@@ -2008,7 +2008,7 @@ export async function driveEffects(make: () => Drive, after: () => void = () => 
     thirdDiffers: calls.length === 3 && !isDeepStrictEqual(calls[2]?.outcome, calls[0]?.outcome),
   };
 }
-/** A source member's double-quoted string literals, each decoded as JSON decodes it, joined in order: the word R-COMPOSED's member builds at run time, read over its raw text, comments included (so R-COMMENTED refuses a comment opener at a position FAIL_CLOSED's S2 forms pin). */
+/** A source member's double-quoted string literals, each decoded as JSON decodes it, joined in order: the word R-COMPOSED's member builds at run time, read over its raw text, comments included (so R-COMMENTED refuses the comment openers FAIL_CLOSED's S2 forms' texts hold). */
 export const composedOf = (text: string): string =>
   [...text.matchAll(/"((?:[^"\\\n]|\\.)*)"/g)]
     .map(match => {
@@ -2020,7 +2020,7 @@ export const composedOf = (text: string): string =>
       }
     })
     .join("");
-/** The object keys a source member's text names (an identifier before a colon) that are keys of the given document: R-UNNAMED's static reading of a GraphDataIR-shaped value, over its raw text, comments included (so R-COMMENTED refuses a comment opener at a position FAIL_CLOSED's S2 forms pin). */
+/** The object keys a source member's text names (an identifier before a colon) that are keys of the given document: R-UNNAMED's static reading of a GraphDataIR-shaped value, over its raw text, comments included (so R-COMMENTED refuses the comment openers FAIL_CLOSED's S2 forms' texts hold). */
 export const shapeKeysOf = (text: string, keys: ReadonlySet<string>): string[] => [...new Set([...text.matchAll(/\b([A-Za-z_][A-Za-z0-9_]*)\s*:/g)].map(match => match[1] ?? "").filter(key => keys.has(key)))];
 const withGraph = (outcome: Exported, change: (graph: Record<string, unknown>) => Record<string, unknown>): Exported => ({ ...outcome, graph: change(structuredClone(outcome.graph) as Record<string, unknown>) });
 export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
@@ -2239,13 +2239,22 @@ export function unpinnedExecutorRequestFindings(texts: ReadonlyMap<string, strin
 /**
  * The comment openers (// and /*) a residual source member's raw text holds, read over the raw text, a double-quoted string
  * literal's included: the static liveness proxies (shapeKeysOf, composedOf) read raw text and cannot tell a comment from code.
- * What the census claims of it is R-COMMENTED's pinned positions, each held by an S2 form of FAIL_CLOSED with its opener count
- * (wb-0x41 cut #2, refusal #1's U2): // opening every non-empty line, after a line's indentation, after code at a line's end and
- * inside a double-quoted string literal; /* opening the text with a space after it and with none, between code on a line, and
- * opening a later line with its block closing on another. An opener at another position is outside the claim.
+ * What the census claims of it is exactly the texts FAIL_CLOSED's eight S2 forms refuse, each with its opener count (wb-0x41
+ * cut #3, R-B181's enumerate-the-resolvable form; each opener written with the characters beside it in its form's text):
+ * // opening each non-empty line, "// e" and "//d"; after a two-space indentation, "  // a" and "  //a"; after code ending in
+ * ";" at a line's end, "; // a", "; //a", ";// a" and ";//a"; inside a double-quoted string literal, "a // b", "a //b",
+ * "a// b" and "a//b"; /* opening the text, "/* a" and "/*a"; between code on a line, "export /* a", "export/* a",
+ * "export /*a" and "export/*a" (each block closed before " const") and "( /* a", "(/* a", "( /*a" and "(/*a" (each closed
+ * before "entities"); opening a later line, "/*" ending its line, "/* a" and "/*a", each block closing on a later line; and two
+ * openers on one line, each counted, as TRAILING_LINES' c1-c5 write them after code ending in ";", each opener after one space:
+ * a block comment then a line comment, a line comment holding // and one holding /*, two block comments, and a block comment
+ * holding //. So each position above but those two-opener lines is held both with one space and with none beside the opener,
+ * before it and after it wherever code or text stands there, and each opener is counted on its own, never per line. An opener
+ * with other characters beside it (a tab, a run of spaces, another letter, digit or mark), at another position, or three or
+ * more on one line, is outside the claim.
  */
 export const commentOpeners = (text: string): number => [...text.matchAll(/\/[/*]/g)].length;
-/** S2's fail-closed refusal (R-B73): a residual source member whose text holds a comment opener at a pinned position (commentOpeners) is refused, R-COMMENTED. */
+/** S2's fail-closed refusal (R-B73): a residual source member whose text holds a comment opener (commentOpeners) is refused, R-COMMENTED, claimed on the texts FAIL_CLOSED's S2 forms pin. */
 export const commentFindings = (path: string, text: string): string[] => {
   const openers = commentOpeners(text);
   return openers === 0 ? [] : [`R-COMMENTED ${path} holds ${openers} comment opener${openers === 1 ? "" : "s"} (// or /*), so its static liveness proxy could read a comment as code`];
@@ -2437,28 +2446,77 @@ export interface FailClosedListing {
   readonly anchor: FailClosedAnchor;
 }
 export type FailClosedForm = FailClosedSource | FailClosedDocs | FailClosedMember | FailClosedListing;
-/** Every non-empty line behind a line comment: the member defines nothing (refusal #5's S2-Q1-COMMENTED and S2-Q2-COMMENTED). */
+/**
+ * Every non-empty line behind a line comment: the member defines nothing (refusal #5's S2-Q1-COMMENTED and S2-Q2-COMMENTED).
+ * The opener is followed by one space on the text's first, third, ... lines and by the line's code on its second, fourth, ...
+ * (wb-0x41 cut #3, refusal #2's U1: L2-CO-LINE-SPACE, reading // only before a space, misses the second line's opener).
+ */
 const commentedOut = (text: string): string =>
   text
     .split("\n")
-    .map(line => (line === "" ? line : `// ${line}`))
+    .map((line, index) => (line === "" ? line : `//${index % 2 === 0 ? " " : ""}${line}`))
     .join("\n");
 /** A block comment before the member's text (the gate's G15-P-S2-Q1-BLOCKCOMMENT plant): the member still defines its value, and its one comment opener is R-COMMENTED's block half. */
 const blockCommented = (text: string): string => `/* a note */ ${text}`;
-/** A block comment between code on the member's first line, after its first word (refusal #1's U2: the opener L2-CO-BLOCK-TEXT-START, reading /* at the text's start only, misses). */
-const blockMidLine = (text: string): string => text.replace(" ", " /* a note */ ");
-/** A line comment after a line's indentation, on a line before the member's text (refusal #1's U2: the opener L2-CO-LINE-LINE-START, reading // at a line's start only, misses). */
-const lineIndented = (text: string): string => `  // a note\n${text}`;
 /**
- * A line comment after code at the end of the member's first line, and a line after the text whose double-quoted string literal
- * holds // (refusal #1's U2: both openers stand after code on their lines, where L2-CO-BOTH-LINE-START, reading either opener at
- * a line's start only, reads none; the second is commentOpeners' string-literal reading).
+ * The lines blockMidLine writes after the member's text (wb-0x41 cut #3, refusal #2's U2): a block comment between code on a
+ * line, after "export" and before " const", or after "(" and before "entities", one space or none before its opener and one
+ * space or a letter after it (L2-CO-BLOCK-AFTER-SPACE, reading /* only after a line's start or white space, misses the openers
+ * a letter or "(" precedes; L2-CO-BLOCK-START-OR-SPACE, reading /* only at a line's start or before a space, the ones a letter
+ * follows).
  */
-const lineTrailing = (text: string): string => `${text.replace("\n", " // a note\n")}export const NOTE = "a // b";\n`;
+const MID_LINE_LINES = [
+  "export/* a note */ const m1 = 1;",
+  "export /*a note*/ const m2 = 2;",
+  "export/*a note*/ const m3 = 3;",
+  "export const m4 = (/* a note */entities: unknown[]): unknown[] => entities;",
+  "export const m5 = ( /* a note */entities: unknown[]): unknown[] => entities;",
+  "export const m6 = (/*a note*/entities: unknown[]): unknown[] => entities;",
+  "export const m7 = ( /*a note*/entities: unknown[]): unknown[] => entities;",
+] as const;
+/** A block comment between code on the member's first line, after its first word, then MID_LINE_LINES (refusal #1's U2: L2-CO-BLOCK-TEXT-START, reading /* at the text's start only, misses every opener). */
+const blockMidLine = (text: string): string => `${text.replace(" ", " /* a note */ ")}${MID_LINE_LINES.map(line => `${line}\n`).join("")}`;
+/**
+ * Two line comments after a two-space indentation, on lines before the member's text, the opener followed by one space and by a
+ * letter (refusal #1's U2: L2-CO-LINE-LINE-START, reading // at a line's start only, misses both; wb-0x41 cut #3, refusal #2's
+ * U1: L2-CO-LINE-SPACE, reading // only before a space, misses the second).
+ */
+const lineIndented = (text: string): string => `  // a note\n  //a note\n${text}`;
+/**
+ * The lines lineTrailing writes after the member's text (wb-0x41 cut #3, refusal #2's U1 and U3), each opener after code ending
+ * in ";" on its line: a line comment, one space or none before its opener and one space or a letter after it (L2-CO-LINE-SPACE
+ * misses the openers a letter follows, L2-CO-LINE-AFTER-SPACE, reading // only after a line's start or white space, the ones
+ * ";" precedes); a double-quoted string literal holding //, one space or none on each side of it (commentOpeners' string-literal
+ * reading; L2-CO-LINE-SPACE misses "a //b" and "a//b", L2-CO-LINE-AFTER-SPACE "a// b" and "a//b"); and two openers on one line,
+ * each counted (L2-CO-PER-LINE, counting the lines that hold an opener, reads one on each).
+ */
+const TRAILING_LINES = [
+  "export const t1 = 1; //a note",
+  "export const t2 = 2;// a note",
+  "export const t3 = 3;//a note",
+  'export const NOTE = "a // b";',
+  'export const NOTE1 = "a //b";',
+  'export const NOTE2 = "a// b";',
+  'export const NOTE3 = "a//b";',
+  "export const c1 = 1; /* a */ // b",
+  "export const c2 = 2; // a // b",
+  "export const c3 = 3; // a /* b",
+  "export const c4 = 4; /* a */ /* b */",
+  "export const c5 = 5; /* a // b */",
+] as const;
+/**
+ * A line comment after code at the end of the member's first line, then TRAILING_LINES (refusal #1's U2: every opener stands
+ * after code on its line, where L2-CO-BOTH-LINE-START, reading an opener at a line's start only, reads none).
+ */
+const lineTrailing = (text: string): string => `${text.replace("\n", " // a note\n")}${TRAILING_LINES.map(line => `${line}\n`).join("")}`;
 /** A block comment opening the text with no space after its opener (refusal #1's U2: the opener L2-CO-BLOCK-SPACE, reading /* only before a space, misses). */
 const blockUnspaced = (text: string): string => `/*a note*/ ${text}`;
-/** A block comment opening the member's second line and closing two lines on (refusal #1's U2: the opener L2-CO-BLOCK-SAME-LINE, reading /* only when its block closes on its line, misses). */
-const blockMultiLine = (text: string): string => text.replace("\n", "\n/*\n * a note\n */\n");
+/**
+ * Three block comments opening the lines after the member's first, each closing on a later line, the opener followed by its
+ * line's end, by one space and by a letter (refusal #1's U2: L2-CO-BLOCK-SAME-LINE, reading /* only when its block closes on its
+ * line, misses all three; wb-0x41 cut #3).
+ */
+const blockMultiLine = (text: string): string => text.replace("\n", "\n/*\n * a note\n */\n/* a note\n */\n/*a note\n*/\n");
 /**
  * The fail-closed row (R-B73, R-B67's one pinned row proving that a form outside the pinned set refuses): refusal #5's twelve
  * plants, one per member of its U1-U5, each outside its claim's pinned set and each refused with exactly its typed refusals.
@@ -2474,7 +2532,12 @@ const blockMultiLine = (text: string): string => text.replace("\n", "\n/*\n * a 
  * refusal #1, each form answering the gate hollowing its UNMET line names, and each that hollowing's falsifier): five S2
  * positions of q1-shape's openers (U2: FC-S2-Q1-BLOCK-MID-LINE, FC-S2-Q1-LINE-INDENTED, FC-S2-Q1-LINE-TRAILING,
  * FC-S2-Q1-BLOCK-UNSPACED, FC-S2-Q1-BLOCK-MULTI-LINE) and FC-LISTING-TRACKED (U1: links in git's index, the listing's tracked
- * half). Each form names its outside anchor (FailClosedAnchor).
+ * half). wb-0x41 cut #3 (refusal #2, R-B181's enumerate-the-resolvable form) keeps the twenty-two forms and their anchors and
+ * widens five S2 forms' texts (FC-S2-Q1-COMMENTED, FC-S2-Q1-LINE-INDENTED, FC-S2-Q1-LINE-TRAILING, FC-S2-Q1-BLOCK-MID-LINE,
+ * FC-S2-Q1-BLOCK-MULTI-LINE), so each opener position commentOpeners' doc lists, but its two-opener lines, is held both with
+ * one space and with none beside the opener, before it and after it wherever code or text stands there, and
+ * FC-S2-Q1-LINE-TRAILING holds lines with two openers, each counted; that doc lists the texts exactly. Each form names its
+ * outside anchor (FailClosedAnchor).
  */
 export const FAIL_CLOSED: readonly FailClosedForm[] = [
   { kind: "source", id: "FC-G1-CAMEL", claim: "G1", path: "src/workbench/zz-fc-g1-camel.ts", text: 'export const graphPolicyLabel = "seam";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graphPolicy" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-CAMEL" } },
@@ -2511,11 +2574,11 @@ export const FAIL_CLOSED: readonly FailClosedForm[] = [
   { kind: "member", id: "FC-S2-Q1-COMMENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: commentedOut, openers: 2, anchor: { bead: REFUSAL_ITEMS_BEAD, name: "Q1" } },
   { kind: "member", id: "FC-S2-Q2-COMMENTED", claim: "S2", member: "src/workbench/q2-joined.ts", edit: commentedOut, openers: 1, anchor: { bead: REFUSAL_ITEMS_BEAD, name: "Q2" } },
   { kind: "member", id: "FC-S2-Q1-BLOCK-COMMENT", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockCommented, openers: 1, anchor: { bead: CARRIED_BEAD, name: "G15-P-S2-Q1-BLOCKCOMMENT" } },
-  { kind: "member", id: "FC-S2-Q1-BLOCK-MID-LINE", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockMidLine, openers: 1, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-TEXT-START" } },
-  { kind: "member", id: "FC-S2-Q1-LINE-INDENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: lineIndented, openers: 1, anchor: { bead: CARRIED_BEAD, name: "L2-CO-LINE-LINE-START" } },
-  { kind: "member", id: "FC-S2-Q1-LINE-TRAILING", claim: "S2", member: "src/workbench/q1-shape.ts", edit: lineTrailing, openers: 2, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BOTH-LINE-START" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-MID-LINE", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockMidLine, openers: 8, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-TEXT-START" } },
+  { kind: "member", id: "FC-S2-Q1-LINE-INDENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: lineIndented, openers: 2, anchor: { bead: CARRIED_BEAD, name: "L2-CO-LINE-LINE-START" } },
+  { kind: "member", id: "FC-S2-Q1-LINE-TRAILING", claim: "S2", member: "src/workbench/q1-shape.ts", edit: lineTrailing, openers: 18, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BOTH-LINE-START" } },
   { kind: "member", id: "FC-S2-Q1-BLOCK-UNSPACED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockUnspaced, openers: 1, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-SPACE" } },
-  { kind: "member", id: "FC-S2-Q1-BLOCK-MULTI-LINE", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockMultiLine, openers: 1, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-SAME-LINE" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-MULTI-LINE", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockMultiLine, openers: 3, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-SAME-LINE" } },
   {
     kind: "listing",
     id: "FC-LISTING-SYMLINK",

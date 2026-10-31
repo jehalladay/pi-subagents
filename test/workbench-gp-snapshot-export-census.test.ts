@@ -162,7 +162,7 @@
  * so does a member silenced as its row reads it, R-B66 and rule 19's residual definition: a Q1 member's raw text names a key
  * of the vendored v1 document as an identifier before a colon (shapeKeysOf), a Q2 member's double-quoted literals, decoded
  * and joined, are read by a source reader (composedOf), each over a text holding no comment opener (R-COMMENTED, FAIL CLOSED:
- * refused at the positions its S2 forms pin), a Q3-Q5 member's edit changes the
+ * refused on the texts its S2 forms pin), a Q3-Q5 member's edit changes the
  * reference's export (its first difference is named), a Q6-Q8 member does what its family names as the drive observer
  * driveEffects reads it on fixture projections of its own (the reference drive reads as NO_EFFECTS), and a Q9 member lands in
  * the section's tables):
@@ -255,10 +255,10 @@
  *    is the no-integration sentence both as rendered and in its source, case included (boundary-opening: D-SENTENCE-CASE among
  *    its plants).
  *  - Q1-Q9: every member of every residual family quiet in its row, and its liveness read in the same row by the static
- *    reading RESIDUALS above names, so a member whose reading no longer holds reds its row; a source member's text holding a
- *    comment opener at a position FAIL_CLOSED's S2 forms pin is refused (R-COMMENTED, FAIL CLOSED), and each source member's
- *    comment-opener count is held to the roster (the Q1 and Q2 witnesses), so a source member commented out reds its row
- *    (FAIL_CLOSED's FC-S2-Q1-COMMENTED and FC-S2-Q2-COMMENTED);
+ *    reading RESIDUALS above names, so a member whose reading no longer holds reds its row; a source member's text holding
+ *    comment openers as one of FAIL_CLOSED's S2 forms' texts holds them is refused (R-COMMENTED, FAIL CLOSED), and each
+ *    source member's comment-opener count is held to the roster (the Q1 and Q2 witnesses), so a source member commented out
+ *    reds its row (FAIL_CLOSED's FC-S2-Q1-COMMENTED and FC-S2-Q2-COMMENTED);
  *    a member silenced while its static reading still holds (its text wrapped in a string, its code made unreachable) is
  *    outside the claim (FAIL CLOSED).
  * FAIL CLOSED (R-B73, the final cut's fail-closed core, in R-B67's form): every claim above is exactly its pinned set, and
@@ -272,12 +272,23 @@
  * other refusing it. G3's docs rules
  * refuse a boundary section led by any block but a paragraph (boundary-first) and any block outside the Ownership section's
  * tables holding GraphPolicyCLI (ownership-other). A residual source member whose raw text holds a comment opener, // or /*,
- * is refused (R-COMMENTED), claimed exactly on the positions FAIL_CLOSED's eight S2 forms pin, each with its opener count
- * (wb-0x41 cut #2, refusal #1's U2): // opening every non-empty line (FC-S2-Q1-COMMENTED, FC-S2-Q2-COMMENTED), after a line's
- * indentation (FC-S2-Q1-LINE-INDENTED), and after code at a line's end beside one inside a double-quoted string literal
- * (FC-S2-Q1-LINE-TRAILING); /* opening the text with a space after it (FC-S2-Q1-BLOCK-COMMENT) and with none
- * (FC-S2-Q1-BLOCK-UNSPACED), between code on a line (FC-S2-Q1-BLOCK-MID-LINE), and opening a later line, its block closing on
- * another (FC-S2-Q1-BLOCK-MULTI-LINE); an opener at another position is outside the claim. An entry git would commit under src
+ * is refused (R-COMMENTED), claimed exactly on the texts FAIL_CLOSED's eight S2 forms refuse, each with its opener count
+ * (wb-0x41 cut #3, the enumerate-the-resolvable form R-B181 binds on refusal #2; each opener below is written with the
+ * characters beside it in its form's text): // opening each non-empty line, "// e" and "//d" (FC-S2-Q1-COMMENTED,
+ * FC-S2-Q2-COMMENTED); after a two-space indentation, "  // a" and "  //a" (FC-S2-Q1-LINE-INDENTED); after code ending in ";"
+ * at a line's end, "; // a", "; //a", ";// a" and ";//a", and inside a double-quoted string literal, "a // b", "a //b",
+ * "a// b" and "a//b" (FC-S2-Q1-LINE-TRAILING); /* opening the text, "/* a" (FC-S2-Q1-BLOCK-COMMENT) and "/*a"
+ * (FC-S2-Q1-BLOCK-UNSPACED); between code on a line, "export /* a", "export/* a", "export /*a" and "export/*a", each block
+ * closed before " const", and "( /* a", "(/* a", "( /*a" and "(/*a", each closed before "entities" (FC-S2-Q1-BLOCK-MID-LINE);
+ * opening a later line, "/*" ending its line, "/* a" and "/*a", each block closing on a later line (FC-S2-Q1-BLOCK-MULTI-LINE);
+ * and two openers on one line, each counted, as the helper's TRAILING_LINES c1-c5 write them after code ending in ";", each
+ * opener after one space: a block comment then a line comment, a line comment holding // and one holding /*, two block
+ * comments, and a block comment holding // (FC-S2-Q1-LINE-TRAILING). So each position above but those two-opener lines is
+ * held both with one space and with none beside the opener, before it and after it wherever code or text stands there, and
+ * each opener is counted on its own, never per line: refusal #2's five members (U1 L2-CO-LINE-SPACE and
+ * L2-CO-LINE-AFTER-SPACE, U2 L2-CO-BLOCK-AFTER-SPACE and L2-CO-BLOCK-START-OR-SPACE, U3 L2-CO-PER-LINE) each read fewer
+ * openers than those texts hold. An opener with other characters beside it (a tab, a run of spaces, another letter, digit or
+ * mark), at another position, or three or more on one line, is outside the claim. An entry git would commit under src
  * or qa (LISTED_SCOPES, the two scopes the census's readers list) that is no regular file is refused (S-NONREGULAR, wb-0x41:
  * the landed listers, gitList's regular-file filter and walkList's lstat walk, drop it, so no reader reads a module through
  * it), claimed exactly on the two listing forms pinned (wb-0x41 cut #2, refusal #1's U1), each a scratch repository whose src
@@ -334,8 +345,12 @@
  * word reader and its fail-closed reader (siteFindings with unpinnedSiteFindings, executorRequestNamers with
  * unpinnedExecutorRequestFindings) in these files; a site-word part spelled with a confusable or other non-ASCII letter
  * (refusal #5's F6: the live patterns match ASCII letters only, so neither G1 reader reads it; wb-0lf.8); a residual member
- * silenced while its static reading still holds (FAIL CLOSED; wb-0lf.8); a comment opener at a position no S2 form pins
- * (outside R-COMMENTED's claim); an entry git would commit that is no regular file in a kind other than a symbolic link (a
+ * silenced while its static reading still holds (FAIL CLOSED; wb-0lf.8); a comment opener in a text no S2 form pins (outside
+ * R-COMMENTED's claim, wb-0x41 cut #3): other characters beside it (a tab, a run of spaces, another letter, digit or mark, so
+ * a doc comment's /** or a run of three slashes), another position (after code ending in another character, inside a
+ * single-quoted or template string or a regular expression literal), three or more on one line, or a two-opener line with
+ * other spacing than the helper's TRAILING_LINES c1-c5; an entry git would commit that is no regular file in a kind other
+ * than a symbolic link (a
  * gitlink's or a nested repository's directory: refused S-NONREGULAR by the same reader, pinned on no form), a listing outside
  * LISTED_SCOPES (the census reads none), and the landed wb-e66.5, wb-1xvp.2 and wb-gxd7.4 guards' own listings, which landing
  * 677's F1 names as sharing the landed listers' regular-file reading (wb-0x41 leaves those censuses as landed); a coordinated
@@ -1029,8 +1044,8 @@ const vendoredKeys = (): Set<string> => {
  * them), and every member's static reading holds (R-B66 and rule 19's residual definition, narrowed by R-B73 to what the row
  * reads: a member whose reading no longer holds reds its row): a shape member's raw text names keys of the vendored v1
  * document before a colon (shapeKeysOf), a composed member's double-quoted literals, decoded and joined (composedOf), are
- * read by a source reader, each over a text holding no comment opener (R-COMMENTED, refused at the positions FAIL_CLOSED's
- * S2 forms pin, and the row's witness holds each source member's count), an outcome member's edit changes the reference's
+ * read by a source reader, each over a text holding no comment opener (R-COMMENTED, refused on the texts FAIL_CLOSED's S2
+ * forms pin, and the row's witness holds each source member's count), an outcome member's edit changes the reference's
  * export (its first
  * difference named), a drive member does what its family names as driveEffects reads it (the reference drive reading as
  * NO_EFFECTS), and a docs member lands in the section's tables.
@@ -1293,14 +1308,14 @@ describe(SUITE, () => {
       "FC-G3-LEAD-HEADING:G3:boundary-first",
       "FC-G3-LEAD-BREAK:G3:boundary-first",
       "FC-G3-OTHER-LEAD:G3:ownership-other",
-      'FC-S2-Q1-COMMENTED:S2:src/workbench/q1-shape.ts:2:"// export const a = 1;\\n// export const b = 2;\\n"',
-      'FC-S2-Q2-COMMENTED:S2:src/workbench/q2-joined.ts:1:"// export const a = 1;\\n// export const b = 2;\\n"',
+      'FC-S2-Q1-COMMENTED:S2:src/workbench/q1-shape.ts:2:"// export const a = 1;\\n//export const b = 2;\\n"',
+      'FC-S2-Q2-COMMENTED:S2:src/workbench/q2-joined.ts:1:"// export const a = 1;\\n//export const b = 2;\\n"',
       'FC-S2-Q1-BLOCK-COMMENT:S2:src/workbench/q1-shape.ts:1:"/* a note */ export const a = 1;\\nexport const b = 2;\\n"',
-      'FC-S2-Q1-BLOCK-MID-LINE:S2:src/workbench/q1-shape.ts:1:"export /* a note */ const a = 1;\\nexport const b = 2;\\n"',
-      'FC-S2-Q1-LINE-INDENTED:S2:src/workbench/q1-shape.ts:1:"  // a note\\nexport const a = 1;\\nexport const b = 2;\\n"',
-      'FC-S2-Q1-LINE-TRAILING:S2:src/workbench/q1-shape.ts:2:"export const a = 1; // a note\\nexport const b = 2;\\nexport const NOTE = \\"a // b\\";\\n"',
+      'FC-S2-Q1-BLOCK-MID-LINE:S2:src/workbench/q1-shape.ts:8:"export /* a note */ const a = 1;\\nexport const b = 2;\\nexport/* a note */ const m1 = 1;\\nexport /*a note*/ const m2 = 2;\\nexport/*a note*/ const m3 = 3;\\nexport const m4 = (/* a note */entities: unknown[]): unknown[] => entities;\\nexport const m5 = ( /* a note */entities: unknown[]): unknown[] => entities;\\nexport const m6 = (/*a note*/entities: unknown[]): unknown[] => entities;\\nexport const m7 = ( /*a note*/entities: unknown[]): unknown[] => entities;\\n"',
+      'FC-S2-Q1-LINE-INDENTED:S2:src/workbench/q1-shape.ts:2:"  // a note\\n  //a note\\nexport const a = 1;\\nexport const b = 2;\\n"',
+      'FC-S2-Q1-LINE-TRAILING:S2:src/workbench/q1-shape.ts:18:"export const a = 1; // a note\\nexport const b = 2;\\nexport const t1 = 1; //a note\\nexport const t2 = 2;// a note\\nexport const t3 = 3;//a note\\nexport const NOTE = \\"a // b\\";\\nexport const NOTE1 = \\"a //b\\";\\nexport const NOTE2 = \\"a// b\\";\\nexport const NOTE3 = \\"a//b\\";\\nexport const c1 = 1; /* a */ // b\\nexport const c2 = 2; // a // b\\nexport const c3 = 3; // a /* b\\nexport const c4 = 4; /* a */ /* b */\\nexport const c5 = 5; /* a // b */\\n"',
       'FC-S2-Q1-BLOCK-UNSPACED:S2:src/workbench/q1-shape.ts:1:"/*a note*/ export const a = 1;\\nexport const b = 2;\\n"',
-      'FC-S2-Q1-BLOCK-MULTI-LINE:S2:src/workbench/q1-shape.ts:1:"export const a = 1;\\n/*\\n * a note\\n */\\nexport const b = 2;\\n"',
+      'FC-S2-Q1-BLOCK-MULTI-LINE:S2:src/workbench/q1-shape.ts:3:"export const a = 1;\\n/*\\n * a note\\n */\\n/* a note\\n */\\n/*a note\\n*/\\nexport const b = 2;\\n"',
       "FC-LISTING-SYMLINK:LISTING:qa/zz-g15-target.ts,src/workbench/zz-g15-module.ts:src/workbench/zz-g15-link.ts->../../qa/zz-g15-target.ts,src/workbench/zz-g15-dir->../../qa,src/workbench/zz-g15-dangling.ts->../../qa/zz-g15-missing.ts,qa/zz-g15-link.ts->zz-g15-target.ts,src/workbench/zz-g15-ignored.ts->../../qa/zz-g15-target.ts:tracked=:ignored=src/workbench/zz-g15-ignored.ts:removed=:GraphPolicy",
       "FC-LISTING-TRACKED:LISTING:qa/zz-l2-target.ts,src/workbench/zz-l2-module.ts,src/workbench/zz-l2-removed.ts:src/workbench/zz-l2-link.ts->../../qa/zz-l2-target.ts,src/workbench/zz-l2-dir->../../qa,src/workbench/zz-l2-dangling.ts->../../qa/zz-l2-missing.ts,src/workbench/zz-l2-untracked.ts->../../qa/zz-l2-missing.ts,qa/zz-l2-link.ts->zz-l2-target.ts:tracked=qa/zz-l2-link.ts,src/workbench/zz-l2-dangling.ts,src/workbench/zz-l2-dir,src/workbench/zz-l2-link.ts,src/workbench/zz-l2-removed.ts:ignored=:removed=src/workbench/zz-l2-removed.ts:GraphPolicy",
     ]);

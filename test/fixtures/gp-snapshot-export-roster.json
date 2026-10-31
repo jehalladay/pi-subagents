@@ -2443,7 +2443,7 @@
       "refusal": [
         "R-COMMENTED"
       ],
-      "openers": 1,
+      "openers": 8,
       "proxy": true
     },
     "FC-S2-Q1-LINE-INDENTED": {
@@ -2452,7 +2452,7 @@
       "refusal": [
         "R-COMMENTED"
       ],
-      "openers": 1,
+      "openers": 2,
       "proxy": true
     },
     "FC-S2-Q1-LINE-TRAILING": {
@@ -2461,7 +2461,7 @@
       "refusal": [
         "R-COMMENTED"
       ],
-      "openers": 2,
+      "openers": 18,
       "proxy": true
     },
     "FC-S2-Q1-BLOCK-UNSPACED": {
@@ -2479,7 +2479,7 @@
       "refusal": [
         "R-COMMENTED"
       ],
-      "openers": 1,
+      "openers": 3,
       "proxy": true
     },
     "FC-LISTING-SYMLINK": {
