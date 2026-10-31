@@ -41,6 +41,17 @@
  * onto a held node stores a node for the record ref) and G-F1e2 (a hypothesis between two held nodes stores a prediction
  * node), and its ordering survivors G-F1f and G-F1f2 (a snapshot refreshed after a hypothesis onto its key takes a success
  * tone) each kept the census 17 passed (17); this cut adds BESIDE's class plants (Z1), LISTING and ORDER (C1) for them.
+ * RE-MEASURED by the respin seat ws-01 (run g10-work-s158, wb-a7ud refusal #2's U1 with its rider F1, under the rule-19
+ * second-stage cap R-B153) on trunk 7290d91: the same 117 .ts modules under src (57 under src/workbench) in 6 directories,
+ * no file under src with another extension, the release unchanged (128 files in 9 directories, 16 classes); refusal #2's
+ * walks G6-W5 (no release README.md, the only module of its class), G6-W5p (no release package.json, the same) and G6-W6
+ * (no release module under the path prefix dist/contract/executors/e, three whole classes), with or without the skipped
+ * file naming a record, and its rider's walks G6-W4 (identifiers and private names alone under src/workbench) and G6-W7
+ * (the first 2000 characters alone under src/workbench), with or without a src/workbench module spelling a record where
+ * that walk does not read, each kept the census 17 passed (17), as did the last 2000 characters alone under src/workflow,
+ * the first 2000 alone under the release's dist and the last 2000 alone under its contract/registry; this cut adds EVERY
+ * and BESIDE's class plants of every channel (Z1) for them, and names under NOT CLAIMED the walks it measured that keep
+ * the census green (no stems, or identifiers and private names alone, for the modules a file-name mark picks).
  * Pi's Beads and Furnace readers take their native clients as parameters, the seams this census drives: the Beads work reader
  * (src/workbench/beads-observer.ts,
  * seam BeadsReadClient: show) and the program readiness reader (src/workbench/beads-program-readiness.ts, seam
@@ -117,15 +128,23 @@
  *    call: a planted spelling of each stem is found as an identifier, a private name, a string, a template, a
  *    regular-expression literal and a regular expression whose every character is escaped (in each of the three forms) by
  *    the src arm, and inside a comment by the release arm. BESIDE: each channel plant's path sits under its arm's own root
- *    (src, the release's directory) beside the tree's modules; every class of module the tree's listing hands an arm (a
- *    module's own directory with its extension, the file name from its first dot: src 6 classes, the release 16 at c947b21,
- *    each arm held to a floor, CLASS_FLOORS) holds one class plant per stem in that directory with that extension, of the
- *    arm's own kind (the src identifier, the release comment), and the witness lists by arm every class whose plants the
- *    walk did not read as their stems (none); and the head and tail channels put the src arm's identifier and the release
- *    arm's comment before and after the whole text of the longest module that arm reads. So a walk that reads no module of
- *    one class - and so one that reads no module of one directory the listing hands it (by its path or by a path prefix:
- *    src/workbench, src/workbench/providers, the release's dist or any other) or of one extension - or computes no stems
- *    for those modules, or reads only each module's first or last characters, loses those plants' readings too.
+ *    (src, the release's directory) beside the tree's modules, and the head and tail channels put the src arm's identifier
+ *    and the release arm's comment before and after the whole text of the longest module that arm reads; every class of
+ *    module the tree's listing hands an arm (a module's own directory with its extension, the file name from its first dot:
+ *    src 6 classes, the release 16 at c947b21 and at 7290d91, each arm held to a floor, CLASS_FLOORS) holds, in that
+ *    directory with that extension, one class plant per stem for each of the arm's channels (the src arm's eight code
+ *    channels and its head and tail, the release arm's comment and its head and tail; a class's head and tail plants put
+ *    the arm's plant before and after the whole text of the longest module of that class), and the witness lists by arm
+ *    every class whose plants the walk did not read as their stems (none). A class plant carries its class's directory and
+ *    extension but no file name of the class's modules: so a walk that picks the modules of one class by a mark its plants
+ *    carry - the directory (by its path, or by a path prefix that stops short of the file names: src/workbench, src/work,
+ *    src/workbench/providers, the release's dist or any other) or the extension - and reads none of them, computes no stems
+ *    for them, reads only some of the src arm's eight code channels in them, or reads only each one's first or last
+ *    characters, loses those plants' readings too. EVERY: the witness lists by arm every module the walk was handed (the
+ *    tree's modules and the plants) that it handed back no reading of (none), so a walk that skips a module it is handed,
+ *    picked by any mark - a file name (the release's README.md or package.json, each the only module of its class), a path
+ *    prefix that ends inside the file names (the release's dist/contract/executors/e, three whole classes) or any other -
+ *    reds as well.
  *    ARMED: when a release file or the code of a .ts module under src names one, Z1 reds: the reader that arrives joins the
  *    spies of A, B and C before the census is re-measured.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
@@ -188,15 +207,24 @@
  * plant form, residual seam kind, cross source or record field removed from its table and the roster together (no outside
  * anchor names the placements, spellings, channels, forms, kinds or sources; the record names are anchored to the title); a
  * floor lowered with the roster; a residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside
- * anchor names the residual families); a walk that tells Z1's plants from the tree's modules by any other mark and reads
- * stems from the plants alone - a path segment such as the plants' own directory or file name, a plant's place in the call,
- * a text only plants carry, or a reading of only part of each long module other than its first characters alone or its
- * last characters alone (its head and its tail together, skipping the middle): BESIDE removes a path prefix, a directory,
- * an extension, a module's head and a module's tail as such marks, not every mark a walk could read; a walk that skips some
- * but not all of one class's modules (by a file name, a size, a text or any other mark the class's plants do not carry): a
- * class plant shows that its class is read, not that each module of it is (measured: no stems for the src modules whose
- * file name starts furnace- keeps the census 17 passed (17), also with a src/workbench/furnace-* module naming a record,
- * which alone reds Z1); and a module the tree's listing never hands the walk (the listing narrowed before the walk): the
+ * anchor names the residual families); a walk that tells Z1's plants from the tree's modules by any other mark and computes
+ * stems for the plants alone while it hands back a reading of every module (so EVERY holds) - a path segment such as the
+ * plants' own directory or file name, a plant's place in the call, a text only plants carry, or a reading of only part of a
+ * long module other than its first characters alone or its last characters alone (its head and its tail together, skipping
+ * the middle): BESIDE removes a directory, a path prefix that stops short of the file names, an extension, a module's head
+ * and a module's tail as such marks, not every mark a walk could read; a walk that hands back a reading of every module but
+ * computes no stems for, reads only some of the src arm's code channels in, or reads only the first or last characters of
+ * the modules it picks by a mark the class plants do not carry (a file name, a path prefix that ends inside the file names,
+ * or a size or a text the class plants do not share), whether those are all of one class's modules or some of them: a class
+ * plant shows that its class's directory and extension are read, not that each module of the class is (measured: no stems
+ * for the release README.md, the only module of its class, keeps the census 17 passed (17), and so does no stems for the
+ * release modules under the path prefix dist/contract/executors/e, three whole classes; with README.md or
+ * exception_battery.d.ts naming a record, each the longest module of its class, the census reds Z1 through classesUnread,
+ * because that class's head and tail plants carry the module's text; identifiers and private names alone for the src
+ * modules whose file name starts furnace- keeps 17 passed (17), also with a src/workbench/furnace-* module whose only
+ * spelling is a string literal, which alone reds Z1; no stems for the src modules whose file name starts furnace- keeps 17
+ * passed (17), also with a src/workbench/furnace-* module naming a record, which alone reds Z1); and a module the tree's
+ * listing never hands the walk (the listing narrowed before the walk): the
  * walk never reads it, and a class the listing drops whole holds no plant, so the floors and O's seam roster, which reads
  * the same listing, are its only guards (measured: a listing without src/workbench/providers reds O; one without src/ui
  * and one without the release's contract/registry each keep 17 passed (17), the first also with a src/ui module naming
@@ -219,7 +247,8 @@
  * or a snapshot of another state refreshed after them). Z1's src arm reads a string literal whatever it says, so a src
  * message or label that cites the program by name (a bead tag inside a string) reds Z1 as an arriving reader would, and is
  * re-measured the same way. tsconfig.json compiles the .ts files under src, so Z1's src arm and the seam reader read .ts
- * modules only; a file under src with any other extension is not read (none exists at b3d410f, at 71b2807 or at c947b21).
+ * modules only; a file under src with any other extension is not read (none exists at b3d410f, at 71b2807, at c947b21 or
+ * at 7290d91).
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, the installed release and .beads are only read.
  */
@@ -276,7 +305,8 @@ const STEMS = ["observedtransition", "counterfactual", "syntheticattempt", "worl
 /** The src modules Z1 walks (116 at the first cut, 117 since 5fbe25e) and the release files (128): floors, not exact sets. */
 const SRC_FLOOR = 100;
 const SDK_FLOOR = 100;
-/** The floors on the classes BESIDE plants (a module's directory and extension each; at c947b21 src has 6, the release 16). */
+/** The floors on the classes BESIDE plants (a module's directory and extension each; at c947b21 and at 7290d91 src has 6, the
+ * release 16). */
 const CLASS_FLOORS = { src: 5, sdk: 12 } as const;
 /** Each case's timeout: the seam reader builds a checker program over every src module, about a second on an idle host. */
 const CASE_TIMEOUT_MS = 60_000;
@@ -841,15 +871,24 @@ const extensionOf = (path: string): string => {
   return dot < 0 ? "" : name.slice(dot);
 };
 const classOf = (path: string): string => join(dirname(path), `*${extensionOf(path)}`);
-/** A class plant's path: the class's own directory, a plant file name, the class's own extension. */
-const classPlantPath = (path: string, index: number): string => join(dirname(path), `world-model-z1-plant-${index}${extensionOf(path)}`);
-/** The text of a class plant of each arm: the src arm's identifier, the release arm's comment. */
-const CLASS_PLANTS: Readonly<Record<Arm, (index: number) => string>> = { src: identifierPlant, "@furnace/sdk": releaseCommentPlant };
-/** BESIDE's class plants for one arm: one plant per stem in every class of module the tree's listing hands the arm. */
+/** A class plant's path: the class's own directory, a plant file name naming its channel, the class's own extension. */
+const classPlantPath = (path: string, channel: string, index: number): string => join(dirname(path), `world-model-z1-plant-${channel}-${index}${extensionOf(path)}`);
+/** The channels of one arm, in Z1_CHANNELS order: the src arm's eight code channels and its head and tail, the release arm's
+ * comment and its head and tail. */
+const armChannels = (arm: Arm) => Object.entries(Z1_CHANNELS).filter(([, channel]) => channel.arm === arm);
+/** BESIDE's class plants for one arm: in every class of module the tree's listing hands the arm, one plant per stem for each of
+ * the arm's channels, a class's head and tail around the whole text of the longest module of that class. */
 function z1ClassPlants(arm: Arm, modules: readonly Module[]): readonly Z1Plant[] {
-  const members = new Map<string, string>();
-  for (const entry of modules) if (!members.has(classOf(entry.path))) members.set(classOf(entry.path), entry.path);
-  return [...members.values()].flatMap(path => STEMS.map((_stem, index) => ({ channel: "class", arm, module: { path: classPlantPath(path, index), text: CLASS_PLANTS[arm](index) } })));
+  const classes = new Map<string, { readonly path: string; readonly members: Module[] }>();
+  for (const entry of modules) {
+    const held = classes.get(classOf(entry.path));
+    if (held === undefined) classes.set(classOf(entry.path), { path: entry.path, members: [entry] });
+    else held.members.push(entry);
+  }
+  return [...classes.values()].flatMap(({ path, members }) => {
+    const longest = longestText(members);
+    return armChannels(arm).flatMap(([channel, { text }]) => STEMS.map((_stem, index) => ({ channel: "class", arm, module: { path: classPlantPath(path, channel, index), text: text(index, longest) } })));
+  });
 }
 /** R-VOCABULARY's plants (Q3): the family in other words, and regular expressions that match a record name without
  * spelling it (a wildcard, a character class, an alternation, an escape other than \x, \u and \u{}). */
@@ -1301,15 +1340,17 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
       { arm: "src", modules: srcModules },
       { arm: "@furnace/sdk", modules: sdkModules },
     ];
-    // The plants go through the same walk call as the tree, beside its modules (BESIDE): the channel plants under each arm's
-    // own root, and one class plant per stem in every class (a directory with an extension) the listing hands the arm. So a
-    // walk that stops reading stems, reads no module of one class (so none of one directory or of one extension the listing
-    // hands it), or reads only each module's first or last characters loses plant readings.
+    // The plants go through the same walk call as the tree, beside its modules (BESIDE): the channel plants under each
+    // arm's own root, and in every class (a directory with an extension) the listing hands the arm one class plant per stem
+    // for each of the arm's channels, a class's head and tail around its longest module. A class plant carries its class's
+    // directory and extension but no file name of its modules, so a walk that picks a class's modules by its directory, a
+    // path prefix short of the file names or its extension and reads none of them, computes no stems for them, reads only
+    // some of the src arm's code channels in them or reads only each one's first or last characters loses plant readings;
+    // and EVERY holds that the walk handed back a reading of every module it was handed, so a walk that skips a module by
+    // any other mark (a file name, a path prefix inside the file names) reds too.
     const plants = [...z1Plants({ src: longestText(srcModules), "@furnace/sdk": longestText(sdkModules) }), ...tree.flatMap(({ arm, modules }) => z1ClassPlants(arm, modules))];
-    const readings = z1Walk(
-      tree.map(({ arm, modules }) => ({ arm, modules: [...modules, ...plants.filter(plant => plant.arm === arm).map(plant => plant.module)] })),
-      live,
-    );
+    const handed = tree.map(({ arm, modules }) => ({ arm, modules: [...modules, ...plants.filter(plant => plant.arm === arm).map(plant => plant.module)] }));
+    const readings = z1Walk(handed, live);
     const plantPaths = new Set(plants.map(plant => plant.module.path));
     const read = readings.filter(reading => !plantPaths.has(reading.path));
     const mentions = read.filter(reading => reading.stems.length > 0).map(reading => `${reading.path}: ${reading.stems.join(",")}`);
@@ -1318,15 +1359,25 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
     const count = (arm: Arm): number => read.filter(reading => reading.arm === arm).length;
     const stems = new Map(readings.map(reading => [reading.path, reading.stems]));
     const classes = (arm: Arm): number => distinct(tree.filter(entry => entry.arm === arm).flatMap(entry => entry.modules.map(listed => classOf(listed.path)))).length;
-    // Every class whose plants the walk did not read as their stems, by arm (BESIDE).
-    const unread = (modules: readonly Module[]): readonly string[] =>
-      distinct(modules.filter(entry => STEMS.some((stem, index) => JSON.stringify(stems.get(classPlantPath(entry.path, index)) ?? null) !== JSON.stringify([stem]))).map(entry => classOf(entry.path)));
+    // Every class whose plants, of any channel of its arm, the walk did not read as their stems, by arm (BESIDE).
+    const unread = (arm: Arm, modules: readonly Module[]): readonly string[] =>
+      distinct(
+        modules
+          .filter(entry => armChannels(arm).some(([channel]) => STEMS.some((stem, index) => JSON.stringify(stems.get(classPlantPath(entry.path, channel, index)) ?? null) !== JSON.stringify([stem]))))
+          .map(entry => classOf(entry.path)),
+      );
+    // Every module the walk was handed, the tree's and the plants, that it handed back no reading of, by arm (EVERY).
+    const unwalked = (arm: Arm, modules: readonly Module[]): readonly string[] => {
+      const walked = new Set(readings.filter(reading => reading.arm === arm).map(reading => reading.path));
+      return modules.filter(entry => !walked.has(entry.path)).map(entry => entry.path);
+    };
     return {
       floors: { src: count("src") >= SRC_FLOOR, sdk: count("@furnace/sdk") >= SDK_FLOOR, srcClasses: classes("src") >= CLASS_FLOORS.src, sdkClasses: classes("@furnace/sdk") >= CLASS_FLOORS.sdk },
       release: isObject(version) && typeof version.name === "string" ? version.name : null,
       mentions,
       plants: Object.fromEntries(Object.keys(Z1_CHANNELS).map(channel => [channel, plants.filter(plant => plant.channel === channel).map(plant => stems.get(plant.module.path) ?? null)])),
-      classesUnread: Object.fromEntries(tree.map(({ arm, modules }) => [arm, unread(modules)])),
+      classesUnread: Object.fromEntries(tree.map(({ arm, modules }) => [arm, unread(arm, modules)])),
+      modulesUnread: Object.fromEntries(handed.map(({ arm, modules }) => [arm, unwalked(arm, modules)])),
     };
   },
   async Q1(live) {
