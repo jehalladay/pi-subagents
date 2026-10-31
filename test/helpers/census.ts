@@ -5314,6 +5314,8 @@ function blockText(tokens: readonly Token[]): string {
       if (token.type === "html") return "";
       if (token.type === "code") return textOf(token);
       if (isList(token)) return token.items.map(item => blockText(childrenOf(item))).join(" ");
+      // A nested quote owns block children, not just inline tokens: its list's items also render.
+      if (token.type === "blockquote") return blockText(childrenOf(token));
       return childrenOf(token).length > 0 ? inlineText(childrenOf(token)) : decode(textOf(token));
     })
     .join(" ");
