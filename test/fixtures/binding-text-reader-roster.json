@@ -2,7 +2,7 @@
  "bead": "wb-jwc.10",
  "census": "test/workbench-rf-binding-text-reader-census.test.ts",
  "claim": "test/helpers/binding-text-reader.ts BINDING_TEXT_CLAIM",
- "note": "The falsifier roster: every row of the census, its anchor, and each pin with its page's digest (sha256/16) and the claim words its page falsifies. The census holds its rows, their pins and each pin's page to this file, in order.",
+ "note": "The falsifier roster: every row of the census, its anchor, and each pin with its page's digest (sha256/16) and the claim words its page plants, no wider; a NOT CLAIMED row's pin is its residual's quiet row. The census holds its rows, their pins and each pin's page to this file, in order.",
  "rows": [
   {
    "row": "S1",
@@ -147,6 +147,21 @@
      "pin": "A10",
      "page": "bd4719f6c7ced09c",
      "falsifies": "O:1399 U1(c) member a10: a const with an unresolvable initializer shadowing a resolvable same-named const reads opaque, not the outer text"
+    },
+    {
+     "pin": "SC-PATHS",
+     "page": "3991d4983ea4679e",
+     "falsifies": "P1's page read at a path ending .js, .cjs, .mjs, .jsx, .JS, .CJS, .MJS, .JSX and .Js parses as JavaScript (X and join read import), and at .ts, .cts, .mts, .tsx, .TS, .json, .d.ts, .js.txt and no extension as TypeScript (X reads its initializer, join destructuring); Y reads \"y\" at every path"
+    },
+    {
+     "pin": "M21",
+     "page": "d75e035c4e9d50e7",
+     "falsifies": "refusal #2 F5 mutant m21 (the reader cache keyed by text alone): its twin page t21.js, read first at a .js path, reads <opaque X:import>"
+    },
+    {
+     "pin": "M21-TS",
+     "page": "d75e035c4e9d50e7",
+     "falsifies": "the same page t21.js read next at a .ts path reads <opaque require(\"node:fs\")>: each path keeps its own reader"
     }
    ]
   },
@@ -162,7 +177,12 @@
     {
      "pin": "C-PATTERN",
      "page": "6f0f9df2d7032d98",
-     "falsifies": "an element of a destructuring pattern never resolves, even with a default: const object and array pattern elements and a let pattern element, each with a default, read <opaque NAME:destructuring>, never the default's text"
+     "falsifies": "const object and array pattern elements and a let object pattern element, each with a default, read <opaque NAME:destructuring>, never the default's text"
+    },
+    {
+     "pin": "C-JS-ALIAS",
+     "page": "dd5bf708ed8d9f39",
+     "falsifies": "in a JavaScript module a let, a var, an accessed require, a template specifier, a const in a function, an array pattern element and a defaulted object pattern element initialized by require read import; an exported, a parenthesized, a joined-argument, a two-argument, a module.require and a JSDoc-typed require declaration read their initializers, and a nested pattern's element reads destructuring"
     }
    ]
   },
@@ -208,7 +228,7 @@
     {
      "pin": "K-catch",
      "page": "611bd19b2f472b5f",
-     "falsifies": "catch: a catch clause variable"
+     "falsifies": "catch: an untyped catch clause variable, catch (X), reads <opaque X:catch>"
     },
     {
      "pin": "K-no-initializer",
@@ -248,7 +268,7 @@
     {
      "pin": "K-other",
      "page": "736158789dd52378",
-     "falsifies": "other: a declaration of any other kind (a synthetic type alias)"
+     "falsifies": "other: bindingKindOf on a synthetic type alias declaration reads other"
     },
     {
      "pin": "G01",
@@ -264,6 +284,16 @@
      "pin": "G09",
      "page": "b7f81187531e8b21",
      "falsifies": "refusal #1 U1i member g09 (a let or var exported from a namespace body reads namespace): its twin page t09 reads <opaque X:let> and <opaque Y:var>; namespace names only a const exported from a namespace body"
+    },
+    {
+     "pin": "M55",
+     "page": "9279434a239e0430",
+     "falsifies": "refusal #2 U1g member m55 (a typed catch variable read other): its twin page t55, catch (e: unknown), reads <opaque e:catch>"
+    },
+    {
+     "pin": "P1",
+     "page": "3991d4983ea4679e",
+     "falsifies": "refusal #2 U2 plant p1.js: in a JavaScript module a require const reads <opaque X:import>, a require pattern element <opaque join:import>, and a literal const \"y\""
     }
    ]
   },
@@ -289,7 +319,7 @@
     {
      "pin": "W-NESTED",
      "page": "a3d74edfb3cb49f9",
-     "falsifies": "at any depth of a with body (a script): inside a function declaration, a function expression, a class method, an object method, a with whose body is no block, a nested with, nested blocks and a with inside a function the const reads <opaque X:with>; whatever it binds: a let, an unbound name and a const declared inside the body read with; outside every with the const resolves"
+     "falsifies": "inside a with body at each planted depth - a function declaration, a function expression, a class method, an object method, a with whose body is no block, a nested with, nested blocks and a with inside a function - the const reads <opaque X:with>; a let, an unbound name and a const declared inside the body read with too; outside every with the const resolves"
     }
    ]
   },
@@ -300,7 +330,7 @@
     {
      "pin": "V-EVAL",
      "page": "4f56a5ea6d326840",
-     "falsifies": "a module calling eval by name reads every identifier as <opaque X:eval>"
+     "falsifies": "eval(\"1\") called as a statement in an exported function's body: the module's const X, probed at the top level, reads <opaque X:eval>"
     },
     {
      "pin": "V-WRAPPED",
@@ -330,12 +360,92 @@
     {
      "pin": "V-BARE",
      "page": "ef2878be4c039a49",
-     "falsifies": "a call of eval with no argument, inside a class method, counts, whatever each identifier binds: a parameter, a const, a let, an import and an unbound name each read <opaque NAME:eval>"
+     "falsifies": "eval() with no argument inside a class method counts: a parameter, a const, a let, an import and an unbound name each read <opaque NAME:eval>"
     },
     {
      "pin": "V-LOCAL",
      "page": "ec5d949e5bf14e05",
      "falsifies": "eval called through a local binding named eval (a sloppy script's parameter) is still a call of the identifier eval: the module's const reads <opaque X:eval>"
+    },
+    {
+     "pin": "M61",
+     "page": "11cf43be319baee9",
+     "falsifies": "refusal #2 U1a member m61 (an eval call in a with statement not counted): its twin page t61.js, whose only eval call is a with body's statement, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M62",
+     "page": "8997cb28b63915b9",
+     "falsifies": "refusal #2 U1a member m62 (an eval call inside an object literal not counted): its twin page t62, eval returned by an object literal's method, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M63",
+     "page": "cf9e0578e593732e",
+     "falsifies": "refusal #2 U1a member m63 (an eval call inside a template span not counted): its twin page t63, eval as a template substitution, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M64",
+     "page": "fc9d6a51bfbdfc13",
+     "falsifies": "refusal #2 U1a member m64 (an eval call inside an arrow function not counted): its twin page t64, eval as an arrow function's body, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M66",
+     "page": "8223ee89bf93e72e",
+     "falsifies": "refusal #2 U1a member m66 (only an expression statement's eval call counted): its twin page t66, eval as an exported const's initializer, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M72",
+     "page": "1d1ddd6664294ab7",
+     "falsifies": "refusal #2 U1a member m72 (an eval call inside a parameter not counted): its twin page t72, eval as a parameter default, reads <opaque X:eval>"
+    },
+    {
+     "pin": "M11",
+     "page": "1619e1f6855b5544",
+     "falsifies": "refusal #2 U1b member m11 (any callee whose name starts with eval counted): its twin page t11, whose only call is evaluate(\"1\"), reads \"a\""
+    },
+    {
+     "pin": "V-NAMES",
+     "page": "037698bf6cbb0b5a",
+     "falsifies": "calls of evaluate, preval, Eval, EVAL, ev and evalx are no call of eval: the const reads \"a\""
+    },
+    {
+     "pin": "V-STATIC",
+     "page": "e21778172e322b59",
+     "falsifies": "eval called in a class static block counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-FIELD",
+     "page": "b3839edc086946b8",
+     "falsifies": "eval as a class field's initializer counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-GETTER",
+     "page": "b6304654391aaccd",
+     "falsifies": "eval returned by an object literal getter counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-COMPUTED",
+     "page": "f3b7379fc1805593",
+     "falsifies": "eval as a computed property key counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-ENUM",
+     "page": "3d41b40886983272",
+     "falsifies": "eval as an enum member's initializer counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-RETURN",
+     "page": "f2ccd82977cb9490",
+     "falsifies": "eval returned from a function counts: the const reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-ARGUMENT",
+     "page": "5cafc55ec44752b1",
+     "falsifies": "eval as a call's argument counts: the const reads <opaque X:eval> and that argument <opaque eval(\"1\")>"
+    },
+    {
+     "pin": "V-DECORATOR",
+     "page": "19554415a339174b",
+     "falsifies": "an uncalled decorator @eval is no call: the const reads \"a\""
     }
    ]
   },
@@ -367,6 +477,11 @@
      "pin": "Y-BRANCH",
      "page": "2a9acb9ea6aaf58f",
      "falsifies": "the expression's other alternatives read as usual: a const whose true branch reaches itself reads <opaque C:cycle> | \"z\""
+    },
+    {
+     "pin": "Y-FORMS",
+     "page": "c3d8b50c58d4f2d8",
+     "falsifies": "a const reaching itself through each side of ??, || and &&, each of the six wrappers, a template's later substitution, the right side of + and a false branch reads <opaque NAME:cycle> at the repeated reach, its other alternatives as usual"
     }
    ]
   },
@@ -383,6 +498,11 @@
      "pin": "X-ESCAPES",
      "page": "b13c901dac0144fd",
      "falsifies": "each escape sequence reads as its character: \\x41 in a double-quoted, \\x42 in a single-quoted and \\x43 in a no-substitution template literal read A, B and C"
+    },
+    {
+     "pin": "X-ESCAPE-FORMS",
+     "page": "590aa92676ac0565",
+     "falsifies": "one literal's \\x41, \\u0042, \\u{43}, \\n, \\t, \\\\, \\\", \\' and \\0 read A, B, C, a newline, a tab, a backslash, a quote, an apostrophe and U+0000; an octal \\101 reads A; a line continuation reads nothing"
     }
    ]
   },
@@ -486,12 +606,32 @@
     {
      "pin": "X-OTHER",
      "page": "ff8dd88baf0020bc",
-     "falsifies": "a call, property and element accesses, a number, a tagged template and an assignment read opaque, whitespace runs as one space"
+     "falsifies": "a call, a property access, an element access, a number, a tagged template and an assignment read opaque, and a call's runs of a newline and spaces read as one space"
     },
     {
      "pin": "X-OTHER-FORMS",
      "page": "ed7941fdfe66b2b6",
      "falsifies": "each of these reads one <opaque TEXT>: a comma expression, the compound assignments +=, ||=, ??= and &&=, the binary operators - and ===, void, typeof, a prefix !, a postfix ++, delete, an instantiation expression, an optional property access, an optional element access, an optional call, a new expression, null, true, false, this, a bigint, a regular expression, an arrow function, an object literal and an array literal"
+    },
+    {
+     "pin": "X-OPERATORS",
+     "page": "6e8d9f832728ebf5",
+     "falsifies": "each binary operator but +, ??, || and && (* / % ** - << >> >>> < > <= >= instanceof in == != === !== & | ^ and the comma) and each plain or compound assignment reads one <opaque TEXT>"
+    },
+    {
+     "pin": "X-UNARY",
+     "page": "2a89b0d07fed36b9",
+     "falsifies": "prefix -, +, ~, !, ++ and --, postfix ++ and --, typeof, void and delete each read one <opaque TEXT>"
+    },
+    {
+     "pin": "X-KINDS",
+     "page": "9e8cf471905a198d",
+     "falsifies": "a function expression, a class expression, a spread argument, import.meta, yield, new.target, an instantiation expression, a property access through a non-null ! and a property of super each read one <opaque TEXT>"
+    },
+    {
+     "pin": "X-WHITESPACE",
+     "page": "7638549f0168ecbd",
+     "falsifies": "a run of all 25 characters JavaScript's \\s class matches reads as one space in an opaque TEXT; U+0085 and U+200B stay"
     }
    ]
   },
@@ -574,7 +714,17 @@
     {
      "pin": "X-ORDER",
      "page": "0127821fa22acf63",
-     "falsifies": "alternatives are in source order, a true branch's and a left side's first, combinations by their parts, each once"
+     "falsifies": "a conditional's true branch reads first; a conditional of one text twice reads it once; a + join's combinations read by its parts, the first part varying slowest; an opaque part repeated in a ?? chain reads once"
+    },
+    {
+     "pin": "M06",
+     "page": "245acc7e88c7af0c",
+     "falsifies": "refusal #2 U1c member m06 (once() keyed by the bare label): its twin page t06, c ? \"f()\" : f(), reads \"f()\" | <opaque f()>: a text and an opaque part with one label are two alternatives"
+    },
+    {
+     "pin": "X-ONCE",
+     "page": "29497fd3e40186a8",
+     "falsifies": "a + join and a template whose combinations meet read each text once (\"abc\" | \"ac\" | \"abbc\"); a conditional and a ?? of an opaque f() and the text \"f()\" read both"
     }
    ]
   },
@@ -596,12 +746,57 @@
     {
      "pin": "XW-WORDS",
      "page": "8dd3d5171b8ea99e",
-     "falsifies": "words split at whitespace, quotes and shell operators, base names with .exe and .cmd dropped in either case, each once, and unresolved for an opaque alternative"
+     "falsifies": "a path and .EXE reduce to rf; ; | ( ) > < and & split context, render, tee, log, out, in and bg; a quote at a word's end (' \" and `) splits q, d and b; a Windows path with .cmd reduces to rf; a conditional's two texts read their words each once, in order (rf x y); an opaque alternative reads unresolved"
     },
     {
      "pin": "XW-FORMS",
      "page": "1928d101612b5975",
      "falsifies": "a tab and a newline split words; a relative path and a Windows path reduce to their base names; .CMD and .Exe drop in either case; a .exe that is not trailing (z.exe.bak) stays"
+    },
+    {
+     "pin": "M59",
+     "page": "ae86fcf35be7d259",
+     "falsifies": "refusal #2 U1h member m59 (a quote inside a word kept): its twin page t59, \"rf con'text\", reads rf con text"
+    },
+    {
+     "pin": "M68",
+     "page": "07241edb496a4a81",
+     "falsifies": "refusal #2 U1h member m68 (= splits a word): its twin page t68 reads rf --workspace=root"
+    },
+    {
+     "pin": "M69",
+     "page": "bb6dd59e1d5c83cb",
+     "falsifies": "refusal #2 U1h member m69 (, splits a word): its twin page t69 reads rf a,b"
+    },
+    {
+     "pin": "M34",
+     "page": "e3a2567ae8ebc277",
+     "falsifies": "refusal #2 U1h member m34 (the empty word a cut leaves dropped): its twin page t34, \"rf .EXE x\", reads rf, the empty word and x (rf  x)"
+    },
+    {
+     "pin": "P2",
+     "page": "309b407fefbe644c",
+     "falsifies": "refusal #2 F4 plant p2.ts: the words of \"rf bin/ C:\\\\tools\\\\\" read rf and the empty word (rf ): a word ending in / or \\ cuts to the empty word"
+    },
+    {
+     "pin": "XW-WHITESPACE",
+     "page": "729b77af153ae821",
+     "falsifies": "a run of all 25 characters JavaScript's \\s class matches splits rf from x; U+0085 and U+200B split nothing"
+    },
+    {
+     "pin": "XW-PUNCTUATION",
+     "page": "f1e0bd6f238ed873",
+     "falsifies": "no other printable ASCII character splits a word: rf, then ! # $ % * + , - . : = ? @ [ ] ^ _ { } ~, every letter and every digit as one word"
+    },
+    {
+     "pin": "XW-QUOTES",
+     "page": "0efc80f079e3fec0",
+     "falsifies": "a quote inside a word splits it, each of \" ` and ': a\"b, c`d and e'f read a b, c d and e f"
+    },
+    {
+     "pin": "XW-CUTS",
+     "page": "4bf62cabfd695a87",
+     "falsifies": "a/b cuts to b and c\\d to d; e/, f\\, .EXE and x/.cmd each cut to the empty word; each word once: rf b d and the empty word"
     }
    ]
   },
@@ -628,6 +823,16 @@
      "pin": "XP-FORMS",
      "page": "1d4c658da1e9505c",
      "falsifies": "first words are sorted and each once; an empty or blank program, a call and a parameter read opaque; a base name, a shell line and a const read"
+    },
+    {
+     "pin": "P2-PROGRAM",
+     "page": "309b407fefbe644c",
+     "falsifies": "refusal #2 F4 plant p2.ts: spawn(\"/usr/bin/rf/\") reads the empty first word (spawn:)"
+    },
+    {
+     "pin": "XP-CUTS",
+     "page": "a71f653e19fcf17e",
+     "falsifies": "the program a=b,c reads its one word; .EXE, /usr/bin/rf/ and x/.cmd y read the empty first word"
     }
    ]
   },
@@ -638,7 +843,7 @@
     {
      "pin": "XF-KEYS",
      "page": "c78a66a5d3990908",
-     "falsifies": "a string literal key and a computed string literal key set their fields"
+     "falsifies": "a string literal key and a computed string literal key set their fields, and a numeric key sets its own field only"
     },
     {
      "pin": "XF-SHORTHAND",
@@ -663,7 +868,7 @@
     {
      "pin": "XF-ORDER",
      "page": "cb08b99cc78c3319",
-     "falsifies": "a later member overrides, and a field an opaque member may set after its last setting reads opaque"
+     "falsifies": "a property set before an opaque spread is relabelled by it (id reads <opaque ...g()>) and a property after it sets its field again (effectClass reads read); of two properties of one name the later wins (reactivefiber.r:write)"
     },
     {
      "pin": "XF-DEPTH",
@@ -684,6 +889,21 @@
      "pin": "XF-ACCESSOR-KEYS",
      "page": "e5c45db8c1cce667",
      "falsifies": "a method with a string literal key, and a getter or setter with a computed string, parenthesized string or no-substitution template key, each make their own field opaque: effectClass reads <opaque LABEL>, the member's label, and id still reads"
+    },
+    {
+     "pin": "M19",
+     "page": "215ee1ce1504d191",
+     "falsifies": "refusal #2 U1f member m19 (a resolved spread after an opaque one left the opaque label): its twin page t19 reads reactivefiber.r:read: the later resolved spread sets effectClass"
+    },
+    {
+     "pin": "M26",
+     "page": "3442717aacef4e75",
+     "falsifies": "refusal #2 U1f member m26 (an unset field kept the first opaque label): its twin page t26, { ...a, ...b, id }, reads <opaque ...b>, the last such member's label"
+    },
+    {
+     "pin": "XF-OVERRIDES",
+     "page": "ad039ce3d0c86122",
+     "falsifies": "the override matrix read by registration(), object by object: effectClass set by a property, a resolved spread, an opaque spread, an accessor or method, or a computed non-literal key, then by another of these; the later member wins, and an opaque member labels every field it may set, the last one's label kept (d3 and d5: a method's field relabelled by a later spread or computed key)"
     }
    ]
   },
@@ -714,7 +934,87 @@
     {
      "pin": "XR-FORMS",
      "page": "6a8fcdd52b392fdc",
-     "falsifies": "no id text starting reactivefiber. and a reactivefiber field that is no id register nothing; <none>, effectClass alternatives sorted and joined, and one entry per id text"
+     "falsifies": "the id texts forge.render.commit, an opaque-only id and a reactivefiber field that is no id register nothing; no effectClass reads <none>; effectClass alternatives read sorted and joined (read|write), an opaque one as <opaque p:parameter>; two id texts read one entry each; a conditional of one effect text twice reads it once"
+    },
+    {
+     "pin": "M12",
+     "page": "8db06d76ef52922e",
+     "falsifies": "refusal #2 U1d member m12 (an id text containing reactivefiber. admitted): its twin page t12, forge.reactivefiber.commit beside an opaque p, registers nothing"
+    },
+    {
+     "pin": "M13",
+     "page": "8cdc88f90daf8a12",
+     "falsifies": "refusal #2 U1d member m13 (an entry starting reactivefiber without the dot kept): its twin page t13 reads reactivefiber.a:read alone"
+    },
+    {
+     "pin": "M14",
+     "page": "063a81d5e278223e",
+     "falsifies": "refusal #2 U1d member m14 (an id text starting reactivefiber without the dot admitted): its twin page t14, reactivefiberx.b beside an opaque p, registers nothing"
+    },
+    {
+     "pin": "M15",
+     "page": "6f548c1b9811f1ce",
+     "falsifies": "refusal #2 U1e member m15 (registration()'s per-object sort dropped): its twin page t15 read by registration() gives reactivefiber.a:read, reactivefiber.b:read, sorted"
+    },
+    {
+     "pin": "XR-PREFIXES",
+     "page": "20f0d6d2c85a0f7b",
+     "falsifies": "reactivefiber, reactivefiberx.b, forge.reactivefiber.c, ReactiveFiber.d and \" reactivefiber.e\" register nothing, nor do reactivefiberx.g, forge.reactivefiber.h, ReactiveFiber.k, \" reactivefiber.l\" and reactivefiber beside an opaque p; reactivefiber. alone registers; reactivefiberx.i and reactivefiber beside a reactivefiber. text add no entry"
+    }
+   ]
+  },
+  {
+   "row": "eval-position",
+   "anchor": "claim: NOT CLAIMED (1)",
+   "pins": [
+    {
+     "pin": "Q-EVAL-POSITION",
+     "page": "49de5761e7f81b25",
+     "falsifies": "NAMED RESIDUAL eval-position, not claimed: eval in a switch statement's head; today the const reads <opaque X:eval>"
+    }
+   ]
+  },
+  {
+   "row": "alias-form",
+   "anchor": "claim: NOT CLAIMED (2)",
+   "pins": [
+    {
+     "pin": "Q-ALIAS-FORM",
+     "page": "02af42170aa0e125",
+     "falsifies": "NAMED RESIDUAL alias-form, not claimed: (0, require)(\"node:fs\") in a JavaScript module; today it reads its initializer"
+    }
+   ]
+  },
+  {
+   "row": "path-form",
+   "anchor": "claim: NOT CLAIMED (3)",
+   "pins": [
+    {
+     "pin": "Q-PATH-FORM",
+     "page": "3991d4983ea4679e",
+     "falsifies": "NAMED RESIDUAL path-form, not claimed: P1's page at a path ending .Mjs; today it parses as JavaScript"
+    }
+   ]
+  },
+  {
+   "row": "expression-form",
+   "anchor": "claim: NOT CLAIMED (4)",
+   "pins": [
+    {
+     "pin": "Q-EXPRESSION-FORM",
+     "page": "af06e0f7765d0f4c",
+     "falsifies": "NAMED RESIDUAL expression-form, not claimed: a JSX element and a JSX fragment in a .tsx module; today each reads one <opaque TEXT>"
+    }
+   ]
+  },
+  {
+   "row": "character-form",
+   "anchor": "claim: NOT CLAIMED (5)",
+   "pins": [
+    {
+     "pin": "Q-CHARACTER-FORM",
+     "page": "d640076fbb9064a1",
+     "falsifies": "NAMED RESIDUAL character-form, not claimed: a word holding the letter U+00E9; today it stays in its word"
     }
    ]
   }
