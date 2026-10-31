@@ -41,7 +41,15 @@
  *      these 11 kinds are the bodies this file calls closed; its exported ENVELOPE_KEYS constant, which the 27 shipped modules spell
  *      once in protocol/decoder.js, at its declaration, and once in index.js, in its re-export, and nowhere else; its 3
  *      EMPTY_BODY_KINDS and its EVIDENCE_STATUSES. No declared name (a kind, a key or a status) holds a tier, and that reading fires
- *      on a copy of the tables holding a tier name in each of those five places. THE BYTES: the installed package's package.json and
+ *      on a copy of the tables holding a tier name in each of those five places. THE SAME VIEW (wb-b9ot): the package the cases
+ *      read is the one this file executes, the repository's installed copy. SDK_DIST, the dist/ directory this file's own import
+ *      of '@hyperunix/sdk' resolves to (import.meta.resolve: Node's resolution from test/, where a git-ignored test/node_modules
+ *      copy would resolve first), is SDK_INSTALLED (../node_modules/@hyperunix/sdk/dist/), compared by real path; each of the
+ *      five functions this file imports from the package (decodeResultStream, assembleQueryResult, evidenceOf, resultFromJson and
+ *      resultToJson, which with ProtocolError are every value its own import declaration names, read with the TypeScript parser)
+ *      raises, called on null, from its own frame in SDK_DIST's result.js; and a decoder refusal is this file's
+ *      ProtocolError raised from StreamChecker.fail in SDK_DIST's protocol/decoder.js (a test-config alias, which Node's
+ *      resolution does not see, raises from the aliased copy's modules). THE BYTES: the installed package's package.json and
  *      its 27 shipped modules equal SDK_BYTES, one sha256 each, so a change to any of them (a table, a refusal site or any other
  *      line) reds T2. PROBED through decodeResultStream: each closed body refuses each of the 12
  *      TIER_MEMBERS under each of the 11 TIER_VALUES (the ten words and their list) as SDK_PROTOCOL_MALFORMED at body.<member>
@@ -92,7 +100,11 @@
  *      topology, live-invariant verdict and native evidence below, the baseline the on-landing toStrictEqual compares against.
  *   Q  the residuals' quiet rows (RESIDUALS below): the title names exactly the table's seven families; the frozen shape pins each
  *      row's id, the names of its pins and the length of its family label; the table holds one family per measured gap
- *      (GAP_WITNESSES, which name no family); and each quiet row reads exactly its frozen reading.
+ *      (GAP_WITNESSES, which name no family); each quiet row reads exactly its frozen reading; and, anchored outside the table
+ *      and its witness list (wb-b9ot), each of the decoder module's unknown-key refusals that T2 reads no key set from (measured
+ *      from the module) and each kind of facet the adapter relays (measured from the adapter) is a string one of those frozen
+ *      readings holds, so R-ACCEPTANCE or R-VALUE removed with its witness and its gap still reds there (the other five families'
+ *      gaps are anchored by the witness list alone).
  * T1-T4, R0 and R1 assert today's tier-blindness and are re-pinned by the on-landing leg (each failure message names it); A1, A2 and
  * P1 assert only the licence axis and the pre-landing snapshot, which the statement and its acceptance keep unchanged at landing.
  * RESIDUALS (named, each with its pinned quiet row in Q; a quiet row reds when its family stops reading quiet, and the family is
@@ -112,8 +124,14 @@
  *      beyond its probes is R-ACCEPTANCE's; the type walk, the name and code scans, the roster and the placements do not see it.
  *      Quiet row: the same four surfaces as R-SPELLING's, with the same readings.
  *   R-VALUE a tier word as the value of a field a reader reads (the view, a listed provider's version, a conflict code, an incomplete
- *      region's scope and target, the execution id). Quiet row: each is relayed by its own field's meaning (its facet, the native
- *      id) and the licence axis does not move.
+ *      region's scope and target, the execution id, and every other string a reader reads). Quiet row: each of the first five is
+ *      relayed by its own field's meaning (its facet, the native id) and the licence axis does not move; and (wb-b9ot) at each of
+ *      the 17 strings the complete full reading holds at a path READS names (the contract, representation, operation, batch id,
+ *      execution kind, diagnostic code, view, incomplete region's target and scope, support id, derivation handle, listed provider
+ *      and its version, execution id, workspace root, runtime version and runtime digest), under each licence, each of the ten
+ *      TIER_WORDS moves, against its reversed word, exactly the outputs (the projection or its refusal, the live verdict and the
+ *      native evidence, read by label, not by value) that the neutral word moves against its own: the site's echoes, none or the
+ *      field's own relays.
  *   R-UNSEEN-READING a reading outside the 104 base readings and the live twin (other row, certificate, provider, sidecar-frame or
  *      diagnostic counts), a read gated on such a reading included when its member's name is never spelled in code (built at run
  *      time), which neither R0's traced reads nor its code scan reaches. Quiet row: a held-out reading with two of each is read
@@ -144,12 +162,15 @@
  * pinned literally, QUALIFIERS and TIER_MEMBERS deriving from the quoted GC-D13 and statement texts. LIVENESS: each judgment is one
  * function a control shows can fire: moved() (a changed runtime digest moves every base reading's outputs and axis, and the twin's),
  * departure() (an open body departs from a refusal, a closed one from a decode), the placement control (every cell carries what it
- * names), promotion() (the licensed complete readings, and an unlicensed reading judged as licensed, flag each of its seven clauses)
- * and the instrument's four stand-ins. Pure: no HX binary, scratch directory, clock, network or file write; the files read are the
- * installed SDK's package.json, shipped declaration files and modules, and the three READER_MODULES. Display paths added: none
- * (test-only). */
+ * names), promotion() (the licensed complete readings, and an unlicensed reading judged as licensed, flag each of its seven clauses),
+ * the instrument's four stand-ins, firstFrame() (a frame in another copy reads as its own URL, one in this copy by its path from
+ * SDK_DIST), differing() (a changed leaf, an added member and a longer list each read by label), valueEchoes()'s deviating judge
+ * (a stand-in reader promoting on a lower tier word as the runtime version deviates at exactly those cells) and unheld() (with no
+ * residual, every unread refusal and relayed facet kind is unheld). Pure: no HX binary, scratch directory, clock, network or file write; the files read
+ * are the installed SDK's package.json, shipped declaration files and modules, and the three READER_MODULES (and the real paths
+ * of SDK_DIST and SDK_INSTALLED). Display paths added: none (test-only). */
 import {createHash} from 'node:crypto';
-import {readdirSync, readFileSync} from 'node:fs';
+import {readdirSync, readFileSync, realpathSync} from 'node:fs';
 import {isDeepStrictEqual} from 'node:util';
 import {
   assembleQueryResult, type ClaimBody, type Coverage, type CoverageSummary, decodeResultStream, type EvidenceSummary, type ExecutionStatus,
@@ -180,7 +201,12 @@ const context: HyperUnixTopologyContext = {scope: SCOPE, target: {kind: 'hx.fs/r
 const invokedContext: HyperUnixTopologyContext = {...context, invocationId: 'wf_hx_tz2.12',
   operationRef: {provider: 'pi-workflow', type: 'node-call', id: 'wf_hx_tz2.12:0'}};
 const CAPABILITY_CONTEXT = {grants: ['hyperunix:read'], signal: new AbortController().signal};
-const SDK_DIST = new URL('../node_modules/@hyperunix/sdk/dist/', import.meta.url);
+/** Where npm ci installs the package: the repository root's node_modules/@hyperunix/sdk (package-lock.json's entry). */
+const SDK_INSTALLED = new URL('../node_modules/@hyperunix/sdk/dist/', import.meta.url);
+/** The dist/ directory of the package this file's own import of '@hyperunix/sdk' resolves to (import.meta.resolve: Node's resolution
+ * from test/, so a git-ignored test/node_modules copy would resolve first). Every read of the package below reads it; T2 holds it to
+ * SDK_INSTALLED and holds the functions this file imports to its modules (THE SAME VIEW). */
+const SDK_DIST = new URL('./', import.meta.resolve('@hyperunix/sdk'));
 
 /** The statement this leg holds before its trigger, verbatim (the bead's title). */
 const STATEMENT = 'When a GC-D13 ADR plus an SDK result field carry provider evidence tiers (14-decisions-and-migration.md:19@6ed14cab8d; '
@@ -222,6 +248,8 @@ const QUIET = 'wb-tz2.12 residual: its family stopped reading quiet; promote it 
 const BYTES_MOVED = 'wb-tz2.12: the installed @hyperunix/sdk runtime bytes moved; if the SDK now carries a provider evidence tier, '
   + 'build the on-landing leg first, else re-read the decoder (its tables, refusal sites and envelope keys: R-ACCEPTANCE, wb-tz2.18) '
   + 'before re-pinning SDK_BYTES';
+const SAME_VIEW = "wb-b9ot: the @hyperunix/sdk this file executes is not the repository's installed copy (a test/node_modules copy or a "
+  + 'test-config alias resolved first); SDK_BYTES and every decoder reading pin the installed copy, so remove the other copy and re-read';
 
 /** The words of a name: split at each run of characters other than letters and digits, at each lower-to-upper camelCase step and
  * inside an upper run before its last capital (XTier), each word lowercased. */
@@ -641,6 +669,30 @@ const sdkBytes = (): Record<string, string> => ({'package.json': sha256(readFile
 /** How many times each shipped module spells a text, the modules that never spell it left out. */
 const spelledIn = (text: string): Record<string, number> => Object.fromEntries(shippedModules()
   .map(name => [name, readFileSync(new URL(name, SDK_DIST), 'utf8').split(text).length - 1] as const).filter(([, count]) => count > 0));
+/** The first frame of a stack, as its function and its module: a module under SDK_DIST by its path from there, any other by its own
+ * URL; a first frame of another form is reported whole. */
+function firstFrame(stack: string): string {
+  const frame = stack.split('\n').find(line => line.startsWith('    at ')) ?? 'no frame';
+  const match = frame.match(/^ {4}at (\S+) \((file:\/\/\/[^)]+):\d+:\d+\)$/);
+  if (match === null) return `unread: ${frame.trim()}`;
+  return `${match[1]} ${match[2].startsWith(SDK_DIST.href) ? match[2].slice(SDK_DIST.href.length) : match[2]}`;
+}
+/** Where a call raises from: the first frame of what it throws. */
+function raisedFrom(call: () => unknown): string {
+  const error = thrown(call);
+  return error instanceof Error ? firstFrame(error.stack ?? '') : `not an Error: ${String(error)}`;
+}
+/** The value bindings this file imports from '@hyperunix/sdk': its own import declaration, read with the TypeScript parser, type-only
+ * names left out. */
+function sdkBindings(): string[] {
+  const source = ts.createSourceFile('self.ts', readFileSync(new URL(import.meta.url), 'utf8'), ts.ScriptTarget.Latest, true);
+  return source.statements.filter(ts.isImportDeclaration)
+    .filter(statement => ts.isStringLiteral(statement.moduleSpecifier) && statement.moduleSpecifier.text === '@hyperunix/sdk')
+    .flatMap(statement => {
+      const bindings = statement.importClause?.namedBindings;
+      return bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.filter(element => !element.isTypeOnly).map(element => element.name.text) : [];
+    });
+}
 /** The installed @hyperunix/sdk's runtime bytes, one sha256 each: its package.json and its 27 shipped modules. T2 fails closed over
  * them: a changed byte reds T2. */
 const SDK_BYTES: Readonly<Record<string, string>> = {
@@ -902,6 +954,66 @@ async function familyQuiet(names: readonly string[]): Promise<JsonValue> {
   return {refusedBy: refusedBy(names), roundTripCarried, roundTripOther, live, readers};
 }
 
+/** A reading with the value at a path replaced: the nodes on the path are copied, every other node is shared with the reading. */
+function valued(value: JsonValue, path: Path, leaf: JsonValue): JsonValue {
+  if (path.length === 0) return leaf;
+  const [step, ...rest] = path;
+  if (typeof step === 'number') {
+    const list = [...asList(value)];
+    list[step] = valued(list[step], rest, leaf);
+    return list;
+  }
+  const node = asRecord(value);
+  return {...node, [step]: valued(node[step], rest, leaf)};
+}
+/** A path as READS writes it: members joined by '.', each list index written []. */
+const readLabel = (path: Path): string => path.map((step, index) => typeof step === 'number' ? '[]' : index === 0 ? step : `.${step}`).join('');
+/** The paths of a reading's strings that a reader reads (a path READS names for one of the three readers), in walk order. */
+function readStrings(reading: JsonValue): Path[] {
+  const reads = new Set(READER_NAMES.flatMap(reader => READS[reader]));
+  const walk = (value: JsonValue, path: Path): Path[] => {
+    if (typeof value === 'string') return reads.has(readLabel(path)) ? [path] : [];
+    if (Array.isArray(value)) return value.flatMap((item, index) => walk(item, [...path, index]));
+    if (value === null || typeof value !== 'object') return [];
+    return Object.entries(value).flatMap(([key, child]) => walk(child, [...path, key]));
+  };
+  return walk(reading, []);
+}
+/** The leaves at which two JSON values differ, by label: a member or element only one of them holds included. */
+function differing(a: JsonValue | undefined, b: JsonValue | undefined, path: Path = []): string[] {
+  if (isDeepStrictEqual(a, b)) return [];
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return Array.from({length: Math.max(a.length, b.length)}, (_, index) => differing(a[index], b[index], [...path, index])).flat();
+  }
+  if (a !== null && b !== null && typeof a === 'object' && typeof b === 'object' && !Array.isArray(a) && !Array.isArray(b)) {
+    return [...new Set([...Object.keys(a), ...Object.keys(b)])].flatMap(key => differing(a[key], b[key], [...path, key]));
+  }
+  return [label(path)];
+}
+/** The word of a tier word's length and characters that is no tier word: the word reversed. */
+const reversedWord = (word: string): string => [...word].reverse().join('');
+/** A word that is neither a tier word nor holds one: the baseline each string read site's echoes are measured with. */
+const NEUTRAL_WORD = 'neutral';
+/** What a word at each string a reader reads moves: at each string read site of the complete full reading under each licence, the
+ * outputs (by default the three readers': the projection or its refusal, the live verdict and the native evidence) the neutral word
+ * moves against its reversed word (the site's echoes), and every site and tier word whose word moves other outputs against its own
+ * reversed word (deviating). */
+async function valueEchoes(outputs: (reading: JsonValue) => unknown = outputsOf): Promise<{echoes: Json; deviating: string[]}> {
+  const echoes: Json = {};
+  const deviating: string[] = [];
+  for (const licensed of LICENCES) {
+    const reading = deepFrozen(await provided(baseDocument('complete', licensed, 'full')));
+    for (const path of readStrings(reading)) {
+      const site = `${licensed ? 'licensed' : 'unlicensed'} ${readLabel(path)}`;
+      const movedBy = (word: string): string[] =>
+        differing(json(outputs(valued(reading, path, word))), json(outputs(valued(reading, path, reversedWord(word)))));
+      const neutral = movedBy(NEUTRAL_WORD);
+      echoes[site] = neutral;
+      for (const word of TIER_WORDS) if (!isDeepStrictEqual(movedBy(word), neutral)) deviating.push(`${site} ${word}`);
+    }
+  }
+  return {echoes, deviating};
+}
 /** A named residual family and its quiet row: the reading the row measures today, which reds when the family stops reading quiet
  * (its family is then promoted to a pinned case). */
 interface Residual {
@@ -917,7 +1029,7 @@ const RESIDUALS: readonly Residual[] = [
   {id: 'R-SYNONYM', family: 'a tier carried under a name that holds no tier word (SYNONYMS: level, grade, rank, evidence_level, evidencetier): the word scans and the roster do not see it',
     quiet: () => familyQuiet(SYNONYMS),
     reading: {refusedBy: [11, 11, 11, 11, 11], roundTripCarried: [...CARRIED], roundTripOther: [], live: [], readers: []}},
-  {id: 'R-VALUE', family: "a tier word as the value of a field a reader reads (the view, a listed provider's version, a conflict code, an incomplete region's scope and target, the execution id): each is read by its own field's meaning",
+  {id: 'R-VALUE', family: "a tier word as the value of a field a reader reads (the view, a listed provider's version, a conflict code, an incomplete region's scope and target, the execution id, and every other string a reader reads: the 17 string read sites of the complete full reading): each is read by its own field's meaning",
     quiet: async () => {
       const document = baseDocument('complete', false, 'full');
       document.view = 'Contextual';
@@ -927,13 +1039,53 @@ const RESIDUALS: readonly Residual[] = [
       document.execution_id = 'Inventory';
       const reading = await provided(document);
       const reference = await provided(baseDocument('complete', false, 'full'));
+      // Every other string a reader reads (wb-b9ot, gate plant GP-VAL): at each string read site of the complete full reading under
+      // each licence, each tier word moves, against its reversed word, exactly the outputs a neutral word moves against its own.
+      const {echoes, deviating} = await valueEchoes();
       return json({facets: hyperunixTopology(reading, context).facets, axisMoved: moved(axisOf, reading, axisOf(reference)),
-        native: nativeEvidence('hyperunix.find', reading)});
+        native: nativeEvidence('hyperunix.find', reading), echoes, deviating});
     },
     reading: {facets: [{kind: 'view', view: 'Contextual'}, {kind: 'provider-version', provider: 'hx.fs/builtin', version: 'Parsed'},
       {kind: 'conflict', code: 'HX-CONTEXTUAL-TIER-CONFLICT'}, {kind: 'incomplete-region', scope: 'Contextual', target: 'Parsed'}],
       axisMoved: false, native: {provider: 'hyperunix', nativeId: 'Inventory', domainStatus: 'complete',
-        evidenceRefs: ['hx-fs/b1/s1', 'hx-fs/b1/s1/dependency[0]:file:c3Jj']}}},
+        evidenceRefs: ['hx-fs/b1/s1', 'hx-fs/b1/s1/dependency[0]:file:c3Jj']},
+      echoes: {
+        'licensed contract': [],
+        'licensed source.representation': [],
+        'licensed source.operation': ['projection.snapshots[0].source.id', 'projection.snapshots[0].node.title', 'projection.diagnostics[0]'],
+        'licensed source.coverage[].batch_id': ['projection.snapshots[0].source.id', 'projection.snapshots[0].evidenceRefs[1]'],
+        'licensed source.execution_status.kind': ['native.domainStatus'],
+        'licensed source.diagnostics[].code': [],
+        'licensed source.view': ['projection.facets[0].view'],
+        'licensed source.coverage_summary.incomplete_regions[].target': ['projection.facets[3].target'],
+        'licensed source.coverage_summary.incomplete_regions[].scope': ['projection.facets[3].scope'],
+        'licensed source.evidence.support_ids[]': ['native.evidenceRefs[0]'],
+        'licensed source.evidence.derivation_handles[]': ['native.evidenceRefs[1]'],
+        'licensed source.evidence.providers[]': [],
+        'licensed source.evidence.provider_versions.hx.fs/builtin': ['projection.facets[1].version'],
+        'licensed source.execution_id': ['native.nativeId'],
+        'licensed workspaceRoot': [],
+        'licensed runtime.version': ['projection.snapshots[0].sourceVersion'],
+        'licensed runtime.binarySha256': [],
+        'unlicensed contract': [],
+        'unlicensed source.representation': [],
+        'unlicensed source.operation': ['projection.snapshots[0].source.id', 'projection.snapshots[0].node.title', 'projection.diagnostics[0]'],
+        'unlicensed source.coverage[].batch_id': ['projection.snapshots[0].source.id', 'projection.snapshots[0].evidenceRefs[1]'],
+        'unlicensed source.execution_status.kind': ['native.domainStatus'],
+        'unlicensed source.diagnostics[].code': [],
+        'unlicensed source.view': ['projection.facets[0].view'],
+        'unlicensed source.coverage_summary.incomplete_regions[].target': ['projection.facets[3].target'],
+        'unlicensed source.coverage_summary.incomplete_regions[].scope': ['projection.facets[3].scope'],
+        'unlicensed source.evidence.support_ids[]': ['native.evidenceRefs[0]'],
+        'unlicensed source.evidence.derivation_handles[]': ['native.evidenceRefs[1]'],
+        'unlicensed source.evidence.providers[]': [],
+        'unlicensed source.evidence.provider_versions.hx.fs/builtin': ['projection.facets[1].version'],
+        'unlicensed source.execution_id': ['native.nativeId'],
+        'unlicensed workspaceRoot': [],
+        'unlicensed runtime.version': ['projection.snapshots[0].sourceVersion'],
+        'unlicensed runtime.binarySha256': [],
+      },
+      deviating: []}},
   {id: 'R-UNSEEN-READING', family: 'a reading outside the 104 base readings and the live twin (more rows, certificates, listed providers, sidecar frames or diagnostics)',
     quiet: async () => {
       const document = baseDocument('complete', false, 'full');
@@ -1032,6 +1184,18 @@ const GAP_WITNESSES: readonly (() => Promise<number>)[] = [
   },
   async () => unreadRefusals().length,
 ];
+/** Every string a JSON value holds, at any depth. */
+const stringsOf = (value: JsonValue): string[] => typeof value === 'string' ? [value] : Array.isArray(value) ? value.flatMap(stringsOf)
+  : value !== null && typeof value === 'object' ? Object.values(value).flatMap(stringsOf) : [];
+/** The kinds of the facets the adapter relays from the complete licensed full reading, measured from the adapter. */
+const relayedFacetKinds = async (): Promise<string[]> =>
+  (hyperunixTopology(await provided(baseDocument('complete', true, 'full')), context).facets ?? []).map(facet => facet.kind);
+/** The measured gap items that none of the given residuals' frozen readings holds as a string: the decoder module's unknown-key
+ * refusals that T2 reads no key set from, and the kinds of the facets the adapter relays. */
+async function unheld(residuals: readonly Residual[]): Promise<{refusals: string[]; facets: string[]}> {
+  const held = new Set(residuals.flatMap(residual => stringsOf(residual.reading)));
+  return {refusals: unreadRefusals().filter(message => !held.has(message)), facets: (await relayedFacetKinds()).filter(kind => !held.has(kind))};
+}
 /** A read is inside the adapter's consumed-field manifest when it is a manifest field or a container on the way to one, a member
  * read below a '.*' map field included (test/workbench-hyperunix-consumed-fields.test.ts inside()). */
 const inManifest = (read: string): boolean => HYPERUNIX_CONSUMED_FIELDS.some(({path}) => path === read || path.startsWith(`${read}.`)
@@ -1185,7 +1349,31 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       .toStrictEqual(['supportIds', 'evidenceClasses', 'derivationHandles', 'providers', 'providerVersions']);
   });
 
-  it('T2: read as declarations, never as what the decoder accepts, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export) and its 3 empty-body kinds are exactly these and hold no tier, and the package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
+  it('T2: read as declarations, never as what the decoder accepts, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export) and its 3 empty-body kinds are exactly these and hold no tier, the package this file imports @hyperunix/sdk from is the installed copy (its import resolves there, and each function it imports and a decoder refusal raise from its modules) and its package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
+    // THE SAME VIEW (wb-b9ot, gate plant G13): the package these cases read is the one this file executes. Its import resolves to
+    // the installed copy (a git-ignored test/node_modules copy would resolve first; real paths, so a symlinked node_modules reads as
+    // its target); each function it imports raises, called on null, from its own frame in that copy's result.js; and a decoder
+    // refusal is this file's ProtocolError raised from StreamChecker.fail in its protocol/decoder.js (a test-config alias, which
+    // import.meta.resolve does not see, raises from the aliased copy's modules).
+    expect(realpathSync(SDK_DIST), SAME_VIEW).toBe(realpathSync(SDK_INSTALLED));
+    const refusal = thrown(() => decodeResultStream(envelopeStream({unknown_key: 'r1'})));
+    expect([refusal instanceof ProtocolError, refusal instanceof Error ? firstFrame(refusal.stack ?? '') : 'not an Error'], SAME_VIEW)
+      .toStrictEqual([true, 'StreamChecker.fail protocol/decoder.js']);
+    const raised: Record<string, string> = {
+      decodeResultStream: raisedFrom(() => decodeResultStream(null as unknown as string)),
+      assembleQueryResult: raisedFrom(() => assembleQueryResult('find', null as unknown as ProcessResult, WS)),
+      evidenceOf: raisedFrom(() => evidenceOf(null as unknown as Parameters<typeof evidenceOf>[0])),
+      resultFromJson: raisedFrom(() => resultFromJson(null)),
+      resultToJson: raisedFrom(() => resultToJson(null as unknown as QueryResult<ClaimBody>)),
+    };
+    expect(raised, SAME_VIEW).toStrictEqual({decodeResultStream: 'decodeResultStream result.js', assembleQueryResult: 'assembleQueryResult result.js',
+      evidenceOf: 'evidenceOf result.js', resultFromJson: 'resultFromJson result.js', resultToJson: 'resultToJson result.js'});
+    // Those are every value this file imports from the package: its own import declaration names exactly them and ProtocolError.
+    expect(sdkBindings().sort()).toStrictEqual([...Object.keys(raised), 'ProtocolError'].sort());
+    // The frame reader can fire: a frame in another copy reads as its own URL, one in this copy by its path from SDK_DIST.
+    expect([firstFrame('E\n    at resultFromJson (file:///elsewhere/@hyperunix/sdk/dist/result.js:526:15)'),
+      firstFrame(`E\n    at resultFromJson (${new URL('result.js', SDK_DIST).href}:526:15)`)])
+      .toStrictEqual(['resultFromJson file:///elsewhere/@hyperunix/sdk/dist/result.js', 'resultFromJson result.js']);
     // THE BYTES: the package.json and each of the 27 shipped modules equal SDK_BYTES, so a change to any of them reds here.
     expect(sdkBytes(), BYTES_MOVED).toStrictEqual(SDK_BYTES);
     const tables = decoderTables();
@@ -1483,7 +1671,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     }
   });
 
-  it('Q: the seven named residual families, each with its pinned quiet row: R-SPELLING, R-SYNONYM, R-VALUE, R-UNSEEN-READING, R-OPEN-BODY, R-LIVE-UNSEEN and R-ACCEPTANCE read exactly their frozen readings', async () => {
+  it('Q: the seven named residual families, each with its pinned quiet row: R-SPELLING, R-SYNONYM, R-VALUE, R-UNSEEN-READING, R-OPEN-BODY, R-LIVE-UNSEEN and R-ACCEPTANCE read exactly their frozen readings, and each unknown-key refusal of the decoder that T2 reads no key set from and each facet kind the adapter relays is held by one of those readings', async () => {
     expect(RESIDUALS.map(residual => residual.id)).toStrictEqual(['R-SPELLING', 'R-SYNONYM', 'R-VALUE', 'R-UNSEEN-READING', 'R-OPEN-BODY',
       'R-LIVE-UNSEEN', 'R-ACCEPTANCE']);
     // The title claims exactly the table's families, each row's pins are pinned by count, and each family answers a measured gap.
@@ -1493,7 +1681,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     const pins = (reading: JsonValue): string => Array.isArray(reading) ? reading.map(row => asList(row)[0]).join('+') : Object.keys(asRecord(reading)).join('+');
     expect(RESIDUALS.map(residual => `${residual.id}:${pins(residual.reading)}:${residual.family.length}`)).toStrictEqual([
       'R-SPELLING:refusedBy+roundTripCarried+roundTripOther+live+readers:174', 'R-SYNONYM:refusedBy+roundTripCarried+roundTripOther+live+readers:157',
-      'R-VALUE:facets+axisMoved+native:207',
+      'R-VALUE:facets+axisMoved+native+echoes+deviating:301',
       'R-UNSEEN-READING:outside+nodes+moved:132', 'R-OPEN-BODY:decodedAndCarried+liveOutcomes+moved:130',
       'R-LIVE-UNSEEN:node-claim.attributes.nested+node-claim.identities[0]+node-claim.kinds[0]+node-claim.locators[0]+coverage.scope.path[0]:173',
       'R-ACCEPTANCE:envelope+unread:265']);
@@ -1501,6 +1689,22 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     for (const witness of GAP_WITNESSES) gaps.push(await witness());
     expect(gaps).toStrictEqual([5, 4, 4, 6, 48, 44, 2]);
     expect(RESIDUALS.length).toBe(GAP_WITNESSES.length);
+    // Anchored outside the table and its witness list (wb-b9ot, gate copy H03): the decoder module's unknown-key refusals that T2
+    // reads no key set from (measured from the module) and the kinds of the facets the adapter relays (measured from the adapter)
+    // are each held by a residual's frozen reading, so R-ACCEPTANCE or R-VALUE removed with its witness and its gap still reds here;
+    // and with no residual, every one of them is unheld.
+    const relayed = await relayedFacetKinds();
+    expect([unreadRefusals().length > 0, relayed.length > 0]).toStrictEqual([true, true]);
+    expect(await unheld(RESIDUALS)).toStrictEqual({refusals: [], facets: []});
+    expect(await unheld([])).toStrictEqual({refusals: unreadRefusals(), facets: relayed});
+    // differing(), R-VALUE's echo judge, can fire: a changed leaf, an added member and a longer list each read by label; and the
+    // deviating judge fires on a stand-in reader that promotes a reading whose runtime version is a lower tier word (gate plant
+    // GP-VAL's shape): exactly the six LOWER_WORDS at runtime.version under each licence deviate.
+    expect(differing({a: {b: 1, c: [1]}}, {a: {b: 2, c: [1, 2]}, d: 0})).toStrictEqual(['a.b', 'a.c[1]', 'd']);
+    const promoting = (reading: JsonValue): unknown =>
+      ({...outputsOf(reading), promoted: LOWER_WORDS.includes(String(asRecord(asRecord(reading).runtime).version))});
+    expect((await valueEchoes(promoting)).deviating).toStrictEqual(LICENCES.flatMap(licensed =>
+      LOWER_WORDS.map(word => `${licensed ? 'licensed' : 'unlicensed'} runtime.version ${word}`)));
     const readings: Record<string, JsonValue> = {};
     for (const residual of RESIDUALS) readings[residual.id] = await residual.quiet();
     for (const residual of RESIDUALS) expect(readings[residual.id], `${residual.id}: ${QUIET}`).toStrictEqual(residual.reading);
