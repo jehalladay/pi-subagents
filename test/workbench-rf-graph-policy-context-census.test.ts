@@ -72,70 +72,99 @@
  * of g10-work-s141, 2026-10-29, on trunk 57cb1c0; cut #2, the respin of refusal #1 (gate-prep-12 of g10-gate-s144: UNMET U1-U3, the
  * claims wider than their pins), by seat ws-04 of g10-work-s145, 2026-10-30, on trunk c2695d7; cut #3, the respin of refusal #2
  * (gate-prep-3 of g10-gate-s154: the same three classes through new members, frozen by ruling R-B136), by seat ws-04 of
- * g10-work-s153, 2026-10-30, on trunk 2459270, every named member pinned by a falsifier that reds under it). This is hop 3 of the
- * landing-550 chain (wb-e9dy, wb-r63c, wb-b4lg), so the cut takes the R739 TERMINAL enumerate-the-resolvable form: each class below
- * is listed by its resolvable surface, every member is pinned or is a named residual with its pinned quiet row, and the claims of
- * this header are re-pinned to exactly that set. The chain is terminal: a later survivor outside these classes is record-only unless
- * it contradicts a re-pinned claim.
- * - F1, THE RECORD ITEM FORMS (the wb-e9dy F5 class): the record judge reads two item forms - every key (the envelope's at any
- *   depth, its root's included, arrays by index, and the roster's four key lists) and every string value of the envelope (its
- *   root's, an object member's and an array element's) - and applies each reading to the forms it names: a MENTION to keys and
- *   values; the abbreviation gp as one of a term's words (wordsOf: split at non-letters and at camel-case humps, each word
- *   lowercased, so gp, GP and the gp of gpLayer read while gP is the words g and p) to keys and values; a field word to keys only.
- *   T3 pins each form by a plant found in the same call as the real record: MENTION keys at the result, in
- *   provenance (camel case), in a planted diagnostic's metadata, at the root, on a block (an array element's own key) and in the
- *   roster, and MENTION values at the root (operation_id), on an object member (judge_context_layers), on a block and as an array
- *   element; the abbreviation as a key (gp at the result; GP and gpLayer in the metadata; gp_trace at the root; gp_note on a block;
- *   gp_rank and gpCheckpoint in the roster) and as a value - the acceptance's
- *   own ref form rf-gp:program:checkpoint:backend as a diagnostic message and as an array element, gp as a diagnostic source and as
- *   an array element, gp.scorer on a block, GP and gpLayer as values, gp-txn-1 at the root, rfo_01gp3x (gp between digits) as an
- *   array element - while gpu-runner and gpuCount (gp inside a longer word) stay quiet; T4 plants a field word as a key at the
- *   root, at the result, on a block, in a planted diagnostic's metadata and in the roster; and each of the roster's four key lists
- *   holds a plant (T3's in the result, provenance and work keys, T4's in the work-metrics keys) (cut #2 cures U1: the gate's DJ1
- *   array-element and DJ2 case- and camel-blind members each red T3; cut #3 cures U1 again: the gate's L2-A1 roster-abbreviation
- *   and L2-A3 root-MENTION members each red T3, every other key and value cell of these readings planted beside them). A value is
- *   never a field: a string value naming a field word,
- *   and a number, boolean or null value (no words), is no GraphPolicy output field (R-FIELD-VALUE, Q13).
- * - F2, THE PLANTED POSITIONS (the wb-e9dy F6 class): Z2 plants the four fields on every object of the envelope - its root, its
- *   workspace object, the planted diagnostic's own keys and its metadata, and every result-tree object - that the reader under
- *   comparison does not hold exactly, and runs and compares each src reader on its own plants. The planted positions are read off
- *   the very envelope each reader is handed (plantedRun: the paths of its objects carrying all four leak-marked fields), per reader
- *   and per render variant, and pinned (plantedAt); outerPlanted (the clean render's positions outside the result tree) and
- *   deepPlanted (every reader's and variant's count at the floor) are counted from them, and Q10 counts the positions on the
- *   envelope the provider relays (plantedRelayed) (cut #2 cures U2: the gate's DP0, DP00, DP1, DP3 and DP4 members each change
- *   plantedAt). The handoff is pinned by each reader's own reads: plantedRun hands the reader its planted envelope through a read
- *   log (logged), so the planted positions the reader read while it ran are pinned per reader and per variant (plantedRead), and a
- *   plant-presence control (presenceOn: the planted score and receipt id read off that same handed envelope) runs beside each
- *   reader through the same plantedRun, the same compareReaders call and the same leak walk, so its planted run differs from its
- *   plain one and leaks (readersUnchanged, readerLeaks) (cut #3 cures U2: the gate's L2-B1 unplanted-handoff member empties
- *   plantedRead, and its L2-B2 self-compare member turns the control's compare unchanged). strictObjects is measured per reader on
- *   the clean render: the observer holds the root, the workspace object, the
- *   diagnostic, result.work and result.engine_metrics exactly; nativeEvidence holds none, so its plants reach the root it reads
- *   loosely.
- * - F3, THE DOCS LOCATES (the same-view class): every docs element this file matches or locates on a page it reads is read by
- *   the binding's rendered text (renderedHeading: a heading's inline source bound by docsSection in a one-heading probe section),
- *   never by marked's token text or a source spelling - postureHomes' section opening and the page title it binds that section
- *   under, and the posture heading and opening paragraph Z3's in-memory docs/03 controls edit at (renderedHeadingAt,
- *   respelledOpening, through locateControls). The re-spellings that leave the binding's rendered text unchanged are pinned as
- *   MARKUPS enumerates them, by what the binding normalizes: one per inline token kind it renders as its content's text (emphasis
- *   and strong, each by asterisks and by underscores; a code span; a link; an image, read as its alt text; a strikethrough; inline
- *   HTML, a tag and a comment; a backslash escape; a hard line break), the one character reference it decodes that spells these
- *   elements (&nbsp; for a space), whitespace (indentation and doubled spaces, a tab, and a no-break space, each collapsed by its
- *   clean()), a soft line break, and the ATX
- *   closing sequence and setext heading forms (the setext heading and title split over two lines), each on the posture heading,
- *   docs/03's title and the posture sentence where the form can spell it (the heading holds no punctuation to escape; an ATX heading
- *   or title holds no line break; inline HTML and the heading forms spell no sentence: HTML in the section reads it whole,
- *   OVER-READS). Q4 plants a page with each form's title and heading, and Z3 re-spells docs/03 with each form - the heading and the
- *   title replaced whole, the opening paragraph replaced by the form's sentence, each located through the rendered view and read
- *   back the same way (respelled) - and reads the home, the stated sentence and the decoy, changed-sentence and level-1-above locate
- *   controls on that copy through docs/03's own control path (postureControls.markup), beside the asterisk-only heading and title
- *   controls; nothing is located by docs/03's own source spelling, so a docs/03 already carrying one of these forms keeps every
- *   control (cut #2 cures U3: the gate's DF3a token-text and DF3b source-spelling members each red Q4 or Z3; cut #3 cures U3
- *   again: the gate's L2-C1 markdown-stripping member reds Q4 and Z3 on the &nbsp; form, the character reference MARKUPS had
- *   omitted, and members that keep comments, tabs or no-break spaces red on those forms). A control's own
- *   inserted text (the decoy comment, the appendix heading it splits on) is located by the spelling the control wrote. Rows match
- *   cells as sectionTables reads them (marked's cell source, inline markup kept), the one table reading the binding has, so a
- *   posture row with markup in its owner or Pi cell is read (OVER-READS, planted in Z3).
+ * g10-work-s153, 2026-10-30, on trunk 2459270; cut #4, the FINAL cut after refusal #3 (gate-prep-22 of g10-gate-s156: all three
+ * classes failing again on cut #3 through new members), by seat ws-03 of g10-work-s158, 2026-10-31, on trunk 379a945). This is hop 3
+ * of the landing-550 chain (wb-e9dy, wb-r63c, wb-b4lg), in the R739 TERMINAL form. Refusals #1 and #2's named members (DJ1, DJ2,
+ * DP0, DP00, DP1, DP3, DP4, DF3a, DF3b; L2-A1, L2-A3, L2-B1, L2-B2, L2-C1) were cured by cuts #2 and #3, as those cuts' notes and
+ * gates record; the members this cut re-measures on its own bytes are named below.
+ * FORM (cut #4: ruling R-B176 binds the FAIL-CLOSED CORE after the rule-19 STRUCTURAL EXIT, whose child wb-v03p carries the reader
+ * coverage of the three classes): ENUMERATED, NOT GENERAL. Each reading of the three classes below is claimed for exactly the plants,
+ * positions and witness facts it lists, each held in its pin's roster witness; a case form, position, roster key list, read kind,
+ * compare input, whitespace kind or markup form it does not list is NOT CLAIMED. The doc comments on this file's functions say what
+ * the code does on these bytes and claim nothing beyond these lists; where this header says how the census does something (a call,
+ * a trap, a helper), it describes these bytes, and the claim is the witness fact it names. The nine members refusal #3 counted
+ * against cut #3 (U1-U3: each survived while a measured twin changed a verdict) are the DEFERRED residuals (DEFERRED, named per class
+ * below: NOT CLAIMED here, each carried by wb-v03p); their names are held to the roster and to wb-v03p's own export row (the outside
+ * anchors). The chain is terminal: a later survivor outside these lists is record-only unless it contradicts a listed claim.
+ * - F1, THE RECORD ITEM FORMS (the wb-e9dy F5 class). Claimed (the T1, T3, T4, Q12 and Q13 witnesses): among T3's and T4's planted
+ *   items the record judge (judgeRecord) finds exactly T3's 27 vocabulary plants (VOCABULARY_PLANTS) and T4's 7 field plants
+ *   (FIELD_PLANTS) and no other; it finds nothing in the real record (T1), whose envelope items and roster keys are read at floors
+ *   (T3); on these bytes T3 and T4 judge their plants beside the real record's items in one call. The plants, by reading and
+ *   position: a MENTION as a key at the result (graph_policy), in provenance in camel case
+ *   (graphPolicyReceipt), in a planted diagnostic's metadata (graph-data-ir), at the root (graph_data_ir), on a block as an array
+ *   element's own key (graphPolicyRank), and in the roster's result and work key lists (graphpolicy_rank, graph_data_ir_count); a
+ *   MENTION as a string value at the root (the operation_id), as an object member's value (judge_context_layers' task.goal), on a
+ *   block (component_id) and as an array element (explicit_requests); the abbreviation gp as a key at the result (gp), in the
+ *   metadata (GP, gpLayer), at the root (gp_trace), on a block (gp_note) and in the roster's result and provenance key lists (gp_rank,
+ *   gpCheckpoint); the abbreviation as a string value - the acceptance's own ref form rf-gp:program:checkpoint:backend as a diagnostic
+ *   message and as an array element, gp as a diagnostic source and as an array element, gp.scorer on a block, gpLayer and GP as object
+ *   members' values, gp-txn-1 at the root, rfo_01gp3x (gp between digits) as an array element; a field word as a key at the root
+ *   (receipt), at the result (score, the plural rankings, embedding), on a block (the plural embeddings), in the metadata in camel
+ *   case (gpReceipt) and in the roster's work-metrics key list (score_count). The planted items beside them stay unread, among them gp
+ *   opening a longer lowercase word (the value gpu-runner, the key gpuCount), the gp block's own keys (rank, vector, program,
+ *   checkpoint, backend) and the planted diagnostics' other keys and values; so do field words' near forms as keys (rank, ranked,
+ *   vector, scored: Q12) and Q13's planted values (a diagnostic message naming every field word, an object member's value rankings,
+ *   and a number, a boolean and a null under keys that name none). The abbreviation's case forms claimed are exactly the planted ones:
+ *   a lowercase gp or an uppercase GP with no letter on either side, and a lowercase gp with no letter before it and an uppercase
+ *   letter after it (gpLayer, gpCheckpoint). Re-measured on these bytes, each red: the abbreviation skipped on roster items (L2-A1) or
+ *   on root keys (M-A2), a MENTION skipped on root string values (L2-A3), a field word skipped on root keys (M-A4), the provenance or
+ *   the work key list dropped (M-LIST-P, M-LIST-W), array elements' own keys unread (M-ARRKEY), gp read inside a longer word
+ *   (M-GP-SUBSTRING), the abbreviation read in lowercase only (M-NO-UPPER), terms split at non-letters only (M-NO-HUMP), digits read
+ *   as part of a word (M-DIGIT-JOIN), field words read without their plurals (M-NO-PLURAL) and field words read on values
+ *   (M-FIELD-ON-VALUES).
+ *   NOT CLAIMED (DEFERRED R-ITEM-FORMS, wb-v03p): every other case form wordsOf reads as gp - a title-case Gp (GpRank) and an
+ *   uppercase GP joined to other letters (GPRank) carry no plant, so a judge reading only the claimed forms keeps every pin
+ *   (G-U1-CASE); a roster key list a reading has no plant in - the abbreviation on the work and work-metrics key lists (G-U1-LIST)
+ *   and a field word on the result, provenance and work key lists (G-U1-LISTF); a MENTION on the provenance and work-metrics key
+ *   lists, likewise unplanted (G-U1-LISTM, record-only: refusal #3's gate measured Z3's scan of the key roster file still reading a
+ *   real MENTION key there); and any position no plant above stands at.
+ * - F2, THE PLANTED POSITIONS (the wb-e9dy F6 class). Claimed, per render variant (the five VARIANTS) and per src reader (the
+ *   observer's reactivefiberTopology and nativeEvidence), exactly Z2's witness facts: plantedAt, the planted positions (on these bytes
+ *   read back off the envelope plantedRun hands that reader: gpPlanted's plants on every envelope object outside that reader's
+ *   strictObjects - the root, the workspace object, the planted diagnostic, its metadata and the result-tree objects); plantedRead,
+ *   the planted positions the read log noted that reader reading while it ran, its member (get) and own-property-descriptor traps the
+ *   ones the pins hold (the observer reads result.provenance.sdk_versions by descriptor alone); readersUnchanged, Z2's compare
+ *   (compareReaders), true in each src reader's
+ *   slot and false in each reader's plant-presence control (presenceOn: the planted score and receipt id read off that reader's own
+ *   handed envelope); readerLeaks, the leak markers in the planted run's parts (outputParts), the controls' only; readerControls, a
+ *   difference and a leak read on synthetic outputs; strictObjects, measured per reader on the clean render (the observer holds the
+ *   root, the workspace object, the diagnostic, result.work and result.engine_metrics exactly; nativeEvidence holds none, so its
+ *   plants reach the root it reads loosely); deepPlanted and outerPlanted, counted off plantedAt; and Q10's plantedRelayed, the
+ *   planted positions on the envelope the provider relays. Re-measured on these bytes, each red: the unplanted render handed to the
+ *   reader (L2-B1) or handed through a fresh read log (L2-B1b), the planted outputs compared with themselves (L2-B2), the control
+ *   returning a constant (M-PRESENCE), a log that never notes (M-LOGOFF) or notes every object (M-STRICTLOG), a log noting member
+ *   reads only (G-U2-GETONLY), leaving key-list and descriptor reads unnoted (G-U2-NOKEYS) or leaving member reads unnoted
+ *   (M-GET-SILENT), and the root left unplanted (M-PLANT-NOROOT).
+ *   NOT CLAIMED (DEFERRED R-HANDOFF, wb-v03p): a read kind the real readers do not make on these bytes - a key-presence (has) or a
+ *   key-list (ownKeys) read of a planted object: the log's traps for them note too, but a log leaving them silent keeps plantedRead
+ *   (G-U2-HASKEYS); and what the compare's src slots hold - outputsOf handing one reader's output over as the other's
+ *   (G-U2-OUTPUTSOF) or Z2's call site handing a reader's plain output in for its planted one (G-U2-CALLSITE) keeps every witness
+ *   fact. On these bytes Z2's call site compares each src reader's planted run with its plain run, and a src read of a planted field
+ *   that changes nativeEvidence's output (the gate's T-P2) reds Z2, but no pin holds the compare's inputs to that.
+ * - F3, THE DOCS LOCATES (the same-view class). Claimed (the Q4 and Z3 witnesses), on exactly these re-spellings - postureHomes'
+ *   section opening and the page title it binds that section under, and the posture heading and opening paragraph Z3's in-memory
+ *   docs/03 controls edit at (renderedHeadingAt, respelledOpening, through locateControls), each located through renderedHeading (on
+ *   these bytes: a heading's inline source bound by the landed docsSection binding as the one heading of a probe section): MARKUPS'
+ *   19 forms -
+ *   emphasis and strong, each by asterisks and by underscores; a code span; a link; an image; a strikethrough; inline HTML, a tag and
+ *   a comment; the &nbsp; character reference; a backslash escape; a hard and a soft line break; indentation with doubled spaces; a
+ *   tab; a no-break space; the ATX closing sequence; the setext form - each on the posture heading, docs/03's title and the posture
+ *   sentence where MARKUPS spells it, and the asterisk-only heading and title controls (EMPHASIZED_HEADING, EMPHASIZED_TITLE). Q4
+ *   plants a page for each form that spells a title or a heading and holds which plant pages read (findings); Z3 re-spells docs/03
+ *   with each form and holds, per form, whether each re-spelling applied (respelled), the home, the stated sentence and the decoy,
+ *   changed-sentence and level-1-above locate controls (postureControls.markup). Re-measured on these bytes, each red: a locate by
+ *   marked's raw token text (M-TOKEN-TEXT) or by docs/03's own source spelling (M-SOURCE-SPELLING), the opening paragraph located by
+ *   the posture sentence's source spelling (M-PARAGRAPH-SPELLING), marked's token text through a markdown-stripping normalizer that
+ *   decodes no character reference (L2-C1), normalizers collapsing spaces only (M-SPACES) or
+ *   [ \t\n] only (M-ASCIIWS) or keeping comments (M-TAGS), and the character-reference form deleted from MARKUPS (MK-CR-OMIT).
+ *   NOT CLAIMED (DEFERRED R-LOCATES, wb-v03p): that the locate is the binding's own reading rather than marked's token text through a
+ *   normalizer reading these forms alike - L2-C1's stripping with the &nbsp; decode and comment removal keeps every pin
+ *   (M-NORM-FULL); and every re-spelling MARKUPS does not list - every whitespace kind the binding's clean() collapses beyond the
+ *   space, the tab, the line break and the no-break space (a normalizer collapsing only those four, G-U3-WS4, or only Unicode space
+ *   separators with the tab and the line break, G-U3-ZS, keeps every pin), and every inline spelling beyond each kind's one form.
+ *   A control's own inserted text (the decoy comment, the appendix heading it splits on) is located by the spelling the control
+ *   wrote. Rows match cells as sectionTables reads them (marked's cell source, inline markup kept), the one table reading the binding
+ *   has, so a posture row with markup in its owner or Pi cell is read (OVER-READS, planted in Z3).
  *
  * THE JUDGE. A MENTION is the until-then pattern's words in order - "graph" then "policy", or "graph", "data" and "ir" - with any
  * run of characters that are neither letters nor digits between them (none, spaces, newlines, underscores, hyphens, dots, quotes,
@@ -149,12 +178,13 @@
  * references and the common named entities decoded ("decoded"); a shell script (.sh .bash .zsh) also with its \x, \u, \U and
  * octal escapes decoded ("decoded"). judgeScope reads an entry list in one call, so every leg judges its planted entries after the
  * real ones: the findings must be exactly the plants', so a real mention, a hollowed judge or a result forced empty reds; it also
- * counts the bytes each entry's judge decoded. THE RECORD JUDGE (T) reads the record's items: every key of the fixture envelope at
- * any depth (its root's included, arrays by index) and every string value (the root's, an object member's and an array element's),
- * and every key of the roster's four key lists; a key or string value holding a MENTION, or whose words (split at non-letters and
- * camel-case humps, each lowercased) include the abbreviation gp, is a GraphPolicy output (wb-b4lg F1: values too), and a key whose
- * words include one of the title's field words (score, ranking, embedding, receipt) or its plural is a GraphPolicy output field (a
- * value never is: R-FIELD-VALUE). Z3 judges each rf reading test and each data file it names with the content of every ownership-row echo blanked
+ * counts the bytes each entry's judge decoded. THE RECORD JUDGE (T) reads the record's items - the fixture envelope's keys and
+ * string values (recordItems) and the roster's four key lists (rosterItems) - and takes a key or string value holding a MENTION, or
+ * whose words (wordsOf: split at non-letters and camel-case humps, each lowercased) include the abbreviation gp, as a GraphPolicy
+ * output (wb-b4lg F1: values too), and a key whose words include one of the title's field words (score, ranking, embedding,
+ * receipt) or its plural as a GraphPolicy output field (R-FIELD-VALUE: Q13's values are none); what it is claimed to read and to
+ * leave unread is exactly F1's lists (FORM, above). Z3 judges each rf reading test and each data file it names with the content of
+ * every ownership-row echo blanked
  * first (R-POSTURE: a string literal naming the owner as docs/03's ownership row spells it, each of its words a word of that row's
  * owner or subject cell, one of them the subject's alone), and each docs page with its rendered posture homes blanked.
  *
@@ -162,18 +192,18 @@
  * output or field, T1 reds naming the acceptance on landing as owed; T2 the record is the installed rf's capture (a captured
  * roster with a command receipt, and the fixture's cli_version and the provider's contract source on the roster's release),
  * compared as relations, so a consistent rf re-pin keeps T2 and re-reads T1, T3 and T4 on the new record; T3 the envelope, its
- * diagnostics and the roster read at floors, and the vocabulary plants (the abbreviation's on keys and on values, array elements,
- * uppercase and camel-case humps and the root's items included) found by the same call; T4
- * the field words and their plants found, and the schema pin the title records. Z, the until-then duty: Z1 the literal held at
- * the filing pin, its judged bytes an exact count, a pin plant found by the same call; Z2 every listed src and qa file spells no
- * MENTION (file, script and byte floors, every file judged whole, a plant of each reading found), and each src reader ignores the
- * GraphPolicy plants - on every envelope object it does not hold exactly, root and diagnostic included, the strict objects measured
- * and pinned per reader, and the planted positions read off the envelope each reader is handed and pinned per reader and per
- * variant, beside the planted positions the reader itself read and the plant-presence control that must change and leak - on
- * every render variant with nothing leaked by a src reader; Z3 the rf reading tests, the data files they name and docs/workbench outside the rendered posture
- * homes spell none, at file and byte floors, every file judged whole, docs/03's home bound and its posture sentence stated, the
- * rendered-view controls and plants found, and the locate controls read again on docs/03 re-spelled in each markup form; Z4 the vocabulary: the notes' pattern, its words, every spelling form read and the
- * near words quiet. Q, the residuals' pinned quiet rows.
+ * diagnostics and the roster read at floors, and exactly F1's vocabulary plants found by the same call, no other planted item; T4
+ * the field words and exactly F1's field plants found, and the schema pin the title records. Z, the until-then duty: Z1 the literal
+ * held at the filing pin, its judged bytes an exact count, a pin plant found by the same call; Z2 every listed src and qa file
+ * spells no MENTION (file, script and byte floors, every file judged whole, a plant of each reading found), and Z2's compare reads
+ * each src reader's slot unchanged and no src part leaking under the GraphPolicy plants, on the five render variants, with exactly
+ * F2's witness facts - the strict objects measured per reader, the planted positions and the planted reads per reader and per
+ * variant, and the plant-presence control that must change and leak (what the compare's src slots hold is NOT CLAIMED: F2, DEFERRED
+ * R-HANDOFF); Z3 the rf reading tests, the data files they name and docs/workbench outside the rendered posture homes spell none,
+ * at file and byte floors, every file judged whole, docs/03's home bound and its posture sentence stated, the rendered-view
+ * controls and plants found, and the locate controls read again on docs/03 re-spelled in each MARKUPS form (F3's list); Z4 the
+ * vocabulary: the notes' pattern, its words, every spelling form read and the near words quiet. Q, the residuals' pinned quiet
+ * rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  * pins, every pin's quote, claims and witness, the constants (READERS included) and every registered test title - is held to the
  * out-of-file roster (test/fixtures/rf-graph-policy-context-roster.json), and every case calls a reader of the subject (READERS,
@@ -186,7 +216,9 @@
  * (the notes' first two blocks, so a later note quoting them never masks a replaced original; a weakened-and-quoted control of
  * each read as replaced); docs/03 renders the posture section once under its title and the row R-POSTURE names in its bound
  * Ownership boundaries tables, and the echo's words are read off that row at run time (never a literal here); the filing pin is a
- * commit of this repository.
+ * commit of this repository; and the structural-exit child's own export row (DEFERRED_TO, wb-v03p) names exactly DEFERRED's
+ * members, in order, and is blocked by the follow-up bead (FOLLOW_UP, wb-b4lg), so a deferred member dropped from DEFERRED and the
+ * roster together still reds.
  * CLAIMS: each quoted pin carries claims - terms tiling its quote, each naming the witness facts (top-level keys) that show it; a
  * pin's live witness holds exactly its claimed facts, each fact under one term, and no pin's live witness holds another pin's
  * claimed facts (the claims bound), so a case swap reds at the swapped pin's claims beside its roster witness.
@@ -200,8 +232,9 @@
  * "nothing today" are not read (docs/03 holds one of each), nor is a string literal of an rf reading test or of a .json data file
  * it names that only restates docs/03's ownership row (an echo, its words read off the row: the landed wb-grmo.1 census and its
  * roster hold one each) (Q4); R-RECEIPTS docs/workbench/receipts/ records deliveries and is not read (Q5); R-ABBREVIATION "GP"
- * or "gp" alone is no MENTION in a file scan - src names a general-purpose agent gp (Q6) - while on the record a key carrying it
- * or a string value carrying it as a word is a GraphPolicy output (T3); R-COMPUTED a word assembled at run time (a concat call, a template substitution between
+ * or "gp" alone is no MENTION in a file scan - src names a general-purpose agent gp (Q6) - while on the record a key or string
+ * value carrying it as a word, in F1's claimed case forms and at F1's plant positions, is a GraphPolicy output (T3); R-COMPUTED a
+ * word assembled at run time (a concat call, a template substitution between
  * its parts, a character code) is not read (Q7); R-INTERIOR a character inside a word (a format character, a confusable letter)
  * hides it, and so does a backslash escape in a file kind whose escapes are not decoded (plain text and every kind but scripts,
  * .json, markup entities and shell scripts) or an escape kind the decoders do not read (a regex octal or control escape, a shell
@@ -211,15 +244,23 @@
  * naming a field word (score, ranking, embedding, receipt) is no MENTION: field words are read on the record (T4) and the two
  * readers' outputs (Z2) only (Q11); R-NEAR-FIELD a record key naming a near form of a field word (rank, ranked, vector, scored)
  * outside the vocabulary and the abbreviation is no GraphPolicy output field: T4 reads the title's four words and their plurals
- * (Q12); R-FIELD-VALUE a record value is never a GraphPolicy output field: a string value naming a field word (a diagnostic message
- * "score 0.9") and a number, boolean or null under a key that names none are no field - T4 reads field words on keys only, the
- * title's "fields" - while a value holding a MENTION or the abbreviation is a GraphPolicy output (T3) (Q13).
+ * (Q12); R-FIELD-VALUE a record value is no GraphPolicy output field, read on Q13's planted values: a string value naming every
+ * field word (a diagnostic message "score 0.9, ...") or a plural (an object member's value rankings), and a number, a boolean and a
+ * null under keys that name none are no field - T4 reads field words on keys only, the title's "fields" - while a value holding a
+ * MENTION or the abbreviation is a GraphPolicy output (T3) (Q13).
+ * DEFERRED (wb-b4lg cut #4, ruling R-B176; DEFERRED and DEFERRED_TO): the nine members refusal #3 counted against cut #3, each NOT
+ * CLAIMED here and carried by the structural-exit child wb-v03p, whose acceptance owes, per class, a reader or witness that reds
+ * under each named member, or the class as a named residual with its measured twin checked in - R-ITEM-FORMS (G-U1-CASE,
+ * G-U1-LIST, G-U1-LISTF: F1's NOT CLAIMED), R-HANDOFF (G-U2-HASKEYS, G-U2-OUTPUTSOF,
+ * G-U2-CALLSITE: F2's) and R-LOCATES (M-NORM-FULL, G-U3-WS4, G-U3-ZS: F3's). Their names are held to the roster and to wb-v03p's
+ * export row (OUTSIDE ANCHORS); their coverage is the child's, so no quiet row of this file stands for them.
  * NOT CLAIMED (edits of this file and the roster together): a pin's case and its roster witness re-authored together, its claims
  * rewritten with them; a plant or control edited in IMPL and the roster together; a floor lowered with the roster; a residual row
  * removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside anchor names the residual families); the
  * outside-anchor case or the closing case removed with its roster title; a case that calls a reader and discards what it read
  * (the reader-keeping constant: the judged set requires a reader's call, not the use of its result); a judge edited to judge
- * less of an entry than the bytes it counts (the count is taken from the text the judge decodes, not from each reading of it).
+ * less of an entry than the bytes it counts (the count is taken from the text the judge decodes, not from each reading of it);
+ * anything F1, F2 or F3 lists as NOT CLAIMED, the DEFERRED members among it (FORM, DEFERRED).
  * ARMED HALF PENDING: the clause ARMED (a GraphPolicy output read only as one bounded rf-gp:<program>:<checkpoint>:<backend> ref
  * and one note, never raising coverage, tone or freshness, never surfacing a value) has nothing to read until rf ships one; no
  * GraphPolicy reader is added or faked here. T1 binds it: the census reds with ACCEPTANCE the moment the record carries one.
@@ -227,12 +268,13 @@
  * included ("the dependency graph. Policy ..."), and so does "graph data ir" opening a longer word; a shell backslash escape is
  * decoded wherever it stands (inside single quotes too); a posture section carrying HTML (planted in Z3, wb-b4lg U3), or one the
  * blanked source does not render as block for block, is read whole; a data file is in the surface when any read member spells its
- * file name, a comment included; a record string value whose words include gp reads as a GraphPolicy output wherever it stands (an
- * id whose letters between digits run gp, such as rfo_01gp3x, included and planted in T3; none today); a heading whose rendered text
- * needs the rest of its page (a reference link defined elsewhere on it) is probed alone by renderedHeading, so a posture section
- * under it is read whole (planted in Z3); a posture row whose owner or Pi cell carries inline markup is read (planted in Z3); a
- * character reference the binding does not decode (any but the amp, lt, gt, quot, nbsp, #39 and #x27 references) re-spells a
- * heading, title or sentence in the binding's reading, so its home is unbound and read whole (wb-b4lg F3).
+ * file name, a comment included; a record string value whose words include gp reads as a GraphPolicy output at F1's planted value
+ * positions (an id whose letters between digits run gp, rfo_01gp3x, planted in T3; none in the real record today); a heading whose
+ * rendered text needs the rest of its page (a reference link defined elsewhere on it) is probed alone by renderedHeading, so a
+ * posture section under it is read whole (planted in Z3); a posture row whose owner or Pi cell carries inline markup is read
+ * (planted in Z3); a character reference the binding does not decode (any but the amp, lt, gt, quot, nbsp, #39 and #x27
+ * references) re-spells a heading, title or sentence in the binding's reading, so its home is unbound and read whole (wb-b4lg F3;
+ * disclosed, not planted).
  * ECHO BOUND (disclosed): an echo literal is blanked whatever its test does with it, so a literal made only of the ownership row's
  * words ("GraphPolicyCLI learned scores") used as a key or a lookup would go unread by Z3; at df1ce2a the one echo in the surface
  * is wb-grmo.1's quiet-control sentence (and, from wb-r63c, its roster's copy of it). A comment, an identifier, a template with a
@@ -241,8 +283,9 @@
  * listed; the installed rf and ReactiveFiberCLI's repository are never read (the default gate is hermetic: the record is Pi's).
  * READS (contacts): every listed src, qa and docs/workbench file and every test module (for its imports and file names; the rf
  * reading surface and the data files it names for their content) (Z2, Z3), docs/03's posture section and Ownership boundaries
- * tables through the rendered binding (Z3, Q4, the outside anchors), git objects at the filing pin (Z1), the tracker export row of
- * wb-e9dy (its owner filing), test/fixtures/rf-result-keys.json, the fixture module's fullShapeRf and the provider's contract source
+ * tables through the rendered binding (Z3, Q4, the outside anchors), git objects at the filing pin (Z1), the tracker export rows of
+ * wb-e9dy (its owner filing) and wb-v03p (its description and blocks dependencies: the outside anchors),
+ * test/fixtures/rf-result-keys.json, the fixture module's fullShapeRf and the provider's contract source
  * (T); the observer, nativeEvidence and the injected provider registration run in memory (Z2, Q10), the two readers each handed
  * its envelopes through a read log (Z2).
  *
@@ -326,7 +369,7 @@ const MARKUP = /\.(?:md|html?|xml|svg)$/;
 /** A shell script, whose backslash escapes are decoded (wb-r63c F4). */
 const SHELL = /\.(?:sh|bash|zsh)$/;
 /** The record-side abbreviation: a record key or string value whose words include it is a GraphPolicy output (wb-r63c F5 keys,
- * wb-b4lg F1 values). */
+ * wb-b4lg F1 values), claimed in F1's case forms and at F1's plant positions only. */
 const ABBREVIATION = "gp";
 /** The acceptance's own bounded ref form with its placeholders read as words (rf-gp:program:checkpoint:backend): T3's value plant of
  * a GraphPolicy output carried as a diagnostic message (wb-b4lg F1, the gate's P1 shape). String.prototype.match, never exec. */
@@ -355,7 +398,7 @@ const NEAR_WORDS: readonly string[] = [
 ];
 /** The path of the envelope's root object: Z2's planted positions start there, not at the result (wb-b4lg F2). */
 const ENVELOPE_ROOT = "envelope";
-/** The two src readers of the envelope, each run and compared on its own plants (wb-b4lg F2). */
+/** The two src readers of the envelope, each run on its own plants (wb-b4lg F2; what the compare's slots hold: F2, NOT CLAIMED). */
 const READER_KINDS = ["topology", "evidence"] as const;
 type ReaderKind = (typeof READER_KINDS)[number];
 /** The probe section's heading renderedHeading binds a heading's inline source under (wb-b4lg F3). */
@@ -383,15 +426,16 @@ function wrapped(open: string, close: string): Markup {
 /** A no-break space (U+00A0): JavaScript's \s, so the binding's clean() collapses it like a space (wb-b4lg U3, cut #3). */
 const NO_BREAK_SPACE = String.fromCodePoint(0xa0);
 /**
- * The re-spellings that leave the binding's rendered text unchanged (wb-b4lg U3, the F3 enumeration), by what the binding normalizes:
- * one per inline token kind it renders as its content's text - emphasis and strong by both delimiters, a code span, a link, an image
- * (its alt text), a strikethrough, inline HTML (a tag and a comment), a backslash escape and a hard line break - plus the one character
- * reference its decode() reads that can spell these elements (&nbsp; for a space: the amp, lt, gt, quot, #39 and #x27 references spell
- * characters none of them holds), whitespace (indentation and doubled spaces, a tab and a no-break space, each of which its clean()
- * collapses), a soft line break, and the ATX closing sequence and setext heading forms (the setext heading
- * and title each split over two lines). A form spells no element it cannot: the heading holds no punctuation to escape, an ATX
- * heading or title holds no line break, inline HTML in the section reads it whole (OVER-READS), and the heading forms spell no
- * sentence. Held to the roster, so a plant or control stripped of its markup reds.
+ * The 19 re-spellings Q4 and Z3 pin (wb-b4lg U3, F3's list), each leaving the binding's rendered text unchanged on these bytes: one
+ * form per inline token kind - emphasis and strong by both delimiters, a code span, a link, an image (its alt text), a
+ * strikethrough, inline HTML (a tag and a comment), a backslash escape and a hard line break - plus the &nbsp; character reference
+ * (the amp, lt, gt, quot, #39 and #x27 references the binding's decode() also reads spell characters none of these elements holds),
+ * whitespace (indentation with doubled spaces, a tab and a no-break space), a soft line break, and the ATX closing sequence and
+ * setext heading forms (the setext heading and title each split over two lines). They are not every spelling the binding renders
+ * alike: other whitespace kinds its clean() collapses and other spellings of a kind are NOT CLAIMED (F3, DEFERRED R-LOCATES). A form
+ * spells no element it cannot: the heading holds no punctuation to escape, an ATX heading or title holds no line break, inline HTML
+ * in the section reads it whole (OVER-READS), and the heading forms spell no sentence. Held to the roster, so a plant or control
+ * stripped of its markup reds.
  */
 const MARKUPS: Readonly<Record<string, Markup>> = {
   "emphasis-asterisk": wrapped("*", "*"),
@@ -501,6 +545,21 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-GENERIC": "Q11",
   "R-NEAR-FIELD": "Q12",
   "R-FIELD-VALUE": "Q13",
+};
+/** The follow-up bead whose cuts the FOLLOW-UP wb-b4lg block below records (the R694 carry from wb-r63c's landing 617). */
+const FOLLOW_UP = "wb-b4lg";
+/** Ruling R-B176's structural-exit child of FOLLOW_UP: it carries the reader coverage of the classes DEFERRED names. */
+const DEFERRED_TO = "wb-v03p";
+/**
+ * The DEFERRED residuals (wb-b4lg cut #4, ruling R-B176's FAIL-CLOSED CORE): per class, the members refusal #3 (gate-prep-22 of
+ * g10-gate-s156) counted against cut #3, each NOT CLAIMED by this census and carried by DEFERRED_TO. Held to the roster, and
+ * the outside anchors hold it to DEFERRED_TO's own export row: its description names exactly these members, in this order, and
+ * the row is blocked by FOLLOW_UP.
+ */
+const DEFERRED: Readonly<Record<string, readonly string[]>> = {
+  "R-ITEM-FORMS": ["G-U1-CASE", "G-U1-LIST", "G-U1-LISTF"],
+  "R-HANDOFF": ["G-U2-HASKEYS", "G-U2-OUTPUTSOF", "G-U2-CALLSITE"],
+  "R-LOCATES": ["M-NORM-FULL", "G-U3-WS4", "G-U3-ZS"],
 };
 /**
  * The functions that read the subject - the listing and the files, the filing pin, the record, the tracker export, docs/03,
@@ -636,13 +695,25 @@ function sorted(values: Iterable<string>): string[] {
 interface ExportRow {
   readonly title: string;
   readonly notes: string;
+  /** The row's description ("" when it carries none). */
+  readonly description: string;
+  /** The ids the row depends on through a "blocks" dependency, in export order. */
+  readonly blockedBy: readonly string[];
 }
 /** One row of the tracker export (one JSON object per line), found by its id. */
 function exportRow(id: string): ExportRow {
   for (const line of textOf(EXPORT).split("\n")) {
     if (!line.includes(id)) continue;
     const parsed: unknown = JSON.parse(line);
-    if (isObject(parsed) && parsed.id === id && typeof parsed.title === "string") return { title: parsed.title, notes: typeof parsed.notes === "string" ? parsed.notes : "" };
+    if (isObject(parsed) && parsed.id === id && typeof parsed.title === "string") {
+      const dependencies: unknown[] = Array.isArray(parsed.dependencies) ? parsed.dependencies : [];
+      return {
+        title: parsed.title,
+        notes: typeof parsed.notes === "string" ? parsed.notes : "",
+        description: typeof parsed.description === "string" ? parsed.description : "",
+        blockedBy: dependencies.flatMap(edge => (isObject(edge) && edge.type === "blocks" && typeof edge.depends_on_id === "string" ? [edge.depends_on_id] : [])),
+      };
+    }
   }
   throw new Error(`the tracker export holds no row ${id}`);
 }
@@ -913,9 +984,11 @@ interface PostureHomes {
   /** The rendered posture rows blanked. */
   readonly rows: number;
 }
-/** A heading's rendered text in the binding's own reading (wb-b4lg F3): its inline source bound by the landed docsSection as the
- * one level-6 heading of a probe section, whose rendered block text is the binding's (inline markup, escapes and inline HTML read as
- * the binding reads them) - never marked's token text, which keeps the markup. "" when the probe renders no heading block. */
+/** A heading's rendered text in the binding's own reading (wb-b4lg F3): on these bytes its inline source bound by the landed
+ * docsSection as the one level-6 heading of a probe section, whose rendered block text is the binding's (inline markup, escapes and
+ * inline HTML read as the binding reads them), not marked's token text, which keeps the markup. "" when the probe renders no heading
+ * block. The pins hold this reading on F3's listed re-spellings only: a token-text normalizer reading those alike is NOT CLAIMED to
+ * be told apart (F3, DEFERRED R-LOCATES). */
 function renderedHeading(heading: Tokens.Heading): string {
   const block = docsSection(`## ${HEADING_PROBE}\n\n###### ${heading.text.replace(/\n/g, " ")}\n`, HEADING_PROBE, 2, []).blocks[0];
   return block?.kind === "heading" ? block.text : "";
@@ -955,7 +1028,7 @@ function openingParagraph(text: string, depth: number, heading: string): { reado
 /** A page re-spelled in one MARKUPS form (wb-b4lg U3): the posture heading and the title, each located through the rendered view,
  * replaced whole by the form's spelling, and the posture section's opening paragraph (located the same way) replaced by the form's
  * sentence; an element the form spells as null is kept. Nothing is located by docs/03's own source spelling, so a page already
- * carrying markup is re-spelled the same way. */
+ * carrying one of F3's listed forms is re-spelled the same way. */
 function markedUp(text: string, markup: Markup): string {
   let out = markup.heading === null ? text : respelledHeading(text, 2, POSTURE_HEADING, markup.heading);
   if (markup.title !== null) out = respelledHeading(out, 1, DOCS03_TITLE, markup.title);
@@ -997,7 +1070,7 @@ function postureHomes(text: string): PostureHomes {
   if (tokens === undefined) return { masked: text, section: "the rendered tokens do not tile the source", rows: 0 };
   const spans: { start: number; end: number }[] = [];
   const headings = tokens.flatMap((entry, index) => (entry.token.type === "heading" ? [{ index, start: entry.start, heading: entry.token as Tokens.Heading }] : []));
-  // Both headings are read by the binding's rendered text, never marked's token text (wb-b4lg F3): the opening and its page title.
+  // Both headings are read through renderedHeading (wb-b4lg F3, on F3's listed re-spellings): the opening and its page title.
   const opening = headings.find(entry => entry.heading.depth === 2 && renderedHeading(entry.heading) === POSTURE_HEADING);
   let section = "none";
   if (opening !== undefined) {
@@ -1201,9 +1274,10 @@ function rosterItems(prefix: string, lists: KeyLists): RecordItem[] {
 function isField(key: string): boolean {
   return wordsOf(key).some(word => FIELD_WORDS.includes(word) || (word.endsWith("s") && FIELD_WORDS.includes(word.slice(0, -1))));
 }
-/** A record key or string value carrying the abbreviation as one of its words (gp, gp_block, gpScore; rf-gp:program:checkpoint:backend,
- * gp.scorer): on the record a GraphPolicy output, though no MENTION in a file scan (R-ABBREVIATION; wb-r63c F5 keys, wb-b4lg F1
- * values). */
+/** Whether a record key or string value carries the abbreviation as one of its words (wordsOf): on the record a GraphPolicy output,
+ * though no MENTION in a file scan (R-ABBREVIATION; wb-r63c F5 keys, wb-b4lg F1 values). Claimed on F1's planted case forms only
+ * (gp, GP, gp_trace, gpLayer, gpCheckpoint, rf-gp:program:checkpoint:backend, gp.scorer, rfo_01gp3x; gpu-runner and gpuCount
+ * quiet); the other case forms wordsOf reads as gp are NOT CLAIMED (F1, DEFERRED R-ITEM-FORMS). */
 function isAbbreviated(term: string): boolean {
   return wordsOf(term).includes(ABBREVIATION);
 }
@@ -1213,7 +1287,8 @@ interface RecordVerdict {
 }
 function judgeRecord(items: readonly RecordItem[]): RecordVerdict {
   return {
-    // Each item is read in its one form, a key or a string value, by both vocabulary readings (wb-b4lg F1: the value side too).
+    // Each item is read in its one form, a key or a string value, by both vocabulary readings (wb-b4lg F1: the value side too),
+    // claimed on F1's planted items only (the unplanted roster list cells: F1, NOT CLAIMED).
     vocabulary: items
       .filter(item => {
         const term = item.key ?? item.value ?? "";
@@ -1252,11 +1327,12 @@ const NO_KEYS: KeyLists = { resultKeys: [], provenanceKeys: [], workKeys: [], wo
  * the acceptance's own ref form and whose source is gp, and a block value gp.scorer; and the item forms the F1 claim names beside
  * them (wb-b4lg U1, the gate's DJ1 and DJ2 twins and their neighbours): string array elements carrying the abbreviation (gp, the ref
  * form, rfo_01gp3x with gp between digits) and a MENTION, the abbreviation as an uppercase and a camel-hump value and key (GP,
- * gpLayer), a root key and a root value; and every other key and value cell of the two readings (wb-b4lg cut #3, the gate's L2-A1 and
- * L2-A3 members and their neighbours): the abbreviation as a root key and as a roster key, a MENTION as a root string value (the
- * operation_id) and as a plain object member's value, both readings on a key of an array element's own object, and a plant in the
- * result, provenance and work key lists of the roster. The planted diagnostics' other keys and values, the near forms and gp inside a
- * longer word (gpu-runner, gpuCount) are quiet. */
+ * gpLayer), a root key and a root value; and the cells cut #3 added (wb-b4lg cut #3, the gate's L2-A1 and L2-A3 members and their
+ * neighbours): the abbreviation as a root key and as a roster key, a MENTION as a root string value (the operation_id) and as a
+ * plain object member's value, both readings on a key of an array element's own object, and a plant in the result, provenance and
+ * work key lists of the roster. The planted diagnostics' other keys and values, the near forms and gp inside a longer word
+ * (gpu-runner, gpuCount) are quiet. These are F1's vocabulary plants; a case form or a roster key list no plant here carries is NOT
+ * CLAIMED (F1, DEFERRED R-ITEM-FORMS). */
 function vocabularyPlantItems(): RecordItem[] {
   const envelope = plantedEnvelope((source, result) => {
     source.transaction_id = "gp-txn-1";
@@ -1325,9 +1401,10 @@ const VOCABULARY_PLANTS: readonly string[] = [
   "plant-roster:result.provenance.gpCheckpoint",
   "plant-roster:result.work.graph_data_ir_count",
 ];
-/** The record's field plants (T4): one key per field word, a plural, a camel-case key in a diagnostic's metadata and a roster key,
- * and a root key and a key of an array element's own object (wb-b4lg cut #3: every key position of the field reading); the planted
- * diagnostic's own keys are quiet. */
+/** The record's field plants (T4): one key per field word, a plural, a camel-case key in a diagnostic's metadata and a roster key
+ * (the work-metrics key list), and a root key and a key of an array element's own object (wb-b4lg cut #3); the planted diagnostic's
+ * own keys are quiet. These are F1's field plants; a roster key list with no field plant (the result, provenance and work key lists)
+ * is NOT CLAIMED (F1, DEFERRED R-ITEM-FORMS). */
 function fieldPlantItems(): RecordItem[] {
   const envelope = plantedEnvelope((source, result) => {
     source.receipt = null;
@@ -1478,16 +1555,17 @@ function plantedPositions(envelope: JsonObject): string[] {
     .filter(entry => carriesPlants(entry.object))
     .map(entry => entry.path);
 }
-/** One reader's read log (wb-b4lg U2, cut #3): the planted positions it read while `live` held, and each object wrapped once. */
+/** One reader's read log (wb-b4lg U2, cut #3): the planted positions its traps noted while `live` held, and each object wrapped once. */
 interface ReadLog {
   live: boolean;
   readonly read: Set<string>;
   readonly wrapped: WeakMap<object, JsonValue>;
 }
-/** `value` as a reader is handed it through `log` (wb-b4lg U2, cut #3): every object and array wrapped once, a read of an object's
- * member, key list or key presence adding the object's path to the log when the object carries the four plants (carriesPlants), so
- * the positions a reader read are read off the very envelope it was handed; a member its target holds fixed is returned as it is
- * (the proxy invariant). */
+/** `value` as a reader is handed it through `log` (wb-b4lg U2, cut #3): every object and array wrapped once, its traps adding the
+ * object's path to the log when the object carries the plants (carriesPlants), so the positions a reader read are read off the very
+ * envelope it was handed; a member its target holds fixed is returned as it is (the proxy invariant). The member (get) and
+ * own-property-descriptor traps are the ones the pins hold (F2); the key-presence (has) and key-list (ownKeys) traps note too, but no
+ * real reader reads a planted object that way on these bytes, so they are NOT CLAIMED (F2, DEFERRED R-HANDOFF). */
 function logged(value: JsonValue, path: string, log: ReadLog): JsonValue {
   if (value === null || typeof value !== "object") return value;
   const held = log.wrapped.get(value);
@@ -1535,9 +1613,9 @@ interface PlantedRun {
   readonly presence: JsonValue;
 }
 /** One src reader on its envelope, handed it through a read log (wb-b4lg U2): the reader's output, the planted positions read off the
- * very envelope it was handed, never off a recomputed listing (planted), the planted positions the reader itself read while it ran
- * (read), and the plant-presence control read off that same envelope (presence) - one handoff, so a plant that never reaches the
- * reader empties its read and leaves its control unchanged. */
+ * very envelope it was handed, never off a recomputed listing (planted), the planted positions the log's traps noted the reader
+ * reading while it ran (read; F2's read kinds), and the plant-presence control read off that same envelope (presence) - one handoff,
+ * so a plant that never reaches the reader empties its read and leaves its control unchanged. */
 function plantedRun(reader: ReaderKind, source: JsonObject, variant: Variant): PlantedRun {
   const log: ReadLog = { live: true, read: new Set(), wrapped: new WeakMap() };
   const handed = logged(source, ENVELOPE_ROOT, log) as JsonObject;
@@ -1555,8 +1633,10 @@ interface ReaderOutputs {
 function outputsOf(runs: Readonly<Record<ReaderKind, PlantedRun>>): ReaderOutputs {
   return { topology: runs.topology.output, evidence: runs.evidence.output, presence: { topology: runs.topology.presence, evidence: runs.evidence.presence } };
 }
-/** Whether a planted run of both readers left each output byte-identical to the plain run, and each reader's plant-presence control
- * likewise - the control must differ, so a compare of the planted outputs with themselves reds (wb-b4lg U2, cut #3). */
+/** Whether each src reader's slot of `planted` equals that slot of `plain` (isDeepStrictEqual), and each reader's plant-presence
+ * control likewise - the control must differ, so a compare of the planted outputs with themselves reds (wb-b4lg U2, cut #3). What
+ * the src slots hold is the caller's: that they hold each reader's own plain and planted outputs is NOT CLAIMED (F2, DEFERRED
+ * R-HANDOFF). */
 function compareReaders(plain: ReaderOutputs, planted: ReaderOutputs): JsonValue {
   return {
     topology: isDeepStrictEqual(planted.topology, plain.topology),
@@ -1686,14 +1766,14 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const clean = readersOn(variantEnvelope("clean"), "clean");
     const inert: string[] = [];
     // Where the plants landed, per variant and reader, read off the very envelope each reader was handed (wb-b4lg U2), and which of
-    // them the reader itself read while it ran (plantedRead, wb-b4lg cut #3: a reader handed no plants reads none).
+    // them the log noted the reader reading while it ran (plantedRead, wb-b4lg cut #3: a reader handed no plants reads none).
     const plantedAt: Partial<Record<Variant, Record<ReaderKind, readonly string[]>>> = {};
     const plantedRead: Partial<Record<Variant, Record<ReaderKind, readonly string[]>>> = {};
     for (const variant of VARIANTS) {
       const base = variantEnvelope(variant);
       const plain = readersOn(base, variant);
       if (variant !== "clean" && isDeepStrictEqual(plain.topology, clean.topology)) inert.push(variant);
-      // Each reader runs on its own plants (wb-b4lg F2): the observer's refusal of a root plant never hides nativeEvidence's read of it.
+      // Each reader runs on its own plants (wb-b4lg F2): the observer's strict objects are never planted for nativeEvidence's run.
       const runs = {
         topology: plantedRun("topology", gpPlanted(base, strictObjects().topology), variant),
         evidence: plantedRun("evidence", gpPlanted(base, strictObjects().evidence), variant),
@@ -1702,7 +1782,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       plantedAt[variant] = { topology: runs.topology.planted, evidence: runs.evidence.planted };
       plantedRead[variant] = { topology: runs.topology.read, evidence: runs.evidence.read };
       // One compare and one leak walk for the src readers and their plant-presence controls (wb-b4lg cut #3): the controls must differ
-      // and leak, so a compare or a walk that cannot read a planted run reds here.
+      // and leak, so a compare or a walk that reads no planted control reds here. What the src slots hold is NOT CLAIMED (F2).
       readersUnchanged[variant] = json(compareReaders(plain, planted));
       for (const [part, value] of outputParts(planted)) for (const marker of leaksIn(JSON.stringify(value))) leaked.add(`${variant} ${part}: ${marker}`);
     }
@@ -1752,12 +1832,12 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     // sentence, a second rendered heading or a level-1 heading inserted above each un-states it, and a level-1 appendix after the
     // section bounds it, so the appendix's claim is read.
     // The posture heading and its opening paragraph are located through the rendered view, never by their source spelling (wb-b4lg
-    // F3, locateControls), so a markup-only edit of docs/03's heading, title or sentence leaves every control on the section it binds.
+    // F3, locateControls), so docs/03 re-spelled in each MARKUPS form keeps every control on the section it binds (F3's list only).
     // The heading-read controls (wb-b4lg F3): docs/03's rendered posture heading and page title re-spelled with inline emphasis.
     const emphasized = respelledHeading(docs03, 2, POSTURE_HEADING, EMPHASIZED_HEADING);
     const titled = respelledHeading(docs03, 1, DOCS03_TITLE, EMPHASIZED_TITLE);
     const appended = postureHomes(`${docs03}\n# Appendix\n\nPi reads GraphPolicy scores from the rf render envelope.\n`).masked;
-    // The F3 enumeration on docs/03 itself (wb-b4lg U3): each MARKUPS form re-spells its heading, title and sentence where it can (the
+    // F3's list on docs/03 itself (wb-b4lg U3): each MARKUPS form re-spells its heading, title and sentence where it can (the
     // opening paragraph replaced by the form's sentence), and the home, the stated sentence and the locate controls are read on that
     // copy through docs/03's own control path.
     const markup = Object.fromEntries(
@@ -1936,8 +2016,8 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     return json({ residual: "R-NEAR-FIELD", findings: { vocabulary: [...verdict.vocabulary], fields: [...verdict.fields] } });
   },
   Q13: () => {
-    // A record value is never a GraphPolicy output field (wb-b4lg F1, the enumerated item forms): a string value naming every field
-    // word and a plural, and a number, a boolean and a null under keys that name none.
+    // A record value is no GraphPolicy output field (wb-b4lg F1), read on these planted values: a string value naming every field
+    // word, one naming a plural, and a number, a boolean and a null under keys that name none.
     const items = plantedItems(
       plantedEnvelope((source, result) => {
         source.diagnostics = [{ ...infoDiagnostic({ weight: LEAK_SCORE, flag: true, mark: null }), message: "score 0.9, ranking a b, embedding [0.5], receipt r" }];
@@ -2022,6 +2102,9 @@ describe("wb-e9dy rf GraphPolicy-context census (RF-GRAPH-POLICY-CONTEXT-R1, unt
         fieldPlants: [...FIELD_PLANTS],
         pinPlant: PIN_PLANT,
         residuals: RESIDUALS,
+        followUp: FOLLOW_UP,
+        deferredTo: DEFERRED_TO,
+        deferred: DEFERRED,
         readers: [...READERS],
       }),
     ).toStrictEqual(ROSTER.constants);
@@ -2070,6 +2153,13 @@ describe("wb-e9dy rf GraphPolicy-context census (RF-GRAPH-POLICY-CONTEXT-R1, unt
     expect(ownershipRows(docs03).length, "docs/03's Ownership boundaries section renders the posture ownership row").toBeGreaterThanOrEqual(1);
     expect(git(["cat-file", "-t", FILING_PIN]).toString("utf8").trim(), "the filing pin is a commit of this repository").toBe("commit");
     expect([...SURFACE_ROOTS, KEY_ROSTER].filter(path => !existsSync(join(REPO, path))), "the surface roots and the key roster exist").toEqual([]);
+    // The DEFERRED residuals (wb-b4lg cut #4, ruling R-B176): the structural-exit child's own export row names exactly the deferred
+    // members, in order, and is blocked by the follow-up bead, so a member dropped from DEFERRED and the roster together still reds.
+    const child = exportRow(DEFERRED_TO);
+    expect(child.description.match(/\b[GM]-[A-Z0-9]+(?:-[A-Z0-9]+)+\b/g) ?? [], `${DEFERRED_TO}'s export row names exactly the DEFERRED members, in order`).toEqual(
+      Object.values(DEFERRED).flat(),
+    );
+    expect(child.blockedBy, `${DEFERRED_TO}'s export row is blocked by ${FOLLOW_UP}`).toContain(FOLLOW_UP);
   });
 
   for (const row of ROWS) {

@@ -304,6 +304,25 @@
       "R-NEAR-FIELD": "Q12",
       "R-FIELD-VALUE": "Q13"
     },
+    "followUp": "wb-b4lg",
+    "deferredTo": "wb-v03p",
+    "deferred": {
+      "R-ITEM-FORMS": [
+        "G-U1-CASE",
+        "G-U1-LIST",
+        "G-U1-LISTF"
+      ],
+      "R-HANDOFF": [
+        "G-U2-HASKEYS",
+        "G-U2-OUTPUTSOF",
+        "G-U2-CALLSITE"
+      ],
+      "R-LOCATES": [
+        "M-NORM-FULL",
+        "G-U3-WS4",
+        "G-U3-ZS"
+      ]
+    },
     "readers": [
       "listing",
       "piVerdict",
