@@ -12,12 +12,12 @@
  * BINDINGS (bindingOf): an identifier resolves through the TypeScript binder's own symbol at its use site, in a one-file
  * program over the very source (no lib, no module resolution, nothing emitted), so a same-named declaration in another scope
  * never answers for it (refusal #3 U1, refusal #4 U1); an expando entry the binder records for a property write (f.tag = v)
- * is no declaration. BINDING_KINDS:
+ * is no declaration, nor is a type-only one (an interface or a type alias). BINDING_KINDS:
  * - import: the symbol is declared in the file by an import (named, default or namespace) or an import-equals
  * - global: the symbol has no declaration in the file, or only declarations in an ambient context
  * - local: any other declaration in the file
  * VALUES (stringValues): a string literal or a no-substitution template, or an identifier whose own binding is a local const
- * declaration of that name initialized by one, through a chain of such names (a cycle reads no value); parentheses, as,
+ * declaration of that name initialized by one (its one variable declaration: a namespace merged with it holds no value), through a chain of such names (a cycle reads no value); parentheses, as,
  * satisfies, non-null and <T> assertions are read through. Any other value (a let or var binding, an ambient const, a member,
  * a parameter, an imported name, a computed string) is no value.
  * CHAINS (calleeChains): a member, or an element whose key has a value (any other key reads <computed>), as dotted text, with
@@ -242,13 +242,15 @@ const isAmbient = (node: ts.Node): boolean => {
 };
 /** A binder entry that is no declaration: an expando property write (f.tag = v or f["tag"] = v) records the written name itself, an identifier, among the name's declarations. */
 const isExpando = (declaration: ts.Node): boolean => ts.isIdentifier(declaration);
+/** A type-only declaration (an interface or a type alias) declares no value, so no value read answers to it (a const or a declare const merged with one keeps its own kind). */
+const isTypeOnly = (declaration: ts.Node): boolean => ts.isInterfaceDeclaration(declaration) || ts.isTypeAliasDeclaration(declaration);
 /** The binding an identifier resolves to at its use site (BINDINGS above); a shorthand property's value symbol for its name. */
 export function bindingOf(identifier: ts.Identifier): Binding {
   const source = identifier.getSourceFile();
   const checker = checkerOf(source);
   const parent = identifier.parent;
   const symbol = ts.isShorthandPropertyAssignment(parent) && parent.name === identifier ? checker.getShorthandAssignmentValueSymbol(parent) : checker.getSymbolAtLocation(identifier);
-  const declarations = (symbol?.declarations ?? []).filter(declaration => declaration.getSourceFile() === source && !isExpando(declaration));
+  const declarations = (symbol?.declarations ?? []).filter(declaration => declaration.getSourceFile() === source && !isExpando(declaration) && !isTypeOnly(declaration));
   if (declarations.some(isImportBinding)) return { kind: "import", declarations };
   if (declarations.every(isAmbient)) return { kind: "global", declarations };
   return { kind: "local", declarations };
@@ -256,11 +258,12 @@ export function bindingOf(identifier: ts.Identifier): Binding {
 /** Whether a node is a const declaration of a name (not a pattern). */
 export const isConstDeclaration = (declaration: ts.Node): boolean =>
   ts.isVariableDeclaration(declaration) && ts.isIdentifier(declaration.name) && ts.isVariableDeclarationList(declaration.parent) && (declaration.parent.flags & ts.NodeFlags.Const) !== 0;
-/** The initializer of an identifier's own binding when that binding is a const declaration of the name with one. */
+/** The initializer of an identifier's own binding when that binding's one variable declaration is a const declaration of the name with one (a namespace merged with it holds no value of its own). */
 export function constInitializer(identifier: ts.Identifier): ts.Expression | undefined {
   const { kind, declarations } = bindingOf(identifier);
-  const [declaration] = declarations;
-  return kind === "local" && declarations.length === 1 && declaration !== undefined && ts.isVariableDeclaration(declaration) && isConstDeclaration(declaration) ? declaration.initializer : undefined;
+  const variables = declarations.filter(ts.isVariableDeclaration);
+  const [declaration] = variables;
+  return kind === "local" && variables.length === 1 && declaration !== undefined && isConstDeclaration(declaration) ? declaration.initializer : undefined;
 }
 
 // ---- values and chains ------------------------------------------------------------------------------------------------
@@ -1045,7 +1048,7 @@ export const MODULE_NEEDLES = ["providers/hyperunix", "hyperunix-observer"] as c
 export const CAPABILITY_ID = "hyperunix.find";
 export const OVERRIDE = "HYPERUNIX_HX";
 const escaped = (text: string): string => text.replace(/[./-]/g, match => `\\${match}`);
-const MODULE_PATTERNS: readonly RegExp[] = MODULE_NEEDLES.map(needle => new RegExp(`/${escaped(needle)}(?:\\.[cm]?[jt]s)?$`));
+const MODULE_PATTERNS: readonly RegExp[] = MODULE_NEEDLES.map(needle => new RegExp(`(?:^|/)${escaped(needle)}(?:\\.[cm]?[jt]s)?$`));
 /** A path into the installed SDK package. */
 const SDK_PATH = new RegExp(`(?:^|/)node_modules/${escaped(SDK_MODULE)}(?:/|$)`);
 /** A specifier as a resolver may read it: every %HH escape decoded and the path normalized (posix). */
@@ -1053,7 +1056,7 @@ export function normalizedSpecifier(specifier: string): string {
   const decoded = specifier.replace(/%([0-9A-Fa-f]{2})/g, (_whole: string, hex: string) => String.fromCharCode(Number.parseInt(hex, 16)));
   return decoded.length === 0 ? decoded : posix.normalize(decoded);
 }
-/** An HX module: the SDK package or a subpath of it, a path into node_modules/@hyperunix/sdk, or a path ending providers/hyperunix or hyperunix-observer - read after normalizedSpecifier. */
+/** An HX module: the SDK package or a subpath of it, a path into node_modules/@hyperunix/sdk, or a path ending providers/hyperunix or hyperunix-observer at a segment boundary (the path's start or a /; a .js, .ts, .mjs, .mts, .cjs or .cts extension allowed) - read after normalizedSpecifier, which drops a leading ./ (cut #3 reads that start as a boundary). */
 export const HX_MODULE = (specifier: string): boolean => {
   const path = normalizedSpecifier(specifier);
   return path === SDK_MODULE || path.startsWith(`${SDK_MODULE}/`) || SDK_PATH.test(path) || MODULE_PATTERNS.some(pattern => pattern.test(path));
