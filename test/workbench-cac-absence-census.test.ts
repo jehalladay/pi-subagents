@@ -108,8 +108,9 @@
  * trees and docs/ past docs/workbench (38 in this worktree unbuilt; the git-ignored dist/ and .forge/ a build and a default-tier run
  * leave make 40 - these subjects follow the checkout); R-ALIAS each program file the vendored lines come from, by stem (13); R-VERSION
  * each schema member's other version; R-TITLE a live export title that spells a needle, on a receipt's line 1; R-REQUIREMENT-ID a live
- * requirement id that spells one, in a test/ source outside the holders. Every write a quiet row makes is recorded (PLANTED) and the
- * residual-anchor case requires each subject planted (320 unbuilt, 322 built), so a family's row deleted with its roster entry reds.
+ * requirement id that spells one, in a test/ source outside the holders. Every write a quiet row makes is recorded (PLANTED; since
+ * wb-iug2 cut #4 as the text the write left on disk, read back from its path) and the residual-anchor case requires each subject
+ * planted (320 unbuilt, 322 built), so a family's row deleted with its roster entry reds.
  * MEASURED FOR wb-iug2 AT 9ad61f3 (trunk tip at claim time, landing 680) and again at 242b275 (landing 691, wb-ycue, merged into the
  * branch for the respin): the two-word member written with U+200B (zero-width space), with U+3164 (Hangul filler) and with nothing in
  * place of its space, planted in one src file of the live tree, reads quiet (25 of 25 at 9ad61f3, 28 of 28 at 242b275: the gate's
@@ -133,6 +134,20 @@
  * spelling to the engine's last code point. The anchor owes each class file at its path in its shape (classFiles): 34 subjects, 354
  * unbuilt and 356 built (measured). Cost: the code-line shape's 1,112,099 lines pay the per-line read the packed shape avoids,
  * R-SPELLING 7,500 ms against 579 ms on cut #2 at load1 ~81 (measured back to back), inside the row's 60 s budget.
+ * RESPIN (wb-iug2 cut #4, the third substance cut, in the enumerate-the-resolvable form under the rule 19 cap R-B190; the gate's
+ * refusal #3, U1-U2, merged with trunk e56ed87, landing 743, whose census and roster bytes are the refusal probe's): three gate
+ * members of one edit each read 28 of 28 on cut #3, and again on its merge (measured). U1: an own symbol-keyed Symbol.matchAll on the
+ * matcher (M-SYM-ALT-SINGLE-QUOTE, M-SYM-SINGLE-QUOTE), which the whole pin's Object.getOwnPropertyNames never lists; the matcher's
+ * own keys are now read whole (Reflect.ownKeys), with its lastIndex, its regular-expression slot and no proxy, and each member reds.
+ * U2: write() dropping U+200B from the bytes on disk (W-H-WRITE-HOLLOW) while the identity pins read the built text; the text the line
+ * reading is handed for each class file is now held byte for byte to its built text, and PLANTED records what each write left on disk,
+ * so W-H and its pairs with L2-00 and L2-Q red, and so does the landed separator plant's own write hollow (W-H-TAB with its tab cure,
+ * PREP's counter-reading). The measured open members are killed at their own sites (THE CONTEXT PLANT below), and the class shapes are
+ * held to CLASS_FORMS' (cut #3's guard hollow G-U1-HOLLOW, with L2-Q, reds). The anchor owes each class and context file: 370
+ * subjects, 34 class and 16 context among them, unbuilt (measured; dist/ and .forge/ add the two outside sites of F5). Cost:
+ * R-SPELLING 8,623 to 9,179 ms against 8,850 to 9,064 ms on cut #3's merged bytes, measured back to back at load1 ~200 to 250; peak
+ * RSS 1.20 to 1.34 GB against 1.10 to 1.18 GB, the PLANTED read-back's (reverted alone it reads 0.92 to 1.04 GB, in back-to-back
+ * pairs).
  *
  * READINGS. A tree is walked from the repository root by directory entries: a regular file is read, a directory recursed (hidden
  * entries included), anything else (a symlink, a socket) is UNREAD and recorded. Every file is read as latin1 bytes, so the ASCII
@@ -225,30 +240,46 @@
  * member: encoded, it is still read (as the member it spells), so it is no escape. With wb-ycue, R-TITLE a needle on a receipt's R539
  * title line, the bead's own export title, is title data, and R-REQUIREMENT-ID a needle inside an export requirement id in a test's
  * comment or suite title is title data (THE TITLE READINGS); every family is held to its outside subjects (F5 above).
- * Since wb-iug2, R-SPELLING bounds the two-word member's joiner at the class. THE MATCHER is pinned whole (cut #3, U2): its source is
- * the needles' own texts (none holds a pattern character), one alternative each in the needle set's order, the acronym bounded by no
- * letter, digit or underscore on either side, joined by "|", its flags g alone, on a plain RegExp (RegExp.prototype its prototype, no
- * own property but lastIndex) - not a projection of its source, so an alternative added, dropped or respelled reds however it is
- * written. Such a matcher reads the
- * member only where the line it is handed holds the member's own text, its words (which carry no white space) joined by its one
- * space. THE CLASS PLANT writes every other joiner of at most one code point - the joined spelling and each of the 1,112,063 other
- * Unicode scalar values, derived plane by plane from the engine (U+200B and U+3164 among them, named in JOINER_POINTS) - in two
- * shapes, one file per plane each (CLASS_SHAPES): packed, 256 spellings to an unquoted line a space apart, the controls on lines of
- * their own, in src/plant-<plane>.ts; and code line, one spelling to a line in the census's own code() form, inside a double-quoted
- * string, in qa/plant-<plane>.mjs. The member with its space opens and closes each file, so each is read to its end, and the residual
- * anchor owes each file as written at its path. Each file is read off its text as written (classFaults, cut #3): its path and every
- * gap before, between and after its spellings are its shape's form, as written apart from the shape's writer (CLASS_FORMS), and in each
- * shape the joiners strictly increase by code point plane by plane, from the joined spelling and U+0000 to the engine's last code
- * point, each of its own plane, none the space or a surrogate, and number the standard's SCALAR_VALUES: the class exactly (U3).
- * THE LINE READING is pinned at the sites the two shapes write, and only there (cut #3, U1): a rewrite before the matcher that reads a
- * joiner of at most one code point as the space at one of those sites reds the row. A rewrite keyed to a site neither shape writes -
- * another quoting (single quotes, a template, a comment), another line length (the code-line shape's lines run 9 to 46 characters as
- * read, the packed shape's spelling lines 5,015 to 5,887 but for the 230-character head of the one line its U+000A spelling breaks),
- * another tree (test, docs/workbench, examples), another file kind or name, another position on the line - reads such a joiner as the
- * space without a row reddening, and so does a rewrite of a longer joiner (two or more code points, of which only the landed two spaces
- * are planted) at any site. Those context-limited and longer-joiner readings stay open R-SPELLING members (measured on the cut's final
- * bytes, 28 of 28 each: U+200B read as the space only in examples, only inside single quotes, only on lines of 64 to 511 characters,
- * and a doubled U+200B mapped to the space).
+ * Since wb-iug2, R-SPELLING bounds the two-word member's joiner at the class. THE MATCHER is pinned whole (cut #3, U2; cut #4, refusal
+ * #3 U1): its source is the needles' own texts (none holds a pattern character), one alternative each in the needle set's order, the
+ * acronym bounded by no letter, digit or underscore on either side, joined by "|"; its flags g alone; RegExp.prototype its prototype;
+ * its own keys, string- and symbol-keyed (Reflect.ownKeys), lastIndex alone, at 0; a RegExp object (the engine's regular-expression
+ * slot, types.isRegExp) that is not a proxy (types.isProxy). So an alternative added, dropped or respelled in its source reds, and so
+ * does a reading given to the matcher itself, an own property string- or symbol-keyed (a Symbol.matchAll of its own: refusal #3's
+ * M-SYM-ALT-SINGLE-QUOTE and M-SYM-SINGLE-QUOTE). A reading changed through the shared intrinsics the matcher is read through -
+ * RegExp.prototype's methods and getters, RegExp's species, String.prototype.matchAll and the iterators they return, which every
+ * regular expression in the realm shares - is NOT CLAIMED by this census. Such a matcher reads the member only where the line it is
+ * handed holds the member's own text, its words (which carry no white space) joined by its one space.
+ * THE CLASS PLANT writes every other joiner of at most one code point - the joined spelling and each of the 1,112,063 other Unicode
+ * scalar values, derived plane by plane from the engine (U+200B and U+3164 among them, named in JOINER_POINTS) - in two shapes, one
+ * file per plane each (CLASS_SHAPES, held to exactly CLASS_FORMS' shapes, cut #4): packed, 256 spellings to an unquoted line a space
+ * apart, the controls on lines of their own, in src/plant-<plane>.ts; and code line, one spelling to a line in the census's own code()
+ * form, inside a double-quoted string, in qa/plant-<plane>.mjs. The member with its space opens and closes each file, so each is read
+ * to its end. Each built file is read off its text (classFaults, cut #3): its path and every gap before, between and after its
+ * spellings are its shape's form, as written apart from the shape's writer (CLASS_FORMS), and in each shape the joiners strictly
+ * increase by code point plane by plane, from the joined spelling and U+0000 to the engine's last code point, each of its own plane,
+ * none the space or a surrogate, and number the standard's SCALAR_VALUES: the class exactly (U3). The line reading is handed each
+ * class file byte for byte as built (cut #4, refusal #3 U2): the text locatedHits is handed for each file, which it records, is the
+ * UTF-8 bytes of its built text, so the identity and form classFaults reads off the built text are those of the bytes the line reading
+ * is handed, never only of the text handed to write() (refusal #3's W-H-WRITE-HOLLOW). PLANTED records each write as the text it left
+ * on disk, read back from its path (cut #4), so the residual anchor owes each class file at its path as the disk holds it.
+ * THE CONTEXT PLANT (cut #4, refusal #3's reading order) writes the named joiners (CONTEXT_JOINERS: JOINER_POINTS' three and the
+ * doubled U+200B), one to a line between the member with its space first and last, at each context site (CONTEXT_SITES): the census's
+ * ten plant sites in their own forms (C1's PLANT_SITES - the code() lines in src, qa and examples, the docs/workbench prose line and
+ * the test/ const line - and F1's COMMENT_SITES, the same five trees with the member inside a comment) and six src files that give the
+ * joiners forms neither those sites nor the class shapes give them - a single-quoted, a template and a bare line, and the code line
+ * padded to 128, 1,024 and 8,192 characters as read. The line reading is handed each context file byte for byte as built, each named
+ * joiner reads quiet there and the controls are read; each measured open member's own site holds the member with the joiner its
+ * rewrite reads as the space (OPEN_MEMBERS, written apart from the sites' writers), and the residual anchor owes each context file at
+ * its path.
+ * THE LINE READING is pinned at the sites R-SPELLING's plants write - the landed separator plant's code() lines in src, the class
+ * shapes' and the context plant's - and only there: a rewrite before the matcher that reads a joiner planted at one of those sites as
+ * the space reds the row (refusal #2's L2-Q, L2-S and L2-P at the class shapes' sites; the measured open members O-EX-EXAMPLES-ONLY,
+ * O-SQ-SINGLE-QUOTED, O-MID-LINE-64-511, O-LJ-DOUBLED-ZWSP and PREP's L2-SRC-DQ at the context plant's; each measured red on the cut's
+ * final bytes). NOT CLAIMED by this census: a rewrite keyed to a site no plant writes - another quoting, line length, tree, file kind
+ * or name, position on the line, or the root read (every plant is written in a synthetic tree, never the live repository) - and a
+ * rewrite of a joiner at a site that does not plant it (a context site plants CONTEXT_JOINERS alone, a class site no joiner of two or
+ * more code points).
  * Gate behaviour: the day a source owner publishes an exported package or an adapter with a recorded adoption gate, the artifact is
  * triaged as its own program-triage epic and the cut that lands its adoption owes this census's update; until then it stays empty by
  * design. Display paths added: none. Test-only: synthetic trees live in makeScratch scratch with the leak guard installed; src, the
@@ -258,7 +289,7 @@ import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { isDeepStrictEqual } from "node:util";
+import { isDeepStrictEqual, types } from "node:util";
 import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
 import { RECEIPT_FILE } from "../qa/workbench/receipts-index.mjs";
@@ -569,7 +600,10 @@ interface Located {
   readonly at: number;
   readonly end: number;
 }
-function locatedHits(file: string, text: string): Located[] {
+/** The line reading: each line of a text through the matcher, every hit with its offsets. Given a map (wb-iug2 cut #4, refusal #3 U2),
+ * it first records in it, by path, the text it is handed, so a census can hold that text to what was planted. */
+function locatedHits(file: string, text: string, walked?: Map<string, string>): Located[] {
+  walked?.set(file, text);
   if (!ANY.test(text)) return [];
   const found: Located[] = [];
   let start = 0;
@@ -763,8 +797,9 @@ function walk(root: string, dir: string, unread: string[]): string[] {
     .sort();
 }
 /** The five trees of a root read by class: product hits (the bound sentence in docs/18 blanked first), test/ hits in and outside a
- * holder, every bound-sentence site in product scope, and the entries the walk could not read. */
-function treeCensus(root: string): Census {
+ * holder, every bound-sentence site in product scope, and the entries the walk could not read. Given a map (wb-iug2 cut #4, refusal #3
+ * U2), it passes it to the line reading, which records in it each file's text exactly as it is handed it, by path. */
+function treeCensus(root: string, walked?: Map<string, string>): Census {
   const unread: string[] = [];
   const perRoot: Record<string, number> = {};
   const files = ROOTS.flatMap(dir => {
@@ -793,7 +828,7 @@ function treeCensus(root: string): Census {
       }
       if (file === DOCS_FILE) text = text.replaceAll(bound, " ".repeat(bound.length));
     }
-    const hits = locatedHits(file, text);
+    const hits = locatedHits(file, text, walked);
     if (holders.has(file)) {
       holder.push(...hits.map(item => item.hit));
       continue;
@@ -898,7 +933,8 @@ function registryNames(): { readonly read: Readonly<Record<string, number>>; rea
 }
 
 // --- synthetic trees ----------------------------------------------------------------------------------------------------------------------
-/** wb-ycue F5, the plant record: every file a quiet row writes, by row (the residual anchor reads it). */
+/** wb-ycue F5, the plant record: every file a quiet row writes, by row (the residual anchor reads it) - since wb-iug2 cut #4 (refusal #3
+ * U2) the text the write left on disk, read back from its path as UTF-8 after the write, never the text handed to the writer. */
 interface Plant {
   readonly quiet: string;
   readonly file: string;
@@ -909,7 +945,7 @@ let planting: string | undefined;
 const write = (root: string, file: string, text: string): void => {
   mkdirSync(dirname(join(root, file)), { recursive: true });
   writeFileSync(join(root, file), text);
-  if (planting !== undefined) PLANTED.push({ quiet: planting, file, text });
+  if (planting !== undefined) PLANTED.push({ quiet: planting, file, text: readFileSync(join(root, file), "utf8") });
 };
 const BOUND_PAGE = `# ${DOCS_PARENT}\n\n## ${DOCS_HEADING}\n\n${PARAGRAPH}\n`;
 /** The walked shape in miniature: one clean file per tree, the bound page, a census module and the roster it names. */
@@ -1205,7 +1241,8 @@ const WHITE_SPACE: readonly string[] = Array.from({ length: 0x10000 }, (_, point
 /** R-SPELLING's class-level bound on what may join the two-word member's words (wb-iug2, the R694 lead from landing 635 F1): the
  * matcher, pinned whole in the row, reads that member through its one space only, so every other joiner of at most one code point -
  * nothing at all (the joined spelling, named "none") and each other Unicode scalar value - is planted in its place, in each class
- * shape (CLASS_SHAPES). JOINER_POINTS names by code point the three members the gate measured outside the white-space class;
+ * shape (CLASS_SHAPES); JOINER_POINTS' three are planted at each context site as well (CONTEXT_JOINERS, cut #4). JOINER_POINTS
+ * names by code point the three members the gate measured outside the white-space class;
  * SCALAR_VALUES is the standard's count each shape must reach (17 planes of 65,536 code points less the 2,048 surrogates: with the
  * space out and the joined spelling in, the same number). */
 const JOINER_POINTS: readonly string[] = ["none", "200b", "3164"];
@@ -1274,7 +1311,55 @@ function classFiles(): readonly ClassFile[] {
   }
   return CLASS_FILES;
 }
-/** A class file read off its text as written (wb-iug2 cut #3, refusal #2 U3): its joiners - what stands between the member's two words
+/** The context plant's joiners (wb-iug2 cut #4, refusal #3's reading order): JOINER_POINTS' three - the joined spelling, U+200B and
+ * U+3164 - and the doubled U+200B, the longer joiner cut #3 measured open (O-LJ-DOUBLED-ZWSP), each named by code point. */
+const CONTEXT_JOINERS: readonly string[] = [...JOINER_POINTS, "200b+200b"];
+/** The census's code() line with a trailing comment that pads it to `length` characters as read (its UTF-8 bytes, the walk's latin1
+ * reading), its line break apart. */
+const padded =
+  (length: number) =>
+  (spelling: string): string => {
+    const head = `${code(spelling).slice(0, -1)} //`;
+    return `${head}${" ".padEnd(length - Buffer.byteLength(head, "utf8"), "x")}\n`;
+  };
+/** The context plant's sites (wb-iug2 cut #4: the measured open members' own sites), one file each: the census's ten plant sites in
+ * their own forms (C1's PLANT_SITES and F1's COMMENT_SITES, each file renamed plant-context-c1 and plant-context-f1), then six src files
+ * that give the joiners forms neither those sites nor the class shapes give them - a single-quoted, a template and a bare line, and
+ * the code line padded to 128, 1,024 and 8,192 characters as read. */
+const CONTEXT_SITES: readonly (readonly [string, (spelling: string) => string])[] = [
+  ...PLANT_SITES.map(([site, line]) => [site.replace("/plant.", "/plant-context-c1."), line] as const),
+  ...COMMENT_SITES.map(([site, line]) => [site.replace("/plant.", "/plant-context-f1."), line] as const),
+  ["src/plant-context-quoted.ts", spelling => `export const plant = '${spelling}';\n`],
+  ["src/plant-context-template.ts", spelling => `export const plant = \`${spelling}\`;\n`],
+  ["src/plant-context-bare.ts", spelling => `${spelling}\n`],
+  ["src/plant-context-128.ts", padded(128)],
+  ["src/plant-context-1024.ts", padded(1024)],
+  ["src/plant-context-8192.ts", padded(8192)],
+];
+/** One context file as written: its path and its text - the member with its space first and last, each named joiner's spelling
+ * between, one to a line in its site's form. */
+interface ContextFile {
+  readonly file: string;
+  readonly text: string;
+}
+let CONTEXT_FILES: readonly ContextFile[] | undefined;
+/** The context plant's files as written, built once from the needle set (R-SPELLING writes them; the residual anchor owes each). */
+function contextFiles(): readonly ContextFile[] {
+  CONTEXT_FILES ??= CONTEXT_SITES.map(([file, line]) => ({ file, text: [spellMember(" "), ...CONTEXT_JOINERS.map(name => spellMember(joinerOf(name))), spellMember(" ")].map(line).join("") }));
+  return CONTEXT_FILES;
+}
+/** The measured open members (cut #3's note: O-EX-EXAMPLES-ONLY, O-SQ-SINGLE-QUOTED, O-MID-LINE-64-511, O-LJ-DOUBLED-ZWSP; refusal #3's
+ * PREP F5: L2-SRC-DQ), each by the joiner its rewrite reads as the space and the context it keys to, written here apart from
+ * CONTEXT_SITES' writers: the context plant must hold that joiner's spelling, as read, on a line in that context (wb-iug2 cut #4). */
+const OPEN_MEMBERS: Readonly<Record<string, { readonly joiner: string; readonly at: (file: string, line: string, spelling: string) => boolean }>> = {
+  "O-EX-EXAMPLES-ONLY": { joiner: "200b", at: (file, line, spelling) => file.startsWith("examples/") && line.includes(spelling) },
+  "O-SQ-SINGLE-QUOTED": { joiner: "200b", at: (_file, line, spelling) => line.includes(`'${spelling}'`) },
+  "O-MID-LINE-64-511": { joiner: "200b", at: (_file, line, spelling) => line.length >= 64 && line.length < 512 && line.includes(spelling) },
+  "O-LJ-DOUBLED-ZWSP": { joiner: "200b+200b", at: (_file, line, spelling) => line.includes(spelling) },
+  "L2-SRC-DQ": { joiner: "200b", at: (file, line, spelling) => file.startsWith("src/") && line.includes(`"${spelling}"`) },
+};
+/** A class file read off its built text (wb-iug2 cut #3, refusal #2 U3; R-SPELLING holds the text the line reading is handed to it,
+ * byte for byte, cut #4): its joiners - what stands between the member's two words
  * in each spelling, in file order, the two controls (the space) first and last - and its gaps: the text before the first spelling,
  * between each two and after the last. */
 function classRead(text: string): { readonly joiners: readonly string[]; readonly gaps: readonly string[] } {
@@ -1326,7 +1411,8 @@ function engineLast(point: number): boolean {
     return true;
   }
 }
-/** The class's identity and form per shape, read off its files as written (refusal #2 U3: cut #2 held the plant by its count alone):
+/** The class's identity and form per shape, read off its files' built texts (refusal #2 U3: cut #2 held the plant by its count alone;
+ * the line reading is handed those texts byte for byte, R-SPELLING, cut #4):
  * the faults against the class - a file other than its form's (CLASS_FORMS) for its plane, or a gap other than its form's; controls
  * other than the space; a joiner of more than one code point, the space, a surrogate, a code point of another plane than its file's,
  * or one not above the joiner before it (the joined spelling first, U+0000 second); a last joiner other than the engine's last code
@@ -1447,6 +1533,9 @@ const QUIET: Readonly<Record<string, () => void>> = {
     const files = classFiles();
     /** Per shape, the joiners its files hold: each spelling ends in the member's last word once, so a file holds its count less the two
      * controls, and a joiner is held when its spelling is in its plane's file. */
+    // cut #3's guard isolation G-U1-HOLLOW (cut #4): the shapes the class is written in are exactly CLASS_FORMS', written apart from
+    // their writers, so dropping a shape from CLASS_SHAPES reds here, never only through a cure it would hide
+    expect(CLASS_SHAPES.map(({ shape }) => shape), "the class is written in exactly the shapes CLASS_FORMS states: packed and code line").toEqual(Object.keys(CLASS_FORMS));
     const planted = CLASS_SHAPES.map(({ shape }) => {
       const texts = files.filter(entry => entry.shape === shape).map(entry => entry.text);
       return {
@@ -1473,26 +1562,70 @@ const QUIET: Readonly<Record<string, () => void>> = {
       [member.split(" ").length, [...head, ...tail].filter(char => /\s/.test(char)).length, MATCHER.source.split("|").filter(part => part.includes(head) && part.includes(tail))],
       "the matcher admits one joiner between the member's words, its one space: the words carry no white space and its one alternative holding both is the member's own text",
     ).toEqual([2, 0, [escapeRe(member)]]);
-    // refusal #2 U2 (cut #3): the matcher pinned whole, not by a projection of its source - each needle's own text (none holds a
+    // refusal #2 U2 (cut #3): the matcher's source pinned whole, not by a projection of it - each needle's own text (none holds a
     // pattern character), one alternative each in the needle set's order, the acronym bounded by no letter, digit or underscore on either
-    // side, joined by "|", its flags g alone, on a plain RegExp - so an alternative added, dropped or respelled reds however it is written
+    // side, joined by "|" - its flags g alone, RegExp.prototype its prototype and lastIndex its one own string-named key, so an
+    // alternative added, dropped or respelled in its source reds however the source spells it (its symbol keys: the next pin, cut #4)
     const own = (needle: Needle): string => (needle.word ? `(?<![A-Za-z0-9_])${needle.text}(?![A-Za-z0-9_])` : needle.text);
     expect(
       [NEEDLES.filter(needle => !/^[A-Za-z0-9 _-]+$/.test(needle.text)).length, MATCHER.source === NEEDLES.map(own).join("|"), MATCHER.flags, Object.getPrototypeOf(MATCHER) === RegExp.prototype, Object.getOwnPropertyNames(MATCHER)],
-      "the matcher is pinned whole: the needles' own texts, one alternative each in the needle set's order, the acronym word-bounded, the flag g alone, a plain RegExp",
+      "the matcher's source is pinned whole - the needles' own texts, one alternative each in the needle set's order, the acronym word-bounded - its flag g alone, RegExp.prototype its prototype, lastIndex its one own string-named key",
     ).toEqual([0, true, "g", true, ["lastIndex"]]);
+    // refusal #3 U1 (cut #4): every own key read, string- and symbol-keyed (Reflect.ownKeys), so a reading given to the matcher itself -
+    // a protocol method of its own (Symbol.matchAll, match, replace, search or split) - reds however it reads; its lastIndex at 0; the
+    // matcher a RegExp object (the engine's own regular-expression slot, types.isRegExp) that is not a proxy (types.isProxy)
+    expect(
+      [Reflect.ownKeys(MATCHER), MATCHER.lastIndex, types.isRegExp(MATCHER), types.isProxy(MATCHER)],
+      "the matcher's own keys, string and symbol, are lastIndex alone, at 0, on a RegExp object that is no proxy: no reading of its own",
+    ).toEqual([["lastIndex"], 0, true, false]);
     withTree(root => {
       for (const entry of files) write(root, entry.file, entry.text);
-      const read = treeCensus(root);
+      const walked = new Map<string, string>();
+      const read = treeCensus(root, walked);
       expect(
         files.map(entry => entry.file).filter(file => !read.files.includes(file)),
         "the walk reads each class file, in each shape",
+      ).toEqual([]);
+      // refusal #3 U2 (cut #4): the class held to the text the line reading is handed for each file (locatedHits records it), never
+      // only to the text handed to write(): byte for byte the UTF-8 bytes of the file as built, so the identity and form classFaults
+      // reads off the built text above are those of the text the line reading is handed
+      expect(
+        files.filter(entry => !Buffer.from(walked.get(entry.file) ?? "", "latin1").equals(Buffer.from(entry.text, "utf8"))).map(entry => entry.file),
+        "the line reading is handed each class file byte for byte as built, in each shape: the class exactly, as it is read",
       ).toEqual([]);
       expect(findings(read), "at each site the class shapes write, every other joiner reads quiet, while the member with its one space, first and last in each class file, is read").toEqual(
         files.flatMap(entry => [
           { file: entry.file, line: 1, needle: member },
           { file: entry.file, line: entry.text.split("\n").length - 1, needle: member },
         ]),
+      );
+    });
+    // refusal #3's reading order (cut #4): the measured open members killed at their own sites - the named joiners (CONTEXT_JOINERS)
+    // at each context site (CONTEXT_SITES), read through the walk and held to the text the line reading is handed
+    const contexts = contextFiles();
+    withTree(root => {
+      for (const entry of contexts) write(root, entry.file, entry.text);
+      const walked = new Map<string, string>();
+      const read = treeCensus(root, walked);
+      expect(
+        contexts.filter(entry => !Buffer.from(walked.get(entry.file) ?? "", "latin1").equals(Buffer.from(entry.text, "utf8"))).map(entry => entry.file),
+        "the line reading is handed each context file byte for byte as built, in its site's form",
+      ).toEqual([]);
+      expect(
+        Object.entries(OPEN_MEMBERS)
+          .filter(([, { joiner, at }]) => !contexts.some(entry => (walked.get(entry.file) ?? "").split("\n").some(line => at(entry.file, line, latin1(spellMember(joinerOf(joiner)))))))
+          .map(([id]) => id),
+        "each measured open member's own site holds the member with the joiner its rewrite reads as the space, in the text the line reading is handed",
+      ).toEqual([]);
+      // the walk orders hits product scope first; both sides are compared in one order, by file and line
+      const byPlace = (hits: readonly Hit[]): Hit[] => [...hits].sort((a, b) => (a.file === b.file ? a.line - b.line : a.file < b.file ? -1 : 1));
+      expect(byPlace(findings(read)), "at each context site every named joiner reads quiet, while the member with its one space, first and last in each context file, is read").toEqual(
+        byPlace(
+          contexts.flatMap(entry => [
+            { file: entry.file, line: 1, needle: member },
+            { file: entry.file, line: entry.text.split("\n").length - 1, needle: member },
+          ]),
+        ),
       );
     });
   },
@@ -1743,6 +1876,7 @@ function residualSubjects(): { readonly subject: string; readonly planted: boole
       .flatMap(needle => ["_", "-", "  ", ...WHITE_SPACE].map(separator => needle.text.replaceAll(" ", separator)))
       .map(text => ({ subject: `other separator ${points(text)}`, planted: spelt(text) })),
     ...classFiles().map(entry => ({ subject: `joiner class ${entry.shape} plane ${entry.plane.toString(16)}`, planted: has(plant => plant.file === entry.file && plant.text === entry.text) })),
+    ...contextFiles().map(entry => ({ subject: `joiner context ${entry.file}`, planted: has(plant => plant.file === entry.file && plant.text === entry.text) })),
     ...NEEDLES.filter(needle => spells(needle).length === 0).map(needle => ({ subject: `encoded ${needle.text}`, planted: spelt(Buffer.from(needle.text, "utf8").toString("base64")) })),
     ...outsideSites().map(site => ({ subject: `outside site ${site}`, planted: has(plant => plant.file === site) })),
     ...PROGRAM_STEMS.map(stem => ({ subject: `alias ${stem}`, planted: spelt(stem) })),
