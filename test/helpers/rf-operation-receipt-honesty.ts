@@ -1,6 +1,6 @@
 /**
  * wb-jwc.9 (RFCLI-FEEDBACK-OPERATIONAL-CONVERGENCE-R6; the rule-19 structural-exit child of wb-jwc.6, orchestrator rulings R-B88
- * and R-B109; cut #3 in the enumerate-the-resolvable form the second-stage cap R-B177 binds): the readers and the probe vocabulary
+ * and R-B109; cut #4, the fail-closed core the structural exit R-B213 binds, child wb-jwc.12): the readers and the probe vocabulary
  * of the rf operation-receipt reconcile honesty core, landed so wb-jwc.6's final core re-cut can restate its G registrar and N/H
  * honesty claims over them (R-B109: a mechanical restatement over this bead's landed work). Census of record:
  * test/workbench-rf-operation-receipt-honesty-census.test.ts; falsifier roster: test/fixtures/rf-operation-receipt-honesty-roster.json.
@@ -11,7 +11,8 @@
  * forms, and a form no plant feeds is not claimed (the census's named residual R-READER-FORM lists every plant's planted forms).
  *  - srcTree walks src/ with readdirSync: each directory's names sorted by UTF-16 code unit, a directory followed where its name
  *    sorts. A file whose extension is exactly .ts (a .d.ts file included) is a module, parsed with TypeScript's ScriptKind.TS; a
- *    file with another extension is listed unparsed, never parsed.
+ *    file with another extension is listed unparsed (no plant feeds one to a parsing reader, so which files the parsing readers
+ *    parse is not claimed: R-READER-FORM).
  *  - rfRegistrationLiterals reads the spellings of register in the modules: an identifier register or a whole string token
  *    register (a string literal or a template with no substitution); a template with a substitution spells no name and is not
  *    read. A spelling is JUDGED only as the property-access callee of a call, in an optional chain too. A judged call is READ only
@@ -21,8 +22,10 @@
  *    real CapabilityRegistry accepts the id) is listed in `rf` with its descriptor's `effectClass` (the whole string token written
  *    there, else the syntax standing there in angle brackets, else why there is no one plain effectClass assignment) and
  *    `permissions` (an array literal's elements, each its whole string token else its syntax in angle brackets; else the syntax
- *    standing there; else why), so an effect class or a permission written in one of the planted syntaxes (a conditional, a
- *    reference, a call, an assertion, a ?? or || default) is written into the reading instead of a word: it fails closed. A read
+ *    standing there; else why), so an effect class or a permission written in one of the syntax forms READER_PLANTS and
+ *    REFUSAL_TWO_PLANTS plant (their labels name them) is written into the reading as its syntax instead of a word; another form
+ *    is not claimed (refusal #3's U1a-U1e forms among them: a conditional with a branch that is not a whole token, a call with an
+ *    argument, an assertion to a string literal type, a binary whose left operand is a whole token; deferred to wb-jwc.12). A read
  *    call whose id is not an rf capability id is not listed. A spelling that is not a read call is listed in `unjudged` by file,
  *    owner and syntax (a judged call not read: why).
  *  - srcEnvironmentReads reads process.env, the property access env of the identifier process: a property access of it
