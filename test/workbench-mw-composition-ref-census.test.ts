@@ -303,9 +303,11 @@
  * three acceptance clauses, each row's pin quotes tile its label with nothing but separators between them (quoteStarts and
  * unquoted: a quote starts at a word start, ends at a word end or before a comma, semicolon or full stop that white space or the
  * end follows, and sits once, and the words no quote covers form the runs; a label's lead is dropped at its start only and once
- * (lead-not-first, lead-twice, no-lead), in the single-letter form "(x) " alone: four code points, each a COMPUTED SCAN that
- * plants every BMP code point at its position and holds the ones read as a lead - "(" first, x one of the 26 lower-case ASCII
- * letters, ")" and then the space - while a lead whose x is no code point or several (GQ36's "(ab) ") is NOT CLAIMED (wb-h6th);
+ * (lead-not-first, lead-after-space, lead-twice, no-lead), in the single-letter form "(x) " alone: four code points, each a
+ * COMPUTED SCAN that plants every BMP code point at its position and holds the ones read as a lead - "(" first, x one of the 26
+ * lower-case ASCII letters, ")" and then the space - and a fifth COMPUTED SCAN, leadBefore, that plants every BMP code point
+ * before the "(" of "(x) alpha" and holds the ones read as a lead: none (lead-after-space plants a space there: " (x) alpha
+ * gamma" keeps the run "(x)") - while a lead whose x is no code point or several (GQ36's "(ab) ") is NOT CLAIMED (wb-h6th);
  * each rule planted both ways in MEMBERSHIP_PLANTS and each boundary a COMPUTED SCAN, the readings held to the roster's
  * membership block), and every pin is load-bearing, so a pin or a row removed from ROWS, IMPL, the frozen
  * literal and the roster together still reds; the constants the readers use are derived at run time from the same texts (the
@@ -389,13 +391,17 @@
  * field name too: import-type-template, import-type-reference) - each fails closed.
  * NOT CLAIMED: that an edit emptying a live reading is caught (PLANTS: the LIVE CALLS and the routed calls' live projections are
  * held on today's tree only; routing the plants through the live calls is wb-h6th's); a membership lead whose x is no code point
- * or several (wb-h6th); the armed contract is this census's reading of an unpublished type (a consumer whose own cut takes
+ * or several (wb-h6th); a lead after two or more leading code points other than lead-not-first's word and space (leadBefore
+ * scans one); the armed contract is this census's reading of an unpublished type (a consumer whose own cut takes
  * another shape re-measures row A with it); whether W11 (wb-04s) or VC-3 (wb-w12) decided a consumer is read only through src and
  * the manifests; Git revisions and HyperUnix answers (the remote tip's widened list) are not clause (b)'s families; that a
  * producer reference resolves in its producer; that the listing excludes ignored files is held only live (no in-memory plant
  * reaches git); code points outside the BMP are not scanned (each is two surrogate code units, and every lone surrogate is
  * scanned); and the producer facts beyond the anchored ones (the remote tip, its commit time, the blob ids, the package spelling,
  * the measuring stamps) are the measuring seats' record, held to the literal only.
+ * CURED (wb-kym4, the R694 follow-up filed from landing 723's F1, proven red-first): the lead's start-only side had no case for a
+ * lead after one code point, so F1's four gate-authored lead-regex mutants (n01-n04, each admitting a code point before the
+ * opening parenthesis) left this census green; leadBefore and lead-after-space now hold that side, and each of the four reds.
  * CURED (refusal #4 on cut #5, in R-B113's FAIL-CLOSED CORE form): U1 the plant-routing claim restated to exactly the four ROUTED
  * CALLS and the LIVE CALLS stated (PLANTS, T2, FAIL CLOSED, NOT CLAIMED; GQ15-GQ18 read the LIVE CALLS, which no plant passes
  * through); U2 the lead clause restated to its single-letter form, each of its four code points a COMPUTED SCAN (leadOpen, lead,
@@ -635,7 +641,8 @@ function unquoted(label: string, quotes: readonly string[]): { runs: string[]; m
  * Planted labels for the pin-membership readers (quoteStarts, unquoted), each rule both ways: a quote ends at a word end, or
  * before a comma, semicolon or full stop and then white space or the end; it starts at a word start; it sits once; the words no
  * quote covers form the runs; a label's single-letter "(x) " lead is dropped at its start only and once (each of its four code
- * points a COMPUTED SCAN in membershipReading; an x of no or several code points is not claimed: wb-h6th).
+ * points a COMPUTED SCAN in membershipReading, and leadBefore a fifth, of the code point before its "(", which lead-after-space
+ * plants as a space; an x of no or several code points is not claimed: wb-h6th).
  */
 const MEMBERSHIP_PLANTS: Readonly<Record<string, { readonly label: string; readonly quotes: readonly string[] }>> = {
   tiled: { label: "(x) alpha beta gamma", quotes: ["alpha beta", "gamma"] },
@@ -650,6 +657,7 @@ const MEMBERSHIP_PLANTS: Readonly<Record<string, { readonly label: string; reado
   "trailing-run": { label: "(x) alpha gamma", quotes: ["alpha"] },
   "leading-run": { label: "(x) alpha gamma", quotes: ["gamma"] },
   "lead-not-first": { label: "alpha (c) gamma", quotes: ["alpha", "gamma"] },
+  "lead-after-space": { label: " (x) alpha gamma", quotes: ["alpha", "gamma"] },
   "lead-twice": { label: "(x) (y) alpha gamma", quotes: ["alpha", "gamma"] },
   "no-lead": { label: "alpha gamma", quotes: ["alpha", "gamma"] },
   "one-char-quotes": { label: "(x) a b", quotes: ["a", "b"] },
@@ -670,6 +678,7 @@ function membershipReading(): JsonValue {
       leadOpen: BMP.filter(code => unquoted(`${pointOf(code)}x) alpha`, ["alpha"]).runs.length === 0).map(hex4),
       leadClose: BMP.filter(code => unquoted(`(x${pointOf(code)} alpha`, ["alpha"]).runs.length === 0).map(hex4),
       leadGap: BMP.filter(code => unquoted(`(x)${pointOf(code)}alpha`, ["alpha"]).runs.length === 0).map(hex4),
+      leadBefore: BMP.filter(code => unquoted(`${pointOf(code)}(x) alpha`, ["alpha"]).runs.length === 0).map(hex4),
     },
   };
 }
