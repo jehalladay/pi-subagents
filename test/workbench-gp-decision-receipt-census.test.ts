@@ -20,15 +20,19 @@
  *
  *
  * MEASURED (read-only): cut #1's seat (2026-10-28) at the trunk tip 09f45a52f7a7 and at its base e544dd872434, cut #2's seat
- * (2026-10-28) at its base e81d2b08eecf, cut #3's seat (2026-10-28) at its base 014d116fb4c1 and the wb-odlv follow-up's
- * seat (2026-10-30) at its base 577493f9e951, each also at the Pi pin 758ec18187a5: no src module spells GraphPolicyCLI or
- * verifierOutcome (in any spelling the word reader reads); src/workbench/control.ts declares one exported ControlOutcome type
- * alias, a union of the four string literals, starting on line 53 at the pin (read from its parse); the docs sections
- * carrying docs/workbench/06:28, 09:91 and 08:38 render the same, block for block, at the pin and at HEAD; the wb-lrz.3
- * correction row is one line of docs/workbench/TRACEABILITY.md, appended by commit e805a5efd42d (an ancestor of the pin) with
- * numstat 2 added, 0 deleted; the installed @furnace/sdk (vendor/furnace-sdk-0.1.0.tgz) declares AttemptState,
- * AttemptOutcome and TerminationCause in dist/src/protocol.d.ts; and (the follow-up's seat) row A4's Acceptance clause in the
- * bead's own row names one TerminationCause member, external_termination, by the outside anchors' cause reader.
+ * (2026-10-28) at its base e81d2b08eecf, cut #3's seat (2026-10-28) at its base 014d116fb4c1, the wb-odlv follow-up's seat
+ * (2026-10-30) at its base 577493f9e951 and the wb-4wts follow-up's seat (2026-10-30) at its base 2e3a2538887f, each also at
+ * the Pi pin 758ec18187a5: no src module spells GraphPolicyCLI or verifierOutcome (in any spelling the word reader reads);
+ * src/workbench/control.ts declares one exported ControlOutcome type alias, a union of the four string literals, starting on
+ * line 53 at the pin (read from its parse); the docs sections carrying docs/workbench/06:28, 09:91 and 08:38 render the same,
+ * block for block, at the pin and at HEAD; the wb-lrz.3 correction row is one line of docs/workbench/TRACEABILITY.md,
+ * appended by commit e805a5efd42d (an ancestor of the pin) with numstat 2 added, 0 deleted; the installed @furnace/sdk
+ * (vendor/furnace-sdk-0.1.0.tgz) declares AttemptState, AttemptOutcome and TerminationCause in dist/src/protocol.d.ts; (the
+ * wb-odlv follow-up's seat) row A4's Acceptance clause in the bead's own row names one TerminationCause member,
+ * external_termination, by the outside anchors' cause reader; and (the wb-4wts follow-up's seat) each of the three
+ * WHITESPACE_PLANTS' planted texts differs from HEAD's by whitespace alone, keeps its section's heading on its line and moves
+ * the line carrying its anchor's sentence one down (W1 adding no blank line, W2 and W3 one each), and D10's planted carrier,
+ * in block 2 of its section, reads the anchor's carrier text with markdown other than HEAD's, its verdict led "block 2 differs".
  *
  * Pi records no GP decision receipt today. The census pins that (row T) and an ARMED contract (rows A1 to A7) that binds the
  * first receipt site to come, as the wb-0lf.7 and wb-gxd7.3 censuses arm theirs:
@@ -93,15 +97,21 @@
  *    later edit that changes those blocks reds this census until it is re-measured, a markup-only edit too (D10), while the
  *    three WHITESPACE_PLANTS, each changing only what the blocks do not carry (W1 the 06:28 carrier re-wrapped at a space, W2
  *    and W3 a blank line added under the 09:91 and 08:38 headings, so their carriers move a line down), each leave their anchor
- *    held; on disk, an edit of that kind still reds a plant whose span it moves (a plant throws on a drifted span: landing
+ *    held, and each one's planted change is read in the Q3/Q10 planted form, so a plant that writes nothing reds (landing
+ *    706's F1): its planted text differs from HEAD's, by whitespace alone, its section's heading line stays where it is, the
+ *    line carrying its anchor's sentence (the first from the heading on) moves one down, and it adds no blank line (W1) or one
+ *    (W2, W3); on disk, an edit of that kind still reds a plant whose span it moves (a plant throws on a drifted span: landing
  *    658's gate re-wrap P-W1 reds S2b through D3's span). Three controls over the pin's text (the filing's line moved one down,
  *    the carrier text edited, the carrier's source line doubled) each leave their anchor unheld. Eleven in-memory plants (the
  *    gate's D1 to D5, D4 split by page, and D6 a withdrawing paragraph in the section, D7 a duplicated heading, D8 a level-1
  *    heading re-homing the section, D9 a list item added, D10 the 06:28 carrier's strong marker respelled with underscores, a
- *    markup-only edit) each leave their anchor unheld. S2 also a boolean admission or verifier
- *    outcome is refused by its check; S3 also the real control core never takes a causation relation for lifecycle ownership,
- *    and the reference states no relation at all; S4 the precedent commit is an ancestor of the pin and added the correction row
- *    without deleting a line, and the row stands at the pin and at HEAD.
+ *    markup-only edit) each leave their anchor unheld, and D10's is read past that boolean (landing 706's F2): the one prose
+ *    item of its planted section that carries the sentence sits in the section's block 2, reads the anchor's carrier text and
+ *    has markdown other than HEAD's, and its verdict's lead (the why before its first colon) is "block 2 differs", the
+ *    section's block comparison failing at the carrier's own block, never a carrier-text why. S2 also a boolean admission or
+ *    verifier outcome is refused by its check; S3 also the real control core never takes a causation relation for lifecycle
+ *    ownership, and the reference states no relation at all; S4 the precedent commit is an ancestor of the pin and added the
+ *    correction row without deleting a line, and the row stands at the pin and at HEAD.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins as literals each row's id and pin count; one quote, one case and
  * one subject list per pin, in row order, and each pin's subjects; the checks, one per Acceptance row; every mutant with the
@@ -142,11 +152,14 @@
  * and writer (verifier-field compares a reading only on the rows of Attempts that were not killed: a killed row may read pending
  * or unavailable whatever its evidence); which rows of the O5 and O13 drafts the trailing parenthetical carries (the drafts are
  * outside this repository); docs text outside an anchor's section (a later section of the page that withdraws it: the docs leg
- * reads the anchor's own section); R12's field-independence rows (wb-0lf.6, its own bead); Furnace's own durable effect
- * receipts; a pin's reading and its witness's expected value narrowed together (REACHED binds the subjects a pin consulted, not
- * how much of them it reads); a mutant, a journal event, a plant or a control removed from its table and the frozen literal
- * together while every check keeps a mutant that fails it alone; row Q, one of its pins (a residual family) or a residual
- * member removed from every literal (no source outside this cut names the residual families before its delivery note lands).
+ * reads the anchor's own section); the cause of a docs plant's unheld reading but D10's (D1 to D9 read the boolean only);
+ * where between its section's heading and its anchor's sentence a whitespace plant's change lands (its planted reading binds
+ * the change's kind, the two lines' moves and the blank lines added); R12's field-independence rows (wb-0lf.6, its own bead);
+ * Furnace's own durable effect receipts; a pin's reading and its witness's expected value narrowed together (REACHED binds the
+ * subjects a pin consulted, not how much of them it reads); a mutant, a journal event, a plant or a control removed from its
+ * table and the frozen literal together while every check keeps a mutant that fails it alone; row Q, one of its pins (a
+ * residual family) or a residual member removed from every literal (no source outside this cut names the residual families
+ * before its delivery note lands).
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row): R-SPELLING
  * (Q1, a vocabulary spelling the word reader does not read: a member composed at run time from pieces with other words between
  * them, one spelled with escapes, the shortened name GraphPolicy, the word gp, refusal #2's four: a member built from character
@@ -791,7 +804,7 @@ const DOCS_ANCHORS: readonly DocsAnchor[] = [
   },
 ];
 const S06 = "rich producer status must not be flattened into a boolean";
-/** The in-memory docs plants (the gate's D1 to D5 of refusal #1 on cut #1, D4 split by page, D6 to D9, and D10 a markup-only edit, landing 658's gate P-W3 shape): each must leave its anchor unheld. */
+/** The in-memory docs plants (the gate's D1 to D5 of refusal #1 on cut #1, D4 split by page, D6 to D9, and D10 a markup-only edit, landing 658's gate P-W3 shape): each must leave its anchor unheld; D10's carrier change is read by carrierChange. */
 const DOCS_PLANTS: readonly { readonly id: string; readonly anchor: string; readonly apply: (text: string) => string }[] = [
   { id: "D1", anchor: "06:28", apply: text => once(text, `${S06}.`, `<!-- ${S06}. -->`) },
   { id: "D2", anchor: "06:28", apply: text => once(text, `and ${S06}.`, `and the former rule that ${S06} is withdrawn; producers may flatten status to a boolean.`) },
@@ -808,7 +821,8 @@ const DOCS_PLANTS: readonly { readonly id: string; readonly anchor: string; read
 /**
  * The in-memory whitespace plants (landing 658's gate P-W1 and P-W2 shapes, its F1): each changes only what the rendered blocks
  * do not carry (a soft line break inside a paragraph, a blank line between blocks), so each must leave its anchor held; W2 and
- * W3 move their carrier a line down, which no HEAD reading sees.
+ * W3 move their carrier a line down, which no HEAD verdict sees (it reads blocks, never lines), and plantedChange reads that
+ * each plant changes the text at all (landing 706's F1).
  */
 const WHITESPACE_PLANTS: readonly { readonly id: string; readonly anchor: string; readonly apply: (text: string) => string }[] = [
   { id: "W1", anchor: "06:28", apply: text => once(text, "where serializable, and rich producer status", "where serializable,\nand rich producer status") },
@@ -844,13 +858,80 @@ function anchorVerdict(text: string, anchor: DocsAnchor, pin?: string): string {
   const verdict = sectionMatches(section, docsSection(pin, anchor.heading, 2, [anchor.title]).blocks);
   return verdict.ok ? "holds" : verdict.why;
 }
-/** One docs anchor read at the pin and at HEAD, and every in-memory docs and whitespace plant of it read at HEAD (true: the plant left the anchor held). */
+/** The 1-based number of the first line of a text, at or after line from, that holds; 0 when no such line does. */
+function lineWhere(text: string, from: number, holds: (line: string) => boolean): number {
+  const lines = text.split("\n");
+  for (let index = Math.max(from, 1) - 1; index < lines.length; index += 1) if (holds(lines[index] ?? "")) return index + 1;
+  return 0;
+}
+/**
+ * A whitespace plant's planted change, read in the Q3/Q10 planted form so a plant that writes nothing reds (landing 706's F1):
+ * whether the planted text differs from HEAD's, and by whitespace alone (each whitespace run read as one space); how many lines
+ * down the plant moves the section's heading line and the line carrying the anchor's sentence (the first such line from the
+ * heading on); and how many blank lines it adds. A re-wrap inside the carrier adds no blank line and a blank line under the
+ * heading adds one; each moves the sentence's line one down and leaves the heading's where it was.
+ */
+interface PlantedChange {
+  readonly changed: boolean;
+  readonly whitespace: boolean;
+  readonly heading: number;
+  readonly carrier: number;
+  readonly blank: number;
+}
+function plantedChange(head: string, planted: string, anchor: DocsAnchor): PlantedChange {
+  const collapsed = (text: string): string => text.split(/\s+/).join(" ");
+  const heading = (text: string): number => lineWhere(text, 1, line => line === `## ${anchor.heading}`);
+  const carrier = (text: string): number => lineWhere(text, heading(text), line => line.includes(anchor.sentence));
+  const blanks = (text: string): number => text.split("\n").filter(line => line.trim() === "").length;
+  return {
+    changed: planted !== head, whitespace: collapsed(planted) === collapsed(head),
+    heading: heading(planted) - heading(head), carrier: carrier(planted) - carrier(head), blank: blanks(planted) - blanks(head),
+  };
+}
+/** A verdict's lead: its text before the first colon (sectionMatches' "block N differs", ahead of the two blocks it compares). */
+const leadOf = (verdict: string): string => verdict.split(":", 1)[0] ?? verdict;
+/**
+ * A docs plant read for what it does to its anchor's carrier (landing 706's F2: D10's reading pinned beyond the boolean): the
+ * lead of its HEAD verdict; the 1-based number of the planted section's block holding the one prose item that carries the
+ * sentence (0 when not exactly one item does); and whether that item still reads the anchor's carrier text, and still HEAD's
+ * carrier markdown. D10, a markup-only edit, keeps the text and changes the markdown, and its verdict is the section's block
+ * comparison failing at the carrier's own block, never a carrier-text why.
+ */
+function carrierChange(id: string): { readonly lead: string; readonly block: number; readonly text: boolean; readonly markdown: boolean } {
+  const plant = DOCS_PLANTS.find(entry => entry.id === id);
+  if (plant === undefined) throw new Error(`no docs plant ${id}`);
+  const anchor = anchorOf(plant.anchor);
+  const head = headText(anchor.path);
+  const planted = plant.apply(head);
+  const carrierIn = (text: string): { readonly block: number; readonly text?: string; readonly markdown?: string } => {
+    const carrying = docsSection(text, anchor.heading, 2, [anchor.title]).blocks.flatMap((block, index) =>
+      proseOf([block])
+        .filter(item => item.text.includes(anchor.sentence))
+        .map(item => ({ block: index + 1, text: item.text, markdown: item.markdown })),
+    );
+    const only = carrying[0];
+    return carrying.length === 1 && only !== undefined ? only : { block: 0 };
+  };
+  const before = carrierIn(head);
+  const after = carrierIn(planted);
+  return {
+    lead: leadOf(anchorVerdict(planted, anchor, pinText(anchor.path))),
+    block: after.block,
+    text: after.text === anchor.carrier,
+    markdown: after.markdown !== undefined && after.markdown === before.markdown,
+  };
+}
+/**
+ * One docs anchor read at the pin and at HEAD, every in-memory docs and whitespace plant of it read at HEAD (true: the plant
+ * left the anchor held), and each whitespace plant's planted change.
+ */
 function anchorWitness(id: string): {
   readonly pin: string;
   readonly head: string;
   readonly controls: Readonly<Record<string, boolean>>;
   readonly plants: Readonly<Record<string, boolean>>;
   readonly unseen: Readonly<Record<string, boolean>>;
+  readonly planted: Readonly<Record<string, PlantedChange>>;
 } {
   const anchor = anchorOf(id);
   const pin = pinText(anchor.path);
@@ -865,6 +946,7 @@ function anchorWitness(id: string): {
     },
     plants: Object.fromEntries(DOCS_PLANTS.filter(plant => plant.anchor === id).map(plant => [plant.id, anchorVerdict(plant.apply(head), anchor, pin) === "holds"])),
     unseen: Object.fromEntries(WHITESPACE_PLANTS.filter(plant => plant.anchor === id).map(plant => [plant.id, anchorVerdict(plant.apply(head), anchor, pin) === "holds"])),
+    planted: Object.fromEntries(WHITESPACE_PLANTS.filter(plant => plant.anchor === id).map(plant => [plant.id, plantedChange(head, plant.apply(head), anchor)])),
   };
 }
 
@@ -1336,9 +1418,10 @@ const PINS: Readonly<Record<string, () => void>> = {
     witness("S2a", byTwist("boolean-admission", "boolean-verifier"), { "boolean-admission": ["one-row"], "boolean-verifier": ["verifier-field"] });
   },
   S2b: () => {
-    witness("S2b", anchorWitness("06:28"), {
+    witness("S2b", { ...anchorWitness("06:28"), markup: { D10: carrierChange("D10") } }, {
       pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { D1: false, D2: false, D3: false, D6: false, D10: false },
-      unseen: { W1: true },
+      unseen: { W1: true }, planted: { W1: { changed: true, whitespace: true, heading: 0, carrier: 1, blank: 0 } },
+      markup: { D10: { lead: "block 2 differs", block: 2, text: true, markdown: false } },
     });
   },
   S3a: () => {
@@ -1353,8 +1436,14 @@ const PINS: Readonly<Record<string, () => void>> = {
   },
   S3b: () => {
     witness("S3b", { "09:91": anchorWitness("09:91"), "08:38": anchorWitness("08:38") }, {
-      "09:91": { pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { "D4-09": false, D7: false, D9: false }, unseen: { W2: true } },
-      "08:38": { pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { "D4-08": false, D5: false, D8: false }, unseen: { W3: true } },
+      "09:91": {
+        pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { "D4-09": false, D7: false, D9: false }, unseen: { W2: true },
+        planted: { W2: { changed: true, whitespace: true, heading: 0, carrier: 1, blank: 1 } },
+      },
+      "08:38": {
+        pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { "D4-08": false, D5: false, D8: false }, unseen: { W3: true },
+        planted: { W3: { changed: true, whitespace: true, heading: 0, carrier: 1, blank: 1 } },
+      },
     });
   },
   S4a: () => {
