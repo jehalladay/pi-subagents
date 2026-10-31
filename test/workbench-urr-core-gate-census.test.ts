@@ -27,10 +27,12 @@
  *    readings on D1, B2 and B1, each now read with its page twin (markupFree, closedState, optionLabel and groupLabel read no page
  *    twin and are unchanged); the plants' ids and texts and the two families' counts are held to refusal #5's PLANTS sections in
  *    the tracked export, and the table's frozen shape is pinned.
- *  CLAIM WORDS -> FALSIFIERS: each rule THE PAGE TWIN, THE PAGE READ and THE INPUT READ state (below) is a D1 control, one
- *    checkable item per rule, pinned in the roster: PAGE_TWIN_FORMS (5 Markdown texts, read by D1 and by their reader view),
- *    PAGE_READ_FORMS (89 raw-state texts, each read by THE PAGE READ alone) and INPUT_READ_FORMS (40 input start tags, each read
- *    in an HTML block by its reader view), so a reader that breaks a stated rule reds its item.
+ *  CLAIM WORDS -> FALSIFIERS (restated by cut #3 to exactly its pins, orchestrator ruling R-B191): the falsifiers of THE PAGE
+ *    TWIN, THE PAGE READ and THE INPUT READ (below) are exactly the items pinned in the roster as D1 controls - PAGE_TWIN_FORMS (5
+ *    Markdown texts, read by D1 and by their reader view), PAGE_READ_FORMS (154 raw-state texts, each read by THE PAGE READ
+ *    alone) and INPUT_READ_FORMS (48 input start tags, each read in an HTML block by its reader view) - so a reader that reads one
+ *    of these texts otherwise than its pinned reading reds that item (case D1, against the roster's D1 witness). A reader that
+ *    departs from a stated rule only at a text no item holds is NOT CLAIMED by this census (CUT #3 and NOT CLAIMED, below).
  *  Found by the seat (no refusal item; FAIL-CLOSED): THE RENDERED LEG's reference reading looked a name up in NAMED_REFERENCES
  *    without asking whether it is one of its own names, so &constructor; and &toString; decoded to their function's source text and
  *    were neither refused nor left as written, against its claim that any other named reference is REFUSED. A NAMED_REFERENCES name
@@ -44,12 +46,50 @@
  *    upper-case letter; U2, markup opened by an upper-case letter and a bogus comment, a markup declaration and a "</ " form the
  *    text does not close; U3, a low surrogate, 7 hexadecimal and 9 decimal digits, a two-letter name and a name opened by an
  *    upper-case letter; U4, a type whose Unicode lower case is a keyword and whose ASCII lower case is none (a Kelvin sign) and the
- *    first of two placeholders. Beside them each other sub-form the claims below state holds an item too (a carriage return and a
- *    vertical tab, every other place a quote opens no value, an end tag's name, "</" before another character, the first end of a
- *    comment and of other markup, the code points either side of the surrogates and 0x10FFFF, 32-digit references, every
- *    NAMED_REFERENCES name, a legacy name before a space, a type in mixed case, an entry state with neither text), and, for F2, the
- *    windows-1252 table's 32 values and the state of each of the 22 INPUT_TYPES keywords, so a table entry changed in this file and
- *    the roster's constants reds its reading. PAGE_READ_FORMS grows from 41 to 89 items and INPUT_READ_FORMS from 26 to 40.
+ *    first of two placeholders. Beside them cut #2 pinned these further items (restated by cut #3: these items, not each other
+ *    sub-form the claims below state - refusal #2's U1-U4 measured that wider reading false): a carriage return and a vertical
+ *    tab between a tag's name and an attribute, a quote that opens no value at the seven places its items hold, an "=" in an end
+ *    tag's name, "</" before a space read to its first ">" past a quote, the first end of a comment (four items) and of other
+ *    markup (one item), the code points either side of the surrogates and 0x10FFFF, 32-digit references, every NAMED_REFERENCES
+ *    name, a legacy name before a space, a type in mixed case, an entry state with neither text, and, for F2, the windows-1252
+ *    table's 32 values and the state of each of the 22 INPUT_TYPES keywords, so a table entry changed in this file and the
+ *    roster's constants reds its reading. PAGE_READ_FORMS grows from 41 to 89 items and INPUT_READ_FORMS from 26 to 40.
+ *  CUT #3 - THE PINNED READER SET: PAGE_READ_FORMS' 154 texts and INPUT_READ_FORMS' 48 tags, each read by case D1 of this file
+ *    (row D, pin D1; assertion target: the D1 witness's pageReadForms and inputReadForms readings, toStrictEqual the roster's;
+ *    observed at the cut: every reading equal, D1 passing). The respin of refusal #2 (gate run g10-gate-s161 on cut #2 32e16318;
+ *    seat ws-01, run g10-work-s160, trunk 3b8bb88, landing 744, merged in), authored in orchestrator ruling R-B191's terminal
+ *    enumerate-the-resolvable form (R739; rule 19's class frozen at its second failure). Cut #2's frozen shape is kept and only
+ *    added to - no title, row, pin, control, residual row, refusal or reading is removed or weakened, and no reader changes; a
+ *    claim is restated only to narrow it (CLAIM WORDS -> FALSIFIERS, the CUT #2 paragraph, THE PAGE TWIN, THE PAGE READ, THE
+ *    INPUT READ, the two form tables' docstrings and NOT CLAIMED). Its criterion is refusal #2's twenty named members, each red
+ *    at an item that holds one of its gate witnesses, the gate's own text, which reaches THE PAGE READ through a Markdown page as
+ *    one raw-state text token (an input, THE INPUT READ in an HTML block): U1, white space after a quoted value before a letter
+ *    and before a quote (spaceAfterQuotedName, spaceAfterQuotedQuote); a "/" after a quoted value, after an attribute's name and
+ *    before one, each before a letter and before a quote (solidusAfterValueName, solidusAfterValueQuote, solidusAfterNameName,
+ *    solidusAfterNameQuote, solidusBeforeNameName, solidusBeforeNameQuote); a quote after a tag name's "/" (nameSolidusQuote); a
+ *    run of white space before "=" (beforeAttributeSpace, spaceRunAfterQuoted); a tab before a value and after an unquoted one
+ *    (beforeValueTab, afterUnquotedTab); U2, "<!-" before another character (oneDashDeclaration, oneDashEmpty), "</" before a
+ *    digit (digitEndTag, digitNameEndTag), a CDATA section holding ">" (cdataGreaterThan), a comment whose "--!>" starts right
+ *    after "<!--" (dashBangComment) and "<" before ">" (lessThanGreaterThan, lessThanGreaterThanTwice); U3, a reference to 1 and
+ *    to C0 controls (oneReference, oneHexReference, tabReference, lastC0Reference, lastC0HexReference); U4, a type with white
+ *    space around a keyword and a type that starts with one (spacedType, typeTrailingSpace, keywordPrefixType,
+ *    keywordPluralType), a value with white space around it and a white-space value beside a placeholder (valueWithSpaces,
+ *    spaceValue). Beside them, the items the seat's own one-edit members of the readers called for: a space, a tab, a line feed,
+ *    a form feed, a carriage return and a vertical tab (which is none) in each of the five tag states where white space changes
+ *    where a tag ends - before an attribute's name, the self-closing state, before a value, after an unquoted value and after a
+ *    quoted value (beforeAttributeSpace to afterQuotedVerticalTab, 30 items); a run of white space before an attribute's name
+ *    opened by "=" (spaceRunEqualsName); an unquoted value holding "/" and "=" (unquotedSolidusEquals); a single quote within a
+ *    double-quoted value (singleQuoteInDoubleQuoted); "<" before "-" (lessThanDash); a bogus comment and a markup declaration
+ *    holding a quote, each to its first ">" (instructionQuote, declarationQuote); three comments opened by dashes after "<!--" -
+ *    a "--!>" overlapping "<!--", a "--!" with no ">" after it and a "-->" right after it (overlappingBangClose,
+ *    dashBangNoGreaterThan, closedEmptyComment); a carriage return, the delete control and a noncharacter, each read as its code
+ *    point (carriageReturnReference, deleteReference, noncharacterReference); a placeholder and a button's value that are white
+ *    space (spacePlaceholder, spaceButtonValue). Each item's reading was decided before the census ran - by the parse5 7.1.2
+ *    data-state tokenizer, or for an input by the HTML Standard's rendering over parse5's attributes - and D1 holds THE PAGE
+ *    READ's or THE INPUT READ's reading to it; the five carriage-return items and the three comment items are decided by the
+ *    tokenizer alone (a page never hands THE PAGE READ such a text: marked 18.0.11 reads a carriage return as a line feed and
+ *    lexes those comments as html tokens of their own). PAGE_READ_FORMS grows from 89 to 154 items and INPUT_READ_FORMS from 40
+ *    to 48.
  *
  * CUT #6 (the FINAL cut: the respin of refusal #5, gate run g10-gate-s142 on cut #5 b70da137; seat ws-03, run g10-work-s141), bound
  * by orchestrator ruling R-B93 (rule 19's structural exit) to the FAIL-CLOSED CORE: the rendered-reading claim restated to exactly
@@ -299,7 +339,9 @@
  * token's place, THE INPUT READ's in the tag's) and each image as the run first shows it, adding only the findings its unit lacks; a
  * bidirectional control or an invisible split in it is refused as in every twin. Its refusals stay the run's. A raw-state text
  * token in a Markdown image's alt text is no page piece: it is read in the image's reading as written, and refused (marked escapes
- * the alt text into the attribute, so a reader shows it as written).
+ * the alt text into the attribute, so a reader shows it as written). Cut #3: these rules state the delivered reader, pinned at
+ * exactly PAGE_TWIN_FORMS' items (CLAIM WORDS -> FALSIFIERS); a reading that departs from them at a text no item holds is NOT
+ * CLAIMED.
  * THE PAGE READ (wb-2wiv.4, the RB family): a raw-state text token's text as the page holds it - marked writes it there unescaped,
  * as raw HTML - read within the token as the HTML Standard's tokenizer reads text in its data state. MARKUP is removed, as the page
  * shows none of it: from a "<" before an ASCII letter of either case, "/", "!" or "?", a comment ("<!--") to its first "-->" or
@@ -321,7 +363,9 @@
  * not followed, so such a tag in the token is removed like any other and the text after it read in the data state, though a reader
  * shows a script's or a style's text not at all and an xmp's or a textarea's markup as written. A raw-state token inside a script
  * element (its start tag a REFUSED_ELEMENTS refusal) is read the same way, though a reader shows no script text. The token stays
- * refused whatever it holds.
+ * refused whatever it holds. Cut #3: these rules state the delivered reader, pinned at exactly PAGE_READ_FORMS' items (CLAIM
+ * WORDS -> FALSIFIERS; CUT #3 names the sub-forms its items hold); a reading that departs from them at a text no item holds is
+ * NOT CLAIMED.
  * THE INPUT READ (wb-2wiv.4, the IV family): an input start tag THE HTML READ reads shows, in its place, the text of its state - its
  * type attribute (the first one, references decoded by REFERENCE's rule, in ASCII lower case - any other character as written, so a
  * Kelvin sign is no "k" -; absent, or no INPUT_TYPES keyword:
@@ -329,7 +373,10 @@
  * HTML Standard's value sanitization not applied), or its placeholder (the first one) when the value is absent or empty; a button
  * state (submit, reset, button) its value (none when it is absent: the user agent's default label is not read); any other state nothing. That
  * text, its references decoded as an image's alt text is, stands in the tag's place in the unit's page twin; the tag stays a
- * REFUSED_ELEMENTS refusal, and each of its attribute values is still read as a unit of its own.
+ * REFUSED_ELEMENTS refusal, and each of its attribute values is still read as a unit of its own. Cut #3: these rules state the
+ * delivered reader, pinned at exactly INPUT_READ_FORMS' items (CLAIM WORDS -> FALSIFIERS); a reading that departs from them at a
+ * tag no item holds is NOT CLAIMED, and neither is a value or a placeholder holding a line break (the HTML Standard strips line
+ * breaks from an entry state's value and from a placeholder; the value as written is the stated divergence).
  * THE CENSUS (row C1): every tracked src script module is read through its AST. The RF CENSUS holds every text that is no name -
  * a string-like literal, a template's head, middle or tail, a regular-expression pattern, a JSX text - whose tokens include
  * RF_WORD; the SDK CENSUS every such text whose fold holds reactivefiber, the stem or a crate (a name and a comment are read by
@@ -520,7 +567,11 @@
  * and the roster: A1-A4, B1, B2, C1-C3 and D1 red through the bead text, D2 and Q1-Q18 stay green); a control removed from its
  * list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the walk it anchors;
  * and (wb-2wiv.4 cut #2) a NUMERIC_REPLACEMENTS, NAMED_REFERENCES, INPUT_TYPES or INPUT_SHOWN entry changed in this file, in the
- * roster's constants and in every reading that pins it (nothing in the repository holds the HTML Standard's tables).
+ * roster's constants and in every reading that pins it (nothing in the repository holds the HTML Standard's tables); and (cut #3)
+ * a reader that departs from a rule of THE PAGE TWIN, THE PAGE READ or THE INPUT READ only at a text no PAGE_TWIN_FORMS,
+ * PAGE_READ_FORMS or INPUT_READ_FORMS item holds - the rules state the delivered readers, their falsifiers are those items alone
+ * - and such an item removed or re-read in this file, in the roster's constants and in D1's reading together (no text in the
+ * repository holds the items' readings).
  * RESIDUALS (named, each with its pinned quiet row): R-COMPOSED a name composed at run time from parts no one of which holds it
  * ("Host" + "CapabilitySet", a join, a split template, "r" + "f", String.fromCharCode) is read by no scan and by neither census
  * (Q1); R-GENERIC-ABI the ABI spelled only through its generic entries (initialize, inspect, subscribe, snapshot, close) is not
@@ -2215,8 +2266,8 @@ const INVISIBLE_FORMS: Readonly<Record<string, string>> = {
 /** The path D1 reads each INVISIBLE_FORMS text under. */
 const INVISIBLE_FORM_PATH = "docs/invisible.md";
 /**
- * THE PAGE READ's forms (wb-2wiv.4; one checkable item per rule its claim states, each read by pageRead alone and pinned as a D1
- * control, so a reader that breaks a rule reds its form): markup outside CommonMark's grammar (a namespaced or dotted tag, an end
+ * THE PAGE READ's forms (wb-2wiv.4; each read by pageRead alone and pinned as a D1 control, so a reader that reads a form otherwise
+ * reds it - restated by cut #3: these forms, not every sub-form of THE PAGE READ's rules, are what is pinned): markup outside CommonMark's grammar (a namespaced or dotted tag, an end
  * tag a space opens, an empty end tag, a lower-case declaration), markup the grammar holds that marked lexes as an html token of its
  * own (a processing instruction, a CDATA section, the comment forms, one holding ">"), the tag states (a ">" in a double- or single-quoted value of a
  * start or an end tag, white space around "=", a quote that opens no value - after an "=" in a tag's name or an "=" that opens an
@@ -2230,7 +2281,7 @@ const INVISIBLE_FORM_PATH = "docs/invisible.md";
  * quoted value, the next character opening an attribute's name (nameSolidus, solidusBeforeName, solidusAfterName,
  * solidusAfterValue); white space after an unquoted or a quoted value, an "=" after it opening an attribute's name, not a value
  * (spaceAfterUnquoted, spaceAfterQuoted); a character right after a quoted value opening an attribute's name, an "=" among them
- * (nameAfterQuoted, nameAfterQuotedValue, equalsAfterQuotedValue); a quote that opens no value at each other place - a single quote after a tag's name, opening an
+ * (nameAfterQuoted, nameAfterQuotedValue, equalsAfterQuotedValue); a quote that opens no value at seven places - a single quote after a tag's name, opening an
  * attribute's name and within one, a double or a single quote within an unquoted value and right after a quoted value
  * (singleQuoteAfterName, singleNameQuote, singleQuoteInName, doubleQuoteInUnquoted, singleQuoteInUnquoted, quoteAfterQuotedValue,
  * singleQuoteAfterQuotedValue); a start and an end tag opened by an upper-case letter, read by the tag states (upperStartTag,
@@ -2244,7 +2295,16 @@ const INVISIBLE_FORM_PATH = "docs/invisible.md";
  * and 32 decimal ones (longHex, manyHexDigits, longerDecimal, manyDecimalDigits); the windows-1252 table's 32 values 0x80 to 0x9F,
  * in order (windowsTable, F2); a name of two characters and one opened by an upper-case letter (twoLetterName, upperInitialName),
  * every NAMED_REFERENCES name closed by ";", in order (namedTable, F2), and a legacy name before a space, left as written
- * (legacyNameUnclosed; a reader decodes it, the stated divergence).
+ * (legacyNameUnclosed; a reader decodes it, the stated divergence). Cut #3 (refusal #2's U1-U3 and the seat's members; the header's
+ * CUT #3 names each item's sub-form): spaceAfterQuotedName, spaceAfterQuotedQuote, solidusAfterValueName, solidusAfterValueQuote,
+ * solidusAfterNameName, solidusAfterNameQuote, solidusBeforeNameName, solidusBeforeNameQuote, nameSolidusQuote,
+ * spaceRunAfterQuoted, digitEndTag, digitNameEndTag, oneDashDeclaration, oneDashEmpty, dashBangComment, cdataGreaterThan,
+ * lessThanGreaterThan, lessThanGreaterThanTwice, oneReference, oneHexReference, tabReference, lastC0Reference and
+ * lastC0HexReference; the white space grid - a space, a tab, a line feed, a form feed, a carriage return and a vertical tab (none)
+ * before an attribute's name, in the self-closing state, before a value, after an unquoted value and after a quoted value
+ * (beforeAttributeSpace to afterQuotedVerticalTab); and spaceRunEqualsName, unquotedSolidusEquals, singleQuoteInDoubleQuoted,
+ * lessThanDash, instructionQuote, declarationQuote, overlappingBangClose, dashBangNoGreaterThan, closedEmptyComment,
+ * carriageReturnReference, deleteReference and noncharacterReference.
  */
 const PAGE_READ_FORMS: Readonly<Record<string, string>> = {
   namespacedTag: "Fib<o:p>er core",
@@ -2336,10 +2396,75 @@ const PAGE_READ_FORMS: Readonly<Record<string, string>> = {
   upperInitialName: "Fi&NoBreak;er",
   namedTable: "&amp;&lt;&gt;&quot;&apos;&nbsp;&ensp;&emsp;&thinsp;&hairsp;&shy;&ZeroWidthSpace;&zwnj;&zwj;&NoBreak;&hyphen;&dash;&ndash;&mdash;&minus;&period;&excl;&quest;&comma;&colon;&semi;",
   legacyNameUnclosed: "Fi&amp er",
+  spaceAfterQuotedName: 'Fib<o:p a="b" c="d>e">er core',
+  spaceAfterQuotedQuote: 'Fib<o:p a="b" "c>d">er core',
+  solidusAfterValueName: 'Fib<o:p a="b"/c="d>e">er core',
+  solidusAfterValueQuote: 'Fib<o:p a="b"/"c>d">er core',
+  solidusAfterNameName: 'Fib<o:p a/b="c>d">er core',
+  solidusAfterNameQuote: 'Fib<o:p a/"b>c">er core',
+  solidusBeforeNameName: 'Fib<o:p /a="b>c">er core',
+  solidusBeforeNameQuote: 'Fib<o:p /"a>b">er core',
+  nameSolidusQuote: 'Fib<o:p/"a>b">er core',
+  spaceRunAfterQuoted: 'Fib<o:p a="b"  ="c>d">er core',
+  digitEndTag: 'Fib</1 a="b>c">er core',
+  digitNameEndTag: 'Fib</1a b="c>d">er core',
+  oneDashDeclaration: "Fib<!-x>er core",
+  oneDashEmpty: "Fib<!->er core",
+  dashBangComment: "Fib<!----!>er core",
+  cdataGreaterThan: "Fib<![CDATA[a>b er core",
+  lessThanGreaterThan: "Fib<>er core",
+  lessThanGreaterThanTwice: "Fib<>er <>core",
+  oneReference: "x&#1;y",
+  oneHexReference: "Fi&#x1;ber",
+  tabReference: "x&#9;y",
+  lastC0Reference: "x&#31;y",
+  lastC0HexReference: "Fi&#x1F;ber",
+  beforeAttributeSpace: 'Fib<o:p  ="a>b">er core',
+  selfClosingSpace: 'Fib<o:p/ ="a>b">er core',
+  beforeValueSpace: 'Fib<o:p a= "b>c">er core',
+  afterUnquotedSpace: 'Fib<o:p a=b c="d>e">er core',
+  afterQuotedSpace: 'Fib<o:p a="b" ="c>d">er core',
+  beforeAttributeTab: 'Fib<o:p \t="a>b">er core',
+  selfClosingTab: 'Fib<o:p/\t="a>b">er core',
+  beforeValueTab: 'Fib<o:p a=\t"b>c">er core',
+  afterUnquotedTab: 'Fib<o:p a=b\tc="d>e">er core',
+  afterQuotedTab: 'Fib<o:p a="b"\t="c>d">er core',
+  beforeAttributeLineFeed: 'Fib<o:p \n="a>b">er core',
+  selfClosingLineFeed: 'Fib<o:p/\n="a>b">er core',
+  beforeValueLineFeed: 'Fib<o:p a=\n"b>c">er core',
+  afterUnquotedLineFeed: 'Fib<o:p a=b\nc="d>e">er core',
+  afterQuotedLineFeed: 'Fib<o:p a="b"\n="c>d">er core',
+  beforeAttributeFormFeed: 'Fib<o:p \f="a>b">er core',
+  selfClosingFormFeed: 'Fib<o:p/\f="a>b">er core',
+  beforeValueFormFeed: 'Fib<o:p a=\f"b>c">er core',
+  afterUnquotedFormFeed: 'Fib<o:p a=b\fc="d>e">er core',
+  afterQuotedFormFeed: 'Fib<o:p a="b"\f="c>d">er core',
+  beforeAttributeCarriageReturn: 'Fib<o:p \r="a>b">er core',
+  selfClosingCarriageReturn: 'Fib<o:p/\r="a>b">er core',
+  beforeValueCarriageReturn: 'Fib<o:p a=\r"b>c">er core',
+  afterUnquotedCarriageReturn: 'Fib<o:p a=b\rc="d>e">er core',
+  afterQuotedCarriageReturn: 'Fib<o:p a="b"\r="c>d">er core',
+  beforeAttributeVerticalTab: 'Fib<o:p \v="a>b">er core',
+  selfClosingVerticalTab: 'Fib<o:p/\v="a>b">er core',
+  beforeValueVerticalTab: 'Fib<o:p a=\v"b>c">er core',
+  afterUnquotedVerticalTab: 'Fib<o:p a=b\vc="d>e">er core',
+  afterQuotedVerticalTab: 'Fib<o:p a="b"\v="c>d">er core',
+  spaceRunEqualsName: 'Fib<x  =x="y>z">er core',
+  unquotedSolidusEquals: 'Fib<x a=ba/x="y>z">er core',
+  singleQuoteInDoubleQuoted: 'Fib<x a="\'x="y>z">er core',
+  lessThanDash: "Fib<-er core",
+  instructionQuote: 'Fib<? a=">er core',
+  declarationQuote: 'Fib<! a=">er core',
+  overlappingBangClose: "Fib<!---!>er core",
+  dashBangNoGreaterThan: "Fib<!----!er core",
+  closedEmptyComment: "Fib<!---->er core",
+  carriageReturnReference: "x&#13;y",
+  deleteReference: "x&#127;y",
+  noncharacterReference: "x&#xFDD0;y",
 };
 /**
- * THE INPUT READ's forms (wb-2wiv.4; one checkable item per state rule its claim states, each an input start tag read by D1 in an
- * HTML block, "Pi embeds the <tag> core.", and pinned by its reader view): the Text state without a type, by each entry keyword, in
+ * THE INPUT READ's forms (wb-2wiv.4; items for the state rules its claim states - restated by cut #3: these tags, not every
+ * sub-form of THE INPUT READ's rules, are what is pinned -, each an input start tag read by D1 in an HTML block, "Pi embeds the <tag> core.", and pinned by its reader view): the Text state without a type, by each entry keyword, in
  * upper case, by an unknown or empty type; a type matched in any case (HIDDEN) and behind a reference (hidd&#101;n), and the first
  * of two types, each hiding the value; a placeholder alone, behind an
  * empty value, under a value; the first of two values; a value behind a reference; each button state, a button's placeholder and a
@@ -2348,7 +2473,11 @@ const PAGE_READ_FORMS: Readonly<Record<string, string>> = {
  * box - the Text state (kelvinType); a type in mixed case, each upper-case run read (pAsSwOrD, mixedCaseType); the first of two
  * placeholders (firstPlaceholder); an entry state with neither a value nor a placeholder, showing nothing (entryNothing); and the
  * state of each other INPUT_TYPES keyword, each showing nothing (dateType, monthType, weekType, timeType, datetimeLocalType,
- * rangeType, colorType, radioType, fileType, imageType), so every one of the 22 keywords' states holds an item.
+ * rangeType, colorType, radioType, fileType, imageType), so every one of the 22 keywords' states holds an item. Cut #3 (refusal
+ * #2's U4 and the seat's members): a type with white space before and after a keyword (spacedType, typeTrailingSpace) and one
+ * that starts with a keyword (keywordPrefixType, keywordPluralType), each the Text state; a value with white space around it,
+ * shown as written (valueWithSpaces); a white-space value, shown over a placeholder (spaceValue); a white-space placeholder and a
+ * button's white-space value, each shown (spacePlaceholder, spaceButtonValue).
  */
 const INPUT_READ_FORMS: Readonly<Record<string, string>> = {
   noType: '<input value="Fiber" size="6">',
@@ -2391,6 +2520,14 @@ const INPUT_READ_FORMS: Readonly<Record<string, string>> = {
   radioType: '<input type="radio" value="Fiber" size="6">',
   fileType: '<input type="file" value="Fiber" size="6">',
   imageType: '<input type="image" value="Fiber" size="6">',
+  spacedType: '<input type=" hidden" value="Fiber" size="6">',
+  typeTrailingSpace: '<input type="hidden " value="Fiber" size="6">',
+  keywordPrefixType: '<input type="hiddenx" value="Fiber" size="6">',
+  keywordPluralType: '<input type="checkboxes" value="Fiber" size="6">',
+  valueWithSpaces: '<input value=" Fiber " size="6">',
+  spaceValue: '<input value=" " placeholder="Fiber" size="6">',
+  spacePlaceholder: '<input placeholder=" " size="6">',
+  spaceButtonValue: '<input type="reset" value=" " size="6">',
 };
 /** The HTML block D1 reads each INPUT_READ_FORMS tag in. */
 function inputReadPage(tag: string): string {
