@@ -11,7 +11,8 @@
  * for byte, to the roster exported for its section, gives every word a calibration plant, and reds when the reader for a word is
  * removed (ReadOptions lists the words a reading uses; every word by default). CLAIMED_SUBFORMS registers the sub-forms the claims
  * name that no calibration plant of a word pins - each a phrase standing verbatim in the READING paragraph, in a section's heading or
- * in a word's claim - and the census gives each one or more falsifier rows of its own (wb-tz2.19 refusal #1: U1-U4).
+ * in a word's claim - and the census gives each one or more falsifier rows of its own (wb-tz2.19 refusal #1: U1-U4;
+ * refusal #2: U1-U4, cut #3 under ruling R-B217).
  *
  * READING (liveReading). Active code only: comments are trivia. An HX LOCAL is a name a BINDING form binds; its entry reads
  * `<form> <name>`, in binding order. A file is LIVE when it binds an HX local or holds an M5 import. An HX CASE is a case
@@ -360,6 +361,41 @@ export const CLAIMED_SUBFORMS: readonly Subform[] = (
     ["PLACEMENT/bound store", "its entries"],
     ["PLACEMENT/binding default", "and computed keys"],
     ["PLACEMENT/binding default", "a shorthand property's default in an assignment target"],
+    // wb-tz2.19 cut #3 (R-B217): the sub-forms refusal #2's members (O:1589) and the seat's battery members reach
+    ["BINDING/type-only", "binds as the same import would without the marker"],
+    ["PLACEMENT/declaration type", "the type annotation of an M5 or M6 declaration"],
+    ["REGISTRATION/function body", "a case's body may be a function expression"],
+    ["REGISTRATION/arrow body", "a case's body may be an arrow function"],
+    ["REGISTRATION/beside", "every argument beside the title and the body"],
+    ["BINDING/fixpoint", "in source order"],
+    ["BINDING/fixpoint", "every unread declaration, then every unread assignment"],
+    ["MODULE/sdk root", "@hyperunix/sdk exactly"],
+    ["REGISTRATION/chained", "any number"],
+    ["BINDING/string specifier", "whose first argument is a string literal"],
+    ["BINDING/import await", "read through await, as well as through UNWRAP"],
+    ["BINDING/dynamic", "an M5 import bound whole to the name its declaration introduces"],
+    ["BINDING/namespace", "a static namespace import of an HX module"],
+    ["BINDING/aliased", "a static import of an entry under another local name"],
+    ["BINDING/destructured shorthand", "a shorthand element"],
+    ["BINDING/alias", "a variable declared from an HX local"],
+    ["BINDING/alias member", "of a module local"],
+    ["BINDING/assigned value", "reads that assignment's right side as its own source"],
+    ["BINDING/assigned name", "an M6 assignment to a name binds that name"],
+    ["BINDING/store", "a member .name of a value"],
+    ["BINDING/store deep", "at any depth below the root"],
+    ["UNRESOLVED/unread binding", "an element with a computed key that is no string value"],
+    ["UNRESOLVED/unread binding", "a binding pattern the reader cannot read"],
+    ["UNRESOLVED/unread assignment", "no object literal of named entries over a module local"],
+    ["UNRESOLVED/unread assignment", "no member chain rooted at a name"],
+    ["READING", "UNRESOLVED lists what the reader cannot read"],
+    ["REFERENCE/local reference", "by spelling and never by scope"],
+    ["REFERENCE/binding element", "a binding element's name or its property key"],
+    ["REFERENCE/parameter name", "a parameter's own name"],
+    ["REFERENCE/inline import", "an M5 import no declaration binds"],
+    ["PLACEMENT/case body", "a reference inside a case body"],
+    ["PLACEMENT/declaration source", "the initializer of an M5 or M6 declaration"],
+    ["PLACEMENT/binding default", "a binding pattern's defaults"],
+    ["BINDING/assigned =", "an assignment written with ="],
   ] as const
 ).map(([place, phrase]) => ({ place, phrase }));
 /** The words a reading uses, per roster; a roster left out uses every word of it. */

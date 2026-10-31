@@ -15,7 +15,10 @@
  * BASE; every named mutant is a ReadOptions word removal that reds every row it names (its fail-open witnesses among them); and the
  * helper's header roster lines - its FAIL CLOSED clause (UNRESOLVED, REFERENCE, PLACEMENT) and its membership claim (MODULE, ENTRY,
  * UNWRAP, BINDING, REGISTRATION, FLAG, METHOD) - equal its exported rosters byte for byte, and every roster word has a FORMS row
- * whose reading without the word differs from its reading with it.
+ * whose reading without the word differs from its reading with it. Cut #3 restates the R-B128 acceptance to the pinned subset (ruling
+ * R-B217): each gate-authored member of wb-tz2.19's refusals #1 (H<n>) and #2 (G2-<NAME>) and each member of the seat's battery reds
+ * this census, measured on a helper copy (the delivery's battery; never run here), and the membership claim text and the binding
+ * coverage agree with the falsifier roster at exactly the forms the FORMS and SUBFORMS rows plant.
  *
  * ROWS:
  *  ITEM: the description's enumerated items U1 and U2 and the R-B128 note's folded U2 recurrence (U2r), each label verbatim, each with
@@ -33,15 +36,33 @@
  *   quiet row - no HX case titled "HX probe" and nothing unresolved or outside; member 5 still registers its "HX hand-off" case - then
  *   its loud control.
  *  BOUNDARY: B-NONMODULE, an entry member of a local that is no module local, which reads OUTSIDE.
- *  SUBFORMS (wb-tz2.19 refusal #1, U1-U4: claimed sub-forms without a falsifier): one or more rows per sub-form the helper's
- *   CLAIMED_SUBFORMS registers - a phrase of the READING paragraph, of a section's heading or of a word's claim that no calibration
- *   plant of a word pins - each with its reading (pins), its reading without a word where the sub-form is read only once a word is
- *   gone (without), and its reading with WITNESS as ReadOptions.witness where the sub-form is the witnessing reading (witness). Each
- *   row names the gate's refusal #1 members it is the falsifier for (members; H1 H2 H3 H4 H7 H8 H9 H10 H11 H12 H30 H31), and the
- *   refusal's four UNMET lines name exactly those members.
+ *  SUBFORMS (wb-tz2.19 refusals #1 and #2, U1-U4 each: claimed sub-forms, memberships and readings without a falsifier): one or more
+ *   rows per sub-form the helper's CLAIMED_SUBFORMS registers - a phrase of the READING paragraph, of a section's heading or of a
+ *   word's claim that no calibration plant of a word pins - each with its reading (pins), its reading without a word where the
+ *   sub-form is read only once a word is gone (without), and its reading with WITNESS as ReadOptions.witness where the sub-form is the
+ *   witnessing reading (witness). Each row names the gate's refusal #1 members it is the falsifier for (members; H1 H2 H3 H4 H7 H8 H9
+ *   H10 H11 H12 H30 H31), and the refusal's four UNMET lines name exactly those members. Cut #3's rows name no member: the tracker
+ *   export at this cut's base holds no refusal #2 line, so CUT #3 below names the rows each refusal #2 member is pinned by.
  *  MUTANT: the gate's named reader mutants. A word mutant is a ReadOptions word removal that reds every row it names. A code mutant
  *   (options null) is an edit no word removal spells, measured on a helper copy and never run here: GM58 (every local form a module
  *   local) widens B-NONMODULE's reading, and its row names that kill row and the line the kill row reads that the widening drops.
+ *
+ * CUT #3 (orchestrator ruling R-B217, the ENUMERATE-THE-RESOLVABLE form, after refusal #2 O:1589 on cut #2 8cfef694): this census
+ * claims exactly its pinned set - the readings its rows pin, the word removals its MUTANT rows name and the anchors below - and a form
+ * that a header claim's words reach but that no FORMS or SUBFORMS row plants is NOT CLAIMED by this census. Refusal #2's eleven
+ * members are each pinned by rows that red under the member (measured on helper copies, the delivery's battery):
+ *  U1 G2-ENTRY-SOURCE-ASSIGN: unread-assignment-entry-source, unread-assignment-entry-source-entry-name; G2-STORE-ELEMENT-ANYKEY:
+ *   store-element-name-key, store-element-numeric-key, alias-element-name-key, element-member-name-key.
+ *  U2 G2-ALIAS-MEMBER-DEEP: alias-member-deep-chain, alias-member-deep-namespace.
+ *  U3 G2-TYPEONLY-CLAUSE-DEFAULT: type-only-default; G2-USED-VOID: used-assignment-void; G2-USED-COMMA: used-assignment-comma-left,
+ *   used-assignment-comma-right; G2-WITNESS-FIRST: witness-ordered-cases.
+ *  U4 G2-DECLTYPE-M5-ONLY: place-declaration-type-alias; G2-PLACING-CASE-ONLY-ARROW: function-body-named; G2-DECL-REVERSE:
+ *   fixpoint-declaration-order; G2-COMPUTEDKEY-NOUNWRAP: unwrap-site-computed-key, unwrap-site-assigned-computed-key ('a member key'
+ *   is pinned at both keys the reader reads through UNWRAP: an element access's ['name'] and a computed key [name]).
+ *  The rest of cut #3's rows pin further members of the same claims that the seat's battery found surviving cut #2 (the delivery note
+ *  names each member and its rows). Two rows pin a fail-closed boundary of a claim's words, each reading OUTSIDE: a test API taken
+ *  through a binding pattern (declared-api-pattern; declared api reads a variable whose name is an identifier) and a case-method call
+ *  written as a tagged template (chained-tagged-template; chained reads a call expression).
  *
  * ANCHORS OUTSIDE THIS FILE (standing rule 16, CT5 and CT6): the tracker export .beads/issues.jsonl - wb-tz2.19's description holds
  * ITEM U1 and U2 and the acceptance line, its notes hold U2r and the R-B128 acceptance line, and wb-tz2.9's notes hold the refusal
@@ -56,13 +77,15 @@
  * SELF-ANCHORED (held only by this file's literals; a coordinated removal from all of them reads green, and that is NOT claimed): the
  * CONTROLS rows, the RESIDUALS rows, BOUNDARY, the q9 member texts beyond their count, the q7 row, a FORMS plant of a word that keeps
  * another plant, a SUBFORMS row of a sub-form that keeps another row, which SUBFORMS row carries a member (the anchor holds the
- * members' union), the kill lists of the MUTANT rows beyond the first, and the line a code mutant's row names.
+ * members' union), the plant and pins of a SUBFORMS row (refusal #2 F3: a row's plant and pins swapped for another row's of the same
+ * count read green), the kill lists of the MUTANT rows beyond the first, and the line a code mutant's row names.
  * FROZEN SHAPE (standing rule 16): one literal pins every row as <table>:<id>:<pin count> (FORMS: <pins>/<without>; SUBFORMS: <pins>,
  * or <pins>/<without> for a row read without a word; ITEM: its member count; MUTANT: its kill count).
  *
- * NOT CLAIMED: that this census runs a code mutant (GM58 and the gate's refusal #1 members are measured on helper copies, the delivery's
- * battery); any hx behaviour, or that the native tier ran; scope (the reader reads a reference by spelling); a drive that reaches
- * hx through no HX local and no M5 import (R-LIVE-INDIRECT); wb-tz2.9's census itself - its W, S, T and N rows, its claim scanner and
+ * NOT CLAIMED: that this census runs a code mutant (GM58, the gate's refusal #1 and #2 members and the seat's battery members are
+ * measured on helper copies, the delivery's battery); a form a header claim's words reach that no FORMS or SUBFORMS row plants
+ * (CUT #3); any hx behaviour, or that the native tier ran; scope (the reader reads a reference by spelling); a drive that reaches hx
+ * through no HX local and no M5 import (R-LIVE-INDIRECT); wb-tz2.9's census itself - its W, S, T and N rows, its claim scanner and
  * its ROUTE reader stay with that bead, whose re-cut restates its LIVE SET reader over this helper (R-B128).
  *
  * Display paths added: none. Test-only: it spawns nothing and writes nothing; it reads the helper, the tracker export, forge.toml, the
@@ -107,6 +130,7 @@ const BEAD = "wb-tz2.19";
 const PARENT = "wb-tz2.9";
 const SUITE = `hx live-set reader census (${BEAD}, HX-ORIGINAL-GOALS-CLOSURE-R9)`;
 const HELPER = "test/helpers/hx-live-set-reader.ts";
+const CENSUS = "test/workbench-hx-live-set-reader-census.test.ts";
 const EXPORT = ".beads/issues.jsonl";
 const NATIVE_TIER = "native-read";
 const NATIVE_CONFIG = "vitest.native.config.ts";
@@ -536,6 +560,159 @@ const SUBFORMS: readonly SubformRow[] = [
   { place: "PLACEMENT/bound store", phrase: "its entries", id: "bound-store-entries", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; beforeAll(() => { ({nativeHyperUnixFind} = hxProvider); }); it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind", "outside 1: hxProvider"] },
   { place: "PLACEMENT/binding default", phrase: "a shorthand property's default in an assignment target", id: "binding-default-bound-target", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; ({nativeHyperUnixFind = await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\")} = hxProvider); it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind", "outside 1: nativeHyperUnixFind", "outside 1: hxProvider"], without: { section: "PLACEMENT", word: "bound store", pins: ["live", "local namespace hxProvider", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] } },
   { place: "PLACEMENT/binding default", phrase: "and computed keys", id: "binding-default-computed-key", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const {[nativeHyperUnixFind.name]: find} = hxProvider; it(\"HX probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local namespace hxProvider", "local named nativeHyperUnixFind", "unresolved 1: an unread binding: {[nativeHyperUnixFind.name]:find}=hxProvider", "outside 1: nativeHyperUnixFind"], without: { section: "PLACEMENT", word: "binding default", pins: ["live", "local namespace hxProvider", "local named nativeHyperUnixFind", "unresolved 1: an unread binding: {[nativeHyperUnixFind.name]:find}=hxProvider"] } },
+  // wb-tz2.19 cut #3 (R-B217): refusal #2's members (O:1589, U1-U4), then the seat's battery members (CUT #3 in the header)
+  { place: "UNRESOLVED/unread assignment", phrase: "an object literal over a source that is no module local", id: "unread-assignment-entry-source", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; let name: unknown; ({name} = hxProvider.nativeHyperUnixFind); it(\"probe\", async () => { expect(name).toBeDefined(); });", pins: ["live", "local namespace hxProvider", "unresolved 1: an unread assignment: {name}=hxProvider.nativeHyperUnixFind", "outside 1: hxProvider"] },
+  { place: "UNRESOLVED/unread assignment", phrase: "an object literal over a source that is no module local", id: "unread-assignment-entry-source-entry-name", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; let nativeHyperUnixFind: unknown; ({nativeHyperUnixFind} = hxProvider.nativeHyperUnixFind as unknown as Record<string, unknown>); it(\"HX probe\", async () => { expect(nativeHyperUnixFind).toBeDefined(); });", pins: ["live", "local namespace hxProvider", "unresolved 1: an unread assignment: {nativeHyperUnixFind}=hxProvider.nativeHyperUnixFindasunknownasRecord<string,unknown>", "outside 1: hxProvider"] },
+  { place: "BINDING/store element", phrase: "a string value", id: "store-element-name-key", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const key = \"find\"; const holder: Record<string, unknown> = {}; holder[key] = nativeHyperUnixFind; it(\"probe\", async () => { expect(holder[key]).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "unresolved 1: an unread assignment: holder[key]=nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/store element", phrase: "a string value", id: "store-element-numeric-key", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const holder: unknown[] = []; holder[0] = nativeHyperUnixFind; it(\"probe\", async () => { expect(holder[0]).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "unresolved 1: an unread assignment: holder[0]=nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/alias element", phrase: "the name a string value", id: "alias-element-name-key", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; const registerHyperUnixFind = \"nativeHyperUnixFind\"; const find = hxProvider[registerHyperUnixFind]; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "outside 1: hxProvider"] },
+  { place: "REGISTRATION/element member", phrase: "a string value", id: "element-member-name-key", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const concurrent = \"concurrent\"; it[concurrent](\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/alias member", phrase: "an entry member .name", id: "alias-member-deep-chain", members: [], source: "const hx = await import(\"../src/workbench/providers/hyperunix.js\"); const find = hx.default.nativeHyperUnixFind; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local dynamic hx", "outside 1: hx"] },
+  { place: "BINDING/alias member", phrase: "an entry member .name", id: "alias-member-deep-namespace", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; const find = (hxProvider as unknown as {inner: typeof hxProvider}).inner.nativeHyperUnixFind; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "outside 1: hxProvider", "outside 1: hxProvider"] },
+  { place: "BINDING/type-only", phrase: "binds as the same import would without the marker", id: "type-only-default", members: [], source: "import type hxProvider from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const run: typeof hxProvider.nativeHyperUnixFind = async () => { throw new Error(\"none\"); }; await run(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local default hxProvider", "case it :: HX probe"], without: { section: "BINDING", word: "type-only", pins: ["not live"] } },
+  { place: "BINDING/type-only", phrase: "binds as the same import would without the marker", id: "type-only-namespace", members: [], source: "import type * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const run: typeof hxProvider.nativeHyperUnixFind = async () => { throw new Error(\"none\"); }; await run(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "case it :: HX probe"], without: { section: "BINDING", word: "type-only", pins: ["not live"] } },
+  { place: "BINDING/type-only", phrase: "binds as the same import would without the marker", id: "type-only-aliased", members: [], source: "import type {nativeHyperUnixFind as find} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const run: typeof find = async () => { throw new Error(\"none\"); }; await run(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local aliased find", "case it :: HX probe"], without: { section: "BINDING", word: "type-only", pins: ["not live"] } },
+  { place: "BINDING/type-only", phrase: "binds as the same import would without the marker", id: "type-only-specifier-aliased", members: [], source: "import {type nativeHyperUnixFind as find} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { const run: typeof find = async () => { throw new Error(\"none\"); }; await run(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local aliased find", "case it :: HX probe"], without: { section: "BINDING", word: "type-only", pins: ["not live"] } },
+  { place: "REFERENCE/used assignment", phrase: "through parentheses only", id: "used-assignment-void", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; void (find = nativeHyperUnixFind); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "REFERENCE/used assignment", phrase: "through parentheses only", id: "used-assignment-comma-left", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; (find = nativeHyperUnixFind, 0); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "REFERENCE/used assignment", phrase: "through parentheses only", id: "used-assignment-comma-right", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; (0, find = nativeHyperUnixFind); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "REFERENCE/used assignment", phrase: "through parentheses only", id: "used-assignment-await", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; await (find = nativeHyperUnixFind); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "REFERENCE/used assignment", phrase: "through parentheses only", id: "used-assignment-non-null", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; (find = nativeHyperUnixFind)!; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "REFERENCE/used assignment", phrase: "through parentheses only", id: "used-assignment-satisfies", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; (find = nativeHyperUnixFind) satisfies unknown; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "REFERENCE/used assignment", phrase: "through parentheses only", id: "used-assignment-type-assertion", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; <unknown>(find = nativeHyperUnixFind); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "REFERENCE/used assignment", phrase: "through parentheses only", id: "used-assignment-typeof", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; typeof (find = nativeHyperUnixFind); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "REFERENCE/used assignment", phrase: "through parentheses only", id: "used-assignment-not", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; !(find = nativeHyperUnixFind); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "REFERENCE/used assignment", phrase: "through parentheses only", id: "used-assignment-for-init", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; for (find = nativeHyperUnixFind; ; ) break; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "READING", phrase: "the titles of the HX cases whose body ReadOptions.witness reads a claim in", id: "witness-ordered-cases", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX zeta probe\", async () => { expect(await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\")).toBeDefined(); }); it(\"HX quiet probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); }); it(\"HX alpha probe\", async () => { expect(await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\")).toBeDefined(); }); it(\"HX zeta probe\", async () => { expect(await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\")).toBeDefined(); }); it(\"HX beta probe\", async () => { expect(await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\")).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX zeta probe", "case it :: HX quiet probe", "case it :: HX alpha probe", "case it :: HX zeta probe", "case it :: HX beta probe", "witness HX zeta probe", "witness HX alpha probe", "witness HX zeta probe", "witness HX beta probe"], witness: true },
+  { place: "PLACEMENT/declaration type", phrase: "the type annotation of an M5 or M6 declaration", id: "place-declaration-type-alias", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const find: typeof nativeHyperUnixFind = nativeHyperUnixFind; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe"], without: { section: "PLACEMENT", word: "declaration type", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] } },
+  { place: "PLACEMENT/declaration type", phrase: "the type annotation of an M5 or M6 declaration", id: "place-declaration-type-pattern", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const {nativeHyperUnixFind: find}: {nativeHyperUnixFind: typeof nativeHyperUnixFind} = hxProvider; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe"], without: { section: "PLACEMENT", word: "declaration type", pins: ["live", "local namespace hxProvider", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] } },
+  { place: "REGISTRATION/function body", phrase: "a case's body may be a function expression", id: "function-body-named", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async function probe() { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe"], without: { section: "REGISTRATION", word: "function body", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] } },
+  { place: "REGISTRATION/function body", phrase: "a case's body may be a function expression", id: "function-body-generator", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", function* () { yield nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe"], without: { section: "REGISTRATION", word: "function body", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] } },
+  { place: "REGISTRATION/function body", phrase: "a case's body may be a function expression", id: "function-body-plain", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", function () { void nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe"], without: { section: "REGISTRATION", word: "function body", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] } },
+  { place: "REGISTRATION/arrow body", phrase: "a case's body may be an arrow function", id: "arrow-body-concise", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", () => nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"));", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe"], without: { section: "REGISTRATION", word: "arrow body", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] } },
+  { place: "REGISTRATION/arrow body", phrase: "the first argument after the title that is a body form", id: "arrow-body-third", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", {retry: 0}, 0, async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it {retry:0} 0 :: HX probe"] },
+  { place: "REGISTRATION/beside", phrase: "every argument beside the title and the body", id: "beside-two-arguments", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", {retry: 0}, async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); }, 60000);", pins: ["live", "local named nativeHyperUnixFind", "case it {retry:0} 60000 :: HX probe"] },
+  { place: "BINDING/fixpoint", phrase: "in source order", id: "fixpoint-declaration-order", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const first = nativeHyperUnixFind; const second = nativeHyperUnixFind; it(\"HX probe\", async () => { await first(process.cwd(), \"hx.fs/regular-file\", \"src\"); await second(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias first", "local alias second", "case it :: HX probe"] },
+  { place: "BINDING/fixpoint", phrase: "in source order", id: "fixpoint-assignment-order", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let first; let second; first = nativeHyperUnixFind; second = nativeHyperUnixFind; it(\"HX probe\", async () => { await first(process.cwd(), \"hx.fs/regular-file\", \"src\"); await second(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias first", "local alias second", "case it :: HX probe"] },
+  { place: "BINDING/fixpoint", phrase: "every unread declaration, then every unread assignment", id: "fixpoint-declarations-then-assignments", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let first; first = nativeHyperUnixFind; const second = nativeHyperUnixFind; it(\"HX probe\", async () => { await first(process.cwd(), \"hx.fs/regular-file\", \"src\"); await second(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias second", "local alias first", "case it :: HX probe"] },
+  { place: "BINDING/fixpoint", phrase: "until a round binds nothing", id: "fixpoint-three-rounds", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const third = second; const second = first; const first = nativeHyperUnixFind; it(\"HX probe\", async () => { await third(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias first", "local alias second", "local alias third", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "a member key", id: "unwrap-site-computed-key", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; const {[(\"nativeHyperUnixFind\")]: find} = hxProvider; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local alias find", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "a member key", id: "unwrap-site-assigned-computed-key", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; let find; ({[(\"nativeHyperUnixFind\")]: find} = hxProvider); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local alias find", "case it :: HX probe"] },
+  { place: "MODULE/sdk root", phrase: "@hyperunix/sdk exactly", id: "sdk-root-case", members: [], source: "import * as sdk from \"@HyperUnix/SDK\"; it(\"HX probe\", async () => { await sdk.HyperUnix.open({workspace: process.cwd()}); });", pins: ["not live"] },
+  { place: "MODULE/sdk root", phrase: "@hyperunix/sdk exactly", id: "sdk-root-space", members: [], source: "import * as sdk from \" @hyperunix/sdk\"; it(\"HX probe\", async () => { await sdk.HyperUnix.open({workspace: process.cwd()}); });", pins: ["not live"] },
+  { place: "MODULE/sdk root", phrase: "@hyperunix/sdk exactly", id: "sdk-root-prefixed", members: [], source: "import * as sdk from \"npm:@hyperunix/sdk\"; it(\"HX probe\", async () => { await sdk.HyperUnix.open({workspace: process.cwd()}); });", pins: ["not live"] },
+  { place: "MODULE/sdk root", phrase: "a subpath such as @hyperunix/sdk/raw names none", id: "sdk-root-trailing-slash", members: [], source: "import * as sdk from \"@hyperunix/sdk/\"; it(\"HX probe\", async () => { await sdk.HyperUnix.open({workspace: process.cwd()}); });", pins: ["not live"] },
+  { place: "MODULE/sdk root", phrase: "a subpath such as @hyperunix/sdk/raw names none", id: "sdk-root-index", members: [], source: "import * as sdk from \"@hyperunix/sdk/index.js\"; it(\"HX probe\", async () => { await sdk.HyperUnix.open({workspace: process.cwd()}); });", pins: ["not live"] },
+  { place: "MODULE/provider path", phrase: "ending in providers/hyperunix", id: "provider-path-case", members: [], source: "import * as hxProvider from \"../src/workbench/Providers/HyperUnix.js\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["not live"] },
+  { place: "MODULE/provider path", phrase: "ending in providers/hyperunix", id: "provider-path-index", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix/index.js\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["not live"] },
+  { place: "MODULE/provider path", phrase: "ending in providers/hyperunix", id: "provider-path-index-bare", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix/index\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["not live"] },
+  { place: "MODULE/provider path", phrase: "ending in providers/hyperunix", id: "provider-path-declaration-file", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.d.ts\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["not live"] },
+  { place: "MODULE/provider path", phrase: "ending in providers/hyperunix", id: "provider-path-query", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js?raw\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["not live"] },
+  { place: "MODULE/provider path", phrase: "ending in providers/hyperunix", id: "provider-path-jsx", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.jsx\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["not live"] },
+  { place: "MODULE/provider path", phrase: "ending in providers/hyperunix", id: "provider-path-upper-extension", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.JS\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["not live"] },
+  { place: "MODULE/provider path", phrase: "after a slash", id: "provider-path-backslash", members: [], source: "import * as hxProvider from \"..\\\\src\\\\workbench\\\\providers/hyperunix.js\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["not live"] },
+  { place: "MODULE/provider path", phrase: "after a slash", id: "provider-path-hyphen", members: [], source: "import * as hxProvider from \"../src/workbench/x-providers/hyperunix.js\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["not live"] },
+  { place: "MODULE/provider path alone", phrase: "with nothing before it", id: "provider-path-alone-dotslash", members: [], source: "import * as hxProvider from \"./providers/hyperunix.js\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "case it :: HX probe"], without: { section: "MODULE", word: "provider path", pins: ["not live"] } },
+  { place: "MODULE/provider path alone", phrase: "with nothing before it", id: "provider-path-alone-rooted", members: [], source: "import * as hxProvider from \"/providers/hyperunix.js\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "case it :: HX probe"], without: { section: "MODULE", word: "provider path", pins: ["not live"] } },
+  { place: "UNWRAP", phrase: "a source", id: "unwrap-not-void", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const find = void nativeHyperUnixFind; it(\"HX probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "UNWRAP", phrase: "a source", id: "unwrap-not-typeof", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const find = typeof nativeHyperUnixFind; it(\"HX probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "UNWRAP", phrase: "a source", id: "unwrap-not-instantiation", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const find = nativeHyperUnixFind<string>; it(\"HX probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-site-double-parentheses", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const find = ((nativeHyperUnixFind)); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "a specifier", id: "unwrap-site-specifier-as", members: [], source: "const hxProvider = await import(\"../src/workbench/providers/hyperunix.js\" as string); it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local dynamic hxProvider", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "a member's base", id: "unwrap-site-store-base", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const holder = {find: undefined as unknown}; holder!.find = nativeHyperUnixFind; it(\"HX probe\", async () => { expect(holder.find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "local store holder", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "an assignment target", id: "unwrap-site-assignment-target-type", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const holder = {find: undefined as unknown}; (holder.find as typeof nativeHyperUnixFind | undefined) = nativeHyperUnixFind; it(\"HX probe\", async () => { expect(holder.find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "local store holder", "case it :: HX probe"] },
+  { place: "REGISTRATION/literal title", phrase: "a string value", id: "literal-title-number", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(1, async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: <computed: 1>"] },
+  { place: "REGISTRATION/literal title", phrase: "a string value", id: "literal-title-template-expression", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const n = 1; it(`HX probe \u0024{n}`, async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: <computed: `HXprobe\u0024{n}`>"] },
+  { place: "REGISTRATION/chained", phrase: "any number", id: "chained-three-deep", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it.concurrent.sequential.each([[1]])(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it.concurrent.sequential.each([[1]]) :: HX probe"] },
+  { place: "REGISTRATION/chained", phrase: "in any order", id: "chained-method-then-method", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it.for([[1]]).each([[2]])(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it.for([[1]]).each([[2]]) :: HX probe"] },
+  { place: "REGISTRATION/chained", phrase: "case-method calls", id: "chained-method-no-argument", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it.scoped()(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it.scoped() :: HX probe"] },
+  { place: "REGISTRATION/chained", phrase: "case-method calls", id: "chained-method-two-arguments", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it.each([[1]], [[2]])(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it.each([[1]],[[2]]) :: HX probe"] },
+  { place: "REGISTRATION/vitest import", phrase: "imported from vitest", id: "vitest-import-subpath", members: [], source: "import {it as liveIt} from \"vitest/node\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; liveIt(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "REGISTRATION/vitest import", phrase: "imported from vitest", id: "vitest-import-type-specifier", members: [], source: "import {type it as liveIt} from \"vitest\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; liveIt(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case liveIt :: HX probe"] },
+  { place: "REGISTRATION/vitest import", phrase: "imported from vitest", id: "vitest-import-type-declaration", members: [], source: "import type {it as liveIt} from \"vitest\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; liveIt(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case liveIt :: HX probe"] },
+  { place: "REGISTRATION/vitest import", phrase: "it or test", id: "vitest-import-string-name", members: [], source: "import {\"it\" as liveIt} from \"vitest\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; liveIt(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case liveIt :: HX probe"] },
+  { place: "REGISTRATION/declared api", phrase: "a variable declared from a test API", id: "declared-api-let", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let liveIt = it; liveIt(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case liveIt :: HX probe"] },
+  { place: "REGISTRATION/declared api", phrase: "a variable declared from a test API", id: "declared-api-nested", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; describe(\"probe\", () => { const liveIt = it; liveIt(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); }); });", pins: ["live", "local named nativeHyperUnixFind", "case liveIt :: HX probe"] },
+  { place: "REGISTRATION/declared api", phrase: "a variable declared from a test API", id: "declared-api-before", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const second = first; const first = it; second(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case second :: HX probe"] },
+  { place: "BINDING/string specifier", phrase: "whose first argument is a string literal", id: "import-options-argument", members: [], source: "const hxProvider = await import(\"../src/workbench/providers/hyperunix.js\", {with: {}}); it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local dynamic hxProvider", "case it :: HX probe"] },
+  { place: "BINDING/import await", phrase: "read through await, as well as through UNWRAP", id: "import-await-twice", members: [], source: "it(\"HX probe\", async () => { const hxProvider = await (await import(\"../src/workbench/providers/hyperunix.js\")); await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local dynamic hxProvider", "case it :: HX probe"] },
+  { place: "BINDING/dynamic", phrase: "an M5 import bound whole to the name its declaration introduces", id: "dynamic-let", members: [], source: "let hxProvider = await import(\"../src/workbench/providers/hyperunix.js\"); it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local dynamic hxProvider", "case it :: HX probe"] },
+  { place: "BINDING/namespace", phrase: "a static namespace import of an HX module", id: "namespace-beside-default", members: [], source: "import hxDefault, * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local default hxDefault", "local namespace hxProvider", "case it :: HX probe"] },
+  { place: "BINDING/aliased", phrase: "a static import of an entry under another local name", id: "aliased-other-module", members: [], source: "import {nativeHyperUnixFind as find} from \"./helpers/hx-proxy.js\"; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local aliased find", "case it :: HX probe"] },
+  { place: "BINDING/destructured shorthand", phrase: "a shorthand element", id: "destructured-shorthand-default", members: [], source: "const {nativeHyperUnixFind = undefined} = await import(\"../src/workbench/providers/hyperunix.js\"); it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local destructured nativeHyperUnixFind", "case it :: HX probe"] },
+  { place: "BINDING/alias renamed", phrase: "its key written", id: "alias-renamed-default", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; const {nativeHyperUnixFind: find = undefined} = hxProvider; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local alias find", "case it :: HX probe"] },
+  { place: "BINDING/alias", phrase: "a variable declared from an HX local", id: "alias-not-conditional", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const flag = true; const find = flag ? nativeHyperUnixFind : undefined; it(\"HX probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/alias", phrase: "a variable declared from an HX local", id: "alias-not-logical", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const find = nativeHyperUnixFind || undefined; it(\"HX probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/alias", phrase: "a variable declared from an HX local", id: "alias-not-comma", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const find = (0, nativeHyperUnixFind); it(\"HX probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/alias", phrase: "a variable declared from an HX local", id: "alias-not-await", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const find = await nativeHyperUnixFind; it(\"HX probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/alias member", phrase: "of a module local", id: "alias-member-of-named", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const find = nativeHyperUnixFind.nativeHyperUnixFind; it(\"probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/alias member", phrase: "of a module local", id: "alias-member-of-store", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const holder: Record<string, unknown> = {}; holder.find = nativeHyperUnixFind; const find = holder.nativeHyperUnixFind; it(\"probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "local store holder", "outside 1: holder", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/alias member", phrase: "of a module local", id: "alias-member-of-call", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; const find = (hxProvider as unknown as () => typeof hxProvider)().nativeHyperUnixFind; it(\"probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local namespace hxProvider", "outside 1: hxProvider", "outside 1: hxProvider"] },
+  { place: "BINDING/assigned value", phrase: "reads that assignment's right side as its own source", id: "assigned-value-parenthesized", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let carried; const find = (carried = (nativeHyperUnixFind)); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "local alias carried", "case it :: HX probe"] },
+  { place: "BINDING/assigned value", phrase: "reads that assignment's right side as its own source", id: "assigned-value-logical", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let carried; const find = (carried ||= nativeHyperUnixFind); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "local alias carried", "case it :: HX probe"] },
+  { place: "BINDING/assigned name", phrase: "an M6 assignment to a name binds that name", id: "assigned-name-without-alias", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; find = nativeHyperUnixFind; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe"], without: { section: "BINDING", word: "alias", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe"] } },
+  { place: "BINDING/store", phrase: "a member .name of a value", id: "store-private-member", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; class Holder { #find: unknown; static put(holder: Holder) { holder.#find = nativeHyperUnixFind; } } it(\"probe\", async () => { expect(Holder).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "local store holder"] },
+  { place: "BINDING/store deep", phrase: "at any depth below the root", id: "store-deep-element", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const holder = {inner: {find: undefined as unknown}}; holder[\"inner\"].find = nativeHyperUnixFind; it(\"HX probe\", async () => { expect(holder.inner.find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "local store holder", "case it :: HX probe"], without: { section: "BINDING", word: "store element", pins: ["live", "local named nativeHyperUnixFind", "unresolved 1: an unread assignment: holder[\"inner\"].find=nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] } },
+  { place: "BINDING/store deep", phrase: "at any depth below the root", id: "store-deep-optional-chain", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const holder = {inner: {find: undefined as unknown}}; holder?.inner.find = nativeHyperUnixFind; it(\"HX probe\", async () => { expect(holder.inner.find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "local store holder", "case it :: HX probe"] },
+  { place: "BINDING/alias member", phrase: "an entry member .name", id: "alias-member-optional", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; const find = hxProvider?.nativeHyperUnixFind; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local alias find", "case it :: HX probe"], without: { section: "BINDING", word: "alias member", pins: ["live", "local namespace hxProvider", "outside 1: hxProvider"] } },
+  { place: "UNRESOLVED/unread binding", phrase: "an element with a computed key that is no string value", id: "unread-binding-numeric-computed-key", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; const {[0]: zero, nativeHyperUnixFind: find} = hxProvider as unknown as Record<string, unknown>; it(\"HX probe\", async () => { expect(zero).toBeDefined(); });", pins: ["live", "local namespace hxProvider", "unresolved 1: an unread binding: {[0]:zero,nativeHyperUnixFind:find}=hxProviderasunknownasRecord<string,unknown>"] },
+  { place: "UNRESOLVED/unread binding", phrase: "a binding pattern the reader cannot read", id: "unread-binding-empty-pattern", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; const {} = hxProvider; it(\"probe\", async () => { expect(1).toBe(1); });", pins: ["live", "local namespace hxProvider"] },
+  { place: "UNRESOLVED/unread assignment", phrase: "no object literal of named entries over a module local", id: "unread-assignment-empty-target", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; ({} = hxProvider); it(\"probe\", async () => { expect(1).toBe(1); });", pins: ["live", "local namespace hxProvider", "outside 1: hxProvider"] },
+  { place: "UNRESOLVED/unread assignment", phrase: "no member chain rooted at a name", id: "unread-assignment-this-root", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; class Holder { find: unknown; put() { this.find = nativeHyperUnixFind; } } it(\"probe\", async () => { expect(new Holder()).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "unresolved 1: an unread assignment: this.find=nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "UNRESOLVED/stray specifier", phrase: "a string literal or no-substitution template", id: "stray-import-type", members: [], source: "type Provider = typeof import(\"../src/workbench/providers/hyperunix.js\"); it(\"probe\", async () => { expect(1).toBe(1); });", pins: ["not live", "unresolved 1: \"../src/workbench/providers/hyperunix.js\""] },
+  { place: "UNRESOLVED/stray specifier", phrase: "a string literal or no-substitution template", id: "stray-import-equals", members: [], source: "import hxProvider = require(\"../src/workbench/providers/hyperunix.js\"); it(\"probe\", async () => { expect(1).toBe(1); });", pins: ["not live", "unresolved 1: \"../src/workbench/providers/hyperunix.js\""] },
+  { place: "READING", phrase: "UNRESOLVED lists what the reader cannot read", id: "unresolved-order", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\";\nconst held = \"../src/workbench/providers/hyperunix.js\"; const again = \"../src/workbench/providers/hyperunix.js\";\nconst {[held]: first} = hxProvider;\nit(\"probe\", async () => { expect(1).toBe(1); });", pins: ["live", "local namespace hxProvider", "unresolved 3: an unread binding: {[held]:first}=hxProvider", "unresolved 2: \"../src/workbench/providers/hyperunix.js\"", "unresolved 2: \"../src/workbench/providers/hyperunix.js\""] },
+  { place: "REFERENCE/local reference", phrase: "member names", id: "reference-property-declaration", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; class Shape { nativeHyperUnixFind = 1; } it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "member names", id: "reference-accessor-name", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; class Shape { get nativeHyperUnixFind() { return 1; } } it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "object-literal keys", id: "reference-assignment-target-key", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const holder: Record<string, unknown> = {}; let other; ({nativeHyperUnixFind: other} = holder); it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "by spelling and never by scope", id: "reference-interface-name", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; interface nativeHyperUnixFind { size: number } it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "by spelling and never by scope", id: "reference-type-alias-name", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; type nativeHyperUnixFind = number; it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "by spelling and never by scope", id: "reference-enum-name", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; enum nativeHyperUnixFind { One } it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "by spelling and never by scope", id: "reference-enum-member", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; enum Kinds { nativeHyperUnixFind } it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "by spelling and never by scope", id: "reference-type-parameter", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; function shadow<nativeHyperUnixFind>(value: nativeHyperUnixFind) { return value; } it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "by spelling and never by scope", id: "reference-label", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; nativeHyperUnixFind: for (;;) { break nativeHyperUnixFind; } it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "by spelling and never by scope", id: "reference-namespace-name", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; namespace nativeHyperUnixFind { export const size = 1; } it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "by spelling and never by scope", id: "reference-export-specifier", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; export {nativeHyperUnixFind}; it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/binding element", phrase: "a binding element's name or its property key", id: "reference-binding-default", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; function shadow({find = nativeHyperUnixFind}: {find?: unknown}) { return find; } it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/parameter name", phrase: "a parameter's own name", id: "reference-parameter-default", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; function shadow(find = nativeHyperUnixFind) { return find; } it(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] },
+  { place: "REFERENCE/local reference", phrase: "type positions", id: "reference-type-position-case", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async () => { let find: typeof nativeHyperUnixFind | undefined; expect(find).toBeUndefined(); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe"] },
+  { place: "REFERENCE/inline import", phrase: "an M5 import no declaration binds", id: "inline-import-statement", members: [], source: "import(\"../src/workbench/providers/hyperunix.js\"); it(\"probe\", async () => { expect(1).toBe(1); });", pins: ["live", "outside 1: import(\"../src/workbench/providers/hyperunix.js\")"] },
+  { place: "PLACEMENT/case body", phrase: "a reference inside a case body", id: "place-case-body-parameter", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", async (context: {find?: typeof nativeHyperUnixFind}) => { expect(context).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe"] },
+  { place: "PLACEMENT/declaration source", phrase: "the initializer of an M5 or M6 declaration", id: "place-declaration-source-m5", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const hxProvider = (await import(\"../src/workbench/providers/hyperunix.js\")) as unknown as {find: typeof nativeHyperUnixFind}; it(\"HX probe\", async () => { await hxProvider.find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local dynamic hxProvider", "case it :: HX probe"], without: { section: "PLACEMENT", word: "declaration source", pins: ["live", "local named nativeHyperUnixFind", "local dynamic hxProvider", "case it :: HX probe", "outside 1: nativeHyperUnixFind"] } },
+  { place: "PLACEMENT/binding default", phrase: "a binding pattern's defaults", id: "binding-default-nested", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const {nativeHyperUnixFind: {name = nativeHyperUnixFind.name} = nativeHyperUnixFind} = hxProvider; it(\"probe\", async () => { expect(1).toBe(1); });", pins: ["live", "local namespace hxProvider", "local named nativeHyperUnixFind", "unresolved 1: an unread binding: {nativeHyperUnixFind:{name=nativeHyperUnixFind.name}=nativeHyperUnixFind}=hxProvider", "outside 1: nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"], without: { section: "PLACEMENT", word: "binding default", pins: ["live", "local namespace hxProvider", "local named nativeHyperUnixFind", "unresolved 1: an unread binding: {nativeHyperUnixFind:{name=nativeHyperUnixFind.name}=nativeHyperUnixFind}=hxProvider"] } },
+  { place: "PLACEMENT/binding default", phrase: "a shorthand property's default in an assignment target", id: "binding-default-target-computed-key", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; let find; ({[(\"nativeHyperUnixFind\" as keyof typeof hxProvider)]: find} = hxProvider); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local alias find", "case it :: HX probe"] },
+  { place: "MODULE/provider path", phrase: "ending in providers/hyperunix", id: "provider-path-trailing-dot", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.\"; it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["not live"] },
+  { place: "REGISTRATION/literal title", phrase: "a string value", id: "literal-title-escape", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX\\x20probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe"] },
+  { place: "REGISTRATION/vitest import", phrase: "it or test", id: "vitest-import-test", members: [], source: "import {test as liveTest} from \"vitest\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; liveTest(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case liveTest :: HX probe"] },
+  { place: "REGISTRATION/declared api", phrase: "a variable declared from a test API", id: "declared-api-method-call", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const liveIt = it.each([[1]]); liveIt(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case liveIt :: HX probe"] },
+  { place: "REGISTRATION/chained", phrase: "case-method calls", id: "chained-tagged-template", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it.each`value\\n\u0024{1}`(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/assigned =", phrase: "an assignment written with =", id: "assigned-not-compound", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find: unknown; find += nativeHyperUnixFind; it(\"HX probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "UNRESOLVED/stray specifier", phrase: "a string literal or no-substitution template", id: "stray-object-key", members: [], source: "const table = {\"../src/workbench/providers/hyperunix.js\": 1}; it(\"probe\", async () => { expect(1).toBe(1); });", pins: ["not live", "unresolved 1: \"../src/workbench/providers/hyperunix.js\""] },
+  { place: "READING", phrase: "<its text, whitespace removed>", id: "outside-text-tab", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find;\n(find\t=\tnativeHyperUnixFind) as unknown;\nit(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 2: find=nativeHyperUnixFind"] },
+  { place: "READING", phrase: "<its text, whitespace removed>", id: "outside-text-crlf", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\";\r\nlet find;\r\n(find =\r\n  nativeHyperUnixFind) as unknown;\r\nit(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 3: find=nativeHyperUnixFind"] },
+  { place: "READING", phrase: "<its text, whitespace removed>", id: "outside-text-nbsp", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; (find\u00a0=\u00a0nativeHyperUnixFind) as unknown; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe", "outside 1: find=nativeHyperUnixFind"] },
+  { place: "REGISTRATION/computed title", phrase: "whitespace removed", id: "computed-title-tab", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const suffix = \"probe\"; it(\"HX \"\t+\tsuffix, async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: <computed: \"HX\"+suffix>"] },
+  { place: "REGISTRATION/beside", phrase: "whitespace removed", id: "beside-tab", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it(\"HX probe\", {retry:\t0}, async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it {retry:0} :: HX probe"] },
+  { place: "BINDING/alias member", phrase: "an entry member .name", id: "alias-member-element-base", members: [], source: "const hx = await import(\"../src/workbench/providers/hyperunix.js\"); const find = hx[\"default\"].nativeHyperUnixFind; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local dynamic hx", "outside 1: hx"] },
+  { place: "REGISTRATION/vitest import", phrase: "it or test", id: "vitest-default-import", members: [], source: "import vt from \"vitest\"; import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; vt(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "REGISTRATION/declared api", phrase: "a variable declared from a test API", id: "declared-api-pattern", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const {concurrent: liveIt} = it; liveIt(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "UNRESOLVED/unread binding", phrase: "a binding pattern the reader cannot read", id: "unread-import-array-binding", members: [], source: "const [find] = await import(\"../src/workbench/providers/hyperunix.js\"); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "unresolved 1: an unread binding: [find]=awaitimport(\"../src/workbench/providers/hyperunix.js\")"] },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-nested-specifier", members: [], source: "const hxProvider = await import((\"../src/workbench/providers/hyperunix.js\" as string)); it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local dynamic hxProvider", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-nested-callee", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; ((it as typeof it))(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case ((itastypeofit)) :: HX probe"] },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-nested-flag-base", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; ((it as typeof it)).concurrent(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case ((itastypeofit)).concurrent :: HX probe"], without: { section: "REGISTRATION", word: "chained", pins: ["live", "local named nativeHyperUnixFind", "case ((itastypeofit)).concurrent :: HX probe"] } },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-nested-member-base", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; const find = ((hxProvider as typeof hxProvider)).nativeHyperUnixFind; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local alias find", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-nested-target-name", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; let find; ({nativeHyperUnixFind: ((find as unknown))} = hxProvider); it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local alias find", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-nested-title", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it((\"HX probe\" as string), async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-nested-member-key", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; it[(\"concurrent\" as \"concurrent\")](\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case it[(\"concurrent\"as\"concurrent\")] :: HX probe"] },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-nested-computed-key", members: [], source: "import * as hxProvider from \"../src/workbench/providers/hyperunix.js\"; const {[(\"nativeHyperUnixFind\" as string)]: find} = hxProvider; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local namespace hxProvider", "local alias find", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-nested-store-base", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; const holder = {find: undefined as unknown}; ((holder as typeof holder)).find = nativeHyperUnixFind; it(\"HX probe\", async () => { expect(holder.find).toBeDefined(); });", pins: ["live", "local named nativeHyperUnixFind", "local store holder", "case it :: HX probe"] },
+  { place: "UNWRAP", phrase: "any number in any order", id: "unwrap-nested-assignment-target", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; let find; ((find as unknown)) = nativeHyperUnixFind; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe"] },
+  { place: "MODULE/sdk root", phrase: "@hyperunix/sdk exactly", id: "sdk-root-trailing-space", members: [], source: "import * as sdk from \"@hyperunix/sdk \"; it(\"HX probe\", async () => { await sdk.HyperUnix.open({workspace: process.cwd()}); });", pins: ["not live"] },
+  { place: "BINDING/dynamic", phrase: "an M5 import bound whole to the name its declaration introduces", id: "dynamic-var", members: [], source: "var hxProvider = await import(\"../src/workbench/providers/hyperunix.js\"); it(\"HX probe\", async () => { await hxProvider.nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local dynamic hxProvider", "case it :: HX probe"] },
+  { place: "REGISTRATION/declared api", phrase: "a variable declared from a test API", id: "declared-api-var", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; var liveIt = it; liveIt(\"HX probe\", async () => { await nativeHyperUnixFind(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "case liveIt :: HX probe"] },
+  { place: "BINDING/alias", phrase: "a variable declared from an HX local", id: "alias-var", members: [], source: "import {nativeHyperUnixFind} from \"../src/workbench/providers/hyperunix.js\"; var find = nativeHyperUnixFind; it(\"HX probe\", async () => { await find(process.cwd(), \"hx.fs/regular-file\", \"src\"); });", pins: ["live", "local named nativeHyperUnixFind", "local alias find", "case it :: HX probe"] },
+  { place: "BINDING/alias member", phrase: "of a module local", id: "alias-member-of-destructured", members: [], source: "const {nativeHyperUnixFind} = await import(\"../src/workbench/providers/hyperunix.js\"); const find = nativeHyperUnixFind.nativeHyperUnixFind; it(\"probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local destructured nativeHyperUnixFind", "outside 1: nativeHyperUnixFind", "outside 1: nativeHyperUnixFind"] },
+  { place: "BINDING/alias member", phrase: "of a module local", id: "alias-member-of-aliased", members: [], source: "import {nativeHyperUnixFind as hxFind} from \"../src/workbench/providers/hyperunix.js\"; const find = hxFind.nativeHyperUnixFind; it(\"probe\", async () => { expect(find).toBeDefined(); });", pins: ["live", "local aliased hxFind", "outside 1: hxFind"] },
 ];
 
 const NAMED = 'import {nativeHyperUnixFind} from "../src/workbench/providers/hyperunix.js";';
@@ -629,6 +806,23 @@ const REFUSAL_LINES: readonly string[] = [
   "- U3: U3-MEDIUM-MEMBERSHIP-CLAIMS-WIDER-THAN-BINDING-COVERAGE",
   "- U4: U4-LOW-CLAIMED-READINGS-MUTANTS-DEPART-LOUDER",
 ];
+/** wb-tz2.19's refusal #2 members (O:1589, U1-U4; ruling R-B217): literal here, since the tracker export at this cut's base holds no
+ * refusal #2 line. */
+const REFUSAL2_MEMBERS: readonly string[] = [
+  "G2-ALIAS-MEMBER-DEEP",
+  "G2-COMPUTEDKEY-NOUNWRAP",
+  "G2-DECL-REVERSE",
+  "G2-DECLTYPE-M5-ONLY",
+  "G2-ENTRY-SOURCE-ASSIGN",
+  "G2-PLACING-CASE-ONLY-ARROW",
+  "G2-STORE-ELEMENT-ANYKEY",
+  "G2-TYPEONLY-CLAUSE-DEFAULT",
+  "G2-USED-COMMA",
+  "G2-USED-VOID",
+  "G2-WITNESS-FIRST",
+];
+/** The rows the CUT #3 paragraph names as a claim's fail-closed boundary, each reading OUTSIDE. */
+const CUT3_BOUNDARY_ROWS: readonly string[] = ["declared-api-pattern", "chained-tagged-template"];
 /** A member name refusal #1 gives a reader mutant. */
 const GATE_MEMBER = /\bH\d+\b/g;
 /** The cut #4 delivery line that names Q9 and counts its members. */
@@ -919,6 +1113,158 @@ const FROZEN_SHAPE: readonly string[] = [
   "SUBFORMS:bound-store-entries:6",
   "SUBFORMS:binding-default-bound-target:7/5",
   "SUBFORMS:binding-default-computed-key:5/4",
+  "SUBFORMS:unread-assignment-entry-source:4",
+  "SUBFORMS:unread-assignment-entry-source-entry-name:4",
+  "SUBFORMS:store-element-name-key:4",
+  "SUBFORMS:store-element-numeric-key:4",
+  "SUBFORMS:alias-element-name-key:3",
+  "SUBFORMS:element-member-name-key:3",
+  "SUBFORMS:alias-member-deep-chain:3",
+  "SUBFORMS:alias-member-deep-namespace:4",
+  "SUBFORMS:type-only-default:3/1",
+  "SUBFORMS:type-only-namespace:3/1",
+  "SUBFORMS:type-only-aliased:3/1",
+  "SUBFORMS:type-only-specifier-aliased:3/1",
+  "SUBFORMS:used-assignment-void:5",
+  "SUBFORMS:used-assignment-comma-left:5",
+  "SUBFORMS:used-assignment-comma-right:5",
+  "SUBFORMS:used-assignment-await:5",
+  "SUBFORMS:used-assignment-non-null:5",
+  "SUBFORMS:used-assignment-satisfies:5",
+  "SUBFORMS:used-assignment-type-assertion:5",
+  "SUBFORMS:used-assignment-typeof:5",
+  "SUBFORMS:used-assignment-not:5",
+  "SUBFORMS:used-assignment-for-init:5",
+  "SUBFORMS:witness-ordered-cases:11",
+  "SUBFORMS:place-declaration-type-alias:4/5",
+  "SUBFORMS:place-declaration-type-pattern:5/7",
+  "SUBFORMS:function-body-named:3/3",
+  "SUBFORMS:function-body-generator:3/3",
+  "SUBFORMS:function-body-plain:3/3",
+  "SUBFORMS:arrow-body-concise:3/3",
+  "SUBFORMS:arrow-body-third:3",
+  "SUBFORMS:beside-two-arguments:3",
+  "SUBFORMS:fixpoint-declaration-order:5",
+  "SUBFORMS:fixpoint-assignment-order:5",
+  "SUBFORMS:fixpoint-declarations-then-assignments:5",
+  "SUBFORMS:fixpoint-three-rounds:6",
+  "SUBFORMS:unwrap-site-computed-key:4",
+  "SUBFORMS:unwrap-site-assigned-computed-key:4",
+  "SUBFORMS:sdk-root-case:1",
+  "SUBFORMS:sdk-root-space:1",
+  "SUBFORMS:sdk-root-prefixed:1",
+  "SUBFORMS:sdk-root-trailing-slash:1",
+  "SUBFORMS:sdk-root-index:1",
+  "SUBFORMS:provider-path-case:1",
+  "SUBFORMS:provider-path-index:1",
+  "SUBFORMS:provider-path-index-bare:1",
+  "SUBFORMS:provider-path-declaration-file:1",
+  "SUBFORMS:provider-path-query:1",
+  "SUBFORMS:provider-path-jsx:1",
+  "SUBFORMS:provider-path-upper-extension:1",
+  "SUBFORMS:provider-path-backslash:1",
+  "SUBFORMS:provider-path-hyphen:1",
+  "SUBFORMS:provider-path-alone-dotslash:3/1",
+  "SUBFORMS:provider-path-alone-rooted:3/1",
+  "SUBFORMS:unwrap-not-void:3",
+  "SUBFORMS:unwrap-not-typeof:3",
+  "SUBFORMS:unwrap-not-instantiation:3",
+  "SUBFORMS:unwrap-site-double-parentheses:4",
+  "SUBFORMS:unwrap-site-specifier-as:3",
+  "SUBFORMS:unwrap-site-store-base:4",
+  "SUBFORMS:unwrap-site-assignment-target-type:4",
+  "SUBFORMS:literal-title-number:3",
+  "SUBFORMS:literal-title-template-expression:3",
+  "SUBFORMS:chained-three-deep:3",
+  "SUBFORMS:chained-method-then-method:3",
+  "SUBFORMS:chained-method-no-argument:3",
+  "SUBFORMS:chained-method-two-arguments:3",
+  "SUBFORMS:vitest-import-subpath:3",
+  "SUBFORMS:vitest-import-type-specifier:3",
+  "SUBFORMS:vitest-import-type-declaration:3",
+  "SUBFORMS:vitest-import-string-name:3",
+  "SUBFORMS:declared-api-let:3",
+  "SUBFORMS:declared-api-nested:3",
+  "SUBFORMS:declared-api-before:3",
+  "SUBFORMS:import-options-argument:3",
+  "SUBFORMS:import-await-twice:3",
+  "SUBFORMS:dynamic-let:3",
+  "SUBFORMS:namespace-beside-default:4",
+  "SUBFORMS:aliased-other-module:3",
+  "SUBFORMS:destructured-shorthand-default:3",
+  "SUBFORMS:alias-renamed-default:4",
+  "SUBFORMS:alias-not-conditional:3",
+  "SUBFORMS:alias-not-logical:3",
+  "SUBFORMS:alias-not-comma:3",
+  "SUBFORMS:alias-not-await:3",
+  "SUBFORMS:alias-member-of-named:4",
+  "SUBFORMS:alias-member-of-store:5",
+  "SUBFORMS:alias-member-of-call:4",
+  "SUBFORMS:assigned-value-parenthesized:5",
+  "SUBFORMS:assigned-value-logical:5",
+  "SUBFORMS:assigned-name-without-alias:4/4",
+  "SUBFORMS:store-private-member:3",
+  "SUBFORMS:store-deep-element:4/4",
+  "SUBFORMS:store-deep-optional-chain:4",
+  "SUBFORMS:alias-member-optional:4/3",
+  "SUBFORMS:unread-binding-numeric-computed-key:3",
+  "SUBFORMS:unread-binding-empty-pattern:2",
+  "SUBFORMS:unread-assignment-empty-target:3",
+  "SUBFORMS:unread-assignment-this-root:4",
+  "SUBFORMS:stray-import-type:2",
+  "SUBFORMS:stray-import-equals:2",
+  "SUBFORMS:unresolved-order:5",
+  "SUBFORMS:reference-property-declaration:4",
+  "SUBFORMS:reference-accessor-name:4",
+  "SUBFORMS:reference-assignment-target-key:4",
+  "SUBFORMS:reference-interface-name:4",
+  "SUBFORMS:reference-type-alias-name:4",
+  "SUBFORMS:reference-enum-name:4",
+  "SUBFORMS:reference-enum-member:4",
+  "SUBFORMS:reference-type-parameter:5",
+  "SUBFORMS:reference-label:5",
+  "SUBFORMS:reference-namespace-name:4",
+  "SUBFORMS:reference-export-specifier:4",
+  "SUBFORMS:reference-binding-default:4",
+  "SUBFORMS:reference-parameter-default:4",
+  "SUBFORMS:reference-type-position-case:3",
+  "SUBFORMS:inline-import-statement:2",
+  "SUBFORMS:place-case-body-parameter:3",
+  "SUBFORMS:place-declaration-source-m5:4/5",
+  "SUBFORMS:binding-default-nested:6/4",
+  "SUBFORMS:binding-default-target-computed-key:4",
+  "SUBFORMS:provider-path-trailing-dot:1",
+  "SUBFORMS:literal-title-escape:3",
+  "SUBFORMS:vitest-import-test:3",
+  "SUBFORMS:declared-api-method-call:3",
+  "SUBFORMS:chained-tagged-template:3",
+  "SUBFORMS:assigned-not-compound:3",
+  "SUBFORMS:stray-object-key:2",
+  "SUBFORMS:outside-text-tab:5",
+  "SUBFORMS:outside-text-crlf:5",
+  "SUBFORMS:outside-text-nbsp:5",
+  "SUBFORMS:computed-title-tab:3",
+  "SUBFORMS:beside-tab:3",
+  "SUBFORMS:alias-member-element-base:3",
+  "SUBFORMS:vitest-default-import:3",
+  "SUBFORMS:declared-api-pattern:3",
+  "SUBFORMS:unread-import-array-binding:2",
+  "SUBFORMS:unwrap-nested-specifier:3",
+  "SUBFORMS:unwrap-nested-callee:3",
+  "SUBFORMS:unwrap-nested-flag-base:3/3",
+  "SUBFORMS:unwrap-nested-member-base:4",
+  "SUBFORMS:unwrap-nested-target-name:4",
+  "SUBFORMS:unwrap-nested-title:3",
+  "SUBFORMS:unwrap-nested-member-key:3",
+  "SUBFORMS:unwrap-nested-computed-key:4",
+  "SUBFORMS:unwrap-nested-store-base:4",
+  "SUBFORMS:unwrap-nested-assignment-target:4",
+  "SUBFORMS:sdk-root-trailing-space:1",
+  "SUBFORMS:dynamic-var:3",
+  "SUBFORMS:declared-api-var:3",
+  "SUBFORMS:alias-var:4",
+  "SUBFORMS:alias-member-of-destructured:4",
+  "SUBFORMS:alias-member-of-aliased:3",
   "MUTANT:RM-ORAND:2",
   "MUTANT:RM-EXT:5",
   "MUTANT:RM-NSFORMS:6",
@@ -975,6 +1321,17 @@ function headerSections(): { readonly sections: readonly { readonly name: string
     open = undefined;
   }
   return { sections, stray };
+}
+/** This census's CUT #3 paragraph, its lines joined. */
+function cut3Paragraph(): string {
+  const text = textOf(CENSUS);
+  const header = text
+    .slice(0, text.indexOf("*/"))
+    .split("\n")
+    .map(line => line.replace(/^\s*(?:\/\*\*|\*)\s?/, ""));
+  const start = header.findIndex(line => line.startsWith("CUT #3 ("));
+  const end = header.findIndex(line => line.startsWith("ANCHORS OUTSIDE THIS FILE"));
+  return start < 0 || end < start ? "" : header.slice(start, end).join(" ");
 }
 /** The text a claimed sub-form's place names in the helper: the READING paragraph, a section's heading line, or a word's claim. */
 function placeText(place: string): string | undefined {
@@ -1188,6 +1545,18 @@ describe(SUITE, () => {
     for (const entry of CLAIMED_SUBFORMS) expect({ entry: key(entry), held: placeText(entry.place)?.includes(entry.phrase) }).toEqual({ entry: key(entry), held: true });
     expect([...new Set(SUBFORMS.map(key))].sort()).toEqual(CLAIMED_SUBFORMS.map(key).sort());
     expect(new Set(CLAIMED_SUBFORMS.map(key)).size).toBe(CLAIMED_SUBFORMS.length);
+  });
+
+  it("CUT #3: the header's CUT #3 paragraph names exactly refusal #2's members, each with SUBFORMS rows, and its fail-closed boundary rows read OUTSIDE", { timeout: BUDGET_MS }, () => {
+    const paragraph = cut3Paragraph();
+    const named = [...paragraph.matchAll(/\b(G2-[A-Z0-9]+(?:-[A-Z0-9]+)*):\s+([a-z0-9-]+(?:,\s+[a-z0-9-]+)*)/g)].map(match => ({ member: match[1] ?? "", rows: (match[2] ?? "").split(/,\s+/) }));
+    expect(named.map(entry => entry.member).sort()).toEqual([...REFUSAL2_MEMBERS].sort());
+    const ids = new Set(SUBFORMS.map(row => row.id));
+    expect(named.flatMap(entry => entry.rows).filter(id => !ids.has(id))).toEqual([]);
+    for (const id of CUT3_BOUNDARY_ROWS) {
+      const pins = SUBFORMS.find(row => row.id === id)?.pins ?? [];
+      expect({ id, named: paragraph.includes(`(${id};`), outside: pins.some(pin => pin.startsWith("outside ")), cased: pins.some(pin => pin.startsWith("case ")) }).toEqual({ id, named: true, outside: true, cased: false });
+    }
   });
 
   it.each(SUBFORMS.map(row => [`${row.place} | ${row.phrase} (${row.id})`, row] as const))("SUBFORMS %s: the claimed sub-form's falsifier reading", (_id, row) => {
