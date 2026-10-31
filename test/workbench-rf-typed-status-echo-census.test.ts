@@ -73,6 +73,18 @@
  *    GM01-GM15) - and in no other: a context no control spells is outside the claim, and one found unread there is a
  *    residual-list addition (named in R-SPLIT-PATH with a quiet twin), never a claimed reading; likewise each quiet form
  *    R-SPLIT-PATH names for wb-1709 is pinned in exactly the contexts its SPLIT_PATH_ADDITIONS_CUT_5 twins spell;
+ *    wb-xbwy (the wb-1709 gate's F1: five gate-authored structural narrowings of the A1 reader, IB01-IB05, each of which kept
+ *    this census at 26 of 26 and every cut-5 control's reading while its paired witness read 1 hit under the real reader and 0
+ *    under the narrowing) adds the six KEY_PATH_ADDITIONS_CUT_6 controls, at least one falsifier per narrowing, each spelling
+ *    its witness's form and each enumerated by name, reading and text digest in the receipt's cut-6 table: a type-level chain
+ *    head inside two parentheses (IB01), a throw that is a for (;;) loop's body (IB02), a parenthesized as-expression callee
+ *    (IB03), a class expression with an extends clause as a member's value and, in the src shape of furnace-hosted.ts's
+ *    openHost.sessionClass, constructed through a parenthesized callee and returned from a method (IB04), and a
+ *    signature-holding type literal as an intersection's first member (IB05); under the same CLAIM SCOPE each of these
+ *    readings is claimed in exactly the contexts those six controls spell. NOT CLAIMED by this census: a type-level chain head
+ *    inside three parentheses or more, a throw inside any other loop form (while, do, for-in, for-of), a callee wrapped in
+ *    satisfies or an angle-bracket assertion, a class expression whose only heritage clause is an implements clause, and a
+ *    signature-holding type literal as a later member of an intersection;
  *    A2 the rf roster, selected by id prefix, reactivefiber:
  *    permission or rf@ contractSource, stays the preview alone (native and injected registrations, RECONCILE_EVIDENCE_READS);
  *    A3 the native provider refuses a federation record printed by rf as an unrecognized envelope, in one spawn of the render argv;
@@ -157,7 +169,8 @@
  * records are held to the receipt's cut-3 tables, so a control removed together with its reading, or rewritten, reds. wb-50dt:
  * the cut-4 controls join both records after the cut-3 ones, each record held to its cut-3 table followed by its cut-4
  * additions table. wb-1709: the cut-5 A1 controls join A1's record after the cut-4 ones, held to the cut-5 additions table
- * after the cut-4 one.
+ * after the cut-4 one. wb-xbwy: the cut-6 A1 controls join it after the cut-5 ones, held to the cut-6 additions table after
+ * the cut-5 one.
  * RESIDUALS (named, each with a pinned quiet row): R-UNLISTED the note names at most four distinct not-observed words, so a fifth
  * one and beyond is the marker … and two renders differing only there share a note, while the count and every reading still
  * carry each row (Q1); R-TONE-CLASS the snapshot node's coverage, tone and statusText are Pi presentation classes, so PENDING and
@@ -250,6 +263,10 @@ const RECEIPT_CUT_4 =
  * additions table's rows. */
 const RECEIPT_CUT_5 =
   "2026-10-29 the typed-status echo census judged set, cut 5: A1's key paths through call and construct signatures, a declaration's own return type, a thrown value, a callee, a tag, a class expression's members and a parameter property, type-level indexed access chains, and R-SPLIT-PATH's cut-5 twins (wb-1709, the wb-50dt gate's F1)";
+/** wb-xbwy (the wb-1709 gate's F1): the entry its cut appended, whose one table adds the cut-6 A1 controls after the cut-5
+ * additions table's rows. */
+const RECEIPT_CUT_6 =
+  "2026-10-31 the typed-status echo census judged set, cut 6: one falsifier control per structural narrowing of A1's reader, IB01-IB05 - a type-level chain head inside two parentheses, a throw as a loop's body, a parenthesized as-expression callee, a class expression with an extends clause and a signature-holding type literal in an intersection (wb-xbwy, the wb-1709 gate's F1)";
 /** The table sections, the entry each sits under and the header row each must keep. */
 const RECEIPT_TABLES = {
   pins: { entry: RECEIPT_ENTRY, heading: "Judged pins, wb-d8io cut 1", header: ["Row", "Pin"] },
@@ -262,6 +279,7 @@ const RECEIPT_TABLES = {
   readingControlAdditions: { entry: RECEIPT_CUT_4, heading: "A1 control additions, wb-d8io cut 4", header: ["Group", "Control", "Reads", "Text sha256/16"] },
   registrationControlAdditions: { entry: RECEIPT_CUT_4, heading: "Registration-mode control additions, wb-d8io cut 4", header: ["Control", "Modes", "Text sha256/16"] },
   readingControlCut5: { entry: RECEIPT_CUT_5, heading: "A1 control additions, wb-d8io cut 5", header: ["Group", "Control", "Reads", "Text sha256/16"] },
+  readingControlCut6: { entry: RECEIPT_CUT_6, heading: "A1 control additions, wb-d8io cut 6", header: ["Group", "Control", "Reads", "Text sha256/16"] },
 } as const;
 const ROOT = process.cwd();
 const PREVIEW_ID = "reactivefiber.render.preview";
@@ -1419,6 +1437,23 @@ const SPLIT_PATH_ADDITIONS_CUT_5: Readonly<Record<string, string>> = {
   typeofChain: "type State = typeof record.publication.state;",
 };
 
+/** wb-xbwy (the wb-1709 gate's F1, IB01-IB05): A1's cut-6 key-path controls, at least one falsifier per structural narrowing of
+ * the reader the gate wrote, each spelling its paired witness's form in this census's control style and each caught by exactly
+ * one matcher: a type-level chain head inside two parentheses (IB01, parenthesized types unwrapped once), a throw that is a
+ * for (;;) loop's body (IB02, a throw inside a loop blocked), a parenthesized as-expression callee (IB03), a class expression
+ * with an extends clause as a member's value and, in the src shape of furnace-hosted.ts's openHost.sessionClass, one
+ * constructed through a parenthesized callee and returned from a method (IB04, a class expression with a heritage clause no
+ * container), and a signature-holding type literal as an intersection's first member (IB05). Each reading is claimed in
+ * exactly these contexts (the header's CLAIM SCOPE and NOT CLAIMED list). */
+const KEY_PATH_ADDITIONS_CUT_6: Readonly<Record<string, string>> = {
+  doubleParenthesizedHead: 'type State = ((Rec["publication"]))["state"];',
+  throwInLoop: 'const record = { publication: () => {\n  for (;;) throw { state: "FAILED" };\n} };',
+  asCallee: 'const record = { publication: (make({ state: "FAILED" }) as Factory)() };',
+  classWithHeritage: 'const record = { publication: class extends Base {\n  state = "FAILED";\n} };',
+  returnedHeritageClass: 'const record = { publication() {\n  return new (class extends api.Base {\n    override readonly state: string = "FAILED";\n  })();\n} };',
+  signatureInIntersection: "type Rec = { publication: { (): { state: string } } & Extra };",
+};
+
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
@@ -1649,10 +1684,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     ).toEqual([]);
     const splitPathCut5 = group("quiet.splitPath.cut5", SPLIT_PATH_ADDITIONS_CUT_5);
     expect(Object.values(splitPathCut5).every(count => count === 0), "a cut-5 R-SPLIT-PATH twin reads as a key path").toBe(true);
-    expect(ledger, "A1's controls (group, name, reading, text) stand in the receipt's A1 control table, then in its cut-4 and cut-5 additions").toStrictEqual([
+    // wb-xbwy (the wb-1709 gate's F1): one falsifier per structural narrowing IB01-IB05 of the reader, each caught by exactly one
+    // matcher; the group joins the record after the cut-5 ones, held to the cut-6 additions table.
+    const keyPathsCut6 = group("widened.keyPaths.cut6", KEY_PATH_ADDITIONS_CUT_6);
+    expect(
+      Object.entries(keyPathsCut6)
+        .filter(([, count]) => count !== 1)
+        .map(([key]) => key),
+      "a cut-6 key-path control is not caught by exactly one matcher",
+    ).toEqual([]);
+    expect(ledger, "A1's controls (group, name, reading, text) stand in the receipt's A1 control table, then in its cut-4, cut-5 and cut-6 additions").toStrictEqual([
       ...receiptTable(RECEIPT_TABLES.readingControls),
       ...receiptTable(RECEIPT_TABLES.readingControlAdditions),
       ...receiptTable(RECEIPT_TABLES.readingControlCut5),
+      ...receiptTable(RECEIPT_TABLES.readingControlCut6),
     ]);
     return {
       floorMet,
@@ -1671,6 +1716,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       splitPath,
       keyPathsCut5,
       splitPathCut5,
+      keyPathsCut6,
     };
   },
   A2: async () => {
