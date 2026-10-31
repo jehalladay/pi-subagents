@@ -65,6 +65,19 @@
  * lands after the readings), each a pinned quiet row; every handle member's handle is shown live (the seam calling it is
  * refused by K-EFFECT).
  *
+ * WB-J517 (seat ws-02, run g10-work-s160; the R694 follow-up of landing 715's PASS-WITH-FINDING, gate cmd_d61bf6a779e0, whose F1
+ * leads and F2 and F3 ride): F1 (fail-closed scope, time and memory: the gate's B-G27 and B-G28, a blocks and an unmet array of
+ * length 2^32 - 1, stopped the judge - presentItems' items.filter visited every index below the length, and placement's spread
+ * of the unmet ran the worker out of memory) is cured by the finding's first cure: the placement, content and demand readings
+ * read every array they read through its own index keys (presentItems, itemsOf), so none walks a length (THE CHECKS, FAIL
+ * CLOSED). The oversized member is pinned three ways, M78 (the blocks), M79 (the unmet) and M80 (the demand's subjects), each
+ * of length 2^32 - 1 behind a probe that throws at a reading's third probe of an absent index (HOLE_PROBES), so a reading that
+ * walks the length reads unreadable:<reading> in row S3c's oversized readings instead of stopping the judge. The same reading
+ * reads M76's admitted unmet entries (K-DEMAND now refuses M76 beside K-SPLIT) and M77's covered text (K-SPLIT's content). F2
+ * (a coverage carried only between a value's two readings, the gate's G34) and F3 (built-in slots beyond the Map, the gate's
+ * G30 Symbol wrapper and G31 WeakRef) are named: R-OUTSIDE-VALUE gains interval-coverage, boxed-primitive-coverage and
+ * weakref-handle, each a pinned quiet row (weakref-handle's handle is shown live).
+ *
  * MEASURED (read-only). Producer, by cut #1's seat (ws-06, run g10-work-s125, 2026-10-28, at trunk a423a25): the local
  * ReactiveComponentsSDK checkout, git show at the bead pin 44b72145b1756908585c94da2327ab8809a3ca9a:
  * docs/programs/evidence-directed-computation-2026-10-18.md (blob de04229d9cdad063e4704d732f3cbcee1f001e68, the same blob
@@ -113,18 +126,33 @@
  *  shape does not name - each a data property, never an accessor; every leaf is a string primitive. And R1's and R2's
  *  documents carry each present block's subject's evidence (deep strict) and source verbatim, a demanded subject being a
  *  block exactly when its evidence and source are both in hand (R3's content is K-PURE's: it equals R2's).
- *  K-DEMAND's placement and K-SPLIT's content read a document through its own iteration and methods (the unmet's iterator,
- *  the blocks' filter): a value that steers them does so through an own key, an accessor, a proxy or a foreign prototype,
- *  each K-SPLIT's shape finding (M76 steers the unmet's iteration, M77 the blocks' filter; each refused by K-SPLIT alone).
+ *  K-DEMAND's placement and demand readings and K-SPLIT's content read every array they read - the blocks, the unmet and the
+ *  demand's subjects - through its own index keys, in index order (presentItems): never by walking its length and never
+ *  through its iteration or methods, so no document steers them (M76's own iterator and M77's
+ *  own filter are K-SPLIT's shape findings and are never called: M76's admitted unmet entries are K-DEMAND's placement
+ *  finding, M77's covered text K-SPLIT's content finding); a hole in the unmet or the subjects is an entry that names no
+ *  subject, counted from the length (itemsOf; M58, M64).
  *  FAIL CLOSED: every reading above is guarded - a reading that throws is the finding unreadable:<reading>, so its check
  *  refuses and the judge goes on: the wiring (M74), demand (M75), placement and content (M72) readings and K-PURE's input
  *  datum (M73, M75) and repeat comparison (M72); the shape reading reads keys, descriptors and prototypes only and stops at
  *  a proxy, so no declared value makes it throw (its guard is a backstop no mutant reaches); the placement and content
- *  readings read a blocks array's present items only, so a hole is the shape reading's finding (M65, M67). A seam that
- *  throws from its own wire or assemble is no reading: the judge stops on its error.
+ *  readings read a blocks array's present items only, so a hole is the shape reading's finding (M65, M67). Every reading
+ *  ends on the arrays M78-M80 hand it, each of length 2^32 - 1, the largest (row S3c's oversized readings): the shape and
+ *  wiring readings read own keys and descriptors, the placement, content and demand readings own index keys (above), K-PURE's
+ *  input datum (node's JSON.stringify) throws on M80's subjects (unreadable:input), and its repeat comparison (node's
+ *  util.isDeepStrictEqual) probes an array's first hole once and then reads its own keys. Each such array is behind a probe
+ *  that throws at a reading's third probe of an absent index (HOLE_PROBES is 2, more than any reading above makes) and lists
+ *  its own keys last index first, so a reading that walks the length reads unreadable:<reading> there and reds row S3c
+ *  instead of stopping the judge, and one that takes own keys unsorted reads M78's blocks out of order (K-DEMAND); S3c's
+ *  probe readings are the probe's own control (a filter, a spread and an own-descriptor walk are probed, presentItems and
+ *  node's comparison end), and its indexBoundary '4294967294' reading is the shape reading of a plain array of that length. A seam that throws from its own
+ *  wire or assemble is no reading: the judge stops on its error. Seam code a reading calls that never returns (a getter, a
+ *  proxy's trap) is NOT CLAIMED by this census, and a wiring's evidence or sources array of length 2^32 - 1 is NOT CLAIMED
+ *  by this census (no member hands one).
  *  What K-WIRING and K-SPLIT read is a value at its two readings: a property's attribute flags, a value's extensibility, a
  *  side table keyed by a value, storage a value holds outside its properties (a native private element, a built-in's
- *  internal slot) and what a value comes to carry after its last reading lie outside it (R-OUTSIDE-VALUE, Q8).
+ *  internal slot: a Map's entries, a Symbol wrapper's symbol, a WeakRef's target), what a value comes to carry after its last
+ *  reading and what it carries only between its two readings lie outside it (R-OUTSIDE-VALUE, Q8).
  * THE K-SPLIT FAMILY (the enumerate-the-resolvable form R-B102 binds; the PINNED SET, each element with its declared
  * falsifiers, every one refused by exactly its declared checks in the battery, and the K-SPLIT reading of every carrying,
  * holey, ordered and fail-closed one pinned on case C2 in row S3c, M21's in row S4b): proxy M39; prototype
@@ -132,17 +160,19 @@
  * M48, M56; symbol keys M44; accessors M45, M72; the array items exactly the indices below the length M61-M66 (S3c's
  * indexBoundary reading: '4294967294' is an index, '4294967295', '99999999999999999999' and '01' are keys); holes M58,
  * M64-M67; key order M68-M70; leaf type M47 and the leaves table; missing keys M21 (row S4b); content M19-M24, M41, M47,
- * M59, M63; every run M48, M59; the moment M56; fail closed M65, M67 and M72-M75 (row S3c's failClosed readings); steered
- * readings M76, M77 (row S3c's steered readings) - and the
+ * M59, M63; every run M48, M59; the moment M56; fail closed M65, M67 and M72-M75 (row S3c's failClosed readings); own
+ * iteration and methods, never called, M76, M77 (row S3c's steered readings); arrays of length 2^32 - 1 M78-M80 (row S3c's
+ * oversized readings) - and the
  * carrier tables, every carrier on every document node. NAMED RESIDUALS of the family, each a pinned quiet row (a reading
  * that starts reading a member reds its row): attribute-flags, frozen-document, side-table-coverage, side-table-handle,
- * private-element-coverage, private-element-handle, internal-slot-coverage, internal-slot-handle and deferred-coverage
- * (R-OUTSIDE-VALUE, Q8); outside-provider-call and deferred-query (R-UNMODELED-EFFECT, Q5). NOT CLAIMED, with no quiet row
+ * private-element-coverage, private-element-handle, internal-slot-coverage, internal-slot-handle, deferred-coverage,
+ * boxed-primitive-coverage, weakref-handle and interval-coverage (R-OUTSIDE-VALUE, Q8); outside-provider-call and
+ * deferred-query (R-UNMODELED-EFFECT, Q5). NOT CLAIMED, with no quiet row
  * by rule: a seam that rewrites one of the realm's shared intrinsics (Object's, Array's or String's prototype, a built-in
  * function) - every reading compares prototypes by identity, and the readings and the record call the realm's built-ins as
  * they find them, so such a seam could carry a member through a shared prototype or reach or rewrite what the census reads;
  * a quiet row would have to write a shared intrinsic, which standing rule 3 keeps out of tests.
- * MUTANTS: 77 single-fault seams, each refused by exactly its declared checks (asserted); every check refuses one alone. The
+ * MUTANTS: 80 single-fault seams, each refused by exactly its declared checks (asserted); every check refuses one alone. The
  * CARRIER TABLES (rows S3b and S3c) plant a handle on every wiring node and coverage on every document node by every carrier -
  * an own key that is enumerable, non-enumerable or a symbol, an accessor, a prototype, a proxy or the own key '4294967295';
  * for the wiring also a collection and a listed handle the assembler removes as it starts - and a null prototype on every
@@ -204,8 +234,11 @@
  * reading never reads - a property's attribute flags (a document whose unmet key is read-only), a value's extensibility (a
  * frozen document), a side table keyed by a value (a WeakMap the seam keeps coverage in beside its document, or a live
  * handle in beside its wiring), storage a value holds outside its properties (a native private element holding coverage on
- * the document or a live handle on the wiring; a Map re-prototyped to Object's whose entries hold either) and what a value
- * comes to carry after its last reading (coverage a timer writes on the document); every check admits each member, which
+ * the document or a live handle on the wiring; a Map re-prototyped to Object's whose entries hold either; a Symbol wrapper
+ * re-prototyped to Object's holding coverage as its symbol; a WeakRef re-prototyped to Object's holding a live handle as its
+ * target), what a value comes to carry after its last reading (coverage a timer writes on the document) and what it carries
+ * only between its two readings (coverage put on R1's document as K-PURE's instance first wires and taken off as it
+ * assembles R3); every check admits each member, which
  * answers every case while it carries its coverage or its handle, and each handle member's handle is live: the seam calling
  * it is refused by K-EFFECT).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and the shape of every table
@@ -448,7 +481,10 @@ type Fault =
   | "hand-revoked-proxy"
   | "demand-throwing-owner"
   | "unmet-own-iterator"
-  | "blocks-own-filter";
+  | "blocks-own-filter"
+  | "blocks-oversized"
+  | "unmet-oversized"
+  | "subjects-oversized";
 /** The fault that wires each port's handle into the assembler. */
 const WIRE_FAULTS: Readonly<Record<Port, Fault>> = {
   "provider-query": "wire-provider-query",
@@ -497,6 +533,39 @@ function holeyAtZero<T>(items: readonly T[], moved: boolean): T[] {
   if (moved && items.length > 0) Object.defineProperty(copy, INDEX_LIKE_KEY, { value: items[0], enumerable: true, writable: true, configurable: true });
   return copy;
 }
+/** The most probes of an absent index key a bounded reading makes of one array (wb-j517 F1): node's util.isDeepStrictEqual, K-PURE's repeat
+ * comparison, probes an array's first hole once and then reads its own keys; the census's own readings probe none. */
+const HOLE_PROBES = 2;
+/** A copy of an array with a given length (every index from its items' count up is a hole), behind a probe that counts each read of an absent index
+ * key - has, get and own property descriptor - and throws a RangeError at the third, past HOLE_PROBES, and that lists its own keys last index first:
+ * a reading that walks the length throws at its third hole, and one that takes its own keys unsorted reads its items out of order. */
+function probed<T>(items: readonly T[], length: number): T[] {
+  const target: T[] = Object.assign([...items], { length });
+  let probes = 0;
+  const probe = (key: string | symbol): void => {
+    if (typeof key !== "string" || !isArrayIndex(key) || Object.hasOwn(target, key)) return;
+    probes += 1;
+    if (probes > HOLE_PROBES) throw new RangeError(`a reading walked the length: hole ${key} probed`);
+  };
+  return new Proxy(target, {
+    has: (inner, key) => {
+      probe(key);
+      return Reflect.has(inner, key);
+    },
+    get: (inner, key, receiver) => {
+      probe(key);
+      return Reflect.get(inner, key, receiver);
+    },
+    getOwnPropertyDescriptor: (inner, key) => {
+      probe(key);
+      return Reflect.getOwnPropertyDescriptor(inner, key);
+    },
+    ownKeys: inner => [...Reflect.ownKeys(inner)].reverse(),
+  });
+}
+/** An array of length 2^32 - 1, the largest, behind the probe (the oversized faults, M78-M80): the judge reads a reading that walks its length as
+ * unreadable:<reading> instead of stopping. */
+const oversized = <T>(items: readonly T[]): T[] => probed(items, INDEX_LIMIT);
 /** The document-shape faults (refusal #2 U1's GM8a-GM8i shapes, refusal #3's XI1 and XK1 shapes, and their kin): each carries coverage or
  * admission beside the closed shape, leaves a hole, reorders own keys, or makes a reading throw. */
 function shapeFault(has: (fault: Fault) => boolean, runs: number, document: ContextDocument): ContextDocument {
@@ -524,6 +593,8 @@ function shapeFault(has: (fault: Fault) => boolean, runs: number, document: Cont
   if (has("blocks-holey-index-like")) return { blocks: holeyAtZero(blocks, true), unmet };
   if (has("evidence-holey-index-like")) return { blocks: blocks.map(block => ({ ...block, evidence: holeyAtZero(block.evidence, true) })), unmet };
   if (has("blocks-holey")) return { blocks: holeyAtZero(blocks, false), unmet };
+  if (has("blocks-oversized")) return { blocks: oversized(blocks), unmet };
+  if (has("unmet-oversized")) return { blocks, unmet: oversized(unmet) };
   if (has("block-key-order")) return { blocks: blocks.map(block => ({ evidence: block.evidence, text: block.text, subject: block.subject })), unmet };
   if (has("document-key-order")) return { unmet, blocks };
   if (has("evidence-key-order"))
@@ -572,6 +643,8 @@ function seamWith(faults: ReadonlySet<Fault>): SeamFactory {
     if (has("coverage-withdrawn")) withdraw();
     let runs = 0;
     let wires = 0;
+    /** The subjects the host's half demanded, which the subjects-oversized assembler assembles: it never walks the oversized array it was handed. */
+    let demanded: readonly string[] = [];
     const handle =
       (port: Port): Handle =>
       subject =>
@@ -587,7 +660,12 @@ function seamWith(faults: ReadonlySet<Fault>): SeamFactory {
           const queried = port === "provider-query" && (has("query-through-wired-port") || has("hand-withdrawn") || (repeat && has("hand-on-repeat")));
           if (has(WIRE_FAULTS[port]) || queried) ports[port] = handle(port);
         }
-        const subjects = has("demand-from-evidence") ? distinct(request.evidence.map(item => item.subject)) : [...request.subjects];
+        demanded = [...request.subjects];
+        const subjects = has("subjects-oversized")
+          ? oversized(request.subjects)
+          : has("demand-from-evidence")
+            ? distinct(request.evidence.map(item => item.subject))
+            : [...request.subjects];
         const owner = has("demand-owner-assembler") || has("owner-restored") || (repeat && has("owner-on-repeat")) ? "assembler" : "host";
         const demand: Wiring["demand"] & { readonly query?: Handle } = has("hand-in-demand")
           ? { owner, subjects, query: smuggled }
@@ -623,7 +701,7 @@ function seamWith(faults: ReadonlySet<Fault>): SeamFactory {
         if (has("hand-withdrawn")) Reflect.deleteProperty(wiring.ports, "provider-query");
         if (has("owner-restored")) (wiring.demand as { owner: string }).owner = "host";
         if (runs === 2 && has("coverage-withdrawn")) withdraw();
-        let subjects: readonly string[] = wiring.demand.subjects;
+        let subjects: readonly string[] = has("subjects-oversized") ? demanded : wiring.demand.subjects;
         if (has("widen-demand")) subjects = distinct([...subjects, ...wiring.evidence.map(item => item.subject)]);
         if (has("evidence-order")) subjects = [...subjects].sort((left, right) => firstIndex(wiring.evidence, left) - firstIndex(wiring.evidence, right));
         const blocks: Block[] = [];
@@ -846,8 +924,24 @@ function shapeFindings(value: unknown, shape: Shape, path: string): string[] {
   }
   return findings;
 }
-/** The items an array holds at its present indices, in index order (a hole holds none; K-SPLIT's shape reading names it). */
-const presentItems = <T>(items: readonly T[]): T[] => items.filter(() => true);
+/** The own index keys of an array, in index order: the keys its items sit under, read from its own keys, never by walking its length. */
+const indexKeysOf = (items: readonly unknown[]): string[] =>
+  Reflect.ownKeys(items)
+    .filter((key): key is string => typeof key === "string" && isArrayIndex(key))
+    .sort((left, right) => Number(left) - Number(right));
+/** The items an array holds at its present indices, in index order (a hole holds none; K-SPLIT's shape reading names it), read through its own index
+ * keys, sorted: never by walking its length and never through its iteration or methods, so the reading ends on an array of any length and a document
+ * cannot steer it (wb-j517 F1: the former items.filter visited every index below a length of 2^32 - 1 and did not return). */
+function presentItems<T>(items: readonly T[]): T[] {
+  if (!Array.isArray(items)) throw new TypeError("no array");
+  return indexKeysOf(items).map(key => items[Number(key)]);
+}
+/** An array's items as the placement and demand readings read them: its present items, and its holes - the indices below its length that hold no own
+ * item, each an entry that names no subject (as cut #4's spread read a hole: M58, M64) - counted from its length, never walked. */
+function itemsOf<T>(items: readonly T[]): { readonly present: readonly T[]; readonly holes: number } {
+  const present = presentItems(items);
+  return { present, holes: items.length - present.length };
+}
 /** A reading that throws reads as the finding `unreadable:<reading>`, so its check refuses (fail closed) and the judge goes on (refusal #3 F4: a
  * holey blocks array threw inside the content reading and crashed the battery instead of being read). */
 function guarded(name: string, read: () => readonly string[]): readonly string[] {
@@ -873,22 +967,25 @@ function contentFindings(document: ContextDocument, request: Request): string[] 
   }
   return findings;
 }
-/** K-DEMAND's reading of a wiring's demand: the owner is the host, and the subjects are the request's, in its order. */
+/** K-DEMAND's reading of a wiring's demand: the owner is the host, and the subjects are the request's, in its order (a hole in the subjects is an entry
+ * that names no subject). */
 function demandFindings(wiring: Wiring, request: Request): string[] {
   const findings: string[] = [];
   if (wiring.demand.owner !== "host") findings.push("owner");
-  if (!isDeepStrictEqual([...wiring.demand.subjects], [...request.subjects])) findings.push("subjects");
+  const subjects = itemsOf(wiring.demand.subjects);
+  if (subjects.holes > 0 || !isDeepStrictEqual([...subjects.present], [...request.subjects])) findings.push("subjects");
   return findings;
 }
-/** K-DEMAND's reading of a document's placement: exactly the demanded subjects, each once, the blocks and the unmet each in demand order. */
+/** K-DEMAND's reading of a document's placement: exactly the demanded subjects, each once, the blocks and the unmet each in demand order (a hole in the
+ * unmet is an entry that names no subject, so a holey unmet never places exactly the demand, nor in its order). */
 function placementFindings(document: ContextDocument, request: Request): string[] {
   const findings: string[] = [];
   const blockSubjects = presentItems(document.blocks).map(block => block.subject);
-  const unmet = [...document.unmet];
-  const placed = [...blockSubjects, ...unmet];
-  if (placed.length !== request.subjects.length || request.subjects.some(subject => !placed.includes(subject))) findings.push("placed");
+  const unmet = itemsOf(document.unmet);
+  const placed = [...blockSubjects, ...unmet.present];
+  if (placed.length + unmet.holes !== request.subjects.length || request.subjects.some(subject => !placed.includes(subject))) findings.push("placed");
   const inOrder = (subjects: readonly string[]): boolean => isDeepStrictEqual([...subjects], request.subjects.filter(subject => subjects.includes(subject)));
-  if (!inOrder(blockSubjects) || !inOrder(unmet)) findings.push("order");
+  if (!inOrder(blockSubjects) || !inOrder(unmet.present) || unmet.holes > 0) findings.push("order");
   return findings;
 }
 /** One reading of a run's two values: its wiring (K-WIRING; K-DEMAND's demand) and its document (K-DEMAND's placement; K-SPLIT's shape and content). */
@@ -1082,8 +1179,11 @@ const MUTANTS: readonly Mutant[] = [
   mutant("M73", "input-unserializable", ["K-PURE"]),
   mutant("M74", "hand-revoked-proxy", ["K-WIRING"]),
   mutant("M75", "demand-throwing-owner", ["K-WIRING", "K-DEMAND", "K-PURE"]),
-  mutant("M76", "unmet-own-iterator", ["K-SPLIT"]),
+  mutant("M76", "unmet-own-iterator", ["K-DEMAND", "K-SPLIT"]),
   mutant("M77", "blocks-own-filter", ["K-SPLIT"]),
+  mutant("M78", "blocks-oversized", ["K-SPLIT"]),
+  mutant("M79", "unmet-oversized", ["K-DEMAND", "K-SPLIT"]),
+  mutant("M80", "subjects-oversized", ["K-WIRING", "K-DEMAND", "K-PURE"]),
 ];
 const mutantLine = (entry: Mutant): string => `${entry.id}:${entry.fault}:${entry.refusedBy.join("+")}`;
 const FALLBACK_MUTANT: Mutant = { id: "-", fault: "empty-document", refusedBy: [], factory: REFERENCE };
@@ -1109,13 +1209,43 @@ const ORDERED: readonly string[] = ["M68", "M69", "M70"];
  * now (M72 placement, content and K-PURE's repeat comparison; M73 K-PURE's input datum; M74 the wiring; M75 the demand and the input datum):
  * each is refused through readings, never through a crash of the judge. */
 const FAIL_CLOSED: readonly string[] = ["M65", "M67", "M72", "M73", "M74", "M75"];
-/** The mutants that steer the readings that read a document through its own iteration and methods - K-DEMAND's placement through the unmet's
- * iterator (M76), K-DEMAND's placement and K-SPLIT's content through the blocks' filter (M77) - each through an own key K-SPLIT's shape refuses. */
+/** The mutants that would steer a reading that read a document through its own iteration and methods - the unmet's iterator (M76), the blocks'
+ * filter (M77) - each through an own key K-SPLIT's shape refuses. The readings read own index keys and call neither (wb-j517), so M76's admitted
+ * unmet entries are K-DEMAND's placement finding and M77's covered text is K-SPLIT's content finding. */
 const STEERING: readonly string[] = ["M76", "M77"];
+/** The mutants that hand an array of length 2^32 - 1 behind the probe (oversized()): the blocks (M78), the unmet (M79) and the demand's subjects (M80).
+ * Each is refused by exactly its declared checks and the judge goes on; a reading that walked the length would read unreadable:<reading> (wb-j517 F1). */
+const OVERSIZED: readonly string[] = ["M78", "M79", "M80"];
 /** The mutants that misbehave only in K-PURE's runs - R3, or both R2 and R3 (so every run is read). */
 const EVERY_RUN: readonly string[] = ["M48", "M50", "M51", "M52", "M59", "M60"];
 /** The mutants a value shows only the moment its run makes it: a handle or a demand the assembler takes back, coverage stripped before the runs are done. */
 const MOMENT: readonly string[] = ["M49", "M55", "M56"];
+
+/** The probe's own control (wb-j517 F1), over an array of length 1000 behind it, so a probe that missed a walk ends instead of stopping the judge: each
+ * walk of the length - filter (has), a spread (get) and an own-descriptor loop - is probed, and the bounded readings - presentItems, and node's
+ * util.isDeepStrictEqual of two such arrays - end; presentItems reads the items in index order, though the probe lists its own keys last index first. */
+function probeReadings(): Readonly<Record<string, string>> {
+  const items = (): string[] => probed(["s1", "s2"], 1000);
+  const readings: Readonly<Record<string, () => unknown>> = {
+    filter: () => items().filter(() => true),
+    spread: () => [...items()],
+    "own-descriptor": () => {
+      const walked = items();
+      for (let index = 0; index < walked.length; index += 1) Reflect.getOwnPropertyDescriptor(walked, String(index));
+    },
+    presentItems: () => presentItems(items()).join(","),
+    "deep-equal": () => isDeepStrictEqual(items(), items()),
+  };
+  return Object.fromEntries(
+    Object.entries(readings).map(([name, read]) => {
+      try {
+        return [name, `ends:${String(read())}`];
+      } catch (error) {
+        return [name, error instanceof RangeError ? "probed" : "threw"];
+      }
+    }),
+  );
+}
 
 // ---- the carrier tables ----
 
@@ -1793,8 +1923,8 @@ const OUTSIDE_SRC: readonly string[] = [CENSUS_PATH, ROSTER_PATH, DOCS_03];
 /** What R-COORDINATED's removals range over. */
 const COORDINATED: readonly string[] = ["pin", "case", "mutant", "residual-member", "control"];
 /** R-OUTSIDE-VALUE (row Q8): what the value readings never read - a property's attribute flags, a value's extensibility, a side table keyed by the
- * value, and storage a value holds outside its properties (a native private element, a built-in's internal slot) - each member a seam every check
- * admits while it carries coverage or a handle. */
+ * value, storage a value holds outside its properties (a native private element, a built-in's internal slot) and what a value carries only after or
+ * between its readings - each member a seam every check admits while it carries coverage or a handle. */
 interface OutsideMember {
   readonly id: string;
   readonly seam: SeamFactory;
@@ -1804,6 +1934,8 @@ interface OutsideMember {
   readonly live?: SeamFactory;
   /** For a member written after the readings: its carrying is read once a timer queued after the run has fired. */
   readonly deferred?: boolean;
+  /** For a member carried only between a run's two readings: its carrying is read once the next instance has wired (as K-PURE's instance wires R2). */
+  readonly interval?: boolean;
 }
 /** A macrotask turn: every timer a seam queued with no delay before this one has fired. */
 const nextTurn = (): Promise<void> => new Promise(resolve => setTimeout(resolve, 0));
@@ -1864,6 +1996,62 @@ const SLOT_HANDLE = handleSeams(
   (wiring, handle) => restamped(new Map<string, unknown>([["query", handle]]), wiring),
   wiring => slotOf(wiring, "query"),
 );
+/** The symbol a Symbol wrapper holds in its [[SymbolData]] slot as coverage (wb-j517 F3, the gate's G30 shape). */
+const BOXED_COVERAGE = Symbol.for(`coverage:${COVERAGE}`);
+/** The symbol a re-prototyped Symbol wrapper holds in its [[SymbolData]] slot, or undefined: no own key, prototype or proxy reading reaches it. */
+function boxedOf(value: object): unknown {
+  try {
+    return Reflect.apply(Symbol.prototype.valueOf, value, []);
+  } catch {
+    return undefined;
+  }
+}
+/** The target a re-prototyped WeakRef holds in its [[WeakRefTarget]] slot, or undefined (wb-j517 F3, the gate's G31 shape). */
+function derefOf(value: object): unknown {
+  try {
+    return Reflect.apply(WeakRef.prototype.deref, value, []);
+  } catch {
+    return undefined;
+  }
+}
+/** The handles a WeakRef wiring targets, held strongly here so no collection can empty a WeakRef while its case reads it. */
+const KEPT_HANDLES = new Set<Handle>();
+const WEAKREF_HANDLE = handleSeams(
+  (wiring, handle) => {
+    KEPT_HANDLES.add(handle);
+    return restamped(new WeakRef(handle), wiring);
+  },
+  wiring => derefOf(wiring),
+);
+/** interval-coverage (wb-j517 F2, the gate's G34 shape): an instance's first wire puts an enumerable coverage on the document the factory's previous
+ * instance returned first, and its second assemble takes it off - so in a case R1's document carries coverage from K-PURE's instance's first wire
+ * (R2's) to its second assemble (R3's), between R1's two readings and at neither. */
+function intervalSeam(): SeamFactory {
+  let previous: object | undefined;
+  return world => {
+    const inner = REFERENCE(world);
+    let covered: object | undefined;
+    let wires = 0;
+    let assembles = 0;
+    return {
+      wire: request => {
+        wires += 1;
+        if (wires === 1 && previous !== undefined) {
+          covered = previous;
+          Object.defineProperty(covered, "coverage", { value: COVERAGE, enumerable: true, configurable: true });
+        }
+        return inner.wire(request);
+      },
+      assemble: wiring => {
+        assembles += 1;
+        if (assembles === 2 && covered !== undefined) Reflect.deleteProperty(covered, "coverage");
+        const document = inner.assemble(wiring);
+        if (assembles === 1) previous = document;
+        return document;
+      },
+    };
+  };
+}
 const OUTSIDE_VALUE: readonly OutsideMember[] = [
   {
     id: "attribute-flags",
@@ -1919,6 +2107,23 @@ const OUTSIDE_VALUE: readonly OutsideMember[] = [
     }),
     carried: run => Object.getOwnPropertyDescriptor(run.document, "coverage")?.value === COVERAGE,
     deferred: true,
+  },
+  {
+    id: "boxed-primitive-coverage",
+    seam: plantedSeam(document => restamped(Object(BOXED_COVERAGE) as object, { blocks: document.blocks, unmet: document.unmet })),
+    carried: run => boxedOf(run.document) === BOXED_COVERAGE,
+  },
+  {
+    id: "weakref-handle",
+    seam: WEAKREF_HANDLE.seam,
+    carried: run => typeof derefOf(run.wiring) === "function",
+    live: WEAKREF_HANDLE.live,
+  },
+  {
+    id: "interval-coverage",
+    seam: intervalSeam(),
+    carried: run => Object.getOwnPropertyDescriptor(run.document, "coverage")?.value === COVERAGE,
+    interval: true,
   },
 ];
 const RESIDUAL_MEMBERS: Readonly<Record<string, readonly string[]>> = {
@@ -2035,6 +2240,8 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     holes: refusedOf(HOLEY),
     ordered: refusedOf(ORDERED),
     failClosed: Object.fromEntries(FAIL_CLOSED.map(id => [id, readingsOf(mutantById(id).factory, caseById("C1"))])),
+    oversized: Object.fromEntries(OVERSIZED.map(id => [id, readingsOf(mutantById(id).factory, caseById("C2"))])),
+    probe: probeReadings(),
     erased: readingsOf(mutantById("M71").factory, caseById("C2"))["K-EFFECT"],
     indexBoundary: Object.fromEntries(
       ["4294967294", INDEX_LIKE_KEY, "99999999999999999999", "01"].map(key => [key, shapeFindings({ blocks: [], unmet: Object.assign([] as string[], { [key]: "s3" }) }, DOCUMENT_SHAPE, "document")]),
@@ -2234,11 +2441,17 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       const run = runOnce(member.seam, caseById("C1"));
       const atReading = member.carried(run);
       if (member.deferred === true) await nextTurn();
+      if (member.interval === true) member.seam(recordingWorld({}).world).wire(clone(caseById("C1").request));
       rows.push({ id: member.id, refused, answers: isDeepStrictEqual(answers, CASES.map(caseLine)), atReading, carried: member.carried(run), live: member.live === undefined ? null : refusing(judge(member.live)) });
     }
     expect(
-      rows.filter(row => row.atReading !== (OUTSIDE_VALUE.find(member => member.id === row.id)?.deferred !== true)).map(row => row.id),
-      "every member carries its coverage or handle when its run returns, except a deferred one, which carries it only after the readings",
+      rows
+        .filter(row => {
+          const member = OUTSIDE_VALUE.find(entry => entry.id === row.id);
+          return row.atReading !== (member?.deferred !== true && member?.interval !== true);
+        })
+        .map(row => row.id),
+      "every member carries its coverage or handle when its run returns, except a deferred one, which carries it only after the readings, and an interval one, which carries it only once the next instance wires",
     ).toEqual([]);
     expect(
       rows.filter(row => row.refused.length > 0 || !row.answers || !row.carried).map(row => row.id),
@@ -2366,12 +2579,15 @@ describe(SUITE, () => {
       "M73:input-unserializable:K-PURE",
       "M74:hand-revoked-proxy:K-WIRING",
       "M75:demand-throwing-owner:K-WIRING+K-DEMAND+K-PURE",
-      "M76:unmet-own-iterator:K-SPLIT",
+      "M76:unmet-own-iterator:K-DEMAND+K-SPLIT",
       "M77:blocks-own-filter:K-SPLIT",
+      "M78:blocks-oversized:K-SPLIT",
+      "M79:unmet-oversized:K-DEMAND+K-SPLIT",
+      "M80:subjects-oversized:K-WIRING+K-DEMAND+K-PURE",
     ]);
     expect(CASES.filter(entry => entry.expected.split(";unmet=")[1]?.includes(",") === true).map(entry => entry.id), "cases leave two or more subjects unmet, in both orders of their numbers").toEqual(["C10", "C11"]);
     expect(SMUGGLING.map(id => mutantById(id).fault)).toEqual(["hand-extra-field", "hand-in-demand", "hand-unlisted-port", "hand-accessor", "hand-array-property", "hand-inherited", "hand-proxy"]);
-    expect([CARRYING, ADMITTING, HOLEY, ORDERED, FAIL_CLOSED, STEERING, EVERY_RUN, MOMENT]).toEqual([
+    expect([CARRYING, ADMITTING, HOLEY, ORDERED, FAIL_CLOSED, STEERING, EVERY_RUN, MOMENT, OVERSIZED]).toEqual([
       ["M33", "M34", "M35", "M36", "M37", "M38", "M39", "M40", "M41", "M42", "M43", "M44", "M45", "M46", "M47", "M48", "M56", "M61", "M62", "M63", "M64", "M65", "M66"],
       ["M36", "M61", "M64"],
       ["M58", "M64", "M65", "M66", "M67"],
@@ -2380,12 +2596,14 @@ describe(SUITE, () => {
       ["M76", "M77"],
       ["M48", "M50", "M51", "M52", "M59", "M60"],
       ["M49", "M55", "M56"],
+      ["M78", "M79", "M80"],
     ]);
     expect([INDEX.source, INDEX_LIMIT, INDEX_LIKE_KEY], "the array index reading: a canonical integer key below 2^32 - 1, and the index-like key").toEqual([
       "^(?:0|[1-9]\\d*)$",
       4294967295,
       "4294967295",
     ]);
+    expect(HOLE_PROBES, "the most probes of an absent index key a bounded reading makes of one array").toBe(2);
     expect(shapeLine(DOCUMENT_SHAPE), "the closed document shape").toBe("{blocks:[{subject:string,text:string,evidence:[{subject:string,claim:string,value:string,evaluatedBy:string}]}],unmet:[string]}");
     expect([CARRIERS, WIRING_CARRIERS, DOCUMENT_NODES, DOCUMENT_OBJECTS, LEAVES, WIRING_NODES, WIRING_OBJECTS], "the carrier tables").toEqual([
       ["listed", "hidden", "symbol", "accessor", "inherited", "proxy", "index-like"],
@@ -2397,8 +2615,11 @@ describe(SUITE, () => {
       ["wiring", "demand", "item", "source", "ports"],
     ]);
     expect(RESIDUALS.map(family => `${family.id}:${family.name}`)).toEqual(["Q1:R-SHARED-WORD", "Q2:R-COMPOSED", "Q3:R-COMMENT", "Q4:R-UNNAMED-SEAM"]);
-    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:7", "Q2:14", "Q3:3", "Q4:2", "Q5:2", "Q6:3", "Q7:5", "Q8:9"]);
-    expect(OUTSIDE_VALUE.map(member => `${member.id}:${member.live === undefined ? "coverage" : "handle"}${member.deferred === true ? ":deferred" : ""}`), "R-OUTSIDE-VALUE's members").toEqual([
+    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:7", "Q2:14", "Q3:3", "Q4:2", "Q5:2", "Q6:3", "Q7:5", "Q8:12"]);
+    expect(
+      OUTSIDE_VALUE.map(member => `${member.id}:${member.live === undefined ? "coverage" : "handle"}${member.deferred === true ? ":deferred" : ""}${member.interval === true ? ":interval" : ""}`),
+      "R-OUTSIDE-VALUE's members",
+    ).toEqual([
       "attribute-flags:coverage",
       "frozen-document:coverage",
       "side-table-coverage:coverage",
@@ -2408,6 +2629,9 @@ describe(SUITE, () => {
       "internal-slot-coverage:coverage",
       "internal-slot-handle:handle",
       "deferred-coverage:coverage:deferred",
+      "boxed-primitive-coverage:coverage",
+      "weakref-handle:handle",
+      "interval-coverage:coverage:interval",
     ]);
     expect(VOCABULARY.map(word => `${word.id}:${word.spelling}:${word.reading}:${word.forms.join("|")}`)).toEqual([
       "V1:EDC:word:edc|edcs",

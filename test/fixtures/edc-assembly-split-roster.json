@@ -239,8 +239,11 @@
   "M73:input-unserializable:K-PURE",
   "M74:hand-revoked-proxy:K-WIRING",
   "M75:demand-throwing-owner:K-WIRING+K-DEMAND+K-PURE",
-  "M76:unmet-own-iterator:K-SPLIT",
-  "M77:blocks-own-filter:K-SPLIT"
+  "M76:unmet-own-iterator:K-DEMAND+K-SPLIT",
+  "M77:blocks-own-filter:K-SPLIT",
+  "M78:blocks-oversized:K-SPLIT",
+  "M79:unmet-oversized:K-DEMAND+K-SPLIT",
+  "M80:subjects-oversized:K-WIRING+K-DEMAND+K-PURE"
  ],
  "residuals": {
   "Q1": [
@@ -302,7 +305,10 @@
    "private-element-handle",
    "internal-slot-coverage",
    "internal-slot-handle",
-   "deferred-coverage"
+   "deferred-coverage",
+   "boxed-primitive-coverage",
+   "weakref-handle",
+   "interval-coverage"
   ]
  },
  "witnesses": {
@@ -971,13 +977,13 @@
     "M74": "ok",
     "M75": "ok",
     "M76": "split:key:document.unmet.Symbol(Symbol.iterator)",
-    "M77": "split:key:document.blocks.filter"
+    "M77": "split:key:document.blocks.filter+source:s1"
    },
    "steered": {
     "M76": {
      "K-WIRING": "ok",
      "K-EFFECT": "ok",
-     "K-DEMAND": "ok",
+     "K-DEMAND": "demand:placed+order",
      "K-PURE": "ok",
      "K-SPLIT": "split:key:document.unmet.Symbol(Symbol.iterator)"
     },
@@ -986,7 +992,7 @@
      "K-EFFECT": "ok",
      "K-DEMAND": "ok",
      "K-PURE": "ok",
-     "K-SPLIT": "split:key:document.blocks.filter"
+     "K-SPLIT": "split:key:document.blocks.filter+source:s1"
     }
    },
    "holes": {
@@ -1064,6 +1070,36 @@
      "K-PURE": "impure:unreadable:input",
      "K-SPLIT": "ok"
     }
+   },
+   "oversized": {
+    "M78": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "ok",
+     "K-PURE": "ok",
+     "K-SPLIT": "split:proxy:document.blocks"
+    },
+    "M79": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "demand:placed+order",
+     "K-PURE": "ok",
+     "K-SPLIT": "split:proxy:document.unmet"
+    },
+    "M80": {
+     "K-WIRING": "wired:proxy:wiring.demand.subjects",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "demand:subjects",
+     "K-PURE": "impure:unreadable:input",
+     "K-SPLIT": "ok"
+    }
+   },
+   "probe": {
+    "filter": "probed",
+    "spread": "probed",
+    "own-descriptor": "probed",
+    "presentItems": "ends:s1,s2",
+    "deep-equal": "ends:true"
    },
    "erased": "effect:provider-query:s3",
    "indexBoundary": {
@@ -1914,6 +1950,32 @@
     },
     {
      "id": "deferred-coverage",
+     "refused": [],
+     "answers": true,
+     "atReading": false,
+     "carried": true,
+     "live": null
+    },
+    {
+     "id": "boxed-primitive-coverage",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": null
+    },
+    {
+     "id": "weakref-handle",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": [
+      "K-EFFECT"
+     ]
+    },
+    {
+     "id": "interval-coverage",
      "refused": [],
      "answers": true,
      "atReading": false,
