@@ -1,0 +1,2718 @@
+{
+  "bead": "wb-pyel.8",
+  "claims": {
+    "COMMENTS": "bare() reads a node as written: its tokens' own text in order, the trivia between two tokens kept as written when it is white space alone, in a node a comment walks too (C-LINES). A trivia run that holds a comment - a block, a line or a JSDoc-style comment, a JSDoc comment the parser attaches as a node too (its node is no token: M-JSDOC) - is read whole, its white space, line ends, blank and white-space-only lines with it: as nothing right after a token whose text ends in a terminator (the '.', '...', ';', '?.', '!', '?' and '??' punctuators and a number written with a trailing '.'), so the reading reads on uncut there (T-R1, T-R3, T-TOKENS, M-AFTER); and as one space anywhere else (T-R1C, M-BEFORE), where a line boundary the run holds cuts nothing either - a subject and a family across it find (U-OWN-LINE, U-BLANK) and a marker across it quiets the reading, which LIVE QUIET holds (U-MARKER). So no comment cuts an as-written reading, a marker in a comment quiets nothing (M-AFTER, M-BEFORE) and a family word in a comment finds nothing (M-WORDS).",
+    "AS-WRITTEN": "The as-written readings are the 13 sites bare() reads: a property access, a qualified name, an element access's receiver, an indexed access type's object type, an object binding pattern's receiver (a variable's initializer, a for-of's and a for-in's iterated expression, a parameter's type annotation and its default value), a destructuring assignment's receiver (the assigned expression, a for-of's and a for-in's iterated expression) and an import-equals entity name - each read with every comment kind right after a '.' inside it (M-AFTER) and before that '.' or inside its brackets (M-BEFORE), one finding each.",
+    "CUT": "SENTENCES cuts an as-written reading where its text holds a boundary as written: white space alone - a space or a line end - right after a token that ends in a terminator (C-SPACE), a blank or white-space-only line, a line read as a table row, a heading or a list item (a '-', '+' or '*' bullet, or a number with ')'; a number with '.' is a terminator cut, C-SPACE), or a terminator before white space inside a string, a template, a regular expression or JSX text the reading holds (C-LINES). A subject and a family on two sides of a cut read no finding while the uncut twin finds once, every cut member is held by LIVE QUIET (fail closed: the residual R-CUT), and a cut can part a marker away, which then finds (C-OVER-READ).",
+    "LIVE QUIET": "quietOf holds, beside the quiet readings of one text, every carrier pair whose two words a sentence cut parts - each occurrence of each pair, in a code reading and across a page's sentences - as '<where> parted:carrier <pair>' (P-ONE, P-C04, P-C05, P-C06, P-CODE); a pair one sentence spells is a finding and is held as parted nowhere, while a parted occurrence of the same pair beside it is held (P-WITHIN)."
+  },
+  "kills": {
+    "GM3": [
+      "T-R1",
+      "T-R3",
+      "T-TOKENS",
+      "M-AFTER",
+      "M-BEFORE",
+      "M-WORDS",
+      "M-JSDOC",
+      "U-OWN-LINE",
+      "U-BLANK",
+      "U-MARKER",
+      "C-LINES"
+    ],
+    "GM1": [
+      "P-C04",
+      "P-C06",
+      "P-WITHIN"
+    ],
+    "GM2": [
+      "P-C04",
+      "P-C05",
+      "P-C06",
+      "P-CODE"
+    ],
+    "GM7": [
+      "C-LINES"
+    ]
+  },
+  "rows": [
+    {
+      "id": "T",
+      "label": "After-terminator comment positions: a comment following \".\" / \"?.\" / \"!\" in a property access or qualified name must keep the reading's finding.",
+      "pins": [
+        {
+          "id": "T-R1",
+          "witness": {
+            "findings": [
+              "src/plant.ts:1 access:1 demand"
+            ],
+            "quiet": [
+              "src/plant.ts lexeme subjectless:demand demand"
+            ],
+            "asWritten": [
+              "context.demand"
+            ]
+          }
+        },
+        {
+          "id": "T-R3",
+          "witness": {
+            "findings": [
+              "src/plant.ts:1 import:1 demand"
+            ],
+            "quiet": [
+              "src/plant.ts lexeme subjectless:demand demand",
+              "src/plant.ts lexeme subjectless:demand demand"
+            ],
+            "asWritten": [
+              "Context.Inner.demand",
+              "Context.Inner"
+            ]
+          }
+        },
+        {
+          "id": "T-R1C",
+          "witness": {
+            "findings": [
+              "src/plant.ts:1 access:1 demand"
+            ],
+            "quiet": [
+              "src/plant.ts lexeme subjectless:demand demand"
+            ],
+            "asWritten": [
+              "context .demand"
+            ]
+          }
+        },
+        {
+          "id": "T-TOKENS",
+          "witness": {
+            ".": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Context.Demand"
+                ]
+              },
+              "wide": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Context.Demand"
+                ]
+              },
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Context. Demand"
+                ]
+              }
+            },
+            "...": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "[context, ...rest].demand"
+                ]
+              },
+              "wide": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "[context, ...rest].demand"
+                ]
+              },
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "[context, ... rest].demand"
+                ]
+              }
+            },
+            ";": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "{ context: 1;other: 2 }.demand"
+                ]
+              },
+              "wide": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "{ context: 1;other: 2 }.demand"
+                ]
+              },
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "{ context: 1; other: 2 }.demand"
+                ]
+              }
+            },
+            "?.": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context?.demand"
+                ]
+              },
+              "wide": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context?.demand"
+                ]
+              },
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context?. demand"
+                ]
+              }
+            },
+            "!": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context!.demand"
+                ]
+              },
+              "wide": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context!.demand"
+                ]
+              },
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context! .demand"
+                ]
+              }
+            },
+            "?": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ?a : b).demand"
+                ]
+              },
+              "wide": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ?a : b).demand"
+                ]
+              },
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ? a : b).demand"
+                ]
+              }
+            },
+            "??": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ??other).demand"
+                ]
+              },
+              "wide": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ??other).demand"
+                ]
+              },
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ?? other).demand"
+                ]
+              }
+            },
+            "1.": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context, 1.).demand"
+                ]
+              },
+              "wide": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context, 1.).demand"
+                ]
+              },
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context, 1. ).demand"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "The commentMatrix gains after-the-dot rows for every as-written site (13 sites)",
+      "pins": [
+        {
+          "id": "M-AFTER",
+          "witness": {
+            "propertyAccess.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.demand"
+              ]
+            },
+            "propertyAccess.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.demand"
+              ]
+            },
+            "propertyAccess.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.demand"
+              ]
+            },
+            "qualifiedName.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context.Demand"
+              ]
+            },
+            "qualifiedName.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context.Demand"
+              ]
+            },
+            "qualifiedName.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context.Demand"
+              ]
+            },
+            "elementReceiver.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "elementReceiver.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "elementReceiver.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context.inner).demand",
+                "context.inner"
+              ]
+            },
+            "indexedObject.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.demand",
+                "Context.Inner"
+              ]
+            },
+            "indexedObject.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.demand",
+                "Context.Inner"
+              ]
+            },
+            "indexedObject.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts<Context.Inner>.demand",
+                "Context.Inner"
+              ]
+            },
+            "bindingInitializer.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.inner.demand",
+                "context.inner"
+              ]
+            },
+            "bindingInitializer.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.inner.demand",
+                "context.inner"
+              ]
+            },
+            "bindingInitializer.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.inner.demand",
+                "context.inner"
+              ]
+            },
+            "bindingForOf.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "bindingForOf.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "bindingForOf.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "bindingForIn.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "bindingForIn.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "bindingForIn.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "parameterType.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context.Inner.demand",
+                "Context.Inner"
+              ]
+            },
+            "parameterType.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context.Inner.demand",
+                "Context.Inner"
+              ]
+            },
+            "parameterType.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context.Inner.demand",
+                "Context.Inner"
+              ]
+            },
+            "parameterDefault.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.inner.demand",
+                "context.inner"
+              ]
+            },
+            "parameterDefault.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.inner.demand",
+                "context.inner"
+              ]
+            },
+            "parameterDefault.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.inner.demand",
+                "context.inner"
+              ]
+            },
+            "assignment.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.inner.demand",
+                "context.inner"
+              ]
+            },
+            "assignment.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.inner.demand",
+                "context.inner"
+              ]
+            },
+            "assignment.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context.inner.demand",
+                "context.inner"
+              ]
+            },
+            "assignmentForOf.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "assignmentForOf.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "assignmentForOf.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "assignmentForIn.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "assignmentForIn.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "assignmentForIn.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "contexts.items.demand",
+                "contexts.items"
+              ]
+            },
+            "importEntity.block": {
+              "findings": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context.Inner.demand",
+                "Context.Inner"
+              ]
+            },
+            "importEntity.line": {
+              "findings": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context.Inner.demand",
+                "Context.Inner"
+              ]
+            },
+            "importEntity.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context.Inner.demand",
+                "Context.Inner"
+              ]
+            }
+          }
+        },
+        {
+          "id": "M-BEFORE",
+          "witness": {
+            "propertyAccess.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context .demand"
+              ]
+            },
+            "propertyAccess.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context .demand"
+              ]
+            },
+            "propertyAccess.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "context .demand"
+              ]
+            },
+            "qualifiedName.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context .Demand"
+              ]
+            },
+            "qualifiedName.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context .Demand"
+              ]
+            },
+            "qualifiedName.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context .Demand"
+              ]
+            },
+            "elementReceiver.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "elementReceiver.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "elementReceiver.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "indexedObject.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts< Context>.demand"
+              ]
+            },
+            "indexedObject.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts< Context>.demand"
+              ]
+            },
+            "indexedObject.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts< Context>.demand"
+              ]
+            },
+            "bindingInitializer.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "bindingInitializer.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "bindingInitializer.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "bindingForOf.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "bindingForOf.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "bindingForOf.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "bindingForIn.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "bindingForIn.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "bindingForIn.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "parameterType.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts< Context>.demand"
+              ]
+            },
+            "parameterType.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts< Context>.demand"
+              ]
+            },
+            "parameterType.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Opts< Context>.demand"
+              ]
+            },
+            "parameterDefault.block": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "parameterDefault.line": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "parameterDefault.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "assignment.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "assignment.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "assignment.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(context ).demand"
+              ]
+            },
+            "assignmentForOf.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "assignmentForOf.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "assignmentForOf.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "assignmentForIn.block": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "assignmentForIn.line": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "assignmentForIn.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:2 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(contexts ).demand"
+              ]
+            },
+            "importEntity.block": {
+              "findings": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context .Inner.demand",
+                "Context .Inner"
+              ]
+            },
+            "importEntity.line": {
+              "findings": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context .Inner.demand",
+                "Context .Inner"
+              ]
+            },
+            "importEntity.jsdocStyle": {
+              "findings": [
+                "src/plant.ts:1 import:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "Context .Inner.demand",
+                "Context .Inner"
+              ]
+            }
+          }
+        },
+        {
+          "id": "M-WORDS",
+          "witness": {
+            "propertyAccess": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "context.size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context.demand.size",
+                  "context.demand"
+                ]
+              }
+            },
+            "qualifiedName": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "Context.Size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Context.Demand.Size",
+                  "Context.Demand"
+                ]
+              }
+            },
+            "elementReceiver": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "(context ).size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context.demand).size",
+                  "context.demand"
+                ]
+              }
+            },
+            "indexedObject": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "Opts< Context>.size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Opts<Demand, Context>.size"
+                ]
+              }
+            },
+            "bindingInitializer": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "(context ).size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context.demand).size",
+                  "context.demand"
+                ]
+              }
+            },
+            "bindingForOf": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "(contexts ).size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(contexts.demand).size",
+                  "contexts.demand"
+                ]
+              }
+            },
+            "bindingForIn": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "(contexts ).size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(contexts.demand).size",
+                  "contexts.demand"
+                ]
+              }
+            },
+            "parameterType": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "Opts< Context>.size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Opts<Demand, Context>.size"
+                ]
+              }
+            },
+            "parameterDefault": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "(context ).size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context.demand).size",
+                  "context.demand"
+                ]
+              }
+            },
+            "assignment": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "(context ).size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context.demand).size",
+                  "context.demand"
+                ]
+              }
+            },
+            "assignmentForOf": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "(contexts ).size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(contexts.demand).size",
+                  "contexts.demand"
+                ]
+              }
+            },
+            "assignmentForIn": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "(contexts ).size"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(contexts.demand).size",
+                  "contexts.demand"
+                ]
+              }
+            },
+            "importEntity": {
+              "plant": {
+                "findings": [],
+                "quiet": [],
+                "asWritten": [
+                  "Context .Inner.size",
+                  "Context .Inner"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 import:1 demand",
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Context.Demand.Inner.size",
+                  "Context.Demand.Inner",
+                  "Context.Demand"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "M-JSDOC",
+          "witness": {
+            "parameter": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(( context: 1) => 1).demand"
+              ]
+            },
+            "jsCast": {
+              "findings": [
+                "src/plant.js:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.js lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "( (context)).demand"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "U",
+      "label": "the restated COMMENTS clause (:51-63) claims more than the reader proves - under the delivered reader the comment-free-twin equivalence is false wherever a comment's trivia holds a blank line, a whitespace-only line or a line-start boundary; the wording 'read as one space, a white space like any other' survives gate mutant GM3",
+      "pins": [
+        {
+          "id": "U-OWN-LINE",
+          "witness": {
+            "a04": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context .demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context\n  \n  .demand"
+                ]
+              }
+            },
+            "a11": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context .demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context\n  \n  .demand"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "U-BLANK",
+          "witness": {
+            "b01": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context .demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context\n\n  .demand"
+                ]
+              }
+            },
+            "b02": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context .demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context\n\n  .demand"
+                ]
+              }
+            },
+            "b03": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context .demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context\n  \n\n  .demand"
+                ]
+              }
+            },
+            "b05": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Context .Demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Context\n  \n\n  .Demand"
+                ]
+              }
+            },
+            "b06": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context + other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context \n  + other).demand"
+                ]
+              }
+            },
+            "b07": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(Context | Other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(Context \n  | Other).demand"
+                ]
+              }
+            },
+            "b08": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context && other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context \n\n  && other).demand"
+                ]
+              }
+            },
+            "b09": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context && other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context\n  \n\n  && other).demand"
+                ]
+              }
+            },
+            "b10": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Context .Demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "Context\n\n  .Demand"
+                ]
+              }
+            },
+            "b11": {
+              "plant": {
+                "findings": [
+                  "src/plant.ts:2 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ).demand"
+                ]
+              },
+              "twin": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context \n\n  ).demand"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "U-MARKER",
+          "witness": {
+            "b04": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access marker:never demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "never .context.demand",
+                  "never .context"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:3 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "never\n\n  .context.demand",
+                  "never\n\n  .context"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "the boundary kinds an as-written reading can hold are listed, each pinned",
+      "pins": [
+        {
+          "id": "C-SPACE",
+          "witness": {
+            ".": {
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context. demand"
+                ]
+              },
+              "lineEnd": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context.\n  demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context.demand"
+                ]
+              }
+            },
+            "...": {
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "[context, ... rest].demand"
+                ]
+              },
+              "lineEnd": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "[context, ...\n  rest].demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "[context, ...rest].demand"
+                ]
+              }
+            },
+            ";": {
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "{ context: 1; other: 2 }.demand"
+                ]
+              },
+              "lineEnd": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "{ context: 1;\n  other: 2 }.demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "{ context: 1, other: 2 }.demand"
+                ]
+              }
+            },
+            "?.": {
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context?. demand"
+                ]
+              },
+              "lineEnd": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context?.\n  demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context?.demand"
+                ]
+              }
+            },
+            "!": {
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context! .demand"
+                ]
+              },
+              "lineEnd": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context!\n  .demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context!.demand"
+                ]
+              }
+            },
+            "?": {
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ? a : b).demand"
+                ]
+              },
+              "lineEnd": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ?\n  a : b).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ?a : b).demand"
+                ]
+              }
+            },
+            "??": {
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ?? other).demand"
+                ]
+              },
+              "lineEnd": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ??\n  other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context ??other).demand"
+                ]
+              }
+            },
+            "1.": {
+              "space": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context, 1. ).demand"
+                ]
+              },
+              "lineEnd": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context, 1.\n  ).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context, 1.).demand"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "C-LINES",
+          "witness": {
+            "blank-line": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context\n\n  && other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context\n  && other).demand"
+                ]
+              }
+            },
+            "white-space-line": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context\n   \n  && other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context\n  && other).demand"
+                ]
+              }
+            },
+            "blank-line-walked": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context &&\n\n  other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context &&\n  other).demand"
+                ]
+              }
+            },
+            "line-end-walked": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context .inner.\n  demand",
+                  "context .inner"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "context .inner\n  .demand",
+                  "context .inner"
+                ]
+              }
+            },
+            "table-row-line": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(\n  | Context\n  | Other\n).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(Context | Other).demand"
+                ]
+              }
+            },
+            "list-item-dash": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context\n  - other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context -\n  other).demand"
+                ]
+              }
+            },
+            "list-item-plus": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context\n  + other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context +\n  other).demand"
+                ]
+              }
+            },
+            "list-item-star": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context\n  * other).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context *\n  other).demand"
+                ]
+              }
+            },
+            "h06": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context + `\n1) x`).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context + `1) x`).demand"
+                ]
+              }
+            },
+            "h01": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context + `\n# x`).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context + `# x`).demand"
+                ]
+              }
+            },
+            "h05": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.tsx access subjectless:demand demand",
+                  "src/plant.tsx lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(<b>context\n# x</b>).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.tsx:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.tsx lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(<b>context # x</b>).demand"
+                ]
+              }
+            },
+            "terminator-in-string": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context + \". \").demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context + \".\").demand"
+                ]
+              }
+            },
+            "terminator-in-template": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context + `a. b`).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context + `a.b`).demand"
+                ]
+              }
+            },
+            "h02": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.ts access subjectless:demand demand",
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context, /a. b/).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.ts:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.ts lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(context, /a.b/).demand"
+                ]
+              }
+            },
+            "h03": {
+              "plant": {
+                "findings": [],
+                "quiet": [
+                  "src/plant.tsx access subjectless:demand demand",
+                  "src/plant.tsx lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(<b>context. x</b>).demand"
+                ]
+              },
+              "twin": {
+                "findings": [
+                  "src/plant.tsx:1 access:1 demand"
+                ],
+                "quiet": [
+                  "src/plant.tsx lexeme subjectless:demand demand"
+                ],
+                "asWritten": [
+                  "(<b>context x</b>).demand"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "C-OVER-READ",
+          "witness": {
+            "cut": {
+              "findings": [
+                "src/plant.ts:1 access:1 demand"
+              ],
+              "quiet": [
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(never. context).demand",
+                "never. context"
+              ]
+            },
+            "twin": {
+              "findings": [],
+              "quiet": [
+                "src/plant.ts access marker:never demand",
+                "src/plant.ts lexeme subjectless:demand demand"
+              ],
+              "asWritten": [
+                "(never.context).demand",
+                "never.context"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "P",
+      "label": "LIVE QUIET's new parted-carrier holding is unpinned past the first parted pair of a text - GM1 and GM2 survive at 10 passed (10)",
+      "pins": [
+        {
+          "id": "P-ONE",
+          "witness": {
+            "findings": [],
+            "quiet": [
+              "src/plant.ts lexeme parted:carrier projection requirement"
+            ],
+            "asWritten": []
+          }
+        },
+        {
+          "id": "P-C04",
+          "witness": {
+            "findings": [],
+            "quiet": [
+              "src/plant.ts lexeme parted:carrier projection requirement",
+              "src/plant.ts lexeme parted:carrier projection requirement"
+            ],
+            "asWritten": []
+          }
+        },
+        {
+          "id": "P-C05",
+          "witness": {
+            "findings": [],
+            "quiet": [
+              "src/plant.ts lexeme parted:carrier projection requirement",
+              "src/plant.ts lexeme parted:carrier projection requirements"
+            ],
+            "asWritten": []
+          }
+        },
+        {
+          "id": "P-C06",
+          "witness": {
+            "findings": [],
+            "quiet": [
+              ".pi/agents/plant.md parted:carrier projection requirement",
+              ".pi/agents/plant.md parted:carrier projection requirement"
+            ],
+            "asWritten": []
+          }
+        },
+        {
+          "id": "P-CODE",
+          "witness": {
+            "findings": [],
+            "quiet": [
+              "src/plant.ts access parted:carrier projection requirement",
+              "src/plant.ts access parted:carrier projection requirement",
+              "src/plant.ts access parted:carrier projection requirements",
+              "src/plant.ts access parted:carrier projection requirements"
+            ],
+            "asWritten": [
+              "(projection. requirement, projection. requirements).size",
+              "projection. requirement",
+              "projection. requirements"
+            ]
+          }
+        },
+        {
+          "id": "P-WITHIN",
+          "witness": {
+            "findings": [
+              "src/plant.ts:1 lexeme:1 carrier"
+            ],
+            "quiet": [
+              "src/plant.ts lexeme parted:carrier projection requirement"
+            ],
+            "asWritten": []
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the claims, the out-of-file roster, the tracker export and the compiler anchors agree",
+    "T-R1",
+    "T-R3",
+    "T-R1C",
+    "T-TOKENS",
+    "M-AFTER",
+    "M-BEFORE",
+    "M-WORDS",
+    "M-JSDOC",
+    "U-OWN-LINE",
+    "U-BLANK",
+    "U-MARKER",
+    "C-SPACE",
+    "C-LINES",
+    "C-OVER-READ",
+    "P-ONE",
+    "P-C04",
+    "P-C05",
+    "P-C06",
+    "P-CODE",
+    "P-WITHIN",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ]
+}
