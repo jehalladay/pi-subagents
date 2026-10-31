@@ -481,6 +481,74 @@
           "a-near/t-open",
           "a-near/t-dual"
         ]
+      },
+      "required": [
+        "fixture:read",
+        "fixture:write",
+        "invoke:fixture.support-open"
+      ],
+      "kinds": {
+        "M23": [
+          "prefix"
+        ],
+        "M24": [
+          "suffix"
+        ],
+        "M25": [
+          "case"
+        ],
+        "M26": [
+          "padded"
+        ],
+        "M27": [
+          "wildcard"
+        ],
+        "M28": [
+          "compatibility"
+        ],
+        "M29": [
+          "padded",
+          "longer"
+        ]
+      },
+      "through": {
+        "M23": [
+          "prefix:\"fixture\"->fixture:read",
+          "prefix:\"fixture\"->fixture:write",
+          "prefix:\"invoke\"->invoke:fixture.support-open",
+          "prefix:\"invoke:fixture\"->invoke:fixture.support-open"
+        ],
+        "M24": [
+          "suffix:\"read\"->fixture:read",
+          "suffix:\"fixture.support-open\"->invoke:fixture.support-open"
+        ],
+        "M25": [
+          "case:\"FIXTURE:READ\"->fixture:read",
+          "case:\"INVOKE:FIXTURE.SUPPORT-OPEN\"->invoke:fixture.support-open"
+        ],
+        "M26": [
+          "padded:\" fixture:read\"->fixture:read",
+          "padded:\"fixture:write \"->fixture:write",
+          "padded:\" invoke:fixture.support-open\"->invoke:fixture.support-open",
+          "padded:\"invoke:fixture.support-open \"->invoke:fixture.support-open"
+        ],
+        "M27": [
+          "wildcard:\"fixture:*\"->fixture:read",
+          "wildcard:\"fixture:*\"->fixture:write",
+          "wildcard:\"invoke:*\"->invoke:fixture.support-open"
+        ],
+        "M28": [
+          "compatibility:\"fixture\uff1aread\"->fixture:read",
+          "compatibility:\"invoke\uff1afixture.support-open\"->invoke:fixture.support-open"
+        ],
+        "M29": [
+          "padded:\" fixture:read\"->fixture:read",
+          "padded:\"fixture:write \"->fixture:write",
+          "padded:\" invoke:fixture.support-open\"->invoke:fixture.support-open",
+          "padded:\"invoke:fixture.support-open \"->invoke:fixture.support-open",
+          "longer:\"fixture:reader\"->fixture:read",
+          "longer:\"invoke:fixture.support-opener\"->invoke:fixture.support-open"
+        ]
       }
     },
     "A2a": {
@@ -1378,7 +1446,7 @@
   },
   "assertions": [
     "A1a:13",
-    "A1b:28",
+    "A1b:30",
     "A2a:7",
     "A2b:10",
     "A3a:12",
