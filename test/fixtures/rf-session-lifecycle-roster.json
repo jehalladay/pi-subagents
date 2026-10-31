@@ -154,9 +154,7 @@
    ".beads"
   ],
   "defaultIgnorable": "\\p{Default_Ignorable_Code_Point}/gu",
-  "intrawordEmphasis": "(?<=[\\p{L}\\p{N}])\\*+(?=[\\p{L}\\p{N}])/gu",
-  "directoryPlant": "zz-census-plant.md",
-  "canaryModule": "zz-census-canary.ts"
+  "intrawordEmphasis": "(?<=[\\p{L}\\p{N}])\\*+(?=[\\p{L}\\p{N}])/gu"
  },
  "producer": {
   "rfVersion": "0.1.832",
@@ -417,6 +415,7 @@
   "R-NEGATED",
   "R-ENCODED",
   "R-RENDERED",
+  "R-CONFUSABLE",
   "R-OUTSIDE",
   "R-COMPOSED",
   "R-INDIRECT-LAUNCH",
@@ -533,6 +532,216 @@
        },
        "dynamicThen": {
         "rf": 0,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-parentheses-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-parentheses-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-parentheses-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-parentheses-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-parentheses-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-parentheses-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-await-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-await-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-await-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-await-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-await-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-await-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-as-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-as-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-as-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-as-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-as-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-as-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-satisfies-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-satisfies-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-satisfies-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-satisfies-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-satisfies-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-satisfies-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nonNull-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nonNull-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nonNull-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nonNull-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nonNull-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nonNull-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-angle-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-angle-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-angle-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-angle-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-angle-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-angle-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nested-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nested-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap0-nested-direct": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nested-whole": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nested-destructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "wrap1-nested-direct": {
+        "rf": 1,
         "composed": 0,
         "unbound": 0
        }
@@ -689,7 +898,8 @@
        "rawJoin": true,
        "htmlTag": false,
        "htmlEntity": false,
-       "codeSpan": false
+       "codeSpan": false,
+       "confusable": false
       },
       "plants": {
        "docs/expiry.md": true,
@@ -814,7 +1024,8 @@
       "unscanned": [],
       "descriptorsUnread": [],
       "canariesMissed": [],
-      "listingSound": true
+      "listingSound": true,
+      "descriptorCanariesMissed": []
      }
     },
     {

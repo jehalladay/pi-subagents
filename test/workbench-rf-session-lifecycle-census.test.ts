@@ -15,7 +15,8 @@
  * state, the measured producer behaviour each clause depends on, and every surface the obligation already reaches:
  *  A, acceptance (a). A1 the src launch inventory: every child_process launcher call in a src module, through a named, aliased,
  *    namespace or default import, an import-equals, a require or dynamic import binding (destructured or whole, the import
- *    awaited) or a launcher called on a require or a dynamic import of child_process, with its command folded from literals; exactly
+ *    awaited) or a launcher called on a require or a dynamic import of child_process (load wrappers pinned below), with its
+ *    command folded from literals; exactly
  *    one launch names rf (the provider) and the one launch whose command is not a literal is the detached host's process.execPath.
  *    A2 N ticks of the registered native preview (three legacy, three view) against a stand-in rf: N spawns, each argv carrying
  *    --no-commit and no --session or --commit word, N readings admitted, each stating result.session_id null; the measured legacy
@@ -57,11 +58,23 @@
  * TypeScript resolves (each module's ts.preProcessFile imports resolved by ts.resolveModuleName under tsconfig.json's options);
  * C1 reads exactly the descriptors a second native registration lists. The listing is itself checked sound (it meets the files
  * floor and names every walk anchor and reader module), so no anchor passes on an empty listing; the FLOORS stay beside them.
- * PATH CANARIES (wb-khhg F1): a judge that drops its judgement by path keeps its reach, so each judge also meets a canary in every
- * directory: B1 plants an expiry sentence (DIRECTORY_PLANT) in every directory git lists and reads that tree through the same
- * readTree; A1 and C1 scan an in-memory canary module (CANARY_MODULE: an rf launch, a session verb) in every src directory git
- * lists, and B2 a session-state canary in every directory of the closure. Not claimed: a finding or hit a case drops by path after
- * its judge returned (a filter on the list the case asserts); the anchors and canaries bind the judges' reach and judgement.
+ * EXACT-PATH CANARIES (wb-khhg U1): B1 mirrors every listedJudgeable path (same basename and extension) into a scratch tree
+ * carrying one expiry sentence, read through readTree. A1 and C1 scan an in-memory rf launch or dotted session leaf at every
+ * listedSrc path. B2 scans a session-state identifier at every TypeScript-resolved closure path. C1 also gives every native
+ * descriptor id, separately, a verb and a flag description through the same descriptorJudge that reads the real catalog.
+ * These pins bind the name/directory/prefix/extension/id-keyed judgement drops exercised by these payloads, not arbitrary
+ * content-dependent suppression. Suppression after a judge returns is NOT CLAIMED by this census. Coordinated edits that
+ * narrow both a walk and its independent listing (K03), or both the canary and the asserted finding, are NOT CLAIMED.
+ * U2 LOAD WRAPPERS: A1 controls wrap require and awaited dynamic import in parentheses, await, as, satisfies, non-null and
+ * angle-bracket assertions, singly and in the pinned nested composition, for whole/destructured bindings and direct calls.
+ * Wrappers on launcher callees, commands or declaration names are NOT CLAIMED by this census.
+ * PINNED READER SET: test/workbench-rf-session-lifecycle-census.test.ts judged-set, A1-A4, B1-B3, C1-C2, D1-D3 and records:
+ * each asserts its named witness against test/fixtures/rf-session-lifecycle-roster.json. Judged-set checks ROWS/roster/bead
+ * agreement; A1 checks launches and load wrappers; A2 checks preview ticks; A3 checks rf descriptors; A4 checks captured ticks;
+ * B1 checks text and exact-path plants; B2 checks closure state; B3 checks exemptions; C1 checks verbs/descriptors and their
+ * canaries; C2 checks captured session leaves; D1-D3 check the captured refusal's native/injected/projected handling; records
+ * checks execution and end reach. Each positive is falsifiable by its paired real-tree plant, roster-witness flip, or the
+ * CT frozen-shape battery; U1 falsifiers K01/K02/K04/K05/K06/K11 and U2 K08/K08b are independently gate-authored.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness, the scan constants, the residual families and the registered test titles are held to the out-of-file roster
  * (test/fixtures/rf-session-lifecycle-roster.json). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export
@@ -72,12 +85,14 @@
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED); every registered test and suite title reads quiet to B1's judge.
  * A skipped case cannot see its own skip, so the judged-set case, which runs first, reads the records case's registration: the
- * last registered test, in run mode, not inverted (wb-khhg F4).
+ * last registered test, in run mode, not inverted (wb-khhg F4). An afterAll sentinel refuses an early return from records
+ * even after one assertion (K09b); only its final statement sets the sentinel.
  * RESIDUALS (named families, each with a pinned quiet row in a control): R-SPLIT an assumption spread over two sentences or past the
  * word windows (B1 split); R-PARAPHRASE an expiry stated without the vocabulary (B1 paraphrase); R-NEGATED a negator earlier in the
  * sentence quiets a later expiry term (B1 negatedEarlier); R-ENCODED text outside UTF-8 or written with escapes (B1 utf16, escaped;
  * the planted notes/le.txt); R-RENDERED a word split by markup the rendered reading keeps, an inline HTML tag, an HTML entity or a
- * code span (B1 htmlTag, htmlEntity, codeSpan); R-OUTSIDE a file below a skipped root entry (B1 planted node_modules/, .beads/,
+ * code span (B1 htmlTag, htmlEntity, codeSpan); R-CONFUSABLE a confusable code point NFKC does not fold (B1 confusable);
+ * R-OUTSIDE a file below a skipped root entry (B1 planted node_modules/, .beads/,
  * dist/); R-COMPOSED a session argv or field built from non-literal parts (C1 composedArgv, B2 composedField); R-INDIRECT-LAUNCH a
  * launcher reached through a variable, an element access or the callback of a dynamic import's then (A1 indirect, elementAccess,
  * dynamicThen); R-SESSION-ECHO the preview reader admits a --no-commit envelope stating a session id, taking the producer's
@@ -185,10 +200,6 @@ const LISTED_UNJUDGED = [".beads"];
 /** B1's rendered reading: default-ignorable code points (a zero-width space, a soft hyphen) and intraword emphasis asterisks. */
 const DEFAULT_IGNORABLE = /\p{Default_Ignorable_Code_Point}/gu;
 const INTRAWORD_EMPHASIS = /(?<=[\p{L}\p{N}])\*+(?=[\p{L}\p{N}])/gu;
-/** The path canaries' file names: a planted expiry note in every listed directory (B1), an in-memory module in every src or closure
- * directory (A1, C1, B2). */
-const DIRECTORY_PLANT = "zz-census-plant.md";
-const CANARY_MODULE = "zz-census-canary.ts";
 /** Files the walk must reach, each with a token its bytes carry: a root page, a src module, a qa script, an example and a binary. */
 const WALK_ANCHORS: readonly (readonly [string, string])[] = [
   ["README.md", "pi-subagents"],
@@ -199,7 +210,7 @@ const WALK_ANCHORS: readonly (readonly [string, string])[] = [
 ];
 /** The reader modules: the provider and its adapter; B2 walks their src import closure. */
 const READER_MODULES = ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"];
-const RESIDUAL_FAMILIES = ["R-SPLIT", "R-PARAPHRASE", "R-NEGATED", "R-ENCODED", "R-RENDERED", "R-OUTSIDE", "R-COMPOSED", "R-INDIRECT-LAUNCH", "R-SESSION-ECHO", "R-UNLABELED"];
+const RESIDUAL_FAMILIES = ["R-SPLIT", "R-PARAPHRASE", "R-NEGATED", "R-ENCODED", "R-RENDERED", "R-CONFUSABLE", "R-OUTSIDE", "R-COMPOSED", "R-INDIRECT-LAUNCH", "R-SESSION-ECHO", "R-UNLABELED"];
 
 interface Row {
   readonly id: string;
@@ -610,10 +621,6 @@ const listedSrc = (): string[] => gitListing().filter(file => file.startsWith("s
  * anchor that reads it passes vacuously. */
 const listingSound = (): boolean =>
   gitListing().length >= FLOORS.files && [...WALK_ANCHORS.map(([path]) => path), ...READER_MODULES].every(path => gitListing().includes(path));
-/** The distinct directories of some files, "/"-separated and sorted ("." for the root). */
-const directoriesOf = (files: readonly string[]): string[] => [...new Set(files.map(file => posix(dirname(file))))].sort();
-/** A canary's path in a directory. */
-const inDirectory = (directory: string, name: string): string => (directory === "." ? name : `${directory}/${name}`);
 /** Plants `files` in a fresh scratch root (a null content is a symlink to the root's first file) and reads that tree. */
 function plantedTree(files: Readonly<Record<string, string | Buffer | null>>): TreeReading {
   const root = makeScratch("rf-session-lifecycle-tree-");
@@ -696,10 +703,10 @@ function launchesOf(fileName: string, source: string): LaunchScan {
   const isChildProcess = (node: ts.Node | undefined): boolean => node !== undefined && ts.isStringLiteralLike(node) && CHILD_PROCESS.test(node.text);
   const requiresChildProcess = (node: ts.Node | undefined): boolean =>
     node !== undefined && ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "require" && isChildProcess(node.arguments[0]);
-  /** The expression under its parentheses and an await. */
+  /** U2: transparent load-expression wrappers, recursively peeled in any order. */
   const bare = (node: ts.Node | undefined): ts.Node | undefined => {
     let current = node;
-    while (current !== undefined && (ts.isParenthesizedExpression(current) || ts.isAwaitExpression(current))) current = current.expression;
+    while (current !== undefined && (ts.isParenthesizedExpression(current) || ts.isAwaitExpression(current) || ts.isAsExpression(current) || ts.isSatisfiesExpression(current) || ts.isNonNullExpression(current) || ts.isTypeAssertionExpression(current))) current = current.expression;
     return current;
   };
   const importsChildProcess = (node: ts.Node | undefined): boolean => {
@@ -1008,6 +1015,10 @@ function stringLeaves(value: unknown): string[] {
 const closedValues = (): string[] => stringLeaves(closedPrimary().metadata);
 
 const REACHED: string[] = [];
+let recordsReachedEnd = false;
+afterAll(() => {
+  expect(recordsReachedEnd, "records must reach its final statement (wb-khhg K09/K09b)").toBe(true);
+});
 /** A pin's witness, recorded as reached: only a case that ran to its end returns through here. */
 function done(pin: string, witness: JsonObject): JsonValue {
   REACHED.push(pin);
@@ -1058,12 +1069,36 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       dynamicDestructured: control('const { execFile: run } = await import("child_process");\nrun("rf", argv);'),
       dynamicDirect: control('(await import("node:child_process")).spawnSync("rf", argv);'),
       importEquals: control('import cp = require("node:child_process");\ncp.spawn("rf", argv);'),
+      // U2 (M:17008): TypeScript's transparent load-expression wrappings, pinned independently in the roster.
+      ...Object.fromEntries(
+        ([
+          ["parentheses", (value: string): string => `(${value})`],
+          ["await", (value: string): string => `await (${value})`],
+          ["as", (value: string): string => `(${value}) as typeof import("node:child_process")`],
+          ["satisfies", (value: string): string => `(${value}) satisfies typeof import("node:child_process")`],
+          ["nonNull", (value: string): string => `(${value})!`],
+          ["angle", (value: string): string => `<typeof import("node:child_process")>(${value})`],
+          ["nested", (value: string): string => `((<typeof import("node:child_process")>((${value}) as typeof import("node:child_process")))!) satisfies typeof import("node:child_process")`],
+        ] satisfies readonly (readonly [string, (value: string) => string])[]).flatMap(([name, wrapping]) => {
+          return ["require(\"node:child_process\")", "await import(\"node:child_process\")"].flatMap((load, index) => {
+            const expression = wrapping(load);
+            return [
+              [`wrap${index}-${name}-whole`, control(`async function probe() { const cp = ${expression}; cp.spawn("rf", argv); }`)],
+              [`wrap${index}-${name}-destructured`, control(`async function probe() { const { spawn: run } = ${expression}; run("rf", argv); }`)],
+              [`wrap${index}-${name}-direct`, control(`async function probe() { (${expression}).spawn("rf", argv); }`)],
+            ];
+          });
+        }),
+      ),
       // R-INDIRECT-LAUNCH: the launcher reached through the callback of the dynamic import's then (the quiet row).
       dynamicThen: control('import("node:child_process").then(cp => cp.spawn("rf", argv));'),
     };
-    // The path canaries (wb-khhg F1): the scan finds an rf launch in a canary module of every src directory git lists.
-    const canariesMissed = directoriesOf(listedSrc()).filter(directory => launchesOf(inDirectory(directory, CANARY_MODULE), 'import { spawn } from "node:child_process";\nspawn("rf", argv);').rf.length !== 1);
-    expect(canariesMissed, "src directories whose canary launch A1's scan missed").toEqual([]);
+    for (const [name, outcome] of Object.entries(controls)) {
+      if (name.startsWith("wrap")) expect(outcome, `U2 load wrapper ${name}`).toStrictEqual({ rf: 1, composed: 0, unbound: 0 });
+    }
+    // U1 (M:17008): judgement must survive at each exact listed path, not just one name per directory.
+    const canariesMissed = listedSrc().filter(path => launchesOf(path, 'import { spawn } from "node:child_process";\nspawn("rf", argv);').rf.length !== 1);
+    expect(canariesMissed, "listed src paths whose canary launch A1's scan missed (U1)").toEqual([]);
     return done("A1", { srcFloorMet, listingSound: listingSound(), unscanned, rf, composed, unbound, controls, canariesMissed });
   },
   A2: async () => {
@@ -1214,6 +1249,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       htmlTag: asserts("Pi relies on rf sessions that ex<b>pire</b> after an hour of inactivity."),
       htmlEntity: asserts("Pi relies on rf sessions that ex&shy;pire after an hour of inactivity."),
       codeSpan: asserts("Pi relies on rf sessions that ex`pire` after an hour of inactivity."),
+      // R-CONFUSABLE (K07): NFKC is not a confusables skeleton; this quiet row pins that boundary.
+      confusable: asserts(`Pi relies on rf sessions that ${String.fromCodePoint(0x0435)}xpire after an hour of inactivity.`),
     };
     const planted = plantedTree({
       "docs/expiry.md": `${expiring}\n`,
@@ -1227,11 +1264,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ".beads/issues.jsonl": `{"title":"${expiring}"}\n`,
       "dist/notes.md": `${expiring}\n`,
     });
-    // The path canaries (wb-khhg F1): an expiry note in every directory git lists, read through the same readTree, is flagged.
-    const plantPaths = directoriesOf(listedJudgeable()).map(directory => inDirectory(directory, DIRECTORY_PLANT));
+    // U1: mirror every exact listed path, including its basename and extension, through readTree in scratch.
+    const plantPaths = listedJudgeable();
     const directoryTree = plantedTree(Object.fromEntries(plantPaths.map(path => [path, `${expiring}\n`])));
     const directoryPlantsMissed = plantPaths.filter(path => !directoryTree.findings.some(finding => finding.startsWith(`${path}: `)));
-    expect(directoryPlantsMissed, `directory plants B1's judge did not flag (${plantPaths.length} planted)`).toEqual([]);
+    expect(directoryPlantsMissed, `exact listed path plants B1's judge did not flag (${plantPaths.length} planted; U1)`).toEqual([]);
     const flagged = (path: string): boolean => planted.findings.some(finding => finding.startsWith(`${path}: `)) || planted.walk.symlinks.includes(path);
     const plants = Object.fromEntries(
       ["docs/expiry.md", "src/ttl.ts", "test/fixtures/expiry-note.md", "docs/rendered.md", "notes/never.md", "notes/le.txt", "notes/link.md", "node_modules/pkg/notes.md", ".beads/issues.jsonl", "dist/notes.md"].map(path => [path, flagged(path)]),
@@ -1273,9 +1310,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       deadline: control("const deadlineMs = 60_000;"),
       composedField: control('const head = "session";\nconst key = head + suffix;'),
     };
-    // The path canaries (wb-khhg F1): the scan finds session state in a canary module of every directory of the closure.
-    const canariesMissed = directoriesOf(judged).filter(directory => sessionStateOf(inDirectory(directory, CANARY_MODULE), "let session: string | undefined;").identifiers.length !== 1);
-    expect(canariesMissed, "closure directories whose canary B2's scan missed").toEqual([]);
+    // U1: session state must be judged at every exact TypeScript-resolved closure path.
+    const canariesMissed = resolved.modules.filter(path => sessionStateOf(path, "let session: string | undefined;").identifiers.length !== 1);
+    expect(canariesMissed, "resolved closure paths whose canary B2's scan missed (U1)").toEqual([]);
     return done("B2", { closureFloorMet, anchorsRead, unresolved, unscanned, identifiers, literals, controls, canariesMissed });
   },
   B3: async () => {
@@ -1297,12 +1334,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const descriptors = await nativeCatalog();
     const descriptorFloorMet = descriptors.length >= 4;
     const descriptorsRead: string[] = [];
-    const descriptorHits = descriptors
+    const descriptorJudge = (entries: readonly CapabilityDescriptor[]): string[] => entries
       .filter(descriptor => {
         descriptorsRead.push(descriptor.id);
         return SESSION_VERB_TEXT.test(JSON.stringify(descriptor)) || SESSION_FLAG_TEXT.test(JSON.stringify(descriptor));
       })
       .map(descriptor => descriptor.id);
+    const descriptorHits = descriptorJudge(descriptors);
     const srcFloorMet = modules.length >= FLOORS.srcModules;
     // The listing anchors (wb-khhg F1): every file git lists below src/ is one these scans judged, and every descriptor a second
     // native registration lists is one the descriptor judge read.
@@ -1334,10 +1372,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       previewArgv: control('spawn("rf", ["--workspace", w, "context", "render", "--model", m, "--task", t, "--no-commit", "--no-input", "--json"]);'),
       composedArgv: control('const verb = "show";\nspawn("rf", ["session", verb]);'),
     };
-    // The path canaries (wb-khhg F1): the scan finds a dotted session leaf in a canary module of every src directory git lists.
-    const canariesMissed = directoriesOf(listedSrc()).filter(directory => sessionVerbsOf(inDirectory(directory, CANARY_MODULE), 'const leaf = "session.recover";').literals.length !== 1);
-    expect(canariesMissed, "src directories whose canary C1's scan missed").toEqual([]);
-    return done("C1", { srcFloorMet, listingSound: listingSound(), unscanned, descriptorFloorMet, descriptorsUnread, renderArgvSeen, argv, flags, literals, descriptorHits, composedArgv, controls, canariesMissed });
+    // U1: a dotted session leaf must be judged at every exact listed src path.
+    const canariesMissed = listedSrc().filter(path => sessionVerbsOf(path, 'const leaf = "session.recover";').literals.length !== 1);
+    expect(canariesMissed, "listed src paths whose canary C1's scan missed (U1)").toEqual([]);
+    // U1 K11: every listed id carries a verb and a flag in separate probes through the SAME live-catalog judge.
+    const descriptorCanariesMissed = ["rf session show", "--session"].flatMap(sentence => {
+      const hits = descriptorJudge(descriptors.map(descriptor => ({ ...descriptor, description: sentence })));
+      return freshIds.filter(id => !hits.includes(id)).map(id => `${id}:${sentence}`);
+    });
+    expect(descriptorCanariesMissed, "listed descriptor ids whose verb/flag judgement C1 missed (U1)").toEqual([]);
+    return done("C1", { srcFloorMet, listingSound: listingSound(), unscanned, descriptorFloorMet, descriptorsUnread, renderArgvSeen, argv, flags, literals, descriptorHits, composedArgv, controls, canariesMissed, descriptorCanariesMissed });
   },
   C2: async () => {
     const { leafPaths, sessionLeaves, help, record, duplicateNames } = ROSTER.producer;
@@ -1421,7 +1465,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 /** A describe title: the row id and its label. */
 const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
-describe("wb-hs2j.3 rf session lifecycle census (RF-REACTIVE-CONTEXT-ASSEMBLY-R3, absent-today leg)", () => {
+describe("workbench-rf-session-lifecycle-census.test.ts judged-set A1-A4 B1-B3 C1-C2 D1-D3 records: captured rf lifecycle and absent-today readers", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, ({ task }) => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:3", "C:2", "D:3"]);
     // The records case cannot see its own skip (wb-khhg F4): this case, which runs first, reads its registration.
@@ -1461,8 +1505,6 @@ describe("wb-hs2j.3 rf session lifecycle census (RF-REACTIVE-CONTEXT-ASSEMBLY-R3
         listedUnjudged: LISTED_UNJUDGED,
         defaultIgnorable: `${DEFAULT_IGNORABLE.source}/${DEFAULT_IGNORABLE.flags}`,
         intrawordEmphasis: `${INTRAWORD_EMPHASIS.source}/${INTRAWORD_EMPHASIS.flags}`,
-        directoryPlant: DIRECTORY_PLANT,
-        canaryModule: CANARY_MODULE,
         walkAnchors: WALK_ANCHORS.map(([path, token]) => `${path}:${token}`),
         readerModules: READER_MODULES,
         fixtureRoot: FIXTURE_ROOT,
@@ -1528,5 +1570,6 @@ describe("wb-hs2j.3 rf session lifecycle census (RF-REACTIVE-CONTEXT-ASSEMBLY-R3
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
     expect([...suites, ...titles].filter(asserts), "registered titles B1's judge would flag").toEqual([]);
+    recordsReachedEnd = true;
   });
 });
