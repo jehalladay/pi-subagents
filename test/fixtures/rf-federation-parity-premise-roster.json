@@ -1,5 +1,5 @@
 {
-  "comment": "wb-a9l2.1 (the hk9l/5jha/zq7i roster pattern): the OUT-OF-FILE anchor for test/workbench-rf-federation-parity-premise.test.ts. rows: every judged row of ROWS in census order (FALSIFIERS 47, CONTROLS 12, RESIDUALS 10) - table, id, the registered test name, every finding the row reads and the sha256 of its input (files, bead lines, fixture state and receipts as JSON), written from the rows as measured at the cut. residuals: the header's named residual families, one pinned quiet row each. The census judges its in-file rows and its registered tests (vitest's task tree) against this file at test time, in order and both ways.",
+  "comment": "wb-a9l2.1 (the hk9l/5jha/zq7i roster pattern): the OUT-OF-FILE anchor for test/workbench-rf-federation-parity-premise.test.ts. rows: every judged row of ROWS in census order (FALSIFIERS 51, CONTROLS 15, RESIDUALS 13; wb-wfpj added F48-F51, N13-N15 and R11-R13) - table, id, the registered test name, every finding the row reads and the sha256 of its input (files, bead lines, fixture state and receipts as JSON), written from the rows as measured at the cut. residuals: the header's named residual families, one pinned quiet row each. The census judges its in-file rows and its registered tests (vitest's task tree) against this file at test time, in order and both ways.",
   "rows": [
     {
       "table": "FALSIFIERS",
@@ -426,6 +426,50 @@
       "input": "e54af4d7ef0523c48b0499437918ffb5c2d516975d2ab89e5736a74913153f53"
     },
     {
+      "table": "FALSIFIERS",
+      "id": "F48",
+      "test": "falsifier F48 non-ASCII separators between words",
+      "findings": [
+        "docs/f48a.md:1 mode-parity: unechoed-claim",
+        "docs/f48b.md:1 mode-parity: unechoed-claim",
+        "docs/f48c.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim",
+        "docs/f48d.md:1 mode-parity: unechoed-claim",
+        "docs/f48e.md:1 neg-05: unechoed-claim",
+        "docs/f48f.md:1 rf-normally: unechoed-claim"
+      ],
+      "input": "6b3c7d18ccfd1b5a4548a83d757d0df24df5a160de3302560eb3f016b0fd5543"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F49",
+      "test": "falsifier F49 line joins that leave two or three spaces between words",
+      "findings": [
+        "test/f49a.test.ts:2 mode-parity: unechoed-claim",
+        "docs/f49b.md:1 rf-normally: unechoed-claim",
+        "src/f49c.ts:2 mode-parity: unechoed-claim"
+      ],
+      "input": "0650a552ee5bd3f8fe667c28a9f85b3a41f458cf4d60426bc2aab387eea0d76a"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F50",
+      "test": "falsifier F50 a four-character separator, the bound",
+      "findings": [
+        "docs/x.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "acf24249425342cfe7c9f34210aac4cbf99624c0b8422c6f740bf8ee190717ba"
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "F51",
+      "test": "falsifier F51 two- and three-character gaps inside a word, the bound",
+      "findings": [
+        "docs/f51a.md:1 mode-parity: unechoed-claim",
+        "docs/f51b.md:1 mode-parity: unechoed-claim"
+      ],
+      "input": "aa10649dd5743fb1b2b4cd2648d714c54f79871e2422927d9dcdb9ebcfeb0f03"
+    },
+    {
       "table": "CONTROLS",
       "id": "N01",
       "test": "control N01 the echo form",
@@ -510,6 +554,27 @@
       "input": "528c75a0865ca90030be198aaa88932538707b0f12f1917a03aca538e521363d"
     },
     {
+      "table": "CONTROLS",
+      "id": "N13",
+      "test": "control N13 a five-character separator, past the bound",
+      "findings": [],
+      "input": "3a40bc925a92db01b7a9b08186184dd875d8ff1ab19c2ac2209cf9600f572a1d"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N14",
+      "test": "control N14 a four-character gap inside a word, past the bound",
+      "findings": [],
+      "input": "8947550ed6bc108d5df3d2744dc6e19c1ba1edf8fa5bc51c0ef3072ed888379f"
+    },
+    {
+      "table": "CONTROLS",
+      "id": "N15",
+      "test": "control N15 a grade inside a longer word is no grade",
+      "findings": [],
+      "input": "7acb67a39b6e6a02e9abc085c49855a91159dcc9bbebbc5e4020132013f38422"
+    },
+    {
       "table": "RESIDUALS",
       "id": "R1",
       "test": "residual R1 a paraphrase",
@@ -578,6 +643,27 @@
       "test": "residual R10 a named reference outside the decoded set",
       "findings": [],
       "input": "3ff23a66538007faeca5e6cf26912dd4cc49c236b688dcba2b63072f50cbe99a"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R11",
+      "test": "residual R11 joined words, the identifier forms",
+      "findings": [],
+      "input": "153a8eec35eb07d4e24aba2d33d6c26362ea8c838e1a5802e67dbc76ada09c24"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R12",
+      "test": "residual R12 another word form or a dropped letter",
+      "findings": [],
+      "input": "a2db2a6f7ca0f6c3f90744a4298e36261c0dd566bb70db532999eb4f6386961f"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R13",
+      "test": "residual R13 a percent, semicolon-less or octal encoding",
+      "findings": [],
+      "input": "9bb299b8459ff0281c496aca896d4af41770a5819529ecc838c44544115987f9"
     }
   ],
   "residuals": {
@@ -590,6 +676,9 @@
     "R7": "status prose beside an echo",
     "R8": "phrase split across a blank line",
     "R9": "same-line echo tokens",
-    "R10": "named references outside the decoded set"
+    "R10": "named references outside the decoded set",
+    "R11": "joined words",
+    "R12": "inflection and deletion",
+    "R13": "encodings outside the decoded set"
   }
 }

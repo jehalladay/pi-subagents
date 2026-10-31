@@ -24,10 +24,12 @@
  *   NFKC, lower case, every run of ASCII punctuation or white space one space, every other code point (a non-ASCII one
  *   or an ASCII control) one wildcard; a block's lines are folded one by one and joined by a space. A word of a family
  *   reads as itself, with one letter read as a wildcard, or with one to three spaces or wildcards between two of its
- *   letters, and the words of a phrase stand one to four spaces or wildcards apart: a hyphen, a line break inside a
- *   block, emphasis inside a word, a look-alike letter, an inserted invisible or an encoded hyphen hides no mention,
- *   while a run of wildcards never reads as a word. Required text is never folded: the verdict word and the pin are
- *   matched exactly, as whole words.
+ *   letters, and the words of a phrase stand one to four spaces or wildcards apart (SEPARATOR; a line join can leave
+ *   two or three spaces between them): a hyphen, a line break inside a block, emphasis inside a word, a look-alike
+ *   letter, an inserted invisible or a hyphen encoded in the decoded set (a numeric or NAMED_REFERENCES character
+ *   reference, or one of the JS escapes listed above) hides no mention, while a run of wildcards never reads as a word.
+ *   A hyphen encoded outside that set can hide one (residuals R10 and R13). Required text is never folded: the verdict
+ *   word and the pin are matched exactly, as whole words.
  * - WINDOW: a mention is judged on the raw lines its phrase spans, never on the rest of its block, so an echo on
  *   another line or in another table row does not cover it (rows F36-F38, F43).
  * - ECHO: a window that carries the verdict word as a whole upper-case word, the audit pin as a whole hex token (or a
@@ -62,15 +64,38 @@
  * file's registered tests (vitest's task tree) against it, in order and both ways, so a row removed from every literal
  * of this file still reds. Not claimed: an edit of this file and the roster together.
  * FROZEN SHAPE (standing rule 16): one row pins every judged row (table, id, findings, input digest prefix), the family
- * slots, the grades, the trees, the floors, the exemption, the decoded references and the residual families as literals
- * read at this cut.
+ * slots, the grades, the trees, the floors, the exemption, the decoded references, the residual families and the
+ * tolerance bounds (SEPARATOR, and the in-word gap as tolerantWord's forms for a two-letter word) as literals read at
+ * this cut.
  * RESIDUALS (named; each has a pinned quiet row): R1 a paraphrase outside the four families; R2 a phrase assembled at
  * runtime around another token; R3 ASCII look-alikes (1 for l, 0 for o), two alterations in one word, or one code point
  * standing for several letters; R4 a bead row naming a family but not the claim id (wb-a9l2.6 quotes README:51's
  * release condition so); R5 bead-row granularity: a later note on a row that already carries both tokens, and grades in
  * a bead row; R6 files outside the four trees; R7 status prose (lower-case or negated grade words) beside a verbatim
  * echo; R8 a phrase split across a blank line; R9 echo tokens on a mention's own lines admit it, whatever they qualify;
- * R10 a named character reference outside NAMED_REFERENCES.
+ * R10 a named character reference outside NAMED_REFERENCES; R11 joined words: a phrase's words, or the claim id's two
+ * parts, written with no separator between them (camelCase, PascalCase or upper-case identifiers, or one hyphen dropped
+ * between two words); R12 inflection and deletion: another form of a family word (leave, leaving or left for NEG-05's
+ * leaves; the plural parities) or a dropped letter; R13 a hyphen encoded outside the decoded set (percent-encoded, a
+ * numeric reference without its semicolon, an octal escape).
+ * FOLLOW-UP wb-wfpj (landing 255 PREP F1 MEDIUM + F2 LOW; riders F5 and F9; F4 rides). The pinned set it adds, by row
+ * id, with the falsifier that turns each red (measured at this cut on in-place throwaway edits):
+ * - R11-R13, quiet rows for the three unnamed families of PREP F1. Each carries every gate probe of its family, one
+ *   file per probe in the tree that probe used (R11: U01-U03, J01-J05; R12: J06-J08, J11, J15, J16; R13: U04, U17,
+ *   U19), so a reader change that closes any one of them reds its row: a camelCase split or joined words admitted
+ *   (R11), inflected slots or a dropped-letter form (R12), and decoders for those three encodings (R13) each did.
+ * - F48 (six non-ASCII separators: soft hyphen, U+2011, U+2010 inside the claim id, U+2013, a zero-width space beside
+ *   a space, a no-break space beside a zero-width space), F49 (line joins leaving two and three spaces: a JSDoc
+ *   continuation, a markdown list continuation, a hyphen broken across JSDoc lines), F50 (a four-character separator)
+ *   and F51 (two- and three-character gaps inside a word) are refused. The PREP survivors red them: M05 (SEPARATOR one
+ *   space) F48-F50, M29 (one or two) F49-F50, M29b (spaces only) F48 and F50, M28 (an in-word gap of one) F51.
+ * - N13 (a five-character separator) and N14 (a four-character gap inside a word) stay quiet, the far side of each
+ *   bound: a separator of up to five reds N13, a gap of up to four reds N14. N15: a grade inside a longer word
+ *   (PROVENANCE) is no grade; OB2 (grades matched inside longer words) reds it.
+ * - The frozen shape pins SEPARATOR and the in-word gap; deleting that pin together with M29 or M28 still reds F49-F50
+ *   or F51.
+ * Other spellings of the R11-R13 families are NOT CLAIMED by a quiet row of their own; the F4 boundary above (an edit
+ * of this file and the roster together) is unchanged.
  * Display paths added: none. This file is test-only: it spawns nothing and writes nothing; it reads the four trees, the
  * receipts directory, the bead export and the roster fixture.
  */
@@ -425,6 +450,11 @@ const CYRILLIC_A = String.fromCodePoint(0x0430);
 const CYRILLIC_ER = String.fromCodePoint(0x0440);
 const CYRILLIC_I = String.fromCodePoint(0x0406);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
+const SOFT_HYPHEN = String.fromCodePoint(0xad);
+const NO_BREAK_SPACE = String.fromCodePoint(0xa0);
+const UNICODE_HYPHEN = String.fromCodePoint(0x2010);
+const NON_BREAKING_HYPHEN = String.fromCodePoint(0x2011);
+const EN_DASH = String.fromCodePoint(0x2013);
 const FULLWIDTH_RF_CLI = String.fromCodePoint(0xff32, 0xff26, 0xff0d, 0xff23, 0xff2c, 0xff29);
 const COMPLETE_RECEIPT = ["# wb-x: installed journey", "", "## 2026-10-22 run", "rf sha 0123456789abcdef0123456789abcdef01234567", `\`${FIXTURE_COMMAND}\` -> exit 0`, ""].join("\n");
 const CITING = "Disabled-mode parity holds (docs/workbench/receipts/wb-x.md).";
@@ -502,6 +532,43 @@ const ROWS: readonly Row[] = [
   { table: "FALSIFIERS", id: "F45", label: "an html character reference", files: doc("disabled&#45;mode&nbsp;parity\n"), expect: ["docs/x.md:1 mode-parity: unechoed-claim"] },
   { table: "FALSIFIERS", id: "F46", label: "a JS escape inside a string", files: [{ path: "src/w.ts", text: 'const s = "disabled\\u002dmode\\x20parity";\n' }], expect: ["src/w.ts:1 mode-parity: unechoed-claim"] },
   { table: "FALSIFIERS", id: "F47", label: "emphasis inside a word", files: doc("dis**abled** mode parity\n"), expect: ["docs/x.md:1 mode-parity: unechoed-claim"] },
+  // the tolerance bounds (wb-wfpj, landing 255 PREP F2): non-ASCII separators, multi-space line joins, both bounds
+  {
+    table: "FALSIFIERS",
+    id: "F48",
+    label: "non-ASCII separators between words",
+    files: [
+      { path: "docs/f48a.md", text: `disabled${SOFT_HYPHEN}mode parity\n` },
+      { path: "docs/f48b.md", text: `disabled${NON_BREAKING_HYPHEN}mode parity\n` },
+      { path: "docs/f48c.md", text: `h2fp${UNICODE_HYPHEN}C004 holds\n` },
+      { path: "docs/f48d.md", text: `disabled${EN_DASH}mode parity\n` },
+      { path: "docs/f48e.md", text: `Turning it off leaves ${ZERO_WIDTH_SPACE}existing RF-CLI graph and agent usage unchanged.\n` },
+      { path: "docs/f48f.md", text: `agents keep using${NO_BREAK_SPACE}${ZERO_WIDTH_SPACE}RF-CLI normally\n` },
+    ],
+    expect: ["docs/f48a.md:1 mode-parity: unechoed-claim", "docs/f48b.md:1 mode-parity: unechoed-claim", "docs/f48c.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim", "docs/f48d.md:1 mode-parity: unechoed-claim", "docs/f48e.md:1 neg-05: unechoed-claim", "docs/f48f.md:1 rf-normally: unechoed-claim"],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F49",
+    label: "line joins that leave two or three spaces between words",
+    files: [
+      { path: "test/f49a.test.ts", text: "/**\n * Turning integration off keeps disabled-mode\n * parity for every agent.\n */\n" },
+      { path: "docs/f49b.md", text: "- agents keep using\n  RF-CLI normally\n" },
+      { path: "src/f49c.ts", text: "/**\n * Turning integration off keeps disabled-\n * mode parity.\n */\n" },
+    ],
+    expect: ["test/f49a.test.ts:2 mode-parity: unechoed-claim", "docs/f49b.md:1 rf-normally: unechoed-claim", "src/f49c.ts:2 mode-parity: unechoed-claim"],
+  },
+  { table: "FALSIFIERS", id: "F50", label: "a four-character separator, the bound", files: doc(`disabled ${ZERO_WIDTH_SPACE.repeat(2)} mode parity\n`), expect: ["docs/x.md:1 mode-parity: unechoed-claim"] },
+  {
+    table: "FALSIFIERS",
+    id: "F51",
+    label: "two- and three-character gaps inside a word, the bound",
+    files: [
+      { path: "docs/f51a.md", text: `disa${SOFT_HYPHEN}${ZERO_WIDTH_SPACE}bled-mode parity\n` },
+      { path: "docs/f51b.md", text: `disa ${ZERO_WIDTH_SPACE} bled-mode parity\n` },
+    ],
+    expect: ["docs/f51a.md:1 mode-parity: unechoed-claim", "docs/f51b.md:1 mode-parity: unechoed-claim"],
+  },
   // accepted
   { table: "CONTROLS", id: "N01", label: "the echo form", files: doc("h2fp-C004 (agents keep using RF-CLI normally; disabled-mode parity) is UNDETERMINED at rf main 740c1a817.\n"), expect: [] },
   { table: "CONTROLS", id: "N02", label: "an echo on the lines a mention spans", files: doc("agents keep using\nRF-CLI normally: UNDETERMINED at 740c1a817\n"), expect: [] },
@@ -515,6 +582,9 @@ const ROWS: readonly Row[] = [
   { table: "CONTROLS", id: "N10", label: "bead row with both tokens", bead: [beadLine({ id: "wb-zz.5", notes: "h2fp-C004 is UNDETERMINED at 740c1a817" })], expect: [] },
   { table: "CONTROLS", id: "N11", label: "a run of wildcards is no word", files: doc(`${String.fromCodePoint(0x4e00).repeat(40)}\n`), expect: [] },
   { table: "CONTROLS", id: "N12", label: "a decoded reference outside a phrase", files: doc("parity &amp; disabled mode\n"), expect: [] },
+  { table: "CONTROLS", id: "N13", label: "a five-character separator, past the bound", files: doc(`disabled ${ZERO_WIDTH_SPACE.repeat(3)} mode parity\n`), expect: [] },
+  { table: "CONTROLS", id: "N14", label: "a four-character gap inside a word, past the bound", files: doc(`disa ${ZERO_WIDTH_SPACE.repeat(2)} bled-mode parity\n`), expect: [] },
+  { table: "CONTROLS", id: "N15", label: "a grade inside a longer word is no grade", files: doc("disabled-mode parity: UNDETERMINED at 740c1a817 (PROVENANCE: the rf audit)\n"), expect: [] },
   // named residuals: quiet rows
   { table: "RESIDUALS", id: "R1", label: "a paraphrase", files: doc("With the integration switched off, agents see no change in rf.\n"), expect: [] },
   { table: "RESIDUALS", id: "R2", label: "assembled at runtime", files: [{ path: "src/z.ts", text: 'const s = "disabled-" + kind + " parity";\n' }], expect: [] },
@@ -526,6 +596,47 @@ const ROWS: readonly Row[] = [
   { table: "RESIDUALS", id: "R8", label: "split across a blank line", files: doc("agents continue using\n\nRF-CLI normally\n"), expect: [] },
   { table: "RESIDUALS", id: "R9", label: "echo tokens on the same line", files: doc("Disabled-mode parity holds; h2fp-C004 is UNDETERMINED at 740c1a817.\n"), expect: [] },
   { table: "RESIDUALS", id: "R10", label: "a named reference outside the decoded set", files: doc("disabled&hybull;mode parity\n"), expect: [] },
+  {
+    table: "RESIDUALS",
+    id: "R11",
+    label: "joined words, the identifier forms",
+    files: [
+      { path: "src/u01.ts", text: "export const disabledModeParity = true;\n" },
+      { path: "src/u02.ts", text: "assertDisabledModeParity();\n" },
+      { path: "docs/u03.md", text: "h2fpC004 holds\n" },
+      { path: "src/j01.ts", text: "class DisabledModeParity {}\n" },
+      { path: "test/j02.test.ts", text: "it('keeps disabledModeParity', () => {});\n" },
+      { path: "src/j03.ts", text: "const usingRfCliNormally = true;\n" },
+      { path: "qa/j04.sh", text: "DISABLEDMODEPARITY=1\n" },
+      { path: "docs/j05.md", text: "disabled-modeparity\n" },
+    ],
+    expect: [],
+  },
+  {
+    table: "RESIDUALS",
+    id: "R12",
+    label: "another word form or a dropped letter",
+    files: [
+      { path: "docs/j06.md", text: "Disabling it must leave existing RF-CLI graph and agent usage unchanged.\n" },
+      { path: "docs/j07.md", text: "leaving existing RF-CLI graph and agent usage unchanged\n" },
+      { path: "docs/j08.md", text: "it left existing RF-CLI graph and agent usage unchanged\n" },
+      { path: "docs/j11.md", text: "agents keep usin' RF-CLI normally\n" },
+      { path: "docs/j15.md", text: "disable-mode parity\n" },
+      { path: "docs/j16.md", text: "disabled-mode parities\n" },
+    ],
+    expect: [],
+  },
+  {
+    table: "RESIDUALS",
+    id: "R13",
+    label: "a percent, semicolon-less or octal encoding",
+    files: [
+      { path: "docs/u04.md", text: "disabled%2Dmode parity\n" },
+      { path: "docs/u17.md", text: "disabled&#45mode parity\n" },
+      { path: "src/u19.ts", text: "disabled\\055mode parity\n" },
+    ],
+    expect: [],
+  },
 ];
 const RESIDUAL_FAMILIES: Readonly<Record<string, string>> = {
   R1: "paraphrase outside the four families",
@@ -538,6 +649,9 @@ const RESIDUAL_FAMILIES: Readonly<Record<string, string>> = {
   R8: "phrase split across a blank line",
   R9: "same-line echo tokens",
   R10: "named references outside the decoded set",
+  R11: "joined words",
+  R12: "inflection and deletion",
+  R13: "encodings outside the decoded set",
 };
 
 function readRow(row: Row): string[] {
@@ -612,7 +726,7 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
     });
   }
 
-  it("frozen shape (rule 16): rows, family slots, grades, trees, floors, the exemption, the decoded references and the residual families as read at this cut", () => {
+  it("frozen shape (rule 16): rows, family slots, grades, trees, floors, the exemption, the decoded references, the residual families and the tolerance bounds as read at this cut", () => {
     expect(ROWS.map(row => `${row.table}:${row.id}:${row.expect.join("|")}:${inputDigest(row).slice(0, 8)}`)).toEqual([
       "FALSIFIERS:F01:docs/workbench/x.md:1 rf-normally: unechoed-claim:86057134",
       "FALSIFIERS:F02:src/x.ts:1 mode-parity: unechoed-claim:403c351e",
@@ -661,6 +775,10 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "FALSIFIERS:F45:docs/x.md:1 mode-parity: unechoed-claim:a3b69aa6",
       "FALSIFIERS:F46:src/w.ts:1 mode-parity: unechoed-claim:4141a351",
       "FALSIFIERS:F47:docs/x.md:1 mode-parity: unechoed-claim:e54af4d7",
+      "FALSIFIERS:F48:docs/f48a.md:1 mode-parity: unechoed-claim|docs/f48b.md:1 mode-parity: unechoed-claim|docs/f48c.md:1 claim-id: echo-no-undetermined+echo-no-pin+unechoed-claim|docs/f48d.md:1 mode-parity: unechoed-claim|docs/f48e.md:1 neg-05: unechoed-claim|docs/f48f.md:1 rf-normally: unechoed-claim:6b3c7d18",
+      "FALSIFIERS:F49:test/f49a.test.ts:2 mode-parity: unechoed-claim|docs/f49b.md:1 rf-normally: unechoed-claim|src/f49c.ts:2 mode-parity: unechoed-claim:0650a552",
+      "FALSIFIERS:F50:docs/x.md:1 mode-parity: unechoed-claim:acf24249",
+      "FALSIFIERS:F51:docs/f51a.md:1 mode-parity: unechoed-claim|docs/f51b.md:1 mode-parity: unechoed-claim:aa10649d",
       "CONTROLS:N01::6c96b072",
       "CONTROLS:N02::1e8fd29a",
       "CONTROLS:N03::3a545c1b",
@@ -673,6 +791,9 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "CONTROLS:N10::a496060b",
       "CONTROLS:N11::9823b841",
       "CONTROLS:N12::528c75a0",
+      "CONTROLS:N13::3a40bc92",
+      "CONTROLS:N14::8947550e",
+      "CONTROLS:N15::7acb67a3",
       "RESIDUALS:R1::1e0d90ec",
       "RESIDUALS:R2::e7707859",
       "RESIDUALS:R3::cf696a35",
@@ -683,6 +804,9 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "RESIDUALS:R8::920a96a7",
       "RESIDUALS:R9::486147cd",
       "RESIDUALS:R10::3ff23a66",
+      "RESIDUALS:R11::153a8eec",
+      "RESIDUALS:R12::a2db2a6f",
+      "RESIDUALS:R13::9bb299b8",
     ]);
     expect(FAMILIES.map(family => `${family.id}:${family.slots.map(slot => slot.join("/")).join(" ")}`)).toEqual([
       "claim-id:h2fp c004",
@@ -696,6 +820,7 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
     expect([MIN_SELF_FINDINGS, EXPORT_FLOOR, RECEIPTS_FLOOR]).toEqual([30, 100, 30]);
     expect([...EXEMPT]).toEqual(["test/workbench-rf-federation-parity-premise.test.ts"]);
     expect([...NAMED_REFERENCES.keys()]).toEqual(["amp", "lt", "gt", "quot", "apos", "nbsp", "shy", "hyphen", "dash", "ndash", "mdash", "minus", "zwj", "zwnj"]);
+    expect([SEPARATOR, tolerantWord("ab")], "the separator between words and the in-word gap, as tolerantWord's forms for a two-letter word").toEqual(["[ ?]{1,4}", "(?:ab|\\?b|a\\?|a[ ?]{1,3}b)"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([id, family]) => `${id}:${family}`)).toEqual([
       "R1:paraphrase outside the four families",
       "R2:phrase assembled at runtime",
@@ -707,6 +832,9 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "R8:phrase split across a blank line",
       "R9:same-line echo tokens",
       "R10:named references outside the decoded set",
+      "R11:joined words",
+      "R12:inflection and deletion",
+      "R13:encodings outside the decoded set",
     ]);
   });
 
