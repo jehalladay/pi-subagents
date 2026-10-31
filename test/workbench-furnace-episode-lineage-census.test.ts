@@ -7,10 +7,17 @@
  * typed edge (never causation, never ownership without a native confirmation reference), with absent keys keeping
  * today's output byte-identical."
  *
- * MEASURED (read-only, 2026-10-28/29; by cut #1 at base f5589e0 and 695105d, re-read by cut #2 at 51f4db4 and by cut #3
- * at c843ed5, whose landings 596-653 touched neither the vendored SDK nor the observer). The installed @furnace/sdk is
- * 0.1.0 from vendor/furnace-sdk-0.1.0.tgz: 128 regular files in 12 directories and no entry of any other kind
- * (byte-identical to the tarball's package tree at cut #3), 28 of them TypeScript declaration files (the only
+ * MEASURED (read-only, 2026-10-28/30; by cut #1 at base f5589e0 and 695105d, re-read by cut #2 at 51f4db4 and by cut #3
+ * at c843ed5, whose landings 596-653 touched neither the vendored SDK nor the observer, and by wb-uwk7, the landing-662
+ * follow-up, at 577493f and by its respin 1 at 87b34f3, no commit since c843ed5 touching vendor/ or
+ * src/workbench/furnace-observer.ts). The installed @furnace/sdk is 0.1.0 from vendor/furnace-sdk-0.1.0.tgz: 128
+ * regular files in 12 directories and no entry of any other kind (byte-identical to the tarball's package tree at cut #3
+ * and at respin 1; at wb-uwk7 no entry's name starts with a dot, no directory is empty or named node_modules, the
+ * deepest entry is four path components down, the largest file is contract/registry/conformance-cases.json at 135370
+ * bytes, and every file decodes as UTF-8; at respin 1 the tarball, which package.json's @furnace/sdk spec names and
+ * vendor/README.md pins by sha256 aaa57dcfb1c205ec1f23f07cdffd6af32901bc4b972d81301758a7467ea865a9, is a gzipped
+ * ustar archive of 128 regular-file members under package/, none of another type and none with a ustar prefix), 28 of
+ * them TypeScript declaration files (the only
  * TypeScript files it ships), each an ES module with no reference directive and no global augmentation. Its entry,
  * package.json's types, is dist/src/index.d.ts, which re-exports dist/src/protocol.d.ts. Read through the TypeScript
  * type checker (READER below), AttemptDto (27 members) and RunStatusDto (16 members, plus RunDto's 29 by heritage),
@@ -37,7 +44,11 @@
  * READER (cut #2's checker walk, widened by cut #3, which cures refusal #2's U1, the unread labeled tuple elements). T0
  * reads every entry under the installed package root at every depth: its path, its kind and, for a regular file, the
  * sha256 of its bytes (a symbolic link by its target, never followed); the manifest is the sha256 of those lines,
- * sorted. T1 reads the release through the TypeScript type checker, never by syntax alone: a Program over every
+ * sorted. A second reader (wb-uwk7 respin 1) shares no code with that walk, sha256 or manifest: it reads the package
+ * tree of the vendored tarball (VENDORED), the gunzipped ustar members (their package/ prefix dropped) by their
+ * headers' name, size and type fields, a regular file by the sha256 of its bytes and any other member as kind other,
+ * every ancestor of a member as a directory (the archive lists none), and takes its own manifest of the same lines. T1
+ * reads the release through the TypeScript type checker, never by syntax alone: a Program over every
  * TypeScript file under the package root (the ES2023 library without the DOM, no ambient types). Its roots are every
  * interface, type alias, class, enum, namespace, function or variable declaration named AttemptDto or RunStatusDto in
  * any of those files, at any nesting (inside a namespace, a module augmentation or a global block), and every
@@ -65,13 +76,24 @@
  * and a subject the entry does not export.
  *
  * CASES. T0 (ARMED, bytes) the installed release's manifest, regular-file count and directory count equal INSTALLED,
- * and no entry is of another kind; the manifest is shown to move with a changed byte, path or kind and with an added or
- * a removed entry, and the entry walk to read a symbolic link as one, by its target (the npm-made
- * node_modules/.bin/tsc). So any re-vendor that changes, adds or removes an installed file reds T0, whatever form the
- * change takes, naming the acceptance on landing as owed. T1 (ARMED) the roots are exactly protocol.d.ts's AttemptDto
- * and RunStatusDto, the matches equal LINEAGE's today sets, the walk finds no open slot, and no release file spells
- * "episode" or "lineage" by path or content (the content reading is proven live by finding the release's own
- * superseded_by, spelled today only in dist/src/protocol.d.ts); a re-vendor that brings an FRC-01 word to a place
+ * and no entry is of another kind; the second reader's manifest and counts of the vendored tarball equal INSTALLED too,
+ * and the walk's entries equal its entries one for one, so INSTALLED is held outside the walk and manifest: a walk or a
+ * manifest hollowed in what the installed release holds reds T0 even with INSTALLED re-pinned to its own measurement
+ * (wb-uwk7 respin 1); the manifest is shown to move with a changed byte, path or kind and with an added or
+ * a removed entry (edits of the walk's entries), and the entry walk to read a symbolic link as one, by its target (the
+ * npm-made node_modules/.bin/tsc), and to read a tree planted on disk (PLANTED_TREE, wb-uwk7) entry for entry against
+ * digests measured outside this file: it lists every planted entry, a dotfile, a dot-directory, an empty directory, a
+ * nested node_modules and an entry deeper than any installed one included, by its path, its kind and the sha256 of its
+ * bytes, and a same-size change of the last byte of a file larger than any installed one, a byte that is not UTF-8 by
+ * itself either side of the change, moves that file's digest, no other entry, and the manifest. So any re-vendor that
+ * changes an installed entry's path, kind or bytes, or adds or removes an entry, reds T0, naming the acceptance on
+ * landing as owed (metadata alone, a mode or a time, is no part of an entry). T1 (ARMED) the roots are exactly
+ * protocol.d.ts's AttemptDto and RunStatusDto, the matches equal LINEAGE's today sets, the walk finds no open slot, and
+ * no release file spells "episode" or "lineage" by path or content (the content reading is proven live by finding the
+ * release's own superseded_by, spelled today only in dist/src/protocol.d.ts, and the path reading by a planted file
+ * map, wb-uwk7, in which a file name, a directory name and a first path component two directories above its file
+ * (respin 1) that spell a record word are found while their contents spell none; both readings ignore letter case); a
+ * re-vendor that brings an FRC-01 word to a place
  * READER matches, an open slot, another root or a record word anywhere in the release reds T1 as well. T2 the same
  * reader reads a planted release: an FRC-01 word through an interface parent, a type-alias parent, a generic-wrapped
  * parent (Partial) and a second type-alias parent of RunStatusDto that is an intersection, nested in an array of
@@ -102,31 +124,51 @@
  * job, outputs or prev) is reached but not matched; R-UNDECLARED a ref the release carries only outside its TypeScript
  * files (its JavaScript or JSON) and under no record word is not read; R-UNREACHED a ref on a type neither DTO reaches
  * (another response DTO such as AttemptListDto, or an unreferenced declaration) is not read.
- * FROZEN SHAPE (standing rule 16): LINEAGE pins `${ref}:${today.length}` and RESIDUALS their ids as literals; LINEAGE's
- * refs are held to the export title (A1) and its today sets to the installed release (T1); INSTALLED is held to the
- * installed release (T0).
+ * FROZEN SHAPE (standing rule 16): LINEAGE pins `${ref}:${today.length}`, RESIDUALS their ids and PLANTED_TREE its
+ * member paths (PLANTED_EMPTY last) as literals; LINEAGE's refs are held to the export title (A1) and its today sets to
+ * the installed release (T1); INSTALLED is held to the installed release and to the second reader's reading of the
+ * vendored tarball (T0), and PLANTED_TREE_ENTRIES to the walk of the planted tree (T0).
  * NOT CLAIMED (edits of this file alone): a residual row removed from RESIDUALS and the frozen-shape literal together
  * (no outside anchor names the residual families); a case whose subject is replaced by its own expected value (T0's
  * entries by the pinned manifest, A1's export read by a constant title and description, B1's observer call by the
  * frozen literals); a T0 entry walk that drops a kind no directory it reads holds (anything but a regular file, a
- * directory or a symbolic link).
+ * directory or a symbolic link); a hollow of T0's readers (its entry walk, manifest and the second reader) that changes
+ * nothing T0 compares: the walk and manifest are anchored only where the installed release (held entry for entry to the
+ * second reader's reading of the vendored tarball, and by its counts and manifest to INSTALLED), the planted tree
+ * (before and after its in-place change), node_modules/.bin's tsc entry and the five moved entry lists exercise them,
+ * and the second reader only where the vendored tarball does, so a hollow keyed to a name, a path prefix, a depth, a
+ * size band, a byte offset, a content pattern, an entry count, an entry kind or member type, a tarball header field or
+ * form, or metadata that none of them exercises is not claimed (the installed release and the tarball: 128 regular
+ * files in 12 directories, four path components at the deepest, 135370 bytes at the largest, no member of another type
+ * and none with a ustar prefix; PLANTED_TREE: the planted names, seven path components at its deepest, one 150001-byte
+ * file); a hollow applied alike to the walk (or manifest) and to the second reader with INSTALLED re-pinned to their
+ * common measurement, and the second reader replaced by the walk of the installed release (both readers are this
+ * file's own: vendor/README.md and package-lock.json pin only the tarball's bytes, and nothing outside this file reads
+ * its package tree); a row removed from T1's pathPlant (with its expected path when it has one), or a planted content
+ * there changed to spell a record word (no outside anchor names the planted paths or contents); a planted dotfile,
+ * dot-directory, empty directory or
+ * node_modules removed from PLANTED_TREE (or PLANTED_EMPTY), PLANTED_TREE_ENTRIES, the frozen-shape literal and the
+ * planted-kinds expectation together (no outside anchor names the planted kinds; the deep entry and the large file
+ * are held to the installed tree's depth and size).
  * HYGIENE: B1, B2 and C1 run under vi.useFakeTimers({ toFake: ["Date"] }) with vi.setSystemTime(CLOCK), a frozen clock
- * for the observer's stamps; no module, function or timer is replaced. Nothing is written and no scratch is allocated:
- * T0 and T1 only read the installed files (T0 also lists node_modules/.bin for its symbolic-link control), and every
- * planted release is served from memory.
+ * for the observer's stamps; no module, function or timer is replaced. T0 and T1 only read the installed files (T0
+ * also lists node_modules/.bin for its symbolic-link control and reads VENDORED). The only writes are T0's planted tree
+ * and its in-place change, in one rule-11 scratch directory (makeScratch from test/helpers/scratch.ts, removed by
+ * removeScratch in a finally, the leak guard installed at module scope); every planted release is served from memory.
  * PARKED (the external remainder, a Furnace release): ACCEPTANCE[0] and ACCEPTANCE[1] need F2's fields in a released
  * @furnace/sdk. The re-vendor that brings them changes the installed release, so T0 reds and names both as owed,
  * whatever form the fields take (a residual family's included); T1 then reports the FRC-01 words the new release
  * reaches where READER matches, and AC2's fixture replaces B2.
  */
 import { createHash } from "node:crypto";
-import { readdirSync, readFileSync, readlinkSync } from "node:fs";
+import { mkdirSync, readdirSync, readFileSync, readlinkSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { gunzipSync } from "node:zlib";
 import type { AttemptDto, AttemptListDto, LogsReadDto, Response, ResponseKind, RunStatusDto } from "@furnace/sdk";
 import ts from "typescript";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import {
   type FurnaceObservedRelation,
   FurnaceObserver,
@@ -135,6 +177,9 @@ import {
   type FurnaceReading,
 } from "../src/workbench/furnace-observer.js";
 import { type NativeSnapshot, ObservationProjection } from "../src/workbench/observation.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard(afterAll);
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-4ap.12";
@@ -200,6 +245,107 @@ function manifest(entries: readonly ReleaseEntry[]): string {
 const INSTALLED = { files: 128, directories: 12, manifest: "4603217b221e3a9aeff51ffd97ff770371f0f7d4aa0719dbea3d918b15812225" } as const;
 function owedBytes(measured: { readonly files: number; readonly directories: number; readonly manifest: string }): string {
   return `ARMED (${BEAD}): the installed @furnace/sdk is not the release T0 pins (measured ${measured.files} files, ${measured.directories} directories, manifest ${measured.manifest}). If F2 shipped, the acceptance on landing is owed: ${ACCEPTANCE[0]} ${ACCEPTANCE[1]} If it did not, read T1 against the new release, re-measure LINEAGE's today sets, re-pin INSTALLED and say so.`;
+}
+/** The vendored tarball T0 holds INSTALLED to as well (wb-uwk7 respin 1): the file: spec package.json gives @furnace/sdk,
+ * and the artifact vendor/README.md pins by sha256 (MEASURED). */
+const VENDORED = "vendor/furnace-sdk-0.1.0.tgz";
+/** INSTALLED's anchor outside the walk (wb-uwk7 respin 1, the cure of refusal #1's U1): the package tree of a tarball,
+ * read by a second reader that shares no code with releaseEntries, sha256 or manifest. npm's tarball is a gzipped ustar
+ * archive whose members sit under package/: a member is read by its header's name, size and type fields, a regular
+ * file by the sha256 of its bytes and any other member as kind other; every ancestor of a member is a directory entry
+ * (the archive lists none), and the manifest is this reader's own, over the same lines. */
+function vendoredRelease(archive: Buffer): { readonly entries: ReleaseEntry[]; readonly files: number; readonly directories: number; readonly manifest: string } {
+  const tar = gunzipSync(archive);
+  const members: ReleaseEntry[] = [];
+  for (let at = 0; at + 512 <= tar.length; ) {
+    const header = tar.subarray(at, at + 512);
+    if (header.every((byte) => byte === 0)) break;
+    const field = (start: number, end: number): string => {
+      const raw = header.subarray(start, end);
+      const nul = raw.indexOf(0);
+      return raw.subarray(0, nul < 0 ? raw.length : nul).toString("utf8");
+    };
+    const name = field(0, 100);
+    const size = Number.parseInt(field(124, 136).trim() || "0", 8);
+    const type = field(156, 157);
+    const path = name.startsWith("package/") ? name.slice("package/".length) : name;
+    const member: ReleaseEntry =
+      type === "0" || type === ""
+        ? { path, kind: "file", content: createHash("sha256").update(tar.subarray(at + 512, at + 512 + size)).digest("hex") }
+        : { path, kind: "other", content: "" };
+    members.push(member);
+    at += 512 + Math.ceil(size / 512) * 512;
+  }
+  const ancestors = new Set(
+    members.flatMap((member) => {
+      const parts = member.path.split("/");
+      return parts.slice(0, -1).map((_, index) => parts.slice(0, index + 1).join("/"));
+    }),
+  );
+  const entries: ReleaseEntry[] = [...members, ...[...ancestors].map((path): ReleaseEntry => ({ path, kind: "directory", content: "" }))];
+  const lines = entries.map((entry) => [entry.kind, entry.path, entry.content].join("\t")).sort();
+  return {
+    entries,
+    files: members.filter((member) => member.kind === "file").length,
+    directories: ancestors.size,
+    manifest: createHash("sha256").update(lines.join("\n")).digest("hex"),
+  };
+}
+/** The planted tree's large file: 150000 ASCII bytes, then `last` (0x80 or 0x81; neither is UTF-8 by itself, so a change
+ * from one to the other keeps the size and every UTF-8 decoding of the file). */
+function largeBytes(last: number): Buffer {
+  return Buffer.concat([Buffer.from("0123456789abcdef".repeat(9375)), Buffer.from([last])]);
+}
+const LARGE_FILE = "dist/src/large.bin";
+/** T0's planted tree (wb-uwk7, F3 of the landing-662 verdict), path inside the tree to bytes: what the installed tree
+ * holds none of (MEASURED) - a dotfile, a dot-directory, a nested node_modules, an entry seven path components down and
+ * a file larger than any installed one; PLANTED_EMPTY is an empty directory beside them. */
+const PLANTED_TREE: Readonly<Record<string, string | Buffer>> = {
+  ".hidden.json": "{}\n",
+  "dist/.cache/state.json": "{}\n",
+  "dist/a/b/c/d/e/deep.d.ts": "export {};\n",
+  "dist/node_modules/dep/index.js": "export {};\n",
+  [LARGE_FILE]: largeBytes(0x80),
+};
+const PLANTED_EMPTY = "dist/empty";
+/** The walk's entries for the planted tree, sorted by path; every digest measured outside this file (sha256sum over the
+ * same bytes). */
+const PLANTED_TREE_ENTRIES: readonly ReleaseEntry[] = [
+  { path: ".hidden.json", kind: "file", content: "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356" },
+  { path: "dist", kind: "directory", content: "" },
+  { path: "dist/.cache", kind: "directory", content: "" },
+  { path: "dist/.cache/state.json", kind: "file", content: "ca3d163bab055381827226140568f3bef7eaac187cebd76878e0b63e9e442356" },
+  { path: "dist/a", kind: "directory", content: "" },
+  { path: "dist/a/b", kind: "directory", content: "" },
+  { path: "dist/a/b/c", kind: "directory", content: "" },
+  { path: "dist/a/b/c/d", kind: "directory", content: "" },
+  { path: "dist/a/b/c/d/e", kind: "directory", content: "" },
+  { path: "dist/a/b/c/d/e/deep.d.ts", kind: "file", content: "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881" },
+  { path: "dist/empty", kind: "directory", content: "" },
+  { path: "dist/node_modules", kind: "directory", content: "" },
+  { path: "dist/node_modules/dep", kind: "directory", content: "" },
+  { path: "dist/node_modules/dep/index.js", kind: "file", content: "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881" },
+  { path: "dist/src", kind: "directory", content: "" },
+  { path: LARGE_FILE, kind: "file", content: "c440a855baaad380507dbcd5d32819a82d1078c62bc4509d81304a51c7e7f34c" },
+];
+/** LARGE_FILE's digest once its last byte changes from 0x80 to 0x81 in place (sha256sum over the same bytes). */
+const LARGE_CHANGED = "1d3e82f93d34b5502d3ec427f771cb45d9c110b38e5af02e54a8436a73f86c4b";
+/** Entries in path order (code units; every path is unique). */
+function byPath(entries: readonly ReleaseEntry[]): ReleaseEntry[] {
+  return [...entries].sort((a, b) => (a.path < b.path ? -1 : 1));
+}
+/** Which of the kinds of entry the installed tree holds none of (MEASURED) a walk's entries hold, read from the entries
+ * alone: a regular file and a directory whose names start with a dot, a directory no entry is under, and a directory
+ * named node_modules. */
+function plantedKinds(entries: readonly ReleaseEntry[]): Record<string, boolean> {
+  const name = (entry: ReleaseEntry): string => entry.path.slice(entry.path.lastIndexOf("/") + 1);
+  const directories = entries.filter((entry) => entry.kind === "directory");
+  return {
+    dotfile: entries.some((entry) => entry.kind === "file" && name(entry).startsWith(".")),
+    dotDirectory: directories.some((entry) => name(entry).startsWith(".")),
+    emptyDirectory: directories.some((entry) => !entries.some((other) => other.path.startsWith(`${entry.path}/`))),
+    nodeModules: directories.some((entry) => name(entry) === "node_modules"),
+  };
 }
 
 interface LineageRow {
@@ -1027,6 +1173,16 @@ describe("wb-4ap.12 Furnace episode-lineage census (until F2 ships)", () => {
       owedBytes(measured),
     ).toStrictEqual([]);
     expect(measured, owedBytes(measured)).toStrictEqual(INSTALLED);
+    // INSTALLED's anchor outside the walk (wb-uwk7 respin 1): the second reader's reading of the vendored tarball measures
+    // INSTALLED as well and lists the walk's entries one for one, so a hollowed walk reds here even when INSTALLED is
+    // re-pinned to the hollowed walk's own measurement.
+    const vendored = vendoredRelease(readFileSync(join(REPO, VENDORED)));
+    const tarball = { files: vendored.files, directories: vendored.directories, manifest: vendored.manifest };
+    expect(
+      tarball,
+      `the second reader's reading of ${VENDORED} is not the release T0 pins (measured ${tarball.files} files, ${tarball.directories} directories, manifest ${tarball.manifest})`,
+    ).toStrictEqual(INSTALLED);
+    expect(byPath(entries), "the walk lists the vendored tarball's package tree, entry for entry").toStrictEqual(byPath(vendored.entries));
     // The manifest reads every part of every entry: a changed byte, path or kind, or an added or removed entry, moves it.
     const protocol = entries.findIndex((entry) => entry.path === "dist/src/protocol.d.ts");
     expect(protocol, "the release's protocol declarations are among the entries").toBeGreaterThanOrEqual(0);
@@ -1045,6 +1201,43 @@ describe("wb-4ap.12 Furnace episode-lineage census (until F2 ships)", () => {
       kind: "symlink",
       content: "../typescript/bin/tsc",
     });
+    // The walk itself, on a tree planted on disk (wb-uwk7): every entry is listed whatever its name or depth, and every
+    // byte of a regular file is read. The planted tree holds what the installed one holds none of (MEASURED).
+    const deepest = Math.max(...entries.map((entry) => entry.path.split("/").length));
+    const largest = Math.max(...entries.filter((entry) => entry.kind === "file").map((entry) => readFileSync(join(SDK_ROOT, entry.path)).length));
+    const large = Buffer.from(PLANTED_TREE[LARGE_FILE] ?? "");
+    const changedLarge = largeBytes(0x81);
+    expect(plantedKinds(entries), "the installed tree holds none of the kinds the planted tree holds").toStrictEqual({
+      dotfile: false,
+      dotDirectory: false,
+      emptyDirectory: false,
+      nodeModules: false,
+    });
+    expect(deepest, "the planted tree holds an entry deeper than any installed one").toBeLessThan(Math.max(...PLANTED_TREE_ENTRIES.map((entry) => entry.path.split("/").length)));
+    expect(largest, "the planted tree holds a file larger than any installed one").toBeLessThan(large.length);
+    expect(
+      [changedLarge.length - large.length, Buffer.compare(changedLarge.subarray(0, -1), large.subarray(0, -1)), changedLarge.at(-1) === large.at(-1), changedLarge.toString("utf8") === large.toString("utf8")],
+      "the in-place change keeps the size and every byte but the last, and no UTF-8 decoding tells the two apart",
+    ).toStrictEqual([0, 0, false, true]);
+    const tree = makeScratch("episode-lineage-t0-");
+    try {
+      mkdirSync(join(tree, PLANTED_EMPTY), { recursive: true });
+      for (const [path, bytes] of Object.entries(PLANTED_TREE)) {
+        mkdirSync(dirname(join(tree, path)), { recursive: true });
+        writeFileSync(join(tree, path), bytes);
+      }
+      const planted = releaseEntries(tree);
+      expect(byPath(planted), "the walk lists every planted entry, whatever its name or depth, by path, kind and sha256").toStrictEqual(PLANTED_TREE_ENTRIES);
+      expect(plantedKinds(planted), "the planted tree holds each of those kinds").toStrictEqual({ dotfile: true, dotDirectory: true, emptyDirectory: true, nodeModules: true });
+      writeFileSync(join(tree, LARGE_FILE), changedLarge);
+      const changed = releaseEntries(tree);
+      expect(byPath(changed), "a same-size change of the large file's last byte moves its digest and no other entry").toStrictEqual(
+        PLANTED_TREE_ENTRIES.map((entry) => (entry.path === LARGE_FILE ? { ...entry, content: LARGE_CHANGED } : entry)),
+      );
+      expect(manifest(changed), "the same change moves the manifest").not.toBe(manifest(planted));
+    } finally {
+      removeScratch(tree);
+    }
   });
 
   it("T1 (ARMED): through the checker, AttemptDto and RunStatusDto reach no new FRC-01 word, open slot or root, and no file spells a record word", () => {
@@ -1062,6 +1255,24 @@ describe("wb-4ap.12 Furnace episode-lineage census (until F2 ships)", () => {
     expect(spelling(installed.files, RECORD_WORDS), OWED).toStrictEqual([]);
     const successorMark = spelling(installed.files, ["superseded_by"]).filter((path) => path.endsWith(".d.ts"));
     expect(successorMark.length, "the content reading is live: it finds the release's existing successor mark").toBeGreaterThan(0);
+    // The path reading is live as well (wb-uwk7): in a planted file map, a file name and a directory name that spell a
+    // record word are found while their contents spell none, and so is a first path component two directories above its
+    // file (respin 1, the rider F1: a reading of a path's last two components alone, or one that drops its first, misses
+    // it); a content spelling is found under a neutral path, and a neutral file is not found; the capitalized directory
+    // name and the camel-case content spelling show that both readings ignore letter case.
+    const pathPlant = new Map([
+      ["dist/src/episode.json", "{}\n"],
+      ["dist/Lineage/index.d.ts", "export {};\n"],
+      ["lineage/x/y.json", "{}\n"],
+      ["dist/src/note.js", "export const EpisodeRef = 1;\n"],
+      ["dist/src/plain.d.ts", "export {};\n"],
+    ]);
+    expect(spelling(pathPlant, RECORD_WORDS), "the path reading is live: a path that spells a record word is found when its content spells none").toStrictEqual([
+      "dist/src/episode.json",
+      "dist/Lineage/index.d.ts",
+      "lineage/x/y.json",
+      "dist/src/note.js",
+    ]);
   });
 
   it("T2: the same reader reads every planted form: parents, nesting, names, labels, literals, type names, every kind of root and every open slot", () => {
@@ -1194,7 +1405,7 @@ describe("wb-4ap.12 Furnace episode-lineage census (until F2 ships)", () => {
     expect(residual.seen(planted), "the reader saw the plant: the quiet reading is the family's, not blindness").toContain(residual.witness);
   });
 
-  it("FROZEN SHAPE (standing rule 16): LINEAGE's rows and pin counts, and the residual families", () => {
+  it("FROZEN SHAPE (standing rule 16): LINEAGE's rows and pin counts, the residual families and the planted tree's members", () => {
     expect(LINEAGE.map((row) => `${row.ref}:${row.today.length}`)).toStrictEqual([
       "episode:0",
       "task:0",
@@ -1204,5 +1415,13 @@ describe("wb-4ap.12 Furnace episode-lineage census (until F2 ships)", () => {
       "artifact:0",
     ]);
     expect(RESIDUALS.map((residual) => residual.id)).toStrictEqual(["R-SYNONYM", "R-UNDECLARED", "R-UNREACHED"]);
+    expect([...Object.keys(PLANTED_TREE), PLANTED_EMPTY]).toStrictEqual([
+      ".hidden.json",
+      "dist/.cache/state.json",
+      "dist/a/b/c/d/e/deep.d.ts",
+      "dist/node_modules/dep/index.js",
+      "dist/src/large.bin",
+      "dist/empty",
+    ]);
   });
 });

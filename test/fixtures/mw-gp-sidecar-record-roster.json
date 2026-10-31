@@ -1,5 +1,5 @@
 {
- "comment": "wb-e66.3 (MW-GRAPH-POLICY-COORDINATION-R8): the judged set of test/workbench-mw-gp-sidecar-record-census.test.ts, held out of file (standing rule 16). rows, quotes, witnesses, asserted (each pin's assertion count, its witness compare included), residuals, mutants and tests are the census's measured shape at its cut (cut #1 base df37dac; cut #2, respin 1, base e81d2b0; cut #3, respin 2, base b3d410f; cut #4, respin 3, base 1ad30c3); producer holds the filing's cited MechanicalWorkflows lines at the bead's pin 4b8b974ca72b (git show from the local checkout; the census never re-reads the producer).",
+ "comment": "wb-e66.3 (MW-GRAPH-POLICY-COORDINATION-R8): the judged set of test/workbench-mw-gp-sidecar-record-census.test.ts, held out of file (standing rule 16). rows, quotes, witnesses, asserted (each pin's assertion count, its witness compare included), ended (the assertion count each of the three other judged cases ends on), residuals, mutants and tests are the census's measured shape at its cut (cut #1 base df37dac; cut #2, respin 1, base e81d2b0; cut #3, respin 2, base b3d410f; cut #4, respin 3, base 1ad30c3; the wb-27pe follow-up cut, base cdf5484); producer holds the filing's cited MechanicalWorkflows lines at the bead's pin 4b8b974ca72b (git show from the local checkout; the census never re-reads the producer).",
  "bead": "wb-e66.3",
  "rows": [
   {
@@ -691,14 +691,44 @@
     "C6B2: B2 merged into B1",
     "C6C3: C3 merged into C2",
     "C6D2: D2 merged into D1",
-    "C6S1: S1 merged into S2"
+    "C6S1: S1 merged into S2",
+    "G6-PIN-BOUNDARY-A: the A1/A2 cut moved over one word, A2's first word re-homed at the end of A1",
+    "S-PIN-BOUNDARY-B: the B1/B2 cut moved over one word, B2's first word re-homed at the end of B1",
+    "S-PIN-BOUNDARY-C: the C1/C2 cut moved over one word, C2's first word re-homed at the end of C1",
+    "S-PIN-BOUNDARY-D: the D1/D2 cut moved over one word, D2's first word re-homed at the end of D1",
+    "S-PIN-BOUNDARY-S: the S2/S3 cut moved over one word, S3's first word re-homed at the end of S2",
+    "S-PIN-SPLIT-A: A3 cut in two at its last space, a new pin A4 taking its last word",
+    "S-PIN-SPLIT-B: B2 cut in two at its last space, a new pin B3 taking its last word",
+    "S-PIN-SPLIT-C: C3 cut in two at its last space, a new pin C4 taking its last word",
+    "S-PIN-SPLIT-D: D2 cut in two at its last space, a new pin D3 taking its last word",
+    "S-PIN-SPLIT-S: S3 cut in two at its last space, a new pin S4 taking its last word",
+    "S-PIN-SEPARATOR-A: the separator after A1 taken into A1's quote",
+    "S-PIN-SEPARATOR-B: the separator after B1 taken into B1's quote",
+    "S-PIN-SEPARATOR-C: the separator after C1 taken into C1's quote",
+    "S-PIN-SEPARATOR-D: the separator after D1 taken into D1's quote",
+    "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote"
    ],
    "readings": [
     "C6A2: A2 merged into A1: reds no reading; its contrast reds tiling A",
     "C6B2: B2 merged into B1: reds no reading; its contrast reds tiling B",
     "C6C3: C3 merged into C2: reds no reading; its contrast reds tiling C",
     "C6D2: D2 merged into D1: reds no reading; its contrast reds tiling D",
-    "C6S1: S1 merged into S2: reds no reading; its contrast reds tiling S"
+    "C6S1: S1 merged into S2: reds no reading; its contrast reds tiling S",
+    "G6-PIN-BOUNDARY-A: the A1/A2 cut moved over one word, A2's first word re-homed at the end of A1: reds no reading; its contrast reds tiling A",
+    "S-PIN-BOUNDARY-B: the B1/B2 cut moved over one word, B2's first word re-homed at the end of B1: reds no reading; its contrast reds tiling B",
+    "S-PIN-BOUNDARY-C: the C1/C2 cut moved over one word, C2's first word re-homed at the end of C1: reds no reading; its contrast reds tiling C",
+    "S-PIN-BOUNDARY-D: the D1/D2 cut moved over one word, D2's first word re-homed at the end of D1: reds no reading; its contrast reds tiling D",
+    "S-PIN-BOUNDARY-S: the S2/S3 cut moved over one word, S3's first word re-homed at the end of S2: reds no reading; its contrast reds tiling S",
+    "S-PIN-SPLIT-A: A3 cut in two at its last space, a new pin A4 taking its last word: reds no reading; its contrast reds tiling A",
+    "S-PIN-SPLIT-B: B2 cut in two at its last space, a new pin B3 taking its last word: reds no reading; its contrast reds tiling B",
+    "S-PIN-SPLIT-C: C3 cut in two at its last space, a new pin C4 taking its last word: reds no reading; its contrast reds tiling C",
+    "S-PIN-SPLIT-D: D2 cut in two at its last space, a new pin D3 taking its last word: reds no reading; its contrast reds tiling D",
+    "S-PIN-SPLIT-S: S3 cut in two at its last space, a new pin S4 taking its last word: reds no reading; its contrast reds tiling S",
+    "S-PIN-SEPARATOR-A: the separator after A1 taken into A1's quote: reds no reading; its contrast reds tiling A",
+    "S-PIN-SEPARATOR-B: the separator after B1 taken into B1's quote: reds no reading; its contrast reds tiling B",
+    "S-PIN-SEPARATOR-C: the separator after C1 taken into C1's quote: reds no reading; its contrast reds tiling C",
+    "S-PIN-SEPARATOR-D: the separator after D1 taken into D1's quote: reds no reading; its contrast reds tiling D",
+    "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote: reds no reading; its contrast reds tiling S"
    ]
   },
   "Q11": {
@@ -745,10 +775,15 @@
   "Q5:4",
   "Q6:4",
   "Q7:5",
-  "Q8:6",
-  "Q9:6",
-  "Q10:6",
-  "Q11:6"
+  "Q8:7",
+  "Q9:7",
+  "Q10:7",
+  "Q11:7"
+ ],
+ "ended": [
+  "rule 16:33",
+  "battery:6",
+  "outside anchors:69"
  ],
  "residuals": {
   "Q1": [
@@ -819,7 +854,22 @@
    "C6B2: B2 merged into B1",
    "C6C3: C3 merged into C2",
    "C6D2: D2 merged into D1",
-   "C6S1: S1 merged into S2"
+   "C6S1: S1 merged into S2",
+   "G6-PIN-BOUNDARY-A: the A1/A2 cut moved over one word, A2's first word re-homed at the end of A1",
+   "S-PIN-BOUNDARY-B: the B1/B2 cut moved over one word, B2's first word re-homed at the end of B1",
+   "S-PIN-BOUNDARY-C: the C1/C2 cut moved over one word, C2's first word re-homed at the end of C1",
+   "S-PIN-BOUNDARY-D: the D1/D2 cut moved over one word, D2's first word re-homed at the end of D1",
+   "S-PIN-BOUNDARY-S: the S2/S3 cut moved over one word, S3's first word re-homed at the end of S2",
+   "S-PIN-SPLIT-A: A3 cut in two at its last space, a new pin A4 taking its last word",
+   "S-PIN-SPLIT-B: B2 cut in two at its last space, a new pin B3 taking its last word",
+   "S-PIN-SPLIT-C: C3 cut in two at its last space, a new pin C4 taking its last word",
+   "S-PIN-SPLIT-D: D2 cut in two at its last space, a new pin D3 taking its last word",
+   "S-PIN-SPLIT-S: S3 cut in two at its last space, a new pin S4 taking its last word",
+   "S-PIN-SEPARATOR-A: the separator after A1 taken into A1's quote",
+   "S-PIN-SEPARATOR-B: the separator after B1 taken into B1's quote",
+   "S-PIN-SEPARATOR-C: the separator after C1 taken into C1's quote",
+   "S-PIN-SEPARATOR-D: the separator after D1 taken into D1's quote",
+   "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote"
   ],
   "Q11": [
    "S-DECISION-FIELD-RENAME: the decision's second field named choice",
@@ -1000,7 +1050,7 @@
   "rule 16: the rows, the items and fields, the domains, the value lists, the vocabulary, the bases, the later faults, the checks and their controls, the mutants, the residual families and the registrations are frozen at their measured shape",
   "the mutant battery: every subject passes every check, a planted registration is judged, every base is a control accepted unchanged, each mutant is refused by exactly its declared checks, and every check refuses one mutant alone",
   "the outside anchors: every outside reading holds on the census's anchor model and every BOUND edit of that model reds the reading it names; the bead's own row binds the labels of rows A-D (its acceptance clauses) and S (its title's statement), those rows' pin quotes' text, each item's text and the join of its fields' phrases, each field name to a contiguous run of its phrase's words, the actions and their three distinct fields, ADMITTED, the codes, the statuses, the record noun and the vocabulary's composition; wb-4ap.16's note carries the six codes; the notes cite the producer pin and lines; git's src listing names no vocabulary word unregistered; how an item is cut into fields, which run of its phrase a field name takes, the pin partition, row Q, the decision's fields and the roster's producer copy are not anchored",
-  "roster: the judged rows, the quotes, the residual members, the witness and mutant keys, the assertion counts and the registered tests equal test/fixtures/mw-gp-sidecar-record-roster.json, keys in order; every pin reached its witness compare and each compare held"
+  "roster: the judged rows, the quotes, the residual members, the witness and mutant keys, the assertion counts and the registered tests equal test/fixtures/mw-gp-sidecar-record-roster.json, keys in order; every pin reached its witness compare and each compare held, and each other judged case reached its last statement on the assertion count the roster pins"
  ],
  "producer": {
   "repo": "MechanicalWorkflows",

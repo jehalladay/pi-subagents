@@ -100,7 +100,8 @@
    "holds": true,
    "misplaced": [],
    "unquoted": {},
-   "idle": []
+   "idle": [],
+   "shared": []
   },
   "mergeA": {
    "pins": [
@@ -111,7 +112,8 @@
    "holds": true,
    "misplaced": [],
    "unquoted": {},
-   "idle": []
+   "idle": [],
+   "shared": []
   },
   "mergeC": {
    "pins": [
@@ -122,7 +124,8 @@
    "holds": true,
    "misplaced": [],
    "unquoted": {},
-   "idle": []
+   "idle": [],
+   "shared": []
   },
   "removeA": {
    "pins": [
@@ -137,7 +140,8 @@
      "no Pi caption/status path"
     ]
    },
-   "idle": []
+   "idle": [],
+   "shared": []
   },
   "removeC": {
    "pins": [
@@ -153,7 +157,8 @@
      "renders it as"
     ]
    },
-   "idle": []
+   "idle": [],
+   "shared": []
   },
   "redundantA": {
    "pins": [
@@ -166,6 +171,9 @@
    "unquoted": {},
    "idle": [
     "A4"
+   ],
+   "shared": [
+    "A:CAC-verified label"
    ]
   },
   "misplacedA": {
@@ -183,7 +191,92 @@
      "a hermetic guard proving"
     ]
    },
-   "idle": []
+   "idle": [],
+   "shared": []
+  },
+  "midWordStartA": {
+   "pins": [
+    "A:A1,A2,A3",
+    "B:B1",
+    "C:C1,C2,C3,C4"
+   ],
+   "holds": false,
+   "misplaced": [
+    "A:ermetic guard proving"
+   ],
+   "unquoted": {
+    "A": [
+     "a hermetic guard proving"
+    ]
+   },
+   "idle": [],
+   "shared": []
+  },
+  "midWordEndA": {
+   "pins": [
+    "A:A1,A2,A3",
+    "B:B1",
+    "C:C1,C2,C3,C4"
+   ],
+   "holds": false,
+   "misplaced": [
+    "A:a hermetic guard prov"
+   ],
+   "unquoted": {
+    "A": [
+     "a hermetic guard proving"
+    ]
+   },
+   "idle": [],
+   "shared": []
+  },
+  "sharedC": {
+   "pins": [
+    "A:A1,A2,A3",
+    "B:B1",
+    "C:C1,C2,C3,C4"
+   ],
+   "holds": false,
+   "misplaced": [],
+   "unquoted": {},
+   "idle": [],
+   "shared": [
+    "C:quoted data"
+   ]
+  },
+  "shortenedC3": {
+   "pins": [
+    "A:A1,A2,A3",
+    "B:B1",
+    "C:C1,C2,C3,C4"
+   ],
+   "holds": false,
+   "misplaced": [],
+   "unquoted": {
+    "C": [
+     "or receipt",
+     "as"
+    ]
+   },
+   "idle": [],
+   "shared": []
+  },
+  "shortenedC4": {
+   "pins": [
+    "A:A1,A2,A3",
+    "B:B1",
+    "C:C1,C2,C3,C4"
+   ],
+   "holds": false,
+   "misplaced": [],
+   "unquoted": {
+    "C": [
+     "or receipt",
+     "quoted"
+    ]
+   },
+   "idle": [],
+   "shared": []
   }
  },
  "rows": [
@@ -685,7 +778,7 @@
     },
     {
      "id": "C3",
-     "quote": "renders it as quoted data",
+     "quote": "renders it as",
      "witness": {
       "current/source.status": {
        "planted": [
