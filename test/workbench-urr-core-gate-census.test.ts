@@ -29,12 +29,27 @@
  *    the tracked export, and the table's frozen shape is pinned.
  *  CLAIM WORDS -> FALSIFIERS: each rule THE PAGE TWIN, THE PAGE READ and THE INPUT READ state (below) is a D1 control, one
  *    checkable item per rule, pinned in the roster: PAGE_TWIN_FORMS (5 Markdown texts, read by D1 and by their reader view),
- *    PAGE_READ_FORMS (41 raw-state texts, each read by THE PAGE READ alone) and INPUT_READ_FORMS (26 input start tags, each read
+ *    PAGE_READ_FORMS (89 raw-state texts, each read by THE PAGE READ alone) and INPUT_READ_FORMS (40 input start tags, each read
  *    in an HTML block by its reader view), so a reader that breaks a stated rule reds its item.
  *  Found by the seat (no refusal item; FAIL-CLOSED): THE RENDERED LEG's reference reading looked a name up in NAMED_REFERENCES
  *    without asking whether it is one of its own names, so &constructor; and &toString; decoded to their function's source text and
  *    were neither refused nor left as written, against its claim that any other named reference is REFUSED. A NAMED_REFERENCES name
  *    is now one of its own; each inherited name is refused and stays as written (INHERITED_REFERENCE_FORMS on D1).
+ *  CUT #2 (the respin of refusal #1, gate run g10-gate-s156 on cut #1 3568a6f; seat ws-04, run g10-work-s155, trunk 84295e4,
+ *    landing 730, merged in): cut #1's frozen shape is kept and only added to - no title, row, pin, control, residual row, refusal
+ *    or reading is removed or weakened, and no reader changes. Refusal #1's four items, each by its route's first option (a pinned
+ *    item per stated sub-form, the gate's own witness text where it gave one): U1, THE PAGE READ's tag states - a tab, a line feed
+ *    and a form feed for white space, a "/" after a tag's name, before or after an attribute's name and after a quoted value, white
+ *    space after an unquoted or a quoted value, a character right after a quoted value, and a start or end tag opened by an
+ *    upper-case letter; U2, markup opened by an upper-case letter and a bogus comment, a markup declaration and a "</ " form the
+ *    text does not close; U3, a low surrogate, 7 hexadecimal and 9 decimal digits, a two-letter name and a name opened by an
+ *    upper-case letter; U4, a type whose Unicode lower case is a keyword and whose ASCII lower case is none (a Kelvin sign) and the
+ *    first of two placeholders. Beside them each other sub-form the claims below state holds an item too (a carriage return and a
+ *    vertical tab, every other place a quote opens no value, an end tag's name, "</" before another character, the first end of a
+ *    comment and of other markup, the code points either side of the surrogates and 0x10FFFF, 32-digit references, every
+ *    NAMED_REFERENCES name, a legacy name before a space, a type in mixed case, an entry state with neither text), and, for F2, the
+ *    windows-1252 table's 32 values and the state of each of the 22 INPUT_TYPES keywords, so a table entry changed in this file and
+ *    the roster's constants reds its reading. PAGE_READ_FORMS grows from 41 to 89 items and INPUT_READ_FORMS from 26 to 40.
  *
  * CUT #6 (the FINAL cut: the respin of refusal #5, gate run g10-gate-s142 on cut #5 b70da137; seat ws-03, run g10-work-s141), bound
  * by orchestrator ruling R-B93 (rule 19's structural exit) to the FAIL-CLOSED CORE: the rendered-reading claim restated to exactly
@@ -287,13 +302,17 @@
  * the alt text into the attribute, so a reader shows it as written).
  * THE PAGE READ (wb-2wiv.4, the RB family): a raw-state text token's text as the page holds it - marked writes it there unescaped,
  * as raw HTML - read within the token as the HTML Standard's tokenizer reads text in its data state. MARKUP is removed, as the page
- * shows none of it: from a "<" before an ASCII letter, "/", "!" or "?", a comment ("<!--") to its first "-->" or "--!>" ("<!-->"
- * and "<!--->" ending at once); a start or end tag ("<", or "</", before an ASCII letter) to its first ">" outside a quoted
- * attribute value, by the tokenizer's tag states (a value is quoted only by a quote that opens it after an attribute name's "=",
- * white space between allowed); any other markup ("</" before another character, "<!", "<?": a bogus comment, a markup declaration,
- * a DOCTYPE, a CDATA section) to its first ">"; each to the token's end when the token does not close it (a reader carries it on
- * into the page beyond the token). Every other "<" is text. REFERENCES: a numeric character reference ("&#" and decimal digits,
- * "&#x" or "&#X" and hexadecimal digits) is decoded with or without its closing ";" by the HTML Standard's rule (0, a surrogate or a
+ * shows none of it: from a "<" before an ASCII letter of either case, "/", "!" or "?", a comment ("<!--") to its first "-->" or
+ * "--!>", whichever comes first ("<!-->" and "<!--->" ending at once); a start or end tag ("<", or "</", before an ASCII letter of
+ * either case) to its first ">" outside a quoted attribute value, by the tokenizer's tag states (white space a tab, a line feed, a
+ * form feed, a carriage return - the input stream reads it as a line feed - or a space, a vertical tab none; a value is quoted
+ * only by a quote that opens it after an attribute name's "=", white space between allowed; after a "/" (the self-closing state),
+ * after white space that follows a value and right after a quoted value, the next character other than white space, "/" or ">"
+ * opens an attribute's name, an "=" or a quote among them, never a value; an end tag's name and attributes read as a start tag's);
+ * any other markup ("</" before another character, "<!", "<?": a bogus comment, a markup declaration, a DOCTYPE, a CDATA section)
+ * to its first ">"; each to the token's end when the token does not close it (a reader carries it on into the page beyond the
+ * token). Every other "<" is text. REFERENCES: a numeric character reference ("&#" and decimal digits, "&#x" or "&#X" and
+ * hexadecimal digits, every digit read) is decoded with or without its closing ";" by the HTML Standard's rule (0, a surrogate or a
  * value above 0x10FFFF reads as U+FFFD; 0x80 to 0x9F through NUMERIC_REPLACEMENTS, the windows-1252 table, where it maps one; any
  * other value as its code point); a named one only by REFERENCE's rule (a NAMED_REFERENCES name closed by ";"), and any other "&" is
  * text (a reader decodes the HTML Standard's whole table, legacy names without ";" among them). It reads the data state alone: the
@@ -304,7 +323,8 @@
  * element (its start tag a REFUSED_ELEMENTS refusal) is read the same way, though a reader shows no script text. The token stays
  * refused whatever it holds.
  * THE INPUT READ (wb-2wiv.4, the IV family): an input start tag THE HTML READ reads shows, in its place, the text of its state - its
- * type attribute (the first one, references decoded by REFERENCE's rule, in ASCII lower case; absent, or no INPUT_TYPES keyword:
+ * type attribute (the first one, references decoded by REFERENCE's rule, in ASCII lower case - any other character as written, so a
+ * Kelvin sign is no "k" -; absent, or no INPUT_TYPES keyword:
  * the Text state): an INPUT_SHOWN entry state (text, search, tel, url, email) its value attribute as written (the first one, the
  * HTML Standard's value sanitization not applied), or its placeholder (the first one) when the value is absent or empty; a button
  * state (submit, reset, button) its value (none when it is absent: the user agent's default label is not read); any other state nothing. That
@@ -498,7 +518,9 @@
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
  * roster where no anchor of the bead text holds it - D2 and every Q pin (the cut-time CT6 sweep removed each pin from every literal
  * and the roster: A1-A4, B1, B2, C1-C3 and D1 red through the bead text, D2 and Q1-Q18 stay green); a control removed from its
- * list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the walk it anchors.
+ * list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the walk it anchors;
+ * and (wb-2wiv.4 cut #2) a NUMERIC_REPLACEMENTS, NAMED_REFERENCES, INPUT_TYPES or INPUT_SHOWN entry changed in this file, in the
+ * roster's constants and in every reading that pins it (nothing in the repository holds the HTML Standard's tables).
  * RESIDUALS (named, each with its pinned quiet row): R-COMPOSED a name composed at run time from parts no one of which holds it
  * ("Host" + "CapabilitySet", a join, a split template, "r" + "f", String.fromCharCode) is read by no scan and by neither census
  * (Q1); R-GENERIC-ABI the ABI spelled only through its generic entries (initialize, inspect, subscribe, snapshot, close) is not
@@ -2201,7 +2223,28 @@ const INVISIBLE_FORM_PATH = "docs/invisible.md";
  * attribute's name -, an unquoted value ended by ">" or by white space), markup the text does not close, a "<" that opens none, the
  * numeric references (without and with ";", hexadecimal in either case, every digit read - "&#x62e" is U+062E -, more than 7
  * digits, 0, a surrogate, above 0x10FFFF, a windows-1252 value, a value the table leaves out, no digits), the named ones (closed, legacy, unknown, an inherited object name)
- * and a raw-text element read in the data state.
+ * and a raw-text element read in the data state. Cut #2 (refusal #1's U1-U3, each sub-form its own item, so the member that breaks
+ * it reds it): the tag states' white space - a tab, a line feed, a form feed and a carriage return between a tag's name and an
+ * attribute, and a vertical tab, which is none (tabTagSpace, lineFeedTagSpace, formFeedTagSpace, carriageReturnTagSpace,
+ * verticalTabNoSpace); a "/" that opens the self-closing state after a tag's name, before an attribute's name, after it and after a
+ * quoted value, the next character opening an attribute's name (nameSolidus, solidusBeforeName, solidusAfterName,
+ * solidusAfterValue); white space after an unquoted or a quoted value, an "=" after it opening an attribute's name, not a value
+ * (spaceAfterUnquoted, spaceAfterQuoted); a character right after a quoted value opening an attribute's name, an "=" among them
+ * (nameAfterQuoted, nameAfterQuotedValue, equalsAfterQuotedValue); a quote that opens no value at each other place - a single quote after a tag's name, opening an
+ * attribute's name and within one, a double or a single quote within an unquoted value and right after a quoted value
+ * (singleQuoteAfterName, singleNameQuote, singleQuoteInName, doubleQuoteInUnquoted, singleQuoteInUnquoted, quoteAfterQuotedValue,
+ * singleQuoteAfterQuotedValue); a start and an end tag opened by an upper-case letter, read by the tag states (upperStartTag,
+ * upperEndTag), and markup opened by one (upperOpening); an end tag's name read by the tag states, an "=" in it opening no value
+ * (endTagNameEquals); "</" before another character read to its first ">", a quote in it opening no value (spacedEndTagValue); a
+ * bogus comment, a markup declaration and a "</ " form the text does not close, each read to the text's end (unclosedInstruction,
+ * unclosedDeclaration, unclosedSpacedEndTag); the first ">" ending other markup (otherMarkupFirstClose); the first "-->" or "--!>"
+ * ending a comment, whichever comes first (commentFirstClose, bangCommentFirstClose, commentEitherClose, commentDashThenBang); a low
+ * surrogate at both ends of its range and the code points either side of the surrogates (lowSurrogate, lastSurrogate,
+ * belowSurrogate, aboveSurrogate); 0x10FFFF, the last code point (maxReference); every digit read - 7 and 32 hexadecimal digits, 9
+ * and 32 decimal ones (longHex, manyHexDigits, longerDecimal, manyDecimalDigits); the windows-1252 table's 32 values 0x80 to 0x9F,
+ * in order (windowsTable, F2); a name of two characters and one opened by an upper-case letter (twoLetterName, upperInitialName),
+ * every NAMED_REFERENCES name closed by ";", in order (namedTable, F2), and a legacy name before a space, left as written
+ * (legacyNameUnclosed; a reader decodes it, the stated divergence).
  */
 const PAGE_READ_FORMS: Readonly<Record<string, string>> = {
   namespacedTag: "Fib<o:p>er core",
@@ -2245,6 +2288,54 @@ const PAGE_READ_FORMS: Readonly<Record<string, string>> = {
   unknownName: "Fi&foo;er",
   inheritedName: "Fi&toString;er",
   rawTextElement: "Fib<style>x</style>er core",
+  tabTagSpace: 'Fib<o:p\ttitle="a>b">er core',
+  lineFeedTagSpace: 'Fib<o:p\ntitle="a>b">er core',
+  formFeedTagSpace: 'Fib<o:p\ftitle="a>b">er core',
+  carriageReturnTagSpace: 'Fib<o:p\rtitle="a>b">er core',
+  verticalTabNoSpace: 'Fib<o:p\vtitle="a>b">er core',
+  nameSolidus: 'Fib<o:p/a="b>c">er core',
+  solidusBeforeName: 'Fib<x /="a>b">er core',
+  solidusAfterName: 'Fib<x a/="b>c">er core',
+  solidusAfterValue: 'Fib<x a="b"/="c>d">er core',
+  spaceAfterUnquoted: 'Fib<x a=b ="c>d">er core',
+  spaceAfterQuoted: 'Fib<x a="b" ="c>d">er core',
+  nameAfterQuoted: 'Fib<x a="b"c"d>e">er core',
+  nameAfterQuotedValue: 'Fib<x a="b"c="d>e">er core',
+  equalsAfterQuotedValue: 'Fib<x a="b"="c>d">er core',
+  singleQuoteAfterName: "Fib<x'a>b'>er core",
+  singleNameQuote: "Fib<x 'a>b'>er core",
+  singleQuoteInName: "Fib<x a'b>c'>er core",
+  doubleQuoteInUnquoted: 'Fib<x a=b"c>d">er core',
+  singleQuoteInUnquoted: "Fib<x a=b'c>d'>er core",
+  quoteAfterQuotedValue: 'Fib<x a="b""c>d">er core',
+  singleQuoteAfterQuotedValue: "Fib<x a='b''c>d'>er core",
+  upperStartTag: 'Fib<O:P title="a>b">er core',
+  upperEndTag: 'Fib</X title="a>b">er core',
+  upperOpening: "Fib<O:P>er core",
+  endTagNameEquals: 'Fib</x="a>b">er core',
+  spacedEndTagValue: 'Fib</ a="b>c">er core',
+  unclosedInstruction: "Fib<?x er core",
+  unclosedDeclaration: "Fib<!x er core",
+  unclosedSpacedEndTag: "Fib</ x er core",
+  otherMarkupFirstClose: "Fib<?x>er core>",
+  commentFirstClose: "Fib<!-- a -->er core -->",
+  bangCommentFirstClose: "Fib<!-- a --!>er core --!>",
+  commentEitherClose: "Fib<!-- a --!>er core -->",
+  commentDashThenBang: "Fib<!-- a -->er core --!>",
+  lowSurrogate: "x&#xDC00;y",
+  lastSurrogate: "x&#xDFFF;y",
+  belowSurrogate: "x&#xD7FF;y",
+  aboveSurrogate: "x&#xE000;y",
+  maxReference: "x&#x10FFFF;y",
+  longHex: "Fi&#x0000062;er",
+  manyHexDigits: "Fi&#x00000000000000000000000000000062;er",
+  longerDecimal: "Fi&#000000098;er",
+  manyDecimalDigits: "Fi&#00000000000000000000000000000098;er",
+  windowsTable: "&#128;&#129;&#130;&#131;&#132;&#133;&#134;&#135;&#136;&#137;&#138;&#139;&#140;&#141;&#142;&#143;&#144;&#145;&#146;&#147;&#148;&#149;&#150;&#151;&#152;&#153;&#154;&#155;&#156;&#157;&#158;&#159;",
+  twoLetterName: "Fi&lt;er",
+  upperInitialName: "Fi&NoBreak;er",
+  namedTable: "&amp;&lt;&gt;&quot;&apos;&nbsp;&ensp;&emsp;&thinsp;&hairsp;&shy;&ZeroWidthSpace;&zwnj;&zwj;&NoBreak;&hyphen;&dash;&ndash;&mdash;&minus;&period;&excl;&quest;&comma;&colon;&semi;",
+  legacyNameUnclosed: "Fi&amp er",
 };
 /**
  * THE INPUT READ's forms (wb-2wiv.4; one checkable item per state rule its claim states, each an input start tag read by D1 in an
@@ -2252,7 +2343,12 @@ const PAGE_READ_FORMS: Readonly<Record<string, string>> = {
  * upper case, by an unknown or empty type; a type matched in any case (HIDDEN) and behind a reference (hidd&#101;n), and the first
  * of two types, each hiding the value; a placeholder alone, behind an
  * empty value, under a value; the first of two values; a value behind a reference; each button state, a button's placeholder and a
- * submit button's default label (neither read); and the states that show nothing (hidden, password, checkbox, number).
+ * submit button's default label (neither read); and the states that show nothing (hidden, password, checkbox, number). Cut #2
+ * (refusal #1's U4 and F2): a type whose Unicode lower case is a keyword and whose ASCII lower case is none - chec, a Kelvin sign,
+ * box - the Text state (kelvinType); a type in mixed case, each upper-case run read (pAsSwOrD, mixedCaseType); the first of two
+ * placeholders (firstPlaceholder); an entry state with neither a value nor a placeholder, showing nothing (entryNothing); and the
+ * state of each other INPUT_TYPES keyword, each showing nothing (dateType, monthType, weekType, timeType, datetimeLocalType,
+ * rangeType, colorType, radioType, fileType, imageType), so every one of the 22 keywords' states holds an item.
  */
 const INPUT_READ_FORMS: Readonly<Record<string, string>> = {
   noType: '<input value="Fiber" size="6">',
@@ -2281,6 +2377,20 @@ const INPUT_READ_FORMS: Readonly<Record<string, string>> = {
   passwordType: '<input type="password" value="Fiber" size="6">',
   checkboxType: '<input type="checkbox" value="Fiber" size="6">',
   numberType: '<input type="number" value="Fiber" size="6">',
+  kelvinType: `<input type="chec${at(0x212a)}box" value="Fiber" size="6">`,
+  mixedCaseType: '<input type="pAsSwOrD" value="Fiber" size="6">',
+  firstPlaceholder: '<input placeholder="Fiber" placeholder="x" size="6">',
+  entryNothing: '<input type="text" size="6">',
+  dateType: '<input type="date" value="Fiber" size="6">',
+  monthType: '<input type="month" value="Fiber" size="6">',
+  weekType: '<input type="week" value="Fiber" size="6">',
+  timeType: '<input type="time" value="Fiber" size="6">',
+  datetimeLocalType: '<input type="datetime-local" value="Fiber" size="6">',
+  rangeType: '<input type="range" value="Fiber" size="6">',
+  colorType: '<input type="color" value="Fiber" size="6">',
+  radioType: '<input type="radio" value="Fiber" size="6">',
+  fileType: '<input type="file" value="Fiber" size="6">',
+  imageType: '<input type="image" value="Fiber" size="6">',
 };
 /** The HTML block D1 reads each INPUT_READ_FORMS tag in. */
 function inputReadPage(tag: string): string {
