@@ -102,8 +102,20 @@
  * plane files enter PLANTED, and two readings followed. The residual anchor read 1895 ms against 482 ms without them (load1 ~240):
  * each subject's scan read the 1,112,064 spellings before the plants that hold it, so the anchor now reads the smaller plants first
  * (some() is order-free, so every subject reads as before; 530 ms at load1 ~340). And the class plant deleted from R-SPELLING's row,
- * the rest kept, read 28 of 28: nothing outside the row required it. The anchor now owes each plane's file as written (classTexts,
- * built once from the needle set and the engine: 17 subjects, 337 unbuilt and 339 built), so a deleted plant reds the anchor.
+ * the rest kept, read 28 of 28: nothing outside the row required it. The anchor now owes each plane's file as written (cut #2's
+ * classTexts, built once from the needle set and the engine: 17 subjects, 337 unbuilt and 339 built at cut #2), so a deleted plant
+ * reds the anchor.
+ * RESPIN (wb-iug2 cut #3; the gate's refusal #2, U1-U3, merged with trunk 99ead5f, landing 725, for the cut): five gate mutants of one
+ * edit each read 28 of 28 on cut #2, and again on its merge with 99ead5f (measured). U1: three line readings that read U+200B as the
+ * space only inside a double-quoted string (L2-Q), only on a line under 512 characters (L2-S) or only outside src (L2-P), while cut #2
+ * wrote the class in one shape, packed unquoted src lines. The class is now written in two shapes (CLASS_SHAPES), the second one
+ * spelling to a line in the census's own code() form in qa, and each of the three reds R-SPELLING; the line-reading claim is narrowed
+ * to the sites the two shapes write (RESIDUALS below). U2: an added matcher alternative spelled so that no part of the source holds
+ * both words (L2-M) passed the source-text projection; the matcher is now pinned whole. U3: a derivation that planted U+4E00 as a
+ * second U+4E01 (L2-D) kept the count; each shape's joiners, read off its files, now strictly increase by code point from the joined
+ * spelling to the engine's last code point. The anchor owes each class file at its path in its shape (classFiles): 34 subjects, 354
+ * unbuilt and 356 built (measured). Cost: the code-line shape's 1,112,099 lines pay the per-line read the packed shape avoids,
+ * R-SPELLING 7,500 ms against 579 ms on cut #2 at load1 ~81 (measured back to back), inside the row's 60 s budget.
  *
  * READINGS. A tree is walked from the repository root by directory entries: a regular file is read, a directory recursed (hidden
  * entries included), anything else (a symlink, a socket) is UNREAD and recorded. Every file is read as latin1 bytes, so the ASCII
@@ -194,16 +206,30 @@
  * member: encoded, it is still read (as the member it spells), so it is no escape. With wb-ycue, R-TITLE a needle on a receipt's R539
  * title line, the bead's own export title, is title data, and R-REQUIREMENT-ID a needle inside an export requirement id in a test's
  * comment or suite title is title data (THE TITLE READINGS); every family is held to its outside subjects (F5 above).
- * Since wb-iug2, R-SPELLING bounds the two-word member's joiner at the class: the matcher admits one joiner between its words, its
- * one space (the words carry no white space, and the matcher's one alternative holding both is the member's own text), and the quiet
- * row plants every other joiner of at most one code point - the joined spelling and each of the 1,112,063 other Unicode scalar
- * values, derived plane by plane from the engine (U+200B and U+3164 among them, named in JOINER_POINTS; the count pinned at the
- * standard's SCALAR_VALUES, read off the files as written), one src file per plane that the member with its space opens and closes,
- * so each file is read to its end; the residual anchor owes each plane's file as written. No joiner of one scalar value escapes
- * unplanted. A longer joiner (two or more code points, of which only the landed two spaces are planted) stays an open R-SPELLING
- * member: the matcher reads one as the member only where the line it is handed holds the member's own text, so a line reading that
- * rewrote a line before the matcher would read one without a row reddening (a doubled U+200B mapped to the space reads 28 of 28,
- * measured).
+ * Since wb-iug2, R-SPELLING bounds the two-word member's joiner at the class. THE MATCHER is pinned whole (cut #3, U2): its source is
+ * the needles' own texts (none holds a pattern character), one alternative each in the needle set's order, the acronym bounded by no
+ * letter, digit or underscore on either side, joined by "|", its flags g alone, on a plain RegExp (RegExp.prototype its prototype, no
+ * own property but lastIndex) - not a projection of its source, so an alternative added, dropped or respelled reds however it is
+ * written. Such a matcher reads the
+ * member only where the line it is handed holds the member's own text, its words (which carry no white space) joined by its one
+ * space. THE CLASS PLANT writes every other joiner of at most one code point - the joined spelling and each of the 1,112,063 other
+ * Unicode scalar values, derived plane by plane from the engine (U+200B and U+3164 among them, named in JOINER_POINTS) - in two
+ * shapes, one file per plane each (CLASS_SHAPES): packed, 256 spellings to an unquoted line a space apart, the controls on lines of
+ * their own, in src/plant-<plane>.ts; and code line, one spelling to a line in the census's own code() form, inside a double-quoted
+ * string, in qa/plant-<plane>.mjs. The member with its space opens and closes each file, so each is read to its end, and the residual
+ * anchor owes each file as written at its path. Each file is read off its text as written (classFaults, cut #3): its path and every
+ * gap before, between and after its spellings are its shape's form, as written apart from the shape's writer (CLASS_FORMS), and in each
+ * shape the joiners strictly increase by code point plane by plane, from the joined spelling and U+0000 to the engine's last code
+ * point, each of its own plane, none the space or a surrogate, and number the standard's SCALAR_VALUES: the class exactly (U3).
+ * THE LINE READING is pinned at the sites the two shapes write, and only there (cut #3, U1): a rewrite before the matcher that reads a
+ * joiner of at most one code point as the space at one of those sites reds the row. A rewrite keyed to a site neither shape writes -
+ * another quoting (single quotes, a template, a comment), another line length (the code-line shape's lines run 9 to 46 characters as
+ * read, the packed shape's spelling lines 5,015 to 5,887 but for the 230-character head of the one line its U+000A spelling breaks),
+ * another tree (test, docs/workbench, examples), another file kind or name, another position on the line - reads such a joiner as the
+ * space without a row reddening, and so does a rewrite of a longer joiner (two or more code points, of which only the landed two spaces
+ * are planted) at any site. Those context-limited and longer-joiner readings stay open R-SPELLING members (measured on the cut's final
+ * bytes, 28 of 28 each: U+200B read as the space only in examples, only inside single quotes, only on lines of 64 to 511 characters,
+ * and a doubled U+200B mapped to the space).
  * Gate behaviour: the day a source owner publishes an exported package or an adapter with a recorded adoption gate, the artifact is
  * triaged as its own program-triage epic and the cut that lands its adoption owes this census's update; until then it stays empty by
  * design. Display paths added: none. Test-only: synthetic trees live in makeScratch scratch with the leak guard installed; src, the
@@ -1151,11 +1177,12 @@ const SPACE_SEPARATOR_POINTS: readonly string[] = ["005f", "002d", "0020+0020", 
 /** The white-space characters other than the space, derived at run time from the engine's \s class over the BMP - an anchor outside
  * this census's literals, so SPACE_SEPARATOR_POINTS losing a member (or the derivation losing one) reds R-SPELLING. */
 const WHITE_SPACE: readonly string[] = Array.from({ length: 0x10000 }, (_, point) => String.fromCodePoint(point)).filter(char => char !== " " && /\s/.test(char));
-/** R-SPELLING's class-level bound on what may join the two-word member's words (wb-iug2, the R694 lead from landing 635 F1): the line
- * reading reads that member through one joiner only, its one space, so every other joiner of at most one code point - nothing at all
- * (the joined spelling, named "none") and each other Unicode scalar value - is planted in its place. JOINER_POINTS names by code point
- * the three members the gate measured outside the white-space class; SCALAR_VALUES is the standard's count the class must reach (17
- * planes of 65,536 code points less the 2,048 surrogates: with the space out and the joined spelling in, the same number). */
+/** R-SPELLING's class-level bound on what may join the two-word member's words (wb-iug2, the R694 lead from landing 635 F1): the
+ * matcher, pinned whole in the row, reads that member through its one space only, so every other joiner of at most one code point -
+ * nothing at all (the joined spelling, named "none") and each other Unicode scalar value - is planted in its place, in each class
+ * shape (CLASS_SHAPES). JOINER_POINTS names by code point the three members the gate measured outside the white-space class;
+ * SCALAR_VALUES is the standard's count each shape must reach (17 planes of 65,536 code points less the 2,048 surrogates: with the
+ * space out and the joined spelling in, the same number). */
 const JOINER_POINTS: readonly string[] = ["none", "200b", "3164"];
 const SCALAR_VALUES = 17 * 0x10000 - 0x800;
 /** A joiner's name read back: "none" is the joined spelling, any other name the code points it spells. */
@@ -1185,16 +1212,135 @@ function joinerPlanes(): string[][] {
 const [MEMBER_HEAD = "", MEMBER_TAIL = ""] = NEEDLES.find(needle => needle.text.includes(" "))?.text.split(" ") ?? [];
 /** The member spelled with a joiner in place of its space; the controls spell it with the space itself, through the same template. */
 const spellMember = (joiner: string): string => `${MEMBER_HEAD}${joiner}${MEMBER_TAIL}`;
-/** A plane's spellings, 256 to a line and a space apart (a line read per spelling costs seconds); a space between two spellings
- * follows the member's last word, never its first, so it joins no member. */
+/** A plane's spellings, 256 to a line and a space apart (the packed shape: a line read per spelling costs seconds, which the code-line
+ * shape pays once); a space between two spellings follows the member's last word, never its first, so it joins no member. */
 const packed = (lines: readonly string[]): string[] => Array.from({ length: Math.ceil(lines.length / 256) }, (_, row) => lines.slice(row * 256, (row + 1) * 256).join(" "));
-let CLASS_TEXTS: readonly string[] | undefined;
-/** The class plant's files as written, one per plane, built once from the needle set and the engine (wb-iug2 respin): the member with
- * its space opens and closes each file, the plane's spellings between. R-SPELLING's quiet row writes them and the residual anchor
- * requires each one written as built (residualSubjects), so the plant cannot leave the row unseen. */
-function classTexts(): readonly string[] {
-  CLASS_TEXTS ??= joinerPlanes().map(plane => `${[spellMember(" "), ...packed(plane.map(spellMember)), spellMember(" ")].join("\n")}\n`);
-  return CLASS_TEXTS;
+/** A class shape (wb-iug2 cut #3, the gate's refusal #2 U1: cut #2 wrote the class in one shape only): the file one plane's spellings
+ * go to and the text they are written as, the member with its space opening and closing it in the shape's own form, so each file is
+ * read to its end. */
+interface ClassShape {
+  readonly shape: string;
+  readonly file: (plane: number) => string;
+  readonly text: (spellings: readonly string[]) => string;
+}
+/** The class plant's two shapes: "packed", 256 spellings to an unquoted line a space apart, in a src file (a spelling line runs 5,015
+ * to 5,887 characters as read, but for the 230-character head of the one line the U+000A spelling breaks); "code line", one spelling
+ * to a line in the census's own code() form - inside a double-quoted string, every line 9 to 46 characters as read - in a qa/ file,
+ * the C1 qa site's form outside src. */
+const CLASS_SHAPES: readonly ClassShape[] = [
+  { shape: "packed", file: plane => `src/plant-${plane.toString(16).padStart(2, "0")}.ts`, text: spellings => `${[spellMember(" "), ...packed(spellings), spellMember(" ")].join("\n")}\n` },
+  { shape: "code line", file: plane => `qa/plant-${plane.toString(16).padStart(2, "0")}.mjs`, text: spellings => [spellMember(" "), ...spellings, spellMember(" ")].map(code).join("") },
+];
+/** One class file as written: its shape, its plane, its path and its text. */
+interface ClassFile {
+  readonly shape: string;
+  readonly plane: number;
+  readonly file: string;
+  readonly text: string;
+}
+let CLASS_FILES: readonly ClassFile[] | undefined;
+/** The class plant's files as written, one per plane in each shape, built once from the needle set and the engine (wb-iug2 respin):
+ * R-SPELLING's quiet row writes them and the residual anchor requires each one written as built at its path (residualSubjects), so
+ * the plant cannot leave the row unseen. */
+function classFiles(): readonly ClassFile[] {
+  if (CLASS_FILES === undefined) {
+    const planes = joinerPlanes().map(plane => plane.map(spellMember));
+    CLASS_FILES = CLASS_SHAPES.flatMap(({ shape, file, text }) => planes.map((spellings, plane) => ({ shape, plane, file: file(plane), text: text(spellings) })));
+  }
+  return CLASS_FILES;
+}
+/** A class file read off its text as written (wb-iug2 cut #3, refusal #2 U3): its joiners - what stands between the member's two words
+ * in each spelling, in file order, the two controls (the space) first and last - and its gaps: the text before the first spelling,
+ * between each two and after the last. */
+function classRead(text: string): { readonly joiners: readonly string[]; readonly gaps: readonly string[] } {
+  const joiners: string[] = [];
+  const gaps: string[] = [];
+  let from = 0;
+  for (let at = text.indexOf(MEMBER_HEAD); at >= 0; at = text.indexOf(MEMBER_HEAD, from)) {
+    const end = text.indexOf(MEMBER_TAIL, at + MEMBER_HEAD.length);
+    if (end < 0) break;
+    gaps.push(text.slice(from, at));
+    joiners.push(text.slice(at + MEMBER_HEAD.length, end));
+    from = end + MEMBER_TAIL.length;
+  }
+  gaps.push(text.slice(from));
+  return { joiners, gaps };
+}
+/** Each class shape's form as the header states it, written here apart from CLASS_SHAPES' writers (cut #3): the file a plane's
+ * spellings go to, and each gap of a file whose last gap is `last` - packed: nothing before the first spelling, the controls on lines
+ * of their own, the spellings a space apart and 256 to a line, a line break at the end; code line: each spelling, the controls
+ * included, inside code()'s line, one to a line. */
+const CLASS_FORMS: Readonly<Record<string, { readonly file: (plane: number) => string; readonly gap: (index: number, last: number) => string }>> = {
+  packed: {
+    file: plane => `src/plant-${plane.toString(16).padStart(2, "0")}.ts`,
+    gap: (index, last) => {
+      if (index === 0) return "";
+      if (index === 1 || index >= last - 1) return "\n";
+      return (index - 1) % 256 === 0 ? "\n" : " ";
+    },
+  },
+  "code line": {
+    file: plane => `qa/plant-${plane.toString(16).padStart(2, "0")}.mjs`,
+    gap: (index, last) => {
+      if (index === 0) return 'export const plant = "';
+      return index === last ? '";\n' : '";\nexport const plant = "';
+    },
+  },
+};
+/** Is a code point the engine's last: String.fromCodePoint builds it and refuses the next (read here apart from inCodeSpace). */
+function engineLast(point: number): boolean {
+  try {
+    String.fromCodePoint(point);
+  } catch {
+    return false;
+  }
+  try {
+    String.fromCodePoint(point + 1);
+    return false;
+  } catch {
+    return true;
+  }
+}
+/** The class's identity and form per shape, read off its files as written (refusal #2 U3: cut #2 held the plant by its count alone):
+ * the faults against the class - a file other than its form's (CLASS_FORMS) for its plane, or a gap other than its form's; controls
+ * other than the space; a joiner of more than one code point, the space, a surrogate, a code point of another plane than its file's,
+ * or one not above the joiner before it (the joined spelling first, U+0000 second); a last joiner other than the engine's last code
+ * point; a count other than SCALAR_VALUES. Strictly increasing from the joined spelling to the engine's last code point, never the
+ * space or a surrogate, at that count, is the class exactly. The first 20 faults are kept. */
+function classFaults(files: readonly ClassFile[]): string[] {
+  const faults: string[] = [];
+  for (const { shape } of CLASS_SHAPES) {
+    const form = CLASS_FORMS[shape];
+    let previous = -2;
+    let count = 0;
+    for (const entry of files.filter(item => item.shape === shape)) {
+      const { joiners: read, gaps } = classRead(entry.text);
+      if (form === undefined || entry.file !== form.file(entry.plane)) faults.push(`${shape} plane ${entry.plane}: the file is not its form's`);
+      const last = gaps.length - 1;
+      const bent = gaps.findIndex((gap, index) => gap !== form?.gap(index, last));
+      if (bent >= 0) faults.push(`${shape} plane ${entry.plane} gap ${bent}: not the shape's form`);
+      if (read.length < 2 || read[0] !== " " || read.at(-1) !== " ") faults.push(`${shape} plane ${entry.plane}: the controls`);
+      for (const joiner of read.slice(1, -1)) {
+        const point = joiner === "" ? -1 : (joiner.codePointAt(0) ?? -1);
+        const plane = point < 0 ? 0 : Math.floor(point / 0x10000);
+        let why = "";
+        if (joiner.length > (point > 0xffff ? 2 : 1)) why = "more than one code point";
+        else if (point === 0x20) why = "the space";
+        else if (point >= 0xd800 && point <= 0xdfff) why = "a surrogate";
+        else if (plane !== entry.plane) why = "a code point of another plane";
+        else if (count === 0 && point !== -1) why = "not the joined spelling, first";
+        else if (count === 1 && point !== 0) why = "not U+0000, second";
+        else if (point <= previous) why = "not above the joiner before it";
+        if (why !== "") faults.push(`${shape} plane ${entry.plane} joiner ${count}: ${why} (${points(joiner) || "none"})`);
+        if (faults.length >= 20) return faults;
+        previous = point;
+        count += 1;
+      }
+    }
+    if (!engineLast(previous)) faults.push(`${shape}: the last joiner ${previous.toString(16)} is not the engine's last code point`);
+    if (count !== SCALAR_VALUES) faults.push(`${shape}: ${count} joiners, not ${SCALAR_VALUES}`);
+  }
+  return faults;
 }
 const swaps = (text: string): string[] =>
   [
@@ -1269,43 +1415,58 @@ const QUIET: Readonly<Record<string, () => void>> = {
       write(root, "src/plant.ts", [needle, ...variants].map(code).join(""));
       expect(findings(treeCensus(root)), "beside a judged needle in the same file, the other spellings still read quiet").toEqual([{ file: "src/plant.ts", line: 1, needle }]);
     });
-    // wb-iug2: the class-level bound, read over every joiner this row plants between the member's words: the class, plane by plane.
+    // wb-iug2: the class-level bound, read over every joiner this row plants between the member's words: the class, plane by plane,
+    // in each class shape (cut #3, refusal #2 U1: the packed src lines and the code() lines in qa).
     const member = joined[0]?.text ?? "";
-    /** Each plane's file as written (classTexts): the member with its space opens and closes it, the plane's spellings between. */
-    const texts = classTexts();
-    /** The joiners the written files hold: each spelling ends in the member's last word once, so a file holds its count less the two
+    /** Each class file as written (classFiles): the member with its space opens and closes it, the plane's spellings between. */
+    const files = classFiles();
+    /** Per shape, the joiners its files hold: each spelling ends in the member's last word once, so a file holds its count less the two
      * controls, and a joiner is held when its spelling is in its plane's file. */
-    const planted = {
-      count: texts.reduce((sum, text) => sum + text.split(tail).length - 3, 0),
-      has: (name: string): boolean => {
-        const joiner = joinerOf(name);
-        return [...joiner].length <= 1 && (texts[Math.floor((joiner.codePointAt(0) ?? 0) / 0x10000)] ?? "").includes(spellMember(joiner));
-      },
-    };
+    const planted = CLASS_SHAPES.map(({ shape }) => {
+      const texts = files.filter(entry => entry.shape === shape).map(entry => entry.text);
+      return {
+        count: texts.reduce((sum, text) => sum + text.split(tail).length - 3, 0),
+        has: (name: string): boolean => {
+          const joiner = joinerOf(name);
+          return [...joiner].length <= 1 && (texts[Math.floor((joiner.codePointAt(0) ?? 0) / 0x10000)] ?? "").includes(spellMember(joiner));
+        },
+      };
+    });
     expect(
-      [planted.count, JOINER_POINTS.filter(name => !planted.has(name))],
-      "the two-word member is planted with every joiner of at most one code point but its space: the joined spelling and each other scalar value, U+200B and U+3164 among them",
-    ).toEqual([SCALAR_VALUES, []]);
-    expect(separators.filter(name => !name.includes("+") && !planted.has(name)), "every landed one-code-point separator is a member of the class").toEqual([]);
+      planted.map(shape => [shape.count, JOINER_POINTS.filter(name => !shape.has(name))]),
+      "each class shape plants the two-word member with every joiner of at most one code point but its space: the joined spelling and each other scalar value, U+200B and U+3164 among them",
+    ).toEqual(CLASS_SHAPES.map(() => [SCALAR_VALUES, []]));
+    expect(
+      classFaults(files),
+      "in each shape its files stand at their form's paths in their form's text, and the joiners read off them strictly increase by code point, plane by plane, from the joined spelling and U+0000 to the engine's last code point, each of its own plane, none the space or a surrogate, at the standard's count: the class exactly",
+    ).toEqual([]);
+    expect(
+      planted.map(shape => separators.filter(name => !name.includes("+") && !shape.has(name))),
+      "every landed one-code-point separator is a member of the class, in each shape",
+    ).toEqual(CLASS_SHAPES.map(() => []));
     expect(
       [member.split(" ").length, [...head, ...tail].filter(char => /\s/.test(char)).length, MATCHER.source.split("|").filter(part => part.includes(head) && part.includes(tail))],
       "the matcher admits one joiner between the member's words, its one space: the words carry no white space and its one alternative holding both is the member's own text",
     ).toEqual([2, 0, [escapeRe(member)]]);
+    // refusal #2 U2 (cut #3): the matcher pinned whole, not by a projection of its source - each needle's own text (none holds a
+    // pattern character), one alternative each in the needle set's order, the acronym bounded by no letter, digit or underscore on either
+    // side, joined by "|", its flags g alone, on a plain RegExp - so an alternative added, dropped or respelled reds however it is written
+    const own = (needle: Needle): string => (needle.word ? `(?<![A-Za-z0-9_])${needle.text}(?![A-Za-z0-9_])` : needle.text);
+    expect(
+      [NEEDLES.filter(needle => !/^[A-Za-z0-9 _-]+$/.test(needle.text)).length, MATCHER.source === NEEDLES.map(own).join("|"), MATCHER.flags, Object.getPrototypeOf(MATCHER) === RegExp.prototype, Object.getOwnPropertyNames(MATCHER)],
+      "the matcher is pinned whole: the needles' own texts, one alternative each in the needle set's order, the acronym word-bounded, the flag g alone, a plain RegExp",
+    ).toEqual([0, true, "g", true, ["lastIndex"]]);
     withTree(root => {
-      const sites = texts.map((text, index) => {
-        const file = `src/plant-${index.toString(16).padStart(2, "0")}.ts`;
-        write(root, file, text);
-        return { file, last: text.split("\n").length - 1 };
-      });
+      for (const entry of files) write(root, entry.file, entry.text);
       const read = treeCensus(root);
       expect(
-        sites.map(site => site.file).filter(file => !read.files.includes(file)),
-        "the walk reads each plane's file",
+        files.map(entry => entry.file).filter(file => !read.files.includes(file)),
+        "the walk reads each class file, in each shape",
       ).toEqual([]);
-      expect(findings(read), "every other joiner reads quiet, while the member with its one space, first and last in each plane's file, is read").toEqual(
-        sites.flatMap(site => [
-          { file: site.file, line: 1, needle: member },
-          { file: site.file, line: site.last, needle: member },
+      expect(findings(read), "at each site the class shapes write, every other joiner reads quiet, while the member with its one space, first and last in each class file, is read").toEqual(
+        files.flatMap(entry => [
+          { file: entry.file, line: 1, needle: member },
+          { file: entry.file, line: entry.text.split("\n").length - 1, needle: member },
         ]),
       );
     });
@@ -1516,7 +1677,7 @@ function residualSubjects(): { readonly subject: string; readonly planted: boole
     ...NEEDLES.filter(needle => needle.text.includes(" "))
       .flatMap(needle => ["_", "-", "  ", ...WHITE_SPACE].map(separator => needle.text.replaceAll(" ", separator)))
       .map(text => ({ subject: `other separator ${points(text)}`, planted: spelt(text) })),
-    ...classTexts().map((text, plane) => ({ subject: `joiner class plane ${plane.toString(16)}`, planted: has(plant => plant.text === text) })),
+    ...classFiles().map(entry => ({ subject: `joiner class ${entry.shape} plane ${entry.plane.toString(16)}`, planted: has(plant => plant.file === entry.file && plant.text === entry.text) })),
     ...NEEDLES.filter(needle => spells(needle).length === 0).map(needle => ({ subject: `encoded ${needle.text}`, planted: spelt(Buffer.from(needle.text, "utf8").toString("base64")) })),
     ...outsideSites().map(site => ({ subject: `outside site ${site}`, planted: has(plant => plant.file === site) })),
     ...PROGRAM_STEMS.map(stem => ({ subject: `alias ${stem}`, planted: spelt(stem) })),
