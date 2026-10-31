@@ -1,5 +1,5 @@
 {
- "comment": "wb-e66.3 (MW-GRAPH-POLICY-COORDINATION-R8): the judged set of test/workbench-mw-gp-sidecar-record-census.test.ts, held out of file (standing rule 16). rows, quotes, witnesses, asserted (each pin's assertion count, its witness compare included), ended (the assertion count each of the three other judged cases ends on), residuals, mutants and tests are the census's measured shape at its cut (cut #1 base df37dac; cut #2, respin 1, base e81d2b0; cut #3, respin 2, base b3d410f; cut #4, respin 3, base 1ad30c3; the wb-27pe follow-up cut, base cdf5484); producer holds the filing's cited MechanicalWorkflows lines at the bead's pin 4b8b974ca72b (git show from the local checkout; the census never re-reads the producer).",
+ "comment": "wb-e66.3 (MW-GRAPH-POLICY-COORDINATION-R8): the judged set of test/workbench-mw-gp-sidecar-record-census.test.ts, held out of file (standing rule 16). rows, quotes, witnesses, asserted (each pin's assertion count, its witness compare included), ended (the assertion count each of the three other judged cases ends on), residuals, mutants and tests are the census's measured shape at its cut (cut #1 base df37dac; cut #2, respin 1, base e81d2b0; cut #3, respin 2, base b3d410f; cut #4, respin 3, base 1ad30c3; the wb-27pe follow-up cut, base cdf5484; the wb-4nh8 follow-up cut, base 74f8aa7); producer holds the filing's cited MechanicalWorkflows lines at the bead's pin 4b8b974ca72b (git show from the local checkout; the census never re-reads the producer).",
  "bead": "wb-e66.3",
  "rows": [
   {
@@ -706,7 +706,22 @@
     "S-PIN-SEPARATOR-B: the separator after B1 taken into B1's quote",
     "S-PIN-SEPARATOR-C: the separator after C1 taken into C1's quote",
     "S-PIN-SEPARATOR-D: the separator after D1 taken into D1's quote",
-    "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote"
+    "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote",
+    "K5-EMPTY-PIN-END-A: a new pin A4 with an empty quote appended after A3",
+    "K5-EMPTY-PIN-END-B: a new pin B3 with an empty quote appended after B2",
+    "K5-EMPTY-PIN-END-C: a new pin C4 with an empty quote appended after C3",
+    "K5-EMPTY-PIN-END-D: a new pin D3 with an empty quote appended after D2",
+    "K5-EMPTY-PIN-END-S: a new pin S4 with an empty quote appended after S3",
+    "K5-EMPTY-PIN-MID-A: a new pin A4 with an empty quote inserted after A1",
+    "K5-EMPTY-PIN-MID-B: a new pin B3 with an empty quote inserted after B1",
+    "K5-EMPTY-PIN-MID-C: a new pin C4 with an empty quote inserted after C1",
+    "K5-EMPTY-PIN-MID-D: a new pin D3 with an empty quote inserted after D1",
+    "K5-EMPTY-PIN-MID-S: a new pin S4 with an empty quote inserted after S1",
+    "S-SEPARATOR-PIN-A: a new pin A4 inserted after A1, its quote the label's separator there",
+    "S-SEPARATOR-PIN-B: a new pin B3 inserted after B1, its quote the label's separator there",
+    "S-SEPARATOR-PIN-C: a new pin C4 inserted after C1, its quote the label's separator there",
+    "S-SEPARATOR-PIN-D: a new pin D3 inserted after D1, its quote the label's separator there",
+    "S-SEPARATOR-PIN-S: a new pin S4 inserted after S1, its quote the label's separator there"
    ],
    "readings": [
     "C6A2: A2 merged into A1: reds no reading; its contrast reds tiling A",
@@ -728,7 +743,22 @@
     "S-PIN-SEPARATOR-B: the separator after B1 taken into B1's quote: reds no reading; its contrast reds tiling B",
     "S-PIN-SEPARATOR-C: the separator after C1 taken into C1's quote: reds no reading; its contrast reds tiling C",
     "S-PIN-SEPARATOR-D: the separator after D1 taken into D1's quote: reds no reading; its contrast reds tiling D",
-    "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote: reds no reading; its contrast reds tiling S"
+    "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote: reds no reading; its contrast reds tiling S",
+    "K5-EMPTY-PIN-END-A: a new pin A4 with an empty quote appended after A3: reds no reading; its contrast reds tiling A",
+    "K5-EMPTY-PIN-END-B: a new pin B3 with an empty quote appended after B2: reds no reading; its contrast reds tiling B",
+    "K5-EMPTY-PIN-END-C: a new pin C4 with an empty quote appended after C3: reds no reading; its contrast reds tiling C",
+    "K5-EMPTY-PIN-END-D: a new pin D3 with an empty quote appended after D2: reds no reading; its contrast reds tiling D",
+    "K5-EMPTY-PIN-END-S: a new pin S4 with an empty quote appended after S3: reds no reading; its contrast reds tiling S",
+    "K5-EMPTY-PIN-MID-A: a new pin A4 with an empty quote inserted after A1: reds no reading; its contrast reds tiling A",
+    "K5-EMPTY-PIN-MID-B: a new pin B3 with an empty quote inserted after B1: reds no reading; its contrast reds tiling B",
+    "K5-EMPTY-PIN-MID-C: a new pin C4 with an empty quote inserted after C1: reds no reading; its contrast reds tiling C",
+    "K5-EMPTY-PIN-MID-D: a new pin D3 with an empty quote inserted after D1: reds no reading; its contrast reds tiling D",
+    "K5-EMPTY-PIN-MID-S: a new pin S4 with an empty quote inserted after S1: reds no reading; its contrast reds tiling S",
+    "S-SEPARATOR-PIN-A: a new pin A4 inserted after A1, its quote the label's separator there: reds no reading; its contrast reds tiling A",
+    "S-SEPARATOR-PIN-B: a new pin B3 inserted after B1, its quote the label's separator there: reds no reading; its contrast reds tiling B",
+    "S-SEPARATOR-PIN-C: a new pin C4 inserted after C1, its quote the label's separator there: reds no reading; its contrast reds tiling C",
+    "S-SEPARATOR-PIN-D: a new pin D3 inserted after D1, its quote the label's separator there: reds no reading; its contrast reds tiling D",
+    "S-SEPARATOR-PIN-S: a new pin S4 inserted after S1, its quote the label's separator there: reds no reading; its contrast reds tiling S"
    ]
   },
   "Q11": {
@@ -869,7 +899,22 @@
    "S-PIN-SEPARATOR-B: the separator after B1 taken into B1's quote",
    "S-PIN-SEPARATOR-C: the separator after C1 taken into C1's quote",
    "S-PIN-SEPARATOR-D: the separator after D1 taken into D1's quote",
-   "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote"
+   "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote",
+   "K5-EMPTY-PIN-END-A: a new pin A4 with an empty quote appended after A3",
+   "K5-EMPTY-PIN-END-B: a new pin B3 with an empty quote appended after B2",
+   "K5-EMPTY-PIN-END-C: a new pin C4 with an empty quote appended after C3",
+   "K5-EMPTY-PIN-END-D: a new pin D3 with an empty quote appended after D2",
+   "K5-EMPTY-PIN-END-S: a new pin S4 with an empty quote appended after S3",
+   "K5-EMPTY-PIN-MID-A: a new pin A4 with an empty quote inserted after A1",
+   "K5-EMPTY-PIN-MID-B: a new pin B3 with an empty quote inserted after B1",
+   "K5-EMPTY-PIN-MID-C: a new pin C4 with an empty quote inserted after C1",
+   "K5-EMPTY-PIN-MID-D: a new pin D3 with an empty quote inserted after D1",
+   "K5-EMPTY-PIN-MID-S: a new pin S4 with an empty quote inserted after S1",
+   "S-SEPARATOR-PIN-A: a new pin A4 inserted after A1, its quote the label's separator there",
+   "S-SEPARATOR-PIN-B: a new pin B3 inserted after B1, its quote the label's separator there",
+   "S-SEPARATOR-PIN-C: a new pin C4 inserted after C1, its quote the label's separator there",
+   "S-SEPARATOR-PIN-D: a new pin D3 inserted after D1, its quote the label's separator there",
+   "S-SEPARATOR-PIN-S: a new pin S4 inserted after S1, its quote the label's separator there"
   ],
   "Q11": [
    "S-DECISION-FIELD-RENAME: the decision's second field named choice",
