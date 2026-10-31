@@ -405,6 +405,13 @@
    "reflect-get-const-key",
    "wrapped-helper-initializer",
    "member-callee-function",
+   "numeric-named-method",
+   "infinity-named-method",
+   "numeric-named-class-method",
+   "numeric-named-static-method",
+   "numeric-named-class-expression-method",
+   "bigint-named-method",
+   "escaped-string-named-method",
    "reflective-Object.values",
    "reflective-Object.entries",
    "reflective-Object.assign",
@@ -467,8 +474,8 @@
    "parameter-default-helper",
    "conditional-helper",
    "new-function-declaration",
-   "numeric-named-method",
-   "unresolved-named-method"
+   "unresolved-named-method",
+   "nested-array-after-spread"
   ],
   "surfacePins": {
    "Pi type": "C2",
@@ -1591,6 +1598,27 @@
         "member-callee-function": [
          "2 member blocks"
         ],
+        "numeric-named-method": [
+         "2 declaration unpinned"
+        ],
+        "infinity-named-method": [
+         "2 declaration unpinned"
+        ],
+        "numeric-named-class-method": [
+         "2 declaration unpinned"
+        ],
+        "numeric-named-static-method": [
+         "2 declaration unpinned"
+        ],
+        "numeric-named-class-expression-method": [
+         "2 declaration unpinned"
+        ],
+        "bigint-named-method": [
+         "2 declaration unpinned"
+        ],
+        "escaped-string-named-method": [
+         "3 member blocks"
+        ],
         "reflective-Object.values": [
          "1 reflective Object.values"
         ],
@@ -1667,8 +1695,8 @@
         "parameter-default-helper": [],
         "conditional-helper": [],
         "new-function-declaration": [],
-        "numeric-named-method": [],
-        "unresolved-named-method": []
+        "unresolved-named-method": [],
+        "nested-array-after-spread": []
        }
       },
       "reactivefiberLoader": false,

@@ -68,9 +68,10 @@
  *    reading; M2 the identifier word splitter and the CONTROL words; M3 the sentence cutter and the two sentence rules, over
  *    every reading of a file. C3's own instruments
  *    are held live in its case: the TUI loads (UI_LOAD_PROBES) and one probe module per read form and per result-expression
- *    form the parse-aware reading names (READ_PROBES) or leaves quiet (QUIET_PROBES).
+ *    or declaration form the parse-aware reading names or fails closed on (READ_PROBES) or leaves quiet (QUIET_PROBES).
  *  R, the residuals' pinned quiet rows.
- * PARSE-AWARE READING (C3, wb-ycir F1, widened by wb-qnl8 F2 and wb-qnls F2, U2 and cut #3 U1; resultReadsOf). The brackets after a
+ * PARSE-AWARE READING (C3, wb-ycir F1, widened by wb-qnl8 F2 and wb-qnls F2, U2 and cut #3 U1, failing closed by cut #4;
+ * resultReadsOf). The brackets after a
  * form name the probes that hold it live: READ_PROBES rows the reading must name and QUIET_PROBES rows it must leave quiet; C3
  * holds the bracketed keys of this header equal to the two tables (headerProbeIds). A probe holds its form live at the shapes
  * its text spells - an argument's or an item's place, a wrapper, an operator, a kind of declaration -, each probe's reading
@@ -123,15 +124,22 @@
  * apply-inline, apply-function-expression, apply-asserted-list] - a relay reaching exactly the functions a direct call of its
  * callee reaches, a method the table holds under a string-literal name included [call-string-named-relay,
  * apply-string-named-relay] -, a declared `this` parameter taking no argument [this-parameter-direct, call-this-parameter].
- * The FUNCTION TABLE (wb-qnls cut #3, ruling R-B121: exactly the declarations resultReadsOf's collect admits, nothing else)
+ * The FUNCTION TABLE (wb-qnls cut #3, ruling R-B121: exactly the declarations resultReadsOf's collect admits, nothing else;
+ * cut #4, ruling R-B151: a method's name exactly the pinned kinds, failing closed outside them)
  * holds a function declaration [function-helper] or a method - of an object literal, a class declaration or a class
  * expression [method-helper, class-method-helper, class-expression-method-helper], static or not [static-method-helper] -
- * under its name's constant string (propertyKeyOf): an identifier, a #private name [private-method-helper], a string literal
- * [string-named-method, string-named-class-method, string-named-static-method], a number literal (held under its digits,
- * which no callee name spells, so no call hands it a result [numeric-named-method]) or a computed name whose key resolves to
+ * under its name's constant string (propertyKeyOf), the name of one of the PINNED KINDS: an identifier, a #private name
+ * [private-method-helper], a string literal, held under its value with any escape decoded [string-named-method,
+ * string-named-class-method, string-named-static-method, escaped-string-named-method], or a computed name whose key resolves to
  * a constant string by the KEY rule above [const-named-method, const-named-class-method, literal-named-method,
  * template-named-method, sum-named-method, template-expression-named-method], a computed name that resolves to none holding
- * nothing [unresolved-named-method]; and it holds a
+ * nothing [unresolved-named-method]. FAIL CLOSED (cut #4): a method named by any other kind - a number literal, in an object
+ * literal [numeric-named-method, infinity-named-method], a class declaration, static or not [numeric-named-class-method,
+ * numeric-named-static-method], or a class expression [numeric-named-class-expression-method], or a bigint literal
+ * [bigint-named-method] - is held under no name, so no call hands it an argument (refusal #3 measured TypeScript holding a
+ * number literal's name under its value's string, 1e999 under "Infinity", which a member callee spells: the gate's q18),
+ * and the reading notes its name instead ("declaration unpinned"), which refuses its module whether or not anything calls
+ * it; what the table would hold such a name under is child wb-zmez's. And it holds a
  * variable declared by a name, in any declaration list - const [local-helper], let [let-helper] or var [var-helper] -, under
  * that name when its initializer, read through its wrappers [wrapped-helper-initializer], is an arrow or a function
  * expression [function-expression-helper]. An expression's value is read
@@ -169,7 +177,9 @@
  * other, and leaves quiet: a result handed to another module [other-module]; a function's return value, imported or local
  * [imported-return, local-return]; a callback's parameter, of an inline or a declared function [callback-parameter,
  * callback-function]; an object's member or a class field holding one [object-member, class-field]; an array binding's rest
- * element [array-rest]; a for-of or an fn.apply over an array a name holds [for-of-variable, apply-list]; a for-of
+ * element [array-rest], and an array pattern nested at or past an array literal's first spread (past it the reading binds a
+ * name, never a nested array pattern; the gate's q64) [nested-array-after-spread]; a for-of or an fn.apply over an array a
+ * name holds [for-of-variable, apply-list]; a for-of
  * declaration's array pattern and a for-of target's pattern [for-of-array-pattern, for-of-pattern-target]; a name a
  * destructuring assignment binds - a renamed `result` target, an array pattern's element, a target's default -
  * [assigned-result-property, array-assignment-pattern, assigned-target-default]; a function a later assignment, an object
@@ -253,13 +263,21 @@
  * enumerate-the-resolvable form ruling R-B121 binds on the declaration-name family): U1 the FUNCTION TABLE holds a method
  * under its name's constant string - a string literal or a computed name whose key resolves - (the gate's k01, k02, k41 and
  * k03, and the relays k40 and k57 over one, each a read probe that reds cut #2's reader), and the header states the table
- * exactly: what it holds, each beside a probe, and what it leaves out (a number literal's digits, a computed name resolving
+ * exactly: what it holds, each beside a probe, and what it leaves out (a computed name resolving
  * to none, a getter, a destructuring, a parameter's default, a conditional's arm, a `new` call), each beside a quiet row;
  * refusal #2's seven GN survivors are pinned, a read probe each (GN04 a for-of target through a satisfies clause, a non-null
  * mark or an angle assertion; GN06 a third same-named declaration; GN18 a class expression's method; GN19 a let and a var
  * helper; GN26 a member callee named call or apply called directly; GN29 an array pattern element's default; GN30 a
  * KEYED_READS key a const holds); and its F5 forms (a rest parameter's items, an argument or an fn.apply item after a spread)
- * are named in NOT CLAIMED beside quiet rows.
+ * are named in NOT CLAIMED beside quiet rows. Refusal #3's respin (cut #4, the FAIL-CLOSED CORE ruling R-B151 binds; the
+ * number-literal reader coverage moved to child wb-zmez): U1 cut #3's table held a number-literal method name under its
+ * value's string as TypeScript normalizes it (1e999 under "Infinity", which a member callee spells: the gate's q18 and its
+ * mutant GP09), never under the digits its header named, so cut #3's "a number literal's digits" is withdrawn; the table
+ * now holds a method only under a name of a pinned kind and fails closed on any other, a number or a bigint literal, a read
+ * probe per shape (an object literal's number-named method, reached by an element access or as q18 by a member callee, a
+ * class declaration's, static or not, a class expression's, and an uncalled bigint-named method); F2 the gate's q64, an
+ * array pattern nested past a spread, is named in NOT CLAIMED beside its quiet row; F3 the gate's MF01 shape, an escaped
+ * string-literal method name, is pinned by a read probe.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -440,9 +458,10 @@ const UI_LOAD_PROBES: Readonly<Record<string, boolean>> = { [UI_PACKAGE]: true, 
 const PROBE_RESULT = "(reading as { source: { result: Record<string, unknown> } }).source.result";
 /** C3's read forms (wb-ycir F1; wb-qnl8 F2 and F3 add one per claimed result-expression and read form; wb-qnls F1 and F2 one per
  * binding form the gate's F1 mutants and P31-P33 named, cut #2 one per shape a refusal #1 U1 or F4 mutant or a seat mutant
- * narrowed a form to and per form U2 widens, and cut #3 one per FUNCTION TABLE form and per refusal #2 GN survivor's shape):
- * each probe module reaches an rf result member without spelling
- * "result.<member>", and the parse-aware reading must name it. Each key is named in brackets beside its form in the header's
+ * narrowed a form to and per form U2 widens, cut #3 one per FUNCTION TABLE form and per refusal #2 GN survivor's shape, and
+ * cut #4 one per shape of a method the table fails closed on and the gate's MF01 shape): each probe module reaches an rf
+ * result member without spelling "result.<member>" or declares a method the table fails closed on, and the parse-aware
+ * reading must name it. Each key is named in brackets beside its form in the header's
  * PARSE-AWARE READING, and C3 holds the two to each other (headerProbeIds); a probe holds its form live at the shapes it
  * spells, never beyond them. */
 const READ_PROBES: Readonly<Record<string, string>> = {
@@ -626,6 +645,17 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   "reflect-get-const-key": `const part = "blocks";\nexport const rows = Reflect.get(${PROBE_RESULT}, part);\n`,
   "wrapped-helper-initializer": `const blocksOf = ((envelope: Record<string, unknown>) => envelope.blocks) as (envelope: Record<string, unknown>) => unknown;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
   "member-callee-function": `function blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nconst helpers = { blocksOf };\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  // wb-qnls cut #4 (refusal #3 U1, ruling R-B151's FAIL-CLOSED CORE): a method a number literal names - of an object literal,
+  // reached by an element access or, for 1e999, which TypeScript holds under "Infinity", by a member callee (the gate's q18),
+  // of a class declaration, static or not, or of a class expression - and an uncalled method a bigint literal names each
+  // refuse their module; and (refusal #3 F3, the gate's MF01) a string-literal name is held under its value, escapes decoded.
+  "numeric-named-method": `const helpers = {\n  0(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers[0](${PROBE_RESULT});\n`,
+  "infinity-named-method": `const helpers = {\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "numeric-named-class-method": `class Helpers {\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().Infinity(${PROBE_RESULT});\n`,
+  "numeric-named-static-method": `class Helpers {\n  static 1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = Helpers.Infinity(${PROBE_RESULT});\n`,
+  "numeric-named-class-expression-method": `const Helpers = class {\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\nexport const rows = new Helpers().Infinity(${PROBE_RESULT});\n`,
+  "bigint-named-method": "export const helpers = {\n  1n(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\n",
+  "escaped-string-named-method": `const helpers = {\n  "blocks\\u004ff"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
   ...Object.fromEntries(REFLECTIVE_READS.map(call => [`reflective-${call}`, `export const rows = ${call}(${PROBE_RESULT});\n`])),
 };
 /** The forms C3's parse-aware reading leaves quiet: a constant key naming another member, a bare name result spread, read for
@@ -685,8 +715,8 @@ const QUIET_PROBES: Readonly<Record<string, string>> = {
   "numeric-key": `export const first = ${PROBE_RESULT}[0];\n`,
   // wb-qnls cut #3 (refusal #2's F5 and the FUNCTION TABLE's statement): each form NOT CLAIMED or the table's statement adds,
   // pinned quiet - a rest parameter's items, an argument or an fn.apply item after a spread, a getter, a destructuring, a
-  // parameter's default or a conditional's arm holding a function, a function declaration `new` calls, a method a number
-  // literal names (only an element access calls it) and a computed name resolving to none.
+  // parameter's default or a conditional's arm holding a function, a function declaration `new` calls and a computed name
+  // resolving to none (cut #3's quiet number-named method reads since cut #4, which fails closed on it).
   "rest-parameter": `function blocksOf(...envelopes: Record<string, unknown>[]) {\n  return envelopes[0]?.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
   "rest-parameter-later": `function blocksOf(...envelopes: Record<string, unknown>[]) {\n  return envelopes[1]?.blocks;\n}\nexport const rows = blocksOf({}, ${PROBE_RESULT});\n`,
   "spread-before-argument": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf(...([] as []), ${PROBE_RESULT});\n`,
@@ -696,8 +726,9 @@ const QUIET_PROBES: Readonly<Record<string, string>> = {
   "parameter-default-helper": `export const rows = (blocksOf = (envelope: Record<string, unknown>) => envelope.blocks) => blocksOf(${PROBE_RESULT});\n`,
   "conditional-helper": `export const rows = (flag: boolean) => {\n  const blocksOf = flag ? (envelope: Record<string, unknown>) => envelope.blocks : (envelope: Record<string, unknown>) => envelope.output;\n  return blocksOf(${PROBE_RESULT});\n};\n`,
   "new-function-declaration": `function Holder(this: { rows: unknown }, envelope: Record<string, unknown>) {\n  this.rows = envelope.blocks;\n}\nexport const rows = new (Holder as unknown as new (envelope: Record<string, unknown>) => { rows: unknown })(${PROBE_RESULT}).rows;\n`,
-  "numeric-named-method": `const helpers = {\n  0(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers[0](${PROBE_RESULT});\n`,
   "unresolved-named-method": `let blocksOf = "blocksOf";\nblocksOf = "blocksOf";\nconst helpers = {\n  [blocksOf](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  // wb-qnls cut #4 (refusal #3 F2, the gate's q64): an array pattern nested at or past an array literal's first spread.
+  "nested-array-after-spread": `const [[envelope]] = [...([] as Record<string, unknown>[][]), [${PROBE_RESULT}]];\nexport const rows = envelope.blocks;\n`,
 };
 
 function needleNamed(id: string): string {
@@ -1519,7 +1550,8 @@ const ASSIGNMENTS: readonly ts.SyntaxKind[] = [
 const LOGICAL_ASSIGNMENTS: readonly ts.SyntaxKind[] = ASSIGNMENTS.filter(kind => kind !== ts.SyntaxKind.EqualsToken);
 /** C3's parse-aware reading of one module (wb-ycir F1, widened by wb-qnl8 F2 and by wb-qnls F2 and U2): every read of a RESULT_MEMBERS member
  * off a result expression, as `<line> <form>` - "member", "element", "binding", "assigned", "spread", "for-in" or "reflective",
- * with the member read, "computed" for a key that resolves to no constant string, or "rest" -, so a UI module that reaches the
+ * with the member read, "computed" for a key that resolves to no constant string, or "rest" -, and every method named outside
+ * the FUNCTION TABLE's pinned kinds, as "declaration unpinned" (cut #4, failing closed), so a UI module that reaches the
  * rf result's blocks without spelling "result.<member>" reads as one that spells it. The reads, the result expressions and the
  * forms it leaves quiet are the header's PARSE-AWARE READING and NOT CLAIMED lists, each form beside the probes that hold it
  * (READ_PROBES, QUIET_PROBES). Names bind to a result in passes until none grows - a declaration's, a parameter's or a binding
@@ -1532,7 +1564,8 @@ const LOGICAL_ASSIGNMENTS: readonly ts.SyntaxKind[] = ASSIGNMENTS.filter(kind =>
 function resultReadsOf(file: ts.SourceFile): string[] {
   const consts = constStringsOf(file);
   // The FUNCTION TABLE (wb-qnls cut #3 U1, ruling R-B121): a function declaration or a method under its name's constant string
-  // (propertyKeyOf: an identifier, a #private name, a string or number literal, or a computed name whose key resolves), and a
+  // (propertyKeyOf: an identifier, a #private name, a string literal, or a computed name whose key resolves; cut #4, ruling
+  // R-B151, fails closed on a method named by any other kind, a number or a bigint literal), and a
   // variable a name declares whose initializer, read through its wrappers, is an arrow or a function expression; nothing else.
   // Each same-named declaration is kept (wb-qnls cut #2 U2): a call hands its arguments to all of them, so a name collision
   // over-reads and never hides the function the call site means.
@@ -1540,7 +1573,15 @@ function resultReadsOf(file: ts.SourceFile): string[] {
   const declare = (name: string, parameters: readonly ts.ParameterDeclaration[]): void => {
     functions.set(name, [...(functions.get(name) ?? []), parameters]);
   };
+  const unpinned: ts.PropertyName[] = [];
   const collect = (node: ts.Node): void => {
+    // FAIL CLOSED (wb-qnls cut #4, ruling R-B151): a method named outside the pinned kinds - an identifier, a #private name,
+    // a string literal, a computed name -, so by a number or a bigint literal, is held under no name; its name is noted.
+    if (ts.isMethodDeclaration(node) && !(ts.isIdentifier(node.name) || ts.isPrivateIdentifier(node.name) || ts.isStringLiteral(node.name) || ts.isComputedPropertyName(node.name))) {
+      unpinned.push(node.name);
+      ts.forEachChild(node, collect);
+      return;
+    }
     if ((ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) && node.name !== undefined) {
       const name = propertyKeyOf(node.name, consts);
       if (name !== undefined) declare(name, node.parameters);
@@ -1674,6 +1715,8 @@ function resultReadsOf(file: ts.SourceFile): string[] {
       nestedAssigned(property.initializer);
     }
   };
+  // FAIL CLOSED (cut #4): a method collect holds under no name refuses its module, whatever calls it.
+  for (const name of unpinned) note(name, "declaration unpinned");
   const visit = (node: ts.Node): void => {
     if (ts.isPropertyAccessExpression(node)) {
       if (holdOf(node.expression) !== undefined && RESULT_MEMBERS.includes(node.name.text)) note(node, `member ${node.name.text}`);
