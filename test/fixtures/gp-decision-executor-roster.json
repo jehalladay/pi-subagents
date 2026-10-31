@@ -311,40 +311,743 @@
           "control:furnace.stop"
         ]
       },
-      "recorded": {
-        "requests": 4,
-        "copies": 4,
-        "inOrder": true,
-        "changed": [],
-        "edited": [
-          "scope",
-          "principal",
-          "grants",
-          "target",
-          "action",
-          "params",
-          "invocationId",
-          "requestedAt"
+      "forgedAtCallSite": {
+        "returned": 1,
+        "sameGrantsArray": true,
+        "grants": [
+          [
+            "observe:furnace.run.inspect",
+            "control:furnace.stop"
+          ]
         ],
-        "inPlace": [
-          "scope",
-          "principal",
-          "grants",
-          "target",
-          "params"
+        "handed": [
+          {
+            "decision": "permitted",
+            "minted": true
+          }
         ]
       },
+      "recorded": {
+        "F1": [
+          {
+            "requests": 1,
+            "copies": 1,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          {
+            "requests": 2,
+            "copies": 2,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          {
+            "requests": 3,
+            "copies": 3,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F1"
+            ]
+          },
+          {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F1"
+            ]
+          }
+        ],
+        "F2": [
+          {
+            "requests": 1,
+            "copies": 1,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          {
+            "requests": 2,
+            "copies": 2,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          {
+            "requests": 3,
+            "copies": 3,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F2"
+            ]
+          },
+          {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F2"
+            ]
+          }
+        ],
+        "F3": [
+          {
+            "requests": 1,
+            "copies": 1,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          {
+            "requests": 2,
+            "copies": 2,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          {
+            "requests": 3,
+            "copies": 3,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F3"
+            ]
+          },
+          {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F3"
+            ]
+          }
+        ],
+        "F4": [
+          {
+            "requests": 1,
+            "copies": 1,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          {
+            "requests": 2,
+            "copies": 2,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          {
+            "requests": 3,
+            "copies": 3,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F4"
+            ]
+          },
+          {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F4"
+            ]
+          }
+        ],
+        "F5": [
+          {
+            "requests": 1,
+            "copies": 1,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          {
+            "requests": 2,
+            "copies": 2,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          {
+            "requests": 3,
+            "copies": 3,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F5"
+            ]
+          },
+          {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F5"
+            ]
+          }
+        ]
+      },
+      "serial": {
+        "F1": {
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F1"
+          ]
+        },
+        "F2": {
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F2"
+          ]
+        },
+        "F3": {
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F3"
+          ]
+        },
+        "F4": {
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F4"
+          ]
+        },
+        "F5": {
+          "carried": [
+            [
+              true,
+              true,
+              true,
+              true
+            ],
+            [
+              true,
+              true,
+              true,
+              true
+            ]
+          ],
+          "shared": [],
+          "named": [
+            "F5"
+          ]
+        }
+      },
+      "segments": {
+        "its own segment": true,
+        "a longer number": false,
+        "a shorter number": false,
+        "inside another segment": false
+      },
+      "replays": {
+        "first": {
+          "minting": [],
+          "replaying": [
+            "effect-unrequested"
+          ],
+          "answered": [
+            0,
+            -1
+          ]
+        },
+        "second": {
+          "minting": [],
+          "replaying": [
+            "effect-unrequested"
+          ],
+          "answered": [
+            1,
+            -1
+          ]
+        },
+        "third": {
+          "minting": [],
+          "replaying": [
+            "effect-unrequested"
+          ],
+          "answered": [
+            2,
+            -1
+          ]
+        },
+        "last": {
+          "minting": [],
+          "replaying": [
+            "effect-unrequested"
+          ],
+          "answered": [
+            3,
+            -1
+          ]
+        }
+      },
       "positions": {
-        "first": [
+        "1 of 1": [
+          0,
+          1
+        ],
+        "1 of 2": [
+          0,
+          2
+        ],
+        "2 of 2": [
+          1,
+          2
+        ],
+        "1 of 3": [
+          0,
+          3
+        ],
+        "2 of 3": [
+          1,
+          3
+        ],
+        "3 of 3": [
+          2,
+          3
+        ],
+        "1 of 4": [
           0,
           4
         ],
-        "last": [
-          3,
+        "2 of 4": [
+          1,
           4
         ],
-        "between": [
-          1,
+        "3 of 4": [
+          2,
+          4
+        ],
+        "4 of 4": [
+          3,
           4
         ]
       },
@@ -370,16 +1073,93 @@
             "effect-unrequested"
           ]
         },
-        "first": [],
-        "last": [],
-        "between": [],
-        "a second decision answering none": [
+        "1 of 1": [],
+        "1 of 2": [],
+        "2 of 2": [],
+        "1 of 3": [],
+        "2 of 3": [],
+        "3 of 3": [],
+        "1 of 4": [],
+        "2 of 4": [],
+        "3 of 4": [],
+        "4 of 4": [],
+        "none of 1": [
           "effect-unrequested"
         ],
-        "a first decision answering none": [
+        "none of 2": [
           "effect-unrequested"
         ],
-        "both decisions answering": []
+        "none of 3": [
+          "effect-unrequested"
+        ],
+        "none of 4": [
+          "effect-unrequested"
+        ]
+      },
+      "decisions": {
+        "a first decision answering none": {
+          "answering": [
+            false,
+            true
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "a second decision answering none": {
+          "answering": [
+            true,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "both decisions answering": {
+          "answering": [
+            true,
+            true
+          ],
+          "found": []
+        },
+        "the first of three answering none": {
+          "answering": [
+            false,
+            true,
+            true
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "the middle of three answering none": {
+          "answering": [
+            true,
+            false,
+            true
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "the last of three answering none": {
+          "answering": [
+            true,
+            true,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "all three answering": {
+          "answering": [
+            true,
+            true,
+            true
+          ],
+          "found": []
+        }
       },
       "echoedByCore": [
         "scope",

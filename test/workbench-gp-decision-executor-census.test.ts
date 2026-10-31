@@ -45,11 +45,14 @@
  *    effect-unvalidated (the seam was called for a reply whose converted decision fails basis validation), effect-unpermitted
  *    (handed a decision whose verdict is not 'permitted'), effect-unminted (handed a value isCoreMintedDecision refuses),
  *    effect-unrequested (handed a decision whose receipt answers no request this call issued, a call that issued none
- *    included: the drive records, in the order returned, a copy of each request its requestOf returned (pinned for a call
- *    issuing up to four), taken at the return, so an in-place edit of any member of a returned object afterwards edits no
- *    record; a receipt answers a request when its scope, principal, target, action, invocationId and requestedAt each equal
- *    that request's and its grant is one of that request's grants; every request a call issues carries that call's own serial
- *    in its invocationId), mismatch-receipt (a snapshot-mismatch reply lacks exactly one receipt of status conflict or
+ *    included; pinned for a call issuing up to four requests and handing up to three decisions, at each position: the drive
+ *    records, in the order returned, a copy of each request its requestOf returned, taken at the return, so an in-place edit
+ *    of any member of a returned object afterwards edits no record; the check reads every handed decision, the first, middle
+ *    and last of three, against every recorded request, at each position of one to four; a receipt answers a
+ *    request when its scope, principal, target, action, invocationId and requestedAt each equal that request's and its grant
+ *    is one of that request's grants; every request a call issues, the first, second, third and last of four, carries that
+ *    call's own serial in its invocationId, and of two calls in a row over one fixture neither issues an invocationId the
+ *    other issued), mismatch-receipt (a snapshot-mismatch reply lacks exactly one receipt of status conflict or
  *    refused naming snapshot-mismatch) and current-unexecuted (F1, the one reply every clause admits, did not reach the seam
  *    exactly once with a core-minted permit: the drive's positive control, without which a decision point that never issues
  *    anything would meet the clause's "unless" vacuously). A1 the bound decision points (none) and the synthetic bindings:
@@ -57,18 +60,31 @@
  *    is the computed one. A2 a point skipping either basis member or the conversion's candidate check reaches the seam on F2,
  *    F4 or F5 (effect-unvalidated). A3 a denied decision executed anyway fails effect-unpermitted; today even an exact grant
  *    for a GraphPolicyCLI verb reads unknown-action; and a permit decideControl returned for a request this call did not
- *    issue fails effect-unrequested: on F3 (observer grant only) M-FORGED-GRANT appends the exact grant to the issued
- *    request's own grants array, in place, and asks the core on that object (A3 reads the forged request back: the issued
- *    object itself, holding its own grants array, the grant appended); M-REPLAYED-PERMIT hands the seam the first permit it
- *    minted (F1's); M-NO-REQUEST-REPLAY, once it holds that permit, asks requestOf nothing more and hands it over, so its
- *    later calls issue no request (A3 reads 0 issued on F3 and on the next F1); each replay hands F3 and the same point's
- *    next F1 call the very permit F1's call handed the seam, and fails both. A3's reader controls: the record (a planted
- *    point asking requestOf once per can_execute candidate of the snapshot, four requests, then editing every member of each
- *    returned object in place, reads a record equal to its own copies taken at the return, in order, and reads its own edits
- *    back: every member differs from its copy, and each object or array member still holds the object it held); the check
- *    over a record (a core-minted permit handed with no request issued fails it on every fixture, beside that fixture's other
- *    checks; with its own request issued first, last or second of the four it passes on F1; of two decisions handed in one F3
- *    call, either one answering no issued request fails it, and both answering an issued request pass); the echo (a minted
+ *    issue fails effect-unrequested: on F3 (observer grant only) M-FORGED-GRANT appends the exact grant to the own grants
+ *    array of the object requestOf returned, in place, then asks the core (A3 reads that object back after the call: its own
+ *    grants array, the grant appended, and the seam handed a core-minted permit; and reads forged() itself on a planted
+ *    object: the object it was handed, its own grants array, the grant appended); M-REPLAYED-PERMIT hands the seam the first
+ *    permit it minted (F1's); M-NO-REQUEST-REPLAY, once it holds that permit, asks requestOf nothing more and hands it over,
+ *    so its later calls issue no request (A3 reads 0 issued on F3 and on the next F1); each replay hands F3 and the same
+ *    point's next F1 call the very permit F1's call handed the seam, and fails both. A3's reader controls: the record (a
+ *    planted point driven over each fixture asking requestOf once for each of the snapshot's first one, two, three and four
+ *    can_execute candidates, then editing every member of each returned object in place, reads a record equal to its own
+ *    copies taken at the return, in order, and reads its own edits back: every member differs from its copy, and each
+ *    object or array member still holds the object it held, and its records name the fixture driven);
+ *    the serial (the same four requests asked by a planted point driven over each fixture twice in a row: every request of
+ *    each call carries that call's serial, driveSerial as its drive left it, and not the other call's, as one whole
+ *    dash-separated segment of its invocationId, which planted invocationIds pin; the two calls issue no invocationId in
+ *    common, and their requests name the fixture driven); the replay (for each position of the four, a planted point
+ *    driven over F1 twice in a row issues the four requests, one per can_execute candidate in the snapshot's order; the
+ *    first call executes the core's permit for the request at that position, which answers that request, and meets every
+ *    check; the second hands the seam that same permit, which answers none of its requests, and fails effect-unrequested
+ *    alone); the check over a record (a core-minted
+ *    permit handed with no request issued fails it on every fixture, beside that fixture's other checks; on F1, with its own
+ *    request at each position of a call issuing one, two, three or four requests it passes, and with none of one, two,
+ *    three or four requests answering it it fails; of two decisions handed in one F3 call, either
+ *    one answering no issued request fails it, and both answering an issued request pass; of three, the first, the middle or
+ *    the last answering none fails it, and all three answering pass; each decision control reads which handed decision
+ *    answers an issued request beside the checks the call fails); the echo (a minted
  *    receipt answers the request it was minted for, with that request's grants in either order, and answers it no longer with
  *    any one echoed field or its grant altered). A4 a hand-built look-alike permit and a spread copy of a minted one fail
  *    effect-unminted; isCoreMintedDecision is false for the reply, its typed conversion, a copy, a JSON round trip and a
@@ -83,17 +99,18 @@
  *    one-character plant inside each member is reported as that member's change, only.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's
- * member count as literals, beside the vocabulary, the checks, the echoed request fields, the mutants, the lead plants, the
- * fixtures, the bound points, the floor, the pin and the derived path; the judged set (every row's id, label and pins, every
- * pin's quote and witness, the residual members, every registered test title) is held to the out-of-file roster
- * test/fixtures/gp-decision-executor-roster.json. OUTSIDE ANCHORS (their own registered case): the bead's own row in the
+ * member count as literals, beside the vocabulary, the checks, the echoed request fields, the positions, the mutants, the
+ * lead plants, the fixtures, the bound points, the floor, the pin and the derived path; the judged set (every row's id, label
+ * and pins, every pin's quote and witness, the residual members, every registered test title) is held to the out-of-file
+ * roster test/fixtures/gp-decision-executor-roster.json. OUTSIDE ANCHORS (their own registered case): the bead's own row in the
  * tracker export (.beads/issues.jsonl): the title opens with the requirement id and carries row T's label before its artifact
  * parenthetical, and names exactly the two names; the first notes line opening "Citation: " holds the Acceptance sentence,
  * whose three clauses are exactly the labels of rows A, B and C, and the Pi pin; each row's pin quotes tile its label; clause
  * A's control.ts citation resolves at the pin to the isCoreMintedDecision export, and the notes' furnace-hosted.ts:9 citation
  * resolves at the pin to the adapter's "no scheduler" sentence, so the adapter path is the filing's; the vendored reply
  * carries the vocabulary's schema, kind and members, its digest is the generator's recorded input digest and the snapshot
- * fixture's own, and the snapshot's revision is F1's observed basis; and the vocabulary is derived outside every literal: the
+ * fixture's own, the snapshot's revision is F1's observed basis, and the snapshot holds one can_execute relation per
+ * position; and the vocabulary is derived outside every literal: the
  * title's Graph names, the vendored reply's schema and kind values, the reply member whose value is the snapshot fixture's
  * digest and the sample member whose value is a candidate; and the follow-up bead wb-5omz's own row: the lead reader takes
  * the first line of its notes that opens with "[leads] - F1 " (not a line holding that text further in, not a line opening
@@ -116,8 +133,14 @@
  * a forged request that keeps every echoed field, when the grant the core records is one the issued request holds, as
  * M-FORGED-GRANT's on F1, or one minted before the call for the call's own request, answers it), what a point hands
  * decideControl besides the request (the projection and the clock), and the request's params, which no receipt echoes; a
- * record or a check that drops a request only past the fourth one a call issues (the reader controls issue four); the lead
- * reader's grammar outside the live lead line and LEAD_PLANTS (a check spelled outside [a-z-], a point outside P-[A-Z-],
+ * record, a check or a serial that misses a request only past the fourth one a call issues (the reader controls issue up to
+ * four);
+ * a check that skips a handed decision only past the third one a call hands (the check controls hand three); a serial that
+ * two calls over one fixture share only when they are not in a row (the serial control drives each fixture twice in a row);
+ * which object holding the returned grants array M-FORGED-GRANT hands decideControl (the object requestOf returned or a copy
+ * sharing that array: no echoed field tells them apart); a check that skips a request or a decision only on a fixture
+ * other than the one its control drives (the position controls drive F1, the decision controls F3); the lead reader's
+ * grammar outside the live lead line and LEAD_PLANTS (a check spelled outside [a-z-], a point outside P-[A-Z-],
  * another line separator); the leading comment of a path member and anything C1 does not derive (row Q4); a mutant, a
  * fixture, a planted control or a reader control removed from its table or case, the frozen literal and the roster together
  * while every check still fires; row Q or a residual member removed from every literal and the roster together (no source
@@ -143,14 +166,20 @@
  * grants plus the exact control:furnace.stop grant) and P-REPLAYED-PERMIT (the seam handed the first permit the point minted,
  * F1's) executed F3's reply, which the core denies observer-only on F3's own request, and met every check on every fixture.
  * The request-binding check effect-unrequested reads each handed receipt against the requests the call issued. MUTANTS carry
- * the two as M-FORGED-GRANT, which appends the grant to the issued request's own grants array (so a record held by reference
- * or as a shallow copy would read the forged grant as issued), and M-REPLAYED-PERMIT; each fails it on F3, and so do M-DENIED
- * (a denial carries no receipt) and M-LOOKALIKE (its grant is none of F3's), beside the checks they already failed. Cut #2
- * (refusal #1 of cut #1, gate-prep-4 / g10-gate-s161: unmet U1-U4, claims wider than pins): U1 M-NO-REQUEST-REPLAY and the
- * check control over an empty record pin the zero-issued half; U2 M-FORGED-GRANT appends in place and the record control
- * edits every member of every returned request in place; U3 the record control's four requests and the check controls' first,
- * last and between positions pin each request a call issues; U4 LEAD_PLANTS, the planted readings and the distinct points
- * condition pin the lead reader's clauses and the anchor's conditions.
+ * the two as M-FORGED-GRANT, which appends the grant to the own grants array of the object requestOf returned (so a record
+ * held by reference or as a shallow copy would read the forged grant as issued), and M-REPLAYED-PERMIT; each fails it on
+ * F3, and so do M-DENIED (a denial carries no receipt) and M-LOOKALIKE (its grant is none of F3's), beside the checks they
+ * already failed. Cut #2 (refusal #1 of cut #1, gate-prep-4 / g10-gate-s161: unmet U1-U4, claims wider than pins): U1
+ * M-NO-REQUEST-REPLAY and the check control over an empty record pin the zero-issued half; U2 M-FORGED-GRANT appends in
+ * place and the record control edits every member of every returned request in place; U3 the record control's four
+ * requests and the check controls' first, second and last positions; U4 LEAD_PLANTS, the planted readings and the distinct
+ * points condition pin the lead reader's clauses and the anchor's conditions. Cut #3 (refusal #2 of cut #2, gate-prep-2 /
+ * g10-gate-s167: unmet U1-U3; the class frozen and this cut bound to the enumerate-the-resolvable form by ruling R-B216):
+ * U1 the serial control (every fixture, two calls in a row, each of the four positions) and the replay control (each
+ * position, F1) pin every request's serial; U2 the check controls place the permit's own request at each of the four
+ * positions, the third included; U3 the check controls hand three decisions, each position in turn answering none; the
+ * refusal's F1 LOW: A3 reads M-FORGED-GRANT's grant back on the object requestOf returned; and a lead plant pins the cure
+ * phrase's closing words.
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI dependency, adapter, seam or fake binary.
  */
 import { execFileSync } from "node:child_process";
@@ -376,7 +405,7 @@ function projectionOf(fixture: Fixture): ObservationProjection {
   }
   return projection;
 }
-/** The control request for one candidate; a drive passes its own serial, so no two calls issue one invocationId (0: no drive). */
+/** The control request for one candidate; a drive passes its own serial into the invocationId (0: no drive). */
 function requestFor(fixture: Fixture, candidate: string, serial = 0): NativeControlRequest {
   return { scope: { ...SCOPE }, principal: { id: SCOPE.principal, role: "local-operator" }, grants: [...fixture.grants], target: runRef(candidate), action: "stop",
     params: { confirmed: true }, invocationId: `inv-${fixture.id}-${serial}-${candidate}`, requestedAt: REQUESTED_AT };
@@ -390,10 +419,10 @@ const targetIdOf = (decision: unknown): unknown => own(own(own(decision, "receip
 interface Drive {
   readonly receipts: readonly DecisionReceipt[];
   readonly calls: readonly { readonly decision: unknown; readonly answer: string }[];
-  /** Every request this call's requestOf returned, each a copy taken at the return: a later edit of the object edits no record. */
+  /** Every request this call's requestOf returned, each a copy taken at the return: a later edit of the object edits no record (A3's record control issues one to four). */
   readonly issued: readonly NativeControlRequest[];
 }
-/** The drives so far: each drive's serial is its own, so every call issues requests no other call issues. */
+/** The drives so far; a drive's serial is this count after its own increment (A3's serial control reads it). */
 let driveSerial = 0;
 function drive(point: DecisionPoint, fixture: Fixture): Drive {
   driveSerial += 1;
@@ -440,18 +469,23 @@ type RecordReading = {
   readonly edited: readonly string[];
   /** The members whose returned value is an object or array that still holds the same object after the edit. */
   readonly inPlace: readonly string[];
+  /** The fixture ids the recorded requests' invocationIds name (their second dash-separated segment), once each. */
+  readonly named: readonly string[];
 };
 /**
- * The record control: a planted point asks requestOf once per can_execute candidate of the snapshot (four requests), keeps its
- * own copy of each at the return, then edits every member of each returned object in place and executes nothing; the drive's
- * record must equal those copies, in order. It also reads its own edits back (edited, inPlace).
+ * The record control, over one fixture: a planted point asks requestOf once for each of the snapshot's first `size`
+ * can_execute candidates, keeps its own copy of each at the return, then edits every member of each returned object in
+ * place and executes nothing; the drive's record must equal those copies, in order. It also reads its own edits back
+ * (edited, inPlace).
  */
-function recordReading(): RecordReading {
+function recordReading(entry: Fixture, size: number): RecordReading {
   const copies: NativeControlRequest[] = [];
   let edited: string[] = [];
   let inPlace: string[] = [];
   const probe: DecisionPoint = call => {
-    const returned = executable(call.presented).map(candidate => call.requestOf(candidate));
+    const returned = executable(call.presented)
+      .slice(0, size)
+      .map(candidate => call.requestOf(candidate));
     copies.push(...returned.map(request => structuredClone(request)));
     const before = returned.map(request => new Map(Object.keys(request).map(key => [key, own(request, key)] as const)));
     for (const request of returned) editEveryMember(request);
@@ -465,10 +499,71 @@ function recordReading(): RecordReading {
     );
     return [];
   };
-  const { issued } = drive(probe, fixture("F1"));
+  const { issued } = drive(probe, entry);
   const fields = Object.keys(copies[0] ?? {});
   const changed = fields.filter(field => issued.some((request, index) => !isDeepStrictEqual(own(request, field), own(copies[index], field))));
-  return { requests: issued.length, copies: copies.length, inOrder: isDeepStrictEqual(issued, copies), changed, edited, inPlace };
+  const named = [...new Set(issued.map(request => request.invocationId.split("-")[1] ?? ""))];
+  return { requests: issued.length, copies: copies.length, inOrder: isDeepStrictEqual(issued, copies), changed, edited, inPlace, named };
+}
+/** The positions of a call's four requests, one per can_execute relation of the snapshot (the outside anchors hold the count). */
+const POSITIONS = ["first", "second", "third", "last"] as const;
+/** Whether an invocationId carries a serial as one whole dash-separated segment (A3's planted invocationIds pin this reading). */
+const carriesSerial = (invocationId: string, serial: number): boolean => invocationId.split("-").includes(String(serial));
+/** A type alias, not an interface, so the reading is a Json witness as it stands. */
+type SerialReading = {
+  /** Per call, per request in the order returned: whether its invocationId carries that call's serial, and not the other call's. */
+  readonly carried: readonly (readonly boolean[])[];
+  /** The invocationIds both calls issued. */
+  readonly shared: readonly string[];
+  /** The fixture ids the two calls' invocationIds name (their second dash-separated segment), once each. */
+  readonly named: readonly string[];
+};
+/**
+ * The serial control: a planted point asks requestOf once per can_execute candidate of the snapshot (four requests) and
+ * executes nothing; it is driven over one fixture twice in a row, and each call's serial is driveSerial as its drive left it.
+ */
+function serialReading(entry: Fixture): SerialReading {
+  const returned: NativeControlRequest[][] = [];
+  const probe: DecisionPoint = call => {
+    returned.push(executable(call.presented).map(candidate => call.requestOf(candidate)));
+    return [];
+  };
+  const serials: number[] = [];
+  drive(probe, entry);
+  serials.push(driveSerial);
+  drive(probe, entry);
+  serials.push(driveSerial);
+  const carried = returned.map((requests, index) =>
+    requests.map(request => carriesSerial(request.invocationId, serials[index] ?? 0) && !carriesSerial(request.invocationId, serials[1 - index] ?? 0)),
+  );
+  const [first = [], second = []] = returned;
+  const shared = first.map(request => request.invocationId).filter(id => second.some(request => request.invocationId === id));
+  const named = [...new Set(returned.flat().map(request => request.invocationId.split("-")[1] ?? ""))];
+  return { carried, shared, named };
+}
+/**
+ * The replay control, per position of the four: a planted point driven over F1 twice in a row issues the four requests, one
+ * per can_execute candidate in the snapshot's order; its first call asks the core on the request at that position and hands
+ * the seam the permit, its second hands the seam that same permit. Each call's failed checks, in CHECKS order, and per call
+ * the index of the recorded request the handed permit answers (-1: none).
+ */
+function replayReading(): Record<string, { readonly minting: Check[]; readonly replaying: Check[]; readonly answered: readonly number[] }> {
+  const F1 = fixture("F1");
+  return Object.fromEntries(
+    POSITIONS.map((label, index) => {
+      let held: ControlDecision | undefined;
+      const point: DecisionPoint = call => {
+        const request = executable(call.presented).map(candidate => call.requestOf(candidate))[index];
+        if (request === undefined) return [];
+        held ??= decideControl(request, { projection: call.projection, now: call.now });
+        return [{ status: "executed", candidate: request.target.id, answer: call.effect(held) }];
+      };
+      const runs = [drive(point, F1), drive(point, F1)];
+      const [minting = [], replaying = []] = runs.map(run => violations(F1, run));
+      const answered = runs.map(run => run.issued.findIndex(request => answers(own(run.calls[0]?.decision, "receipt"), request)));
+      return [label, { minting, replaying, answered }];
+    }),
+  );
 }
 
 const CHECKS = ["effect-unvalidated", "effect-unpermitted", "effect-unminted", "effect-unrequested", "mismatch-receipt", "current-unexecuted"] as const;
@@ -893,6 +988,35 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       sameGrantsArray: true,
       grants: [...F3.grants, ...CONTROL_GRANTS.filter(grant => !F3.grants.includes(grant))],
     });
+    const returnedToPoint: { readonly request: NativeControlRequest; readonly grants: readonly string[] | undefined }[] = [];
+    const handedToSeam: { readonly decision: string; readonly minted: boolean }[] = [];
+    pointOf(MUTANTS["M-FORGED-GRANT"] ?? {})({
+      reply: F3.reply,
+      presented: F3.presented,
+      projection: projectionOf(F3),
+      requestOf: candidate => {
+        const request = requestFor(F3, candidate);
+        returnedToPoint.push({ request, grants: request.grants });
+        return request;
+      },
+      effect: decision => {
+        handedToSeam.push({ decision: String(own(decision, "decision")), minted: isCoreMintedDecision(decision) });
+        return "frn-ack-forged";
+      },
+      now: () => DECIDED_AT,
+    });
+    const forgedAtCallSite = {
+      returned: returnedToPoint.length,
+      sameGrantsArray: returnedToPoint.every(entry => entry.request.grants === entry.grants),
+      grants: returnedToPoint.map(entry => [...(entry.request.grants ?? [])]),
+      handed: handedToSeam,
+    };
+    expect(forgedAtCallSite, "M-FORGED-GRANT's point appends the grant to the own grants array of the very object requestOf returned, and the seam is handed a core-minted permit").toEqual({
+      returned: 1,
+      sameGrantsArray: true,
+      grants: [[...F3.grants, ...CONTROL_GRANTS.filter(grant => !F3.grants.includes(grant))]],
+      handed: [{ decision: "permitted", minted: true }],
+    });
     const unrequested = {
       "M-FORGED-GRANT": forging.F3,
       "M-REPLAYED-PERMIT": replayed.table.F3,
@@ -901,18 +1025,47 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "M-NO-REQUEST-REPLAY next F1": nextF1["M-NO-REQUEST-REPLAY"],
     };
     for (const [name, found] of Object.entries(unrequested)) expect(found, `${name}: a permit for a request this call did not issue is caught`).toContain("effect-unrequested");
-    const recorded = recordReading();
     const candidates = executable(SNAPSHOT_BYTES);
+    const sizes = candidates.map((_, index) => index + 1);
+    const recorded = Object.fromEntries(FIXTURES.map(entry => [entry.id, sizes.map(size => recordReading(entry, size))]));
     const F1 = fixture("F1");
     const mintedFor = requestFor(F1, chosen);
     const members = Object.keys(mintedFor);
-    expect(recorded, "the drive records a copy of every request its requestOf returned, in order, taken at the return: an in-place edit of any member afterwards edits no record").toEqual({
-      requests: candidates.length,
-      copies: candidates.length,
+    const copiedAtReturn = (size: number, id: string): RecordReading => ({
+      requests: size,
+      copies: size,
       inOrder: true,
       changed: [],
       edited: members,
       inPlace: members.filter(key => typeof own(mintedFor, key) === "object"),
+      named: [id],
+    });
+    expect(recorded, "on every fixture, for a call issuing one, two, three or four requests, the drive records a copy of every request its requestOf returned, in order, taken at the return: an in-place edit of any member afterwards edits no record").toEqual(
+      Object.fromEntries(FIXTURES.map(entry => [entry.id, [1, 2, 3, 4].map(size => copiedAtReturn(size, entry.id))])),
+    );
+    const serial = Object.fromEntries(FIXTURES.map(entry => [entry.id, serialReading(entry)]));
+    const everyPosition = [true, true, true, true];
+    expect(serial, "on every fixture, each request of each of two calls in a row, first, second, third and last, carries that call's serial and not the other call's; the two calls share no invocationId").toEqual(
+      Object.fromEntries(FIXTURES.map(entry => [entry.id, { carried: [everyPosition, everyPosition], shared: [], named: [entry.id] }])),
+    );
+    const segments = {
+      "its own segment": carriesSerial("inv-F1-87-exec-a1-t1", 87),
+      "a longer number": carriesSerial("inv-F1-870-exec-a1-t1", 87),
+      "a shorter number": carriesSerial("inv-F1-8-exec-a1-t1", 87),
+      "inside another segment": carriesSerial("inv-F1-x87-exec-a1-t1", 87),
+    };
+    expect(segments, "a serial is carried as one whole dash-separated segment only").toEqual({
+      "its own segment": true,
+      "a longer number": false,
+      "a shorter number": false,
+      "inside another segment": false,
+    });
+    const replays = replayReading();
+    expect(replays, "a permit minted for the request at any of the four positions of one call answers that request and meets every check there, and handed to the seam on the next call answers none and fails effect-unrequested alone").toEqual({
+      first: { minting: [], replaying: ["effect-unrequested"], answered: [0, -1] },
+      second: { minting: [], replaying: ["effect-unrequested"], answered: [1, -1] },
+      third: { minting: [], replaying: ["effect-unrequested"], answered: [2, -1] },
+      last: { minting: [], replaying: ["effect-unrequested"], answered: [3, -1] },
     });
     const permit = decideControl(mintedFor, { projection: projectionOf(F1), now: () => DECIDED_AT });
     const others = candidates.filter(candidate => candidate !== chosen).map(candidate => requestFor(F1, candidate));
@@ -921,23 +1074,29 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const handed = (id: string, decisions: readonly ControlDecision[], issued: readonly NativeControlRequest[]): Check[] =>
       violations(fixture(id), { receipts: [], calls: decisions.map(decision => ({ decision, answer: "frn-ack-control" })), issued });
     const judged = (issued: readonly NativeControlRequest[]): Check[] => handed("F1", [permit], issued);
-    const records = { first: [mintedFor, ...others], last: [...others, mintedFor], between: [...others.slice(0, 1), mintedFor, ...others.slice(1)] };
+    const records = Object.fromEntries(
+      sizes.flatMap(size => sizes.slice(0, size).map(at => [`${at} of ${size}`, [...others.slice(0, at - 1), mintedFor, ...others.slice(at - 1, size - 1)]])),
+    );
     const positions = Object.fromEntries(Object.entries(records).map(([label, issued]) => [label, [issued.indexOf(mintedFor), issued.length]]));
-    expect(positions, "the permit's own request sits first, last and second of the four").toEqual({
-      first: [0, candidates.length],
-      last: [candidates.length - 1, candidates.length],
-      between: [1, candidates.length],
+    expect(positions, "the permit's own request sits at each position of a call issuing one, two, three or four requests").toEqual({
+      "1 of 1": [0, 1],
+      "1 of 2": [0, 2],
+      "2 of 2": [1, 2],
+      "1 of 3": [0, 3],
+      "2 of 3": [1, 3],
+      "3 of 3": [2, 3],
+      "1 of 4": [0, 4],
+      "2 of 4": [1, 4],
+      "3 of 4": [2, 4],
+      "4 of 4": [3, 4],
     });
+    const unanswering = [...others, requestFor(F1, chosen, 1)];
     const answered = {
       none: Object.fromEntries(FIXTURES.map(entry => [entry.id, handed(entry.id, [permit], [])])),
-      first: judged(records.first),
-      last: judged(records.last),
-      between: judged(records.between),
-      "a second decision answering none": handed("F3", [permit, foreign], [mintedFor]),
-      "a first decision answering none": handed("F3", [foreign, permit], [mintedFor]),
-      "both decisions answering": handed("F3", [permit, foreign], [mintedFor, otherRequest]),
+      ...Object.fromEntries(Object.entries(records).map(([label, issued]) => [label, judged(issued)])),
+      ...Object.fromEntries(sizes.map(size => [`none of ${size}`, judged(unanswering.slice(0, size))])),
     };
-    expect(answered, "a permit handed with no request issued fails the check on every fixture; its own request issued anywhere in four passes; of two handed decisions, either one answering none fails").toEqual({
+    expect(answered, "a permit handed with no request issued fails the check on every fixture; its own request issued at each position of a call issuing one to four requests passes; with none of one to four answering it fails").toEqual({
       none: {
         F1: ["effect-unrequested"],
         F2: ["effect-unvalidated", "effect-unrequested", "mismatch-receipt"],
@@ -945,12 +1104,42 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         F4: ["effect-unvalidated", "effect-unrequested"],
         F5: ["effect-unvalidated", "effect-unrequested"],
       },
-      first: [],
-      last: [],
-      between: [],
-      "a second decision answering none": ["effect-unrequested"],
-      "a first decision answering none": ["effect-unrequested"],
-      "both decisions answering": [],
+      "1 of 1": [],
+      "1 of 2": [],
+      "2 of 2": [],
+      "1 of 3": [],
+      "2 of 3": [],
+      "3 of 3": [],
+      "1 of 4": [],
+      "2 of 4": [],
+      "3 of 4": [],
+      "4 of 4": [],
+      "none of 1": ["effect-unrequested"],
+      "none of 2": ["effect-unrequested"],
+      "none of 3": ["effect-unrequested"],
+      "none of 4": ["effect-unrequested"],
+    });
+    const decided = (decisions: readonly ControlDecision[], issued: readonly NativeControlRequest[]): { readonly answering: boolean[]; readonly found: Check[] } => ({
+      answering: decisions.map(decision => issued.some(request => answers(own(decision, "receipt"), request))),
+      found: handed("F3", decisions, issued),
+    });
+    const decisions = {
+      "a first decision answering none": decided([foreign, permit], [mintedFor]),
+      "a second decision answering none": decided([permit, foreign], [mintedFor]),
+      "both decisions answering": decided([permit, foreign], [mintedFor, otherRequest]),
+      "the first of three answering none": decided([foreign, permit, permit], [mintedFor]),
+      "the middle of three answering none": decided([permit, foreign, permit], [mintedFor]),
+      "the last of three answering none": decided([permit, permit, foreign], [mintedFor]),
+      "all three answering": decided([permit, foreign, permit], [mintedFor, otherRequest]),
+    };
+    expect(decisions, "of two or three decisions handed in one F3 call, the one at each position answering no issued request fails the check, and all answering pass").toEqual({
+      "a first decision answering none": { answering: [false, true], found: ["effect-unrequested"] },
+      "a second decision answering none": { answering: [true, false], found: ["effect-unrequested"] },
+      "both decisions answering": { answering: [true, true], found: [] },
+      "the first of three answering none": { answering: [false, true, true], found: ["effect-unrequested"] },
+      "the middle of three answering none": { answering: [true, false, true], found: ["effect-unrequested"] },
+      "the last of three answering none": { answering: [true, true, false], found: ["effect-unrequested"] },
+      "all three answering": { answering: [true, true, true], found: [] },
     });
     const receipt = own(permit, "receipt");
     const echoedByCore = record(receipt) ? Object.keys(receipt).filter(key => Object.hasOwn(mintedFor, key) && isDeepStrictEqual(own(receipt, key), own(mintedFor, key))) : [];
@@ -980,9 +1169,14 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       issuedLater,
       handedF1s,
       forgedInPlace,
+      forgedAtCallSite,
       recorded,
+      serial,
+      segments,
+      replays,
       positions,
       answered,
+      decisions,
       echoedByCore,
       echo,
     };
@@ -1163,6 +1357,10 @@ const LEAD_PLANTS: Readonly<Record<string, { readonly notes: string; readonly re
     notes: "[leads] - F1 cure: arm a request-binding check (c-one) with P-ONE and P-TWO as its mutants.\n[leads] - F1 later: arm a request-binding check (c-two) with P-THREE and P-FOUR as its mutants.",
     reading: { check: "c-one", points: ["P-ONE", "P-TWO"] },
   },
+  "a cure phrase without its closing words": {
+    notes: "[leads] - F1 cure: arm a request-binding check (c-one) with P-ONE and P-TWO, or name a residual.",
+    reading: { check: null, points: [] },
+  },
 };
 /** The outside-anchors case pushes here as its last statement, so the roster case sees that it ran to its end. */
 const ANCHORED: string[] = [];
@@ -1200,6 +1398,7 @@ describe(SUITE, () => {
     expect(VOCABULARY).toEqual(["GraphPolicyCLI", "GraphDataIR", "graphpolicy.receipt.decision.v1", "sampled-decision", "graph_digest", "chosen_id"]);
     expect(CHECKS).toEqual(["effect-unvalidated", "effect-unpermitted", "effect-unminted", "effect-unrequested", "mismatch-receipt", "current-unexecuted"]);
     expect(ECHOED).toEqual(["scope", "principal", "target", "action", "invocationId", "requestedAt"]);
+    expect(POSITIONS).toEqual(["first", "second", "third", "last"]);
     expect(Object.keys(MUTANTS)).toEqual([
       "M-NO-BASIS",
       "M-DIGEST-ONLY",
@@ -1216,7 +1415,14 @@ describe(SUITE, () => {
       "M-RECEIPT-AND-EFFECT",
       "M-INERT",
     ]);
-    expect(Object.keys(LEAD_PLANTS)).toEqual(["the lead line", "a lead line further in", "a cure phrase off the lead line", "another finding's lead line first", "a later lead line"]);
+    expect(Object.keys(LEAD_PLANTS)).toEqual([
+      "the lead line",
+      "a lead line further in",
+      "a cure phrase off the lead line",
+      "another finding's lead line first",
+      "a later lead line",
+      "a cure phrase without its closing words",
+    ]);
     expect(FIXTURES.map(entry => `${entry.id}:${entry.basis}:${entry.grants.length}:${entry.current}`)).toEqual([
       "F1:valid:2:true",
       "F2:snapshot-mismatch:2:false",
@@ -1270,6 +1476,7 @@ describe(SUITE, () => {
     expect(`sha256:${String(own(recorded, "sha256"))}`, "the reply's digest is the generator's recorded input digest").toBe(own(REPLY, REPLY_DIGEST));
     expect(digestOf(SNAPSHOT_BYTES), "and the snapshot fixture's own").toBe(own(REPLY, REPLY_DIGEST));
     expect(revisionOf(SNAPSHOT_BYTES), "the snapshot's revision is F1's observed basis").toBe(fixture("F1").observed);
+    expect(executable(SNAPSHOT_BYTES).length, "the snapshot holds one can_execute relation per position").toBe(POSITIONS.length);
     const candidates = own(REPLY, "candidates");
     expect(strings(candidates) && candidates.every(candidate => executable(SNAPSHOT_BYTES).includes(candidate)), "every candidate is a can_execute relation of the snapshot").toBe(true);
     expect(strings(candidates) && !candidates.includes(UNCHOSEN) && executable(SNAPSHOT_BYTES).includes(UNCHOSEN), "F5's choice is observed but no candidate").toBe(true);
