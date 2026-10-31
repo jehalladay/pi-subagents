@@ -267,13 +267,120 @@
         "F4": [],
         "F5": []
       },
+      "M-NO-REQUEST-REPLAY": {
+        "F1": [],
+        "F2": [],
+        "F3": [
+          "effect-unrequested"
+        ],
+        "F4": [],
+        "F5": []
+      },
       "reachedF3": {
         "M-FORGED-GRANT": 1,
-        "M-REPLAYED-PERMIT": 1
+        "M-REPLAYED-PERMIT": 1,
+        "M-NO-REQUEST-REPLAY": 1
       },
-      "nextF1": [
-        "effect-unrequested"
-      ],
+      "nextF1": {
+        "M-REPLAYED-PERMIT": [
+          "effect-unrequested"
+        ],
+        "M-NO-REQUEST-REPLAY": [
+          "effect-unrequested"
+        ]
+      },
+      "issuedLater": {
+        "M-REPLAYED-PERMIT": [
+          1,
+          1
+        ],
+        "M-NO-REQUEST-REPLAY": [
+          0,
+          0
+        ]
+      },
+      "handedF1s": {
+        "M-REPLAYED-PERMIT": true,
+        "M-NO-REQUEST-REPLAY": true
+      },
+      "forgedInPlace": {
+        "sameObject": true,
+        "sameGrantsArray": true,
+        "grants": [
+          "observe:furnace.run.inspect",
+          "control:furnace.stop"
+        ]
+      },
+      "recorded": {
+        "requests": 4,
+        "copies": 4,
+        "inOrder": true,
+        "changed": [],
+        "edited": [
+          "scope",
+          "principal",
+          "grants",
+          "target",
+          "action",
+          "params",
+          "invocationId",
+          "requestedAt"
+        ],
+        "inPlace": [
+          "scope",
+          "principal",
+          "grants",
+          "target",
+          "params"
+        ]
+      },
+      "positions": {
+        "first": [
+          0,
+          4
+        ],
+        "last": [
+          3,
+          4
+        ],
+        "between": [
+          1,
+          4
+        ]
+      },
+      "answered": {
+        "none": {
+          "F1": [
+            "effect-unrequested"
+          ],
+          "F2": [
+            "effect-unvalidated",
+            "effect-unrequested",
+            "mismatch-receipt"
+          ],
+          "F3": [
+            "effect-unrequested"
+          ],
+          "F4": [
+            "effect-unvalidated",
+            "effect-unrequested"
+          ],
+          "F5": [
+            "effect-unvalidated",
+            "effect-unrequested"
+          ]
+        },
+        "first": [],
+        "last": [],
+        "between": [],
+        "a second decision answering none": [
+          "effect-unrequested"
+        ],
+        "a first decision answering none": [
+          "effect-unrequested"
+        ],
+        "both decisions answering": []
+      },
       "echoedByCore": [
         "scope",
         "principal",
@@ -284,6 +391,7 @@
       ],
       "echo": {
         "minted": true,
+        "grantsReversed": true,
         "altered": {
           "scope": false,
           "principal": false,
