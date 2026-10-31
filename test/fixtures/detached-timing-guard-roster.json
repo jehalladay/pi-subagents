@@ -1,5 +1,5 @@
 {
- "provenance": "wb-nqbd guard roster (the R694 follow-up of wb-maza landing 395, gate cmd_d35d53e6a40a: F1 leads, F2-F5 ride), cut by ws-03 (run g10-work-s96) on trunk 467b14b4bf0106677ab65fd79efb4c8a8c6990e9. The rules of every control were authored from the bead's findings before the widened reading existed (RED-1 of record: 28 of 28 kill controls read nothing on the landed reader); each finding's text was then measured by test/workbench-detached-timing-guard.test.ts on 467b14b plus the cut and reviewed against the finding it pins, so a control swapped to another case of the same rule reds. controls holds what each planted site of the guard yields, as '<rule> <text>' (F1, F2 and F3 kill controls; N negative controls, which yield nothing), residuals the quiet rows of each named residual (F5), raiseRows the family's raiseTransportLapse call rows (F5, R-RAISE-SITE), and tests the guard's collected test titles in order, '%s: ' opening a per-member rule row (F4, the frozen shape). wb-vh7c carry (the R694 follow-up of wb-nqbd landing 491, gate cmd_7cbc36ba6b11: F1 leads, F2 rides), cut by ws-01 (run g10-work-s117) on trunk 94fc15ab5f9a4b9d21c0e77bd7f1cba9b4654da7: adds the V1 kill controls (G3: a counter of the loop under an equality operator or read as its truth value), the V2 kill controls (G4: vitest's onTestFinished, onTestFailed, aroundEach and aroundAll, hooks through a destructured binding or a variable, and every fixture that stops hosts), five N negatives, the R-COUNTER-ROUTE and R-REGISTRAR-ROUTE quiet rows, and three test titles. Each V control's finding was authored from the bead's findings before the widened reading existed (RED-2 of record: 28 of 28 V kill controls read nothing on the landed reader), and the cut's reader then yields each one unchanged. wb-n5xs carry (the R694 follow-up of wb-vh7c landing 583, gate cmd_9a13529b9c57: F1 leads), cut by ws-01 (run g10-work-s120) on trunk 415cc30c9b4e8c5afcc4808a709f4db2facc13e6: adds the T1 kill controls (G3: a counter of the loop read through a TypeScript type-level wrapper - as, an angle-bracket assertion, satisfies or the non-null !, nested too - as its truth value or under an equality operator, and a counter keyed by its unwrapped operand), two N negatives (a state or a flag read through a wrapper while another value counts), the T1 and wrapper-kinds test titles, and re-titles the negative-controls row. Each T1 control's finding was authored from the bead's findings before the widened reading existed (RED-3 of record: 12 of 13 T1 kill controls read nothing on the landed reader; T1.wrappedBoth, the bead's W5, reads on both readers and pins the keying by unwrapped operand), and the cut's reader then yields each one unchanged. wb-69ur carry (the R694 follow-up of wb-n5xs landing 639, gate cmd_aa11f2b1ebe8: F1 leads, F2 rides), cut by ws-03 (run g10-work-s143) on trunk 9ad61f3665d45d32090e6f55a207b24f5ca931b5: adds the M1 kill controls (G3: a member counter of the loop keyed by its member chain - parentheses and type-level wrappers removed at every link, an optional chain's ?. read as ., an element named by a literal read as the member it names, the spacing or a comment around a link left out), four N negatives (another receiver's member, another member and another element read through a wrapper while a member counts), the R-CHAIN-KEY quiet rows, the unwraps table (what each T1 and M1 kill control's finding unwraps in its condition, which the wrapper-kinds and M1 rows read), the M1 test title, and re-titles the wrapper-kinds and negative-controls rows. Each M1 control's finding and every unwraps entry was authored from the bead's findings before the reader keyed by member chain or reported what it unwraps (RED-4 of record, on the final test-side bytes with the landed reader restored: 3 failed | 54 passed (57); 19 of 21 M1 kill controls read nothing on the landed reader, while M1.wrappedBoth (one spelling on both sides) and M1.wrappedNeighbour (a wrapper on the other operand) read on both readers; the landed reader reports no unwraps, so 13 of 13 T1 entries read empty against the table's 11 non-empty), and the cut's reader then yields each one unchanged. wb-dr81 carry (the R694 follow-up of wb-69ur landing 698, gate cmd_2fc9ac8e06c0: F1 leads, F2 rides), cut by ws-05 (run g10-work-s151) on trunk 09276d06d7a112d52c12ee5019b93826c8da599c: adds two M1 kill controls for a literal element key behind a wrapper or parentheses (G3: the key reads as the member it names, so the loop holds one counter): M1.wrappedLiteralKey (counts[0 as const] read while counts[0] steps; its finding unwraps AsExpression) and M1.parenthesizedLiteralKey (state[(\"n\")] read while state.n steps; its finding unwraps nothing, parentheses being no type-level wrapper), and two N negatives that back the reader's non-collision readings: N.quotedPrivate (a private name never meets its quoted spelling, this![\"#n\"] read while this.#n steps) and N.computedLiteral (a computed key never meets a literal of the same text, counts[n!] read while counts[\"n\"] steps). The reader is unchanged. Each entry was authored from the bead's findings before it was measured, against the gate's three escape mutants (GM1 tests an element's key for a literal before removing its wrappers, GM2 keys a private name as its quoted name, GM19 keys a computed identifier key as the literal it spells) and the seat's GM1c (an element's key unwraps only the type-level wrappers, never parentheses), each of which left the base census green, GM1c the gate's as-only cure shape too; RED-5 of record, on the final bytes: GM1, GM1c, GM2 and GM19 each read 2 failed | 55 passed (57), and the reader then yields each entry unchanged. wb-dr81 second cut (the respin of its first refusal: U1, U2 and U3 with the F4 ride), cut by ws-04 (run g10-work-s155) on cut 1 with trunk 05ebdef108aafb0640e94ee5139e74570f4ef760 merged in: adds sixteen M1 kill controls and six N negatives, the reader unchanged. M1: a literal element key behind each type-level wrapper and behind parentheses, one control for each literal kind (a numeric literal, a quoted string, a template with no substitution) behind each of the five (as, an angle-bracket assertion, satisfies, the non-null !, parentheses), the two cut-1 controls M1.wrappedLiteralKey and M1.parenthesizedLiteralKey being two of the fifteen cells and the other thirteen added (M1.angleNumericKey, M1.satisfiesNumericKey, M1.nonNullNumericKey, M1.parenthesizedNumericKey, M1.asStringKey, M1.angleStringKey, M1.satisfiesStringKey, M1.nonNullStringKey, M1.asTemplateKey, M1.angleTemplateKey, M1.satisfiesTemplateKey, M1.nonNullTemplateKey, M1.parenthesizedTemplateKey); a bare template key (M1.templateKey, the F4 ride); and two nested keys (M1.nestedLiteralKey, a wrapper inside parentheses, and M1.stackedLiteralKey, a wrapper around parentheses around another). Each is read on a plain name while the member it names steps unwrapped, and each finding's unwraps name the key's type-level wrappers. N: the four pairings of a named member, a private name and a computed element (a quoted \"#n\", a plain n and a computed n read while #n steps, a computed n read while \"n\" steps) on this and on a plain name, cut 1's N.quotedPrivate and N.computedLiteral beside the six added (N.quotedPrivatePeer, N.namedPrivate, N.namedPrivatePeer, N.computedPrivate, N.computedPrivatePeer, N.computedLiteralThis). Each entry was authored from the refusal's unmet list before it was measured; the red of record is the seat's mutant battery over counterKey (the gate's GA1-GA7 and GB1-GB3 among it), each member read on the cut-1 bytes and on these, in the delivery note.",
+ "provenance": "wb-nqbd guard roster (the R694 follow-up of wb-maza landing 395, gate cmd_d35d53e6a40a: F1 leads, F2-F5 ride), cut by ws-03 (run g10-work-s96) on trunk 467b14b4bf0106677ab65fd79efb4c8a8c6990e9. The rules of every control were authored from the bead's findings before the widened reading existed (RED-1 of record: 28 of 28 kill controls read nothing on the landed reader); each finding's text was then measured by test/workbench-detached-timing-guard.test.ts on 467b14b plus the cut and reviewed against the finding it pins, so a control swapped to another case of the same rule reds. controls holds what each planted site of the guard yields, as '<rule> <text>' (F1, F2 and F3 kill controls; N negative controls, which yield nothing), residuals the quiet rows of each named residual (F5), raiseRows the family's raiseTransportLapse call rows (F5, R-RAISE-SITE), and tests the guard's collected test titles in order, '%s: ' opening a per-member rule row (F4, the frozen shape). wb-vh7c carry (the R694 follow-up of wb-nqbd landing 491, gate cmd_7cbc36ba6b11: F1 leads, F2 rides), cut by ws-01 (run g10-work-s117) on trunk 94fc15ab5f9a4b9d21c0e77bd7f1cba9b4654da7: adds the V1 kill controls (G3: a counter of the loop under an equality operator or read as its truth value), the V2 kill controls (G4: vitest's onTestFinished, onTestFailed, aroundEach and aroundAll, hooks through a destructured binding or a variable, and every fixture that stops hosts), five N negatives, the R-COUNTER-ROUTE and R-REGISTRAR-ROUTE quiet rows, and three test titles. Each V control's finding was authored from the bead's findings before the widened reading existed (RED-2 of record: 28 of 28 V kill controls read nothing on the landed reader), and the cut's reader then yields each one unchanged. wb-n5xs carry (the R694 follow-up of wb-vh7c landing 583, gate cmd_9a13529b9c57: F1 leads), cut by ws-01 (run g10-work-s120) on trunk 415cc30c9b4e8c5afcc4808a709f4db2facc13e6: adds the T1 kill controls (G3: a counter of the loop read through a TypeScript type-level wrapper - as, an angle-bracket assertion, satisfies or the non-null !, nested too - as its truth value or under an equality operator, and a counter keyed by its unwrapped operand), two N negatives (a state or a flag read through a wrapper while another value counts), the T1 and wrapper-kinds test titles, and re-titles the negative-controls row. Each T1 control's finding was authored from the bead's findings before the widened reading existed (RED-3 of record: 12 of 13 T1 kill controls read nothing on the landed reader; T1.wrappedBoth, the bead's W5, reads on both readers and pins the keying by unwrapped operand), and the cut's reader then yields each one unchanged. wb-69ur carry (the R694 follow-up of wb-n5xs landing 639, gate cmd_aa11f2b1ebe8: F1 leads, F2 rides), cut by ws-03 (run g10-work-s143) on trunk 9ad61f3665d45d32090e6f55a207b24f5ca931b5: adds the M1 kill controls (G3: a member counter of the loop keyed by its member chain - parentheses and type-level wrappers removed at every link, an optional chain's ?. read as ., an element named by a literal read as the member it names, the spacing or a comment around a link left out), four N negatives (another receiver's member, another member and another element read through a wrapper while a member counts), the R-CHAIN-KEY quiet rows, the unwraps table (what each T1 and M1 kill control's finding unwraps in its condition, which the wrapper-kinds and M1 rows read), the M1 test title, and re-titles the wrapper-kinds and negative-controls rows. Each M1 control's finding and every unwraps entry was authored from the bead's findings before the reader keyed by member chain or reported what it unwraps (RED-4 of record, on the final test-side bytes with the landed reader restored: 3 failed | 54 passed (57); 19 of 21 M1 kill controls read nothing on the landed reader, while M1.wrappedBoth (one spelling on both sides) and M1.wrappedNeighbour (a wrapper on the other operand) read on both readers; the landed reader reports no unwraps, so 13 of 13 T1 entries read empty against the table's 11 non-empty), and the cut's reader then yields each one unchanged. wb-dr81 (the R694 follow-up of wb-69ur landing 698, gate cmd_2fc9ac8e06c0: F1 leads, F2 rides), third cut (the enumerate-the-resolvable respin of its second refusal), cut by ws-05 (run g10-work-s160) on cut 2 with trunk 0c3217d0d46b6a52e4b55de5535895f696414bec merged in, the reader unchanged: adds thirty-nine M1 kill controls (M1.wrappedLiteralKey to M1.nonNullPeerPrivate) and sixteen N negatives (N.quotedPrivate to N.literalComputedThis), each a while loop of the census's own control shape that the guard's header names as its read and the operand it steps. The claim is exactly those planted loops, each read as its own member (each M1 entry one G3 finding of a counter read as its truth value, with the wrapper kinds its condition unwraps; each N entry no finding), and no other loop. This cut's twenty-nine entries were authored by hand before they were measured; the red of record is the seat's member battery over counterKey (the second refusal's L2-A1, L2-A4 and L2-B1 to L2-B6 among it), each member read on the cut-2 bytes and on these, in the delivery note.",
  "bead": "wb-nqbd",
  "tests": [
   "judges every default-gate member of the family, read from the test directory and vitest.config.ts",
@@ -349,6 +349,69 @@
   "M1.stackedLiteralKey": [
    "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && state[(\"n\" as const)!])"
   ],
+  "M1.nonNullReceiverAsKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts![0 as const])"
+  ],
+  "M1.nonNullReceiverAngleKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts![<number>0])"
+  ],
+  "M1.nonNullReceiverSatisfiesKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts![0 satisfies number])"
+  ],
+  "M1.nonNullReceiverNonNullKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts![0!])"
+  ],
+  "M1.nonNullReceiverParenthesizedKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts![(0)])"
+  ],
+  "M1.asReceiverAsKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && (counts as number[])[0 as const])"
+  ],
+  "M1.angleReceiverAsKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && (<number[]>counts)[0 as const])"
+  ],
+  "M1.satisfiesReceiverAsKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && (counts satisfies number[])[0 as const])"
+  ],
+  "M1.parenthesizedReceiverAsKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && (counts)[0 as const])"
+  ],
+  "M1.nonNullReceiverAsStringKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && state![\"n\" as const])"
+  ],
+  "M1.nonNullReceiverAsTemplateKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && state![`n` as const])"
+  ],
+  "M1.nonNullBothAsKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts![1 as const])"
+  ],
+  "M1.asStepKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts[0])"
+  ],
+  "M1.angleStepKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts[1])"
+  ],
+  "M1.satisfiesStepKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts[2])"
+  ],
+  "M1.nonNullStepKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts[3])"
+  ],
+  "M1.parenthesizedStepKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && counts[4])"
+  ],
+  "M1.asStepStringKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && state.m)"
+  ],
+  "M1.asStepTemplateKey": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && state.t)"
+  ],
+  "M1.nonNullThisPrivate": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && this!.#n)"
+  ],
+  "M1.nonNullPeerPrivate": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && peer!.#n)"
+  ],
   "M1.spacedLink": [
    "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && state /* left */ .n)"
   ],
@@ -389,7 +452,15 @@
   "N.namedPrivatePeer": [],
   "N.computedPrivate": [],
   "N.computedPrivatePeer": [],
-  "N.computedLiteralThis": []
+  "N.computedLiteralThis": [],
+  "N.privateQuoted": [],
+  "N.privateQuotedPeer": [],
+  "N.privateNamed": [],
+  "N.privateNamedPeer": [],
+  "N.privateComputed": [],
+  "N.privateComputedPeer": [],
+  "N.literalComputed": [],
+  "N.literalComputedThis": []
  },
  "residuals": {
   "R-WAIT-LOOP": [
@@ -562,6 +633,63 @@
   ],
   "M1.stackedLiteralKey": [
    "AsExpression",
+   "NonNullExpression"
+  ],
+  "M1.nonNullReceiverAsKey": [
+   "AsExpression",
+   "NonNullExpression"
+  ],
+  "M1.nonNullReceiverAngleKey": [
+   "TypeAssertionExpression",
+   "NonNullExpression"
+  ],
+  "M1.nonNullReceiverSatisfiesKey": [
+   "NonNullExpression",
+   "SatisfiesExpression"
+  ],
+  "M1.nonNullReceiverNonNullKey": [
+   "NonNullExpression"
+  ],
+  "M1.nonNullReceiverParenthesizedKey": [
+   "NonNullExpression"
+  ],
+  "M1.asReceiverAsKey": [
+   "AsExpression"
+  ],
+  "M1.angleReceiverAsKey": [
+   "TypeAssertionExpression",
+   "AsExpression"
+  ],
+  "M1.satisfiesReceiverAsKey": [
+   "AsExpression",
+   "SatisfiesExpression"
+  ],
+  "M1.parenthesizedReceiverAsKey": [
+   "AsExpression"
+  ],
+  "M1.nonNullReceiverAsStringKey": [
+   "AsExpression",
+   "NonNullExpression"
+  ],
+  "M1.nonNullReceiverAsTemplateKey": [
+   "AsExpression",
+   "NonNullExpression"
+  ],
+  "M1.nonNullBothAsKey": [
+   "AsExpression",
+   "NonNullExpression"
+  ],
+  "M1.asStepKey": [],
+  "M1.angleStepKey": [],
+  "M1.satisfiesStepKey": [],
+  "M1.nonNullStepKey": [],
+  "M1.parenthesizedStepKey": [],
+  "M1.asStepStringKey": [],
+  "M1.asStepTemplateKey": [],
+  "M1.nonNullThisPrivate": [
+   "NonNullExpression"
+  ],
+  "M1.nonNullPeerPrivate": [
    "NonNullExpression"
   ],
   "M1.spacedLink": [],
