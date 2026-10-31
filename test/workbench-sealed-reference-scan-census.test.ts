@@ -7,20 +7,23 @@
  * (rule-19 structural exit)".
  *
  * WHAT IS DELIVERED. The scan is test/helpers/sealed-reference-scan.ts (sealedScan), shared so a census rides it:
- * wb-jwc.5's census (blocked by this bead, R-B86; not on trunk) can take it in place of its own sealsOf, passing its
- * own value reader (ScanReader) and reading the { rootOf, open } shape its own sealsOf returns. This census measures
- * the scan with planted module trees and with the real src tree; src is only read. ARMED, UNREAD and C1 in the bead's
+ * wb-jwc.5's census (blocked by this bead, R-B86; not on trunk) can take it in place of its own sealsOf and read the
+ * { rootOf, open } shape its own sealsOf returns, under the scan's default reader, LITERAL_READER, the only reader this
+ * census passes (A READING reads rootOf's roots and open's verdict for each pinned root). This census measures the scan
+ * with planted module trees and with the real src tree; src is only read. ARMED, UNREAD and C1 in the bead's
  * lines are wb-jwc.5's census verdicts; what they rest on is the scan reading this census pins: a gate plant's rewrite
  * reads OPEN through its channel (so a census reading through the const refuses it UNREAD, and its leaf reader reads
  * the rewritten word as a placeholder), a near control reads OPEN through a channel the old scan already followed, and
  * a ctl reads SEALED (so a census reads the committing initializers and arms on them).
  *
- * A READING (each pin's witness, held to WITNESS): per const literal of the pin's tree, in module and source order,
- * `name:sealed`, or `name:open` and the forms that opened it, each `<channel>>...|<use>`, `|heritage` when the
- * reference sits in a class extends expression (channels and uses are SEALED_FORMS and SEALED_USES ids, below);
- * `name+N` when N object or array literals are nested in the const's literal (each sealed or open with it). Each
- * planted pin's witness also carries its page, the digest of its modules (PAGES), so a plant swapped for another case
- * reds its row.
+ * A READING (each pin's witness, held to WITNESS): per root of the pin's tree (each literal Seals.rootOf maps to
+ * itself, in module and source order), `name:` and the scan's verdict, `open` when Seals.open holds the root and
+ * `sealed` when it does not, then the forms Seals.reached records opening it, each `<channel>>...|<use>`,
+ * `|heritage` when the reference sits in a class extends expression (channels and uses are SEALED_FORMS and
+ * SEALED_USES ids, below); `name+N` when rootOf maps N other object or array literals to the root (each sealed or open
+ * with it). The verdict and the records are read apart: a verdict with no opening record (`open` alone) or opening
+ * records with no verdict (`sealed` and forms) differs from every witness and reds its pin. Each planted pin's witness
+ * also carries its page, the digest of its modules (PAGES), so a plant swapped for another case reds its row.
  *
  * THE ROWS (ROWS: one test per planted row and one per pin of HOLLOWINGS, SRC and CLAIM; a row's label is the requirement
  * text it answers, verbatim from the tracker export):
@@ -30,9 +33,11 @@
  *   plants.
  *  HOLLOWINGS, SRC, CLAIM: the Acceptance's three clauses. HOLLOWINGS: every gate plant, placed in the real src tree,
  *   reads exactly as it does alone (each rewrite OPEN, each control SEALED), and every real src module reads exactly as
- *   it does without them. SRC: the real src tree holds no reference through a namespace, an import-equals alias or a
- *   class extends expression today, its scan is live (modules, roots, both readings, the name and import channels in
- *   use), and every FORMS, USES and VISIT plant, placed in it, reads as it does alone. CLAIM: this header's SEALED
+ *   it does without them. SRC: srcTree hands the scan exactly the .ts files under src/ (equal to the census's own
+ *   enumeration, each module its file's text); the scan's records over them hold no reach through a namespace, an
+ *   import-equals alias or a class extends expression today; the scan is live by thresholds (more than 100 modules and
+ *   roots, a sealed and an open verdict, the name and import channels in use; which modules it reads is pinned no
+ *   further); and every FORMS, USES and VISIT plant, placed in it, reads as it does alone. CLAIM: this header's SEALED
  *   paragraph equals SEALED_CLAIM and its LITERAL_READER paragraph equals READER_CLAIM byte-for-byte, the forms and
  *   uses the planted rows measure are exactly SEALED_FORMS and SEALED_USES (each measured by its designated pin
  *   F-<form>, U-<use>), and SUBFORMS answers the claim's sub-form lists (below).
@@ -71,6 +76,9 @@
  *   G3-BO-VAR-CTL already reds this census); W3-BO-FUNCEXPR and W3-BO-ENUM are TS2339 under the repo options, so the
  *   expando witness and F-root-freeze-binds-elsewhere's enum (declared in a function, the freeze at module scope) stand
  *   for them.
+ *  REFUSAL #3 (gate s159, O:1584): its F1 witness WB-AFTER, an Object bound after the freeze, is a pin of this census,
+ *   verbatim (REFUSAL3_PLANTS): F-root-freeze-binds-after, a variable binder. Its U1-U3 are answered by the FAIL-CLOSED
+ *   CORE below; its F2 and F3 are NOT CLAIMED.
  *
  * THE CRITERION (cut #3, the enumerate-the-resolvable cut ruling R-B170 binds under rules 14 and 19(c): refusal #2's
  * class, SUBFORMS claiming more than its pins on four listed sub-forms, frozen at its second failure): SUBFORMS claims
@@ -83,19 +91,29 @@
  * witnesses, a kind's further spellings (a let and a var, a method's parameter, a renamed, an array and a parameter's
  * destructured binding, a nested class and a nested namespace, a renamed named import), a binder in each further scope
  * (a block, a namespace body, a class static block, a for-of head, a catch clause, an arrow function's parameter, a
- * nested function) and a binder elsewhere than the freeze. 'a call written Object.freeze(...)' and 'its one argument'
- * are each held on both sides: F-root-freeze reads a root, and the gate's other-method witness, an element-access, a
- * parenthesized and a globalThis callee, two arguments and a spread argument read none. SEALED_USES (3)'s 'a member or
- * element that is not a string' is held for a property or element whose value is not a string (a number) and for each
- * other member and element kind: an accessor that runs, a getter returning a string, a setter, a method, a shorthand, a
- * spread member, a hole and a spread element. SEALED_USES (4)'s 'the modules it re-exports' is held for export * and
- * for named re-exports (every literal of the module, not only the names re-exported), and its neighbours 'a namespace'
- * (every block of a merged one), 'bare' (a namespace reached through a member read, then used bare), 'its own const
- * literals at any scope' (a module's exported, unexported and function-scope consts) and 'what it imports' (a default
- * import re-exported). Every known unpinned mode is a NAMED RESIDUAL below with a pinned quiet row (R-PATCHED-GLOBAL is
- * this cut's addition), and a newly found escape is a residual-list addition for the owner, not a claim this census
- * makes, unless it contradicts a pinned claim. The battery of record names, member by member, the hollowings each pin
- * was authored red against.
+ * nested function), a binder elsewhere than the freeze and one written after it (refusal #3's F1 witness). 'a call
+ * written Object.freeze(...)' and 'its one argument' are each held on both sides: F-root-freeze reads a root, and the
+ * gate's other-method witness, an element-access, a parenthesized and a globalThis callee, two arguments and a spread
+ * argument read none. SEALED_USES (3)'s 'a member or element that is not a string' is held for a property or element
+ * whose value is not a string (a number) and for each other member and element kind: an accessor that runs, a getter
+ * returning a string, a setter, a method, a shorthand, a spread member, a hole and a spread element. SEALED_USES (4)'s
+ * 'the modules it re-exports' is held for export * and for named re-exports (every literal of the module, not only the
+ * names re-exported), and its neighbours 'a namespace' (every block of a merged one), 'bare' (a namespace reached
+ * through a member read, then used bare), 'its own const literals at any scope' (a module's exported, unexported and
+ * function-scope consts) and 'what it imports' (a default import re-exported). Every known unpinned mode is a NAMED
+ * RESIDUAL below with a pinned quiet row (R-PATCHED-GLOBAL is this cut's addition), and a newly found escape is a
+ * residual-list addition for the owner, not a claim this census makes, unless it contradicts a pinned claim. The
+ * battery of record names, member by member, the hollowings each pin was authored red against.
+ *
+ * FAIL-CLOSED CORE (cut #4, the final cut ruling R-B211 binds at refusal #3, gate s159, O:1584; the structural exit's
+ * child wb-jwc.11 carries refusal #3's U1-U3 coverage past this core): the three claims refusal #3 measured wider than
+ * their readers are each narrowed to what this census reads. The verdict set: each reading takes its verdict from
+ * Seals.open and its forms from Seals.reached (A READING), so a planted pin whose root's verdict moves reds (U1). The
+ * reader: the census passes the default reader only, and SEALED_CLAIM names it; a reader a caller passes in its place
+ * is NOT CLAIMED (U2). The src walk: SRC src-live holds srcTree's modules equal to the census's own enumeration of the
+ * .ts files under src/ and each module to its file's text (U3); which of those modules the scan reads is pinned by
+ * src-live's thresholds only. No sub-form is added: SUBFORMS lists cut #3's sub-forms, and its one new pin, refusal
+ * #3's F1 witness, holds the variable binder (THE CRITERION names it); refusal #3's F2 and F3 are NOT CLAIMED.
  *
  * THE CLAIM (test/helpers/sealed-reference-scan.ts SEALED_CLAIM, held here byte-for-byte; its parts' listed sub-forms are
  * SUBFORMS' rows):
@@ -136,10 +154,12 @@
  * re-exports and what it imports); (5) a namespace import, or an import-equals alias of a module, is re-exported
  * (export { M }, export { M as N }, export import A = M at module scope or namespace scope, export { A } of such an
  * alias, export import M = require(...)), or its module is re-exported by export * as, which opens every literal the
- * module reaches. Any other reference only reads, as the caller's reader decides; a reference the scan does not follow
- * is not judged, and SEALED claims nothing about it.
+ * module reaches. Any other reference only reads, as the default reader, LITERAL_READER, decides (a reader a caller
+ * passes in its place is not claimed); a reference the scan does not follow is not judged, and SEALED claims nothing
+ * about it.
  *
- * THE READER (LITERAL_READER, the census's reader: READER_CLAIM, held here byte-for-byte):
+ * THE READER (LITERAL_READER, the scan's default reader and the only one this census passes: READER_CLAIM, held here
+ * byte-for-byte):
  * LITERAL_READER: a member read chain reads as a string when it denotes a string literal or a no-substitution template
  * as written: a member of a const literal reached through the scan's own forms, the last member of its key, in a
  * literal whose keys all read and that holds no spread, accessor or method member, an element access choosing the
@@ -165,13 +185,17 @@
  *  R-PATCHED-GLOBAL [rows: R-PATCHED-FREEZE, R-PATCHED-ITERATOR]: a built-in the scan reads as written, replaced at run
  *   time: the global Object or its freeze reassigned (the literal handed to Object.freeze(...) still reads as a root)
  *   and the array iterator a spread runs (a spread of strings still only reads).
- * NOT CLAIMED: how wb-jwc.5's census reads once it rides this scan (its file is not on trunk; the cutting seat's
- * differential run over its planted tables is a delivery-note receipt, not a pin); a spelling, binder or member kind of
- * a listed sub-form that no planted pin holds (THE CRITERION); a connective word of a claim part that the part does not
- * list as a sub-form; and edits of this file alone, with no anchor outside it: a planted row that no tracker line
- * names, that is not a designated F-/U- pin and that is not the last pin SUBFORMS names for a sub-form, removed
- * together with its WITNESS, PAGES and SUBFORMS entries and its frozen counts; a residual removed from this paragraph,
- * the roster, WITNESS and PAGES together. The seat battery of record carries their falsifiers.
+ * NOT CLAIMED: how wb-jwc.5's census reads once it rides this scan (its file is not on trunk); a reader a caller passes
+ * in LITERAL_READER's place (refusal #3 U2: wb-jwc.11 carries it); Seals.open's members other than a planted pin's
+ * roots (a real src root's verdict is held only to its own reading without the plants, HOLLOWINGS, and to SRC
+ * src-live's thresholds); which of the modules srcTree hands the scan it reads, past SRC src-live's thresholds
+ * (refusal #3 U3's remainder: wb-jwc.11); a path both trees of an overlay hold (refusal #3 F2); the numbering of a
+ * reached line (refusal #3 F3); a spelling, binder or member kind of a listed sub-form that no planted pin holds (THE CRITERION); a
+ * connective word of a claim part that the part does not list as a sub-form; and edits of this file alone, with no
+ * anchor outside it: a planted row that no tracker line names, that is not a designated F-/U- pin and that is not the
+ * last pin SUBFORMS names for a sub-form, removed together with its WITNESS, PAGES and SUBFORMS entries and its frozen
+ * counts; a residual removed from this paragraph, the roster, WITNESS and PAGES together. The seat battery of record
+ * carries their falsifiers.
  * ANCHORS (outside this file): the tracker export (.beads/issues.jsonl): the bead's description lines and Acceptance
  * clauses and its R-B86 note's member lines are the ROWS' labels verbatim, and every gate plant a label names (G-NS*,
  * P18-*, with the near and ctl a label implies) is a pin of that row; the helper's SEALED_CLAIM, READER_CLAIM,
@@ -183,7 +207,7 @@
  * Display paths added: none. Test-only: every tree is read in memory; nothing is written or run.
  */
 import { createHash } from "node:crypto";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -209,7 +233,7 @@ function constName(root: ts.Node): string {
 function formOf(reach: Reached): string {
   return `${reach.via.join(">")}|${reach.use}${reach.heritage ? "|heritage" : ""}`;
 }
-/** A tree's reading (see the header), over the roots of the modules a path filter keeps. */
+/** A tree's reading (see the header), over the roots of the modules a path filter keeps: each root's verdict read from Seals.open, its opening forms from Seals.reached. */
 function reading(tree: ModuleTree, keep: string | ((path: string) => boolean) = "src/"): string {
   const kept = typeof keep === "string" ? (path: string) => path.startsWith(keep) : keep;
   const seals = sealedScan(tree);
@@ -218,7 +242,8 @@ function reading(tree: ModuleTree, keep: string | ((path: string) => boolean) = 
     if (node !== root || !kept(root.getSourceFile().fileName)) continue;
     const forms = [...new Set(seals.reached.filter((reach) => reach.root === root && reach.use !== undefined).map(formOf))].sort();
     const nested = [...seals.rootOf].filter(([literal, owner]) => owner === root && literal !== root).length;
-    out.push(`${constName(root)}${nested > 0 ? `+${nested}` : ""}:${forms.length === 0 ? "sealed" : `open ${forms.join(",")}`}`);
+    const verdict = seals.open.has(root) ? "open" : "sealed";
+    out.push(`${constName(root)}${nested > 0 ? `+${nested}` : ""}:${verdict}${forms.length === 0 ? "" : ` ${forms.join(",")}`}`);
   }
   return out.join("; ");
 }
@@ -571,6 +596,11 @@ const REFUSAL2_PLANTS: Readonly<Record<string, Modules>> = {
   }),
 };
 
+/** Refusal #3 (gate s159, O:1584): its F1 witness WB-AFTER, verbatim - an Object bound after the freeze, so the literal handed to Object.freeze(...) is no root (the battery of record's GL2-BO-BEFORE-FREEZE reds it). */
+const REFUSAL3_PLANTS: Readonly<Record<string, Modules>> = {
+  "F-root-freeze-binds-after": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nexport function make(): string {\n  const IDS = Object.freeze({ id: "forge.gate.commit" });\n  return IDS.id;\n}\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nconst Object = { freeze: swap };\n' }),
+};
+
 const CONSUME = "function consume(_value: object): void {}\n";
 /** One module per compound assignment operator's const, each written through that operator. */
 const OPERATORS = [
@@ -774,6 +804,7 @@ const OWN_PLANTS: Readonly<Record<string, Modules>> = {
   "U-export-form-reaches": under({ "ids.ts": `import { OTHER } from "./other.js";\n${IDS}export const id: string = OTHER.id;\n`, "other.ts": 'export const OTHER = { id: "forge.gate.other" };\n', "hub.ts": 'export * as all from "./ids.js";\n' }),
   ...REFUSAL1_PLANTS,
   ...REFUSAL2_PLANTS,
+  ...REFUSAL3_PLANTS,
   // VISIT: VISIT-OUT and VISIT-OUT-NAMES hold the root names only where the scan must not visit (each would open a root if
   // it were visited); VISIT-IN holds one value reference per syntactic position, each opening its own root.
   "VISIT-OUT": under({
@@ -940,7 +971,7 @@ const SUBFORMS: readonly Subform[] = [
   { part: "root", sub: "its one argument", pins: ["F-root-freeze"], quiet: ["F-root-freeze-arguments"] },
   { part: "root", sub: "a call written Object.freeze(...)", pins: ["F-root-freeze"], quiet: ["F-root-freeze-other-method", "F-root-freeze-other-spellings"] },
   { part: "root", sub: "the global Object's freeze", pins: ["F-root-freeze"] },
-  { part: "root", sub: "variable", pins: ["F-root-freeze-shadowed", "F-root-freeze-binds-variable-kinds"] },
+  { part: "root", sub: "variable", pins: ["F-root-freeze-shadowed", "F-root-freeze-binds-variable-kinds", "F-root-freeze-binds-after"] },
   { part: "root", sub: "parameter", pins: ["F-root-freeze-binds-parameter", "F-root-freeze-binds-parameter-kinds"] },
   { part: "root", sub: "destructured binding", pins: ["F-root-freeze-binds-binding", "F-root-freeze-binds-binding-kinds"] },
   { part: "root", sub: "function declaration", pins: ["F-root-freeze-binds-function"] },
@@ -1241,6 +1272,7 @@ const OWN_WITNESS: Readonly<Record<string, string>> = {
   "F-root-freeze-binds-binding-kinds": "ARRAY:sealed; DESTRUCTURED:sealed; RENAMED:sealed; holder+1:open name|other",
   "F-root-freeze-binds-nested-declarations": "NESTED_CLASS:sealed; NESTED_SPACE:sealed",
   "F-root-freeze-binds-renamed-import": "RENAMED_IMPORT:sealed; swapper:open import>name|other",
+  "F-root-freeze-binds-after": "KEEP:sealed; Object:open name|other",
   "U-spread-member-kinds": "BASE:sealed; IDS:open name|spread; copy:sealed; IDS:open name|spread; copy:sealed; IDS:open name|spread; copy:sealed; IDS:open name|spread; copy:sealed; IDS:open name|spread; copy:sealed; inner:open name|other; IDS:open name|spread; copy:sealed; BASE:sealed; IDS:open name|spread; copy:sealed",
   "U-whole-module-default-import": "D:open namespace-import|whole",
   "U-whole-module-scopes": "IDS:open namespace-import|whole; HIDDEN:open namespace-import|whole; LOCAL:open namespace-import|whole",
@@ -1477,6 +1509,7 @@ const PAGES: Readonly<Record<string, string>> = {
   "F-root-freeze-binds-binding-kinds": "213dfcdeb2e1d6c4",
   "F-root-freeze-binds-nested-declarations": "3ec4d053336c8c43",
   "F-root-freeze-binds-renamed-import": "1be4179bbe7b7792",
+  "F-root-freeze-binds-after": "11704080265edab8",
   "U-spread-member-kinds": "fadc804171e68142",
   "U-whole-module-default-import": "ed83169c14449551",
   "U-whole-module-scopes": "a03ab0db1e5a68d5",
@@ -1495,6 +1528,13 @@ const ALL_WITNESS: Readonly<Record<string, string>> = { ...WITNESS, ...OWN_WITNE
 function plantReading(pin: string): string {
   const modules = PLANTS[pin];
   return `${reading(plantedTree(modules))} #${pageDigest(modules)}`;
+}
+/** The .ts files under a directory of the repository, enumerated apart from srcTree's walk: each directory read by entry kind, recursively. */
+function srcFiles(dir: string): string[] {
+  return readdirSync(join(REPO, dir), { withFileTypes: true }).flatMap((entry) => {
+    const path = `${dir}/${entry.name}`;
+    return entry.isDirectory() ? srcFiles(path) : entry.isFile() && entry.name.endsWith(".ts") ? [path] : [];
+  });
 }
 /** Where a placed plant's modules go in the real src tree (one directory per pin). */
 const PLACED = "src/workbench/sealed-scan-plants/";
@@ -1590,14 +1630,17 @@ const PIN_CHECKS: Readonly<Record<string, () => void>> = {
     expect(Object.fromEntries(pins.map((pin) => [pin, reading(tree, dirs[pin])]))).toStrictEqual(Object.fromEntries(pins.map((pin) => [pin, WITNESS[pin]])));
     expect(reading(tree, (path) => !path.startsWith(PLACED))).toBe(reading(SRC));
   },
-  // SRC: today no src reference reaches a literal through a namespace, an import-equals alias or a class extends expression.
+  // SRC: today the scan records no src reach through a namespace, an import-equals alias or a class extends expression.
   "src-no-new-channel": () => {
     const novel = sealedScan(SRC).reached.filter((reach) => reach.via.includes("namespace") || reach.via.includes("import-equals") || reach.heritage);
     expect(novel.map((reach) => `${reach.file}:${reach.line} ${formOf(reach)}`)).toStrictEqual([]);
   },
-  // SRC: the scan reads the real tree (modules, roots, both readings, the name and import channels in use).
+  // SRC: srcTree hands the scan exactly the .ts files under src/ (the census's own enumeration), each module its file's
+  // text, and the scan of them is live by thresholds (modules, roots, both verdicts, the name and import channels in use).
   "src-live": () => {
     const tree = SRC;
+    expect(tree.paths()).toStrictEqual(srcFiles("src").sort());
+    expect(tree.paths().filter((path) => tree.module(path)?.text !== readFileSync(join(REPO, path), "utf8"))).toStrictEqual([]);
     const seals = sealedScan(tree);
     const roots = [...seals.rootOf].filter(([node, root]) => node === root).map(([, root]) => root);
     expect({
@@ -1707,14 +1750,14 @@ describe("wb-jwc.8: the SEALED reference scan follows qualified, import-equals, 
       "HOLLOWINGS:1",
       "SRC:3",
       "CLAIM:5",
-      "FORMS:70",
+      "FORMS:71",
       "USES:59",
       "VISIT:3",
       "READER:12",
       "RESIDUALS:20",
     ]);
     expect(SUBFORMS.map((entry) => `${entry.pins.length}+${entry.quiet?.length ?? 0}`).join(" ")).toBe(
-      "1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+1 1+2 1+0 2+0 2+0 2+0 1+0 1+0 2+0 1+0 1+0 2+0 1+0 1+0 2+0 1+0 4+0 2+0 1+0 1+0 1+0 1+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 2+0 2+0 1+0 1+0 2+0 2+0 1+0 2+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 0+1 1+0 1+0 1+0 1+0 1+1 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 0+1 1+0 1+0 1+0 1+0 1+0 5+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0 2+0 2+0 0+1 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 4+0 2+0 2+0 1+0 3+0 1+0 2+0 1+0 3+0 2+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0",
+      "1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+1 1+2 1+0 3+0 2+0 2+0 1+0 1+0 2+0 1+0 1+0 2+0 1+0 1+0 2+0 1+0 4+0 2+0 1+0 1+0 1+0 1+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 2+0 2+0 1+0 1+0 2+0 2+0 1+0 2+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 0+1 1+0 1+0 1+0 1+0 1+1 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 0+1 1+0 1+0 1+0 1+0 1+0 5+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0 2+0 2+0 0+1 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 4+0 2+0 2+0 1+0 3+0 1+0 2+0 1+0 3+0 2+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0",
     );
     expect(Object.keys(PIN_CHECKS)).toStrictEqual(CHECKED_ROWS.flatMap((id) => rowOf(id).pins));
     expect([...PLANTED_ROWS, ...CHECKED_ROWS].sort()).toStrictEqual(ROWS.map((row) => row.id).sort());

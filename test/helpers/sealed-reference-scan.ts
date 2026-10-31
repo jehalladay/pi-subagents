@@ -31,10 +31,18 @@
  * clause lists as sub-forms of their own the one-argument rule and each binder kind of Object bindsObject counts (and
  * the scope rule), so each is claimed exactly as far as its census pins hold it; the scan's behaviour is unchanged.
  *
- * READER: whether a visited reference only reads is the caller's question (ScanReader): a census passes its own value
- * reader (wb-jwc.5's raw-view readString), and LITERAL_READER is the default. The scan returns the same { rootOf, open }
- * shape wb-jwc.5's sealsOf returned, plus the reaches and openings it measured (each with the channels it followed), so
- * a census swaps its own sealsOf for sealedScan(tree, reader) mechanically.
+ * wb-jwc.8 refusal #3 (gate s159) answered here, in the FAIL-CLOSED CORE ruling R-B211 binds: SEALED_CLAIM's reader
+ * clause names the default reader, LITERAL_READER, the only reader the census passes (U2); the census reads the verdict
+ * set open for each pinned root (U1) and holds srcTree's modules to its own enumeration of src (U3); what refusal #3's
+ * members need beyond that is wb-jwc.11's. The doc lines no census pin reads say so (overlayTree's shared paths, F2;
+ * Reached's file and line, F3; Seals.open's other members and Seals.reached's order). Only doc comments and
+ * SEALED_CLAIM's reader clause change here; the scan's behaviour is unchanged.
+ *
+ * READER: whether a visited reference only reads is its reader's question (ScanReader). LITERAL_READER is the default,
+ * and the census claims the scan under it only: a reader a caller passes in its place (wb-jwc.5's raw-view readString)
+ * is not claimed (refusal #3 U2; wb-jwc.11). The scan returns the same { rootOf, open } shape wb-jwc.5's sealsOf
+ * returned, plus the reaches and openings it measured (each with the channels it followed), so a census can take
+ * sealedScan(tree) in place of its own sealsOf; the census reads all three for each pinned root.
  *
  * Test-only: this module reads source text and never runs it.
  */
@@ -45,7 +53,7 @@ import ts from "typescript";
 /** A tree of modules; its .ts modules under src/ are what the scan reads. */
 export interface ModuleTree {
   readonly module: (path: string) => ts.SourceFile | undefined;
-  /** Every module of the tree: the scope of the scan. */
+  /** Every module of the tree: the scope of the scan (the census reads a planted tree's through its pinned readings, and holds srcTree's equal to its own enumeration of src; which of them the scan reads is pinned for src by src-live's thresholds only). */
   readonly paths: () => readonly string[];
 }
 
@@ -65,7 +73,7 @@ export function plantedTree(modules: Readonly<Record<string, string>>): ModuleTr
   return { module: (path) => (inTree(path) ? files.get(path) : undefined), paths: () => paths };
 }
 
-/** A repository's src tree: every .ts module under <repo>/src, each parsed once. */
+/** A repository's src tree: every .ts module under <repo>/src, each parsed once (the census holds the set to its own enumeration of src, and each module to its file's text). */
 export function srcTree(repo: string): ModuleTree {
   const parsed = new Map<string, ts.SourceFile>();
   let paths: readonly string[] | undefined;
@@ -90,7 +98,7 @@ export function srcTree(repo: string): ModuleTree {
   };
 }
 
-/** A tree carrying planted modules beside (or in place of) another tree's modules: a real src tree with a plant in it. */
+/** A tree carrying planted modules beside another tree's modules: a real src tree with a plant in it. The census plants at paths the other tree does not hold; a path both trees hold is not claimed (refusal #3 F2). */
 export function overlayTree(base: ModuleTree, modules: Readonly<Record<string, string>>): ModuleTree {
   const planted = plantedTree(modules);
   const paths = [...new Set([...base.paths(), ...planted.paths()])].sort();
@@ -330,7 +338,7 @@ function joined(parts: readonly ClaimPart<string>[]): string {
 }
 
 /** THE CLAIM, byte-for-byte: the census's header holds this paragraph, and its planted rows hold each listed sub-form's pinned readings. */
-export const SEALED_CLAIM = `SEALED: ${SEALED_ROOT.text}, is sealed while no reference the scan visits opens it. ${SEALED_VISIT.text} From each it follows exactly these forms to a const literal: ${joined(SEALED_FORMS)}. A reference reaching a literal opens it when ${joined(SEALED_USES)}. Any other reference only reads, as the caller's reader decides; a reference the scan does not follow is not judged, and SEALED claims nothing about it.`;
+export const SEALED_CLAIM = `SEALED: ${SEALED_ROOT.text}, is sealed while no reference the scan visits opens it. ${SEALED_VISIT.text} From each it follows exactly these forms to a const literal: ${joined(SEALED_FORMS)}. A reference reaching a literal opens it when ${joined(SEALED_USES)}. Any other reference only reads, as the default reader, LITERAL_READER, decides (a reader a caller passes in its place is not claimed); a reference the scan does not follow is not judged, and SEALED claims nothing about it.`;
 
 /* ---------------------------------------------------------------- resolution */
 
@@ -536,7 +544,7 @@ function everyRoot(r: Resolver, entity: Entity, seen: Set<ts.Node | string>): Li
 
 /* ---------------------------------------------------------------- the reader */
 
-/** How the scan asks whether a visited reference only reads: the caller's value reader. */
+/** How the scan asks whether a visited reference only reads: the value reader it is handed (LITERAL_READER unless a caller passes another; the census passes no other, so only LITERAL_READER is claimed). */
 export interface ScanReader {
   /** Whether a member read chain reads as a string where it is used. */
   readonly readsString: (chain: ts.Expression, file: ts.SourceFile, tree: ModuleTree) => boolean;
@@ -616,9 +624,9 @@ export const LITERAL_READER: ScanReader = {
 /** A visited reference that reached a const literal. */
 export interface Reached {
   readonly root: ts.Node;
-  /** The module holding the reference. */
+  /** The module holding the reference: like the line, printed only beside a src-no-new-channel failure, so not claimed. */
   readonly file: string;
-  /** The 1-based line of the reference. */
+  /** The line of the reference: the census prints it only beside a src-no-new-channel failure, so its numbering is not claimed (refusal #3 F3). */
   readonly line: number;
   /** The channels the reference followed to the literal, in order. */
   readonly via: readonly Link[];
@@ -630,9 +638,9 @@ export interface Reached {
 export interface Seals {
   /** Each const's own literal, and every literal nested in one, mapped to its root (the const's literal). */
   readonly rootOf: Map<ts.Node, ts.Node>;
-  /** The roots a reference leaves open. */
+  /** The roots a reference leaves open (the census reads it for each planted pin's roots, and a real src root's only against its own reading and src-live's thresholds; any other member is not claimed). */
   readonly open: Set<ts.Node>;
-  /** Every visited reference that reached a root, in module and source order. */
+  /** The visited references that reached a root: the census reads the roots, uses, channels and heritage they record (a pinned tree's opening ones, and over src every one's channels and heritage); their order, file and line are not claimed. */
   readonly reached: readonly Reached[];
 }
 
