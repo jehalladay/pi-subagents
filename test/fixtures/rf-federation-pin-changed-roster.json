@@ -488,6 +488,83 @@
         "composed": 0,
         "launches": 1
        },
+       "afterSiblingInObjectScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "afterSiblingInArrayScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "beforeSiblingInObjectScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "beforeSiblingInArrayScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "outerArrayDefaultScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "outerObjectDefaultScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "restNestScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "computedKeyScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "numericKeyScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "stringKeyScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "holeBeforeNestScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
        "commaAlias": {
         "render": 0,
         "uncommitted": 0,
