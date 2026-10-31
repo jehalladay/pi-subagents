@@ -476,6 +476,7 @@
     "P-NESTED-SKIPPED-NAME": true,
     "P-ROOT-MODULE": true,
     "P-NAME-NOT-UTF8": true,
+    "P-NO-TEXT": true,
     "Q-OUTSIDE": false,
     "Q-NONMODULE": false
    }
