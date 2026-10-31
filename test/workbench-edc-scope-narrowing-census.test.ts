@@ -67,14 +67,24 @@
  *    cases, the carriers of each case reading every stem and every axis; after the carrier's first letter and before its last, the
  *    first spelling of each kind pinned by code point: written), and every precomposed letter (a code point whose NFKD is one
  *    ASCII letter and one or more marks) written for the first occurrence of its letter in every carrier that holds it, must read
- *    what its carrier reads - the stems through stemsIn (A1), the axis words through axesOf (D1). A text is read as the compiler
- *    reads it, and the census claims that reading for exactly these forms, each pinned by its SOURCE_CONTROLS row: an identifier's
- *    and a private name's unicode escape (identifier-escape, private-name-escape) and the hex escape of a string (string-escape),
- *    a no-substitution template (no-substitution-escape) and a template's head, middle and tail (template-escape,
- *    template-middle-escape, template-tail-escape) are decoded (\x45DC reads EDC). R-ESCAPED's seven members (below: three escapes
- *    in a regular-expression literal, two character references in JSX text and two in a JSX attribute's string) are read as
- *    written, never decoded, each pinned by its Q15 probe. How any other escape or reference spelling is read, at those sites or
- *    anywhere else, is NOT CLAIMED by this census. Any mention reads the adoption PRESENT.
+ *    what its carrier reads - the stems through stemsIn (A1), the axis words through axesOf (D1). THE DECODED TEXTS (wb-a6m9 cut
+ *    #4, the enumerate-the-resolvable cut R-B212 binds; refusal #3's U1 and U2): the census claims that a text is read decoded,
+ *    as the compiler reads it (\x45DC reads EDC), only for the escaped text of each of the sixteen escape rows of SOURCE_CONTROLS,
+ *    as the row writes it - at its one site, in its one quoting and through its one escape, the row read on its own as a module
+ *    of one line (A1's controls.sources; a row name carries no extension, so the TS script kind). The rows, by site: a unicode
+ *    escape (\u0045, and \u0065 in the private name) in a const declaration's name (identifier-escape), in a class field's
+ *    private name (private-name-escape), in a property-access name (property-access-escape) and in a named import's and a named
+ *    export-from's specifier name (import-name-escape, export-name-escape); a hex escape (\x45) in a double-quoted and a
+ *    single-quoted string (string-escape, single-quoted-escape), in an untagged template with no substitution
+ *    (no-substitution-escape) and in a template's head, middle and tail (template-escape, template-middle-escape,
+ *    template-tail-escape), each initializing a const declaration, in the double-quoted module specifier of a named import and
+ *    of a named export-from (import-escape, export-from-escape), in a dynamic import's double-quoted specifier
+ *    (dynamic-import-escape), in a double-quoted string key of an object literal (property-key-escape) and in a double-quoted
+ *    string literal type (literal-type-escape). R-ESCAPED's seven members (below: three escapes in a regular-expression literal,
+ *    two character references in JSX text and two in a JSX attribute's string) are read as written, never decoded, each pinned
+ *    by its Q15 probe. How a text is read at any other site, in any other quoting, through any other escape or reference
+ *    spelling, beside a second escape in the same text, in a module holding more than the row's one line, or under another
+ *    module name or script kind, is NOT CLAIMED by this census. Any mention reads the adoption PRESENT.
  *  - D, the artifact. THE FORMS (DECLARATION_FORMS; the claim is exactly these seven forms, each pinned by its TRIPLE_CONTROLS
  *    rows): a name-carrying declaration is a node of one of the forms, read by its names -
  *     (1) members: an interface, a type literal or a class (declaration or expression) - its members' written names (properties,
@@ -1074,9 +1084,11 @@ const ENCLOSING_CIRCLE = String.fromCodePoint(0x20dd);
 const CAPITAL_E_ACUTE = String.fromCodePoint(0x00c9);
 const SMALL_E_ACUTE = String.fromCodePoint(0x00e9);
 const SMALL_I_DIAERESIS = String.fromCodePoint(0x00ef);
-/** Synthetic modules the adoption reader must read exactly as pinned (each a module body; none is compiled or run). The escape
- * rows pin the decoded forms the header names, one row per form (the private-name, no-substitution, template-middle and
- * template-tail rows since cut #3, refusal #2's U2). */
+/** Synthetic modules the adoption reader must read exactly as pinned (each a module body; none is compiled or run). The sixteen
+ * escape rows are the texts THE DECODED TEXTS claims, one row per site (the private-name, no-substitution, template-middle and
+ * template-tail rows since cut #3, refusal #2's U2; the import, export-from and dynamic-import specifier, string property key,
+ * string literal type, single-quoted string, property-access name and import and export specifier name rows since cut #4, the
+ * sites refusal #3's U1 and U2 name). */
 const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   identifier: "const EdcAssembler = 1;",
   string: `const label = "evidence-directed context";`,
@@ -1102,6 +1114,15 @@ const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   "no-substitution-escape": "const label = `\\x45DC scope`;",
   "template-middle-escape": `const label = \`\${first} \\x45DC \${second} scope\`;`,
   "template-tail-escape": `const label = \`\${name} \\x45DC scope\`;`,
+  "import-escape": 'import { assemble } from "\\x45DC-scope";',
+  "export-from-escape": 'export { assemble } from "\\x45DC-scope";',
+  "dynamic-import-escape": 'const load = () => import("\\x45DC-scope");',
+  "property-key-escape": 'const table = { "\\x45DC scope": 1 };',
+  "literal-type-escape": 'type Label = "\\x45DC scope";',
+  "single-quoted-escape": "const label = '\\x45DC scope';",
+  "property-access-escape": "const value = host.\\u0045dcAssembler;",
+  "import-name-escape": 'import { \\u0045dcAssembler } from "./scope";',
+  "export-name-escape": 'export { \\u0045dcAssembler } from "./scope";',
 };
 /** Synthetic manifests the adoption reader must read exactly as pinned. */
 const MANIFEST_CONTROLS: Readonly<Record<string, string>> = {

@@ -24,7 +24,11 @@
  * cut #3 (seat ws-03, run g10-work-s160, 2026-10-31, on trunk 379a945): the same 81 pages and 117 modules, each read once through
  * THE PLANTED READING, whose module plant now also carries the zero-width, full-width, precomposed, noncomposing, spacing,
  * enclosing and joined-mark controls and the private-name, no-substitution, template-middle and template-tail escape controls,
- * with no mention.
+ * with no mention; and at its cut #4 (seat ws-06, run g10-work-s171, 2026-10-31, on trunk f63d389): the same 81 pages and 117
+ * modules, each read once through THE PLANTED READING, whose module plant now also carries the import, export-from and
+ * dynamic-import specifier, string property key, string literal type, single-quoted string, property-access name and import
+ * and export specifier name escape controls and whose page plant now also carries the hex character reference control, with no
+ * mention.
  *
  * THE VOCABULARY: both stems are derived from the title's charter path (docs/programs/<slug>-<date>.md, slug
  * evidence-directed-computation): its INITIALS, the acronym the title spells (edc, read as a whole word or its plural "edcs"), and
@@ -62,14 +66,26 @@
  *  - ADOPTION: package.json read whole (every key and string, parsed, and its raw text, so a shadowed duplicate key is read too)
  *    and package-lock.json's installed package paths and names (never its integrity hashes); every script module below src (.ts
  *    .mts .cts .tsx .js .mjs .cjs .jsx; 116 .ts modules at the cut) through its TypeScript AST: identifiers, private names,
- *    string, template and regular-expression literal texts (so every import, export and dynamic-import specifier) and JSX text,
- *    never a comment. A text is read as the compiler reads it, and the census claims that reading for exactly these forms, each
- *    pinned by its SOURCE_CONTROLS row (A3): an identifier's and a private name's unicode escape (identifier-escape,
- *    private-name-escape) and the hex escape of a string (string-escape), a no-substitution template (no-substitution-escape) and
- *    a template's head, middle and tail (template-escape, template-middle-escape, template-tail-escape) are decoded (\x45DC reads
- *    EDC). R-ESCAPED's seven src members (below: three escapes in a regular-expression literal, two character references in JSX
- *    text and two in a JSX attribute's string) are read as written, never decoded, each pinned by its Q7 probe. How any other
- *    escape or reference spelling is read, at those sites or anywhere else, is NOT CLAIMED by this census.
+ *    string, template and regular-expression literal texts (among them the module specifiers the import-specifier, import-escape
+ *    and export-from-escape rows write and the specifiers the dynamic-import and dynamic-import-escape rows write, each pinned by
+ *    its A3 row; cut #4 narrows ADOPTION's specifier phrase to these rows, refusal #3's U1) and JSX text, never a comment. THE
+ *    DECODED TEXTS (wb-a6m9 cut #4, the enumerate-the-resolvable cut R-B212 binds; refusal #3's U1 and U2): the census claims
+ *    that a text is read decoded, as the compiler reads it (\x45DC reads EDC), only for the escaped text of each of the sixteen
+ *    escape rows of SOURCE_CONTROLS, as the row writes it - at its one site, in its one quoting and through its one escape, the
+ *    row read on its own as a module of one line (A3's sources; a row name carries no extension, so the TS script kind). The
+ *    rows, by site: a unicode escape (\u0045, and \u0065 in the private name) in a const declaration's name (identifier-escape),
+ *    in a class field's private name (private-name-escape), in a property-access name (property-access-escape) and in a named
+ *    import's and a named export-from's specifier name (import-name-escape, export-name-escape); a hex escape (\x45) in a
+ *    double-quoted and a single-quoted string (string-escape, single-quoted-escape), in an untagged template with no
+ *    substitution (no-substitution-escape) and in a template's head, middle and tail (template-escape, template-middle-escape,
+ *    template-tail-escape), each initializing a const declaration, in the double-quoted module specifier of a named import and
+ *    of a named export-from (import-escape, export-from-escape), in a dynamic import's double-quoted specifier
+ *    (dynamic-import-escape), in a double-quoted string key of an object literal (property-key-escape) and in a double-quoted
+ *    string literal type (literal-type-escape). R-ESCAPED's seven src members (below: three escapes in a regular-expression
+ *    literal, two character references in JSX text and two in a JSX attribute's string) are read as written, never decoded, each
+ *    pinned by its Q7 probe. How a text is read at any other site, in any other quoting, through any other escape or reference
+ *    spelling, beside a second escape in the same text, in a module holding more than the row's one line, or under another
+ *    module name or script kind, is NOT CLAIMED by this census.
  *  - THE TRACKED LISTING (wb-0st4, restated by wb-kv0y): git's index (git ls-files -z) is the walks' independent anchor. The
  *    claim-page walk equals git's tracked claim pages, both ways (B1). The pages B2 judges and the src modules A2 judges each equal
  *    git's tracked paths of the same scope, both ways, and a reading records a file only through its judgment's own output
@@ -131,13 +147,16 @@
  *     written after its letter, and the precomposed U+00C9 (precomposed). The marks and the precomposed letter came with wb-a6m9:
  *     every one of them to the page plant at cut #2; to the module plant U+0301 at cut #2 and the rest, with the zero-width space
  *     and the full-width letters, at cut #3 (refusal #2's F4: at cut #2 the module plant's one mark was U+0301, so a skip of the
- *     src texts holding a spacing or an enclosing mark stayed green). The module plant also carries a stem through the seven
+ *     src texts holding a spacing or an enclosing mark stayed green). The module plant also carries a stem through the sixteen
  *     escapes ADOPTION names as decoded (a string's and a template head's hex escape and an identifier's unicode escape since cut
  *     #2; a no-substitution template's and a template middle's and tail's hex escape and a private name's unicode escape since cut
- *     #3), and the page plant through a decimal character reference (numeric-reference). A skip of the texts or blocks holding one
- *     of these in some files of the scope reds A2 or B2 through unjudged (the same skip in every file reds them through the
- *     plant's own count and the control's own reading, own); for each spelling a wb-a6m9 cut added, the census before that cut
- *     stayed green under the same skip;
+ *     #3; since cut #4, refusal #3's U1 and U2, the hex escape of a single-quoted string, of an import's and an export-from's
+ *     module specifier, of a dynamic import's specifier, of a string property key and of a string literal type, and the unicode
+ *     escape of a property-access name and of an import's and an export's specifier name), and the page plant through a decimal
+ *     character reference (numeric-reference) and, since cut #4 (refusal #3's F7), a hex one (hex-reference). A skip of the texts
+ *     or blocks holding one of these in some files of the scope reds A2 or B2 through unjudged (the same skip in every file reds
+ *     them through the plant's own count and the control's own reading, own); for each spelling a wb-a6m9 cut added, the census
+ *     before that cut stayed green under the same skip;
  *  K4 it skips the judgment of the whole handed text of a file selected by that text's size, content or list place (refusal #1's G1,
  *     G2 and G3 family), or judges a handed text, or one form in it that a control carries a stem in, only up to before its end or
  *     only from after its start (refusal #1's U2 members G10 and G11 truncate one form's tail).
@@ -166,9 +185,9 @@
  * extent-keyed skip the control run shares reds through own); a judgment that skips some or all of a file's own texts or blocks,
  * selected by their content or by their place strictly between the plant's two ends (the plant stands in for each control form at a
  * file's two ends, not for every text the file holds); a judged form no control carries a stem in (a mark, a format control or a
- * compatibility spelling other than the code points K3 names, an escape other than the seven K3 names, a character reference
- * other than the page plant's decimal one, and a named character reference), skipped for part or all of the scope, and JSX text,
- * which no tracked src module holds at the cut;
+ * compatibility spelling other than the code points K3 names, an escape other than the sixteen K3 names, a character reference
+ * other than the page plant's decimal and hex ones, and a named character reference), skipped for part or all of the scope, and
+ * JSX text, which no tracked src module holds at the cut;
  * a case that drops part of the file's own findings after splitByPlant returns them,
  * or a verdict helper (unjudgedOf, unwrappedOf) that returns an empty list without reading (the partial forms of a case that echoes
  * its witness; a dropped record reds through git's listing); the text reader DISK_TEXT handing the planted reading and the
@@ -279,7 +298,8 @@ const VISARGA = String.fromCodePoint(0x0903);
 const ENCLOSING_CIRCLE = String.fromCodePoint(0x20dd);
 const CAPITAL_E_ACUTE = String.fromCodePoint(0x00c9);
 
-/** Synthetic pages the page reader must read exactly as pinned: every claim block kind, each carrying a stem once. */
+/** Synthetic pages the page reader must read exactly as pinned: every claim block kind, each carrying a stem once (the
+ * hex-reference page since wb-a6m9 cut #4, refusal #3's F7). */
 const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   heading: "# EDC adoption\n",
   paragraph: "Evidence-directed context assembly ships today.\n",
@@ -295,6 +315,7 @@ const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   "emphasis-split": "**Evidence**-*directed* assembly ships.\n",
   strikethrough: "~~EDC~~ shipped.\n",
   "numeric-reference": "E&#68;C integration ships.\n",
+  "hex-reference": "E&#x44;C integration ships.\n",
   "soft-break": "The evidence-\ndirected assembly ships.\n",
   "zero-width": `E${ZWSP}DC integration ships.\n`,
   "full-width": `${FULL_WIDTH_EDC} integration ships.\n`,
@@ -348,7 +369,10 @@ const LOCK_CONTROLS: Readonly<Record<string, JsonObject>> = {
 };
 /** Synthetic modules the source reader must read exactly as pinned (each a module body; none is compiled or run). Since cut #3
  * they carry the page plant's vocabulary spellings (zero-width through joined-mark; refusal #2's F4) and one row per escape form
- * ADOPTION names as decoded (the private-name, no-substitution, template-middle and template-tail rows; refusal #2's U2). */
+ * ADOPTION names as decoded (the private-name, no-substitution, template-middle and template-tail rows; refusal #2's U2), and since
+ * cut #4 one row per site refusal #3's U1 and U2 name (the import, export-from and dynamic-import specifier, string property key,
+ * string literal type and single-quoted string rows, and the property-access name and import and export specifier name rows),
+ * which the module plant carries too. */
 const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   identifier: "const EdcAssembler = 1;",
   string: `const label = "evidence-directed context";`,
@@ -374,6 +398,15 @@ const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   "no-substitution-escape": "const label = `\\x45DC ships`;",
   "template-middle-escape": `const label = \`\${first} \\x45DC \${second} ships\`;`,
   "template-tail-escape": `const label = \`\${name} \\x45DC ships\`;`,
+  "import-escape": 'import { assemble } from "\\x45DC-ships";',
+  "export-from-escape": 'export { assemble } from "\\x45DC-ships";',
+  "dynamic-import-escape": 'const load = () => import("\\x45DC-ships");',
+  "property-key-escape": 'const table = { "\\x45DC ships": 1 };',
+  "literal-type-escape": 'type Label = "\\x45DC ships";',
+  "single-quoted-escape": "const label = '\\x45DC ships';",
+  "property-access-escape": "const value = host.\\u0045dcAssembler;",
+  "import-name-escape": 'import { \\u0045dcAssembler } from "./ships";',
+  "export-name-escape": 'export { \\u0045dcAssembler } from "./ships";',
 };
 /** THE PLANTED READING's plants (wb-kv0y): each wraps a file's own text as `${first}${gap}${text}${gap}${last}`. The first part is
  * the reader's own controls; the last part is the same controls again and one mention of the modifier (cut #2), so each form a
