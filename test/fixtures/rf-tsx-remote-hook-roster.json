@@ -1270,6 +1270,30 @@
                 "satisfies": "1|0",
                 "angle": "1|0"
               }
+            },
+            "refusedImports": {
+              "after directive": "0|1",
+              "after constDeclaration": "0|1",
+              "after call": "0|1",
+              "after typeAlias": "0|1",
+              "after interface": "0|1",
+              "after functionDeclaration": "0|1",
+              "after functionWithBody": "0|1",
+              "after empty": "0|1",
+              "after reExport": "0|1",
+              "after importEquals": "0|1",
+              "after otherNamed": "0|1",
+              "after otherTypeOnly": "0|1",
+              "after otherBare": "0|1",
+              "late type-only": "0|1",
+              "late bare": "0|1",
+              "late namespace": "0|1",
+              "late default": "0|1",
+              "two late": "0|2",
+              "default beside named": "0|1",
+              "default beside namespace": "0|1",
+              "run after a default beside named": "0|1",
+              "leading run": "0|0"
             }
           }
         }

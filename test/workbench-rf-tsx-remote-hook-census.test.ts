@@ -42,36 +42,58 @@
  *    SHIPPED_OTHERWISE, so a note appended beside the owner's sentence is read); a re-measure that ships the hook flips C1 red
  *    until (b) and (c) land with it. C2 the rf-tsx tier (the files vitest.rf-tsx.config.ts includes, run by forge.toml's
  *    rf-preview-tsx command) registers exactly its two R9 rows: every reference to a row registrar (ROW_REGISTRARS, by its
- *    own name where no import declaration from vitest binds that name to a value otherwise, by a renamed vitest import or
- *    as a vitest namespace member) is read through its whole head - a modifier member (concurrent, fails, sequential and
+ *    own name where no vitest import declaration C2 reads binds that name to a value otherwise, by a renamed vitest import
+ *    or as a vitest namespace member) is read through its whole head - a modifier member (concurrent, fails, sequential and
  *    the rest, by property or by element access) or a condition's call registers one row, a table factory
  *    (TABLE_FACTORIES) one per entry and an API factory (API_FACTORIES) a further registrar - and a one-row head is a row
  *    only where it runs once, in the file body or in the body of a one-row suite (SUITE_REGISTRARS); every other reference
  *    (a table or API factory, an alias, an argument, a row in a loop, a branch, a table suite, a row's callback or another
- *    function) is unaccounted, a finding. Which callee heads a suite (suiteReference()) is pinned on both sides by C2's
- *    HEAD SHAPES: every registrar's root - its own name (a global, or a vitest import), a renamed vitest import under a
- *    local name no registrar has (renamed), a vitest namespace's member by property or by element access (the namespace's
- *    local name vt) - bare and under each single step (the concurrent modifier by property or by element access, the
- *    run-if condition's call, parentheses, or a non-null, as, satisfies or angle-bracket assertion) heads a suite for a
- *    suite registrar and none for a row registrar, so a row in the callback of such a row's head is unaccounted. An import
- *    declaration from vitest binds each value import's local name to what it imports, shadowing the name's own-name
- *    reading (registrarBindings()): C2's SHADOW SHAPES pin both readings (does the name head a row, does it head a suite)
- *    for each registrar's own name (it, test, describe, suite) as the local name of each of eight import forms - a named
- *    import of each other registrar (a row registrar's import heads a row and no suite, a suite registrar's a suite and no
- *    row), a named import of expect and a default import (neither), a namespace import (neither: its it member reads as a
+ *    function) is unaccounted, a finding. C2 claims to read a vitest import declaration only where it sits in the module's
+ *    leading run of them (no statement that is not a vitest import declaration precedes it; a comment is no statement)
+ *    and its clause binds one kind (a default import alone, a namespace import alone, or named bindings). It REFUSES,
+ *    fail-closed, the other vitest import declarations its REFUSED IMPORTS spell: refusedVitestImports() names each one and
+ *    tierReadingOf() reports it unaccounted, so a tier holding one reds C2 whatever its rows read, and what
+ *    registrarBindings() reads from a module holding one is NOT CLAIMED by this census. C2's REFUSED IMPORTS pin one
+ *    refusal after each statement of their `before` table, each exactly as it spells it ('"use strict";', 'const title =
+ *    "s";', 'setup();', 'type Api = unknown;', 'interface Api {}', 'function setup(): void {}', a function setup with a
+ *    one-call body, ';', 'export { helper } from "./helpers/rows.js";', 'import fs = require("node:fs");', 'import {
+ *    helper } from "./helpers/rows.js";', 'import type { Api } from "./helpers/rows.js";' and 'import
+ *    "./helpers/setup.js";'), before the same named vitest import; one for each late type-only, bare, namespace and
+ *    default vitest import after 'const title = "s";', as the table spells each; two for two late declarations; one for a
+ *    default import beside named bindings and for one beside a namespace import; and none for the declaration that
+ *    follows such a clause in the leading run. Their leading run (named, type-only, namespace, default and bare vitest
+ *    imports, then another module's import and a const declaration) reads no refusal, as no C2 control, HEAD SHAPES or
+ *    SHADOW SHAPES source does. Whether C2 refuses a vitest import declaration that the REFUSED IMPORTS do not spell, or
+ *    one after a statement or module specifier they do not spell - another statement kind (a class), another spelling of
+ *    a kind they spell (a let declaration, a call with an argument), another late or combined clause - is NOT CLAIMED by
+ *    this census, and C2 claims no reading of such a declaration either way; wb-6fr4 is the home of reading the refused
+ *    forms (refusal #3 of wb-8avz: an import scan that stops at the first statement that is no import declaration, or at
+ *    the first import from another module, and a default import beside other bindings). Which callee
+ *    heads a suite (suiteReference()) is pinned on both sides by C2's HEAD SHAPES: every registrar's root - its own name (a
+ *    global, or a vitest import), a renamed vitest import under a local name no registrar has (renamed), a vitest
+ *    namespace's member by property or by element access (the namespace's local name vt) - bare and under each single
+ *    step (the concurrent modifier by property or by element access, the run-if condition's call, parentheses, or a
+ *    non-null, as, satisfies or angle-bracket assertion) heads a suite for a suite registrar and none for a row registrar,
+ *    so a row in the callback of such a row's head is unaccounted. A vitest import declaration C2 reads binds each value
+ *    import's local name to what it imports, shadowing the name's own-name reading (registrarBindings()): C2's SHADOW
+ *    SHAPES pin both readings (does the name head a row, does it head a suite) for each registrar's own name (it, test,
+ *    describe, suite) as the local name of each of eight import forms - a named import of each other registrar (a row
+ *    registrar's import heads a row and no suite, a suite registrar's a suite and no row), a named import of expect and a
+ *    default import (neither), a namespace import (neither: its it member reads as a
  *    row, the steps' concurrent and run-if members name no registrar, and called, parenthesized or asserted whole it is
  *    unaccounted), and a type-only import clause and a type-only specifier of the other kind's first registrar, describe
  *    under a row registrar's name and it under a suite registrar's (no value bound, the own-name reading kept) - bare and
  *    under each single step above, each form's import placed between two other vitest imports (two specifiers of its
  *    declaration, or two declarations); C2's shadow controls pin bare heads beside them, with the shadow alone, first or
- *    last among its declaration's specifiers and its declaration first or last. Not claimed (any reading of C2): a head
- *    under two or more steps; a step through another member or condition; a local name the pins do not spell (they spell
- *    renamed and row for a renamed import, vt for a namespace, and the four registrars' own names); an import form or
- *    imported name they do not spell (a specifier naming a string, a named import other than a registrar's or expect's, a
- *    type-only import other than describe's or it's); or two imports binding one local name. An import C2 does not read
- *    (another module's, an import-equals) leaves the own-name reading in place (R-HELPER). And no literal in it names a
- *    federated import, the hook, network, a read-set, a resolved revision or an imported dependency (CLAIM_FAMILY), so no
- *    tier row claims (b) or (c) before the contract ships.
+ *    last among its declaration's specifiers and its declaration first or last. C2 claims these readings for the forms
+ *    its pins spell and for no other: a form they do not spell is NOT CLAIMED by this census (any reading of C2), among
+ *    them a head under two or more steps; a step through another member or condition; a local name the pins do not spell
+ *    (they spell renamed and row for a renamed import, vt for a namespace, and the four registrars' own names); an import
+ *    form or imported name they do not spell (a specifier naming a string, a named import other than a registrar's or
+ *    expect's, a type-only import other than describe's or it's); two imports binding one local name; and every vitest
+ *    import declaration C2 refuses. An import C2 does not read (another module's, an import-equals) leaves the own-name
+ *    reading in place (R-HELPER). And no literal in it names a federated import, the hook, network, a read-set, a resolved
+ *    revision or an imported dependency (CLAIM_FAMILY), so no tier row claims (b) or (c) before the contract ships.
  * THE WALK: every regular file below the repository root, at any depth, in name order. The root entries SKIPPED_ROOTS (git's
  * data, the tracker export - bead rows quote the statement -, installed dependencies, build, coverage and Forge outputs) are
  * skipped at the root only; the two EXEMPT files are walked but not judged. It reads the working tree, so an untracked plant
@@ -133,16 +155,23 @@
  * verbatim (a modifier and a condition head by name, a namespace row member by element access and under a modifier) - and
  * C2's HEAD SHAPES, which pin suiteReference() on both sides for every registrar root (the renamed root under the local
  * name renamed) bare and under each single step; made registrarBindings() shadow-aware, so the local name of a value
- * import in an import declaration from vitest reads as what it imports - a row registrar imported under a suite
- * registrar's name a row only (U4), a suite registrar under a row registrar's name a suite only (F1) - with a shadow
- * control per import form and name kind (bare heads); and named a row's callback in the unaccounted reason of a row that
- * does not run once (F3). Cut #3 answers refusal #2 (U1-U2) under ruling R-B139: C2's SHADOW SHAPES pin both readings for
- * each registrar's own name as the local name of each of the eight import forms the header lists, bare and under each
+ * import in an import declaration from vitest (one C2 reads, since cut #4) reads as what it imports - a row registrar
+ * imported under a suite registrar's name a row only (U4), a suite registrar under a row registrar's name a suite only
+ * (F1) - with a shadow control per import form and name kind (bare heads); and named a row's callback in the unaccounted
+ * reason of a row that does not run once (F3). Cut #3 answers refusal #2 (U1-U2) under ruling R-B139: C2's SHADOW SHAPES
+ * pin both readings for each registrar's own name as the local name of each of the eight import forms the header lists,
+ * bare and under each
  * single step (each form's import between two other vitest imports; two shadow controls place a shadow last), so an
  * own-name suite reading under a step (U1, the gate's X1) and an own-name row reading under a step (U2, X3) each red C2;
- * the header's Not-claimed list names what no pin reads (two or more steps, another member or condition, a local name, an
- * import form or an imported name the pins do not spell, two imports binding one local name); and R-HELPER names its other
- * way, a registrar's own name bound by an import C2 does not read, with two quiet rows (helperOwnName, requireOwnName).
+ * the header's Not-claimed list named two or more steps, another member or condition, a local name, an import form or an
+ * imported name the pins do not spell, and two imports binding one local name; and R-HELPER names its other way, a
+ * registrar's own name bound by an import C2 does not read, with two quiet rows (helperOwnName, requireOwnName). Cut #4
+ * answers refusal #3 (U1-U3: the list omitted where a vitest import sits and a default import beside other bindings, so
+ * the gate's M1, M2 and M3 left the census green on its live plants P-STMT, P-OTHER and P-DEFAULT) under ruling R-B179's
+ * fail-closed core: C2 claims to read a vitest import declaration only in the module's leading run and only where its
+ * clause binds one kind, and refuses the others its REFUSED IMPORTS spell (refusedVitestImports(), unaccounted; 22
+ * readings), so each of those plants reds C2 under the real reader and under its member; every C2 claim names the forms
+ * its pins spell, a form they do not spell is NOT CLAIMED, and wb-6fr4 carries the reading of the refused forms.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -705,7 +734,10 @@ interface RegistrarBindings {
   readonly namespaces: ReadonlySet<string>;
 }
 /** The names a module binds to vitest's registrars: each registrar's own name (a global or a plain import), a renamed import
- * from vitest, and a vitest namespace import (whose registrar members are read). An import declaration from vitest binds
+ * from vitest, and a vitest namespace import (whose registrar members are read). It scans every vitest import declaration,
+ * and C2 claims what it reads only from the declarations C2 claims to read - the module's leading run of them, each clause
+ * of one kind; tierReadingOf() refuses the others C2's REFUSED IMPORTS spell (refusedVitestImports()), and what this scan
+ * reads from a module holding one is NOT CLAIMED by this census (wb-6fr4). A vitest import declaration C2 reads binds
  * each value import's local name to what it imports and to nothing else, shadowing that name's own-name reading (wb-8avz
  * refusal #1 U4 and F1; an import it does not read, another module's or an import-equals, shadows nothing: R-HELPER): a named
  * import's local name reads as the registrar it names - a row registrar under a suite registrar's name is a row only, a
@@ -714,7 +746,8 @@ interface RegistrarBindings {
  * exports no default); a type-only import or specifier binds no value and shadows nothing (C2 pins describe's under a row
  * registrar's name and it's under a suite registrar's). C2's SHADOW SHAPES pin each of these forms under each
  * registrar's own name (it, test, describe, suite), bare and under each single step, and C2's shadow controls pin bare
- * heads under a row registrar's name and under a suite registrar's name; the header's Not-claimed list bounds both. */
+ * heads under a row registrar's name and under a suite registrar's name; C2 claims these readings for the forms its pins
+ * spell, and a form they do not spell is NOT CLAIMED (the header names some). */
 function registrarBindings(file: ts.SourceFile): RegistrarBindings {
   const rows = new Set(ROW_REGISTRARS);
   const suites = new Set(SUITE_REGISTRARS);
@@ -744,6 +777,26 @@ function registrarBindings(file: ts.SourceFile): RegistrarBindings {
     }
   }
   return { rows, suites, namespaces };
+}
+/** The vitest import declarations C2 refuses (wb-8avz cut #4, the fail-closed core of ruling R-B179): C2 claims to read a
+ * vitest import declaration only in the module's leading run of them (no statement that is not one precedes it) and only
+ * where its clause binds one kind, so this names the declarations after the run's end and those whose clause binds a
+ * default import beside named or namespace bindings, and tierReadingOf() reports each unaccounted. C2 claims the refusal
+ * only for the statements and clauses its REFUSED IMPORTS spell, which pin both arms; for any other, whether this names
+ * it is NOT CLAIMED (the header). */
+function refusedVitestImports(file: ts.SourceFile): ts.ImportDeclaration[] {
+  const refused: ts.ImportDeclaration[] = [];
+  let leading = true;
+  for (const statement of file.statements) {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || statement.moduleSpecifier.text !== "vitest") {
+      leading = false;
+      continue;
+    }
+    const clause = statement.importClause;
+    const mixed = clause !== undefined && clause.name !== undefined && clause.namedBindings !== undefined;
+    if (!leading || mixed) refused.push(statement);
+  }
+  return refused;
 }
 /** Is the identifier a reference to a binding (not a member or key name, an import binding's own name, or a label)? */
 function isReference(node: ts.Identifier): boolean {
@@ -787,9 +840,9 @@ function memberOf(node: ts.Identifier): { readonly access: ts.Expression; readon
  * to none. C2's SHADOW SHAPES pin both checks for each registrar's own name as the local name of each import form the
  * header lists, bare and under each single step: the name descends to a suite only where a suite registrar's named import
  * binds it or a type-only import leaves its own-name suite reading, so a row registrar's or expect's named import, a
- * default import or a namespace import under a suite registrar's name heads no suite. Not claimed: what the header's
- * Not-claimed list names (two or more steps, another member or condition, a local name, an import form or an imported name
- * the pins do not spell, two imports binding one local name). */
+ * default import or a namespace import under a suite registrar's name heads no suite. Not claimed: a form the pins do not
+ * spell (the header names some: two or more steps, another member or condition, a local name, an import form or an
+ * imported name the pins do not spell, two imports binding one local name, a vitest import declaration C2 refuses). */
 function suiteReference(callee: ts.Expression, bindings: RegistrarBindings): ts.Expression | undefined {
   let current = callee;
   for (;;) {
@@ -832,10 +885,11 @@ function runsOnce(call: ts.CallExpression, bindings: RegistrarBindings): boolean
   }
 }
 /** A tier text's registered rows and the literals in it that name a claim of (b) or (c): every reference to a row registrar
- * (by its own name where no import declaration from vitest binds that name to a value otherwise, by a renamed vitest
+ * (by its own name where no vitest import declaration C2 reads binds that name to a value otherwise, by a renamed vitest
  * import, or as a vitest namespace member: registrarBindings(); C2's SHADOW SHAPES pin the row reading for each
  * registrar's own name as each listed import form's local name, bare and under each single step) is read through its
- * whole head, a one-row head that runs once is a row, and every other reference is unaccounted. */
+ * whole head, a one-row head that runs once is a row, and every other reference is unaccounted; so is every vitest import
+ * declaration C2 refuses (refusedVitestImports(); C2's REFUSED IMPORTS), whatever the rows read. */
 function tierReadingOf(path: string, source: string): TierReading {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const bindings = registrarBindings(file);
@@ -843,6 +897,9 @@ function tierReadingOf(path: string, source: string): TierReading {
   const unaccounted: string[] = [];
   const claims: string[] = [];
   const line = (node: ts.Node): number => file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1;
+  for (const declaration of refusedVitestImports(file)) {
+    unaccounted.push(`${path}:${line(declaration)} a vitest import declaration C2 refuses (after the leading run, or a default import beside other bindings): NOT CLAIMED, wb-6fr4`);
+  }
   const row = (reference: ts.Expression): void => {
     const reading = headReading(headOf(reference));
     if ("reason" in reading) unaccounted.push(`${path}:${line(reference)} ${reading.reason}`);
@@ -1215,7 +1272,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       namespaceElementNestedRow: rowsIn('import * as vt from "vitest";\nvt["it"]("r1", () => {\n  vt["it"]("r2", () => {});\n});\n'),
       namespaceModifierNestedRow: rowsIn(`import * as vt from "vitest";\n${chain("vt", "it", "concurrent")}("r1", () => {\n  vt.it("r2", () => {});\n});\n`),
       suiteInsideRow: rowsIn(`${vitest}it("r1", () => {\n  describe("s", () => {\n    it("r2", () => {});\n  });\n});\n`),
-      // An import declaration from vitest binds a value import's local name to what it imports, shadowing the own-name
+      // A vitest import declaration C2 reads binds a value import's local name to what it imports, shadowing the own-name
       // reading (refusal #1 U4 and F1 of wb-8avz): each import form under a row registrar's name and under a suite
       // registrar's name - a row registrar, a suite registrar (the gate's two cross texts verbatim, the second again with a
       // row inside), another vitest export (expect), a namespace, a default import, and a type-only import and specifier,
@@ -1333,7 +1390,46 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         shadowShapes[`${form} as ${name}`] = readings;
       }
     }
-    return done("C2", { tierFiles: [...include], command, titles, unaccounted, claims, controls, headShapes, shadowShapes });
+    // REFUSED IMPORTS (cut #4 of wb-8avz, the fail-closed core of ruling R-B179): C2 claims to read a vitest import
+    // declaration only in the module's leading run of them and only where its clause binds one kind; tierReadingOf()
+    // refuses the others these sources spell (refusedVitestImports()), unaccounted. No source here references a registrar,
+    // so a reading is the refusal count alone: 0|1 one refused declaration, 0|2 two, 0|0 none. Each statement of `before`
+    // precedes the same vitest import.
+    const late = 'import { it } from "vitest";\n';
+    const before: Readonly<Record<string, string>> = {
+      directive: '"use strict";\n',
+      constDeclaration: 'const title = "s";\n',
+      call: "setup();\n",
+      typeAlias: "type Api = unknown;\n",
+      interface: "interface Api {}\n",
+      functionDeclaration: "function setup(): void {}\n",
+      functionWithBody: "function setup(): void {\n  run();\n}\n",
+      empty: ";\n",
+      reExport: 'export { helper } from "./helpers/rows.js";\n',
+      importEquals: 'import fs = require("node:fs");\n',
+      otherNamed: 'import { helper } from "./helpers/rows.js";\n',
+      otherTypeOnly: 'import type { Api } from "./helpers/rows.js";\n',
+      otherBare: 'import "./helpers/setup.js";\n',
+    };
+    const refusedSources: { [shape: string]: string } = {};
+    for (const [kind, statement] of Object.entries(before)) refusedSources[`after ${kind}`] = `${statement}${late}`;
+    refusedSources["late type-only"] = 'const title = "s";\nimport type { Api } from "vitest";\n';
+    refusedSources["late bare"] = 'const title = "s";\nimport "vitest";\n';
+    refusedSources["late namespace"] = 'const title = "s";\nimport * as vt from "vitest";\n';
+    refusedSources["late default"] = 'const title = "s";\nimport describe from "vitest";\n';
+    refusedSources["two late"] = `const title = "s";\n${late}import { describe } from "vitest";\n`;
+    refusedSources["default beside named"] = 'import it, { describe } from "vitest";\n';
+    refusedSources["default beside namespace"] = 'import it, * as vt from "vitest";\n';
+    refusedSources["run after a default beside named"] = 'import it, { describe } from "vitest";\nimport { test } from "vitest";\n';
+    refusedSources["leading run"] =
+      `${late}import type { Api } from "vitest";\nimport * as vt from "vitest";\nimport describe from "vitest";\nimport "vitest";\n` +
+      'import { helper } from "./helpers/rows.js";\nconst title = "s";\n';
+    const refusedImports: { [shape: string]: string } = {};
+    for (const [shape, source] of Object.entries(refusedSources)) {
+      const reading = rowsIn(source);
+      refusedImports[shape] = `${reading.rows}|${reading.unaccounted}`;
+    }
+    return done("C2", { tierFiles: [...include], command, titles, unaccounted, claims, controls, headShapes, shadowShapes, refusedImports });
   },
 };
 
