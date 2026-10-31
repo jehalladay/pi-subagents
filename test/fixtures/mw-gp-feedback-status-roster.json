@@ -97,7 +97,8 @@
     "Q3",
     "Q4",
     "Q5",
-    "Q6"
+    "Q6",
+    "Q7"
    ]
   }
  ],
@@ -128,7 +129,8 @@
   "Q3": "R-UNNAMED-RECORD",
   "Q4": "R-OTHER-DERIVATION",
   "Q5": "R-TEST-MENTION",
-  "Q6": "R-COORDINATED"
+  "Q6": "R-COORDINATED",
+  "Q7": "R-DEEP-CHAIN"
  },
  "residuals": {
   "Q1": [
@@ -167,6 +169,10 @@
    "code",
    "mutant",
    "residual-member"
+  ],
+  "Q7": [
+   "walk-four-steps",
+   "actor-first-five"
   ]
  },
  "cases": {
@@ -255,7 +261,18 @@
    "t-other-episode-correction=ok",
    "t-correction-chain-copy-causal=team-outcome-copied:causalBenefit",
    "t-correction-own-actor=team-outcome-copied:reward",
-   "t-correction-chain-actor=team-outcome-copied:reward"
+   "t-correction-chain-actor=team-outcome-copied:reward",
+   "t-corrected-depth3=team-outcome-copied:reward",
+   "t-corrected-depth4-share=team-outcome-copied:reward",
+   "t-actor-team-correction=ok",
+   "t-actor-team-correction-copy=team-outcome-copied:reward",
+   "t-actor-team-correction-own-copy=team-outcome-copied:reward",
+   "t-correction-depth3-copy=team-outcome-copied:reward",
+   "t-correction-depth4-copy-causal=team-outcome-copied:causalBenefit",
+   "t-correction-decision-copy=team-outcome-copied:reward",
+   "t-correction-decision-copy-causal=team-outcome-copied:causalBenefit",
+   "t-correction-decision-chain-copy=team-outcome-copied:reward",
+   "t-correction-decision-chain-copy-causal=team-outcome-copied:causalBenefit"
   ],
   "K-APPEND": [
    "a-correct-feedback=ok",
@@ -331,7 +348,12 @@
   "M49:chained-actor-unread:K-TEAM",
   "M50:zero-statusless-admitted:K-REWARD",
   "M51:correction-root-any-team-outcome:K-TEAM",
-  "M52:correction-actor-from-root:K-TEAM"
+  "M52:correction-actor-from-root:K-TEAM",
+  "M53:chain-walk-two-steps:K-TEAM",
+  "M54:chain-walk-three-steps:K-TEAM",
+  "M55:actor-read-first-three:K-TEAM",
+  "M56:actor-naming-correction-underived:K-TEAM",
+  "M57:decision-actor-unread:K-TEAM"
  ],
  "witnesses": {
   "A1a": {
@@ -381,7 +403,9 @@
    "fixes": {
     "t1 corrected": "ok",
     "the correction corrected": "ok",
-    "t1 corrected again": "ok"
+    "t1 corrected again": "ok",
+    "three corrections deep": "ok",
+    "four corrections deep": "ok"
    },
    "corrected": {
     "once": [
@@ -406,11 +430,75 @@
      18,
      6
     ],
+    "depth3": [
+     12,
+     4,
+     15,
+     5,
+     18,
+     6,
+     21,
+     7
+    ],
+    "depth4": [
+     12,
+     4,
+     15,
+     5,
+     18,
+     6,
+     21,
+     7,
+     24,
+     8
+    ],
     "otherEpisode": [],
     "otherEpisodeFixed": [
      12,
      4
     ]
+   },
+   "actorNamed": {
+    "direct, a team actor, on a receipt": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      9,
+      3
+     ]
+    },
+    "direct, an actor outside the team, on a verifier": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      42,
+      14
+     ]
+    },
+    "through k15, a team actor, on a verifier": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      15,
+      5,
+      30,
+      10
+     ]
+    },
+    "through k15, an actor outside the team, on a receipt": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      15,
+      5,
+      33,
+      11
+     ]
+    }
    },
    "read": {
     "t-copy-reward": "team-outcome-copied:reward",
@@ -419,7 +507,10 @@
     "t-no-team": "ok",
     "t-correction-team": "ok",
     "t-other-episode-copy": "ok",
-    "t-other-episode-correction": "ok"
+    "t-other-episode-correction": "ok",
+    "t-actor-team-correction": "ok",
+    "t-actor-team-correction-copy": "team-outcome-copied:reward",
+    "t-actor-team-correction-own-copy": "team-outcome-copied:reward"
    }
   },
   "A2b": {
@@ -439,7 +530,13 @@
     "t-correction-chain-copy": "team-outcome-copied:reward",
     "t-correction-chain-copy-causal": "team-outcome-copied:causalBenefit",
     "t-correction-own-actor": "team-outcome-copied:reward",
-    "t-correction-chain-actor": "team-outcome-copied:reward"
+    "t-correction-chain-actor": "team-outcome-copied:reward",
+    "t-correction-depth3-copy": "team-outcome-copied:reward",
+    "t-correction-depth4-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-correction-decision-copy": "team-outcome-copied:reward",
+    "t-correction-decision-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-correction-decision-chain-copy": "team-outcome-copied:reward",
+    "t-correction-decision-chain-copy-causal": "team-outcome-copied:causalBenefit"
    }
   },
   "A3a": {
@@ -637,7 +734,10 @@
    "t-corrected-share": "team-outcome-copied:reward",
    "t-corrected-chain": "team-outcome-copied:reward",
    "t-corrected-earlier": "team-outcome-copied:reward",
-   "t-corrected-original": "team-outcome-copied:reward"
+   "t-corrected-original": "team-outcome-copied:reward",
+   "t-corrected-depth3": "team-outcome-copied:reward",
+   "t-corrected-depth4-share": "team-outcome-copied:reward",
+   "t-actor-team-correction-copy": "team-outcome-copied:reward"
   },
   "S4a": {
    "correction": {
@@ -1147,9 +1247,22 @@
      "Q3",
      "Q4",
      "Q5",
-     "Q6"
+     "Q6",
+     "Q7"
     ]
    }
+  },
+  "Q7": {
+   "name": "R-DEEP-CHAIN",
+   "members": [
+    "walk-four-steps",
+    "actor-first-five"
+   ],
+   "verdicts": {
+    "walk-four-steps": [],
+    "actor-first-five": []
+   },
+   "deepest": 4
   }
  },
  "tests": [
@@ -1180,6 +1293,7 @@
   "Q4: R-OTHER-DERIVATION",
   "Q5: R-TEST-MENTION",
   "Q6: R-COORDINATED",
+  "Q7: R-DEEP-CHAIN",
   "rule 16: the rows, the tables and the vocabulary are frozen at their measured shape",
   "mutant battery: the reference meets every check, each mutant is refused by exactly its declared checks, and every check refuses a mutant alone",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the statuses, the vocabulary, the docs citation and the producer block",
