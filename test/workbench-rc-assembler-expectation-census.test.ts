@@ -70,33 +70,55 @@
  *   JavaScript's \s, the set String.prototype.trim strips: cutter.space.engine reads both from the engine over every code
  *   point, the same 25 (U+0009-U+000D, U+0020, U+00A0, U+1680, U+2000-U+200A, U+2028, U+2029, U+202F, U+205F, U+3000 and
  *   U+FEFF), scanning all 1,112,064 code points but the surrogates (scanned); the line feed is the line break itself, so
- *   white space inside a line is the other 24. Every run this rule names is claimed only within the bound COUNTS gives it.
- *   The cut is held by A3 cutter rows (wb-ro24, the R694 follow-up of landing 654, and the respin of its refusal #1), in the
- *   clause's order. SWEEPS put every BMP code point but the surrogates and the line feed into one page shape each and sort
- *   the cuts into the readings this clause predicts for that shape (run-on counted, every other reading listed by code
- *   point, and a code point no prediction reads listed under other, held empty): cutter.marks (Next, the code point, a
- *   space) cuts after exactly the four marks; cutter.space cuts at exactly the 24 inline white-space code points at each of
- *   the seven places white space is read - after a mark (terminator), on a line holding only it, twice (blank), before a
- *   pipe (pipe), before a heading's # (headingLead), after the # run (headingTrail), before a list marker (listLead) and
- *   after it (listTrail) - and lists the code points that make a line of their own there (whole: ## and || at blank, | at
- *   pipe and listLead, # and | at headingLead; mark: at blank, a line holding a mark twice ends the sentence after it);
- *   cutter.openers (the code point then a space, opening a line) cuts before exactly -, + and *, around exactly # and |,
- *   after exactly the four marks, and trims exactly the 24; cutter.digitsFirst (the code point then ")", opening a line) and
- *   cutter.digits (1, the code point, then ")") read exactly the ten ASCII digits as digits, first and after a digit, so no
- *   other script's digit and no fullwidth digit is one (digitsFirst also lists | as a pipe line, whole, and trims the 24);
+ *   white space inside a line is the other 24. CLAIMED: the cut on exactly the shapes the A3 cutter rows below hold, each
+ *   over the domain it names, and on no other shape (wb-ro24, the R694 follow-up of landing 654; cut #3, in the
+ *   enumerate-the-resolvable form that its refusals #1 and #2 bind). NOT CLAIMED, though the same four expressions and the
+ *   blank-line test cut it: a run past the bound its count gives; at one place, a run of two or more white-space code
+ *   points, but a run a count holds (of spaces or of tabs, within its bound, for its place and alternative), blank's code
+ *   point twice and cutter.blank's space and tab; a list marker with more than two digits, but with no lead and a space
+ *   after it (counts.digits); a code point above the BMP; before white space other than a space, a code point other than the
+ *   four marks; and two places varied together, but a cross's items. The rows are in the clause's order. SWEEPS put every
+ *   BMP code point but the surrogates and the line feed into one page shape each and sort the cuts into the readings this
+ *   clause predicts for that shape (the common reading counted - run-on, or mark where the shape's "." ends a sentence
+ *   whatever the code point - every other reading listed by code point, and a code point no prediction reads listed under
+ *   other, held empty), one sweep for each alternative the clause names at a place: cutter.marks (Next, the code point, a
+ *   space) and cutter.marksEnd (Next and the code point at the line end) cut after exactly the four marks, marksEnd trimming
+ *   exactly the 24, and cutter.marksAfter (Next, the code point and ".", then A, the code point and "!", and so on through
+ *   the four marks, each before a space) cuts after each mark whatever code point is before it; cutter.space cuts at exactly
+ *   the 24 inline white-space code points at each place white space is read - after each of the four marks (terminator), on
+ *   a line holding only it, once (blankOne) and twice (blank), before a pipe (pipe), before each run of one to six #
+ *   (headingLead) and after it (headingTrail), and before each of the markers -, +, *, 1. and 1) (listLead) and after it
+ *   (listTrail) - and lists the code points that make a line of their own there (whole: # and | at blankOne, ## and || at
+ *   blank, | at pipe and at each listLead, # and | at headingLead before one to five #, | alone before six; mark: at
+ *   blankOne and blank, a line holding only a mark, once or twice, ends the sentence after it; digit: at listLead 1. and 1),
+ *   each of the ten ASCII digits, which keeps the line a list marker's; listLead 1. counts mark, since its "." ends a
+ *   sentence whatever opens the line); cutter.openers (the code point then a space, opening a line) cuts before exactly -, +
+ *   and *, around exactly # and |, after exactly the four marks, and trims exactly the 24; cutter.digitsFirst (the code
+ *   point, then ")" or ".", opening a line) and cutter.digits (1, the code point, then ")" or ".") read exactly the ten
+ *   ASCII digits as digits, first and after a digit, before each delimiter, so no other script's digit and no fullwidth
+ *   digit is one (digitsFirst also lists | as a pipe line, whole, and trims the 24; before "." both count mark);
  *   cutter.delimiters (1 and the code point, then a space) cuts before exactly ")", before and after exactly "." (the
- *   terminator cuts after it), and after exactly !, ? and ;. COUNTS are bounded runs, each claimed only within its bound: of
- *   the runs of one to twelve #, exactly one to six cut (cutter.counts.hashes); of zero to eight spaces and of zero to eight
- *   tabs before a #, exactly zero to three cut, the count being of characters, never of tab stops (headingLead); every run
- *   of one to thirty-two ASCII digits before ")" and before "." cuts (digits); and every run of zero to thirty-two spaces
- *   and of zero to eight tabs before a list marker and before a pipe cuts (listLead, pipeLead). ROWS beside their near
- *   misses: cutter.terminator each of the four marks before a space, a mark before a tab and at the line end, a mark before
- *   a letter (no cut); cutter.blank a line holding a space and a tab; cutter.pipe a pipe after spaces and after a tab, and
- *   the line after a pipe line; cutter.heading six #, seven # (no cut), three spaces, four spaces (no cut), a tab before the
- *   #, a tab after it, a # alone, a # before a letter (no cut), and the lines on both sides of a heading; cutter.list -, +,
- *   *, digits and ., digits and ), two digits, after spaces, after a tab, a tab after the marker, a marker before a letter
- *   (no cut), and the line after a list marker's line (no cut); cutter.alone -, +, * and 1) alone before the line end (no
- *   cut), and 1. alone, which only the terminator cuts after.
+ *   terminator cuts after it), and after exactly !, ? and ;. COUNTS are bounded runs of spaces and of tabs, each claimed
+ *   only within its bound, for each alternative its place names: of the runs of one to twelve #, before a space and alone
+ *   before the line end, exactly one to six cut (cutter.counts.hashes, hashesEnd); of zero to eight spaces and of zero to
+ *   eight tabs before each run of one to six #, exactly zero to three cut, the count being of characters, never of tab stops
+ *   (headingLead); every run of one to eight spaces and of one to eight tabs after each run of one to six # cuts
+ *   (headingTrail); every run of one to thirty-two ASCII digits before ")" and before "." cuts (digits); every run of zero
+ *   to thirty-two spaces and of zero to eight tabs before each of the five markers and before a pipe cuts (listLead,
+ *   pipeLead); and every run of one to eight spaces and of one to eight tabs cuts after each of the five markers
+ *   (listTrail), as a line of its own (blank) and after each of the four marks (terminatorTrail). CROSSES vary a lead and a
+ *   trail together, each item held to the one reading this clause predicts for it and counted as held, an item cut any other
+ *   way listed under other, held empty: cutter.cross.heading each run of one to six #, after no lead or one of the 24,
+ *   before one of the 24 or the line end (each cut); cross.list each of the markers -, +, *, 1., 1), 12. and 12), after no
+ *   lead or one of the 24, before one of the 24 (each cut); and cross.alone each of those seven, after no lead or one of the
+ *   24, alone before the line end (no list cut; after "." the terminator cuts). ROWS beside their near misses:
+ *   cutter.terminator each of the four marks before a space, a mark before a tab and at the line end, a mark before a letter
+ *   (no cut); cutter.blank a line holding a space and a tab; cutter.pipe a pipe after spaces and after a tab, and the line
+ *   after a pipe line; cutter.heading six #, seven # (no cut), three spaces, four spaces (no cut), a tab before the #, a tab
+ *   after it, a # alone, a # before a letter (no cut), and the lines on both sides of a heading; cutter.list -, +, *, digits
+ *   and ., digits and ), two digits, after spaces, after a tab, a tab after the marker, a marker before a letter (no cut),
+ *   and the line after a list marker's line (no cut); cutter.alone -, +, * and 1) alone before the line end (no cut), and 1.
+ *   alone, which only the terminator cuts after.
  * - COMMENTS OUT (wb-cppf, the R694 follow-up of landing 553): the doc reading is the page source with its placed comments
  *   taken out, never the rendered view - no clause of this file claims what a rendered page shows, and each clause names the
  *   A3 rows that hold it. (1) TAKEN OUT: every span from `<!--` to the next `-->` (an empty `<!-->` or `<!--->` included, so
@@ -117,10 +139,14 @@
  *   for the near misses U+0085, U+00AD, U+180E, U+200B and U+2060). (4) UNLEXED: comment-shaped text that marked does not
  *   lex as HTML - in a code span or a code block, after a backslash, an opener left unterminated in a paragraph - is read as
  *   written (comments.unlexed). (5) PLACED: walking each top-level block's tokens in page order - a list's items in order, a
- *   table's header cells in order and then its body rows in order, each body row's cells in order, and any other token's own
- *   tokens in order (comments.cells: a comment in a header cell before a body row; comments.order: a comment in the first of
- *   two list items, in a body row's first cell before another cell, in the last cell of the first of two body rows, in a
- *   block quote's first paragraph before its second, and in a list item's first paragraph before its second, each placed) -
+ *   table's header cells in order and then its body rows in order, each body row's cells in order, and the own tokens, in
+ *   order, of a block quote, a list item, a list item's text, a paragraph, a heading, a strong, an em, a del, a link and an
+ *   image (comments.cells: a comment in a header cell before a body row; comments.order: a comment in the first of two list
+ *   items - bulleted with -, + and *, numbered 1. and 1), numbered from 3., loose, with task boxes, and nested in an item -
+ *   in a body row's first cell before another cell, in the last cell of the first of two body rows, in a block quote's first
+ *   paragraph before its second, in a list item's first paragraph before its second, and followed by more of its token's own
+ *   text in a list item's text, a paragraph, a heading, a strong (** and __), an em (* and _), a del, a link and an image,
+ *   each placed) -
  *   a cursor moves past each leaf token's source as found in the block (comments.cursor[0]: two identical comments side by
  *   side in a paragraph, each placed), and each span is found within its HTML token's source as found there, after the span
  *   before it (comments.cursor[1]-[2]: two identical comments in one comment block's line, spaced and side by side, each
@@ -495,8 +521,9 @@ const shown = (text: string): string => text.replace(/[^\x20-\x7e]/gu, char => `
 const cutOf = (page: string): string[] => sentences(page).map(sentence => `${sentence.line}:${sentence.text}`);
 type Predicted<T> = (item: T) => readonly string[];
 /** One sweep: every swept code point put in one page shape and cut, each cut sorted into the readings the DOC clause predicts
- * for that shape - run-on counted, every other prediction listed by code point, a code point no prediction reads under other. */
-function sweep(page: (char: string) => string, runOn: Predicted<string>, predictions: Readonly<Record<string, Predicted<string>>>): Json {
+ * for that shape - the common reading counted under its name (run-on, or mark where the shape's "." ends a sentence whatever
+ * the code point), every other prediction listed by code point, a code point no prediction reads under other. */
+function sweep(page: (char: string) => string, runOn: Predicted<string>, predictions: Readonly<Record<string, Predicted<string>>>, common = "runOn"): Json {
   const names = Object.keys(predictions);
   const listed: Record<string, string[]> = Object.fromEntries([...names, "other"].map(name => [name, []]));
   let runs = 0;
@@ -506,7 +533,7 @@ function sweep(page: (char: string) => string, runOn: Predicted<string>, predict
     if (got === JSON.stringify(runOn(char))) runs += 1;
     else listed[names.find(name => JSON.stringify(predictions[name]?.(char)) === got) ?? "other"]?.push(codeLabel(cp));
   }
-  return { runOn: runs, ...listed };
+  return { [common]: runs, ...listed };
 }
 /** A bounded count sweep: each count's page cut and listed under the prediction it equals, or under other. */
 function counted(counts: readonly number[], page: (count: number) => string, predictions: Readonly<Record<string, Predicted<number>>>): Json {
@@ -520,6 +547,19 @@ function counted(counts: readonly number[], page: (count: number) => string, pre
 }
 /** The counts first, first + 1, ..., last. */
 const upTo = (last: number, first = 0): number[] => Array.from({ length: last - first + 1 }, (_, index) => first + index);
+/** The four marks DOC's terminator cuts after, in the clause's order. */
+const MARKS: readonly string[] = [".", "!", "?", ";"];
+/** The runs of # an ATX heading line opens with: one to six. */
+const HASH_RUNS: readonly string[] = upTo(6, 1).map(count => "#".repeat(count));
+/** The list markers DOC names, an ordered one with one digit: -, +, *, 1. and 1). */
+const LIST_MARKERS: readonly string[] = ["-", "+", "*", "1.", "1)"];
+/** The list markers the crosses read: the five, and an ordered one with two digits, 12. and 12). */
+const CROSS_MARKERS: readonly string[] = [...LIST_MARKERS, "12.", "12)"];
+/** A cross: each item's page cut and held to the one reading the DOC clause predicts for it; an item cut otherwise is listed. */
+function crossed<T>(items: readonly T[], label: (item: T) => string, page: (item: T) => string, predicted: Predicted<T>): Json {
+  const other = items.filter(item => JSON.stringify(cutOf(page(item))) !== JSON.stringify(predicted(item))).map(label);
+  return { held: items.length - other.length, other };
+}
 
 // --------------------------------------------------------------------------------------------------------------- the comments
 /** marked's own HTML comment form: an empty <!--> or <!---> included, an unterminated one running to the end of its text. */
@@ -1296,10 +1336,16 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       if (/^\s$/.test(char)) whiteSpace.push(cp);
       if (char.trim() === "") trimmed.push(cp);
     }
-    const headingCut = { cut: () => ["1:The assembler", "2:# acquires", "3:the resources."], runOn: () => ["1:The assembler # acquires the resources."] };
-    const listCut = { cut: () => ["1:The assembler", "2:- acquires the resources."] };
+    const headingCut = (run: string) => ({ cut: () => ["1:The assembler", `2:${run} acquires`, "3:the resources."], runOn: () => [`1:The assembler ${run} acquires the resources.`] });
     const pipeCut = { cut: () => ["1:The assembler", "2:| acquires |", "3:the resources."] };
     const digitRun = "1234567890".repeat(4);
+    /** A list marker's line cut from the line before it (the trail its white space after the marker): after "." the
+     * terminator cuts too, so the marker ends a sentence of its own. */
+    const listed = (marker: string, trail: string): string[] =>
+      marker.endsWith(".") ? ["1:The assembler", `2:${marker}`, "2:acquires the resources."] : ["1:The assembler", `2:${marker}${trail}acquires the resources.`];
+    /** The 24 inline white-space code points, as the engine reads them, for the crosses. */
+    const inline = whiteSpace.filter(cp => cp !== 0x0a).map(cp => String.fromCodePoint(cp));
+    const spaceLabel = (text: string): string => (text === "" ? "none" : text === "\n" ? "end" : codeLabel(text.codePointAt(0) ?? 0));
     // DOC's cutter (wb-ro24): one row per alternative the header's DOC clause restates, in its order, beside its near miss.
     const cutter = {
       terminator: ["Next. The assembler acquires.", "Next! The assembler acquires.", "Next? The assembler acquires.", "Next; the assembler acquires.", "Next.\tThe assembler acquires.", "Next.\nThe assembler acquires.", "Next.The assembler acquires."].map(cutOf),
@@ -1331,19 +1377,44 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       ].map(cutOf),
       // A list marker alone before the line end (wb-ro24 respin 1): no list cut; 1. alone only the terminator cuts after.
       alone: ["The assembler\n-\nacquires.", "The assembler\n+\nacquires.", "The assembler\n*\nacquires.", "The assembler\n1)\nacquires.", "The assembler\n1.\nacquires."].map(cutOf),
-      // SWEEPS (wb-ro24 respin 1): every BMP code point but the surrogates and the line feed, in one page shape each, sorted
-      // into the readings the DOC clause predicts for that shape.
+      // SWEEPS (wb-ro24): every BMP code point but the surrogates and the line feed, in one page shape each, sorted into the
+      // readings the DOC clause predicts for that shape; at each place, one sweep for each alternative the clause names there.
       marks: sweep(
         char => `Next${char} The assembler acquires.`,
         char => [`1:Next${char} The assembler acquires.`],
         { cut: char => [`1:Next${char}`, "1:The assembler acquires."] },
       ),
+      marksEnd: sweep(
+        char => `Next${char}\nThe assembler acquires.`,
+        char => [`1:Next${char} The assembler acquires.`],
+        { cut: char => [`1:Next${char}`, "2:The assembler acquires."], trimmed: () => ["1:Next The assembler acquires."] },
+      ),
+      marksAfter: sweep(
+        char => `Next${char}. A${char}! B${char}? C${char}; The assembler acquires.`,
+        char => [`1:Next${char}.`, `1:A${char}!`, `1:B${char}?`, `1:C${char};`, "1:The assembler acquires."],
+        {},
+        "cut",
+      ),
       space: {
         engine: { scanned, whiteSpace: whiteSpace.map(codeLabel), trimmed: trimmed.map(codeLabel) },
-        terminator: sweep(
-          char => `Next.${char}The assembler acquires.`,
-          char => [`1:Next.${char}The assembler acquires.`],
-          { cut: () => ["1:Next.", "1:The assembler acquires."] },
+        terminator: Object.fromEntries(
+          MARKS.map(mark => [
+            mark,
+            sweep(
+              char => `Next${mark}${char}The assembler acquires.`,
+              char => [`1:Next${mark}${char}The assembler acquires.`],
+              { cut: () => [`1:Next${mark}`, "1:The assembler acquires."] },
+            ),
+          ]),
+        ),
+        blankOne: sweep(
+          char => `The assembler\n${char}\nacquires.`,
+          char => [`1:The assembler ${char} acquires.`],
+          {
+            cut: () => ["1:The assembler", "3:acquires."],
+            mark: char => [`1:The assembler ${char}`, "3:acquires."],
+            whole: char => ["1:The assembler", `2:${char}`, "3:acquires."],
+          },
         ),
         blank: sweep(
           char => `The assembler\n${char}${char}\nacquires.`,
@@ -1359,25 +1430,62 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
           char => [`1:The assembler ${char}| acquires | the resources.`],
           { cut: () => ["1:The assembler", "2:| acquires |", "3:the resources."], whole: char => ["1:The assembler", `2:${char}| acquires |`, "3:the resources."] },
         ),
-        headingLead: sweep(
-          char => `The assembler\n${char}# acquires\nthe resources.`,
-          char => [`1:The assembler ${char}# acquires the resources.`],
-          { cut: () => ["1:The assembler", "2:# acquires", "3:the resources."], whole: char => ["1:The assembler", `2:${char}# acquires`, "3:the resources."] },
+        headingLead: Object.fromEntries(
+          HASH_RUNS.map(run => [
+            run,
+            sweep(
+              char => `The assembler\n${char}${run} acquires\nthe resources.`,
+              char => [`1:The assembler ${char}${run} acquires the resources.`],
+              { cut: () => ["1:The assembler", `2:${run} acquires`, "3:the resources."], whole: char => ["1:The assembler", `2:${char}${run} acquires`, "3:the resources."] },
+            ),
+          ]),
         ),
-        headingTrail: sweep(
-          char => `The assembler\n#${char}acquires\nthe resources.`,
-          char => [`1:The assembler #${char}acquires the resources.`],
-          { cut: char => ["1:The assembler", `2:#${char}acquires`, "3:the resources."] },
+        headingTrail: Object.fromEntries(
+          HASH_RUNS.map(run => [
+            run,
+            sweep(
+              char => `The assembler\n${run}${char}acquires\nthe resources.`,
+              char => [`1:The assembler ${run}${char}acquires the resources.`],
+              { cut: char => ["1:The assembler", `2:${run}${char}acquires`, "3:the resources."] },
+            ),
+          ]),
         ),
-        listLead: sweep(
-          char => `The assembler\n${char}- acquires\nthe resources.`,
-          char => [`1:The assembler ${char}- acquires the resources.`],
-          { cut: () => ["1:The assembler", "2:- acquires the resources."], whole: char => ["1:The assembler", `2:${char}- acquires`, "3:the resources."] },
+        listLead: Object.fromEntries(
+          LIST_MARKERS.map(marker => [
+            marker,
+            marker.endsWith(".")
+              ? sweep(
+                  char => `The assembler\n${char}${marker} acquires\nthe resources.`,
+                  char => [`1:The assembler ${char}${marker}`, "2:acquires the resources."],
+                  {
+                    cut: () => listed(marker, " "),
+                    digit: char => ["1:The assembler", `2:${char}${marker}`, "2:acquires the resources."],
+                    whole: char => ["1:The assembler", `2:${char}${marker}`, "2:acquires", "3:the resources."],
+                  },
+                  "mark",
+                )
+              : sweep(
+                  char => `The assembler\n${char}${marker} acquires\nthe resources.`,
+                  char => [`1:The assembler ${char}${marker} acquires the resources.`],
+                  marker.endsWith(")")
+                    ? {
+                        cut: () => listed(marker, " "),
+                        digit: char => ["1:The assembler", `2:${char}${marker} acquires the resources.`],
+                        whole: char => ["1:The assembler", `2:${char}${marker} acquires`, "3:the resources."],
+                      }
+                    : { cut: () => listed(marker, " "), whole: char => ["1:The assembler", `2:${char}${marker} acquires`, "3:the resources."] },
+                ),
+          ]),
         ),
-        listTrail: sweep(
-          char => `The assembler\n-${char}acquires\nthe resources.`,
-          char => [`1:The assembler -${char}acquires the resources.`],
-          { cut: char => ["1:The assembler", `2:-${char}acquires the resources.`] },
+        listTrail: Object.fromEntries(
+          LIST_MARKERS.map(marker => [
+            marker,
+            sweep(
+              char => `The assembler\n${marker}${char}acquires\nthe resources.`,
+              char => [`1:The assembler ${marker}${char}acquires the resources.`],
+              { cut: char => listed(marker, char) },
+            ),
+          ]),
         ),
       },
       openers: sweep(
@@ -1390,20 +1498,40 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
           trimmed: () => ["1:The assembler acquires the resources."],
         },
       ),
-      digitsFirst: sweep(
-        char => `The assembler\n${char}) acquires\nthe resources.`,
-        char => [`1:The assembler ${char}) acquires the resources.`],
-        {
-          list: char => ["1:The assembler", `2:${char}) acquires the resources.`],
-          whole: char => ["1:The assembler", `2:${char}) acquires`, "3:the resources."],
-          trimmed: () => ["1:The assembler ) acquires the resources."],
-        },
-      ),
-      digits: sweep(
-        char => `The assembler\n1${char}) acquires\nthe resources.`,
-        char => [`1:The assembler 1${char}) acquires the resources.`],
-        { list: char => ["1:The assembler", `2:1${char}) acquires the resources.`] },
-      ),
+      digitsFirst: {
+        ")": sweep(
+          char => `The assembler\n${char}) acquires\nthe resources.`,
+          char => [`1:The assembler ${char}) acquires the resources.`],
+          {
+            list: char => ["1:The assembler", `2:${char}) acquires the resources.`],
+            whole: char => ["1:The assembler", `2:${char}) acquires`, "3:the resources."],
+            trimmed: () => ["1:The assembler ) acquires the resources."],
+          },
+        ),
+        ".": sweep(
+          char => `The assembler\n${char}. acquires\nthe resources.`,
+          char => [`1:The assembler ${char}.`, "2:acquires the resources."],
+          {
+            list: char => ["1:The assembler", `2:${char}.`, "2:acquires the resources."],
+            whole: char => ["1:The assembler", `2:${char}.`, "2:acquires", "3:the resources."],
+            trimmed: () => ["1:The assembler .", "2:acquires the resources."],
+          },
+          "mark",
+        ),
+      },
+      digits: {
+        ")": sweep(
+          char => `The assembler\n1${char}) acquires\nthe resources.`,
+          char => [`1:The assembler 1${char}) acquires the resources.`],
+          { list: char => ["1:The assembler", `2:1${char}) acquires the resources.`] },
+        ),
+        ".": sweep(
+          char => `The assembler\n1${char}. acquires\nthe resources.`,
+          char => [`1:The assembler 1${char}.`, "2:acquires the resources."],
+          { list: char => ["1:The assembler", `2:1${char}.`, "2:acquires the resources."] },
+          "mark",
+        ),
+      },
       delimiters: sweep(
         char => `The assembler\n1${char} acquires\nthe resources.`,
         char => [`1:The assembler 1${char} acquires the resources.`],
@@ -1413,16 +1541,39 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
           mark: char => [`1:The assembler 1${char}`, "2:acquires the resources."],
         },
       ),
-      // COUNTS (wb-ro24 respin 1): bounded runs, each claimed only within its bound.
+      // COUNTS (wb-ro24): bounded runs of spaces and of tabs, each claimed only within its bound, at each place and for each
+      // alternative the clause names there.
       counts: {
         hashes: counted(upTo(12, 1), count => `The assembler\n${"#".repeat(count)} acquires\nthe resources.`, {
           cut: count => ["1:The assembler", `2:${"#".repeat(count)} acquires`, "3:the resources."],
           runOn: count => [`1:The assembler ${"#".repeat(count)} acquires the resources.`],
         }),
-        headingLead: {
-          spaces: counted(upTo(8), count => `The assembler\n${" ".repeat(count)}# acquires\nthe resources.`, headingCut),
-          tabs: counted(upTo(8), count => `The assembler\n${"\t".repeat(count)}# acquires\nthe resources.`, headingCut),
-        },
+        hashesEnd: counted(upTo(12, 1), count => `The assembler\n${"#".repeat(count)}\nacquires.`, {
+          cut: count => ["1:The assembler", `2:${"#".repeat(count)}`, "3:acquires."],
+          runOn: count => [`1:The assembler ${"#".repeat(count)} acquires.`],
+        }),
+        headingLead: Object.fromEntries(
+          HASH_RUNS.map(run => [
+            run,
+            {
+              spaces: counted(upTo(8), count => `The assembler\n${" ".repeat(count)}${run} acquires\nthe resources.`, headingCut(run)),
+              tabs: counted(upTo(8), count => `The assembler\n${"\t".repeat(count)}${run} acquires\nthe resources.`, headingCut(run)),
+            },
+          ]),
+        ),
+        headingTrail: Object.fromEntries(
+          HASH_RUNS.map(run => [
+            run,
+            {
+              spaces: counted(upTo(8, 1), count => `The assembler\n${run}${" ".repeat(count)}acquires\nthe resources.`, {
+                cut: count => ["1:The assembler", `2:${run}${" ".repeat(count)}acquires`, "3:the resources."],
+              }),
+              tabs: counted(upTo(8, 1), count => `The assembler\n${run}${"\t".repeat(count)}acquires\nthe resources.`, {
+                cut: count => ["1:The assembler", `2:${run}${"\t".repeat(count)}acquires`, "3:the resources."],
+              }),
+            },
+          ]),
+        ),
         digits: {
           paren: counted(upTo(32, 1), count => `The assembler\n${digitRun.slice(0, count)}) acquires\nthe resources.`, {
             cut: count => ["1:The assembler", `2:${digitRun.slice(0, count)}) acquires the resources.`],
@@ -1431,14 +1582,62 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
             cut: count => ["1:The assembler", `2:${digitRun.slice(0, count)}.`, "2:acquires the resources."],
           }),
         },
-        listLead: {
-          spaces: counted(upTo(32), count => `The assembler\n${" ".repeat(count)}- acquires\nthe resources.`, listCut),
-          tabs: counted(upTo(8), count => `The assembler\n${"\t".repeat(count)}- acquires\nthe resources.`, listCut),
-        },
+        listLead: Object.fromEntries(
+          LIST_MARKERS.map(marker => [
+            marker,
+            {
+              spaces: counted(upTo(32), count => `The assembler\n${" ".repeat(count)}${marker} acquires\nthe resources.`, { cut: () => listed(marker, " ") }),
+              tabs: counted(upTo(8), count => `The assembler\n${"\t".repeat(count)}${marker} acquires\nthe resources.`, { cut: () => listed(marker, " ") }),
+            },
+          ]),
+        ),
+        listTrail: Object.fromEntries(
+          LIST_MARKERS.map(marker => [
+            marker,
+            {
+              spaces: counted(upTo(8, 1), count => `The assembler\n${marker}${" ".repeat(count)}acquires\nthe resources.`, { cut: count => listed(marker, " ".repeat(count)) }),
+              tabs: counted(upTo(8, 1), count => `The assembler\n${marker}${"\t".repeat(count)}acquires\nthe resources.`, { cut: count => listed(marker, "\t".repeat(count)) }),
+            },
+          ]),
+        ),
         pipeLead: {
           spaces: counted(upTo(32), count => `The assembler\n${" ".repeat(count)}| acquires |\nthe resources.`, pipeCut),
           tabs: counted(upTo(8), count => `The assembler\n${"\t".repeat(count)}| acquires |\nthe resources.`, pipeCut),
         },
+        blank: {
+          spaces: counted(upTo(8, 1), count => `The assembler\n${" ".repeat(count)}\nacquires.`, { cut: () => ["1:The assembler", "3:acquires."] }),
+          tabs: counted(upTo(8, 1), count => `The assembler\n${"\t".repeat(count)}\nacquires.`, { cut: () => ["1:The assembler", "3:acquires."] }),
+        },
+        terminatorTrail: Object.fromEntries(
+          MARKS.map(mark => [
+            mark,
+            {
+              spaces: counted(upTo(8, 1), count => `Next${mark}${" ".repeat(count)}The assembler acquires.`, { cut: () => [`1:Next${mark}`, "1:The assembler acquires."] }),
+              tabs: counted(upTo(8, 1), count => `Next${mark}${"\t".repeat(count)}The assembler acquires.`, { cut: () => [`1:Next${mark}`, "1:The assembler acquires."] }),
+            },
+          ]),
+        ),
+      },
+      // CROSSES (wb-ro24 cut #3): a lead and a trail varied together, each item held to the one reading DOC predicts for it.
+      cross: {
+        heading: crossed(
+          HASH_RUNS.flatMap(run => ["", ...inline].flatMap(lead => [...inline, "\n"].map(trail => ({ lead, run, trail })))),
+          item => `${spaceLabel(item.lead)} ${item.run} ${spaceLabel(item.trail)}`,
+          item => `The assembler\n${item.lead}${item.run}${item.trail}acquires\nthe resources.`,
+          item => (item.trail === "\n" ? ["1:The assembler", `2:${item.run}`, "3:acquires the resources."] : ["1:The assembler", `2:${item.run}${item.trail}acquires`, "3:the resources."]),
+        ),
+        list: crossed(
+          CROSS_MARKERS.flatMap(marker => ["", ...inline].flatMap(lead => inline.map(trail => ({ lead, marker, trail })))),
+          item => `${spaceLabel(item.lead)} ${item.marker} ${spaceLabel(item.trail)}`,
+          item => `The assembler\n${item.lead}${item.marker}${item.trail}acquires\nthe resources.`,
+          item => listed(item.marker, item.trail),
+        ),
+        alone: crossed(
+          CROSS_MARKERS.flatMap(marker => ["", ...inline].map(lead => ({ lead, marker }))),
+          item => `${spaceLabel(item.lead)} ${item.marker}`,
+          item => `The assembler\n${item.lead}${item.marker}\nacquires.`,
+          item => (item.marker.endsWith(".") ? [`1:The assembler ${item.marker}`, "3:acquires."] : [`1:The assembler ${item.marker} acquires.`]),
+        ),
       },
     };
     // R-OUTSIDE-ROOTS quiet row: the same claim in every outside directory, in a root text file and in a non-module code file.
@@ -1643,13 +1842,32 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         lines: ["> The assembler <!-- a\n> b\n> c --> acquires resources.\n", "- The assembler <!-- a\n  b\n  c --> acquires resources.\n"].map(surveyed),
       },
       cells: ["| x <!-- never --> | y |\n| --- | --- |\n| The assembler | acquires resources |\n"].map(surveyed),
-      // COMMENTS OUT (5)'s walk order (wb-ro24 respin 1): each comment placed in page order.
+      // COMMENTS OUT (5)'s walk order (wb-ro24): each comment placed in page order.
       order: [
         "- <!-- never --> The assembler acquires resources\n- x\n",
         "| a | b |\n| --- | --- |\n| <!-- never --> The assembler acquires resources | x |\n",
         "| a | b |\n| --- | --- |\n| x | <!-- never --> The assembler acquires resources |\n| y | z |\n",
         "> <!-- never --> The assembler acquires resources.\n>\n> x\n",
         "- <!-- never --> The assembler acquires resources.\n\n  x\n",
+        // wb-ro24 cut #3: every other list kind, then the own tokens of each other token marked nests tokens in.
+        "+ <!-- never --> The assembler acquires resources\n+ x\n",
+        "* <!-- never --> The assembler acquires resources\n* x\n",
+        "1. <!-- never --> The assembler acquires resources\n2. x\n",
+        "1) x <!-- not --> The assembler acquires resources\n2) y\n",
+        "3. <!-- never --> The assembler acquires resources\n4. x\n",
+        "- <!-- never --> The assembler acquires resources\n\n- x\n",
+        "- [ ] <!-- never --> The assembler acquires resources\n- [ ] x\n",
+        "- a\n  - <!-- never --> The assembler acquires resources\n  - x\n",
+        "- x <!-- never --> The assembler acquires resources\n",
+        "x <!-- never --> The assembler acquires resources.\n",
+        "# <!-- never --> The assembler acquires resources\n",
+        "The assembler **<!-- never --> acquires** resources.\n",
+        "__<!-- never --> The assembler acquires__ resources.\n",
+        "*<!-- never --> The assembler acquires* resources.\n",
+        "_<!-- never --> The assembler acquires_ resources.\n",
+        "~~<!-- never --> The assembler acquires~~ resources.\n",
+        "[<!-- never --> The assembler acquires](x) resources.\n",
+        "![<!-- never --> The assembler acquires](x) resources.\n",
       ].map(surveyed),
       // COMMENTS OUT (5)'s cursor (wb-ro24 respin 1): two identical comments side by side, each placed past the one before.
       cursor: [
