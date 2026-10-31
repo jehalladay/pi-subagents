@@ -61,12 +61,13 @@
  *   COMMENT each sentence of each comment, read from the trivia around every token (an empty block's comment included). A
  *   finding is `<path>:<line> <via> <families>`.
  * - DOC (row A, "or doc"): every git-listed .md page below docs/, examples/, .agents/ and .pi/ and at the repository root,
- *   read as its source is written once its placed comments are out (COMMENTS OUT; R-SOURCE-AS-WRITTEN) and cut into
+ *   read as its source is written once its placed comments are out (COMMENTS OUT, claimed only as its rows and PINNED
+ *   hold it; R-SOURCE-AS-WRITTEN) and cut into
  *   sentences after ".", "!", "?" or ";" before white space or the line end, at a line holding only white space, around a
  *   line that opens with a pipe after white space and an ATX heading line (one to six # after at most three white-space
  *   characters, then white space or the line end), and before a line that opens, after white space, with -, + or * or with
  *   ASCII digits and . or ), then white space (a marker alone before the line end is no list cut); a sentence otherwise runs
- *   on across line breaks. A finding is `<path>:<line> <families>`. WHITE SPACE, here and in COMMENTS OUT (3), is
+ *   on across line breaks. A finding is `<path>:<line> <families>`. WHITE SPACE here is
  *   JavaScript's \s, the set String.prototype.trim strips: cutter.space.engine reads both from the engine over every code
  *   point, the same 25 (U+0009-U+000D, U+0020, U+00A0, U+1680, U+2000-U+200A, U+2028, U+2029, U+202F, U+205F, U+3000 and
  *   U+FEFF), scanning all 1,112,064 code points but the surrogates (scanned); the line feed is the line break itself, so
@@ -119,76 +120,160 @@
  *   and ., digits and ), two digits, after spaces, after a tab, a tab after the marker, a marker before a letter (no cut),
  *   and the line after a list marker's line (no cut); cutter.alone -, +, * and 1) alone before the line end (no cut), and 1.
  *   alone, which only the terminator cuts after.
- * - COMMENTS OUT (wb-cppf, the R694 follow-up of landing 553): the doc reading is the page source with its placed comments
- *   taken out, never the rendered view - no clause of this file claims what a rendered page shows, and each clause names the
- *   A3 rows that hold it. (1) TAKEN OUT: every span from `<!--` to the next `-->` (an empty `<!-->` or `<!--->` included, so
- *   the text after it is read: comments.empty, each form opening a comment block and inline before a later `-->`; an
- *   unterminated one runs to the end of its token) in the source of a token that marked (the markdown grammar
- *   test/helpers/census.ts reads pages with) lexes as HTML, once placed (5): a marker only such a span holds quiets nothing
- *   (comments.hiddenMarker), and a claim only it holds is not read (R-COMMENT-HIDDEN). (2) BLANKED: a comment block's
- *   opening comment - the span an HTML block token's source opens with after at most three spaces, at any depth, as (5)
- *   confirms it - reads as spaces with its line breaks kept, so a line holding nothing else but white space is a blank line
- *   (comments.lines[0-1], comments.blanked: one opened after three spaces and one after none, R-SPLIT's third row, then one
- *   after one space and one after two; the last comments.blanked row opens after four spaces, a code block, so its comment
- *   is read as written: (4)); the rest of its lines is read as written, but for another comment there, removed as (3) says
- *   (R-COMMENT-BLOCK). (3) JOINED: every other placed span is removed with its line breaks, so the text before it and after
- *   it read as one line (comments.joined, comments.lines[2-3]), and a line a span touched that is left with nothing but
- *   white space is dropped, never read as a blank line (comments.joined[1] and [3], R-COMMENT-BLOCK's second rows;
- *   comments.dropped, a line a removed comment leaves holding one code point: dropped for each of the 24 inline white-space
- *   code points DOC defines, but for the carriage return, whose page does not tile and so is unplaced (5), and kept as text
- *   for the near misses U+0085, U+00AD, U+180E, U+200B and U+2060). (4) UNLEXED: comment-shaped text that marked does not
- *   lex as HTML - in a code span or a code block, after a backslash, an opener left unterminated in a paragraph - is read as
- *   written (comments.unlexed). (5) PLACED: walking each top-level block's tokens in page order - a list's items in order, a
- *   table's header cells in order and then its body rows in order, each body row's cells in order, and the own tokens, in
- *   order, of a block quote, a list item, a list item's text, a paragraph, a heading, a strong, an em, a del, a link and an
- *   image (comments.cells: a comment in a header cell before a body row; comments.order: a comment in the first of two list
- *   items - bulleted with -, + and *, numbered 1. and 1), numbered from 3., loose, with task boxes, and nested in an item -
- *   in a body row's first cell before another cell, in the last cell of the first of two body rows, in a block quote's first
- *   paragraph before its second, in a list item's first paragraph before its second, and followed by more of its token's own
- *   text in a list item's text, a paragraph, a heading, a strong (** and __), an em (* and _), a del, a link and an image,
- *   each placed) -
- *   a cursor moves past each leaf token's source as found in the block (comments.cursor[0]: two identical comments side by
- *   side in a paragraph, each placed), and each span is found within its HTML token's source as found there, after the span
- *   before it (comments.cursor[1]-[2]: two identical comments in one comment block's line, spaced and side by side, each
- *   placed); source over several lines is found with each line break followed by a run of spaces or tabs, then quote marks
- *   each followed by at most one space or tab. The runs held (comments.runs, each claimed only within its bound; each page's
- *   comment is placed unless named otherwise): a paragraph's continuation line opened with zero to thirty-two spaces, one to
- *   eight tabs, or one to four space-tab pairs (paragraph); a list item's continuation line opened with zero to sixteen
- *   spaces (item), and an item numbered 10.'s (ordered); the continuation line of the innermost of one to twelve nested list
- *   items, opened with the two to twenty-four spaces their indentation takes out of the token's source (nested), and of one
- *   to eight with a block quote in the innermost item (nestedQuote); the continuation line of two to twelve nested items
- *   opened with the one to six tabs their indentation covers whole (tabStops), and the mixed runs an indentation covers
- *   whole - a tab and two spaces under three items, two spaces, a tab and four spaces under four, a tab under an item
- *   numbered 1. whose text opens after two spaces, and two tabs under an item numbered 123456. (mixedStops); a list item's
- *   continuation line opened with one to four tabs is unplaced (item: the item's two-column indentation takes only part of
- *   the first tab, and marked spells the rest as spaces in its token's source); one to eight quote marks, unspaced and
- *   spaced, opening both lines (depth, spacedDepth); zero to eight spaces and zero to four tabs after one quote mark
- *   (afterQuote); a block quote in a list item whose continuation line opens with zero to eight spaces or zero to four tabs
- *   before its quote mark (itemQuote: with fewer than two spaces, or no tab, the line is not the item's, so the opener is
- *   left unterminated and read as written, unlexed (4); from two tabs on the comment is unplaced, marked spelling the tabs
- *   past the item's indentation as spaces), and with a space and a tab in either order or a tab between two spaces (mixed);
- *   and a span over three lines in a block quote and in a list item (lines). A span so found is placed only when marked,
- *   lexing the page again with a sentinel (a run of Q the page does not hold, claimed for pages spelling runs of up to
- *   sixty-four Q) written just inside its `<!--`, keeps the sentinel inside an HTML token (comments.sentinel: the
- *   link-destination misplacement page below, spelling each run of zero to sixty-four Q in a tag's attribute, lists its
- *   comment unplaced every time, so no run of up to sixty-four Q stands in for the sentinel); it is a comment block's
- *   opening comment (2) when that token is a block whose source opens with it after at most three spaces. A page's CRLF line
- *   ends are read as line feeds first, so a CRLF page tiles and its spans are placed (comments.crlf). Placed shapes held
- *   (comments.containers): a list item's space-indented lines, a block quote's lines, a block quote in a list item, nested
- *   block quotes, a block quote's line whose quote mark is followed by a tab, a block quote in a list item whose
- *   continuation line is indented with one tab before its quote mark; and two identical comments in one paragraph, each
- *   placed (the last comments.unplaced row). A span the reader cannot place is not taken out: it is read as written and
- *   listed as unplaced, and A3 holds the live and frozen lists empty. Unplaced shapes held (comments.unplaced): a comment
- *   spelling an escaped pipe in a table cell; every span on a page whose top-level blocks do not tile its source (a lone
- *   carriage return); a list item in a block quote whose continuation line repeats the quote mark before the item's
- *   indentation, bulleted or ordered; a list item's continuation line indented with a tab; and a span the cursor found in
- *   other text spelled the same way, which marked does not confirm - a link destination just before the comment (also on a
- *   page that spells QQ elsewhere, so neither Q nor QQ is the sentinel), a code span past an escaped pipe in its table cell,
- *   a code span on a later line after a tab-indented line; and an inline empty comment, `<!-->` or `<!--->`, with no later
- *   `-->` in its inline run, which the sentinel turns into text marked does not lex as HTML (with a later `-->` it is
- *   placed: comments.empty). (6) LINES: each kept line keeps the page line it starts on, so a finding names the page line
- *   its sentence starts on, and text after a span removed with its line breaks stays on the line the span opens on
- *   (comments.lines).
+ * - COMMENTS OUT (wb-cppf, the R694 follow-up of landing 553; narrowed by wb-ro24 cut #4 to the fail-closed core that
+ *   orchestrator ruling R-B197 binds): the doc reading is the page source with its placed comments taken out, never the
+ *   rendered view - no clause of this file claims what a rendered page shows. CLAIMED, and no wider: on the page of each A3
+ *   row a clause names, exactly the reading the roster pins for it (findings, quieted sentences, unplaced spans, a
+ *   placement or cut sentences, as the row records); A3's live and frozen unplaced lists held empty, so a comment the
+ *   reader does not place on a live or frozen page reds A3 (the reader fails closed there); and a red census under each
+ *   one-edit reader change PINNED names. A clause describes the reader only so that its rows can be read: a page shape no
+ *   row holds is NOT CLAIMED, whatever the description would predict for it, and a reader change PINNED does not name is
+ *   NOT CLAIMED either way (HOLES names every one this cut's battery leaves green).
+ *   (1) TAKEN OUT: a span from `<!--` to the next `-->` (HTML_COMMENT, marked's own comment form: an unterminated one runs
+ *   to the end of its token) in the source of a token that marked (the markdown grammar test/helpers/census.ts reads pages
+ *   with) lexes as HTML, once placed (5): a marker only such a span holds quiets nothing (comments.hiddenMarker: inline
+ *   after text, between two words and after a sentence's "."), a claim only it holds is not read (R-COMMENT-HIDDEN, an
+ *   unterminated comment block's included), and an empty `<!-->` or `<!--->` is such a span, so the text after it is read
+ *   (comments.empty: each form opening a comment block, and each inline before a later `-->`).
+ *   (2) BLANKED: a comment block's opening comment - the span an HTML block token's source opens with after up to three
+ *   spaces (comments.blanked: after none, one, two and three), as (5) confirms it, at the top level and in a list item
+ *   (R-SPLIT's third row; R-COMMENT-BLOCK's listed rows) - is taken out with its line breaks kept, so a line holding
+ *   nothing else but white space is a blank line (comments.lines[0-1], comments.blanked; the last comments.blanked row
+ *   opens after four spaces, a code block, so its comment is read as written: (4)); the rest of its lines is read as
+ *   written, but for another comment there, removed as (3) says (R-COMMENT-BLOCK). HOLES, no row's page reading differently
+ *   either way: an opening comment in a block quote (comments.containers[1] and R-COMMENT-BLOCK's quoted rows read the same
+ *   when it is joined (3) instead), the comment read as spaces rather than removed, and a lead past three spaces or of
+ *   other white space.
+ *   (3) JOINED: every other placed span is removed with its line breaks, so the text before it and after it read as one
+ *   line (comments.joined, comments.lines[2-3]), and a line a removed span leaves holding no text is dropped, never read as
+ *   a blank line, on the pages the rows hold: holding nothing (comments.joined[3]), two spaces (comments.joined[1]), a
+ *   comment block's line holding its opening comment and a second comment, spaced or side by side (R-COMMENT-BLOCK's second
+ *   rows), and one code point (comments.dropped: dropped for each of the 24 inline white-space code points DOC defines, but
+ *   for the carriage return, whose page does not tile and so is unplaced (5), and kept as text for the near misses U+0085,
+ *   U+00AD, U+180E, U+200B and U+2060). A HOLE: a line left holding any other run - two or more tabs, two or more U+00A0,
+ *   two or more of one other code point, or a space and a tab together.
+ *   (4) UNLEXED: comment-shaped text that marked does not lex as HTML - in a code span or a code block, after a backslash,
+ *   an opener left unterminated in a paragraph - is read as written (comments.unlexed).
+ *   (5) PLACED: the reader walks each top-level block's nested tokens (nestedTokens: a list's items; a table's header
+ *   cells, then its body rows' cells, and each cell's own tokens; any other token's own tokens), moves a cursor past each
+ *   leaf token's source as found in the block, and finds each span of an HTML token after the span before it; a span so
+ *   found is placed only when marked, lexing the page again with a sentinel (a run of Q the page does not hold) written
+ *   just inside its `<!--`, keeps the sentinel inside an HTML token, and it is a comment block's opening comment (2) when
+ *   that token is a block whose source opens with it; a span the reader cannot place is not taken out: it is read as
+ *   written and listed as unplaced. What the rows hold of this walk, in their own shapes and no other (each page's comment
+ *   placed unless named otherwise):
+ *   WALK - comments.order: a comment as the only own token of the first of two list items (bulleted with -, + and *,
+ *   numbered 1. and from 3., loose, and nested in an item); second of three own tokens of the text of the first of two
+ *   items numbered 1), and first of two own tokens of the text after the box of the first of two items with task boxes; in
+ *   the first of a body row's two cells; in the last of two cells of the first of two body rows; first of a block quote's
+ *   and of a list item's three own tokens (a comment block, a blank line, a paragraph); second of three own tokens of a
+ *   list item's text and of a paragraph; and first of two own tokens of a heading, a strong (** and __), an em (* and _), a
+ *   del, a link and an image. comments.cells: second of two own tokens of the first of two header cells, before a body row;
+ *   its claim is on another line, so the row reads the same whether that cell is walked or not, and holds only the two
+ *   cells' order. comments.cursor[0] and the last comments.unplaced row: two identical comments in a paragraph, side by
+ *   side (its second and third of four own tokens) and apart (second and fourth of five). Every other comments row holds
+ *   its comment where its own page puts it. The order of a list's items, a table's header cells, its body rows and a block
+ *   quote's own tokens past these positions is deferred to wb-hhu9, the structural-exit child R-B197 files, with refusal
+ *   #3's members GP15-Q01 to GP15-Q05 among the HOLES below; every other position is NOT CLAIMED by this census.
+ *   CURSOR - comments.cursor[1]-[2]: two identical comments in one comment block's line, spaced and side by side, each
+ *   placed.
+ *   LINE BREAKS - source over several lines is found with each line break followed by the leads the comments.runs and
+ *   comments.containers rows spell, each claimed only within its bound: a paragraph's continuation line opened with zero to
+ *   thirty-two spaces, one to eight tabs, or one to four space-tab pairs (paragraph); a list item's continuation line
+ *   opened with zero to sixteen spaces (item), and an item numbered 10.'s (ordered); the continuation line of the innermost
+ *   of one to twelve nested list items, opened with the two to twenty-four spaces their indentation takes out of the
+ *   token's source (nested), and of one to eight with a block quote in the innermost item (nestedQuote); the continuation
+ *   line of two to twelve nested items opened with the one to six tabs their indentation covers whole (tabStops), and the
+ *   mixed runs an indentation covers whole - a tab and two spaces under three items, two spaces, a tab and four spaces
+ *   under four, a tab under an item numbered 1. whose text opens after two spaces, and two tabs under an item numbered
+ *   123456. (mixedStops); a list item's continuation line opened with one to four tabs is unplaced (item: the item's
+ *   two-column indentation takes only part of the first tab, and marked spells the rest as spaces in its token's source);
+ *   one to eight quote marks opening both lines, unspaced and each followed by one space (depth, spacedDepth); zero to
+ *   eight spaces and zero to four tabs after one quote mark (afterQuote), and a tab after a line's one quote mark
+ *   (comments.containers); a block quote in a list item whose continuation line opens with zero to eight spaces or zero to
+ *   four tabs before its quote mark (itemQuote: with fewer than two spaces, or no tab, the line is not the item's, so the
+ *   opener is left unterminated and read as written, unlexed (4); from two tabs on the comment is unplaced, marked spelling
+ *   the tabs past the item's indentation as spaces), and with a space and a tab in either order or a tab between two spaces
+ *   (mixed); and a span over three lines in a block quote and in a list item (lines). Every other spelling around a quote
+ *   mark is a HOLE: a tab after a quote mark another follows (refusal #3's GP15-Q10), two spaces or tabs after a quote mark
+ *   (GP15-Q11), white space other than spaces and tabs before or after the marks, and one more space or tab after the last
+ *   mark.
+ *   SENTINEL - comments.sentinel: the link-destination misplacement page below, spelling each run of zero to sixty-four Q
+ *   in a tag's attribute, lists its comment unplaced every time, so no run of up to sixty-four Q stands in for the
+ *   sentinel; the sentinel's length is a HOLE. CRLF - a page's CRLF line ends are read as line feeds first, so a CRLF page
+ *   tiles and its spans are placed (comments.crlf).
+ *   Placed shapes held (comments.containers): a list item's space-indented lines, a block quote's lines, a block quote in a
+ *   list item, nested block quotes, a block quote's line whose quote mark is followed by a tab, a block quote in a list
+ *   item whose continuation line is indented with one tab before its quote mark; and two identical comments in one
+ *   paragraph, each placed (the last comments.unplaced row). A3 holds the live and frozen unplaced lists empty. Unplaced
+ *   shapes held (comments.unplaced): a comment spelling an escaped pipe in a table cell; every span on a page whose
+ *   top-level blocks do not tile its source (a lone carriage return); a list item in a block quote whose continuation line
+ *   repeats the quote mark before the item's indentation, bulleted or ordered; a list item's continuation line indented
+ *   with a tab; and a span the cursor found in other text spelled the same way, which marked does not confirm - a link
+ *   destination just before the comment (also on a page that spells QQ elsewhere, so neither Q nor QQ is the sentinel), a
+ *   code span past an escaped pipe in its table cell, a code span on a later line after a tab-indented line; and an inline
+ *   empty comment, `<!-->` or `<!--->`, with no later `-->` in its inline run, which the sentinel turns into text marked
+ *   does not lex as HTML (with a later `-->` it is placed: comments.empty).
+ *   (6) LINES: each kept line keeps the page line it starts on, so a finding names the page line its sentence starts on,
+ *   and text after a span removed with its line breaks stays on the line the span opens on (comments.lines).
+ *   PINNED (wb-ro24 cut #4's battery: each one-edit reader change below reds A3 and records, 2 failed | 9 passed (11), or
+ *   with A1, 3 failed | 8 passed (11), on the rows named above; the member ids are the battery's, in the cut's evidence
+ *   archive). WALK: a list's items reversed, its first two swapped, its first not walked, or none walked (WL-REV, WL-SWAP2,
+ *   WL-DROPFIRST, WL-SKIP); a table's header cells reversed or its first two swapped (WH-REV, WH-SWAP2); its body rows
+ *   reversed, the first two swapped, the first not walked, none walked, or walked before the header cells (WR-REV,
+ *   WR-SWAP2, WR-DROPFIRST, WR-SKIP, WR-BEFOREHEADER); a body row's cells, and a cell's own tokens, reversed, the first two
+ *   swapped, only the first walked, the last not walked, the first not walked, or none walked (WC- and WT-REV, -SWAP2,
+ *   -FIRST, -DROPLAST, -DROPFIRST, -SKIP); a block quote's own tokens reversed, the first not walked, or none walked
+ *   (WO-blockquote-REV, -DROPFIRST, -SKIP); a list item's own tokens reversed, reversed after the first
+ *   (WO-list_item-TAIL1, as refusal #3's GP15-Q06), only the first walked, the last not walked, the first not walked, or
+ *   none walked (WO-list_item-REV, -FIRST, -DROPLAST, -DROPFIRST, -SKIP); a list item's text's own tokens reversed,
+ *   reversed after the first, the first two swapped, only the first walked, the first not walked, or none walked
+ *   (WO-text-REV, -TAIL1, -SWAP2, -FIRST, -DROPFIRST, -SKIP; with the six kinds below, as refusal #3's GP15-Q07); a
+ *   paragraph's own tokens each of the eight ways (WO-paragraph-*: reversed, reversed after the first, reversed after the
+ *   second as refusal #3's GP15-Q08, the first two swapped, only the first walked, the last not walked, the first not
+ *   walked, none walked); and a heading's, a strong's, an em's, a del's, a link's and an image's own tokens reversed, the
+ *   first two swapped, the first not walked, or none walked (WO-<kind>-REV, -SWAP2, -DROPFIRST, -SKIP). CURSOR: the cursor
+ *   moved to a leaf's start, or never moved (CU-START, CU-NONE); an HTML token's later span searched from the token's start
+ *   (CU-INNER); only a token's first span read (CU-FIRST-COMMENT); any token whose source holds `<!--` read as an HTML
+ *   token (CU-ANY-TOKEN); an unplaced span neither listed nor read (CU-UNPLACED-DROP); no tiling test (CU-NO-TILE); only
+ *   the top-level HTML tokens read for the sentinel (HT-TOP). LINE BREAKS: the lead before the quote marks spaces only,
+ *   tabs only, none, or one or more (SP-SPACES-ONLY-LEAD, SP-TABS-ONLY-LEAD, SP-NO-LEAD, SP-LEAD-PLUS); a quote mark
+ *   followed by a space only, a tab only, nothing, or any run of spaces and tabs (SP-MARK-SPACE-ONLY, SP-MARK-TAB-ONLY,
+ *   SP-MARK-BARE, SP-LEAD-AFTER-MARK); at most one quote mark, at most four, or none (SP-ONE-MARK, SP-MARKS-4,
+ *   SP-NO-MARKS); the search from the block's start, not the cursor (SP-NO-FROM); a spelling that ends at its bound refused
+ *   (SP-END-GE). SENTINEL: always Q (KI-Q-ALWAYS, refusal #1's GE2); a span marked does not confirm read as placed
+ *   (KI-NO-SENTINEL-CHECK), or taken out unlisted (KI-UNCONFIRMED-PLACED). (1): no empty alternative (HC-NO-EMPTY, refusal
+ *   #1's GE1), only `<!--->` or only `<!-->` empty (HC-EMPTY-3, HC-EMPTY-2), a span to the last `-->` (HC-GREEDY), no
+ *   unterminated span (HC-NO-OPEN-END), a span stopped at a line break (HC-LINE). (2): every placed span an opening
+ *   comment, none, or one a block token holds anywhere (KI-NO-BLOCK, KI-NEVER-BLOCK, KI-ANY-INDEX); an opening comment at
+ *   the top level, in a list, or anywhere below the top level, joined instead (KI-TOP-JOINED, KI-LIST-JOINED,
+ *   KI-NESTED-JOINED); the lead's bound two spaces (LS-2); its line breaks not kept (BL-NO-BREAKS). (3): only an empty line
+ *   dropped, only a line of spaces, only a line of at most one code point, a line of three or more spaces kept, no line
+ *   dropped, or a comment block's line dropped too (DR-EMPTY-ONLY, DR-SPACES-ONLY, DR-ONE-CP, DR-THREE-SP, DR-NEVER,
+ *   DR-ALWAYS-EMPTIED). (6): a removed span's line breaks not counted (LN-NO-COUNT). CRLF: only the first CRLF read as a
+ *   line feed, or none (CR-FIRST-ONLY, CR-NONE).
+ *   HOLES (NOT CLAIMED: each one-edit reader change below leaves the census at 0 failed | 11 passed (11), measured on cut
+ *   #3's bytes and on cut #4's; no residual and no follow-up bead is made of a hole, but the walk order wb-hhu9 carries).
+ *   WALK: a list's items reversed after the first or after the second, only the first walked, or the last not walked
+ *   (WL-TAIL1 = refusal #3's GP15-Q01, WL-TAIL2, WL-FIRST, WL-DROPLAST); a table's header cells reversed after the first or
+ *   after the second, only the first walked, the last not walked, the first not walked, or none walked (WH-TAIL1 =
+ *   GP15-Q02, WH-TAIL2, WH-FIRST, WH-DROPLAST, WH-DROPFIRST, WH-SKIP); its body rows reversed after the first or after the
+ *   second, only the first walked, or the last not walked (WR-TAIL1 = GP15-Q03, WR-TAIL2, WR-FIRST, WR-DROPLAST); a body
+ *   row's cells reversed after the first or after the second (WC-TAIL1 = GP15-Q04, WC-TAIL2); a cell's own tokens the same
+ *   two ways (WT-TAIL1, WT-TAIL2); a block quote's own tokens reversed after the first or after the second, two swapped,
+ *   only the first walked, or the last not walked (WO-blockquote-TAIL1 = GP15-Q05, -TAIL2, -SWAP2, -FIRST, -DROPLAST); a
+ *   list item's own tokens reversed after the second, or two swapped (WO-list_item-TAIL2, -SWAP2); a list item's text's own
+ *   tokens reversed after the second, or the last not walked (WO-text-TAIL2, -DROPLAST); and a heading's, a strong's, an
+ *   em's, a del's, a link's and an image's own tokens reversed after the first or after the second, only the first walked,
+ *   or the last not walked (WO-<kind>-TAIL1, -TAIL2, -FIRST, -DROPLAST). CURSOR: an HTML token's span searched to the
+ *   block's end, not the token's (CU-TOKEN-END). LINE BREAKS: a tab after a quote mark only after the last (GP15-Q10), up
+ *   to two spaces or tabs after a quote mark (GP15-Q11), any white space after a quote mark or before the marks
+ *   (SP-MARK-WS, SP-LEAD-WS), one more space or tab after the last mark (SP-SPACE-THEN-TAB-LAST), and no end bound
+ *   (SP-NO-END). SENTINEL: grown by QQ (KI-QQ-STEP). (2): an opening comment in a block quote joined instead
+ *   (KI-QUOTE-JOINED); one found at or before its lead (KI-LEAD-LE); the lead's bound four spaces, any run, or any white
+ *   space up to three (LS-4, LS-ANY = refusal #1's GE3, LS-WS); the opening comment removed rather than read as spaces
+ *   (BL-REMOVE). (3): a line left holding two or more tabs (GP15-Q14), two or more U+00A0 (GP15-Q16), two or more of one
+ *   code point but the space (DR-TWO-SAME), or a space and a tab together (DR-MIXED) kept.
  * - SEAM (row C, "an actual Pi seam"): the one path by which assembled context reaches Pi is the registered
  *   reactivefiber.render.preview capability (read), spawned at the one rf launch site in src (a child-process launcher whose
  *   first argument's constant names rf: exactly the provider's spawn). Its spawned argv for both input arms and the
@@ -569,7 +654,8 @@ const REGEXP_SPECIAL = /[.*+?^${}()|[\]\\]/g;
 const isHtmlToken = (token: Token): token is Tokens.HTML | Tokens.Tag => token.type === "html";
 const isListToken = (token: Token): token is Tokens.List => token.type === "list";
 const isTableToken = (token: Token): token is Tokens.Table => token.type === "table";
-/** A token's nested tokens in page order: a list's items, a table's cells (its header first), or its own tokens. */
+/** A token's nested tokens: a list's items, a table's header cells and then its body rows' cells, or its own tokens. The walk
+ * is claimed only as COMMENTS OUT (5)'s WALK and PINNED name it; its HOLES are not claimed (wb-hhu9 carries the order). */
 function nestedTokens(token: Token): readonly Token[] {
   if (isListToken(token)) return token.items;
   if (isTableToken(token)) return [...token.header, ...token.rows.flat()].flatMap(cell => cell.tokens);
@@ -577,7 +663,8 @@ function nestedTokens(token: Token): readonly Token[] {
   return Array.isArray(value) ? (value as Token[]) : [];
 }
 /** Where a token's source sits in a block at or after `from` and before `end`: as written, or with each line break followed by
- * spaces or tabs and then quote marks each followed by at most one space or tab (COMMENTS OUT (5)). */
+ * spaces or tabs and then quote marks each followed by at most one space or tab - claimed only on the leads COMMENTS OUT (5)'s
+ * LINE BREAKS rows spell and against the edits its PINNED names (its HOLES are not claimed). */
 function placed(block: string, raw: string, from: number, end: number): { readonly start: number; readonly end: number } | undefined {
   if (raw === "") return undefined;
   const spelling = new RegExp(raw.split("\n").map(line => line.replace(REGEXP_SPECIAL, "\\$&")).join("\\n[ \\t]*(?:>[ \\t]?)*"), "g");
@@ -588,7 +675,7 @@ function placed(block: string, raw: string, from: number, end: number): { readon
 interface CommentSpan {
   readonly start: number;
   readonly end: number;
-  /** A comment block's opening comment (COMMENTS OUT (2), as htmlKindAt reads it): blanked, its line breaks kept. */
+  /** A comment block's opening comment (COMMENTS OUT (2), as htmlKindAt reads it): taken out with its line breaks kept. */
   readonly block: boolean;
 }
 /** Every HTML token marked lexes in a page, at any depth. */
@@ -603,7 +690,8 @@ function htmlTokens(page: string): (Tokens.HTML | Tokens.Tag)[] {
 }
 /** COMMENTS OUT (5): marked lexes the page again with a sentinel (a run of Q the page does not hold) written just inside
  * the `<!--` at `start`. No HTML token holding the sentinel: undefined (the span is not placed). Otherwise whether that token is a
- * block whose source opens with this comment after at most three spaces (a comment block's opening comment, blanked by (2)). */
+ * block whose source opens with this comment after LEADING_SPACES (a comment block's opening comment, (2)); the rows hold a
+ * lead of up to three spaces, and the bound past three is one of (2)'s HOLES. */
 function htmlKindAt(page: string, start: number): boolean | undefined {
   let mark = "Q";
   while (page.includes(mark)) mark += "Q";
@@ -612,9 +700,9 @@ function htmlKindAt(page: string, start: number): boolean | undefined {
   const lead = LEADING_SPACES.exec(holder.raw)?.[0].length ?? 0;
   return holder.block && holder.raw.indexOf(`<!--${mark}`) === lead;
 }
-/** Every comment span in the source of a token marked lexes as HTML, placed in the page (COMMENTS OUT (5)): walking each
- * top-level block's tokens in page order moves a cursor past each leaf token's source as found, and a span found is placed only
- * where htmlKindAt finds marked's own HTML token holding it. */
+/** The comment spans in the source of the tokens marked lexes as HTML, placed in the page (COMMENTS OUT (5)): walking each
+ * top-level block's nested tokens (nestedTokens) moves a cursor past each leaf token's source as found, and a span found is
+ * placed only where htmlKindAt finds marked's own HTML token holding it (claimed only as (5)'s rows and PINNED hold it). */
 function commentSpans(page: string): { readonly spans: readonly CommentSpan[]; readonly unplaced: readonly string[] } {
   const blocks = marked.lexer(page);
   // The top-level tokens tile the page; when they do not, no position can be trusted: every comment-shaped span is unplaced.
@@ -659,9 +747,10 @@ interface CommentFreePage {
   /** The comment spans the reader does not place (COMMENTS OUT (5)); each is read as written. */
   readonly unplaced: readonly string[];
 }
-/** A page with its placed comments out (COMMENTS OUT (2), (3), (6)): a comment block's opening comment is blanked with its line
- * breaks kept, any other comment is removed with its line breaks (a line it leaves holding only white space is dropped), every
- * other character is kept as written, and every kept line keeps its page number. */
+/** A page with its placed comments out (COMMENTS OUT (2), (3), (6)): a comment block's opening comment is taken out with its
+ * line breaks kept (read as spaces, one of (2)'s HOLES), any other comment is removed with its line breaks (a line it leaves
+ * holding only white space dropped, claimed only for the lines (3)'s rows hold), every other character is kept as written,
+ * and every kept line keeps its page number. */
 function commentFreePage(markdown: string): CommentFreePage {
   if (!markdown.includes("<!--")) return { text: markdown, lines: null, unplaced: [] };
   const page = markdown.replace(/\r\n/g, "\n");
@@ -1842,14 +1931,14 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         lines: ["> The assembler <!-- a\n> b\n> c --> acquires resources.\n", "- The assembler <!-- a\n  b\n  c --> acquires resources.\n"].map(surveyed),
       },
       cells: ["| x <!-- never --> | y |\n| --- | --- |\n| The assembler | acquires resources |\n"].map(surveyed),
-      // COMMENTS OUT (5)'s walk order (wb-ro24): each comment placed in page order.
+      // COMMENTS OUT (5)'s WALK (wb-ro24): each comment placed at its row's position, as the header's WALK names it.
       order: [
         "- <!-- never --> The assembler acquires resources\n- x\n",
         "| a | b |\n| --- | --- |\n| <!-- never --> The assembler acquires resources | x |\n",
         "| a | b |\n| --- | --- |\n| x | <!-- never --> The assembler acquires resources |\n| y | z |\n",
         "> <!-- never --> The assembler acquires resources.\n>\n> x\n",
         "- <!-- never --> The assembler acquires resources.\n\n  x\n",
-        // wb-ro24 cut #3: every other list kind, then the own tokens of each other token marked nests tokens in.
+        // wb-ro24 cut #3: the other list kinds, then a comment in the own tokens of each other token kind WALK names.
         "+ <!-- never --> The assembler acquires resources\n+ x\n",
         "* <!-- never --> The assembler acquires resources\n* x\n",
         "1. <!-- never --> The assembler acquires resources\n2. x\n",
