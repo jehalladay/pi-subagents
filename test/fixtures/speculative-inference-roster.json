@@ -1,0 +1,491 @@
+{
+  "provenance": "wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census roster; exact pinned witnesses. Re-measured on trunk f63d38962c19f3d80330ac83a72af25dc306abfd (117 src modules, 60 plane knowers; 12 reaching, six sites in four modules) by resume seat ws-05. The previous ws-04 measured the same witnesses at 5ff6aef; no witness changed on the trunk merge. Acceptance clauses are independently anchored in the tracked bead export. Regenerate only by re-measuring.",
+  "launchExports": {
+    "@anthropic-ai/claude-agent-sdk": [
+      "prewarm",
+      "query",
+      "startup"
+    ],
+    "@earendil-works/pi-ai": [
+      "createModels",
+      "createProvider",
+      "lazyStream",
+      "retryAssistantCall"
+    ],
+    "@earendil-works/pi-coding-agent": [
+      "AgentSession",
+      "AgentSessionRuntime",
+      "InteractiveMode",
+      "ModelRuntime",
+      "createAgentSession",
+      "createAgentSessionFromServices",
+      "createAgentSessionRuntime",
+      "createAgentSessionServices",
+      "main",
+      "runPrintMode",
+      "runRpcMode"
+    ]
+  },
+  "providerPackages": [
+    "@anthropic-ai/sdk",
+    "@aws-sdk/client-bedrock-runtime",
+    "@google/genai",
+    "openai"
+  ],
+  "wholeSubpaths": [
+    "@earendil-works/pi-ai/api/",
+    "@earendil-works/pi-ai/providers/"
+  ],
+  "turnMembers": [
+    "sendUserMessage",
+    "triggerTurn"
+  ],
+  "runtimeMembers": [
+    "completeSimple",
+    "fetchDeferred",
+    "streamDeferred",
+    "streamSimple",
+    "complete",
+    "stream"
+  ],
+  "cores": [
+    "src/workbench/evidence-loader.ts",
+    "src/workbench/observation.ts",
+    "src/workbench/observe-query.ts"
+  ],
+  "seam": "src/workbench/native-modules.ts",
+  "modelSide": [
+    "src/index.ts",
+    "src/workbench/claude-host.ts",
+    "src/workbench/hosts/local-detached.ts",
+    "src/workbench/native-modules.ts"
+  ],
+  "optInChecklist": [
+    "output contract",
+    "generation",
+    "exact model/version/settings",
+    "measured success/ROI",
+    "budget"
+  ],
+  "licenseClause": "query evidence is never a license",
+  "rows": [
+    {
+      "id": "A",
+      "label": "a model-call site is a launch export of a model package, a provider SDK binding, a host turn or a model-runtime call: the vocabulary resolves against the installed packages and src holds an exact multiset of sites, with the named A3 static, re-exported, namespace and literal dynamic controls",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "launchExports": {
+              "@anthropic-ai/claude-agent-sdk": [
+                "prewarm",
+                "query",
+                "startup"
+              ],
+              "@earendil-works/pi-ai": [
+                "createModels",
+                "createProvider",
+                "lazyStream",
+                "retryAssistantCall"
+              ],
+              "@earendil-works/pi-coding-agent": [
+                "AgentSession",
+                "AgentSessionRuntime",
+                "InteractiveMode",
+                "ModelRuntime",
+                "createAgentSession",
+                "createAgentSessionFromServices",
+                "createAgentSessionRuntime",
+                "createAgentSessionServices",
+                "main",
+                "runPrintMode",
+                "runRpcMode"
+              ]
+            },
+            "providers": [
+              "@anthropic-ai/sdk",
+              "@aws-sdk/client-bedrock-runtime",
+              "@google/genai",
+              "openai"
+            ],
+            "wholeSubpaths": [
+              "@earendil-works/pi-ai/api/",
+              "@earendil-works/pi-ai/providers/"
+            ],
+            "turns": {
+              "sendUserMessage": true,
+              "triggerTurn": true
+            },
+            "runtimeMembers": [
+              "complete",
+              "completeSimple",
+              "fetchDeferred",
+              "stream",
+              "streamDeferred",
+              "streamSimple"
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "modulesAboveFloor": true,
+            "sites": [
+              "src/agent-runner.ts: @earendil-works/pi-coding-agent createAgentSession",
+              "src/index.ts: turn triggerTurn",
+              "src/index.ts: turn triggerTurn",
+              "src/index.ts: turn triggerTurn",
+              "src/mention-clone.ts: @earendil-works/pi-coding-agent createAgentSession",
+              "src/workbench/claude-host.ts: @anthropic-ai/claude-agent-sdk query"
+            ],
+            "topLevel": [],
+            "missedPlants": []
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "named": 1,
+            "aliased": 1,
+            "subpath": 1,
+            "namespaceMember": 1,
+            "namespaceLiteralKey": 1,
+            "namespaceComputed": 1,
+            "namespaceArgument": 1,
+            "namespaceDestructured": 1,
+            "namespaceSpread": 1,
+            "namespaceAlias": 1,
+            "defaultMember": 1,
+            "importEquals": 1,
+            "reexportNamed": 1,
+            "reexportStar": 1,
+            "reexportNamespace": 1,
+            "dynamicDestructured": 1,
+            "dynamicMember": 1,
+            "dynamicBound": 1,
+            "dynamicOpaque": 1,
+            "requireLiteral": 1,
+            "createRequireLiteral": 1,
+            "providerDefault": 1,
+            "providerNamed": 1,
+            "providerSubpath": 1,
+            "piAiProvider": 1,
+            "piAiApi": 1,
+            "piAiClient": 1,
+            "turnUser": 1,
+            "turnUserLiteralKey": 1,
+            "turnTrigger": 1,
+            "turnTriggerComputed": 1,
+            "turnShorthand": 1,
+            "turnAssigned": 1,
+            "runtimeSimple": 1,
+            "runtimeDeferredRead": 1,
+            "runtimeDestructured": 1,
+            "runtimeCalled": 1,
+            "runtimeOptional": 1,
+            "runtimeViaCall": 1,
+            "typeOnlyImport": 0,
+            "typeOnlySpecifier": 0,
+            "typeOnlyReexport": 0,
+            "typeOnlyLaunchSpecifier": 0,
+            "typeOnlyLaunchClause": 0,
+            "nonLaunchExports": 0,
+            "namespaceTypeQuery": 0,
+            "sideEffectImport": 0,
+            "localQuery": 0,
+            "triggerTurnFalse": 0,
+            "turnInComment": 0,
+            "dataFields": 0,
+            "aliasedRuntime": 0,
+            "runtimeViaApply": 1,
+            "runtimeViaBind": 1,
+            "runtimeDestructuredAlias": 1,
+            "namespaceAliasedDestructured": 1,
+            "dynamicLiteralMember": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "the evidence/query/projection plane is three cores and every src module that knows one through any import edge, type imports included, and no core exposes a change subscription",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "cores": [
+              "src/workbench/evidence-loader.ts",
+              "src/workbench/observation.ts",
+              "src/workbench/observe-query.ts"
+            ],
+            "surfaces": [
+              "src/workbench/evidence-loader.ts: class EvidenceStore",
+              "src/workbench/observation.ts: class ObservationProjection",
+              "src/workbench/observe-query.ts: function observeInvocation"
+            ],
+            "runtime": [
+              "function",
+              "function",
+              "function"
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "knowersAboveFloor": true,
+            "coresKnown": true,
+            "anchorsAboveFloor": true,
+            "missingAnchors": [],
+            "controls": {
+              "byTypeImport": true,
+              "atDistance": true,
+              "byImportType": true,
+              "unrelated": false
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "listeners": [],
+            "callbacks": [
+              "src/workbench/evidence-loader.ts: EvidenceLoader.canLoad",
+              "src/workbench/evidence-loader.ts: EvidenceLoader.load"
+            ],
+            "prototypeMembersAboveFloor": true,
+            "prototypeListeners": [],
+            "controls": {
+              "onChange": {
+                "listeners": 1,
+                "callbacks": 0
+              },
+              "subscribe": {
+                "listeners": 1,
+                "callbacks": 0
+              },
+              "callbackOption": {
+                "listeners": 1,
+                "callbacks": 1
+              },
+              "listenerOption": {
+                "listeners": 1,
+                "callbacks": 1
+              },
+              "quietMethod": {
+                "listeners": 0,
+                "callbacks": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(acceptance) no model-call site is reachable from evidence/query/projection-change paths: outside the four model-side modules no knower's src value closure holds a launch-site module",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "violations": [],
+            "typedHandles": [
+              "src/ui/workflow-card.ts <- src/ui/agent-widget.ts: Theme",
+              "src/ui/workflow-dialog.ts <- src/ui/agent-widget.ts: Theme",
+              "src/workbench/claude-control-observer.ts <- src/workbench/claude-host.ts: ClaudeCallIdentity",
+              "src/workbench/claude-topology.ts <- src/workbench/claude-host.ts: ClaudeCallIdentity",
+              "src/workbench/claude-transcript.ts <- src/workbench/claude-host.ts: ClaudeCallIdentity",
+              "src/workbench/detached-control.ts <- src/workbench/hosts/local-detached.ts: DetachedCommand",
+              "src/workbench/detached-control.ts <- src/workbench/hosts/local-detached.ts: connectDetachedWorkflow",
+              "src/workbench/detached-observer.ts <- src/workbench/hosts/local-detached.ts: DetachedReceipt",
+              "src/workbench/detached-observer.ts <- src/workbench/hosts/local-detached.ts: DetachedSnapshot",
+              "src/workbench/detached-observer.ts <- src/workbench/hosts/local-detached.ts: LocalOperator",
+              "src/workflow/host.ts <- src/agent-manager.ts: AgentManager"
+            ],
+            "knowersReaching": [
+              "src/index.ts",
+              "src/workbench/claude-host.ts",
+              "src/workbench/hosts/local-detached.ts",
+              "src/workbench/native-modules.ts"
+            ],
+            "justified": [
+              "src/index.ts: site",
+              "src/workbench/claude-host.ts: site",
+              "src/workbench/hosts/local-detached.ts -> src/workbench/claude-host.ts",
+              "src/workbench/native-modules.ts -> src/workbench/claude-host.ts"
+            ],
+            "reaching": [
+              "src/agent-manager.ts",
+              "src/agent-runner.ts",
+              "src/cross-extension-rpc.ts",
+              "src/index.ts",
+              "src/mention-clone.ts",
+              "src/schedule.ts",
+              "src/ui/agent-widget.ts",
+              "src/ui/conversation-viewer.ts",
+              "src/ui/fleet-list.ts",
+              "src/workbench/claude-host.ts",
+              "src/workbench/hosts/local-detached.ts",
+              "src/workbench/native-modules.ts"
+            ],
+            "siteModules": [
+              "src/agent-runner.ts",
+              "src/index.ts",
+              "src/mention-clone.ts",
+              "src/workbench/claude-host.ts"
+            ],
+            "seamMembers": {
+              "Furnace": [
+                "@furnace/sdk"
+              ],
+              "createClaudeWorkflowHost": [
+                "src/workbench/claude-host.ts"
+              ],
+              "createClaudeObserver": [
+                "src/workbench/claude-transcript.ts"
+              ],
+              "readClaudeTranscript": [
+                "src/workbench/claude-transcript.ts"
+              ],
+              "connectDetachedWorkflow": [
+                "src/workbench/hosts/local-detached.ts"
+              ],
+              "launchDetachedWorkflow": [
+                "src/workbench/hosts/local-detached.ts"
+              ],
+              "openForgeOperationConnection": [
+                "src/workbench/providers/forge.ts"
+              ],
+              "registerNativeProviders": [
+                "src/workbench/providers/forge.ts",
+                "src/workbench/providers/furnace.ts",
+                "src/workbench/providers/hyperunix.ts",
+                "src/workbench/providers/reactivefiber.ts"
+              ]
+            },
+            "seamImporters": {
+              "src/index.ts": [
+                "Furnace",
+                "connectDetachedWorkflow",
+                "createClaudeObserver",
+                "createClaudeWorkflowHost",
+                "launchDetachedWorkflow",
+                "openForgeOperationConnection",
+                "readClaudeTranscript",
+                "registerNativeProviders"
+              ],
+              "src/workbench/evidence-wiring.ts": [
+                "Furnace",
+                "readClaudeTranscript"
+              ]
+            },
+            "plantedMissing": []
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "topLevel": {
+              "callsLaunchBinding": 1,
+              "callsReachingImport": 1,
+              "topLevelTurn": 1,
+              "insideFunction": 0,
+              "callsAliasedDynamic": 1,
+              "callsAliasedNamespace": 1,
+              "callsProviderDefault": 1,
+              "callsProviderDynamic": 1
+            },
+            "typedHandles": {
+              "typedLauncher": 1,
+              "typedImportType": 1,
+              "structural": 0,
+              "typedQuiet": 0
+            },
+            "direct": 1,
+            "transitive": 1,
+            "reexportNamed": 1,
+            "reexportStar": 1,
+            "sideEffect": 1,
+            "importEquals": 1,
+            "dynamic": 1,
+            "dynamicDestructured": 1,
+            "requireLiteral": 1,
+            "selfLaunch": 1,
+            "selfProvider": 1,
+            "injectedTurn": 1,
+            "injectedTrigger": 1,
+            "injectedRuntime": 1,
+            "seamLaunchMember": 1,
+            "seamTypedMember": 1,
+            "nonLiteralConst": 1,
+            "seamStaticEdge": 1,
+            "mixedLiteral": 1,
+            "atDistance": 1,
+            "typeOnlyEdge": 0,
+            "literalConst": 0,
+            "literalObject": 0,
+            "seamReadMember": 0,
+            "reverseDirection": 0,
+            "modelSide": 0,
+            "injected": 0,
+            "injectedGlobal": 0,
+            "composed": 0,
+            "workerLoad": 0,
+            "unnamedPlane": 0,
+            "cliLaunch": 0,
+            "ipcLaunch": 0,
+            "httpLaunch": 0,
+            "seamComposedMember": 0,
+            "mixedArray": 1,
+            "mixedObject": 1,
+            "literalParenthesized": 0,
+            "literalSatisfies": 0,
+            "literalTemplate": 0,
+            "literalStringKey": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "the opt-in checklist (output contract, generation, exact model/version/settings, measured success/ROI, budget) waits for the seam: src spells no speculative-inference vocabulary and holds no warm-start site, so the seam's first site reds this census until the checklist is bound",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "checklist": [
+              "output contract",
+              "generation",
+              "exact model/version/settings",
+              "measured success/ROI",
+              "budget"
+            ],
+            "licenseClause": "query evidence is never a license",
+            "vocabulary": [],
+            "warmStarts": [],
+            "controls": {
+              "identifier": 1,
+              "string": 1,
+              "comment": 0,
+              "outsideVocabulary": 0
+            },
+            "missedPlants": []
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "D1",
+    "registration: every judged pin registered once, ran in run mode, was not inverted and reached its witness"
+  ]
+}
