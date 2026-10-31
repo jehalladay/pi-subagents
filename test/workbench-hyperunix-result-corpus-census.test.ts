@@ -5,8 +5,14 @@
  * and R-B96 binds for the export-field class: the census claims exactly the items CLAIMS lists, each bound to an executable
  * falsifier this file runs, and every form outside them is a named residual with a pinned quiet row (RESIDUALS).
  * wb-ulnv (the R694 follow-up of wb-tz2.7's landing 708) adds R-DECODER and R-HIDDEN's wrapped members: its cut #1 (seat
- *   ws-05, run g10-work-s151, trunk 42ab54d2) named them, and its cut #2 (seat ws-01, run g10-work-s158, trunk e792b37) answers
- *   wb-ulnv refusal #1 (U1-U3 and F5-F7 in that bead's note) by pinning the plants those quiet rows and T2 claim.
+ *   ws-05, run g10-work-s151, trunk 42ab54d2) named them; its cut #2 (seat ws-01, run g10-work-s158; authored at trunk e792b37,
+ *   base of record 89109cd3) answers wb-ulnv refusal #1 (U1-U3 and F5-F7 in that bead's note) by pinning the plants those quiet
+ *   rows and T2 claim; and its cut #3 (seat ws-04, run g10-work-s162, trunk ee72db2) answers wb-ulnv refusal #2 (its U1: the
+ *   planted bindings were pinned by name and property kind only, so the gate's GV1-GV6 emptied six bindings' documents unread)
+ *   under orchestrator ruling R-B201, in the enumerate-the-resolvable form: R-HIDDEN's DOCUMENT WITNESS reads the documents
+ *   behind every planted binding but WRAPPED_CASES (whose wrapped members the wrapped-kind literal reads) through the channel
+ *   its form names, the content digest pins the planted module entries' bytes, and R-SELF-HOLLOW pins both emptyings as
+ *   unseen by every outside reading.
  * Statement: STATEMENT below, the bead's export title verbatim after its id prefix. Acceptance: ACCEPTANCE below, verbatim: the
  * export description's only ACCEPTANCE line, three clauses.
  *
@@ -172,14 +178,23 @@
  *   plant itself (hiddenPlant): the planted namespace's bindings beside the SDK's own, by name and property kind
  *   (resultCases, loadCases, INHERITED_CASES, WEAK_CASES, WEAK_SET, VAULT, PENDING_CASES, CASE_BYTES and WRAPPED_CASES as
  *   enumerable data, CASES as an enumerable accessor, HIDDEN_CASES as non-enumerable data and the symbol-keyed cases); the
- *   wrapped members as the namespace carries them where the walk reads (each WRAPPED_CASES document's representation,
- *   reached through own enumerable data properties; beside the quiet, the same plant with each member replaced by the
- *   representation itself is read by the walk at exactly those five paths): one of each kind by the realm's own checks (a
- *   String wrapper by node:util's isStringObject, an object whose own toString or own Symbol.toPrimitive is a function, a
- *   symbol, a function), each one's string value (String.prototype.valueOf, the method's result, the description,
- *   Function.prototype.toString) including the representation; and the planted module entries (cases, samples, shapes and
- *   wrapped, with the declarations of cases and wrapped), each of which, shipped alone in today's release, makes T1
- *   identity's tarballs facet read another release.
+ *   documents every binding but WRAPPED_CASES holds (DOCUMENT WITNESS: documentChannels, the census-side twins of the gate's
+ *   TV1-TV6 walk changes and five more channels, none of which the walk itself reads), each read through the channel its form
+ *   names and then walked as the walk walks a value: resultCases and loadCases called (call), loadCases's own enumerable data
+ *   (own, TV4's), INHERITED_CASES's prototype's own enumerable data (prototype, TV3's), WEAK_CASES's entry and WEAK_SET's
+ *   membership for the planted document (get, has), VAULT's private field through Vault's own static reader (private),
+ *   PENDING_CASES's resolution as node:util's inspect renders it (resolution), CASE_BYTES decoded as UTF-8 JSON (bytes, TV5's),
+ *   CASES's getter invoked (getter, TV6's), HIDDEN_CASES's value (non-enumerable, TV2's) and the symbol-keyed binding's value
+ *   (symbol, TV1's): the walk reaches the representation in them at exactly the twelve paths the literal names, so any of those
+ *   bindings emptied of its documents (the gate's GV1-GV6 among them) is read there; the wrapped members, WRAPPED_CASES'
+ *   documents' representations, as the namespace carries them where the walk reads (reached through own enumerable data
+ *   properties; beside the quiet, the same plant with each member replaced by the representation itself is read by the walk at
+ *   exactly those five paths): one of each kind by the realm's own checks (a String wrapper by node:util's isStringObject, an
+ *   object whose own toString or own Symbol.toPrimitive is a function, a symbol, a function), each one's string value
+ *   (String.prototype.valueOf, the method's result, the description, Function.prototype.toString) including the representation;
+ *   and the planted module entries (cases, samples, shapes and wrapped, with the declarations of cases and wrapped), each of
+ *   which, shipped alone in today's release, makes T1 identity's tarballs facet read another release, and whose paths and bytes
+ *   the content digest of the six pins, so no entry's documents change unread.
  * R-OTHER-PACKAGE a corpus in a package T1 identity does not watch: one outside the @hyperunix/ scope (another scope, that scope
  *   in another letter case, or none), or an HX-scoped one that package.json's four dependency fields do not name (named only
  *   in bundledDependencies, overrides or workspaces, or installed only as another package's dependency). The quiet row plants
@@ -193,16 +208,18 @@
  *   (from PLANTED_ENTRIES or PLANTED_MODULES and PLANTED_READINGS), a surface control (from SURFACE_CONTROLS and its frozen
  *   counts), a field or row control (from FIELD_CONTROLS or ROW_CONTROLS and its frozen literal), a re-vendor form (from FORMS,
  *   its frozen literal and CLAIMS), a residual's known member (from its quiet row's plant, the quiet row's literals that name
- *   it and the residual's header text; R-HIDDEN's planted bindings, wrapped members and planted entries among them), an
- *   R-DECODER placement (from PLACEMENTS and its frozen literals), or a line boundary other than LF, CR, LS and PS (from
- *   LINE_BOUNDARIES, its frozen literals and CLAIMS). The quiet row pins that each pin's removal leaves A1's anchor reading
- *   unchanged while each row's removal changes it, and that a boundary's removal leaves the engine anchor's reading unchanged
- *   for exactly CR LF, VT, FF, FS, GS, RS and NEL. For the two member kinds wb-ulnv names it pins that each R-HIDDEN planted
- *   binding's, wrapped member's and planted entry's removal from the plant alone leaves every classification pin's reading of
- *   the planted release unchanged and T1 identity's tarballs facet still reading it as another release, while R-HIDDEN's
- *   literal for that member reads the removal; and that each R-DECODER placement's removal leaves the engine fold anchor's
- *   reading (the placements whose plant set is not the one the engine's folds predict: none) unchanged, while one name's
- *   removal from any placement's plant set is read.
+ *   it and the residual's header text; R-HIDDEN's planted bindings, the documents behind each, wrapped members and planted
+ *   entries among them), an R-DECODER placement (from PLACEMENTS and its frozen literals), or a line boundary other than LF,
+ *   CR, LS and PS (from LINE_BOUNDARIES, its frozen literals and CLAIMS). The quiet row pins that each pin's removal leaves
+ *   A1's anchor reading unchanged while each row's removal changes it, and that a boundary's removal leaves the engine anchor's
+ *   reading unchanged for exactly CR LF, VT, FF, FS, GS, RS and NEL. For the two member kinds wb-ulnv names it pins that each
+ *   R-HIDDEN planted binding's, wrapped member's and planted entry's removal from the plant alone leaves every classification
+ *   pin's reading of the planted release unchanged and T1 identity's tarballs facet still reading it as another release, while
+ *   R-HIDDEN's literal for that member reads the removal; that the documents behind each DOCUMENT WITNESS channel, emptied in
+ *   the plant alone (the binding kept), leave those readings unchanged while the witness loses exactly that channel's paths,
+ *   and each planted entry's bytes, emptied (the entry kept), leave them unchanged while the content digest reads it; and that
+ *   each R-DECODER placement's removal leaves the engine fold anchor's reading (the placements whose plant set is not the one
+ *   the engine's folds predict: none) unchanged, while one name's removal from any placement's plant set is read.
  * R-UNLOADED a re-vendor whose module code fails when this file imports the SDK's three export subpaths (a throw at import, or
  *   a subpath retargeted to a file Node cannot import as a module): the file then fails at load with the loader's error,
  *   before any case runs, so no case's message (the OWED text included) is read, though its package.json, tarball or
@@ -239,7 +256,7 @@ import { createHash } from "node:crypto";
 import { lstatSync, readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { types } from "node:util";
+import { inspect, types } from "node:util";
 import { gunzipSync, gzipSync } from "node:zlib";
 import * as sdkRoot from "@hyperunix/sdk";
 import * as sdkProtocol from "@hyperunix/sdk/protocol";
@@ -1477,11 +1494,15 @@ function headerRoster(): string[] {
   const roster = /FORMS ROSTER \(FROZEN SHAPE holds it equal to FORMS' ids\): ([^.]+)\./.exec(header)?.[1];
   return roster === undefined ? [] : roster.split(", ");
 }
-/** A class whose instances hold documents in a private field only. */
+/** A class whose instances hold documents in a private field only; the DOCUMENT WITNESS reads it through the class's own static
+ * reader, the one channel a private field has (the walk reads an instance's own enumerable data, which holds none). */
 class Vault {
   readonly #cases: readonly object[];
   constructor(cases: readonly object[]) {
     this.#cases = cases;
+  }
+  static held(vault: Vault): readonly object[] {
+    return vault.#cases;
   }
   count(): number {
     return this.#cases.length;
@@ -1521,10 +1542,13 @@ function walked(value: unknown, keys: readonly string[]): readonly unknown[] {
   );
 }
 /** R-HIDDEN's planted release: today's release with module entries the bytes readers cannot see, and its root namespace with
- * documents in every hidden form the residual names, the given wrapped members (WRAPPED by default) among them. */
-function hiddenPlant(wrapped: readonly unknown[] = WRAPPED): { readonly release: Release; readonly namespace: object } {
+ * documents in every hidden form the residual names, the given wrapped members (WRAPPED by default) among them. Each binding's
+ * documents but WRAPPED_CASES' are held under the DOCUMENT WITNESS label that reads them (documentChannels): the site the
+ * `emptied` label names holds none (R-SELF-HOLLOW's emptied-documents reading), every other site the planted document. */
+function hiddenPlant(wrapped: readonly unknown[] = WRAPPED, emptied = ""): { readonly release: Release; readonly namespace: object } {
   const today = vendoredRelease();
   const documents = [PLANTED_DOCUMENT];
+  const held = (label: string): readonly object[] => (label === emptied ? [] : documents);
   const entries = new Map(today.entries);
   entries.set(
     "package/dist/cases.js",
@@ -1541,22 +1565,22 @@ function hiddenPlant(wrapped: readonly unknown[] = WRAPPED): { readonly release:
     Buffer.from('import { SDK_REPRESENTATION } from "./result.js";\nexport const WRAPPED_CASES = [{ id: "find-incomplete", document: { representation: new String(SDK_REPRESENTATION) } }];\n'),
   );
   entries.set("package/dist/wrapped.d.ts", Buffer.from("export declare const WRAPPED_CASES: readonly object[];\n"));
-  const loadCases = Object.assign(() => documents, { cases: documents });
+  const loadCases = Object.assign(() => held("loadCases<call>"), { cases: held("loadCases<own>") });
   const namespace: Record<string | symbol, unknown> = {
     ...sdkRoot,
-    resultCases: () => documents,
+    resultCases: () => held("resultCases<call>"),
     loadCases,
-    INHERITED_CASES: Object.create({ documents }),
-    [Symbol("cases")]: documents,
-    WEAK_CASES: new WeakMap([[PLANTED_DOCUMENT, documents]]),
-    WEAK_SET: new WeakSet(documents),
-    VAULT: new Vault(documents),
-    PENDING_CASES: Promise.resolve(documents),
-    CASE_BYTES: new Uint8Array(Buffer.from(JSON.stringify(documents))),
+    INHERITED_CASES: Object.create({ documents: held("INHERITED_CASES<prototype>") }),
+    [Symbol("cases")]: held("Symbol(cases)<symbol>"),
+    WEAK_CASES: new WeakMap([[PLANTED_DOCUMENT, held("WEAK_CASES<get>")]]),
+    WEAK_SET: new WeakSet(held("WEAK_SET<has>")),
+    VAULT: new Vault(held("VAULT<private>")),
+    PENDING_CASES: Promise.resolve(held("PENDING_CASES<resolution>")),
+    CASE_BYTES: new Uint8Array(Buffer.from(JSON.stringify(held("CASE_BYTES<bytes>")))),
     WRAPPED_CASES: wrapped.map((representation) => ({ id: "find-incomplete", sha256: "0".repeat(64), document: { representation, operation: "find" } })),
   };
-  Object.defineProperty(namespace, "CASES", { enumerable: true, get: () => documents });
-  Object.defineProperty(namespace, "HIDDEN_CASES", { enumerable: false, value: documents });
+  Object.defineProperty(namespace, "CASES", { enumerable: true, get: () => held("CASES<getter>") });
+  Object.defineProperty(namespace, "HIDDEN_CASES", { enumerable: false, value: held("HIDDEN_CASES<non-enumerable>") });
   return { release: { ...today, entries, modules: { ...today.modules, ".": namespace } }, namespace };
 }
 /** A namespace's bindings beside the SDK's own, by name and property kind (R-HIDDEN's binding roster). */
@@ -1583,6 +1607,54 @@ function entryRoster(release: Release): string[] {
     .map(([path, bytes]) => `${path}: ${JSON.stringify(readingOf(new Map([...today, [path, bytes]]))) === JSON.stringify(MEASURED) ? "the measured release" : "another release"}`)
     .sort();
 }
+/** The documents a namespace's planted bindings (beside the SDK's own) hold, each read census-side through the channel its form
+ * names and labelled `<binding><channel>` (R-HIDDEN's DOCUMENT WITNESS; the walk itself reads none of these channels): an
+ * accessor's getter invoked (getter); a symbol-keyed or non-enumerable binding's value (symbol, non-enumerable); a function
+ * called with no arguments (call) and its own enumerable data, when it has any (own); bytes decoded as UTF-8 JSON (bytes); a
+ * WeakMap's entry and a WeakSet's membership for the planted document, through the realm's own WeakMap.prototype.get and
+ * WeakSet.prototype.has (get, has); a Vault's private field through Vault's own static reader (private); a Promise's
+ * resolution as node:util's inspect renders it, synchronously (resolution); and an object's prototype's own enumerable data,
+ * when that prototype is neither Object.prototype nor null and has any (prototype). */
+function documentChannels(namespace: object): Record<string, unknown> {
+  const channels: Record<string, unknown> = {};
+  const ownData = (holder: object): Record<string, unknown> =>
+    Object.fromEntries(Object.keys(holder).flatMap((key) => dataValue(holder, key).map((member) => [key, member] as const)));
+  for (const key of Reflect.ownKeys(namespace)) {
+    const property = Object.getOwnPropertyDescriptor(namespace, key);
+    if (property === undefined || (typeof key === "string" && Object.hasOwn(sdkRoot, key))) continue;
+    const name = String(key);
+    if (!("value" in property)) {
+      channels[`${name}<getter>`] = property.get?.call(namespace);
+      continue;
+    }
+    const value: unknown = property.value;
+    if (typeof key === "symbol") channels[`${name}<symbol>`] = value;
+    else if (property.enumerable !== true) channels[`${name}<non-enumerable>`] = value;
+    else if (typeof value === "function") {
+      channels[`${name}<call>`] = Reflect.apply(value, undefined, []);
+      if (Object.keys(value).length > 0) channels[`${name}<own>`] = ownData(value);
+    } else if (types.isUint8Array(value)) channels[`${name}<bytes>`] = JSON.parse(Buffer.from(value).toString("utf8"));
+    else if (types.isWeakMap(value)) channels[`${name}<get>`] = WeakMap.prototype.get.call(value, PLANTED_DOCUMENT);
+    else if (types.isWeakSet(value)) channels[`${name}<has>`] = WeakSet.prototype.has.call(value, PLANTED_DOCUMENT) ? [PLANTED_DOCUMENT] : [];
+    else if (value instanceof Vault) channels[`${name}<private>`] = Vault.held(value);
+    else if (types.isPromise(value)) channels[`${name}<resolution>`] = inspect(value, { depth: Number.POSITIVE_INFINITY });
+    else if (typeof value === "object" && value !== null) {
+      const prototype: unknown = Object.getPrototypeOf(value);
+      if (typeof prototype === "object" && prototype !== null && prototype !== Object.prototype && Object.keys(prototype).length > 0)
+        channels[`${name}<prototype>`] = ownData(prototype);
+    }
+  }
+  return channels;
+}
+/** What the walk's own reader (carriers) reads in each channel's documents: every path, under the channel's label, to a string
+ * spelling the representation. */
+const documentWitness = (namespace: object): string[] =>
+  Object.entries(documentChannels(namespace)).flatMap(([label, value]) => carriers(value, label, new Set()));
+/** A release's entries beyond today's (R-HIDDEN's planted module entries). */
+function plantedEntries(release: Release): Map<string, Buffer> {
+  const today = vendoredRelease().entries;
+  return new Map([...release.entries].filter(([path]) => !today.has(path)));
+}
 /** Each named residual family's quiet row. */
 const QUIET: Readonly<Record<string, () => void>> = {
   "R-HIDDEN": () => {
@@ -1607,6 +1679,23 @@ const QUIET: Readonly<Record<string, () => void>> = {
       "Symbol(cases):data:enumerable",
     ]);
     expect(
+      documentWitness(namespace),
+      "R-HIDDEN: the documents each planted binding but WRAPPED_CASES holds, read through the channel its form names and walked, reach the representation at these paths",
+    ).toStrictEqual([
+      "resultCases<call>.0.document.representation",
+      "loadCases<call>.0.document.representation",
+      "loadCases<own>.cases.0.document.representation",
+      "INHERITED_CASES<prototype>.documents.0.document.representation",
+      "WEAK_CASES<get>.0.document.representation",
+      "WEAK_SET<has>.0.document.representation",
+      "VAULT<private>.0.document.representation",
+      "PENDING_CASES<resolution>",
+      "CASE_BYTES<bytes>.0.document.representation",
+      "CASES<getter>.0.document.representation",
+      "HIDDEN_CASES<non-enumerable>.0.document.representation",
+      "Symbol(cases)<symbol>.0.document.representation",
+    ]);
+    expect(
       wrappedKinds(namespace),
       "R-HIDDEN: the wrapped members, read where the walk reads them, are one of each kind, each one's string value including the representation",
     ).toStrictEqual(["string-object:true", "to-string:true", "to-primitive:true", "symbol:true", "function:true"]);
@@ -1629,6 +1718,10 @@ const QUIET: Readonly<Record<string, () => void>> = {
       "package/dist/wrapped.d.ts: another release",
       "package/dist/wrapped.js: another release",
     ]);
+    expect(readingOf(plantedEntries(hidden)), "R-HIDDEN: the planted module entries' paths and bytes, by their content digest").toStrictEqual({
+      entries: 6,
+      digest: "a97c78eb9e5be53c828469aeeae52052039bcae83a06ee94c90437b89e0b2e8f",
+    });
     expect(readingOf(hidden.entries), "R-HIDDEN: T1 identity's tarballs facet reads the planted entries as another release").not.toStrictEqual(MEASURED);
     // A built-in the walk calls, replaced by import-time code: Map.prototype.entries, for one walk, then restored.
     const indexed: Release = { ...today, modules: { ".": { INDEX: new Map([["find-incomplete", PLANTED_DOCUMENT]]) } } };
@@ -1721,6 +1814,28 @@ const QUIET: Readonly<Record<string, () => void>> = {
         return unchanged(release) && !same(entryRoster(release), entryReading);
       }),
       "R-SELF-HOLLOW: each planted entry's removal leaves every outside reading unchanged, while the entry roster reads it",
+    ).toStrictEqual(planted);
+    // wb-ulnv refusal #2's class: a known member's documents emptied in the plant alone, the binding or the entry kept.
+    const witness = documentWitness(hidden.namespace);
+    const labels = Object.keys(documentChannels(hidden.namespace));
+    const under =
+      (label: string) =>
+      (path: string): boolean =>
+        path === label || path.startsWith(`${label}.`);
+    expect(
+      labels.filter((label) => {
+        const emptied = hiddenPlant(WRAPPED, label);
+        return witness.some(under(label)) && unchanged(emptied.release) && same(documentWitness(emptied.namespace), witness.filter((path) => !under(label)(path)));
+      }),
+      "R-SELF-HOLLOW: the documents behind each DOCUMENT WITNESS channel, emptied in the plant alone, leave every outside reading unchanged, while the witness loses exactly that channel's paths",
+    ).toStrictEqual(labels);
+    const entryDigest = JSON.stringify(readingOf(plantedEntries(hidden.release)));
+    expect(
+      planted.filter((path) => {
+        const release: Release = { ...hidden.release, entries: new Map(hidden.release.entries).set(path, Buffer.alloc(0)) };
+        return unchanged(release) && JSON.stringify(readingOf(plantedEntries(release))) !== entryDigest;
+      }),
+      "R-SELF-HOLLOW: each planted entry's bytes, emptied, leave every outside reading unchanged, while the content digest reads it",
     ).toStrictEqual(planted);
     const plants = decoderPlants();
     const misses = foldAnchorMisses(plants);
