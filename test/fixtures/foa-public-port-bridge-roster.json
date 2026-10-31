@@ -1,0 +1,6940 @@
+{
+ "bead": "wb-2wiv.2",
+ "rows": [
+  {
+   "id": "G",
+   "label": "Gating artifact: released FiberOpticsSDK PublicPortBridge (unshipped) + a wb-x32 committing decision connecting a Pi runtime over it",
+   "pins": [
+    "G1",
+    "G2"
+   ]
+  },
+  {
+   "id": "C",
+   "label": "then Pi supplies the full bridge contract (visibility/schema/direction through resync on gaps)",
+   "pins": [
+    "C1",
+    "C2"
+   ]
+  },
+  {
+   "id": "O",
+   "label": "keeps one authority per runtime domain",
+   "pins": [
+    "O1"
+   ]
+  },
+  {
+   "id": "P",
+   "label": "admits no private endpoint or remote executable function",
+   "pins": [
+    "P1",
+    "P2"
+   ]
+  },
+  {
+   "id": "N",
+   "label": "and asserts no global ordering, shared memory or implicit conflict merge",
+   "pins": [
+    "N1",
+    "N2",
+    "N3"
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals' pinned quiet rows",
+   "pins": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9",
+    "Q10",
+    "Q11",
+    "Q12"
+   ]
+  }
+ ],
+ "quotes": {
+  "G1": "Gating artifact: released FiberOpticsSDK PublicPortBridge (unshipped)",
+  "G2": "+ a wb-x32 committing decision connecting a Pi runtime over it",
+  "C1": "then Pi supplies the full bridge contract",
+  "C2": "(visibility/schema/direction through resync on gaps)",
+  "O1": "keeps one authority per runtime domain",
+  "P1": "admits no private endpoint",
+  "P2": "or remote executable function",
+  "N1": "and asserts no global ordering",
+  "N2": "shared memory",
+  "N3": "or implicit conflict merge",
+  "Q1": "R-SPELLING",
+  "Q2": "R-INDIRECT-LOAD",
+  "Q3": "R-DECISION-ELSEWHERE",
+  "Q4": "R-SIDE-PATH",
+  "Q5": "R-PARAPHRASE",
+  "Q6": "R-PRECEDENCE",
+  "Q7": "R-KIND-SCOPE",
+  "Q8": "R-FIELD-FORM",
+  "Q9": "R-VALUE-DOMAIN",
+  "Q10": "R-PAYLOAD-HOLDER",
+  "Q11": "R-HOST-STATE",
+  "Q12": "R-LABEL-TEXT"
+ },
+ "residuals": {
+  "Q1": [
+   "abbreviation",
+   "split-statements",
+   "base64",
+   "yaml-escape",
+   "toml-escape",
+   "markdown-link-split",
+   "homoglyph",
+   "digit-substitution"
+  ],
+  "Q2": [
+   "environment-specifier",
+   "configured-subprocess",
+   "configured-binary",
+   "archive-content"
+  ],
+  "Q3": [
+   "other-bead-row",
+   "sdk-only",
+   "work-package",
+   "blocks-edge",
+   "grandchild-edge"
+  ],
+  "Q4": [
+   "side-path-host"
+  ],
+  "Q5": [
+   "total-order",
+   "single-timeline",
+   "reversed-merge",
+   "reversed-shared",
+   "last-writer-wins",
+   "split-statements"
+  ],
+  "Q6": [
+   "schema-before-version",
+   "epoch-before-digest",
+   "basis-before-duplicate",
+   "disposition-before-authority"
+  ],
+  "Q7": [
+   "signals-unchecked",
+   "snapshot-basis-skipped",
+   "snapshot-version-skipped",
+   "resync-digest-skipped"
+  ],
+  "Q8": [
+   "kind-case-folded",
+   "schema-case-folded",
+   "source-case-folded",
+   "digest-case-folded",
+   "identity-case-folded",
+   "version-numeric",
+   "basis-trim",
+   "visibility-case-folded"
+  ],
+  "Q9": [
+   "effect-denylist",
+   "private-denylist",
+   "lane-word-exact",
+   "feedback-negative-refused",
+   "absent-digest-skipped",
+   "absent-epoch-stale",
+   "absent-identity-unseen",
+   "executable-depth-five",
+   "no-base-later",
+   "absent-version-skipped",
+   "absent-schema-skipped",
+   "absent-source-skipped"
+  ],
+  "Q10": [
+   "set",
+   "map",
+   "symbol-key",
+   "prototype"
+  ],
+  "Q11": [
+   "cross-call-identities",
+   "running-epoch",
+   "owner-from-id",
+   "announced-at-last"
+  ],
+  "Q12": [
+   "label-unnamed"
+  ]
+ },
+ "witnesses": {
+  "G1": {
+   "sites": {
+    "src": [],
+    "qa": [],
+    "examples": [],
+    "config": [],
+    "docs": [],
+    "front": [],
+    "other-md": []
+   },
+   "hosts": [],
+   "bound": [],
+   "live": {
+    "src": {
+     "floor": true,
+     "anchor": true
+    },
+    "qa": {
+     "floor": true,
+     "anchor": true
+    },
+    "examples": {
+     "floor": true,
+     "anchor": true
+    },
+    "config": {
+     "floor": true,
+     "anchor": true
+    },
+    "docs": {
+     "floor": true,
+     "anchor": true
+    },
+    "front": {
+     "floor": true,
+     "anchor": true
+    },
+    "other-md": {
+     "floor": true,
+     "anchor": true
+    }
+   },
+   "partition": {
+    "unwalked": [],
+    "doubled": [],
+    "excludedWalked": [],
+    "misrouted": []
+   },
+   "controls": {
+    "code": {
+     "specifier": [
+      "sdk"
+     ],
+     "identifier": [
+      "bridge"
+     ],
+     "escaped": [
+      "bridge"
+     ],
+     "folded": [
+      "bridge"
+     ],
+     "template": [
+      "bridge"
+     ],
+     "escaped-identifier": [
+      "bridge"
+     ],
+     "escaped-private-name": [
+      "bridge"
+     ],
+     "jsx-attribute": [
+      "bridge"
+     ],
+     "jsx-text": [
+      "bridge"
+     ],
+     "normalized": [
+      "bridge"
+     ],
+     "comment": [
+      "bridge"
+     ],
+     "path": [
+      "bridge"
+     ],
+     "subprocess": [
+      "sdk"
+     ],
+     "qa-escaped": [
+      "sdk"
+     ],
+     "examples-sdk": [
+      "sdk"
+     ],
+     "json-key": [
+      "sdk"
+     ],
+     "json-value": [
+      "bridge"
+     ],
+     "rf-identity-key": [
+      "sdk"
+     ],
+     "quiet": []
+    },
+    "cooked": {
+     ".ts": [
+      "bridge"
+     ],
+     ".tsx": [
+      "bridge"
+     ],
+     ".js": [
+      "bridge"
+     ],
+     ".jsx": [
+      "bridge"
+     ],
+     ".mjs": [
+      "bridge"
+     ],
+     ".mts": [
+      "bridge"
+     ],
+     ".cjs": [
+      "bridge"
+     ],
+     ".cts": [
+      "bridge"
+     ]
+    },
+    "plural": {
+     "publics port bridge": [
+      "bridge"
+     ],
+     "public ports bridge": [
+      "bridge"
+     ],
+     "public port bridges": [
+      "bridge"
+     ],
+     "fibers optics": [
+      "sdk"
+     ],
+     "fiber opticss": [
+      "sdk"
+     ]
+    },
+    "pages": {
+     "page": [
+      "bridge"
+     ],
+     "entity": [
+      "bridge"
+     ],
+     "entity-html": [
+      "bridge"
+     ],
+     "entity-htm": [
+      "bridge"
+     ],
+     "entity-xml": [
+      "bridge"
+     ],
+     "entity-svg": [
+      "bridge"
+     ],
+     "named-amp": [
+      "bridge"
+     ],
+     "named-lt": [
+      "bridge"
+     ],
+     "named-gt": [
+      "bridge"
+     ],
+     "named-quot": [
+      "bridge"
+     ],
+     "named-apos": [
+      "bridge"
+     ],
+     "named-nbsp": [
+      "bridge"
+     ],
+     "bare-decimal": [
+      "bridge"
+     ],
+     "bare-hex": [
+      "bridge"
+     ],
+     "bare-named": [
+      "bridge"
+     ],
+     "comment-split": [
+      "bridge"
+     ],
+     "tag-split": [
+      "bridge"
+     ],
+     "quiet": [],
+     "front": [
+      "bridge"
+     ],
+     "front-quiet": [],
+     "other-md": [
+      "bridge"
+     ],
+     "other-md-quiet": []
+    },
+    "config": {
+     "manifest-peer": [
+      "sdk"
+     ],
+     "manifest-alias": [
+      "sdk"
+     ],
+     "lock-path": [
+      "sdk"
+     ],
+     "config-script": [
+      "sdk"
+     ],
+     "ci-step": [
+      "bridge"
+     ],
+     "archive-path": [
+      "sdk"
+     ],
+     "quiet": []
+    },
+    "walk": [
+     "src/tracked.ts",
+     "src/untracked.ts"
+    ]
+   }
+  },
+  "G2": {
+   "rowRead": true,
+   "found": [],
+   "fields": {
+    "title": [
+     "wb-x32:title"
+    ],
+    "description": [
+     "wb-x32:description"
+    ],
+    "notes": [
+     "wb-x32:notes"
+    ],
+    "comments": [
+     "wb-x32:comments"
+    ],
+    "acceptance": [
+     "wb-x32:acceptance_criteria"
+    ],
+    "close-reason": [
+     "wb-x32:close_reason"
+    ],
+    "labels": [
+     "wb-x32:labels"
+    ]
+   },
+   "controls": {
+    "child": [
+     "wb-x32.9:description"
+    ],
+    "edge": [
+     "wb-zz01:title"
+    ],
+    "log": [
+     "docs/workbench/18-decisions-and-risks.md"
+    ]
+   }
+  },
+  "C1": {
+   "bound": [],
+   "certified": {
+    "honest": [
+     "refused:outside-the-pinned-set"
+    ],
+    "schema-before-version": [
+     "refused:outside-the-pinned-set"
+    ],
+    "M-SIGNAL-READ": [
+     "F-GAP-ACK:merged",
+     "refused:outside-the-pinned-set"
+    ]
+   },
+   "fixtures": [
+    "F-SESSION",
+    "F-READ",
+    "F-READ-KIND",
+    "F-ALIAS-REJECTED-RESYNC",
+    "F-ALIAS-LATER-EFFECT",
+    "F-ALIAS-LATER-REJECTED",
+    "F-ALIAS-ADMITTED-RESYNC",
+    "F-ALIAS-ADMITTED-DELTA",
+    "F-VERSION",
+    "F-SCHEMA",
+    "F-DIGEST",
+    "F-EPOCH",
+    "F-DUPLICATE",
+    "F-DUPLICATE-SCOPE",
+    "F-DUPLICATE-REJECTED",
+    "F-BASIS",
+    "F-DISPOSITION",
+    "F-FEEDBACK",
+    "F-GAP",
+    "F-GAP-ANNOUNCED",
+    "F-GAP-SNAPSHOT",
+    "F-GAP-BACKWARD",
+    "F-GAP-NO-BASE",
+    "F-GAP-ENDPOINTS",
+    "F-GAP-ORDER",
+    "F-GAP-PORTS",
+    "F-GAP-SIGNAL",
+    "F-GAP-ACK",
+    "F-GAP-IDENTITY",
+    "F-GAP-HOLD-RUNTIME",
+    "F-GAP-REGAP",
+    "F-AUTHORITY",
+    "F-PRIVATE",
+    "F-EXECUTABLE",
+    "F-EXECUTABLE-SEQUENCE",
+    "F-EXECUTABLE-DEPTH",
+    "F-EXECUTABLE-NESTING",
+    "F-EXECUTABLE-CASE",
+    "F-EXECUTABLE-KEY-VALUES",
+    "F-EFFECT"
+   ],
+   "verdicts": {
+    "F-SESSION": [
+     "admitted",
+     "admitted",
+     "admitted",
+     "admitted"
+    ],
+    "F-READ": [
+     "admitted",
+     "admitted"
+    ],
+    "F-READ-KIND": [
+     "rejected:unauthorized-effect",
+     "admitted"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "admitted",
+     "rejected:stale-epoch",
+     "admitted"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "admitted",
+     "rejected:unauthorized-effect"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "admitted",
+     "rejected:stale-epoch",
+     "admitted"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "admitted",
+     "admitted",
+     "admitted"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "admitted",
+     "admitted",
+     "admitted"
+    ],
+    "F-VERSION": [
+     "admitted",
+     "rejected:bad-version",
+     "rejected:bad-version"
+    ],
+    "F-SCHEMA": [
+     "admitted",
+     "rejected:schema-mismatch",
+     "rejected:schema-mismatch"
+    ],
+    "F-DIGEST": [
+     "admitted",
+     "rejected:bad-digest",
+     "admitted",
+     "admitted"
+    ],
+    "F-EPOCH": [
+     "admitted",
+     "rejected:stale-epoch",
+     "admitted",
+     "rejected:stale-epoch"
+    ],
+    "F-DUPLICATE": [
+     "admitted",
+     "admitted",
+     "rejected:duplicate-message",
+     "rejected:duplicate-message"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "admitted",
+     "rejected:duplicate-message",
+     "rejected:bad-digest",
+     "admitted",
+     "admitted",
+     "rejected:duplicate-message",
+     "admitted",
+     "rejected:duplicate-message"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "admitted",
+     "rejected:executable-function-on-the-wire",
+     "admitted",
+     "rejected:unauthorized-effect",
+     "admitted",
+     "rejected:private-endpoint",
+     "admitted",
+     "rejected:foreign-authority",
+     "admitted",
+     "rejected:missing-disposition",
+     "admitted",
+     "rejected:bad-version",
+     "admitted",
+     "rejected:schema-mismatch",
+     "admitted",
+     "rejected:bad-digest",
+     "admitted",
+     "rejected:stale-epoch",
+     "admitted",
+     "rejected:missing-basis",
+     "admitted",
+     "rejected:unbounded-feedback",
+     "admitted"
+    ],
+    "F-BASIS": [
+     "admitted",
+     "rejected:missing-basis",
+     "rejected:missing-basis"
+    ],
+    "F-DISPOSITION": [
+     "rejected:missing-disposition",
+     "rejected:missing-disposition",
+     "rejected:missing-disposition",
+     "admitted"
+    ],
+    "F-FEEDBACK": [
+     "admitted",
+     "rejected:unbounded-feedback",
+     "rejected:unbounded-feedback",
+     "admitted"
+    ],
+    "F-GAP": [
+     "admitted",
+     "rejected:gap-without-resync",
+     "rejected:gap-without-resync",
+     "admitted",
+     "admitted"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "admitted",
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "admitted"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "admitted"
+    ],
+    "F-GAP-BACKWARD": [
+     "admitted",
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "rejected:gap-without-resync"
+    ],
+    "F-GAP-NO-BASE": [
+     "rejected:gap-without-resync",
+     "admitted",
+     "admitted"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "admitted",
+     "admitted",
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "rejected:gap-without-resync"
+    ],
+    "F-GAP-ORDER": [
+     "admitted",
+     "admitted",
+     "rejected:gap-without-resync",
+     "rejected:gap-without-resync"
+    ],
+    "F-GAP-PORTS": [
+     "admitted",
+     "admitted",
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted"
+    ],
+    "F-GAP-SIGNAL": [
+     "admitted",
+     "admitted",
+     "admitted",
+     "admitted"
+    ],
+    "F-GAP-ACK": [
+     "admitted",
+     "admitted",
+     "admitted",
+     "admitted",
+     "admitted",
+     "rejected:gap-without-resync"
+    ],
+    "F-GAP-IDENTITY": [
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "admitted",
+     "admitted",
+     "admitted",
+     "rejected:duplicate-message",
+     "rejected:duplicate-message",
+     "rejected:duplicate-message"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "admitted",
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "rejected:gap-without-resync"
+    ],
+    "F-GAP-REGAP": [
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "rejected:gap-without-resync"
+    ],
+    "F-AUTHORITY": [
+     "rejected:foreign-authority",
+     "rejected:foreign-authority",
+     "rejected:foreign-authority",
+     "admitted"
+    ],
+    "F-PRIVATE": [
+     "rejected:private-endpoint",
+     "rejected:private-endpoint",
+     "rejected:private-endpoint",
+     "admitted"
+    ],
+    "F-EXECUTABLE": [
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "admitted"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "admitted",
+     "admitted"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "admitted"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "admitted"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "admitted"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "rejected:executable-function-on-the-wire",
+     "admitted"
+    ],
+    "F-EFFECT": [
+     "admitted",
+     "rejected:unauthorized-effect",
+     "rejected:unauthorized-effect"
+    ]
+   },
+   "fired": [
+    "admit",
+    "reject",
+    "diagnostic",
+    "resync",
+    "aliased",
+    "merged",
+    "claim-order",
+    "claim-shared",
+    "claim-merge"
+   ],
+   "quiet": [],
+   "isolated": [
+    "admit",
+    "reject",
+    "diagnostic",
+    "resync",
+    "aliased",
+    "merged",
+    "claim-order",
+    "claim-shared",
+    "claim-merge"
+   ],
+   "isolating": {
+    "admit": [
+     "M-EXECUTABLE-STRING-VALUES",
+     "M-DUPLICATE-COUNTS-GAP",
+     "M-SIGNAL-APPLIED",
+     "M-DOUBLE-APPLY",
+     "M-SEAM-PORT",
+     "M-SEAM-BLANK",
+     "M-SEAM-REVERSED",
+     "M-ADMITTED-DIAGNOSTIC",
+     "M-SEAM-PHANTOM"
+    ],
+    "reject": [
+     "M-REJECTED-APPLIED"
+    ],
+    "diagnostic": [
+     "M-LOCAL-SPOOF",
+     "M-CODE-COLLAPSED"
+    ],
+    "resync": [
+     "M-GAP-SILENT",
+     "M-ANNOUNCED-SILENT",
+     "M-RESYNC-SPURIOUS",
+     "M-RESYNC-ALL",
+     "M-RESYNC-SORTED",
+     "M-RESYNC-REPEATED",
+     "M-RESYNC-PER-EPISODE"
+    ],
+    "aliased": [
+     "M-READ-ALIAS",
+     "M-SEAM-ALIAS",
+     "M-READ-CROSS-ALIAS",
+     "M-READ-KIND-ALIAS",
+     "M-SEAM-CROSS-ALIAS",
+     "M-SEAM-KIND-ALIAS",
+     "M-SEAM-ADMITTED-ALIAS",
+     "M-SEAM-LATER-ALIAS",
+     "M-SEAM-OWN-DELTA-ALIAS",
+     "M-SEAM-OWN-RESYNC-ALIAS",
+     "M-SHARED-REF"
+    ],
+    "merged": [
+     "M-SIGNAL-READ",
+     "M-MERGE"
+    ],
+    "claim-order": [
+     "M-ORDER-LABEL"
+    ],
+    "claim-shared": [
+     "M-SHARED-LABEL"
+    ],
+    "claim-merge": [
+     "M-MERGE-LABEL"
+    ]
+   },
+   "seam": [
+    {
+     "endpoint": "browser/view",
+     "value": {
+      "rows": [
+       1
+      ]
+     },
+     "index": 0
+    },
+    {
+     "endpoint": "browser/view",
+     "value": {
+      "rows": [
+       1,
+       2
+      ]
+     },
+     "index": 1
+    },
+    {
+     "endpoint": "browser/view",
+     "value": {
+      "rows": [
+       1,
+       2,
+       3
+      ]
+     },
+     "index": 3
+    }
+   ],
+   "members": {
+    "version": [
+     "admitted",
+     "rejected:bad-version",
+     "rejected:bad-version"
+    ],
+    "schema": [
+     "admitted",
+     "rejected:schema-mismatch",
+     "rejected:schema-mismatch"
+    ],
+    "digest": [
+     "admitted",
+     "rejected:bad-digest",
+     "admitted",
+     "admitted"
+    ],
+    "epoch": [
+     "admitted",
+     "rejected:stale-epoch",
+     "admitted",
+     "rejected:stale-epoch"
+    ],
+    "identity": [
+     "admitted",
+     "rejected:duplicate-message",
+     "rejected:bad-digest",
+     "admitted",
+     "admitted",
+     "rejected:duplicate-message",
+     "admitted",
+     "rejected:duplicate-message"
+    ],
+    "rejected": [
+     "admitted",
+     "rejected:executable-function-on-the-wire",
+     "admitted",
+     "rejected:unauthorized-effect",
+     "admitted",
+     "rejected:private-endpoint",
+     "admitted",
+     "rejected:foreign-authority",
+     "admitted",
+     "rejected:missing-disposition",
+     "admitted",
+     "rejected:bad-version",
+     "admitted",
+     "rejected:schema-mismatch",
+     "admitted",
+     "rejected:bad-digest",
+     "admitted",
+     "rejected:stale-epoch",
+     "admitted",
+     "rejected:missing-basis",
+     "admitted",
+     "rejected:unbounded-feedback",
+     "admitted"
+    ],
+    "borne": [
+     "admitted",
+     "rejected:gap-without-resync",
+     "admitted",
+     "admitted",
+     "admitted",
+     "admitted",
+     "rejected:duplicate-message",
+     "rejected:duplicate-message",
+     "rejected:duplicate-message"
+    ],
+    "feedback": [
+     "admitted",
+     "rejected:unbounded-feedback",
+     "rejected:unbounded-feedback",
+     "admitted"
+    ]
+   },
+   "mutants": {
+    "M-DISPOSITION": {
+     "F-DUPLICATE-REJECTED": [
+      "diagnostic",
+      "resync"
+     ],
+     "F-DISPOSITION": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-LANE-BLIND": {
+     "F-DISPOSITION": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-INVALIDATION-BLIND": {
+     "F-DISPOSITION": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-VERSION": {
+     "F-VERSION": [
+      "reject",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "reject",
+      "diagnostic"
+     ]
+    },
+    "M-VERSION-NEWER-ONLY": {
+     "F-VERSION": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-SCHEMA": {
+     "F-SCHEMA": [
+      "reject",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "reject",
+      "diagnostic"
+     ]
+    },
+    "M-SCHEMA-ANY-DECLARED": {
+     "F-SCHEMA": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DIGEST": {
+     "F-DIGEST": [
+      "admit",
+      "reject",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "admit",
+      "reject",
+      "diagnostic"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "reject",
+      "diagnostic"
+     ]
+    },
+    "M-DIGEST-NONCANONICAL": {
+     "F-DIGEST": [
+      "admit",
+      "resync",
+      "merged"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "admit"
+     ]
+    },
+    "M-DIGEST-ARRAYS-SORTED": {
+     "F-DIGEST": [
+      "admit",
+      "merged"
+     ]
+    },
+    "M-EPOCH": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "reject",
+      "diagnostic"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "reject",
+      "diagnostic"
+     ],
+     "F-EPOCH": [
+      "admit",
+      "reject",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "reject",
+      "diagnostic"
+     ]
+    },
+    "M-EPOCH-EXACT": {
+     "F-EPOCH": [
+      "admit",
+      "merged"
+     ]
+    },
+    "M-EPOCH-FIRST-RUNTIME": {
+     "F-EPOCH": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE": {
+     "F-DUPLICATE": [
+      "diagnostic",
+      "resync"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ],
+     "F-GAP-IDENTITY": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-ADJACENT": {
+     "F-DUPLICATE": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ],
+     "F-GAP-IDENTITY": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-PER-ENDPOINT": {
+     "F-DUPLICATE-SCOPE": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-REJECTED": {
+     "F-DUPLICATE-SCOPE": [
+      "admit"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "merged"
+     ],
+     "F-GAP-IDENTITY": [
+      "admit"
+     ]
+    },
+    "M-DUPLICATE-VALUES-ONLY": {
+     "F-DUPLICATE-SCOPE": [
+      "reject",
+      "diagnostic"
+     ],
+     "F-GAP-IDENTITY": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-REBASE-FORGETS": {
+     "F-DUPLICATE-SCOPE": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ],
+     "F-GAP-IDENTITY": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-RESYNC-FORGETS": {
+     "F-GAP-IDENTITY": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-GAP-UNRECORDED": {
+     "F-GAP-IDENTITY": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-RESYNC-UNRECORDED": {
+     "F-GAP-IDENTITY": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-AT-CHECK": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "merged"
+     ],
+     "F-GAP-IDENTITY": [
+      "admit"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-EXECUTABLE": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-EFFECT": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-PRIVATE": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-FOREIGN": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-DISPOSITION": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-VERSION": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-SCHEMA": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-DIGEST": {
+     "F-DUPLICATE-SCOPE": [
+      "admit"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-EPOCH": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-BASIS": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-FEEDBACK": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "merged"
+     ]
+    },
+    "M-DUPLICATE-COUNTS-GAP": {
+     "F-GAP-IDENTITY": [
+      "admit"
+     ]
+    },
+    "M-BASIS": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "reject",
+      "diagnostic"
+     ],
+     "F-BASIS": [
+      "reject",
+      "diagnostic",
+      "resync",
+      "merged"
+     ]
+    },
+    "M-BASIS-EMPTY": {
+     "F-BASIS": [
+      "reject",
+      "diagnostic",
+      "merged"
+     ]
+    },
+    "M-FEEDBACK": {
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "reject",
+      "diagnostic"
+     ],
+     "F-FEEDBACK": [
+      "admit",
+      "reject",
+      "diagnostic",
+      "resync"
+     ]
+    },
+    "M-FEEDBACK-AT-BOUND": {
+     "F-FEEDBACK": [
+      "admit",
+      "merged"
+     ]
+    },
+    "M-CODE-COLLAPSED": {
+     "F-READ-KIND": [
+      "diagnostic"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "diagnostic"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "diagnostic"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "diagnostic"
+     ],
+     "F-VERSION": [
+      "diagnostic"
+     ],
+     "F-SCHEMA": [
+      "diagnostic"
+     ],
+     "F-DIGEST": [
+      "diagnostic"
+     ],
+     "F-EPOCH": [
+      "diagnostic"
+     ],
+     "F-DUPLICATE": [
+      "diagnostic"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "diagnostic"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "diagnostic"
+     ],
+     "F-BASIS": [
+      "diagnostic"
+     ],
+     "F-DISPOSITION": [
+      "diagnostic"
+     ],
+     "F-FEEDBACK": [
+      "diagnostic"
+     ],
+     "F-GAP": [
+      "diagnostic"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "diagnostic"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "diagnostic"
+     ],
+     "F-GAP-BACKWARD": [
+      "diagnostic"
+     ],
+     "F-GAP-NO-BASE": [
+      "diagnostic"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "diagnostic"
+     ],
+     "F-GAP-ORDER": [
+      "diagnostic"
+     ],
+     "F-GAP-PORTS": [
+      "diagnostic"
+     ],
+     "F-GAP-ACK": [
+      "diagnostic"
+     ],
+     "F-GAP-IDENTITY": [
+      "diagnostic"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "diagnostic"
+     ],
+     "F-GAP-REGAP": [
+      "diagnostic"
+     ],
+     "F-AUTHORITY": [
+      "diagnostic"
+     ],
+     "F-PRIVATE": [
+      "diagnostic"
+     ],
+     "F-EXECUTABLE": [
+      "diagnostic"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "diagnostic"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "diagnostic"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "diagnostic"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "diagnostic"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "diagnostic"
+     ],
+     "F-EFFECT": [
+      "diagnostic"
+     ]
+    },
+    "M-REFUSE-ALL": {
+     "F-SESSION": [
+      "admit",
+      "merged"
+     ],
+     "F-READ": [
+      "admit",
+      "merged"
+     ],
+     "F-READ-KIND": [
+      "admit",
+      "merged"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit",
+      "merged"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit",
+      "merged"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit",
+      "merged"
+     ],
+     "F-VERSION": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-SCHEMA": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-DIGEST": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EPOCH": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-DUPLICATE": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-BASIS": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-DISPOSITION": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-FEEDBACK": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-GAP": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-BACKWARD": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-NO-BASE": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-ORDER": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-PORTS": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-SIGNAL": [
+      "admit",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-ACK": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-IDENTITY": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-GAP-REGAP": [
+      "admit",
+      "diagnostic",
+      "resync",
+      "merged"
+     ],
+     "F-AUTHORITY": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-PRIVATE": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EXECUTABLE": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-EFFECT": [
+      "admit",
+      "merged"
+     ]
+    },
+    "M-SIGNAL-APPLIED": {
+     "F-SESSION": [
+      "admit"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "admit"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit"
+     ],
+     "F-GAP-SIGNAL": [
+      "admit"
+     ],
+     "F-GAP-ACK": [
+      "admit"
+     ],
+     "F-GAP-IDENTITY": [
+      "admit"
+     ]
+    },
+    "M-DOUBLE-APPLY": {
+     "F-SESSION": [
+      "admit"
+     ],
+     "F-READ": [
+      "admit"
+     ],
+     "F-READ-KIND": [
+      "admit"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-VERSION": [
+      "admit"
+     ],
+     "F-SCHEMA": [
+      "admit"
+     ],
+     "F-DIGEST": [
+      "admit"
+     ],
+     "F-EPOCH": [
+      "admit"
+     ],
+     "F-DUPLICATE": [
+      "admit"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "admit"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit"
+     ],
+     "F-BASIS": [
+      "admit"
+     ],
+     "F-DISPOSITION": [
+      "admit"
+     ],
+     "F-FEEDBACK": [
+      "admit"
+     ],
+     "F-GAP": [
+      "admit"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "admit"
+     ],
+     "F-GAP-BACKWARD": [
+      "admit"
+     ],
+     "F-GAP-NO-BASE": [
+      "admit"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "admit"
+     ],
+     "F-GAP-ORDER": [
+      "admit"
+     ],
+     "F-GAP-PORTS": [
+      "admit"
+     ],
+     "F-GAP-SIGNAL": [
+      "admit"
+     ],
+     "F-GAP-ACK": [
+      "admit"
+     ],
+     "F-GAP-IDENTITY": [
+      "admit"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "admit"
+     ],
+     "F-GAP-REGAP": [
+      "admit"
+     ],
+     "F-AUTHORITY": [
+      "admit"
+     ],
+     "F-PRIVATE": [
+      "admit"
+     ],
+     "F-EXECUTABLE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "admit"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "admit"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "admit"
+     ],
+     "F-EFFECT": [
+      "admit"
+     ]
+    },
+    "M-REJECTED-APPLIED": {
+     "F-READ-KIND": [
+      "reject"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "reject"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "reject"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "reject"
+     ],
+     "F-VERSION": [
+      "reject"
+     ],
+     "F-SCHEMA": [
+      "reject"
+     ],
+     "F-DIGEST": [
+      "reject"
+     ],
+     "F-EPOCH": [
+      "reject"
+     ],
+     "F-DUPLICATE": [
+      "reject"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "reject"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "reject"
+     ],
+     "F-BASIS": [
+      "reject"
+     ],
+     "F-DISPOSITION": [
+      "reject"
+     ],
+     "F-FEEDBACK": [
+      "reject"
+     ],
+     "F-GAP": [
+      "reject"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "reject"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "reject"
+     ],
+     "F-GAP-BACKWARD": [
+      "reject"
+     ],
+     "F-GAP-NO-BASE": [
+      "reject"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "reject"
+     ],
+     "F-GAP-ORDER": [
+      "reject"
+     ],
+     "F-GAP-PORTS": [
+      "reject"
+     ],
+     "F-GAP-ACK": [
+      "reject"
+     ],
+     "F-GAP-IDENTITY": [
+      "reject"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "reject"
+     ],
+     "F-GAP-REGAP": [
+      "reject"
+     ],
+     "F-AUTHORITY": [
+      "reject"
+     ],
+     "F-PRIVATE": [
+      "reject"
+     ],
+     "F-EXECUTABLE": [
+      "reject"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "reject"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "reject"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "reject"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "reject"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "reject"
+     ],
+     "F-EFFECT": [
+      "reject"
+     ]
+    },
+    "M-SEAM-PORT": {
+     "F-SESSION": [
+      "admit"
+     ],
+     "F-READ": [
+      "admit"
+     ],
+     "F-READ-KIND": [
+      "admit"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-VERSION": [
+      "admit"
+     ],
+     "F-SCHEMA": [
+      "admit"
+     ],
+     "F-DIGEST": [
+      "admit"
+     ],
+     "F-EPOCH": [
+      "admit"
+     ],
+     "F-DUPLICATE": [
+      "admit"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "admit"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit"
+     ],
+     "F-BASIS": [
+      "admit"
+     ],
+     "F-DISPOSITION": [
+      "admit"
+     ],
+     "F-FEEDBACK": [
+      "admit"
+     ],
+     "F-GAP": [
+      "admit"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "admit"
+     ],
+     "F-GAP-BACKWARD": [
+      "admit"
+     ],
+     "F-GAP-NO-BASE": [
+      "admit"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "admit"
+     ],
+     "F-GAP-ORDER": [
+      "admit"
+     ],
+     "F-GAP-PORTS": [
+      "admit"
+     ],
+     "F-GAP-SIGNAL": [
+      "admit"
+     ],
+     "F-GAP-ACK": [
+      "admit"
+     ],
+     "F-GAP-IDENTITY": [
+      "admit"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "admit"
+     ],
+     "F-GAP-REGAP": [
+      "admit"
+     ],
+     "F-AUTHORITY": [
+      "admit"
+     ],
+     "F-PRIVATE": [
+      "admit"
+     ],
+     "F-EXECUTABLE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "admit"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "admit"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "admit"
+     ],
+     "F-EFFECT": [
+      "admit"
+     ]
+    },
+    "M-SEAM-BLANK": {
+     "F-SESSION": [
+      "admit"
+     ],
+     "F-READ": [
+      "admit"
+     ],
+     "F-READ-KIND": [
+      "admit"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-VERSION": [
+      "admit"
+     ],
+     "F-SCHEMA": [
+      "admit"
+     ],
+     "F-DIGEST": [
+      "admit"
+     ],
+     "F-EPOCH": [
+      "admit"
+     ],
+     "F-DUPLICATE": [
+      "admit"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "admit"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit"
+     ],
+     "F-BASIS": [
+      "admit"
+     ],
+     "F-DISPOSITION": [
+      "admit"
+     ],
+     "F-FEEDBACK": [
+      "admit"
+     ],
+     "F-GAP": [
+      "admit"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "admit"
+     ],
+     "F-GAP-BACKWARD": [
+      "admit"
+     ],
+     "F-GAP-NO-BASE": [
+      "admit"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "admit"
+     ],
+     "F-GAP-ORDER": [
+      "admit"
+     ],
+     "F-GAP-PORTS": [
+      "admit"
+     ],
+     "F-GAP-SIGNAL": [
+      "admit"
+     ],
+     "F-GAP-ACK": [
+      "admit"
+     ],
+     "F-GAP-IDENTITY": [
+      "admit"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "admit"
+     ],
+     "F-GAP-REGAP": [
+      "admit"
+     ],
+     "F-AUTHORITY": [
+      "admit"
+     ],
+     "F-PRIVATE": [
+      "admit"
+     ],
+     "F-EXECUTABLE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "admit"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "admit"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "admit"
+     ],
+     "F-EFFECT": [
+      "admit"
+     ]
+    },
+    "M-SEAM-REVERSED": {
+     "F-SESSION": [
+      "admit"
+     ],
+     "F-READ": [
+      "admit"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-DIGEST": [
+      "admit"
+     ],
+     "F-EPOCH": [
+      "admit"
+     ],
+     "F-DUPLICATE": [
+      "admit"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "admit"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit"
+     ],
+     "F-FEEDBACK": [
+      "admit"
+     ],
+     "F-GAP": [
+      "admit"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "admit"
+     ],
+     "F-GAP-BACKWARD": [
+      "admit"
+     ],
+     "F-GAP-NO-BASE": [
+      "admit"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "admit"
+     ],
+     "F-GAP-ORDER": [
+      "admit"
+     ],
+     "F-GAP-PORTS": [
+      "admit"
+     ],
+     "F-GAP-SIGNAL": [
+      "admit"
+     ],
+     "F-GAP-ACK": [
+      "admit"
+     ],
+     "F-GAP-IDENTITY": [
+      "admit"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "admit"
+     ],
+     "F-GAP-REGAP": [
+      "admit"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "admit"
+     ]
+    },
+    "M-SIGNAL-READ": {
+     "F-GAP-ACK": [
+      "merged"
+     ]
+    },
+    "M-ADMITTED-DIAGNOSTIC": {
+     "F-SESSION": [
+      "admit"
+     ],
+     "F-READ": [
+      "admit"
+     ],
+     "F-READ-KIND": [
+      "admit"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-VERSION": [
+      "admit"
+     ],
+     "F-SCHEMA": [
+      "admit"
+     ],
+     "F-DIGEST": [
+      "admit"
+     ],
+     "F-EPOCH": [
+      "admit"
+     ],
+     "F-DUPLICATE": [
+      "admit"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "admit"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit"
+     ],
+     "F-BASIS": [
+      "admit"
+     ],
+     "F-DISPOSITION": [
+      "admit"
+     ],
+     "F-FEEDBACK": [
+      "admit"
+     ],
+     "F-GAP": [
+      "admit"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "admit"
+     ],
+     "F-GAP-BACKWARD": [
+      "admit"
+     ],
+     "F-GAP-NO-BASE": [
+      "admit"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "admit"
+     ],
+     "F-GAP-ORDER": [
+      "admit"
+     ],
+     "F-GAP-PORTS": [
+      "admit"
+     ],
+     "F-GAP-SIGNAL": [
+      "admit"
+     ],
+     "F-GAP-ACK": [
+      "admit"
+     ],
+     "F-GAP-IDENTITY": [
+      "admit"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "admit"
+     ],
+     "F-GAP-REGAP": [
+      "admit"
+     ],
+     "F-AUTHORITY": [
+      "admit"
+     ],
+     "F-PRIVATE": [
+      "admit"
+     ],
+     "F-EXECUTABLE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "admit"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "admit"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "admit"
+     ],
+     "F-EFFECT": [
+      "admit"
+     ]
+    },
+    "M-SEAM-PHANTOM": {
+     "F-SESSION": [
+      "admit"
+     ],
+     "F-READ": [
+      "admit"
+     ],
+     "F-READ-KIND": [
+      "admit"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-VERSION": [
+      "admit"
+     ],
+     "F-SCHEMA": [
+      "admit"
+     ],
+     "F-DIGEST": [
+      "admit"
+     ],
+     "F-EPOCH": [
+      "admit"
+     ],
+     "F-DUPLICATE": [
+      "admit"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "admit"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "admit"
+     ],
+     "F-BASIS": [
+      "admit"
+     ],
+     "F-DISPOSITION": [
+      "admit"
+     ],
+     "F-FEEDBACK": [
+      "admit"
+     ],
+     "F-GAP": [
+      "admit"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "admit"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "admit"
+     ],
+     "F-GAP-BACKWARD": [
+      "admit"
+     ],
+     "F-GAP-NO-BASE": [
+      "admit"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "admit"
+     ],
+     "F-GAP-ORDER": [
+      "admit"
+     ],
+     "F-GAP-PORTS": [
+      "admit"
+     ],
+     "F-GAP-SIGNAL": [
+      "admit"
+     ],
+     "F-GAP-ACK": [
+      "admit"
+     ],
+     "F-GAP-IDENTITY": [
+      "admit"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "admit"
+     ],
+     "F-GAP-REGAP": [
+      "admit"
+     ],
+     "F-AUTHORITY": [
+      "admit"
+     ],
+     "F-PRIVATE": [
+      "admit"
+     ],
+     "F-EXECUTABLE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "admit"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "admit"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "admit"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "admit"
+     ],
+     "F-EFFECT": [
+      "admit"
+     ]
+    },
+    "M-READ-ALIAS": {
+     "F-SESSION": [
+      "aliased"
+     ],
+     "F-READ": [
+      "aliased"
+     ],
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-VERSION": [
+      "aliased"
+     ],
+     "F-SCHEMA": [
+      "aliased"
+     ],
+     "F-DIGEST": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-BASIS": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP": [
+      "aliased"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "aliased"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "aliased"
+     ],
+     "F-GAP-BACKWARD": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-PORTS": [
+      "aliased"
+     ],
+     "F-GAP-SIGNAL": [
+      "aliased"
+     ],
+     "F-GAP-ACK": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ],
+     "F-GAP-REGAP": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "aliased"
+     ],
+     "F-EFFECT": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-ALIAS": {
+     "F-SESSION": [
+      "aliased"
+     ],
+     "F-READ": [
+      "aliased"
+     ],
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-VERSION": [
+      "aliased"
+     ],
+     "F-SCHEMA": [
+      "aliased"
+     ],
+     "F-DIGEST": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-BASIS": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP": [
+      "aliased"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "aliased"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "aliased"
+     ],
+     "F-GAP-BACKWARD": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-PORTS": [
+      "aliased"
+     ],
+     "F-GAP-SIGNAL": [
+      "aliased"
+     ],
+     "F-GAP-ACK": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ],
+     "F-GAP-REGAP": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "aliased"
+     ],
+     "F-EFFECT": [
+      "aliased"
+     ]
+    },
+    "M-READ-CROSS-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-READ-KIND-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-CROSS-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-KIND-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-ADMITTED-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-LATER-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-OWN-DELTA-ALIAS": {
+     "F-SESSION": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-DIGEST": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP": [
+      "aliased"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "aliased"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "aliased"
+     ],
+     "F-GAP-BACKWARD": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "aliased"
+     ],
+     "F-GAP-PORTS": [
+      "aliased"
+     ],
+     "F-GAP-SIGNAL": [
+      "aliased"
+     ],
+     "F-GAP-ACK": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-OWN-RESYNC-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-GAP": [
+      "aliased"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "aliased"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "aliased"
+     ],
+     "F-GAP-SIGNAL": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ],
+     "F-GAP-REGAP": [
+      "aliased"
+     ]
+    }
+   },
+   "departures": {
+    "M-EXECUTABLE": [
+     "F-DUPLICATE-REJECTED#1:rr1",
+     "F-DUPLICATE-REJECTED#2:rr1",
+     "F-EXECUTABLE#0:x1",
+     "F-EXECUTABLE#1:x2",
+     "F-EXECUTABLE#2:x4",
+     "F-EXECUTABLE-SEQUENCE#0:y1",
+     "F-EXECUTABLE-SEQUENCE#1:y2",
+     "F-EXECUTABLE-DEPTH#0:j1",
+     "F-EXECUTABLE-DEPTH#1:j2",
+     "F-EXECUTABLE-DEPTH#2:j3",
+     "F-EXECUTABLE-NESTING#0:xn1",
+     "F-EXECUTABLE-NESTING#1:xn2",
+     "F-EXECUTABLE-CASE#0:xc1",
+     "F-EXECUTABLE-CASE#1:xc2",
+     "F-EXECUTABLE-KEY-VALUES#0:xv1",
+     "F-EXECUTABLE-KEY-VALUES#1:xv2",
+     "F-EXECUTABLE-KEY-VALUES#2:xv3",
+     "F-EXECUTABLE-KEY-VALUES#3:xv4",
+     "F-EXECUTABLE-KEY-VALUES#4:xv5"
+    ],
+    "M-CALLABLES-ONLY": [
+     "F-EXECUTABLE#1:x2",
+     "F-EXECUTABLE#2:x4",
+     "F-EXECUTABLE-SEQUENCE#1:y2",
+     "F-EXECUTABLE-DEPTH#2:j3",
+     "F-EXECUTABLE-NESTING#1:xn2",
+     "F-EXECUTABLE-CASE#0:xc1",
+     "F-EXECUTABLE-CASE#1:xc2",
+     "F-EXECUTABLE-KEY-VALUES#0:xv1",
+     "F-EXECUTABLE-KEY-VALUES#1:xv2",
+     "F-EXECUTABLE-KEY-VALUES#2:xv3",
+     "F-EXECUTABLE-KEY-VALUES#3:xv4",
+     "F-EXECUTABLE-KEY-VALUES#4:xv5"
+    ],
+    "M-EXECUTABLE-TOP-ONLY": [
+     "F-EXECUTABLE#2:x4",
+     "F-EXECUTABLE-SEQUENCE#1:y2",
+     "F-EXECUTABLE-DEPTH#2:j3"
+    ],
+    "M-CALLABLES-TOP-ONLY": [
+     "F-EXECUTABLE-SEQUENCE#0:y1",
+     "F-EXECUTABLE-DEPTH#0:j1",
+     "F-EXECUTABLE-NESTING#0:xn1"
+    ],
+    "M-EXECUTABLE-NO-SEQUENCES": [
+     "F-EXECUTABLE-SEQUENCE#0:y1",
+     "F-EXECUTABLE-SEQUENCE#1:y2",
+     "F-EXECUTABLE-DEPTH#2:j3",
+     "F-EXECUTABLE-NESTING#0:xn1",
+     "F-EXECUTABLE-NESTING#1:xn2"
+    ],
+    "M-EXECUTABLE-NO-CODE": [
+     "F-EXECUTABLE-SEQUENCE#1:y2",
+     "F-EXECUTABLE-NESTING#1:xn2",
+     "F-EXECUTABLE-KEY-VALUES#0:xv1",
+     "F-EXECUTABLE-KEY-VALUES#4:xv5"
+    ],
+    "M-EXECUTABLE-NO-HANDLER": [
+     "F-EXECUTABLE#1:x2",
+     "F-EXECUTABLE-CASE#1:xc2",
+     "F-EXECUTABLE-KEY-VALUES#1:xv2"
+    ],
+    "M-EXECUTABLE-NO-SCRIPT": [
+     "F-EXECUTABLE#2:x4",
+     "F-EXECUTABLE-CASE#0:xc1",
+     "F-EXECUTABLE-KEY-VALUES#2:xv3"
+    ],
+    "M-EXECUTABLE-NO-FUNCTION": [
+     "F-EXECUTABLE-DEPTH#2:j3",
+     "F-EXECUTABLE-KEY-VALUES#3:xv4"
+    ],
+    "M-EXECUTABLE-CASE-EXACT": [
+     "F-EXECUTABLE#1:x2",
+     "F-EXECUTABLE-DEPTH#2:j3",
+     "F-EXECUTABLE-CASE#0:xc1",
+     "F-EXECUTABLE-CASE#1:xc2"
+    ],
+    "M-EXECUTABLE-SHALLOW": [
+     "F-EXECUTABLE-DEPTH#2:j3"
+    ],
+    "M-CALLABLE-VALUE-BLIND": [
+     "F-EXECUTABLE-DEPTH#1:j2"
+    ],
+    "M-EXECUTABLE-STRING-VALUES": [
+     "F-EXECUTABLE-SEQUENCE#2:y4"
+    ],
+    "M-EXECUTABLE-NESTED-ARRAYS-BLIND": [
+     "F-EXECUTABLE-NESTING#0:xn1"
+    ],
+    "M-EXECUTABLE-TOP-ARRAY-BLIND": [
+     "F-EXECUTABLE-NESTING#1:xn2"
+    ],
+    "M-EXECUTABLE-TITLE-CASE": [
+     "F-EXECUTABLE-CASE#0:xc1",
+     "F-EXECUTABLE-CASE#1:xc2"
+    ],
+    "M-EXECUTABLE-CASE-WORDS": [
+     "F-EXECUTABLE-CASE#1:xc2"
+    ],
+    "M-EXECUTABLE-KEY-STRINGS-ONLY": [
+     "F-EXECUTABLE-KEY-VALUES#0:xv1",
+     "F-EXECUTABLE-KEY-VALUES#1:xv2",
+     "F-EXECUTABLE-KEY-VALUES#2:xv3",
+     "F-EXECUTABLE-KEY-VALUES#3:xv4",
+     "F-EXECUTABLE-KEY-VALUES#4:xv5"
+    ],
+    "M-EXECUTABLE-KEY-SCALARS-ONLY": [
+     "F-EXECUTABLE-KEY-VALUES#3:xv4",
+     "F-EXECUTABLE-KEY-VALUES#4:xv5"
+    ],
+    "M-EFFECT": [
+     "F-READ-KIND#0:ek1",
+     "F-ALIAS-LATER-EFFECT#1:ae2",
+     "F-DUPLICATE-REJECTED#3:rr2",
+     "F-DUPLICATE-REJECTED#4:rr2",
+     "F-EFFECT#1:f2",
+     "F-EFFECT#2:f3"
+    ],
+    "M-EFFECT-NAMED-ONLY": [
+     "F-EFFECT#2:f3"
+    ],
+    "M-PRIVATE": [
+     "F-DUPLICATE-REJECTED#5:rr3",
+     "F-PRIVATE#0:q1",
+     "F-PRIVATE#2:q4"
+    ],
+    "M-UNDECLARED-OPEN": [
+     "F-PRIVATE#1:q2"
+    ],
+    "M-PRIVATE-NAMED-ONLY": [
+     "F-PRIVATE#2:q4"
+    ],
+    "M-FOREIGN": [
+     "F-DUPLICATE-REJECTED#7:rr4",
+     "F-DUPLICATE-REJECTED#8:rr4",
+     "F-AUTHORITY#0:o1",
+     "F-AUTHORITY#1:o2",
+     "F-AUTHORITY#2:o4"
+    ],
+    "M-SOURCE-BLIND": [
+     "F-DUPLICATE-REJECTED#7:rr4",
+     "F-DUPLICATE-REJECTED#8:rr4",
+     "F-AUTHORITY#1:o2"
+    ],
+    "M-LOCAL-SPOOF": [
+     "F-AUTHORITY#2:o4"
+    ],
+    "M-DISPOSITION": [
+     "F-DUPLICATE-REJECTED#9:rr5",
+     "F-DISPOSITION#0:p1",
+     "F-DISPOSITION#1:p2",
+     "F-DISPOSITION#2:p4"
+    ],
+    "M-LANE-BLIND": [
+     "F-DISPOSITION#2:p4"
+    ],
+    "M-INVALIDATION-BLIND": [
+     "F-DISPOSITION#1:p2"
+    ],
+    "M-VERSION": [
+     "F-VERSION#1:v2",
+     "F-VERSION#2:v3",
+     "F-DUPLICATE-REJECTED#11:rr6",
+     "F-DUPLICATE-REJECTED#12:rr6"
+    ],
+    "M-VERSION-NEWER-ONLY": [
+     "F-VERSION#2:v3"
+    ],
+    "M-SCHEMA": [
+     "F-SCHEMA#1:h2",
+     "F-SCHEMA#2:h3",
+     "F-DUPLICATE-REJECTED#13:rr7",
+     "F-DUPLICATE-REJECTED#14:rr7"
+    ],
+    "M-SCHEMA-ANY-DECLARED": [
+     "F-SCHEMA#2:h3"
+    ],
+    "M-DIGEST": [
+     "F-DIGEST#1:d2",
+     "F-DIGEST#2:d3",
+     "F-DIGEST#3:d4",
+     "F-DUPLICATE-SCOPE#2:i2",
+     "F-DUPLICATE-SCOPE#3:i2",
+     "F-DUPLICATE-REJECTED#15:rr8",
+     "F-DUPLICATE-REJECTED#16:rr8"
+    ],
+    "M-DIGEST-NONCANONICAL": [
+     "F-DIGEST#2:d3",
+     "F-DIGEST#3:d4",
+     "F-EXECUTABLE-SEQUENCE#2:y4"
+    ],
+    "M-DIGEST-ARRAYS-SORTED": [
+     "F-DIGEST#3:d4"
+    ],
+    "M-EPOCH": [
+     "F-ALIAS-REJECTED-RESYNC#1:ar2",
+     "F-ALIAS-LATER-REJECTED#1:aj2",
+     "F-EPOCH#1:e2",
+     "F-EPOCH#2:e3",
+     "F-EPOCH#3:e4",
+     "F-DUPLICATE-REJECTED#17:rr9",
+     "F-DUPLICATE-REJECTED#18:rr9"
+    ],
+    "M-EPOCH-EXACT": [
+     "F-EPOCH#2:e3"
+    ],
+    "M-EPOCH-FIRST-RUNTIME": [
+     "F-EPOCH#3:e4"
+    ],
+    "M-DUPLICATE": [
+     "F-DUPLICATE#2:u2",
+     "F-DUPLICATE#3:u1",
+     "F-DUPLICATE-SCOPE#1:i1",
+     "F-DUPLICATE-SCOPE#5:i3",
+     "F-DUPLICATE-SCOPE#7:i2",
+     "F-GAP-IDENTITY#6:gi4",
+     "F-GAP-IDENTITY#7:gi5",
+     "F-GAP-IDENTITY#8:gi1"
+    ],
+    "M-DUPLICATE-ADJACENT": [
+     "F-DUPLICATE#3:u1",
+     "F-DUPLICATE-SCOPE#7:i2",
+     "F-GAP-IDENTITY#6:gi4",
+     "F-GAP-IDENTITY#7:gi5",
+     "F-GAP-IDENTITY#8:gi1"
+    ],
+    "M-DUPLICATE-PER-ENDPOINT": [
+     "F-DUPLICATE-SCOPE#1:i1"
+    ],
+    "M-DUPLICATE-COUNTS-REJECTED": [
+     "F-DUPLICATE-SCOPE#3:i2",
+     "F-DUPLICATE-REJECTED#2:rr1",
+     "F-DUPLICATE-REJECTED#4:rr2",
+     "F-DUPLICATE-REJECTED#6:rr3",
+     "F-DUPLICATE-REJECTED#8:rr4",
+     "F-DUPLICATE-REJECTED#10:rr5",
+     "F-DUPLICATE-REJECTED#12:rr6",
+     "F-DUPLICATE-REJECTED#14:rr7",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11",
+     "F-GAP-IDENTITY#3:gi2"
+    ],
+    "M-DUPLICATE-VALUES-ONLY": [
+     "F-DUPLICATE-SCOPE#5:i3",
+     "F-GAP-IDENTITY#6:gi4"
+    ],
+    "M-DUPLICATE-REBASE-FORGETS": [
+     "F-DUPLICATE-SCOPE#7:i2",
+     "F-GAP-IDENTITY#6:gi4",
+     "F-GAP-IDENTITY#8:gi1"
+    ],
+    "M-DUPLICATE-RESYNC-FORGETS": [
+     "F-GAP-IDENTITY#6:gi4",
+     "F-GAP-IDENTITY#8:gi1"
+    ],
+    "M-DUPLICATE-GAP-UNRECORDED": [
+     "F-GAP-IDENTITY#6:gi4"
+    ],
+    "M-DUPLICATE-RESYNC-UNRECORDED": [
+     "F-GAP-IDENTITY#7:gi5"
+    ],
+    "M-DUPLICATE-AT-CHECK": [
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11",
+     "F-GAP-IDENTITY#3:gi2"
+    ],
+    "M-DUPLICATE-COUNTS-EXECUTABLE": [
+     "F-DUPLICATE-REJECTED#2:rr1",
+     "F-DUPLICATE-REJECTED#4:rr2",
+     "F-DUPLICATE-REJECTED#6:rr3",
+     "F-DUPLICATE-REJECTED#8:rr4",
+     "F-DUPLICATE-REJECTED#10:rr5",
+     "F-DUPLICATE-REJECTED#12:rr6",
+     "F-DUPLICATE-REJECTED#14:rr7",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-EFFECT": [
+     "F-DUPLICATE-REJECTED#4:rr2",
+     "F-DUPLICATE-REJECTED#6:rr3",
+     "F-DUPLICATE-REJECTED#8:rr4",
+     "F-DUPLICATE-REJECTED#10:rr5",
+     "F-DUPLICATE-REJECTED#12:rr6",
+     "F-DUPLICATE-REJECTED#14:rr7",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-PRIVATE": [
+     "F-DUPLICATE-REJECTED#6:rr3",
+     "F-DUPLICATE-REJECTED#8:rr4",
+     "F-DUPLICATE-REJECTED#10:rr5",
+     "F-DUPLICATE-REJECTED#12:rr6",
+     "F-DUPLICATE-REJECTED#14:rr7",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-FOREIGN": [
+     "F-DUPLICATE-REJECTED#8:rr4",
+     "F-DUPLICATE-REJECTED#10:rr5",
+     "F-DUPLICATE-REJECTED#12:rr6",
+     "F-DUPLICATE-REJECTED#14:rr7",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-DISPOSITION": [
+     "F-DUPLICATE-REJECTED#10:rr5",
+     "F-DUPLICATE-REJECTED#12:rr6",
+     "F-DUPLICATE-REJECTED#14:rr7",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-VERSION": [
+     "F-DUPLICATE-REJECTED#12:rr6",
+     "F-DUPLICATE-REJECTED#14:rr7",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-SCHEMA": [
+     "F-DUPLICATE-REJECTED#14:rr7",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-DIGEST": [
+     "F-DUPLICATE-SCOPE#3:i2",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-EPOCH": [
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-BASIS": [
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-FEEDBACK": [
+     "F-DUPLICATE-REJECTED#22:rr11"
+    ],
+    "M-DUPLICATE-COUNTS-GAP": [
+     "F-GAP-IDENTITY#3:gi2"
+    ],
+    "M-BASIS": [
+     "F-DUPLICATE-REJECTED#19:rr10",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-BASIS#1:b2",
+     "F-BASIS#2:b3"
+    ],
+    "M-BASIS-EMPTY": [
+     "F-BASIS#2:b3"
+    ],
+    "M-FEEDBACK": [
+     "F-DUPLICATE-REJECTED#21:rr11",
+     "F-DUPLICATE-REJECTED#22:rr11",
+     "F-FEEDBACK#1:k2",
+     "F-FEEDBACK#2:k3",
+     "F-FEEDBACK#3:k4"
+    ],
+    "M-FEEDBACK-AT-BOUND": [
+     "F-FEEDBACK#3:k4"
+    ],
+    "M-CODE-COLLAPSED": [
+     "F-READ-KIND#0:ek1",
+     "F-ALIAS-REJECTED-RESYNC#1:ar2",
+     "F-ALIAS-LATER-EFFECT#1:ae2",
+     "F-ALIAS-LATER-REJECTED#1:aj2",
+     "F-VERSION#1:v2",
+     "F-VERSION#2:v3",
+     "F-SCHEMA#1:h2",
+     "F-SCHEMA#2:h3",
+     "F-DIGEST#1:d2",
+     "F-EPOCH#1:e2",
+     "F-EPOCH#3:e4",
+     "F-DUPLICATE#2:u2",
+     "F-DUPLICATE#3:u1",
+     "F-DUPLICATE-SCOPE#1:i1",
+     "F-DUPLICATE-SCOPE#2:i2",
+     "F-DUPLICATE-SCOPE#5:i3",
+     "F-DUPLICATE-SCOPE#7:i2",
+     "F-DUPLICATE-REJECTED#1:rr1",
+     "F-DUPLICATE-REJECTED#3:rr2",
+     "F-DUPLICATE-REJECTED#5:rr3",
+     "F-DUPLICATE-REJECTED#7:rr4",
+     "F-DUPLICATE-REJECTED#9:rr5",
+     "F-DUPLICATE-REJECTED#11:rr6",
+     "F-DUPLICATE-REJECTED#13:rr7",
+     "F-DUPLICATE-REJECTED#15:rr8",
+     "F-DUPLICATE-REJECTED#17:rr9",
+     "F-DUPLICATE-REJECTED#19:rr10",
+     "F-DUPLICATE-REJECTED#21:rr11",
+     "F-BASIS#1:b2",
+     "F-BASIS#2:b3",
+     "F-DISPOSITION#0:p1",
+     "F-DISPOSITION#1:p2",
+     "F-DISPOSITION#2:p4",
+     "F-FEEDBACK#1:k2",
+     "F-FEEDBACK#2:k3",
+     "F-GAP#1:g2",
+     "F-GAP#2:g3",
+     "F-GAP-ANNOUNCED#2:a3",
+     "F-GAP-SNAPSHOT#1:n2",
+     "F-GAP-BACKWARD#2:w3",
+     "F-GAP-BACKWARD#4:w5",
+     "F-GAP-NO-BASE#0:z1",
+     "F-GAP-ENDPOINTS#3:m4",
+     "F-GAP-ENDPOINTS#6:m7",
+     "F-GAP-ENDPOINTS#8:m9",
+     "F-GAP-ORDER#2:l3",
+     "F-GAP-ORDER#3:l4",
+     "F-GAP-PORTS#3:pp4",
+     "F-GAP-ACK#5:c6",
+     "F-GAP-IDENTITY#1:gi2",
+     "F-GAP-IDENTITY#6:gi4",
+     "F-GAP-IDENTITY#7:gi5",
+     "F-GAP-IDENTITY#8:gi1",
+     "F-GAP-HOLD-RUNTIME#2:hl3",
+     "F-GAP-HOLD-RUNTIME#4:hl5",
+     "F-GAP-HOLD-RUNTIME#6:hl7",
+     "F-GAP-REGAP#1:rg2",
+     "F-GAP-REGAP#3:rg4",
+     "F-AUTHORITY#0:o1",
+     "F-AUTHORITY#1:o2",
+     "F-AUTHORITY#2:o4",
+     "F-PRIVATE#0:q1",
+     "F-PRIVATE#1:q2",
+     "F-PRIVATE#2:q4",
+     "F-EXECUTABLE#0:x1",
+     "F-EXECUTABLE#1:x2",
+     "F-EXECUTABLE#2:x4",
+     "F-EXECUTABLE-SEQUENCE#0:y1",
+     "F-EXECUTABLE-SEQUENCE#1:y2",
+     "F-EXECUTABLE-DEPTH#0:j1",
+     "F-EXECUTABLE-DEPTH#1:j2",
+     "F-EXECUTABLE-DEPTH#2:j3",
+     "F-EXECUTABLE-NESTING#0:xn1",
+     "F-EXECUTABLE-NESTING#1:xn2",
+     "F-EXECUTABLE-CASE#0:xc1",
+     "F-EXECUTABLE-CASE#1:xc2",
+     "F-EXECUTABLE-KEY-VALUES#0:xv1",
+     "F-EXECUTABLE-KEY-VALUES#1:xv2",
+     "F-EXECUTABLE-KEY-VALUES#2:xv3",
+     "F-EXECUTABLE-KEY-VALUES#3:xv4",
+     "F-EXECUTABLE-KEY-VALUES#4:xv5",
+     "F-EFFECT#1:f2",
+     "F-EFFECT#2:f3"
+    ],
+    "M-REFUSE-ALL": [
+     "F-SESSION#0:s1",
+     "F-SESSION#1:s2",
+     "F-SESSION#2:s3",
+     "F-SESSION#3:s4",
+     "F-READ#0:r1",
+     "F-READ#1:r2",
+     "F-READ-KIND#1:ek2",
+     "F-ALIAS-REJECTED-RESYNC#0:ar1",
+     "F-ALIAS-REJECTED-RESYNC#1:ar2",
+     "F-ALIAS-REJECTED-RESYNC#2:ar3",
+     "F-ALIAS-LATER-EFFECT#0:ae1",
+     "F-ALIAS-LATER-REJECTED#0:aj1",
+     "F-ALIAS-LATER-REJECTED#1:aj2",
+     "F-ALIAS-LATER-REJECTED#2:aj3",
+     "F-ALIAS-ADMITTED-RESYNC#0:aa1",
+     "F-ALIAS-ADMITTED-RESYNC#1:aa2",
+     "F-ALIAS-ADMITTED-RESYNC#2:aa3",
+     "F-ALIAS-ADMITTED-DELTA#0:ad1",
+     "F-ALIAS-ADMITTED-DELTA#1:ad2",
+     "F-ALIAS-ADMITTED-DELTA#2:ad3",
+     "F-VERSION#0:v1",
+     "F-VERSION#1:v2",
+     "F-VERSION#2:v3",
+     "F-SCHEMA#0:h1",
+     "F-SCHEMA#1:h2",
+     "F-SCHEMA#2:h3",
+     "F-DIGEST#0:d1",
+     "F-DIGEST#1:d2",
+     "F-DIGEST#2:d3",
+     "F-DIGEST#3:d4",
+     "F-EPOCH#0:e1",
+     "F-EPOCH#1:e2",
+     "F-EPOCH#2:e3",
+     "F-EPOCH#3:e4",
+     "F-DUPLICATE#0:u1",
+     "F-DUPLICATE#1:u2",
+     "F-DUPLICATE#2:u2",
+     "F-DUPLICATE#3:u1",
+     "F-DUPLICATE-SCOPE#0:i1",
+     "F-DUPLICATE-SCOPE#1:i1",
+     "F-DUPLICATE-SCOPE#2:i2",
+     "F-DUPLICATE-SCOPE#3:i2",
+     "F-DUPLICATE-SCOPE#4:i3",
+     "F-DUPLICATE-SCOPE#5:i3",
+     "F-DUPLICATE-SCOPE#6:i4",
+     "F-DUPLICATE-SCOPE#7:i2",
+     "F-DUPLICATE-REJECTED#0:rr0",
+     "F-DUPLICATE-REJECTED#1:rr1",
+     "F-DUPLICATE-REJECTED#2:rr1",
+     "F-DUPLICATE-REJECTED#4:rr2",
+     "F-DUPLICATE-REJECTED#5:rr3",
+     "F-DUPLICATE-REJECTED#6:rr3",
+     "F-DUPLICATE-REJECTED#7:rr4",
+     "F-DUPLICATE-REJECTED#8:rr4",
+     "F-DUPLICATE-REJECTED#9:rr5",
+     "F-DUPLICATE-REJECTED#10:rr5",
+     "F-DUPLICATE-REJECTED#11:rr6",
+     "F-DUPLICATE-REJECTED#12:rr6",
+     "F-DUPLICATE-REJECTED#13:rr7",
+     "F-DUPLICATE-REJECTED#14:rr7",
+     "F-DUPLICATE-REJECTED#15:rr8",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#17:rr9",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#19:rr10",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#21:rr11",
+     "F-DUPLICATE-REJECTED#22:rr11",
+     "F-BASIS#0:b1",
+     "F-BASIS#1:b2",
+     "F-BASIS#2:b3",
+     "F-DISPOSITION#0:p1",
+     "F-DISPOSITION#1:p2",
+     "F-DISPOSITION#2:p4",
+     "F-DISPOSITION#3:p3",
+     "F-FEEDBACK#0:k1",
+     "F-FEEDBACK#1:k2",
+     "F-FEEDBACK#2:k3",
+     "F-FEEDBACK#3:k4",
+     "F-GAP#0:g1",
+     "F-GAP#1:g2",
+     "F-GAP#2:g3",
+     "F-GAP#3:g4",
+     "F-GAP#4:g5",
+     "F-GAP-ANNOUNCED#0:a1",
+     "F-GAP-ANNOUNCED#1:a2",
+     "F-GAP-ANNOUNCED#2:a3",
+     "F-GAP-ANNOUNCED#3:a4",
+     "F-GAP-ANNOUNCED#4:a5",
+     "F-GAP-SNAPSHOT#0:n1",
+     "F-GAP-SNAPSHOT#1:n2",
+     "F-GAP-SNAPSHOT#2:n3",
+     "F-GAP-SNAPSHOT#3:n4",
+     "F-GAP-BACKWARD#0:w1",
+     "F-GAP-BACKWARD#1:w2",
+     "F-GAP-BACKWARD#2:w3",
+     "F-GAP-BACKWARD#3:w4",
+     "F-GAP-BACKWARD#4:w5",
+     "F-GAP-NO-BASE#0:z1",
+     "F-GAP-NO-BASE#1:z2",
+     "F-GAP-NO-BASE#2:z3",
+     "F-GAP-ENDPOINTS#0:m1",
+     "F-GAP-ENDPOINTS#1:m2",
+     "F-GAP-ENDPOINTS#2:m3",
+     "F-GAP-ENDPOINTS#3:m4",
+     "F-GAP-ENDPOINTS#4:m5",
+     "F-GAP-ENDPOINTS#5:m6",
+     "F-GAP-ENDPOINTS#6:m7",
+     "F-GAP-ENDPOINTS#7:m8",
+     "F-GAP-ENDPOINTS#8:m9",
+     "F-GAP-ORDER#0:l1",
+     "F-GAP-ORDER#1:l2",
+     "F-GAP-ORDER#2:l3",
+     "F-GAP-ORDER#3:l4",
+     "F-GAP-PORTS#0:pp1",
+     "F-GAP-PORTS#1:pp2",
+     "F-GAP-PORTS#2:pp3",
+     "F-GAP-PORTS#3:pp4",
+     "F-GAP-PORTS#4:pp5",
+     "F-GAP-SIGNAL#0:sg1",
+     "F-GAP-SIGNAL#1:sg2",
+     "F-GAP-SIGNAL#2:sg3",
+     "F-GAP-SIGNAL#3:sg4",
+     "F-GAP-ACK#0:c1",
+     "F-GAP-ACK#1:c2",
+     "F-GAP-ACK#2:c3",
+     "F-GAP-ACK#3:c4",
+     "F-GAP-ACK#4:c5",
+     "F-GAP-ACK#5:c6",
+     "F-GAP-IDENTITY#0:gi1",
+     "F-GAP-IDENTITY#1:gi2",
+     "F-GAP-IDENTITY#2:gi3",
+     "F-GAP-IDENTITY#3:gi2",
+     "F-GAP-IDENTITY#4:gi4",
+     "F-GAP-IDENTITY#5:gi5",
+     "F-GAP-IDENTITY#6:gi4",
+     "F-GAP-IDENTITY#7:gi5",
+     "F-GAP-IDENTITY#8:gi1",
+     "F-GAP-HOLD-RUNTIME#0:hl1",
+     "F-GAP-HOLD-RUNTIME#1:hl2",
+     "F-GAP-HOLD-RUNTIME#2:hl3",
+     "F-GAP-HOLD-RUNTIME#3:hl4",
+     "F-GAP-HOLD-RUNTIME#4:hl5",
+     "F-GAP-HOLD-RUNTIME#5:hl6",
+     "F-GAP-HOLD-RUNTIME#6:hl7",
+     "F-GAP-REGAP#0:rg1",
+     "F-GAP-REGAP#1:rg2",
+     "F-GAP-REGAP#2:rg3",
+     "F-GAP-REGAP#3:rg4",
+     "F-AUTHORITY#0:o1",
+     "F-AUTHORITY#1:o2",
+     "F-AUTHORITY#2:o4",
+     "F-AUTHORITY#3:o3",
+     "F-PRIVATE#0:q1",
+     "F-PRIVATE#1:q2",
+     "F-PRIVATE#2:q4",
+     "F-PRIVATE#3:q3",
+     "F-EXECUTABLE#0:x1",
+     "F-EXECUTABLE#1:x2",
+     "F-EXECUTABLE#2:x4",
+     "F-EXECUTABLE#3:x3",
+     "F-EXECUTABLE-SEQUENCE#0:y1",
+     "F-EXECUTABLE-SEQUENCE#1:y2",
+     "F-EXECUTABLE-SEQUENCE#2:y4",
+     "F-EXECUTABLE-SEQUENCE#3:y3",
+     "F-EXECUTABLE-DEPTH#0:j1",
+     "F-EXECUTABLE-DEPTH#1:j2",
+     "F-EXECUTABLE-DEPTH#2:j3",
+     "F-EXECUTABLE-DEPTH#3:j4",
+     "F-EXECUTABLE-NESTING#0:xn1",
+     "F-EXECUTABLE-NESTING#1:xn2",
+     "F-EXECUTABLE-NESTING#2:xn3",
+     "F-EXECUTABLE-CASE#0:xc1",
+     "F-EXECUTABLE-CASE#1:xc2",
+     "F-EXECUTABLE-CASE#2:xc3",
+     "F-EXECUTABLE-KEY-VALUES#0:xv1",
+     "F-EXECUTABLE-KEY-VALUES#1:xv2",
+     "F-EXECUTABLE-KEY-VALUES#2:xv3",
+     "F-EXECUTABLE-KEY-VALUES#3:xv4",
+     "F-EXECUTABLE-KEY-VALUES#4:xv5",
+     "F-EXECUTABLE-KEY-VALUES#5:xv6",
+     "F-EFFECT#0:f1"
+    ],
+    "M-SIGNAL-APPLIED": [],
+    "M-DOUBLE-APPLY": [],
+    "M-REJECTED-APPLIED": [],
+    "M-SEAM-PORT": [],
+    "M-SEAM-BLANK": [],
+    "M-SEAM-REVERSED": [],
+    "M-SIGNAL-READ": [],
+    "M-ADMITTED-DIAGNOSTIC": [
+     "F-SESSION#0:s1",
+     "F-SESSION#1:s2",
+     "F-SESSION#2:s3",
+     "F-SESSION#3:s4",
+     "F-READ#0:r1",
+     "F-READ#1:r2",
+     "F-READ-KIND#1:ek2",
+     "F-ALIAS-REJECTED-RESYNC#0:ar1",
+     "F-ALIAS-REJECTED-RESYNC#2:ar3",
+     "F-ALIAS-LATER-EFFECT#0:ae1",
+     "F-ALIAS-LATER-REJECTED#0:aj1",
+     "F-ALIAS-LATER-REJECTED#2:aj3",
+     "F-ALIAS-ADMITTED-RESYNC#0:aa1",
+     "F-ALIAS-ADMITTED-RESYNC#1:aa2",
+     "F-ALIAS-ADMITTED-RESYNC#2:aa3",
+     "F-ALIAS-ADMITTED-DELTA#0:ad1",
+     "F-ALIAS-ADMITTED-DELTA#1:ad2",
+     "F-ALIAS-ADMITTED-DELTA#2:ad3",
+     "F-VERSION#0:v1",
+     "F-SCHEMA#0:h1",
+     "F-DIGEST#0:d1",
+     "F-DIGEST#2:d3",
+     "F-DIGEST#3:d4",
+     "F-EPOCH#0:e1",
+     "F-EPOCH#2:e3",
+     "F-DUPLICATE#0:u1",
+     "F-DUPLICATE#1:u2",
+     "F-DUPLICATE-SCOPE#0:i1",
+     "F-DUPLICATE-SCOPE#3:i2",
+     "F-DUPLICATE-SCOPE#4:i3",
+     "F-DUPLICATE-SCOPE#6:i4",
+     "F-DUPLICATE-REJECTED#0:rr0",
+     "F-DUPLICATE-REJECTED#2:rr1",
+     "F-DUPLICATE-REJECTED#4:rr2",
+     "F-DUPLICATE-REJECTED#6:rr3",
+     "F-DUPLICATE-REJECTED#8:rr4",
+     "F-DUPLICATE-REJECTED#10:rr5",
+     "F-DUPLICATE-REJECTED#12:rr6",
+     "F-DUPLICATE-REJECTED#14:rr7",
+     "F-DUPLICATE-REJECTED#16:rr8",
+     "F-DUPLICATE-REJECTED#18:rr9",
+     "F-DUPLICATE-REJECTED#20:rr10",
+     "F-DUPLICATE-REJECTED#22:rr11",
+     "F-BASIS#0:b1",
+     "F-DISPOSITION#3:p3",
+     "F-FEEDBACK#0:k1",
+     "F-FEEDBACK#3:k4",
+     "F-GAP#0:g1",
+     "F-GAP#3:g4",
+     "F-GAP#4:g5",
+     "F-GAP-ANNOUNCED#0:a1",
+     "F-GAP-ANNOUNCED#1:a2",
+     "F-GAP-ANNOUNCED#3:a4",
+     "F-GAP-ANNOUNCED#4:a5",
+     "F-GAP-SNAPSHOT#0:n1",
+     "F-GAP-SNAPSHOT#2:n3",
+     "F-GAP-SNAPSHOT#3:n4",
+     "F-GAP-BACKWARD#0:w1",
+     "F-GAP-BACKWARD#1:w2",
+     "F-GAP-BACKWARD#3:w4",
+     "F-GAP-NO-BASE#1:z2",
+     "F-GAP-NO-BASE#2:z3",
+     "F-GAP-ENDPOINTS#0:m1",
+     "F-GAP-ENDPOINTS#1:m2",
+     "F-GAP-ENDPOINTS#2:m3",
+     "F-GAP-ENDPOINTS#4:m5",
+     "F-GAP-ENDPOINTS#5:m6",
+     "F-GAP-ENDPOINTS#7:m8",
+     "F-GAP-ORDER#0:l1",
+     "F-GAP-ORDER#1:l2",
+     "F-GAP-PORTS#0:pp1",
+     "F-GAP-PORTS#1:pp2",
+     "F-GAP-PORTS#2:pp3",
+     "F-GAP-PORTS#4:pp5",
+     "F-GAP-SIGNAL#0:sg1",
+     "F-GAP-SIGNAL#1:sg2",
+     "F-GAP-SIGNAL#2:sg3",
+     "F-GAP-SIGNAL#3:sg4",
+     "F-GAP-ACK#0:c1",
+     "F-GAP-ACK#1:c2",
+     "F-GAP-ACK#2:c3",
+     "F-GAP-ACK#3:c4",
+     "F-GAP-ACK#4:c5",
+     "F-GAP-IDENTITY#0:gi1",
+     "F-GAP-IDENTITY#2:gi3",
+     "F-GAP-IDENTITY#3:gi2",
+     "F-GAP-IDENTITY#4:gi4",
+     "F-GAP-IDENTITY#5:gi5",
+     "F-GAP-HOLD-RUNTIME#0:hl1",
+     "F-GAP-HOLD-RUNTIME#1:hl2",
+     "F-GAP-HOLD-RUNTIME#3:hl4",
+     "F-GAP-HOLD-RUNTIME#5:hl6",
+     "F-GAP-REGAP#0:rg1",
+     "F-GAP-REGAP#2:rg3",
+     "F-AUTHORITY#3:o3",
+     "F-PRIVATE#3:q3",
+     "F-EXECUTABLE#3:x3",
+     "F-EXECUTABLE-SEQUENCE#2:y4",
+     "F-EXECUTABLE-SEQUENCE#3:y3",
+     "F-EXECUTABLE-DEPTH#3:j4",
+     "F-EXECUTABLE-NESTING#2:xn3",
+     "F-EXECUTABLE-CASE#2:xc3",
+     "F-EXECUTABLE-KEY-VALUES#5:xv6",
+     "F-EFFECT#0:f1"
+    ],
+    "M-SEAM-PHANTOM": [],
+    "M-READ-ALIAS": [],
+    "M-SEAM-ALIAS": [],
+    "M-READ-CROSS-ALIAS": [],
+    "M-READ-KIND-ALIAS": [],
+    "M-SEAM-CROSS-ALIAS": [],
+    "M-SEAM-KIND-ALIAS": [],
+    "M-SEAM-ADMITTED-ALIAS": [],
+    "M-SEAM-LATER-ALIAS": [],
+    "M-SEAM-OWN-DELTA-ALIAS": [],
+    "M-SEAM-OWN-RESYNC-ALIAS": [],
+    "M-GAP-APPLY": [
+     "F-GAP#1:g2",
+     "F-GAP#2:g3",
+     "F-GAP-ANNOUNCED#2:a3",
+     "F-GAP-SNAPSHOT#1:n2",
+     "F-GAP-BACKWARD#2:w3",
+     "F-GAP-BACKWARD#4:w5",
+     "F-GAP-NO-BASE#0:z1",
+     "F-GAP-ENDPOINTS#3:m4",
+     "F-GAP-ENDPOINTS#6:m7",
+     "F-GAP-ENDPOINTS#8:m9",
+     "F-GAP-ORDER#2:l3",
+     "F-GAP-ORDER#3:l4",
+     "F-GAP-PORTS#3:pp4",
+     "F-GAP-ACK#5:c6",
+     "F-GAP-IDENTITY#1:gi2",
+     "F-GAP-IDENTITY#3:gi2",
+     "F-GAP-HOLD-RUNTIME#2:hl3",
+     "F-GAP-HOLD-RUNTIME#4:hl5",
+     "F-GAP-HOLD-RUNTIME#6:hl7",
+     "F-GAP-REGAP#1:rg2",
+     "F-GAP-REGAP#3:rg4"
+    ],
+    "M-GAP-SILENT": [],
+    "M-GAP-RESUME": [
+     "F-GAP#2:g3"
+    ],
+    "M-ANNOUNCED-IGNORED": [
+     "F-GAP-ANNOUNCED#2:a3",
+     "F-GAP-ACK#5:c6"
+    ],
+    "M-ANNOUNCED-SILENT": [],
+    "M-SNAPSHOT-KEEPS-HOLD": [
+     "F-GAP-SNAPSHOT#3:n4",
+     "F-GAP-NO-BASE#2:z3"
+    ],
+    "M-SNAPSHOT-LIFTS-EVERY-HOLD": [
+     "F-GAP-ENDPOINTS#6:m7",
+     "F-GAP-HOLD-RUNTIME#4:hl5"
+    ],
+    "M-RESYNC-LIFTS-EVERY-HOLD": [
+     "F-GAP-ENDPOINTS#8:m9",
+     "F-GAP-HOLD-RUNTIME#6:hl7"
+    ],
+    "M-SNAPSHOT-LIFTS-RUNTIME-HOLDS": [
+     "F-GAP-HOLD-RUNTIME#4:hl5"
+    ],
+    "M-RESYNC-LIFTS-RUNTIME-HOLDS": [
+     "F-GAP-HOLD-RUNTIME#6:hl7"
+    ],
+    "M-RESYNC-SPURIOUS": [],
+    "M-GAP-BACKWARD-OK": [
+     "F-GAP-BACKWARD#2:w3",
+     "F-GAP-BACKWARD#4:w5"
+    ],
+    "M-GAP-EQUAL-OK": [
+     "F-GAP-BACKWARD#2:w3"
+    ],
+    "M-GAP-LOWER-OK": [
+     "F-GAP-BACKWARD#4:w5"
+    ],
+    "M-GAP-NO-BASE": [
+     "F-GAP-NO-BASE#0:z1"
+    ],
+    "M-GAP-GLOBAL-SEQUENCE": [
+     "F-GAP-ENDPOINTS#2:m3",
+     "F-GAP-ENDPOINTS#4:m5",
+     "F-GAP-PORTS#2:pp3",
+     "F-GAP-PORTS#4:pp5"
+    ],
+    "M-GAP-GLOBAL-HOLD": [
+     "F-GAP-ENDPOINTS#4:m5",
+     "F-GAP-ENDPOINTS#6:m7",
+     "F-GAP-PORTS#4:pp5",
+     "F-GAP-HOLD-RUNTIME#4:hl5"
+    ],
+    "M-GAP-DOMAIN-SEQUENCE": [
+     "F-GAP-PORTS#2:pp3",
+     "F-GAP-PORTS#4:pp5"
+    ],
+    "M-GAP-DOMAIN-HOLD": [
+     "F-GAP-PORTS#4:pp5",
+     "F-GAP-HOLD-RUNTIME#4:hl5"
+    ],
+    "M-ACK-ADVANCES": [
+     "F-GAP-ACK#2:c3"
+    ],
+    "M-ACK-CLEARS-HOLD": [
+     "F-GAP-ACK#5:c6"
+    ],
+    "M-RESYNC-ALL": [],
+    "M-RESYNC-SORTED": [],
+    "M-RESYNC-REPEATED": [],
+    "M-RESYNC-PER-EPISODE": [],
+    "M-RESYNC-SOLICITED-ONLY": [
+     "F-ALIAS-REJECTED-RESYNC#2:ar3",
+     "F-ALIAS-ADMITTED-RESYNC#1:aa2",
+     "F-ALIAS-ADMITTED-RESYNC#2:aa3",
+     "F-ALIAS-ADMITTED-DELTA#2:ad3",
+     "F-GAP-ENDPOINTS#7:m8",
+     "F-GAP-HOLD-RUNTIME#5:hl6"
+    ],
+    "M-SHARED-REF": [],
+    "M-MERGE": [],
+    "M-ORDER-LABEL": [],
+    "M-SHARED-LABEL": [],
+    "M-MERGE-LABEL": []
+   }
+  },
+  "C2": {
+   "gap": [
+    "admitted",
+    "rejected:gap-without-resync",
+    "rejected:gap-without-resync",
+    "admitted",
+    "admitted"
+   ],
+   "announced": [
+    "admitted",
+    "admitted",
+    "rejected:gap-without-resync",
+    "admitted",
+    "admitted"
+   ],
+   "snapshot": [
+    "admitted",
+    "rejected:gap-without-resync",
+    "admitted",
+    "admitted"
+   ],
+   "resync": [
+    [
+     "browser/view"
+    ],
+    [
+     "browser/view"
+    ],
+    [
+     "browser/view"
+    ]
+   ],
+   "applied": [
+    [
+     0,
+     3,
+     4
+    ],
+    [
+     0,
+     3,
+     4
+    ],
+    [
+     0,
+     2,
+     3
+    ]
+   ],
+   "scoped": {
+    "F-GAP-BACKWARD": {
+     "receipts": [
+      "admitted",
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted",
+      "rejected:gap-without-resync"
+     ],
+     "resync": [
+      "browser/view",
+      "server/view"
+     ],
+     "applied": [
+      0,
+      1,
+      3
+     ]
+    },
+    "F-GAP-NO-BASE": {
+     "receipts": [
+      "rejected:gap-without-resync",
+      "admitted",
+      "admitted"
+     ],
+     "resync": [
+      "server/view"
+     ],
+     "applied": [
+      1,
+      2
+     ]
+    },
+    "F-GAP-ENDPOINTS": {
+     "receipts": [
+      "admitted",
+      "admitted",
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted",
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted",
+      "rejected:gap-without-resync"
+     ],
+     "resync": [
+      "server/view"
+     ],
+     "applied": [
+      0,
+      1,
+      2,
+      4,
+      5,
+      7
+     ]
+    },
+    "F-GAP-ORDER": {
+     "receipts": [
+      "admitted",
+      "admitted",
+      "rejected:gap-without-resync",
+      "rejected:gap-without-resync"
+     ],
+     "resync": [
+      "server/view",
+      "browser/view"
+     ],
+     "applied": [
+      0,
+      1
+     ]
+    },
+    "F-GAP-PORTS": {
+     "receipts": [
+      "admitted",
+      "admitted",
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted"
+     ],
+     "resync": [
+      "browser/panel"
+     ],
+     "applied": [
+      0,
+      1,
+      2,
+      4
+     ]
+    },
+    "F-GAP-SIGNAL": {
+     "receipts": [
+      "admitted",
+      "admitted",
+      "admitted",
+      "admitted"
+     ],
+     "resync": [
+      "browser/view"
+     ],
+     "applied": [
+      0,
+      2,
+      3
+     ]
+    },
+    "F-GAP-ACK": {
+     "receipts": [
+      "admitted",
+      "admitted",
+      "admitted",
+      "admitted",
+      "admitted",
+      "rejected:gap-without-resync"
+     ],
+     "resync": [
+      "browser/view"
+     ],
+     "applied": [
+      0,
+      2
+     ]
+    },
+    "F-GAP-IDENTITY": {
+     "receipts": [
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted",
+      "admitted",
+      "admitted",
+      "admitted",
+      "rejected:duplicate-message",
+      "rejected:duplicate-message",
+      "rejected:duplicate-message"
+     ],
+     "resync": [
+      "browser/view"
+     ],
+     "applied": [
+      0,
+      2,
+      3,
+      5
+     ]
+    },
+    "F-GAP-HOLD-RUNTIME": {
+     "receipts": [
+      "admitted",
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted",
+      "rejected:gap-without-resync"
+     ],
+     "resync": [
+      "browser/view"
+     ],
+     "applied": [
+      0,
+      1,
+      3,
+      5
+     ]
+    },
+    "F-GAP-REGAP": {
+     "receipts": [
+      "admitted",
+      "rejected:gap-without-resync",
+      "admitted",
+      "rejected:gap-without-resync"
+     ],
+     "resync": [
+      "browser/view"
+     ],
+     "applied": [
+      0,
+      2
+     ]
+    }
+   },
+   "M-GAP-APPLY": {
+    "F-GAP": [
+     "reject",
+     "diagnostic",
+     "resync"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "reject",
+     "diagnostic",
+     "resync"
+    ],
+    "F-GAP-BACKWARD": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ],
+    "F-GAP-NO-BASE": [
+     "reject",
+     "diagnostic",
+     "resync"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ],
+    "F-GAP-ORDER": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ],
+    "F-GAP-PORTS": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ],
+    "F-GAP-ACK": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "F-GAP-IDENTITY": [
+     "admit",
+     "reject",
+     "diagnostic"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ],
+    "F-GAP-REGAP": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ]
+   },
+   "M-GAP-SILENT": {
+    "F-GAP": [
+     "resync"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "resync"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "resync"
+    ],
+    "F-GAP-BACKWARD": [
+     "resync"
+    ],
+    "F-GAP-NO-BASE": [
+     "resync"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "resync"
+    ],
+    "F-GAP-ORDER": [
+     "resync"
+    ],
+    "F-GAP-PORTS": [
+     "resync"
+    ],
+    "F-GAP-SIGNAL": [
+     "resync"
+    ],
+    "F-GAP-ACK": [
+     "resync"
+    ],
+    "F-GAP-IDENTITY": [
+     "resync"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "resync"
+    ],
+    "F-GAP-REGAP": [
+     "resync"
+    ]
+   },
+   "M-GAP-RESUME": {
+    "F-GAP": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-ANNOUNCED-IGNORED": {
+    "F-GAP-ANNOUNCED": [
+     "reject",
+     "diagnostic",
+     "resync"
+    ],
+    "F-GAP-SIGNAL": [
+     "resync"
+    ],
+    "F-GAP-ACK": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ]
+   },
+   "M-ANNOUNCED-SILENT": {
+    "F-GAP-SIGNAL": [
+     "resync"
+    ]
+   },
+   "M-SNAPSHOT-KEEPS-HOLD": {
+    "F-GAP-SNAPSHOT": [
+     "admit",
+     "merged"
+    ],
+    "F-GAP-NO-BASE": [
+     "admit",
+     "merged"
+    ]
+   },
+   "M-SNAPSHOT-LIFTS-EVERY-HOLD": {
+    "F-GAP-ENDPOINTS": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-RESYNC-LIFTS-EVERY-HOLD": {
+    "F-GAP-ENDPOINTS": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-SNAPSHOT-LIFTS-RUNTIME-HOLDS": {
+    "F-GAP-HOLD-RUNTIME": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-RESYNC-LIFTS-RUNTIME-HOLDS": {
+    "F-GAP-HOLD-RUNTIME": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-RESYNC-SPURIOUS": {
+    "F-SESSION": [
+     "resync"
+    ],
+    "F-READ": [
+     "resync"
+    ],
+    "F-READ-KIND": [
+     "resync"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "resync"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "resync"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "resync"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "resync"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "resync"
+    ],
+    "F-VERSION": [
+     "resync"
+    ],
+    "F-SCHEMA": [
+     "resync"
+    ],
+    "F-DIGEST": [
+     "resync"
+    ],
+    "F-EPOCH": [
+     "resync"
+    ],
+    "F-DUPLICATE": [
+     "resync"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "resync"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "resync"
+    ],
+    "F-BASIS": [
+     "resync"
+    ],
+    "F-DISPOSITION": [
+     "resync"
+    ],
+    "F-FEEDBACK": [
+     "resync"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "resync"
+    ],
+    "F-GAP-PORTS": [
+     "resync"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "resync"
+    ],
+    "F-AUTHORITY": [
+     "resync"
+    ],
+    "F-PRIVATE": [
+     "resync"
+    ],
+    "F-EXECUTABLE": [
+     "resync"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "resync"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "resync"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "resync"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "resync"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "resync"
+    ],
+    "F-EFFECT": [
+     "resync"
+    ]
+   },
+   "M-GAP-BACKWARD-OK": {
+    "F-GAP-BACKWARD": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ]
+   },
+   "M-GAP-EQUAL-OK": {
+    "F-GAP-BACKWARD": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ]
+   },
+   "M-GAP-LOWER-OK": {
+    "F-GAP-BACKWARD": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ]
+   },
+   "M-GAP-NO-BASE": {
+    "F-GAP-NO-BASE": [
+     "reject",
+     "diagnostic",
+     "resync"
+    ]
+   },
+   "M-GAP-GLOBAL-SEQUENCE": {
+    "F-GAP-ENDPOINTS": [
+     "admit",
+     "resync"
+    ],
+    "F-GAP-PORTS": [
+     "admit",
+     "resync",
+     "merged"
+    ]
+   },
+   "M-GAP-GLOBAL-HOLD": {
+    "F-GAP-ENDPOINTS": [
+     "admit",
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ],
+    "F-GAP-PORTS": [
+     "admit",
+     "resync",
+     "merged"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-GAP-DOMAIN-SEQUENCE": {
+    "F-GAP-PORTS": [
+     "admit",
+     "resync",
+     "merged"
+    ]
+   },
+   "M-GAP-DOMAIN-HOLD": {
+    "F-GAP-PORTS": [
+     "admit",
+     "resync",
+     "merged"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-ACK-ADVANCES": {
+    "F-GAP-ACK": [
+     "admit",
+     "merged"
+    ]
+   },
+   "M-ACK-CLEARS-HOLD": {
+    "F-GAP-ACK": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-RESYNC-ALL": {
+    "F-GAP-ENDPOINTS": [
+     "resync"
+    ],
+    "F-GAP-PORTS": [
+     "resync"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "resync"
+    ]
+   },
+   "M-RESYNC-SORTED": {
+    "F-GAP-ORDER": [
+     "resync"
+    ]
+   },
+   "M-RESYNC-REPEATED": {
+    "F-GAP": [
+     "resync"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "resync"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "resync"
+    ],
+    "F-GAP-ACK": [
+     "resync"
+    ],
+    "F-GAP-IDENTITY": [
+     "resync"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "resync"
+    ],
+    "F-GAP-REGAP": [
+     "resync"
+    ]
+   },
+   "M-RESYNC-PER-EPISODE": {
+    "F-GAP-IDENTITY": [
+     "resync"
+    ],
+    "F-GAP-REGAP": [
+     "resync"
+    ]
+   },
+   "M-RESYNC-SOLICITED-ONLY": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "admit"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "admit",
+     "resync",
+     "merged"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "admit"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "admit",
+     "merged"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "admit",
+     "merged"
+    ]
+   }
+  },
+  "O1": {
+   "receipts": [
+    "rejected:foreign-authority",
+    "rejected:foreign-authority",
+    "rejected:foreign-authority",
+    "admitted"
+   ],
+   "applied": [
+    3
+   ],
+   "values": {
+    "pi": {
+     "status": {
+      "state": "idle"
+     }
+    },
+    "browser": {
+     "view": {
+      "rows": [
+       1
+      ]
+     }
+    }
+   },
+   "owners": {
+    "browser/view": "browser",
+    "browser/panel": "browser",
+    "server/view": "server",
+    "pi/status": "pi",
+    "browser/secret": "browser",
+    "browser/internal": "browser",
+    "browser/bare": "browser",
+    "browser/half": "browser",
+    "browser/unlaned": "browser"
+   },
+   "M-FOREIGN": {
+    "F-DUPLICATE-REJECTED": [
+     "admit",
+     "reject",
+     "diagnostic"
+    ],
+    "F-AUTHORITY": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-SOURCE-BLIND": {
+    "F-DUPLICATE-REJECTED": [
+     "admit",
+     "reject",
+     "diagnostic"
+    ],
+    "F-AUTHORITY": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-LOCAL-SPOOF": {
+    "F-AUTHORITY": [
+     "diagnostic"
+    ]
+   }
+  },
+  "P1": {
+   "receipts": [
+    "rejected:private-endpoint",
+    "rejected:private-endpoint",
+    "rejected:private-endpoint",
+    "admitted"
+   ],
+   "applied": [
+    3
+   ],
+   "M-PRIVATE": {
+    "F-DUPLICATE-REJECTED": [
+     "diagnostic",
+     "resync"
+    ],
+    "F-PRIVATE": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-UNDECLARED-OPEN": {
+    "F-PRIVATE": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-PRIVATE-NAMED-ONLY": {
+    "F-PRIVATE": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   }
+  },
+  "P2": {
+   "payload": [
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "admitted"
+   ],
+   "sequence": [
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "admitted",
+    "admitted"
+   ],
+   "depth": [
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "admitted"
+   ],
+   "effect": [
+    "admitted",
+    "rejected:unauthorized-effect",
+    "rejected:unauthorized-effect"
+   ],
+   "nesting": [
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "admitted"
+   ],
+   "keyCase": [
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "admitted"
+   ],
+   "keyValues": [
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "rejected:executable-function-on-the-wire",
+    "admitted"
+   ],
+   "applied": [
+    [
+     3
+    ],
+    [
+     2,
+     3
+    ],
+    [
+     3
+    ],
+    [
+     0
+    ],
+    [
+     2
+    ],
+    [
+     2
+    ],
+    [
+     5
+    ]
+   ],
+   "keys": [
+    "code",
+    "handler",
+    "script",
+    "function"
+   ],
+   "sole": {
+    "code": [
+     "y2",
+     "xn2",
+     "xv1",
+     "xv5"
+    ],
+    "handler": [
+     "x2",
+     "xc2",
+     "xv2"
+    ],
+    "script": [
+     "x4",
+     "xc1",
+     "xv3"
+    ],
+    "function": [
+     "j3",
+     "xv4"
+    ]
+   },
+   "M-EXECUTABLE": {
+    "F-DUPLICATE-REJECTED": [
+     "admit",
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-CALLABLES-ONLY": {
+    "F-EXECUTABLE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-TOP-ONLY": {
+    "F-EXECUTABLE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-CALLABLES-TOP-ONLY": {
+    "F-EXECUTABLE-SEQUENCE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-NO-SEQUENCES": {
+    "F-EXECUTABLE-SEQUENCE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-NO-CODE": {
+    "F-EXECUTABLE-SEQUENCE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-NO-HANDLER": {
+    "F-EXECUTABLE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-NO-SCRIPT": {
+    "F-EXECUTABLE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-NO-FUNCTION": {
+    "F-EXECUTABLE-DEPTH": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-CASE-EXACT": {
+    "F-EXECUTABLE": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-SHALLOW": {
+    "F-EXECUTABLE-DEPTH": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-CALLABLE-VALUE-BLIND": {
+    "F-EXECUTABLE-DEPTH": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-STRING-VALUES": {
+    "F-EXECUTABLE-SEQUENCE": [
+     "admit"
+    ]
+   },
+   "M-EXECUTABLE-NESTED-ARRAYS-BLIND": {
+    "F-EXECUTABLE-NESTING": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-TOP-ARRAY-BLIND": {
+    "F-EXECUTABLE-NESTING": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-TITLE-CASE": {
+    "F-EXECUTABLE-CASE": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-CASE-WORDS": {
+    "F-EXECUTABLE-CASE": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-KEY-STRINGS-ONLY": {
+    "F-EXECUTABLE-KEY-VALUES": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EXECUTABLE-KEY-SCALARS-ONLY": {
+    "F-EXECUTABLE-KEY-VALUES": [
+     "reject",
+     "diagnostic"
+    ]
+   },
+   "M-EFFECT": {
+    "F-READ-KIND": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "admit",
+     "reject",
+     "diagnostic"
+    ],
+    "F-EFFECT": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   },
+   "M-EFFECT-NAMED-ONLY": {
+    "F-EFFECT": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ]
+   }
+  },
+  "N1": {
+   "surfaces": {
+    "src": [],
+    "qa": [],
+    "examples": [],
+    "config": [],
+    "docs": [],
+    "front": [],
+    "other-md": []
+   },
+   "live": {
+    "src": {
+     "floor": true,
+     "anchor": true
+    },
+    "qa": {
+     "floor": true,
+     "anchor": true
+    },
+    "examples": {
+     "floor": true,
+     "anchor": true
+    },
+    "config": {
+     "floor": true,
+     "anchor": true
+    },
+    "docs": {
+     "floor": true,
+     "anchor": true
+    },
+    "front": {
+     "floor": true,
+     "anchor": true
+    },
+    "other-md": {
+     "floor": true,
+     "anchor": true
+    }
+   },
+   "read": {
+    "prose": [
+     "order"
+    ],
+    "charter": [
+     "order"
+    ],
+    "camel": [
+     "order"
+    ],
+    "negated": [
+     "order"
+    ],
+    "decoded": [
+     "order"
+    ]
+   },
+   "quiet": {
+    "settings": [],
+    "list": []
+   },
+   "label": "browser/view: epoch 3, sequence 1; server/view: epoch 5, sequence 1; pi: local",
+   "M-ORDER-LABEL": {
+    "F-SESSION": [
+     "claim-order"
+    ],
+    "F-READ": [
+     "claim-order"
+    ],
+    "F-READ-KIND": [
+     "claim-order"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "claim-order"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "claim-order"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "claim-order"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "claim-order"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "claim-order"
+    ],
+    "F-VERSION": [
+     "claim-order"
+    ],
+    "F-SCHEMA": [
+     "claim-order"
+    ],
+    "F-DIGEST": [
+     "claim-order"
+    ],
+    "F-EPOCH": [
+     "claim-order"
+    ],
+    "F-DUPLICATE": [
+     "claim-order"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "claim-order"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "claim-order"
+    ],
+    "F-BASIS": [
+     "claim-order"
+    ],
+    "F-DISPOSITION": [
+     "claim-order"
+    ],
+    "F-FEEDBACK": [
+     "claim-order"
+    ],
+    "F-GAP": [
+     "claim-order"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "claim-order"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "claim-order"
+    ],
+    "F-GAP-BACKWARD": [
+     "claim-order"
+    ],
+    "F-GAP-NO-BASE": [
+     "claim-order"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "claim-order"
+    ],
+    "F-GAP-ORDER": [
+     "claim-order"
+    ],
+    "F-GAP-PORTS": [
+     "claim-order"
+    ],
+    "F-GAP-SIGNAL": [
+     "claim-order"
+    ],
+    "F-GAP-ACK": [
+     "claim-order"
+    ],
+    "F-GAP-IDENTITY": [
+     "claim-order"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "claim-order"
+    ],
+    "F-GAP-REGAP": [
+     "claim-order"
+    ],
+    "F-AUTHORITY": [
+     "claim-order"
+    ],
+    "F-PRIVATE": [
+     "claim-order"
+    ],
+    "F-EXECUTABLE": [
+     "claim-order"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "claim-order"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "claim-order"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "claim-order"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "claim-order"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "claim-order"
+    ],
+    "F-EFFECT": [
+     "claim-order"
+    ]
+   }
+  },
+  "N2": {
+   "surfaces": {
+    "src": [],
+    "qa": [],
+    "examples": [],
+    "config": [],
+    "docs": [],
+    "front": [],
+    "other-md": []
+   },
+   "live": {
+    "src": {
+     "floor": true,
+     "anchor": true
+    },
+    "qa": {
+     "floor": true,
+     "anchor": true
+    },
+    "examples": {
+     "floor": true,
+     "anchor": true
+    },
+    "config": {
+     "floor": true,
+     "anchor": true
+    },
+    "docs": {
+     "floor": true,
+     "anchor": true
+    },
+    "front": {
+     "floor": true,
+     "anchor": true
+    },
+    "other-md": {
+     "floor": true,
+     "anchor": true
+    }
+   },
+   "read": {
+    "hyphen": [
+     "shared"
+    ],
+    "camel": [
+     "shared"
+    ],
+    "escaped": [
+     "shared"
+    ],
+    "json": [
+     "shared"
+    ]
+   },
+   "quiet": {
+    "state": [],
+    "store": []
+   },
+   "label": "browser/view: epoch 3, sequence 1; server/view: epoch 5, sequence 1; pi: local",
+   "aliased": false,
+   "M-SHARED-REF": {
+    "F-SESSION": [
+     "aliased"
+    ],
+    "F-READ": [
+     "aliased"
+    ],
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-VERSION": [
+     "aliased"
+    ],
+    "F-SCHEMA": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-BASIS": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "aliased"
+    ],
+    "F-GAP-BACKWARD": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-PORTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-ACK": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ],
+    "F-GAP-REGAP": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "aliased"
+    ],
+    "F-EFFECT": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-ALIAS": {
+    "F-SESSION": [
+     "aliased"
+    ],
+    "F-READ": [
+     "aliased"
+    ],
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-VERSION": [
+     "aliased"
+    ],
+    "F-SCHEMA": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-BASIS": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "aliased"
+    ],
+    "F-GAP-BACKWARD": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-PORTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-ACK": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ],
+    "F-GAP-REGAP": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "aliased"
+    ],
+    "F-EFFECT": [
+     "aliased"
+    ]
+   },
+   "M-READ-ALIAS": {
+    "F-SESSION": [
+     "aliased"
+    ],
+    "F-READ": [
+     "aliased"
+    ],
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-VERSION": [
+     "aliased"
+    ],
+    "F-SCHEMA": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-BASIS": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "aliased"
+    ],
+    "F-GAP-BACKWARD": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-PORTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-ACK": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ],
+    "F-GAP-REGAP": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "aliased"
+    ],
+    "F-EFFECT": [
+     "aliased"
+    ]
+   },
+   "M-READ-CROSS-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-READ-KIND-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-CROSS-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-KIND-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-ADMITTED-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-LATER-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-OWN-DELTA-ALIAS": {
+    "F-SESSION": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "aliased"
+    ],
+    "F-GAP-BACKWARD": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-PORTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-ACK": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-OWN-RESYNC-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ],
+    "F-GAP-REGAP": [
+     "aliased"
+    ]
+   },
+   "M-SHARED-LABEL": {
+    "F-SESSION": [
+     "claim-shared"
+    ],
+    "F-READ": [
+     "claim-shared"
+    ],
+    "F-READ-KIND": [
+     "claim-shared"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "claim-shared"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "claim-shared"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "claim-shared"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "claim-shared"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "claim-shared"
+    ],
+    "F-VERSION": [
+     "claim-shared"
+    ],
+    "F-SCHEMA": [
+     "claim-shared"
+    ],
+    "F-DIGEST": [
+     "claim-shared"
+    ],
+    "F-EPOCH": [
+     "claim-shared"
+    ],
+    "F-DUPLICATE": [
+     "claim-shared"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "claim-shared"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "claim-shared"
+    ],
+    "F-BASIS": [
+     "claim-shared"
+    ],
+    "F-DISPOSITION": [
+     "claim-shared"
+    ],
+    "F-FEEDBACK": [
+     "claim-shared"
+    ],
+    "F-GAP": [
+     "claim-shared"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "claim-shared"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "claim-shared"
+    ],
+    "F-GAP-BACKWARD": [
+     "claim-shared"
+    ],
+    "F-GAP-NO-BASE": [
+     "claim-shared"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "claim-shared"
+    ],
+    "F-GAP-ORDER": [
+     "claim-shared"
+    ],
+    "F-GAP-PORTS": [
+     "claim-shared"
+    ],
+    "F-GAP-SIGNAL": [
+     "claim-shared"
+    ],
+    "F-GAP-ACK": [
+     "claim-shared"
+    ],
+    "F-GAP-IDENTITY": [
+     "claim-shared"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "claim-shared"
+    ],
+    "F-GAP-REGAP": [
+     "claim-shared"
+    ],
+    "F-AUTHORITY": [
+     "claim-shared"
+    ],
+    "F-PRIVATE": [
+     "claim-shared"
+    ],
+    "F-EXECUTABLE": [
+     "claim-shared"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "claim-shared"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "claim-shared"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "claim-shared"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "claim-shared"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "claim-shared"
+    ],
+    "F-EFFECT": [
+     "claim-shared"
+    ]
+   }
+  },
+  "N3": {
+   "surfaces": {
+    "src": [],
+    "qa": [],
+    "examples": [],
+    "config": [],
+    "docs": [],
+    "front": [],
+    "other-md": []
+   },
+   "live": {
+    "src": {
+     "floor": true,
+     "anchor": true
+    },
+    "qa": {
+     "floor": true,
+     "anchor": true
+    },
+    "examples": {
+     "floor": true,
+     "anchor": true
+    },
+    "config": {
+     "floor": true,
+     "anchor": true
+    },
+    "docs": {
+     "floor": true,
+     "anchor": true
+    },
+    "front": {
+     "floor": true,
+     "anchor": true
+    },
+    "other-md": {
+     "floor": true,
+     "anchor": true
+    }
+   },
+   "read": {
+    "hyphen": [
+     "merge"
+    ],
+    "implicit": [
+     "merge"
+    ],
+    "charter": [
+     "merge"
+    ],
+    "compact": [
+     "merge"
+    ],
+    "normalized": [
+     "merge"
+    ]
+   },
+   "quiet": {
+    "loading": [],
+    "request": [],
+    "save": []
+   },
+   "label": "browser/view: epoch 3, sequence 1; server/view: epoch 5, sequence 1; pi: local",
+   "values": {
+    "pi": {
+     "status": {
+      "state": "idle"
+     }
+    },
+    "browser": {
+     "view": {
+      "rows": [
+       1,
+       2
+      ]
+     }
+    },
+    "server": {
+     "view": {
+      "rows": [
+       3
+      ]
+     }
+    }
+   },
+   "M-MERGE": {
+    "F-SESSION": [
+     "merged"
+    ],
+    "F-READ": [
+     "merged"
+    ],
+    "F-READ-KIND": [
+     "merged"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "merged"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "merged"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "merged"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "merged"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "merged"
+    ],
+    "F-VERSION": [
+     "merged"
+    ],
+    "F-SCHEMA": [
+     "merged"
+    ],
+    "F-DIGEST": [
+     "merged"
+    ],
+    "F-EPOCH": [
+     "merged"
+    ],
+    "F-DUPLICATE": [
+     "merged"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "merged"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "merged"
+    ],
+    "F-BASIS": [
+     "merged"
+    ],
+    "F-DISPOSITION": [
+     "merged"
+    ],
+    "F-FEEDBACK": [
+     "merged"
+    ],
+    "F-GAP": [
+     "merged"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "merged"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "merged"
+    ],
+    "F-GAP-BACKWARD": [
+     "merged"
+    ],
+    "F-GAP-NO-BASE": [
+     "merged"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "merged"
+    ],
+    "F-GAP-ORDER": [
+     "merged"
+    ],
+    "F-GAP-PORTS": [
+     "merged"
+    ],
+    "F-GAP-SIGNAL": [
+     "merged"
+    ],
+    "F-GAP-ACK": [
+     "merged"
+    ],
+    "F-GAP-IDENTITY": [
+     "merged"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "merged"
+    ],
+    "F-GAP-REGAP": [
+     "merged"
+    ],
+    "F-AUTHORITY": [
+     "merged"
+    ],
+    "F-PRIVATE": [
+     "merged"
+    ],
+    "F-EXECUTABLE": [
+     "merged"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "merged"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "merged"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "merged"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "merged"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "merged"
+    ],
+    "F-EFFECT": [
+     "merged"
+    ]
+   },
+   "M-MERGE-LABEL": {
+    "F-SESSION": [
+     "claim-merge"
+    ],
+    "F-READ": [
+     "claim-merge"
+    ],
+    "F-READ-KIND": [
+     "claim-merge"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "claim-merge"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "claim-merge"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "claim-merge"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "claim-merge"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "claim-merge"
+    ],
+    "F-VERSION": [
+     "claim-merge"
+    ],
+    "F-SCHEMA": [
+     "claim-merge"
+    ],
+    "F-DIGEST": [
+     "claim-merge"
+    ],
+    "F-EPOCH": [
+     "claim-merge"
+    ],
+    "F-DUPLICATE": [
+     "claim-merge"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "claim-merge"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "claim-merge"
+    ],
+    "F-BASIS": [
+     "claim-merge"
+    ],
+    "F-DISPOSITION": [
+     "claim-merge"
+    ],
+    "F-FEEDBACK": [
+     "claim-merge"
+    ],
+    "F-GAP": [
+     "claim-merge"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "claim-merge"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "claim-merge"
+    ],
+    "F-GAP-BACKWARD": [
+     "claim-merge"
+    ],
+    "F-GAP-NO-BASE": [
+     "claim-merge"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "claim-merge"
+    ],
+    "F-GAP-ORDER": [
+     "claim-merge"
+    ],
+    "F-GAP-PORTS": [
+     "claim-merge"
+    ],
+    "F-GAP-SIGNAL": [
+     "claim-merge"
+    ],
+    "F-GAP-ACK": [
+     "claim-merge"
+    ],
+    "F-GAP-IDENTITY": [
+     "claim-merge"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "claim-merge"
+    ],
+    "F-GAP-REGAP": [
+     "claim-merge"
+    ],
+    "F-AUTHORITY": [
+     "claim-merge"
+    ],
+    "F-PRIVATE": [
+     "claim-merge"
+    ],
+    "F-EXECUTABLE": [
+     "claim-merge"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "claim-merge"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "claim-merge"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "claim-merge"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "claim-merge"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "claim-merge"
+    ],
+    "F-EFFECT": [
+     "claim-merge"
+    ]
+   }
+  },
+  "Q1": {
+   "abbreviation": [],
+   "split-statements": [],
+   "base64": [],
+   "yaml-escape": [],
+   "toml-escape": [],
+   "markdown-link-split": [],
+   "homoglyph": [],
+   "digit-substitution": []
+  },
+  "Q2": {
+   "environment-specifier": [],
+   "configured-subprocess": [],
+   "configured-binary": [],
+   "archive-content": []
+  },
+  "Q3": {
+   "other-bead-row": [],
+   "sdk-only": [],
+   "work-package": [],
+   "blocks-edge": [],
+   "grandchild-edge": []
+  },
+  "Q4": {
+   "violations": {},
+   "sideTaken": true
+  },
+  "Q5": {
+   "total-order": [],
+   "single-timeline": [],
+   "reversed-merge": [],
+   "reversed-shared": [],
+   "last-writer-wins": [],
+   "split-statements": []
+  },
+  "Q6": {
+   "schema-before-version": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "diagnostic"
+    ],
+    "differs": [
+     "receipts"
+    ]
+   },
+   "epoch-before-digest": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "diagnostic"
+    ],
+    "differs": [
+     "receipts"
+    ]
+   },
+   "basis-before-duplicate": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "diagnostic"
+    ],
+    "differs": [
+     "receipts"
+    ]
+   },
+   "disposition-before-authority": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "diagnostic"
+    ],
+    "differs": [
+     "receipts"
+    ]
+   }
+  },
+  "Q7": {
+   "signals-unchecked": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic"
+    ],
+    "differs": [
+     "receipts"
+    ]
+   },
+   "snapshot-basis-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "snapshot-version-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "resync-digest-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   }
+  },
+  "Q8": {
+   "kind-case-folded": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "schema-case-folded": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "source-case-folded": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "digest-case-folded": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "identity-case-folded": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "admit",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "version-numeric": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "basis-trim": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "admit",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "visibility-case-folded": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   }
+  },
+  "Q9": {
+   "effect-denylist": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "private-denylist": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "lane-word-exact": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "admit",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "feedback-negative-refused": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "admit",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "absent-digest-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "absent-epoch-stale": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "admit",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "absent-identity-unseen": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "executable-depth-five": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "no-base-later": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "resync",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "absent-version-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "absent-schema-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "absent-source-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "diagnostic"
+    ],
+    "differs": [
+     "receipts"
+    ]
+   }
+  },
+  "Q10": {
+   "set": {
+    "read": false,
+    "holds": true,
+    "oracle": [
+     "admitted"
+    ],
+    "honest": [
+     "admitted"
+    ]
+   },
+   "map": {
+    "read": false,
+    "holds": true,
+    "oracle": [
+     "admitted"
+    ],
+    "honest": [
+     "admitted"
+    ]
+   },
+   "symbol-key": {
+    "read": false,
+    "holds": true,
+    "oracle": [
+     "admitted"
+    ],
+    "honest": [
+     "admitted"
+    ]
+   },
+   "prototype": {
+    "read": false,
+    "holds": true,
+    "oracle": [
+     "admitted"
+    ],
+    "honest": [
+     "admitted"
+    ]
+   }
+  },
+  "Q11": {
+   "cross-call-identities": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "admit",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "running-epoch": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "admit",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "owner-from-id": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "admit",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "announced-at-last": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "resync",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "resync",
+     "values",
+     "label",
+     "seam"
+    ]
+   }
+  },
+  "Q12": {
+   "label-unnamed": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [],
+    "differs": [
+     "label"
+    ]
+   }
+  }
+ },
+ "readers": {
+  "G1": [
+   "src",
+   "mention-judge",
+   "qa",
+   "examples",
+   "config",
+   "docs",
+   "front",
+   "other-md",
+   "closure",
+   "scratch-walk"
+  ],
+  "G2": [
+   "export",
+   "decisions",
+   "decision-reader",
+   "mention-judge"
+  ],
+  "C1": [
+   "host",
+   "claim-judge"
+  ],
+  "C2": [
+   "host",
+   "claim-judge"
+  ],
+  "O1": [
+   "host",
+   "claim-judge"
+  ],
+  "P1": [
+   "host",
+   "claim-judge"
+  ],
+  "P2": [
+   "host",
+   "claim-judge"
+  ],
+  "N1": [
+   "src",
+   "claim-judge",
+   "qa",
+   "examples",
+   "config",
+   "docs",
+   "front",
+   "other-md",
+   "host"
+  ],
+  "N2": [
+   "host",
+   "src",
+   "claim-judge",
+   "qa",
+   "examples",
+   "config",
+   "docs",
+   "front",
+   "other-md"
+  ],
+  "N3": [
+   "host",
+   "src",
+   "claim-judge",
+   "qa",
+   "examples",
+   "config",
+   "docs",
+   "front",
+   "other-md"
+  ],
+  "Q1": [
+   "mention-judge"
+  ],
+  "Q2": [
+   "mention-judge"
+  ],
+  "Q3": [
+   "export",
+   "decision-reader",
+   "mention-judge"
+  ],
+  "Q4": [
+   "host",
+   "claim-judge"
+  ],
+  "Q5": [
+   "claim-judge"
+  ],
+  "Q6": [
+   "host",
+   "claim-judge"
+  ],
+  "Q7": [
+   "host",
+   "claim-judge"
+  ],
+  "Q8": [
+   "host",
+   "claim-judge"
+  ],
+  "Q9": [
+   "host",
+   "claim-judge"
+  ],
+  "Q10": [
+   "host"
+  ],
+  "Q11": [
+   "host",
+   "claim-judge"
+  ],
+  "Q12": [
+   "host",
+   "claim-judge"
+  ]
+ },
+ "tests": [
+  "G1: Gating artifact: released FiberOpticsSDK PublicPortBridge (unshipped)",
+  "G2: + a wb-x32 committing decision connecting a Pi runtime over it",
+  "C1: then Pi supplies the full bridge contract",
+  "C2: (visibility/schema/direction through resync on gaps)",
+  "O1: keeps one authority per runtime domain",
+  "P1: admits no private endpoint",
+  "P2: or remote executable function",
+  "N1: and asserts no global ordering",
+  "N2: shared memory",
+  "N3: or implicit conflict merge",
+  "Q1: R-SPELLING",
+  "Q2: R-INDIRECT-LOAD",
+  "Q3: R-DECISION-ELSEWHERE",
+  "Q4: R-SIDE-PATH",
+  "Q5: R-PARAPHRASE",
+  "Q6: R-PRECEDENCE",
+  "Q7: R-KIND-SCOPE",
+  "Q8: R-FIELD-FORM",
+  "Q9: R-VALUE-DOMAIN",
+  "Q10: R-PAYLOAD-HOLDER",
+  "Q11: R-HOST-STATE",
+  "Q12: R-LABEL-TEXT",
+  "rule 16: the rows, the residual families, the classes, the contract parts, the claim families, the checks, the mutants, the fixtures, the contract's endpoints, the words, the reading forms (script and markup extensions, named entities), the walks (roots, pathspecs, judges, floors, anchors and exclusions) and the hosts are frozen at their measured shape",
+  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading and the record's own line",
+  "roster: the judged rows, the quotes, the residual members, the readers and the registered tests equal test/fixtures/foa-public-port-bridge-roster.json, in order and both ways; every pin reached its witness compare"
+ ],
+ "producer": {
+  "repo": "FiberOpticsSDK",
+  "path": "docs/programs/universal-reactive-rendering-2026-10-18.md",
+  "sha": "dcc5b57c4aed5fa2daa5333ec0b39c0916a508d7",
+  "blob": "5ae73cc357221ae2754ba5bf87f6f5b11db66a1e",
+  "lines": {
+   "3": "**Status:** design charter only (2026-10-18), no code or backend switch. **Owner:** FiberOpticsSDK. **Authority:** existing Rust-runtime normative requirements/ADRs outrank this additive charter; cross-program decisions: https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/universal-reactive-rendering-2026-10-18.",
+   "17": "Use one authority per runtime domain; remote public-port bridge may connect independent browser and server runtimes. Bridge requires endpoint visibility/schema/direction, lane and invalidation disposition, source revision, message identity, feedback bound, and explicit resync on gaps. Do not assert global transaction ordering, shared memory or implicit optimistic conflict merge.",
+   "19": "## Proposed interfaces (unshipped)",
+   "23": "- PublicPortBridge: negotiate contracts; subscribe/unsubscribe; snapshot/delta/ack/gap/resync; rejects private endpoints. No remotely supplied arbitrary executable functions.",
+   "41": "- Invalid private-port bridge, bad version/digest, stale epoch, duplicate message, missing basis, unauthorized effect and unbounded feedback are rejected with stable diagnostics."
+  },
+  "measured": {
+   "readAt": "2026-10-28",
+   "tip": "2099f193cccff7e35d0e618f4aab805b481e1983",
+   "tipBlob": "5ae73cc357221ae2754ba5bf87f6f5b11db66a1e",
+   "contractHalf": {
+    "workPackage": "FO-UI-05-a",
+    "commit": "52c16fc725a8d579fcb156841adcdb2ec98854e9",
+    "module": "src/fiber_optics/bridge.py",
+    "moduleBlob": "61697119a19b078c27f57b2b209c218fdbada9a2",
+    "codeRoster": "conformance/urr/v1/diagnostic_codes.json",
+    "codeRosterBlob": "dba3980c6d978c73337b349d2416e5e9b64226fa",
+    "codes": [
+     "BRIDGE_EXECUTABLE_PAYLOAD_REFUSED",
+     "BRIDGE_NOT_CROSS_RUNTIME",
+     "BRIDGE_DECLARATION_MISMATCH",
+     "BRIDGE_DISPOSITION_UNDECLARED",
+     "BRIDGE_PRIVATE_ENDPOINT",
+     "BRIDGE_PROTOCOL_VERSION_UNSUPPORTED",
+     "BRIDGE_SCHEMA_MISMATCH",
+     "BRIDGE_DIRECTION_CLASH",
+     "BRIDGE_DIGEST_MISMATCH"
+    ],
+    "executablePayloadKeys": [
+     "code",
+     "handler",
+     "script",
+     "function"
+    ]
+   },
+   "transportTier": {
+    "workPackage": "FO-UI-05-d",
+    "commit": "384f03f9cdc1d848f454fbb4b84ce9aa5003a56a",
+    "gapAnswer": "BRIDGE_GAP plus a ResyncRequest (tests/shell/lib/fo_urr_bridge_child.py, test-side)"
+   },
+   "releaseTags": 0,
+   "rfBundled": {
+    "rf": "0.1.845",
+    "fiber_optics": "0.1.0.20261014202847",
+    "receipt": "docs/workbench/receipts/wb-jwc.4.md"
+   }
+  }
+ }
+}

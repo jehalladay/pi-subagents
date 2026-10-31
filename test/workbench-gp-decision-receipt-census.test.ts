@@ -20,13 +20,19 @@
  *
  *
  * MEASURED (read-only): cut #1's seat (2026-10-28) at the trunk tip 09f45a52f7a7 and at its base e544dd872434, cut #2's seat
- * (2026-10-28) at its base e81d2b08eecf and cut #3's seat (2026-10-28) at its base 014d116fb4c1, each also at the Pi pin
- * 758ec18187a5: no src module spells GraphPolicyCLI or verifierOutcome (in any spelling the word reader reads);
+ * (2026-10-28) at its base e81d2b08eecf, cut #3's seat (2026-10-28) at its base 014d116fb4c1, the wb-odlv follow-up's seat
+ * (2026-10-30) at its base 577493f9e951 and the wb-4wts follow-up's seat (2026-10-30) at its base 2e3a2538887f, each also at
+ * the Pi pin 758ec18187a5: no src module spells GraphPolicyCLI or verifierOutcome (in any spelling the word reader reads);
  * src/workbench/control.ts declares one exported ControlOutcome type alias, a union of the four string literals, starting on
  * line 53 at the pin (read from its parse); the docs sections carrying docs/workbench/06:28, 09:91 and 08:38 render the same,
- * block for block, at the pin and at HEAD; the wb-lrz.3 correction row is one line of docs/workbench/TRACEABILITY.md, appended
- * by commit e805a5efd42d (an ancestor of the pin) with numstat 2 added, 0 deleted; the installed @furnace/sdk
- * (vendor/furnace-sdk-0.1.0.tgz) declares AttemptState, AttemptOutcome and TerminationCause in dist/src/protocol.d.ts.
+ * block for block, at the pin and at HEAD; the wb-lrz.3 correction row is one line of docs/workbench/TRACEABILITY.md,
+ * appended by commit e805a5efd42d (an ancestor of the pin) with numstat 2 added, 0 deleted; the installed @furnace/sdk
+ * (vendor/furnace-sdk-0.1.0.tgz) declares AttemptState, AttemptOutcome and TerminationCause in dist/src/protocol.d.ts; (the
+ * wb-odlv follow-up's seat) row A4's Acceptance clause in the bead's own row names one TerminationCause member,
+ * external_termination, by the outside anchors' cause reader; and (the wb-4wts follow-up's seat) each of the three
+ * WHITESPACE_PLANTS' planted texts differs from HEAD's by whitespace alone, keeps its section's heading on its line and moves
+ * the line carrying its anchor's sentence one down (W1 adding no blank line, W2 and W3 one each), and D10's planted carrier,
+ * in block 2 of its section, reads the anchor's carrier text with markdown other than HEAD's, its verdict led "block 2 differs".
  *
  * Pi records no GP decision receipt today. The census pins that (row T) and an ARMED contract (rows A1 to A7) that binds the
  * first receipt site to come, as the wb-0lf.7 and wb-gxd7.3 censuses arm theirs:
@@ -86,23 +92,36 @@
  *    the next level-1/2 heading): at the pin the section carries no HTML, exactly one of its prose items (a paragraph or a list
  *    item) carries the anchor's sentence, it reads exactly the census's carrier text, and the filing's line is its source; at HEAD
  *    the section carries no HTML, the same one item reads the same text, and the whole section equals the pin's block for block
- *    (sectionMatches, the same view at both), so at HEAD an anchor is read by its section, never by a line, and any later edit of
- *    an anchor's section reds this census until it is re-measured. Three controls over the pin's text (the filing's line moved
- *    one down, the carrier text edited, the carrier's source line doubled) each leave their anchor unheld. Ten in-memory plants
- *    (the gate's D1 to D5, D4 split by page, and D6 a withdrawing paragraph in the section, D7 a duplicated heading, D8 a level-1
- *    heading re-homing the section, D9 a list item added) each leave their anchor unheld. S2 also a boolean admission or verifier
- *    outcome is refused by its check; S3 also the real control core never takes a causation relation for lifecycle ownership,
- *    and the reference states no relation at all; S4 the precedent commit is an ancestor of the pin and added the correction row
- *    without deleting a line, and the row stands at the pin and at HEAD.
+ *    (sectionMatches, the same view at both). So at HEAD an anchor is read by its section's rendered blocks (each block as
+ *    docsSection renders it, a paragraph's or list item's source with its whitespace collapsed included), never by a line: any
+ *    later edit that changes those blocks reds this census until it is re-measured, a markup-only edit too (D10), while the
+ *    three WHITESPACE_PLANTS, each changing only what the blocks do not carry (W1 the 06:28 carrier re-wrapped at a space, W2
+ *    and W3 a blank line added under the 09:91 and 08:38 headings, so their carriers move a line down), each leave their anchor
+ *    held, and each one's planted change is read in the Q3/Q10 planted form, so a plant that writes nothing reds (landing
+ *    706's F1): its planted text differs from HEAD's, by whitespace alone, its section's heading line stays where it is, the
+ *    line carrying its anchor's sentence (the first from the heading on) moves one down, and it adds no blank line (W1) or one
+ *    (W2, W3); on disk, an edit of that kind still reds a plant whose span it moves (a plant throws on a drifted span: landing
+ *    658's gate re-wrap P-W1 reds S2b through D3's span). Three controls over the pin's text (the filing's line moved one down,
+ *    the carrier text edited, the carrier's source line doubled) each leave their anchor unheld. Eleven in-memory plants (the
+ *    gate's D1 to D5, D4 split by page, and D6 a withdrawing paragraph in the section, D7 a duplicated heading, D8 a level-1
+ *    heading re-homing the section, D9 a list item added, D10 the 06:28 carrier's strong marker respelled with underscores, a
+ *    markup-only edit) each leave their anchor unheld, and D10's is read past that boolean (landing 706's F2): the one prose
+ *    item of its planted section that carries the sentence sits in the section's block 2, reads the anchor's carrier text and
+ *    has markdown other than HEAD's, and its verdict's lead (the why before its first colon) is "block 2 differs", the
+ *    section's block comparison failing at the carrier's own block, never a carrier-text why. S2 also a boolean admission or
+ *    verifier outcome is refused by its check; S3 also the real control core never takes a causation relation for lifecycle
+ *    ownership, and the reference states no relation at all; S4 the precedent commit is an ancestor of the pin and added the
+ *    correction row without deleting a line, and the row stands at the pin and at HEAD.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins as literals each row's id and pin count; one quote, one case and
  * one subject list per pin, in row order, and each pin's subjects; the checks, one per Acceptance row; every mutant with the
  * checks it fails; the phantom twists (step, decision, outcome, link and admission); the journal's events by kind, decision and
  * evidence; the vocabulary, the admissions, the verifier outcomes and the evidence reading; the killed readings; each residual
  * family's member count, one family per row Q pin and each row Q pin's quote; the plant counts of R-SPELLING, R-KILL-READING
- * and R-NEGATIVE-SIGNAL, one per member; the docs anchors' ids and headings, the docs plants' ids and anchors and the SDK and
- * control plants' names; the reader, stem and negative-feedback controls with their readings; the R-SPELLING plants' texts
- * (each character past ASCII written as its code point); and the receipt sites. OUTSIDE ANCHORS (their own registered case):
+ * and R-NEGATIVE-SIGNAL, one per member; the docs anchors' ids and headings, the docs and whitespace plants' ids and anchors and
+ * the SDK and control plants' names; the reader, stem, negative-feedback and cause controls with their readings; the
+ * R-SPELLING plants' texts (each character past ASCII written as its code point); and the receipt sites. OUTSIDE ANCHORS
+ * (their own registered case):
  * the bead's own row in the tracker export (.beads/issues.jsonl): the title opens with the requirement id and carries row T's
  * label before its artifact parenthetical and names exactly the vocabulary's first member; the first notes line opening
  * "Citation: " holds the standing-anchors sentence, whose four clauses are exactly the labels of rows S1 to S4 and whose pin is
@@ -110,8 +129,12 @@
  * whose one camel-case member, admission set and brace set are the vocabulary's second member, ADMISSIONS and
  * VERIFIER_OUTCOMES; each row's pin quotes but row Q's, joined by single spaces, are its label; and a row whose clause ends in a
  * parenthetical (A2 and S1 to S4) has two pins that quote exactly the clause before the parenthetical and the parenthetical, so
- * the filing fixes that row's pin split. A tracker note appended later (a delivery, gate or park note) sits on a line of its own
- * and binds nothing. So a row but Q, a clause or a check removed from every literal of this file still reds, and so does a
+ * the filing fixes that row's pin split. Row A4's clause, read from the same row, names the installed SDK's TerminationCause
+ * members each word of whose name shares a stem with a word of the clause (the shorter word, its last three letters dropped but
+ * at least four kept, opens the longer; CAUSE_CONTROLS show the reader): external_termination ("externally terminated") and no
+ * other, and each member it names must read as a kill in KILLED_CAUSES (landing 658's F2). A tracker note appended later (a
+ * delivery, gate or park note) sits on a line of its own and binds nothing. So a row but Q, a clause, a check or
+ * external_termination's kill reading removed from every literal of this file still reds, and so does a
  * pin of a row but Q removed from every literal with its quote (its row's joined quotes no longer read as its label) and a pin
  * of row A2, S1, S2, S3 or S4 merged into its sibling or split from it elsewhere; a pin of row T, A1 or A3 to A7 merged into its
  * sibling with its quote re-homed, or the boundary between such a row's two pins moved, every literal edited to match, leaves
@@ -129,27 +152,35 @@
  * and writer (verifier-field compares a reading only on the rows of Attempts that were not killed: a killed row may read pending
  * or unavailable whatever its evidence); which rows of the O5 and O13 drafts the trailing parenthetical carries (the drafts are
  * outside this repository); docs text outside an anchor's section (a later section of the page that withdraws it: the docs leg
- * reads the anchor's own section); R12's field-independence rows (wb-0lf.6, its own bead); Furnace's own durable effect
- * receipts; a pin's reading and its witness's expected value narrowed together (REACHED binds the subjects a pin consulted, not
- * how much of them it reads); a mutant, a journal event, a plant or a control removed from its table and the frozen literal
- * together while every check keeps a mutant that fails it alone; row Q, one of its pins (a residual family) or a residual
- * member removed from every literal (no source outside this cut names the residual families before its delivery note lands).
+ * reads the anchor's own section); the cause of a docs plant's unheld reading but D10's (D1 to D9 read the boolean only);
+ * where between its section's heading and its anchor's sentence a whitespace plant's change lands (its planted reading binds
+ * the change's kind, the two lines' moves and the blank lines added); R12's field-independence rows (wb-0lf.6, its own bead);
+ * Furnace's own durable effect receipts; a pin's reading and its witness's expected value narrowed together (REACHED binds the
+ * subjects a pin consulted, not how much of them it reads); a mutant, a journal event, a plant or a control removed from its
+ * table and the frozen literal together while every check keeps a mutant that fails it alone; row Q, one of its pins (a
+ * residual family) or a residual member removed from every literal (no source outside this cut names the residual families
+ * before its delivery note lands).
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row): R-SPELLING
  * (Q1, a vocabulary spelling the word reader does not read: a member composed at run time from pieces with other words between
- * them, one spelled with escapes, the shortened name GraphPolicy, the word gp, and refusal #2's four: a member built from
- * character codes, one with a homoglyph letter, one in full-width letters and one encoded in base64; the landed wb-e66.5
+ * them, one spelled with escapes, the shortened name GraphPolicy, the word gp, refusal #2's four: a member built from character
+ * codes, one with a homoglyph letter, one in full-width letters and one encoded in base64, and landing 658's three (its F3): one
+ * encoded in rot13, one reversed at run time and the expanded name GraphPolicyCommandLineInterface; the landed wb-e66.5
  * census's src leg reads every GraphPolicy word under src/, so the shortened name reds there), R-SIDE-RECORD (Q2, a receipt kept
  * outside rows(): the checks read rows() only), R-CAUSAL-WORDING (Q3, a causal claim worded without the stem: a credit member
- * holding the score, a reason saying the score led to the outcome), R-SECOND-RECORD (Q4, the Attempt record copied into a row:
+ * holding the score, a reason saying the score led to the outcome, and landing 658's two (its F3), planted on the rows of the
+ * operator-stopped decision: a by member holding the score beside a termination member, and a termination member nested under
+ * the score member, the termination member's name exempt at any depth), R-SECOND-RECORD (Q4, the Attempt record copied into a row:
  * the filing's "Pi's receipt is a correlation record, never a second Attempt record", docs/workbench/09:9-10, is read by no
  * check), R-KILL-READING (Q5, an abandoned Attempt and one whose process identity was lost are not KILLED, so a pass over either
  * reads success unjudged), R-NEGATIVE-SIGNAL (Q6, negative feedback unknown-never-negative does not read: a negative signal under
  * a member name without a feedback noun, a penalty; a feedback member's word on neither negative stem, bad; a feedback member's
  * number written as a string, "-1"; and refusal #2's three booleans: one under a member named for negative feedback, a feedback
  * member's false, and one under a negative-named member of a feedback member), R-KILL-VALUES (Q7, which Attempt readings are
- * kills has no anchor outside this census - the installed SDK declares the members, not their meaning - so a TerminationCause,
- * AttemptState or AttemptOutcome kill reading removed from its table and from every literal, or one of those tables' other
- * readings made a kill the same way, refusal #2's addition shape, leaves T2's key anchor holding), R-WITNESS-SWAP (Q8, REACHED
+ * kills has one anchor outside this census, row A4's clause, which names external_termination alone - the installed SDK
+ * declares the members, not their meaning - so any other kill reading (a TerminationCause one row A4's clause does not name,
+ * operator_stop or timeout_escalation, or an AttemptState or AttemptOutcome one) removed from its table and from every literal,
+ * or one of those tables' other readings made a kill the same way, refusal #2's addition shape, leaves T2's key anchor and row
+ * A4's anchor holding), R-WITNESS-SWAP (Q8, REACHED
  * binds the subjects a pin consulted, never its payload: a pin body that consults its subjects, then witnesses equal values it
  * did not take from them, leaves the same record; one that consults nothing reads "consulted nothing" even with its CONSULTS
  * entry emptied), R-PIN-PARTITION (Q9, the pin split of row T, A1 or A3 to A7 has no source outside this file: a pin merged
@@ -304,7 +335,7 @@ type Twist =
   | "wrong-link" | "edit-in-place" | "caused-by" | "causation-relation" | "phantom-success" | "phantom-rejection" | "phantom-pending"
   | "phantom-elsewhere" | "phantom-unlinked" | "phantom-admission" | "phantom-killed" | "negative-reward" | "negative-feedback" | "correction-ref"
   | "correction-admission" | "credit" | "led-to" | "second-record" | "penalty" | "bad-feedback" | "string-reward" | "negative-flag"
-  | "feedback-false" | "nested-negative" | "result-success";
+  | "feedback-false" | "nested-negative" | "result-success" | "stop-by-score" | "nested-termination";
 interface Mutant { readonly twist: Twist; readonly refusedBy: readonly Check[] }
 const MUTANTS: readonly Mutant[] = [
   { twist: "duplicate", refusedBy: ["one-row"] },
@@ -365,6 +396,10 @@ function extraOf(event: Decided, twist: Twist | undefined): Row {
   if (twist === "causation-relation") return { relations: [{ kind: "causation", from: "score", to: "verifierOutcome" }] };
   if (twist === "credit") return { credit: event.score };
   if (twist === "led-to") return { reason: "the score led to this outcome" };
+  // Landing 658's two R-CAUSAL-WORDING members (its F3), on the operator-stopped decision's rows: the stop credited to the score
+  // beside Furnace's own member, and that member nested under the score member.
+  if (twist === "stop-by-score" && event.attempt?.termination_cause === "operator_stop") return { termination_cause: "operator_stop", by: "score" };
+  if (twist === "nested-termination" && event.attempt?.termination_cause === "operator_stop") return { score: { termination_cause: "operator_stop" } };
   if (twist === "second-record" && event.attempt !== undefined) return { attempt: { ...event.attempt } };
   if (twist === "result-success" && killed(event.attempt)) return { result: "success" };
   return {};
@@ -675,7 +710,7 @@ interface KilledTables {
   readonly outcomes: Readonly<Record<string, boolean>>;
 }
 const KILLED: KilledTables = { causes: KILLED_CAUSES, states: KILLED_STATES, outcomes: KILLED_OUTCOMES };
-/** T2's anchor for the KILLED tables: each is keyed by exactly the installed SDK union's members (its values have no outside anchor). */
+/** T2's anchor for the KILLED tables: each is keyed by exactly the installed SDK union's members (its values' one outside anchor is row A4's, namedUnkilled). */
 function tablesAnchored(tables: KilledTables): { readonly causes: boolean; readonly states: boolean; readonly outcomes: boolean } {
   const declarations = protocolText();
   const sorted = (values: readonly string[]): string[] => [...values].sort();
@@ -685,6 +720,31 @@ function tablesAnchored(tables: KilledTables): { readonly causes: boolean; reado
     outcomes: isDeepStrictEqual(sorted(Object.keys(tables.outcomes)), sorted(unionOf(declarations, "AttemptOutcome"))),
   };
 }
+/** Whether two words share a stem: the shorter, its last three letters dropped but at least four kept, opens the longer (so external reads externally and termination reads terminated; a word under four letters shares none). */
+function sameStem(left: string, right: string): boolean {
+  const [short, long] = left.length <= right.length ? [left, right] : [right, left];
+  return short.length >= 4 && long.startsWith(short.slice(0, Math.max(4, short.length - 3)));
+}
+/** The installed SDK's TerminationCause members a clause names: each word of the member's name shares a stem with a word of the clause. */
+function causesNamed(clause: string): string[] {
+  const said = words(clause);
+  return unionOf(protocolText(), TERMINATION_CAUSE).filter(cause => words(cause).every(part => said.some(word => sameStem(part, word))));
+}
+/** The clauses the cause reader is shown: each with the TerminationCause members it must name. */
+const CAUSE_CONTROLS: readonly (readonly [string, readonly string[]])[] = [
+  ["a killed or externally terminated Attempt", ["external_termination"]],
+  ["an Attempt its operator stopped", ["operator_stop"]],
+  ["an Attempt that exited naturally", ["natural_exit"]],
+  ["a timeout escalated", ["timeout_escalation"]],
+  ["a process whose identity was lost", ["process_identity_lost"]],
+  ["an external timeout", []],
+  ["a killed Attempt", []],
+  ["an Attempt terminated by its operator", []],
+];
+/** Row A4's clause as the bead's own row states it: the Acceptance clause in the place of the row whose check is killed-never-success. */
+const killClauseOf = (filing: Filing): string => filing.clauses[ROWS.filter(row => /^A\d$/.test(row.id)).findIndex(row => CHECK_OF[row.id] === "killed-never-success")] ?? "";
+/** Row A4's outside anchor for the KILLED tables (landing 658's F2): the TerminationCause members its clause names that do not read as a kill (none while it holds). */
+const namedUnkilled = (tables: KilledTables, clause: string): string[] => causesNamed(clause).filter(cause => tables.causes[cause] !== true);
 /** Every kill reading of the KILLED tables, as table:member (row Q7's R-KILL-VALUES family hollows each one). */
 const KILL_READINGS: readonly (readonly [keyof KilledTables, string])[] = (["causes", "states", "outcomes"] as const).flatMap(table =>
   Object.entries(KILLED[table]).filter(([, value]) => value).map(([key]): readonly [keyof KilledTables, string] => [table, key]));
@@ -744,18 +804,30 @@ const DOCS_ANCHORS: readonly DocsAnchor[] = [
   },
 ];
 const S06 = "rich producer status must not be flattened into a boolean";
-/** The in-memory docs plants (the gate's D1 to D5 of refusal #1 on cut #1, D4 split by page, and D6 to D9): each must leave its anchor unheld. */
+/** The in-memory docs plants (the gate's D1 to D5 of refusal #1 on cut #1, D4 split by page, D6 to D9, and D10 a markup-only edit, landing 658's gate P-W3 shape): each must leave its anchor unheld; D10's carrier change is read by carrierChange. */
 const DOCS_PLANTS: readonly { readonly id: string; readonly anchor: string; readonly apply: (text: string) => string }[] = [
   { id: "D1", anchor: "06:28", apply: text => once(text, `${S06}.`, `<!-- ${S06}. -->`) },
   { id: "D2", anchor: "06:28", apply: text => once(text, `and ${S06}.`, `and the former rule that ${S06} is withdrawn; producers may flatten status to a boolean.`) },
   { id: "D3", anchor: "06:28", apply: text => `${once(text, `, and ${S06}.`, ".").trimEnd()}\n\n\`\`\`text\n${S06}\n\`\`\`\n` },
   { id: "D6", anchor: "06:28", apply: text => once(text, "not an exactly-once guarantee.", "not an exactly-once guarantee.\n\nThe flattening rule above is withdrawn: producers may flatten status to a boolean.") },
+  { id: "D10", anchor: "06:28", apply: text => once(text, "This contract is **workbench-facing**.", "This contract is __workbench-facing__.") },
   { id: "D4-09", anchor: "09:91", apply: text => once(text, "no fabricated dependency edge or precise critical path.", "<!-- no fabricated dependency edge or precise critical path. -->") },
   { id: "D7", anchor: "09:91", apply: text => `${text.trimEnd()}\n\n## Acceptance/negative controls\n\n1. Simulated missing relation; no fabricated dependency edge or precise critical path.\n` },
   { id: "D9", anchor: "09:91", apply: text => once(text, "not full-fold in render.", "not full-fold in render.\n10. A missing relation may be filled with a fabricated dependency edge.") },
   { id: "D4-08", anchor: "08:38", apply: text => once(text, "Causality != ownership.", "<!-- Causality != ownership. -->") },
   { id: "D5", anchor: "08:38", apply: text => once(text, "Causality != ownership.", 'The old note "Causality != ownership" no longer holds: a cause owns its effect.') },
   { id: "D8", anchor: "08:38", apply: text => once(text, "## Cancellation and ownership", "# Appendix (non-normative, superseded drafts)\n\n## Cancellation and ownership") },
+];
+/**
+ * The in-memory whitespace plants (landing 658's gate P-W1 and P-W2 shapes, its F1): each changes only what the rendered blocks
+ * do not carry (a soft line break inside a paragraph, a blank line between blocks), so each must leave its anchor held; W2 and
+ * W3 move their carrier a line down, which no HEAD verdict sees (it reads blocks, never lines), and plantedChange reads that
+ * each plant changes the text at all (landing 706's F1).
+ */
+const WHITESPACE_PLANTS: readonly { readonly id: string; readonly anchor: string; readonly apply: (text: string) => string }[] = [
+  { id: "W1", anchor: "06:28", apply: text => once(text, "where serializable, and rich producer status", "where serializable,\nand rich producer status") },
+  { id: "W2", anchor: "09:91", apply: text => once(text, "## Acceptance/negative controls\n", "## Acceptance/negative controls\n\n") },
+  { id: "W3", anchor: "08:38", apply: text => once(text, "## Cancellation and ownership\n", "## Cancellation and ownership\n\n") },
 ];
 const anchorOf = (id: string): DocsAnchor => {
   const anchor = DOCS_ANCHORS.find(entry => entry.id === id);
@@ -786,12 +858,80 @@ function anchorVerdict(text: string, anchor: DocsAnchor, pin?: string): string {
   const verdict = sectionMatches(section, docsSection(pin, anchor.heading, 2, [anchor.title]).blocks);
   return verdict.ok ? "holds" : verdict.why;
 }
-/** One docs anchor read at the pin and at HEAD, and every in-memory plant of it read at HEAD (true: the plant left the anchor held). */
+/** The 1-based number of the first line of a text, at or after line from, that holds; 0 when no such line does. */
+function lineWhere(text: string, from: number, holds: (line: string) => boolean): number {
+  const lines = text.split("\n");
+  for (let index = Math.max(from, 1) - 1; index < lines.length; index += 1) if (holds(lines[index] ?? "")) return index + 1;
+  return 0;
+}
+/**
+ * A whitespace plant's planted change, read in the Q3/Q10 planted form so a plant that writes nothing reds (landing 706's F1):
+ * whether the planted text differs from HEAD's, and by whitespace alone (each whitespace run read as one space); how many lines
+ * down the plant moves the section's heading line and the line carrying the anchor's sentence (the first such line from the
+ * heading on); and how many blank lines it adds. A re-wrap inside the carrier adds no blank line and a blank line under the
+ * heading adds one; each moves the sentence's line one down and leaves the heading's where it was.
+ */
+interface PlantedChange {
+  readonly changed: boolean;
+  readonly whitespace: boolean;
+  readonly heading: number;
+  readonly carrier: number;
+  readonly blank: number;
+}
+function plantedChange(head: string, planted: string, anchor: DocsAnchor): PlantedChange {
+  const collapsed = (text: string): string => text.split(/\s+/).join(" ");
+  const heading = (text: string): number => lineWhere(text, 1, line => line === `## ${anchor.heading}`);
+  const carrier = (text: string): number => lineWhere(text, heading(text), line => line.includes(anchor.sentence));
+  const blanks = (text: string): number => text.split("\n").filter(line => line.trim() === "").length;
+  return {
+    changed: planted !== head, whitespace: collapsed(planted) === collapsed(head),
+    heading: heading(planted) - heading(head), carrier: carrier(planted) - carrier(head), blank: blanks(planted) - blanks(head),
+  };
+}
+/** A verdict's lead: its text before the first colon (sectionMatches' "block N differs", ahead of the two blocks it compares). */
+const leadOf = (verdict: string): string => verdict.split(":", 1)[0] ?? verdict;
+/**
+ * A docs plant read for what it does to its anchor's carrier (landing 706's F2: D10's reading pinned beyond the boolean): the
+ * lead of its HEAD verdict; the 1-based number of the planted section's block holding the one prose item that carries the
+ * sentence (0 when not exactly one item does); and whether that item still reads the anchor's carrier text, and still HEAD's
+ * carrier markdown. D10, a markup-only edit, keeps the text and changes the markdown, and its verdict is the section's block
+ * comparison failing at the carrier's own block, never a carrier-text why.
+ */
+function carrierChange(id: string): { readonly lead: string; readonly block: number; readonly text: boolean; readonly markdown: boolean } {
+  const plant = DOCS_PLANTS.find(entry => entry.id === id);
+  if (plant === undefined) throw new Error(`no docs plant ${id}`);
+  const anchor = anchorOf(plant.anchor);
+  const head = headText(anchor.path);
+  const planted = plant.apply(head);
+  const carrierIn = (text: string): { readonly block: number; readonly text?: string; readonly markdown?: string } => {
+    const carrying = docsSection(text, anchor.heading, 2, [anchor.title]).blocks.flatMap((block, index) =>
+      proseOf([block])
+        .filter(item => item.text.includes(anchor.sentence))
+        .map(item => ({ block: index + 1, text: item.text, markdown: item.markdown })),
+    );
+    const only = carrying[0];
+    return carrying.length === 1 && only !== undefined ? only : { block: 0 };
+  };
+  const before = carrierIn(head);
+  const after = carrierIn(planted);
+  return {
+    lead: leadOf(anchorVerdict(planted, anchor, pinText(anchor.path))),
+    block: after.block,
+    text: after.text === anchor.carrier,
+    markdown: after.markdown !== undefined && after.markdown === before.markdown,
+  };
+}
+/**
+ * One docs anchor read at the pin and at HEAD, every in-memory docs and whitespace plant of it read at HEAD (true: the plant
+ * left the anchor held), and each whitespace plant's planted change.
+ */
 function anchorWitness(id: string): {
   readonly pin: string;
   readonly head: string;
   readonly controls: Readonly<Record<string, boolean>>;
   readonly plants: Readonly<Record<string, boolean>>;
+  readonly unseen: Readonly<Record<string, boolean>>;
+  readonly planted: Readonly<Record<string, PlantedChange>>;
 } {
   const anchor = anchorOf(id);
   const pin = pinText(anchor.path);
@@ -805,6 +945,8 @@ function anchorWitness(id: string): {
       twice: anchorVerdict(once(pin, `${source}\n`, `${source}\n\n${source}\n`), anchor) === "holds",
     },
     plants: Object.fromEntries(DOCS_PLANTS.filter(plant => plant.anchor === id).map(plant => [plant.id, anchorVerdict(plant.apply(head), anchor, pin) === "holds"])),
+    unseen: Object.fromEntries(WHITESPACE_PLANTS.filter(plant => plant.anchor === id).map(plant => [plant.id, anchorVerdict(plant.apply(head), anchor, pin) === "holds"])),
+    planted: Object.fromEntries(WHITESPACE_PLANTS.filter(plant => plant.anchor === id).map(plant => [plant.id, plantedChange(head, plant.apply(head), anchor)])),
   };
 }
 
@@ -950,10 +1092,15 @@ const RESIDUALS: readonly Residual[] = [
   {
     id: "Q1", name: "R-SPELLING",
     members: ["a member composed at run time from pieces with other words between them", "a member spelled with escapes", "the shortened name GraphPolicy", "the word gp",
-      "a member built from character codes", "a member with a homoglyph letter", "a member in full-width letters", "a member encoded in base64"],
+      "a member built from character codes", "a member with a homoglyph letter", "a member in full-width letters", "a member encoded in base64",
+      "a member encoded in rot13", "a member reversed at run time", "the expanded name GraphPolicyCommandLineInterface"],
   },
   { id: "Q2", name: "R-SIDE-RECORD", members: ["a receipt kept outside rows()"] },
-  { id: "Q3", name: "R-CAUSAL-WORDING", members: ["a credit member holding the score", "a reason saying the score led to the outcome"] },
+  {
+    id: "Q3", name: "R-CAUSAL-WORDING",
+    members: ["a credit member holding the score", "a reason saying the score led to the outcome", "a by member holding the score beside a termination member",
+      "a termination member nested under the score member"],
+  },
   { id: "Q4", name: "R-SECOND-RECORD", members: ["the Attempt record copied into a row"] },
   { id: "Q5", name: "R-KILL-READING", members: ["an abandoned Attempt", "an Attempt whose process identity was lost"] },
   {
@@ -963,7 +1110,7 @@ const RESIDUALS: readonly Residual[] = [
   },
   {
     id: "Q7", name: "R-KILL-VALUES",
-    members: ["a TerminationCause kill reading removed", "an AttemptState kill reading removed", "an AttemptOutcome kill reading removed",
+    members: ["a TerminationCause kill reading removed that row A4's clause does not name", "an AttemptState kill reading removed", "an AttemptOutcome kill reading removed",
       "a TerminationCause reading made a kill", "an AttemptState reading made a kill", "an AttemptOutcome reading made a kill"],
   },
   { id: "Q8", name: "R-WITNESS-SWAP", members: ["a pin body that consults its subjects, then witnesses equal values it did not take from them"] },
@@ -1020,7 +1167,7 @@ const fullWidth = (text: string): string => [...text].map(char => String.fromCod
 /** A text with every character past ASCII written as its code point, the frozen literal's view of a plant. */
 const ascii = (text: string): string =>
   [...text].map(char => ((char.codePointAt(0) ?? 0) > 0x7e ? `<U+${(char.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}>` : char)).join("");
-/** Q1's plants: one per R-SPELLING member, each read as nothing (the last four are refusal #2's F5 spellings). */
+/** Q1's plants: one per R-SPELLING member, each read as nothing (after the first four, refusal #2's four F5 spellings, then landing 658's three, its F3). */
 const SPELLING_PLANTS: readonly string[] = [
   'const tail = "ierOutcome"; const name = "verif" + tail;',
   'const name = "verifier\\u004Futcome";',
@@ -1030,6 +1177,9 @@ const SPELLING_PLANTS: readonly string[] = [
   `export const verifierOutc${HOMOGLYPH_O}me = 1;`,
   `const ${fullWidth("verifierOutcome")} = 1;`,
   'const name = Buffer.from("dmVyaWZpZXJPdXRjb21l", "base64").toString();',
+  'const name = rot13("irevsvreBhgpbzr");',
+  'const name = "emoctuOreifirev".split("").reverse().join("");',
+  "export const GraphPolicyCommandLineInterface = 1;",
 ];
 /** Q5's journal: a pass over an Attempt R-KILL-READING does not read as killed, recorded success. */
 const UNKILLED_JOURNAL: readonly LedgerEvent[] = [
@@ -1055,7 +1205,7 @@ const CONSULTS: Readonly<Record<string, readonly Subject[]>> = {
   A7a: ["ledger"], A7b: ["control", "judge", "ledger"],
   S1a: ["control"], S1b: ["repo"], S2a: ["judge", "ledger"], S2b: ["repo"], S3a: ["control", "ledger"], S3b: ["repo"], S4a: ["repo"], S4b: ["repo"],
   Q1: ["reader"], Q2: ["judge", "ledger"], Q3: ["judge", "ledger"], Q4: ["judge", "ledger"], Q5: ["judge", "ledger"], Q6: ["judge", "ledger"],
-  Q7: ["sdk"], Q8: ["reached"], Q9: ["repo"], Q10: ["judge", "ledger"],
+  Q7: ["repo", "sdk"], Q8: ["reached"], Q9: ["repo"], Q10: ["judge", "ledger"],
 };
 interface Reached {
   readonly pin: string;
@@ -1268,8 +1418,10 @@ const PINS: Readonly<Record<string, () => void>> = {
     witness("S2a", byTwist("boolean-admission", "boolean-verifier"), { "boolean-admission": ["one-row"], "boolean-verifier": ["verifier-field"] });
   },
   S2b: () => {
-    witness("S2b", anchorWitness("06:28"), {
-      pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { D1: false, D2: false, D3: false, D6: false },
+    witness("S2b", { ...anchorWitness("06:28"), markup: { D10: carrierChange("D10") } }, {
+      pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { D1: false, D2: false, D3: false, D6: false, D10: false },
+      unseen: { W1: true }, planted: { W1: { changed: true, whitespace: true, heading: 0, carrier: 1, blank: 0 } },
+      markup: { D10: { lead: "block 2 differs", block: 2, text: true, markdown: false } },
     });
   },
   S3a: () => {
@@ -1284,8 +1436,14 @@ const PINS: Readonly<Record<string, () => void>> = {
   },
   S3b: () => {
     witness("S3b", { "09:91": anchorWitness("09:91"), "08:38": anchorWitness("08:38") }, {
-      "09:91": { pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { "D4-09": false, D7: false, D9: false } },
-      "08:38": { pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { "D4-08": false, D5: false, D8: false } },
+      "09:91": {
+        pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { "D4-09": false, D7: false, D9: false }, unseen: { W2: true },
+        planted: { W2: { changed: true, whitespace: true, heading: 0, carrier: 1, blank: 1 } },
+      },
+      "08:38": {
+        pin: "holds", head: "holds", controls: { line: false, carrier: false, twice: false }, plants: { "D4-08": false, D5: false, D8: false }, unseen: { W3: true },
+        planted: { W3: { changed: true, whitespace: true, heading: 0, carrier: 1, blank: 1 } },
+      },
     });
   },
   S4a: () => {
@@ -1324,7 +1482,14 @@ const PINS: Readonly<Record<string, () => void>> = {
     witness("Q2", { findings: judge(run(() => plant)), side: side.length }, { findings: [], side: 3 });
   },
   Q3: () => {
-    witness("Q3", byTwist("credit", "led-to"), { credit: [], "led-to": [] });
+    const planted = (twist: Twist, shape: (row: unknown) => boolean): number => run(() => reference(twist)).rows.filter(shape).length;
+    witness("Q3", {
+      ...byTwist("credit", "led-to", "stop-by-score", "nested-termination"),
+      planted: {
+        "stop-by-score": planted("stop-by-score", row => member(row, "termination_cause") === "operator_stop" && member(row, "by") === "score"),
+        "nested-termination": planted("nested-termination", row => member(member(row, "score"), "termination_cause") === "operator_stop"),
+      },
+    }, { credit: [], "led-to": [], "stop-by-score": [], "nested-termination": [], planted: { "stop-by-score": 2, "nested-termination": 2 } });
   },
   Q4: () => {
     witness("Q4", byTwist("second-record"), { "second-record": [] });
@@ -1338,16 +1503,21 @@ const PINS: Readonly<Record<string, () => void>> = {
     witness("Q6", byTwist(...SIGNAL_PLANTS), { penalty: [], "bad-feedback": [], "string-reward": [], "negative-flag": [], "feedback-false": [], "nested-negative": [] });
   },
   Q7: () => {
+    const clause = killClauseOf(filingOf(beadRow().notes));
     witness("Q7", {
       readings: KILL_READINGS.map(([table, key]) => `${table}:${key}`),
       anchored: KILL_READINGS.map(([table, key]) => tablesAnchored({ ...KILLED, [table]: { ...KILLED[table], [key]: false } })),
+      namedUnkilled: KILL_READINGS.map(([table, key]) => namedUnkilled({ ...KILLED, [table]: { ...KILLED[table], [key]: false } }, clause)),
       additions: NON_KILL_READINGS.length,
       addedAnchored: NON_KILL_READINGS.map(([table, key]) => tablesAnchored({ ...KILLED, [table]: { ...KILLED[table], [key]: true } })),
+      addedNamedUnkilled: NON_KILL_READINGS.map(([table, key]) => namedUnkilled({ ...KILLED, [table]: { ...KILLED[table], [key]: true } }, clause)),
     }, {
       readings: ["causes:operator_stop", "causes:timeout_escalation", "causes:external_termination", "states:timed_out", "states:cancelled", "outcomes:timeout", "outcomes:cancelled"],
       anchored: KILL_READINGS.map(() => ({ causes: true, states: true, outcomes: true })),
+      namedUnkilled: [[], [], ["external_termination"], [], [], [], []],
       additions: 17,
       addedAnchored: NON_KILL_READINGS.map(() => ({ causes: true, states: true, outcomes: true })),
+      addedNamedUnkilled: NON_KILL_READINGS.map(() => []),
     });
   },
   Q8: () => {
@@ -1374,9 +1544,9 @@ const PINS: Readonly<Record<string, () => void>> = {
 };
 
 const FROZEN_TITLE =
-  "rule 16, frozen as literals: each row's id and pin count; one quote, case and subject list per pin, and each pin's subjects; the checks, one per Acceptance row; the mutants with the checks each fails; the phantom twists; the journal's events by kind, decision and evidence; the vocabulary, admissions, verifier outcomes and evidence reading; the killed readings; each residual family's member count and row Q pin; the plant counts; the docs anchors' and docs plants' ids, the SDK and control plants' names and the R-SPELLING plants' texts; the reader, stem and negative-feedback controls; the receipt sites";
+  "rule 16, frozen as literals: each row's id and pin count; one quote, case and subject list per pin, and each pin's subjects; the checks, one per Acceptance row; the mutants with the checks each fails; the phantom twists; the journal's events by kind, decision and evidence; the vocabulary, admissions, verifier outcomes and evidence reading; the killed readings; each residual family's member count and row Q pin; the plant counts; the docs anchors', docs plants' and whitespace plants' ids, the SDK and control plants' names and the R-SPELLING plants' texts; the reader, stem, negative-feedback and cause controls; the receipt sites";
 const ANCHORS_TITLE =
-  "the outside anchors: the bead's own row binds the trigger, the clauses, the anchors, the vocabulary, the admission and outcome sets, each row's pin quotes but row Q's joined as its label, and the pin split of each row whose clause ends in a parenthetical; a later note binds nothing";
+  "the outside anchors: the bead's own row binds the trigger, the clauses, the anchors, the vocabulary, the admission and outcome sets, each row's pin quotes but row Q's joined as its label, the pin split of each row whose clause ends in a parenthetical, and each termination cause row A4's clause names as a kill (the cause reader shown its controls); a later note binds nothing";
 const LAST_TITLE = "registered tests: every pin case and fixed case, in order and in run mode, ran before this one; every pin reached its witness compare and each compare held";
 
 describe(SUITE, () => {
@@ -1433,18 +1603,19 @@ describe(SUITE, () => {
       ["operator_stop", "timeout_escalation", "external_termination"], ["timed_out", "cancelled"], ["timeout", "cancelled"],
     ]);
     expect(RESIDUALS.map(residual => `${residual.id}:${residual.name}:${residual.members.length}`), "the residual families").toEqual([
-      "Q1:R-SPELLING:8", "Q2:R-SIDE-RECORD:1", "Q3:R-CAUSAL-WORDING:2", "Q4:R-SECOND-RECORD:1", "Q5:R-KILL-READING:2",
+      "Q1:R-SPELLING:11", "Q2:R-SIDE-RECORD:1", "Q3:R-CAUSAL-WORDING:4", "Q4:R-SECOND-RECORD:1", "Q5:R-KILL-READING:2",
       "Q6:R-NEGATIVE-SIGNAL:6", "Q7:R-KILL-VALUES:6", "Q8:R-WITNESS-SWAP:1", "Q9:R-PIN-PARTITION:2", "Q10:R-SUCCESS-ELSEWHERE:1",
     ]);
     expect(RESIDUALS.map(residual => residual.id), "one residual family per row Q pin").toEqual(ROWS.find(row => row.id === "Q")?.pins);
     expect(RESIDUALS.map(residual => QUOTES[residual.id]), "each row Q pin quotes its family").toEqual(RESIDUALS.map(residual => residual.name));
-    expect([SPELLING_PLANTS.length, UNKILLED_JOURNAL.length, SIGNAL_PLANTS.length], "a plant per R-SPELLING, R-KILL-READING and R-NEGATIVE-SIGNAL member").toEqual([8, 2, 6]);
+    expect([SPELLING_PLANTS.length, UNKILLED_JOURNAL.length, SIGNAL_PLANTS.length], "a plant per R-SPELLING, R-KILL-READING and R-NEGATIVE-SIGNAL member").toEqual([11, 2, 6]);
     expect(DOCS_ANCHORS.map(anchor => `${anchor.id}:${anchor.heading}`), "the docs anchors").toEqual([
       "06:28:Proposed capability descriptor", "09:91:Acceptance/negative controls", "08:38:Cancellation and ownership",
     ]);
     expect(DOCS_PLANTS.map(plant => `${plant.id}:${plant.anchor}`), "the docs plants").toEqual([
-      "D1:06:28", "D2:06:28", "D3:06:28", "D6:06:28", "D4-09:09:91", "D7:09:91", "D9:09:91", "D4-08:08:38", "D5:08:38", "D8:08:38",
+      "D1:06:28", "D2:06:28", "D3:06:28", "D6:06:28", "D10:06:28", "D4-09:09:91", "D7:09:91", "D9:09:91", "D4-08:08:38", "D5:08:38", "D8:08:38",
     ]);
+    expect(WHITESPACE_PLANTS.map(plant => `${plant.id}:${plant.anchor}`), "the whitespace plants").toEqual(["W1:06:28", "W2:09:91", "W3:08:38"]);
     expect(SDK_PLANTS.map(([name]) => name), "the SDK plants").toEqual([
       "a comment restating the union with one member above its declaration", "a string restating the union with one member above its declaration",
     ]);
@@ -1457,7 +1628,7 @@ describe(SUITE, () => {
       "T1:reader+repo", "T2:sdk", "A1a:judge+ledger", "A1b:judge+ledger", "A2a:ledger", "A2b:judge+ledger", "A3a:judge+ledger", "A3b:judge+ledger",
       "A4a:ledger", "A4b:judge+ledger", "A5a:ledger", "A5b:judge+ledger", "A6a:judge+ledger", "A6b:judge+ledger", "A7a:ledger", "A7b:control+judge+ledger",
       "S1a:control", "S1b:repo", "S2a:judge+ledger", "S2b:repo", "S3a:control+ledger", "S3b:repo", "S4a:repo", "S4b:repo",
-      "Q1:reader", "Q2:judge+ledger", "Q3:judge+ledger", "Q4:judge+ledger", "Q5:judge+ledger", "Q6:judge+ledger", "Q7:sdk", "Q8:reached", "Q9:repo",
+      "Q1:reader", "Q2:judge+ledger", "Q3:judge+ledger", "Q4:judge+ledger", "Q5:judge+ledger", "Q6:judge+ledger", "Q7:repo+sdk", "Q8:reached", "Q9:repo",
       "Q10:judge+ledger",
     ]);
     expect(READER_CONTROLS.map(([text, names]) => `${text} => ${names.join("+") || "nothing"}`), "the reader controls").toEqual([
@@ -1501,6 +1672,12 @@ describe(SUITE, () => {
       "{\"meta\":{\"reward\":-1}} => true",
       "{\"notes\":[{\"feedback\":\"negative\"}]} => true",
     ]);
+    expect(CAUSE_CONTROLS.map(([clause, causes]) => `${clause} => ${causes.join("+") || "nothing"}`), "the cause controls").toEqual([
+      "a killed or externally terminated Attempt => external_termination", "an Attempt its operator stopped => operator_stop",
+      "an Attempt that exited naturally => natural_exit", "a timeout escalated => timeout_escalation",
+      "a process whose identity was lost => process_identity_lost", "an external timeout => nothing", "a killed Attempt => nothing",
+      "an Attempt terminated by its operator => nothing",
+    ]);
     expect(SPELLING_PLANTS.map(ascii), "the R-SPELLING plants, each character past ASCII written as its code point").toEqual([
       "const tail = \"ierOutcome\"; const name = \"verif\" + tail;", "const name = \"verifier\\u004Futcome\";",
       "export const GraphPolicy = 1;", "const gp = load();",
@@ -1508,6 +1685,8 @@ describe(SUITE, () => {
       "export const verifierOutc<U+043E>me = 1;",
       "const <U+FF56><U+FF45><U+FF52><U+FF49><U+FF46><U+FF49><U+FF45><U+FF52><U+FF2F><U+FF55><U+FF54><U+FF43><U+FF4F><U+FF4D><U+FF45> = 1;",
       "const name = Buffer.from(\"dmVyaWZpZXJPdXRjb21l\", \"base64\").toString();",
+      "const name = rot13(\"irevsvreBhgpbzr\");", "const name = \"emoctuOreifirev\".split(\"\").reverse().join(\"\");",
+      "export const GraphPolicyCommandLineInterface = 1;",
     ]);
     expect(RECEIPT_SITES.map(site => site.module), "the receipt sites").toEqual([]);
   });
@@ -1534,6 +1713,10 @@ describe(SUITE, () => {
     const split = Object.keys(filingSplits(filing));
     expect(split, "the rows whose clause ends in a parenthetical: A2 and the four standing anchors").toEqual(["A2", "S1", "S2", "S3", "S4"]);
     expect(split.map(id => [addedFindings(filing, mergedPins(id)).length > 0, addedFindings(filing, movedBoundary(id)).length > 0]), "a pin of those rows merged into its sibling, or the boundary between their pins moved, is refused").toEqual(split.map(() => [true, true]));
+    const killClause = killClauseOf(filing);
+    expect(causesNamed(killClause), "row A4's clause names one TerminationCause member, external_termination (its 'externally terminated')").toEqual(["external_termination"]);
+    expect(namedUnkilled(KILLED, killClause), "each TerminationCause member row A4's clause names reads as a kill in KILLED_CAUSES").toEqual([]);
+    expect(CAUSE_CONTROLS.map(([clause]) => causesNamed(clause)), "the cause reader names exactly each control's members").toEqual(CAUSE_CONTROLS.map(([, causes]) => causes));
     const appended = `${notes}\n\nCitation: a later note. Standing anchors carried here as acceptance rows: x, y @000000000000. Acceptance: z, w.\n`;
     expect(filingOf(appended), "a note appended after the filing changes no reading").toEqual(filing);
   });
