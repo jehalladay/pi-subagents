@@ -1,5 +1,5 @@
 {
-  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #8; wb-021.7, its cut #2). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site, and where a typed reader in it keeps an admission member, those writers. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses, typed writers and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant or a class-element kind removed from the census and this file together still reds.",
+  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #8; wb-021.7, its cut #3). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site, and where a typed reader in it keeps an admission member, those writers. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses, typed writers and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant or a class-element kind removed from the census and this file together still reds.",
   "rows": [
     {
       "table": "SURFACES",
@@ -628,7 +628,7 @@
     {
       "table": "REACH",
       "id": "DISPATCH",
-      "label": "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), a constructor parameter property as a field is (wb-021.7, R-PARAMETER-PROPERTIES), an object literal's own method, getter, setter or shorthand property under the contextual type of the flow it is written at, against the member of its name in each part of that type, and of the declared target of that flow, that declares one (a union part by part - an undefined or an object part beside the type, an argument's union parameter, and an async function's return, whose contextual type is the awaited type united with a PromiseLike of it - and a type parameter through its constraint, a src callee's generic parameter included, whose instantiation the checker's contextual type takes from the literal itself: wb-021.7 cut #2, refusal #1 U1 and U2), and a field, a getter or a callback typed by a src overload set read through the set's implementation (wb-021.7, R-OVERLOADS) - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal member that keep the projection read quiet, under a union contextual type too; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a field, a getter or a callback typed by an overload set with no single implementation (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), a generator's written-type return (generator-yield; an async function's is read against the awaited type, wb-021.7, ASYNC-RETURNS) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH; a member a base names only through an index signature, R-INDEX-STAND-IN; a member an extending interface redeclares with a type that hides the projection, R-INTERFACE-REDECLARATION), and any other stand-in shape is outside this claim",
+      "label": "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), a constructor parameter property as a field is (wb-021.7, R-PARAMETER-PROPERTIES), an object literal's own method, getter, setter or shorthand property under the contextual type of the flow it is written at, against the member of its name in each part of that type, and of the declared target of that flow, that declares one (a union part by part - an undefined or an object part beside the type, an argument's union parameter, and an async function's return, whose contextual type is the awaited type united with a PromiseLike of it - and a type parameter through its constraint, a src callee's generic parameter included where the literal is the argument itself, as writtenAt reads it, of a call the checker resolves to a src declaration with a body (argumentTarget's declared parameter), whose instantiation the checker's contextual type takes from the literal itself: wb-021.7 cut #2, refusal #1 U1 and U2, narrowed to that position at cut #3, refusal #2 U1, ruling R-B155; the twin of each R-INFERRED-INSTANTIATION page under a parameter typed without a type parameter - a property's value, its getter, a shorthand, an array's and a tuple's element, two levels down, a method's and a constructor's nested argument, and a function-typed parameter's and an interface method's argument and an interface method's nested argument - is read against its contextual type, that position's declared member, and refused, and so is a setter inside a src callee's generic-parameter argument whose literal's own getter types the property as the projection, the literal's own type handing it: cut #3), and a field, a getter or a callback typed by a src overload set read through the set's implementation (wb-021.7, R-OVERLOADS) - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal member that keep the projection read quiet, under a union contextual type too; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a field, a getter or a callback typed by an overload set with no single implementation (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), a generator's written-type return (generator-yield; an async function's is read against the awaited type, wb-021.7, ASYNC-RETURNS) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH; a member a base names only through an index signature, R-INDEX-STAND-IN; a member an extending interface redeclares with a type that hides the projection, R-INTERFACE-REDECLARATION; a literal's member matched against the instantiation a call infers from the literal itself, R-INFERRED-INSTANTIATION), and any other stand-in shape is outside this claim",
       "pins": [
         "e6e228e2172b47ae074f1753129e664d10fbba6cfc4cd7d4175e566c20b8ebc0",
         "dc4dcaa78955b75d923a9b63ba6cf987aedc9671782f8ca10c952418fabcb688",
@@ -661,7 +661,20 @@
         "2794c49496521d34da9462215293fcfae8db50d84be73beae4ca2c5692fd3855",
         "4e2e0336ffee359a541044cf70018844849a80b6c0d93912ca4dfa7e71d4f4db",
         "f4ca0d51203041839925ccb5d387d80088ce7619b02b34593e72b62dcd88bbfe",
-        "d5af980aa243849e373221642ee0cc76e379f377ad7e19eff5400925fe6d77d7"
+        "d5af980aa243849e373221642ee0cc76e379f377ad7e19eff5400925fe6d77d7",
+        "d6e750802b059921280202b26b30f625aaa87ee099af43c3e4b729e58e5760fd",
+        "114d3b37441c73301dac500a03c53f3d6a5dfa5b35c155eabc7a6afe63dafdb4",
+        "9a267e2a3bd5370b6c6c4333d768b20a42ffa9ae23bb94c4a0a6329412e386d3",
+        "dca5066e81be8409f811ade1ffa3336ce41da005e4e29e5fa760fe2a93cd8d3f",
+        "b49811b39f7f592b672ba35931dfbafefeb855c27b31988923b743def6aea54e",
+        "88c9abc1720fff3a5ccd354a04e357f77f86cf71d49be684b68593e2e54d4742",
+        "41fde82be81431c8a07fda4bf64c659c751a4bd5bee2e8915fbeb74bfc9d799f",
+        "63f72a81ee2d7e7bb9396d1fb48a3678bce98d9b0312573991bbd96237de3d01",
+        "433adca649dc2619dce5f9f5ec1acbc3deac32de88ea925f468bc3e45c496a39",
+        "3b57d21bf54017d4b95269ed72bee79e2b90ed14f9543f412a733f3913300307",
+        "6fc0d6eeadde2f31b6c62845831878c9283c8d25d0898394e6211ec6cca2f6be",
+        "6e1f08c0b817dae0d8b48799e3ba552064e2aa0a9f9165da3ad59787ad220888",
+        "0411afb3f88865ce99e8e5c8a9cc2952666511e806f9f363793d1a4cb0ef00d6"
       ],
       "test": "REACH DISPATCH"
     },
@@ -1086,6 +1099,26 @@
       "test": "REACH R-INTERFACE-REDECLARATION"
     },
     {
+      "table": "REACH",
+      "id": "R-INFERRED-INSTANTIATION",
+      "label": "residual (wb-021.7 cut #3, refusal #2 U1, ruling R-B155: the class it froze, named; pre-existing in the landed core and at cuts #1 and #2): an object literal's method, getter and shorthand property are read against the parts of the literal's contextual type and of its flow's declared target (literalBases), and where the contextual type is the instantiation a call infers from the literal itself while no declared target is read, the member is matched against the literal's own type, which hands nothing - a literal written inside the argument of a src callee's generic parameter (a property's value under a type parameter constrained to the type or to a union, its getter, a shorthand, an array's element, a tuple's element, two levels down, a generic method's and a generic constructor's nested argument: flowOf reads a property's value through that contextual type and an element not at all) and a literal passed, as the argument or inside it, to a generic signature with no body (a function-typed parameter, an interface method: argumentTarget trusts no parameter of one) - so each reads quiet with no row where the call's result flows into no written type, whether its member hides the projection or keeps it, while its twin under the type alone is refused (DISPATCH; each page plants one that hides it)",
+      "pins": [
+        "6a6c42340cae0469099aab0b15d2421a0f86f19879e48a546b163c06c84225a8",
+        "cc2d077758d98ce430c75d97a643006350eb7f256f1718b861aef6d8b173560e",
+        "d9d7a67d62d512caf3b7c38f456e2962f8e97b7dfe4d3d9d63703ec8e2a548d4",
+        "04824e3c7bd56f548e62e22365c18d94e32add5ac7eda4677d34ae01db51cfc1",
+        "38c6fca963684cf8d284e03dab709f1841d84445fa65a2ff35c288d233a90e4f",
+        "dd35335ce0622c860bf878dfe6b5f0e4263c94136eda80b4c435e87f096a45bb",
+        "de2a3b64da439f3359c60be79eb81625082bede96af2c147fdafa5bb41fbcc3e",
+        "acf40d170130fb3283cf72ebd5c65fbe223aaef007f5cfad457a5101ef79c2f5",
+        "48644209a1114fb0bff0068118ca072ad70b10dd32002eb43c20067f4839f4b5",
+        "ead6d84a5f43d500d462ba50315193b1ec8d9b59496772e1f892bfb48c28a32b",
+        "ad9e13c09853d97525c122683c6831201197fe93878df8ca2d049ab71bc6443b",
+        "c52f7ce273ea3d8c375ed77eacdfa5af1b8211bdaeaaa99c9ff4b264669e9df7"
+      ],
+      "test": "REACH R-INFERRED-INSTANTIATION"
+    },
+    {
       "table": "NAMES",
       "id": "CLASS-NAME-FORMS",
       "label": "a public member of the class is read under any name form - a string or numeric literal, a computed literal, template or constant, a symbol",
@@ -1374,6 +1407,7 @@
     "REACH UNLISTED-STAND-INS",
     "REACH R-INDEX-STAND-IN",
     "REACH R-INTERFACE-REDECLARATION",
+    "REACH R-INFERRED-INSTANTIATION",
     "NAMES CLASS-NAME-FORMS",
     "NAMES CLASS-MEMBER-KINDS",
     "NAMES CLASS-MEMBER-SHAPES",
@@ -1436,6 +1470,9 @@
     ],
     "R-INTERFACE-REDECLARATION": [
       "REACH R-INTERFACE-REDECLARATION"
+    ],
+    "R-INFERRED-INSTANTIATION": [
+      "REACH R-INFERRED-INSTANTIATION"
     ]
   }
 }

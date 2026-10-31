@@ -1329,7 +1329,9 @@ function isValueName(node: ts.Identifier): boolean {
  * member of their name in each part of the literal's contextual type, and of the declared target of the flow it is written at,
  * that declares one (contextualParts and literalBases: a union part by part, a type parameter through its constraint, a src
  * callee's generic parameter as declared, which the checker's contextual type instantiates with what the call infers from the
- * literal itself), never against the union's own members, which are only those every part declares -
+ * literal itself, for a literal that is the argument itself of a call resolved to a src declaration with a body: cut #3 narrows
+ * the claim to that position, and a literal written inside such an argument, or passed to a src signature with no body, is read
+ * against that inferred instantiation alone and reads quiet, R-INFERRED-INSTANTIATION), never against the union's own members, which are only those every part declares -
  * so under a union written at the flow (an undefined or an object part beside the type) and under an async function's return,
  * whose contextual type is the awaited type united with a PromiseLike of it, each member is judged as its twin under the type
  * alone is, a shorthand property with one row per kind at its site.
@@ -1808,7 +1810,10 @@ export function readForms(
      * literal's contextual type (contextualParts) and each part of the declared target (flowOf) of the flow the literal is written
      * at - the outermost expression at which writtenAt reads the literal as written where it flows (cut #8's walk) - a src
      * callee's parameter as declared included, a type parameter whose instantiation the checker's contextual type takes from the
-     * literal itself, so a literal passed to a type parameter is read through its constraint; each type once.
+     * literal itself, so a literal passed as the argument itself to a type parameter is read through its constraint; each type
+     * once. A literal written inside such an argument (flowOf reads a property's value through its contextual type and an array's
+     * or a tuple's element not at all), or passed to a src signature with no body (argumentTarget trusts none of its parameters),
+     * is read against the instantiation the call infers from the literal itself alone (R-INFERRED-INSTANTIATION, wb-021.7 cut #3).
      */
     const literalBases = (literal: ts.ObjectLiteralExpression): readonly ts.Type[] => {
       const contextual = checker.getContextualType(literal);
@@ -3172,7 +3177,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "DISPATCH",
       label:
-        "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), a constructor parameter property as a field is (wb-021.7, R-PARAMETER-PROPERTIES), an object literal's own method, getter, setter or shorthand property under the contextual type of the flow it is written at, against the member of its name in each part of that type, and of the declared target of that flow, that declares one (a union part by part - an undefined or an object part beside the type, an argument's union parameter, and an async function's return, whose contextual type is the awaited type united with a PromiseLike of it - and a type parameter through its constraint, a src callee's generic parameter included, whose instantiation the checker's contextual type takes from the literal itself: wb-021.7 cut #2, refusal #1 U1 and U2), and a field, a getter or a callback typed by a src overload set read through the set's implementation (wb-021.7, R-OVERLOADS) - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal member that keep the projection read quiet, under a union contextual type too; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a field, a getter or a callback typed by an overload set with no single implementation (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), a generator's written-type return (generator-yield; an async function's is read against the awaited type, wb-021.7, ASYNC-RETURNS) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH; a member a base names only through an index signature, R-INDEX-STAND-IN; a member an extending interface redeclares with a type that hides the projection, R-INTERFACE-REDECLARATION), and any other stand-in shape is outside this claim",
+        "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), a constructor parameter property as a field is (wb-021.7, R-PARAMETER-PROPERTIES), an object literal's own method, getter, setter or shorthand property under the contextual type of the flow it is written at, against the member of its name in each part of that type, and of the declared target of that flow, that declares one (a union part by part - an undefined or an object part beside the type, an argument's union parameter, and an async function's return, whose contextual type is the awaited type united with a PromiseLike of it - and a type parameter through its constraint, a src callee's generic parameter included where the literal is the argument itself, as writtenAt reads it, of a call the checker resolves to a src declaration with a body (argumentTarget's declared parameter), whose instantiation the checker's contextual type takes from the literal itself: wb-021.7 cut #2, refusal #1 U1 and U2, narrowed to that position at cut #3, refusal #2 U1, ruling R-B155; the twin of each R-INFERRED-INSTANTIATION page under a parameter typed without a type parameter - a property's value, its getter, a shorthand, an array's and a tuple's element, two levels down, a method's and a constructor's nested argument, and a function-typed parameter's and an interface method's argument and an interface method's nested argument - is read against its contextual type, that position's declared member, and refused, and so is a setter inside a src callee's generic-parameter argument whose literal's own getter types the property as the projection, the literal's own type handing it: cut #3), and a field, a getter or a callback typed by a src overload set read through the set's implementation (wb-021.7, R-OVERLOADS) - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal member that keep the projection read quiet, under a union contextual type too; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a field, a getter or a callback typed by an overload set with no single implementation (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), a generator's written-type return (generator-yield; an async function's is read against the awaited type, wb-021.7, ASYNC-RETURNS) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH; a member a base names only through an index signature, R-INDEX-STAND-IN; a member an extending interface redeclares with a type that hides the projection, R-INTERFACE-REDECLARATION; a literal's member matched against the instantiation a call infers from the literal itself, R-INFERRED-INSTANTIATION), and any other stand-in shape is outside this claim",
       cases: [
         reachForms("src/ui/census-forms-dispatch-interface.ts", `${OBS_UI}interface Api {\n  forget(projection: ObservationProjection): void;\n}\nexport const run = (api: Api, projection: ObservationProjection): void => api.forget(projection);\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: api.forget(projection)"])),
         reachForms("src/ui/census-forms-dispatch-function-type.ts", `${OBS_UI}export const run = (sink: (projection: ObservationProjection) => void, projection: ObservationProjection): void => sink(projection);\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: sink(projection)"])),
@@ -3320,6 +3325,84 @@ export const REACH: Table<ReachItem> = {
           `${OBS_UI}${SINK_UI}const keep = <T extends Sink>(value: T): T => value;\nexport const kept = keep({\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  },\n});\n`,
           reached(true, ["stats"], [], ["projection"]),
           formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-nested-property.ts",
+          `${OBS_UI}${SINK_UI}const keep = (value: { readonly sink: Sink }): Sink => value.sink;\nexport const kept = keep({\n  sink: {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-nested-union.ts",
+          `${OBS_UI}${SINK_UI}const keep = (value: { readonly sink: Sink | undefined }): Sink | undefined => value.sink;\nexport const kept = keep({\n  sink: {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-nested-getter.ts",
+          `${OBS_UI}${SINK_UI}const keep = (value: { readonly sink: Sink }): Sink => value.sink;\nexport const kept = keep({\n  sink: {\n    get forget(): (projection: unknown) => void {\n      return (projection: unknown): void => void projection;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: get forget(): (projection: unknown) => void { return (projection: unknown): void => void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-nested-shorthand.ts",
+          `${OBS_UI}${SINK_UI}const forget = (projection: unknown): void => void projection;\nconst keep = (value: { readonly sink: Sink }): Sink => value.sink;\nexport const kept = keep({ sink: { forget } });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-array-element.ts",
+          `${OBS_UI}${SINK_UI}const keepAll = (values: readonly Sink[]): readonly Sink[] => values;\nexport const kept = keepAll([\n  {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n]);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-tuple-element.ts",
+          `${OBS_UI}${SINK_UI}const keepPair = (pair: readonly [number, Sink]): readonly [number, Sink] => pair;\nexport const kept = keepPair([\n  1,\n  {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n]);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-two-levels.ts",
+          `${OBS_UI}${SINK_UI}const keep = (value: { readonly outer: { readonly sink: Sink } }): Sink => value.outer.sink;\nexport const kept = keep({\n  outer: {\n    sink: {\n      forget(projection: unknown): void {\n        void projection;\n      },\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-nested-method.ts",
+          `${OBS_UI}${SINK_UI}class Box {\n  put(value: { readonly sink: Sink }): Sink {\n    return value.sink;\n  }\n}\nexport const kept = new Box().put({\n  sink: {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-nested-constructor.ts",
+          `${OBS_UI}${SINK_UI}class Box {\n  constructor(readonly value: { readonly sink: Sink }) {}\n}\nexport const box = new Box({\n  sink: {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-function-type-parameter.ts",
+          `${OBS_UI}${SINK_UI}export const run = (keep: (value: Sink) => Sink): void => {\n  keep({\n    forget(projection: unknown): void {\n      void projection;\n    },\n  });\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-interface-method-literal.ts",
+          `${OBS_UI}${SINK_UI}interface Api {\n  put(value: Sink): Sink;\n}\nexport const run = (api: Api): void => {\n  api.put({\n    forget(projection: unknown): void {\n      void projection;\n    },\n  });\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-interface-method-nested.ts",
+          `${OBS_UI}${SINK_UI}interface Api {\n  put(value: { readonly sink: Sink }): Sink;\n}\nexport const run = (api: Api): void => {\n  api.put({\n    sink: {\n      forget(projection: unknown): void {\n        void projection;\n      },\n    },\n  });\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-generic-nested-setter.ts",
+          `${OBS_UI}${SLOT_UI}const keep = <T extends Slot>(value: { readonly slot: T }): T => value.slot;\nexport const kept = keep({\n  slot: {\n    get projection(): ObservationProjection {\n      return held as ObservationProjection;\n    },\n    set projection(value: unknown) {\n      held = value;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation", "return"], ["property: set projection(value: unknown) { held = value; }"]),
         ),
       ],
     },
@@ -5018,6 +5101,85 @@ export const REACH: Table<ReachItem> = {
         ),
       ],
     },
+    {
+      id: "R-INFERRED-INSTANTIATION",
+      label:
+        "residual (wb-021.7 cut #3, refusal #2 U1, ruling R-B155: the class it froze, named; pre-existing in the landed core and at cuts #1 and #2): an object literal's method, getter and shorthand property are read against the parts of the literal's contextual type and of its flow's declared target (literalBases), and where the contextual type is the instantiation a call infers from the literal itself while no declared target is read, the member is matched against the literal's own type, which hands nothing - a literal written inside the argument of a src callee's generic parameter (a property's value under a type parameter constrained to the type or to a union, its getter, a shorthand, an array's element, a tuple's element, two levels down, a generic method's and a generic constructor's nested argument: flowOf reads a property's value through that contextual type and an element not at all) and a literal passed, as the argument or inside it, to a generic signature with no body (a function-typed parameter, an interface method: argumentTarget trusts no parameter of one) - so each reads quiet with no row where the call's result flows into no written type, whether its member hides the projection or keeps it, while its twin under the type alone is refused (DISPATCH; each page plants one that hides it)",
+      cases: [
+        reachForms(
+          "src/ui/census-forms-inferred-nested-property.ts",
+          `${OBS_UI}${SINK_UI}const keep = <T extends Sink>(value: { readonly sink: T }): T => value.sink;\nexport const kept = keep({\n  sink: {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-nested-union-constraint.ts",
+          `${OBS_UI}${SINK_UI}const keep = <T extends Sink | undefined>(value: { readonly sink: T }): T => value.sink;\nexport const kept = keep({\n  sink: {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-nested-getter.ts",
+          `${OBS_UI}${SINK_UI}const keep = <T extends Sink>(value: { readonly sink: T }): T => value.sink;\nexport const kept = keep({\n  sink: {\n    get forget(): (projection: unknown) => void {\n      return (projection: unknown): void => void projection;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-nested-shorthand.ts",
+          `${OBS_UI}${SINK_UI}const forget = (projection: unknown): void => void projection;\nconst keep = <T extends Sink>(value: { readonly sink: T }): T => value.sink;\nexport const kept = keep({ sink: { forget } });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-array-element.ts",
+          `${OBS_UI}${SINK_UI}const keepAll = <T extends Sink>(values: readonly T[]): readonly T[] => values;\nexport const kept = keepAll([\n  {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n]);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-tuple-element.ts",
+          `${OBS_UI}${SINK_UI}const keepPair = <T extends Sink>(pair: readonly [number, T]): readonly [number, T] => pair;\nexport const kept = keepPair([\n  1,\n  {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n]);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-two-levels.ts",
+          `${OBS_UI}${SINK_UI}const keep = <T extends Sink>(value: { readonly outer: { readonly sink: T } }): T => value.outer.sink;\nexport const kept = keep({\n  outer: {\n    sink: {\n      forget(projection: unknown): void {\n        void projection;\n      },\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-generic-method.ts",
+          `${OBS_UI}${SINK_UI}class Box {\n  put<T extends Sink>(value: { readonly sink: T }): T {\n    return value.sink;\n  }\n}\nexport const kept = new Box().put({\n  sink: {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-generic-constructor.ts",
+          `${OBS_UI}${SINK_UI}class Box<T extends Sink> {\n  constructor(readonly value: { readonly sink: T }) {}\n}\nexport const box = new Box({\n  sink: {\n    forget(projection: unknown): void {\n      void projection;\n    },\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-function-type-parameter.ts",
+          `${OBS_UI}${SINK_UI}export const run = (keep: <T extends Sink>(value: T) => T): void => {\n  keep({\n    forget(projection: unknown): void {\n      void projection;\n    },\n  });\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-interface-method.ts",
+          `${OBS_UI}${SINK_UI}interface Api {\n  put<T extends Sink>(value: T): T;\n}\nexport const run = (api: Api): void => {\n  api.put({\n    forget(projection: unknown): void {\n      void projection;\n    },\n  });\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-interface-method-nested.ts",
+          `${OBS_UI}${SINK_UI}interface Api {\n  put<T extends Sink>(value: { readonly sink: T }): T;\n}\nexport const run = (api: Api): void => {\n  api.put({\n    sink: {\n      forget(projection: unknown): void {\n        void projection;\n      },\n    },\n  });\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+      ],
+    },
   ],
 };
 
@@ -5227,6 +5389,7 @@ export const RESIDUAL_FAMILIES: Readonly<Record<string, readonly string[]>> = {
   "R-STRUCTURAL-STAND-IN": ["REACH R-STRUCTURAL-STAND-IN"],
   "R-INDEX-STAND-IN": ["REACH R-INDEX-STAND-IN"],
   "R-INTERFACE-REDECLARATION": ["REACH R-INTERFACE-REDECLARATION"],
+  "R-INFERRED-INSTANTIATION": ["REACH R-INFERRED-INSTANTIATION"],
 };
 
 /** Every table's name, quote and its source in the export row, in census order: the anchor row holds each quote to exactly one occurrence in its source. */

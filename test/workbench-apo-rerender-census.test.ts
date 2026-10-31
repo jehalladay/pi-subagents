@@ -215,8 +215,10 @@
  * through the set's implementation; a return under the written type of a function that is no generator, an async function's
  * against the awaited type; and, at cut #2, an object literal's own method, getter, setter and shorthand property against the
  * member of its name in each part of its contextual type, and of the declared target of the flow it is written at, that declares
- * one - and with the two FAIL_CLOSED kinds this cut retires removed (parameter-property, async-return); every other stand-in the
- * readings meet, outside the named residuals' quiet pages (R-INDEX-STAND-IN added, and R-INTERFACE-REDECLARATION at cut #2),
+ * one (narrowed at cut #3: a src callee's generic parameter is such a declared target only for a literal that is the argument
+ * itself, of a call resolved to a src declaration with a body) - and with the two FAIL_CLOSED kinds this cut retires removed
+ * (parameter-property, async-return); every other stand-in the readings meet, outside the named residuals' quiet pages
+ * (R-INDEX-STAND-IN added, R-INTERFACE-REDECLARATION at cut #2 and R-INFERRED-INSTANTIATION at cut #3),
  * fails closed with its typed row, and any other stand-in shape is outside the claim. The other escape families R-B67 (1) names -
  * structural
  * stand-ins, inherited implementations, context-less literals, spreads, hiding callbacks returned under a written type - and
@@ -232,9 +234,11 @@
  * a PromiseLike of it, and under any union contextual type, where only a property assignment, which the checker types through the
  * union, was read): each is read against the member of its name in each part of the literal's contextual type, and of the
  * declared target of the flow it is written at, that declares one (contextualParts, literalBases), as its twin under the type
- * alone is, a shorthand with one row per kind at its site; so a literal passed to a src callee's generic parameter, which the
- * checker types by what the call infers from the literal itself, is read through the parameter's constraint (pre-existing in the
- * landed core and at cut #1, found at this cut). ASYNC-RETURNS pins a method returned by an async function (an arrow's body, a
+ * alone is, a shorthand with one row per kind at its site; so a literal passed as the argument itself (as writtenAt reads it) to
+ * a src callee's generic parameter, of a call resolved to a src declaration with a body, which the checker types by what the call
+ * infers from the literal itself, is read through the parameter's constraint (pre-existing in the landed core and at cut #1, found
+ * at this cut; narrowed to that position at cut #3, where a literal written inside such an argument, or passed to a generic
+ * signature with no body, is the residual R-INFERRED-INSTANTIATION). ASYNC-RETURNS pins a method returned by an async function (an arrow's body, a
  * function's, a class method's, under an alias, as an argument's callback and from a block beside an undefined branch), a getter,
  * a setter and a shorthand, each refused (property) beside its sync twin, and a keeping literal read quiet; DISPATCH pins a
  * method under Sink | undefined, under a union with an object part, as the argument of a union parameter and under a type
@@ -260,6 +264,25 @@
  * modules each, of 117 src files, at trunk c947b21, whose src equals 4350926's), so this cut's reader changes no src module's
  * reading (no form and no refused use added).
  *
+ * WB-021.7 CUT #3 (the respin of refusal #2, gate run g10-gate-s157; the enumerate-the-resolvable cut orchestrator ruling R-B155
+ * binds, in its second form: the three claims narrowed to the argument-itself position and the nested positions not claimed; the
+ * CUT #4 FORM and rulings R-B33, R-B41, R-B60 and R-B67 kept; 0 rows, pins or old cases removed, 0 old cases changed, the readers'
+ * code unchanged, one row and 25 pages added). U1 (an object literal written inside the argument of a src callee's generic
+ * parameter - a property's value, its getter or shorthand, an array's or a tuple's element, two levels down, a generic method's or
+ * a generic constructor's nested argument, under a type parameter constrained to the type or to a union - is matched against the
+ * instantiation the checker infers from the literal itself, so a hiding member reads quiet with no row while its twin under the
+ * type alone is refused): the DISPATCH label, the CUT #2 sentence above and THE CLAIM are narrowed to a literal written as the
+ * argument itself, as writtenAt reads it, of a call the checker resolves to a src declaration with a body, whose declared
+ * parameter literalBases reads through its constraint (DISPATCH's generic pages pin that position); the nested positions are not
+ * claimed and are named as the residual R-INFERRED-INSTANTIATION, which also names, found at this cut and pre-existing in the
+ * landed core, a literal passed as the argument, or inside it, to a generic signature with no body (a function-typed parameter, an
+ * interface method), none of whose parameters argumentTarget trusts: each reads quiet where the call's result flows into no
+ * written type, pinned by 12 quiet pages, each hiding the projection. DISPATCH pins each page's twin under the type alone, read
+ * against its contextual type and refused (12 pages), and a setter inside a generic argument whose literal's own getter types the
+ * property as the projection, refused (the literal's own type hands it). Measured on src: the readers' code is unchanged, and the
+ * live reach map and src's forms and refused uses read byte for byte the same under this cut's helper as under cut #2's (25
+ * modules, of 117 src files, at trunk 9bf3b6d, whose src equals 4350926's).
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
  * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
@@ -268,7 +291,7 @@
  * unchanged); cut #7 re-measured 2026-10-29 at trunk 4350926, merged, whose src equals e81d2b0's; cut #8 re-measured
  * 2026-10-29 at trunk 93133f0 and at trunks e3022a1, 9fdd6d9 and 1ad30c3, each merged, whose src equals 4350926's; wb-021.7
  * re-measured 2026-10-30 at trunk 577493f, whose src equals 4350926's, and its cut #2 2026-10-30 at trunk c947b21, merged, whose src
- * equals 4350926's too; src there differs from 3223843, cut #2's measured trunk, by those, the wb-4ap.17 landing (src/index.ts,
+ * equals 4350926's too (its cut #3 2026-10-31 at trunk 9bf3b6d, merged, whose src equals 4350926's as well); src there differs from 3223843, cut #2's measured trunk, by those, the wb-4ap.17 landing (src/index.ts,
  * src/workbench/forge-operation-observer.ts), the wb-jwc.4 landing (src/workbench/providers/reactivefiber.ts) and the wb-3ht.1
  * landing (src/workbench/hyperunix-observer.ts: a consumed-fields table that references no projection member), and the live
  * reach map over every src module reads byte for byte the same under cut #2's reach scan and cut #5's, at both of cut #5's trunks): src holds 117 TypeScript modules and none spells the program (the mention judge below:
@@ -347,7 +370,7 @@
  * beside its read twins and quiet pages, UNLISTED-STAND-INS pins that a stand-in whose type the readings do not list refuses
  * (cut #8, the fail-closed core), and ASYNC-RETURNS plants the reading wb-021.7 gives an async function's return. What neither
  * scan reads is named: R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH, the fail-closed family R-STRUCTURAL-STAND-IN, and
- * R-INDEX-STAND-IN (wb-021.7) and R-INTERFACE-REDECLARATION (wb-021.7 cut #2).
+ * R-INDEX-STAND-IN (wb-021.7), R-INTERFACE-REDECLARATION (wb-021.7 cut #2) and R-INFERRED-INSTANTIATION (wb-021.7 cut #3).
  * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
  * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
  * plants, the interface forms INTERFACE-FORMS plants and the heritage and signature shapes INTERFACE-HERITAGE plants, and
@@ -430,10 +453,19 @@
  * type that hides it is read as declaring the extended type, and no reading judges an interface's member as a stand-in, so a class
  * implementing it is judged against the redeclared member, which hands nothing, and its instance reads quiet handed back under the
  * redeclaring type into a callback typed by the extended type, held by a field stand-in so typed, or flowing into the extended
- * type (REACH; wb-021.7 cut #2, refusal #1 F4, pre-existing in the landed core).
+ * type (REACH; wb-021.7 cut #2, refusal #1 F4, pre-existing in the landed core); R-INFERRED-INSTANTIATION an object literal's
+ * method, getter or shorthand property whose contextual type is the instantiation a call infers from the literal itself, with no
+ * declared target read - written inside the argument of a src callee's generic parameter (a property's value, an array's or a
+ * tuple's element, two levels down, a generic method's and a generic constructor's nested argument), or passed, as the argument
+ * or inside it, to a generic signature with no body (a function-typed parameter, an interface method) - is matched against the
+ * literal's own type and reads quiet whether it hides the projection or keeps it, where the call's result flows into no written
+ * type, while its twin under the type alone is refused (REACH; wb-021.7 cut #3, refusal #2 U1, ruling R-B155, pre-existing in the
+ * landed core).
  * NOT CLAIMED. In src: an instance member's own code - its body, initializer, parameters and types - is not read statically
  * (REPROJECTION's runtime reading and MEMBERS judge it), nor is a parameter decorator (the compiler refuses one under the
- * repo's standard decorators, TS1206). As edits of this file, its helper and the roster together: a plant row of IDENTITY, QUIET,
+ * repo's standard decorators, TS1206), nor is a src callee's declared parameter, for an object literal written inside the
+ * argument of its generic parameter or passed to a src signature with no body (R-INFERRED-INSTANTIATION, wb-021.7 cut #3,
+ * ruling R-B155). As edits of this file, its helper and the roster together: a plant row of IDENTITY, QUIET,
  * WRITE-ANY-ROUTE, OTHER-ROUTES, EVIDENCE-ABORTS, a READERS, REACH or NAMES row or a residual row removed with its
  * frozen-literal element and roster entry (no outside anchor names those plants); a case and its expected reading
  * re-authored together; the reach scan's key reading or its marker removed from the helper together with the REACH rows
@@ -954,7 +986,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/ERASING-FLOWS:9",
       "REACH/LIBRARY-FLOWS:8",
       "REACH/RELAYS:13",
-      "REACH/DISPATCH:32",
+      "REACH/DISPATCH:45",
       "REACH/UNLISTED-FORMS:10",
       "REACH/CLASS-ELEMENT-KINDS:4",
       "REACH/STAND-IN-KINDS:8",
@@ -974,6 +1006,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/UNLISTED-STAND-INS:10",
       "REACH/R-INDEX-STAND-IN:11",
       "REACH/R-INTERFACE-REDECLARATION:3",
+      "REACH/R-INFERRED-INSTANTIATION:12",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
       "NAMES/CLASS-MEMBER-SHAPES:10",
@@ -1015,6 +1048,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "R-STRUCTURAL-STAND-IN:REACH R-STRUCTURAL-STAND-IN",
       "R-INDEX-STAND-IN:REACH R-INDEX-STAND-IN",
       "R-INTERFACE-REDECLARATION:REACH R-INTERFACE-REDECLARATION",
+      "R-INFERRED-INSTANTIATION:REACH R-INFERRED-INSTANTIATION",
     ]);
     // The fail-closed shapes (cut #7, ruling R-B60; cut #8, ruling R-B67), each with the REACH row that plants it: the row reads it refused under its typed row and holds a quiet page beside it.
     expect(Object.entries(FAIL_CLOSED).map(([kind, id]) => `${kind}:${id}`)).toEqual([
