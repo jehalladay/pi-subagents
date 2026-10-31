@@ -23,7 +23,13 @@
  * and the off-list effect and invoke, with the fixtures F-READ-INVOKE, F-READ-ACK, F-READ-GAP and F-READ-RESYNC, F7); the
  * certification's plural, on a mutant failing three checks on two fixtures (M-DUPLICATE-AT-CHECK, F8); and the reach's limit,
  * the data walk, stated in the aliased check's reading with the non-enumerable holders it does not read pinned as the residual
- * family R-ALIAS-HOLDER (Q13, F5).
+ * family R-ALIAS-HOLDER (Q13, F5). That bead's cut #2 (the respin of its cut #1 b42195f7 after refusal #1, PREP F) cures
+ * the three claims refusal #1 found wider than their pins (UNMET U1-U3): U1, the reach's own-object reading, pinned apart
+ * from the member reach at each half by a mutant sharing only a member-less wire value's own object (M-SEAM-OWN-ALIAS at
+ * F-DIGEST's d3 and F-READ-OWN's ow1; M-READ-OWN-ALIAS on the new fixture F-READ-OWN, whose member-less ow1 the read
+ * keeps); U2 and U3, the certification's order and plural, held for every mutant to every one of its failed checks in
+ * fixture and check order, with a certification of two checks on each of three fixtures pinned in an order lexical neither
+ * by fixture nor by check (M-CALLABLES-TOP-ONLY).
  * Statement (the bead's tracker-export title, verbatim): "Gating artifact: released FiberOpticsSDK PublicPortBridge
  * (unshipped) + a wb-x32 committing decision connecting a Pi runtime over it; then Pi supplies the full bridge contract
  * (visibility/schema/direction through resync on gaps), keeps one authority per runtime domain, admits no private endpoint
@@ -109,7 +115,9 @@
  *    certifies no host outside the pinned set. A host's certification is its failed checks followed by the typed refusal
  *    OUTSIDE_PINNED_SET, so a host that meets every check on every fixture is refused outside the pinned set and never read
  *    as conforming there (C1 pins the refusal on the honest host, on a residual member and after a member mutant's failed
- *    checks). The residual families (Q4, Q6-Q13) pin exactly their listed members, each with its quiet row, and claim no
+ *    checks, and holds every mutant's certification to every one of its failed checks, fixtures in FIXTURES order and a
+ *    fixture's checks in CHECKS order). The residual families (Q4, Q6-Q13) pin exactly their listed members, each with its
+ *    quiet row, and claim no
  *    other departure: one no member and no residual row pins is outside the pinned set (NOT CLAIMED names the ones the
  *    record knows).
  *    A host is one function over a negotiated contract (the endpoints, each with an owner runtime, a
@@ -127,12 +135,14 @@
  *    (a rejected message reached the seam or was not rejected), diagnostic, resync (the endpoints asked to resync are exactly
  *    the gapped ones, each once per call, in the order they gapped), aliased (exactly two halves: a seam call holds an object
  *    of the one wire message it names, its own message only, or the read holds an object of any wire message of the call,
- *    whatever its status or kind; an object of a value is the value's own object or one the data walk reaches from it, through
- *    own enumerable string-keyed properties at every depth, the properties copyOf copies and isDeepStrictEqual compares, so
- *    both halves read an object one of the value's own members holds and neither reads one held through a non-enumerable
+ *    whatever its status or kind; an object of a value is the value's own object or one the data walk reaches from it through
+ *    own enumerable string-keyed properties, the properties copyOf copies and isDeepStrictEqual compares; each half reads the
+ *    value's own object alone, where the value holds no object member (M-SEAM-OWN-ALIAS, M-READ-OWN-ALIAS), and an object one
+ *    of the value's own members holds, without the value's own object (M-SEAM-SUB-ALIAS, M-READ-SUB-ALIAS); no member holds
+ *    an object two or more levels below a value alone (NOT CLAIMED), and neither half reads one held through a non-enumerable
  *    property: R-ALIAS-HOLDER, Q13), merged (the read is not each runtime's own values) and the three claim checks over the
  *    label.
- *    Thirty-nine fixtures; the honest host meets every check on every fixture, each of 121 mutants fails at least one, every
+ *    Forty fixtures; the honest host meets every check on every fixture, each of 123 mutants fails at least one, every
  *    check fires, every check is the only check some mutant fails, and C1's witness holds each check's isolating mutants
  *    and, per mutant, the messages whose receipt it departs on.
  *    CLASS TABLE (a class with the oracle's reading of it, then its members: fixture messages that each break one part, with
@@ -204,7 +214,10 @@
  *    and rx1 are sent on an undeclared endpoint, which a host rejects even where it judges no class on the message's kind
  *    (only M-UNDECLARED-OPEN opens one), so no R-KIND-SCOPE member admits them)
  *    and the two reach mutants (a copy whose own members are the wire's own, only the value's own object new, the half alone,
- *    through its reach below the value: M-SEAM-SUB-ALIAS handed to the seam, M-READ-SUB-ALIAS kept in the read);
+ *    through its reach below the value: M-SEAM-SUB-ALIAS handed to the seam, M-READ-SUB-ALIAS kept in the read) and the two
+ *    own-object mutants (the wire's own value where it holds no object member, else a copy, the half alone, through its
+ *    reading of the value's own object: M-SEAM-OWN-ALIAS handed to the seam, killed at F-DIGEST's d3 and F-READ-OWN's ow1,
+ *    and M-READ-OWN-ALIAS kept in the read, killed at F-READ-OWN, where ow1 is the last value its endpoint applies);
  *    M-SIGNAL-READ (an ack's value kept in the read: F-GAP-ACK's closing ack c5, merged); M-CODE-COLLAPSED (diagnostic),
  *    M-REFUSE-ALL. Two fixture messages break
  *    two parts each and bind two precedences: o4 (foreign authority before stale epoch: M-LOCAL-SPOOF) and F-DUPLICATE's
@@ -214,9 +227,12 @@
  *    is the honest host's diagnostic (so the oracle's verdict) on some message, the version, schema, digest, epoch, identity
  *    (F-DUPLICATE-SCOPE, F-DUPLICATE-REJECTED, F-GAP-IDENTITY) and feedback members' receipts are pinned in this file, the
  *    contract-field and seam mutants each fail, and the certification of the honest host, of a residual member (Q6's
- *    schema-before-version), of a member mutant (M-SIGNAL-READ, after its failed check) and of a member mutant failing three
- *    checks on two fixtures (M-DUPLICATE-AT-CHECK, after every one of them in fixture and check order) each ends in the typed
- *    refusal OUTSIDE_PINNED_SET. C2 the gap: a detected and an announced gap are rejected until a resync,
+ *    schema-before-version), of a member mutant (M-SIGNAL-READ, after its failed check), of a member mutant failing three
+ *    checks on two fixtures (M-DUPLICATE-AT-CHECK) and of one failing two checks on each of three fixtures, in an order
+ *    lexical neither by fixture nor by check (M-CALLABLES-TOP-ONLY), each ends in the typed refusal OUTSIDE_PINNED_SET after
+ *    every one of its failed checks in fixture and check order, and every mutant's certification is every one of its failed
+ *    checks, fixtures in FIXTURES order and a fixture's checks in CHECKS order, then the refusal (each of the 123 against
+ *    its own violations). C2 the gap: a detected and an announced gap are rejected until a resync,
  *    a snapshot after a gap re-bases the stream, each gap asks to resync once, no gapless stream is asked to resync, the
  *    other gap members' receipts and resync asks are pinned in this file, and the 26 gap and resync mutants fail. O1 one
  *    authority per runtime domain: a remote write into Pi's own endpoint, a write by a non-owner runtime and a write into
@@ -228,8 +244,9 @@
  *  N, the falsifier, one pin per claim family: no file of any root spells the family (each root at its floor, every planted
  *    control read and every quiet control quiet), the honest host's label of a two-runtime read spells no claim and names
  *    each runtime's own epoch and sequence, and the family's mutants fail: N1 order (M-ORDER-LABEL), N2 shared memory
- *    (the fourteen aliased mutants M-SHARED-REF, M-SEAM-ALIAS, M-READ-ALIAS, M-READ-CROSS-ALIAS, M-READ-KIND-ALIAS, the seven
- *    single-kind M-READ-SNAPSHOT-ALIAS through M-READ-INVOKE-ALIAS, M-SEAM-SUB-ALIAS and M-READ-SUB-ALIAS, and M-SHARED-LABEL),
+ *    (the sixteen aliased mutants M-SHARED-REF, M-SEAM-ALIAS, M-READ-ALIAS, M-READ-CROSS-ALIAS, M-READ-KIND-ALIAS, the seven
+ *    single-kind M-READ-SNAPSHOT-ALIAS through M-READ-INVOKE-ALIAS, M-SEAM-SUB-ALIAS, M-READ-SUB-ALIAS, M-SEAM-OWN-ALIAS and
+ *    M-READ-OWN-ALIAS, and M-SHARED-LABEL),
  *    N3 implicit conflict merge (M-MERGE keys the read by port across runtimes, M-MERGE-LABEL).
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's
@@ -262,13 +279,19 @@
  * owes are mutants the aliased check alone kills, each kind :23 and F7's gate hosts name (the wire's five, invoke and
  * effect) has its single-kind mutant, killed by the aliased check alone, and a member (a rejected message of that kind whose
  * value a later admitted message repeats), and, F8 naming the first-check narrowing, C1 pins a certification of several
- * failed checks on several fixtures, two on one. So each of these, removed from every literal of this file and the roster
- * together, still reds through the anchor named: a title row
+ * failed checks on several fixtures, two on one and one on another; and its first refusal's U1, U2 and U3 lines (the
+ * first notes line opening with each tag, so a later verdict changes no reading) bind the members cut #2 adds for them:
+ * U1's gate plant names one of the two halves F5's hosts name, and U1's route (a) owes, at each of those halves, a mutant
+ * the aliased check alone kills whose every hold is a member-less wire value's own object; U2 naming the lexical-sort
+ * narrowing, C1 pins a certification whose fixtures and, on one fixture, whose checks are out of lexical order; and U3
+ * naming the first-two-fixtures narrowing, C1 pins one over three or more fixtures. So each of these, removed from every
+ * literal of this file and the roster together, still reds through the anchor named: a title row
  * or pin (the tiling), row Q or one of Q1-Q5's families (the record's first declaration), a rejection class (the shape list, :41 or the break of
  * the part it guards), a contract part (the requires quote), a claim family (the falsifier list), a judge word (the title),
  * a script extension (TypeScript's table), a root's files (the closure, unless another root walks them), and an
  * R-ALIAS-HOLDER member, an F6 sub-object mutant, a single-kind mutant or its kind's last member, and the plural
- * certification pin (the follow-up's filing, :23 for the wire's kinds). The last case reads the vitest task tree (every
+ * certification pin (the follow-up's filing, :23 for the wire's kinds), and an own-object mutant and the out-of-order,
+ * three-fixture certification pin (the follow-up's refusal lines, F5's hosts for the halves). The last case reads the vitest task tree (every
  * registered test, in roster order, in run mode, ran before it) and REACHED.
  * NOT CLAIMED: test/, docs/workbench/receipts/ and .beads/ (they name the vocabulary as text they judge or record, this
  * census included); a mention outside the BRIDGE and SDK words (FO-UI-05, URR, "the bridge"); the producer's own code
@@ -371,6 +394,8 @@ const RECEIPTS = "docs/workbench/receipts/";
 /** The follow-up bead carrying the landing-684 gate's F5-F8 (ruling R694), and the tags its filing's verbatim finding lines open with. */
 const FOLLOW_UP = "wb-vf3r";
 const FOLLOW_UP_LINES = { F5: "[leads] - F5 LOW LEADS:", F6: "[rides] - F6 LOW RIDES:", F7: "[rides] - F7 LOW RIDES:", F8: "[rides] - F8 LOW RIDES:" } as const;
+/** The follow-up's first refusal (refusal #1, on its cut #1): the first notes line opening with each UNMET tag binds, as the filing's tags do. */
+const REFUSAL_LINES = { U1: "- U1: ", U2: "- U2: ", U3: "- U3: " } as const;
 /** The owner filing's own paragraph opens with this; the tracker appends every later note on a line of its own. */
 const PROGRAM_OPENING = "PROGRAM: sdk-universal-reactive-rendering ";
 /** The live cases parse every walked script; they carry this explicit budget. */
@@ -954,8 +979,10 @@ function copyOf(value: unknown): unknown {
 }
 /**
  * The data walk, the reach of both aliased halves: a value's own object and every object reached from it through own
- * enumerable string-keyed properties (Object.values, which reads an array's elements), at every depth - the properties
- * copyOf copies and isDeepStrictEqual compares. A non-enumerable property is not walked (R-ALIAS-HOLDER, Q13).
+ * enumerable string-keyed properties (Object.values, which reads an array's elements) - the properties copyOf copies and
+ * isDeepStrictEqual compares. Its pinned readings are the value's own object alone (M-SEAM-OWN-ALIAS, M-READ-OWN-ALIAS) and
+ * an object one of its own members holds (M-SEAM-SUB-ALIAS, M-READ-SUB-ALIAS); it also walks deeper, where no member holds
+ * an object alone (NOT CLAIMED). A non-enumerable property is not walked (R-ALIAS-HOLDER, Q13).
  */
 function objectsIn(value: unknown, into: Set<object> = new Set()): Set<object> {
   if (typeof value === "object" && value !== null && !into.has(value)) {
@@ -974,6 +1001,14 @@ function shallowOf(value: unknown): unknown {
   if (Array.isArray(value)) return [...value];
   if (record(value)) return { ...value };
   return value;
+}
+/** A value object holding no object member: sharing it shares its own object and nothing below it. */
+function memberless(value: unknown): boolean {
+  return typeof value === "object" && value !== null && !Object.values(value).some(item => typeof item === "object" && item !== null);
+}
+/** The wire's own value where it holds no object member, else a copy: only a value's own object is shared (M-SEAM-OWN-ALIAS, M-READ-OWN-ALIAS). */
+function ownOf(value: unknown): unknown {
+  return memberless(value) ? value : copyOf(value);
 }
 /** A copy of the data that also holds the wire's own value through a non-enumerable property (R-ALIAS-HOLDER's members, Q13). */
 function holderOf(value: unknown): unknown {
@@ -1028,6 +1063,8 @@ const FIXTURES: readonly Fixture[] = [
   { id: "F-READ-GAP", messages: [message("ga1", "browser/undeclared", "gap", 1, { rows: [1] }), snap("ga2")] },
   /** The same for the one value kind no other fixture rejects with a value an admitted message repeats: a resync rx1 on the undeclared endpoint (so resync-digest-skipped admits nothing here either). */
   { id: "F-READ-RESYNC", messages: [message("rx1", "browser/undeclared", "resync", 1, { rows: [1] }), snap("rx2")] },
+  /** The aliased check's reading of a value's own object (wb-vf3r refusal #1 U1): a snapshot whose value holds no object member, the last value its endpoint applies, so the read keeps it (M-READ-OWN-ALIAS; M-SEAM-OWN-ALIAS also at F-DIGEST's d3). */
+  { id: "F-READ-OWN", messages: [message("ow1", "browser/view", "snapshot", 1, { state: "live" })] },
   { id: "F-VERSION", messages: [snap("v1"), delta("v2", { version: "2" }), delta("v3", { version: "0" })] },
   { id: "F-SCHEMA", messages: [snap("h1"), delta("h2", { schema: "view/v2" }), delta("h3", { schema: "status/v1" })] },
   {
@@ -1446,6 +1483,10 @@ interface Shape {
   readonly seamSubAlias?: boolean;
   /** Keep in the read a copy whose own members are the wire's own (the seam takes a copy): only the read half's reach below the value reads it. */
   readonly readSubAlias?: boolean;
+  /** Hand the seam the wire's own value where it holds no object member, else a copy: only the seam half's reading of the value's own object reads it. */
+  readonly seamOwnAlias?: boolean;
+  /** Keep in the read the wire's own value where it holds no object member, else a copy (the seam takes a copy): only the read half's reading of the value's own object reads it. */
+  readonly readOwnAlias?: boolean;
   /**
    * apply: no gap reading; silent: never ask to resync; resume: take the gapped sequence as the new base; ignore-announced: read no
    * announced gap; backward-ok: only a forward jump is a gap; equal-ok: a delta at the last applied sequence is admitted; lower-ok:
@@ -1673,7 +1714,7 @@ function hostOf(shape: Shape): BridgeHost {
       }
       shape.side?.();
       const value = shape.alias === true ? entry.value : copyOf(entry.value);
-      const handed = shape.seamAlias === true ? entry.value : shape.seamSubAlias === true ? shallowOf(entry.value) : shape.seamHolder === true ? holderOf(entry.value) : value;
+      const handed = shape.seamAlias === true ? entry.value : shape.seamSubAlias === true ? shallowOf(entry.value) : shape.seamOwnAlias === true ? ownOf(entry.value) : shape.seamHolder === true ? holderOf(entry.value) : value;
       toSeam(shape.seam === "port" ? split(endpoint.id).port : endpoint.id, shape.seam === "blank" ? {} : handed, index);
       if (shape.doubleApply === true) toSeam(endpoint.id, copyOf(entry.value), index);
       if (shape.resyncSpurious === true && kind === "snapshot") askResync(endpoint.id);
@@ -1683,7 +1724,7 @@ function hostOf(shape: Shape): BridgeHost {
       if (shape.snapshotKeepsHold !== true || kind !== "snapshot") held.delete(holdKey(endpoint.id));
       if (shape.holdLift === kind) for (const key of [...held]) if (shape.holdLiftRuntime !== true || split(key).domain === split(endpoint.id).domain) held.delete(key);
       const kept = rejectedWire.find(item => crossed(item.kind) && isDeepStrictEqual(item.value, entry.value));
-      const stored = shape.readSubAlias === true ? shallowOf(entry.value) : shape.readHolder === true ? holderOf(entry.value) : value;
+      const stored = shape.readSubAlias === true ? shallowOf(entry.value) : shape.readOwnAlias === true ? ownOf(entry.value) : shape.readHolder === true ? holderOf(entry.value) : value;
       remember(endpoint.id, shape.readAlias === true ? entry.value : kept !== undefined ? kept.value : stored);
       marks.set(endpoint.id, shape.labelUnnamed === true ? "applied" : `epoch ${entry.epoch}, sequence ${entry.sequence}`);
     }
@@ -1792,6 +1833,8 @@ const MUTANTS: Readonly<Record<string, Shape>> = {
   "M-READ-INVOKE-ALIAS": { readCrossKind: "invoke" },
   "M-SEAM-SUB-ALIAS": { seamSubAlias: true },
   "M-READ-SUB-ALIAS": { readSubAlias: true },
+  "M-SEAM-OWN-ALIAS": { seamOwnAlias: true },
+  "M-READ-OWN-ALIAS": { readOwnAlias: true },
   "M-GAP-APPLY": { gap: "apply" },
   "M-GAP-SILENT": { gap: "silent" },
   "M-GAP-RESUME": { gap: "resume" },
@@ -1846,8 +1889,9 @@ type Check = (typeof CHECKS)[number];
  * (a rejected wire object of a kind off the value kinds: the kind reading) and the seven single-kind mutants (one per kind the
  * fixtures carry, M-READ-SNAPSHOT-ALIAS through M-READ-INVOKE-ALIAS) are the ones only the read half kills. Both halves reach
  * through the data walk (objectsIn): M-SEAM-SUB-ALIAS and M-READ-SUB-ALIAS share only the objects the value's own members
- * hold, so a half narrowed to the value's own object misses them, and neither half reads a non-enumerable holder
- * (R-ALIAS-HOLDER, Q13).
+ * hold, so a half narrowed to the value's own object misses them; M-SEAM-OWN-ALIAS and M-READ-OWN-ALIAS share only a
+ * member-less value's own object, so a half whose reach drops the value's own object misses them; and neither half reads a
+ * non-enumerable holder (R-ALIAS-HOLDER, Q13).
  */
 function aliasedIn(entry: Fixture, run: Drive): boolean {
   const seam = run.calls.some(call => aliases(call.value, entry.messages[call.index]?.value));
@@ -1892,8 +1936,9 @@ const mutant = (name: string): Record<string, Check[]> => violationsOf(hostOf(MU
 /** The typed refusal the armed contract answers outside its pinned set (FAIL CLOSED, ruling R-B80). */
 const OUTSIDE_PINNED_SET = "refused:outside-the-pinned-set";
 /**
- * A host's certification (FAIL CLOSED, ruling R-B80): its failed checks, each `<fixture>:<check>`, then the typed refusal
- * OUTSIDE_PINNED_SET. The armed contract judges a host at its pinned set only and certifies nothing outside it, so every host
+ * A host's certification (FAIL CLOSED, ruling R-B80): its failed checks, each `<fixture>:<check>`, every one of them,
+ * fixtures in FIXTURES order and a fixture's checks in CHECKS order (C1 holds every mutant's to that order), then the typed
+ * refusal OUTSIDE_PINNED_SET. The armed contract judges a host at its pinned set only and certifies nothing outside it, so every host
  * is refused there: one that meets every check on every fixture, the honest host and a residual member included, is never
  * read as conforming.
  */
@@ -2391,20 +2436,35 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "schema-before-version": certification(hostOf(departure?.shape ?? {})),
       "M-SIGNAL-READ": certification(hostOf(MUTANTS["M-SIGNAL-READ"] ?? {})),
       "M-DUPLICATE-AT-CHECK": certification(hostOf(MUTANTS["M-DUPLICATE-AT-CHECK"] ?? {})),
+      "M-CALLABLES-TOP-ONLY": certification(hostOf(MUTANTS["M-CALLABLES-TOP-ONLY"] ?? {})),
     };
     CERTIFIED = certified;
     expect(
       certified,
-      "fail closed: no host is certified outside the pinned set (a host meeting every check and a residual member are refused there); a mutant's failed checks come first, every one of them in fixture and check order (two on one fixture and one on another)",
+      "fail closed: no host is certified outside the pinned set (a host meeting every check and a residual member are refused there); a mutant's failed checks come first, every one of them in fixture and check order (two on one fixture and one on another; two on each of three fixtures, in an order lexical neither by fixture nor by check)",
     ).toEqual({
       honest: [OUTSIDE_PINNED_SET],
       "schema-before-version": [OUTSIDE_PINNED_SET],
       "M-SIGNAL-READ": ["F-GAP-ACK:merged", OUTSIDE_PINNED_SET],
       "M-DUPLICATE-AT-CHECK": ["F-DUPLICATE-REJECTED:admit", "F-DUPLICATE-REJECTED:merged", "F-GAP-IDENTITY:admit", OUTSIDE_PINNED_SET],
+      "M-CALLABLES-TOP-ONLY": [
+        "F-EXECUTABLE-SEQUENCE:reject",
+        "F-EXECUTABLE-SEQUENCE:diagnostic",
+        "F-EXECUTABLE-DEPTH:reject",
+        "F-EXECUTABLE-DEPTH:diagnostic",
+        "F-EXECUTABLE-NESTING:reject",
+        "F-EXECUTABLE-NESTING:diagnostic",
+        OUTSIDE_PINNED_SET,
+      ],
     });
     const honest = violationsOf(HONEST);
     expect(honest, "the honest host meets every check on every fixture").toEqual({});
     const judged = mapOf(MUTANTS, shape => violationsOf(hostOf(shape)));
+    const flattened = mapOf(judged, table => [...FIXTURES.flatMap(entry => CHECKS.filter(check => table[entry.id]?.includes(check) === true).map(check => `${entry.id}:${check}`)), OUTSIDE_PINNED_SET]);
+    expect(
+      mapOf(MUTANTS, shape => certification(hostOf(shape))),
+      "every mutant's certification is every one of its failed checks, fixtures in FIXTURES order and a fixture's checks in CHECKS order, then the typed refusal (its own violations, flattened)",
+    ).toEqual(flattened);
     const fired = CHECKS.filter(check => Object.values(judged).some(table => Object.values(table).some(list => list.includes(check))));
     const quiet = Object.entries(judged).filter(([, table]) => Object.keys(table).length === 0).map(([name]) => name);
     expect(fired, "every check fires on some mutant").toEqual([...CHECKS]);
@@ -2551,6 +2611,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "M-READ-INVOKE-ALIAS",
       "M-SEAM-SUB-ALIAS",
       "M-READ-SUB-ALIAS",
+      "M-SEAM-OWN-ALIAS",
+      "M-READ-OWN-ALIAS",
     ];
     const departures = mapOf(MUTANTS, shape => {
       const host = hostOf(shape);
@@ -2801,6 +2863,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "M-READ-INVOKE-ALIAS": mutant("M-READ-INVOKE-ALIAS"),
       "M-SEAM-SUB-ALIAS": mutant("M-SEAM-SUB-ALIAS"),
       "M-READ-SUB-ALIAS": mutant("M-READ-SUB-ALIAS"),
+      "M-SEAM-OWN-ALIAS": mutant("M-SEAM-OWN-ALIAS"),
+      "M-READ-OWN-ALIAS": mutant("M-READ-OWN-ALIAS"),
       "M-SHARED-LABEL": mutant("M-SHARED-LABEL"),
     };
   },
@@ -3114,6 +3178,8 @@ describe(SUITE, () => {
       "M-READ-INVOKE-ALIAS",
       "M-SEAM-SUB-ALIAS",
       "M-READ-SUB-ALIAS",
+      "M-SEAM-OWN-ALIAS",
+      "M-READ-OWN-ALIAS",
       "M-GAP-APPLY",
       "M-GAP-SILENT",
       "M-GAP-RESUME",
@@ -3154,6 +3220,7 @@ describe(SUITE, () => {
       "F-READ-ACK:2",
       "F-READ-GAP:2",
       "F-READ-RESYNC:2",
+      "F-READ-OWN:1",
       "F-VERSION:3",
       "F-SCHEMA:3",
       "F-DIGEST:4",
@@ -3247,7 +3314,7 @@ describe(SUITE, () => {
     expect(BRIDGE_HOSTS).toEqual([]);
   });
 
-  it("the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe", { timeout: 60_000 }, () => {
+  it("the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe, and its first refusal's U1-U3 lines the members they owe", { timeout: 60_000 }, () => {
     const rows = parseExport(textOf(EXPORT));
     const own = rows.find(entry => entry.id === BEAD);
     expect(own, `${BEAD}'s row was read from the tracker export`).toBeDefined();
@@ -3351,9 +3418,45 @@ describe(SUITE, () => {
     const plural = Object.values(CERTIFIED).some(list => {
       const failed = list.filter(entry => entry !== OUTSIDE_PINNED_SET);
       const fixtures = new Set(failed.map(entry => entry.slice(0, entry.lastIndexOf(":"))));
-      return fixtures.size > 1 && failed.length > fixtures.size;
+      return fixtures.size > 1 && failed.length > fixtures.size && [...fixtures].some(id => failed.filter(entry => entry.slice(0, entry.lastIndexOf(":")) === id).length === 1);
     });
-    expect([filed(FOLLOW_UP_LINES.F8).includes("H09 (certification keeps only its first failed check)"), plural], "the follow-up's F8 names the first-check narrowing, and C1 pins a certification of several failed checks on several fixtures, two on one").toEqual([true, true]);
+    expect([filed(FOLLOW_UP_LINES.F8).includes("H09 (certification keeps only its first failed check)"), plural], "the follow-up's F8 names the first-check narrowing, and C1 pins a certification of several failed checks on several fixtures, two on one and one on another").toEqual([true, true]);
+    const halves = hosts.map(host => host.slice(0, host.indexOf("-")));
+    const plantHalf = /\bthe gate plant (\w+)-own-memberless\b/.exec(filed(REFUSAL_LINES.U1))?.[1] ?? "-";
+    const routeA = filed(REFUSAL_LINES.U1).includes("(a) add a member that aliases only such a value's own object, killed by aliased alone");
+    expect([halves.includes(plantHalf), routeA], "the follow-up's U1 gate plant reads the own object at one of the two halves F5's hosts name, and U1's route (a) owes a member sharing only that object").toEqual([true, true]);
+    const wireValues = new Set<unknown>(FIXTURES.flatMap(entry => entry.messages.map(sent => sent.value)));
+    const holdsOf = (host: BridgeHost, half: string): unknown[] =>
+      FIXTURES.flatMap(entry => {
+        const run = drive(host, entry);
+        const pairs: (readonly [unknown, unknown])[] =
+          half === "seam" ? run.calls.map(call => [call.value, entry.messages[call.index]?.value] as const) : [[run.journal.read.values, entry.messages.map(sent => sent.value)]];
+        return pairs.flatMap(([applied, sent]) => {
+          const wire = objectsIn(sent);
+          return [...objectsIn(applied)].filter(item => wire.has(item));
+        });
+      });
+    const ownOnly = (name: string, half: string): boolean => {
+      const host = hostOf(MUTANTS[name] ?? {});
+      const held = holdsOf(host, half);
+      const elsewhere = halves.filter(other => other !== half).flatMap(other => holdsOf(host, other));
+      return held.length > 0 && elsewhere.length === 0 && held.every(item => wireValues.has(item) && memberless(item));
+    };
+    const aliasedOnly = Object.keys(MUTANTS).filter(killedByAliased);
+    const owners = Object.fromEntries(halves.map(half => [half, aliasedOnly.filter(name => ownOnly(name, half))]));
+    expect(mapOf(owners, names => names.length > 0), "each such half has a mutant, killed by the aliased check alone, whose every hold is a member-less wire value's own object").toEqual(
+      Object.fromEntries(halves.map(half => [half, true])),
+    );
+    const pinned = Object.values(CERTIFIED).map(list => list.filter(entry => entry !== OUTSIDE_PINNED_SET));
+    const fixtureOf = (entry: string): string => entry.slice(0, entry.lastIndexOf(":"));
+    const fixturesIn = (failed: readonly string[]): string[] => [...new Set(failed.map(fixtureOf))];
+    const lexical = (items: readonly string[]): boolean => items.every((item, at) => at === 0 || (items[at - 1] ?? "") <= item);
+    const unordered = pinned.some(failed => !lexical(fixturesIn(failed)) && fixturesIn(failed).some(id => !lexical(failed.filter(entry => fixtureOf(entry) === id))));
+    const wide = pinned.some(failed => fixturesIn(failed).length >= 3);
+    expect(
+      [filed(REFUSAL_LINES.U2).includes("L2-CERT-LEXICAL-SORT"), unordered, filed(REFUSAL_LINES.U3).includes("L2-CERT-FIRST-TWO-FIXTURES"), wide],
+      "the follow-up's U2 names the lexical-sort narrowing, and C1 pins a certification whose fixtures and, on one fixture, whose checks are out of lexical order; its U3 names the first-two-fixtures narrowing, and C1 pins one over three or more fixtures",
+    ).toEqual([true, true, true, true]);
   });
 
   it("roster: the judged rows, the quotes, the residual members, the readers and the registered tests equal test/fixtures/foa-public-port-bridge-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {

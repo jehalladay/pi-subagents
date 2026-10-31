@@ -468,6 +468,15 @@
      "F-DUPLICATE-REJECTED:merged",
      "F-GAP-IDENTITY:admit",
      "refused:outside-the-pinned-set"
+    ],
+    "M-CALLABLES-TOP-ONLY": [
+     "F-EXECUTABLE-SEQUENCE:reject",
+     "F-EXECUTABLE-SEQUENCE:diagnostic",
+     "F-EXECUTABLE-DEPTH:reject",
+     "F-EXECUTABLE-DEPTH:diagnostic",
+     "F-EXECUTABLE-NESTING:reject",
+     "F-EXECUTABLE-NESTING:diagnostic",
+     "refused:outside-the-pinned-set"
     ]
    },
    "fixtures": [
@@ -478,6 +487,7 @@
     "F-READ-ACK",
     "F-READ-GAP",
     "F-READ-RESYNC",
+    "F-READ-OWN",
     "F-VERSION",
     "F-SCHEMA",
     "F-DIGEST",
@@ -540,6 +550,9 @@
     ],
     "F-READ-RESYNC": [
      "rejected:private-endpoint",
+     "admitted"
+    ],
+    "F-READ-OWN": [
      "admitted"
     ],
     "F-VERSION": [
@@ -837,6 +850,8 @@
      "M-READ-INVOKE-ALIAS",
      "M-SEAM-SUB-ALIAS",
      "M-READ-SUB-ALIAS",
+     "M-SEAM-OWN-ALIAS",
+     "M-READ-OWN-ALIAS",
      "M-SHARED-REF"
     ],
     "merged": [
@@ -1459,6 +1474,10 @@
       "diagnostic",
       "merged"
      ],
+     "F-READ-OWN": [
+      "admit",
+      "merged"
+     ],
      "F-VERSION": [
       "admit",
       "diagnostic",
@@ -1671,6 +1690,9 @@
       "admit"
      ],
      "F-READ-RESYNC": [
+      "admit"
+     ],
+     "F-READ-OWN": [
       "admit"
      ],
      "F-VERSION": [
@@ -1902,6 +1924,9 @@
      "F-READ-RESYNC": [
       "admit"
      ],
+     "F-READ-OWN": [
+      "admit"
+     ],
      "F-VERSION": [
       "admit"
      ],
@@ -2019,6 +2044,9 @@
       "admit"
      ],
      "F-READ-RESYNC": [
+      "admit"
+     ],
+     "F-READ-OWN": [
       "admit"
      ],
      "F-VERSION": [
@@ -2213,6 +2241,9 @@
      "F-READ-RESYNC": [
       "admit"
      ],
+     "F-READ-OWN": [
+      "admit"
+     ],
      "F-VERSION": [
       "admit"
      ],
@@ -2330,6 +2361,9 @@
       "admit"
      ],
      "F-READ-RESYNC": [
+      "admit"
+     ],
+     "F-READ-OWN": [
       "admit"
      ],
      "F-VERSION": [
@@ -2451,6 +2485,9 @@
      "F-READ-RESYNC": [
       "aliased"
      ],
+     "F-READ-OWN": [
+      "aliased"
+     ],
      "F-VERSION": [
       "aliased"
      ],
@@ -2568,6 +2605,9 @@
       "aliased"
      ],
      "F-READ-RESYNC": [
+      "aliased"
+     ],
+     "F-READ-OWN": [
       "aliased"
      ],
      "F-VERSION": [
@@ -2998,6 +3038,19 @@
       "aliased"
      ],
      "F-EFFECT": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-OWN-ALIAS": {
+     "F-READ-OWN": [
+      "aliased"
+     ],
+     "F-DIGEST": [
+      "aliased"
+     ]
+    },
+    "M-READ-OWN-ALIAS": {
+     "F-READ-OWN": [
       "aliased"
      ]
     }
@@ -3486,6 +3539,7 @@
      "F-READ-GAP#1:ga2",
      "F-READ-RESYNC#0:rx1",
      "F-READ-RESYNC#1:rx2",
+     "F-READ-OWN#0:ow1",
      "F-VERSION#0:v1",
      "F-VERSION#1:v2",
      "F-VERSION#2:v3",
@@ -3668,6 +3722,7 @@
      "F-READ-ACK#1:ak2",
      "F-READ-GAP#1:ga2",
      "F-READ-RESYNC#1:rx2",
+     "F-READ-OWN#0:ow1",
      "F-VERSION#0:v1",
      "F-SCHEMA#0:h1",
      "F-DIGEST#0:d1",
@@ -3769,6 +3824,8 @@
     "M-READ-INVOKE-ALIAS": [],
     "M-SEAM-SUB-ALIAS": [],
     "M-READ-SUB-ALIAS": [],
+    "M-SEAM-OWN-ALIAS": [],
+    "M-READ-OWN-ALIAS": [],
     "M-GAP-APPLY": [
      "F-GAP#1:g2",
      "F-GAP#2:g3",
@@ -4308,6 +4365,9 @@
      "resync"
     ],
     "F-READ-RESYNC": [
+     "resync"
+    ],
+    "F-READ-OWN": [
      "resync"
     ],
     "F-VERSION": [
@@ -5070,6 +5130,9 @@
     "F-READ-RESYNC": [
      "claim-order"
     ],
+    "F-READ-OWN": [
+     "claim-order"
+    ],
     "F-VERSION": [
      "claim-order"
     ],
@@ -5250,6 +5313,9 @@
     "F-READ-RESYNC": [
      "aliased"
     ],
+    "F-READ-OWN": [
+     "aliased"
+    ],
     "F-VERSION": [
      "aliased"
     ],
@@ -5369,6 +5435,9 @@
     "F-READ-RESYNC": [
      "aliased"
     ],
+    "F-READ-OWN": [
+     "aliased"
+    ],
     "F-VERSION": [
      "aliased"
     ],
@@ -5486,6 +5555,9 @@
      "aliased"
     ],
     "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-READ-OWN": [
      "aliased"
     ],
     "F-VERSION": [
@@ -5919,6 +5991,19 @@
      "aliased"
     ]
    },
+   "M-SEAM-OWN-ALIAS": {
+    "F-READ-OWN": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ]
+   },
+   "M-READ-OWN-ALIAS": {
+    "F-READ-OWN": [
+     "aliased"
+    ]
+   },
    "M-SHARED-LABEL": {
     "F-SESSION": [
      "claim-shared"
@@ -5939,6 +6024,9 @@
      "claim-shared"
     ],
     "F-READ-RESYNC": [
+     "claim-shared"
+    ],
+    "F-READ-OWN": [
      "claim-shared"
     ],
     "F-VERSION": [
@@ -6146,6 +6234,9 @@
     "F-READ-RESYNC": [
      "merged"
     ],
+    "F-READ-OWN": [
+     "merged"
+    ],
     "F-VERSION": [
      "merged"
     ],
@@ -6263,6 +6354,9 @@
      "claim-merge"
     ],
     "F-READ-RESYNC": [
+     "claim-merge"
+    ],
+    "F-READ-OWN": [
      "claim-merge"
     ],
     "F-VERSION": [
@@ -6855,7 +6949,7 @@
   "Q13": {
    "seam-nonenum": {
     "fixtures": {},
-    "seam": 89,
+    "seam": 90,
     "read": [],
     "certification": [
      "refused:outside-the-pinned-set"
@@ -6872,6 +6966,7 @@
      "F-READ-ACK",
      "F-READ-GAP",
      "F-READ-RESYNC",
+     "F-READ-OWN",
      "F-VERSION",
      "F-SCHEMA",
      "F-DIGEST",
@@ -7062,7 +7157,7 @@
   "Q12: R-LABEL-TEXT",
   "Q13: R-ALIAS-HOLDER",
   "rule 16: the rows, the residual families, the classes, the contract parts, the claim families, the checks, the mutants, the fixtures, the contract's endpoints, the words, the reading forms (script and markup extensions, named entities), the walks (roots, pathspecs, judges, floors, anchors and exclusions) and the hosts are frozen at their measured shape",
-  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe",
+  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe, and its first refusal's U1-U3 lines the members they owe",
   "roster: the judged rows, the quotes, the residual members, the readers and the registered tests equal test/fixtures/foa-public-port-bridge-roster.json, in order and both ways; every pin reached its witness compare"
  ],
  "producer": {
