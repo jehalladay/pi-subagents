@@ -1054,6 +1054,18 @@
     "path": "docs/alt-mixed-reference.md",
     "text": "Pi embeds a ![wa&sopf;m `wa&sopf;m`](x.png) runtime.\n"
    },
+   "altRawState": {
+    "path": "docs/alt-raw-state.md",
+    "text": "Pi embeds the <code>![x](x.png)</code>.\n"
+   },
+   "altNestedImage": {
+    "path": "docs/alt-nested-image.md",
+    "text": "Pi embeds a ![![wa  \nsm](y.png)](x.png) runtime.\n"
+   },
+   "altRefusedMarkup": {
+    "path": "docs/alt-refused-markup.md",
+    "text": "Pi embeds a ![wa<?x?>sm](x.png) runtime.\n"
+   },
    "paragraphBreak": {
     "path": "docs/break.md",
     "text": "Pi will embed wa  \nsm.\n"
@@ -1553,7 +1565,12 @@
    "delDestination": "![~~[x](wa&#115;m)~~](x.png)",
    "linkCodeSpan": "![[`wa&#115;m`](u)](x.png)",
    "codeSpanUnknownReference": "![`wa&sopf;m`](x.png)",
-   "escapeUnknownReference": "![wa\\&sopf;m](x.png)"
+   "escapeUnknownReference": "![wa\\&sopf;m](x.png)",
+   "codeSpanNameBefore": "![`&Copf;` wa&sopf;m](x.png)",
+   "codeSpanNameAfter": "![wa&sopf;m `&Copf;`](x.png)",
+   "codeSpanSameNameBefore": "![`&sopf;` &Copf; &sopf;](x.png)",
+   "codeSpanSameNameAfter": "![&sopf; &Copf; `&sopf;`](x.png)",
+   "codeSpanPair": "![`wa&sopf;m` `wa&sopf;m`](x.png)"
   },
   "altFormPath": "docs/alt-form.md",
   "imageAlt": "image alt",
@@ -2278,6 +2295,28 @@
        ],
        "escapeUnknownReference": [
         "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "codeSpanNameBefore": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;",
+        "wb-x32.comments[0].text:1: rendered unknown &Copf;"
+       ],
+       "codeSpanNameAfter": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;",
+        "wb-x32.comments[0].text:1: rendered unknown &Copf;"
+       ],
+       "codeSpanSameNameBefore": [
+        "wb-x32.comments[0].text:1: rendered unknown &Copf;",
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;",
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "codeSpanSameNameAfter": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;",
+        "wb-x32.comments[0].text:1: rendered unknown &Copf;",
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
+       ],
+       "codeSpanPair": [
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;",
+        "wb-x32.comments[0].text:1: rendered unknown &sopf;"
        ]
       }
      }
@@ -2557,6 +2596,28 @@
        ],
        "escapeUnknownReference": [
         "escapeUnknownReference:1: rendered unknown &sopf;"
+       ],
+       "codeSpanNameBefore": [
+        "codeSpanNameBefore:1: rendered unknown &sopf;",
+        "codeSpanNameBefore:1: rendered unknown &Copf;"
+       ],
+       "codeSpanNameAfter": [
+        "codeSpanNameAfter:1: rendered unknown &sopf;",
+        "codeSpanNameAfter:1: rendered unknown &Copf;"
+       ],
+       "codeSpanSameNameBefore": [
+        "codeSpanSameNameBefore:1: rendered unknown &Copf;",
+        "codeSpanSameNameBefore:1: rendered unknown &sopf;",
+        "codeSpanSameNameBefore:1: rendered unknown &sopf;"
+       ],
+       "codeSpanSameNameAfter": [
+        "codeSpanSameNameAfter:1: rendered unknown &sopf;",
+        "codeSpanSameNameAfter:1: rendered unknown &Copf;",
+        "codeSpanSameNameAfter:1: rendered unknown &sopf;"
+       ],
+       "codeSpanPair": [
+        "codeSpanPair:1: rendered unknown &sopf;",
+        "codeSpanPair:1: rendered unknown &sopf;"
        ]
       }
      }
@@ -3670,6 +3731,17 @@
         "docs/alt-mixed-reference.md:1: rendered unknown &sopf;",
         "docs/alt-mixed-reference.md:1: rendered unknown &sopf;"
        ],
+       "altRawState": [
+        "docs/alt-raw-state.md:1: rendered unknown raw-state text \"x\""
+       ],
+       "altNestedImage": [
+        "docs/alt-nested-image.md:1: rendered unknown image alt \"wasm\""
+       ],
+       "altRefusedMarkup": [
+        "docs/alt-refused-markup.md:1: rendered unknown <?x?>",
+        "docs/alt-refused-markup.md:1: rendered unknown image alt \"wa<?x?>sm\"",
+        "docs/alt-refused-markup.md:1: rendered embed+core"
+       ],
        "paragraphBreak": [],
        "paragraphBackslashBreak": [],
        "rawStateReference": [],
@@ -4240,6 +4312,28 @@
         "docs/alt-form.md:1: rendered unknown &sopf;"
        ],
        "escapeUnknownReference": [
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "codeSpanNameBefore": [
+        "docs/alt-form.md:1: rendered unknown &sopf;",
+        "docs/alt-form.md:1: rendered unknown &Copf;"
+       ],
+       "codeSpanNameAfter": [
+        "docs/alt-form.md:1: rendered unknown &sopf;",
+        "docs/alt-form.md:1: rendered unknown &Copf;"
+       ],
+       "codeSpanSameNameBefore": [
+        "docs/alt-form.md:1: rendered unknown &Copf;",
+        "docs/alt-form.md:1: rendered unknown &sopf;",
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "codeSpanSameNameAfter": [
+        "docs/alt-form.md:1: rendered unknown &sopf;",
+        "docs/alt-form.md:1: rendered unknown &Copf;",
+        "docs/alt-form.md:1: rendered unknown &sopf;"
+       ],
+       "codeSpanPair": [
+        "docs/alt-form.md:1: rendered unknown &sopf;",
         "docs/alt-form.md:1: rendered unknown &sopf;"
        ]
       },
