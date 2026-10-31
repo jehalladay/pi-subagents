@@ -1,5 +1,5 @@
 {
- "comment": "wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11) roster of test/workbench-rf-graph-explain-truncation-census.test.ts, cut #4 (the enumerate-the-resolvable cut bound by refusal #3's CUT #4 FORM). capture: the producer state, written by cut #2's capture script (seat ws-03, g10-work-s129) from the installed rf, two scratch rf workspaces and a read-only git show and log of the RFCLI object store, re-read equal on every value by the same script at 2026-10-28T22:20:05Z (seat ws-03, g10-work-s130) and again at 2026-10-29T02:02:54Z (seat ws-04, g10-work-s133; the empty-scratch probe's per-run operation id aside each time); filing, constants, rows, witnesses and tests: measured from the census at trunk b3d410f (merged into the branch) by a dump run on a throwaway tree, never hand-typed. A carrier re-pin reds row G1 until capture is re-measured at the new release (capture.remeasure); a rebuild under the same release does not (R-SAME-RELEASE-REBUILD, Q2). Neither biome nor tsc reads this file (both include src/**/*.ts and test/**/*.ts only): the census's JSON.parse at run time is its only reader, and it refuses any field of the wrong shape by name.",
+ "comment": "wb-2j3.10 (RFCLI-PERFORMANCE-MATHEMATICAL-OPTIMIZATION-R11) roster of test/workbench-rf-graph-explain-truncation-census.test.ts: cut #4 (the enumerate-the-resolvable cut bound by refusal #3's CUT #4 FORM, landed at 664) and its R694 follow-up wb-o6jx (seat ws-03, g10-work-s145: Q6's three construct members of R-UNREAD-SPECIFIER; W1's live Unix socket entry control, socket.ts|other). capture: the producer state, written by cut #2's capture script (seat ws-03, g10-work-s129) from the installed rf, two scratch rf workspaces and a read-only git show and log of the RFCLI object store, re-read equal on every value by the same script at 2026-10-28T22:20:05Z (seat ws-03, g10-work-s130) and again at 2026-10-29T02:02:54Z (seat ws-04, g10-work-s133; the empty-scratch probe's per-run operation id aside each time), carried unchanged by the follow-up; filing, constants, rows, witnesses and tests: measured from the census by a dump run on a throwaway tree of trunk e55254c (the follow-up's base) plus the follow-up's two files, never hand-typed. A carrier re-pin reds row G1 until capture is re-measured at the new release (capture.remeasure); a rebuild under the same release does not (R-SAME-RELEASE-REBUILD, Q2). Neither biome nor tsc reads this file (both include src/**/*.ts and test/**/*.ts only): the census's JSON.parse at run time is its only reader, and it refuses any field of the wrong shape by name.",
  "bead": "wb-2j3.10",
  "capture": {
   "capturedUtc": "2026-10-28T17:21:52Z",
@@ -394,6 +394,10 @@
     "path": "dangling.ts",
     "kind": "symlink",
     "target": "missing.ts"
+   },
+   {
+    "path": "socket.ts",
+    "kind": "socket"
    }
   ],
   "kindControls": {
@@ -745,7 +749,10 @@
    "composed": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"@reactive\" + \"-fiber/sdk\");",
    "url": "await import(new URL(\"@reactive-fiber/sdk\", import.meta.url).href);",
    "spread": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(...[\"@reactive-fiber/sdk\"]);",
-   "conditional": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(flag ? \"@reactive-fiber/sdk\" : \"@furnace/sdk\");"
+   "conditional": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(flag ? \"@reactive-fiber/sdk\" : \"@furnace/sdk\");",
+   "construct": "import { createRequire } from \"node:module\"; new (createRequire(import.meta.url))(\"@reactive-fiber/sdk\");",
+   "construct-asserted": "import { createRequire as gateMakeLoader } from \"node:module\"; type GateLoader = new (id: string) => unknown; export const gateConstructed = new (gateMakeLoader(import.meta.url) as unknown as GateLoader)(\"@reactive-fiber/sdk\");",
+   "construct-bound": "import { createRequire } from \"node:module\"; const Loader = createRequire(import.meta.url) as unknown as new (id: string) => unknown; new Loader(\"@reactive-fiber/sdk\");"
   },
   "pathSpecifiers": {
    "relative": "import { createRequire } from \"node:module\"; createRequire(import.meta.url)(\"../node_modules/@reactive-fiber/sdk/dist/index.js\");",
@@ -1013,6 +1020,7 @@
         "linked-dir|symlink",
         "linked.ts|symlink",
         "nested/.hidden|file",
+        "socket.ts|other",
         "upper.TS|file"
        ]
       },
@@ -1453,7 +1461,10 @@
       "composed": [],
       "url": [],
       "spread": [],
-      "conditional": []
+      "conditional": [],
+      "construct": [],
+      "construct-asserted": [],
+      "construct-bound": []
      }
     },
     {
