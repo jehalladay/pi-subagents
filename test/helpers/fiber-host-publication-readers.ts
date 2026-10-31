@@ -1,23 +1,29 @@
 /**
  * wb-pyel.7 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1; the rule-19 structural exit of wb-pyel.1, orchestrator rulings R-B105 and
- * R-B135): the Fiber host-publication census's A1 and A3 readers at full surface, for wb-pyel.1's census to compose. Every claim
- * word here is held to a planted falsifier by test/workbench-fiber-host-publication-readers-census.test.ts, whose CLAIMS constant
- * states the claims and whose roster (test/fixtures/fiber-host-publication-readers-roster.json) holds every reading.
+ * R-B135): the Fiber host-publication census's A1 and A3 readers, for wb-pyel.1's census to compose. WHAT IS CLAIMED about them is
+ * stated in one place only: the CLAIMS constant of test/workbench-fiber-host-publication-readers-census.test.ts, each clause bounded
+ * to the planted inputs of the pins it names, every reading held to its roster
+ * (test/fixtures/fiber-host-publication-readers-roster.json). The comments in this file describe what the code does, rule by rule;
+ * they claim no coverage of their own, and an input no census plant holds is not claimed by them.
  *
- * A1, THE MANIFEST READERS. manifestForm names the one form that selects a path: manifest-name (its base name is a MANIFEST_NAMES
- * entry, in any ASCII letter case), pip-name (its base name holds a PIP_FAMILY_WORDS word, in any ASCII letter case, whatever its extension
- * or none), pip-directory (a directory segment of its path holds a PIP_FAMILY_WORDS word, in any ASCII letter case: every file below it,
- * at any depth, whatever its extension or none). readManifests reads every listed path outside TEST_ROOT that a form selects, each
- * as raw lines (all but the ROOT_NPM pair, which have their own readers: manifestHits reads package.json whole, lockReading reads
- * package-lock.json's installed paths and names), and reports each STEM hit as `<path>:<line>: <needle>`.
+ * A1, THE MANIFEST READERS. manifestForm names the one form that selects a path, trying in order: manifest-name (the base name,
+ * lower-cased, equals a lower-cased MANIFEST_NAMES entry), pip-name (the lower-cased base name, extension included, contains a
+ * PIP_FAMILY_WORDS word), pip-directory (a lower-cased directory segment of the path contains one). The path is cut at every "/".
+ * readManifests skips every listed path that starts with TEST_ROOT, selects the rest by manifestForm, reads each selected path as
+ * raw lines (split at "\n") except the ROOT_NPM pair at the root, which have their own readers (manifestHits reads package.json's
+ * parsed keys and strings and, given, its raw lines; lockReading reads package-lock.json's installed paths and name fields), and
+ * reports each STEM hit as `<path>:<line>: <needle>`.
  *
- * A3, THE REGISTRATION READERS. registrationTexts is the static reading of one file: in a script module every judged text (a
- * JUDGED_KINDS node) one of whose word segments is a REGISTRATION_WORDS entry, one entry per segment, and every REGISTER_NAME name
- * that a DECLARATION_KINDS declaration or an import or export specifier's property name spells; in any other file every raw
- * line's REGISTRATION_WORDS segments. familyCriteria names each criterion that puts a descriptor in the Fiber family, one reason per
- * criterion (id, permission, contract: the text folds to hold FAMILY_WORD; rf-contract: the contract starts with RF_CONTRACT);
- * isCarrier reads the contract against the provider's own REACTIVE_FIBER_CONTRACT_SOURCE; registryReading states a registry's
- * needle hits and its Fiber family whole (criteria, carrier and publishing reasons for each member).
+ * A3, THE REGISTRATION READERS. registrationTexts is the static reading of one file. A file whose lower-cased extension is a
+ * SCRIPT_KINDS key is parsed: every judged text (a JUDGED_KINDS node) is cut into word segments at every character outside A-Z,
+ * a-z, 0-9, _ and $, each segment equal to a REGISTRATION_WORDS entry giving one entry, and a judged text with none that names a
+ * DECLARATION_KINDS declaration, or is an import or export specifier's property name, gives one entry when REGISTER_NAME matches
+ * it. Every other file is read as raw lines, each line's REGISTRATION_WORDS segments one entry each. familyCriteria names each
+ * criterion that puts a descriptor in the Fiber family (id, permission, contract: the text's fold contains FAMILY_WORD;
+ * rf-contract: the contract starts with RF_CONTRACT); isCarrier compares the contract to the provider's own
+ * REACTIVE_FIBER_CONTRACT_SOURCE with ===; publishingReasons states one reason per non-read effect, per mode other than invoke and
+ * for a contract that does not end with a space and NO_COMMIT; registryReading states a registry's needle hits and its Fiber
+ * family (criteria, carrier and publishing reasons for each member).
  *
  * Display paths added: none. Test-only: nothing here writes, spawns or registers anything; every reader reads what it is handed.
  */
@@ -37,7 +43,7 @@ export const HOSTED_CLASSES = ["FiberRuntime", "FiberGraph", "FiberScheduler"] a
 export const PUBLICATION_ENTRIES = ["queue_value_publication", "flush_value_publications", "request_rerender", "flush_requested_renders"] as const;
 /** Today's rf previews are renders ending in this flag. */
 export const NO_COMMIT = "--no-commit";
-/** The dependency manifests A1 reads at any depth by base name, in any ASCII letter case: the npm, Python and Rust ecosystems. */
+/** The dependency manifests manifest-name selects by base name, compared lower-cased: the npm, Python and Rust ecosystems. */
 export const MANIFEST_NAMES = [
   "package.json",
   "package-lock.json",
@@ -57,7 +63,7 @@ export const MANIFEST_NAMES = [
   "Cargo.toml",
   "Cargo.lock",
 ] as const;
-/** pip's requirement, constraint and lock family: a base name or a directory segment holding one of these, in any ASCII letter case, is read. */
+/** pip's requirement, constraint and lock family: pip-name and pip-directory select a lower-cased base name or directory segment containing one. */
 export const PIP_FAMILY_WORDS = ["requirements", "constraints", "pylock"] as const;
 /** The test tree: .npmignore keeps it out of the published package, so a manifest below it declares no dependency of Pi's. */
 export const TEST_ROOT = "test/";
@@ -167,7 +173,7 @@ export function json(value: unknown): JsonValue {
 
 // ---- A1: the manifest readers ----
 
-/** Every key and string of a JSON value at any depth, each with its path (a key is read as text too). */
+/** Every key and string of a JSON value, recursing through every array item and object entry (a key is read as text too), each with its path. */
 export function textsOf(value: unknown, path: string): { path: string; text: string }[] {
   if (typeof value === "string") return [{ path, text: value }];
   if (Array.isArray(value)) return value.flatMap((item, index) => textsOf(item, `${path}[${index}]`));
@@ -178,7 +184,7 @@ export function textsOf(value: unknown, path: string): { path: string; text: str
 export function textHits(value: unknown, path: string, needles: readonly string[]): string[] {
   return textsOf(value, path).flatMap(({ path: at, text }) => needlesIn(text, needles).map(needle => `${at}: ${needle}`));
 }
-/** A text's raw lines, each with its line number (every line is judged, comments included). */
+/** A text's raw lines, split at "\n", each with its line number (a comment line is a line like any other). */
 export function rawLines(text: string): { line: number; text: string }[] {
   return text.split("\n").map((line, index) => ({ line: index + 1, text: line }));
 }
@@ -203,7 +209,7 @@ export function lockReading(lock: unknown): { packages: number; hits: string[] }
 }
 /** The three forms that select a path for A1, in the order manifestForm tries them. */
 export type ManifestForm = "manifest-name" | "pip-name" | "pip-directory";
-/** Whether a path segment holds a PIP_FAMILY_WORDS word, in any ASCII letter case. */
+/** Whether a path segment, lower-cased, contains a PIP_FAMILY_WORDS word. */
 export function holdsPipWord(segment: string): boolean {
   const lower = segment.toLowerCase();
   return PIP_FAMILY_WORDS.some(word => lower.includes(word));
@@ -362,15 +368,15 @@ export function inFiberFamily(descriptor: CapabilityDescriptor): boolean {
 export function isCarrier(descriptor: CapabilityDescriptor): boolean {
   return descriptor.contractSource === REACTIVE_FIBER_CONTRACT_SOURCE;
 }
-/** Why a Fiber-family descriptor is not the read preview: a non-read effect, a mode beyond invoke, a contract without the flag. */
+/** Why a Fiber-family descriptor is not the read preview: each non-read effect, each mode other than invoke, a contract not ending with a space and NO_COMMIT. */
 export function publishingReasons(descriptor: CapabilityDescriptor): string[] {
   const reasons: string[] = [];
   if (descriptor.effectClass !== "read") reasons.push(`effectClass ${descriptor.effectClass}`);
   for (const mode of descriptor.supportedModes) if (mode !== "invoke") reasons.push(`mode ${mode}`);
-  if (!(descriptor.contractSource ?? "").endsWith(` ${NO_COMMIT}`)) reasons.push(`contract without ${NO_COMMIT}`);
+  if (!(descriptor.contractSource ?? "").endsWith(` ${NO_COMMIT}`)) reasons.push(`contract not ending with " ${NO_COMMIT}"`);
   return reasons;
 }
-/** One descriptor's reading: its needles (any set, every key and string at any depth) and, in the family, its criteria and why it publishes. */
+/** One descriptor's reading: its ALL_NEEDLES needles over textsOf's keys and strings, its criteria and, in the family, why it publishes. */
 export function descriptorReading(descriptor: CapabilityDescriptor): { criteria: FamilyCriterion[]; publishing: string[]; needles: string[] } {
   const criteria = familyCriteria(descriptor);
   const needles = [...new Set(textsOf(descriptor, descriptor.id).flatMap(({ text }) => needlesIn(text, ALL_NEEDLES)))];
