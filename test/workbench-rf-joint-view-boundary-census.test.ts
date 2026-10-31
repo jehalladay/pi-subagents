@@ -33,12 +33,15 @@
  * reading only at the root in force, host.authorizedRfRoot ?? host.scope.workspace (:436, any other root refused
  * 'authorization'; the authorizedRfRoot docstring at :38-39: 'When present it, and only it, replaces scope.workspace as the root
  * a reading may name'), and refuses 'validation' an envelope whose workspace root differs from the reading's (:452) (C3 pins
- * the root rule); and no tracked src module names a VOCABULARY fold (A3 pins the scan; a separator-tolerant git grep of the
- * eight needles over src reads 0 rows). So the trigger has not fired: Pi states no joint conditions, and a caller composes
- * views only as separate values and separate snapshots. Re-read for wb-fxyx (seat ws-06, run g10-work-s145) at trunk
- * ee48709, landing 685: git log b3d410f..ee48709 over the four src modules this census imports (capability-registry.ts,
- * observation.ts, providers/reactivefiber.ts, reactivefiber-observer.ts) reads no commit, so every line named here stands;
- * the root-rule lines :38-39, :436 and :452 were read at that trunk.
+ * the two rules, :436's and :452's, each in its admitting and its refusing direction, in the two host configurations its pin
+ * names below and in no other); and no tracked src module names a VOCABULARY fold (A3 pins the scan; a separator-tolerant git
+ * grep of the eight needles over src reads 0 rows). So the trigger has not fired: Pi states no joint conditions, and a caller
+ * composes views only as separate values and separate snapshots. Re-read for wb-fxyx (seat ws-06, run g10-work-s145) at
+ * trunk ee48709, landing 685, and for wb-t99a (seat ws-06, run g10-work-s153) at trunk 42ab54d, landing 711: git log
+ * b3d410f..42ab54d over the four src modules this census imports (capability-registry.ts, observation.ts,
+ * providers/reactivefiber.ts, reactivefiber-observer.ts) reads no commit, so every line named here stands. The root-rule
+ * lines :38-39, :436 and :452 were read at both trunks; that is a record of what was read, and what C3 pins is the
+ * parenthetical above.
  *
  * READINGS. A VOCABULARY fold is NFKC, lower case, every character outside a-z and 0-9 removed. The needles: the two contract
  * names the vendored :4 and :6 lines spell (RFContext...V0, the rf prefix and the V0 suffix dropped), the title's three
@@ -109,8 +112,11 @@
  *    scope's prefix (<root>-elsewhere) with no authorized root stated, and the observer scope's own root under an authorized
  *    root (<root>-authorized) that differs from it. A reading at that authorized root (its envelope stating the same root)
  *    projects whatever VERDICT form it carries, each topology, whole, the same as the verdict-free reading's there, though
- *    that root differs from the observer scope. A reading at the observer scope's root with no authorized root stated projects
- *    a topology that is, whole, the same with and without any VERDICT form.
+ *    that root differs from the observer scope. A reading at the root in force whose envelope states another root is refused
+ *    'validation' with one message whatever VERDICT form it carries, read in the same two host configurations: at the
+ *    observer scope's root with no authorized root stated, its envelope stating <root>-elsewhere, and at the authorized root,
+ *    its envelope stating the observer scope's root. A reading at the observer scope's root with no authorized root stated
+ *    projects a topology that is, whole, the same with and without any VERDICT form.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the claims shape below. The judged set -
  * every row's id, label and pins, every pin's witness and claims, the vocabulary, the verdict words, the denial codes, the info
@@ -921,6 +927,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     // The third configuration: a reading at the authorized root, its envelope stating that root, under the host stating it.
     const atAuthorized = variants(authorizedRfRoot, authorizedRfRoot).map(value => observed(value, authorized));
     const authorizedBaseline = JSON.stringify(observed(reading(cleanView(0, authorizedRfRoot), {}, authorizedRfRoot), authorized));
+    // The envelope rule (:452) in both host configurations: a reading at the root in force whose envelope states another root.
+    const envelopeElsewhere = [
+      ...variants(ROOT, elsewhere).map(value => observed(value)),
+      ...variants(authorizedRfRoot, ROOT).map(value => observed(value, authorized)),
+    ];
     return {
       "or observer workspace-scope checks": {
         outOfScope: refusals(variants(elsewhere).map(value => observed(value))),
@@ -931,6 +942,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
           equal: atAuthorized.filter(row => JSON.stringify(row) === authorizedBaseline).length,
           differsFromScope: authorized.authorizedRfRoot !== authorized.scope.workspace,
         },
+        envelopeRootDiffers: refusals(envelopeElsewhere),
       },
       "(read admission independent of scoring)": {
         positions: ["reading", "result"],
@@ -972,7 +984,7 @@ describe("wb-ae7u rf joint-view boundary census (RF-CAC-CONTEXT-REFINEMENT-R5, g
     expect(ROSTER.residuals.every(item => pins.includes(item.quietPin))).toBe(true);
     const held = ROSTER.rows.flatMap(row => row.pins);
     expect(ROSTER.residuals.every(item => held.find(pin => pin.id === item.quietPin)?.claims.some(claim => claim.facts.includes(item.fact)) === true)).toBe(true);
-    expect(held.map(pin => `${pin.id}:${pin.claims.map(claim => claim.facts.length).join("+")}`)).toEqual(["A1:3+3", "A2:3+3", "A3:3+6", "B1:2+2", "B2:2+2", "B3:4", "C1:4+5", "C2:3+2", "C3:3+4"]);
+    expect(held.map(pin => `${pin.id}:${pin.claims.map(claim => claim.facts.length).join("+")}`)).toEqual(["A1:3+3", "A2:3+3", "A3:3+6", "B1:2+2", "B2:2+2", "B3:4", "C1:4+5", "C2:3+2", "C3:4+4"]);
     expect(held.filter(pin => !tiled(pin.quote, pin.claims.map(claim => claim.term))).map(pin => pin.id)).toEqual([]);
   });
   for (const row of ROWS) {
