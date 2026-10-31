@@ -67,56 +67,86 @@
  * clause, never to state it exactly. So an entry appended without the resolution, with a second or no rule block, or with words that
  * show added around the clause in its rule block reds, and so does the clause shortened in this file and the roster together,
  * against the unchanged receipt; and a header that drops the clause reds.
- * THE READERS (wb-pnn8 cut #3, the enumerate-the-resolvable form ruling R-B126 binds): of its four receipt-anchor readers the census
- * claims exactly the readings listed here and no other, each pinned by the in-case control of the receipt-anchor case named beside
- * it, so a reader that departs from a listed reading reds that control on the unmodified census and receipt.
+ * THE READERS (wb-pnn8 cut #4, the FAIL-CLOSED CORE ruling R-B159 binds on cut #3's R-B126 enumeration): of its four receipt-anchor
+ * readers the census claims exactly the readings listed here and no other, each for the inputs the in-case control of the
+ * receipt-anchor case named beside it holds (quoted where a reading names a form), so a reader that departs from a listed reading on
+ * those inputs reds the receipt-anchor case on the unmodified census and receipt, at that control or at an earlier assertion of the
+ * case that holds the same input (the receipt's own tables, rule and header are read first). A form no listed reading names is not
+ * claimed: THE HOLES below name the forms measured escaping the controls.
  * Entries (anchorTables, anchorProse and anchorRules, the entry forms control reading all three): an entry starts at a top-level
- * level-2 heading - ATX, ATX with a closing sequence, ATX indented by two spaces, or setext; dated or not - and runs to the next one or
- * to the end, and the readers read the last entry only (the entry forms control; lastEntry of the tables reader and prose reader
- * controls; the rule entries control); nothing before the first such heading belongs to an entry (noEntry of the tables reader and
- * prose reader controls; beforeEntries of the rule entries control); a heading of level 1 (ATX or setext), 3, 4, 5 or 6, and a level-2
- * heading inside a blockquote, a list item, an HTML comment, a fenced code block or an indented code block, neither ends an entry nor
- * starts one (the entry forms and tables depth controls; the prose forms control for levels 1 and 3 to 6).
- * Tables (anchorTables): the entry's top-level tables, in document order, each as its header row then its body rows of cell texts
- * as written, their markup kept (the table cells and tables depth controls); a table inside a blockquote or a list item (the table
- * nesting control), an HTML comment or a code block (comment and codeBlock of the tables reader control) is no table.
+ * level-2 heading - ATX ('## Notes'), ATX with a closing sequence ('## Closed ##'), ATX indented by two spaces ('  ## Indented') or
+ * setext ('Setext entry' over '---'); dated or not - and the readers read the last entry only, from its heading to the end of the
+ * document (the entry forms control; lastEntry of the tables reader and prose reader controls; the rule entries control); nothing
+ * before the first such heading belongs to an entry (noEntry of the tables reader and prose reader controls; beforeEntries of the
+ * rule entries control); a heading of level 1 (ATX or setext), 3, 4, 5 or 6, and a level-2 heading inside a blockquote, a list item,
+ * an HTML comment, a fenced code block or an indented code block, neither ends an entry nor starts one (the entry forms and tables
+ * depth controls; the prose forms control for levels 1 and 3 to 6).
+ * Tables (anchorTables): the entry's top-level tables, in document order (the tables depth control: three tables, headings of the
+ * other levels between them), each read as its header row then its body rows in order (every control's one-row tables; the receipt's
+ * own three tables, whose 9, 29 and 14 body rows the case holds in order), each cell read as written for the cell forms the controls
+ * and the receipt hold - plain words, digits, hyphens and single spaces ('Pin', 'Quote sha-256', 'B1', '0'), a code span ('`B1`') and
+ * an asterisk emphasis ('*0*') with their markup kept (the table cells control), and the receipt's lower-case hexadecimal digests,
+ * comma-separated pin ids ('A1, A2, A3, A4') and hyphenated family names ('R-SCOPE'); a table inside a blockquote or a list item (the
+ * table nesting control), an HTML comment or a fenced code block (comment and codeBlock of the tables reader control) is no table.
  * Prose (anchorProse): the entry's top-level paragraphs and the items of its top-level lists, bullet ('-', '*' and '+') and ordered
- * ('1.' and '1)'), in document order (the prose forms and lists controls); an item is read whole, its parts joined by a space: its
- * text, a nested list, a further paragraph, a nested blockquote, a nested code block, a nested table and a nested heading (the item
- * whole and prose forms controls); a top-level blockquote (a list inside it included), heading, table, thematic break, link reference
- * definition, HTML block (an element or a comment) and code block (fenced or indented) is no prose block (the prose forms and
- * not-prose controls; comment and codeBlock of the prose reader control). Each block is read whitespace-squeezed and trimmed, with
- * these inline readings (the inline forms and prose forms controls; lastEntry of the prose reader control): text, emphasis and strong
- * text (asterisks or underscores), a code span's code, an escaped character, the text of an inline link, a reference link and an
- * autolink, and a bare URL show themselves; a hard break (two trailing spaces or a backslash) reads as a space; struck text, an image
- * (its alt text included), an inline HTML comment, a link's destination and title and a task item's checkbox show nothing; a block
- * holding a raw HTML element (an opening or a closing tag) is opaque and is dropped, that block only, and the next block is read
- * (element of the prose reader control; the opacity control).
- * Rules (anchorRules): a rule block is a prose block that opens with ANCHOR.rule ('Witness rule: ') exactly: a lead one character off
- * it - a case flip, a deletion, an inserted 'x' or a substituted 'x' at any place before its end - and the lead in all upper case or
- * with every letter's case inverted are no lead (the rule leads control: 54 leads, the exact lead read), and so are a lead in lower
- * case, one without its closing space and one later in its block (the rule forms control; rules of the prose reader control); a rule
- * paragraph, a list item's rule and a task item's rule are read (the rule forms control); a rule reads past its lead with one closing
- * period dropped - of two, one stays and an inner period stays (the rule forms control); after a space, the period goes and the space
- * stays (the closing marks control) - and with every other closing ASCII punctuation mark kept (the closing marks control: the 31
- * printable ASCII characters that are neither a letter, a digit nor the period; the rule forms control for '!'); and only the last
- * entry's rule blocks are read, none from an earlier entry or from before the first (the rule entries control).
- * Header (headerOf; the header reader and header forms controls): the doc comment that opens the file at its first byte, read from its
- * opening '/**' to its first closing delimiter, each line's comment prefix - indentation, one '*' and one space - removed, whitespace
- * squeezed: a later doc comment not read, a bare '*' line a removed prefix, one '*' of two removed, a tab indent removed; a plain block
- * comment, and a doc comment after a blank first line, no header.
+ * ('1.' and '3)'), in document order (the prose forms and lists controls); an item is read whole, its parts joined by a space - its
+ * text, a nested blockquote, a nested fenced code block, a nested table (its cells), a nested level-3 heading, a further paragraph
+ * and a nested bullet list (the item whole control; the prose forms control for a nested item and a loose item's second paragraph); a
+ * top-level blockquote (a list inside it included), heading (of level 1, 3, 4, 5 or 6), table, thematic break ('---'), link reference
+ * definition, HTML block (a '<div>' element or an HTML comment) and code block (fenced or indented) is no prose block (the prose
+ * forms and not-prose controls; comment and codeBlock of the prose reader control). Each block is read whitespace-squeezed and
+ * trimmed, with these inline readings (the inline forms and prose forms controls; lastEntry of the prose reader control): text,
+ * emphasis and strong text in asterisks or underscores ('*emphasis*', '**strong**', '_under_', '__double__'), a code span's code, an
+ * escaped asterisk, the text of an inline link, of a full reference link ('[ref text][r]') and of an autolink, and a bare URL show
+ * themselves; a hard break (two trailing spaces or a backslash) reads as a space; struck text, an image (its alt text included), an
+ * inline HTML comment, an inline link's destination and title and a task item's checkbox show nothing; a top-level paragraph or a
+ * list item, each of one line, whose text holds a raw HTML element with a lower-case tag name - an opening tag ('<b>', '<i>',
+ * '<span>') or a closing one ('</i>') - is opaque and is dropped, that block only, and the next block is read (element of the prose
+ * reader control; the opacity control).
+ * Rules (anchorRules): a rule block is a prose block that opens with ANCHOR.rule ('Witness rule: '); the exact lead is read (the rule
+ * leads control), and so are a rule paragraph, a list item's rule and a task item's rule (the rule forms control); the near leads
+ * pinned as no lead are exactly these: every lead one character off ANCHOR.rule (a case flip, a deletion, an inserted 'x' or a
+ * substituted 'x' at any place before its end), the lead in all upper case and the lead with every letter's case inverted (the rule
+ * leads control: 54 leads), the lead in lower case and the lead without its closing space (the rule forms control), and a lead later
+ * in its block (rules of the prose reader control); a rule reads past its lead with one closing period dropped - of two, one stays
+ * and an inner period stays (the rule forms control); after a space, the period goes and the space stays (the closing marks control)
+ * - and with every other closing printable ASCII punctuation mark kept (the closing marks control: the 31 printable ASCII characters
+ * that are neither a letter, a digit nor the period; the rule forms control for '!'); and only the last entry's rule blocks are read,
+ * none from an earlier entry or from before the first (the rule entries control).
+ * Header (headerOf; the header reader and header forms controls): the doc comment that opens the file at its first byte, read from
+ * its opening '/**' to its first closing delimiter, each line's comment prefix - an indentation of one space or one tab, one '*' and
+ * one space - removed, whitespace squeezed: a later doc comment not read, a bare '*' line a removed prefix, one '*' of two removed, a
+ * tab indent removed; a plain block comment, and a doc comment after a blank first line, no header.
+ * THE HOLES (stated under R-B159 and NOT CLAIMED; their coverage, an in-case control per form, is the child bead wb-t8my's). A
+ * measured hole is a form no listed reading names on which a one-edit reader mutant departs while the unmodified census stays green.
+ * Fail-open, each beside a witness (a receipt holding the form, which the census reds and the mutant passes) - measured by the gate
+ * (refusal #3 on cut #3, its U1 to U3): in a table cell, an HTML element (mutant G12-T-CELL-HTML-STRIPPED, witness GW12-01), a
+ * backslash escape (G12-T-CELL-ESCAPES-RESOLVED, GW12-02), struck text (G12-T-CELL-STRIKE-STRIPPED, GW12-03) and a link
+ * (G12-T-CELL-LINK-TEXT, GW12-04); in prose, an item's nested indented code block (G12-P-NESTED-INDENTED-CODE-OFF, GW12-09), a
+ * shortcut reference link's text (G12-P-SHORTCUT-REFLINK-HIDDEN, GW12-08) and an HTML element in an item's nested list
+ * (G12-P-NESTED-LIST-OPACITY-ISOLATED, GW12-06); in a rule, a lead that compatibility normalization (NFKC) folds into ANCHOR.rule,
+ * its colon fullwidth (G12-R-NFKC-LEAD, GW12-07); measured by this cut: in a table cell, strong text and underscore emphasis; in
+ * prose, a collapsed reference link's text ('[text][]'). Fail-closed, measured by this cut: a header line whose comment prefix is
+ * indented by two or more characters, which the mutant keeps (it strips less than the census, so it can only lose the clause from a
+ * header, never find one the census misses: no fail-open witness exists). Not measured, and not claimed either: any other cell markup
+ * (an image, an autolink, a character reference) and an escaped pipe in a cell (marked resolves it: refusal #3 F5); an HTML element
+ * in a block of more than one line or in an item's other nested blocks, and one with an upper-case tag name (refusal #3 F7: the
+ * mutant that ignores upper-case names is killed outside these controls, at the judged-set case); a near lead outside the list above,
+ * and a rule clause holding a character NFKC folds.
  * READER RESIDUALS (named families, each pinned by its quiet rows in the receipt-anchor case; they are not row Q's residual families,
- * which the receipt's residuals table holds). An RR-SECOND-RULE-UNREAD or RR-UNSHOWN-WORDS quiet row is a synthetic receipt whose last
- * entry holds the rule 'one' and whose page holds one escaping form carrying the word 'two' (a second rule beside 'one' or before the
- * first entry, or words inside the rule 'one' itself); the row pins both that the page carries 'two' once and that the rule reader
- * reads ['one'] only, so it reds when its page is silenced or when its form starts to be read. RR-SECOND-RULE-UNREAD: a second,
- * contradicting rule where the rule reader reads no rule block - in a blockquote, in a level-3 heading, in an HTML block, in an HTML
- * comment, in a fenced code block, in a link reference definition's title, in an item nested under another item, in another item's
- * further paragraph, in a block holding a raw HTML element, behind a lead in another case ('Witness Rule: '), behind other words in
- * its block, or before the first entry (twelve rows). RR-UNSHOWN-WORDS: words around the clause carried only by text that shows
- * nothing - struck text, an image, an inline HTML comment, a link's title (four rows). RR-HEADER-WORDS: words around the clause in
- * this header, a negation before it or an exception after it (one row: a synthetic header carrying 'two' once in such words is pinned
- * to still contain the clause, since the case holds containment only).
+ * which the receipt's residuals table holds). An RR-SECOND-RULE-UNREAD or RR-UNSHOWN-WORDS quiet row is a synthetic receipt whose
+ * last entry holds the rule 'one' and whose page holds one escaping form carrying the word 'two' (a second rule beside 'one' or
+ * before the first entry, or words inside the rule 'one' itself); the row pins both that the page carries 'two' once and that the
+ * rule reader reads ['one'] only, so it reds when its page is silenced or when its form starts to be read. RR-SECOND-RULE-UNREAD: a
+ * second, contradicting rule where the rule reader reads no rule block - in a blockquote, in a heading of level 1 (ATX or setext), 3,
+ * 4, 5 or 6, in an HTML block, in an HTML comment, in a fenced code block, in a top-level indented code block, in a link reference
+ * definition's title, in an item nested under another item, in another item's further paragraph, in a block holding a raw HTML
+ * element, in a block whose only text is struck or is an image's alt text, behind a lead in another case ('Witness Rule: '), behind
+ * other words in its block, or before the first entry (twenty rows). RR-UNSHOWN-WORDS: words around the clause carried only by text
+ * that shows nothing - struck text, an image, an inline HTML comment, a link's title, a link's destination, an inline CDATA section
+ * and an inline processing instruction (seven rows). RR-HEADER-WORDS: words around the clause in this header, a negation before it or
+ * an exception after it (one row: a synthetic header carrying 'two' once in such words is pinned to still contain the clause, since
+ * the case holds containment only).
  *
  * THE UNITS. A unit is the smallest text the judges read as one "paragraph". Markdown (every document is .md): a blank-line-delimited
  * block, where a heading, a table row and each line inside a code fence are units of their own and a list item starts a new unit (its
@@ -189,7 +219,7 @@
  * dated entry appended to docs/workbench/receipts/wb-xfkx.md whose tables and witness rule carry it (the census reads the last entry;
  * the append is the visible act a gate judges) - and a sha-256 collision; what the receipt's other prose says (of the last entry the
  * census reads its tables and its rule blocks, never its other blocks); the escapes the READER RESIDUALS name (each pinned by its quiet
- * rows); a reading of the four receipt-anchor readers that THE READERS do not list; an in-case control of the receipt-anchor case, a
+ * rows); a reading of the four receipt-anchor readers that THE READERS do not list, THE HOLES they state included; an in-case control of the receipt-anchor case, a
  * reader residual's quiet row included, edited together with its expected reading (the roster's ends catch an assertion removed,
  * never one edited); a non-pin case's tail cut, or any one of its assertions removed, together with its count in the roster's ends;
  * a control removed from IMPL and the roster together while every remaining control holds; a plant edited in IMPL and the roster
@@ -1834,7 +1864,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
       comment: anchorTables(page(entry("2026-10-27 first", "A1"), "## 2026-10-28 second\n\n<!--\n| Pin | Quote sha-256 |\n| --- | --- |\n| B1 | 0 |\n-->")),
       codeBlock: anchorTables(page("## 2026-10-28 second\n\n```\n| Pin | Quote sha-256 |\n| --- | --- |\n| B1 | 0 |\n```")),
     };
-    expect(controls, "the tables reader control: the last entry's tables only (lastEntry), none before an entry (noEntry), none inside a comment or a code block (comment, codeBlock)").toEqual({
+    expect(controls, "the tables reader control: the last entry's tables only (lastEntry), none before an entry (noEntry), none inside an HTML comment or a fenced code block (comment, codeBlock)").toEqual({
       lastEntry: [[["Pin", "Quote sha-256"], ["B1", "0"]]],
       noEntry: [],
       comment: [],
@@ -1870,7 +1900,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     };
     expect(
       prose,
-      "the prose reader control: the last entry's paragraphs and list items only, a code span as its code and struck text unshown (lastEntry); none before an entry (noEntry), none inside a comment or a code block (comment, codeBlock), and a block with a raw HTML element opaque (element); the rule reader: only blocks opening with the lead, read past it, one closing period dropped (rules)",
+      "the prose reader control: the last entry's paragraphs and list items only, a code span as its code and struck text unshown (lastEntry); none before an entry (noEntry), none inside an HTML comment or a fenced code block (comment, codeBlock), and an item holding a lower-case '<span>' element opaque (element); the rule reader: only blocks opening with the lead, read past it, one closing period dropped (rules)",
     ).toEqual({
       lastEntry: ["second rule", "third rule"],
       noEntry: [],
@@ -1898,7 +1928,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     ];
     expect(
       anchorProse(page(stated("2026-10-28 second", forms.join("\n\n")))),
-      "the prose forms: a paragraph over two lines, a nested item and a loose item's second paragraph read with their block, a second top-level list read; a blockquote, a heading of each other level (1, 3, 4, 5 and 6), a table, a thematic break, a link reference definition and an HTML block not read, no such heading ending the entry; a task checkbox, struck text, an image with its alt text and a link's destination and title unshown; each block trimmed; in document order",
+      "the prose forms: a paragraph over two lines, a nested item and a loose item's second paragraph read with their block, a second top-level list read; a blockquote, a heading of each other level (1, 3, 4, 5 and 6), a table, a thematic break ('---'), a link reference definition and an HTML block (a '<div>' element) not read, no such heading ending the entry; a task checkbox, struck text, an image with its alt text and a link's destination and title unshown; each block trimmed; in document order",
     ).toEqual(["a paragraph over two lines", "an item its nested item", "a task", "a loose item with a second paragraph", "an image and a link text", "a closing paragraph"]);
     const ruleForms = [
       `- ${ANCHOR.rule}two closing periods..`,
@@ -1912,7 +1942,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
       anchorRules(page(stated("2026-10-28 second", `${ANCHOR.rule}in a paragraph.\n\n${ruleForms.join("\n")}`))),
       "the rule forms: a rule paragraph read; of two closing periods one dropped, a closing '!' kept, an inner period kept; a lead in lower case or without its closing space no rule; a task item's rule read (its checkbox unshown, the block trimmed)",
     ).toEqual(["in a paragraph", "two closing periods.", "a closing exclamation!", "a task item", "an inner. period"]);
-    // THE READERS (wb-pnn8 cut #3, R-B126): the controls of the listed readings the controls above do not pin, then the READER RESIDUALS' quiet rows.
+    // THE READERS (wb-pnn8 cut #3, R-B126; restated at cut #4, R-B159): the controls of the listed readings the controls above do not pin, then the READER RESIDUALS' quiet rows.
     const quoteTable = (cell: string): string => `| Pin | Quote sha-256 |\n| --- | --- |\n| ${cell} | 0 |`;
     const entryForms = ["## Notes", "## 2026-10-29 dated", "## Closed ##", "  ## Indented", "Setext entry\n---", "# level 1", "Setext one\n===", "### level 3", "#### level 4", "##### level 5", "###### level 6", "> ## quoted heading", "- ## item heading", "<!--\n## commented\n-->", "```\n## fenced\n```", "    ## indented code"];
     expect(
@@ -1953,7 +1983,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     ).toEqual(["a dash item", "a star item", "a plus item", "an ordered item", "a second ordered item", "a paren-ordered item"]);
     expect(
       anchorProse(page(stated("2026-10-28 second", "- an item\n  > its nested quote\n\n  ```\n  its nested code\n  ```\n\n  | its | table |\n  | --- | --- |\n  | its | row |\n\n  ### its nested heading\n\n  its further paragraph\n  - its nested item"))),
-      "the item whole control: an item read whole, its parts joined by a space - its text, a nested blockquote, a nested code block, a nested table, a nested heading, a further paragraph and a nested list",
+      "the item whole control: an item read whole, its parts joined by a space - its text, a nested blockquote, a nested fenced code block, a nested table (its cells), a nested level-3 heading, a further paragraph and a nested bullet list",
     ).toEqual(["an item its nested quote its nested code its table its row its nested heading its further paragraph its nested item"]);
     expect(
       anchorProse(page(stated("2026-10-28 second", ["before", "> - a quoted item", "    an indented code block", "after"].join("\n\n")))),
@@ -1968,11 +1998,11 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
           ),
         ),
       ),
-      "the inline forms control: emphasis and strong text (asterisks or underscores), a code span's code, an escaped character, an inline, a reference and an autolink's text and a bare URL shown; a link's destination and title, an inline HTML comment (the block kept), struck text and an image with its alt text unshown; a hard break (two spaces or a backslash) a space; the block squeezed and trimmed",
+      "the inline forms control: emphasis and strong text (asterisks or underscores), a code span's code, an escaped asterisk, an inline link's, a full reference link's ('[ref text][r]') and an autolink's text and a bare URL shown; an inline link's destination and title, an inline HTML comment (the block kept), struck text and an image with its alt text unshown; a hard break (two spaces or a backslash) a space; the block squeezed and trimmed",
     ).toEqual(["emphasis and strong and under and double and code and *escaped* and link text and ref text and https://example.invalid/auto and https://example.invalid/bare and an gap and a hard break and a back slash break and and end"]);
     expect(
       anchorProse(page(stated("2026-10-28 second", ["a <b>marked</b> paragraph", "a later paragraph", "a stray </i> closing tag", "a next paragraph", "- an <i>item</i>\n- a later item"].join("\n\n")))),
-      "the opacity control: a block holding a raw HTML element, an opening or a closing tag, is dropped, that block only - the next block is read",
+      "the opacity control: a top-level paragraph or a list item whose own text holds a raw HTML element with a lower-case tag name, an opening ('<b>', '<i>') or a closing tag ('</i>'), is dropped, that block only - the next block is read",
     ).toEqual(["a later paragraph", "a next paragraph", "a later item"]);
     expect(
       anchorTables(page(stated("2026-10-28 second", "> | Pin | Quote sha-256 |\n> | --- | --- |\n> | Q1 | 0 |\n\n- | Pin | Quote sha-256 |\n  | --- | --- |\n  | Q2 | 0 |\n\n| Pin | Quote sha-256 |\n| --- | --- |\n| B1 | 0 |"))),
@@ -1985,7 +2015,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     ]);
     expect(
       anchorTables(page(stated("2026-10-28 second", "| Pin | Quote sha-256 |\n| --- | --- |\n| `B1` | *0* |"))),
-      "the table cells control: a cell's text as written, its markup kept",
+      "the table cells control: a code span ('`B1`') and an asterisk emphasis ('*0*') in a cell read as written, their markup kept (no other cell markup is claimed)",
     ).toEqual([
       [
         ["Pin", "Quote sha-256"],
@@ -2015,13 +2045,21 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     const quietRows: readonly (readonly [string, string, string])[] = [
       ["RR-SECOND-RULE-UNREAD", "in a blockquote", beside(`> ${ANCHOR.rule}two.`)],
       ["RR-SECOND-RULE-UNREAD", "in a level-3 heading", beside(`### ${ANCHOR.rule}two.`)],
+      ["RR-SECOND-RULE-UNREAD", "in a level-1 ATX heading", beside(`# ${ANCHOR.rule}two.`)],
+      ["RR-SECOND-RULE-UNREAD", "in a level-1 setext heading", beside(`${ANCHOR.rule}two.\n===`)],
+      ["RR-SECOND-RULE-UNREAD", "in a level-4 heading", beside(`#### ${ANCHOR.rule}two.`)],
+      ["RR-SECOND-RULE-UNREAD", "in a level-5 heading", beside(`##### ${ANCHOR.rule}two.`)],
+      ["RR-SECOND-RULE-UNREAD", "in a level-6 heading", beside(`###### ${ANCHOR.rule}two.`)],
       ["RR-SECOND-RULE-UNREAD", "in an HTML block", beside(`<p>${ANCHOR.rule}two.</p>`)],
       ["RR-SECOND-RULE-UNREAD", "in an HTML comment", beside(`<!--\n${ANCHOR.rule}two.\n-->`)],
       ["RR-SECOND-RULE-UNREAD", "in a fenced code block", beside(`\`\`\`\n${ANCHOR.rule}two.\n\`\`\``)],
+      ["RR-SECOND-RULE-UNREAD", "in a top-level indented code block", page(stated("2026-10-28 second", `    ${ANCHOR.rule}two.\n\n- ${ANCHOR.rule}one.`))],
       ["RR-SECOND-RULE-UNREAD", "in a link reference definition's title", beside(`[note]: https://example.invalid/n "${ANCHOR.rule}two."`)],
       ["RR-SECOND-RULE-UNREAD", "in an item nested under another item", beside(`- a change\n  - ${ANCHOR.rule}two.`)],
       ["RR-SECOND-RULE-UNREAD", "in another item's further paragraph", beside(`- a change\n\n  ${ANCHOR.rule}two.`)],
       ["RR-SECOND-RULE-UNREAD", "in a block holding a raw HTML element", beside(`- ${ANCHOR.rule}<b>two</b>.`)],
+      ["RR-SECOND-RULE-UNREAD", "in a block whose only text is struck", beside(`~~${ANCHOR.rule}two.~~`)],
+      ["RR-SECOND-RULE-UNREAD", "in a block whose only text is an image's alt text", beside(`![${ANCHOR.rule}two.](x.png)`)],
       ["RR-SECOND-RULE-UNREAD", "behind a lead in another case", beside("- Witness Rule: two.")],
       ["RR-SECOND-RULE-UNREAD", "behind other words in its block", beside(`- Note: ${ANCHOR.rule}two.`)],
       ["RR-SECOND-RULE-UNREAD", "before the first entry", page(`- ${ANCHOR.rule}two.`, stated("2026-10-28 second", `- ${ANCHOR.rule}one.`))],
@@ -2029,6 +2067,9 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
       ["RR-UNSHOWN-WORDS", "in an image", around("one![except two](x.png).")],
       ["RR-UNSHOWN-WORDS", "in an inline HTML comment", around("one<!-- except two -->.")],
       ["RR-UNSHOWN-WORDS", "in a link's title", around('[one](https://example.invalid/n "except two").')],
+      ["RR-UNSHOWN-WORDS", "in a link's destination", around("[one](https://example.invalid/except-two).")],
+      ["RR-UNSHOWN-WORDS", "in an inline CDATA section", around("one<![CDATA[except two]]>.")],
+      ["RR-UNSHOWN-WORDS", "in an inline processing instruction", around("one<?except two?>.")],
     ];
     for (const [family, form, text] of quietRows) {
       expect({ two: text.split("two").length - 1, rules: anchorRules(text) }, `${family} quiet row (${form}): the page carries 'two' once and the rule reader reads ['one'] only`).toEqual({ two: 1, rules: ["one"] });
