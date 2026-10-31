@@ -11,36 +11,37 @@
  *
  * BINDINGS (bindingOf): an identifier resolves through the TypeScript binder's own symbol at its use site, in a one-file
  * program over the very source (no lib, no module resolution, nothing emitted), so a same-named declaration in another scope
- * never answers for it (refusal #3 U1, refusal #4 U1). BINDING_KINDS:
+ * never answers for it (refusal #3 U1, refusal #4 U1); an expando entry the binder records for a property write (f.tag = v)
+ * is no declaration. BINDING_KINDS:
  * - import: the symbol is declared in the file by an import (named, default or namespace) or an import-equals
  * - global: the symbol has no declaration in the file, or only declarations in an ambient context
  * - local: any other declaration in the file
- * VALUES (stringValues): a string literal or a no-substitution template, or an identifier whose own binding is a const
- * declaration of that name initialized by one, through a chain of such names; parentheses, as, satisfies, non-null and <T>
- * assertions are read through. Any other value (a let or var binding, a member, a parameter, an imported name, a computed
- * string) is no value.
+ * VALUES (stringValues): a string literal or a no-substitution template, or an identifier whose own binding is a local const
+ * declaration of that name initialized by one, through a chain of such names (a cycle reads no value); parentheses, as,
+ * satisfies, non-null and <T> assertions are read through. Any other value (a let or var binding, an ambient const, a member,
+ * a parameter, an imported name, a computed string) is no value.
  * CHAINS (calleeChains): a member, or an element whose key has a value (any other key reads <computed>), as dotted text, with
  * a leading globalThis. or global. dropped; a root identifier reads as its own spelling and, when its own binding is a const
  * initialized by a member chain or a name, as that chain's spellings too.
  * ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global (a call, a this, a literal or any
  * other root is not); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:
  * - initializer: a variable's initializer
- * - reassignment: for a let or var, every value assigned to it in the file by =, ||=, &&= or ??=
- * - destructured: a destructured binding's source chain with its keys (an array element by its index; a rest element holds a copy and reads nothing), and its own default
+ * - reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??=
+ * - destructured: a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index; a rest element holds a copy and reads nothing), and its own default
  * - for-of element: a for-of variable's elements when the iterable is an array literal, directly or through a const name
  * - parameter default: a parameter's default value
- * - call argument: the argument at a parameter's position in every call of its function through a name whose own binding declares the function
+ * - call argument: the argument at a parameter's position in every call of its function through a name whose own binding is the function's declaration or a variable initialized by the function (read through parentheses and assertions); a rest parameter reads nothing
  * - immediately invoked: the argument at a parameter's position when its function is itself the callee
  * - call() argument: the argument one place later in a call() of the function by either route
  * A chain under process.env is the environment, which the stubbed HyperUnix.open makes inert, and is not read, unless it
  * leaves the environment object through constructor, __proto__ or prototype (refusal #4 F3).
  *
  * C2 TAMPER FORMS (tampersIn, C2_FORMS; each finding is "<what> :<line>"):
- * - spy: a vi.spyOn call other than vi.spyOn(HyperUnix, "open"), its "open" a value
+ * - spy: a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, "open"), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose "open" is a value
  * - global stub: a GLOBAL_STUBS call
  * - watched reference: a WATCHED callee chain read other than as a call's callee (an argument, an alias, call / apply / bind of it)
- * - destructured watched: a WATCHED member destructured from its owner in a declaration (a rest element holds every member)
- * - destructuring-assigned watched: a WATCHED member destructured from its owner by a destructuring assignment
+ * - destructured watched: a WATCHED member destructured from its owner (the declaration's initializer) in a declaration (a rest element holds every member)
+ * - destructuring-assigned watched: a WATCHED member destructured from its owner by a destructuring assignment (a rest element holds every member)
  * - assignment: = on an outside target, every element of an array or object destructuring-assignment pattern included (nested, spread and rest)
  * - compound operator: an assignment by any other assignment operator (+=, &&=, ??= and the rest) on an outside target
  * - for-of target: an outside for-of assignment target
@@ -49,6 +50,8 @@
  * - update: ++ or -- (prefix or postfix) of an outside chain
  * - mutator call: a MUTATORS call (read through calleeChains) whose first argument is outside
  * - legacy accessor definer: __defineGetter__ or __defineSetter__ called as a member of an outside chain (refusal #4 F4)
+ * A write whose target is a bare name bound to a local declaration rebinds that local and reaches no value it held or receives
+ * (writtenChains), so the assignment, compound operator, for-of target, for-in target, delete and update forms read nothing for it.
  * MOCKS (moduleMockSpecifiers): every call whose callee chains hold a MODULE_MOCKS name, with each value of its first argument,
  * or of the import() its first argument is.
  *
@@ -68,22 +71,22 @@
  * - override in [override]: HYPERUNIX_HX as the value of the left operand of in
  * - override env call [override]: HYPERUNIX_HX as an argument value of an ENV_CALLS call
  * - override env method [override]: HYPERUNIX_HX as an argument value of an ENV_METHODS method call
- * C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word):
+ * C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):
  * - member: a member name read as .name, called or not
  * - element key: an element key value read as ["name"]
  * - type member: the right side of a qualified name in a type
  * - destructuring: a destructuring key
- * - destructuring assignment: a destructuring-assignment key
+ * - destructuring assignment: a destructuring-assignment key (a shorthand's default value is no target)
  * - import: an import or export specifier's imported name
  * - bare call: a call of the bare name kill
- * - identifier: an identifier holding the ESRCH word that no member form reads
+ * - identifier: an identifier holding the ESRCH word that is no member key
  * - regular expression: a regular expression holding the ESRCH word (regexText)
- * - key: a key literal holding the ESRCH word that no member form reads
+ * - key: a key literal holding the ESRCH word that is no member key
  * - literal: a string or template part that is no key and holds the ESRCH word
- * - /proc path: a /proc path (PROC_PATH) in a string, a template part, a key or a regular expression holding no ESRCH word
- * - kill name literal: the literal kill (trimmed) outside a spawner's argument
- * - pid name literal: the literal pid (trimmed)
- * - process-table command: a string or template part whose command heads (commandHeads) hold a PROCESS_TABLE tool
+ * - /proc path: a /proc path (PROC_PATH) in a string, a template part, a key or a regular expression, unless the literal, key or regular expression form reads it as holding the ESRCH word
+ * - kill name literal: a plain text kill (trimmed) outside a spawner's argument or argv array (a call whose callee is a SPAWNERS name or a member named one)
+ * - pid name literal: a plain text pid (trimmed)
+ * - process-table command: any other plain text whose command heads (commandHeads) hold a PROCESS_TABLE tool
  * F3 COMMAND HEADS (commandHeads): the modelled heads (modelledCommandHeads) together with cut #4's fail-closed spelling read
  * (failClosedCommandHeads: every fragment of every word past a WRAPPERS wrapper or a SHELLS shell in head position). The
  * modelled reader splits a text at COMMAND_SEPARATOR, reads each piece as shell words (shellWords: single quotes literal,
@@ -108,10 +111,11 @@
  * - line continuation: a backslash before a line terminator, which reads as nothing
  * - escaped character: a backslash before any other character, which reads as that character (b, f, n, r, t and v as their controls)
  * - percent escape: a percent sign and two hex digits, decoded after the backslash escapes
+ * A hex escape run that names no Unicode scalar value (zero, a surrogate, or above U+10FFFF) reads as U+FFFD (codePoint).
  * RESIDUALS (RESIDUAL_FAMILIES; families these readers do not read, each with a pinned quiet row and a loud control in the census):
  * - R-WRAPPER: a process-table tool run through a word outside WRAPPERS, SHELL_KEYWORDS and SHELLS (a leading redirection included), by a script file a shell runs, or inside another language's inline program reads as no command head
  * - R-INDIRECT: a module specifier, override name or capability id reached through anything but a literal or a const chain to one (a let or var binding, an object member, a parameter, an imported name), or an environment call reached through call, apply or Reflect.apply, reads as no value
- * - R-FLOW: a local root whose value arrives through a flow ROOT_FORMS does not follow (a parameter of a function the file only passes on as a value, such as a callback, a catch variable, a return value, an object member) reads as no outside chain
+ * - R-FLOW: a local root whose value arrives through a flow ROOT_FORMS does not follow (a parameter of a function the file only passes on as a value, such as a callback, or reaches only through a parameter default; a catch variable; a destructured for-of binding; a return value; an object member) reads as no outside chain, and a WATCHED member destructured in a for-of binding reads as no reference
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it parses the text it is given.
  */
@@ -150,17 +154,18 @@ export function callsIn(source: ts.SourceFile): readonly ts.CallExpression[] {
   CALLS.set(source, calls);
   return calls;
 }
+/** The character a decoded escape names: the code point itself when it is a Unicode scalar value, else U+FFFD. */
 export function codePoint(value: number): string {
   return Number.isSafeInteger(value) && value > 0 && value <= 0x10ffff && (value < 0xd800 || value > 0xdfff) ? String.fromCodePoint(value) : String.fromCodePoint(0xfffd);
 }
-/** A regular-expression literal as the pattern it matches: \xHH, \uHHHH and \u{H...} decoded, a backslash before any other character dropped. */
+/** A regular-expression literal as the pattern it matches: \xHH, \uHHHH and \u{H...} decoded (codePoint), a backslash before any other character dropped. */
 export function regexText(literal: string): string {
   return literal.replace(/\\(?:x([0-9A-Fa-f]{2})|u\{([0-9A-Fa-f]{1,6})\}|u([0-9A-Fa-f]{4})|([\s\S]))/g, (_whole: string, hex: string | undefined, braced: string | undefined, unicode: string | undefined, other: string | undefined) => {
     const digits = hex ?? braced ?? unicode;
     return digits === undefined ? (other ?? "") : codePoint(Number.parseInt(digits, 16));
   });
 }
-/** An identifier read as words: split at camelCase humps, before a capital that starts a lowercase run, and at underscores. */
+/** An identifier read as words: split at camelCase humps (a lowercase letter or a digit before a capital), before a capital that starts a lowercase run, and at underscores and dollar signs. */
 export function identifierWords(name: string): string {
   return name
     .replace(/^#/, "")
@@ -235,13 +240,15 @@ const isAmbient = (node: ts.Node): boolean => {
   }
   return false;
 };
+/** A binder entry that is no declaration: an expando property write (f.tag = v or f["tag"] = v) records the written name itself, an identifier, among the name's declarations. */
+const isExpando = (declaration: ts.Node): boolean => ts.isIdentifier(declaration);
 /** The binding an identifier resolves to at its use site (BINDINGS above); a shorthand property's value symbol for its name. */
 export function bindingOf(identifier: ts.Identifier): Binding {
   const source = identifier.getSourceFile();
   const checker = checkerOf(source);
   const parent = identifier.parent;
   const symbol = ts.isShorthandPropertyAssignment(parent) && parent.name === identifier ? checker.getShorthandAssignmentValueSymbol(parent) : checker.getSymbolAtLocation(identifier);
-  const declarations = (symbol?.declarations ?? []).filter(declaration => declaration.getSourceFile() === source);
+  const declarations = (symbol?.declarations ?? []).filter(declaration => declaration.getSourceFile() === source && !isExpando(declaration));
   if (declarations.some(isImportBinding)) return { kind: "import", declarations };
   if (declarations.every(isAmbient)) return { kind: "global", declarations };
   return { kind: "local", declarations };
@@ -498,13 +505,35 @@ export const watchedIn = (members: readonly string[]): string[] =>
   members.map(unglobal).flatMap(member => (member.endsWith(".*") ? [...WATCHED].filter(name => name.startsWith(member.slice(0, -1))) : WATCHED.has(member) ? [member] : []));
 const isAssignment = (node: ts.Node): node is ts.BinaryExpression =>
   ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment;
+/**
+ * The outside chains a write to a target names: none when the target is a bare name bound to a local declaration (the write
+ * rebinds that local and reaches no value it held or receives), else the target's outside chains.
+ */
+const writtenChains = (target: ts.Node, outside: (node: ts.Node) => readonly string[]): readonly string[] => {
+  const inner = bare(target);
+  return ts.isIdentifier(inner) && bindingOf(inner).kind === "local" ? [] : outside(target);
+};
 const isGlobalStubCall = (call: ts.CallExpression): boolean => calleeChains(call.expression).some(name => GLOBAL_STUBS.has(name));
 const isSpyCall = (call: ts.CallExpression): boolean => !isGlobalStubCall(call) && calleeChains(call.expression).includes("vi.spyOn");
-/** The custody stub the census allows: vi.spyOn(HyperUnix, "open"). */
+/** The SDK export the custody stub spies on. */
+export const CUSTODY_EXPORT = "HyperUnix";
+/** Whether a name's own binding is a named import (aliased or not) of CUSTODY_EXPORT from an HX module (HX_MODULE). */
+export function importsCustodyExport(identifier: ts.Identifier): boolean {
+  const { kind, declarations } = bindingOf(identifier);
+  return (
+    kind === "import" &&
+    declarations.some(declaration => {
+      if (!ts.isImportSpecifier(declaration) || (declaration.propertyName ?? declaration.name).text !== CUSTODY_EXPORT) return false;
+      const statement = declaration.parent.parent.parent;
+      return ts.isStringLiteralLike(statement.moduleSpecifier) && HX_MODULE(statement.moduleSpecifier.text);
+    })
+  );
+}
+/** The custody stub the census allows: vi.spyOn(HyperUnix, "open"), its receiver a name that importsCustodyExport, its "open" a value. */
 const isCustodySpy = (call: ts.CallExpression): boolean => {
   const [target, method] = call.arguments;
   const inner = target === undefined ? undefined : bare(target);
-  return inner !== undefined && ts.isIdentifier(inner) && inner.text === "HyperUnix" && stringValue(method) === "open";
+  return inner !== undefined && ts.isIdentifier(inner) && importsCustodyExport(inner) && stringValue(method) === "open";
 };
 const memberNames = (callee: ts.Node): readonly string[] => {
   const inner = bare(callee);
@@ -547,25 +576,25 @@ export const C2_FORMS: readonly TamperForm[] = [
   },
   {
     word: "assignment",
-    read: (node, outside) => (isAssignment(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken ? assignmentTargets(node.left).flatMap(outside).map(chain => `${chain} assigned`) : []),
+    read: (node, outside) => (isAssignment(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken ? assignmentTargets(node.left).flatMap(target => writtenChains(target, outside)).map(chain => `${chain} assigned`) : []),
   },
   {
     word: "compound operator",
-    read: (node, outside) => (isAssignment(node) && node.operatorToken.kind !== ts.SyntaxKind.EqualsToken ? assignmentTargets(node.left).flatMap(outside).map(chain => `${chain} assigned`) : []),
+    read: (node, outside) => (isAssignment(node) && node.operatorToken.kind !== ts.SyntaxKind.EqualsToken ? assignmentTargets(node.left).flatMap(target => writtenChains(target, outside)).map(chain => `${chain} assigned`) : []),
   },
   {
     word: "for-of target",
-    read: (node, outside) => (ts.isForOfStatement(node) && !ts.isVariableDeclarationList(node.initializer) ? assignmentTargets(node.initializer).flatMap(outside).map(chain => `${chain} assigned`) : []),
+    read: (node, outside) => (ts.isForOfStatement(node) && !ts.isVariableDeclarationList(node.initializer) ? assignmentTargets(node.initializer).flatMap(target => writtenChains(target, outside)).map(chain => `${chain} assigned`) : []),
   },
   {
     word: "for-in target",
-    read: (node, outside) => (ts.isForInStatement(node) && !ts.isVariableDeclarationList(node.initializer) ? assignmentTargets(node.initializer).flatMap(outside).map(chain => `${chain} assigned`) : []),
+    read: (node, outside) => (ts.isForInStatement(node) && !ts.isVariableDeclarationList(node.initializer) ? assignmentTargets(node.initializer).flatMap(target => writtenChains(target, outside)).map(chain => `${chain} assigned`) : []),
   },
-  { word: "delete", read: (node, outside) => (ts.isDeleteExpression(node) ? outside(node.expression).map(chain => `${chain} deleted`) : []) },
+  { word: "delete", read: (node, outside) => (ts.isDeleteExpression(node) ? writtenChains(node.expression, outside).map(chain => `${chain} deleted`) : []) },
   {
     word: "update",
     read: (node, outside) =>
-      (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken) ? outside(node.operand).map(chain => `${chain} updated`) : [],
+      (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken) ? writtenChains(node.operand, outside).map(chain => `${chain} updated`) : [],
   },
   {
     word: "mutator call",
@@ -679,13 +708,12 @@ export const ESRCH_WORD = /(?<![A-Za-z0-9_])esrch(?![A-Za-z0-9_])/i;
 const ASSIGNMENT_WORD = /^[A-Za-z_][A-Za-z0-9_]*=/;
 const basename = (word: string): string => word.slice(word.lastIndexOf("/") + 1);
 
-/** Whether an object-literal property is part of a destructuring-assignment target ({ pid } = child, for ({ pid } of list)). */
+/** Whether an object-literal property is part of a destructuring-assignment target ({ pid } = child, for ({ pid } of list)); a shorthand's default ({ a = { pid } } = child) is a value, not a target. */
 export function inAssignmentTarget(property: ts.Node): boolean {
   let link: ts.Node = property.parent;
   while (
     link.parent !== undefined &&
     (ts.isPropertyAssignment(link.parent) ||
-      ts.isShorthandPropertyAssignment(link.parent) ||
       ts.isSpreadAssignment(link.parent) ||
       ts.isObjectLiteralExpression(link.parent) ||
       ts.isArrayLiteralExpression(link.parent) ||
@@ -710,15 +738,20 @@ export function memberRead(node: ts.Node): { readonly names: readonly string[]; 
   if (ts.isImportSpecifier(node) || ts.isExportSpecifier(node)) return read([(node.propertyName ?? node.name).text], "import");
   return undefined;
 }
-/** Whether an identifier is the name position of its parent's member read (memberRead reads it there). */
-function isMemberName(node: ts.Identifier | ts.PrivateIdentifier): boolean {
+/**
+ * Whether a name or key literal is the very key its parent's member read reads (memberRead): a member or qualified name's
+ * right side, an element's literal key, a binding element's or specifier's key (its property name, else its name) and a
+ * destructuring-assignment property's name - so a binding element's local name, an import's local name and an export's
+ * exported name are no member key.
+ */
+function isMemberKey(node: ts.Node): boolean {
   const parent = node.parent;
+  if (parent === undefined || memberRead(parent) === undefined) return false;
   if (ts.isPropertyAccessExpression(parent)) return parent.name === node;
+  if (ts.isElementAccessExpression(parent)) return parent.argumentExpression === node && ts.isStringLiteralLike(node);
   if (ts.isQualifiedName(parent)) return parent.right === node;
-  if (ts.isBindingElement(parent)) return parent.name === node || parent.propertyName === node;
-  if (ts.isImportSpecifier(parent) || ts.isExportSpecifier(parent)) return true;
-  if (ts.isShorthandPropertyAssignment(parent) || ts.isPropertyAssignment(parent)) return parent.name === node;
-  return false;
+  if (ts.isBindingElement(parent) || ts.isImportSpecifier(parent) || ts.isExportSpecifier(parent)) return (parent.propertyName ?? parent.name) === node;
+  return (ts.isShorthandPropertyAssignment(parent) || ts.isPropertyAssignment(parent)) && parent.name === node;
 }
 /** Whether a string literal is a member key (an element-access key, or a property, binding, computed or import key). */
 function isKeyLiteral(node: ts.Node): boolean {
@@ -730,7 +763,7 @@ function isKeyLiteral(node: ts.Node): boolean {
   if (ts.isPropertyAssignment(parent) || ts.isPropertySignature(parent) || ts.isPropertyDeclaration(parent) || ts.isMethodDeclaration(parent)) return parent.name === node;
   return false;
 }
-/** Whether a literal sits where a process-spawning call reads a command: an argument, or an element of an argv array given to it. */
+/** Whether a literal sits where a process-spawning call reads a command: an argument, or an element of an argv array given to it, of a call whose callee is a SPAWNERS name or a member named one. */
 function inSpawnPosition(node: ts.Node): boolean {
   const link: ts.Node = ts.isArrayLiteralExpression(node.parent) ? node.parent : node;
   const call = link.parent;
@@ -741,7 +774,7 @@ function inSpawnPosition(node: ts.Node): boolean {
 }
 type TextLiteral = ts.StringLiteralLike | ts.TemplateHead | ts.TemplateMiddle | ts.TemplateTail;
 const isTextLiteral = (node: ts.Node): node is TextLiteral => ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node);
-/** A string or template part that is no key and holds neither the ESRCH word nor a /proc path: the literal-word and command forms read it. */
+/** A plain text: a string or template part that is no key and holds neither the ESRCH word nor a /proc path; the literal-word and command forms read it. */
 const plainText = (node: ts.Node): node is TextLiteral => isTextLiteral(node) && !isKeyLiteral(node) && !ESRCH_WORD.test(node.text) && !PROC_PATH.test(node.text);
 const isKillLiteral = (node: TextLiteral): boolean => node.text.trim() === "kill" && !inSpawnPosition(node);
 const memberShape =
@@ -766,10 +799,10 @@ export const SHAPE_FORMS: readonly ShapeForm[] = [
   { word: "bare call", read: node => (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "kill" ? ["F1"] : []) },
   {
     word: "identifier",
-    read: node => ((ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) && ESRCH_WORD.test(identifierWords(node.text)) && !(isMemberName(node) && memberRead(node.parent) !== undefined) ? ["F4"] : []),
+    read: node => ((ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) && ESRCH_WORD.test(identifierWords(node.text)) && !isMemberKey(node) ? ["F4"] : []),
   },
   { word: "regular expression", read: node => (ts.isRegularExpressionLiteral(node) && ESRCH_WORD.test(regexText(node.text)) ? ["F4"] : []) },
-  { word: "key", read: node => (isTextLiteral(node) && isKeyLiteral(node) && ESRCH_WORD.test(identifierWords(node.text)) && memberRead(node.parent) === undefined ? ["F4"] : []) },
+  { word: "key", read: node => (isTextLiteral(node) && isKeyLiteral(node) && ESRCH_WORD.test(identifierWords(node.text)) && !isMemberKey(node) ? ["F4"] : []) },
   { word: "literal", read: node => (isTextLiteral(node) && !isKeyLiteral(node) && ESRCH_WORD.test(node.text) ? ["F4"] : []) },
   {
     word: "/proc path",
@@ -779,7 +812,7 @@ export const SHAPE_FORMS: readonly ShapeForm[] = [
         return !ESRCH_WORD.test(text) && PROC_PATH.test(text) ? ["F3"] : [];
       }
       if (!isTextLiteral(node)) return [];
-      const esrch = isKeyLiteral(node) ? ESRCH_WORD.test(identifierWords(node.text)) && memberRead(node.parent) === undefined : ESRCH_WORD.test(node.text);
+      const esrch = isKeyLiteral(node) ? ESRCH_WORD.test(identifierWords(node.text)) && !isMemberKey(node) : ESRCH_WORD.test(node.text);
       return !esrch && PROC_PATH.test(node.text) ? ["F3"] : [];
     },
   },
@@ -1145,6 +1178,6 @@ export const RESIDUAL_FAMILIES: readonly ResidualFamily[] = [
   {
     id: "R-FLOW",
     family:
-      "a local root whose value arrives through a flow ROOT_FORMS does not follow (a parameter of a function the file only passes on as a value, such as a callback, a catch variable, a return value, an object member) reads as no outside chain",
+      "a local root whose value arrives through a flow ROOT_FORMS does not follow (a parameter of a function the file only passes on as a value, such as a callback, or reaches only through a parameter default; a catch variable; a destructured for-of binding; a return value; an object member) reads as no outside chain, and a WATCHED member destructured in a for-of binding reads as no reference",
   },
 ];
