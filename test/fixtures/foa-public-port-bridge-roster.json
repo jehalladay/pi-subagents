@@ -891,6 +891,19 @@
      "M-READ-SUB-ALIAS",
      "M-SEAM-OWN-ALIAS",
      "M-READ-OWN-ALIAS",
+     "M-READ-CROSS-SUB-ALIAS",
+     "M-READ-KIND-SUB-ALIAS",
+     "M-READ-SNAPSHOT-SUB-ALIAS",
+     "M-READ-DELTA-SUB-ALIAS",
+     "M-READ-ACK-SUB-ALIAS",
+     "M-READ-GAP-SUB-ALIAS",
+     "M-READ-RESYNC-SUB-ALIAS",
+     "M-READ-EFFECT-SUB-ALIAS",
+     "M-READ-INVOKE-SUB-ALIAS",
+     "M-SEAM-CROSS-SUB-ALIAS",
+     "M-SEAM-KIND-SUB-ALIAS",
+     "M-SEAM-ADMITTED-SUB-ALIAS",
+     "M-SEAM-LATER-SUB-ALIAS",
      "M-SHARED-REF"
     ],
     "merged": [
@@ -3494,6 +3507,215 @@
      "F-READ-OWN": [
       "aliased"
      ]
+    },
+    "M-READ-CROSS-SUB-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-READ-KIND-SUB-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ]
+    },
+    "M-READ-SNAPSHOT-SUB-ALIAS": {
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-READ-DELTA-SUB-ALIAS": {
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ]
+    },
+    "M-READ-ACK-SUB-ALIAS": {
+     "F-READ-ACK": [
+      "aliased"
+     ]
+    },
+    "M-READ-GAP-SUB-ALIAS": {
+     "F-READ-GAP": [
+      "aliased"
+     ]
+    },
+    "M-READ-RESYNC-SUB-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ]
+    },
+    "M-READ-EFFECT-SUB-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ]
+    },
+    "M-READ-INVOKE-SUB-ALIAS": {
+     "F-READ-INVOKE": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-CROSS-SUB-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-KIND-SUB-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-ADMITTED-SUB-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-LATER-SUB-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ]
     }
    },
    "departures": {
@@ -4303,6 +4525,19 @@
     "M-READ-SUB-ALIAS": [],
     "M-SEAM-OWN-ALIAS": [],
     "M-READ-OWN-ALIAS": [],
+    "M-READ-CROSS-SUB-ALIAS": [],
+    "M-READ-KIND-SUB-ALIAS": [],
+    "M-READ-SNAPSHOT-SUB-ALIAS": [],
+    "M-READ-DELTA-SUB-ALIAS": [],
+    "M-READ-ACK-SUB-ALIAS": [],
+    "M-READ-GAP-SUB-ALIAS": [],
+    "M-READ-RESYNC-SUB-ALIAS": [],
+    "M-READ-EFFECT-SUB-ALIAS": [],
+    "M-READ-INVOKE-SUB-ALIAS": [],
+    "M-SEAM-CROSS-SUB-ALIAS": [],
+    "M-SEAM-KIND-SUB-ALIAS": [],
+    "M-SEAM-ADMITTED-SUB-ALIAS": [],
+    "M-SEAM-LATER-SUB-ALIAS": [],
     "M-GAP-APPLY": [
      "F-GAP#1:g2",
      "F-GAP#2:g3",
@@ -4410,6 +4645,39 @@
     "M-ORDER-LABEL": [],
     "M-SHARED-LABEL": [],
     "M-MERGE-LABEL": []
+   },
+   "maxima": {
+    "entries": {
+     "value": 138,
+     "hosts": [
+      "M-REFUSE-ALL"
+     ]
+    },
+    "perFixture": {
+     "value": 5,
+     "hosts": [
+      "M-DIGEST",
+      "M-EPOCH",
+      "M-GAP-GLOBAL-HOLD"
+     ]
+    },
+    "fixtures": 45
+   },
+   "boundary": {
+    "changed": {
+     "entries": [],
+     "perFixture": []
+    },
+    "past": {
+     "entries": {
+      "failed": 183,
+      "capped": 138
+     },
+     "perFixture": {
+      "failed": 56,
+      "capped": 55
+     }
+    }
    }
   },
   "C2": {
@@ -6812,6 +7080,215 @@
      "aliased"
     ]
    },
+   "M-READ-CROSS-SUB-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-READ-KIND-SUB-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ]
+   },
+   "M-READ-SNAPSHOT-SUB-ALIAS": {
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-READ-DELTA-SUB-ALIAS": {
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ]
+   },
+   "M-READ-ACK-SUB-ALIAS": {
+    "F-READ-ACK": [
+     "aliased"
+    ]
+   },
+   "M-READ-GAP-SUB-ALIAS": {
+    "F-READ-GAP": [
+     "aliased"
+    ]
+   },
+   "M-READ-RESYNC-SUB-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ]
+   },
+   "M-READ-EFFECT-SUB-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ]
+   },
+   "M-READ-INVOKE-SUB-ALIAS": {
+    "F-READ-INVOKE": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-CROSS-SUB-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-KIND-SUB-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-ADMITTED-SUB-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-LATER-SUB-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ]
+   },
    "M-SHARED-LABEL": {
     "F-SESSION": [
      "claim-shared"
@@ -8070,7 +8547,7 @@
   "Q12: R-LABEL-TEXT",
   "Q13: R-ALIAS-HOLDER",
   "rule 16: the rows, the residual families, the classes, the contract parts, the claim families, the checks, the mutants, the fixtures, the contract's endpoints, the words, the reading forms (script and markup extensions, named entities), the walks (roots, pathspecs, judges, floors, anchors and exclusions) and the hosts are frozen at their measured shape",
-  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe, and its first refusal's U1-U3 lines the members they owe",
+  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe, its first refusal's U1-U3 lines the members they owe, and its second refusal's U1-U3 lines the member-depth mutants and the maxima they owe",
   "roster: the judged rows, the quotes, the residual members, the readers and the registered tests equal test/fixtures/foa-public-port-bridge-roster.json, in order and both ways; every pin reached its witness compare"
  ],
  "producer": {
