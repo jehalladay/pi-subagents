@@ -138,23 +138,41 @@
  * file, throws a TypeError or is refused. The judged set pins it: no unfrozen object or list is reachable from them; the six write
  * forms are each refused on every member of row B and of D3's pin in ROWS and on the first member of ROWS and of each constant, which
  * read the same after them; and a test method set on each pattern is refused. Nor does the judged set bind a name this file's top
- * level binds: the SELF-READ refuses a variable, parameter, function or class of the judged set that bears the name of a top-level
- * import, function, class, enum or variable (two planted blocks pin it beside a control), so the judged set never compares the roster
- * against itself under an in-file name. Measured on the landed census (2211bdf), each 0 failed there and red now: the gate's e11 and
- * e12; row B's label restored through Object.defineProperty; row B's id; INVOCATION's task; a gating artifact dropped and pushed back;
+ * level binds: the SELF-READ refuses each declaration of the judged set that binds a value name - a variable or a parameter (its
+ * binding patterns included; a catch clause's and a loop head's are variables), a named function or class (a declaration or an
+ * expression), an enum, a namespace, an import alias or an import - that bears the name of a top-level import (a default, namespace or
+ * named one), function, class, enum, variable, namespace, import alias or global (a name a `declare global` block declares), and THE
+ * RUNNER's scaffolding rule reads the describe callback through the same declarations. Ten planted blocks pin it beside a control:
+ * the judged set's variable, parameter, binding-pattern, function, class and enum forms, its namespace, import alias and import
+ * together, the top-level kinds together, an enum in the describe callback, and the describe callback's other kinds together. So the
+ * judged set never compares the roster against itself under an in-file name (wb-5333 U1: the wb-5333 gate's G01 - an enum INVOCATION
+ * frozen as the judged set's first statements, beside INVOCATION's task edited in source - stayed 18/18 when the SELF-READ read a
+ * variable, parameter, function or class alone). In
+ * a function body the typing step refuses a namespace, an import alias and an import as well (TS1235, TS1232; measured), and vitest
+ * fails to load a namespace or an import there, though it runs an import alias. Measured on the landed census (2211bdf), each 0
+ * failed there and red now: the gate's e11 and e12; row B's label restored through Object.defineProperty; row B's id; INVOCATION's
+ * task; a gating artifact dropped and pushed back;
  * a ref kind; a member name (each restored by the judged set before its comparison); the label restored through a top-level helper;
  * CT6 beside a SEPARATOR.test reading every gap that holds no quote as a separator (17/17 there); and 'const ROWS = ROSTER.rows;' as
- * the judged set's first statement beside the label cut (refused at collection). Values this file keeps for its own readers stay
- * unfrozen (NOT CLAIMED).
+ * the judged set's first statement beside the label cut (refused at collection). Measured on the wb-5333 cut #1 (e62f380), each 0
+ * failed there and failing at collection now: G01 and its enum alone; the same enum INVOCATION in the describe callback, beside the
+ * task edit and alone (the wb-5333 seat's G01d, lint- and type-clean there); and an import alias INVOCATION in the judged set beside
+ * the task edit (refused by the typing step there); an enum MEMBER beside a member name edited (3 failed there) fails at collection
+ * too. Values this file keeps for its own readers stay unfrozen (NOT CLAIMED).
  * THE ORDER (wb-5333 F2: the wb-b93c gate's e10 - top-level statements placed before ROSTER's declaration read the roster file through
  * a composed path, dropped a mutant from D3's witness through a computed key, wrote the file back, let readRoster read it and restored
  * the bytes, beside a D3 measuring one mutant fewer, and stayed 18/18; a file write, which THE FREEZE does not see): ROSTER's
  * declaration is this file's first statement after its imports and reads READ_FIRST, `const ROSTER = readRoster();`, and readRoster
  * computes ROSTER_PATH and reads the file before it calls anything of this file. The SELF-READ pins the order in any source that
- * declares ROSTER: each statement before that declaration that is not an import, an interface or a type alias (a function declaration
- * included, though it runs nothing) is refused, and so is a declaration other than READ_FIRST; three planted sources pin it (two
- * refusals, a control reading clean). readRoster is named only for ROSTER (above), so the roster is read once, and a rewrite of the
- * file after that read reaches nothing the cases compare (measured: e10's rewrite placed after the read, beside D3's dropped mutant,
+ * declares ROSTER, by any declaration it reads (above: an import, an import alias and a `declare global` block included): each
+ * statement before that declaration that is not an import, an interface or a type alias (a function declaration included, though it
+ * runs nothing) is refused, and so is a declaration other than READ_FIRST; and a source that declares readRoster but no ROSTER of its
+ * own is refused the same way (wb-5333 cut #2: the wb-5333 seat's I1, G1 and G1p - ROSTER imported from a module that forges D3's
+ * witness, or a global such a module sets, declared in a `declare global` block here or in another file, each beside D3's mutant line
+ * deleted - stayed 18/18 on the wb-5333 cut #1, G1 there passing biome (rc 0, one unused-function warning) and tsc (0 errors), and
+ * fail at collection now). Seven planted sources pin it (six refusals, a control reading clean). readRoster is named only for ROSTER
+ * (above), so the roster is read once, and a rewrite of the file after that read reaches nothing the cases compare (measured: e10's
+ * rewrite placed after the read, beside D3's dropped mutant,
  * reds D3 and the record). Measured on the landed census, each 0 failed there and failing at collection now: e10 (verbatim it reads
  * HERE, now declared after ROSTER, and fails on HERE's temporal dead zone; re-anchored without HERE it fails at THE GUARD) and the same
  * rewrite run inside ROSTER's initializer by a helper readRoster is handed to. Code that runs before the module body is R-PRE-READ.
@@ -182,7 +200,13 @@
  * unreachable is a change of the reader (measured on the cut: INVOCATION's freeze and its entry dropped, beside INVOCATION's task cut
  * and restored, kept 18/18, and with its entry kept it reds the judged set; readRoster dropping a mutant from D3's witness, beside a
  * D3 measuring one mutant fewer, kept 18/18; row B's label cut beside 'if (ROWS.length > 0) return;' after the judged set's first
- * assertion kept 18/18). Nor are the values this file keeps for its own readers frozen: CARRIER, BASE, CONTEXTS, ABSENT, SEAMS,
+ * assertion kept 18/18). So is readRoster replaced or removed (wb-5333 cut #2): imported from a module that forges D3's witness
+ * beside READ_FIRST, or deleted together with ROSTER's declaration while ROSTER is a global such a module sets and another file
+ * declares (measured on the wb-5333 cut #2, each beside D3's mutant line deleted: 18/18). Nor is the tracked bead export's file held:
+ * exportRow reads .beads/issues.jsonl from disk when it is called, so a rewrite of that file this file makes before a read and restores
+ * after it is not refused - THE ORDER binds the roster's read alone (measured on the wb-5333 cut #2: the wb-5333 gate's G02, CT6
+ * beside row C's label cut and that rewrite in the judged set, 17/17). Nor are the values this file keeps for its own readers frozen:
+ * CARRIER, BASE, CONTEXTS, ABSENT, SEAMS,
  * SURFACES, GRANTS, IMPL, the native descriptor cache, the SELF-READ's tables and planted pins, THE GUARD's inputs and reading, and
  * the records MEASURED, REACHED and scratches. THE FREEZE holds exactly the roster, ROWS, the constants and the patterns named above.
  * RESIDUALS (named families, each with a pinned quiet row: D4's for the first five, R-RUNTIME and R-PRE-READ, A1's for R-READ-SITE):
@@ -1180,14 +1204,31 @@ function keysOf(node: ts.Identifier): boolean {
   if (!ts.isCallExpression(call) || call.arguments.length !== 1 || call.arguments[0] !== node || !ts.isPropertyAccessExpression(call.expression)) return false;
   return ts.isIdentifier(call.expression.expression) && call.expression.expression.text === "Object" && call.expression.name.text === "keys";
 }
-/** The names one declaration binds (wb-yi2o): a variable or a parameter, its binding patterns included, or a named function or class. */
+/**
+ * The value names one declaration binds (wb-yi2o; wb-5333 U1: every kind of declaration that binds one): a variable or a parameter,
+ * its binding patterns included (a catch clause's and a loop head's are variables), a named function or class (a declaration or an
+ * expression), an enum, a namespace (a `declare global` block: the names its own statements declare), an import alias, and an import's
+ * default, namespace and named bindings.
+ */
 function boundNames(node: ts.Node): string[] {
   const names = (name: ts.BindingName): string[] => (ts.isIdentifier(name) ? [name.text] : name.elements.flatMap(element => (ts.isBindingElement(element) ? names(element.name) : [])));
   if (ts.isVariableDeclaration(node) || ts.isParameter(node)) return names(node.name);
   if (ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isClassDeclaration(node) || ts.isClassExpression(node)) return node.name === undefined ? [] : [node.name.text];
+  // wb-5333 U1: the wb-5333 gate's G01, an enum INVOCATION frozen in the judged set, stood in for the edited constant at 18/18.
+  if (ts.isEnumDeclaration(node) || ts.isImportEqualsDeclaration(node)) return [node.name.text];
+  if (ts.isModuleDeclaration(node) && (node.flags & ts.NodeFlags.GlobalAugmentation) !== 0) return node.body !== undefined && ts.isModuleBlock(node.body) ? node.body.statements.flatMap(declaredBy) : [];
+  if (ts.isModuleDeclaration(node)) return ts.isIdentifier(node.name) ? [node.name.text] : [];
+  if (ts.isImportDeclaration(node)) return importedNames(node);
   return [];
 }
-/** The names one top-level statement declares: a variable statement's bindings, or a function's or class's name (wb-5333). */
+/** The names an import binds: its default, its namespace and its named bindings (wb-5333). */
+function importedNames(statement: ts.ImportDeclaration): string[] {
+  const clause = statement.importClause;
+  const bindings = clause?.namedBindings;
+  const named = bindings === undefined ? [] : ts.isNamespaceImport(bindings) ? [bindings.name.text] : bindings.elements.map(element => element.name.text);
+  return [...(clause?.name === undefined ? [] : [clause.name.text]), ...named];
+}
+/** The names one top-level statement declares: a variable statement's bindings, or what boundNames reads in it (wb-5333). */
 function declaredBy(statement: ts.Statement): string[] {
   return ts.isVariableStatement(statement) ? statement.declarationList.declarations.flatMap(boundNames) : boundNames(statement);
 }
@@ -1195,13 +1236,7 @@ function declaredBy(statement: ts.Statement): string[] {
 function topLevelNames(file: ts.SourceFile): Set<string> {
   const names = new Set<string>();
   for (const statement of file.statements) {
-    if (ts.isImportDeclaration(statement)) {
-      const clause = statement.importClause;
-      const bindings = clause?.namedBindings;
-      if (clause?.name !== undefined) names.add(clause.name.text);
-      if (bindings !== undefined && ts.isNamespaceImport(bindings)) names.add(bindings.name.text);
-      else if (bindings !== undefined) for (const element of bindings.elements) names.add(element.name.text);
-    } else if (ts.isEnumDeclaration(statement)) names.add(statement.name.text);
+    if (ts.isImportDeclaration(statement)) for (const name of importedNames(statement)) names.add(name);
     else for (const name of declaredBy(statement)) names.add(name);
   }
   return names;
@@ -1341,7 +1376,8 @@ function describeReads(file: ts.SourceFile, block: ts.CallExpression, topLevel: 
  * readRoster and readRoster only for ROSTER; a witness member is read only in readRoster and rosterWitness; ROSTER is read only
  * through SUBJECT_MEMBERS (its rows in rosterWitness alone, GUARDED_MEMBERS in GUARD_MISSES alone); it is never named, describe and
  * expect only as a call's callee, and a hook only in the HOOKS statements; and in a source that declares ROSTER, THE ORDER (wb-5333
- * F2): no statement before that declaration but an import, an interface or a type alias, and the declaration READ_FIRST. Inside it,
+ * F2): no statement before that declaration but an import, an interface or a type alias, and the declaration READ_FIRST, while a
+ * source that declares readRoster declares ROSTER (wb-5333 cut #2). Inside it,
  * describeReads. Returns the refused reads, by
  * declaration (an IMPL case as IMPL.<pin>) or by region.
  */
@@ -1355,6 +1391,10 @@ function selfRead(text: string): string[] {
   for (const statement of rosterAt < 0 ? [] : file.statements.slice(0, rosterAt)) if (!typeOrImport(statement)) found.push(`${ownerOf(statement)} runs before readRoster`);
   const declared = file.statements[rosterAt];
   if (declared !== undefined && normalized(declared.getText(file)) !== READ_FIRST) found.push("ROSTER is not readRoster() alone");
+  // wb-5333 cut #2: a source that declares readRoster binds ROSTER by a top-level declaration of its own, never a global another module
+  // sets (the wb-5333 seat's G1: `declare global` and an imported module's side effect, beside a broken D3, stayed 18/18).
+  const reader = file.statements.some(statement => ts.isFunctionDeclaration(statement) && statement.name?.text === "readRoster");
+  if (declared === undefined && reader) found.push("ROSTER is not readRoster() alone");
   for (const statement of file.statements) {
     if (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isImportDeclaration(statement)) continue;
     const call = ts.isExpressionStatement(statement) && ts.isCallExpression(statement.expression) ? statement.expression : undefined;
@@ -1453,6 +1493,13 @@ const PLANTED_SOURCES: Readonly<Record<string, Pinned>> = {
     source: "const ROSTER = preRead(readRoster);\nfunction preRead(read: () => unknown): unknown {\n  return read();\n}\n",
     reads: ["ROSTER is not readRoster() alone"],
   },
+  // wb-5333 cut #2: a function declaration before ROSTER's is refused though it runs nothing (the wb-5333 gate's G05a, unpinned at
+  // cut #1); ROSTER bound by an import or declared as a global is not readRoster() alone (the wb-5333 seat's I1 and G1), nor is a
+  // source that declares readRoster beside no ROSTER of its own (G1p: the global declared in another file).
+  "a function declaration before ROSTER's (the wb-5333 gate's G05a)": { source: "function early(): void {}\nconst ROSTER = readRoster();\n", reads: ["early runs before readRoster"] },
+  "ROSTER bound by an import (the wb-5333 seat's I1)": { source: 'import { ROSTER } from "./elsewhere.js";\n', reads: ["ROSTER is not readRoster() alone"] },
+  "ROSTER declared as a global (the wb-5333 seat's G1)": { source: "declare global {\n  var ROSTER: unknown;\n}\n", reads: ["ROSTER is not readRoster() alone"] },
+  "readRoster declared beside no ROSTER of this source (the wb-5333 seat's G1p)": { source: "function readRoster(): unknown {\n  return null;\n}\n", reads: ["ROSTER is not readRoster() alone"] },
   "the roster read first, imports and types before it (control)": {
     source: 'import { join } from "node:path";\ninterface Kept {\n  readonly id: string;\n}\ntype Also = Kept;\nconst ROSTER = readRoster();\nconst AFTER = join("a", "b");\n',
     reads: [],
@@ -1569,6 +1616,106 @@ const PLANTED_BLOCKS: Readonly<Record<string, Pinned>> = {
   "a parameter of the judged set re-binding a top-level name and a variable re-binding an import": {
     source: `import { join } from "node:path";\nconst ROWS: unknown[] = [];\n${plantedJudgedSet(["[ROSTER.rows].forEach(ROWS => expect(ROWS).toHaveLength(4));", 'const join = (...parts: string[]): string => parts.join("/");', 'expect(join("a")).toBe("a");'])}`,
     reads: ["the judged set binds ROWS", "the judged set binds join"],
+  },
+  // wb-5333 U1 (the wb-5333 gate's G01: an enum INVOCATION frozen as the judged set's first statements, beside INVOCATION's task
+  // edited in source, stayed 18/18): every kind of declaration that binds a value name is read, in the judged set and in the describe
+  // callback, and so is every kind of top-level binding.
+  "an enum of the judged set standing in for INVOCATION (the wb-5333 gate's G01)": {
+    source: `const INVOCATION = { model: "pi-invocation-model-9d2", task: "summarise the notes" };\n${plantedJudgedSet(['enum INVOCATION { model = "pi-invocation-model-9d2", task = "summarise the notes" }', "Object.freeze(INVOCATION);", "expect(INVOCATION).toStrictEqual(ROSTER.invocation);"])}`,
+    reads: ["the judged set binds INVOCATION"],
+  },
+  "an enum in the describe callback standing in for INVOCATION (the wb-5333 seat's G01d)": {
+    source: `const INVOCATION = { model: "pi-invocation-model-9d2", task: "summarise the notes" };\n${plantedBlock(HARNESS, ['enum INVOCATION { model = "pi-invocation-model-9d2", task = "summarise the notes" }'])}`,
+    reads: ["describe binds INVOCATION"],
+  },
+  "the describe callback's other declarations (a variable, a parameter, a binding pattern, a function and a class in each form, a namespace, an import alias and an import)": {
+    source: plantedBlock(HARNESS, [
+      "const value = 1;",
+      "[1].forEach(item => void item);",
+      "const { length } = [];",
+      "function helper(): void {}",
+      "void function named(): void {};",
+      "class Kept {}",
+      "void class Made {};",
+      "namespace Space {}",
+      "import Alias = Space;",
+      'import { join } from "node:path";',
+    ]),
+    reads: [
+      "describe binds value",
+      "describe binds item",
+      "describe binds length",
+      "describe binds helper",
+      "describe binds named",
+      "describe binds Kept",
+      "describe binds Made",
+      "describe binds Space",
+      "describe binds Alias",
+      "describe binds join",
+    ],
+  },
+  "binding patterns of the judged set re-binding top-level names (an object, a list, a catch clause and a loop head)": {
+    source: `const ROWS: unknown[] = [];\nconst HOOKS: unknown[] = [];\nconst RECORD = {};\nconst FIELDS: unknown[] = [];\n${plantedJudgedSet([
+      "const { rows: ROWS } = ROSTER;",
+      "const [HOOKS] = [ROSTER.hooks];",
+      "try {",
+      "  expect(ROWS).toHaveLength(4);",
+      "} catch ({ record: RECORD }) {",
+      "  expect(RECORD).toBeUndefined();",
+      "}",
+      "for (const [FIELDS] of [[ROSTER.fields]]) expect(FIELDS).toHaveLength(4);",
+    ])}`,
+    reads: ["the judged set binds ROWS", "the judged set binds HOOKS", "the judged set binds RECORD", "the judged set binds FIELDS"],
+  },
+  "functions of the judged set re-binding top-level names (a declaration and an expression)": {
+    source: `function tiles(): void {}\nfunction unfrozen(): void {}\n${plantedJudgedSet([
+      "function tiles(): string[] {",
+      "  return [];",
+      "}",
+      "const quiet = function unfrozen(): string[] {",
+      "  return [];",
+      "};",
+      "expect([tiles(), quiet()]).toHaveLength(2);",
+    ])}`,
+    reads: ["the judged set binds tiles", "the judged set binds unfrozen"],
+  },
+  "classes of the judged set re-binding top-level names (a declaration and an expression)": {
+    source: `class Kept {}\nconst RECORD = {};\n${plantedJudgedSet(["class Kept {}", "const Made = class RECORD {};", "expect([new Kept(), new Made()]).toHaveLength(2);"])}`,
+    reads: ["the judged set binds Kept", "the judged set binds RECORD"],
+  },
+  "a namespace, an import alias and an import of the judged set re-binding top-level names (each refused there by the typing step too)": {
+    source: `import { join } from "node:path";\nconst INVOCATION = {};\nconst HOOKS: unknown[] = [];\n${plantedJudgedSet([
+      "namespace HOOKS {",
+      "  export const first = 1;",
+      "}",
+      "import INVOCATION = ROSTER.invocation;",
+      'import { join } from "node:path";',
+      "expect([HOOKS, INVOCATION, join]).toHaveLength(3);",
+    ])}`,
+    reads: ["the judged set binds HOOKS", "the judged set binds INVOCATION", "the judged set binds join"],
+  },
+  "the top-level kinds the judged set re-binds: a default import, a namespace import, a function, a class, an enum, a namespace, an import alias and a global": {
+    source: `import ts from "typescript";\nimport * as path from "node:path";\nfunction tiles(): void {}\nclass Kept {}\nenum Mode {\n  Quiet = "quiet",\n}\nnamespace Space {\n  export const inner = 1;\n}\nimport Alias = Space.inner;\ndeclare global {\n  var Shared: number;\n}\n${plantedJudgedSet([
+      "const ts = 1;",
+      "const path = 2;",
+      "const tiles = 3;",
+      "const Kept = 4;",
+      "const Mode = 5;",
+      "const Space = 6;",
+      "const Alias = 7;",
+      "const Shared = 8;",
+      "expect([ts, path, tiles, Kept, Mode, Space, Alias, Shared]).toHaveLength(8);",
+    ])}`,
+    reads: [
+      "the judged set binds ts",
+      "the judged set binds path",
+      "the judged set binds tiles",
+      "the judged set binds Kept",
+      "the judged set binds Mode",
+      "the judged set binds Space",
+      "the judged set binds Alias",
+      "the judged set binds Shared",
+    ],
   },
   "the judged set binding names of its own (control)": {
     source: `const ROWS: unknown[] = [];\n${plantedJudgedSet(["const rows = ROSTER.rows;", "expect(rows).toHaveLength(4);"])}`,
