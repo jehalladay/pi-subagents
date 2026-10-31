@@ -19,7 +19,7 @@
  *
  * MEASURED (read-only, 2026-10-28, by the cutting seats: cut #1 at trunk cf56481cd915 and again after its fast-forward to
  * df37dacef497; cut #2 re-measured every fact below on trunk e81d2b08eecf and again on 5fbe25ebea37, each merged into the
- * branch). At HEAD and at the Pi pin
+ * branch; cut #3 read them again, 2026-10-31, on trunk 5c577c97ca91 merged into the branch). At HEAD and at the Pi pin
  * 758ec18187a5 (its src tree read from git's objects): no src module spells GraphPolicyCLI, programId, checkpointId or
  * sourceOutcome (in any case or separator spelling the word reader reads), and exactly two spell snapshotDigest,
  * src/workbench/hosts/local-detached.ts and src/workbench/detached-observer.ts, both for the detached host's invocation-snapshot
@@ -80,14 +80,20 @@
  *    duplicate, it adds no row naming its id and no application of it, and a fresh presentation is never refused duplicate)
  *    and worker-failure (a failed worker's verdict is refused or unavailable, and no row records its decision and applied()
  *    never holds it, at any step until its id is presented again).
- *    The honest REFERENCE host meets every check over the journal and every fixture; each of the thirty-five MUTANTS fails
+ *    The honest REFERENCE host meets every check over the journal and every fixture; each of the forty-one MUTANTS fails
  *    exactly its declared checks; every check is failed by some mutant and every check but four-fields by a mutant alone (each
- *    four-fields mutant leaves an expected-admitted decision without a replayable row, so it fails replay too). Seven MUTANTS
+ *    four-fields mutant leaves an expected-admitted decision without a replayable row, so it fails replay too). Eleven MUTANTS
  *    are TRANSIENT: each lists a row or an application only from the presentation it answers to the host's next event, and
  *    reads as the reference at the last step (the same verdicts, last rows and last applications: settledBy), so only a check
  *    that reads the affected step fails it: a phantom application d0 while the host answers the stale presentation
- *    (replay), the stale decision's row and its application (stale), the d1 duplicate's extra row and application at
- *    its duplicate step (duplicate), and each failed worker's row and its application (worker-failure).
+ *    (replay), the stale decision's row and its application (stale), a duplicate's extra row and its re-application at its
+ *    duplicate step, at both duplicates (d1 at step 5, d2 at step 10) or at d2's only (duplicate), and a failed worker's row
+ *    and its application at its own step, at both failed workers (d4 at step 6, d7 at step 11) or at d7's only
+ *    (worker-failure). Six MUTANTS act at the later presentation only, d2's duplicate (presented with other fields than the
+ *    admitted d2) and d7's worker kill: an admitted verdict, a transient row and a transient application at each. So a check
+ *    that reads only the first duplicate's verdict, rows or applications, or skips a duplicate presented with other fields,
+ *    or that reads only the first failed worker's verdict or window, misses one of them and reds this census (the gate's
+ *    JMDF, JMD1 and JWF among such checks).
  *    A1 the honest rows, four-fields' reading of four planted rows (FIELD_CONTROLS) and the structural mutants; the pairs
  *    differing in one input differ in that field and the outcome only, a replay with one of d1's fields swapped for its pair's
  *    reads the pair's outcome, and the real gp receipt records the four as separate members. A2 the honest replays reconstruct
@@ -100,23 +106,29 @@
  *    its own step only (transient-stale-record, transient-stale-application). A4 the two duplicates and the mutants that
  *    re-admit, dedupe by content,
  *    answer admitted, re-apply, re-record the original row, refuse with the reason stale, or refuse a fresh decision duplicate
- *    for an admitted one's outcome on the same basis, or record or apply d1 only at its duplicate step
- *    (transient-duplicate-record, transient-duplicate-application). A5 the four NEGATIVE_FIXTURES, named as the clause names them: each a
+ *    for an admitted one's outcome on the same basis, or record or apply a duplicate only at its duplicate step, at both
+ *    duplicates (transient-duplicate-record, transient-duplicate-application), and the three that act at d2's duplicate only:
+ *    answer it admitted, or record or apply it only at its duplicate step (differing-duplicate-success,
+ *    transient-differing-duplicate-record, transient-differing-duplicate-application). A5 the four NEGATIVE_FIXTURES, named as the clause names them: each a
  *    frozen in-memory journal with one decision the reference admits, met by the reference and failed by its member mutant
- *    through exactly its check, while four more mutants (a row for a failed worker, an admitted verdict for one, and a row or
- *    an application of a failed worker's decision at its own step only: transient-failure-record, transient-failure-application)
- *    fail worker-failure over the journal; two runs of each fixture are identical, and every digest each presents resolves in the
+ *    through exactly its check, while seven more mutants (a row for a failed worker, an admitted verdict for one, and a row or
+ *    an application of a failed worker's decision at its own step only: transient-failure-record, transient-failure-application;
+ *    and the three that act at d7's worker kill only: an admitted verdict, or its row or its application at its own step only,
+ *    kill-as-admitted, transient-kill-record, transient-kill-application) fail worker-failure over the journal; two runs of
+ *    each fixture are identical, and every digest each presents resolves in the
  *    in-memory store. A5c the default gate: forge.toml's gate list (the gate key of its [build] table) and its test step's
  *    command; the package test script read against a closed flag list (vitest run with only reporter, outputFile,
  *    includeTaskLocation and expect.requireAssertions flags: any other flag or argument, a config, root, filter or exclude among
  *    them, reads as no default run, and four in-memory script plants, -c, --config=, a positional file and --exclude=, each read
  *    so); the default config's include and exclude; no forge.toml GP word run; and no other vitest config file in the listing (a
- *    file named vitest.config or vitest.<name>.config with a ts, mts, cts, js, mjs or cjs extension, at any depth) that names
- *    this file's base name or selects it by an include list of string literals, its globs read with * and ** only, where four
- *    in-memory config plants read eight claiming it and a census-only control that does not: root .mts, named nested .ts,
- *    glob .ts, .js/.mjs/.cjs/.cts and nameless nested .ts. Each plant's path reads through the same otherConfigs predicate
- *    as the listing. Narrowing it to root-only, excluding the js family (including an exclusion in otherConfigs' own body),
- *    excluding the c family or requiring a name segment reds a plant; the listing call has no plant (NOT CLAIMED).
+ *    file named vitest.config or vitest.<name>.config with a ts, mts, cts, js, mjs or cjs extension, read by its base name at
+ *    any depth, the plants pinning depths 0 to 3) that names
+ *    this file's base name or selects it by an include list of string literals, its globs read with * and ** only, where ten
+ *    in-memory config plants read nine claiming it and a census-only control that does not: root .mts, named nested .ts,
+ *    glob .ts, .js/.mjs/.cjs/.cts and nameless nested .ts two and three directories deep. Each plant's path reads through the
+ *    same otherConfigs predicate as the listing. Narrowing it to root-only, excluding the js family (including an exclusion in
+ *    otherConfigs' own body), excluding the c family, requiring a name segment or dropping files deeper than two directories
+ *    (the gate's FXDEPTH) reds a plant; the listing call has no plant (NOT CLAIMED).
  *  S1 to S3, the standing anchors, each row's text pins read at the pin and at HEAD and its drive at HEAD: S1 the real
  *    control core mints a permit that isCoreMintedDecision accepts while its spread copy, its JSON round trip and its
  *    structured clone are refused, a GP receipt row is no minted decision, and the docs anchor and the export rows of wb-pjj;
@@ -146,21 +158,30 @@
  *    spans, its list marker kept even when the marker and prose occupy different lines, found by that item's source words
  *    with any whitespace run between them), D5 and D7 at the
  *    line that renders the heading (headingLine: its words with any spacing, any whitespace but a line break, around and
- *    between them) and the line break after it, and D6 at the page's end; a plant whose site or edit pattern does not occur
+ *    between them), edited as that whole line (line-anchored: a longer line that contains it, a level-3 heading of the same
+ *    words among them, is never the site), and D6 at the page's end; a plant whose site or edit pattern does not occur
  *    exactly once reads needle-miss, its own reason, at the witness compare, never a throw before it. The in-memory HEAD
  *    re-spacing control, not a claim that every whitespace rewrite of the on-disk page leaves every other reader unchanged,
  *    witnesses the sites and their plant readings: the HEAD page re-spaced at its plants' sites (its carrier re-wrapped across
  *    two lines, broken at
  *    the first space from its middle on with the continuation indented under its list marker; its heading's line re-spaced,
- *    with the blank line after it dropped; every line break written CRLF) reads holds and each plant over it its pinned reason.
+ *    with the run of blank lines after it dropped, a page with none dropping nothing; every line break written CRLF) reads
+ *    holds and each plant over it its pinned reason.
  *    A second HEAD control with its carrier's source doubled reads each carrier plant needle-miss (D5 there reads carriers:2, D6
- *    unbound:repeated and D7 unbound:parent). A third HEAD control reads the marker-only first line, omitted blank after the
- *    heading, and between-word heading spacing as holding sections with the same plant reasons, and checks the marker is
- *    kept at the start of the carrier site. An edit that leaves a section holding while a site stops occurring exactly once
- *    in its page (the carrier's source words repeated elsewhere in the page, the heading's line repeated inside a code fence or
- *    an HTML comment, or the heading closed with a run of hashes) reds this census at that plant until it is re-measured.
- *    Setext-style headings remove the ATX heading site: the D5/D7 heading plants can read needle-miss even while their
- *    section holds; this is disclosed, not claimed as a semantic section red.
+ *    unbound:repeated and D7 unbound:parent). A third HEAD control reads three pages as holding sections with the same plant
+ *    reasons: the carrier's list marker moved to a line of its own (checking the marker is kept at the start of the carrier
+ *    site), the run of blank lines after the heading's line dropped (a page with none dropping nothing, so the control needs
+ *    no blank line on disk), and the heading's first between-word space doubled. Every reading above (the page, its plants
+ *    and the three HEAD controls) is read again over three HEAD variants and pinned to the HEAD page's own: the run of blank
+ *    lines after the heading's line dropped, that run replaced by one line of spaces and a tab, and a level-3 heading of the
+ *    same words added at the page's end (the gate's GW7/GW7b, GWWS/GWWSb and GWL3/GWL3b, in memory); each variant is built
+ *    at the heading's whole line, so none needs the on-disk blank line. An edit that leaves a section holding while a site
+ *    stops occurring exactly once in its page reds this census at every reading that plants or builds at that site until it
+ *    is re-measured: the carrier's source words repeated elsewhere in the page (the carrier plants and every HEAD control,
+ *    over the page and over each variant), and the heading's line repeated inside a code fence or an HTML comment, the
+ *    heading closed with a run of hashes, or the heading rewritten setext-style, which leaves no ATX heading line (the D5/D7
+ *    heading plants over the page and over the doubled control, the re-spacing and third controls, and the variants: the
+ *    gate's GE2, GE3, GW14 and GW15). These reds are disclosed, not claimed as semantic section reds.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, the checks, every mutant with its
  * failed checks, the journal, the oracle's expectations, the fixtures, the vocabulary, the fields, the reasons, the holders, the
@@ -202,9 +223,12 @@
  * selecting this file through a computed include, a glob form beyond * and
  * ** (braces, character classes, ?), a projects list or a workspace file, and a config file named otherwise than
  * vitest.config or vitest.<name>.config (one a tier names by --config under any other name); a mutant, a journal event or a
- * planted control removed from its table and the frozen literal together while every check keeps a mutant; a docs plant or a
- * docs control swapped for another edit that reads the same pinned reason (the docs plants are pinned by id, anchor and
- * reason, never by their edits); a pin merged into a neighbouring
+ * planted control removed from its table and the frozen literal together while every check keeps a mutant; a docs plant, a
+ * docs control or a HEAD variant swapped for another edit that reads the same pinned reason, and a docs control or a HEAD
+ * variant removed from its witness and its pinned reading together (the docs plants are pinned by id, anchor and reason,
+ * never by their edits, and no source outside this file names the controls or the variants: a re-spacing control that keeps
+ * the blank run, a blank-run edit that drops one blank line only or reads only an empty line as blank, and a level-3 variant
+ * left as the HEAD page each read 0 failed | 29 passed); a pin merged into a neighbouring
  * pin of its row in every literal (its quote joined to the neighbour's, its case dropped, its row's count lowered in the frozen
  * literal: the gate's GH1, A5b into A5a, and GH2, S1b into S1a, each read 0 failed | 27 passed on cut #1; on cut #2 GH1 reads
  * 0 failed | 28 passed, and the plain GH2 reds the frozen-shape case alone, its docs anchor left without its pin), since the
@@ -429,7 +453,9 @@ type Twist =
   | "silent-apply-stale" | "readmit" | "content-dedupe" | "idempotent-success" | "reapply" | "duplicate-row" | "duplicate-as-stale"
   | "outcome-dedupe" | "phantom-row" | "phantom-application" | "fault-admitted" | "kill-admitted" | "failure-recorded" | "failure-as-admitted"
   | "transient-phantom-application" | "transient-stale-record" | "transient-stale-application" | "transient-failure-record"
-  | "transient-failure-application" | "transient-duplicate-record" | "transient-duplicate-application" | "stale-first" | "refuse-represented" | "sample-member";
+  | "transient-failure-application" | "transient-duplicate-record" | "transient-duplicate-application" | "differing-duplicate-success"
+  | "transient-differing-duplicate-record" | "transient-differing-duplicate-application" | "kill-as-admitted" | "transient-kill-record"
+  | "transient-kill-application" | "stale-first" | "refuse-represented" | "sample-member";
 interface Mutant { readonly twist: Twist; readonly refusedBy: readonly Check[] }
 const MUTANTS: readonly Mutant[] = [
   { twist: "combined-basis", refusedBy: ["four-fields", "replay"] },
@@ -452,6 +478,7 @@ const MUTANTS: readonly Mutant[] = [
   { twist: "readmit", refusedBy: ["replay", "duplicate"] },
   { twist: "content-dedupe", refusedBy: ["replay", "duplicate"] },
   { twist: "idempotent-success", refusedBy: ["duplicate"] },
+  { twist: "differing-duplicate-success", refusedBy: ["duplicate"] },
   { twist: "reapply", refusedBy: ["duplicate"] },
   { twist: "duplicate-row", refusedBy: ["duplicate"] },
   { twist: "duplicate-as-stale", refusedBy: ["duplicate"] },
@@ -463,10 +490,15 @@ const MUTANTS: readonly Mutant[] = [
   { twist: "kill-admitted", refusedBy: ["worker-failure"] },
   { twist: "failure-recorded", refusedBy: ["worker-failure"] },
   { twist: "failure-as-admitted", refusedBy: ["worker-failure"] },
+  { twist: "kill-as-admitted", refusedBy: ["worker-failure"] },
   { twist: "transient-failure-record", refusedBy: ["worker-failure"] },
   { twist: "transient-failure-application", refusedBy: ["worker-failure"] },
+  { twist: "transient-kill-record", refusedBy: ["worker-failure"] },
+  { twist: "transient-kill-application", refusedBy: ["worker-failure"] },
   { twist: "transient-duplicate-record", refusedBy: ["duplicate"] },
   { twist: "transient-duplicate-application", refusedBy: ["duplicate"] },
+  { twist: "transient-differing-duplicate-record", refusedBy: ["duplicate"] },
+  { twist: "transient-differing-duplicate-application", refusedBy: ["duplicate"] },
 ];
 
 /** What a transient twist lists from the presentation it answers to the next event: its rows and its applications. */
@@ -526,12 +558,14 @@ function reference(twist?: Twist): DecisionHost {
           const guess = SNAPSHOTS.get(presentation.snapshotDigest)?.candidates[0]?.id ?? "";
           return admit({ ...presentation, kind: "presented", sourceOutcome: guess });
         }
-        if (twist === "failure-as-admitted") return ADMITTED;
+        if (twist === "failure-as-admitted" || (twist === "kill-as-admitted" && presentation.worker === "kill")) return ADMITTED;
         const { decision, programId, checkpointId, snapshotDigest } = presentation;
         const row: Row = { decision, programId, checkpointId, snapshotDigest, sourceOutcome: "unavailable" };
         if (twist === "failure-recorded") records.push(row);
         if (twist === "transient-failure-record") flash = { rows: [row], applied: [] };
         if (twist === "transient-failure-application") flash = { rows: [], applied: [decision] };
+        if (twist === "transient-kill-record" && presentation.worker === "kill") flash = { rows: [row], applied: [] };
+        if (twist === "transient-kill-application" && presentation.worker === "kill") flash = { rows: [], applied: [decision] };
         return UNAVAILABLE;
       }
       const prior = admitted.get(presentation.decision);
@@ -539,11 +573,14 @@ function reference(twist?: Twist): DecisionHost {
       if (twist === "stale-first" && prior !== undefined && stale) return refusal("stale");
       if (prior !== undefined) {
         if (twist === "readmit" || (twist === "content-dedupe" && !isDeepStrictEqual(decisionOf(prior), decisionOf(presentation)))) return admit(presentation);
-        if (twist === "idempotent-success") return ADMITTED;
+        const differs = !isDeepStrictEqual(decisionOf(prior), decisionOf(presentation));
+        if (twist === "idempotent-success" || (twist === "differing-duplicate-success" && differs)) return ADMITTED;
         if (twist === "reapply") effects.push(presentation.decision);
         if (twist === "duplicate-row") records.push(rowOf(prior, twist));
         if (twist === "transient-duplicate-record") flash = { rows: [rowOf(prior, twist)], applied: [] };
         if (twist === "transient-duplicate-application") flash = { rows: [], applied: [presentation.decision] };
+        if (twist === "transient-differing-duplicate-record" && differs) flash = { rows: [rowOf(prior, twist)], applied: [] };
+        if (twist === "transient-differing-duplicate-application" && differs) flash = { rows: [], applied: [presentation.decision] };
         return refusal(twist === "duplicate-as-stale" ? "stale" : "duplicate");
       }
       if (twist === "refuse-represented" && refusedStale.has(presentation.decision)) return refusal("duplicate");
@@ -784,7 +821,7 @@ function includesOf(text: string): string[] {
 }
 /** Whether a vitest config text names this file's base name or selects it by one of its include globs. */
 const claimsSelf = (text: string): boolean => text.includes(basename(SELF)) || includesOf(text).some(glob => globMatches(glob, SELF));
-/** In-memory config plants (path, text): the gate's root .mts and nested configs/ files naming this file, a glob include written without spaces, and a control selecting the census tier only. */
+/** In-memory config plants (path, text): the gate's root .mts and nested files naming this file (depths 1 to 3), a glob include written without spaces, and a control selecting the census tier only. */
 const CONFIG_PLANTS: readonly (readonly [string, string])[] = [
   ["vitest.gp-live.config.mts", `export default defineConfig({ test: { include: ["${SELF}"] } });`],
   ["configs/vitest.gp-live.config.ts", `export default defineConfig({ test: { include: ["${SELF}"] } });`],
@@ -795,6 +832,7 @@ const CONFIG_PLANTS: readonly (readonly [string, string])[] = [
   ["vitest.gp-live.config.cjs", `export default defineConfig({ test: { include: ["${SELF}"] } });`],
   ["vitest.gp-live.config.cts", `export default defineConfig({ test: { include: ["${SELF}"] } });`],
   ["qa/configs/vitest.config.ts", `export default defineConfig({ test: { include: ["${SELF}"] } });`],
+  ["qa/configs/live/vitest.config.ts", `export default defineConfig({ test: { include: ["${SELF}"] } });`],
 ];
 /** In-memory package script plants, none a default run: a short config flag, a long one, a positional file and an exclude flag. */
 const SCRIPT_PLANTS: readonly string[] = [
@@ -897,6 +935,35 @@ function swap(text: string, pattern: RegExp, replacement: string): string {
   if (!pattern.test(text)) throw new NeedleMiss(`a plant's edit pattern does not match: ${pattern.source}`);
   return text.replace(pattern, replacement);
 }
+/** A blank line as marked and CommonMark read one: spaces and tabs only (a CRLF page's carriage return kept at its end). */
+const BLANK_LINE = /^[ \t]*\r?$/;
+/**
+ * The index of the one whole line of a page's lines equal to a line: line-anchored, so a longer line that contains it (a
+ * level-3 heading of the same words among them) is never its site; a NeedleMiss unless exactly one.
+ */
+function lineAt(lines: readonly string[], line: string): number {
+  const found = lines.flatMap((entry, index) => (entry === line ? [index] : []));
+  const index = found[0];
+  if (found.length !== 1 || index === undefined) throw new NeedleMiss(`a plant's line does not occur exactly once as a whole line: ${JSON.stringify(line.slice(0, 60))}`);
+  return index;
+}
+/** Replaces the one whole line of a page equal to a line (line-anchored, as lineAt finds it). */
+function onceLine(text: string, line: string, replacement: string): string {
+  const lines = text.split("\n");
+  const index = lineAt(lines, line);
+  return [...lines.slice(0, index), replacement, ...lines.slice(index + 1)].join("\n");
+}
+/**
+ * The page with the run of blank lines after one whole line (line-anchored) replaced by the given lines: none drops the
+ * run, and a page with no blank line there gets the lines inserted, so no edit needs a blank line on disk.
+ */
+function blankRun(text: string, line: string, blanks: readonly string[]): string {
+  const lines = text.split("\n");
+  const index = lineAt(lines, line);
+  const after = lines.slice(index + 1);
+  const run = after.findIndex(entry => !BLANK_LINE.test(entry));
+  return [...lines.slice(0, index + 1), ...blanks, ...after.slice(run < 0 ? after.length : run)].join("\n");
+}
 /** Where a plant edits its anchor's page: the section's own carrier source and its heading's own line, each found when the plant asks (a NeedleMiss unless exactly once). */
 interface PlantSites { readonly carrier: () => string; readonly heading: () => string }
 /** An in-memory docs plant over the HEAD text of its anchor's page, edited at that page's own sites (never at the pin's line). */
@@ -935,7 +1002,7 @@ const DOCS_PLANTS: readonly DocsPlant[] = [
     id: "D5", anchor: "S2b",
     apply: (text, at) => {
       const line = at.heading();
-      return once(text, `${line}\n`, `${line}\n\nThese controls describe a future design; none of them is enforced today.\n`);
+      return onceLine(text, line, `${line}\n\nThese controls describe a future design; none of them is enforced today.`);
     },
   },
   { id: "D6", anchor: "S1b", apply: text => `${text.trimEnd()}\n\n## Authorization design\n\n- A deserialized or audit/journal-replayed receipt is executed when its shape matches.\n` },
@@ -943,7 +1010,7 @@ const DOCS_PLANTS: readonly DocsPlant[] = [
     id: "D7", anchor: "S2b",
     apply: (text, at) => {
       const line = at.heading();
-      return once(text, `${line}\n`, `# Appendix (non-normative, superseded drafts)\n\n${line}\n`);
+      return onceLine(text, line, `# Appendix (non-normative, superseded drafts)\n\n${line}`);
     },
   },
 ];
@@ -1013,8 +1080,8 @@ function needled<T>(read: () => T): T | "needle-miss" {
 /**
  * The page re-spaced at its plants' sites, every block left as it was: its carrier's source re-wrapped across two lines
  * (broken at the first space from its middle on, the continuation indented under its list marker), its heading's line
- * re-spaced (a second space after the hashes, a trailing space) with any existing blank line after it dropped, and every line break
- * written CRLF.
+ * re-spaced (a second space after the hashes, a trailing space), edited as its whole line, with the run of blank lines after
+ * it dropped (a page with none drops nothing), and every line break written CRLF.
  */
 function respaced(text: string, anchor: DocsAnchor): string {
   const own = ownSource(text, anchor);
@@ -1023,12 +1090,13 @@ function respaced(text: string, anchor: DocsAnchor): string {
   const indent = " ".repeat(/^ *(?:\d+[.)]|[-*+]) +/.exec(own)?.[0].length ?? 0);
   const wrapped = once(text, own, `${own.slice(0, middle)}\n${indent}${own.slice(middle + 1)}`);
   const line = headingLine(wrapped, anchor);
-  const headingAndBreak = wrapped.startsWith(`${line}\n\n`) || wrapped.includes(`\n${line}\n\n`) ? `${line}\n\n` : `${line}\n`;
-  return once(wrapped, headingAndBreak, `${line.replace("## ", "##  ")} \n`).split("\n").join("\r\n");
+  return onceLine(blankRun(wrapped, line, []), line, `${line.replace("## ", "##  ")} `).split("\n").join("\r\n");
 }
 /**
- * A docs anchor read at the pin and at HEAD, three controls over the pin's text, each of its plants over the HEAD text, and
- * HEAD controls: the page re-spaced at its plants' sites, its carrier source doubled, and marker/heading spacing edits.
+ * A docs anchor read at the pin and at HEAD, three controls over the pin's text, each of its plants over the HEAD text, the
+ * HEAD controls (the page re-spaced at its plants' sites, its carrier source doubled, and marker/heading spacing edits),
+ * and the same whole HEAD reading over three variants of the HEAD page: the run of blank lines after its heading's line
+ * dropped, that run replaced by one line of spaces and a tab, and a level-3 heading of its heading's words added at its end.
  */
 function anchorWitness(anchor: DocsAnchor): Readonly<Record<string, unknown>> {
   const pin = pinText(anchor.path);
@@ -1039,33 +1107,39 @@ function anchorWitness(anchor: DocsAnchor): Readonly<Record<string, unknown>> {
     const at: PlantSites = { carrier: () => ownSource(text, anchor), heading: () => headingLine(text, anchor) };
     return Object.fromEntries(DOCS_PLANTS.filter(plant => plant.anchor === anchor.pin).map(plant => [plant.id, needled(() => anchorReading(plant.apply(text, at), anchor, pin))]));
   };
+  const read = (page: string) => ({ head: anchorReading(page, anchor, pin), plants: plantsOver(page) });
+  /** The whole HEAD reading of a page: the page itself, its plants, and the HEAD controls built from it at its own sites. */
+  const headReading = (page: string) => ({
+    ...read(page),
+    respaced: needled(() => read(respaced(page, anchor))),
+    doubled: needled(() => {
+      const own = ownSource(page, anchor);
+      return plantsOver(once(page, `${own}\n`, `${own}\n\n${own}\n`));
+    }),
+    spacing: needled(() => {
+      const heading = headingLine(page, anchor);
+      const own = ownSource(page, anchor);
+      const marker = /^ *(?:\d+[.)]|[-*+])\s+/.exec(own)?.[0] ?? "";
+      const afterMarker = marker.length > 0 ? once(page, own, `${marker.trimEnd()}\n${" ".repeat(marker.length)}${own.slice(marker.length)}`) : page;
+      const noBlank = blankRun(page, heading, []);
+      const first = anchor.heading.split(" ")[0] ?? "";
+      const betweenWords = onceLine(page, heading, heading.replace(`${first} `, `${first}  `));
+      return { afterMarker: { ...read(afterMarker), markerKept: /^ {0,3}(?:\d+[.)]|[-*+])[ \t]*\n/.test(ownSource(afterMarker, anchor)) },
+        noBlank: read(noBlank), betweenWords: read(betweenWords) };
+    }),
+  });
   return {
-    pin: anchorReading(pin, anchor), head: anchorReading(head, anchor, pin),
+    pin: anchorReading(pin, anchor),
     controls: {
       line: anchorReading(pin, { ...anchor, line: anchor.line + 1 }), carrier: anchorReading(pin, { ...anchor, carrier: `${anchor.carrier} (edited)` }),
       twice: anchorReading(once(pin, `${source}\n`, `${source}\n\n${source}\n`), anchor),
     },
-    plants: plantsOver(head),
-    respaced: needled(() => {
-      const page = respaced(head, anchor);
-      return { head: anchorReading(page, anchor, pin), plants: plantsOver(page) };
-    }),
-    doubled: needled(() => {
-      const own = ownSource(head, anchor);
-      return plantsOver(once(head, `${own}\n`, `${own}\n\n${own}\n`));
-    }),
-    spacing: needled(() => {
-      const heading = headingLine(head, anchor);
-      const own = ownSource(head, anchor);
-      const marker = /^ *(?:\d+[.)]|[-*+])\s+/.exec(own)?.[0] ?? "";
-      const afterMarker = marker.length > 0 ? once(head, own, `${marker.trimEnd()}\n${" ".repeat(marker.length)}${own.slice(marker.length)}`) : head;
-      const noBlank = once(head, `${heading}\n\n`, `${heading}\n`);
-      const first = anchor.heading.split(" ")[0] ?? "";
-      const betweenWords = once(head, heading, heading.replace(`${first} `, `${first}  `));
-      const read = (page: string) => ({ head: anchorReading(page, anchor, pin), plants: plantsOver(page) });
-      return { afterMarker: { ...read(afterMarker), markerKept: /^ {0,3}(?:\d+[.)]|[-*+])[ \t]*\n/.test(ownSource(afterMarker, anchor)) },
-        noBlank: read(noBlank), betweenWords: read(betweenWords) };
-    }),
+    ...headReading(head),
+    variants: {
+      bare: needled(() => headReading(blankRun(head, headingLine(head, anchor), []))),
+      spaced: needled(() => headReading(blankRun(head, headingLine(head, anchor), [" \t "]))),
+      deeper: headReading(`${head.trimEnd()}\n\n### ${anchor.heading}\n\nA later subsection under the same words.\n`),
+    },
   };
 }
 interface ExportFacts { readonly title: string; readonly notes: string }
@@ -1369,13 +1443,18 @@ const PINS: Readonly<Record<string, () => void>> = {
   },
   A4b: () => {
     witness("A4b", {
-      ...byTwist("idempotent-success", "reapply", "duplicate-row", "duplicate-as-stale", "outcome-dedupe", "transient-duplicate-record", "transient-duplicate-application"),
-      settled: settledBy("transient-duplicate-record", "transient-duplicate-application"),
+      ...byTwist("idempotent-success", "differing-duplicate-success", "reapply", "duplicate-row", "duplicate-as-stale", "outcome-dedupe", "transient-duplicate-record",
+        "transient-duplicate-application", "transient-differing-duplicate-record", "transient-differing-duplicate-application"),
+      settled: settledBy("transient-duplicate-record", "transient-duplicate-application", "transient-differing-duplicate-record", "transient-differing-duplicate-application"),
     }, {
-      "idempotent-success": ["duplicate"], reapply: ["duplicate"], "duplicate-row": ["duplicate"], "duplicate-as-stale": ["duplicate"],
-      "outcome-dedupe": ["four-fields", "replay", "duplicate"],
-      "transient-duplicate-record": ["duplicate"], "transient-duplicate-application": ["duplicate"],
-      settled: { "transient-duplicate-record": true, "transient-duplicate-application": true },
+      "idempotent-success": ["duplicate"], "differing-duplicate-success": ["duplicate"], reapply: ["duplicate"], "duplicate-row": ["duplicate"],
+      "duplicate-as-stale": ["duplicate"], "outcome-dedupe": ["four-fields", "replay", "duplicate"],
+      "transient-duplicate-record": ["duplicate"], "transient-duplicate-application": ["duplicate"], "transient-differing-duplicate-record": ["duplicate"],
+      "transient-differing-duplicate-application": ["duplicate"],
+      settled: {
+        "transient-duplicate-record": true, "transient-duplicate-application": true, "transient-differing-duplicate-record": true,
+        "transient-differing-duplicate-application": true,
+      },
     });
   },
   A5a: () => {
@@ -1384,8 +1463,9 @@ const PINS: Readonly<Record<string, () => void>> = {
       honest: NEGATIVE_FIXTURES.map(fixture => judge(honest(fixture.journal), fixture.journal)),
       verdicts: NEGATIVE_FIXTURES.map(fixture => honest(fixture.journal).verdicts.filter(verdict => verdict !== null)),
       members: NEGATIVE_FIXTURES.map(fixture => `${fixture.member}:${failsOf(fixture.member, fixture.journal).join("+")}`),
-      ...byTwist("failure-recorded", "failure-as-admitted", "transient-failure-record", "transient-failure-application"),
-      settled: settledBy("transient-failure-record", "transient-failure-application"),
+      ...byTwist("failure-recorded", "failure-as-admitted", "kill-as-admitted", "transient-failure-record", "transient-failure-application", "transient-kill-record",
+        "transient-kill-application"),
+      settled: settledBy("transient-failure-record", "transient-failure-application", "transient-kill-record", "transient-kill-application"),
     }, {
       names: ["worker fault", "stale basis", "worker kill", "duplicate replay"], honest: [[], [], [], []],
       verdicts: [
@@ -1393,8 +1473,10 @@ const PINS: Readonly<Record<string, () => void>> = {
         [{ verdict: "unavailable" }, { verdict: "admitted" }], [{ verdict: "admitted" }, { verdict: "refused", reason: "duplicate" }],
       ],
       members: ["fault-admitted:worker-failure", "apply-stale:stale", "kill-admitted:worker-failure", "readmit:duplicate"],
-      "failure-recorded": ["worker-failure"], "failure-as-admitted": ["worker-failure"], "transient-failure-record": ["worker-failure"],
-      "transient-failure-application": ["worker-failure"], settled: { "transient-failure-record": true, "transient-failure-application": true },
+      "failure-recorded": ["worker-failure"], "failure-as-admitted": ["worker-failure"], "kill-as-admitted": ["worker-failure"],
+      "transient-failure-record": ["worker-failure"], "transient-failure-application": ["worker-failure"], "transient-kill-record": ["worker-failure"],
+      "transient-kill-application": ["worker-failure"],
+      settled: { "transient-failure-record": true, "transient-failure-application": true, "transient-kill-record": true, "transient-kill-application": true },
     });
   },
   A5b: () => {
@@ -1428,7 +1510,7 @@ const PINS: Readonly<Record<string, () => void>> = {
     }, {
       gate: ["lint", "typing", "build", "test", "census", "workbench-shell", "package-smoke"], table: "[build]", test: "npm run test", script: true,
       include: ["test/**/*.test.ts"], selected: true, excluded: false, gpWords: [], others: { count: true, claiming: [] },
-      plants: { configs: [true, true, true, false, true, true, true, true, true], scripts: [false, false, false, false] },
+      plants: { configs: [true, true, true, false, true, true, true, true, true, true], scripts: [false, false, false, false] },
     });
   },
   S1a: () => {
@@ -1446,19 +1528,17 @@ const PINS: Readonly<Record<string, () => void>> = {
     const anchor = docsAnchor("S1b");
     const named = (line: string): boolean => line.includes("`isCoreMintedDecision`") && line.includes("a deserialized or audit/journal-replayed receipt") &&
       line.includes(`"${CONTROL_UNMINTED_REASON}"`);
+    const plants = { D1: "carrier-text", D2: "html", D6: "unbound:repeated" };
+    const reading = {
+      head: "holds", plants, respaced: { head: "holds", plants }, doubled: { D1: "needle-miss", D2: "needle-miss", D6: "unbound:repeated" },
+      spacing: { afterMarker: { head: "holds", plants, markerKept: true }, noBlank: { head: "holds", plants }, betweenWords: { head: "holds", plants } },
+    };
     witness("S1b", {
       line: named(lineOf(pinText(anchor.path), anchor.line)), ...anchorWitness(anchor),
       pjj: { pin: statusAt(pinText(EXPORT), "wb-pjj"), head: statusAt(headText(EXPORT), "wb-pjj") },
     }, {
-      line: true, pin: "holds", head: "holds", controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" },
-      plants: { D1: "carrier-text", D2: "html", D6: "unbound:repeated" },
-      respaced: { head: "holds", plants: { D1: "carrier-text", D2: "html", D6: "unbound:repeated" } },
-      doubled: { D1: "needle-miss", D2: "needle-miss", D6: "unbound:repeated" },
-      spacing: {
-        afterMarker: { head: "holds", plants: { D1: "carrier-text", D2: "html", D6: "unbound:repeated" }, markerKept: true },
-        noBlank: { head: "holds", plants: { D1: "carrier-text", D2: "html", D6: "unbound:repeated" } },
-        betweenWords: { head: "holds", plants: { D1: "carrier-text", D2: "html", D6: "unbound:repeated" } },
-      }, pjj: { pin: "closed", head: "closed" },
+      line: true, pin: "holds", controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading,
+      variants: { bare: reading, spaced: reading, deeper: reading }, pjj: { pin: "closed", head: "closed" },
     });
   },
   S2a: () => {
@@ -1477,16 +1557,14 @@ const PINS: Readonly<Record<string, () => void>> = {
   },
   S2b: () => {
     const anchor = docsAnchor("S2b");
+    const plants = { D3: "html", D4: "carriers:0", D5: "section", D7: "unbound:parent" };
+    const reading = {
+      head: "holds", plants, respaced: { head: "holds", plants }, doubled: { D3: "needle-miss", D4: "needle-miss", D5: "carriers:2", D7: "unbound:parent" },
+      spacing: { afterMarker: { head: "holds", plants, markerKept: true }, noBlank: { head: "holds", plants }, betweenWords: { head: "holds", plants } },
+    };
     witness("S2b", { line: lineOf(pinText(anchor.path), anchor.line), ...anchorWitness(anchor) }, {
-      line: "2. Replay duplicate/out-of-order events; no double count or status regression.", pin: "holds", head: "holds",
-      controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, plants: { D3: "html", D4: "carriers:0", D5: "section", D7: "unbound:parent" },
-      respaced: { head: "holds", plants: { D3: "html", D4: "carriers:0", D5: "section", D7: "unbound:parent" } },
-      doubled: { D3: "needle-miss", D4: "needle-miss", D5: "carriers:2", D7: "unbound:parent" },
-      spacing: {
-        afterMarker: { head: "holds", plants: { D3: "html", D4: "carriers:0", D5: "section", D7: "unbound:parent" }, markerKept: true },
-        noBlank: { head: "holds", plants: { D3: "html", D4: "carriers:0", D5: "section", D7: "unbound:parent" } },
-        betweenWords: { head: "holds", plants: { D3: "html", D4: "carriers:0", D5: "section", D7: "unbound:parent" } },
-      },
+      line: "2. Replay duplicate/out-of-order events; no double count or status regression.", pin: "holds",
+      controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading, variants: { bare: reading, spaced: reading, deeper: reading },
     });
   },
   S3a: () => {
@@ -1618,11 +1696,13 @@ describe(SUITE, () => {
       "combined-basis:four-fields+replay", "nested-fields:four-fields+replay", "missing-outcome:four-fields+replay", "aliased-checkpoint:four-fields+replay",
       "lazy-checkpoint:replay", "lazy-digest:replay", "unprefixed-digest:replay", "mapped-outcome:replay", "apply-stale:stale", "rebase-stale:stale",
       "untyped-stale:stale", "frozen-basis:four-fields+replay+stale", "settling-stale:four-fields+replay+stale", "retry-stale:stale", "silent-apply-stale:stale",
-      "transient-stale-record:stale", "transient-stale-application:stale", "readmit:replay+duplicate", "content-dedupe:replay+duplicate", "idempotent-success:duplicate", "reapply:duplicate", "duplicate-row:duplicate",
+      "transient-stale-record:stale", "transient-stale-application:stale", "readmit:replay+duplicate", "content-dedupe:replay+duplicate", "idempotent-success:duplicate",
+      "differing-duplicate-success:duplicate", "reapply:duplicate", "duplicate-row:duplicate",
       "duplicate-as-stale:duplicate", "outcome-dedupe:four-fields+replay+duplicate", "phantom-row:replay", "phantom-application:replay",
       "transient-phantom-application:replay", "fault-admitted:worker-failure", "kill-admitted:worker-failure", "failure-recorded:worker-failure",
-      "failure-as-admitted:worker-failure", "transient-failure-record:worker-failure", "transient-failure-application:worker-failure",
-      "transient-duplicate-record:duplicate", "transient-duplicate-application:duplicate",
+      "failure-as-admitted:worker-failure", "kill-as-admitted:worker-failure", "transient-failure-record:worker-failure", "transient-failure-application:worker-failure",
+      "transient-kill-record:worker-failure", "transient-kill-application:worker-failure", "transient-duplicate-record:duplicate", "transient-duplicate-application:duplicate",
+      "transient-differing-duplicate-record:duplicate", "transient-differing-duplicate-application:duplicate",
     ]);
     expect(failsOf(), "the reference meets every check over the journal").toEqual([]);
     expect(NEGATIVE_FIXTURES.map(fixture => failsOf(undefined, fixture.journal)), "and over every fixture").toEqual([[], [], [], []]);
@@ -1665,7 +1745,7 @@ describe(SUITE, () => {
         `vitest.gp-live.config.mts:${SELF}:spaced`, `configs/vitest.gp-live.config.ts:${SELF}:spaced`, "vitest.gp-live.config.ts:test/workbench-gp-*.test.ts:unspaced",
         "vitest.gp-census.config.ts:test/**/*.census.ts:spaced",
         `vitest.gp-live.config.js:${SELF}:spaced`, `vitest.gp-live.config.mjs:${SELF}:spaced`, `vitest.gp-live.config.cjs:${SELF}:spaced`,
-        `vitest.gp-live.config.cts:${SELF}:spaced`, `qa/configs/vitest.config.ts:${SELF}:spaced`,
+        `vitest.gp-live.config.cts:${SELF}:spaced`, `qa/configs/vitest.config.ts:${SELF}:spaced`, `qa/configs/live/vitest.config.ts:${SELF}:spaced`,
       ],
       scripts: ["-c", "--config=vitest.gp-live.config.ts", "test/workbench-other.test.ts", "--exclude=test/workbench-gp-*.test.ts"],
     });
