@@ -8,7 +8,7 @@
  * WHAT IS DELIVERED. The readers are test/helpers/binding-text-reader.ts (bindingTextReader), shared so a census rides them:
  * wb-jwc.7's census (blocked by this bead, R-B115; not on trunk) can take their resolve, alternatives, exact, words, program,
  * fields and registration in place of its own nameResolved, textsOf, commandText, resolvedProperties and rfRegistrations. This
- * census proves the readers with planted modules, each a string parsed in memory (no file is written), and reads today's src
+ * census pins the readers with planted modules, each a string parsed in memory (no file is written), and reads today's src
  * with them (LIVE); src is only read.
  *
  * A READING (each pin's witness): a pin plants one module, its page, at a src-shaped path, and reads it with one probe:
@@ -21,7 +21,8 @@
  *  registrations: the module's registration entries;
  *  kind: bindingKindOf on a synthetic declaration (a type alias, which no module text binds a value to);
  *  claim-header, claim-rows, export-rows, member-pins, kind-pins and falsifier-roster: the ACCEPTANCE checks (THE ROWS).
- * Each pin's witness is held to its expected reading, and each page to its digest (PAGES), so a pin swapped for another case reds.
+ * Each pin's witness is held to its expected reading, and each page to its digest twice (PAGES here, and the roster's digest
+ * outside this file), so a pin swapped for another case, or a page hollowed together with this file's literals, reds.
  *
  * THE ROWS (ROWS: one test per pin; a row's label is the requirement it answers, held to that requirement's own text outside
  * this file):
@@ -29,71 +30,91 @@
  *   #3 of wb-jwc.7, O:1346) and this census's controls.
  *  ACCEPTANCE: the export's Acceptance line, verbatim: CLAIM-HEADER (this header's claim paragraph equals BINDING_TEXT_CLAIM
  *   byte-for-byte), CLAIM-ROWS (the claim rows are exactly the claim's parts, in order), EXPORT-ROWS (the export rows are the
- *   export's title, items and Acceptance line), MEMBER-PINS (each of the helper's MEMBERS, the gate members R-B115 folded into
- *   this bead, is a pin of its part's row), KIND-PINS (the kinds row holds exactly one K- pin per kind the claim names) and
- *   FALSIFIER-ROSTER (every row's pins, in order, are the ones test/fixtures/binding-text-reader-roster.json lists, each there
- *   with the claim words it falsifies).
- *  One row per part of the claim (labelled `SECTION (n) id`): the part's proof, a falsifier per claim word; MEMBERS sit in them
- *   (R-ALT1 to R-ALT4 in registration, E1 to E3 in program, A10 in scope).
+ *   export's title, items and Acceptance line), MEMBER-PINS (each of the helper's MEMBERS, the gate members folded into this
+ *   bead, is a pin of its part's row), KIND-PINS (the kinds row holds exactly one K- pin per kind the claim names, in the
+ *   claim's order, then the kinds part's MEMBERS, in their order) and FALSIFIER-ROSTER (every row's pins, in order, are the
+ *   ones test/fixtures/binding-text-reader-roster.json lists, each there with its page's digest and the claim words it
+ *   falsifies).
+ *  One row per part of the claim (labelled `SECTION (n) id`): its pins, each a planted page held to the reading the part's
+ *   words give it. The roster states, per pin, the claim words its page plants, and the census claims a pin for no word the
+ *   roster's entry for that pin does not name. MEMBERS sit in their parts' rows: R-B115's R-ALT1 to R-ALT4 in registration, E1
+ *   to E3 in program and A10 in scope; refusal #1's G01, G08 and G09 in kinds, G02 in with, G03 in eval, G04 in cycle, G05, G06
+ *   and G07 in bounds and G10 in opaque-part, each pinned by the twin page the refusal names (gate-prep-23's evidence, byte for
+ *   byte), read as the delivered reader reads it.
  *
  * THE CLAIM (test/helpers/binding-text-reader.ts BINDING_TEXT_CLAIM, held here byte-for-byte; its numbered parts are
- * BINDING_FORMS, TEXT_FORMS and READING_FORMS, each proven by its row):
+ * BINDING_FORMS, TEXT_FORMS and READING_FORMS, each pinned by its row):
  * BINDING: (1) an identifier is read through the declaration TypeScript's checker binds it to by scope, in a program over its
  * own module alone (no lib, no module resolution), and a shorthand property's name through the binding of its value; (2) it
- * resolves only when that binding is exactly one declaration, a const with an initializer, outside an ambient (declare) context
- * and not exported from a namespace body, and it then reads as that initializer's alternatives; so a const shadowing a
- * same-named const reads its own initializer inside its scope and the outer one's outside it; (3) any other binding does not
- * resolve and reads as <opaque NAME:KIND>, NAME the identifier and KIND the first of these that names the binding: import (an
- * import or import-equals, merged or not); unbound (no declaration in the module, a type's name in a value position included);
- * merged (more than one declaration); let; var; using (a using or await using declaration); catch (a catch clause variable);
- * no-initializer (a const with no initializer); ambient (a const in an ambient context); namespace (a namespace, or a const
- * exported from a namespace body); parameter; destructuring (a destructuring element); function (a function declaration, or a
- * named function expression's own name); class (a class declaration, or a named class expression's own name); enum (an enum or
- * an enum member); other (a declaration of any other kind); (4) an identifier inside a with statement's body reads as <opaque
- * NAME:with>, whatever it binds; (5) every identifier of a module that calls eval by name (a call whose callee is the
- * identifier eval inside any parentheses, as, satisfies, non-null !, type assertion or await) reads as <opaque NAME:eval>,
- * whatever it binds, a with statement's body included; (6) an identifier whose const's initializer reaches that same const
- * again reads, at the repeated reach, as <opaque NAME:cycle>, NAME the identifier there. TEXT: an expression's alternatives are
- * (1) a string or no-substitution template literal: its text; (2) an identifier: as BINDING reads it; (3) a template with
- * substitutions: every combination of its literal parts and its substitutions' alternatives, in order; (4) a + join: every
- * combination of its left side's and its right side's alternatives; (5) a ?: expression: its two branches' alternatives, its
- * condition unread; (6) a ?? expression: both sides' alternatives; (7) a || expression: both sides' alternatives; (8) a &&
- * expression: both sides' alternatives; (9) parentheses, as, satisfies, a non-null !, a type assertion and await: the inner
- * expression's alternatives; (10) any other expression (a call, a property or element access, a number, a tagged template, an
- * assignment, and so on): one <opaque TEXT>, TEXT its source text with each whitespace run read as one space; (11) a
- * combination with an opaque part reads as its first opaque part's alternative; (12) a template or + join with more than 64
- * combinations, or an expression read more than 16 levels deep (each wrapper, each identifier followed to its initializer, and
- * each side, branch or substitution read counting one level), reads, where the bound is passed, as one <opaque TEXT:bound>,
- * TEXT that expression's source text; (13) the alternatives are listed in source order (a left side's or a true branch's first,
- * a combination's by its parts, the first part varying slowest), each once. READINGS: (1) an expression's texts: its
- * alternatives' texts, in order, when none is opaque; unresolved otherwise; (2) a command's words: every alternative's text
- * split at whitespace, quotes and the shell operators ; & | ( ) < >, each path reduced to its base name with a trailing .exe or
- * .cmd (either case) dropped, each word once, in order of first appearance; unresolved when any alternative is opaque; (3) a
- * launch program: when every alternative is a text with a first word, those first words, sorted, each once, joined by |;
- * otherwise <opaque TEXT>, TEXT the program expression's source text with each whitespace run read as one space; (4) an object
- * literal's fields, member by member in source order, a later member overriding: a property assignment whose key is a name, a
- * string or numeric literal or a computed string literal sets its field, and so does a shorthand property; a method, getter or
- * setter with such a key makes its own field opaque; a spread of an identifier BINDING resolves to a const whose initializer is
- * an object literal whose own fields hold no opaque member (spreads nested at most 8 deep) sets the fields it holds; any other
- * member (a spread of anything else, or a member with any other key) is opaque and may set every field; (5) a registration: an
- * object literal whose id field has a text alternative starting reactivefiber., read as one ID:EFFECT entry per such text and
- * per opaque alternative of that id, sorted, each once, ID the text or <opaque LABEL>; EFFECT its effectClass field's
- * alternatives (a text as itself, an opaque one as <opaque LABEL>), sorted, each once, joined by |, or <none> when it has no
- * effectClass field; a field an opaque member may set after its last setting, or in place of one, reads <opaque MEMBER>, MEMBER
- * that member's label (...expression for a spread, its key's source text, or get name, set name or name() for an accessor or
- * method). No reading claims more than these parts state.
+ * resolves only when that binding is exactly one declaration, a const with an initializer that declares the name itself (an
+ * element of a destructuring pattern never resolves), outside an ambient (declare) context and not exported from a namespace
+ * body, and it then reads as that initializer's alternatives; so a const shadowing a same-named const reads its own
+ * initializer inside its scope and the outer one's outside it; (3) any other binding does not resolve and reads as <opaque
+ * NAME:KIND>, NAME the identifier and KIND the first of these that names the binding: import (an import or import-equals,
+ * merged or not); unbound (no declaration in the module, a type's name in a value position included); merged (more than one
+ * declaration); destructuring (an element of a destructuring pattern, whatever declares the pattern: a const, let or var
+ * declaration, a parameter or a catch clause); let (a let declaration, declare let and a let exported from a namespace body
+ * included); var (a var declaration, declare var and a var exported from a namespace body included); using (a using or await
+ * using declaration); catch (a catch clause variable); no-initializer (a const with no initializer); ambient (a const in an
+ * ambient context); namespace (a namespace, or a const exported from a namespace body); parameter; function (a function
+ * declaration, or a named function expression's own name); class (a class declaration, or a named class expression's own
+ * name); enum (an enum or an enum member); other (a declaration of any other kind); (4) an identifier inside a with
+ * statement's body, at any depth (nested blocks, functions, classes and with statements included), reads as <opaque
+ * NAME:with>, whatever it binds; (5) every identifier of a module that calls eval by name (a call, optional or not and with or
+ * without arguments, whose callee is the identifier eval inside any parentheses, as, satisfies, non-null !, type assertion or
+ * await; a new expression and a tagged template are no call) reads as <opaque NAME:eval>, whatever it binds, a with
+ * statement's body included; (6) an identifier whose const's initializer reaches that same const (the same declaration, not a
+ * same-named one) again reads, at the repeated reach, as <opaque NAME:cycle>, NAME the identifier there, the expression's
+ * other alternatives read as usual. TEXT: an expression's alternatives are (1) a string or no-substitution template literal:
+ * its text, each escape sequence read as the character it stands for; (2) an identifier: as BINDING reads it; (3) a template
+ * with substitutions: every combination of its literal parts' texts (escape sequences read) and its substitutions'
+ * alternatives, in order; (4) a + join: every combination of its left side's and its right side's alternatives; (5) a ?:
+ * expression: its two branches' alternatives, its condition unread; (6) a ?? expression: both sides' alternatives; (7) a ||
+ * expression: both sides' alternatives; (8) a && expression: both sides' alternatives; (9) parentheses, as, satisfies, a
+ * non-null !, a type assertion and await: the inner expression's alternatives; (10) any other expression (a call, optional or
+ * not, a new expression, a property or element access, optional or not, a number, bigint or regular expression literal, true,
+ * false, null or this, a tagged template, a plain or compound assignment, a comma expression, any other binary operator, a
+ * prefix or postfix operator, void, typeof and delete included, an arrow function, an object or array literal, an
+ * instantiation expression, and so on): one <opaque TEXT>, TEXT its source text with each whitespace run read as one space;
+ * (11) each combination with an opaque part reads as its first opaque part's alternative, and each combination without one as
+ * its joined text, so a join keeps its exact alternatives beside its opaque ones; (12) a template or + join with more than 64
+ * combinations (counted before any two are found to read alike), or an expression read more than 16 levels deep (each wrapper,
+ * each identifier followed to its initializer, and each side, branch or substitution read counting one level), reads, where
+ * the bound is passed, as one <opaque TEXT:bound>, TEXT that expression's source text; (13) the alternatives are listed in
+ * source order (a left side's or a true branch's first, a combination's by its parts, the first part varying slowest), each
+ * once. READINGS: (1) an expression's texts: its alternatives' texts, in order, when none is opaque; unresolved otherwise; (2)
+ * a command's words: every alternative's text split at whitespace, quotes and the shell operators ; & | ( ) < >, each path
+ * reduced to its base name with a trailing .exe or .cmd (either case) dropped, each word once, in order of first appearance;
+ * unresolved when any alternative is opaque; (3) a launch program: when every alternative is a text with a first word, those
+ * first words, sorted, each once, joined by |; otherwise <opaque TEXT>, TEXT the program expression's source text with each
+ * whitespace run read as one space; (4) an object literal's fields, member by member in source order, a later member
+ * overriding: a property assignment whose key is a name, a string or numeric literal, or a computed key whose expression,
+ * inside any of the wrappers TEXT (9) names, is a string or no-substitution template literal sets its field, and so does a
+ * shorthand property; a method, getter or setter with such a key makes its own field opaque; a spread whose expression, inside
+ * any of those wrappers, is an identifier BINDING resolves to a const whose initializer, inside any of those wrappers, is an
+ * object literal whose own fields hold no opaque member (a method, getter or setter included; spreads nested at most 8 deep)
+ * sets the fields it holds; any other member (a spread of anything else, or a member with any other key, a computed number
+ * included) is opaque and may set every field; (5) a registration: an object literal whose id field has a text alternative
+ * starting reactivefiber., read as one ID:EFFECT entry per such text and per opaque alternative of that id, sorted, each once,
+ * ID the text or <opaque LABEL>; EFFECT its effectClass field's alternatives (a text as itself, an opaque one as <opaque
+ * LABEL>), sorted, each once, joined by |, or <none> when it has no effectClass field; a field an opaque member may set after
+ * its last setting, or in place of one, reads <opaque MEMBER>, MEMBER that member's label (...expression for a spread, its
+ * key's source text, or get name, set name or name() for an accessor or method). No reading claims more than these parts
+ * state.
  *
  * ANCHORS (outside this file): the tracker export (.beads/issues.jsonl, the bead's title, description items and Acceptance
  * line) for S1, S2, S3, PREMISE and ACCEPTANCE; the helper's BINDING_FORMS, TEXT_FORMS and READING_FORMS for every claim row and
  * its label, its MEMBERS for each folded gate member's pin, and the kinds the claim's kinds part names for the K- pins; the
- * falsifier roster (test/fixtures/binding-text-reader-roster.json) for every row's pins; and src, read by LIVE. FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal and PAGES pins each pin's
+ * falsifier roster (test/fixtures/binding-text-reader-roster.json) for every row's pins, each with its page's digest and the claim words
+ * it falsifies; and src, read by LIVE. FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal and PAGES pins each pin's
  * `${id}:${sha256/16 of its page}`.
  * NOT CLAIMED: how wb-jwc.7's census reads once it rides these readers (its file is not on trunk; the cutting seat's run of its
  * refusal #4 members through these readers is a delivery-note receipt, not a pin); which calls load or launch a module (the
  * loads and programs probes above are this census's own locators, by callee name, and a riding census keeps its own); what a
  * module does at run time beyond its source text (a CommonJS exports object reassigned, a prototype patched, source evaluated),
- * which the readers never see; and R-B115's note, which the tracker export at this cut's base does not yet carry, so its members
- * anchor to MEMBERS (each naming its source) and not to the export.
+ * which the readers never see; and the gate members' notes: MEMBERS anchors R-B115's members and refusal #1's members by
+ * naming each one's source (the tracker export at this cut's base, trunk 5c577c9, carries both notes in the bead's notes
+ * field), and this census reads only the export's title and description, never its notes.
  */
 import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
@@ -278,6 +299,18 @@ function boundsReading(): string[] {
     '<opaque "a":bound>',
   ];
 }
+/**
+ * The depth bound at each form that counts a level (TEXT (12)): I0 to I15 chain, so probe(I15) reads "i" exactly 16 levels deep;
+ * each form is planted twice, around I14 (one level more: still read) and around I15 (one level more: bound).
+ */
+function levelsPage(...forms: string[]): string {
+  const chain = Array.from({ length: 16 }, (_, index) => (index === 0 ? 'const I0 = "i";' : `const I${index} = I${index - 1};`));
+  return page(...chain, "probe(I14);", "probe(I15);", ...forms.flatMap((form) => [form.replace("@", "I14"), form.replace("@", "I15")]));
+}
+/** The 64 texts of an 8 x 8 join of "0" to "7" and "a" to "h", rendered in combination order (the first part varying slowest). */
+function eightByEight(): string {
+  return Array.from({ length: 64 }, (_, index) => JSON.stringify(`${Math.floor(index / 8)}${"abcdefgh"[index % 8]}`)).join(" | ");
+}
 function spreadDepthPage(): string {
   const bases = Array.from({ length: 9 }, (_, index) => (index === 0 ? 'const B0 = { effectClass: "write" };' : `const B${index} = { ...B${index - 1} };`));
   return page(...bases, 'export const s = { id: "reactivefiber.s", ...B7 };', 'export const t = { id: "reactivefiber.t", ...B8 };');
@@ -384,6 +417,23 @@ const ROWS: readonly Row[] = [
         page('const X = "a";', "probe(X);", 'export const Y = "y";', "probe(Y);", 'for (const Z = "z"; ; ) { probe(Z); break; }', 'const A = "a2";', "const B = A;", "probe(B);"),
         ['"a"', '"y"', '"z"', '"a2"'],
       ),
+      pin(
+        "C-PATTERN",
+        "texts",
+        page(
+          'const { X = "x" } = o;',
+          "probe(X);",
+          'const [Y = "y"] = a;',
+          "probe(Y);",
+          'let { L = "l" } = o;',
+          "probe(L);",
+        ),
+        [
+          "<opaque X:destructuring>",
+          "<opaque Y:destructuring>",
+          "<opaque L:destructuring>",
+        ],
+      ),
     ],
   },
   {
@@ -415,20 +465,128 @@ const ROWS: readonly Row[] = [
       pin(
         "K-merged",
         "texts",
-        page('var X = "a";', 'var X = "b";', "probe(X);", 'const Y = "y";', "type Y = string;", "probe(Y);", "function F(a: string): void;", "function F(a: unknown): void {}", "probe(F);"),
-        ["<opaque X:merged>", "<opaque Y:merged>", "<opaque F:merged>"],
+        page(
+          'var X = "a";',
+          'var X = "b";',
+          "probe(X);",
+          'const Y = "y";',
+          "type Y = string;",
+          "probe(Y);",
+          "function F(a: string): void;",
+          "function F(a: unknown): void {}",
+          "probe(F);",
+          "var { MV } = o;",
+          "var { MV } = p;",
+          "probe(MV);",
+          "namespace MN { export const a = 1; }",
+          "namespace MN { export const b = 2; }",
+          "probe(MN);",
+        ),
+        [
+          "<opaque X:merged>",
+          "<opaque Y:merged>",
+          "<opaque F:merged>",
+          "<opaque MV:merged>",
+          "<opaque MN:merged>",
+        ],
       ),
-      pin("K-let", "texts", page('let X = "a";', "probe(X);", "let Y: string;", "probe(Y);"), ["<opaque X:let>", "<opaque Y:let>"]),
-      pin("K-var", "texts", page('var X = "a";', "probe(X);", 'function f() { var Y = "y"; probe(Y); }'), ["<opaque X:var>", "<opaque Y:var>"]),
+      pin(
+        "K-destructuring",
+        "texts",
+        page(
+          "function f({ Z }: { Z: string }) { probe(Z); }",
+          "const { X } = o;",
+          'const [Y = "y"] = a;',
+          "probe(X); probe(Y);",
+          "let { L } = o;",
+          "var { V } = o;",
+          "probe(L); probe(V);",
+          "try { f(); } catch ({ M }) { probe(M); }",
+          "for (const { F } of list) probe(F);",
+        ),
+        [
+          "<opaque Z:destructuring>",
+          "<opaque X:destructuring>",
+          "<opaque Y:destructuring>",
+          "<opaque L:destructuring>",
+          "<opaque V:destructuring>",
+          "<opaque M:destructuring>",
+          "<opaque F:destructuring>",
+        ],
+      ),
+      pin(
+        "K-let",
+        "texts",
+        page(
+          'let X = "a";',
+          "probe(X);",
+          "let Y: string;",
+          "probe(Y);",
+          "declare let DL: string;",
+          "probe(DL);",
+          'namespace NL { export let EL = "e"; probe(EL); }',
+        ),
+        [
+          "<opaque X:let>",
+          "<opaque Y:let>",
+          "<opaque DL:let>",
+          "<opaque EL:let>",
+        ],
+      ),
+      pin(
+        "K-var",
+        "texts",
+        page(
+          'var X = "a";',
+          "probe(X);",
+          'function f() { var Y = "y"; probe(Y); }',
+          "declare var DV: string;",
+          "probe(DV);",
+          'namespace NV { export var EV = "e"; probe(EV); }',
+        ),
+        [
+          "<opaque X:var>",
+          "<opaque Y:var>",
+          "<opaque DV:var>",
+          "<opaque EV:var>",
+        ],
+      ),
       pin("K-using", "texts", page("{ using X = r; probe(X); }", "async function f() { await using Y = r; probe(Y); }"), ["<opaque X:using>", "<opaque Y:using>"]),
       pin("K-catch", "texts", page("try { f(); } catch (X) { probe(X); }"), ["<opaque X:catch>"]),
       pin(
         "K-no-initializer",
         "texts",
-        page("for (const X of list) probe(X);", "for (const K in o) probe(K);", "declare const Y: string;", "probe(Y);"),
-        ["<opaque X:no-initializer>", "<opaque K:no-initializer>", "<opaque Y:no-initializer>"],
+        page(
+          "for (const X of list) probe(X);",
+          "for (const K in o) probe(K);",
+          "declare const Y: string;",
+          "probe(Y);",
+          "namespace NI { export const Z: string; probe(Z); }",
+          "declare namespace DI { export const W: string; }",
+          "namespace DI { probe(W); }",
+        ),
+        [
+          "<opaque X:no-initializer>",
+          "<opaque K:no-initializer>",
+          "<opaque Y:no-initializer>",
+          "<opaque Z:no-initializer>",
+          "<opaque W:no-initializer>",
+        ],
       ),
-      pin("K-ambient", "texts", page("export {};", 'declare const X = "a";', "probe(X);", 'declare global { const G = "g"; }', "probe(G);"), ["<opaque X:ambient>", "<opaque G:ambient>"]),
+      pin(
+        "K-ambient",
+        "texts",
+        page(
+          "export {};",
+          'declare const X = "a";',
+          "probe(X);",
+          'declare global { const G = "g"; }',
+          "probe(G);",
+          'declare namespace DA { namespace DB { export const Z = "z"; } }',
+          "namespace DA.DB { probe(Z); }",
+        ),
+        ["<opaque X:ambient>", "<opaque G:ambient>", "<opaque Z:ambient>"],
+      ),
       pin(
         "K-namespace",
         "texts",
@@ -438,19 +596,109 @@ const ROWS: readonly Row[] = [
       pin(
         "K-parameter",
         "texts",
-        page("function f(X: string) { probe(X); }", "class C { constructor(public P: string) { probe(P); } }", 'const g = (Q = "q") => probe(Q);'),
-        ["<opaque X:parameter>", "<opaque P:parameter>", "<opaque Q:parameter>"],
+        page(
+          "function f(X: string) { probe(X); }",
+          "class C { constructor(public P: string) { probe(P); } }",
+          'const g = (Q = "q") => probe(Q);',
+          "function r(...R: string[]) { probe(R); }",
+        ),
+        [
+          "<opaque X:parameter>",
+          "<opaque P:parameter>",
+          "<opaque Q:parameter>",
+          "<opaque R:parameter>",
+        ],
       ),
       pin(
-        "K-destructuring",
+        "K-function",
         "texts",
-        page("function f({ Z }: { Z: string }) { probe(Z); }", "const { X } = o;", 'const [Y = "y"] = a;', "probe(X); probe(Y);"),
-        ["<opaque Z:destructuring>", "<opaque X:destructuring>", "<opaque Y:destructuring>"],
+        page(
+          "function F() {}",
+          "probe(F);",
+          "const g = function G() { probe(G); };",
+          "async function AF() {}",
+          "function* GF() {}",
+          "declare function DF(): void;",
+          "probe(AF); probe(GF); probe(DF);",
+          "namespace NF { export function EF() {} probe(EF); }",
+        ),
+        [
+          "<opaque F:function>",
+          "<opaque G:function>",
+          "<opaque AF:function>",
+          "<opaque GF:function>",
+          "<opaque DF:function>",
+          "<opaque EF:function>",
+        ],
       ),
-      pin("K-function", "texts", page("function F() {}", "probe(F);", "const g = function G() { probe(G); };"), ["<opaque F:function>", "<opaque G:function>"]),
-      pin("K-class", "texts", page("class K {}", "probe(K);", "const c = class D { m() { probe(D); } };"), ["<opaque K:class>", "<opaque D:class>"]),
-      pin("K-enum", "texts", page('enum E { A = "a", B = probe(A) }', "probe(E);"), ["<opaque A:enum>", "<opaque E:enum>"]),
+      pin(
+        "K-class",
+        "texts",
+        page(
+          "class K {}",
+          "probe(K);",
+          "const c = class D { m() { probe(D); } };",
+          "declare class DC {}",
+          "probe(DC);",
+          "namespace NC { export class EC {} probe(EC); }",
+        ),
+        [
+          "<opaque K:class>",
+          "<opaque D:class>",
+          "<opaque DC:class>",
+          "<opaque EC:class>",
+        ],
+      ),
+      pin(
+        "K-enum",
+        "texts",
+        page(
+          'enum E { A = "a", B = probe(A) }',
+          "probe(E);",
+          "const enum CE { A }",
+          "declare enum DE { A }",
+          "probe(CE); probe(DE);",
+          "namespace NE { export enum EE { A } probe(EE); }",
+        ),
+        [
+          "<opaque A:enum>",
+          "<opaque E:enum>",
+          "<opaque CE:enum>",
+          "<opaque DE:enum>",
+          "<opaque EE:enum>",
+        ],
+      ),
       pin("K-other", "kind", page("type TA = string; (a synthetic type alias declaration)"), ["other"]),
+      pin("G01", "texts", page("declare function probe(value: unknown): void;", 'declare namespace N { export const X = "a"; }', "namespace N { probe(X); }", "export {};"), ["<opaque X:ambient>"]),
+      pin(
+        "G08",
+        "texts",
+        page(
+          "declare function probe(value: unknown): void;",
+          "declare let X: string;",
+          "declare var Y: string;",
+          "probe(X);",
+          "probe(Y);",
+          "export {};",
+        ),
+        [
+          "<opaque X:let>",
+          "<opaque Y:var>",
+        ],
+      ),
+      pin(
+        "G09",
+        "texts",
+        page(
+          "declare function probe(value: unknown): void;",
+          'namespace N { export let X = "a"; probe(X); export var Y = "y"; probe(Y); }',
+          "export {};",
+        ),
+        [
+          "<opaque X:let>",
+          "<opaque Y:var>",
+        ],
+      ),
     ],
   },
   {
@@ -460,6 +708,40 @@ const ROWS: readonly Row[] = [
     pins: [
       pin("W-SCRIPT", "texts", page('const X = "a";', "with (o) { probe(X); }", "with (probe(X)) {}", "probe(X);"), ["<opaque X:with>", '"a"', '"a"'], "src/workbench/zz-w-script.js"),
       pin("W-MODULE", "texts", page('const X = "a";', "with (o) { probe(X); }", "with (probe(X)) {}", "probe(X);"), ["<opaque X:with>", '"a"', '"a"']),
+      pin("G02", "texts", page('const X = "a";', "with (o) { const read = () => probe(X); read(); }", "probe(X);"), ["<opaque X:with>", '"a"'], "src/workbench/zz-g02.js"),
+      pin(
+        "W-NESTED",
+        "texts",
+        page(
+          'const X = "a";',
+          'let L = "l";',
+          "with (o) { function g() { probe(X); } }",
+          "with (o) { const h = function () { probe(X); }; }",
+          "with (o) { class K { m() { probe(X); } } }",
+          "with (o) { const q = { m() { probe(X); } }; }",
+          "with (o) probe(X);",
+          "with (o) { with (p) { probe(X); } }",
+          "with (o) { { { probe(X); } } }",
+          "function w() { with (o) { probe(X); } }",
+          'with (o) { probe(L); probe(MISSING); const Y = "y"; probe(Y); }',
+          "probe(X);",
+        ),
+        [
+          "<opaque X:with>",
+          "<opaque X:with>",
+          "<opaque X:with>",
+          "<opaque X:with>",
+          "<opaque X:with>",
+          "<opaque X:with>",
+          "<opaque X:with>",
+          "<opaque X:with>",
+          "<opaque L:with>",
+          "<opaque MISSING:with>",
+          "<opaque Y:with>",
+          '"a"',
+        ],
+        "src/workbench/zz-w-nested.js",
+      ),
     ],
   },
   {
@@ -471,7 +753,28 @@ const ROWS: readonly Row[] = [
       pin("V-WRAPPED", "texts", page('const X = "a";', "probe(X);", '((<(code: string) => unknown>(eval satisfies unknown)) as (code: string) => unknown)!("1");'), ["<opaque X:eval>"]),
       pin("V-AWAIT", "texts", page('const X = "a";', "probe(X);", 'async function f() { (await eval)("1"); }'), ["<opaque X:eval>"]),
       pin("V-WITH", "texts", page('const X = "a";', "with (o) { probe(X); }", 'eval("1");'), ["<opaque X:eval>"], "src/workbench/zz-v-with.js"),
-      pin("V-INDIRECT", "texts", page('const X = "a";', "probe(X);", 'globalThis.eval("1");', '(0, eval)("1");', "const e = eval;", 'e("1");'), ['"a"']),
+      pin("V-INDIRECT", "texts", page('const X = "a";', "probe(X);", 'globalThis.eval("1");', '(0, eval)("1");', "const e = eval;", 'e("1");', 'new eval("1");', "eval`1`;"), ['"a"']),
+      pin("G03", "texts", page("declare function probe(value: unknown): void;", 'const X = "a";', "probe(X);", 'eval?.("1");', "export {};"), ["<opaque X:eval>"]),
+      pin(
+        "V-BARE",
+        "texts",
+        page(
+          'import { I } from "./i.js";',
+          'const X = "a";',
+          'let L = "l";',
+          "function g(p: string) { probe(p); }",
+          "probe(X); probe(L); probe(I); probe(MISSING);",
+          "class K { m() { eval(); } }",
+        ),
+        [
+          "<opaque p:eval>",
+          "<opaque X:eval>",
+          "<opaque L:eval>",
+          "<opaque I:eval>",
+          "<opaque MISSING:eval>",
+        ],
+      ),
+      pin("V-LOCAL", "texts", page('const X = "a";', "probe(X);", 'function f(eval) { eval("1"); }'), ["<opaque X:eval>"], "src/workbench/zz-v-local.js"),
     ],
   },
   {
@@ -481,15 +784,41 @@ const ROWS: readonly Row[] = [
     pins: [
       pin("Y-PAIR", "texts", page("const A = B;", "const B = A;", "probe(A);"), ["<opaque A:cycle>"]),
       pin("Y-SELF", "texts", page('const C = C + "x";', "probe(C);", `const D = \`${sub("D")}!\`;`, "probe(D);"), ["<opaque C:cycle>", "<opaque D:cycle>"]),
+      pin("G04", "texts", page("declare function probe(value: unknown): void;", "const A = B;", "const B = C;", "const C = B;", "probe(A);", "export {};"), ["<opaque B:cycle>"]),
+      pin("Y-SHADOW", "texts", page('const N = "n";', "{ const M = N; { const N = M; probe(N); } }"), ['"n"']),
+      pin("Y-BRANCH", "texts", page('const C = c ? C : "z";', "probe(C);"), ['<opaque C:cycle> | "z"']),
     ],
   },
-  { id: "literal", from: "claim", label: "TEXT (1) literal", pins: [pin("X-LITERAL", "texts", page('probe("a");', "probe('b');", "probe(`c`);"), ['"a"', '"b"', '"c"'])] },
+  {
+    id: "literal",
+    from: "claim",
+    label: "TEXT (1) literal",
+    pins: [
+      pin("X-LITERAL", "texts", page('probe("a");', "probe('b');", "probe(`c`);"), ['"a"', '"b"', '"c"']),
+      pin("X-ESCAPES", "texts", page("probe(\"\\x41\");", "probe('\\x42');", "probe(`\\x43`);"), ['"A"', '"B"', '"C"']),
+    ],
+  },
   { id: "identifier", from: "claim", label: "TEXT (2) identifier", pins: [pin("X-IDENTIFIER", "texts", page('const A = "a";', 'let B = "b";', "probe(A);", "probe(B);"), ['"a"', "<opaque B:let>"])] },
   {
     id: "template",
     from: "claim",
     label: "TEXT (3) template",
-    pins: [pin("X-TEMPLATE", "texts", page('const H = "h";', `probe(\`${sub("H")}-${sub('c ? "x" : "y"')}!\`);`, `probe(\`${sub("H")}${sub("H")}\`);`), ['"h-x!" | "h-y!"', '"hh"'])],
+    pins: [
+      pin("X-TEMPLATE", "texts", page('const H = "h";', `probe(\`${sub("H")}-${sub('c ? "x" : "y"')}!\`);`, `probe(\`${sub("H")}${sub("H")}\`);`), ['"h-x!" | "h-y!"', '"hh"']),
+      pin(
+        "X-TEMPLATE-PARTS",
+        "texts",
+        page(
+          'const H = "h";',
+          `probe(\`\\x43${sub("H")}\\x44\`);`,
+          `probe(\`${sub('c ? "a" : "b"')}${sub('d ? "x" : "y"')}\`);`,
+        ),
+        [
+          '"ChD"',
+          '"ax" | "ay" | "bx" | "by"',
+        ],
+      ),
+    ],
   },
   {
     id: "plus",
@@ -530,6 +859,66 @@ const ROWS: readonly Row[] = [
         page("probe(f(x));", "probe(o.p);", 'probe(o["p"]);', "probe(1);", "probe(String.raw`a`);", 'probe(X = "a");', "probe(f(", "  x,", "  y", "));"),
         ["<opaque f(x)>", "<opaque o.p>", '<opaque o["p"]>', "<opaque 1>", "<opaque String.raw`a`>", '<opaque X = "a">', "<opaque f( x, y )>"],
       ),
+      pin(
+        "X-OTHER-FORMS",
+        "texts",
+        page(
+          'probe(("a", "b"));',
+          'probe(X += "b");',
+          'probe(X ||= "b");',
+          'probe(X ??= "b");',
+          'probe(X &&= "b");',
+          'probe("a" - "b");',
+          'probe("a" === "b");',
+          'probe(void "a");',
+          'probe(typeof "a");',
+          'probe(!"a");',
+          "probe(X++);",
+          "probe(delete o.p);",
+          "probe(I<string>);",
+          "probe(o?.p);",
+          'probe(o?.["p"]);',
+          "probe(f?.());",
+          "probe(new F());",
+          "probe(null);",
+          "probe(true);",
+          "probe(false);",
+          "probe(this);",
+          "probe(1n);",
+          "probe(/a/);",
+          'probe(() => "a");',
+          'probe({ a: "a" });',
+          'probe(["a"]);',
+        ),
+        [
+          '<opaque "a", "b">',
+          '<opaque X += "b">',
+          '<opaque X ||= "b">',
+          '<opaque X ??= "b">',
+          '<opaque X &&= "b">',
+          '<opaque "a" - "b">',
+          '<opaque "a" === "b">',
+          '<opaque void "a">',
+          '<opaque typeof "a">',
+          '<opaque !"a">',
+          "<opaque X++>",
+          "<opaque delete o.p>",
+          "<opaque I<string>>",
+          "<opaque o?.p>",
+          '<opaque o?.["p"]>',
+          "<opaque f?.()>",
+          "<opaque new F()>",
+          "<opaque null>",
+          "<opaque true>",
+          "<opaque false>",
+          "<opaque this>",
+          "<opaque 1n>",
+          "<opaque /a/>",
+          '<opaque () => "a">',
+          '<opaque { a: "a" }>',
+          '<opaque ["a"]>',
+        ],
+      ),
     ],
   },
   {
@@ -543,9 +932,151 @@ const ROWS: readonly Row[] = [
         page("function g(p: string) {", `  probe(\`${sub("p")}/bin\`);`, '  probe("a" + f() + p);', "  probe(p + f());", "}"),
         ["<opaque p:parameter>", "<opaque f()>", "<opaque p:parameter>"],
       ),
+      pin(
+        "G10",
+        "texts",
+        page(
+          "declare function probe(value: unknown): void;",
+          "export function g(p: string, c: boolean): void {",
+          `  probe(\`${sub('c ? p : "x"')}/bin\`);`,
+          '  probe((c ? p : "x") + "/bin");',
+          "}",
+        ),
+        [
+          '<opaque p:parameter> | "x/bin"',
+          '<opaque p:parameter> | "x/bin"',
+        ],
+      ),
+      pin("X-OPAQUE-MIXED", "texts", page("function g(p: string, c: boolean) {", '  probe((c ? "x" : p) + (c ? f() : "y"));', "}"), ['<opaque f()> | "xy" | <opaque p:parameter>']),
     ],
   },
-  { id: "bounds", from: "claim", label: "TEXT (12) bounds", pins: [pin("X-BOUNDS", "texts", boundsPage(), boundsReading())] },
+  {
+    id: "bounds",
+    from: "claim",
+    label: "TEXT (12) bounds",
+    pins: [
+      pin("X-BOUNDS", "texts", boundsPage(), boundsReading()),
+      pin(
+        "G05",
+        "texts",
+        page(
+          "declare function probe(value: unknown): void;",
+          'probe("a" + "b" + "c" + "d" + "e" + "f" + "g" + "h" + "i" + "j" + "k" + "l" + "m" + "n" + "o" + "p" + "q" + "r");',
+          "export {};",
+        ),
+        [
+          '<opaque "a":bound>',
+        ],
+      ),
+      pin(
+        "G06",
+        "texts",
+        page(
+          "declare function probe(value: unknown): void;",
+          "export function f(p0: string, p1: string, p2: string, p3: string, p4: string, p5: string, p6: string, p7: string, p8: string, p9: string, p10: string, p11: string, p12: string, p13: string, p14: string, p15: string, p16: string, p17: string): void {",
+          "  probe(p0 || p1 || p2 || p3 || p4 || p5 || p6 || p7 || p8 || p9 || p10 || p11 || p12 || p13 || p14 || p15 || p16 || p17);",
+          "  probe(p0 && p1 && p2 && p3 && p4 && p5 && p6 && p7 && p8 && p9 && p10 && p11 && p12 && p13 && p14 && p15 && p16 && p17);",
+          "}",
+        ),
+        [
+          "<opaque p0:bound> | <opaque p1:bound> | <opaque p2:parameter> | <opaque p3:parameter> | <opaque p4:parameter> | <opaque p5:parameter> | <opaque p6:parameter> | <opaque p7:parameter> | <opaque p8:parameter> | <opaque p9:parameter> | <opaque p10:parameter> | <opaque p11:parameter> | <opaque p12:parameter> | <opaque p13:parameter> | <opaque p14:parameter> | <opaque p15:parameter> | <opaque p16:parameter> | <opaque p17:parameter>",
+          "<opaque p0:bound> | <opaque p1:bound> | <opaque p2:parameter> | <opaque p3:parameter> | <opaque p4:parameter> | <opaque p5:parameter> | <opaque p6:parameter> | <opaque p7:parameter> | <opaque p8:parameter> | <opaque p9:parameter> | <opaque p10:parameter> | <opaque p11:parameter> | <opaque p12:parameter> | <opaque p13:parameter> | <opaque p14:parameter> | <opaque p15:parameter> | <opaque p16:parameter> | <opaque p17:parameter>",
+        ],
+      ),
+      pin(
+        "G07",
+        "texts",
+        page(
+          "declare function probe(value: unknown): void;",
+          'probe("a" as string as string as string as string as string as string as string as string as string as string as string as string as string as string as string as string as string);',
+          "export {};",
+        ),
+        [
+          '<opaque "a":bound>',
+        ],
+      ),
+      pin(
+        "X-BOUNDS-JOINS",
+        "texts",
+        page(
+          'const A5 = c ? "" : c ? "a" : c ? "aa" : c ? "aaa" : "aaaa";',
+          'const B13 = c ? "" : c ? "a" : c ? "aa" : c ? "aaa" : c ? "aaaa" : c ? "aaaaa" : c ? "aaaaaa" : c ? "aaaaaaa" : c ? "aaaaaaaa" : c ? "aaaaaaaaa" : c ? "aaaaaaaaaa" : c ? "aaaaaaaaaaa" : "aaaaaaaaaaaa";',
+          "probe(A5 + B13);",
+          `probe(\`${sub("A5")}${sub("B13")}\`);`,
+          'const A8 = c ? "0" : c ? "1" : c ? "2" : c ? "3" : c ? "4" : c ? "5" : c ? "6" : "7";',
+          'const B8 = c ? "a" : c ? "b" : c ? "c" : c ? "d" : c ? "e" : c ? "f" : c ? "g" : "h";',
+          "probe(A8 + B8);",
+          `probe(\`${sub("A8")}${sub("B8")}\`);`,
+        ),
+        [
+          "<opaque A5 + B13:bound>",
+          `<opaque \`${sub("A5")}${sub("B13")}\`:bound>`,
+          eightByEight(),
+          eightByEight(),
+        ],
+      ),
+      pin(
+        "X-BOUNDS-WRAPPERS",
+        "texts",
+        levelsPage("probe((@));", "probe(@ as string);", "probe(@ satisfies string);", "probe(@!);", "probe(<string>@);", "void (async () => probe(await @))();"),
+        [
+          '"i"',
+          '"i"',
+          '"i"',
+          '<opaque "i":bound>',
+          '"i"',
+          '<opaque "i":bound>',
+          '"i"',
+          '<opaque "i":bound>',
+          '"i"',
+          '<opaque "i":bound>',
+          '"i"',
+          '<opaque "i":bound>',
+          '"i"',
+          '<opaque "i":bound>',
+        ],
+      ),
+      pin(
+        "X-BOUNDS-SIDES",
+        "texts",
+        levelsPage('probe(@ + "x");', 'probe("x" + @);', 'probe(@ ?? "x");', 'probe("x" ?? @);', 'probe(@ || "x");', 'probe("x" || @);', 'probe(@ && "x");', 'probe("x" && @);'),
+        [
+          '"i"',
+          '"i"',
+          '"ix"',
+          '<opaque "i":bound>',
+          '"xi"',
+          '<opaque "i":bound>',
+          '"i" | "x"',
+          '<opaque "i":bound> | "x"',
+          '"x" | "i"',
+          '"x" | <opaque "i":bound>',
+          '"i" | "x"',
+          '<opaque "i":bound> | "x"',
+          '"x" | "i"',
+          '"x" | <opaque "i":bound>',
+          '"i" | "x"',
+          '<opaque "i":bound> | "x"',
+          '"x" | "i"',
+          '"x" | <opaque "i":bound>',
+        ],
+      ),
+      pin("X-BOUNDS-BRANCHES", "texts", levelsPage('probe(c ? @ : "x");', 'probe(c ? "x" : @);'), ['"i"', '"i"', '"i" | "x"', '<opaque "i":bound> | "x"', '"x" | "i"', '"x" | <opaque "i":bound>']),
+      pin(
+        "X-BOUNDS-SUBSTITUTIONS",
+        "texts",
+        levelsPage(`probe(\`<${sub("@")}>\`);`, `probe(\`<${sub('"x"')}-${sub("@")}>\`);`),
+        [
+          '"i"',
+          '"i"',
+          '"<i>"',
+          '<opaque "i":bound>',
+          '"<x-i>"',
+          '<opaque "i":bound>',
+        ],
+      ),
+    ],
+  },
   {
     id: "order",
     from: "claim",
@@ -581,6 +1112,7 @@ const ROWS: readonly Row[] = [
         ),
         ["rf context render tee log out in bg q d b", "rf x", "rf x y", "unresolved"],
       ),
+      pin("XW-FORMS", "words", page("probe(\"rf\\tcontext\\nrender\");", "probe(\"bin/rf ./x C:\\\\t\\\\rf.CMD y.Exe z.exe.bak\");"), ["rf context render", "rf x y z.exe.bak"]),
     ],
   },
   {
@@ -675,6 +1207,89 @@ const ROWS: readonly Row[] = [
         ["<opaque ...g()>:read", "reactivefiber.r:write"],
       ),
       pin("XF-DEPTH", "registrations", spreadDepthPage(), ["<opaque ...B8>:<opaque ...B8>", "reactivefiber.s:write"]),
+      pin(
+        "XF-WRAPPED",
+        "registrations",
+        page(
+          'export const k1 = { id: "reactivefiber.k1", [("effectClass")]: "read" };',
+          'export const k2 = { id: "reactivefiber.k2", ["effectClass" as string]: "read" };',
+          'export const k3 = { id: "reactivefiber.k3", ["effectClass" satisfies string]: "read" };',
+          'export const k4 = { id: "reactivefiber.k4", ["effectClass"!]: "read" };',
+          'export const k5 = { id: "reactivefiber.k5", [<string>"effectClass"]: "read" };',
+          'export async function k6() { return { id: "reactivefiber.k6", [await "effectClass"]: "read" }; }',
+          'export const k7 = { id: "reactivefiber.k7", [`effectClass`]: "read" };',
+          'const BASE = { effectClass: "write" };',
+          'export const s1 = { id: "reactivefiber.s1", ...(BASE) };',
+          'export const s2 = { id: "reactivefiber.s2", ...(BASE as typeof BASE) };',
+          'export const s3 = { id: "reactivefiber.s3", ...(BASE satisfies object) };',
+          'export const s4 = { id: "reactivefiber.s4", ...BASE! };',
+          'export const s5 = { id: "reactivefiber.s5", ...<typeof BASE>BASE };',
+          'export async function s6() { return { id: "reactivefiber.s6", ...(await BASE) }; }',
+          'const W1 = ({ effectClass: "write" });',
+          'const W2 = { effectClass: "write" } as const;',
+          'const W3 = { effectClass: "write" } satisfies object;',
+          'const W4 = { effectClass: "write" }!;',
+          'const W5 = <object>{ effectClass: "write" };',
+          'const W6 = await { effectClass: "write" };',
+          'export const i1 = { id: "reactivefiber.i1", ...W1 };',
+          'export const i2 = { id: "reactivefiber.i2", ...W2 };',
+          'export const i3 = { id: "reactivefiber.i3", ...W3 };',
+          'export const i4 = { id: "reactivefiber.i4", ...W4 };',
+          'export const i5 = { id: "reactivefiber.i5", ...W5 };',
+          'export const i6 = { id: "reactivefiber.i6", ...W6 };',
+        ),
+        [
+          "reactivefiber.i1:write",
+          "reactivefiber.i2:write",
+          "reactivefiber.i3:write",
+          "reactivefiber.i4:write",
+          "reactivefiber.i5:write",
+          "reactivefiber.i6:write",
+          "reactivefiber.k1:read",
+          "reactivefiber.k2:read",
+          "reactivefiber.k3:read",
+          "reactivefiber.k4:read",
+          "reactivefiber.k5:read",
+          "reactivefiber.k6:read",
+          "reactivefiber.k7:read",
+          "reactivefiber.s1:write",
+          "reactivefiber.s2:write",
+          "reactivefiber.s3:write",
+          "reactivefiber.s4:write",
+          "reactivefiber.s5:write",
+          "reactivefiber.s6:write",
+        ],
+      ),
+      pin(
+        "XF-OPAQUE-MEMBERS",
+        "registrations",
+        page(
+          'const GET = { get effectClass() { return "w"; } };',
+          'export const g = { id: "reactivefiber.g", ...GET };',
+          "const SET = { set effectClass(v: string) {} };",
+          'export const h = { id: "reactivefiber.h", ...SET };',
+          'const METHOD = { effectClass() { return "w"; } };',
+          'export const m = { id: "reactivefiber.m", ...METHOD };',
+          'export const n = { id: "reactivefiber.n", effectClass: "read", [1]: "x" };',
+        ),
+        [
+          "<opaque ...GET>:<opaque ...GET>",
+          "<opaque ...METHOD>:<opaque ...METHOD>",
+          "<opaque ...SET>:<opaque ...SET>",
+          "<opaque [1]>:<opaque [1]>",
+        ],
+      ),
+      pin(
+        "XF-ACCESSOR-KEYS",
+        "registrations",
+        page(
+          'export const p1 = { id: "reactivefiber.p1", "effectClass"() { return "w"; } };',
+          'export const p2 = { id: "reactivefiber.p2", get ["effectClass"]() { return "w"; } };',
+          'export const p3 = { id: "reactivefiber.p3", set [("effectClass")](v: string) {} };',
+          'export const p4 = { id: "reactivefiber.p4", get [`effectClass`]() { return "w"; } };',
+        ),
+        ["reactivefiber.p1:<opaque effectClass()>", "reactivefiber.p2:<opaque get effectClass>", "reactivefiber.p3:<opaque set effectClass>", "reactivefiber.p4:<opaque get effectClass>"],
+      ),
     ],
   },
   {
@@ -752,18 +1367,22 @@ function exportRequirements(): string[] {
   const lines = row.description.split("\n");
   return [row.title, ...lines.filter((line) => line.startsWith("- ")).map((line) => line.slice(2)), ...lines.filter((line) => line.startsWith("Acceptance: "))];
 }
-/** The falsifier roster's rows as `row:pin,pin,...`, in order; each pin there names the claim words it falsifies. */
+/** The falsifier roster's rows as `row:pin@digest,...`, in order; each pin there names its page's digest and the claim words it falsifies. */
 function rosterRows(): string[] {
   const roster = JSON.parse(readFileSync(join(REPO, ROSTER), "utf8")) as { bead?: unknown; rows?: unknown };
   expect(roster.bead, `${ROSTER} is this bead's roster`).toBe(BEAD);
   const rows = Array.isArray(roster.rows) ? (roster.rows as Array<{ row?: unknown; pins?: unknown }>) : [];
   return rows.map((row) => {
-    const pins = Array.isArray(row.pins) ? (row.pins as Array<{ pin?: unknown; falsifies?: unknown }>) : [];
+    const pins = Array.isArray(row.pins) ? (row.pins as Array<{ pin?: unknown; page?: unknown; falsifies?: unknown }>) : [];
     expect(
       pins.every((held) => typeof held.pin === "string" && typeof held.falsifies === "string" && held.falsifies.length > 0),
       `${ROSTER} row ${String(row.row)}: every pin names what it falsifies`,
     ).toBe(true);
-    return `${String(row.row)}:${pins.map((held) => String(held.pin)).join(",")}`;
+    expect(
+      pins.every((held) => typeof held.page === "string" && /^[0-9a-f]{16}$/.test(held.page)),
+      `${ROSTER} row ${String(row.row)}: every pin carries its page's digest`,
+    ).toBe(true);
+    return `${String(row.row)}:${pins.map((held) => `${String(held.pin)}@${String(held.page)}`).join(",")}`;
   });
 }
 /** The claim's parts as the rows label them: `SECTION (n) id`, in claim order. */
@@ -805,7 +1424,7 @@ function reading(row: Row, at: Pin): readonly string[] {
   if (at.probe === "export-rows") return [STATEMENT, ...ROWS.filter((each) => each.from === "export").map((each) => each.label)];
   if (at.probe === "member-pins") return MEMBERS.map((member) => `${member.id}:${ROWS.find((each) => each.pins.some((held) => held.id === member.id))?.id ?? "no row"}`);
   if (at.probe === "kind-pins") return (ROWS.find((each) => each.id === "kinds")?.pins ?? []).map((held) => held.id);
-  if (at.probe === "falsifier-roster") return ROWS.map((each) => `${each.id}:${each.pins.map((held) => held.id).join(",")}`);
+  if (at.probe === "falsifier-roster") return ROWS.map((each) => `${each.id}:${each.pins.map((held) => `${held.id}@${digest(held.page)}`).join(",")}`);
   if (at.probe === "kind") return [bindingKindOf(ts.factory.createTypeAliasDeclaration(undefined, "TA", undefined, ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)))];
   const reader = bindingTextReader(at.path, at.page);
   if (at.probe === "registrations") return reader.registrations();
@@ -825,7 +1444,7 @@ function expected(at: Pin): readonly string[] {
   if (at.probe === "claim-rows") return claimLabels();
   if (at.probe === "export-rows") return exportRequirements();
   if (at.probe === "member-pins") return MEMBERS.map((member) => `${member.id}:${member.form}`);
-  if (at.probe === "kind-pins") return claimKinds().map((kind) => `K-${kind}`);
+  if (at.probe === "kind-pins") return [...claimKinds().map((kind) => `K-${kind}`), ...MEMBERS.filter((member) => member.form === "kinds").map((member) => member.id)];
   if (at.probe === "falsifier-roster") return rosterRows();
   return at.expect;
 }
@@ -843,32 +1462,39 @@ describe("wb-jwc.10 binding text reader census (test/helpers/binding-text-reader
 
   it("FROZEN SHAPE: the rows and their pins, and each pin's page, are the frozen set (standing rule 16)", () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual([
-      "S1:4", "S2:3", "S3:3", "PREMISE:3", "ACCEPTANCE:6", "scope:3", "const:1", "kinds:16",
-      "with:2", "eval:5", "cycle:2", "literal:1", "identifier:1", "template:1", "plus:1", "conditional:1",
-      "nullish:1", "or:1", "and:1", "wrapper:1", "other:1", "opaque-part:1", "bounds:1", "order:1",
-      "texts:1", "words:1", "program:4", "properties:7", "registration:5",
+      "S1:4", "S2:3", "S3:3", "PREMISE:3", "ACCEPTANCE:6", "scope:3", "const:2", "kinds:19",
+      "with:4", "eval:8", "cycle:5", "literal:2", "identifier:1", "template:2", "plus:1", "conditional:1",
+      "nullish:1", "or:1", "and:1", "wrapper:1", "other:2", "opaque-part:3", "bounds:9", "order:1",
+      "texts:1", "words:2", "program:4", "properties:10", "registration:5",
     ]);
     expect(ROWS.flatMap((row) => row.pins.map((at) => `${at.id}:${digest(at.page)}`))).toEqual([
       "S1:8afd84e55bb80436", "S1-LITERAL:6dc9075e02c6c569", "S1C:44deb751ea6881c2", "S1-OUTER:a5260da7eaa52c80",
       "S2:26443104183ebf73", "S2C:ff69c95e8744ba15", "S2-OUTER:d23f25db1042d4bf", "S3:d5cd38c84164c1df",
       "S3C:c1bd7fe71f49bb49", "S3-OUTER:f921d5052d539181", "P-CONST-SHADOW:d7af84145ca904b0", "P-LET-SHADOW:8a4bd4ace78e42e2",
       "P-PARAMETER-SHADOW:9c209ba2166739dd", "CLAIM-HEADER:e3b0c44298fc1c14", "CLAIM-ROWS:e3b0c44298fc1c14", "EXPORT-ROWS:e3b0c44298fc1c14",
-      "MEMBER-PINS:e3b0c44298fc1c14", "KIND-PINS:e3b0c44298fc1c14", "FALSIFIER-ROSTER:e3b0c44298fc1c14", "SC-SHADOW:1549c1ad35d1b87e", "SC-SHORTHAND:06d879e5de557160",
-      "A10:bd4719f6c7ced09c", "C-RESOLVES:e71f3769d6975434", "K-import:ea1106db3623af7b", "K-unbound:898c0f5c16093308",
-      "K-merged:4f6d211d9e79196b", "K-let:e8ae42863aa7003b", "K-var:9e9c7c3873028a68", "K-using:e30364b542bb8a82",
-      "K-catch:611bd19b2f472b5f", "K-no-initializer:63a8642ac75bb055", "K-ambient:e1b75ade94c13988", "K-namespace:f125b607ca7f49a2",
-      "K-parameter:e8dcb9b4f07d06bd", "K-destructuring:c8986f2cd70dc1b0", "K-function:0c94ebb9149ee5f4", "K-class:19516138e46ffe08",
-      "K-enum:b92862c557bd45a8", "K-other:736158789dd52378", "W-SCRIPT:2bb4edcbd2c23a76", "W-MODULE:2bb4edcbd2c23a76",
-      "V-EVAL:4f56a5ea6d326840", "V-WRAPPED:834efdc279613272", "V-AWAIT:4f9d587dfcb20493", "V-WITH:0d7debb6fe26cb27",
-      "V-INDIRECT:ee50094347bb5b48", "Y-PAIR:477a1897de50b251", "Y-SELF:d1877ed980f899d7", "X-LITERAL:eb1d7c7a7bee5345",
-      "X-IDENTIFIER:71c26db42648b754", "X-TEMPLATE:59e2a192e79b63e9", "X-PLUS:e359b1d21d75ae31", "X-CONDITIONAL:2797a0461868be0f",
-      "X-NULLISH:73b1e8a2957cecb4", "X-OR:e735eae419d85798", "X-AND:b7d5b22cee00ed7d", "X-WRAPPER:d3758bbdd60be81f",
-      "X-OTHER:ff8dd88baf0020bc", "X-OPAQUE-PART:45501e3f38f6a872", "X-BOUNDS:7700e8de7c5875ea", "X-ORDER:0127821fa22acf63",
-      "XT-TEXTS:17ff55942c562568", "XW-WORDS:8dd3d5171b8ea99e", "E1:989ef4466f3ec475", "E2:56eba4274318e4e6",
-      "E3:a8c7ea8b7257b883", "XP-FORMS:1d4c658da1e9505c", "XF-KEYS:c78a66a5d3990908", "XF-SHORTHAND:4ff1157ea60d0a26",
-      "XF-SPREAD:6d4d178025a374b2", "XF-SPREAD-OPAQUE:706c61b34faba034", "XF-MEMBERS:87c5a406050e13cb", "XF-ORDER:cb08b99cc78c3319",
-      "XF-DEPTH:f41ea21228896054", "R-ALT1:3c1f8d03c348ba37", "R-ALT2:54b2d72f2e0becb0", "R-ALT3:76fc148f3114cbe8",
-      "R-ALT4:c5575ebe73a2dfa0", "XR-FORMS:6a8fcdd52b392fdc",
+      "MEMBER-PINS:e3b0c44298fc1c14", "KIND-PINS:e3b0c44298fc1c14", "FALSIFIER-ROSTER:e3b0c44298fc1c14", "SC-SHADOW:1549c1ad35d1b87e",
+      "SC-SHORTHAND:06d879e5de557160", "A10:bd4719f6c7ced09c", "C-RESOLVES:e71f3769d6975434", "C-PATTERN:6f0f9df2d7032d98",
+      "K-import:ea1106db3623af7b", "K-unbound:898c0f5c16093308", "K-merged:3d30bd72f99bdbe2", "K-destructuring:9a68584bb451311b",
+      "K-let:af08458a5a933a9a", "K-var:2282675695032160", "K-using:e30364b542bb8a82", "K-catch:611bd19b2f472b5f",
+      "K-no-initializer:aa4e8e93b77301e0", "K-ambient:0dd6b9fc15fa96a5", "K-namespace:f125b607ca7f49a2", "K-parameter:4a1bf4f67e7dfa5c",
+      "K-function:066c12d5e4e728fb", "K-class:095968e279c082a9", "K-enum:95fc1c94d0f565b6", "K-other:736158789dd52378",
+      "G01:3bfce53df3890737", "G08:29c4bc12eb74ec8a", "G09:b7f81187531e8b21", "W-SCRIPT:2bb4edcbd2c23a76",
+      "W-MODULE:2bb4edcbd2c23a76", "G02:a9cb49d86853c407", "W-NESTED:a3d74edfb3cb49f9", "V-EVAL:4f56a5ea6d326840",
+      "V-WRAPPED:834efdc279613272", "V-AWAIT:4f9d587dfcb20493", "V-WITH:0d7debb6fe26cb27", "V-INDIRECT:d65ac9ce97754577",
+      "G03:1f21c5326c209bf4", "V-BARE:ef2878be4c039a49", "V-LOCAL:ec5d949e5bf14e05", "Y-PAIR:477a1897de50b251",
+      "Y-SELF:d1877ed980f899d7", "G04:f13c0485b8771fc7", "Y-SHADOW:e6e24ad042da232e", "Y-BRANCH:2a9acb9ea6aaf58f",
+      "X-LITERAL:eb1d7c7a7bee5345", "X-ESCAPES:b13c901dac0144fd", "X-IDENTIFIER:71c26db42648b754", "X-TEMPLATE:59e2a192e79b63e9",
+      "X-TEMPLATE-PARTS:89a22cb8ca9b5c03", "X-PLUS:e359b1d21d75ae31", "X-CONDITIONAL:2797a0461868be0f", "X-NULLISH:73b1e8a2957cecb4",
+      "X-OR:e735eae419d85798", "X-AND:b7d5b22cee00ed7d", "X-WRAPPER:d3758bbdd60be81f", "X-OTHER:ff8dd88baf0020bc",
+      "X-OTHER-FORMS:ed7941fdfe66b2b6", "X-OPAQUE-PART:45501e3f38f6a872", "G10:9094d871e755e431", "X-OPAQUE-MIXED:16aa541030168a5d",
+      "X-BOUNDS:7700e8de7c5875ea", "G05:843ded306e1d3cab", "G06:5b631d3c7268684e", "G07:a1605bb889f6ef87",
+      "X-BOUNDS-JOINS:7b2f657a3f7d8d4b", "X-BOUNDS-WRAPPERS:1a56f63228be813c", "X-BOUNDS-SIDES:bc4db5a94bb3a2b9", "X-BOUNDS-BRANCHES:2cd0e4b495e0ee80",
+      "X-BOUNDS-SUBSTITUTIONS:625211828c6a3002", "X-ORDER:0127821fa22acf63", "XT-TEXTS:17ff55942c562568", "XW-WORDS:8dd3d5171b8ea99e",
+      "XW-FORMS:1928d101612b5975", "E1:989ef4466f3ec475", "E2:56eba4274318e4e6", "E3:a8c7ea8b7257b883",
+      "XP-FORMS:1d4c658da1e9505c", "XF-KEYS:c78a66a5d3990908", "XF-SHORTHAND:4ff1157ea60d0a26", "XF-SPREAD:6d4d178025a374b2",
+      "XF-SPREAD-OPAQUE:706c61b34faba034", "XF-MEMBERS:87c5a406050e13cb", "XF-ORDER:cb08b99cc78c3319", "XF-DEPTH:f41ea21228896054",
+      "XF-WRAPPED:09724e932abc0752", "XF-OPAQUE-MEMBERS:3b50a416cbb8f7f9", "XF-ACCESSOR-KEYS:e5c45db8c1cce667", "R-ALT1:3c1f8d03c348ba37",
+      "R-ALT2:54b2d72f2e0becb0", "R-ALT3:76fc148f3114cbe8", "R-ALT4:c5575ebe73a2dfa0", "XR-FORMS:6a8fcdd52b392fdc",
     ]);
   });
 

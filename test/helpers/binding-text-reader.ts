@@ -11,10 +11,10 @@
  *
  * WHAT. bindingTextReader(path, text) parses one module, binds it with TypeScript's checker in a program over that module alone,
  * and reads its expressions exactly as BINDING_TEXT_CLAIM states, part by part (BINDING_FORMS, TEXT_FORMS and READING_FORMS). The
- * census test/workbench-rf-binding-text-reader-census.test.ts holds the claim byte-for-byte and proves every part with planted
+ * census test/workbench-rf-binding-text-reader-census.test.ts holds the claim byte-for-byte and pins every part with planted
  * modules. wb-jwc.7's census (blocked by this bead, R-B115) can take these readers in place of its own nameResolved, textsOf,
- * commandText and rfRegistrations; MEMBERS names the gate members ruling R-B115 folded into this bead, each bound to the part
- * that answers it.
+ * commandText and rfRegistrations; MEMBERS names the gate members folded into this bead (ruling R-B115's and refusal #1's), each
+ * bound to the part whose row pins it.
  */
 import ts from "typescript";
 
@@ -37,25 +37,31 @@ export const BINDING_FORMS: readonly ClaimPart<BindingFormId>[] = [
   },
   {
     id: "const",
-    text: "it resolves only when that binding is exactly one declaration, a const with an initializer, outside an ambient (declare) context and not exported from a namespace body, and it then reads as that initializer's alternatives; so a const shadowing a same-named const reads its own initializer inside its scope and the outer one's outside it",
+    text: "it resolves only when that binding is exactly one declaration, a const with an initializer that declares the name itself (an element of a destructuring pattern never resolves), outside an ambient (declare) context and not exported from a namespace body, and it then reads as that initializer's alternatives; so a const shadowing a same-named const reads its own initializer inside its scope and the outer one's outside it",
   },
   {
     id: "kinds",
-    text: "any other binding does not resolve and reads as <opaque NAME:KIND>, NAME the identifier and KIND the first of these that names the binding: import (an import or import-equals, merged or not); unbound (no declaration in the module, a type's name in a value position included); merged (more than one declaration); let; var; using (a using or await using declaration); catch (a catch clause variable); no-initializer (a const with no initializer); ambient (a const in an ambient context); namespace (a namespace, or a const exported from a namespace body); parameter; destructuring (a destructuring element); function (a function declaration, or a named function expression's own name); class (a class declaration, or a named class expression's own name); enum (an enum or an enum member); other (a declaration of any other kind)",
+    text: "any other binding does not resolve and reads as <opaque NAME:KIND>, NAME the identifier and KIND the first of these that names the binding: import (an import or import-equals, merged or not); unbound (no declaration in the module, a type's name in a value position included); merged (more than one declaration); destructuring (an element of a destructuring pattern, whatever declares the pattern: a const, let or var declaration, a parameter or a catch clause); let (a let declaration, declare let and a let exported from a namespace body included); var (a var declaration, declare var and a var exported from a namespace body included); using (a using or await using declaration); catch (a catch clause variable); no-initializer (a const with no initializer); ambient (a const in an ambient context); namespace (a namespace, or a const exported from a namespace body); parameter; function (a function declaration, or a named function expression's own name); class (a class declaration, or a named class expression's own name); enum (an enum or an enum member); other (a declaration of any other kind)",
   },
-  { id: "with", text: "an identifier inside a with statement's body reads as <opaque NAME:with>, whatever it binds" },
+  {
+    id: "with",
+    text: "an identifier inside a with statement's body, at any depth (nested blocks, functions, classes and with statements included), reads as <opaque NAME:with>, whatever it binds",
+  },
   {
     id: "eval",
-    text: "every identifier of a module that calls eval by name (a call whose callee is the identifier eval inside any parentheses, as, satisfies, non-null !, type assertion or await) reads as <opaque NAME:eval>, whatever it binds, a with statement's body included",
+    text: "every identifier of a module that calls eval by name (a call, optional or not and with or without arguments, whose callee is the identifier eval inside any parentheses, as, satisfies, non-null !, type assertion or await; a new expression and a tagged template are no call) reads as <opaque NAME:eval>, whatever it binds, a with statement's body included",
   },
-  { id: "cycle", text: "an identifier whose const's initializer reaches that same const again reads, at the repeated reach, as <opaque NAME:cycle>, NAME the identifier there" },
+  {
+    id: "cycle",
+    text: "an identifier whose const's initializer reaches that same const (the same declaration, not a same-named one) again reads, at the repeated reach, as <opaque NAME:cycle>, NAME the identifier there, the expression's other alternatives read as usual",
+  },
 ];
 
 /** TEXT: the alternatives an expression spells. */
 export const TEXT_FORMS: readonly ClaimPart<TextFormId>[] = [
-  { id: "literal", text: "a string or no-substitution template literal: its text" },
+  { id: "literal", text: "a string or no-substitution template literal: its text, each escape sequence read as the character it stands for" },
   { id: "identifier", text: "an identifier: as BINDING reads it" },
-  { id: "template", text: "a template with substitutions: every combination of its literal parts and its substitutions' alternatives, in order" },
+  { id: "template", text: "a template with substitutions: every combination of its literal parts' texts (escape sequences read) and its substitutions' alternatives, in order" },
   { id: "plus", text: "a + join: every combination of its left side's and its right side's alternatives" },
   { id: "conditional", text: "a ?: expression: its two branches' alternatives, its condition unread" },
   { id: "nullish", text: "a ?? expression: both sides' alternatives" },
@@ -64,12 +70,15 @@ export const TEXT_FORMS: readonly ClaimPart<TextFormId>[] = [
   { id: "wrapper", text: "parentheses, as, satisfies, a non-null !, a type assertion and await: the inner expression's alternatives" },
   {
     id: "other",
-    text: "any other expression (a call, a property or element access, a number, a tagged template, an assignment, and so on): one <opaque TEXT>, TEXT its source text with each whitespace run read as one space",
+    text: "any other expression (a call, optional or not, a new expression, a property or element access, optional or not, a number, bigint or regular expression literal, true, false, null or this, a tagged template, a plain or compound assignment, a comma expression, any other binary operator, a prefix or postfix operator, void, typeof and delete included, an arrow function, an object or array literal, an instantiation expression, and so on): one <opaque TEXT>, TEXT its source text with each whitespace run read as one space",
   },
-  { id: "opaque-part", text: "a combination with an opaque part reads as its first opaque part's alternative" },
+  {
+    id: "opaque-part",
+    text: "each combination with an opaque part reads as its first opaque part's alternative, and each combination without one as its joined text, so a join keeps its exact alternatives beside its opaque ones",
+  },
   {
     id: "bounds",
-    text: "a template or + join with more than 64 combinations, or an expression read more than 16 levels deep (each wrapper, each identifier followed to its initializer, and each side, branch or substitution read counting one level), reads, where the bound is passed, as one <opaque TEXT:bound>, TEXT that expression's source text",
+    text: "a template or + join with more than 64 combinations (counted before any two are found to read alike), or an expression read more than 16 levels deep (each wrapper, each identifier followed to its initializer, and each side, branch or substitution read counting one level), reads, where the bound is passed, as one <opaque TEXT:bound>, TEXT that expression's source text",
   },
   { id: "order", text: "the alternatives are listed in source order (a left side's or a true branch's first, a combination's by its parts, the first part varying slowest), each once" },
 ];
@@ -87,7 +96,7 @@ export const READING_FORMS: readonly ClaimPart<ReadingFormId>[] = [
   },
   {
     id: "properties",
-    text: "an object literal's fields, member by member in source order, a later member overriding: a property assignment whose key is a name, a string or numeric literal or a computed string literal sets its field, and so does a shorthand property; a method, getter or setter with such a key makes its own field opaque; a spread of an identifier BINDING resolves to a const whose initializer is an object literal whose own fields hold no opaque member (spreads nested at most 8 deep) sets the fields it holds; any other member (a spread of anything else, or a member with any other key) is opaque and may set every field",
+    text: "an object literal's fields, member by member in source order, a later member overriding: a property assignment whose key is a name, a string or numeric literal, or a computed key whose expression, inside any of the wrappers TEXT (9) names, is a string or no-substitution template literal sets its field, and so does a shorthand property; a method, getter or setter with such a key makes its own field opaque; a spread whose expression, inside any of those wrappers, is an identifier BINDING resolves to a const whose initializer, inside any of those wrappers, is an object literal whose own fields hold no opaque member (a method, getter or setter included; spreads nested at most 8 deep) sets the fields it holds; any other member (a spread of anything else, or a member with any other key, a computed number included) is opaque and may set every field",
   },
   {
     id: "registration",
@@ -104,7 +113,11 @@ export const BINDING_TEXT_CLAIM =
   `BINDING: ${joined(BINDING_FORMS)}. TEXT: an expression's alternatives are ${joined(TEXT_FORMS)}. ` +
   `READINGS: ${joined(READING_FORMS)}. No reading claims more than these parts state.`;
 
-/** The gate members ruling R-B115 folded into this bead (its note; outbox row O:1399), each with the part whose row holds it. */
+/**
+ * The gate members folded into this bead, each with the part whose row holds its pin (the pin is named by the member's id): ruling
+ * R-B115's (its note; outbox row O:1399) and refusal #1's (gate-prep-23, run g10-gate-s152, outbox row O:1485: the surviving helper
+ * mutants g01 to g10, each pinned by the twin page the refusal names, read as the delivered reader reads it).
+ */
 export const MEMBERS: readonly { readonly id: string; readonly form: FormId; readonly source: string }[] = [
   { id: "R-ALT1", form: "registration", source: "R-B115 U1(a)" },
   { id: "R-ALT2", form: "registration", source: "R-B115 U1(a)" },
@@ -114,6 +127,16 @@ export const MEMBERS: readonly { readonly id: string; readonly form: FormId; rea
   { id: "E2", form: "program", source: "R-B115 U1(b)" },
   { id: "E3", form: "program", source: "R-B115 U1(b) control" },
   { id: "A10", form: "scope", source: "O:1399 U1(c)" },
+  { id: "G01", form: "kinds", source: "refusal #1 U1a (g01, O:1485)" },
+  { id: "G02", form: "with", source: "refusal #1 U1b (g02, O:1485)" },
+  { id: "G03", form: "eval", source: "refusal #1 U1c (g03, O:1485)" },
+  { id: "G04", form: "cycle", source: "refusal #1 U1d (g04, O:1485)" },
+  { id: "G05", form: "bounds", source: "refusal #1 U1e (g05, O:1485)" },
+  { id: "G06", form: "bounds", source: "refusal #1 U1f (g06, O:1485)" },
+  { id: "G07", form: "bounds", source: "refusal #1 U1g (g07, O:1485)" },
+  { id: "G08", form: "kinds", source: "refusal #1 U1h (g08, O:1485)" },
+  { id: "G09", form: "kinds", source: "refusal #1 U1i (g09, O:1485)" },
+  { id: "G10", form: "opaque-part", source: "refusal #1 U1j (g10, O:1485)" },
 ];
 
 /** What a binding that does not resolve is (BINDING_FORMS kinds). */

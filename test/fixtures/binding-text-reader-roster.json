@@ -2,7 +2,7 @@
  "bead": "wb-jwc.10",
  "census": "test/workbench-rf-binding-text-reader-census.test.ts",
  "claim": "test/helpers/binding-text-reader.ts BINDING_TEXT_CLAIM",
- "note": "The falsifier roster: every row of the census, its anchor, and each pin with the claim words it falsifies. The census holds its rows and pins to this file, in order.",
+ "note": "The falsifier roster: every row of the census, its anchor, and each pin with its page's digest (sha256/16) and the claim words its page falsifies. The census holds its rows, their pins and each pin's page to this file, in order.",
  "rows": [
   {
    "row": "S1",
@@ -10,18 +10,22 @@
    "pins": [
     {
      "pin": "S1",
+     "page": "8afd84e55bb80436",
      "falsifies": "refusal #3's S1 plant: import() of a let that shadows a same-file const reads the let's binding, <opaque MODULE:let>, never the const's text"
     },
     {
      "pin": "S1-LITERAL",
+     "page": "6dc9075e02c6c569",
      "falsifies": "the same let with a literal initializer still reads <opaque MODULE:let>: a let never reads its initializer"
     },
     {
      "pin": "S1C",
+     "page": "44deb751ea6881c2",
      "falsifies": "control S1c: the let renamed LOADED (no shadowed const) reads <opaque LOADED:let>"
     },
     {
      "pin": "S1-OUTER",
+     "page": "a5260da7eaa52c80",
      "falsifies": "the shadowed module-level const, read outside the let's scope, resolves to \"node:fs\""
     }
    ]
@@ -32,14 +36,17 @@
    "pins": [
     {
      "pin": "S2",
+     "page": "26443104183ebf73",
      "falsifies": "refusal #3's S2 plant: a parameter shadowing a same-file const, loaded through a same-file createRequire helper, reads <opaque SPECIFIER:parameter>"
     },
     {
      "pin": "S2C",
+     "page": "ff69c95e8744ba15",
      "falsifies": "control: the parameter renamed REQUESTED reads <opaque REQUESTED:parameter>"
     },
     {
      "pin": "S2-OUTER",
+     "page": "d23f25db1042d4bf",
      "falsifies": "the shadowed const, read outside the parameter's function, resolves to \"node:path\""
     }
    ]
@@ -50,14 +57,17 @@
    "pins": [
     {
      "pin": "S3",
+     "page": "d5cd38c84164c1df",
      "falsifies": "refusal #3's S3 plant: a registration's effectClass held by a let that shadows a same-file const reads <opaque EFFECT_CLASS:let>"
     },
     {
      "pin": "S3C",
+     "page": "c1bd7fe71f49bb49",
      "falsifies": "control S3c: the same let with no shadowed const reads the same"
     },
     {
      "pin": "S3-OUTER",
+     "page": "f921d5052d539181",
      "falsifies": "a registration outside the let's scope reads the const's read"
     }
    ]
@@ -68,14 +78,17 @@
    "pins": [
     {
      "pin": "P-CONST-SHADOW",
+     "page": "d7af84145ca904b0",
      "falsifies": "a const shadowing a const reads its own text inside its scope and the outer one's outside it: no over-report"
     },
     {
      "pin": "P-LET-SHADOW",
+     "page": "8a4bd4ace78e42e2",
      "falsifies": "a let shadowing a const reads opaque inside its scope: no under-report"
     },
     {
      "pin": "P-PARAMETER-SHADOW",
+     "page": "9c209ba2166739dd",
      "falsifies": "a parameter shadowing a const reads opaque inside its function: no under-report"
     }
    ]
@@ -86,27 +99,33 @@
    "pins": [
     {
      "pin": "CLAIM-HEADER",
+     "page": "e3b0c44298fc1c14",
      "falsifies": "the census header's claim paragraph is BINDING_TEXT_CLAIM byte-for-byte"
     },
     {
      "pin": "CLAIM-ROWS",
+     "page": "e3b0c44298fc1c14",
      "falsifies": "the claim rows are exactly the claim's parts, in order"
     },
     {
      "pin": "EXPORT-ROWS",
+     "page": "e3b0c44298fc1c14",
      "falsifies": "the export rows are the export's title, description items and Acceptance line, verbatim"
     },
     {
      "pin": "MEMBER-PINS",
-     "falsifies": "each MEMBERS entry is a pin of its part's row"
+     "page": "e3b0c44298fc1c14",
+     "falsifies": "each MEMBERS entry (R-B115's eight and refusal #1's G01 to G10) is a pin of its part's row"
     },
     {
      "pin": "KIND-PINS",
-     "falsifies": "the kinds row holds one K- pin per kind the kinds part names, in order"
+     "page": "e3b0c44298fc1c14",
+     "falsifies": "the kinds row holds one K- pin per kind the kinds part names, in the claim's order, then the kinds part's MEMBERS (G01, G08, G09), in order"
     },
     {
      "pin": "FALSIFIER-ROSTER",
-     "falsifies": "every row's pins, in order, are this roster's"
+     "page": "e3b0c44298fc1c14",
+     "falsifies": "every row's pins, in order, are this roster's, each page at the digest this roster names"
     }
    ]
   },
@@ -116,14 +135,17 @@
    "pins": [
     {
      "pin": "SC-SHADOW",
+     "page": "1549c1ad35d1b87e",
      "falsifies": "by scope: a block const shadowing a const reads its own text, the outer reads outside, and a function's later const binds its earlier reference"
     },
     {
      "pin": "SC-SHORTHAND",
+     "page": "06d879e5de557160",
      "falsifies": "a shorthand property's name reads through its value's binding: the const registers, the parameter does not"
     },
     {
      "pin": "A10",
+     "page": "bd4719f6c7ced09c",
      "falsifies": "O:1399 U1(c) member a10: a const with an unresolvable initializer shadowing a resolvable same-named const reads opaque, not the outer text"
     }
    ]
@@ -134,7 +156,13 @@
    "pins": [
     {
      "pin": "C-RESOLVES",
+     "page": "e71f3769d6975434",
      "falsifies": "a module, exported, for-statement and chained const each resolve through their initializers"
+    },
+    {
+     "pin": "C-PATTERN",
+     "page": "6f0f9df2d7032d98",
+     "falsifies": "an element of a destructuring pattern never resolves, even with a default: const object and array pattern elements and a let pattern element, each with a default, read <opaque NAME:destructuring>, never the default's text"
     }
    ]
   },
@@ -144,67 +172,98 @@
    "pins": [
     {
      "pin": "K-import",
+     "page": "ea1106db3623af7b",
      "falsifies": "import: named (twice, merged), import-equals, namespace, default, and an import merged with a namespace"
     },
     {
      "pin": "K-unbound",
+     "page": "898c0f5c16093308",
      "falsifies": "unbound: a global, a missing name, a type alias and an interface in value position, and the lib names String, undefined and globalThis (no lib)"
     },
     {
      "pin": "K-merged",
-     "falsifies": "merged: a redeclared var, a const merged with a type, function overloads"
+     "page": "3d30bd72f99bdbe2",
+     "falsifies": "merged: a redeclared var, a const merged with a type, function overloads, a var destructuring element declared twice (merged before destructuring) and a namespace declared in two blocks (merged before namespace)"
+    },
+    {
+     "pin": "K-destructuring",
+     "page": "9a68584bb451311b",
+     "falsifies": "destructuring before the declaring kinds: a parameter pattern's element, const object and array pattern elements (one with a default), let and var object pattern elements, a catch clause pattern's element and a for-of head pattern's element all read destructuring"
     },
     {
      "pin": "K-let",
-     "falsifies": "let: with and without an initializer"
+     "page": "af08458a5a933a9a",
+     "falsifies": "let: with and without an initializer, a declare let (let, not ambient) and a let exported from a namespace body (let, not namespace)"
     },
     {
      "pin": "K-var",
-     "falsifies": "var: at module and function level"
+     "page": "2282675695032160",
+     "falsifies": "var: at module and function level, a declare var (var, not ambient) and a var exported from a namespace body (var, not namespace)"
     },
     {
      "pin": "K-using",
+     "page": "e30364b542bb8a82",
      "falsifies": "using: a using and an await using declaration"
     },
     {
      "pin": "K-catch",
+     "page": "611bd19b2f472b5f",
      "falsifies": "catch: a catch clause variable"
     },
     {
      "pin": "K-no-initializer",
-     "falsifies": "no-initializer: for-of and for-in consts, and an ambient const with no initializer"
+     "page": "aa4e8e93b77301e0",
+     "falsifies": "no-initializer: for-of and for-in consts, a declare const with no initializer (before ambient), a const with no initializer exported from a namespace body (before namespace) and one exported from a declare namespace, read from a merged namespace block (before both)"
     },
     {
      "pin": "K-ambient",
-     "falsifies": "ambient: a declare const and a const in a declare global block"
+     "page": "0dd6b9fc15fa96a5",
+     "falsifies": "ambient: a declare const, a const in a declare global block, and a const exported from a namespace nested in a declare namespace (ambient through an outer declare, read from a merged dotted namespace block)"
     },
     {
      "pin": "K-namespace",
+     "page": "f125b607ca7f49a2",
      "falsifies": "namespace: a const exported from a namespace body (two merged blocks), and the namespace itself; an unexported namespace const resolves"
     },
     {
      "pin": "K-parameter",
-     "falsifies": "parameter: a function parameter, a constructor parameter property, a defaulted arrow parameter"
-    },
-    {
-     "pin": "K-destructuring",
-     "falsifies": "destructuring: a parameter pattern element and object and array pattern elements"
+     "page": "4a1bf4f67e7dfa5c",
+     "falsifies": "parameter: a function parameter, a constructor parameter property, a defaulted arrow parameter and a rest parameter"
     },
     {
      "pin": "K-function",
-     "falsifies": "function: a function declaration and a named function expression's own name"
+     "page": "066c12d5e4e728fb",
+     "falsifies": "function: a function declaration (plain, async, generator, declare - not ambient - and one exported from a namespace body - not namespace) and a named function expression's own name"
     },
     {
      "pin": "K-class",
-     "falsifies": "class: a class declaration and a named class expression's own name"
+     "page": "095968e279c082a9",
+     "falsifies": "class: a class declaration (plain, declare - not ambient - and one exported from a namespace body - not namespace) and a named class expression's own name"
     },
     {
      "pin": "K-enum",
-     "falsifies": "enum: an enum member read inside its enum, and the enum"
+     "page": "95fc1c94d0f565b6",
+     "falsifies": "enum: an enum member read inside its enum, the enum, a const enum, a declare enum (not ambient) and an enum exported from a namespace body (not namespace)"
     },
     {
      "pin": "K-other",
+     "page": "736158789dd52378",
      "falsifies": "other: a declaration of any other kind (a synthetic type alias)"
+    },
+    {
+     "pin": "G01",
+     "page": "3bfce53df3890737",
+     "falsifies": "refusal #1 U1a member g01 (the ambient and namespace checks swapped): its twin page t01a, a const exported from a declare namespace read in a merged namespace block, reads <opaque X:ambient> (ambient before namespace), never <opaque X:namespace>"
+    },
+    {
+     "pin": "G08",
+     "page": "29c4bc12eb74ec8a",
+     "falsifies": "refusal #1 U1h member g08 (declare let and declare var read ambient): its twin page t08 reads <opaque X:let> and <opaque Y:var>; ambient names only a const"
+    },
+    {
+     "pin": "G09",
+     "page": "b7f81187531e8b21",
+     "falsifies": "refusal #1 U1i member g09 (a let or var exported from a namespace body reads namespace): its twin page t09 reads <opaque X:let> and <opaque Y:var>; namespace names only a const exported from a namespace body"
     }
    ]
   },
@@ -214,11 +273,23 @@
    "pins": [
     {
      "pin": "W-SCRIPT",
+     "page": "2bb4edcbd2c23a76",
      "falsifies": "a script's with body reads <opaque X:with> for a const; the with's object and code outside it resolve"
     },
     {
      "pin": "W-MODULE",
+     "page": "2bb4edcbd2c23a76",
      "falsifies": "the same in a .ts module"
+    },
+    {
+     "pin": "G02",
+     "page": "a9cb49d86853c407",
+     "falsifies": "refusal #1 U1b member g02 (the with-body walk stops at a function): its twin page t02.js, an identifier inside an arrow function inside a with body, reads <opaque X:with>, and the same identifier outside the with resolves"
+    },
+    {
+     "pin": "W-NESTED",
+     "page": "a3d74edfb3cb49f9",
+     "falsifies": "at any depth of a with body (a script): inside a function declaration, a function expression, a class method, an object method, a with whose body is no block, a nested with, nested blocks and a with inside a function the const reads <opaque X:with>; whatever it binds: a let, an unbound name and a const declared inside the body read with; outside every with the const resolves"
     }
    ]
   },
@@ -228,23 +299,43 @@
    "pins": [
     {
      "pin": "V-EVAL",
+     "page": "4f56a5ea6d326840",
      "falsifies": "a module calling eval by name reads every identifier as <opaque X:eval>"
     },
     {
      "pin": "V-WRAPPED",
+     "page": "834efdc279613272",
      "falsifies": "eval through parentheses, as, satisfies, a non-null ! and a type assertion still counts"
     },
     {
      "pin": "V-AWAIT",
+     "page": "4f9d587dfcb20493",
      "falsifies": "eval through await still counts"
     },
     {
      "pin": "V-WITH",
+     "page": "0d7debb6fe26cb27",
      "falsifies": "eval wins over a with body"
     },
     {
      "pin": "V-INDIRECT",
-     "falsifies": "control: globalThis.eval, (0, eval) and an alias of eval are no call by name"
+     "page": "d65ac9ce97754577",
+     "falsifies": "control: globalThis.eval, (0, eval), an alias of eval, new eval(...) and the tagged template eval`1` are no call by name, so the const resolves"
+    },
+    {
+     "pin": "G03",
+     "page": "1f21c5326c209bf4",
+     "falsifies": "refusal #1 U1c member g03 (an optional call is not counted): its twin page t03, whose only eval call is eval?.(\"1\"), reads <opaque X:eval>"
+    },
+    {
+     "pin": "V-BARE",
+     "page": "ef2878be4c039a49",
+     "falsifies": "a call of eval with no argument, inside a class method, counts, whatever each identifier binds: a parameter, a const, a let, an import and an unbound name each read <opaque NAME:eval>"
+    },
+    {
+     "pin": "V-LOCAL",
+     "page": "ec5d949e5bf14e05",
+     "falsifies": "eval called through a local binding named eval (a sloppy script's parameter) is still a call of the identifier eval: the module's const reads <opaque X:eval>"
     }
    ]
   },
@@ -254,11 +345,28 @@
    "pins": [
     {
      "pin": "Y-PAIR",
+     "page": "477a1897de50b251",
      "falsifies": "two consts reaching each other read <opaque A:cycle> at the repeated reach"
     },
     {
      "pin": "Y-SELF",
+     "page": "d1877ed980f899d7",
      "falsifies": "a const reaching itself through a + join and a template reads <opaque NAME:cycle>"
+    },
+    {
+     "pin": "G04",
+     "page": "f13c0485b8771fc7",
+     "falsifies": "refusal #1 U1d member g04 (NAME taken from the first const reached): its twin page t04, A reaching B, B reaching C, C reaching B, reads <opaque B:cycle> - the identifier at the repeated reach, not the probed A"
+    },
+    {
+     "pin": "Y-SHADOW",
+     "page": "e6e24ad042da232e",
+     "falsifies": "the same declaration, not a same-named one: an inner const N reached through M to the outer const N reads the outer's text, no cycle"
+    },
+    {
+     "pin": "Y-BRANCH",
+     "page": "2a9acb9ea6aaf58f",
+     "falsifies": "the expression's other alternatives read as usual: a const whose true branch reaches itself reads <opaque C:cycle> | \"z\""
     }
    ]
   },
@@ -268,7 +376,13 @@
    "pins": [
     {
      "pin": "X-LITERAL",
+     "page": "eb1d7c7a7bee5345",
      "falsifies": "double-quoted, single-quoted and no-substitution template literals read their texts"
+    },
+    {
+     "pin": "X-ESCAPES",
+     "page": "b13c901dac0144fd",
+     "falsifies": "each escape sequence reads as its character: \\x41 in a double-quoted, \\x42 in a single-quoted and \\x43 in a no-substitution template literal read A, B and C"
     }
    ]
   },
@@ -278,6 +392,7 @@
    "pins": [
     {
      "pin": "X-IDENTIFIER",
+     "page": "71c26db42648b754",
      "falsifies": "a const identifier reads its text and a let reads opaque"
     }
    ]
@@ -288,7 +403,13 @@
    "pins": [
     {
      "pin": "X-TEMPLATE",
+     "page": "59e2a192e79b63e9",
      "falsifies": "a template reads every combination of its parts, in order"
+    },
+    {
+     "pin": "X-TEMPLATE-PARTS",
+     "page": "89a22cb8ca9b5c03",
+     "falsifies": "a template's literal parts read with their escapes (\\x43 and \\x44 around a const substitution read ChD), and two varying substitutions combine in order, the first varying slowest"
     }
    ]
   },
@@ -298,6 +419,7 @@
    "pins": [
     {
      "pin": "X-PLUS",
+     "page": "e359b1d21d75ae31",
      "falsifies": "a + join reads every combination of its sides"
     }
    ]
@@ -308,6 +430,7 @@
    "pins": [
     {
      "pin": "X-CONDITIONAL",
+     "page": "2797a0461868be0f",
      "falsifies": "both branches are read and the condition is not"
     }
    ]
@@ -318,6 +441,7 @@
    "pins": [
     {
      "pin": "X-NULLISH",
+     "page": "73b1e8a2957cecb4",
      "falsifies": "both sides of ?? are read, an opaque left side included"
     }
    ]
@@ -328,6 +452,7 @@
    "pins": [
     {
      "pin": "X-OR",
+     "page": "e735eae419d85798",
      "falsifies": "both sides of || are read"
     }
    ]
@@ -338,6 +463,7 @@
    "pins": [
     {
      "pin": "X-AND",
+     "page": "b7d5b22cee00ed7d",
      "falsifies": "both sides of && are read"
     }
    ]
@@ -348,6 +474,7 @@
    "pins": [
     {
      "pin": "X-WRAPPER",
+     "page": "d3758bbdd60be81f",
      "falsifies": "parentheses, as, satisfies, a non-null !, a type assertion and await read through"
     }
    ]
@@ -358,7 +485,13 @@
    "pins": [
     {
      "pin": "X-OTHER",
+     "page": "ff8dd88baf0020bc",
      "falsifies": "a call, property and element accesses, a number, a tagged template and an assignment read opaque, whitespace runs as one space"
+    },
+    {
+     "pin": "X-OTHER-FORMS",
+     "page": "ed7941fdfe66b2b6",
+     "falsifies": "each of these reads one <opaque TEXT>: a comma expression, the compound assignments +=, ||=, ??= and &&=, the binary operators - and ===, void, typeof, a prefix !, a postfix ++, delete, an instantiation expression, an optional property access, an optional element access, an optional call, a new expression, null, true, false, this, a bigint, a regular expression, an arrow function, an object literal and an array literal"
     }
    ]
   },
@@ -368,7 +501,18 @@
    "pins": [
     {
      "pin": "X-OPAQUE-PART",
+     "page": "45501e3f38f6a872",
      "falsifies": "a combination with opaque parts reads as its first opaque part"
+    },
+    {
+     "pin": "G10",
+     "page": "9094d871e755e431",
+     "falsifies": "refusal #1 U1j member g10 (a join collapsed to its first opaque part when any combination holds one): its twin page t10, a template and a + join over (c ? p : \"x\"), each reads <opaque p:parameter> | \"x/bin\" - the exact combination stays"
+    },
+    {
+     "pin": "X-OPAQUE-MIXED",
+     "page": "16aa541030168a5d",
+     "falsifies": "per combination: (c ? \"x\" : p) + (c ? f() : \"y\") reads <opaque f()> | \"xy\" | <opaque p:parameter>: each combination's first opaque part, the text-only combination joined, each once, in combination order"
     }
    ]
   },
@@ -378,7 +522,48 @@
    "pins": [
     {
      "pin": "X-BOUNDS",
-     "falsifies": "64 combinations read and 65 or more bound, for a + join and a template; 16 levels read and 17 bound, for wrappers, identifiers, sides, branches and substitutions"
+     "page": "7700e8de7c5875ea",
+     "falsifies": "64 combinations read and 128 bound, for a + join and for a template of two-way conditionals; 16 levels read and 17 bound for nested parentheses, an identifier chain (I15 and I16), a left-nested ?? chain, nested false branches and nested template substitutions"
+    },
+    {
+     "pin": "G05",
+     "page": "843ded306e1d3cab",
+     "falsifies": "refusal #1 U1e member g05 (+ sides count no level): its twin page t05, an 18-term + chain, reads <opaque \"a\":bound>"
+    },
+    {
+     "pin": "G06",
+     "page": "5b631d3c7268684e",
+     "falsifies": "refusal #1 U1f member g06 (|| and && sides count no level): its twin page t06, 18-term || and && chains of parameters, reads p0 and p1 bound and p2 to p17 as parameters, for each chain"
+    },
+    {
+     "pin": "G07",
+     "page": "a1605bb889f6ef87",
+     "falsifies": "refusal #1 U1g member g07 (only parentheses count a wrapper level): its twin page t07, \"a\" under 17 as string wrappers, reads <opaque \"a\":bound>"
+    },
+    {
+     "pin": "X-BOUNDS-JOINS",
+     "page": "7b2f657a3f7d8d4b",
+     "falsifies": "more than 64 combinations, counted before any two read alike: a + join and a template of 5 x 13 alternatives (65 combinations, 17 distinct texts) read bound, and of 8 x 8 (64 combinations) read all 64 texts"
+    },
+    {
+     "pin": "X-BOUNDS-WRAPPERS",
+     "page": "1a56f63228be813c",
+     "falsifies": "each wrapper counts exactly one level: parentheses, as, satisfies, a non-null !, a type assertion and await around I14 read \"i\" and around I15 bound, beside I14 and I15 read alone (\"i\")"
+    },
+    {
+     "pin": "X-BOUNDS-SIDES",
+     "page": "bc4db5a94bb3a2b9",
+     "falsifies": "each side counts exactly one level: the left and the right side of +, ??, || and && holding I14 read and holding I15 bound"
+    },
+    {
+     "pin": "X-BOUNDS-BRANCHES",
+     "page": "2cd0e4b495e0ee80",
+     "falsifies": "each branch counts exactly one level: the true and the false branch of ?: holding I14 read and holding I15 bound"
+    },
+    {
+     "pin": "X-BOUNDS-SUBSTITUTIONS",
+     "page": "625211828c6a3002",
+     "falsifies": "each substitution counts exactly one level: a template's first and a later substitution holding I14 read and holding I15 bound"
     }
    ]
   },
@@ -388,6 +573,7 @@
    "pins": [
     {
      "pin": "X-ORDER",
+     "page": "0127821fa22acf63",
      "falsifies": "alternatives are in source order, a true branch's and a left side's first, combinations by their parts, each once"
     }
    ]
@@ -398,6 +584,7 @@
    "pins": [
     {
      "pin": "XT-TEXTS",
+     "page": "17ff55942c562568",
      "falsifies": "texts are read when no alternative is opaque, and are unresolved otherwise"
     }
    ]
@@ -408,7 +595,13 @@
    "pins": [
     {
      "pin": "XW-WORDS",
+     "page": "8dd3d5171b8ea99e",
      "falsifies": "words split at whitespace, quotes and shell operators, base names with .exe and .cmd dropped in either case, each once, and unresolved for an opaque alternative"
+    },
+    {
+     "pin": "XW-FORMS",
+     "page": "1928d101612b5975",
+     "falsifies": "a tab and a newline split words; a relative path and a Windows path reduce to their base names; .CMD and .Exe drop in either case; a .exe that is not trailing (z.exe.bak) stays"
     }
    ]
   },
@@ -418,18 +611,22 @@
    "pins": [
     {
      "pin": "E1",
+     "page": "989ef4466f3ec475",
      "falsifies": "O:1399 U1(b) member E1: observedPackageHead's program process.env.PI_VCS ?? \"git\" reads <opaque ...>, not git"
     },
     {
      "pin": "E2",
+     "page": "56eba4274318e4e6",
      "falsifies": "O:1399 U1(b) member E2: an inner const with an unresolvable initializer shadowing a module const \"git\" reads <opaque VCS_PROGRAM>"
     },
     {
      "pin": "E3",
+     "page": "a8c7ea8b7257b883",
      "falsifies": "O:1399 U1(b) control E3: E1's program as a new launch reads opaque beside the existing launch's git"
     },
     {
      "pin": "XP-FORMS",
+     "page": "1d4c658da1e9505c",
      "falsifies": "first words are sorted and each once; an empty or blank program, a call and a parameter read opaque; a base name, a shell line and a const read"
     }
    ]
@@ -440,31 +637,53 @@
    "pins": [
     {
      "pin": "XF-KEYS",
+     "page": "c78a66a5d3990908",
      "falsifies": "a string literal key and a computed string literal key set their fields"
     },
     {
      "pin": "XF-SHORTHAND",
+     "page": "4ff1157ea60d0a26",
      "falsifies": "shorthand properties set their fields through their values' bindings"
     },
     {
      "pin": "XF-SPREAD",
+     "page": "6d4d178025a374b2",
      "falsifies": "a spread of a const object literal sets its fields, and a later property overrides one (gate member LC3's shape)"
     },
     {
      "pin": "XF-SPREAD-OPAQUE",
+     "page": "706c61b34faba034",
      "falsifies": "a spread of a let, of a const literal holding an opaque member, and of a non-identifier are opaque and may set every field"
     },
     {
      "pin": "XF-MEMBERS",
+     "page": "87c5a406050e13cb",
      "falsifies": "a computed non-literal key may set every field; a getter, method and setter make their own field opaque"
     },
     {
      "pin": "XF-ORDER",
+     "page": "cb08b99cc78c3319",
      "falsifies": "a later member overrides, and a field an opaque member may set after its last setting reads opaque"
     },
     {
      "pin": "XF-DEPTH",
+     "page": "f41ea21228896054",
      "falsifies": "spreads nested 8 deep resolve and 9 deep are opaque"
+    },
+    {
+     "pin": "XF-WRAPPED",
+     "page": "09724e932abc0752",
+     "falsifies": "the wrappers TEXT (9) names read through in each position: a computed key inside parentheses, as, satisfies, a non-null !, a type assertion or await, and a no-substitution template key, sets its field; a spread inside each of the six wrappers resolves; a spread const's initializer inside each of the six wrappers resolves"
+    },
+    {
+     "pin": "XF-OPAQUE-MEMBERS",
+     "page": "3b50a416cbb8f7f9",
+     "falsifies": "a spread of a const literal holding a getter, a setter or a method is opaque and may set every field; a computed number key is any other key, opaque and setting every field"
+    },
+    {
+     "pin": "XF-ACCESSOR-KEYS",
+     "page": "e5c45db8c1cce667",
+     "falsifies": "a method with a string literal key, and a getter or setter with a computed string, parenthesized string or no-substitution template key, each make their own field opaque: effectClass reads <opaque LABEL>, the member's label, and id still reads"
     }
    ]
   },
@@ -474,22 +693,27 @@
    "pins": [
     {
      "pin": "R-ALT1",
+     "page": "3c1f8d03c348ba37",
      "falsifies": "R-B115 U1(a) member R-ALT1: an id whose reactivefiber text is the false branch registers reactivefiber.render.commit:write"
     },
     {
      "pin": "R-ALT2",
+     "page": "54b2d72f2e0becb0",
      "falsifies": "R-B115 U1(a) member R-ALT2: an id whose reactivefiber text is the right side of ?? registers, its opaque left side an entry too"
     },
     {
      "pin": "R-ALT3",
+     "page": "76fc148f3114cbe8",
      "falsifies": "R-B115 U1(a) control R-ALT3: the reactivefiber text as the true branch registers"
     },
     {
      "pin": "R-ALT4",
+     "page": "c5575ebe73a2dfa0",
      "falsifies": "R-B115 U1(a) member R-ALT4: the right side of || through a same-file const registers, its opaque left side an entry too"
     },
     {
      "pin": "XR-FORMS",
+     "page": "6a8fcdd52b392fdc",
      "falsifies": "no id text starting reactivefiber. and a reactivefiber field that is no id register nothing; <none>, effectClass alternatives sorted and joined, and one entry per id text"
     }
    ]
