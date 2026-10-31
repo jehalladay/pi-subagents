@@ -78,7 +78,24 @@
  * paragraph in the export, held to the roster's sha-256: followUp) names R-SIBLING and R-SCOPE by id and asks for the two title
  * readings, each with a pinned quiet row, so those four families hold past the table, and R-VERSION holds past it through its landed
  * version line. R-HOLDER, R-SPELLING, R-ENCODED and R-ALIAS are bound by the table alone (no outside source names them): a 4-place
- * hollow that also deletes the family's table line reads green for those four (measured), and red for the other five.
+ * hollow that also deletes the family's table line reads green for those four (measured), and red for the other five (DEPTH below).
+ * DEPTH (wb-jml6, the R694 follow-up of the landing-691 gate's F3 lead; its F4 rides). F3: the 4-place residual hollow - a family's
+ * QUIET row, roster residual, residualSubjects entries and implied-table line deleted together, every census literal that names it -
+ * read 27 passed (27) for R-HOLDER, R-SPELLING, R-ENCODED and R-ALIAS and red=1 for the other five (re-measured by this cut on wb-ycue
+ * cut #2's bytes at 242b275, trunk tip at claim time; this cut's own readings below are taken at c85be84, landing 692, merged into the
+ * branch, whose export first carries the wb-jml6 row). The wb-jml6 filing (its first paragraph in the export, held to the roster's
+ * sha-256: depth) names all nine families by id, its F3 lead naming those four as read green (TABLE_ALONE_CLAUSE); the judged set
+ * requires each family that clause names to be a named residual, and the residual families to be exactly the ids the outside filings
+ * (wb-ycue's and wb-jml6's) name. A family deleted from every census literal therefore reds against the filing's text - each of the
+ * nine 4-place hollows reads red=1, and so does each with its earlier anchor neutralized as well - and a family no outside filing names
+ * reds too: none is bound by the table alone. wb-jml6 F4: R-HOLDER's presence was implied by the live census's holder hits, so a
+ * landing that left none would red the judged set and ask for R-HOLDER's removal while its synthetic quiet row passed (measured: the
+ * landed census with its live holder reading emptied reads 1 failed | 27 passed; this cut reads 28 of 28). Each family whose presence
+ * read live data alone - R-HOLDER, R-SCOPE (the live root's entries), R-TITLE and R-REQUIREMENT-ID (the live export's needle-titled
+ * rows and needle-spelling requirement ids) - is now implied by the reading the code makes on a synthetic tree (codeReadings), and
+ * R-HOLDER's residual subject follows that reading. Stated, not cured: the quiet rows of R-SCOPE, R-TITLE and R-REQUIREMENT-ID still
+ * require a live member (their F5 and cut #1 forms), so a landing that empties one of those live readings reds that quiet row by name,
+ * and so the records case, never the judged set.
  * F4 NOT TAKEN (measured): exempting qa/workbench/status-ledger.mjs:30 alone and judging the sibling training program's name would
  * refuse what the landed BEADS-TRAININGWORKS-R1 status census admits - its clause (a) reads every docs/workbench citation of that name
  * and owes the deposit's status phrase within 400 chars, never zero (80 lines in 3 files at e8e13f8: that ledger line, the census
@@ -86,7 +103,7 @@
  * F5 (the residual anchor): a family removed from QUIET and the roster together read green (R-SCOPE: 24 of 24 on the untouched census
  * at e8e13f8), the enumeration's only anchors being its own literals. Each family now owes SUBJECTS derived outside this file's
  * literals (residualSubjects): R-SIBLING each member the roster excludes from the filing's set, in product scope; R-HOLDER a census
- * module and a fixture it names, while the live census reads holder hits; R-SPELLING each needle's other case and the two-word member
+ * module and a fixture it names, while the holder reading holds (wb-jml6 F4); R-SPELLING each needle's other case and the two-word member
  * under each separator of the engine's \s class; R-ENCODED each free needle's base64; R-SCOPE each live root entry outside the five
  * trees and docs/ past docs/workbench (38 in this worktree unbuilt; the git-ignored dist/ and .forge/ a build and a default-tier run
  * leave make 40 - these subjects follow the checkout); R-ALIAS each program file the vendored lines come from, by stem (13); R-VERSION
@@ -189,7 +206,9 @@
  * sha-256 held and yield the schema names. The extension's filing is the second outside anchor: rows E-H tile its acceptance clause,
  * its member and range clauses yield the extension members, its count, first and last, and its pins are the roster's. The wb-ycue
  * filing is the third (F2): its first paragraph, held to the roster's sha-256, names two residual families by id and asks for the two
- * title readings, and every residual family is held to a condition read outside this file (the implied table).
+ * title readings, and every residual family is held to a condition read outside this file (the implied table). The wb-jml6 filing
+ * is the fourth (DEPTH): its first paragraph, held to the roster's sha-256, names every residual family by id, so the families are
+ * exactly the ids the outside filings name.
  * SELF-READ: the judged set parses this file's IMPL and requires every pin to name one of READERS and not ROSTER (direct identifiers
  * only); each pin's witness carries the digest of its own quote, so a pin swapped for another pin's case reds; the records case
  * requires every pin and every quiet row to have run to its end.
@@ -286,6 +305,8 @@ interface Roster {
   };
   /** wb-ycue (its R694 filing, the F2 residual anchor's outside source): the filing's first paragraph in the export, held to its sha-256. */
   readonly followUp: { readonly bead: string; readonly filing: { readonly export: string; readonly paragraphs: number; readonly sha256: string } };
+  /** wb-jml6 (its R694 filing, the DEPTH anchor's outside source): the filing's first paragraph in the export, held to its sha-256. */
+  readonly depth: { readonly bead: string; readonly filing: { readonly export: string; readonly paragraphs: number; readonly sha256: string } };
 }
 type Family = "schema" | "status" | "program";
 interface Needle {
@@ -349,6 +370,7 @@ const LOCK_FILE = "vendor/dependency-lock.json";
 const BEAD = "wb-zzb4";
 const EXT_BEAD = "wb-rdlh.2";
 const FOLLOW_UP_BEAD = "wb-ycue";
+const DEPTH_BEAD = "wb-jml6";
 const DOCS_FILE = "docs/workbench/18-decisions-and-risks.md";
 const DOCS_PARENT = "18 — Decisions, risks, deliberate defaults and re-evaluation triggers";
 const DOCS_HEADING = "Library design programs";
@@ -486,6 +508,9 @@ const EXT_ACCEPTANCE_CLAUSE = /Acceptance: (\(a\) [^\n]+)\./;
 /** The wb-ycue filing's F3 lead (the R694 follow-up of landing 543, its first paragraph in the export): the two title readings it asks
  * for, each with a pinned quiet row (the parse anchor spells no needle). */
 const TITLE_READINGS_CLAUSE = /read (the R539 first line of each receipt) \(the title line only\) and (a test's requirement-id comment and describe title) as holder data, each with a pinned quiet row/;
+/** The wb-jml6 filing's F3 lead (the R694 follow-up of landing 691, its first paragraph in the export): the residual families whose
+ * 4-place hollow read green, bound by the table alone, by id (the parse anchor spells no needle). */
+const TABLE_ALONE_CLAUSE = /It reads \d+ passed \(\d+\) for ((?:R-[A-Z]+(?:-[A-Z]+)*(?:, | and ))+R-[A-Z]+(?:-[A-Z]+)*)\./;
 function extensionStatement(text: string): Extension {
   const set = EXT_SET_CLAUSE.exec(text);
   const range = EXT_RANGE_CLAUSE.exec(text);
@@ -1653,6 +1678,46 @@ const QUIET: Readonly<Record<string, () => void>> = {
   },
 };
 
+// --- the readings the code makes (wb-jml6 F4) ---------------------------------------------------------------------------------------------
+type CodeReading = "holder" | "scope" | "title" | "requirement";
+let BY_CODE: Readonly<Record<CodeReading, boolean>> | undefined;
+/** wb-jml6 F4: the readings the code makes, read through treeCensus on one synthetic tree, never on the live tree, root or export alone.
+ * holder: a needle in a census module and in the fixture it names reads as holder data. scope: a needle in a root page and in docs/
+ * past docs/workbench is not walked. title: a bead's own export title on its receipt's R539 title line reads as title data.
+ * requirement: an export requirement id spelling a needle, in a comment of a test/ source outside the holders, reads as title data.
+ * Each holds only when its plant also reads no finding. The judged set's implied table conditions each family whose presence read live
+ * data alone on its reading here, so a landing that empties a live reading never asks for a live residual's removal. Read outside every
+ * quiet row (planting unset: the judged set and the residual anchor), so no write here counts as a quiet row's plant. */
+function codeReadings(): Readonly<Record<CodeReading, boolean>> {
+  BY_CODE ??= withTree(root => {
+    const needle = NEEDLES[0]?.text ?? "";
+    const title = `a title naming ${needle}`;
+    const requirement = `${STATEMENT.word}-PLANT-R1`;
+    const files: Readonly<Record<CodeReading, readonly string[]>> = {
+      holder: ["test/fixtures/plant-roster.json", "test/workbench-plant-census.test.ts"],
+      scope: ["README.md", "docs/plant.md"],
+      title: [`${RECEIPTS_DIR}wb-zz9.md`],
+      requirement: ["test/plant.test.ts"],
+    };
+    write(root, EXPORT_FILE, exportRows([["wb-zz9", title], ["wb-zz8", `[${requirement}] a plant requirement`]]));
+    write(root, "test/workbench-plant-census.test.ts", `const ROSTER = "test/fixtures/plant-roster.json";\n${code(needle)}`);
+    write(root, "test/fixtures/plant-roster.json", `{"key": "${needle}"}\n`);
+    for (const site of files.scope) write(root, site, code(needle));
+    write(root, `${RECEIPTS_DIR}wb-zz9.md`, `# wb-zz9: ${title}\n`);
+    write(root, "test/plant.test.ts", `// ${requirement}\n`);
+    const read = treeCensus(root);
+    const judged = new Set(findings(read).map(hit => hit.file));
+    const reads = (hits: readonly Hit[], plants: readonly string[]): boolean => plants.every(file => hits.some(hit => hit.file === file) && !judged.has(file));
+    return {
+      holder: reads(read.holder, files.holder),
+      scope: files.scope.every(site => !read.files.includes(site)),
+      title: reads(read.titled, files.title),
+      requirement: reads(read.titled, files.requirement),
+    };
+  });
+  return BY_CODE;
+}
+
 // --- the residual anchor (wb-ycue F5) ---------------------------------------------------------------------------------------------------
 /** Every residual family's subjects, each derived from a source outside this file's literals - the filings and the vendored lines
  * (NEEDLES), the engine's \s class (WHITE_SPACE), the roster's exclusion of a filing member, the files the vendored lines come from,
@@ -1670,7 +1735,7 @@ function residualSubjects(): { readonly subject: string; readonly planted: boole
   const other = (texts: readonly string[]): string[] => texts.filter(text => !NEEDLES.some(needle => needle.text === text));
   return [
     ...EXCLUDED.map(member => ({ subject: `excluded member ${member}`, planted: has(plant => inProduct(plant.file) && plant.text.includes(member)) })),
-    ...(realCensus().holder.length > 0
+    ...(codeReadings().holder
       ? [{ subject: "a census module and a fixture it names, each spelling a needle", planted: has(plant => HOLDER_MODULE.test(plant.file) && ANY.test(plant.text)) && has(plant => plant.file.startsWith("test/fixtures/") && ANY.test(plant.text)) }]
       : []),
     ...other(NEEDLES.flatMap(needle => [needle.text.toLowerCase(), needle.text.toUpperCase()])).map(text => ({ subject: `other case ${text}`, planted: spelt(text) })),
@@ -1760,17 +1825,19 @@ describe("wb-zzb4 Library design-program absence census (LIBRARY-COMPOSITIONAL-A
     // wb-ycue respin (F2, the 3-place residual hollow): each family is present exactly when a source outside this file's literals
     // implies it - the R-VERSION form above, for every family - so a family deleted from QUIET, the roster and residualSubjects
     // together still reds here. The wb-ycue filing names two families by id and asks for two title readings, each with a pinned
-    // quiet row; those four hold past this table as well.
+    // quiet row; those four hold past this table as well. wb-jml6 F4: a family whose presence read live data alone (the live holder
+    // hits, root entries, needle-titled rows and needle-spelling requirement ids) is implied by the reading the code makes instead.
+    const byCode = codeReadings();
     const implied: Readonly<Record<string, boolean>> = {
       "R-SIBLING": STATEMENT.plus.some(member => !NEEDLES.some(needle => needle.text === member)),
-      "R-HOLDER": realCensus().holder.length > 0,
+      "R-HOLDER": byCode.holder,
       "R-SPELLING": /\bcase-sensitive\b/.test(EXT.acceptance),
       "R-ENCODED": /\breads those trees as text\b/.test(STATEMENT.acceptance),
-      "R-SCOPE": outsideSites().length > 0,
+      "R-SCOPE": byCode.scope,
       "R-ALIAS": PROGRAM_STEMS.length > 0,
       "R-VERSION": / V\d(?:\/V\d)+ names /.test(extension),
-      "R-TITLE": titledRows().length > 0,
-      "R-REQUIREMENT-ID": exportTitles(REPO).requirements.some(id => ANY.test(id)),
+      "R-TITLE": byCode.title,
+      "R-REQUIREMENT-ID": byCode.requirement,
     };
     expect(Object.keys(QUIET).sort(), "each residual family is present exactly when a source outside this file implies it").toEqual(
       Object.entries(implied)
@@ -1785,6 +1852,18 @@ describe("wb-zzb4 Library design-program absence census (LIBRARY-COMPOSITIONAL-A
     const readings = TITLE_READINGS_CLAUSE.exec(followUp)?.slice(1) ?? [];
     const titleFamilies = ROSTER.residuals.filter(item => item.family.includes("is title data")).map(item => item.id);
     expect([readings.length > 0, readings.length - titleFamilies.length, titleFamilies.filter(id => !Object.keys(QUIET).includes(id))], "each title reading the wb-ycue filing asks for is one named residual with a pinned quiet row").toEqual([true, 0, []]);
+    // wb-jml6 F3 (the 4-place residual hollow: a family's QUIET row, roster residual, residualSubjects entries and table line deleted
+    // together): the wb-jml6 filing names every family by id, the four its F3 lead read as bound by the table alone among them, so the
+    // families are exactly the ids the outside filings name - a family deleted from every census literal still reds against the
+    // filing's text, and a family no outside filing names reds as well.
+    const depth = filing(DEPTH_BEAD, ROSTER.depth.filing.paragraphs);
+    expect([ROSTER.depth.bead, ROSTER.depth.filing.export, sha256(depth)], "the wb-jml6 filing is the text the roster measured").toEqual([DEPTH_BEAD, EXPORT_FILE, ROSTER.depth.filing.sha256]);
+    const tableAlone = (TABLE_ALONE_CLAUSE.exec(depth)?.[1] ?? "").split(/, | and /).filter(id => id !== "");
+    expect([tableAlone.length > 0, tableAlone.filter(id => !Object.keys(QUIET).includes(id))], "each family the wb-jml6 filing read as bound by the table alone is a named residual").toEqual([true, []]);
+    const familyIds = (text: string): string[] => text.match(/\bR-[A-Z]+(?:-[A-Z]+)*\b/g) ?? [];
+    expect(Object.keys(QUIET).sort(), "the residual families are exactly the families the outside filings name by id: none is bound by the table alone").toEqual(
+      [...new Set([...familyIds(followUp), ...familyIds(depth)])].sort(),
+    );
     const reads = implReads();
     expect(Object.keys(reads).sort()).toEqual(pinIds());
     expect(

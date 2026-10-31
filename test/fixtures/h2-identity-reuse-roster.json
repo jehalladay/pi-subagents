@@ -1,6 +1,6 @@
 {
  "bead": "wb-4nut.9",
- "basis": "The out-of-file roster of test/workbench-h2-identity-reuse-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the residual families and the pin carrying each one's quiet row, every registered test title, and the record (wb-flt6: reached, each case's end before the records case, in run order, with its assertion count; recordsEnd, the records case's own end), so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. producer: read-only git rev-parse/show/grep on the local checkouts below /workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src at the cited shas (no fetch; the checkouts' HEADs predate the pins, so only the cited shas are read): each source's file blob, the cited lines verbatim, the gating work packages its table rows name, and srcProbe = git grep -l -E <pattern> <sha> -- src (none at every pin). The TSX-FED-01 row is held to its first three cells (heldCells 3): its program cell spells the rf source kind the landed wb-a9l2.2 census keeps out of every file under test/. wb-3wcm (the landing-405 gate's F1-F6): scan.readingControls gains the wrapper, parenthesized-key, indexed-access-type, parenthesized-type and type-query chain readings and the hex, unicode, code point, escaped-letter, control and digit regex escape readings; scan.findingControls (the finding step's own controls) and scan.tokenControl (the token anchor's own control) join the scan, comparisons (the SELF-READ's witness comparisons) joins the roster, and A2's witness gains findingControls, unreadTokens (the compiler-anchored token census: every src node that carries its own text read by a token reading) and tokenControl. wb-3w79 (the landing-501 gate's F1-F4): scan.readingControls gains a control per chain root (a type name, a type query of a name and of a qualified name, this and the this type) and the identity-escape and count, range and open brace-quantifier regex readings; A2's witness gains spellings (each reading control's text as its own reading read it) and findingKnown (each finding control's known spellings, from the one finding step A2's src call makes too); operands (the SELF-READ's operand statements: the pin case's IMPL lookup, the echo check over that entry's source, its witness declaration and its MEASURED record) joins the roster.",
+ "basis": "The out-of-file roster of test/workbench-h2-identity-reuse-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the residual families and the pin carrying each one's quiet row, every registered test title, and the record (wb-flt6: reached, each case's end before the records case, in run order, with its assertion count; recordsEnd, the records case's own end), so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. producer: read-only git rev-parse/show/grep on the local checkouts below /workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src at the cited shas (no fetch; the checkouts' HEADs predate the pins, so only the cited shas are read): each source's file blob, the cited lines verbatim, the gating work packages its table rows name, and srcProbe = git grep -l -E <pattern> <sha> -- src (none at every pin). The TSX-FED-01 row is held to its first three cells (heldCells 3): its program cell spells the rf source kind the landed wb-a9l2.2 census keeps out of every file under test/. wb-3wcm (the landing-405 gate's F1-F6): scan.readingControls gains the wrapper, parenthesized-key, indexed-access-type, parenthesized-type and type-query chain readings and the hex, unicode, code point, escaped-letter, control and digit regex escape readings; scan.findingControls (the finding step's own controls) and scan.tokenControl (the token anchor's own control) join the scan, comparisons (the SELF-READ's witness comparisons) joins the roster, and A2's witness gains findingControls, unreadTokens (the compiler-anchored token census: every src node that carries its own text read by a token reading) and tokenControl. wb-3w79 (the landing-501 gate's F1-F4): scan.readingControls gains a control per chain root (a type name, a type query of a name and of a qualified name, this and the this type) and the identity-escape and count, range and open brace-quantifier regex readings; A2's witness gains spellings (each reading control's text as its own reading read it) and findingKnown (each finding control's known spellings, from the one finding step A2's src call makes too); operands (the SELF-READ's operand statements: the pin case's IMPL lookup, the echo check over that entry's source, its witness declaration and its MEASURED record) joins the roster. wb-jdz6 (the landing-594 gate's F1-F3): scan.readingControls gains the type-name root's qualified form (type E = rec.Owner[\"epoch\"]) and the regex reading's separator family, one control per kind (class escapes, assertions and control character escapes), each spelling the term across every member of its kind, one literal per member; A2's witness gains their readings and spellings; pinCase (the SELF-READ's pin case body: every statement of the pin case's callback body, of any kind, in order) joins the roster, and reached's judged end counts its one new assertion. wb-jdz6 cut #2 (refusal #1's U1 and F2): the SELF-READ reads every held statement and every held literal token for token (tokensOf: the compiler's tokens in order, each with its own text, and every comment between two of them), so spellingControls (the reader's own controls: [label, one spelling, another, whether the two read as one]) joins the roster after pinCase; scan.readingControls gains a qualified name two links deep (type E = Rec.Owner.Epoch), A2's witness gains its reading and spelling, and reached's judged end counts the one new spelling-control assertion. wb-jdz6 cut #3 (refusal #2's U2 and F4): spellingControls holds one control per member the reader's kill sentence names, each label naming its member (an equality and an inequality operator's own text; a doubled space inside a double- and a single-quoted string, a no-substitution template, a template head, middle and tail, and a regex; a block comment, a line comment and a JSDoc block between two tokens, each kind's own words and a doubled space inside it; a second block comment between the same two tokens, two block comments' order there and a block comment's place; the tokens' order; and layout, now with a tab and CRLF); scan.readingControls gains a qualified name three links deep (type E = A.Rec.Owner.Epoch) and A2's witness gains its reading and spelling; reached is unchanged (no assertion is added). wb-jdz6 cut #4 (refusal #3's U3, F2, F3 and F4, in the enumerate-the-resolvable form under orchestrator ruling R-B141): spellingControls gains, for each of the ten whitespace members, a second control that pairs no space against two beside its one-space pair; selfReadResiduals (the SELF-READ residual members: [family, member, one spelling, another, from, to]) and selfReadQuiet (each member's measured quiet row: whether its model erases the member, the controls whose verdict it changes and how many pinned statements it reads otherwise) join the roster after spellingControls; residuals and residualRows gain R-CHAIN-DEPTH, whose quiet row in A2's witness is the longest run of links of one kind its chain reading controls spell, by link kind; and reached's judged end counts the one new assertion (the residual members' quiet rows and every residual family named in the census header).",
  "quote": "Restart changes source owner epoch; matching sequence counter cannot authorize reuse.",
  "citation": "RL docs/programs/harness2-reactive-evolution-2026-10-20/README.md:45@bfe1f4ac7fa0",
  "scan": {
@@ -172,6 +172,16 @@
     "type E = Owner.Epoch;"
    ],
    [
+    "nested qualified name",
+    "chain",
+    "type E = Rec.Owner.Epoch;"
+   ],
+   [
+    "twice-nested qualified name",
+    "chain",
+    "type E = A.Rec.Owner.Epoch;"
+   ],
+   [
     "object keys",
     "key path",
     "const o = { owner: { epoch: 1 } };"
@@ -292,6 +302,11 @@
     "type E = Owner[\"epoch\"];"
    ],
    [
+    "type name qualified root",
+    "chain",
+    "type E = rec.Owner[\"epoch\"];"
+   ],
+   [
     "type query name root",
     "chain",
     "type E = (typeof owner)[\"epoch\"];"
@@ -315,6 +330,21 @@
     "regex identity escape",
     "regex",
     "const r = /owner\\Epoch/;"
+   ],
+   [
+    "regex class escapes",
+    "regex",
+    "const r = [/owner\\depoch/, /owner\\Depoch/, /owner\\sepoch/, /owner\\Sepoch/, /owner\\wepoch/, /owner\\Wepoch/];"
+   ],
+   [
+    "regex assertions",
+    "regex",
+    "const r = [/owner\\bepoch/, /owner\\Bepoch/];"
+   ],
+   [
+    "regex control character escapes",
+    "regex",
+    "const r = [/owner\\fepoch/, /owner\\nepoch/, /owner\\repoch/, /owner\\tepoch/, /owner\\vepoch/];"
    ],
    [
     "regex count quantifier",
@@ -555,7 +585,8 @@
   "R-COMPOSED",
   "R-UNJUDGED-SITES",
   "R-OWN-FIELD",
-  "R-SPLIT-NAMES"
+  "R-SPLIT-NAMES",
+  "R-CHAIN-DEPTH"
  ],
  "residualRows": {
   "R-EVENT-ID": "B1",
@@ -565,7 +596,8 @@
   "R-COMPOSED": "A2",
   "R-UNJUDGED-SITES": "A2",
   "R-OWN-FIELD": "A2",
-  "R-SPLIT-NAMES": "A2"
+  "R-SPLIT-NAMES": "A2",
+  "R-CHAIN-DEPTH": "A2"
  },
  "comparisons": [
   "expect(witness).toStrictEqual(rosterWitness(pin));",
@@ -576,6 +608,595 @@
   "expect(String(impl), `${pin}'s case reads the roster's witnesses`).not.toMatch(/\\brosterWitness\\b|\\bROSTER\\.rows\\b/);",
   "const witness = impl === undefined ? null : await impl();",
   "MEASURED[pin] = witness;"
+ ],
+ "pinCase": [
+  "const impl = IMPL[pin];",
+  "expect(impl, `no case for ${pin}`).toBeTypeOf(\"function\");",
+  "expect(String(impl), `${pin}'s case reads the roster's witnesses`).not.toMatch(/\\brosterWitness\\b|\\bROSTER\\.rows\\b/);",
+  "const witness = impl === undefined ? null : await impl();",
+  "expect(witness).toStrictEqual(rosterWitness(pin));",
+  "MEASURED[pin] = witness;",
+  "REACHED.push(endOf(pin));"
+ ],
+ "spellingControls": [
+  [
+   "two tokens merged into one",
+   "const witness = impl === undefined ? null : await impl();",
+   "const witness = impl === undefined ? null : awaitimpl();",
+   false
+  ],
+  [
+   "a keyword merged into a name",
+   "const witness = impl === undefined ? null : await impl();",
+   "constwitness = impl === undefined ? null : await impl();",
+   false
+  ],
+  [
+   "an equality operator's own text",
+   "const witness = impl === undefined ? null : await impl();",
+   "const witness = impl == undefined ? null : await impl();",
+   false
+  ],
+  [
+   "an inequality operator's own text",
+   "const known = impl !== undefined;",
+   "const known = impl != undefined;",
+   false
+  ],
+  [
+   "a double-quoted string's inner whitespace",
+   "expect(impl, \"no case\").toBeTypeOf(\"function\");",
+   "expect(impl, \"no  case\").toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a double-quoted string's doubled space read as none",
+   "expect(impl, \"nocase\").toBeTypeOf(\"function\");",
+   "expect(impl, \"no  case\").toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a single-quoted string's inner whitespace",
+   "expect(impl, 'no case').toBeTypeOf('function');",
+   "expect(impl, 'no  case').toBeTypeOf('function');",
+   false
+  ],
+  [
+   "a single-quoted string's doubled space read as none",
+   "expect(impl, 'nocase').toBeTypeOf('function');",
+   "expect(impl, 'no  case').toBeTypeOf('function');",
+   false
+  ],
+  [
+   "a no-substitution template's inner whitespace",
+   "expect(impl, `no case`).toBeTypeOf(\"function\");",
+   "expect(impl, `no  case`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a no-substitution template's doubled space read as none",
+   "expect(impl, `nocase`).toBeTypeOf(\"function\");",
+   "expect(impl, `no  case`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template head's inner whitespace",
+   "expect(impl, `no case for ${pin}`).toBeTypeOf(\"function\");",
+   "expect(impl, `no case  for ${pin}`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template head's doubled space read as none",
+   "expect(impl, `no casefor ${pin}`).toBeTypeOf(\"function\");",
+   "expect(impl, `no case  for ${pin}`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template middle's inner whitespace",
+   "expect(impl, `${pin} no case ${pin}.`).toBeTypeOf(\"function\");",
+   "expect(impl, `${pin} no  case ${pin}.`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template middle's doubled space read as none",
+   "expect(impl, `${pin} nocase ${pin}.`).toBeTypeOf(\"function\");",
+   "expect(impl, `${pin} no  case ${pin}.`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template tail's inner whitespace",
+   "expect(impl, `${pin} no case`).toBeTypeOf(\"function\");",
+   "expect(impl, `${pin} no  case`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template tail's doubled space read as none",
+   "expect(impl, `${pin} nocase`).toBeTypeOf(\"function\");",
+   "expect(impl, `${pin} no  case`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a regex's inner whitespace",
+   "expect(text).toMatch(/owner epoch/);",
+   "expect(text).toMatch(/owner  epoch/);",
+   false
+  ],
+  [
+   "a regex's doubled space read as none",
+   "expect(text).toMatch(/ownerepoch/);",
+   "expect(text).toMatch(/owner  epoch/);",
+   false
+  ],
+  [
+   "a block comment between two tokens",
+   "MEASURED[pin] = witness;",
+   "MEASURED[pin] = /* drift */ witness;",
+   false
+  ],
+  [
+   "a line comment between two tokens",
+   "MEASURED[pin] = witness;",
+   "MEASURED[pin] = // drift\nwitness;",
+   false
+  ],
+  [
+   "a JSDoc block between two tokens",
+   "const f = (x: number) => x;",
+   "const f = /** drift */ (x: number) => x;",
+   false
+  ],
+  [
+   "a block comment's own words",
+   "MEASURED[pin] = /* one */ witness;",
+   "MEASURED[pin] = /* other */ witness;",
+   false
+  ],
+  [
+   "a line comment's own words",
+   "MEASURED[pin] = // one\nwitness;",
+   "MEASURED[pin] = // other\nwitness;",
+   false
+  ],
+  [
+   "a JSDoc block's own words",
+   "const f = /** @param x the one */ (x: number) => x;",
+   "const f = /** @param x the other */ (x: number) => x;",
+   false
+  ],
+  [
+   "a block comment's inner whitespace",
+   "MEASURED[pin] = /* the one */ witness;",
+   "MEASURED[pin] = /* the  one */ witness;",
+   false
+  ],
+  [
+   "a block comment's doubled space read as none",
+   "MEASURED[pin] = /* theone */ witness;",
+   "MEASURED[pin] = /* the  one */ witness;",
+   false
+  ],
+  [
+   "a line comment's inner whitespace",
+   "MEASURED[pin] = // the one\nwitness;",
+   "MEASURED[pin] = // the  one\nwitness;",
+   false
+  ],
+  [
+   "a line comment's doubled space read as none",
+   "MEASURED[pin] = // theone\nwitness;",
+   "MEASURED[pin] = // the  one\nwitness;",
+   false
+  ],
+  [
+   "a JSDoc block's inner whitespace",
+   "const f = /** @param x the one */ (x: number) => x;",
+   "const f = /** @param x the  one */ (x: number) => x;",
+   false
+  ],
+  [
+   "a JSDoc block's doubled space read as none",
+   "const f = /** @param x theone */ (x: number) => x;",
+   "const f = /** @param x the  one */ (x: number) => x;",
+   false
+  ],
+  [
+   "a second block comment between the same two tokens",
+   "MEASURED[pin] = /* drift */ witness;",
+   "MEASURED[pin] = /* drift */ /* drift */ witness;",
+   false
+  ],
+  [
+   "two block comments' order between the same two tokens",
+   "MEASURED[pin] = /* one */ /* other */ witness;",
+   "MEASURED[pin] = /* other */ /* one */ witness;",
+   false
+  ],
+  [
+   "a block comment's place among the tokens",
+   "MEASURED[pin] = /* drift */ witness;",
+   "MEASURED[pin] /* drift */ = witness;",
+   false
+  ],
+  [
+   "the tokens' order",
+   "MEASURED[pin] = witness;",
+   "witness = MEASURED[pin];",
+   false
+  ],
+  [
+   "layout between two tokens",
+   "REACHED.push(endOf(pin));",
+   "REACHED.push(\r\n\tendOf( pin )\n);",
+   true
+  ]
+ ],
+ "selfReadResiduals": [
+  [
+   "R-SELF-SELECTIVE",
+   "a doubled space read as one only after the word drift (by its neighbour)",
+   "expect(text).toMatch(/drift  epoch/);",
+   "expect(text).toMatch(/drift epoch/);",
+   "drift  ",
+   "drift "
+  ],
+  [
+   "R-SELF-SELECTIVE",
+   "a third block comment between the same two tokens dropped (a count past the two the count control holds)",
+   "MEASURED[pin] = /* a */ /* a */ /* a */ witness;",
+   "MEASURED[pin] = /* a */ /* a */ witness;",
+   "/* a */ /* a */ /* a */",
+   "/* a */ /* a */"
+  ],
+  [
+   "R-SELF-SELECTIVE",
+   "a keyword merged into the name after it only after typeof (by its own text)",
+   "const kind = typeof value;",
+   "const kind = typeofvalue;",
+   "typeof value",
+   "typeofvalue"
+  ],
+  [
+   "R-SELF-FILE-ONLY",
+   "a block comment dropped from this file's statements only",
+   "MEASURED[pin] = /* drift */ witness;",
+   "MEASURED[pin] = witness;",
+   "/* drift */ ",
+   ""
+  ],
+  [
+   "R-SELF-OPERATOR",
+   "<= read as <",
+   "const ok = a <= b;",
+   "const ok = a < b;",
+   "<=",
+   "<"
+  ],
+  [
+   "R-SELF-OPERATOR",
+   "!== read as ===",
+   "const known = a !== b;",
+   "const known = a === b;",
+   "!==",
+   "==="
+  ],
+  [
+   "R-SELF-TEXT",
+   "a name read case-folded",
+   "type E = Rec;",
+   "type E = rec;",
+   "Rec",
+   "rec"
+  ],
+  [
+   "R-SELF-TEXT",
+   "a keyword read as another (let as const)",
+   "let n = 1;",
+   "const n = 1;",
+   "let ",
+   "const "
+  ],
+  [
+   "R-SELF-TEXT",
+   "a number read by its value (0x10 as 16)",
+   "const n = 0x10;",
+   "const n = 16;",
+   "0x10",
+   "16"
+  ],
+  [
+   "R-SELF-TEXT",
+   "a regex's flags dropped (u)",
+   "const r = /owner/u;",
+   "const r = /owner/;",
+   "/u;",
+   "/;"
+  ],
+  [
+   "R-SELF-TEXT",
+   "a comment's words read case-folded",
+   "MEASURED[pin] = /* One */ witness;",
+   "MEASURED[pin] = /* one */ witness;",
+   "/* One */",
+   "/* one */"
+  ],
+  [
+   "R-SELF-COMMENT-ORDER",
+   "a second JSDoc block between the same two tokens dropped",
+   "const f = /** a */ /** a */ (x: number) => x;",
+   "const f = /** a */ (x: number) => x;",
+   "/** a */ /** a */",
+   "/** a */"
+  ],
+  [
+   "R-SELF-COMMENT-ORDER",
+   "two line comments' order between the same two tokens",
+   "MEASURED[pin] = // one\n// other\nwitness;",
+   "MEASURED[pin] = // other\n// one\nwitness;",
+   "// one\n// other",
+   "// other\n// one"
+  ],
+  [
+   "R-SELF-COMMENT-ORDER",
+   "a line comment's place among the tokens",
+   "MEASURED[pin] // one\n= witness;",
+   "MEASURED[pin] = // one\nwitness;",
+   "// one\n= witness",
+   "= // one\nwitness"
+  ],
+  [
+   "R-SELF-COOKED",
+   "a string's quotes read by its value (single as double)",
+   "const s = 'case';",
+   "const s = \"case\";",
+   "'case'",
+   "\"case\""
+  ],
+  [
+   "R-SELF-COOKED",
+   "a string's escape read by its value (\\x41 as A)",
+   "const s = \"\\x41\";",
+   "const s = \"A\";",
+   "\\x41",
+   "A"
+  ],
+  [
+   "R-SELF-EDGE",
+   "a block comment's edge spaces trimmed",
+   "MEASURED[pin] = /* edge */ witness;",
+   "MEASURED[pin] = /*edge*/ witness;",
+   "/* edge */",
+   "/*edge*/"
+  ],
+  [
+   "R-SELF-EDGE",
+   "a string's edge space dropped",
+   "const s = \" edge\";",
+   "const s = \"edge\";",
+   "\" edge\"",
+   "\"edge\""
+  ],
+  [
+   "R-SELF-INNER-WS",
+   "a doubled space read as a tab",
+   "const s = \"an  edge\";",
+   "const s = \"an\tedge\";",
+   "\"an  edge\"",
+   "\"an\tedge\""
+  ],
+  [
+   "R-SELF-INNER-WS",
+   "a run of three spaces read as two",
+   "const s = \"no   case\";",
+   "const s = \"no  case\";",
+   "   ",
+   "  "
+  ],
+  [
+   "R-SELF-INNER-WS",
+   "a tab inside a string read as a space",
+   "const s = \"no\tcase\";",
+   "const s = \"no case\";",
+   "\t",
+   " "
+  ],
+  [
+   "R-SELF-INNER-WS",
+   "a line break inside a template read as a space",
+   "const s = `no\ncase`;",
+   "const s = `no case`;",
+   "`no\ncase`",
+   "`no case`"
+  ],
+  [
+   "R-SELF-INNER-WS",
+   "a single space between two words inside a string read as none (no control pairs one space against none)",
+   "const s = \"no case\";",
+   "const s = \"nocase\";",
+   "\"no case\"",
+   "\"nocase\""
+  ],
+  [
+   "R-SELF-OTHER-LAYOUT",
+   "a vertical tab between two tokens read as spelling",
+   "REACHED.push(\u000bendOf(pin));",
+   "REACHED.push( endOf(pin));",
+   "\u000b",
+   " "
+  ]
+ ],
+ "selfReadQuiet": [
+  {
+   "family": "R-SELF-SELECTIVE",
+   "member": "a doubled space read as one only after the word drift (by its neighbour)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-SELECTIVE",
+   "member": "a third block comment between the same two tokens dropped (a count past the two the count control holds)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-SELECTIVE",
+   "member": "a keyword merged into the name after it only after typeof (by its own text)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-FILE-ONLY",
+   "member": "a block comment dropped from this file's statements only",
+   "erased": true,
+   "controls": [
+    "a block comment between two tokens",
+    "a second block comment between the same two tokens",
+    "a block comment's place among the tokens"
+   ],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-OPERATOR",
+   "member": "<= read as <",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-OPERATOR",
+   "member": "!== read as ===",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a name read case-folded",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a keyword read as another (let as const)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a number read by its value (0x10 as 16)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a regex's flags dropped (u)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a comment's words read case-folded",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-COMMENT-ORDER",
+   "member": "a second JSDoc block between the same two tokens dropped",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-COMMENT-ORDER",
+   "member": "two line comments' order between the same two tokens",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-COMMENT-ORDER",
+   "member": "a line comment's place among the tokens",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-COOKED",
+   "member": "a string's quotes read by its value (single as double)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-COOKED",
+   "member": "a string's escape read by its value (\\x41 as A)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-EDGE",
+   "member": "a block comment's edge spaces trimmed",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-EDGE",
+   "member": "a string's edge space dropped",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-INNER-WS",
+   "member": "a doubled space read as a tab",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-INNER-WS",
+   "member": "a run of three spaces read as two",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-INNER-WS",
+   "member": "a tab inside a string read as a space",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-INNER-WS",
+   "member": "a line break inside a template read as a space",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-INNER-WS",
+   "member": "a single space between two words inside a string read as none (no control pairs one space against none)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-OTHER-LAYOUT",
+   "member": "a vertical tab between two tokens read as spelling",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  }
  ],
  "rows": [
   {
@@ -657,6 +1278,8 @@
        "computed root:true",
        "element access:true",
        "qualified name:true",
+       "nested qualified name:true",
+       "twice-nested qualified name:true",
        "object keys:true",
        "type members:true",
        "binding pattern:true",
@@ -681,11 +1304,15 @@
        "regex property escape:true",
        "regex named back-reference:true",
        "type name root:true",
+       "type name qualified root:true",
        "type query name root:true",
        "type query qualified root:true",
        "this root:true",
        "this type root:true",
        "regex identity escape:true",
+       "regex class escapes:true",
+       "regex assertions:true",
+       "regex control character escapes:true",
        "regex count quantifier:true",
        "regex range quantifier:true",
        "regex open quantifier:true"
@@ -699,6 +1326,8 @@
        "computed root: owner.epoch",
        "element access: record.owner.epoch",
        "qualified name: Owner.Epoch",
+       "nested qualified name: Rec.Owner.Epoch",
+       "twice-nested qualified name: A.Rec.Owner.Epoch",
        "object keys: owner.epoch",
        "type members: owner.epoch",
        "binding pattern: owner.epoch",
@@ -723,11 +1352,15 @@
        "regex property escape: /owner epoch/u",
        "regex named back-reference: /  <dot>. owner epoch/",
        "type name root: Owner.epoch",
+       "type name qualified root: rec.Owner.epoch",
        "type query name root: owner.epoch",
        "type query qualified root: record.owner.epoch",
        "this root: this.owner.epoch",
        "this type root: this.owner.epoch",
        "regex identity escape: /ownerEpoch/",
+       "regex class escapes: /owner epoch/ | /owner epoch/ | /owner epoch/ | /owner epoch/ | /owner epoch/ | /owner epoch/",
+       "regex assertions: /owner epoch/ | /owner epoch/",
+       "regex control character escapes: /owner epoch/ | /owner epoch/ | /owner epoch/ | /owner epoch/ | /owner epoch/",
        "regex count quantifier: /owner. epoch/",
        "regex range quantifier: /owner. epoch/",
        "regex open quantifier: /owner. epoch/"
@@ -772,7 +1405,13 @@
         0,
         0,
         0
-       ]
+       ],
+       "R-CHAIN-DEPTH": {
+        "property access": 2,
+        "element access": 2,
+        "qualified name": 3,
+        "indexed access type": 2
+       }
       }
      }
     },
@@ -1421,7 +2060,7 @@
   "records: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its end with its pinned assertion count"
  ],
  "reached": [
-  "judged:18",
+  "judged:21",
   "A1:12",
   "A2:17",
   "A3:8",
