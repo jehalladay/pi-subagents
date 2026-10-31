@@ -745,40 +745,59 @@ const ROWS: readonly Row[] = [
  * promise of a launcher, pinned by awaitedReturn), and its later assignment includes a destructuring assignment's default (an
  * assignment pattern binds nothing, pinned by assignedDefault).
  * FOLLOW-UP wb-w0a4 (the R694 follow-up of landing 681, wb-6njq; gate of record cmd_30025798cf3f, its PREP LEG-2 probes H11, H12,
- *  H21 and H22, the findings F1 and F2). Each new reading is pinned by kill controls at its code and bounded by a quiet one:
+ *  H21 and H22, the findings F1 and F2; cut #2 answers the cut #1 refusal's unmet U1-U6, its gate members GK1, GK2, GK4, GR1, GR2
+ *  and GR5 with their twins P-SAT, P-FIX, P-QUAL3, H-FILES, H-ARRSUB and H-NEACC, and eight further single-edit members of the same
+ *  claims, GK2b, GK2c, GK2d, GKX, GRS, GRN, GRO and GRA, each surviving the cut #1 bytes). Each new reading is pinned by kill controls at
+ *  its code and bounded by a quiet one:
  *  F1 launches: launcherAliasesOf also reads a destructuring element keyed by a computed key that holds a string literal or a
- *    template literal without substitutions, read through unwrapped's wrappers, as one keyed by that literal; and it binds the name
- *    an import-equals declaration declares to the entity name it names, read the way launcherOf reads an expression - a qualified
- *    name as a member, by its last name, an identifier by its own name or by the launcher an alias of it is bound to - to the same
- *    fixed point. An identifier there must name a namespace, and declaration merging gives a launcher's name one: a module
- *    augmentation declaring a namespace spawn in node:child_process makes `import run = spawn;` alias the real spawn (0 diagnostics
- *    under the repo tsconfig at the cut, where an unmerged `import run = spawn;` is TS2503). One naming an external module
- *    (`import x = require(...)`) is no alias this reading follows, and no module the repo's typing step admits (TS1202 under its
- *    ES2022 module target, measured at the cut). So the gate's H11 module (`import run = childProcess.spawn;`) and H12 module
- *    (`const { ["spawn"]: run } = childProcess;`), a chain of import-equals declarations through a shell, the augmented identifier
- *    alias (of spawn and of a renamed import of it), an identifier alias of a local function named spawn merged with a namespace
- *    (read by its own name; 0 diagnostics too), a template-literal key and a parenthesized `as const` key through a shell launch rf
- *    (C2), and import-equals aliases (of a member and of a namespace) and a computed literal key of no launcher stay quiet (C3
- *    otherKeys). Real src holds no import-equals declaration and no computed binding key (117 modules, read by an AST walk at the
- *    cut), so A4's two launch walks still agree.
- *  F2 echo guard: routesOf reads every object the parsed roster holds - any pin's witness, its own or another pin's (the gate's H21
- *    hands back pin A2's empty qa list inside A1's witness), and every other part of the roster - and, once the structured clone
- *    accepts a witness, refuses one that is not plain data (plainData) as "unplain": an accessor (the gate's H22, whose fourth read
- *    hands the equality the roster's own list), a proxy that an accessor the clone ran left in place, a function at a property the
- *    clone does not read (a non-enumerable or symbol-keyed own one), or an object whose prototype is not Object.prototype
- *    (Array.prototype for an array). plainData reads through the proxy test of node:util, captured at load as IS_PROXY, each
- *    object's prototype and its own property descriptors only, so no accessor and no trap runs at that read. vitest's equality read
- *    consults an asymmetricMatch of the received value before any other comparison, so a witness carrying one that answers true -
- *    own and non-enumerable, or inherited from a class prototype - compared equal to the roster's witness whatever it held (measured
- *    at the cut on vitest 4.1.10 against A1's witness, a nested files object of the wrong value included); both shapes read as
- *    unplain now. A witness routesOf accepts is plain data, so the message's and the equality's later reads run none of its own
- *    code and read the objects routesOf walked; the runner's message names what it refuses. The judged set pins H21, H22, the
- *    cloned view, the two matches and a part of the roster read beside its copy; IS_PROXY and plainData join the const runner
- *    bindings. Not claimed, as before: a helper patching a built-in or a library object a reader calls (now also
- *    Object.getPrototypeOf, Reflect.ownKeys and Object.getOwnPropertyDescriptor) or editing a runner table's contents, and a copy of
- *    a witness that holds none of the roster's own objects (R-INLINE-ECHO).
+ *    template literal without substitutions, read through unwrapped's wrappers (await, parentheses, a comma's right operand, a
+ *    non-null !, as, a <T> assertion and satisfies: one key chains all seven, as launcherTypeWrapped chains them at a call site), as
+ *    one keyed by that literal; and it binds the name an import-equals declaration declares to the entity name it names, read the
+ *    way launcherOf reads an expression - a qualified name as a member, by its last name, its qualifier an identifier or a qualified
+ *    name in turn (two and three levels pinned), an identifier by its own name or by the launcher an alias of it is bound to (an
+ *    import specifier's, a declaration's or another import-equals declaration's) - in the one fixed point the declarations reach,
+ *    so an import-equals alias feeds a declaration, a declaration's alias feeds an import-equals declaration, and an import-equals
+ *    declaration reads one declared after it. An identifier there must name a namespace, and declaration merging gives a name one: a module
+ *    augmentation declaring a namespace spawn in node:child_process makes `import run = spawn;` alias the real spawn, and a const
+ *    merged with an empty namespace of its own name is an entity an import-equals declaration names (0 diagnostics each under the
+ *    repo tsconfig, TS 6.0.3); `import run = spawn;` read in a program holding no augmenting module is TS2503 (an augmentation is
+ *    program-global: beside one, the same text reads 0 diagnostics). One naming an external module (`import x = require(...)`) is
+ *    no alias this reading follows, and no module the repo's typing step admits (TS1202 under its ES2022 module target). So the
+ *    gate's H11 module (`import run = childProcess.spawn;`) and H12 module (`const { ["spawn"]: run } = childProcess;`), a chain of
+ *    import-equals declarations through a shell, the augmented identifier alias (of spawn and of a renamed import of it), an
+ *    identifier alias of a local function named spawn merged with a namespace (read by its own name), a template-literal key, a
+ *    parenthesized `as const` key through a shell, the seven-wrapper key (GK1's kill), an import-equals alias a declaration reads
+ *    (the gate's P-FIX shape: GK2's and GK2c's kill), a const's alias an import-equals declaration reads through the namespace merged
+ *    with it (GK2b's kill), an import-equals alias of one declared after it (GK2d's kill, and GK2's, GK2b's and GK2c's) and a
+ *    three-level qualified name (the gate's P-QUAL3 shape: GK4's kill) launch rf (C2); and import-equals
+ *    aliases (of a member and of a namespace) and a computed literal key of no launcher stay quiet (C3 otherKeys), as does an
+ *    import-equals declaration naming an external module, read without failing the reading (C3 requiredModuleAlias: GKX's kill).
+ *    Real src holds no import-equals declaration and no computed binding key (117 modules, read by an AST walk at both cuts), so
+ *    A4's two launch walks still agree.
+ *  F2 echo guard: routesOf reads every object the parsed roster holds, an array or not - any pin's witness, its own or another
+ *    pin's (the gate's H21 hands back pin A2's empty qa list inside A1's witness; its H-FILES builds A1's witness anew around the
+ *    roster's own A1 files object, an object that is no array: GR1's kill), and every other part of the roster (its catalog list
+ *    and its wiring object, each read beside its copy) - and, once the structured clone accepts a witness, refuses one that is not
+ *    plain data (plainData) as "unplain": an accessor, enumerable or not (the gate's H22, whose fourth read hands the equality the
+ *    roster's own list; its H-NEACC, a non-enumerable one handing out a match: GR5's kill), a proxy that an accessor the clone ran
+ *    left in place (G11's shallow view of the roster's own list, and a view whose every trap throws), a function at a property the
+ *    clone does not read (a non-enumerable own one on an object, and on an array: GRA's kill; a symbol-keyed one: GRS's kill), or an
+ *    object whose prototype is not Object.prototype, or Array.prototype for an array (a class instance; the gate's H-ARRSUB Array
+ *    subclass: GR2's kill; a null prototype: GRN's kill). plainData reads through the proxy test of node:util, captured at load as
+ *    IS_PROXY, then each object's prototype and its own property descriptors, the proxy test first, so no accessor and no trap runs
+ *    at that read (the throwing view: GRO's kill). vitest's equality read consults an asymmetricMatch of the received value before
+ *    any other comparison, so a witness carrying one that answers true compared equal to A1's witness whatever it held, measured on
+ *    vitest 4.1.10: a non-enumerable own one on a files object of the wrong value and one inherited from a class prototype (cut #1);
+ *    one a non-enumerable accessor hands out on a files object of the wrong value, one inherited from an Array subclass and a
+ *    non-enumerable own one on an array, each array holding a wrong entry (cut #2); each of these shapes reads as unplain now. A
+ *    witness routesOf accepts is plain data, so the message's and the equality's later reads run none of its own code and read the
+ *    objects routesOf walked; the runner's message names what it refuses. The judged set pins every shape named here; IS_PROXY and
+ *    plainData join the const runner bindings. Not claimed, as before: a helper patching a built-in or a library object a reader
+ *    calls (now also Object.getPrototypeOf, Reflect.ownKeys and Object.getOwnPropertyDescriptor) or editing a runner table's
+ *    contents, and a copy of a witness that holds none of the roster's own objects (R-INLINE-ECHO).
  *  LINE DISCIPLINE: :3, :9 and :614 here and :222 in the roster stay byte-identical and in place: the node:util import enters at
- *    :103 and the blank line after the scratch guard leaves, so only lines 103-116 move, and every line from :117 on stays put.
+ *    :103 and the blank line after the scratch guard leaves, so only lines 103-116 move and lines 117-614 stay put; both cuts edit
+ *    nothing else above :614 here, and nothing above :222 in the roster but its comment line, in place.
  * RESIDUALS (wb-w0a4; quiet rows in C3): R-COMPUTED-LAUNCHER's key held in a variable includes a destructuring element's computed
  * key (pinned by variableKey), and R-PASSED-LAUNCHER's object property includes a namespace's exported import-equals alias called
  * as its member (pinned by namespaceAlias).
@@ -1433,6 +1452,60 @@ class AnswersEveryMatch {
   }
 }
 const prototypeMatcherFor = (): unknown => new AnswersEveryMatch();
+/** wb-w0a4 F2 cut #2, the gate's H-FILES route: a helper handing back A1's witness built anew around the parsed roster's own files
+ * object of it - an object of the roster that is no array. */
+const ownFilesFor = (pin: string): JsonValue => {
+  const own = rosterWitness(pin) as { files: JsonValue };
+  return { files: own.files, groupWord: true, sites: [] };
+};
+/** wb-w0a4 F2 cut #2, the gate's H-ARRSUB: an Array subclass whose prototype carries an asymmetric match answering true. */
+class MatchesEveryList extends Array<string> {
+  asymmetricMatch(): boolean {
+    return true;
+  }
+}
+const arraySubclassMatcherFor = (): unknown => {
+  const sites = new MatchesEveryList();
+  sites.push("wrong");
+  return { files: { floor: true, allTs: true }, groupWord: true, sites };
+};
+/** wb-w0a4 F2 cut #2, the gate's H-NEACC: the asymmetric match handed out by a non-enumerable own accessor (neither the clone nor
+ * the walk runs it), on a files object of the wrong value. */
+const hiddenAccessorMatcherFor = (): JsonValue => ({
+  files: Object.defineProperty({ floor: false, allTs: false }, "asymmetricMatch", { get: (): (() => boolean) => (): boolean => true }),
+  groupWord: true,
+  sites: [],
+});
+/** wb-w0a4 F2 cut #2: the asymmetric match as a non-enumerable own property of an array (the clone and the walk read an array's
+ * enumerable properties only), the site list holding a wrong entry. */
+const hiddenArrayMatcherFor = (): JsonValue => ({
+  files: { floor: true, allTs: true },
+  groupWord: true,
+  sites: Object.defineProperty(["wrong"], "asymmetricMatch", { value: (): boolean => true }),
+});
+/** wb-w0a4 F2 cut #2: a function at a symbol-keyed own property (the clone reads no symbol-keyed property), beside a whole A1 witness. */
+const MATCH_KEY = Symbol("asymmetricMatch");
+const symbolFunctionFor = (): unknown => ({ files: { floor: true, allTs: true }, groupWord: true, sites: [], [MATCH_KEY]: (): boolean => true });
+/** wb-w0a4 F2 cut #2: a whole A1 witness on an object whose prototype is null. */
+const nullPrototypeFor = (): unknown => Object.assign(Object.create(null) as object, { files: { floor: true, allTs: true }, groupWord: true, sites: [] });
+/** wb-w0a4 F2 cut #2: every trap of a view throws, so a read of the view that runs one fails. */
+const trapRan = (): never => {
+  throw new Error("a trap of the view ran");
+};
+const THROWING_TRAPS: ProxyHandler<object> = { getPrototypeOf: trapRan, ownKeys: trapRan, getOwnPropertyDescriptor: trapRan, get: trapRan, has: trapRan };
+/** wb-w0a4 F2 cut #2: an accessor the structured clone runs once: it hands the clone a fresh empty list and leaves in its own place a
+ * data property holding a view whose every trap throws. */
+const trappedViewFor = (): JsonValue => {
+  const witness: JsonObject = { files: { floor: true, allTs: true }, groupWord: true };
+  return Object.defineProperty(witness, "sites", {
+    enumerable: true,
+    configurable: true,
+    get: (): JsonValue => {
+      Object.defineProperty(witness, "sites", { value: new Proxy<object>([], THROWING_TRAPS), enumerable: true, writable: true, configurable: true });
+      return [];
+    },
+  });
+};
 /** The echo guard's controls, run only by the judged set's identity reading (each hands back pin A1's witness, or a value the
  * equality read takes for it): the gate's P17 echo (three padding assertions, the witness handed back from the roster), an echo
  * through the parsed roster and one through the
@@ -1440,7 +1513,8 @@ const prototypeMatcherFor = (): unknown => new AnswersEveryMatch();
  * echo whose own toString disguises its source, E24 (the witness handed back through a helper, the source naming no reader) and a
  * shallow copy of it; R-INLINE-ECHO, the P17 echo with its witness copied inline; and wb-6njq F2's views of the witness through a
  * helper: the gate's G11b deep view, G11's shallow view and a shallow view over a deep copy; wb-w0a4 F2's H21 and H22 routes, the
- * accessor the clone runs once and the two asymmetric matches. */
+ * accessor the clone runs once and the two asymmetric matches; and its cut #2 shapes: the gate's H-FILES route, its H-ARRSUB and
+ * H-NEACC matches, a hidden match on an array, a symbol-keyed function, a null prototype and a view whose every trap throws. */
 const ECHOES: Readonly<Record<string, () => Promise<JsonValue>>> = {
   rosterRowsEcho: async () => ROSTER.rows[0]?.pins[0]?.witness ?? null,
   rereadEcho: async () => readRoster().rows[0]?.pins[0]?.witness ?? null,
@@ -1485,6 +1559,21 @@ const ECHOES: Readonly<Record<string, () => Promise<JsonValue>>> = {
   clonedViewEcho: async () => clonedViewFor("A1"),
   hiddenMatcherEcho: async () => hiddenMatcherFor(),
   prototypeMatcherEcho: async () => prototypeMatcherFor() as JsonValue,
+  // wb-w0a4 F2 cut #2: the gate's H-FILES route (A1's padded case handing back the roster's own files object, an object that is no
+  // array), its H-ARRSUB and H-NEACC matches, a hidden match on an array, a symbol-keyed function, a null prototype and a view whose
+  // every trap throws.
+  filesObjectEcho: async () => {
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    return ownFilesFor("A1");
+  },
+  arraySubclassMatcherEcho: async () => arraySubclassMatcherFor() as JsonValue,
+  hiddenAccessorMatcherEcho: async () => hiddenAccessorMatcherFor(),
+  hiddenArrayMatcherEcho: async () => hiddenArrayMatcherFor(),
+  symbolFunctionEcho: async () => symbolFunctionFor() as JsonValue,
+  nullPrototypeEcho: async () => nullPrototypeFor() as JsonValue,
+  trappedViewEcho: async () => trappedViewFor(),
 };
 /** wb-tnig F3: the evaluated-text echo controls, as source texts whose evaluator is composed from its name at runtime, so this file
  * runs no evaluated text and spells no evaluator call: the gate's E22 (a direct call composing the reader's name), the Function
@@ -1844,6 +1933,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       literalKeyLauncher: wired({ "src/workbench/providers/h12-literal-computed-key.ts": 'import * as childProcess from "node:child_process";\nconst { ["spawn"]: run } = childProcess;\nexport const h12 = (argv: string[]) => run("rf", argv);\n' }),
       templateKeyLauncher: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nconst { [`spawn`]: run } = childProcess;\nexport const again = (argv: string[]) => run("rf", argv);\n' }),
       wrappedKeyShell: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nconst { [("spawn" as const)]: run } = childProcess;\nexport const again = () => run("sh", ["-c", "rf context render --no-commit"]);\n' }),
+      // wb-w0a4 F1 cut #2 (the cut #1 refusal's U1-U3): a computed key through all seven of unwrapped's wrappers in one chain (GK1's
+      // kill), an import-equals alias a declaration reads (the gate's P-FIX shape: GK2's and GK2c's kill), a const's alias an
+      // import-equals declaration reads through the namespace merged with it (GK2b's kill), an import-equals alias of one declared
+      // after it (GK2d's kill, and GK2's, GK2b's and GK2c's) and a three-level qualified name (the gate's P-QUAL3 shape: GK4's kill)
+      // launch rf as the launcher itself does.
+      chainedKeyLauncher: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nconst { [await (void 0, (<"spawn">("spawn" satisfies "spawn") as "spawn")!)]: run } = childProcess;\nexport const again = (argv: string[]) => run("rf", argv);\n' }),
+      importAliasFedDeclaration: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nimport run = childProcess.spawn;\nconst go = run;\nexport const again = (argv: string[]) => go("rf", argv);\n' }),
+      declarationFedImportAlias: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nconst launch = childProcess.spawn;\nnamespace launch {}\nimport run = launch;\nexport const again = (argv: string[]) => run("rf", argv);\n' }),
+      laterImportAliasChain: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\ndeclare module "node:child_process" {\n  namespace spawn {}\n}\nimport run = first;\nimport first = childProcess.spawn;\nexport const again = (argv: string[]) => run("rf", argv);\n' }),
+      threeLevelImportAlias: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nnamespace tools {\n  export import processes = childProcess;\n}\nimport run = tools.processes.spawn;\nexport const again = (argv: string[]) => run("rf", argv);\n' }),
     };
     // An orchestrator wired in brings its own environment reads into the launch closure (the agent runner's session directory and
     // the agent directory's variable), so F4 reads them beside it.
@@ -1866,6 +1965,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       parameterDefaultLauncher: ["launches"], awaitedLauncher: ["launches"], awaitedAlias: ["launches"], awaitedLoader: ["orchestrator", "env-read"],
       importAliasLauncher: ["launches"], importAliasChainShell: ["launches", "wrapped"], augmentedAliasLauncher: ["launches"], augmentedRenamedAlias: ["launches"],
       mergedLocalAlias: ["launches"], literalKeyLauncher: ["launches"], templateKeyLauncher: ["launches"], wrappedKeyShell: ["launches", "wrapped"],
+      chainedKeyLauncher: ["launches"], importAliasFedDeclaration: ["launches"], declarationFedImportAlias: ["launches"], threeLevelImportAlias: ["launches"],
+      laterImportAliasChain: ["launches"],
     });
     return witness;
   },
@@ -1924,6 +2025,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       otherKeys: wired({ [SECOND_MODULE]: 'import * as fs from "node:fs";\nimport read = fs.readFileSync;\nimport files = fs;\nconst { ["statSync"]: stat } = fs;\nexport const first = () => read("rf");\nexport const second = () => stat("rf");\nexport const third = () => files.lstatSync("rf");\n' }),
       variableKey: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nconst method = "spawn";\nconst { [method]: run } = childProcess;\nexport const again = (argv: string[]) => run("rf", argv);\n' }),
       namespaceAlias: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nexport namespace launchers {\n  export import run = childProcess.spawn;\n}\nexport const again = (argv: string[]) => launchers.run("rf", argv);\n' }),
+      // wb-w0a4 cut #2: an import-equals declaration naming an external module is no alias the reading follows, and reading one
+      // leaves the reading whole (GKX's kill).
+      requiredModuleAlias: wired({ [SECOND_MODULE]: 'import processes = require("node:child_process");\nexport const again = () => processes.execFileSync("git", ["status", "--porcelain"]);\n' }),
     };
     expect(Object.values(witness)).toEqual(Object.keys(witness).map(() => []));
     return witness;
@@ -1962,6 +2066,8 @@ describe("wb-tz4r.5 RI observation authority census (RI-UNIFIED-DECISION-INFEREN
       rosterRowsEcho: ["reads-roster"], rereadEcho: ["reads-roster"], rosterEcho: ["reads-roster"], boundEcho: ["native-source"],
       disguisedEcho: ["reads-roster"], helperEcho: [], copiedEcho: [], "R-INLINE-ECHO": [], deepViewEcho: [], shallowViewEcho: [], copyViewEcho: [],
       crossPinEcho: [], accessorEcho: [], clonedViewEcho: [], hiddenMatcherEcho: [], prototypeMatcherEcho: [],
+      filesObjectEcho: [], arraySubclassMatcherEcho: [], hiddenAccessorMatcherEcho: [], hiddenArrayMatcherEcho: [], symbolFunctionEcho: [],
+      nullPrototypeEcho: [], trappedViewEcho: [],
     });
     expect(Object.fromEntries(Object.entries(EVALUATED_ECHOES).map(([name, text]) => [name, echoReasonsOf(text())]))).toStrictEqual({
       composedReader: ["evaluated-text"], constructedFunction: ["evaluated-text"], quietString: [],
@@ -1975,17 +2081,23 @@ describe("wb-tz4r.5 RI observation authority census (RI-UNIFIED-DECISION-INFEREN
     // E24's helper echo and its shallow copy included, while the roster read anew and R-INLINE-ECHO hand back whole copies; and
     // (wb-6njq F2) each view - the gate's G11b deep view, G11's shallow one and the view over a copy - is a proxy the structured
     // clone algorithm refuses; (wb-w0a4 F2) another pin's roster object reads as a roster object (the gate's H21), and the gate's
-    // H22 accessor, the view an accessor leaves in place after the clone and both asymmetric matches read as unplain.
+    // H22 accessor, the view an accessor leaves in place after the clone and both asymmetric matches read as unplain; (cut #2) a roster
+    // object that is no array reads as one too (the gate's H-FILES), and a non-enumerable accessor's match (H-NEACC), an Array
+    // subclass's (H-ARRSUB), a hidden match on an array, a symbol-keyed function, a null prototype and a view whose every trap
+    // throws read as unplain, no trap of the view run.
     const handedBack: JsonObject = {};
     for (const [name, echo] of Object.entries(ECHOES)) handedBack[name] = routesOf(await echo());
     expect(handedBack).toStrictEqual({
       rosterRowsEcho: ["roster-object"], rereadEcho: [], rosterEcho: ["roster-object"], boundEcho: ["roster-object"], disguisedEcho: ["roster-object"],
       helperEcho: ["roster-object"], copiedEcho: ["roster-object"], "R-INLINE-ECHO": [], deepViewEcho: ["uncloneable"], shallowViewEcho: ["uncloneable"],
       copyViewEcho: ["uncloneable"], crossPinEcho: ["roster-object"], accessorEcho: ["unplain"], clonedViewEcho: ["unplain"], hiddenMatcherEcho: ["unplain"],
-      prototypeMatcherEcho: ["unplain"],
+      prototypeMatcherEcho: ["unplain"], filesObjectEcho: ["roster-object"], arraySubclassMatcherEcho: ["unplain"], hiddenAccessorMatcherEcho: ["unplain"],
+      hiddenArrayMatcherEcho: ["unplain"], symbolFunctionEcho: ["unplain"], nullPrototypeEcho: ["unplain"], trappedViewEcho: ["unplain"],
     });
-    // wb-w0a4 F2: any other part of the parsed roster reads as one of its objects too - its catalog list, beside a copy of it.
+    // wb-w0a4 F2: any other part of the parsed roster reads as one of its objects too - its catalog list, beside a copy of it; and
+    // (cut #2) its wiring object, an object that is no array, beside a copy of it.
     expect([routesOf({ catalogs: ROSTER.knownCatalogs }), routesOf({ catalogs: [...ROSTER.knownCatalogs] })]).toStrictEqual([["roster-object"], []]);
+    expect([routesOf({ wiring: ROSTER.wiring }), routesOf({ wiring: { ...ROSTER.wiring } })]).toStrictEqual([["roster-object"], []]);
   });
 
   it("the outside anchor: the owner filing's export row holds the three clauses, the three spellings and every pin's own words", () => {
