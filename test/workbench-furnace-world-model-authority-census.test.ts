@@ -27,6 +27,31 @@
  * RE-MEASURED by the respin seat ws-03 (run g10-work-s133) on trunk b3d410f: no src path changed since 5fbe25e (117 .ts
  * modules, 57 of them under src/workbench), the release is unchanged (128 files), and the seam reader (O) lists the same
  * seven Client seams the earlier export-modifier reading listed, each a top-level declaration carrying the export modifier.
+ * RE-MEASURED by the follow-up seat ws-02 (run g10-work-s145, wb-a7ud: landing 666's F1-F3) on trunk 71b2807: the same 117
+ * .ts modules under src (57 under src/workbench), no file under src with another extension, the release unchanged (128
+ * files); landing 666's survivors replayed on the landed bytes - an observation.ts relate() that nests a hypothesis
+ * relation sourced as furnace (FS6), a Z1 walk that reads stems only for paths starting world-model- (GH1) or only each
+ * module's first 400 characters (GH2), and a src identifier spelling world model with a Cyrillic o (GZ4) - each kept the
+ * census 17 passed (17); this cut adds ROLL-UP (C1), BESIDE (Z1) and CONFUSABLES (Q3) for them.
+ * RE-MEASURED by the respin seat ws-02 (run g10-work-s151, wb-a7ud refusal #1's U1 and U2 with its riders F1 and F2) on
+ * trunk c947b21: the same 117 .ts modules under src (57 under src/workbench) in 6 directories, the release unchanged (128
+ * files in 9 directories, 16 classes of a directory with an extension); refusal #1's walks G-W1 (no stems under
+ * src/workbench/), G-W2 (src/workbench/providers/ never visited) and G-W3 (no stems under the release's dist/), with or
+ * without a module naming a record in the skipped directory, its node stores G-F1d (a hypothesis from an unheld record ref
+ * onto a held node stores a node for the record ref) and G-F1e2 (a hypothesis between two held nodes stores a prediction
+ * node), and its ordering survivors G-F1f and G-F1f2 (a snapshot refreshed after a hypothesis onto its key takes a success
+ * tone) each kept the census 17 passed (17); this cut adds BESIDE's class plants (Z1), LISTING and ORDER (C1) for them.
+ * RE-MEASURED by the respin seat ws-01 (run g10-work-s158, wb-a7ud refusal #2's U1 with its rider F1, under the rule-19
+ * second-stage cap R-B153) on trunk 7290d91: the same 117 .ts modules under src (57 under src/workbench) in 6 directories,
+ * no file under src with another extension, the release unchanged (128 files in 9 directories, 16 classes); refusal #2's
+ * walks G6-W5 (no release README.md, the only module of its class), G6-W5p (no release package.json, the same) and G6-W6
+ * (no release module under the path prefix dist/contract/executors/e, three whole classes), with or without the skipped
+ * file naming a record, and its rider's walks G6-W4 (identifiers and private names alone under src/workbench) and G6-W7
+ * (the first 2000 characters alone under src/workbench), with or without a src/workbench module spelling a record where
+ * that walk does not read, each kept the census 17 passed (17), as did the last 2000 characters alone under src/workflow,
+ * the first 2000 alone under the release's dist and the last 2000 alone under its contract/registry; this cut adds EVERY
+ * and BESIDE's class plants of every channel (Z1) for them, and names under NOT CLAIMED the walks it measured that keep
+ * the census green (no stems, or identifiers and private names alone, for the modules a file-name mark picks).
  * Pi's Beads and Furnace readers take their native clients as parameters, the seams this census drives: the Beads work reader
  * (src/workbench/beads-observer.ts,
  * seam BeadsReadClient: show) and the program readiness reader (src/workbench/beads-program-readiness.ts, seam
@@ -71,8 +96,23 @@
  *    record-free baseline". C1 a projection fed only predicted records (every record stated as hypothesis relations onto the
  *    work, run and attempt refs, the projection's only channel for a model statement) holds no node, as the record-free empty
  *    projection holds none, and the same statements added to the natively populated projection leave every node
- *    byte-identical; C2 the Beads work reading, its projection, the projected work node and the program readiness answer are
- *    byte-identical (JSON text) to the baseline's under every record in every Beads placement; C3 the run reading, its
+ *    byte-identical; ROLL-UP: every record stated between the native refs themselves (a hypothesis relation for each
+ *    ordered pair of two different refs among the work, run and attempt refs, under each authority's name as its source:
+ *    CROSS_SOURCES), onto the projection holding only the native snapshots and onto the natively populated one (under C1's
+ *    statements too), leaves each native node's bytes, its aggregate() roll-up and its parent and dependency views (query
+ *    by parent, by dependency) as the statement-free projection read them. The roll-up is compared without the aggregate's
+ *    two change counters (revision, topologyRevision), which relate() moves for every accepted statement, a hypothesis one
+ *    included; the witness pins that they moved. The populated run's natively owned attempt (the run's direct children 1,
+ *    where only the snapshots are held 0) is the roll-up's own non-vacuity. LISTING: each projection's full node listing
+ *    (query by scope, with stats().nodes) - the populated one's before C1's statements, after them and after ROLL-UP's, and
+ *    the snapshots-only one's before and after ROLL-UP's - stays byte-identical at 3 nodes (the work, run and attempt
+ *    nodes), so a statement C1 makes that stores a node of its own (for a record's ref, or a prediction between two held
+ *    nodes) reds. ORDER: the same 45 statements made BEFORE the native snapshots and relations, onto a fourth projection,
+ *    and the populated projection's native snapshots refreshed again after all of its statements (each refresh applied)
+ *    leave each projection's node listing and each native node's ROLL-UP surfaces as the statement-free populated
+ *    projection read them, so a refresh that reads a hypothesis already stated onto its key reds; C2 the Beads work
+ *    reading, its projection, the projected work node and the program readiness answer are byte-identical (JSON text) to
+ *    the baseline's under every record in every Beads placement; C3 the run reading, its
  *    topology and the projected run and attempt nodes are byte-identical under every record in every Furnace placement (the
  *    reader's clock fixed); C4 the comparison is live: the baseline is a real native reading, each native change (the blocker
  *    closed, the work closed, the attempt succeeded, the run completed) is a byte difference the same comparison reports,
@@ -87,8 +127,26 @@
  *    is no reader), with floors on the modules the walk read. The walk that reads the tree reads Z1's plants in the same
  *    call: a planted spelling of each stem is found as an identifier, a private name, a string, a template, a
  *    regular-expression literal and a regular expression whose every character is escaped (in each of the three forms) by
- *    the src arm, and inside a comment by the release arm. ARMED: when a release file or the code of a .ts module under src
- *    names one, Z1 reds: the reader that arrives joins the spies of A, B and C before the census is re-measured.
+ *    the src arm, and inside a comment by the release arm. BESIDE: each channel plant's path sits under its arm's own root
+ *    (src, the release's directory) beside the tree's modules, and the head and tail channels put the src arm's identifier
+ *    and the release arm's comment before and after the whole text of the longest module that arm reads; every class of
+ *    module the tree's listing hands an arm (a module's own directory with its extension, the file name from its first dot:
+ *    src 6 classes, the release 16 at c947b21 and at 7290d91, each arm held to a floor, CLASS_FLOORS) holds, in that
+ *    directory with that extension, one class plant per stem for each of the arm's channels (the src arm's eight code
+ *    channels and its head and tail, the release arm's comment and its head and tail; a class's head and tail plants put
+ *    the arm's plant before and after the whole text of the longest module of that class), and the witness lists by arm
+ *    every class whose plants the walk did not read as their stems (none). A class plant carries its class's directory and
+ *    extension but no file name of the class's modules: so a walk that picks the modules of one class by a mark its plants
+ *    carry - the directory (by its path, or by a path prefix that stops short of the file names: src/workbench, src/work,
+ *    src/workbench/providers, the release's dist or any other) or the extension - and reads none of them, computes no stems
+ *    for them, reads only some of the src arm's eight code channels in them, or reads only each one's first or last
+ *    characters, loses those plants' readings too. EVERY: the witness lists by arm every module the walk was handed (the
+ *    tree's modules and the plants) that it handed back no reading of (none), so a walk that skips a module it is handed,
+ *    picked by any mark - a file name (the release's README.md or package.json, each the only module of its class), a path
+ *    prefix that ends inside the file names (the release's dist/contract/executors/e, three whole classes) or any other -
+ *    reds as well.
+ *    ARMED: when a release file or the code of a .ts module under src names one, Z1 reds: the reader that arrives joins the
+ *    spies of A, B and C before the census is re-measured.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  * pins, every pin's quote and subjects, the constants and every pin's witness - is held to the out-of-file roster
@@ -119,8 +177,10 @@
  * attempt's own log lines (redacted, bounded), so a record inside that record, or printed by the executor, rides as Furnace's
  * payload or the attempt's output, from which Pi derives no state (Q2); R-VOCABULARY a record family named in other words, or
  * a regular expression that matches a record name without spelling it (a wildcard, a character class, an alternation, an
- * escape other than \x, \u and \u{}), is not read by Z1's fold: each such plant, read by the walk under both arms, stays
- * quiet under both (Q3); R-UNPLANTED-KEY the
+ * escape other than \x, \u and \u{}), or a name spelled with a letter of another script that looks like its Latin letter
+ * (CONFUSABLES: NFKC keeps such a letter and the fold then drops it), is not read by Z1's fold: each such plant, read by the
+ * walk under both arms, stays quiet under both, while each confusable's twin, the same letter in its fullwidth form, which
+ * NFKC folds to the Latin letter, is read under both as its stem (Q3); R-UNPLANTED-KEY the
  * plants use PLANT_KEYS and the records' own fields, so a reader keyed to any
  * other member name is not exercised: a leaking reader keyed to "forecast" stays quiet under every plant and is caught once a
  * plant spells the key (Q4); R-UNNAMED-SEAM the seam roster lists only what the seam reader reads (O), so a reader whose client
@@ -144,25 +204,56 @@
  * (C3's quote into C2's as "leaves Beads work nodes and run/attempt supervision state", or A2's into A1's as row A's whole
  * label), its case dropped and any seam only it named moved to the neighbour, since no outside anchor binds the
  * acceptance's partition into rows or a label's into pins; a plant placement, plant key, planted spelling, Z1 channel, seam
- * plant form, residual seam kind or record field removed from its table and the roster together (no outside anchor names
- * the placements, spellings, channels, forms or kinds; the record names are anchored to the title); a floor lowered with
- * the roster; a residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside anchor
- * names the residual families).
+ * plant form, residual seam kind, cross source or record field removed from its table and the roster together (no outside
+ * anchor names the placements, spellings, channels, forms, kinds or sources; the record names are anchored to the title); a
+ * floor lowered with the roster; a residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside
+ * anchor names the residual families); a walk that tells Z1's plants from the tree's modules by any other mark and computes
+ * stems for the plants alone while it hands back a reading of every module (so EVERY holds) - a path segment such as the
+ * plants' own directory or file name, a plant's place in the call, a text only plants carry, or a reading of only part of a
+ * long module other than its first characters alone or its last characters alone (its head and its tail together, skipping
+ * the middle): BESIDE removes a directory, a path prefix that stops short of the file names, an extension, a module's head
+ * and a module's tail as such marks, not every mark a walk could read; a walk that hands back a reading of every module but
+ * computes no stems for, reads only some of the src arm's code channels in, or reads only the first or last characters of
+ * the modules it picks by a mark the class plants do not carry (a file name, a path prefix that ends inside the file names,
+ * or a size or a text the class plants do not share), whether those are all of one class's modules or some of them: a class
+ * plant shows that its class's directory and extension are read, not that each module of the class is (measured: no stems
+ * for the release README.md, the only module of its class, keeps the census 17 passed (17), and so does no stems for the
+ * release modules under the path prefix dist/contract/executors/e, three whole classes; with README.md or
+ * exception_battery.d.ts naming a record, each the longest module of its class, the census reds Z1 through classesUnread,
+ * because that class's head and tail plants carry the module's text; identifiers and private names alone for the src
+ * modules whose file name starts furnace- keeps 17 passed (17), also with a src/workbench/furnace-* module whose only
+ * spelling is a string literal, which alone reds Z1; no stems for the src modules whose file name starts furnace- keeps 17
+ * passed (17), also with a src/workbench/furnace-* module naming a record, which alone reds Z1); and a module the tree's
+ * listing never hands the walk (the listing narrowed before the walk): the
+ * walk never reads it, and a class the listing drops whole holds no plant, so the floors and O's seam roster, which reads
+ * the same listing, are its only guards (measured: a listing without src/workbench/providers reds O; one without src/ui
+ * and one without the release's contract/registry each keep 17 passed (17), the first also with a src/ui module naming
+ * a record, which alone reds Z1).
  * SCOPE: the census judges the readers Pi has, through their seams; a host that binds a seam (the open wb-752.12 bd client)
  * is not judged until it lands, when its launch argv is the frozen argv A2 maps each call to (and wb-kku9.3's census already
  * holds the work reader's seam to show alone). The furnace-hosted execution host (FurnaceHostedClient, runs.start on an
  * operator's request) is no reader and is not driven (SCOPED_SEAMS). The log evidence reader's content is the attempt's log
  * text, never supervision state, so C3 does not compare it (B1 holds its reads, Q2 its relay). The projection core cannot tell a
- * reader that states a prediction as a snapshot or an ownership relation: Z1 holds that no such reader exists, C1 holds the
- * hypothesis channel. Z1's src arm reads a string literal whatever it says, so a src message or label that cites the program
- * by name (a bead tag inside a string) reds Z1 as an arriving reader would, and is re-measured the same way. tsconfig.json
- * compiles the .ts files under src, so Z1's src arm and the seam reader read .ts modules only; a file under src with any other
- * extension is not read (none exists at b3d410f).
+ * reader that states a prediction as a snapshot or an ownership relation: Z1 holds that no such reader exists. C1 holds the
+ * hypothesis channel as far as it reads it: under the statements C1 makes (onto the work, run and attempt refs from the
+ * records' own refs, and ROLL-UP's between two different ones of those refs; none from a ref onto itself, so a hypothesis
+ * from a held ref onto itself that stores a node of its own keeps the census 17 passed (17), measured), made after the
+ * native snapshots and, in ORDER, before them and before a second refresh of them, it reads each projection's full node
+ * listing (the predicted-only projection's against the empty one's, LISTING's against each projection's own statement-free
+ * listing, ORDER's against the statement-free populated one's) and each native node's bytes, aggregate() roll-up (its two
+ * change counters aside) and parent and dependency views; the projection's other read surfaces (the relation listing,
+ * which lists every accepted statement as a hypothesis edge by design, the event log, the invocation viewports and the
+ * edge and aggregate counters) are not compared, and no other order is made (statements interleaved between the snapshots,
+ * or a snapshot of another state refreshed after them). Z1's src arm reads a string literal whatever it says, so a src
+ * message or label that cites the program by name (a bead tag inside a string) reds Z1 as an arriving reader would, and is
+ * re-measured the same way. tsconfig.json compiles the .ts files under src, so Z1's src arm and the seam reader read .ts
+ * modules only; a file under src with any other extension is not read (none exists at b3d410f, at 71b2807, at c947b21 or
+ * at 7290d91).
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, the installed release and .beads are only read.
  */
 import { readdirSync, readFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it, vi } from "vitest";
@@ -214,6 +305,9 @@ const STEMS = ["observedtransition", "counterfactual", "syntheticattempt", "worl
 /** The src modules Z1 walks (116 at the first cut, 117 since 5fbe25e) and the release files (128): floors, not exact sets. */
 const SRC_FLOOR = 100;
 const SDK_FLOOR = 100;
+/** The floors on the classes BESIDE plants (a module's directory and extension each; at c947b21 and at 7290d91 src has 6, the
+ * release 16). */
+const CLASS_FLOORS = { src: 5, sdk: 12 } as const;
 /** Each case's timeout: the seam reader builds a checker program over every src module, about a second on an idle host. */
 const CASE_TIMEOUT_MS = 60_000;
 /** Exported seams of src/workbench this census does not drive, each with its reason. */
@@ -596,6 +690,55 @@ function predictedStatements() {
     })),
   );
 }
+/** The sources a ROLL-UP statement is made under: each authority's own name. */
+const CROSS_SOURCES = ["furnace", "beads"] as const;
+/** ROLL-UP's statements: each record stated as a hypothesis relation between the native refs themselves, one for every
+ * ordered pair of the work, run and attempt refs under each name in CROSS_SOURCES. Two statements that differ only in
+ * their record are one edge (an edge is its ends, its kind and its source). */
+function crossStatements() {
+  const refs = [workRef, runRef, attemptRef];
+  return RECORDS.flatMap(({ name }) =>
+    refs.flatMap(from =>
+      refs
+        .filter(to => to !== from)
+        .flatMap(to =>
+          CROSS_SOURCES.map(source => ({
+            scope: SCOPE,
+            from,
+            to,
+            kind: "hypothesis" as const,
+            provenance: { source, observedAt: STAMP, nativeConfirmationRef: `model:${name}` },
+          })),
+        ),
+    ),
+  );
+}
+/** ROLL-UP's reading of the work, run and attempt nodes: each node's bytes, its aggregate() roll-up and the keys of its
+ * parent and dependency views, as JSON text, and apart from them the aggregate's two change counters, which relate() moves
+ * for every accepted statement, a hypothesis one included. */
+function rollUpsOf(projection: ObservationProjection): { readonly surfaces: string; readonly counters: string } {
+  const read = [workRef, runRef, attemptRef].map(ref => {
+    const nodes = nodeOf(projection, ref);
+    const key = nodes[0]?.key;
+    const aggregate = key === undefined ? undefined : projection.aggregate({ scope: SCOPE, key });
+    const children = projection.query({ scope: SCOPE, parent: ref, limit: 100 }).nodes.map(node => node.key);
+    const dependencies = projection.query({ scope: SCOPE, dependency: ref, limit: 100 }).nodes.map(node => node.key);
+    if (aggregate === undefined) return { surfaces: { nodes, rollUp: null, children, dependencies }, counters: null };
+    const { revision, topologyRevision, ...rollUp } = aggregate;
+    return { surfaces: { nodes, rollUp, children, dependencies }, counters: [revision, topologyRevision] };
+  });
+  return { surfaces: JSON.stringify(read.map(entry => entry.surfaces)), counters: JSON.stringify(read.map(entry => entry.counters)) };
+}
+/** A projection's full node listing (query by scope) as JSON text, with its node count (stats().nodes): LISTING's and
+ * ORDER's reading of every node the projection holds, native or not. */
+function listingOf(projection: ObservationProjection): { readonly bytes: string; readonly nodes: number } {
+  return { bytes: JSON.stringify(projection.query({ scope: SCOPE, limit: 100 }).nodes), nodes: projection.stats().nodes };
+}
+/** The direct children of a node's aggregate() roll-up, or null when the projection holds no such node. */
+function directChildren(projection: ObservationProjection, ref: NativeRef): number | null {
+  const key = nodeOf(projection, ref)[0]?.key;
+  return key === undefined ? null : (projection.aggregate({ scope: SCOPE, key })?.direct.children ?? null);
+}
 
 // ---- Z1's fold and walk ----
 const fold = (value: string): string => value.normalize("NFKC").toLowerCase().replace(/[^a-z0-9]/g, "");
@@ -686,9 +829,15 @@ const SPLIT_PLANTS = [
  * line verbatim, closed. */
 const BEAD_TAG_PROSE = "/** One field of the HX result relayed verbatim as its own facet (wb-gwr.2, HX-PREDICTIVE-WORLD-MODEL-ADAPTERS-R2; HX WM-002 names */";
 const plantModule = (line: string): string => `${line}\nexport const plant = 1;\n`;
-/** Z1's plants: one module per stem for each channel, the src arm's code channels and the release arm's comment. */
-const Z1_CHANNELS: Readonly<Record<string, { readonly arm: Arm; readonly text: (index: number) => string }>> = {
-  identifier: { arm: "src", text: index => `export interface ${IDENTIFIER_SPELLINGS[index]} {\n  readonly id: string;\n}\n` },
+/** The roots Z1's arms walk: the src tree and the installed release's directory. */
+const Z1_ROOTS: Readonly<Record<Arm, string>> = { src: "src", "@furnace/sdk": join("node_modules", "@furnace", "sdk") };
+const identifierPlant = (index: number): string => `export interface ${IDENTIFIER_SPELLINGS[index]} {\n  readonly id: string;\n}\n`;
+const releaseCommentPlant = (index: number): string => plantModule(`// ${SPELLINGS[index]}\n/** ${SPELLINGS[index]} */`);
+/** Z1's plants: one module per stem for each channel, the src arm's code channels and the release arm's comment; the head
+ * and tail channels (BESIDE) put the src arm's identifier or the release arm's comment before or after the whole text of the
+ * longest module the arm reads, handed in as `longest`. */
+const Z1_CHANNELS: Readonly<Record<string, { readonly arm: Arm; readonly text: (index: number, longest: string) => string }>> = {
+  identifier: { arm: "src", text: identifierPlant },
   privateName: { arm: "src", text: index => `export class Plant {\n  #${IDENTIFIER_SPELLINGS[index]} = 1;\n}\n` },
   string: { arm: "src", text: index => `export const plant = ${JSON.stringify(SPELLINGS[index])};\n` },
   template: { arm: "src", text: index => `export const plant = (id: string): string => \`\${id} ${SPELLINGS[index]}\`;\n` },
@@ -696,20 +845,67 @@ const Z1_CHANNELS: Readonly<Record<string, { readonly arm: Arm; readonly text: (
   regexHex: { arm: "src", text: index => `export const plant = /${ESCAPES.regexHex(SPELLINGS[index])}/u;\n` },
   regexUnicode: { arm: "src", text: index => `export const plant = /${ESCAPES.regexUnicode(SPELLINGS[index])}/u;\n` },
   regexCodePoint: { arm: "src", text: index => `export const plant = /${ESCAPES.regexCodePoint(SPELLINGS[index])}/u;\n` },
-  releaseComment: { arm: "@furnace/sdk", text: index => plantModule(`// ${SPELLINGS[index]}\n/** ${SPELLINGS[index]} */`) },
+  head: { arm: "src", text: (index, longest) => `${identifierPlant(index)}${longest}` },
+  tail: { arm: "src", text: (index, longest) => `${longest}\n${identifierPlant(index)}` },
+  releaseComment: { arm: "@furnace/sdk", text: releaseCommentPlant },
+  releaseHead: { arm: "@furnace/sdk", text: (index, longest) => `${releaseCommentPlant(index)}${longest}` },
+  releaseTail: { arm: "@furnace/sdk", text: (index, longest) => `${longest}\n${releaseCommentPlant(index)}` },
 };
 interface Z1Plant {
   readonly channel: string;
   readonly arm: Arm;
   readonly module: Module;
 }
-const Z1_PLANTS: readonly Z1Plant[] = Object.entries(Z1_CHANNELS).flatMap(([channel, { arm, text }]) =>
-  STEMS.map((_stem, index) => ({ channel, arm, module: { path: `world-model-z1-plant/${channel}-${index}.ts`, text: text(index) } })),
-);
+/** The text of the longest module a reading reads. */
+const longestText = (modules: readonly Module[]): string => modules.reduce((held, entry) => (entry.text.length > held.length ? entry.text : held), "");
+/** Z1's plants for one tree (BESIDE): each plant's path under its arm's own root, beside the tree's modules. */
+function z1Plants(longest: Readonly<Record<Arm, string>>): readonly Z1Plant[] {
+  return Object.entries(Z1_CHANNELS).flatMap(([channel, { arm, text }]) =>
+    STEMS.map((_stem, index) => ({ channel, arm, module: { path: join(Z1_ROOTS[arm], "world-model-z1-plant", `${channel}-${index}.ts`), text: text(index, longest[arm]) } })),
+  );
+}
+/** BESIDE's class of a module: its own directory and its extension (its file name from the first dot; empty for none). */
+const extensionOf = (path: string): string => {
+  const name = basename(path);
+  const dot = name.indexOf(".");
+  return dot < 0 ? "" : name.slice(dot);
+};
+const classOf = (path: string): string => join(dirname(path), `*${extensionOf(path)}`);
+/** A class plant's path: the class's own directory, a plant file name naming its channel, the class's own extension. */
+const classPlantPath = (path: string, channel: string, index: number): string => join(dirname(path), `world-model-z1-plant-${channel}-${index}${extensionOf(path)}`);
+/** The channels of one arm, in Z1_CHANNELS order: the src arm's eight code channels and its head and tail, the release arm's
+ * comment and its head and tail. */
+const armChannels = (arm: Arm) => Object.entries(Z1_CHANNELS).filter(([, channel]) => channel.arm === arm);
+/** BESIDE's class plants for one arm: in every class of module the tree's listing hands the arm, one plant per stem for each of
+ * the arm's channels, a class's head and tail around the whole text of the longest module of that class. */
+function z1ClassPlants(arm: Arm, modules: readonly Module[]): readonly Z1Plant[] {
+  const classes = new Map<string, { readonly path: string; readonly members: Module[] }>();
+  for (const entry of modules) {
+    const held = classes.get(classOf(entry.path));
+    if (held === undefined) classes.set(classOf(entry.path), { path: entry.path, members: [entry] });
+    else held.members.push(entry);
+  }
+  return [...classes.values()].flatMap(({ path, members }) => {
+    const longest = longestText(members);
+    return armChannels(arm).flatMap(([channel, { text }]) => STEMS.map((_stem, index) => ({ channel: "class", arm, module: { path: classPlantPath(path, channel, index), text: text(index, longest) } })));
+  });
+}
 /** R-VOCABULARY's plants (Q3): the family in other words, and regular expressions that match a record name without
  * spelling it (a wildcard, a character class, an alternation, an escape other than \x, \u and \u{}). */
 const VOCABULARY = ["WhatIfCandidate", "ScenarioBranch", "forecast record", "simulated outcome", "PredictedTransition", "learned dynamics"] as const;
 const UNSPELLED = ["w.rld-model", "synthetic\\w+attempt", "counterf(?:a|4)ctual", "\\167orld-model"] as const;
+/** R-VOCABULARY's confusable spellings (Q3): the first `latin` letter of a stem's identifier spelling written instead as the
+ * letter of another script at code point `letter` (given as a number, never as the character); NFKC keeps such a letter and
+ * the fold then drops it. Each one's twin writes the same Latin letter in its fullwidth form, which NFKC folds back. */
+const CONFUSABLES: readonly { readonly id: string; readonly stem: number; readonly latin: string; readonly letter: number }[] = [
+  { id: "cyrillic-o", stem: 3, latin: "o", letter: 0x043e },
+  { id: "greek-omicron", stem: 3, latin: "o", letter: 0x03bf },
+  { id: "cyrillic-a", stem: 1, latin: "a", letter: 0x0430 },
+];
+/** The fullwidth form of a printable ASCII character. */
+const fullwidth = (latin: string): string => String.fromCodePoint((latin.codePointAt(0) ?? 0) - 0x21 + 0xff01);
+/** A confusable's src module: its stem's identifier spelling with the letter written as `letter`. */
+const confusablePlant = (entry: (typeof CONFUSABLES)[number], letter: string): string => `export const ${(IDENTIFIER_SPELLINGS[entry.stem] ?? "").replace(entry.latin, letter)} = 1;\n`;
 
 // ---- the seam reader ----
 /** A Beads or Furnace client seam's name: it holds Beads or Furnace and ends in Client, letter case ignored. */
@@ -1012,18 +1208,74 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
     const furnace = await furnaceBytes(BASE_ANSWERS, live);
     for (const snapshot of furnace.topology.snapshots) populated.refresh(snapshot);
     for (const relation of furnace.topology.relations) populated.relate(relation);
+    // ROLL-UP's other projection holds the same native snapshots and no relation; both are read before any statement.
+    const snapshotsOnly = new ObservationProjection();
+    snapshotsOnly.refresh(projected.snapshot);
+    for (const snapshot of furnace.topology.snapshots) snapshotsOnly.refresh(snapshot);
+    const rollUpsBefore = { snapshotsOnly: rollUpsOf(snapshotsOnly), populated: rollUpsOf(populated) };
+    const listingsBefore = { snapshotsOnly: listingOf(snapshotsOnly), populated: listingOf(populated) };
+    const runChildren = { snapshotsOnly: directChildren(snapshotsOnly, runRef), populated: directChildren(populated, runRef) };
     const refs = [workRef, runRef, attemptRef];
     const before = JSON.stringify(refs.map(ref => nodeOf(populated, ref)));
     const edgesBefore = populated.stats().edges;
     for (const statement of statements) populated.relate(statement);
     const after = JSON.stringify(refs.map(ref => nodeOf(populated, ref)));
+    const populatedNodes = refs.map(ref => nodeOf(populated, ref).length);
+    const edgesAdded = populated.stats().edges - edgesBefore;
+    const listingAfterStatements = listingOf(populated);
+    // ROLL-UP: every record stated between the native refs themselves, onto both projections.
+    const crossed = crossStatements();
+    const edgesBeforeCrossed = { snapshotsOnly: snapshotsOnly.stats().edges, populated: populated.stats().edges };
+    for (const statement of crossed) {
+      snapshotsOnly.relate(statement);
+      populated.relate(statement);
+    }
+    const rollUpsAfter = { snapshotsOnly: rollUpsOf(snapshotsOnly), populated: rollUpsOf(populated) };
+    const listingsAfter = { snapshotsOnly: listingOf(snapshotsOnly), populated: listingOf(populated) };
+    // ORDER: every statement made BEFORE the native snapshots and relations, onto a fourth projection; then the populated
+    // projection's native snapshots refreshed again, after all of its statements.
+    const statementsFirst = new ObservationProjection();
+    for (const statement of [...statements, ...crossed]) statementsFirst.relate(statement);
+    statementsFirst.refresh(projected.snapshot);
+    for (const relation of projected.relations) statementsFirst.relate(relation);
+    for (const snapshot of furnace.topology.snapshots) statementsFirst.refresh(snapshot);
+    for (const relation of furnace.topology.relations) statementsFirst.relate(relation);
+    const refreshedAgain = [projected.snapshot, ...furnace.topology.snapshots].map(snapshot => populated.refresh(snapshot));
     return {
       statements: statements.length,
       predictedOnlyNodes: fed.stats().nodes,
       predictedOnlyIdentical: fedNodes === emptyNodes,
-      populatedNodes: refs.map(ref => nodeOf(populated, ref).length),
+      populatedNodes,
       populatedIdentical: after === before,
-      edgesAdded: populated.stats().edges - edgesBefore,
+      edgesAdded,
+      rollUp: {
+        statements: crossed.length,
+        edges: { snapshotsOnly: snapshotsOnly.stats().edges - edgesBeforeCrossed.snapshotsOnly, populated: populated.stats().edges - edgesBeforeCrossed.populated },
+        identical: {
+          snapshotsOnly: rollUpsAfter.snapshotsOnly.surfaces === rollUpsBefore.snapshotsOnly.surfaces,
+          populated: rollUpsAfter.populated.surfaces === rollUpsBefore.populated.surfaces,
+        },
+        runChildren,
+        countersMoved: {
+          snapshotsOnly: rollUpsAfter.snapshotsOnly.counters !== rollUpsBefore.snapshotsOnly.counters,
+          populated: rollUpsAfter.populated.counters !== rollUpsBefore.populated.counters,
+        },
+      },
+      listing: {
+        populated: {
+          nodes: [listingsBefore.populated.nodes, listingAfterStatements.nodes, listingsAfter.populated.nodes],
+          identical: [listingAfterStatements.bytes === listingsBefore.populated.bytes, listingsAfter.populated.bytes === listingsBefore.populated.bytes],
+        },
+        snapshotsOnly: {
+          nodes: [listingsBefore.snapshotsOnly.nodes, listingsAfter.snapshotsOnly.nodes],
+          identical: [listingsAfter.snapshotsOnly.bytes === listingsBefore.snapshotsOnly.bytes],
+        },
+      },
+      order: {
+        statements: statements.length + crossed.length,
+        before: { nodes: listingOf(statementsFirst).nodes, listing: listingOf(statementsFirst).bytes === listingsBefore.populated.bytes, rollUp: rollUpsOf(statementsFirst).surfaces === rollUpsBefore.populated.surfaces },
+        again: { refreshed: refreshedAgain, listing: listingOf(populated).bytes === listingsBefore.populated.bytes, rollUp: rollUpsOf(populated).surfaces === rollUpsBefore.populated.surfaces },
+      },
     };
   },
   async C2(live) {
@@ -1081,28 +1333,51 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
     };
   },
   async Z1(live) {
-    const sdk = join("node_modules", "@furnace", "sdk");
+    const sdk = Z1_ROOTS["@furnace/sdk"];
+    const srcModules = modulesUnder(Z1_ROOTS.src, isTs);
+    const sdkModules = modulesUnder(sdk, () => true);
     const tree: readonly { readonly arm: Arm; readonly modules: readonly Module[] }[] = [
-      { arm: "src", modules: modulesUnder("src", isTs) },
-      { arm: "@furnace/sdk", modules: modulesUnder(sdk, () => true) },
+      { arm: "src", modules: srcModules },
+      { arm: "@furnace/sdk", modules: sdkModules },
     ];
-    // The plants go through the same walk call as the tree: a walk that stops reading stems loses the plants' readings too.
-    const readings = z1Walk(
-      tree.map(({ arm, modules }) => ({ arm, modules: [...modules, ...Z1_PLANTS.filter(plant => plant.arm === arm).map(plant => plant.module)] })),
-      live,
-    );
-    const plantPaths = new Set(Z1_PLANTS.map(plant => plant.module.path));
+    // The plants go through the same walk call as the tree, beside its modules (BESIDE): the channel plants under each
+    // arm's own root, and in every class (a directory with an extension) the listing hands the arm one class plant per stem
+    // for each of the arm's channels, a class's head and tail around its longest module. A class plant carries its class's
+    // directory and extension but no file name of its modules, so a walk that picks a class's modules by its directory, a
+    // path prefix short of the file names or its extension and reads none of them, computes no stems for them, reads only
+    // some of the src arm's code channels in them or reads only each one's first or last characters loses plant readings;
+    // and EVERY holds that the walk handed back a reading of every module it was handed, so a walk that skips a module by
+    // any other mark (a file name, a path prefix inside the file names) reds too.
+    const plants = [...z1Plants({ src: longestText(srcModules), "@furnace/sdk": longestText(sdkModules) }), ...tree.flatMap(({ arm, modules }) => z1ClassPlants(arm, modules))];
+    const handed = tree.map(({ arm, modules }) => ({ arm, modules: [...modules, ...plants.filter(plant => plant.arm === arm).map(plant => plant.module)] }));
+    const readings = z1Walk(handed, live);
+    const plantPaths = new Set(plants.map(plant => plant.module.path));
     const read = readings.filter(reading => !plantPaths.has(reading.path));
     const mentions = read.filter(reading => reading.stems.length > 0).map(reading => `${reading.path}: ${reading.stems.join(",")}`);
     const version: unknown = JSON.parse(readFileSync(join(REPO, sdk, "package.json"), "utf8"));
     expect(mentions, "ARMED: a release or src module names a world-model record; drive its reader through A, B and C, then re-measure").toEqual([]);
     const count = (arm: Arm): number => read.filter(reading => reading.arm === arm).length;
     const stems = new Map(readings.map(reading => [reading.path, reading.stems]));
+    const classes = (arm: Arm): number => distinct(tree.filter(entry => entry.arm === arm).flatMap(entry => entry.modules.map(listed => classOf(listed.path)))).length;
+    // Every class whose plants, of any channel of its arm, the walk did not read as their stems, by arm (BESIDE).
+    const unread = (arm: Arm, modules: readonly Module[]): readonly string[] =>
+      distinct(
+        modules
+          .filter(entry => armChannels(arm).some(([channel]) => STEMS.some((stem, index) => JSON.stringify(stems.get(classPlantPath(entry.path, channel, index)) ?? null) !== JSON.stringify([stem]))))
+          .map(entry => classOf(entry.path)),
+      );
+    // Every module the walk was handed, the tree's and the plants, that it handed back no reading of, by arm (EVERY).
+    const unwalked = (arm: Arm, modules: readonly Module[]): readonly string[] => {
+      const walked = new Set(readings.filter(reading => reading.arm === arm).map(reading => reading.path));
+      return modules.filter(entry => !walked.has(entry.path)).map(entry => entry.path);
+    };
     return {
-      floors: { src: count("src") >= SRC_FLOOR, sdk: count("@furnace/sdk") >= SDK_FLOOR },
+      floors: { src: count("src") >= SRC_FLOOR, sdk: count("@furnace/sdk") >= SDK_FLOOR, srcClasses: classes("src") >= CLASS_FLOORS.src, sdkClasses: classes("@furnace/sdk") >= CLASS_FLOORS.sdk },
       release: isObject(version) && typeof version.name === "string" ? version.name : null,
       mentions,
-      plants: Object.fromEntries(Object.keys(Z1_CHANNELS).map(channel => [channel, Z1_PLANTS.filter(plant => plant.channel === channel).map(plant => stems.get(plant.module.path) ?? null)])),
+      plants: Object.fromEntries(Object.keys(Z1_CHANNELS).map(channel => [channel, plants.filter(plant => plant.channel === channel).map(plant => stems.get(plant.module.path) ?? null)])),
+      classesUnread: Object.fromEntries(tree.map(({ arm, modules }) => [arm, unread(arm, modules)])),
+      modulesUnread: Object.fromEntries(handed.map(({ arm, modules }) => [arm, unwalked(arm, modules)])),
     };
   },
   async Q1(live) {
@@ -1140,7 +1415,12 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
     // The family in other words, and regular expressions that match a record name without spelling it: each planted as a
     // src module and read by the walk under both arms; a quiet plant is read under both and holds no stem under either.
     const words = [...VOCABULARY.map(word => ({ word, text: `export const plant = ${JSON.stringify(word)};\n` })), ...UNSPELLED.map(word => ({ word, text: `export const plant = /${word}/;\n` }))];
-    const modules = words.map(({ text }, index) => ({ path: `world-model-q3-plant/${index}.ts`, text }));
+    // The confusable spellings (CONFUSABLES) and their fullwidth twins, planted and read the same way.
+    const spelled = CONFUSABLES.flatMap(entry => [
+      { path: `world-model-q3-plant/confusable-${entry.id}.ts`, text: confusablePlant(entry, String.fromCodePoint(entry.letter)) },
+      { path: `world-model-q3-plant/twin-${entry.id}.ts`, text: confusablePlant(entry, fullwidth(entry.latin)) },
+    ]);
+    const modules = [...words.map(({ text }, index) => ({ path: `world-model-q3-plant/${index}.ts`, text })), ...spelled];
     const readings = z1Walk(
       [
         { arm: "src", modules },
@@ -1148,13 +1428,18 @@ const IMPL: Readonly<Record<string, (live: Live) => Promise<Json>>> = {
       ],
       live,
     );
-    const quiet = words
-      .filter((_word, index) => {
-        const read = readings.filter(reading => reading.path === `world-model-q3-plant/${index}.ts`);
-        return read.length === 2 && read.every(reading => reading.stems.length === 0);
-      })
-      .map(({ word }) => word);
-    return { quiet: quiet.filter(word => (VOCABULARY as readonly string[]).includes(word)), unspelled: quiet.filter(word => (UNSPELLED as readonly string[]).includes(word)) };
+    /** Whether the module at `path` is read under both arms and each reading holds exactly `stems`. */
+    const readAs = (path: string, stems: readonly string[]): boolean => {
+      const read = readings.filter(reading => reading.path === path);
+      return read.length === 2 && read.every(reading => JSON.stringify(reading.stems) === JSON.stringify(stems));
+    };
+    const quiet = words.filter((_word, index) => readAs(`world-model-q3-plant/${index}.ts`, [])).map(({ word }) => word);
+    return {
+      quiet: quiet.filter(word => (VOCABULARY as readonly string[]).includes(word)),
+      unspelled: quiet.filter(word => (UNSPELLED as readonly string[]).includes(word)),
+      confusable: CONFUSABLES.filter(entry => readAs(`world-model-q3-plant/confusable-${entry.id}.ts`, [])).map(entry => entry.id),
+      twins: CONFUSABLES.filter(entry => readAs(`world-model-q3-plant/twin-${entry.id}.ts`, [STEMS[entry.stem] ?? ""])).map(entry => entry.id),
+    };
   },
   async Q4(live) {
     // A reader keyed to a member no plant spells: it copies a top-level `forecast` into the work status.
@@ -1292,12 +1577,13 @@ const CONSTANTS: Json = {
   records: RECORDS.map(entry => ({ name: entry.name, fields: Object.keys(entry.record) })),
   beadsPlacements: BEADS_PLACEMENTS.map(placement => placement.id),
   furnacePlacements: FURNACE_PLACEMENTS.map(placement => placement.id),
+  crossSources: [...CROSS_SOURCES],
   scopedSeams: Object.keys(SCOPED_SEAMS),
   z1Channels: Object.keys(Z1_CHANNELS),
   seamForms: SEAM_PLANTS.map(plant => plant.form),
   residualSeams: RESIDUAL_SEAMS.map(kind => kind.kind),
   residuals: Object.entries(RESIDUALS).map(([family, pin]) => `${family}:${pin}`),
-  floors: { src: SRC_FLOOR, sdk: SDK_FLOOR },
+  floors: { src: SRC_FLOOR, sdk: SDK_FLOOR, srcClasses: CLASS_FLOORS.src, sdkClasses: CLASS_FLOORS.sdk },
 };
 
 // ---- the outside anchors ----
