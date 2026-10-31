@@ -1,0 +1,1771 @@
+{
+  "bead": "wb-pyel.7",
+  "claims": {
+    "A1": [
+      {
+        "words": "manifest-name: a base name equal to a MANIFEST_NAMES entry, in any ASCII letter case, at any depth",
+        "falsifiers": [
+          "N-NAMES"
+        ]
+      },
+      {
+        "words": "pip-name: a base name holding requirements, constraints or pylock, in any ASCII letter case",
+        "falsifiers": [
+          "N-WORDS",
+          "L3-M5"
+        ]
+      },
+      {
+        "words": "the word held anywhere in the name: a prefix, a suffix, a digit or a space beside it",
+        "falsifiers": [
+          "N-OTHER",
+          "L3-Mc1",
+          "P-A1-DIGIT-STEM"
+        ]
+      },
+      {
+        "words": "whatever its extension, .pip among them",
+        "falsifiers": [
+          "N-PIP",
+          "L3-M1"
+        ]
+      },
+      {
+        "words": "or none",
+        "falsifiers": [
+          "N-EXTENSIONLESS",
+          "L3-M4"
+        ]
+      },
+      {
+        "words": "pip-directory: every file below a directory whose name holds one of those words, in any ASCII letter case, at any depth, whatever its extension or none",
+        "falsifiers": [
+          "N-DIRECTORY",
+          "L3-M2",
+          "L3-Mc2",
+          "L3-M3"
+        ]
+      },
+      {
+        "words": "only outside test/; each selected path read as raw lines but the root package.json and package-lock.json, read by their own readers; a hit named by its line",
+        "falsifiers": [
+          "N-OTHER",
+          "N-ROOT-READERS",
+          "LIVE-A1"
+        ]
+      }
+    ],
+    "A3": [
+      {
+        "words": "static reading: in a script module every judged text holding a REGISTRATION_WORDS segment (register, registerNativeProviders), one entry per segment",
+        "falsifiers": [
+          "S-WORDS"
+        ]
+      },
+      {
+        "words": "so every call spelling is read: direct, optional, .call, .apply, .bind, an element access by a string or template key, a Reflect.apply argument, a parenthesized callee, a destructured binding",
+        "falsifiers": [
+          "S-SPELLINGS",
+          "L3-R1",
+          "L3-R2",
+          "L3-R3",
+          "L3-R4",
+          "L3-Rc1",
+          "L3-Rc2"
+        ]
+      },
+      {
+        "words": "the judged texts are the JUDGED_KINDS nodes: an identifier, a private name, a string literal, a no-substitution template, a template head, middle and tail, a regular expression, JSX text",
+        "falsifiers": [
+          "S-POSITIONS"
+        ]
+      },
+      {
+        "words": "and every REGISTER_NAME name a DECLARATION_KINDS declaration or an import or export specifier's property name spells, no name hard-coded, so a const-arrow export and a renamed import are read",
+        "falsifiers": [
+          "S-KINDS",
+          "L3-R7a",
+          "L3-R7b"
+        ]
+      },
+      {
+        "words": "in any other file every raw line's REGISTRATION_WORDS segments",
+        "falsifiers": [
+          "S-RAW"
+        ]
+      },
+      {
+        "words": "near misses are not read: registered, RegisterHost, unregister, a registerTool call, and registering, $register and register_x in a string",
+        "falsifiers": [
+          "S-QUIET"
+        ]
+      },
+      {
+        "words": "Fiber family: a descriptor whose id folds to hold fiber, or a permission does, or its contract does, or whose contract starts with rf@, each criterion read alone",
+        "falsifiers": [
+          "P-A3-FAM-ID",
+          "P-A3-PERM",
+          "P-A3-CONTRACT",
+          "P-A3-FAM-RF"
+        ]
+      },
+      {
+        "words": "carrier: a family member's contract is the provider's own REACTIVE_FIBER_CONTRACT_SOURCE byte for byte, never a contract that merely ends --no-commit",
+        "falsifiers": [
+          "P-A3-CARRIER",
+          "LIVE-A3-REGISTRIES"
+        ]
+      },
+      {
+        "words": "publishing: a family member that is not the read preview states each reason: a non-read effect, a mode beyond invoke, a contract without the --no-commit flag",
+        "falsifiers": [
+          "P-A3-PUB-WRITE",
+          "P-A3-PUB-OBSERVE",
+          "P-A3-FAM-ID"
+        ]
+      },
+      {
+        "words": "needles: every registered descriptor is read whole, every key and string at any depth, for the stem, a hosted class or a publication entry",
+        "falsifiers": [
+          "P-A3-NEEDLES"
+        ]
+      },
+      {
+        "words": "the live src's static reading and the live registrations' readings are pinned whole",
+        "falsifiers": [
+          "LIVE-A3-STATIC",
+          "LIVE-A3-REGISTRIES"
+        ]
+      }
+    ]
+  },
+  "constants": {
+    "stem": "fiberoptics",
+    "hostedClasses": [
+      "FiberRuntime",
+      "FiberGraph",
+      "FiberScheduler"
+    ],
+    "publicationEntries": [
+      "queue_value_publication",
+      "flush_value_publications",
+      "request_rerender",
+      "flush_requested_renders"
+    ],
+    "noCommit": "--no-commit",
+    "manifestNames": [
+      "package.json",
+      "package-lock.json",
+      "npm-shrinkwrap.json",
+      "yarn.lock",
+      "pnpm-lock.yaml",
+      "pyproject.toml",
+      "setup.py",
+      "setup.cfg",
+      "Pipfile",
+      "Pipfile.lock",
+      "poetry.lock",
+      "uv.lock",
+      "pdm.lock",
+      "environment.yml",
+      "environment.yaml",
+      "Cargo.toml",
+      "Cargo.lock"
+    ],
+    "pipFamilyWords": [
+      "requirements",
+      "constraints",
+      "pylock"
+    ],
+    "testRoot": "test/",
+    "rootNpm": [
+      "package.json",
+      "package-lock.json"
+    ],
+    "registrationWords": [
+      "register",
+      "registerNativeProviders"
+    ],
+    "registerName": "^register(?![a-z])",
+    "judgedKinds": [
+      "Identifier",
+      "PrivateIdentifier",
+      "StringLiteral",
+      "NoSubstitutionTemplateLiteral",
+      "TemplateHead",
+      "TemplateMiddle",
+      "TemplateTail",
+      "RegularExpressionLiteral",
+      "JsxText"
+    ],
+    "declarationKinds": [
+      "FunctionDeclaration",
+      "FunctionExpression",
+      "ClassDeclaration",
+      "ClassExpression",
+      "MethodDeclaration",
+      "PropertyDeclaration",
+      "GetAccessor",
+      "SetAccessor",
+      "VariableDeclaration",
+      "Parameter",
+      "BindingElement",
+      "PropertyAssignment",
+      "ShorthandPropertyAssignment",
+      "MethodSignature",
+      "PropertySignature",
+      "InterfaceDeclaration",
+      "TypeAliasDeclaration",
+      "EnumDeclaration",
+      "EnumMember",
+      "ModuleDeclaration",
+      "ImportClause",
+      "NamespaceImport",
+      "ImportSpecifier",
+      "ExportSpecifier",
+      "NamespaceExport",
+      "ImportEqualsDeclaration",
+      "TypeParameter"
+    ],
+    "familyWord": "fiber",
+    "rfContract": "rf@",
+    "carrier": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit",
+    "scriptKinds": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "requiredDescriptors": [
+      "forge.gate.status",
+      "furnace.run.inspect",
+      "hyperunix.find",
+      "reactivefiber.render.preview"
+    ],
+    "floors": {
+      "manifestTexts": 80,
+      "lockPackages": 300
+    },
+    "anchors": {
+      "a1Item": "- A1 manifest name-forms: ",
+      "a3Item": "- A3 registration coverage: ",
+      "acceptance": "Acceptance: ",
+      "ruling": "ORCHESTRATOR RULING R-B135 ",
+      "a1Unmet": "- U1-HIGH-CONFIRMED-RECORD-HONESTY-R515-R668-R-B87-THIRD-FAMILY-FAILURE-A1-",
+      "a3Unmet": "- U2-HIGH-CONFIRMED-RECORD-HONESTY-R515-R668-R-B87-THIRD-FAMILY-FAILURE-A3-",
+      "familyUnmet": "- U1-HIGH-CONFIRMED-R-B105-CORE-NO-CLAIM-WORD-WITHOUT-FALSIFIER-A3-",
+      "plantGaps": "- F4 INFO: (PREP F4, verbatim, flattened to one line) INFO (sub-word partial hollowings"
+    },
+    "phrases": {
+      "N-PIP": ".pip extensions",
+      "N-EXTENSIONLESS": "extensionless files named requirements/constraints",
+      "N-DIRECTORY": "every member of a requirements/ directory regardless of extension"
+    },
+    "kills": {
+      "H-A3-FAM-ID": "P-A3-FAM-ID",
+      "H-A3-FAM-PERM": "P-A3-PERM",
+      "H-A3-FAM-CONTRACT": "P-A3-CONTRACT",
+      "H-A3-CARRIER-WEAK": "P-A3-CARRIER",
+      "H-A3-CARRIER": "P-A3-CARRIER",
+      "H-A3-FAM-RF": "P-A3-FAM-RF",
+      "H-A1-DIGIT": "P-A1-DIGIT-STEM",
+      "H-A3-WORD-DEDUPE": "S-WORDS"
+    },
+    "forms": [
+      "manifest-name",
+      "pip-name",
+      "pip-directory"
+    ],
+    "plantText": "pytest>=8\nFiberOpticsSDK==0.1.0\n",
+    "memberPlants": {
+      "L3-M1": "requirements.pip",
+      "L3-M4": "requirements",
+      "L3-M2": "requirements/base.pip",
+      "L3-Mc1": "requirements-gpu.txt",
+      "L3-Mc2": "requirements/base.txt",
+      "L3-M3": "requirements/env/dev.txt",
+      "L3-M5": "pylock.dev.toml",
+      "P-A1-DIGIT-STEM": "ops/requirements2.txt"
+    },
+    "wordPlants": {
+      "N-NAMES": [
+        "examples/host/package.json",
+        "examples/host/package-lock.json",
+        "examples/host/npm-shrinkwrap.json",
+        "examples/host/yarn.lock",
+        "examples/host/pnpm-lock.yaml",
+        "examples/host/pyproject.toml",
+        "examples/host/setup.py",
+        "examples/host/setup.cfg",
+        "examples/host/Pipfile",
+        "examples/host/Pipfile.lock",
+        "examples/host/poetry.lock",
+        "examples/host/uv.lock",
+        "examples/host/pdm.lock",
+        "examples/host/environment.yml",
+        "examples/host/environment.yaml",
+        "examples/host/Cargo.toml",
+        "examples/host/Cargo.lock",
+        "web/Package.json",
+        "py/host/PIPFILE"
+      ],
+      "N-WORDS": [
+        "requirements.txt",
+        "constraints.txt",
+        "pylock.toml",
+        "Requirements_Docs.TXT",
+        "py/CONSTRAINTS.in",
+        "PyLock.toml"
+      ],
+      "N-PIP": [
+        "deps/requirements-dev.pip",
+        "constraints.pip",
+        "Requirements.PIP"
+      ],
+      "N-EXTENSIONLESS": [
+        "sidecar/requirements",
+        "constraints",
+        "py/CONSTRAINTS"
+      ],
+      "N-DIRECTORY": [
+        "requirements/README",
+        "requirements/base.cfg",
+        "requirements/env.d/dev",
+        "a/b/requirements/c/d/e.yaml",
+        "py/Requirements/base.txt",
+        "constraints/base.txt",
+        "pylock/env.toml"
+      ],
+      "N-OTHER": [
+        "dev-requirements.txt",
+        "requirements-test.in",
+        "requirements copy.txt",
+        "docs/requirements.md",
+        "requirements.lock",
+        "test/fixtures/host/requirements.pip",
+        "test/fixtures/host/package.json"
+      ]
+    },
+    "memberModules": {
+      "L3-R1": "import type { CapabilityProvider, CapabilityRegistry } from \"../capability-registry.js\";\ndeclare const PROVIDER: CapabilityProvider;\nexport const registerValuePublish = (registry: CapabilityRegistry): void => {\n  registry.register.call(registry, PROVIDER);\n};\n",
+      "L3-R2": "import type { CapabilityProvider, CapabilityRegistry } from \"../capability-registry.js\";\ndeclare const PROVIDER: CapabilityProvider;\nexport const registerValuePublish = (registry: CapabilityRegistry): void => {\n  registry[\"register\"](PROVIDER);\n};\n",
+      "L3-R3": "import type { CapabilityProvider, CapabilityRegistry } from \"../capability-registry.js\";\ndeclare const PROVIDER: CapabilityProvider;\nexport const registerValuePublish = (registry: CapabilityRegistry): void => {\n  Reflect.apply(registry.register, registry, [PROVIDER]);\n};\n",
+      "L3-R4": "import type { CapabilityProvider, CapabilityRegistry } from \"../capability-registry.js\";\ndeclare const PROVIDER: CapabilityProvider;\nexport const registerValuePublish = (registry: CapabilityRegistry): void => {\n  (registry.register)(PROVIDER);\n};\n",
+      "L3-Rc1": "import type { CapabilityProvider, CapabilityRegistry } from \"../capability-registry.js\";\ndeclare const PROVIDER: CapabilityProvider;\nexport const registerValuePublish = (registry: CapabilityRegistry): void => {\n  registry.register(PROVIDER);\n};\n",
+      "L3-Rc2": "import type { CapabilityProvider, CapabilityRegistry } from \"../capability-registry.js\";\ndeclare const PROVIDER: CapabilityProvider;\nexport function registerValuePublish(registry: CapabilityRegistry): void {\n  registry.register.call(registry, PROVIDER);\n}\n",
+      "L3-R7a": "import type { CapabilityProvider, CapabilityRegistry } from \"../capability-registry.js\";\ndeclare const PROVIDER: CapabilityProvider;\nimport { registerNativeFiberValuePublish } from \"./value-host.js\";\nexport function registryFor(registry: CapabilityRegistry): CapabilityRegistry {\n  registerNativeFiberValuePublish(registry);\n  return registry;\n}\n",
+      "L3-R7b": "import type { CapabilityProvider, CapabilityRegistry } from \"../capability-registry.js\";\ndeclare const PROVIDER: CapabilityProvider;\nimport { registerNativeValueHost } from \"./value-host.js\";\nexport function registryFor(registry: CapabilityRegistry): CapabilityRegistry {\n  registerNativeValueHost(registry);\n  return registry;\n}\n"
+    },
+    "memberModulePath": "src/workbench/providers/value-publish.ts",
+    "staticPlants": {
+      "S-WORDS": {
+        "src/workbench/providers/value-words.ts": "export const both = \"register register\";\nexport const pair = \"register, then registerNativeProviders\";\n",
+        "src/workbench/hosts/value-bridge.ts": "declare const modules: { registerNativeProviders(registry: unknown, root: string): void };\nmodules.registerNativeProviders({}, \"/\");\nmodules[\"registerNativeProviders\"].call(modules, {}, \"/\");\n"
+      },
+      "S-SPELLINGS": {
+        "src/workbench/providers/value-spellings.ts": "declare const registry: { register(provider: unknown): void };\ndeclare const PROVIDER: unknown;\nexport const installSpellings = (): void => {\n  registry.register(PROVIDER);\n  registry?.register(PROVIDER);\n  registry.register.call(registry, PROVIDER);\n  registry.register.apply(registry, [PROVIDER]);\n  const add = registry.register.bind(registry);\n  add(PROVIDER);\n  registry[\"register\"](PROVIDER);\n  registry[`register`](PROVIDER);\n  Reflect.apply(registry.register, registry, [PROVIDER]);\n  (registry.register)(PROVIDER);\n  const { register } = registry;\n  register.call(registry, PROVIDER);\n};\n"
+      },
+      "S-POSITIONS": {
+        "src/positions/Identifier.ts": "declare const host: { register: number };\nexport const value = host.register;\n",
+        "src/positions/PrivateIdentifier.ts": "export class Host {\n  #register = 1;\n}\n",
+        "src/positions/StringLiteral.ts": "export const value = \"register\";\n",
+        "src/positions/NoSubstitutionTemplateLiteral.ts": "export const value = `register`;\n",
+        "src/positions/TemplateHead.ts": "declare const n: number;\nexport const value = `register${n}`;\n",
+        "src/positions/TemplateMiddle.ts": "declare const n: number;\nexport const value = `a${n}register${n}`;\n",
+        "src/positions/TemplateTail.ts": "declare const n: number;\nexport const value = `a${n}register`;\n",
+        "src/positions/RegularExpressionLiteral.ts": "export const value = /register/;\n",
+        "src/positions/JsxText.tsx": "export const value = <b>register</b>;\n"
+      },
+      "S-KINDS": {
+        "src/workbench/providers/value-names.ts": "import registerValueDefault, { registerValueImported, registerValueOriginal as renamed } from \"./value-publish.js\";\nimport * as registerValueStar from \"./value-publish.js\";\nimport registerValueRequire = require(\"./value-publish.js\");\nexport * as registerValueReexport from \"./value-publish.js\";\ndeclare const host: { registerValueBinding: number };\nexport function registerValueDeclared(): void {}\nexport const registerValueArrow = (): void => {};\nexport const named = function registerValueNamed(): void {};\nclass registerValueClass {}\nexport const expression = class registerValueClassExpression {};\nexport class Members {\n  registerValueMethod(): void {}\n  registerValueField = 1;\n  get registerValueGetter(): number {\n    return 1;\n  }\n  set registerValueSetter(value: number) {}\n}\nfunction install(registerValueParameter: () => void): void {}\nconst { registerValueBinding } = host;\nexport const assigned = { registerValueAssigned: 1, registerValueArrow };\ninterface Shape {\n  registerValueSignature(): void;\n  registerValueProperty: number;\n}\ninterface registerValueInterface {}\ntype registerValueAlias = number;\nenum registerValueEnum {\n  A,\n}\nenum Kinds {\n  registerValueMember,\n}\nnamespace registerValueNamespace {}\nfunction generic<registerValueType>(): void {}\nexport { install as registerValueExported, registerValueArrow as installArrow };\nexport const quoted = { \"registerValueQuoted\": 1, [\"registerValueComputed\"]: 2, [`registerValueComputedTemplate`]: 3 };\nexport class Privates {\n  #registerValuePrivate(): void {}\n}\nimport { \"registerValueString\" as stringImport } from \"./value-publish.js\";\nexport { install as \"registerValueStringExport\" };\ndeclare module \"registerValueModule\" {}\nconst register_value = 1;\nconst register2 = 2;\n"
+      },
+      "S-RAW": {
+        "src/workbench/providers/value-host.json": "{ \"register\": \"fiber.value.publish\", \"bridge\": \"registerNativeProviders\" }\n",
+        "src/workbench/hosts/value-host.py": "def install(registry):\n    registry.register(provider)  # register\n"
+      },
+      "S-QUIET": {
+        "src/workbench/providers/value-near-miss.ts": "declare const pi: Record<string, (tool: unknown) => void>;\nexport const registered = true;\nexport class RegisterHost {}\nexport function unregister(): void {}\npi.registerTool({ name: \"value\" });\nexport const note = \"registering is refused; preregister\";\nexport const separators = \"$register register_x registerX\";\n"
+      }
+    },
+    "familyControls": {
+      "P-A3-FAM-ID": {
+        "version": "1.0.0",
+        "description": "planted",
+        "inputSchema": {
+          "type": "object"
+        },
+        "effectClass": "read",
+        "permissions": [
+          "value:read"
+        ],
+        "supportedModes": [
+          "invoke"
+        ],
+        "id": "fiber.value.host",
+        "contractSource": "value-host@1.0.0:Host.read"
+      },
+      "P-A3-PERM": {
+        "version": "1.0.0",
+        "description": "planted",
+        "inputSchema": {
+          "type": "object"
+        },
+        "effectClass": "read",
+        "permissions": [
+          "forge:inspect",
+          "fiber:publish"
+        ],
+        "supportedModes": [
+          "invoke"
+        ],
+        "id": "forge.gate.status",
+        "contractSource": "forge@0.1.0:GateFacade.status"
+      },
+      "P-A3-CONTRACT": {
+        "version": "1.0.0",
+        "description": "planted",
+        "inputSchema": {
+          "type": "object"
+        },
+        "effectClass": "read",
+        "permissions": [
+          "forge:inspect"
+        ],
+        "supportedModes": [
+          "invoke"
+        ],
+        "id": "forge.gate.status",
+        "contractSource": "forge@0.1.0:GateFacade.status fiber-publish"
+      },
+      "P-A3-FAM-RF": {
+        "version": "1.0.0",
+        "description": "planted",
+        "inputSchema": {
+          "type": "object"
+        },
+        "effectClass": "read",
+        "permissions": [
+          "context:render"
+        ],
+        "supportedModes": [
+          "invoke"
+        ],
+        "id": "context.render.preview",
+        "contractSource": "rf@0.1.845:context.render"
+      },
+      "P-A3-CARRIER": {
+        "version": "1.0.0",
+        "description": "planted",
+        "inputSchema": {
+          "type": "object"
+        },
+        "effectClass": "read",
+        "permissions": [
+          "reactivefiber:render"
+        ],
+        "supportedModes": [
+          "invoke"
+        ],
+        "id": "reactivefiber.render.preview",
+        "contractSource": "rf@0.0.0:context.render --no-commit"
+      }
+    },
+    "descriptorControls": {
+      "P-A3-PUB-WRITE": [
+        {
+          "version": "1.0.0",
+          "description": "planted",
+          "inputSchema": {
+            "type": "object"
+          },
+          "effectClass": "write",
+          "permissions": [
+            "planted:read"
+          ],
+          "supportedModes": [
+            "invoke"
+          ],
+          "id": "fiber.value.publish",
+          "contractSource": "value-host@1.0.0:Host.publish --no-commit"
+        }
+      ],
+      "P-A3-PUB-OBSERVE": [
+        {
+          "version": "1.0.0",
+          "description": "planted",
+          "inputSchema": {
+            "type": "object"
+          },
+          "effectClass": "read",
+          "permissions": [
+            "planted:read"
+          ],
+          "supportedModes": [
+            "invoke",
+            "observe"
+          ],
+          "id": "fiber.value.observe",
+          "contractSource": "value-host@1.0.0:Host.observe --no-commit"
+        }
+      ],
+      "P-A3-NEEDLES": [
+        {
+          "version": "1.0.0",
+          "description": "planted",
+          "inputSchema": {
+            "type": "object",
+            "properties": {
+              "handle": {
+                "type": "string",
+                "description": "a FiberRuntime handle"
+              }
+            }
+          },
+          "effectClass": "read",
+          "permissions": [
+            "planted:read"
+          ],
+          "supportedModes": [
+            "invoke"
+          ],
+          "id": "workbench.handle.read"
+        },
+        {
+          "version": "1.0.0",
+          "description": "queue_value_publication, then flush_value_publications",
+          "inputSchema": {
+            "type": "object"
+          },
+          "effectClass": "read",
+          "permissions": [
+            "planted:read"
+          ],
+          "supportedModes": [
+            "invoke"
+          ],
+          "id": "workbench.value.queue"
+        },
+        {
+          "version": "1.0.0",
+          "description": "planted",
+          "inputSchema": {
+            "type": "object"
+          },
+          "effectClass": "read",
+          "permissions": [
+            "fiber-optics:read"
+          ],
+          "supportedModes": [
+            "invoke"
+          ],
+          "id": "workbench.sdk.read"
+        },
+        {
+          "version": "1.0.0",
+          "description": "reads .reactive-fiber/graphs/context.toml",
+          "inputSchema": {
+            "type": "object"
+          },
+          "effectClass": "read",
+          "permissions": [
+            "planted:read"
+          ],
+          "supportedModes": [
+            "invoke"
+          ],
+          "id": "workbench.layout.read"
+        }
+      ]
+    },
+    "rootManifestControls": {
+      "dependencies": {
+        "dependencies": {
+          "fiber-optics": "^0.1.0"
+        }
+      },
+      "devDependencies": {
+        "devDependencies": {
+          "@fiber-optics/sdk": "0.1.0"
+        }
+      },
+      "peerDependencies": {
+        "peerDependencies": {
+          "FiberOpticsSDK": "*"
+        }
+      },
+      "optionalDependencies": {
+        "optionalDependencies": {
+          "fiber_optics_research": "*"
+        }
+      },
+      "bundleDependencies": {
+        "bundleDependencies": [
+          "fiber-optics-replay-observer"
+        ]
+      },
+      "nestedValue": {
+        "overrides": {
+          "reactive-fiber-cli": {
+            "engine": "npm:fiber-optics@0.1.0"
+          }
+        }
+      },
+      "nearMissRf": {
+        "dependencies": {
+          "reactive-fiber-cli": "1.0.0"
+        }
+      },
+      "nearMissSplit": {
+        "keywords": [
+          "fiber",
+          "optics"
+        ]
+      }
+    },
+    "shadowedManifest": "{ \"dependencies\": { \"fiber-optics\": \"1.0.0\" }, \"dependencies\": {} }",
+    "rootLockControls": {
+      "lockPath": {
+        "packages": {
+          "node_modules/fiber-optics": {
+            "version": "0.1.0"
+          }
+        }
+      },
+      "lockName": {
+        "packages": {
+          "node_modules/alias": {
+            "name": "FiberOpticsSDK",
+            "version": "0.1.0"
+          }
+        }
+      },
+      "lockQuiet": {
+        "packages": {
+          "node_modules/reactive-fiber": {
+            "version": "1.0.0"
+          }
+        }
+      }
+    },
+    "unreadManifests": [
+      "Dockerfile",
+      "scripts/setup-sidecar.sh",
+      "tox.ini",
+      "tools/value-host/deps.txt",
+      "tools/value-host/requirement.txt",
+      "tools/value-host/requirement\u017f.txt",
+      "py/host/P\u0131pfile",
+      "web/bun.lock",
+      "web/package.yaml",
+      "test/fixtures/host/pyproject.toml",
+      "test/fixtures/host/requirements.pip"
+    ],
+    "unreadRegistration": {
+      "module": "src/workbench/providers/value-unread.ts",
+      "source": "import { registerNativeReactiveFiberRender } from \"./reactivefiber.js\";\nimport * as providers from \"./reactivefiber.js\";\ndeclare const registry: Record<string, (provider: unknown) => void> & { providers: Map<string, unknown> };\ndeclare const PROVIDER: unknown;\nregistry[[\"regi\", \"ster\"].join(\"\")](PROVIDER);\nregistry.providers.set(\"fiber.value.publish\", PROVIDER);\nregisterNativeReactiveFiberRender(registry as never, \"/a\");\nfunction registerLocalValue(): void {}\nregisterLocalValue();\nproviders.registerNativeReactiveFiberRender(registry as never, \"/b\");\n"
+    },
+    "residuals": {
+      "R-UNREAD-MANIFEST": [
+        "Q1"
+      ],
+      "R-UNREAD-REGISTRATION": [
+        "Q2"
+      ]
+    }
+  },
+  "tests": [
+    "the judged set: the frozen shape, the claims, the out-of-file roster, the tracker export and the readers' vocabulary agree",
+    "L3-M1",
+    "L3-M4",
+    "L3-M2",
+    "L3-Mc1",
+    "L3-Mc2",
+    "L3-M3",
+    "L3-M5",
+    "P-A1-DIGIT-STEM",
+    "N-NAMES",
+    "N-WORDS",
+    "N-PIP",
+    "N-EXTENSIONLESS",
+    "N-DIRECTORY",
+    "N-OTHER",
+    "N-ROOT-READERS",
+    "L3-R1",
+    "L3-R2",
+    "L3-R3",
+    "L3-R4",
+    "L3-Rc1",
+    "L3-Rc2",
+    "L3-R7a",
+    "L3-R7b",
+    "S-WORDS",
+    "S-SPELLINGS",
+    "S-POSITIONS",
+    "S-KINDS",
+    "S-RAW",
+    "S-QUIET",
+    "P-A3-FAM-ID",
+    "P-A3-PERM",
+    "P-A3-CONTRACT",
+    "P-A3-FAM-RF",
+    "P-A3-CARRIER",
+    "P-A3-PUB-WRITE",
+    "P-A3-PUB-OBSERVE",
+    "P-A3-NEEDLES",
+    "LIVE-A1",
+    "LIVE-A3-STATIC",
+    "LIVE-A3-REGISTRIES",
+    "Q1",
+    "Q2",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "M",
+      "label": "A1 manifest name-forms: .pip extensions, extensionless files named requirements/constraints, and every member of a requirements/ directory regardless of extension",
+      "pins": [
+        {
+          "id": "L3-M1",
+          "witness": {
+            "selected": [
+              "requirements.pip"
+            ],
+            "forms": {
+              "requirements.pip": "pip-name"
+            },
+            "raw": [
+              "requirements.pip"
+            ],
+            "hits": [
+              "requirements.pip:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "L3-M4",
+          "witness": {
+            "selected": [
+              "requirements"
+            ],
+            "forms": {
+              "requirements": "pip-name"
+            },
+            "raw": [
+              "requirements"
+            ],
+            "hits": [
+              "requirements:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "L3-M2",
+          "witness": {
+            "selected": [
+              "requirements/base.pip"
+            ],
+            "forms": {
+              "requirements/base.pip": "pip-directory"
+            },
+            "raw": [
+              "requirements/base.pip"
+            ],
+            "hits": [
+              "requirements/base.pip:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "L3-Mc1",
+          "witness": {
+            "selected": [
+              "requirements-gpu.txt"
+            ],
+            "forms": {
+              "requirements-gpu.txt": "pip-name"
+            },
+            "raw": [
+              "requirements-gpu.txt"
+            ],
+            "hits": [
+              "requirements-gpu.txt:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "L3-Mc2",
+          "witness": {
+            "selected": [
+              "requirements/base.txt"
+            ],
+            "forms": {
+              "requirements/base.txt": "pip-directory"
+            },
+            "raw": [
+              "requirements/base.txt"
+            ],
+            "hits": [
+              "requirements/base.txt:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "L3-M3",
+          "witness": {
+            "selected": [
+              "requirements/env/dev.txt"
+            ],
+            "forms": {
+              "requirements/env/dev.txt": "pip-directory"
+            },
+            "raw": [
+              "requirements/env/dev.txt"
+            ],
+            "hits": [
+              "requirements/env/dev.txt:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "L3-M5",
+          "witness": {
+            "selected": [
+              "pylock.dev.toml"
+            ],
+            "forms": {
+              "pylock.dev.toml": "pip-name"
+            },
+            "raw": [
+              "pylock.dev.toml"
+            ],
+            "hits": [
+              "pylock.dev.toml:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "P-A1-DIGIT-STEM",
+          "witness": {
+            "selected": [
+              "ops/requirements2.txt"
+            ],
+            "forms": {
+              "ops/requirements2.txt": "pip-name"
+            },
+            "raw": [
+              "ops/requirements2.txt"
+            ],
+            "hits": [
+              "ops/requirements2.txt:2: fiberoptics"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "N",
+      "label": "A1's claim words, each planted",
+      "pins": [
+        {
+          "id": "N-NAMES",
+          "witness": {
+            "selected": [
+              "examples/host/package.json",
+              "examples/host/package-lock.json",
+              "examples/host/npm-shrinkwrap.json",
+              "examples/host/yarn.lock",
+              "examples/host/pnpm-lock.yaml",
+              "examples/host/pyproject.toml",
+              "examples/host/setup.py",
+              "examples/host/setup.cfg",
+              "examples/host/Pipfile",
+              "examples/host/Pipfile.lock",
+              "examples/host/poetry.lock",
+              "examples/host/uv.lock",
+              "examples/host/pdm.lock",
+              "examples/host/environment.yml",
+              "examples/host/environment.yaml",
+              "examples/host/Cargo.toml",
+              "examples/host/Cargo.lock",
+              "web/Package.json",
+              "py/host/PIPFILE"
+            ],
+            "forms": {
+              "examples/host/package.json": "manifest-name",
+              "examples/host/package-lock.json": "manifest-name",
+              "examples/host/npm-shrinkwrap.json": "manifest-name",
+              "examples/host/yarn.lock": "manifest-name",
+              "examples/host/pnpm-lock.yaml": "manifest-name",
+              "examples/host/pyproject.toml": "manifest-name",
+              "examples/host/setup.py": "manifest-name",
+              "examples/host/setup.cfg": "manifest-name",
+              "examples/host/Pipfile": "manifest-name",
+              "examples/host/Pipfile.lock": "manifest-name",
+              "examples/host/poetry.lock": "manifest-name",
+              "examples/host/uv.lock": "manifest-name",
+              "examples/host/pdm.lock": "manifest-name",
+              "examples/host/environment.yml": "manifest-name",
+              "examples/host/environment.yaml": "manifest-name",
+              "examples/host/Cargo.toml": "manifest-name",
+              "examples/host/Cargo.lock": "manifest-name",
+              "web/Package.json": "manifest-name",
+              "py/host/PIPFILE": "manifest-name"
+            },
+            "raw": [
+              "examples/host/package.json",
+              "examples/host/package-lock.json",
+              "examples/host/npm-shrinkwrap.json",
+              "examples/host/yarn.lock",
+              "examples/host/pnpm-lock.yaml",
+              "examples/host/pyproject.toml",
+              "examples/host/setup.py",
+              "examples/host/setup.cfg",
+              "examples/host/Pipfile",
+              "examples/host/Pipfile.lock",
+              "examples/host/poetry.lock",
+              "examples/host/uv.lock",
+              "examples/host/pdm.lock",
+              "examples/host/environment.yml",
+              "examples/host/environment.yaml",
+              "examples/host/Cargo.toml",
+              "examples/host/Cargo.lock",
+              "web/Package.json",
+              "py/host/PIPFILE"
+            ],
+            "hits": [
+              "examples/host/package.json:2: fiberoptics",
+              "examples/host/package-lock.json:2: fiberoptics",
+              "examples/host/npm-shrinkwrap.json:2: fiberoptics",
+              "examples/host/yarn.lock:2: fiberoptics",
+              "examples/host/pnpm-lock.yaml:2: fiberoptics",
+              "examples/host/pyproject.toml:2: fiberoptics",
+              "examples/host/setup.py:2: fiberoptics",
+              "examples/host/setup.cfg:2: fiberoptics",
+              "examples/host/Pipfile:2: fiberoptics",
+              "examples/host/Pipfile.lock:2: fiberoptics",
+              "examples/host/poetry.lock:2: fiberoptics",
+              "examples/host/uv.lock:2: fiberoptics",
+              "examples/host/pdm.lock:2: fiberoptics",
+              "examples/host/environment.yml:2: fiberoptics",
+              "examples/host/environment.yaml:2: fiberoptics",
+              "examples/host/Cargo.toml:2: fiberoptics",
+              "examples/host/Cargo.lock:2: fiberoptics",
+              "web/Package.json:2: fiberoptics",
+              "py/host/PIPFILE:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "N-WORDS",
+          "witness": {
+            "selected": [
+              "requirements.txt",
+              "constraints.txt",
+              "pylock.toml",
+              "Requirements_Docs.TXT",
+              "py/CONSTRAINTS.in",
+              "PyLock.toml"
+            ],
+            "forms": {
+              "requirements.txt": "pip-name",
+              "constraints.txt": "pip-name",
+              "pylock.toml": "pip-name",
+              "Requirements_Docs.TXT": "pip-name",
+              "py/CONSTRAINTS.in": "pip-name",
+              "PyLock.toml": "pip-name"
+            },
+            "raw": [
+              "requirements.txt",
+              "constraints.txt",
+              "pylock.toml",
+              "Requirements_Docs.TXT",
+              "py/CONSTRAINTS.in",
+              "PyLock.toml"
+            ],
+            "hits": [
+              "requirements.txt:2: fiberoptics",
+              "constraints.txt:2: fiberoptics",
+              "pylock.toml:2: fiberoptics",
+              "Requirements_Docs.TXT:2: fiberoptics",
+              "py/CONSTRAINTS.in:2: fiberoptics",
+              "PyLock.toml:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "N-PIP",
+          "witness": {
+            "selected": [
+              "deps/requirements-dev.pip",
+              "constraints.pip",
+              "Requirements.PIP"
+            ],
+            "forms": {
+              "deps/requirements-dev.pip": "pip-name",
+              "constraints.pip": "pip-name",
+              "Requirements.PIP": "pip-name"
+            },
+            "raw": [
+              "deps/requirements-dev.pip",
+              "constraints.pip",
+              "Requirements.PIP"
+            ],
+            "hits": [
+              "deps/requirements-dev.pip:2: fiberoptics",
+              "constraints.pip:2: fiberoptics",
+              "Requirements.PIP:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "N-EXTENSIONLESS",
+          "witness": {
+            "selected": [
+              "sidecar/requirements",
+              "constraints",
+              "py/CONSTRAINTS"
+            ],
+            "forms": {
+              "sidecar/requirements": "pip-name",
+              "constraints": "pip-name",
+              "py/CONSTRAINTS": "pip-name"
+            },
+            "raw": [
+              "sidecar/requirements",
+              "constraints",
+              "py/CONSTRAINTS"
+            ],
+            "hits": [
+              "sidecar/requirements:2: fiberoptics",
+              "constraints:2: fiberoptics",
+              "py/CONSTRAINTS:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "N-DIRECTORY",
+          "witness": {
+            "selected": [
+              "requirements/README",
+              "requirements/base.cfg",
+              "requirements/env.d/dev",
+              "a/b/requirements/c/d/e.yaml",
+              "py/Requirements/base.txt",
+              "constraints/base.txt",
+              "pylock/env.toml"
+            ],
+            "forms": {
+              "requirements/README": "pip-directory",
+              "requirements/base.cfg": "pip-directory",
+              "requirements/env.d/dev": "pip-directory",
+              "a/b/requirements/c/d/e.yaml": "pip-directory",
+              "py/Requirements/base.txt": "pip-directory",
+              "constraints/base.txt": "pip-directory",
+              "pylock/env.toml": "pip-directory"
+            },
+            "raw": [
+              "requirements/README",
+              "requirements/base.cfg",
+              "requirements/env.d/dev",
+              "a/b/requirements/c/d/e.yaml",
+              "py/Requirements/base.txt",
+              "constraints/base.txt",
+              "pylock/env.toml"
+            ],
+            "hits": [
+              "requirements/README:2: fiberoptics",
+              "requirements/base.cfg:2: fiberoptics",
+              "requirements/env.d/dev:2: fiberoptics",
+              "a/b/requirements/c/d/e.yaml:2: fiberoptics",
+              "py/Requirements/base.txt:2: fiberoptics",
+              "constraints/base.txt:2: fiberoptics",
+              "pylock/env.toml:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "N-OTHER",
+          "witness": {
+            "selected": [
+              "dev-requirements.txt",
+              "requirements-test.in",
+              "requirements copy.txt",
+              "docs/requirements.md",
+              "requirements.lock"
+            ],
+            "forms": {
+              "dev-requirements.txt": "pip-name",
+              "requirements-test.in": "pip-name",
+              "requirements copy.txt": "pip-name",
+              "docs/requirements.md": "pip-name",
+              "requirements.lock": "pip-name"
+            },
+            "raw": [
+              "dev-requirements.txt",
+              "requirements-test.in",
+              "requirements copy.txt",
+              "docs/requirements.md",
+              "requirements.lock"
+            ],
+            "hits": [
+              "dev-requirements.txt:2: fiberoptics",
+              "requirements-test.in:2: fiberoptics",
+              "requirements copy.txt:2: fiberoptics",
+              "docs/requirements.md:2: fiberoptics",
+              "requirements.lock:2: fiberoptics"
+            ]
+          }
+        },
+        {
+          "id": "N-ROOT-READERS",
+          "witness": {
+            "manifestControls": {
+              "dependencies": [
+                "dependencies.dependencies{fiber-optics}: fiberoptics"
+              ],
+              "devDependencies": [
+                "devDependencies.devDependencies{@fiber-optics/sdk}: fiberoptics"
+              ],
+              "peerDependencies": [
+                "peerDependencies.peerDependencies{FiberOpticsSDK}: fiberoptics"
+              ],
+              "optionalDependencies": [
+                "optionalDependencies.optionalDependencies{fiber_optics_research}: fiberoptics"
+              ],
+              "bundleDependencies": [
+                "bundleDependencies.bundleDependencies[0]: fiberoptics"
+              ],
+              "nestedValue": [
+                "nestedValue.overrides.reactive-fiber-cli.engine: fiberoptics"
+              ],
+              "nearMissRf": [],
+              "nearMissSplit": []
+            },
+            "shadowedKey": {
+              "parsed": [],
+              "raw": [
+                "shadowed:1: fiberoptics"
+              ]
+            },
+            "lockControls": {
+              "lockPath": [
+                "node_modules/fiber-optics: fiberoptics"
+              ],
+              "lockName": [
+                "node_modules/alias name: fiberoptics"
+              ],
+              "lockQuiet": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "A3 registration coverage: the new register*/bridge members refusal #3 names, each with a falsifier",
+      "pins": [
+        {
+          "id": "L3-R1",
+          "witness": {
+            "src/workbench/providers/value-publish.ts": [
+              "src/workbench/providers/value-publish.ts#(module):registerValuePublish@VariableDeclaration",
+              "src/workbench/providers/value-publish.ts#registerValuePublish:register@PropertyAccessExpression"
+            ]
+          }
+        },
+        {
+          "id": "L3-R2",
+          "witness": {
+            "src/workbench/providers/value-publish.ts": [
+              "src/workbench/providers/value-publish.ts#(module):registerValuePublish@VariableDeclaration",
+              "src/workbench/providers/value-publish.ts#registerValuePublish:register@ElementAccessExpression"
+            ]
+          }
+        },
+        {
+          "id": "L3-R3",
+          "witness": {
+            "src/workbench/providers/value-publish.ts": [
+              "src/workbench/providers/value-publish.ts#(module):registerValuePublish@VariableDeclaration",
+              "src/workbench/providers/value-publish.ts#registerValuePublish:register@PropertyAccessExpression"
+            ]
+          }
+        },
+        {
+          "id": "L3-R4",
+          "witness": {
+            "src/workbench/providers/value-publish.ts": [
+              "src/workbench/providers/value-publish.ts#(module):registerValuePublish@VariableDeclaration",
+              "src/workbench/providers/value-publish.ts#registerValuePublish:register@PropertyAccessExpression"
+            ]
+          }
+        },
+        {
+          "id": "L3-Rc1",
+          "witness": {
+            "src/workbench/providers/value-publish.ts": [
+              "src/workbench/providers/value-publish.ts#(module):registerValuePublish@VariableDeclaration",
+              "src/workbench/providers/value-publish.ts#registerValuePublish:register@PropertyAccessExpression"
+            ]
+          }
+        },
+        {
+          "id": "L3-Rc2",
+          "witness": {
+            "src/workbench/providers/value-publish.ts": [
+              "src/workbench/providers/value-publish.ts#(module):registerValuePublish@FunctionDeclaration",
+              "src/workbench/providers/value-publish.ts#registerValuePublish:register@PropertyAccessExpression"
+            ]
+          }
+        },
+        {
+          "id": "L3-R7a",
+          "witness": {
+            "src/workbench/providers/value-publish.ts": [
+              "src/workbench/providers/value-publish.ts#(module):registerNativeFiberValuePublish@ImportSpecifier"
+            ]
+          }
+        },
+        {
+          "id": "L3-R7b",
+          "witness": {
+            "src/workbench/providers/value-publish.ts": [
+              "src/workbench/providers/value-publish.ts#(module):registerNativeValueHost@ImportSpecifier"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "S",
+      "label": "A3's static-reading claim words, each planted",
+      "pins": [
+        {
+          "id": "S-WORDS",
+          "witness": {
+            "src/workbench/providers/value-words.ts": [
+              "src/workbench/providers/value-words.ts#both:register@VariableDeclaration",
+              "src/workbench/providers/value-words.ts#both:register@VariableDeclaration",
+              "src/workbench/providers/value-words.ts#pair:register@VariableDeclaration",
+              "src/workbench/providers/value-words.ts#pair:registerNativeProviders@VariableDeclaration"
+            ],
+            "src/workbench/hosts/value-bridge.ts": [
+              "src/workbench/hosts/value-bridge.ts#modules:registerNativeProviders@MethodSignature",
+              "src/workbench/hosts/value-bridge.ts#(module):registerNativeProviders@PropertyAccessExpression",
+              "src/workbench/hosts/value-bridge.ts#(module):registerNativeProviders@ElementAccessExpression"
+            ]
+          }
+        },
+        {
+          "id": "S-SPELLINGS",
+          "witness": {
+            "src/workbench/providers/value-spellings.ts": [
+              "src/workbench/providers/value-spellings.ts#registry:register@MethodSignature",
+              "src/workbench/providers/value-spellings.ts#installSpellings:register@PropertyAccessExpression",
+              "src/workbench/providers/value-spellings.ts#installSpellings:register@PropertyAccessExpression",
+              "src/workbench/providers/value-spellings.ts#installSpellings:register@PropertyAccessExpression",
+              "src/workbench/providers/value-spellings.ts#installSpellings:register@PropertyAccessExpression",
+              "src/workbench/providers/value-spellings.ts#add:register@PropertyAccessExpression",
+              "src/workbench/providers/value-spellings.ts#installSpellings:register@ElementAccessExpression",
+              "src/workbench/providers/value-spellings.ts#installSpellings:register@ElementAccessExpression",
+              "src/workbench/providers/value-spellings.ts#installSpellings:register@PropertyAccessExpression",
+              "src/workbench/providers/value-spellings.ts#installSpellings:register@PropertyAccessExpression",
+              "src/workbench/providers/value-spellings.ts#installSpellings:register@BindingElement",
+              "src/workbench/providers/value-spellings.ts#installSpellings:register@PropertyAccessExpression"
+            ]
+          }
+        },
+        {
+          "id": "S-POSITIONS",
+          "witness": {
+            "src/positions/Identifier.ts": [
+              "src/positions/Identifier.ts#host:register@PropertySignature",
+              "src/positions/Identifier.ts#value:register@PropertyAccessExpression"
+            ],
+            "src/positions/PrivateIdentifier.ts": [
+              "src/positions/PrivateIdentifier.ts#Host:register@PropertyDeclaration"
+            ],
+            "src/positions/StringLiteral.ts": [
+              "src/positions/StringLiteral.ts#value:register@VariableDeclaration"
+            ],
+            "src/positions/NoSubstitutionTemplateLiteral.ts": [
+              "src/positions/NoSubstitutionTemplateLiteral.ts#value:register@VariableDeclaration"
+            ],
+            "src/positions/TemplateHead.ts": [
+              "src/positions/TemplateHead.ts#value:register@TemplateExpression"
+            ],
+            "src/positions/TemplateMiddle.ts": [
+              "src/positions/TemplateMiddle.ts#value:register@TemplateSpan"
+            ],
+            "src/positions/TemplateTail.ts": [
+              "src/positions/TemplateTail.ts#value:register@TemplateSpan"
+            ],
+            "src/positions/RegularExpressionLiteral.ts": [
+              "src/positions/RegularExpressionLiteral.ts#value:register@VariableDeclaration"
+            ],
+            "src/positions/JsxText.tsx": [
+              "src/positions/JsxText.tsx#value:register@JsxElement"
+            ]
+          }
+        },
+        {
+          "id": "S-KINDS",
+          "witness": {
+            "src/workbench/providers/value-names.ts": [
+              "src/workbench/providers/value-names.ts#(module):registerValueDefault@ImportClause",
+              "src/workbench/providers/value-names.ts#registerValueDefault:registerValueImported@ImportSpecifier",
+              "src/workbench/providers/value-names.ts#renamed:registerValueOriginal@ImportSpecifier",
+              "src/workbench/providers/value-names.ts#(module):registerValueStar@NamespaceImport",
+              "src/workbench/providers/value-names.ts#(module):registerValueRequire@ImportEqualsDeclaration",
+              "src/workbench/providers/value-names.ts#(module):registerValueReexport@NamespaceExport",
+              "src/workbench/providers/value-names.ts#host:registerValueBinding@PropertySignature",
+              "src/workbench/providers/value-names.ts#(module):registerValueDeclared@FunctionDeclaration",
+              "src/workbench/providers/value-names.ts#(module):registerValueArrow@VariableDeclaration",
+              "src/workbench/providers/value-names.ts#named:registerValueNamed@FunctionExpression",
+              "src/workbench/providers/value-names.ts#(module):registerValueClass@ClassDeclaration",
+              "src/workbench/providers/value-names.ts#expression:registerValueClassExpression@ClassExpression",
+              "src/workbench/providers/value-names.ts#Members:registerValueMethod@MethodDeclaration",
+              "src/workbench/providers/value-names.ts#Members:registerValueField@PropertyDeclaration",
+              "src/workbench/providers/value-names.ts#Members:registerValueGetter@GetAccessor",
+              "src/workbench/providers/value-names.ts#Members:registerValueSetter@SetAccessor",
+              "src/workbench/providers/value-names.ts#install:registerValueParameter@Parameter",
+              "src/workbench/providers/value-names.ts#(module):registerValueBinding@BindingElement",
+              "src/workbench/providers/value-names.ts#assigned:registerValueAssigned@PropertyAssignment",
+              "src/workbench/providers/value-names.ts#assigned:registerValueArrow@ShorthandPropertyAssignment",
+              "src/workbench/providers/value-names.ts#Shape:registerValueSignature@MethodSignature",
+              "src/workbench/providers/value-names.ts#Shape:registerValueProperty@PropertySignature",
+              "src/workbench/providers/value-names.ts#(module):registerValueInterface@InterfaceDeclaration",
+              "src/workbench/providers/value-names.ts#(module):registerValueAlias@TypeAliasDeclaration",
+              "src/workbench/providers/value-names.ts#(module):registerValueEnum@EnumDeclaration",
+              "src/workbench/providers/value-names.ts#Kinds:registerValueMember@EnumMember",
+              "src/workbench/providers/value-names.ts#(module):registerValueNamespace@ModuleDeclaration",
+              "src/workbench/providers/value-names.ts#generic:registerValueType@TypeParameter",
+              "src/workbench/providers/value-names.ts#(module):registerValueExported@ExportSpecifier",
+              "src/workbench/providers/value-names.ts#installArrow:registerValueArrow@ExportSpecifier",
+              "src/workbench/providers/value-names.ts#quoted:registerValueQuoted@PropertyAssignment",
+              "src/workbench/providers/value-names.ts#quoted:registerValueComputed@ComputedPropertyName",
+              "src/workbench/providers/value-names.ts#quoted:registerValueComputedTemplate@ComputedPropertyName",
+              "src/workbench/providers/value-names.ts#Privates:registerValuePrivate@MethodDeclaration",
+              "src/workbench/providers/value-names.ts#stringImport:registerValueString@ImportSpecifier",
+              "src/workbench/providers/value-names.ts#(module):registerValueStringExport@ExportSpecifier",
+              "src/workbench/providers/value-names.ts#(module):registerValueModule@ModuleDeclaration",
+              "src/workbench/providers/value-names.ts#(module):register_value@VariableDeclaration",
+              "src/workbench/providers/value-names.ts#(module):register2@VariableDeclaration"
+            ]
+          }
+        },
+        {
+          "id": "S-RAW",
+          "witness": {
+            "src/workbench/providers/value-host.json": [
+              "src/workbench/providers/value-host.json:1: register",
+              "src/workbench/providers/value-host.json:1: registerNativeProviders"
+            ],
+            "src/workbench/hosts/value-host.py": [
+              "src/workbench/hosts/value-host.py:2: register",
+              "src/workbench/hosts/value-host.py:2: register"
+            ]
+          }
+        },
+        {
+          "id": "S-QUIET",
+          "witness": {
+            "src/workbench/providers/value-near-miss.ts": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "label": "the Fiber-family criteria id, a permission and its contract (each 'folds to hold fiber'), and the carrier contract",
+      "pins": [
+        {
+          "id": "P-A3-FAM-ID",
+          "witness": {
+            "hosting": [],
+            "family": [
+              {
+                "id": "fiber.value.host",
+                "criteria": [
+                  "id"
+                ],
+                "effectClass": "read",
+                "supportedModes": [
+                  "invoke"
+                ],
+                "permissions": [
+                  "value:read"
+                ],
+                "carrier": false,
+                "description": "planted",
+                "publishing": [
+                  "contract without --no-commit"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "P-A3-PERM",
+          "witness": {
+            "hosting": [],
+            "family": [
+              {
+                "id": "forge.gate.status",
+                "criteria": [
+                  "permission"
+                ],
+                "effectClass": "read",
+                "supportedModes": [
+                  "invoke"
+                ],
+                "permissions": [
+                  "forge:inspect",
+                  "fiber:publish"
+                ],
+                "carrier": false,
+                "description": "planted",
+                "publishing": [
+                  "contract without --no-commit"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "P-A3-CONTRACT",
+          "witness": {
+            "hosting": [],
+            "family": [
+              {
+                "id": "forge.gate.status",
+                "criteria": [
+                  "contract"
+                ],
+                "effectClass": "read",
+                "supportedModes": [
+                  "invoke"
+                ],
+                "permissions": [
+                  "forge:inspect"
+                ],
+                "carrier": false,
+                "description": "planted",
+                "publishing": [
+                  "contract without --no-commit"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "P-A3-FAM-RF",
+          "witness": {
+            "hosting": [],
+            "family": [
+              {
+                "id": "context.render.preview",
+                "criteria": [
+                  "rf-contract"
+                ],
+                "effectClass": "read",
+                "supportedModes": [
+                  "invoke"
+                ],
+                "permissions": [
+                  "context:render"
+                ],
+                "carrier": false,
+                "description": "planted",
+                "publishing": [
+                  "contract without --no-commit"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "P-A3-CARRIER",
+          "witness": {
+            "hosting": [],
+            "family": [
+              {
+                "id": "reactivefiber.render.preview",
+                "criteria": [
+                  "id",
+                  "permission",
+                  "rf-contract"
+                ],
+                "effectClass": "read",
+                "supportedModes": [
+                  "invoke"
+                ],
+                "permissions": [
+                  "reactivefiber:render"
+                ],
+                "carrier": false,
+                "description": "planted",
+                "publishing": []
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "A3's descriptor-reading claim words, each planted",
+      "pins": [
+        {
+          "id": "P-A3-PUB-WRITE",
+          "witness": {
+            "hosting": [],
+            "family": [
+              {
+                "id": "fiber.value.publish",
+                "criteria": [
+                  "id"
+                ],
+                "effectClass": "write",
+                "supportedModes": [
+                  "invoke"
+                ],
+                "permissions": [
+                  "planted:read"
+                ],
+                "carrier": false,
+                "description": "planted",
+                "publishing": [
+                  "effectClass write"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "P-A3-PUB-OBSERVE",
+          "witness": {
+            "hosting": [],
+            "family": [
+              {
+                "id": "fiber.value.observe",
+                "criteria": [
+                  "id"
+                ],
+                "effectClass": "read",
+                "supportedModes": [
+                  "invoke",
+                  "observe"
+                ],
+                "permissions": [
+                  "planted:read"
+                ],
+                "carrier": false,
+                "description": "planted",
+                "publishing": [
+                  "mode observe"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "P-A3-NEEDLES",
+          "witness": {
+            "hosting": [
+              "workbench.handle.read: fiberruntime",
+              "workbench.value.queue: queuevaluepublication",
+              "workbench.value.queue: flushvaluepublications",
+              "workbench.sdk.read: fiberoptics"
+            ],
+            "family": [
+              {
+                "id": "workbench.sdk.read",
+                "criteria": [
+                  "permission"
+                ],
+                "effectClass": "read",
+                "supportedModes": [
+                  "invoke"
+                ],
+                "permissions": [
+                  "fiber-optics:read"
+                ],
+                "carrier": false,
+                "description": "planted",
+                "publishing": [
+                  "contract without --no-commit"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "L",
+      "label": "the live tree, read through the same readers",
+      "pins": [
+        {
+          "id": "LIVE-A1",
+          "witness": {
+            "rootNpm": [
+              "manifest-name",
+              "manifest-name"
+            ],
+            "rootNpmRaw": [],
+            "manifestTextsAboveFloor": true,
+            "packageJson": [],
+            "lockPackagesAboveFloor": true,
+            "lock": [],
+            "hits": [],
+            "testRootIgnored": true
+          }
+        },
+        {
+          "id": "LIVE-A3-STATIC",
+          "witness": [
+            "src/agent-types.ts#(module):registerAgents@FunctionDeclaration",
+            "src/cross-extension-rpc.ts#(module):registerRpcHandlers@FunctionDeclaration",
+            "src/group-join.ts#GroupJoinManager:registerGroup@MethodDeclaration",
+            "src/index.ts#(module):registerAgents@ImportSpecifier",
+            "src/index.ts#(module):registerRpcHandlers@ImportSpecifier",
+            "src/index.ts#(module):registerToolReportingUsage@FunctionDeclaration",
+            "src/index.ts#(module):registerWorkbenchTools@FunctionDeclaration",
+            "src/index.ts#registryFor:registerNativeProviders@PropertyAccessExpression",
+            "src/workbench/capability-registry.ts#CapabilityRegistry:register@MethodDeclaration",
+            "src/workbench/hosts/local-detached.ts#(module):registerNativeForgeGateStatus@ImportSpecifier",
+            "src/workbench/hosts/local-detached.ts#(module):registerNativeFurnaceRunInspect@ImportSpecifier",
+            "src/workbench/hosts/local-detached.ts#(module):registerNativeHyperUnixFind@ImportSpecifier",
+            "src/workbench/hosts/local-detached.ts#(module):registerNativeReactiveFiberRender@ImportSpecifier",
+            "src/workbench/hosts/local-detached.ts#module:register@PropertySignature",
+            "src/workbench/hosts/local-detached.ts#register:register@PropertyAccessExpression",
+            "src/workbench/hosts/local-detached.ts#registryFor:register@CallExpression",
+            "src/workbench/hosts/local-detached.ts#registryFor:register@NewExpression",
+            "src/workbench/hosts/local-detached.ts#registryFor:register@PropertyAccessExpression",
+            "src/workbench/hosts/local-detached.ts#registryFor:register@PropertyAccessExpression",
+            "src/workbench/hosts/local-detached.ts#registryFor:register@PropertyAccessExpression",
+            "src/workbench/hosts/local-detached.ts#registryFor:register@VariableDeclaration",
+            "src/workbench/native-modules.ts#WorkbenchNativeModules:registerNativeProviders@PropertySignature",
+            "src/workbench/native-modules.ts#importAll:registerNativeProviders@MethodDeclaration",
+            "src/workbench/providers/forge.ts#(module):registerForgeGateStatus@FunctionDeclaration",
+            "src/workbench/providers/forge.ts#(module):registerNativeForgeGateStatus@FunctionDeclaration",
+            "src/workbench/providers/forge.ts#registerForgeGateStatus:register@PropertyAccessExpression",
+            "src/workbench/providers/forge.ts#registerNativeForgeGateStatus:register@PropertyAccessExpression",
+            "src/workbench/providers/furnace.ts#(module):registerFurnaceRunInspect@FunctionDeclaration",
+            "src/workbench/providers/furnace.ts#(module):registerNativeFurnaceRunInspect@FunctionDeclaration",
+            "src/workbench/providers/furnace.ts#registerFurnaceRunInspect:register@PropertyAccessExpression",
+            "src/workbench/providers/furnace.ts#registerNativeFurnaceRunInspect:register@PropertyAccessExpression",
+            "src/workbench/providers/hyperunix.ts#(module):registerHyperUnixFind@FunctionDeclaration",
+            "src/workbench/providers/hyperunix.ts#(module):registerNativeHyperUnixFind@FunctionDeclaration",
+            "src/workbench/providers/hyperunix.ts#registerHyperUnixFind:register@PropertyAccessExpression",
+            "src/workbench/providers/hyperunix.ts#registerNativeHyperUnixFind:register@PropertyAccessExpression",
+            "src/workbench/providers/reactivefiber.ts#(module):registerNativeReactiveFiberRender@FunctionDeclaration",
+            "src/workbench/providers/reactivefiber.ts#(module):registerReactiveFiberRender@FunctionDeclaration",
+            "src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender:register@PropertyAccessExpression",
+            "src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender:register@PropertyAccessExpression"
+          ]
+        },
+        {
+          "id": "LIVE-A3-REGISTRIES",
+          "witness": {
+            "native": {
+              "missing": [],
+              "reading": {
+                "hosting": [],
+                "family": [
+                  {
+                    "id": "reactivefiber.render.preview",
+                    "criteria": [
+                      "id",
+                      "permission",
+                      "contract",
+                      "rf-contract"
+                    ],
+                    "effectClass": "read",
+                    "supportedModes": [
+                      "invoke"
+                    ],
+                    "permissions": [
+                      "reactivefiber:render"
+                    ],
+                    "carrier": true,
+                    "description": "RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",
+                    "publishing": []
+                  }
+                ]
+              }
+            },
+            "injected": {
+              "missing": [],
+              "reading": {
+                "hosting": [],
+                "family": [
+                  {
+                    "id": "reactivefiber.render.preview",
+                    "criteria": [
+                      "id",
+                      "permission",
+                      "contract",
+                      "rf-contract"
+                    ],
+                    "effectClass": "read",
+                    "supportedModes": [
+                      "invoke"
+                    ],
+                    "permissions": [
+                      "reactivefiber:render"
+                    ],
+                    "carrier": true,
+                    "description": "Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",
+                    "publishing": []
+                  }
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "residual": "R-UNREAD-MANIFEST",
+            "selected": [],
+            "stemNamed": [
+              "Dockerfile",
+              "scripts/setup-sidecar.sh",
+              "tox.ini",
+              "tools/value-host/deps.txt",
+              "tools/value-host/requirement.txt",
+              "tools/value-host/requirement\u017f.txt",
+              "py/host/P\u0131pfile",
+              "web/bun.lock",
+              "web/package.yaml",
+              "test/fixtures/host/pyproject.toml",
+              "test/fixtures/host/requirements.pip"
+            ]
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "residual": "R-UNREAD-REGISTRATION",
+            "read": [
+              "src/workbench/providers/value-unread.ts#(module):registerNativeReactiveFiberRender@ImportSpecifier",
+              "src/workbench/providers/value-unread.ts#(module):registerLocalValue@FunctionDeclaration"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
