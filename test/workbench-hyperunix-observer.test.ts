@@ -823,13 +823,26 @@ describe('hxLiveReceipt: the live HX receipt line (wb-tz2.1 fold-in HXFS-PI-3)',
  * measured read carries a conflict diagnostic, so the conflict facet is pinned on HX's own code spelling (HX-SCHEMA-CONFLICT) from a
  * fixture; hyperunix.result/1 has no consistency-mode field, so a consistency mode is a named residual that sequences behind the
  * wb-tz2.3 successor re-vendor (R1-RESIDUAL below). Rows: G1 the measured read; G2 the acceptance fixture; G3 absence and basis;
- * G4 a result lacking them; G5 bounds and sanitizing; G6 only the measured shapes; G7 frozen, lossless, deterministic. */
+ * G4 a result lacking them; G5 bounds and sanitizing; G6 only the measured shapes; G7 frozen, lossless, deterministic; and from
+ * wb-noq8 (the landing-646 follow-up) G8 the conflict-code boundary as the adapter reads it, on the producer's code before the
+ * label layout: CONFLICT counts in capitals only (each other spelling of the word read), and only where no capital A-Z or digit
+ * 0-9 touches it (every other ASCII character, read on each side, bounds it, as do a code end and the capital, digit and
+ * zero-width space G8 plants outside ASCII, and one bounded CONFLICT anywhere in a code is enough), and G9 a facet whose string
+ * sanitizes to nothing is not relayed, read guard by guard (view, provider, version, conflict code, region scope, region
+ * target). */
 describe('wb-gwr.2 HX result facets: view identity, provider versions, incomplete regions and conflicts relayed verbatim', () => {
   const MEASURED_BINARY = '451221852d248a2d31398b6b18bee9f6e149e5561e30bb6efc5fadeb23dc2913';
   const REGION_TARGET = 'hx.fs/directory-entry (coverage opportunistic (other:No_change_exclusion))';
   const ESC = String.fromCodePoint(0x1b);
   const BEL = String.fromCodePoint(0x07);
   const RLO = String.fromCodePoint(0x202e);
+  /** G8 and G9's code points outside printable ASCII: the 8-bit OSC and ST, a capital letter outside A-Z, a digit outside 0-9 and
+   * a zero-width space. */
+  const C1_OSC = String.fromCodePoint(0x9d);
+  const C1_ST = String.fromCodePoint(0x9c);
+  const E_ACUTE = String.fromCodePoint(0xc9);
+  const SUPERSCRIPT_TWO = String.fromCodePoint(0xb2);
+  const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
   /** The 2026-10-28 measured read as the SDK's hyperunix.result/1 document: the facet fields as measured, row, certificate and
    * diagnostic bodies replaced by secret markers that must never surface. */
   const measuredDocument = (overrides: Json = {}): Json => ({representation: 'hyperunix.result/1', operation: 'find',
@@ -992,6 +1005,97 @@ describe('wb-gwr.2 HX result facets: view identity, provider versions, incomplet
     for (const facet of first.facets ?? []) expect(Object.isFrozen(facet)).toBe(true);
     expect(JSON.parse(JSON.stringify(first))).toStrictEqual(first);
     expect(hyperunixTopology(reading(acceptance()), context)).toStrictEqual(first);
+  });
+
+  it("G8: the conflict boundary, read on the producer's code: a capital A-Z or a digit 0-9 on either side of a capital CONFLICT glues it, every other ASCII character, the planted non-ASCII capital, digit and zero-width space, and a code end bound it, one bounded CONFLICT anywhere makes the code a conflict facet, and the word in any other case never does", () => {
+    // G6's non-conflict codes spell no CONFLICT at all, so a substring reading of the conflict test reads them the same way; these
+    // glue a capital or a digit to it on either side, and beside them a hyphen or a code end bounds it at a code's start, inside a
+    // code and at its end.
+    const glued = ['HX-NONCONFLICT', 'HX-CONFLICTED', 'HX-2CONFLICT', 'HX-CONFLICT9', 'NONCONFLICT', 'CONFLICTS', 'CONFLICTCONFLICT'];
+    const hyphenated = ['CONFLICT', 'CONFLICT-HX', 'HX-CONFLICT-ORIGIN', 'HX-CONTENT-EDIT-ORIGIN-CONFLICT'];
+    const coded = (codes: readonly string[]): Json => measured({diagnostics: codes.map(code => ({code, severity: 'error', message: 'SECRET-CONFLICT-MESSAGE'}))});
+    const bare = hyperunixTopology(measured(), context);
+    expect(hyperunixTopology(coded(glued), context)).toStrictEqual(bare);
+    const mixed = hyperunixTopology(coded([...glued, ...hyphenated]), context);
+    expect(mixed.facets).toStrictEqual(hyphenated.map(code => ({kind: 'conflict', code})));
+    expect(JSON.stringify(mixed)).not.toContain('SECRET-CONFLICT-MESSAGE');
+    const {facets: _facets, ...rest} = mixed;
+    expect(rest).toStrictEqual(bare);
+    // Only a capital A-Z or a digit 0-9 glues (wb-noq8 refusal #1 U1). Every ASCII character is read on each side: A-Z and 0-9
+    // keep the code from counting, and each other one bounds CONFLICT as a hyphen does (the layout may show it otherwise, a control
+    // character as a space, so only the facet kind is read here).
+    for (let point = 0; point < 0x80; point++) {
+      const character = String.fromCodePoint(point);
+      const glues = /[A-Z0-9]/.test(character);
+      for (const code of [`HX${character}CONFLICT`, `CONFLICT${character}HX`]) {
+        const kinds = (hyperunixTopology(coded([code]), context).facets ?? []).map(facet => facet.kind);
+        expect(kinds, JSON.stringify(code)).toStrictEqual(glues ? [] : ['conflict']);
+      }
+    }
+    // Each code below, alone, relays as one conflict facet verbatim: a lowercase letter and other ASCII characters on the left and
+    // on the right, the planted capital outside A-Z on both sides and digit outside 0-9, and one bounded CONFLICT beside glued ones
+    // (bounded last, first, and in the middle), so one bounded CONFLICT anywhere in a code is enough.
+    const bounded = ['HX-CONFLICTed', 'HX-nonCONFLICT', 'HX-xCONFLICTx', 'CONFLICTs', 'nonCONFLICT', 'HX_CONFLICT', 'HX.CONFLICT',
+      'HX:CONFLICT', 'HX CONFLICT', 'HX/CONFLICT', 'HX-CONFLICT_9', 'CONFLICT.HX', 'CONFLICT/HX', `HX-${E_ACUTE}CONFLICT`,
+      `HX-CONFLICT${E_ACUTE}`, `HX-CONFLICT${SUPERSCRIPT_TWO}`, 'HX-CONFLICTED-CONFLICT', 'CONFLICTS-CONFLICT', 'CONFLICT-CONFLICTS',
+      'HX-CONFLICTS-CONFLICT-NONCONFLICT'];
+    for (const code of bounded) {
+      const alone = hyperunixTopology(coded([code]), context);
+      expect(alone.facets, code).toStrictEqual([{kind: 'conflict', code}]);
+      const {facets: _alone, ...others} = alone;
+      expect(others, code).toStrictEqual(bare);
+    }
+    // The test reads the producer's code before the label layout: a control character bounds CONFLICT there and the layout shows it
+    // as a space, and a zero-width space bounds it there though the layout deletes it, so that code is a conflict status whose
+    // display glues a capital to CONFLICT.
+    expect(hyperunixTopology(coded([`HX${BEL}CONFLICT`]), context).facets).toStrictEqual([{kind: 'conflict', code: 'HX CONFLICT'}]);
+    expect(hyperunixTopology(coded([`HX${ZERO_WIDTH_SPACE}CONFLICT`]), context).facets).toStrictEqual([{kind: 'conflict', code: 'HXCONFLICT'}]);
+    // CONFLICT counts in capitals only: a code spelling the word only in another case, bounded or not, is no conflict status - each
+    // of the word's 255 other spellings, read bounded by a hyphen and a code end, and three read bare or glued.
+    let spellings = 0;
+    for (let capitals = 0; capitals < 0xff; capitals++) {
+      const word = [...'conflict'].map((letter, index) => ((capitals >> index) & 1) === 1 ? letter.toUpperCase() : letter).join('');
+      expect(hyperunixTopology(coded([`HX-${word}`]), context), word).toStrictEqual(bare);
+      spellings++;
+    }
+    expect(spellings).toBe(255);
+    for (const code of ['conflict', 'Conflict', 'HXconflictX']) expect(hyperunixTopology(coded([code]), context), code).toStrictEqual(bare);
+  });
+
+  it('G9: a facet whose string sanitizes to nothing is not relayed: a blank view, provider, version, conflict code, region scope or target drops exactly that facet', () => {
+    // HyperUnixResultFacet's own claim, one plant per guard: every blank is a string the label layout keeps nothing of, and the
+    // unblanked provider and region beside them show the same document still relays.
+    const blanks = ['', '   ', `${ESC}[2J`, `${BEL}${RLO}`];
+    const bare = hyperunixTopology(measured(), context);
+    for (const blank of blanks) {
+      const value = measured({view: blank,
+        evidence: {providers: [blank, 'hx.fs/builtin', 'hx.fs/other'], provider_versions: {[blank]: '0.1.0', 'hx.fs/builtin': blank, 'hx.fs/other': '0.2.0'}},
+        coverage_summary: {licenses_absence: false, incomplete_regions: [{scope: blank, target: 'hx.fs/directory-entry'},
+          {scope: `fs:${WS}/src`, target: blank}, {scope: `fs:${WS}/lib`, target: 'hx.fs/regular-file'}]}});
+      const topology = hyperunixTopology(value, context);
+      expect(topology.facets, JSON.stringify(blank)).toStrictEqual([
+        {kind: 'provider-version', provider: 'hx.fs/other', version: '0.2.0'},
+        {kind: 'incomplete-region', scope: `fs:${WS}/lib`, target: 'hx.fs/regular-file'},
+      ]);
+      const {facets: _facets, ...rest} = topology;
+      expect(rest, JSON.stringify(blank)).toStrictEqual(bare);
+    }
+    // The conflict code's guard (wb-noq8 refusal #1 U2): the conflict test reads the producer's code, so a blank conflict code is
+    // one the test accepts whose CONFLICT sits inside a control string the label layout hides whole. The plants are each kind of
+    // control string - an OSC ended by BEL, by ST and in its 8-bit form, a DCS, an APC, a PM and an SOS. Beside a visible conflict
+    // code exactly the blank one drops, and behind a visible X each relays as a conflict showing only X, so each reaches the guard
+    // and the guard alone drops it.
+    const hidden = [`${ESC}]0;HX-CONFLICT${BEL}`, `${ESC}]0;HX-CONFLICT${ESC}\\`, `${C1_OSC}0;HX-CONFLICT${C1_ST}`, `${ESC}PHX-CONFLICT${ESC}\\`,
+      `${ESC}_HX-CONFLICT${ESC}\\`, `${ESC}^HX-CONFLICT${ESC}\\`, `${ESC}XHX-CONFLICT${ESC}\\`];
+    const diagnostic = (code: string): Json => ({code, severity: 'error', message: 'SECRET-CONFLICT-MESSAGE'});
+    for (const code of hidden) {
+      const topology = hyperunixTopology(measured({diagnostics: [diagnostic(code), conflict]}), context);
+      expect(topology.facets, JSON.stringify(code)).toStrictEqual([{kind: 'conflict', code: 'HX-SCHEMA-CONFLICT'}]);
+      const {facets: _facets, ...rest} = topology;
+      expect(rest, JSON.stringify(code)).toStrictEqual(bare);
+      const witness = hyperunixTopology(measured({diagnostics: [diagnostic(`X${code}`)]}), context);
+      expect(witness.facets, JSON.stringify(`X${code}`)).toStrictEqual([{kind: 'conflict', code: 'X'}]);
+    }
   });
 
   it('R1-RESIDUAL: hyperunix.result/1 has no consistency-mode field, so no reading carries one and no facet kind names one', () => {
