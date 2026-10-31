@@ -1,0 +1,4155 @@
+{
+ "bead": "wb-klr7",
+ "constants": {
+  "gatingType": "CACWorkflowCompositionV0",
+  "programSlug": "cac-workflow-composition",
+  "mwScope": "@mechanical/",
+  "taskPrefixes": [
+   "bd-",
+   "wb-"
+  ],
+  "attemptPrefixes": [
+   "frn-"
+  ],
+  "idFields": [
+   "step",
+   "source-artifact"
+  ],
+  "compositionWord": "composition",
+  "holder": "test/workbench-docs07-provider-rules.census.ts",
+  "holderRow": "W1",
+  "holderFrozen": "FROZEN_W1",
+  "docsHeading": "MechanicalWorkflows is an ordinary function library"
+ },
+ "producer": {
+  "mw": {
+   "repository": "https://github.com/jehalladay/MechanicalWorkflows",
+   "measuredUtc": "2026-10-29T09:15:22Z",
+   "measuredBy": "seat ws-06 of g10-work-s125 (2026-10-28T08:49:16Z: the filing pin, and the tip at f489cee4ce20), re-read by seat ws-02 of g10-work-s136 (the filing pin's blobs and :6, and the tip at cb45df94cd8e, whose program documents are blob-identical to f489cee4ce20's), read-only: git show on the local MechanicalWorkflows checkout and depth-1 scratch clones of the remote tip; this hermetic census never re-reads the producer",
+   "filingPin": "4b8b974ca72bf2ed36b99e315e45857c6181fbe8",
+   "filingBlobs": {
+    "01-composition-contracts.md": "f006a4760ecbb8fb0ddcbba4db4066791b58f228",
+    "README.md": "40774a7b36f6d0cfe79d908090a4fc9818bf9a22"
+   },
+   "filingLine6": "Use \\`CACWorkflowCompositionV0\\` as a concept only. It can point to existing workflow step and source artifact IDs, but it must not create new authoritative IDs for Beads tasks, Forge tests or Furnace attempts.",
+   "remoteTip": "cb45df94cd8e7d246b52861e8b88bc90de4f1975",
+   "remoteTipCommitted": "2026-10-28T23:14:59Z",
+   "tipBlobs": {
+    "01-composition-contracts.md": "937850d83fe6814cf93a02c66c923657cc1aea42",
+    "README.md": "8724bfbef6638e8efa371e78a7c026c28ca2dc62"
+   },
+   "tipLine6": "Use \\`CACWorkflowCompositionV0\\` as a concept only. It can point to existing workflow step and source artifact IDs, but it must not create new authoritative IDs for Beads tasks, Forge operations/gates, Furnace attempts, Git revisions or HyperUnix answers (a non-exhaustive list).",
+   "tipReadme3Status": "**Design-only as of 2026-10-18 (19ca8d4): the two program documents are the only artifacts; P2–P4 plan adapter code and live runs.**",
+   "tipTypeSpellings": [
+    "docs/10-current-state-and-gaps.md",
+    "docs/programs/cac-workflow-composition-2026-10-18/01-composition-contracts.md"
+   ],
+   "tipPackageSpellings": [
+    "packages/coordination/test/cacwc-doc-pins.test.ts (a test reading the program documents by path; no schema, type or export)"
+   ]
+  }
+ },
+ "residuals": [
+  {
+   "id": "R-PACKAGE-NAME",
+   "pin": "T1",
+   "quiet": [
+    "unscoped-name"
+   ],
+   "twin": [
+    "manifest-dependency"
+   ],
+   "open": [
+    "unscoped-name"
+   ]
+  },
+  {
+   "id": "R-SPEC-FORM",
+   "pin": "T1",
+   "quiet": [
+    "manifest-git-spec",
+    "manifest-jsr-spec",
+    "manifest-overrides",
+    "manifest-npm-infix"
+   ],
+   "twin": [
+    "manifest-npm-alias"
+   ],
+   "open": [
+    "manifest-git-spec"
+   ]
+  },
+  {
+   "id": "R-LOAD-FORM",
+   "pin": "T1",
+   "quiet": [
+    "dynamic-specifier",
+    "require-template-substitution",
+    "require-alias",
+    "require-member",
+    "create-require-renamed",
+    "require-resolve",
+    "require-resolve-bare",
+    "create-require-element",
+    "create-require-destructured",
+    "create-require-parameter",
+    "create-require-property",
+    "create-require-string-callee",
+    "create-require-other-member",
+    "create-require-compound",
+    "assigned-other",
+    "require-string-callee",
+    "import-type-template"
+   ],
+   "twin": [
+    "create-require-bound"
+   ],
+   "open": [
+    "require-template-substitution"
+   ]
+  },
+  {
+   "id": "R-LOCK-NESTING",
+   "pin": "T1",
+   "quiet": [
+    "lock-v1-nested"
+   ],
+   "twin": [
+    "lock-v1-dependencies"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-MODULE-KIND",
+   "pin": "T1",
+   "quiet": [
+    "kind-md"
+   ],
+   "twin": [
+    "kind-ts"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-JSDOC-TYPE",
+   "pin": "T1",
+   "quiet": [
+    "kind-js-jsdoc"
+   ],
+   "twin": [
+    "import-type-node"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-REQUIREMENT-ID",
+   "pin": "T2",
+   "quiet": [
+    "requirement-id",
+    "requirement-id-bare",
+    "requirement-id-two-digit",
+    "requirement-id-twice",
+    "requirement-id-hyphen-after",
+    "requirement-id-hyphen-before",
+    "requirement-id-lead-embedded"
+   ],
+   "twin": [
+    "type-name"
+   ],
+   "open": [
+    "requirement-id",
+    "requirement-id-bare",
+    "requirement-id-two-digit",
+    "requirement-id-twice",
+    "requirement-id-hyphen-after",
+    "requirement-id-hyphen-before",
+    "requirement-id-lead-embedded"
+   ]
+  },
+  {
+   "id": "R-UNSPELLED-CONSUMER",
+   "pin": "T2",
+   "quiet": [
+    "unspelled-consumer"
+   ],
+   "twin": [
+    "type-name"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-SCOPE",
+   "pin": "B1",
+   "quiet": [
+    "qa-module",
+    "examples-src-module"
+   ],
+   "twin": [
+    "task-template"
+   ],
+   "open": [
+    "qa-module",
+    "examples-src-module"
+   ]
+  },
+  {
+   "id": "R-INDIRECT",
+   "pin": "B1",
+   "quiet": [
+    "indirect-binding",
+    "task-destructured-id",
+    "task-destructured-id-alias"
+   ],
+   "twin": [
+    "task-template",
+    "task-member-id"
+   ],
+   "open": [
+    "task-destructured-id",
+    "task-destructured-id-alias"
+   ]
+  },
+  {
+   "id": "R-CALL-FORM",
+   "pin": "B1",
+   "quiet": [
+    "concat-call",
+    "join-call"
+   ],
+   "twin": [
+    "task-template"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-PREFIX-CONSTANT",
+   "pin": "B1",
+   "quiet": [
+    "prefix-constant"
+   ],
+   "twin": [
+    "task-split-literal"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-COMPOUND",
+   "pin": "B1",
+   "quiet": [
+    "task-compound"
+   ],
+   "twin": [
+    "task-concat"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-HOLDER-FORM",
+   "pin": "B1",
+   "quiet": [
+    "task-holder-element-key",
+    "task-holder-call"
+   ],
+   "twin": [
+    "task-member-id"
+   ],
+   "open": [
+    "task-holder-element-key",
+    "task-holder-call"
+   ]
+  },
+  {
+   "id": "R-FIELD-STRING",
+   "pin": "B1",
+   "quiet": [
+    "task-field-string-argument"
+   ],
+   "twin": [
+    "task-kebab-key"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-MEMBER-KEY",
+   "pin": "B1",
+   "quiet": [
+    "task-member-identifier-key",
+    "task-member-const-key"
+   ],
+   "twin": [
+    "task-member-id"
+   ],
+   "open": [
+    "task-member-identifier-key",
+    "task-member-const-key"
+   ]
+  },
+  {
+   "id": "R-VALUE-CHAIN",
+   "pin": "B2",
+   "quiet": [
+    "forge-value-chain"
+   ],
+   "twin": [
+    "forge-gate-ref"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-NAME-BINDING",
+   "pin": "B2",
+   "quiet": [
+    "forge-provider-import",
+    "forge-provider-let",
+    "forge-provider-member",
+    "forge-provider-destructured"
+   ],
+   "twin": [
+    "forge-provider-constant"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-KEY-ACCESSOR",
+   "pin": "B2",
+   "quiet": [
+    "forge-key-getter",
+    "forge-key-method"
+   ],
+   "twin": [
+    "forge-id-key"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-COMPOUND-KEY",
+   "pin": "B2",
+   "quiet": [
+    "forge-compound-key",
+    "forge-compound-key-template"
+   ],
+   "twin": [
+    "forge-assignment"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-ID-POSITION",
+   "pin": "B2",
+   "quiet": [
+    "builder-argument"
+   ],
+   "twin": [
+    "forge-native-ref"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-POSITION-BINDING",
+   "pin": "B2",
+   "quiet": [
+    "forge-id-binding",
+    "forge-key-binding"
+   ],
+   "twin": [
+    "forge-native-ref"
+   ],
+   "open": []
+  },
+  {
+   "id": "R-FIELD-SPELLING",
+   "pin": "B3",
+   "quiet": [
+    "other-field-name",
+    "bare-step-name"
+   ],
+   "twin": [
+    "attempt-template"
+   ],
+   "open": [
+    "other-field-name",
+    "bare-step-name"
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "id": "T",
+   "label": "a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers",
+   "pins": [
+    {
+     "id": "T1",
+     "quote": "a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type",
+     "witness": {
+      "scope": "@mechanical/",
+      "manifest": [],
+      "locks": {
+       "package-lock.json": [],
+       "vendor/dependency-lock.json": []
+      },
+      "lockVersions": {
+       "package-lock.json": 3,
+       "vendor/dependency-lock.json": 3
+      },
+      "imports": [],
+      "controls": {
+       "manifest-dependency": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-dev": [
+        "@mechanical/workflows-development"
+       ],
+       "manifest-optional": [
+        "@mechanical/workflows-coordination"
+       ],
+       "manifest-peer": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-bundled": [
+        "@mechanical/workflows-coordination"
+       ],
+       "manifest-bundled-spelling": [
+        "@mechanical/workflows-development"
+       ],
+       "manifest-dependency-list": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-dev-list": [
+        "@mechanical/workflows-development"
+       ],
+       "manifest-optional-list": [
+        "@mechanical/workflows-coordination"
+       ],
+       "manifest-peer-list": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-bundled-map": [
+        "@mechanical/workflows-coordination"
+       ],
+       "manifest-bundled-spelling-map": [
+        "@mechanical/workflows-development"
+       ],
+       "manifest-own-name": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-npm-alias": [
+        "@mechanical/workflows-composition"
+       ],
+       "manifest-git-spec": [],
+       "manifest-jsr-spec": [],
+       "manifest-overrides": [],
+       "unscoped-name": [],
+       "near-scope": [],
+       "upper-scope": [],
+       "manifest-npm-infix": [],
+       "manifest-list-non-string": [
+        "@mechanical/workflows-coordination"
+       ],
+       "lock-path": [
+        "node_modules/@mechanical/workflows-composition"
+       ],
+       "lock-nested": [
+        "node_modules/a/node_modules/@mechanical/workflows-coordination"
+       ],
+       "lock-declared": [
+        "@mechanical/workflows-development"
+       ],
+       "lock-entry-name": [
+        "@mechanical/workflows-composition"
+       ],
+       "lock-alias-spec": [
+        "@mechanical/workflows-development"
+       ],
+       "lock-v1-dependencies": [
+        "@mechanical/workflows-coordination"
+       ],
+       "lock-own-name": [
+        "@mechanical/workflows-composition"
+       ],
+       "lock-workspace-path": [],
+       "lock-null-entry": [
+        "node_modules/@mechanical/workflows-composition"
+       ],
+       "lock-not-object": [],
+       "lock-v1-nested": [],
+       "import-static": [
+        "@mechanical/workflows-development"
+       ],
+       "import-type": [
+        "@mechanical/workflows-composition"
+       ],
+       "import-side-effect": [
+        "@mechanical/workflows-composition"
+       ],
+       "import-default": [
+        "@mechanical/workflows-development"
+       ],
+       "import-namespace": [
+        "@mechanical/workflows-coordination"
+       ],
+       "export-from": [
+        "@mechanical/workflows-coordination"
+       ],
+       "export-named-from": [
+        "@mechanical/workflows-development"
+       ],
+       "export-namespace-from": [
+        "@mechanical/workflows-composition"
+       ],
+       "export-type-from": [
+        "@mechanical/workflows-composition"
+       ],
+       "dynamic-import": [
+        "@mechanical/workflows-composition"
+       ],
+       "require": [
+        "@mechanical/workflows-composition"
+       ],
+       "require-template": [
+        "@mechanical/workflows-coordination"
+       ],
+       "import-equals": [
+        "@mechanical/workflows-composition"
+       ],
+       "import-type-node": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-bound": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-direct": [
+        "@mechanical/workflows-coordination"
+       ],
+       "create-require-assigned": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-nullish-assigned": [
+        "@mechanical/workflows-development"
+       ],
+       "create-require-or-assigned": [
+        "@mechanical/workflows-coordination"
+       ],
+       "create-require-and-assigned": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-member": [
+        "@mechanical/workflows-development"
+       ],
+       "reference-types": [
+        "@mechanical/workflows-composition"
+       ],
+       "reference-path": [
+        "../../node_modules/@mechanical/workflows-composition/index.d.ts"
+       ],
+       "require-parenthesized": [
+        "@mechanical/workflows-composition"
+       ],
+       "require-wrapped-specifier": [
+        "@mechanical/workflows-development"
+       ],
+       "create-require-wrapped-target": [
+        "@mechanical/workflows-coordination"
+       ],
+       "create-require-asserted": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-parenthesized": [
+        "@mechanical/workflows-coordination"
+       ],
+       "create-require-let": [
+        "@mechanical/workflows-composition"
+       ],
+       "create-require-var": [
+        "@mechanical/workflows-development"
+       ],
+       "create-require-local": [
+        "@mechanical/workflows-coordination"
+       ],
+       "import-other": [],
+       "import-equals-entity": [],
+       "dynamic-specifier": [],
+       "require-template-substitution": [],
+       "require-alias": [],
+       "require-member": [],
+       "create-require-renamed": [],
+       "require-resolve": [],
+       "require-resolve-bare": [],
+       "create-require-element": [],
+       "create-require-destructured": [],
+       "create-require-parameter": [],
+       "create-require-property": [],
+       "create-require-string-callee": [],
+       "create-require-other-member": [],
+       "create-require-compound": [],
+       "assigned-other": [],
+       "require-string-callee": [],
+       "import-type-template": [],
+       "require-no-argument": [],
+       "import-type-reference": [],
+       "kind-ts": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-dts": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-tsx": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-mts": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-cts": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-js": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-jsx": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-mjs": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-cjs": [
+        "@mechanical/workflows-composition"
+       ],
+       "kind-tsx-jsx": [
+        "@mechanical/workflows-coordination"
+       ],
+       "kind-jsx-jsx": [
+        "@mechanical/workflows-coordination"
+       ],
+       "kind-md": [],
+       "kind-js-comparison": [],
+       "kind-mjs-comparison": [],
+       "kind-cjs-comparison": [],
+       "kind-js-jsdoc": []
+      },
+      "closed": {
+       "src": [],
+       "manifests": [],
+       "controls": {
+        "manifest-dependency": [
+         "scope"
+        ],
+        "manifest-dev": [
+         "scope"
+        ],
+        "manifest-optional": [
+         "scope"
+        ],
+        "manifest-peer": [
+         "scope"
+        ],
+        "manifest-bundled": [
+         "scope"
+        ],
+        "manifest-bundled-spelling": [
+         "scope"
+        ],
+        "manifest-dependency-list": [
+         "scope"
+        ],
+        "manifest-dev-list": [
+         "scope"
+        ],
+        "manifest-optional-list": [
+         "scope"
+        ],
+        "manifest-peer-list": [
+         "scope"
+        ],
+        "manifest-bundled-map": [
+         "scope"
+        ],
+        "manifest-bundled-spelling-map": [
+         "scope"
+        ],
+        "manifest-own-name": [
+         "scope"
+        ],
+        "manifest-npm-alias": [
+         "scope"
+        ],
+        "manifest-git-spec": [],
+        "manifest-jsr-spec": [
+         "scope"
+        ],
+        "manifest-overrides": [
+         "scope"
+        ],
+        "unscoped-name": [],
+        "near-scope": [],
+        "upper-scope": [],
+        "manifest-npm-infix": [
+         "scope"
+        ],
+        "manifest-list-non-string": [
+         "scope"
+        ],
+        "lock-path": [
+         "scope"
+        ],
+        "lock-nested": [
+         "scope"
+        ],
+        "lock-declared": [
+         "scope"
+        ],
+        "lock-entry-name": [
+         "scope"
+        ],
+        "lock-alias-spec": [
+         "scope"
+        ],
+        "lock-v1-dependencies": [
+         "scope"
+        ],
+        "lock-own-name": [
+         "scope"
+        ],
+        "lock-workspace-path": [
+         "scope"
+        ],
+        "lock-null-entry": [
+         "scope"
+        ],
+        "lock-not-object": [],
+        "lock-v1-nested": [
+         "scope"
+        ],
+        "import-static": [
+         "scope"
+        ],
+        "import-type": [
+         "scope",
+         "field 1 Composition",
+         "field 2 Composition"
+        ],
+        "import-side-effect": [
+         "scope"
+        ],
+        "import-default": [
+         "scope"
+        ],
+        "import-namespace": [
+         "scope"
+        ],
+        "export-from": [
+         "scope"
+        ],
+        "export-named-from": [
+         "scope"
+        ],
+        "export-namespace-from": [
+         "scope"
+        ],
+        "export-type-from": [
+         "scope",
+         "field 1 Composition"
+        ],
+        "dynamic-import": [
+         "scope"
+        ],
+        "require": [
+         "scope"
+        ],
+        "require-template": [
+         "scope"
+        ],
+        "import-equals": [
+         "scope"
+        ],
+        "import-type-node": [
+         "scope",
+         "field 1 Composition"
+        ],
+        "create-require-bound": [
+         "scope"
+        ],
+        "create-require-direct": [
+         "scope"
+        ],
+        "create-require-assigned": [
+         "scope"
+        ],
+        "create-require-nullish-assigned": [
+         "scope"
+        ],
+        "create-require-or-assigned": [
+         "scope"
+        ],
+        "create-require-and-assigned": [
+         "scope"
+        ],
+        "create-require-member": [
+         "scope"
+        ],
+        "reference-types": [
+         "scope"
+        ],
+        "reference-path": [
+         "scope"
+        ],
+        "require-parenthesized": [
+         "scope"
+        ],
+        "require-wrapped-specifier": [
+         "scope"
+        ],
+        "create-require-wrapped-target": [
+         "scope"
+        ],
+        "create-require-asserted": [
+         "scope"
+        ],
+        "create-require-parenthesized": [
+         "scope"
+        ],
+        "create-require-let": [
+         "scope"
+        ],
+        "create-require-var": [
+         "scope"
+        ],
+        "create-require-local": [
+         "scope"
+        ],
+        "import-other": [],
+        "import-equals-entity": [],
+        "dynamic-specifier": [
+         "scope"
+        ],
+        "require-template-substitution": [],
+        "require-alias": [
+         "scope"
+        ],
+        "require-member": [
+         "scope"
+        ],
+        "create-require-renamed": [
+         "scope"
+        ],
+        "require-resolve": [
+         "scope"
+        ],
+        "require-resolve-bare": [
+         "scope"
+        ],
+        "create-require-element": [
+         "scope"
+        ],
+        "create-require-destructured": [
+         "scope"
+        ],
+        "create-require-parameter": [
+         "scope"
+        ],
+        "create-require-property": [
+         "scope"
+        ],
+        "create-require-string-callee": [
+         "scope"
+        ],
+        "create-require-other-member": [
+         "scope"
+        ],
+        "create-require-compound": [
+         "scope"
+        ],
+        "assigned-other": [
+         "scope"
+        ],
+        "require-string-callee": [
+         "scope"
+        ],
+        "import-type-template": [
+         "scope",
+         "field 1 Composition"
+        ],
+        "require-no-argument": [],
+        "import-type-reference": [
+         "field 2 Composition"
+        ],
+        "kind-ts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-dts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-tsx": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-mts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-cts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-js": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-jsx": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-mjs": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-cjs": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-tsx-jsx": [
+         "scope",
+         "field 1 stepId"
+        ],
+        "kind-jsx-jsx": [
+         "scope",
+         "field 1 stepId"
+        ],
+        "kind-md": [
+         "scope"
+        ],
+        "kind-js-comparison": [
+         "scope"
+        ],
+        "kind-mjs-comparison": [
+         "scope"
+        ],
+        "kind-cjs-comparison": [
+         "scope"
+        ],
+        "kind-js-jsdoc": [
+         "scope"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "id": "T2",
+     "quote": "plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers",
+     "witness": {
+      "slug": "cac-workflow-composition",
+      "spelling": [],
+      "bound": [],
+      "readers": {
+       "workflow_catalog": "quiet",
+       "workflow_inspect": "quiet"
+      },
+      "controls": {
+       "type-name": 1,
+       "program-slug": 1,
+       "snake-case": 1,
+       "embedded": 1,
+       "spaced": 1,
+       "requirement-id": 0,
+       "requirement-id-bare": 0,
+       "requirement-id-two-digit": 0,
+       "requirement-id-twice": 0,
+       "requirement-id-embedded": 1,
+       "requirement-id-suffixed": 1,
+       "requirement-id-lowercase": 1,
+       "requirement-id-no-digits": 1,
+       "requirement-id-hyphen-after": 0,
+       "requirement-id-hyphen-before": 0,
+       "requirement-id-lead-embedded": 0,
+       "requirement-id-between": 1,
+       "dotted": 1,
+       "letter-separated": 0,
+       "unspelled-consumer": 0
+      },
+      "readerControls": {
+       "reader-literal": [
+        "workflow_inspect"
+       ],
+       "reader-template": [
+        "workflow_catalog"
+       ],
+       "reader-comment": [],
+       "reader-longer": [],
+       "reader-longer-prefix": [],
+       "reader-template-substitution": [],
+       "reader-identifier": [],
+       "kind-ts": [
+        "workflow_inspect"
+       ],
+       "kind-dts": [
+        "workflow_inspect"
+       ],
+       "kind-tsx": [
+        "workflow_inspect"
+       ],
+       "kind-mts": [
+        "workflow_inspect"
+       ],
+       "kind-cts": [
+        "workflow_inspect"
+       ],
+       "kind-js": [
+        "workflow_inspect"
+       ],
+       "kind-jsx": [
+        "workflow_inspect"
+       ],
+       "kind-mjs": [
+        "workflow_inspect"
+       ],
+       "kind-cjs": [
+        "workflow_inspect"
+       ],
+       "kind-tsx-jsx": [
+        "workflow_catalog"
+       ],
+       "kind-jsx-jsx": [
+        "workflow_catalog"
+       ],
+       "kind-md": [],
+       "kind-js-comparison": [],
+       "kind-mjs-comparison": [],
+       "kind-cjs-comparison": [],
+       "kind-js-jsdoc": []
+      },
+      "separators": {
+       "scanned": 65536,
+       "quiet": [
+        "0030",
+        "0031",
+        "0032",
+        "0033",
+        "0034",
+        "0035",
+        "0036",
+        "0037",
+        "0038",
+        "0039",
+        "0041",
+        "0042",
+        "0043",
+        "0044",
+        "0045",
+        "0046",
+        "0047",
+        "0048",
+        "0049",
+        "004a",
+        "004b",
+        "004c",
+        "004d",
+        "004e",
+        "004f",
+        "0050",
+        "0051",
+        "0052",
+        "0053",
+        "0054",
+        "0055",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "005a",
+        "0061",
+        "0062",
+        "0063",
+        "0064",
+        "0065",
+        "0066",
+        "0067",
+        "0068",
+        "0069",
+        "006a",
+        "006b",
+        "006c",
+        "006d",
+        "006e",
+        "006f",
+        "0070",
+        "0071",
+        "0072",
+        "0073",
+        "0074",
+        "0075",
+        "0076",
+        "0077",
+        "0078",
+        "0079",
+        "007a"
+       ]
+      },
+      "requirementBoundary": {
+       "before": [
+        "0030",
+        "0031",
+        "0032",
+        "0033",
+        "0034",
+        "0035",
+        "0036",
+        "0037",
+        "0038",
+        "0039",
+        "0041",
+        "0042",
+        "0043",
+        "0044",
+        "0045",
+        "0046",
+        "0047",
+        "0048",
+        "0049",
+        "004a",
+        "004b",
+        "004c",
+        "004d",
+        "004e",
+        "004f",
+        "0050",
+        "0051",
+        "0052",
+        "0053",
+        "0054",
+        "0055",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "005a",
+        "005f",
+        "0061",
+        "0062",
+        "0063",
+        "0064",
+        "0065",
+        "0066",
+        "0067",
+        "0068",
+        "0069",
+        "006a",
+        "006b",
+        "006c",
+        "006d",
+        "006e",
+        "006f",
+        "0070",
+        "0071",
+        "0072",
+        "0073",
+        "0074",
+        "0075",
+        "0076",
+        "0077",
+        "0078",
+        "0079",
+        "007a"
+       ],
+       "after": [
+        "0041",
+        "0042",
+        "0043",
+        "0044",
+        "0045",
+        "0046",
+        "0047",
+        "0048",
+        "0049",
+        "004a",
+        "004b",
+        "004c",
+        "004d",
+        "004e",
+        "004f",
+        "0050",
+        "0051",
+        "0052",
+        "0053",
+        "0054",
+        "0055",
+        "0056",
+        "0057",
+        "0058",
+        "0059",
+        "005a",
+        "005f",
+        "0061",
+        "0062",
+        "0063",
+        "0064",
+        "0065",
+        "0066",
+        "0067",
+        "0068",
+        "0069",
+        "006a",
+        "006b",
+        "006c",
+        "006d",
+        "006e",
+        "006f",
+        "0070",
+        "0071",
+        "0072",
+        "0073",
+        "0074",
+        "0075",
+        "0076",
+        "0077",
+        "0078",
+        "0079",
+        "007a"
+       ]
+      },
+      "closed": {
+       "controls": {
+        "type-name": [],
+        "program-slug": [],
+        "snake-case": [],
+        "embedded": [],
+        "spaced": [],
+        "requirement-id": [],
+        "requirement-id-bare": [],
+        "requirement-id-two-digit": [],
+        "requirement-id-twice": [],
+        "requirement-id-embedded": [],
+        "requirement-id-suffixed": [],
+        "requirement-id-lowercase": [],
+        "requirement-id-no-digits": [],
+        "requirement-id-hyphen-after": [],
+        "requirement-id-hyphen-before": [],
+        "requirement-id-lead-embedded": [],
+        "requirement-id-between": [],
+        "dotted": [],
+        "letter-separated": [],
+        "unspelled-consumer": [
+         "field 1 sourceArtifactId",
+         "field 1 sourceArtifactId"
+        ],
+        "reader-literal": [],
+        "reader-template": [],
+        "reader-comment": [],
+        "reader-longer": [],
+        "reader-longer-prefix": [],
+        "reader-template-substitution": [],
+        "reader-identifier": []
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "A",
+   "label": "(a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture",
+     "witness": {
+      "checks": [
+       "foreign",
+       "lost"
+      ],
+      "fixtures": "4f075ab5cb24dfd1",
+      "honest": {
+       "F1": [],
+       "F2": []
+      },
+      "projection": {
+       "F1": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx01"
+          }
+         },
+         {
+          "row": "step:verify",
+          "ref": {
+           "provider": "forge",
+           "type": "operation",
+           "id": "op-fx-0001"
+          }
+         },
+         {
+          "row": "step:supervise",
+          "ref": {
+           "provider": "furnace",
+           "type": "attempt",
+           "id": "frn-atm-fx-0001-1"
+          }
+         },
+         {
+          "row": "source:gate",
+          "ref": {
+           "provider": "forge",
+           "type": "gate-step",
+           "id": "op-fx-0001/lint",
+           "scope": "fx-workspace"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 0,
+         "rows": []
+        }
+       },
+       "F2": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx02"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 3,
+         "rows": [
+          {
+           "row": "step:plan",
+           "reason": "unmapped"
+          },
+          {
+           "row": "source:context",
+           "reason": "unavailable"
+          },
+          {
+           "row": "source:lint",
+           "reason": "unavailable"
+          }
+         ]
+        }
+       }
+      },
+      "mutants": {
+       "mint-task": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-attempt": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-gate": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-and-count": {
+        "F1": [],
+        "F2": []
+       },
+       "rewrite-id": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": [
+         "foreign",
+         "lost"
+        ]
+       },
+       "swap-provider": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": [
+         "foreign",
+         "lost"
+        ]
+       },
+       "add-scope": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": [
+         "foreign",
+         "lost"
+        ]
+       },
+       "drop-scope": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": []
+       },
+       "drop-ref": {
+        "F1": [
+         "lost"
+        ],
+        "F2": [
+         "lost"
+        ]
+       },
+       "drop-unmapped": {
+        "F1": [],
+        "F2": []
+       },
+       "count-only": {
+        "F1": [],
+        "F2": []
+       },
+       "miscount": {
+        "F1": [],
+        "F2": []
+       },
+       "retype": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": [
+         "foreign",
+         "lost"
+        ]
+       },
+       "ghost-row": {
+        "F1": [
+         "foreign"
+        ],
+        "F2": [
+         "foreign"
+        ]
+       },
+       "swap-rows": {
+        "F1": [
+         "foreign",
+         "lost"
+        ],
+        "F2": []
+       },
+       "reason-pending": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-undefined-id": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-empty-id": {
+        "F1": [],
+        "F2": []
+       }
+      },
+      "fires": {
+       "foreign": true,
+       "lost": true
+      },
+      "bound": {},
+      "quiet": {
+       "swap-reasons": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-refs": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-unmapped": {
+        "F1": [],
+        "F2": []
+       },
+       "duplicate-ref": {
+        "F1": [],
+        "F2": []
+       },
+       "undefined-scope": {
+        "F1": [],
+        "F2": []
+       }
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "and that a row lacking a producer id yields a counted unmapped/unavailable entry",
+     "witness": {
+      "checks": [
+       "uncounted",
+       "miscounted"
+      ],
+      "fixtures": "4f075ab5cb24dfd1",
+      "honest": {
+       "F1": [],
+       "F2": []
+      },
+      "projection": {
+       "F1": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx01"
+          }
+         },
+         {
+          "row": "step:verify",
+          "ref": {
+           "provider": "forge",
+           "type": "operation",
+           "id": "op-fx-0001"
+          }
+         },
+         {
+          "row": "step:supervise",
+          "ref": {
+           "provider": "furnace",
+           "type": "attempt",
+           "id": "frn-atm-fx-0001-1"
+          }
+         },
+         {
+          "row": "source:gate",
+          "ref": {
+           "provider": "forge",
+           "type": "gate-step",
+           "id": "op-fx-0001/lint",
+           "scope": "fx-workspace"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 0,
+         "rows": []
+        }
+       },
+       "F2": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx02"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 3,
+         "rows": [
+          {
+           "row": "step:plan",
+           "reason": "unmapped"
+          },
+          {
+           "row": "source:context",
+           "reason": "unavailable"
+          },
+          {
+           "row": "source:lint",
+           "reason": "unavailable"
+          }
+         ]
+        }
+       }
+      },
+      "mutants": {
+       "mint-task": {
+        "F1": [],
+        "F2": [
+         "uncounted",
+         "miscounted"
+        ]
+       },
+       "mint-attempt": {
+        "F1": [],
+        "F2": [
+         "uncounted",
+         "miscounted"
+        ]
+       },
+       "mint-gate": {
+        "F1": [],
+        "F2": [
+         "uncounted",
+         "miscounted"
+        ]
+       },
+       "mint-and-count": {
+        "F1": [],
+        "F2": []
+       },
+       "rewrite-id": {
+        "F1": [],
+        "F2": []
+       },
+       "swap-provider": {
+        "F1": [],
+        "F2": []
+       },
+       "add-scope": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-scope": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-ref": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-unmapped": {
+        "F1": [],
+        "F2": [
+         "uncounted",
+         "miscounted"
+        ]
+       },
+       "count-only": {
+        "F1": [],
+        "F2": [
+         "uncounted",
+         "miscounted"
+        ]
+       },
+       "miscount": {
+        "F1": [
+         "miscounted"
+        ],
+        "F2": [
+         "miscounted"
+        ]
+       },
+       "retype": {
+        "F1": [],
+        "F2": []
+       },
+       "ghost-row": {
+        "F1": [],
+        "F2": []
+       },
+       "swap-rows": {
+        "F1": [],
+        "F2": []
+       },
+       "reason-pending": {
+        "F1": [],
+        "F2": [
+         "uncounted"
+        ]
+       },
+       "mint-undefined-id": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-empty-id": {
+        "F1": [],
+        "F2": []
+       }
+      },
+      "fires": {
+       "uncounted": true,
+       "miscounted": true
+      },
+      "bound": {},
+      "quiet": {
+       "swap-reasons": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-refs": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-unmapped": {
+        "F1": [],
+        "F2": []
+       },
+       "duplicate-ref": {
+        "F1": [],
+        "F2": []
+       },
+       "undefined-scope": {
+        "F1": [],
+        "F2": []
+       }
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "quote": "never a minted id",
+     "witness": {
+      "checks": [
+       "minted"
+      ],
+      "fixtures": "4f075ab5cb24dfd1",
+      "honest": {
+       "F1": [],
+       "F2": []
+      },
+      "projection": {
+       "F1": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx01"
+          }
+         },
+         {
+          "row": "step:verify",
+          "ref": {
+           "provider": "forge",
+           "type": "operation",
+           "id": "op-fx-0001"
+          }
+         },
+         {
+          "row": "step:supervise",
+          "ref": {
+           "provider": "furnace",
+           "type": "attempt",
+           "id": "frn-atm-fx-0001-1"
+          }
+         },
+         {
+          "row": "source:gate",
+          "ref": {
+           "provider": "forge",
+           "type": "gate-step",
+           "id": "op-fx-0001/lint",
+           "scope": "fx-workspace"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 0,
+         "rows": []
+        }
+       },
+       "F2": {
+        "refs": [
+         {
+          "row": "step:build",
+          "ref": {
+           "provider": "beads",
+           "type": "work",
+           "id": "wb-fx02"
+          }
+         }
+        ],
+        "unmapped": {
+         "count": 3,
+         "rows": [
+          {
+           "row": "step:plan",
+           "reason": "unmapped"
+          },
+          {
+           "row": "source:context",
+           "reason": "unavailable"
+          },
+          {
+           "row": "source:lint",
+           "reason": "unavailable"
+          }
+         ]
+        }
+       }
+      },
+      "mutants": {
+       "mint-task": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       },
+       "mint-attempt": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       },
+       "mint-gate": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       },
+       "mint-and-count": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       },
+       "rewrite-id": {
+        "F1": [],
+        "F2": []
+       },
+       "swap-provider": {
+        "F1": [],
+        "F2": []
+       },
+       "add-scope": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-scope": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-ref": {
+        "F1": [],
+        "F2": []
+       },
+       "drop-unmapped": {
+        "F1": [],
+        "F2": []
+       },
+       "count-only": {
+        "F1": [],
+        "F2": []
+       },
+       "miscount": {
+        "F1": [],
+        "F2": []
+       },
+       "retype": {
+        "F1": [],
+        "F2": []
+       },
+       "ghost-row": {
+        "F1": [],
+        "F2": []
+       },
+       "swap-rows": {
+        "F1": [],
+        "F2": []
+       },
+       "reason-pending": {
+        "F1": [],
+        "F2": []
+       },
+       "mint-undefined-id": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       },
+       "mint-empty-id": {
+        "F1": [],
+        "F2": [
+         "minted"
+        ]
+       }
+      },
+      "fires": {
+       "minted": true
+      },
+      "bound": {},
+      "quiet": {
+       "swap-reasons": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-refs": {
+        "F1": [],
+        "F2": []
+       },
+       "reorder-unmapped": {
+        "F1": [],
+        "F2": []
+       },
+       "duplicate-ref": {
+        "F1": [],
+        "F2": []
+       },
+       "undefined-scope": {
+        "F1": [],
+        "F2": []
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "static census over src that no module constructs a bd/wb- task id",
+     "witness": {
+      "prefixes": [
+       "bd-",
+       "wb-"
+      ],
+      "idFields": [
+       "step",
+       "source-artifact"
+      ],
+      "compositionWord": "composition",
+      "live": [],
+      "controls": {
+       "task-template": [
+        "1 task prefix stepId"
+       ],
+       "task-bd-template": [
+        "1 task prefix stepId"
+       ],
+       "task-concat": [
+        "1 task prefix composition,stepId"
+       ],
+       "task-template-chain": [
+        "1 task prefix stepId"
+       ],
+       "task-parenthesized-chain": [
+        "1 task prefix stepId"
+       ],
+       "task-split-literal": [
+        "1 task prefix stepId"
+       ],
+       "task-native-ref": [
+        "1 task native-ref stepId"
+       ],
+       "task-id-key": [
+        "1 task id-key sourceArtifactId"
+       ],
+       "task-work-key": [
+        "1 task id-key stepId"
+       ],
+       "task-beads-work-key": [
+        "1 task id-key stepId"
+       ],
+       "task-issue-key": [
+        "1 task id-key stepId"
+       ],
+       "task-hyphen-key": [
+        "1 task id-key stepId"
+       ],
+       "task-member-id": [
+        "1 task prefix step.id"
+       ],
+       "task-nested-holder": [
+        "1 task prefix step.id"
+       ],
+       "task-ids-member": [
+        "1 task prefix sourceArtifacts.ids"
+       ],
+       "task-snake-field": [
+        "1 task prefix step_id"
+       ],
+       "task-kebab-key": [
+        "1 task prefix source-artifact-id"
+       ],
+       "task-plural-field": [
+        "1 task prefix stepsIds"
+       ],
+       "task-composition-word": [
+        "1 task prefix compositions"
+       ],
+       "task-prose-prefix": [
+        "1 task prefix stepId"
+       ],
+       "task-copy": [],
+       "task-no-field": [],
+       "task-split-around-value": [],
+       "task-embedded-prefix": [],
+       "task-template-literal-chain": [
+        "1 task prefix stepId"
+       ],
+       "task-later-value-prefix": [
+        "1 task prefix stepId"
+       ],
+       "task-trailing-prefix": [],
+       "task-digit-preceded": [],
+       "task-upper-preceded": [],
+       "task-underscore-preceded": [
+        "1 task prefix stepId"
+       ],
+       "task-hyphen-preceded": [
+        "1 task prefix stepId"
+       ],
+       "task-dot-preceded": [
+        "1 task prefix stepId"
+       ],
+       "task-token-chars": [
+        "1 task prefix stepId"
+       ],
+       "task-token-broken": [],
+       "task-upper-prefix": [],
+       "task-field-trailing-word": [
+        "1 task prefix stepIdList"
+       ],
+       "task-field-leading-word": [],
+       "task-acronym-field": [
+        "1 task prefix stepID"
+       ],
+       "task-holder-longer-name": [],
+       "task-decomposition": [],
+       "task-later-composition-word": [],
+       "task-spaced-element-key": [
+        "1 task prefix step id"
+       ],
+       "task-template-element-key": [
+        "1 task prefix source-artifact-id"
+       ],
+       "task-wrapped-holder": [
+        "1 task prefix step.id"
+       ],
+       "task-non-null-holder": [
+        "1 task prefix step.id"
+       ],
+       "task-wrapped-operand": [
+        "1 task prefix stepId"
+       ],
+       "task-wrapped-key-value": [
+        "1 task id-key+prefix stepId"
+       ],
+       "task-wrapped-ref-id": [
+        "1 task native-ref+prefix stepId"
+       ],
+       "task-key-longer": [],
+       "task-standalone-parenthesized": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-as": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-satisfies": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-non-null": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-angle": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-receiver": [
+        "1 task prefix stepId"
+       ],
+       "task-standalone-argument": [
+        "1 task prefix stepId"
+       ],
+       "task-inner-parenthesized": [
+        "1 task prefix sourceArtifactId,stepId"
+       ],
+       "task-inner-as": [
+        "1 task prefix sourceArtifactId,stepId"
+       ],
+       "task-inner-satisfies": [
+        "1 task prefix sourceArtifactId,stepId"
+       ],
+       "task-inner-non-null": [
+        "1 task prefix sourceArtifactId,stepId"
+       ],
+       "task-inner-angle": [
+        "1 task prefix sourceArtifactId,stepId"
+       ],
+       "task-private-field": [
+        "4 task prefix #stepId"
+       ],
+       "task-private-holder": [
+        "4 task prefix #step.id"
+       ],
+       "task-private-member": [
+        "4 task prefix step.#id"
+       ],
+       "task-private-leading-word": [],
+       "task-private-holder-longer": [],
+       "task-optional-member": [
+        "1 task prefix step.id"
+       ],
+       "task-leading-underscore-field": [
+        "1 task prefix _stepId"
+       ],
+       "task-token-colon": [],
+       "task-holder-element-key": [],
+       "task-holder-call": [],
+       "task-field-string-argument": [],
+       "task-holder-half-match": [],
+       "task-member-identifier-key": [],
+       "task-member-const-key": [],
+       "task-other-operator": [],
+       "task-other-family": [
+        "1 attempt prefix stepId"
+       ],
+       "qa-module": [],
+       "examples-src-module": [],
+       "indirect-binding": [],
+       "task-destructured-id": [],
+       "task-destructured-id-alias": [],
+       "concat-call": [],
+       "join-call": [],
+       "prefix-constant": [],
+       "task-compound": [],
+       "kind-ts": [
+        "3 task prefix stepId"
+       ],
+       "kind-dts": [
+        "3 task prefix stepId"
+       ],
+       "kind-tsx": [
+        "3 task prefix stepId"
+       ],
+       "kind-mts": [
+        "3 task prefix stepId"
+       ],
+       "kind-cts": [
+        "3 task prefix stepId"
+       ],
+       "kind-js": [
+        "3 task prefix stepId"
+       ],
+       "kind-jsx": [
+        "3 task prefix stepId"
+       ],
+       "kind-mjs": [
+        "3 task prefix stepId"
+       ],
+       "kind-cjs": [
+        "3 task prefix stepId"
+       ],
+       "kind-tsx-jsx": [
+        "1 task prefix stepId"
+       ],
+       "kind-jsx-jsx": [
+        "1 task prefix stepId"
+       ],
+       "kind-md": [],
+       "kind-js-comparison": [],
+       "kind-mjs-comparison": [],
+       "kind-cjs-comparison": [],
+       "kind-js-jsdoc": []
+      },
+      "inFamily": [
+       "task-template",
+       "task-bd-template",
+       "task-concat",
+       "task-template-chain",
+       "task-parenthesized-chain",
+       "task-split-literal",
+       "task-native-ref",
+       "task-id-key",
+       "task-work-key",
+       "task-beads-work-key",
+       "task-issue-key",
+       "task-hyphen-key",
+       "task-member-id",
+       "task-nested-holder",
+       "task-ids-member",
+       "task-snake-field",
+       "task-kebab-key",
+       "task-plural-field",
+       "task-composition-word",
+       "task-prose-prefix",
+       "task-template-literal-chain",
+       "task-later-value-prefix",
+       "task-underscore-preceded",
+       "task-hyphen-preceded",
+       "task-dot-preceded",
+       "task-token-chars",
+       "task-field-trailing-word",
+       "task-acronym-field",
+       "task-spaced-element-key",
+       "task-template-element-key",
+       "task-wrapped-holder",
+       "task-non-null-holder",
+       "task-wrapped-operand",
+       "task-wrapped-key-value",
+       "task-wrapped-ref-id",
+       "task-standalone-parenthesized",
+       "task-standalone-as",
+       "task-standalone-satisfies",
+       "task-standalone-non-null",
+       "task-standalone-angle",
+       "task-standalone-receiver",
+       "task-standalone-argument",
+       "task-inner-parenthesized",
+       "task-inner-as",
+       "task-inner-satisfies",
+       "task-inner-non-null",
+       "task-inner-angle",
+       "task-private-field",
+       "task-private-holder",
+       "task-private-member",
+       "task-optional-member",
+       "task-leading-underscore-field",
+       "kind-ts",
+       "kind-dts",
+       "kind-tsx",
+       "kind-mts",
+       "kind-cts",
+       "kind-js",
+       "kind-jsx",
+       "kind-mjs",
+       "kind-cjs",
+       "kind-tsx-jsx",
+       "kind-jsx-jsx"
+      ],
+      "scan": {
+       "bd-": {
+        "blocking": [
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ],
+        "running": [
+         "002d",
+         "002e",
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "005f",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ]
+       },
+       "wb-": {
+        "blocking": [
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ],
+        "running": [
+         "002d",
+         "002e",
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "005f",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ]
+       }
+      },
+      "closed": {
+       "src": [],
+       "bound": [],
+       "controls": {
+        "task-template": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-bd-template": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-concat": [
+         "field 1 composition",
+         "field 1 stepId",
+         "field 1 composition",
+         "field 1 stepId"
+        ],
+        "task-template-chain": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-parenthesized-chain": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-split-literal": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-native-ref": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-id-key": [
+         "field 1 sourceArtifactId",
+         "field 1 sourceArtifactId"
+        ],
+        "task-work-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-beads-work-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-issue-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-hyphen-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-member-id": [
+         "field 1 step.id"
+        ],
+        "task-nested-holder": [
+         "field 1 step.id"
+        ],
+        "task-ids-member": [
+         "field 1 sourceArtifacts.ids"
+        ],
+        "task-snake-field": [
+         "field 1 step_id",
+         "field 1 step_id"
+        ],
+        "task-kebab-key": [
+         "field 1 \"source-artifact-id\""
+        ],
+        "task-plural-field": [
+         "field 1 stepsIds",
+         "field 1 stepsIds"
+        ],
+        "task-composition-word": [
+         "field 1 compositions",
+         "field 1 compositions"
+        ],
+        "task-prose-prefix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-copy": [],
+        "task-no-field": [],
+        "task-split-around-value": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-embedded-prefix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-template-literal-chain": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-later-value-prefix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-trailing-prefix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-digit-preceded": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-upper-preceded": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-underscore-preceded": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-hyphen-preceded": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-dot-preceded": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-token-chars": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-token-broken": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-upper-prefix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-field-trailing-word": [
+         "field 1 stepIdList",
+         "field 1 stepIdList"
+        ],
+        "task-field-leading-word": [],
+        "task-acronym-field": [
+         "field 1 stepID",
+         "field 1 stepID"
+        ],
+        "task-holder-longer-name": [],
+        "task-decomposition": [],
+        "task-later-composition-word": [],
+        "task-spaced-element-key": [
+         "field 1 \"step id\""
+        ],
+        "task-template-element-key": [
+         "field 1 \"source-artifact-id\""
+        ],
+        "task-wrapped-holder": [
+         "field 1 step.id"
+        ],
+        "task-non-null-holder": [
+         "field 1 step.id"
+        ],
+        "task-wrapped-operand": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-wrapped-key-value": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-wrapped-ref-id": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-key-longer": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-parenthesized": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-as": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-satisfies": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-non-null": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-angle": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-receiver": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-standalone-argument": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-inner-parenthesized": [
+         "field 1 sourceArtifactId",
+         "field 1 stepId",
+         "field 1 sourceArtifactId",
+         "field 1 stepId"
+        ],
+        "task-inner-as": [
+         "field 1 sourceArtifactId",
+         "field 1 stepId",
+         "field 1 sourceArtifactId",
+         "field 1 stepId"
+        ],
+        "task-inner-satisfies": [
+         "field 1 sourceArtifactId",
+         "field 1 stepId",
+         "field 1 sourceArtifactId",
+         "field 1 stepId"
+        ],
+        "task-inner-non-null": [
+         "field 1 sourceArtifactId",
+         "field 1 stepId",
+         "field 1 sourceArtifactId",
+         "field 1 stepId"
+        ],
+        "task-inner-angle": [
+         "field 1 sourceArtifactId",
+         "field 1 stepId",
+         "field 1 sourceArtifactId",
+         "field 1 stepId"
+        ],
+        "task-private-field": [
+         "field 2 #stepId",
+         "field 4 #stepId"
+        ],
+        "task-private-holder": [
+         "field 4 #step.id"
+        ],
+        "task-private-member": [
+         "field 4 step.#id"
+        ],
+        "task-private-leading-word": [],
+        "task-private-holder-longer": [],
+        "task-optional-member": [
+         "field 1 step.id"
+        ],
+        "task-leading-underscore-field": [
+         "field 1 _stepId",
+         "field 1 _stepId"
+        ],
+        "task-token-colon": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-holder-element-key": [],
+        "task-holder-call": [],
+        "task-field-string-argument": [
+         "field 1 \"stepId\""
+        ],
+        "task-holder-half-match": [],
+        "task-member-identifier-key": [],
+        "task-member-const-key": [],
+        "task-other-operator": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "task-other-family": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "qa-module": [],
+        "examples-src-module": [],
+        "indirect-binding": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "task-destructured-id": [],
+        "task-destructured-id-alias": [],
+        "concat-call": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "join-call": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "prefix-constant": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "task-compound": [
+         "field 1 stepId",
+         "field 3 stepId"
+        ],
+        "kind-ts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-dts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-tsx": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-mts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-cts": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-js": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-jsx": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-mjs": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-cjs": [
+         "scope",
+         "field 3 stepId"
+        ],
+        "kind-tsx-jsx": [
+         "scope",
+         "field 1 stepId"
+        ],
+        "kind-jsx-jsx": [
+         "scope",
+         "field 1 stepId"
+        ],
+        "kind-md": [
+         "scope"
+        ],
+        "kind-js-comparison": [
+         "scope"
+        ],
+        "kind-mjs-comparison": [
+         "scope"
+        ],
+        "kind-cjs-comparison": [
+         "scope"
+        ],
+        "kind-js-jsdoc": [
+         "scope"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "a Forge operation or gate id",
+     "witness": {
+      "providers": [
+       "forge"
+      ],
+      "keys": [
+       "operationid",
+       "gateid",
+       "gatestepid"
+      ],
+      "live": [],
+      "controls": {
+       "forge-native-ref": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-gate-ref": [
+        "1 forge native-ref composition,compositionId"
+       ],
+       "forge-provider-constant": [
+        "2 forge native-ref stepId"
+       ],
+       "forge-shadowed-constant": [
+        "4 forge native-ref stepId",
+        "4 task native-ref stepId"
+       ],
+       "forge-id-key": [
+        "1 forge id-key stepId"
+       ],
+       "forge-gate-key": [
+        "1 forge id-key sourceArtifact.id"
+       ],
+       "forge-computed-key": [
+        "1 forge id-key stepId"
+       ],
+       "forge-key-constant": [
+        "2 forge id-key stepId"
+       ],
+       "forge-wrapped-computed-key": [
+        "1 forge id-key stepId"
+       ],
+       "forge-assignment": [
+        "2 forge id-key stepId"
+       ],
+       "forge-element-assignment": [
+        "2 forge id-key stepId"
+       ],
+       "forge-element-key-constant": [
+        "3 forge id-key stepId"
+       ],
+       "forge-name-assignment": [
+        "3 forge id-key stepId"
+       ],
+       "forge-declaration": [
+        "2 forge id-key stepId"
+       ],
+       "forge-parameter-default": [
+        "1 forge id-key stepId"
+       ],
+       "forge-destructuring-default": [
+        "1 forge id-key stepId"
+       ],
+       "forge-destructuring-alias": [
+        "1 forge id-key stepId"
+       ],
+       "forge-class-property": [
+        "3 forge id-key stepId"
+       ],
+       "forge-gate-step-name": [],
+       "forge-copy": [],
+       "builder-argument": [],
+       "forge-value-chain": [],
+       "forge-provider-import": [],
+       "forge-provider-let": [],
+       "forge-provider-member": [],
+       "forge-key-getter": [],
+       "forge-compound-key": [],
+       "forge-provider-template": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-template-constant": [
+        "2 forge native-ref stepId"
+       ],
+       "forge-provider-as-const": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-constant-as-const": [
+        "2 forge native-ref stepId"
+       ],
+       "forge-provider-satisfies": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-angle": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-angle-mts": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-provider-angle-cts": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-kind-tsx-infix": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-kind-jsx-infix": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-kind-js-infix": [
+        "1 forge native-ref stepId"
+       ],
+       "forge-key-inner-hash": [],
+       "forge-other-family": [
+        "1 task prefix stepId"
+       ],
+       "forge-other-property": [],
+       "forge-provider-other-key": [],
+       "forge-key-comparison": [],
+       "forge-compound-key-template": [],
+       "forge-nested-destructuring": [
+        "1 forge id-key stepId"
+       ],
+       "forge-provider-shorthand": [
+        "2 forge native-ref stepId"
+       ],
+       "forge-wrapped-target": [
+        "2 forge id-key stepId"
+       ],
+       "forge-nullish-assignment": [
+        "2 forge id-key stepId"
+       ],
+       "forge-or-assignment": [
+        "2 forge id-key stepId"
+       ],
+       "forge-and-assignment": [
+        "2 forge id-key stepId"
+       ],
+       "forge-private-field": [
+        "3 forge id-key stepId"
+       ],
+       "forge-private-assignment": [
+        "4 forge id-key stepId"
+       ],
+       "forge-let-declaration": [
+        "2 forge id-key stepId"
+       ],
+       "forge-var-declaration": [
+        "2 forge id-key stepId"
+       ],
+       "forge-static-property": [
+        "3 forge id-key stepId"
+       ],
+       "forge-accessor-property": [
+        "3 forge id-key stepId"
+       ],
+       "forge-array-destructuring-default": [
+        "1 forge id-key stepId"
+       ],
+       "other-provider-ref": [],
+       "forge-key-method": [],
+       "forge-provider-destructured": [],
+       "forge-id-binding": [],
+       "forge-key-binding": []
+      },
+      "inFamily": [
+       "forge-native-ref",
+       "forge-gate-ref",
+       "forge-provider-constant",
+       "forge-shadowed-constant",
+       "forge-id-key",
+       "forge-gate-key",
+       "forge-computed-key",
+       "forge-key-constant",
+       "forge-wrapped-computed-key",
+       "forge-assignment",
+       "forge-element-assignment",
+       "forge-element-key-constant",
+       "forge-name-assignment",
+       "forge-declaration",
+       "forge-parameter-default",
+       "forge-destructuring-default",
+       "forge-destructuring-alias",
+       "forge-class-property",
+       "forge-provider-template",
+       "forge-provider-template-constant",
+       "forge-provider-as-const",
+       "forge-provider-constant-as-const",
+       "forge-provider-satisfies",
+       "forge-provider-angle",
+       "forge-provider-angle-mts",
+       "forge-provider-angle-cts",
+       "forge-kind-tsx-infix",
+       "forge-kind-jsx-infix",
+       "forge-kind-js-infix",
+       "forge-nested-destructuring",
+       "forge-provider-shorthand",
+       "forge-wrapped-target",
+       "forge-nullish-assignment",
+       "forge-or-assignment",
+       "forge-and-assignment",
+       "forge-private-field",
+       "forge-private-assignment",
+       "forge-let-declaration",
+       "forge-var-declaration",
+       "forge-static-property",
+       "forge-accessor-property",
+       "forge-array-destructuring-default"
+      ],
+      "closed": {
+       "controls": {
+        "forge-native-ref": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-gate-ref": [
+         "field 1 composition",
+         "field 1 compositionId",
+         "field 1 composition",
+         "field 1 compositionId"
+        ],
+        "forge-provider-constant": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-shadowed-constant": [
+         "field 2 stepId",
+         "field 4 stepId"
+        ],
+        "forge-id-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-gate-key": [
+         "field 1 sourceArtifact.id"
+        ],
+        "forge-computed-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-key-constant": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-wrapped-computed-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-assignment": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-element-assignment": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-element-key-constant": [
+         "field 2 stepId",
+         "field 3 stepId"
+        ],
+        "forge-name-assignment": [
+         "field 1 stepId",
+         "field 3 stepId"
+        ],
+        "forge-declaration": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-parameter-default": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-destructuring-default": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-destructuring-alias": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-class-property": [
+         "field 2 stepId",
+         "field 3 stepId"
+        ],
+        "forge-gate-step-name": [],
+        "forge-copy": [],
+        "builder-argument": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-value-chain": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-import": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-provider-let": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-provider-member": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-key-getter": [
+         "field 1 stepId",
+         "field 3 stepId"
+        ],
+        "forge-compound-key": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-provider-template": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-template-constant": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-provider-as-const": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-constant-as-const": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-provider-satisfies": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-angle": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-angle-mts": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-angle-cts": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-kind-tsx-infix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-kind-jsx-infix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-kind-js-infix": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-key-inner-hash": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-other-family": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-other-property": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-other-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-key-comparison": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-compound-key-template": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-nested-destructuring": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-provider-shorthand": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-wrapped-target": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-nullish-assignment": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-or-assignment": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-and-assignment": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-private-field": [
+         "field 2 stepId",
+         "field 3 stepId"
+        ],
+        "forge-private-assignment": [
+         "field 3 stepId",
+         "field 4 stepId"
+        ],
+        "forge-let-declaration": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-var-declaration": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-static-property": [
+         "field 2 stepId",
+         "field 3 stepId"
+        ],
+        "forge-accessor-property": [
+         "field 2 stepId",
+         "field 3 stepId"
+        ],
+        "forge-array-destructuring-default": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "other-provider-ref": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "forge-key-method": [
+         "field 1 stepId",
+         "field 3 stepId"
+        ],
+        "forge-provider-destructured": [
+         "field 2 stepId",
+         "field 2 stepId"
+        ],
+        "forge-id-binding": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ],
+        "forge-key-binding": [
+         "field 1 stepId",
+         "field 2 stepId"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "quote": "or a Furnace frn- Attempt id from composition fields",
+     "witness": {
+      "prefixes": [
+       "frn-"
+      ],
+      "keys": [
+       "attemptid",
+       "furnaceattemptid"
+      ],
+      "live": [],
+      "controls": {
+       "attempt-template": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-concat": [
+        "1 attempt prefix sourceArtifact.id"
+       ],
+       "attempt-native-ref": [
+        "1 attempt native-ref stepId"
+       ],
+       "attempt-id-key": [
+        "1 attempt id-key composition"
+       ],
+       "attempt-furnace-key": [
+        "1 attempt id-key stepId"
+       ],
+       "attempt-element-id": [
+        "1 attempt prefix steps.id"
+       ],
+       "attempt-element-member": [
+        "1 attempt prefix sourceArtifact.id"
+       ],
+       "attempt-template-element-member": [
+        "1 attempt prefix sourceArtifact.id"
+       ],
+       "attempt-no-field": [],
+       "attempt-literal": [],
+       "attempt-standalone-parenthesized": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-as": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-satisfies": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-non-null": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-angle": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-receiver": [
+        "1 attempt prefix stepId"
+       ],
+       "attempt-standalone-argument": [
+        "1 attempt prefix stepId"
+       ],
+       "other-field-name": [],
+       "bare-step-name": [],
+       "attempt-other-family": [
+        "1 forge id-key stepId"
+       ]
+      },
+      "inFamily": [
+       "attempt-template",
+       "attempt-concat",
+       "attempt-native-ref",
+       "attempt-id-key",
+       "attempt-furnace-key",
+       "attempt-element-id",
+       "attempt-element-member",
+       "attempt-template-element-member",
+       "attempt-standalone-parenthesized",
+       "attempt-standalone-as",
+       "attempt-standalone-satisfies",
+       "attempt-standalone-non-null",
+       "attempt-standalone-angle",
+       "attempt-standalone-receiver",
+       "attempt-standalone-argument"
+      ],
+      "scan": {
+       "frn-": {
+        "blocking": [
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ],
+        "running": [
+         "002d",
+         "002e",
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "005f",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ]
+       }
+      },
+      "closed": {
+       "controls": {
+        "attempt-template": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-concat": [
+         "field 1 sourceArtifact.id"
+        ],
+        "attempt-native-ref": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-id-key": [
+         "field 1 composition",
+         "field 1 composition"
+        ],
+        "attempt-furnace-key": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-element-id": [
+         "field 1 steps.id"
+        ],
+        "attempt-element-member": [
+         "field 1 sourceArtifact.id"
+        ],
+        "attempt-template-element-member": [
+         "field 1 sourceArtifact.id"
+        ],
+        "attempt-no-field": [],
+        "attempt-literal": [],
+        "attempt-standalone-parenthesized": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-as": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-satisfies": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-non-null": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-angle": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-receiver": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "attempt-standalone-argument": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ],
+        "other-field-name": [],
+        "bare-step-name": [],
+        "attempt-other-family": [
+         "field 1 stepId",
+         "field 1 stepId"
+        ]
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) docs/workbench/07 § MechanicalWorkflows gains one falsifiable sentence bound by the docs/07 census (wb-6hb.11 shape)",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "docs/workbench/07 § MechanicalWorkflows gains one falsifiable sentence",
+     "witness": {
+      "heading": "MechanicalWorkflows is an ordinary function library",
+      "sentence": "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.",
+      "holding": 1,
+      "plants": {
+       "dropped": 0,
+       "doubled": 2,
+       "moved": 0,
+       "extended": 1,
+       "listed": 0,
+       "prefixed": 1,
+       "retitled": 0,
+       "held": {
+        "dropped": false,
+        "doubled": false,
+        "moved": false,
+        "extended": false,
+        "listed": false,
+        "prefixed": false,
+        "retitled": false
+       },
+       "secondHeading": "",
+       "secondHeadingBare": "",
+       "subHeading": "MechanicalWorkflows is an ordinary function library",
+       "html": true,
+       "statusReplaced": false,
+       "statusEmbedded": false,
+       "twoSentences": 2,
+       "status": {
+        "status-whole": true,
+        "status-punctuated": true,
+        "status-letter-before": false,
+        "status-digit-before": false,
+        "status-underscore-before": false,
+        "status-hyphen-before": false,
+        "status-letter-after": false,
+        "status-digit-after": false,
+        "status-underscore-after": false,
+        "status-hyphen-after": false,
+        "status-capitalized": false
+       },
+       "sentences": {
+        "sentence-two": 2,
+        "sentence-lower-case-after": 1,
+        "sentence-unspaced": 1,
+        "sentence-question": 1,
+        "sentence-exclamation": 1
+       }
+      },
+      "scans": {
+       "status": {
+        "before": [
+         "002d",
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "005f",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ],
+        "after": [
+         "002d",
+         "0030",
+         "0031",
+         "0032",
+         "0033",
+         "0034",
+         "0035",
+         "0036",
+         "0037",
+         "0038",
+         "0039",
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a",
+         "005f",
+         "0061",
+         "0062",
+         "0063",
+         "0064",
+         "0065",
+         "0066",
+         "0067",
+         "0068",
+         "0069",
+         "006a",
+         "006b",
+         "006c",
+         "006d",
+         "006e",
+         "006f",
+         "0070",
+         "0071",
+         "0072",
+         "0073",
+         "0074",
+         "0075",
+         "0076",
+         "0077",
+         "0078",
+         "0079",
+         "007a"
+        ]
+       },
+       "sentence": {
+        "stops": [
+         "002e"
+        ],
+        "gaps": [
+         "0009",
+         "000a",
+         "000b",
+         "000c",
+         "000d",
+         "0020",
+         "00a0",
+         "1680",
+         "2000",
+         "2001",
+         "2002",
+         "2003",
+         "2004",
+         "2005",
+         "2006",
+         "2007",
+         "2008",
+         "2009",
+         "200a",
+         "2028",
+         "2029",
+         "202f",
+         "205f",
+         "3000",
+         "feff"
+        ],
+        "capitals": [
+         "0041",
+         "0042",
+         "0043",
+         "0044",
+         "0045",
+         "0046",
+         "0047",
+         "0048",
+         "0049",
+         "004a",
+         "004b",
+         "004c",
+         "004d",
+         "004e",
+         "004f",
+         "0050",
+         "0051",
+         "0052",
+         "0053",
+         "0054",
+         "0055",
+         "0056",
+         "0057",
+         "0058",
+         "0059",
+         "005a"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "bound by the docs/07 census (wb-6hb.11 shape)",
+     "witness": {
+      "holder": "test/workbench-docs07-provider-rules.census.ts",
+      "row": "W1",
+      "frozen": "FROZEN_W1",
+      "shape": {
+       "census": true,
+       "judge": true
+      },
+      "binding": [
+       "today | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers | T1",
+       "today | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers | T2",
+       "producer-references-only | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A1",
+       "counted-unmapped | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A2",
+       "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A3",
+       "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B1",
+       "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B2",
+       "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B3"
+      ],
+      "plants": {
+       "shapes": {
+        "holder-test-suffix": {
+         "census": false,
+         "judge": true
+        },
+        "holder-no-header": {
+         "census": false,
+         "judge": true
+        },
+        "holder-no-judge": {
+         "census": true,
+         "judge": false
+        },
+        "holder-judge-elsewhere": {
+         "census": true,
+         "judge": false
+        },
+        "holder-judge-alias": {
+         "census": true,
+         "judge": true
+        },
+        "holder-header-not-first": {
+         "census": false,
+         "judge": true
+        },
+        "holder-other-header": {
+         "census": false,
+         "judge": true
+        },
+        "holder-renamed-to-judge": {
+         "census": true,
+         "judge": false
+        },
+        "holder-namespace-import": {
+         "census": true,
+         "judge": false
+        },
+        "holder-default-import": {
+         "census": true,
+         "judge": false
+        },
+        "holder-census-infix": {
+         "census": false,
+         "judge": true
+        }
+       },
+       "frozen": {
+        "frozen-literal": [
+         "quote | a",
+         "today | test"
+        ],
+        "frozen-non-literal": [
+         "<non-literal Identifier>",
+         "today | test"
+        ],
+        "frozen-other-name": null,
+        "frozen-not-array": null,
+        "frozen-as-const": [
+         "quote | a",
+         "today | test"
+        ],
+        "frozen-template-element": [
+         "quote | a",
+         "today | test"
+        ],
+        "frozen-template-substitution": [
+         "<non-literal TemplateExpression>"
+        ],
+        "frozen-no-initializer": null
+       }
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "membership": {
+  "plants": {
+   "tiled": {
+    "runs": [],
+    "misplaced": []
+   },
+   "comma-after": {
+    "runs": [],
+    "misplaced": []
+   },
+   "semicolon-after": {
+    "runs": [],
+    "misplaced": []
+   },
+   "stop-after": {
+    "runs": [],
+    "misplaced": []
+   },
+   "colon-after": {
+    "runs": [
+     "alpha beta:"
+    ],
+    "misplaced": [
+     "alpha beta"
+    ]
+   },
+   "mid-word-end": {
+    "runs": [
+     "alpha"
+    ],
+    "misplaced": [
+     "alph"
+    ]
+   },
+   "mid-word-start": {
+    "runs": [
+     "xalpha"
+    ],
+    "misplaced": [
+     "alpha"
+    ]
+   },
+   "twice": {
+    "runs": [
+     "alpha",
+     "alpha"
+    ],
+    "misplaced": [
+     "alpha"
+    ]
+   },
+   "gap": {
+    "runs": [
+     "and"
+    ],
+    "misplaced": []
+   },
+   "trailing-run": {
+    "runs": [
+     "gamma"
+    ],
+    "misplaced": []
+   },
+   "leading-run": {
+    "runs": [
+     "alpha"
+    ],
+    "misplaced": []
+   },
+   "lead-not-first": {
+    "runs": [
+     "(c)"
+    ],
+    "misplaced": []
+   },
+   "lead-twice": {
+    "runs": [
+     "(y)"
+    ],
+    "misplaced": []
+   },
+   "no-lead": {
+    "runs": [],
+    "misplaced": []
+   },
+   "one-char-quotes": {
+    "runs": [],
+    "misplaced": []
+   },
+   "empty-quote": {
+    "runs": [],
+    "misplaced": [
+     ""
+    ]
+   },
+   "quote-trailing-space": {
+    "runs": [
+     ","
+    ],
+    "misplaced": []
+   }
+  },
+  "scans": {
+   "before": [
+    "0009",
+    "000a",
+    "000b",
+    "000c",
+    "000d",
+    "0020",
+    "00a0",
+    "1680",
+    "2000",
+    "2001",
+    "2002",
+    "2003",
+    "2004",
+    "2005",
+    "2006",
+    "2007",
+    "2008",
+    "2009",
+    "200a",
+    "2028",
+    "2029",
+    "202f",
+    "205f",
+    "3000",
+    "feff"
+   ],
+   "after": [
+    "0009",
+    "000a",
+    "000b",
+    "000c",
+    "000d",
+    "0020",
+    "002c",
+    "002e",
+    "003b",
+    "00a0",
+    "1680",
+    "2000",
+    "2001",
+    "2002",
+    "2003",
+    "2004",
+    "2005",
+    "2006",
+    "2007",
+    "2008",
+    "2009",
+    "200a",
+    "2028",
+    "2029",
+    "202f",
+    "205f",
+    "3000",
+    "feff"
+   ],
+   "afterStop": [
+    "0009",
+    "000a",
+    "000b",
+    "000c",
+    "000d",
+    "0020",
+    "00a0",
+    "1680",
+    "2000",
+    "2001",
+    "2002",
+    "2003",
+    "2004",
+    "2005",
+    "2006",
+    "2007",
+    "2008",
+    "2009",
+    "200a",
+    "2028",
+    "2029",
+    "202f",
+    "205f",
+    "3000",
+    "feff"
+   ],
+   "lead": [
+    "0061",
+    "0062",
+    "0063",
+    "0064",
+    "0065",
+    "0066",
+    "0067",
+    "0068",
+    "0069",
+    "006a",
+    "006b",
+    "006c",
+    "006d",
+    "006e",
+    "006f",
+    "0070",
+    "0071",
+    "0072",
+    "0073",
+    "0074",
+    "0075",
+    "0076",
+    "0077",
+    "0078",
+    "0079",
+    "007a"
+   ],
+   "leadOpen": [
+    "0028"
+   ],
+   "leadClose": [
+    "0029"
+   ],
+   "leadGap": [
+    "0020"
+   ]
+  }
+ }
+}

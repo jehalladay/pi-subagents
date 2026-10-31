@@ -38,9 +38,18 @@
  *     a map the manifest does not name stays outside.
  *  M1b the relayed entries (wb-gwr.2, the 'relayed' use): equal to that filing's facet list (RELAYED_LIST, verbatim from its
  *     title), each phrase read onto the fields it names; M4 holds each relayed field to moving the facets and nothing else.
+ *     The phrase list is held two ways (wb-noq8, the landing-646 follow-up): RELAYED_FIELDS' phrases are exactly RELAYED_LIST's
+ *     segmentation (its leading article dropped, split at each ', ' and ' or '), in order, so a phrase row deleted together with
+ *     its frozen-literal element still reds, the zero-path 'consistency mode' row included; and RELAYED_LIST is held to an anchor
+ *     outside this file, wb-gwr.2's row in the tracked bead export (.beads/issues.jsonl, its title only, never its notes: the text
+ *     after its first 'carries ' up to the first ' (' after that), so a phrase removed from every literal here still reds. Each
+ *     phrase is read onto its fields through the adapter (wb-noq8 cut #2, the refusal's F1): each field of a phrase, moved alone to
+ *     its ALTERNATE value, moves facets of exactly one kind, the kind that opens that phrase and no other (each hyphen read as a
+ *     space; the kinds are the adapter's own), every relayed manifest field judged once, so two rows' field lists swapped red.
  *
- * Display paths added: none. Test-only: the one file read is the adapter module's own source (refusalSites, read-only, for M3);
- * no write, process, clock or network access; the provider row injects its reader. SPELLING (two landed censuses read this file):
+ * Display paths added: none. Test-only: the files read are the adapter module's own source (refusalSites, read-only, for M3) and
+ * the tracked bead export (read-only, for M1b: the one wb-gwr.2 row's title); no write, process, clock or network access; the
+ * provider row injects its reader. SPELLING (two landed censuses read this file):
  * the requirement id is cited by this bead's id and never spelled whole, since its program acronym is a needle the wb-zzb4 absence
  * census reads in a test file outside a census module; and the title's opening clause is restated rather than quoted, since the
  * title's own words for that declaration are a mention the wb-dqf.1 census's Z2 judge reads in every Pi file outside its holders.
@@ -52,7 +61,7 @@ import {describe, expect, it} from 'vitest';
 import {CapabilityError, CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
 import {
   HYPERUNIX_CONSUMED_FIELDS, HYPERUNIX_EXECUTION_KINDS, type HyperUnixConsumedField, type HyperUnixProjectionTopology,
-  type HyperUnixTopologyContext, hxLiveInvariant, hyperunixTopology,
+  type HyperUnixResultFacet, type HyperUnixTopologyContext, hxLiveInvariant, hyperunixTopology,
 } from '../src/workbench/hyperunix-observer.js';
 import {registerHyperUnixFind} from '../src/workbench/providers/hyperunix.js';
 
@@ -83,8 +92,10 @@ const TITLE_FIELDS: readonly (readonly [string, readonly string[]])[] = [
 ];
 /** wb-gwr.2's facet list, verbatim from its title ("When an HX result Pi consumes carries ..."), each phrase read onto the fields
  * the adapter relays for it. hyperunix.result/1 has no consistency-mode field, so that phrase names none (the observer suite's
- * R1-RESIDUAL row pins the absence against the vendored declaration). */
+ * R1-RESIDUAL row pins the absence against the vendored declaration). M1b holds the list to that title in the tracked export. */
 const RELAYED_LIST = 'a view identity or consistency mode, provider versions, conflict or incomplete-region statuses';
+/** The bead whose title RELAYED_LIST is quoted from (M1b's outside anchor). */
+const RELAYED_BEAD = 'wb-gwr.2';
 const RELAYED_FIELDS: readonly (readonly [string, readonly string[]])[] = [
   ['view identity', ['source.view']],
   ['consistency mode', []],
@@ -108,6 +119,37 @@ const unread = (reads: ReadonlySet<string>): string[] =>
   PATHS.filter(path => !reads.has(path) && !(path.endsWith('.*') && [...reads].some(read => read.startsWith(path.slice(0, -1)))));
 /** "rows (length only)": any read below the row list's own path (an element, a row body) is a row-body read. */
 const rowBodyReads = (reads: ReadonlySet<string>): string[] => [...reads].filter(read => read.startsWith('source.rows[]')).sort();
+
+/** A facet list's phrases: its leading article dropped, split at each ', ' and ' or ' (M1b). */
+const phrasesOf = (list: string): string[] => list.replace(/^a /, '').split(/, | or /);
+/** The title of id's one row in the tracked bead export; the row's notes are never read, so a later note append never moves M1b. */
+function exportTitle(id: string): string {
+  const titles: string[] = [];
+  for (const line of readFileSync(new URL('../.beads/issues.jsonl', import.meta.url), 'utf8').split('\n')) {
+    if (!line.includes(`"id":"${id}"`)) continue;
+    const row = JSON.parse(line) as JsonValue;
+    if (isJsonRecord(row) && row.id === id && typeof row.title === 'string') titles.push(row.title);
+  }
+  const [title, ...others] = titles;
+  if (title === undefined || others.length > 0) throw new Error(`the tracked bead export carries ${titles.length} rows for ${id}`);
+  return title;
+}
+/** The facet list a title quotes: the text after its first 'carries ' up to the first ' (' after that. */
+function quotedFacetList(title: string): string {
+  const start = title.indexOf('carries ');
+  const end = start < 0 ? -1 : title.indexOf(' (', start);
+  if (start < 0 || end < 0) throw new Error(`the title carries no "carries ... (" span: ${title}`);
+  return title.slice(start + 'carries '.length, end);
+}
+/** The kinds of the facets one list carries and the other lacks, either way, each kind once and sorted (M1b). */
+function movedKinds(before: readonly HyperUnixResultFacet[], after: readonly HyperUnixResultFacet[]): string[] {
+  const had = new Set(before.map(facet => JSON.stringify(facet)));
+  const has = new Set(after.map(facet => JSON.stringify(facet)));
+  const moved = [...before.filter(facet => !has.has(JSON.stringify(facet))), ...after.filter(facet => !had.has(JSON.stringify(facet)))];
+  return [...new Set(moved.map(facet => facet.kind))].sort();
+}
+/** Whether a facet kind opens a phrase, each hyphen in either read as a space (M1b: 'provider-version' opens 'provider versions'). */
+const opens = (kind: string, phrase: string): boolean => phrase.replaceAll('-', ' ').startsWith(kind.replaceAll('-', ' '));
 
 /** Wraps a JSON value so each field read through it lands in reads (see THE INSTRUMENT above). */
 function traced(value: JsonValue, reads: Set<string>, path = ''): JsonValue {
@@ -352,8 +394,29 @@ describe('wb-3ht.1 HyperUnix consumed-field manifest (evidence-projection R5, st
     expect(RELAYED_LIST.indexOf('view identity')).toBeLessThan(RELAYED_LIST.indexOf('consistency mode'));
     expect(RELAYED_LIST.indexOf('provider versions')).toBeLessThan(RELAYED_LIST.indexOf('conflict'));
     expect(RELAYED_LIST.indexOf('conflict')).toBeLessThan(RELAYED_LIST.indexOf('incomplete-region statuses'));
+    // The other way (wb-noq8): the list's phrases are exactly the rows', in order, so no phrase row - a zero-path one included -
+    // can leave with its literal element while the list keeps the phrase.
+    expect(RELAYED_FIELDS.map(([phrase]) => phrase)).toStrictEqual(phrasesOf(RELAYED_LIST));
+    // The outside anchor: the list is the one wb-gwr.2's title quotes in the tracked bead export, so a phrase removed from every
+    // literal of this file (its row, its frozen-literal element, the list and its ordering check) still reds.
+    expect(quotedFacetList(exportTitle(RELAYED_BEAD))).toBe(RELAYED_LIST);
     expect([...pathsOf('relayed')].sort()).toStrictEqual(RELAYED_FIELDS.flatMap(([, paths]) => paths).sort());
     expect(new Set(HYPERUNIX_CONSUMED_FIELDS.map(field => field.use))).toStrictEqual(new Set(['envelope', 'observed', 'rows', 'relayed']));
+    // Each phrase read onto the fields it names, held through the adapter (wb-noq8 refusal #1 F1, the gate's TRANSPOSE members):
+    // each of a phrase's fields, moved alone to its ALTERNATE value, moves facets of exactly one kind, and that kind opens that
+    // phrase and no other, so two rows' field lists swapped, whole or one field each, red.
+    const before = hyperunixTopology(output(), context).facets ?? [];
+    let judged = 0;
+    for (const [phrase, paths] of RELAYED_FIELDS) for (const path of paths) {
+      const next = ALTERNATE[path];
+      if (next === undefined) throw new Error(`no alternate for ${path}`);
+      const kinds = movedKinds(before, hyperunixTopology(setAt(output(), path, next), context).facets ?? []);
+      expect(kinds, `${phrase}: ${path} moves facets of one kind`).toHaveLength(1);
+      expect(RELAYED_FIELDS.filter(([other]) => opens(kinds[0] ?? '', other)).map(([other]) => other), `${phrase}: ${path} moves ${kinds[0]}`)
+        .toStrictEqual([phrase]);
+      judged++;
+    }
+    expect(judged).toBe(pathsOf('relayed').length);
   });
 
   it('M2: every projectable kind under both licences reads exactly the manifest, and the traced projection equals the untraced one', () => {
