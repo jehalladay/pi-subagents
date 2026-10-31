@@ -842,6 +842,18 @@
                 ],
                 "equal": 57,
                 "differsFromScope": true
+              },
+              "envelopeRootDiffers": {
+                "readings": 114,
+                "kinds": [
+                  "refused"
+                ],
+                "categories": [
+                  "validation"
+                ],
+                "messages": [
+                  "ReactiveFiber topology refused: source.workspace needs an rfw_ id and the reading workspace root."
+                ]
               }
             },
             "(read admission independent of scoring)": {
@@ -869,7 +881,8 @@
               "facts": [
                 "outOfScope",
                 "authorizedRoot",
-                "atAuthorizedRoot"
+                "atAuthorizedRoot",
+                "envelopeRootDiffers"
               ]
             },
             {
