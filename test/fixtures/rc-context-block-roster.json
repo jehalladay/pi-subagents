@@ -294,7 +294,131 @@
    "descriptor",
    "comma",
    "comma-key",
-   "comma-const-key"
+   "comma-const-key",
+   "or-assigned",
+   "and-assigned",
+   "for-of-target",
+   "array-first-after-spread",
+   "for-of-later-item",
+   "nested-array-binding",
+   "parameter-array-pattern",
+   "chained-assign",
+   "assignment-value",
+   "nullish-assignment-value",
+   "or-assignment-value",
+   "and-assignment-value",
+   "logical-assignment-left",
+   "iife",
+   "iife-function",
+   "call-method",
+   "call-inline",
+   "apply-method",
+   "call-this-parameter",
+   "function-helper",
+   "method-helper",
+   "function-expression-helper",
+   "named-member",
+   "named-destructured",
+   "assigned-renamed",
+   "assigned-rest",
+   "array-spread",
+   "reflect-get-computed",
+   "reflective-later-argument",
+   "direct-later-argument",
+   "call-later-argument",
+   "apply-later-item",
+   "this-parameter-direct",
+   "class-method-helper",
+   "static-method-helper",
+   "private-method-helper",
+   "call-member-relay",
+   "apply-member-relay",
+   "apply-inline",
+   "call-function-expression",
+   "apply-function-expression",
+   "reflective-third-argument",
+   "reflective-first-of-three",
+   "for-of-first-item",
+   "for-of-third-item",
+   "array-third-after-spread",
+   "assignment-value-name",
+   "logical-assignment-value-name",
+   "conditional-false-arm",
+   "comma-wrapped-operand",
+   "let-key",
+   "conflicting-key",
+   "shadowed-parameter-key",
+   "shadowed-binding-key",
+   "template-const-key",
+   "template-key",
+   "sum-key",
+   "template-expression-key",
+   "asserted-key",
+   "string-key-binding",
+   "mixed-arms",
+   "mixed-items",
+   "array-binding-asserted",
+   "apply-asserted-list",
+   "call-wrapped-callee",
+   "result-shorthand-binding",
+   "for-of-asserted-list",
+   "named-assigned",
+   "reflective-spaced-callee",
+   "assigned-computed",
+   "module-wide-name",
+   "paren-assigned-target",
+   "paren-logical-target",
+   "asserted-assigned-target",
+   "angle-asserted-target",
+   "satisfied-target",
+   "non-null-assigned-target",
+   "paren-for-of-target",
+   "asserted-for-of-target",
+   "collision-nested-function",
+   "collision-nested-arrow",
+   "collision-object-method",
+   "collision-class-method",
+   "collision-relay",
+   "collision-relay-earlier",
+   "collision-earlier-declaration",
+   "string-named-method",
+   "string-named-class-method",
+   "string-named-static-method",
+   "const-named-method",
+   "const-named-class-method",
+   "literal-named-method",
+   "template-named-method",
+   "sum-named-method",
+   "template-expression-named-method",
+   "call-string-named-relay",
+   "apply-string-named-relay",
+   "satisfied-for-of-target",
+   "non-null-for-of-target",
+   "angle-asserted-for-of-target",
+   "collision-third-declaration",
+   "class-expression-method-helper",
+   "let-helper",
+   "var-helper",
+   "call-named-method",
+   "apply-named-method",
+   "array-binding-default",
+   "reflect-get-const-key",
+   "wrapped-helper-initializer",
+   "member-callee-function",
+   "numeric-named-method",
+   "infinity-named-method",
+   "numeric-named-class-method",
+   "numeric-named-static-method",
+   "numeric-named-class-expression-method",
+   "bigint-named-method",
+   "escaped-string-named-method",
+   "reflective-Object.values",
+   "reflective-Object.entries",
+   "reflective-Object.assign",
+   "reflective-Object.getOwnPropertyDescriptors",
+   "reflective-Reflect.ownKeys",
+   "reflective-JSON.stringify",
+   "reflective-structuredClone"
   ],
   "quietProbes": [
    "other-member",
@@ -303,7 +427,55 @@
    "string-result",
    "reflect-other-member",
    "descriptor-other-member",
-   "array-other-element"
+   "array-other-element",
+   "bare-for-in",
+   "bare-reflective",
+   "bare-keyed",
+   "other-module",
+   "imported-return",
+   "local-return",
+   "callback-parameter",
+   "object-member",
+   "class-field",
+   "array-rest",
+   "for-of-variable",
+   "apply-list",
+   "assigned-result-property",
+   "array-assignment-pattern",
+   "assigned-target-default",
+   "bind-partial",
+   "reflect-apply",
+   "this-argument",
+   "named-alias",
+   "callback-function",
+   "for-of-array-pattern",
+   "for-of-pattern-target",
+   "assigned-helper",
+   "property-arrow-helper",
+   "class-field-arrow-helper",
+   "constructor-parameter",
+   "new-function-expression",
+   "spread-argument",
+   "element-callee",
+   "comma-callee",
+   "tagged-template",
+   "bind-then-call",
+   "reflective-element-callee",
+   "reflective-optional-callee",
+   "reflective-alias",
+   "imported-key",
+   "numeric-key",
+   "rest-parameter",
+   "rest-parameter-later",
+   "spread-before-argument",
+   "apply-list-spread",
+   "getter-helper",
+   "destructured-helper",
+   "parameter-default-helper",
+   "conditional-helper",
+   "new-function-declaration",
+   "unresolved-named-method",
+   "nested-array-after-spread"
   ],
   "surfacePins": {
    "Pi type": "C2",
@@ -1095,6 +1267,378 @@
         ],
         "comma-const-key": [
          "2 element computed"
+        ],
+        "or-assigned": [
+         "3 member blocks"
+        ],
+        "and-assigned": [
+         "3 member blocks"
+        ],
+        "for-of-target": [
+         "3 member blocks"
+        ],
+        "array-first-after-spread": [
+         "2 member blocks"
+        ],
+        "for-of-later-item": [
+         "2 member blocks"
+        ],
+        "nested-array-binding": [
+         "2 member blocks"
+        ],
+        "parameter-array-pattern": [
+         "1 member blocks"
+        ],
+        "chained-assign": [
+         "4 member blocks"
+        ],
+        "assignment-value": [
+         "2 member blocks"
+        ],
+        "nullish-assignment-value": [
+         "2 member blocks"
+        ],
+        "or-assignment-value": [
+         "2 member blocks"
+        ],
+        "and-assignment-value": [
+         "2 member blocks"
+        ],
+        "logical-assignment-left": [
+         "2 member blocks"
+        ],
+        "iife": [
+         "1 member blocks"
+        ],
+        "iife-function": [
+         "2 member blocks"
+        ],
+        "call-method": [
+         "1 member blocks"
+        ],
+        "call-inline": [
+         "1 member blocks"
+        ],
+        "apply-method": [
+         "1 member blocks"
+        ],
+        "call-this-parameter": [
+         "2 member blocks"
+        ],
+        "function-helper": [
+         "2 member blocks"
+        ],
+        "method-helper": [
+         "3 member blocks"
+        ],
+        "function-expression-helper": [
+         "2 member blocks"
+        ],
+        "named-member": [
+         "1 member blocks"
+        ],
+        "named-destructured": [
+         "2 binding blocks"
+        ],
+        "assigned-renamed": [
+         "2 assigned blocks"
+        ],
+        "assigned-rest": [
+         "2 assigned rest"
+        ],
+        "array-spread": [
+         "1 spread"
+        ],
+        "reflect-get-computed": [
+         "1 reflective Reflect.get computed"
+        ],
+        "reflective-later-argument": [
+         "1 reflective Object.assign"
+        ],
+        "direct-later-argument": [
+         "2 member blocks"
+        ],
+        "call-later-argument": [
+         "1 member blocks"
+        ],
+        "apply-later-item": [
+         "1 member blocks"
+        ],
+        "this-parameter-direct": [
+         "2 member blocks"
+        ],
+        "class-method-helper": [
+         "3 member blocks"
+        ],
+        "static-method-helper": [
+         "3 member blocks"
+        ],
+        "private-method-helper": [
+         "3 member blocks"
+        ],
+        "call-member-relay": [
+         "3 member blocks"
+        ],
+        "apply-member-relay": [
+         "3 member blocks"
+        ],
+        "apply-inline": [
+         "1 member blocks"
+        ],
+        "call-function-expression": [
+         "2 member blocks"
+        ],
+        "apply-function-expression": [
+         "2 member blocks"
+        ],
+        "reflective-third-argument": [
+         "1 reflective Object.assign"
+        ],
+        "reflective-first-of-three": [
+         "1 reflective JSON.stringify"
+        ],
+        "for-of-first-item": [
+         "2 member blocks"
+        ],
+        "for-of-third-item": [
+         "2 member blocks"
+        ],
+        "array-third-after-spread": [
+         "2 member blocks"
+        ],
+        "assignment-value-name": [
+         "3 member blocks"
+        ],
+        "logical-assignment-value-name": [
+         "3 member blocks"
+        ],
+        "conditional-false-arm": [
+         "1 member blocks"
+        ],
+        "comma-wrapped-operand": [
+         "1 member blocks"
+        ],
+        "let-key": [
+         "3 element computed"
+        ],
+        "conflicting-key": [
+         "3 element computed"
+        ],
+        "shadowed-parameter-key": [
+         "2 element computed"
+        ],
+        "shadowed-binding-key": [
+         "2 element computed"
+        ],
+        "template-const-key": [
+         "2 element blocks"
+        ],
+        "template-key": [
+         "1 element blocks"
+        ],
+        "sum-key": [
+         "1 element blocks"
+        ],
+        "template-expression-key": [
+         "2 element blocks"
+        ],
+        "asserted-key": [
+         "1 element blocks"
+        ],
+        "string-key-binding": [
+         "1 binding blocks"
+        ],
+        "mixed-arms": [
+         "1 spread"
+        ],
+        "mixed-items": [
+         "3 member blocks"
+        ],
+        "array-binding-asserted": [
+         "2 member blocks"
+        ],
+        "apply-asserted-list": [
+         "1 member blocks"
+        ],
+        "call-wrapped-callee": [
+         "1 member blocks"
+        ],
+        "result-shorthand-binding": [
+         "2 spread"
+        ],
+        "for-of-asserted-list": [
+         "2 member blocks"
+        ],
+        "named-assigned": [
+         "3 assigned blocks"
+        ],
+        "reflective-spaced-callee": [
+         "1 reflective Object.values"
+        ],
+        "assigned-computed": [
+         "2 assigned computed"
+        ],
+        "module-wide-name": [
+         "2 member blocks"
+        ],
+        "paren-assigned-target": [
+         "3 member blocks"
+        ],
+        "paren-logical-target": [
+         "3 member blocks"
+        ],
+        "asserted-assigned-target": [
+         "3 member blocks"
+        ],
+        "angle-asserted-target": [
+         "3 member blocks"
+        ],
+        "satisfied-target": [
+         "3 member blocks"
+        ],
+        "non-null-assigned-target": [
+         "3 member blocks"
+        ],
+        "paren-for-of-target": [
+         "3 member blocks"
+        ],
+        "asserted-for-of-target": [
+         "3 member blocks"
+        ],
+        "collision-nested-function": [
+         "2 member blocks"
+        ],
+        "collision-nested-arrow": [
+         "1 member blocks"
+        ],
+        "collision-object-method": [
+         "2 member blocks"
+        ],
+        "collision-class-method": [
+         "2 member blocks"
+        ],
+        "collision-relay": [
+         "1 member blocks"
+        ],
+        "collision-relay-earlier": [
+         "6 member blocks"
+        ],
+        "collision-earlier-declaration": [
+         "8 member blocks"
+        ],
+        "string-named-method": [
+         "3 member blocks"
+        ],
+        "string-named-class-method": [
+         "3 member blocks"
+        ],
+        "string-named-static-method": [
+         "3 member blocks"
+        ],
+        "const-named-method": [
+         "4 member blocks"
+        ],
+        "const-named-class-method": [
+         "4 member blocks"
+        ],
+        "literal-named-method": [
+         "3 member blocks"
+        ],
+        "template-named-method": [
+         "3 member blocks"
+        ],
+        "sum-named-method": [
+         "3 member blocks"
+        ],
+        "template-expression-named-method": [
+         "4 member blocks"
+        ],
+        "call-string-named-relay": [
+         "3 member blocks"
+        ],
+        "apply-string-named-relay": [
+         "3 member blocks"
+        ],
+        "satisfied-for-of-target": [
+         "3 member blocks"
+        ],
+        "non-null-for-of-target": [
+         "3 member blocks"
+        ],
+        "angle-asserted-for-of-target": [
+         "3 member blocks"
+        ],
+        "collision-third-declaration": [
+         "12 member blocks"
+        ],
+        "class-expression-method-helper": [
+         "3 member blocks"
+        ],
+        "let-helper": [
+         "1 member blocks"
+        ],
+        "var-helper": [
+         "2 member blocks"
+        ],
+        "call-named-method": [
+         "3 member blocks"
+        ],
+        "apply-named-method": [
+         "3 member blocks"
+        ],
+        "array-binding-default": [
+         "2 member blocks"
+        ],
+        "reflect-get-const-key": [
+         "2 reflective Reflect.get blocks"
+        ],
+        "wrapped-helper-initializer": [
+         "1 member blocks"
+        ],
+        "member-callee-function": [
+         "2 member blocks"
+        ],
+        "numeric-named-method": [
+         "2 declaration unpinned"
+        ],
+        "infinity-named-method": [
+         "2 declaration unpinned"
+        ],
+        "numeric-named-class-method": [
+         "2 declaration unpinned"
+        ],
+        "numeric-named-static-method": [
+         "2 declaration unpinned"
+        ],
+        "numeric-named-class-expression-method": [
+         "2 declaration unpinned"
+        ],
+        "bigint-named-method": [
+         "2 declaration unpinned"
+        ],
+        "escaped-string-named-method": [
+         "3 member blocks"
+        ],
+        "reflective-Object.values": [
+         "1 reflective Object.values"
+        ],
+        "reflective-Object.entries": [
+         "1 reflective Object.entries"
+        ],
+        "reflective-Object.assign": [
+         "1 reflective Object.assign"
+        ],
+        "reflective-Object.getOwnPropertyDescriptors": [
+         "1 reflective Object.getOwnPropertyDescriptors"
+        ],
+        "reflective-Reflect.ownKeys": [
+         "1 reflective Reflect.ownKeys"
+        ],
+        "reflective-JSON.stringify": [
+         "1 reflective JSON.stringify"
+        ],
+        "reflective-structuredClone": [
+         "1 reflective structuredClone"
         ]
        },
        "quiet": {
@@ -1104,7 +1648,55 @@
         "string-result": [],
         "reflect-other-member": [],
         "descriptor-other-member": [],
-        "array-other-element": []
+        "array-other-element": [],
+        "bare-for-in": [],
+        "bare-reflective": [],
+        "bare-keyed": [],
+        "other-module": [],
+        "imported-return": [],
+        "local-return": [],
+        "callback-parameter": [],
+        "object-member": [],
+        "class-field": [],
+        "array-rest": [],
+        "for-of-variable": [],
+        "apply-list": [],
+        "assigned-result-property": [],
+        "array-assignment-pattern": [],
+        "assigned-target-default": [],
+        "bind-partial": [],
+        "reflect-apply": [],
+        "this-argument": [],
+        "named-alias": [],
+        "callback-function": [],
+        "for-of-array-pattern": [],
+        "for-of-pattern-target": [],
+        "assigned-helper": [],
+        "property-arrow-helper": [],
+        "class-field-arrow-helper": [],
+        "constructor-parameter": [],
+        "new-function-expression": [],
+        "spread-argument": [],
+        "element-callee": [],
+        "comma-callee": [],
+        "tagged-template": [],
+        "bind-then-call": [],
+        "reflective-element-callee": [],
+        "reflective-optional-callee": [],
+        "reflective-alias": [],
+        "imported-key": [],
+        "numeric-key": [],
+        "rest-parameter": [],
+        "rest-parameter-later": [],
+        "spread-before-argument": [],
+        "apply-list-spread": [],
+        "getter-helper": [],
+        "destructured-helper": [],
+        "parameter-default-helper": [],
+        "conditional-helper": [],
+        "new-function-declaration": [],
+        "unresolved-named-method": [],
+        "nested-array-after-spread": []
        }
       },
       "reactivefiberLoader": false,
@@ -1697,7 +2289,7 @@
   "B4:9",
   "C1:10",
   "C2:7",
-  "C3:12",
+  "C3:13",
   "C4:6",
   "C5:5",
   "M1:9",
