@@ -55,7 +55,8 @@
  * interface for its member chains down to a leaf and each heritage type, read as the path `<extends T>`, and any other
  * declaration of the name, a class included, read whole as the path `<K FurnaceObserverClient>` - and the type of the
  * constructor's client parameter) equals docs/09's three reads one to one, docs/09 read through the landed rendered
- * binding over every rendered block of its section (Docs09Reading), and a widened interface, a planted augmentation, the
+ * binding over the text units its section's rendered blocks carry (docs09Units, Docs09Reading: the placements read are
+ * the F1 READ SET's, those not counted R-DOCS-UNCOUNTED's), and a widened interface, a planted augmentation, the
  * heritage plants, the non-interface plants and the docs plants are read as widened or refused; W2 every client read carries a timeoutMs bound, the list reads a
  * limit, and the poll loop both budgets, an unbounded plant read as such; W3 every client use is one of the three read calls
  * (no alias, no other member), the SDK is imported for types only (no value import, value re-export, import-equals
@@ -88,7 +89,7 @@
  *   read raw (the first heading by indexOf, bounded only at the next raw '## ', regexes over comments and fences, and Z2's
  *   polling liveness an includes-anywhere check), so the gate's G17 hidden copy, G18 decoy heading, G19 appendix and G20 fence
  *   stayed green; the section is now the landed docsSection binding and both sentences came from rendered paragraph blocks,
- *   each exactly once among them (wb-s876 F1 now reads every rendered block), in a section without HTML, the six docs
+ *   each exactly once among them (wb-s876 F1 now reads the text units of the placements its READ SET names), in a section without HTML, the six docs
  *   plants pinned in W1. F2 a case returning a constant witness
  *   (H9a Z2, H9b Q5) stayed green; the judged set now requires every case to name a reader of the subject. F3 Z2's liveness
  *   read through textOf and Z1 had none, so truncated real reads (H1P, H6) stayed green; both now read the anchors from the
@@ -103,30 +104,40 @@
  *   the criterion, the gate's survivors are cured inside it, and a member outside it is a named residual with a pinned
  *   quiet row. F1, docs-truth over the rendered blocks: the gate's L2-D1 blockquote, L2-D2 list item and L2-D3 table
  *   cell each restated a widened reads sentence beside the real paragraph and stayed green, as both sentences were taken
- *   from paragraph blocks only. READ SET: every rendered block of the bound section - a paragraph, each list item and
- *   each blockquote (the blocks nested in either, as the landed rendered view joins them: a nested table contributes no
- *   cell), a heading, a code block (fenced or indented) and a table (its cells joined) - is read for the two sentences'
- *   subject words (DOCS09_SUBJECTS: "Furnace read", "poll" and "attach", any case, as word parts, matched in
- *   subjectText: numeric character references decoded as the HTML standard decodes them (THE JUDGE's numericReference,
- *   &#146; and &#x92; to U+2019 included) and the six named references amp, lt, gt, quot, apos and nbsp decoded,
- *   NFKC-folded, then format characters (\p{Cf}) and default-ignorable code points (\p{Default_Ignorable_Code_Point})
- *   removed, nothing else folded or removed), for every other named character reference (any `&name;` whose name is not
- *   one of the six, as written: undecoded), for every control character once the references are decoded either way
- *   (decodedMarkup's HTML-standard decoding or decodedCodePoints' code-point decoding: a bidi control, \p{Bidi_Control},
- *   or any other \p{Cc} code point but tab, line feed, form feed and carriage return: controls), and for their frames (matched as written); the reads and verbs are stated only when the section holds no
- *   HTML, no such named reference and no such control character, each subject word occurs exactly once in those units,
- *   in a paragraph, and each frame matches once. Beside the reading, W1 pins docs/09's section whole: its rendered block list (each block's kind,
- *   rendered text and, for a paragraph or list item, its markdown) is part of W1's witness (docsBinding.blocks, the
- *   adoption form's slice equality held to the roster), so on docs/09 itself a block added, removed or re-ordered inside
- *   the section, or one whose kind, rendered text or markdown changes - a restatement the reading does not count
- *   included - reds W1 (a whitespace-only change renders the same and does not; the section holds no blockquote or table
- *   today, so no nested cell sits outside the pin). The RESTATED docs plants (L2-D1, L2-D2, L2-D3, a heading, a fenced
- *   code block, a list nested in a quote, the reads subject without its frame, a "poll" restatement, a narrowed verbs
- *   quote, an "attach" restatement, the subject words spelled with numeric character references, full-width letters or
- *   format characters, the paragraph moved into a list item, and cut #2's and cut #3's members below) each refuse the reading,
- *   asserted and pinned in W1. Outside
- *   the reading: R-DOCS-UNCOUNTED (Q10; covered on docs/09 itself by the block pin) and R-DOCS-ELSEWHERE (Q11, outside
- *   the section and the pin). F2, augmentation heritage: L2-W4b's augmentation that only extends another interface read
+ *   from paragraph blocks only. READ SET (restated by cut #4 to the placements the reader proves, ruling R-B157): the
+ *   text units docs09Units makes of the bound section's rendered blocks - one per top-level paragraph, heading (level 3
+ *   to 6: a level 1 or 2 heading ends the section), code block (fenced or indented) and table (its header and body cells
+ *   joined in one unit), one per item of a top-level list (bullet, ordered or task) and one per top-level blockquote -
+ *   are read for the two sentences' subject words (DOCS09_SUBJECTS: "Furnace read", "poll" and "attach", any case, as
+ *   word parts, matched in subjectText: numeric character references decoded as the HTML standard decodes them (THE
+ *   JUDGE's numericReference, &#146; and &#x92; to U+2019 included) and the six named references amp, lt, gt, quot, apos
+ *   and nbsp decoded (their names in any case), NFKC-folded, then format characters (\p{Cf}) and default-ignorable code
+ *   points (\p{Default_Ignorable_Code_Point}) removed, nothing else folded or removed), for every other named character
+ *   reference (any `&name;` whose name is not one of the six, as written: undecoded), for every control character once
+ *   the references are decoded either way (decodedMarkup's HTML-standard decoding or decodedCodePoints' code-point
+ *   decoding: a bidi control, \p{Bidi_Control}, or any other \p{Cc} code point but tab, line feed, form feed and carriage
+ *   return: controls), and for their frames (matched as written). A list item's unit and a top-level blockquote's unit
+ *   hold the text of the paragraphs, headings, code blocks, lists (each item, a list nested in a list included) and
+ *   blockquotes nested in them, and no table's; a blockquote nested in a list item or in a blockquote adds the text of its
+ *   own paragraphs, headings, code blocks and blockquotes, and of no other block. Each of these placements is a RESTATED
+ *   plant that refuses the reading (W1). NOT COUNTED (the nested-placement hole, named in R-DOCS-UNCOUNTED with pinned
+ *   quiet and block-pin rows, Q10): a list nested in a blockquote that is itself nested in a blockquote or a list item,
+ *   with everything nested in that list - the landed rendered view reads such a blockquote's children as inline text,
+ *   and a list token carries none - and a table nested in a blockquote or a list item add no text to their unit, so a
+ *   subject word, a named reference or a control character there is not read. The reads and verbs are stated only when
+ *   the section holds no HTML (anywhere: inside the hole too), its units hold no such named reference and no such control
+ *   character, each subject word occurs exactly once in those units, in a paragraph, and each frame matches once. Beside
+ *   the reading, W1 pins docs/09's section whole: its rendered block list (each block's kind, rendered text and, for a
+ *   paragraph or list item, its markdown) is part of W1's witness (docsBinding.blocks, the adoption form's slice equality
+ *   held to the roster), so on docs/09 itself a block added, removed or re-ordered inside the section, or one whose kind,
+ *   rendered text or markdown changes - a restatement the reading does not count included - reds W1 (a whitespace-only
+ *   change renders the same and does not; the section holds no list, blockquote or table today, so neither a nested cell
+ *   nor a nested list sits outside the pin). The RESTATED docs plants (L2-D1, L2-D2, L2-D3, a heading, a fenced code
+ *   block, a list nested in a quote, the reads subject without its frame, a "poll" restatement, a narrowed verbs quote,
+ *   an "attach" restatement, the subject words spelled with numeric character references, full-width letters or format
+ *   characters, the paragraph moved into a list item, and cut #2's, cut #3's and cut #4's members below) each refuse the
+ *   reading, asserted and pinned in W1. Outside the reading: R-DOCS-UNCOUNTED (Q10; covered on docs/09 itself by the
+ *   block pin) and R-DOCS-ELSEWHERE (Q11, outside the section and the pin). F2, augmentation heritage: L2-W4b's augmentation that only extends another interface read
  *   as no augmentation. READ SET: each declaration of the name FurnaceObserverClient (declarationsOf: every identifier
  *   spelled with it, by its cooked text, that names its parent node), in the observer module and in every module
  *   augmentation of it in a listed script - an interface declaration read for its member chains and for each heritage
@@ -140,8 +151,8 @@
  *   READ SET: the whole owner filing, pinned byte for byte by FILING_SHA256, and each bound sentence's lead
  *   (OWNER_LEADS) exactly once in it, the L2-F7a duplicate asserted against both in the outside-anchor case; nothing
  *   inside the filing's two blocks is outside the read set, so F3 names no residual (a note appended after a blank line
- *   leaves the filing as it was, G22a). Measured at cut #2's base ee48709 and again at cut #3's base 42ab54d: docs/09's
- *   section renders three paragraphs and no other block, holds no character reference, no non-ASCII character and no
+ *   leaves the filing as it was, G22a). Measured at cut #2's base ee48709, at cut #3's base 42ab54d and at cut #4's
+ *   base 89109cd: docs/09's section renders three paragraphs and no other block, holds no character reference, no non-ASCII character and no
  *   control character, and each subject word occurs once, in the third; the observer declares FurnaceObserverClient once,
  *   as its interface, and no listed script augments the observer, declares the name under another specifier or declares
  *   a global interface Object; the filing reads fb66562ab5acae93, each lead once.
@@ -154,12 +165,12 @@
  *   subject words spelled with named references outside the six (&shy;, &zwnj;, &zwj;, &NoBreak;, &ZeroWidthSpace;,
  *   &afr;/&pfr;, &aopf;/&popf;; in a blockquote, a list item, a table cell, an h3 and the verbs sentence) read as stated,
  *   against the old READ SET's "character references decoded"; the read set now names the six, and any other named
- *   reference refuses the reading (fail closed: the full HTML entity table is not read), the soft hyphen's numeric and
+ *   reference a unit holds refuses the reading (fail closed: the full HTML entity table is not read), the soft hyphen's numeric and
  *   raw spellings of the same rendered page pinned beside them. F3 (rides): default-ignorable code points that are not
  *   format characters (U+034F, U+FE00, U+FE0F, U+3164, U+17B4) inside the subject words read as stated; they are now
  *   removed. In the same F1 class, a right-to-left override (U+202E, raw or as &#x202E;) shows a reader reversed subject
- *   words ("redaer ecanruF" as "Furnace reader") that subjectText holds in stored order; any bidi control now refuses
- *   the reading. Each docs member is pinned in W1's RESTATED list.
+ *   words ("redaer ecanruF" as "Furnace reader") that subjectText holds in stored order; any bidi control a unit holds
+ *   now refuses the reading. Each docs member is pinned in W1's RESTATED list.
  * CUT #3 (the wb-s876 respin: refusal #2, gate s148, outbox O:1436; U1 MEDIUM cured, F2 and F5 taken; the same R739
  *   TERMINAL form, hop 3; ruling R-B125: the F1/U2 class frozen, every member enumerated with a falsifier). U1, the F1
  *   class: the subject word's possessive spelled with a numeric reference in the HTML standard's replacement range
@@ -177,13 +188,35 @@
  *   code-point decoding (decodedCodePoints; a markup file's &#136; between the words still reads as the separator U+0088,
  *   as on trunk, and a Z2 plant pins each half), and controlCharacters reads both. F5: a control character subjectText
  *   keeps (a C1 control the table does not remap, &#141;, a raw U+0081 or U+0092, a C0 control) read as stated; any
- *   control character but tab, line feed, form feed and carriage return in either decoding now refuses the reading
- *   beside the bidi controls (controls), so a reference into 0x80-0x9F, which XML and CommonMark read as its C1
+ *   control character but tab, line feed, form feed and carriage return a unit holds in either decoding now refuses
+ *   the reading beside the bidi controls (controls), so a reference into 0x80-0x9F, which XML and CommonMark read as its C1
  *   control, refuses wherever a unit holds one, a letter the table maps it to between Furnace and read included (&#136;
  *   to U+02C6; &#153; to U+2122, which NFKC folds to TM); each member is pinned in RESTATED. F2: a global declaration of interface Object widens every object type's apparent members,
  *   the client's included, without declaring the name; it is named in R-OTHER-MODULE (Q8 pins a planted one quiet for W1
  *   and the listed scripts holding none). The apostrophe look-alikes and the private-use and unassigned code points
  *   subjectText keeps are named in R-DOCS-UNCOUNTED (Q10), and the references without their semicolon in R-INTERIOR (Q6).
+ * CUT #4 (the wb-s876 FINAL cut: refusal #3, gate s156, outbox O:1515, the F1 class's third failure; ruling R-B157, the
+ *   rule-19 structural exit: the nested-placement rendering coverage is the child bead wb-aalz's, and this cut is bound
+ *   to the fail-closed core - the docs09 claims restated to exactly the placements the reader proves, the
+ *   nested-placement hole stated, no claim word without a falsifier). U1, the F1 class: a list nested in a blockquote
+ *   that is itself nested in a blockquote or a list item adds no text to its unit, so the gate's eight restatements
+ *   there left the reading stated against the old READ SET's "the blocks nested in either". The reader is unchanged and
+ *   the claims are restated (among them the READ SET above, docs09Units, docs09Reading, subjectText, DOCS09_SUBJECTS,
+ *   R-DOCS-UNCOUNTED and OVER-READS): each placement the READ SET names is a RESTATED plant that refuses the reading (the
+ *   members are listed at RESTATED), and the hole is named in R-DOCS-UNCOUNTED - the gate's eight placements; a
+ *   blockquote, a list, a named reference and a control character inside such a list; a table in a quote in a quote and
+ *   in a list item in a list item; and a named reference and a control character in a nested table cell - each quiet
+ *   for the reading and red for the block pin, asserted in Q10, while HTML inside the hole still refuses the reading
+ *   whole. Further claim words of the docs09 reading gained falsifiers: RESTATED plants for the subject-word forms, a
+ *   second subject word in the real paragraph, the six named references where subjectText alone decodes them, a mathematical letter, the reads and
+ *   verbs frames matched as written, the controls' edges and the reference over-reads; a W1 assertion that tab, line
+ *   feed, form feed and carriage return read as no control (whitespaceControlsCopy); and a Q11 pin of R-DOCS-ELSEWHERE's
+ *   Reader adapters line. F2 (a residual-list addition): the possessive apostrophes U+0060,
+ *   U+00B4, U+2032, U+02BB, U+FF40 and U+055A read as stated beside U+02BC and U+2018, and NFKC folds U+00B4 and U+FF40
+ *   (asserted in Q10), so "a look-alike NFKC does not fold" did not describe them; R-DOCS-UNCOUNTED now names every
+ *   possessive apostrophe that is neither U+0027 nor U+2019 once NFKC has folded it, the eight pinned in Q10. Also
+ *   withdrawn as wider than the reader: subjectText's "the rendered view keeps references as written" (it decodes &amp;, which
+ *   ampExposedCopy pins) and OVER-READS' "wherever it sits" (now "wherever a unit holds it").
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi scope: the bead's
  * own row spells the record (Q1); R-HOLDER this file and its roster spell it and are excluded by name (Q2); R-BINARY a file
  * holding a NUL byte is not read (Q3); R-PARAPHRASE "observed boundary" and "observation boundary" are not the record's
@@ -201,13 +234,16 @@
  * as no augmentation) and the listed scripts hold none (globalObjects; cut #3) (Q8); R-COMPUTED-ACCESS a client reached through a computed key is
  * not read as a client use (Q9); R-DOCS-UNCOUNTED the subject-word reading does not count a restatement inside docs/09's
  * section whose subjectText matches none of the subject words (a paraphrase; a subject word holding a confusable letter
- * NFKC does not fold; a possessive whose apostrophe is a look-alike NFKC does not fold, U+02BC or U+2018; a subject word
- * holding a private-use or an unassigned code point, which subjectText keeps as itself - cut #3), a subject word in a
- * table nested in a blockquote or a list item, or one in a link's title: a plant of each reads as stated, while on
- * docs/09 itself each such plant adds a block or changes a block's text or markdown, which the section's block pin (W1)
- * reds (Q10 pins both readings);
+ * NFKC does not fold; a possessive whose apostrophe is neither U+0027 nor U+2019 once NFKC has folded it - U+02BC,
+ * U+2018, U+0060, U+00B4, U+2032, U+02BB, U+FF40 and U+055A pinned, cut #4; a subject word holding a private-use or an
+ * unassigned code point, which subjectText keeps as itself - cut #3), nor text its units do not carry: the
+ * nested-placement hole (cut #4) - a list nested in a blockquote that is itself nested in a blockquote or a list item,
+ * with everything nested in that list, and a table nested in a blockquote or a list item, where a subject word, a named
+ * reference or a control character is not read - a link's or an image's title, and a link reference definition's
+ * title: a plant of each reads as stated, while on docs/09 itself each such plant adds a block or changes a block's text
+ * or markdown, which the section's block pin (W1) reds (Q10 pins both readings and asserts each);
  * R-DOCS-ELSEWHERE a restatement outside the bound section - a later heading of level 1 or 2 (it ends the section),
- * another section of docs/09 (its Reader adapters list already names a Furnace event stream) or another page - is not
+ * another section of docs/09 (its Reader adapters list already names a Furnace event stream, a line Q11 pins) or another page - is not
  * read (Q11); R-ALIASED-MODULE a module declaration whose specifier reaches the observer only
  * through configuration (tsconfig paths, package.json imports) is not read as an augmentation, and the listed scripts
  * hold none (Q12).
@@ -232,11 +268,12 @@
  * an interface reads as a widening too - a namespace, a value, a member, a parameter, a specifier or a property access
  * named by it included, nested anywhere in the observer module or an augmentation (a namespace's own, a function's
  * local), as an interface nested there reads too. In docs/09's section any named character reference other than the six
- * refuses the reading wherever it sits - one that renders no subject word (&copy;), one that renders what a decoded
+ * refuses the reading wherever a unit holds it (no unit holds the nested-placement hole's text) - one that renders
+ * no subject word (&copy;), one that renders what a decoded
  * spelling renders (&NonBreakingSpace; for &nbsp;), one in a code span or code block, where the page shows it as
  * written, and one the rendered view exposes by decoding the &amp; before it (test/helpers/census.ts decodes &amp;
  * first) included - and so does any bidi control, a mark between words included, and any other control character but
- * tab, line feed, form feed and carriage return. A numeric reference is decoded wherever it sits too - in a code span
+ * tab, line feed, form feed and carriage return. A numeric reference is decoded wherever a unit holds it too - in a code span
  * or code block, behind a decoded &amp;, or with more than seven decimal or six hex digits (marked 18.0.11 keeps a
  * reference in its HTML only up to those lengths and escapes a longer one, which the page shows as written) - so a
  * subject word it spells counts (cut #3), and a reference into 0x80-0x9F refuses the reading wherever a unit holds one,
@@ -1094,7 +1131,7 @@ interface Docs09Reading {
   readonly undecoded: readonly string[];
   /** Each control character in the section's units once their references are decoded either way - a bidi control or any other \p{Cc} code point but tab, line feed, form feed and carriage return - as U+XXXX (wb-s876 U2, cut #3). */
   readonly controls: readonly string[];
-  /** For each subject word (DOCS09_SUBJECTS), the block kind of each of its occurrences in the section (wb-s876 F1). */
+  /** For each subject word (DOCS09_SUBJECTS), the block kind of each of its occurrences in the section's text units (docs09Units; wb-s876 F1). */
   readonly subjects: { readonly [word: string]: readonly string[] };
   readonly readsClauses: readonly string[];
   readonly verbsClauses: readonly string[];
@@ -1107,8 +1144,9 @@ const VERBS_SENTENCE = /Pi attachment is read-only and does not (.+?) a Run\./g;
  * The words that name the subjects of docs/09's two Furnace sentences (wb-s876 F1): the reads sentence's "Furnace read"
  * (Furnace, an optional possessive, any run of non-alphanumeric characters, then read) and "poll", the verbs sentence's
  * "attach", each in any case and as a word part, so reader, reading, reads, polling, polls, attachment and attaches all
- * count (an over-read: reattachment and readiness count too). The possessive is an apostrophe, U+0027 or U+2019, then s
- * (after NFKC, so a full-width apostrophe counts). They are matched in subjectText, the mechanical reading its doc names
+ * count (an over-read: reattachment and readiness count too; cut #4 pins each form in RESTATED). The possessive is an
+ * apostrophe, U+0027 or U+2019, then s (after NFKC, so a full-width apostrophe counts and any other apostrophe does not:
+ * R-DOCS-UNCOUNTED). They are matched in subjectText, the mechanical reading its doc names
  * (wb-s876 U2, F3, cut #3); a unit holding a named reference outside the six or a control character (controlCharacters)
  * refuses the reading, and a spelling whose subjectText matches no subject word is not counted (R-DOCS-UNCOUNTED, Q10).
  */
@@ -1118,15 +1156,16 @@ const DOCS09_SUBJECTS: Readonly<Record<string, RegExp>> = {
   attach: /attach/giu,
 };
 /**
- * A unit's text as the subject words are matched in it (wb-s876 F1, U2, F3, cut #3): numeric character references decoded
- * as the HTML standard decodes them (decodedMarkup through numericReference: &#146; and &#x92; to U+2019; 0, a surrogate
- * and a code point above 0x10FFFF to U+FFFD) and the six named references amp, lt, gt, quot, apos and nbsp decoded (the
- * rendered view keeps references as written, and any other named reference refuses the reading: undecodedReferences),
- * compatibility forms folded (NFKC: a full-width or mathematical letter reads as its letter), then format characters
- * (\p{Cf}) and default-ignorable code points (\p{Default_Ignorable_Code_Point}) removed. Nothing else is folded or
- * removed: a confusable letter or apostrophe NFKC does not fold and a private-use or unassigned code point read as
- * themselves (R-DOCS-UNCOUNTED, Q10), and a control character in either decoding refuses the reading instead
- * (controlCharacters: a reference into 0x80-0x9F among them, as decodedCodePoints reads it).
+ * A unit's text as the subject words are matched in it (wb-s876 F1, U2, F3, cut #3, cut #4): numeric character references
+ * decoded as the HTML standard decodes them (decodedMarkup through numericReference: &#146; and &#x92; to U+2019; 0, a
+ * surrogate and a code point above 0x10FFFF to U+FFFD) and the six named references amp, lt, gt, quot, apos and nbsp
+ * decoded, their names in any case (an over-read), any other named reference refusing the reading instead
+ * (undecodedReferences); compatibility forms folded (NFKC: a full-width or mathematical letter reads as its letter); then
+ * format characters (\p{Cf}) and default-ignorable code points (\p{Default_Ignorable_Code_Point}) removed. Nothing else
+ * is folded or removed: a confusable letter NFKC does not fold, an apostrophe that is neither U+0027 nor U+2019 once
+ * folded, and a private-use or unassigned code point read as themselves (R-DOCS-UNCOUNTED, Q10), and a control
+ * character in either decoding refuses the reading instead (controlCharacters: a reference into 0x80-0x9F among them, as
+ * decodedCodePoints reads it). Each decoding, fold and removal is pinned by a RESTATED plant (W1).
  */
 function subjectText(text: string): string {
   return decodedMarkup(text)
@@ -1160,15 +1199,21 @@ interface Docs09Unit {
   readonly text: string;
 }
 /**
- * Every rendered text unit of the bound section (wb-s876 F1), by block kind: a paragraph; each list item, the blocks
- * nested in it included; a heading; a code block, fenced or indented, its whitespace collapsed; and any other block by
- * its marked type - a blockquote, the blocks nested in it included, or a table, its header and body cells joined by a
- * space. An HTML block renders no text: HTML anywhere in the section refuses the reading whole. A thematic break and a
- * link reference definition render no text in the page's flow and a link's title shows only as a tooltip, so the units
- * carry none of their text and a subject word in a link's title is not counted (R-DOCS-UNCOUNTED, Q10; an image's alt
- * text is read, as the rendered view keeps it). A table nested in a blockquote or a list item contributes
- * none of its cells (the landed rendered view joins a nested block's text, and a table carries none), so a subject word
- * there is not counted (R-DOCS-UNCOUNTED, Q10); on docs/09 itself W1 pins the section's whole block list, which reds it.
+ * The rendered text units of the bound section (wb-s876 F1; restated by cut #4 to what the landed rendered view carries,
+ * ruling R-B157): one per top-level paragraph, heading and code block (fenced or indented, its whitespace collapsed), one
+ * per item of a top-level list, and one per other top-level block by its marked type (a blockquote; a table, its header
+ * and body cells joined by a space; a thematic break or a link reference definition, with no text). A list item's unit
+ * and a top-level blockquote's unit hold the landed rendered view's text for it (test/helpers/census.ts blockText): the
+ * paragraphs, headings, code blocks and lists nested in it (each item; a list nested in a list too) and the blockquotes
+ * nested in it, whose own children that view reads as inline text (inlineText) - their paragraphs, headings, code blocks
+ * and further blockquotes, but no list and no table. So a list nested in a blockquote that is itself nested in a
+ * blockquote or a list item adds no text to its unit, nor does anything nested in that list (the nested-placement hole,
+ * cut #4), and a table nested in a blockquote or a list item adds none of its cells: a subject word, a named reference
+ * or a control character there is not read (R-DOCS-UNCOUNTED, Q10). An HTML block renders no text: HTML anywhere in the
+ * section, inside the hole included, refuses the reading whole (containsHtml walks every nested token). A thematic break
+ * and a link reference definition render no text in the page's flow and a link's or an image's title shows only as a
+ * tooltip, so the units carry none of that text (R-DOCS-UNCOUNTED, Q10; an image's alt text is read, as the rendered
+ * view keeps it). On docs/09 itself W1 pins the section's whole block list, which reds each of these.
  */
 function docs09Units(blocks: readonly RenderedBlock[]): Docs09Unit[] {
   return blocks.flatMap((block): Docs09Unit[] => {
@@ -1181,19 +1226,21 @@ function docs09Units(blocks: readonly RenderedBlock[]): Docs09Unit[] {
 /**
  * docs/09's Furnace sentences as this census reads the rendered page (wb-6c6i F1, wb-s876 F1): the section is the landed
  * docsSection binding's (test/helpers/census.ts: the heading exactly once in the rendered view, under the page title,
- * bounded at the next level-1 or level-2 heading or EOF, no comment or fence spanning a heading line). Every rendered
- * text unit of the section (docs09Units) is read for each subject word (DOCS09_SUBJECTS, matched in subjectText): the
- * block kind of each occurrence; for every named character reference outside the six (undecodedReferences) and every
+ * bounded at the next level-1 or level-2 heading or EOF, no comment or fence spanning a heading line). Every text unit
+ * docs09Units makes of the section is read for each subject word (DOCS09_SUBJECTS, matched in subjectText): the block
+ * kind of each occurrence; for every named character reference outside the six (undecodedReferences) and every
  * control character in either decoding (controlCharacters: a bidi control or any other but tab, line feed, form feed and
  * carriage return; wb-s876 U2, cut #3); and for each sentence's frame (READS_SENTENCE, VERBS_SENTENCE, matched as
  * written): its clause.
- * The reads and verbs are stated only when the section binds, carries no HTML (a comment can hide what its source
- * says), holds no such reference and no such control character, each subject word occurs exactly once among the
- * section's units, in a paragraph, and each frame matches
- * exactly once; so a second unit of any kind - a paragraph, a list item, a blockquote, a table, a heading or a code block -
- * that spells a subject word refuses the reading, as does a subject word held only by a unit that is not a paragraph.
- * Otherwise the reads and verbs read as none, which reds every reader of them. What the units do not carry is not
- * counted (R-DOCS-UNCOUNTED, Q10); W1 pins the real section's whole block list beside this reading.
+ * The reads and verbs are stated only when the section binds, carries no HTML anywhere (a comment can hide what its
+ * source says), its units hold no such reference and no such control character, each subject word occurs exactly once
+ * among the section's units, in a paragraph, and each frame matches exactly once (a second frame match always brings a
+ * second subject word, so only a missing frame decides alone: frameReferenceCopy, verbsFrameReferenceCopy); so a second
+ * unit - a paragraph, a list
+ * item, a blockquote, a table, a heading or a code block - whose text spells a subject word refuses the reading, as does
+ * a subject word held only by a unit that is not a paragraph. Otherwise the reads and verbs read as none, which reds
+ * every reader of them. What the units do not carry - the nested-placement hole among it (cut #4) - is not counted
+ * (R-DOCS-UNCOUNTED, Q10); W1 pins the real section's whole block list beside this reading.
  */
 function docs09Reading(text: string): Docs09Reading {
   const section = docsSection(text, DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]);
@@ -1256,7 +1303,19 @@ function afterFurnace(text: string, block: string): string {
  * the widened reads restatement spelled &#146;, beside their proper-spelling controls (raw U+2019, &#8217;, &#x2019;,
  * &rsquo;, and the restatement raw and as &#8217;), a control character - the possessive's raw U+0092, &#141;, a raw
  * U+0081 and &#1; - inside the subject words, and a reference into 0x80-0x9F the table maps to a letter between Furnace
- * and read (&#136;, &#153;) - each must refuse the reading (W1).
+ * and read (&#136;, &#153;) - and cut #4's (ruling R-B157, the fail-closed core: a plant per placement and per claim
+ * word of the docs09 reading): a second top-level paragraph, an h6, an indented code block, a subject word split across
+ * table cells, an ordered and a task item; a list item's paragraph, heading, level-2 heading, code block, nested list,
+ * list two deep and blockquote; a top-level blockquote's heading, code block, list in a list and blockquote; a nested
+ * blockquote's heading, code block and blockquote under a list item and under a blockquote, and a blockquote in a list
+ * in a quote and in a nested list item; an image's alt text; HTML inside the nested-placement hole; the subject-word
+ * forms reading, reads, polling and attaches, the readiness and reattachment over-reads, upper case, a run of
+ * separators and the U+0027 and full-width possessives; a mathematical letter; the six named references where only
+ * subjectText decodes them (amp, lt, gt, quot and nbsp in a code block, apos in a possessive) and an upper-case name; the
+ * real reads and verbs frames, each with a word spelled as a reference; a second subject word in the real paragraph; a left-to-right mark, U+007F and U+000B; &copy;,
+ * &NonBreakingSpace;, a named reference in a code span and in a code block, and one behind &amp;; and a numeric
+ * reference in a code span, in a code block, behind &amp;, and of eight decimal or seven hex digits - each must refuse
+ * the reading (W1).
  */
 const RESTATED: readonly string[] = [
   "blockquoteCopy",
@@ -1314,6 +1373,67 @@ const RESTATED: readonly string[] = [
   "c0ReferenceCopy",
   "tableLetterCopy",
   "tableTrademarkCopy",
+  "paragraphCopy",
+  "deepHeadingCopy",
+  "indentedCodeCopy",
+  "tableSplitCopy",
+  "orderedItemCopy",
+  "taskItemCopy",
+  "itemParagraphCopy",
+  "itemHeadingCopy",
+  "itemLevelTwoHeadingCopy",
+  "itemCodeCopy",
+  "itemNestedListCopy",
+  "itemDeepListCopy",
+  "itemNestedQuoteCopy",
+  "quoteHeadingCopy",
+  "quoteCodeCopy",
+  "quoteListListCopy",
+  "quoteNestedQuoteCopy",
+  "itemQuoteHeadingCopy",
+  "itemQuoteCodeCopy",
+  "itemQuoteQuoteCopy",
+  "quoteQuoteHeadingCopy",
+  "quoteQuoteCodeCopy",
+  "quoteQuoteQuoteCopy",
+  "quoteListQuoteCopy",
+  "itemListQuoteCopy",
+  "imageAltCopy",
+  "htmlInHoleCopy",
+  "readingCopy",
+  "readsCopy",
+  "pollingCopy",
+  "attachesCopy",
+  "readinessCopy",
+  "reattachmentCopy",
+  "upperCaseCopy",
+  "separatorRunCopy",
+  "asciiPossessiveCopy",
+  "fullWidthApostropheCopy",
+  "mathLetterCopy",
+  "aposPossessiveCopy",
+  "codeAmpCopy",
+  "codeLtCopy",
+  "codeGtCopy",
+  "codeQuotCopy",
+  "codeNbspCopy",
+  "codeUpperNamedCopy",
+  "frameReferenceCopy",
+  "bidiMarkCopy",
+  "delReferenceCopy",
+  "verticalTabCopy",
+  "copyrightCopy",
+  "nonBreakingSpaceCopy",
+  "codeSpanReferenceCopy",
+  "codeBlockReferenceCopy",
+  "ampExposedCopy",
+  "numericCodeSpanCopy",
+  "numericCodeBlockCopy",
+  "numericAmpCopy",
+  "numericLongCopy",
+  "numericLongHexCopy",
+  "secondSentenceCopy",
+  "verbsFrameReferenceCopy",
 ];
 /** The widened reads sentence with one spelling written inside both subject words, after "Furn" and after "po" (wb-s876 U2, F3). */
 function spelledInside(inside: string): string {
@@ -1332,10 +1452,11 @@ function widerReads(apostrophe: string): string {
 /** A right-to-left override (U+202E) and its pop (U+202C): the text between them shows reversed, so "redaer ecanruF" shows "Furnace reader". */
 const OVERRIDE = String.fromCodePoint(0x202e);
 const POP = String.fromCodePoint(0x202c);
-/** docs/09 plants (the wb-dqf.1 gate's G17-G21b shapes, wb-6c6i F1; the RESTATED shapes, wb-s876 F1): each a copy of the real page, read by the same docs reading. */
+/** docs/09 plants (the wb-dqf.1 gate's G17-G21b shapes, wb-6c6i F1; the RESTATED shapes, wb-s876 F1; whitespaceControlsCopy, a second unit holding the four whitespace controls as references, which reads as the real page, cut #4): each a copy of the real page, read by the same docs reading. */
 function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
   const paragraph = furnaceParagraph(text);
   const after = (block: string): string => afterFurnace(text, block);
+  const fence = "```";
   const pages: Readonly<Record<string, string>> = {
     hiddenCopy: text.replace(paragraph, `<!-- ${paragraph} -->\n\n${narrowed(widened(paragraph))}`),
     decoyHeading: widened(text).replace("\n## Acceptance/negative controls\n", `\n${DOCS09_SECTION}\n\n${paragraph}\n\n## Acceptance/negative controls\n`),
@@ -1398,6 +1519,68 @@ function docs09Plants(text: string): { [plant: string]: Docs09Reading } {
     c0ReferenceCopy: after(`> ${spelledInside("&#1;")}`),
     tableLetterCopy: after("> The external Furnace&#136;reader uses explicit bounded status/attempt/log-reference/event-stream reads."),
     tableTrademarkCopy: after("> The external Furnace&#153;reader uses explicit bounded status/attempt/log-reference/event-stream reads."),
+    paragraphCopy: after(widened(FURNACE_READS)),
+    deepHeadingCopy: after(`###### ${widened(FURNACE_READS)}`),
+    indentedCodeCopy: after(`    ${widened(FURNACE_READS)}`),
+    tableSplitCopy: after("| Furnace | reader |\n| --- | --- |\n| a | b |"),
+    orderedItemCopy: after(`1. ${widened(FURNACE_READS)}`),
+    taskItemCopy: after(`- [ ] ${widened(FURNACE_READS)}`),
+    itemParagraphCopy: after(`- note\n\n  ${widened(FURNACE_READS)}`),
+    itemHeadingCopy: after(`- ### ${widened(FURNACE_READS)}`),
+    itemLevelTwoHeadingCopy: after(`- ## ${widened(FURNACE_READS)}`),
+    itemCodeCopy: after(`- note\n\n  ${fence}\n  ${widened(FURNACE_READS)}\n  ${fence}`),
+    itemNestedListCopy: after(`- note\n  - ${widened(FURNACE_READS)}`),
+    itemDeepListCopy: after(`- a\n  - b\n    - ${widened(FURNACE_READS)}`),
+    itemNestedQuoteCopy: after(`- note\n\n  > ${widened(FURNACE_READS)}`),
+    quoteHeadingCopy: after(`> ### ${widened(FURNACE_READS)}`),
+    quoteCodeCopy: after(`> ${fence}\n> ${widened(FURNACE_READS)}\n> ${fence}`),
+    quoteListListCopy: after(`> - note\n>   - ${widened(FURNACE_READS)}`),
+    quoteNestedQuoteCopy: after(`> > ${widened(FURNACE_READS)}`),
+    itemQuoteHeadingCopy: after(`- note\n\n  > ### ${widened(FURNACE_READS)}`),
+    itemQuoteCodeCopy: after(`- note\n\n  > ${fence}\n  > ${widened(FURNACE_READS)}\n  > ${fence}`),
+    itemQuoteQuoteCopy: after(`- note\n\n  > > ${widened(FURNACE_READS)}`),
+    quoteQuoteHeadingCopy: after(`> > ### ${widened(FURNACE_READS)}`),
+    quoteQuoteCodeCopy: after(`> > ${fence}\n> > ${widened(FURNACE_READS)}\n> > ${fence}`),
+    quoteQuoteQuoteCopy: after(`> > > ${widened(FURNACE_READS)}`),
+    quoteListQuoteCopy: after(`> - note\n>\n>   > ${widened(FURNACE_READS)}`),
+    itemListQuoteCopy: after(`- a\n  - b\n\n    > ${widened(FURNACE_READS)}`),
+    imageAltCopy: after(`> ![${widened(FURNACE_READS)}](https://example.invalid/reader.png)`),
+    htmlInHoleCopy: after(`> > - <b>${widened(FURNACE_READS)}</b>`),
+    readingCopy: after("> The Furnace reading also follows each Run's event stream."),
+    readsCopy: after("> Pi's Furnace reads each Run's status."),
+    pollingCopy: after("> Pi keeps polling each Run."),
+    attachesCopy: after("> Pi attaches to each Run it observes."),
+    readinessCopy: after("> Pi checks Furnace readiness first."),
+    reattachmentCopy: after("> A reattachment never starts a Run."),
+    upperCaseCopy: after("> THE EXTERNAL FURNACE READER POLLS EACH RUN."),
+    separatorRunCopy: after("> The Furnace -- reader also follows each Run's event stream."),
+    asciiPossessiveCopy: after(`> ${possessive("'")}`),
+    fullWidthApostropheCopy: after(`> ${possessive(String.fromCodePoint(0xff07))}`),
+    mathLetterCopy: after(`> The external Furn${String.fromCodePoint(0x1d51e)}ce reader uses explicit bounded status/attempt/log-reference/event-stream po${String.fromCodePoint(0x1d529)}ling.`),
+    aposPossessiveCopy: after(`> ${possessive("&apos;")}`),
+    codeAmpCopy: after(`${fence}\nThe external Furnace&amp;reader\n${fence}`),
+    codeLtCopy: after(`${fence}\nThe external Furnace&lt;reader\n${fence}`),
+    codeGtCopy: after(`${fence}\nThe external Furnace&gt;reader\n${fence}`),
+    codeQuotCopy: after(`${fence}\nThe external Furnace&quot;reader\n${fence}`),
+    codeNbspCopy: after(`${fence}\nThe external Furnace&nbsp;reader\n${fence}`),
+    codeUpperNamedCopy: after(`${fence}\nThe external Furnace&NBSP;reader\n${fence}`),
+    frameReferenceCopy: text.replace(FURNACE_READS, () => FURNACE_READS.replace("bounded", "b&#111;unded")),
+    bidiMarkCopy: after(`> Pi${String.fromCodePoint(0x200e)}docs.`),
+    delReferenceCopy: after(`> ${spelledInside("&#127;")}`),
+    verticalTabCopy: after("> Pi&#11;keeps each record bounded."),
+    whitespaceControlsCopy: after("> Pi&#9;keeps&#10;each&#12;record&#13;bounded."),
+    copyrightCopy: after("> &copy; Pi."),
+    nonBreakingSpaceCopy: after("> Pi&NonBreakingSpace;docs."),
+    codeSpanReferenceCopy: after("> `&shy;`"),
+    codeBlockReferenceCopy: after(`${fence}\n&shy;\n${fence}`),
+    ampExposedCopy: after("> &amp;shy;"),
+    numericCodeSpanCopy: after("> `The external Furn&#97;ce reader`"),
+    numericCodeBlockCopy: after(`${fence}\nThe external Furn&#97;ce reader\n${fence}`),
+    numericAmpCopy: after("> The external Furn&amp;#97;ce reader"),
+    numericLongCopy: after("> The external Furn&#00000097;ce reader"),
+    numericLongHexCopy: after("> The external Furn&#x0000061;ce reader"),
+    secondSentenceCopy: text.replace(FURNACE_VERBS, () => `${FURNACE_VERBS} Pi keeps polling each Run.`),
+    verbsFrameReferenceCopy: text.replace(FURNACE_VERBS, () => FURNACE_VERBS.replace("read-only", "read&#45;only")),
   };
   return Object.fromEntries(Object.entries(pages).map(([plant, page]) => [plant, docs09Reading(page)]));
 }
@@ -1623,8 +1806,16 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const docsPlants = docs09Plants(textOf(DOCS09));
     expect(
       RESTATED.filter(plant => (docsPlants[plant]?.reads.length ?? 1) + (docsPlants[plant]?.verbs.length ?? 1) > 0),
-      "a subject word restated in a second rendered block, or held by no paragraph, refuses the reading (wb-s876 F1)",
+      "a subject word restated in a second text unit, in each placement the READ SET names, or held by no paragraph, refuses the reading (wb-s876 F1, cut #4)",
     ).toEqual([]);
+    expect(
+      docsPlants.whitespaceControlsCopy,
+      "tab, line feed, form feed and carriage return, spelled as references in a second unit, are no control characters the reading refuses (cut #4)",
+    ).toStrictEqual(docs);
+    expect(
+      docsSection(textOf(DOCS09).replace(FURNACE_READS, () => FURNACE_READS.replace(" uses ", "  uses\n")), DOCS09_SECTION.slice("## ".length), 2, [DOCS09_TITLE]).blocks,
+      "a whitespace-only change inside the section renders the same block list, so the block pin does not red it (cut #4)",
+    ).toStrictEqual(blocks);
     const spellings: Readonly<Record<string, string>> = { decimal: "&#146;", hex: "&#x92;", padded: "&#0146;", upperHex: "&#X92;", decimalRsquo: "&#8217;", hexRsquo: "&#x2019;" };
     expect(
       Object.entries(spellings)
@@ -1853,13 +2044,47 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       apostropheQuote: `> ${possessive(String.fromCodePoint(0x2018))}`,
       privateUse: `> ${spelledInside(String.fromCodePoint(0xe000))}`,
       unassigned: `> ${spelledInside(String.fromCodePoint(0x378))}`,
+      apostropheGrave: `> ${possessive(String.fromCodePoint(0x60))}`,
+      apostropheAcute: `> ${possessive(String.fromCodePoint(0xb4))}`,
+      apostrophePrime: `> ${possessive(String.fromCodePoint(0x2032))}`,
+      apostropheTurnedComma: `> ${possessive(String.fromCodePoint(0x2bb))}`,
+      apostropheFullWidthGrave: `> ${possessive(String.fromCodePoint(0xff40))}`,
+      apostropheArmenian: `> ${possessive(String.fromCodePoint(0x55a))}`,
+      quoteQuoteList: `> > - ${widened(FURNACE_READS)}`,
+      quoteQuoteOrderedList: `> > 1. ${widened(FURNACE_READS)}`,
+      quoteQuoteTaskList: `> > - [ ] ${widened(FURNACE_READS)}`,
+      quoteQuoteListPossessive: `> > - ${possessive(RSQUO)}`,
+      quoteQuoteListVerbs: `> > - ${narrowed(FURNACE_VERBS)}`,
+      quoteQuoteQuoteList: `> > > - ${widened(FURNACE_READS)}`,
+      itemQuoteList: `- note\n\n  > - ${widened(FURNACE_READS)}`,
+      quoteItemQuoteList: `> - note\n>\n>   > - ${widened(FURNACE_READS)}`,
+      quoteQuoteListQuote: `> > - note\n> >\n> >   > ${widened(FURNACE_READS)}`,
+      quoteQuoteListList: `> > - note\n> >   - ${widened(FURNACE_READS)}`,
+      quoteQuoteListReference: "> > - Pi&shy;docs.",
+      quoteQuoteListControl: "> > - Pi&#1;docs.",
+      quoteQuoteTable: `> > | Reader |\n> > | --- |\n> > | ${widened(FURNACE_READS)} |`,
+      itemItemTable: `- a\n  - b\n\n    | Reader |\n    | --- |\n    | ${widened(FURNACE_READS)} |`,
+      tableReference: "> | Reader |\n> | --- |\n> | Pi&shy;docs. |",
+      tableControl: "> | Reader |\n> | --- |\n> | Pi&#1;docs. |",
+      imageTitle: `![x](https://example.invalid/x.png "${widened(FURNACE_READS)}")`,
+      definitionTitle: `[ref]: https://example.invalid "${widened(FURNACE_READS)}"`,
     };
     const pages = Object.entries(uncounted).map(([kind, block]): [string, string] => [kind, afterFurnace(text, block)]);
-    return json({
-      residual: "R-DOCS-UNCOUNTED",
-      quiet: Object.fromEntries(pages.map(([kind, page]) => [kind, isDeepStrictEqual(docs09Reading(page), real)])),
-      blockPinReds: Object.fromEntries(pages.map(([kind, page]) => [kind, !isDeepStrictEqual(blocksOf(page), blocksOf(text))])),
-    });
+    const quiet = Object.fromEntries(pages.map(([kind, page]) => [kind, isDeepStrictEqual(docs09Reading(page), real)]));
+    const blockPinReds = Object.fromEntries(pages.map(([kind, page]) => [kind, !isDeepStrictEqual(blocksOf(page), blocksOf(text))]));
+    expect(
+      Object.keys(quiet).filter(kind => quiet[kind] !== true),
+      "every R-DOCS-UNCOUNTED plant reads as the real page reads: the subject-word reading does not count it (cut #4)",
+    ).toEqual([]);
+    expect(
+      Object.keys(blockPinReds).filter(kind => blockPinReds[kind] !== true),
+      "every R-DOCS-UNCOUNTED plant changes the section's block list, which the block pin reds on docs/09 itself (cut #4)",
+    ).toEqual([]);
+    expect(
+      [0xb4, 0xff40].map(code => String.fromCodePoint(code).normalize("NFKC")),
+      "NFKC folds U+00B4 and U+FF40, each to no apostrophe the possessive reads (cut #4 F2)",
+    ).toEqual([String.fromCodePoint(0x20, 0x301), String.fromCodePoint(0x60)]);
+    return json({ residual: "R-DOCS-UNCOUNTED", quiet, blockPinReds });
   },
   Q11: () => {
     const text = textOf(DOCS09);
@@ -1868,7 +2093,18 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(text.includes(next), "docs/09 still holds the other section the plant writes into").toBe(true);
     const otherSection = text.replace(next, () => `\n${widened(FURNACE_READS)}\n${next}`);
     const nextHeading = afterFurnace(text, `## ${widened(FURNACE_READS)}`);
-    return json({ residual: "R-DOCS-ELSEWHERE", quiet: { otherSection: isDeepStrictEqual(docs09Reading(otherSection), real), nextHeading: isDeepStrictEqual(docs09Reading(nextHeading), real) } });
+    const readerAdapters = docsSection(text, "Reader adapters", 2, [DOCS09_TITLE])
+      .blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : []))
+      .filter(item => item.startsWith("Furnace:"));
+    expect(
+      readerAdapters.filter(item => item.includes("event stream")),
+      "docs/09's Reader adapters list names a Furnace event stream, outside the bound section, which the reading does not read (R-DOCS-ELSEWHERE, cut #4)",
+    ).toHaveLength(1);
+    return json({
+      residual: "R-DOCS-ELSEWHERE",
+      quiet: { otherSection: isDeepStrictEqual(docs09Reading(otherSection), real), nextHeading: isDeepStrictEqual(docs09Reading(nextHeading), real) },
+      readerAdapters,
+    });
   },
   Q12: () => {
     const listed = piEntries().filter(item => SCRIPT.test(item.path) && item.path !== OBSERVER);
