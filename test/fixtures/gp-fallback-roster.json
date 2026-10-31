@@ -1,5 +1,5 @@
 {
-  "comment": "wb-1xvp.4 (RF-GRAPH-POLICY-MACHINE-CONTROL-R3; the hk9l/5jha roster pattern): the OUT-OF-FILE anchor of test/workbench-gp-fallback-census.test.ts. rows: every judged row of test/helpers/gp-fallback-census.ts in census order (TOUCHPOINTS, CLEAN, RESIDUALS, FAMILIES, UNUSABLE, MUTANTS, PAIRING_CASES) - table, id, label, the SHA-256 of each pin as written (a source; a fake seam with its reason and code; a mutant's shape, edits and expected rules; a pairing case's pairings, files and expected rules) and the registered test. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
+  "comment": "wb-1xvp.4 (RF-GRAPH-POLICY-MACHINE-CONTROL-R3; the hk9l/5jha roster pattern), extended by wb-qxdr (the 1xvp.4 PREP F1 follow-up): the OUT-OF-FILE anchor of test/workbench-gp-fallback-census.test.ts. rows: every judged row of test/helpers/gp-fallback-census.ts in census order (TOUCHPOINTS, CLEAN, RESIDUALS, FAMILIES, UNUSABLE, MUTANTS, PAIRING_CASES, WALKS) - table, id, label, the SHA-256 of each pin as written (a source; a fake seam with its reason and code; a mutant's shape, edits and expected rules; a pairing case's pairings, files and expected rules; a walk case's planted tree and its expected listing or refusal) and the registered test. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
   "rows": [
     {
       "table": "TOUCHPOINTS",
@@ -27,7 +27,8 @@
         "508c8301616131061496f0e2958a902ea781fd2474bf67be323980923342e79e",
         "98a957f63ac40256c6f7af38a5d6f56f7455b43bfb0c11efaf785c2657f3ab9b",
         "9b841e7be2c022bab2b9f2ca087386d43b495cc56e4e1f2ad086c9743efcb1f4",
-        "e3723a4533b972240f3bfc1faac18d90015d338f08607db174fe5450be9978f2"
+        "e3723a4533b972240f3bfc1faac18d90015d338f08607db174fe5450be9978f2",
+        "185c1bfa812c43192addb900b82e9b9218579c1b33a2b891408d76fee19f1ab6"
       ],
       "test": "TOUCHPOINTS SDK"
     },
@@ -42,7 +43,8 @@
         "e7ec82a062cc5570ff3309e6e3a1f2bb349146914542d4d9cac01be26a836e10",
         "c79d77e7cdafb0e12f3078dcccb5b999f2017aa82eab85e9b5a4525c86326014",
         "01350d84d3a213a86bb5a283cc1e34c8baaf930515c22009fa564d8160a41edb",
-        "40857bb0237d48e269713793af7049ec010c4af607a40e7e46c418b71ba7cf16"
+        "40857bb0237d48e269713793af7049ec010c4af607a40e7e46c418b71ba7cf16",
+        "9cf1c56a11199bb673b8c15a92a02c3e9d43b7c26230eb806fe8d6c74ccdbd54"
       ],
       "test": "TOUCHPOINTS WIRE"
     },
@@ -110,6 +112,17 @@
         "d686b85360d1410a2cb388ef4f2f3cf2ba60d161f5b58defbed63817fbe98de5"
       ],
       "test": "RESIDUALS R-TRANSITIVE"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-BINARY-SPELLING",
+      "label": "the gp binary spelled in another case or as a Windows command shim: the command word is gp or gp.exe exactly as written",
+      "pins": [
+        "23bc7f5be469013e225a3e9e25ee8af27a01b1debaa98d724892f435aa3d351c",
+        "2a66b4875d821e1197a1fa5666a0f41807796f8405fd5c19572d781487466f92",
+        "dab313804431ac1077c65232ce3f3606c1d697b6f9f9d2aaffac1b22dc41b86f"
+      ],
+      "test": "RESIDUALS R-BINARY-SPELLING"
     },
     {
       "table": "FAMILIES",
@@ -354,6 +367,150 @@
       "test": "MUTANTS R-UNNAMED-NUMBER"
     },
     {
+      "table": "MUTANTS",
+      "id": "M-PROPENSITY",
+      "label": "a propensity is written on an absent binary",
+      "pins": [
+        "723a28c825828c3c35bcc14bfb4034241a0ee87c06093f25e895ddc4f3c6563e"
+      ],
+      "test": "MUTANTS M-PROPENSITY"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-LOGIT-NESTED",
+      "label": "a logit is written under a detail key",
+      "pins": [
+        "4e84b8431f848ad601da62a40bae9d68926621f59d1251e791f26d48bdfd067c"
+      ],
+      "test": "MUTANTS M-LOGIT-NESTED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-LIKELIHOOD",
+      "label": "a likelihood is written on a stale basis",
+      "pins": [
+        "c107a9181951f4f5f2d83bb442258add37f0116d38df3da9e489c60fb74a8035"
+      ],
+      "test": "MUTANTS M-LIKELIHOOD"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-DISTRIBUTION-NESTED",
+      "label": "a distribution is written under a detail key",
+      "pins": [
+        "9e7b6dc2bc3d9e393bb68fbb04c6dae20101cf5d8e02405bcd63953870909a3e"
+      ],
+      "test": "MUTANTS M-DISTRIBUTION-NESTED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-FALLBACK-FAMILY",
+      "label": "the record names the paired fallback's name under another named family",
+      "pins": [
+        "5c9be2c091c42150c770f4fdd929d4198ec580d95b4b3d41ee745db766ff976d"
+      ],
+      "test": "MUTANTS M-FALLBACK-FAMILY"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-SOURCE-INHERITED",
+      "label": "decision_source is inherited through the prototype, not an own key",
+      "pins": [
+        "75c2aaa956012c761e6ce54d3b82a10606ed2ba1fecad32dc2c164a3f7477960"
+      ],
+      "test": "MUTANTS M-SOURCE-INHERITED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-ACTION-INHERITED",
+      "label": "the action is inherited through the prototype, not an own key",
+      "pins": [
+        "99f5e69744a3e7ba3380c7245f79cbe53362666667952a5bec6b75469948f893"
+      ],
+      "test": "MUTANTS M-ACTION-INHERITED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-FALLBACK-INHERITED",
+      "label": "the fallback object is inherited through the prototype, not an own key",
+      "pins": [
+        "a654608ca63074e77c00479ffc051b70a2b24f69ea665133ef83a0e46bea2db2"
+      ],
+      "test": "MUTANTS M-FALLBACK-INHERITED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-FALLBACK-NAME-INHERITED",
+      "label": "the fallback's name is inherited inside an own fallback object",
+      "pins": [
+        "1d2c3d88c4dfdaf20225a80293bd6ead60f6a8f807f19e27264aaeca3dfd26cc"
+      ],
+      "test": "MUTANTS M-FALLBACK-NAME-INHERITED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-REASON-INHERITED",
+      "label": "the reason is inherited through the prototype, not an own key",
+      "pins": [
+        "fe10c2fd48dcbc6d6a3136d8c7e628fc516144d667f7a69a5ea511d1a82a7f14"
+      ],
+      "test": "MUTANTS M-REASON-INHERITED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-CODE-INHERITED",
+      "label": "the producer's refusal code is inherited through the prototype, not an own key",
+      "pins": [
+        "603d94b71ff73c97d924eaa4590547ceaee580b131f558d1673d5675ee074046"
+      ],
+      "test": "MUTANTS M-CODE-INHERITED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-SCORE-BESIDE-CYCLE",
+      "label": "a score is written beside a cycle in the record: the walk cuts the cycle and still finds the key",
+      "pins": [
+        "2faed91744dd6c99263f0bb5b8e95681b0becc1093d39ad6be02883b23a4db5b"
+      ],
+      "test": "MUTANTS M-SCORE-BESIDE-CYCLE"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-ARRAY-RECORD",
+      "label": "the drive returns an array, not a record object",
+      "pins": [
+        "e66d2c2262f4b7dcc4e216b4ed815c4e81123aa3fca8f4e8130e754aa3dec068"
+      ],
+      "test": "MUTANTS M-ARRAY-RECORD"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "R-HIDDEN-SCORE",
+      "label": "a score written as a non-enumerable own key",
+      "pins": [
+        "d5012ad8d942a547ad7173de6ac79384b9f9b27df5efe111c32eae7f9788e610"
+      ],
+      "test": "MUTANTS R-HIDDEN-SCORE"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "R-SYMBOL-SCORE",
+      "label": "a score written under a symbol key",
+      "pins": [
+        "8b728e7a1d396e60a9e3e073d5aa505d875047b01ea3ae79b79644dc4eeac07a"
+      ],
+      "test": "MUTANTS R-SYMBOL-SCORE"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "R-DERIVED-OUTPUT",
+      "label": "a re-cased copy of the fake seam's policy candidate under an unnamed key",
+      "pins": [
+        "a1adaac90d71e54802474ecb3a5cef7b62d6d3600054908b1cca98329eca17c9"
+      ],
+      "test": "MUTANTS R-DERIVED-OUTPUT"
+    },
+    {
       "table": "PAIRING_CASES",
       "id": "P-PAIRED",
       "label": "a site paired with a named fallback it exports",
@@ -415,6 +572,60 @@
         "73eb6b0670aae8cd478e775548bae71e52be48111c1721c6e4510c09340e42c5"
       ],
       "test": "PAIRING_CASES P-UNEXPORTED"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-HIDDEN",
+      "label": "a hidden file is walked",
+      "pins": [
+        "3c768e71db11b4fe91190ce24e327bcba449c27b32b92c7c470b13ba408d9ac5"
+      ],
+      "test": "WALKS W-HIDDEN"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-EXTENSIONLESS",
+      "label": "an extensionless file in a nested directory is walked",
+      "pins": [
+        "d88d65b331a135d65f7e6f85b14722b16d05ff959a977b27483d052bf94fdcae"
+      ],
+      "test": "WALKS W-EXTENSIONLESS"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-SYMLINKED-FILE",
+      "label": "a symlinked file is followed and listed under its link path, beside its target",
+      "pins": [
+        "38ad01949327b4dc172b79aa9544292816b47d01efdb6c4cf2798d9853824ffb"
+      ],
+      "test": "WALKS W-SYMLINKED-FILE"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-DIRECTORY-ALIAS",
+      "label": "a second link to a real directory already walked is not walked again",
+      "pins": [
+        "dd7c8384c5b84b9eb28e3f4ed93612dcd95a9183a6b63ca50d310d1b98d2980c"
+      ],
+      "test": "WALKS W-DIRECTORY-ALIAS"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-DIRECTORY-LOOP",
+      "label": "a directory symlink back to the walked directory ends the walk",
+      "pins": [
+        "ad317f7de0307a3415246192d4c4cdcb49d554f2bae9eb2262b5fd1adc3e65d6"
+      ],
+      "test": "WALKS W-DIRECTORY-LOOP"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-FIFO",
+      "label": "a FIFO is neither a regular file nor a directory, so the walk fails closed",
+      "pins": [
+        "39c06a2c86dae39a4f81b7929d1e466e4023b1115119237812cb159d2154b751"
+      ],
+      "test": "WALKS W-FIFO"
     }
   ],
   "tests": [
@@ -427,6 +638,7 @@
     "RESIDUALS R-COMPUTED",
     "RESIDUALS R-ENVIRONMENT",
     "RESIDUALS R-TRANSITIVE",
+    "RESIDUALS R-BINARY-SPELLING",
     "FAMILIES existing-machine-rule",
     "FAMILIES ready-first",
     "FAMILIES priority-first",
@@ -455,6 +667,22 @@
     "MUTANTS M-NOT-A-RECORD",
     "MUTANTS M-DRIVE-THROWS",
     "MUTANTS R-UNNAMED-NUMBER",
+    "MUTANTS M-PROPENSITY",
+    "MUTANTS M-LOGIT-NESTED",
+    "MUTANTS M-LIKELIHOOD",
+    "MUTANTS M-DISTRIBUTION-NESTED",
+    "MUTANTS M-FALLBACK-FAMILY",
+    "MUTANTS M-SOURCE-INHERITED",
+    "MUTANTS M-ACTION-INHERITED",
+    "MUTANTS M-FALLBACK-INHERITED",
+    "MUTANTS M-FALLBACK-NAME-INHERITED",
+    "MUTANTS M-REASON-INHERITED",
+    "MUTANTS M-CODE-INHERITED",
+    "MUTANTS M-SCORE-BESIDE-CYCLE",
+    "MUTANTS M-ARRAY-RECORD",
+    "MUTANTS R-HIDDEN-SCORE",
+    "MUTANTS R-SYMBOL-SCORE",
+    "MUTANTS R-DERIVED-OUTPUT",
     "PAIRING_CASES P-PAIRED",
     "PAIRING_CASES P-REEXPORTED",
     "PAIRING_CASES P-UNPAIRED",
@@ -462,6 +690,12 @@
     "PAIRING_CASES P-DUPLICATE",
     "PAIRING_CASES P-FAMILY",
     "PAIRING_CASES P-UNEXPORTED",
+    "WALKS W-HIDDEN",
+    "WALKS W-EXTENSIONLESS",
+    "WALKS W-SYMLINKED-FILE",
+    "WALKS W-DIRECTORY-ALIAS",
+    "WALKS W-DIRECTORY-LOOP",
+    "WALKS W-FIFO",
     "live: the scan walks every regular file under src/ and reads the native CLI commands its call sites pass",
     "live (c): no src file carries a GraphPolicyCLI touchpoint today, and GP_CALL_SITES pairs exactly the touched files",
     "live (a)+(b): every GP_CALL_SITES entry records a conforming fallback on every unusable fake seam",
@@ -478,8 +712,18 @@
     "R-TRANSITIVE": [
       "RESIDUALS R-TRANSITIVE"
     ],
+    "R-BINARY-SPELLING": [
+      "RESIDUALS R-BINARY-SPELLING"
+    ],
     "R-UNNAMED-NUMBER": [
       "MUTANTS R-UNNAMED-NUMBER"
+    ],
+    "R-UNWALKED-KEY": [
+      "MUTANTS R-HIDDEN-SCORE",
+      "MUTANTS R-SYMBOL-SCORE"
+    ],
+    "R-DERIVED-OUTPUT": [
+      "MUTANTS R-DERIVED-OUTPUT"
     ]
   }
 }

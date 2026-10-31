@@ -32,7 +32,8 @@
  * descriptor profile) has not fired. The census pins:
  *  A, acceptance (a), over BOTH fixtures (validRf read off its declaration in test/workbench-provider-envelope-audit.test.ts by a
  *    literal evaluator, fullShapeRf from the shared helper). A1 each fixture keeps its eight envelope keys and its output key set,
- *    carries no UI word, phrase or HTML tag in any key or string, and both readers admit it (the provider returns it verbatim);
+ *    carries no UI word, phrase or HTML tag and no spelling of the checkout's path in any key or string (THE CHECKOUT PIN), and
+ *    both readers admit it (the provider returns it verbatim);
  *    A2 a block row carrying a kind outside the vocabulary is admitted verbatim and projects exactly as the same row without it
  *    (paired control), the planted kind and content surfacing nowhere, the in-vocabulary kind rftsx.block projecting the same
  *    (R-PRODUCER-VOCABULARY), and rf's own closed-vocabulary refusal (RF_TSX_OUTPUT_INVALID, sdk_code RFTSX_OUTPUT_UNSUPPORTED_NODE,
@@ -69,6 +70,23 @@
  * NOT CLAIMED (the armed half, gated): once Pi reads the descriptor profile (TSX-IF-03), an unregistered descriptor ID or a newer
  * descriptor version must fail as one typed diagnostic in that reader; no such reader is added or faked here. C1's src-wide phrase
  * scan is the tripwire: a src module that names the profile reds C1 until the armed rule ships with it.
+ * THE CHECKOUT PIN (wb-30xx; the wb-j5y6 gate's F3: A1's assertion that no fixture string spells the checkout's path was held by
+ * no pin, so deleting it alone left this file 16/16, PREP LEG 2 probe G4): A1's witness also holds, per fixture, the checkout paths
+ * its scan finds (checkoutPaths, none) and the same scan read live on planted copies (checkoutPlants: each spelling of CHECKOUTS in
+ * turn, the launch directory's and then the repository's, written as file://<checkout>/rf.json at $.workspace.root, as a key beside
+ * it and as the one item of $.diagnostics, is found exactly there and nowhere else, CHECKOUT_PLANTS), both held to the roster
+ * witness and to the "stay unchanged" claim. So a fixture or helper edit that makes a fixture key or string spell the checkout's
+ * path reds A1 at its witness with that assertion deleted too, and a scan hollowed to find nothing, no key, no array item, no
+ * string, or only a whole, a leading or a trailing spelling reds A1 at checkoutPlants. The witness calls the scan apart from the
+ * assertion, so either one deleted or replaced by a literal leaves the other holding, and each planted copy is scanned whole, so a
+ * spelling the fixture carries outside the planted places shows in checkoutPlants too; deleting the assertion alone stays 16/16 by
+ * design (an equivalent mutant). The pin adds no expect call to A1, so no assertion count moves.
+ * NOT CLAIMED (the checkout pin): the assertion deleted and checkoutPaths returned as a literal together (the wb-wtfr gate's
+ * L2-CONST class, a pin case that returns its roster witness as a literal): checkoutPlants then still shows a spelling the fixture
+ * carries outside the planted places, but not one at $.workspace.root or in $.diagnostics, which each planted copy overwrites, and
+ * nothing once it is returned as a literal too; a scan that drops one of CHECKOUTS's two spellings, wherever both name one
+ * directory (a run launched from the repository root plants the same spelling twice); a path spelled otherwise than verbatim
+ * (another case, a relative, escaped or encoded spelling).
  * RESIDUALS (named families, each with a pinned quiet row): R-PRODUCER-VOCABULARY the closed rftsx.* vocabulary is enforced by the
  * producer (the TSX output converter and rf's worker), not by Pi, whose readers are content-blind to block rows (quiet row: A2's
  * in-vocabulary control projects exactly as the outside kinds do); R-ADDITIVE the provider validates the result keys it reads and
@@ -78,15 +96,49 @@
  * invisible to it, as is a read through an alias of the output object, and the behavioural rows carry what such a weakening would
  * admit (quiet rows: B3's two quiet mutants, 0 flags); R-OUTSIDE-CLOSURE a src module that reads rf output without naming the
  * envelope's schema or command, and spells no descriptor-profile phrase, is outside B3's closure and C1's phrase scan (quiet row:
- * B3's planted outside reader, not in the closure, 0 phrase hits).
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row (id, label, pins with their quotes),
- * every pin's witness (each carries its pin id), the scan constants, the residual families and the registered test titles are held
- * to the out-of-file roster (test/fixtures/rf-tsx-closed-vocabulary-roster.json). OUTSIDE ANCHOR: the owner filing's row in the
- * tracked bead export (.beads/issues.jsonl, row wb-if7q.2): each acceptance clause sits verbatim in exactly one row label, and the
- * row's pin quotes, in order, tile that clause with separator-only gaps, so a row or a pin removed from every literal of this file
- * and the roster still reds; its quote and citation equal the roster's, and its Gating line names the vocabulary sites and the gate.
+ * B3's planted outside reader, not in the closure, 0 phrase hits); R-REAUTHORED a pin's case, claims and roster witness rewritten
+ * together, in whole or in part (a fact dropped from all three, or the case cut to facts no other pin's claims accept), is held by no
+ * anchor: the terms reach the bead export, the facts each term names are this file's reading of it (quiet row: the claims-bound
+ * case's re-authored C3, its case cut to one refusal's reading under one matching claim, shows that claim with every fact under it,
+ * and no other pin's claims accept it, while C3's own claims refuse it).
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and CLAIMS each pin's claim and check counts as literals; every
+ * row (id, label, pins with their quotes), every pin's claims and witness (each witness carries its pin id), the scan constants, the
+ * residual families, the registered test titles and THE RECORD are held to the out-of-file roster (test/fixtures/rf-tsx-closed-
+ * vocabulary-roster.json). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-if7q.2): each
+ * acceptance clause sits verbatim in exactly one row label, and the row's pin quotes, in order, tile that clause with separator-only
+ * gaps, so a row or a pin removed from every literal of this file and the roster still reds; its quote and citation equal the
+ * roster's, and its Gating line names the vocabulary sites and the gate.
+ * CLAIMS (wb-wtfr; the wb-if7q.2 gate's LEG-2 survivor H7, C2's case under id C3 with the roster witness rewritten to match, stayed
+ * 15/15 because no pin's witness content was bound to its claim by an outside anchor): each pin's quote is cut into terms that, in
+ * order, tile it with the same separator-only gaps, so every term reaches the bead export through its quote; each term is a claim
+ * naming the witness facts that show it (a path into the witness, "*" standing for every key of an object, and the exact value, the
+ * pattern or the key list it requires). Each pin's live witness must show every one of its claims; every fact of it (each value that
+ * is not an object with keys) must sit under a term, and every term must reach a fact of its own (an equals or matches check reaches
+ * facts; a key list covers no value); and the claims-bound case holds each pin's claims against every other pin's live witness, none
+ * of which they may accept. So a case swapped for another pin's, its roster witness rewritten to match, reds at its own claims and at
+ * the claims-bound case; claims carried from one pin to another leave both quotes untiled; a claim removed from every literal leaves
+ * its term a gap in the quote; a check removed from every literal leaves its fact outside every term, and one moved to another term
+ * leaves its own term idle. B4's (wb-973.11) claim reads the wb-973.11 roster's own file.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode, not
- * inverted, ran; every pin reached its witness assertion (REACHED).
+ * inverted, ran; every pin reached its witness and claims assertions (REACHED).
+ * THE RECORD (wb-g8uk; the wb-wtfr gate's F1: the claims-bound case had no assertion-reached leg, so a guarded return after its first
+ * assertion (L2-E1), its cross-pin acceptance assertion deleted (L2-E2) or its R-REAUTHORED quiet-row assertion deleted (L2-QR)
+ * stayed green, the first two also beside the forged-claims swap H7F that only that acceptance assertion kills, and the judged set
+ * carried the same partial hollowing (L2-JS-E1)): every case records its end in ENDS as `${id}:${count}` as its last statement - the
+ * judged set, each pin after its claims assertions, the claims-bound case and the records case - where count is vitest's tally of
+ * the expect calls the case made (expect.getState().assertionCalls), so a case that returns early leaves its end absent and a case
+ * that loses an assertion statement leaves its count short. The judged set, registered first, holds the collected task tree to the
+ * roster's tests (every title once, in roster order, set to run and not inverted, the records case last), so a records case deleted
+ * (with its roster title or without), renamed, skipped or inverted at collection reds there. The records case holds ENDS to the
+ * roster's reached list (the judged set, the pins in row order, the claims-bound case, each at its pinned count), then records its
+ * own end; the file-end judge (afterAll) holds that end at the roster's recordsEnd whenever the records case was selected to run
+ * (read from the collected tree before the first case runs), so a records case that returns early, loses an assertion statement or
+ * skips itself at run time reds after it has run.
+ * NOT CLAIMED (the record): an assertion statement removed together with its pinned count in the roster's record; an expect call
+ * whose matcher is dropped or weakened (the tally counts calls to expect, not matchers); a case that keeps its assertions but returns
+ * its witness as a literal (the wb-wtfr gate's L2-CONST); the file-end judge, or the selection it reads, removed (no claim rides them
+ * alone: the records case still holds every other case's end); every case of the file skipped at once (no case runs to read the
+ * tree).
  * CONTACT: the queued wb-hs2j.1 cut adds an inclusion leg to the adapter (it reads result.blocks' length and result.necessity's
  * include flags) and gives fullShapeRf one block row and one decision record. No witness here depends on either: block mutants
  * keep the fixture's block count against a paired control, A1 pins shapes rather than bytes and C4 selects its note by prefix.
@@ -100,7 +152,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, type RunnerTask } from "vitest";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { nativeReactiveFiberRender, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberProjectionTopology, type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
@@ -113,7 +165,21 @@ type JsonObject = { [key: string]: JsonValue };
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
-const ROOT = process.cwd();
+/**
+ * The workspace root both fixtures and every seam are told (wb-j5y6): a census identity, never the checkout's path. A1 word-scans
+ * every key and string of each fixture, and a checkout's name is a host input like the clock: land-prep checks each try out at
+ * mktemp -d /tmp/fw-landprep-<bead>-XXXX, landing 373's try 1 drew the suffix edUi, whose case boundary splits off the reader
+ * word ui, and A1 found it at $.workspace.root of validRf and fullShapeRf, while try 2 (suffix vBqv, the same tree) read quiet.
+ * It holds no "/", so no checkout's absolute path is a substring of it; the roster holds it (scan.readingRoot).
+ */
+const ROOT = "rf-tsx-closed-vocabulary-census-workspace";
+/** The checkout this file runs in, both spellings (the launch directory and this file's repository): read only to show that no
+ * fixture string spells either (A1). */
+const CHECKOUTS: readonly string[] = [...new Set([process.cwd(), REPO])];
+/** Where A1's checkout scan finds each spelling planted in a copy of a fixture (wb-30xx, checkoutPlantsOf): the string value, the
+ * key beside it and the array item, each found path reading the spelling as <checkout>; the same for both spellings. */
+const PLANTS_FOUND = ["$.workspace.root", "$.workspace.file://<checkout>/rf.json", "$.diagnostics[0]"];
+const CHECKOUT_PLANTS = { launch: PLANTS_FOUND, repository: PLANTS_FOUND };
 const ROSTER_FILE = "test/fixtures/rf-tsx-closed-vocabulary-roster.json";
 const BEAD_EXPORT = ".beads/issues.jsonl";
 const BEAD = "wb-if7q.2";
@@ -165,7 +231,7 @@ const PROPOSED_ENTRY = /^\.\/(?:core|ui|host|node|resources)(?:\/|$)/;
 /** Each floor sits below the count measured at base dae1788 (src 115 .ts modules), so an emptied walk reds and an additive change does not. */
 const SRC_FLOOR = 100;
 const CLOSURE = ["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"];
-const RESIDUAL_FAMILIES = ["R-PRODUCER-VOCABULARY", "R-ADDITIVE", "R-UNFLAGGED", "R-OUTSIDE-CLOSURE"];
+const RESIDUAL_FAMILIES = ["R-PRODUCER-VOCABULARY", "R-ADDITIVE", "R-UNFLAGGED", "R-OUTSIDE-CLOSURE", "R-REAUTHORED"];
 /** A planted reader of rf output that names neither the envelope's schema nor its command (the R-OUTSIDE-CLOSURE quiet row). */
 const OUTSIDE_READER = "export function readOutput(raw: string): unknown {\n  const value = JSON.parse(raw);\n  return value.result.output.html;\n}\n";
 const OPERATION_ID = `rfo_${"a".repeat(22)}`;
@@ -221,9 +287,21 @@ const ROWS: readonly Row[] = [
 
 // ------------------------------------------------------------------------------------------------------------------- the roster
 
+/** A witness fact a claim names: every value its path reaches ("*" stands for every key of an object, at least one) equals the value,
+ * matches the pattern (a regular expression source), or holds exactly these keys in this order. */
+type ClaimCheck =
+  | { readonly path: string; readonly equals: JsonValue }
+  | { readonly path: string; readonly matches: string }
+  | { readonly path: string; readonly keys: readonly string[] };
+/** One term of a pin's quote and the witness facts that show it. */
+interface Claim {
+  readonly term: string;
+  readonly checks: readonly ClaimCheck[];
+}
 interface RosterPin {
   readonly id: string;
   readonly quote: string;
+  readonly claims: readonly Claim[];
   readonly witness: JsonValue;
 }
 interface RosterRow {
@@ -256,6 +334,9 @@ interface Roster {
   readonly residuals: readonly { readonly id: string; readonly quietRow: string }[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  /** THE RECORD: every case's end before the records case's, as `${id}:${count}`, and the records case's own. */
+  readonly reached: readonly string[];
+  readonly recordsEnd: string;
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -278,6 +359,26 @@ function objectOf(value: JsonValue | undefined, field: string): JsonObject {
   return value;
 }
 
+const CHECK_TESTS = ["equals", "matches", "keys"];
+/** Parses one pin's claims, refusing a claim without checks and a check that states other than one test beside its path. */
+function claimsFrom(value: unknown, field: string): Claim[] {
+  if (!Array.isArray(value)) throw new Error(`roster ${field} must be a claims list`);
+  return value.map((claim: unknown, index: number): Claim => {
+    if (!isObject(claim) || !Array.isArray(claim.checks) || claim.checks.length === 0) throw new Error(`roster ${field}[${index}] needs a non-empty checks list`);
+    const checks = claim.checks.map((check: unknown, at: number): ClaimCheck => {
+      const where = `${field}[${index}].checks[${at}]`;
+      if (!isObject(check)) throw new Error(`roster ${where} must be an object`);
+      const named = Object.keys(check).filter(key => CHECK_TESTS.includes(key));
+      if (named.length !== 1 || Object.keys(check).length !== 2) throw new Error(`roster ${where} must state its path and exactly one of ${CHECK_TESTS.join(", ")}`);
+      const path = text(check.path, `${where}.path`);
+      if (named[0] === "equals") return { path, equals: json(check.equals) };
+      if (named[0] === "matches") return { path, matches: text(check.matches, `${where}.matches`) };
+      return { path, keys: stringList(check.keys, `${where}.keys`) };
+    });
+    return { term: text(claim.term, `${field}[${index}].term`), checks };
+  });
+}
+
 /** Parses the roster from disk, refusing any field of the wrong shape by name; each call is a fresh read. */
 function readRoster(): Roster {
   const raw: unknown = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8"));
@@ -286,7 +387,12 @@ function readRoster(): Roster {
     if (!isObject(row) || !Array.isArray(row.pins)) throw new Error(`roster rows[${index}] needs a pins list`);
     const pins = row.pins.map((pin: unknown, at: number): RosterPin => {
       if (!isObject(pin) || !Object.hasOwn(pin, "witness")) throw new Error(`roster rows[${index}].pins[${at}] needs a witness`);
-      return { id: text(pin.id, `rows[${index}].pins[${at}].id`), quote: text(pin.quote, `rows[${index}].pins[${at}].quote`), witness: json(pin.witness) };
+      return {
+        id: text(pin.id, `rows[${index}].pins[${at}].id`),
+        quote: text(pin.quote, `rows[${index}].pins[${at}].quote`),
+        claims: claimsFrom(pin.claims, `rows[${index}].pins[${at}].claims`),
+        witness: json(pin.witness),
+      };
     });
     return { id: text(row.id, `rows[${index}].id`), label: text(row.label, `rows[${index}].label`), pins };
   });
@@ -324,6 +430,8 @@ function readRoster(): Roster {
     residuals,
     rows,
     tests: stringList(raw.tests, "tests"),
+    reached: stringList(raw.reached, "reached"),
+    recordsEnd: text(raw.recordsEnd, "recordsEnd"),
   };
 }
 
@@ -362,6 +470,7 @@ function scanConstants(): JsonValue {
     closure: CLOSURE,
     outsideReader: OUTSIDE_READER,
     minimalFixture: MINIMAL_FIXTURE,
+    readingRoot: ROOT,
   });
 }
 
@@ -408,7 +517,8 @@ function tiles(body: string, quotes: readonly string[]): { covered: boolean; gap
 // ----------------------------------------------------------------------------------------------------------------- the fixtures
 
 /** Evaluates the literal tree of one module-local declaration: object, array, string, template, number, boolean and null literals,
- * module-local const references, `'x'.repeat(n)` and `process.cwd()` (the reading root). Anything else throws, naming the node. */
+ * module-local const references, `'x'.repeat(n)` and `process.cwd()` (read as ROOT, the census's reading root, never the checkout's
+ * path). Anything else throws, naming the node. */
 function evaluateDeclaration(file: string, name: string): JsonValue {
   const source = ts.createSourceFile(file, readFileSync(join(REPO, file), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const declarations = new Map<string, ts.Expression>();
@@ -700,6 +810,27 @@ function uiFindings(value: JsonValue, path = "$"): string[] {
   return Object.entries(value).flatMap(([key, item]) => [...(readerWordHits(key).length + uiPhraseHits(key).length > 0 ? [`${path}.${key}`] : []), ...uiFindings(item, `${path}.${key}`)]);
 }
 
+/** Every key and string of a JSON value spelling the checkout's path, by path (wb-j5y6: what no word scan may read). */
+function checkoutPathsOf(value: JsonValue, path = "$"): string[] {
+  const spells = (text: string): boolean => CHECKOUTS.some(checkout => text.includes(checkout));
+  if (typeof value === "string") return spells(value) ? [path] : [];
+  if (Array.isArray(value)) return value.flatMap((item, index) => checkoutPathsOf(item, `${path}[${index}]`));
+  if (value === null || typeof value !== "object") return [];
+  return Object.entries(value).flatMap(([key, item]) => [...(spells(key) ? [`${path}.${key}`] : []), ...checkoutPathsOf(item, `${path}.${key}`)]);
+}
+/** A1's checkout scan read live on planted copies of one fixture (wb-30xx): for each spelling in turn, where checkoutPathsOf finds
+ * it written as file://<checkout>/rf.json at $.workspace.root, as a key beside it and as the one item of $.diagnostics, the spelling
+ * read back as <checkout> (CHECKOUT_PLANTS). */
+function checkoutPlantsOf(envelope: JsonObject): JsonObject {
+  const workspace = objectOf(envelope.workspace, "workspace");
+  const found = (checkout: string): string[] => {
+    const spelled = `file://${checkout}/rf.json`;
+    const planted: JsonObject = { ...envelope, workspace: { ...workspace, root: spelled, [spelled]: ROOT }, diagnostics: [spelled] };
+    return checkoutPathsOf(planted).map(path => path.split(checkout).join("<checkout>"));
+  };
+  return { launch: found(process.cwd()), repository: found(REPO) };
+}
+
 /** One module's identifiers and literal texts (string, template parts, regular expressions): what a reader can match or read. */
 function tokensOf(fileName: string, source: ts.SourceFile): string[] {
   const out: string[] = [];
@@ -859,6 +990,309 @@ const MUTANTS: readonly { readonly id: string; readonly find: string; readonly r
   { id: "Q2-failure-schema-disjunct", find: "source.schema===REACTIVE_FIBER_CLI_SCHEMA", replace: "(source.schema===REACTIVE_FIBER_CLI_SCHEMA||source.ok===false)" },
 ];
 
+// --------------------------------------------------------------------------------------------------------------- the claims
+
+/** The provider's summary of a planted block or text it admitted verbatim, projecting as its control with nothing surfaced. */
+const DEGRADED = "admitted/verbatim/same/surfaced 0/spawns 1";
+/** The same, the projection differing from its control only in the output reference (the text's digest). */
+const DEGRADED_BUT_PAYLOAD = "admitted/verbatim/same-but-payload/surfaced 0/spawns 1";
+/** The provider's line for exactly one typed refusal in one spawn. */
+const ONE_REFUSAL = "^[a-z]+: .+ \\(errors 1, spawns 1\\)$";
+/** The adapter's own typed refusal. */
+const ADAPTER_REFUSAL = "^validation: ReactiveFiber topology refused: ";
+/** The adapter's failure projection, naming the rf code and nothing else. */
+const FAILURE_NODE = "^projected unknown/failure: refused \u00b7 RF_[A-Z_]+$";
+
+/** The closure's schema and command comparisons, as B3's facts spell them. */
+const ADMISSION_COMPARISONS = [`command=${RENDER_COMMAND}`, `schema=${CLI_SCHEMA}`];
+/** The wb-973.11 result-key roster, read from its own file: B4's (wb-973.11) claim names its identity and key lists. */
+const RF_RESULT_ROSTER = readRfResultRoster();
+
+/** Each pin's quote cut into terms that tile it, each term a claim with the witness facts that show it (wb-wtfr). The paths read the
+ * witness without its pin id. */
+const CLAIMS: Readonly<Record<string, readonly Claim[]>> = {
+  A1: [
+    {
+      term: "Pi's validRf/fullShapeRf fixtures",
+      checks: [
+        { path: "validRf.provider", equals: "admitted/verbatim/spawns 1" },
+        { path: "fullShapeRf.provider", equals: "admitted/verbatim/spawns 1" },
+        { path: "*.adapter", equals: "projected" },
+      ],
+    },
+    {
+      term: "stay unchanged",
+      checks: [
+        { path: "*.envelopeKeys", equals: ENVELOPE_KEYS },
+        { path: "validRf.outputKeys", equals: ["text"] },
+        { path: "fullShapeRf.outputKeys", equals: ["text", "size_bytes", "digest", "path"] },
+        { path: "*.uiFindings", equals: [] },
+        { path: "*.checkoutPaths", equals: [] },
+        { path: "*.checkoutPlants", equals: CHECKOUT_PLANTS },
+      ],
+    },
+  ],
+  A2: [
+    { term: "a block kind", checks: [{ path: "degraded.*.*", equals: DEGRADED }] },
+    {
+      term: "outside rftsx.*",
+      checks: [
+        { path: "outsideKindsInVocabulary", equals: [] },
+        { path: "insideKindInVocabulary", equals: true },
+        { path: "closedVocabularyRefusal.provider", matches: ONE_REFUSAL },
+        { path: "closedVocabularyRefusal.adapter", matches: FAILURE_NODE },
+      ],
+    },
+  ],
+  A3: [
+    {
+      term: "a UI-descriptor",
+      checks: [
+        { path: "*.serializedAsText", equals: DEGRADED_BUT_PAYLOAD },
+        { path: "*.treeAsText.provider", matches: ONE_REFUSAL },
+        { path: "*.treeAsText.adapter", matches: ADAPTER_REFUSAL },
+      ],
+    },
+    { term: "block", checks: [{ path: "*.blockRow", equals: DEGRADED }] },
+  ],
+  A4: [
+    {
+      term: "an HTML body",
+      checks: [
+        { path: "htmlBodyDigest", equals: `sha256:${sha256(HTML_BODY)}` },
+        { path: "fixtures.*.payloadRef", equals: `rf-output:sha256:${sha256(HTML_BODY)}` },
+      ],
+    },
+    {
+      term: "is refused/degraded as today",
+      checks: [
+        { path: "fixtures.*.body", equals: DEGRADED_BUT_PAYLOAD },
+        { path: "fixtures.*.htmlField.provider", matches: ONE_REFUSAL },
+        { path: "fixtures.*.htmlField.adapter", matches: ADAPTER_REFUSAL },
+      ],
+    },
+  ],
+  B1: [
+    { term: "src/workbench/providers/reactivefiber.ts accepts no", checks: [{ path: "*.*.provider", matches: ONE_REFUSAL }] },
+    {
+      term: "UI-descriptor",
+      checks: [
+        { path: "*", keys: ["ui-schema", "ui-schema-failure", "ui-command", "descriptor-command", "descriptor-list"] },
+        { path: "*.*.adapter", matches: ADAPTER_REFUSAL },
+      ],
+    },
+  ],
+  B2: [
+    {
+      term: "host-output envelope",
+      checks: [
+        { path: "*", keys: ["dom-commit", "tui-cells", "mounted-control", "additive-host-output-key"] },
+        { path: "*.dom-commit.provider", matches: ONE_REFUSAL },
+        { path: "*.dom-commit.adapter", matches: ADAPTER_REFUSAL },
+        { path: "*.tui-cells.provider", matches: ONE_REFUSAL },
+        { path: "*.tui-cells.adapter", matches: ADAPTER_REFUSAL },
+        { path: "*.mounted-control.provider", matches: ONE_REFUSAL },
+        { path: "*.mounted-control.adapter", matches: ADAPTER_REFUSAL },
+        { path: "*.additive-host-output-key", equals: DEGRADED },
+      ],
+    },
+  ],
+  B3: [
+    {
+      term: "(a mutant adding one fails the census)",
+      checks: [
+        { path: "modules", equals: CLOSURE },
+        {
+          path: "facts",
+          equals: {
+            "src/workbench/native-evidence.ts": { comparisons: ADMISSION_COMPARISONS, outputReads: [], keyLiterals: [], registrations: [], uiWords: [] },
+            "src/workbench/providers/reactivefiber.ts": { comparisons: ADMISSION_COMPARISONS, outputReads: ["text"], keyLiterals: [ENVELOPE_KEYS], registrations: [PREVIEW_ID, PREVIEW_ID], uiWords: [] },
+            "src/workbench/reactivefiber-observer.ts": { comparisons: ADMISSION_COMPARISONS, outputReads: ["text"], keyLiterals: [ENVELOPE_KEYS], registrations: [], uiWords: [] },
+          },
+        },
+        {
+          path: "mutants",
+          equals: {
+            "M1-ui-schema": ["comparisons", "ui-words"],
+            "M2-interface-command": ["comparisons"],
+            "M3-output-nodes": ["output-reads"],
+            "M4-output-html": ["output-reads", "ui-words"],
+            "M5-ninth-key": ["key-literals"],
+            "M6-registration": ["registrations"],
+            "M7-profile-reader": ["ui-words"],
+            "M8-output-destructure": ["output-reads"],
+            "Q1-text-type-relaxed": [],
+            "Q2-failure-schema-disjunct": [],
+          },
+        },
+        { path: "outsideReader", equals: { inClosure: false, phraseHits: 0, outputReads: ["html"] } },
+      ],
+    },
+  ],
+  B4: [
+    {
+      term: "roster",
+      checks: [
+        { path: "uiKeys", equals: [] },
+        { path: "documentKeys", equals: ["output", "blocks", "components"] },
+        { path: "fullShapeDiff", equals: { failures: [], extraResultKeys: [] } },
+      ],
+    },
+    {
+      term: "(wb-973.11)",
+      checks: [
+        { path: "rfVersion", equals: RF_RESULT_ROSTER.rfVersion },
+        { path: "source", equals: RF_RESULT_ROSTER.source },
+        { path: "receipt", equals: RF_RESULT_ROSTER.receipt },
+        { path: "resultKeys", equals: RF_RESULT_ROSTER.resultKeys },
+        { path: "provenanceKeys", equals: RF_RESULT_ROSTER.provenanceKeys },
+        { path: "workKeys", equals: RF_RESULT_ROSTER.workKeys },
+        { path: "workMetricsKeys", equals: RF_RESULT_ROSTER.workMetricsKeys },
+      ],
+    },
+  ],
+  B5: [
+    {
+      term: "eight-key strictness (wb-2j3.9) unchanged",
+      checks: [
+        { path: "*.cases", equals: [...NINTH_KEYS.map(key => `ninth ${key}`), ...ENVELOPE_KEYS.map(key => `missing ${key}`), "renamed transaction_id->ui"] },
+        { path: "*.admitted", equals: [] },
+        { path: "*.spawns", equals: 14 },
+        { path: "*.provider", equals: ["transport: RF preview returned an unrecognized native envelope."] },
+        { path: "*.adapter", equals: ["validation: ReactiveFiber topology refused: source must be the strict eight-key rf envelope."] },
+      ],
+    },
+  ],
+  C1: [
+    {
+      term: "armed on",
+      checks: [
+        { path: "phraseHits", equals: [] },
+        { path: "argvWords", equals: [] },
+        { path: "srcFloorMet", equals: true },
+        { path: "admitted", equals: true },
+        { path: "argv", equals: [["--workspace", "<root>", "context", "render", "--model", "model", "--task", "task", "--no-commit", "--no-input", "--json"]] },
+      ],
+    },
+    {
+      term: "TSX-IF-03",
+      checks: [
+        { path: "gate.closed", equals: true },
+        { path: "gate.proposedEntries", equals: [] },
+        { path: "gate.exportsMeasured", equals: 6 },
+      ],
+    },
+  ],
+  C2: [
+    { term: "an unregistered descriptor ID", checks: [{ path: "unregistered-code.adapter", matches: FAILURE_NODE }] },
+    {
+      term: "newer version",
+      checks: [
+        { path: "newer-envelope-version.adapter", matches: ADAPTER_REFUSAL },
+        { path: "newer-version-failure.adapter", matches: ADAPTER_REFUSAL },
+      ],
+    },
+    {
+      term: "yields one typed diagnostic",
+      checks: [
+        { path: "*.provider", matches: ONE_REFUSAL },
+        { path: "sdk-coded-primary.adapter", matches: ADAPTER_REFUSAL },
+      ],
+    },
+  ],
+  C3: [
+    {
+      term: "no generic block",
+      checks: [
+        { path: "cases", keys: ["closed-vocabulary", "unregistered-code"] },
+        { path: "cases.*.reading", equals: false },
+        { path: "cases.*.snapshots", equals: 1 },
+        { path: "cases.*.valueCarried", equals: false },
+        { path: "cases.*.evidenceRefs", equals: ["rf-workspace"] },
+        { path: "cases.*.sentinelInvariant", equals: true },
+        { path: "cases.*.surfaced", equals: [] },
+        { path: "sdkWithheld", equals: true },
+      ],
+    },
+  ],
+  C4: [
+    {
+      term: "unknown stays unknown (wb-973.10)",
+      checks: [
+        { path: "*.provider", equals: "admitted/verbatim" },
+        { path: "unknown.coverage", equals: "partial" },
+        { path: "unknown.tone", equals: "unknown" },
+        { path: "unknown.note", equals: "observations: 2 rows, 2 not observed (unregistered, \u2026): partial" },
+        { path: "known.coverage", equals: "complete" },
+        { path: "known.tone", equals: "success" },
+        { path: "known.note", equals: "observations: 1 row, 0 reused" },
+      ],
+    },
+  ],
+};
+const claimsOf = (pin: string): readonly Claim[] => CLAIMS[pin] ?? [];
+
+interface Reached {
+  readonly path: string;
+  readonly value: JsonValue | undefined;
+}
+/** Every value a check's path reaches, by concrete path; an absent key, a non-object or a "*" over no key reaches undefined. */
+function reached(value: JsonValue | undefined, segments: readonly string[], at: string): Reached[] {
+  const [head, ...rest] = segments;
+  if (head === undefined) return [{ path: at, value }];
+  if (value === undefined || value === null || typeof value !== "object" || Array.isArray(value)) return [{ path: `${at}.${head}`, value: undefined }];
+  if (head !== "*") return reached(value[head], rest, `${at}.${head}`);
+  const keys = Object.keys(value);
+  return keys.length === 0 ? [{ path: `${at}.*`, value: undefined }] : keys.flatMap(key => reached(value[key], rest, `${at}.${key}`));
+}
+function checkMisses(check: ClaimCheck, content: JsonValue): string[] {
+  return reached(content, check.path.split("."), "$").flatMap(({ path, value }): string[] => {
+    if (value === undefined) return [`${path} absent`];
+    if ("equals" in check) return isDeepStrictEqual(value, check.equals) ? [] : [`${path} is not ${JSON.stringify(check.equals)}`];
+    if ("matches" in check) return typeof value === "string" && new RegExp(check.matches).test(value) ? [] : [`${path} does not match ${check.matches}`];
+    return isObject(value) && isDeepStrictEqual(Object.keys(value), check.keys) ? [] : [`${path} keys are not ${check.keys.join(", ")}`];
+  });
+}
+/** A witness without its pin id, which is no fact. */
+function contentOf(witness: JsonValue | null): JsonValue {
+  return isObject(witness) ? Object.fromEntries(Object.entries(witness).filter(([key]) => key !== "pin")) : witness;
+}
+/** What a witness fails to show of the claims: one line per missed fact, naming the term. */
+function missesOf(claims: readonly Claim[], witness: JsonValue | null): string[] {
+  const content = contentOf(witness);
+  return claims.flatMap(claim => claim.checks.flatMap(check => checkMisses(check, content).map(miss => `${claim.term}: ${miss}`)));
+}
+/** The paths of a value's facts: every value below it that is not an object with keys (an array is one fact). */
+function factPaths(value: unknown, at: string): string[] {
+  return isObject(value) && Object.keys(value).length > 0 ? Object.entries(value).flatMap(([key, item]) => factPaths(item, `${at}.${key}`)) : [at];
+}
+/** The paths a claim's equals and matches checks reach in a witness's content (a key list reaches no value). */
+function coveredBy(claim: Claim, content: JsonValue): string[] {
+  return claim.checks.filter(check => !("keys" in check)).flatMap(check => reached(content, check.path.split("."), "$").flatMap(entry => (entry.value === undefined ? [] : [entry.path])));
+}
+const under = (fact: string, paths: readonly string[]): boolean => paths.some(path => fact === path || fact.startsWith(`${path}.`));
+/** The facts of a witness that no claim covers. */
+function unclaimedOf(claims: readonly Claim[], witness: JsonValue | null): string[] {
+  const content = contentOf(witness);
+  const covered = claims.flatMap(claim => coveredBy(claim, content));
+  return factPaths(content, "$").filter(fact => !under(fact, covered));
+}
+/** The terms that show no fact of their own: every fact they cover, if any, another term of the pin covers too. */
+function idleTermsOf(claims: readonly Claim[], witness: JsonValue | null): string[] {
+  const content = contentOf(witness);
+  const facts = factPaths(content, "$");
+  return claims
+    .filter((claim, index) => {
+      const own = coveredBy(claim, content);
+      const others = claims.flatMap((other, at) => (at === index ? [] : coveredBy(other, content)));
+      return !facts.some(fact => under(fact, own) && !under(fact, others));
+    })
+    .map(claim => claim.term);
+}
+const claimMisses = (pin: string, witness: JsonValue | null): string[] => missesOf(claimsOf(pin), witness);
+/** The pins' live witnesses, set as each case returns; the claims-bound case reads them. */
+const LIVE = new Map<string, JsonValue>();
+
 // ---------------------------------------------------------------------------------------------------------------- the cases
 
 /** Every judged pin's witness, with its pin id; the judged-set case holds each to the roster. */
@@ -868,7 +1302,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
     const rf = installStandIn();
     const out: JsonObject = {};
+    const hosted: string[] = [];
     for (const fixture of fixtures()) {
+      hosted.push(...checkoutPathsOf(fixture.envelope).map(path => `${fixture.name} ${path}`));
       const output = objectOf(resultOf(fixture.envelope).output, "result.output");
       const provided = await provide(rf, fixture.envelope, 0);
       const observed = observe(provided.reading ?? readingOf(fixture.envelope));
@@ -876,10 +1312,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         envelopeKeys: Object.keys(fixture.envelope),
         outputKeys: Object.keys(output),
         uiFindings: uiFindings(fixture.envelope),
+        checkoutPaths: checkoutPathsOf(fixture.envelope),
+        checkoutPlants: checkoutPlantsOf(fixture.envelope),
         provider: provided.reading === null ? refusalText(provided.refusals[0]) : `admitted/${verbatim(provided.reading, fixture.envelope) ? "verbatim" : "rewritten"}/spawns ${provided.spawns}`,
         adapter: observed.topology === null ? refusalText(observed.refusal) : "projected",
       };
     }
+    expect(hosted, "no fixture string spells the checkout's path: both fixtures read the census's own root").toStrictEqual([]);
     return done("A1", out);
   },
   A2: async () => {
@@ -1112,8 +1551,62 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 const REACHED = new Set<string>();
 const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
+const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the outside anchor and the cases agree";
+const CLAIMS_TITLE = "claims bound: each pin's claims refuse every other pin's live witness, and a re-authored pin stays quiet (R-REAUTHORED)";
+const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order, every pin reached its witness, and every case reached its end at its pinned assertion count";
+/** The record's ids of the three cases that are not pins (a pin's is its own id). */
+const JUDGED_ID = "judged";
+const CLAIMS_ID = "claims";
+const RECORDS_ID = "records";
+
+/** THE RECORD (wb-g8uk): each case's end, in run order, as `${id}:${count}`, where count is vitest's tally of the case's expect calls
+ * (expect.getState().assertionCalls, reset at each try); a case pushes it as its last statement, so a case that stops early pushes
+ * none and a case that lost an assertion statement pushes a short count. */
+const ENDS: string[] = [];
+/** The titles selected to run, read from the collected task tree before any case runs (a test-name filter deselects the rest). */
+const SELECTED: string[] = [];
+/** A case's end as the record holds it. */
+const endOf = (id: string): string => `${id}:${expect.getState().assertionCalls}`;
+
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every test a task tree holds, in registration order; self marks the case doing the reading. */
+function registered(tasks: readonly RunnerTask[], self?: RunnerTask): Registered[] {
+  const walked: Registered[] = [];
+  for (const child of tasks) {
+    if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self });
+    else if (child.type === "suite") walked.push(...registered(child.tasks, self));
+  }
+  return walked;
+}
+/** A registered test's title with its collected mode, "+fails" marking an inverted one. */
+const modeLine = (entry: Registered): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""}`;
+
+// The selection, read once from the collected tree before the first case runs (no case has run, so every mode is the collected one).
+beforeEach(({ task }) => {
+  if (SELECTED.length === 0) SELECTED.push(...registered(task.file.tasks).filter(entry => entry.mode === "run").map(entry => entry.name));
+});
+// The file-end judge: a records case selected to run reached its own end, after every other case's, at its pinned count.
+afterAll(() => {
+  if (!SELECTED.includes(RECORDS_TITLE)) return;
+  expect(ENDS, "every case of this file reached its end, the records case last").toEqual([...ROSTER.reached, ROSTER.recordsEnd]);
+});
+
 describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-PORTABLE-TSX-R2, posture leg)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the outside anchor and the cases agree", () => {
+  it(JUDGED_TITLE, ({ task }) => {
+    // The collected cases (vitest's task tree), read before any other case runs: a records case deleted, renamed, skipped or
+    // inverted reds here.
+    const collected = registered(task.file.tasks, task);
+    const names = collected.map(entry => entry.name);
+    expect(names, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(names[names.length - 1], "the records case is registered last").toBe(RECORDS_TITLE);
+    expect(collected.findIndex(entry => entry.self), "this case finds itself by task identity, registered first").toBe(0);
+    expect(collected.filter(entry => entry.mode !== "run" || entry.fails).map(modeLine), "every registered test is set to run and not inverted").toEqual([]);
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:5", "C:4"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => ({ id: pin.id, quote: pin.quote })) }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => ({ id: pin.id, quote: pin.quote })) })),
@@ -1121,6 +1614,31 @@ describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-P
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort());
     expect(scanConstants()).toStrictEqual(ROSTER.scan);
     expect(ROSTER.residuals.map(entry => entry.id)).toEqual(RESIDUAL_FAMILIES);
+    // The claims (wb-wtfr): every pin's, frozen by claim and check counts, held to the roster, and its terms tiling its quote.
+    const pins = ROWS.flatMap(row => row.pins);
+    expect(Object.keys(CLAIMS), "claims for exactly the pins, in order").toEqual(pins.map(pin => pin.id));
+    expect(pins.map(pin => `${pin.id}:${claimsOf(pin.id).map(claim => claim.checks.length).join("+")}`)).toEqual([
+      "A1:3+6",
+      "A2:1+4",
+      "A3:3+1",
+      "A4:2+3",
+      "B1:1+2",
+      "B2:8",
+      "B3:4",
+      "B4:3+7",
+      "B5:5",
+      "C1:5+3",
+      "C2:1+2+2",
+      "C3:8",
+      "C4:7",
+    ]);
+    expect(json(pins.map(pin => ({ id: pin.id, claims: claimsOf(pin.id) })))).toStrictEqual(json(ROSTER.rows.flatMap(row => row.pins).map(pin => ({ id: pin.id, claims: pin.claims }))));
+    const termTilings = pins.map(pin => ({ pin: pin.id, ...tiles(pin.quote, claimsOf(pin.id).map(claim => claim.term)) }));
+    expect(termTilings.filter(tiling => !tiling.covered).map(tiling => `${tiling.pin} ${JSON.stringify(tiling.gaps)}`), "each pin's claim terms tile its quote").toEqual([]);
+    expect(
+      pins.flatMap(pin => claimsOf(pin.id).flatMap(claim => claim.checks.filter(check => check.path.split(".").some(segment => segment.length === 0)).map(check => `${pin.id} ${claim.term}: ${check.path}`))),
+      "every check path names its segments",
+    ).toEqual([]);
     expect(ROSTER.bead).toBe(BEAD);
     // The measured producer facts anchor the vocabulary and the refusal row this file names.
     expect(ROSTER.producer.contextVocabulary).toEqual(CONTEXT_VOCABULARY);
@@ -1146,6 +1664,7 @@ describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-P
     const gating = bead.notes.split("\n").find(line => line.startsWith("Gating: ")) ?? "";
     expect(gating.includes("output-nodes.ts :149-155") && gating.includes("TSX-IF-03"), "the Gating line names the vocabulary constants and the unshipped gate").toBe(true);
     expect(ROSTER.producer.vocabularySites[0]?.endsWith(":149-155"), "the roster's first vocabulary site is the Gating line's").toBe(true);
+    ENDS.push(endOf(JUDGED_ID));
   });
 
   for (const row of ROWS) {
@@ -1155,22 +1674,39 @@ describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-P
           const impl = IMPL[pin.id];
           expect(impl, `no case for ${pin.id}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
+          if (witness !== null) LIVE.set(pin.id, witness);
           expect(witness).toStrictEqual(rosterWitness(pin.id));
+          expect(claimMisses(pin.id, witness), `${pin.id}'s witness shows every term of its quote`).toEqual([]);
+          expect(unclaimedOf(claimsOf(pin.id), witness), `every fact of ${pin.id}'s witness sits under a term of its quote`).toEqual([]);
+          expect(idleTermsOf(claimsOf(pin.id), witness), `every term of ${pin.id}'s quote shows a fact of its own`).toEqual([]);
           REACHED.add(pin.id);
+          ENDS.push(endOf(pin.id));
         });
       }
     });
   }
 
-  it("records: every registered test ran once in run mode in roster order, and every pin reached its witness", ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const walk = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") walk(child.tasks);
-      }
-    };
-    walk(task.file.tasks);
+  it(CLAIMS_TITLE, () => {
+    const ids = ROWS.flatMap(row => row.pins.map(pin => pin.id));
+    expect(ids.filter(id => !LIVE.has(id)), "every pin's case returned a live witness").toEqual([]);
+    const accepted = ids.flatMap(claimer => ids.filter(other => other !== claimer && claimMisses(claimer, LIVE.get(other) ?? null).length === 0).map(other => `${claimer} accepts ${other}`));
+    expect(accepted, "no pin's claims accept another pin's live witness").toEqual([]);
+    // R-REAUTHORED, the quiet row: C3 re-authored (its case cut to one refusal's reading, its claims to that one fact, its roster
+    // witness to match) shows those claims with every fact under them, and no other pin's claims accept it; C3's own claims refuse it.
+    const reauthored: JsonValue = { pin: "C3", cases: { "closed-vocabulary": { reading: false } } };
+    const reauthoredClaims: readonly Claim[] = [{ term: "no generic block", checks: [{ path: "cases.*.reading", equals: false }] }];
+    expect({
+      shows: missesOf(reauthoredClaims, reauthored),
+      unclaimed: unclaimedOf(reauthoredClaims, reauthored),
+      idle: idleTermsOf(reauthoredClaims, reauthored),
+      acceptedBy: ids.filter(id => id !== "C3" && claimMisses(id, reauthored).length === 0),
+      refusedByC3: claimMisses("C3", reauthored).length > 0,
+    }).toStrictEqual({ shows: [], unclaimed: [], idle: [], acceptedBy: [], refusedByC3: true });
+    ENDS.push(endOf(CLAIMS_ID));
+  });
+
+  it(RECORDS_TITLE, ({ task }) => {
+    const walked = registered(task.file.tasks, task);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file, exactly and in roster order").toEqual([...ROSTER.tests]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
@@ -1179,5 +1715,13 @@ describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-P
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(entry => entry.name), "every other test ran in run mode, not inverted").toEqual([]);
     expect([...REACHED].sort(), "every judged pin reached its witness assertion").toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort());
+    // THE RECORD: every case before this one reached its end - the judged set first, each pin after its claims assertions in row
+    // order, then the claims-bound case - at its pinned assertion count.
+    expect(ENDS, "every case before this one reached its end, in run order, at its pinned assertion count").toEqual([...ROSTER.reached]);
+    expect(
+      ENDS.map(entry => entry.slice(0, entry.lastIndexOf(":"))),
+      "the ends recorded are the judged set's, the rows' pins' and the claims-bound case's",
+    ).toEqual([JUDGED_ID, ...ROWS.flatMap(row => row.pins.map(pin => pin.id)), CLAIMS_ID]);
+    ENDS.push(endOf(RECORDS_ID));
   });
 });

@@ -5,9 +5,9 @@
  *
  * observeInvocation is a synchronous function of one ObserveReader and one request whose scope the host has already
  * authorized; the ACL (grants, session/workspace/principal checks) stays with the registered tool in src/index.ts.
- * Per call it reads one viewport window, at most one 40-row outgoing relation page per returned node and one bounded
- * event window. It never ingests, refreshes, relates, marks stale, reconnects or reaches a provider: an observation
- * stays a read.
+ * Per call it reads one viewport window, at most one 40-row outgoing relation page per returned node, one bounded
+ * event window and, when asked, one bounded page of the request scope's typed identity refusals (wb-86q). It never
+ * ingests, refreshes, relates, marks stale, reconnects or reaches a provider: an observation stays a read.
  *
  * Hygiene: every string of a reply passes the one shared helper, sanitizeWorkbenchText in redaction.ts (wb-952 census
  * site 22): it normalizes once, redacts every credential any reading of the unsafe units exposes (a unit between two
@@ -17,8 +17,13 @@
  *
  * Honesty: counts describe the returned window only (countsBasis "returned-window"); aggregates stay "not-wired"
  * until the ancestor-aggregate read model is wired; nothing is estimated. Over the byte cap the reply drops events,
- * then relations, then nodes from the tail, says so in truncatedForBytes and droppedForBytes, and points nextCursor
- * at the first dropped node; window, freshness and anomalies are never dropped.
+ * then identity refusals, then relations, then nodes from the tail, says so in truncatedForBytes and droppedForBytes,
+ * and points nextCursor at the first dropped node; window, freshness and anomalies are never dropped.
+ *
+ * Identity refusals (wb-86q, the wb-0br F5 follow-up): the projection's own rows for the request scope, read only when
+ * selectors.identityRefusals asks. Every value is closed vocabulary (the admission path, the reference, the identity
+ * field, the first unsafe code point and the reason), so no producer text reaches the reply; a row a reader hands over
+ * outside that vocabulary is withheld and counted, never repaired.
  *
  * Cursor: opaque base64url of the canonical JSON { v: 1, offset, invocationId, scope, revision }. Beyond the
  * offset and invocation it binds a tag of the request scope (FNV-1a over the workspace/principal pair; a binding
@@ -28,7 +33,17 @@
  * with CapabilityError("validation"); none is ever a silent restart at offset 0.
  */
 import { CapabilityError } from "./capability-registry.js";
-import type { Interval, NativeRef, ObservationProjection, ObservationScope, ObservedNode, Presentation, RelationKind } from "./observation.js";
+import {
+  type IdentityRefusal,
+  type Interval,
+  type NativeRef,
+  type ObservationProjection,
+  type ObservationScope,
+  type ObservedNode,
+  type Presentation,
+  type RelationKind,
+  unsafeIdentityUnit,
+} from "./observation.js";
 import { sanitizeWorkbenchJsonText, sanitizeWorkbenchText } from "./redaction.js";
 
 export const OBSERVE_CONTRACT = "workbench.observe/v1";
@@ -56,12 +71,22 @@ const FRESHNESS: readonly ObservedNode["freshness"][] = ["current", "stale", "un
 const COMPLETENESS: readonly ObservedNode["completeness"][] = ["complete", "partial", "unknown"];
 const CONNECTION: readonly ObservedNode["sourceConnectionState"][] = ["connected", "disconnected", "unknown"];
 const RELATION_KINDS: readonly RelationKind[] = ["dependency", "causation", "ownership", "grouping", "hypothesis"];
+const REFUSAL_PATHS: readonly IdentityRefusal["path"][] = ["ingest", "refresh", "relate", "markStale"];
+const REFUSAL_REFS: readonly IdentityRefusal["ref"][] = ["source", "from", "to", "ref"];
+const REFUSAL_FIELDS: readonly IdentityRefusal["field"][] = ["provider", "type", "id", "scope"];
+/** The projection's code point form: "U+" and four to six uppercase hex digits. */
+const CODE_POINT = /^U\+([0-9A-F]{4,6})$/;
 const CURSOR_FIELDS = "v,offset,invocationId,scope,revision";
 /** The projection's reference rule: no C0 control character and no DEL. */
 const CONTROL = /[\u0000-\u001f\u007f]/;
 
-/** The five read methods of ObservationProjection this builder may call; nothing else is reachable through it. */
-export type ObserveReader = Pick<ObservationProjection, "window" | "relations" | "events" | "relationRevision" | "stats">;
+/**
+ * The read methods of ObservationProjection this builder may call; nothing else is reachable through it. identityRefusals
+ * is optional so a reader written before it still serves every other selector; asked for refusals, such a reader is
+ * refused typed "unavailable", never answered with an empty page.
+ */
+export type ObserveReader = Pick<ObservationProjection, "window" | "relations" | "events" | "relationRevision" | "stats"> &
+  Partial<Pick<ObservationProjection, "identityRefusals">>;
 
 /** A source-qualified event position, passed through to ObservationProjection.events({after}). */
 export interface ObserveEventCursor {
@@ -78,6 +103,8 @@ export interface ObserveSelectors {
   readonly relations?: boolean;
   /** Summarize one bounded event window of the request scope (1..40 events, optionally after a cursor). */
   readonly events?: { readonly limit: number; readonly after?: ObserveEventCursor };
+  /** Return one bounded page (1..40 rows) of the request scope's typed identity refusals (wb-86q). */
+  readonly identityRefusals?: { readonly limit: number };
 }
 
 export interface ObserveRequest {
@@ -135,6 +162,24 @@ export interface ObserveEvents {
   readonly basis: "scope-event-window";
 }
 
+/**
+ * The request scope's typed identity refusals (wb-0br rows, surfaced by wb-86q). A refused input made no node, event or
+ * edge, so these rows can explain a window that is short or empty; they never carry the refused text.
+ */
+export interface ObserveIdentityRefusals {
+  /** Rows in this reply, oldest retained first. */
+  readonly returned: number;
+  /** Every identity refusal the projection counted for the request scope, retained or not. */
+  readonly total: number;
+  /** More retained rows exist than this page returned. */
+  readonly truncated: boolean;
+  /** Rows the reader handed over outside the closed vocabulary: withheld from rows, never repaired. */
+  readonly unrecognized: number;
+  readonly rows: readonly Readonly<IdentityRefusal>[];
+  /** The projection's retained refusal rows of the whole request scope; a row names no invocation. */
+  readonly basis: "scope-refusal-window";
+}
+
 export interface ObserveFreshness {
   readonly current: number;
   readonly stale: number;
@@ -167,6 +212,8 @@ export interface ObserveWindow {
 /** The explicit byte-cap marker: what was read but left out of this reply. */
 export interface ObserveDropped {
   readonly events: boolean;
+  /** Present exactly when selectors.identityRefusals was given. */
+  readonly identityRefusals?: boolean;
   readonly relations: boolean;
   readonly nodes: number;
 }
@@ -178,6 +225,7 @@ export interface ObserveReply {
   readonly nodes: readonly ObserveNode[];
   readonly relations?: ObserveRelations;
   readonly events?: ObserveEvents;
+  readonly identityRefusals?: ObserveIdentityRefusals;
   readonly freshness: ObserveFreshness;
   readonly anomalies: ObserveAnomalies;
   readonly aggregates: "not-wired";
@@ -197,6 +245,7 @@ interface Plan {
   readonly kind?: string;
   readonly relations: boolean;
   readonly events?: { readonly limit: number; readonly after?: ObserveEventCursor };
+  readonly identityRefusals?: { readonly limit: number };
   readonly maxBytes: number;
 }
 
@@ -218,6 +267,7 @@ interface Gathered {
   readonly outgoing?: readonly ObserveRelationCount[];
   readonly relationRevision?: number;
   readonly events?: ObserveEvents;
+  readonly identityRefusals?: ObserveIdentityRefusals;
 }
 
 const refused = (message: string): CapabilityError => new CapabilityError("validation", `Observe request refused: ${message}.`);
@@ -291,11 +341,19 @@ function eventSelector(events: unknown): NonNullable<Plan["events"]> {
   return { limit, after: { source: { provider, type, id, ...(scope === undefined ? {} : { scope }) }, projectionEventId } };
 }
 
-function selectorsOf(selectors: unknown): Pick<Plan, "tone" | "kind" | "relations" | "events"> {
+function refusalSelector(selector: unknown): NonNullable<Plan["identityRefusals"]> {
+  if (!record(selector)) throw refused(`selectors.identityRefusals must be an object with a refusal limit 1..${OBSERVE_MAX_LIMIT}`);
+  known(selector, ["limit"], "identity refusal selector");
+  const { limit } = selector;
+  if (!integer(limit, 1, OBSERVE_MAX_LIMIT)) throw refused(`selectors.identityRefusals needs a refusal limit that is a safe integer 1..${OBSERVE_MAX_LIMIT}`);
+  return { limit };
+}
+
+function selectorsOf(selectors: unknown): Pick<Plan, "tone" | "kind" | "relations" | "events" | "identityRefusals"> {
   if (selectors === undefined) return { relations: false };
   if (!record(selectors)) throw refused("selectors must be an object");
-  known(selectors, ["tone", "kind", "relations", "events"], "selector");
-  const { tone, kind, relations, events } = selectors;
+  known(selectors, ["tone", "kind", "relations", "events", "identityRefusals"], "selector");
+  const { tone, kind, relations, events, identityRefusals } = selectors;
   if (tone !== undefined && !TONES.some((candidate) => candidate === tone)) throw refused(`selectors.tone must be one of ${TONES.join(", ")}`);
   if (kind !== undefined && !reference(kind)) throw refused(`selectors.kind must be a non-empty string of at most ${REFERENCE_LIMIT} bytes without control characters`);
   if (relations !== undefined && typeof relations !== "boolean") throw refused("selectors.relations must be a boolean");
@@ -304,6 +362,7 @@ function selectorsOf(selectors: unknown): Pick<Plan, "tone" | "kind" | "relation
     ...(kind === undefined ? {} : { kind }),
     relations: relations === true,
     ...(events === undefined ? {} : { events: eventSelector(events) }),
+    ...(identityRefusals === undefined ? {} : { identityRefusals: refusalSelector(identityRefusals) }),
   };
 }
 
@@ -445,6 +504,47 @@ function eventsOf(reader: ObserveReader, plan: Plan, selector: NonNullable<Plan[
   };
 }
 
+/** The projection's first unsafe code point of an identity part, exactly as it spells it, or nothing. */
+function refusedCodePoint(value: unknown): string | undefined {
+  if (typeof value !== "string") return undefined;
+  const hex = CODE_POINT.exec(value)?.[1];
+  const code = hex === undefined ? undefined : Number.parseInt(hex, 16);
+  if (code === undefined || code > 0x10ffff) return undefined;
+  return unsafeIdentityUnit(String.fromCodePoint(code)) === value ? value : undefined;
+}
+
+/** One reader row in the closed vocabulary, rebuilt from this module's own values; anything else is undefined. */
+function refusalRow(value: unknown): IdentityRefusal | undefined {
+  if (!record(value)) return undefined;
+  const path = REFUSAL_PATHS.find((candidate) => candidate === value.path);
+  const at = REFUSAL_REFS.find((candidate) => candidate === value.ref);
+  const field = REFUSAL_FIELDS.find((candidate) => candidate === value.field);
+  const codePoint = refusedCodePoint(value.codePoint);
+  if (path === undefined || at === undefined || field === undefined || codePoint === undefined || value.reason !== "unsafe-identity") return undefined;
+  return { path, ref: at, field, codePoint, reason: "unsafe-identity" };
+}
+
+function identityRefusalsOf(reader: ObserveReader, plan: Plan, selector: NonNullable<Plan["identityRefusals"]>): ObserveIdentityRefusals {
+  if (reader.identityRefusals === undefined) throw new CapabilityError("unavailable", "Observation reader cannot read identity refusals.");
+  const read: unknown = reader.identityRefusals({ scope: plan.scope, limit: selector.limit });
+  if (!record(read) || !Array.isArray(read.refusals)) throw unavailable("identity refusal page");
+  const page: readonly unknown[] = read.refusals.slice(0, selector.limit);
+  if (!count(read.total) || read.total < page.length) throw unavailable("identity refusal total");
+  const rows: IdentityRefusal[] = [];
+  for (const entry of page) {
+    const row = refusalRow(entry);
+    if (row !== undefined) rows.push(row);
+  }
+  return {
+    returned: rows.length,
+    total: read.total,
+    truncated: read.truncated === true || read.refusals.length > selector.limit,
+    unrecognized: page.length - rows.length,
+    rows,
+    basis: "scope-refusal-window",
+  };
+}
+
 function freshnessOf(nodes: readonly ObserveNode[]): ObserveFreshness {
   let current = 0;
   let stale = 0;
@@ -478,8 +578,8 @@ function anomaliesOf(nodes: readonly ObserveNode[], outgoing: readonly ObserveRe
   };
 }
 
-/** One candidate reply: `keep` returned nodes, with or without the read events/relations, measured through the shared serializer. */
-function candidate(gathered: Gathered, keep: number, withEvents: boolean, withRelations: boolean): ObserveReply {
+/** One candidate reply: `keep` returned nodes, with or without the read events/refusals/relations, measured through the shared serializer. */
+function candidate(gathered: Gathered, keep: number, withEvents: boolean, withRefusals: boolean, withRelations: boolean): ObserveReply {
   const { plan, picked } = gathered;
   const kept = picked.slice(0, keep);
   const nodes = kept.map((row) => row.node);
@@ -492,8 +592,10 @@ function candidate(gathered: Gathered, keep: number, withEvents: boolean, withRe
     ? { perNode: outgoing, basis: "returned-window-only" as const, revision: gathered.relationRevision }
     : undefined;
   const events = withEvents ? gathered.events : undefined;
+  const identityRefusals = withRefusals ? gathered.identityRefusals : undefined;
   const droppedForBytes: ObserveDropped = {
     events: gathered.events !== undefined && !withEvents,
+    ...(gathered.identityRefusals === undefined ? {} : { identityRefusals: !withRefusals }),
     relations: gathered.outgoing !== undefined && !withRelations,
     nodes: picked.length - keep,
   };
@@ -506,12 +608,13 @@ function candidate(gathered: Gathered, keep: number, withEvents: boolean, withRe
     nodes,
     ...(relations === undefined ? {} : { relations }),
     ...(events === undefined ? {} : { events }),
+    ...(identityRefusals === undefined ? {} : { identityRefusals }),
     freshness,
     anomalies,
     aggregates: "not-wired",
     countsBasis: "returned-window",
     bytes,
-    truncatedForBytes: droppedForBytes.events || droppedForBytes.relations || droppedForBytes.nodes > 0,
+    truncatedForBytes: droppedForBytes.events || droppedForBytes.identityRefusals === true || droppedForBytes.relations || droppedForBytes.nodes > 0,
     droppedForBytes,
   });
   // `bytes` counts itself: settle on the value that equals the length of the text that carries it.
@@ -523,15 +626,17 @@ function candidate(gathered: Gathered, keep: number, withEvents: boolean, withRe
   return reply(bytes);
 }
 
-/** Deterministic byte cap: drop events, then relations, then nodes from the tail; the skeleton itself always fits 1024 bytes. */
+/** Deterministic byte cap: drop events, then identity refusals, then relations, then nodes from the tail; the skeleton itself always fits 1024 bytes. */
 function fitted(gathered: Gathered): ObserveReply {
   let withEvents = gathered.events !== undefined;
+  let withRefusals = gathered.identityRefusals !== undefined;
   let withRelations = gathered.outgoing !== undefined;
   let keep = gathered.picked.length;
   for (;;) {
-    const reply = candidate(gathered, keep, withEvents, withRelations);
-    if (reply.bytes <= gathered.plan.maxBytes || (!withEvents && !withRelations && keep === 0)) return deepFreeze(reply);
+    const reply = candidate(gathered, keep, withEvents, withRefusals, withRelations);
+    if (reply.bytes <= gathered.plan.maxBytes || (!withEvents && !withRefusals && !withRelations && keep === 0)) return deepFreeze(reply);
     if (withEvents) withEvents = false;
+    else if (withRefusals) withRefusals = false;
     else if (withRelations) withRelations = false;
     else keep -= 1;
   }
@@ -540,8 +645,10 @@ function fitted(gathered: Gathered): ObserveReply {
 /**
  * workflow_observe's reply over one invocation's viewport. Pure and synchronous: one window() read; when
  * selectors.relations, one relations() page per returned node plus one relationRevision(); when selectors.events and
- * the invocation is observed in this scope, one events() read. Throws CapabilityError("validation") for any invalid
- * request or cursor and CapabilityError("unavailable") when the reader returns counters JSON cannot carry.
+ * the invocation is observed in this scope, one events() read; when selectors.identityRefusals, one identityRefusals()
+ * read of the request scope, also for an empty window, since a refused input makes no node. Throws
+ * CapabilityError("validation") for any invalid request or cursor and CapabilityError("unavailable") when the reader
+ * returns counters JSON cannot carry or cannot read identity refusals.
  */
 export function observeInvocation(reader: ObserveReader, request: ObserveRequest): ObserveReply {
   const plan = planOf(request);
@@ -565,6 +672,7 @@ export function observeInvocation(reader: ObserveReader, request: ObserveRequest
     relationRevision = revision;
   }
   const events = plan.events !== undefined && read.total > 0 ? eventsOf(reader, plan, plan.events) : undefined;
+  const identityRefusals = plan.identityRefusals === undefined ? undefined : identityRefusalsOf(reader, plan, plan.identityRefusals);
   return fitted({
     plan,
     offset,
@@ -575,5 +683,6 @@ export function observeInvocation(reader: ObserveReader, request: ObserveRequest
     ...(outgoing === undefined ? {} : { outgoing }),
     ...(relationRevision === undefined ? {} : { relationRevision }),
     ...(events === undefined ? {} : { events }),
+    ...(identityRefusals === undefined ? {} : { identityRefusals }),
   });
 }

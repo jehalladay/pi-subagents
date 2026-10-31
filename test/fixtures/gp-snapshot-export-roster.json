@@ -1,0 +1,2467 @@
+{
+  "bead": "wb-0lf.2",
+  "rows": [
+    {
+      "id": "A",
+      "label": "a pure exporter test builds GraphDataIR from an ObservationProjection fixture and asserts every node and edge traces to a native ref inside the caller's scope",
+      "pins": [
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "A5"
+      ]
+    },
+    {
+      "id": "B",
+      "label": "coverage partial/unknown rows export as explicit unknown (never absent, never a guessed value)",
+      "pins": [
+        "B1",
+        "B2",
+        "B3"
+      ]
+    },
+    {
+      "id": "C",
+      "label": "sourceRevision/subjectBasis are carried verbatim",
+      "pins": [
+        "C1",
+        "C2",
+        "C3"
+      ]
+    },
+    {
+      "id": "D",
+      "label": "candidate actions are exactly the host's admissible set (NATIVE_CONTROL_ACTIONS at control.ts:30-37 or typed executor requests)",
+      "pins": [
+        "D1",
+        "D2",
+        "D3"
+      ]
+    },
+    {
+      "id": "E",
+      "label": "and a snapshot over the declared node/edge/byte budget is refused with a typed unavailable",
+      "pins": [
+        "E1",
+        "E2",
+        "E3",
+        "E4"
+      ]
+    },
+    {
+      "id": "F",
+      "label": "never truncated silently",
+      "pins": [
+        "F1"
+      ]
+    },
+    {
+      "id": "G",
+      "label": "When Pi exports a request to GraphPolicyCLI (artifact: released GraphDataIR schema + an owner-decided Pi decision point)",
+      "pins": [
+        "G1",
+        "G2",
+        "G3"
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the named residual families, each member a pinned quiet row",
+      "pins": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6",
+        "Q7",
+        "Q8",
+        "Q9"
+      ]
+    }
+  ],
+  "quotes": {
+    "A1": "a pure exporter test",
+    "A2": "builds GraphDataIR",
+    "A3": "from an ObservationProjection fixture",
+    "A4": "and asserts every node and edge traces to a native ref",
+    "A5": "inside the caller's scope",
+    "B1": "coverage partial/unknown rows export as explicit unknown",
+    "B2": "never absent",
+    "B3": "never a guessed value",
+    "C1": "sourceRevision",
+    "C2": "subjectBasis",
+    "C3": "are carried verbatim",
+    "D1": "candidate actions are exactly the host's admissible set",
+    "D2": "NATIVE_CONTROL_ACTIONS at control.ts:30-37",
+    "D3": "or typed executor requests",
+    "E1": "and a snapshot over the declared node",
+    "E2": "edge",
+    "E3": "byte budget",
+    "E4": "is refused with a typed unavailable",
+    "F1": "never truncated silently",
+    "G1": "When Pi exports a request to GraphPolicyCLI",
+    "G2": "artifact: released GraphDataIR schema",
+    "G3": "an owner-decided Pi decision point",
+    "Q1": "R-UNNAMED",
+    "Q2": "R-COMPOSED",
+    "Q3": "R-SCHEMA",
+    "Q4": "R-LABELS",
+    "Q5": "R-SNAPSHOT-REVISIONS",
+    "Q6": "R-DEFERRED",
+    "Q7": "R-OUTSIDE",
+    "Q8": "R-REQUEST",
+    "Q9": "R-OWNER-CELL"
+  },
+  "witnesses": {
+    "A1": {
+      "mutants": {
+        "M-MUTATES": [
+          "impure"
+        ],
+        "M-COUNTER-IDS": [
+          "impure"
+        ],
+        "M-DISCONNECT-UNHELD": [
+          "impure"
+        ],
+        "M-RECONNECT-UNHELD": [
+          "impure"
+        ],
+        "M-IDENTITY-REFUSAL": [
+          "impure"
+        ],
+        "M-DISCONNECT-HELD": [
+          "impure"
+        ],
+        "M-WRITE-NOOP": [
+          "impure"
+        ],
+        "M-BYPASS-WRITE": [
+          "impure"
+        ],
+        "M-CLASS-PATCH": [
+          "impure"
+        ],
+        "M-CLASS-STATIC": [
+          "impure"
+        ],
+        "M-REFRESH-WRITE": [
+          "impure"
+        ],
+        "M-RELATE-WRITE": [
+          "impure"
+        ],
+        "M-INGEST-WRITE": [
+          "impure"
+        ],
+        "M-OTHER-CALL": [
+          "impure"
+        ],
+        "M-NONENUM-MEMO": [
+          "impure"
+        ],
+        "M-FREEZE": [
+          "impure"
+        ],
+        "M-PREVENT-EXTENSIONS": [
+          "impure"
+        ],
+        "M-SYMBOL-FIELD": [
+          "impure"
+        ],
+        "M-FIXED-REVISION": [
+          "impure"
+        ],
+        "M-REVISION-ACCESSOR": [
+          "impure"
+        ],
+        "M-PROTO-SWAP": [
+          "impure"
+        ],
+        "M-FROZEN-NODE": [
+          "impure"
+        ],
+        "M-SCOPE-REORDER": [
+          "impure"
+        ],
+        "M-SHADOW-CONNECTIONS": [
+          "impure"
+        ],
+        "M-KEY-ORDER": [
+          "impure"
+        ],
+        "M-CLASS-PROTO": [
+          "impure"
+        ],
+        "M-BUDGET-EDIT": [
+          "impure"
+        ],
+        "M-SCOPE-EDIT": [
+          "impure"
+        ],
+        "M-REBIND-BUDGET": [
+          "impure"
+        ],
+        "M-REBIND-BUDGET-REFLECT": [
+          "impure"
+        ],
+        "M-REBIND-SCOPE": [
+          "impure"
+        ],
+        "M-REBIND-SCOPE-ACCESSOR": [
+          "impure"
+        ]
+      },
+      "legs": {
+        "M-MUTATES": [
+          "impure the drive called the projection's markStale, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin (value)",
+          "impure drive 2 left the projection it read unlike a fresh twin (value)"
+        ],
+        "M-COUNTER-IDS": [
+          "impure two drives over one fixture returned different outcomes (value)"
+        ],
+        "M-DISCONNECT-UNHELD": [
+          "impure the drive called the projection's disconnect, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
+        ],
+        "M-RECONNECT-UNHELD": [
+          "impure the drive called the projection's reconnect, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
+        ],
+        "M-IDENTITY-REFUSAL": [
+          "impure the drive called the projection's markStale, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin (keys)",
+          "impure drive 2 left the projection it read unlike a fresh twin (keys)"
+        ],
+        "M-DISCONNECT-HELD": [
+          "impure the drive called the projection's disconnect, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin (value)",
+          "impure drive 2 left the projection it read unlike a fresh twin (value)"
+        ],
+        "M-WRITE-NOOP": [
+          "impure the drive called the projection's markStale, which is no read"
+        ],
+        "M-BYPASS-WRITE": [
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
+        ],
+        "M-CLASS-PATCH": [
+          "impure a drive edited the ObservationProjection class (keys)"
+        ],
+        "M-CLASS-STATIC": [
+          "impure a drive edited the ObservationProjection class (keys)"
+        ],
+        "M-REFRESH-WRITE": [
+          "impure the drive called the projection's refresh, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
+        ],
+        "M-RELATE-WRITE": [
+          "impure the drive called the projection's relate, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
+        ],
+        "M-INGEST-WRITE": [
+          "impure the drive called the projection's ingest, which is no read",
+          "impure drive 1 left the projection it read unlike a fresh twin (size)",
+          "impure drive 2 left the projection it read unlike a fresh twin (size)"
+        ],
+        "M-OTHER-CALL": [
+          "impure the drive called the projection's toString, which is no read"
+        ],
+        "M-NONENUM-MEMO": [
+          "impure drive 1 left the projection it read unlike a fresh twin (keys)",
+          "impure drive 2 left the projection it read unlike a fresh twin (keys)"
+        ],
+        "M-FREEZE": [
+          "impure drive 1 left the projection it read unlike a fresh twin (integrity)",
+          "impure drive 2 left the projection it read unlike a fresh twin (integrity)"
+        ],
+        "M-PREVENT-EXTENSIONS": [
+          "impure drive 1 left the projection it read unlike a fresh twin (integrity)",
+          "impure drive 2 left the projection it read unlike a fresh twin (integrity)"
+        ],
+        "M-SYMBOL-FIELD": [
+          "impure drive 1 left the projection it read unlike a fresh twin (keys)",
+          "impure drive 2 left the projection it read unlike a fresh twin (keys)"
+        ],
+        "M-FIXED-REVISION": [
+          "impure drive 1 left the projection it read unlike a fresh twin (attributes)",
+          "impure drive 2 left the projection it read unlike a fresh twin (attributes)"
+        ],
+        "M-REVISION-ACCESSOR": [
+          "impure drive 1 left the projection it read unlike a fresh twin (attributes)",
+          "impure drive 2 left the projection it read unlike a fresh twin (attributes)"
+        ],
+        "M-PROTO-SWAP": [
+          "impure drive 1 left the projection it read unlike a fresh twin (prototype)",
+          "impure drive 2 left the projection it read unlike a fresh twin (prototype)"
+        ],
+        "M-FROZEN-NODE": [
+          "impure drive 1 left the projection it read unlike a fresh twin (integrity)",
+          "impure drive 2 left the projection it read unlike a fresh twin (integrity)"
+        ],
+        "M-SCOPE-REORDER": [
+          "impure drive 1 left the projection it read unlike a fresh twin (value)",
+          "impure drive 2 left the projection it read unlike a fresh twin (value)"
+        ],
+        "M-SHADOW-CONNECTIONS": [
+          "impure drive 1 left the projection it read unlike a fresh twin (keys)",
+          "impure drive 2 left the projection it read unlike a fresh twin (keys)"
+        ],
+        "M-KEY-ORDER": [
+          "impure two drives over one fixture returned different outcomes (keys)"
+        ],
+        "M-CLASS-PROTO": [
+          "impure a drive edited the ObservationProjection class (prototype)"
+        ],
+        "M-BUDGET-EDIT": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ],
+        "M-SCOPE-EDIT": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ],
+        "M-REBIND-BUDGET": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ],
+        "M-REBIND-BUDGET-REFLECT": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ],
+        "M-REBIND-SCOPE": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ],
+        "M-REBIND-SCOPE-ACCESSOR": [
+          "impure drive 1 edited the scope or budget of its request (value)",
+          "impure drive 2 edited the scope or budget of its request (value)"
+        ]
+      },
+      "cases": {
+        "K-FITS": [],
+        "K-OTHER-PRINCIPAL": [],
+        "K-OTHER-WORKSPACE": [],
+        "K-EMPTY": [],
+        "K-AT-BUDGET": [],
+        "K-NODES": [],
+        "K-EDGES": [],
+        "K-BYTES": [],
+        "K-ALL": []
+      },
+      "walk": {
+        "S-EQUAL": "",
+        "S-VALUE": "value",
+        "S-NEGATIVE-ZERO": "value",
+        "S-NONENUMERABLE": "keys",
+        "S-SYMBOL": "keys",
+        "S-ATTRIBUTE": "attributes",
+        "S-ACCESSOR": "attributes",
+        "S-GETTER": "get",
+        "S-SETTER": "set",
+        "S-PROTOTYPE": "prototype",
+        "S-EXTENSIBLE": "integrity",
+        "S-NESTED-FROZEN": "integrity",
+        "S-MAP-ORDER": "value",
+        "S-MAP-SIZE": "size",
+        "S-MAP-OWN": "keys",
+        "S-SET-ORDER": "value",
+        "S-DATE": "time",
+        "S-UNSHARED": "kind",
+        "S-RESHARED": "same",
+        "S-PROXY": "kind"
+      },
+      "kinds": [
+        "array",
+        "map",
+        "object",
+        "set"
+      ],
+      "providers": [
+        "beads",
+        "claude-agent-sdk",
+        "forge",
+        "furnace",
+        "local-detached"
+      ],
+      "equivalents": {
+        "E-EVERY-READ": [],
+        "E-READ-RESULT-EDIT": []
+      }
+    },
+    "A2": {
+      "producer": [],
+      "exports": [
+        "K-FITS",
+        "K-OTHER-PRINCIPAL",
+        "K-OTHER-WORKSPACE",
+        "K-EMPTY",
+        "K-AT-BUDGET"
+      ],
+      "mutants": {
+        "M-NAMESPACE": [
+          "graphdatair"
+        ],
+        "M-DUPLICATE-ID": [
+          "graphdatair"
+        ],
+        "M-DANGLING": [
+          "graphdatair",
+          "relation"
+        ]
+      }
+    },
+    "A3": {
+      "scopes": {
+        "A": [
+          "furnace/frn-run-0001:observed:complete",
+          "claude-agent-sdk/sess-0001:observed:partial",
+          "forge/cmd_0123456789ab:observed:unknown",
+          "local-detached/det-0001:observed:unknown",
+          "beads/wb-zz9:observed:complete",
+          "furnace/frn-atm-0001:observed:unknown",
+          "forge/art-0001:related:unknown"
+        ],
+        "B": [
+          "furnace/frn-run-0001:observed:complete",
+          "furnace/frn-run-0002:observed:partial"
+        ],
+        "C": [
+          "claude-agent-sdk/sess-0001:observed:complete"
+        ],
+        "D": []
+      },
+      "cases": {
+        "K-FITS": {
+          "kind": "ok",
+          "entities": 7,
+          "relations": 5
+        },
+        "K-OTHER-PRINCIPAL": {
+          "kind": "ok",
+          "entities": 2,
+          "relations": 1
+        },
+        "K-OTHER-WORKSPACE": {
+          "kind": "ok",
+          "entities": 1,
+          "relations": 0
+        },
+        "K-EMPTY": {
+          "kind": "ok",
+          "entities": 0,
+          "relations": 0
+        },
+        "K-AT-BUDGET": {
+          "kind": "ok",
+          "entities": 7,
+          "relations": 5
+        },
+        "K-NODES": {
+          "ok": false,
+          "category": "unavailable",
+          "code": "export-over-budget",
+          "limit": "nodes",
+          "declared": 3,
+          "measured": 7
+        },
+        "K-EDGES": {
+          "ok": false,
+          "category": "unavailable",
+          "code": "export-over-budget",
+          "limit": "edges",
+          "declared": 2,
+          "measured": 5
+        },
+        "K-BYTES": {
+          "ok": false,
+          "category": "unavailable",
+          "code": "export-over-budget",
+          "limit": "bytes",
+          "declared": 256,
+          "measured": 1678
+        },
+        "K-ALL": {
+          "ok": false,
+          "category": "unavailable",
+          "code": "export-over-budget",
+          "limit": "nodes",
+          "declared": 1,
+          "measured": 7
+        }
+      }
+    },
+    "A4": {
+      "traced": [
+        "furnace/frn-run-0001",
+        "claude-agent-sdk/sess-0001",
+        "forge/cmd_0123456789ab",
+        "local-detached/det-0001",
+        "beads/wb-zz9",
+        "furnace/frn-atm-0001",
+        "forge/art-0001"
+      ],
+      "relations": 5,
+      "mutants": {
+        "M-UNTRACED": [
+          "trace"
+        ],
+        "M-GHOST": [
+          "native-ref"
+        ],
+        "M-REF-SWAP": [
+          "native-ref"
+        ],
+        "M-EDGE-REVERSED": [
+          "relation"
+        ],
+        "M-EDGE-KIND": [
+          "relation",
+          "truncated"
+        ]
+      }
+    },
+    "A5": {
+      "isolated": {
+        "K-FITS": 7,
+        "K-OTHER-PRINCIPAL": 2,
+        "K-OTHER-WORKSPACE": 1,
+        "K-EMPTY": 0
+      },
+      "mutants": {
+        "M-FOREIGN-NODE": [
+          "scope"
+        ],
+        "M-FOREIGN-EDGE": [
+          "scope"
+        ],
+        "M-SCOPE-STAMP": [
+          "scope"
+        ]
+      }
+    },
+    "B1": {
+      "marked": [
+        {
+          "entity": "furnace/frn-run-0001",
+          "completeness": "complete",
+          "coverage": {
+            "status": "known",
+            "value": 1
+          }
+        },
+        {
+          "entity": "claude-agent-sdk/sess-0001",
+          "completeness": "partial",
+          "coverage": {
+            "status": "unknown"
+          }
+        },
+        {
+          "entity": "forge/cmd_0123456789ab",
+          "completeness": "unknown",
+          "coverage": {
+            "status": "unknown"
+          }
+        },
+        {
+          "entity": "local-detached/det-0001",
+          "completeness": "unknown",
+          "coverage": {
+            "status": "unknown"
+          }
+        },
+        {
+          "entity": "beads/wb-zz9",
+          "completeness": "complete",
+          "coverage": {
+            "status": "known",
+            "value": 1
+          }
+        },
+        {
+          "entity": "furnace/frn-atm-0001",
+          "completeness": "unknown",
+          "coverage": {
+            "status": "unknown"
+          }
+        },
+        {
+          "entity": "forge/art-0001",
+          "completeness": "unknown",
+          "coverage": {
+            "status": "unknown"
+          }
+        }
+      ],
+      "mutants": {
+        "M-COMPLETE-AS-UNKNOWN": [
+          "coverage-known"
+        ]
+      }
+    },
+    "B2": {
+      "mutants": {
+        "M-COVERAGE-ABSENT": [
+          "unknown-absent"
+        ],
+        "M-DROP-UNKNOWN": [
+          "truncated"
+        ]
+      }
+    },
+    "B3": {
+      "mutants": {
+        "M-COVERAGE-HALF": [
+          "unknown-guessed"
+        ],
+        "M-COVERAGE-COMPLETE": [
+          "unknown-guessed"
+        ],
+        "M-COVERAGE-VALUE-NULL": [
+          "unknown-guessed"
+        ]
+      }
+    },
+    "C1": {
+      "revisions": [
+        "frn-rev-0042",
+        " sess-rev MiXeD ",
+        "forge-0.9.1",
+        null,
+        "bd-export-3f2a",
+        "frn-rev-0043",
+        null
+      ],
+      "mutants": {
+        "M-REVISION-TRIM": [
+          "revision"
+        ],
+        "M-REVISION-LOWER": [
+          "revision"
+        ],
+        "M-REVISION-GUESS": [
+          "revision"
+        ],
+        "M-REVISION-SWAP": [
+          "revision"
+        ]
+      }
+    },
+    "C2": {
+      "bases": [
+        "furnace:run/frn-run-0001@seq 7",
+        "basis-cafe<U+0301>",
+        null,
+        null,
+        "wb-zz9@2026-10-28",
+        "furnace:attempt",
+        null
+      ],
+      "mutants": {
+        "M-BASIS-NFC": [
+          "basis"
+        ],
+        "M-BASIS-DROP": [
+          "basis"
+        ],
+        "M-BASIS-EMPTY": [
+          "basis"
+        ]
+      }
+    },
+    "C3": {
+      "revision": "20736573732d726576204d6958654420",
+      "basis": "62617369732d63616665cc81",
+      "absent": [
+        "local-detached/det-0001",
+        "forge/art-0001"
+      ]
+    },
+    "D1": {
+      "listed": [
+        "furnace:stop",
+        "claude-agent-sdk:interrupt",
+        "forge:cancel",
+        "local-detached:cancel",
+        "local-detached:shutdown",
+        "furnace:stop",
+        "forge:cancel"
+      ],
+      "mutants": {
+        "M-ACTION-EXTRA": [
+          "actions"
+        ],
+        "M-ACTION-MISSING": [
+          "actions"
+        ],
+        "M-ACTION-UNIVERSAL": [
+          "actions"
+        ],
+        "M-ACTION-UNLISTED": [
+          "actions"
+        ],
+        "M-ACTION-DUPLICATE": [
+          "actions"
+        ]
+      }
+    },
+    "D2": {
+      "pin": "758ec18187a5d66ba40b766caad38754b5313558",
+      "lines": [
+        30,
+        37
+      ],
+      "first": "export const NATIVE_CONTROL_ACTIONS: Readonly<Record<string, readonly string[]>> = Object.freeze({",
+      "last": "});"
+    },
+    "D3": {
+      "named": [],
+      "planted": [
+        "src/workbench/zz-executor-request.ts"
+      ],
+      "proof": {
+        "unread": [],
+        "extra": [],
+        "missed": {
+          "start": [],
+          "middle": [],
+          "end": []
+        }
+      },
+      "hits": [
+        "ExecutorRequest",
+        "executor request",
+        "executor_request",
+        "executor-request",
+        "EXECUTOR_REQUEST",
+        "ExecutorRequest"
+      ],
+      "quiet": [
+        "executor.request",
+        "ExecRequest",
+        "executorsRequest",
+        "request executor"
+      ],
+      "reading": {
+        "parts": [
+          "executor",
+          "request"
+        ],
+        "chars": [
+          " ",
+          "_",
+          "-"
+        ],
+        "quantifier": "?",
+        "flags": "i",
+        "uniform": true
+      },
+      "spelled": {
+        "ExecutorRequest/none/lower": "executorrequest",
+        "ExecutorRequest/none/upper": "EXECUTORREQUEST",
+        "ExecutorRequest/none/written": "ExecutorRequest",
+        "ExecutorRequest/space/lower": "executor request",
+        "ExecutorRequest/space/upper": "EXECUTOR REQUEST",
+        "ExecutorRequest/space/written": "Executor Request",
+        "ExecutorRequest/underscore/lower": "executor_request",
+        "ExecutorRequest/underscore/upper": "EXECUTOR_REQUEST",
+        "ExecutorRequest/underscore/written": "Executor_Request",
+        "ExecutorRequest/hyphen/lower": "executor-request",
+        "ExecutorRequest/hyphen/upper": "EXECUTOR-REQUEST",
+        "ExecutorRequest/hyphen/written": "Executor-Request"
+      },
+      "outside": [],
+      "spellingPlants": [
+        "src/workbench/zz-spelling-00.ts",
+        "src/workbench/zz-spelling-01.ts",
+        "src/workbench/zz-spelling-02.ts",
+        "src/workbench/zz-spelling-03.ts",
+        "src/workbench/zz-spelling-04.ts",
+        "src/workbench/zz-spelling-05.ts",
+        "src/workbench/zz-spelling-06.ts",
+        "src/workbench/zz-spelling-07.ts",
+        "src/workbench/zz-spelling-08.ts",
+        "src/workbench/zz-spelling-09.ts",
+        "src/workbench/zz-spelling-10.ts",
+        "src/workbench/zz-spelling-11.ts"
+      ],
+      "placedPlants": [
+        "src/workbench/zz-place-executor-line-comment.ts",
+        "src/workbench/zz-place-executor-block-comment.ts",
+        "src/workbench/zz-place-executor-doc-comment.ts",
+        "src/workbench/zz-place-executor-double-quoted.ts",
+        "src/workbench/zz-place-executor-single-quoted.ts",
+        "src/workbench/zz-place-executor-template.ts",
+        "src/workbench/zz-place-executor-code.ts"
+      ]
+    },
+    "E1": {
+      "case": {
+        "ok": false,
+        "category": "unavailable",
+        "code": "export-over-budget",
+        "limit": "nodes",
+        "declared": 3,
+        "measured": 7
+      },
+      "mutants": {
+        "M-NODES-TRUNCATE": [
+          "truncated",
+          "over-budget"
+        ],
+        "M-NODES-ADMIT": [
+          "over-budget"
+        ],
+        "M-NODES-OVERFLOW": [
+          "native-ref",
+          "over-budget"
+        ]
+      }
+    },
+    "E2": {
+      "case": {
+        "ok": false,
+        "category": "unavailable",
+        "code": "export-over-budget",
+        "limit": "edges",
+        "declared": 2,
+        "measured": 5
+      },
+      "mutants": {
+        "M-EDGES-TRUNCATE": [
+          "truncated",
+          "over-budget"
+        ],
+        "M-EDGES-ADMIT": [
+          "over-budget"
+        ],
+        "M-EDGES-OVERFLOW": [
+          "trace",
+          "over-budget"
+        ]
+      }
+    },
+    "E3": {
+      "case": {
+        "ok": false,
+        "category": "unavailable",
+        "code": "export-over-budget",
+        "limit": "bytes",
+        "declared": 256,
+        "measured": 1678
+      },
+      "margin": 4,
+      "mutants": {
+        "M-BYTES-ADMIT": [
+          "over-budget"
+        ],
+        "M-BYTES-BLOAT": [
+          "over-budget"
+        ]
+      }
+    },
+    "E4": {
+      "all": {
+        "ok": false,
+        "category": "unavailable",
+        "code": "export-over-budget",
+        "limit": "nodes",
+        "declared": 1,
+        "measured": 7
+      },
+      "mutants": {
+        "M-OVER-THROW": [
+          "outcome"
+        ],
+        "M-OVER-UNTYPED": [
+          "refusal"
+        ],
+        "M-OVER-WRONG-LIMIT": [
+          "refusal"
+        ],
+        "M-OVER-DECLARED": [
+          "refusal"
+        ],
+        "M-OVER-PARTIAL": [
+          "refusal"
+        ],
+        "M-REFUSE-FITTING": [
+          "refused-fitting"
+        ]
+      }
+    },
+    "F1": {
+      "atBudget": {
+        "kind": "ok",
+        "entities": 7,
+        "relations": 5
+      },
+      "mutants": {
+        "M-DROP-NODE": [
+          "truncated"
+        ],
+        "M-DROP-EDGE": [
+          "truncated"
+        ]
+      }
+    },
+    "G1": {
+      "touched": [],
+      "proof": {
+        "unread": [],
+        "extra": [],
+        "missed": {
+          "start": [],
+          "middle": [],
+          "end": []
+        }
+      },
+      "anchor": {
+        "unread": [
+          "src/workbench/control.ts"
+        ],
+        "extra": [],
+        "missed": {
+          "start": [],
+          "middle": [],
+          "end": []
+        }
+      },
+      "controls": {
+        "P-WHOLE": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        },
+        "P-MAP-BLANK": {
+          "unread": [
+            "src/workbench/zz-proof-b.ts"
+          ],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        },
+        "P-MAP-SHORT": {
+          "unread": [
+            "src/workbench/zz-proof-c.ts"
+          ],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        },
+        "P-MAP-DROP": {
+          "unread": [
+            "src/workbench/zz-proof-a.ts"
+          ],
+          "extra": [],
+          "missed": {
+            "start": [
+              "src/workbench/zz-proof-a.ts"
+            ],
+            "middle": [
+              "src/workbench/zz-proof-a.ts"
+            ],
+            "end": [
+              "src/workbench/zz-proof-a.ts"
+            ]
+          }
+        },
+        "P-MAP-EXTRA": {
+          "unread": [],
+          "extra": [
+            "src/workbench/zz-proof-unlisted.ts"
+          ],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        },
+        "P-READER-LAST": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts"
+            ],
+            "middle": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts"
+            ],
+            "end": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts"
+            ]
+          }
+        },
+        "P-READER-FIRST": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "middle": [
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "end": [
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ]
+          }
+        },
+        "P-READER-HEAD": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "end": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ]
+          }
+        },
+        "P-READER-TAIL": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "middle": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "end": []
+          }
+        },
+        "P-READER-BLANK": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "middle": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ],
+            "end": [
+              "src/workbench/zz-proof-a.ts",
+              "src/workbench/zz-proof-b.ts",
+              "src/workbench/zz-proof-c.ts"
+            ]
+          }
+        }
+      },
+      "planted": [
+        "S-UNREGISTERED src/workbench/zz-gp-export.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "sites": {
+        "S-REGISTERED": [],
+        "S-UNREGISTERED": [
+          "S-UNREGISTERED"
+        ],
+        "S-STALE": [
+          "S-STALE"
+        ],
+        "S-DUPLICATE": [
+          "S-DUPLICATE"
+        ],
+        "S-UNEXPORTED": [
+          "S-UNEXPORTED"
+        ]
+      },
+      "hits": [
+        "GraphDataIR",
+        "GraphDataIR",
+        "GraphDataIR",
+        "GraphPolicy",
+        "GraphPolicy",
+        "GraphPolicy",
+        "GraphDataIR"
+      ],
+      "quiet": 11,
+      "drives": [],
+      "wordProofs": {
+        "GraphPolicy": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        },
+        "GraphDataIR": {
+          "unread": [],
+          "extra": [],
+          "missed": {
+            "start": [],
+            "middle": [],
+            "end": []
+          }
+        }
+      },
+      "wordPlants": [
+        "S-UNREGISTERED src/workbench/zz-gp-site-data-ir.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-gp-site-policy.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "hitFindings": [
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration"
+      ],
+      "quietPaths": [],
+      "patterns": {
+        "GraphPolicy": {
+          "parts": [
+            "graph",
+            "policy"
+          ],
+          "chars": [
+            " ",
+            "\t",
+            ".",
+            "_",
+            "-"
+          ],
+          "quantifier": "*",
+          "flags": "i",
+          "uniform": true
+        },
+        "GraphDataIR": {
+          "parts": [
+            "graph",
+            "data",
+            "ir"
+          ],
+          "chars": [
+            " ",
+            "\t",
+            ".",
+            "_",
+            "-"
+          ],
+          "quantifier": "*",
+          "flags": "i",
+          "uniform": true
+        }
+      },
+      "spellingReads": {
+        "GraphPolicy/none/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/none/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/none/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/space/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/space/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/space/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/tab/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/tab/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/tab/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/dot/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/dot/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/dot/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/underscore/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/underscore/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/underscore/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/hyphen/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/hyphen/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/hyphen/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/repeated/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/repeated/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/repeated/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/mixed/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/mixed/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphPolicy/mixed/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphPolicy with no EXPORT_SITES registration",
+        "GraphDataIR/none/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/none/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/none/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/space/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/space/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/space/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/tab/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/tab/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/tab/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/dot/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/dot/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/dot/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/underscore/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/underscore/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/underscore/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/hyphen/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/hyphen/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/hyphen/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/repeated/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/repeated/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/repeated/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/mixed/lower": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/mixed/upper": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration",
+        "GraphDataIR/mixed/written": "S-UNREGISTERED src/workbench/zz-hit.ts names GraphDataIR with no EXPORT_SITES registration"
+      },
+      "spellingPlants": [
+        "S-UNREGISTERED src/workbench/zz-spelling-00.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-01.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-02.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-03.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-04.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-05.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-06.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-07.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-08.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-09.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-10.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-11.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-12.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-13.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-14.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-15.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-16.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-17.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-18.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-19.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-20.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-21.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-22.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-23.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-24.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-25.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-26.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-27.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-28.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-29.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-30.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-31.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-32.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-33.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-34.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-35.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-36.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-37.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-38.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-39.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-40.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-41.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-42.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-43.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-44.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-45.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-46.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-spelling-47.ts names GraphDataIR with no EXPORT_SITES registration"
+      ],
+      "placedFindings": [
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-block-comment.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-code.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-doc-comment.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-double-quoted.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-line-comment.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-single-quoted.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphDataIR-template.ts names GraphDataIR with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-block-comment.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-code.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-doc-comment.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-double-quoted.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-line-comment.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-single-quoted.ts names GraphPolicy with no EXPORT_SITES registration",
+        "S-UNREGISTERED src/workbench/zz-place-site-GraphPolicy-template.ts names GraphPolicy with no EXPORT_SITES registration"
+      ]
+    },
+    "G2": {
+      "namespace": "graphpolicy.data.v1",
+      "naming": [],
+      "planted": [
+        "qa/zz-gp-namespace.mjs"
+      ],
+      "proof": {
+        "unread": [],
+        "extra": [],
+        "missed": {
+          "start": [],
+          "middle": [],
+          "end": []
+        }
+      },
+      "placedPlants": [
+        "src/workbench/zz-place-namespace-line-comment.ts",
+        "src/workbench/zz-place-namespace-block-comment.ts",
+        "src/workbench/zz-place-namespace-doc-comment.ts",
+        "src/workbench/zz-place-namespace-double-quoted.ts",
+        "src/workbench/zz-place-namespace-single-quoted.ts",
+        "src/workbench/zz-place-namespace-template.ts"
+      ]
+    },
+    "G3": {
+      "reading": {
+        "ownership": {
+          "refused": null,
+          "rows": 1,
+          "owner": "GraphPolicyCLI",
+          "header": [
+            "Concern",
+            "Authoritative owner",
+            "Workbench may do"
+          ],
+          "cell": "nothing today (no gp seam is registered)",
+          "other": []
+        },
+        "boundary": {
+          "refused": null,
+          "first": "paragraph",
+          "opening": "Pi carries no GraphPolicyCLI (gp) integration today.",
+          "source": "Pi carries no GraphPolicyCLI (gp) integration today."
+        }
+      },
+      "plants": {
+        "D-MOVE": [
+          "boundary-opening"
+        ],
+        "D-LEAD": [
+          "boundary-opening"
+        ],
+        "D-COMMENT": [
+          "boundary-first"
+        ],
+        "D-FENCE": [
+          "boundary-first"
+        ],
+        "D-ROW-DUP": [
+          "ownership-cell"
+        ],
+        "D-CELL-ONLY": [
+          "ownership-cell"
+        ],
+        "D-SENTENCE-EDIT": [
+          "boundary-opening"
+        ],
+        "D-ROW-SAME-TABLE": [
+          "ownership-rows"
+        ],
+        "D-OWNERSHIP-DUP": [
+          "ownership-bound"
+        ],
+        "D-HEADING-DUP": [
+          "boundary-bound"
+        ],
+        "D-REHOME": [
+          "boundary-bound"
+        ],
+        "D-COMMENT-ABOVE": [],
+        "D-HEADER-SWAP": [
+          "ownership-header"
+        ],
+        "D-BLOCKQUOTE": [
+          "boundary-first"
+        ],
+        "D-LIST-LEAD": [
+          "boundary-first"
+        ],
+        "D-SECOND-TABLE": [
+          "ownership-rows"
+        ],
+        "D-STRIKE": [
+          "boundary-opening"
+        ],
+        "D-STRIKE-HTML": [
+          "boundary-opening"
+        ],
+        "D-SETEXT-DUP": [
+          "boundary-bound"
+        ],
+        "D-CELL-STRIKE": [
+          "ownership-cell"
+        ],
+        "D-HTML-LEAD": [
+          "boundary-first"
+        ],
+        "D-QUOTED-ROW": [
+          "ownership-other"
+        ],
+        "D-HTML-ROW": [
+          "ownership-other"
+        ],
+        "D-LISTED-ROW": [
+          "ownership-other"
+        ],
+        "D-OWNER-COMMENT": [],
+        "D-GP-BOLD-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-CODE-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-LINK-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-ALIAS-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-HTML-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-ESCAPE-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-REFLINK-ROW": [
+          "ownership-rows"
+        ],
+        "D-OWNER-BOLD": [
+          "ownership-owner"
+        ],
+        "D-OWNER-ALIAS": [
+          "ownership-owner"
+        ],
+        "D-OWNER-CELL-COMMENT": [],
+        "D-GP-SPELLED-none-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-none-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-none-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-space-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-space-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-space-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-tab-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-tab-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-tab-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-dot-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-dot-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-dot-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-underscore-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-underscore-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-underscore-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-hyphen-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-hyphen-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-hyphen-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-repeated-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-repeated-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-repeated-written": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-mixed-lower": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-mixed-upper": [
+          "ownership-rows"
+        ],
+        "D-GP-SPELLED-mixed-written": [
+          "ownership-rows"
+        ],
+        "D-GP-EMPH-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-STRIKE-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-NBSP-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-ENTITY-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-CODE-ENTITY-ROW": [
+          "ownership-rows"
+        ],
+        "D-GP-ESCAPE-ENTITY-ROW": [
+          "ownership-rows"
+        ],
+        "D-OTHER-PARAGRAPH": [
+          "ownership-other"
+        ],
+        "D-OTHER-CODE": [
+          "ownership-other"
+        ],
+        "D-OTHER-HEADING": [
+          "ownership-other"
+        ],
+        "D-OTHER-DEF": [
+          "ownership-other"
+        ],
+        "D-HEADER-SWAP-FIRST": [
+          "ownership-header"
+        ],
+        "D-HEADER-SWAP-SECOND": [
+          "ownership-header"
+        ],
+        "D-CELL-CASE": [
+          "ownership-cell"
+        ],
+        "D-SENTENCE-CASE": [
+          "boundary-opening"
+        ]
+      },
+      "views": {
+        "D-MOVE": [
+          false,
+          false
+        ],
+        "D-LEAD": [
+          false,
+          false
+        ],
+        "D-COMMENT": [
+          false,
+          false
+        ],
+        "D-FENCE": [
+          false,
+          false
+        ],
+        "D-ROW-DUP": [
+          true,
+          true
+        ],
+        "D-CELL-ONLY": [
+          true,
+          true
+        ],
+        "D-SENTENCE-EDIT": [
+          false,
+          false
+        ],
+        "D-ROW-SAME-TABLE": [
+          true,
+          true
+        ],
+        "D-OWNERSHIP-DUP": [
+          true,
+          true
+        ],
+        "D-HEADING-DUP": [
+          false,
+          false
+        ],
+        "D-REHOME": [
+          false,
+          false
+        ],
+        "D-COMMENT-ABOVE": [
+          true,
+          true
+        ],
+        "D-HEADER-SWAP": [
+          true,
+          true
+        ],
+        "D-BLOCKQUOTE": [
+          false,
+          false
+        ],
+        "D-LIST-LEAD": [
+          false,
+          false
+        ],
+        "D-SECOND-TABLE": [
+          true,
+          true
+        ],
+        "D-STRIKE": [
+          true,
+          false
+        ],
+        "D-STRIKE-HTML": [
+          true,
+          false
+        ],
+        "D-SETEXT-DUP": [
+          false,
+          false
+        ],
+        "D-CELL-STRIKE": [
+          true,
+          true
+        ],
+        "D-HTML-LEAD": [
+          false,
+          false
+        ],
+        "D-QUOTED-ROW": [
+          true,
+          true
+        ],
+        "D-HTML-ROW": [
+          true,
+          true
+        ],
+        "D-LISTED-ROW": [
+          true,
+          true
+        ],
+        "D-OWNER-COMMENT": [
+          true,
+          true
+        ],
+        "D-GP-BOLD-ROW": [
+          true,
+          true
+        ],
+        "D-GP-CODE-ROW": [
+          true,
+          true
+        ],
+        "D-GP-LINK-ROW": [
+          true,
+          true
+        ],
+        "D-GP-ALIAS-ROW": [
+          true,
+          true
+        ],
+        "D-GP-HTML-ROW": [
+          true,
+          true
+        ],
+        "D-GP-ESCAPE-ROW": [
+          true,
+          true
+        ],
+        "D-GP-REFLINK-ROW": [
+          true,
+          true
+        ],
+        "D-OWNER-BOLD": [
+          true,
+          true
+        ],
+        "D-OWNER-ALIAS": [
+          true,
+          true
+        ],
+        "D-OWNER-CELL-COMMENT": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-none-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-none-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-none-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-space-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-space-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-space-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-tab-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-tab-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-tab-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-dot-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-dot-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-dot-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-underscore-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-underscore-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-underscore-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-hyphen-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-hyphen-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-hyphen-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-repeated-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-repeated-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-repeated-written": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-mixed-lower": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-mixed-upper": [
+          true,
+          true
+        ],
+        "D-GP-SPELLED-mixed-written": [
+          true,
+          true
+        ],
+        "D-GP-EMPH-ROW": [
+          true,
+          true
+        ],
+        "D-GP-STRIKE-ROW": [
+          true,
+          true
+        ],
+        "D-GP-NBSP-ROW": [
+          true,
+          true
+        ],
+        "D-GP-ENTITY-ROW": [
+          true,
+          true
+        ],
+        "D-GP-CODE-ENTITY-ROW": [
+          true,
+          true
+        ],
+        "D-GP-ESCAPE-ENTITY-ROW": [
+          true,
+          true
+        ],
+        "D-OTHER-PARAGRAPH": [
+          true,
+          true
+        ],
+        "D-OTHER-CODE": [
+          true,
+          true
+        ],
+        "D-OTHER-HEADING": [
+          true,
+          true
+        ],
+        "D-OTHER-DEF": [
+          true,
+          true
+        ],
+        "D-HEADER-SWAP-FIRST": [
+          true,
+          true
+        ],
+        "D-HEADER-SWAP-SECOND": [
+          true,
+          true
+        ],
+        "D-CELL-CASE": [
+          true,
+          true
+        ],
+        "D-SENTENCE-CASE": [
+          false,
+          false
+        ]
+      },
+      "page": [],
+      "counts": {
+        "D-MOVE": 1,
+        "D-LEAD": 1,
+        "D-COMMENT": 1,
+        "D-FENCE": 1,
+        "D-ROW-DUP": 1,
+        "D-CELL-ONLY": 1,
+        "D-SENTENCE-EDIT": 1,
+        "D-ROW-SAME-TABLE": 2,
+        "D-OWNERSHIP-DUP": 0,
+        "D-HEADING-DUP": 1,
+        "D-REHOME": 1,
+        "D-COMMENT-ABOVE": 1,
+        "D-HEADER-SWAP": 1,
+        "D-BLOCKQUOTE": 1,
+        "D-LIST-LEAD": 1,
+        "D-SECOND-TABLE": 2,
+        "D-STRIKE": 1,
+        "D-STRIKE-HTML": 1,
+        "D-SETEXT-DUP": 1,
+        "D-CELL-STRIKE": 1,
+        "D-HTML-LEAD": 1,
+        "D-QUOTED-ROW": 1,
+        "D-HTML-ROW": 1,
+        "D-LISTED-ROW": 1,
+        "D-OWNER-COMMENT": 1,
+        "D-GP-BOLD-ROW": 2,
+        "D-GP-CODE-ROW": 2,
+        "D-GP-LINK-ROW": 2,
+        "D-GP-ALIAS-ROW": 2,
+        "D-GP-HTML-ROW": 2,
+        "D-GP-ESCAPE-ROW": 2,
+        "D-GP-REFLINK-ROW": 2,
+        "D-OWNER-BOLD": 1,
+        "D-OWNER-ALIAS": 1,
+        "D-OWNER-CELL-COMMENT": 1,
+        "D-GP-SPELLED-none-lower": 2,
+        "D-GP-SPELLED-none-upper": 2,
+        "D-GP-SPELLED-none-written": 2,
+        "D-GP-SPELLED-space-lower": 2,
+        "D-GP-SPELLED-space-upper": 2,
+        "D-GP-SPELLED-space-written": 2,
+        "D-GP-SPELLED-tab-lower": 2,
+        "D-GP-SPELLED-tab-upper": 2,
+        "D-GP-SPELLED-tab-written": 2,
+        "D-GP-SPELLED-dot-lower": 2,
+        "D-GP-SPELLED-dot-upper": 2,
+        "D-GP-SPELLED-dot-written": 2,
+        "D-GP-SPELLED-underscore-lower": 2,
+        "D-GP-SPELLED-underscore-upper": 2,
+        "D-GP-SPELLED-underscore-written": 2,
+        "D-GP-SPELLED-hyphen-lower": 2,
+        "D-GP-SPELLED-hyphen-upper": 2,
+        "D-GP-SPELLED-hyphen-written": 2,
+        "D-GP-SPELLED-repeated-lower": 2,
+        "D-GP-SPELLED-repeated-upper": 2,
+        "D-GP-SPELLED-repeated-written": 2,
+        "D-GP-SPELLED-mixed-lower": 2,
+        "D-GP-SPELLED-mixed-upper": 2,
+        "D-GP-SPELLED-mixed-written": 2,
+        "D-GP-EMPH-ROW": 2,
+        "D-GP-STRIKE-ROW": 2,
+        "D-GP-NBSP-ROW": 2,
+        "D-GP-ENTITY-ROW": 2,
+        "D-GP-CODE-ENTITY-ROW": 2,
+        "D-GP-ESCAPE-ENTITY-ROW": 2,
+        "D-OTHER-PARAGRAPH": 1,
+        "D-OTHER-CODE": 1,
+        "D-OTHER-HEADING": 1,
+        "D-OTHER-DEF": 1,
+        "D-HEADER-SWAP-FIRST": 1,
+        "D-HEADER-SWAP-SECOND": 1,
+        "D-CELL-CASE": 1,
+        "D-SENTENCE-CASE": 1
+      },
+      "owners": [
+        "Pi",
+        "Claude Agent SDK",
+        "Forked interpreter",
+        "Function's package/source",
+        "Furnace",
+        "Beads",
+        "Forge",
+        "HyperUnix",
+        "ReactiveFiberCLI",
+        "GraphPolicyCLI",
+        "RCP + implementing runtime",
+        "Workbench",
+        "Git/Forge artifact"
+      ],
+      "unlike": [],
+      "control": false,
+      "ownerWords": {
+        "GraphPolicy/none/lower": true,
+        "GraphPolicy/none/upper": true,
+        "GraphPolicy/none/written": true,
+        "GraphPolicy/space/lower": true,
+        "GraphPolicy/space/upper": true,
+        "GraphPolicy/space/written": true,
+        "GraphPolicy/tab/lower": true,
+        "GraphPolicy/tab/upper": true,
+        "GraphPolicy/tab/written": true,
+        "GraphPolicy/dot/lower": true,
+        "GraphPolicy/dot/upper": true,
+        "GraphPolicy/dot/written": true,
+        "GraphPolicy/underscore/lower": true,
+        "GraphPolicy/underscore/upper": true,
+        "GraphPolicy/underscore/written": true,
+        "GraphPolicy/hyphen/lower": true,
+        "GraphPolicy/hyphen/upper": true,
+        "GraphPolicy/hyphen/written": true,
+        "GraphPolicy/repeated/lower": true,
+        "GraphPolicy/repeated/upper": true,
+        "GraphPolicy/repeated/written": true,
+        "GraphPolicy/mixed/lower": true,
+        "GraphPolicy/mixed/upper": true,
+        "GraphPolicy/mixed/written": true
+      }
+    },
+    "Q1": {
+      "members": [
+        "src/workbench/q1-shape.ts",
+        "src/workbench/q1-incidences.ts"
+      ],
+      "findings": [],
+      "live": {
+        "src/workbench/q1-shape.ts": [
+          "entities",
+          "schema_ref",
+          "namespace",
+          "relations"
+        ],
+        "src/workbench/q1-incidences.ts": [
+          "incidences",
+          "participant",
+          "role"
+        ]
+      },
+      "code": {
+        "src/workbench/q1-shape.ts": 0,
+        "src/workbench/q1-incidences.ts": 0
+      }
+    },
+    "Q2": {
+      "members": [
+        "src/workbench/q2-joined.ts",
+        "src/workbench/q2-escape.ts",
+        "src/workbench/q2-request.ts"
+      ],
+      "findings": [],
+      "live": {
+        "src/workbench/q2-joined.ts": [
+          "graphpolicy.data.v1",
+          "GraphPolicy",
+          "src/workbench/q2-joined.ts"
+        ],
+        "src/workbench/q2-escape.ts": [
+          "GraphDataIR",
+          "GraphDataIR"
+        ],
+        "src/workbench/q2-request.ts": [
+          "ExecutorRequest",
+          "src/workbench/q2-request.ts"
+        ]
+      },
+      "code": {
+        "src/workbench/q2-joined.ts": 0,
+        "src/workbench/q2-escape.ts": 0,
+        "src/workbench/q2-request.ts": 0
+      }
+    },
+    "Q3": {
+      "members": [
+        "q3-feature-status",
+        "q3-schema-hash"
+      ],
+      "findings": [],
+      "live": {
+        "q3-feature-status": {
+          "at": "#0.graph.entities.0.features",
+          "facet": "keys"
+        },
+        "q3-schema-hash": {
+          "at": "#0.graph.schema_ref",
+          "facet": "keys"
+        }
+      }
+    },
+    "Q4": {
+      "members": [
+        "q4-entity-kind",
+        "q4-roles"
+      ],
+      "findings": [],
+      "live": {
+        "q4-entity-kind": {
+          "at": "#0.graph.entities.0.kind",
+          "facet": "value"
+        },
+        "q4-roles": {
+          "at": "#0.graph.relations.0.incidences.0.role",
+          "facet": "value"
+        }
+      }
+    },
+    "Q5": {
+      "members": [
+        "q5-revisions-empty",
+        "q5-revisions-guessed"
+      ],
+      "findings": [],
+      "live": {
+        "q5-revisions-empty": {
+          "at": "#0.graph.observation.revisions",
+          "facet": "keys"
+        },
+        "q5-revisions-guessed": {
+          "at": "#0.graph.observation.revisions",
+          "facet": "keys"
+        }
+      }
+    },
+    "Q6": {
+      "members": [
+        "q6-timer-write",
+        "q6-timer-freeze"
+      ],
+      "findings": [],
+      "live": {
+        "q6-timer-write": {
+          "deferredCalls": [
+            "disconnect"
+          ],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        },
+        "q6-timer-freeze": {
+          "deferredCalls": [],
+          "projectionFrozen": true,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        }
+      }
+    },
+    "Q7": {
+      "members": [
+        "q7-global-write",
+        "q7-module-record",
+        "q7-third-call",
+        "q7-past-view-call"
+      ],
+      "findings": [],
+      "live": {
+        "q7-global-write": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": true,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        },
+        "q7-module-record": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": true,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        },
+        "q7-third-call": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": true
+        },
+        "q7-past-view-call": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [
+            "Symbol(Symbol.toStringTag)"
+          ],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        }
+      }
+    },
+    "Q8": {
+      "members": [
+        "q8-rebind-equal",
+        "q8-request-key",
+        "q8-request-freeze",
+        "q8-projection-rebind"
+      ],
+      "findings": [],
+      "live": {
+        "q8-rebind-equal": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [
+            "budget"
+          ],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        },
+        "q8-request-key": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [
+            "exportedBy"
+          ],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        },
+        "q8-request-freeze": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [],
+          "addedKeys": [],
+          "requestFrozen": true,
+          "thirdDiffers": false
+        },
+        "q8-projection-rebind": {
+          "deferredCalls": [],
+          "projectionFrozen": false,
+          "globalMark": false,
+          "moduleRecord": false,
+          "symbolReads": [],
+          "rebound": [
+            "projection"
+          ],
+          "addedKeys": [],
+          "requestFrozen": false,
+          "thirdDiffers": false
+        }
+      }
+    },
+    "Q9": {
+      "members": [
+        "q9-concern-cell",
+        "q9-workbench-cell",
+        "q9-owner-column-moved",
+        "q9-header-row",
+        "q9-owner-gp",
+        "q9-owner-reference",
+        "q9-owner-invisible",
+        "q9-owner-confusable",
+        "q9-owner-hexref",
+        "q9-owner-named-reference"
+      ],
+      "findings": [],
+      "live": {
+        "q9-concern-cell": true,
+        "q9-workbench-cell": true,
+        "q9-owner-column-moved": true,
+        "q9-header-row": true,
+        "q9-owner-gp": true,
+        "q9-owner-reference": true,
+        "q9-owner-invisible": true,
+        "q9-owner-confusable": true,
+        "q9-owner-hexref": true,
+        "q9-owner-named-reference": true
+      }
+    }
+  },
+  "residuals": {
+    "Q1": [
+      "src/workbench/q1-shape.ts",
+      "src/workbench/q1-incidences.ts"
+    ],
+    "Q2": [
+      "src/workbench/q2-joined.ts",
+      "src/workbench/q2-escape.ts",
+      "src/workbench/q2-request.ts"
+    ],
+    "Q3": [
+      "q3-feature-status",
+      "q3-schema-hash"
+    ],
+    "Q4": [
+      "q4-entity-kind",
+      "q4-roles"
+    ],
+    "Q5": [
+      "q5-revisions-empty",
+      "q5-revisions-guessed"
+    ],
+    "Q6": [
+      "q6-timer-write",
+      "q6-timer-freeze"
+    ],
+    "Q7": [
+      "q7-global-write",
+      "q7-module-record",
+      "q7-third-call",
+      "q7-past-view-call"
+    ],
+    "Q8": [
+      "q8-rebind-equal",
+      "q8-request-key",
+      "q8-request-freeze",
+      "q8-projection-rebind"
+    ],
+    "Q9": [
+      "q9-concern-cell",
+      "q9-workbench-cell",
+      "q9-owner-column-moved",
+      "q9-header-row",
+      "q9-owner-gp",
+      "q9-owner-reference",
+      "q9-owner-invisible",
+      "q9-owner-confusable",
+      "q9-owner-hexref",
+      "q9-owner-named-reference"
+    ]
+  },
+  "failClosed": {
+    "FC-G1-CAMEL": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-camel.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-camel.ts names GraphPolicy as \"graphPolicy\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-G1-SENTENCE": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-sentence.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-sentence.ts names GraphPolicy as \"Graph policy\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-G1-RUN-LONG": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-run-long.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-run-long.ts names GraphPolicy as \"graph -- policy\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-G1-RUN3-SAME": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-run3-same.ts names GraphPolicy with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-run3-same.ts names GraphPolicy as \"graph___policy\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-G1-UNEVEN": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-uneven.ts names GraphDataIR with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-uneven.ts names GraphDataIR as \"GRAPH_DATAIR\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-G1-EVERY-MATCH": {
+      "site": [
+        "S-UNREGISTERED src/workbench/zz-fc-g1-every-match.ts names GraphPolicy, GraphDataIR with no EXPORT_SITES registration"
+      ],
+      "unpinnedSite": [
+        "S-UNPINNED src/workbench/zz-fc-g1-every-match.ts names GraphPolicy as \"graphPolicy\", a spelling outside G1's pinned set",
+        "S-UNPINNED src/workbench/zz-fc-g1-every-match.ts names GraphDataIR as \"GRAPH_DATAIR\", a spelling outside G1's pinned set"
+      ],
+      "request": [],
+      "unpinnedRequest": []
+    },
+    "FC-D3-CAMEL": {
+      "site": [],
+      "unpinnedSite": [],
+      "request": [
+        "src/workbench/zz-fc-d3-camel.ts"
+      ],
+      "unpinnedRequest": [
+        "D3-UNPINNED src/workbench/zz-fc-d3-camel.ts names a typed executor request as \"executorRequest\", a spelling outside D3's pinned set"
+      ]
+    },
+    "FC-D3-SENTENCE": {
+      "site": [],
+      "unpinnedSite": [],
+      "request": [
+        "src/workbench/zz-fc-d3-sentence.ts"
+      ],
+      "unpinnedRequest": [
+        "D3-UNPINNED src/workbench/zz-fc-d3-sentence.ts names a typed executor request as \"Executor request\", a spelling outside D3's pinned set"
+      ]
+    },
+    "FC-D3-EVERY-MATCH": {
+      "site": [],
+      "unpinnedSite": [],
+      "request": [
+        "src/workbench/zz-fc-d3-every-match.ts"
+      ],
+      "unpinnedRequest": [
+        "D3-UNPINNED src/workbench/zz-fc-d3-every-match.ts names a typed executor request as \"executorRequest\", a spelling outside D3's pinned set"
+      ]
+    },
+    "FC-G3-LEAD-HEADING": [
+      "boundary-first"
+    ],
+    "FC-G3-LEAD-BREAK": [
+      "boundary-first"
+    ],
+    "FC-G3-OTHER-LEAD": [
+      "ownership-other"
+    ],
+    "FC-S2-Q1-COMMENTED": {
+      "member": "shape",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "proxy": true
+    },
+    "FC-S2-Q2-COMMENTED": {
+      "member": "composed",
+      "quiet": [],
+      "refusal": [
+        "R-COMMENTED"
+      ],
+      "proxy": true
+    }
+  },
+  "tests": [
+    "A1: a pure exporter test",
+    "A2: builds GraphDataIR",
+    "A3: from an ObservationProjection fixture",
+    "A4: and asserts every node and edge traces to a native ref",
+    "A5: inside the caller's scope",
+    "B1: coverage partial/unknown rows export as explicit unknown",
+    "B2: never absent",
+    "B3: never a guessed value",
+    "C1: sourceRevision",
+    "C2: subjectBasis",
+    "C3: are carried verbatim",
+    "D1: candidate actions are exactly the host's admissible set",
+    "D2: NATIVE_CONTROL_ACTIONS at control.ts:30-37",
+    "D3: or typed executor requests",
+    "E1: and a snapshot over the declared node",
+    "E2: edge",
+    "E3: byte budget",
+    "E4: is refused with a typed unavailable",
+    "F1: never truncated silently",
+    "G1: When Pi exports a request to GraphPolicyCLI",
+    "G2: artifact: released GraphDataIR schema",
+    "G3: an owner-decided Pi decision point",
+    "Q1: R-UNNAMED",
+    "Q2: R-COMPOSED",
+    "Q3: R-SCHEMA",
+    "Q4: R-LABELS",
+    "Q5: R-SNAPSHOT-REVISIONS",
+    "Q6: R-DEFERRED",
+    "Q7: R-OUTSIDE",
+    "Q8: R-REQUEST",
+    "Q9: R-OWNER-CELL",
+    "rule 16: the rows, the residual families, the mutants and cases per pin, the rules and the registry are frozen at their measured shape",
+    "the outside anchors: the bead's own row binds the rows and the pin quotes; the vendored producer fixture, the registry and the live control import bind the judge's spellings",
+    "fail closed (R-B73): each FAIL_CLOSED form, outside its claim's pinned set, refuses with exactly its typed refusals, and the fail-closed readers refuse no pinned spelling and nothing on today's tree",
+    "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-snapshot-export-roster.json, in order and both ways; every pin reached its witness compare"
+  ]
+}

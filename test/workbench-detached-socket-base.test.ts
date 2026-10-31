@@ -8,17 +8,21 @@ import { basename, dirname, join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import subagentsExtension from "../src/index.js";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
-import {
-  connectDetachedWorkflow,
-  DETACHED_SOCKET_PATH_LIMIT,
-  type DetachedLaunchRequest,
-  type DetachedSnapshot,
-  detachedFrame,
-  launchDetachedWorkflow,
-  resolveDetachedSocket,
-} from "../src/workbench/hosts/local-detached.js";
+import { DETACHED_SOCKET_PATH_LIMIT, type DetachedLaunchRequest, type DetachedSnapshot, detachedFrame, resolveDetachedSocket } from "../src/workbench/hosts/local-detached.js";
 import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import { ctx, hermeticDir, makePi } from "./helpers/boot-extension.js";
+import {
+  connectDetachedMarked,
+  DETACHED_TIMING_LAPSES,
+  HOST_HOOK_TIMEOUT_MS,
+  holdOpen,
+  launchDetachedMarked,
+  markTimingLapse,
+  pollFor,
+  raiseTransportLapse,
+  refusalOf,
+  reportAfterCleanup,
+} from "./helpers/detached-timing.js";
 import { installScratchLeakGuard, removeScratch, trackScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
@@ -47,16 +51,18 @@ afterEach(async () => {
   for (const pid of stopping) { try { process.kill(pid, "SIGTERM"); } catch {} }
   // A stopping host unlinks its socket and removes its per-launch socket directory. Removing the fixtures while it
   // does so races that removal, and rmSync returns early, without an error, when an entry vanishes mid-walk: the
-  // fixture survives and the scratch guard names it (wb-e37). So each host has exited (bounded) before cleanup.
-  await Promise.all(stopping.map(gone));
-  if (savedEnv) {
-    if (savedEnv.tmpdir === undefined) delete process.env.TMPDIR; else process.env.TMPDIR = savedEnv.tmpdir;
-    if (savedEnv.xdg === undefined) delete process.env.XDG_RUNTIME_DIR; else process.env.XDG_RUNTIME_DIR = savedEnv.xdg;
-    savedEnv = undefined;
-  }
-  sandbox?.restore(); sandbox = undefined;
-  removeScratch(...scratch.splice(0));
-});
+  // fixture survives and the scratch guard names it (wb-e37). So each host has exited (bounded) before cleanup. A host
+  // still running at its budget is a lapse reported only after the cleanup has run (wb-maza).
+  await reportAfterCleanup(stopping.map(pid => gone(pid)), () => {
+    if (savedEnv) {
+      if (savedEnv.tmpdir === undefined) delete process.env.TMPDIR; else process.env.TMPDIR = savedEnv.tmpdir;
+      if (savedEnv.xdg === undefined) delete process.env.XDG_RUNTIME_DIR; else process.env.XDG_RUNTIME_DIR = savedEnv.xdg;
+      savedEnv = undefined;
+    }
+    sandbox?.restore(); sandbox = undefined;
+    removeScratch(...scratch.splice(0));
+  });
+}, HOST_HOOK_TIMEOUT_MS);
 const LONG_ROOT = `/${"x".repeat(100)}`;
 /** Bytes the resolver appends to a private runtime base: "/pw-<uid>/<16 hex>.sock". */
 const SOCKET_SUFFIX_BYTES = Buffer.byteLength(`/pw-${uid}/${"0".repeat(16)}.sock`);
@@ -68,11 +74,13 @@ function privateDirRefusal(path: string): string { return `Authorization: direct
 /** wb-a3j legibility: every reply-parse site below goes through jsonReply. The reply must be JSON; a refusal text where a
  * receipt or snapshot was expected fails NAMING that text, never as JSON.parse's opaque `"Authorizat"... is not valid JSON`
  * (which hid both measured occurrences). The text is shown as the shared display sanitizer renders it, in the named
- * "terminal" layout: the failure prints in the runner's terminal and in the gate's captured log. */
+ * "terminal" layout: the failure prints in the runner's terminal and in the gate's captured log. A reply that is one of
+ * the product's two fixed-bound lapses (a launch or inspect the tool reports as text) fails re-labelled, naming the
+ * lapse with the strict timing marker (wb-maza). */
 function jsonReply<T>(site: string, reply: string): T {
   let value: unknown;
   try { value = JSON.parse(reply); }
-  catch { throw new Error(`${site}: expected a JSON reply, received: ${sanitizeWorkbenchText(reply, WORKBENCH_TEXT_LIMIT, "terminal")}`); }
+  catch { throw markTimingLapse(site, new Error(`${site}: expected a JSON reply, received: ${sanitizeWorkbenchText(reply, WORKBENCH_TEXT_LIMIT, "terminal")}`)); }
   return value as T;
 }
 /** An obviously fake credential-shaped placeholder (standing rule 7), never a real key. */
@@ -202,9 +210,8 @@ describe("detached socket base selection (wb-71q)", () => {
     // Reattachment must not depend on the env at connect time.
     delete process.env.XDG_RUNTIME_DIR;
     const inspect = async () => (await tool.execute("inspect", { action: "inspect", invocationId: "sock-base" }, undefined, undefined, context)).content[0].text as string;
-    const snapshot = async () => jsonReply<{ terminal?: string; result?: unknown }>("inspect snapshot", await inspect());
-    let observed = await snapshot();
-    for (let i = 0; i < 100 && !observed.terminal; i++) { await new Promise(r => setTimeout(r, 20)); observed = await snapshot(); }
+    const snapshot = async () => raiseTransportLapse("inspect snapshot", jsonReply<{ terminal?: string; result?: unknown; source?: string; diagnostic?: string }>("inspect snapshot", await inspect()));
+    const observed = await pollFor("a terminal reading of sock-base through the tool", snapshot, reading => Boolean(reading.terminal));
     expect(observed.terminal).toBe("completed"); expect(observed.result).toBe(42);
     // A client refuses to connect once the recorded socket directory stops being private (gate mutant M7).
     const socketDir = dirname(receipt.socketPath);
@@ -253,26 +260,23 @@ function fixture(prefix: string): { cwd: string; scriptPath: string; root: strin
 function request(f: ReturnType<typeof fixture>, invocationId: string): DetachedLaunchRequest {
   return { directory: f.root, invocationId, scriptPath: f.scriptPath, cwd: f.cwd, input: null, trustedScript: true, backend: "deterministic", providers: [], grants: [], permissions: ["inspect", "execute", "cancel", "shutdown"], sourceFiles: [f.scriptPath] };
 }
-async function launched(f: ReturnType<typeof fixture>, invocationId: string, placement?: Parameters<typeof launchDetachedWorkflow>[1]) {
-  const receipt = await launchDetachedWorkflow(request(f, invocationId), placement);
+async function launched(f: ReturnType<typeof fixture>, invocationId: string, placement?: Parameters<typeof launchDetachedMarked>[1]) {
+  const receipt = await launchDetachedMarked(request(f, invocationId), placement);
   hosts.push(receipt.pid);
   return receipt;
 }
+/** The first reading of `id` with a terminal; a budget lapse names the wait, and a lapsed inspect is raised (wb-maza). */
 async function terminal(root: string, id: string): Promise<DetachedSnapshot> {
-  const client = connectDetachedWorkflow(root, id);
-  let observed = await client.inspect();
-  for (let i = 0; i < 150 && !observed.terminal; i++) { await new Promise(r => setTimeout(r, 20)); observed = await client.inspect(); }
-  return observed;
+  const client = connectDetachedMarked(root, id);
+  return pollFor(`a terminal reading of ${id}`, () => client.inspect(), observed => Boolean(observed.terminal));
 }
 function alive(pid: number): boolean {
   try { process.kill(pid, 0); return true; } catch { return false; }
 }
-async function gone(pid: number): Promise<boolean> {
-  for (let i = 0; i < 150 && alive(pid); i++) await new Promise(r => setTimeout(r, 20));
+/** True once `pid` has exited; a host still running at the budget is a lapse that names the wait (wb-maza). */
+async function gone(pid: number, budgetMs?: number): Promise<boolean> {
+  await pollFor(`the exit of host pid ${pid}`, () => alive(pid), running => !running, budgetMs);
   return !alive(pid);
-}
-async function refusal(promise: Promise<unknown>): Promise<unknown> {
-  return promise.then(() => undefined, (error: unknown) => error);
 }
 /** The tmpdir fallback, reached by naming the inputs a host without a private runtime dir has (wb-70b PF2). */
 const tmpdirOnly = (base: string) => ({ env: {}, tmpdir: base, runUserRoot: NO_RUN_USER });
@@ -284,7 +288,7 @@ describe("detached invocation reuse, socket placement and cleanup (wb-70b)", () 
     process.env.XDG_RUNTIME_DIR = private0700("rt-r2-");
     const f = fixture("r2-");
     const first = await launched(f, "reserved-one");
-    const error = await refusal(launchDetachedWorkflow(request(f, "reserved-one")));
+    const error = await refusalOf(launchDetachedMarked(request(f, "reserved-one")));
     expect(error).toBeInstanceOf(CapabilityError);
     expect((error as CapabilityError).category).toBe("validation");
     const text = (error as Error).message;
@@ -295,7 +299,7 @@ describe("detached invocation reuse, socket placement and cleanup (wb-70b)", () 
     expect(text).toContain(join(f.root, "reserved-one"));
     // The refusal reserves nothing new, and the first host keeps serving its receipt.
     expect(readdirSync(f.root)).toEqual(["reserved-one"]);
-    expect((await connectDetachedWorkflow(f.root, "reserved-one").inspect()).receipt?.pid).toBe(first.pid);
+    expect((await connectDetachedMarked(f.root, "reserved-one").inspect()).receipt?.pid).toBe(first.pid);
   }, 30000);
 
   it("routes the typed relaunch refusal to the model through the workflow_detached catch, sanitized (R2 display path)", async () => {
@@ -363,7 +367,7 @@ describe("detached invocation reuse, socket placement and cleanup (wb-70b)", () 
       for (const [key, value] of Object.entries(fields)) if (value === undefined) delete next[key];
       writeFileSync(receiptFile, JSON.stringify(next));
     };
-    const client = connectDetachedWorkflow(f.root, "f3-one");
+    const client = connectDetachedMarked(f.root, "f3-one");
     try {
       for (const fields of [
         { socketPath: decoySocket },
@@ -394,7 +398,7 @@ describe("detached invocation reuse, socket placement and cleanup (wb-70b)", () 
     const graceful = await launched(f, "pf4-graceful");
     expect(dirname(graceful.socketPath)).toBe(shared);
     expect((await terminal(f.root, "pf4-graceful")).terminal).toBe("completed");
-    await connectDetachedWorkflow(f.root, "pf4-graceful").shutdown("wb-70b PF4 graceful stop");
+    await connectDetachedMarked(f.root, "pf4-graceful").shutdown("wb-70b PF4 graceful stop");
     expect(await gone(graceful.pid)).toBe(true);
     expect(existsSync(graceful.socketPath)).toBe(false);
     // The shared directory stays even when the stopping host was its only tenant.
@@ -405,11 +409,11 @@ describe("detached invocation reuse, socket placement and cleanup (wb-70b)", () 
     process.kill(crashed.pid, "SIGKILL");
     expect(await gone(crashed.pid)).toBe(true);
     expect(lstatSync(crashed.socketPath).isSocket()).toBe(true);
-    const lost = await connectDetachedWorkflow(f.root, "pf4-crashed").inspect();
+    const lost = await connectDetachedMarked(f.root, "pf4-crashed").inspect();
     expect(lost.observation).toBe("unknown"); expect(lost.reconcileHint).toMatch(/never automatically retry/i);
     expect(lstatSync(crashed.socketPath).isSocket()).toBe(true);
     // Both ids stay reserved, so neither path is ever bound again.
-    for (const id of ["pf4-graceful", "pf4-crashed"]) expect(await refusal(launchDetachedWorkflow(request(f, id)))).toBeInstanceOf(CapabilityError);
+    for (const id of ["pf4-graceful", "pf4-crashed"]) expect(await refusalOf(launchDetachedMarked(request(f, id)))).toBeInstanceOf(CapabilityError);
     expect(readdirSync(join(f.root, "pf4-crashed")).sort()).toEqual(["invocation.json", "receipt.json"]);
     expect(readdirSync(shared).sort()).toEqual([basename(crashed.socketPath)]);
   }, 30000);
@@ -421,13 +425,13 @@ describe("detached invocation reuse, socket placement and cleanup (wb-70b)", () 
     const crashed = await launched(f, "pf4t-crashed", tmpdirOnly(base));
     expect((await terminal(f.root, "pf4t-graceful")).terminal).toBe("completed");
     expect((await terminal(f.root, "pf4t-crashed")).terminal).toBe("completed");
-    await connectDetachedWorkflow(f.root, "pf4t-graceful").shutdown("wb-70b PF4 graceful stop");
+    await connectDetachedMarked(f.root, "pf4t-graceful").shutdown("wb-70b PF4 graceful stop");
     expect(await gone(graceful.pid)).toBe(true);
     expect(existsSync(dirname(graceful.socketPath))).toBe(false);
     process.kill(crashed.pid, "SIGKILL");
     expect(await gone(crashed.pid)).toBe(true);
     expect(lstatSync(crashed.socketPath).isSocket()).toBe(true);
-    expect(await refusal(launchDetachedWorkflow(request(f, "pf4t-graceful"), tmpdirOnly(base)))).toBeInstanceOf(CapabilityError);
+    expect(await refusalOf(launchDetachedMarked(request(f, "pf4t-graceful"), tmpdirOnly(base)))).toBeInstanceOf(CapabilityError);
     expect(readdirSync(base).filter(name => PER_LAUNCH_DIR.test(name))).toEqual([basename(dirname(crashed.socketPath))]);
   }, 30000);
 });
@@ -452,11 +456,12 @@ function receiptWritten(path: string): boolean {
   try { JSON.parse(readFileSync(path, "utf8")); return true; } catch { return false; }
 }
 /** The host writes its receipt before it binds, so a launch refused before its handshake still names the host to wait for.
- * The wait reads the receipt only once it is written whole, within the same 250 x 20 ms budget (wb-dfx). */
-async function hostGone(root: string, id: string): Promise<boolean> {
+ * The wait reads the receipt only once it is written whole (wb-dfx); a receipt still not whole at the budget is a lapse
+ * that names the wait, never a fall-through read of an absent or partial receipt (wb-maza). */
+async function hostGone(root: string, id: string, budgetMs?: number): Promise<boolean> {
   const receipt = join(root, id, "receipt.json");
-  for (let i = 0; i < 250 && !receiptWritten(receipt); i++) await new Promise(r => setTimeout(r, 20));
-  return gone((JSON.parse(readFileSync(receipt, "utf8")) as { pid: number }).pid);
+  await pollFor(`a whole receipt for ${id}`, () => receiptWritten(receipt), written => written, budgetMs);
+  return gone((JSON.parse(readFileSync(receipt, "utf8")) as { pid: number }).pid, budgetMs);
 }
 const socketRefusal = (path: string): string => `Authorization: socket must be owned by uid ${uid} with exact private permissions: ${path}.`;
 
@@ -467,7 +472,7 @@ describe("the launch handshake and the host's socket bind mode (wb-70b re-cut, l
     const socket = heldSocketPath(f, "mid-bind", xdg);
     const release = await holdSocket(socket, 0o700);
     try {
-      const error = await refusal(launchDetachedWorkflow(request(f, "mid-bind"), { env: { XDG_RUNTIME_DIR: xdg } }));
+      const error = await refusalOf(launchDetachedMarked(request(f, "mid-bind"), { env: { XDG_RUNTIME_DIR: xdg } }));
       expect((error as Error).message).not.toBe(socketRefusal(socket));
       // The host cannot bind the held path, so it exits; the launch reports that, never an authorization refusal.
       expect((error as Error).message).toBe("Detached host exited before handshake; invocation reserved, do not retry automatically.");
@@ -481,12 +486,12 @@ describe("the launch handshake and the host's socket bind mode (wb-70b re-cut, l
     const placement = { env: { XDG_RUNTIME_DIR: xdg } };
     const file = heldSocketPath(f, "not-a-socket", xdg);
     writeFileSync(file, ""); chmodSync(file, 0o700);
-    expect((await refusal(launchDetachedWorkflow(request(f, "not-a-socket"), placement)) as Error).message).toBe(socketRefusal(file));
+    expect((await refusalOf(launchDetachedMarked(request(f, "not-a-socket"), placement)) as Error).message).toBe(socketRefusal(file));
     expect(await hostGone(f.root, "not-a-socket")).toBe(true);
     const open = heldSocketPath(f, "open-mode", xdg);
     const release = await holdSocket(open, 0o755);
     try {
-      expect((await refusal(launchDetachedWorkflow(request(f, "open-mode"), placement)) as Error).message).toBe(socketRefusal(open));
+      expect((await refusalOf(launchDetachedMarked(request(f, "open-mode"), placement)) as Error).message).toBe(socketRefusal(open));
       expect(await hostGone(f.root, "open-mode")).toBe(true);
     } finally { await release(); }
   }, 30000);
@@ -511,7 +516,7 @@ describe("the refused-launch receipt wait (wb-dfx)", () => {
     expect(() => JSON.parse(partial)).toThrow(SyntaxError);
     let outcome: { verdict: boolean } | { error: unknown } | undefined;
     const settled = hostGone(root, id).then(verdict => { outcome = { verdict }; }, (error: unknown) => { outcome = { error }; });
-    const hold = () => new Promise(r => setTimeout(r, RECEIPT_WINDOW_MS));
+    const hold = () => holdOpen(RECEIPT_WINDOW_MS);
     // Absent: the host has not reached its write.
     await hold(); expect(outcome, "absent receipt").toBeUndefined();
     // Empty: the O_EXCL create has run, with the host's own flags and mode, and the write has not.
@@ -525,5 +530,26 @@ describe("the refused-launch receipt wait (wb-dfx)", () => {
     } finally { closeSync(fd); }
     await settled;
     expect(outcome).toEqual({ verdict: true });
+  });
+});
+
+/** The product's two fixed-bound lapse sentences (pinned against src by test/workbench-detached-timing.test.ts). */
+const HANDSHAKE_LAPSE = DETACHED_TIMING_LAPSES.handshake.sentence;
+const TRANSPORT_LAPSE = DETACHED_TIMING_LAPSES.transport.sentence;
+
+describe("wb-maza: a lapsed wait names its lapse with the strict timing marker (owner R721, R723)", () => {
+  it("a refused-launch receipt that never appears lapses naming the wait, never a fall-through read of an absent receipt (ENOENT)", async () => {
+    const root = private0700("maza-receipt-"); const id = "never-written";
+    mkdirSync(join(root, id), { mode: 0o700 });
+    await expect(hostGone(root, id, 60)).rejects.toThrow("a whole receipt for never-written exceeded its 60 ms wait timeout");
+  }, 30000);
+
+  it("a host that has not exited lapses naming the wait, never a silent false", async () => {
+    await expect(gone(process.pid, 60)).rejects.toThrow(`the exit of host pid ${process.pid} exceeded its 60 ms wait timeout`);
+  }, 30000);
+
+  it("a tool reply that is a product timing lapse fails naming the lapse with the strict marker, never as a bare refusal text", () => {
+    expect(() => jsonReply("launch receipt", HANDSHAKE_LAPSE)).toThrow(`launch receipt: the launcher's fixed handshake poll exceeded its timeout: ${HANDSHAKE_LAPSE}`);
+    expect(() => jsonReply("launch receipt", TRANSPORT_LAPSE)).toThrow(`launch receipt: a host command exceeded its fixed socket timeout: ${TRANSPORT_LAPSE}`);
   });
 });

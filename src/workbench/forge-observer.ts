@@ -148,7 +148,7 @@ export function forgeGateTopology(reading: JsonValue, context: ForgeGateObservat
     ...(invocationId !== undefined ? {trace: {invocationId}} : {}),
   });
   const workspace: NativeRef = {provider: 'forge', type: 'gate-status', id: WORKSPACE_ID, scope: target};
-  const snapshots: NativeSnapshot[] = [snapshot(workspace, 'forge.gate.status.snapshot', readSucceeded && packages.every(pkg => pkg.current) ? 'complete' : 'partial',
+  const snapshots: NativeSnapshot[] = [snapshot(workspace, 'forge.gate.status.snapshot', readSucceeded && judged ? 'complete' : 'partial',
     {title: shown(`Forge gate status ${target}`, MAX_TEXT), type: 'sdk-operation', statusText, statusTone: tone}, evidenceRefs)];
   const relations: ForgeObservedRelation[] = [];
   for (const pkg of packages) {

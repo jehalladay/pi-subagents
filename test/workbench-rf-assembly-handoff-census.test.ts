@@ -7,6 +7,18 @@
  * (docs/programs/compositional-assembly-2026-10-18/README.md:33@6a251bf73af5). The acceptance is the owner filing's, verbatim: the
  * labels of rows A-D below.
  *
+ * FOLLOW-UP wb-dm26 (R694, F1 of the landing-277 gate, cmd_8bf70fa257bc composing cmd_edce85938e24): the zero-bytes rows A1-A3 and
+ * B4 also measure TEXT DEPENDENCE, so a partial or re-joined copy of the document is no longer green (the gate's S7/S7b); the src
+ * and docs walks hold every path git would commit below them, so a walk narrowed above its floor reds (S15/S16); D4 also reads the
+ * PAGE_ROOTS markdown pages, the root README.md included (S11), and residual R10 names the markdown it leaves unwalked.
+ *
+ * FOLLOW-UP wb-ilmy (R694, F1-F3 of the landing-369 gate, cmd_6c65c1a1c373): TEXT DEPENDENCE also pins the value form of the one leaf
+ * it lets follow the text (PAYLOAD_REF_FORM, on both seams), A5 measures it over every preview shape the census builds
+ * (PREVIEW_SHAPES) and B4 over every committed variant, so a text prefix smuggled into the allowed leaf or a shape-keyed note reds
+ * (the gate's G3-G6); D4 and R10 read pages by PAGE_EXTENSIONS in any case (G10, G11, G11b) and R12 names the pages outside them;
+ * the src walk gains a second anchor outside its own listing (git's SOURCE_EXTENSIONS files, whose unwalked roots must be exactly
+ * UNWALKED_SOURCE_ROOTS), so a src walk narrowed together with its listing reds (G14, G21), and R11 names that unwalked source.
+ *
  * SOURCE (ReactiveFiberCLI at 6a251bf73af5, read with git show; the filing quotes it): "5. 'assembly handoff': receipt containing
  * render ID, graph revision, source basis, environment/worker versions, workspace locator/capabilities and integrity digest; NOT the
  * copied prompt." (README.md:33); "These are semantic contracts, not commitments to six new top-level verbs." (:35); "All
@@ -26,8 +38,10 @@
  * render ID, the receipt's first field, and Pi hands no rf assembly across processes or agents: the statement's trigger has not
  * fired. The census pins that absence and every surface the obligation already reaches:
  *  T, the trigger, absent today. T1 a TypeScript AST scan of every src module: no identifier, string or template literal spells a
- *    handoff (HANDOFF_WORD: hand, an optional run of white space, "_" or "-", then off, in any case), with a floor and the controls
- *    of rows MT; T2 the receipt-field reader set: per field of the filing's Authority list, the src modules whose code spells it (an
+ *    handoff (HANDOFF_WORD: hand, an optional run of white space, "_" or "-", then off, in any case), with a floor, git's listing of
+ *    src as the walk's outside anchor, git's whole SOURCE_EXTENSIONS listing as its second (R11's extent) and the controls of rows
+ *    MT; T2 the receipt-field reader set: per field of the filing's
+ *    Authority list, the src modules whose code spells it (an
  *    identifier or property name equal to it, or a string literal holding it as a word) are exactly READER_SET, so a module that
  *    starts reading render_id or graph_revision_id - as any handoff carrying them must - reds until its cut re-pins the set (controls
  *    MF); T3 Pi's rf roster stays reactivefiber.render.preview (RECONCILE_EVIDENCE_READS.reactivefiber at
@@ -40,12 +54,23 @@
  *    sourceVersion) verbatim and zero bytes of the document or the block; A2 without bundle_revision_id it names no bundle at all; A3
  *    native evidence carries the operation id and the bundle (else the graph) basis and no document or block byte; A4 the native
  *    reading of that preview states render_id null, ephemeral true and no transaction: there is no render ID for a Pi surface to
- *    carry.
+ *    carry; A5 TEXT DEPENDENCE holds on every preview shape the census builds (PREVIEW_SHAPES: FULL, NO_BUNDLE, BARE and STATED, the
+ *    four D3 projects), on both seams' projections and on native evidence, and the same sweep names each planted smuggle (SMUGGLES:
+ *    the gate's G3-G6 shapes and a native-evidence one) at exactly its own shapes and leaves, the sweep's positive control. ZERO
+ *    BYTES is read two ways: no surfaced string holds the whole document or block, and TEXT DEPENDENCE - each surface is built once
+ *    from the preview and once from its twin (every ASCII letter of the document and of the block rotated thirteen places, so each
+ *    twin keeps its text's length and layout and holds no letter of it at any position); the input must differ exactly at the two
+ *    texts' own leaves (TEXT_LEAVES: the twins reached it), the only surfaced leaf allowed to differ is Pi's digest reference to the
+ *    withheld text on each seam's projection (PAYLOAD_REF_LEAVES, R4), none on native evidence, and that leaf must hold exactly its
+ *    value form in both builds (PAYLOAD_REF_FORM: rf-output:sha256: and the sha256 of the document, or of the twin document; a
+ *    differing leaf's two values are read with the texts and their digests named by placeholder). A prefix, a re-joined copy or an
+ *    encoding of either text therefore differs between the two builds and reds, in the allowed leaf too, on every shape A1-A5 build.
  *  B, acceptance (b). Pi has no handoff builder; every Pi surface given a committed render envelope (ephemeral false, an rfr_
  *    render_id, commit_seq 1, an rft_ transaction: the schema's committed branch) emits nothing of it: B1 the native reader refuses it
  *    in one spawn and returns no reading; B2 the adapter refuses a reading carrying it before projecting anything; B3 three partial
  *    committed shapes (no transaction; a render_id beside ephemeral true; a commit_seq beside a null render_id) are refused by both;
- *    B4 native evidence of it names identifiers only: no render id, no document byte and no block byte.
+ *    B4 native evidence of it names identifiers only: no render id, no document byte and no block byte (no text-dependent leaf, on it
+ *    and on each of the three partial committed shapes).
  *  C, acceptance (c). C1 an envelope whose provenance states no cli_version and no sdk_versions projects no rf-cli reference, no
  *    release note, no rf-engine reference and no digest beyond the envelope's own two and the adapter's payload reference (R4); C2
  *    the control: stated, both are carried (the rf-cli reference, the release note, the engine references), so C1's absence is the
@@ -54,7 +79,9 @@
  *  D, acceptance (d). D1 no src string or template literal spells a FAMILIES form (H, a handoff form; L, an rf receipt label; any
  *    case); D2 no native or injected descriptor's JSON spells one and both rf registrations carry REACTIVE_FIBER_CONTRACT_SOURCE; D3 no
  *    surfaced string of any projection this census builds (the four preview shapes and a refusal, on either seam) names a receipt:
- *    the adapter labels its own snapshot reactivefiber.render.preview.snapshot behind its seam label; D4 a docs mention of a FAMILIES form is admitted only when a line it
+ *    the adapter labels its own snapshot reactivefiber.render.preview.snapshot behind its seam label; D4 a mention of a FAMILIES
+ *    form in docs/ or in a PAGE_ROOTS page (the pages directly in the repository root, README.md among them, in examples/ and in
+ *    vendor/: every regular file whose extension, in any case, is one of PAGE_EXTENSIONS) is admitted only when a line it
  *    spans carries a NOT-SHIPPED marker or the Pi-assembled label (MARKERS: closed, whole words, any case), else it is
  *    named-as-shipped (matcher rows MD).
  * The committed envelope, the document and the block are CONSTRUCTED from the full-shape fixture (test/helpers/rf-render-fixture.ts);
@@ -64,8 +91,14 @@
  * acceptance sentence names exactly the clauses rows A-D cover, and each of rows A-D's labels equals its clause there, so a relabelled
  * or shortened label reds against the owner's own text. The out-of-file roster test/fixtures/rf-assembly-handoff-roster.json holds
  * every row's id, label and pins, every pin's witness and the pinned constants, so a pin deleted, relabelled, swapped or removed from
- * every literal of this file at once still reds against it. FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a
- * literal.
+ * every literal of this file at once still reds against it. GIT'S LISTING (what git would commit: tracked or untracked, never
+ * ignored, present on disk) anchors the src walk of T1, T2 and D1 and the docs and pages walk of D4: each walk must hold every path
+ * git lists, so a walk narrowed above its floor reds while an additive file does not; the page anchor README.md must name the
+ * package.json name, so the pages are read, not only listed. A SECOND LISTING anchors each walk outside its own pathspecs: git's
+ * whole listing, by extension in any case. The SOURCE_EXTENSIONS files T1, T2 and D1 do not walk must sit exactly under
+ * UNWALKED_SOURCE_ROOTS (in their walk and in R11), and the PAGE_EXTENSIONS pages D4 does not read exactly under
+ * UNWALKED_PAGE_ROOTS (in its walk and in R10), so a walk narrowed together with its own listing still reds, and so does a src
+ * module in another source extension. FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * RESIDUALS (named; each has a pinned quiet row in row R): R1 R-JOURNAL a read node's journal row keeps the whole reading, the
  * document and its blocks included, for the same run's resume (src/workflow/runtime.ts journals a read's payload); this census reads
  * that as the run's own durability record, not an assembly handoff. R2 R-SCRIPT-PROMPT a workflow script may copy a reading's
@@ -81,16 +114,32 @@
  * R-PARAPHRASE a handoff or receipt paraphrase outside FAMILIES ("passes the assembly to the next agent", "the receipt rf printed")
  * is not caught. R9 R-TOOL-READ a Claude role the host exposes the preview capability to reads the whole reading, the document
  * included, as its capability_invoke reply (claude-capability-tools.ts, sanitized and bounded): this census reads that as the
- * agent's own read of rf context through Pi's tool surface, not an assembly handed from one process or agent to another.
+ * agent's own read of rf context through Pi's tool surface, not an assembly handed from one process or agent to another. R10
+ * R-UNWALKED-PAGES (R-UNWALKED-MARKDOWN until wb-ilmy) the pages (PAGE_EXTENSIONS, any case) below .agents/, .beads/, .pi/,
+ * new-feedback/ and test/ (tool instructions, agent feedback and test fixtures, not Pi's product pages) are not walked by D4, so a
+ * FAMILIES mention there is never judged; its quiet row pins exactly those roots as the unwalked extent, so a page under any other
+ * root reds until a cut walks it or names it. R11 R-UNWALKED-SOURCE the JavaScript and TypeScript git lists outside src/
+ * (SOURCE_EXTENSIONS, any case: the repository root's own vitest configs, examples/' workflow scripts, qa/'s scripts and test/;
+ * tooling, examples and tests, not Pi's product modules) is not walked by T1, T2 and D1, so a handoff spelled there is never judged;
+ * its quiet row pins exactly those roots as the unwalked extent (UNWALKED_SOURCE_ROOTS, "" naming the root's own files), so source
+ * under any other root reds until a cut walks it or names it - src/ included, when its walk narrows or one of its modules takes
+ * another source extension - and reads a planted git tree (SOURCE_PLANTS) through the same walk and extent. R12 R-PAGE-EXTENSION a
+ * page whose name carries none of PAGE_EXTENSIONS in any case (an extensionless NOTES, an .html page) is neither read by D4 nor in
+ * R10's extent, outside docs/ (which D4 reads whole), so a FAMILIES mention in it is never judged; its quiet row reads a planted git
+ * tree (PAGE_PLANTS) through D4's page reading and R10's extent: the root's NOTES-zz.txt, ZZ.MD and README.md and docs/'s
+ * zz-notes.html are read, examples/nested/zz.md and qa/'s zz-notes.markdown, zz-notes.MD and zz-notes.md are the extent's
+ * examples and qa roots, the root's NOTES and zz.html are neither, and the line planted in each is a real unmarked mention.
  * SCOPE: the families, the markers and the reading of "prompt text" as the rendered document (README:33's "copied prompt") are this
  * cut's reading of the filing; the producer facts above are measured at the shas named and are not re-read here (the census is
  * hermetic). The positive half of (d) - a Pi-assembled label on a handoff artifact - and the armed half of (a)-(c) wait for a Pi
  * handoff: no builder is added or faked here. A later cut that adds one re-pins READER_SET and brings its artifact under rows A-D.
  *
- * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs and the bead export are only read.
+ * Display paths added: none. Test-only: the stand-in rf and the planted git trees live in makeScratch scratch; src, docs and the
+ * bead export are only read.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
@@ -192,6 +241,37 @@ const SESSION_ID = `rfs_${"f".repeat(22)}`;
 /** The rendered document (result.output.text) and one block's content (context.show's `content` spelling), CONSTRUCTED. */
 const DOCUMENT = "Assembled census context: alpha bravo charlie delta.";
 const BLOCK_CONTENT = "Census block content: echo foxtrot golf hotel.";
+interface Texts {
+  readonly document: string;
+  readonly block: string;
+}
+const TEXTS: Texts = { document: DOCUMENT, block: BLOCK_CONTENT };
+/** A text's twin: every ASCII letter rotated thirteen places, so it keeps the text's length and layout and holds no letter of the
+ * text at any position (no word, prefix or re-joined copy of the text survives in it). */
+const twinOf = (text: string): string => text.replace(/[A-Za-z]/g, letter => {
+  const base = letter <= "Z" ? 65 : 97;
+  return String.fromCharCode(((letter.charCodeAt(0) - base + 13) % 26) + base);
+});
+const TWINS: Texts = { document: twinOf(DOCUMENT), block: twinOf(BLOCK_CONTENT) };
+/** The reading's own text leaves: where a preview and its twin must differ, and nowhere else. */
+const TEXT_LEAVES: readonly string[] = ["$.source.result.blocks.0.content", "$.source.result.output.text"];
+/** Pi's digest reference to the withheld text on each seam's projection (R4): the one surfaced leaf allowed to follow the text. */
+const PAYLOAD_REF_LEAVES: readonly string[] = ["$.0.snapshots.0.nativePayloadRef", "$.1.snapshots.0.nativePayloadRef"];
+const sha256Of = (text: string): string => createHash("sha256").update(text).digest("hex");
+/** A leaf that follows the texts, read in each build: its value with the texts and their digests named by placeholder. A type, not
+ * an interface, so a reading holding forms stays a JsonValue. */
+type Form = { readonly own: JsonValue; readonly twin: JsonValue };
+/** The allowed leaf's value form (R4): Pi's own sha256 of the withheld document in each build, never a prefix, a copy or an encoding
+ * of the text beside it or in its place. */
+const PAYLOAD_REF_FORM: Form = { own: "rf-output:sha256:<document sha256>", twin: "rf-output:sha256:<twin document sha256>" };
+/** The texts and their digests, by the placeholder a form names them with (the 64-hex digests before the texts they hash). */
+const TEXT_NAMES: readonly (readonly [string, string])[] = [
+  [sha256Of(TEXTS.document), "<document sha256>"], [sha256Of(TWINS.document), "<twin document sha256>"],
+  [sha256Of(TEXTS.block), "<block sha256>"], [sha256Of(TWINS.block), "<twin block sha256>"],
+  [TEXTS.document, "<document>"], [TWINS.document, "<twin document>"], [TEXTS.block, "<block>"], [TWINS.block, "<twin block>"],
+];
+const namedText = (value: JsonValue): JsonValue =>
+  typeof value === "string" ? TEXT_NAMES.reduce((text, [raw, name]) => text.split(raw).join(name), value) : value;
 const ENGINE_VERSIONS: JsonObject = {
   tsx_runtime: { distribution_version: "2.4.1", contract_fingerprint: "unknown" },
   tsx_sdk: { distribution_version: "0.3.2", contract_fingerprint: "unknown" },
@@ -213,7 +293,7 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label: "(a) any Pi cross-agent handoff of rf context carries render_id and graph_revision_id (plus bundle_revision_id when present) and zero bytes of rendered document or block content",
-    pins: ["A1", "A2", "A3", "A4"],
+    pins: ["A1", "A2", "A3", "A4", "A5"],
   },
   {
     id: "B",
@@ -242,8 +322,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "R",
-    label: "the named residuals R1-R9 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9"],
+    label: "the named residuals R1-R12 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12"],
   },
 ];
 
@@ -313,6 +393,18 @@ function constants(): JsonValue {
     handoffWord: HANDOFF_WORD.source,
     families: FAMILIES,
     markers: MARKERS,
+    srcFloor: SRC_FLOOR,
+    docsFloor: DOCS_FLOOR,
+    pageRoots: PAGE_ROOTS,
+    unwalkedPageRoots: UNWALKED_PAGE_ROOTS,
+    previewShapes: PREVIEW_SHAPES,
+    payloadRefForm: PAYLOAD_REF_FORM,
+    smuggles: SMUGGLES.map(({ id, label }) => ({ id, label })),
+    pageExtensions: PAGE_EXTENSIONS,
+    sourceExtensions: SOURCE_EXTENSIONS,
+    unwalkedSourceRoots: UNWALKED_SOURCE_ROOTS,
+    pagePlants: PAGE_PLANTS.map(plant => plant.path),
+    sourcePlants: SOURCE_PLANTS.map(plant => plant.path),
   });
 }
 
@@ -337,6 +429,53 @@ function textOf(path: string): string {
     return readFileSync(path, "utf8");
   } catch {
     return "";
+  }
+}
+/** What git would commit in `base` for the pathspecs: tracked or untracked, never ignored, and present on disk, sorted. The walks'
+ * outside anchor: a walk must hold every path listed here, so a narrowed walk reds while an additive file does not. */
+function gitListedIn(base: string, ...pathspecs: string[]): string[] {
+  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...pathspecs], { cwd: base, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(base, path))))].sort();
+}
+const gitListed = (...pathspecs: string[]): string[] => gitListedIn(REPO, ...pathspecs);
+let listingCache: string[] | undefined;
+/** Git's whole listing of the repository, read once: the source of each walk's second anchor. */
+const repoListed = (): string[] => (listingCache ??= gitListed());
+/** The page extensions D4 reads and R10's extent lists, compared in lower case: the program's doc set (the DOC_EXTENSIONS of
+ * test/workbench-tsx-h2-proposed-api-census.test.ts). */
+const PAGE_EXTENSIONS: readonly string[] = [".md", ".mdx", ".markdown", ".rst", ".txt", ".adoc"];
+/** The source extensions of the src walk's second listing, compared in lower case: the program's module set (the MODULE_EXTENSIONS
+ * of the same census). */
+const SOURCE_EXTENSIONS: readonly string[] = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
+/** A path's extension in lower case: "" when its name holds no dot after its first character (NOTES, .gitignore). */
+function extensionOf(path: string): string {
+  const name = path.slice(path.lastIndexOf("/") + 1);
+  const dot = name.lastIndexOf(".");
+  return dot <= 0 ? "" : name.slice(dot).toLowerCase();
+}
+const isPage = (path: string): boolean => PAGE_EXTENSIONS.includes(extensionOf(path));
+const isSource = (path: string): boolean => SOURCE_EXTENSIONS.includes(extensionOf(path));
+/** A path's root: its first segment, or "" for a file directly in the repository root. */
+const rootOf = (path: string): string => (path.includes("/") ? path.slice(0, path.indexOf("/")) : "");
+/** A walk's unwalked extent: the roots of every listed path the walk does not hold, sorted. */
+const rootsUnwalked = (listed: readonly string[], walked: ReadonlySet<string>): string[] =>
+  [...new Set(listed.filter(path => !walked.has(path)).map(rootOf))].sort();
+interface Plant {
+  readonly path: string;
+  readonly text: string;
+}
+/** `read` over a fresh scratch git repository holding `plants` untracked, as a file stands before its first commit. */
+function withPlantedTree<T>(plants: readonly Plant[], read: (base: string) => T): T {
+  const base = makeScratch("rf-assembly-handoff-tree-");
+  try {
+    execFileSync("git", ["init", "-q"], { cwd: base, stdio: "pipe" });
+    for (const plant of plants) {
+      mkdirSync(dirname(join(base, plant.path)), { recursive: true });
+      writeFileSync(join(base, plant.path), plant.text);
+    }
+    return read(base);
+  } finally {
+    removeScratch(base);
   }
 }
 /** Every string a JSON value holds, keys excluded. */
@@ -372,17 +511,20 @@ const FULL: PreviewShape = { bundle: true, release: true, versions: "sdk" };
 const NO_BUNDLE: PreviewShape = { bundle: false, release: true, versions: "sdk" };
 const BARE: PreviewShape = { bundle: true, release: false, versions: "absent" };
 const STATED: PreviewShape = { bundle: true, release: true, versions: "engine" };
+/** Every preview shape the census builds, by name: D3 projects each, A5 measures TEXT DEPENDENCE over each. */
+const PREVIEW_SHAPES: Readonly<Record<string, PreviewShape>> = { FULL, NO_BUNDLE, BARE, STATED };
 
-/** A full-shape noncommitted preview carrying DOCUMENT and one block of BLOCK_CONTENT, with the shape's optional fields. */
-function previewEnvelope(shape: PreviewShape): JsonObject {
+/** A full-shape noncommitted preview carrying the document and one block of the block content (DOCUMENT and BLOCK_CONTENT, or the
+ * twins of A's text dependence), with the shape's optional fields. */
+function previewEnvelope(shape: PreviewShape, texts: Texts = TEXTS): JsonObject {
   const envelope = objectOf(clone(fullShapeRf(ROOT)), "fixture");
   const result = objectOf(envelope.result, "result");
   const output = objectOf(result.output, "result.output");
-  output.text = DOCUMENT;
-  output.size_bytes = Buffer.byteLength(DOCUMENT);
+  output.text = texts.document;
+  output.size_bytes = Buffer.byteLength(texts.document);
   result.blocks = [{
     final_index: 0, candidate_key: "census.block::body", component_id: "census.block", token_cost: { kind: "measured", tokens: 9 },
-    token_cost_kind: "measured", content: BLOCK_CONTENT,
+    token_cost_kind: "measured", content: texts.block,
   }];
   if (!shape.bundle) delete result.bundle_revision_id;
   const provenance = objectOf(result.provenance, "result.provenance");
@@ -401,10 +543,12 @@ const REFUSAL: JsonObject = {
 
 type CommittedVariant = "committed" | "untransacted" | "id-beside-ephemeral" | "seq-beside-null-id";
 const PARTIAL_VARIANTS: readonly CommittedVariant[] = ["untransacted", "id-beside-ephemeral", "seq-beside-null-id"];
+/** Every committed shape the census builds: B4 measures TEXT DEPENDENCE of native evidence over each. */
+const COMMITTED_VARIANTS: readonly CommittedVariant[] = ["committed", ...PARTIAL_VARIANTS];
 /** The schema's committed branch (ephemeral false, an rfr_ render_id, an integer commit_seq, an rft_ transaction, one store write) or
  * one of three partial committed shapes. */
-function committedEnvelope(variant: CommittedVariant): JsonObject {
-  const envelope = previewEnvelope(FULL);
+function committedEnvelope(variant: CommittedVariant, texts: Texts = TEXTS): JsonObject {
+  const envelope = previewEnvelope(FULL, texts);
   const result = objectOf(envelope.result, "result");
   if (variant === "committed" || variant === "untransacted") {
     result.ephemeral = false;
@@ -445,6 +589,157 @@ const refsOf = (snapshot: JsonObject): string[] => stringLeaves(snapshot.evidenc
 const notesOf = (projected: Projected): string[] => projected.strings.filter(text => text.includes("producer release") || text.includes("TSX engine"));
 const DIGEST = /sha256:[0-9a-f]{64}/g;
 const digestsIn = (strings: readonly string[]): string[] => [...new Set(strings.flatMap(text => text.match(DIGEST) ?? []))].sort();
+/** Both seams' topologies of one reading: the live rf-cli seam and the injected fixture seam. */
+const topologiesOf = (reading: JsonValue): JsonValue => (["rf-cli", "injected-fixture"] as const).map(seam => clone(reactivefiberTopology(reading, contextOf(seam))));
+/** Native evidence of one reading. */
+const evidenceOf = (reading: JsonValue): JsonValue => clone(nativeEvidence(PREVIEW_ID, reading));
+/** Every leaf of a JSON value keyed by its path ("$", then each key or index after a "."), as its JSON text. */
+function leavesOf(value: JsonValue, path: string, into: Map<string, string>): Map<string, string> {
+  if (Array.isArray(value)) {
+    for (const [index, child] of value.entries()) leavesOf(child, `${path}.${index}`, into);
+  } else if (value !== null && typeof value === "object") {
+    for (const [key, child] of Object.entries(value)) leavesOf(child, `${path}.${key}`, into);
+  } else {
+    into.set(path, JSON.stringify(value));
+  }
+  return into;
+}
+/** The leaf paths at which two leaf maps differ, sorted; a leaf held on one side only differs. */
+function differingIn(own: ReadonlyMap<string, string>, other: ReadonlyMap<string, string>): string[] {
+  return [...new Set([...own.keys(), ...other.keys()])].filter(path => own.get(path) !== other.get(path)).sort();
+}
+/** The leaf paths at which two JSON values differ, sorted; a leaf held on one side only differs. */
+function differingLeaves(left: JsonValue, right: JsonValue): string[] {
+  return differingIn(leavesOf(left, "$", new Map()), leavesOf(right, "$", new Map()));
+}
+/** Whether a twin keeps its text's length and holds none of its letters at any position. */
+function letterDisjoint(text: string, twin: string): boolean {
+  if (text.length !== twin.length) return false;
+  for (let index = 0; index < text.length; index++) if (/[A-Za-z]/.test(text.charAt(index)) && twin.charAt(index) === text.charAt(index)) return false;
+  return true;
+}
+type Dependence = { twinDisjoint: boolean; inputDependent: string[]; dependent: string[]; forms: Record<string, Form> };
+/** A surfaced leaf's value as a form reads it: its JSON value with the texts and digests named, or "absent" on a side lacking it. */
+const formOf = (leaf: string | undefined): JsonValue => (leaf === undefined ? "absent" : namedText(JSON.parse(leaf) as JsonValue));
+/** TEXT DEPENDENCE (A1-A3, A5, B4): `surface` applied to the input built from the texts and to the input built from their twins. The
+ * input must differ exactly at TEXT_LEAVES; every surfaced leaf that differs carries the text in some form, and its two values are
+ * kept as its form, so an allowed leaf is held to its value and not only to its place. */
+function textDependence(input: (texts: Texts) => JsonValue, surface: (built: JsonValue) => JsonValue): Dependence {
+  const own = input(TEXTS);
+  const twin = input(TWINS);
+  const ownLeaves = leavesOf(surface(own), "$", new Map());
+  const twinLeaves = leavesOf(surface(twin), "$", new Map());
+  const dependent = differingIn(ownLeaves, twinLeaves);
+  return {
+    twinDisjoint: letterDisjoint(TEXTS.document, TWINS.document) && letterDisjoint(TEXTS.block, TWINS.block),
+    inputDependent: differingLeaves(own, twin),
+    dependent,
+    forms: Object.fromEntries(dependent.map(leaf => [leaf, { own: formOf(ownLeaves.get(leaf)), twin: formOf(twinLeaves.get(leaf)) }])),
+  };
+}
+/** TEXT DEPENDENCE as each seam's projection must read: only the payload reference follows the texts, in its pinned value form. */
+const PROJECTED: Dependence = {
+  twinDisjoint: true, inputDependent: [...TEXT_LEAVES], dependent: [...PAYLOAD_REF_LEAVES],
+  forms: Object.fromEntries(PAYLOAD_REF_LEAVES.map(leaf => [leaf, { ...PAYLOAD_REF_FORM }])),
+};
+/** TEXT DEPENDENCE as native evidence must read: no leaf follows the texts. */
+const UNDEPENDENT: Dependence = { twinDisjoint: true, inputDependent: [...TEXT_LEAVES], dependent: [], forms: {} };
+/** Where a reading departs from the expected one, each as "<shape> <leaf>" ("<shape> input <leaf>" for the input, "<shape> twins"
+ * for twins sharing a letter): a leaf that follows the texts where it may not, stops following them where it must, or holds
+ * another form. */
+function breaksOf(shape: string, reading: Dependence, expected: Dependence): string[] {
+  const breaks: string[] = reading.twinDisjoint === expected.twinDisjoint ? [] : [`${shape} twins`];
+  const inputs = [...new Set([...reading.inputDependent, ...expected.inputDependent])].sort();
+  breaks.push(...inputs.filter(leaf => reading.inputDependent.includes(leaf) !== expected.inputDependent.includes(leaf)).map(leaf => `${shape} input ${leaf}`));
+  const state = (of: Dependence, leaf: string): string => JSON.stringify([of.dependent.includes(leaf), Object.hasOwn(of.forms, leaf) ? of.forms[leaf] : null]);
+  const leaves = [...new Set([...reading.dependent, ...Object.keys(reading.forms), ...expected.dependent])].sort();
+  breaks.push(...leaves.filter(leaf => state(reading, leaf) !== state(expected, leaf)).map(leaf => `${shape} ${leaf}`));
+  return breaks;
+}
+type Surface = (built: JsonValue) => JsonValue;
+/** A5's sweep over every preview shape: where the projections break PROJECTED and where native evidence breaks UNDEPENDENT. */
+function sweepOf(projection: Surface, evidence: Surface): { projection: string[]; evidence: string[] } {
+  const built = (shape: PreviewShape) => (texts: Texts): JsonValue => readingOf(previewEnvelope(shape, texts));
+  const shapes = Object.entries(PREVIEW_SHAPES);
+  return {
+    projection: shapes.flatMap(([name, shape]) => breaksOf(name, textDependence(built(shape), projection), PROJECTED)),
+    evidence: shapes.flatMap(([name, shape]) => breaksOf(name, textDependence(built(shape), evidence), UNDEPENDENT)),
+  };
+}
+/** A built reading's result and document, and which optional fields its shape states. */
+const resultOf = (built: JsonValue): JsonObject => objectOf(sourceOf(built).result, "result");
+const documentOf = (built: JsonValue): string => String(objectOf(resultOf(built).output, "result.output").text);
+const statesBundle = (built: JsonValue): boolean => Object.hasOwn(resultOf(built), "bundle_revision_id");
+const statesRelease = (built: JsonValue): boolean => Object.hasOwn(objectOf(resultOf(built).provenance, "result.provenance"), "cli_version");
+function statesEngines(built: JsonValue): boolean {
+  const versions = objectOf(resultOf(built).provenance, "result.provenance").sdk_versions;
+  return isObject(versions) && Object.hasOwn(versions, "tsx_runtime");
+}
+/** Both seams' topologies with a document prefix smuggled in on the seams `when` selects: 8 characters after the payload reference,
+ * or 16 as the first note. */
+function smuggledTopologies(into: "payload" | "note", when: (built: JsonValue, seam: number) => boolean): Surface {
+  return built => {
+    const topologies = topologiesOf(built);
+    if (!Array.isArray(topologies)) throw new Error("expected both seams' topologies");
+    return topologies.map((topology, seam) => {
+      const copy = objectOf(clone(topology), "topology");
+      if (!when(built, seam)) return copy;
+      if (into === "payload") {
+        const snapshot = objectOf(Array.isArray(copy.snapshots) ? copy.snapshots[0] : undefined, "snapshot");
+        snapshot.nativePayloadRef = `${String(snapshot.nativePayloadRef)}${documentOf(built).slice(0, 8)}`;
+      } else {
+        copy.diagnostics = [documentOf(built).slice(0, 16), ...(Array.isArray(copy.diagnostics) ? copy.diagnostics : [])];
+      }
+      return copy;
+    });
+  };
+}
+/** Native evidence with an 8-character document prefix smuggled in as a note on the readings `when` selects. */
+function smuggledEvidence(when: (built: JsonValue) => boolean): Surface {
+  return built => {
+    const evidence = objectOf(evidenceOf(built), "evidence");
+    if (when(built)) evidence.note = documentOf(built).slice(0, 8);
+    return evidence;
+  };
+}
+interface Smuggle {
+  readonly id: string;
+  readonly label: string;
+  readonly projection: Surface;
+  readonly evidence: Surface;
+  readonly breaks: { readonly projection: readonly string[]; readonly evidence: readonly string[] };
+}
+/** A5's positive control: each plant smuggles a document prefix into one surface, keyed to one shape or seam (the gate's G3-G6 src
+ * mutants, rebuilt over the surfaces; E4 the native-evidence analog of G4), and the sweep must name exactly its breaks. */
+const SMUGGLES: readonly Smuggle[] = [
+  {
+    id: "G3", label: "a 16-character document prefix noted first when engine identities are stated",
+    projection: smuggledTopologies("note", statesEngines), evidence: evidenceOf,
+    breaks: { projection: ["STATED $.0.diagnostics.0", "STATED $.1.diagnostics.0"], evidence: [] },
+  },
+  {
+    id: "G4", label: "a 16-character document prefix noted first when no producer release is stated",
+    projection: smuggledTopologies("note", built => !statesRelease(built)), evidence: evidenceOf,
+    breaks: { projection: ["BARE $.0.diagnostics.0", "BARE $.1.diagnostics.0"], evidence: [] },
+  },
+  {
+    id: "G5", label: "an 8-character document prefix after the payload reference when no bundle is stated",
+    projection: smuggledTopologies("payload", built => !statesBundle(built)), evidence: evidenceOf,
+    breaks: { projection: ["NO_BUNDLE $.0.snapshots.0.nativePayloadRef", "NO_BUNDLE $.1.snapshots.0.nativePayloadRef"], evidence: [] },
+  },
+  {
+    id: "G6", label: "an 8-character document prefix after the payload reference on the injected-fixture seam",
+    projection: smuggledTopologies("payload", (_built, seam) => seam === 1), evidence: evidenceOf,
+    breaks: {
+      projection: ["FULL", "NO_BUNDLE", "BARE", "STATED"].map(shape => `${shape} $.1.snapshots.0.nativePayloadRef`), evidence: [],
+    },
+  },
+  {
+    id: "E4", label: "an 8-character document prefix in native evidence when no producer release is stated",
+    projection: topologiesOf, evidence: smuggledEvidence(built => !statesRelease(built)),
+    breaks: { projection: [], evidence: ["BARE $.note"] },
+  },
+];
 
 interface Refusal {
   readonly category: string;
@@ -592,20 +887,36 @@ function scanCode(fileName: string, text: string): CodeScan {
   visit(source);
   return { handoff, labels, fields: [...fields].sort(), renderArgv };
 }
-/** The src modules walk at base 051d37e holds 115; the floor sits below it, so an emptied walk reds and an additive one does not. */
+/** The src modules walk held 115 at base 051d37e (115 at 7bfe51b); the floor sits below it, so an emptied walk reds and an additive
+ * one does not, and git's listing of src is the anchor a narrowed walk reds against. */
 const SRC_FLOOR = 100;
+/** R11's unwalked extent, the src walk's second anchor: the roots of every SOURCE_EXTENSIONS file git would commit that the src walk
+ * does not hold ("" the repository root's own vitest configs, examples/' workflow scripts, qa/'s scripts, test/), at 6ef96af. */
+const UNWALKED_SOURCE_ROOTS: readonly string[] = ["", "examples", "qa", "test"];
+/** The src modules a walk of `base` holds: every regular .ts file below its src/ (symlinks are not followed), relative, sorted. */
+function srcModulesIn(base: string): string[] {
+  return filesBelow(join(base, "src")).filter(file => file.endsWith(".ts")).map(file => relative(base, file)).sort();
+}
 let srcCache: { path: string; scan: CodeScan }[] | undefined;
 function srcScans(): { path: string; scan: CodeScan }[] {
-  srcCache ??= filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts")).map(file => {
-    const path = relative(REPO, file);
-    return { path, scan: scanCode(path, textOf(file)) };
-  });
+  srcCache ??= srcModulesIn(REPO).map(path => ({ path, scan: scanCode(path, textOf(join(REPO, path))) }));
   return srcCache;
 }
-function srcWalk(): { srcFloorMet: boolean; renderArgvSeen: boolean } {
+/** The roots of the SOURCE_EXTENSIONS files of a git listing that `walked` does not hold. */
+const sourceRootsOf = (listed: readonly string[], walked: ReadonlySet<string>): string[] => rootsUnwalked(listed.filter(isSource), walked);
+function srcWalk(): { srcFloorMet: boolean; srcUnwalked: string[]; sourceRoots: string[]; renderArgvSeen: boolean } {
   const scans = srcScans();
-  const walk = { srcFloorMet: scans.length >= SRC_FLOOR, renderArgvSeen: scans.some(entry => entry.scan.renderArgv > 0) };
-  expect(walk, `src modules walked: ${scans.length}, floor ${SRC_FLOOR}`).toStrictEqual({ srcFloorMet: true, renderArgvSeen: true });
+  const listed = gitListed("src").filter(path => path.endsWith(".ts"));
+  const walked = new Set(scans.map(entry => entry.path));
+  const walk = {
+    srcFloorMet: scans.length >= SRC_FLOOR && listed.length >= SRC_FLOOR,
+    srcUnwalked: listed.filter(path => !walked.has(path)),
+    sourceRoots: sourceRootsOf(repoListed(), walked),
+    renderArgvSeen: scans.some(entry => entry.scan.renderArgv > 0),
+  };
+  expect(walk, `src modules walked: ${scans.length}, listed by git: ${listed.length}, floor ${SRC_FLOOR}, unwalked source roots ${JSON.stringify(walk.sourceRoots)}`).toStrictEqual({
+    srcFloorMet: true, srcUnwalked: [], sourceRoots: [...UNWALKED_SOURCE_ROOTS], renderArgvSeen: true,
+  });
   return walk;
 }
 /** Per receipt field, the src modules spelling it, sorted. */
@@ -617,14 +928,59 @@ interface SourceFile {
   readonly path: string;
   readonly text: string;
 }
-/** The docs tree holds 69 files at base 051d37e; the floor sits below it, so an emptied walk reds and an additive one does not. */
+/** The docs tree held 69 files at base 051d37e (71 at 7bfe51b, beside 7 PAGE_ROOTS pages); the floor sits below it, so an emptied
+ * walk reds and an additive one does not, and git's listing of docs and the pages is the anchor a narrowed walk reds against. */
 const DOCS_FLOOR = 50;
 const DOCS_ANCHOR = { file: "docs/workbench/13-contracts-and-config.md", token: PREVIEW_ID };
+/** The roots whose pages D4 reads beside docs/, one level deep each: the repository root (README.md, AGENTS.md, CHANGELOG.md,
+ * CONTRIBUTING.md, SECURITY.md at 6ef96af, all markdown), examples/ and vendor/. */
+const PAGE_ROOTS: readonly string[] = ["", "examples", "vendor"];
+/** Every file directly in a page root; the listing keeps the pages among them (isPage), as the walk does. */
+const PAGE_SPECS: readonly string[] = PAGE_ROOTS.map(root => `:(glob)${root === "" ? "" : `${root}/`}*`);
+/** R10's unwalked extent: the roots of every page (PAGE_EXTENSIONS, any case) git would commit that D4 does not read. */
+const UNWALKED_PAGE_ROOTS: readonly string[] = [".agents", ".beads", ".pi", "new-feedback", "test"];
+/** The page anchor: the root README.md names the package by its package.json name, so a read page is a page with its text. */
+const PAGE_ANCHOR = { file: "README.md", token: String((JSON.parse(textOf(join(REPO, "package.json"))) as { name?: unknown }).name) };
+/** A page root's own pages in `base`, one level deep: the regular files whose extension is one of PAGE_EXTENSIONS in any case
+ * (symlinks are not followed), relative to `base`. */
+function pagesIn(base: string, root: string): string[] {
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(join(base, root), { withFileTypes: true });
+  } catch {
+    return [];
+  }
+  return entries.filter(entry => entry.isFile() && isPage(entry.name)).map(entry => (root === "" ? entry.name : `${root}/${entry.name}`));
+}
+/** D4's walk of `base`: every regular file below its docs/ and each page root's own pages, relative paths. */
+const pageWalkIn = (base: string): string[] => [
+  ...filesBelow(join(base, "docs")).map(file => relative(base, file)), ...PAGE_ROOTS.flatMap(root => pagesIn(base, root)),
+];
+/** What D4's walk of `base` must hold: every file git lists below docs/ and every page it lists directly in a page root. */
+const pageListedIn = (base: string): string[] => [...gitListedIn(base, "docs"), ...gitListedIn(base, ...PAGE_SPECS).filter(isPage)].sort();
+/** The roots of the pages of a git listing that `walked` does not hold (R10's extent). */
+const pageRootsOf = (listed: readonly string[], walked: ReadonlySet<string>): string[] => rootsUnwalked(listed.filter(isPage), walked);
 let docsCache: SourceFile[] | undefined;
 function docsFiles(): SourceFile[] {
-  docsCache ??= filesBelow(join(REPO, "docs")).map(file => ({ path: relative(REPO, file), text: textOf(file) }));
+  docsCache ??= pageWalkIn(REPO).map(path => ({ path, text: textOf(join(REPO, path)) }));
   return docsCache;
 }
+/** The line every page plant holds: an unmarked rf receipt label (the gate's G10-G11b line). */
+const PAGE_PLANT_LINE = "Pi stores the rf receipt beside every run.\n";
+/** R12's planted tree: pages in each case and extension the reading must classify (the gate's G10, G11 and G11b and its .md
+ * control), a docs/ file D4 reads whole, a page nested below a page root, and two names outside PAGE_EXTENSIONS. */
+const PAGE_PLANTS: readonly Plant[] = [
+  "NOTES-zz.txt", "ZZ.MD", "README.md", "NOTES", "zz.html", "docs/zz-notes.html", "examples/nested/zz.md", "qa/zz-notes.markdown",
+  "qa/zz-notes.MD", "qa/zz-notes.md",
+].map(path => ({ path, text: PAGE_PLANT_LINE }));
+/** The text every source plant holds: a handoff spelled as an identifier (T1's word). */
+const SOURCE_PLANT_TEXT = "export const handOffTarget = 1;\n";
+/** R11's planted tree: src modules the walk holds (one nested), a src module in another source extension, source under each unwalked
+ * root, and a docs page that is no source. */
+const SOURCE_PLANTS: readonly Plant[] = [
+  "src/zz-walked.ts", "src/ui/zz-walked.ts", "src/zz-plant.mjs", "qa/zz-plant.mjs", "test/zz-plant.ts", "examples/zz-plant.js",
+  "zz-plant.config.ts", "docs/zz-plant.md",
+].map(path => ({ path, text: SOURCE_PLANT_TEXT }));
 function lineStarts(text: string): number[] {
   const starts = [0];
   for (let index = 0; index < text.length; index++) if (text[index] === "\n") starts.push(index + 1);
@@ -813,10 +1169,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       documentBytes: carrying(projected.strings, DOCUMENT),
       blockBytes: carrying(projected.strings, BLOCK_CONTENT),
       renderIds: carrying(projected.strings, "rfr_"),
+      dependence: textDependence(texts => readingOf(previewEnvelope(FULL, texts)), topologiesOf),
     };
     expect(reading).toStrictEqual({
       sourceRevision: RF_FIXTURE_GRAPH_REVISION, sourceVersion: BUNDLE,
       identityRefs: [`rf-graph:${RF_FIXTURE_GRAPH_REVISION}`, `rf-bundle:${BUNDLE}`], documentBytes: 0, blockBytes: 0, renderIds: 0,
+      dependence: PROJECTED,
     });
     return placeheld(reading);
   },
@@ -829,10 +1187,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       bundleNamed: carrying(projected.strings, BUNDLE),
       documentBytes: carrying(projected.strings, DOCUMENT),
       blockBytes: carrying(projected.strings, BLOCK_CONTENT),
+      dependence: textDependence(texts => readingOf(previewEnvelope(NO_BUNDLE, texts)), topologiesOf),
     };
     expect(reading).toStrictEqual({
       sourceRevision: RF_FIXTURE_GRAPH_REVISION, hasSourceVersion: false, identityRefs: [`rf-graph:${RF_FIXTURE_GRAPH_REVISION}`],
       bundleNamed: 0, documentBytes: 0, blockBytes: 0,
+      dependence: PROJECTED,
     });
     return placeheld(reading);
   },
@@ -843,7 +1203,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(objectOf(withBundle, "evidence").sourceBasis).toBe(BUNDLE);
     expect(objectOf(withoutBundle, "evidence").sourceBasis).toBe(RF_FIXTURE_GRAPH_REVISION);
     expect([carrying(strings, DOCUMENT), carrying(strings, BLOCK_CONTENT)]).toEqual([0, 0]);
-    return placeheld({ withBundle, withoutBundle, documentBytes: 0, blockBytes: 0 });
+    const dependence = {
+      withBundle: textDependence(texts => readingOf(previewEnvelope(FULL, texts)), evidenceOf),
+      withoutBundle: textDependence(texts => readingOf(previewEnvelope(NO_BUNDLE, texts)), evidenceOf),
+    };
+    expect(dependence).toStrictEqual({ withBundle: UNDEPENDENT, withoutBundle: UNDEPENDENT });
+    return placeheld({ withBundle, withoutBundle, documentBytes: 0, blockBytes: 0, dependence });
   },
   A4: async () => {
     const { refusal, reading, spawns } = await nativeOutcome(previewEnvelope(FULL));
@@ -854,6 +1219,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const witness = { renderId: own(result, "render_id"), ephemeral: own(result, "ephemeral"), transactionId: own(source, "transaction_id"), spawns: spawns.length };
     expect(witness).toStrictEqual({ renderId: null, ephemeral: true, transactionId: null, spawns: 1 });
     return witness;
+  },
+  A5: async () => {
+    const real = sweepOf(topologiesOf, evidenceOf);
+    expect(real, "a preview shape whose projection or native evidence follows the texts outside the allowed leaf's pinned form").toStrictEqual({
+      projection: [], evidence: [],
+    });
+    const controls = Object.fromEntries(SMUGGLES.map(smuggle => [smuggle.id, sweepOf(smuggle.projection, smuggle.evidence)]));
+    expect(controls, "each planted smuggle is named at exactly its own shapes and leaves").toStrictEqual(
+      Object.fromEntries(SMUGGLES.map(smuggle => [smuggle.id, { projection: [...smuggle.breaks.projection], evidence: [...smuggle.breaks.evidence] }])),
+    );
+    return { shapes: Object.keys(PREVIEW_SHAPES), ...real, controls };
   },
   B1: async () => {
     const { refusal, reading, spawns } = await nativeOutcome(committedEnvelope("committed"));
@@ -886,8 +1262,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const evidence = clone(nativeEvidence(PREVIEW_ID, readingOf(committedEnvelope("committed"))));
     const strings = stringLeaves(evidence);
     const counts = { renderIds: carrying(strings, RENDER_ID), documentBytes: carrying(strings, DOCUMENT), blockBytes: carrying(strings, BLOCK_CONTENT) };
+    const dependence = Object.fromEntries(
+      COMMITTED_VARIANTS.map(variant => [variant, textDependence(texts => readingOf(committedEnvelope(variant, texts)), evidenceOf)]),
+    );
     expect(counts).toStrictEqual({ renderIds: 0, documentBytes: 0, blockBytes: 0 });
-    return placeheld({ evidence, ...counts });
+    expect(dependence).toStrictEqual(Object.fromEntries(COMMITTED_VARIANTS.map(variant => [variant, UNDEPENDENT])));
+    return placeheld({ evidence, ...counts, dependence });
   },
   C1: async () => {
     const projected = projectionOf(previewEnvelope(BARE));
@@ -958,7 +1338,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return { descriptorFloorMet, hits, rfCarriers };
   },
   D3: async () => {
-    const envelopes: JsonValue[] = [...[FULL, NO_BUNDLE, BARE, STATED].map(previewEnvelope), REFUSAL];
+    const envelopes: JsonValue[] = [...Object.values(PREVIEW_SHAPES).map(shape => previewEnvelope(shape)), REFUSAL];
     const projections = envelopes.flatMap(envelope => (["rf-cli", "injected-fixture"] as const).map(seam => projectionOf(envelope, seam)));
     const receiptWords = projections.reduce((sum, projected) => sum + projected.strings.filter(text => /receipt/i.test(text)).length, 0);
     const kinds = [...new Set(projections.map(projected => String(projected.snapshot.kind)))].sort();
@@ -968,9 +1348,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   D4: async () => {
     const files = docsFiles();
+    const listed = pageListedIn(REPO);
+    const walked = new Set(files.map(file => file.path));
     const anchor = files.find(file => file.path === DOCS_ANCHOR.file);
-    const walk = { floorMet: files.length >= DOCS_FLOOR, anchorRead: anchor?.text.includes(DOCS_ANCHOR.token) === true };
-    expect(walk, `docs: ${files.length} files walked, floor ${DOCS_FLOOR}, anchor ${DOCS_ANCHOR.file}`).toStrictEqual({ floorMet: true, anchorRead: true });
+    const page = files.find(file => file.path === PAGE_ANCHOR.file);
+    const walk = {
+      floorMet: files.length >= DOCS_FLOOR && listed.length >= DOCS_FLOOR,
+      unwalked: listed.filter(path => !walked.has(path)),
+      pageRoots: pageRootsOf(repoListed(), walked),
+      anchorRead: anchor?.text.includes(DOCS_ANCHOR.token) === true,
+      pageAnchorRead: page?.text.includes(PAGE_ANCHOR.token) === true,
+    };
+    expect(walk, `docs and pages: ${files.length} files walked, ${listed.length} listed by git, floor ${DOCS_FLOOR}, anchors ${DOCS_ANCHOR.file} and ${PAGE_ANCHOR.file}`).toStrictEqual({
+      floorMet: true, unwalked: [], pageRoots: [...UNWALKED_PAGE_ROOTS], anchorRead: true, pageAnchorRead: true,
+    });
     const findings = files.flatMap(file =>
       mentionsOf(file.text).filter(mention => !mention.marked).map(mention => `${file.path}:${mention.line} ${mention.family}: named-as-shipped`),
     );
@@ -1047,6 +1438,45 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(witness).toStrictEqual({ isError: false, kind: "returned", replyCarriesDocument: true, replyCarriesBlockContent: true, replyNamesReceipt: false });
     return witness;
   },
+  R10: async () => {
+    const walked = new Set(docsFiles().map(file => file.path));
+    const roots = pageRootsOf(repoListed(), walked);
+    // The extent is real: a line D4 names as shipped there is never judged.
+    const planted = outcomeOf("mention", ["Pi stores the rf receipt beside the run."]);
+    expect({ roots, planted }).toStrictEqual({ roots: [...UNWALKED_PAGE_ROOTS], planted: ["L:shipped"] });
+    return { roots, planted };
+  },
+  R11: async () => {
+    const roots = sourceRootsOf(repoListed(), new Set(srcScans().map(entry => entry.path)));
+    // The same walk and extent over a planted tree: a src module in another source extension makes src an unwalked root.
+    const planted = withPlantedTree(SOURCE_PLANTS, base => {
+      const walked = srcModulesIn(base);
+      return { walked, roots: sourceRootsOf(gitListedIn(base), new Set(walked)) };
+    });
+    // The extent is real: a handoff spelled in such a module is a T1 hit wherever the walk reads it.
+    const spelled = outcomeOf("code", [SOURCE_PLANT_TEXT]);
+    expect({ roots, planted, spelled }).toStrictEqual({
+      roots: [...UNWALKED_SOURCE_ROOTS], planted: { walked: ["src/ui/zz-walked.ts", "src/zz-walked.ts"], roots: ["", "examples", "qa", "src", "test"] },
+      spelled: ["control.ts: identifier handOffTarget"],
+    });
+    return { roots, planted, spelled };
+  },
+  R12: async () => {
+    const planted = withPlantedTree(PAGE_PLANTS, base => {
+      const read = pageWalkIn(base).sort();
+      const listing = gitListedIn(base);
+      const pages = listing.filter(isPage);
+      const neither = PAGE_PLANTS.map(plant => plant.path).filter(path => !read.includes(path) && !pages.includes(path)).sort();
+      return { read, listed: pageListedIn(base), roots: pageRootsOf(listing, new Set(read)), neither };
+    });
+    // The residual is real: the line planted in a page no reading classifies is an unmarked mention.
+    const mention = outcomeOf("mention", [PAGE_PLANT_LINE]);
+    const read = ["NOTES-zz.txt", "README.md", "ZZ.MD", "docs/zz-notes.html"];
+    expect({ planted, mention }).toStrictEqual({
+      planted: { read, listed: [...read].sort(), roots: ["examples", "qa"], neither: ["NOTES", "zz.html"] }, mention: ["L:shipped"],
+    });
+    return { planted, mention };
+  },
   ...Object.fromEntries(
     CASES.map(entry => [
       entry.pin,
@@ -1061,7 +1491,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 
 describe("wb-pfxo.3 assembly-handoff census (RF-COMPOSITIONAL-ASSEMBLY-R4, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:4", "C:4", "D:4", "F:1", "M:15", "R:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:5", "B:4", "C:4", "D:4", "F:1", "M:15", "R:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );

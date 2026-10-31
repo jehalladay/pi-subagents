@@ -551,14 +551,14 @@
        {
         "id": "reactivefiber.render.preview",
         "effectClass": "read",
-        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+        "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
        }
       ],
       "injected": [
        {
         "id": "reactivefiber.render.preview",
         "effectClass": "read",
-        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+        "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
        }
       ],
       "reconcile": [

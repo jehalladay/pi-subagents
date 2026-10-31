@@ -1,0 +1,241 @@
+{
+  "schema_ref": {
+    "namespace": "graphpolicy.data.v1",
+    "hash": "sha256:f43017c2b463a5de92800ca1f50951b99ef1ca7b83edc7dde9baf7f54e9a55ce",
+    "version": "1.0.0"
+  },
+  "observation": {
+    "adapter": "synthetic.mechanicalworkflows",
+    "revisions": [
+      "mw-synthetic-rev-0001"
+    ],
+    "scope": "fixtures://synthetic/host-adapter/read-only",
+    "extraction": {
+      "generator": "host-adapter-fixture",
+      "synthetic": true
+    },
+    "budget": {
+      "max_entities": 64
+    },
+    "completeness": {
+      "can_execute": {
+        "coverage": 1,
+        "complete": true
+      },
+      "needs": {
+        "coverage": 1,
+        "complete": true
+      }
+    },
+    "slice": {
+      "kind": "snapshot"
+    }
+  },
+  "entities": [
+    {
+      "id": "agent-1",
+      "kind": "agent",
+      "features": {
+        "capacity": {
+          "status": "known",
+          "value": 1
+        }
+      }
+    },
+    {
+      "id": "agent-2",
+      "kind": "agent",
+      "features": {
+        "capacity": {
+          "status": "known",
+          "value": 1
+        }
+      }
+    },
+    {
+      "id": "task-1",
+      "kind": "task",
+      "features": {
+        "priority": {
+          "status": "known",
+          "value": 0.75
+        }
+      }
+    },
+    {
+      "id": "task-2",
+      "kind": "task",
+      "features": {
+        "priority": {
+          "status": "known",
+          "value": 0.5
+        }
+      }
+    },
+    {
+      "id": "task-3",
+      "kind": "task",
+      "features": {
+        "priority": {
+          "status": "unknown"
+        }
+      }
+    },
+    {
+      "id": "resource-gpu",
+      "kind": "resource",
+      "features": {
+        "units": {
+          "status": "known",
+          "value": 1
+        }
+      }
+    }
+  ],
+  "relations": [
+    {
+      "id": "exec-a1-t1",
+      "kind": "can_execute",
+      "features": {
+        "affinity": {
+          "status": "known",
+          "value": 0.875
+        }
+      },
+      "incidences": [
+        {
+          "id": "exec-a1-t1-w",
+          "participant": "agent-1",
+          "role": "worker"
+        },
+        {
+          "id": "exec-a1-t1-k",
+          "participant": "task-1",
+          "role": "work"
+        }
+      ]
+    },
+    {
+      "id": "exec-a1-t2",
+      "kind": "can_execute",
+      "features": {
+        "affinity": {
+          "status": "known",
+          "value": 0.625
+        }
+      },
+      "incidences": [
+        {
+          "id": "exec-a1-t2-w",
+          "participant": "agent-1",
+          "role": "worker"
+        },
+        {
+          "id": "exec-a1-t2-k",
+          "participant": "task-2",
+          "role": "work"
+        }
+      ]
+    },
+    {
+      "id": "exec-a2-t2",
+      "kind": "can_execute",
+      "features": {
+        "affinity": {
+          "status": "known",
+          "value": 0.75
+        }
+      },
+      "incidences": [
+        {
+          "id": "exec-a2-t2-w",
+          "participant": "agent-2",
+          "role": "worker"
+        },
+        {
+          "id": "exec-a2-t2-k",
+          "participant": "task-2",
+          "role": "work"
+        }
+      ]
+    },
+    {
+      "id": "exec-a2-t3",
+      "kind": "can_execute",
+      "features": {
+        "affinity": {
+          "status": "known",
+          "value": 0.25
+        }
+      },
+      "incidences": [
+        {
+          "id": "exec-a2-t3-w",
+          "participant": "agent-2",
+          "role": "worker"
+        },
+        {
+          "id": "exec-a2-t3-k",
+          "participant": "task-3",
+          "role": "work"
+        }
+      ]
+    },
+    {
+      "id": "need-task-1",
+      "kind": "needs",
+      "features": {},
+      "incidences": [
+        {
+          "id": "need-task-1-c",
+          "participant": "task-1",
+          "role": "consumer"
+        },
+        {
+          "id": "need-task-1-s",
+          "participant": "resource-gpu",
+          "role": "supply"
+        }
+      ]
+    },
+    {
+      "id": "need-task-2",
+      "kind": "needs",
+      "features": {},
+      "incidences": [
+        {
+          "id": "need-task-2-c",
+          "participant": "task-2",
+          "role": "consumer"
+        },
+        {
+          "id": "need-task-2-s",
+          "participant": "resource-gpu",
+          "role": "supply"
+        }
+      ]
+    },
+    {
+      "id": "need-task-3",
+      "kind": "needs",
+      "features": {},
+      "incidences": [
+        {
+          "id": "need-task-3-c",
+          "participant": "task-3",
+          "role": "consumer"
+        },
+        {
+          "id": "need-task-3-s",
+          "participant": "resource-gpu",
+          "role": "supply"
+        }
+      ]
+    }
+  ],
+  "candidates": {},
+  "digests": {
+    "source": "mw-synthetic-rev-0001",
+    "canonical": "graphpolicy.snapshot.c1:d821ba50282dee2e69381b6b089ce4eb2417d8836ec4a714ffbe92d107948b70"
+  }
+}

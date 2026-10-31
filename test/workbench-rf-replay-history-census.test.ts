@@ -27,12 +27,52 @@
  *  A, acceptance (c). A1 every input arm the SERVED native descriptor admits (registerNativeProviders; the rf descriptors selected
  *    by their reactivefiber:render permission, never by an id prefix; inputSchema oneOf {model, task} and {view, taskId}, the view
  *    arm with and without its optional model) spawns exactly one argv against a stand-in rf, each `context render ... --no-commit`
- *    and none naming replay; A2 the rf launch sites of src: every call or construction whose first argument is a literal (or a
- *    module-local const bound to one) naming the rf program, whatever its callee or binding, is exactly the provider's spawn (a src
- *    floor), with controls for bare, aliased, namespace, method, template, path and const launchers; A3 no string or template
- *    literal of any src module spells an rf replay verb, no array literal or argument list has "context" before "replay" (a flag
- *    between them, a module-local const resolved), and no literal of an rf launch module (the modules A2 finds) spells the word
- *    replay at all, so a push, a concat or a const composing the verb from a literal reds too.
+ *    and none naming replay; A2 the rf launch sites of src: every call or construction whose first argument reads as a literal
+ *    naming the rf program, whatever its callee or binding, is exactly the provider's spawn (a src floor). The literal is the
+ *    argument itself or a module-local const, let or var read through its initializer (wb-3l7x F1 and its PREP F2: every
+ *    declaration of the name at any depth, a cycle reading nothing), through parentheses, type assertions (as, satisfies, angle
+ *    brackets) and non-null marks, either operand of ?? or ||, either branch of a conditional, or the leading literal piece of a
+ *    concatenation or template (a span folded while it reads whole: a literal, a binding, or a fallback or conditional of them);
+ *    it names rf whole (a bare name or a path, an .exe or .cmd suffix included) or as the program word of a shell-command line's
+ *    first simple command (wb-bstx F1: `execSync("rf --json status")`), read with its quoting removed (single and double quotes
+ *    and their $-prefixed forms, backslashes, a backslash-newline joining the lines) and raw, so a backslash path separator stays
+ *    (wb-3l7x U1 M2: `C:\tools\rf.exe`, `.\rf`), after any opener (a subshell or group, !, if, while, until) and command prefix
+ *    (NAME=value assignments, a quoted value included, and redirections), every unquoted operator ending a word (wb-3l7x F2) while
+ *    a command or arithmetic substitution, a parameter expansion or a backquoted command stays inside the word it sits in (wb-3l7x
+ *    U1 M1: `RF_HOME=$(pwd) rf ...`): inside $(...) and ${...} its own nested brackets, quoted strings and backslash escapes never
+ *    close it, and a backquoted command ends at its first backquote that no backslash escapes (wb-kls1, the wb-3l7x gate's F4).
+ *    Beside that reading A2 keeps the landed one verbatim (landing 372: the literal through a const bound to a literal or a
+ *    template's text to its first span that is no literal, and the text's first whitespace word that is no NAME=value), so the
+ *    cut only adds kills to the landed census (wb-3l7x U1). Controls: bare, aliased, namespace, method, template, path and const
+ *    launchers, the shell line (plain, concatenated, templated, env-prefixed), the fallback, the conditional and the asserted
+ *    program, the const-bound shell lines (templated, concatenated, chained) and programs (fallback, asserted), the const and
+ *    conditional spans, the const cycle (0), the quoted (env value, program, double-quoted, $-quoted), escaped, subshell, grouped,
+ *    negated, conditioned, redirected, glued and commented shell lines, the substituted env values (command, arithmetic,
+ *    templated, const-bound, spaced, quoted, escaped, inside double quotes, backquoted, expanded), the backslash program paths
+ *    (absolute, relative, raw only), the landed reading's own kills (a later command after a NAME=value word, a template cut at
+ *    its first span), the let, var and compound-assigned shell lines, and one kill per claimed reading that the wb-3l7x gate's or
+ *    this seat's reader mutants found unpinned (wb-kls1, the gate's F3): every declaration of the name at any depth (a var in a
+ *    block, a let in a for-init, a nested second let, a var declared again), a let read through parentheses, satisfies, an
+ *    angle-bracket assertion and a non-null mark, either branch of its conditional and either operand of its || or ??, a let
+ *    span before the program, a span's leading piece, a construction, a spaced path read whole, a .cmd program, the $"..." quote,
+ *    the while and until openers, every redirection prefix (heredoc, tab-stripped heredoc, here-string, input, append,
+ *    read-write, both duplications, clobber, &> and &>>), a backslash-newline outside and inside double quotes, a program glued to
+ *    ;, &&, >, < or a closing parenthesis, and an escaped backquote inside a backquoted env value (F4), and one kill per claimed
+ *    reading the wb-kls1 gate's reader mutants found unpinned (wb-vfzd, that gate's F1 and F2): an escaped backslash right before
+ *    a backquoted command's closing backquote and right before a substitution's closing bracket, a let template's string-literal
+ *    span, and a parameter expansion nested inside ${...}, and one kill per claimed reading the wb-vfzd gate's reader mutants
+ *    found unpinned (wb-9heo, that gate's F1) or this seat's mutants of the same readings found unpinned beside them: inside
+ *    ${...} an escaped backslash right before its closing brace and a closing brace inside a double-quoted or a single-quoted
+ *    string, each with a word break inside the expansion (the kept landed reading masks their unbroken forms), and an escaped
+ *    closing brace; inside $(...) and inside ${...} an escaped opening bracket, an escaped single quote and an escaped double
+ *    quote, each with a word break inside the expansion; a let template's no-substitution template literal span, a let bound
+ *    to a no-substitution template literal, and a template span that is a ?? or a || fallback to a literal (the template
+ *    passed as the argument itself); A3 no string or template
+ *    literal of any src module
+ *    spells an rf replay verb (a template read with its literal and const spans folded in), no array literal or argument list
+ *    has "context" before "replay" (a flag between them, a module-local const resolved), and no literal of an rf launch module
+ *    (the modules A2 finds) spells the word replay at all, so a push, a concat or a const composing the verb from a literal reds
+ *    too.
  *  B, acceptance (a). B1 the measured refusal: command context.replay, ok false, result null, one error diagnostic
  *    RF_REPLAY_RECONSTRUCTION_UNAVAILABLE whose metadata is exactly {source_id}, and the measured exit 8 riding the roster; B2 the
  *    native typed refusal of a render refusing with it is CapabilityError unavailable "RF render refused: <code>", in one spawn of
@@ -45,11 +85,14 @@
  *    projection is unchanged when the diagnostic's metadata, message and hint are replaced by sentinels; B5 a stand-in rf that
  *    refuses the first spawn and would answer any later spawn with a full-shape live render still yields the refusal, no reading,
  *    exactly one spawn and fetch 0: neither a fresh render nor an owner fetch stands in for the replay result; B6 the static port
- *    census of the reader closure (the reader modules' transitive src imports): no network global as an identifier (a property name
- *    included) or an exact string literal, no network module as an exact string literal (a static, dynamic or required specifier,
- *    or a concatenation that keeps the module name whole), and child_process launchers, however bound (named, aliased, namespace,
- *    default, required,
- *    dynamically imported or import-equals; a module-local const program resolved), reach only "rf".
+ *    census of the reader closure (the reader modules' transitive src imports, its edges the static import and export
+ *    declarations, dynamic import() and require() calls and import-equals - a module-local const specifier resolved - while an
+ *    import() or require() whose specifier no literal spells is refused, wb-bstx F2; a scratch reader whose lazy import reaches
+ *    a fetching module and whose computed import is refused is walked end to end): no network global as an identifier (a
+ *    property name included) or an exact string literal, no network module as an exact string literal (a static, dynamic or
+ *    required specifier, or a concatenation that keeps the module name whole), and child_process launchers, however bound
+ *    (named, aliased, namespace, default, required, dynamically imported or import-equals; a module-local const program
+ *    resolved), reach only "rf".
  *  C, acceptance (b). C1 the native reader refuses the measured replay output (context.replay, ok true, outcome reproduced) as an
  *    unrecognized envelope in one spawn, no reading, fetch 0; C2 the reader adapter refuses a reading carrying it, so nothing is
  *    projected; C3 the registered reading of a deep copy of it equals a FRESH roster read byte for byte - its render_id, outcome,
@@ -57,7 +100,9 @@
  *    contract and workspaceRoot; C4 a live render whose one observation row was replayed (freshness reused) projects partial with
  *    tone unknown and a note naming the reused count, never complete or success, while the same render with the row captured at
  *    render projects complete, and no display string of either (titles, status texts, evidence references, notes) carries a
- *    freshness label (FRESH_LABELS); C5 no string or template literal of the reader modules spells a freshness label; C6 the quiet
+ *    freshness label (FRESH_LABELS: the fresh and current families, latest, newest, live, up to date or to the minute, real
+ *    time, the now phrases and most recent - wb-bstx F3 added newest, as of now and their kin); C5 no string or template
+ *    literal of the reader modules spells a freshness label (a template read with its literal and const spans folded in); C6 the quiet
  *    row of R-NODE-FRESHNESS: Pi's real ObservationProjection applies both C4 snapshots and holds each node at the freshness of the
  *    provider connection (observation.ts:718), the same for both, with the reused render's completeness partial.
  * NOT CLAIMED (the armed half, gated): a replay reader that labels replay output historical, names its federation receipt and
@@ -66,10 +111,30 @@
  * and root, the operation id and the refusal's source_id (B3, B4, C3).
  * RESIDUALS (named, each with a pinned quiet row): R-WITHHELD the native typed refusal and the adapter's projection carry the code
  * and withhold source_id with the producer's message and hint (quiet rows B2 and B4: no value named, sentinel invariance), so the
- * source_id rides only the registered reading (B3); R-COMPOSED a program name, verb, port name or label assembled at runtime from
- * parts - a call, a concatenation or a template that splits the word across literals, a property read, an import, a re-export or a
- * wrapper - is invisible to A2, A3, B6 and C5 (each one's `composed` control stays 0); R-UNLISTED a port outside the listed network globals, network modules and
- * child_process launchers (a worker, a native addon, process.binding) is not read by B6 (its `unlisted` control stays quiet);
+ * source_id rides only the registered reading (B3); R-COMPOSED a program name, verb, port name or label that no literal of its
+ * module spells - built by a call (a join, a wrapper's return value), split across a concatenation (inside a template span too),
+ * split by a template's non-literal expression, read from a property, bound by an import from another module (a re-export
+ * included), or expanded by the shell from a variable - or whose program position a template's non-literal expression opens
+ * (`${prefix} rf ...`, its leading piece read as that expression) or a shell parameter expansion fills, its default value
+ * included (`${RF_BIN:-rf} ...`, the word read as the expansion) is invisible to A2, A3, B6 and C5, and each scan pins one quiet
+ * control per member, each staying 0 (A2 and A3: `composed` the call, composedConcat, composedTemplate, composedProperty,
+ * composedImport, and A2's shell-reading members composedSpan, composedAfterSpan, composedShellVar and composedShellDefault,
+ * wb-3l7x; B6 and C5: `composed` the concatenation, composedCall, composedTemplate, composedProperty, composedImport); R-WRAPPED
+ * an rf launch whose program is a wrapper (a shell's -c line, env, or a builtin or keyword that runs its arguments: exec,
+ * command, time) or a later or nested command of a shell line (`cd /w && rf ...`, inside a subshell too, or a command
+ * substitution) is not an A2 site - except a later command whose every earlier word reads as NAME=value, which the kept landed
+ * reading takes (`x=1; rf ...`, control landedChained) - so its module is no A3 launch module (A3's verb scan still reads its
+ * literals; quiet controls wrappedShell, wrappedEnv, wrappedExec, wrappedCommand, wrappedTime, chained, chainedSubshell and
+ * nested stay 0); R-BOUND a literal that reaches an rf launch argument other than as the argument itself or a plain name's const,
+ * let or var initializer - through a destructuring pattern (an object or an array), a parameter (its default value included), an
+ * assignment after the declaration, a loop binding, a spread argument list or a template tag (String.raw) - is not read by A2, so
+ * its call is no A2 site and its module no A3 launch module (wb-3l7x PREP F2; quiet controls boundObject, boundArray,
+ * boundParameter, boundAssigned, boundLoop, boundSpread and boundTagged stay 0); R-UNLISTED a
+ * port outside the listed network globals, network modules and child_process launchers (a worker, a native addon,
+ * process.binding) is not read by B6 (its `unlisted`, `worker` and `addon` controls stay quiet); R-LOADER an edge loaded through
+ * a runtime-bound loader (a createRequire result, module.require) is neither followed nor refused by B6 (its edge controls
+ * aliasedLoader and moduleRequire stay followed [] and refused 0); R-VOCABULARY a freshness claim worded outside FRESH_LABELS (a synonym the
+ * list does not hold, such as "just rendered") is seen by neither C4 nor C5 (C5's `outside` control stays 0);
  * R-NODE-FRESHNESS the workbench projection gives every refreshed node its freshness from the provider connection state, never
  * from rf's row freshness, and the inspector displays it (src/ui/workflow-inspector.ts), so a live render holding a reused row
  * reaches the projection at the same freshness as a clean one, its reuse carried by completeness partial and the adapter's note
@@ -83,7 +148,7 @@
  * echo census) and wb-973.9 (the replayed-row demotion); the surfaces they share with this bead are re-measured here against this
  * bead's own fixture, never imported.
  *
- * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src is only read.
+ * Display paths added: none. Test-only: the stand-in rf and the B6 walk plant live in makeScratch scratch; src is only read.
  */
 import { chmodSync, type Dirent, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
@@ -128,10 +193,24 @@ const REPLAY_COMMAND = "context.replay";
 const REPLAY_VERB = /\bcontext[\s._-]+replay\b/i;
 /** The replay word itself: an argv word, or a literal anywhere in an rf launch module (A3). */
 const REPLAY_WORD = /\breplay\b/i;
-/** The freshness labels no Pi surface may give rf output (acceptance (b): "no fresh/current label"). */
-const FRESH_LABELS = /\b(?:fresh|current|currently|latest|live|up[\s_-]?to[\s_-]?date|real[\s_-]?time)\b/i;
+/** The freshness labels no Pi surface may give rf output (acceptance (b): "no fresh/current label"): the fresh and current
+ * families, latest and newest, live, up to date or to the minute, real time, the now phrases (as of, right and just now) and most
+ * recent. A claim worded outside the list is R-VOCABULARY. */
+const FRESH_LABELS =
+  /\b(?:fresh(?:er|est|ly)?|current|currently|latest|newest|live|up[\s_-]?to[\s_-]?date|up[\s_-]?to[\s_-]?the[\s_-]?(?:minute|moment|second)|real[\s_-]?time|as[\s_-]+of[\s_-]+now|(?:right|just)[\s_-]+now|most[\s_-]+recent(?:ly)?)\b/i;
 /** The program an rf launch names: "rf" itself, or a path ending in it. */
 const RF_PROGRAM = /(?:^|[\\/])rf(?:\.exe|\.cmd)?$/;
+/** A leading NAME=value environment assignment of a shell-command line; A2 reads the program after any of them. */
+const ENV_ASSIGNMENT = /^[A-Za-z_][A-Za-z0-9_]*=/;
+/** A shell operator at the start of a text: a control operator or a redirection, its io number included (wb-3l7x F2). */
+const SHELL_OPERATOR = /^(?:&&|\|\||;;|&>>|&>|\d*(?:<<-|<<<|<<|<>|<&|>&|>>|>\||<|>)|[()&|;])/;
+/** A redirection operator of a command prefix; the token after it is its target, never the program. */
+const SHELL_REDIRECTION = /^(?:&>>|&>|\d*(?:<<-|<<<|<<|<>|<&|>&|>>|>\||<|>))$/;
+/** What opens a command position before a shell line's first program: a subshell or a group, a negation, and the reserved words
+ * whose condition is a command list. A wrapper that runs its arguments (env, exec, command, time) is R-WRAPPED. */
+const SHELL_OPENERS: ReadonlySet<string> = new Set(["(", "{", "!", "if", "while", "until"]);
+/** The characters that end an unquoted shell word: whitespace and the operator characters. */
+const SHELL_BREAK = /[\s()&|;<>]/;
 /** The ports a network contact would need; none may appear in the reader closure (B6). */
 const NETWORK_GLOBALS = ["fetch", "WebSocket", "EventSource", "XMLHttpRequest"];
 const NETWORK_MODULE = /^(?:node:)?(?:net|http|https|http2|dns|tls|dgram)$|^(?:undici|ws)$/;
@@ -362,6 +441,245 @@ function literalOf(node: ts.Node | undefined, bindings: ReadonlyMap<string, stri
   if (ts.isIdentifier(node)) return bindings.get(node.text) ?? null;
   return null;
 }
+/** A template's text with each literal (or module-local const) span folded in. An unreadable span ends the text when `gap` is null
+ * (A2 reads a template's leading text only) and reads as `gap` otherwise (A3 and C5 read on past it). */
+function templateText(node: ts.TemplateExpression, bindings: ReadonlyMap<string, string>, gap: string | null): string {
+  let text = node.head.text;
+  for (const span of node.templateSpans) {
+    const piece = literalOf(span.expression, bindings) ?? gap;
+    if (piece === null) return text;
+    text += piece + span.literal.text;
+  }
+  return text;
+}
+/** A module's binding initializers by name: every `const`, `let` or `var NAME = <expression>` declaration, at any depth (A2 reads a
+ * launch argument's binding through them: wb-3l7x F1 for a const, its PREP F2 for a let or var; a later assignment is R-BOUND). */
+function bindingInitializers(source: ts.SourceFile): Map<string, ts.Expression[]> {
+  const initializers = new Map<string, ts.Expression[]>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && ts.isVariableDeclarationList(node.parent)) {
+      initializers.set(node.name.text, [...(initializers.get(node.name.text) ?? []), node.initializer]);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return initializers;
+}
+/** One reading of an rf launch argument: its text, and whether that text is the argument's whole value or only its leading piece
+ * (a concatenation's left operand, or a template cut at a span that does not read whole). */
+interface LaunchReading {
+  readonly text: string;
+  readonly whole: boolean;
+}
+/** Every reading an rf launch argument can take (A2): the argument itself or a module-local const, let or var read through its
+ * initializer (wb-3l7x F1 and its PREP F2: every declaration of the name, a cycle reading nothing), through parentheses, a type
+ * assertion or a non-null mark, either operand of ?? and ||, either branch of a conditional, the leftmost literal piece of a
+ * concatenation and a template's leading text, each span folded while it reads whole, so a shell line composed after its first
+ * word (`"rf context show " + id`) still names its program. */
+function launchReadingsOf(node: ts.Expression | undefined, initializers: ReadonlyMap<string, readonly ts.Expression[]>, resolving: ReadonlySet<string> = new Set()): LaunchReading[] {
+  if (node === undefined) return [];
+  if (ts.isStringLiteralLike(node)) return [{ text: node.text, whole: true }];
+  if (ts.isIdentifier(node)) {
+    if (resolving.has(node.text)) return [];
+    const inner = new Set([...resolving, node.text]);
+    return (initializers.get(node.text) ?? []).flatMap(initializer => launchReadingsOf(initializer, initializers, inner));
+  }
+  const read = (expression: ts.Expression): LaunchReading[] => launchReadingsOf(expression, initializers, resolving);
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node)) {
+    return read(node.expression);
+  }
+  if (ts.isConditionalExpression(node)) return [...read(node.whenTrue), ...read(node.whenFalse)];
+  if (ts.isBinaryExpression(node)) {
+    const operator = node.operatorToken.kind;
+    if (operator === ts.SyntaxKind.QuestionQuestionToken || operator === ts.SyntaxKind.BarBarToken) return [...read(node.left), ...read(node.right)];
+    if (operator === ts.SyntaxKind.PlusToken) return read(node.left).map(reading => ({ text: reading.text, whole: false }));
+  }
+  if (ts.isTemplateExpression(node)) {
+    let readings: LaunchReading[] = [{ text: node.head.text, whole: true }];
+    for (const span of node.templateSpans) {
+      const pieces = read(span.expression);
+      readings = readings.flatMap((reading): LaunchReading[] => {
+        if (!reading.whole) return [reading];
+        if (pieces.length === 0) return [{ text: reading.text, whole: false }];
+        return pieces.map(piece => (piece.whole ? { text: reading.text + piece.text + span.literal.text, whole: true } : { text: reading.text + piece.text, whole: false }));
+      });
+    }
+    return readings;
+  }
+  return [];
+}
+/** The index just past the shell expansion that opens at `at` - a command substitution $(...), an arithmetic expansion $((...)), a
+ * parameter expansion ${...} or a backquoted command - or `at` itself when none opens there (wb-3l7x U1: the expansion stays inside
+ * the word it sits in, so `RF_HOME=$(pwd) rf ...` assigns before its program). Inside $(...) and ${...} a nested pair of its own
+ * brackets, a quoted string (quotedEnd) and a backslash escape never close it; a backquoted command ends at its next backquote that
+ * no backslash escapes (wb-kls1, the wb-3l7x gate's F4: an env value holding a backquoted command with an escaped backquote inside,
+ * the gate's G22-O08, still prefixes its program); an unclosed expansion runs to the end of the text. */
+function expansionEnd(text: string, at: number): number {
+  if (text.charAt(at) === "`") {
+    let end = at + 1;
+    while (end < text.length && text.charAt(end) !== "`") end += text.charAt(end) === "\\" ? 2 : 1;
+    return Math.min(end + 1, text.length);
+  }
+  const open = text.charAt(at + 1);
+  if (text.charAt(at) !== "$" || (open !== "(" && open !== "{")) return at;
+  const close = open === "(" ? ")" : "}";
+  let depth = 1;
+  let end = at + 2;
+  while (end < text.length && depth > 0) {
+    const char = text.charAt(end);
+    if (char === "'" || char === '"') {
+      end = quotedEnd(text, end);
+      continue;
+    }
+    if (char === open) depth += 1;
+    if (char === close) depth -= 1;
+    end += char === "\\" ? 2 : 1;
+  }
+  return Math.min(end, text.length);
+}
+/** The index just past the quoted string that opens at `at`: a single-quoted string ends at its next single quote, a double-quoted
+ * one at its next double quote that no backslash escapes; an unclosed quote runs to the end of the text. */
+function quotedEnd(text: string, at: number): number {
+  const quote = text.charAt(at);
+  let end = at + 1;
+  while (end < text.length && text.charAt(end) !== quote) end += quote === '"' && text.charAt(end) === "\\" ? 2 : 1;
+  return Math.min(end + 1, text.length);
+}
+interface ShellToken {
+  readonly raw: string;
+  readonly value: string;
+  readonly operator: boolean;
+}
+/** A shell line's tokens with its quoting removed (wb-3l7x F2): single quotes, double quotes (inside them a backslash escapes $, `,
+ * ", \ and a newline), their $-prefixed forms ($'...' and $"...") and a backslash outside them (a backslash-newline joins the
+ * lines); every unquoted operator is a token of its own and ends the word before it, and a # that starts a word comments out the
+ * rest of its line. An expansion (expansionEnd), quoted or not, is kept verbatim inside its word (wb-3l7x U1). */
+function shellTokens(text: string): ShellToken[] {
+  const tokens: ShellToken[] = [];
+  let at = 0;
+  while (at < text.length) {
+    const char = text.charAt(at);
+    if (/\s/.test(char)) {
+      at += 1;
+      continue;
+    }
+    if (char === "#") {
+      const end = text.indexOf("\n", at);
+      at = end < 0 ? text.length : end;
+      continue;
+    }
+    const operator = SHELL_OPERATOR.exec(text.slice(at));
+    if (operator !== null) {
+      tokens.push({ raw: operator[0], value: operator[0], operator: true });
+      at += operator[0].length;
+      continue;
+    }
+    let raw = "";
+    let value = "";
+    while (at < text.length && !SHELL_BREAK.test(text.charAt(at))) {
+      const next = text.charAt(at);
+      const expansion = expansionEnd(text, at);
+      if (expansion > at) {
+        raw += text.slice(at, expansion);
+        value += text.slice(at, expansion);
+        at = expansion;
+      } else if (next === "\\") {
+        const escaped = text.charAt(at + 1);
+        raw += next + escaped;
+        if (escaped !== "\n") value += escaped;
+        at += 2;
+      } else if (next === "$" && (text.charAt(at + 1) === "'" || text.charAt(at + 1) === '"')) {
+        raw += next;
+        at += 1;
+      } else if (next === "'") {
+        const end = text.indexOf("'", at + 1);
+        const close = end < 0 ? text.length : end;
+        raw += text.slice(at, close + 1);
+        value += text.slice(at + 1, close);
+        at = close + 1;
+      } else if (next === '"') {
+        raw += next;
+        at += 1;
+        while (at < text.length && text.charAt(at) !== '"') {
+          const inner = text.charAt(at);
+          const escaped = text.charAt(at + 1);
+          const nested = expansionEnd(text, at);
+          if (nested > at) {
+            raw += text.slice(at, nested);
+            value += text.slice(at, nested);
+            at = nested;
+          } else if (inner === "\\" && /[$`"\\\n]/.test(escaped)) {
+            raw += inner + escaped;
+            if (escaped !== "\n") value += escaped;
+            at += 2;
+          } else {
+            raw += inner;
+            value += inner;
+            at += 1;
+          }
+        }
+        raw += text.charAt(at);
+        at += 1;
+      } else {
+        raw += next;
+        value += next;
+        at += 1;
+      }
+    }
+    tokens.push({ raw, value, operator: false });
+  }
+  return tokens;
+}
+/** The program word of a shell line's first simple command (wb-3l7x F2): past every opener (SHELL_OPENERS) and command prefix (a
+ * NAME=value assignment, its value quoted, substituted or expanded or not, or a redirection and its target), the next word's token
+ * (its raw text and its value with the quoting removed); null when an operator ends the command first. */
+function shellProgramOf(text: string): ShellToken | null {
+  const tokens = shellTokens(text);
+  let at = 0;
+  while (at < tokens.length) {
+    const token = tokens[at];
+    if (token === undefined) break;
+    at += 1;
+    if (SHELL_OPENERS.has(token.raw) || (!token.operator && ENV_ASSIGNMENT.test(token.raw))) continue;
+    if (!token.operator) return token;
+    if (!SHELL_REDIRECTION.test(token.raw)) return null;
+    at += 1;
+  }
+  return null;
+}
+/** The programs a launch text can name: the text whole (a bare name or a path) and the program word of its first simple command
+ * read as a shell-command line (shellProgramOf), with its quoting removed and raw, so a backslash path separator stays (wb-3l7x U1:
+ * `C:\tools\rf.exe`, `.\rf`). */
+function programsOf(text: string): string[] {
+  const program = shellProgramOf(text);
+  return program === null ? [text] : [text, program.value, program.raw];
+}
+/** The landed A2 reading (landing 372), kept verbatim beside launchReadingsOf so A2 only adds kills to the landed census (wb-3l7x
+ * U1): every literal text an rf launch argument reads as - the argument itself or a const bound to a literal, through parentheses,
+ * a type assertion or a non-null mark, either operand of ?? and ||, either branch of a conditional, a concatenation's left operand
+ * and a template's text up to its first span that is no literal (templateText). */
+function launchTextsOf(node: ts.Expression | undefined, bindings: ReadonlyMap<string, string>): string[] {
+  if (node === undefined) return [];
+  const literal = literalOf(node, bindings);
+  if (literal !== null) return [literal];
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node)) {
+    return launchTextsOf(node.expression, bindings);
+  }
+  if (ts.isConditionalExpression(node)) return [...launchTextsOf(node.whenTrue, bindings), ...launchTextsOf(node.whenFalse, bindings)];
+  if (ts.isBinaryExpression(node)) {
+    const operator = node.operatorToken.kind;
+    if (operator === ts.SyntaxKind.QuestionQuestionToken || operator === ts.SyntaxKind.BarBarToken) return [...launchTextsOf(node.left, bindings), ...launchTextsOf(node.right, bindings)];
+    if (operator === ts.SyntaxKind.PlusToken) return launchTextsOf(node.left, bindings);
+  }
+  if (ts.isTemplateExpression(node)) return [templateText(node, bindings, null)];
+  return [];
+}
+/** The landed reading's programs of a launch text (landing 372's programsOf, kept verbatim): the text whole and its first
+ * whitespace word that is no NAME=value assignment. */
+function firstWordsOf(text: string): string[] {
+  const first = text.trim().split(/\s+/).find(word => !ENV_ASSIGNMENT.test(word));
+  return first === undefined ? [text] : [text, first];
+}
 
 const oldPath = process.env.PATH;
 const scratches: string[] = [];
@@ -511,16 +829,19 @@ function armsOf(schema: unknown): string[][] {
   return schema.oneOf.map((arm: unknown) => (isObject(arm) && Array.isArray(arm.required) ? arm.required.map(String) : []));
 }
 
-/** One module's rf launch sites: every call or construction whose first argument is a literal, or a const bound to one, naming the
- * rf program. */
+/** One module's rf launch sites: every call or construction whose first argument reads as a literal (launchReadingsOf) naming the
+ * rf program whole or as the program word of a shell-command line's first simple command (programsOf), or as the landed reading
+ * reads it (launchTextsOf and firstWordsOf, wb-3l7x U1). */
 function rfLaunchSites(fileName: string, text: string): string[] {
   const source = sourceOf(fileName, text);
   const bindings = constStrings(source);
+  const initializers = bindingInitializers(source);
   const sites: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node) || ts.isNewExpression(node)) {
-      const program = literalOf(node.arguments?.[0], bindings);
-      if (program !== null && RF_PROGRAM.test(program)) sites.push(`${fileName}: ${node.expression.getText(source)}`);
+      const first = node.arguments?.[0];
+      const programs = [...launchReadingsOf(first, initializers).flatMap(reading => programsOf(reading.text)), ...launchTextsOf(first, bindings).flatMap(firstWordsOf)];
+      if (programs.some(program => RF_PROGRAM.test(program))) sites.push(`${fileName}: ${node.expression.getText(source)}`);
     }
     ts.forEachChild(node, visit);
   };
@@ -561,7 +882,7 @@ function scanReplay(fileName: string, text: string, launchModule: boolean): Repl
     }
     if (ts.isTemplateExpression(node)) {
       const parts = [node.head.text, ...node.templateSpans.map(span => span.literal.text)];
-      if (REPLAY_VERB.test(parts.join(" "))) literals.push(`${fileName}: ${parts.join("<expr>")}`);
+      if (REPLAY_VERB.test(parts.join(" ")) || REPLAY_VERB.test(templateText(node, bindings, " "))) literals.push(`${fileName}: ${parts.join("<expr>")}`);
       if (launchModule && parts.some(part => REPLAY_WORD.test(part))) words.push(`${fileName}: ${parts.join("<expr>")}`);
     }
     ts.forEachChild(node, visit);
@@ -575,24 +896,31 @@ interface PortScan {
   readonly modules: string[];
   readonly launches: string[];
   readonly local: string[];
+  readonly opaque: string[];
+}
+/** True for a module load spelled as a call: `import(...)` or `require(...)`. */
+function isLoader(call: ts.CallExpression): boolean {
+  return call.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(call.expression) && call.expression.text === "require");
 }
 /** True for `require("node:child_process")` and `[await] import("node:child_process")`. */
 function loadsChildProcess(node: ts.Expression): boolean {
   const call = ts.isAwaitExpression(node) ? node.expression : node;
   if (!ts.isCallExpression(call)) return false;
   const first = call.arguments[0];
-  const loader = call.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(call.expression) && call.expression.text === "require");
-  return loader && first !== undefined && ts.isStringLiteralLike(first) && CHILD_PROCESS.test(first.text);
+  return isLoader(call) && first !== undefined && ts.isStringLiteralLike(first) && CHILD_PROCESS.test(first.text);
 }
 /** One module's ports: every identifier (a property name included) or exact string literal naming a network global, every exact
  * string literal naming a network module, the program of every child_process launcher call however the launcher is bound (named,
- * aliased, namespace, default or required; "<composed>" when the program is not a literal), and its relative import specifiers. */
+ * aliased, namespace, default or required; "<composed>" when the program is not a literal), its relative edges (static import
+ * and export declarations, import() and require() calls whose specifier is a literal or a module-local const, import-equals) and
+ * its opaque loads (an import() or require() whose specifier no literal spells; B6 refuses them). */
 function scanPorts(fileName: string, text: string): PortScan {
   const source = sourceOf(fileName, text);
   const names: string[] = [];
   const modules: string[] = [];
   const launches: string[] = [];
   const local: string[] = [];
+  const opaque: string[] = [];
   const bound = new Map<string, string>();
   const spaces = new Set<string>();
   const bindings = constStrings(source);
@@ -637,44 +965,55 @@ function scanPorts(fileName: string, text: string): PortScan {
       if (node.text.startsWith(".") && (ts.isImportDeclaration(node.parent) || ts.isExportDeclaration(node.parent))) local.push(node.text);
     }
     if (ts.isCallExpression(node) && launcherOf(node.expression) !== undefined) launches.push(literalOf(node.arguments[0], bindings) ?? "<composed>");
+    if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteralLike(node.moduleReference.expression) &&
+      node.moduleReference.expression.text.startsWith(".")) local.push(node.moduleReference.expression.text);
+    if (ts.isCallExpression(node) && isLoader(node)) {
+      const specifier = literalOf(node.arguments[0], bindings);
+      if (specifier === null) opaque.push(`${fileName}: ${node.getText(source)}`);
+      else if (specifier.startsWith(".")) local.push(specifier);
+    }
     ts.forEachChild(node, visit);
   };
   visit(source);
-  return { names, modules, launches, local };
+  return { names, modules, launches, local, opaque };
 }
 
-/** The reader modules' transitive src import closure, each module's ports merged. */
-function readerClosure(): { modules: string[]; unresolved: string[]; ports: PortScan } {
+/** The transitive import closure of `entries` below `root` (by default the reader modules of this repository's src), each module's
+ * ports and opaque loads merged. */
+function readerClosure(root: string = REPO, entries: readonly string[] = READER_MODULES): { modules: string[]; unresolved: string[]; ports: PortScan } {
   const seen = new Set<string>();
   const unresolved: string[] = [];
-  const merged: PortScan = { names: [], modules: [], launches: [], local: [] };
-  const queue = READER_MODULES.map(module => join(REPO, module));
+  const merged: PortScan = { names: [], modules: [], launches: [], local: [], opaque: [] };
+  const queue = entries.map(module => join(root, module));
   while (queue.length > 0) {
     const file = queue.shift();
     if (file === undefined || seen.has(file)) continue;
     seen.add(file);
-    const scan = scanPorts(relative(REPO, file), textOf(file));
+    const scan = scanPorts(relative(root, file), textOf(file));
     merged.names.push(...scan.names);
     merged.modules.push(...scan.modules);
     merged.launches.push(...scan.launches);
+    merged.opaque.push(...scan.opaque);
     for (const specifier of scan.local) {
       const target = join(dirname(file), specifier.replace(/\.js$/, ".ts"));
       if (existsSync(target)) queue.push(target);
-      else unresolved.push(`${relative(REPO, file)}: ${specifier}`);
+      else unresolved.push(`${relative(root, file)}: ${specifier}`);
     }
   }
-  return { modules: [...seen].map(file => relative(REPO, file)).sort(), unresolved, ports: merged };
+  return { modules: [...seen].map(file => relative(root, file)).sort(), unresolved, ports: merged };
 }
 
-/** One module's freshness labels: a string or template literal spelling one. */
+/** One module's freshness labels: a string or template literal spelling one (a template read with its literal and const spans
+ * folded in). */
 function scanLabels(fileName: string, text: string): string[] {
   const source = sourceOf(fileName, text);
+  const bindings = constStrings(source);
   const hits: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isStringLiteralLike(node) && FRESH_LABELS.test(node.text)) hits.push(`${fileName}: ${node.text}`);
     if (ts.isTemplateExpression(node)) {
       const parts = [node.head.text, ...node.templateSpans.map(span => span.literal.text)];
-      if (parts.some(part => FRESH_LABELS.test(part))) hits.push(`${fileName}: ${parts.join("<expr>")}`);
+      if (parts.some(part => FRESH_LABELS.test(part)) || FRESH_LABELS.test(templateText(node, bindings, " "))) hits.push(`${fileName}: ${parts.join("<expr>")}`);
     }
     ts.forEachChild(node, visit);
   };
@@ -725,6 +1064,186 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       path: control('execFileSync("/usr/local/bin/rf", []);'),
       constProgram: control('const program = "rf"; spawn(program, []);'),
       composed: control('const program = ["r", "f"].join(""); spawn(program, []);'),
+      // wb-bstx F1: a shell-command line names its program first (after any NAME=value assignments), and the literal-visible
+      // readings of an argument (a fallback, a conditional, an asserted literal) name it too.
+      shell: control('execSync("rf --json status");'),
+      shellConcat: control('exec("rf context show " + id);'),
+      shellTemplate: control(["execSync(`rf --workspace $", "{root} --json status`);"].join("")),
+      shellEnv: control('execSync("RF_HOME=/w rf --json status");'),
+      fallback: control('spawn(process.env.RF_BIN ?? "rf", []);'),
+      conditional: control('spawn(windows ? "rf.exe" : "rf", []);'),
+      asserted: control('spawn(("rf" as string), []);'),
+      // wb-3l7x F1: an argument bound to a module-local const is read through the const's initializer, so a const bound to a
+      // template or concatenation shell line (the gate's G6-01 and G6-02 plants), a fallback, an asserted literal or another const
+      // names its program as the expression passed directly does; a template span folds while it reads whole; a cycle reads nothing.
+      constShellTemplate: control(["const CMD = `rf --workspace $", "{process.cwd()} --json status`; execSync(CMD);"].join("")),
+      constShellConcat: control('const CMD = "rf --json status " + String(process.pid); execSync(CMD);'),
+      constFallback: control('const program = process.env.RF_BIN ?? "rf"; spawn(program, []);'),
+      constAsserted: control('const program = "rf" as const; spawn(program, []);'),
+      constChain: control(["const BASE = `rf --workspace $", "{root}`; const CMD = BASE; execSync(CMD);"].join("")),
+      constSpan: control(['const BIN = process.env.RF_BIN ?? "rf"; execSync(`$', "{BIN} --json status`);"].join("")),
+      conditionalSpan: control(['execSync(`$', '{windows ? "rf.exe" : "rf"} --json status`);'].join("")),
+      constCycle: control("const a = b; const b = a; spawn(a, []);"),
+      // wb-3l7x F2: the shell line's first simple command is read with shell quoting removed, after any opener and command prefix
+      // (the gate's G6-05, G6-06 and G6-11 plants first), and an unquoted operator ends a word.
+      shellQuotedEnv: control(`execSync('RF_HOME="/a b" rf --json status');`),
+      shellQuotedProgram: control(`execSync("'rf' --json status");`),
+      shellSubshell: control('execSync("(rf --json status)");'),
+      shellDoubleQuoted: control(`execSync('"rf" --json status');`),
+      shellEscaped: control('execSync("r\\\\f --json status");'),
+      shellGroup: control('execSync("{ rf --json status; }");'),
+      shellNegated: control('execSync("! rf --json status");'),
+      shellCondition: control('execSync("if rf --json status; then exit 0; fi");'),
+      shellRedirected: control('execSync("2>/dev/null rf --json status");'),
+      shellGlued: control('execSync("rf|jq .result");'),
+      shellComment: control('execSync("# status\\nrf --json status");'),
+      shellAnsiQuoted: control(`execSync("$'rf' --json status");`),
+      // wb-3l7x U1 (the cut #1 refusal): a command or arithmetic substitution, a parameter expansion or a backquoted command stays
+      // inside the word it sits in, so an env value holding one still prefixes the program (M1: the gate's G2-R1, G2-R3, G2-R10
+      // and G2-R11 plants first, then its spaced, quoted, escaped, backquoted and expanded kin), and the program word is read raw
+      // as well as unquoted, so a backslash path separator stays (M2: the gate's G2-R2 and G2-R6 plants, then a raw-only path).
+      shellSubstituted: control('execSync("RF_HOME=$(pwd) rf --json status");'),
+      shellArithmetic: control('execSync("RF_N=$((1+1)) rf --json status");'),
+      shellSubstitutedTemplate: control(["execSync(`RF_ROOT=$(pwd) rf --workspace $", "{process.cwd()} --json status`);"].join("")),
+      constShellSubstituted: control('const RF_CMD = "RF_HOME=$(pwd) rf --json status"; execSync(RF_CMD);'),
+      shellSubstitutedSpaced: control('execSync("RF_HOME=$(pwd -P) rf --json status");'),
+      shellArithmeticSpaced: control('execSync("RF_N=$(( 1 + 1 )) rf --json status");'),
+      shellSubstitutedQuoted: control(`execSync("RF_HOME=$(echo \\")\\" ')' \\"\\\\\\")\\") rf --json status");`),
+      shellSubstitutedEscaped: control('execSync("RF_HOME=$(echo \\\\)) rf --json status");'),
+      shellQuotedSubstitution: control(`execSync('RF_HOME="$(echo "a b")" rf --json status');`),
+      shellBackquoted: control('execSync("RF_HOME=`pwd -P` rf --json status");'),
+      shellExpanded: control(['execSync("RF_HOME=$', '{A:-/a b} rf --json status");'].join("")),
+      shellBackslashPath: control('execSync("C:\\\\tools\\\\rf.exe --json status");'),
+      shellBackslashRelative: control('execSync(".\\\\rf --json status");'),
+      shellRawPath: control('execSync("! .\\\\rf --json status");'),
+      // wb-3l7x U1: the landed reading is kept beside the shell reading, so its kills stay: a later command after a NAME=value
+      // word (`x=1; rf`, the gate's G2-R8) and a template cut at its first span that is no literal (`rf$` + `{...}`).
+      landedChained: control('execSync("x=1; rf --json status");'),
+      landedSpanCut: control(["spawn(`rf$", '{windows ? "x" : "y"}`, []);'].join("")),
+      // wb-3l7x PREP F2: a let or var is read through its initializer as a const is (the gate's G2-L1, G2-L2 and G2-L8 plants).
+      letShellLine: control('let CMD = "rf --json status"; execSync(CMD);'),
+      varShellLine: control('var CMD = "rf --json status"; execSync(CMD);'),
+      letCompound: control('let cmd = "rf --json"; cmd += " status"; execSync(cmd);'),
+      // wb-kls1 (R694 follow-up of the wb-3l7x gate's F3): one kill control per claimed reading that no control pinned, so an
+      // edit narrowing that reading reds A2; each is read by the cut #2 reading alone (launchReadingsOf and the shell reading),
+      // except the construction and the .cmd program, read through what both readings share (rfLaunchSites, RF_PROGRAM). Every
+      // declaration of the name at any depth (the gate's K02, K04, K54 and K55 plants first), a let read through parentheses,
+      // satisfies, an angle-bracket assertion and a non-null mark (K56), either branch of a conditional (K57) and either operand
+      // of || and ??, a let span before the program (K58), a span whose leading piece reads, a construction, a path read whole
+      // and .cmd.
+      varInBlock: control('if (ci) { var CMD = "rf --json status"; } execSync(CMD);'),
+      letForInit: control('for (let CMD = "rf --json status"; ; ) { execSync(CMD); break; }'),
+      letSecondNested: control('let CMD = "echo"; if (ci) { let CMD = "rf --json status"; execSync(CMD); }'),
+      varSecond: control('var CMD = "rf --json status"; execSync(CMD); var CMD = "echo";'),
+      letParenthesized: control('let CMD = ("rf --json status"); execSync(CMD);'),
+      letSatisfies: control('let CMD = "rf --json status" satisfies string; execSync(CMD);'),
+      letTypeAsserted: control('let CMD = <string>"rf --json status"; execSync(CMD);'),
+      letNonNull: control('let CMD = "rf --json status"; execSync(CMD!);'),
+      letConditionalTrue: control('let CMD = ci ? "rf --json status" : "true"; execSync(CMD);'),
+      letConditionalFalse: control('let CMD = ci ? "true" : "rf --json status"; execSync(CMD);'),
+      letOrRight: control('let P = process.env.RF_BIN || "rf"; spawn(P, []);'),
+      letOrLeft: control('let P = "rf" || process.env.RF_BIN; spawn(P, []);'),
+      letCoalesceLeft: control('let P = "rf" ?? process.env.RF_BIN; spawn(P, []);'),
+      letSpanPrefix: control(['let E = "A=1"; execSync(`$', "{E} rf --json status`);"].join("")),
+      spanLeadingPiece: control(["execSync(`$", '{"rf --json " + flag} status`);'].join("")),
+      constructed: control('new Launcher("rf", ["--json", "status"]);'),
+      letSpacedPath: control('let BIN = "/opt/my tools/rf"; spawn(BIN, []);'),
+      cmdProgram: control('spawn("rf.cmd", []);'),
+      // wb-kls1, the shell reading: the $"..." quote, the while and until openers (K26, K59), every redirection prefix (the
+      // heredoc K23 and its tab-stripping form with a spaced delimiter, the here-string, input, append, read-write, both
+      // duplications, clobber, &> K24 and &>>), a backslash-newline joining the program word outside double quotes (K27) and
+      // inside them, and each word-ending operator glued to the program (;, &&, >, < and a closing parenthesis).
+      shellLocaleQuoted: control(`execSync('$"rf" --json status');`),
+      shellWhile: control('execSync("while rf --json status; do sleep 1; done");'),
+      shellUntil: control('execSync("until rf --json status; do sleep 1; done");'),
+      shellHeredoc: control('execSync("<<EOF rf --json status\\nEOF");'),
+      shellHeredocTabbed: control('execSync("<<- EOF rf --json status\\nEOF");'),
+      shellHereString: control('execSync("<<<input rf --json status");'),
+      shellInput: control('execSync("<input rf --json status");'),
+      shellAppended: control('execSync(">>log rf --json status");'),
+      shellReadWrite: control('execSync("<>file rf --json status");'),
+      shellInputDup: control('execSync("<&0 rf --json status");'),
+      shellOutputDup: control('execSync(">&2 rf --json status");'),
+      shellClobber: control('execSync(">|out rf --json status");'),
+      shellAllRedirected: control('execSync("&>/dev/null rf --json status");'),
+      shellAllAppended: control('execSync("&>>log rf --json status");'),
+      shellContinued: control('execSync("r\\\\\\nf --json status");'),
+      shellQuotedContinued: control(`execSync('"r\\\\\\nf" --json status');`),
+      shellGluedSemicolon: control('execSync("rf;echo done");'),
+      shellGluedAnd: control('execSync("rf&&echo ok");'),
+      shellGluedOutput: control('execSync("rf>out");'),
+      shellGluedInput: control('execSync("rf<in");'),
+      shellGluedClose: control('execSync("(rf)");'),
+      // wb-kls1 (the wb-3l7x gate's F4): a backslash-escaped backquote inside a backquoted env value never closes it (G22-O08).
+      shellBackquotedEscaped: control('execSync("A=`echo \\\\`x\\\\`` rf --json status");'),
+      // wb-vfzd (R694 follow-up of the wb-kls1 gate's F1 and F2): one kill control per claimed reading a gate reader mutant left
+      // unpinned. A backslash escapes whatever character follows it, so an escaped backslash right before a backquoted command's
+      // closing backquote (GP22) or right before a substitution's closing bracket (GP40) never escapes that close; a let
+      // initializer's template folds a string-literal span in (GP42; the same template passed as the argument itself is masked
+      // by the kept landed templateText reading, so the control reads it through a binding); and a parameter expansion nested
+      // inside ${...} never closes it (GP43).
+      shellBackquotedEscapedBackslash: control('execSync("A=`echo \\\\\\\\` rf --json status");'),
+      shellSubstitutedEscapedBackslash: control('execSync("RF_HOME=$(echo \\\\\\\\) rf --json status");'),
+      letLiteralSpan: control(["let CMD = `$", '{"rf"} --json status`; execSync(CMD);'].join("")),
+      shellExpandedNested: control(['execSync("RF_HOME=$', '{A:-$', '{B} x} rf --json status");'].join("")),
+      // wb-9heo (R694 follow-up of the wb-vfzd gate's F1): one kill control per claimed reading a gate reader mutant left
+      // unpinned. Inside ${...} a backslash escapes whatever character follows it and a quoted string is skipped whole, so an
+      // escaped backslash right before the closing brace (M01), an escaped closing brace (M08) and a closing brace inside a
+      // double-quoted (M07) or a single-quoted string never close it; the escaped backslash and both quoted closes break a word
+      // inside the expansion, since the kept landed reading (firstWordsOf) masks their unbroken forms. A let initializer's
+      // template folds a no-substitution template literal span in (M05), and a let bound to a no-substitution template literal
+      // reads as that literal (M06); the kept landed reading masks both forms passed as the argument itself, so each control
+      // reads it through a let binding.
+      shellExpandedEscapedBackslash: control(['execSync("RF_HOME=$', '{A:-x \\\\\\\\} rf --json status");'].join("")),
+      shellExpandedEscapedClose: control(['execSync("RF_HOME=$', '{A:-\\\\} x} rf --json status");'].join("")),
+      shellExpandedQuotedClose: control(["execSync('RF_HOME=$", `{A:-"}" x} rf --json status');`].join("")),
+      shellExpandedSingleQuotedClose: control(['execSync("RF_HOME=$', `{A:-'}' x} rf --json status");`].join("")),
+      letTemplateLiteralSpan: control(["let CMD = `$", "{`rf`} --json status`; execSync(CMD);"].join("")),
+      letTemplateLiteralProgram: control("let P = `rf`; spawn(P, []);"),
+      // wb-9heo, beside the gate's members: the same readings' members this seat's mutants found unpinned. Inside $(...) and
+      // ${...} a backslash escapes an opening bracket and a quote as it escapes any character, so neither nests nor opens a
+      // quoted string (one control per bracket and character, each with a word break inside the expansion); and a template
+      // span that is a ?? or a || fallback to a literal folds the literal in (the template passed as the argument itself,
+      // whose text the kept landed reading cuts at that span).
+      shellSubstitutedEscapedOpen: control('execSync("RF_HOME=$(echo \\\\( x) rf --json status");'),
+      shellExpandedEscapedOpen: control(['execSync("RF_HOME=$', '{A:-\\\\{ x} rf --json status");'].join("")),
+      shellSubstitutedEscapedSingleQuote: control(`execSync("RF_HOME=$(echo \\\\' x) rf --json status");`),
+      shellExpandedEscapedSingleQuote: control(['execSync("RF_HOME=$', `{A:-\\\\' x} rf --json status");`].join("")),
+      shellSubstitutedEscapedDoubleQuote: control('execSync("RF_HOME=$(echo \\\\\\" x) rf --json status");'),
+      shellExpandedEscapedDoubleQuote: control(['execSync("RF_HOME=$', '{A:-\\\\\\" x} rf --json status");'].join("")),
+      coalesceSpan: control(['execSync(`$', '{process.env.RF_BIN ?? "rf"} --json status`);'].join("")),
+      orSpan: control(['execSync(`$', '{process.env.RF_BIN || "rf"} --json status`);'].join("")),
+      // R-WRAPPED quiet rows: rf behind a wrapper program or after another shell command is no A2 site.
+      wrappedShell: control('spawn("sh", ["-c", "rf --json status"]);'),
+      wrappedEnv: control('spawn("env", ["rf", "--json", "status"]);'),
+      chained: control('execSync("cd /w && rf --json status");'),
+      // wb-3l7x: R-WRAPPED members named with the shell reading - a builtin or keyword that runs its arguments, a later command
+      // inside a subshell, and a nested (substituted) command.
+      wrappedExec: control('execSync("exec rf --json status");'),
+      wrappedCommand: control('execSync("command rf --json status");'),
+      wrappedTime: control('execSync("time rf --json status");'),
+      chainedSubshell: control('execSync("(cd /w && rf --json status)");'),
+      nested: control('execSync("echo $(rf --json status)");'),
+      // R-COMPOSED quiet rows, one per member (`composed` above is the call member).
+      composedConcat: control('spawn("r" + "f", []);'),
+      composedTemplate: control(["spawn(`r$", "{suffix}`, []);"].join("")),
+      composedProperty: control("spawn(BINARIES.rf, []);"),
+      composedImport: control('import { RF_BIN } from "./process-env.js"; spawn(RF_BIN, []);'),
+      // wb-3l7x: R-COMPOSED members of the shell reading - a concatenation split inside a template span, a program position a
+      // template's non-literal expression opens, and a program the shell expands from a variable.
+      composedSpan: control(['execSync(`$', '{"r" + suffix}f --json status`);'].join("")),
+      composedAfterSpan: control(["execSync(`$", "{prefix} rf --json status`);"].join("")),
+      composedShellVar: control('execSync("$RF_BIN --json status");'),
+      composedShellDefault: control(['execSync("$', '{RF_BIN:-rf} --json status");'].join("")),
+      // R-BOUND quiet rows (wb-3l7x PREP F2): a literal that reaches the launch other than as the argument or a plain name's
+      // initializer - a destructuring pattern, a parameter, a later assignment, a loop binding, a spread or a template tag.
+      boundObject: control('const { CMD } = { CMD: "rf --json status" }; execSync(CMD);'),
+      boundArray: control('const [CMD] = ["rf --json status"]; execSync(CMD);'),
+      boundParameter: control('function run(cmd = "rf --json status") { execSync(cmd); }'),
+      boundAssigned: control('let cmd; cmd = "rf --json status"; execSync(cmd);'),
+      boundLoop: control('for (const cmd of ["rf --json status"]) execSync(cmd);'),
+      boundSpread: control('execSync(...["rf --json status"]);'),
+      boundTagged: control("execSync(String.raw`rf --json status`);"),
     };
     return { srcFloorMet, sites, controls };
   },
@@ -756,6 +1275,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       constArgv: control('const VERB = "replay"; export const ARGV = ["context", VERB];', false),
       flagBetween: control('spawn("rf", ["context", "--no-input", "replay", id]);', false),
       composed: control('const verb = ["re", "play"].join(""); spawn("rf", ["context", verb]);', true),
+      // A template's literal and const spans are folded in before the verb test.
+      literalSpan: control(["const cmd = `rf context $", '{"replay"} rfr_x --json`;'].join(""), false),
+      constSpan: control(['const VERB = "replay"; const cmd = `rf context $', "{VERB} --json`;"].join(""), false),
+      // R-COMPOSED quiet rows, one per member (`composed` above is the call member), each in an rf launch module.
+      composedConcat: control('spawn("rf", ["context", "re" + "play"]);', true),
+      composedTemplate: control(["const cmd = `rf context re$", "{gap}play`;"].join(""), true),
+      composedProperty: control('spawn("rf", ["context", VERBS.replay]);', true),
+      composedImport: control('import { VERB } from "./process-env.js"; spawn("rf", ["context", VERB]);', true),
     };
     return { srcFloorMet, launchModules, renderArgvSeen, argv, literals, words, controls };
   },
@@ -831,7 +1358,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(closureFloorMet, `closure modules: ${modules.join(", ")}`).toBe(true);
     expect(anchorsRead).toBe(true);
     expect(unresolved).toEqual([]);
-    expect({ names: ports.names, modules: ports.modules, launches }).toStrictEqual({ names: [], modules: [], launches: ["rf"] });
+    expect({ names: ports.names, modules: ports.modules, launches, opaque: ports.opaque }).toStrictEqual({ names: [], modules: [], launches: ["rf"], opaque: [] });
     const control = (text: string): JsonValue => {
       const scan = scanPorts("control.ts", text);
       return { names: scan.names.length, modules: scan.modules.length, launches: scan.launches };
@@ -852,8 +1379,43 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       dynamicLauncher: control('const cp = await import("node:child_process"); cp.execFile("curl", []);'),
       composed: control('await globalThis["fe" + "tch"](producer);'),
       unlisted: control('process.binding("tcp_wrap");'),
+      // R-COMPOSED quiet rows, one per member (`composed` above is the concatenation member).
+      composedCall: control('await globalThis[["fe", "tch"].join("")](producer);'),
+      composedTemplate: control(["await globalThis[`fe$", "{suffix}`](producer);"].join("")),
+      composedProperty: control("await globalThis[config.port](producer);"),
+      composedImport: control('import { PORT } from "./process-env.js"; await globalThis[PORT](producer);'),
+      // R-UNLISTED quiet rows: a worker and a native addon.
+      worker: control('import { Worker } from "node:worker_threads"; new Worker(source, { eval: true });'),
+      addon: control('const addon = require("./native.node");'),
     };
-    return { closureFloorMet, anchorsRead, unresolved, names: ports.names, modules: ports.modules, launches, controls };
+    // wb-bstx F2: the closure's edges. A literal or module-local const specifier is followed, an unreadable one refused; a
+    // runtime-bound loader is R-LOADER (aliasedLoader and moduleRequire stay followed [] and refused 0).
+    const edge = (text: string): JsonValue => {
+      const scan = scanPorts("control.ts", text);
+      return { followed: scan.local, refused: scan.opaque.length };
+    };
+    const edges = {
+      staticImport: edge('import { x } from "./static.js";'),
+      dynamicImport: edge('const lazy = await import("./lazy.js");'),
+      required: edge('const lazy = require("./lazy.js");'),
+      importEquals: edge('import lazy = require("./lazy.js");'),
+      constSpecifier: edge('const target = "./lazy.js"; const lazy = await import(target);'),
+      computed: edge("const lazy = await import(target);"),
+      concatenated: edge('const lazy = await import("./la" + "zy.js");'),
+      templated: edge(["const lazy = await import(`./$", "{name}.js`);"].join("")),
+      aliasedLoader: edge('const load = createRequire(import.meta.url); const lazy = load("./lazy.js");'),
+      moduleRequire: edge('const lazy = module.require("./lazy.js");'),
+    };
+    // F2 end to end: a scratch reader whose lazy import reaches a fetching module is walked and its port read, and its computed
+    // import is refused through the walk's merge.
+    const plant = makeScratch("rf-replay-history-closure-");
+    scratches.push(plant);
+    writeFileSync(join(plant, "reader.ts"), 'export const load = () => import("./lazy.js");\nexport const pick = (name: string) => import(name);\n');
+    writeFileSync(join(plant, "lazy.ts"), "export const ping = (url: string) => fetch(url);\n");
+    const planted = readerClosure(plant, ["reader.ts"]);
+    const walk = { modules: planted.modules, unresolved: planted.unresolved, names: planted.ports.names, opaque: planted.ports.opaque };
+    expect(walk).toStrictEqual({ modules: ["lazy.ts", "reader.ts"], unresolved: [], names: ["lazy.ts: fetch"], opaque: ["reader.ts: import(name)"] });
+    return { closureFloorMet, anchorsRead, unresolved, names: ports.names, modules: ports.modules, launches, controls, opaque: ports.opaque, edges, walk };
   },
   C1: async () => {
     const outcome = await nativeOutcome(json(REPLAY), 0);
@@ -918,6 +1480,21 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       hyphenated: control('const label = "up-to-date";'),
       cased: control('const label = "Latest";'),
       composed: control('const label = "fre" + "sh";'),
+      // wb-bstx F3: the widened vocabulary, and a template's literal span folded in.
+      newest: control('const label = "newest";'),
+      asOfNow: control('const label = "as of now";'),
+      freshly: control('const label = "freshly rendered";'),
+      mostRecent: control('const label = "most recent";'),
+      rightNow: control('const label = "right now";'),
+      toTheMinute: control('const label = "up to the minute";'),
+      foldedSpan: control(["const label = `as of $", '{"now"}`;'].join("")),
+      // R-VOCABULARY quiet row: a freshness claim worded outside FRESH_LABELS.
+      outside: control('const label = "just rendered";'),
+      // R-COMPOSED quiet rows, one per member (`composed` above is the concatenation member).
+      composedCall: control('const label = ["fre", "sh"].join("");'),
+      composedTemplate: control(["const label = `fre$", "{suffix}sh`;"].join("")),
+      composedProperty: control("const label = LABELS.current;"),
+      composedImport: control('import { LABEL } from "./labels.js"; const label = LABEL;'),
     };
     return { anchorsRead, hits, controls };
   },

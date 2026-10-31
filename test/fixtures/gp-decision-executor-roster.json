@@ -1,0 +1,467 @@
+{
+  "comment": "wb-0lf.1 (FURNACE-GRAPH-POLICY-DECISION-EXECUTOR-R1): the out-of-file roster of test/workbench-gp-decision-executor-census.test.ts. Every judged row (id, label, pins), every pin's quote and measured witness, the residual members and every registered test title, in order; the census holds itself to this file both ways. Witnesses come from a measured run of the census's own cases, never from hand edits.",
+  "bead": "wb-0lf.1",
+  "rows": [
+    {
+      "id": "T",
+      "label": "When Pi hosts a GraphPolicyCLI decision point",
+      "pins": [
+        "T1"
+      ]
+    },
+    {
+      "id": "A",
+      "label": "a host test drives a fixture GP reply through the Pi decision point and asserts no native verb or executor request is issued unless the converted decision passed basis validation and decideControl returned permitted with a core-minted receipt (isCoreMintedDecision, control.ts:255)",
+      "pins": [
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ]
+    },
+    {
+      "id": "B",
+      "label": "a reply whose snapshot digest differs from the observed basis yields a conflict/refusal receipt and no effect",
+      "pins": [
+        "B1",
+        "B2",
+        "B3"
+      ]
+    },
+    {
+      "id": "C",
+      "label": "the Furnace-hosted adapter's execute/interpret path stays byte-identical",
+      "pins": [
+        "C1",
+        "C2"
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals' pinned quiet rows",
+      "pins": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4"
+      ]
+    }
+  ],
+  "quotes": {
+    "T1": "When Pi hosts a GraphPolicyCLI decision point",
+    "A1": "a host test drives a fixture GP reply through the Pi decision point",
+    "A2": "and asserts no native verb or executor request is issued unless the converted decision passed basis validation",
+    "A3": "and decideControl returned permitted",
+    "A4": "with a core-minted receipt (isCoreMintedDecision, control.ts:255)",
+    "B1": "a reply whose snapshot digest differs from the observed basis",
+    "B2": "yields a conflict/refusal receipt",
+    "B3": "and no effect",
+    "C1": "the Furnace-hosted adapter's execute/interpret path",
+    "C2": "stays byte-identical",
+    "Q1": "R-SPELLING",
+    "Q2": "R-SIDE-PATH",
+    "Q3": "R-CHOSEN-TARGET",
+    "Q4": "R-ADAPTER-OUTSIDE-PATH"
+  },
+  "residuals": {
+    "Q1": [
+      "camel-case",
+      "composed",
+      "lower-case-name"
+    ],
+    "Q2": [
+      "side-path-point"
+    ],
+    "Q3": [
+      "unchosen-target-point"
+    ],
+    "Q4": [
+      "method-outside-path",
+      "same-file-constant",
+      "import-line"
+    ]
+  },
+  "witnesses": {
+    "T1": {
+      "findings": [],
+      "bound": [],
+      "srcFloor": true,
+      "readsCore": true,
+      "readsAdapter": true,
+      "controls": {
+        "names": [
+          "GraphPolicyCLI",
+          "GraphDataIR"
+        ],
+        "reply": [
+          "graphpolicy.receipt.decision.v1",
+          "sampled-decision",
+          "graph_digest"
+        ],
+        "choice": [
+          "chosen_id"
+        ],
+        "all": [
+          "GraphPolicyCLI",
+          "GraphDataIR",
+          "graphpolicy.receipt.decision.v1",
+          "sampled-decision",
+          "graph_digest",
+          "chosen_id"
+        ],
+        "quiet": []
+      }
+    },
+    "A1": {
+      "bound": [],
+      "bases": [
+        "F1:valid",
+        "F2:snapshot-mismatch",
+        "F3:valid",
+        "F4:revision-mismatch",
+        "F5:reply-unconverted"
+      ],
+      "honest": {
+        "F1": [],
+        "F2": [],
+        "F3": [],
+        "F4": [],
+        "F5": []
+      },
+      "honestCalls": {
+        "F1": 1,
+        "F2": 0,
+        "F3": 0,
+        "F4": 0,
+        "F5": 0
+      },
+      "fired": [
+        "effect-unvalidated",
+        "effect-unpermitted",
+        "effect-unminted",
+        "mismatch-receipt",
+        "current-unexecuted"
+      ],
+      "quiet": [],
+      "fixtureReply": {
+        "replyDigest": "sha256:06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+        "presentedDigest": "sha256:06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+        "chosen": "exec-a1-t1",
+        "sourceSha": "3f7d52cd17397d8ed22e2c768714a057fe098b62"
+      },
+      "M-INERT": {
+        "F1": [
+          "current-unexecuted"
+        ],
+        "F2": [],
+        "F3": [],
+        "F4": [],
+        "F5": []
+      }
+    },
+    "A2": {
+      "honestCalls": {
+        "F2": 0,
+        "F4": 0,
+        "F5": 0
+      },
+      "honestReceipts": {
+        "F4": [
+          {
+            "status": "conflict",
+            "code": "revision-mismatch",
+            "candidate": "exec-a1-t1"
+          }
+        ],
+        "F5": [
+          {
+            "status": "refused",
+            "code": "reply-unconverted"
+          }
+        ]
+      },
+      "reached": {
+        "M-NO-BASIS": 1,
+        "M-UNCONVERTED": 1
+      },
+      "M-NO-BASIS": {
+        "F1": [],
+        "F2": [
+          "effect-unvalidated",
+          "mismatch-receipt"
+        ],
+        "F3": [],
+        "F4": [
+          "effect-unvalidated"
+        ],
+        "F5": []
+      },
+      "M-DIGEST-ONLY": {
+        "F1": [],
+        "F2": [],
+        "F3": [],
+        "F4": [
+          "effect-unvalidated"
+        ],
+        "F5": []
+      },
+      "M-REVISION-ONLY": {
+        "F1": [],
+        "F2": [
+          "effect-unvalidated",
+          "mismatch-receipt"
+        ],
+        "F3": [],
+        "F4": [],
+        "F5": []
+      },
+      "M-UNCONVERTED": {
+        "F1": [],
+        "F2": [],
+        "F3": [],
+        "F4": [],
+        "F5": [
+          "effect-unvalidated"
+        ]
+      }
+    },
+    "A3": {
+      "providers": [],
+      "denial": {
+        "decision": "denied",
+        "policy": "observer-only",
+        "category": "authorization"
+      },
+      "gpVerb": {
+        "decision": "denied",
+        "policy": "unknown-action",
+        "category": "validation"
+      },
+      "M-DENIED": {
+        "F1": [],
+        "F2": [],
+        "F3": [
+          "effect-unpermitted",
+          "effect-unminted"
+        ],
+        "F4": [],
+        "F5": []
+      }
+    },
+    "A4": {
+      "truth": {
+        "minted": true,
+        "spread": false,
+        "json": false,
+        "denial": false,
+        "reply": false,
+        "typed": false
+      },
+      "M-LOOKALIKE": {
+        "F1": [
+          "effect-unminted",
+          "current-unexecuted"
+        ],
+        "F2": [],
+        "F3": [
+          "effect-unminted"
+        ],
+        "F4": [],
+        "F5": []
+      },
+      "M-COPY": {
+        "F1": [
+          "effect-unminted",
+          "current-unexecuted"
+        ],
+        "F2": [],
+        "F3": [],
+        "F4": [],
+        "F5": []
+      }
+    },
+    "B1": {
+      "replyDigest": "sha256:06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+      "presentedDigest": "sha256:f6acb8ea80ddfc1a5f0e65236afe078432f2b7e207358542a8411ef28d0eaa90",
+      "currentDigest": "sha256:06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+      "sameDocument": true,
+      "basis": "snapshot-mismatch",
+      "honestReceipts": [
+        {
+          "status": "conflict",
+          "code": "snapshot-mismatch",
+          "candidate": "exec-a1-t1"
+        }
+      ]
+    },
+    "B2": {
+      "honest": [
+        {
+          "status": "conflict",
+          "code": "snapshot-mismatch",
+          "candidate": "exec-a1-t1"
+        }
+      ],
+      "M-MISMATCH-SILENT": {
+        "F1": [],
+        "F2": [
+          "mismatch-receipt"
+        ],
+        "F3": [],
+        "F4": [],
+        "F5": []
+      },
+      "M-MISMATCH-DENIED": {
+        "F1": [],
+        "F2": [
+          "mismatch-receipt"
+        ],
+        "F3": [],
+        "F4": [],
+        "F5": []
+      }
+    },
+    "B3": {
+      "honestCalls": 0,
+      "bothCalls": 1,
+      "bothReceipts": [
+        {
+          "status": "conflict",
+          "code": "snapshot-mismatch",
+          "candidate": "exec-a1-t1"
+        }
+      ],
+      "M-RECEIPT-AND-EFFECT": {
+        "F1": [],
+        "F2": [
+          "effect-unvalidated"
+        ],
+        "F3": [],
+        "F4": [],
+        "F5": []
+      }
+    },
+    "C1": {
+      "keys": [
+        "method:execute",
+        "method:record",
+        "function:hasCancellation",
+        "function:safeText",
+        "method:interpret",
+        "method:toResult",
+        "const:isRecord"
+      ],
+      "digests": [
+        "method:execute:0a11bd6116617c14",
+        "method:record:866aeb76ab499fb1",
+        "function:hasCancellation:b49ca2aad499b752",
+        "function:safeText:3ff25f415251211c",
+        "method:interpret:b0816cced59212bc",
+        "method:toResult:e4ba40d9d657d214",
+        "const:isRecord:eaae347d0570c558"
+      ],
+      "pathDigest": "59667a61906c58446d7e5683b8c4bbe0d8e2020b7e05afe9f9d3f8e004883ef8"
+    },
+    "C2": {
+      "pin": "758ec18187a5d66ba40b766caad38754b5313558",
+      "atPin": [
+        "method:execute",
+        "method:record",
+        "function:hasCancellation",
+        "function:safeText",
+        "method:interpret",
+        "method:toResult",
+        "const:isRecord"
+      ],
+      "changed": [],
+      "planted": {
+        "method:execute": [
+          "method:execute"
+        ],
+        "method:record": [
+          "method:record"
+        ],
+        "function:hasCancellation": [
+          "function:hasCancellation"
+        ],
+        "function:safeText": [
+          "function:safeText"
+        ],
+        "method:interpret": [
+          "method:interpret"
+        ],
+        "method:toResult": [
+          "method:toResult"
+        ],
+        "const:isRecord": [
+          "const:isRecord"
+        ]
+      }
+    },
+    "Q1": {
+      "camel-case": [],
+      "composed": [],
+      "lower-case-name": []
+    },
+    "Q2": {
+      "violations": {
+        "F1": [],
+        "F2": [],
+        "F3": [],
+        "F4": [],
+        "F5": []
+      },
+      "side": 1
+    },
+    "Q3": {
+      "violations": {
+        "F1": [],
+        "F2": [],
+        "F3": [],
+        "F4": [],
+        "F5": []
+      },
+      "executed": [
+        {
+          "status": "executed",
+          "candidate": "exec-a2-t2",
+          "answer": "frn-ack-frn-run-exec-a2-t2"
+        }
+      ],
+      "chosen": "exec-a1-t1"
+    },
+    "Q4": {
+      "method-outside-path": {
+        "plantedHere": true,
+        "changed": []
+      },
+      "same-file-constant": {
+        "plantedHere": true,
+        "changed": []
+      },
+      "import-line": {
+        "plantedHere": true,
+        "changed": []
+      }
+    }
+  },
+  "tests": [
+    "T1: When Pi hosts a GraphPolicyCLI decision point",
+    "A1: a host test drives a fixture GP reply through the Pi decision point",
+    "A2: and asserts no native verb or executor request is issued unless the converted decision passed basis validation",
+    "A3: and decideControl returned permitted",
+    "A4: with a core-minted receipt (isCoreMintedDecision, control.ts:255)",
+    "B1: a reply whose snapshot digest differs from the observed basis",
+    "B2: yields a conflict/refusal receipt",
+    "B3: and no effect",
+    "C1: the Furnace-hosted adapter's execute/interpret path",
+    "C2: stays byte-identical",
+    "Q1: R-SPELLING",
+    "Q2: R-SIDE-PATH",
+    "Q3: R-CHOSEN-TARGET",
+    "Q4: R-ADAPTER-OUTSIDE-PATH",
+    "rule 16: the rows, the residual families, the vocabulary, the checks, the mutants, the fixtures, the bound points and the path are frozen at their measured shape",
+    "the outside anchors: the bead's own row binds the rows, the pin quotes, the names and the pin; the citations resolve at the pin; the vendored reply and snapshot bind the vocabulary and the fixtures",
+    "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-decision-executor-roster.json, in order and both ways; every pin reached its witness compare"
+  ]
+}

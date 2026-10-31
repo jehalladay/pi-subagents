@@ -1,0 +1,651 @@
+{
+  "provenance": "wb-gwr.1 HX prediction effect-class census roster (test/workbench-hx-prediction-effect-class-census.test.ts), the census's OUT-OF-FILE anchor. Witnesses MEASURED by the cutting seat ws-04 (run g10-work-s109, 2026-10-26) on Pi trunk f381c52a43fcecbd5c7e1fac907ed8756acff590 (116 src modules): they were first held null (every pin red at its witness compare, RED-1 14 failed of 14), then filled from the measured cases. Every control, probe and synthetic source text is CONSTRUCTED by this census; no producer mints a prediction record today.",
+  "bead": "wb-gwr.1",
+  "constants": {
+    "stems": [
+      "predict",
+      "cphs",
+      "hypothe",
+      "proposeddelta",
+      "adoptionverdict"
+    ],
+    "judgedFields": [
+      "id",
+      "description"
+    ],
+    "srcFloor": 100,
+    "flagged": [
+      {
+        "name": "id-stem",
+        "id": "hyperunix.predict",
+        "description": "Read typed HX results",
+        "effectClass": "write"
+      },
+      {
+        "name": "acronym",
+        "id": "hyperunix.adopt",
+        "description": "Adopt one CPHS record",
+        "effectClass": "external"
+      },
+      {
+        "name": "record-name",
+        "id": "hyperunix.delta",
+        "description": "Apply a ProposedDelta",
+        "effectClass": "write"
+      },
+      {
+        "name": "snake-record",
+        "id": "hyperunix.verdict",
+        "description": "adoption_verdict apply",
+        "effectClass": "write"
+      },
+      {
+        "name": "spaced-record",
+        "id": "hyperunix.change",
+        "description": "Proposed Delta adoption",
+        "effectClass": "unknown"
+      },
+      {
+        "name": "upper-case",
+        "id": "hyperunix.slice",
+        "description": "PREDICTIVE HYPOTHESIS",
+        "effectClass": "write"
+      },
+      {
+        "name": "plural",
+        "id": "hyperunix.replay",
+        "description": "re-predicted hypotheses",
+        "effectClass": "external"
+      },
+      {
+        "name": "interrupted",
+        "id": "hyperunix.read",
+        "description": "pre\u200bdict the next tree",
+        "effectClass": "write"
+      },
+      {
+        "name": "full-width",
+        "id": "hyperunix.read",
+        "description": "\uff50\uff52\uff45\uff44\uff49\uff43\uff54 the next tree",
+        "effectClass": "write"
+      },
+      {
+        "name": "opaque-effect",
+        "id": "hyperunix.predict",
+        "description": "",
+        "effectClass": "<opaque>"
+      },
+      {
+        "name": "over-read",
+        "id": "forge.gate.run",
+        "description": "unpredictable timing",
+        "effectClass": "write"
+      }
+    ],
+    "passing": [
+      {
+        "name": "read-matched",
+        "id": "hyperunix.predict",
+        "description": "Read CPHS predictions",
+        "effectClass": "read"
+      },
+      {
+        "name": "unmatched-write",
+        "id": "forge.gate.run",
+        "description": "Run the Forge gate",
+        "effectClass": "write"
+      }
+    ],
+    "scanner": {
+      "literal": "registry.register({ descriptor: { id: \"x.predict\", description: \"d\", effectClass: \"write\" }, async invoke() { return null; } });",
+      "quoted-keys": "registry.register({ \"descriptor\": { \"id\": \"x.cphs\", \"description\": \"d\", \"effectClass\": \"external\" }, \"invoke\": run });",
+      "template": "registry.register({ descriptor: { id: `x.hypothesis`, description: `d`, effectClass: `write` }, invoke });",
+      "spread": "registry.register({ descriptor: { ...BASE, id: \"x.predict\" }, invoke });",
+      "shorthand": "const effectClass = \"write\"; registry.register({ descriptor: { id: \"x.predict\", description: \"d\", effectClass }, invoke });",
+      "composed": "registry.register({ descriptor: { id: \"x.read\", description: \"pre\" + \"dict\", effectClass: \"write\" }, invoke });",
+      "const-provider": "const P = { descriptor: { id: \"x.predict\", description: \"d\", effectClass: \"write\" }, invoke }; registry.register(P);",
+      "const-descriptor": "registry.register({ descriptor: D, invoke });",
+      "element-access": "registry[\"register\"]({ descriptor: { id: \"x.predict\", description: \"d\", effectClass: \"write\" }, invoke });",
+      "read-literal": "registry.register({ descriptor: { id: \"x.read\", description: \"Read one record\", effectClass: \"read\" }, invoke });",
+      "element-opaque": "registry[\"register\"](P);"
+    },
+    "table": {
+      "frozen": "export const RECONCILE_EVIDENCE_READS = Object.freeze({ a: Object.freeze([\"a.read\"]), \"b\": Object.freeze([\"b.read\", \"b.list\"]) });",
+      "unfrozen": "export const RECONCILE_EVIDENCE_READS = { a: Object.freeze([\"a.read\"]) };",
+      "unfrozen-list": "export const RECONCILE_EVIDENCE_READS = Object.freeze({ a: [\"a.read\"] });",
+      "composed-read": "export const RECONCILE_EVIDENCE_READS = Object.freeze({ a: Object.freeze([PREFIX + \".read\"]) });",
+      "spread": "export const RECONCILE_EVIDENCE_READS = Object.freeze({ ...BASE, a: Object.freeze([\"a.read\"]) });",
+      "local": "const RECONCILE_EVIDENCE_READS = Object.freeze({ a: Object.freeze([\"a.read\"]) });"
+    },
+    "planted": {
+      "id": "hyperunix.predict",
+      "version": "1.0.0",
+      "description": "Adopt a CPHS ProposedDelta",
+      "inputSchema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "effectClass": "write",
+      "permissions": [
+        "hyperunix:write"
+      ],
+      "supportedModes": [
+        "invoke"
+      ]
+    },
+    "frozenControls": {
+      "frozen": {
+        "a": [
+          "a.read"
+        ]
+      },
+      "unfrozen-table": {
+        "a": [
+          "a.read"
+        ]
+      },
+      "unfrozen-list": {
+        "a": [
+          "a.read"
+        ]
+      }
+    },
+    "readControls": [
+      [
+        "forge",
+        "hyperunix.find"
+      ],
+      [
+        "hyperunix",
+        "hyperunix.predict"
+      ]
+    ],
+    "vocabulary": [
+      "Forecast the HX change",
+      "speculative delta",
+      "projected outcome",
+      "estimated effect",
+      "what-if scenario",
+      "simulated adoption",
+      "world model slice",
+      "guess the next state"
+    ],
+    "lookalike": [
+      {
+        "text": "pr\u0435dict",
+        "lookalike": "\u0435",
+        "latin": "e"
+      },
+      {
+        "text": "\u0441phs",
+        "lookalike": "\u0441",
+        "latin": "c"
+      },
+      {
+        "text": "hyp\u043ethesis",
+        "lookalike": "\u043e",
+        "latin": "o"
+      }
+    ],
+    "otherFields": {
+      "permissions": "hyperunix:predict",
+      "contractSource": "@hyperunix/sdk@0.2.0:CPHS.adopt",
+      "version": "1.0.0-hypothesis",
+      "inputSchema": "proposedDelta"
+    },
+    "localProvider": "export function register(registry) {\n  registry.register({ descriptor: { id: \"local.predict\", version: \"1.0.0\", description: \"Adopt a CPHS ProposedDelta\", inputSchema: {}, effectClass: \"write\", permissions: [\"local:write\"], supportedModes: [\"invoke\"] }, async invoke() { return null; } });\n}",
+    "indirect": [
+      "class PredictProvider { descriptor = PREDICT_DESCRIPTOR; async invoke() { return null; } }\nconst reg = registry.register.bind(registry);\nreg(new PredictProvider());",
+      "class PredictProvider { descriptor = PREDICT_DESCRIPTOR; async invoke() { return null; } }\nregistry.register(new PredictProvider());"
+    ],
+    "residuals": {
+      "R-VOCABULARY": [
+        "Q1"
+      ],
+      "R-LOOKALIKE": [
+        "Q2"
+      ],
+      "R-OTHER-FIELDS": [
+        "Q3"
+      ],
+      "R-LOCAL-PROVIDER": [
+        "Q4"
+      ],
+      "R-INDIRECT": [
+        "Q5"
+      ]
+    }
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster, the bead's standing clauses and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "a census asserts no registered capability descriptor whose id or description names predict/CPHS/hypothesis carries a non-read effectClass",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "readings": [
+              "forge.gate.status|read|",
+              "hyperunix.find|read|",
+              "furnace.run.inspect|read|",
+              "reactivefiber.render.preview|read|"
+            ],
+            "violations": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "readings": [
+              "forge.gate.status|read|",
+              "hyperunix.find|read|",
+              "furnace.run.inspect|read|",
+              "reactivefiber.render.preview|read|"
+            ],
+            "violations": []
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "literals": [
+              "src/workbench/providers/forge.ts|forge.gate.status|read|",
+              "src/workbench/providers/forge.ts|forge.gate.status|read|",
+              "src/workbench/providers/furnace.ts|furnace.run.inspect|read|",
+              "src/workbench/providers/furnace.ts|furnace.run.inspect|read|",
+              "src/workbench/providers/hyperunix.ts|hyperunix.find|read|",
+              "src/workbench/providers/hyperunix.ts|hyperunix.find|read|",
+              "src/workbench/providers/reactivefiber.ts|reactivefiber.render.preview|read|",
+              "src/workbench/providers/reactivefiber.ts|reactivefiber.render.preview|read|"
+            ],
+            "opaqueFields": [],
+            "opaqueProviders": [
+              "src/workbench/capability-registry.ts|descriptor: copied"
+            ],
+            "opaqueRegisterCalls": [
+              "src/workbench/hosts/local-detached.ts|module.register(registry)"
+            ],
+            "violations": []
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "flagged": [
+              "id-stem|predict|violates",
+              "acronym|cphs|violates",
+              "record-name|proposeddelta|violates",
+              "snake-record|adoptionverdict|violates",
+              "spaced-record|proposeddelta|violates",
+              "upper-case|predict+hypothe|violates",
+              "plural|predict+hypothe|violates",
+              "interrupted|predict|violates",
+              "full-width|predict|violates",
+              "opaque-effect|predict|violates",
+              "over-read|predict|violates"
+            ],
+            "passing": [
+              "read-matched|predict+cphs|passes",
+              "unmatched-write||passes"
+            ],
+            "scanner": {
+              "literal": {
+                "literals": [
+                  "literal|x.predict|write|predict"
+                ],
+                "opaqueFields": [],
+                "opaqueProviders": [],
+                "opaqueRegisterCalls": [],
+                "violations": [
+                  "literal|x.predict"
+                ]
+              },
+              "quoted-keys": {
+                "literals": [
+                  "quoted-keys|x.cphs|external|cphs"
+                ],
+                "opaqueFields": [],
+                "opaqueProviders": [],
+                "opaqueRegisterCalls": [],
+                "violations": [
+                  "quoted-keys|x.cphs"
+                ]
+              },
+              "template": {
+                "literals": [
+                  "template|x.hypothesis|write|hypothe"
+                ],
+                "opaqueFields": [],
+                "opaqueProviders": [],
+                "opaqueRegisterCalls": [],
+                "violations": [
+                  "template|x.hypothesis"
+                ]
+              },
+              "spread": {
+                "literals": [
+                  "spread|x.predict|<opaque>|predict"
+                ],
+                "opaqueFields": [
+                  "spread|x.predict|description",
+                  "spread|x.predict|effectClass",
+                  "spread|x.predict|spread"
+                ],
+                "opaqueProviders": [],
+                "opaqueRegisterCalls": [],
+                "violations": [
+                  "spread|x.predict"
+                ]
+              },
+              "shorthand": {
+                "literals": [
+                  "shorthand|x.predict|<opaque>|predict"
+                ],
+                "opaqueFields": [
+                  "shorthand|x.predict|effectClass"
+                ],
+                "opaqueProviders": [],
+                "opaqueRegisterCalls": [],
+                "violations": [
+                  "shorthand|x.predict"
+                ]
+              },
+              "composed": {
+                "literals": [
+                  "composed|x.read|write|"
+                ],
+                "opaqueFields": [
+                  "composed|x.read|description"
+                ],
+                "opaqueProviders": [],
+                "opaqueRegisterCalls": [],
+                "violations": []
+              },
+              "const-provider": {
+                "literals": [
+                  "const-provider|x.predict|write|predict"
+                ],
+                "opaqueFields": [],
+                "opaqueProviders": [],
+                "opaqueRegisterCalls": [
+                  "const-provider|registry.register(P)"
+                ],
+                "violations": [
+                  "const-provider|x.predict"
+                ]
+              },
+              "const-descriptor": {
+                "literals": [],
+                "opaqueFields": [],
+                "opaqueProviders": [
+                  "const-descriptor|descriptor: D"
+                ],
+                "opaqueRegisterCalls": [],
+                "violations": []
+              },
+              "element-access": {
+                "literals": [
+                  "element-access|x.predict|write|predict"
+                ],
+                "opaqueFields": [],
+                "opaqueProviders": [],
+                "opaqueRegisterCalls": [],
+                "violations": [
+                  "element-access|x.predict"
+                ]
+              },
+              "read-literal": {
+                "literals": [
+                  "read-literal|x.read|read|"
+                ],
+                "opaqueFields": [],
+                "opaqueProviders": [],
+                "opaqueRegisterCalls": [],
+                "violations": []
+              },
+              "element-opaque": {
+                "literals": [],
+                "opaqueFields": [],
+                "opaqueProviders": [],
+                "opaqueRegisterCalls": [
+                  "element-opaque|registry[\"register\"](P)"
+                ],
+                "violations": []
+              }
+            },
+            "registered": {
+              "readings": [
+                "hyperunix.predict|write|predict+cphs+proposeddelta"
+              ],
+              "violations": [
+                "hyperunix.predict"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "RECONCILE_EVIDENCE_READS (src/workflow/reconcile.ts) stays exactly the four producer reads",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "entries": [
+              "furnace=furnace.run.inspect",
+              "forge=forge.gate.status",
+              "hyperunix=hyperunix.find",
+              "reactivefiber=reactivefiber.render.preview"
+            ],
+            "frozen": true,
+            "reads": 4,
+            "controls": {
+              "frozen": true,
+              "unfrozen-table": false,
+              "unfrozen-list": false
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "reads": [
+              "furnace|furnace.run.inspect|read|own",
+              "forge|forge.gate.status|read|own",
+              "hyperunix|hyperunix.find|read|own",
+              "reactivefiber|reactivefiber.render.preview|read|own"
+            ],
+            "controls": [
+              "forge|hyperunix.find|read|foreign",
+              "hyperunix|hyperunix.predict|unregistered|own"
+            ]
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "declarations": [
+              "src/workflow/reconcile.ts|exported|frozen-literal"
+            ],
+            "entries": [
+              "furnace=furnace.run.inspect",
+              "forge=forge.gate.status",
+              "hyperunix=hyperunix.find",
+              "reactivefiber=reactivefiber.render.preview"
+            ],
+            "controls": {
+              "frozen": {
+                "declarations": [
+                  "frozen|exported|frozen-literal"
+                ],
+                "entries": [
+                  "a=a.read",
+                  "b=b.read,b.list"
+                ]
+              },
+              "unfrozen": {
+                "declarations": [
+                  "unfrozen|exported|other"
+                ],
+                "entries": []
+              },
+              "unfrozen-list": {
+                "declarations": [
+                  "unfrozen-list|exported|frozen-literal"
+                ],
+                "entries": [
+                  "a=<opaque>"
+                ]
+              },
+              "composed-read": {
+                "declarations": [
+                  "composed-read|exported|frozen-literal"
+                ],
+                "entries": [
+                  "a=<opaque>"
+                ]
+              },
+              "spread": {
+                "declarations": [
+                  "spread|exported|frozen-literal"
+                ],
+                "entries": [
+                  "<opaque>=<opaque>",
+                  "a=a.read"
+                ]
+              },
+              "local": {
+                "declarations": [
+                  "local|local|frozen-literal"
+                ],
+                "entries": [
+                  "a=a.read"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "controls": 8,
+            "matched": 0,
+            "violations": 0
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "lookalike": [
+              0,
+              0,
+              0
+            ],
+            "repaired": [
+              [
+                "predict"
+              ],
+              [
+                "cphs"
+              ],
+              [
+                "hypothe"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "fields": [
+              "permissions",
+              "contractSource",
+              "version",
+              "inputSchema"
+            ],
+            "matched": 0,
+            "asDescription": [
+              [
+                "predict"
+              ],
+              [
+                "cphs"
+              ],
+              [
+                "hypothe"
+              ],
+              [
+                "proposeddelta"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "scanned": {
+              "literals": [
+                "local-provider.js|local.predict|write|predict+cphs+proposeddelta"
+              ],
+              "opaqueFields": [],
+              "opaqueProviders": [],
+              "opaqueRegisterCalls": [],
+              "violations": [
+                "local-provider.js|local.predict"
+              ]
+            },
+            "walkedOutsideSrc": 0,
+            "sites": [
+              "src/workbench/hosts/local-detached.ts|module.register(registry)"
+            ]
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "aliased": {
+              "literals": [],
+              "opaqueFields": [],
+              "opaqueProviders": [],
+              "opaqueRegisterCalls": [],
+              "violations": []
+            },
+            "direct": {
+              "literals": [],
+              "opaqueFields": [],
+              "opaqueProviders": [],
+              "opaqueRegisterCalls": [
+                "direct|registry.register(new PredictProvider())"
+              ],
+              "violations": []
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

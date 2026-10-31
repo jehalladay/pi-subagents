@@ -3,9 +3,9 @@
  * tier (vitest.census.config.ts, include test/**\/*.census.ts) judged in wb-u62 REPORT MODE. It is the 20th member of the
  * sequenced census class (owner ruling on the held R1, 2026-10-18: adopt the gate default, the wb-cax.24 precedent).
  *
- * The Forge, Furnace, HyperUnix, ReactiveFiberCLI and Beads provider sections and "Shared integration requirements" state
- * adapter rules in single paragraphs. This leg binds each falsifiable sentence (rows F1-F4, U1-U6, H1-H2, R1-R4, B1-B2,
- * S1-S2, plus the DELTA-B-AMEND note rows U7 and U8) to existing cases by file, verbatim title and tier, or records it as
+ * The Forge, Furnace, HyperUnix, ReactiveFiberCLI, Beads and Agent provider sections and "Shared integration requirements"
+ * state adapter rules in single paragraphs. This leg binds each falsifiable sentence (rows F1-F4, U1-U6, H1-H3, R1-R4,
+ * B1-B2, A1, S1-S2, plus the DELTA-B-AMEND note rows U7 and U8) to existing cases by file, verbatim title and tier, or records it as
  * unpinned with a reason. It executes no pinned case and no test run: judge() from the shared helper
  * test/helpers/census.ts reads vitest's own JSON report of the default gate's test step (DEFAULT_TIER_REPORT, written by
  * `npm run test` before the census step runs), so a pinned case counts only when the gate's own run collected it exactly
@@ -20,11 +20,30 @@
  * cases, so its derived-basis-echoed half reads red (absent) on every tree that does not carry them: the row lands after
  * wb-4ap.1.
  *
- * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the six sections, under
+ * Row F5 (wb-6ps1.2, R2 (a)) is the Forge provider's gate.run selection sentence: the producer's selected-versus-complete
+ * universe travels beside the verdict as its own facet, a short or narrowed run renders partial, a malformed selection
+ * unknown, neither success, and a gate-step node never carries the workspace verdict. Each clause binds to the wb-6ps1.2 cases
+ * of test/workbench-forge-operation-observer.test.ts under their describe path. Its identity is frozen as a literal (rule 16),
+ * and the FORGE ANCHOR reads the live Forge paragraph: every sentence of it is one Forge row's quote or one of the three named
+ * unbound sentences, so a row removed from every literal of this file (CT5/CT6) is still red against the docs.
+ *
+ * Row F6 (wb-b9n.2, R6 of the Forge evidence-assurance program at Forge bc2c379f7802) is the Forge provider's claim-scope
+ * sentence: a Forge verdict or verification reference warrants only its exact acceptance predicate at its declared source
+ * basis, and Workbench captions and previews never restate a pass as general or universal software correctness. One half per
+ * clause: exact-acceptance-predicate binds the withheld-success, short-selection and same-operation cases; declared-source-basis
+ * the echoed derived basis and the historical (not authoritative_current) reading; forge-pass-captions the exact pass captions
+ * of the gate.status, gate.run and forge-operation evidence readers and the evidence producer's never-verified scan. A fourth
+ * half, other-captions, is unpinned by design: no landed case walks the other Workbench caption paths, and the row says so
+ * rather than counting the clause as covered. Its identity (sentence, halves, pins) is frozen as the literal FROZEN_F6 (rule
+ * 16), the FORGE ANCHOR reads the sentence from the live paragraph, and the receipt of record (receipts/wb-b9n.2.md) repeats
+ * the identity's line count and SHA-256 outside this file, so a pin, half or the row removed, swapped or reordered in TABLE
+ * and in every literal here together still reds (CT5/CT6).
+ *
+ * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the eight sections, under
  * its unique level-2 heading of the level-1 parent heading and bounded at the next level-1/2 heading or EOF, must render
- * as exactly its frozen paragraph. A dropped or reworded clause names its row. The docs drift falsifiers run over a
+ * as exactly its frozen paragraph (the MechanicalWorkflows section as exactly its five frozen blocks). A dropped or reworded clause names its row. The docs drift falsifiers run over a
  * SYNTHETIC document built from the frozen section bodies, never over the live docs/07 text, so a legitimate edit of an
- * unpinned section (RCP provider, Agent provider, the vertical journey) can never redden a falsifier row.
+ * unpinned section (RCP provider, the vertical journey) can never redden a falsifier row.
  *
  * Tiers: a row's tier names the report that vouches for it. The default report vouches for the default gate's test tier
  * only; judge() refuses a pin of any other tier (tier-mismatch, R2 = (i)), so this leg never reports a live or native
@@ -62,8 +81,27 @@
  * without its cases: over the gate's own report with those cases removed, every R4 pin reads absent and the leg is red,
  * naming the row, while the docs still state the sentence. Row R4's quote and binding are frozen as literals (rule 16).
  *
- * Non-scope (no falsifiable adapter sentence, or covered by the docs/14 matrix): "MechanicalWorkflows is an ordinary
- * function library", "RCP provider", "Agent provider", "First realistic vertical journey".
+ * Rows H3 and A1 (wb-kku9.1, MW-CAC-WORKFLOW-COMPOSITION-R1 (d)) bind the two observation-class sentences: the HyperUnix
+ * provider's last sentence (an HX answer is an observation only) and the Agent provider's last sentence (a Claude call's
+ * completion, transcript and session reference are observations only), one half per clause, to the cases of
+ * test/workbench-observation-class-census.test.ts by file and verbatim title. "Agent provider" joined the frozen sections with
+ * that sentence. Both rows' identities are frozen as literals (rule 16), and that census reads both sentences back from this
+ * file and from the live docs/07 (its D1-D3), so a row removed from TABLE and from every literal here still reds there.
+ *
+ * Row W1 (wb-klr7, CAC-WORKFLOW-COMPOSITION-R1 (c)) is the MechanicalWorkflows section's composition-reference sentence, the
+ * section's last paragraph: CACWorkflowCompositionV0 is design-only and no Pi surface consumes it; a future consumer carries
+ * each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a row without one as an
+ * unmapped entry, and never mints a Beads task, Forge operation or gate, or Furnace Attempt ID from composition fields. One
+ * half per clause, bound to test/workbench-mw-composition-ref-census.test.ts by file, describe path and verbatim title: today
+ * (T1-T2), producer-references-only (A1), counted-unmapped (A2) and never-mints (A3, B1-B3). "MechanicalWorkflows is an
+ * ordinary function library" joined the frozen sections with that sentence, its five blocks frozen whole (MW_SECTION_BLOCKS).
+ * The row's identity is frozen as the literal FROZEN_W1 (rule 16), and that census reads FROZEN_W1 back from this file and the
+ * sentence from the live docs/07 (its C1-C2), so a row removed from TABLE and from every literal here still reds there. The
+ * sentence carries the program status "design-only" verbatim, the wb-kku9.2 clause (c) duty, and the wb-kku9.2 census holds
+ * it to this file (its C3).
+ *
+ * Non-scope (no falsifiable adapter sentence, or covered by the docs/14 matrix): "RCP provider", "First realistic vertical
+ * journey".
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -127,6 +165,21 @@ const BASIS_SENTENCE =
   "The gate.status reader echoes the producer's per-package derived-verdict basis (last_result_state.invalidation_basis.derived_from) as the package snapshot basis, distinct from the workspace basis of WB-025 (02-atomic-requirements.md), and quotes the producer's freshness word verbatim; it never recomputes freshness, never fabricates a basis when the descriptor is absent or malformed, and freshness never confers current authority (authoritative_current alone does).";
 
 /**
+ * wb-6ps1.2 (R2 (a)): the Forge provider paragraph's sentence on the gate.run reader's selected-versus-complete facet. Row F5
+ * quotes it whole; FROZEN_F5 repeats it as a literal and the FORGE ANCHOR reads it from the live paragraph.
+ */
+const SELECTION_SENTENCE =
+  "The gate.run reader carries the producer's selected-versus-complete universe (data.selection_accounting for the declared steps or members, data.selection for the tests) beside the operation's verdict as its own facet; a run that selected fewer units than it declared or narrowed its tests renders partial, a selection that is not well formed renders unknown, neither ever renders success, and a gate-step node carries only its own step's outcome, never the workspace verdict.";
+
+/**
+ * wb-b9n.2 (R6 of the Forge evidence-assurance program): the Forge provider paragraph's claim-scope sentence, after the posture
+ * sentence and before the F3 sentence. Row F6 quotes it whole; FROZEN_F6 repeats the row's identity as a literal and the
+ * receipt of record repeats the identity's digest outside this file.
+ */
+const CLAIM_SCOPE_SENTENCE =
+  "A Forge verdict or verification reference warrants only its exact acceptance predicate at its declared source basis, and Workbench captions and previews never restate a pass as general or universal software correctness.";
+
+/**
  * wb-973.17 (SWARM-CONTEXT-GRAPH-R17 (c)): the RF paragraph's sentence on the contractSource release and the live drift
  * guard. Row R5 quotes it whole; FROZEN_R5_QUOTE repeats it as a literal.
  */
@@ -143,30 +196,84 @@ const WORKSPACE_ROOT_SENTENCE =
 const LOCATORS_SENTENCE = "RF_WORKSPACE and SWARM_RF_WORKSPACE are the allowlisted operational names a hosted agent learns the swarm workspace from, identical on the embedded and the detached host.";
 const LEGACY_ARGV_SENTENCE = "The legacy {model, task} argv is frozen byte for byte (SCG-R025).";
 
-/** The six frozen docs/07 section paragraphs, as the markdown source says them. */
+/**
+ * wb-kku9.1 (MW-CAC-WORKFLOW-COMPOSITION-R1 (d)): the two observation-class sentences, the last of the HyperUnix and Agent
+ * provider paragraphs. Rows H3 and A1 quote them whole; FROZEN_H3 and FROZEN_A1 repeat each row's identity as a literal.
+ */
+const HX_OBSERVATION_SENTENCE =
+  "An HX answer is an observation only: the hyperunix.find reader adapter projects one hyperunix.query.snapshot whose evidence references are hx-binary and hx-coverage references only and no Beads, Forge, Furnace or Git kind or reference, and its one possible edge is the display grouping from the invoking operation the host names, so an HX answer never closes Beads work, passes a Forge gate or stands for a Furnace state or a Git basis.";
+const AGENT_OBSERVATION_SENTENCE =
+  "A Claude agent() call's completion, its transcript and its session reference are observations only: the Claude topology adapter projects claude.call, claude.session and claude.tool-use snapshots with partial or unknown coverage and no Forge, Furnace, Beads or Git snapshot, edge or reference, and a claude-message evidence read carries no status or verdict, so a failed Forge gate stays failed and an open Beads item stays open whatever the transcript says.";
+/** The wb-kku9.1 census whose cases rows H3 and A1 bind (test/workbench-observation-class-census.test.ts). */
+const OBSERVATION_CENSUS = "observation-class-census";
+
+/** wb-klr7 (CAC-WORKFLOW-COMPOSITION-R1 (c)): the MechanicalWorkflows section, frozen whole with row W1's sentence as its last block. */
+const MW_SECTION = "MechanicalWorkflows is an ordinary function library";
+/** wb-klr7: the MechanicalWorkflows section's composition-reference sentence. Row W1 quotes it whole; FROZEN_W1 repeats the row's identity. */
+const MW_COMPOSITION_SENTENCE =
+  "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.";
+/** The wb-klr7 census whose cases row W1 binds (test/workbench-mw-composition-ref-census.test.ts), and its describe paths. */
+const COMPOSITION_CENSUS = "mw-composition-ref-census";
+const COMPOSITION_TOP = "wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1)";
+const COMPOSITION_ROW_SUITES: Readonly<Record<string, string>> = {
+  T: "T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers",
+  A: "A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id",
+  B: "B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields",
+};
+const compositionPin = (row: string, title: string): Pin => pin(COMPOSITION_CENSUS, title, [COMPOSITION_TOP, COMPOSITION_ROW_SUITES[row] ?? ""]);
+
+/** The eight frozen docs/07 sections, as the markdown source says them: one paragraph each, the MechanicalWorkflows section five blocks. */
 const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
+  [MW_SECTION]:
+    "**Current evidence:** https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; the documentation baseline described its rig as fixture-only. A later read-only inspection on 2026-10-15 found a narrower RF/Claude/Forge live rig, but not the required HX-task-scoped Pi binding. See `TRACEABILITY.md` for artifact pins and limitations. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata.\n\nHost integration:\n1. Resolve requested entrypoint package/export and pinned artifact digest; reject incompatible host ABI.\n2. Validate request against descriptor schema and application invariants.\n3. Construct a scope-limited service dependency object from native SDK clients owned by this host.\n4. Call exported function directly, or delegate to Furnace ExecutorApp where selected.\n5. Validate output and record native evidence references; preserve four existing outcome variants.\n6. Dispose only host-owned clients. Client disconnect does not imply detached native child stop.\n\nNo MechanicalWorkflows dependency on Workbench, no mandated graph DSL, no mandatory registration inside MechanicalWorkflows. Descriptor introspection helps catalog only; it is not already a deployment/runtime loader.\n\nCACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.",
   "Forge provider":
-    `Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. ${BASIS_SENTENCE} A successful RPC or shell exit does **not** equal verified Forge PASS. Prefer Forge first for gates, test, build and packaging. Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.`,
+    `Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. ${BASIS_SENTENCE} A successful RPC or shell exit does **not** equal verified Forge PASS. ${SELECTION_SENTENCE} Prefer Forge first for gates, test, build and packaging. ${CLAIM_SCOPE_SENTENCE} Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.`,
   "Furnace provider":
     "Use public TypeScript client for runs.start/get/status/events/pause/stop as verified. Native Run/Work/Attempt and supervision semantics remain Furnace's. Future idempotent ensure/reconcile and convenience wait methods are upstream targets, not an assumed API. Ambiguous runs.start timeout -> uncertain/reconcile; do not issue second start blindly. A Furnace host may use ExecutorApp over the per-Attempt embedded bridge to call a MechanicalWorkflows function, with the application outcome mapped explicitly to the four-word Furnace execution result (only status is read; failure_class and data are not); failure and indeterminate park the Run rather than retrying, cancellation is a cooperative AbortSignal, and transport success is never domain verification.",
-  "HyperUnix provider":
-    'Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage.',
+  "HyperUnix provider": `Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage. ${HX_OBSERVATION_SENTENCE}`,
   "ReactiveFiberCLI provider":
     `Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. ${INPUT_ARMS_SENTENCE} ${WORKSPACE_ROOT_SENTENCE} ${LOCATORS_SENTENCE} ${LEGACY_ARGV_SENTENCE} For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. ${CONTRACT_SOURCE_SENTENCE} Fixture text is never reported as real generated context.`,
   "Beads provider":
     "Beads retains readiness, formulas and logical task dependencies. Workbench may inspect supported scopes and surface linked work; it does not store an authoritative second readiness DAG. No assumed stable Beads SDK if only other integration contracts are available.",
+  "Agent provider": `Use Claude Agent SDK for workflow agent(). Role-specific tool catalogs may include restricted Forge/HX/Furnace/RF actions through the provider edges, not a universal all-tools conversion. Native Claude SDK hooks/session records remain first-class. ${AGENT_OBSERVATION_SENTENCE}`,
   "Shared integration requirements":
     "Every live adapter records: SDK package + revision, native operation IDs, owner/basis, observed evidence, error taxonomy, trace correlation, cancellation/timeout semantics, and cleanup ownership. For a missing API, produce upstream feedback with smallest reproducer, accepted behavior, and explicit blocker. Avoid quietly writing a private reimplementation of an upstream feature.",
 };
 /** What a reader sees of each paragraph: the markdown source without its emphasis markers. */
 const renderedOf = (markdown: string): string => markdown.replaceAll("**", "");
-const SECTION_ORDER: readonly string[] = ["Forge provider", "Furnace provider", "HyperUnix provider", "ReactiveFiberCLI provider", "Beads provider", "Shared integration requirements"];
+const SECTION_ORDER: readonly string[] = [MW_SECTION, "Forge provider", "Furnace provider", "HyperUnix provider", "ReactiveFiberCLI provider", "Beads provider", "Agent provider", "Shared integration requirements"];
+/** wb-klr7: the MechanicalWorkflows section's five rendered blocks, written by hand from its markdown (whole-section equality). */
+const MW_SECTION_BLOCKS: readonly RenderedBlock[] = [
+  { kind: "paragraph", text: "Current evidence: https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; the documentation baseline described its rig as fixture-only. A later read-only inspection on 2026-10-15 found a narrower RF/Claude/Forge live rig, but not the required HX-task-scoped Pi binding. See TRACEABILITY.md for artifact pins and limitations. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata.", markdown: "**Current evidence:** https://github.com/jehalladay/MechanicalWorkflows, docs/04-public-programming-model.md, docs/06-sdk-integration-and-hosts.md, docs/11-decisions-and-non-goals.md. The shipped @mechanical/workflows-development exports develop(services,request) with four injected callbacks; the documentation baseline described its rig as fixture-only. A later read-only inspection on 2026-10-15 found a narrower RF/Claude/Forge live rig, but not the required HX-task-scoped Pi binding. See `TRACEABILITY.md` for artifact pins and limitations. contracts/entrypoints/development.v1.json declares optional descriptor-only entrypoint metadata." },
+  { kind: "paragraph", text: "Host integration:", markdown: "Host integration:" },
+  {
+    kind: "list",
+    ordered: true,
+    items: [
+      { text: "Resolve requested entrypoint package/export and pinned artifact digest; reject incompatible host ABI.", markdown: "Resolve requested entrypoint package/export and pinned artifact digest; reject incompatible host ABI." },
+      { text: "Validate request against descriptor schema and application invariants.", markdown: "Validate request against descriptor schema and application invariants." },
+      { text: "Construct a scope-limited service dependency object from native SDK clients owned by this host.", markdown: "Construct a scope-limited service dependency object from native SDK clients owned by this host." },
+      { text: "Call exported function directly, or delegate to Furnace ExecutorApp where selected.", markdown: "Call exported function directly, or delegate to Furnace ExecutorApp where selected." },
+      { text: "Validate output and record native evidence references; preserve four existing outcome variants.", markdown: "Validate output and record native evidence references; preserve four existing outcome variants." },
+      { text: "Dispose only host-owned clients. Client disconnect does not imply detached native child stop.", markdown: "Dispose only host-owned clients. Client disconnect does not imply detached native child stop." },
+    ],
+  },
+  { kind: "paragraph", text: "No MechanicalWorkflows dependency on Workbench, no mandated graph DSL, no mandatory registration inside MechanicalWorkflows. Descriptor introspection helps catalog only; it is not already a deployment/runtime loader.", markdown: "No MechanicalWorkflows dependency on Workbench, no mandated graph DSL, no mandatory registration inside MechanicalWorkflows. Descriptor introspection helps catalog only; it is not already a deployment/runtime loader." },
+  { kind: "paragraph", text: "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.", markdown: "CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields." },
+];
 const sectionBlocks = (heading: string): readonly RenderedBlock[] => {
+  if (heading === MW_SECTION) return MW_SECTION_BLOCKS;
   const markdown = SECTION_MARKDOWN[heading] ?? "";
   return [{ kind: "paragraph", text: renderedOf(markdown), markdown }];
 };
 
 const CAPABILITY_SUITE = "no native cancel: the typed capability-unavailable refusal quotes the measured surface, never a shell-out or a minted verb";
+/** wb-6ps1.2: the describe path holding the gate.run selection cases row F5 binds (its pins bind the describe as well as the case). */
+const SELECTION_SUITE = "wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict";
+/** wb-b9n.2: the describe paths holding the gate.status, forge-operation evidence and evidence-producer cases row F6 binds. */
+const FORGE_STATUS_SUITE = "Forge gate.status reader adapter";
+const FORGE_EVIDENCE_SUITE = "forge-operation evidence reader";
+const PRODUCER_MAPPING_SUITE = "producer-mapping conformance pass (wb-6ze.20, docs/workbench/20 § Producer mapping)";
 /** wb-693.9: the describe paths holding the R1/R4 cases row R4 binds (its pins bind the describe as well as the case). */
 const RELEASE_SUITE = "producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard)";
 const ENGINE_SUITE = "engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-693.2 R2, wb-693.3 R3)";
@@ -203,6 +310,20 @@ function isDeepFrozen(value: unknown): boolean {
 }
 
 const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
+  {
+    row: "W1",
+    section: MW_SECTION,
+    source: "docs",
+    quote: MW_COMPOSITION_SENTENCE,
+    // wb-klr7: one half per clause, in the sentence's order, bound to the composition-reference census by file, describe path
+    // and verbatim title; a renamed, deleted or skipped pin reads red.
+    halves: [
+      gate("today", [compositionPin("T", "T1"), compositionPin("T", "T2")]),
+      gate("producer-references-only", [compositionPin("A", "A1")]),
+      gate("counted-unmapped", [compositionPin("A", "A2")]),
+      gate("never-mints", [compositionPin("A", "A3"), compositionPin("B", "B1"), compositionPin("B", "B2"), compositionPin("B", "B3")]),
+    ],
+  },
   {
     row: "F1",
     section: "Forge provider",
@@ -267,6 +388,64 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
       gate("no-current-authority", [
         pin("forge-observer", "F13 (wb-4ap.5): withPackages(current) keeps unknown tone, partial coverage, the historical label and the workspace literal"),
       ]),
+    ],
+  },
+  {
+    row: "F5",
+    section: "Forge provider",
+    source: "docs",
+    quote: SELECTION_SENTENCE,
+    // One half per clause, in the sentence's order. Every pin is a wb-6ps1.2 case of the forge-operation observer test under
+    // its describe path, so a same-titled case anywhere else never counts; a renamed, deleted or skipped pin reads red.
+    halves: [
+      gate("facet-travels", [
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the facet sits after the echoed disposition, which routes through the shared label layout (a bidi override or a line break displays as a space)", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): a reply that publishes no selection block keeps the a3s reading - no facet, no coverage, the command status's tone", [SELECTION_SUITE]),
+      ]),
+      gate("short-renders-partial", [
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the measured --only selection (1 of 3 steps) renders partial with its own facet and never success, whatever command status the reply states", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): a selection short of complete by any unselected state - unaffected, explicitly_narrowed or unknown - renders partial, never success", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the documented member fan-out whose every member skipped as unaffected (0 of 2 members, exit 0) renders partial, never success", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the measured -- <args> run (status success, gate_verdict null, data.selection narrowed) renders partial with a tests facet beside the complete step facet, never success", [SELECTION_SUITE]),
+      ]),
+      gate("malformed-renders-unknown", [
+        eachPinIn("forge-operation-observer", "wb-6ps1.2 (a): %s is withheld as selection UNKNOWN, unknown coverage, and never lets a success tone stand", 11, [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): a malformed test-selection block is withheld as tests UNKNOWN and never lets a success tone stand", [SELECTION_SUITE]),
+      ]),
+      gate("step-never-verdict", [
+        pin("forge-operation-observer", "wb-6ps1.2 (a): through the live observer the measured --only reply settles the operation node partial with its facet, and a gate-step node never carries the workspace verdict", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): a gate-step node never carries the workspace verdict - a failed step stays failed under a complete success reply, and a passed step stays passed under a failure reply", [SELECTION_SUITE]),
+      ]),
+    ],
+  },
+  {
+    row: "F6",
+    section: "Forge provider",
+    source: "docs",
+    quote: CLAIM_SCOPE_SENTENCE,
+    // wb-b9n.2: one half per clause, in the sentence's order, then the unpinned rest of the third clause. Every pin binds its
+    // describe path, so a same-titled case anywhere else never counts; a renamed, deleted or skipped pin reads red.
+    halves: [
+      gate("exact-acceptance-predicate", [
+        pin("forge-observer", "withholds workspace success that the read status or a declared verdict does not support, and says so", [FORGE_STATUS_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the measured --only selection (1 of 3 steps) renders partial with its own facet and never success, whatever command status the reply states", [SELECTION_SUITE]),
+        pin("forge-evidence", "C1: an id mismatch between ref and reading, or a reading naming no operation, is a validation refusal never a substituted result", [FORGE_EVIDENCE_SUITE]),
+      ]),
+      gate("declared-source-basis", [
+        pin("forge-observer", "F9 (wb-4ap.1): the measured STALE row carries its derived_from digest B as the package subjectBasis, never its source_digest A", [FORGE_STATUS_SUITE]),
+        pin("forge-evidence", "C2: authoritative_current=false stays historical and indeterminate, never current verification", [FORGE_EVIDENCE_SUITE]),
+      ]),
+      gate("forge-pass-captions", [
+        pin("forge-observer", "F2: a current failed gate stays failed despite transport success, and current success is success", [FORGE_STATUS_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone", [SELECTION_SUITE]),
+        pin("forge-evidence", "C1: a valid ref re-reads exactly once through the injected seam and loads EvidenceContent-shaped data", [FORGE_EVIDENCE_SUITE]),
+        pin("evidence-loader", "the producer module imports no SDK or child_process and never labels a result verified", [PRODUCER_MAPPING_SUITE]),
+      ]),
+      unpinned(
+        "other-captions",
+        "PARTIAL by design: the forge-pass-captions half binds the exact pass captions of the three Forge readers (the gate.status workspace and package captions, the gate.run operation caption and the forge-operation evidence preview) and the evidence producer's never-verified scan; no landed case walks every other Workbench caption or preview path (the workflow card and dialog, control replies, reconcile rows) for a general or universal correctness restatement of a single pass (the wb-kku9.4 receipt-composition census judges composition across producers, not one producer's pass), so the rest of the clause has no falsifier today and is never reported as covered; a seat that lands such a walk flips this half to a pin consciously",
+      ),
     ],
   },
   {
@@ -370,6 +549,18 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
       pin("hyperunix-observer", "H2: only a runtime-licensed complete-empty answer is known-empty, complete coverage and a success"),
       pin("hyperunix-observer", "H6: row, claim and certificate bodies never surface, and 40 certificates cap evidence at 32 references"),
     ]),
+  },
+  {
+    row: "H3",
+    section: "HyperUnix provider",
+    source: "docs",
+    quote: HX_OBSERVATION_SENTENCE,
+    // wb-kku9.1: one half per clause, in the sentence's order, bound to the observation-class census (its rows B, R and C).
+    halves: [
+      gate("no-authority-kind-or-reference", [pin(OBSERVATION_CENSUS, "B1: hyperunixTopology over hyperunix.find/v1 readings of every read kind, whose rows name tracker, gate, run and repository paths, carries no beads, forge, furnace or git kind, reference or edge")]),
+      gate("host-grouping-only", [pin(OBSERVATION_CENSUS, "R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping, and no src module calls either topology adapter")]),
+      gate("never-an-authority", [pin(OBSERVATION_CENSUS, "C1: the module graph: the observation class, the authority modules and the five holders are the measured rosters and no edge joins the first two outside the holders")]),
+    ],
   },
   {
     row: "R1",
@@ -534,6 +725,19 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     ]),
   },
   {
+    row: "A1",
+    section: "Agent provider",
+    source: "docs",
+    quote: AGENT_OBSERVATION_SENTENCE,
+    // wb-kku9.1: one half per clause, in the sentence's order, bound to the observation-class census (its row A).
+    halves: [
+      gate("claude-snapshots-only", [pin(OBSERVATION_CENSUS, "A1: a succeeded Claude SDK run whose transcript says fixed and PASS settles ok and projects only claude.* snapshots, each with partial or unknown coverage")]),
+      gate("no-authority-snapshot-edge-or-reference", [pin(OBSERVATION_CENSUS, "A2: that projection names no forge, furnace, beads or git provider in any snapshot, edge or evidence reference, and no transcript claim reaches it")]),
+      gate("evidence-without-verdict", [pin(OBSERVATION_CENSUS, "A4: the transcript message the session lists reads as a claude-message preview with no status, verdict or authority field, whatever the message claims")]),
+      gate("authority-unchanged", [pin(OBSERVATION_CENSUS, "A3: applying that projection beside a failed Forge gate and an open bd item leaves both nodes and their edges exactly as they were")]),
+    ],
+  },
+  {
     row: "S1",
     section: "Shared integration requirements",
     source: "docs",
@@ -576,9 +780,9 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["W1", "F1", "F2", "F3", "F4", "F5", "F6", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "A1", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
-const UNPINNED_HALVES: readonly string[] = ["F3/whole", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
+const UNPINNED_HALVES: readonly string[] = ["F3/whole", "F6/other-captions", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
 const readRepo = (path: string): string => readFileSync(join(ROOT, path), "utf8");
 
@@ -623,9 +827,13 @@ function docsFailures(markdown: string): string[] {
 
 /** The synthetic document the drift falsifiers run over: the frozen bodies under the real heading shape, never the live text. */
 const synthetic = (edit: (heading: string, body: string) => string = (_heading, body) => body, tail = ""): string =>
-  `# ${DOCS_PARENT}\n\n## MechanicalWorkflows is an ordinary function library\n\nNo dependency.\n\n${SECTION_ORDER.map(heading => `## ${heading}\n\n${edit(heading, SECTION_MARKDOWN[heading] ?? "")}\n`).join("\n")}\n## RCP provider\n\nOptional.\n\n## First realistic vertical journey\n\nA journey.\n${tail}`;
+  `# ${DOCS_PARENT}\n\n${SECTION_ORDER.map(heading => `## ${heading}\n\n${edit(heading, SECTION_MARKDOWN[heading] ?? "")}\n`).join("\n")}\n## RCP provider\n\nOptional.\n\n## First realistic vertical journey\n\nA journey.\n${tail}`;
 /** wb-pfl (ORCH-REC-R544 F1): the judged shape frozen as a literal, never derived from TABLE, so deleting a half or a pin cannot pass. */
 const FROZEN_JUDGED_SHAPE: readonly string[] = [
+  "W1/today:2",
+  "W1/producer-references-only:1",
+  "W1/counted-unmapped:1",
+  "W1/never-mints:4",
   "F1/whole:3",
   "F2/whole:3",
   "F4/derived-basis-echoed:4",
@@ -635,6 +843,13 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "F4/absent-no-basis:1",
   "F4/malformed-no-basis:2",
   "F4/no-current-authority:1",
+  "F5/facet-travels:3",
+  "F5/short-renders-partial:4",
+  "F5/malformed-renders-unknown:2",
+  "F5/step-never-verdict:2",
+  "F6/exact-acceptance-predicate:3",
+  "F6/declared-source-basis:2",
+  "F6/forge-pass-captions:4",
   "U1/whole:2",
   "U2/whole:2",
   "U3/whole:1",
@@ -646,6 +861,9 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "U7/pause-stop:1",
   "H1/whole:3",
   "H2/whole:2",
+  "H3/no-authority-kind-or-reference:1",
+  "H3/host-grouping-only:1",
+  "H3/never-an-authority:1",
   "R1/whole:2",
   "R2/observer:3",
   "R4/producer-release:2",
@@ -665,6 +883,10 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "R9/whole:1",
   "B1/whole:2",
   "B2/whole:2",
+  "A1/claude-snapshots-only:1",
+  "A1/no-authority-snapshot-edge-or-reference:1",
+  "A1/evidence-without-verdict:1",
+  "A1/authority-unchanged:1",
   "S1/sdk-revision:1",
   "S1/native-operation-ids:1",
   "S1/error-taxonomy:1",
@@ -699,6 +921,20 @@ const identityOf = (row: Row): string[] => [
   `quote | ${row.quote}`,
   ...row.halves.flatMap(half => half.pins.map(entry => `${half.id} | ${entry.file} | ${entry.title}${entry.each === undefined ? "" : ` | each >= ${entry.each}`}`)),
 ];
+/** wb-kku9.1 (standing rule 16): rows H3 and A1 in FROZEN_F4's form, never derived from TABLE or the sentence constants. */
+const FROZEN_H3: readonly string[] = [
+  "quote | An HX answer is an observation only: the hyperunix.find reader adapter projects one hyperunix.query.snapshot whose evidence references are hx-binary and hx-coverage references only and no Beads, Forge, Furnace or Git kind or reference, and its one possible edge is the display grouping from the invoking operation the host names, so an HX answer never closes Beads work, passes a Forge gate or stands for a Furnace state or a Git basis.",
+  "no-authority-kind-or-reference | test/workbench-observation-class-census.test.ts | B1: hyperunixTopology over hyperunix.find/v1 readings of every read kind, whose rows name tracker, gate, run and repository paths, carries no beads, forge, furnace or git kind, reference or edge",
+  "host-grouping-only | test/workbench-observation-class-census.test.ts | R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping, and no src module calls either topology adapter",
+  "never-an-authority | test/workbench-observation-class-census.test.ts | C1: the module graph: the observation class, the authority modules and the five holders are the measured rosters and no edge joins the first two outside the holders",
+];
+const FROZEN_A1: readonly string[] = [
+  "quote | A Claude agent() call's completion, its transcript and its session reference are observations only: the Claude topology adapter projects claude.call, claude.session and claude.tool-use snapshots with partial or unknown coverage and no Forge, Furnace, Beads or Git snapshot, edge or reference, and a claude-message evidence read carries no status or verdict, so a failed Forge gate stays failed and an open Beads item stays open whatever the transcript says.",
+  "claude-snapshots-only | test/workbench-observation-class-census.test.ts | A1: a succeeded Claude SDK run whose transcript says fixed and PASS settles ok and projects only claude.* snapshots, each with partial or unknown coverage",
+  "no-authority-snapshot-edge-or-reference | test/workbench-observation-class-census.test.ts | A2: that projection names no forge, furnace, beads or git provider in any snapshot, edge or evidence reference, and no transcript claim reaches it",
+  "evidence-without-verdict | test/workbench-observation-class-census.test.ts | A4: the transcript message the session lists reads as a claude-message preview with no status, verdict or authority field, whatever the message claims",
+  "authority-unchanged | test/workbench-observation-class-census.test.ts | A3: applying that projection beside a failed Forge gate and an open bd item leaves both nodes and their edges exactly as they were",
+];
 
 const named = (lines: readonly string[]): string[] => lines.filter(line => line.startsWith("row ")).map(line => line.slice(0, line.indexOf(":")));
 
@@ -721,15 +957,15 @@ const RF_UNBOUND_SENTENCES: readonly string[] = ["Use actual public render/conte
 const sentencesOf = (text: string): string[] => text.split(/(?<=\.) (?=[A-Z])/u);
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the twenty-seven frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the thirty-two frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(27);
+    expect(TABLE).toHaveLength(32);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
 
-  it("AC1: the six sections are the six the table names, and the frozen bodies render exactly (HTML-free, whole-section equality)", () => {
+  it("AC1: the eight sections are the eight the table names, and the frozen bodies render exactly (HTML-free, whole-section equality)", () => {
     expect(new Set(TABLE.map(row => row.section))).toEqual(new Set(SECTION_ORDER));
     expect(Object.keys(SECTION_MARKDOWN)).toEqual(SECTION_ORDER);
     for (const heading of SECTION_ORDER) {
@@ -776,6 +1012,22 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
     expect(row.halves.flatMap(half => half.pins.map(entry => [half.id, tierCommand(half.tier), entry.file, (entry.suite ?? []).join(" > "), entry.title].join(" | ")))).toEqual(FROZEN_R5_BINDING);
   });
 
+  it("AC1 (wb-kku9.1): rows H3 and A1 quote the observation-class sentences whole, each its paragraph's last sentence, and bind every clause to the observation-class census by file and verbatim title, frozen as literals", () => {
+    let checked = 0;
+    for (const [id, frozen, section] of [["H3", FROZEN_H3, "HyperUnix provider"], ["A1", FROZEN_A1, "Agent provider"]] as const) {
+      const row = TABLE.find(candidate => candidate.row === id);
+      expect(row, id).toBeDefined();
+      if (row === undefined) continue;
+      expect(row.section).toBe(section);
+      expect(row.source).toBe("docs");
+      expect(identityOf(row)).toEqual(frozen);
+      expect(row.halves.every(half => half.tier === "default-gate" && half.reason === undefined && half.pins.every(entry => entry.file === T(OBSERVATION_CENSUS)))).toBe(true);
+      expect((SECTION_MARKDOWN[section] ?? "").endsWith(` ${row.quote}`), `${id} closes the ${section} paragraph`).toBe(true);
+      checked += 1;
+    }
+    expect(checked).toBe(2);
+  });
+
   it("RF anchor (wb-973.17, rule 16): every sentence of the LIVE ReactiveFiberCLI paragraph is one RF row's quote or the one named unbound sentence, read from the document, never from SECTION_MARKDOWN", () => {
     const section = docsSection(readRepo(DOCS_FILE), "ReactiveFiberCLI provider", 2, [DOCS_PARENT]);
     expect(section.ok, section.why).toBe(true);
@@ -791,6 +1043,7 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
     expect(listed).toEqual(UNPINNED_HALVES);
     const reasons = Object.fromEntries(TABLE.flatMap(row => row.halves.filter(half => half.reason !== undefined).map(half => [`${row.row}/${half.id}`, half.reason ?? ""])));
     expect(reasons["F3/whole"]).toContain("Workspace Families");
+    expect(reasons["F6/other-captions"]).toContain("PARTIAL by design");
     expect(reasons["U7/events"]).toContain("furnace-observer.ts:2");
     expect(reasons["U8/negative-verbs"]).toContain("bare-text");
     expect(reasons["R3/whole"]).toContain("native-rf-preview");
@@ -886,6 +1139,27 @@ describe("wb-6hb.11 liveness: the adopted judge is not accept-all (the real repo
     }
   });
 
+  it("M5 (wb-kku9.1): every row-H3 and row-A1 pin renamed by one character is absent from the report and red, naming its row, its half, the file and the title", () => {
+    let checked = 0;
+    for (const id of ["H3", "A1"]) {
+      const row = TABLE.find(candidate => candidate.row === id);
+      if (row === undefined) continue;
+      for (const half of row.halves) {
+        for (const entry of half.pins) {
+          const wrong = { ...entry, title: `${entry.title}.` };
+          const verdicts = judge(REPORT, [casePin(half, wrong)]);
+          expect(verdicts[0]?.code, wrong.title).toBe("absent");
+          const [line] = failures(row, half, verdicts);
+          expect(line, wrong.title).toContain(`row ${id}/${half.id}`);
+          expect(line, wrong.title).toContain(entry.file);
+          expect(line, wrong.title).toContain(wrong.title);
+          checked += 1;
+        }
+      }
+    }
+    expect(checked).toBe(7);
+  });
+
   it("M2: a row removed from the table fails the row-set pin (the frozen ids no longer match)", () => {
     expect(TABLE.filter(row => row.row !== "B1").map(row => row.row)).not.toEqual(ROW_IDS);
   });
@@ -922,7 +1196,7 @@ describe("wb-6hb.11 liveness: the adopted judge is not accept-all (the real repo
 describe("wb-6hb.11 docs drift names the row or the section (synthetic document, rendered view)", () => {
   const edit = (heading: string, from: string, to: string) => (section: string, body: string): string => (section === heading ? body.replace(from, to) : body);
 
-  it("accepts the six sections exactly as written, at EOF and bounded by a following level-2 heading", () => {
+  it("accepts the eight sections exactly as written, at EOF and bounded by a following level-2 heading", () => {
     expect(docsFailures(synthetic())).toEqual([]);
     expect(docsFailures(synthetic(undefined, "\n## Next\n\nOther text.\n"))).toEqual([]);
   });
@@ -941,6 +1215,24 @@ describe("wb-6hb.11 docs drift names the row or the section (synthetic document,
     const lines = docsFailures(synthetic(edit("Forge provider", "never fabricates a basis when", "may fabricate a basis when")));
     expect(named(lines)).toEqual(["row F4"]);
     expect(lines.some(line => line.includes("Forge provider is not exactly its frozen paragraph"))).toBe(true);
+  });
+
+  it("K9 (wb-6ps1.2) names row F5 (and only it) when the selection sentence lets a short or narrowed run render success", () => {
+    const lines = docsFailures(synthetic(edit("Forge provider", "neither ever renders success", "either may render success")));
+    expect(named(lines)).toEqual(["row F5"]);
+    expect(lines.some(line => line.includes("Forge provider is not exactly its frozen paragraph"))).toBe(true);
+  });
+
+  it("K5 (wb-kku9.1) names row H3 (and only it) when the HX answer sentence lets an answer close Beads work", () => {
+    const lines = docsFailures(synthetic(edit("HyperUnix provider", "so an HX answer never closes Beads work", "so an HX answer may close Beads work")));
+    expect(named(lines)).toEqual(["row H3"]);
+    expect(lines.some(line => line.includes("HyperUnix provider is not exactly its frozen paragraph"))).toBe(true);
+  });
+
+  it("K6 (wb-kku9.1) names row A1 (and only it) when the Agent sentence lets the transcript pass a failed gate", () => {
+    const lines = docsFailures(synthetic(edit("Agent provider", "so a failed Forge gate stays failed", "so a failed Forge gate may pass")));
+    expect(named(lines)).toEqual(["row A1"]);
+    expect(lines.some(line => line.includes("Agent provider is not exactly its frozen paragraph"))).toBe(true);
   });
 
   it("K3 names row B1 (and only it) when the Beads clause is reworded", () => {
@@ -1694,7 +1986,7 @@ interface Sourced {
  * The frozen EXPECTATION's provenance, pinned as source-level string literals (R696 (1), read back by the LITERAL PIN row from
  * this file's AST): the fixture path and the SHA-256 of its committed bytes (sha256sum), written out and never computed here.
  */
-const EXPECTATION: Provenance = { path: "test/fixtures/docs19-full-section-omxf.json", sha256: "6f0d6217045be897e9121b5489a3be53164b24cef062c2cb1bbb42b30a824cf2" };
+const EXPECTATION: Provenance = { path: "test/fixtures/docs19-full-section-omxf.json", sha256: "7e636fe7f252a675bbfe0fea73bc96c70b604f5fe28631f40a774ee34e34b397" };
 const sha256Hex = (bytes: string | Buffer): string => createHash("sha256").update(bytes).digest("hex");
 /** A file under a repo root with the digest of exactly its bytes: the one read every full-slice row judges. */
 function readWithProvenance(root: string, path: string): Sourced {
@@ -2613,5 +2905,1246 @@ describe("wb-lybr every read of EXPECTATION resolves to the literal identifier (
     expect(READ_ROSTER).toEqual(tables.readRoster);
     expect(LYBR_READS).toEqual(tables.readerRows);
     expect(LYBR_RESIDUALS).toEqual(tables.readerResiduals);
+  });
+});
+
+/**
+ * wb-6ps1.2 (rule 16): row F5's quote and binding as literals, never derived from TABLE - the sentence whole, then every pin as
+ * "half | tier | file | describe path | title" (an it.each pin adds its table-row floor) - so a shortened sentence, a dropped,
+ * swapped or re-homed pin or a relabelled tier reads red.
+ */
+const FROZEN_F5_QUOTE =
+  "The gate.run reader carries the producer's selected-versus-complete universe (data.selection_accounting for the declared steps or members, data.selection for the tests) beside the operation's verdict as its own facet; a run that selected fewer units than it declared or narrowed its tests renders partial, a selection that is not well formed renders unknown, neither ever renders success, and a gate-step node carries only its own step's outcome, never the workspace verdict.";
+const FROZEN_F5_BINDING: readonly string[] = [
+  "facet-travels | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone",
+  "facet-travels | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the facet sits after the echoed disposition, which routes through the shared label layout (a bidi override or a line break displays as a space)",
+  "facet-travels | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): a reply that publishes no selection block keeps the a3s reading - no facet, no coverage, the command status's tone",
+  "short-renders-partial | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the measured --only selection (1 of 3 steps) renders partial with its own facet and never success, whatever command status the reply states",
+  "short-renders-partial | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): a selection short of complete by any unselected state - unaffected, explicitly_narrowed or unknown - renders partial, never success",
+  "short-renders-partial | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the documented member fan-out whose every member skipped as unaffected (0 of 2 members, exit 0) renders partial, never success",
+  "short-renders-partial | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the measured -- <args> run (status success, gate_verdict null, data.selection narrowed) renders partial with a tests facet beside the complete step facet, never success",
+  "malformed-renders-unknown | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): %s is withheld as selection UNKNOWN, unknown coverage, and never lets a success tone stand | each >= 11",
+  "malformed-renders-unknown | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): a malformed test-selection block is withheld as tests UNKNOWN and never lets a success tone stand",
+  "step-never-verdict | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): through the live observer the measured --only reply settles the operation node partial with its facet, and a gate-step node never carries the workspace verdict",
+  "step-never-verdict | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): a gate-step node never carries the workspace verdict - a failed step stays failed under a complete success reply, and a passed step stays passed under a failure reply",
+];
+/**
+ * wb-6ps1.2 (rule 16 anchor): the three sentences of the live Forge paragraph no row binds - posture and scope sentences (use
+ * the public SDK, the initial function list, prefer Forge first) that state no adapter rule a case can falsify. Every other
+ * sentence of the live paragraph must be one Forge row's quote.
+ */
+const FORGE_UNBOUND_SENTENCES: readonly string[] = [
+  "Use public Forge TypeScript App Server/facade or other current SDK.",
+  "Initial functions: build/verification, affected/incremental selection, inspect artifact and operation.",
+  "Prefer Forge first for gates, test, build and packaging.",
+];
+
+describe("wb-6ps1.2 docs/workbench/07 row F5: the gate.run selection sentence and the Forge anchor", () => {
+  it("AC1 (wb-6ps1.2): row F5 quotes the whole gate.run selection sentence and binds every clause to the wb-6ps1.2 observer cases by file, describe path, verbatim title and tier, frozen as literals", () => {
+    const row = TABLE.find(candidate => candidate.row === "F5");
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe("Forge provider");
+    expect(row.source).toBe("docs");
+    expect(row.quote).toBe(FROZEN_F5_QUOTE);
+    expect(row.halves.map(half => `${half.id}:${half.tier}:${half.reason ?? "pinned"}`)).toEqual([
+      "facet-travels:default-gate:pinned",
+      "short-renders-partial:default-gate:pinned",
+      "malformed-renders-unknown:default-gate:pinned",
+      "step-never-verdict:default-gate:pinned",
+    ]);
+    expect(bindingOf(row)).toEqual(FROZEN_F5_BINDING);
+    // The sentence is the paragraph's own: one whole sentence of the Forge provider source, after the F1 sentence and before the posture sentence.
+    const markdown = SECTION_MARKDOWN["Forge provider"] ?? "";
+    expect(markdown.split(`verified Forge PASS. ${row.quote} Prefer Forge first`)).toHaveLength(2);
+  });
+
+  it("Forge anchor (wb-6ps1.2, rule 16): every sentence of the LIVE Forge provider paragraph is one Forge row's quote or one of the three named unbound sentences, read from the document, never from SECTION_MARKDOWN", () => {
+    const section = docsSection(readRepo(DOCS_FILE), "Forge provider", 2, [DOCS_PARENT]);
+    expect(section.ok, section.why).toBe(true);
+    const sentences = sentencesOf(section.blocks.map(block => (block.kind === "paragraph" ? block.text : "")).join(" "));
+    const quotes = TABLE.filter(row => row.section === "Forge provider" && row.source === "docs").map(row => renderedOf(row.quote));
+    expect(sentences.filter(sentence => !quotes.includes(sentence) && !FORGE_UNBOUND_SENTENCES.includes(sentence))).toEqual([]);
+    for (const quote of quotes) expect(sentences.filter(sentence => sentence === quote), quote).toHaveLength(1);
+    for (const unbound of FORGE_UNBOUND_SENTENCES) expect(sentences.filter(sentence => sentence === unbound), unbound).toHaveLength(1);
+    expect(sentences).toHaveLength(quotes.length + FORGE_UNBOUND_SENTENCES.length);
+  });
+});
+
+/**
+ * wb-b9n.2 (rule 16): row F6's identity as a literal, never derived from TABLE - the sentence whole, every half with its tier
+ * and its reason (or "pinned"), then every pin as "half | tier | file | describe path | title" - so a shortened sentence, a
+ * dropped, swapped or re-homed pin, a dropped or reworded half or a relabelled tier reads red.
+ */
+const FROZEN_F6: readonly string[] = [
+  "quote | A Forge verdict or verification reference warrants only its exact acceptance predicate at its declared source basis, and Workbench captions and previews never restate a pass as general or universal software correctness.",
+  "half | exact-acceptance-predicate | test | pinned",
+  "half | declared-source-basis | test | pinned",
+  "half | forge-pass-captions | test | pinned",
+  "half | other-captions | test | PARTIAL by design: the forge-pass-captions half binds the exact pass captions of the three Forge readers (the gate.status workspace and package captions, the gate.run operation caption and the forge-operation evidence preview) and the evidence producer's never-verified scan; no landed case walks every other Workbench caption or preview path (the workflow card and dialog, control replies, reconcile rows) for a general or universal correctness restatement of a single pass (the wb-kku9.4 receipt-composition census judges composition across producers, not one producer's pass), so the rest of the clause has no falsifier today and is never reported as covered; a seat that lands such a walk flips this half to a pin consciously",
+  "exact-acceptance-predicate | test | test/workbench-forge-observer.test.ts | Forge gate.status reader adapter | withholds workspace success that the read status or a declared verdict does not support, and says so",
+  "exact-acceptance-predicate | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the measured --only selection (1 of 3 steps) renders partial with its own facet and never success, whatever command status the reply states",
+  "exact-acceptance-predicate | test | test/workbench-forge-evidence.test.ts | forge-operation evidence reader | C1: an id mismatch between ref and reading, or a reading naming no operation, is a validation refusal never a substituted result",
+  "declared-source-basis | test | test/workbench-forge-observer.test.ts | Forge gate.status reader adapter | F9 (wb-4ap.1): the measured STALE row carries its derived_from digest B as the package subjectBasis, never its source_digest A",
+  "declared-source-basis | test | test/workbench-forge-evidence.test.ts | forge-operation evidence reader | C2: authoritative_current=false stays historical and indeterminate, never current verification",
+  "forge-pass-captions | test | test/workbench-forge-observer.test.ts | Forge gate.status reader adapter | F2: a current failed gate stays failed despite transport success, and current success is success",
+  "forge-pass-captions | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone",
+  "forge-pass-captions | test | test/workbench-forge-evidence.test.ts | forge-operation evidence reader | C1: a valid ref re-reads exactly once through the injected seam and loads EvidenceContent-shaped data",
+  "forge-pass-captions | test | test/workbench-evidence-loader.test.ts | producer-mapping conformance pass (wb-6ze.20, docs/workbench/20 § Producer mapping) | the producer module imports no SDK or child_process and never labels a result verified",
+];
+/** A row's identity in FROZEN_F6's form: the sentence, one line per half (tier, then reason or "pinned"), then bindingOf's pin lines. */
+const f6IdentityOf = (row: Row): string[] => [`quote | ${row.quote}`, ...row.halves.map(half => `half | ${half.id} | ${tierCommand(half.tier)} | ${half.reason ?? "pinned"}`), ...bindingOf(row)];
+
+/**
+ * wb-b9n.2 RECEIPT ANCHOR (rule 16 CT5/CT6, the 6ze.39 class): the receipt of record repeats row F6's identity OUTSIDE this
+ * file - its line count and the SHA-256 of f6IdentityOf's lines joined by newlines - as one B9N2_F6_IDENTITY JSON item of its
+ * dated entry, read through the rendered view (docsSection) under the receipt's own level-1 title, so a pin, a half or the row
+ * removed, swapped or reordered in TABLE and in every literal here together still reds against the receipt. A digest, not the
+ * lines: the receipt is a docs/workbench page, which the docs walkers judge sentence by sentence.
+ */
+const F6_RECEIPT_FILE = "docs/workbench/receipts/wb-b9n.2.md";
+const F6_RECEIPT_ENTRY = "2026-10-26 receipt: the Forge provider claim-scope sentence and docs/07 census row F6";
+const F6_IDENTITY_MARK = "Identity of record: B9N2_F6_IDENTITY ";
+/** The receipt shape's first line (standing rule 15): "# <bead>: <bead title>"; the entry is bound under that title. */
+const F6_RECEIPT_OPENING = "# wb-b9n.2: ";
+
+interface RecordedIdentity {
+  readonly row: string;
+  readonly lines: number;
+  readonly sha256: string;
+}
+type ReceiptIdentity = { readonly ok: true; readonly identity: RecordedIdentity } | { readonly ok: false; readonly why: string };
+
+const isRecordedIdentity = (value: unknown): value is RecordedIdentity =>
+  isRecord(value) &&
+  Object.keys(value).length === 3 &&
+  value.row === "F6" &&
+  typeof value.lines === "number" &&
+  Number.isInteger(value.lines) &&
+  typeof value.sha256 === "string" &&
+  /^[0-9a-f]{64}$/.test(value.sha256);
+
+/** The one B9N2_F6_IDENTITY item of the receipt entry, parsed; any other shape is a named refusal. */
+function f6ReceiptIdentity(markdown: string): ReceiptIdentity {
+  const opening = markdown.split("\n", 1)[0] ?? "";
+  if (!opening.startsWith(F6_RECEIPT_OPENING)) return { ok: false, why: `${F6_RECEIPT_FILE}: the first line does not open "${F6_RECEIPT_OPENING}" (standing rule 15)` };
+  const section = docsSection(markdown, F6_RECEIPT_ENTRY, 2, [opening.slice(2)]);
+  if (!section.ok) return { ok: false, why: `${F6_RECEIPT_FILE}: ${section.why}` };
+  if (section.hasHtml) return { ok: false, why: `${F6_RECEIPT_FILE}: the entry carries HTML, which can hide what its source says` };
+  const items = section.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : [])).filter(text => text.startsWith(F6_IDENTITY_MARK));
+  if (items.length !== 1) return { ok: false, why: `${F6_RECEIPT_FILE}: the entry renders ${items.length} B9N2_F6_IDENTITY items, not exactly one` };
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse((items[0] ?? "").slice(F6_IDENTITY_MARK.length));
+  } catch (error) {
+    return { ok: false, why: `${F6_RECEIPT_FILE}: the B9N2_F6_IDENTITY item is not JSON (${error instanceof Error ? error.message : String(error)})` };
+  }
+  if (!isRecordedIdentity(parsed)) return { ok: false, why: `${F6_RECEIPT_FILE}: the B9N2_F6_IDENTITY item is not one {row: "F6", lines, sha256} record` };
+  return { ok: true, identity: parsed };
+}
+
+/** Every disagreement between a table's row F6 and the receipt's identity of record, naming the row and its sentence. */
+function f6ReceiptFindings(table: readonly Row[], identity: RecordedIdentity): string[] {
+  const row = table.find(candidate => candidate.row === identity.row);
+  if (row === undefined) return [`row ${identity.row}: the receipt records it but the table holds no such row`];
+  const lines = f6IdentityOf(row);
+  const digest = bindingDigest(lines);
+  if (lines.length === identity.lines && digest === identity.sha256) return [];
+  return [`row F6 ("${row.quote}"): the table's identity is ${lines.length} lines (sha256 ${digest}), not the receipt's ${identity.lines} (sha256 ${identity.sha256})`];
+}
+
+describe("wb-b9n.2 docs/workbench/07 row F6: the Forge claim-scope sentence, frozen and anchored in its receipt", () => {
+  const rowF6 = (table: readonly Row[] = TABLE): Row | undefined => table.find(candidate => candidate.row === "F6");
+  const withF6 = (change: (row: Row) => Row): readonly Row[] => TABLE.map(row => (row.row === "F6" ? change(row) : row));
+
+  it("AC1 (wb-b9n.2): row F6 quotes the whole claim-scope sentence, binds its clauses by file, describe path, verbatim title and tier, records the unpinned rest, and is frozen as a literal", () => {
+    const row = rowF6();
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe("Forge provider");
+    expect(row.source).toBe("docs");
+    expect(f6IdentityOf(row)).toEqual(FROZEN_F6);
+    expect(row.halves.map(half => `${half.id}:${half.pins.length}`)).toEqual(["exact-acceptance-predicate:3", "declared-source-basis:2", "forge-pass-captions:4", "other-captions:0"]);
+    expect(row.halves.filter(half => half.reason === undefined).every(half => half.tier === "default-gate" && half.pins.every(entry => entry.suite !== undefined))).toBe(true);
+    // The sentence is the paragraph's own: one whole sentence of the Forge provider source, after the posture sentence and before the F3 sentence.
+    const markdown = SECTION_MARKDOWN["Forge provider"] ?? "";
+    expect(markdown.split(`build and packaging. ${row.quote} Workspace Families`)).toHaveLength(2);
+  });
+
+  it("F6 receipt anchor (rule 16 CT5/CT6): row F6's identity is the one the receipt of record names, read from receipts/wb-b9n.2.md through the rendered view, never from TABLE", () => {
+    const recorded = f6ReceiptIdentity(readRepo(F6_RECEIPT_FILE));
+    expect(recorded.ok, recorded.ok ? "" : recorded.why).toBe(true);
+    if (!recorded.ok) return;
+    expect(f6ReceiptFindings(TABLE, recorded.identity)).toEqual([]);
+    expect(recorded.identity.lines).toBe(14);
+  });
+
+  it("F6 receipt anchor falsifiers: a pin, a half or the row dropped, swapped, reworded, relabelled or reordered in the table (and in every literal of this file with it) reds against the receipt, naming the row and its sentence", () => {
+    const recorded = f6ReceiptIdentity(readRepo(F6_RECEIPT_FILE));
+    expect(recorded.ok).toBe(true);
+    if (!recorded.ok) return;
+    const named6 = `row F6 ("${CLAIM_SCOPE_SENTENCE}"): the table's identity is`;
+    const halfOf = (row: Row, id: string, change: (half: Half) => Half): Row => ({ ...row, halves: row.halves.map(half => (half.id === id ? change(half) : half)) });
+    const cases: readonly [string, readonly Row[], string][] = [
+      ["a dropped pin", withF6(row => halfOf(row, "forge-pass-captions", half => ({ ...half, pins: half.pins.slice(1) }))), `${named6} 13 lines`],
+      [
+        "a same-seam swapped pin",
+        withF6(row => halfOf(row, "forge-pass-captions", half => ({ ...half, pins: half.pins.map(entry => (entry.title.startsWith("C1: a valid ref") ? pin("forge-evidence", "C2: an empty package list judges nothing", [FORGE_EVIDENCE_SUITE]) : entry)) }))),
+        `${named6} 14 lines`,
+      ],
+      ["a dropped half", withF6(row => ({ ...row, halves: row.halves.filter(half => half.id !== "other-captions") })), `${named6} 13 lines`],
+      ["a reworded reason", withF6(row => halfOf(row, "other-captions", half => ({ ...half, reason: "PARTIAL by design: the other caption paths are not walked." }))), `${named6} 14 lines`],
+      ["a relabelled tier", withF6(row => halfOf(row, "declared-source-basis", half => ({ ...half, tier: "native-read" }))), `${named6} 14 lines`],
+      ["reordered halves", withF6(row => ({ ...row, halves: [...row.halves].reverse() })), `${named6} 14 lines`],
+      ["a dropped row", TABLE.filter(row => row.row !== "F6"), "row F6: the receipt records it but the table holds no such row"],
+    ];
+    expect(cases.map(([name]) => name)).toEqual(["a dropped pin", "a same-seam swapped pin", "a dropped half", "a reworded reason", "a relabelled tier", "reordered halves", "a dropped row"]);
+    for (const [name, table, expected] of cases) {
+      expect(table, `${name} is a real edit`).not.toEqual(TABLE);
+      expect(f6ReceiptFindings(table, recorded.identity).some(line => line.startsWith(expected)), name).toBe(true);
+    }
+  });
+
+  it("F6 receipt shape: the identity item relabelled, duplicated, hidden in a comment, given a fractional line count or re-homed under another title is refused, naming the receipt", () => {
+    const source = readRepo(F6_RECEIPT_FILE);
+    const item = /- Identity of record: `B9N2_F6_IDENTITY [^\n]*/;
+    const shapes: readonly [string, string][] = [
+      ["the identity item relabelled", source.replace("- Identity of record: `B9N2_F6_IDENTITY ", "- Identity: `B9N2_F6_IDENTITY ")],
+      ["the identity item duplicated", source.replace(item, match => `${match}\n${match}`)],
+      ["the identity item hidden in a comment", source.replace(item, match => `<!-- ${match} -->`)],
+      ["a line count made fractional", source.replace('"lines":14,', '"lines":14.5,')],
+      ["the entry re-homed under another title", source.replace(F6_RECEIPT_OPENING, "# wb-b9n.3: ")],
+    ];
+    expect(shapes.map(([name]) => name)).toEqual(["the identity item relabelled", "the identity item duplicated", "the identity item hidden in a comment", "a line count made fractional", "the entry re-homed under another title"]);
+    for (const [name, mutant] of shapes) {
+      expect(mutant, `${name} is a real edit`).not.toBe(source);
+      const read = f6ReceiptIdentity(mutant);
+      expect(read.ok, name).toBe(false);
+      if (!read.ok) expect(read.why, name).toContain(F6_RECEIPT_FILE);
+    }
+  });
+
+  it("K10 (wb-b9n.2) names row F6 (and only it) when the claim-scope sentence lets a caption widen a pass", () => {
+    const edit = (heading: string, body: string): string => (heading === "Forge provider" ? body.replace("never restate a pass as general", "may restate a pass as general") : body);
+    const lines = docsFailures(synthetic(edit));
+    expect(named(lines)).toEqual(["row F6"]);
+    expect(lines.some(line => line.includes("Forge provider is not exactly its frozen paragraph"))).toBe(true);
+  });
+
+  it("M6 (wb-b9n.2): every row-F6 pin renamed by one character is absent from the report and red, naming row F6, its half, the file and the title", () => {
+    const row = rowF6();
+    const pins = row === undefined ? [] : row.halves.flatMap(half => half.pins.map(entry => ({ half, entry })));
+    expect(pins).toHaveLength(9);
+    if (row === undefined) return;
+    for (const { half, entry } of pins) {
+      const wrong = { ...entry, title: `${entry.title}.` };
+      const verdicts = judge(REPORT, [casePin(half, wrong)]);
+      expect(verdicts[0]?.code, wrong.title).toBe("absent");
+      const [line] = failures(row, half, verdicts);
+      expect(line, wrong.title).toContain(`row F6/${half.id}`);
+      expect(line, wrong.title).toContain(entry.file);
+      expect(line, wrong.title).toContain(wrong.title);
+    }
+  });
+});
+
+/**
+ * wb-ur08 respin #1 (owner ruling R739: the TERMINAL enumerate-the-resolvable form under rules 14 and 19(c); hop 3, the last,
+ * of the EXPECTATION chain omxf 247 -> lybr 251 -> ur08; the R694 follow-up of the landing-251 PREP F1 READER-CONSEQUENCE G4
+ * survivor). The lybr pin binds each read of EXPECTATION by identifier, site and reader TEXT; this pin binds where each
+ * CONSEQUENCE reader's statement sits and what it does, by this file's own AST and checker (the lybr program of this one
+ * source: parsed and bound, never run). The consequence readers are CONSEQUENCE_ROSTER, the READ_ROSTER readers minus the two
+ * failure-message templates (payload pushed after a decision, never a decision); their sites are CONSEQUENCE_SITES.
+ * THE CRITERION (R739): this pin's roster is the RESOLVABLE CLASSES of CONSEQUENCE_CLASSES, never the escapes found so far.
+ * Each class names the syntax it reads, the claim it serves, the line kind its falsifier rows draw, and those rows; the
+ * CLASSES row holds every falsifier row to exactly one class and every class to at least one witness, and the classes are
+ * anchored out of file (the fixture's consequenceClasses). Claiming exactly these classes and no more:
+ * (1) SITE-BOUND AND UNGUARDED (classes GUARD, CLOSURE, NAMESAKE, REGISTRAR; the respin-#1 gate's U2 SITE-NAMESAKE survivor is
+ * CURED here): walking from a consequence reader's statement up to the module, the only function-like nodes passed are its
+ * site's ONE node - a module-scope function declaration, or the callback of an it/test registration - and the describe
+ * callbacks above it; no if, try, for, for-in, for-of, while, do, switch or labeled statement stands on that path (around
+ * the statement, around the site's registration or around a describe above it); every registration on the path calls the
+ * vitest import of its own name, as this file's checker resolves it (never a shadow), and one through .each iterates a bare
+ * identifier of a module-scope const (never an inline or computed table such as it.each([])); and exactly one node carries
+ * each site's key in this file - a second function declaration of a function site's name, or a second registration of a
+ * test site's title head, is a NAMESAKE (lines "guarded", naming the nearest guard, and "namesake").
+ * (2) CONDITION (class CONDITION): no if on that path names EXPECTATION in its condition (line "cond-expectation").
+ * (3) RETURN AHEAD (class RETURN-AHEAD): no return outside a nested function precedes the reader's statement, or a
+ * registration on its path, in any enclosing block up to the module (line "early-exit"; a throw is loud and not counted).
+ * (4) PUSH (class PUSH): each provenance check's consequence is exactly if (<the check>) out.push(<one template literal>),
+ * with no else and no nested guard (line "push-consequence").
+ * (5) SINK (class SINK; the gate's F1 SINK-SUBCLASS is CURED here): every declaration of a sink named out is a const
+ * initialized by [] or by a call of a module-scope function whose last statement is return out, made directly in the body
+ * of a module-scope function whose last statement is return out with no return between the two; every other reference to
+ * an identifier out (a member name .out aside) is out.push(...) or that last return (line "sink").
+ * (6) ASSERT (class ASSERT; the gate's F2 MATCHER-PROTO is CURED here): every reference to expect is an unaliased import of it
+ * from vitest or the head of a matcher statement expect(...)[.not|.resolves|.rejects].<matcher>(...); whose matcher call is
+ * the whole statement, awaited or not (line "assert"). ANCHOR reports the committed source's lines by a plain throw as well as
+ * by its matcher, so no override this claim refuses can empty the matcher that reports it.
+ * ROUTED to the lybr reads pin (rows ROUTE-*): an expression-level guard or sibling inside a reader's statement, or a site
+ * re-keyed (renamed, moved, or registered through a modifier such as .skip), changes the read's key; this pin then refuses to
+ * judge the page (no read keyed so) and the reads pin draws exactly the row's missing and unexpected lines.
+ * NOT CLAIMED, each a NAMED RESIDUAL with its pinned quiet row below: R-COORDINATED-CONSEQUENCE-ROSTER,
+ * R-COORDINATED-READS-TABLE, R-RUNTIME-OVERRIDE, R-DOWNSTREAM-DISCARD and R-RUNNER-CONTROL. CHAIN TERMINAL (R739): a later
+ * survivor outside the enumerated classes is record-only unless it contradicts a claim above.
+ * The findings of record, each verbatim in a row: the s24 G4 spec (G4); the respin-#1 gate's U2 members N1, N2 and N3 and
+ * its in-place LIVE variant (NAMESAKE-FUNCTION, NAMESAKE-ON-DISK, NAMESAKE-SUITE and NAMESAKE-IN-SITE, the three members
+ * together U2-NAMESAKE-FULL); F1's N5b and N5 sinks (SINK-SUBCLASS, SINK-OWN-PUSH); F2's N7 (MATCHER-PROTO).
+ */
+/** The consequence class a rostered reader stands for: a provenance check's push, or an assertion. */
+type ConsequenceKind = "push" | "assertion";
+/** One AST-located consequence edit of this file's source, applied in memory to a page that is parsed and bound, never run. */
+type ConsequenceEdit =
+  | { readonly op: "guard"; readonly read: string; readonly nested: string }
+  | { readonly op: "wrap-if"; readonly read: string; readonly condition: string }
+  | { readonly op: "wrap-try"; readonly read: string; readonly rethrow: boolean }
+  | { readonly op: "wrap-while"; readonly read: string; readonly condition: string }
+  | { readonly op: "wrap-closure"; readonly read: string }
+  | { readonly op: "wrap-label"; readonly read: string; readonly exit: string }
+  | { readonly op: "push-spread"; readonly read: string; readonly condition: string }
+  | { readonly op: "fn-before-return"; readonly fn: string; readonly text: string }
+  | { readonly op: "prepend"; readonly site: string; readonly text: string }
+  | { readonly op: "nest-function"; readonly read: string; readonly call: string }
+  | { readonly op: "namesake"; readonly reads: readonly string[]; readonly condition: string; readonly at: "suite" | "site"; readonly prelude: string }
+  | { readonly op: "wrap-registration"; readonly site: string; readonly condition: string }
+  | { readonly op: "suite-prepend"; readonly site: string; readonly text: string }
+  | { readonly op: "sink-initializer"; readonly fn: string; readonly text: string }
+  | { readonly op: "guard-expression"; readonly read: string; readonly condition: string }
+  | { readonly op: "registrar"; readonly site: string; readonly to: string }
+  | { readonly op: "import-vitest"; readonly name: string }
+  | { readonly op: "after-call"; readonly fn: string; readonly callee: string; readonly text: string }
+  | { readonly op: "runtime-skip"; readonly site: string };
+/** A CONSEQUENCE row: [id, the edits of this file's source it reads (null: the committed source), the lines the pin must draw]. */
+type ConsequenceRow = readonly [string, readonly ConsequenceEdit[] | null, readonly string[]];
+/** The rostered consequence readers: [read key, its kind] - the READ_ROSTER readers minus the two failure-message templates. */
+const CONSEQUENCE_ROSTER: readonly (readonly [string, ConsequenceKind])[] = [
+  [readKey(READ_SITE_FAILURES, "expectation.provenance.path !== EXPECTATION.path"), "push"],
+  [readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK), "push"],
+  [readKey(READ_SITE_LIVE, READ_PROVENANCE_EQUAL), "assertion"],
+  [readKey(READ_SITE_LIVE, READ_LIVE_PIN), "assertion"],
+  [readKey(READ_SITE_ON_DISK, READ_PROVENANCE_EQUAL), "assertion"],
+  [readKey(READ_SITE_LITERAL, "expect(reading.pin, `...`).toEqual(edit === null ? EXPECTATION : undefined)"), "assertion"],
+  [readKey(READ_SITE_RESIDUAL, 'expect(page.expectation.provenance.sha256, "the fixture carries the edit").not.toBe(EXPECTATION.sha256)'), "assertion"],
+  [readKey(READ_SITE_RESIDUAL, 'expect(moved, "the page moves the literal").not.toBe(EXPECTATION.sha256)'), "assertion"],
+  [readKey(READ_SITE_RESIDUAL, "expect(expectationLiteral(page.source)).toEqual({ findings: [], pin: { path: EXPECTATION.path, sha256: moved } })"), "assertion"],
+];
+/** The s24 G4 and respin-#1 N1 condition, verbatim: the expectation's digest differs from the on-disk fixture's current digest. */
+const G4_DIFFERS = "expectation.provenance.sha256 !== sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE)))";
+/** The gate's s24 G4 guard, verbatim: it exempts the on-disk fixture's current digest. */
+const G4_GUARD = `if (${G4_DIFFERS})`;
+/** The gate's s24 G4 never-true wrap condition, verbatim (also the respin-#1 N2 and in-place LIVE namesake guard). */
+const G4_WRAP = "expectation.text.length < 0";
+/** The exemption G4's guard draws, as a condition: the expectation's digest is the on-disk fixture's current digest. */
+const G4_EXEMPT = "expectation.provenance.sha256 === sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE)))";
+/** An always-true condition that names no read: the head of a silent early return or break. */
+const ALWAYS = "OMXF_WHERE.length > 0";
+/** The respin-#1 N3 never-true registration guard, verbatim. */
+const NEVER = "OMXF_WHERE.length < 0";
+/** The respin-#1 N3 namesake's prelude, verbatim: it re-reads the expectation the moved statements consume. */
+const LIVE_PRELUDE = "const { expectation } = liveReading(ROOT);";
+/** The respin-#1 gate's F1 sinks, verbatim: N5b, an Array subclass whose push drops the digest line, and N5, an own push that drops every line. */
+const N5B_SINK = `${G4_EXEMPT} ? new (class extends Array<string> { override push(...lines: string[]): number { return super.push(...lines.filter(line => !line.includes("expectation-digest"))); } })() : []`;
+const N5_SINK = `${G4_EXEMPT} ? Object.assign([] as string[], { push: (..._lines: string[]): number => 0 }) : []`;
+/** The respin-#1 gate's F2 N7, verbatim: the matcher's prototype reached through a sanctioned call head and emptied. */
+const N7_PROTO = "Object.getPrototypeOf(expect(0)).toEqual = function (): void {};";
+const DIGEST_READ = readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK);
+const LIVE_EQUAL_READ = readKey(READ_SITE_LIVE, READ_PROVENANCE_EQUAL);
+const LIVE_PIN_READ = readKey(READ_SITE_LIVE, READ_LIVE_PIN);
+const ON_DISK_READ = readKey(READ_SITE_ON_DISK, READ_PROVENANCE_EQUAL);
+/** The omxf describe's seven consequence readers in roster order: every reader a suite-level edit there reaches. */
+const SUITE_READS: readonly string[] = CONSEQUENCE_ROSTER.map(([key]) => key).filter(key => !key.startsWith(`${READ_SITE_FAILURES} | `));
+/** The namesake line a page draws when it carries a second node keyed as one rostered site. */
+const twoCarriers = (site: string): string => `namesake: ${site} -> 2 nodes carry this site key`;
+/**
+ * wb-ur08: row CONSEQUENCES reads the committed source, quiet; each falsifier edits it in memory by AST position and must draw
+ * exactly its lines. Each falsifier witnesses one class of CONSEQUENCE_CLASSES (the CLASSES row): G4 is the s24 finding of
+ * record; the WRAP rows and GUARD-REGISTRATION wrap a reader's statement or its site's registration, EACH-INLINE-TABLE
+ * registers LIVE through .each over an inline empty table (GUARD); WRAP-CLOSURE
+ * wraps a statement in a never-run closure (CLOSURE); the NAMESAKE rows are the respin-#1 gate's U2 members, verbatim, and an
+ * unguarded second registration (NAMESAKE); REGISTRAR-SHADOW shadows it above the omxf registrations (REGISTRAR); the COND
+ * rows consult the literal (CONDITION); the EXIT rows return ahead of a reader and of a registration (RETURN-AHEAD);
+ * GUARD-EXEMPT and PUSH-SPREAD bend a push (PUSH); the SINK rows empty, shorten, subclass or exempt a sink (SINK); the ASSERT
+ * rows and MATCHER-PROTO override, alias or empty a matcher (ASSERT).
+ */
+const UR08_CONSEQUENCE: readonly ConsequenceRow[] = [
+  ["CONSEQUENCES", null, []],
+  [
+    "G4",
+    [
+      { op: "guard", read: DIGEST_READ, nested: G4_GUARD },
+      { op: "wrap-if", read: LIVE_EQUAL_READ, condition: G4_WRAP },
+      { op: "wrap-if", read: LIVE_PIN_READ, condition: G4_WRAP },
+      { op: "wrap-if", read: ON_DISK_READ, condition: G4_WRAP },
+    ],
+    [
+      `push-consequence: ${DIGEST_READ} -> a nested if`,
+      `guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`,
+      `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`,
+      `guarded: ${ON_DISK_READ} -> its statement sits inside an if`,
+    ],
+  ],
+  ["GUARD-EXEMPT", [{ op: "guard", read: DIGEST_READ, nested: G4_GUARD }], [`push-consequence: ${DIGEST_READ} -> a nested if`]],
+  ["WRAP-LIVE-PIN", [{ op: "wrap-if", read: LIVE_PIN_READ, condition: G4_WRAP }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`]],
+  ["WRAP-LIVE-EQUAL", [{ op: "wrap-if", read: LIVE_EQUAL_READ, condition: G4_WRAP }], [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`]],
+  ["WRAP-ON-DISK", [{ op: "wrap-if", read: ON_DISK_READ, condition: G4_WRAP }], [`guarded: ${ON_DISK_READ} -> its statement sits inside an if`]],
+  ["WRAP-TRY", [{ op: "wrap-try", read: LIVE_PIN_READ, rethrow: false }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a try`]],
+  ["WRAP-TRY-RETHROW", [{ op: "wrap-try", read: LIVE_PIN_READ, rethrow: true }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a try`]],
+  ["WRAP-WHILE", [{ op: "wrap-while", read: LIVE_PIN_READ, condition: G4_WRAP }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a while`]],
+  ["WRAP-CLOSURE", [{ op: "wrap-closure", read: ON_DISK_READ }], [`guarded: ${ON_DISK_READ} -> its statement sits inside a closure`]],
+  ["WRAP-LABEL", [{ op: "wrap-label", read: LIVE_PIN_READ, exit: ALWAYS }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a label`]],
+  [
+    "GUARD-REGISTRATION",
+    [{ op: "wrap-registration", site: READ_SITE_LIVE, condition: NEVER }],
+    [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`, `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`],
+  ],
+  [
+    "EACH-INLINE-TABLE",
+    [{ op: "registrar", site: READ_SITE_LIVE, to: "it.each([])" }],
+    [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an each over a table that is not a module-scope const`, `guarded: ${LIVE_PIN_READ} -> its statement sits inside an each over a table that is not a module-scope const`],
+  ],
+  [
+    "NAMESAKE-FUNCTION",
+    [{ op: "nest-function", read: DIGEST_READ, call: G4_DIFFERS }],
+    [`guarded: ${DIGEST_READ} -> its statement sits inside a nested function`, twoCarriers(READ_SITE_FAILURES)],
+  ],
+  [
+    "NAMESAKE-SUITE",
+    [{ op: "namesake", reads: [LIVE_EQUAL_READ, LIVE_PIN_READ], condition: NEVER, at: "suite", prelude: LIVE_PRELUDE }],
+    [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`, `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`, twoCarriers(READ_SITE_LIVE)],
+  ],
+  [
+    "NAMESAKE-IN-SITE",
+    [{ op: "namesake", reads: [LIVE_EQUAL_READ, LIVE_PIN_READ], condition: G4_WRAP, at: "site", prelude: "" }],
+    [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`, `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`, twoCarriers(READ_SITE_LIVE)],
+  ],
+  [
+    "NAMESAKE-ON-DISK",
+    [{ op: "namesake", reads: [ON_DISK_READ], condition: G4_WRAP, at: "site", prelude: "" }],
+    [`guarded: ${ON_DISK_READ} -> its statement sits inside an if`, twoCarriers(READ_SITE_ON_DISK)],
+  ],
+  ["NAMESAKE-UNGUARDED", [{ op: "namesake", reads: [LIVE_EQUAL_READ, LIVE_PIN_READ], condition: "", at: "suite", prelude: LIVE_PRELUDE }], [twoCarriers(READ_SITE_LIVE)]],
+  [
+    "U2-NAMESAKE-FULL",
+    [
+      { op: "nest-function", read: DIGEST_READ, call: G4_DIFFERS },
+      { op: "namesake", reads: [ON_DISK_READ], condition: G4_WRAP, at: "site", prelude: "" },
+      { op: "namesake", reads: [LIVE_EQUAL_READ, LIVE_PIN_READ], condition: NEVER, at: "suite", prelude: LIVE_PRELUDE },
+    ],
+    [
+      `guarded: ${DIGEST_READ} -> its statement sits inside a nested function`,
+      `guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`,
+      `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`,
+      `guarded: ${ON_DISK_READ} -> its statement sits inside an if`,
+      twoCarriers(READ_SITE_FAILURES),
+      twoCarriers(READ_SITE_LIVE),
+      twoCarriers(READ_SITE_ON_DISK),
+    ],
+  ],
+  [
+    "REGISTRAR-SHADOW",
+    [{ op: "suite-prepend", site: READ_SITE_LIVE, text: "const it = (..._args: unknown[]): void => undefined;" }],
+    SUITE_READS.map(read => `guarded: ${read} -> its statement sits inside a registration whose it is not the vitest import`),
+  ],
+  [
+    "COND-EXPECTATION",
+    [{ op: "wrap-if", read: LIVE_PIN_READ, condition: "EXPECTATION !== undefined" }],
+    [`guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`, `cond-expectation: ${LIVE_PIN_READ} -> the guard condition names EXPECTATION`],
+  ],
+  [
+    "COND-OUTER",
+    [
+      { op: "wrap-if", read: LIVE_PIN_READ, condition: "EXPECTATION !== undefined" },
+      { op: "wrap-try", read: LIVE_PIN_READ, rethrow: true },
+    ],
+    [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a try`, `cond-expectation: ${LIVE_PIN_READ} -> the guard condition names EXPECTATION`],
+  ],
+  ["EXIT-RETURN", [{ op: "prepend", site: READ_SITE_LIVE, text: `if (${ALWAYS}) return;` }], [`early-exit: ${LIVE_EQUAL_READ} -> a return precedes its statement`, `early-exit: ${LIVE_PIN_READ} -> a return precedes its statement`]],
+  ["EXIT-SUITE", [{ op: "suite-prepend", site: READ_SITE_LIVE, text: `if (${ALWAYS}) return;` }], SUITE_READS.map(read => `early-exit: ${read} -> a return precedes its site's registration`)],
+  ["PUSH-SPREAD", [{ op: "push-spread", read: DIGEST_READ, condition: G4_EXEMPT }], [`push-consequence: ${DIGEST_READ} -> the push argument is not one template literal`]],
+  ["SINK-ASSIGN", [{ op: "fn-before-return", fn: "expectationFailures", text: "out.length = 0;" }], ["sink: out.length = 0;"]],
+  ["SINK-METHOD", [{ op: "fn-before-return", fn: "expectationFailures", text: "out.pop();" }], ["sink: out.pop();"]],
+  ["SINK-UPDATE", [{ op: "fn-before-return", fn: "expectationFailures", text: "out.length--;" }], ["sink: out.length--;"]],
+  ["SINK-SUBCLASS", [{ op: "sink-initializer", fn: "expectationFailures", text: N5B_SINK }], [`sink: const out: string[] = ${N5B_SINK};`]],
+  ["SINK-OWN-PUSH", [{ op: "sink-initializer", fn: "expectationFailures", text: N5_SINK }], [`sink: const out: string[] = ${N5_SINK};`]],
+  ["SINK-EXEMPT-RETURN", [{ op: "fn-before-return", fn: "expectationFailures", text: `if (${G4_EXEMPT}) return [];` }], ["sink: const out: string[] = []; -> a return stands between the declaration and its function's last statement"]],
+  ["ASSERT-EXTEND", [{ op: "prepend", site: READ_SITE_LIVE, text: 'expect.extend({ toEqual: () => ({ pass: true, message: () => "" }) });' }], ['assert: expect.extend({ toEqual: () => ({ pass: true, message: () => "" }) });']],
+  ["ASSERT-ALIAS", [{ op: "prepend", site: READ_SITE_LIVE, text: "const verdictOf = expect;" }], ["assert: const verdictOf = expect;"]],
+  ["MATCHER-PROTO", [{ op: "prepend", site: READ_SITE_LIVE, text: N7_PROTO }], [`assert: ${N7_PROTO}`]],
+];
+/** A ROUTED row: [id, the edits of this file's source it reads, the lines the lybr reads pin must draw over the page]. */
+type RoutedRow = readonly [string, readonly ConsequenceEdit[], readonly string[]];
+/** The omxf describe's title, the site its reads re-key to when their registration is no longer a site. */
+const OMXF_SUITE = "describe wb-omxf R677 + R695 full docs19 section equality (explicit expectation with asserted provenance, no NAMES_RF selection)";
+/**
+ * wb-ur08: the routed families, each read by the lybr reads pin instead of this one: an expression-level guard re-keys the
+ * reader TEXT (ROUTE-EXPRESSION); a registration modifier unmakes the site, so its reads re-key to the describe above it
+ * (ROUTE-MODIFIER). Over each page this pin refuses to judge (no read keyed so) and the reads pin draws exactly the lines.
+ */
+const UR08_ROUTED: readonly RoutedRow[] = [
+  ["ROUTE-EXPRESSION", [{ op: "guard-expression", read: LIVE_PIN_READ, condition: NEVER }], [`missing: ${LIVE_PIN_READ}`, `unexpected: ${readKey(READ_SITE_LIVE, `${NEVER} && ${READ_LIVE_PIN}`)}`]],
+  [
+    "ROUTE-MODIFIER",
+    [{ op: "registrar", site: READ_SITE_LIVE, to: "it.skip" }],
+    [`missing: ${LIVE_EQUAL_READ}`, `missing: ${LIVE_PIN_READ}`, `unexpected: ${readKey(OMXF_SUITE, READ_PROVENANCE_EQUAL)}`, `unexpected: ${readKey(OMXF_SUITE, READ_LIVE_PIN)}`],
+  ],
+];
+/** A resolvable class of the consequence pin (R739's criterion): what it reads, the claim it serves, the line kind its rows draw, its rows. */
+interface ConsequenceClass {
+  readonly id: string;
+  readonly claim: string;
+  readonly reads: string;
+  readonly line: string;
+  readonly rows: readonly string[];
+}
+/** R739: the enumerated resolvable classes - the criterion this pin claims, each witnessed by its falsifier rows. */
+const CONSEQUENCE_CLASSES: readonly ConsequenceClass[] = [
+  {
+    id: "GUARD",
+    claim: "(1)",
+    reads: "an if, try, for, for-in, for-of, while, do, switch or labeled statement anywhere on the path from a consequence reader's statement to the module: around the statement, around its site's registration, or around a describe above it; and a registration on that path through .each over a table other than a bare identifier of a module-scope const",
+    line: "guarded",
+    rows: ["G4", "WRAP-LIVE-PIN", "WRAP-LIVE-EQUAL", "WRAP-ON-DISK", "WRAP-TRY", "WRAP-TRY-RETHROW", "WRAP-WHILE", "WRAP-LABEL", "GUARD-REGISTRATION", "EACH-INLINE-TABLE"],
+  },
+  {
+    id: "CLOSURE",
+    claim: "(1)",
+    reads: "a function-like node on that path other than the site's one node and the describe callbacks above it: an arrow function, a function expression, a function declaration, a method or an accessor, or a test callback around the site's registration",
+    line: "guarded",
+    rows: ["WRAP-CLOSURE"],
+  },
+  {
+    id: "NAMESAKE",
+    claim: "(1)",
+    reads: "a second node carrying a rostered site's key: a function declaration of a function site's name below module scope, or a registration of a test site's title head under a guard, inside another test's callback or beside the site's own (the respin-#1 gate's U2 SITE-NAMESAKE class)",
+    line: "namesake",
+    rows: ["NAMESAKE-FUNCTION", "NAMESAKE-SUITE", "NAMESAKE-IN-SITE", "NAMESAKE-ON-DISK", "NAMESAKE-UNGUARDED", "U2-NAMESAKE-FULL"],
+  },
+  {
+    id: "REGISTRAR",
+    claim: "(1)",
+    reads: "a registration on that path whose it, test or describe this file's checker does not resolve to the vitest import of that name (a shadow, an unbound name or another import renamed to it)",
+    line: "guarded",
+    rows: ["REGISTRAR-SHADOW"],
+  },
+  { id: "CONDITION", claim: "(2)", reads: "an if on that path whose condition names EXPECTATION", line: "cond-expectation", rows: ["COND-EXPECTATION", "COND-OUTER"] },
+  {
+    id: "RETURN-AHEAD",
+    claim: "(3)",
+    reads: "a return outside nested functions ahead of the reader's statement, or of a registration on its path, in any enclosing block up to the module",
+    line: "early-exit",
+    rows: ["EXIT-RETURN", "EXIT-SUITE"],
+  },
+  { id: "PUSH", claim: "(4)", reads: "a provenance check whose consequence is not exactly if (<the check>) out.push(<one template literal>)", line: "push-consequence", rows: ["GUARD-EXEMPT", "PUSH-SPREAD"] },
+  {
+    id: "SINK",
+    claim: "(5)",
+    reads: "a reference to a sink named out other than out.push(...) and its function's last return; a declaration other than a const initialized by [] or by a call of a module-scope sink function, or one whose function returns between it and the last statement (the gate's F1 SINK-SUBCLASS)",
+    line: "sink",
+    rows: ["SINK-ASSIGN", "SINK-METHOD", "SINK-UPDATE", "SINK-SUBCLASS", "SINK-OWN-PUSH", "SINK-EXEMPT-RETURN"],
+  },
+  {
+    id: "ASSERT",
+    claim: "(6)",
+    reads: "a reference to expect other than an unaliased vitest import of it and the head of a matcher statement, including an assertion object reaching anything but its matcher call (the gate's F2 MATCHER-PROTO)",
+    line: "assert",
+    rows: ["ASSERT-EXTEND", "ASSERT-ALIAS", "MATCHER-PROTO"],
+  },
+];
+/** How a residual's quiet row builds its family's page: a judged table's form row removed with the literal moved, or a representative member. */
+type ResidualPage =
+  | { readonly kind: "coordinated"; readonly table: "UR08_CONSEQUENCE" | "LYBR_READS"; readonly form: string }
+  | { readonly kind: "member"; readonly edits: readonly ConsequenceEdit[]; readonly marks: readonly string[] };
+/** A named residual NOT CLAIMED by the consequence pin: its family, how its page is built, and its quiet and runtime readings. */
+interface ConsequenceResidual {
+  readonly id: string;
+  readonly family: string;
+  readonly page: ResidualPage;
+  /** What this file reads on the family's page. */
+  readonly reading: string;
+  /** What the whole census reads, run under the family's edit on disk. */
+  readonly runtime: string;
+}
+const UR08_RESIDUALS: readonly ConsequenceResidual[] = [
+  {
+    id: "R-COORDINATED-CONSEQUENCE-ROSTER",
+    family:
+      "a CONSEQUENCE row removed from the census's consequence table, its class's rows and frozen row count, its frozen-shape element and the fixture's consequenceRows and consequenceClasses together (any row keyed on it rewritten alike), the EXPECTATION sha256 literal moved to the edited fixture's bytes",
+    page: { kind: "coordinated", table: "UR08_CONSEQUENCE", form: "G4" },
+    reading:
+      "quiet: the page's table and class rows hold every row but the form row, its frozen shape lacks the element and counts the form row's class one row fewer, the consequence judgment and the reads pin draw no line over the page's source (the removal touches no read), and the literal-shape pin reads the moved literal as it reads the pinned one",
+    runtime:
+      "quiet for every member but its own form: with a CONSEQUENCE row other than G4 removed from the census table, its class's rows and frozen row count, its frozen-shape element and the fixture's consequenceRows and consequenceClasses together and the EXPECTATION sha256 literal moved (measured: WRAP-TRY), the whole census reads green, 0 failed | 225 passed; removing the form row G4 itself reds this quiet row and CONSEQUENCE FROZEN SHAPE (2 failed | 223 passed: the page's witness is gone); no reading in this file tells a reviewed row removal from a hollowing one, so the edit is the review: its diff drops the row from the fixture and moves the literal",
+  },
+  {
+    id: "R-COORDINATED-READS-TABLE",
+    family:
+      "a lybr READS row removed from LYBR_READS, its frozen-shape element and the fixture's readerRows together (the lybr PREP F5 generic coordinated anchor edit, its CT6-COORD form), the EXPECTATION sha256 literal moved to the edited fixture's bytes",
+    page: { kind: "coordinated", table: "LYBR_READS", form: "ALIAS-SPREAD" },
+    reading:
+      "quiet: the page's READS table holds every row but the form row, its frozen shape lacks the element, the consequence judgment and the reads pin draw no line over the page's source (the removal touches no read), and the literal-shape pin reads the moved literal as it reads the pinned one",
+    runtime:
+      "quiet for every member but its own form: with a READS row other than ALIAS-SPREAD removed from LYBR_READS, its frozen-shape element and the fixture's readerRows together and the EXPECTATION sha256 literal moved (measured: ALIAS-CONST), the whole census reads green, 0 failed | 225 passed; removing the form row ALIAS-SPREAD itself reds this quiet row and CONSEQUENCE FROZEN SHAPE (2 failed | 223 passed); no reading in this file tells a reviewed row removal from a hollowing one, so the edit is the review: its diff drops the row from the fixture's readerRows and moves the literal",
+  },
+  {
+    id: "R-RUNTIME-OVERRIDE",
+    family:
+      "the runtime a consequence reader or this pin's own judge calls, replaced through a channel that names neither a sink named out nor expect: a builtin's prototype (Array.prototype.push, String.prototype.includes), the hash or the file read, the typescript module the judge parses with, the runner's assertion objects reached through another vitest import (chai.Assertion.prototype), or code this file's AST never parses (an evaluated string, the lybr PREP F2 eval family that biome noGlobalEval refuses out of band)",
+    page: {
+      kind: "member",
+      edits: [
+        { op: "import-vitest", name: "chai" },
+        { op: "prepend", site: READ_SITE_LIVE, text: "chai.Assertion.prototype.toEqual = function (): void {};" },
+      ],
+      marks: ["chai.Assertion.prototype.toEqual = function (): void {};", ", chai }"],
+    },
+    reading: "quiet: the vitest import gains chai and LIVE empties chai's toEqual first; no consequence or reads line, since the page names no sink and expect only as before",
+    runtime:
+      "a full survivor of every assertion after it: with the member on disk (chai imported, LIVE emptying chai's toEqual first) the census reads 1 failed | 225 passed, only this quiet row (its page cannot carry the member a second time), and a wrong expected line in row G4 that alone reds 3 rows (ANCHOR, CONSEQUENCE G4, CONSEQUENCE FROZEN SHAPE) reads the same 1 failed under it: the hollowed matcher is read by no row of this file",
+  },
+  {
+    id: "R-DOWNSTREAM-DISCARD",
+    family:
+      "a pushed provenance line dropped after its sink returns, by a caller of a push site: a filter, slice or substitution of the result of expectationFailures or provenanceFailures in fullExampleFailures, expectedTables or a row (claim (5) binds a sink named out, never a caller's own binding)",
+    page: {
+      kind: "member",
+      edits: [{ op: "after-call", fn: "fullExampleFailures", callee: "provenanceFailures", text: '.filter(line => !line.includes("expectation-digest"))' }],
+      marks: ['provenanceFailures(subject, expectation).filter(line => !line.includes("expectation-digest"))'],
+    },
+    reading: "quiet: fullExampleFailures filters the digest line out of provenanceFailures's result; every push site and sink stays exactly its claimed shape",
+    runtime:
+      "loud: with the member on disk the census reads 16 failed | 210 passed - the ten ANCHOR-SIDE rows, P-ANCHOR-LIVE-DOCS, P-ANCHOR-IS-SUBJECT and the omxf R-COORDINATED-LITERAL-AND-ANCHOR quiet row (each expects the dropped digest line), this quiet row (its page cannot carry the member a second time) and both FROZEN SHAPE rows (judged-list cascades); the omxf rows read the drop at runtime, this pin does not",
+  },
+  {
+    id: "R-RUNNER-CONTROL",
+    family:
+      "a registered site whose body the runner stops or skips at runtime through a call rather than a return or a guard: the test context's skip, called as a member or by its bracketed name (the respin-#1 gate's N8 control), a hook that skips the test, or a registration through .each whose module-scope table holds no row at runtime",
+    page: { kind: "member", edits: [{ op: "runtime-skip", site: READ_SITE_LIVE }], marks: ['(ctx) => {\n    ctx["skip"]();'] },
+    reading: "quiet: LIVE's callback takes the test context and calls its skip first; a call is no return, no guard and no function on the path",
+    runtime:
+      "loud: with the member on disk the census reads 3 failed | 222 passed | 1 skipped - LIVE skips, the omxf FROZEN SHAPE judged list misses it, this quiet row cannot build its page (LIVE's callback already takes a parameter) and CONSEQUENCE FROZEN SHAPE cascades; the judged lists read the skip at runtime, this pin does not",
+  },
+];
+interface ConsequenceAnchor {
+  readonly consequenceRoster: readonly (readonly [string, ConsequenceKind])[];
+  readonly consequenceRows: readonly ConsequenceRow[];
+  readonly consequenceRouted: readonly RoutedRow[];
+  readonly consequenceClasses: readonly ConsequenceClass[];
+  readonly consequenceResiduals: readonly ConsequenceResidual[];
+}
+/** The consequence tables out of file: the fixture's own, read behind its pinned provenance (expectedTables refuses any other read). */
+function consequenceAnchor(expectation: Sourced): ConsequenceAnchor {
+  const tables: unknown = expectedTables(expectation);
+  if (!isRecord(tables) || ![tables.consequenceRoster, tables.consequenceRows, tables.consequenceRouted, tables.consequenceClasses, tables.consequenceResiduals].every(Array.isArray)) {
+    throw new Error(`${OMXF_ANCHOR_FILE}: missing the consequence roster, row, routed, class or residual anchor`);
+  }
+  return tables as unknown as ConsequenceAnchor;
+}
+const UR08_JUDGED: string[] = [];
+/** The rostered sites, in roster order, each once: the keys exactly one node of this file must carry. */
+const CONSEQUENCE_SITES: readonly string[] = [...new Set(CONSEQUENCE_ROSTER.map(([key]) => key.slice(0, key.indexOf(" | "))))];
+/** The innermost statement containing a node; throws when there is none. */
+function closestStatement(node: ts.Node): ts.Statement {
+  let at = node;
+  while (!ts.isStatement(at)) {
+    if (at.parent === undefined || ts.isSourceFile(at.parent)) throw new Error(`${SELF}: a judged node outside every statement`);
+    at = at.parent;
+  }
+  return at;
+}
+/** The registrar identifier of a registration callback (it, test or describe, directly or through .each); undefined for any other node. */
+function registrarOf(node: ts.Node): ts.Identifier | undefined {
+  if (registrationSite(node) === undefined || !ts.isCallExpression(node.parent)) return undefined;
+  const callee = node.parent.expression;
+  const base = ts.isCallExpression(callee) && ts.isPropertyAccessExpression(callee.expression) && callee.expression.name.text === "each" ? callee.expression.expression : callee;
+  return ts.isIdentifier(base) ? base : undefined;
+}
+/** Whether an identifier resolves, by this file's checker, to the vitest module's import of its own name (never another import renamed to it). */
+function isVitestImport(identifier: ts.Identifier, checker: ts.TypeChecker): boolean {
+  const declaration = checker.getSymbolAtLocation(identifier)?.declarations?.[0];
+  if (declaration === undefined || !ts.isImportSpecifier(declaration) || (declaration.propertyName ?? declaration.name).text !== identifier.text) return false;
+  const specifier = declaration.parent.parent.parent.moduleSpecifier;
+  return ts.isStringLiteral(specifier) && specifier.text === "vitest";
+}
+/** The table a registration callback's .each iterates, or undefined when the registration does not go through .each. */
+function eachTableOf(node: ts.Node): ts.Expression | undefined {
+  if (registrationSite(node) === undefined || !ts.isCallExpression(node.parent)) return undefined;
+  const callee = node.parent.expression;
+  return ts.isCallExpression(callee) && ts.isPropertyAccessExpression(callee.expression) && callee.expression.name.text === "each" ? callee.arguments[0] : undefined;
+}
+/** Whether a .each table is a bare identifier this file's checker resolves to a module-scope const. */
+function isModuleTable(table: ts.Expression, checker: ts.TypeChecker): boolean {
+  if (!ts.isIdentifier(table)) return false;
+  const declaration = checker.getSymbolAtLocation(table)?.valueDeclaration;
+  return declaration !== undefined && ts.isVariableDeclaration(declaration) && isModuleScope(declaration) && declarationKeyword(declaration) === "const";
+}
+interface PathGuard {
+  readonly kind: string;
+  readonly condition: ts.Expression | undefined;
+}
+/** The statement guard a node stands for on a reader's path, or undefined when it is none. */
+function statementGuardOf(node: ts.Node): PathGuard | undefined {
+  if (ts.isIfStatement(node)) return { kind: "an if", condition: node.expression };
+  if (ts.isTryStatement(node)) return { kind: "a try", condition: undefined };
+  if (ts.isForStatement(node) || ts.isForInStatement(node) || ts.isForOfStatement(node)) return { kind: "a for", condition: undefined };
+  if (ts.isWhileStatement(node)) return { kind: "a while", condition: undefined };
+  if (ts.isDoStatement(node)) return { kind: "a do", condition: undefined };
+  if (ts.isSwitchStatement(node)) return { kind: "a switch", condition: undefined };
+  return ts.isLabeledStatement(node) ? { kind: "a label", condition: undefined } : undefined;
+}
+/**
+ * wb-ur08 (1): every guard on the path from a statement up to the module, nearest first. The site's one node (a module-scope
+ * function declaration, where the walk ends, or the nearest it/test callback) and the describe callbacks above it are the
+ * only function-like nodes passed without a guard; a registration whose registrar is not the vitest import of its name, or
+ * whose .each iterates anything but a bare identifier of a module-scope const, is a guard.
+ */
+function pathGuards(statement: ts.Statement, checker: ts.TypeChecker): PathGuard[] {
+  const guards: PathGuard[] = [];
+  let siteFound = false;
+  for (let at: ts.Node = statement.parent; !ts.isSourceFile(at); at = at.parent) {
+    const guard = statementGuardOf(at);
+    if (guard !== undefined) {
+      guards.push(guard);
+      continue;
+    }
+    if (!ts.isFunctionLike(at)) continue;
+    if (!siteFound && ts.isFunctionDeclaration(at) && ts.isSourceFile(at.parent)) return guards;
+    const registered = registrationSite(at);
+    const registrar = registrarOf(at);
+    if (registrar !== undefined && !isVitestImport(registrar, checker)) guards.push({ kind: `a registration whose ${registrar.text} is not the vitest import`, condition: undefined });
+    const table = eachTableOf(at);
+    if (table !== undefined && !isModuleTable(table, checker)) guards.push({ kind: "an each over a table that is not a module-scope const", condition: undefined });
+    if (registered?.startsWith("describe ")) continue;
+    if (registered !== undefined && !siteFound) {
+      siteFound = true;
+      continue;
+    }
+    guards.push({ kind: ts.isFunctionDeclaration(at) ? (ts.isSourceFile(at.parent) ? "a function" : "a nested function") : registered !== undefined ? "an outer test" : "a closure", condition: undefined });
+  }
+  return guards;
+}
+/** Whether a node names EXPECTATION anywhere in it (a guard that consults the literal vouches itself). */
+function namesExpectation(node: ts.Node): boolean {
+  if (ts.isIdentifier(node) && node.text === "EXPECTATION") return true;
+  return ts.forEachChild(node, namesExpectation) ?? false;
+}
+/** Whether a node holds a return statement outside every nested function. */
+function holdsReturn(node: ts.Node): boolean {
+  if (ts.isReturnStatement(node)) return true;
+  if (ts.isFunctionLike(node)) return false;
+  return ts.forEachChild(node, holdsReturn) ?? false;
+}
+/** wb-ur08 (3): what a return outside a nested function precedes, in any enclosing block up to the module: the statement, its site's registration, or nothing. */
+function returnAhead(statement: ts.Statement): string | undefined {
+  let past = false;
+  for (let at: ts.Node = statement; !ts.isSourceFile(at.parent); at = at.parent) {
+    if (registrationSite(at) !== undefined) past = true;
+    const parent = at.parent;
+    if (ts.isBlock(parent) || ts.isCaseClause(parent) || ts.isDefaultClause(parent)) {
+      for (const member of parent.statements) {
+        if (member === at) break;
+        if (holdsReturn(member)) return past ? "its site's registration" : "its statement";
+      }
+    }
+  }
+  return undefined;
+}
+/** Why a provenance check's statement is not exactly if (<the check>) out.push(<one template literal>), or undefined when it is. */
+function pushShapeWhy(statement: ts.Statement, file: ts.SourceFile): string | undefined {
+  if (!ts.isIfStatement(statement)) return "its statement is not an if";
+  if (statement.elseStatement !== undefined) return "an else";
+  const then = statement.thenStatement;
+  if (ts.isIfStatement(then)) return "a nested if";
+  if (ts.isBlock(then)) return "a block then";
+  if (!ts.isExpressionStatement(then)) return "the then is not an expression statement";
+  const call = then.expression;
+  if (!ts.isCallExpression(call) || !ts.isPropertyAccessExpression(call.expression) || call.expression.expression.getText(file) !== "out" || call.expression.name.text !== "push") return "the then is not exactly out.push";
+  if (call.arguments.length !== 1 || !(ts.isTemplateExpression(call.arguments[0]) || ts.isNoSubstitutionTemplateLiteral(call.arguments[0]))) return "the push argument is not one template literal";
+  return undefined;
+}
+/** wb-ur08 (1): one namesake line per rostered site that a number of nodes other than one carries. */
+function namesakeLines(file: ts.SourceFile): string[] {
+  const carriers = new Map<string, number>();
+  const visit = (node: ts.Node): void => {
+    const site = ts.isFunctionDeclaration(node) && node.name !== undefined && node.body !== undefined ? `function ${node.name.text}` : registrationSite(node);
+    if (site !== undefined) carriers.set(site, (carriers.get(site) ?? 0) + 1);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return CONSEQUENCE_SITES.filter(site => carriers.get(site) !== 1).map(site => `namesake: ${site} -> ${carriers.get(site) ?? 0} nodes carry this site key`);
+}
+/** Whether a function declaration sits at module scope and ends in return out: a sink function. */
+function isSinkFunction(node: ts.Node): node is ts.FunctionDeclaration {
+  if (!ts.isFunctionDeclaration(node) || !ts.isSourceFile(node.parent)) return false;
+  const last = node.body?.statements.at(-1);
+  return last !== undefined && ts.isReturnStatement(last) && last.expression !== undefined && ts.isIdentifier(last.expression) && last.expression.text === "out";
+}
+/** wb-ur08 (5): whether a declaration of out is a const initialized by [] or by a call of a module-scope sink function (resolved by the checker). */
+function sanctionedSinkDeclaration(declaration: ts.VariableDeclaration, checker: ts.TypeChecker): boolean {
+  if (!ts.isVariableDeclarationList(declaration.parent) || (declaration.parent.flags & ts.NodeFlags.Const) === 0) return false;
+  const initializer = declaration.initializer;
+  if (initializer === undefined) return false;
+  if (ts.isArrayLiteralExpression(initializer)) return initializer.elements.length === 0;
+  if (!ts.isCallExpression(initializer) || !ts.isIdentifier(initializer.expression)) return false;
+  const callee = checker.getSymbolAtLocation(initializer.expression)?.valueDeclaration;
+  return callee !== undefined && isSinkFunction(callee);
+}
+/** wb-ur08 (5): why the function holding a sanctioned sink declaration may drop what it holds, or undefined when it cannot. */
+function sinkHolderWhy(declaration: ts.VariableDeclaration): string | undefined {
+  const statement = declaration.parent.parent;
+  const body = statement.parent;
+  if (!ts.isVariableStatement(statement) || !ts.isBlock(body) || !isSinkFunction(body.parent)) return "it is not declared directly in a module-scope function whose last statement is return out";
+  const members = body.statements;
+  if (members.slice(members.indexOf(statement) + 1, -1).some(holdsReturn)) return "a return stands between the declaration and its function's last statement";
+  return undefined;
+}
+/** Whether an identifier named out is a sanctioned reference: its sanctioned declaration, a member name, out.push(...), or its function's last return. */
+function sanctionedSinkUse(identifier: ts.Identifier, checker: ts.TypeChecker): boolean {
+  const parent = identifier.parent;
+  if (ts.isVariableDeclaration(parent) && parent.name === identifier) return sanctionedSinkDeclaration(parent, checker);
+  if (ts.isPropertyAccessExpression(parent) && parent.name === identifier) return true;
+  if (ts.isPropertyAccessExpression(parent) && parent.name.text === "push" && ts.isCallExpression(parent.parent) && parent.parent.expression === parent) return true;
+  return ts.isReturnStatement(parent) && parent.expression === identifier && ts.isBlock(parent.parent) && parent.parent.statements.at(-1) === parent && isSinkFunction(parent.parent.parent);
+}
+/** wb-ur08 (5): one line per unsanctioned reference to a sink named out, and per sanctioned declaration whose function may drop it. */
+function sinkLines(file: ts.SourceFile, checker: ts.TypeChecker): string[] {
+  const lines: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === "out") {
+      if (!sanctionedSinkUse(node, checker)) lines.push(`sink: ${readerTextOf(closestStatement(node), file)}`);
+      else if (ts.isVariableDeclaration(node.parent) && node.parent.name === node) {
+        const why = sinkHolderWhy(node.parent);
+        if (why !== undefined) lines.push(`sink: ${readerTextOf(closestStatement(node), file)} -> ${why}`);
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return lines;
+}
+/** The modifiers a matcher statement may chain between expect(...) and its matcher. */
+const MATCHER_MODIFIERS: ReadonlySet<string> = new Set(["not", "resolves", "rejects"]);
+/** wb-ur08 (6): whether an expect(...) call heads a matcher statement expect(...)[.not|.resolves|.rejects].<matcher>(...); whose matcher call is the whole statement. */
+function headsMatcherStatement(call: ts.CallExpression): boolean {
+  let at: ts.Expression = call;
+  while (ts.isPropertyAccessExpression(at.parent) && at.parent.expression === at && MATCHER_MODIFIERS.has(at.parent.name.text)) at = at.parent;
+  const member = at.parent;
+  if (!ts.isPropertyAccessExpression(member) || member.expression !== at) return false;
+  const matcher = member.parent;
+  if (!ts.isCallExpression(matcher) || matcher.expression !== member) return false;
+  return ts.isExpressionStatement(ts.isAwaitExpression(matcher.parent) ? matcher.parent.parent : matcher.parent);
+}
+/** wb-ur08 (6): whether an identifier named expect is a sanctioned reference: its one unaliased vitest import, or the head of a matcher statement. */
+function sanctionedAssertUse(identifier: ts.Identifier): boolean {
+  const parent = identifier.parent;
+  if (ts.isImportSpecifier(parent)) {
+    const specifier = parent.parent.parent.parent.moduleSpecifier;
+    return parent.propertyName === undefined && parent.name === identifier && ts.isStringLiteral(specifier) && specifier.text === "vitest";
+  }
+  return ts.isCallExpression(parent) && parent.expression === identifier && headsMatcherStatement(parent);
+}
+/** wb-ur08 (6): one line per unsanctioned reference to expect. */
+function assertLines(file: ts.SourceFile): string[] {
+  const lines: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === "expect" && !sanctionedAssertUse(node)) lines.push(`assert: ${readerTextOf(closestStatement(node), file)}`);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return lines;
+}
+/** wb-ur08 (1)-(6): the consequence lines a source of this file draws - per roster reader in roster order, then the namesake, sink and assert lines. */
+function consequenceJudgment(source: string): readonly string[] {
+  const { file, checker } = boundSource(source);
+  const reads = locateReads(file, checker);
+  const lines: string[] = [];
+  for (const [key, kind] of CONSEQUENCE_ROSTER) {
+    const read = reads.find(entry => readKey(entry.site, entry.reader) === key);
+    if (read === undefined) throw new Error(`${SELF}: no read of EXPECTATION is keyed ${key}`);
+    const statement = closestStatement(read.access);
+    const guards = pathGuards(statement, checker);
+    if (guards.length > 0) lines.push(`guarded: ${key} -> its statement sits inside ${guards[0].kind}`);
+    if (guards.some(guard => guard.condition !== undefined && namesExpectation(guard.condition))) lines.push(`cond-expectation: ${key} -> the guard condition names EXPECTATION`);
+    const ahead = returnAhead(statement);
+    if (ahead !== undefined) lines.push(`early-exit: ${key} -> a return precedes ${ahead}`);
+    if (kind === "push") {
+      const why = pushShapeWhy(statement, file);
+      if (why !== undefined) lines.push(`push-consequence: ${key} -> ${why}`);
+    }
+  }
+  return [...lines, ...namesakeLines(file), ...sinkLines(file, checker), ...assertLines(file)];
+}
+/** A source with each [start, end, text] splice applied, the latest first, so every offset stays the parsed one. */
+function spliced(source: string, splices: readonly (readonly [number, number, string])[]): string {
+  return [...splices].sort((left, right) => right[0] - left[0]).reduce((text, [start, end, replacement]) => `${text.slice(0, start)}${replacement}${text.slice(end)}`, source);
+}
+/** The whole lines a statement spans, as [start, end): from its line's start through its line break. */
+function lineSpan(source: string, statement: ts.Statement, file: ts.SourceFile): readonly [number, number] {
+  const end = statement.getEnd();
+  return [source.lastIndexOf("\n", statement.getStart(file)) + 1, source[end] === "\n" ? end + 1 : end];
+}
+/** The registration of a site: its callback, and the statement that registers it; throws when the site has none. */
+function siteRegistration(file: ts.SourceFile, site: string): { readonly callback: ts.ArrowFunction | ts.FunctionExpression; readonly statement: ts.ExpressionStatement } {
+  const visit = (node: ts.Node): ts.ArrowFunction | ts.FunctionExpression | undefined => {
+    if ((ts.isArrowFunction(node) || ts.isFunctionExpression(node)) && registrationSite(node) === site) return node;
+    return ts.forEachChild(node, visit);
+  };
+  const callback = visit(file);
+  const statement = callback === undefined ? undefined : closestStatement(callback);
+  if (callback === undefined || statement === undefined || !ts.isExpressionStatement(statement)) throw new Error(`${SELF}: no registration statement at ${site}`);
+  return { callback, statement };
+}
+/** The module-scope function declaration of a name; throws when there is none. */
+function moduleFunction(file: ts.SourceFile, name: string): ts.FunctionDeclaration & { readonly body: ts.Block } {
+  const declared = file.statements.find((entry): entry is ts.FunctionDeclaration & { readonly body: ts.Block } => ts.isFunctionDeclaration(entry) && entry.name?.text === name && entry.body !== undefined);
+  if (declared === undefined) throw new Error(`${SELF}: no module-scope function ${name}`);
+  return declared;
+}
+/** The statement of a keyed read of EXPECTATION in a bound source; throws when no read is keyed so. */
+function readStatement(source: string, key: string): { readonly file: ts.SourceFile; readonly statement: ts.Statement } {
+  const { file, checker } = boundSource(source);
+  const read = locateReads(file, checker).find(entry => readKey(entry.site, entry.reader) === key);
+  if (read === undefined) throw new Error(`${SELF}: no read of EXPECTATION is keyed ${key}`);
+  return { file, statement: closestStatement(read.access) };
+}
+/** A source text of this file with one consequence edit applied by AST position (a page, parsed and bound, never run); an absent anchor throws. */
+function withConsequenceEdit(source: string, edit: ConsequenceEdit): string {
+  if (edit.op === "prepend") return withReadsEdit(source, edit);
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  if (edit.op === "fn-before-return") {
+    const last = moduleFunction(file, edit.fn).body.statements.at(-1);
+    if (last === undefined || !ts.isReturnStatement(last)) throw new Error(`${SELF}: no function ${edit.fn} ending in a return`);
+    const at = last.getStart(file);
+    return spliced(source, [[at, at, `${edit.text}\n  `]]);
+  }
+  if (edit.op === "sink-initializer") {
+    const holder = moduleFunction(file, edit.fn).body.statements.find(entry => ts.isVariableStatement(entry) && entry.declarationList.declarations.some(declaration => declaration.name.getText(file) === "out"));
+    const initializer = holder !== undefined && ts.isVariableStatement(holder) ? holder.declarationList.declarations[0].initializer : undefined;
+    if (initializer === undefined) throw new Error(`${SELF}: function ${edit.fn} declares no initialized sink`);
+    return spliced(source, [[initializer.getStart(file), initializer.getEnd(), edit.text]]);
+  }
+  if (edit.op === "after-call") {
+    const visit = (node: ts.Node): ts.CallExpression | undefined => (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === edit.callee ? node : ts.forEachChild(node, visit));
+    const call = visit(moduleFunction(file, edit.fn).body);
+    if (call === undefined) throw new Error(`${SELF}: function ${edit.fn} calls no ${edit.callee}`);
+    return spliced(source, [[call.getEnd(), call.getEnd(), edit.text]]);
+  }
+  if (edit.op === "import-vitest") {
+    const named = file.statements.flatMap(entry => (ts.isImportDeclaration(entry) && ts.isStringLiteral(entry.moduleSpecifier) && entry.moduleSpecifier.text === "vitest" && entry.importClause?.namedBindings !== undefined && ts.isNamedImports(entry.importClause.namedBindings) ? [entry.importClause.namedBindings] : []));
+    const last = named[0]?.elements.at(-1);
+    if (named.length !== 1 || last === undefined) throw new Error(`${SELF}: no single named vitest import`);
+    return spliced(source, [[last.getEnd(), last.getEnd(), `, ${edit.name}`]]);
+  }
+  if (edit.op === "wrap-registration" || edit.op === "suite-prepend" || edit.op === "registrar" || edit.op === "runtime-skip") {
+    const { callback, statement } = siteRegistration(file, edit.site);
+    if (edit.op === "wrap-registration") return spliced(source, [[statement.getStart(file), statement.getStart(file), `if (${edit.condition}) `]]);
+    if (edit.op === "suite-prepend") {
+      const suite = statement.parent;
+      if (!ts.isBlock(suite)) throw new Error(`${SELF}: the registration at ${edit.site} is not a statement of a suite body`);
+      const open = suite.getStart(file) + 1;
+      return spliced(source, [[open, open, `\n  ${edit.text}`]]);
+    }
+    if (edit.op === "registrar") {
+      const registrar = registrarOf(callback);
+      if (registrar === undefined) throw new Error(`${SELF}: the site ${edit.site} has no registrar identifier`);
+      return spliced(source, [[registrar.getStart(file), registrar.getEnd(), edit.to]]);
+    }
+    if (callback.parameters.length > 0 || !ts.isBlock(callback.body)) throw new Error(`${SELF}: the callback at ${edit.site} is not a parameterless block`);
+    const open = callback.body.getStart(file) + 1;
+    return spliced(source, [
+      [callback.getStart(file), callback.getStart(file) + 2, "(ctx)"],
+      [open, open, '\n    ctx["skip"]();'],
+    ]);
+  }
+  if (edit.op === "namesake") {
+    const located = edit.reads.map(read => readStatement(source, read).statement);
+    const site = edit.reads[0].slice(0, edit.reads[0].indexOf(" | "));
+    const head = site.slice(site.indexOf(" ") + 1);
+    const body = [...(edit.prelude === "" ? [] : [edit.prelude]), ...located.map(statement => source.slice(statement.getStart(), statement.getEnd()))].map(text => `      ${text}`).join("\n");
+    const namesake = `${edit.condition === "" ? "" : `if (${edit.condition}) `}it(${JSON.stringify(`${head}: namesake`)}, () => {\n${body}\n    });`;
+    const removals = located.map((statement): readonly [number, number, string] => [...lineSpan(source, statement, statement.getSourceFile()), ""]);
+    if (edit.at === "site") return spliced(source, [[located[0].getStart(), located[0].getEnd(), namesake], ...removals.slice(1)]);
+    const { statement } = siteRegistration(file, site);
+    const at = statement.getStart(file);
+    return spliced(source, [[at, at, `${namesake.replaceAll("\n  ", "\n")}\n\n  `], ...removals]);
+  }
+  const { file: bound, statement } = readStatement(source, edit.read);
+  const start = statement.getStart(bound);
+  const end = statement.getEnd();
+  const wrapped = (head: string, tail: string): string => `${source.slice(0, start)}${head}\n    ${source.slice(start, end)}\n    ${tail}${source.slice(end)}`;
+  if (edit.op === "nest-function") {
+    const site = edit.read.slice(0, edit.read.indexOf(" | "));
+    if (!site.startsWith("function ")) throw new Error(`${SELF}: the read at ${edit.read} is not at a function site`);
+    const name = site.slice("function ".length);
+    if (!moduleFunction(bound, name).body.statements.includes(statement)) throw new Error(`${SELF}: the read at ${edit.read} is not a statement of its function's body`);
+    return spliced(source, [[start, end, `if (${edit.call}) ${name}();\n  function ${name}(): void {\n    ${source.slice(start, end)}\n  }`]]);
+  }
+  if (edit.op === "guard-expression") {
+    if (!ts.isExpressionStatement(statement)) throw new Error(`${SELF}: the read at ${edit.read} is not an expression statement`);
+    return spliced(source, [[statement.expression.getStart(bound), statement.expression.getStart(bound), `${edit.condition} && `]]);
+  }
+  if (edit.op === "guard" || edit.op === "push-spread") {
+    if (!ts.isIfStatement(statement) || pushShapeWhy(statement, bound) !== undefined) throw new Error(`${SELF}: the read at ${edit.read} is not if (<the check>) out.push(<one template literal>)`);
+    if (edit.op === "guard") {
+      const thenStart = statement.thenStatement.getStart(bound);
+      return `${source.slice(0, thenStart)}${edit.nested} ${source.slice(thenStart)}`;
+    }
+    const call = statement.thenStatement;
+    if (!ts.isExpressionStatement(call) || !ts.isCallExpression(call.expression)) throw new Error(`${SELF}: the read at ${edit.read} has no push call`);
+    const [argument] = call.expression.arguments;
+    return `${source.slice(0, argument.getStart(bound))}...(${edit.condition} ? [] : [${argument.getText(bound)}])${source.slice(argument.getEnd())}`;
+  }
+  if (edit.op === "wrap-if") return wrapped(`if (${edit.condition}) {`, "}");
+  if (edit.op === "wrap-while") return wrapped(`while (${edit.condition}) {`, "}");
+  if (edit.op === "wrap-closure") return wrapped("(() => {", "});");
+  if (edit.op === "wrap-label") return wrapped(`exit: {\n    if (${edit.exit}) break exit;`, "}");
+  return wrapped("try {", edit.rethrow ? "} catch (error) {\n      throw error;\n    }" : "} catch {\n    }");
+}
+/** A judged table's module-scope array literal in a source of this file, read by its AST (never evaluated). */
+function tableRows(file: ts.SourceFile, table: string): ts.NodeArray<ts.Expression> {
+  const statement = file.statements.find((entry): entry is ts.VariableStatement => ts.isVariableStatement(entry) && entry.declarationList.declarations.some(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === table));
+  const initializer = statement?.declarationList.declarations[0].initializer;
+  if (initializer === undefined || !ts.isArrayLiteralExpression(initializer)) throw new Error(`${SELF}: ${table} is not a module-scope array literal`);
+  return initializer.elements;
+}
+/** The id of a judged table row ([id, edits, lines]); throws on any other shape. */
+function rowIdOf(element: ts.Expression): string {
+  if (!ts.isArrayLiteralExpression(element) || element.elements.length !== 3 || !ts.isStringLiteral(element.elements[0])) throw new Error(`${SELF}: a judged table row is not an [id, edits, lines] triple`);
+  return element.elements[0].text;
+}
+/** The row ids of a judged table in a source of this file, in source order. */
+const tableRowIds = (source: string, table: string): string[] => tableRows(ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS), table).map(rowIdOf);
+/** A source text of this file with one judged table row removed by AST position, its whole lines included (a page, never run); an absent id throws. */
+function withoutTableRow(source: string, table: string, id: string): string {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const element = tableRows(file, table).find(candidate => rowIdOf(candidate) === id);
+  if (element === undefined) throw new Error(`${SELF}: ${table} has no row ${id}`);
+  const start = source.lastIndexOf("\n", element.getStart(file)) + 1;
+  let end = element.getEnd();
+  if (source[end] === ",") end += 1;
+  if (source[end] === "\n") end += 1;
+  return `${source.slice(0, start)}${source.slice(end)}`;
+}
+/** The string literals of every class's rows in CONSEQUENCE_CLASSES, read by the AST of a source of this file (never evaluated). */
+function classRowLiterals(file: ts.SourceFile): ts.StringLiteral[] {
+  return tableRows(file, "CONSEQUENCE_CLASSES").flatMap(entry => {
+    const rows = ts.isObjectLiteralExpression(entry) ? entry.properties.find((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && property.name.getText(file) === "rows") : undefined;
+    return rows !== undefined && ts.isArrayLiteralExpression(rows.initializer) ? rows.initializer.elements.filter(ts.isStringLiteral) : [];
+  });
+}
+/** The class rows a source of this file names, in source order. */
+const classRowIds = (source: string): string[] => classRowLiterals(ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)).map(literal => literal.text);
+/** A source text of this file with one row id removed from its class's rows, with one adjacent separator (a page, never run); the id must be named once. */
+function withoutClassRow(source: string, id: string): string {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const named = classRowLiterals(file).filter(literal => literal.text === id);
+  if (named.length !== 1) throw new Error(`${SELF}: the class rows name ${id} ${named.length} times, not once`);
+  const start = named[0].getStart(file);
+  const end = named[0].getEnd();
+  if (source.slice(end, end + 2) === ", ") return `${source.slice(0, start)}${source.slice(end + 2)}`;
+  return source.slice(start - 2, start) === ", " ? `${source.slice(0, start - 2)}${source.slice(end)}` : `${source.slice(0, start)}${source.slice(end)}`;
+}
+/** A frozen-shape element of a judged table row: id, edit count (or "-") and line count. */
+const frozenOf = (row: readonly [string, readonly unknown[] | null, readonly string[]]): string => `${row[0]}:${row[1]?.length ?? "-"}:${row[2].length}`;
+/** A source text of this file with one frozen-shape element and one adjacent separator removed (a page, never run); the element must occur exactly once. */
+function withoutFrozenElement(source: string, element: string): string {
+  const literal = JSON.stringify(element);
+  if (source.split(literal).length !== 2) throw new Error(`${SELF}: the frozen element ${element} does not occur exactly once`);
+  return source.includes(`${literal}, `) ? source.replace(`${literal}, `, () => "") : source.replace(`, ${literal}`, () => "");
+}
+/** A frozen classes element: id, claim, line kind and row count (the count given, or the class's own). */
+const classShapeOf = ({ id, claim, line, rows }: ConsequenceClass, count: number = rows.length): string => `${id}:${claim}:${line}:${count}`;
+/** A source text of this file whose frozen classes literal counts one class a row fewer (a page, never run); the element must occur exactly once. */
+function withClassCount(source: string, owner: ConsequenceClass): string {
+  const literal = JSON.stringify(classShapeOf(owner));
+  if (source.split(literal).length !== 2) throw new Error(`${SELF}: the frozen class element ${classShapeOf(owner)} does not occur exactly once`);
+  return source.replace(literal, () => JSON.stringify(classShapeOf(owner, owner.rows.length - 1)));
+}
+/** A residual page's frozen-shape element: the coordinated table and form, or the member's edit count. */
+const residualShapeOf = ({ id, page }: ConsequenceResidual): string => `${id}:${page.kind === "coordinated" ? `${page.table}:${page.form}` : `member:${page.edits.length}`}`;
+
+describe("wb-ur08 the consequence readers of EXPECTATION over the enumerated resolvable classes (R739 terminal form; this file's own AST and checker; s24 G4 and the respin-#1 U2/F1/F2 members red-first)", () => {
+  it("ANCHOR (wb-ur08): the committed source draws no consequence line, and the roster, the consequence and routed tables, the classes and the residuals equal their out-of-file anchor (the fixture's consequence keys, read behind the pinned provenance)", () => {
+    const tables = consequenceAnchor(readPair(ROOT).expectation);
+    const lines = consequenceJudgment(readRepo(SELF));
+    // The verdict on the committed source reaches the runner by a plain throw too, never only through a matcher that a line it
+    // refuses could have emptied first: the gate's F2 N7 empties toEqual inside LIVE, which runs before this row.
+    if (lines.length > 0) throw new Error(`the committed source draws ${lines.length} consequence line(s): ${lines.join(" | ")}`);
+    expect(lines, "the committed source draws no consequence line").toEqual([]);
+    expect(CONSEQUENCE_ROSTER).toEqual(tables.consequenceRoster);
+    expect(UR08_CONSEQUENCE).toEqual(tables.consequenceRows);
+    expect(UR08_ROUTED).toEqual(tables.consequenceRouted);
+    expect(CONSEQUENCE_CLASSES).toEqual(tables.consequenceClasses);
+    expect(UR08_RESIDUALS).toEqual(tables.consequenceResiduals);
+    UR08_JUDGED.push("ANCHOR");
+  });
+
+  it.each(UR08_CONSEQUENCE)("CONSEQUENCE %s (wb-ur08): this file's own AST and checker judge every consequence reader - CONSEQUENCES, the committed source, quiet; a falsifier, its edits applied in memory by AST position (parsed and bound, never run): exactly its lines", (id, edits, lines) => {
+    const own = readRepo(SELF);
+    const page = edits === null ? own : edits.reduce((source, edit) => withConsequenceEdit(source, edit), own);
+    expect(page === own, `${id}: only CONSEQUENCES reads the committed source unedited`).toBe(edits === null);
+    const reading = consequenceJudgment(page);
+    expect(reading, `${id}: ${reading.join(" | ")}`).toEqual(lines);
+    UR08_JUDGED.push(`CONSEQUENCE ${id}`);
+  });
+
+  it.each(UR08_ROUTED)("ROUTED %s (wb-ur08): a page that re-keys a consequence read is refused by this pin (no read keyed so) and read by the lybr reads pin as exactly its lines", (id, edits, lines) => {
+    const own = readRepo(SELF);
+    const page = edits.reduce((source, edit) => withConsequenceEdit(source, edit), own);
+    expect(page, `${id}: the page edits the committed source`).not.toBe(own);
+    expect(() => consequenceJudgment(page), `${id}: this pin refuses to judge a re-keyed read`).toThrow(/no read of EXPECTATION is keyed/u);
+    const reading = expectationReads(page, READ_ROSTER).lines;
+    expect(reading, `${id}: ${reading.join(" | ")}`).toEqual(lines);
+    UR08_JUDGED.push(`ROUTED ${id}`);
+  });
+
+  it("CLASSES (wb-ur08, R739: the criterion is the enumerated resolvable classes): every falsifier row witnesses exactly one class and draws that class's line kind, every class has a witness, every line kind any row draws is a class's, and the classes equal their out-of-file anchor", () => {
+    const falsifiers = UR08_CONSEQUENCE.filter(([, edits]) => edits !== null).map(([id]) => id);
+    const witnesses = CONSEQUENCE_CLASSES.flatMap(({ rows }) => rows);
+    expect(witnesses, "the class rows name exactly the falsifier rows, each once").toHaveLength(falsifiers.length);
+    for (const id of falsifiers) expect(witnesses.filter(row => row === id), `${id} witnesses exactly one class`).toHaveLength(1);
+    for (const { id, line, rows } of CONSEQUENCE_CLASSES) {
+      expect(rows.length, `${id} has a witness`).toBeGreaterThan(0);
+      for (const row of rows) {
+        const drawn = UR08_CONSEQUENCE.find(([rowId]) => rowId === row)?.[2] ?? [];
+        expect(drawn.some(entry => entry.startsWith(`${line}: `)), `${id}: ${row} draws a ${line} line`).toBe(true);
+      }
+    }
+    const kinds = [...new Set(UR08_CONSEQUENCE.flatMap(([, , lines]) => lines.map(entry => entry.slice(0, entry.indexOf(": ")))))];
+    for (const kind of kinds) expect(CONSEQUENCE_CLASSES.some(({ line }) => line === kind), `${kind} is a class's line kind`).toBe(true);
+    expect(CONSEQUENCE_CLASSES).toEqual(consequenceAnchor(readPair(ROOT).expectation).consequenceClasses);
+    UR08_JUDGED.push("CLASSES");
+  });
+
+  it.each(UR08_RESIDUALS)("RESIDUAL $id quiet row (wb-ur08, a named residual NOT CLAIMED by the consequence pin): the family's page reads quiet here, and the row reds when the page stops carrying any part of the family's edit", residual => {
+    const own = readRepo(SELF);
+    const pinned = expectationLiteral(own).pin;
+    if (residual.page.kind === "member") {
+      const { edits, marks } = residual.page;
+      const page = edits.reduce((source, edit) => withConsequenceEdit(source, edit), own);
+      // Liveness: the page carries every part of the member's edit, each mark once more than the committed source.
+      for (const mark of marks) expect(page.split(mark).length, `${residual.id}: the page carries ${mark}`).toBe(own.split(mark).length + 1);
+      // The quiet reading: no consequence or reads line, and the literal untouched.
+      expect(consequenceJudgment(page)).toEqual([]);
+      expect(expectationReads(page, READ_ROSTER).lines).toEqual([]);
+      expect(expectationLiteral(page)).toEqual({ findings: [], pin: pinned });
+      UR08_JUDGED.push(`RESIDUAL ${residual.id}`);
+      return;
+    }
+    const { table, form } = residual.page;
+    const rows: readonly (readonly [string, readonly unknown[] | null, readonly string[]])[] = table === "UR08_CONSEQUENCE" ? UR08_CONSEQUENCE : LYBR_READS;
+    const row = rows.find(([id]) => id === form);
+    if (row === undefined) throw new Error(`${residual.id}: ${form} is not a ${table} row`);
+    const owner = CONSEQUENCE_CLASSES.find(({ rows: witnesses }) => witnesses.includes(form));
+    if (table === "UR08_CONSEQUENCE" && owner === undefined) throw new Error(`${residual.id}: ${form} witnesses no class`);
+    const literal = "e".repeat(64);
+    const removed = withoutFrozenElement(withoutTableRow(own, table, form), frozenOf(row));
+    const page = withExpectationProperty(owner === undefined ? removed : withClassCount(withoutClassRow(removed, form), owner), "sha256", JSON.stringify(literal));
+    // Liveness: the page carries the family's whole edit - the row dropped (and from its class, counted one fewer), its frozen element dropped, the literal moved.
+    expect(tableRowIds(own, table), "the committed table holds the form row").toEqual(rows.map(([id]) => id));
+    expect(tableRowIds(page, table), "the page's table drops exactly the form row").toEqual(rows.map(([id]) => id).filter(id => id !== form));
+    if (owner !== undefined) {
+      expect(classRowIds(page), "the page's class rows drop exactly the form row").toEqual(classRowIds(own).filter(id => id !== form));
+      expect(page.includes(JSON.stringify(classShapeOf(owner, owner.rows.length - 1))), "the page's frozen classes count the form row's class one row fewer").toBe(true);
+    }
+    expect(own.split(JSON.stringify(frozenOf(row))).length, "the committed frozen shape holds the element once").toBe(2);
+    expect(page.includes(JSON.stringify(frozenOf(row))), "the page's frozen shape drops the element").toBe(false);
+    expect(literal, "the page moves the literal").not.toBe(pinned?.sha256);
+    // The quiet reading: no consequence or reads line over the page's source, and the moved literal read as the pinned one is.
+    expect(consequenceJudgment(page)).toEqual([]);
+    expect(expectationReads(page, READ_ROSTER).lines).toEqual([]);
+    expect(expectationLiteral(page)).toEqual({ findings: [], pin: { path: pinned?.path, sha256: literal } });
+    UR08_JUDGED.push(`RESIDUAL ${residual.id}`);
+  });
+
+  it("CONSEQUENCE FROZEN SHAPE (wb-ur08): the roster derives from READ_ROSTER minus the templates; the roster, the consequence and routed tables, the classes and the residuals are frozen here and equal to their out-of-file anchors; every judged member reaches its last assertion", () => {
+    expect(CONSEQUENCE_ROSTER.map(([key]) => key)).toEqual(READ_ROSTER.flatMap(([site, readers]) => readers.filter(reader => !reader.startsWith("template ")).map(reader => readKey(site, reader))));
+    expect(CONSEQUENCE_ROSTER.map(([key, kind]) => `${key.slice(0, key.indexOf(" | "))}:${kind}`)).toEqual([
+      "function expectationFailures:push",
+      "function expectationFailures:push",
+      "it LIVE (R695 (a)):assertion",
+      "it LIVE (R695 (a)):assertion",
+      "it ON-DISK %s:assertion",
+      "it LITERAL %s (R696 (1)):assertion",
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin):assertion",
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin):assertion",
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin):assertion",
+    ]);
+    expect(UR08_CONSEQUENCE.map(frozenOf)).toEqual([
+      "CONSEQUENCES:-:0", "G4:4:4", "GUARD-EXEMPT:1:1", "WRAP-LIVE-PIN:1:1", "WRAP-LIVE-EQUAL:1:1", "WRAP-ON-DISK:1:1", "WRAP-TRY:1:1", "WRAP-TRY-RETHROW:1:1", "WRAP-WHILE:1:1", "WRAP-CLOSURE:1:1", "WRAP-LABEL:1:1", "GUARD-REGISTRATION:1:2", "EACH-INLINE-TABLE:1:2",
+      "NAMESAKE-FUNCTION:1:2", "NAMESAKE-SUITE:1:3", "NAMESAKE-IN-SITE:1:3", "NAMESAKE-ON-DISK:1:2", "NAMESAKE-UNGUARDED:1:1", "U2-NAMESAKE-FULL:3:7", "REGISTRAR-SHADOW:1:7", "COND-EXPECTATION:1:2", "COND-OUTER:2:2", "EXIT-RETURN:1:2", "EXIT-SUITE:1:7",
+      "PUSH-SPREAD:1:1", "SINK-ASSIGN:1:1", "SINK-METHOD:1:1", "SINK-UPDATE:1:1", "SINK-SUBCLASS:1:1", "SINK-OWN-PUSH:1:1", "SINK-EXEMPT-RETURN:1:1", "ASSERT-EXTEND:1:1", "ASSERT-ALIAS:1:1", "MATCHER-PROTO:1:1",
+    ]);
+    expect(UR08_ROUTED.map(frozenOf)).toEqual(["ROUTE-EXPRESSION:1:2", "ROUTE-MODIFIER:1:4"]);
+    expect(CONSEQUENCE_CLASSES.map(entry => classShapeOf(entry))).toEqual([
+      "GUARD:(1):guarded:10", "CLOSURE:(1):guarded:1", "NAMESAKE:(1):namesake:6", "REGISTRAR:(1):guarded:1", "CONDITION:(2):cond-expectation:2", "RETURN-AHEAD:(3):early-exit:2", "PUSH:(4):push-consequence:2", "SINK:(5):sink:6", "ASSERT:(6):assert:3",
+    ]);
+    expect(UR08_RESIDUALS.map(residualShapeOf)).toEqual([
+      "R-COORDINATED-CONSEQUENCE-ROSTER:UR08_CONSEQUENCE:G4",
+      "R-COORDINATED-READS-TABLE:LYBR_READS:ALIAS-SPREAD",
+      "R-RUNTIME-OVERRIDE:member:2",
+      "R-DOWNSTREAM-DISCARD:member:1",
+      "R-RUNNER-CONTROL:member:1",
+    ]);
+    const tables = consequenceAnchor(readPair(ROOT).expectation);
+    expect(CONSEQUENCE_ROSTER).toEqual(tables.consequenceRoster);
+    expect(UR08_CONSEQUENCE).toEqual(tables.consequenceRows);
+    expect(UR08_ROUTED).toEqual(tables.consequenceRouted);
+    expect(CONSEQUENCE_CLASSES).toEqual(tables.consequenceClasses);
+    expect(UR08_RESIDUALS).toEqual(tables.consequenceResiduals);
+    expect(UR08_JUDGED).toEqual([
+      "ANCHOR",
+      ...UR08_CONSEQUENCE.map(([id]) => `CONSEQUENCE ${id}`),
+      ...UR08_ROUTED.map(([id]) => `ROUTED ${id}`),
+      "CLASSES",
+      ...UR08_RESIDUALS.map(({ id }) => `RESIDUAL ${id}`),
+    ]);
+  });
+});
+
+/**
+ * wb-klr7 (CAC-WORKFLOW-COMPOSITION-R1 (c), rule 16): row W1's identity as a literal, never derived from TABLE - the sentence
+ * whole, then every pin as "half | tier | file | describe path | title" (bindingOf's form) - so a shortened sentence or a
+ * dropped, swapped or re-homed pin reads red here. The composition-reference census reads this literal back (its C2) and holds
+ * every pin line to its own registered cases, and the sentence to the live docs/07 (its C1).
+ */
+const FROZEN_W1: readonly string[] = [
+  "quote | CACWorkflowCompositionV0 is design-only (the MechanicalWorkflows cac-workflow-composition-2026-10-18 program states it as a concept only, with no released schema or type), and no Pi surface consumes it; when a release ships it and a Pi surface consumes it, Pi carries each step and source-artifact ID only as a native reference equal to the producer's own ID, counts a step or source without one as an unmapped entry, and never mints a Beads task ID, a Forge operation or gate ID, or a Furnace Attempt ID from composition fields.",
+  "today | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers | T1",
+  "today | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > T a MechanicalWorkflows release publishing CACWorkflowCompositionV0 as a versioned schema/type plus a Pi consumer decided under W11/VC-3 or the workflow_catalog/workflow_inspect readers | T2",
+  "producer-references-only | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A1",
+  "counted-unmapped | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A2",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > A (a) hermetic vitest that a fixture composition carrying step/source refs projects only nativeRef identities equal to the producer ids in the fixture, and that a row lacking a producer id yields a counted unmapped/unavailable entry, never a minted id | A3",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B1",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B2",
+  "never-mints | test | test/workbench-mw-composition-ref-census.test.ts | wb-klr7 MechanicalWorkflows composition-reference census (CAC-WORKFLOW-COMPOSITION-R1) > B (b) static census over src that no module constructs a bd/wb- task id, a Forge operation or gate id, or a Furnace frn- Attempt id from composition fields | B3",
+];
+
+describe("wb-klr7 docs/workbench/07 row W1: the MechanicalWorkflows composition-reference sentence, frozen and read back by its census", () => {
+  const withMw = (change: (body: string) => string) => (section: string, body: string): string => (section === MW_SECTION ? change(body) : body);
+
+  it("AC1 (wb-klr7): row W1 quotes the composition-reference sentence whole, the MechanicalWorkflows section's last block, and binds every clause to the composition-reference census by file, describe path, verbatim title and tier, frozen as a literal", () => {
+    const row = TABLE.find(candidate => candidate.row === "W1");
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe(MW_SECTION);
+    expect(row.source).toBe("docs");
+    expect([`quote | ${row.quote}`, ...bindingOf(row)]).toEqual(FROZEN_W1);
+    expect(row.halves.map(half => `${half.id}:${half.pins.length}`)).toEqual(["today:2", "producer-references-only:1", "counted-unmapped:1", "never-mints:4"]);
+    expect(row.halves.every(half => half.tier === "default-gate" && half.reason === undefined && half.pins.every(entry => entry.file === T(COMPOSITION_CENSUS) && entry.suite?.[0] === COMPOSITION_TOP))).toBe(true);
+    const last = MW_SECTION_BLOCKS.at(-1);
+    expect(last?.kind === "paragraph" ? last.text : "", "the sentence is the section's last block").toBe(row.quote);
+    expect((SECTION_MARKDOWN[MW_SECTION] ?? "").endsWith(`\n\n${row.quote}`), "and its markdown's last paragraph").toBe(true);
+  });
+
+  it("K10 (wb-klr7) names row W1 (and only it) when the composition sentence lets Pi mint an id from composition fields", () => {
+    const lines = docsFailures(synthetic(withMw(body => body.replace("and never mints a Beads task ID", "and may mint a Beads task ID"))));
+    expect(named(lines)).toEqual(["row W1"]);
+    expect(lines.some(line => line.includes(`${MW_SECTION} is not exactly its frozen paragraph`))).toBe(true);
+  });
+
+  it("K11 (wb-klr7) reds the MechanicalWorkflows section, naming no row, when a weakening paragraph follows the composition sentence", () => {
+    const lines = docsFailures(synthetic(withMw(body => `${body}\n\nA host may mint composition IDs where the producer has none.`)));
+    expect(named(lines)).toEqual([]);
+    expect(lines.some(line => line.includes(`${MW_SECTION} is not exactly its frozen paragraph`))).toBe(true);
   });
 });

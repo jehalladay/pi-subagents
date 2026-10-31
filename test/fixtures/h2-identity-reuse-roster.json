@@ -1,0 +1,2078 @@
+{
+ "bead": "wb-4nut.9",
+ "basis": "The out-of-file roster of test/workbench-h2-identity-reuse-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the residual families and the pin carrying each one's quiet row, every registered test title, and the record (wb-flt6: reached, each case's end before the records case, in run order, with its assertion count; recordsEnd, the records case's own end), so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. producer: read-only git rev-parse/show/grep on the local checkouts below /workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src at the cited shas (no fetch; the checkouts' HEADs predate the pins, so only the cited shas are read): each source's file blob, the cited lines verbatim, the gating work packages its table rows name, and srcProbe = git grep -l -E <pattern> <sha> -- src (none at every pin). The TSX-FED-01 row is held to its first three cells (heldCells 3): its program cell spells the rf source kind the landed wb-a9l2.2 census keeps out of every file under test/. wb-3wcm (the landing-405 gate's F1-F6): scan.readingControls gains the wrapper, parenthesized-key, indexed-access-type, parenthesized-type and type-query chain readings and the hex, unicode, code point, escaped-letter, control and digit regex escape readings; scan.findingControls (the finding step's own controls) and scan.tokenControl (the token anchor's own control) join the scan, comparisons (the SELF-READ's witness comparisons) joins the roster, and A2's witness gains findingControls, unreadTokens (the compiler-anchored token census: every src node that carries its own text read by a token reading) and tokenControl. wb-3w79 (the landing-501 gate's F1-F4): scan.readingControls gains a control per chain root (a type name, a type query of a name and of a qualified name, this and the this type) and the identity-escape and count, range and open brace-quantifier regex readings; A2's witness gains spellings (each reading control's text as its own reading read it) and findingKnown (each finding control's known spellings, from the one finding step A2's src call makes too); operands (the SELF-READ's operand statements: the pin case's IMPL lookup, the echo check over that entry's source, its witness declaration and its MEASURED record) joins the roster. wb-jdz6 (the landing-594 gate's F1-F3): scan.readingControls gains the type-name root's qualified form (type E = rec.Owner[\"epoch\"]) and the regex reading's separator family, one control per kind (class escapes, assertions and control character escapes), each spelling the term across every member of its kind, one literal per member; A2's witness gains their readings and spellings; pinCase (the SELF-READ's pin case body: every statement of the pin case's callback body, of any kind, in order) joins the roster, and reached's judged end counts its one new assertion. wb-jdz6 cut #2 (refusal #1's U1 and F2): the SELF-READ reads every held statement and every held literal token for token (tokensOf: the compiler's tokens in order, each with its own text, and every comment between two of them), so spellingControls (the reader's own controls: [label, one spelling, another, whether the two read as one]) joins the roster after pinCase; scan.readingControls gains a qualified name two links deep (type E = Rec.Owner.Epoch), A2's witness gains its reading and spelling, and reached's judged end counts the one new spelling-control assertion. wb-jdz6 cut #3 (refusal #2's U2 and F4): spellingControls holds one control per member the reader's kill sentence names, each label naming its member (an equality and an inequality operator's own text; a doubled space inside a double- and a single-quoted string, a no-substitution template, a template head, middle and tail, and a regex; a block comment, a line comment and a JSDoc block between two tokens, each kind's own words and a doubled space inside it; a second block comment between the same two tokens, two block comments' order there and a block comment's place; the tokens' order; and layout, now with a tab and CRLF); scan.readingControls gains a qualified name three links deep (type E = A.Rec.Owner.Epoch) and A2's witness gains its reading and spelling; reached is unchanged (no assertion is added). wb-jdz6 cut #4 (refusal #3's U3, F2, F3 and F4, in the enumerate-the-resolvable form under orchestrator ruling R-B141): spellingControls gains, for each of the ten whitespace members, a second control that pairs no space against two beside its one-space pair; selfReadResiduals (the SELF-READ residual members: [family, member, one spelling, another, from, to]) and selfReadQuiet (each member's measured quiet row: whether its model erases the member, the controls whose verdict it changes and how many pinned statements it reads otherwise) join the roster after spellingControls; residuals and residualRows gain R-CHAIN-DEPTH, whose quiet row in A2's witness is the longest run of links of one kind its chain reading controls spell, by link kind; and reached's judged end counts the one new assertion (the residual members' quiet rows and every residual family named in the census header).",
+ "quote": "Restart changes source owner epoch; matching sequence counter cannot authorize reuse.",
+ "citation": "RL docs/programs/harness2-reactive-evolution-2026-10-20/README.md:45@bfe1f4ac7fa0",
+ "scan": {
+  "h2Package": "reactive[-_./]?(?:components|inference|lenses)|fiber[-_./]?optics|reactive[-_./]?fiber[-_./]?tsx/i",
+  "workPackageTerms": [
+   "(?:rl|fo|rc|ri|tsx) ?h2 ?0[0-9]",
+   "tsx ?fed ?0[0-9]",
+   "harness ?2"
+  ],
+  "identityTerms": [
+   "owner epochs?",
+   "source epochs?",
+   "instance epochs?",
+   "owner instances?",
+   "owner identit(?:y|ies)",
+   "snapshot observations?",
+   "import bindings?",
+   "public ports?",
+   "cache receipts?",
+   "resync required",
+   "request identit(?:y|ies)",
+   "inference demands?",
+   "local alias(?:es)?"
+  ],
+  "moduleExtensions": [
+   ".ts",
+   ".mts",
+   ".cts",
+   ".tsx",
+   ".js",
+   ".mjs",
+   ".cjs",
+   ".jsx"
+  ],
+  "floors": {
+   "srcFiles": 100,
+   "srcModules": 100
+  },
+  "anchors": {
+   "src/workbench/observation.ts": "projectionEventId",
+   "src/workbench/evidence-loader.ts": "cacheKey",
+   "src/workbench/reactivefiber-observer.ts": "bundleRevision",
+   "src/workbench/observe-query.ts": "observeInvocation",
+   "src/workflow/journal.ts": "journalKey",
+   "src/workbench/claude-host.ts": "replayBasis"
+  },
+  "literalAnchors": {
+   "src/workbench/observation.ts": "out-of-order",
+   "src/workbench/reactivefiber-observer.ts": "rf-bundle:"
+  },
+  "quietSites": {
+   "src/workbench/graph-view.ts": "cached",
+   "src/ui/workflow-inspector.ts": "relationCache",
+   "src/workflow/meta.ts": "workflowNames",
+   "src/schedule-store.ts": "ScheduleStore"
+  },
+  "flaggedControls": [
+   [
+    "const ownerEpoch = 1;",
+    "owner epochs?"
+   ],
+   [
+    "const x = \"source_epoch\";",
+    "source epochs?"
+   ],
+   [
+    "const instanceEpoch = 2;",
+    "instance epochs?"
+   ],
+   [
+    "const ownerInstance = \"a\";",
+    "owner instances?"
+   ],
+   [
+    "const ownerIdentity = \"a\";",
+    "owner identit(?:y|ies)"
+   ],
+   [
+    "type SnapshotObservation = { id: string };",
+    "snapshot observations?"
+   ],
+   [
+    "const importBinding = 1;",
+    "import bindings?"
+   ],
+   [
+    "const publicPort = \"p\";",
+    "public ports?"
+   ],
+   [
+    "const r = \"cache-receipt\";",
+    "cache receipts?"
+   ],
+   [
+    "const s = \"RESYNC_REQUIRED\";",
+    "resync required"
+   ],
+   [
+    "const requestIdentity = 1;",
+    "request identit(?:y|ies)"
+   ],
+   [
+    "const inferenceDemand = 0;",
+    "inference demands?"
+   ],
+   [
+    "const localAlias = \"x\";",
+    "local alias(?:es)?"
+   ],
+   [
+    "const p = \"RL-H2-01\";",
+    "(?:rl|fo|rc|ri|tsx) ?h2 ?0[0-9]"
+   ],
+   [
+    "const q = `TSX-FED-01`;",
+    "tsx ?fed ?0[0-9]"
+   ],
+   [
+    "const h = \"harness2\";",
+    "harness ?2"
+   ]
+  ],
+  "quietControls": [
+   "const epoch = 1; const owner = \"a\"; const alias = \"b\"; const sequence = 3; const resync = true; const port = 8080;",
+   "// owner epoch, RESYNC_REQUIRED and RL-H2-01 in a comment are no reader\nconst value = 1;",
+   "const cacheKey = \"k\"; const projectionEventId = \"e\"; const replayBasis = \"b\";",
+   "const name = record.owner.name; const path = { owner: { name: 1 } }; const pattern = /owner[._]name/;"
+  ],
+  "composedControl": "const word = [\"owner\", \"epoch\"].join(\" \");",
+  "readingControls": [
+   [
+    "identifier",
+    "identifier",
+    "let ownerEpoch = 0;"
+   ],
+   [
+    "private name",
+    "identifier",
+    "class Holder { #ownerEpoch = 0; }"
+   ],
+   [
+    "string",
+    "literal",
+    "const s = \"owner epoch\";"
+   ],
+   [
+    "template part",
+    "literal",
+    "const t = `${a} owner epoch ${b}`;"
+   ],
+   [
+    "property access",
+    "chain",
+    "const e = record.owner.epoch;"
+   ],
+   [
+    "computed root",
+    "chain",
+    "const e = load().owner.epoch;"
+   ],
+   [
+    "element access",
+    "chain",
+    "const e = record[\"owner\"]?.[\"epoch\"];"
+   ],
+   [
+    "qualified name",
+    "chain",
+    "type E = Owner.Epoch;"
+   ],
+   [
+    "nested qualified name",
+    "chain",
+    "type E = Rec.Owner.Epoch;"
+   ],
+   [
+    "twice-nested qualified name",
+    "chain",
+    "type E = A.Rec.Owner.Epoch;"
+   ],
+   [
+    "object keys",
+    "key path",
+    "const o = { owner: { epoch: 1 } };"
+   ],
+   [
+    "type members",
+    "key path",
+    "type T = { owner: { epoch: number } };"
+   ],
+   [
+    "binding pattern",
+    "key path",
+    "const { owner: { epoch } } = record;"
+   ],
+   [
+    "regex literal",
+    "regex",
+    "const r = /owner.epoch/;"
+   ],
+   [
+    "regex escape",
+    "regex",
+    "const r = /owner\\.epoch/;"
+   ],
+   [
+    "regex class",
+    "regex",
+    "const r = /owner[._-]epoch/i;"
+   ],
+   [
+    "non-null link",
+    "chain",
+    "const e = record.owner!.epoch;"
+   ],
+   [
+    "parenthesized link",
+    "chain",
+    "const e = (record.owner).epoch;"
+   ],
+   [
+    "as link",
+    "chain",
+    "const e = (record.owner as Owner).epoch;"
+   ],
+   [
+    "satisfies link",
+    "chain",
+    "const e = (record.owner satisfies Owner).epoch;"
+   ],
+   [
+    "type assertion link",
+    "chain",
+    "const e = (<Owner>record.owner).epoch;"
+   ],
+   [
+    "parenthesized key",
+    "chain",
+    "const e = record[(\"owner\")][(\"epoch\")];"
+   ],
+   [
+    "indexed access type",
+    "chain",
+    "type E = Rec[\"owner\"][\"epoch\"];"
+   ],
+   [
+    "parenthesized type",
+    "chain",
+    "type E = (Rec[\"owner\"])[\"epoch\"];"
+   ],
+   [
+    "type query root",
+    "chain",
+    "type E = (typeof record)[\"owner\"][\"epoch\"];"
+   ],
+   [
+    "regex hex escape",
+    "regex",
+    "const r = /owner\\x2Eepoch/;"
+   ],
+   [
+    "regex unicode escape",
+    "regex",
+    "const r = /owner\\u002Eepoch/;"
+   ],
+   [
+    "regex code point escape",
+    "regex",
+    "const r = /owner\\u{2E}epoch/u;"
+   ],
+   [
+    "regex escaped letter",
+    "regex",
+    "const r = /owner\\u0045poch/;"
+   ],
+   [
+    "regex control escape",
+    "regex",
+    "const r = /owner\\cJepoch/;"
+   ],
+   [
+    "regex digit escape",
+    "regex",
+    "const r = /owner\\0epoch/;"
+   ],
+   [
+    "regex property escape",
+    "regex",
+    "const r = /owner\\p{P}epoch/u;"
+   ],
+   [
+    "regex named back-reference",
+    "regex",
+    "const r = /(?<dot>\\.)owner\\k<dot>epoch/;"
+   ],
+   [
+    "type name root",
+    "chain",
+    "type E = Owner[\"epoch\"];"
+   ],
+   [
+    "type name qualified root",
+    "chain",
+    "type E = rec.Owner[\"epoch\"];"
+   ],
+   [
+    "type query name root",
+    "chain",
+    "type E = (typeof owner)[\"epoch\"];"
+   ],
+   [
+    "type query qualified root",
+    "chain",
+    "type E = (typeof record.owner)[\"epoch\"];"
+   ],
+   [
+    "this root",
+    "chain",
+    "class Holder { e = this.owner.epoch; }"
+   ],
+   [
+    "this type root",
+    "chain",
+    "interface Holder { e: this[\"owner\"][\"epoch\"]; }"
+   ],
+   [
+    "regex identity escape",
+    "regex",
+    "const r = /owner\\Epoch/;"
+   ],
+   [
+    "regex class escapes",
+    "regex",
+    "const r = [/owner\\depoch/, /owner\\Depoch/, /owner\\sepoch/, /owner\\Sepoch/, /owner\\wepoch/, /owner\\Wepoch/];"
+   ],
+   [
+    "regex assertions",
+    "regex",
+    "const r = [/owner\\bepoch/, /owner\\Bepoch/];"
+   ],
+   [
+    "regex control character escapes",
+    "regex",
+    "const r = [/owner\\fepoch/, /owner\\nepoch/, /owner\\repoch/, /owner\\tepoch/, /owner\\vepoch/];"
+   ],
+   [
+    "regex count quantifier",
+    "regex",
+    "const r = /owner.{1}epoch/;"
+   ],
+   [
+    "regex range quantifier",
+    "regex",
+    "const r = /owner.{0,2}epoch/;"
+   ],
+   [
+    "regex open quantifier",
+    "regex",
+    "const r = /owner.{1,}epoch/;"
+   ]
+  ],
+  "readingTerm": "owner epochs?",
+  "knownSpellings": [
+   "src/workbench/detached-observer.ts chain snapshot.observation"
+  ],
+  "findingControls": [
+   [
+    "src/workbench/detached-observer.ts",
+    "const seen = snapshot.observation; const ownerEpoch = 1;",
+    "owner epochs?"
+   ],
+   [
+    "src/workbench/detached-observer-copy.ts",
+    "const seen = snapshot.observation;",
+    "snapshot observations?"
+   ]
+  ],
+  "tokenControl": [
+   "control.tsx",
+   "const view = <b>owner epoch</b>;"
+  ],
+  "splitControls": [
+   "const o = { owner: epoch };",
+   "function f(owner: Epoch) {}",
+   "const o = { owner: wrap({ epoch: 1 }) };",
+   "interface Owner { epoch: number }"
+  ],
+  "packageControls": [
+   "reactive-components",
+   "reactive_inference",
+   "@reactive/inference",
+   "fiber-optics",
+   "fiber_optics",
+   "reactive-lenses",
+   "reactive_lenses",
+   "@reactive-fiber/tsx"
+  ],
+  "ownRfSpecifier": "./providers/reactivefiber.js",
+  "ownSdks": [
+   "@anthropic-ai/claude-agent-sdk",
+   "@furnace/sdk",
+   "@forge/sdk"
+  ]
+ },
+ "producer": [
+  {
+   "label": "RL",
+   "repo": "ReactiveLensesSDK",
+   "sha": "bfe1f4ac7fa097ef3883d97cda6ab70052849f55",
+   "committed": "2026-10-21T02:47:19-07:00",
+   "file": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "blob": "314b1e9f38705e1bee3940f1e6b0b4e6baed8cc3",
+   "lines": [
+    {
+     "line": 24,
+     "text": "1. An imported snapshot includes owner/instance identity, immutable source revision and epoch, schema digest, original source status, freshness basis and optional coverage proof reference. A local alias cannot supersede owner identity."
+    },
+    {
+     "line": 34,
+     "text": "| RL-H2-01 | define source-qualified SnapshotObservation and ImportBinding adapters using the common Fiber port descriptor | source SHA, independently executed positive/negative fixture, receipt + measured overhead |"
+    },
+    {
+     "line": 35,
+     "text": "| RL-H2-02 | support pinned read, local accepted-latest and explicit resync-required states (no casual-cut claim) | source SHA, independently executed positive/negative fixture, receipt + measured overhead |"
+    },
+    {
+     "line": 45,
+     "text": "2. Restart changes source owner epoch; matching sequence counter cannot authorize reuse."
+    }
+   ],
+   "gating": [
+    "RL-H2-01",
+    "RL-H2-02"
+   ],
+   "srcProbe": {
+    "pattern": "SnapshotObservation|ImportBinding|RESYNC_REQUIRED",
+    "filesAtPin": []
+   }
+  },
+  {
+   "label": "FO",
+   "repo": "FiberOpticsSDK",
+   "sha": "e803f66c5fb9e3650e263aa96dcaeac36af761e1",
+   "committed": "2026-10-21T02:47:18-07:00",
+   "file": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "blob": "27fe98974f8fe2fb2b744ae5b39fdfc08bba9fcb",
+   "lines": [
+    {
+     "line": 25,
+     "text": "2. Publication records preserve VALUE/ABSENT/PENDING/SUPPRESSED/FAILED and queued-versus-committed distinctions; failure/status/witness changes may invalidate consumers even with unchanged payload bytes."
+    },
+    {
+     "line": 34,
+     "text": "| FO-H2-01 | define versioned owner-qualified public-port descriptor and canonical typed codec in existing port layer | source SHA, independently executed positive/negative fixture, receipt + measured overhead |"
+    },
+    {
+     "line": 35,
+     "text": "| FO-H2-02 | add remote-observation admission as an ordinary source transaction with replay witness and revocation semantics | source SHA, independently executed positive/negative fixture, receipt + measured overhead |"
+    },
+    {
+     "line": 45,
+     "text": "2. Equal value with changed provenance/status still invalidates if observer can read those fields."
+    },
+    {
+     "line": 46,
+     "text": "3. Two owner-instance epochs with equal sequence numbers do not alias."
+    }
+   ],
+   "gating": [
+    "FO-H2-01",
+    "FO-H2-02"
+   ],
+   "srcProbe": {
+    "pattern": "PublicPort|public_port|owner_epoch|owner_instance|RemoteObservation|remote_observation",
+    "filesAtPin": []
+   }
+  },
+  {
+   "label": "RC",
+   "repo": "ReactiveComponentsSDK",
+   "sha": "640a3b579a955f84388d7bacd385d13b232a3116",
+   "committed": "2026-10-21T02:42:29-07:00",
+   "file": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "blob": "87ef3d4c397cd7e6aeb745eda703e3c3722ce0b9",
+   "lines": [
+    {
+     "line": 36,
+     "text": "| RC-H2-02 | add deterministic ContextProjection export: included/excluded blocks, source and budget receipts | source SHA, independently executed positive/negative fixture, receipt + measured overhead |"
+    },
+    {
+     "line": 48,
+     "text": "4. Identical rendered text from different source/provenance cannot inherit an invalid cache receipt."
+    }
+   ],
+   "gating": [
+    "RC-H2-02"
+   ],
+   "srcProbe": {
+    "pattern": "ContextProjection|context_projection|CacheReceipt|cache_receipt",
+    "filesAtPin": []
+   }
+  },
+  {
+   "label": "RI",
+   "repo": "ReactiveInferenceSDK",
+   "sha": "485f3615db1e8703d6ce1093713fe595e46f42a0",
+   "committed": "2026-10-21T02:38:38-07:00",
+   "file": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "blob": "aae0e893dc2b4c2a21a31dad2e03d7bd3e43f8eb",
+   "lines": [
+    {
+     "line": 32,
+     "text": "| RI-H2-02 | Bridge context digest/source cut and graph generation to admitted inference request identity | installed consumer + independent negative test + source SHA + cost receipt |"
+    },
+    {
+     "line": 44,
+     "text": "4. Two identical prompt strings with different authority/source digests do not automatically share inference demand."
+    }
+   ],
+   "gating": [
+    "RI-H2-02"
+   ],
+   "srcProbe": {
+    "pattern": "source_cut|context_projection_digest|graph_generation",
+    "filesAtPin": []
+   }
+  },
+  {
+   "label": "RF",
+   "repo": "ReactiveFiberCLI",
+   "sha": "978f6515c302f92d0567169315ac8a4bfea7f399",
+   "committed": "2026-10-21T20:42:13-07:00",
+   "file": "docs/programs/harness2-federated-peer-2026-10-20/README.md",
+   "blob": "1be8d2d21b91f3f750b959bd1057fd1ebbe7e79c",
+   "lines": [
+    {
+     "line": 43,
+     "text": "1. A and B have same local resource alias but different owner-instance IDs => do not alias."
+    }
+   ],
+   "gating": []
+  },
+  {
+   "label": "TSX",
+   "repo": "ReactiveFiberTSXSDK",
+   "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+   "committed": "2026-10-21T12:27:27-07:00",
+   "file": "docs/programs/cfrr-tsx-resource-trace-refinement-2026-10-18-BEADS-2026-10-21.md",
+   "blob": "0df87df308153ca3537e85b48da7048bab069939",
+   "lines": [
+    {
+     "line": 39,
+     "text": "| rftsx-c7gog | TSX-FED-01 | [FED] Hook-name and status-vocabulary collision audit pins the R-09 mapping onto ready/failed/stale/absent in one ADR |"
+    }
+   ],
+   "gating": [
+    "TSX-FED-01"
+   ],
+   "heldCells": 3
+  },
+  {
+   "label": "TSX-dp010",
+   "repo": "ReactiveFiberTSXSDK",
+   "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+   "committed": "2026-10-21T12:27:27-07:00",
+   "file": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md",
+   "blob": "80427fdf9c89958cce77f66cc3dfa481327400f7",
+   "lines": [
+    {
+     "line": 75,
+     "text": "| dp010-C020 | 'Admitted public-port snapshot' names a defined artifact. | a definition of 'public port' and 'admitted' in the federated program or the harness2 contracts; R-09 makes TSX-FED-01 the owner of the vocabulary mapping |"
+    }
+   ],
+   "gating": []
+  }
+ ],
+ "residuals": [
+  "R-EVENT-ID",
+  "R-SNAPSHOT-RESYNC",
+  "R-ADAPTER-REF",
+  "R-SAME-BASIS",
+  "R-COMPOSED",
+  "R-UNJUDGED-SITES",
+  "R-OWN-FIELD",
+  "R-SPLIT-NAMES",
+  "R-CHAIN-DEPTH"
+ ],
+ "residualRows": {
+  "R-EVENT-ID": "B1",
+  "R-SNAPSHOT-RESYNC": "B1",
+  "R-ADAPTER-REF": "B2",
+  "R-SAME-BASIS": "D2",
+  "R-COMPOSED": "A2",
+  "R-UNJUDGED-SITES": "A2",
+  "R-OWN-FIELD": "A2",
+  "R-SPLIT-NAMES": "A2",
+  "R-CHAIN-DEPTH": "A2"
+ },
+ "comparisons": [
+  "expect(witness).toStrictEqual(rosterWitness(pin));",
+  "expect(MEASURED, \"every pin's measured witness, compared against the roster a second time\").toStrictEqual(Object.fromEntries(pins.map(pin => [pin, rosterWitness(pin)])));"
+ ],
+ "operands": [
+  "const impl = IMPL[pin];",
+  "expect(String(impl), `${pin}'s case reads the roster's witnesses`).not.toMatch(/\\brosterWitness\\b|\\bROSTER\\.rows\\b/);",
+  "const witness = impl === undefined ? null : await impl();",
+  "MEASURED[pin] = witness;"
+ ],
+ "pinCase": [
+  "const impl = IMPL[pin];",
+  "expect(impl, `no case for ${pin}`).toBeTypeOf(\"function\");",
+  "expect(String(impl), `${pin}'s case reads the roster's witnesses`).not.toMatch(/\\brosterWitness\\b|\\bROSTER\\.rows\\b/);",
+  "const witness = impl === undefined ? null : await impl();",
+  "expect(witness).toStrictEqual(rosterWitness(pin));",
+  "MEASURED[pin] = witness;",
+  "REACHED.push(endOf(pin));"
+ ],
+ "spellingControls": [
+  [
+   "two tokens merged into one",
+   "const witness = impl === undefined ? null : await impl();",
+   "const witness = impl === undefined ? null : awaitimpl();",
+   false
+  ],
+  [
+   "a keyword merged into a name",
+   "const witness = impl === undefined ? null : await impl();",
+   "constwitness = impl === undefined ? null : await impl();",
+   false
+  ],
+  [
+   "an equality operator's own text",
+   "const witness = impl === undefined ? null : await impl();",
+   "const witness = impl == undefined ? null : await impl();",
+   false
+  ],
+  [
+   "an inequality operator's own text",
+   "const known = impl !== undefined;",
+   "const known = impl != undefined;",
+   false
+  ],
+  [
+   "a double-quoted string's inner whitespace",
+   "expect(impl, \"no case\").toBeTypeOf(\"function\");",
+   "expect(impl, \"no  case\").toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a double-quoted string's doubled space read as none",
+   "expect(impl, \"nocase\").toBeTypeOf(\"function\");",
+   "expect(impl, \"no  case\").toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a single-quoted string's inner whitespace",
+   "expect(impl, 'no case').toBeTypeOf('function');",
+   "expect(impl, 'no  case').toBeTypeOf('function');",
+   false
+  ],
+  [
+   "a single-quoted string's doubled space read as none",
+   "expect(impl, 'nocase').toBeTypeOf('function');",
+   "expect(impl, 'no  case').toBeTypeOf('function');",
+   false
+  ],
+  [
+   "a no-substitution template's inner whitespace",
+   "expect(impl, `no case`).toBeTypeOf(\"function\");",
+   "expect(impl, `no  case`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a no-substitution template's doubled space read as none",
+   "expect(impl, `nocase`).toBeTypeOf(\"function\");",
+   "expect(impl, `no  case`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template head's inner whitespace",
+   "expect(impl, `no case for ${pin}`).toBeTypeOf(\"function\");",
+   "expect(impl, `no case  for ${pin}`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template head's doubled space read as none",
+   "expect(impl, `no casefor ${pin}`).toBeTypeOf(\"function\");",
+   "expect(impl, `no case  for ${pin}`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template middle's inner whitespace",
+   "expect(impl, `${pin} no case ${pin}.`).toBeTypeOf(\"function\");",
+   "expect(impl, `${pin} no  case ${pin}.`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template middle's doubled space read as none",
+   "expect(impl, `${pin} nocase ${pin}.`).toBeTypeOf(\"function\");",
+   "expect(impl, `${pin} no  case ${pin}.`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template tail's inner whitespace",
+   "expect(impl, `${pin} no case`).toBeTypeOf(\"function\");",
+   "expect(impl, `${pin} no  case`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a template tail's doubled space read as none",
+   "expect(impl, `${pin} nocase`).toBeTypeOf(\"function\");",
+   "expect(impl, `${pin} no  case`).toBeTypeOf(\"function\");",
+   false
+  ],
+  [
+   "a regex's inner whitespace",
+   "expect(text).toMatch(/owner epoch/);",
+   "expect(text).toMatch(/owner  epoch/);",
+   false
+  ],
+  [
+   "a regex's doubled space read as none",
+   "expect(text).toMatch(/ownerepoch/);",
+   "expect(text).toMatch(/owner  epoch/);",
+   false
+  ],
+  [
+   "a block comment between two tokens",
+   "MEASURED[pin] = witness;",
+   "MEASURED[pin] = /* drift */ witness;",
+   false
+  ],
+  [
+   "a line comment between two tokens",
+   "MEASURED[pin] = witness;",
+   "MEASURED[pin] = // drift\nwitness;",
+   false
+  ],
+  [
+   "a JSDoc block between two tokens",
+   "const f = (x: number) => x;",
+   "const f = /** drift */ (x: number) => x;",
+   false
+  ],
+  [
+   "a block comment's own words",
+   "MEASURED[pin] = /* one */ witness;",
+   "MEASURED[pin] = /* other */ witness;",
+   false
+  ],
+  [
+   "a line comment's own words",
+   "MEASURED[pin] = // one\nwitness;",
+   "MEASURED[pin] = // other\nwitness;",
+   false
+  ],
+  [
+   "a JSDoc block's own words",
+   "const f = /** @param x the one */ (x: number) => x;",
+   "const f = /** @param x the other */ (x: number) => x;",
+   false
+  ],
+  [
+   "a block comment's inner whitespace",
+   "MEASURED[pin] = /* the one */ witness;",
+   "MEASURED[pin] = /* the  one */ witness;",
+   false
+  ],
+  [
+   "a block comment's doubled space read as none",
+   "MEASURED[pin] = /* theone */ witness;",
+   "MEASURED[pin] = /* the  one */ witness;",
+   false
+  ],
+  [
+   "a line comment's inner whitespace",
+   "MEASURED[pin] = // the one\nwitness;",
+   "MEASURED[pin] = // the  one\nwitness;",
+   false
+  ],
+  [
+   "a line comment's doubled space read as none",
+   "MEASURED[pin] = // theone\nwitness;",
+   "MEASURED[pin] = // the  one\nwitness;",
+   false
+  ],
+  [
+   "a JSDoc block's inner whitespace",
+   "const f = /** @param x the one */ (x: number) => x;",
+   "const f = /** @param x the  one */ (x: number) => x;",
+   false
+  ],
+  [
+   "a JSDoc block's doubled space read as none",
+   "const f = /** @param x theone */ (x: number) => x;",
+   "const f = /** @param x the  one */ (x: number) => x;",
+   false
+  ],
+  [
+   "a second block comment between the same two tokens",
+   "MEASURED[pin] = /* drift */ witness;",
+   "MEASURED[pin] = /* drift */ /* drift */ witness;",
+   false
+  ],
+  [
+   "two block comments' order between the same two tokens",
+   "MEASURED[pin] = /* one */ /* other */ witness;",
+   "MEASURED[pin] = /* other */ /* one */ witness;",
+   false
+  ],
+  [
+   "a block comment's place among the tokens",
+   "MEASURED[pin] = /* drift */ witness;",
+   "MEASURED[pin] /* drift */ = witness;",
+   false
+  ],
+  [
+   "the tokens' order",
+   "MEASURED[pin] = witness;",
+   "witness = MEASURED[pin];",
+   false
+  ],
+  [
+   "layout between two tokens",
+   "REACHED.push(endOf(pin));",
+   "REACHED.push(\r\n\tendOf( pin )\n);",
+   true
+  ]
+ ],
+ "selfReadResiduals": [
+  [
+   "R-SELF-SELECTIVE",
+   "a doubled space read as one only after the word drift (by its neighbour)",
+   "expect(text).toMatch(/drift  epoch/);",
+   "expect(text).toMatch(/drift epoch/);",
+   "drift  ",
+   "drift "
+  ],
+  [
+   "R-SELF-SELECTIVE",
+   "a third block comment between the same two tokens dropped (a count past the two the count control holds)",
+   "MEASURED[pin] = /* a */ /* a */ /* a */ witness;",
+   "MEASURED[pin] = /* a */ /* a */ witness;",
+   "/* a */ /* a */ /* a */",
+   "/* a */ /* a */"
+  ],
+  [
+   "R-SELF-SELECTIVE",
+   "a keyword merged into the name after it only after typeof (by its own text)",
+   "const kind = typeof value;",
+   "const kind = typeofvalue;",
+   "typeof value",
+   "typeofvalue"
+  ],
+  [
+   "R-SELF-FILE-ONLY",
+   "a block comment dropped from this file's statements only",
+   "MEASURED[pin] = /* drift */ witness;",
+   "MEASURED[pin] = witness;",
+   "/* drift */ ",
+   ""
+  ],
+  [
+   "R-SELF-OPERATOR",
+   "<= read as <",
+   "const ok = a <= b;",
+   "const ok = a < b;",
+   "<=",
+   "<"
+  ],
+  [
+   "R-SELF-OPERATOR",
+   "!== read as ===",
+   "const known = a !== b;",
+   "const known = a === b;",
+   "!==",
+   "==="
+  ],
+  [
+   "R-SELF-TEXT",
+   "a name read case-folded",
+   "type E = Rec;",
+   "type E = rec;",
+   "Rec",
+   "rec"
+  ],
+  [
+   "R-SELF-TEXT",
+   "a keyword read as another (let as const)",
+   "let n = 1;",
+   "const n = 1;",
+   "let ",
+   "const "
+  ],
+  [
+   "R-SELF-TEXT",
+   "a number read by its value (0x10 as 16)",
+   "const n = 0x10;",
+   "const n = 16;",
+   "0x10",
+   "16"
+  ],
+  [
+   "R-SELF-TEXT",
+   "a regex's flags dropped (u)",
+   "const r = /owner/u;",
+   "const r = /owner/;",
+   "/u;",
+   "/;"
+  ],
+  [
+   "R-SELF-TEXT",
+   "a comment's words read case-folded",
+   "MEASURED[pin] = /* One */ witness;",
+   "MEASURED[pin] = /* one */ witness;",
+   "/* One */",
+   "/* one */"
+  ],
+  [
+   "R-SELF-COMMENT-ORDER",
+   "a second JSDoc block between the same two tokens dropped",
+   "const f = /** a */ /** a */ (x: number) => x;",
+   "const f = /** a */ (x: number) => x;",
+   "/** a */ /** a */",
+   "/** a */"
+  ],
+  [
+   "R-SELF-COMMENT-ORDER",
+   "two line comments' order between the same two tokens",
+   "MEASURED[pin] = // one\n// other\nwitness;",
+   "MEASURED[pin] = // other\n// one\nwitness;",
+   "// one\n// other",
+   "// other\n// one"
+  ],
+  [
+   "R-SELF-COMMENT-ORDER",
+   "a line comment's place among the tokens",
+   "MEASURED[pin] // one\n= witness;",
+   "MEASURED[pin] = // one\nwitness;",
+   "// one\n= witness",
+   "= // one\nwitness"
+  ],
+  [
+   "R-SELF-COOKED",
+   "a string's quotes read by its value (single as double)",
+   "const s = 'case';",
+   "const s = \"case\";",
+   "'case'",
+   "\"case\""
+  ],
+  [
+   "R-SELF-COOKED",
+   "a string's escape read by its value (\\x41 as A)",
+   "const s = \"\\x41\";",
+   "const s = \"A\";",
+   "\\x41",
+   "A"
+  ],
+  [
+   "R-SELF-EDGE",
+   "a block comment's edge spaces trimmed",
+   "MEASURED[pin] = /* edge */ witness;",
+   "MEASURED[pin] = /*edge*/ witness;",
+   "/* edge */",
+   "/*edge*/"
+  ],
+  [
+   "R-SELF-EDGE",
+   "a string's edge space dropped",
+   "const s = \" edge\";",
+   "const s = \"edge\";",
+   "\" edge\"",
+   "\"edge\""
+  ],
+  [
+   "R-SELF-INNER-WS",
+   "a doubled space read as a tab",
+   "const s = \"an  edge\";",
+   "const s = \"an\tedge\";",
+   "\"an  edge\"",
+   "\"an\tedge\""
+  ],
+  [
+   "R-SELF-INNER-WS",
+   "a run of three spaces read as two",
+   "const s = \"no   case\";",
+   "const s = \"no  case\";",
+   "   ",
+   "  "
+  ],
+  [
+   "R-SELF-INNER-WS",
+   "a tab inside a string read as a space",
+   "const s = \"no\tcase\";",
+   "const s = \"no case\";",
+   "\t",
+   " "
+  ],
+  [
+   "R-SELF-INNER-WS",
+   "a line break inside a template read as a space",
+   "const s = `no\ncase`;",
+   "const s = `no case`;",
+   "`no\ncase`",
+   "`no case`"
+  ],
+  [
+   "R-SELF-INNER-WS",
+   "a single space between two words inside a string read as none (no control pairs one space against none)",
+   "const s = \"no case\";",
+   "const s = \"nocase\";",
+   "\"no case\"",
+   "\"nocase\""
+  ],
+  [
+   "R-SELF-OTHER-LAYOUT",
+   "a vertical tab between two tokens read as spelling",
+   "REACHED.push(\u000bendOf(pin));",
+   "REACHED.push( endOf(pin));",
+   "\u000b",
+   " "
+  ]
+ ],
+ "selfReadQuiet": [
+  {
+   "family": "R-SELF-SELECTIVE",
+   "member": "a doubled space read as one only after the word drift (by its neighbour)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-SELECTIVE",
+   "member": "a third block comment between the same two tokens dropped (a count past the two the count control holds)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-SELECTIVE",
+   "member": "a keyword merged into the name after it only after typeof (by its own text)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-FILE-ONLY",
+   "member": "a block comment dropped from this file's statements only",
+   "erased": true,
+   "controls": [
+    "a block comment between two tokens",
+    "a second block comment between the same two tokens",
+    "a block comment's place among the tokens"
+   ],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-OPERATOR",
+   "member": "<= read as <",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-OPERATOR",
+   "member": "!== read as ===",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a name read case-folded",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a keyword read as another (let as const)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a number read by its value (0x10 as 16)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a regex's flags dropped (u)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a comment's words read case-folded",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-COMMENT-ORDER",
+   "member": "a second JSDoc block between the same two tokens dropped",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-COMMENT-ORDER",
+   "member": "two line comments' order between the same two tokens",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-COMMENT-ORDER",
+   "member": "a line comment's place among the tokens",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-COOKED",
+   "member": "a string's quotes read by its value (single as double)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-COOKED",
+   "member": "a string's escape read by its value (\\x41 as A)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-EDGE",
+   "member": "a block comment's edge spaces trimmed",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-EDGE",
+   "member": "a string's edge space dropped",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-INNER-WS",
+   "member": "a doubled space read as a tab",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-INNER-WS",
+   "member": "a run of three spaces read as two",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-INNER-WS",
+   "member": "a tab inside a string read as a space",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-INNER-WS",
+   "member": "a line break inside a template read as a space",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-INNER-WS",
+   "member": "a single space between two words inside a string read as none (no control pairs one space against none)",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-OTHER-LAYOUT",
+   "member": "a vertical tab between two tokens read as spelling",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  }
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(trigger, absent today) If Pi ever caches, de-dupes or imports H2 records: Pi declares, installs, loads and names no H2 producer package, no src module names a gating work package or the H2 identity-record vocabulary, and the gating artifacts are measured unshipped at the cited shas",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "declaredH2": [],
+      "installedH2": [],
+      "loadedH2": [],
+      "namedH2": [],
+      "ownSdksRead": [
+       "@anthropic-ai/claude-agent-sdk",
+       "@furnace/sdk",
+       "@forge/sdk"
+      ],
+      "patternReads": [
+       "reactive-components",
+       "reactive_inference",
+       "@reactive/inference",
+       "fiber-optics",
+       "fiber_optics",
+       "reactive-lenses",
+       "reactive_lenses",
+       "@reactive-fiber/tsx"
+      ],
+      "ownRfRead": false,
+      "declaredFloorMet": true,
+      "installedFloorMet": true
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "hits": [],
+      "floorsMet": {
+       "srcFiles": true,
+       "srcModules": true
+      },
+      "nonModules": [],
+      "anchors": [
+       "src/workbench/observation.ts:true",
+       "src/workbench/evidence-loader.ts:true",
+       "src/workbench/reactivefiber-observer.ts:true",
+       "src/workbench/observe-query.ts:true",
+       "src/workflow/journal.ts:true",
+       "src/workbench/claude-host.ts:true"
+      ],
+      "literalAnchors": [
+       "src/workbench/observation.ts:true",
+       "src/workbench/reactivefiber-observer.ts:true"
+      ],
+      "flagged": [
+       "owner epochs?:true",
+       "source epochs?:true",
+       "instance epochs?:true",
+       "owner instances?:true",
+       "owner identit(?:y|ies):true",
+       "snapshot observations?:true",
+       "import bindings?:true",
+       "public ports?:true",
+       "cache receipts?:true",
+       "resync required:true",
+       "request identit(?:y|ies):true",
+       "inference demands?:true",
+       "local alias(?:es)?:true",
+       "(?:rl|fo|rc|ri|tsx) ?h2 ?0[0-9]:true",
+       "tsx ?fed ?0[0-9]:true",
+       "harness ?2:true"
+      ],
+      "readings": [
+       "identifier:true",
+       "private name:true",
+       "string:true",
+       "template part:true",
+       "property access:true",
+       "computed root:true",
+       "element access:true",
+       "qualified name:true",
+       "nested qualified name:true",
+       "twice-nested qualified name:true",
+       "object keys:true",
+       "type members:true",
+       "binding pattern:true",
+       "regex literal:true",
+       "regex escape:true",
+       "regex class:true",
+       "non-null link:true",
+       "parenthesized link:true",
+       "as link:true",
+       "satisfies link:true",
+       "type assertion link:true",
+       "parenthesized key:true",
+       "indexed access type:true",
+       "parenthesized type:true",
+       "type query root:true",
+       "regex hex escape:true",
+       "regex unicode escape:true",
+       "regex code point escape:true",
+       "regex escaped letter:true",
+       "regex control escape:true",
+       "regex digit escape:true",
+       "regex property escape:true",
+       "regex named back-reference:true",
+       "type name root:true",
+       "type name qualified root:true",
+       "type query name root:true",
+       "type query qualified root:true",
+       "this root:true",
+       "this type root:true",
+       "regex identity escape:true",
+       "regex class escapes:true",
+       "regex assertions:true",
+       "regex control character escapes:true",
+       "regex count quantifier:true",
+       "regex range quantifier:true",
+       "regex open quantifier:true"
+      ],
+      "spellings": [
+       "identifier: ownerEpoch",
+       "private name: #ownerEpoch",
+       "string: owner epoch",
+       "template part:  owner epoch ",
+       "property access: record.owner.epoch",
+       "computed root: owner.epoch",
+       "element access: record.owner.epoch",
+       "qualified name: Owner.Epoch",
+       "nested qualified name: Rec.Owner.Epoch",
+       "twice-nested qualified name: A.Rec.Owner.Epoch",
+       "object keys: owner.epoch",
+       "type members: owner.epoch",
+       "binding pattern: owner.epoch",
+       "regex literal: /owner.epoch/",
+       "regex escape: /owner.epoch/",
+       "regex class: /owner ._- epoch/i",
+       "non-null link: record.owner.epoch",
+       "parenthesized link: record.owner.epoch",
+       "as link: record.owner.epoch",
+       "satisfies link: record.owner.epoch",
+       "type assertion link: record.owner.epoch",
+       "parenthesized key: record.owner.epoch",
+       "indexed access type: Rec.owner.epoch",
+       "parenthesized type: Rec.owner.epoch",
+       "type query root: record.owner.epoch",
+       "regex hex escape: /owner.epoch/",
+       "regex unicode escape: /owner.epoch/",
+       "regex code point escape: /owner.epoch/u",
+       "regex escaped letter: /ownerEpoch/",
+       "regex control escape: /owner epoch/",
+       "regex digit escape: /owner epoch/",
+       "regex property escape: /owner epoch/u",
+       "regex named back-reference: /  <dot>. owner epoch/",
+       "type name root: Owner.epoch",
+       "type name qualified root: rec.Owner.epoch",
+       "type query name root: owner.epoch",
+       "type query qualified root: record.owner.epoch",
+       "this root: this.owner.epoch",
+       "this type root: this.owner.epoch",
+       "regex identity escape: /ownerEpoch/",
+       "regex class escapes: /owner epoch/ | /owner epoch/ | /owner epoch/ | /owner epoch/ | /owner epoch/ | /owner epoch/",
+       "regex assertions: /owner epoch/ | /owner epoch/",
+       "regex control character escapes: /owner epoch/ | /owner epoch/ | /owner epoch/ | /owner epoch/ | /owner epoch/",
+       "regex count quantifier: /owner. epoch/",
+       "regex range quantifier: /owner. epoch/",
+       "regex open quantifier: /owner. epoch/"
+      ],
+      "quietControls": [
+       0,
+       0,
+       0,
+       0
+      ],
+      "findingControls": [
+       [
+        "src/workbench/detached-observer.ts:1 identifier owner epochs?: ownerEpoch"
+       ],
+       [
+        "src/workbench/detached-observer-copy.ts:1 chain snapshot observations?: snapshot.observation"
+       ]
+      ],
+      "findingKnown": [
+       [
+        "src/workbench/detached-observer.ts chain snapshot.observation"
+       ],
+       []
+      ],
+      "unreadTokens": [],
+      "tokenControl": [
+       "control.tsx:1: owner epoch"
+      ],
+      "quiet": {
+       "R-COMPOSED": 0,
+       "R-UNJUDGED-SITES": [
+        "src/workbench/graph-view.ts:true:0",
+        "src/ui/workflow-inspector.ts:true:0",
+        "src/workflow/meta.ts:true:0",
+        "src/schedule-store.ts:true:0"
+       ],
+       "R-OWN-FIELD": [
+        "src/workbench/detached-observer.ts chain snapshot.observation"
+       ],
+       "R-SPLIT-NAMES": [
+        0,
+        0,
+        0,
+        0
+       ],
+       "R-CHAIN-DEPTH": {
+        "property access": 2,
+        "element access": 2,
+        "qualified name": 3,
+        "indexed access type": 2
+       }
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "packages": [
+       "RL-H2-01",
+       "RL-H2-02",
+       "FO-H2-01",
+       "FO-H2-02",
+       "RC-H2-02",
+       "RI-H2-02"
+      ],
+      "fed": [
+       "TSX-FED-01"
+      ],
+      "shipped": true,
+      "cited": [
+       {
+        "label": "RL",
+        "from": 34,
+        "to": 35
+       },
+       {
+        "label": "FO",
+        "from": 34,
+        "to": 35
+       },
+       {
+        "label": "RC",
+        "from": 36,
+        "to": 36
+       },
+       {
+        "label": "RI",
+        "from": 32,
+        "to": 32
+       }
+      ],
+      "rowsHold": [
+       "RL:true",
+       "FO:true",
+       "RC:true",
+       "RI:true"
+      ],
+      "probes": [
+       "RL:0",
+       "FO:0",
+       "RC:0",
+       "RI:0"
+      ],
+      "fedRow": true,
+      "publicPortOwner": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(a) same sequence + new owner epoch reads RESYNC_REQUIRED/refused, never a cache hit; cache keys include owner instance + epoch + revision: Pi's native observation cache refuses a restarted owner's re-count, and its keys and the evidence store's separate every identity part a native reference or an evidence reference states",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "first": [
+       "applied",
+       "applied",
+       "applied"
+      ],
+      "restart": [
+       "out-of-order",
+       "out-of-order"
+      ],
+      "snapshots": [
+       "out-of-order",
+       "out-of-order"
+      ],
+      "unchanged": true,
+      "before": {
+       "nodes": 1,
+       "statusText": "VALUE r3",
+       "statusTone": "success",
+       "freshness": "unknown",
+       "completeness": "unknown",
+       "sourceVersion": null,
+       "subjectBasis": null,
+       "payloadRef": null,
+       "evidenceRefs": [],
+       "title": "port.value",
+       "observedAt": "2026-10-23T00:00:03Z"
+      },
+      "piFailures": [],
+      "sequenceKeyed": [
+       "hit",
+       "hit"
+      ],
+      "sequenceKeyedFailures": [
+       "record 0: read hit, owes out-of-order",
+       "record 1: read hit, owes out-of-order"
+      ],
+      "quiet": {
+       "R-EVENT-ID": "duplicate",
+       "R-SNAPSHOT-RESYNC": {
+        "nodes": 1,
+        "statusText": "VALUE epoch-2 r3",
+        "statusTone": "waiting",
+        "freshness": "current",
+        "completeness": "complete",
+        "sourceVersion": "epoch-2",
+        "subjectBasis": null,
+        "payloadRef": null,
+        "evidenceRefs": [],
+        "title": "port.value",
+        "observedAt": "2026-10-23T00:00:40Z"
+       }
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "variants": [
+       "base",
+       "workspace",
+       "principal",
+       "provider",
+       "type",
+       "owner-instance",
+       "epoch",
+       "revision",
+       "evidence-reference"
+      ],
+      "refreshed": [
+       "applied",
+       "applied",
+       "applied",
+       "applied",
+       "applied",
+       "applied",
+       "applied",
+       "applied"
+      ],
+      "readings": [
+       "held by base",
+       "held by workspace",
+       "held by principal",
+       "held by provider",
+       "held by type",
+       "held by owner-instance",
+       "held by epoch",
+       "held by revision"
+      ],
+      "scopeless": [
+       "held by epoch",
+       "held by workspace",
+       "held by principal",
+       "held by provider",
+       "held by type",
+       "held by epoch",
+       "held by epoch",
+       "held by revision"
+      ],
+      "scopelessFailures": [
+       "record 0: read held by epoch, owes held by base",
+       "record 5: read held by epoch, owes held by owner-instance"
+      ],
+      "eventVerdicts": [
+       "applied",
+       "applied"
+      ],
+      "loads": [
+       "h2-fixture/public-port/owner-a:instance-1:epoch-1/port.value#r7 h2-evidence:r7",
+       "h2-fixture/snapshot/owner-a:instance-1:epoch-1/port.value#r7 h2-evidence:r7",
+       "h2-fixture/public-port/owner-a:instance-2:epoch-1/port.value#r7 h2-evidence:r7",
+       "h2-fixture/public-port/owner-a:instance-1:epoch-2/port.value#r7 h2-evidence:r7",
+       "h2-fixture/public-port/owner-a:instance-1:epoch-1/port.value#r8 h2-evidence:r7",
+       "h2-fixture/public-port/owner-a:instance-1:epoch-1/port.value#r7 h2-evidence:r8",
+       "h2-fixture-b/public-port/owner-a:instance-1:epoch-1/port.value#r7 h2-evidence:r7"
+      ],
+      "loadsAfterFirst": 7,
+      "loadsAfterSecond": 7,
+      "entries": [
+       "base:loaded",
+       "workspace:unavailable:unauthorized",
+       "principal:unavailable:unauthorized",
+       "provider:loaded",
+       "type:loaded",
+       "owner-instance:loaded",
+       "epoch:loaded",
+       "revision:loaded",
+       "evidence-reference:loaded"
+      ],
+      "quiet": {
+       "R-ADAPTER-REF": {
+        "nodes": 1,
+        "node": {
+         "nodes": 1,
+         "statusText": "VALUE epoch-2",
+         "statusTone": "success",
+         "freshness": "current",
+         "completeness": "complete",
+         "sourceVersion": "epoch-2",
+         "subjectBasis": null,
+         "payloadRef": null,
+         "evidenceRefs": [],
+         "title": "port.value",
+         "observedAt": "2026-10-23T00:00:05Z"
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(b) identical bytes with different status/provenance stay distinct and invalidating (no payload-digest key): measured at the native observation cache, the evidence store and the rf reader, each against a judge a payload- or content-keyed cache fails",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "admitted": [
+       "applied",
+       "applied"
+      ],
+      "two": [
+       {
+        "nodes": 1,
+        "statusText": "VALUE",
+        "statusTone": "success",
+        "freshness": "current",
+        "completeness": "complete",
+        "sourceVersion": "rev:a",
+        "subjectBasis": null,
+        "payloadRef": "h2-payload:sha256:5555555555555555555555555555555555555555555555555555555555555555",
+        "evidenceRefs": [
+         "h2-evidence:a"
+        ],
+        "title": "port.value",
+        "observedAt": "2026-10-23T00:00:01Z"
+       },
+       {
+        "nodes": 1,
+        "statusText": "FAILED",
+        "statusTone": "failure",
+        "freshness": "current",
+        "completeness": "complete",
+        "sourceVersion": "rev:b",
+        "subjectBasis": null,
+        "payloadRef": "h2-payload:sha256:5555555555555555555555555555555555555555555555555555555555555555",
+        "evidenceRefs": [
+         "h2-evidence:b"
+        ],
+        "title": "port.value",
+        "observedAt": "2026-10-23T00:00:01Z"
+       }
+      ],
+      "changed": "applied",
+      "invalidated": {
+       "nodes": 1,
+       "statusText": "FAILED witness changed",
+       "statusTone": "failure",
+       "freshness": "current",
+       "completeness": "complete",
+       "sourceVersion": "rev:a2",
+       "subjectBasis": null,
+       "payloadRef": "h2-payload:sha256:5555555555555555555555555555555555555555555555555555555555555555",
+       "evidenceRefs": [
+        "h2-evidence:a2"
+       ],
+       "title": "port.value",
+       "observedAt": "2026-10-23T00:00:09Z"
+      },
+      "readings": [
+       "VALUE",
+       "FAILED",
+       "FAILED witness changed"
+      ],
+      "payloadKeyed": [
+       "VALUE",
+       "VALUE",
+       "VALUE"
+      ],
+      "payloadKeyedFailures": [
+       "record 1: read VALUE, owes FAILED",
+       "record 2: read VALUE, owes FAILED witness changed"
+      ],
+      "byPayload": {
+       "evidence": 0,
+       "basis": 0,
+       "version": 0
+      },
+      "queryMembers": [
+       "scope",
+       "limit",
+       "ref",
+       "invocationId",
+       "parent",
+       "dependency",
+       "basis",
+       "statusTone",
+       "kind",
+       "time",
+       "evidence",
+       "version"
+      ],
+      "replyNodes": 2,
+      "replyCarriesPayload": false
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "loads": [
+       "h2-fixture/public-port/owner-a:instance-1:epoch-1/port.value#r7 h2-evidence:a",
+       "h2-fixture/public-port/owner-a:instance-1:epoch-1/port.value#r7 h2-evidence:b",
+       "h2-fixture/public-port/owner-b:instance-1:epoch-1/port.value#r7 h2-evidence:a"
+      ],
+      "counts": [
+       2,
+       2,
+       3
+      ],
+      "views": [
+       {
+        "state": "loaded",
+        "freshness": "current",
+        "sourceBasis": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "producerReceipt": "receipt-a",
+        "preview": [
+         "VALUE r7",
+         "witness ok"
+        ]
+       },
+       {
+        "state": "loaded",
+        "freshness": "stale",
+        "sourceBasis": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "producerReceipt": "receipt-b",
+        "preview": [
+         "VALUE r7",
+         "witness ok"
+        ]
+       },
+       {
+        "state": "loaded",
+        "freshness": "current",
+        "sourceBasis": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "producerReceipt": "receipt-a",
+        "preview": [
+         "VALUE r7",
+         "witness ok"
+        ]
+       }
+      ],
+      "samePreview": true,
+      "readings": [
+       "current/receipt-a",
+       "stale/receipt-b",
+       "current/receipt-a"
+      ],
+      "contentKeyed": [
+       "current/receipt-a",
+       "current/receipt-a",
+       "current/receipt-a"
+      ],
+      "contentKeyedFailures": [
+       "record 1: read current/receipt-a, owes stale/receipt-b"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "clean": {
+       "id": "rfo_bbbbbbbbbbbbbbbbbbbbbb",
+       "statusTone": "success",
+       "coverage": "complete",
+       "sourceRevision": "graph-one",
+       "payload": "rf-output:sha256:<64 hex>",
+       "provenance": [
+        "rf-graph:graph-one",
+        "rf-bundle:bundle-one"
+       ]
+      },
+      "flagged": {
+       "id": "rfo_cccccccccccccccccccccc",
+       "statusTone": "unknown",
+       "coverage": "partial",
+       "sourceRevision": "graph-two",
+       "payload": "rf-output:sha256:<64 hex>",
+       "provenance": [
+        "rf-graph:graph-two",
+        "rf-bundle:bundle-one"
+       ]
+      },
+      "payloadEqual": true,
+      "admitted": [
+       "applied",
+       "applied"
+      ],
+      "cleanHeld": {
+       "statusTone": "success",
+       "completeness": "complete",
+       "sourceVersion": "bundle-one",
+       "payload": "rf-output:sha256:<64 hex>",
+       "provenance": [
+        "rf-graph:graph-one",
+        "rf-bundle:bundle-one"
+       ],
+       "title": "RF context preview rfo_bbbbbbbbbbbbbbbbbbbbbb",
+       "observedAt": "2026-10-23T00:00:01Z"
+      },
+      "flaggedHeld": {
+       "statusTone": "unknown",
+       "completeness": "partial",
+       "sourceVersion": "bundle-one",
+       "payload": "rf-output:sha256:<64 hex>",
+       "provenance": [
+        "rf-graph:graph-two",
+        "rf-bundle:bundle-one"
+       ],
+       "title": "RF context preview rfo_cccccccccccccccccccccc",
+       "observedAt": "2026-10-23T00:00:01Z"
+      },
+      "replaced": "applied",
+      "replacedHeld": {
+       "statusTone": "unknown",
+       "completeness": "partial",
+       "sourceVersion": "bundle-one",
+       "payload": "rf-output:sha256:<64 hex>",
+       "provenance": [
+        "rf-graph:graph-two",
+        "rf-bundle:bundle-one"
+       ],
+       "title": "RF context preview rfo_bbbbbbbbbbbbbbbbbbbbbb",
+       "observedAt": "2026-10-23T00:00:30Z"
+      },
+      "payloadIsEvidence": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(c) same output.text, different bundle_revision_id = distinct cohorts (wb-973.8), no receipt by text hash; equal prompts, different source digests = two request identities: measured at the rf reader and the observation cache, and at the workflow journal, Pi's one prompt-keyed reuse",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "readings": [
+       "bundle-one",
+       "bundle-two"
+      ],
+      "payloadEqual": true,
+      "admitted": [
+       "applied",
+       "applied"
+      ],
+      "cohorts": {
+       "one": [
+        "rfo_dddddddddddddddddddddd"
+       ],
+       "two": [
+        "rfo_eeeeeeeeeeeeeeeeeeeeee"
+       ],
+       "payload": []
+      },
+      "bundleRefs": {
+       "one": [
+        "rfo_dddddddddddddddddddddd"
+       ],
+       "two": [
+        "rfo_eeeeeeeeeeeeeeeeeeeeee"
+       ],
+       "payload": 0
+      },
+      "moved": "applied",
+      "afterMove": {
+       "one": [],
+       "two": [
+        "rfo_dddddddddddddddddddddd",
+        "rfo_eeeeeeeeeeeeeeeeeeeeee"
+       ]
+      },
+      "loaderRows": [
+       "claude-agent-sdk: claude-message:<uuid>",
+       "furnace: native Attempt id listed on the owning run node",
+       "forge: forge-operation:<operation_id>"
+      ],
+      "textHashLoader": false,
+      "textKeyedFailures": [
+       "record 0: read rf-output:sha256:<64 hex>, owes bundle-one",
+       "record 1: read rf-output:sha256:<64 hex>, owes bundle-two"
+      ]
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "first": [
+       1,
+       0
+      ],
+      "otherSource": [
+       1,
+       0,
+       "answer under source-b"
+      ],
+      "keysArePromptKey": [
+       true,
+       true
+      ],
+      "bases": [
+       "source-a",
+       "source-b"
+      ],
+      "promptKeyed": [
+       "answer under source-a"
+      ],
+      "promptKeyedFailures": [
+       "record 0: read answer under source-a, owes answer under source-b"
+      ],
+      "hostBases": {
+       "sameConfigEqual": true,
+       "distinct": 4
+      },
+      "quiet": {
+       "R-SAME-BASIS": [
+        0,
+        1,
+        "answer under source-a"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "E",
+   "label": "(d) equal local alias, different owner identity never merges; owner id shown verbatim: measured at the native observation cache, the rf reader and the workflow_observe reply, against a judge an alias-keyed index fails",
+   "pins": [
+    {
+     "id": "E1",
+     "witness": {
+      "admitted": [
+       "applied",
+       "applied",
+       "applied"
+      ],
+      "distinctKeys": 3,
+      "own": [
+       true,
+       true,
+       true
+      ],
+      "edges": [
+       true
+      ],
+      "readings": [
+       "{\"provider\":\"h2-fixture\",\"type\":\"public-port\",\"id\":\"port.value#r7\",\"scope\":\"owner-a:instance-1:epoch-1\"}",
+       "{\"provider\":\"h2-fixture\",\"type\":\"public-port\",\"id\":\"port.value#r7\",\"scope\":\"owner-b:instance-1:epoch-1\"}",
+       "{\"provider\":\"h2-fixture-b\",\"type\":\"public-port\",\"id\":\"port.value#r7\",\"scope\":\"owner-a:instance-1:epoch-1\"}"
+      ],
+      "aliasKeyed": [
+       "{\"provider\":\"h2-fixture-b\",\"type\":\"public-port\",\"id\":\"port.value#r7\",\"scope\":\"owner-a:instance-1:epoch-1\"}",
+       "{\"provider\":\"h2-fixture-b\",\"type\":\"public-port\",\"id\":\"port.value#r7\",\"scope\":\"owner-a:instance-1:epoch-1\"}",
+       "{\"provider\":\"h2-fixture-b\",\"type\":\"public-port\",\"id\":\"port.value#r7\",\"scope\":\"owner-a:instance-1:epoch-1\"}"
+      ],
+      "aliasKeyedFailures": [
+       "record 0: read {\"provider\":\"h2-fixture-b\",\"type\":\"public-port\",\"id\":\"port.value#r7\",\"scope\":\"owner-a:instance-1:epoch-1\"}, owes {\"provider\":\"h2-fixture\",\"type\":\"public-port\",\"id\":\"port.value#r7\",\"scope\":\"owner-a:instance-1:epoch-1\"}",
+       "record 1: read {\"provider\":\"h2-fixture-b\",\"type\":\"public-port\",\"id\":\"port.value#r7\",\"scope\":\"owner-a:instance-1:epoch-1\"}, owes {\"provider\":\"h2-fixture\",\"type\":\"public-port\",\"id\":\"port.value#r7\",\"scope\":\"owner-b:instance-1:epoch-1\"}"
+      ],
+      "selfAlias": "validation: ReactiveFiber topology refused: the operation reference aliases the preview node itself.",
+      "otherOwnerEdge": [
+       "h2-fixture/rfo_bbbbbbbbbbbbbbbbbbbbbb -> reactivefiber/rfo_bbbbbbbbbbbbbbbbbbbbbb"
+      ]
+     }
+    },
+    {
+     "id": "E2",
+     "witness": {
+      "shownRefs": [
+       {
+        "provider": "h2-fixture",
+        "type": "public-port",
+        "id": "port.value#r7",
+        "scope": "owner-a:instance-1:epoch-1"
+       },
+       {
+        "provider": "h2-fixture",
+        "type": "public-port",
+        "id": "port.value#r7",
+        "scope": "owner-b:instance-1:epoch-1"
+       },
+       {
+        "provider": "H2-Fixture.Owner",
+        "type": "Public-Port",
+        "id": "Owner-A.Port/value@r7#e1",
+        "scope": "Owner-A:Instance-1:Epoch-1"
+       }
+      ],
+      "verbatim": true,
+      "titles": [
+       "shared-port",
+       "shared-port",
+       "shared-port"
+      ],
+      "rfShown": {
+       "id": "rfo_bbbbbbbbbbbbbbbbbbbbbb",
+       "title": "RF context preview rfo_bbbbbbbbbbbbbbbbbbbbbb",
+       "replyId": "rfo_bbbbbbbbbbbbbbbbbbbbbb",
+       "replyTitle": "RF context preview rfo_bbbbbbbbbbbbbbbbbbbbbb"
+      },
+      "refused": "refused",
+      "refusals": [
+       {
+        "path": "refresh",
+        "ref": "source",
+        "field": "id",
+        "codePoint": "U+202E",
+        "reason": "unsafe-identity"
+       }
+      ],
+      "afterRefusal": 3
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the collected cases and the bead row agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "C3",
+  "D1",
+  "D2",
+  "E1",
+  "E2",
+  "records: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its end with its pinned assertion count"
+ ],
+ "reached": [
+  "judged:21",
+  "A1:12",
+  "A2:17",
+  "A3:8",
+  "B1:12",
+  "B2:10",
+  "C1:11",
+  "C2:8",
+  "C3:11",
+  "D1:12",
+  "D2:14",
+  "E1:12",
+  "E2:8"
+ ],
+ "recordsEnd": "records:7"
+}

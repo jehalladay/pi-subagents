@@ -3,7 +3,8 @@
  *
  * Pure node: no src/ or dist/ import. Exports a parser and a validator and doubles as a CLI that prints a
  * `workbench.status-ledger/v1` receipt. Integrity findings are always enforced; status-vocabulary findings are
- * reported and only fail the run under --strict.
+ * reported and only fail the run under --strict. A shipped, gate-pass or live-sdk row whose every receipt clause is fixture tier
+ * is an integrity finding (receipt-tier, wb-4wmu.1): a fixture, fake-producer or hermetic run never backs a claim alone.
  *
  *   node qa/workbench/status-ledger.mjs [--strict] [--doc docs/workbench/TRACEABILITY.md]
  *
@@ -26,6 +27,12 @@ const EVIDENCE_END = 9; // exclusive; the Status cell follows
 const EXPECTED_IDS = Array.from({ length: 50 }, (_, i) => `WB-${String(i + 1).padStart(3, '0')}`);
 const PATH_RE = /(?<![A-Za-z0-9_./@-])((?:(?:src|test|qa|docs|examples|vendor)\/[A-Za-z0-9_.@/-]+)|package\.json|forge\.toml|LICENSE)(?::(\d+)(?:-(\d+))?)?/g;
 const CMD_RE = /\bcmd_[A-Za-z0-9_]*/g;
+/** wb-4wmu.1 (BEADS-TRAININGWORKS-R1 (c)): the statuses that claim more than a fixture pass. Furnace's TrainingWorks deposit:
+ * "Never claim a fixture run equals live Furnace/Beads success" (docs/programs/trainingworks-2026-10-18/README.md:26@d39a93dddf38). */
+export const CLAIM_STATUSES = Object.freeze(['shipped', 'gate-pass', 'live-sdk']);
+/** A receipt clause is fixture tier when its own words name a fixture, a fake producer or a hermetic run. */
+export const FIXTURE_TIER = /fixture|fake|hermetic/i;
+const LIVE_CELL = EVIDENCE_END - EVIDENCE_START - 1; // the Live/native evidence cell's index within row.evidence
 
 function splitRow(line) {
   const trimmed = line.trim();
@@ -66,6 +73,23 @@ function citedPaths(cell) {
     found.push({ path, line: match[2] === undefined ? undefined : Number(match[2]), lineEnd: match[3] === undefined ? undefined : Number(match[3]) });
   }
   return found;
+}
+
+/**
+ * A row's receipt clauses: every `;`-separated clause of its Live/native evidence cell other than the em dash, and every clause of
+ * another evidence cell that carries a cmd_ token.
+ * @param {{ evidence: string[] }} row
+ * @returns {string[]}
+ */
+export function receiptClauses(row) {
+  const clauses = [];
+  row.evidence.forEach((cell, index) => {
+    for (const clause of cell.split(';').map((part) => part.trim())) {
+      if (clause === '' || clause === '—') continue;
+      if (index === LIVE_CELL || clause.match(CMD_RE) !== null) clauses.push(clause);
+    }
+  });
+  return clauses;
 }
 
 function lineCount(text) {
@@ -121,6 +145,12 @@ export function validateLedger(parsed, { root, allowedStatuses = ALLOWED_STATUSE
       for (const cite of citedPaths(cell)) {
         const finding = checkPath(cite, root);
         if (finding) add(finding.rule, finding.detail, label);
+      }
+    }
+    if (CLAIM_STATUSES.includes(row.status)) {
+      const receipts = receiptClauses(row);
+      if (receipts.length > 0 && receipts.every((clause) => FIXTURE_TIER.test(clause))) {
+        add('receipt-tier', `${row.status} row rests only on fixture-tier receipts: ${receipts.join('; ')}`, label);
       }
     }
     if (!allowedStatuses.includes(row.status)) vocabulary.push({ rule: 'status-vocabulary', row: label, detail: `status ${JSON.stringify(row.status)} is not in [${allowedStatuses.join(', ')}]` });

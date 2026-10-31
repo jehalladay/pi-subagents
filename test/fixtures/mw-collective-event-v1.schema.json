@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "collective.event.v1",
+  "title": "collective.event.v1",
+  "description": "Ecosystem interchange envelope projected from mw.episode.v1, one per episode event. Observation-only: an event cannot execute, publish or certify a downstream effect. Consumers retain native receipt payloads beside it. A value the episode does not know is the literal \"unknown\". The envelope freeze is owned by the 08 implementation index.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "episode_id",
+    "mode",
+    "episode_root",
+    "event_id",
+    "actor_id",
+    "producer_revision",
+    "subject",
+    "causal_parents",
+    "evidence_refs",
+    "status",
+    "authority"
+  ],
+  "properties": {
+    "schema": {
+      "const": "collective.event.v1"
+    },
+    "episode_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/=+-]{0,255}$"
+    },
+    "mode": {
+      "enum": [
+        "fixture",
+        "replay",
+        "live"
+      ]
+    },
+    "episode_root": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "digest"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/=+-]{0,255}$"
+        },
+        "digest": {
+          "type": "string",
+          "pattern": "^sha256:[0-9a-f]{64}$"
+        }
+      }
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/=+-]{0,255}$"
+    },
+    "actor_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/=+-]{0,255}$"
+    },
+    "producer_revision": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "uri",
+        "revision"
+      ],
+      "properties": {
+        "uri": {
+          "type": "string",
+          "minLength": 1
+        },
+        "revision": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "causal_parents": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@/=+-]{0,255}$"
+      }
+    },
+    "evidence_refs": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "status": {
+      "const": "observed"
+    },
+    "authority": {
+      "const": "observation-only"
+    }
+  }
+}
