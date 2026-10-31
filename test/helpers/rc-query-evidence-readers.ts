@@ -3,39 +3,68 @@
  * R-B143): the full-surface readers of wb-km7q.3's query-evidence census, shared so its re-cut takes them in place of its own
  * notPlain, stringsOf, declaredViews, sizeMembers and DRAW (R-B143: "a mechanical restatement over the landed readers").
  *
- * Every reader's claim is composed from its roster (the forms it reads and the forms it fails closed on, in claim order), so
- * the claim text cannot name a form the roster lacks, and test/workbench-rc-query-evidence-readers-census.test.ts holds one
- * falsifier per roster form. The two AST readers and the tier reader never throw on a form they cannot read: they return it in
- * `unread`, and a census reading them fails closed on a non-empty `unread`.
+ * Every reader's claim is composed from its rosters. A roster form is a lead and the examples it lists in parentheses, so a
+ * claim names exactly the examples its rosters hold, and test/workbench-rc-query-evidence-readers-census.test.ts holds one
+ * falsifier per example, named by it, pinning the reader's whole reading of it. The module readers and the docs reader never
+ * throw on a form they cannot read: they return it in `unread`, and a census reading them fails closed on a non-empty `unread`.
  */
 import ts from "typescript";
 import type { InspectorSize } from "../../src/ui/workflow-inspector.js";
+import { docsSection } from "./census.js";
 
-/** One form of a reader's roster: its id (a falsifier's key in the census) and its text as the claim lists it. */
+/** One form of a reader's roster: its id (its falsifiers' key in the census), its lead, and the examples it lists. */
 export interface ReaderForm {
   readonly id: string;
-  readonly text: string;
+  readonly lead: string;
+  readonly examples: readonly string[];
 }
-const listed = (forms: readonly ReaderForm[]): string => forms.map(form => form.text).join("; ");
+/** A form as its claim lists it: the lead, then the examples in parentheses. */
+export const formText = (form: ReaderForm): string => `${form.lead} (${form.examples.join(", ")})`;
+const listed = (forms: readonly ReaderForm[]): string => forms.map(formText).join("; ");
+/** R-UNLISTED, the named residual of notPlain and stringsOf, as both claims state it. */
+export const UNLISTED_RESIDUAL =
+  "a proxy that reports another prototype, or answers or hides a key, is R-UNLISTED, a named residual whose quiet row is the readers census's case 'R-UNLISTED quiet row'";
 
 // ------------------------------------------------------------------------------------------------- R14: the plain-data check
 /** 2^32 - 1: an own key of an array is an array index only when it is a canonical numeric string whose value is below it. */
 export const ARRAY_INDEX_LIMIT = 4_294_967_295;
 /** Whether an own key of an array is an array index (ECMAScript: a canonical numeric string below 2^32 - 1). */
 export const isArrayIndex = (key: string): boolean => /^(?:0|[1-9]\d*)$/.test(key) && Number(key) < ARRAY_INDEX_LIMIT;
+/** What notPlain walks. */
+export const NOT_PLAIN_WALK: readonly ReaderForm[] = [
+  { id: "object-keys", lead: "every own string-keyed property of every object, whatever its name", examples: ["a name", "length", "a numeric name"] },
+  { id: "array-keys", lead: "every own string-keyed property of every array but its length", examples: ["an index", "a named property"] },
+  { id: "depth", lead: "the data value of every property it walks, at any depth", examples: ["64 levels down"] },
+];
 /** The forms notPlain fails closed on, each with the message it returns (`<at>: <message>`, or `<at>.<key>: <message>`). */
 export const NOT_PLAIN_FORMS: readonly (ReaderForm & { readonly message: string })[] = [
-  { id: "object-prototype", text: "an object that is no array whose prototype is neither Object.prototype nor null (a Map, a Set, a class instance)", message: "no plain object" },
-  { id: "array-prototype", text: "an array whose prototype is not Array.prototype (a class-instance array, whatever it inherits)", message: "no plain array" },
-  { id: "symbol-key", text: "a symbol key", message: "a symbol key" },
-  { id: "array-key", text: "on an array, an own key that is no array index: no canonical numeric string, or one at or above 4294967295 (a name, 01, 4294967295)", message: "a named property on an array" },
-  { id: "not-enumerable", text: "a property that is not enumerable", message: "not enumerable" },
-  { id: "accessor", text: "an accessor (a getter or a setter)", message: "an accessor" },
-  { id: "type", text: "a value of type undefined, function, symbol or bigint", message: "a <type>" },
-  { id: "not-finite", text: "a number that is not finite (NaN, an infinity)", message: "a number that is not finite" },
+  { id: "object-prototype", lead: "an object that is no array whose prototype is neither Object.prototype nor null", examples: ["a Map", "a Set", "a class instance", "an object inheriting a value"], message: "no plain object" },
+  {
+    id: "array-prototype",
+    lead: "an array whose prototype is not Array.prototype, whatever it inherits",
+    examples: ["the gate's class-instance array", "a class-instance array holding nothing of its own", "an array without a prototype"],
+    message: "no plain array",
+  },
+  { id: "symbol-key", lead: "a symbol key", examples: ["on an object", "on an array"], message: "a symbol key" },
+  {
+    id: "array-key",
+    lead: "on an array, an own key that is no array index: no canonical numeric string, or one at or above 4294967295",
+    examples: ["a name", "01", "4294967295", "4294967296"],
+    message: "a named property on an array",
+  },
+  { id: "not-enumerable", lead: "a property that is not enumerable", examples: ["on an object", "at an index of an array"], message: "not enumerable" },
+  { id: "accessor", lead: "an accessor", examples: ["a getter", "a setter", "a getter at an index of an array"], message: "an accessor" },
+  { id: "type", lead: "a value of type undefined, function, symbol or bigint", examples: ["undefined", "a function", "a symbol", "a bigint"], message: "a <type>" },
+  { id: "not-finite", lead: "a number that is not finite", examples: ["NaN", "an infinity", "a negative infinity"], message: "a number that is not finite" },
 ];
-/** R14's claim, composed from NOT_PLAIN_FORMS. */
-export const R14_CLAIM = `notPlain walks every own string-keyed property of every object and array (an array's length skipped), recursing into their data values at any depth, and fails closed on each of these forms: ${listed(NOT_PLAIN_FORMS)}. Null, strings, finite numbers and booleans pass, and so do plain and null-prototype objects and plain arrays whose properties pass. It reads a value through what reflection reports and only the keys the value lists: a proxy that reports another prototype, or answers or hides a key, is R-UNLISTED's (a residual of wb-km7q.3's census), and a value nested deeper than the stack throws, failing a census, never passing it.`;
+/** What notPlain passes. */
+export const NOT_PLAIN_PASS: readonly ReaderForm[] = [
+  { id: "leaves", lead: "null, a string, a finite number and a boolean", examples: ["null", "a string", "an empty string", "0", "a negative fraction", "true", "false"] },
+  { id: "objects", lead: "a plain or null-prototype object whose properties pass", examples: ["a plain object", "a null-prototype object", "an empty object", "an object with numeric length"] },
+  { id: "arrays", lead: "a plain array whose properties pass, its length never read", examples: ["a plain array", "a sparse array", "an empty array", "nested arrays"] },
+];
+/** R14's claim, composed from NOT_PLAIN_WALK, NOT_PLAIN_FORMS and NOT_PLAIN_PASS. */
+export const R14_CLAIM = `notPlain walks ${listed(NOT_PLAIN_WALK)}, and fails closed on each of these forms: ${listed(NOT_PLAIN_FORMS)}. It passes ${listed(NOT_PLAIN_PASS)}. It reads a value through what reflection reports and only the keys the value lists: ${UNLISTED_RESIDUAL}. A value nested deeper than the stack throws, failing a census, never passing it.`;
 /** The plain-data check (R14), by `<at>: <form>`. */
 export function notPlain(value: unknown, at: string): string[] {
   if (value === null || typeof value === "string" || typeof value === "boolean") return [];
@@ -62,14 +91,31 @@ export function notPlain(value: unknown, at: string): string[] {
 // ---------------------------------------------------------------------------------------- READINGS: the string leaves read
 /** The forms stringsOf reads. */
 export const STRINGS_FORMS: readonly ReaderForm[] = [
-  { id: "string", text: "a string itself" },
-  { id: "element", text: "each own enumerable element of an array (its index keys)" },
-  { id: "value", text: "the value of each own enumerable string-keyed property of an object" },
-  { id: "key", text: "the name of each own enumerable string-keyed property of an object" },
-  { id: "array-key", text: "the name and the value of each own enumerable key of an array that is no array index" },
+  { id: "string", lead: "a string itself", examples: ["at the top", "64 arrays down"] },
+  { id: "element", lead: "the value of each own enumerable index of an array, never the index itself", examples: ["an index", "the largest index"] },
+  { id: "value", lead: "the value of each own enumerable string-keyed property of an object", examples: ["a data property", "a getter"] },
+  { id: "key", lead: "the name of each own enumerable string-keyed property of an object", examples: ["a name", "a numeric name"] },
+  { id: "array-key", lead: "the name and the value of each own enumerable key of an array that is no array index", examples: ["a name", "01", "4294967295", "4294967296"] },
 ];
-/** READINGS' claim, composed from STRINGS_FORMS. */
-export const STRINGS_CLAIM = `stringsOf reads every string a value lists, at any depth: ${listed(STRINGS_FORMS)}. Numbers, booleans, null and every other value read as nothing. Not read: what a value holds other than as an own enumerable string-keyed property or an array element - what it inherits, a Map's or a Set's entries, a symbol-keyed or non-enumerable property, what a proxy answers without listing it (R-UNLISTED, a residual) - and notPlain fails closed on a Map, a Set, a class instance, a class-instance array, a symbol key and a non-enumerable property.`;
+/** What stringsOf leaves unread. */
+export const STRINGS_UNREAD_FORMS: readonly ReaderForm[] = [
+  { id: "other", lead: "any value that is no string, array or object, which reads as nothing", examples: ["a number", "a boolean", "null", "undefined", "a function", "a symbol", "a bigint"] },
+  {
+    id: "unlisted",
+    lead: "what a value holds other than as an own enumerable string-keyed property",
+    examples: ["what it inherits", "a Map's entries", "a Set's entries", "a symbol-keyed property", "a non-enumerable property", "an array's length"],
+  },
+];
+/** What notPlain fails closed on among the values stringsOf leaves unread. */
+export const STRINGS_GUARDED: readonly ReaderForm[] = [
+  {
+    id: "guarded",
+    lead: "notPlain fails closed on each unread value that can hold a string",
+    examples: ["what it inherits", "a Map's entries", "a Set's entries", "a symbol-keyed property", "a non-enumerable property", "a function"],
+  },
+];
+/** READINGS' claim, composed from STRINGS_FORMS, STRINGS_UNREAD_FORMS and STRINGS_GUARDED. */
+export const STRINGS_CLAIM = `stringsOf reads every string a value lists, in order: ${listed(STRINGS_FORMS)}. It leaves unread ${listed(STRINGS_UNREAD_FORMS)}; and ${listed(STRINGS_GUARDED)}. It reads a value through what reflection reports and only the keys the value lists: ${UNLISTED_RESIDUAL}.`;
 /** The strings a value lists, in order. */
 export function stringsOf(value: unknown): string[] {
   if (typeof value === "string") return [value];
@@ -80,7 +126,8 @@ export function stringsOf(value: unknown): string[] {
 
 // ------------------------------------------------------------------------------------------- the AST readers (src modules)
 const parse = (path: string, text: string): ts.SourceFile => ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-/** What a module reader read: the members, and every form it could not read (a census fails closed on a non-empty `unread`). */
+/** What a module or docs reader read: the members, and every form it could not read (a census fails closed on a non-empty
+ * `unread`). */
 export interface ModuleReading<T> {
   readonly members: readonly T[];
   readonly unread: readonly string[];
@@ -88,15 +135,28 @@ export interface ModuleReading<T> {
 
 /** The forms declaredViews reads. */
 export const VIEWS_FORMS: readonly ReaderForm[] = [
-  { id: "literal", text: "a string-literal member of the union" },
-  { id: "alias", text: "a type reference to a type alias the module declares at top level without type parameters, read through its own members" },
-  { id: "parenthesized", text: "a member written in parentheses" },
+  { id: "literal", lead: "a string-literal member of the union, read once however often it is written", examples: ["the real union", "a repeated literal"] },
+  {
+    id: "alias",
+    lead: "a bare name of a type alias the module declares once at top level without type parameters, read through its own members",
+    examples: ["an alias chain", "a whole union behind one alias"],
+  },
+  { id: "parenthesized", lead: "a member written in parentheses", examples: ["a parenthesized union", "a parenthesized literal"] },
 ];
 /** The forms declaredViews fails closed on. */
 export const VIEWS_UNREAD_FORMS: readonly ReaderForm[] = [
-  { id: "other-member", text: "any other member (a template literal type, a keyword, another kind of literal, a qualified, generic or undeclared name)" },
-  { id: "circular", text: "an alias that leads back to an alias on its own path (a cycle)" },
-  { id: "declaration", text: "InspectorView declared other than exactly once as a top-level type alias" },
+  {
+    id: "other-member",
+    lead: "any other member",
+    examples: ["a template literal type", "a keyword", "a number literal", "a boolean literal", "a qualified name", "type arguments on a plain alias", "type arguments on a generic alias", "an undeclared name"],
+  },
+  { id: "other-alias", lead: "a bare name the module declares other than once at top level as a type alias without type parameters", examples: ["a generic alias", "an alias declared twice", "an interface"] },
+  { id: "circular", lead: "an alias that leads back to an alias on its own path", examples: ["back to InspectorView", "between two other aliases", "back to itself"] },
+  {
+    id: "declaration",
+    lead: "InspectorView declared other than once at top level as a type alias, or beside it as an interface, a class or an enum",
+    examples: ["no declaration", "two aliases", "an interface alone", "an alias beside an interface", "an alias beside a class", "an alias beside an enum"],
+  },
 ];
 /** The views claim (R13, SURFACES, D1, A1), composed from VIEWS_FORMS and VIEWS_UNREAD_FORMS. */
 export const VIEWS_CLAIM = `declaredViews reads every member of the module's InspectorView union: ${listed(VIEWS_FORMS)}. It fails closed on ${listed(VIEWS_UNREAD_FORMS)}.`;
@@ -145,16 +205,16 @@ function otherDeclarations(source: ts.SourceFile, name: string, kind: (node: ts.
     statement => !kind(statement) && (ts.isInterfaceDeclaration(statement) || ts.isClassDeclaration(statement) || ts.isEnumDeclaration(statement) || ts.isTypeAliasDeclaration(statement)) && statement.name?.text === name,
   ).length;
 }
-/** A member's name as written: an identifier, a string, numeric or template literal, or a computed name holding one of those
- * literals; undefined for a private name or another computed name. */
+/** A member's name as written: an identifier, a string or numeric literal, or a computed name holding a string, numeric or
+ * no-substitution template literal; undefined for any other name (a private name, a bigint literal, another computed name). */
 function memberName(name: ts.PropertyName): string | undefined {
-  if (ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name) || ts.isNoSubstitutionTemplateLiteral(name)) return name.text;
+  if (ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isNumericLiteral(name)) return name.text;
   if (ts.isComputedPropertyName(name) && (ts.isStringLiteral(name.expression) || ts.isNumericLiteral(name.expression) || ts.isNoSubstitutionTemplateLiteral(name.expression))) return name.expression.text;
   return undefined;
 }
 
-/** One draw option the drawer module declares: its name, whether it is optional, its declared type as spelled, and the
- * interface that declares it. */
+/** One draw option the drawer module declares: its name, whether it is optional, its declared type as spelled (empty when none is
+ * written), and the interface that declares it. */
 export interface SizeMember {
   readonly name: string;
   readonly optional: boolean;
@@ -163,17 +223,36 @@ export interface SizeMember {
 }
 /** The forms sizeMembers reads. */
 export const SIZE_FORMS: readonly ReaderForm[] = [
-  { id: "merged", text: "every member of every top-level interface InspectorSize declaration of the module (merged declarations included)" },
-  { id: "names", text: "a member named by an identifier or by a string, numeric or no-substitution template literal, written as the name or inside a computed name" },
-  { id: "heritage", text: "every member of every interface an extends clause names that the module declares at top level, recursively" },
+  { id: "merged", lead: "every member of every top-level interface InspectorSize declaration of the module", examples: ["one declaration", "merged declarations"] },
+  {
+    id: "names",
+    lead: "a member named by an identifier, a string or numeric literal, or a computed name holding a string, numeric or no-substitution template literal",
+    examples: ["an identifier", "a string", "a number", "a computed string", "a computed number", "a computed template literal"],
+  },
+  {
+    id: "heritage",
+    lead: "every member of every interface an extends clause names by a bare name the module declares at top level, recursively",
+    examples: ["an extended interface", "an interface an extended one extends", "two interfaces one clause names", "a merged extended interface", "one interface two paths reach"],
+  },
+  {
+    id: "fields",
+    lead: "each member's name, whether it is optional, its type as spelled and the interface that declares it",
+    examples: ["a member of InspectorSize", "a member an extended interface declares", "a member with no type written"],
+  },
 ];
 /** The forms sizeMembers fails closed on. */
 export const SIZE_UNREAD_FORMS: readonly ReaderForm[] = [
-  { id: "member-kind", text: "a member that is no property signature (a method, an index, call or construct signature)" },
-  { id: "member-name", text: "any other member name (a private name, another computed name)" },
-  { id: "heritage-other", text: "an extends clause naming anything else (a type alias, a type argument, a qualified or undeclared name)" },
-  { id: "circular", text: "an extends clause that leads back to an interface on its own path (a cycle)" },
-  { id: "declaration", text: "InspectorSize declared other than as top-level interfaces (a type alias, a class) or not at all" },
+  { id: "member-kind", lead: "a member that is no property signature", examples: ["a method", "an index signature", "a call signature", "a construct signature", "a get accessor", "a set accessor"] },
+  { id: "member-name", lead: "any other member name", examples: ["a private name", "a bigint literal", "another computed name"] },
+  { id: "type-parameters", lead: "an interface it reads that declares type parameters", examples: ["InspectorSize", "an extended interface"] },
+  { id: "heritage-other", lead: "an extends clause naming anything else", examples: ["a type alias", "type arguments on a declared interface", "type arguments on an undeclared name", "a qualified name", "an undeclared name"] },
+  { id: "circular", lead: "an extends clause that leads back to an interface on its own path", examples: ["back to InspectorSize", "between two other interfaces"] },
+  { id: "redeclared", lead: "a member name two of the declarations it reads both declare", examples: ["an override in InspectorSize", "a member two merged declarations repeat"] },
+  {
+    id: "declaration",
+    lead: "InspectorSize declared nowhere at top level as an interface, or beside one as a type alias, a class or an enum",
+    examples: ["no declaration", "a type alias alone", "a class alone", "an interface beside a class", "an interface beside a type alias", "an interface beside an enum"],
+  },
 ];
 /** The draw-option claim (Q25), composed from SIZE_FORMS and SIZE_UNREAD_FORMS. */
 export const SIZE_CLAIM = `sizeMembers reads the drawer module's draw options: ${listed(SIZE_FORMS)}. It fails closed on ${listed(SIZE_UNREAD_FORMS)}.`;
@@ -203,7 +282,8 @@ export function sizeMembers(text: string, path = "module.ts"): ModuleReading<Siz
         const spelled = member.name === undefined ? undefined : memberName(member.name);
         if (!ts.isPropertySignature(member)) unread.push(`${name}: a ${ts.SyntaxKind[member.kind]}`);
         else if (spelled === undefined) unread.push(`${name}: the member name ${member.name.getText(source)}`);
-        else if (!members.some(found => found.name === spelled)) members.push({ name: spelled, optional: member.questionToken !== undefined, type: member.type?.getText(source) ?? "", from: name });
+        else if (members.some(found => found.name === spelled)) unread.push(`${name}: the member ${spelled}, declared before`);
+        else members.push({ name: spelled, optional: member.questionToken !== undefined, type: member.type?.getText(source) ?? "", from: name });
       }
     }
   };
@@ -212,7 +292,9 @@ export function sizeMembers(text: string, path = "module.ts"): ModuleReading<Siz
 }
 
 // --------------------------------------------------------------------------------------- R13 / D1-F3: every declared tier
-/** One band of docs/10's "Layout responsiveness": its bullet as written, the lowest column count it states (`from`), and the
+/** docs/10's title: the one parent heading docsSection binds "## Layout responsiveness" under. */
+export const DOCS10_TITLE = `10 ${String.fromCodePoint(0x2014)} Terminal-native rich workflow inspector, interaction and performance`;
+/** One band of docs/10's "Layout responsiveness": its item's rendered text, the lowest column count it states (`from`), and the
  * bounds it states below (`columnsBelow`, `rowsBelow`: a band written "<80 columns or <20 rows"). */
 export interface LayoutBand {
   readonly text: string;
@@ -220,19 +302,68 @@ export interface LayoutBand {
   readonly columnsBelow: number | undefined;
   readonly rowsBelow: number | undefined;
 }
-/** The bands of docs/10's "## Layout responsiveness" section: each bullet that opens with a column range. */
+/** The forms layoutBands reads. */
+export const LAYOUT_FORMS: readonly ReaderForm[] = [
+  {
+    id: "binding",
+    lead: "the section docsSection (test/helpers/census.ts) binds as docs/10's '## Layout responsiveness' under its title: that heading rendered exactly once, the section running to the next level-1 or level-2 heading or the end",
+    examples: ["the real section", "a level-1 heading after its list"],
+  },
+  { id: "lists", lead: "each item of each list in the section, by its rendered text, whatever the list's marker", examples: ["a - item", "a * item", "a + item", "a 1. item", "a 1) item"] },
+  {
+    id: "bands",
+    lead: "as a band, an item whose rendered text opens with one of these leads, N and M whole numbers from 1 written without a leading zero, then ': ' and a description holding no digit",
+    examples: ["<N columns or <M rows", "<N columns", "N to M with an en dash and N at most M", ">=N", "a lead in bold"],
+  },
+  { id: "prose", lead: "as prose and no band, an item whose rendered text holds no digit", examples: ["the resize item alone", "a note with a colon"] },
+];
+/** The forms layoutBands fails closed on. */
+export const LAYOUT_UNREAD_FORMS: readonly ReaderForm[] = [
+  { id: "refused", lead: "a section docsSection refuses", examples: ["a missing heading", "a heading rendered twice", "the heading under another parent", "a code fence hiding a heading line"] },
+  { id: "html", lead: "a section that carries HTML", examples: ["a comment", "a tag"] },
+  { id: "block", lead: "a block in the section that is no list", examples: ["a paragraph", "a code block", "a heading", "a blockquote", "a table"] },
+  {
+    id: "item",
+    lead: "an item holding a digit outside a lead it reads",
+    examples: ["a lead it cannot read", "a range from more to less", "a zero", "a leading zero", "a greater-than-or-equal sign", "a greater-than sign that opens a quote", "a band nested under another band", "a digit in a band's description", "no space after the colon"],
+  },
+];
+/** The bands claim (R13, D1-F3), composed from LAYOUT_FORMS and LAYOUT_UNREAD_FORMS. */
+export const LAYOUT_CLAIM = `layoutBands reads the bands of ${listed(LAYOUT_FORMS)}. It fails closed on ${listed(LAYOUT_UNREAD_FORMS)}.`;
+const COUNT = "([1-9]\\d*)";
+const BELOW = new RegExp(`^<${COUNT} columns(?: or <${COUNT} rows)?$`);
+const RANGE = new RegExp(`^${COUNT}${String.fromCodePoint(0x2013)}${COUNT}$`);
+const FROM = new RegExp(`^>=${COUNT}$`);
+/** An item's band, when its rendered text is one. */
+function bandOf(text: string): LayoutBand | undefined {
+  const colon = text.indexOf(": ");
+  if (colon < 0 || /\d/.test(text.slice(colon + 2))) return undefined;
+  const lead = text.slice(0, colon);
+  const below = BELOW.exec(lead);
+  if (below !== null) return { text, from: undefined, columnsBelow: Number(below[1]), rowsBelow: below[2] === undefined ? undefined : Number(below[2]) };
+  const range = RANGE.exec(lead);
+  if (range !== null && Number(range[1]) <= Number(range[2])) return { text, from: Number(range[1]), columnsBelow: undefined, rowsBelow: undefined };
+  const from = FROM.exec(lead);
+  if (from !== null) return { text, from: Number(from[1]), columnsBelow: undefined, rowsBelow: undefined };
+  return undefined;
+}
+/** The bands of docs/10's "## Layout responsiveness" section, read through the rendered docs binding. */
 export function layoutBands(doc: string): ModuleReading<LayoutBand> {
-  const section = doc.split(/^## /m).find(part => part.startsWith("Layout responsiveness\n"));
-  if (section === undefined) return { members: [], unread: ["docs/10 holds no Layout responsiveness section"] };
+  const section = docsSection(doc, "Layout responsiveness", 2, [DOCS10_TITLE]);
+  if (!section.ok) return { members: [], unread: [`docs/10: ${section.why}`] };
+  if (section.hasHtml) return { members: [], unread: ["docs/10: the section carries HTML"] };
   const bands: LayoutBand[] = [];
   const unread: string[] = [];
-  for (const line of section.split("\n").filter(line => line.startsWith("- "))) {
-    const lead = line.slice(2).split(":")[0] ?? "";
-    const below = /^<(\d+) columns(?: or <(\d+) rows)?$/.exec(lead);
-    const range = /^(\d+)–(\d+)$/.exec(lead) ?? /^>=(\d+)$/.exec(lead);
-    if (below !== null) bands.push({ text: line, from: undefined, columnsBelow: Number(below[1]), rowsBelow: below[2] === undefined ? undefined : Number(below[2]) });
-    else if (range !== null) bands.push({ text: line, from: Number(range[1]), columnsBelow: undefined, rowsBelow: undefined });
-    else if (/^(?:[<>]=?)?\d/.test(lead)) unread.push(`${lead}: a band the reader cannot read`);
+  for (const block of section.blocks) {
+    if (block.kind !== "list") {
+      unread.push(`docs/10: a ${block.kind === "other" ? block.type : block.kind} block in the section`);
+      continue;
+    }
+    for (const item of block.items) {
+      const band = bandOf(item.text);
+      if (band !== undefined) bands.push(band);
+      else if (/\d/.test(item.text)) unread.push(`docs/10: "${item.text.split(": ")[0] ?? ""}" holds a digit outside a band lead the reader reads`);
+    }
   }
   return { members: bands, unread };
 }
@@ -243,15 +374,34 @@ export interface TierDraw {
 }
 /** The forms tierDraws draws. */
 export const TIER_FORMS: readonly ReaderForm[] = [
-  { id: "default", text: "the default tier: no draw option given" },
-  { id: "options", text: "each optional boolean draw option sizeMembers reads absent, false and true, in every combination (the ASCII tier and the pane tiers among them)" },
-  { id: "widths", text: "each combination at a width inside every band of docs/10's Layout responsiveness (the band's lowest stated column count, or one below the column bound it states)" },
-  { id: "rows", text: "each width at the census's row count and at one below every row bound a band states" },
+  { id: "default", lead: "the default tier, no draw option given", examples: ["at 120x40", "at every width and row count"] },
+  {
+    id: "options",
+    lead: "each draw option sizeMembers reads that is optional with its type spelled boolean, absent, false and true, in every combination",
+    examples: ["the real ascii and panes", "a third option"],
+  },
+  {
+    id: "widths",
+    lead: "each combination at one width inside every band layoutBands reads, the band's lowest stated column count or one below the column bound it states, in band order",
+    examples: ["the real three bands", "a fourth band", "a band listed first", "two bands sharing a width"],
+  },
+  { id: "rows", lead: "each width at the census's row count and at one below every row bound a band states, ascending", examples: ["the real row bound", "no row bound", "a row bound at the census's row count"] },
+  {
+    id: "ids",
+    lead: "each draw named <width>x<rows>, then per option in name order -<option> for false or +<option> for true, the first option varying fastest",
+    examples: ["the real 54 draws"],
+  },
 ];
 /** The forms tierDraws fails closed on. */
 export const TIER_UNREAD_FORMS: readonly ReaderForm[] = [
-  { id: "option-kind", text: "a draw option that is neither an optional boolean nor a required number named width or rows" },
-  { id: "unread-input", text: "a draw option or a band its readers could not read, or no band at all" },
+  {
+    id: "option-kind",
+    lead: "a draw option that is neither optional with its type spelled boolean nor required with its type spelled number and named width or rows",
+    examples: ["a union type", "a required number of another name", "a required boolean", "a width spelled string", "an optional width", "an optional rows", "a boolean spelled with undefined"],
+  },
+  { id: "required", lead: "a module that declares no width or no rows draw option", examples: ["no width", "no rows"] },
+  { id: "unread-input", lead: "anything sizeMembers or layoutBands leave unread", examples: ["a method member", "a band lead it cannot read", "a refused section"] },
+  { id: "no-band", lead: "no band at all", examples: ["a section with no band item"] },
 ];
 /** The tier claim (R13, D1-F3), composed from TIER_FORMS and TIER_UNREAD_FORMS. */
 export const TIER_CLAIM = `tierDraws draws every declared tier of the inspector: ${listed(TIER_FORMS)}. It fails closed on ${listed(TIER_UNREAD_FORMS)}.`;

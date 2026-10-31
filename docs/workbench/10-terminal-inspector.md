@@ -45,7 +45,7 @@ For ASCII: +-|>, * running, x failed, ? unknown. Color is redundant to glyph/tex
 
 - <80 columns or <20 rows: single-column compact tree; details as subview, no side-by-side graph.
 - 80–119: two-pane tree + details or timeline summary; scrollable pane cap.
-- >=120: left hierarchy, center graph/timeline, right details when viable; cap width and height.
+- \>=120: left hierarchy, center graph/timeline, right details when viable; cap width and height.
 - Resize preserves node selection, focus and scroll intent where possible. Unicode visibleWidth always used; guard wide CJK, combining emoji, ANSI codes, zero-width characters.
 
 ## Navigation

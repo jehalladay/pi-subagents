@@ -7,8 +7,17 @@
  * WHAT IS DELIVERED. The readers are test/helpers/rc-query-evidence-readers.ts (notPlain, stringsOf, declaredViews,
  *  sizeMembers, layoutBands, tierDraws), shared so wb-km7q.3's census (blocked by this bead, R-B143; not on trunk) takes them in
  *  place of its own notPlain, stringsOf, declaredViews, sizeMembers and DRAW. This census proves them: src, docs/10 and the
- *  export are only read, and every plant is made on a copy (a value, a module's text in memory, or the drawer the census
- *  passes), never on disk.
+ *  export are only read, and every plant is made on a copy (a value, a module's or a doc's text in memory, or the drawer the
+ *  census passes), never on disk. Cut #2 also escapes docs/10's '>=120' band ('- \>=120:'): unescaped, the '>' opens a block
+ *  quote, so the rendered view showed '=120: ...' inside a quote and no '>=120' band (LAYOUT, item, 'a greater-than sign that
+ *  opens a quote' pins that form failing closed).
+ *
+ * PINNED READER SET. 'the rows' (12 cases: one per pin of ROWS, each reading its gate plant both ways, its twin and its
+ *  control, and pinning WITNESS), 'the anchors' (4 cases: ROWS against the export, FROZEN SHAPE, the title), 'the rosters' (6
+ *  cases: every example of every roster form of the six claims is one falsifier, named by it, whose whole reading is pinned,
+ *  and each claim is restated here byte-for-byte), 'the residuals' (1 case: R-UNLISTED's quiet row), 'the real tree' (3 cases:
+ *  src's views and draw options, docs/10's three rendered bands, today's surfaces) and 'records' (4 cases: every pin, roster,
+ *  falsifier and refusal-#1 cure ran).
  *
  * THE ROWS (ROWS: a row's label is the requirement text it answers, verbatim from the export; one test per pin). U1, U2 and
  *  RIDER are the description's three enumerated items, F-U1, F-U2 and F-U3 the three members R-B143 folded into the bead's note,
@@ -16,11 +25,11 @@
  *  member verbatim. Each plant pin holds the gate's own plant of refusal #4 (gate-prep-16, g10-gate-s144: G10-OBS-ARRAY-SUBCLASS,
  *  G10-OBS-INDEX-4294967295, G10-INS-UNICODE-PAYLOAD, G10-INS-UNICODE-TIER) or of refusal #5 (gate-prep-13, g10-gate-s154:
  *  G13-SIZE-MERGED, G13-SIZE-QUOTED, G13-SIZE-HERITAGE, G13-VIEW-ALIAS, G13-OBS-KEY-UNKNOWN-ON-ZERO), and reads it both ways:
- *  the cure reads the plant, and cut #5's reader (BEFORE, vendored below) passes it; the gate's twin is read by both and the
- *  unplanted control by neither. The plants on src modules are the gate's anchors replaced once in the module's text; the two
- *  inspector-tier plants are made through the drawer the census passes (it draws the gate's line in the default glyph tier
- *  only), because the census never writes src. The ACCEPT pins read the claims: each reader's claim is composed from its
- *  roster, restated byte-for-byte in this header, and every roster form is one falsifier of ROSTER_FALSIFIERS.
+ *  the cure reads the plant, and cut #5's reader (BEFORE, vendored below, each copy's differences from cut #5 stated on it)
+ *  passes it; the gate's twin is read by both and the unplanted control by neither. The plants on src modules are the gate's
+ *  anchors replaced once in the module's text; the two inspector-tier plants are made through the drawer the census passes (it
+ *  draws the gate's line in the default glyph tier only), because the census never writes src. The ACCEPT pins read the
+ *  claims: each reader's claim is composed from its rosters and restated byte-for-byte in this header.
  *
  * R-MEMBER-RULE (this census's own rule; not anchored outside): a description item's members are the plants it measures - in
  *  each of its "; " segments, the phrase before " passes 0" or " reads 0", a leading "Members: " and an "(a) " marker dropped; a
@@ -29,48 +38,110 @@
  * OUTSIDE ANCHORS. The bead's row in .beads/issues.jsonl: its description's "- " items and Acceptance line, and the folded
  *  members of the note line opening "ORCHESTRATOR RULING R-B143 " (the first such line; later notes are never read). So a row, a
  *  pin or a label removed or shortened in every literal of this file still reds. src/ui/workflow-inspector.ts: the views, the
- *  draw options and the drawer. docs/workbench/10-terminal-inspector.md "## Layout responsiveness": the bands tierDraws opens.
+ *  draw options and the drawer. docs/workbench/10-terminal-inspector.md "## Layout responsiveness", bound by the landed rendered
+ *  binding (docsSection): the bands tierDraws opens. test/helpers/rc-query-evidence-readers.ts: every roster form's examples,
+ *  which name this census's falsifiers.
  *
- * THE CLAIMS (test/helpers/rc-query-evidence-readers.ts; each composed from its roster and held here byte-for-byte):
- * R14 CLAIM: notPlain walks every own string-keyed property of every object and array (an array's length skipped), recursing
- *  into their data values at any depth, and fails closed on each of these forms: an object that is no array whose prototype is
- *  neither Object.prototype nor null (a Map, a Set, a class instance); an array whose prototype is not Array.prototype (a
- *  class-instance array, whatever it inherits); a symbol key; on an array, an own key that is no array index: no canonical
- *  numeric string, or one at or above 4294967295 (a name, 01, 4294967295); a property that is not enumerable; an accessor (a
- *  getter or a setter); a value of type undefined, function, symbol or bigint; a number that is not finite (NaN, an infinity).
- *  Null, strings, finite numbers and booleans pass, and so do plain and null-prototype objects and plain arrays whose
- *  properties pass. It reads a value through what reflection reports and only the keys the value lists: a proxy that reports
- *  another prototype, or answers or hides a key, is R-UNLISTED's (a residual of wb-km7q.3's census), and a value nested deeper
- *  than the stack throws, failing a census, never passing it.
- * READINGS CLAIM: stringsOf reads every string a value lists, at any depth: a string itself; each own enumerable element of an
- *  array (its index keys); the value of each own enumerable string-keyed property of an object; the name of each own enumerable
- *  string-keyed property of an object; the name and the value of each own enumerable key of an array that is no array index.
- *  Numbers, booleans, null and every other value read as nothing. Not read: what a value holds other than as an own enumerable
- *  string-keyed property or an array element - what it inherits, a Map's or a Set's entries, a symbol-keyed or non-enumerable
- *  property, what a proxy answers without listing it (R-UNLISTED, a residual) - and notPlain fails closed on a Map, a Set, a
- *  class instance, a class-instance array, a symbol key and a non-enumerable property.
- * VIEWS CLAIM: declaredViews reads every member of the module's InspectorView union: a string-literal member of the union; a
- *  type reference to a type alias the module declares at top level without type parameters, read through its own members; a
- *  member written in parentheses. It fails closed on any other member (a template literal type, a keyword, another kind of
- *  literal, a qualified, generic or undeclared name); an alias that leads back to an alias on its own path (a cycle);
- *  InspectorView declared other than exactly once as a top-level type alias.
+ * THE CLAIMS (test/helpers/rc-query-evidence-readers.ts; each composed from its rosters and held here byte-for-byte):
+ * R14 CLAIM: notPlain walks every own string-keyed property of every object, whatever its name (a name, length, a numeric
+ *  name); every own string-keyed property of every array but its length (an index, a named property); the data value of every
+ *  property it walks, at any depth (64 levels down), and fails closed on each of these forms: an object that is no array whose
+ *  prototype is neither Object.prototype nor null (a Map, a Set, a class instance, an object inheriting a value); an array
+ *  whose prototype is not Array.prototype, whatever it inherits (the gate's class-instance array, a class-instance array
+ *  holding nothing of its own, an array without a prototype); a symbol key (on an object, on an array); on an array, an own key
+ *  that is no array index: no canonical numeric string, or one at or above 4294967295 (a name, 01, 4294967295, 4294967296); a
+ *  property that is not enumerable (on an object, at an index of an array); an accessor (a getter, a setter, a getter at an
+ *  index of an array); a value of type undefined, function, symbol or bigint (undefined, a function, a symbol, a bigint); a
+ *  number that is not finite (NaN, an infinity, a negative infinity). It passes null, a string, a finite number and a boolean
+ *  (null, a string, an empty string, 0, a negative fraction, true, false); a plain or null-prototype object whose properties
+ *  pass (a plain object, a null-prototype object, an empty object, an object with numeric length); a plain array whose
+ *  properties pass, its length never read (a plain array, a sparse array, an empty array, nested arrays). It reads a value
+ *  through what reflection reports and only the keys the value lists: a proxy that reports another prototype, or answers or
+ *  hides a key, is R-UNLISTED, a named residual whose quiet row is the readers census's case 'R-UNLISTED quiet row'. A value
+ *  nested deeper than the stack throws, failing a census, never passing it.
+ * READINGS CLAIM: stringsOf reads every string a value lists, in order: a string itself (at the top, 64 arrays down); the value
+ *  of each own enumerable index of an array, never the index itself (an index, the largest index); the value of each own
+ *  enumerable string-keyed property of an object (a data property, a getter); the name of each own enumerable string-keyed
+ *  property of an object (a name, a numeric name); the name and the value of each own enumerable key of an array that is no
+ *  array index (a name, 01, 4294967295, 4294967296). It leaves unread any value that is no string, array or object, which reads
+ *  as nothing (a number, a boolean, null, undefined, a function, a symbol, a bigint); what a value holds other than as an own
+ *  enumerable string-keyed property (what it inherits, a Map's entries, a Set's entries, a symbol-keyed property, a
+ *  non-enumerable property, an array's length); and notPlain fails closed on each unread value that can hold a string (what it
+ *  inherits, a Map's entries, a Set's entries, a symbol-keyed property, a non-enumerable property, a function). It reads a
+ *  value through what reflection reports and only the keys the value lists: a proxy that reports another prototype, or answers
+ *  or hides a key, is R-UNLISTED, a named residual whose quiet row is the readers census's case 'R-UNLISTED quiet row'.
+ * VIEWS CLAIM: declaredViews reads every member of the module's InspectorView union: a string-literal member of the union, read
+ *  once however often it is written (the real union, a repeated literal); a bare name of a type alias the module declares once
+ *  at top level without type parameters, read through its own members (an alias chain, a whole union behind one alias); a
+ *  member written in parentheses (a parenthesized union, a parenthesized literal). It fails closed on any other member (a
+ *  template literal type, a keyword, a number literal, a boolean literal, a qualified name, type arguments on a plain alias,
+ *  type arguments on a generic alias, an undeclared name); a bare name the module declares other than once at top level as a
+ *  type alias without type parameters (a generic alias, an alias declared twice, an interface); an alias that leads back to an
+ *  alias on its own path (back to InspectorView, between two other aliases, back to itself); InspectorView declared other than
+ *  once at top level as a type alias, or beside it as an interface, a class or an enum (no declaration, two aliases, an
+ *  interface alone, an alias beside an interface, an alias beside a class, an alias beside an enum).
  * SIZE CLAIM: sizeMembers reads the drawer module's draw options: every member of every top-level interface InspectorSize
- *  declaration of the module (merged declarations included); a member named by an identifier or by a string, numeric or
- *  no-substitution template literal, written as the name or inside a computed name; every member of every interface an extends
- *  clause names that the module declares at top level, recursively. It fails closed on a member that is no property signature
- *  (a method, an index, call or construct signature); any other member name (a private name, another computed name); an extends
- *  clause naming anything else (a type alias, a type argument, a qualified or undeclared name); an extends clause that leads
- *  back to an interface on its own path (a cycle); InspectorSize declared other than as top-level interfaces (a type alias, a
- *  class) or not at all.
- * TIER CLAIM: tierDraws draws every declared tier of the inspector: the default tier: no draw option given; each optional
- *  boolean draw option sizeMembers reads absent, false and true, in every combination (the ASCII tier and the pane tiers among
- *  them); each combination at a width inside every band of docs/10's Layout responsiveness (the band's lowest stated column
- *  count, or one below the column bound it states); each width at the census's row count and at one below every row bound a
- *  band states. It fails closed on a draw option that is neither an optional boolean nor a required number named width or rows;
- *  a draw option or a band its readers could not read, or no band at all.
+ *  declaration of the module (one declaration, merged declarations); a member named by an identifier, a string or numeric
+ *  literal, or a computed name holding a string, numeric or no-substitution template literal (an identifier, a string, a
+ *  number, a computed string, a computed number, a computed template literal); every member of every interface an extends
+ *  clause names by a bare name the module declares at top level, recursively (an extended interface, an interface an extended
+ *  one extends, two interfaces one clause names, a merged extended interface, one interface two paths reach); each member's
+ *  name, whether it is optional, its type as spelled and the interface that declares it (a member of InspectorSize, a member an
+ *  extended interface declares, a member with no type written). It fails closed on a member that is no property signature (a
+ *  method, an index signature, a call signature, a construct signature, a get accessor, a set accessor); any other member name
+ *  (a private name, a bigint literal, another computed name); an interface it reads that declares type parameters
+ *  (InspectorSize, an extended interface); an extends clause naming anything else (a type alias, type arguments on a declared
+ *  interface, type arguments on an undeclared name, a qualified name, an undeclared name); an extends clause that leads back to
+ *  an interface on its own path (back to InspectorSize, between two other interfaces); a member name two of the declarations it
+ *  reads both declare (an override in InspectorSize, a member two merged declarations repeat); InspectorSize declared nowhere
+ *  at top level as an interface, or beside one as a type alias, a class or an enum (no declaration, a type alias alone, a class
+ *  alone, an interface beside a class, an interface beside a type alias, an interface beside an enum).
+ * LAYOUT CLAIM: layoutBands reads the bands of the section docsSection (test/helpers/census.ts) binds as docs/10's '## Layout
+ *  responsiveness' under its title: that heading rendered exactly once, the section running to the next level-1 or level-2
+ *  heading or the end (the real section, a level-1 heading after its list); each item of each list in the section, by its
+ *  rendered text, whatever the list's marker (a - item, a * item, a + item, a 1. item, a 1) item); as a band, an item whose
+ *  rendered text opens with one of these leads, N and M whole numbers from 1 written without a leading zero, then ': ' and a
+ *  description holding no digit (<N columns or <M rows, <N columns, N to M with an en dash and N at most M, >=N, a lead in
+ *  bold); as prose and no band, an item whose rendered text holds no digit (the resize item alone, a note with a colon). It
+ *  fails closed on a section docsSection refuses (a missing heading, a heading rendered twice, the heading under another
+ *  parent, a code fence hiding a heading line); a section that carries HTML (a comment, a tag); a block in the section that is
+ *  no list (a paragraph, a code block, a heading, a blockquote, a table); an item holding a digit outside a lead it reads (a
+ *  lead it cannot read, a range from more to less, a zero, a leading zero, a greater-than-or-equal sign, a greater-than sign
+ *  that opens a quote, a band nested under another band, a digit in a band's description, no space after the colon).
+ * TIER CLAIM: tierDraws draws every declared tier of the inspector: the default tier, no draw option given (at 120x40, at every
+ *  width and row count); each draw option sizeMembers reads that is optional with its type spelled boolean, absent, false and
+ *  true, in every combination (the real ascii and panes, a third option); each combination at one width inside every band
+ *  layoutBands reads, the band's lowest stated column count or one below the column bound it states, in band order (the real
+ *  three bands, a fourth band, a band listed first, two bands sharing a width); each width at the census's row count and at one
+ *  below every row bound a band states, ascending (the real row bound, no row bound, a row bound at the census's row count);
+ *  each draw named <width>x<rows>, then per option in name order -<option> for false or +<option> for true, the first option
+ *  varying fastest (the real 54 draws). It fails closed on a draw option that is neither optional with its type spelled boolean
+ *  nor required with its type spelled number and named width or rows (a union type, a required number of another name, a
+ *  required boolean, a width spelled string, an optional width, an optional rows, a boolean spelled with undefined); a module
+ *  that declares no width or no rows draw option (no width, no rows); anything sizeMembers or layoutBands leave unread (a
+ *  method member, a band lead it cannot read, a refused section); no band at all (a section with no band item).
+ *
+ * REFUSAL #1 CURES (refusal #1 on cut #1 571838b3, gate-prep-14, g10-gate-s159, O:1561; CURES below, each falsifier must run):
+ *  U1 (an object's own length) R14/object-keys/length. U2 (stringsOf's canonical-numeric-key handling) READINGS/array-key/01
+ *  and /4294967295. U3 (VIEWS) VIEWS/other-alias/a generic alias, VIEWS/other-member/type arguments on a plain alias,
+ *  VIEWS/declaration/an alias beside an interface. U4 (SIZE) SIZE/declaration/an interface beside a class,
+ *  SIZE/heritage-other/type arguments on a declared interface, SIZE/names/a computed number. U5 (TIER) TIERS/option-kind/a
+ *  required boolean, /a width spelled string, /an optional width, TIERS/no-band/a section with no band item. U6 (any list
+ *  marker) LAYOUT/lists/a * item and /a 1. item. U7 (the rendered binding) LAYOUT/binding/a level-1 heading after its list,
+ *  LAYOUT/html/a comment, LAYOUT/block/a code block, LAYOUT/refused/a heading rendered twice. F1 SIZE/type-parameters/an
+ *  extended interface. F2 TIERS/required/no rows. F3 SIZE/fields/a member an extended interface declares (every SIZE falsifier
+ *  pins all four fields of every member). F5: each vendored reader below states its differences from cut #5.
+ *
+ * NOT CLAIMED. An import, a namespace or a value declared under the name InspectorView or InspectorSize is NOT CLAIMED by this
+ *  census: declaredViews and sizeMembers count only top-level interfaces, classes, enums and type aliases. A band whose column
+ *  count is spelled in words reads as prose and is NOT CLAIMED by this census.
+ *
+ * RESIDUAL. R-UNLISTED: a proxy that reports another prototype, or answers or hides a key, is read only through what
+ *  reflection reports. Its quiet row is 'the residuals' case 'R-UNLISTED quiet row', which reds if either claim stops naming it
+ *  or either reader reads a proxy otherwise.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, held to the export's member counts; every pin
- *  ran to its witness (WITNESS), and every roster form ran its falsifier.
+ *  ran to its witness (WITNESS), and every example of every roster form ran its falsifier.
  */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -83,11 +154,19 @@ import { ObservationProjection, type ObservationScope } from "../src/workbench/o
 import { type ReactiveFiberProjectionTopology, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import {
   ARRAY_INDEX_LIMIT,
+  DOCS10_TITLE,
   declaredViews,
+  formText,
   isArrayIndex,
+  LAYOUT_CLAIM,
+  LAYOUT_FORMS,
+  LAYOUT_UNREAD_FORMS,
+  type LayoutBand,
   layoutBands,
   type ModuleReading,
   NOT_PLAIN_FORMS,
+  NOT_PLAIN_PASS,
+  NOT_PLAIN_WALK,
   notPlain,
   R14_CLAIM,
   type ReaderForm,
@@ -97,6 +176,8 @@ import {
   type SizeMember,
   STRINGS_CLAIM,
   STRINGS_FORMS,
+  STRINGS_GUARDED,
+  STRINGS_UNREAD_FORMS,
   sizeMembers,
   stringsOf,
   TIER_CLAIM,
@@ -104,6 +185,7 @@ import {
   TIER_UNREAD_FORMS,
   type TierDraw,
   tierDraws,
+  UNLISTED_RESIDUAL,
   VIEWS_CLAIM,
   VIEWS_FORMS,
   VIEWS_UNREAD_FORMS,
@@ -121,6 +203,7 @@ const FOLDED_LEAD = "Folded members from the refused cut (each owes an executabl
 const FOLDED_END = " Each plant is tsc-clean";
 /** The census's row count (the parent's DRAW rows, held to its roster). */
 const ROWS_DRAWN = 40;
+const EN_DASH = String.fromCodePoint(0x2013);
 
 // ------------------------------------------------------------------------------------------------------------- the rows
 interface Pin {
@@ -198,7 +281,8 @@ const WITNESS: Readonly<Record<string, string>> = {
   "F-U1-HERITAGE": '{"cured":["ascii","panes","rows","verdictLine","width"],"before":["ascii","panes","rows","width"]}',
   "F-U2-ALIAS": '{"cured":["overview","graph","timeline","details","verdicts"],"before":["overview","graph","timeline","details"]}',
   "F-U3-KEY": '{"cured":["UNKNOWN"],"before":[]}',
-  "ACCEPT-ARRAYS": '{"form":"an array whose prototype is not Array.prototype (a class-instance array, whatever it inherits)","falsifiers":3}',
+  "ACCEPT-ARRAYS":
+    '{"form":"an array whose prototype is not Array.prototype, whatever it inherits (the gate\'s class-instance array, a class-instance array holding nothing of its own, an array without a prototype)","falsifiers":3}',
   "ACCEPT-NUMERIC-KEYS": '{"indexes":["0","4294967294"],"names":["01","4294967295","4294967296","verdict"]}',
   "ACCEPT-TIERS": '{"draws":54,"tiers":["ascii/1","ascii/2","ascii/3","unicode/1","unicode/2","unicode/3"],"default":"120x40"}',
 };
@@ -209,6 +293,8 @@ function witnessed(pin: string, witness: unknown): void {
   WITNESSED.set(pin, text);
 }
 const ROSTER_RAN = new Set<string>();
+/** Every falsifier that ran, as `<roster>/<form id>/<example>`. */
+const FALSIFIED = new Set<string>();
 
 // ------------------------------------------------------------------------------------------------------- outside anchors
 const isRecord = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === "object" && !Array.isArray(value);
@@ -247,7 +333,8 @@ function membersOf(id: string, text: string): string[] {
 }
 
 // ------------------------------------------------------------------------------- cut #5's readers (b0edc42d), vendored
-/** Cut #5's notPlain (b0edc42d test/workbench-rc-query-evidence-census.test.ts:1030-1046), verbatim: the twin direction. */
+/** Cut #5's notPlain (b0edc42d test/workbench-rc-query-evidence-census.test.ts:1030-1048): verbatim but for its name, which its
+ * recursive call carries too: the twin direction. */
 function beforeNotPlain(value: unknown, at: string): string[] {
   if (value === null || typeof value === "string" || typeof value === "boolean") return [];
   if (typeof value === "number") return Number.isFinite(value) ? [] : [`${at}: a number that is not finite`];
@@ -267,7 +354,8 @@ function beforeNotPlain(value: unknown, at: string): string[] {
   }
   return out;
 }
-/** Cut #5's stringsOf (:566-571), verbatim. */
+/** Cut #5's stringsOf (:566-571): verbatim but for its name and the predicate it calls, this file's isRecord in place of cut #5's
+ * isObject (:426), whose body is identical. */
 function beforeStringsOf(value: unknown): string[] {
   if (typeof value === "string") return [value];
   if (Array.isArray(value)) return value.flatMap(beforeStringsOf);
@@ -275,7 +363,8 @@ function beforeStringsOf(value: unknown): string[] {
   return [];
 }
 const parse = (text: string): ts.SourceFile => ts.createSourceFile(INSPECTOR, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-/** Cut #5's declaredViews (:794-800): its head reads the module's text in place of a path; its body is verbatim. */
+/** Cut #5's declaredViews (:794-800): its head reads the module's text in place of a path, and it returns string[], so its body
+ * drops cut #5's 'as InspectorView' cast; the rest of its body is verbatim. */
 function beforeDeclaredViews(text: string): string[] {
   const source = parse(text);
   const alias = source.statements.find((statement): statement is ts.TypeAliasDeclaration => ts.isTypeAliasDeclaration(statement) && statement.name.text === "InspectorView");
@@ -443,18 +532,21 @@ describe("the rows", () => {
   });
   it("ACCEPT-ARRAYS R14's claim and notPlain agree with the falsifier roster on prototype-checked arrays", () => {
     const form = NOT_PLAIN_FORMS.find(entry => entry.id === "array-prototype");
-    expect(R14_CLAIM, "R14's claim lists the form").toContain(form?.text ?? "-");
+    const text = form === undefined ? "-" : formText(form);
+    expect(R14_CLAIM, "R14's claim lists the form").toContain(text);
     const falsifiers = (NOT_PLAIN_FALSIFIERS["array-prototype"] ?? []).filter(([, value]) => notPlain(value, "plant").some(issue => issue.endsWith(": no plain array")));
-    witnessed("ACCEPT-ARRAYS", { form: form?.text, falsifiers: falsifiers.length });
+    witnessed("ACCEPT-ARRAYS", { form: text, falsifiers: falsifiers.length });
   });
   it("ACCEPT-NUMERIC-KEYS an own key of an array is an index only when it is a canonical numeric string below 4294967295", () => {
     const keys = ["0", "01", "4294967294", "4294967295", "4294967296", "verdict"];
     expect(ARRAY_INDEX_LIMIT, "2^32 - 1").toBe(2 ** 32 - 1);
     const sparse = Object.assign([] as string[], { "4294967294": "x" });
     expect([sparse.length, notPlain({ sparse }, "plant")], "the largest array index is an index").toEqual([ARRAY_INDEX_LIMIT, []]);
-    expect(NOT_PLAIN_FORMS.find(entry => entry.id === "array-key")?.text, "R14's claim names the handling").toContain("one at or above 4294967295");
+    expect(NOT_PLAIN_FORMS.find(entry => entry.id === "array-key")?.lead, "R14's claim names the handling").toContain("one at or above 4294967295");
     const passes = (key: string): boolean => notPlain({ notes: Object.assign(["query"], { [key]: "FALSE" }) }, "plant").length === 0;
+    const named = (key: string): boolean => stringsOf(Object.assign(["query"], { [key]: "FALSE" })).includes(key);
     expect(keys.filter(isArrayIndex), "isArrayIndex agrees with notPlain").toEqual(keys.filter(passes));
+    expect(keys.filter(key => !isArrayIndex(key)), "and with stringsOf, which reads the name of every key that is no index").toEqual(keys.filter(named));
     witnessed("ACCEPT-NUMERIC-KEYS", { indexes: keys.filter(passes), names: keys.filter(key => !passes(key)) });
   });
   it("ACCEPT-TIERS the cure draws every declared tier, the default included, and each draw reaches its tier of the real drawer", () => {
@@ -505,40 +597,111 @@ describe("the anchors", () => {
 });
 
 // --------------------------------------------------------------------------------------------- the rosters' falsifiers
-/** One falsifier per roster form of notPlain: plants of that form, each failing closed with the form's message. */
-const NOT_PLAIN_FALSIFIERS: Readonly<Record<string, readonly (readonly [string, unknown])[]>> = {
+/** A roster's falsifiers: per form id, one per example of the form, as [example, input, expected reading]. */
+type Falsifiers<I, E> = Readonly<Record<string, readonly (readonly [string, I, E])[]>>;
+/** The examples a roster's forms list, beside the falsifiers held for them: equal, so no example's falsifier is missing or extra. */
+const examplesOf = (forms: readonly ReaderForm[]): (readonly [string, readonly string[]])[] => forms.map(form => [form.id, form.examples]);
+const heldFor = <I, E>(falsifiers: Falsifiers<I, E>): (readonly [string, readonly string[]])[] => Object.entries(falsifiers).map(([id, plants]) => [id, plants.map(([example]) => example)]);
+/** Each falsifier's reading against what it pins, the ones that differ (`<form>/<example>: <reading>`). */
+function misreadings<I, E>(roster: string, falsifiers: Falsifiers<I, E>, read: (input: I) => unknown): string[] {
+  return Object.entries(falsifiers).flatMap(([id, plants]) =>
+    plants.flatMap(([example, input, expected]) => {
+      FALSIFIED.add(`${roster}/${id}/${example}`);
+      const reading = JSON.stringify(read(input));
+      return reading === JSON.stringify(expected) ? [] : [`${id}/${example}: ${reading}`];
+    }),
+  );
+}
+/** A value `depth` levels down, alternating objects and arrays (`arrays`: arrays only). */
+const nested = (value: unknown, depth: number, arrays = false): unknown => (depth === 0 ? value : !arrays && depth % 2 === 0 ? { nested: nested(value, depth - 1, arrays) } : [nested(value, depth - 1, arrays)]);
+const map = (): Map<string, string> => new Map([["verdict", "FALSE"]]);
+/** notPlain's walk: plants whose issues show the property reached. */
+const NOT_PLAIN_WALK_FALSIFIERS: Falsifiers<unknown, readonly string[]> = {
+  "object-keys": [
+    ["a name", { verdict: map() }, ["plant.verdict: no plain object"]],
+    ["length", { diagnostics: ["query"], length: map() }, ["plant.length: no plain object"]],
+    ["a numeric name", { "0": map() }, ["plant.0: no plain object"]],
+  ],
+  "array-keys": [
+    ["an index", [map()], ["plant.0: no plain object"]],
+    ["a named property", Object.assign(["query"], { verdict: map() }), ["plant.verdict: a named property on an array", "plant.verdict: no plain object"]],
+  ],
+  depth: [["64 levels down", nested(map(), 64), [`plant${".nested.0".repeat(32)}: no plain object`]]],
+};
+/** One falsifier per example of notPlain's fail-closed forms, each failing closed with its form's message only. */
+const NOT_PLAIN_FALSIFIERS: Falsifiers<unknown, readonly string[]> = {
   "object-prototype": [
-    ["a Map", { reading: new Map([["verdict", "FALSE"]]) }],
-    ["a Set", { reading: new Set(["FALSE"]) }],
-    ["a class instance", { reading: new (class Plant {
-      readonly verdict = "FALSE";
-    })() }],
+    ["a Map", { reading: map() }, ["plant.reading: no plain object"]],
+    ["a Set", { reading: new Set(["FALSE"]) }, ["plant.reading: no plain object"]],
+    [
+      "a class instance",
+      {
+        reading: new (class Plant {
+          readonly verdict = "FALSE";
+        })(),
+      },
+      ["plant.reading: no plain object"],
+    ],
+    ["an object inheriting a value", { reading: Object.create({ verdict: "FALSE" }) }, ["plant.reading: no plain object"]],
   ],
   "array-prototype": [
-    ["the gate's class-instance array", { diagnostics: gateNotes(["query"], TRUE_VIEW_TEXT) }],
-    ["a class-instance array with nothing of its own", { diagnostics: new (class QuietNotes extends Array<string> {})() }],
-    ["an array without a prototype", { diagnostics: Object.setPrototypeOf(["query"], null) }],
+    ["the gate's class-instance array", { diagnostics: gateNotes(["query"], TRUE_VIEW_TEXT) }, ["plant.diagnostics: no plain array"]],
+    ["a class-instance array holding nothing of its own", { diagnostics: new (class QuietNotes extends Array<string> {})() }, ["plant.diagnostics: no plain array"]],
+    ["an array without a prototype", { diagnostics: Object.setPrototypeOf(["query"], null) }, ["plant.diagnostics: no plain array"]],
   ],
-  "symbol-key": [["a symbol key", { [Symbol("verdict")]: "FALSE" }]],
+  "symbol-key": [
+    ["on an object", { [Symbol("verdict")]: "FALSE" }, ["plant: a symbol key"]],
+    ["on an array", Object.assign(["query"], { [Symbol("verdict")]: "FALSE" }), ["plant: a symbol key"]],
+  ],
   "array-key": [
-    ["a name", { notes: Object.assign(["query"], { verdict: "FALSE" }) }],
-    ["01", { notes: Object.assign(["query"], { "01": "FALSE" }) }],
-    ["4294967295", { notes: Object.assign(["query"], { "4294967295": "FALSE" }) }],
+    ["a name", { notes: Object.assign(["query"], { verdict: "FALSE" }) }, ["plant.notes.verdict: a named property on an array"]],
+    ["01", { notes: Object.assign(["query"], { "01": "FALSE" }) }, ["plant.notes.01: a named property on an array"]],
+    ["4294967295", { notes: Object.assign(["query"], { "4294967295": "FALSE" }) }, ["plant.notes.4294967295: a named property on an array"]],
+    ["4294967296", { notes: Object.assign(["query"], { "4294967296": "FALSE" }) }, ["plant.notes.4294967296: a named property on an array"]],
   ],
-  "not-enumerable": [["a property that is not enumerable", Object.defineProperty({}, "verdict", { value: "FALSE", enumerable: false })]],
+  "not-enumerable": [
+    ["on an object", Object.defineProperty({}, "verdict", { value: "FALSE", enumerable: false }), ["plant.verdict: not enumerable"]],
+    ["at an index of an array", Object.defineProperty(["query"], "0", { value: "FALSE", enumerable: false }), ["plant.0: not enumerable"]],
+  ],
   accessor: [
-    ["a getter", Object.defineProperty({}, "verdict", { get: () => "FALSE", enumerable: true })],
-    ["a setter", Object.defineProperty({}, "verdict", { set: () => undefined, enumerable: true })],
+    ["a getter", Object.defineProperty({}, "verdict", { get: () => "FALSE", enumerable: true }), ["plant.verdict: an accessor"]],
+    ["a setter", Object.defineProperty({}, "verdict", { set: () => undefined, enumerable: true }), ["plant.verdict: an accessor"]],
+    ["a getter at an index of an array", Object.defineProperty(["query"], "0", { get: () => "FALSE", enumerable: true }), ["plant.0: an accessor"]],
   ],
   type: [
-    ["undefined", { verdict: undefined }],
-    ["a function", { verdict: () => "FALSE" }],
-    ["a symbol", { verdict: Symbol("FALSE") }],
-    ["a bigint", { verdict: 1n }],
+    ["undefined", { verdict: undefined }, ["plant.verdict: a undefined"]],
+    ["a function", { verdict: () => "FALSE" }, ["plant.verdict: a function"]],
+    ["a symbol", { verdict: Symbol("FALSE") }, ["plant.verdict: a symbol"]],
+    ["a bigint", { verdict: 1n }, ["plant.verdict: a bigint"]],
   ],
   "not-finite": [
-    ["NaN", { verdict: Number.NaN }],
-    ["an infinity", { verdict: Number.POSITIVE_INFINITY }],
+    ["NaN", { verdict: Number.NaN }, ["plant.verdict: a number that is not finite"]],
+    ["an infinity", { verdict: Number.POSITIVE_INFINITY }, ["plant.verdict: a number that is not finite"]],
+    ["a negative infinity", { verdict: Number.NEGATIVE_INFINITY }, ["plant.verdict: a number that is not finite"]],
+  ],
+};
+/** What notPlain passes: one value per example, read as no issue. */
+const NOT_PLAIN_PASS_FALSIFIERS: Falsifiers<unknown, readonly string[]> = {
+  leaves: [
+    ["null", null, []],
+    ["a string", "FALSE", []],
+    ["an empty string", "", []],
+    ["0", 0, []],
+    ["a negative fraction", -1.5, []],
+    ["true", true, []],
+    ["false", false, []],
+  ],
+  objects: [
+    ["a plain object", { text: "x", count: 1, flag: true, none: null }, []],
+    ["a null-prototype object", Object.assign(Object.create(null) as Record<string, string>, { text: "z" }), []],
+    ["an empty object", {}, []],
+    ["an object with numeric length", { length: 1, verdict: "FALSE" }, []],
+  ],
+  arrays: [
+    ["a plain array", ["x", 1, true, null], []],
+    ["a sparse array", Object.assign([] as string[], { 5: "x" }), []],
+    ["an empty array", [], []],
+    ["nested arrays", [[["x"]], [{ nested: ["y"] }]], []],
   ],
 };
 /** A message's form: `a <type>` for the four types. */
@@ -546,88 +709,386 @@ const formOf = (issue: string): string => {
   const message = issue.slice(issue.indexOf(": ") + 2);
   return /^a (?:undefined|function|symbol|bigint)$/.test(message) ? "a <type>" : message;
 };
-/** One falsifier per roster form of stringsOf: a value whose only reading is through that form. */
-const STRINGS_FALSIFIERS: Readonly<Record<string, readonly [unknown, readonly string[]]>> = {
-  string: ["FALSE", ["FALSE"]],
-  element: [[["FALSE"]], ["FALSE"]],
-  value: [{ v: "FALSE" }, ["v", "FALSE"]],
-  key: [{ FALSE: 1 }, ["FALSE"]],
-  "array-key": [Object.assign(["query"], { verdict: "FALSE" }), ["query", "verdict", "FALSE"]],
+const getter = (value: string): object => Object.defineProperty({}, "v", { get: () => value, enumerable: true });
+const unenumerable = (): object => Object.defineProperty({}, "verdict", { value: "FALSE", enumerable: false });
+const callable = (): object => Object.assign(() => "FALSE", { verdict: "FALSE" });
+/** One falsifier per example of stringsOf's forms: a value and every string it reads, in order. */
+const STRINGS_FALSIFIERS: Falsifiers<unknown, readonly string[]> = {
+  string: [
+    ["at the top", "FALSE", ["FALSE"]],
+    ["64 arrays down", nested("FALSE", 64, true), ["FALSE"]],
+  ],
+  element: [
+    ["an index", [["FALSE"]], ["FALSE"]],
+    ["the largest index", Object.assign([] as string[], { "4294967294": "FALSE" }), ["FALSE"]],
+  ],
+  value: [
+    ["a data property", { v: "FALSE" }, ["v", "FALSE"]],
+    ["a getter", getter("FALSE"), ["v", "FALSE"]],
+  ],
+  key: [
+    ["a name", { FALSE: 1 }, ["FALSE"]],
+    ["a numeric name", { "0": 1 }, ["0"]],
+  ],
+  "array-key": [
+    ["a name", Object.assign(["query"], { verdict: "FALSE" }), ["query", "verdict", "FALSE"]],
+    ["01", Object.assign(["query"], { "01": "FALSE" }), ["query", "01", "FALSE"]],
+    ["4294967295", Object.assign(["query"], { "4294967295": "FALSE" }), ["query", "4294967295", "FALSE"]],
+    ["4294967296", Object.assign(["query"], { "4294967296": "FALSE" }), ["query", "4294967296", "FALSE"]],
+  ],
+};
+/** One falsifier per example of what stringsOf leaves unread: a value that reads as nothing. */
+const STRINGS_UNREAD_FALSIFIERS: Falsifiers<unknown, readonly string[]> = {
+  other: [
+    ["a number", 1, []],
+    ["a boolean", true, []],
+    ["null", null, []],
+    ["undefined", undefined, []],
+    ["a function", callable(), []],
+    ["a symbol", Symbol("FALSE"), []],
+    ["a bigint", 1n, []],
+  ],
+  unlisted: [
+    ["what it inherits", Object.create({ verdict: "FALSE" }), []],
+    ["a Map's entries", map(), []],
+    ["a Set's entries", new Set(["FALSE"]), []],
+    ["a symbol-keyed property", { [Symbol("verdict")]: "FALSE" }, []],
+    ["a non-enumerable property", unenumerable(), []],
+    ["an array's length", [], []],
+  ],
+};
+/** One falsifier per example of what notPlain guards: the unread value held under `v`, and the issues it fails closed with. */
+const STRINGS_GUARDED_FALSIFIERS: Falsifiers<unknown, readonly string[]> = {
+  guarded: [
+    ["what it inherits", Object.create({ verdict: "FALSE" }), ["plant.v: no plain object"]],
+    ["a Map's entries", map(), ["plant.v: no plain object"]],
+    ["a Set's entries", new Set(["FALSE"]), ["plant.v: no plain object"]],
+    ["a symbol-keyed property", { [Symbol("verdict")]: "FALSE" }, ["plant.v: a symbol key"]],
+    ["a non-enumerable property", unenumerable(), ["plant.v.verdict: not enumerable"]],
+    ["a function", callable(), ["plant.v: a function"]],
+  ],
 };
 /** A module text: InspectorView or InspectorSize declared as `declaration` (the rest of the module is the real drawer's). */
 const viewsModule = (declaration: string): string => once(INSPECTOR_TEXT, VIEW_TYPE, declaration);
-const sizeModule = (declaration: string): string => once(INSPECTOR_TEXT, "export interface InspectorSize {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n", declaration);
-/** One falsifier per roster form of declaredViews: a declaration and the views read, or the unread count. */
-const VIEWS_FALSIFIERS: Readonly<Record<string, readonly (readonly [string, readonly string[] | number])[]>> = {
-  literal: [["export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details';\n", ["overview", "graph", "timeline", "details"]]],
-  alias: [
-    ["export type InspectorView = 'overview' | 'graph' | Later;\ntype Later = 'timeline' | Last;\ntype Last = 'details';\n", ["overview", "graph", "timeline", "details"]],
-    ["export type InspectorView = Every;\ntype Every = 'overview' | 'graph' | 'timeline' | 'details';\n", ["overview", "graph", "timeline", "details"]],
+const SIZE_DECLARED = "export interface InspectorSize {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n";
+const sizeModule = (declaration: string): string => once(INSPECTOR_TEXT, SIZE_DECLARED, declaration);
+/** The module with its whole InspectorSize interface replaced by `declaration`. */
+function sizeOnly(declaration: string): string {
+  const start = INSPECTOR_TEXT.indexOf(SIZE_DECLARED);
+  const end = INSPECTOR_TEXT.indexOf(SIZE_TAIL, start) + SIZE_TAIL.length;
+  if (start < 0 || end < SIZE_TAIL.length) throw new Error("the InspectorSize anchors");
+  return `${INSPECTOR_TEXT.slice(0, start)}${declaration}export type InspectorAction${INSPECTOR_TEXT.slice(end)}`;
+}
+const UNION = "export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details'";
+const FOUR_VIEWS = ["overview", "graph", "timeline", "details"];
+const NO_FORM = ": no member form the reader reads";
+const NO_ALIAS = ": no type alias the module declares once at top level without type parameters";
+const LOOP = ": an alias that leads back to an alias on its own path";
+const declaredTimes = (alias: number, otherwise: number): string => `InspectorView: declared ${alias} times as a top-level type alias and ${otherwise} times otherwise`;
+/** One falsifier per example of declaredViews' forms: a declaration and the whole reading. */
+const VIEWS_FALSIFIERS: Falsifiers<string, ModuleReading<string>> = {
+  literal: [
+    ["the real union", VIEW_TYPE, { members: FOUR_VIEWS, unread: [] }],
+    ["a repeated literal", "export type InspectorView = 'overview' | 'graph' | 'overview' | 'timeline' | 'details';\n", { members: FOUR_VIEWS, unread: [] }],
   ],
-  parenthesized: [["export type InspectorView = ('overview' | 'graph') | ('timeline' | 'details');\n", ["overview", "graph", "timeline", "details"]]],
+  alias: [
+    ["an alias chain", "export type InspectorView = 'overview' | 'graph' | Later;\ntype Later = 'timeline' | Last;\ntype Last = 'details';\n", { members: FOUR_VIEWS, unread: [] }],
+    ["a whole union behind one alias", "export type InspectorView = Every;\ntype Every = 'overview' | 'graph' | 'timeline' | 'details';\n", { members: FOUR_VIEWS, unread: [] }],
+  ],
+  parenthesized: [
+    ["a parenthesized union", "export type InspectorView = ('overview' | 'graph') | ('timeline' | 'details');\n", { members: FOUR_VIEWS, unread: [] }],
+    ["a parenthesized literal", "export type InspectorView = ('overview') | 'graph' | 'timeline' | 'details';\n", { members: FOUR_VIEWS, unread: [] }],
+  ],
   "other-member": [
     // a template literal type; the placeholder is split so no string literal of this file holds one
-    ["export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details' | `view-$" + "{string}`;\n", 1],
-    ["export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details' | string;\n", 1],
-    ["export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details' | 1;\n", 1],
-    ["export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details' | Views.More;\n", 1],
-    ["export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details' | More<'verdicts'>;\ntype More<T> = T;\n", 1],
-    ["export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details' | Undeclared;\n", 1],
+    ["a template literal type", `${UNION} | \`view-$` + "{string}`;\n", { members: FOUR_VIEWS, unread: ["`view-$" + `{string}\`${NO_FORM}`] }],
+    ["a keyword", `${UNION} | string;\n`, { members: FOUR_VIEWS, unread: [`string${NO_FORM}`] }],
+    ["a number literal", `${UNION} | 1;\n`, { members: FOUR_VIEWS, unread: [`1${NO_FORM}`] }],
+    ["a boolean literal", `${UNION} | true;\n`, { members: FOUR_VIEWS, unread: [`true${NO_FORM}`] }],
+    ["a qualified name", `${UNION} | Views.More;\n`, { members: FOUR_VIEWS, unread: [`Views.More${NO_FORM}`] }],
+    ["type arguments on a plain alias", `${UNION} | Every<'x'>;\ntype Every = 'verdicts';\n`, { members: FOUR_VIEWS, unread: [`Every<'x'>${NO_FORM}`] }],
+    ["type arguments on a generic alias", `${UNION} | More<'verdicts'>;\ntype More<T> = T;\n`, { members: FOUR_VIEWS, unread: [`More<'verdicts'>${NO_FORM}`] }],
+    ["an undeclared name", `${UNION} | Undeclared;\n`, { members: FOUR_VIEWS, unread: [`Undeclared${NO_ALIAS}`] }],
   ],
-  circular: [["export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details' | Loop;\ntype Loop = 'verdicts' | InspectorView;\n", 1]],
+  "other-alias": [
+    ["a generic alias", `${UNION} | More;\ntype More<T = 'verdicts'> = 'verdicts';\n`, { members: FOUR_VIEWS, unread: [`More${NO_ALIAS}`] }],
+    ["an alias declared twice", `${UNION} | A;\ntype A = 'verdicts';\ntype A = 'more';\n`, { members: FOUR_VIEWS, unread: [`A${NO_ALIAS}`] }],
+    ["an interface", `${UNION} | A;\ninterface A { readonly name: string; }\n`, { members: FOUR_VIEWS, unread: [`A${NO_ALIAS}`] }],
+  ],
+  circular: [
+    ["back to InspectorView", `${UNION} | Loop;\ntype Loop = 'verdicts' | InspectorView;\n`, { members: [...FOUR_VIEWS, "verdicts"], unread: [`InspectorView${LOOP}`] }],
+    ["between two other aliases", `${UNION} | A;\ntype A = 'verdicts' | B;\ntype B = A;\n`, { members: [...FOUR_VIEWS, "verdicts"], unread: [`A${LOOP}`] }],
+    ["back to itself", `${UNION} | A;\ntype A = 'verdicts' | A;\n`, { members: [...FOUR_VIEWS, "verdicts"], unread: [`A${LOOP}`] }],
+  ],
   declaration: [
-    ["export interface InspectorView { readonly name: string; }\n", 1],
-    ["export type InspectorView = 'overview' | 'graph' | 'timeline' | 'details';\nexport type InspectorView = 'verdicts';\n", 1],
-    ["export type Views = 'overview' | 'graph' | 'timeline' | 'details';\n", 1],
+    ["no declaration", "export type Views = 'overview' | 'graph' | 'timeline' | 'details';\n", { members: [], unread: [declaredTimes(0, 0)] }],
+    ["two aliases", `${UNION};\nexport type InspectorView = 'verdicts';\n`, { members: [], unread: [declaredTimes(2, 0)] }],
+    ["an interface alone", "export interface InspectorView { readonly name: string; }\n", { members: [], unread: [declaredTimes(0, 1)] }],
+    ["an alias beside an interface", `${UNION};\nexport interface InspectorView { readonly name: string; }\n`, { members: [], unread: [declaredTimes(1, 1)] }],
+    ["an alias beside a class", `${UNION};\nexport class InspectorView {}\n`, { members: [], unread: [declaredTimes(1, 1)] }],
+    ["an alias beside an enum", `${UNION};\nexport enum InspectorView { A }\n`, { members: [], unread: [declaredTimes(1, 1)] }],
   ],
 };
-/** One falsifier per roster form of sizeMembers: a declaration replacing the head of InspectorSize, and the members read or
- * the unread count. */
-const SIZE_FALSIFIERS: Readonly<Record<string, readonly (readonly [string, readonly string[] | number])[]>> = {
-  merged: [["export interface InspectorSize {\n  width: number;\n  rows: number;\n}\nexport interface InspectorSize {\n  ascii?: boolean;\n", ["ascii", "panes", "rows", "width"]]],
+/** A size reading with every field of every member: `<name>[?]: <type>@<interface>`. */
+const sizeView = (reading: ModuleReading<SizeMember>): { readonly members: string[]; readonly unread: readonly string[] } => ({
+  members: reading.members.map(member => `${member.name}${member.optional ? "?" : ""}: ${member.type}@${member.from}`),
+  unread: reading.unread,
+});
+const ASCII = "ascii?: boolean@InspectorSize";
+const PANES = "panes?: boolean@InspectorSize";
+const ROWS_MEMBER = "rows: number@InspectorSize";
+const WIDTH = "width: number@InspectorSize";
+const REAL_SIZE = [ASCII, PANES, ROWS_MEMBER, WIDTH];
+const VERDICT_LINE = "verdictLine?: boolean@InspectorSize";
+const sizedTimes = (interfaces: number, otherwise: number): string => `InspectorSize: declared ${interfaces} times as a top-level interface and ${otherwise} times otherwise`;
+const noInterface = (clause: string): string => `InspectorSize extends ${clause}: no interface the module declares at top level`;
+const BODY = "  width: number;\n  rows: number;\n  ascii?: boolean;\n";
+/** One falsifier per example of sizeMembers' forms: a declaration replacing the head of InspectorSize, and the whole reading. */
+const SIZE_FALSIFIERS: Falsifiers<string, { readonly members: readonly string[]; readonly unread: readonly string[] }> = {
+  merged: [
+    ["one declaration", SIZE_DECLARED, { members: REAL_SIZE, unread: [] }],
+    ["merged declarations", "export interface InspectorSize {\n  width: number;\n  rows: number;\n}\nexport interface InspectorSize {\n  ascii?: boolean;\n", { members: REAL_SIZE, unread: [] }],
+  ],
   names: [
-    ["export interface InspectorSize {\n  'width': number;\n  rows: number;\n  ascii?: boolean;\n", ["ascii", "panes", "rows", "width"]],
-    ["export interface InspectorSize {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n  0?: boolean;\n", ["0", "ascii", "panes", "rows", "width"]],
-    ["export interface InspectorSize {\n  width: number;\n  rows: number;\n  ['ascii']?: boolean;\n", ["ascii", "panes", "rows", "width"]],
-    ["export interface InspectorSize {\n  width: number;\n  rows: number;\n  [`ascii`]?: boolean;\n", ["ascii", "panes", "rows", "width"]],
+    ["an identifier", `${SIZE_DECLARED}  verdictLine?: boolean;\n`, { members: [ASCII, PANES, ROWS_MEMBER, VERDICT_LINE, WIDTH], unread: [] }],
+    ["a string", "export interface InspectorSize {\n  'width': number;\n  rows: number;\n  ascii?: boolean;\n", { members: REAL_SIZE, unread: [] }],
+    ["a number", `${SIZE_DECLARED}  0?: boolean;\n`, { members: ["0?: boolean@InspectorSize", ...REAL_SIZE], unread: [] }],
+    ["a computed string", "export interface InspectorSize {\n  width: number;\n  rows: number;\n  ['ascii']?: boolean;\n", { members: REAL_SIZE, unread: [] }],
+    ["a computed number", `${SIZE_DECLARED}  [0]?: boolean;\n`, { members: ["0?: boolean@InspectorSize", ...REAL_SIZE], unread: [] }],
+    ["a computed template literal", "export interface InspectorSize {\n  width: number;\n  rows: number;\n  [`ascii`]?: boolean;\n", { members: REAL_SIZE, unread: [] }],
   ],
-  heritage: [["interface Sized {\n  width: number;\n  rows: number;\n}\ninterface Glyphs extends Sized {\n  ascii?: boolean;\n}\nexport interface InspectorSize extends Glyphs {\n", ["ascii", "panes", "rows", "width"]]],
+  heritage: [
+    ["an extended interface", "interface Glyphs {\n  ascii?: boolean;\n}\nexport interface InspectorSize extends Glyphs {\n  width: number;\n  rows: number;\n", { members: ["ascii?: boolean@Glyphs", PANES, ROWS_MEMBER, WIDTH], unread: [] }],
+    [
+      "an interface an extended one extends",
+      "interface Sized {\n  width: number;\n  rows: number;\n}\ninterface Glyphs extends Sized {\n  ascii?: boolean;\n}\nexport interface InspectorSize extends Glyphs {\n",
+      { members: ["ascii?: boolean@Glyphs", PANES, "rows: number@Sized", "width: number@Sized"], unread: [] },
+    ],
+    [
+      "two interfaces one clause names",
+      "interface Sized {\n  width: number;\n  rows: number;\n}\ninterface Glyphs {\n  ascii?: boolean;\n}\nexport interface InspectorSize extends Sized, Glyphs {\n",
+      { members: ["ascii?: boolean@Glyphs", PANES, "rows: number@Sized", "width: number@Sized"], unread: [] },
+    ],
+    [
+      "a merged extended interface",
+      "interface Glyphs {\n  ascii?: boolean;\n}\ninterface Glyphs {\n  width: number;\n}\nexport interface InspectorSize extends Glyphs {\n  rows: number;\n",
+      { members: ["ascii?: boolean@Glyphs", PANES, ROWS_MEMBER, "width: number@Glyphs"], unread: [] },
+    ],
+    [
+      "one interface two paths reach",
+      "interface Sized {\n  width: number;\n  rows: number;\n}\ninterface Glyphs extends Sized {\n  ascii?: boolean;\n}\ninterface Tiers extends Sized {}\nexport interface InspectorSize extends Glyphs, Tiers {\n",
+      { members: ["ascii?: boolean@Glyphs", PANES, "rows: number@Sized", "width: number@Sized"], unread: [] },
+    ],
+  ],
+  fields: [
+    ["a member of InspectorSize", `${SIZE_DECLARED}  verdictLine: string;\n`, { members: [ASCII, PANES, ROWS_MEMBER, "verdictLine: string@InspectorSize", WIDTH], unread: [] }],
+    ["a member an extended interface declares", `interface Glyphs {\n  verdictLine?: 'on' | 'off';\n}\nexport interface InspectorSize extends Glyphs {\n${BODY}`, { members: [ASCII, PANES, ROWS_MEMBER, "verdictLine?: 'on' | 'off'@Glyphs", WIDTH], unread: [] }],
+    ["a member with no type written", `${SIZE_DECLARED}  verdictLine?;\n`, { members: [ASCII, PANES, ROWS_MEMBER, "verdictLine?: @InspectorSize", WIDTH], unread: [] }],
+  ],
   "member-kind": [
-    ["export interface InspectorSize {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n  verdictLine(): boolean;\n", 1],
-    ["export interface InspectorSize {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n  [option: string]: boolean | number | undefined;\n", 1],
+    ["a method", `${SIZE_DECLARED}  verdictLine(): boolean;\n`, { members: REAL_SIZE, unread: ["InspectorSize: a MethodSignature"] }],
+    ["an index signature", `${SIZE_DECLARED}  [option: string]: boolean | number | undefined;\n`, { members: REAL_SIZE, unread: ["InspectorSize: a IndexSignature"] }],
+    ["a call signature", `${SIZE_DECLARED}  (): boolean;\n`, { members: REAL_SIZE, unread: ["InspectorSize: a CallSignature"] }],
+    ["a construct signature", `${SIZE_DECLARED}  new (): InspectorSize;\n`, { members: REAL_SIZE, unread: ["InspectorSize: a ConstructSignature"] }],
+    ["a get accessor", `${SIZE_DECLARED}  get verdictLine(): boolean;\n`, { members: REAL_SIZE, unread: ["InspectorSize: a GetAccessor"] }],
+    ["a set accessor", `${SIZE_DECLARED}  set verdictLine(value: boolean);\n`, { members: REAL_SIZE, unread: ["InspectorSize: a SetAccessor"] }],
   ],
-  "member-name": [["export interface InspectorSize {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n  [Symbol.iterator]?: boolean;\n", 1]],
+  "member-name": [
+    ["a private name", `${SIZE_DECLARED}  #verdictLine?: boolean;\n`, { members: REAL_SIZE, unread: ["InspectorSize: the member name #verdictLine"] }],
+    ["a bigint literal", `${SIZE_DECLARED}  1n?: boolean;\n`, { members: REAL_SIZE, unread: ["InspectorSize: the member name 1n"] }],
+    ["another computed name", `${SIZE_DECLARED}  [Symbol.iterator]?: boolean;\n`, { members: REAL_SIZE, unread: ["InspectorSize: the member name [Symbol.iterator]"] }],
+  ],
+  "type-parameters": [
+    ["InspectorSize", `export interface InspectorSize<T = boolean> {\n${BODY}`, { members: REAL_SIZE, unread: ["InspectorSize: type parameters"] }],
+    ["an extended interface", `interface Glyphs<T = boolean> {\n  verdictLine?: boolean;\n}\nexport interface InspectorSize extends Glyphs {\n${BODY}`, { members: [ASCII, PANES, ROWS_MEMBER, "verdictLine?: boolean@Glyphs", WIDTH], unread: ["Glyphs: type parameters"] }],
+  ],
   "heritage-other": [
-    ["export interface InspectorSize extends Partial<Record<'verdictLine', boolean>> {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n", 1],
-    ["export interface InspectorSize extends Options.Verdict {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n", 1],
-    ["export interface InspectorSize extends Undeclared {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n", 1],
-    ["type Base = { verdictLine?: boolean };\nexport interface InspectorSize extends Base {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n", 1],
+    ["a type alias", `type Base = { verdictLine?: boolean };\nexport interface InspectorSize extends Base {\n${BODY}`, { members: REAL_SIZE, unread: [noInterface("Base")] }],
+    ["type arguments on a declared interface", `interface Glyphs {\n  verdictLine?: boolean;\n}\nexport interface InspectorSize extends Glyphs<boolean> {\n${BODY}`, { members: REAL_SIZE, unread: [noInterface("Glyphs<boolean>")] }],
+    ["type arguments on an undeclared name", `export interface InspectorSize extends Partial<Record<'verdictLine', boolean>> {\n${BODY}`, { members: REAL_SIZE, unread: [noInterface("Partial<Record<'verdictLine', boolean>>")] }],
+    ["a qualified name", `export interface InspectorSize extends Options.Verdict {\n${BODY}`, { members: REAL_SIZE, unread: [noInterface("Options.Verdict")] }],
+    ["an undeclared name", `export interface InspectorSize extends Undeclared {\n${BODY}`, { members: REAL_SIZE, unread: [noInterface("Undeclared")] }],
   ],
-  circular: [["interface Loop extends InspectorSize {\n  verdictLine?: boolean;\n}\nexport interface InspectorSize extends Loop {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n", 1]],
+  circular: [
+    [
+      "back to InspectorSize",
+      `interface Loop extends InspectorSize {\n  verdictLine?: boolean;\n}\nexport interface InspectorSize extends Loop {\n${BODY}`,
+      { members: [ASCII, PANES, ROWS_MEMBER, "verdictLine?: boolean@Loop", WIDTH], unread: ["Loop extends InspectorSize: an extends clause that leads back to an interface on its own path"] },
+    ],
+    [
+      "between two other interfaces",
+      `interface A extends B {\n  verdictLine?: boolean;\n}\ninterface B extends A {}\nexport interface InspectorSize extends A {\n${BODY}`,
+      { members: [ASCII, PANES, ROWS_MEMBER, "verdictLine?: boolean@A", WIDTH], unread: ["B extends A: an extends clause that leads back to an interface on its own path"] },
+    ],
+  ],
+  redeclared: [
+    ["an override in InspectorSize", `interface Glyphs {\n  ascii?: boolean;\n}\nexport interface InspectorSize extends Glyphs {\n${BODY}`, { members: ["ascii?: boolean@Glyphs", PANES, ROWS_MEMBER, WIDTH], unread: ["InspectorSize: the member ascii, declared before"] }],
+    ["a member two merged declarations repeat", `${SIZE_DECLARED}}\nexport interface InspectorSize {\n  ascii?: boolean;\n`, { members: REAL_SIZE, unread: ["InspectorSize: the member ascii, declared before"] }],
+  ],
   declaration: [
-    ["export type InspectorSize = {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n", 1],
-    ["export class InspectorSize {\n  width = 0;\n  rows = 0;\n  ascii?: boolean;\n", 1],
+    ["no declaration", `export interface InspectorSizes {\n${BODY}`, { members: [], unread: [sizedTimes(0, 0)] }],
+    ["a type alias alone", `export type InspectorSize = {\n${BODY}`, { members: [], unread: [sizedTimes(0, 1)] }],
+    ["a class alone", "export class InspectorSize {\n  width = 0;\n  rows = 0;\n  ascii?: boolean;\n", { members: [], unread: [sizedTimes(0, 1)] }],
+    ["an interface beside a class", `export class InspectorSize {}\n${SIZE_DECLARED}`, { members: [], unread: [sizedTimes(1, 1)] }],
+    ["an interface beside a type alias", `export type InspectorSize = { verdictLine?: boolean };\n${SIZE_DECLARED}`, { members: [], unread: [sizedTimes(1, 1)] }],
+    ["an interface beside an enum", `export enum InspectorSize { A }\n${SIZE_DECLARED}`, { members: [], unread: [sizedTimes(1, 1)] }],
   ],
 };
-const SIZE_DECLARED = "export interface InspectorSize {\n  width: number;\n  rows: number;\n  ascii?: boolean;\n";
-/** One falsifier per roster form of tierDraws: the draws read, or the unread count, for a module's draw options and docs/10. */
-const TIER_FALSIFIERS: Readonly<Record<string, readonly (readonly [string, string, number])[]>> = {
-  default: [[SIZE_DECLARED, DOCS10_TEXT, 54]],
-  options: [[`${SIZE_DECLARED}  verdictLine?: boolean;\n`, DOCS10_TEXT, 162]],
-  widths: [[SIZE_DECLARED, DOCS10_TEXT.replace("- >=120:", "- >=120: three panes;\n- >=160:"), 72]],
-  rows: [[SIZE_DECLARED, DOCS10_TEXT.replace("- <80 columns or <20 rows:", "- <80 columns:"), 27]],
+/** docs/10's band items as written (the real section's three bands and its resize item), the anchors of the docs plants. */
+const BAND_BELOW = "- <80 columns or <20 rows: single-column compact tree; details as subview, no side-by-side graph.\n";
+const BAND_80 = `- 80${EN_DASH}119: two-pane tree + details or timeline summary; scrollable pane cap.\n`;
+const BAND_120 = "- \\>=120: left hierarchy, center graph/timeline, right details when viable; cap width and height.\n";
+const FOURTH = "\\>=160: four panes when viable.\n";
+const docs = (old: string, replacement: string): string => once(DOCS10_TEXT, old, replacement);
+/** docs/10 with `text` inserted after the >=120 item, or at the end of the section. */
+const after120 = (text: string): string => docs(BAND_120, `${BAND_120}${text}`);
+const atEnd = (text: string): string => docs("\n## Navigation", `\n${text}\n## Navigation`);
+const NO_BANDS = DOCS10_TEXT.replace(BAND_BELOW, "").replace(BAND_80, "").replace(BAND_120, "");
+/** A bands reading: each band as `<lead>=<from>/<columns below>/<rows below>`, and what is unread. */
+const bandsView = (reading: ModuleReading<LayoutBand>): { readonly bands: string[]; readonly unread: readonly string[] } => ({
+  bands: reading.members.map(band => `${band.text.split(": ")[0] ?? ""}=${band.from ?? ""}/${band.columnsBelow ?? ""}/${band.rowsBelow ?? ""}`),
+  unread: reading.unread,
+});
+const BELOW_80 = "<80 columns or <20 rows=/80/20";
+const FROM_80 = `80${EN_DASH}119=80//`;
+const FROM_120 = ">=120=120//";
+const FROM_160 = ">=160=160//";
+const REAL_BANDS = [BELOW_80, FROM_80, FROM_120];
+const digit = (lead: string): string => `docs/10: "${lead}" holds a digit outside a band lead the reader reads`;
+const block = (kind: string): string => `docs/10: a ${kind} block in the section`;
+const HTML = "docs/10: the section carries HTML";
+/** One falsifier per example of layoutBands' forms: a docs/10 text and the whole reading. */
+const LAYOUT_FALSIFIERS: Falsifiers<string, { readonly bands: readonly string[]; readonly unread: readonly string[] }> = {
+  binding: [
+    ["the real section", DOCS10_TEXT, { bands: REAL_BANDS, unread: [] }],
+    ["a level-1 heading after its list", atEnd(`# Appendix\n\n- ${FOURTH}`), { bands: REAL_BANDS, unread: [] }],
+  ],
+  lists: [
+    ["a - item", after120(`- ${FOURTH}`), { bands: [...REAL_BANDS, FROM_160], unread: [] }],
+    ["a * item", after120(`* ${FOURTH}`), { bands: [...REAL_BANDS, FROM_160], unread: [] }],
+    ["a + item", after120(`+ ${FOURTH}`), { bands: [...REAL_BANDS, FROM_160], unread: [] }],
+    ["a 1. item", after120(`1. ${FOURTH}`), { bands: [...REAL_BANDS, FROM_160], unread: [] }],
+    ["a 1) item", after120(`1) ${FOURTH}`), { bands: [...REAL_BANDS, FROM_160], unread: [] }],
+  ],
+  bands: [
+    ["<N columns or <M rows", DOCS10_TEXT, { bands: REAL_BANDS, unread: [] }],
+    ["<N columns", docs("- <80 columns or <20 rows:", "- <80 columns:"), { bands: ["<80 columns=/80/", FROM_80, FROM_120], unread: [] }],
+    ["N to M with an en dash and N at most M", docs(`- 80${EN_DASH}119:`, `- 80${EN_DASH}80:`), { bands: [BELOW_80, `80${EN_DASH}80=80//`, FROM_120], unread: [] }],
+    [">=N", docs("- \\>=120:", "- \\>=1:"), { bands: [BELOW_80, FROM_80, ">=1=1//"], unread: [] }],
+    ["a lead in bold", docs("- \\>=120:", "- **\\>=120**:"), { bands: REAL_BANDS, unread: [] }],
+  ],
+  prose: [
+    ["the resize item alone", NO_BANDS, { bands: [], unread: [] }],
+    ["a note with a colon", after120("- Note: panes need room.\n"), { bands: REAL_BANDS, unread: [] }],
+  ],
+  refused: [
+    ["a missing heading", docs("## Layout responsiveness\n", "## Layout\n"), { bands: [], unread: ['docs/10: the rendered view has no level-2 heading "Layout responsiveness"'] }],
+    [
+      "a heading rendered twice",
+      `${DOCS10_TEXT}\n## Layout responsiveness\n\n- ${FOURTH}`,
+      { bands: [], unread: ['docs/10: the heading "Layout responsiveness" occurs 2 times in the rendered view; a pinned section needs it exactly once'] },
+    ],
+    [
+      "the heading under another parent",
+      docs("## Layout responsiveness\n", "# Part two\n\n## Layout responsiveness\n"),
+      { bands: [], unread: [`docs/10: the heading "Layout responsiveness" sits under the parent heading path ["Part two"]; the census binds it under ${JSON.stringify([DOCS10_TITLE])}`] },
+    ],
+    [
+      "a code fence hiding a heading line",
+      atEnd("```\n## Hidden\n```\n"),
+      { bands: [], unread: ['docs/10: a code block inside the section spans the heading line "## Hidden", hiding a heading boundary from the rendered view'] },
+    ],
+  ],
+  html: [
+    ["a comment", atEnd(`<!--\n- ${FOURTH}-->\n`), { bands: [], unread: [HTML] }],
+    ["a tag", docs("left hierarchy", "left <b>hierarchy</b>"), { bands: [], unread: [HTML] }],
+  ],
+  block: [
+    ["a paragraph", atEnd("Wide terminals get more panes.\n"), { bands: REAL_BANDS, unread: [block("paragraph")] }],
+    ["a code block", atEnd(`\`\`\`\n- ${FOURTH}\`\`\`\n`), { bands: REAL_BANDS, unread: [block("code")] }],
+    ["a heading", atEnd(`### Wide terminals\n\n- ${FOURTH}`), { bands: [...REAL_BANDS, FROM_160], unread: [block("heading")] }],
+    ["a blockquote", atEnd(`> - ${FOURTH}`), { bands: REAL_BANDS, unread: [block("blockquote")] }],
+    ["a table", atEnd("| Columns | Panes |\n| --- | --- |\n| 160 | four |\n"), { bands: REAL_BANDS, unread: [block("table")] }],
+  ],
+  item: [
+    ["a lead it cannot read", docs(`- 80${EN_DASH}119:`, "- 80 to 119:"), { bands: [BELOW_80, FROM_120], unread: [digit("80 to 119")] }],
+    ["a range from more to less", docs(`- 80${EN_DASH}119:`, `- 119${EN_DASH}80:`), { bands: [BELOW_80, FROM_120], unread: [digit(`119${EN_DASH}80`)] }],
+    ["a zero", docs("- <80 columns or <20 rows:", "- <0 columns or <20 rows:"), { bands: [FROM_80, FROM_120], unread: [digit("<0 columns or <20 rows")] }],
+    ["a leading zero", docs(`- 80${EN_DASH}119:`, `- 080${EN_DASH}119:`), { bands: [BELOW_80, FROM_120], unread: [digit(`080${EN_DASH}119`)] }],
+    ["a greater-than-or-equal sign", docs("- \\>=120:", `- ${String.fromCodePoint(0x2265)}120:`), { bands: [BELOW_80, FROM_80], unread: [digit(`${String.fromCodePoint(0x2265)}120`)] }],
+    ["a greater-than sign that opens a quote", docs("- \\>=120:", "- >=120:"), { bands: [BELOW_80, FROM_80], unread: [digit("=120")] }],
+    ["a band nested under another band", after120(`  - ${FOURTH}`), { bands: [BELOW_80, FROM_80], unread: [digit(">=120")] }],
+    ["a digit in a band's description", docs("- \\>=120: left hierarchy", "- \\>=120: 3 panes, left hierarchy"), { bands: [BELOW_80, FROM_80], unread: [digit(">=120")] }],
+    ["no space after the colon", docs("- \\>=120: left hierarchy", "- \\>=120:left hierarchy"), { bands: [BELOW_80, FROM_80], unread: [digit(">=120:left hierarchy, center graph/timeline, right details when viable; cap width and height.")] }],
+  ],
+};
+/** The ids tierDraws names, as a grid: every width, then every row count, then every option suffix (an independent literal). */
+const grid = (widths: readonly number[], heights: readonly number[], suffixes: readonly string[]): string[] => widths.flatMap(width => heights.flatMap(height => suffixes.map(suffix => `${width}x${height}${suffix}`)));
+/** The option suffixes of ascii and panes, the first option varying fastest. */
+const SUFFIXES = ["", "-ascii", "+ascii", "-panes", "-ascii-panes", "+ascii-panes", "+panes", "-ascii+panes", "+ascii+panes"];
+const SUFFIXES_THREE = ["", "-verdictLine", "+verdictLine"].flatMap(last => SUFFIXES.map(suffix => `${suffix}${last}`));
+const WIDTHS = [79, 80, 120];
+const HEIGHTS = [19, 40];
+const REAL_IDS = grid(WIDTHS, HEIGHTS, SUFFIXES);
+/** The size a draw's id names: its width and rows, then each option it gives. */
+function sizeOfId(id: string): Record<string, number | boolean> {
+  const found = /^(\d+)x(\d+)((?:[+-][A-Za-z]+)*)$/.exec(id);
+  const size: Record<string, number | boolean> = { width: Number(found?.[1]), rows: Number(found?.[2]) };
+  for (const option of (found?.[3] ?? "").matchAll(/([+-])([A-Za-z]+)/g)) size[option[2] ?? ""] = option[1] === "+";
+  return size;
+}
+const optionKind = (name: string): string => `${name}: a draw option that is neither an optional boolean nor a required number named width or rows`;
+const REAL_TIERS = { ids: REAL_IDS, unread: [] };
+/** One falsifier per example of tierDraws' forms: a module (a declaration in place of the head of InspectorSize, or `whole:` and
+ * a whole InspectorSize), a docs/10 text, and every draw's id with what is unread. */
+const TIER_FALSIFIERS: Falsifiers<readonly [string, string], { readonly ids: readonly string[]; readonly unread: readonly string[] }> = {
+  default: [
+    ["at 120x40", [SIZE_DECLARED, DOCS10_TEXT], REAL_TIERS],
+    ["at every width and row count", ["whole:export interface InspectorSize {\n  width: number;\n  rows: number;\n}\n", DOCS10_TEXT], { ids: grid(WIDTHS, HEIGHTS, [""]), unread: [] }],
+  ],
+  options: [
+    ["the real ascii and panes", [SIZE_DECLARED, DOCS10_TEXT], REAL_TIERS],
+    ["a third option", [`${SIZE_DECLARED}  verdictLine?: boolean;\n`, DOCS10_TEXT], { ids: grid(WIDTHS, HEIGHTS, SUFFIXES_THREE), unread: [] }],
+  ],
+  widths: [
+    ["the real three bands", [SIZE_DECLARED, DOCS10_TEXT], REAL_TIERS],
+    ["a fourth band", [SIZE_DECLARED, after120(`- ${FOURTH}`)], { ids: grid([...WIDTHS, 160], HEIGHTS, SUFFIXES), unread: [] }],
+    ["a band listed first", [SIZE_DECLARED, docs(BAND_BELOW, `- ${FOURTH}${BAND_BELOW}`)], { ids: grid([160, ...WIDTHS], HEIGHTS, SUFFIXES), unread: [] }],
+    ["two bands sharing a width", [SIZE_DECLARED, after120("- \\>=80: two panes again.\n")], REAL_TIERS],
+  ],
+  rows: [
+    ["the real row bound", [SIZE_DECLARED, DOCS10_TEXT], REAL_TIERS],
+    ["no row bound", [SIZE_DECLARED, docs("- <80 columns or <20 rows:", "- <80 columns:")], { ids: grid(WIDTHS, [ROWS_DRAWN], SUFFIXES), unread: [] }],
+    ["a row bound at the census's row count", [SIZE_DECLARED, docs("- <80 columns or <20 rows:", "- <80 columns or <41 rows:")], { ids: grid(WIDTHS, [ROWS_DRAWN], SUFFIXES), unread: [] }],
+  ],
+  ids: [["the real 54 draws", [SIZE_DECLARED, DOCS10_TEXT], REAL_TIERS]],
   "option-kind": [
-    [`${SIZE_DECLARED}  mode?: 'compact' | 'full';\n`, DOCS10_TEXT, -1],
-    [`${SIZE_DECLARED}  scale: number;\n`, DOCS10_TEXT, -1],
+    ["a union type", [`${SIZE_DECLARED}  mode?: 'compact' | 'full';\n`, DOCS10_TEXT], { ids: [], unread: [optionKind("mode")] }],
+    ["a required number of another name", [`${SIZE_DECLARED}  scale: number;\n`, DOCS10_TEXT], { ids: [], unread: [optionKind("scale")] }],
+    ["a required boolean", [`${SIZE_DECLARED}  verdictLine: boolean;\n`, DOCS10_TEXT], { ids: [], unread: [optionKind("verdictLine")] }],
+    ["a width spelled string", ["export interface InspectorSize {\n  width: string;\n  rows: number;\n  ascii?: boolean;\n", DOCS10_TEXT], { ids: [], unread: [optionKind("width")] }],
+    ["an optional width", ["export interface InspectorSize {\n  width?: number;\n  rows: number;\n  ascii?: boolean;\n", DOCS10_TEXT], { ids: [], unread: [optionKind("width")] }],
+    ["an optional rows", ["export interface InspectorSize {\n  width: number;\n  rows?: number;\n  ascii?: boolean;\n", DOCS10_TEXT], { ids: [], unread: [optionKind("rows")] }],
+    ["a boolean spelled with undefined", ["export interface InspectorSize {\n  width: number;\n  rows: number;\n  ascii?: boolean | undefined;\n", DOCS10_TEXT], { ids: [], unread: [optionKind("ascii")] }],
+  ],
+  required: [
+    ["no width", ["export interface InspectorSize {\n  rows: number;\n  ascii?: boolean;\n", DOCS10_TEXT], { ids: [], unread: ["width: no draw option the module declares"] }],
+    ["no rows", ["export interface InspectorSize {\n  width: number;\n  ascii?: boolean;\n", DOCS10_TEXT], { ids: [], unread: ["rows: no draw option the module declares"] }],
   ],
   "unread-input": [
-    [`${SIZE_DECLARED}  verdictLine(): boolean;\n`, DOCS10_TEXT, -1],
-    [SIZE_DECLARED, DOCS10_TEXT.replace(`- 80${String.fromCodePoint(0x2013)}119:`, "- 80 to 119:"), -1],
-    [SIZE_DECLARED, DOCS10_TEXT.replace("## Layout responsiveness", "## Layout"), -1],
+    ["a method member", [`${SIZE_DECLARED}  verdictLine(): boolean;\n`, DOCS10_TEXT], { ids: [], unread: ["InspectorSize: a MethodSignature"] }],
+    ["a band lead it cannot read", [SIZE_DECLARED, docs(`- 80${EN_DASH}119:`, "- 80 to 119:")], { ids: [], unread: [digit("80 to 119")] }],
+    ["a refused section", [SIZE_DECLARED, docs("## Layout responsiveness\n", "## Layout\n")], { ids: [], unread: ['docs/10: the rendered view has no level-2 heading "Layout responsiveness"', "docs/10: no band"] }],
   ],
+  "no-band": [["a section with no band item", [SIZE_DECLARED, NO_BANDS], { ids: [], unread: ["docs/10: no band"] }]],
 };
-/** The forms a roster lists, beside the falsifiers held for it: equal, so a form's falsifier cannot be dropped silently. */
-const formIds = (forms: readonly ReaderForm[]): string[] => forms.map(form => form.id);
+/** A tier reading: every draw's id (each draw's size checked against the size its id names), and what is unread. */
+function tierView([declaration, doc]: readonly [string, string]): { readonly ids: string[]; readonly unread: readonly string[]; readonly misnamed: string[] } {
+  const module = declaration.startsWith("whole:") ? sizeOnly(declaration.slice("whole:".length)) : sizeModule(declaration);
+  const reading = tierDraws(sizeMembers(module, INSPECTOR), layoutBands(doc), ROWS_DRAWN);
+  const misnamed = reading.members.filter(draw => JSON.stringify(draw.size) !== JSON.stringify(sizeOfId(draw.id))).map(draw => draw.id);
+  return { ids: reading.members.map(draw => draw.id), unread: reading.unread, misnamed };
+}
 /** The header's claim paragraph labelled `label`, its lines joined. */
 function headerClaim(label: string): string {
   const header = readFileSync(fileURLToPath(import.meta.url), "utf8").split(" */")[0] ?? "";
@@ -645,73 +1106,79 @@ function headerClaim(label: string): string {
     .slice(label.length + 1);
 }
 
-describe("the rosters: every form of every claim holds one falsifier, and every claim is restated here byte-for-byte", () => {
-  it("R14 notPlain: each plant fails closed with its form's message, and plain data passes", () => {
-    expect(Object.keys(NOT_PLAIN_FALSIFIERS), "a falsifier per form").toEqual(formIds(NOT_PLAIN_FORMS));
-    const misread = NOT_PLAIN_FORMS.flatMap(form =>
-      (NOT_PLAIN_FALSIFIERS[form.id] ?? []).flatMap(([name, value]) => {
-        const issues = notPlain(value, "plant");
-        return issues.length > 0 && issues.every(issue => formOf(issue) === form.message) ? [] : [`${form.id} ${name}: ${issues.join("; ")}`];
-      }),
-    );
-    expect(misread, "every plant reads as its form").toEqual([]);
-    const nested = (value: unknown, depth: number): unknown => (depth === 0 ? value : depth % 2 === 0 ? { nested: nested(value, depth - 1) } : [nested(value, depth - 1)]);
-    expect(notPlain(nested(new Map([["verdict", "FALSE"]]), 64), "plant").length, "a plant 64 levels down").toBe(1);
+describe("the rosters: every example of every claim form holds one falsifier, and every claim is restated here byte-for-byte", () => {
+  it("R14 notPlain: each plant reads as its form, plain data passes, and the stack bounds the walk", () => {
+    expect([heldFor(NOT_PLAIN_WALK_FALSIFIERS), heldFor(NOT_PLAIN_FALSIFIERS), heldFor(NOT_PLAIN_PASS_FALSIFIERS)], "a falsifier per example").toEqual([examplesOf(NOT_PLAIN_WALK), examplesOf(NOT_PLAIN_FORMS), examplesOf(NOT_PLAIN_PASS)]);
+    const read = (value: unknown): string[] => notPlain(value, "plant");
+    expect([...misreadings("R14", NOT_PLAIN_WALK_FALSIFIERS, read), ...misreadings("R14", NOT_PLAIN_FALSIFIERS, read), ...misreadings("R14", NOT_PLAIN_PASS_FALSIFIERS, read)], "every falsifier reads as it pins").toEqual([]);
+    const messages = NOT_PLAIN_FORMS.flatMap(form => (NOT_PLAIN_FALSIFIERS[form.id] ?? []).flatMap(([example, value]) => read(value).flatMap(issue => (formOf(issue) === form.message ? [] : [`${form.id}/${example}: ${issue}`]))));
+    expect(messages, "each fail-closed plant fails with its own form's message only").toEqual([]);
     let deep: unknown = "x";
     for (let level = 0; level < 200_000; level++) deep = [deep];
     expect(() => notPlain(deep, "plant"), "a value nested deeper than the stack throws").toThrow(RangeError);
-    const bare = Object.assign(Object.create(null) as Record<string, string>, { text: "z" });
-    expect(notPlain({ text: "x", count: 1, flag: true, none: null, list: [{ nested: ["y"] }], bare, deep: nested("x", 64) }, "plant"), "plain data passes").toEqual([]);
     expect(headerClaim("R14 CLAIM:"), "the header restates R14's claim").toBe(R14_CLAIM);
     ROSTER_RAN.add("R14");
   });
-  it("READINGS stringsOf: each form's value reads exactly its strings", () => {
-    expect(Object.keys(STRINGS_FALSIFIERS), "a falsifier per form").toEqual(formIds(STRINGS_FORMS));
-    expect(Object.fromEntries(Object.entries(STRINGS_FALSIFIERS).map(([id, [value]]) => [id, stringsOf(value)])), "each form's readings").toEqual(Object.fromEntries(Object.entries(STRINGS_FALSIFIERS).map(([id, [, read]]) => [id, read])));
-    expect([1, true, null, undefined].map(stringsOf), "what reads as nothing").toEqual([[], [], [], []]);
+  it("READINGS stringsOf: each form's value reads exactly its strings, the unread read nothing, and notPlain guards them", () => {
+    expect([heldFor(STRINGS_FALSIFIERS), heldFor(STRINGS_UNREAD_FALSIFIERS), heldFor(STRINGS_GUARDED_FALSIFIERS)], "a falsifier per example").toEqual([examplesOf(STRINGS_FORMS), examplesOf(STRINGS_UNREAD_FORMS), examplesOf(STRINGS_GUARDED)]);
+    expect([...misreadings("READINGS", STRINGS_FALSIFIERS, stringsOf), ...misreadings("READINGS", STRINGS_UNREAD_FALSIFIERS, stringsOf)], "every falsifier reads as it pins").toEqual([]);
+    expect(misreadings("READINGS", STRINGS_GUARDED_FALSIFIERS, value => notPlain({ v: value }, "plant")), "notPlain fails closed on each").toEqual([]);
+    const unreadExamples = STRINGS_UNREAD_FORMS.flatMap(form => form.examples);
+    expect(STRINGS_GUARDED.flatMap(form => form.examples.filter(example => !unreadExamples.includes(example))), "each guarded example is one stringsOf leaves unread").toEqual([]);
+    expect((STRINGS_GUARDED_FALSIFIERS.guarded ?? []).filter(([, value]) => stringsOf(value).length > 0).map(([example]) => example), "and each guarded value reads as nothing").toEqual([]);
     expect(headerClaim("READINGS CLAIM:"), "the header restates the claim").toBe(STRINGS_CLAIM);
     ROSTER_RAN.add("READINGS");
   });
   it("VIEWS declaredViews: each form is read, or fails closed", () => {
-    expect(Object.keys(VIEWS_FALSIFIERS), "a falsifier per form").toEqual(formIds([...VIEWS_FORMS, ...VIEWS_UNREAD_FORMS]));
-    const misread = Object.entries(VIEWS_FALSIFIERS).flatMap(([id, plants]) =>
-      plants.flatMap(([declaration, expected]) => {
-        const reading = declaredViews(viewsModule(declaration), INSPECTOR);
-        const ok = typeof expected === "number" ? reading.unread.length === expected : reading.unread.length === 0 && JSON.stringify(reading.members) === JSON.stringify(expected);
-        return ok ? [] : [`${id}: ${JSON.stringify(reading)}`];
-      }),
-    );
-    expect(misread, "every falsifier reads as its form").toEqual([]);
+    expect(heldFor(VIEWS_FALSIFIERS), "a falsifier per example").toEqual(examplesOf([...VIEWS_FORMS, ...VIEWS_UNREAD_FORMS]));
+    expect(misreadings("VIEWS", VIEWS_FALSIFIERS, declaration => declaredViews(viewsModule(declaration), INSPECTOR)), "every falsifier reads as it pins").toEqual([]);
     expect(headerClaim("VIEWS CLAIM:"), "the header restates the claim").toBe(VIEWS_CLAIM);
     ROSTER_RAN.add("VIEWS");
   });
-  it("SIZE sizeMembers: each form is read, or fails closed", () => {
-    expect(Object.keys(SIZE_FALSIFIERS), "a falsifier per form").toEqual(formIds([...SIZE_FORMS, ...SIZE_UNREAD_FORMS]));
-    const misread = Object.entries(SIZE_FALSIFIERS).flatMap(([id, plants]) =>
-      plants.flatMap(([declaration, expected]) => {
-        const reading = sizeMembers(sizeModule(declaration), INSPECTOR);
-        const ok = typeof expected === "number" ? reading.unread.length === expected : reading.unread.length === 0 && JSON.stringify(names(reading)) === JSON.stringify(expected);
-        return ok ? [] : [`${id}: ${JSON.stringify(reading)}`];
-      }),
-    );
-    expect(misread, "every falsifier reads as its form").toEqual([]);
+  it("SIZE sizeMembers: each form is read with all four fields of every member, or fails closed", () => {
+    expect(heldFor(SIZE_FALSIFIERS), "a falsifier per example").toEqual(examplesOf([...SIZE_FORMS, ...SIZE_UNREAD_FORMS]));
+    expect(misreadings("SIZE", SIZE_FALSIFIERS, declaration => sizeView(sizeMembers(sizeModule(declaration), INSPECTOR))), "every falsifier reads as it pins").toEqual([]);
     expect(headerClaim("SIZE CLAIM:"), "the header restates the claim").toBe(SIZE_CLAIM);
     ROSTER_RAN.add("SIZE");
   });
-  it("TIERS tierDraws: each form is drawn, or fails closed", () => {
-    expect(Object.keys(TIER_FALSIFIERS), "a falsifier per form").toEqual(formIds([...TIER_FORMS, ...TIER_UNREAD_FORMS]));
-    const misread = Object.entries(TIER_FALSIFIERS).flatMap(([id, plants]) =>
-      plants.flatMap(([declaration, doc, expected]) => {
-        const reading = tierDraws(sizeMembers(sizeModule(declaration), INSPECTOR), layoutBands(doc), ROWS_DRAWN);
-        const ids = reading.members.map(draw => draw.id);
-        const ok = expected === -1 ? reading.unread.length > 0 && ids.length === 0 : reading.unread.length === 0 && ids.length === expected && ids.includes("120x40");
-        return ok ? [] : [`${id}: ${JSON.stringify({ ids: ids.length, unread: reading.unread })}`];
-      }),
-    );
-    expect(misread, "every falsifier draws as its form").toEqual([]);
+  it("LAYOUT layoutBands: each form is read through the rendered binding, or fails closed", () => {
+    expect(heldFor(LAYOUT_FALSIFIERS), "a falsifier per example").toEqual(examplesOf([...LAYOUT_FORMS, ...LAYOUT_UNREAD_FORMS]));
+    expect(misreadings("LAYOUT", LAYOUT_FALSIFIERS, doc => bandsView(layoutBands(doc))), "every falsifier reads as it pins").toEqual([]);
+    expect(headerClaim("LAYOUT CLAIM:"), "the header restates the claim").toBe(LAYOUT_CLAIM);
+    ROSTER_RAN.add("LAYOUT");
+  });
+  it("TIERS tierDraws: each form is drawn, every draw at the size its id names, or fails closed", () => {
+    expect(heldFor(TIER_FALSIFIERS), "a falsifier per example").toEqual(examplesOf([...TIER_FORMS, ...TIER_UNREAD_FORMS]));
+    expect(misreadings("TIERS", TIER_FALSIFIERS, input => {
+        const { ids, unread } = tierView(input);
+        return { ids, unread };
+      }), "every falsifier draws as it pins").toEqual([]);
+    expect(Object.values(TIER_FALSIFIERS).flatMap(plants => plants.flatMap(([example, input]) => tierView(input).misnamed.map(id => `${example}: ${id}`))), "every draw is at the size its id names").toEqual([]);
     expect(CURED_DRAWS().members.find(draw => draw.id === "120x40")?.size, "the default draw gives no option").toEqual({ width: 120, rows: 40 });
     expect(headerClaim("TIER CLAIM:"), "the header restates the claim").toBe(TIER_CLAIM);
     ROSTER_RAN.add("TIERS");
+  });
+});
+
+describe("the residuals", () => {
+  it("R-UNLISTED quiet row: a proxy is read only through what reflection reports, and both claims name it", () => {
+    expect(UNLISTED_RESIDUAL, "the quiet page's literal residual name and reader boundary").toBe("a proxy that reports another prototype, or answers or hides a key, is R-UNLISTED, a named residual whose quiet row is the readers census's case 'R-UNLISTED quiet row'");
+    expect([R14_CLAIM.includes(UNLISTED_RESIDUAL), STRINGS_CLAIM.includes(UNLISTED_RESIDUAL)], "the quiet page: both claims name R-UNLISTED").toEqual([true, true]);
+    const reportsPlain = new Proxy(map(), { getPrototypeOf: () => Object.prototype });
+    const hidesKey = new Proxy({ verdict: "FALSE" }, { ownKeys: () => [] });
+    const answersKey = new Proxy({}, { get: () => "FALSE" });
+    const answersOther = new Proxy({ verdict: "TRUE" }, { get: () => "FALSE" });
+    const read = (value: object): readonly [string[], string[]] => [notPlain(value, "plant"), stringsOf(value)];
+    expect([read(reportsPlain), read(hidesKey), read(answersKey), read(answersOther)], "each proxy's readings (notPlain, stringsOf), as measured").toEqual([
+      [[], []],
+      [[], []],
+      [[], []],
+      [[], ["verdict", "FALSE"]],
+    ]);
+    expect([read(map()), read({ verdict: "FALSE" })], "the twins: the same values without a proxy").toEqual([
+      [["plant: no plain object"], []],
+      [[], ["verdict", "FALSE"]],
+    ]);
   });
 });
 
@@ -734,7 +1201,7 @@ describe("the real tree", () => {
       ["ascii", "panes", "rows", "width"],
     ]);
   });
-  it("docs/10's Layout responsiveness states three bands: one below 80 columns or 20 rows, one from 80 and one from 120", () => {
+  it("docs/10's rendered Layout responsiveness states three bands: one below 80 columns or 20 rows, one from 80 and one from 120", () => {
     const bands = layoutBands(DOCS10_TEXT);
     expect([bands.members.map(band => [band.from, band.columnsBelow, band.rowsBelow]), bands.unread], "the bands").toEqual([
       [
@@ -744,7 +1211,7 @@ describe("the real tree", () => {
       ],
       [],
     ]);
-    expect(bands.members.map(band => band.text.slice(2).split(":")[0]), "each band's lead").toEqual(["<80 columns or <20 rows", `80${String.fromCodePoint(0x2013)}119`, ">=120"]);
+    expect(bands.members.map(band => band.text.split(": ")[0]), "each band's rendered lead").toEqual(["<80 columns or <20 rows", `80${EN_DASH}119`, ">=120"]);
   });
   it("today's surfaces read clean under the cure: the topology passes notPlain, and its keys are read", () => {
     const topology = topologyOf();
@@ -754,12 +1221,42 @@ describe("the real tree", () => {
   });
 });
 
+/** Refusal #1's unmet items and riders, each with the falsifiers that cure it by name (`<roster>/<form id>/<example>`). */
+const CURES: readonly (readonly [string, readonly string[]])[] = [
+  ["U1", ["R14/object-keys/length"]],
+  ["U2", ["READINGS/array-key/01", "READINGS/array-key/4294967295"]],
+  ["U3", ["VIEWS/other-alias/a generic alias", "VIEWS/other-member/type arguments on a plain alias", "VIEWS/declaration/an alias beside an interface"]],
+  ["U4", ["SIZE/declaration/an interface beside a class", "SIZE/heritage-other/type arguments on a declared interface", "SIZE/names/a computed number"]],
+  ["U5", ["TIERS/option-kind/a required boolean", "TIERS/option-kind/a width spelled string", "TIERS/option-kind/an optional width", "TIERS/no-band/a section with no band item"]],
+  ["U6", ["LAYOUT/lists/a * item", "LAYOUT/lists/a 1. item"]],
+  ["U7", ["LAYOUT/binding/a level-1 heading after its list", "LAYOUT/html/a comment", "LAYOUT/block/a code block", "LAYOUT/refused/a heading rendered twice"]],
+  ["F1", ["SIZE/type-parameters/an extended interface"]],
+  ["F2", ["TIERS/required/no rows"]],
+  ["F3", ["SIZE/fields/a member an extended interface declares"]],
+];
+/** Every example of every roster form, as `<roster>/<form id>/<example>`. */
+const ROSTERS: readonly (readonly [string, readonly ReaderForm[]])[] = [
+  ["R14", [...NOT_PLAIN_WALK, ...NOT_PLAIN_FORMS, ...NOT_PLAIN_PASS]],
+  ["READINGS", [...STRINGS_FORMS, ...STRINGS_UNREAD_FORMS, ...STRINGS_GUARDED]],
+  ["VIEWS", [...VIEWS_FORMS, ...VIEWS_UNREAD_FORMS]],
+  ["SIZE", [...SIZE_FORMS, ...SIZE_UNREAD_FORMS]],
+  ["LAYOUT", [...LAYOUT_FORMS, ...LAYOUT_UNREAD_FORMS]],
+  ["TIERS", [...TIER_FORMS, ...TIER_UNREAD_FORMS]],
+];
+
 describe("records", () => {
   it("every pin ran to its witness", () => {
     expect([...WITNESSED.keys()].sort()).toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort());
     expect(Object.fromEntries(WITNESSED)).toEqual(Object.fromEntries(Object.entries(WITNESS).map(([pin, witness]) => [pin, witness])));
   });
   it("every roster ran its falsifiers", () => {
-    expect([...ROSTER_RAN].sort()).toEqual(["R14", "READINGS", "SIZE", "TIERS", "VIEWS"]);
+    expect([...ROSTER_RAN].sort()).toEqual(["LAYOUT", "R14", "READINGS", "SIZE", "TIERS", "VIEWS"]);
+  });
+  it("every example of every roster form ran its falsifier", () => {
+    expect([...FALSIFIED].sort()).toEqual(ROSTERS.flatMap(([roster, forms]) => forms.flatMap(form => form.examples.map(example => `${roster}/${form.id}/${example}`))).sort());
+  });
+  it("every refusal-#1 cure ran", () => {
+    expect(CURES.flatMap(([item, cures]) => cures.filter(cure => !FALSIFIED.has(cure)).map(cure => `${item}: ${cure}`))).toEqual([]);
+    expect(CURES.map(([item]) => item)).toEqual(["U1", "U2", "U3", "U4", "U5", "U6", "U7", "F1", "F2", "F3"]);
   });
 });
