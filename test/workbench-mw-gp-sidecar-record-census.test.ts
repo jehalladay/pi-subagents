@@ -14,8 +14,8 @@
  * first one.
  *
  * MEASURED (read-only, by the cutting seats: cut #1 at trunk df37dac and cut #2 = respin 1 at e81d2b0 on 2026-10-28, cut #3 =
- * respin 2 at b3d410f and cut #4 = respin 3 at 1ad30c3 on 2026-10-29). Pi: git's src listing holds 116 files at df37dac and
- * 117 at e81d2b0, at b3d410f and at 1ad30c3, and
+ * respin 2 at b3d410f and cut #4 = respin 3 at 1ad30c3 on 2026-10-29, and the follow-up cut of wb-27pe at cdf5484 on
+ * 2026-10-30). Pi: git's src listing holds 116 files at df37dac and 117 at e81d2b0, at b3d410f, at 1ad30c3 and at cdf5484, and
  * none names a word of the vocabulary below, in its path or its text; git grep -i over docs/ finds none of them either, so the
  * filing's "absence of any ... doc" still holds. "sidecar" is read as one word: its separator-tolerant spelling side car
  * reads src/workbench/designer.ts:308 ("one side carries"), a Pi word with another meaning. Producer (the local
@@ -163,15 +163,26 @@
  * the action item's two " vs " cuts, so no member merges two actions), R-FIELD-RUN (Q9: which contiguous run of its phrase
  * a field name takes - G-REN-FP, featureProjection named projection, and S-FIELD-HASH, snapshotHash named hash, each a
  * one-part name that leaves the vocabulary; behaviorLogProbability named logProbability; support named legalSupport, a
- * two-part name that joins it - and its contrast, a name whose parts are no run, reds runs), R-PIN-PARTITION (Q10: a pin
- * merged into its sibling, its quote re-homed there - C6A2, C6B2, C6C3, C6D2 and C6S1 - and its contrast, the same merge
- * with the sibling's quote left in place, reds that row's tiling) and R-UNREAD (Q11: an edit of a model part no reading
+ * two-part name that joins it - and its contrast, a name whose parts are no run, reds runs), R-PIN-PARTITION (Q10: where a
+ * label is cut into pins - tiling reads that a row's quotes, in order, tile its label, never where its cuts fall - in four
+ * kinds, each over every tiled row (A-D and S): a pin merged into its sibling, its quote re-homed there - C6A2, C6B2, C6C3,
+ * C6D2 and C6S1 - and its contrast, the same merge with the sibling's quote left in place; the cut between two sibling pins
+ * moved over one word, the second quote's first word re-homed at the end of the first - G6-PIN-BOUNDARY-A (A1/A2),
+ * S-PIN-BOUNDARY-B (B1/B2), S-PIN-BOUNDARY-C (C1/C2), S-PIN-BOUNDARY-D (D1/D2) and S-PIN-BOUNDARY-S (S2/S3) - and its
+ * contrast, the same move with the word kept in its old quote as well; a pin cut in two at its quote's last space, a new pin
+ * after it taking the last word - S-PIN-SPLIT-A (A3 and A4), S-PIN-SPLIT-B (B2 and B3), S-PIN-SPLIT-C (C3 and C4),
+ * S-PIN-SPLIT-D (D2 and D3) and S-PIN-SPLIT-S (S3 and S4) - and its contrast, the same cut with the pin's quote kept whole;
+ * and the label's separator after a row's first pin taken into that pin's quote - S-PIN-SEPARATOR-A, S-PIN-SEPARATOR-B,
+ * S-PIN-SEPARATOR-C, S-PIN-SEPARATOR-D and S-PIN-SEPARATOR-S - and its contrast, the separator taken in twice; each contrast
+ * reds that row's tiling) and R-UNREAD (Q11: an edit of a model part no reading
  * takes - S-DECISION-FIELD-RENAME, the decision's second field named choice; C6Q, row Q removed whole with every residual
  * member; C6Q4, pin Q4 with its quote and members; C6-labelQ, row Q's label reworded; C6-quoteQ, Q3's quote reworded;
  * C6-member, Q1's first member removed; S-PRODUCER-PHRASE, a phrase cut from P3's text; PL-blob, P5's blob id). Each
  * member of Q8-Q11 is an edit of the anchor model (OUTSIDE ANCHORS): its quiet row asserts that the edit changes the model,
  * that it reds no reading the census's own model holds, and that its contrast reds the reading named wherever the
- * census's own model holds that reading.
+ * census's own model holds that reading; its witness carries what each member's contrast is measured to red, never the
+ * reading's declared name alone, and the row first judges that contrast check on two planted members of its own, a dead
+ * contrast the check must name and a live one it must pass.
  * OUTSIDE THE CLAIM: value shapes beyond presence, the two domains and the decision's chosen list (Q1, Q3); cross-field
  * consistency (Q4); a departure on a record no control holds (Q7); the final feedback status's closed set and any reward
  * (R9 = wb-e66.4); the selector's naming and its log-probability rules (R3 = wb-e66.2) and the support's legality (R2 =
@@ -181,8 +192,9 @@
  * so nothing reds; the gate's marker rule guards it).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and the shape of every table
  * as literals (READINGS, the BOUND table as `${member}:${reading}` and each anchor-model family's contrast readings among
- * them); the judged set (every row's id, label and pins, every pin's quote, witness and assertion count, the residual
- * members, each mutant's declared checks, every registered test title) is held to the out-of-file roster
+ * them); the judged set (every row's id, label and pins, every pin's quote, witness and assertion count, the assertion count
+ * each of the three other judged cases ends on, the residual members, each mutant's declared checks, every registered test
+ * title) is held to the out-of-file roster
  * test/fixtures/mw-gp-sidecar-record-roster.json (equal both ways, keys in order), and the records to the schema fixture
  * test/fixtures/mw-gp-sidecar-record-schema.json.
  * OUTSIDE ANCHORS (their own registered case; exactly what it reads). The anchor model (AnchorModel; LIVE is the census's
@@ -193,8 +205,8 @@
  * and its roster, except join and runs, which read its fields against the item texts the items reading holds to the title.
  * The files: the bead's own row in the tracker export (.beads/issues.jsonl), read through its title and its notes (the owner
  * filing's first "Acceptance shape: " sentence, split into its four clauses, and the producer pin and line citations
- * wherever the notes carry them), wb-4ap.16's row there, and git's src listing. title (the title opens with the requirement
- * id and the merge note and ends in a period); statement (the title's statement is row S's label); clauses (the four
+ * wherever the notes carry them), wb-4ap.16's row there, and git's src listing. title (the title is the requirement id, the
+ * merge note and row S's label, then a period); statement (the title's statement is row S's label); clauses (the four
  * acceptance clauses are the labels of rows A, B, C and D, in order); tiling A, tiling B, tiling C, tiling D and tiling S (the
  * row's pin quotes, in order, tile its label with nothing but separators); items (the title's nine items are the model's
  * items, in order); join (each item is joined by its fields' phrases, one connector between each two); runs (each field
@@ -206,10 +218,13 @@
  * after an @); lines cited (the notes cite P1, P2 and P4 as file:line and P3 by its line); src (git's src listing, read as
  * the src reading reads its words, names no word of the model's vocabulary unregistered). BOUND: each BOUND member is an
  * edit of the anchor model, named for the coordinated census-and-roster edit it stands for, and the case asserts that each
- * reds the reading the BOUND table names beside it; every reading is red under at least one member.
+ * reds the reading the BOUND table names beside it; every reading is red under at least one member. G6-merge-trunc, the
+ * merge note cut to its first six characters, is among them: the title reading holds the merge note whole, never as a
+ * prefix of the title.
  * So the readings hold by equality the labels of rows A-D and S, the requirement id and the merge note, the items' texts,
  * ACTIONS, ADMITTED, the codes, the codes bead and its note pin, STATUSES, the record noun and the vocabulary's spellings;
- * each pin quote's text once the row's split into pins is given; that each item is joined by its fields' phrases, that each
+ * each pin quote's text once the row's split into pins - where each of its quotes starts and ends in the label, separators
+ * included - is given; that each item is joined by its fields' phrases, that each
  * field name is a contiguous run of its phrase's words and that clause B's three words are three distinct fields; the
  * producer pin's first twelve characters, the files and lines of P1, P2 and P4 and P3's line; and git's src listing against
  * the vocabulary. They do not read how an item is cut into fields (R-FIELD-PARTITION), which run of its phrase a field name
@@ -226,17 +241,23 @@
  * action (actions), or merging one into a sibling field (action fields); removing or rewording a code (codes) or a status
  * (statuses); rewording the record noun (noun), or dropping it from the vocabulary (vocabulary); removing one of rows A-D,
  * or rewording a word of its label (clauses); removing row S (statement); removing one of rows A-D's or S's pins together
- * with its quote, or rewording a pin quote (that row's tiling). How an item is cut into fields is not among them: a field
- * merged into a sibling with its phrase re-homed there, or an item cut at a connector its phrase holds, keeps every reading
- * (R-FIELD-PARTITION, Q8), as do the other model edits Q9-Q11 name.
+ * with its quote, or rewording a pin quote - a word of it changed, added or dropped while its sibling quotes stay (that
+ * row's tiling). How an item is cut into fields is not among them: a field merged into a sibling with its phrase re-homed
+ * there, or an item cut at a connector its phrase holds, keeps every reading (R-FIELD-PARTITION, Q8); nor is where a label
+ * is cut into pins: a merge, a moved cut, a split or a separator taken into a quote keeps every reading (R-PIN-PARTITION,
+ * Q10); and so do the other model edits Q9 and Q11 name.
  * NOT CLAIMED (limits of this file's own literals, not reading modes: no source outside the census and its roster names
  * them; each measured surviving): a pin's case replaced by another passing case with the roster re-measured to it; a
  * mutant, a value-list entry with its controls, or a base removed from its table, the frozen literals and the roster; a
- * residual member removed from its table, the frozen literal and the roster; and a row or pin id renamed everywhere it
+ * residual member removed from its table, the frozen literal and the roster; a BOUND member removed from the BOUND table,
+ * its frozen literal and the roster's count of the outside-anchor case, where another member still reds the same reading
+ * (S-ACTION-REWORD beside S-ACTION-DROP: every reading stays red under one); and a row or pin id renamed everywhere it
  * appears.
  * The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it), REACHED
- * (every pin reached its witness compare, and each compare's own result) and ASSERTED (each pin's case made the assertion
- * count the roster pins, its witness compare included).
+ * (every pin reached its witness compare, and each compare's own result), ASSERTED (each pin's case made the assertion
+ * count the roster pins, its witness compare included) and ENDED (each of the three other judged cases - rule 16, the
+ * mutant battery and the outside anchors - reached its last statement having made the assertion count the roster pins,
+ * so a return before a later read, or a read removed, inside one of them reds).
  *
  * Display paths added: none. Test-only: no src change, no sidecar module, schema, validator or seam in src.
  */
@@ -1076,13 +1097,17 @@ function quietRow(id: string): Json {
   if (models !== undefined) {
     expect(models.length, `${id} has members`).toBeGreaterThan(0);
     const held = failing(LIVE);
+    expect(
+      deadContrasts([DEAD_CONTRAST, LIVE_CONTRAST], held),
+      `${id}: the contrast check names the planted dead contrast and passes its live twin, where the census's own model holds ${PROBE_READING}`,
+    ).toEqual(held.includes(PROBE_READING) ? [] : [DEAD_CONTRAST.id]);
     const judged = models.map(member => {
       const edited = member.edit(LIVE);
       return {
         id: member.id,
         changed: !isDeepStrictEqual(edited, LIVE),
         reds: failing(edited).filter(reading => !held.includes(reading)),
-        contrast: member.contrast === undefined ? [] : failing(member.contrast.edit(LIVE)),
+        contrast: contrastReds(member, held),
       };
     });
     expect(
@@ -1093,13 +1118,10 @@ function quietRow(id: string): Json {
       judged.filter(entry => entry.reds.length > 0).map(entry => `${entry.id}: ${entry.reds.join(", ")}`),
       `${id}: no member reds an outside reading the census's own model holds`,
     ).toEqual([]);
-    expect(
-      models.filter((member, index) => member.contrast !== undefined && !held.includes(member.contrast.reds) && !(judged[index]?.contrast ?? []).includes(member.contrast.reds)).map(member => member.id),
-      `${id}: each member's contrast reds the reading it names, where the census's own model holds that reading`,
-    ).toEqual([]);
+    expect(deadContrasts(models, held), `${id}: each member's contrast reds the reading it names, where the census's own model holds that reading`).toEqual([]);
     return {
       members: models.map(member => member.id),
-      readings: models.map((member, index) => `${member.id}: reds ${judged[index]?.reds.join(", ") || "no reading"}${member.contrast === undefined ? "" : `; its contrast reds ${member.contrast.reds}`}`),
+      readings: judged.map(entry => `${entry.id}: reds ${entry.reds.join(", ") || "no reading"}${entry.contrast === undefined ? "" : `; its contrast reds ${entry.contrast.join(", ") || "no reading"}`}`),
     };
   }
   const texts = SRC_RESIDUALS[id] ?? [];
@@ -1181,6 +1203,8 @@ interface Roster {
   readonly quotes: Readonly<Record<string, string>>;
   readonly witnesses: Readonly<Record<string, Json>>;
   readonly asserted: readonly string[];
+  /** The assertion count each of the three other judged cases ends on, in run order. */
+  readonly ended: readonly string[];
   readonly residuals: Readonly<Record<string, readonly string[]>>;
   readonly mutants: Readonly<Record<string, readonly string[]>>;
   readonly tests: readonly string[];
@@ -1317,7 +1341,7 @@ function anchorReadings(model: AnchorModel): Readonly<Record<AnchorReading, bool
   const cite = (id: string): string => `${line(id)?.path.split("/").pop() ?? "-"}:${line(id)?.line ?? "-"}`;
   const three = actionWords.slice(0, 3);
   return {
-    title: title.startsWith(`[${model.requirement}] ${model.mergeNote}`) && title.endsWith("."),
+    title: title === `[${model.requirement}] ${model.mergeNote}${model.rows.find(entry => entry.id === "S")?.label ?? ""}.`,
     statement: model.rows.find(entry => entry.label === statement)?.id === "S",
     clauses: isDeepStrictEqual(
       clauses.map(clause => model.rows.find(entry => entry.label === clause)?.id ?? "-"),
@@ -1369,6 +1393,23 @@ function pinRemoved(model: AnchorModel, id: string, pin: string): AnchorModel {
 }
 /** Pin `from` of a row merged into its sibling `into`, whose quote becomes `quote`. */
 const pinMerged = (model: AnchorModel, id: string, into: string, from: string, quote: string): AnchorModel => quoted(pinRemoved(model, id, from), into, quote);
+/** The cut between sibling pins `left` and `right` moved over one word: right's first word re-homed at the end of left's quote, after the label's `gap` between them (kept: the word left in right's quote as well, the contrast). */
+function cutMoved(model: AnchorModel, left: string, right: string, gap: string, kept = false): AnchorModel {
+  const quote = model.quotes[right] ?? "";
+  const space = quote.indexOf(" ");
+  const moved = quoted(model, left, `${model.quotes[left] ?? ""}${gap}${space < 0 ? quote : quote.slice(0, space)}`);
+  return kept ? moved : quoted(moved, right, space < 0 ? "" : quote.slice(space + 1));
+}
+/** Pin `pin` of row `id` cut in two at its quote's last space, a new pin `added` after it taking the last word (kept: the pin's quote left whole, the contrast); a quote with no space is left uncut. */
+function pinCut(model: AnchorModel, id: string, pin: string, added: string, kept = false): AnchorModel {
+  const quote = model.quotes[pin] ?? "";
+  const space = quote.lastIndexOf(" ");
+  if (space < 0) return model;
+  const rows = model.rows.map(row => (row.id === id ? { ...row, pins: row.pins.flatMap(entry => (entry === pin ? [pin, added] : [entry])) } : row));
+  return { ...model, rows, quotes: { ...model.quotes, [pin]: kept ? quote : quote.slice(0, space), [added]: quote.slice(space + 1) } };
+}
+/** The label's separator after pin `pin` taken into the end of that pin's quote (twice: the separator taken in twice, the contrast). */
+const separatorTaken = (model: AnchorModel, pin: string, separator: string, twice = false): AnchorModel => quoted(model, pin, `${model.quotes[pin] ?? ""}${separator}${twice ? separator : ""}`);
 /** The vocabulary composed from a record noun and the items' fields. */
 const composedVocabulary = (noun: string, items: readonly Item[]): string[] => [
   noun,
@@ -1485,6 +1526,81 @@ const MODEL_RESIDUALS: Readonly<Record<string, readonly ModelMember[]>> = {
       edit: model => pinMerged(model, "S", "S2", "S1", `${model.quotes.S1 ?? ""}; ${model.quotes.S2 ?? ""}`),
       contrast: { edit: model => pinMerged(model, "S", "S2", "S1", model.quotes.S2 ?? ""), reds: "tiling S" },
     },
+    {
+      id: "G6-PIN-BOUNDARY-A: the A1/A2 cut moved over one word, A2's first word re-homed at the end of A1",
+      edit: model => cutMoved(model, "A1", "A2", " "),
+      contrast: { edit: model => cutMoved(model, "A1", "A2", " ", true), reds: "tiling A" },
+    },
+    {
+      id: "S-PIN-BOUNDARY-B: the B1/B2 cut moved over one word, B2's first word re-homed at the end of B1",
+      edit: model => cutMoved(model, "B1", "B2", " ("),
+      contrast: { edit: model => cutMoved(model, "B1", "B2", " (", true), reds: "tiling B" },
+    },
+    {
+      id: "S-PIN-BOUNDARY-C: the C1/C2 cut moved over one word, C2's first word re-homed at the end of C1",
+      edit: model => cutMoved(model, "C1", "C2", " "),
+      contrast: { edit: model => cutMoved(model, "C1", "C2", " ", true), reds: "tiling C" },
+    },
+    {
+      id: "S-PIN-BOUNDARY-D: the D1/D2 cut moved over one word, D2's first word re-homed at the end of D1",
+      edit: model => cutMoved(model, "D1", "D2", ", "),
+      contrast: { edit: model => cutMoved(model, "D1", "D2", ", ", true), reds: "tiling D" },
+    },
+    {
+      id: "S-PIN-BOUNDARY-S: the S2/S3 cut moved over one word, S3's first word re-homed at the end of S2",
+      edit: model => cutMoved(model, "S2", "S3", ", "),
+      contrast: { edit: model => cutMoved(model, "S2", "S3", ", ", true), reds: "tiling S" },
+    },
+    {
+      id: "S-PIN-SPLIT-A: A3 cut in two at its last space, a new pin A4 taking its last word",
+      edit: model => pinCut(model, "A", "A3", "A4"),
+      contrast: { edit: model => pinCut(model, "A", "A3", "A4", true), reds: "tiling A" },
+    },
+    {
+      id: "S-PIN-SPLIT-B: B2 cut in two at its last space, a new pin B3 taking its last word",
+      edit: model => pinCut(model, "B", "B2", "B3"),
+      contrast: { edit: model => pinCut(model, "B", "B2", "B3", true), reds: "tiling B" },
+    },
+    {
+      id: "S-PIN-SPLIT-C: C3 cut in two at its last space, a new pin C4 taking its last word",
+      edit: model => pinCut(model, "C", "C3", "C4"),
+      contrast: { edit: model => pinCut(model, "C", "C3", "C4", true), reds: "tiling C" },
+    },
+    {
+      id: "S-PIN-SPLIT-D: D2 cut in two at its last space, a new pin D3 taking its last word",
+      edit: model => pinCut(model, "D", "D2", "D3"),
+      contrast: { edit: model => pinCut(model, "D", "D2", "D3", true), reds: "tiling D" },
+    },
+    {
+      id: "S-PIN-SPLIT-S: S3 cut in two at its last space, a new pin S4 taking its last word",
+      edit: model => pinCut(model, "S", "S3", "S4"),
+      contrast: { edit: model => pinCut(model, "S", "S3", "S4", true), reds: "tiling S" },
+    },
+    {
+      id: "S-PIN-SEPARATOR-A: the separator after A1 taken into A1's quote",
+      edit: model => separatorTaken(model, "A1", " "),
+      contrast: { edit: model => separatorTaken(model, "A1", " ", true), reds: "tiling A" },
+    },
+    {
+      id: "S-PIN-SEPARATOR-B: the separator after B1 taken into B1's quote",
+      edit: model => separatorTaken(model, "B1", " ("),
+      contrast: { edit: model => separatorTaken(model, "B1", " (", true), reds: "tiling B" },
+    },
+    {
+      id: "S-PIN-SEPARATOR-C: the separator after C1 taken into C1's quote",
+      edit: model => separatorTaken(model, "C1", " "),
+      contrast: { edit: model => separatorTaken(model, "C1", " ", true), reds: "tiling C" },
+    },
+    {
+      id: "S-PIN-SEPARATOR-D: the separator after D1 taken into D1's quote",
+      edit: model => separatorTaken(model, "D1", ", "),
+      contrast: { edit: model => separatorTaken(model, "D1", ", ", true), reds: "tiling D" },
+    },
+    {
+      id: "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote",
+      edit: model => separatorTaken(model, "S1", "; "),
+      contrast: { edit: model => separatorTaken(model, "S1", "; ", true), reds: "tiling S" },
+    },
   ],
   Q11: [
     { id: "S-DECISION-FIELD-RENAME: the decision's second field named choice", edit: model => ({ ...model, decisionFields: [model.decisionFields[0] ?? "", "choice"] }) },
@@ -1517,10 +1633,24 @@ const LIVE: AnchorModel = {
   producerPin: PRODUCER_PIN,
   producer: ROSTER.producer,
 };
+/** A member's contrast as measured: the readings its edit reds that the census's own model holds (undefined: the member has none). */
+function contrastReds(member: ModelMember, held: readonly AnchorReading[]): AnchorReading[] | undefined {
+  return member.contrast === undefined ? undefined : failing(member.contrast.edit(LIVE)).filter(reading => !held.includes(reading));
+}
+/** The members whose contrast, as measured, leaves the reading it names holding, where the census's own model holds that reading. */
+function deadContrasts(members: readonly ModelMember[], held: readonly AnchorReading[]): string[] {
+  return members.filter(member => member.contrast !== undefined && !held.includes(member.contrast.reds) && !(contrastReds(member, held) ?? []).includes(member.contrast.reds)).map(member => member.id);
+}
+/** The reading the contrast check's own controls name. */
+const PROBE_READING: AnchorReading = "tiling A";
+/** The contrast check's own controls, planted beside every anchor-model family: a member whose contrast edits nothing, which the check must name, and its twin whose contrast reds the reading it names, which the check must pass. */
+const DEAD_CONTRAST: ModelMember = { id: "planted: a contrast that edits nothing", edit: model => separatorTaken(model, "A1", " "), contrast: { edit: model => model, reds: PROBE_READING } };
+const LIVE_CONTRAST: ModelMember = { id: "planted: a contrast that reds tiling A", edit: model => separatorTaken(model, "A1", " "), contrast: { edit: model => separatorTaken(model, "A1", " ", true), reds: PROBE_READING } };
 /** BOUND: model edits, each named for the coordinated census-and-roster edit it stands for, and the reading it must red. */
 const BOUND: Readonly<Record<string, { readonly edit: Edit; readonly reds: AnchorReading }>> = {
   "G-requirement": { edit: model => ({ ...model, requirement: model.requirement.replace(/R8$/, "R9") }), reds: "title" },
   "G-merge-note": { edit: model => ({ ...model, mergeNote: model.mergeNote.replace("R7", "R9") }), reds: "title" },
+  "G6-merge-trunc": { edit: model => ({ ...model, mergeNote: model.mergeNote.slice(0, 6) }), reds: "title" },
   "S-ROW-S": { edit: model => rowRemoved(model, "S"), reds: "statement" },
   "S-LABEL-WORD": { edit: model => quoted(relabeled(model, "A", labelIn(model, "A").replace("positive", "valid")), "A2", (model.quotes.A2 ?? "").replace("positive", "valid")), reds: "clauses" },
   "C6-rowD": { edit: model => rowRemoved(model, "D"), reds: "clauses" },
@@ -1573,6 +1703,8 @@ const BOUND: Readonly<Record<string, { readonly edit: Edit; readonly reds: Ancho
 const REACHED: { pin: string; same: boolean }[] = [];
 /** Each pin's case's assertion count once its witness compare held, in run order. */
 const ASSERTED: string[] = [];
+/** Each of the three other judged cases (rule 16, the mutant battery, the outside anchors) at its last statement, with its assertion count, in run order. */
+const ENDED: string[] = [];
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Json>> = {
@@ -1993,7 +2125,7 @@ describe(SUITE, () => {
       "M-NULLISH-AFTER-ABSENT",
       "M-OBJECT-CHOICE",
     ]);
-    expect(Object.entries(residualMembers()).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:5", "Q2:2", "Q3:5", "Q4:3", "Q5:9", "Q6:1", "Q7:12", "Q8:4", "Q9:4", "Q10:5", "Q11:8"]);
+    expect(Object.entries(residualMembers()).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:5", "Q2:2", "Q3:5", "Q4:3", "Q5:9", "Q6:1", "Q7:12", "Q8:4", "Q9:4", "Q10:20", "Q11:8"]);
     expect([...READINGS]).toEqual([
       "title",
       "statement",
@@ -2022,6 +2154,7 @@ describe(SUITE, () => {
     expect(Object.entries(BOUND).map(([name, bound]) => `${name}:${bound.reds}`)).toEqual([
       "G-requirement:title",
       "G-merge-note:title",
+      "G6-merge-trunc:title",
       "S-ROW-S:statement",
       "S-LABEL-WORD:clauses",
       "C6-rowD:clauses",
@@ -2055,11 +2188,12 @@ describe(SUITE, () => {
     expect(Object.entries(MODEL_RESIDUALS).map(([id, members]) => `${id}:${members.map(member => member.contrast?.reds ?? "-").join(", ")}`)).toEqual([
       "Q8:join, join, join, join",
       "Q9:runs, runs, runs, runs",
-      "Q10:tiling A, tiling B, tiling C, tiling D, tiling S",
+      "Q10:tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S",
       "Q11:-, -, -, -, -, -, -, -",
     ]);
     expect(SITES).toEqual([]);
     expect(SRC_FLOOR).toBe(100);
+    ENDED.push(`rule 16:${expect.getState().assertionCalls}`);
   });
 
   it("the mutant battery: every subject passes every check, a planted registration is judged, every base is a control accepted unchanged, each mutant is refused by exactly its declared checks, and every check refuses one mutant alone", { timeout: LIVE_BUDGET_MS }, () => {
@@ -2082,6 +2216,7 @@ describe(SUITE, () => {
     expect(refused, "each mutant is refused by exactly its declared checks (the roster's)").toEqual(ROSTER.mutants);
     const alone = CHECK_IDS.filter(check => !Object.values(refused).some(checks => isDeepStrictEqual(checks, [check])));
     expect(alone, "every check refuses one mutant alone").toEqual([]);
+    ENDED.push(`battery:${expect.getState().assertionCalls}`);
   });
 
   it("the outside anchors: every outside reading holds on the census's anchor model and every BOUND edit of that model reds the reading it names; the bead's own row binds the labels of rows A-D (its acceptance clauses) and S (its title's statement), those rows' pin quotes' text, each item's text and the join of its fields' phrases, each field name to a contiguous run of its phrase's words, the actions and their three distinct fields, ADMITTED, the codes, the statuses, the record noun and the vocabulary's composition; wb-4ap.16's note carries the six codes; the notes cite the producer pin and lines; git's src listing names no vocabulary word unregistered; how an item is cut into fields, which run of its phrase a field name takes, the pin partition, row Q, the decision's fields and the roster's producer copy are not anchored", { timeout: 60_000 }, () => {
@@ -2156,9 +2291,10 @@ describe(SUITE, () => {
       READINGS.filter(reading => !Object.values(BOUND).some(bound => bound.reds === reading)),
       "every reading is red under some BOUND edit",
     ).toEqual([]);
+    ENDED.push(`outside anchors:${expect.getState().assertionCalls}`);
   });
 
-  it("roster: the judged rows, the quotes, the residual members, the witness and mutant keys, the assertion counts and the registered tests equal test/fixtures/mw-gp-sidecar-record-roster.json, keys in order; every pin reached its witness compare and each compare held", ({ task }) => {
+  it("roster: the judged rows, the quotes, the residual members, the witness and mutant keys, the assertion counts and the registered tests equal test/fixtures/mw-gp-sidecar-record-roster.json, keys in order; every pin reached its witness compare and each compare held, and each other judged case reached its last statement on the assertion count the roster pins", ({ task }) => {
     expect(ROSTER.bead, "the roster is this bead's").toBe(BEAD);
     expect(ROWS, "the judged rows equal the roster rows exactly and in order").toEqual(ROSTER.rows);
     expect(QUOTES, "the pin quotes equal the roster's").toEqual(ROSTER.quotes);
@@ -2185,5 +2321,6 @@ describe(SUITE, () => {
     expect(REACHED.map(entry => entry.pin), "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(entry => entry.pins));
     expect(REACHED.filter(entry => !entry.same).map(entry => entry.pin), "and each compare held").toEqual([]);
     expect(ASSERTED, "every pin's case made the assertion count the roster pins (its witness compare included), in row order").toEqual([...ROSTER.asserted]);
+    expect(ENDED, "each other judged case - rule 16, the mutant battery, the outside anchors - reached its last statement having made the assertion count the roster pins, in run order").toEqual([...ROSTER.ended]);
   });
 });

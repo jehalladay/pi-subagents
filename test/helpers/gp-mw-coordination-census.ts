@@ -13,7 +13,9 @@
  * runs the heading-tag bound removes are stated exactly as the reader reads them (COMMENTS), and the admission
  * consequence where HTML reads a comment otherwise is the named residual R-HTML-COMMENT (Q8, its members in the census);
  * an instantiation expression's type arguments are one more wrapper (F3), a require reached as a member and an import in
- * a type position are read (F4), and each residual member's text is part of its quiet row's witness (F2).
+ * a type position are read (F4), and each residual member's text is part of its quiet row's witness (F2). wb-5hcx (the
+ * landing-656 verdict's F1-F3): R-HTML-COMMENT gains twenty members (in the census) and R-OTHER-LAUNCHER (Q4) a require
+ * reached through .apply, .bind or Reflect.apply and an import a JSDoc comment holds, each a pinned quiet row.
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { lstatSync, readdirSync } from "node:fs";
@@ -161,7 +163,8 @@ const isGpProgram = (launcher: string, argument: string): boolean => PROGRAMS.in
 /**
  * The GP means a source file carries, in source order: imports of a GP or MP package (an import, an export-from, an
  * import-equals, a require called bare or as a member such as module.require, an import() call, or an import in a type
- * position such as typeof import("gp")) and launches of gp or mp.
+ * position such as typeof import("gp")) and launches of gp or mp. ts.forEachChild never visits a JSDoc comment, so an
+ * import a JSDoc comment holds is not read (wb-5hcx: R-OTHER-LAUNCHER).
  */
 export function meansOf(path: string, text: string): Means[] {
   if (!CODE_EXTENSIONS.has(extname(path).toLowerCase())) return [];
@@ -283,9 +286,11 @@ const HEADING_TAG = /<h[12](?=[\s/>])/i;
  * The comment runs (wb-5esj cut #3, refusal #2 U1, its cure (b): the reader's comment model, stated exactly): each run
  * starts at a '<!--' and ends with the first '-->' wholly after those four characters, or at the end of the raw text when
  * none follows. The text is read as text: a '<!--' starts a run wherever it stands (in an attribute value, in script,
- * style, textarea, title, iframe or noframes content), '<!-->' and '<!--->' start runs too (their dashes never close
- * them), and '--!>' closes nothing. Where HTML reads that '<!--' otherwise (as no comment's start, or a comment it closes
- * sooner), a run can hide a heading tag a browser reads as a heading: the residual R-HTML-COMMENT (Q8).
+ * style, textarea, title, iframe or noframes content; wb-5hcx: in an attribute name, an end tag's attribute value, xmp,
+ * noembed or noscript content, a processing instruction, a declaration, CDATA in HTML content or a CDATA section in svg
+ * or math content), '<!-->' and '<!--->' start runs too (their dashes never close them), and '--!>' closes nothing.
+ * Where HTML reads that '<!--' otherwise (as no comment's start, or a comment it closes sooner), a run can hide a
+ * heading tag a browser reads as a heading: the residual R-HTML-COMMENT (Q8).
  */
 const COMMENTS = /<!--[\s\S]*?(?:-->|$)/g;
 /**
@@ -633,7 +638,8 @@ export const RESIDUALS: Readonly<Record<string, readonly { readonly leg: Leg; re
   // A launch or a load the means reader does not read: outside node:child_process's seven launchers and the import forms
   // it reads (a worker, another process library), a loader bound to a name (createRequire's, or require itself aliased),
   // a require reached through .call or an element access, or a load whose specifier is no literal (a const; wb-5esj cut
-  // #3 adds the last four).
+  // #3 adds the last four); wb-5hcx adds a require reached through .apply, .bind or Reflect.apply and an import a JSDoc
+  // comment holds.
   Q4: [
     { leg: "src", path: "src/workbench/q4-worker.ts", text: 'import { Worker } from "node:worker_threads";\nnew Worker("./gp.js");\n' },
     { leg: "src", path: "src/workbench/q4-execa.ts", text: 'declare const execa: (file: string, args: string[]) => void;\nexeca("gp", ["sample"]);\n' },
@@ -642,6 +648,13 @@ export const RESIDUALS: Readonly<Record<string, readonly { readonly leg: Leg; re
     { leg: "src", path: "src/workbench/q4-require-call.ts", text: 'export const gp: unknown = require.call(undefined, "gp");\n' },
     { leg: "src", path: "src/workbench/q4-require-element.ts", text: 'export const gp: unknown = module["require"]("gp");\n' },
     { leg: "src", path: "src/workbench/q4-const-specifier.ts", text: 'const SPEC = "gp";\nexport const gp: unknown = require(SPEC);\n' },
+    // wb-5hcx (the landing-656 verdict's F2 and F3): a require reached through .apply, .bind or Reflect.apply, and an import
+    // a JSDoc comment holds (an import type in a @type tag, an @import tag; JSDoc is where a JS file states its types).
+    { leg: "src", path: "src/workbench/q4-require-apply.ts", text: 'export const gp: unknown = require.apply(undefined, ["gp"]);\n' },
+    { leg: "src", path: "src/workbench/q4-require-bind.ts", text: 'export const gp: unknown = require.bind(undefined)("gp");\n' },
+    { leg: "src", path: "src/workbench/q4-reflect-require.ts", text: 'export const gp: unknown = Reflect.apply(require, undefined, ["gp"]);\n' },
+    { leg: "src", path: "src/workbench/q4-jsdoc-type.js", text: '/** @type {import("gp").Sample} */\nexport let sample;\n' },
+    { leg: "src", path: "src/workbench/q4-jsdoc-import.js", text: '/** @import { Sample } from "gp" */\n/** @type {Sample} */\nexport let sample;\n' },
   ],
   // A test file naming the vocabulary as text or as a name, importing and launching nothing of GP.
   Q5: [
