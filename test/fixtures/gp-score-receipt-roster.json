@@ -726,6 +726,54 @@
           "missing": [],
           "helpers": []
         },
+        "auditing@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the auditing: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "auditing@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "auditing@elsewhere": {
+          "unread": [
+            "a decision read back from the auditing <- \"a decision read back from the auditing\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journaling@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the journaling: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journaling@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journaling@elsewhere": {
+          "unread": [
+            "a decision read back from the journaling <- \"a decision read back from the journaling\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
         "audit_log@label": {
           "unread": [],
           "added": [
@@ -822,6 +870,54 @@
           "missing": [],
           "helpers": []
         },
+        "audit-log@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the audit-log: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-log@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-log@elsewhere": {
+          "unread": [
+            "a decision read back from the audit-log <- \"a decision read back from the audit-log\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-entry@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the journal-entry: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-entry@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-entry@elsewhere": {
+          "unread": [
+            "a decision read back from the journal-entry <- \"a decision read back from the journal-entry\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
         "control_audit@label": {
           "unread": [],
           "added": [
@@ -913,6 +1009,54 @@
         "decisionJournal@elsewhere": {
           "unread": [
             "a decision read back from the decisionJournal <- \"a decision read back from the decisionJournal\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "control-audit@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the control-audit: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "control-audit@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "control-audit@elsewhere": {
+          "unread": [
+            "a decision read back from the control-audit <- \"a decision read back from the control-audit\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "replay-journal@label": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip read back from the replay-journal: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "replay-journal@title": {
+          "unread": [],
+          "added": [
+            "deep-frozen JSON round-trip: deepFreeze > jsonRoundTrip"
+          ],
+          "missing": [],
+          "helpers": []
+        },
+        "replay-journal@elsewhere": {
+          "unread": [
+            "a decision read back from the replay-journal <- \"a decision read back from the replay-journal\""
           ],
           "added": [],
           "missing": [],
@@ -1373,8 +1517,995 @@
           "added": [],
           "missing": [],
           "helpers": []
+        },
+        "audits@net": {
+          "unread": [
+            "a decision read back from the audits <- \"a decision read back from the audits\"",
+            "a decision read back from the audits <- \"a decision read back from the audits\"",
+            "a decision read back from the audits <- `a decision read back from the audits`",
+            "a decision read back from the audits <- `a decision read back from the audits${",
+            "a decision read back from the audits <- }a decision read back from the audits${",
+            "a decision read back from the audits <- }a decision read back from the audits`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journals@net": {
+          "unread": [
+            "a decision read back from the journals <- \"a decision read back from the journals\"",
+            "a decision read back from the journals <- \"a decision read back from the journals\"",
+            "a decision read back from the journals <- `a decision read back from the journals`",
+            "a decision read back from the journals <- `a decision read back from the journals${",
+            "a decision read back from the journals <- }a decision read back from the journals${",
+            "a decision read back from the journals <- }a decision read back from the journals`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audited@net": {
+          "unread": [
+            "a decision read back from the audited <- \"a decision read back from the audited\"",
+            "a decision read back from the audited <- \"a decision read back from the audited\"",
+            "a decision read back from the audited <- `a decision read back from the audited`",
+            "a decision read back from the audited <- `a decision read back from the audited${",
+            "a decision read back from the audited <- }a decision read back from the audited${",
+            "a decision read back from the audited <- }a decision read back from the audited`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journaled@net": {
+          "unread": [
+            "a decision read back from the journaled <- \"a decision read back from the journaled\"",
+            "a decision read back from the journaled <- \"a decision read back from the journaled\"",
+            "a decision read back from the journaled <- `a decision read back from the journaled`",
+            "a decision read back from the journaled <- `a decision read back from the journaled${",
+            "a decision read back from the journaled <- }a decision read back from the journaled${",
+            "a decision read back from the journaled <- }a decision read back from the journaled`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "auditing@net": {
+          "unread": [
+            "a decision read back from the auditing <- \"a decision read back from the auditing\"",
+            "a decision read back from the auditing <- \"a decision read back from the auditing\"",
+            "a decision read back from the auditing <- `a decision read back from the auditing`",
+            "a decision read back from the auditing <- `a decision read back from the auditing${",
+            "a decision read back from the auditing <- }a decision read back from the auditing${",
+            "a decision read back from the auditing <- }a decision read back from the auditing`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journaling@net": {
+          "unread": [
+            "a decision read back from the journaling <- \"a decision read back from the journaling\"",
+            "a decision read back from the journaling <- \"a decision read back from the journaling\"",
+            "a decision read back from the journaling <- `a decision read back from the journaling`",
+            "a decision read back from the journaling <- `a decision read back from the journaling${",
+            "a decision read back from the journaling <- }a decision read back from the journaling${",
+            "a decision read back from the journaling <- }a decision read back from the journaling`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit_log@net": {
+          "unread": [
+            "a decision read back from the audit_log <- \"a decision read back from the audit_log\"",
+            "a decision read back from the audit_log <- \"a decision read back from the audit_log\"",
+            "a decision read back from the audit_log <- `a decision read back from the audit_log`",
+            "a decision read back from the audit_log <- `a decision read back from the audit_log${",
+            "a decision read back from the audit_log <- }a decision read back from the audit_log${",
+            "a decision read back from the audit_log <- }a decision read back from the audit_log`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal_entry@net": {
+          "unread": [
+            "a decision read back from the journal_entry <- \"a decision read back from the journal_entry\"",
+            "a decision read back from the journal_entry <- \"a decision read back from the journal_entry\"",
+            "a decision read back from the journal_entry <- `a decision read back from the journal_entry`",
+            "a decision read back from the journal_entry <- `a decision read back from the journal_entry${",
+            "a decision read back from the journal_entry <- }a decision read back from the journal_entry${",
+            "a decision read back from the journal_entry <- }a decision read back from the journal_entry`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "auditLog@net": {
+          "unread": [
+            "a decision read back from the auditLog <- \"a decision read back from the auditLog\"",
+            "a decision read back from the auditLog <- \"a decision read back from the auditLog\"",
+            "a decision read back from the auditLog <- `a decision read back from the auditLog`",
+            "a decision read back from the auditLog <- `a decision read back from the auditLog${",
+            "a decision read back from the auditLog <- }a decision read back from the auditLog${",
+            "a decision read back from the auditLog <- }a decision read back from the auditLog`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journalEntry@net": {
+          "unread": [
+            "a decision read back from the journalEntry <- \"a decision read back from the journalEntry\"",
+            "a decision read back from the journalEntry <- \"a decision read back from the journalEntry\"",
+            "a decision read back from the journalEntry <- `a decision read back from the journalEntry`",
+            "a decision read back from the journalEntry <- `a decision read back from the journalEntry${",
+            "a decision read back from the journalEntry <- }a decision read back from the journalEntry${",
+            "a decision read back from the journalEntry <- }a decision read back from the journalEntry`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-log@net": {
+          "unread": [
+            "a decision read back from the audit-log <- \"a decision read back from the audit-log\"",
+            "a decision read back from the audit-log <- \"a decision read back from the audit-log\"",
+            "a decision read back from the audit-log <- `a decision read back from the audit-log`",
+            "a decision read back from the audit-log <- `a decision read back from the audit-log${",
+            "a decision read back from the audit-log <- }a decision read back from the audit-log${",
+            "a decision read back from the audit-log <- }a decision read back from the audit-log`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-entry@net": {
+          "unread": [
+            "a decision read back from the journal-entry <- \"a decision read back from the journal-entry\"",
+            "a decision read back from the journal-entry <- \"a decision read back from the journal-entry\"",
+            "a decision read back from the journal-entry <- `a decision read back from the journal-entry`",
+            "a decision read back from the journal-entry <- `a decision read back from the journal-entry${",
+            "a decision read back from the journal-entry <- }a decision read back from the journal-entry${",
+            "a decision read back from the journal-entry <- }a decision read back from the journal-entry`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "control_audit@net": {
+          "unread": [
+            "a decision read back from the control_audit <- \"a decision read back from the control_audit\"",
+            "a decision read back from the control_audit <- \"a decision read back from the control_audit\"",
+            "a decision read back from the control_audit <- `a decision read back from the control_audit`",
+            "a decision read back from the control_audit <- `a decision read back from the control_audit${",
+            "a decision read back from the control_audit <- }a decision read back from the control_audit${",
+            "a decision read back from the control_audit <- }a decision read back from the control_audit`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "replay_journal@net": {
+          "unread": [
+            "a decision read back from the replay_journal <- \"a decision read back from the replay_journal\"",
+            "a decision read back from the replay_journal <- \"a decision read back from the replay_journal\"",
+            "a decision read back from the replay_journal <- `a decision read back from the replay_journal`",
+            "a decision read back from the replay_journal <- `a decision read back from the replay_journal${",
+            "a decision read back from the replay_journal <- }a decision read back from the replay_journal${",
+            "a decision read back from the replay_journal <- }a decision read back from the replay_journal`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "controlAudit@net": {
+          "unread": [
+            "a decision read back from the controlAudit <- \"a decision read back from the controlAudit\"",
+            "a decision read back from the controlAudit <- \"a decision read back from the controlAudit\"",
+            "a decision read back from the controlAudit <- `a decision read back from the controlAudit`",
+            "a decision read back from the controlAudit <- `a decision read back from the controlAudit${",
+            "a decision read back from the controlAudit <- }a decision read back from the controlAudit${",
+            "a decision read back from the controlAudit <- }a decision read back from the controlAudit`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "decisionJournal@net": {
+          "unread": [
+            "a decision read back from the decisionJournal <- \"a decision read back from the decisionJournal\"",
+            "a decision read back from the decisionJournal <- \"a decision read back from the decisionJournal\"",
+            "a decision read back from the decisionJournal <- `a decision read back from the decisionJournal`",
+            "a decision read back from the decisionJournal <- `a decision read back from the decisionJournal${",
+            "a decision read back from the decisionJournal <- }a decision read back from the decisionJournal${",
+            "a decision read back from the decisionJournal <- }a decision read back from the decisionJournal`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "control-audit@net": {
+          "unread": [
+            "a decision read back from the control-audit <- \"a decision read back from the control-audit\"",
+            "a decision read back from the control-audit <- \"a decision read back from the control-audit\"",
+            "a decision read back from the control-audit <- `a decision read back from the control-audit`",
+            "a decision read back from the control-audit <- `a decision read back from the control-audit${",
+            "a decision read back from the control-audit <- }a decision read back from the control-audit${",
+            "a decision read back from the control-audit <- }a decision read back from the control-audit`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "replay-journal@net": {
+          "unread": [
+            "a decision read back from the replay-journal <- \"a decision read back from the replay-journal\"",
+            "a decision read back from the replay-journal <- \"a decision read back from the replay-journal\"",
+            "a decision read back from the replay-journal <- `a decision read back from the replay-journal`",
+            "a decision read back from the replay-journal <- `a decision read back from the replay-journal${",
+            "a decision read back from the replay-journal <- }a decision read back from the replay-journal${",
+            "a decision read back from the replay-journal <- }a decision read back from the replay-journal`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "plaudit@net": {
+          "unread": [
+            "a decision read back from the plaudit <- \"a decision read back from the plaudit\"",
+            "a decision read back from the plaudit <- \"a decision read back from the plaudit\"",
+            "a decision read back from the plaudit <- `a decision read back from the plaudit`",
+            "a decision read back from the plaudit <- `a decision read back from the plaudit${",
+            "a decision read back from the plaudit <- }a decision read back from the plaudit${",
+            "a decision read back from the plaudit <- }a decision read back from the plaudit`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "photojournal@net": {
+          "unread": [
+            "a decision read back from the photojournal <- \"a decision read back from the photojournal\"",
+            "a decision read back from the photojournal <- \"a decision read back from the photojournal\"",
+            "a decision read back from the photojournal <- `a decision read back from the photojournal`",
+            "a decision read back from the photojournal <- `a decision read back from the photojournal${",
+            "a decision read back from the photojournal <- }a decision read back from the photojournal${",
+            "a decision read back from the photojournal <- }a decision read back from the photojournal`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "unaudited@net": {
+          "unread": [
+            "a decision read back from the unaudited <- \"a decision read back from the unaudited\"",
+            "a decision read back from the unaudited <- \"a decision read back from the unaudited\"",
+            "a decision read back from the unaudited <- `a decision read back from the unaudited`",
+            "a decision read back from the unaudited <- `a decision read back from the unaudited${",
+            "a decision read back from the unaudited <- }a decision read back from the unaudited${",
+            "a decision read back from the unaudited <- }a decision read back from the unaudited`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "auditorium@net": {
+          "unread": [
+            "a decision read back from the auditorium <- \"a decision read back from the auditorium\"",
+            "a decision read back from the auditorium <- \"a decision read back from the auditorium\"",
+            "a decision read back from the auditorium <- `a decision read back from the auditorium`",
+            "a decision read back from the auditorium <- `a decision read back from the auditorium${",
+            "a decision read back from the auditorium <- }a decision read back from the auditorium${",
+            "a decision read back from the auditorium <- }a decision read back from the auditorium`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journalism@net": {
+          "unread": [
+            "a decision read back from the journalism <- \"a decision read back from the journalism\"",
+            "a decision read back from the journalism <- \"a decision read back from the journalism\"",
+            "a decision read back from the journalism <- `a decision read back from the journalism`",
+            "a decision read back from the journalism <- `a decision read back from the journalism${",
+            "a decision read back from the journalism <- }a decision read back from the journalism${",
+            "a decision read back from the journalism <- }a decision read back from the journalism`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "Audit@net": {
+          "unread": [
+            "a decision read back from the Audit <- \"a decision read back from the Audit\"",
+            "a decision read back from the Audit <- \"a decision read back from the Audit\"",
+            "a decision read back from the Audit <- `a decision read back from the Audit`",
+            "a decision read back from the Audit <- `a decision read back from the Audit${",
+            "a decision read back from the Audit <- }a decision read back from the Audit${",
+            "a decision read back from the Audit <- }a decision read back from the Audit`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "Journal@net": {
+          "unread": [
+            "a decision read back from the Journal <- \"a decision read back from the Journal\"",
+            "a decision read back from the Journal <- \"a decision read back from the Journal\"",
+            "a decision read back from the Journal <- `a decision read back from the Journal`",
+            "a decision read back from the Journal <- `a decision read back from the Journal${",
+            "a decision read back from the Journal <- }a decision read back from the Journal${",
+            "a decision read back from the Journal <- }a decision read back from the Journal`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "AUDIT@net": {
+          "unread": [
+            "a decision read back from the AUDIT <- \"a decision read back from the AUDIT\"",
+            "a decision read back from the AUDIT <- \"a decision read back from the AUDIT\"",
+            "a decision read back from the AUDIT <- `a decision read back from the AUDIT`",
+            "a decision read back from the AUDIT <- `a decision read back from the AUDIT${",
+            "a decision read back from the AUDIT <- }a decision read back from the AUDIT${",
+            "a decision read back from the AUDIT <- }a decision read back from the AUDIT`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "JOURNAL@net": {
+          "unread": [
+            "a decision read back from the JOURNAL <- \"a decision read back from the JOURNAL\"",
+            "a decision read back from the JOURNAL <- \"a decision read back from the JOURNAL\"",
+            "a decision read back from the JOURNAL <- `a decision read back from the JOURNAL`",
+            "a decision read back from the JOURNAL <- `a decision read back from the JOURNAL${",
+            "a decision read back from the JOURNAL <- }a decision read back from the JOURNAL${",
+            "a decision read back from the JOURNAL <- }a decision read back from the JOURNAL`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "aUdIt@net": {
+          "unread": [
+            "a decision read back from the aUdIt <- \"a decision read back from the aUdIt\"",
+            "a decision read back from the aUdIt <- \"a decision read back from the aUdIt\"",
+            "a decision read back from the aUdIt <- `a decision read back from the aUdIt`",
+            "a decision read back from the aUdIt <- `a decision read back from the aUdIt${",
+            "a decision read back from the aUdIt <- }a decision read back from the aUdIt${",
+            "a decision read back from the aUdIt <- }a decision read back from the aUdIt`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "jOuRnAl@net": {
+          "unread": [
+            "a decision read back from the jOuRnAl <- \"a decision read back from the jOuRnAl\"",
+            "a decision read back from the jOuRnAl <- \"a decision read back from the jOuRnAl\"",
+            "a decision read back from the jOuRnAl <- `a decision read back from the jOuRnAl`",
+            "a decision read back from the jOuRnAl <- `a decision read back from the jOuRnAl${",
+            "a decision read back from the jOuRnAl <- }a decision read back from the jOuRnAl${",
+            "a decision read back from the jOuRnAl <- }a decision read back from the jOuRnAl`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-start@net": {
+          "unread": [
+            "audit replay: a decision read back <- \"audit replay: a decision read back\"",
+            "audit replay: a decision read back <- \"audit replay: a decision read back\"",
+            "audit replay: a decision read back <- `audit replay: a decision read back`",
+            "audit replay: a decision read back <- `audit replay: a decision read back${",
+            "audit replay: a decision read back <- }audit replay: a decision read back${",
+            "audit replay: a decision read back <- }audit replay: a decision read back`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-middle@net": {
+          "unread": [
+            "a decision the audit hands back <- \"a decision the audit hands back\"",
+            "a decision the audit hands back <- \"a decision the audit hands back\"",
+            "a decision the audit hands back <- `a decision the audit hands back`",
+            "a decision the audit hands back <- `a decision the audit hands back${",
+            "a decision the audit hands back <- }a decision the audit hands back${",
+            "a decision the audit hands back <- }a decision the audit hands back`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-start@net": {
+          "unread": [
+            "journal replay: a decision read back <- \"journal replay: a decision read back\"",
+            "journal replay: a decision read back <- \"journal replay: a decision read back\"",
+            "journal replay: a decision read back <- `journal replay: a decision read back`",
+            "journal replay: a decision read back <- `journal replay: a decision read back${",
+            "journal replay: a decision read back <- }journal replay: a decision read back${",
+            "journal replay: a decision read back <- }journal replay: a decision read back`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-middle@net": {
+          "unread": [
+            "a decision the journal hands back <- \"a decision the journal hands back\"",
+            "a decision the journal hands back <- \"a decision the journal hands back\"",
+            "a decision the journal hands back <- `a decision the journal hands back`",
+            "a decision the journal hands back <- `a decision the journal hands back${",
+            "a decision the journal hands back <- }a decision the journal hands back${",
+            "a decision the journal hands back <- }a decision the journal hands back`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "escaped@net": {
+          "unread": [
+            "a decision read back from the journal <- \"a decision read back from the \\u006aournal\"",
+            "a decision read back from the journal <- \"a decision read back from the \\u006aournal\"",
+            "a decision read back from the journal <- `a decision read back from the \\u006aournal`",
+            "a decision read back from the journal <- `a decision read back from the \\u006aournal${",
+            "a decision read back from the journal <- }a decision read back from the \\u006aournal${",
+            "a decision read back from the journal <- }a decision read back from the \\u006aournal`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audits@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the audits <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journals@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the journals <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audited@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the audited <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journaled@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the journaled <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "auditing@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the auditing <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journaling@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the journaling <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit_log@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the audit_log <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal_entry@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the journal_entry <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "auditLog@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the auditLog <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journalEntry@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the journalEntry <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-log@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the audit-log <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-entry@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the journal-entry <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "control_audit@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the control_audit <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "replay_journal@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the replay_journal <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "controlAudit@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the controlAudit <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "decisionJournal@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the decisionJournal <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "control-audit@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the control-audit <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "replay-journal@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the replay-journal <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "plaudit@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the plaudit <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "photojournal@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the photojournal <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "unaudited@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the unaudited <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "auditorium@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the auditorium <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journalism@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the journalism <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "Audit@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the Audit <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "Journal@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the Journal <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "AUDIT@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the AUDIT <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "JOURNAL@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the JOURNAL <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "aUdIt@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the aUdIt <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "jOuRnAl@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the jOuRnAl <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-start@zero-form": {
+          "unread": [
+            "audit replay: refuses a deep-frozen JSON round-trip <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "audit-middle@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip the audit hands back <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-start@zero-form": {
+          "unread": [
+            "journal replay: refuses a deep-frozen JSON round-trip <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "journal-middle@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip the journal hands back <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "escaped@zero-form": {
+          "unread": [
+            "refuses a deep-frozen JSON round-trip read back from the journal <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:audit:async-arrow:genuine": {
+          "unread": [
+            "refuses a replay the audit hands back <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:audit:async-arrow:empty": {
+          "unread": [
+            "refuses a replay the audit hands back <- {}"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:audit:arrow:genuine": {
+          "unread": [
+            "refuses a replay the audit hands back <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:audit:arrow:empty": {
+          "unread": [
+            "refuses a replay the audit hands back <- {}"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:audit:async-function:genuine": {
+          "unread": [
+            "refuses a replay the audit hands back <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:audit:async-function:empty": {
+          "unread": [
+            "refuses a replay the audit hands back <- {}"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:audit:function:genuine": {
+          "unread": [
+            "refuses a replay the audit hands back <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:audit:function:empty": {
+          "unread": [
+            "refuses a replay the audit hands back <- {}"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:journal:async-arrow:genuine": {
+          "unread": [
+            "refuses a replay the journal hands back <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:journal:async-arrow:empty": {
+          "unread": [
+            "refuses a replay the journal hands back <- {}"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:journal:arrow:genuine": {
+          "unread": [
+            "refuses a replay the journal hands back <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:journal:arrow:empty": {
+          "unread": [
+            "refuses a replay the journal hands back <- {}"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:journal:async-function:genuine": {
+          "unread": [
+            "refuses a replay the journal hands back <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:journal:async-function:empty": {
+          "unread": [
+            "refuses a replay the journal hands back <- {}"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:journal:function:genuine": {
+          "unread": [
+            "refuses a replay the journal hands back <- { const genuine = subject.permit(); }"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "zero-form:journal:function:empty": {
+          "unread": [
+            "refuses a replay the journal hands back <- {}"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:it:concatenated": {
+          "unread": [
+            "<unlabelled> <- \"refuses a decision read back from the st\" + \"ore\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:it:identifier": {
+          "unread": [
+            "<unlabelled> <- REPLAY_TITLE"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:it:substituted": {
+          "unread": [
+            "<unlabelled> <- `refuses a decision read back from the ${\"store\"}`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:test:concatenated": {
+          "unread": [
+            "<unlabelled> <- \"refuses a decision read back from the st\" + \"ore\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:test:identifier": {
+          "unread": [
+            "<unlabelled> <- REPLAY_TITLE"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:test:substituted": {
+          "unread": [
+            "<unlabelled> <- `refuses a decision read back from the ${\"store\"}`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:it-modifier:concatenated": {
+          "unread": [
+            "<unlabelled> <- \"refuses a decision read back from the st\" + \"ore\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:it-modifier:identifier": {
+          "unread": [
+            "<unlabelled> <- REPLAY_TITLE"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:it-modifier:substituted": {
+          "unread": [
+            "<unlabelled> <- `refuses a decision read back from the ${\"store\"}`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:test-modifier:concatenated": {
+          "unread": [
+            "<unlabelled> <- \"refuses a decision read back from the st\" + \"ore\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:test-modifier:identifier": {
+          "unread": [
+            "<unlabelled> <- REPLAY_TITLE"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:test-modifier:substituted": {
+          "unread": [
+            "<unlabelled> <- `refuses a decision read back from the ${\"store\"}`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:it-each:concatenated": {
+          "unread": [
+            "<unlabelled> <- \"refuses a decision read back from the st\" + \"ore\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:it-each:identifier": {
+          "unread": [
+            "<unlabelled> <- REPLAY_TITLE"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:it-each:substituted": {
+          "unread": [
+            "<unlabelled> <- `refuses a decision read back from the ${\"store\"}`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:test-each:concatenated": {
+          "unread": [
+            "<unlabelled> <- \"refuses a decision read back from the st\" + \"ore\""
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:test-each:identifier": {
+          "unread": [
+            "<unlabelled> <- REPLAY_TITLE"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
+        },
+        "title:test-each:substituted": {
+          "unread": [
+            "<unlabelled> <- `refuses a decision read back from the ${\"store\"}`"
+          ],
+          "added": [],
+          "missing": [],
+          "helpers": []
         }
-      }
+      },
+      "plantTexts": "c929b12456b50a1da9a9363a1e0ec2d4ccc7006af4295e92a3a81fbb14d2f988"
     },
     "Q1": {
       "outcome": "scores-only",
