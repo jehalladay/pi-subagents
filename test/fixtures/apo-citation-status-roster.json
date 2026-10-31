@@ -206,7 +206,25 @@
    "R-RETILED",
    "R-CONSTANT-WITNESS"
   ],
-  "selfRead": "\\bROSTER(?:_PATH)?\\b|rosterWitness|readRoster|apo-citation-status-roster"
+  "selfRead": "\\bROSTER(?:_PATH)?\\b|rosterWitness|readRoster|apo-citation-status-roster",
+  "flags": {
+   "STATUS_PATTERN": "gi",
+   "SCOPE_PATTERN": "gi",
+   "STATUS_LITERAL_PATTERN": "gi",
+   "NEGATION_BEFORE": "i",
+   "NEGATION_AFTER": "i",
+   "BLANK": "",
+   "LIST_ITEM": "",
+   "HEADING": "",
+   "TABLE_ROW": "",
+   "FENCE": "",
+   "MARKDOWN": "",
+   "SCRIPT": "",
+   "ELEMENT": "",
+   "FOOTNOTE_REFERENCE": "g",
+   "FOOTNOTE_DEFINITION": "",
+   "SELF_READ": ""
+  }
  },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
@@ -1525,6 +1543,18 @@
        {
         "id": "typescript-comparison-regex",
         "path": "src/x.ts",
+        "text": "export const r = a < b > /APO/g;\n",
+        "causes": []
+       },
+       {
+        "id": "typescript-comparison-regex-mts",
+        "path": "src/x.mts",
+        "text": "export const r = a < b > /APO/g;\n",
+        "causes": []
+       },
+       {
+        "id": "typescript-comparison-regex-cts",
+        "path": "src/x.cts",
         "text": "export const r = a < b > /APO/g;\n",
         "causes": []
        }

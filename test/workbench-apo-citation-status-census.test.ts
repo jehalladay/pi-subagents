@@ -31,7 +31,10 @@
  * strings at 57cb1c0), between 57cb1c0 and ee48709 in none (the same counts at ee48709), and this bead's export row keeps its
  * title and its owner filing first. Trunk ea7a66c (landing 687) followed before cut #3's handoff and trunk 51d130e (landing
  * 714) before cut #4's: git diff ee48709 51d130e outside test/ and .beads/ is empty, so the product scope is unchanged through
- * 51d130e. No src, docs or tracker text is edited by this cut.
+ * 51d130e. Trunk 360919f (landing 716) followed before cut #4's handoff and trunk 89109cd (landing 737) before cut #5's: git
+ * diff 51d130e 89109cd outside test/ and .beads/ is two lines added to docs/workbench/07-native-integrations.md, no citing unit
+ * among them (329 files, 155480 units, 7450 doc units and 16809 strings at 89109cd). No src, docs or tracker text is edited by
+ * this cut.
  * CUT #2 (the respin of refusal #1, gate s139): the unit claims are narrowed to the five patterns (U1, R-UNCUT), a template's
  * carriers are read on its cooked parts (U2), each named judge mutant has a killing control (U3), and F1-F6 are cured or named
  * below (R-RETILED, the run guard and R-CONSTANT-WITNESS, Q1's root reading, R-JSX and R-ACCESSOR, the character-reference
@@ -55,6 +58,17 @@
  * below: a CRLF line's carriage return, another file's white-space-only line, each script grammar, a no-break space before a
  * definition, a definition opening a list item, indentation however deep, a non-literal class field or assignment, and the
  * trailing negation phrases, which now take any white space between their words (fail-closed).
+ * CUT #5 (the FINAL cut, after refusal #4 at gate s156; orchestrator ruling R-B160 exits the rule-19 loop with child wb-021.9,
+ * which carries the judge-mutant coverage, and binds this cut to the FAIL-CLOSED CORE: the five clauses restated to exactly the
+ * readings the plants prove, the surviving-mutant holes stated, no claim word without a falsifier): no reader is changed. Each
+ * guarded clause below claims a reading only as far as a control pins it (a named pattern's spelling as far as the judged set
+ * holds it, the unit cuts as far as the counted trees hold them) and names the pinned forms with it: the white-space kinds, the
+ * cases, the words, the wrappers, the places. Every form beyond them is stated in THE HOLES and is not claimed: refusal #4's
+ * nine surviving members, the readings of its two findings (the trailing phrases' case, the locks' paths) and every further
+ * member of their classes the seat's own sweep found. Two falsifiers are added where a claim word had none: the judged set
+ * holds every named pattern's flags beside its source (refusal #4's F3: a flag edit was invisible to it; G16-N1, G16-N2 and
+ * G16-F1 as authored now red it, while the same readings reached at a pattern's use stay in THE HOLES), and C2 holds an .mts
+ * and a .cts script, the two script kinds no control and no counted tree held.
  *
  * THE CITATION. A text CITES the program when the program family's shared ROLE reading (roleReading of
  * test/helpers/apo-ui-publish-census.ts, wb-021.4) reads it: the abbreviation APO as a word, or the slug's three words in order
@@ -63,72 +77,116 @@
  * acronym boundaries and letter-digit boundaries, lower-cased). Every mention counts: a requirement id of the family, a source
  * tag, a path or link destination inside a unit, a comment. Citations are read on the raw text of a unit, so a citation only
  * the markup or a substitution's source text holds still cites (fail-closed); carriers are read on the carrier view.
- * THE UNITS. White space means JavaScript's \s throughout. A markdown file (.md) is cut line by line (at each line feed; a
- * carriage return before one stays on its line as white space) by five patterns. A line FENCE reads (up to three white-space
- * characters, then three or more backticks or three or more tildes) is a unit of its own and toggles the fence, whatever mark
+ * THE NAMED PATTERNS AND WHITE SPACE (the five clauses). A named pattern - FENCE, BLANK, HEADING, TABLE_ROW, LIST_ITEM,
+ * MARKDOWN, SCRIPT, the three carrier patterns, NEGATION_BEFORE, NEGATION_AFTER, ELEMENT and the two FOOTNOTE patterns - is
+ * held in the judged set by its source and its flags, so a change to its own spelling reds the census; a reading one of its
+ * uses makes is claimed only as far as the controls (and, for the five line patterns, the counted trees: G2's two fixed trees,
+ * the filing tree and this census's base, read through git's objects at exact unit counts) pin it, and each clause names those
+ * pinned forms. The readers read white space as JavaScript's \s; a white-space kind is claimed at a reading only where a
+ * control (or a counted tree) holds it there, and each reading below names its kinds. Every other kind, and every other form,
+ * is in THE HOLES.
+ * THE UNITS. A markdown file (.md) is cut line by line (at each line feed; a carriage return before one stays on its line as
+ * white space, as C1's crlf-dash-line holds) by five patterns. A line FENCE reads (up to three white-space characters, then
+ * three or more backticks or three or more tildes; the controls hold fences of three backticks that three backticks or three
+ * tildes close (C1's fence and fence-closed-by-other-mark) and, in Q17's G-LIST-FENCE-4, a line four spaces in that opens no
+ * fence, and the counted trees hold fence lines indented by spaces) is a unit of its own and toggles the fence, whatever mark
  * opened it, and every line read while the fence is open is a unit of its own. Outside a fence, a line BLANK reads (white space
- * and '>' marks only) ends the open block; a line HEADING reads (up to three white-space characters, then one to six '#' and
- * white space or the line's end) or TABLE_ROW reads (white space, then '|') is a unit of its own; a line LIST_ITEM reads (white
- * space and '>' marks, then '-', '*', '+' or one to nine digits and '.' or ')', then white space) opens a block, and so does
- * any line read while no block is open; every other line joins the open block. No other line is a boundary: a setext heading, a
- * table row whose first character after its white space is not '|', a heading or a fence after four or more white-space
- * characters, and a heading, a row or a fence behind a '>' mark are read inside their block (R-UNCUT). A script (.ts, .js and
- * their m/c and x forms) is read through the TypeScript AST (a .ts, .mts, .cts or .tsx script parsed as TypeScript, a .js,
- * .mjs, .cjs or .jsx script as JavaScript, where a '<' after a name compares rather than opening type arguments): each string
- * literal by its cooked value, each regular-expression literal by its source, each template expression by its cooked parts (its
- * head and every later part, each with its escapes decoded) with the source text of each substitution's expression (from its
- * first token to its last, so a comment before or after the expression is a comment unit of its own) in place, each comment
- * (leading and same-line trailing ranges) and each identifier as CODE; JSX text (a .tsx, .jsx, .js, .mjs or .cjs script parses
- * JSX) is not a unit (R-JSX). Any other file is read line by line (a line of white space only is no unit). A file holding a NUL
- * byte is a binary and is not read; the two locks are set aside by name. Every unit and every finding names the line its unit
- * starts on: a markdown block's first line, a script unit's first token's line (a token after a line break included) and
- * another file's own line.
+ * and '>' marks only; the controls hold an empty line and a lone '>' mark) ends the open block; a line HEADING reads (up to
+ * three white-space characters, then one to six '#' and white space or the line's end; the controls hold two '#' marks and a
+ * space) or TABLE_ROW reads (white space, then '|'; the controls hold rows opening with '|', the counted trees rows indented by
+ * spaces) is a unit of its own; a line LIST_ITEM reads (white space and '>' marks, then '-', '*', '+' or one to nine digits and
+ * '.' or ')', then white space; the controls hold '-' items and, in crlf-dash-line, a carriage return after the marker, the
+ * counted trees '-' items and items numbered by one or two digits and '.', indented by spaces or behind '>' marks) opens a
+ * block, and so does any line read while no block is open; every other line joins the open block. No other line is a boundary:
+ * a setext heading, a table row whose first character after its white space is not '|', a heading or a fence after four or more
+ * white-space characters, and a heading, a row or a fence behind a '>' mark are read inside their block (R-UNCUT). A script
+ * (.ts, .js and their m/c and x forms) is read through the TypeScript AST (a .ts, .mts, .cts or .tsx script parsed as
+ * TypeScript, a .js, .mjs, .cjs or .jsx script as JavaScript, where a '<' after a name compares rather than opening type
+ * arguments; C2 and Q20 read a script of each of the eight kinds whose verdict turns on its grammar): each string literal by
+ * its cooked value, each regular-expression literal as a string unit, each template expression by its head and its parts after
+ * each substitution, cooked (an escape decoded in the head and in the last part, where C2 holds one), with the source text of
+ * each substitution's expression (from its first token to its last, so a comment before or after the expression is a comment
+ * unit of its own) in place, each comment (leading and same-line trailing ranges) and each identifier as CODE; JSX text (a
+ * .tsx, .jsx, .js, .mjs or .cjs script parses JSX) is not a unit (R-JSX). Any other file is read line by line, and a line of
+ * spaces only is no unit (M1's other-file-blank-line). A file holding a NUL byte at the place Q3 holds one (the 63rd character,
+ * on its first line) is a binary and is not read; the two locks, package-lock.json and vendor/dependency-lock.json, are set
+ * aside (Q2 holds the first, G1 counts both). Every unit and every finding names the line its unit starts on: a markdown
+ * block's first line, a script unit's first token's line (a token after a line break included) and another file's own line.
  * THE CARRIERS. A citing markdown unit (a Pi doc's) or a citing script string (a surfaced string) OWES both carriers in its own
  * carrier view; a citing comment, identifier or other line owes none. The status carrier is "design-stage" (the statement's
- * word) as a whole word in any case, or the producer's status literal "accepted design direction; documentation only" (any
- * case, marks exact, any white-space run between its words, a whole literal at both ends); the scope carrier is "non-effectful"
- * (the statement's word) as a whole word in any case (a whole word: no ASCII letter or digit, '_' or '-' touches it). A carrier
- * counts unless one of the two words before it holds a negation - not, never, nor, no, isn't, aren't, wasn't, weren't, formerly
- * or previously (the ASCII apostrophe), matched between word boundaries in any case, a word being a run of characters between
- * white space (any \s run: spaces, tabs, line breaks, carriage returns, vertical tabs and no-break spaces alike) in the text
- * before the carrier, so a lone punctuation mark and a mark touching the carrier's start each count as one - or "no longer",
- * "no more", "anymore" or "any more" (any white space between its words, a line break included) follows it after non-word
- * characters only; one carrier that counts qualifies the unit, whichever of its carriers it is. A unit carrying no status is a
- * status finding, no scope a scope finding.
+ * word) as a whole word in any case (the controls hold lower case, a capital and upper case), or the producer's status literal
+ * "accepted design direction; documentation only" (any case, a capital in the controls; marks exact; any white-space run
+ * between its words, spaces and a line feed in the controls; a whole literal at both ends); the scope carrier is
+ * "non-effectful" (the statement's word) as a whole word in any case (lower case, a capital and upper case in the controls). A
+ * whole word is one no ASCII letter or digit, '_' or '-' touches (the controls hold a '-' before and after the status word,
+ * after the scope word, and a letter before and after the literal). A carrier counts unless one of the two words before it
+ * holds a negation - not, never, nor, no, isn't, aren't, wasn't, weren't, formerly or previously (the ASCII apostrophe),
+ * matched between word boundaries (NEGATION_BEFORE's spelling; the controls spell not, never and no, each in lower case) - a
+ * word being a run of characters between white space (spaces, tabs, line feeds, carriage returns, vertical tabs and no-break
+ * spaces: the six kinds the controls hold) in the text before the carrier, so a lone punctuation mark and a mark touching the
+ * carrier's start each count as one; or unless "no longer", "no more", "anymore" or "any more" (NEGATION_AFTER's spelling: any
+ * white space between its words; the controls hold a space, a tab and a line feed, a hard line break among them, each phrase in
+ * lower case) follows it after non-word characters only. One carrier that counts qualifies the unit, whichever of its carriers
+ * it is. A unit carrying no status is a status finding, no scope a scope finding.
  * THE CARRIER VIEW (the wb-kku9.2 / wb-3cql F3 reading, ported): a markdown unit's carriers are read on what its rendered page
  * shows. marked's top-level tokens of the whole document place each line: a raw HTML block and a link reference definition show
  * nothing, a code block's lines FENCE reads (its delimiters, an info string included) show nothing and its other lines show as
  * code, and a list or quote holding an HTML token whose raw text crosses a blank line (a line of white space and '>' marks
- * only, as BLANK reads it, a no-break space and a form feed among the white space; at any depth and in any item) is opaque; a
- * line marked shares between a block and the blank-line token after it keeps the block's place. A unit holding an opaque line
- * is opaque, whatever its other lines show. A unit whose lines all show as code or nothing shows its code lines verbatim; every
- * other unit is rendered on its own (its lines that show nothing dropped, every leading space and tab removed however many (a
- * no-break space stays), every footnote definition line dropped and every footnote reference removed, the document's link
- * definitions preloaded), where an inline run shows its parts joined as written (emphasis inside a word, an escaped character
- * and a hard line break, which shows as white space, among them) and a table its header and its cells: HTML, images and their
- * alt text, definitions, link destinations and titles (an autolink's text, which is its destination, shows) and struck text
- * show no carrier, and a raw HTML element makes the view opaque, carrying nothing. A script string is shown as its cooked text,
- * and a template as its cooked parts (an escape in any part decoded) joined with nothing between them, each substitution shown
- * as nothing: a carrier only a substitution holds (a value, a literal, a call or a comment) does not qualify, and what a
- * substitution's value would show is not read (R-SUBST-VALUE).
+ * only: the controls hold an empty line and lines of spaces, tabs, '>' marks, no-break spaces and form feeds; in a nested list,
+ * a quote in a list, a quote in a quote and a later item, as the controls hold them) is opaque; a line marked shares between a
+ * block and the blank-line token after it keeps the block's place. A unit holding an opaque line is opaque, whatever its other
+ * lines show. A unit whose lines all show as code or nothing shows its code lines verbatim; every other unit is rendered on its
+ * own (its lines that show nothing dropped; its leading spaces and tabs removed so that a line the controls indent four, five,
+ * nine or twenty-four spaces or a tab renders as text, not as code, a no-break space staying; every footnote definition line
+ * dropped and its footnote reference removed, one per unit in the controls; the document's link definitions preloaded), where
+ * an inline run shows its parts joined as written (emphasis inside a word, an escaped character and a hard line break, which
+ * shows as white space, among them) and a table its header and its cells: HTML, images and their alt text, definitions, link
+ * destinations and titles (an autolink's text, which is its destination, shows) and struck text show no carrier, and a raw HTML
+ * element makes the view opaque, carrying nothing. A script string is shown as its cooked text, and a template as its head and
+ * its parts after each substitution, cooked (an escape decoded in the head and in the last part, where C2 holds one) and joined
+ * with nothing between them, each substitution shown as nothing: a carrier only a substitution holds (a value, a literal, a
+ * call or a comment) does not qualify, and what a substitution's value would show is not read (R-SUBST-VALUE).
  * THE BANNER AND THE EFFECT CLASS. A src script (a script under the top src/ directory) holding a citing unit (a string, a
  * comment or an identifier) is under the program's banner; a src file that is no script is not, whatever it holds, and nor is a
  * script under a src/ directory nested elsewhere. In a banner module every effectClass it sets - a property assignment (an
- * identifier key, a quoted key, or a computed key holding a LITERAL: a string literal or a template without substitutions, its
- * wrappers removed), a shorthand property, a class field with an initializer (a declared or optional field without one sets
- * nothing), or a plain assignment to a property access named effectClass or to an element access keyed by such a literal (the
- * target's parentheses, as, angle-bracket and non-null assertions and satisfies clauses removed, as a value's are) - whose
- * value, with its parentheses, its as, angle-bracket and non-null ('!') assertions and its satisfies clauses removed (nested in
- * any order), is not the literal "read" (quoted or a template), compared exactly (a space at either end, another case or any
- * further character makes another value), is an effect-class finding naming the value, white space included, at the line its
- * setting starts on (a non-literal value reads non-literal). The registry's descriptor type
- * (src/workbench/capability-registry.ts) holds read and the effect classes beside it.
- * THE BINDING. Every citing unit of the product scope, keyed by its path and its text with white space squeezed (every \s run,
- * line breaks, carriage returns and no-break spaces included, read as one space, the ends trimmed), must be held in BOUND
- * exactly - an entry holding the key's prefix, its suffix, a longer text, the key in another case, with other white space or
- * padded binds nothing and is stale - and every BOUND entry must key a citing unit: BOUND is empty because no unit cites today,
- * so the first mention lands unbound and the cut that adds it binds it here in the same commit, where its carriers are judged
- * by name.
+ * identifier key, a quoted key, or a computed key holding a LITERAL: a string literal or a template without substitutions,
+ * plain or in parentheses, the forms the controls hold), a shorthand property, a class field with an initializer (a declared or
+ * optional field without one sets nothing), or a plain assignment to a property access named effectClass or to an element
+ * access keyed by such a literal (plain or in parentheses; the target's parentheses, as, angle-bracket and non-null assertions
+ * and satisfies clauses removed, as a value's are) - whose value, with its parentheses, its as, angle-bracket and non-null
+ * ('!') assertions and its satisfies clauses removed (nested in any order), is not the literal "read" (quoted or a template),
+ * compared exactly (a space at either end, another case or any further character makes another value), is an effect-class
+ * finding naming the value, white space included, at the line its setting starts on (a non-literal value reads non-literal).
+ * The registry's descriptor type (src/workbench/capability-registry.ts) holds read and the effect classes beside it.
+ * THE BINDING. Every citing unit of the product scope, keyed by its path and its text with white space squeezed (a run of
+ * spaces, line feeds, CRLF line ends or no-break spaces read as one space, the kinds the controls hold; the ends trimmed), must
+ * be held in BOUND exactly - an entry holding the key's prefix, its suffix, a longer text, the key in another case, with other
+ * white space (a doubled space in the controls) or padded binds nothing and is stale - and every BOUND entry must key a citing
+ * unit: BOUND is empty because no unit cites today, so the first mention lands unbound and the cut that adds it binds it here
+ * in the same commit, where its carriers are judged by name.
+ * THE HOLES (stated, not claimed; ruling R-B160 routes their coverage to wb-021.9; every refusal #4 member named here leaves
+ * the census green by design but G16-N1, G16-N2 and G16-F1, whose edits as authored now red the judged set while the readings
+ * they reach stay holes at the pattern's use). THE UNITS: a NUL byte anywhere past the 63rd character (G16-U4, which reads the
+ * first 8000 characters only); another file's line of white space other than spaces - a tab, a no-break space, a carriage
+ * return (G16-U5) or any other \s kind; whether a file of a lock's name at another path is set aside (LOCKS names full paths,
+ * G16-U6 file names); the text a regular-expression unit holds beyond its citation (no control compares it); and, at the line
+ * patterns' uses, a white-space-only line BLANK reads and white space after a blank line's '>' mark, a heading's indentation,
+ * white space after its marks other than a space, its mark counts but two and its marks at the line's end, a fence tildes open,
+ * a fence of four or more marks and a fence indented by other white space than spaces, a list item opened by '*', '+' or ')',
+ * by a run of three to nine digits or with other white space after its marker than a space or a carriage return, and other
+ * white space than spaces before a table row's '|' or a list marker. THE CARRIERS: any case but lower in the negations and the
+ * trailing phrases (G16-N1 and G16-N2 as authored now red the judged set, which holds the flags; the same readings reached at
+ * the use stay green); the negation words no control spells (nor, isn't, aren't, wasn't, weren't, formerly, previously);
+ * between the window's words any \s kind beyond the six the controls hold (G16-K2: a form feed, an em space, an ideographic
+ * space); inside a trailing phrase any white space beyond a space, a tab and a line feed; inside the status literal any white
+ * space beyond spaces and a line feed; a letter, a digit or '_' touching either word, and a '-' before the scope word. THE
+ * CARRIER VIEW: inside an HTML span's blank line any \s kind beyond the five the controls hold (G16-V3: a vertical tab, an em
+ * space; a carriage return alike); a second footnote reference in a unit (G16-F1 as authored now reds the judged set; the
+ * reading reached at the use stays green); an indentation deeper than the controls' twenty-four spaces; an escape in a
+ * template's middle part, between two substitutions, in the view and in the text the citation reads. THE BANNER AND THE EFFECT
+ * CLASS: a computed key or an element access key behind an as, satisfies, non-null or angle-bracket wrapper (G16-EC6, G16-EC7).
+ * THE BINDING: inside a citing text any \s run beyond spaces, line feeds, CRLF line ends and no-break spaces (G16-B4: a form
+ * feed, a vertical tab, an em space; a tab alike).
  *
  * ROWS (rows P, E and C tile the statement in order and rows G and M the acceptance; each row's pin quotes tile its label).
  * P, the premise: P1 the producer record - 01-vision-decisions.md:20 opens the Non-goals section, :21's last non-goal is
@@ -171,7 +229,8 @@
  *    citation in a template's middle part and in its tail after one, carriers in a middle part and in the tail after one, a
  *    citation and the carriers spelled through an escape in a template's head or tail, a cooked escape, carriers split across
  *    two strings, a property key, a regular expression, a qa/, an examples/ and a root config string, and one text read by each
- *    grammar: in a .jsx script 'a < b > /APO/g' holds a citing regular expression, in a .ts script a citing identifier); C3 the
+ *    grammar: in a .jsx script 'a < b > /APO/g' holds a citing regular expression, in a .ts, an .mts and a .cts script a citing
+ *    identifier); C3 the
  *    citation reader, through the shared reader, on its spellings and its quiet words; C4 the status carriers on the carrier
  *    view (a negation two words before, across line breaks and a tab, across carriage returns and across no-break spaces in a
  *    doc and in a src string, a trailing "no longer" across a line break and "no more" across a hard break, and behind two lone
@@ -203,8 +262,9 @@
  *    not the judge's and on one whose are); the witnesses of R-SCOPE (its path list and the readings of the files it sets
  *    aside), R-RETILED (the folds it tiles) and R-CONSTANT-WITNESS (the run guard's reading of a stand-in) are structural.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
- * pins, every pin's witness, the producer block, the constants and every registered test title - is held to the out-of-file
- * roster (test/fixtures/apo-citation-status-roster.json); the residual families are held to the RESIDUALS line of this header.
+ * pins, every pin's witness, the producer block, the constants (every named pattern's source and flags among them) and every
+ * registered test title - is held to the out-of-file roster (test/fixtures/apo-citation-status-roster.json); the residual
+ * families are held to the RESIDUALS line of this header.
  * THE RUN GUARD: every pin's case runs under a counter that the judge (judgeFiles) and the export reader (beadRow) raise, and
  * its pin and the closing case red when neither ran while it ran, so a case that returns its witness as a constant without
  * reading reds; the judged-set case fires the guard both ways (a stand-in that runs no reader reads not ran, one that runs the
@@ -231,12 +291,16 @@
  * equal to the filesystem walk stays the narrowing guard for src/ and docs/); a seat-added vocabulary member (a negation word,
  * an effect-class key form) removed with every control naming it; the outside-anchor case or the closing case removed with its
  * roster title; the shared reader's own readings (wb-021.4's census pins them; a change there moves this census's controls,
- * which then red). Nor, in this file alone, a reader that tells the product scope's files from the files Q1 reads, the plants
- * or M1's scratch repository (by path, by root or by content): Q1 reads three citing test/ files through readScope at the
- * repository root, so a reader that neutralizes every file it reads from that root reds, and one that neutralizes only the
- * product scope's files does not.
+ * which then red); a named pattern's use replaced by another pattern while its own spelling stays (the judged set holds each
+ * named pattern's source and flags, not its uses, which are pinned only as far as the clauses name their pinned forms: the rest
+ * is in THE HOLES); a named pattern's source or flags changed in this file and the roster together (the judged set holds the
+ * roster's copy, so the controls and the counted trees then judge the changed reading, as far as they pin it). Nor, in this
+ * file alone, a reader that tells the product scope's files from the files Q1 reads, the plants or M1's scratch repository (by
+ * path, by root or by content): Q1 reads three citing test/ files through readScope at the repository root, so a reader that
+ * neutralizes every file it reads from that root reds, and one that neutralizes only the product scope's files does not.
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE test/ and .beads/ are not read (Q1); R-LOCKFILE the two dependency
- * locks are set aside by name (Q2); R-BINARY a file holding a NUL byte is not read (Q3); R-PATH a file's path is not read (Q4);
+ * locks are set aside (Q2); R-BINARY a file holding a NUL byte at the place Q3 holds one is not read (Q3); R-PATH a file's
+ * path is not read (Q4);
  * R-PARAPHRASE-CITE a citation through none of the reader's spellings does not cite (Q5); R-GLUED the slug's words run together
  * in one case do not cite (Q6); R-PLURAL the abbreviation's plural does not cite (Q7); R-ENCODED a spelling through a character
  * reference does not cite (Q8); R-SPLIT-SOURCE a src citation split across a concatenation does not cite (Q9);
@@ -940,7 +1004,7 @@ function tiles(text: string, quotes: readonly string[]): boolean {
   return /^[\s,;:().]*$/.test(text.slice(at));
 }
 
-/** The judged constants, held to the roster by the judged-set case. */
+/** The judged constants, held to the roster by the judged-set case: every named pattern by its source and, under flags, by its flags. */
 function constantsOf(): JsonValue {
   return json({
     carriers: { statusWord: STATUS_WORD, scopeWord: SCOPE_WORD, statusLiteral: STATUS_LITERAL },
@@ -964,6 +1028,24 @@ function constantsOf(): JsonValue {
     residuals: RESIDUALS,
     structuralResiduals: STRUCTURAL_RESIDUALS,
     selfRead: SELF_READ.source,
+    flags: {
+      STATUS_PATTERN: STATUS_PATTERN.flags,
+      SCOPE_PATTERN: SCOPE_PATTERN.flags,
+      STATUS_LITERAL_PATTERN: STATUS_LITERAL_PATTERN.flags,
+      NEGATION_BEFORE: NEGATION_BEFORE.flags,
+      NEGATION_AFTER: NEGATION_AFTER.flags,
+      BLANK: BLANK.flags,
+      LIST_ITEM: LIST_ITEM.flags,
+      HEADING: HEADING.flags,
+      TABLE_ROW: TABLE_ROW.flags,
+      FENCE: FENCE.flags,
+      MARKDOWN: MARKDOWN.flags,
+      SCRIPT: SCRIPT.flags,
+      ELEMENT: ELEMENT.flags,
+      FOOTNOTE_REFERENCE: FOOTNOTE.reference.flags,
+      FOOTNOTE_DEFINITION: FOOTNOTE.definition.flags,
+      SELF_READ: SELF_READ.flags,
+    },
   });
 }
 
@@ -1216,6 +1298,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "root-config", path: "vitest.x.config.ts", text: `export default { name: "${cite}" };`, causes: ["status", "scope"] },
       { id: "javascript-comparison-regex", path: "src/x.jsx", text: "export const r = a < b > /APO/g;\n", causes: ["status", "scope"] },
       { id: "typescript-comparison-regex", path: "src/x.ts", text: "export const r = a < b > /APO/g;\n", causes: [] },
+      { id: "typescript-comparison-regex-mts", path: "src/x.mts", text: "export const r = a < b > /APO/g;\n", causes: [] },
+      { id: "typescript-comparison-regex-cts", path: "src/x.cts", text: "export const r = a < b > /APO/g;\n", causes: [] },
     ];
     return json({ scope: "every script", floor: FLOORS.scripts, stringFloor: FLOORS.strings, schemaLiteralHolders: holders, findings: reading.findings, controls: controlsHold(controls) });
   },
