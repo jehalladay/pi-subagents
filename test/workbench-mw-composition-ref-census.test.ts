@@ -10,16 +10,18 @@
  * clauses, each verbatim without its separator, read back from that line in the judged-set case.
  *
  * FORM (cut #6, the FINAL cut: orchestrator ruling R-B113 binds it to the FAIL-CLOSED CORE after refusal #4 on the cut #5 that
- * R-B90 froze in the rule 14 shape, whose enumerated form it keeps; the full-surface reader work - the plants routed through
- * the LIVE CALLS, and multi-letter leads - is child wb-h6th's): ENUMERATED, NOT GENERAL.
+ * R-B90 froze in the rule 14 shape, whose enumerated form it keeps; then the cut of its structural-exit child wb-h6th, the
+ * full-surface reader work: the FAIL CLOSED live checks and T2's live verdict read in ROUTED CALLS, and the lead's empty and
+ * two-letter sides planted): ENUMERATED, NOT GENERAL.
  * Each reading below is claimed for exactly the forms it lists, and each listed form is either a PLANTED input whose whole
  * reading its pin's witness holds (the plant ids in parentheses, both sides: the form read and the form exempted) or a COMPUTED
  * SCAN, which plants every BMP code point (0000-ffff, each lone surrogate included) at one position and holds the code points
  * that read. A form this header does not list is not claimed. A known unread form is a named RESIDUAL with a pinned quiet row;
  * beside every reading, the FAIL CLOSED readers refuse every planted src file, manifest or lock that holds the package scope in
  * any form (FC-SCOPE) and every planted src module that names a composition field in any of the forms FC-FIELD reads, and find
- * no scope in today's src files, package.json or locks and no composition field in today's src modules (each live check a LIVE
- * CALL, held on today's tree only: PLANTS below); a form found later is a residual-list addition (rule 14), not a claim.
+ * no scope in today's src files, package.json or locks and no composition field in today's src modules (each live check the
+ * real part of a ROUTED CALL that reads the plants after the real files, held on today's tree only: PLANTS below); a form found
+ * later is a residual-list addition (rule 14), not a claim.
  *
  * MEASURED (read-only; the measuring seats' record, which no case re-reads beyond what rows T-C pin). Producer, first by seat
  * ws-06 of g10-work-s125 on 2026-10-28 and re-read by seat ws-02 of g10-work-s136 on 2026-10-29 (its remote tip re-read again by
@@ -48,25 +50,31 @@
  * count, or the constructions as "<line> <family> <forms> <fields>" ([] or 0 for a quiet row) - and so are the FAIL CLOSED hits
  * of every planted module, manifest and lock (T1's witness for its plants and the module kinds, T2's for its spelling and
  * reader plants, each B pin's for its own), so a reader that reads a planted input differently reds the compare. Planted
- * manifests, locks, documents, holders and literals go through the same reader functions as the real ones, each in a call of
- * its own, and every plant's FAIL CLOSED hits come from a per-plant call (closedHits, closedJson). Planted modules go through
- * the same call as the real src modules, after them, so a reader that stops before them misses them, in exactly four ROUTED
- * CALLS: T1's loads (importSites), T2's reader finder (literalSites, once per tool name), T2's spelling read, and B's
- * construction judge (judgeConstructions, in each B pin's familyReading). LIVE CALLS (R-B113: the live-reader hole, stated):
- * T1's manifest and lock names (declaredNames and lockNames over the real package.json and locks), FC-SCOPE's two live checks
- * (over the src files' texts, and over the texts of package.json and both locks), FC-FIELD's live check (liveFieldNames over
- * the src modules) and T2's live spelling verdict (and the readers' spelling reading, derived from it) are each a call no
- * planted input passes through. Every live reading that is empty today - those, and the live projections of the routed calls
- * (T1's loads, B's constructions) - is held on today's tree only: a real file that reads reds it, but an edit that empties it
- * (a live call that stops early or skips a file kind, a lock or any real file, a routed call that skips real files ahead of
- * the plants, or a live projection filtered to nothing) is NOT CLAIMED to be caught. A SRC MODULE (isModule) is a
- * src file whose name ends with .ts, .tsx, .mts, .cts, .js, .jsx, .mjs or .cjs (a declaration file's .d.ts among them:
- * kind-dts; one planted module per extension, kind-ts to kind-cjs, each read by T1's loads, T2's reader finder and B1; the same
- * text as a .ts.md file, kind-md, is read by none of them:
- * R-MODULE-KIND), parsed by its extension (scriptKind): TSX for .tsx, JSX for .jsx, JavaScript for .js, .mjs and .cjs,
- * TypeScript otherwise (planted: JSX only a JSX-enabled parse reads, kind-tsx-jsx and kind-jsx-jsx; `require < string >
- * (...)`, two comparisons to a JavaScript parse and a load to a TypeScript one, kind-js-comparison, kind-mjs-comparison and
- * kind-cjs-comparison; a <T> assertion only a TypeScript parse reads, forge-provider-angle-mts and forge-provider-angle-cts;
+ * manifests, locks, documents, holders and literals go through the same reader functions as the real ones, each in a call of its
+ * own (T1's manifest and lock names, C1's sentence reader, C2's holder readers), and planted manifests and locks also go through
+ * FC-SCOPE's manifest and lock check below, routed. Planted inputs go through the same call as the real ones, after them, so a
+ * reader that stops before them misses them, in exactly six ROUTED CALLS: T1's loads (importSites), T2's reader finder
+ * (literalSites, once per tool name), T2's spelling read (its real part T2's live verdict), B's construction judge
+ * (judgeConstructions, in each B pin's familyReading), the FAIL CLOSED reading of each pin's planted modules (failClosed, once in
+ * each of T1, T2 and B1-B3: closedHits over every listed src file, then that pin's plants; T1's call gives FC-SCOPE's live list,
+ * B1's FC-FIELD's) and FC-SCOPE's manifest and lock check (failClosedJson: the texts of package.json and both locks, then T1's
+ * planted manifests' and locks'). Three of them also hold the real inputs they are handed (wb-h6th): T2's spelling read and each
+ * FAIL CLOSED reading (both through routed) hold the order they read to every src file git lists, then the plants, and FC-SCOPE's
+ * manifest and lock check holds each real file's hits under its path in T1's witness, so a call handed fewer real files reds
+ * there. LIVE CALLS (the rest of R-B113's live-reader hole, stated): T1's manifest and lock names (declaredNames and lockNames
+ * over the real package.json and locks) are a call no planted input passes through. Every live reading that is empty (or quiet)
+ * today - T1's names, and the live projections of the routed calls (T1's loads, FC-SCOPE's and FC-FIELD's live lists, T2's live
+ * verdict and the readers' spelling reading derived from it, B's constructions) - is held on today's tree only: a real file that
+ * reads reds it, but an edit that narrows or empties it (a live call that stops early or skips a file kind, a lock or any real
+ * file, a reader that skips a real file it is handed, a routed call among T1's loads, T2's reader finder and B's judge that skips
+ * real files ahead of the plants, or a live projection filtered, whole or in part) is NOT CLAIMED to be caught. A SRC MODULE
+ * (isModule) is a src file whose name ends with .ts, .tsx, .mts, .cts, .js, .jsx, .mjs or .cjs (a declaration file's .d.ts among
+ * them: kind-dts; one planted module per extension, kind-ts to kind-cjs, each read by T1's loads, T2's reader finder and B1; the
+ * same text as a .ts.md file, kind-md, is read by none of them: R-MODULE-KIND), parsed by its extension (scriptKind): TSX for
+ * .tsx, JSX for .jsx, JavaScript for .js, .mjs and .cjs, TypeScript otherwise (planted: JSX only a JSX-enabled parse reads,
+ * kind-tsx-jsx and kind-jsx-jsx; `require < string > (...)`, two comparisons to a JavaScript parse and a load to a TypeScript
+ * one, kind-js-comparison, kind-mjs-comparison and kind-cjs-comparison; a <T> assertion only a TypeScript parse reads,
+ * forge-provider-angle-mts and forge-provider-angle-cts;
  * the kind is read from the last extension alone, so a .tsx, .jsx or .js further in parses as TypeScript:
  * forge-kind-tsx-infix, forge-kind-jsx-infix, forge-kind-js-infix). UNWRAP is one reader (isWrapper's five
  * WRAPPERS: a parenthesis, as, satisfies, ! and <T>, nested to any depth; planted two deep) at exactly these sites, each planted
@@ -123,26 +131,25 @@
  *    @mechanical/ package (import-other).
  *    T2 (the consumer): the src files whose text spells the program's words are exactly the bound consumers
  *    MW_COMPOSITION_CONSUMERS (empty today both ways: a module that starts consuming must be bound, and a bound path that spells
- *    nothing is stale), held by T2's live verdict, a LIVE CALL (today's tree only); each planted spelling is read in T2's
- *    spelling read, a ROUTED CALL. SPELLING: the program slug's words in order (read from the Citation), case-insensitive,
- *    anywhere in the text, with any run of code units other than an ASCII letter or digit between each pair, or none - the
- *    separator class [^A-Za-z0-9]*, read wide so the census fails closed on a separator nobody listed (planted: snake-case,
- *    embedded, spaced, program-slug, type-name and dotted spell, letter-separated does not; a COMPUTED SCAN plants every BMP code
- *    point between the words and holds the 62 ASCII letters and digits as the only code points that leave them unspelled) - read
- *    after every REQUIREMENT ID is blanked: each match of \b(?:MW-)?CAC-WORKFLOW-COMPOSITION-R\d+\b (global, case-sensitive)
- *    replaced by a space (blanked, so quiet: requirement-id with its MW- lead, requirement-id-bare without it,
- *    requirement-id-two-digit, requirement-id-twice, requirement-id-hyphen-after, requirement-id-hyphen-before and
- *    requirement-id-lead-embedded, all R-REQUIREMENT-ID; no id, so they spell: requirement-id-no-digits, requirement-id-embedded,
- *    requirement-id-suffixed and requirement-id-lowercase; the blank is a separator, so the words around a blanked id still
- *    spell: requirement-id-between; a COMPUTED SCAN plants every BMP code point just before and just after
- *    an id and holds the ones next to which the text spells: before, the 63 of \w; after, the 52 ASCII letters and the
- *    underscore, since a digit there lengthens the number). The two READERS the trigger names are found by their tool names in
- *    src modules (literalSites: a string literal or a template without substitution equal to the name, reader-literal and
- *    reader-template; a comment, a name longer on either side, a template with a substitution and an identifier so named are
- *    not one: reader-comment, reader-longer, reader-longer-prefix, reader-template-substitution and reader-identifier) and
- *    spell none of it (read from the live verdict, a LIVE CALL). A consumer that never spells the program (unspelled-consumer,
- *    R-UNSPELLED-CONSUMER) is not T2's;
- *    FC-FIELD refuses it.
+ *    nothing is stale), held by T2's live verdict, the real part of T2's spelling read, a ROUTED CALL that reads each planted
+ *    spelling after the src files (the verdict held on today's tree only). SPELLING: the program slug's words in order (read from
+ *    the Citation), case-insensitive, anywhere in the text, with any run of code units other than an ASCII letter or digit
+ *    between each pair, or none - the separator class [^A-Za-z0-9]*, read wide so the census fails closed on a separator nobody
+ *    listed (planted: snake-case, embedded, spaced, program-slug, type-name and dotted spell, letter-separated does not; a
+ *    COMPUTED SCAN plants every BMP code point between the words and holds the 62 ASCII letters and digits as the only code
+ *    points that leave them unspelled) - read after every REQUIREMENT ID is blanked: each match of
+ *    \b(?:MW-)?CAC-WORKFLOW-COMPOSITION-R\d+\b (global, case-sensitive) replaced by a space (blanked, so quiet: requirement-id
+ *    with its MW- lead, requirement-id-bare without it, requirement-id-two-digit, requirement-id-twice,
+ *    requirement-id-hyphen-after, requirement-id-hyphen-before and requirement-id-lead-embedded, all R-REQUIREMENT-ID; no id, so
+ *    they spell: requirement-id-no-digits, requirement-id-embedded, requirement-id-suffixed and requirement-id-lowercase; the
+ *    blank is a separator, so the words around a blanked id still spell: requirement-id-between; a COMPUTED SCAN plants every BMP
+ *    code point just before and just after an id and holds the ones next to which the text spells: before, the 63 of \w; after,
+ *    the 52 ASCII letters and the underscore, since a digit there lengthens the number). The two READERS the trigger names are
+ *    found by their tool names in src modules (literalSites: a string literal or a template without substitution equal to the
+ *    name, reader-literal and reader-template; a comment, a name longer on either side, a template with a substitution and an
+ *    identifier so named are not one: reader-comment, reader-longer, reader-longer-prefix, reader-template-substitution and
+ *    reader-identifier) and spell none of it (read from the live verdict, held on today's tree only). A consumer that never
+ *    spells the program (unspelled-consumer, R-UNSPELLED-CONSUMER) is not T2's; FC-FIELD refuses it.
  *  A, clause (a), ARMED: the contract a consumer must meet, run today on synthetic bindings and on every bound consumer (none).
  *    A consumer is read as one function from a composition (steps and sources, each row carrying its producer reference
  *    {provider, type, id, scope?} or not) to a projection {refs: [{row, ref}], unmapped: {count, rows: [{row, reason}]}}. Two
@@ -276,22 +283,24 @@
  *    cases judge the default gate's report with that
  *    judge: its AC case holds its TABLE row to FROZEN_W1 and its report judge holds every pin to this file's registered, passing,
  *    asserting cases.
- * FAIL CLOSED (R-B90: outside each enumerated reading the census refuses instead of passing; each reader held on the plants
- * through its per-plant call, and live through a LIVE CALL held on today's tree only):
+ * FAIL CLOSED (R-B90: outside each enumerated reading the census refuses instead of passing; wb-h6th: each reader reads the
+ * real files and then the plants in one ROUTED CALL - failClosed per pin, failClosedJson for T1's manifests and locks:
+ * PLANTS - its live list held on today's tree only):
  *   FC-SCOPE (T1's witness): holdsScope - a case-sensitive substring test of the derived scope, whatever form holds it (a load, a
  *     string, a comment; npm names are lower-case, and upper-scope holds none) - refuses every planted src file holding it,
  *     module or not (closedHits reads the text of any src path: kind-md), and every planted manifest and lock whose JSON text
- *     holds it (closedJson), so each T1 residual's quiet row whose text spells the scope is refused: R-LOAD-FORM's rows but
- *     require-template-substitution (its scope is assembled from a substitution), R-SPEC-FORM's jsr:, overrides and npm:-infix
- *     rows, R-LOCK-NESTING's, R-MODULE-KIND's .ts.md file and R-JSDOC-TYPE's module; live, no src file's text and no text of
- *     package.json or either lock holds the scope today.
+ *     holds it (failClosedJson, after the real files' texts as written), so each T1 residual's quiet row whose text spells the
+ *     scope is refused: R-LOAD-FORM's rows but require-template-substitution (its scope is assembled from a substitution),
+ *     R-SPEC-FORM's jsr:, overrides and npm:-infix rows, R-LOCK-NESTING's, R-MODULE-KIND's .ts.md file and R-JSDOC-TYPE's module;
+ *     live, no src file's text (T1's failClosed) and no text of package.json or either lock (each held under its path) holds the
+ *     scope today.
  *   FC-FIELD (B1's witness): fieldNames reads, with B's own field tests, each identifier or #private name, each string literal
  *     or template without substitution wherever it sits, and each id member of every planted src module (closedHits, through
- *     liveFieldNames over that one module), so every unread construction form over a named field is refused: R-INDIRECT's
- *     field-copy row, R-CALL-FORM's, R-PREFIX-CONSTANT's, R-COMPOUND's, R-FIELD-STRING's, every B2 residual's and
- *     R-UNSPELLED-CONSUMER's quiet rows; live, the src modules naming a composition field anywhere - not only inside a
- *     construction - are exactly MW_FIELD_MODULES (empty today; a module that starts naming one is refused until its own cut
- *     binds it there).
+ *     liveFieldNames over that one module, in its pin's failClosed after the src files), so every unread construction form over a
+ *     named field is refused: R-INDIRECT's field-copy row, R-CALL-FORM's, R-PREFIX-CONSTANT's, R-COMPOUND's, R-FIELD-STRING's,
+ *     every B2 residual's and R-UNSPELLED-CONSUMER's quiet rows; live, the src modules naming a composition field anywhere (B1's
+ *     failClosed) - not only inside a construction - are exactly MW_FIELD_MODULES (empty today; a module that starts naming one
+ *     is refused until its own cut binds it there).
  *   OPEN (no fail-closed reader refuses them; each residual's open rows are held to the roster and to the witness):
  *     R-PACKAGE-NAME, R-SPEC-FORM's github: row, R-LOAD-FORM's assembled specifier, R-REQUIREMENT-ID (a cited id is
  *     deliberately no consumer), R-SCOPE (clause (b)'s scope is src), R-INDIRECT's destructured id members (no field is
@@ -305,19 +314,20 @@
  * end follows, and sits once, and the words no quote covers form the runs; a label's lead is dropped at its start only and once
  * (lead-not-first, lead-twice, no-lead), in the single-letter form "(x) " alone: four code points, each a COMPUTED SCAN that
  * plants every BMP code point at its position and holds the ones read as a lead - "(" first, x one of the 26 lower-case ASCII
- * letters, ")" and then the space - while a lead whose x is no code point or several (GQ36's "(ab) ") is NOT CLAIMED (wb-h6th);
- * each rule planted both ways in MEMBERSHIP_PLANTS and each boundary a COMPUTED SCAN, the readings held to the roster's
- * membership block), and every pin is load-bearing, so a pin or a row removed from ROWS, IMPL, the frozen
- * literal and the roster together still reds; the constants the readers use are derived at run time from the same texts (the
- * type and the field words from the title, the program slug from the citation, the prefixes and the field word "composition"
- * from clause (b), the package scope from docs/07's MechanicalWorkflows section, the holder from wb-kku9.2's clause (c)),
- * never retyped; the producer block's filing fields are anchored to the same texts (the filing pin extends the pin the
- * Citation cites :6 at, which the title carries; both blob maps name exactly the files the Citation cites at that pin; the tip
- * spellings hold the cited program document; both :6 lines open with the filing quote's first sentence, which names the type;
- * the tip's README status is the design-only status the Citation reads; the repository is the one docs/07's
- * MechanicalWorkflows section cites as its current evidence); the
- * holder's row W1 and the live docs/07 sentence sit outside this file. Each pin's witness carries its own planted inputs, so a
- * pin rewritten to another's body reds the compare; the records case reads that every registered pin ran to its compare.
+ * letters, ")" and then the space - and an x of no code point, or of two opening with the letter a, is no lead (wb-h6th:
+ * lead-empty "() " and lead-multi-letter "(ab) " each keep their parentheses as a run, and a COMPUTED SCAN, leadSecond, plants
+ * every BMP code point as x's second after a and holds none read as a lead); each rule planted both ways in MEMBERSHIP_PLANTS and
+ * each boundary a COMPUTED SCAN, the readings held to the roster's membership block), and every pin is load-bearing, so a pin or
+ * a row removed from ROWS, IMPL, the frozen literal and the roster together still reds; the constants the readers use are derived
+ * at run time from the same texts (the type and the field words from the title, the program slug from the citation, the prefixes
+ * and the field word "composition" from clause (b), the package scope from docs/07's MechanicalWorkflows section, the holder from
+ * wb-kku9.2's clause (c)), never retyped; the producer block's filing fields are anchored to the same texts (the filing pin
+ * extends the pin the Citation cites :6 at, which the title carries; both blob maps name exactly the files the Citation cites at
+ * that pin; the tip spellings hold the cited program document; both :6 lines open with the filing quote's first sentence, which
+ * names the type; the tip's README status is the design-only status the Citation reads; the repository is the one docs/07's
+ * MechanicalWorkflows section cites as its current evidence); the holder's row W1 and the live docs/07 sentence sit outside this
+ * file. Each pin's witness carries its own planted inputs, so a pin rewritten to another's body reds the compare; the records
+ * case reads that every registered pin ran to its compare.
  * RESIDUALS (named; each has a pinned quiet row and a live twin among the planted inputs of the pin named; the judged-set case
  * holds every quiet row at nothing and every twin reading in the held witness, and each quiet row open or refused as its
  * residual's open list says):
@@ -387,27 +397,34 @@
  * resolved); a call of any function named createRequire makes a require (create-require-local); and the wide T2 separator and
  * both FAIL CLOSED readers refuse texts that load nothing and construct nothing (to FC-FIELD a type named Composition is a
  * field name too: import-type-template, import-type-reference) - each fails closed.
- * NOT CLAIMED: that an edit emptying a live reading is caught (PLANTS: the LIVE CALLS and the routed calls' live projections are
- * held on today's tree only; routing the plants through the live calls is wb-h6th's); a membership lead whose x is no code point
- * or several (wb-h6th); the armed contract is this census's reading of an unpublished type (a consumer whose own cut takes
- * another shape re-measures row A with it); whether W11 (wb-04s) or VC-3 (wb-w12) decided a consumer is read only through src and
- * the manifests; Git revisions and HyperUnix answers (the remote tip's widened list) are not clause (b)'s families; that a
- * producer reference resolves in its producer; that the listing excludes ignored files is held only live (no in-memory plant
- * reaches git); code points outside the BMP are not scanned (each is two surrogate code units, and every lone surrogate is
- * scanned); and the producer facts beyond the anchored ones (the remote tip, its commit time, the blob ids, the package spelling,
- * the measuring stamps) are the measuring seats' record, held to the literal only.
- * CURED (refusal #4 on cut #5, in R-B113's FAIL-CLOSED CORE form): U1 the plant-routing claim restated to exactly the four ROUTED
- * CALLS and the LIVE CALLS stated (PLANTS, T2, FAIL CLOSED, NOT CLAIMED; GQ15-GQ18 read the LIVE CALLS, which no plant passes
- * through); U2 the lead clause restated to its single-letter form, each of its four code points a COMPUTED SCAN (leadOpen, lead,
- * leadClose, leadGap) and its once side planted (lead-twice), GQ36's multi-letter side NOT CLAIMED; the fifth finding's LD1 named
- * in R-INDIRECT as open quiet rows (task-destructured-id, task-destructured-id-alias). And (refusal #3 on cut #4, each proven
- * red-first; the unmet items and riders it names): U1 a standalone parenthesized or wrapped + chain read zero times (outerOf; the
- * task-standalone and attempt-standalone forms, the task-inner exempt side); U2 the clause sides with no case - GN01 a separator
- * outside the named set (the separator read wide, its COMPUTED SCAN and dotted), GN02 a requirement prefix without digits
- * (requirement-id-no-digits and the boundary scan), GN03 a let or var createRequire declaration (create-require-let,
- * create-require-var); U3 #private field and holder names (memberName; task-private-field, task-private-holder,
- * task-private-member and the two exempt forms); the fifth finding's samples GN04 (task-token-colon and the prefix scans) and
- * GN06 (sentence-exclamation and the sentence scan); the sixth finding's GL3 (R-JSDOC-TYPE, refused by FC-SCOPE).
+ * NOT CLAIMED: that an edit narrowing or emptying a live reading is caught (PLANTS: T1's names, a LIVE CALL, and the routed
+ * calls' live projections are held on today's tree only); a membership lead whose x is two code points not opening with the
+ * letter a, or three or more; a lead after a leading code point (" (x) ", which no case pins: wb-kym4's follow-up); the armed
+ * contract is this census's reading of an unpublished type (a consumer whose own cut takes another shape re-measures row A with
+ * it); whether W11 (wb-04s) or VC-3 (wb-w12) decided a consumer is read only through src and the manifests; Git revisions and
+ * HyperUnix answers (the remote tip's widened list) are not clause (b)'s families; that a producer reference resolves in its
+ * producer; that the listing excludes ignored files is held only live (no in-memory plant reaches git); code points outside the
+ * BMP are not scanned (each is two surrogate code units, and every lone surrogate is scanned); and the producer facts beyond the
+ * anchored ones (the remote tip, its commit time, the blob ids, the package spelling, the measuring stamps) are the measuring
+ * seats' record, held to the literal only.
+ * CURED (wb-h6th, the rule-19 structural-exit child R-B113 filed with refusal #4's U1 and U2, each proven red-first): U1 the FAIL
+ * CLOSED live checks and T2's live verdict read the plants in the same call as the real files - failClosed per pin (FC-SCOPE's
+ * src texts, FC-FIELD), failClosedJson (FC-SCOPE's package.json and lock texts) and T2's spelling read (its real part the
+ * verdict) - so GQ15-GQ18, re-placed on those calls, red, as do a stop before the plants and a list short of the real files on
+ * each; U2 the lead's empty and two-letter sides planted (lead-empty, lead-multi-letter) and x's second code point scanned
+ * (leadSecond), so GQ36 reds. Before it (cut #6, refusal #4 on cut #5, in R-B113's FAIL-CLOSED CORE form): U1 the plant-routing
+ * claim restated to the four ROUTED CALLS of that cut with the LIVE CALLS stated (GQ15-GQ18 read the LIVE CALLS, which no plant
+ * passed through then); U2 the lead clause restated to its single-letter form, each of its four code points a COMPUTED SCAN
+ * (leadOpen, lead, leadClose, leadGap) and its once side planted (lead-twice), GQ36's multi-letter side left to wb-h6th; the
+ * fifth finding's LD1 named in R-INDIRECT as open quiet rows (task-destructured-id, task-destructured-id-alias). And (refusal #3
+ * on cut #4, each proven red-first; the unmet items and riders it names): U1 a standalone parenthesized or wrapped + chain read
+ * zero times (outerOf; the task-standalone and attempt-standalone forms, the task-inner exempt side); U2 the clause sides with no
+ * case - GN01 a separator outside the named set (the separator read wide, its COMPUTED SCAN and dotted), GN02 a requirement
+ * prefix without digits (requirement-id-no-digits and the boundary scan), GN03 a let or var createRequire declaration
+ * (create-require-let, create-require-var); U3 #private field and holder names (memberName; task-private-field,
+ * task-private-holder, task-private-member and the two exempt forms); the fifth finding's samples GN04 (task-token-colon and the
+ * prefix scans) and GN06 (sentence-exclamation and the sentence scan); the sixth finding's GL3 (R-JSDOC-TYPE, refused by
+ * FC-SCOPE).
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: none (every plant is in memory; the only spawn
  * is git ls-files; the bead export, docs, the locks and src are only read).
@@ -635,7 +652,8 @@ function unquoted(label: string, quotes: readonly string[]): { runs: string[]; m
  * Planted labels for the pin-membership readers (quoteStarts, unquoted), each rule both ways: a quote ends at a word end, or
  * before a comma, semicolon or full stop and then white space or the end; it starts at a word start; it sits once; the words no
  * quote covers form the runs; a label's single-letter "(x) " lead is dropped at its start only and once (each of its four code
- * points a COMPUTED SCAN in membershipReading; an x of no or several code points is not claimed: wb-h6th).
+ * points a COMPUTED SCAN in membershipReading; an x of no code point, or of two opening with a, is no lead: lead-empty,
+ * lead-multi-letter and the leadSecond scan, wb-h6th).
  */
 const MEMBERSHIP_PLANTS: Readonly<Record<string, { readonly label: string; readonly quotes: readonly string[] }>> = {
   tiled: { label: "(x) alpha beta gamma", quotes: ["alpha beta", "gamma"] },
@@ -651,6 +669,8 @@ const MEMBERSHIP_PLANTS: Readonly<Record<string, { readonly label: string; reado
   "leading-run": { label: "(x) alpha gamma", quotes: ["gamma"] },
   "lead-not-first": { label: "alpha (c) gamma", quotes: ["alpha", "gamma"] },
   "lead-twice": { label: "(x) (y) alpha gamma", quotes: ["alpha", "gamma"] },
+  "lead-empty": { label: "() alpha gamma", quotes: ["alpha", "gamma"] },
+  "lead-multi-letter": { label: "(ab) alpha gamma", quotes: ["alpha", "gamma"] },
   "no-lead": { label: "alpha gamma", quotes: ["alpha", "gamma"] },
   "one-char-quotes": { label: "(x) a b", quotes: ["a", "b"] },
   "empty-quote": { label: "(x) alpha  beta", quotes: ["", "alpha", "beta"] },
@@ -670,6 +690,7 @@ function membershipReading(): JsonValue {
       leadOpen: BMP.filter(code => unquoted(`${pointOf(code)}x) alpha`, ["alpha"]).runs.length === 0).map(hex4),
       leadClose: BMP.filter(code => unquoted(`(x${pointOf(code)} alpha`, ["alpha"]).runs.length === 0).map(hex4),
       leadGap: BMP.filter(code => unquoted(`(x)${pointOf(code)}alpha`, ["alpha"]).runs.length === 0).map(hex4),
+      leadSecond: BMP.filter(code => unquoted(`(a${pointOf(code)}) alpha`, ["alpha"]).runs.length === 0).map(hex4),
     },
   };
 }
@@ -1484,8 +1505,53 @@ function fieldNames(module: Module): string[] {
 /** A module's fail-closed hits, src paths only: "scope" when its text holds the scope (any src file), and "field <line> <name>" per field it names (a src module). */
 const closedHits = (module: Module): string[] =>
   inSrc(module.path) ? [...(holdsScope(module.text) ? ["scope"] : []), ...liveFieldNames([module]).map(site => `field ${site.slice(module.path.length + 1)}`)] : [];
-/** A planted manifest's or lock's fail-closed hit: "scope" when its JSON text holds the scope. */
-const closedJson = (value: unknown): string[] => (holdsScope(JSON.stringify(value)) ? ["scope"] : []);
+/** A text's FC-SCOPE hit: "scope" when it holds the scope (a manifest's or lock's text as written, or a planted one's JSON text). */
+const closedText = (text: string): string[] => (holdsScope(text) ? ["scope"] : []);
+/** A planted module (or a planted path outside src) under the id its pin's witness reads it by. */
+interface Plant extends Module {
+  readonly id: string;
+}
+const plantsOf = (table: Readonly<Record<string, Module>>): Plant[] => Object.entries(table).map(([id, module]) => ({ id, ...module }));
+/**
+ * A ROUTED CALL over src (wb-h6th): ONE call hands a reader every src file git lists, then the planted inputs after them, and
+ * holds the order it read - the listing, then the plants - so a call handed fewer real files, or one that stops before the
+ * plants, reds; the real files' readings and the plants' come back apart, by position.
+ */
+function routed<T>(plants: readonly Module[], reader: (module: Module) => T, call: string): { real: { readonly path: string; readonly reading: T }[]; planted: T[] } {
+  const listing = gitSrc();
+  const read = [...srcFiles(), ...plants].map(module => ({ path: module.path, reading: reader(module) }));
+  expect(read.map(entry => entry.path), `${call} reads every listed src file, then the planted inputs, in one call`).toEqual([...listing, ...plants.map(plant => plant.path)]);
+  return { real: read.slice(0, listing.length), planted: read.slice(listing.length).map(entry => entry.reading) };
+}
+/**
+ * The FAIL CLOSED reading of one pin's planted modules, a ROUTED CALL (wb-h6th): FC-SCOPE and FC-FIELD (closedHits) read every
+ * listed src file, then the plants, in one call; its real part gives the live lists - the src files holding the scope, and
+ * "<path>:<line> <name>" per composition field a src module names - and each plant's hits are its own entry.
+ */
+function failClosed(plants: readonly Plant[]): { scope: string[]; fields: string[]; controls: Record<string, string[]> } {
+  const { real, planted } = routed(plants, closedHits, "the FAIL CLOSED reading");
+  return {
+    scope: real.filter(entry => entry.reading.includes("scope")).map(entry => entry.path),
+    fields: real.flatMap(entry => entry.reading.filter(hit => hit.startsWith("field ")).map(hit => `${entry.path}:${hit.slice("field ".length)}`)),
+    controls: Object.fromEntries(plants.map((plant, index) => [plant.id, planted[index] ?? []])),
+  };
+}
+/**
+ * FC-SCOPE over the manifests and locks, a ROUTED CALL (wb-h6th): the real files at realPaths (package.json and both locks, their
+ * texts as written), then T1's planted manifests and locks (their JSON texts), read by closedText in one call over one list;
+ * each real file's hits come back under its path (T1's witness holds them, so a call that skips one reds) and each plant's
+ * under its id.
+ */
+function failClosedJson(realPaths: readonly string[]): { manifests: Record<string, string[]>; controls: Record<string, string[]> } {
+  const plants = [...Object.entries(MANIFEST_PLANTS), ...Object.entries(LOCK_PLANTS)].map(([id, value]) => ({ id, text: JSON.stringify(value) }));
+  const read = [...realPaths.map(path => ({ id: path, text: readRepo(path) })), ...plants].map(entry => ({ id: entry.id, hits: closedText(entry.text) }));
+  const real = read.slice(0, read.length - plants.length);
+  const planted = read.slice(read.length - plants.length);
+  return {
+    manifests: Object.fromEntries(real.map(entry => [entry.id, entry.hits])),
+    controls: Object.fromEntries(plants.map((plant, index) => [plant.id, planted[index]?.hits ?? []])),
+  };
+}
 /**
  * The src modules bound to name a composition field: empty today. A module that starts naming one is refused (FC-FIELD) until
  * its own cut binds it here; B judges its constructions as before.
@@ -1998,16 +2064,16 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     for (const [id, plant] of Object.entries(MANIFEST_PLANTS)) controls[id] = declaredNames(plant).filter(isMwName);
     for (const [id, plant] of Object.entries(LOCK_PLANTS)) controls[id] = lockNames(plant).names.filter(isMwName);
     for (const plant of plants) controls[plant.id] = sites.filter(site => plantOf(site) === plant.id && isMwName(specOf(site))).map(specOf);
-    // FAIL CLOSED (FC-SCOPE), two LIVE CALLS: no src file's text and no manifest's or lock's text holds the scope today, whatever
-    // form holds it; no planted input passes through them (the plants' hits are the per-plant calls below).
-    const scopeSrc = src.filter(module => holdsScope(module.text)).map(module => module.path);
-    const scopeManifests = ["package.json", ...locks.map(lock => lock.path)].filter(path => holdsScope(readRepo(path)));
-    expect(scopeSrc, "FC-SCOPE: no src file holds the scope").toEqual([]);
-    expect(scopeManifests, "FC-SCOPE: no manifest or lock holds the scope").toEqual([]);
-    const closed: Record<string, string[]> = {};
-    for (const [id, plant] of Object.entries(MANIFEST_PLANTS)) closed[id] = closedJson(plant);
-    for (const [id, plant] of Object.entries(LOCK_PLANTS)) closed[id] = closedJson(plant);
-    for (const plant of plants) closed[plant.id] = closedHits(plant);
+    // FAIL CLOSED (FC-SCOPE), two ROUTED CALLS (wb-h6th): every listed src file's text, then the planted modules' (failClosed),
+    // and package.json's and both locks' texts, then the planted manifests' and locks' (failClosedJson); no real file holds the
+    // scope today, whatever form holds it, and each plant's hits come from the same call as the real files'.
+    const closedSrc = failClosed(plants);
+    const closedManifests = failClosedJson(["package.json", ...locks.map(lock => lock.path)]);
+    expect(closedSrc.scope, "FC-SCOPE: no src file holds the scope").toEqual([]);
+    expect(
+      Object.entries(closedManifests.manifests).flatMap(([path, hits]) => (hits.length > 0 ? [path] : [])),
+      "FC-SCOPE: no manifest or lock holds the scope",
+    ).toEqual([]);
     return {
       scope: CONSTANTS.mwScope,
       manifest: declaredNames(manifest).filter(isMwName),
@@ -2015,13 +2081,16 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       lockVersions: Object.fromEntries(locks.map(lock => [lock.path, typeof lock.version === "number" ? lock.version : null])),
       imports: sites.filter(site => plantOf(site) === undefined && isMwName(specOf(site))),
       controls,
-      closed: { src: scopeSrc, manifests: scopeManifests, controls: closed },
+      closed: { src: closedSrc.scope, manifests: closedManifests.manifests, controls: { ...closedManifests.controls, ...closedSrc.controls } },
     };
   },
   T2: () => {
     const src = srcFiles();
-    // T2's live verdict, a LIVE CALL: no planted input passes through it (the planted spellings are read in the read below).
-    const spelling = src.filter(module => spells(module.text)).map(module => module.path);
+    // T2's spelling read, a ROUTED CALL (wb-h6th): every listed src file, then the planted spellings after them, in one call; its
+    // real part is T2's live verdict.
+    const plants = Object.entries(SPELLING_PLANTS).map(([id, text]) => ({ id, path: plantPath(id), text }));
+    const read = routed(plants, module => spells(module.text), "T2's spelling read");
+    const spelling = read.real.filter(entry => entry.reading).map(entry => entry.path);
     expect(spelling, "the src files spelling the program's words are exactly the bound consumers").toEqual(MW_COMPOSITION_CONSUMERS.map(entry => entry.module).sort(byName));
     // One call per tool name reads the real modules, then the planted readers (and the module-kind plants) after them.
     const readerPlants = [...Object.entries(READER_PLANTS).map(([id, text]) => ({ id, path: plantPath(id), text })), ...Object.entries(MODULE_PLANTS).map(([id, module]) => ({ id, ...module }))];
@@ -2029,11 +2098,9 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const found = Object.fromEntries(TRIGGER_READERS.map(name => [name, literalSites([...src, ...readerPlants], name)]));
     const readers = Object.fromEntries(Object.entries(found).map(([name, sites]) => [name, sites.filter(path => !isReaderPlant(path))]));
     for (const [name, sites] of Object.entries(readers)) expect(sites.length, `the ${name} reader is found by its tool name`).toBeGreaterThan(0);
-    const plants = Object.entries(SPELLING_PLANTS).map(([id, text]) => ({ id, path: plantPath(id), text }));
-    const read = [...src, ...plants].filter(module => spells(module.text)).map(module => module.path);
-    const controls = Object.fromEntries(plants.map(plant => [plant.id, read.filter(path => path === plant.path).length]));
+    const controls = Object.fromEntries(plants.map((plant, index) => [plant.id, read.planted[index] === true ? 1 : 0]));
     const readerControls = Object.fromEntries(readerPlants.map(plant => [plant.id, Object.entries(found).flatMap(([name, sites]) => (sites.includes(plant.path) ? [name] : []))]));
-    const closed = Object.fromEntries([...plants, ...Object.entries(READER_PLANTS).map(([id, text]) => ({ id, path: plantPath(id), text }))].map(plant => [plant.id, closedHits(plant)]));
+    const closed = failClosed([...plants, ...Object.entries(READER_PLANTS).map(([id, text]) => ({ id, path: plantPath(id), text }))]).controls;
     return {
       slug: CONSTANTS.programSlug,
       spelling,
@@ -2055,32 +2122,32 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(walk.files, "a filesystem walk of src lists what git lists").toEqual(listed);
     expect(walk.links, "no symlink sits under src").toEqual([]);
     expect(listed.filter(isModule).length, "the walk reads at least SRC_FLOOR modules").toBeGreaterThanOrEqual(SRC_FLOOR);
-    // FAIL CLOSED (FC-FIELD), a LIVE CALL: the src modules naming a composition field anywhere are exactly the bound ones (none
-    // today); no planted input passes through it (the plants' hits are closedHits per module).
-    const fieldSites = liveFieldNames(srcFiles());
-    expect([...new Set(fieldSites.map(site => site.slice(0, site.indexOf(":"))))].sort(byName), "FC-FIELD: the src modules naming a composition field are exactly MW_FIELD_MODULES").toEqual([...MW_FIELD_MODULES].sort(byName));
+    // FAIL CLOSED (FC-FIELD), a ROUTED CALL (wb-h6th): every listed src file, then the planted modules, in one call (failClosed);
+    // the src modules naming a composition field anywhere are exactly the bound ones (none today).
     const plants = { ...TASK_PLANTS, ...MODULE_PLANTS };
+    const closed = failClosed(plantsOf(plants));
+    expect([...new Set(closed.fields.map(site => site.slice(0, site.indexOf(":"))))].sort(byName), "FC-FIELD: the src modules naming a composition field are exactly MW_FIELD_MODULES").toEqual([...MW_FIELD_MODULES].sort(byName));
     return {
       prefixes: [...CONSTANTS.taskPrefixes],
       idFields: [...CONSTANTS.idFields],
       compositionWord: CONSTANTS.compositionWord,
       ...familyReading("task", plants),
       scan: prefixScan(TASK_PREFIX, CONSTANTS.taskPrefixes),
-      closed: { src: fieldSites, bound: [...MW_FIELD_MODULES], controls: Object.fromEntries(Object.entries(plants).map(([id, module]) => [id, closedHits(module)])) },
+      closed: { src: closed.fields, bound: [...MW_FIELD_MODULES], controls: closed.controls },
     };
   },
   B2: () => ({
     providers: Object.keys(PROVIDER_FAMILY).filter(name => PROVIDER_FAMILY[name] === "forge"),
     keys: [...ID_KEYS.forge],
     ...familyReading("forge", FORGE_PLANTS),
-    closed: { controls: Object.fromEntries(Object.entries(FORGE_PLANTS).map(([id, module]) => [id, closedHits(module)])) },
+    closed: { controls: failClosed(plantsOf(FORGE_PLANTS)).controls },
   }),
   B3: () => ({
     prefixes: [...CONSTANTS.attemptPrefixes],
     keys: [...ID_KEYS.attempt],
     ...familyReading("attempt", ATTEMPT_PLANTS),
     scan: prefixScan(ATTEMPT_PREFIX, CONSTANTS.attemptPrefixes),
-    closed: { controls: Object.fromEntries(Object.entries(ATTEMPT_PLANTS).map(([id, module]) => [id, closedHits(module)])) },
+    closed: { controls: failClosed(plantsOf(ATTEMPT_PLANTS)).controls },
   }),
   C1: () => {
     const docs = readRepo(DOCS07);
