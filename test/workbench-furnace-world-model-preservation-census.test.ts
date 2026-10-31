@@ -12,8 +12,9 @@
  * MEASURED (read-only). By the cutting seat, 2026-10-28, at base 7a0ab7f and again at 1bb7b05; by the cut #2 respin seat,
  * 2026-10-28, at trunk 5fbe25e; by the cut #3 respin seat, 2026-10-29, at trunk b3d410f (no src file, vendored SDK or docs/12
  * changed from 5fbe25e to b3d410f); the wb-40zp seats, 2026-10-30, read the src tree, vendor/, package.json, package-lock.json
- * and docs/12 byte-identical from b3d410f to trunk ee48709 and, for the respin, to trunk 42ab54d (empty git diffs), so these
- * readings carry over. Producer (Furnace's own tree, read with git show at the filing pin 0f791db71b9d and at Furnace main
+ * and docs/12 byte-identical from b3d410f to trunk ee48709 and, for the respin, to trunk 42ab54d, and the wb-40zp cut #3 seat,
+ * 2026-10-31, read them so to trunk 89109cd (empty git diffs), so these readings carry over. Producer (Furnace's own tree, read
+ * with git show at the filing pin 0f791db71b9d and at Furnace main
  * 0d41031, and re-read so by the cut #3 seat on 2026-10-29 with main still at 0d41031: the same three blobs at both; this
  * census never reads it): docs/programs/world-model-trace-adapter-2026-10-18/README.md (blob 8649ef6e) reads "DESIGN
  * ONLY, not a new executor, scheduler or live trace exporter." at :2 and "Redact secret-bearing logs" at :6; 01-architecture.md
@@ -101,33 +102,44 @@
  * complete read and under each one INCOMPLETE fact, change none of the outputs O2 reads (the reading, the last reading before
  * and after close(), every observe() yield, the Run snapshot, the topology, the projection and the reply) and reach none of
  * them. E1 the log evidence presentation of either stream (STREAMS) keeps every HELD line redacted and redacts every CORPUS
- * class. S1 the furnace_observe tool body, read through the AST of src/index.ts, replies with
- * textResult(sanitizeWorkbenchJsonText(reading)) for the reading its FurnaceObserver returned and refreshes the projection with
- * that reading's Run snapshot (the projection it refreshes is read by its name only). It names that reading exactly three
- * times, its binding and the arguments of observer.projectionSnapshot and of that sanitizer, so it hands the reading to no
- * other call and binds, iterates, writes or returns it nowhere else; its textResult calls and its return statements are exactly
- * its two literal refusals, the sanitized reading and its sanitized error text; and it writes nothing at all (no assignment,
- * increment, decrement, delete, for-of or for-in target). S1 reads the names its data path calls through by binding, as the
- * TypeScript checker binds src/index.ts alone: the callee of each textResult reply, the plain callee of each call a reply is
- * handed (the reading's sanitizer and the error text's), every identifier the body spells reading, the reading's receiver
- * (reading = [await] <receiver>.<method>(...)) and the class that receiver is built from (<receiver> = [await] new
- * <Class>(...)), each read from the one declaration its binding has. Each resolves to one declaration that no assignment,
- * increment, decrement, for-of or for-in target and no destructuring-assignment name in the file writes (read through
- * parentheses and the as, angle-bracket, satisfies, non-null and instantiation wrappers): textResult to the module's own
+ * class. S1 the furnace_observe tool's execute body, read through the AST of src/index.ts (S1 runs none of it), which names the
+ * tool in one object literal, its registration. The body binds the reading as `const reading = await observer.snapshot()` and
+ * holds the refresh `projection.refresh(observer.projectionSnapshot(reading))` and the data reply
+ * `return textResult(sanitizeWorkbenchJsonText(reading))`. It names that reading exactly three times, its binding and the
+ * arguments of observer.projectionSnapshot and of that sanitizer, so it hands the reading to no other call and binds, iterates,
+ * writes or returns it nowhere else; its textResult calls and its return statements are exactly its two literal refusals, the
+ * sanitized reading and its sanitized error text; its new expressions build the Furnace client and the FurnaceObserver; and it
+ * writes nothing at all: no assignment (compound or destructuring included), increment or decrement (prefix or postfix),
+ * delete, or for-of or for-in target that is an expression rather than a declared variable. S1 also reads the names its data
+ * path calls through by binding, as the TypeScript checker binds src/index.ts alone: the callee of each textResult reply, the
+ * plain callee of each call a reply is handed (the reading's sanitizer and the error text's), every identifier the body spells
+ * reading, the reading's receiver (`reading = [await] <receiver>.<method>(...)`) and the class that receiver is built from
+ * (`<receiver> = [await] new <Class>(...)`), each read from the one variable declaration its binding has (any other declaration
+ * or initializer reads no receiver or class, so S1 reds). Each resolves to one declaration: textResult to the module's own
  * function, the two sanitizers to their redaction.ts imports, the reading and its receiver each to one const of the body, and
- * FurnaceObserver to its furnace-observer.ts import. Anywhere in the file the reading's binding is referenced only as those two
- * arguments, the receiver's only as the object its snapshot, projectionSnapshot and close methods are called on, and
- * FurnaceObserver's only as the class of that one new expression; and textResult's declaration reads TEXT_RESULT (whitespace
- * removed), so it returns the text it is handed, unchanged, as its one content item. A rebinding, shadow or write of one of
- * these names, a data-path name bound elsewhere or to nothing, a property write on the receiver or on FurnaceObserver or its
- * prototype made through these bindings, and an edit of textResult's declaration (whitespace aside) each red S1 (the refusal's
- * G24 witnesses and this cut's members of the class, planted on the furnace_observe slice of the file). O1 holds that the two
- * calls leave the reading unchanged, so, in what S1 reads, R1 and O1 read the text the execute body's reply carries: both call
- * that sanitizer and O1 builds its readings with that class, each imported from the module src/index.ts imports it from, with
- * the census's own client and options standing in for the tool's. S1 reads src/index.ts alone and runs none of it, so what
- * another module does (to the class, its prototype or the sanitizer's module) and code held only in a string escape it, as do
- * two families inside src/index.ts that S1 names and pins as quiet rows: the class's prototype changed through another binding
- * of the class, and a built-in the sanitizer or the observer uses changed (JSON.stringify replaced, say). A1 the outside
+ * FurnaceObserver to its furnace-observer.ts import. Every reference the checker binds to textResult's binding or to either
+ * sanitizer's, anywhere in the file, is that declaration or the callee of a call, so none of the three is written, handed on or
+ * exported anywhere in the file (a write in any form is such a reference: the refusals' assignment, compound and logical
+ * assignment, increment, decrement, for-of, for-in, array- and object-pattern, rest and default witnesses below); the reading's
+ * binding is referenced only as its declaration and those two arguments, the receiver's only as its declaration and the object
+ * its snapshot, projectionSnapshot and close methods are called on, and FurnaceObserver's only as its import and the class of
+ * that one new expression (an export specifier is read as the local binding it exports, and a shorthand property's name as the
+ * binding its value names); and textResult's declaration reads TEXT_RESULT (whitespace removed), so it returns the text it is
+ * handed, unchanged, as its one content item. Each witness of the class (the refusals' G24 and GP15 witnesses and this census's
+ * own members, planted on the furnace_observe slice of the file) changes exactly the readings it names. O1 holds that the two
+ * calls leave the reading unchanged, so R1 and O1 read the text the data reply carries when the body reaches it: both call that
+ * sanitizer and O1 builds its readings with that class, each imported from the module src/index.ts imports it from, with the
+ * census's own client and options standing in for the tool's. S1 reads src/index.ts alone and runs none of it, so what another
+ * module does (to the class, its prototype or the sanitizer's module) escapes it, as do the families inside src/index.ts that
+ * S1 names, each with pinned quiet rows (a plant S1 reads exactly as the slice does, beside what the body's call reader or the
+ * module's statements show of it, so a quiet row whose plant is silenced reds): CONTROL FLOW, whether the body reaches its
+ * refresh and its data reply, which S1 does not read (a throw before the reading or between the refresh and the data reply,
+ * conditional or not, which the catch turns into the error reply; a call that throws; an await that never settles; a loop that
+ * never ends; a throw in the finally block); the class's prototype changed through another binding of the class or of its
+ * module (an alias import or a namespace import); the projection the body refreshes, read by its name only (a body-local
+ * projection standing in for the module's); a built-in the sanitizer or the observer uses changed (JSON.stringify replaced,
+ * say); a reference the checker binds to no symbol (the import-equals alias import zzAlias = textResult); and code held only in
+ * a string. A1 the outside
  * anchors: the export title's clauses, snake-case fields and requirement id; the export notes'
  * FRN-WM-003 phrases, per-field acceptance list, citation, gating artifact and ACCEPTANCE; docs/12's redaction-floor sentence,
  * read as one whole sentence of a paragraph that stands directly under its '## Current diagnostic protections' heading (before
@@ -151,8 +163,9 @@
  * quiet verdict without reading its files is census-internal and not caught, and deleting one probe file together with its
  * witness row survives, the landing-668 quoted-member pair included, since both are literals of this file; disclosed). S1's
  * binding readings are read from src/index.ts and held to literals (its resolved names, its references and TEXT_RESULT), so
- * deleting an entry from one reds S1, killed through the src; its witness and unread rows are literals of this file, so
- * deleting one row together with its expected reading survives (disclosed).
+ * deleting an entry from one reds S1, killed through the src; its witness and quiet rows are literals of this file, so
+ * deleting one row together with its expected reading survives (disclosed), while silencing a quiet row's plant reds it (its
+ * liveness reading).
  *
  * RESIDUALS (named families of forms THE READERS do not read, each with its pinned quiet row in Q1; the families known at this
  * cut, not a complete list): R-RENAMED, a record shipped only under a name, with fields under names, that hold no reading's run
@@ -305,7 +318,7 @@ const CASES = {
   E1: { rows: ["redaction", "privacy"], title: "the log evidence presentation of either stream keeps a producer's redaction redacted and redacts every corpus class" },
   S1: {
     rows: ["surfaces"],
-    title: "the furnace_observe tool replies with sanitizeWorkbenchJsonText(reading), untouched, as its only data reply and projects that reading's Run snapshot",
+    title: "the furnace_observe body holds sanitizeWorkbenchJsonText(reading), untouched, as its only data reply, beside the refresh with that reading's Run snapshot (whether the body reaches them is not read)",
   },
   A1: { rows: [], title: "outside anchors: the export title and notes, docs/12's floor sentence, the observer's operands, NativeSnapshot, RunState and OutputStream" },
   F1: { rows: [], title: "FROZEN SHAPE (standing rule 16): the rows' pin counts and every table's ids" },
@@ -321,9 +334,9 @@ function pinned(id: CaseId, body: () => void | Promise<void>, timeout?: number):
   const rows: readonly string[] = CASES[id].rows;
   it(`${id} [${rows.join(", ")}]: ${CASES[id].title}`, { timeout }, body);
 }
-/** S1's own budget: it binds a source once per witness and unread plant (about thirty); measured 0.7-1.4 s alone at load1
- * 250-295 and 1.9-6.6 s inside four parallel 193-195-file runs at load1 170-420, once past vitest's 5 s default. A budget, not
- * an assertion. */
+/** S1's own budget: it binds a source once per witness and quiet plant (about seventy) and reads every identifier of
+ * src/index.ts twice; measured 1.9-3.8 s alone at load1 150-250, past vitest's 5 s default under load. A budget, not an
+ * assertion. */
 const S1_TIMEOUT_MS = 30_000;
 
 /** A word run read with any run of non-alphanumeric characters (or none) between its words, in any case. */
@@ -1063,10 +1076,11 @@ interface ToolBody {
   /** Every variable initializer, as `name=initializer`. */
   readonly bindings: string[];
   /** Every textResult reply's shape: a string-literal argument reads "<literal>", a call reads as its callee with each argument
-   * read as "reading" when it is that identifier and "..." otherwise. */
+   * read as "reading" when it is that identifier and "..." otherwise, and any other argument as written. */
   readonly replies: string[];
-  /** The target of every assignment (a destructuring assignment included), increment, decrement and delete, and of every
-   * for-of or for-in statement that writes an expression rather than declaring a variable. */
+  /** The target of every assignment (a compound one included, and a destructuring assignment's whole pattern), increment and
+   * decrement (prefix or postfix) and delete, and of every for-of or for-in statement that writes an expression rather than
+   * declaring a variable. */
   readonly writes: string[];
   /** Every return statement's value, a nested function's included: a textResult call read in its reply shape, any other value
    * as written (whitespace removed), and a bare return as "<none>". */
@@ -1077,20 +1091,21 @@ interface ToolBody {
   /** The names the body's data path calls through, read from the body and resolved by binding, as the TypeScript checker binds
    * this one source (no other file and no lib): the callee of every textResult reply, the plain callee of every call a reply is
    * handed, every identifier the body spells `reading`, the reading's receiver (read from the one declaration a reading's
-   * binding has: `reading = [await] <receiver>.<method>(...)`) and the class that receiver is built from (read from the one
-   * declaration the receiver's binding has: `<receiver> = [await] new <Class>(...)`). For each binding, sorted: each of its
-   * declarations by its kind, an import as `import <imported name> from "<specifier>"` (`import type` when type-only, `default`
-   * or `*` for a default or namespace import), a function, class, variable (const, let, var, using or await using), catch,
-   * parameter, enum, namespace, interface, type or type-parameter declaration by that kind, a destructured name by its holder's
-   * kind and "destructuring"; then as "write" each assignment, increment, decrement, for-of or for-in target and each
-   * destructuring-assignment name in the source that is bound to it, read through parentheses and the as, angle-bracket,
-   * satisfies, non-null and instantiation wrappers; each where it stands, in the "body", at "module" scope, in an "enclosing"
-   * function or "nested" in another. A name bound to nothing in the source reads as a global. */
+   * binding has, a variable declaration `reading = [await] <receiver>.<method>(...)`) and the class that receiver is built from
+   * (read likewise from `<receiver> = [await] new <Class>(...)`); any other declaration or initializer reads no receiver or
+   * class. For each binding, sorted: each of its declarations by its kind, an import specifier as `import <imported name> from
+   * "<specifier>"` (`import type` when the import is type-only), a variable as its declaration's keyword as written (const,
+   * let, var or await using, say), and any other declaration by its TypeScript syntax kind (FunctionDeclaration or
+   * BindingElement, say); each where it stands, in the "body", at "module" scope, in an "enclosing" function or "nested" in
+   * another. A name bound to nothing in the source reads as a global. */
   readonly resolved: string[];
-  /** Every reference anywhere in the source to the binding the reading, its receiver and the receiver's class each resolve to,
-   * in that order and in source order within each, by what it does: "binding" where it is declared, "write" where it is
-   * written, "argument of <callee>", "receiver of <method>" where it is the object a method is called on, "class of new",
-   * "callee", "type reference", and "in <parent>" anywhere else (whitespace removed); each where it stands, as above. */
+  /** Every reference the checker binds anywhere in the source to the binding the reading, its receiver and the receiver's class
+   * each resolve to, in that order and in source order within each; then, in source order, every reference to the binding a
+   * reply's callee or a callee a reply is handed resolves to that is neither one of its declarations nor the callee of a call.
+   * Each by what it does: "binding" where it is declared, "argument of <callee>" where it is a call's argument, "callee" where
+   * it is called, "class of new" where it is the class of a new expression, "receiver of <method>" where it is the object a
+   * method is called on, and "in <parent>" anywhere else (whitespace removed); each where it stands, as above. A shorthand
+   * property's name reads as the binding its value names, and an export specifier's local name as the local binding it exports. */
   readonly references: string[];
   /** The text (whitespace removed) of each declaration of the binding each textResult reply's callee resolves to. */
   readonly replier: string[];
@@ -1125,7 +1140,7 @@ function toolBody(name: string, text = readFileSync(join(REPO, INDEX_SOURCE), "u
   const updates: readonly ts.SyntaxKind[] = [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken];
   const returns: string[] = [];
   const mentions: string[] = [];
-  const isTextResult = (node: ts.Expression): node is ts.CallExpression => ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "textResult";
+  const isTextResult = (node: ts.Node): node is ts.CallExpression & { readonly expression: ts.Identifier } => ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "textResult";
   const returned = (value: ts.Expression | undefined): string => {
     if (value === undefined) return "<none>";
     return isTextResult(value) ? `textResult(${value.arguments.map(shape).join(",")})` : squeeze(value);
@@ -1149,20 +1164,26 @@ function toolBody(name: string, text = readFileSync(join(REPO, INDEX_SOURCE), "u
     ts.forEachChild(node, collect);
   };
   collect(body);
-  // The binding reader (landing 668 F3; the wb-40zp refusal #1 U1-U3): the names the body's data path calls through, read from
-  // the body, each resolved to its binding as the TypeScript checker binds this one source (no other file and no lib is read).
-  // Its readings are read when first asked for, so a caller that reads only the body's shape builds no checker.
+  // The binding reader (landing 668 F3; the wb-40zp refusals #1 and #2): the names the body's data path calls through, read from
+  // the body, each resolved to its binding as the TypeScript checker binds this one source (no other file and no lib is read),
+  // and every reference the checker binds to those bindings anywhere in the source. Its readings are read when first asked for,
+  // so a caller that reads only the body's shape builds no checker.
   const root: ts.Node = body;
   const readBindings = (): { readonly resolved: string[]; readonly references: string[]; readonly replier: string[] } => {
     const checker = checkerOf(source);
-    /** The binding a name resolves to (for a shorthand property, the binding its value names, not the property). */
-    const symbolOf = (name: ts.Identifier): ts.Symbol | undefined =>
-      ts.isShorthandPropertyAssignment(name.parent) && name.parent.name === name ? checker.getShorthandAssignmentValueSymbol(name.parent) : checker.getSymbolAtLocation(name);
+    /** The binding a name resolves to: for a shorthand property's name, the binding its value names; for an export specifier's
+     * local name, the local binding it exports; otherwise the checker's symbol at the name. */
+    const symbolOf = (name: ts.Identifier): ts.Symbol | undefined => {
+      const parent = name.parent;
+      if (ts.isShorthandPropertyAssignment(parent) && parent.name === name) return checker.getShorthandAssignmentValueSymbol(parent);
+      if (ts.isExportSpecifier(parent) && (parent.propertyName ?? parent.name) === name) return checker.getExportSpecifierLocalTargetSymbol(parent);
+      return checker.getSymbolAtLocation(name);
+    };
     const replySites: ts.Identifier[] = [];
     const handedSites: ts.Identifier[] = [];
     const readingSites: ts.Identifier[] = [];
     const sites = (node: ts.Node): void => {
-      if (ts.isCallExpression(node) && isTextResult(node) && ts.isIdentifier(node.expression)) {
+      if (isTextResult(node)) {
         replySites.push(node.expression);
         for (const argument of node.arguments) if (ts.isCallExpression(argument) && ts.isIdentifier(argument.expression)) handedSites.push(argument.expression);
       }
@@ -1170,12 +1191,13 @@ function toolBody(name: string, text = readFileSync(join(REPO, INDEX_SOURCE), "u
       ts.forEachChild(node, sites);
     };
     sites(root);
-    const unwrap = (node: ts.Expression): ts.Expression => (ts.isAwaitExpression(node) || ts.isParenthesizedExpression(node) ? unwrap(node.expression) : node);
-    /** The initializer of a binding declared exactly once, by a plain identifier, with an initializer; otherwise nothing. */
+    /** The initializer of a binding with exactly one declaration, a variable declaration with an initializer, read past one
+     * await; otherwise nothing. */
     const initializerOf = (binding: ts.Symbol | undefined): ts.Expression | undefined => {
       const declarations = binding?.declarations ?? [];
       const only = declarations.length === 1 ? declarations[0] : undefined;
-      return only !== undefined && ts.isVariableDeclaration(only) && ts.isIdentifier(only.name) && only.initializer !== undefined ? unwrap(only.initializer) : undefined;
+      if (only === undefined || !ts.isVariableDeclaration(only) || only.initializer === undefined) return undefined;
+      return ts.isAwaitExpression(only.initializer) ? only.initializer.expression : only.initializer;
     };
     const receiverSites = [...new Set(readingSites.map(symbolOf))].flatMap(binding => {
       const read = initializerOf(binding);
@@ -1185,80 +1207,23 @@ function toolBody(name: string, text = readFileSync(join(REPO, INDEX_SOURCE), "u
       const built = initializerOf(binding);
       return built !== undefined && ts.isNewExpression(built) && ts.isIdentifier(built.expression) ? [built.expression] : [];
     });
-    const allSites = [...replySites, ...handedSites, ...readingSites, ...receiverSites, ...classSites];
-    const followed = new Set(allSites.map(site => site.text));
-    /** The names an assignment target writes: a name, or each name of a destructuring-assignment pattern (defaults and rests
-     * included), read through parentheses and the as, angle-bracket, satisfies, non-null and instantiation wrappers. */
-    const targets = (node: ts.Expression): ts.Identifier[] => {
-      if (ts.isIdentifier(node)) return [node];
-      if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isExpressionWithTypeArguments(node)) {
-        return targets(node.expression);
-      }
-      if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) return targets(node.left);
-      if (ts.isArrayLiteralExpression(node)) return node.elements.flatMap(element => targets(ts.isSpreadElement(element) ? element.expression : element));
-      if (ts.isObjectLiteralExpression(node)) {
-        return node.properties.flatMap(property =>
-          ts.isShorthandPropertyAssignment(property) ? [property.name] : ts.isPropertyAssignment(property) ? targets(property.initializer) : ts.isSpreadAssignment(property) ? targets(property.expression) : [],
-        );
-      }
-      return [];
-    };
-    const targeted = new Set<ts.Node>();
-    const writtenAt = new Map<ts.Symbol, ts.Identifier[]>();
-    const wrote = (written: readonly ts.Identifier[]): void => {
-      for (const target of written) {
-        if (!followed.has(target.text)) continue;
-        targeted.add(target);
-        const binding = symbolOf(target);
-        if (binding !== undefined) writtenAt.set(binding, [...(writtenAt.get(binding) ?? []), target]);
-      }
-    };
-    const scan = (node: ts.Node): void => {
-      if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) wrote(targets(node.left));
-      if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && updates.includes(node.operator)) wrote(targets(node.operand));
-      if ((ts.isForOfStatement(node) || ts.isForInStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) wrote(targets(node.initializer));
-      ts.forEachChild(node, scan);
-    };
-    scan(source);
     /** Where a node stands: in the body, at module scope, in a function that encloses the body, or nested in another function. */
     const where = (node: ts.Node): string => {
       if (node.pos >= root.pos && node.end <= root.end) return "body";
       for (let up: ts.Node | undefined = node.parent; up !== undefined; up = up.parent) if (ts.isFunctionLike(up)) return up.pos <= root.pos && root.end <= up.end ? "enclosing" : "nested";
       return "module";
     };
-    const named: readonly (readonly [string, (node: ts.Node) => boolean])[] = [
-      ["function", node => ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node)],
-      ["class", node => ts.isClassDeclaration(node) || ts.isClassExpression(node)],
-      ["enum", ts.isEnumDeclaration],
-      ["namespace", ts.isModuleDeclaration],
-      ["interface", ts.isInterfaceDeclaration],
-      ["type", ts.isTypeAliasDeclaration],
-      ["type parameter", ts.isTypeParameterDeclaration],
-    ];
-    const variableKind = (declaration: ts.VariableDeclaration): string => {
-      if (ts.isCatchClause(declaration.parent)) return "catch";
-      const flags = ts.getCombinedNodeFlags(declaration);
-      if ((flags & ts.NodeFlags.AwaitUsing) === ts.NodeFlags.AwaitUsing) return "await using";
-      if (flags & ts.NodeFlags.Using) return "using";
-      return flags & ts.NodeFlags.Const ? "const" : flags & ts.NodeFlags.Let ? "let" : "var";
-    };
-    const imported = (clause: ts.ImportClause, what: string, typeOnly: boolean): string =>
-      `import ${typeOnly || clause.phaseModifier === ts.SyntaxKind.TypeKeyword ? "type " : ""}${what} from ${clause.parent.moduleSpecifier.getText(source)}`;
-    /** A declaration by its kind: an import by what it imports and from where, a destructured name by its holder's kind. */
+    /** A declaration by its kind: an import specifier by the name it imports and its module specifier ("import type" when the
+     * import is type-only), a variable by its declaration's keyword as written, and any other declaration by its syntax kind. */
     const kindOf = (declaration: ts.Declaration): string => {
-      if (ts.isImportSpecifier(declaration)) return imported(declaration.parent.parent, (declaration.propertyName ?? declaration.name).text, declaration.isTypeOnly);
-      if (ts.isImportClause(declaration)) return imported(declaration, "default", false);
-      if (ts.isNamespaceImport(declaration)) return imported(declaration.parent, "*", false);
-      if (ts.isImportEqualsDeclaration(declaration)) return `import = ${declaration.moduleReference.getText(source)}`;
-      if (ts.isVariableDeclaration(declaration)) return variableKind(declaration);
-      if (ts.isParameter(declaration)) return "parameter";
-      if (ts.isBindingElement(declaration)) {
-        let holder: ts.Node = declaration;
-        while (ts.isBindingElement(holder) || ts.isObjectBindingPattern(holder) || ts.isArrayBindingPattern(holder)) holder = holder.parent;
-        return `${ts.isVariableDeclaration(holder) ? variableKind(holder) : ts.isParameter(holder) ? "parameter" : ts.SyntaxKind[holder.kind]} destructuring`;
+      if (ts.isImportSpecifier(declaration)) {
+        const imported = (declaration.propertyName ?? declaration.name).text;
+        return `import ${ts.isTypeOnlyImportDeclaration(declaration) ? "type " : ""}${imported} from ${declaration.parent.parent.parent.moduleSpecifier.getText(source)}`;
       }
-      return named.find(([, is]) => is(declaration))?.[0] ?? ts.SyntaxKind[declaration.kind];
+      if (ts.isVariableDeclarationList(declaration.parent)) return source.text.slice(declaration.parent.getStart(source), declaration.parent.declarations[0].getStart(source)).trim();
+      return ts.SyntaxKind[declaration.kind];
     };
+    const allSites = [...replySites, ...handedSites, ...readingSites, ...receiverSites, ...classSites];
     const entries = new Map<ts.Symbol | string, string>();
     for (const site of allSites) entries.set(symbolOf(site) ?? `global ${site.text}`, site.text);
     const resolved: string[] = [];
@@ -1266,38 +1231,36 @@ function toolBody(name: string, text = readFileSync(join(REPO, INDEX_SOURCE), "u
       const declarations = typeof binding === "string" ? [] : (binding.declarations ?? []);
       if (declarations.length === 0) resolved.push(`${name}: global (no binding in the file)`);
       for (const declaration of declarations) resolved.push(`${name}: ${kindOf(declaration)} (${where(declaration)})`);
-      for (const target of typeof binding === "string" ? [] : (writtenAt.get(binding) ?? [])) resolved.push(`${name}: write (${where(target)})`);
     }
     resolved.sort();
-    /** What a reference does where it stands. */
+    /** What a reference does where it stands (an identifier a call holds as no argument is that call's callee). */
     const roleOf = (name: ts.Identifier, binding: ts.Symbol): string => {
       const parent = name.parent;
       if ((binding.declarations ?? []).some(declaration => ts.getNameOfDeclaration(declaration) === name)) return "binding";
-      if (targeted.has(name)) return "write";
-      if ((ts.isCallExpression(parent) || ts.isNewExpression(parent)) && parent.arguments?.some(argument => argument === name)) return `argument of ${squeeze(parent.expression)}`;
-      if (ts.isPropertyAccessExpression(parent) && parent.expression === name && ts.isCallExpression(parent.parent) && parent.parent.expression === parent) return `receiver of ${parent.name.text}`;
+      if (ts.isCallExpression(parent) && parent.arguments.some(argument => argument === name)) return `argument of ${squeeze(parent.expression)}`;
+      if (ts.isCallExpression(parent)) return "callee";
       if (ts.isNewExpression(parent) && parent.expression === name) return "class of new";
-      if (ts.isCallExpression(parent) && parent.expression === name) return "callee";
-      if (ts.isTypeReferenceNode(parent) || ts.isTypeQueryNode(parent)) return "type reference";
+      if (ts.isPropertyAccessExpression(parent) && ts.isCallExpression(parent.parent) && parent.parent.expression === parent) return `receiver of ${parent.name.text}`;
       return `in ${squeeze(parent)}`;
     };
-    const groups = [readingSites, receiverSites, classSites].map(group => ({
-      names: new Set(group.map(site => site.text)),
-      bindings: new Set(group.flatMap(site => symbolOf(site) ?? [])),
-      found: [] as string[],
-    }));
+    const group = (named: readonly ts.Identifier[]) => ({ bindings: new Set(named.flatMap(site => symbolOf(site) ?? [])), found: [] as string[] });
+    /** The reading's, the receiver's and the class's references, each kept whatever it does. */
+    const traced = [readingSites, receiverSites, classSites].map(group);
+    /** The callables' references (a reply's callee and each callee a reply is handed), kept unless a declaration or a callee. */
+    const callables = group([...replySites, ...handedSites]);
     const follow = (node: ts.Node): void => {
-      if (ts.isIdentifier(node)) {
-        for (const group of groups) {
-          if (!group.names.has(node.text)) continue;
-          const binding = symbolOf(node);
-          if (binding !== undefined && group.bindings.has(binding)) group.found.push(`${node.text}: ${roleOf(node, binding)} (${where(node)})`);
+      const binding = ts.isIdentifier(node) ? symbolOf(node) : undefined;
+      if (binding !== undefined && ts.isIdentifier(node)) {
+        for (const held of [...traced, callables]) {
+          if (!held.bindings.has(binding)) continue;
+          const role = roleOf(node, binding);
+          if (held !== callables || (role !== "binding" && role !== "callee")) held.found.push(`${node.text}: ${role} (${where(node)})`);
         }
       }
       ts.forEachChild(node, follow);
     };
     follow(source);
-    const references = groups.flatMap(group => group.found);
+    const references = [...traced, callables].flatMap(held => held.found);
     const replier = [...new Set(replySites.map(symbolOf))].flatMap(binding => (binding?.declarations ?? []).map(squeeze));
     return { resolved, references, replier };
   };
@@ -1346,6 +1309,18 @@ function observeSlice(text: string): string {
   }
   const kept = source.statements.filter(node => ts.isImportDeclaration(node) || (ts.isFunctionDeclaration(node) && node.name?.text === "textResult"));
   return [...kept.map(node => node.getText(source)), piece].join("\n");
+}
+/** How many object literals in a source name the tool (a `name` property whose value is that string literal), each a place
+ * toolBody could read an execute body from. */
+function registrations(name: string, text: string): number {
+  const source = parsed(text);
+  let found = 0;
+  const visit = (node: ts.Node): void => {
+    if (ts.isObjectLiteralExpression(node) && node.properties.some(property => ts.isPropertyAssignment(property) && property.name.getText(source) === "name" && ts.isStringLiteral(property.initializer) && property.initializer.text === name)) found += 1;
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found;
 }
 /** A text with each find replaced once; a find that does not stand exactly once throws, so a plant never misses its place. */
 function planted(text: string, edits: readonly (readonly [string, string])[]): string {
@@ -1766,19 +1741,32 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       ["in view=reading", "in reading.attempts"],
       ["{content:view}", "<none>"],
     ]);
+    // Each form the write, call, mention and reply readers' docs state, live on a planted body: a declared loop variable is no
+    // write while its member assignment is one, and a called reading and a bare reply argument read as written.
+    expect(aliased?.writes, "a declared loop variable is no write, and its member assignment is one").toStrictEqual(["item.ordinal"]);
+    const called = toolBody("zz-called", 'tools.push({ name: "zz-called", execute: async () => { reading(); return textResult(reading); } });');
+    expect([called?.mentions, called?.replies], "a called reading is in its call, and a bare reply argument reads as written").toStrictEqual([
+      ["in reading()", "argument of textResult"],
+      ["textResult(reading)"],
+    ]);
+    expect(tool?.calls.filter(call => call.startsWith("new")).map(call => call.slice(0, call.indexOf("(") + 1)), "its new expressions build the Furnace client and the FurnaceObserver").toStrictEqual([
+      "newFurnace(",
+      "newFurnaceObserver(",
+    ]);
     expect(tool?.writes, "and the body writes nothing at all: no assignment, increment, decrement, delete, for-of or for-in target").toStrictEqual([]);
-    // The binding reader (landing 668 F3; the wb-40zp refusal #1 U1-U3): every name the body's data path calls through, resolved
-    // as the TypeScript checker binds src/index.ts alone, is one declaration that nothing in the file writes; the reading, its
-    // receiver and the receiver's class are referenced only where the data path uses them; and textResult hands its text on.
-    expect(tool?.resolved, "the data path resolves to the module's textResult, its redaction.ts and furnace-observer.ts imports and two body consts, written nowhere").toStrictEqual([
+    // The binding reader (landing 668 F3; the wb-40zp refusals #1 and #2): every name the body's data path calls through, resolved
+    // as the TypeScript checker binds src/index.ts alone, is one declaration; the reading, its receiver and the receiver's class are
+    // referenced only where the data path uses them; textResult and the two sanitizers are referenced only as their declarations
+    // and the callees of calls; and textResult hands its text on.
+    expect(tool?.resolved, "the data path resolves to the module's textResult, its redaction.ts and furnace-observer.ts imports and two body consts").toStrictEqual([
       'FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
       "observer: const (body)",
       "reading: const (body)",
       'sanitizeWorkbenchJsonText: import sanitizeWorkbenchJsonText from "./workbench/redaction.js" (module)',
       'sanitizeWorkbenchText: import sanitizeWorkbenchText from "./workbench/redaction.js" (module)',
-      "textResult: function (module)",
+      "textResult: FunctionDeclaration (module)",
     ]);
-    expect(tool?.references, "the reading, its receiver and the receiver's class are referenced nowhere else in src/index.ts").toStrictEqual([
+    expect(tool?.references, "the reading, its receiver and its class are referenced nowhere else in src/index.ts, and the callables only as callees").toStrictEqual([
       "reading: binding (body)",
       "reading: argument of observer.projectionSnapshot (body)",
       "reading: argument of sanitizeWorkbenchJsonText (body)",
@@ -1800,15 +1788,19 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       "+resolved sanitizeWorkbenchJsonText: const (body)",
       '-resolved sanitizeWorkbenchJsonText: import sanitizeWorkbenchJsonText from "./workbench/redaction.js" (module)',
     ]);
-    // The refusal's witnesses (G24-S1-*, as its PREP planted them) and this cut's members of the same class, rebuilt on the
-    // furnace_observe slice of src/index.ts, which reads as the whole file does; each with exactly what it changes in S1's
-    // binding readings (+ read beyond the slice, - no longer read).
+    // The refusals' witnesses (G24-S1-* from refusal #1, GP15-* from refusal #2, as their PREPs planted them) and this census's
+    // own members of the class, rebuilt on the furnace_observe slice of src/index.ts, which reads as the whole file does; each
+    // with exactly what it changes in S1's binding readings (+ read beyond the slice, - no longer read).
     const slice = observeSlice(index);
     const base = toolBody("furnace_observe", slice);
     expect(readings(base), "the furnace_observe slice reads as src/index.ts does").toStrictEqual(readings(tool));
-    const TRY = "        try {\n          const reading = await observer.snapshot();";
+    const TRY = "        try {";
     const READING = "          const reading = await observer.snapshot();";
     const REFRESH = "          projection.refresh(observer.projectionSnapshot(reading));";
+    const REPLY = "          return textResult(sanitizeWorkbenchJsonText(reading));";
+    const CLOSE = "observer.close();";
+    const SCOPE = "        const scope = observerScope(ctx);";
+    const BUILT = "const observer = new FurnaceObserver(client, {";
     const RETURN = '  return { content: [{ type: "text" as const, text: msg }], details: details as any };';
     const HEAD = "function textResult(msg: string, details?: AgentDetails) {";
     const REGISTRATION = 'pi.registerTool(defineTool({\n      name: "furnace_observe",';
@@ -1817,10 +1809,14 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
     const STAND_IN = '{ snapshot: async () => ({ ...(await real.snapshot()), completeness: "complete" as const }), projectionSnapshot: real.projectionSnapshot.bind(real) }';
     const atModule = (code: string): readonly [string, string] => ["\nexport default function (", `\n${code}\nexport default function (`];
     const inBody = (code: string): readonly [string, string] => [TRY, `        ${code}\n${TRY}`];
+    const beforeClient = (code: string): readonly [string, string] => [SCOPE, `        ${code}\n${SCOPE}`];
+    expect(registrations("furnace_observe", index), "src/index.ts names furnace_observe in one object literal, the registration S1 reads").toBe(1);
+    expect(registrations("furnace_observe", planted(slice, [["\nexport default function (", '\nexport const zzTools = [{ name: "furnace_observe", execute: async () => textResult("{}") }];\nexport default function (']])), "and a second literal naming it is counted").toBe(2);
+    expect(() => planted(slice, [["zz-no-such-anchor", ""]]), "a plant whose anchor does not stand exactly once is refused").toThrow("a plant's anchor must stand exactly once: zz-no-such-anchor");
     const witnesses: readonly (readonly [string, readonly (readonly [string, string])[]])[] = [
-      // U1: a write of textResult or the sanitizer through an as, angle-bracket, satisfies, instantiation or non-null wrapper, at
-      // module scope or in the body, as an assignment, increment, decrement, for-of or destructuring-assignment target, and the
-      // plain control.
+      // Refusal #1 U1: a write of textResult or the sanitizer through an as, angle-bracket, satisfies, instantiation or non-null
+      // wrapper, at module scope or in the body, as an assignment (compound and logical included), increment, decrement, for-of or
+      // destructuring-assignment target: each is a reference that is no callee.
       ["G24-S1-WRITE-AS-MODULE", [atModule(`(textResult as unknown) = ${FAKE};`)]],
       ["G24-S1-WRITE-ANGLE-MODULE", [atModule(`(<unknown>textResult) = ${FAKE};`)]],
       ["G24-S1-WRITE-AS-BODY", [inBody(`(textResult as unknown) = ${FAKE};`)]],
@@ -1833,21 +1829,60 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       ["G24-S1-WRITE-LOGICAL-CTRL", [atModule(`(textResult as unknown) ??= 0;\ntextResult ||= ${FAKE} as typeof textResult;`)]],
       ["S1-WRITE-INCREMENT-AS", [atModule("(textResult as unknown as number)++;")]],
       ["S1-WRITE-DECREMENT-NONNULL", [atModule("--textResult!;")]],
-      // U2: the reading's receiver shadowed in the try block, destructured or declared and then assigned, and the plain control.
-      ["G24-S1-RECV-DESTRUCT-SHADOW", [[TRY, `        const real = observer;\n        try {\n          const { observer } = { observer: ${STAND_IN} };\n${READING}`]]],
-      ["G24-S1-RECV-LET-SHADOW", [[TRY, `        const real = observer;\n        try {\n          let observer: Pick<FurnaceObserver, "snapshot" | "projectionSnapshot">;\n          observer = ${STAND_IN};\n${READING}`]]],
-      ["G24-S1-RECV-CONST-SHADOW-CTRL", [[TRY, `        const real = observer;\n        try {\n          const observer = ${STAND_IN};\n${READING}`]]],
-      // U3: textResult's own body edited, the receiver's method swapped in the body (also through a for-of target), FurnaceObserver's
-      // prototype patched at module scope, and the body-write control.
+      // Refusal #2 U2, the file's write forms: a for-in target, an array-pattern name, an array rest, an object rest, a default and
+      // a shorthand default, each a reference that is no callee.
+      ["GP15-W-FORIN-MODULE", [atModule("for ((textResult as any) in { zz: 0 }) break;")]],
+      ["GP15-W-ARRAY-MODULE", [atModule(`[(textResult as unknown)] = [${FAKE}];`)]],
+      ["GP15-W-ARRREST-MODULE", [atModule(`[...(textResult as unknown)] = [${FAKE}];`)]],
+      ["GP15-W-OBJREST-ANY-MODULE", [atModule("({ ...(textResult as any) } = {});")]],
+      ["GP15-W-DEFAULT-MODULE", [atModule(`({ zz: (textResult as unknown) = ${FAKE} } = {});`)]],
+      ["GP15-W-SHORTHAND-DEFAULT-MODULE", [atModule(`({ textResult = ${FAKE} as typeof textResult } = {});`)]],
+      // Refusal #2 U2, the body's write forms (the body's write reader): a for-in target, a decrement and a compound assignment, and
+      // this census's prefix increment and destructuring assignment.
+      ["GP15-W-FORIN-BODY", [beforeClient('for (params.runId in { "frn-run-zz": 0 }) break;')]],
+      ["GP15-W-DECREMENT-BODY", [beforeClient("let zzBudget = 1;\n        zzBudget--;")]],
+      ["GP15-W-COMPOUND-BODY-X", [beforeClient('params.runId += "-zz";')]],
+      ["S1-W-PREFIX-INCREMENT-BODY", [beforeClient("let zzBudget = 1;\n        ++zzBudget;")]],
+      ["S1-W-DESTRUCT-BODY", [beforeClient('({ runId: params.runId } = { runId: "frn-run-zz" });')]],
+      // Refusal #2 U3: an export specifier is read as the local binding it exports (once, under a rename or none), for the class and
+      // for textResult.
+      ["GP15-EXPORT-SPEC", [atModule("export { FurnaceObserver };")]],
+      ["GP15-EXPORT-SPEC-AS-CTRL", [atModule("export { FurnaceObserver as ZzObserver };")]],
+      ["S1-EXPORT-SPEC-SELF-ALIAS", [atModule("export { FurnaceObserver as FurnaceObserver };")]],
+      ["S1-EXPORT-SPEC-TEXTRESULT", [atModule("export { textResult };")]],
+      // This census's members of the reference reader: a callable as a shorthand default's value and handed on as an argument, and
+      // the receiver's property handed on and the receiver as a new expression's argument (none a callee or a method's receiver).
+      ["S1-SHORTHAND-DEFAULT-VALUE", [atModule("let zzValue: unknown;\n({ zzValue = textResult } = {});")]],
+      ["S1-HANDED-AS-ARGUMENT", [atModule("void Promise.resolve(textResult);")]],
+      ["S1-RECV-PROPERTY-HANDED", [inBody("void String(observer.snapshot);")]],
+      ["S1-RECV-NEW-ARGUMENT", [inBody("void new WeakRef(observer);")]],
+      // Refusal #1 U2: the reading's receiver shadowed in the try block, destructured or declared and then assigned, and the plain
+      // control.
+      ["G24-S1-RECV-DESTRUCT-SHADOW", [[TRY, `        const real = observer;\n${TRY}\n          const { observer } = { observer: ${STAND_IN} };`]]],
+      ["G24-S1-RECV-LET-SHADOW", [[TRY, `        const real = observer;\n${TRY}\n          let observer: Pick<FurnaceObserver, "snapshot" | "projectionSnapshot">;\n          observer = ${STAND_IN};`]]],
+      ["G24-S1-RECV-CONST-SHADOW-CTRL", [[TRY, `        const real = observer;\n${TRY}\n          const observer = ${STAND_IN};`]]],
+      // This census's members of the site reader: a reply handed a second call, a reply handed a member call, and readings and
+      // receivers whose one declaration is no plain `[await] <receiver>.<method>(...)` or `new <Class>(...)` variable.
+      ["S1-REPLY-SECOND-ARGUMENT", [[REPLY, "          return textResult(sanitizeWorkbenchJsonText(reading), zzDetails(reading));"]]],
+      ["S1-REPLY-MEMBER-CALLEE", [[REPLY, "          return textResult(JSON.stringify(reading));"]]],
+      ["S1-READING-AS-NONCALL", [[READING, "          const reading = observer.snapshot as never;"]]],
+      ["S1-READING-PAREN-RECEIVER", [[READING, "          const reading = await (observer).snapshot();"]]],
+      ["S1-READING-PAREN-INIT", [[READING, "          const reading = (await observer.snapshot());"]]],
+      ["S1-READING-DESTRUCT-DEFAULT", [[READING, "          const { reading = await observer.snapshot() } = {};"]]],
+      ["S1-READING-AWAIT-USING", [[READING, "          await using reading = await observer.snapshot();"]]],
+      ["S1-RECV-FROM-CALL", [[BUILT, "const observer = zzBuild(client, {"]]],
+      ["S1-RECV-NEW-PAREN-CLASS", [[BUILT, "const observer = new (FurnaceObserver)(client, {"]]],
+      // Refusal #1 U3: textResult's own body edited, the receiver's method swapped in the body (also through a for-of target),
+      // FurnaceObserver's prototype patched at module scope, and the body-write control.
       ["G24-S1-TEXTRESULT-BODY", [[RETURN, RETURN.replace("text: msg", `text: msg.replaceAll('"partial"', '"complete"')`)]]],
       ["G24-S1-METHOD-SWAP", [inBody('observer.snapshot = async () => ({ ...(await FurnaceObserver.prototype.snapshot.call(observer)), completeness: "complete" as const });')]],
       ["S1-METHOD-SWAP-FOROF", [inBody('for (observer.snapshot of [async () => ({ ...(await FurnaceObserver.prototype.snapshot.call(observer)), completeness: "complete" as const })]) break;')]],
       ["G24-S1-PROTO-PATCH", [atModule('const zzSnapshot = FurnaceObserver.prototype.snapshot;\nFurnaceObserver.prototype.snapshot = async function (this: FurnaceObserver) { return { ...(await zzSnapshot.call(this)), completeness: "complete" as const }; };')]],
       ["G24-S1-METHOD-SWAP-CTRL", [[REFRESH, `          reading.completeness = "complete";\n${REFRESH}`]]],
-      // The class's members this cut adds: the reading's binding moved into an inner block while a module const of the same name
-      // is replied, the reading declared twice (no receiver is read from a binding with two declarations), textResult shadowed
-      // in the function that encloses the registration, and an overload of textResult.
-      ["S1-READING-BLOCK-SHADOW", [atModule('const reading = { completeness: "complete" as const };'), [`${READING}\n${REFRESH}`, `          {\n${READING}\n${REFRESH}\n          }`]]],
+      // Cut #2's members: the reading's binding moved into an inner block while a module const of the same name is replied, the
+      // reading declared twice (no receiver is read from a binding with two declarations), textResult shadowed in the function
+      // that encloses the registration, and an overload of textResult.
+      ["S1-READING-BLOCK-SHADOW", [atModule('const reading = { completeness: "complete" as const };'), [READING, `          {\n${READING}`], [REFRESH, `${REFRESH}\n          }`]]],
       ["S1-READING-REDECLARED", [[READING, `          var reading = await observer.snapshot();\n          var reading = await observer.snapshot();`]]],
       ["S1-ENCLOSING-SHADOW", [[REGISTRATION, `const textResult = (msg: string) => ({ content: [{ type: "text" as const, text: msg }], details: undefined });\n    ${REGISTRATION}`]]],
       ["G24-S1-DECL-OVERLOAD", [[HEAD, `function textResult(msg: string, details?: AgentDetails): { content: { type: "text"; text: string }[]; details: any };\n${HEAD}`]]],
@@ -1855,27 +1890,70 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       ["G24-S1-DECL-STATIC-BLOCK", [atModule("export class ZzStatic { static { const FurnaceObserver = 1; void FurnaceObserver; } }")]],
       ["G24-S1-DECL-GLOBAL", [atModule("declare global { var sanitizeWorkbenchJsonText: (value: unknown) => string; }")]],
     ];
-    const swapped = `text:msg.replaceAll('"partial"','"complete"')`;
     expect(
       witnesses.map(([id, edits]) => [id, delta(base, toolBody("furnace_observe", planted(slice, edits)))]),
       "each witness changes exactly the readings it names",
     ).toStrictEqual([
-      ["G24-S1-WRITE-AS-MODULE", ["+resolved textResult: write (module)"]],
-      ["G24-S1-WRITE-ANGLE-MODULE", ["+resolved textResult: write (module)"]],
-      ["G24-S1-WRITE-AS-BODY", ["+resolved textResult: write (body)", "+write (textResultasunknown)"]],
-      ["G24-S1-WRITE-FOROF-AS", ["+resolved textResult: write (module)"]],
-      ["G24-S1-WRITE-DESTRUCT-AS", ["+resolved textResult: write (module)"]],
-      ["G24-S1-WRITE-NONNULL-MODULE", ["+resolved textResult: write (module)"]],
-      ["G24-S1-WRITE-AS-SANITIZER", ["+resolved sanitizeWorkbenchJsonText: write (module)"]],
-      ["S1-WRITE-SATISFIES-MODULE", ["+resolved textResult: write (module)"]],
-      ["S1-WRITE-INSTANTIATION-MODULE", ["+resolved textResult: write (module)"]],
-      ["G24-S1-WRITE-LOGICAL-CTRL", ["+resolved textResult: write (module)", "+resolved textResult: write (module)"]],
-      ["S1-WRITE-INCREMENT-AS", ["+resolved textResult: write (module)"]],
-      ["S1-WRITE-DECREMENT-NONNULL", ["+resolved textResult: write (module)"]],
+      ["G24-S1-WRITE-AS-MODULE", ["+reference textResult: in textResultasunknown (module)"]],
+      ["G24-S1-WRITE-ANGLE-MODULE", ["+reference textResult: in <unknown>textResult (module)"]],
+      [
+        "G24-S1-WRITE-AS-BODY",
+        [
+          "+reference textResult: in textResultasunknown (body)",
+          "+write (textResultasunknown)",
+        ],
+      ],
+      ["G24-S1-WRITE-FOROF-AS", ["+reference textResult: in textResultasunknown (module)"]],
+      ["G24-S1-WRITE-DESTRUCT-AS", ["+reference textResult: in textResultasunknown (module)"]],
+      [
+        "G24-S1-WRITE-NONNULL-MODULE",
+        [
+          "+reference textResult: in textResult! (module)",
+          "+reference textResult: in typeoftextResult (nested)",
+        ],
+      ],
+      ["G24-S1-WRITE-AS-SANITIZER", ["+reference sanitizeWorkbenchJsonText: in sanitizeWorkbenchJsonTextasunknown (module)"]],
+      ["S1-WRITE-SATISFIES-MODULE", ["+reference textResult: in textResultsatisfiesunknown (module)"]],
+      ["S1-WRITE-INSTANTIATION-MODULE", ["+reference textResult: in textResult<never> (module)"]],
+      [
+        "G24-S1-WRITE-LOGICAL-CTRL",
+        [
+          "+reference textResult: in textResultasunknown (module)",
+          `+reference textResult: in textResult||=(msg:string)=>({content:[{type:"text"asconst,text:msg.replaceAll('"partial"','"complete"')}],details:undefined})astypeoftextResult (module)`,
+          "+reference textResult: in typeoftextResult (nested)",
+        ],
+      ],
+      ["S1-WRITE-INCREMENT-AS", ["+reference textResult: in textResultasunknown (module)"]],
+      ["S1-WRITE-DECREMENT-NONNULL", ["+reference textResult: in textResult! (module)"]],
+      ["GP15-W-FORIN-MODULE", ["+reference textResult: in textResultasany (module)"]],
+      ["GP15-W-ARRAY-MODULE", ["+reference textResult: in textResultasunknown (module)"]],
+      ["GP15-W-ARRREST-MODULE", ["+reference textResult: in textResultasunknown (module)"]],
+      ["GP15-W-OBJREST-ANY-MODULE", ["+reference textResult: in textResultasany (module)"]],
+      ["GP15-W-DEFAULT-MODULE", ["+reference textResult: in textResultasunknown (module)"]],
+      [
+        "GP15-W-SHORTHAND-DEFAULT-MODULE",
+        [
+          `+reference textResult: in textResult=(msg:string)=>({content:[{type:"text"asconst,text:msg.replaceAll('"partial"','"complete"')}],details:undefined})astypeoftextResult (module)`,
+          "+reference textResult: in typeoftextResult (nested)",
+        ],
+      ],
+      ["GP15-W-FORIN-BODY", ["+write params.runId"]],
+      ["GP15-W-DECREMENT-BODY", ["+write zzBudget"]],
+      ["GP15-W-COMPOUND-BODY-X", ["+write params.runId"]],
+      ["S1-W-PREFIX-INCREMENT-BODY", ["+write zzBudget"]],
+      ["S1-W-DESTRUCT-BODY", ["+write {runId:params.runId}"]],
+      ["GP15-EXPORT-SPEC", ["+reference FurnaceObserver: in FurnaceObserver (module)"]],
+      ["GP15-EXPORT-SPEC-AS-CTRL", ["+reference FurnaceObserver: in FurnaceObserverasZzObserver (module)"]],
+      ["S1-EXPORT-SPEC-SELF-ALIAS", ["+reference FurnaceObserver: in FurnaceObserverasFurnaceObserver (module)"]],
+      ["S1-EXPORT-SPEC-TEXTRESULT", ["+reference textResult: in textResult (module)"]],
+      ["S1-SHORTHAND-DEFAULT-VALUE", ["+reference textResult: in zzValue=textResult (module)"]],
+      ["S1-HANDED-AS-ARGUMENT", ["+reference textResult: argument of Promise.resolve (module)"]],
+      ["S1-RECV-PROPERTY-HANDED", ["+reference observer: in observer.snapshot (body)"]],
+      ["S1-RECV-NEW-ARGUMENT", ["+reference observer: in newWeakRef(observer) (body)"]],
       [
         "G24-S1-RECV-DESTRUCT-SHADOW",
         [
-          "+resolved observer: const destructuring (body)",
+          "+resolved observer: BindingElement (body)",
           "-reference FurnaceObserver: binding (module)",
           "-reference FurnaceObserver: class of new (body)",
           "-reference observer: receiver of close (body)",
@@ -1886,9 +1964,8 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       [
         "G24-S1-RECV-LET-SHADOW",
         [
-          "+reference observer: write (body)",
+          '+reference observer: in observer={snapshot:async()=>({...(awaitreal.snapshot()),completeness:"complete"asconst}),projectionSnapshot:real.projectionSnapshot.bind(real)} (body)',
           "+resolved observer: let (body)",
-          "+resolved observer: write (body)",
           "+write observer",
           "-reference FurnaceObserver: binding (module)",
           "-reference FurnaceObserver: class of new (body)",
@@ -1906,7 +1983,105 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
           '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
         ],
       ],
-      ["G24-S1-TEXTRESULT-BODY", [`+replier ${TEXT_RESULT.replace("text:msg", swapped)}`, `-replier ${TEXT_RESULT}`]],
+      [
+        "S1-REPLY-SECOND-ARGUMENT",
+        [
+          "+reference reading: argument of zzDetails (body)",
+          "+resolved zzDetails: global (no binding in the file)",
+        ],
+      ],
+      [
+        "S1-REPLY-MEMBER-CALLEE",
+        [
+          "+reference reading: argument of JSON.stringify (body)",
+          "-reference reading: argument of sanitizeWorkbenchJsonText (body)",
+          '-resolved sanitizeWorkbenchJsonText: import sanitizeWorkbenchJsonText from "./workbench/redaction.js" (module)',
+        ],
+      ],
+      [
+        "S1-READING-AS-NONCALL",
+        [
+          "-reference FurnaceObserver: binding (module)",
+          "-reference FurnaceObserver: class of new (body)",
+          "-reference observer: binding (body)",
+          "-reference observer: receiver of close (body)",
+          "-reference observer: receiver of projectionSnapshot (body)",
+          "-reference observer: receiver of snapshot (body)",
+          '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
+          "-resolved observer: const (body)",
+        ],
+      ],
+      [
+        "S1-READING-PAREN-RECEIVER",
+        [
+          "-reference FurnaceObserver: binding (module)",
+          "-reference FurnaceObserver: class of new (body)",
+          "-reference observer: binding (body)",
+          "-reference observer: receiver of close (body)",
+          "-reference observer: receiver of projectionSnapshot (body)",
+          "-reference observer: receiver of snapshot (body)",
+          '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
+          "-resolved observer: const (body)",
+        ],
+      ],
+      [
+        "S1-READING-PAREN-INIT",
+        [
+          "-reference FurnaceObserver: binding (module)",
+          "-reference FurnaceObserver: class of new (body)",
+          "-reference observer: binding (body)",
+          "-reference observer: receiver of close (body)",
+          "-reference observer: receiver of projectionSnapshot (body)",
+          "-reference observer: receiver of snapshot (body)",
+          '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
+          "-resolved observer: const (body)",
+        ],
+      ],
+      [
+        "S1-READING-DESTRUCT-DEFAULT",
+        [
+          "+resolved reading: BindingElement (body)",
+          "-reference FurnaceObserver: binding (module)",
+          "-reference FurnaceObserver: class of new (body)",
+          "-reference observer: binding (body)",
+          "-reference observer: receiver of close (body)",
+          "-reference observer: receiver of projectionSnapshot (body)",
+          "-reference observer: receiver of snapshot (body)",
+          '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
+          "-resolved observer: const (body)",
+          "-resolved reading: const (body)",
+        ],
+      ],
+      [
+        "S1-READING-AWAIT-USING",
+        [
+          "+resolved reading: await using (body)",
+          "-resolved reading: const (body)",
+        ],
+      ],
+      [
+        "S1-RECV-FROM-CALL",
+        [
+          "-reference FurnaceObserver: binding (module)",
+          "-reference FurnaceObserver: class of new (body)",
+          '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
+        ],
+      ],
+      [
+        "S1-RECV-NEW-PAREN-CLASS",
+        [
+          "-reference FurnaceObserver: binding (module)",
+          "-reference FurnaceObserver: class of new (body)",
+          '-resolved FurnaceObserver: import FurnaceObserver from "./workbench/furnace-observer.js" (module)',
+        ],
+      ],
+      [
+        "G24-S1-TEXTRESULT-BODY",
+        [
+          `+replier functiontextResult(msg:string,details?:AgentDetails){return{content:[{type:"text"asconst,text:msg.replaceAll('"partial"','"complete"')}],details:detailsasany};}`,
+          '-replier functiontextResult(msg:string,details?:AgentDetails){return{content:[{type:"text"asconst,text:msg}],details:detailsasany};}',
+        ],
+      ],
       [
         "G24-S1-METHOD-SWAP",
         [
@@ -1928,13 +2103,25 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
       [
         "G24-S1-PROTO-PATCH",
         [
+          "+reference FurnaceObserver: in FurnaceObserver (nested)",
           "+reference FurnaceObserver: in FurnaceObserver.prototype (module)",
           "+reference FurnaceObserver: in FurnaceObserver.prototype (module)",
-          "+reference FurnaceObserver: type reference (nested)",
         ],
       ],
-      ["G24-S1-METHOD-SWAP-CTRL", ["+reference reading: in reading.completeness (body)", "+write reading.completeness"]],
-      ["S1-READING-BLOCK-SHADOW", ["+reference reading: binding (module)", "+resolved reading: const (module)"]],
+      [
+        "G24-S1-METHOD-SWAP-CTRL",
+        [
+          "+reference reading: in reading.completeness (body)",
+          "+write reading.completeness",
+        ],
+      ],
+      [
+        "S1-READING-BLOCK-SHADOW",
+        [
+          "+reference reading: binding (module)",
+          "+resolved reading: const (module)",
+        ],
+      ],
       [
         "S1-READING-REDECLARED",
         [
@@ -1957,35 +2144,126 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
         [
           '+replier textResult=(msg:string)=>({content:[{type:"text"asconst,text:msg}],details:undefined})',
           "+resolved textResult: const (enclosing)",
-          `-replier ${TEXT_RESULT}`,
-          "-resolved textResult: function (module)",
+          '-replier functiontextResult(msg:string,details?:AgentDetails){return{content:[{type:"text"asconst,text:msg}],details:detailsasany};}',
+          "-resolved textResult: FunctionDeclaration (module)",
         ],
       ],
       [
         "G24-S1-DECL-OVERLOAD",
-        ['+replier functiontextResult(msg:string,details?:AgentDetails):{content:{type:"text";text:string}[];details:any};', "+resolved textResult: function (module)"],
+        [
+          '+replier functiontextResult(msg:string,details?:AgentDetails):{content:{type:"text";text:string}[];details:any};',
+          "+resolved textResult: FunctionDeclaration (module)",
+        ],
       ],
       ["G24-S1-DECL-STATIC-BLOCK", []],
       ["G24-S1-DECL-GLOBAL", []],
     ]);
-    // S1's named unread families, each a pinned quiet row: S1 reads neither the class's prototype changed through another binding
-    // of the class nor a built-in the sanitizer or the observer uses changed, so each plant reads exactly as the slice does.
-    const unread: readonly (readonly [string, readonly (readonly [string, string])[]])[] = [
+    // S1's named unread families, each with pinned quiet rows: a plant S1 reads exactly as the slice does, beside what the body's
+    // call reader and the module's statements show of it (so a quiet row whose plant is silenced reds). CONTROL FLOW: S1 does not
+    // read whether the body reaches its refresh and its data reply. The class's prototype changed through another binding of the
+    // class or of its module, the projection the body refreshes (read by its name only), a built-in the sanitizer or the observer
+    // uses changed, a reference the checker binds to no symbol, and code held only in a string are not read either.
+    const statementsOf = (text: string): string[] =>
+      parsed(text)
+        .statements.map(statement => statement.getText(parsed(text)))
+        .filter(statement => !statement.includes('"furnace_observe"'))
+        .map(statement => statement.replace(/\s+/g, ""));
+    const beyond = (left: readonly string[], right: readonly string[]): string[] => {
+      const rest = [...left];
+      return right.filter(item => {
+        const at = rest.indexOf(item);
+        if (at !== -1) rest.splice(at, 1);
+        return at === -1;
+      });
+    };
+    const shown = (edits: readonly (readonly [string, string])[]): string[] => {
+      const text = planted(slice, edits);
+      return [
+        ...beyond(base?.calls ?? [], toolBody("furnace_observe", text)?.calls ?? []).map(call => `call ${call}`),
+        ...beyond(statementsOf(slice), statementsOf(text)).map(statement => `statement ${statement}`),
+      ];
+    };
+    const THROWN = `throw new Error('{"completeness":"complete"}');`;
+    const quiet: readonly (readonly [string, readonly (readonly [string, string])[]])[] = [
+      ["control flow: a conditional throw between the refresh and the data reply", [[REPLY, `          if (params.runId.length > 0) ${THROWN}\n${REPLY}`]]],
+      ["control flow: an unconditional throw before the data reply", [[REPLY, `          ${THROWN}\n${REPLY}`]]],
+      ["control flow: a conditional throw before the reading", [[READING, `          if (params.runId.length > 0) ${THROWN}\n${READING}`]]],
+      ["control flow: an unconditional throw before the reading", [[READING, `          ${THROWN}\n${READING}`]]],
+      ["control flow: a call that throws before the data reply", [[REPLY, `          JSON.parse(params.runId);\n${REPLY}`]]],
+      ["control flow: an await that never settles before the data reply", [[REPLY, `          await new Promise<never>(() => undefined);\n${REPLY}`]]],
+      ["control flow: an await that never settles after the reading", [[REFRESH, `          await new Promise<never>(() => undefined);\n${REFRESH}`]]],
+      ["control flow: a loop that never ends before the data reply", [[REPLY, `          while (params.runId.length > 0) await Promise.resolve();\n${REPLY}`]]],
+      ["control flow: a throw in the finally block", [[CLOSE, `${CLOSE} if (params.runId.length > 0) ${THROWN}`]]],
       [
-        "the class's prototype through another binding of it",
+        "the class's prototype through another binding of the class",
         [
           [IMPORT, `${IMPORT}\nimport { FurnaceObserver as ZzPatched } from "./workbench/furnace-observer.js";`],
           atModule('const zzSnapshot = ZzPatched.prototype.snapshot;\nZzPatched.prototype.snapshot = async function (this: ZzPatched) { return { ...(await zzSnapshot.call(this)), completeness: "complete" as const }; };'),
         ],
       ],
+      [
+        "the class's prototype through a namespace import of its module",
+        [
+          [IMPORT, `${IMPORT}\nimport * as ZzObserverModule from "./workbench/furnace-observer.js";`],
+          atModule(
+            'const zzSnapshot = ZzObserverModule.FurnaceObserver.prototype.snapshot;\nZzObserverModule.FurnaceObserver.prototype.snapshot = async function (this: InstanceType<typeof ZzObserverModule.FurnaceObserver>) { return { ...(await zzSnapshot.call(this)), completeness: "complete" as const }; };',
+          ),
+        ],
+      ],
+      ["the projection the body refreshes, read by its name only", [inBody("const projection = zzProjection();")]],
       ["a built-in the sanitizer or the observer uses", [atModule(`JSON.stringify = ((value: unknown): string => '{"completeness":"complete"}') as typeof JSON.stringify;`)]],
+      ["a reference the checker binds to no symbol", [atModule("import zzAlias = textResult;\nvoid zzAlias;")]],
+      ["code held only in a string", [atModule('eval("textResult = (msg) => msg");')]],
     ];
     expect(
-      unread.map(([id, edits]) => [id, delta(base, toolBody("furnace_observe", planted(slice, edits)))]),
-      "each named unread family is a quiet row: S1 reads none of it",
+      quiet.map(([id, edits]) => [id, delta(base, toolBody("furnace_observe", planted(slice, edits))), shown(edits)]),
+      "each named unread family is a quiet row: S1 reads none of it, while the plant stands",
     ).toStrictEqual([
-      ["the class's prototype through another binding of it", []],
-      ["a built-in the sanitizer or the observer uses", []],
+      ["control flow: a conditional throw between the refresh and the data reply", [], [`call newError('{"completeness":"complete"}')`]],
+      ["control flow: an unconditional throw before the data reply", [], [`call newError('{"completeness":"complete"}')`]],
+      ["control flow: a conditional throw before the reading", [], [`call newError('{"completeness":"complete"}')`]],
+      ["control flow: an unconditional throw before the reading", [], [`call newError('{"completeness":"complete"}')`]],
+      ["control flow: a call that throws before the data reply", [], ["call JSON.parse(params.runId)"]],
+      ["control flow: an await that never settles before the data reply", [], ["call newPromise<never>(()=>undefined)"]],
+      ["control flow: an await that never settles after the reading", [], ["call newPromise<never>(()=>undefined)"]],
+      ["control flow: a loop that never ends before the data reply", [], ["call Promise.resolve()"]],
+      ["control flow: a throw in the finally block", [], [`call newError('{"completeness":"complete"}')`]],
+      [
+        "the class's prototype through another binding of the class",
+        [],
+        [
+          'statement import{FurnaceObserverasZzPatched}from"./workbench/furnace-observer.js";',
+          "statement constzzSnapshot=ZzPatched.prototype.snapshot;",
+          'statement ZzPatched.prototype.snapshot=asyncfunction(this:ZzPatched){return{...(awaitzzSnapshot.call(this)),completeness:"complete"asconst};};',
+        ],
+      ],
+      [
+        "the class's prototype through a namespace import of its module",
+        [],
+        [
+          'statement import*asZzObserverModulefrom"./workbench/furnace-observer.js";',
+          "statement constzzSnapshot=ZzObserverModule.FurnaceObserver.prototype.snapshot;",
+          'statement ZzObserverModule.FurnaceObserver.prototype.snapshot=asyncfunction(this:InstanceType<typeofZzObserverModule.FurnaceObserver>){return{...(awaitzzSnapshot.call(this)),completeness:"complete"asconst};};',
+        ],
+      ],
+      ["the projection the body refreshes, read by its name only", [], ["call zzProjection()"]],
+      ["a built-in the sanitizer or the observer uses", [], [`statement JSON.stringify=((value:unknown):string=>'{"completeness":"complete"}')astypeofJSON.stringify;`]],
+      [
+        "a reference the checker binds to no symbol",
+        [],
+        [
+          "statement importzzAlias=textResult;",
+          "statement voidzzAlias;",
+        ],
+      ],
+      ["code held only in a string", [], ['statement eval("textResult=(msg)=>msg");']],
+    ]);
+    // Where a node stands, at the body's two edges: in a body that is one arrow, its parameter starts where the body starts
+    // and its concise body ends where the body ends, and each reads as in the body.
+    const edges = toolBody("zz-edges", 'tools.push({ name: "zz-edges", execute: reading => reading });');
+    expect([edges?.resolved, edges?.references], "a parameter at the body's start and a name at its end stand in the body").toStrictEqual([
+      ["reading: Parameter (body)"],
+      ["reading: binding (body)", "reading: in reading=>reading (body)"],
     ]);
     // And on the binding forms themselves, in a synthetic module: an alias import, a type-only import written in the body, a
     // destructured callee and another function's parameter and var, which shadow nothing in the body and so are not read.
@@ -2000,18 +2278,18 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
         "  ({ FurnaceObserver } = params);",
         "  const observer = new FurnaceObserver(kept);",
         "  const reading = await observer.snapshot();",
+        "  void sanitizeWorkbenchJsonText;",
         "  return textResult(sanitizeWorkbenchJsonText(reading));",
         "} });",
       ].join("\n"),
     );
-    expect([rebound?.resolved, rebound?.references, rebound?.replier], "an alias or type-only import, a destructured callee and a destructuring write, read by binding").toStrictEqual([
+    expect([rebound?.resolved, rebound?.references, rebound?.replier], "an alias or type-only import, a destructured callee, a destructuring write and a callable handed on, read by binding").toStrictEqual([
       [
         'FurnaceObserver: import type FurnaceObserver from "./workbench/furnace-observer.js" (module)',
-        "FurnaceObserver: write (body)",
         "observer: const (body)",
         "reading: const (body)",
         'sanitizeWorkbenchJsonText: import sanitizeWorkbenchText from "./workbench/redaction.js" (module)',
-        "textResult: const destructuring (body)",
+        "textResult: BindingElement (body)",
       ],
       [
         "reading: binding (body)",
@@ -2019,14 +2297,15 @@ describe("wb-b04.2 Furnace world-model preservation census (until the records sh
         "observer: binding (body)",
         "observer: receiver of snapshot (body)",
         "FurnaceObserver: binding (module)",
-        "FurnaceObserver: write (body)",
+        "FurnaceObserver: in FurnaceObserver (body)",
         "FurnaceObserver: class of new (body)",
+        "sanitizeWorkbenchJsonText: in voidsanitizeWorkbenchJsonText (body)",
       ],
       ["textResult"],
     ]);
     const unbound = toolBody("zz-global", 'function textResult(text) { return text; } tools.push({ name: "zz-global", execute: async () => { const reading = await probe(); return textResult(String(reading)); } });');
     expect([unbound?.resolved, unbound?.replier], "a data-path name bound nowhere in the file reads as a global").toStrictEqual([
-      ["String: global (no binding in the file)", "reading: const (body)", "textResult: function (module)"],
+      ["String: global (no binding in the file)", "reading: const (body)", "textResult: FunctionDeclaration (module)"],
       ["functiontextResult(text){returntext;}"],
     ]);
   }, S1_TIMEOUT_MS);
