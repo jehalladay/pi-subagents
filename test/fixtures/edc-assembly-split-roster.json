@@ -1290,6 +1290,121 @@
       "K-SPLIT"
      ]
     }
+   },
+   "indexReader": {
+    "present": {
+     "dense": [
+      "s1",
+      "s2",
+      "s3",
+      "s4",
+      "s5",
+      "s6",
+      "s7",
+      "s8",
+      "s9",
+      "s10",
+      "s11"
+     ],
+     "probed": [
+      "s1",
+      "s2",
+      "s3",
+      "s4",
+      "s5",
+      "s6",
+      "s7",
+      "s8",
+      "s9",
+      "s10",
+      "s11"
+     ]
+    },
+    "blocks": {
+     "ordered": [],
+     "lexical": [
+      "order"
+     ]
+    },
+    "unmet": {
+     "ordered": [],
+     "lexical": [
+      "order"
+     ]
+    },
+    "subjects": {
+     "ordered": [],
+     "lexical": [
+      "subjects"
+     ]
+    },
+    "sparse": {
+     "ordered": {
+      "K-WIRING": "ok",
+      "K-EFFECT": "ok",
+      "K-DEMAND": "ok",
+      "K-PURE": "ok",
+      "K-SPLIT": "split:holes:document.blocks"
+     },
+     "reversed": {
+      "K-WIRING": "ok",
+      "K-EFFECT": "ok",
+      "K-DEMAND": "demand:order",
+      "K-PURE": "ok",
+      "K-SPLIT": "split:holes:document.blocks"
+     }
+    },
+    "arrayLike": {
+     "subjects": {
+      "K-WIRING": "ok",
+      "K-EFFECT": "ok",
+      "K-DEMAND": "demand:unreadable:demand",
+      "K-PURE": "ok",
+      "K-SPLIT": "ok"
+     },
+     "unmet": {
+      "K-WIRING": "ok",
+      "K-EFFECT": "ok",
+      "K-DEMAND": "demand:unreadable:placement",
+      "K-PURE": "ok",
+      "K-SPLIT": "split:type:document.unmet"
+     }
+    }
+   },
+   "probeBoundary": {
+    "ownKeys": [
+     "length",
+     "1",
+     "0"
+    ],
+    "threshold": {
+     "has": [
+      "ends",
+      "ends",
+      "probed"
+     ],
+     "get": [
+      "ends",
+      "ends",
+      "probed"
+     ],
+     "descriptor": [
+      "ends",
+      "ends",
+      "probed"
+     ],
+     "mixed": [
+      "ends",
+      "ends",
+      "probed"
+     ],
+     "fresh": false
+    },
+    "lengths": {
+     "M78": 4294967295,
+     "M79": 4294967295,
+     "M80": 4294967295
+    }
    }
   },
   "S4a": {

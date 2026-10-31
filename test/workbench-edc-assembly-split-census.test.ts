@@ -71,12 +71,26 @@
  * of the unmet ran the worker out of memory) is cured by the finding's first cure: the placement, content and demand readings
  * read every array they read through its own index keys (presentItems, itemsOf), so none walks a length (THE CHECKS, FAIL
  * CLOSED). The oversized member is pinned three ways, M78 (the blocks), M79 (the unmet) and M80 (the demand's subjects), each
- * of length 2^32 - 1 behind a probe that throws at a reading's third probe of an absent index (HOLE_PROBES), so a reading that
+ * of length 2^32 - 1 behind a probe that throws at the third absent-index probe of that array across readings (HOLE_PROBES), so a reading that
  * walks the length reads unreadable:<reading> in row S3c's oversized readings instead of stopping the judge. The same reading
  * reads M76's admitted unmet entries (K-DEMAND now refuses M76 beside K-SPLIT) and M77's covered text (K-SPLIT's content). F2
  * (a coverage carried only between a value's two readings, the gate's G34) and F3 (built-in slots beyond the Map, the gate's
  * G30 Symbol wrapper and G31 WeakRef) are named: R-OUTSIDE-VALUE gains interval-coverage, boxed-primitive-coverage and
  * weakref-handle, each a pinned quiet row (weakref-handle's handle is shown live).
+ *
+ * WB-J517 CUT #2 (seat ws-04, run g10-work-s168; refusal #1 U1-U5): the pinned reader set is this file's case
+ * S3c: to query providers, mint coverage or admit work. Its indexReader witness reads numeric order over eleven present
+ * items (dense and probed), ordered/lexical blocks, unmet and demand subjects, sparse block indices 2 and 10 in both
+ * orders through all five checks, and array-like subjects and unmet through all five checks. The ordered twins are
+ * K-DEMAND ok; the out-of-order twins refuse (order or subjects); the array-likes refuse as unreadable:demand or
+ * unreadable:placement. R01 SORT-LEX and R02 SORT-DEFAULT independently falsify the order pins; R08 NOGUARD the kind pins.
+ * S3c's probeBoundary witness reads own keys [length,1,0], three repeated absent-index reads through has, get and
+ * descriptor separately and mixed on one array (ends, ends, probed), a fresh array's independent budget, and M78-M80's
+ * actual lengths 4294967295. P01 PROBE-NOREVERSE, P02 THRESH-PLUS1 and P05 OVERSIZED-1000 independently falsify those pins.
+ * U4's probe-count sentences above are restated per array across readings; U5's steering sentence names only the own
+ * iteration and methods the readings never call, not a proxy's traps. The roster pins both added witness sections;
+ * these controls add no case, mutant, row or registered title. Other placements or probe sizes are NOT CLAIMED by these
+ * added controls. The existing census's rows and armed registrations remain as described above.
  *
  * MEASURED (read-only). Producer, by cut #1's seat (ws-06, run g10-work-s125, 2026-10-28, at trunk a423a25): the local
  * ReactiveComponentsSDK checkout, git show at the bead pin 44b72145b1756908585c94da2327ab8809a3ca9a:
@@ -128,7 +142,7 @@
  *  block exactly when its evidence and source are both in hand (R3's content is K-PURE's: it equals R2's).
  *  K-DEMAND's placement and demand readings and K-SPLIT's content read every array they read - the blocks, the unmet and the
  *  demand's subjects - through its own index keys, in index order (presentItems): never by walking its length and never
- *  through its iteration or methods, so no document steers them (M76's own iterator and M77's
+ *  through its iteration or methods; neither own method steers these readings (M76's own iterator and M77's
  *  own filter are K-SPLIT's shape findings and are never called: M76's admitted unmet entries are K-DEMAND's placement
  *  finding, M77's covered text K-SPLIT's content finding); a hole in the unmet or the subjects is an entry that names no
  *  subject, counted from the length (itemsOf; M58, M64).
@@ -140,8 +154,9 @@
  *  ends on the arrays M78-M80 hand it, each of length 2^32 - 1, the largest (row S3c's oversized readings): the shape and
  *  wiring readings read own keys and descriptors, the placement, content and demand readings own index keys (above), K-PURE's
  *  input datum (node's JSON.stringify) throws on M80's subjects (unreadable:input), and its repeat comparison (node's
- *  util.isDeepStrictEqual) probes an array's first hole once and then reads its own keys. Each such array is behind a probe
- *  that throws at a reading's third probe of an absent index (HOLE_PROBES is 2, more than any reading above makes) and lists
+ *  util.isDeepStrictEqual) probes the second document's array's first hole twice (get and own descriptor); the third
+ *  document's array is not probed. Each such array is behind a probe that counts absent-index has, get and descriptor
+ *  reads across readings of that array and throws at the third (HOLE_PROBES is 2, equal to that comparison's count), and lists
  *  its own keys last index first, so a reading that walks the length reads unreadable:<reading> there and reds row S3c
  *  instead of stopping the judge, and one that takes own keys unsorted reads M78's blocks out of order (K-DEMAND); S3c's
  *  probe readings are the probe's own control (a filter, a spread and an own-descriptor walk are probed, presentItems and
@@ -534,7 +549,8 @@ function holeyAtZero<T>(items: readonly T[], moved: boolean): T[] {
   return copy;
 }
 /** The most probes of an absent index key a bounded reading makes of one array (wb-j517 F1): node's util.isDeepStrictEqual, K-PURE's repeat
- * comparison, probes an array's first hole once and then reads its own keys; the census's own readings probe none. */
+ * comparison, probes the second document's array's first hole twice (get and own descriptor), not the third document's array;
+ * the census's own index-key readings probe none. The budget is per array across readings, not per reading. */
 const HOLE_PROBES = 2;
 /** A copy of an array with a given length (every index from its items' count up is a hole), behind a probe that counts each read of an absent index
  * key - has, get and own property descriptor - and throws a RangeError at the third, past HOLE_PROBES, and that lists its own keys last index first:
@@ -930,8 +946,8 @@ const indexKeysOf = (items: readonly unknown[]): string[] =>
     .filter((key): key is string => typeof key === "string" && isArrayIndex(key))
     .sort((left, right) => Number(left) - Number(right));
 /** The items an array holds at its present indices, in index order (a hole holds none; K-SPLIT's shape reading names it), read through its own index
- * keys, sorted: never by walking its length and never through its iteration or methods, so the reading ends on an array of any length and a document
- * cannot steer it (wb-j517 F1: the former items.filter visited every index below a length of 2^32 - 1 and did not return). */
+ * keys, sorted: never by walking its length and never through its iteration or methods. The pinned oversized arrays end; own iteration and methods
+ * cannot steer this reading (a proxy's traps still can; K-SPLIT refuses the proxy). wb-j517 F1: items.filter did not return at length 2^32 - 1. */
 function presentItems<T>(items: readonly T[]): T[] {
   if (!Array.isArray(items)) throw new TypeError("no array");
   return indexKeysOf(items).map(key => items[Number(key)]);
@@ -1245,6 +1261,81 @@ function probeReadings(): Readonly<Record<string, string>> {
       }
     }),
   );
+}
+
+/** wb-j517 U1-U2: numeric order past single-digit indices and the array-kind guard, read through K-DEMAND.
+ * These are paired reading controls, not additions to the eleven-case seam battery. */
+function indexReaderReadings(): unknown {
+  const subjects = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11"];
+  const request: Request = { subjects, evidence: [], sources: [] };
+  // Fixed string-order placement, independent of indexKeysOf and its comparator.
+  const lexical = <T>(items: readonly T[]): T[] => [items[0], items[1], items[3], items[4], items[5], items[6], items[7], items[8], items[9], items[10], items[2]] as T[];
+  const blocks = subjects.map(subject => ({ subject, text: `source of ${subject}`, evidence: [] }));
+  const wiring = (demanded: readonly string[]): Wiring => ({ demand: { owner: "host", subjects: demanded }, evidence: [], sources: [], ports: {} });
+  const arrayLike = (items: readonly string[]): readonly string[] =>
+    Object.assign({}, Object.fromEntries(items.map((item, index) => [String(index), item])), { length: items.length }) as unknown as readonly string[];
+  const likeSeam = (part: "subjects" | "unmet"): SeamFactory => world => {
+    const inner = REFERENCE(world);
+    let handed: Wiring;
+    return {
+      wire(request) {
+        handed = inner.wire(request);
+        return part === "subjects" ? { ...handed, demand: { owner: handed.demand.owner, subjects: arrayLike(handed.demand.subjects) } } : handed;
+      },
+      assemble() {
+        const document = inner.assemble(handed);
+        return part === "unmet" ? { blocks: document.blocks, unmet: arrayLike(document.unmet) } : document;
+      },
+    };
+  };
+  const sparse = (reverse: boolean): SeamFactory => plantedSeam(document => {
+    const blocks: Block[] = [];
+    blocks[2] = document.blocks[reverse ? 1 : 0] as Block;
+    blocks[10] = document.blocks[reverse ? 0 : 1] as Block;
+    return { blocks, unmet: document.unmet };
+  });
+  return {
+    present: { dense: presentItems(subjects), probed: presentItems(probed(subjects, 1000)) },
+    blocks: { ordered: placementFindings({ blocks, unmet: [] }, request), lexical: placementFindings({ blocks: lexical(blocks), unmet: [] }, request) },
+    unmet: { ordered: placementFindings({ blocks: [], unmet: subjects }, request), lexical: placementFindings({ blocks: [], unmet: lexical(subjects) }, request) },
+    subjects: { ordered: demandFindings(wiring(subjects), request), lexical: demandFindings(wiring(lexical(subjects)), request) },
+    sparse: { ordered: readingsOf(sparse(false), caseById("C1")), reversed: readingsOf(sparse(true), caseById("C1")) },
+    arrayLike: { subjects: readingsOf(likeSeam("subjects"), caseById("C2")), unmet: readingsOf(likeSeam("unmet"), caseById("C2")) },
+  };
+}
+/** wb-j517 U3-U4: the instrument's own key order, exact per-array threshold on each trap, and the actual fault lengths. */
+function probeBoundaryReadings(): unknown {
+  const threshold = (read: (items: readonly string[]) => unknown): readonly string[] => {
+    const items = probed(["present"], 4);
+    return [0, 1, 2].map(() => {
+      try {
+        read(items);
+        return "ends";
+      } catch (error) {
+        return error instanceof RangeError ? "probed" : "threw";
+      }
+    });
+  };
+  const first = probed(["present"], 4);
+  const second = probed(["present"], 4);
+  const mixed: string[] = [];
+  for (const read of [() => Reflect.has(first, "1"), () => Reflect.get(first, "1"), () => Reflect.getOwnPropertyDescriptor(first, "1")]) {
+    try { read(); mixed.push("ends"); } catch (error) { mixed.push(error instanceof RangeError ? "probed" : "threw"); }
+  }
+  return {
+    ownKeys: Reflect.ownKeys(probed(["s1", "s2"], 4)).map(String),
+    threshold: {
+      has: threshold(items => Reflect.has(items, "1")),
+      get: threshold(items => Reflect.get(items, "1")),
+      descriptor: threshold(items => Reflect.getOwnPropertyDescriptor(items, "1")),
+      mixed,
+      fresh: Reflect.has(second, "1"),
+    },
+    lengths: Object.fromEntries(OVERSIZED.map(id => {
+      const run = runOnce(mutantById(id).factory, caseById("C2"));
+      return [id, id === "M78" ? run.document.blocks.length : id === "M79" ? run.document.unmet.length : run.wiring.demand.subjects.length];
+    })),
+  };
 }
 
 // ---- the carrier tables ----
@@ -2242,6 +2333,8 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     failClosed: Object.fromEntries(FAIL_CLOSED.map(id => [id, readingsOf(mutantById(id).factory, caseById("C1"))])),
     oversized: Object.fromEntries(OVERSIZED.map(id => [id, readingsOf(mutantById(id).factory, caseById("C2"))])),
     probe: probeReadings(),
+    indexReader: indexReaderReadings(),
+    probeBoundary: probeBoundaryReadings(),
     erased: readingsOf(mutantById("M71").factory, caseById("C2"))["K-EFFECT"],
     indexBoundary: Object.fromEntries(
       ["4294967294", INDEX_LIKE_KEY, "99999999999999999999", "01"].map(key => [key, shapeFindings({ blocks: [], unmet: Object.assign([] as string[], { [key]: "s3" }) }, DOCUMENT_SHAPE, "document")]),
