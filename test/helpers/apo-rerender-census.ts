@@ -1066,7 +1066,10 @@ export const STAND_IN: Readonly<Record<ClassElementKind, "parameters" | "field" 
  * is (parameter-property retired; R-PARAMETER-PROPERTIES pins the reading), a src overload set through its implementation
  * (overload kept for a set with no single implementation; R-OVERLOADS pins both), and an async function's return that is no
  * generator's against its written promise's awaited type (async-return retired; ASYNC-RETURNS pins the reading). R-OVERLOADS
- * and R-PARAMETER-PROPERTIES are no residual families any more; their rows keep their ids.
+ * and R-PARAMETER-PROPERTIES are no residual families any more; their rows keep their ids. wb-021.7 cut #4 (refusal #3 U1,
+ * ruling R-B199, the fail-closed core) adds this-parameter (THIS-PARAMETERS): a call to a src callee that declares an explicit
+ * this parameter, which argumentTarget reads for no argument, where its other parameters touch the projection; bead wb-021.10
+ * is the home of that reading.
  */
 export const FAIL_CLOSED: Readonly<Record<string, string>> = {
   "unresolved-stand-in": "STAND-IN-RECEIVERS",
@@ -1079,6 +1082,7 @@ export const FAIL_CLOSED: Readonly<Record<string, string>> = {
   "callback-return": "CALLBACK-RETURNS",
   "stand-in-return": "STAND-IN-RETURNS",
   "unlisted-stand-in": "UNLISTED-STAND-INS",
+  "this-parameter": "THIS-PARAMETERS",
 };
 /** A stand-in reading that judges something (every reading but "none"). */
 type StandInReading = Exclude<(typeof STAND_IN)[ClassElementKind], "none">;
@@ -1262,6 +1266,8 @@ const refusalRow = (kind: string, site: ts.Node): string => `${kind}: ${site.get
 /** A function-like node's own declared parameters, when it has a parameter list (a signature declaration). */
 const parametersOf = (node: ts.Declaration | undefined): readonly ts.ParameterDeclaration[] =>
   node && (ts.isFunctionLike(node) || ts.isJSDocSignature(node)) && "parameters" in node ? (node.parameters as readonly ts.ParameterDeclaration[]) : [];
+/** True for a declared this parameter (wb-021.7 cut #4): it receives no argument, while a signature declaration's parameter list holds it, first. */
+const isThisParameter = (parameter: ts.ParameterDeclaration): boolean => ts.isIdentifier(parameter.name) && parameter.name.text === "this";
 /** The declared return type node of the function-like a return statement or an arrow body belongs to. */
 function returnTypeOf(site: ts.Node): ts.TypeNode | undefined {
   const fn = ts.isArrowFunction(site) ? site : ts.findAncestor(site.parent, ts.isFunctionLike);
@@ -1331,7 +1337,12 @@ function isValueName(node: ts.Identifier): boolean {
  * callee's generic parameter as declared, which the checker's contextual type instantiates with what the call infers from the
  * literal itself, for a literal that is the argument itself of a call resolved to a src declaration with a body: cut #3 narrows
  * the claim to that position, and a literal written inside such an argument, or passed to a src signature with no body, is read
- * against that inferred instantiation alone and reads quiet, R-INFERRED-INSTANTIATION), never against the union's own members, which are only those every part declares -
+ * against that inferred instantiation alone and reads quiet, R-INFERRED-INSTANTIATION; cut #4 narrows it to a declaration that
+ * declares no explicit this parameter - argumentTarget trusts no parameter of one, so a value or a holder it takes is refused and
+ * a call to it fails closed, this-parameter (judgeThisCall; bead wb-021.10 reads it) - and names as
+ * R-INFERRED-INSTANTIATION's further members, at the argument itself, a property assignment's value and a spread (flowOf and
+ * judgeSpread read the contextual type alone), a .call relay and an overload set whose implementation's parameter declares
+ * none of the literal's members), never against the union's own members, which are only those every part declares -
  * so under a union written at the flow (an undefined or an object part beside the type) and under an async function's return,
  * whose contextual type is the awaited type united with a PromiseLike of it, each member is judged as its twin under the type
  * alone is, a shorthand property with one row per kind at its site.
@@ -1751,10 +1762,8 @@ export function readForms(
       if (hidden) refuse(form, site);
       else if (!quiet) ok(form);
     };
-    /** The type an argument flows into (undefined: no parameter takes it, or the callee is unresolved). */
-    const argumentTarget = (call: ts.CallExpression | ts.NewExpression, node: ts.Expression, exposing: boolean): ts.Type | undefined => {
-      const passed: readonly ts.Expression[] = call.arguments ?? [];
-      const index = passed.indexOf(node);
+    /** The signature a call resolves to and the declaration that runs it: the checker's resolved signature's declaration, a src overload signature replaced by its set's implementation (undefined: unresolved, or a set with no implementation). */
+    const calleeOf = (call: ts.CallExpression | ts.NewExpression): { readonly signature: ts.Signature; readonly declaration: ts.SignatureDeclaration } | undefined => {
       const signature = checker.getResolvedSignature(call);
       let declaration = signature?.getDeclaration();
       if (!signature || !declaration) return undefined;
@@ -1763,8 +1772,19 @@ export function readForms(
         if (!implementation) return undefined;
         declaration = implementation as ts.SignatureDeclaration;
       }
+      return { signature, declaration };
+    };
+    /** The type an argument flows into (undefined: no parameter takes it, or the callee is unresolved). */
+    const argumentTarget = (call: ts.CallExpression | ts.NewExpression, node: ts.Expression, exposing: boolean): ts.Type | undefined => {
+      const passed: readonly ts.Expression[] = call.arguments ?? [];
+      const index = passed.indexOf(node);
+      const callee = calleeOf(call);
+      if (!callee) return undefined;
+      const { signature, declaration } = callee;
       // A src signature with no body of its own (an interface method, a function type, a call signature): the body that runs is an implementation the checker does not resolve here, so no parameter is trusted.
       if (isSrc(declaration) && !hasBody(declaration)) return undefined;
+      // A src declaration that declares an explicit this parameter (wb-021.7 cut #4, refusal #3 U1, ruling R-B199: the fail-closed core) is trusted for no parameter either: its declared list holds the this parameter, which takes no argument, and the reading that skips it is bead wb-021.10's, so a value or a holder it takes is refused (argument) and a call to it fails closed (judgeThisCall: this-parameter).
+      if (isSrc(declaration) && parametersOf(declaration).some(isThisParameter)) return undefined;
       const parameters = parametersOf(declaration);
       const last = parameters[parameters.length - 1];
       const parameter = parameters[index] ?? (last?.dotDotDotToken ? last : undefined);
@@ -1814,6 +1834,8 @@ export function readForms(
      * once. A literal written inside such an argument (flowOf reads a property's value through its contextual type and an array's
      * or a tuple's element not at all), or passed to a src signature with no body (argumentTarget trusts none of its parameters),
      * is read against the instantiation the call infers from the literal itself alone (R-INFERRED-INSTANTIATION, wb-021.7 cut #3).
+     * A callee that declares an explicit this parameter is no such declared target (wb-021.7 cut #4): argumentTarget trusts none of
+     * its parameters, and judgeThisCall fails a call to it closed.
      */
     const literalBases = (literal: ts.ObjectLiteralExpression): readonly ts.Type[] => {
       const contextual = checker.getContextualType(literal);
@@ -1894,7 +1916,7 @@ export function readForms(
     };
     /** The type a method's or a setter's own declared parameters take at a position the base hands (cut #6): a this parameter skipped (it receives no argument), a rest parameter's element at and past its own position; undefined past the last. */
     const ownAt = (own: readonly ts.ParameterDeclaration[], at: number): ts.Type | undefined => {
-      const received = own.filter(parameter => !(ts.isIdentifier(parameter.name) && parameter.name.text === "this"));
+      const received = own.filter(parameter => !isThisParameter(parameter));
       const last = received[received.length - 1];
       const parameter = received[at] ?? (last?.dotDotDotToken ? last : undefined);
       if (!parameter) return undefined;
@@ -2024,6 +2046,25 @@ export function readForms(
       const supplied = objectParts(checker.getTypeAtLocation(spread.expression));
       if (objectParts(constrained(contextual)).some(goal => handingMembers(goal).some(member => supplied.some(part => checker.getPropertyOfType(part, member.name) !== undefined)))) refuse("spread", spread);
     };
+    /**
+     * A call the checker resolves to a src callee that declares an explicit this parameter - the declaration that runs it (an overload
+     * set's implementation), else, for a set with none or a signature with no body, the signature it resolves to (wb-021.7 cut #4,
+     * refusal #3 U1, ruling R-B199: the fail-closed core): argumentTarget trusts no parameter of such a callee and its reading is bead
+     * wb-021.10's, so where a type one of its other declared parameters takes exposes, holds or hands the projection (as exposes,
+     * heldPaths and holdsHanding read a type), the call fails closed (this-parameter), whatever it is passed and whether that hides
+     * the projection or keeps it.
+     */
+    const judgeThisCall = (call: ts.CallExpression | ts.NewExpression): void => {
+      const declaration = calleeOf(call)?.declaration ?? checker.getResolvedSignature(call)?.getDeclaration();
+      if (declaration === undefined || !isSrc(declaration) || !parametersOf(declaration).some(isThisParameter)) return;
+      const touches = parametersOf(declaration)
+        .filter(parameter => !isThisParameter(parameter))
+        .some(parameter => {
+          const type = checker.getTypeAtLocation(parameter);
+          return exposes(type) || heldPaths(type, 0).length > 0 || holdsHanding(type, 0);
+        });
+      if (touches) refuse("this-parameter", call);
+    };
     /** The base sides a class element stands in for: an instance element the extended class's instance side and every implemented interface, a static one (the static modifier, or a static block) the extended class's static side, its constructor type. */
     const standInBases = (element: ts.ClassElement, owner: ts.ClassLikeDeclaration): ts.Type[] =>
       (owner.heritageClauses ?? []).flatMap(clause => {
@@ -2063,6 +2104,7 @@ export function readForms(
       // The fail-closed core's syntax-level shapes (cut #8, ruling R-B67): a class's inherited implementation, a spread under a handing contextual type, and a return or a yield of an async function or a generator under a written type that holds a handing type.
       if (!typed && ts.isClassLike(node)) judgeInherited(node);
       if (!typed && ts.isSpreadAssignment(node)) judgeSpread(node);
+      if (!typed && (ts.isCallExpression(node) || ts.isNewExpression(node))) judgeThisCall(node);
       if (!typed && ts.isExpression(node) && ((ts.isReturnStatement(node.parent) && node.parent.expression === node) || (ts.isArrowFunction(node.parent) && node.parent.body === node))) judgeWrapped(node.parent);
       if (!typed && ts.isYieldExpression(node)) judgeWrapped(node);
       const element = classElementOf(node);
@@ -3177,7 +3219,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "DISPATCH",
       label:
-        "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), a constructor parameter property as a field is (wb-021.7, R-PARAMETER-PROPERTIES), an object literal's own method, getter, setter or shorthand property under the contextual type of the flow it is written at, against the member of its name in each part of that type, and of the declared target of that flow, that declares one (a union part by part - an undefined or an object part beside the type, an argument's union parameter, and an async function's return, whose contextual type is the awaited type united with a PromiseLike of it - and a type parameter through its constraint, a src callee's generic parameter included where the literal is the argument itself, as writtenAt reads it, of a call the checker resolves to a src declaration with a body (argumentTarget's declared parameter), whose instantiation the checker's contextual type takes from the literal itself: wb-021.7 cut #2, refusal #1 U1 and U2, narrowed to that position at cut #3, refusal #2 U1, ruling R-B155; the twin of each R-INFERRED-INSTANTIATION page under a parameter typed without a type parameter - a property's value, its getter, a shorthand, an array's and a tuple's element, two levels down, a method's and a constructor's nested argument, and a function-typed parameter's and an interface method's argument and an interface method's nested argument - is read against its contextual type, that position's declared member, and refused, and so is a setter inside a src callee's generic-parameter argument whose literal's own getter types the property as the projection, the literal's own type handing it: cut #3), and a field, a getter or a callback typed by a src overload set read through the set's implementation (wb-021.7, R-OVERLOADS) - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal member that keep the projection read quiet, under a union contextual type too; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a field, a getter or a callback typed by an overload set with no single implementation (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), a generator's written-type return (generator-yield; an async function's is read against the awaited type, wb-021.7, ASYNC-RETURNS) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH; a member a base names only through an index signature, R-INDEX-STAND-IN; a member an extending interface redeclares with a type that hides the projection, R-INTERFACE-REDECLARATION; a literal's member matched against the instantiation a call infers from the literal itself, R-INFERRED-INSTANTIATION), and any other stand-in shape is outside this claim",
+        "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused (as is one through a src declaration that declares an explicit this parameter, which argumentTarget reads for no argument: THIS-PARAMETERS, wb-021.7 cut #4), and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), a constructor parameter property as a field is (wb-021.7, R-PARAMETER-PROPERTIES), an object literal's own method, getter, setter or shorthand property under the contextual type of the flow it is written at, against the member of its name in each part of that type, and of the declared target of that flow, that declares one (a union part by part - an undefined or an object part beside the type, an argument's union parameter, and an async function's return, whose contextual type is the awaited type united with a PromiseLike of it - and a type parameter through its constraint, a src callee's generic parameter included where the literal is the argument itself, as writtenAt reads it, of a call the checker resolves to a src declaration with a body that declares no explicit this parameter (argumentTarget's declared parameter), whose instantiation the checker's contextual type takes from the literal itself: wb-021.7 cut #2, refusal #1 U1 and U2, narrowed to that position at cut #3, refusal #2 U1, ruling R-B155, and to such a declaration at cut #4, refusal #3 U1, ruling R-B199 (a callee that declares one is read for no argument and a call to it fails closed, this-parameter: THIS-PARAMETERS); the twin of each R-INFERRED-INSTANTIATION page under a parameter typed without a type parameter - a property's value, its getter, a shorthand, an array's and a tuple's element, two levels down, a method's and a constructor's nested argument, and a function-typed parameter's and an interface method's argument and an interface method's nested argument - is read against its contextual type, that position's declared member, and refused, and so is a setter inside a src callee's generic-parameter argument whose literal's own getter types the property as the projection, the literal's own type handing it: cut #3; a property assignment's value and a spread are read against the contextual type alone, and the twin of each page cut #4 adds to R-INFERRED-INSTANTIATION - an arrow's, a function expression's and an identifier's assigned value and a spread, each under a parameter typed without a type parameter, the direct call of the function a .call relay names, and an overload set's plain visible signature over an implementation that takes unknown - is read against its contextual type and refused (property; the spread fails closed, spread): cut #4), and a field, a getter or a callback typed by a src overload set read through the set's implementation (wb-021.7, R-OVERLOADS) - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal member that keep the projection read quiet, under a union contextual type too; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a field, a getter or a callback typed by an overload set with no single implementation (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), a generator's written-type return (generator-yield; an async function's is read against the awaited type, wb-021.7, ASYNC-RETURNS) and a value of any other type (unlisted-stand-in), and a call to a src callee that declares an explicit this parameter whose other parameters touch the projection (this-parameter, wb-021.7 cut #4) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; a branch a conditional or a ?? narrows, R-NARROWED-BRANCH; a member a base names only through an index signature, R-INDEX-STAND-IN; a member an extending interface redeclares with a type that hides the projection, R-INTERFACE-REDECLARATION; a literal's member matched against the instantiation a call infers from the literal itself, R-INFERRED-INSTANTIATION), and any other stand-in shape is outside this claim",
       cases: [
         reachForms("src/ui/census-forms-dispatch-interface.ts", `${OBS_UI}interface Api {\n  forget(projection: ObservationProjection): void;\n}\nexport const run = (api: Api, projection: ObservationProjection): void => api.forget(projection);\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: api.forget(projection)"])),
         reachForms("src/ui/census-forms-dispatch-function-type.ts", `${OBS_UI}export const run = (sink: (projection: ObservationProjection) => void, projection: ObservationProjection): void => sink(projection);\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: sink(projection)"])),
@@ -3403,6 +3445,42 @@ export const REACH: Table<ReachItem> = {
           `${OBS_UI}${SLOT_UI}const keep = <T extends Slot>(value: { readonly slot: T }): T => value.slot;\nexport const kept = keep({\n  slot: {\n    get projection(): ObservationProjection {\n      return held as ObservationProjection;\n    },\n    set projection(value: unknown) {\n      held = value;\n    },\n  },\n});\n`,
           reached(true, [], [], ["projection"]),
           formsRead(["annotation", "return"], ["property: set projection(value: unknown) { held = value; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-property-arrow.ts",
+          `${OBS_UI}${SINK_UI}function keep(value: Sink): Sink {\n  return value;\n}\nexport const kept = keep({ forget: (projection: unknown): void => void projection });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget: (projection: unknown): void => void projection"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-property-function.ts",
+          `${OBS_UI}${SINK_UI}function keep(value: Sink): Sink {\n  return value;\n}\nexport const kept = keep({\n  forget: function (projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget: function (projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-property-identifier.ts",
+          `${OBS_UI}${SINK_UI}const hide = (projection: unknown): void => void projection;\nfunction keep(value: Sink): Sink {\n  return value;\n}\nexport const kept = keep({ forget: hide });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget: hide"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-spread.ts",
+          `${OBS_UI}${SINK_UI}const impl = {\n  forget(projection: unknown): void {\n    void projection;\n  },\n};\nfunction keep(value: Sink): Sink {\n  return value;\n}\nexport const kept = keep({ ...impl });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["spread: ...impl"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-call-direct.ts",
+          `${OBS_UI}${SINK_UI}const keep = (value: Sink): Sink => value;\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-dispatch-overload-plain.ts",
+          `${OBS_UI}${SINK_UI}function keep(value: Sink): Sink;\nfunction keep(value: unknown): unknown {\n  return value;\n}\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
         ),
       ],
     },
@@ -5104,7 +5182,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "R-INFERRED-INSTANTIATION",
       label:
-        "residual (wb-021.7 cut #3, refusal #2 U1, ruling R-B155: the class it froze, named; pre-existing in the landed core and at cuts #1 and #2): an object literal's method, getter and shorthand property are read against the parts of the literal's contextual type and of its flow's declared target (literalBases), and where the contextual type is the instantiation a call infers from the literal itself while no declared target is read, the member is matched against the literal's own type, which hands nothing - a literal written inside the argument of a src callee's generic parameter (a property's value under a type parameter constrained to the type or to a union, its getter, a shorthand, an array's element, a tuple's element, two levels down, a generic method's and a generic constructor's nested argument: flowOf reads a property's value through that contextual type and an element not at all) and a literal passed, as the argument or inside it, to a generic signature with no body (a function-typed parameter, an interface method: argumentTarget trusts no parameter of one) - so each reads quiet with no row where the call's result flows into no written type, whether its member hides the projection or keeps it, while its twin under the type alone is refused (DISPATCH; each page plants one that hides it)",
+        "residual (wb-021.7 cut #3, refusal #2 U1, ruling R-B155: the class it froze, named; pre-existing in the landed core and at cuts #1 and #2): an object literal's method, getter and shorthand property are read against the parts of the literal's contextual type and of its flow's declared target (literalBases), and where the contextual type is the instantiation a call infers from the literal itself while no declared target is read, the member is matched against the literal's own type, which hands nothing - a literal written inside the argument of a src callee's generic parameter (a property's value under a type parameter constrained to the type or to a union, its getter, a shorthand, an array's element, a tuple's element, two levels down, a generic method's and a generic constructor's nested argument: flowOf reads a property's value through that contextual type and an element not at all) and a literal passed, as the argument or inside it, to a generic signature with no body (a function-typed parameter, an interface method: argumentTarget trusts no parameter of one) - so each reads quiet with no row where the call's result flows into no written type, whether its member hides the projection or keeps it, while its twin under the type alone is refused (DISPATCH; each page plants one that hides it); wb-021.7 cut #4 (refusal #3 F3 and F4, and two members measured at the cut; pre-existing in the landed core) adds the members the narrowed position leaves to the contextual type alone - at the argument itself of a src callee's generic parameter, a property assignment's value (an arrow, a function expression, an identifier: flowOf reads it through the contextual type) and a spread (judgeSpread reads the contextual type), a literal relayed through Function.prototype.call to a src function, generic or not (the library signature's own type parameter takes the literal's type), and a literal passed to an overload set whose visible signature is generic while its implementation's parameter, which argumentTarget reads, declares none of the literal's members (an unknown) - each matched against the literal's own type and quiet, its twin refused (DISPATCH); a callee or a signature that declares an explicit this parameter is no member of this family: a call to one fails closed (THIS-PARAMETERS, cut #4)",
       cases: [
         reachForms(
           "src/ui/census-forms-inferred-nested-property.ts",
@@ -5177,6 +5255,289 @@ export const REACH: Table<ReachItem> = {
           `${OBS_UI}${SINK_UI}interface Api {\n  put<T extends Sink>(value: { readonly sink: T }): T;\n}\nexport const run = (api: Api): void => {\n  api.put({\n    sink: {\n      forget(projection: unknown): void {\n        void projection;\n      },\n    },\n  });\n};\n`,
           reached(true, [], [], ["projection"]),
           formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-property-arrow.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(value: T): T {\n  return value;\n}\nexport const kept = keep({ forget: (projection: unknown): void => void projection });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-property-function.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(value: T): T {\n  return value;\n}\nexport const kept = keep({\n  forget: function (projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-property-identifier.ts",
+          `${OBS_UI}${SINK_UI}const hide = (projection: unknown): void => void projection;\nfunction keep<T extends Sink>(value: T): T {\n  return value;\n}\nexport const kept = keep({ forget: hide });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-spread.ts",
+          `${OBS_UI}${SINK_UI}const impl = {\n  forget(projection: unknown): void {\n    void projection;\n  },\n};\nfunction keep<T extends Sink>(value: T): T {\n  return value;\n}\nexport const kept = keep({ ...impl });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-call-relay.ts",
+          `${OBS_UI}${SINK_UI}const keep = <T extends Sink>(value: T): T => value;\nexport const kept = keep.call(undefined, {\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-call-relay-plain.ts",
+          `${OBS_UI}${SINK_UI}const keep = (value: Sink): Sink => value;\nexport const kept = keep.call(undefined, {\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-inferred-overload-unknown.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(value: T): T;\nfunction keep(value: unknown): unknown {\n  return value;\n}\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+      ],
+    },
+    {
+      id: "THIS-PARAMETERS",
+      label:
+        "a src callee that declares an explicit this parameter is read for no argument (wb-021.7 cut #4, refusal #3 U1, ruling R-B199: the fail-closed core; bead wb-021.10 is the home of its reading): its declared parameter list holds the this parameter first, which takes no argument, and argumentTarget read that list by the argument's position, so a generic parameter was never read and a hiding literal matched only the instantiation the call infers from it (refusal #3 U1, live LT1), while a value was read against the parameter before its own; argumentTarget now trusts no parameter of a src declaration that declares one, as of one with no body, so a value or a holder it takes is refused (argument), and a call whose callee declares one - the declaration that runs it, an overload set's implementation, else, for a set with none or a signature with no body, the signature it resolves to - fails closed at the call with one this-parameter row (judgeThisCall) where a type one of its other declared parameters takes exposes, holds or hands the projection, as exposes, heldPaths and holdsHanding read a type, whatever it is passed and whether that hides the projection or keeps it: an object literal as the argument (a method, a getter, an assigned property, a shorthand, a spread's; parenthesized, in a conditional's branches, at another position, naming no handing member), one nested in it, a spread argument's, a literal held in a variable, a class instance, a callback, a value, a holder into a parameter that holds the projection, and no argument; a function's, a union constraint's, a method's, a second position's, a function expression's, a static method's, an object literal method's, a rest parameter's, an overload set's implementation's (behind a visible signature with none too), a generic class method's, an ambient declaration's, an interface method's and a function type's this parameter each fail closed so; a parameter typed without a type parameter of its own (a plain one, a generic class's) fails closed beside its contextual reading (property), a holder into a parameter that touches no projection is refused (argument) alone, a visible overload signature's this parameter over an implementation that declares none is read through the implementation (property), and a call whose other parameters touch no projection - an object's, a primitive's, and beside a this parameter typed to hand it - reads quiet",
+      cases: [
+        reachForms(
+          "src/ui/census-forms-this-function.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-union-constraint.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink | undefined>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-method.ts",
+          `${OBS_UI}${SINK_UI}class Box {\n  put<T extends Sink>(this: Box, value: T): T {\n    return value;\n  }\n}\nexport const kept = new Box().put({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: new Box().put({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-second-position.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, first: number, value: T): T {\n  void first;\n  return value;\n}\nexport const kept = keep(1, {\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep(1, { forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-expression.ts",
+          `${OBS_UI}${SINK_UI}const keep = function <T extends Sink>(this: void, value: T): T {\n  return value;\n};\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-static-method.ts",
+          `${OBS_UI}${SINK_UI}class Box {\n  static put<T extends Sink>(this: typeof Box, value: T): T {\n    return value;\n  }\n}\nexport const kept = Box.put({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: Box.put({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-literal-method.ts",
+          `${OBS_UI}${SINK_UI}const box = {\n  put<T extends Sink>(this: unknown, value: T): T {\n    return value;\n  },\n};\nexport const kept = box.put({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: box.put({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-rest.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, ...values: T[]): T | undefined {\n  return values[0];\n}\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-overload.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: T): T;\nfunction keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-class-parameter.ts",
+          `${OBS_UI}${SINK_UI}class Box<T extends Sink> {\n  put(this: Box<T>, value: T): T {\n    return value;\n  }\n}\nexport const kept = new Box().put({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }", "this-parameter: new Box().put({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-keeps.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep({\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  },\n});\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["this-parameter: keep({ forget(projection: ObservationProjection): void { void projection.stats(); }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-method-keeps.ts",
+          `${OBS_UI}${SINK_UI}class Box {\n  put<T extends Sink>(this: Box, value: T): T {\n    return value;\n  }\n}\nexport const kept = new Box().put({\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  },\n});\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["this-parameter: new Box().put({ forget(projection: ObservationProjection): void { void projection.stats(); }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-plain.ts",
+          `${OBS_UI}${SINK_UI}function keep(this: void, value: Sink): Sink {\n  return value;\n}\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }", "this-parameter: keep({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-property.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep({ forget: (projection: unknown): void => void projection });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ forget: (projection: unknown): void => void projection })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-shorthand.ts",
+          `${OBS_UI}${SINK_UI}const forget = (projection: unknown): void => void projection;\nfunction keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep({ forget });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ forget })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-getter.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep({\n  get forget(): (projection: unknown) => void {\n    return (projection: unknown): void => void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ get forget(): (projection: unknown) => void { return (projection: unknown): void => void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-spread.ts",
+          `${OBS_UI}${SINK_UI}const impl = {\n  forget(projection: unknown): void {\n    void projection;\n  },\n};\nfunction keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep({ ...impl });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ ...impl })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-value.ts",
+          `${OBS_UI}function take(this: void, first: ObservationProjection, second: unknown): void {\n  void first;\n  void second;\n}\nexport const run = (projection: ObservationProjection): void => take(null!, projection);\n`,
+          reached(true, [], [], ["first", "projection"]),
+          formsRead(["annotation", "test"], ["argument: take(null!, projection)", "this-parameter: take(null!, projection)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-value-keeps.ts",
+          `${OBS_UI}function take(this: void, projection: ObservationProjection): void {\n  void projection.stats();\n}\nexport const run = (projection: ObservationProjection): void => take(projection);\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["argument: take(projection)", "this-parameter: take(projection)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-holder.ts",
+          `${OBS_UI}interface Slot {\n  projection: unknown;\n}\nfunction keep<T extends Slot>(this: void, value: T): T {\n  return value;\n}\nexport const run = (projection: ObservationProjection): Slot => keep({ projection });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation", "property"], ["argument: keep({ projection })", "return: (projection: ObservationProjection): Slot => keep({ projection })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-parenthesized.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep(({\n  forget(projection: unknown): void {\n    void projection;\n  },\n}));\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep(({ forget(projection: unknown): void { void projection; }, }))"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-conditional.ts",
+          `${OBS_UI}${SINK_UI}const flag = Date.now() > 0;\nfunction keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep(flag ? {\n  forget(projection: unknown): void {\n    void projection;\n  },\n} : {\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  },\n});\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["this-parameter: keep(flag ? { forget(projection: unknown): void { void projection; }, } : { forget(projection: ObservationProjection): void { void projection.stats(); }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-other-position.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: T, extra: object): T {\n  void extra;\n  return value;\n}\nexport const run = (sink: Sink): Sink => keep(sink, {\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep(sink, { forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-unnamed.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: T, label: { readonly name: string }): T {\n  void label;\n  return value;\n}\nexport const run = (sink: Sink): Sink => keep(sink, { name: "sink" });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep(sink, { name: \"sink\" })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-held-parameter.ts",
+          `${OBS_UI}function keep(this: void, deps: { readonly projection: ObservationProjection }): void {\n  void deps.projection.stats();\n}\nexport const run = (projection: ObservationProjection): void => keep({ projection });\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member", "property"], ["argument: keep({ projection })", "this-parameter: keep({ projection })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-nested.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: { readonly sink: T }): T {\n  return value.sink;\n}\nexport const kept = keep({ sink: {\n  forget(projection: unknown): void {\n    void projection;\n  },\n} });\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ sink: { forget(projection: unknown): void { void projection; }, } })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-spread-argument.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep(...([{\n  forget(projection: unknown): void {\n    void projection;\n  },\n}] as const));\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep(...([{ forget(projection: unknown): void { void projection; }, }] as const))"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-held-literal.ts",
+          `${OBS_UI}${SINK_UI}const impl = {\n  forget(projection: unknown): void {\n    void projection;\n  },\n};\nfunction keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep(impl);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep(impl)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-instance.ts",
+          `${OBS_UI}${SINK_UI}class Quiet {\n  forget(projection: unknown): void {\n    void projection;\n  }\n}\nfunction keep<T extends Sink>(this: void, value: T): T {\n  return value;\n}\nexport const kept = keep(new Quiet());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep(new Quiet())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-callback.ts",
+          `${OBS_UI}function run(this: void, sink: (projection: ObservationProjection) => void): void {\n  void sink;\n}\nexport const ran = run((projection: unknown): void => void projection);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: run((projection: unknown): void => void projection)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-ambient.ts",
+          `${OBS_UI}${SINK_UI}declare function keep<T extends Sink>(this: void, value: T): T;\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-interface-method.ts",
+          `${OBS_UI}${SINK_UI}interface Api {\n  put<T extends Sink>(this: Api, value: T): T;\n}\nexport const run = (api: Api): void => {\n  api.put({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: api.put({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-type.ts",
+          `${OBS_UI}${SINK_UI}export const run = (keep: <T extends Sink>(this: void, value: T) => T): void => {\n  keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n};\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-no-argument.ts",
+          `${OBS_UI}${SINK_UI}function keep(this: void, value?: Sink): Sink | undefined {\n  return value;\n}\nexport const kept = keep();\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep()"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-implementation.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(value: T): T;\nfunction keep(this: void, value: Sink): Sink {\n  return value;\n}\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["this-parameter: keep({ forget(projection: unknown): void { void projection; }, })"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-visible-signature.ts",
+          `${OBS_UI}${SINK_UI}function keep<T extends Sink>(this: void, value: T): T;\nfunction keep(value: Sink): Sink {\n  return value;\n}\nexport const kept = keep({\n  forget(projection: unknown): void {\n    void projection;\n  },\n});\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["property: forget(projection: unknown): void { void projection; }"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-quiet-unhanded.ts",
+          `${OBS_UI}function label(this: void, value: { readonly name: string }): string {\n  return value.name;\n}\nexport const read = (projection: ObservationProjection): string => label({ name: String(projection.stats().nodes) });\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-quiet-primitive.ts",
+          `${OBS_UI}function twice(this: void, value: number): number {\n  return value * 2;\n}\nexport const read = (projection: ObservationProjection): number => twice(projection.stats().nodes);\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-quiet-this-type.ts",
+          `${OBS_UI}${SINK_UI}function keep(this: Sink, value: number): number {\n  void this;\n  return value;\n}\nconst holder = {\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  },\n  keep,\n};\nexport const kept = holder.keep(1);\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
         ),
       ],
     },
