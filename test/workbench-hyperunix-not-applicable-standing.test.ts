@@ -39,12 +39,20 @@
  *      by its forms under the three SDK styles the declaration witnesses. A failing Completeness join names both of its
  *      causes: an edited roster or a moved SDK vocabulary.
  *      Each case's expected cell count is computed once at module scope from these rosters (EXPECTED_CELLS, wb-aced, the
- *      landing-696 F1 follow-up), T2's fixture-validity half included, so a case that rebinds a roster locally or narrows the
- *      roster it iterates at its loop site reds its own guard.
- *      Not claimed, and neither is a residual (no quiet row pins either): a rewrite of the bead's own spelling itself (the
+ *      landing-696 F1 follow-up), T2's fixture-validity half included, and so is the sequence of cells each case drives
+ *      (EXPECTED_VISITS, wb-aced cut #2): T2, K1, K2, C1, C2 and C3 record every innermost cell they drive (the loop values
+ *      they hand the SDK or the adapter; C2 and C3 also the branch the cell took) and compare that record with
+ *      EXPECTED_VISITS, member for member and in order, after their count guards. So a case that drives other cells than the
+ *      module rosters define, because it rebinds an iterated or branch roster in its own scope (the imported
+ *      HYPERUNIX_EXECUTION_KINDS included) or substitutes, narrows, widens or reorders the roster expression at one of its
+ *      loop sites, reds its own case, at the latest at that guard, whether or not its cell count moves.
+ *      Not claimed, and none is a residual (no quiet row pins any): a rewrite of the bead's own spelling itself (the
  *      roster's first member and the frozen literal together: the bead text lives in the tracker, which this file does not
- *      read), and which HXS frame kinds carry a completeness verdict (T2 refuses the word on both listed frames; the SDK's
- *      frame set is not read).
+ *      read); which HXS frame kinds carry a completeness verdict (T2 refuses the word on both listed frames; the SDK's
+ *      frame set is not read); an edit of a guard or of a record (a case-local EXPECTED_CELLS or EXPECTED_VISITS, or a
+ *      recorded value other than the driven one); an edit that hands the SDK or the adapter a value other than the recorded
+ *      loop value (inside a loop body, or a case-local rebinding of a helper such as reading or sdkDocument); and a
+ *      rebinding that changes no driven cell (K1's kind-set assertion reads HYPERUNIX_EXECUTION_KINDS without iterating it).
  * T1, T2, C1 and R0's Completeness join state the vendored SDK 0.1.0 and move with an amended SDK (each names this bead's
  * on-landing leg); K1, K2, C2, C3 and R0's other joins hold before and after it. Pure: no HX binary, scratch directory, clock,
  * network or file write; the only file read is the installed SDK declaration (by T1 and R0). */
@@ -90,7 +98,7 @@ const COMPLETENESS_JOIN = 'wb-tz2.4 R0 Completeness join: PRE_EXISTING or FRAME_
 /** Each case's expected cell count, computed once here from the R0-pinned module rosters (wb-aced, the landing-696 F1 follow-up):
  * a case that rebinds a roster locally, or narrows the roster it iterates at its loop site, cannot move its own guard with it.
  * T2's refusal half keeps the absolute frame count (two verdict frames), which a widened VERDICT_FRAMES cannot follow; its
- * fixture-validity half has a guard of its own. */
+ * fixture-validity half has a guard of its own. These guards pin each case's cell count only; EXPECTED_VISITS pins the cells. */
 const EXPECTED_CELLS = Object.freeze({
   t2Refusals: 2 * NOT_APPLICABLE.length,
   t2Validity: VERDICT_FRAMES.length * FRAME_VALUES.length,
@@ -100,6 +108,26 @@ const EXPECTED_CELLS = Object.freeze({
   c2Projected: NOT_APPLICABLE.length * (READ_KINDS.length * LICENCES.length - COMPLETE_KINDS.size),
   c2Refused: NOT_APPLICABLE.length * MUTATION_KINDS.size * LICENCES.length,
   c3: PRE_EXISTING.length * HYPERUNIX_EXECUTION_KINDS.length * LICENCES.length,
+});
+/** One driven cell as a case records it: its loop values, outermost first (C2 and C3 add the branch the cell took). */
+type Visit = readonly (string | boolean | null)[];
+/** The cells each case drives, in order, computed once here from the same R0-pinned module rosters (wb-aced cut #2, the
+ * refusal-#1 U1 cure): each case records every innermost cell it drives and compares the record with its entry after its
+ * count guard, so a case that drives other cells than these rosters define (a roster rebound in its own scope, or a roster
+ * expression substituted, narrowed, widened or reordered at a loop site) reds even when its cell count does not move. C2
+ * leaves out the cells it skips (the licence on a complete kind, where the runtime itself licensed absence), as the case does. */
+const EXPECTED_VISITS: Readonly<Record<'t2Refusals' | 't2Validity' | 'k1' | 'k2' | 'c1' | 'c2' | 'c3', readonly Visit[]>> = Object.freeze({
+  t2Refusals: VERDICT_FRAMES.flatMap(frame => NOT_APPLICABLE.map(spelling => [frame, spelling])),
+  t2Validity: VERDICT_FRAMES.flatMap(frame => FRAME_VALUES.map(value => [frame, value])),
+  k1: NOT_APPLICABLE.flatMap(spelling => LICENCES.map(licensed => [spelling, licensed])),
+  k2: NOT_APPLICABLE.flatMap(spelling => LICENCES.map(licensed => [spelling, licensed])),
+  c1: NOT_APPLICABLE.flatMap(spelling => READ_KINDS.flatMap(kind => LICENCES.map(licensed => [spelling, kind, licensed]))),
+  c2: NOT_APPLICABLE.flatMap(spelling => HYPERUNIX_EXECUTION_KINDS.flatMap(kind => LICENCES.flatMap((licensed): Visit[] => {
+    if (MUTATION_KINDS.has(kind)) return [[spelling, kind, licensed, 'refused']];
+    return licensed && COMPLETE_KINDS.has(kind) ? [] : [[spelling, kind, licensed, 'projected']];
+  }))),
+  c3: PRE_EXISTING.flatMap(value => HYPERUNIX_EXECUTION_KINDS.flatMap(kind => LICENCES.map(licensed =>
+    [value, kind, licensed, MUTATION_KINDS.has(kind) ? 'refused' : 'projected']))),
 });
 
 /** The provider output shape of the measured live read (test/workbench-hyperunix-observer.test.ts measured()), with the
@@ -200,6 +228,8 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
   });
 
   it('T2: the live decoder fails a stream whose coverage verdict carries the word as SDK_PROTOCOL_INCOMPATIBLE, and passes every pre-existing value verbatim', () => {
+    const refusalVisits: Visit[] = [];
+    const validityVisits: Visit[] = [];
     let validity = 0;
     let refusals = 0;
     for (const frame of VERDICT_FRAMES) {
@@ -207,6 +237,7 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
         const error = thrown(() => decodeResultStream(verdictStream(frame, spelling)));
         expect(error, TRIGGER).toBeInstanceOf(ProtocolError);
         expect(error, TRIGGER).toMatchObject({code: 'SDK_PROTOCOL_INCOMPATIBLE', path: 'body.completeness'});
+        refusalVisits.push([frame, spelling]);
         refusals++;
       }
       // The same stream with each pre-existing value decodes and its verdict reaches the summary as sent: the refusal above is
@@ -214,14 +245,18 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
       for (const value of FRAME_VALUES) {
         const {checker} = decodeResultStream(verdictStream(frame, value));
         expect(coverageSummaryOf([], checker, 'complete', []).completeness).toBe(value);
+        validityVisits.push([frame, value]);
         validity++;
       }
     }
     expect(refusals).toBe(EXPECTED_CELLS.t2Refusals);
     expect(validity).toBe(EXPECTED_CELLS.t2Validity);
+    expect(refusalVisits).toStrictEqual(EXPECTED_VISITS.t2Refusals);
+    expect(validityVisits).toStrictEqual(EXPECTED_VISITS.t2Validity);
   });
 
   it('K1: every spelling is outside the closed kind set, refused before projecting under either licence, and breaks the execution-kind clause', () => {
+    const visits: Visit[] = [];
     let cells = 0;
     for (const spelling of NOT_APPLICABLE) {
       expect(HYPERUNIX_EXECUTION_KINDS).not.toContain(spelling);
@@ -232,13 +267,16 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
         expect(hxLiveInvariant(reading(spelling, licensed))).toStrictEqual({holds: false,
           violations: licensed ? ['execution-kind', 'licence-without-complete-kind'] : ['execution-kind'], absenceLicensed: false,
           versionClass: 'unstamped'});
+        visits.push([spelling, licensed]);
         cells++;
       }
     }
     expect(cells).toBe(EXPECTED_CELLS.k1);
+    expect(visits).toStrictEqual(EXPECTED_VISITS.k1);
   });
 
   it('K2: through the representation decoder the word as a kind rebuilds as protocol-failed, which stays a failure that never licenses absence', () => {
+    const visits: Visit[] = [];
     let cells = 0;
     for (const spelling of NOT_APPLICABLE) {
       for (const licensed of LICENCES) {
@@ -247,27 +285,33 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
         expect(hyperunixTopology(rebuilt, context).snapshots[0]).toMatchObject({coverage: 'unknown',
           node: {statusTone: 'failure', statusText: 'protocol-failed'}});
         expect(hxLiveInvariant(rebuilt).absenceLicensed).toBe(false);
+        visits.push([spelling, licensed]);
         cells++;
       }
     }
     expect(cells).toBe(EXPECTED_CELLS.k2);
+    expect(visits).toStrictEqual(EXPECTED_VISITS.k2);
   });
 
   it('C1: the representation decoder keeps no spelling as a completeness value: each rebuilds as null, byte-identical to its null twin', () => {
+    const visits: Visit[] = [];
     let cells = 0;
     for (const spelling of NOT_APPLICABLE) {
       expect(resultFromJson(sdkDocument('complete', true, spelling)).coverageSummary.completeness, TRIGGER).toBeNull();
       for (const kind of READ_KINDS) {
         for (const licensed of LICENCES) {
           expect(providerReading(sdkDocument(kind, licensed, spelling)), TRIGGER).toStrictEqual(providerReading(sdkDocument(kind, licensed, null)));
+          visits.push([spelling, kind, licensed]);
           cells++;
         }
       }
     }
     expect(cells).toBe(EXPECTED_CELLS.c1);
+    expect(visits).toStrictEqual(EXPECTED_VISITS.c1);
   });
 
   it('C2: a reading carrying the word past the decoder never reads complete, success or known-empty and never licenses absence without the runtime licence', () => {
+    const visits: Visit[] = [];
     let projected = 0;
     let refused = 0;
     for (const spelling of NOT_APPLICABLE) {
@@ -279,6 +323,7 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
             expect(error).toBeInstanceOf(CapabilityError);
             expect(error).toMatchObject({category: 'validation'});
             expect((error as Error).message).toContain('mutation');
+            visits.push([spelling, kind, licensed, 'refused']);
             refused++;
             continue;
           }
@@ -289,15 +334,18 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
           expect(snapshot.node.statusTone).not.toBe('success');
           expect(snapshot.node.statusText).not.toContain('known-empty');
           expect(hxLiveInvariant(value).absenceLicensed).toBe(false);
+          visits.push([spelling, kind, licensed, 'projected']);
           projected++;
         }
       }
     }
     expect(projected).toBe(EXPECTED_CELLS.c2Projected);
     expect(refused).toBe(EXPECTED_CELLS.c2Refused);
+    expect(visits).toStrictEqual(EXPECTED_VISITS.c2);
   });
 
   it('C3: every pre-existing completeness value projects byte-identically to the completeness-free reading, for every kind and licence', () => {
+    const visits: Visit[] = [];
     let cells = 0;
     for (const value of PRE_EXISTING) {
       for (const kind of HYPERUNIX_EXECUTION_KINDS) {
@@ -308,13 +356,16 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
           if (MUTATION_KINDS.has(kind)) {
             expect((thrown(() => hyperunixTopology(stated, context)) as Error).message)
               .toBe((thrown(() => hyperunixTopology(bare, context)) as Error).message);
+            visits.push([value, kind, licensed, 'refused']);
           } else {
             expect(hyperunixTopology(stated, context)).toStrictEqual(hyperunixTopology(bare, context));
+            visits.push([value, kind, licensed, 'projected']);
           }
           cells++;
         }
       }
     }
     expect(cells).toBe(EXPECTED_CELLS.c3);
+    expect(visits).toStrictEqual(EXPECTED_VISITS.c3);
   });
 });
