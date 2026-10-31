@@ -115,6 +115,11 @@
    "execution-id:execution_id",
    "support-id:support_ids"
   ],
+  "relayedShapes": [
+   "view:view",
+   "conflict-code:diagnostics",
+   "region-target:incomplete_regions"
+  ],
   "stopFactSlots": [
    "budget_dimension",
    "dimension",
@@ -159,7 +164,8 @@
   "R-RENAMED",
   "R-DYNAMIC",
   "R-HOMONYM",
-  "R-PIN-HOLLOW"
+  "R-PIN-HOLLOW",
+  "R-RELAYED-SHAPE"
  ],
  "rows": [
   {
@@ -610,14 +616,30 @@
        ]
       },
       "unequal": [],
-      "leaked": []
+      "leaked": [],
+      "relayedShape": {
+       "runs": 198,
+       "reached": {
+        "view": [
+         "reading.source.view"
+        ],
+        "conflict-code": [
+         "reading.source.diagnostics.0.code"
+        ],
+        "region-target": [
+         "reading.source.coverage_summary.incomplete_regions.0.target"
+        ]
+       },
+       "moved": [],
+       "off": []
+      }
      }
     }
    ]
   },
   {
    "id": "C",
-   "label": "(c) on landing: a typed reason with rows [] and kind 'incomplete' surfaces verbatim as its own facet, statusText still 'absence not licensed', and changing only the reason text leaves coverage, statusTone and evidenceRefs byte-identical: gated - If an HX result Pi consumes ever carries the program's typed planner-fallback reason: the vendored SDK's declarations spell no reason outside the recorded other-sense sites and the adapter's read set holds none of the carrier slots",
+   "label": "(c) on landing: a typed reason with rows [] and kind 'incomplete' surfaces verbatim as its own facet, statusText still 'absence not licensed', and changing only the reason text leaves coverage, statusTone and evidenceRefs byte-identical: gated - If an HX result Pi consumes ever carries the program's typed planner-fallback reason: the vendored SDK's declarations spell no reason outside the recorded other-sense sites and the adapter's read set holds no carrier slot beyond the three wb-gwr.2's relayed facets read",
    "pins": [
     {
      "id": "C1",
