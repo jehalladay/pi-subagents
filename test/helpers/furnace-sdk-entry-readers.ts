@@ -10,9 +10,11 @@
  *  - renderedBlocks: U1's reading of vendor/README.md, a hard line break read as the line break marked renders;
  *  - registerMethods: D4's register-method count, a computed literal name read.
  * Each reader's claim is a ClaimPart below, composed from its words and the sub-forms it lists; the census
- * test/workbench-furnace-sdk-entry-readers-census.test.ts holds each claim byte-for-byte in its header and proves every listed
- * sub-form with a planted falsifier. Nothing here reads the file system: callers pass the tarball's entries, the README's
- * text and the scripts' text.
+ * test/workbench-furnace-sdk-entry-readers-census.test.ts holds each claim byte-for-byte in its header and names, for every
+ * listed sub-form, planted falsifiers that carry its mark in what they add or read: an "every" pinned by two occurrences, a
+ * "first" by a later second one, an order ("then", "in order") by both candidates of each adjacent pair present, a plural
+ * by its second member, the WALK's reach by a chain of sixteen followed modules and an "or" by each half alone. Nothing
+ * here reads the file system: callers pass the tarball's entries, the README's text and the scripts' text.
  */
 import { posix } from "node:path";
 import { marked, type Token, type Tokens } from "marked";
@@ -71,17 +73,17 @@ export const DEEP_CLAIM: ClaimPart<"deep"> = claimPart(
 /** D3's ENTRY TEXT READ. */
 export const TEXT_CLAIM: ClaimPart<"text"> = claimPart(
   "text",
-)`each entry's raw text is read for a DEEP class's name as a whole word (the regex \\b<name>\\b): ${"a name in its code"} and ${"a name in a comment"} alike, ${"escape sequences never decoded"}, and ${"a longer identifier holding the name"} not read`;
+)`each entry's raw text (${"the types entry's"} and ${"the main entry's"}) is read for a DEEP class's name as a whole word (the regex \\b<name>\\b): ${"a name in its code"} and ${"a name in a comment"} alike, ${"escape sequences never decoded"}, a name with a word character (${"an ASCII letter"}, ${"a digit"} or ${"an underscore"}) ${"just before it"} or ${"just after it"} not read, and a name beside ${"a $"} or ${"a non-ASCII letter"} read (each a word boundary)`;
 
 /** D1's PATH reading of a literal's cooked text, and what it spells or holds. */
 export const PATH_CLAIM: ClaimPart<"path"> = claimPart(
   "path",
-)`a literal's cooked text is read through exactly these steps - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, then ${"every %XX escape decoded"} and ${"every backslash read as /"}, then posix.normalize (${"empty segments dropped"}, ${". segments dropped"} and ${".. segments resolved"}) - and the text spells a deep @furnace/sdk/<path> when it or that reading ${"begins with @furnace/sdk/"} or holds ${"node_modules/@furnace/sdk/ at its start"} or ${"node_modules/@furnace/sdk/ after a /"}, and holds one when either ${"holds @furnace/sdk/ anywhere"}`;
+)`a literal's cooked text is read through exactly these steps - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, then ${"every %XX escape decoded"} and then ${"every backslash read as /"}, then posix.normalize (${"empty segments dropped"}, ${". segments dropped"} and ${".. segments resolved"}) - and the text spells a deep @furnace/sdk/<path> when ${"the cooked text itself"} or ${"its PATH reading"} ${"begins with @furnace/sdk/"} or holds ${"node_modules/@furnace/sdk/ at its start"} or ${"node_modules/@furnace/sdk/ after a /"}, and holds one when either ${"holds @furnace/sdk/ anywhere"}`;
 
 /** U1's rendered reading of vendor/README.md. */
 export const RENDER_CLAIM: ClaimPart<"render"> = claimPart(
   "render",
-)`vendor/README.md is read through marked's lexer, each top-level block to its text, ${"whitespace collapsed"} (every run one space, trimmed): a hard line break (a br token, ${"a backslash before a line ending"} or ${"two or more spaces before a line ending"}) reads as the line break marked renders, a space; ${"a list"} reads by its items' tokens, ${"a table"} by its ${"header cells' tokens"} and ${"row cells' tokens"}, and a token holding tokens (${"a paragraph"}, ${"a heading"}, ${"a blockquote"}, ${"emphasis"}, ${"strong text"} or ${"a link"}) by those tokens; ${"raw HTML"} (${"an HTML block"} or ${"inline HTML"}), ${"a link-reference definition"} and ${"an image"} read as nothing`;
+)`vendor/README.md is read through marked's lexer, each top-level block to its text, ${"whitespace collapsed"} (${"every run one space"}): a hard line break (a br token, ${"a backslash before a line ending"} or ${"two or more spaces before a line ending"}) reads as the line break marked renders, a space; ${"a list"} reads by ${"its items' tokens"}, ${"a table"} by its ${"header cells' tokens"} and ${"row cells' tokens"}, and a token holding tokens (${"a paragraph"}, ${"a heading"}, ${"a blockquote"}, ${"emphasis"}, ${"strong text"} or ${"a link"}) ${"by those tokens"}; ${"raw HTML"} (${"an HTML block"} or ${"inline HTML"}), ${"a link-reference definition"} and ${"an image"} read as nothing`;
 
 /** D4's register-method count. */
 export const REGISTER_CLAIM: ClaimPart<"register"> = claimPart(
