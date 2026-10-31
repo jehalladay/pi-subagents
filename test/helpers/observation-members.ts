@@ -9,10 +9,13 @@
  * R-B140). Neither cut is on trunk; wb-km7q.4 is blocked by this bead and its re-cut restates B1's claims over this reader (R-B140:
  * "a mechanical restatement of B1's claims over the child's landed member reader"). This reader READS the same-module merges
  * (DECLARATION) and reads a member's type as holding no members only when every node of it is a LEAF form, so it keeps no set of
- * declared or imported names at all. The falsifier census is test/workbench-observation-members-census.test.ts. It holds every
- * "- <word>: <claim>" line of this header equal, in order and byte for byte, to the roster exported for its section, gives every word
- * a calibration plant whose reading without the word differs, and holds every reading the reader makes to the TypeScript checker's
- * reading of the same text (ReadOptions lists the words a reading uses; every word by default).
+ * declared or imported names at all. Its cut #2 answers this bead's refusal #1 (U1-U5, F1-F5): a module block of observation.ts
+ * without the declare modifier is no augmentation (the checker merges none), and every claim word is stated no wider than the census
+ * pins it. The falsifier census is test/workbench-observation-members-census.test.ts. It holds every "- <word>: <claim>" line of this
+ * header equal, in order and byte for byte, to the roster exported for its section, gives every word a calibration plant whose
+ * reading without the word differs, pins every identifier slot and node kind TypeScript's own AST types admit (CONTEXTS, UNIVERSE),
+ * and holds every reading the reader makes to the TypeScript checker's reading of the same text (ReadOptions lists the words a
+ * reading uses; every word by default).
  *
  * READING (observationMembers). It reads one text, the source of src/workbench/observation.ts, through the TypeScript parser and
  * nothing else. The ROOTS are NativeSnapshot and ObservationEvent; a READ NAME is a root or a name a root member expands through
@@ -22,32 +25,35 @@
  * (`<member>.<name>` each) or as `<member>.?` when its type is no LEAF; a required property as nothing; any other member as `?`. The
  * snapshot list is NativeSnapshot's and the event list is ObservationEvent's; a root that reads `?` has the list ["?"]. The order of a
  * list is not claimed (THE MEMBER CHECK compares sorted lists).
+ * THE SYNTAX TREE (REFUSAL elsewhere, LEAF Readonly and Record): an identifier stands in it when a ts.forEachChild walk from the
+ * source file meets it, at whatever node kind and slot holds it. A comment holds none (JSDoc included: TypeScript attaches it as
+ * node.jsDoc, never as a child), and a string's or a template's text is no identifier.
  *
  * DECLARATION (DECLARATION_FORMS; the declarations of a read name whose members are read):
  * - interface: a top-level interface declaration of the name, every one of them (interface merging)
  * - class merge: a top-level class declaration of the name, its elements read as members (class-interface merging)
- * - augmentation: an interface declaration of the name standing directly in the body of a top-level declare module block whose specifier starts with ./ or ../ and, joined to src/workbench, is src/workbench/observation, src/workbench/observation.js or src/workbench/observation.ts (observation.ts augmenting itself)
+ * - augmentation: an interface declaration of the name standing directly in the body of a top-level module block that carries the declare modifier and whose specifier starts with ./ or ../ and, joined to src/workbench, is src/workbench/observation, src/workbench/observation.js or src/workbench/observation.ts (observation.ts augmenting itself)
  * REFUSAL (REFUSAL_FORMS; fail closed: a read name reads `?` when one holds):
  * - missing: the module text holds no top-level interface declaration of the name
- * - elsewhere: the name stands somewhere in the module text other than as the name of a declaration a DECLARATION form reads, a type reference's name or an extends or implements clause's expression
+ * - elsewhere: an identifier of the name stands in THE SYNTAX TREE other than as the name of a declaration a DECLARATION form reads, a type reference's name or an extends or implements clause entry's expression
  * - heritage: a declaration of the name that a DECLARATION form reads holds an extends or implements clause
  * - type parameters: a declaration of the name that a DECLARATION form reads holds type parameters
  * - class modifier: a class declaration of the name that class merge reads carries a modifier or decorator other than export and declare
  * MEMBER (MEMBER_FORMS; the members of a declaration a DECLARATION form reads):
- * - property: a property signature, or a class property declaration, named by an identifier and with no modifier but readonly (or public, on a class property); a root reads the optional ones (written with ?) and no required one, an expansion reads every one
+ * - property: a property signature, or a class property declaration, named by an identifier and with no modifier but readonly (or public, on a class property); a root reads the optional ones (written with ?, which a definite assignment ! is not) and no required one, an expansion reads every one
  * - other member: any other member (a method, an accessor, an index, call or construct signature, a constructor, a static block, a semicolon element, or a member with another name or modifier) reads `?` in a root's list and `<member>.?` in an expansion
  * EXPANSION (EXPANSION_FORMS; a root member's whole type read one level down, each inner member read by MEMBER and LEAF):
  * - type literal: an optional root property whose whole type is a type literal reads as that literal's members, `<member>.<name>` each
  * - read interface: an optional root property whose whole type is a bare type reference (an identifier, no type arguments) to a name with a top-level interface declaration reads as that read name's members, `<member>.<name>` each, or as `<member>.?` when that name reads `?`
- * - inner interface: an expanded property whose whole type is a bare type reference to a name with a top-level interface declaration reads `<member>.<name>`, that interface's own members unread
+ * - inner interface: an expanded property whose whole type is a bare type reference to a name with a top-level interface declaration reads `<member>.<name>`, whatever that name's REFUSAL forms hold, that interface's own members unread
  * LEAF (LEAF_FORMS; a property's type holds no members only when every node of it is one of these forms; any other node anywhere in it, and a property written with no type, makes it read `<member>.?`):
  * - string: the string keyword
  * - number: the number keyword
  * - string literal: a string literal type, a quoted string
  * - union: a union type whose every arm reads as a leaf
  * - readonly array: readonly T[], its element type T read as a leaf
- * - Readonly: Readonly<T> with one type argument, T read as a leaf, while the identifier Readonly stands nowhere in the module text but as a type reference's name
- * - Record: Record<string, V> with two type arguments, the first the string keyword and V read as a leaf, while the identifier Record stands nowhere in the module text but as a type reference's name
+ * - Readonly: Readonly<T> with one type argument, T read as a leaf, while every identifier Readonly in THE SYNTAX TREE is a type reference's name
+ * - Record: Record<string, V> with two type arguments, the first the string keyword and V read as a leaf, while every identifier Record in THE SYNTAX TREE is a type reference's name
  * NOT READ (NOT_READ; each a named residual with a pinned quiet row and a loud twin in the census):
  * - other file: a declaration in another module's text, such as a declare module augmentation of observation.ts written in another file
  * - inner members: an expanded property's own members, such as Presentation's under node.presentation
@@ -78,14 +84,14 @@ export const DECLARATION_FORMS = claims([
   ["class merge", "a top-level class declaration of the name, its elements read as members (class-interface merging)"],
   [
     "augmentation",
-    "an interface declaration of the name standing directly in the body of a top-level declare module block whose specifier starts with ./ or ../ and, joined to src/workbench, is src/workbench/observation, src/workbench/observation.js or src/workbench/observation.ts (observation.ts augmenting itself)",
+    "an interface declaration of the name standing directly in the body of a top-level module block that carries the declare modifier and whose specifier starts with ./ or ../ and, joined to src/workbench, is src/workbench/observation, src/workbench/observation.js or src/workbench/observation.ts (observation.ts augmenting itself)",
   ],
 ]);
 export const REFUSAL_FORMS = claims([
   ["missing", "the module text holds no top-level interface declaration of the name"],
   [
     "elsewhere",
-    "the name stands somewhere in the module text other than as the name of a declaration a DECLARATION form reads, a type reference's name or an extends or implements clause's expression",
+    "an identifier of the name stands in THE SYNTAX TREE other than as the name of a declaration a DECLARATION form reads, a type reference's name or an extends or implements clause entry's expression",
   ],
   ["heritage", "a declaration of the name that a DECLARATION form reads holds an extends or implements clause"],
   ["type parameters", "a declaration of the name that a DECLARATION form reads holds type parameters"],
@@ -94,7 +100,7 @@ export const REFUSAL_FORMS = claims([
 export const MEMBER_FORMS = claims([
   [
     "property",
-    "a property signature, or a class property declaration, named by an identifier and with no modifier but readonly (or public, on a class property); a root reads the optional ones (written with ?) and no required one, an expansion reads every one",
+    "a property signature, or a class property declaration, named by an identifier and with no modifier but readonly (or public, on a class property); a root reads the optional ones (written with ?, which a definite assignment ! is not) and no required one, an expansion reads every one",
   ],
   [
     "other member",
@@ -109,7 +115,7 @@ export const EXPANSION_FORMS = claims([
   ],
   [
     "inner interface",
-    "an expanded property whose whole type is a bare type reference to a name with a top-level interface declaration reads `<member>.<name>`, that interface's own members unread",
+    "an expanded property whose whole type is a bare type reference to a name with a top-level interface declaration reads `<member>.<name>`, whatever that name's REFUSAL forms hold, that interface's own members unread",
   ],
 ]);
 export const LEAF_FORMS = claims([
@@ -118,10 +124,10 @@ export const LEAF_FORMS = claims([
   ["string literal", "a string literal type, a quoted string"],
   ["union", "a union type whose every arm reads as a leaf"],
   ["readonly array", "readonly T[], its element type T read as a leaf"],
-  ["Readonly", "Readonly<T> with one type argument, T read as a leaf, while the identifier Readonly stands nowhere in the module text but as a type reference's name"],
+  ["Readonly", "Readonly<T> with one type argument, T read as a leaf, while every identifier Readonly in THE SYNTAX TREE is a type reference's name"],
   [
     "Record",
-    "Record<string, V> with two type arguments, the first the string keyword and V read as a leaf, while the identifier Record stands nowhere in the module text but as a type reference's name",
+    "Record<string, V> with two type arguments, the first the string keyword and V read as a leaf, while every identifier Record in THE SYNTAX TREE is a type reference's name",
   ],
 ]);
 export const NOT_READ = claims([
@@ -201,12 +207,13 @@ export function observationMembers(text: string, options: ReadOptions = {}): Obs
     } else if (ts.isClassDeclaration(statement)) {
       if (on.has("class merge") && statement.name !== undefined) read(statement, statement.name);
     } else if (ts.isModuleDeclaration(statement) && ts.isStringLiteral(statement.name) && statement.body !== undefined && ts.isModuleBlock(statement.body)) {
-      if (on.has("augmentation") && namesThisModule(statement.name.text)) {
+      if (on.has("augmentation") && namesThisModule(statement.name.text) && (statement.modifiers ?? []).some(modifier => modifier.kind === ts.SyntaxKind.DeclareKeyword)) {
         for (const inner of statement.body.statements) if (ts.isInterfaceDeclaration(inner)) read(inner, inner.name);
       }
     }
   }
-  /** Every name that stands elsewhere (REFUSAL elsewhere), and every name that stands other than as a type reference's name (LEAF). */
+  /** Every name with an identifier in THE SYNTAX TREE that stands elsewhere (REFUSAL elsewhere), and every name with one that stands
+   * other than as a type reference's name (LEAF Readonly and Record). */
   const elsewhere = new Set<string>();
   const notTypeName = new Set<string>();
   const visit = (node: ts.Node): void => {

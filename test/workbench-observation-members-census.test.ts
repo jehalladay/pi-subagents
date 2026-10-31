@@ -13,7 +13,9 @@
  * reader read it as BASE (so THE MEMBER CHECK throws on every one of them); the helper's header roster lines equal its exported
  * rosters byte for byte; every roster word has a FORMS row whose reading without the word differs from its reading with it; every
  * node kind TypeScript's parser yields for a type, a type member, a class member, a property name and a modifier has a row pinning
- * what the reader reads of it; and the TypeScript checker reads every row's text no narrower than the reader (AGREEMENT).
+ * what the reader reads of it; every slot and every node kind at or above which TypeScript's own AST types admit an identifier has a
+ * CONTEXTS row pinning what the reader reads of a read name, of Readonly and of Record standing there, or an UNREACHABLE entry shown
+ * by a parse (UNIVERSE); and the TypeScript checker reads every row's text no narrower than the reader (AGREEMENT).
  *
  * MEMBER CHECK MODEL: wb-km7q.4's B1 feeds exactly the entries of the real module's reading (its comparisons are equal on the real
  * module, which that census asserts), so a plant reds THE MEMBER CHECK exactly when its reading differs from BASE as a multiset
@@ -42,35 +44,61 @@
  *   signature, except the modifiers the parser reads as no modifier there (NOT_MODIFIERS, each shown by a parse).
  *  RESIDUALS: one or more rows per NOT READ word of the helper (one per example its claim names): a quiet plant that reads BASE and
  *   a loud twin that does not; the other-file quiet row also pins the checker reading the sibling augmentation the reader cannot see.
+ *  CONTEXTS (cut #2, refusal #1's U1 and U4 and F1): one or more rows per identifier slot, each a text appended to the module that
+ *   adds exactly ONE identifier, at a named <Kind>.<slot> (TypeScript's SyntaxKind name and the node property ts.forEachChild visits),
+ *   read three times: with the read name Interval (REFUSAL elsewhere) and with Readonly and Record (the LEAF wrapper names). `reads`
+ *   names the reading by name (CONTEXT_PINS): fails closed (Interval reads `?` and ends the interval expansion; Readonly or Record
+ *   ends the LEAF form, so trace.correlationIds reads trace.?), type reference (all three read BASE) and elsewhere exempt (the name
+ *   of a declaration a DECLARATION form reads, or an extends or implements clause entry's expression: Interval reads BASE; Readonly
+ *   and Record end the LEAF form).
+ *  UNIVERSE: the anchor of CONTEXTS, read from TypeScript itself. Every slot ts.forEachChild visits whose type in TypeScript's own
+ *   lib/typescript.d.ts admits an Identifier (the checker's isTypeAssignableTo; a slot that file leaves undeclared takes the type its
+ *   name has on the node interfaces that declare it) is a CONTEXTS row's slot or an UNREACHABLE entry; and every node kind whose slots
+ *   can hold an identifier there or below (the same types, closed transitively) stands above the added identifier of a fails-closed
+ *   CONTEXTS row or is UNREACHABLE. UNREACHABLE: the slots and kinds a .ts parse never fills with, or puts above, an identifier the
+ *   walk meets (UNREACHABLE_SLOTS and UNREACHABLE_KINDS, each shown by a parse of a text that writes the name there), and three
+ *   families by TypeScript's own kind ranges and names (JSDoc: attached as node.jsDoc and never a child; JSX: a .ts text parses none;
+ *   the kinds after the JSDoc range: made by the emitter, never by the parser), each shown by a parse.
+ *  AUGMENTATION PATHS: namesThisModule (DECLARATION augmentation's path clause) asked of every extension spelling of the module, each
+ *   as ./, as ../workbench/, bare and capitalized, answers exactly as the augmentation claim's own path list says.
  *
  * ANCHORS OUTSIDE THIS FILE (standing rule 16, CT5 and CT6): the tracker export .beads/issues.jsonl (wb-km7q.11's description lines
  * and its R-B140 note; wb-km7q.4's notes, each the FIRST line opening with its prefix, so a later note quoting one binds nothing):
  * the GATE rows are exactly the members its three refusal lines name, and the quotes are its quotes; the helper's exported rosters
  * (every word a FORMS row, every NOT READ word a RESIDUALS row); TypeScript's ts.isTypeNode, ts.isTypeElement, ts.isClassElement,
- * ts.isPropertyName and ts.isModifier over every SyntaxKind (the TYPES and MEMBERS kinds); the TypeScript checker (BASE, and the
+ * ts.isPropertyName and ts.isModifier over every SyntaxKind (the TYPES and MEMBERS kinds); TypeScript's ts.forEachChild and its
+ * lib/typescript.d.ts read through its checker (UNIVERSE: the CONTEXTS slots and kinds); the TypeScript checker (BASE, and the
  * AGREEMENT of every row); src/workbench/observation.ts read from disk (BASE).
  * SELF-ANCHORED (held only by this file's literals; a coordinated removal from all of them reads green, and that is NOT claimed): a
  * FORMS row of a word that keeps another FORMS row; a TYPES or MEMBERS row of a kind that keeps another row; a RESIDUALS row of a
- * word that keeps another row; a GATE row's plant beyond the quotes its line gives.
+ * word that keeps another row; a GATE row's plant beyond the quotes its line gives; a CONTEXTS row of a slot that keeps another row
+ * when no kind's coverage rests on it alone; the text of an UNREACHABLE entry; the spellings AUGMENTATION PATHS asks namesThisModule
+ * of (each reads exactly as the augmentation claim's own path list says).
  * FROZEN SHAPE (standing rule 16): one literal pins every row as <table>:<id>:<pin count>.
  *
  * NOT CLAIMED: anything of wb-km7q.4's census beyond the reader (its journeys, its comparisons' fed lists, its other legs); that a
- * plant type-checks (the gate's plants did; the TYPES and MEMBERS rows are syntax and some are not type-correct, which the reader,
- * a parser reading, does not judge); the NOT READ families, each held to a pinned quiet row; the checker's reading where the reader
- * reads `?` (AGREEMENT is one-sided: a reader entry is never wider than the checker's member, and `?` stands for anything).
+ * plant type-checks (the gate's plants did; the TYPES, MEMBERS and CONTEXTS rows are syntax and many are not type-correct, which the
+ * reader, a parser reading, does not judge); the NOT READ families, each held to a pinned quiet row; the checker's reading where the
+ * reader reads `?` (AGREEMENT is one-sided: a reader entry is never wider than the checker's member, and `?` stands for anything);
+ * that an UNREACHABLE slot or kind is unreachable in every text (each is shown by its parse, as TYPES' UNREACHABLE is); refusal #1's
+ * own lines, which the tracker export at this cut's base does not yet hold (its members are cured through CONTEXTS, TYPES, MEMBERS
+ * and FORMS rows, and measured, not read from the export).
  *
- * Display paths added: none. Test-only: it spawns nothing and writes nothing; it reads the helper, the tracker export and
- * src/workbench/observation.ts, lays every plant over that text in memory, and runs the TypeScript checker over in-memory files.
+ * Display paths added: none. Test-only: it spawns nothing and writes nothing; it reads the helper, the tracker export,
+ * src/workbench/observation.ts and TypeScript's lib/typescript.d.ts, lays every plant over that text in memory, and runs the
+ * TypeScript checker over in-memory files and that declaration file.
  */
 import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import {
   ALL_WORDS,
+  DECLARATION_FORMS,
   HEADER_SECTIONS,
   NOT_READ,
+  namesThisModule,
   OBSERVATION_MODULE,
   type ObservationMembers,
   observationMembers,
@@ -431,7 +459,29 @@ const FORM_ROWS: readonly FormRow[] = [
     `without snapshot ${TRACE_REFUSED}`,
     `without event ${TRACE_REFUSED}`,
   ]),
+  // DECLARATION augmentation's declare modifier (refusal #1 F5): another modifier beside declare keeps the block an augmentation,
+  // which the checker merges too; a module block without declare is none (elsewhere/undeclaredModuleBlock).
+  form("augmentation", "exportDeclare", appended('export declare module "./observation.js" { interface NativeSnapshot { region?: string } }'), [
+    "snapshot +region",
+    "event =",
+    "without snapshot ?",
+    "without event =",
+  ]),
   form("missing", "renamedSnapshot", renamed("NativeSnapshot", "NativeSnapshotRenamed"), ["snapshot ?", "event =", "without snapshot none", "without event ="]),
+  // REFUSAL missing reads TOP-LEVEL INTERFACE declarations (refusal #1 U5, gate mutant g05): a class merge or an augmentation of the
+  // name with no top-level interface left still reads `?`.
+  form("missing", "classOnly", both(renamed("NativeSnapshot", "NativeSnapshotRenamed"), appended("export declare class NativeSnapshot { region?: string }")), [
+    "snapshot ?",
+    "event =",
+    `without snapshot ${removedAll(ALL_SNAPSHOT)} +region`,
+    "without event =",
+  ]),
+  form("missing", "augmentationOnly", both(renamed("NativeSnapshot", "NativeSnapshotRenamed"), appended(O8)), [
+    "snapshot ?",
+    "event =",
+    `without snapshot ${removedAll(ALL_SNAPSHOT)} +region`,
+    "without event =",
+  ]),
   form("elsewhere", "functionOfName", appended("export function ObservationEvent(): void {}"), ["snapshot =", "event ?", "without snapshot =", "without event ="]),
   form("elsewhere", "namespaceOfName", appended('export namespace Interval { export const unit = "ms"; }'), [
     `snapshot ${INTERVAL_REFUSED}`,
@@ -502,6 +552,32 @@ const FORM_ROWS: readonly FormRow[] = [
     "without snapshot =",
     "without event =",
   ]),
+  // A module block without declare is no augmentation (refusal #1 F5; the checker merges none, TS1035), so its interface stands
+  // elsewhere; and two more specifiers that name no SELF path.
+  form("elsewhere", "undeclaredModuleBlock", appended('module "./observation.js" { interface NativeSnapshot { region?: string } }'), [
+    "snapshot ?",
+    "event =",
+    "without snapshot =",
+    "without event =",
+  ]),
+  form("elsewhere", "nestedModuleBlock", appended('export namespace probeNs { declare module "./observation.js" { interface NativeSnapshot { region?: string } } }'), [
+    "snapshot ?",
+    "event =",
+    "without snapshot =",
+    "without event =",
+  ]),
+  form("elsewhere", "dtsSpecifier", appended('declare module "./observation.d.ts" { interface NativeSnapshot { region?: string } }'), [
+    "snapshot ?",
+    "event =",
+    "without snapshot =",
+    "without event =",
+  ]),
+  form("elsewhere", "mtsSpecifier", appended('declare module "./observation.mts" { interface NativeSnapshot { region?: string } }'), [
+    "snapshot ?",
+    "event =",
+    "without snapshot =",
+    "without event =",
+  ]),
   form("heritage", "extendsClause", both(afterName("NativeSnapshot", " extends Base"), appended("interface Base { region?: string }")), [
     "snapshot ?",
     "event =",
@@ -533,6 +609,13 @@ const FORM_ROWS: readonly FormRow[] = [
     "without event =",
   ]),
   form("type parameters", "classTypeParameters", appended("export declare class Interval<T> {}"), [`snapshot ${INTERVAL_REFUSED}`, `event ${INTERVAL_REFUSED}`, "without snapshot =", "without event ="]),
+  // REFUSAL type parameters on an augmentation's declaration (refusal #1 F4, gate mutant g36), not only a top-level one.
+  form("type parameters", "augmentationTypeParameters", appended('declare module "./observation.js" { interface NativeSnapshot<T> { region?: string } }'), [
+    "snapshot ?",
+    "event =",
+    "without snapshot +region",
+    "without event =",
+  ]),
   form("class modifier", "abstractClass", appended("export declare abstract class NativeSnapshot { region?: string }"), [
     "snapshot ?",
     "event =",
@@ -556,6 +639,9 @@ const FORM_ROWS: readonly FormRow[] = [
     "without event -trace.invocationId -trace.parentSpan -trace.spanId -trace.correlationIds -interval.startedAt -interval.endedAt +trace.? +interval.?",
   ]),
   form("inner interface", "asIs", asIs, ["snapshot =", "event =", "without snapshot =", "without event -node.presentation +node.?"]),
+  // EXPANSION inner interface reads <member>.<name> whatever the inner name's REFUSAL forms hold (refusal #1 F2, gate mutant g28):
+  // a function named Presentation makes Presentation stand elsewhere, and node.presentation still reads.
+  form("inner interface", "refusedInnerName", appended("export function Presentation(): void {}"), ["snapshot =", "event =", "without snapshot =", "without event -node.presentation +node.?"]),
   form("string", "asIs", asIs, [
     "snapshot =",
     "event =",
@@ -606,11 +692,27 @@ const TYPE_ROWS: readonly KindRow[] = [
   typeRow("TypeReference", "Record", "Record<string, string>", LEAF),
   typeRow("TypeReference", "libReference", "Date"),
   typeRow("TypeReference", "moduleReference", "Presentation", ["snapshot -subjectBasis +subjectBasis.title +subjectBasis.type +subjectBasis.statusText +subjectBasis.statusTone", "event ="]),
+  // EXPANSION read interface's "no type arguments" (refusal #1 U3, gate mutant g27): a reference with type arguments expands nothing.
+  typeRow("TypeReference", "moduleReferenceTypeArguments", "Presentation<string>"),
+  typeRow("TypeReference", "readInterfaceTypeArguments", "ObservationTrace<string>"),
+  // EXPANSION's "whole type" and "bare type reference to a name with a top-level interface declaration": a parenthesized or
+  // possibly-undefined type literal or reference, a qualified reference and a reference to a class the module declares expand nothing.
+  typeRow("ParenthesizedType", "parenthesizedTypeLiteral", "({ region?: string })"),
+  typeRow("UnionType", "typeLiteralOrUndefined", "{ region?: string } | undefined"),
+  typeRow("ParenthesizedType", "parenthesizedReference", "(Presentation)"),
+  typeRow("UnionType", "referenceOrUndefined", "Presentation | undefined"),
+  typeRow("TypeReference", "qualifiedReference", "probeNs.Presentation"),
+  typeRow("TypeReference", "moduleClassReference", "ObservationProjection"),
   typeRow("TypeReference", "ReadonlyTwoArguments", "Readonly<string, string>"),
   typeRow("TypeReference", "ReadonlyNoArgument", "Readonly"),
   typeRow("TypeReference", "RecordNumberKey", "Record<number, string>"),
   typeRow("TypeReference", "RecordLiteralKey", 'Record<"region", string>'),
   typeRow("TypeReference", "RecordObjectValue", "Record<string, { region?: string }>"),
+  typeRow("TypeReference", "ReadonlyObject", "Readonly<{ region?: string }>"),
+  // LEAF Record's "two type arguments" (refusal #1 U2, gate mutants g17 and g39): three, one and no argument each end the form.
+  typeRow("TypeReference", "RecordThreeArguments", "Record<string, string, string>"),
+  typeRow("TypeReference", "RecordOneArgument", "Record<string>"),
+  typeRow("TypeReference", "RecordNoArgument", "Record"),
   typeRow("TypeReference", "ReadonlyArrayReference", "ReadonlyArray<string>"),
   typeRow("TypeReference", "ReadonlyShadowed", "Readonly<string>", SHADOWED, both(subject("Readonly<string>"), appended("export type Readonly<T> = T & { region?: string };"))),
   typeRow("TypeReference", "RecordShadowed", "Record<string, string>", SHADOWED, both(subject("Record<string, string>"), appended("declare global { interface Record { region?: string } }"))),
@@ -676,8 +778,15 @@ const MEMBER_ROWS: readonly KindRow[] = [
   memberRow("interface member", "ConstructSignature", "constructSignature", signature("new (): NativeSnapshot;"), ADDS_UNKNOWN),
   memberRow("interface member", "IndexSignature", "indexSignature", signature("[key: string]: unknown;"), ADDS_UNKNOWN),
   memberRow("interface member", "MethodSignature", "innerMethod", withMember("ObservationTrace", "region?(): string;"), ["snapshot +trace.?", "event +trace.?"]),
+  // EXPANSION inner interface's bare reference (refusal #1 U3, gate mutant g27): an expanded property typed by a read interface with
+  // type arguments reads <member>.?, not <member>.<name>.
+  memberRow("interface member", "PropertySignature", "innerTypeArguments", withMember("ObservationTrace", "inner?: Presentation<string>;"), ["snapshot +trace.?", "event +trace.?"]),
+  memberRow("interface member", "PropertySignature", "innerParenthesized", withMember("ObservationTrace", "inner?: (Presentation);"), ["snapshot +trace.?", "event +trace.?"]),
+  memberRow("interface member", "PropertySignature", "innerClassReference", withMember("ObservationTrace", "inner?: ObservationProjection;"), ["snapshot +trace.?", "event +trace.?"]),
   memberRow("class member", "PropertyDeclaration", "propertyDeclaration", snapshotClass("region?: string;"), ADDS_REGION),
   memberRow("class member", "PropertyDeclaration", "requiredDeclaration", snapshotClass("region: string;"), LEAF),
+  // MEMBER property's "written with ?" (refusal #1 F3, gate mutant g32): a definite assignment ! is a required class property.
+  memberRow("class member", "PropertyDeclaration", "definiteDeclaration", snapshotClass("region!: string;", "export class"), LEAF),
   memberRow("class member", "MethodDeclaration", "methodDeclaration", snapshotClass("region?(): string;"), ADDS_UNKNOWN),
   memberRow("class member", "ClassStaticBlockDeclaration", "staticBlock", snapshotClass("static {}", "export class"), ADDS_UNKNOWN),
   memberRow("class member", "Constructor", "parameterProperty", snapshotClass("constructor(public region?: string) {}", "export class"), ADDS_UNKNOWN),
@@ -800,6 +909,204 @@ const RESIDUAL_ROWS: readonly ResidualRow[] = [
     pins: ["quiet snapshot =", "quiet event =", "twin snapshot -subjectBasis +subjectBasis.?", "twin event ="],
   },
 ];
+
+// ---------------------------------------------------------------------------------------------------------- CONTEXTS
+/** The names every CONTEXTS row is read with: a read name (REFUSAL elsewhere) and the two LEAF wrapper names (LEAF Readonly, Record). */
+const CONTEXT_NAMES = ["Interval", "Readonly", "Record"] as const;
+type ContextName = (typeof CONTEXT_NAMES)[number];
+type ContextReading = "fails closed" | "type reference" | "elsewhere exempt";
+const UNCHANGED = ["snapshot =", "event ="];
+/** ObservationTrace.correlationIds (Readonly<Record<string, string>>) read as no LEAF: an identifier Readonly or Record ends the form. */
+const WRAPPER_ENDED = ["snapshot -trace.correlationIds +trace.?", "event -trace.correlationIds +trace.?"];
+/** What each reading pins, by name. */
+const CONTEXT_PINS: Readonly<Record<ContextReading, Readonly<Record<ContextName, readonly string[]>>>> = {
+  "fails closed": { Interval: [`snapshot ${INTERVAL_REFUSED}`, `event ${INTERVAL_REFUSED}`], Readonly: WRAPPER_ENDED, Record: WRAPPER_ENDED },
+  "type reference": { Interval: UNCHANGED, Readonly: UNCHANGED, Record: UNCHANGED },
+  "elsewhere exempt": { Interval: UNCHANGED, Readonly: WRAPPER_ENDED, Record: WRAPPER_ENDED },
+};
+interface ContextRow {
+  readonly id: string;
+  /** The text appended to the module, `$N` standing for the name it is read with. */
+  readonly text: string;
+  readonly pins: readonly string[];
+}
+const context = (id: string, at: string, text: string, reads: ContextReading = "fails closed"): ContextRow => ({ id, text, pins: [`at ${at}`, `reads ${reads}`] });
+/** One or more rows per identifier slot (UNIVERSE); a slot's further rows carry the identifier through the node kinds above it. */
+const CONTEXT_ROWS: readonly ContextRow[] = [
+  context("qualifiedLeft", "QualifiedName.left", "export type Probe = $N.Inner;"),
+  context("qualifiedRight", "QualifiedName.right", "export type Probe = probeNs.$N;"),
+  context("computedName", "ComputedPropertyName.expression", "export const probe = { [$N]: 1 };"),
+  context("typeParameter", "TypeParameter.name", "export type Probe<$N> = string;"),
+  context("inferTypeParameter", "TypeParameter.name", "export type Probe = string extends infer $N ? 1 : 2;"),
+  context("mappedTypeParameter", "TypeParameter.name", 'export type Probe = { [$N in "a"]: string };'),
+  context("parameter", "Parameter.name", "export function probe($N: string): void {}"),
+  context("functionTypeParameter", "Parameter.name", "export type Probe = ($N: string) => void;"),
+  context("constructorTypeParameter", "Parameter.name", "export type Probe = new ($N: string) => object;"),
+  context("callSignatureParameter", "Parameter.name", "export interface Probe { ($N: string): void }"),
+  context("constructSignatureParameter", "Parameter.name", "export interface Probe { new ($N: string): Probe }"),
+  context("indexSignatureParameter", "Parameter.name", "export interface Probe { [$N: string]: unknown }"),
+  context("constructorParameter", "Parameter.name", "export class Probe { constructor($N: string) {} }"),
+  context("parameterInitializer", "Parameter.initializer", "export function probe(value = $N): void {}"),
+  context("decorator", "Decorator.expression", "@$N export class Probe {}"),
+  context("danglingDecorator", "Decorator.expression", "@$N"),
+  context("signatureName", "PropertySignature.name", "export interface Probe { $N?: string }"),
+  context("signatureInitializer", "PropertySignature.initializer", "export interface Probe { value?: string = $N }"),
+  context("classPropertyName", "PropertyDeclaration.name", "export declare class Probe { $N?: string }"),
+  context("classPropertyInitializer", "PropertyDeclaration.initializer", "export class Probe { value = $N; }"),
+  context("methodSignatureName", "MethodSignature.name", "export interface Probe { $N(): void }"),
+  context("methodName", "MethodDeclaration.name", "export class Probe { $N(): void {} }"),
+  context("getAccessorName", "GetAccessor.name", "export declare class Probe { get $N(): string }"),
+  context("setAccessorName", "SetAccessor.name", "export declare class Probe { set $N(value: string) }"),
+  context("predicateParameter", "TypePredicate.parameterName", "export declare function probe(value: unknown): $N is string;"),
+  context("assertsParameter", "TypePredicate.parameterName", "export declare function probe(value: unknown): asserts $N;"),
+  context("typeReference", "TypeReference.typeName", "export type Probe = $N;", "type reference"),
+  context("typeReferenceArguments", "TypeReference.typeName", "export type Probe = $N<string>;", "type reference"),
+  context("typeQuery", "TypeQuery.exprName", "export type Probe = { value?: string | readonly (typeof $N)[] };"),
+  context("optionalTupleQuery", "TypeQuery.exprName", "export type Probe = [(typeof $N)?];"),
+  context("restTupleQuery", "TypeQuery.exprName", "export type Probe = [...(typeof $N)[]];"),
+  context("intersectionQuery", "TypeQuery.exprName", "export type Probe = string & typeof $N;"),
+  context("conditionalQuery", "TypeQuery.exprName", "export type Probe = string extends typeof $N ? 1 : 2;"),
+  context("indexedAccessQuery", "TypeQuery.exprName", "export type Probe = string[typeof $N];"),
+  context("templateTypeQuery", "TypeQuery.exprName", `export type Probe = \`a\${typeof $N}b\`;`),
+  context("tupleMemberName", "NamedTupleMember.name", "export type Probe = [$N: string];"),
+  context("importTypeQualifier", "ImportType.qualifier", 'export type Probe = import("./observation.js").$N;'),
+  context("bindingPropertyName", "BindingElement.propertyName", "export const { $N: value } = probeSource;"),
+  context("bindingName", "BindingElement.name", "export const { value: $N } = probeSource;"),
+  context("arrayBindingName", "BindingElement.name", "export const [$N] = probeSource;"),
+  context("bindingInitializer", "BindingElement.initializer", "export const { value = $N } = probeSource;"),
+  context("arrayElement", "ArrayLiteralExpression.elements", "export const probe = [$N];"),
+  context("accessExpression", "PropertyAccessExpression.expression", "export const probe = $N.length;"),
+  context("accessName", "PropertyAccessExpression.name", "export const probe = probeSource.$N;"),
+  context("elementExpression", "ElementAccessExpression.expression", "export const probe = $N[0];"),
+  context("elementArgument", "ElementAccessExpression.argumentExpression", "export const probe = probeSource[$N];"),
+  context("callee", "CallExpression.expression", "export const probe = $N();"),
+  context("callArgument", "CallExpression.arguments", "export const probe = String($N);"),
+  context("newCallee", "NewExpression.expression", "export const probe = new $N();"),
+  context("newArgument", "NewExpression.arguments", "export const probe = new Date($N);"),
+  context("templateTag", "TaggedTemplateExpression.tag", "export const probe = $N`text`;"),
+  context("typeAssertion", "TypeAssertionExpression.expression", "export const probe = <string>$N;"),
+  context("parenthesized", "ParenthesizedExpression.expression", "export const probe = ($N);"),
+  context("functionExpressionName", "FunctionExpression.name", "export const probe = function $N(): void {};"),
+  context("arrowBody", "ArrowFunction.body", "export const probe = () => $N;"),
+  context("deleteOperand", "DeleteExpression.expression", "export const probe = () => delete $N;"),
+  context("typeofOperand", "TypeOfExpression.expression", "export const probe = typeof $N;"),
+  context("voidOperand", "VoidExpression.expression", "export const probe = void $N;"),
+  context("awaitOperand", "AwaitExpression.expression", "export const probe = async () => await $N;"),
+  context("prefixOperand", "PrefixUnaryExpression.operand", "export const probe = !$N;"),
+  context("postfixOperand", "PostfixUnaryExpression.operand", "export const probe = () => $N++;"),
+  context("binaryLeft", "BinaryExpression.left", "export const probe = $N + 1;"),
+  context("binaryRight", "BinaryExpression.right", "export const probe = 1 + $N;"),
+  context("conditionalTest", "ConditionalExpression.condition", "export const probe = $N ? 1 : 2;"),
+  context("conditionalTrue", "ConditionalExpression.whenTrue", "export const probe = true ? $N : 2;"),
+  context("conditionalFalse", "ConditionalExpression.whenFalse", "export const probe = true ? 1 : $N;"),
+  context("yieldOperand", "YieldExpression.expression", "export function* probe(): Generator { yield $N; }"),
+  context("spreadElement", "SpreadElement.expression", "export const probe = [...$N];"),
+  context("classExpressionName", "ClassExpression.name", "export const probe = class $N {};"),
+  context("heritageExtends", "ExpressionWithTypeArguments.expression", "export interface Probe extends $N {}", "elsewhere exempt"),
+  context("heritageImplements", "ExpressionWithTypeArguments.expression", "export declare class Probe implements $N {}", "elsewhere exempt"),
+  context("heritageClassExtends", "ExpressionWithTypeArguments.expression", "export declare class Probe extends $N {}", "elsewhere exempt"),
+  context("instantiation", "ExpressionWithTypeArguments.expression", "export const probe = $N<string>;"),
+  context("heritageQualified", "PropertyAccessExpression.name", "export interface Probe extends probeNs.$N {}"),
+  context("asOperand", "AsExpression.expression", "export const probe = $N as string;"),
+  context("nonNullOperand", "NonNullExpression.expression", "export const probe = $N!;"),
+  context("importMetaName", "MetaProperty.name", "export const probe = import.$N;"),
+  context("newMetaName", "MetaProperty.name", "export function probe(): void { new.$N; }"),
+  context("satisfiesOperand", "SatisfiesExpression.expression", "export const probe = $N satisfies string;"),
+  context("templateSpan", "TemplateSpan.expression", `export const probe = \`a\${$N}b\`;`),
+  context("expressionStatement", "ExpressionStatement.expression", "$N;"),
+  context("staticBlockStatement", "ExpressionStatement.expression", "export class Probe { static { $N; } }"),
+  context("defaultClauseStatement", "ExpressionStatement.expression", "switch (probe) { default: $N; }"),
+  context("ifTest", "IfStatement.expression", "if ($N) {}"),
+  context("doTest", "DoStatement.expression", "do {} while ($N);"),
+  context("whileTest", "WhileStatement.expression", "while ($N) {}"),
+  context("forInitializer", "ForStatement.initializer", "for ($N; ; ) {}"),
+  context("forCondition", "ForStatement.condition", "for (; $N; ) {}"),
+  context("forIncrementor", "ForStatement.incrementor", "for (; ; $N) {}"),
+  context("forInInitializer", "ForInStatement.initializer", "for ($N in probeSource) {}"),
+  context("forInExpression", "ForInStatement.expression", "for (const key in $N) {}"),
+  context("forOfInitializer", "ForOfStatement.initializer", "for ($N of []) {}"),
+  context("forOfExpression", "ForOfStatement.expression", "for (const item of $N) {}"),
+  context("continueLabel", "ContinueStatement.label", "for (;;) { continue $N; }"),
+  context("breakLabel", "BreakStatement.label", "for (;;) { break $N; }"),
+  context("returnOperand", "ReturnStatement.expression", "export function probe(): unknown { return $N; }"),
+  context("withObject", "WithStatement.expression", "with ($N) {}"),
+  context("switchTest", "SwitchStatement.expression", "switch ($N) {}"),
+  context("label", "LabeledStatement.label", "$N: for (;;) {}"),
+  context("throwOperand", "ThrowStatement.expression", "export function probe(): never { throw $N; }"),
+  context("variableName", "VariableDeclaration.name", "export const $N = 1;"),
+  context("catchVariable", "VariableDeclaration.name", "try {} catch ($N) {}"),
+  context("variableInitializer", "VariableDeclaration.initializer", "export const probe = $N;"),
+  context("functionName", "FunctionDeclaration.name", "export function $N(): void {}"),
+  context("classRead", "ClassDeclaration.name", "export declare class $N {}", "elsewhere exempt"),
+  context("classNested", "ClassDeclaration.name", "export namespace probeNs { export declare class $N {} }"),
+  context("interfaceRead", "InterfaceDeclaration.name", "export interface $N {}", "elsewhere exempt"),
+  context("interfaceAugmentation", "InterfaceDeclaration.name", 'declare module "./observation.js" { interface $N {} }', "elsewhere exempt"),
+  context("interfaceNested", "InterfaceDeclaration.name", "export namespace probeNs { export interface $N {} }"),
+  context("interfaceUndeclaredBlock", "InterfaceDeclaration.name", 'module "./observation.js" { interface $N {} }'),
+  context("typeAliasName", "TypeAliasDeclaration.name", "export type $N = string;"),
+  context("enumName", "EnumDeclaration.name", "export enum $N { A }"),
+  context("namespaceName", "ModuleDeclaration.name", "export namespace $N {}"),
+  context("umdName", "NamespaceExportDeclaration.name", "export as namespace $N;"),
+  context("importEqualsName", "ImportEqualsDeclaration.name", 'import $N = require("./other.js");'),
+  context("importEqualsReference", "ImportEqualsDeclaration.moduleReference", "import probe = $N;"),
+  context("importFromName", "ImportDeclaration.moduleSpecifier", "import probe from $N;"),
+  context("defaultImport", "ImportClause.name", 'import $N from "./other.js";'),
+  context("namespaceImport", "NamespaceImport.name", 'import * as $N from "./other.js";'),
+  context("importPropertyName", "ImportSpecifier.propertyName", 'import { $N as probe } from "./other.js";'),
+  context("importName", "ImportSpecifier.name", 'import { $N } from "./other.js";'),
+  context("exportDefault", "ExportAssignment.expression", "export default $N;"),
+  context("exportFromName", "ExportDeclaration.moduleSpecifier", "export * from $N;"),
+  context("namespaceExport", "NamespaceExport.name", 'export * as $N from "./other.js";'),
+  context("exportPropertyName", "ExportSpecifier.propertyName", "export { $N as probe };"),
+  context("exportName", "ExportSpecifier.name", "export { probe as $N };"),
+  context("requireArgument", "ExternalModuleReference.expression", "import probe = require($N);"),
+  context("caseTest", "CaseClause.expression", "switch (probe) { case $N: break; }"),
+  context("attributeName", "ImportAttribute.name", 'import probe from "./other.json" with { $N: "json" };'),
+  context("attributeValue", "ImportAttribute.value", 'import probe from "./other.json" with { type: $N };'),
+  context("propertyAssignmentName", "PropertyAssignment.name", "export const probe = { $N: 1 };"),
+  context("propertyAssignmentValue", "PropertyAssignment.initializer", "export const probe = { value: $N };"),
+  context("shorthandName", "ShorthandPropertyAssignment.name", "export const probe = { $N };"),
+  context("shorthandInitializer", "ShorthandPropertyAssignment.objectAssignmentInitializer", "export const probe = { value = $N };"),
+  context("spreadAssignment", "SpreadAssignment.expression", "export const probe = { ...$N };"),
+  context("enumMemberName", "EnumMember.name", "export enum Probe { $N }"),
+  context("enumMemberInitializer", "EnumMember.initializer", "export enum Probe { A = $N }"),
+];
+/** A CONTEXTS row's text read with `name`: the module with the row's text appended. */
+const contextText = (row: ContextRow, name: string): string => appended(row.text.replaceAll("$N", name))(MODULE_TEXT);
+/** The slots no parse of a .ts text fills with an identifier the walk meets, each with a text that writes the name into the slot: its
+ * parse leaves the slot empty or fills it with another kind. */
+const UNREACHABLE_SLOTS: Readonly<Record<string, string>> = {
+  "TypeParameter.expression": "export type Probe<T extends ++$N> = T;",
+  "Constructor.name": "export class Probe { constructor() { $N; } }",
+  "ModuleDeclaration.body": "export namespace probeNs.$N {}",
+};
+/** The kinds no parse of a .ts text puts above an identifier the walk meets, each with a text that writes the name under the kind's
+ * syntax: its parse puts no node of the kind above it. */
+const UNREACHABLE_KINDS: Readonly<Record<string, string>> = {
+  LiteralType: "export type Probe = -$N;",
+  ImportTypeAssertionContainer: 'export type Probe = import("./other.js", { assert: { $N: "json" } });',
+};
+type Family = "jsdoc" | "jsx" | "transformation";
+/** The kind families the walk never meets in a .ts text, by TypeScript's own kind ranges and names, each with the text that shows it. */
+const UNREACHABLE_FAMILIES: Readonly<Record<Family, string>> = {
+  jsdoc: "/** @see $N {@link $N} @param $N value */ export function probe(value: string): void {}",
+  jsx: "export const probe = <$N attr={$N}>{$N}</$N>;",
+  transformation: "export const probe = ($N, <string>$N, $N as string);",
+};
+const familyOf = (kind: ts.SyntaxKind): Family | undefined =>
+  kind >= ts.SyntaxKind.FirstJSDocNode && kind <= ts.SyntaxKind.LastJSDocNode
+    ? "jsdoc"
+    : kind > ts.SyntaxKind.LastJSDocNode
+      ? "transformation"
+      : kindName(kind).startsWith("Jsx")
+        ? "jsx"
+        : undefined;
+
+/** The module spellings DECLARATION augmentation's path clause is asked of (AUGMENTATION PATHS): every extension spelling TypeScript
+ * and Node resolve, a directory and its index, each as ./, as ../workbench/, bare and with a capital. */
+const SPECIFIER_SPELLINGS = ["", ".ts", ".tsx", ".d.ts", ".mts", ".d.mts", ".cts", ".d.cts", ".js", ".jsx", ".mjs", ".cjs", ".json", "/", "/index.ts", "/index.js"];
+const specifiers = (): string[] =>
+  SPECIFIER_SPELLINGS.flatMap(spelling => [`./observation${spelling}`, `../workbench/observation${spelling}`, `observation${spelling}`, `./Observation${spelling}`]);
 
 // ---------------------------------------------------------------------------------------------------------- the checker (AGREEMENT)
 const VIRTUAL = "/wb-km7q11-virtual";
@@ -991,52 +1298,96 @@ const FROZEN_SHAPE: readonly string[] = [
   "ITEM:U1:2", "ITEM:U2:4", "ITEM:ACCEPTANCE:1", "ITEM:R-B140:2", "ITEM:RF4-U1:2", "ITEM:RF5-U1:2", "ITEM:RF5-U2:2", "GATE:O7:3", "GATE:O15:3", "GATE:O8:3",
   "GATE:O7b:3", "GATE:O15b:3", "GATE:O7bt:3", "GATE:O15bt:3", "GATE:GP-globalBrandSnapshot:3", "GATE:GP-globalBrandEvent:3", "GATE:GP-globalBrandInner:3",
   "GATE:GP-globalLeafSnapshot:3", "GATE:GP-topBrandSnapshot:3", "GATE:GP-topBrandEvent:3", "GATE:GP-topBrandInner:3", "GATE:GP-topLeafSnapshot:3",
-  "GATE:GP-inlineBrandSnapshot:3", "GATE:GP-globalAliasSnapshot:3", "GATE:GP-globalAliasEvent:3", "GATE:GP-globalAliasInner:3",
-  "GATE:GP-globalInterfaceUnion:3", "GATE:GP-topInterfaceUnion:3", "GATE:GP-thisUnion:3", "GATE:GP-selfRefUnion:3", "GATE:GM-importEquals:4",
-  "GATE:GP-importEqualsBrand:3", "GATE:GM-importDefault:4", "GATE:GP-defaultImportFile:3", "GATE:GM-typeNamesInterface:4", "GATE:GP-topShapeBrand:3",
-  "GATE:GM-holdsShallow:4", "GATE:GP-deepBrand:3", "BASE:observation.ts:2", "FORMS:interface/declaredTwice:4", "FORMS:interface/redeclaredMember:4", "FORMS:class merge/O7:4",
-  "FORMS:class merge/escapedClassMerge:4", "FORMS:class merge/classWithBody:4", "FORMS:augmentation/O8:4", "FORMS:augmentation/noExtension:4",
-  "FORMS:augmentation/tsExtension:4", "FORMS:augmentation/parentPath:4", "FORMS:missing/renamedSnapshot:4", "FORMS:elsewhere/functionOfName:4",
-  "FORMS:elsewhere/namespaceOfName:4", "FORMS:elsewhere/interfaceInNamespace:4", "FORMS:elsewhere/variableOfName:4", "FORMS:elsewhere/enumOfName:4",
-  "FORMS:elsewhere/typeAliasInNamespace:4", "FORMS:elsewhere/importOfName:4", "FORMS:elsewhere/exportSpecifier:4", "FORMS:elsewhere/propertyNamed:4",
-  "FORMS:elsewhere/parameterNamed:4", "FORMS:elsewhere/typeQueryOfName:4", "FORMS:elsewhere/qualifiedName:4", "FORMS:elsewhere/globalBlock:4",
-  "FORMS:elsewhere/otherModuleBlock:4", "FORMS:elsewhere/mjsSpecifier:4", "FORMS:elsewhere/bareSpecifier:4", "FORMS:elsewhere/caseSpecifier:4",
-  "FORMS:elsewhere/indexSpecifier:4", "FORMS:elsewhere/namespaceInAugmentation:4", "FORMS:elsewhere/classInAugmentation:4", "FORMS:heritage/extendsClause:4",
-  "FORMS:heritage/classExtends:4", "FORMS:heritage/classImplements:4", "FORMS:heritage/augmentationExtends:4",
-  "FORMS:type parameters/interfaceTypeParameters:4", "FORMS:type parameters/classTypeParameters:4", "FORMS:class modifier/abstractClass:4",
-  "FORMS:class modifier/defaultClass:4", "FORMS:class modifier/decoratedClass:4", "FORMS:property/asIs:4", "FORMS:other member/methodMember:4",
-  "FORMS:type literal/asIs:4", "FORMS:read interface/asIs:4", "FORMS:inner interface/asIs:4", "FORMS:string/asIs:4", "FORMS:number/asIs:4",
-  "FORMS:string literal/asIs:4", "FORMS:union/asIs:4", "FORMS:readonly array/asIs:4", "FORMS:Readonly/asIs:4", "FORMS:Record/asIs:4", "TYPES:string:3",
-  "TYPES:number:3", "TYPES:any:3", "TYPES:unknown:3", "TYPES:never:3", "TYPES:void:3", "TYPES:object:3", "TYPES:symbol:3", "TYPES:undefined:3",
-  "TYPES:boolean:3", "TYPES:bigint:3", "TYPES:typePredicate:3", "TYPES:Readonly:3", "TYPES:Record:3", "TYPES:libReference:3", "TYPES:moduleReference:3",
-  "TYPES:ReadonlyTwoArguments:3", "TYPES:ReadonlyNoArgument:3", "TYPES:RecordNumberKey:3", "TYPES:RecordLiteralKey:3", "TYPES:RecordObjectValue:3",
-  "TYPES:ReadonlyArrayReference:3", "TYPES:ReadonlyShadowed:3", "TYPES:RecordShadowed:3", "TYPES:functionType:3", "TYPES:constructorType:3",
-  "TYPES:typeQuery:3", "TYPES:typeLiteral:3", "TYPES:wholeTypeLiteral:3", "TYPES:mutableArray:3", "TYPES:readonlyObjectArray:3", "TYPES:tuple:3",
-  "TYPES:optionalElement:3", "TYPES:restElement:3", "TYPES:leafUnion:3", "TYPES:objectArm:3", "TYPES:intersection:3", "TYPES:conditional:3", "TYPES:infer:3",
-  "TYPES:parenthesized:3", "TYPES:this:3", "TYPES:readonlyArray:3", "TYPES:keyof:3", "TYPES:keyofArray:3", "TYPES:unique:3", "TYPES:readonlyTuple:3", "TYPES:indexedAccess:3",
-  "TYPES:mapped:3", "TYPES:stringLiteral:3", "TYPES:numberLiteral:3", "TYPES:negativeLiteral:3", "TYPES:bigintLiteral:3", "TYPES:trueLiteral:3",
-  "TYPES:falseLiteral:3", "TYPES:nullLiteral:3", "TYPES:templateLiteralNoSubstitution:3", "TYPES:namedTupleMember:3", "TYPES:templateLiteralType:3",
-  "TYPES:templateLiteralTypeSpan:3", "TYPES:importType:3", "TYPES:jsdocAll:3", "TYPES:jsdocUnknown:3", "TYPES:jsdocNullable:3", "TYPES:jsdocNonNullable:3",
-  "TYPES:jsdocOptional:3", "TYPES:jsdocFunction:3", "TYPES:jsdocVariadic:3", "MEMBERS:propertySignature:3", "MEMBERS:requiredSignature:3",
+  "GATE:GP-inlineBrandSnapshot:3", "GATE:GP-globalAliasSnapshot:3", "GATE:GP-globalAliasEvent:3", "GATE:GP-globalAliasInner:3", "GATE:GP-globalInterfaceUnion:3",
+  "GATE:GP-topInterfaceUnion:3", "GATE:GP-thisUnion:3", "GATE:GP-selfRefUnion:3", "GATE:GM-importEquals:4", "GATE:GP-importEqualsBrand:3", "GATE:GM-importDefault:4",
+  "GATE:GP-defaultImportFile:3", "GATE:GM-typeNamesInterface:4", "GATE:GP-topShapeBrand:3", "GATE:GM-holdsShallow:4", "GATE:GP-deepBrand:3", "BASE:observation.ts:2",
+  "FORMS:interface/declaredTwice:4", "FORMS:interface/redeclaredMember:4", "FORMS:class merge/O7:4", "FORMS:class merge/escapedClassMerge:4",
+  "FORMS:class merge/classWithBody:4", "FORMS:augmentation/O8:4", "FORMS:augmentation/noExtension:4", "FORMS:augmentation/tsExtension:4",
+  "FORMS:augmentation/parentPath:4", "FORMS:augmentation/exportDeclare:4", "FORMS:missing/renamedSnapshot:4", "FORMS:missing/classOnly:4",
+  "FORMS:missing/augmentationOnly:4", "FORMS:elsewhere/functionOfName:4", "FORMS:elsewhere/namespaceOfName:4", "FORMS:elsewhere/interfaceInNamespace:4",
+  "FORMS:elsewhere/variableOfName:4", "FORMS:elsewhere/enumOfName:4", "FORMS:elsewhere/typeAliasInNamespace:4", "FORMS:elsewhere/importOfName:4",
+  "FORMS:elsewhere/exportSpecifier:4", "FORMS:elsewhere/propertyNamed:4", "FORMS:elsewhere/parameterNamed:4", "FORMS:elsewhere/typeQueryOfName:4",
+  "FORMS:elsewhere/qualifiedName:4", "FORMS:elsewhere/globalBlock:4", "FORMS:elsewhere/otherModuleBlock:4", "FORMS:elsewhere/mjsSpecifier:4",
+  "FORMS:elsewhere/bareSpecifier:4", "FORMS:elsewhere/caseSpecifier:4", "FORMS:elsewhere/indexSpecifier:4", "FORMS:elsewhere/namespaceInAugmentation:4",
+  "FORMS:elsewhere/classInAugmentation:4", "FORMS:elsewhere/undeclaredModuleBlock:4", "FORMS:elsewhere/nestedModuleBlock:4", "FORMS:elsewhere/dtsSpecifier:4",
+  "FORMS:elsewhere/mtsSpecifier:4", "FORMS:heritage/extendsClause:4", "FORMS:heritage/classExtends:4", "FORMS:heritage/classImplements:4",
+  "FORMS:heritage/augmentationExtends:4", "FORMS:type parameters/interfaceTypeParameters:4", "FORMS:type parameters/classTypeParameters:4",
+  "FORMS:type parameters/augmentationTypeParameters:4", "FORMS:class modifier/abstractClass:4", "FORMS:class modifier/defaultClass:4",
+  "FORMS:class modifier/decoratedClass:4", "FORMS:property/asIs:4", "FORMS:other member/methodMember:4", "FORMS:type literal/asIs:4", "FORMS:read interface/asIs:4",
+  "FORMS:inner interface/asIs:4", "FORMS:inner interface/refusedInnerName:4", "FORMS:string/asIs:4", "FORMS:number/asIs:4", "FORMS:string literal/asIs:4",
+  "FORMS:union/asIs:4", "FORMS:readonly array/asIs:4", "FORMS:Readonly/asIs:4", "FORMS:Record/asIs:4", "TYPES:string:3", "TYPES:number:3", "TYPES:any:3",
+  "TYPES:unknown:3", "TYPES:never:3", "TYPES:void:3", "TYPES:object:3", "TYPES:symbol:3", "TYPES:undefined:3", "TYPES:boolean:3", "TYPES:bigint:3",
+  "TYPES:typePredicate:3", "TYPES:Readonly:3", "TYPES:Record:3", "TYPES:libReference:3", "TYPES:moduleReference:3", "TYPES:moduleReferenceTypeArguments:3",
+  "TYPES:readInterfaceTypeArguments:3", "TYPES:parenthesizedTypeLiteral:3", "TYPES:typeLiteralOrUndefined:3", "TYPES:parenthesizedReference:3",
+  "TYPES:referenceOrUndefined:3", "TYPES:qualifiedReference:3", "TYPES:moduleClassReference:3", "TYPES:ReadonlyTwoArguments:3", "TYPES:ReadonlyNoArgument:3",
+  "TYPES:RecordNumberKey:3", "TYPES:RecordLiteralKey:3", "TYPES:RecordObjectValue:3", "TYPES:ReadonlyObject:3", "TYPES:RecordThreeArguments:3",
+  "TYPES:RecordOneArgument:3", "TYPES:RecordNoArgument:3", "TYPES:ReadonlyArrayReference:3", "TYPES:ReadonlyShadowed:3", "TYPES:RecordShadowed:3",
+  "TYPES:functionType:3", "TYPES:constructorType:3", "TYPES:typeQuery:3", "TYPES:typeLiteral:3", "TYPES:wholeTypeLiteral:3", "TYPES:mutableArray:3",
+  "TYPES:readonlyObjectArray:3", "TYPES:tuple:3", "TYPES:optionalElement:3", "TYPES:restElement:3", "TYPES:leafUnion:3", "TYPES:objectArm:3", "TYPES:intersection:3",
+  "TYPES:conditional:3", "TYPES:infer:3", "TYPES:parenthesized:3", "TYPES:this:3", "TYPES:readonlyArray:3", "TYPES:keyof:3", "TYPES:keyofArray:3", "TYPES:unique:3",
+  "TYPES:readonlyTuple:3", "TYPES:indexedAccess:3", "TYPES:mapped:3", "TYPES:stringLiteral:3", "TYPES:numberLiteral:3", "TYPES:negativeLiteral:3",
+  "TYPES:bigintLiteral:3", "TYPES:trueLiteral:3", "TYPES:falseLiteral:3", "TYPES:nullLiteral:3", "TYPES:templateLiteralNoSubstitution:3", "TYPES:namedTupleMember:3",
+  "TYPES:templateLiteralType:3", "TYPES:templateLiteralTypeSpan:3", "TYPES:importType:3", "TYPES:jsdocAll:3", "TYPES:jsdocUnknown:3", "TYPES:jsdocNullable:3",
+  "TYPES:jsdocNonNullable:3", "TYPES:jsdocOptional:3", "TYPES:jsdocFunction:3", "TYPES:jsdocVariadic:3", "MEMBERS:propertySignature:3", "MEMBERS:requiredSignature:3",
   "MEMBERS:untypedSignature:3", "MEMBERS:methodSignature:3", "MEMBERS:getSignature:3", "MEMBERS:setSignature:3", "MEMBERS:callSignature:3",
-  "MEMBERS:constructSignature:3", "MEMBERS:indexSignature:3", "MEMBERS:innerMethod:3", "MEMBERS:propertyDeclaration:3", "MEMBERS:requiredDeclaration:3",
-  "MEMBERS:methodDeclaration:3", "MEMBERS:staticBlock:3", "MEMBERS:parameterProperty:3", "MEMBERS:getAccessor:3", "MEMBERS:setAccessor:3",
-  "MEMBERS:classIndex:3", "MEMBERS:semicolon:3", "MEMBERS:innerClassMethod:3", "MEMBERS:identifierName:3", "MEMBERS:quotedName:3", "MEMBERS:numericName:3",
-  "MEMBERS:computedName:3", "MEMBERS:privateName:3", "MEMBERS:classProperty-abstract:3", "MEMBERS:classDeclaration-abstract:3", "MEMBERS:signature-abstract:3",
-  "MEMBERS:classProperty-accessor:3", "MEMBERS:classDeclaration-accessor:3", "MEMBERS:signature-accessor:3", "MEMBERS:classProperty-async:3",
-  "MEMBERS:classDeclaration-async:3", "MEMBERS:signature-async:3", "MEMBERS:classProperty-const:3", "MEMBERS:classProperty-declare:3",
-  "MEMBERS:classDeclaration-declare:3", "MEMBERS:signature-declare:3", "MEMBERS:classProperty-export:3", "MEMBERS:classDeclaration-export:3",
-  "MEMBERS:signature-export:3", "MEMBERS:classProperty-in:3", "MEMBERS:signature-in:3", "MEMBERS:classProperty-out:3", "MEMBERS:signature-out:3",
-  "MEMBERS:classProperty-override:3", "MEMBERS:signature-override:3", "MEMBERS:classProperty-private:3", "MEMBERS:classDeclaration-private:3",
-  "MEMBERS:signature-private:3", "MEMBERS:classProperty-protected:3", "MEMBERS:classDeclaration-protected:3", "MEMBERS:signature-protected:3",
-  "MEMBERS:classProperty-public:3", "MEMBERS:classDeclaration-public:3", "MEMBERS:signature-public:3", "MEMBERS:classProperty-readonly:3",
-  "MEMBERS:classDeclaration-readonly:3", "MEMBERS:signature-readonly:3", "MEMBERS:classProperty-static:3", "MEMBERS:classDeclaration-static:3",
-  "MEMBERS:signature-static:3", "MEMBERS:classProperty-decorator:3", "MEMBERS:classDeclaration-decorator:3", "RESIDUALS:other file/siblingAugmentation:5", "RESIDUALS:inner members/presentationMember:4", "RESIDUALS:required root member/requiredRegion:4",
+  "MEMBERS:constructSignature:3", "MEMBERS:indexSignature:3", "MEMBERS:innerMethod:3", "MEMBERS:innerTypeArguments:3", "MEMBERS:innerParenthesized:3",
+  "MEMBERS:innerClassReference:3", "MEMBERS:propertyDeclaration:3", "MEMBERS:requiredDeclaration:3", "MEMBERS:definiteDeclaration:3", "MEMBERS:methodDeclaration:3",
+  "MEMBERS:staticBlock:3", "MEMBERS:parameterProperty:3", "MEMBERS:getAccessor:3", "MEMBERS:setAccessor:3", "MEMBERS:classIndex:3", "MEMBERS:semicolon:3",
+  "MEMBERS:innerClassMethod:3", "MEMBERS:identifierName:3", "MEMBERS:quotedName:3", "MEMBERS:numericName:3", "MEMBERS:computedName:3", "MEMBERS:privateName:3",
+  "MEMBERS:classProperty-abstract:3", "MEMBERS:classDeclaration-abstract:3", "MEMBERS:signature-abstract:3", "MEMBERS:classProperty-accessor:3",
+  "MEMBERS:classDeclaration-accessor:3", "MEMBERS:signature-accessor:3", "MEMBERS:classProperty-async:3", "MEMBERS:classDeclaration-async:3",
+  "MEMBERS:signature-async:3", "MEMBERS:classProperty-const:3", "MEMBERS:classProperty-declare:3", "MEMBERS:classDeclaration-declare:3", "MEMBERS:signature-declare:3",
+  "MEMBERS:classProperty-export:3", "MEMBERS:classDeclaration-export:3", "MEMBERS:signature-export:3", "MEMBERS:classProperty-in:3", "MEMBERS:signature-in:3",
+  "MEMBERS:classProperty-out:3", "MEMBERS:signature-out:3", "MEMBERS:classProperty-override:3", "MEMBERS:signature-override:3", "MEMBERS:classProperty-private:3",
+  "MEMBERS:classDeclaration-private:3", "MEMBERS:signature-private:3", "MEMBERS:classProperty-protected:3", "MEMBERS:classDeclaration-protected:3",
+  "MEMBERS:signature-protected:3", "MEMBERS:classProperty-public:3", "MEMBERS:classDeclaration-public:3", "MEMBERS:signature-public:3",
+  "MEMBERS:classProperty-readonly:3", "MEMBERS:classDeclaration-readonly:3", "MEMBERS:signature-readonly:3", "MEMBERS:classProperty-static:3",
+  "MEMBERS:classDeclaration-static:3", "MEMBERS:signature-static:3", "MEMBERS:classProperty-decorator:3", "MEMBERS:classDeclaration-decorator:3",
+  "RESIDUALS:other file/siblingAugmentation:5", "RESIDUALS:inner members/presentationMember:4", "RESIDUALS:required root member/requiredRegion:4",
   "RESIDUALS:required root member/requiredKind:4", "RESIDUALS:global interface/stringInterface:4", "RESIDUALS:global interface/readonlyArrayInterface:4",
+  "CONTEXTS:qualifiedLeft:2", "CONTEXTS:qualifiedRight:2", "CONTEXTS:computedName:2", "CONTEXTS:typeParameter:2", "CONTEXTS:inferTypeParameter:2",
+  "CONTEXTS:mappedTypeParameter:2", "CONTEXTS:parameter:2", "CONTEXTS:functionTypeParameter:2", "CONTEXTS:constructorTypeParameter:2",
+  "CONTEXTS:callSignatureParameter:2", "CONTEXTS:constructSignatureParameter:2", "CONTEXTS:indexSignatureParameter:2", "CONTEXTS:constructorParameter:2",
+  "CONTEXTS:parameterInitializer:2", "CONTEXTS:decorator:2", "CONTEXTS:danglingDecorator:2", "CONTEXTS:signatureName:2", "CONTEXTS:signatureInitializer:2",
+  "CONTEXTS:classPropertyName:2", "CONTEXTS:classPropertyInitializer:2", "CONTEXTS:methodSignatureName:2", "CONTEXTS:methodName:2", "CONTEXTS:getAccessorName:2",
+  "CONTEXTS:setAccessorName:2", "CONTEXTS:predicateParameter:2", "CONTEXTS:assertsParameter:2", "CONTEXTS:typeReference:2", "CONTEXTS:typeReferenceArguments:2",
+  "CONTEXTS:typeQuery:2", "CONTEXTS:optionalTupleQuery:2", "CONTEXTS:restTupleQuery:2", "CONTEXTS:intersectionQuery:2", "CONTEXTS:conditionalQuery:2",
+  "CONTEXTS:indexedAccessQuery:2", "CONTEXTS:templateTypeQuery:2", "CONTEXTS:tupleMemberName:2", "CONTEXTS:importTypeQualifier:2", "CONTEXTS:bindingPropertyName:2",
+  "CONTEXTS:bindingName:2", "CONTEXTS:arrayBindingName:2", "CONTEXTS:bindingInitializer:2", "CONTEXTS:arrayElement:2", "CONTEXTS:accessExpression:2",
+  "CONTEXTS:accessName:2", "CONTEXTS:elementExpression:2", "CONTEXTS:elementArgument:2", "CONTEXTS:callee:2", "CONTEXTS:callArgument:2", "CONTEXTS:newCallee:2",
+  "CONTEXTS:newArgument:2", "CONTEXTS:templateTag:2", "CONTEXTS:typeAssertion:2", "CONTEXTS:parenthesized:2", "CONTEXTS:functionExpressionName:2",
+  "CONTEXTS:arrowBody:2", "CONTEXTS:deleteOperand:2", "CONTEXTS:typeofOperand:2", "CONTEXTS:voidOperand:2", "CONTEXTS:awaitOperand:2", "CONTEXTS:prefixOperand:2",
+  "CONTEXTS:postfixOperand:2", "CONTEXTS:binaryLeft:2", "CONTEXTS:binaryRight:2", "CONTEXTS:conditionalTest:2", "CONTEXTS:conditionalTrue:2",
+  "CONTEXTS:conditionalFalse:2", "CONTEXTS:yieldOperand:2", "CONTEXTS:spreadElement:2", "CONTEXTS:classExpressionName:2", "CONTEXTS:heritageExtends:2",
+  "CONTEXTS:heritageImplements:2", "CONTEXTS:heritageClassExtends:2", "CONTEXTS:instantiation:2", "CONTEXTS:heritageQualified:2", "CONTEXTS:asOperand:2",
+  "CONTEXTS:nonNullOperand:2", "CONTEXTS:importMetaName:2", "CONTEXTS:newMetaName:2", "CONTEXTS:satisfiesOperand:2", "CONTEXTS:templateSpan:2",
+  "CONTEXTS:expressionStatement:2", "CONTEXTS:staticBlockStatement:2", "CONTEXTS:defaultClauseStatement:2", "CONTEXTS:ifTest:2", "CONTEXTS:doTest:2",
+  "CONTEXTS:whileTest:2", "CONTEXTS:forInitializer:2", "CONTEXTS:forCondition:2", "CONTEXTS:forIncrementor:2", "CONTEXTS:forInInitializer:2",
+  "CONTEXTS:forInExpression:2", "CONTEXTS:forOfInitializer:2", "CONTEXTS:forOfExpression:2", "CONTEXTS:continueLabel:2", "CONTEXTS:breakLabel:2",
+  "CONTEXTS:returnOperand:2", "CONTEXTS:withObject:2", "CONTEXTS:switchTest:2", "CONTEXTS:label:2", "CONTEXTS:throwOperand:2", "CONTEXTS:variableName:2",
+  "CONTEXTS:catchVariable:2", "CONTEXTS:variableInitializer:2", "CONTEXTS:functionName:2", "CONTEXTS:classRead:2", "CONTEXTS:classNested:2", "CONTEXTS:interfaceRead:2",
+  "CONTEXTS:interfaceAugmentation:2", "CONTEXTS:interfaceNested:2", "CONTEXTS:interfaceUndeclaredBlock:2", "CONTEXTS:typeAliasName:2", "CONTEXTS:enumName:2",
+  "CONTEXTS:namespaceName:2", "CONTEXTS:umdName:2", "CONTEXTS:importEqualsName:2", "CONTEXTS:importEqualsReference:2", "CONTEXTS:importFromName:2",
+  "CONTEXTS:defaultImport:2", "CONTEXTS:namespaceImport:2", "CONTEXTS:importPropertyName:2", "CONTEXTS:importName:2", "CONTEXTS:exportDefault:2",
+  "CONTEXTS:exportFromName:2", "CONTEXTS:namespaceExport:2", "CONTEXTS:exportPropertyName:2", "CONTEXTS:exportName:2", "CONTEXTS:requireArgument:2",
+  "CONTEXTS:caseTest:2", "CONTEXTS:attributeName:2", "CONTEXTS:attributeValue:2", "CONTEXTS:propertyAssignmentName:2", "CONTEXTS:propertyAssignmentValue:2",
+  "CONTEXTS:shorthandName:2", "CONTEXTS:shorthandInitializer:2", "CONTEXTS:spreadAssignment:2", "CONTEXTS:enumMemberName:2", "CONTEXTS:enumMemberInitializer:2",
+  "UNREACHABLE:TypeParameter.expression:1", "UNREACHABLE:Constructor.name:1", "UNREACHABLE:ModuleDeclaration.body:1", "UNREACHABLE:LiteralType:1",
+  "UNREACHABLE:ImportTypeAssertionContainer:1", "UNREACHABLE:jsdoc:1", "UNREACHABLE:jsx:1", "UNREACHABLE:transformation:1",
 ];
 
 // ---------------------------------------------------------------------------------------------------------- the census
-const kindName = (kind: ts.SyntaxKind): string => Object.keys(ts.SyntaxKind).find(name => ts.SyntaxKind[name as keyof typeof ts.SyntaxKind] === kind && !/^(First|Last)/u.test(name)) ?? String(kind);
+/** Each kind's name: the first SyntaxKind member of that value that is no First or Last marker (built once; the walks ask per node). */
+const KIND_NAMES: ReadonlyMap<ts.SyntaxKind, string> = new Map(
+  Object.keys(ts.SyntaxKind)
+    .filter(name => !/^(First|Last)/u.test(name))
+    .flatMap(name => {
+      const value: unknown = ts.SyntaxKind[name as keyof typeof ts.SyntaxKind];
+      return typeof value === "number" ? [[value, name] as const] : [];
+    })
+    .reverse(),
+);
+const kindName = (kind: ts.SyntaxKind): string => KIND_NAMES.get(kind) ?? String(kind);
 const kindsWhere = (accepts: (kind: ts.SyntaxKind) => boolean): string[] => {
   const out: string[] = [];
   for (let kind = 0; kind < ts.SyntaxKind.Count; kind += 1) if (accepts(kind)) out.push(kindName(kind));
@@ -1105,6 +1456,135 @@ const SITE_KINDS: Readonly<Record<Site, readonly string[]>> = {
 };
 const rowText = (plant: Plant): string => plant(MODULE_TEXT);
 const sameList = (a: readonly string[], b: readonly string[]): boolean => a.length === b.length && a.every((entry, index) => entry === b[index]);
+
+// ---------------------------------------------------------------------------------------------------------- UNIVERSE
+/** Every node kind, FirstNode up to Count. */
+const NODE_KINDS: readonly ts.SyntaxKind[] = Array.from({ length: ts.SyntaxKind.Count - ts.SyntaxKind.FirstNode }, (_, index) => ts.SyntaxKind.FirstNode + index);
+/** The properties a stand-in node answers as absent: those ts.forEachChild reads that are no child slot. */
+const STAND_IN_ABSENT: ReadonlySet<string> = new Set(["parent", "flags", "pos", "end"]);
+/** The child slots ts.forEachChild visits on a node of `kind`, in its order: asked of a stand-in node that answers every other
+ * property with a child naming the property. */
+function forEachChildSlots(kind: ts.SyntaxKind): string[] {
+  const slots: string[] = [];
+  const stand = new Proxy(
+    { kind },
+    {
+      get: (target, property) =>
+        property === "kind" ? target.kind : typeof property === "string" && !STAND_IN_ABSENT.has(property) ? { kind: ts.SyntaxKind.Identifier, slot: property } : undefined,
+    },
+  );
+  const record = (child: object): undefined => {
+    const slot: unknown = Reflect.get(child, "slot");
+    if (typeof slot === "string") slots.push(slot);
+    return undefined;
+  };
+  ts.forEachChild(stand as ts.Node, record, record);
+  return slots;
+}
+const FOR_EACH_CHILD_SLOTS: ReadonlyMap<ts.SyntaxKind, readonly string[]> = new Map(NODE_KINDS.map(kind => [kind, forEachChildSlots(kind)] as const));
+/** TypeScript's own declaration file, beside its default library. */
+const TS_DECLARATIONS = join(dirname(ts.getDefaultLibFilePath({})), "typescript.d.ts");
+interface DeclaredAst {
+  /** Every <Kind>.<slot> ts.forEachChild visits whose declared type admits an Identifier. */
+  readonly admits: readonly string[];
+  /** Every kind with a slot whose declared type admits an Identifier or a node of such a kind, closed transitively. */
+  readonly holds: ReadonlySet<ts.SyntaxKind>;
+}
+/** The identifier slots and kinds of TypeScript's AST, read through its checker from lib/typescript.d.ts: a kind's node types are the
+ * non-generic interfaces whose kind is that SyntaxKind member; a slot's type is its property's type on them (a NodeArray read as its
+ * element), or, where none declares it, its property's type on every node interface that does. */
+function declaredAst(): DeclaredAst {
+  const program = ts.createProgram({ rootNames: [TS_DECLARATIONS], options: { noEmit: true, types: [], lib: ["lib.es2022.d.ts"], skipLibCheck: true, strict: true } });
+  const checker = program.getTypeChecker();
+  const file = program.getSourceFile(TS_DECLARATIONS);
+  if (file === undefined) throw new Error(`UNIVERSE: no ${TS_DECLARATIONS}`);
+  const interfaces: ts.InterfaceDeclaration[] = [];
+  const collect = (node: ts.Node): void => {
+    if (ts.isInterfaceDeclaration(node)) interfaces.push(node);
+    ts.forEachChild(node, collect);
+  };
+  collect(file);
+  const declaredType = (declaration: ts.InterfaceDeclaration): ts.Type | undefined => {
+    const symbol = checker.getSymbolAtLocation(declaration.name);
+    return symbol === undefined ? undefined : checker.getDeclaredTypeOfSymbol(symbol);
+  };
+  const identifierDeclaration = interfaces.find(declaration => declaration.name.text === "Identifier");
+  const identifier = identifierDeclaration === undefined ? undefined : declaredType(identifierDeclaration);
+  if (identifier === undefined) throw new Error("UNIVERSE: typescript.d.ts declares no Identifier");
+  const byKind = new Map<ts.SyntaxKind, ts.Type[]>();
+  for (const declaration of interfaces) {
+    if (declaration.typeParameters !== undefined) continue;
+    const type = declaredType(declaration);
+    const kindProperty = type === undefined ? undefined : checker.getPropertyOfType(type, "kind");
+    if (type === undefined || kindProperty === undefined) continue;
+    const kindType = checker.getTypeOfSymbol(kindProperty);
+    if (!kindType.isNumberLiteral() || (kindType.flags & ts.TypeFlags.EnumLiteral) === 0) continue;
+    if (checker.getBaseTypeOfLiteralType(kindType).getSymbol()?.name !== "SyntaxKind") continue;
+    byKind.set(kindType.value, [...(byKind.get(kindType.value) ?? []), type]);
+  }
+  const parts = (type: ts.Type): ts.Type[] =>
+    (type.isUnion() ? type.types : [type]).map(part => (part.getSymbol()?.name === "NodeArray" ? (checker.getTypeArguments(part as ts.TypeReference)[0] ?? part) : part));
+  const declaredOn = (types: readonly ts.Type[], slot: string): ts.Type[] =>
+    types.flatMap(type => {
+      const property = checker.getPropertyOfType(type, slot);
+      return property === undefined ? [] : parts(checker.getNonNullableType(checker.getTypeOfSymbol(property)));
+    });
+  const everyInterface = [...byKind.values()].flat();
+  const slotTypes = (kind: ts.SyntaxKind, slot: string): ts.Type[] => {
+    const own = declaredOn(byKind.get(kind) ?? [], slot);
+    return own.length > 0 ? own : declaredOn(everyInterface, slot);
+  };
+  const typed = new Map(NODE_KINDS.map(kind => [kind, (FOR_EACH_CHILD_SLOTS.get(kind) ?? []).map(slot => [slot, slotTypes(kind, slot)] as const)] as const));
+  const admitsIdentifier = (types: readonly ts.Type[]): boolean => types.some(type => checker.isTypeAssignableTo(identifier, type));
+  const admits = NODE_KINDS.flatMap(kind => (typed.get(kind) ?? []).filter(([, types]) => admitsIdentifier(types)).map(([slot]) => `${kindName(kind)}.${slot}`));
+  const holds = new Set(NODE_KINDS.filter(kind => (typed.get(kind) ?? []).some(([, types]) => admitsIdentifier(types))));
+  for (let grew = true; grew; ) {
+    grew = false;
+    const holders = [...holds].flatMap(kind => byKind.get(kind) ?? []);
+    for (const kind of NODE_KINDS) {
+      if (holds.has(kind)) continue;
+      if ((typed.get(kind) ?? []).some(([, types]) => types.some(type => holders.some(holder => checker.isTypeAssignableTo(holder, type))))) {
+        holds.add(kind);
+        grew = true;
+      }
+    }
+  }
+  return { admits, holds };
+}
+/** An identifier a text adds: where it stands, as <Kind>.<slot> (its parent's kind and the forEachChild slot holding it), and the
+ * kinds above it, its parent up to the source file. */
+interface Added {
+  readonly at: string;
+  readonly above: readonly ts.SyntaxKind[];
+}
+const parsed = (text: string): ts.SourceFile => ts.createSourceFile(OBSERVATION_MODULE, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+/** Every node a forEachChild walk from `root` meets, `root` included. */
+function walked(root: ts.Node): ts.Node[] {
+  const out: ts.Node[] = [];
+  const visit = (node: ts.Node): void => {
+    out.push(node);
+    ts.forEachChild(node, visit);
+  };
+  visit(root);
+  return out;
+}
+/** Every identifier spelled `name` that a text adds after the module's own text, as the walk meets it. */
+function addedIdentifiers(text: string, name: string): Added[] {
+  const source = parsed(text);
+  return walked(source).flatMap((node): Added[] => {
+    if (!ts.isIdentifier(node) || node.text !== name || node.getStart(source) < MODULE_TEXT.length) return [];
+    const parent = node.parent;
+    const slot = (FOR_EACH_CHILD_SLOTS.get(parent.kind) ?? []).find(entry => {
+      const value: unknown = Reflect.get(parent, entry);
+      return value === node || (Array.isArray(value) && value.includes(node));
+    });
+    const above: ts.SyntaxKind[] = [];
+    for (let current: ts.Node | undefined = parent; current !== undefined; current = current.parent) above.push(current.kind);
+    return [{ at: `${kindName(parent.kind)}.${slot ?? "?"}`, above }];
+  });
+}
+const contextPins = (reads: string): Readonly<Record<ContextName, readonly string[]>> | undefined => Object.entries(CONTEXT_PINS).find(([key]) => key === reads)?.[1];
+const atOf = (row: ContextRow): string => pinsWith(row.pins, "at ")[0]?.slice("at ".length) ?? "";
 
 describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
   it("CLAIM: every '- <word>: <claim>' line of the helper header equals its section's exported roster, in order and byte for byte", () => {
@@ -1281,6 +1761,122 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
     BUDGET_MS,
   );
 
+  it("AUGMENTATION PATHS: namesThisModule names exactly the paths the augmentation claim lists, among every spelling of the module", () => {
+    const claim = DECLARATION_FORMS.find(entry => entry.word === "augmentation")?.claim ?? "";
+    const claimed = unique([...claim.matchAll(/src\/workbench\/[A-Za-z.]*[A-Za-z]/gu)].map(match => match[0]));
+    expect(claimed).toEqual(["src/workbench/observation", "src/workbench/observation.js", "src/workbench/observation.ts"]);
+    const failures: string[] = [];
+    for (const specifier of specifiers()) {
+      const expected = (specifier.startsWith("./") || specifier.startsWith("../")) && claimed.includes(posix.join("src/workbench", specifier));
+      if (namesThisModule(specifier) !== expected) failures.push(`${specifier}: reads ${String(!expected)}`);
+    }
+    expect(failures).toEqual([]);
+  });
+
+  it(
+    "CONTEXTS: every row adds exactly one identifier, at its slot, and reads its pinned reading with Interval, Readonly and Record",
+    () => {
+      const failures: string[] = [];
+      for (const row of CONTEXT_ROWS) {
+        const at = atOf(row);
+        const pins = contextPins(pinsWith(row.pins, "reads ")[0]?.slice("reads ".length) ?? "");
+        if (at === "" || pins === undefined) {
+          failures.push(`${row.id}: pins ${JSON.stringify(row.pins)}`);
+          continue;
+        }
+        for (const name of CONTEXT_NAMES) {
+          const text = contextText(row, name);
+          const added = addedIdentifiers(text, name).map(entry => entry.at);
+          if (!sameList(added, [at])) failures.push(`${row.id}/${name}: adds ${JSON.stringify(added)}`);
+          const reading = readingPins(observationMembers(text));
+          if (!sameList(reading, pins[name])) failures.push(`${row.id}/${name}: reads ${JSON.stringify(reading)}`);
+        }
+      }
+      expect(failures).toEqual([]);
+    },
+    BUDGET_MS,
+  );
+
+  it(
+    "UNIVERSE: every identifier slot, and every kind that can stand above an identifier, that TypeScript's own AST types admit has a CONTEXTS row or is UNREACHABLE",
+    () => {
+      const ast = declaredAst();
+      const failures: string[] = [];
+      const rowSlots = unique(CONTEXT_ROWS.map(atOf));
+      const kindOf = (name: string): ts.SyntaxKind | undefined => NODE_KINDS.find(kind => kindName(kind) === name);
+      for (const slot of ast.admits) {
+        const kind = kindOf(slot.slice(0, slot.indexOf(".")));
+        const ways = [rowSlots.includes(slot), UNREACHABLE_SLOTS[slot] !== undefined, kind !== undefined && familyOf(kind) !== undefined].filter(Boolean).length;
+        if (ways !== 1) failures.push(`${slot}: ${ways === 0 ? "no CONTEXTS row and not UNREACHABLE" : "both a CONTEXTS row and UNREACHABLE"}`);
+      }
+      for (const slot of rowSlots) if (!ast.admits.includes(slot)) failures.push(`CONTEXTS ${slot}: no identifier slot TypeScript declares`);
+      for (const slot of Object.keys(UNREACHABLE_SLOTS)) if (!ast.admits.includes(slot)) failures.push(`UNREACHABLE_SLOTS ${slot}: no identifier slot TypeScript declares`);
+      const covered = new Set<ts.SyntaxKind>();
+      for (const row of CONTEXT_ROWS) {
+        if (!row.pins.includes("reads fails closed")) continue;
+        for (const added of addedIdentifiers(contextText(row, CONTEXT_NAMES[0]), CONTEXT_NAMES[0])) for (const kind of added.above) covered.add(kind);
+      }
+      for (const kind of ast.holds) {
+        const unreachable = familyOf(kind) !== undefined || UNREACHABLE_KINDS[kindName(kind)] !== undefined;
+        if (unreachable === covered.has(kind)) failures.push(`${kindName(kind)}: ${unreachable ? "UNREACHABLE yet above a fails-closed CONTEXTS row's identifier" : "above no fails-closed CONTEXTS row's identifier and not UNREACHABLE"}`);
+      }
+      for (const kind of Object.keys(UNREACHABLE_KINDS)) {
+        const declared = kindOf(kind);
+        if (declared === undefined || !ast.holds.has(declared)) failures.push(`UNREACHABLE_KINDS ${kind}: no kind TypeScript's AST types let hold an identifier`);
+      }
+      expect(failures).toEqual([]);
+    },
+    BUDGET_MS,
+  );
+
+  it(
+    "UNREACHABLE: each slot, kind and family is shown by the parse of a text that writes the name there",
+    () => {
+      const failures: string[] = [];
+      for (const name of CONTEXT_NAMES) {
+        for (const [slot, template] of Object.entries(UNREACHABLE_SLOTS)) {
+          const [kind = "", property = ""] = slot.split(".");
+          const text = appended(template.replaceAll("$N", name))(MODULE_TEXT);
+          const source = parsed(text);
+          const nodes = walked(source).filter(node => kindName(node.kind) === kind && node.getStart(source) >= MODULE_TEXT.length);
+          if (nodes.length === 0) failures.push(`${slot}/${name}: the text holds no ${kind}`);
+          for (const node of nodes) {
+            const value: unknown = Reflect.get(node, property);
+            const held = Array.isArray(value) ? value : [value];
+            if (held.some(entry => typeof entry === "object" && entry !== null && Reflect.get(entry, "kind") === ts.SyntaxKind.Identifier)) failures.push(`${slot}/${name}: the parse puts an identifier there`);
+          }
+          const added = addedIdentifiers(text, name);
+          if (added.length === 0 || added.some(entry => entry.at === slot)) failures.push(`${slot}/${name}: adds ${JSON.stringify(added.map(entry => entry.at))}`);
+        }
+        for (const [kind, template] of Object.entries(UNREACHABLE_KINDS)) {
+          const added = addedIdentifiers(appended(template.replaceAll("$N", name))(MODULE_TEXT), name);
+          if (added.length === 0 || added.some(entry => entry.above.some(above => kindName(above) === kind))) failures.push(`${kind}/${name}: adds ${JSON.stringify(added.map(entry => entry.above.map(kindName)))}`);
+        }
+        for (const [family, template] of Object.entries(UNREACHABLE_FAMILIES)) {
+          const text = appended(template.replaceAll("$N", name))(MODULE_TEXT);
+          const source = parsed(text);
+          const met = walked(source).filter(node => familyOf(node.kind) === family).map(node => kindName(node.kind));
+          if (met.length > 0) failures.push(`${family}/${name}: the walk meets ${unique(met).join(",")}`);
+          if (family === "jsdoc") {
+            const documented = source.statements.filter(statement => statement.getStart(source) >= MODULE_TEXT.length).flatMap(statement => [...ts.getJSDocCommentsAndTags(statement)]);
+            const named = documented.flatMap(entry => walked(entry)).filter(node => ts.isIdentifier(node) && node.text === name);
+            if (named.length === 0) failures.push(`jsdoc/${name}: the comment holds no identifier ${name}`);
+            const reading = readingPins(observationMembers(text));
+            if (!sameList(reading, UNCHANGED)) failures.push(`jsdoc/${name}: reads ${JSON.stringify(reading)}`);
+          }
+          if (family === "transformation") {
+            for (const row of CONTEXT_ROWS) {
+              const kinds = walked(parsed(contextText(row, name))).filter(node => familyOf(node.kind) === "transformation");
+              if (kinds.length > 0) failures.push(`transformation/${row.id}/${name}: the walk meets ${kindName(kinds[0]?.kind ?? 0)}`);
+            }
+          }
+        }
+      }
+      expect(failures).toEqual([]);
+    },
+    BUDGET_MS,
+  );
+
   it(
     "AGREEMENT: the TypeScript checker reads every row's text no narrower than the reader (a member read as a leaf holds no members, an expansion has the checker's members)",
     () => {
@@ -1292,6 +1888,7 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
         texts.set(`RESIDUALS/${row.word}/${row.id}/quiet`, rowText(row.quiet));
         texts.set(`RESIDUALS/${row.word}/${row.id}/twin`, rowText(row.twin));
       }
+      for (const row of CONTEXT_ROWS) for (const name of CONTEXT_NAMES) texts.set(`CONTEXTS/${row.id}/${name}`, contextText(row, name));
       const oracle = oracleReadings(texts);
       const failures: string[] = [];
       for (const [id, text] of texts) {
@@ -1312,6 +1909,8 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
       ...FORM_ROWS.map(row => `FORMS:${row.word}/${row.id}:${row.pins.length}`),
       ...KIND_ROWS.map(row => `${row.site === "type" ? "TYPES" : "MEMBERS"}:${row.id}:${row.pins.length}`),
       ...RESIDUAL_ROWS.map(row => `RESIDUALS:${row.word}/${row.id}:${row.pins.length}`),
+      ...CONTEXT_ROWS.map(row => `CONTEXTS:${row.id}:${row.pins.length}`),
+      ...[...Object.keys(UNREACHABLE_SLOTS), ...Object.keys(UNREACHABLE_KINDS), ...Object.keys(UNREACHABLE_FAMILIES)].map(entry => `UNREACHABLE:${entry}:1`),
     ];
     expect(shape).toEqual(FROZEN_SHAPE);
   });
