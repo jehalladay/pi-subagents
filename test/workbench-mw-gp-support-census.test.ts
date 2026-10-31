@@ -26,6 +26,21 @@
  * byte-identical at the filing pin 758ec18187a5, at 014d116 and at c843ed5 (git diff --quiet rc 0); its :5, :15 and :73
  * are the filing's citations, and the routing-hint sentence the filing paraphrases is its :28. No src module names the
  * vocabulary: the gate has not fired.
+ * MEASURED (by the wb-lmme seat, 2026-10-30, at trunk 577493f, with a throwaway probe file run under this repo's vitest and
+ * removed): vitest's assertion count (expect.getState().assertionCalls) grows by one per expect() call - a bare expect()
+ * with no matcher included, and by one, not two, for an expect() call a matcher completes - and not at all for chai's
+ * assert (assert.ok, assert.deepEqual).
+ * FOLLOW-UP wb-lmme (the R694 carry of landing 660, gate cmd_f8015b42a20b; F1 leads, F2 and F3 ride): A4b's witness carries
+ * unread, the echo guard states its count in the measured vocabulary, and NOT CLAIMED names the changes that keep the count
+ * (F1); the empty-support case's a-near and the grant-matching mutants M23-M29 put grant matching looser than exact
+ * equality by the seven NEAR_GRANTS kinds in reach of S1's parity and K-LEGAL (F2); NOT CLAIMED names the runner's own
+ * use of the copy and the floor (F3).
+ * FOLLOW-UP wb-s51u (the R694 carry of landing 707, gate cmd_f38c2660edc1; F1 leads, F2 rides): A1b ties each
+ * grant-matching mutant's matcher to its declared kind (one mutant per NEAR_GRANTS kind, and each matcher accepts every
+ * near grant of its declared kind), and A1b's witness carries what each matcher accepts, derived from NEAR_GRANTS and the
+ * registry's catalog: the kinds, and each near grant with the required grants it stands in for. M29's containment accepts
+ * the padded grants beside the longer ones; THE CHECKS and the LOOSE_MATCHING texts say what each matcher accepts (F1).
+ * The wb-lmme FOLLOW-UP line is scoped to the seven NEAR_GRANTS kinds (F2).
  *
  * READINGS.
  * - THE MODEL (this file; test-only, src untouched): a pre-sampling basis (a revision, agents with a capacity and grants,
@@ -35,20 +50,28 @@
  *   capability: every explicit permission of the registered descriptor, or exact invoke:<id> when it requires none
  *   (docs/workbench/06 "Current experimental policy surface"; the invoke-grants case's agent holds exact invoke:<id> for
  *   every fixture capability and its only legal pair is the one whose capability requires no permission, as the registry's
- *   own decisions in S1 give it); an unregistered capability is never legal. capacityKind splits capacities into eight
- *   kinds: unknown (the "unknown" marker), not-a-number (NaN), unbounded, fraction, unsafe (an integer past the safe
- *   range), negative, zero and known; the fixtures hold an agent of every kind, and each fixture agent's capacity is hard
- *   known exactly when its kind is zero or known (A1a). The registry is the real src CapabilityRegistry holding four
- *   fixture capabilities: its catalogSnapshot is the catalog an adapter reads, and its invoke is the oracle rows S and P
- *   hold the reading to.
+ *   own decisions in S1 give it); an unregistered capability is never legal. The empty-support case's a-near (capacity 5,
+ *   so every task's load fits) holds only NEAR_GRANTS, each a near miss of a required grant (fixture:read, fixture:write or
+ *   the open capability's exact invoke:fixture.support-open) by prefix, suffix, case, padding, a trailing wildcard, a
+ *   compatibility (NFKC) spelling or a longer grant containing it, and no required grant itself, so the registry refuses it
+ *   every task and it holds no legal pair (S1, A1b). capacityKind splits capacities into eight kinds: unknown (the
+ *   "unknown" marker), not-a-number (NaN), unbounded, fraction, unsafe (an integer past the safe range), negative, zero and
+ *   known; the fixtures hold an agent of every kind, and each fixture agent's capacity is hard known exactly when its kind
+ *   is zero or known (A1a). The registry is the real src CapabilityRegistry holding four fixture capabilities: its
+ *   catalogSnapshot is the catalog an adapter reads, and its invoke is the oracle rows S and P hold the reading to.
  * - THE REFERENCE adapter: a pre-sampling basis yields the IR {basisRevision, count, pairs} of exactly its legal pairs; any
  *   other source is the typed refusal {ok: false, code: "support-source", source: <its kind>}; a candidate outside the IR's
  *   pairs is the typed refusal {admitted: false, code: "outside-support", agent, task}, and one inside is {admitted: true}.
  * - THE CHECKS (judged by value): K-LEGAL (each case's support equals its hand-authored legal pairs exactly, no pair twice),
  *   K-SOURCE (each post-proposal record is the typed refusal), K-IR (each IR's basisRevision is its basis's revision and
  *   its count its pair count), K-OUTSIDE (every candidate of the agent x task grid, plus a ghost agent and a ghost task, is
- *   admitted exactly when inside the support and refused typed otherwise). MUTANTS: 22 adapters, each refused by exactly
- *   its declared checks, and every check refuses one alone.
+ *   admitted exactly when inside the support and refused typed otherwise). MUTANTS: 29 adapters, each refused by exactly
+ *   its declared checks, and every check refuses one alone. M23-M29 (LOOSE_MATCHING) loosen the reference's exact grant
+ *   matching, one per NEAR_GRANTS kind in NEAR_GRANTS order, each built for its declared kind: its matcher accepts every
+ *   near grant of that kind. A1b pins, derived from NEAR_GRANTS and the registry's catalog, every kind and every near grant
+ *   each matcher accepts, with the required grants each near grant stands in for: M23-M28 accept their declared kind's near
+ *   grants and no other, and M29's containment, built for the longer grants, also accepts the padded ones. Each gains
+ *   a-near a pair through an explicit permission and through the open capability's exact invoke:<id> (A1b).
  * - THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its adapter there,
  *   and every check then judges it beside the reference; an unregistered naming module, a stale registration and a duplicate
  *   are findings.
@@ -78,14 +101,16 @@
  *   outside the suite (IMPL), so a case that names the roster or its read throws a ReferenceError when it runs, or at
  *   module load if it reads the name there. The runner copies a case's returned value (copyOf, a JSON round trip) while
  *   the witnesses are sealed, so a read deferred into that value (a getter or toJSON) throws too. The assertions a case
- *   makes are read as the growth of vitest's assertion count (expect.getState().assertionCalls) across its run and must
- *   number at least OWN_FLOOR (one); after the witness compare the runner records the pin's assertion count, and the
- *   last case holds those counts, in row order, to the roster's. So these each red: a case that reads its roster
- *   witness through the view, by name or deferred into its returned value; a case whose run leaves vitest's count
- *   unmoved (it returns a witness, copied or not, without asserting); and a case that gains or loses an assertion,
- *   writing no count of its own, while the roster's counts stand. The roster case reads the seal (a get and a
- *   descriptor read inside a case, a get outside any case, a read deferred into a toJSON) and the floor on probes. What
- *   the guard does not bind is under NOT CLAIMED.
+ *   makes are read as the growth of vitest's assertion count (expect.getState().assertionCalls) across its run (one per
+ *   expect() call, as MEASURED: a matcher adds nothing and chai's assert counts nothing) and must number at least OWN_FLOOR
+ *   (one); after the witness compare the runner records the pin's assertion count, and the last case holds those counts, in
+ *   row order, to the roster's. So these each red: a case that reads its roster witness through the view, by name or
+ *   deferred into its returned value; a case whose run leaves vitest's count unmoved (it returns a witness, copied or not,
+ *   without asserting); and a case that gains or loses an expect() call, writing no count of its own, while the roster's
+ *   counts stand. A4b's witness carries unread, so beside a listed src path that is not a regular file A4b's witness
+ *   compare reds even with the matcher of its unread assertion dropped. The roster case reads the seal (a get and a
+ *   descriptor read inside a case, a get outside any case, a read deferred into a toJSON) and the floor on probes. What the
+ *   guard does not bind is under NOT CLAIMED.
  *
  * ROWS. A1-A4, the acceptance's four clauses; A5, the statement's last clause; S, the filing's authority slice (the registry
  * authorizes: the reference's permission bit is the registry's dispatch decision for every agent and task, and the
@@ -110,31 +135,39 @@
  * sentence's first clause (the support is the host adapter's duty, never GP's and never MW reconcile's: A2 judges the
  * reconcile half, and the GP half has no Pi subject before the gate); that a producer line reads the same past the pin; the
  * producer block's line texts beyond the two quotes the source citations carry (the seats read them equal at the pin; the
- * census never re-reads the producer); that R-COMPOSED's eight members exhaust the ways a text reading misses a word. Nor
- * does it claim that these removals red when made in every literal of this file and the roster together (the self-anchored
- * CT6 / 6ze.39 class): row Q (its label, its pins Q1-Q4, its residual families and their members), which no source outside
- * this file names; a pin merge (a pin's case deleted and its quote re-homed into a neighbouring pin of its row), since the
- * row still tiles its label, so the deleted case's checks (such as A4b's src floor or S2's effect-class rotation) are held
- * by no anchor outside this file; the :28 docs line's own entry and reading (not a citation; the section equality of :15,
- * which shares its section, still holds its text); a docs line's text cut to another substring that stands once in the
- * pinned page (the text only finds the line); a case, a record, a mutant, a residual member, a capacity kind or a
- * vocabulary control; and a case's assertions changed together with the roster's count. Nor does it claim the echo guard
- * against a case that returns its pin's roster witness obtained by a route that does not read the suite's view - the
- * roster file read again (fs, an import, or sealedRoster called on a fresh parse) or the witness pasted as a literal -
- * while it makes assertions of its own (padded) or writes vitest's assertion count itself (expect.setState, or any route
- * to vitest's matcher state); such a case stands in for its pin's case, so the pin's subject is read by nothing (beside a
- * live plant the unmodified census reds, such as a src module naming the vocabulary or a docs/workbench/06 line wrapped
- * in an HTML comment, it stays green). Nor against a case that patches a global, a builtin or a vitest API the census or
- * the runner calls (Proxy, Reflect, JSON, Array.prototype, expect's matchers or state) to obtain a witness or to pass its
- * compare. Nor that a change to the guard's own code reds: the roster or its read declared where a case can name them
- * (no probe reads their scope), or a trap, the copy or the floor hollowed together with the probe that reads it.
+ * census never re-reads the producer); that R-COMPOSED's eight members exhaust the ways a text reading misses a word; that
+ * a grant matching looser than exact equality is seen when no NEAR_GRANTS entry exercises it (NEAR_GRANTS are fixtures, not
+ * an enumeration of loose matchings); that a grant-matching mutant's matcher traded for another that accepts the same near
+ * grants for the same required grants is seen (A1b pins what a matcher accepts over NEAR_GRANTS, never the matcher itself).
+ * Nor does it claim that these removals red when made in every literal of this file and
+ * the roster together (the self-anchored CT6 / 6ze.39 class): row Q (its label, its pins Q1-Q4, its residual families and
+ * their members), which no source outside this file names; a pin merge (a pin's case deleted and its quote re-homed into a
+ * neighbouring pin of its row), since the row still tiles its label, so the deleted case's checks (such as A4b's src floor
+ * or S2's effect-class rotation) are held by no anchor outside this file; the :28 docs line's own entry and reading (not a
+ * citation; the section equality of :15, which shares its section, still holds its text); a docs line's text cut to another
+ * substring that stands once in the pinned page (the text only finds the line); a case, a record, a mutant, a near grant, a
+ * residual member, a capacity kind or a vocabulary control; and a case's assertions changed together with the roster's
+ * count. Nor that vitest's count sees a change that keeps it: a matcher dropped from its expect() call, an expect() call
+ * traded for another, or a chai assert gained or lost; the witness compare still judges what such a change stops judging
+ * wherever the case's witness carries it (A4b's carries unread). Nor does it claim the echo guard against a case that
+ * returns its pin's roster witness obtained by a route that does not read the suite's view - the roster file read again
+ * (fs, an import, or sealedRoster called on a fresh parse) or the witness pasted as a literal - while it makes assertions
+ * of its own (padded) or writes vitest's assertion count itself (expect.setState, or any route to vitest's matcher state);
+ * such a case stands in for its pin's case, so the pin's subject is read by nothing (beside a live plant the unmodified
+ * census reds, such as a src module naming the vocabulary or a docs/workbench/06 line wrapped in an HTML comment, it stays
+ * green). Nor against a case that patches a global, a builtin or a vitest API the census or the runner calls (Proxy,
+ * Reflect, JSON, Array.prototype, expect's matchers or state) to obtain a witness or to pass its compare. Nor that a change
+ * to the guard's own code reds: the roster or its read declared where a case can name them (no probe reads their scope); a
+ * trap, the copy or the floor hollowed together with the probe that reads it; or the runner's own use of the copy or the
+ * floor changed (such as the copy taken inside the read window or the floor compared at zero): the roster case's probes
+ * read the traps, copyOf and OWN_FLOOR with runCase's count, never the runner's call sites.
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, one quote and one case per
  * pin in row order, and as literals the shape of the capabilities, the tasks, the cases, the records, the mutants, the
- * residual families and members, the vocabulary, the shared words, the docs lines, the capacity kinds and the
- * registrations. The out-of-file roster test/fixtures/mw-gp-support-roster.json holds the rows (id, label, pins), the
- * quotes, the residual members, the mutants with their declared checks, every pin's witness and assertion count, and every
- * registered test title; each is compared by equality and in order (keys included). The cases and the records reach the
- * roster through the pins' witnesses.
+ * near grants and the grant-matching mutants' kinds, the residual families and members, the vocabulary, the shared words,
+ * the docs lines, the capacity kinds and the registrations. The out-of-file roster test/fixtures/mw-gp-support-roster.json
+ * holds the rows (id, label, pins), the quotes, the residual members, the mutants with their declared checks, every pin's
+ * witness and assertion count, and every registered test title; each is compared by equality and in order (keys included).
+ * The cases and the records reach the roster through the pins' witnesses.
  * OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker export (.beads/issues.jsonl). The title
  * opens with the requirement id and the gate; each acceptance clause is exactly one of rows A1-A4's labels, A5's label ends
  * the statement, rows S and P are the authority sentence's slices, and the pin quotes of each of rows A1-A5, S and P tile
@@ -341,6 +374,31 @@ interface Case {
   readonly legal: readonly string[];
 }
 const basisOf = (id: string, agents: readonly Agent[], tasks: readonly Task[] = TASKS): Basis => ({ kind: "pre-sampling", revision: `rev-${id}`, agents, tasks });
+/** FULLWIDTH COLON (U+FF1A): its compatibility (NFKC) form is the colon. */
+const FULLWIDTH_COLON = String.fromCodePoint(0xff1a);
+/**
+ * a-near's grants (the empty-support case): each, under its kind, a near miss of a required grant - fixture:read,
+ * fixture:write or the open capability's exact invoke:fixture.support-open - and never a required grant itself.
+ */
+const NEAR_GRANTS: readonly (readonly [string, string])[] = [
+  ["prefix", "fixture"],
+  ["prefix", "invoke"],
+  ["prefix", "invoke:fixture"],
+  ["suffix", "read"],
+  ["suffix", "fixture.support-open"],
+  ["case", "FIXTURE:READ"],
+  ["case", "INVOKE:FIXTURE.SUPPORT-OPEN"],
+  ["padded", " fixture:read"],
+  ["padded", "fixture:write "],
+  ["padded", " invoke:fixture.support-open"],
+  ["padded", "invoke:fixture.support-open "],
+  ["wildcard", "fixture:*"],
+  ["wildcard", "invoke:*"],
+  ["compatibility", `fixture${FULLWIDTH_COLON}read`],
+  ["compatibility", `invoke${FULLWIDTH_COLON}fixture.support-open`],
+  ["longer", "fixture:reader"],
+  ["longer", "invoke:fixture.support-opener"],
+];
 const CASES: readonly Case[] = [
   {
     id: "five-agents",
@@ -375,6 +433,7 @@ const CASES: readonly Case[] = [
     basis: basisOf("empty-support", [
       { id: "a-ungranted", capacity: 5, grants: [] },
       { id: "a-unmeasured", capacity: "unknown", grants: ["fixture:read", "fixture:write", "invoke:fixture.support-open"] },
+      { id: "a-near", capacity: 5, grants: NEAR_GRANTS.map(([, grant]) => grant) },
     ]),
     legal: [],
   },
@@ -511,6 +570,44 @@ const postAsSupport = (kind: PostProposal["kind"]): Adapter =>
   withEnumerate((source, catalog) =>
     source.kind !== "pre-sampling" && source.kind === kind ? { ok: true, ir: { basisRevision: source.revision, count: source.admitted.length, pairs: source.admitted } } : REFERENCE.enumerate(source, catalog),
   );
+/** The reference's invocation rule with its grant matching loosened: each required grant (every explicit permission, or invoke:<id> when the descriptor requires none) is held when `matches` holds for one of the agent's grants, where the registry asks exact equality. */
+const looseLegal =
+  (matches: (held: string, required: string) => boolean): Legal =>
+  (catalog, agent, task) => {
+    const permissions = catalog.permissions(task.capability);
+    if (!fits(agent, task) || permissions === undefined) return false;
+    const required = permissions.length === 0 ? [`invoke:${task.capability}`] : permissions;
+    return required.every(grant => agent.grants.some(held => matches(held, grant)));
+  };
+interface LooseMatching {
+  readonly id: string;
+  readonly name: string;
+  /** The NEAR_GRANTS kind the loosened matching is built for: it accepts every near grant of that kind (A1b's witness carries every kind it accepts). */
+  readonly kind: string;
+  readonly matches: (held: string, required: string) => boolean;
+}
+/** The grant-matching mutants (M23-M29), one per NEAR_GRANTS kind: each loosens the exact matching for that kind and accepts every near grant of it; M29's containment also accepts the padded grants (A1b). */
+const LOOSE_MATCHING: readonly LooseMatching[] = [
+  { id: "M23", name: "grant-matched-as-prefix", kind: "prefix", matches: (held, required) => required.startsWith(held) },
+  { id: "M24", name: "grant-matched-as-suffix", kind: "suffix", matches: (held, required) => required.endsWith(held) },
+  { id: "M25", name: "grant-matched-case-folded", kind: "case", matches: (held, required) => held.toLowerCase() === required.toLowerCase() },
+  { id: "M26", name: "grant-matched-trimmed", kind: "padded", matches: (held, required) => held.trim() === required },
+  { id: "M27", name: "grant-matched-by-wildcard", kind: "wildcard", matches: (held, required) => (held.endsWith("*") ? required.startsWith(held.slice(0, -1)) : held === required) },
+  { id: "M28", name: "grant-matched-compatibility-folded", kind: "compatibility", matches: (held, required) => held.normalize("NFKC") === required.normalize("NFKC") },
+  { id: "M29", name: "grant-matched-when-contained", kind: "longer", matches: (held, required) => held.includes(required) },
+];
+/** The grants a near grant can stand in for, read from the registry's catalog: each task's registered permissions, or its exact invoke:<id> when the descriptor requires none (an unregistered capability requires none), each once, in task order. */
+const requiredGrants = (catalog: Catalog): string[] => [
+  ...new Set(
+    TASKS.flatMap(task => {
+      const permissions = catalog.permissions(task.capability);
+      if (permissions === undefined) return [];
+      return permissions.length === 0 ? [`invoke:${task.capability}`] : [...permissions];
+    }),
+  ),
+];
+/** The required grants a grant-matching mutant's matcher holds a near grant for. */
+const standsIn = (entry: LooseMatching, grant: string, required: readonly string[]): string[] => required.filter(need => entry.matches(grant, need));
 const MUTANTS: readonly Mutant[] = [
   { id: "M01", name: "capacity-ignored", refusedBy: ["K-LEGAL"], adapter: withLegal((catalog, agent, task) => permits(catalog, task.capability, agent.grants)) },
   {
@@ -625,6 +722,7 @@ const MUTANTS: readonly Mutant[] = [
         fits(agent, task) && ((catalog.permissions(task.capability) !== undefined && agent.grants.includes(`invoke:${task.capability}`)) || permits(catalog, task.capability, agent.grants)),
     ),
   },
+  ...LOOSE_MATCHING.map((entry): Mutant => ({ id: entry.id, name: entry.name, refusedBy: ["K-LEGAL"], adapter: withLegal(looseLegal(entry.matches)) })),
 ];
 const mutantOf = (id: string): Mutant => {
   const found = MUTANTS.find(mutant => mutant.id === id);
@@ -1101,7 +1199,28 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     for (const [name, findings] of Object.entries(judged)) expect(findings, `${name} meets K-LEGAL`).toEqual([]);
     const mutants = mutantReadings("K-LEGAL", catalog);
     for (const [id, findings] of mutants) expect(findings.length, `${id} is refused by K-LEGAL`).toBeGreaterThan(0);
-    return { support, judged, mutants };
+    const empty = caseOf("empty-support");
+    const near = Object.fromEntries(LOOSE_MATCHING.map(entry => [entry.id, (supportKeys(mutantOf(entry.id).adapter, empty, catalog) ?? []).filter(pair => pair.startsWith("a-near/"))]));
+    expect(
+      Object.entries(near)
+        .filter(([, pairs]) => !pairs.includes("a-near/t-open") || !(pairs.includes("a-near/t-read") || pairs.includes("a-near/t-write")))
+        .map(([id]) => id),
+      "each grant-matching mutant gains a-near a pair through an explicit permission and through the open capability's exact invoke:<id>",
+    ).toEqual([]);
+    const required = requiredGrants(catalog);
+    expect(
+      LOOSE_MATCHING.map(entry => entry.kind),
+      "one grant-matching mutant per NEAR_GRANTS kind, in NEAR_GRANTS order",
+    ).toEqual([...new Set(NEAR_GRANTS.map(([kind]) => kind))]);
+    expect(
+      LOOSE_MATCHING.filter(entry => !NEAR_GRANTS.every(([kind, grant]) => kind !== entry.kind || standsIn(entry, grant, required).length > 0)).map(entry => entry.id),
+      "each grant-matching mutant's matcher accepts every near grant of its declared kind",
+    ).toEqual([]);
+    const kinds = Object.fromEntries(LOOSE_MATCHING.map(entry => [entry.id, [...new Set(NEAR_GRANTS.filter(([, grant]) => standsIn(entry, grant, required).length > 0).map(([kind]) => kind))]]));
+    const through = Object.fromEntries(
+      LOOSE_MATCHING.map(entry => [entry.id, NEAR_GRANTS.flatMap(([kind, grant]) => standsIn(entry, grant, required).map(need => `${kind}:${JSON.stringify(grant)}->${need}`))]),
+    );
+    return { support, judged, mutants, near, required, kinds, through };
   },
   A2a: () => {
     const records = RECORDS.map(record => ({ id: record.id, kind: record.source.kind, admitted: record.source.admitted.map(key) }));
@@ -1205,7 +1324,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       findings: ["src/nested/planted.ts: names GraphDataIR, no SITES registration"],
       unread: ["src/link.ts"],
     });
-    return { floor, anchor, words, controls, listing };
+    return { unread, floor, anchor, words, controls, listing };
   },
   A5a: () => {
     const catalog = baseCatalog();
@@ -1414,7 +1533,7 @@ describe(SUITE, () => {
       "t-dual:fixture.support-dual:3",
       "t-missing:fixture.support-missing:1",
     ]);
-    expect(CASES.map(entry => `${entry.id}:${entry.basis.agents.length}:${entry.legal.length}`)).toEqual(["five-agents:5:5", "one-agent:1:3", "bounds:6:1", "empty-support:2:0", "invoke-grants:1:1"]);
+    expect(CASES.map(entry => `${entry.id}:${entry.basis.agents.length}:${entry.legal.length}`)).toEqual(["five-agents:5:5", "one-agent:1:3", "bounds:6:1", "empty-support:3:0", "invoke-grants:1:1"]);
     expect(RECORDS.map(record => `${record.id}:${record.source.kind}:${record.source.admitted.length}`)).toEqual(["training-export-admission:mw.training-export.v1:2", "reconcile-verdict:reconcile-verdict:1"]);
     expect(MUTANTS.map(mutantLine)).toEqual([
       "M01:capacity-ignored:K-LEGAL",
@@ -1439,7 +1558,34 @@ describe(SUITE, () => {
       "M20:refuse-every-source:K-LEGAL+K-IR+K-OUTSIDE",
       "M21:unsafe-integer-capacity:K-LEGAL",
       "M22:invoke-grant-overrides-permissions:K-LEGAL",
+      "M23:grant-matched-as-prefix:K-LEGAL",
+      "M24:grant-matched-as-suffix:K-LEGAL",
+      "M25:grant-matched-case-folded:K-LEGAL",
+      "M26:grant-matched-trimmed:K-LEGAL",
+      "M27:grant-matched-by-wildcard:K-LEGAL",
+      "M28:grant-matched-compatibility-folded:K-LEGAL",
+      "M29:grant-matched-when-contained:K-LEGAL",
     ]);
+    expect(NEAR_GRANTS.map(([kind, grant]) => `${kind}:${JSON.stringify(grant)}`)).toEqual([
+      'prefix:"fixture"',
+      'prefix:"invoke"',
+      'prefix:"invoke:fixture"',
+      'suffix:"read"',
+      'suffix:"fixture.support-open"',
+      'case:"FIXTURE:READ"',
+      'case:"INVOKE:FIXTURE.SUPPORT-OPEN"',
+      'padded:" fixture:read"',
+      'padded:"fixture:write "',
+      'padded:" invoke:fixture.support-open"',
+      'padded:"invoke:fixture.support-open "',
+      'wildcard:"fixture:*"',
+      'wildcard:"invoke:*"',
+      `compatibility:"fixture${FULLWIDTH_COLON}read"`,
+      `compatibility:"invoke${FULLWIDTH_COLON}fixture.support-open"`,
+      'longer:"fixture:reader"',
+      'longer:"invoke:fixture.support-opener"',
+    ]);
+    expect(LOOSE_MATCHING.map(entry => `${entry.id}:${entry.kind}`)).toEqual(["M23:prefix", "M24:suffix", "M25:case", "M26:padded", "M27:wildcard", "M28:compatibility", "M29:longer"]);
     expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:8", "Q2:2", "Q3:1", "Q4:1"]);
     expect(RESIDUALS.map(family => `${family.id}:${family.name}`)).toEqual(["Q1:R-COMPOSED", "Q2:R-SHARED-WORD", "Q3:R-UNNAMED-ADAPTER"]);
     expect(VOCABULARY.map(word => `${word.id}:${word.spelling}`)).toEqual(["V1:sampler", "V2:training-export", "V3:GraphDataIR", "V4:PRE-SAMPLING"]);

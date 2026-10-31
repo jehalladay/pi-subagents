@@ -1,0 +1,1974 @@
+{
+ "bead": "wb-pyel.3",
+ "rows": [
+  {
+   "id": "T",
+   "label": "If Pi-subagents adopts EDC context assembly",
+   "pins": [
+    "T1",
+    "T2"
+   ]
+  },
+  {
+   "id": "S1",
+   "label": "Pi as host shall carry demand ownership",
+   "pins": [
+    "S1a",
+    "S1b"
+   ]
+  },
+  {
+   "id": "S2",
+   "label": "treat assembly as pure context assembly only",
+   "pins": [
+    "S2a",
+    "S2b"
+   ]
+  },
+  {
+   "id": "S3",
+   "label": "never expecting or wiring the assembler to query providers, mint coverage or admit work",
+   "pins": [
+    "S3a",
+    "S3b",
+    "S3c"
+   ]
+  },
+  {
+   "id": "S4",
+   "label": "honoring the split: QuerySDK evaluates evidence, Lenses supplies source, Fiber publishes, Agents owns verification/inference, host owns demand",
+   "pins": [
+    "S4a",
+    "S4b",
+    "S4c",
+    "S4d",
+    "S4e",
+    "S4f"
+   ]
+  },
+  {
+   "id": "N",
+   "label": "a Pi EDC context-assembly consumer (none exists)",
+   "pins": [
+    "N1",
+    "N2"
+   ]
+  },
+  {
+   "id": "A1",
+   "label": "at adoption, docs/03 gains the EDC authority rows bound by the docs-census pattern",
+   "pins": [
+    "A1a",
+    "A1b",
+    "A1c"
+   ]
+  },
+  {
+   "id": "A2",
+   "label": "a falsifier shows the assembler seam performs no provider query, coverage mint or work admission",
+   "pins": [
+    "A2a",
+    "A2b"
+   ]
+  },
+  {
+   "id": "D1",
+   "label": "HyperUnix owns query completeness/coverage/bounds",
+   "pins": [
+    "D1"
+   ]
+  },
+  {
+   "id": "D2",
+   "label": "ReactiveFiberCLI owns context rendering/necessity/provenance",
+   "pins": [
+    "D2"
+   ]
+  },
+  {
+   "id": "D3",
+   "label": "a derived lens over native state, never a competing execution authority",
+   "pins": [
+    "D3"
+   ]
+  },
+  {
+   "id": "D4",
+   "label": "carries no EDC assembler/demand row",
+   "pins": [
+    "D4"
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the named residual families, each member a pinned quiet row",
+   "pins": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8"
+   ]
+  }
+ ],
+ "quotes": {
+  "T1": "If Pi-subagents adopts",
+  "T2": "EDC context assembly",
+  "S1a": "Pi as host shall carry",
+  "S1b": "demand ownership",
+  "S2a": "treat assembly as pure",
+  "S2b": "context assembly only",
+  "S3a": "never expecting",
+  "S3b": "or wiring the assembler",
+  "S3c": "to query providers, mint coverage or admit work",
+  "S4a": "honoring the split",
+  "S4b": "QuerySDK evaluates evidence",
+  "S4c": "Lenses supplies source",
+  "S4d": "Fiber publishes",
+  "S4e": "Agents owns verification/inference",
+  "S4f": "host owns demand",
+  "N1": "a Pi EDC context-assembly consumer",
+  "N2": "none exists",
+  "A1a": "at adoption",
+  "A1b": "docs/03 gains the EDC authority rows",
+  "A1c": "bound by the docs-census pattern",
+  "A2a": "a falsifier shows the assembler seam performs",
+  "A2b": "no provider query, coverage mint or work admission",
+  "D1": "HyperUnix owns query completeness/coverage/bounds",
+  "D2": "ReactiveFiberCLI owns context rendering/necessity/provenance",
+  "D3": "a derived lens over native state, never a competing execution authority",
+  "D4": "carries no EDC assembler/demand row",
+  "Q1": "R-SHARED-WORD",
+  "Q2": "R-COMPOSED",
+  "Q3": "R-COMMENT",
+  "Q4": "R-UNNAMED-SEAM",
+  "Q5": "R-UNMODELED-EFFECT",
+  "Q6": "R-OUTSIDE-SRC",
+  "Q7": "R-COORDINATED",
+  "Q8": "R-OUTSIDE-VALUE"
+ },
+ "cases": [
+  "C1=blocks=s1,s2;unmet=-",
+  "C2=blocks=s1;unmet=s3",
+  "C3=blocks=-;unmet=s4",
+  "C4=blocks=s5;unmet=-",
+  "C5=blocks=s1;unmet=-",
+  "C6=blocks=s2,s1;unmet=-",
+  "C7=blocks=s7;unmet=-",
+  "C8=blocks=-;unmet=-",
+  "C9=blocks=-;unmet=s8",
+  "C10=blocks=s1;unmet=s9,s10",
+  "C11=blocks=s1;unmet=s10,s9"
+ ],
+ "mutants": [
+  "M01:wire-provider-query:K-WIRING",
+  "M02:wire-coverage-mint:K-WIRING",
+  "M03:wire-work-admission:K-WIRING",
+  "M04:wire-publication:K-WIRING",
+  "M05:wire-verification:K-WIRING",
+  "M06:query-missing-evidence:K-EFFECT+K-SPLIT",
+  "M07:query-through-wired-port:K-WIRING+K-EFFECT+K-SPLIT",
+  "M08:mint-coverage:K-EFFECT",
+  "M09:admit-unmet-work:K-EFFECT",
+  "M10:publish-document:K-EFFECT",
+  "M11:verify-unknown:K-EFFECT+K-SPLIT",
+  "M12:widen-demand:K-DEMAND",
+  "M13:drop-unmet:K-DEMAND",
+  "M14:demand-from-evidence:K-DEMAND",
+  "M15:demand-owner-assembler:K-DEMAND",
+  "M16:evidence-order:K-DEMAND",
+  "M17:alternate-order:K-PURE",
+  "M18:mutate-input:K-PURE",
+  "M19:re-evaluate-unknown:K-SPLIT",
+  "M20:fabricate-source:K-SPLIT",
+  "M21:drop-provenance:K-SPLIT",
+  "M22:first-evidence-only:K-SPLIT",
+  "M23:every-subject-unmet:K-SPLIT",
+  "M24:empty-document:K-DEMAND+K-SPLIT",
+  "M25:reverse-unmet:K-DEMAND",
+  "M26:hand-extra-field:K-WIRING",
+  "M27:hand-in-demand:K-WIRING",
+  "M28:hand-unlisted-port:K-WIRING",
+  "M29:hand-accessor:K-WIRING",
+  "M30:hand-array-property:K-WIRING",
+  "M31:hand-inherited:K-WIRING",
+  "M32:hand-proxy:K-WIRING",
+  "M33:document-coverage:K-SPLIT",
+  "M34:block-coverage:K-SPLIT",
+  "M35:blocks-listed-coverage:K-SPLIT",
+  "M36:unmet-listed-admission:K-SPLIT",
+  "M37:document-inherited-coverage:K-SPLIT",
+  "M38:block-inherited-coverage:K-SPLIT",
+  "M39:document-proxy-coverage:K-SPLIT",
+  "M40:evidence-hidden-coverage:K-SPLIT",
+  "M41:evidence-listed-coverage:K-SPLIT",
+  "M42:block-hidden-coverage:K-SPLIT",
+  "M43:evidence-array-hidden-coverage:K-SPLIT",
+  "M44:document-symbol-coverage:K-SPLIT",
+  "M45:document-accessor-coverage:K-SPLIT",
+  "M46:blocks-prototype-coverage:K-SPLIT",
+  "M47:text-object-coverage:K-SPLIT",
+  "M48:repeat-hidden-coverage:K-SPLIT",
+  "M49:hand-withdrawn:K-WIRING",
+  "M50:hand-on-repeat:K-WIRING",
+  "M51:mint-on-repeat:K-EFFECT",
+  "M52:owner-on-repeat:K-DEMAND",
+  "M53:unmet-numeric-order:K-DEMAND",
+  "M54:unmet-sourced-first:K-DEMAND",
+  "M55:owner-restored:K-DEMAND+K-PURE",
+  "M56:coverage-withdrawn:K-SPLIT",
+  "M57:hand-bare-accessor:K-WIRING",
+  "M58:unmet-holey:K-DEMAND+K-SPLIT",
+  "M59:text-drift:K-SPLIT",
+  "M60:order-drift:K-DEMAND",
+  "M61:unmet-index-like:K-SPLIT",
+  "M62:blocks-index-like:K-SPLIT",
+  "M63:evidence-index-like:K-SPLIT",
+  "M64:unmet-holey-index-like:K-DEMAND+K-SPLIT",
+  "M65:blocks-holey-index-like:K-DEMAND+K-SPLIT",
+  "M66:evidence-holey-index-like:K-SPLIT",
+  "M67:blocks-holey:K-DEMAND+K-SPLIT",
+  "M68:block-key-order:K-SPLIT",
+  "M69:document-key-order:K-SPLIT",
+  "M70:evidence-key-order:K-SPLIT",
+  "M71:erase-record:K-EFFECT",
+  "M72:blocks-throwing-accessor:K-DEMAND+K-PURE+K-SPLIT",
+  "M73:input-unserializable:K-PURE",
+  "M74:hand-revoked-proxy:K-WIRING",
+  "M75:demand-throwing-owner:K-WIRING+K-DEMAND+K-PURE",
+  "M76:unmet-own-iterator:K-SPLIT",
+  "M77:blocks-own-filter:K-SPLIT"
+ ],
+ "residuals": {
+  "Q1": [
+   "assemble-reply",
+   "assembly-program",
+   "on-demand",
+   "coverage",
+   "admission",
+   "minted",
+   "provider-query"
+  ],
+  "Q2": [
+   "concatenation",
+   "joined-at-run-time",
+   "template-substitution",
+   "operator-split",
+   "homoglyph",
+   "digit-glued",
+   "acronym-run",
+   "small-capitals",
+   "glued-lower",
+   "glued-context",
+   "glued-upper",
+   "docs-homoglyph-row",
+   "docs-soft-hyphen-row",
+   "docs-zero-width-row"
+  ],
+  "Q3": [
+   "line-comment",
+   "block-comment",
+   "doc-comment"
+  ],
+  "Q4": [
+   "unnamed-seam",
+   "docs-other-words-row"
+  ],
+  "Q5": [
+   "outside-provider-call",
+   "deferred-query"
+  ],
+  "Q6": [
+   "test/workbench-edc-assembly-split-census.test.ts",
+   "test/fixtures/edc-assembly-split-roster.json",
+   "docs/workbench/03-architecture-and-ownership.md"
+  ],
+  "Q7": [
+   "pin",
+   "case",
+   "mutant",
+   "residual-member",
+   "control"
+  ],
+  "Q8": [
+   "attribute-flags",
+   "frozen-document",
+   "side-table-coverage",
+   "side-table-handle",
+   "private-element-coverage",
+   "private-element-handle",
+   "internal-slot-coverage",
+   "internal-slot-handle",
+   "deferred-coverage"
+  ]
+ },
+ "witnesses": {
+  "T1": {
+   "floor": true,
+   "unread": [],
+   "anchor": true,
+   "naming": [],
+   "gate": "CLOSED",
+   "planted": "OPEN",
+   "registered": "OPEN"
+  },
+  "T2": {
+   "camel identifier": [
+    "EDC",
+    "assembler"
+   ],
+   "acronym call": [
+    "EDC"
+   ],
+   "plural acronym": [
+    "EDC"
+   ],
+   "kebab string": [
+    "evidence directed"
+   ],
+   "upper snake": [
+    "evidence directed"
+   ],
+   "template part": [
+    "assembler"
+   ],
+   "full-width letters": [
+    "EDC"
+   ],
+   "format character inside": [
+    "EDC"
+   ],
+   "camel demand owner": [
+    "demand owner"
+   ],
+   "demand ownership": [
+    "demand owner"
+   ],
+   "regular expression": [
+    "assembler"
+   ],
+   "private name": [
+    "assembler"
+   ],
+   "module path": [
+    "EDC"
+   ],
+   "import specifier": [
+    "evidence directed"
+   ],
+   "near miss embedded": [],
+   "near miss reassembler": [],
+   "near miss assembly": [],
+   "near miss on demand": []
+  },
+  "S1a": {
+   "C1": "host:s1,s2",
+   "C2": "host:s1,s3",
+   "C3": "host:s4",
+   "C4": "host:s5",
+   "C5": "host:s1",
+   "C6": "host:s2,s1",
+   "C7": "host:s7",
+   "C8": "host:",
+   "C9": "host:s8",
+   "C10": "host:s9,s1,s10",
+   "C11": "host:s10,s1,s9"
+  },
+  "S1b": {
+   "reference": [],
+   "M12": [
+    "C5=demand:placed+order",
+    "C8=demand:placed+order"
+   ],
+   "M13": [
+    "C2=demand:placed",
+    "C3=demand:placed",
+    "C9=demand:placed",
+    "C10=demand:placed",
+    "C11=demand:placed"
+   ],
+   "M16": [
+    "C6=demand:order"
+   ],
+   "M25": [
+    "C10=demand:order",
+    "C11=demand:order"
+   ],
+   "M53": [
+    "C11=demand:order"
+   ],
+   "M54": [
+    "C11=demand:order"
+   ]
+  },
+  "S2a": {
+   "reference": [],
+   "M17": [
+    "C1=impure:repeat",
+    "C6=impure:repeat"
+   ],
+   "M18": [
+    "C1=impure:input",
+    "C2=impure:input",
+    "C5=impure:input",
+    "C6=impure:input",
+    "C10=impure:input",
+    "C11=impure:input"
+   ]
+  },
+  "S2b": {
+   "documents": {
+    "C1": "blocks=s1,s2;unmet=-",
+    "C2": "blocks=s1;unmet=s3",
+    "C3": "blocks=-;unmet=s4",
+    "C4": "blocks=s5;unmet=-",
+    "C5": "blocks=s1;unmet=-",
+    "C6": "blocks=s2,s1;unmet=-",
+    "C7": "blocks=s7;unmet=-",
+    "C8": "blocks=-;unmet=-",
+    "C9": "blocks=-;unmet=s8",
+    "C10": "blocks=s1;unmet=s9,s10",
+    "C11": "blocks=s1;unmet=s10,s9"
+   },
+   "split": []
+  },
+  "S3a": {
+   "K-EFFECT": {
+    "C1": "ok",
+    "C2": "ok",
+    "C3": "ok",
+    "C4": "ok",
+    "C5": "ok",
+    "C6": "ok",
+    "C7": "ok",
+    "C8": "ok",
+    "C9": "ok",
+    "C10": "ok",
+    "C11": "ok"
+   },
+   "effects": {
+    "C1": "0",
+    "C2": "0",
+    "C3": "0",
+    "C4": "0",
+    "C5": "0",
+    "C6": "0",
+    "C7": "0",
+    "C8": "0",
+    "C9": "0",
+    "C10": "0",
+    "C11": "0"
+   }
+  },
+  "S3b": {
+   "K-WIRING": {
+    "C1": "ok",
+    "C2": "ok",
+    "C3": "ok",
+    "C4": "ok",
+    "C5": "ok",
+    "C6": "ok",
+    "C7": "ok",
+    "C8": "ok",
+    "C9": "ok",
+    "C10": "ok",
+    "C11": "ok"
+   },
+   "handles": {
+    "C1": "0",
+    "C2": "0",
+    "C3": "0",
+    "C4": "0",
+    "C5": "0",
+    "C6": "0",
+    "C7": "0",
+    "C8": "0",
+    "C9": "0",
+    "C10": "0",
+    "C11": "0"
+   },
+   "smuggled": {
+    "M26": [
+     "K-WIRING"
+    ],
+    "M27": [
+     "K-WIRING"
+    ],
+    "M28": [
+     "K-WIRING"
+    ],
+    "M29": [
+     "K-WIRING"
+    ],
+    "M30": [
+     "K-WIRING"
+    ],
+    "M31": [
+     "K-WIRING"
+    ],
+    "M32": [
+     "K-WIRING"
+    ]
+   },
+   "readings": {
+    "M26": "wired:function:wiring.query",
+    "M27": "wired:function:wiring.demand.query",
+    "M28": "wired:port:provider-lookup+function:wiring.ports.provider-lookup",
+    "M29": "wired:accessor:wiring.query",
+    "M30": "wired:function:wiring.evidence.query",
+    "M31": "wired:prototype:wiring",
+    "M32": "wired:proxy:wiring"
+   },
+   "everyRun": {
+    "M48": [
+     "K-SPLIT"
+    ],
+    "M50": [
+     "K-WIRING"
+    ],
+    "M51": [
+     "K-EFFECT"
+    ],
+    "M52": [
+     "K-DEMAND"
+    ],
+    "M59": [
+     "K-SPLIT"
+    ],
+    "M60": [
+     "K-DEMAND"
+    ]
+   },
+   "moment": {
+    "M49": [
+     "K-WIRING"
+    ],
+    "M55": [
+     "K-DEMAND",
+     "K-PURE"
+    ],
+    "M56": [
+     "K-SPLIT"
+    ]
+   },
+   "withdrawn": "wired:port:provider-query+function:wiring.ports.provider-query",
+   "bareAccessor": "wired:accessor:wiring.query",
+   "carriers": {
+    "table": {
+     "wiring": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "demand": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "subjects": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "evidence": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "item": {
+      "listed": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "index-like": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "collection": [
+       "K-WIRING",
+       "K-SPLIT"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "sources": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "source": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     },
+     "ports": {
+      "listed": [
+       "K-WIRING"
+      ],
+      "hidden": [
+       "K-WIRING"
+      ],
+      "symbol": [
+       "K-WIRING"
+      ],
+      "accessor": [
+       "K-WIRING"
+      ],
+      "inherited": [
+       "K-WIRING"
+      ],
+      "proxy": [
+       "K-WIRING"
+      ],
+      "index-like": [
+       "K-WIRING"
+      ],
+      "collection": [
+       "K-WIRING"
+      ],
+      "withdrawn": [
+       "K-WIRING"
+      ]
+     }
+    },
+    "bare": {
+     "wiring": {
+      "bare": [
+       "K-WIRING"
+      ]
+     },
+     "demand": {
+      "bare": [
+       "K-WIRING"
+      ]
+     },
+     "item": {
+      "bare": [
+       "K-WIRING",
+       "K-SPLIT"
+      ]
+     },
+     "source": {
+      "bare": [
+       "K-WIRING"
+      ]
+     },
+     "ports": {
+      "bare": [
+       "K-WIRING"
+      ]
+     }
+    }
+   }
+  },
+  "S3c": {
+   "provider-query": {
+    "M01": [
+     "K-WIRING"
+    ],
+    "M06": [
+     "K-EFFECT",
+     "K-SPLIT"
+    ],
+    "M07": [
+     "K-WIRING",
+     "K-EFFECT",
+     "K-SPLIT"
+    ],
+    "M71": [
+     "K-EFFECT"
+    ]
+   },
+   "coverage-mint": {
+    "M02": [
+     "K-WIRING"
+    ],
+    "M08": [
+     "K-EFFECT"
+    ],
+    "M51": [
+     "K-EFFECT"
+    ],
+    "M33": [
+     "K-SPLIT"
+    ],
+    "M34": [
+     "K-SPLIT"
+    ],
+    "M35": [
+     "K-SPLIT"
+    ],
+    "M37": [
+     "K-SPLIT"
+    ],
+    "M38": [
+     "K-SPLIT"
+    ],
+    "M39": [
+     "K-SPLIT"
+    ],
+    "M40": [
+     "K-SPLIT"
+    ],
+    "M41": [
+     "K-SPLIT"
+    ],
+    "M42": [
+     "K-SPLIT"
+    ],
+    "M43": [
+     "K-SPLIT"
+    ],
+    "M44": [
+     "K-SPLIT"
+    ],
+    "M45": [
+     "K-SPLIT"
+    ],
+    "M46": [
+     "K-SPLIT"
+    ],
+    "M47": [
+     "K-SPLIT"
+    ],
+    "M48": [
+     "K-SPLIT"
+    ],
+    "M56": [
+     "K-SPLIT"
+    ],
+    "M62": [
+     "K-SPLIT"
+    ],
+    "M63": [
+     "K-SPLIT"
+    ],
+    "M65": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ],
+    "M66": [
+     "K-SPLIT"
+    ]
+   },
+   "work-admission": {
+    "M03": [
+     "K-WIRING"
+    ],
+    "M09": [
+     "K-EFFECT"
+    ],
+    "M36": [
+     "K-SPLIT"
+    ],
+    "M61": [
+     "K-SPLIT"
+    ],
+    "M64": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ]
+   },
+   "readings": {
+    "M33": "split:key:document.coverage",
+    "M34": "split:key:document.blocks.0.coverage",
+    "M35": "split:key:document.blocks.coverage",
+    "M36": "split:key:document.unmet.admitted",
+    "M37": "split:prototype:document",
+    "M38": "split:prototype:document.blocks.0",
+    "M39": "split:proxy:document",
+    "M40": "split:key:document.blocks.0.evidence.0.coverage",
+    "M41": "split:key:document.blocks.0.evidence.0.coverage+evidence:s1",
+    "M42": "split:key:document.blocks.0.coverage",
+    "M43": "split:key:document.blocks.0.evidence.coverage",
+    "M44": "split:key:document.Symbol(coverage)",
+    "M45": "split:accessor:document.coverage",
+    "M46": "split:prototype:document.blocks",
+    "M47": "split:type:document.blocks.0.text+source:s1",
+    "M48": "split:key:document.coverage",
+    "M56": "split:key:document.coverage",
+    "M61": "split:key:document.unmet.4294967295",
+    "M62": "split:key:document.blocks.4294967295",
+    "M63": "split:key:document.blocks.0.evidence.4294967295+evidence:s1",
+    "M64": "split:key:document.unmet.4294967295+holes:document.unmet",
+    "M65": "split:key:document.blocks.4294967295+holes:document.blocks+placement:s1",
+    "M66": "split:key:document.blocks.0.evidence.4294967295+holes:document.blocks.0.evidence+evidence:s1",
+    "M58": "split:holes:document.unmet",
+    "M67": "split:holes:document.blocks+placement:s1",
+    "M68": "split:order:document.blocks.0",
+    "M69": "split:order:document",
+    "M70": "split:order:document.blocks.0.evidence.0",
+    "M72": "split:accessor:document.blocks+unreadable:content",
+    "M73": "ok",
+    "M74": "ok",
+    "M75": "ok",
+    "M76": "split:key:document.unmet.Symbol(Symbol.iterator)",
+    "M77": "split:key:document.blocks.filter"
+   },
+   "steered": {
+    "M76": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "ok",
+     "K-PURE": "ok",
+     "K-SPLIT": "split:key:document.unmet.Symbol(Symbol.iterator)"
+    },
+    "M77": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "ok",
+     "K-PURE": "ok",
+     "K-SPLIT": "split:key:document.blocks.filter"
+    }
+   },
+   "holes": {
+    "M58": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ],
+    "M64": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ],
+    "M65": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ],
+    "M66": [
+     "K-SPLIT"
+    ],
+    "M67": [
+     "K-DEMAND",
+     "K-SPLIT"
+    ]
+   },
+   "ordered": {
+    "M68": [
+     "K-SPLIT"
+    ],
+    "M69": [
+     "K-SPLIT"
+    ],
+    "M70": [
+     "K-SPLIT"
+    ]
+   },
+   "failClosed": {
+    "M65": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "demand:placed",
+     "K-PURE": "ok",
+     "K-SPLIT": "split:key:document.blocks.4294967295+holes:document.blocks+placement:s1"
+    },
+    "M67": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "demand:placed",
+     "K-PURE": "ok",
+     "K-SPLIT": "split:holes:document.blocks+placement:s1"
+    },
+    "M72": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "demand:unreadable:placement",
+     "K-PURE": "impure:unreadable:repeat",
+     "K-SPLIT": "split:accessor:document.blocks+unreadable:content"
+    },
+    "M73": {
+     "K-WIRING": "ok",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "ok",
+     "K-PURE": "impure:unreadable:input",
+     "K-SPLIT": "ok"
+    },
+    "M74": {
+     "K-WIRING": "wired:unreadable:wiring",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "ok",
+     "K-PURE": "ok",
+     "K-SPLIT": "ok"
+    },
+    "M75": {
+     "K-WIRING": "wired:accessor:wiring.demand.owner",
+     "K-EFFECT": "ok",
+     "K-DEMAND": "demand:unreadable:demand",
+     "K-PURE": "impure:unreadable:input",
+     "K-SPLIT": "ok"
+    }
+   },
+   "erased": "effect:provider-query:s3",
+   "indexBoundary": {
+    "4294967294": [
+     "holes:document.unmet"
+    ],
+    "4294967295": [
+     "key:document.unmet.4294967295"
+    ],
+    "99999999999999999999": [
+     "key:document.unmet.99999999999999999999"
+    ],
+    "01": [
+     "key:document.unmet.01"
+    ]
+   },
+   "carried": {
+    "table": {
+     "document": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ],
+      "index-like": [
+       "K-SPLIT"
+      ]
+     },
+     "blocks": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ],
+      "index-like": [
+       "K-SPLIT"
+      ]
+     },
+     "unmet": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ],
+      "index-like": [
+       "K-SPLIT"
+      ]
+     },
+     "block": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ],
+      "index-like": [
+       "K-SPLIT"
+      ]
+     },
+     "evidence": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ],
+      "index-like": [
+       "K-SPLIT"
+      ]
+     },
+     "item": {
+      "listed": [
+       "K-SPLIT"
+      ],
+      "hidden": [
+       "K-SPLIT"
+      ],
+      "symbol": [
+       "K-SPLIT"
+      ],
+      "accessor": [
+       "K-SPLIT"
+      ],
+      "inherited": [
+       "K-SPLIT"
+      ],
+      "proxy": [
+       "K-SPLIT"
+      ],
+      "index-like": [
+       "K-SPLIT"
+      ]
+     }
+    },
+    "bare": {
+     "document": {
+      "bare": [
+       "K-SPLIT"
+      ]
+     },
+     "block": {
+      "bare": [
+       "K-SPLIT"
+      ]
+     },
+     "item": {
+      "bare": [
+       "K-SPLIT"
+      ]
+     }
+    },
+    "leaves": {
+     "subject": [
+      "K-DEMAND",
+      "K-SPLIT"
+     ],
+     "text": [
+      "K-SPLIT"
+     ],
+     "unmet entry": [
+      "K-DEMAND",
+      "K-SPLIT"
+     ],
+     "claim": [
+      "K-SPLIT"
+     ]
+    }
+   }
+  },
+  "S4a": {
+   "title": [
+    "QuerySDK evaluates evidence",
+    "Lenses supplies source",
+    "Fiber publishes",
+    "Agents owns verification/inference",
+    "host owns demand"
+   ],
+   "producer": [
+    "QuerySDK evaluates evidence",
+    "Lenses supplies source",
+    "Fiber publishes",
+    "Agents owns verification/inference",
+    "host owns demand"
+   ],
+   "constant": [
+    "QuerySDK evaluates evidence",
+    "Lenses supplies source",
+    "Fiber publishes",
+    "Agents owns verification/inference",
+    "host owns demand"
+   ]
+  },
+  "S4b": {
+   "carried": [
+    [
+     "s5:unknown:QuerySDK"
+    ]
+   ],
+   "M19": [
+    "K-SPLIT"
+   ],
+   "M21": [
+    "K-SPLIT"
+   ],
+   "M22": [
+    "K-SPLIT"
+   ],
+   "dropped": "split:missing:document.blocks.0.evidence.0.evaluatedBy+missing:document.blocks.1.evidence.0.evaluatedBy+evidence:s1+evidence:s2"
+  },
+  "S4c": {
+   "sourceless": "blocks=-;unmet=s4",
+   "M20": [
+    "K-SPLIT"
+   ]
+  },
+  "S4d": {
+   "M04": [
+    "K-WIRING"
+   ],
+   "M10": [
+    "K-EFFECT"
+   ]
+  },
+  "S4e": {
+   "M05": [
+    "K-WIRING"
+   ],
+   "M11": [
+    "K-EFFECT",
+    "K-SPLIT"
+   ]
+  },
+  "S4f": {
+   "M14": [
+    "K-DEMAND"
+   ],
+   "M15": [
+    "K-DEMAND"
+   ],
+   "M52": [
+    "K-DEMAND"
+   ],
+   "M55": [
+    "K-DEMAND",
+    "K-PURE"
+   ]
+  },
+  "N1": {
+   "unregistered": [
+    "src/workbench/zz-edc-host.ts: names EDC, assembler, no SITES registration"
+   ],
+   "registered": [],
+   "stale": [
+    "src/workbench/zz-quiet.ts: registered, names no vocabulary word (stale)"
+   ],
+   "missing": [
+    "src/workbench/zz-gone.ts: registered, names no vocabulary word (stale)"
+   ],
+   "duplicate": [
+    "src/workbench/zz-edc-host.ts: registered twice"
+   ],
+   "judged": [
+    "reference",
+    "src/workbench/zz-edc-host.ts"
+   ]
+  },
+  "N2": {
+   "sites": [],
+   "findings": [],
+   "judged": [
+    "reference"
+   ]
+  },
+  "A1a": {
+   "gate": "CLOSED",
+   "live": [],
+   "closed": [],
+   "open": [
+    "docs/03 owes the evidence authority row",
+    "docs/03 owes the source authority row",
+    "docs/03 owes the publication authority row",
+    "docs/03 owes the verification authority row",
+    "docs/03 owes the demand authority row",
+    "docs/03 owes the assembly authority row"
+   ]
+  },
+  "A1b": {
+   "complete": [],
+   "dropped": {
+    "evidence": [
+     "docs/03 owes the evidence authority row"
+    ],
+    "source": [
+     "docs/03 owes the source authority row"
+    ],
+    "publication": [
+     "docs/03 owes the publication authority row"
+    ],
+    "verification": [
+     "docs/03 owes the verification authority row"
+    ],
+    "demand": [
+     "docs/03 owes the demand authority row"
+    ],
+    "assembly": [
+     "docs/03 owes the assembly authority row"
+    ]
+   },
+   "ownersOnly": [
+    "docs/03 owes the evidence authority row",
+    "docs/03 owes the source authority row",
+    "docs/03 owes the publication authority row",
+    "docs/03 owes the verification authority row",
+    "docs/03 owes the demand authority row",
+    "docs/03 owes the assembly authority row"
+   ],
+   "closedComplete": []
+  },
+  "A1c": {
+   "ok": true,
+   "why": "",
+   "headers": [
+    [
+     "Concern",
+     "Authoritative owner",
+     "Workbench may do"
+    ]
+   ],
+   "floor": true,
+   "owners": [
+    1,
+    1,
+    1
+   ],
+   "unread": [],
+   "planted": [],
+   "fenced": {
+    "ok": true,
+    "why": "",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "otherHeading": {
+    "ok": false,
+    "why": "the rendered view has no level-2 heading \"Ownership boundaries\"",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "afterNextHeading": {
+    "ok": true,
+    "why": "",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "subsection": {
+    "ok": true,
+    "why": "",
+    "tables": 2,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "secondTable": {
+    "ok": true,
+    "why": "",
+    "tables": 2,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "duplicateAtEnd": {
+    "ok": false,
+    "why": "the heading \"Ownership boundaries\" occurs 2 times in the rendered view; a pinned section needs it exactly once",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "duplicateAbove": {
+    "ok": false,
+    "why": "the heading \"Ownership boundaries\" occurs 2 times in the rendered view; a pinned section needs it exactly once",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "reHomed": {
+    "ok": false,
+    "why": "the heading \"Ownership boundaries\" sits under the parent heading path [\"Appendix\"]; the census binds it under [\"03 \u2014 High-level architecture, module ownership and dataflow\"]",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   },
+   "crossChecked": {
+    "ok": false,
+    "why": "table 1: the rendered cells disagree with the shared rendered view (1 tables read, 1 rendered)",
+    "tables": 0,
+    "rows": 0,
+    "naming": [],
+    "unread": []
+   }
+  },
+  "A2a": {
+   "reference": [],
+   "recorded": [
+    "provider-query:probe",
+    "coverage-mint:probe",
+    "work-admission:probe",
+    "publication:probe",
+    "verification:probe"
+   ],
+   "handed": {
+    "keys": [
+     "effect"
+    ],
+    "frozen": true
+   },
+   "caught": [
+    "M06",
+    "M07",
+    "M08",
+    "M09",
+    "M10",
+    "M11",
+    "M51",
+    "M71"
+   ]
+  },
+  "A2b": {
+   "ports": [
+    "provider-query",
+    "coverage-mint",
+    "work-admission"
+   ],
+   "provider-query": {
+    "effect": "effect:provider-query:s3",
+    "wired": "wired:port:provider-query+function:wiring.ports.provider-query"
+   },
+   "coverage-mint": {
+    "effect": "effect:coverage-mint:s1+coverage-mint:s2",
+    "wired": "wired:port:coverage-mint+function:wiring.ports.coverage-mint"
+   },
+   "work-admission": {
+    "effect": "effect:work-admission:s3",
+    "wired": "wired:port:work-admission+function:wiring.ports.work-admission"
+   }
+  },
+  "D1": {
+   "owner": "HyperUnix",
+   "duties": [
+    "query completeness",
+    "coverage",
+    "bounds"
+   ],
+   "concern": "Hypergraph query completeness, coverage and bounds",
+   "held": [
+    true,
+    true,
+    true
+   ]
+  },
+  "D2": {
+   "owner": "ReactiveFiberCLI",
+   "duties": [
+    "context rendering",
+    "necessity",
+    "provenance"
+   ],
+   "concern": "Context rendering, necessity and provenance",
+   "held": [
+    true,
+    true,
+    true
+   ]
+  },
+  "D3": {
+   "page": "docs/workbench/01-product-vision-and-user-journeys.md",
+   "line": 5,
+   "heading": "Product mission",
+   "reading": {
+    "ok": true,
+    "why": "",
+    "hasHtml": false,
+    "blocks": [
+     {
+      "kind": "paragraph",
+      "text": "Give Pi a native workflow laboratory: it can design, run, observe, debug and improve both Claude-style scripts and real workflows assembled from MechanicalWorkflows and the broader SDK ecosystem. Scripted agent() calls execute through the real Claude Agent SDK. Deterministic SDK operations execute through narrow host-side providers. Workbench observation is a derived lens over native state, never a competing execution authority.",
+      "markdown": "Give Pi a native workflow laboratory: it can *design*, *run*, *observe*, *debug* and *improve* both Claude-style scripts and real workflows assembled from MechanicalWorkflows and the broader SDK ecosystem. Scripted agent() calls execute through the **real Claude Agent SDK**. Deterministic SDK operations execute through narrow host-side providers. Workbench observation is a derived lens over native state, never a competing execution authority."
+     }
+    ],
+    "holding": [
+     "Workbench observation is a derived lens over native state, never a competing execution authority."
+    ],
+    "equal": true,
+    "onLine": true
+   },
+   "inSentence": {
+    "section": false,
+    "equal": false,
+    "onLine": false
+   },
+   "afterSentence": {
+    "section": false,
+    "equal": true,
+    "onLine": false
+   },
+   "belowLine": {
+    "section": false,
+    "equal": true,
+    "onLine": true
+   }
+  },
+  "D4": {
+   "floor": true,
+   "naming": [],
+   "unread": [],
+   "planted": [
+    "Pi (host)",
+    "EDC assembler"
+   ],
+   "subsection": {
+    "ok": true,
+    "why": "",
+    "tables": 2,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "secondTable": {
+    "ok": true,
+    "why": "",
+    "tables": 2,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "markupSplit": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "references": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "folded": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 14,
+    "naming": [
+     "Pi (host)"
+    ],
+    "unread": []
+   },
+   "blockquote": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 13,
+    "naming": [],
+    "unread": [
+     "other:blockquote"
+    ]
+   },
+   "list": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 13,
+    "naming": [],
+    "unread": [
+     "list"
+    ]
+   },
+   "comment": {
+    "ok": true,
+    "why": "",
+    "tables": 1,
+    "rows": 13,
+    "naming": [],
+    "unread": [
+     "html"
+    ]
+   }
+  },
+  "Q1": {
+   "name": "R-SHARED-WORD",
+   "members": [
+    "assemble-reply",
+    "assembly-program",
+    "on-demand",
+    "coverage",
+    "admission",
+    "minted",
+    "provider-query"
+   ],
+   "findings": [],
+   "gate": "CLOSED",
+   "rows": []
+  },
+  "Q2": {
+   "name": "R-COMPOSED",
+   "members": [
+    "concatenation",
+    "joined-at-run-time",
+    "template-substitution",
+    "operator-split",
+    "homoglyph",
+    "digit-glued",
+    "acronym-run",
+    "small-capitals",
+    "glued-lower",
+    "glued-context",
+    "glued-upper"
+   ],
+   "findings": [],
+   "gate": "CLOSED",
+   "rows": [
+    {
+     "id": "docs-homoglyph-row",
+     "read": true,
+     "naming": [],
+     "unread": []
+    },
+    {
+     "id": "docs-soft-hyphen-row",
+     "read": true,
+     "naming": [],
+     "unread": []
+    },
+    {
+     "id": "docs-zero-width-row",
+     "read": true,
+     "naming": [],
+     "unread": []
+    }
+   ]
+  },
+  "Q3": {
+   "name": "R-COMMENT",
+   "members": [
+    "line-comment",
+    "block-comment",
+    "doc-comment"
+   ],
+   "findings": [],
+   "gate": "CLOSED",
+   "rows": []
+  },
+  "Q4": {
+   "name": "R-UNNAMED-SEAM",
+   "members": [
+    "unnamed-seam"
+   ],
+   "findings": [],
+   "gate": "CLOSED",
+   "rows": [
+    {
+     "id": "docs-other-words-row",
+     "read": true,
+     "naming": [],
+     "unread": []
+    }
+   ]
+  },
+  "Q5": {
+   "refused": [],
+   "outsideCalls": true,
+   "deferred": {
+    "refused": [],
+    "atReading": [],
+    "afterTurn": [
+     "provider-query:s3"
+    ]
+   }
+  },
+  "Q6": {
+   "outside": [],
+   "listedMembers": [],
+   "naming": [
+    "test/workbench-edc-assembly-split-census.test.ts",
+    "test/fixtures/edc-assembly-split-roster.json"
+   ]
+  },
+  "Q7": {
+   "live": [],
+   "reported": [
+    "T1",
+    "T2",
+    "S1a",
+    "S1b",
+    "S2a",
+    "S2b",
+    "S3a",
+    "S3b",
+    "S3c",
+    "S4a",
+    "S4b",
+    "S4c",
+    "S4d",
+    "S4e",
+    "S4f",
+    "N1",
+    "N2",
+    "A1a",
+    "A1b",
+    "A1c",
+    "A2a",
+    "A2b",
+    "D1",
+    "D2",
+    "D3",
+    "D4"
+   ],
+   "quiet": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8"
+   ]
+  },
+  "Q8": {
+   "name": "R-OUTSIDE-VALUE",
+   "rows": [
+    {
+     "id": "attribute-flags",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": null
+    },
+    {
+     "id": "frozen-document",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": null
+    },
+    {
+     "id": "side-table-coverage",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": null
+    },
+    {
+     "id": "side-table-handle",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": [
+      "K-EFFECT"
+     ]
+    },
+    {
+     "id": "private-element-coverage",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": null
+    },
+    {
+     "id": "private-element-handle",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": [
+      "K-EFFECT"
+     ]
+    },
+    {
+     "id": "internal-slot-coverage",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": null
+    },
+    {
+     "id": "internal-slot-handle",
+     "refused": [],
+     "answers": true,
+     "atReading": true,
+     "carried": true,
+     "live": [
+      "K-EFFECT"
+     ]
+    },
+    {
+     "id": "deferred-coverage",
+     "refused": [],
+     "answers": true,
+     "atReading": false,
+     "carried": true,
+     "live": null
+    }
+   ]
+  }
+ },
+ "tests": [
+  "T1: If Pi-subagents adopts",
+  "T2: EDC context assembly",
+  "S1a: Pi as host shall carry",
+  "S1b: demand ownership",
+  "S2a: treat assembly as pure",
+  "S2b: context assembly only",
+  "S3a: never expecting",
+  "S3b: or wiring the assembler",
+  "S3c: to query providers, mint coverage or admit work",
+  "S4a: honoring the split",
+  "S4b: QuerySDK evaluates evidence",
+  "S4c: Lenses supplies source",
+  "S4d: Fiber publishes",
+  "S4e: Agents owns verification/inference",
+  "S4f: host owns demand",
+  "N1: a Pi EDC context-assembly consumer",
+  "N2: none exists",
+  "A1a: at adoption",
+  "A1b: docs/03 gains the EDC authority rows",
+  "A1c: bound by the docs-census pattern",
+  "A2a: a falsifier shows the assembler seam performs",
+  "A2b: no provider query, coverage mint or work admission",
+  "D1: HyperUnix owns query completeness/coverage/bounds",
+  "D2: ReactiveFiberCLI owns context rendering/necessity/provenance",
+  "D3: a derived lens over native state, never a competing execution authority",
+  "D4: carries no EDC assembler/demand row",
+  "Q1: R-SHARED-WORD",
+  "Q2: R-COMPOSED",
+  "Q3: R-COMMENT",
+  "Q4: R-UNNAMED-SEAM",
+  "Q5: R-UNMODELED-EFFECT",
+  "Q6: R-OUTSIDE-SRC",
+  "Q7: R-COORDINATED",
+  "Q8: R-OUTSIDE-VALUE",
+  "rule 16: the rows, the tables, the vocabulary and the authority rows are frozen at their measured shape",
+  "mutant battery: the reference and every registered site meet every check and answer every case, each mutant is refused by exactly its declared checks, and every check refuses a mutant alone",
+  "the outside anchors: the bead's own row binds the rows, the pin quotes, the split, the ports, the vocabulary, the docs citation and the producer block",
+  "roster: the judged rows, the quotes, the cases, the mutants, the residual members and the registered tests equal test/fixtures/edc-assembly-split-roster.json, in order and both ways; every pin reached its witness compare"
+ ],
+ "producer": {
+  "repository": "ReactiveComponentsSDK",
+  "pin": "44b72145b1756908585c94da2327ab8809a3ca9a",
+  "path": "docs/programs/evidence-directed-computation-2026-10-18.md",
+  "blob": "de04229d9cdad063e4704d732f3cbcee1f001e68",
+  "line": 29,
+  "text": "Pure context assembly only. QuerySDK evaluates evidence; Lenses supplies source; Fiber publishes; Agents owns verification/inference and host owns demand. Forge-local plus clean installed consumer acceptance. APIs only after two clear independent use cases."
+ }
+}

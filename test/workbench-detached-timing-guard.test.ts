@@ -58,6 +58,19 @@
  * keyed by its unwrapped operand, so a loop that steps n! and reads n, or steps n and reads n!, holds one counter. The
  * wrapper-kinds row reads those wrappers against TypeScript's own flags, and a T1 kill control plants each one in both
  * of the reading's forms. One loop is still one finding.
+ * wb-69ur (the R694 follow-up of wb-n5xs landing 639, gate cmd_aa11f2b1ebe8: F1 leads, F2 rides) keys every counter of
+ * that reading by its member chain. Parentheses and the type-level wrappers are removed at every link of the chain (a
+ * name, this, a property, an element and an element's own key), not only around the whole operand; an optional chain's
+ * ?. reads as .; an element named by a string or numeric literal reads as the member it names; and the spacing or a
+ * comment around a link never counts. So state!.n, (state as Counter).n, (<Counter>state).n, (state satisfies
+ * Counter).n, (state).n, state?.n, state["n"], this!.n, counts![0] and counts?.[0] read as the counters state.n, this.n
+ * and counts[0], whichever side of the loop (its condition, its incrementor or its body) holds the wrapper; a link of any
+ * other kind (a call) keys by its own text. The M1 kill controls plant those links. The wrapper-kinds row now reads the
+ * wrappers kind by kind against TypeScript's own isOuterExpression, over its whole SyntaxKind enum and on an instance of
+ * every outer expression (parsed, or built for the one kind its parser never yields), and it judges a planted cell by the
+ * wrappers a finding's condition unwraps, never by a wrapper anywhere in the control's text; the roster pins what each T1
+ * and M1 kill control's finding unwraps, which leaves out a wrapper on an operand that is not the counter (ready! in
+ * ready! && state.n), and the M1 row reads every wrapper kind among them. One loop is still one finding.
  * The judged set is read from the test directory and the config, never typed here. The members importing the marked
  * twins (the three suites that drive real hosts, and the helper's own unit rows) are pinned, so a derivation that reads
  * nothing, or a member that leaves the twins, reds. Every widened reading has planted kill controls beside negative
@@ -89,14 +102,18 @@
  *   R-RAISE-SITE no planted lapse reaches raiseTransportLapse at its call site in socket-base's 60-byte TMPDIR row (the
  *     helper's own unit rows pin what it raises): the family's raiseTransportLapse call rows are pinned to the roster,
  *     and a tool-path read left unraised is a quiet row.
+ *   R-CHAIN-KEY a member counter whose two spellings meet only through a link the key reads by its text or through a
+ *     binding: a call in the chain with a wrapper inside it (state!.get().n read while state.get().n steps), or a
+ *     receiver bound to another name (counter.n read while state.n steps, after const counter = state).
  * test/workbench-detached-control-live.test.ts is not judged either. It is excluded from the default gate and runs only
  * as `forge run detached-control-live`: its until() bound is a receipt-recorded measurement (journeys.*.realised =
  * until().ok), and no landing judge reads its reds. The first case pins that exclusion.
  * NOT CLAIMED: a hollow that removes one planted site from every table it sits in at once (its own table, the roster's
  * entry and the frozen-shape literal's count), unless it also drops a hook kind from HOOKS, which the hook-kinds row
- * reads against vitest's own exports, or the site is the only T1 kill control that plants a wrapper kind in one of the
- * reading's two forms, which the wrapper-kinds row reads against TypeScript's own type-level wrappers; a hollow that
- * removes one of the two shape cases from every literal of the shape; a case whose own assertions are weakened in place.
+ * reads against vitest's own exports, or the site is the only T1 kill control whose finding unwraps a wrapper kind in
+ * one of the reading's two forms, or the only M1 kill control whose finding unwraps a wrapper kind, which the
+ * wrapper-kinds and M1 rows read against TypeScript's own type-level wrappers; a hollow that removes one of the two
+ * shape cases from every literal of the shape; a case whose own assertions are weakened in place.
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -146,7 +163,8 @@ const STEPS = new Set<ts.SyntaxKind>([ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind
 const COUNTING_ASSIGNMENTS = new Set<ts.SyntaxKind>([ts.SyntaxKind.PlusEqualsToken, ts.SyntaxKind.MinusEqualsToken]);
 /** wb-n5xs F1: the TypeScript type-level wrappers G3 reads a counter through, by syntax kind, each with the flag TypeScript
  * files it under: `as` and an angle-bracket assertion (TypeAssertions), `satisfies` (Satisfies) and the non-null `!`
- * (NonNullAssertions). The wrapper-kinds row reads these flags against TypeScript's own OuterExpressionKinds.Assertions. */
+ * (NonNullAssertions). The wrapper-kinds row reads these flags against TypeScript's own OuterExpressionKinds.Assertions,
+ * and (wb-69ur F2) these kinds against its own isOuterExpression. */
 const TYPE_WRAPPERS: ReadonlyMap<ts.SyntaxKind, ts.OuterExpressionKinds> = new Map<ts.SyntaxKind, ts.OuterExpressionKinds>([
   [ts.SyntaxKind.AsExpression, ts.OuterExpressionKinds.TypeAssertions],
   [ts.SyntaxKind.TypeAssertionExpression, ts.OuterExpressionKinds.TypeAssertions],
@@ -156,6 +174,17 @@ const TYPE_WRAPPERS: ReadonlyMap<ts.SyntaxKind, ts.OuterExpressionKinds> = new M
 /** wb-vh7c F1: the two forms in which the wb-vh7c G3 reading holds a counter (wb-n5xs F1: the wrapper-kinds row plants each
  * wrapper in both). */
 const COUNTER_FORMS = { compared: "a counter under an equality operator", truth: "a counter read as its truth value" } as const;
+/** wb-69ur F2: TypeScript's own classifier of outer expressions. typescript 6.0.3 exports isOuterExpression at run time
+ * though its declarations do not name it, so it is read through a typed view of the module; the wrapper-kinds row reds
+ * when a release drops it. */
+interface OuterExpressionReader {
+  readonly isOuterExpression?: (node: ts.Node, kinds: ts.OuterExpressionKinds) => boolean;
+}
+const isOuterExpression = (ts as unknown as OuterExpressionReader).isOuterExpression;
+/** wb-69ur F2: one parsed instance of every outer expression TypeScript's parser yields, each a statement's expression: a
+ * parenthesized expression, `as`, an angle-bracket assertion, `satisfies`, the non-null `!` and an instantiation
+ * expression (the partially emitted expression, which its parser never yields, is built by its own factory). */
+const OUTER_INSTANCES: readonly string[] = ["(n);", "n as number;", "<number>n;", "n satisfies number;", "n!;", "f<number>;"];
 
 interface ConfigShape {
   test?: { exclude?: readonly string[] };
@@ -168,6 +197,9 @@ interface Finding {
   readonly rule: "G1" | "G2" | "G3" | "G4";
   readonly at: string;
   readonly text: string;
+  /** wb-69ur F2: on a G3 counter finding, the type-level wrapper kinds its condition's reading unwrapped to reach the
+   * counter in the form the finding shows; absent on every other finding. */
+  readonly unwraps?: readonly ts.SyntaxKind[];
 }
 interface Reading {
   readonly findings: Finding[];
@@ -217,9 +249,30 @@ function isTypeWrapper(node: ts.Node): node is ts.AsExpression | ts.TypeAssertio
   return TYPE_WRAPPERS.has(node.kind);
 }
 /** wb-vh7c F1, wb-n5xs F1: `node` with its parentheses and its TypeScript type-level wrappers (TYPE_WRAPPERS) removed, at
- * any depth and in any order. */
-function unwrapped(node: ts.Expression): ts.Expression {
-  return ts.isParenthesizedExpression(node) || isTypeWrapper(node) ? unwrapped(node.expression) : node;
+ * any depth and in any order (wb-69ur F2: each wrapper kind removed is recorded in `seen` when one is given). */
+function unwrapped(node: ts.Expression, seen?: Set<ts.SyntaxKind>): ts.Expression {
+  if (isTypeWrapper(node)) seen?.add(node.kind);
+  return ts.isParenthesizedExpression(node) || isTypeWrapper(node) ? unwrapped(node.expression, seen) : node;
+}
+/** wb-69ur F1: the key a counter is read by, its member chain read link by link: `node`'s parentheses and type-level
+ * wrappers removed at every link (a name, this, a property, an element and an element's own key), an optional chain's ?.
+ * read as ., an element named by a string or numeric literal read as the member it names, and the spacing or a comment
+ * around a link left out; a link of any other kind (a call) keys by its own text. Each wrapper kind removed is recorded
+ * in `seen` (wb-69ur F2). */
+function counterKey(node: ts.Expression, source: ts.SourceFile, seen?: Set<ts.SyntaxKind>): string {
+  const bare = unwrapped(node, seen);
+  // A named member (a property, or an element named by a literal) keys as its quoted name, a private name as itself,
+  // and a computed element as its own key behind "=", so no two of the three can meet.
+  if (ts.isPropertyAccessExpression(bare)) {
+    const base = counterKey(bare.expression, source, seen);
+    return ts.isPrivateIdentifier(bare.name) ? `${base}.${bare.name.text}` : `${base}[${JSON.stringify(bare.name.text)}]`;
+  }
+  if (ts.isElementAccessExpression(bare)) {
+    const base = counterKey(bare.expression, source, seen);
+    const key = unwrapped(bare.argumentExpression, seen);
+    return ts.isStringLiteralLike(key) || ts.isNumericLiteral(key) ? `${base}[${JSON.stringify(key.text)}]` : `${base}[=${counterKey(key, source, seen)}]`;
+  }
+  return bare.getText(source);
 }
 /** wb-vh7c F1: true when `node` is a step, ++ or --, prefix or postfix. */
 function isStep(node: ts.Node): node is ts.PrefixUnaryExpression | ts.PostfixUnaryExpression {
@@ -229,38 +282,63 @@ function isStep(node: ts.Node): node is ts.PrefixUnaryExpression | ts.PostfixUna
 function isCountingAssignment(node: ts.Node): node is ts.BinaryExpression {
   return ts.isBinaryExpression(node) && COUNTING_ASSIGNMENTS.has(node.operatorToken.kind);
 }
-/** wb-vh7c F1, wb-n5xs F1: the counters of `loop`, by the text of their unwrapped operand: the operand of every step and
- * the target of every counting assignment in its condition, its incrementor or its body. */
+/** wb-vh7c F1, wb-n5xs F1, wb-69ur F1: the counters of `loop`, by the key of their operand (counterKey): the operand of
+ * every step and the target of every counting assignment in its condition, its incrementor or its body. */
 function countersOf(loop: ts.Node, source: ts.SourceFile): Set<string> {
   const found = new Set<string>();
   const visit = (node: ts.Node): void => {
-    if (isStep(node)) found.add(unwrapped(node.operand).getText(source));
-    if (isCountingAssignment(node)) found.add(unwrapped(node.left).getText(source));
+    if (isStep(node)) found.add(counterKey(node.operand, source));
+    if (isCountingAssignment(node)) found.add(counterKey(node.left, source));
     ts.forEachChild(node, visit);
   };
   visit(loop);
   return found;
 }
-/** wb-vh7c F1, wb-n5xs F1: true when `node`, its parentheses and type-level wrappers aside, is a step, a counting
- * assignment or one of the loop's counters. */
-function readsCounter(node: ts.Expression, counters: ReadonlySet<string>, source: ts.SourceFile): boolean {
-  const bare = unwrapped(node);
-  return isStep(bare) || isCountingAssignment(bare) || counters.has(bare.getText(source));
+/** wb-vh7c F1, wb-n5xs F1, wb-69ur F1: true when `node`, its parentheses and type-level wrappers aside, is a step, a
+ * counting assignment or one of the loop's counters, read by its key (counterKey); the wrapper kinds removed on the way
+ * to a read are recorded in `seen` (wb-69ur F2). */
+function readsCounter(node: ts.Expression, counters: ReadonlySet<string>, source: ts.SourceFile, seen?: Set<ts.SyntaxKind>): boolean {
+  const kinds = new Set<ts.SyntaxKind>();
+  const bare = unwrapped(node, kinds);
+  const reads = isStep(bare) || isCountingAssignment(bare) || counters.has(counterKey(bare, source, kinds));
+  if (reads) for (const kind of kinds) seen?.add(kind);
+  return reads;
+}
+/** wb-69ur F2: the form a condition holds a counter in, with the type-level wrapper kinds its reading unwrapped to reach
+ * the counter in that form. */
+interface CounterBound {
+  readonly form: string;
+  readonly unwraps: readonly ts.SyntaxKind[];
 }
 /** wb-vh7c F1: how `condition` holds a counter of its loop - under an equality operator anywhere in it, or as an operand
- * of one of its `&&`s, read as its truth value - or undefined when it holds neither. */
-function counterBound(condition: ts.Expression, counters: ReadonlySet<string>, source: ts.SourceFile): string | undefined {
+ * of one of its `&&`s, read as its truth value - or undefined when it holds neither (wb-69ur F2: with the wrapper kinds
+ * the reading unwrapped in that form). */
+function counterBound(condition: ts.Expression, counters: ReadonlySet<string>, source: ts.SourceFile): CounterBound | undefined {
   let compared = false;
   let truth = false;
+  const comparedKinds = new Set<ts.SyntaxKind>();
+  const truthKinds = new Set<ts.SyntaxKind>();
   const visit = (node: ts.Node): void => {
-    if (ts.isBinaryExpression(node) && (readsCounter(node.left, counters, source) || readsCounter(node.right, counters, source))) {
-      if (EQUALITY.has(node.operatorToken.kind)) compared = true;
-      if (node.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken) truth = true;
+    if (ts.isBinaryExpression(node)) {
+      const kinds = new Set<ts.SyntaxKind>();
+      const left = readsCounter(node.left, counters, source, kinds);
+      const right = readsCounter(node.right, counters, source, kinds);
+      if (left || right) {
+        if (EQUALITY.has(node.operatorToken.kind)) {
+          compared = true;
+          for (const kind of kinds) comparedKinds.add(kind);
+        }
+        if (node.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken) {
+          truth = true;
+          for (const kind of kinds) truthKinds.add(kind);
+        }
+      }
     }
     ts.forEachChild(node, visit);
   };
   visit(condition);
-  return compared ? COUNTER_FORMS.compared : truth ? COUNTER_FORMS.truth : undefined;
+  const sorted = (kinds: ReadonlySet<ts.SyntaxKind>): ts.SyntaxKind[] => [...kinds].sort((left, right) => left - right);
+  return compared ? { form: COUNTER_FORMS.compared, unwraps: sorted(comparedKinds) } : truth ? { form: COUNTER_FORMS.truth, unwraps: sorted(truthKinds) } : undefined;
 }
 /** wb-vh7c F1: the form a G3 finding shows `loop` in, around its condition's text. */
 function loopForm(loop: ts.Node, condition: string): string {
@@ -359,8 +437,8 @@ function readText(name: string, text: string): Reading {
   const locals = localFunctions(source);
   const hooks = hookNames(source);
   const at = (node: ts.Node): string => `${name}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1}`;
-  const add = (rule: Finding["rule"], node: ts.Node, text: string): void => {
-    found.push({ rule, at: at(node), text });
+  const add = (rule: Finding["rule"], node: ts.Node, text: string, unwraps?: readonly ts.SyntaxKind[]): void => {
+    found.push(unwraps === undefined ? { rule, at: at(node), text } : { rule, at: at(node), text, unwraps });
   };
   const visit = (node: ts.Node): void => {
     if (ts.isImportDeclaration(node)) {
@@ -453,7 +531,7 @@ function readText(name: string, text: string): Reading {
     // or read as its truth value - one finding per loop, and only where the readings above found none.
     if (loopCondition !== undefined && !readsClock(loopCondition) && !landedCount(node) && !relationalBound(loopCondition) && conjunction(loopCondition)) {
       const bound = counterBound(loopCondition, countersOf(node, source), source);
-      if (bound !== undefined) add("G3", node, `fixed-count poll loop (${bound}): ${loopForm(node, loopCondition.getText(source))}`);
+      if (bound !== undefined) add("G3", node, `fixed-count poll loop (${bound.form}): ${loopForm(node, loopCondition.getText(source))}`, bound.unwraps);
     }
     ts.forEachChild(node, visit);
   };
@@ -543,6 +621,27 @@ const CONTROLS: Readonly<Record<string, string>> = {
   "T1.angleEquality": "while (alive() && <number>tries++ !== MAX_TRIES) await holdOpen(20);",
   "T1.satisfiesEquality": "do { left -= 1; await holdOpen(20); } while ((left satisfies number) !== 0 && alive());",
   "T1.nestedWrappers": "do { left--; await holdOpen(20); } while (((left as number)!) !== 0 && alive());",
+  "M1.nonNullReceiver": "while (alive() && state!.n) { state.n--; await holdOpen(20); }",
+  "M1.nonNullStepReceiver": "while (alive() && state.n) { state!.n--; await holdOpen(20); }",
+  "M1.wrappedBoth": "while (alive() && state!.n) { state!.n--; await holdOpen(20); }",
+  "M1.asReceiverEquality": "while (alive() && (state as Counter).n !== 0) { state.n -= 1; await holdOpen(20); }",
+  "M1.angleReceiver": "while (alive() && (<Counter>state).n !== 0) { state.n--; await holdOpen(20); }",
+  "M1.satisfiesReceiver": "while (alive() && (state satisfies Counter).n) { state.n--; await holdOpen(20); }",
+  "M1.parenthesizedReceiver": "while (alive() && (state).n) { state.n--; await holdOpen(20); }",
+  "M1.optionalChain": "while (alive() && state?.n) { state.n--; await holdOpen(20); }",
+  "M1.optionalElement": "while (alive() && counts?.[0]) { counts[0]--; await holdOpen(20); }",
+  "M1.nonNullElement": "while (alive() && counts![0]) { counts[0]--; await holdOpen(20); }",
+  "M1.nonNullThis": "while (alive() && this!.n) { this.n--; await holdOpen(20); }",
+  "M1.innerLink": "while (alive() && state.inner!.n !== 0) { state.inner.n--; await holdOpen(20); }",
+  "M1.stringKey": 'while (alive() && state["n"]) { state.n--; await holdOpen(20); }',
+  "M1.numericKey": 'while (alive() && counts["0"] !== 0) { counts[0]--; await holdOpen(20); }',
+  "M1.wrappedIndex": "while (alive() && counts[i!]) { counts[i]--; await holdOpen(20); }",
+  "M1.wrappedKeyChain": "while (alive() && counts[cursor!.i]) { counts[cursor.i]--; await holdOpen(20); }",
+  "M1.spacedLink": "while (alive() && state /* left */ .n) { state.n--; await holdOpen(20); }",
+  "M1.assignedReceiver": "while (alive() && state.n !== 0) { (state as Counter).n -= 1; await holdOpen(20); }",
+  "M1.forIncrementor": "for (let k = 0; counts[k] !== 0 && alive(); counts![k]--) await holdOpen(20);",
+  "M1.doThis": "do { this.left -= 1; await holdOpen(20); } while ((this as Poller).left !== 0 && alive());",
+  "M1.wrappedNeighbour": "while (ready! && state.n) { state.n--; await holdOpen(20); }",
   "N.settledHelper":
     "function stopHosts() { for (const pid of hosts) process.kill(pid); return hosts.map(gone); }\nafterEach(async () => { await reportAfterCleanup(stopHosts(), cleanup); }, HOST_HOOK_TIMEOUT_MS);",
   "N.settledNamed":
@@ -560,6 +659,10 @@ const CONTROLS: Readonly<Record<string, string>> = {
   "N.quietFixture": "const dataTest = test.extend({ data: async ({}, use) => { await use(await loadData()); } });",
   "N.wrappedState": 'while (alive() && (state as string) !== "done") { attempts++; await holdOpen(20); }',
   "N.wrappedFlag": "while (alive() && ready!) { attempts++; await holdOpen(20); }",
+  "N.otherReceiver": "while (alive() && other!.n) { state.n--; await holdOpen(20); }",
+  "N.otherMemberName": "while (alive() && (state as Counter).done) { state.n--; await holdOpen(20); }",
+  "N.otherElement": "while (alive() && counts![1]) { counts[0]--; await holdOpen(20); }",
+  "N.otherIndex": "while (alive() && counts[j!]) { counts[i]--; await holdOpen(20); }",
 };
 
 /** wb-nqbd F5: each named residual's planted members (`<residual>.<member>`), every one a quiet row the guard reads nothing in. */
@@ -590,6 +693,8 @@ const QUIET: Readonly<Record<string, string>> = {
   "R-REGISTRAR-ROUTE.importedFixture": 'import { hostsFixture } from "./helpers/host-fixtures.js";\nconst hostTest = test.extend({ hosts: hostsFixture });',
   "R-REGISTRAR-ROUTE.methodFixture": "const hostTest = test.extend({ hosts: fixtures.hosts });",
   "R-RAISE-SITE.unraised": 'const snapshot = async () => jsonReply("inspect snapshot", await inspect());',
+  "R-CHAIN-KEY.callLink": "while (alive() && state!.get().n) { state.get().n--; await holdOpen(20); }",
+  "R-CHAIN-KEY.receiverAlias": "const counter = state;\nwhile (alive() && counter.n) { state.n--; await holdOpen(20); }",
 };
 
 /** wb-nqbd: the out-of-file roster - what every planted site yields, the residuals' quiet rows, the raise rows and this
@@ -601,6 +706,8 @@ interface Roster {
   readonly controls: Readonly<Record<string, readonly string[]>>;
   readonly residuals: Readonly<Record<string, readonly string[]>>;
   readonly raiseRows: readonly string[];
+  /** wb-69ur F2: the type-level wrapper kinds each T1 and M1 kill control's finding unwraps in its condition. */
+  readonly unwraps: Readonly<Record<string, readonly string[]>>;
 }
 function stringsOf(value: unknown, field: string): string[] {
   if (!Array.isArray(value) || !value.every((entry): entry is string => typeof entry === "string")) throw new Error(`roster field ${field} is not a list of strings`);
@@ -622,6 +729,7 @@ function readRoster(): Roster {
     controls: tableOf(fields.get("controls"), "controls"),
     residuals: tableOf(fields.get("residuals"), "residuals"),
     raiseRows: stringsOf(fields.get("raiseRows"), "raiseRows"),
+    unwraps: tableOf(fields.get("unwraps"), "unwraps"),
   };
 }
 const ROSTER = readRoster();
@@ -636,16 +744,44 @@ function controlsOf(prefix: string): Record<string, string[]> {
       .map(([id, text]) => [id, readText(`${id}.test.ts`, text).findings.map(finding => `${finding.rule} ${finding.text}`)]),
   );
 }
-/** wb-n5xs F1: the TYPE_WRAPPERS kinds a planted text holds, read as a syntax tree. */
-function wrapperKindsIn(name: string, text: string): Set<ts.SyntaxKind> {
-  const source = ts.createSourceFile(name, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const kinds = new Set<ts.SyntaxKind>();
-  const visit = (node: ts.Node): void => {
-    if (TYPE_WRAPPERS.has(node.kind)) kinds.add(node.kind);
-    ts.forEachChild(node, visit);
-  };
-  visit(source);
-  return kinds;
+/** wb-69ur F2: syntax kinds by name, once each, in kind order. */
+function kindNames(kinds: Iterable<ts.SyntaxKind>): string[] {
+  return [...new Set(kinds)].sort((left, right) => left - right).map(kind => ts.SyntaxKind[kind]);
+}
+/** wb-69ur F2: true when TypeScript's own isOuterExpression files `node` under `flags` (false when the module lacks it). */
+function outerUnder(node: ts.Node, flags: ts.OuterExpressionKinds): boolean {
+  return isOuterExpression?.(node, flags) === true;
+}
+/** wb-69ur F2: a node of `kind` as isOuterExpression reads one under these flags, by its kind alone: it switches on
+ * node.kind, and reads more of a node only under ExcludeJSDocTypeAssertion, which no reading here passes. */
+function kindOnly(kind: ts.SyntaxKind): ts.Node {
+  return { kind } as unknown as ts.Node;
+}
+/** wb-69ur F2: every syntax kind TypeScript's own isOuterExpression files under `flags`, read over its whole SyntaxKind enum. */
+function outerKindsUnder(flags: ts.OuterExpressionKinds): string[] {
+  return kindNames(Object.values(ts.SyntaxKind).filter((value): value is ts.SyntaxKind => typeof value === "number" && outerUnder(kindOnly(value), flags)));
+}
+/** wb-69ur F2: OUTER_INSTANCES parsed, each statement's expression, beside a partially emitted expression built by
+ * TypeScript's own factory. */
+function outerInstances(): ts.Node[] {
+  const parsed = OUTER_INSTANCES.flatMap(text => {
+    const statement = ts.createSourceFile("instance.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS).statements[0];
+    return statement !== undefined && ts.isExpressionStatement(statement) ? [statement.expression] : [];
+  });
+  return [...parsed, ts.factory.createPartiallyEmittedExpression(ts.factory.createIdentifier("n"))];
+}
+/** wb-69ur F2: the type-level wrapper kinds (by name) each planted site `prefix` names unwraps in its G3 findings'
+ * conditions, read as its own member, by site id. */
+function unwrapsOf(prefix: string): Record<string, string[]> {
+  return Object.fromEntries(
+    Object.entries(CONTROLS)
+      .filter(([id]) => id.startsWith(prefix))
+      .map(([id, text]) => [id, kindNames(readText(`${id}.test.ts`, text).findings.flatMap(finding => (finding.rule === "G3" ? (finding.unwraps ?? []) : [])))]),
+  );
+}
+/** wb-69ur F2: the roster's unwrapped kinds for the planted sites `prefix` names. */
+function rosterUnwrapsOf(prefix: string): Record<string, readonly string[]> {
+  return Object.fromEntries(Object.entries(ROSTER.unwraps).filter(([id]) => id.startsWith(prefix)));
 }
 /** wb-nqbd F4: each planted table's case records its table once its compare held; the last case reads the record. */
 const COMPARED: string[] = [];
@@ -793,6 +929,7 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       ...ROSTER.tests.map(title => (title.startsWith("%s: ") ? `each:${title.slice(4, 6)}` : "row")),
       ...groups.map(group => `${group}:${Object.keys(ROSTER.controls).filter(id => id.startsWith(`${group}.`)).length}`),
       ...Object.entries(ROSTER.residuals).map(([residual, ids]) => `${residual}:${ids.length}`),
+      `unwraps:${Object.keys(ROSTER.unwraps).length}`,
     ]).toEqual([
       "row",
       "row",
@@ -814,13 +951,15 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "row",
       "row",
       "row",
+      "row",
       "F1:9",
       "F2:6",
       "F3:14",
       "V1:13",
       "V2:15",
       "T1:13",
-      "N:14",
+      "M1:21",
+      "N:18",
       "R-WAIT-LOOP:3",
       "R-COUNTER-ROUTE:3",
       "R-HOST-ROUTE:4",
@@ -830,6 +969,8 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "R-HOOK-ROUTE:2",
       "R-REGISTRAR-ROUTE:5",
       "R-RAISE-SITE:1",
+      "R-CHAIN-KEY:2",
+      "unwraps:34",
     ]);
     expect(ROSTER.bead).toBe("wb-nqbd");
     // As collected, before any case runs: the last case checks the same tree again, so deleting either one reds the other.
@@ -877,26 +1018,59 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
     COMPARED.push("T1");
   });
 
-  it("wb-n5xs F1 wrapper kinds: the wrappers G3 reads a counter through are exactly TypeScript's own type-level ones (OuterExpressionKinds.Assertions: as and an angle-bracket assertion, satisfies, the non-null !), and a T1 kill control plants each one in both of the reading's forms", () => {
+  it("wb-n5xs F1, wb-69ur F2 wrapper kinds: the wrappers G3 reads a counter through are exactly TypeScript's own type-level ones, kind by kind (the syntax kinds its isOuterExpression files under OuterExpressionKinds.Assertions, read over its whole SyntaxKind enum and on an instance of every outer expression: as and an angle-bracket assertion, satisfies, the non-null !), and a T1 kill control plants each one in both of the reading's forms, read from the wrappers its finding's condition unwraps, which the roster pins", () => {
     expect(
       [...TYPE_WRAPPERS.values()].reduce((flags, flag) => flags | flag, 0),
       "the flags of the wrappers G3 reads a counter through, against TypeScript's own type-level outer expressions",
     ).toBe(ts.OuterExpressionKinds.Assertions);
-    // Each wrapper kind, in each form of the reading: the cells the T1 kill controls plant, read from what each one yields.
+    // wb-69ur F2, kind by kind: the syntax kinds G3 reads a counter through are exactly the ones TypeScript's own
+    // isOuterExpression files under OuterExpressionKinds.Assertions over its whole SyntaxKind enum, each under its own flag.
+    expect(isOuterExpression, "typescript's run-time isOuterExpression").toBeTypeOf("function");
+    expect(kindNames(TYPE_WRAPPERS.keys()), "the wrapper kinds G3 reads a counter through, against every kind TypeScript files under Assertions").toEqual(
+      outerKindsUnder(ts.OuterExpressionKinds.Assertions),
+    );
+    expect(
+      kindNames([...TYPE_WRAPPERS].filter(([kind, flag]) => !outerUnder(kindOnly(kind), flag)).map(([kind]) => kind)),
+      "a wrapper kind TypeScript does not file under its own flag",
+    ).toEqual([]);
+    // On an instance: every outer expression TypeScript files under All has one (parsed, or built for the partially emitted
+    // expression its parser never yields), and the instances it files under Assertions are the wrapper kinds.
+    const instances = outerInstances();
+    expect(kindNames(instances.map(node => node.kind)), "an instance of every outer expression TypeScript files under All").toEqual(outerKindsUnder(ts.OuterExpressionKinds.All));
+    expect(
+      kindNames(instances.filter(node => outerUnder(node, ts.OuterExpressionKinds.Assertions)).map(node => node.kind)),
+      "the instances TypeScript files under Assertions, against the wrapper kinds",
+    ).toEqual(kindNames(TYPE_WRAPPERS.keys()));
+    // What each T1 kill control's finding unwraps in its condition is the roster's (never a wrapper elsewhere in its text).
+    expect(unwrapsOf("T1."), "the wrappers each T1 kill control's finding unwraps").toStrictEqual(rosterUnwrapsOf("T1."));
+    // Each wrapper kind, in each form of the reading: the cells the T1 kill controls plant, read from the wrappers each
+    // finding's condition unwraps.
     const planted = new Set(
       Object.entries(CONTROLS)
         .filter(([id]) => id.startsWith("T1."))
-        .flatMap(([id, text]) => {
-          const kinds = [...wrapperKindsIn(`${id}.test.ts`, text)];
-          const forms = Object.values(COUNTER_FORMS).filter(form => readText(`${id}.test.ts`, text).findings.some(finding => finding.rule === "G3" && finding.text.includes(`(${form})`)));
-          return kinds.flatMap(kind => forms.map(form => `${ts.SyntaxKind[kind]} | ${form}`));
-        }),
+        .flatMap(([id, text]) =>
+          readText(`${id}.test.ts`, text).findings.flatMap(finding => {
+            const form = Object.values(COUNTER_FORMS).find(candidate => finding.rule === "G3" && finding.text.includes(`(${candidate})`));
+            return form === undefined ? [] : (finding.unwraps ?? []).map(kind => `${ts.SyntaxKind[kind]} | ${form}`);
+          }),
+        ),
     );
     const owed = [...TYPE_WRAPPERS.keys()].flatMap(kind => Object.values(COUNTER_FORMS).map(form => `${ts.SyntaxKind[kind]} | ${form}`));
-    expect(owed.filter(cell => !planted.has(cell)), "a wrapper kind that no T1 kill control plants in one of the reading's two forms").toEqual([]);
+    expect(owed.filter(cell => !planted.has(cell)), "a wrapper kind that no T1 kill control's finding unwraps in one of the reading's two forms").toEqual([]);
   });
 
-  it("wb-nqbd, wb-vh7c and wb-n5xs negative controls: a settled hook (an onTestFinished among them), a hook or a fixture that stops nothing, a loop without && (a countdown among them), a loop whose && joins neither a relational bound nor a counter of its own (an inequality on a state, an equality on a flag while another value counts, a state or a flag read through a TypeScript wrapper), text alone and another object's members yield no finding; the controls are the roster's, in order", () => {
+  it("wb-69ur F1 kill controls: a for, while or do loop whose condition joins with && a member counter of the loop (a property or an element, of an object or of this) reads as G3 when parentheses or a TypeScript type-level wrapper sit on a link of its member chain instead of around the counter, whichever side of the loop holds them (its condition, its incrementor or its body), as its truth value or under an equality operator, and when an optional chain, a literal element key or the spacing around a link spells the same member; the wrappers each finding's condition unwraps are the roster's, and they cover every type-level wrapper kind", () => {
+    expect(controlsOf("M1.")).toStrictEqual(rosterControlsOf("M1."));
+    expect(unwrapsOf("M1."), "the wrappers each M1 kill control's finding unwraps").toStrictEqual(rosterUnwrapsOf("M1."));
+    const seen = new Set(Object.values(unwrapsOf("M1.")).flat());
+    expect(
+      kindNames(TYPE_WRAPPERS.keys()).filter(name => !seen.has(name)),
+      "a type-level wrapper kind that no M1 kill control's finding unwraps",
+    ).toEqual([]);
+    COMPARED.push("M1");
+  });
+
+  it("wb-nqbd, wb-vh7c, wb-n5xs and wb-69ur negative controls: a settled hook (an onTestFinished among them), a hook or a fixture that stops nothing, a loop without && (a countdown among them), a loop whose && joins neither a relational bound nor a counter of its own (an inequality on a state, an equality on a flag while another value counts, a state or a flag read through a TypeScript wrapper, and another receiver's member, another member or another element read through a wrapper while a member counts), text alone and another object's members yield no finding; the controls are the roster's, in order", () => {
     expect(controlsOf("N.")).toStrictEqual(rosterControlsOf("N."));
     expect(Object.keys(CONTROLS), "the planted sites are the roster's, in order and both ways").toEqual(Object.keys(ROSTER.controls));
     COMPARED.push("N");

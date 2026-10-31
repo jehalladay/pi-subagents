@@ -1,0 +1,2006 @@
+{
+ "bead": "wb-pyel.6",
+ "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut and for respin 2 by seat ws-03 (run g10-work-s138) on trunk a4cf24c plus the cut; the census holds its own literals to this file and its rows, quotes, partitions, axes, codes and stems to the bead's row in .beads/issues.jsonl",
+ "constants": {
+  "stems": {
+   "edc": "word",
+   "evidencedirected": "joined"
+  },
+  "axes": [
+   "freshness",
+   "precision",
+   "ceiling"
+  ],
+  "codes": [
+   "clamped",
+   "refused"
+  ],
+  "forbidden": "widened-silently",
+  "classes": [
+   "widened-silently",
+   "widened-with-diagnostic",
+   "clamp-undiagnosed",
+   "clamp-misplaced",
+   "diagnostic-misattributed",
+   "diagnostic-spurious",
+   "diagnostic-untyped",
+   "diagnostics-untyped",
+   "refusal-undiagnosed",
+   "tightening-refused",
+   "tightening-dropped",
+   "inherit-changed",
+   "scope-untyped",
+   "outcome-untyped",
+   "threw"
+  ],
+  "acceptanceLead": "a falsifier where ",
+  "mirrorLead": "monotone-narrowing rule for ",
+  "parent": {
+   "freshness": 300,
+   "precision": 20,
+   "ceiling": 5000
+  },
+  "factors": {
+   "tighter": 0.5,
+   "equal": 1,
+   "looser": 2
+  },
+  "probes": [
+   {
+    "name": "inherit",
+    "request": {}
+   },
+   {
+    "name": "freshness:tighter",
+    "request": {
+     "freshness": 150
+    }
+   },
+   {
+    "name": "freshness:equal",
+    "request": {
+     "freshness": 300
+    }
+   },
+   {
+    "name": "freshness:looser",
+    "request": {
+     "freshness": 600
+    }
+   },
+   {
+    "name": "precision:tighter",
+    "request": {
+     "precision": 10
+    }
+   },
+   {
+    "name": "precision:equal",
+    "request": {
+     "precision": 20
+    }
+   },
+   {
+    "name": "precision:looser",
+    "request": {
+     "precision": 40
+    }
+   },
+   {
+    "name": "ceiling:tighter",
+    "request": {
+     "ceiling": 2500
+    }
+   },
+   {
+    "name": "ceiling:equal",
+    "request": {
+     "ceiling": 5000
+    }
+   },
+   {
+    "name": "ceiling:looser",
+    "request": {
+     "ceiling": 10000
+    }
+   },
+   {
+    "name": "all:tighter",
+    "request": {
+     "freshness": 150,
+     "precision": 10,
+     "ceiling": 2500
+    }
+   },
+   {
+    "name": "all:looser",
+    "request": {
+     "freshness": 600,
+     "precision": 40,
+     "ceiling": 10000
+    }
+   },
+   {
+    "name": "mixed:freshness-looser",
+    "request": {
+     "freshness": 600,
+     "precision": 10,
+     "ceiling": 2500
+    }
+   },
+   {
+    "name": "mixed:precision-looser",
+    "request": {
+     "freshness": 150,
+     "precision": 40,
+     "ceiling": 2500
+    }
+   },
+   {
+    "name": "mixed:ceiling-looser",
+    "request": {
+     "freshness": 150,
+     "precision": 10,
+     "ceiling": 10000
+    }
+   }
+  ],
+  "references": [
+   "clamping",
+   "refusing"
+  ],
+  "typedMutants": [
+   "clamp-silent",
+   "diagnostic-untyped",
+   "diagnostic-misattributed",
+   "refuse-undiagnosed",
+   "refuse-any-change",
+   "tightening-dropped",
+   "inherit-zero",
+   "clamp-below"
+  ],
+  "defaultBound": 1000000,
+  "wideningMutants": [
+   "widen-diagnosed",
+   "first-only",
+   "max-merge",
+   "default-bound",
+   "widen-parent"
+  ],
+  "silentMutants": [
+   "silent:freshness",
+   "silent:precision",
+   "silent:ceiling"
+  ],
+  "controlProbe": "ceiling:looser",
+  "classifierControls": {
+   "lawful-clamp": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 5000
+    },
+    "diagnostics": [
+     {
+      "code": "clamped",
+      "axis": "ceiling",
+      "requested": 10000,
+      "bound": 5000
+     }
+    ]
+   },
+   "lawful-refusal": {
+    "kind": "refused",
+    "diagnostic": {
+     "code": "refused",
+     "axis": "ceiling",
+     "requested": 10000,
+     "bound": 5000
+    }
+   },
+   "no-outcome": null,
+   "unknown-kind": {
+    "kind": "granted",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 5000
+    },
+    "diagnostics": []
+   },
+   "scope-strings": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": "300",
+     "precision": "20",
+     "ceiling": "5000"
+    },
+    "diagnostics": [
+     {
+      "code": "clamped",
+      "axis": "ceiling",
+      "requested": 10000,
+      "bound": 5000
+     }
+    ]
+   },
+   "scope-missing-axis": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20
+    },
+    "diagnostics": [
+     {
+      "code": "clamped",
+      "axis": "ceiling",
+      "requested": 10000,
+      "bound": 5000
+     }
+    ]
+   },
+   "diagnostics-object": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 5000
+    },
+    "diagnostics": {
+     "0": {
+      "code": "clamped",
+      "axis": "ceiling",
+      "requested": 10000,
+      "bound": 5000
+     }
+    }
+   },
+   "diagnostic-string-number": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 5000
+    },
+    "diagnostics": [
+     {
+      "code": "clamped",
+      "axis": "ceiling",
+      "requested": "10000",
+      "bound": 5000
+     }
+    ]
+   },
+   "diagnostic-unknown-code": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 5000
+    },
+    "diagnostics": [
+     {
+      "code": "trimmed",
+      "axis": "ceiling",
+      "requested": 10000,
+      "bound": 5000
+     }
+    ]
+   },
+   "widened-silently": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 10000
+    },
+    "diagnostics": []
+   },
+   "widened-with-diagnostic": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 10000
+    },
+    "diagnostics": [
+     {
+      "code": "clamped",
+      "axis": "ceiling",
+      "requested": 10000,
+      "bound": 5000
+     }
+    ]
+   },
+   "clamped-twice": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 5000
+    },
+    "diagnostics": [
+     {
+      "code": "clamped",
+      "axis": "ceiling",
+      "requested": 10000,
+      "bound": 5000
+     },
+     {
+      "code": "clamped",
+      "axis": "ceiling",
+      "requested": 10000,
+      "bound": 5000
+     }
+    ]
+   },
+   "clamp-code-refused": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 5000
+    },
+    "diagnostics": [
+     {
+      "code": "refused",
+      "axis": "ceiling",
+      "requested": 10000,
+      "bound": 5000
+     }
+    ]
+   },
+   "clamp-bound-requested": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 5000
+    },
+    "diagnostics": [
+     {
+      "code": "clamped",
+      "axis": "ceiling",
+      "requested": 10000,
+      "bound": 10000
+     }
+    ]
+   },
+   "clamp-requested-bound": {
+    "kind": "scoped",
+    "scope": {
+     "freshness": 300,
+     "precision": 20,
+     "ceiling": 5000
+    },
+    "diagnostics": [
+     {
+      "code": "clamped",
+      "axis": "ceiling",
+      "requested": 5000,
+      "bound": 5000
+     }
+    ]
+   },
+   "refusal-code-clamped": {
+    "kind": "refused",
+    "diagnostic": {
+     "code": "clamped",
+     "axis": "ceiling",
+     "requested": 10000,
+     "bound": 5000
+    }
+   },
+   "refusal-bound-requested": {
+    "kind": "refused",
+    "diagnostic": {
+     "code": "refused",
+     "axis": "ceiling",
+     "requested": 10000,
+     "bound": 10000
+    }
+   },
+   "refusal-other-axis": {
+    "kind": "refused",
+    "diagnostic": {
+     "code": "refused",
+     "axis": "precision",
+     "requested": 40,
+     "bound": 20
+    }
+   },
+   "refusal-undiagnosed": {
+    "kind": "refused"
+   }
+  },
+  "permission": [
+   "planted.scope.read",
+   "planted.pair.read",
+   "planted.open.read",
+   "planted:read",
+   "planted:audit"
+  ],
+  "grantContexts": {
+   "exact": [
+    "planted:read"
+   ],
+   "superset": [
+    "planted:read",
+    "planted:write"
+   ],
+   "disjoint": [
+    "planted:write"
+   ],
+   "empty": [],
+   "discover-only": [
+    "discover:planted.scope.read"
+   ],
+   "own-invoke": [
+    "invoke:planted.scope.read"
+   ]
+  },
+  "pairContexts": {
+   "both": [
+    "planted:read",
+    "planted:audit"
+   ],
+   "superset": [
+    "planted:read",
+    "planted:audit",
+    "planted:write"
+   ],
+   "first-only": [
+    "planted:read"
+   ],
+   "second-only": [
+    "planted:audit"
+   ],
+   "own-invoke-and-first": [
+    "invoke:planted.pair.read",
+    "planted:read"
+   ]
+  },
+  "invokeContexts": {
+   "exact": [
+    "invoke:planted.open.read"
+   ],
+   "other-invoke": [
+    "invoke:planted.scope.read"
+   ],
+   "empty": [],
+   "discover-only": [
+    "discover:planted.open.read"
+   ]
+  },
+  "curatedCeilings": {
+   "maxCalls": 10000,
+   "maxInputBytes": 262144,
+   "maxOutputBytes": 262144
+  },
+  "scriptKinds": [
+   ".ts",
+   ".mts",
+   ".cts",
+   ".tsx",
+   ".js",
+   ".mjs",
+   ".cjs",
+   ".jsx"
+  ],
+  "floors": {
+   "modules": 100,
+   "texts": 60000,
+   "declarations": 2500,
+   "members": 7000,
+   "manifestTexts": 80,
+   "descriptorObjects": 16
+  },
+  "requiredDescriptors": [
+   "forge.gate.status",
+   "furnace.run.inspect",
+   "hyperunix.find",
+   "reactivefiber.render.preview"
+  ],
+  "owed": "the until-then has ended: an EDC surface or the freshness/precision/ceiling triple reads PRESENT - bind its composer through falsify(), prove its per-axis silent-widening mutants red and re-measure this census (wb-pyel.6)",
+  "sourceControls": {
+   "identifier": "const EdcAssembler = 1;",
+   "string": "const label = \"evidence-directed context\";",
+   "template": "const label = `EDC ${name} scope`;",
+   "import-specifier": "import { assemble } from \"@example/edc\";",
+   "regex": "const pattern = /EDCs/;",
+   "private-name": "class Host { #edcScope = 1; }",
+   "jsx.tsx": "export const view = <span>EDC scope</span>;",
+   "comment": "// EDC assembly\n/* evidence-directed */\nconst value = 1;",
+   "inside-word": "const credcheck = 1; const reedcraft = 2;",
+   "zero-width": "const label = \"E\u200bDC scope\";",
+   "full-width": "const label = \"\uff25\uff24\uff23 scope\";"
+  },
+  "manifestControls": {
+   "dependency": "{ \"name\": \"x\", \"dependencies\": { \"@example/edc\": \"1.0.0\" } }",
+   "dev-dependency": "{ \"name\": \"x\", \"devDependencies\": { \"evidence-directed-sdk\": \"1.0.0\" } }",
+   "specifier": "{ \"name\": \"x\", \"dependencies\": { \"blocks\": \"npm:edc-assembler@1.0.0\" } }",
+   "shadowed-key": "{ \"name\": \"x\", \"dependencies\": { \"@example/edc\": \"1.0.0\" }, \"dependencies\": { \"blocks\": \"1.0.0\" } }",
+   "clean": "{ \"name\": \"x\", \"description\": \"A workflow workbench\", \"dependencies\": { \"@example/blocks\": \"1.0.0\" } }"
+  },
+  "tripleControls": {
+   "interface": "interface RequestScope { requestFreshness: number; resultPrecision: number; resourceCeiling: number }",
+   "type-literal": "type Scope = { freshness: number; precision: number; ceiling: number };",
+   "class": "class Scope { freshness = 1; precision = 2; ceiling = 3; }",
+   "object-literal": "const scope = { maxFreshness: 1, precision: 2, ceilings: [3] };",
+   "binding-pattern": "function narrow({ freshness, precision, ceiling }: Scope) { return freshness + precision + ceiling; }",
+   "enum": "enum Axis { Freshness, Precision, Ceiling }",
+   "string-keys": "const scope = { \"request_freshness\": 1, \"result-precision\": 2, 'resource ceiling': 3 };",
+   "nested": "interface Outer { limits: { freshness: number; precision: number; ceiling: number }; freshness: number }",
+   "private-names": "class Scope { #freshness = 1; #precision = 2; #ceiling = 3; }",
+   "methods": "interface Scope { freshness(): number; precision(): number; ceiling(): number }",
+   "parameters": "function narrow(requestFreshness: number, resultPrecision: number, resourceCeiling: number) { return requestFreshness; }",
+   "parameter-properties": "class Scope { constructor(readonly freshness: number, readonly precision: number, readonly ceiling: number) {} }",
+   "literal-union": "type Axis = \"freshness\" | \"precision\" | \"ceiling\";",
+   "template-union": "type Axis = `freshness` | `precision` | `ceiling`;",
+   "string-array": "const axes = [\"freshness\", \"precision\", \"ceiling\"] as const;",
+   "plurals": "interface Scope { freshnesses: number[]; precisions: number[]; ceilings: number[] }",
+   "zero-width": "interface Scope { \"fresh\u200bness\": number; precision: number; ceiling: number }",
+   "full-width": "interface Scope { \uff46\uff52\uff45\uff53\uff48\uff4e\uff45\uff53\uff53: number; precision: number; ceiling: number }",
+   "string-names": "interface Scope { \"freshness\": number; 'precision': number; ceiling: number }",
+   "accessors": "interface Scope { get freshness(): number; set precision(value: number); readonly ceiling: number }",
+   "class-accessors": "class Scope { get freshness() { return 1; } set precision(value: number) {} static ceiling = 3; }",
+   "class-expression": "const Scope = class { freshness = 1; precision = 2; ceiling = 3; };",
+   "shorthand": "const scope = { freshness, precision, ceiling };",
+   "object-methods": "const scope = { freshness() { return 1; }, get precision() { return 2; }, set ceiling(value: number) {} };",
+   "enum-string-names": "enum Axis { \"freshness\" = 1, \"precision\" = 2, \"ceiling\" = 3 }",
+   "binding-declaration": "const { freshness, precision, ceiling } = scope;",
+   "binding-renamed": "const { a: freshness, b: precision, c: ceiling } = scope;",
+   "binding-properties": "const { freshness: first, precision: second, ceiling: third } = scope;",
+   "binding-nested": "const { limits: { freshness }, precision, ceiling } = scope;",
+   "array-binding": "const [gateFreshness, gatePrecision, gateCeiling] = [1, 2, 3];",
+   "array-binding-defaults": "const [freshness = 1, , precision, ...ceiling] = values;",
+   "array-binding-nested": "const [[freshness], { precision }, ceiling] = values;",
+   "array-binding-parameter": "function narrow([freshness, precision, ceiling]: readonly number[]) { return freshness + precision + ceiling; }",
+   "parameters-destructured": "function narrow({ freshness }: Scope, [precision]: number[], ceiling: number) { return freshness + precision + ceiling; }",
+   "arrow-parameters": "const narrow = (freshness: number, precision: number, ceiling: number) => freshness;",
+   "function-type": "type Narrow = (freshness: number, precision: number, ceiling: number) => void;",
+   "method-signature": "interface Narrower { narrow(freshness: number, precision: number, ceiling: number): void }",
+   "function-expression": "const narrow = function (freshness: number, precision: number, ceiling: number) { return freshness; };",
+   "class-method": "class Narrower { narrow(freshness: number, precision: number, ceiling: number) { return freshness; } }",
+   "setter-pattern": "class Narrower { set scope({ freshness, precision, ceiling }: Limits) {} }",
+   "call-signature": "interface Narrow { (freshness: number, precision: number, ceiling: number): void }",
+   "construct-signature": "interface NarrowFactory { new (freshness: number, precision: number, ceiling: number): object }",
+   "constructor-type": "type NarrowFactory = new (freshness: number, precision: number, ceiling: number) => object;",
+   "index-signature": "interface Limits { [freshnessPrecisionCeiling: string]: number }",
+   "paren-union": "type Axis = (\"freshness\") | (\"precision\") | (\"ceiling\");",
+   "paren-union-mixed": "type Axis = \"freshness\" | (\"precision\") | `ceiling`;",
+   "paren-union-one": "type Axis = \"freshness\" | \"precision\" | (\"ceiling\");",
+   "paren-union-deep": "type Axis = ((\"freshness\")) | \"precision\" | \"ceiling\";",
+   "nested-union": "type Axis = \"freshness\" | (\"precision\" | (\"ceiling\"));",
+   "template-array": "const axes = [`freshness`, `precision`, `ceiling`];",
+   "array-paren": "const axes = [(\"freshness\"), (\"precision\"), (\"ceiling\")];",
+   "array-as": "const axes = [\"freshness\" as const, \"precision\" as const, \"ceiling\" as const];",
+   "array-satisfies": "const axes = [\"freshness\" satisfies string, \"precision\" satisfies string, \"ceiling\" satisfies string];",
+   "array-assertion": "const axes = [<const>\"freshness\", <const>\"precision\", <const>\"ceiling\"];",
+   "array-non-null": "const axes = [\"freshness\"!, \"precision\"!, \"ceiling\"!];",
+   "array-wrapped-deep": "const axes = [((\"freshness\" as const)), (<const>\"precision\")!, (\"ceiling\" satisfies string)];"
+  },
+  "declarationForms": {
+   "members": {
+    "kinds": [
+     "interface",
+     "type-literal",
+     "class"
+    ],
+    "controls": [
+     "interface",
+     "type-literal",
+     "class",
+     "nested",
+     "private-names",
+     "methods",
+     "plurals",
+     "zero-width",
+     "full-width",
+     "string-names",
+     "accessors",
+     "class-accessors",
+     "class-expression"
+    ]
+   },
+   "object-literal": {
+    "kinds": [
+     "object-literal"
+    ],
+    "controls": [
+     "object-literal",
+     "string-keys",
+     "shorthand",
+     "object-methods"
+    ]
+   },
+   "enum": {
+    "kinds": [
+     "enum"
+    ],
+    "controls": [
+     "enum",
+     "enum-string-names"
+    ]
+   },
+   "binding-pattern": {
+    "kinds": [
+     "binding-pattern",
+     "array-binding-pattern"
+    ],
+    "controls": [
+     "binding-declaration",
+     "binding-renamed",
+     "binding-properties",
+     "binding-nested",
+     "array-binding",
+     "array-binding-defaults",
+     "array-binding-nested"
+    ]
+   },
+   "parameters": {
+    "kinds": [
+     "parameters"
+    ],
+    "controls": [
+     "parameters",
+     "parameter-properties",
+     "binding-pattern",
+     "array-binding-parameter",
+     "parameters-destructured",
+     "arrow-parameters",
+     "function-type",
+     "method-signature",
+     "function-expression",
+     "class-method",
+     "setter-pattern",
+     "call-signature",
+     "construct-signature",
+     "constructor-type",
+     "index-signature"
+    ]
+   },
+   "literal-union": {
+    "kinds": [
+     "literal-union"
+    ],
+    "controls": [
+     "literal-union",
+     "template-union",
+     "paren-union",
+     "paren-union-mixed",
+     "paren-union-one",
+     "paren-union-deep",
+     "nested-union"
+    ]
+   },
+   "string-array": {
+    "kinds": [
+     "string-array"
+    ],
+    "controls": [
+     "string-array",
+     "template-array",
+     "array-paren",
+     "array-as",
+     "array-satisfies",
+     "array-assertion",
+     "array-non-null",
+     "array-wrapped-deep"
+    ]
+   }
+  },
+  "planted": {
+   "id": "planted.scope.read",
+   "version": "1.0.0",
+   "description": "Read one planted scope",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "requestFreshness": {
+      "type": "number"
+     },
+     "resultPrecision": {
+      "type": "number"
+     },
+     "resourceCeiling": {
+      "type": "number"
+     }
+    },
+    "additionalProperties": false
+   },
+   "effectClass": "read",
+   "permissions": [
+    "planted:read"
+   ],
+   "supportedModes": [
+    "invoke"
+   ]
+  },
+  "lookalike": [
+   {
+    "text": "\u0435vidence-directed scope",
+    "lookalike": "\u0435",
+    "latin": "e"
+   },
+   {
+    "text": "ED\u0421 scope",
+    "lookalike": "\u0421",
+    "latin": "C"
+   }
+  ],
+  "lookalikeTriple": "interface Scope { fr\u0435shness: number; precision: number; ceiling: number }",
+  "partialControls": {
+   "two-of-three": "interface Scope { freshness: number; ceiling: number }",
+   "one-of-three": "interface Scope { precision: number }",
+   "split-across": "interface A { freshness: number; precision: number } interface B { ceiling: number }",
+   "nested-split": "interface Outer { limits: { freshness: number }; precision: number; ceiling: number }",
+   "spread-split": "const scope = { ...{ freshness: 1 }, precision: 2, ceiling: 3 };",
+   "array-spread-split": "const axes = [...[\"freshness\", \"precision\"], \"ceiling\"];",
+   "heritage-split": "interface Base { freshness: number } interface Derived extends Base { precision: number; ceiling: number }",
+   "array-nested-split": "const axes = [[\"freshness\"], \"precision\", \"ceiling\"];",
+   "union-argument-split": "type Axis = \"freshness\" | Array<\"precision\" | \"ceiling\">;",
+   "union-intersection-split": "type Axis = \"freshness\" | ((\"precision\" | \"ceiling\") & string);",
+   "binding-default-split": "const { freshness = { precision: 1, ceiling: 2 } } = scope;",
+   "complete": "interface Scope { freshness: number; precision: number; ceiling: number }"
+  },
+  "partialDescriptor": {
+   "id": "planted.partial.read",
+   "version": "1.0.0",
+   "description": "Read one planted scope",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "requestFreshness": {
+      "type": "number"
+     },
+     "resourceCeiling": {
+      "type": "number"
+     }
+    }
+   },
+   "effectClass": "read",
+   "permissions": [
+    "planted:read"
+   ],
+   "supportedModes": [
+    "invoke"
+   ]
+  },
+  "vocabularyControls": {
+   "age": "interface Scope { maxAgeMs: number; staleness: number }",
+   "tolerance": "interface Scope { tolerance: number; accuracy: number; epsilon: number }",
+   "budget": "interface Scope { budget: number; quota: number; limit: number; cap: number }",
+   "adjectives": "interface Scope { fresh: boolean; precise: boolean; ceil: number }",
+   "twin": "interface Scope { freshness: number; precision: number; ceiling: number }"
+  },
+  "composed": [
+   "const CEILING = \"ceiling\"; const scope = { [\"fresh\" + \"ness\"]: 1, [`precision`]: 2, [CEILING]: 3 };",
+   "const label = \"evidence-\" + \"directed\"; const acronym = [\"E\", \"D\", \"C\"].join(\"\");"
+  ],
+  "composedElements": {
+   "constant": "const FRESHNESS = \"freshness\"; const axes = [FRESHNESS, \"precision\", \"ceiling\"];",
+   "type-alias": "type Freshness = \"freshness\"; type Axis = Freshness | \"precision\" | \"ceiling\";",
+   "concatenation": "const axes = [\"fresh\" + \"ness\", \"precision\", \"ceiling\"];",
+   "conditional": "const axes = [strict ? \"freshness\" : \"staleness\", \"precision\", \"ceiling\"];",
+   "template-substitution": "type Axis = `${\"fresh\"}ness` | \"precision\" | \"ceiling\";",
+   "tagged-template": "const axes = [raw`freshness`, \"precision\", \"ceiling\"];",
+   "call": "const axes = [String(\"freshness\"), \"precision\", \"ceiling\"];",
+   "twin": "const axes = [\"freshness\", \"precision\", \"ceiling\"];"
+  },
+  "outOfScope": [
+   "examples/edc-scope.ts",
+   "qa/workbench/edc-scope.mjs",
+   "test/edc-scope.test.ts",
+   "scripts/edc-scope.mjs",
+   "docs/workbench/edc-scope.md",
+   "src/workbench/edc-scope.json",
+   "src/workbench/edc-scope.d.json"
+  ],
+  "outOfScopeModule": "export interface EdcScope { freshness: number; precision: number; ceiling: number }",
+  "evaderFactors": [
+   1.5,
+   3
+  ],
+  "suffixed": [
+   "export const GateEDCv2Client = \"EDCv2\";",
+   "export const GateEdcV2Client = \"EDC v2\";"
+  ],
+  "suffixedTriple": [
+   "interface Scope { FRESHNESSms: number; PRECISIONpct: number; CEILINGbytes: number }",
+   "interface Scope { FRESHNESS_MS: number; PRECISION_PCT: number; CEILING_BYTES: number }"
+  ],
+  "dotted": [
+   "export const ASSEMBLY_LABEL = \"E.D.C. assembly\";",
+   "export const ASSEMBLY_LABEL = \"EDC assembly\";"
+  ],
+  "siteControls": {
+   "type-parameters": "function narrow<Freshness, Precision, Ceiling>(): void {}",
+   "labeled-tuple": "type Scope = [freshness: number, precision: number, ceiling: number];",
+   "tuple-literals": "type Axes = readonly [\"freshness\", \"precision\", \"ceiling\"];",
+   "import-specifiers": "import { freshness, precision, ceiling } from \"./scope\";",
+   "export-specifiers": "export { freshness, precision, ceiling };",
+   "variable-list": "const freshness = 1, precision = 2, ceiling = 3;",
+   "namespace-members": "namespace Scope { export const freshness = 1; export const precision = 2; export const ceiling = 3; }",
+   "module-exports": "export const freshness = 1; export function precision() {} export class Ceiling {}",
+   "array-assignment": "[freshness, precision, ceiling] = values;",
+   "jsx-attributes.tsx": "const view = <Scope freshness={1} precision={2} ceiling={3} />;"
+  },
+  "siteTwin": "interface Scope { freshness: number; precision: number; ceiling: number }",
+  "valueControls": {
+   "member-values": "const names = { a: \"freshness\", b: \"precision\", c: \"ceiling\" };",
+   "call-arguments": "pick(\"freshness\", \"precision\", \"ceiling\");",
+   "case-labels": "switch (axis) { case \"freshness\": case \"precision\": case \"ceiling\": break; }",
+   "enum-initializers": "enum Axis { A = \"freshness\", B = \"precision\", C = \"ceiling\" }"
+  },
+  "valueDescriptor": {
+   "id": "planted.values.read",
+   "version": "1.0.0",
+   "description": "Read one planted scope",
+   "inputSchema": {
+    "type": "object",
+    "properties": {
+     "axis": {
+      "type": "string",
+      "enum": [
+       "freshness",
+       "precision",
+       "ceiling"
+      ]
+     }
+    },
+    "required": [
+     "axis"
+    ],
+    "additionalProperties": false
+   },
+   "effectClass": "read",
+   "permissions": [
+    "planted:read"
+   ],
+   "supportedModes": [
+    "invoke"
+   ]
+  },
+  "digit": [
+   "interface Scope { freshness2: number; precision2: number; ceiling2: number }",
+   "interface Scope { freshness_2: number; precision_2: number; ceiling_2: number }",
+   "export const label = \"EDC2 assembler\"; export const GateEDC2Client = 1;",
+   "export const label = \"EDC 2 assembler\";"
+  ],
+  "doc": [
+   "/** @property freshness @property precision @property ceiling - an EDC assembly scope */\ntype Scope = Record<string, number>;\n// interface Scope { freshness: number; precision: number; ceiling: number }",
+   "interface Scope { freshness: number; precision: number; ceiling: number }"
+  ],
+  "split": [
+   "fresh-ness",
+   "preCision",
+   "ceil_ing",
+   "interface Scope { \"fresh-ness\": number; preCision: number; ceil_ing: number }",
+   "interface Scope { \"freshness\": number; precision: number; ceiling: number }",
+   "export const label = \"E-D-C assembly\"; export const EdC = 1;",
+   "export const label = \"EDC assembly\";"
+  ],
+  "residuals": {
+   "R-LOOKALIKE": [
+    "Q1"
+   ],
+   "R-PARTIAL": [
+    "Q2"
+   ],
+   "R-VOCABULARY": [
+    "Q3"
+   ],
+   "R-COMPOSED": [
+    "Q4"
+   ],
+   "R-SCOPE": [
+    "Q5"
+   ],
+   "R-GRID": [
+    "Q6"
+   ],
+   "R-STATEFUL": [
+    "Q7"
+   ],
+   "R-SUFFIXED": [
+    "Q8"
+   ],
+   "R-DOTTED": [
+    "Q9"
+   ],
+   "R-SITES": [
+    "Q10"
+   ],
+   "R-VALUES": [
+    "Q11"
+   ],
+   "R-DIGIT": [
+    "Q12"
+   ],
+   "R-DOC": [
+    "Q13"
+   ],
+   "R-SPLIT": [
+    "Q14"
+   ]
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead's title, acceptance and notes, and the cases agree",
+  "A1",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "C1",
+  "C2",
+  "D1",
+  "D2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q9",
+  "Q10",
+  "Q11",
+  "Q12",
+  "Q13",
+  "Q14",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "If Pi adopts EDC assembly or components",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "If Pi adopts EDC assembly or components",
+     "witness": {
+      "modulesBelowFloor": false,
+      "textsBelowFloor": false,
+      "untracked": [],
+      "unread": [],
+      "mentions": [],
+      "manifestBelowFloor": false,
+      "manifest": [],
+      "adoption": "ABSENT",
+      "controls": {
+       "scope": {
+        "src/workbench/module.ts": true,
+        "src/workbench/module.mts": true,
+        "src/workbench/module.cts": true,
+        "src/workbench/module.tsx": true,
+        "src/workbench/module.js": true,
+        "src/workbench/module.mjs": true,
+        "src/workbench/module.cjs": true,
+        "src/workbench/module.jsx": true
+       },
+       "sources": {
+        "identifier": [
+         "identifier:1|identifier|edc"
+        ],
+        "string": [
+         "string:1|string|evidencedirected"
+        ],
+        "template": [
+         "template:1|template|edc"
+        ],
+        "import-specifier": [
+         "import-specifier:1|string|edc"
+        ],
+        "regex": [
+         "regex:1|regex|edc"
+        ],
+        "private-name": [
+         "private-name:1|identifier|edc"
+        ],
+        "jsx.tsx": [
+         "jsx.tsx:1|jsx|edc"
+        ],
+        "comment": [],
+        "inside-word": [],
+        "zero-width": [
+         "zero-width:1|string|edc"
+        ],
+        "full-width": [
+         "full-width:1|string|edc"
+        ]
+       },
+       "manifests": {
+        "dependency": [
+         "dependency.dependencies.@example/edc#key|edc",
+         "dependency#raw|edc"
+        ],
+        "dev-dependency": [
+         "dev-dependency.devDependencies.evidence-directed-sdk#key|evidencedirected",
+         "dev-dependency#raw|evidencedirected"
+        ],
+        "specifier": [
+         "specifier.dependencies.blocks|edc",
+         "specifier#raw|edc"
+        ],
+        "shadowed-key": [
+         "shadowed-key#raw|edc"
+        ],
+        "clean": []
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "request freshness, result precision and resource ceiling shall be scoped through parent boundaries with children able to tighten but never silently expand rights",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "a child context requests looser freshness, precision or ceiling than its parent",
+     "witness": {
+      "axes": [
+       "freshness",
+       "precision",
+       "ceiling"
+      ],
+      "parent": {
+       "freshness": 300,
+       "precision": 20,
+       "ceiling": 5000
+      },
+      "grid": [
+       "inherit {} looser=",
+       "freshness:tighter {\"freshness\":150} looser=",
+       "freshness:equal {\"freshness\":300} looser=",
+       "freshness:looser {\"freshness\":600} looser=freshness",
+       "precision:tighter {\"precision\":10} looser=",
+       "precision:equal {\"precision\":20} looser=",
+       "precision:looser {\"precision\":40} looser=precision",
+       "ceiling:tighter {\"ceiling\":2500} looser=",
+       "ceiling:equal {\"ceiling\":5000} looser=",
+       "ceiling:looser {\"ceiling\":10000} looser=ceiling",
+       "all:tighter {\"freshness\":150,\"precision\":10,\"ceiling\":2500} looser=",
+       "all:looser {\"freshness\":600,\"precision\":40,\"ceiling\":10000} looser=freshness+precision+ceiling",
+       "mixed:freshness-looser {\"freshness\":600,\"precision\":10,\"ceiling\":2500} looser=freshness",
+       "mixed:precision-looser {\"freshness\":150,\"precision\":40,\"ceiling\":2500} looser=precision",
+       "mixed:ceiling-looser {\"freshness\":150,\"precision\":10,\"ceiling\":10000} looser=ceiling"
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "and is clamped or refused with a typed diagnostic",
+     "witness": {
+      "references": {
+       "clamping": {
+        "verdict": "holds",
+        "probes": 15,
+        "violations": []
+       },
+       "refusing": {
+        "verdict": "holds",
+        "probes": 15,
+        "violations": []
+       }
+      },
+      "controls": {
+       "lawful-clamp": [],
+       "lawful-refusal": [],
+       "no-outcome": [
+        "ceiling:looser|-|outcome-untyped"
+       ],
+       "unknown-kind": [
+        "ceiling:looser|-|outcome-untyped"
+       ],
+       "scope-strings": [
+        "ceiling:looser|-|scope-untyped"
+       ],
+       "scope-missing-axis": [
+        "ceiling:looser|-|scope-untyped"
+       ],
+       "diagnostics-object": [
+        "ceiling:looser|-|diagnostics-untyped"
+       ],
+       "diagnostic-string-number": [
+        "ceiling:looser|-|diagnostic-untyped",
+        "ceiling:looser|ceiling|clamp-undiagnosed"
+       ],
+       "diagnostic-unknown-code": [
+        "ceiling:looser|-|diagnostic-untyped",
+        "ceiling:looser|ceiling|clamp-undiagnosed"
+       ],
+       "widened-silently": [
+        "ceiling:looser|ceiling|widened-silently"
+       ],
+       "widened-with-diagnostic": [
+        "ceiling:looser|ceiling|widened-with-diagnostic"
+       ],
+       "clamped-twice": [
+        "ceiling:looser|ceiling|diagnostic-misattributed"
+       ],
+       "clamp-code-refused": [
+        "ceiling:looser|ceiling|diagnostic-misattributed"
+       ],
+       "clamp-bound-requested": [
+        "ceiling:looser|ceiling|diagnostic-misattributed"
+       ],
+       "clamp-requested-bound": [
+        "ceiling:looser|ceiling|diagnostic-misattributed"
+       ],
+       "refusal-code-clamped": [
+        "ceiling:looser|ceiling|diagnostic-misattributed"
+       ],
+       "refusal-bound-requested": [
+        "ceiling:looser|ceiling|diagnostic-misattributed"
+       ],
+       "refusal-other-axis": [
+        "ceiling:looser|precision|diagnostic-misattributed"
+       ],
+       "refusal-undiagnosed": [
+        "ceiling:looser|-|refusal-undiagnosed"
+       ]
+      },
+      "mutants": {
+       "clamp-silent": {
+        "verdict": "violated",
+        "probes": 15,
+        "violations": [
+         "freshness:looser|freshness|clamp-undiagnosed",
+         "precision:looser|precision|clamp-undiagnosed",
+         "ceiling:looser|ceiling|clamp-undiagnosed",
+         "all:looser|freshness|clamp-undiagnosed",
+         "all:looser|precision|clamp-undiagnosed",
+         "all:looser|ceiling|clamp-undiagnosed",
+         "mixed:freshness-looser|freshness|clamp-undiagnosed",
+         "mixed:precision-looser|precision|clamp-undiagnosed",
+         "mixed:ceiling-looser|ceiling|clamp-undiagnosed"
+        ]
+       },
+       "diagnostic-untyped": {
+        "verdict": "violated",
+        "probes": 15,
+        "violations": [
+         "freshness:looser|-|diagnostic-untyped",
+         "freshness:looser|freshness|clamp-undiagnosed",
+         "precision:looser|-|diagnostic-untyped",
+         "precision:looser|precision|clamp-undiagnosed",
+         "ceiling:looser|-|diagnostic-untyped",
+         "ceiling:looser|ceiling|clamp-undiagnosed",
+         "all:looser|-|diagnostic-untyped",
+         "all:looser|freshness|clamp-undiagnosed",
+         "all:looser|precision|clamp-undiagnosed",
+         "all:looser|ceiling|clamp-undiagnosed",
+         "mixed:freshness-looser|-|diagnostic-untyped",
+         "mixed:freshness-looser|freshness|clamp-undiagnosed",
+         "mixed:precision-looser|-|diagnostic-untyped",
+         "mixed:precision-looser|precision|clamp-undiagnosed",
+         "mixed:ceiling-looser|-|diagnostic-untyped",
+         "mixed:ceiling-looser|ceiling|clamp-undiagnosed"
+        ]
+       },
+       "diagnostic-misattributed": {
+        "verdict": "violated",
+        "probes": 15,
+        "violations": [
+         "freshness:looser|freshness|clamp-undiagnosed",
+         "freshness:looser|precision|diagnostic-spurious",
+         "precision:looser|precision|clamp-undiagnosed",
+         "precision:looser|ceiling|diagnostic-spurious",
+         "ceiling:looser|freshness|diagnostic-spurious",
+         "ceiling:looser|ceiling|clamp-undiagnosed",
+         "all:looser|freshness|diagnostic-misattributed",
+         "all:looser|precision|diagnostic-misattributed",
+         "all:looser|ceiling|diagnostic-misattributed",
+         "mixed:freshness-looser|freshness|clamp-undiagnosed",
+         "mixed:freshness-looser|precision|diagnostic-spurious",
+         "mixed:precision-looser|precision|clamp-undiagnosed",
+         "mixed:precision-looser|ceiling|diagnostic-spurious",
+         "mixed:ceiling-looser|freshness|diagnostic-spurious",
+         "mixed:ceiling-looser|ceiling|clamp-undiagnosed"
+        ]
+       },
+       "refuse-undiagnosed": {
+        "verdict": "violated",
+        "probes": 15,
+        "violations": [
+         "freshness:looser|-|refusal-undiagnosed",
+         "precision:looser|-|refusal-undiagnosed",
+         "ceiling:looser|-|refusal-undiagnosed",
+         "all:looser|-|refusal-undiagnosed",
+         "mixed:freshness-looser|-|refusal-undiagnosed",
+         "mixed:precision-looser|-|refusal-undiagnosed",
+         "mixed:ceiling-looser|-|refusal-undiagnosed"
+        ]
+       },
+       "refuse-any-change": {
+        "verdict": "violated",
+        "probes": 15,
+        "violations": [
+         "freshness:tighter|-|tightening-refused",
+         "precision:tighter|-|tightening-refused",
+         "ceiling:tighter|-|tightening-refused",
+         "all:tighter|-|tightening-refused",
+         "mixed:precision-looser|freshness|diagnostic-misattributed",
+         "mixed:ceiling-looser|freshness|diagnostic-misattributed"
+        ]
+       },
+       "tightening-dropped": {
+        "verdict": "violated",
+        "probes": 15,
+        "violations": [
+         "freshness:tighter|freshness|tightening-dropped",
+         "precision:tighter|precision|tightening-dropped",
+         "ceiling:tighter|ceiling|tightening-dropped",
+         "all:tighter|freshness|tightening-dropped",
+         "all:tighter|precision|tightening-dropped",
+         "all:tighter|ceiling|tightening-dropped",
+         "mixed:freshness-looser|precision|tightening-dropped",
+         "mixed:freshness-looser|ceiling|tightening-dropped",
+         "mixed:precision-looser|freshness|tightening-dropped",
+         "mixed:precision-looser|ceiling|tightening-dropped",
+         "mixed:ceiling-looser|freshness|tightening-dropped",
+         "mixed:ceiling-looser|precision|tightening-dropped"
+        ]
+       },
+       "inherit-zero": {
+        "verdict": "violated",
+        "probes": 15,
+        "violations": [
+         "inherit|freshness|inherit-changed",
+         "inherit|precision|inherit-changed",
+         "inherit|ceiling|inherit-changed",
+         "freshness:tighter|precision|inherit-changed",
+         "freshness:tighter|ceiling|inherit-changed",
+         "freshness:equal|precision|inherit-changed",
+         "freshness:equal|ceiling|inherit-changed",
+         "freshness:looser|precision|inherit-changed",
+         "freshness:looser|ceiling|inherit-changed",
+         "precision:tighter|freshness|inherit-changed",
+         "precision:tighter|ceiling|inherit-changed",
+         "precision:equal|freshness|inherit-changed",
+         "precision:equal|ceiling|inherit-changed",
+         "precision:looser|freshness|inherit-changed",
+         "precision:looser|ceiling|inherit-changed",
+         "ceiling:tighter|freshness|inherit-changed",
+         "ceiling:tighter|precision|inherit-changed",
+         "ceiling:equal|freshness|inherit-changed",
+         "ceiling:equal|precision|inherit-changed",
+         "ceiling:looser|freshness|inherit-changed",
+         "ceiling:looser|precision|inherit-changed"
+        ]
+       },
+       "clamp-below": {
+        "verdict": "violated",
+        "probes": 15,
+        "violations": [
+         "freshness:looser|freshness|clamp-misplaced",
+         "precision:looser|precision|clamp-misplaced",
+         "ceiling:looser|ceiling|clamp-misplaced",
+         "all:looser|freshness|clamp-misplaced",
+         "all:looser|precision|clamp-misplaced",
+         "all:looser|ceiling|clamp-misplaced",
+         "mixed:freshness-looser|freshness|clamp-misplaced",
+         "mixed:precision-looser|precision|clamp-misplaced",
+         "mixed:ceiling-looser|ceiling|clamp-misplaced"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "quote": "never silently widened",
+     "witness": {
+      "widen-diagnosed": {
+       "verdict": "violated",
+       "probes": 15,
+       "violations": [
+        "freshness:looser|freshness|widened-with-diagnostic",
+        "precision:looser|precision|widened-with-diagnostic",
+        "ceiling:looser|ceiling|widened-with-diagnostic",
+        "all:looser|freshness|widened-with-diagnostic",
+        "all:looser|precision|widened-with-diagnostic",
+        "all:looser|ceiling|widened-with-diagnostic",
+        "mixed:freshness-looser|freshness|widened-with-diagnostic",
+        "mixed:precision-looser|precision|widened-with-diagnostic",
+        "mixed:ceiling-looser|ceiling|widened-with-diagnostic"
+       ]
+      },
+      "first-only": {
+       "verdict": "violated",
+       "probes": 15,
+       "violations": [
+        "all:looser|precision|widened-silently",
+        "all:looser|ceiling|widened-silently",
+        "mixed:precision-looser|precision|widened-silently",
+        "mixed:ceiling-looser|ceiling|widened-silently"
+       ]
+      },
+      "max-merge": {
+       "verdict": "violated",
+       "probes": 15,
+       "violations": [
+        "freshness:tighter|freshness|tightening-dropped",
+        "freshness:looser|freshness|widened-silently",
+        "precision:tighter|precision|tightening-dropped",
+        "precision:looser|precision|widened-silently",
+        "ceiling:tighter|ceiling|tightening-dropped",
+        "ceiling:looser|ceiling|widened-silently",
+        "all:tighter|freshness|tightening-dropped",
+        "all:tighter|precision|tightening-dropped",
+        "all:tighter|ceiling|tightening-dropped",
+        "all:looser|freshness|widened-silently",
+        "all:looser|precision|widened-silently",
+        "all:looser|ceiling|widened-silently",
+        "mixed:freshness-looser|freshness|widened-silently",
+        "mixed:freshness-looser|precision|tightening-dropped",
+        "mixed:freshness-looser|ceiling|tightening-dropped",
+        "mixed:precision-looser|freshness|tightening-dropped",
+        "mixed:precision-looser|precision|widened-silently",
+        "mixed:precision-looser|ceiling|tightening-dropped",
+        "mixed:ceiling-looser|freshness|tightening-dropped",
+        "mixed:ceiling-looser|precision|tightening-dropped",
+        "mixed:ceiling-looser|ceiling|widened-silently"
+       ]
+      },
+      "default-bound": {
+       "verdict": "violated",
+       "probes": 15,
+       "violations": [
+        "inherit|freshness|widened-silently",
+        "inherit|precision|widened-silently",
+        "inherit|ceiling|widened-silently",
+        "freshness:tighter|precision|widened-silently",
+        "freshness:tighter|ceiling|widened-silently",
+        "freshness:equal|precision|widened-silently",
+        "freshness:equal|ceiling|widened-silently",
+        "freshness:looser|freshness|widened-silently",
+        "freshness:looser|precision|widened-silently",
+        "freshness:looser|ceiling|widened-silently",
+        "precision:tighter|freshness|widened-silently",
+        "precision:tighter|ceiling|widened-silently",
+        "precision:equal|freshness|widened-silently",
+        "precision:equal|ceiling|widened-silently",
+        "precision:looser|freshness|widened-silently",
+        "precision:looser|precision|widened-silently",
+        "precision:looser|ceiling|widened-silently",
+        "ceiling:tighter|freshness|widened-silently",
+        "ceiling:tighter|precision|widened-silently",
+        "ceiling:equal|freshness|widened-silently",
+        "ceiling:equal|precision|widened-silently",
+        "ceiling:looser|freshness|widened-silently",
+        "ceiling:looser|precision|widened-silently",
+        "ceiling:looser|ceiling|widened-silently",
+        "all:looser|freshness|widened-silently",
+        "all:looser|precision|widened-silently",
+        "all:looser|ceiling|widened-silently",
+        "mixed:freshness-looser|freshness|widened-silently",
+        "mixed:precision-looser|precision|widened-silently",
+        "mixed:ceiling-looser|ceiling|widened-silently"
+       ]
+      },
+      "widen-parent": {
+       "verdict": "violated",
+       "probes": 15,
+       "violations": [
+        "freshness:looser|-|threw",
+        "precision:looser|-|threw",
+        "ceiling:looser|-|threw",
+        "all:looser|-|threw",
+        "mixed:freshness-looser|-|threw",
+        "mixed:precision-looser|-|threw",
+        "mixed:ceiling-looser|-|threw"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B4",
+     "quote": "a silent-widening mutant goes red",
+     "witness": {
+      "silent:freshness": {
+       "verdict": "violated",
+       "probes": 15,
+       "violations": [
+        "freshness:looser|freshness|widened-silently",
+        "all:looser|freshness|widened-silently",
+        "mixed:freshness-looser|freshness|widened-silently"
+       ]
+      },
+      "silent:precision": {
+       "verdict": "violated",
+       "probes": 15,
+       "violations": [
+        "precision:looser|precision|widened-silently",
+        "all:looser|precision|widened-silently",
+        "mixed:precision-looser|precision|widened-silently"
+       ]
+      },
+      "silent:ceiling": {
+       "verdict": "violated",
+       "probes": 15,
+       "violations": [
+        "ceiling:looser|ceiling|widened-silently",
+        "all:looser|ceiling|widened-silently",
+        "mixed:ceiling-looser|ceiling|widened-silently"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "mirroring Pi's existing grant discipline",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "grants",
+     "witness": {
+      "permission": {
+       "exact": "dispatched calls=1",
+       "superset": "dispatched calls=1",
+       "disjoint": "refused:authorization calls=0",
+       "empty": "refused:authorization calls=0",
+       "discover-only": "refused:authorization calls=0",
+       "own-invoke": "refused:authorization calls=0"
+      },
+      "pair": {
+       "both": "dispatched calls=1",
+       "superset": "dispatched calls=1",
+       "first-only": "refused:authorization calls=0",
+       "second-only": "refused:authorization calls=0",
+       "own-invoke-and-first": "refused:authorization calls=0"
+      },
+      "invoke": {
+       "exact": "dispatched calls=1",
+       "other-invoke": "refused:authorization calls=0",
+       "empty": "refused:authorization calls=0",
+       "discover-only": "refused:authorization calls=0"
+      },
+      "discover": {
+       "none": [],
+       "permission": [
+        "planted.scope.read"
+       ],
+       "invoke-grants": [],
+       "both": [
+        "planted.scope.read",
+        "planted.open.read"
+       ]
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "tool surfaces",
+     "witness": {
+      "maxCalls": {
+       "below": "accepted",
+       "at": "accepted",
+       "above": "refused:validation"
+      },
+      "maxInputBytes": {
+       "below": "accepted",
+       "at": "accepted",
+       "above": "refused:validation"
+      },
+      "maxOutputBytes": {
+       "below": "accepted",
+       "at": "accepted",
+       "above": "refused:validation"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "Artifact: a Pi EDC assembly/component surface carrying scoped freshness/precision/ceiling (none exists)",
+   "pins": [
+    {
+     "id": "D1",
+     "quote": "Artifact: a Pi EDC assembly/component surface carrying scoped freshness/precision/ceiling",
+     "witness": {
+      "declarationsBelowFloor": false,
+      "membersBelowFloor": false,
+      "triples": [],
+      "native": {
+       "missing": [],
+       "objectsBelowFloor": false,
+       "descriptions": [
+        "forge.gate.status: Read current Forge workspace gate readiness; last_result is historical only.",
+        "furnace.run.inspect: Attach read-only to external native Furnace Run",
+        "hyperunix.find: Native bounded HX query with coverage",
+        "reactivefiber.render.preview: RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)"
+       ],
+       "triples": []
+      },
+      "injected": {
+       "missing": [],
+       "objectsBelowFloor": false,
+       "descriptions": [
+        "forge.gate.status: Read Forge workspace gate status. Historical results are not current verification.",
+        "furnace.run.inspect: Read native Furnace Run record without starting or controlling it",
+        "hyperunix.find: Read typed HX results with native coverage and query basis",
+        "reactivefiber.render.preview: Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)"
+       ],
+       "triples": []
+      },
+      "artifact": "ABSENT",
+      "controls": {
+       "sources": {
+        "interface": [
+         "interface:1|interface|requestFreshness+resultPrecision+resourceCeiling"
+        ],
+        "type-literal": [
+         "type-literal:1|type-literal|freshness+precision+ceiling"
+        ],
+        "class": [
+         "class:1|class|freshness+precision+ceiling"
+        ],
+        "object-literal": [
+         "object-literal:1|object-literal|maxFreshness+precision+ceilings"
+        ],
+        "binding-pattern": [
+         "binding-pattern:1|parameters|freshness+precision+ceiling",
+         "binding-pattern:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "enum": [
+         "enum:1|enum|Freshness+Precision+Ceiling"
+        ],
+        "string-keys": [
+         "string-keys:1|object-literal|request_freshness+result-precision+resource ceiling"
+        ],
+        "nested": [
+         "nested:1|type-literal|freshness+precision+ceiling"
+        ],
+        "private-names": [
+         "private-names:1|class|#freshness+#precision+#ceiling"
+        ],
+        "methods": [
+         "methods:1|interface|freshness+precision+ceiling"
+        ],
+        "parameters": [
+         "parameters:1|parameters|requestFreshness+resultPrecision+resourceCeiling"
+        ],
+        "parameter-properties": [
+         "parameter-properties:1|parameters|freshness+precision+ceiling"
+        ],
+        "literal-union": [
+         "literal-union:1|literal-union|freshness+precision+ceiling"
+        ],
+        "template-union": [
+         "template-union:1|literal-union|freshness+precision+ceiling"
+        ],
+        "string-array": [
+         "string-array:1|string-array|freshness+precision+ceiling"
+        ],
+        "plurals": [
+         "plurals:1|interface|freshnesses+precisions+ceilings"
+        ],
+        "zero-width": [
+         "zero-width:1|interface|fresh\u200bness+precision+ceiling"
+        ],
+        "full-width": [
+         "full-width:1|interface|\uff46\uff52\uff45\uff53\uff48\uff4e\uff45\uff53\uff53+precision+ceiling"
+        ],
+        "string-names": [
+         "string-names:1|interface|freshness+precision+ceiling"
+        ],
+        "accessors": [
+         "accessors:1|interface|freshness+precision+ceiling"
+        ],
+        "class-accessors": [
+         "class-accessors:1|class|freshness+precision+ceiling"
+        ],
+        "class-expression": [
+         "class-expression:1|class|freshness+precision+ceiling"
+        ],
+        "shorthand": [
+         "shorthand:1|object-literal|freshness+precision+ceiling"
+        ],
+        "object-methods": [
+         "object-methods:1|object-literal|freshness+precision+ceiling"
+        ],
+        "enum-string-names": [
+         "enum-string-names:1|enum|freshness+precision+ceiling"
+        ],
+        "binding-declaration": [
+         "binding-declaration:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "binding-renamed": [
+         "binding-renamed:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "binding-properties": [
+         "binding-properties:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "binding-nested": [
+         "binding-nested:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "array-binding": [
+         "array-binding:1|array-binding-pattern|gateFreshness+gatePrecision+gateCeiling"
+        ],
+        "array-binding-defaults": [
+         "array-binding-defaults:1|array-binding-pattern|freshness+precision+ceiling"
+        ],
+        "array-binding-nested": [
+         "array-binding-nested:1|array-binding-pattern|freshness+precision+ceiling"
+        ],
+        "array-binding-parameter": [
+         "array-binding-parameter:1|parameters|freshness+precision+ceiling",
+         "array-binding-parameter:1|array-binding-pattern|freshness+precision+ceiling"
+        ],
+        "parameters-destructured": [
+         "parameters-destructured:1|parameters|freshness+precision+ceiling"
+        ],
+        "arrow-parameters": [
+         "arrow-parameters:1|parameters|freshness+precision+ceiling"
+        ],
+        "function-type": [
+         "function-type:1|parameters|freshness+precision+ceiling"
+        ],
+        "method-signature": [
+         "method-signature:1|parameters|freshness+precision+ceiling"
+        ],
+        "function-expression": [
+         "function-expression:1|parameters|freshness+precision+ceiling"
+        ],
+        "class-method": [
+         "class-method:1|parameters|freshness+precision+ceiling"
+        ],
+        "setter-pattern": [
+         "setter-pattern:1|parameters|freshness+precision+ceiling",
+         "setter-pattern:1|binding-pattern|freshness+precision+ceiling"
+        ],
+        "call-signature": [
+         "call-signature:1|parameters|freshness+precision+ceiling"
+        ],
+        "construct-signature": [
+         "construct-signature:1|parameters|freshness+precision+ceiling"
+        ],
+        "constructor-type": [
+         "constructor-type:1|parameters|freshness+precision+ceiling"
+        ],
+        "index-signature": [
+         "index-signature:1|parameters|freshnessPrecisionCeiling"
+        ],
+        "paren-union": [
+         "paren-union:1|literal-union|freshness+precision+ceiling"
+        ],
+        "paren-union-mixed": [
+         "paren-union-mixed:1|literal-union|freshness+precision+ceiling"
+        ],
+        "paren-union-one": [
+         "paren-union-one:1|literal-union|freshness+precision+ceiling"
+        ],
+        "paren-union-deep": [
+         "paren-union-deep:1|literal-union|freshness+precision+ceiling"
+        ],
+        "nested-union": [
+         "nested-union:1|literal-union|freshness+precision+ceiling"
+        ],
+        "template-array": [
+         "template-array:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-paren": [
+         "array-paren:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-as": [
+         "array-as:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-satisfies": [
+         "array-satisfies:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-assertion": [
+         "array-assertion:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-non-null": [
+         "array-non-null:1|string-array|freshness+precision+ceiling"
+        ],
+        "array-wrapped-deep": [
+         "array-wrapped-deep:1|string-array|freshness+precision+ceiling"
+        ]
+       },
+       "descriptor": [
+        "planted.scope.read.inputSchema.properties|requestFreshness+resultPrecision+resourceCeiling"
+       ]
+      }
+     }
+    },
+    {
+     "id": "D2",
+     "quote": "(none exists)",
+     "witness": {
+      "semantics": {
+       "ABSENT/ABSENT": "pass",
+       "ABSENT/PRESENT": "owed",
+       "PRESENT/ABSENT": "owed",
+       "PRESENT/PRESENT": "owed"
+      },
+      "composition": {
+       "adoption:manifest-only": "PRESENT",
+       "adoption:src-only": "PRESENT",
+       "adoption:neither": "ABSENT",
+       "artifact:src-only": "PRESENT",
+       "artifact:first-registration": "PRESENT",
+       "artifact:second-registration": "PRESENT",
+       "artifact:neither": "ABSENT"
+      },
+      "live": {
+       "adoption": "ABSENT",
+       "artifact": "ABSENT",
+       "verdict": "pass"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "quote": "R-LOOKALIKE",
+     "witness": {
+      "lookalike": [
+       [],
+       []
+      ],
+      "repaired": [
+       [
+        "evidencedirected"
+       ],
+       [
+        "edc"
+       ]
+      ],
+      "triple": {
+       "axes": [],
+       "lookalike": [],
+       "repaired": [
+        "repaired-triple:1|interface|freshness+precision+ceiling"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Q2",
+     "quote": "R-PARTIAL",
+     "witness": {
+      "sources": {
+       "two-of-three": [],
+       "one-of-three": [],
+       "split-across": [],
+       "nested-split": [],
+       "spread-split": [],
+       "array-spread-split": [],
+       "heritage-split": [],
+       "array-nested-split": [],
+       "union-argument-split": [],
+       "union-intersection-split": [],
+       "binding-default-split": [],
+       "complete": [
+        "complete:1|interface|freshness+precision+ceiling"
+       ]
+      },
+      "descriptor": []
+     }
+    },
+    {
+     "id": "Q3",
+     "quote": "R-VOCABULARY",
+     "witness": {
+      "age": [
+       []
+      ],
+      "tolerance": [
+       []
+      ],
+      "budget": [
+       []
+      ],
+      "adjectives": [
+       []
+      ],
+      "twin": [
+       [
+        "freshness",
+        "precision",
+        "ceiling"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "Q4",
+     "quote": "R-COMPOSED",
+     "witness": {
+      "declaration": [],
+      "source": [],
+      "parts": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "elements": {
+       "constant": [],
+       "type-alias": [],
+       "concatenation": [],
+       "conditional": [],
+       "template-substitution": [],
+       "tagged-template": [],
+       "call": [],
+       "twin": [
+        "twin:1|string-array|freshness+precision+ceiling"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Q5",
+     "quote": "R-SCOPE",
+     "witness": {
+      "inScope": [],
+      "walked": [],
+      "readDirectly": [
+       {
+        "path": "examples/edc-scope.ts",
+        "mentions": [
+         "examples/edc-scope.ts:1|identifier|edc"
+        ],
+        "triples": [
+         "examples/edc-scope.ts:1|interface|freshness+precision+ceiling"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q6",
+     "quote": "R-GRID",
+     "witness": {
+      "grid": {
+       "verdict": "holds",
+       "probes": 15,
+       "violations": []
+      },
+      "offGrid": [
+       [
+        "ceiling:x1.5|ceiling|widened-silently"
+       ],
+       [
+        "ceiling:x3|ceiling|widened-silently"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "Q7",
+     "quote": "R-STATEFUL",
+     "witness": {
+      "first": "holds",
+      "second": "violated",
+      "secondClasses": [
+       "widened-silently"
+      ],
+      "secondViolations": 9
+     }
+    },
+    {
+     "id": "Q8",
+     "quote": "R-SUFFIXED",
+     "witness": {
+      "suffixed": [],
+      "twin": [
+       "suffixed-twin:1|identifier|edc",
+       "suffixed-twin:1|string|edc"
+      ],
+      "axes": [],
+      "triple": [],
+      "tripleTwin": [
+       "suffixed-triple-twin:1|interface|FRESHNESS_MS+PRECISION_PCT+CEILING_BYTES"
+      ]
+     }
+    },
+    {
+     "id": "Q9",
+     "quote": "R-DOTTED",
+     "witness": {
+      "dotted": [],
+      "twin": [
+       "dotted-twin:1|string|edc"
+      ]
+     }
+    },
+    {
+     "id": "Q10",
+     "quote": "R-SITES",
+     "witness": {
+      "sites": {
+       "type-parameters": [],
+       "labeled-tuple": [],
+       "tuple-literals": [],
+       "import-specifiers": [],
+       "export-specifiers": [],
+       "variable-list": [],
+       "namespace-members": [],
+       "module-exports": [],
+       "array-assignment": [],
+       "jsx-attributes.tsx": []
+      },
+      "twin": [
+       "site-twin:1|interface|freshness+precision+ceiling"
+      ]
+     }
+    },
+    {
+     "id": "Q11",
+     "quote": "R-VALUES",
+     "witness": {
+      "values": {
+       "member-values": [],
+       "call-arguments": [],
+       "case-labels": [],
+       "enum-initializers": []
+      },
+      "descriptor": [],
+      "twin": [
+       "planted.scope.read.inputSchema.properties|requestFreshness+resultPrecision+resourceCeiling"
+      ]
+     }
+    },
+    {
+     "id": "Q12",
+     "quote": "R-DIGIT",
+     "witness": {
+      "axes": [],
+      "triple": [],
+      "tripleTwin": [
+       "digit-triple-twin:1|interface|freshness_2+precision_2+ceiling_2"
+      ],
+      "source": [],
+      "sourceTwin": [
+       "digit-source-twin:1|string|edc"
+      ]
+     }
+    },
+    {
+     "id": "Q13",
+     "quote": "R-DOC",
+     "witness": {
+      "triples": [],
+      "mentions": [],
+      "twin": [
+       "doc-twin:1|interface|freshness+precision+ceiling"
+      ]
+     }
+    },
+    {
+     "id": "Q14",
+     "quote": "R-SPLIT",
+     "witness": {
+      "axes": [],
+      "triple": [],
+      "tripleTwin": [
+       "split-triple-twin:1|interface|freshness+precision+ceiling"
+      ],
+      "source": [],
+      "sourceTwin": [
+       "split-source-twin:1|string|edc"
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}
