@@ -80,12 +80,17 @@
  * its notes, nothing else of it: a title whose quoted label or gating artifact changes, or a filing whose acceptance clauses
  * change, reds the judged set by design; appended notes and status writes do not.
  * PIN MEMBERSHIP (wb-530q F1), read against that clause text, never the row labels: each pin's quote sits in its clause
- * exactly once at word boundaries, the pins of a row leave unquoted exactly the row's NOT-DUE spans (NOT_DUE: none of (a);
- * every word of (b) after its trigger B1's quote, (b) being not due; "or receipt" in (c), the receipt half B1 holds back),
- * and every pin is load-bearing: without it, a word of its row goes unquoted. A pin removed from ROWS, IMPL, the frozen shape
- * and the roster together, every other quote and not-due span unchanged, therefore leaves its words unquoted and the clause
- * reds it (the wb-b9n.3 gate's G7a and G7b hollows, which this anchor did not bind before), and so does a quote shortened
- * inside its span; a removal that widens another quote or a not-due span over those words is the edit class above.
+ * exactly once at word boundaries, the pins of a row quote disjoint spans (no word of a clause is quoted by two pins;
+ * wb-v4d5 F1), they leave unquoted exactly the row's NOT-DUE spans (NOT_DUE: none of (a); every word of (b) after its
+ * trigger B1's quote, (b) being not due; "or receipt" in (c), the receipt half B1 holds back), and every pin is
+ * load-bearing: without it, a word of its row goes unquoted. A pin removed from ROWS, IMPL, the frozen shape and the roster
+ * together, every other quote and not-due span unchanged, therefore leaves its words unquoted and the clause reds it (the
+ * wb-b9n.3 gate's G7a and G7b hollows, which this anchor did not bind before). So does a quote shortened inside its span, in
+ * ROWS and the roster: if the shorter quote still sits once at word boundaries, the spans being disjoint, no other quote
+ * covers a word it drops and that word goes unquoted; if it does not, it reads misplaced. A quote widened over another
+ * pin's words reads shared. A removal that widens another quote or a not-due span over the removed pin's words is the edit
+ * class above. Until wb-v4d5, C3 quoted 'renders it as quoted data' over C4's 'quoted data', so a C3 shortened at its tail
+ * into those words (the wb-dpoo gate's PSHORT_C3 and PSHORT_C3b) read clean; C3 now quotes 'renders it as'.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal and NOT_DUE pins `${id}:${unquoted words}`
  * as another; rows, constants, residuals, the not-due spans, the edit readings (R-PIN-EDIT) and every pin's witness are held
  * to the out-of-file roster
@@ -104,15 +109,21 @@
  *     reader type named after the artifact).
  *   R-PIN-EDIT (MEMBERSHIP, the judged set; wb-dpoo F1) the edit class of the LIMIT above, PWIDEN and PMERGE. Its rows are
  *     planted edits of this census's own ROWS and NOT_DUE (PLANTED_EDITS), each read by the same membership law against the
- *     export's clauses, its reading (the edited table's pins, whether the law holds, and any misplaced quote, unquoted run
- *     or idle pin) held to the roster's edits. Quiet, the law holds: widenA (A2 out, NOT_DUE.A widened to A2's quote), mergeA
- *     (A2 out, A1 widened over A2's quote) and mergeC (C3 out, C4 widened over C3's quote). Twins, the law reds: removeA and
- *     removeC (the same pins out, nothing widened). Beside them ride two law controls, outside the residual, each the law's
- *     other defect on an edit of this table: redundantA (a pin A4 quoting 'CAC-verified label', inside A3's span) reads idle,
- *     and misplacedA (A1 quoting 'a', which sits twice in clause (a)) reads misplaced, so a law that stops reading either
- *     moves their readings. Each reading carries the edited table's pin ids and the edits remove two different pins, so a
- *     pin removed, added, renamed or reordered in ROWS while PLANTED_EDITS and the roster's edits stay as they are moves a
- *     reading; an edit that rewrites those as well is not detected.
+ *     export's clauses, its reading (the edited table's pins, whether the law holds, and any misplaced quote, unquoted run,
+ *     idle pin or shared run) held to the roster's edits. Quiet, the law holds: widenA (A2 out, NOT_DUE.A widened to A2's
+ *     quote), mergeA (A2 out, A1 widened over A2's quote) and mergeC (C3 out, C4 widened over C3's quote). Twins, the law
+ *     reds: removeA and removeC (the same pins out, nothing widened). Beside them ride seven law controls, outside the
+ *     residual, edits of this table in which the law reads a defect: redundantA (a pin A4 quoting 'CAC-verified label',
+ *     inside A3's span) reads idle and shared; misplacedA (A1 quoting 'a', which sits twice in clause (a)) reads misplaced;
+ *     the boundary controls (wb-v4d5 F2) midWordStartA (A1 quoting 'ermetic guard proving', which sits once but starts
+ *     inside a word) and midWordEndA (A1 quoting 'a hermetic guard prov', which ends inside one) read misplaced; sharedC (C3
+ *     widened back over C4's 'quoted data') reads shared; and shortenedC3 (C3 shortened at its tail to 'renders it') and
+ *     shortenedC4 (C4 shortened at its head to 'data only') read the dropped word unquoted (wb-v4d5 F1). So a law that stops
+ *     reading any of those defects, or drops the word-boundary test at a quote's start or at its end, moves a reading. Each
+ *     reading carries the edited table's pin ids and the edits remove two different pins, so a pin removed, added, renamed or
+ *     reordered in ROWS while PLANTED_EDITS and the roster's edits stay as they are moves a reading; an edit that rewrites
+ *     those as well is not detected. Nor is a law control removed from PLANTED_EDITS and the roster's edits together: no
+ *     residual names the controls, so the roster alone holds them.
  *
  * MEASURED AT THE CUT (base dc72a6d, read-only; seat records, not assertions): src and docs hold 0 'CAC' word hits; test held 6
  * files with word hits before this cut (MW-CAC-WORKFLOW-COMPOSITION requirement ids and the planted citation corpus of the
@@ -131,6 +142,17 @@
  * with the roster's edit readings re-measured to match (the residual's quiet-row and twin check), and 0 of 9 when
  * PLANTED_EDITS, the residual's rows and the roster's edits are rewritten as well (the LIMIT); each layout swap reads 2
  * failed of 10 (A1 and records).
+ * MEASURED AT THE wb-v4d5 CUT (base 242b275, read-only; seat records, not assertions): on the landed census C3 shortened to
+ * 'renders it as' or 'renders it as quoted' (ROWS and the roster) and quoteStarts testing no word boundary, only the start's
+ * or only the end's, each read 0 failed of 10, and C4 shortened at its head read 1 of 10 only through removeC's reading. On
+ * this one each pin shortened by one word at its head or at its tail (16 edits, ROWS and the roster) reads 1 failed of 10 at
+ * the unquoted runs, and C3 widened back to its landed quote or by one word, and C4, A1 and A2 each widened by one word over
+ * a neighbour, read 1 of 10 at the shared runs. Each of the three boundary-test edits, the shared reading dropped, narrowed
+ * or ignored by holds, the unquoted reading dropped, the idle reading dropped and the misplaced reading dropped or loosened
+ * reads 1 of 10 at the roster's edit readings or the clause. The clause's own shared assert deleted reads 0 of 10 (no run is
+ * shared on this table); with C3 widened back as well it reads 1 of 10 at the edit readings, and 1 of 10 again with the
+ * roster's rows and edits re-measured to match, at the residual's quiet rows (widenA and mergeA keep C3 and C4). Any law
+ * control out of PLANTED_EDITS alone reads 1 of 10; out of PLANTED_EDITS and the roster's edits together, 0 of 10.
  *
  * Display paths added: none. Test-only: every fixture lives in memory (no scratch; the only spawn is git ls-files); src and
  * the bead export are only read.
@@ -203,7 +225,7 @@ const ROWS: readonly Row[] = [
     pins: [
       { id: "C1", quote: "a gate.status" },
       { id: "C2", quote: "payload embedding the literal string" },
-      { id: "C3", quote: "renders it as quoted data" },
+      { id: "C3", quote: "renders it as" },
       { id: "C4", quote: "quoted data only" },
     ],
   },
@@ -256,14 +278,14 @@ function quoteStarts(body: string, quote: string): number[] {
   return starts;
 }
 /**
- * One clause read against its row's pin quotes: the words no quote covers, as maximal runs of the clause's own text (the
- * "(x) " marker is not a word; a word is quoted when a quote covers any of it), and every quote that does not sit in the
- * clause exactly once at word boundaries.
+ * One clause read against its row's pin quotes: the words no quote covers and the words two or more quotes cover (wb-v4d5 F1),
+ * each as maximal runs of the clause's own text (the "(x) " marker is not a word; a word is quoted when a quote covers any of
+ * it), and every quote that does not sit in the clause exactly once at word boundaries (such a quote covers no word).
  */
-function unquoted(clause: string, quotes: readonly string[]): { runs: string[]; misplaced: string[] } {
+function unquoted(clause: string, quotes: readonly string[]): { runs: string[]; shared: string[]; misplaced: string[] } {
   const body = clause.replace(/^\([a-z]\) /, "");
   const words = [...body.matchAll(/\S+/g)].map(match => ({ start: match.index, end: match.index + match[0].length }));
-  const quoted = words.map(() => false);
+  const covers = words.map(() => 0);
   const misplaced: string[] = [];
   for (const quote of quotes) {
     const starts = quoteStarts(body, quote);
@@ -272,22 +294,29 @@ function unquoted(clause: string, quotes: readonly string[]): { runs: string[]; 
       misplaced.push(quote);
       continue;
     }
-    for (const [index, word] of words.entries()) if (word.start < start + quote.length && word.end > start) quoted[index] = true;
+    for (const [index, word] of words.entries()) if (word.start < start + quote.length && word.end > start) covers[index] = (covers[index] ?? 0) + 1;
   }
-  const runs: string[] = [];
-  let open: number | undefined;
-  for (const [index, word] of words.entries()) {
-    if (!quoted[index]) open ??= word.start;
-    else if (open !== undefined) {
-      runs.push(body.slice(open, words[index - 1]?.end));
-      open = undefined;
+  /** The maximal runs of the clause's words whose quote count the test accepts. */
+  const runsOf = (accepts: (count: number) => boolean): string[] => {
+    const runs: string[] = [];
+    let open: number | undefined;
+    for (const [index, word] of words.entries()) {
+      if (accepts(covers[index] ?? 0)) open ??= word.start;
+      else if (open !== undefined) {
+        runs.push(body.slice(open, words[index - 1]?.end));
+        open = undefined;
+      }
     }
-  }
-  if (open !== undefined) runs.push(body.slice(open, words.at(-1)?.end));
-  return { runs, misplaced };
+    if (open !== undefined) runs.push(body.slice(open, words.at(-1)?.end));
+    return runs;
+  };
+  return { runs: runsOf(count => count === 0), shared: runsOf(count => count > 1), misplaced };
 }
-/** The membership law over one table, the census's own or a planted edit of it: misplaced quotes, the unquoted runs by row, idle pins. */
-interface Membership { readonly misplaced: string[]; readonly runs: Record<string, string[]>; readonly idle: string[] }
+/**
+ * The membership law over one table, the census's own or a planted edit of it: misplaced quotes, the unquoted runs by row, idle
+ * pins, and the runs two pins of a row quote (shared, as row:run).
+ */
+interface Membership { readonly misplaced: string[]; readonly runs: Record<string, string[]>; readonly idle: string[]; readonly shared: string[] }
 function membership(rows: readonly Row[], notDue: Readonly<Record<string, readonly string[]>>, clauses: readonly string[]): Membership {
   const quotesOf = (row: Row, without?: Pin): string[] => row.pins.filter(pin => pin !== without).map(pin => pin.quote);
   const readings = rows.map((row, index) => unquoted(clauses[index] ?? "", quotesOf(row)));
@@ -296,13 +325,15 @@ function membership(rows: readonly Row[], notDue: Readonly<Record<string, readon
     misplaced: rows.flatMap((row, index) => (readings[index]?.misplaced ?? []).map(quote => `${row.id}:${quote}`)),
     runs: Object.fromEntries(rows.map((row, index) => [row.id, readings[index]?.runs ?? []])),
     idle: rows.flatMap((row, index) => row.pins.filter(pin => idle(row, index, pin)).map(pin => pin.id)),
+    shared: rows.flatMap((row, index) => (readings[index]?.shared ?? []).map(run => `${row.id}:${run}`)),
   };
 }
 /**
  * R-PIN-EDIT's rows (wb-dpoo F1): edits of this census's own table, each a pin removed and, for the quiet rows, a widening over
- * its words, of a neighbouring pin's quote (PMERGE) or of its row's not-due spans (PWIDEN). The twins widen nothing. The two
- * law controls are the law's other defects on an edit of this table: a redundant pin (idle) and a quote sitting twice
- * (misplaced).
+ * its words, of a neighbouring pin's quote (PMERGE) or of its row's not-due spans (PWIDEN). The twins widen nothing. The law
+ * controls are the defects the law reads on an edit of this table: a redundant pin (idle and shared), a quote sitting twice
+ * (misplaced), a quote sitting once but starting or ending inside a word (misplaced; wb-v4d5 F2), a quote widened over a
+ * neighbour's words (shared) and a quote shortened inside its span at its tail or at its head (unquoted; wb-v4d5 F1).
  */
 interface PlantedEdit {
   readonly remove?: string;
@@ -318,6 +349,11 @@ const PLANTED_EDITS: Readonly<Record<string, PlantedEdit>> = {
   removeC: { remove: "C3" },
   redundantA: { add: { row: "A", pin: { id: "A4", quote: "CAC-verified label" } } },
   misplacedA: { requote: { pin: "A1", quote: "a" } },
+  midWordStartA: { requote: { pin: "A1", quote: "ermetic guard proving" } },
+  midWordEndA: { requote: { pin: "A1", quote: "a hermetic guard prov" } },
+  sharedC: { requote: { pin: "C3", quote: "renders it as quoted data" } },
+  shortenedC3: { requote: { pin: "C3", quote: "renders it" } },
+  shortenedC4: { requote: { pin: "C4", quote: "data only" } },
 };
 interface EditReading {
   readonly pins: readonly string[];
@@ -325,6 +361,7 @@ interface EditReading {
   readonly misplaced: readonly string[];
   readonly unquoted: Readonly<Record<string, readonly string[]>>;
   readonly idle: readonly string[];
+  readonly shared: readonly string[];
 }
 /** One planted edit applied to ROWS and NOT_DUE as they stand, read by the membership law: holds when it reads as this table reads. */
 function editReading(edit: PlantedEdit, clauses: readonly string[]): EditReading {
@@ -343,8 +380,8 @@ function editReading(edit: PlantedEdit, clauses: readonly string[]): EditReading
   const unquotedRows = Object.fromEntries(ids.filter(id => JSON.stringify(law.runs[id] ?? []) !== JSON.stringify(notDue[id] ?? [])).map(id => [id, law.runs[id] ?? []]));
   return {
     pins: rows.map(row => `${row.id}:${row.pins.map(pin => pin.id).join(",")}`),
-    holds: law.misplaced.length === 0 && Object.keys(unquotedRows).length === 0 && law.idle.length === 0,
-    misplaced: law.misplaced, unquoted: unquotedRows, idle: law.idle,
+    holds: law.misplaced.length === 0 && Object.keys(unquotedRows).length === 0 && law.idle.length === 0 && law.shared.length === 0,
+    misplaced: law.misplaced, unquoted: unquotedRows, idle: law.idle, shared: law.shared,
   };
 }
 
@@ -755,14 +792,17 @@ describe("wb-b9n.3 Forge CAC label census (FORGE-CAC-EVIDENCE-ASSURANCE-R7)", ()
     expect(ROWS.map(row => row.label)).toEqual(clauses);
     expect(ROWS.flatMap(row => row.pins.filter(pin => !row.label.includes(pin.quote)).map(pin => pin.id))).toEqual([]);
     // Outside anchor for pin membership (wb-530q F1), read against the export's clause text, never the row labels: each pin
-    // quote sits in its clause once at word boundaries, the pins of a row leave unquoted exactly its not-due spans, and every
-    // pin is load-bearing (without it, a word of its row goes unquoted). A pin removed from ROWS, IMPL, the frozen shape and
-    // the roster together, every other quote and not-due span unchanged, leaves its words unquoted, so the clause reds it; a
-    // removal that widens another quote or a not-due span over those words reads clean here (R-PIN-EDIT, below).
+    // quote sits in its clause once at word boundaries, the pins of a row quote disjoint spans (wb-v4d5 F1) and leave unquoted
+    // exactly its not-due spans, and every pin is load-bearing (without it, a word of its row goes unquoted). A pin removed from
+    // ROWS, IMPL, the frozen shape and the roster together, every other quote and not-due span unchanged, leaves its words
+    // unquoted, so the clause reds it, and so does a quote shortened inside its span (no other quote covers a word it drops, or
+    // the shorter quote reads misplaced); a quote widened over another pin's words reads shared; a removal that widens another
+    // quote or a not-due span over those words reads clean here (R-PIN-EDIT, below).
     const law = membership(ROWS, NOT_DUE, clauses);
     expect(law.misplaced).toEqual([]);
     expect(law.runs).toEqual(NOT_DUE);
     expect(law.idle).toEqual([]);
+    expect(law.shared).toEqual([]);
     expect(ROSTER.notDue).toEqual(NOT_DUE);
     expect(Object.entries(NOT_DUE).map(([id, runs]) => `${id}:${runs.flatMap(run => run.split(/\s+/)).length}`)).toEqual(["A:0", "B:35", "C:2"]);
     // R-PIN-EDIT (wb-dpoo F1): the edit class, planted as edits of this table and read by the same law, readings held to the
