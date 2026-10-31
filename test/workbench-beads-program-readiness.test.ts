@@ -75,34 +75,36 @@
  * `declare const Function` (G1-AMBIENT-FUNCTION), `declare const Reflect` (G1-AMBIENT-REFLECT), `declare const process`
  * (G1-AMBIENT-PROCESS) or a `declare global` block's `var process` (G1-AMBIENT-GLOBAL-BLOCK), while the emitter erases the
  * declaration, so the code reads the built-in. The free-read test leaves a read free when the file declares its name only in
- * declarations of an erased form, read fail closed against each emitter that loads this module - tsc (the build, under
- * tsconfig.json), OXC (vitest's transform, through Vite 8), jiti's Babel (the loader the installed Pi runs this extension with on
- * Node, package.json pi.extensions) - and the installed esbuild (cut #1's frame and the refusal's): a type-only import, an
+ * declarations of the erased forms its rows pin, each row measured at cut time under the four emitters that load this module
+ * (tsc, the build, under tsconfig.json; OXC, vitest's transform, through Vite 8; jiti's Babel, the loader the installed Pi runs
+ * this extension with on Node, package.json pi.extensions; and the installed esbuild, cut #1's frame): a type-only import, an
  * interface, a type alias, a function signature with no body, a const enum (tsc erases it: the project sets neither
  * preserveConstEnums nor isolatedModules), a variable, function, class or enum in an ambient context (a `declare` modifier on it
  * or on a declaration enclosing it), an import alias of a name (`import x = a.b`) whose leftmost name reads free, and a namespace
- * that does not bind. A namespace binds only outside an ambient context, holding a statement of a kept kind (a variable statement,
- * a function with a body, a class, an enum that is not const, an expression statement, or a namespace that binds; a dotted
- * namespace through its inner one), and sharing its name with no ambient or body-less function, class, enum or namespace
- * declaration. A member declared in an ambient context (a property, an enum member) still names a member, never a read; a
- * namespace's, an enum's and an import alias's own name is a declaration, never a read; and the member an alias of a name reads
- * (`b` of `import x = a.b`) keys a member. Each erased form is a REACH_PLANTS row that must read its reach: the four G1-AMBIENT
- * plants, cut #1's ERASED-* rows (an ambient declaration in a function body, a declared class, namespace, enum and function with a
- * body, a signature, both type-only import shapes, and an interface, a type alias and a type-only namespace merged with the
- * ambient value; at cut #1 a filter that drops ambient declarations alone left the signature, the type-only imports and the three
- * merges reading nothing) and cut #2's below. Beside them sit the verdict's two controls (G1-FREE-FUNCTION and G1-FREE-PROCESS,
- * each its plant with the declaration removed) and the ERASED-quiet-* rows, whose reads reach no built-in under any of the four
- * (cut #2 below). Every G1 plant the landing-645 verdict's F1 line names in wb-2fb4's tracked export notes is one of the table's
- * rows, and each G1-AMBIENT plant carries every code span that line quotes for it (whitespace collapsed, an elided `...` read as
- * any text). The ERASED-*, FREE-*, OVER-* and TYPE-PARAMETER-* rows are the cuts' own finds: the frozen id literal holds them (and
- * D3's tsc-frame list the ten namespaces and two const enums TypeScript's own predicates erase, and the ten plant and row ids
- * refusal #1's U1 and U2 lines name in wb-k2vj's tracked export notes the seven rows that cure them), and no anchor outside this
- * file holds their code: outside the tsc frame a clause of the scan removed together with the re-pinned reads of the rows it
- * decides stays green (measured at cut #2 for the ambient-statement clause and OXC's merge clause; in the tsc frame TypeScript's
- * predicates red it).
+ * that does not bind. A namespace binds only outside an ambient context, holding a statement the scan keeps (a variable
+ * statement, a function with a body, a class, an enum that is not const, an expression statement outside the block's directive
+ * prologue, or a namespace that binds; a dotted namespace through its inner one), and sharing its name with no ambient or
+ * body-less function, class, enum or namespace declaration. A member declared in an ambient context (a property, an enum member)
+ * still names a member, never a read; a namespace's, an enum's and an import alias's own name is a declaration, never a read; and
+ * the member an alias of a name reads (`b` of `import x = a.b`) keys a member. Each erased form is a REACH_PLANTS row that must
+ * read its reach: the four G1-AMBIENT plants, cut #1's ERASED-* rows (an ambient declaration in a function body, a declared
+ * class, namespace, enum and function with a body, a signature, both type-only import shapes, and an interface, a type alias and
+ * a type-only namespace merged with the ambient value; at cut #1 a filter that drops ambient declarations alone left the
+ * signature, the type-only imports and the three merges reading nothing) and cut #2's below. Beside them sit the verdict's two
+ * controls (G1-FREE-FUNCTION and G1-FREE-PROCESS, each its plant with the declaration removed) and the ERASED-quiet-* rows, whose
+ * reads reach no built-in under any of the four (cut #2 below). Every G1 plant the landing-645 verdict's F1 line names in
+ * wb-2fb4's tracked export notes is one of the table's rows, and each G1-AMBIENT plant carries every code span that line quotes
+ * for it (whitespace collapsed, an elided `...` read as any text). The ERASED-*, FREE-*, OVER-* and TYPE-PARAMETER-* rows are the
+ * cuts' own finds: the frozen id literal holds them (and D3's tsc-frame list the ten namespaces and two const enums TypeScript's
+ * own predicates erase, D3's OXC-frame list (cut #3) the rows OXC's own transform erases a declaration in, and the ten plant and
+ * row ids refusal #1's U1 and U2 lines name in wb-k2vj's tracked export notes the seven rows that cure them), and no anchor
+ * outside this file holds their code: a clause of the scan removed together with the re-pinned reads of the rows it decides reds
+ * D3 where the tsc or OXC frame decides those rows, and otherwise reds only R4 (cut #3) unless R4's witness is re-pinned too (at
+ * cut #2 the ambient-statement clause and OXC's merge clause, hollowed that way, stayed green).
  * WB-K2VJ CUT #2 (refusal #1 on cut #1: U1 and U2 MEDIUM, F3-F5 riding). Measured by the seat at this cut over all four emitters
  * (each row emitted as a module, loaded and run, reading whether its read reached the host's Function constructor or process.env);
- * this census pins the scan, not the emitters. U1 CURED: tsc emits no namespace holding only const enums and no const enum, so
+ * this census pins the scan and, of the emitters, only the frames D3 reads (the tsc frame below; the OXC frame since cut #3).
+ * U1 CURED: tsc emits no namespace holding only const enums and no const enum, so
  * ERASED-NS-CONST-ENUM, -CONST-ENUM-FUNCTION and -CONST-ENUM-MERGE (the refusal's MP3, MP1 and MP8, its LEG2-P7 rows),
  * -NESTED-CONST-ENUM, -DOTTED-CONST-ENUM, ERASED-CONST-ENUM (TS2475; tsc still emits the bare read), ERASED-ALIAS-CONST-ENUM-NS
  * and ERASED-ALIAS-TYPE-MEMBER (aliases tsc elides with their targets; the member an alias reads keys a member, never a read) read
@@ -134,6 +136,35 @@
  * emitter drops it), and an alias of itself binds nothing (OVER-ALIAS-CYCLE, TS2303). TYPE-PARAMETER-FUNCTION and -CLASS pin the
  * gate's positive reading: a type parameter binds no value. NOT MEASURED: a Pi run on Bun from its own TypeScript source loads the
  * extension natively (Bun's transpiler; no Bun on the measuring host).
+ * WB-K2VJ CUT #3 (refusal #2 on cut #2: U1 MEDIUM, a namespace holding only directives under OXC; the rule 19 second-stage cap
+ * R-B147 froze the class, so this cut ENUMERATES THE RESOLVABLE: the header claims exactly the rows' readings, and a form no row
+ * pins is outside the claim - a newly found one is a residual-list addition). U1 CURED: a namespace block's directive prologue,
+ * its leading statements while each is a string literal alone (TypeScript's isPrologueDirective), keeps nothing: OXC parses those
+ * strings as directives, not as body statements, and emits no binding for a namespace holding only them, alone or beside
+ * type-only statements or a non-exported import alias. Refusal #2's sixteen members are rows under the gate's own ids, each
+ * reading its reach (DIR-USE-STRICT, DIR-STRING, DIR-DOUBLE, DIR-TWO, DIR-FUNCTION, DIR-DOTTED, DIR-NESTED, DIR-PLUS-TYPE,
+ * DIR-MERGE-INTERFACE, DIR2-ALIAS, DIR2-INTERFACE, DIR2-TWO-NAMESPACES, DIR2-IN-HOST, DIR3-EMPTY-STRING, DIR3-ESCAPED-STRING and
+ * DIR3-NO-SEMICOLON), beside ten members this cut found (the ERASED-DIRECTIVE-* rows: "use strict", a unicode escape, a line
+ * continuation, a trailing and a leading comment, a namespace of directives inside one, a type alias merge, an exported
+ * namespace, three dotted names, two nested levels). These keep the gate's ids and read nothing: its bounding controls a template
+ * (NOTDIR-TEMPLATE), a parenthesized string (NOTDIR-PAREN), a string after a statement (NOTDIR-AFTER) or after a type statement
+ * (DIR3-TYPE-THEN-STRING, DIR3-INTERFACE-THEN-STRING), a directive namespace beside a kept one (DIR2-THEN-KEPT, DIR2-KEPT-THEN)
+ * and a number, undefined or a concatenation (NS-NUMBER, NS-UNDEFINED, NS-STRING-CONCAT), and its PREP probes of a merge with a
+ * function, class or enum (DIR2-MERGE-FUNCTION, -CLASS, -ENUM); so do this cut's ERASED-quiet-directive-* rows (two strings with
+ * a type statement between them, -type-between; a string after an empty statement, -after-empty; an asserted string, -as-const; a
+ * directive before a kept statement, -then-void, -dotted-kept, -host-kept). Every member and real-module plant refusal #2's U1
+ * PLANTS line names in wb-k2vj's tracked export notes is a row reading its reach (RM-DIR-PROCESS, -FUNCTION, -USE-STRICT and
+ * -NESTED are DIR-STRING, DIR-FUNCTION, DIR-USE-STRICT and DIR-NESTED planted in the module), and every control its CONTROLS line
+ * names is a row (RM-CTRL-FREE-PROCESS, -FREE-FUNCTION and -VOID stand as G1-FREE-PROCESS, G1-FREE-FUNCTION and
+ * ERASED-quiet-ns-expression). FAIL-CLOSED OVER-READS this rule adds (no measured emitter's module reaches; the scan reads the
+ * built-in): a directive beside only a declare statement, an export declare statement or a const enum (the gate's controls
+ * DIR-PLUS-DECLARE, DIR2-EXPORT-DECLARE and DIR2-CONST-ENUM, which read nothing at cut #2), an export import alias (its PREP
+ * probe DIR2-EXPORT-ALIAS), a signature (OVER-DIRECTIVE-SIGNATURE) or an empty statement (OVER-DIRECTIVE-EMPTY). D3 reads the OXC
+ * frame from OXC itself: under vite's transformWithOxc (vitest's transform) it lists every row whose emitted module reads free a
+ * name the row declares, and the two rows OXC refuses to transform, and each listed name is a free global of the row's reading,
+ * so a scan clause OXC decides, removed with the re-pinned readings of the rows it decides, reds D3. Measured by the seat at this
+ * cut over the 163 rows and 75 namespace-statement probes under the four emitters (tsc 6.0.3, OXC through Vite 8.2.1, jiti
+ * 2.7.0's Babel, esbuild 0.28.2): 0 escapes, no module whose read reached the host process or globalThis reads nothing.
  * NAMED RESIDUALS (row R; each pin is the residual's quiet row, its quiet set derived from the run and pinned as its witness):
  *  R1 R-SHARED-SUBCLAUSE where pins share one acceptance sub-clause and none holds a pinned map or the maps' union, removing one
  *    from every literal at once (its pin, its ROWS entry, the frozen count) leaves the structural holds green. The quiet set is
@@ -144,6 +175,11 @@
  *    wb-2fb4's resolvable-form scan: its doors are REACH_PLANTS rows.)
  *  R3 R-WITNESS-ECHO outside row B's map hold no witnessed value has an anchor outside this file: a body swapped for a case that
  *    still reaches its witness stays green.
+ *  R4 R-UNREAD-FRAME D3 reads two of the four emitters itself, tsc through TypeScript's predicates and OXC through its own
+ *    transform. A row whose reading names as a free global a name it declares that neither read frame reads free (an erasure only
+ *    esbuild, jiti's Babel or tsc's alias elision decides, a declare enum OXC inlines, a module OXC refuses, or a fail-closed
+ *    over-read) has no emitter anchor in this file: the quiet set is derived from the two read frames and pinned as R4's witness,
+ *    so re-pinning such a row's reading, or removing the row, reds R4 unless the witness is re-pinned too.
  * The gate form G08 stays this census's pin of R-NEGATED-PROSE.
  */
 import {createHash} from 'node:crypto';
@@ -152,6 +188,7 @@ import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {inflateRawSync} from 'node:zlib';
 import ts from 'typescript';
+import {transformWithOxc} from 'vite';
 import {describe, expect, it} from 'vitest';
 import {type BeadsShowCall, type BeadsShowResult, readBeadsWork} from '../src/workbench/beads-observer.js';
 import {
@@ -570,11 +607,13 @@ function checkerOf(file: ts.SourceFile): ts.TypeChecker {
   return ts.createProgram([file.fileName], options, host).getTypeChecker();
 }
 /** TypeScript's own emit predicates, which its declaration file does not export (wb-k2vj cut #2, the tsc frame's anchor): whether
- * tsc emits a namespace, whether an enum is const, and whether a project's options keep its const enums. */
+ * tsc emits a namespace, whether an enum is const, and whether a project's options keep its const enums; and (cut #3) whether a
+ * statement is a prologue directive, an expression statement that is a string literal alone. */
 const TS_EMIT = ts as unknown as {
   isInstantiatedModule: (node: ts.ModuleDeclaration, preserveConstEnums: boolean) => boolean;
   isEnumConst: (node: ts.EnumDeclaration) => boolean;
   shouldPreserveConstEnums: (options: ts.CompilerOptions) => boolean;
+  isPrologueDirective: (node: ts.Node) => boolean;
 };
 /** A `declare` modifier on the node or on a declaration enclosing it: an ambient context, which the emitter erases. */
 function ambient(node: ts.Node): boolean {
@@ -592,26 +631,41 @@ const constEnum = (node: ts.EnumDeclaration): boolean => (ts.getModifiers(node) 
 const claimsName = (declaration: ts.Declaration): boolean =>
   (ts.isFunctionDeclaration(declaration) || ts.isClassDeclaration(declaration) || ts.isEnumDeclaration(declaration) || ts.isModuleDeclaration(declaration)) &&
   (ambient(declaration) || (ts.isFunctionDeclaration(declaration) && declaration.body === undefined));
-/** A namespace statement every emitter the project runs keeps (wb-k2vj cut #2, ENUMERATE-THE-RESOLVABLE): a variable statement, a
- * function with a body, a class, an enum that is not const, an expression statement, or a namespace that binds, none of them in an
- * ambient context. Every other statement keeps nothing - an interface or type alias, an import alias, a signature with no body, a
- * const enum (tsc erases it), a declare statement (esbuild), an export declare statement or export import alias (jiti's Babel),
- * and any statement this list does not name (an if, an empty statement: fail closed). */
-function keeps(statement: ts.Statement, binds: (namespace: ts.ModuleDeclaration) => boolean): boolean {
-  if (ambient(statement)) return false;
+/** A namespace block's directive prologue (wb-k2vj cut #3, refusal #2 U1): its leading statements while each is a prologue
+ * directive, TypeScript's isPrologueDirective (a string literal alone); OXC parses these strings as directives, not as body
+ * statements. */
+function directivePrologue(block: ts.ModuleBlock): ReadonlySet<ts.Statement> {
+  const prologue = new Set<ts.Statement>();
+  for (const statement of block.statements) {
+    if (!TS_EMIT.isPrologueDirective(statement)) break;
+    prologue.add(statement);
+  }
+  return prologue;
+}
+/** Whether the scan reads a namespace statement as keeping the namespace a binding of its name (wb-k2vj cut #2; cut #3 the
+ * prologue): a variable statement, a function with a body, a class, an enum that is not const, an expression statement outside
+ * the block's directive prologue, or a namespace that binds, none of them in an ambient context. Every other statement keeps
+ * nothing: a prologue directive, an interface or type alias, an import alias, a signature with no body, a const enum, a declare
+ * statement, an export declare statement or export import alias, and any statement this list does not name (an if, an empty
+ * statement). A namespace whose statements keep nothing binds no read, so the scan reads its name as a free global. Which
+ * emitter keeps or erases each pinned form is the REACH_PLANTS rows' measurement (the header), not this function's. */
+function keeps(statement: ts.Statement, binds: (namespace: ts.ModuleDeclaration) => boolean, prologue: ReadonlySet<ts.Statement>): boolean {
+  if (ambient(statement) || prologue.has(statement)) return false;
   if (ts.isVariableStatement(statement) || ts.isClassDeclaration(statement) || ts.isExpressionStatement(statement)) return true;
   if (ts.isFunctionDeclaration(statement)) return statement.body !== undefined;
   if (ts.isEnumDeclaration(statement)) return !constEnum(statement);
   return ts.isModuleDeclaration(statement) && binds(statement);
 }
-/** A namespace every emitter the project runs keeps as a binding of its name (wb-k2vj cut #2, U1/U2): holding a statement every
- * emitter keeps (a dotted namespace through its inner one; every statement of an ambient namespace is itself ambient, so an
- * ambient namespace keeps nothing), and sharing its name with no declaration OXC reads as declaring it. */
+/** Whether the scan reads a namespace as a binding of its name (wb-k2vj cut #2, U1/U2; cut #3 the prologue): holding a statement
+ * keeps() keeps (a dotted namespace through its inner one; every statement of an ambient namespace is itself ambient, so an
+ * ambient namespace keeps nothing), and sharing its name with no declaration claimsName() reads as declaring it. */
 function namespaceBinds(namespace: ts.ModuleDeclaration, checker: ts.TypeChecker): boolean {
   if ((checker.getSymbolAtLocation(namespace.name)?.declarations ?? []).some((other) => other !== namespace && claimsName(other))) return false;
   const body = namespace.body;
   if (body !== undefined && ts.isModuleDeclaration(body)) return namespaceBinds(body, checker);
-  return body !== undefined && ts.isModuleBlock(body) && body.statements.some((statement) => keeps(statement, (inner) => namespaceBinds(inner, checker)));
+  if (body === undefined || !ts.isModuleBlock(body)) return false;
+  const prologue = directivePrologue(body);
+  return body.statements.some((statement) => keeps(statement, (inner) => namespaceBinds(inner, checker), prologue));
 }
 /** The leftmost name of an entity name: `a` of `a.b.c`. */
 function leftmost(name: ts.EntityName): ts.Identifier {
@@ -749,6 +803,46 @@ function reachViolations(reach: Reach): string[] {
     ...(reach.computedKeys > 0 ? [`computed key x${reach.computedKeys}`] : []),
     ...reach.forms.filter((form) => !RESOLVABLE.includes(form)).map((form) => `form ${form}`),
   ];
+}
+/** The names a module's declarations bind (wb-k2vj cut #3): each name declaresName() reads as a declaration's own. An interface's
+ * or a type alias's name is left out: the scan always reads such a name free, so the OXC frame could never hold it. */
+function declaredNames(code: string): Set<string> {
+  const names = new Set<string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && declaresName(node)) names.add(node.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(ts.createSourceFile('plant.ts', code, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS));
+  return names;
+}
+const oxcRead = new Map<string, Promise<string[] | 'refused'>>();
+/** The OXC frame (wb-k2vj cut #3, refusal #2 U1), read from OXC itself: the names a module declares that its emit under vite's
+ * transformWithOxc (vitest's transform) reads free, by this scan's binder over the emitted code, so OXC kept no declaration of the
+ * name and the read reaches the built-in; 'refused' when OXC cannot transform the module, which then never loads under vitest.
+ * Each module is emitted once. */
+function oxcFrame(code: string): Promise<string[] | 'refused'> {
+  const cached = oxcRead.get(code);
+  if (cached !== undefined) return cached;
+  const declared = declaredNames(code);
+  const read = transformWithOxc(code, MODULE).then(
+    (result) => reachOf(result.code).globals.filter((name) => declared.has(name)),
+    () => 'refused' as const,
+  );
+  oxcRead.set(code, read);
+  return read;
+}
+/** This project's compiler options, from tsconfig.json: the tsc frame reads its const-enum setting (wb-k2vj cut #2). */
+const PROJECT_OPTIONS = ts.convertCompilerOptionsFromJson(JSON.parse(readFileSync(join(REPO, 'tsconfig.json'), 'utf8')).compilerOptions, REPO).options;
+/** The tsc frame (wb-k2vj cut #2, U1), read from TypeScript itself: the names of a module's top-level namespaces and const enums
+ * outside an ambient context that tsc emits nothing for under the project's options (isInstantiatedModule, isEnumConst). */
+function tscErasedNames(code: string): string[] {
+  const preserve = TS_EMIT.shouldPreserveConstEnums(PROJECT_OPTIONS);
+  const outsideAmbient = (declaration: ts.Declaration): boolean => (ts.getCombinedModifierFlags(declaration) & ts.ModifierFlags.Ambient) === 0;
+  return ts.createSourceFile('plant.ts', code, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS).statements.flatMap((statement) => {
+    if (ts.isModuleDeclaration(statement) && ts.isIdentifier(statement.name) && outsideAmbient(statement) && !TS_EMIT.isInstantiatedModule(statement, preserve)) return [statement.name.text];
+    if (ts.isEnumDeclaration(statement) && outsideAmbient(statement) && TS_EMIT.isEnumConst(statement) && !preserve) return [statement.name.text];
+    return [];
+  });
 }
 /** A plant as a module of its own (an exported function holding the code), so each control judges the scan alone. */
 const planted = (code: string): string => `export async function plantedReach(): Promise<void> {\n${code}}\n`;
@@ -1032,6 +1126,71 @@ const REACH_PLANTS: readonly ReachPlant[] = [
     reads: 'global process',
     module: true,
   },
+  // wb-k2vj cut #3 (refusal #2: U1, the directive-only namespace under OXC): a namespace block's directive prologue - its leading
+  // statements that are each a string literal alone - keeps nothing, since OXC parses those strings as directives and emits no
+  // binding for a namespace holding only them. Refusal #2's sixteen members and its bounding controls keep the gate's own ids;
+  // the ERASED-DIRECTIVE-*, ERASED-quiet-directive-* and OVER-DIRECTIVE-* rows are this cut's own finds.
+  {id: 'DIR-USE-STRICT', code: `namespace process {\n  'use strict';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR-STRING', code: `namespace process {\n  'door';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR-DOUBLE', code: `namespace process {\n  "door";\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR-TWO', code: `namespace process {\n  'door';\n  'door2';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR-FUNCTION', code: `namespace Function {\n  'door';\n}\n${FUNCTION_REACH}`, reads: 'global Function', module: true},
+  {id: 'DIR-DOTTED', code: `namespace process.inner {\n  'door';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR-NESTED', code: `namespace process {\n  export namespace inner {\n    'door';\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR-PLUS-TYPE', code: `namespace process {\n  'door';\n  export type T = string;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR-MERGE-INTERFACE', code: `interface process {\n  readonly door?: unknown;\n}\nnamespace process {\n  'door';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR2-ALIAS', code: `namespace Values {\n  export const env = {};\n}\nnamespace process {\n  'door';\n  import door = Values.env;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR2-INTERFACE', code: `namespace process {\n  'door';\n  export interface Door {\n    readonly door?: unknown;\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR2-TWO-NAMESPACES', code: `namespace process {\n  'door';\n}\nnamespace process {\n  'door';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {
+    id: 'DIR2-IN-HOST',
+    code: "namespace host {\n  namespace process {\n    'door';\n  }\n  export function reach(): unknown {\n    return (process as unknown as {env?: unknown}).env;\n  }\n}\nexport async function plantedReach(): Promise<void> {\n  void host.reach();\n}\n",
+    reads: 'global process',
+    module: true,
+  },
+  {id: 'DIR3-EMPTY-STRING', code: `namespace process {\n  '';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR3-ESCAPED-STRING', code: `namespace process {\n  'do\\x6fr';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR3-NO-SEMICOLON', code: `namespace process {\n  'door'\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-DIRECTIVE-USE-STRICT-DOUBLE', code: `namespace process {\n  "use strict";\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-DIRECTIVE-UNICODE-ESCAPE', code: `namespace process {\n  '\\u0064oor';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-DIRECTIVE-LINE-CONTINUATION', code: `namespace process {\n  'do\\\n  or';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-DIRECTIVE-COMMENT', code: `namespace process {\n  'door'; // a comment\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-DIRECTIVE-BLOCK-COMMENT', code: `namespace process {\n  /* a */ 'door';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-DIRECTIVE-NESTED-DIRECTIVE', code: `namespace process {\n  'door';\n  namespace inner {\n    'door';\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-DIRECTIVE-MERGE-TYPE', code: `type process = {readonly door?: unknown};\nnamespace process {\n  'door';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-DIRECTIVE-EXPORT', code: `export namespace process {\n  'door';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-DIRECTIVE-DOTTED-THREE', code: `namespace process.inner.deep {\n  'door';\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'ERASED-DIRECTIVE-NESTED-TWO-DEEP', code: `namespace process {\n  export namespace inner {\n    export namespace deep {\n      'door';\n    }\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'NOTDIR-TEMPLATE', code: `namespace process {\n  \`door\`;\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'NOTDIR-PAREN', code: `namespace process {\n  ('door');\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'NOTDIR-AFTER', code: `namespace process {\n  void 0;\n  'door';\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'DIR3-TYPE-THEN-STRING', code: `namespace process {\n  export type T = string;\n  'door';\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'DIR3-INTERFACE-THEN-STRING', code: `namespace process {\n  interface Door {\n    readonly door?: unknown;\n  }\n  'door';\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'DIR2-THEN-KEPT', code: `namespace process {\n  'door';\n}\nnamespace process {\n  export const env = {};\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'DIR2-KEPT-THEN', code: `namespace process {\n  export const env = {};\n}\nnamespace process {\n  'door';\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'DIR2-MERGE-FUNCTION', code: `function process(): void {}\nnamespace process {\n  'door';\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'DIR2-MERGE-CLASS', code: `class process {}\nnamespace process {\n  'door';\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'DIR2-MERGE-ENUM', code: `enum process {\n  A = 1,\n}\nnamespace process {\n  'door';\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'NS-NUMBER', code: `namespace process {\n  0;\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'NS-UNDEFINED', code: `namespace process {\n  undefined;\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'NS-STRING-CONCAT', code: `namespace process {\n  'do' + 'or';\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-directive-as-const', code: `namespace process {\n  'door' as const;\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-directive-after-empty', code: `namespace process {\n  ;\n  'door';\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-directive-then-void', code: `namespace process {\n  'door';\n  void 0;\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-directive-type-between', code: `namespace process {\n  'a';\n  export type T = string;\n  'b';\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {id: 'ERASED-quiet-directive-dotted-kept', code: `namespace process.inner {\n  'door';\n  export const door = 0;\n}\n${PROCESS_REACH}`, reads: '', module: true},
+  {
+    id: 'ERASED-quiet-directive-host-kept',
+    code: "namespace host {\n  namespace process {\n    'door';\n    export const env = {};\n  }\n  export function reach(): unknown {\n    return (process as unknown as {env?: unknown}).env;\n  }\n}\nexport async function plantedReach(): Promise<void> {\n  void host.reach();\n}\n",
+    reads: '',
+    module: true,
+  },
+  {id: 'DIR-PLUS-DECLARE', code: `namespace process {\n  'door';\n  declare const door: unknown;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR2-EXPORT-DECLARE', code: `namespace process {\n  'door';\n  export declare const door: unknown;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR2-CONST-ENUM', code: `namespace process {\n  'door';\n  const enum Door {\n    A = 1,\n  }\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'DIR2-EXPORT-ALIAS', code: `namespace Values {\n  export const env = {};\n}\nnamespace process {\n  'door';\n  export import door = Values.env;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'OVER-DIRECTIVE-SIGNATURE', code: `namespace process {\n  'door';\n  function door(): void;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
+  {id: 'OVER-DIRECTIVE-EMPTY', code: `namespace process {\n  'door';\n  ;\n}\n${PROCESS_REACH}`, reads: 'global process', module: true},
 ];
 /** The bead whose filing names the L2 reach plants (wb-k888's landing-498 R694 follow-up). */
 const FOLLOW_UP = 'wb-52th';
@@ -1073,6 +1232,31 @@ const REFUSAL_ROWS: Readonly<Record<string, string>> = {
   'LEG2-P1-NS-DECLARE-CONST': 'ERASED-NS-DECLARE-CONST',
   'LEG2-P1-NS-DECLARE-ENUM': 'ERASED-NS-DECLARE-ENUM',
 };
+/** The REACH_PLANTS row that cures each real-module plant and stands for each real-module control refusal #2 names (wb-k2vj cut
+ * #3): each its form planted in the module, the same namespace and read; the refusal's other ids are rows of their own. */
+const DIRECTIVE_ROWS: Readonly<Record<string, string>> = {
+  'RM-DIR-PROCESS': 'DIR-STRING',
+  'RM-DIR-FUNCTION': 'DIR-FUNCTION',
+  'RM-DIR-USE-STRICT': 'DIR-USE-STRICT',
+  'RM-DIR-NESTED': 'DIR-NESTED',
+  'RM-CTRL-FREE-PROCESS': 'G1-FREE-PROCESS',
+  'RM-CTRL-FREE-FUNCTION': 'G1-FREE-FUNCTION',
+  'RM-CTRL-VOID': 'ERASED-quiet-ns-expression',
+};
+/** Refusal #2's members and controls (wb-k2vj cut #3): the gate ids its unmet item's PLANTS and CONTROLS lines name, each id once,
+ * in order. The item opens at the first column-0 `U1-` line naming the directive-only namespace in this bead's tracked export notes
+ * and runs to the next blank line. */
+function directiveRefusal(): {members: string[]; controls: string[]} {
+  const lines = notesOf(RESPIN_BEAD).split('\n');
+  const from = lines.findIndex((line) => line.startsWith('U1-') && line.includes('-DIRECTIVE-ONLY-NAMESPACE-'));
+  const end = lines.findIndex((line, index) => index > from && line === '');
+  const item = from === -1 ? [] : lines.slice(from, end === -1 ? undefined : end);
+  const line = (head: string): string => item.find((entry) => entry.startsWith(head)) ?? '';
+  return {
+    members: [...new Set(line('PLANTS ').match(/(?<![\w-])(?:RM-)?DIR[23]?-[A-Z]+(?:-[A-Z]+)*(?![\w-])/g) ?? [])],
+    controls: [...new Set(line('CONTROLS: ').match(/(?<![\w-])(?:RM-CTRL|NOTDIR|NS|DIR[23]?)-[A-Z]+(?:-[A-Z]+)*(?![\w-])/g) ?? [])],
+  };
+}
 /** The code spans that line quotes for each G1-AMBIENT plant: every backquoted span between the plant's first mention and the next
  * G1 plant's. */
 function quotedSpans(): [string, string[]][] {
@@ -1115,7 +1299,9 @@ const AC_UNREACHABLE = "with the store unreachable Pi reports 'unknown (store un
 /** Row R (wb-k888): the named residuals, each one pin covering its own name, each named in this file's header with its row. */
 const R_SHARED = 'R-SHARED-SUBCLAUSE';
 const R_ECHO = 'R-WITNESS-ECHO';
-const RESIDUALS_LABEL = 'the named residuals R1 and R3 stay pinned quiet';
+/** Row R4 (wb-k2vj cut #3): the emitters the header names that D3 does not read. */
+const R_FRAME = 'R-UNREAD-FRAME';
+const RESIDUALS_LABEL = 'the named residuals R1, R3 and R4 stay pinned quiet';
 const ROWS: readonly Row[] = [
   {
     id: 'A',
@@ -1164,6 +1350,7 @@ const ROWS: readonly Row[] = [
     pins: [
       {id: 'R1', covers: R_SHARED},
       {id: 'R3', covers: R_ECHO},
+      {id: 'R4', covers: R_FRAME},
     ],
   },
 ];
@@ -1236,7 +1423,7 @@ const subClauses = (clause: string): string[] => clause.split(/; | (?:and|or) (?
 
 describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-HARNESS2-REACTIVE-EVOLUTION-R5)', () => {
   it('the judged set: frozen shape, the bead acceptance text, the registered pins and the pinned maps agree', () => {
-    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(['A:6', 'B:5', 'C:3', 'D:3', 'R:2']);
+    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(['A:6', 'B:5', 'C:3', 'D:3', 'R:3']);
     const clauses = acceptanceClauses();
     expect(acceptanceRows().map((row) => row.label)).toEqual(clauses);
     for (const [index, row] of acceptanceRows().entries()) {
@@ -1245,7 +1432,7 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
     }
     // Row R: one pin per named residual, covering its own name, each named with its pin in this file's header comment.
     const residuals = ROWS.find((row) => row.id === 'R');
-    expect([residuals?.label, residuals?.pins.map((entry) => `${entry.id} ${entry.covers}`)]).toEqual([RESIDUALS_LABEL, [`R1 ${R_SHARED}`, `R3 ${R_ECHO}`]]);
+    expect([residuals?.label, residuals?.pins.map((entry) => `${entry.id} ${entry.covers}`)]).toEqual([RESIDUALS_LABEL, [`R1 ${R_SHARED}`, `R3 ${R_ECHO}`, `R4 ${R_FRAME}`]]);
     const header = readFileSync(fileURLToPath(import.meta.url), 'utf8').split('*/')[0] ?? '';
     expect((residuals?.pins ?? []).filter((entry) => !header.includes(`${entry.id} ${entry.covers}`))).toEqual([]);
     expect(sorted([...REGISTERED.keys()])).toEqual(sorted(ROWS.flatMap((row) => row.pins.map((entry) => entry.id))));
@@ -1629,6 +1816,57 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
       'OVER-ALIAS-CYCLE',
       'TYPE-PARAMETER-FUNCTION',
       'TYPE-PARAMETER-CLASS',
+      'DIR-USE-STRICT',
+      'DIR-STRING',
+      'DIR-DOUBLE',
+      'DIR-TWO',
+      'DIR-FUNCTION',
+      'DIR-DOTTED',
+      'DIR-NESTED',
+      'DIR-PLUS-TYPE',
+      'DIR-MERGE-INTERFACE',
+      'DIR2-ALIAS',
+      'DIR2-INTERFACE',
+      'DIR2-TWO-NAMESPACES',
+      'DIR2-IN-HOST',
+      'DIR3-EMPTY-STRING',
+      'DIR3-ESCAPED-STRING',
+      'DIR3-NO-SEMICOLON',
+      'ERASED-DIRECTIVE-USE-STRICT-DOUBLE',
+      'ERASED-DIRECTIVE-UNICODE-ESCAPE',
+      'ERASED-DIRECTIVE-LINE-CONTINUATION',
+      'ERASED-DIRECTIVE-COMMENT',
+      'ERASED-DIRECTIVE-BLOCK-COMMENT',
+      'ERASED-DIRECTIVE-NESTED-DIRECTIVE',
+      'ERASED-DIRECTIVE-MERGE-TYPE',
+      'ERASED-DIRECTIVE-EXPORT',
+      'ERASED-DIRECTIVE-DOTTED-THREE',
+      'ERASED-DIRECTIVE-NESTED-TWO-DEEP',
+      'NOTDIR-TEMPLATE',
+      'NOTDIR-PAREN',
+      'NOTDIR-AFTER',
+      'DIR3-TYPE-THEN-STRING',
+      'DIR3-INTERFACE-THEN-STRING',
+      'DIR2-THEN-KEPT',
+      'DIR2-KEPT-THEN',
+      'DIR2-MERGE-FUNCTION',
+      'DIR2-MERGE-CLASS',
+      'DIR2-MERGE-ENUM',
+      'NS-NUMBER',
+      'NS-UNDEFINED',
+      'NS-STRING-CONCAT',
+      'ERASED-quiet-directive-as-const',
+      'ERASED-quiet-directive-after-empty',
+      'ERASED-quiet-directive-then-void',
+      'ERASED-quiet-directive-type-between',
+      'ERASED-quiet-directive-dotted-kept',
+      'ERASED-quiet-directive-host-kept',
+      'DIR-PLUS-DECLARE',
+      'DIR2-EXPORT-DECLARE',
+      'DIR2-CONST-ENUM',
+      'DIR2-EXPORT-ALIAS',
+      'OVER-DIRECTIVE-SIGNATURE',
+      'OVER-DIRECTIVE-EMPTY',
     ]);
     const filed = filedReachPlants();
     expect(filed, `the L2 reach plants ${FOLLOW_UP}'s filing names`).toEqual(['L2-M33p', 'L2-M33d2', 'L2-M33sh']);
@@ -1685,21 +1923,8 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
     // wb-k2vj cut #2 (U1): the tsc frame read from TypeScript itself - under this project's tsconfig.json (no preserveConstEnums,
     // no isolatedModules) its emitter keeps no const enum and no const-enum-only or type-only namespace, and every such top-level
     // declaration outside an ambient context in the table reads as the built-in it names.
-    const options = ts.convertCompilerOptionsFromJson(JSON.parse(readFileSync(join(REPO, 'tsconfig.json'), 'utf8')).compilerOptions, REPO).options;
-    const preserve = TS_EMIT.shouldPreserveConstEnums(options);
-    expect(preserve).toBe(false);
-    const outsideAmbient = (declaration: ts.Declaration): boolean => (ts.getCombinedModifierFlags(declaration) & ts.ModifierFlags.Ambient) === 0;
-    const tscErasedBy = (statement: ts.Statement): string | undefined => {
-      if (ts.isModuleDeclaration(statement) && ts.isIdentifier(statement.name) && outsideAmbient(statement) && !TS_EMIT.isInstantiatedModule(statement, preserve)) return statement.name.text;
-      if (ts.isEnumDeclaration(statement) && outsideAmbient(statement) && TS_EMIT.isEnumConst(statement) && !preserve) return statement.name.text;
-      return undefined;
-    };
-    const tscErased = REACH_PLANTS.flatMap((plant) =>
-      ts
-        .createSourceFile('plant.ts', plantText(plant), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)
-        .statements.flatMap((statement) => tscErasedBy(statement) ?? [])
-        .map((name) => [plant, name] as const),
-    );
+    expect(TS_EMIT.shouldPreserveConstEnums(PROJECT_OPTIONS)).toBe(false);
+    const tscErased = REACH_PLANTS.flatMap((plant) => tscErasedNames(plantText(plant)).map((name) => [plant, name] as const));
     expect(tscErased.map(([plant, name]) => `${plant.id} ${name}`)).toEqual([
       'ERASED-NAMESPACE-MERGE Function',
       'ERASED-NS-CONST-ENUM process',
@@ -1731,6 +1956,116 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
       'LEG2-P1-NS-DECLARE-ENUM',
     ]);
     expect(refused.filter((id) => !REACH_PLANTS.some((plant) => plant.id === REFUSAL_ROWS[id]))).toEqual([]);
+    // wb-k2vj cut #3: every member and real-module plant refusal #2's U1 names in this bead's tracked export notes is cured by a
+    // REACH_PLANTS row reading its reach, and every control it names is a row.
+    const directive = directiveRefusal();
+    const rowFor = (id: string): ReachPlant | undefined => REACH_PLANTS.find((plant) => plant.id === (DIRECTIVE_ROWS[id] ?? id));
+    expect(directive.members, `the members refusal #2's U1 names in ${RESPIN_BEAD}'s notes`).toEqual([
+      'DIR-USE-STRICT',
+      'DIR-STRING',
+      'DIR-DOUBLE',
+      'DIR-TWO',
+      'DIR-DOTTED',
+      'DIR-NESTED',
+      'DIR-PLUS-TYPE',
+      'DIR-MERGE-INTERFACE',
+      'DIR2-ALIAS',
+      'DIR2-INTERFACE',
+      'DIR2-TWO-NAMESPACES',
+      'DIR2-IN-HOST',
+      'DIR3-EMPTY-STRING',
+      'DIR3-ESCAPED-STRING',
+      'DIR3-NO-SEMICOLON',
+      'DIR-FUNCTION',
+      'RM-DIR-PROCESS',
+      'RM-DIR-FUNCTION',
+      'RM-DIR-USE-STRICT',
+      'RM-DIR-NESTED',
+    ]);
+    expect(directive.members.filter((id) => !(rowFor(id)?.reads.startsWith('global ') ?? false))).toEqual([]);
+    expect(directive.controls, `the controls refusal #2's U1 names in ${RESPIN_BEAD}'s notes`).toEqual([
+      'RM-CTRL-FREE-PROCESS',
+      'RM-CTRL-FREE-FUNCTION',
+      'RM-CTRL-VOID',
+      'NOTDIR-TEMPLATE',
+      'NOTDIR-PAREN',
+      'NOTDIR-AFTER',
+      'DIR3-TYPE-THEN-STRING',
+      'DIR3-INTERFACE-THEN-STRING',
+      'DIR-PLUS-DECLARE',
+      'DIR2-EXPORT-DECLARE',
+      'DIR2-CONST-ENUM',
+      'DIR2-THEN-KEPT',
+      'DIR2-KEPT-THEN',
+      'NS-NUMBER',
+      'NS-UNDEFINED',
+      'NS-STRING-CONCAT',
+      'DIR-STRING',
+    ]);
+    expect(directive.controls.filter((id) => rowFor(id) === undefined)).toEqual([]);
+    // wb-k2vj cut #3 (refusal #2, U1): the OXC frame read from OXC itself - under vite's transformWithOxc (vitest's transform)
+    // these rows emit a module that reads free a name the row declares (OXC kept no declaration of it), each of them reads that
+    // name as a free global, and OXC refuses to transform exactly these two rows.
+    const oxc = await Promise.all(REACH_PLANTS.map(async (plant) => [plant, await oxcFrame(plantText(plant))] as const));
+    expect(oxc.filter(([, frame]) => frame === 'refused').map(([plant]) => plant.id)).toEqual(['ERASED-DECLARED-BODY', 'OVER-MERGE-REFUSED']);
+    const oxcErased = oxc.flatMap(([plant, frame]) => (frame === 'refused' ? [] : frame.map((name) => [plant, name] as const)));
+    expect(oxcErased.map(([plant, name]) => `${plant.id} ${name}`)).toEqual([
+      'L2-M33sh globalThis',
+      'G1-AMBIENT-FUNCTION Function',
+      'G1-AMBIENT-REFLECT Reflect',
+      'G1-AMBIENT-PROCESS process',
+      'G1-AMBIENT-GLOBAL-BLOCK process',
+      'ERASED-INNER process',
+      'ERASED-CLASS Function',
+      'ERASED-NAMESPACE process',
+      'ERASED-SIGNATURE Function',
+      'ERASED-TYPE-SPECIFIER process',
+      'ERASED-TYPE-IMPORT process',
+      'ERASED-INTERFACE-MERGE Function',
+      'ERASED-TYPE-MERGE Function',
+      'ERASED-NAMESPACE-MERGE Function',
+      'ERASED-NS-CONST-ENUM-MERGE process',
+      'ERASED-NS-EMPTY process',
+      'ERASED-ALIAS-TYPE-MEMBER Types',
+      'ERASED-NS-DECLARE-MERGE process',
+      'ERASED-MERGE-DECLARE-FUNCTION process',
+      'ERASED-MERGE-DECLARE-CLASS process',
+      'ERASED-MERGE-DECLARE-ENUM process',
+      'ERASED-MERGE-DECLARE-NAMESPACE process',
+      'ERASED-MERGE-SIGNATURE process',
+      'ERASED-MERGE-IN-NAMESPACE process',
+      'ERASED-NS-MEMBER-EXPORT-DECLARE process',
+      'ERASED-NS-MEMBER-DECLARE process',
+      'TYPE-PARAMETER-FUNCTION Function',
+      'TYPE-PARAMETER-CLASS process',
+      'DIR-USE-STRICT process',
+      'DIR-STRING process',
+      'DIR-DOUBLE process',
+      'DIR-TWO process',
+      'DIR-FUNCTION Function',
+      'DIR-DOTTED process',
+      'DIR-NESTED process',
+      'DIR-PLUS-TYPE process',
+      'DIR-MERGE-INTERFACE process',
+      'DIR2-ALIAS process',
+      'DIR2-INTERFACE process',
+      'DIR2-TWO-NAMESPACES process',
+      'DIR2-IN-HOST process',
+      'DIR3-EMPTY-STRING process',
+      'DIR3-ESCAPED-STRING process',
+      'DIR3-NO-SEMICOLON process',
+      'ERASED-DIRECTIVE-USE-STRICT-DOUBLE process',
+      'ERASED-DIRECTIVE-UNICODE-ESCAPE process',
+      'ERASED-DIRECTIVE-LINE-CONTINUATION process',
+      'ERASED-DIRECTIVE-COMMENT process',
+      'ERASED-DIRECTIVE-BLOCK-COMMENT process',
+      'ERASED-DIRECTIVE-NESTED-DIRECTIVE process',
+      'ERASED-DIRECTIVE-MERGE-TYPE process',
+      'ERASED-DIRECTIVE-EXPORT process',
+      'ERASED-DIRECTIVE-DOTTED-THREE process',
+      'ERASED-DIRECTIVE-NESTED-TWO-DEEP process',
+    ]);
+    expect(oxcErased.filter(([plant, name]) => !reachOf(plantText(plant)).globals.includes(name)).map(([plant, name]) => `${plant.id} ${name}`)).toEqual([]);
     // No Beads reader is imported in any form: the work reader arrives injected (the wb-kku9.3 claim re-check census contract).
     witness('D3', specifiers, ['./capability-registry.js', './observation.js']);
     for (const banned of [/node:/, /readFile|readdir|existsSync/, /BEADS-|\.md\b/, /child_process|spawn|exec\(/, /\bbd ready\b/]) expect(source).not.toMatch(banned);
@@ -1756,6 +2091,45 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
   pin('R3', `${R_ECHO}: outside row B's map hold no pin's witnessed value has an anchor outside this file, so a body swapped for a case that still reaches its witness stays green; the unheld pins are derived from the hold`, () => {
     const held = new Set([...MAPS.flatMap(mapNamed), ...unionHolders()]);
     witness('R3', acceptanceRows().flatMap((row) => row.pins.map((entry) => entry.id)).filter((id) => !held.has(id)), ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'B5', 'C1', 'C2', 'C3', 'D1', 'D2', 'D3']);
+  });
+
+  pin('R4', `${R_FRAME}: D3 reads the tsc frame through TypeScript's predicates and the OXC frame through its own transform; a row reading a name it declares as a free global that neither frame reads free is held by its own pin and this quiet set alone, derived from the two frames`, async () => {
+    const unread: string[] = [];
+    for (const plant of REACH_PLANTS) {
+      const code = plantText(plant);
+      const frame = await oxcFrame(code);
+      const read = new Set([...(frame === 'refused' ? [] : frame), ...tscErasedNames(code)]);
+      const declared = declaredNames(code);
+      const names = reachOf(code).globals.filter((name) => declared.has(name) && !read.has(name));
+      if (names.length > 0) unread.push(`${plant.id} ${names.join(' ')}`);
+    }
+    witness('R4', unread, [
+      'ERASED-ENUM process',
+      'ERASED-DECLARED-BODY Function',
+      'ERASED-ALIAS-CONST-ENUM-NS Function',
+      'ERASED-ALIAS-TYPE-MEMBER Function',
+      'ERASED-NS-DECLARE-CONST process',
+      'ERASED-NS-DECLARE-FUNCTION Function',
+      'ERASED-NS-DECLARE-CLASS process',
+      'ERASED-NS-DECLARE-ENUM process',
+      'ERASED-NS-SIGNATURE process',
+      'ERASED-NS-NESTED-DECLARE process',
+      'ERASED-NS-EXPORT-DECLARE process',
+      'ERASED-NS-EXPORT-DECLARE-FUNCTION Function',
+      'ERASED-NS-EXPORT-ALIAS process',
+      'OVER-NS-IF process',
+      'OVER-MERGE-NAMESPACE-FIRST process',
+      'OVER-INNER-DECLARE-SHADOW process',
+      'OVER-MERGE-REFUSED process',
+      'OVER-ALIAS-DECLARE-NS Function Types',
+      'OVER-ALIAS-CYCLE process',
+      'DIR-PLUS-DECLARE process',
+      'DIR2-EXPORT-DECLARE process',
+      'DIR2-CONST-ENUM process',
+      'DIR2-EXPORT-ALIAS process',
+      'OVER-DIRECTIVE-SIGNATURE process',
+      'OVER-DIRECTIVE-EMPTY process',
+    ]);
   });
 
   it('every pin reached its witness compare, once, in roster order', () => {
