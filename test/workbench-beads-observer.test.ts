@@ -664,9 +664,10 @@ describe('wb-4ap.14 (COLLECTIVE-ADAPTATION-R14): until a released bd ships B1/B2
  * to the blob id written here, and a later bd is a new measurement with a new snapshot.
  *
  * THE READER (readBdDependencyTypes, over the inflated text split on newlines) reads three sites, each in one form, and throws at
- * the first line of a site that is not in that form:
- * - the DependencyType const block: exactly one line `type DependencyType string`; after it only blank lines and comment lines
- *   (`//` after at most one tab) up to the line `const (`; then, up to the first line `)`, every line is blank, a comment line, or
+ * the first line of a site that is not in that form (the FC rows pin the throw the reader gives for each of the 43 changes
+ * FC1-FC43 make, and for no other change: see PINNED THROWS and NOT CLAIMED):
+ * - the DependencyType const block: exactly one line `type DependencyType string`; after it only empty lines and comment lines
+ *   (`//` after at most one tab) up to the line `const (`; then, up to the first line `)`, every line is empty, a comment line, or
  *   one declaration: a tab, a name (Dep, a capital, then letters), spaces, `DependencyType = "`, a value (lowercase words joined
  *   by single hyphens), `"`, then nothing or spaces and a `//` comment; a name or a value declared twice throws;
  * - WellKnownDependencyTypes(): exactly one line `func WellKnownDependencyTypes() []DependencyType {`, then the line
@@ -674,8 +675,19 @@ describe('wb-4ap.14 (COLLECTIVE-ADAPTATION-R14): until a released bd ships B1/B2
  *   space, then the lines `\t}` and `}`;
  * - AffectsReadyWork(): exactly one line `func (d DependencyType) AffectsReadyWork() bool {`, then one line
  *   `\treturn d == <name>` with any further ` || d == <name>` operands, then the line `}`;
- * and a name either list uses that the block does not declare, or that the same list uses twice, throws. FC1-FC24 each change
- * the snapshot at one place (the row's text occurs exactly once in it) and pin the throw the reader gives for it.
+ * and a name either list uses that the block does not declare, or that the same list uses twice, throws.
+ * PINNED THROWS: FC1-FC43 each change the snapshot at one place (the row's text occurs exactly once in it) and pin the throw
+ * the reader gives for it. FC25-FC31 (wb-h7j9, the R694 follow-up of wb-vked landing 726, F1) each write one line verbatim: the
+ * twin line of one of the seven one-edit reader members that kept this file green at that landing (GR3 line 947, GR4 946, GR5
+ * 938, GR6 943, GR7 982, GR9 979, GR13 965): a const name with no space before its type, a declaration comment with no space
+ * before it, a whitespace-only line in the const block, a const block comment after a space, a list line ending in a space, the
+ * WellKnownDependencyTypes line ending in a space and the const block closed by a line ending in a space. FC32-FC43 (wb-h7j9,
+ * the cutting seat's battery on base ee72db2c) each write one more line outside a site's form that a one-edit reader member
+ * of that battery accepted while this file stayed green: the const block opened by a line ending in a space, the list return
+ * line ending in a space, the list closed by a line ending in a space, WellKnownDependencyTypes closed by a line ending in a
+ * space, AffectsReadyWork closed by a line ending in a space, a declaration indented by a space, a declaration after two tabs,
+ * a declaration with no space after its =, a tab before a declaration comment, a declaration ending in a space, a list line
+ * after three tabs and the readiness return indented by a space.
  *
  * PINNED: V1 the snapshot's custody: the inflated bytes' length and recomputed git blob id equal the literals below, and so do
  * the fixture's repo, commit, path, blob, bytes and sameBlobAt fields. V2 BD_DEPENDENCY_TYPES toStrictEqual the values of the
@@ -691,13 +703,21 @@ describe('wb-4ap.14 (COLLECTIVE-ADAPTATION-R14): until a released bd ships B1/B2
  * relabelled, an it.each over part of the table, a skipped it.each and a row whose case returns before its last assertion each
  * red FC0, FC-LIVE or both. FC-LIVE reads a whole-file run: a run filtered by test name that keeps it and leaves an FC row out
  * reds it.
+ * PAYLOAD of the FC table (wb-h7j9, F2): FC0P holds BD_READER_PROBES, row by row, to the frozen literal BD_READER_PROBE_PAYLOAD
+ * (each id with its from, to and message, in order): a row's from, to or message changed (another row's payload given to it, or
+ * its message weakened), and a payload row dropped, added or reordered, red FC0P.
  * NOT CLAIMED: which of U3's other five types bd's comments call authorship, assignment, approval, delegation or a trigger (the
  * seat's reading of types.go:950-952, :960 and :964): one of them exchanged for another WellKnownDependencyTypes() value outside
  * the readiness pair stays green; and a snapshot forged together with this file's blob literal and its roster literal for the
  * same type stays green (the seat's battery measured both): a hermetic file has no upstream to compare with, so the blob id is
  * the anchor a reviewer checks (git rev-parse 26d1cc9dd:internal/types/types.go in the beads repository); and an FC row deleted
- * together with its BD_READER_PROBE_SHAPE entry stays green: both lists are this file's own, and the FC rows are its falsifiers
- * of its own reader, with no outside list to hold them to.
+ * together with its BD_READER_PROBE_SHAPE and BD_READER_PROBE_PAYLOAD entries, or a row's from, to or message changed together
+ * with its BD_READER_PROBE_PAYLOAD entry in a way the row's own assertions still accept (its message weakened, for one), stays
+ * green: these lists are this file's own, and the FC rows are its falsifiers of its own reader, with no outside list to hold
+ * them to; and a line outside a site's form that no FC row writes: a one-edit reader member that only adds such a line to what
+ * it accepts stays green (one the cutting seat measured: a declaration comment opened by one slash); and whether the reader
+ * accepts an in-form line the snapshot does not hold: a reader member that rejects more such lines can stay green while the
+ * snapshot's own lines still read (one the cutting seat measured: a value of three words joined by hyphens).
  */
 const BD_SNAPSHOT_FILE = new URL('./fixtures/bd-dependency-types-snapshot.json', import.meta.url);
 /** `git rev-parse <commit>:internal/types/types.go` in the beads repository at 26d1cc9dd, ba381a58c and 088aff1ba, read by the cutting seat. */
@@ -854,9 +874,143 @@ const BD_READER_PROBES: {id: string; form: string; from: string; to: string; mes
   {id: 'FC22', form: 'a const block comment after two tabs', from: '\t// Association types', to: '\t\t// Association types', message: /^types\.go: unread line 939: /},
   {id: 'FC23', form: 'a readiness operand written without spaces', from: 'd == DepBlocks || d == DepParentChild || d == DepConditionalBlocks', to: 'd == DepBlocks || d==DepParentChild || d == DepConditionalBlocks', message: /^types\.go: unread line 1002: /},
   {id: 'FC24', form: 'a tab between a const name and its type', from: 'DepRelated        DependencyType', to: 'DepRelated\tDependencyType', message: /^types\.go: unread line 940: /},
+  {
+    id: 'FC25',
+    form: 'no space between a const name and its type',
+    from: '\tDepSupersedes DependencyType = "supersedes" // Version chain link',
+    to: '\tDepSupersedesDependencyType = "supersedes" // Version chain link',
+    message: /^types\.go: unread line 947: "\\tDepSupersedesDependencyType = \\"supersedes\\" \/\/ Version chain link"$/,
+  },
+  {
+    id: 'FC26',
+    form: 'a declaration comment with no space before it',
+    from: '\tDepDuplicates DependencyType = "duplicates" // Deduplication link',
+    to: '\tDepDuplicates DependencyType = "duplicates"// Deduplication link',
+    message: /^types\.go: unread line 946: "\\tDepDuplicates DependencyType = \\"duplicates\\"\/\/ Deduplication link"$/,
+  },
+  {
+    id: 'FC27',
+    form: 'a whitespace-only line in the const block',
+    from: '// Fanout gate: wait for dynamic children\n\n',
+    to: '// Fanout gate: wait for dynamic children\n\t\n',
+    message: /^types\.go: unread line 938: "\\t"$/,
+  },
+  {
+    id: 'FC28',
+    form: 'a const block comment after a space',
+    from: '\t// Graph link types',
+    to: ' // Graph link types',
+    message: /^types\.go: unread line 943: " \/\/ Graph link types"$/,
+  },
+  {
+    id: 'FC29',
+    form: 'a list line ending in a space',
+    from: '\t\tDepRepliesTo, DepRelatesTo, DepDuplicates, DepSupersedes,\n',
+    to: '\t\tDepRepliesTo, DepRelatesTo, DepDuplicates, DepSupersedes, \n',
+    message: /^types\.go: unread line 982: "\\t\\tDepRepliesTo, DepRelatesTo, DepDuplicates, DepSupersedes, "$/,
+  },
+  {
+    id: 'FC30',
+    form: 'the WellKnownDependencyTypes line ending in a space',
+    from: 'func WellKnownDependencyTypes() []DependencyType {\n',
+    to: 'func WellKnownDependencyTypes() []DependencyType { \n',
+    message: /^types\.go: expected exactly one line "func WellKnownDependencyTypes\(\) \[\]DependencyType \{", found 0$/,
+  },
+  {
+    id: 'FC31',
+    form: 'the const block closed by a line ending in a space',
+    from: 'completion cascades up\n)\n',
+    to: 'completion cascades up\n) \n',
+    message: /^types\.go: unread line 965: "\) "$/,
+  },
+  {
+    id: 'FC32',
+    form: 'the const block opened by a line ending in a space',
+    from: 'const (\n\t// Workflow types',
+    to: 'const ( \n\t// Workflow types',
+    message: /^types\.go: unread line 932: "const \( "$/,
+  },
+  {
+    id: 'FC33',
+    form: 'the list return line ending in a space',
+    from: '\treturn []DependencyType{\n',
+    to: '\treturn []DependencyType{ \n',
+    message: /^types\.go: unread line 980: "\\treturn \[\]DependencyType\{ "$/,
+  },
+  {
+    id: 'FC34',
+    form: 'the list closed by a line ending in a space',
+    from: 'DepDelegatedFrom,\n\t}\n}',
+    to: 'DepDelegatedFrom,\n\t} \n}',
+    message: /^types\.go: unread line 985: "\\t\} "$/,
+  },
+  {
+    id: 'FC35',
+    form: 'WellKnownDependencyTypes closed by a line ending in a space',
+    from: 'DepDelegatedFrom,\n\t}\n}\n',
+    to: 'DepDelegatedFrom,\n\t}\n} \n',
+    message: /^types\.go: unread line 986: "\} "$/,
+  },
+  {
+    id: 'FC36',
+    form: 'AffectsReadyWork closed by a line ending in a space',
+    from: 'd == DepWaitsFor\n}\n\n// IsBlockingEdge',
+    to: 'd == DepWaitsFor\n} \n\n// IsBlockingEdge',
+    message: /^types\.go: unread line 1003: "\} "$/,
+  },
+  {
+    id: 'FC37',
+    form: 'a declaration indented by a space',
+    from: '\tDepRelated        DependencyType',
+    to: ' DepRelated        DependencyType',
+    message: /^types\.go: unread line 940: " DepRelated {8}DependencyType = \\"related\\""$/,
+  },
+  {
+    id: 'FC38',
+    form: 'a declaration after two tabs',
+    from: '\tDepRelated        DependencyType',
+    to: '\t\tDepRelated        DependencyType',
+    message: /^types\.go: unread line 940: "\\t\\tDepRelated {8}DependencyType = \\"related\\""$/,
+  },
+  {
+    id: 'FC39',
+    form: 'a declaration with no space after its =',
+    from: 'DepBlocks            DependencyType = "blocks"',
+    to: 'DepBlocks            DependencyType ="blocks"',
+    message: /^types\.go: unread line 934: "\\tDepBlocks {12}DependencyType =\\"blocks\\""$/,
+  },
+  {
+    id: 'FC40',
+    form: 'a tab before a declaration comment',
+    from: '"supersedes" // Version chain link',
+    to: '"supersedes"\t// Version chain link',
+    message: /^types\.go: unread line 947: "\\tDepSupersedes DependencyType = \\"supersedes\\"\\t\/\/ Version chain link"$/,
+  },
+  {
+    id: 'FC41',
+    form: 'a declaration ending in a space',
+    from: '\tDepRelated        DependencyType = "related"\n',
+    to: '\tDepRelated        DependencyType = "related" \n',
+    message: /^types\.go: unread line 940: "\\tDepRelated {8}DependencyType = \\"related\\" "$/,
+  },
+  {
+    id: 'FC42',
+    form: 'a list line after three tabs',
+    from: '\t\tDepRepliesTo, DepRelatesTo',
+    to: '\t\t\tDepRepliesTo, DepRelatesTo',
+    message: /^types\.go: unread line 982: "\\t\\t\\tDepRepliesTo, DepRelatesTo, DepDuplicates, DepSupersedes,"$/,
+  },
+  {
+    id: 'FC43',
+    form: 'the readiness return indented by a space',
+    from: '\treturn d == DepBlocks || d == DepParentChild',
+    to: ' return d == DepBlocks || d == DepParentChild',
+    message: /^types\.go: unread line 1002: " return d == DepBlocks \|\| d == DepParentChild \|\| d == DepConditionalBlocks \|\| d == DepWaitsFor"$/,
+  },
 ];
 /** wb-vked respin (refusal #1 U1, each-liveness): BD_READER_PROBES row by row, each id with its form, in table order, frozen
- * at this cut. FC0 holds the table to it; FC-LIVE holds the it.each's registered cases and their completions to it. */
+ * at that cut, FC25-FC43 appended by wb-h7j9. FC0 holds the table to it; FC-LIVE holds the it.each's registered cases and
+ * their completions to it. */
 const BD_READER_PROBE_SHAPE = [
   'FC1: a second type line',
   'FC2: the const block opened another way',
@@ -882,6 +1036,72 @@ const BD_READER_PROBE_SHAPE = [
   'FC22: a const block comment after two tabs',
   'FC23: a readiness operand written without spaces',
   'FC24: a tab between a const name and its type',
+  'FC25: no space between a const name and its type',
+  'FC26: a declaration comment with no space before it',
+  'FC27: a whitespace-only line in the const block',
+  'FC28: a const block comment after a space',
+  'FC29: a list line ending in a space',
+  'FC30: the WellKnownDependencyTypes line ending in a space',
+  'FC31: the const block closed by a line ending in a space',
+  'FC32: the const block opened by a line ending in a space',
+  'FC33: the list return line ending in a space',
+  'FC34: the list closed by a line ending in a space',
+  'FC35: WellKnownDependencyTypes closed by a line ending in a space',
+  'FC36: AffectsReadyWork closed by a line ending in a space',
+  'FC37: a declaration indented by a space',
+  'FC38: a declaration after two tabs',
+  'FC39: a declaration with no space after its =',
+  'FC40: a tab before a declaration comment',
+  'FC41: a declaration ending in a space',
+  'FC42: a list line after three tabs',
+  'FC43: the readiness return indented by a space',
+];
+/** wb-h7j9 (R694 follow-up of wb-vked landing 726, F2): BD_READER_PROBES row by row, each id with its from, to and message, in
+ * table order, frozen at this cut. FC0P holds the table to it. */
+const BD_READER_PROBE_PAYLOAD: [id: string, from: string, to: string, message: RegExp][] = [
+  ['FC1', 'type DependencyType string\n', 'type DependencyType string\ntype DependencyType string\n', /^types\.go: expected exactly one line "type DependencyType string", found 2$/],
+  ['FC2', 'const (\n\t// Workflow types', 'var (\n\t// Workflow types', /^types\.go: unread line 932: "var \("$/],
+  ['FC3', 'DepValidates DependencyType = "validates"', 'DepValidates = DependencyType("validates")', /^types\.go: unread line 961: /],
+  ['FC4', '\t// Association types', '\t/* Association types */', /^types\.go: unread line 939: /],
+  ['FC5', 'DepTracks DependencyType = "tracks"', 'DepUntil DependencyType = "tracks"', /^types\.go: the const block declares DepUntil twice$/],
+  ['FC6', '"relates-to"', '"related"', /^types\.go: the const block declares "related" twice$/],
+  ['FC7', 'func WellKnownDependencyTypes() []DependencyType {', 'func BuiltinDependencyTypes() []DependencyType {', /^types\.go: expected exactly one line "func WellKnownDependencyTypes\(\) \[\]DependencyType \{", found 0$/],
+  ['FC8', '\treturn []DependencyType{', '\ttypes := []DependencyType{', /^types\.go: unread line 980: /],
+  ['FC9', 'DepAttests, DepTracks,', 'DepAttests, DependencyType("tracks"),', /^types\.go: unread line 983: /],
+  ['FC10', 'DepValidates, DepDelegatedFrom,', 'DepValidates, DepDelegatedFrom, DepImplements,', /^types\.go: WellKnownDependencyTypes\(\) names DepImplements, which the DependencyType const block does not declare$/],
+  ['FC11', 'DepValidates, DepDelegatedFrom,', 'DepValidates, DepValidates,', /^types\.go: WellKnownDependencyTypes\(\) lists DepValidates twice$/],
+  ['FC12', 'DepDelegatedFrom,\n\t}\n}', 'DepDelegatedFrom,\n\t}\n\treturn nil\n}', /^types\.go: unread line 986: "\\treturn nil"$/],
+  ['FC13', 'func (d DependencyType) AffectsReadyWork() bool {', 'func (d DependencyType) AffectsReady() bool {', /^types\.go: expected exactly one line "func \(d DependencyType\) AffectsReadyWork\(\) bool \{", found 0$/],
+  ['FC14', 'DepParentChild || d == DepConditionalBlocks || d == DepWaitsFor', 'DepParentChild || d == DepConditionalBlocks || d.IsBlockingEdge()', /^types\.go: unread line 1002: /],
+  ['FC15', 'DepParentChild || d == DepConditionalBlocks || d == DepWaitsFor', 'DepParentChild || d == DepConditionalBlocks || d == DepWaitsForever', /^types\.go: AffectsReadyWork\(\) names DepWaitsForever, which the DependencyType const block does not declare$/],
+  ['FC16', 'DepParentChild || d == DepConditionalBlocks || d == DepWaitsFor', 'DepParentChild || d == DepConditionalBlocks || d == DepParentChild', /^types\.go: AffectsReadyWork\(\) lists DepParentChild twice$/],
+  ['FC17', 'd == DepWaitsFor\n}\n\n// IsBlockingEdge', 'd == DepWaitsFor\n\treturn false\n}\n\n// IsBlockingEdge', /^types\.go: unread line 1003: "\\treturn false"$/],
+  ['FC18', '"waits-for"', '"waits_for"', /^types\.go: unread line 937: /],
+  ['FC19', 'DepAttests    DependencyType', 'depAttests    DependencyType', /^types\.go: unread line 953: /],
+  ['FC20', '"until"     //', '"until" + "" //', /^types\.go: unread line 959: /],
+  ['FC21', 'DepRelated, DepDiscoveredFrom,', 'DepRelated,DepDiscoveredFrom,', /^types\.go: unread line 981: /],
+  ['FC22', '\t// Association types', '\t\t// Association types', /^types\.go: unread line 939: /],
+  ['FC23', 'd == DepBlocks || d == DepParentChild || d == DepConditionalBlocks', 'd == DepBlocks || d==DepParentChild || d == DepConditionalBlocks', /^types\.go: unread line 1002: /],
+  ['FC24', 'DepRelated        DependencyType', 'DepRelated\tDependencyType', /^types\.go: unread line 940: /],
+  ['FC25', '\tDepSupersedes DependencyType = "supersedes" // Version chain link', '\tDepSupersedesDependencyType = "supersedes" // Version chain link', /^types\.go: unread line 947: "\\tDepSupersedesDependencyType = \\"supersedes\\" \/\/ Version chain link"$/],
+  ['FC26', '\tDepDuplicates DependencyType = "duplicates" // Deduplication link', '\tDepDuplicates DependencyType = "duplicates"// Deduplication link', /^types\.go: unread line 946: "\\tDepDuplicates DependencyType = \\"duplicates\\"\/\/ Deduplication link"$/],
+  ['FC27', '// Fanout gate: wait for dynamic children\n\n', '// Fanout gate: wait for dynamic children\n\t\n', /^types\.go: unread line 938: "\\t"$/],
+  ['FC28', '\t// Graph link types', ' // Graph link types', /^types\.go: unread line 943: " \/\/ Graph link types"$/],
+  ['FC29', '\t\tDepRepliesTo, DepRelatesTo, DepDuplicates, DepSupersedes,\n', '\t\tDepRepliesTo, DepRelatesTo, DepDuplicates, DepSupersedes, \n', /^types\.go: unread line 982: "\\t\\tDepRepliesTo, DepRelatesTo, DepDuplicates, DepSupersedes, "$/],
+  ['FC30', 'func WellKnownDependencyTypes() []DependencyType {\n', 'func WellKnownDependencyTypes() []DependencyType { \n', /^types\.go: expected exactly one line "func WellKnownDependencyTypes\(\) \[\]DependencyType \{", found 0$/],
+  ['FC31', 'completion cascades up\n)\n', 'completion cascades up\n) \n', /^types\.go: unread line 965: "\) "$/],
+  ['FC32', 'const (\n\t// Workflow types', 'const ( \n\t// Workflow types', /^types\.go: unread line 932: "const \( "$/],
+  ['FC33', '\treturn []DependencyType{\n', '\treturn []DependencyType{ \n', /^types\.go: unread line 980: "\\treturn \[\]DependencyType\{ "$/],
+  ['FC34', 'DepDelegatedFrom,\n\t}\n}', 'DepDelegatedFrom,\n\t} \n}', /^types\.go: unread line 985: "\\t\} "$/],
+  ['FC35', 'DepDelegatedFrom,\n\t}\n}\n', 'DepDelegatedFrom,\n\t}\n} \n', /^types\.go: unread line 986: "\} "$/],
+  ['FC36', 'd == DepWaitsFor\n}\n\n// IsBlockingEdge', 'd == DepWaitsFor\n} \n\n// IsBlockingEdge', /^types\.go: unread line 1003: "\} "$/],
+  ['FC37', '\tDepRelated        DependencyType', ' DepRelated        DependencyType', /^types\.go: unread line 940: " DepRelated {8}DependencyType = \\"related\\""$/],
+  ['FC38', '\tDepRelated        DependencyType', '\t\tDepRelated        DependencyType', /^types\.go: unread line 940: "\\t\\tDepRelated {8}DependencyType = \\"related\\""$/],
+  ['FC39', 'DepBlocks            DependencyType = "blocks"', 'DepBlocks            DependencyType ="blocks"', /^types\.go: unread line 934: "\\tDepBlocks {12}DependencyType =\\"blocks\\""$/],
+  ['FC40', '"supersedes" // Version chain link', '"supersedes"\t// Version chain link', /^types\.go: unread line 947: "\\tDepSupersedes DependencyType = \\"supersedes\\"\\t\/\/ Version chain link"$/],
+  ['FC41', '\tDepRelated        DependencyType = "related"\n', '\tDepRelated        DependencyType = "related" \n', /^types\.go: unread line 940: "\\tDepRelated {8}DependencyType = \\"related\\" "$/],
+  ['FC42', '\t\tDepRepliesTo, DepRelatesTo', '\t\t\tDepRepliesTo, DepRelatesTo', /^types\.go: unread line 982: "\\t\\t\\tDepRepliesTo, DepRelatesTo, DepDuplicates, DepSupersedes,"$/],
+  ['FC43', '\treturn d == DepBlocks || d == DepParentChild', ' return d == DepBlocks || d == DepParentChild', /^types\.go: unread line 1002: " return d == DepBlocks \|\| d == DepParentChild \|\| d == DepConditionalBlocks \|\| d == DepWaitsFor"$/],
 ];
 /** The FC ids whose case reached its last assertion this run, in run order (read by FC-LIVE). */
 const COMPLETED_FC: string[] = [];
@@ -910,8 +1130,12 @@ describe("wb-vked (R694 follow-up of wb-4ap.14, F1): BD_DEPENDENCY_TYPES, EDGED_
     expect(OWNERSHIP_READINESS_CAUSE_TYPES.filter((type) => ready.includes(type))).toStrictEqual(ready.filter((type) => !EDGED_BD_TYPES.includes(type)));
   });
 
-  it('wb-vked FC0: BD_READER_PROBES is the frozen rows FC1-FC24, each id with its form, in order', () => {
+  it('wb-vked FC0: BD_READER_PROBES is the frozen rows FC1-FC43, each id with its form, in order', () => {
     expect(BD_READER_PROBES.map((probe) => `${probe.id}: ${probe.form}`)).toStrictEqual(BD_READER_PROBE_SHAPE);
+  });
+
+  it('wb-h7j9 FC0P: BD_READER_PROBES is the frozen payloads FC1-FC43, each id with its from, to and message, in order', () => {
+    expect(BD_READER_PROBES.map(({id, from, to, message}) => [id, from, to, message])).toStrictEqual(BD_READER_PROBE_PAYLOAD);
   });
 
   it.each(BD_READER_PROBES.map((probe) => [probe.id, probe.form, probe] as const))('wb-vked %s: the reader throws on %s', (id, _form, {from, to, message}) => {
