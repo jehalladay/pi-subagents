@@ -7,15 +7,23 @@
  * the unmodified census and greens under the cure, and the claim text and the readers' coverage agree byte for byte with the
  * falsifier roster. Read here as: every gate member outbox row O:1415 names (wb-km7q.6 refusal #4: the 16 Q6 members), the two
  * members R-B150 folds in from O:1499 (wb-km7q.6 refusal #5: G1-A01 and G1-A04) and every reader member O:1499 routes to this bead
- * (G1-R01, G1-R02, G1-R03, G1-S04, G1-S05, G1-M03, G1-M04 and G1-D08) is a FALSIFIERS row naming the pin and the witness keys that
- * hold its input; every line of the helper header's claim block equals its CLAIM_LINES row byte for byte and names the pins that
- * hold it; and the FALSIFIER ROSTER block below equals FALSIFIERS byte for byte.
+ * (G1-R01, G1-R02, G1-R03, G1-S04, G1-S05, G1-M03, G1-M04 and G1-D08), and every member this bead's own refusal #1 (outbox row
+ * O:1569) names unmet (GM-W01, GM-W03, GM-W05, GM-W06, GM-W07, GM-W08, GM-W10, GM-W11, GM-W12, GM-W13 and GM-F01) with its LOW
+ * member GM-W17, is a FALSIFIERS row naming the pin and the witness keys that hold its input; every line of the helper header's
+ * claim block equals its CLAIM_LINES row byte for byte and names the pins that hold it; and the FALSIFIER ROSTER block below
+ * equals FALSIFIERS byte for byte.
  * NOT CARRIED (each changes a reading wb-km7q.6's census keeps for itself, not a reader moved here): G1-M06 (a nested qa/src/ path
  * read as a surface: the surface set) and G1-P03 (the status phrase read short: the producer reading).
+ * CUT #2 (refusal #1, O:1569: claims wider than their pins, R514/R515/R668): U1.1's three break-step classes are held whole by
+ *   U1-CLASSES (claim line U1.6) and the steps argument's order by U1-ORDERINGS (U1.7, the LOW member GM-W17); U2.5 is held over the
+ *   kinds U2-FILE plants, a character device among them, and claims no kind it does not plant.
  *
  * ROWS (one test per pin, titled by the pin id under its row; every pin's output is held to its WITNESS entry):
  *  U1 ADOPTION 'read by WORDS': U1-STEPS each WORDS step's calibration names, recorded with every step and unrecorded with that
- *   step alone left out; U1-NAMES the recorded and unrecorded names of one manifest; U1-SEPARATORS every Unicode scalar value
+ *   step alone left out; U1-CLASSES each break step alone, then lower-case, over every text of two or three sweep characters,
+ *   each class member twice in one text and each whole class in one text, against the census's own statement of the classes
+ *   (claimedWords), and each class as the step reads it; U1-ORDERINGS every ordering of every subset of the steps as the steps
+ *   argument; U1-NAMES the recorded and unrecorded names of one manifest; U1-SEPARATORS every Unicode scalar value
  *   between the two words (and, over the Basic Multilingual Plane, the manifest reading agreeing with it); U1-FIELDS the four read
  *   fields (each a table's keys; an array, a string or null holds none) and the never-read ones; U1-TWICE a name in two read
  *   fields, and the sort order.
@@ -23,21 +31,28 @@
  *   directory candidate passed over, a dot form and the dot specifier; U2-PROBES the probe log of every importer and specifier of
  *   the corpus and of ./zz.<e> for every U3 sweep suffix, against claimedCandidates (this census's own statement of the five), and
  *   the stop at the first accepted one; U2-NON every non-candidate (each read unresolved with its file present); U2-ESCAPE the
- *   ".." filter; U2-FILE the default probe.
+ *   ".." filter; U2-FILE the default probe over the kinds it plants (a character device among them), each beside the kind the
+ *   census reads its path as.
  *  U3 PLAUSIBLE: the page and module closed-set complements: U3-PAGE and U3-MODULE, each the sweep (at the root, below docs/ and
  *   below src/ui/) and the named paths.
  *  SPEC the C2 '/' specifier reading: SPEC-LOCAL the local-specifier sweep and the named forms; SPEC-ROOT and SPEC-ABSOLUTE the
  *   repository-root and the absolute forms, each with the file it names present, never probed and read unresolved.
  *  Each scratch pin reads every specifier twice: through the default probe (the resolution held) and through a recording probe
  *   over the same tree (every path asked, in order).
- * RESIDUALS (named; each has a pinned quiet row beside its loud twin, held under `quiet` in its pin's witness): R-DEPENDENCY-NAME
- *   (U1-NAMES), R-DEPENDENCY-FIELD (U1-FIELDS), R-UNTRIED-CANDIDATE (U2-NON), R-PAGE-NAME (U3-PAGE), R-MODULE-NAME (U3-MODULE) and
- *   R-SPECIFIER-FORM (SPEC-LOCAL).
+ * RESIDUALS (named; each has a pinned quiet row beside its loud twin, held under `quiet` in its pin's witness): R-STEP-TEXT
+ *   (U1-CLASSES), R-DEPENDENCY-NAME (U1-NAMES), R-DEPENDENCY-FIELD (U1-FIELDS), R-UNTRIED-CANDIDATE (U2-NON), R-PAGE-NAME
+ *   (U3-PAGE), R-MODULE-NAME (U3-MODULE) and R-SPECIFIER-FORM (SPEC-LOCAL).
  * OUTSIDE ANCHORS (standing rule 16, CT5 and CT6; outside this file's literals): the tracked bead export's wb-km7q.12 row - its
  *   title's and its description's Q6 counts equal the O:1415 members, each description item's parenthesized label is its row's
  *   label (the item ids are the U rows), and the R-B150 paragraph's member ids are the O:1499 SPEC members and its quoted reading
  *   is the SPEC label; and the helper - its claim block (the lines and the pins they name), WORD_STEPS, DEPENDENCY_FIELDS,
- *   CANDIDATE_RULES, PAGE_SUFFIX and MODULE_SUFFIXES, each member of which has its own calibration, form or sweep entry here.
+ *   CANDIDATE_RULES, PAGE_SUFFIX and MODULE_SUFFIXES, each member of which has its own calibration, form or sweep entry here; the
+ *   claim block also names each O:1569 member on the line whose pins hold it, and WORD_STEPS names the break steps that
+ *   BREAK_STEPS lists and BREAK_CLASSES states.
+ * PIN ANCHORS (refusal #1 F5): each pin is held by its IMPL entry against its own WITNESS literal; the anchors outside those two
+ *   literals read keys (the helper's tables, the roster's keys, the residuals' quiet keys), the export's counts and labels and the
+ *   U3 sweeps' dotted suffixes, never a pin's whole output, so a tautological IMPL entry (one returning its own WITNESS) and a
+ *   coordinated swap of two pins' IMPL and WITNESS entries are NOT CLAIMED by this census for any pin.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and FALSIFIERS pins `${id}:${pin}`, each as a literal; a last
  *   case reads that every pin ran to its witness.
  *
@@ -68,13 +83,26 @@
  *   G1-M03 O:1499 U3 U3-MODULE coffee: a .coffee path read as a module
  *   G1-M04 O:1499 U3 U3-MODULE TS,JS,MJS: a module suffix read in any case
  *   G1-D08 O:1499 U1 U1-TWICE twice: a name held in two read fields recorded once
+ *   GM-W01 O:1569 U1 U1-CLASSES lower-capital: lower-capital not breaking after a
+ *   GM-W03 O:1569 U1 U1-CLASSES lower-capital: lower-capital not breaking before A
+ *   GM-W05 O:1569 U1 U1-CLASSES digit-capital: digit-capital not breaking after 0
+ *   GM-W06 O:1569 U1 U1-CLASSES digit-capital: digit-capital not breaking after 9
+ *   GM-W07 O:1569 U1 U1-CLASSES digit-capital: digit-capital not breaking before A
+ *   GM-W08 O:1569 U1 U1-CLASSES digit-capital: digit-capital breaking only the first pair of a text
+ *   GM-W10 O:1569 U1 U1-CLASSES capital-run: capital-run not breaking after the run letter Z
+ *   GM-W11 O:1569 U1 U1-CLASSES capital-run: capital-run not breaking before the last capital A
+ *   GM-W12 O:1569 U1 U1-CLASSES capital-run: capital-run not breaking before the follower a
+ *   GM-W13 O:1569 U1 U1-CLASSES capital-run: capital-run not breaking before the follower z
+ *   GM-W17 O:1569 U1 U1-ORDERINGS orderings,lower-case-first: the steps applied in the argument's order
+ *   GM-F01 O:1569 U2 U2-FILE link-device,/dev/null: every kind but a directory accepted
  *
  * Display paths added: none. Test-only: the trees live in makeScratch scratch with the leak guard installed; the helper, this file
- * and the bead export are only read; nothing is spawned.
+ * and the bead export are only read; U2-FILE stats /dev/null and plants a symlink to it in its scratch tree, writing nothing
+ * outside the scratch; nothing is spawned.
  */
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
-import { dirname, join, posix } from "node:path";
+import { existsSync, mkdirSync, readFileSync, statSync, symlinkSync, writeFileSync } from "node:fs";
+import { basename, dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
@@ -118,7 +146,7 @@ interface ClaimLine {
 }
 interface Falsifier {
   readonly id: string;
-  readonly outbox: "O:1415" | "O:1499";
+  readonly outbox: "O:1415" | "O:1499" | "O:1569";
   readonly row: RowId;
   readonly pin: string;
   readonly keys: readonly string[];
@@ -134,7 +162,7 @@ const BEAD = "wb-km7q.12";
 
 // ------------------------------------------------------------------------------------------------------------------ the rows
 const ROWS: readonly Row[] = [
-  { id: "U1", label: "ADOPTION 'read by WORDS'", pins: [{ id: "U1-STEPS" }, { id: "U1-NAMES" }, { id: "U1-SEPARATORS" }, { id: "U1-FIELDS" }, { id: "U1-TWICE" }] },
+  { id: "U1", label: "ADOPTION 'read by WORDS'", pins: [{ id: "U1-STEPS" }, { id: "U1-CLASSES" }, { id: "U1-ORDERINGS" }, { id: "U1-NAMES" }, { id: "U1-SEPARATORS" }, { id: "U1-FIELDS" }, { id: "U1-TWICE" }] },
   { id: "U2", label: "C2 'No other candidate is tried'", pins: [{ id: "U2-ALONE" }, { id: "U2-ORDER" }, { id: "U2-PROBES" }, { id: "U2-NON" }, { id: "U2-ESCAPE" }, { id: "U2-FILE" }] },
   { id: "U3", label: "PLAUSIBLE: the page and module closed-set complements", pins: [{ id: "U3-PAGE" }, { id: "U3-MODULE" }] },
   { id: "SPEC", label: "the C2 '/' specifier reading", pins: [{ id: "SPEC-LOCAL" }, { id: "SPEC-ROOT" }, { id: "SPEC-ABSOLUTE" }] },
@@ -144,8 +172,8 @@ const ROWS: readonly Row[] = [
 const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "U1.1",
-    pins: ["U1-STEPS"],
-    text: "WORDS reads a text in five steps, in this order: nfkc (the text's NFKC form), lower-capital (a break between an ASCII lower-case letter and the ASCII capital after it), digit-capital (a break between an ASCII digit and the ASCII capital after it), capital-run (a break before the last capital of a run of ASCII capitals that an ASCII lower-case letter follows), lower-case (String.prototype.toLowerCase); the words are then the runs of a-z and 0-9, and every other character separates them; each step is held by calibration names that read recorded with every step and unrecorded with that step alone left out.",
+    pins: ["U1-STEPS", "U1-CLASSES"],
+    text: "WORDS reads a text in five steps, in this order: nfkc (the text's NFKC form), lower-capital (a break between an ASCII lower-case letter and the ASCII capital after it), digit-capital (a break between an ASCII digit and the ASCII capital after it), capital-run (a break before the last capital of a run of two or more ASCII capitals that an ASCII lower-case letter follows), lower-case (String.prototype.toLowerCase); the words are then the runs of a-z and 0-9, and every other character separates them; each step is held by calibration names that read recorded with every step and unrecorded with that step alone left out, and each break step's class by U1.6 over the texts U1.6 holds, no other text claimed for the break steps (R-STEP-TEXT).",
   },
   {
     id: "U1.2",
@@ -163,6 +191,16 @@ const CLAIM_LINES: readonly ClaimLine[] = [
     text: "A name is a key of the table of exactly four fields of the manifest, dependencies, devDependencies, optionalDependencies and peerDependencies (a field whose value is an array, a string or null holds no name); the never-read fields U1-FIELDS holds are not read, and no other field is claimed (R-DEPENDENCY-FIELD).",
   },
   { id: "U1.5", pins: ["U1-TWICE"], text: "A name a manifest holds in two read fields is recorded once per field, and the recorded names are sorted by UTF-16 code unit." },
+  {
+    id: "U1.6",
+    pins: ["U1-CLASSES"],
+    text: "Each break step, applied alone before lower-case, breaks a text exactly where its class stands: lower-capital between the two characters of each of its 676 pairs (an ASCII lower-case letter, then an ASCII capital), digit-capital between the two characters of each of its 260 pairs (an ASCII digit, then an ASCII capital), capital-run between the first two characters of each of its 17576 triples (an ASCII capital, an ASCII capital, then an ASCII lower-case letter); held against the census's own statement of the three classes over every text of two or three characters drawn from the 128 ASCII characters and the scalar values outside them whose lower-case form holds an ASCII letter or digit (U+0130 and U+212A, as U1-CLASSES reads every scalar value), and over each class member twice in one text and each whole class in one text (so every break of a text is made); it answers the O:1569 members GM-W01, GM-W03, GM-W05, GM-W06, GM-W07, GM-W08, GM-W10, GM-W11, GM-W12 and GM-W13; no other text is claimed (R-STEP-TEXT).",
+  },
+  {
+    id: "U1.7",
+    pins: ["U1-ORDERINGS"],
+    text: "WORDS applies the steps a steps argument names in WORD_STEPS order whatever the argument's own order: held over every ordering of every subset of the five, each step named once (326 arguments), each reading every U1-STEPS calibration name as that subset in WORD_STEPS order reads it, and over reactiveFiber read with lower-case named before lower-capital (reactive fiber); it answers the O:1569 member GM-W17; an argument naming a step twice is NOT CLAIMED by this census.",
+  },
   {
     id: "U2.1",
     pins: ["U2-ALONE", "U2-ORDER"],
@@ -182,7 +220,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "U2.5",
     pins: ["U2-FILE"],
-    text: "The default probe, isFileIn(base), accepts a path exactly when join(base, path) names a regular file after symlinks are followed: a file and a symlink to a file read accepted; a directory, a symlink to a directory, a dangling symlink and a missing path read refused.",
+    text: "The default probe, isFileIn(base), accepts a path when join(base, path) names a regular file after symlinks are followed and refuses each other kind planted here: a file and a symlink to a file read accepted; a directory, a symlink to a directory, a dangling symlink, a missing path and a character device (/dev/null by its own path, and a symlink to it) read refused, each beside the kind the census reads its path as; it answers the O:1569 member GM-F01; a FIFO, a socket and a block device are NOT CLAIMED by this census.",
   },
   {
     id: "U3.1",
@@ -203,6 +241,11 @@ const CLAIM_LINES: readonly ClaimLine[] = [
     id: "S.2",
     pins: ["SPEC-ROOT", "SPEC-ABSOLUTE"],
     text: 'A specifier opening with "/" forms no candidate, so resolveLocal never probes for it and reads it unresolved whatever file it names: the repository-root forms SPEC-ROOT holds (a root-relative bundler\'s reading) and the absolute forms naming a repository file SPEC-ABSOLUTE holds (Node\'s reading), each with the named file present.',
+  },
+  {
+    id: "R-STEP-TEXT",
+    pins: ["U1-CLASSES"],
+    text: "A text outside U1.6's sweep, doubled members and whole classes is not claimed: a<U+FF22> (a, then the fullwidth capital B, a character outside the sweep) reads no lower-capital break beside its ASCII twin aB, and ABc1 (a capital-run member, then a fourth character) reads capital-run's break beside its three-character twin ABc.",
   },
   {
     id: "R-DEPENDENCY-NAME",
@@ -248,6 +291,18 @@ const FALSIFIERS: readonly Falsifier[] = [
   { id: "G1-M03", outbox: "O:1499", row: "U3", pin: "U3-MODULE", keys: ["coffee"], reading: "a .coffee path read as a module" },
   { id: "G1-M04", outbox: "O:1499", row: "U3", pin: "U3-MODULE", keys: ["TS", "JS", "MJS"], reading: "a module suffix read in any case" },
   { id: "G1-D08", outbox: "O:1499", row: "U1", pin: "U1-TWICE", keys: ["twice"], reading: "a name held in two read fields recorded once" },
+  { id: "GM-W01", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["lower-capital"], reading: "lower-capital not breaking after a" },
+  { id: "GM-W03", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["lower-capital"], reading: "lower-capital not breaking before A" },
+  { id: "GM-W05", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["digit-capital"], reading: "digit-capital not breaking after 0" },
+  { id: "GM-W06", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["digit-capital"], reading: "digit-capital not breaking after 9" },
+  { id: "GM-W07", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["digit-capital"], reading: "digit-capital not breaking before A" },
+  { id: "GM-W08", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["digit-capital"], reading: "digit-capital breaking only the first pair of a text" },
+  { id: "GM-W10", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["capital-run"], reading: "capital-run not breaking after the run letter Z" },
+  { id: "GM-W11", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["capital-run"], reading: "capital-run not breaking before the last capital A" },
+  { id: "GM-W12", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["capital-run"], reading: "capital-run not breaking before the follower a" },
+  { id: "GM-W13", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["capital-run"], reading: "capital-run not breaking before the follower z" },
+  { id: "GM-W17", outbox: "O:1569", row: "U1", pin: "U1-ORDERINGS", keys: ["orderings", "lower-case-first"], reading: "the steps applied in the argument's order" },
+  { id: "GM-F01", outbox: "O:1569", row: "U2", pin: "U2-FILE", keys: ["link-device", "/dev/null"], reading: "every kind but a directory accepted" },
 ];
 
 // ---------------------------------------------------------------------------------------------------------------- the readings
@@ -290,6 +345,61 @@ const STEP_CALIBRATION: Readonly<Record<WordStep, readonly string[]>> = {
   "capital-run": ["@zz/XMLReactiveFiber", "RFReactiveFiberZz", "IReactiveFiberZz", "ABcXMLReactiveFiber", "REACTIVEFiber"],
   "lower-case": ["REACTIVE.FIBER.ZZ", "Reactive_Fiber_Zz"],
 };
+/** U1-CLASSES: the three break steps of WORDS and the census's own statement of each one's class (U1.1, U1.6): the kinds of the
+ * characters from the one before a break onward (the break falls after the first). */
+type BreakStep = "lower-capital" | "digit-capital" | "capital-run";
+type Kind = "lower" | "capital" | "digit";
+const BREAK_CLASSES: Readonly<Record<BreakStep, readonly Kind[]>> = {
+  "lower-capital": ["lower", "capital"],
+  "digit-capital": ["digit", "capital"],
+  "capital-run": ["capital", "capital", "lower"],
+};
+const BREAK_STEPS: readonly BreakStep[] = ["lower-capital", "digit-capital", "capital-run"];
+/** The ASCII characters of each kind. */
+const KIND_CHARS: Readonly<Record<Kind, string>> = { lower: "abcdefghijklmnopqrstuvwxyz", capital: "ABCDEFGHIJKLMNOPQRSTUVWXYZ", digit: "0123456789" };
+const isKind = (kind: Kind, char: string | undefined): boolean => char !== undefined && char.length === 1 && KIND_CHARS[kind].includes(char);
+/** The highest ASCII code point. */
+const ASCII_TOP = 0x7f;
+/** The census's own statement of one break step applied alone, then lower-case (U1.6): the text broken after every UTF-16 unit
+ * its class stands at (the step regexes read units, no u flag), lower-cased, read as its runs of a-z and 0-9. */
+function claimedWords(text: string, step: BreakStep): string[] {
+  const kinds = BREAK_CLASSES[step];
+  let broken = "";
+  for (let index = 0; index < text.length; index += 1) {
+    broken += text[index];
+    if (kinds.every((kind, offset) => isKind(kind, text[index + offset]))) broken += " ";
+  }
+  return broken.toLowerCase().match(/[a-z0-9]+/g) ?? [];
+}
+/** Every member of a step's class: each string of one character of each of its kinds, in order. */
+const classMembers = (step: BreakStep): string[] => BREAK_CLASSES[step].reduce<string[]>((members, kind) => members.flatMap(member => [...KIND_CHARS[kind]].map(char => `${member}${char}`)), [""]);
+/** A text as its code points in upper-case hex (a mismatch's sample). */
+const hexOf = (text: string): string => [...text].map(char => (char.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")).join(" ");
+const FULLWIDTH_CAPITAL_B = String.fromCodePoint(0xff22);
+/** U1-ORDERINGS: every ordering of every subset of the WORDS steps, each step named once (the empty argument first). */
+function orderingsOf(steps: readonly WordStep[]): WordStep[][] {
+  const out: WordStep[][] = [[]];
+  const grow = (prefix: readonly WordStep[]): void => {
+    for (const step of steps) {
+      if (prefix.includes(step)) continue;
+      const next = [...prefix, step];
+      out.push(next);
+      grow(next);
+    }
+  };
+  grow([]);
+  return out;
+}
+/** U2-FILE: a character device every Linux host has, and the kind the census reads a path as, symlinks followed. */
+const DEVICE = "/dev/null";
+function kindOf(path: string): string {
+  try {
+    const info = statSync(path);
+    return info.isFile() ? "file" : info.isDirectory() ? "directory" : info.isCharacterDevice() ? "character device" : info.isFIFO() ? "fifo" : info.isSocket() ? "socket" : info.isBlockDevice() ? "block device" : "other";
+  } catch {
+    return "missing";
+  }
+}
 /** U1-NAMES: one manifest's dependencies - the names whose words hold the pair, and the near misses whose words do not. */
 const RECORDED_NAMES: readonly string[] = [
   "@reactive-fiber/tsx",
@@ -530,6 +640,69 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       }),
     ),
   }),
+  "U1-CLASSES": () => {
+    // The sweep's characters: the ASCII range, then every other scalar value whose lower-case form holds an ASCII letter or digit.
+    const extra: number[] = [];
+    for (let point = ASCII_TOP + 1; point <= UNICODE_TOP; point += 1) if (!isSurrogate(point) && /[a-z0-9]/.test(String.fromCodePoint(point).toLowerCase())) extra.push(point);
+    const chars = [...Array.from({ length: ASCII_TOP + 1 }, (_, point) => point), ...extra].map(point => String.fromCodePoint(point));
+    const thirds = ["", ...chars];
+    const reading = (text: string, step: BreakStep): string => words(text, [step, "lower-case"]).join(" ");
+    const forms: { [key: string]: Json } = {};
+    for (const step of BREAK_STEPS) {
+      const length = BREAK_CLASSES[step].length;
+      let texts = 0;
+      const mismatches: string[] = [];
+      // The class as the step reads it: the texts of ASCII letters and digits, as long as a member, that it breaks.
+      const read: string[] = [];
+      for (const first of chars) {
+        for (const second of chars) {
+          for (const third of thirds) {
+            const text = `${first}${second}${third}`;
+            const got = reading(text, step);
+            texts += 1;
+            if (got !== claimedWords(text, step).join(" ")) mismatches.push(hexOf(text));
+            if (text.length === length && got.includes(" ") && [...text].every(char => ALNUM.includes(char))) read.push(text);
+          }
+        }
+      }
+      // Each position of the class as read: the characters standing there, and the product of their counts.
+      const held = BREAK_CLASSES[step].map((_, index) => new Set(read.map(text => text[index])));
+      const members = classMembers(step);
+      const doubled = members.filter(member => reading(`${member}${member}`, step) !== claimedWords(`${member}${member}`, step).join(" ")).map(hexOf);
+      const whole = members.join("");
+      forms[step] = {
+        class: { members: read.length, at: held.map(set => codePoints(char => set.has(char), ASCII_TOP)), product: read.length === held.reduce((product, set) => product * set.size, 1) },
+        sweep: { texts, mismatches: mismatches.length, samples: mismatches.slice(0, 3) },
+        doubled: { texts: members.length, mismatches: doubled.length, samples: doubled.slice(0, 3) },
+        whole: { length: whole.length, words: reading(whole, step).split(" ").length, agrees: reading(whole, step) === claimedWords(whole, step).join(" ") },
+      };
+    }
+    return {
+      characters: { ascii: ASCII_TOP + 1, extra: extra.map(point => point.toString(16).toUpperCase().padStart(4, "0")) },
+      forms,
+      quiet: {
+        "R-STEP-TEXT": {
+          "a character outside the sweep": [words(`a${FULLWIDTH_CAPITAL_B}`, ["lower-capital", "lower-case"]), words("aB", ["lower-capital", "lower-case"])],
+          "a fourth character": [words("ABc1", ["capital-run", "lower-case"]), words("ABc", ["capital-run", "lower-case"])],
+        },
+      },
+    };
+  },
+  "U1-ORDERINGS": () => {
+    const names = Object.values(STEP_CALIBRATION).flat();
+    const argumentsRead = orderingsOf(WORD_STEPS);
+    const mismatches: string[] = [];
+    for (const argument of argumentsRead) {
+      const inOrder = WORD_STEPS.filter(step => argument.includes(step));
+      for (const name of names) if (words(name, argument).join(" ") !== words(name, inOrder).join(" ")) mismatches.push(`${argument.join(",")} ${shown(name)}`);
+    }
+    return {
+      forms: {
+        orderings: { arguments: argumentsRead.length, names: names.length, mismatches: mismatches.length, samples: mismatches.slice(0, 3) },
+        "lower-case-first": { steps: ["lower-case", "lower-capital"], words: words("reactiveFiber", ["lower-case", "lower-capital"]) },
+      },
+    };
+  },
   "U1-NAMES": () => ({
     recorded: dependencyNames(manifestOf([...RECORDED_NAMES, ...UNRECORDED_NAMES])).map(shown),
     forms: Object.fromEntries([...RECORDED_NAMES, ...UNRECORDED_NAMES].map(name => [shown(name), dependencyNames(manifestOf([name])).length === 1])),
@@ -665,8 +838,13 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     symlinkSync(join(base, "file.ts"), join(base, "link-file"));
     symlinkSync(join(base, "dir"), join(base, "link-dir"));
     symlinkSync(join(base, "zz-missing-target"), join(base, "dangling"));
+    symlinkSync(DEVICE, join(base, "link-device"));
     const accept = isFileIn(base);
-    return { forms: Object.fromEntries(["file.ts", "link-file", "dir", "link-dir", "dangling", "missing"].map(path => [path, accept(path)])) };
+    const paths = ["file.ts", "link-file", "dir", "link-dir", "dangling", "missing", "link-device"];
+    return {
+      forms: { ...Object.fromEntries(paths.map(path => [path, accept(path)])), [DEVICE]: isFileIn(dirname(DEVICE))(basename(DEVICE)) },
+      kinds: { ...Object.fromEntries(paths.map(path => [path, kindOf(join(base, path))])), [DEVICE]: kindOf(DEVICE) },
+    };
   },
   "U3-PAGE": () => ({
     sweep: sweep(isPage),
@@ -742,6 +920,47 @@ const WITNESS: Readonly<Record<string, Json>> = {
         "without": [false, false],
         "words": ["reactive fiber zz", "reactive fiber zz"],
       },
+    },
+  },
+  "U1-CLASSES": {
+    "characters": { "ascii": 128, "extra": ["0130", "212A"] },
+    "forms": {
+      "lower-capital": {
+        "class": { "members": 676, "at": [["0061-007A"], ["0041-005A"]], "product": true },
+        "sweep": { "texts": 2213900, "mismatches": 0, "samples": [] },
+        "doubled": { "texts": 676, "mismatches": 0, "samples": [] },
+        "whole": { "length": 1352, "words": 677, "agrees": true },
+      },
+      "digit-capital": {
+        "class": { "members": 260, "at": [["0030-0039"], ["0041-005A"]], "product": true },
+        "sweep": { "texts": 2213900, "mismatches": 0, "samples": [] },
+        "doubled": { "texts": 260, "mismatches": 0, "samples": [] },
+        "whole": { "length": 520, "words": 261, "agrees": true },
+      },
+      "capital-run": {
+        "class": { "members": 17576, "at": [["0041-005A"], ["0041-005A"], ["0061-007A"]], "product": true },
+        "sweep": { "texts": 2213900, "mismatches": 0, "samples": [] },
+        "doubled": { "texts": 17576, "mismatches": 0, "samples": [] },
+        "whole": { "length": 52728, "words": 17577, "agrees": true },
+      },
+    },
+    "quiet": {
+      "R-STEP-TEXT": {
+        "a character outside the sweep": [
+          ["a"],
+          ["a", "b"],
+        ],
+        "a fourth character": [
+          ["a", "bc1"],
+          ["a", "bc"],
+        ],
+      },
+    },
+  },
+  "U1-ORDERINGS": {
+    "forms": {
+      "orderings": { "arguments": 326, "names": 16, "mismatches": 0, "samples": [] },
+      "lower-case-first": { "steps": ["lower-case", "lower-capital"], "words": ["reactive", "fiber"] },
     },
   },
   "U1-NAMES": {
@@ -1194,7 +1413,8 @@ const WITNESS: Readonly<Record<string, Json>> = {
     },
   },
   "U2-FILE": {
-    "forms": { "file.ts": true, "link-file": true, "dir": false, "link-dir": false, "dangling": false, "missing": false },
+    "forms": { "file.ts": true, "link-file": true, "dir": false, "link-dir": false, "dangling": false, "missing": false, "link-device": false, "/dev/null": false },
+    "kinds": { "file.ts": "file", "link-file": "file", "dir": "directory", "link-dir": "directory", "dangling": "missing", "missing": "missing", "link-device": "character device", "/dev/null": "character device" },
   },
   "U3-PAGE": {
     "sweep": {
@@ -1431,7 +1651,7 @@ const witnessForms = (pin: string): Record<string, unknown> => {
 describe("wb-km7q.12 activity-boundary readers census", () => {
   const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
   it("frozen shape: the rows, the falsifiers and the pin tables", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["U1:5", "U2:6", "U3:2", "SPEC:3"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["U1:7", "U2:6", "U3:2", "SPEC:3"]);
     expect(FALSIFIERS.map(falsifier => `${falsifier.id}:${falsifier.pin}`)).toEqual([
       "Q6-D01:U1-STEPS",
       "Q6-D02:U1-STEPS",
@@ -1459,6 +1679,18 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
       "G1-M03:U3-MODULE",
       "G1-M04:U3-MODULE",
       "G1-D08:U1-TWICE",
+      "GM-W01:U1-CLASSES",
+      "GM-W03:U1-CLASSES",
+      "GM-W05:U1-CLASSES",
+      "GM-W06:U1-CLASSES",
+      "GM-W07:U1-CLASSES",
+      "GM-W08:U1-CLASSES",
+      "GM-W10:U1-CLASSES",
+      "GM-W11:U1-CLASSES",
+      "GM-W12:U1-CLASSES",
+      "GM-W13:U1-CLASSES",
+      "GM-W17:U1-ORDERINGS",
+      "GM-F01:U2-FILE",
     ]);
     expect(Object.keys(IMPL).sort(byName)).toEqual([...pins].sort(byName));
     expect(Object.keys(WITNESS).sort(byName)).toEqual([...pins].sort(byName));
@@ -1492,6 +1724,9 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
     }
     // The helper's tables: every step, field, rule and suffix has its calibration, form or sweep entry here.
     expect(Object.keys(STEP_CALIBRATION)).toEqual([...WORD_STEPS]);
+    expect(WORD_STEPS.filter(step => step !== "nfkc" && step !== "lower-case")).toEqual([...BREAK_STEPS]);
+    expect(Object.keys(BREAK_CLASSES)).toEqual([...BREAK_STEPS]);
+    expect(Object.keys(witnessForms("U1-CLASSES"))).toEqual([...BREAK_STEPS]);
     expect(READ_FIELDS).toEqual([...DEPENDENCY_FIELDS]);
     expect(Object.keys(witnessForms("U1-FIELDS")).slice(0, READ_FIELDS.length)).toEqual([...DEPENDENCY_FIELDS]);
     expect(Object.keys(ALONE)).toEqual([...CANDIDATE_RULES]);
@@ -1509,6 +1744,11 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
       expect([falsifier.id, ROWS.find(row => row.id === falsifier.row)?.pins.some(pin => pin.id === falsifier.pin)]).toEqual([falsifier.id, true]);
       expect([falsifier.id, falsifier.keys.filter(key => !(key in witnessForms(falsifier.pin)))]).toEqual([falsifier.id, []]);
     }
+    // The O:1569 members are named, in roster order, by the claim lines whose pins hold them (the helper's claim block names them too).
+    const answered = CLAIM_LINES.flatMap(line => [...line.text.matchAll(/GM-[A-Z]\d\d/g)].map(match => ({ id: match[0], pins: line.pins })));
+    const members = FALSIFIERS.filter(falsifier => falsifier.outbox === "O:1569");
+    expect(answered.map(entry => entry.id)).toEqual(members.map(falsifier => falsifier.id));
+    for (const falsifier of members) expect([falsifier.id, answered.find(entry => entry.id === falsifier.id)?.pins.includes(falsifier.pin)]).toEqual([falsifier.id, true]);
   });
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {
