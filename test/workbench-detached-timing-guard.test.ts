@@ -71,12 +71,20 @@
  * wrappers a finding's condition unwraps, never by a wrapper anywhere in the control's text; the roster pins what each T1
  * and M1 kill control's finding unwraps, which leaves out a wrapper on an operand that is not the counter (ready! in
  * ready! && state.n), and the M1 row reads every wrapper kind among them. One loop is still one finding.
- * wb-dr81 (the R694 follow-up of wb-69ur landing 698, gate cmd_2fc9ac8e06c0: F1 leads, F2 rides) pins two readings of
- * that keying with planted controls, the reader unchanged. A literal element key behind a wrapper or parentheses reads
- * as the member it names: counts[0 as const] and state[("n")] read as the counters counts[0] and state.n, two M1 kill
- * controls (the first one's finding unwraps the `as`). And no two of a named member, a private name and a computed
- * element meet: this!["#n"] read while this.#n steps, and counts[n!] read while counts["n"] steps, are two negative
- * controls that stay quiet.
+ * wb-dr81 (the R694 follow-up of wb-69ur landing 698, gate cmd_2fc9ac8e06c0: F1 leads, F2 rides; this second cut
+ * answers its first refusal) pins that keying cell by cell with planted controls, the reader unchanged. An element's
+ * own key that is a numeric literal, a quoted string or a template with no substitution reads as the member it names
+ * behind each of the four type-level wrappers (as, an angle-bracket assertion, satisfies and the non-null !) and behind
+ * parentheses: fifteen M1 kill controls, one for each literal kind behind each of the five, each read on a plain name
+ * while the member it names steps unwrapped (counts[0], state.n), so counts[0 as const] and state[`n`!] read as the
+ * counters counts[0] and state.n, and the finding of each one behind a type-level wrapper unwraps that wrapper. A
+ * template key reads so bare as well (state[`n`], one more M1 kill control), and so does a key nested in either of two
+ * planted shapes, a wrapper inside parentheses (counts[(0 as number)]) and a wrapper around parentheses around another
+ * one (state[("n" as const)!]), two more. And no two of a named member, a private name and a computed element meet, on
+ * this or on a plain name: while #n steps, a quoted "#n", a plain n and a computed n read through a wrapper stay quiet,
+ * and so does a computed n read while "n" steps, eight negative controls, each pairing on both receivers. Not claimed:
+ * those keys on another receiver (this, a member chain), a literal spelled any other way (an escape, 0x0, 1e0, a
+ * bigint), a nesting of another shape, and the pairings on another receiver (a member chain, a call).
  * The judged set is read from the test directory and the config, never typed here. The members importing the marked
  * twins (the three suites that drive real hosts, and the helper's own unit rows) are pinned, so a derivation that reads
  * nothing, or a member that leaves the twins, reds. Every widened reading has planted kill controls beside negative
@@ -645,6 +653,22 @@ const CONTROLS: Readonly<Record<string, string>> = {
   "M1.wrappedKeyChain": "while (alive() && counts[cursor!.i]) { counts[cursor.i]--; await holdOpen(20); }",
   "M1.wrappedLiteralKey": "while (alive() && counts[0 as const]) { counts[0]--; await holdOpen(20); }",
   "M1.parenthesizedLiteralKey": 'while (alive() && state[("n")]) { state.n--; await holdOpen(20); }',
+  "M1.angleNumericKey": "while (alive() && counts[<number>0]) { counts[0]--; await holdOpen(20); }",
+  "M1.satisfiesNumericKey": "while (alive() && counts[0 satisfies number]) { counts[0]--; await holdOpen(20); }",
+  "M1.nonNullNumericKey": "while (alive() && counts[0!]) { counts[0]--; await holdOpen(20); }",
+  "M1.parenthesizedNumericKey": "while (alive() && counts[(0)]) { counts[0]--; await holdOpen(20); }",
+  "M1.asStringKey": 'while (alive() && state["n" as const]) { state.n--; await holdOpen(20); }',
+  "M1.angleStringKey": 'while (alive() && state[<string>"n"]) { state.n--; await holdOpen(20); }',
+  "M1.satisfiesStringKey": 'while (alive() && state["n" satisfies string]) { state.n--; await holdOpen(20); }',
+  "M1.nonNullStringKey": 'while (alive() && state["n"!]) { state.n--; await holdOpen(20); }',
+  "M1.templateKey": "while (alive() && state[`n`]) { state.n--; await holdOpen(20); }",
+  "M1.asTemplateKey": "while (alive() && state[`n` as const]) { state.n--; await holdOpen(20); }",
+  "M1.angleTemplateKey": "while (alive() && state[<string>`n`]) { state.n--; await holdOpen(20); }",
+  "M1.satisfiesTemplateKey": "while (alive() && state[`n` satisfies string]) { state.n--; await holdOpen(20); }",
+  "M1.nonNullTemplateKey": "while (alive() && state[`n`!]) { state.n--; await holdOpen(20); }",
+  "M1.parenthesizedTemplateKey": "while (alive() && state[(`n`)]) { state.n--; await holdOpen(20); }",
+  "M1.nestedLiteralKey": "while (alive() && counts[(0 as number)]) { counts[0]--; await holdOpen(20); }",
+  "M1.stackedLiteralKey": 'while (alive() && state[("n" as const)!]) { state.n--; await holdOpen(20); }',
   "M1.spacedLink": "while (alive() && state /* left */ .n) { state.n--; await holdOpen(20); }",
   "M1.assignedReceiver": "while (alive() && state.n !== 0) { (state as Counter).n -= 1; await holdOpen(20); }",
   "M1.forIncrementor": "for (let k = 0; counts[k] !== 0 && alive(); counts![k]--) await holdOpen(20);",
@@ -673,6 +697,12 @@ const CONTROLS: Readonly<Record<string, string>> = {
   "N.otherIndex": "while (alive() && counts[j!]) { counts[i]--; await holdOpen(20); }",
   "N.quotedPrivate": 'while (alive() && this!["#n"]) { this.#n--; await holdOpen(20); }',
   "N.computedLiteral": 'while (alive() && counts[n!]) { counts["n"]--; await holdOpen(20); }',
+  "N.quotedPrivatePeer": 'while (alive() && peer!["#n"]) { peer.#n--; await holdOpen(20); }',
+  "N.namedPrivate": "while (alive() && this!.n) { this.#n--; await holdOpen(20); }",
+  "N.namedPrivatePeer": "while (alive() && peer!.n) { peer.#n--; await holdOpen(20); }",
+  "N.computedPrivate": "while (alive() && this[n!]) { this.#n--; await holdOpen(20); }",
+  "N.computedPrivatePeer": "while (alive() && peer[n!]) { peer.#n--; await holdOpen(20); }",
+  "N.computedLiteralThis": 'while (alive() && this[n!]) { this["n"]--; await holdOpen(20); }',
 };
 
 /** wb-nqbd F5: each named residual's planted members (`<residual>.<member>`), every one a quiet row the guard reads nothing in. */
@@ -968,8 +998,8 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "V1:13",
       "V2:15",
       "T1:13",
-      "M1:23",
-      "N:20",
+      "M1:39",
+      "N:26",
       "R-WAIT-LOOP:3",
       "R-COUNTER-ROUTE:3",
       "R-HOST-ROUTE:4",
@@ -980,7 +1010,7 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "R-REGISTRAR-ROUTE:5",
       "R-RAISE-SITE:1",
       "R-CHAIN-KEY:2",
-      "unwraps:36",
+      "unwraps:52",
     ]);
     expect(ROSTER.bead).toBe("wb-nqbd");
     // As collected, before any case runs: the last case checks the same tree again, so deleting either one reds the other.
