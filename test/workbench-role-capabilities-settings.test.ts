@@ -70,6 +70,13 @@ it("rejects wildcard role capabilities",()=>{
 // two seat-added rows (a nested parenthetical, a textarea holding a line feed written as a reference) and four
 // non-members the widened cures leave unflagged, anchored in the roster's gb3cResidualRows and gb3cNonMemberRows; it
 // claims only the rows it pins.
+// The wb-iuhz cut (the R694 follow-up of landing 700: F3 leads, F6 rides) keeps all of that and leaves both legs as they
+// are: the wb-gb3c case now reads every named cure over every non-member, as its title quantifies them (F3), and a fourth
+// enumeration case pins F6's two R-ENCLOSED-STOP members as quiet rows of that family's cure, widened to an emoticon's
+// close mark inside an open parenthetical and to a mark right after a digit, beside a seat-added U+2019 right after a
+// digit, the gate's U+2019 right after a letter and three seat-added non-members, and F6's two members that no quiet row can
+// hold as fail-closed rows, each refused by one leg, anchored in the roster's iuhzResidualRows, iuhzNonMemberRows and
+// iuhzFailClosedRows; it claims only the rows it pins.
 // ---------------------------------------------------------------------------------------------
 installScratchLeakGuard();
 
@@ -420,18 +427,23 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
 // tag in it, while markdown emphasis in it still reads as the leg reads emphasis). wb-3jun widens four named cures of
 // cut #4's and cut #5's families to flag the members pinned as quiet rows of that case, wb-gb3c widens three of them
 // again (R-ENCLOSED-STOP's, R-HIDDEN-CONTENT's and R-RAW-ALT-TEXT's; R-CONFUSABLE's stays as wb-3jun left it) besides
-// R-SPLIT-HTML-ROW's, R-BLANK-GLYPH's and R-CONTROL-VALUE's above, and each reads only what follows (cut #2 states each
-// cure's own rule and claims no more than the rows it pins, refusal #1 U2, and wb-gb3c restates each rule it widens):
+// R-SPLIT-HTML-ROW's, R-BLANK-GLYPH's and R-CONTROL-VALUE's above, wb-iuhz widens R-ENCLOSED-STOP's once more, and each
+// reads only what follows (cut #2 states each cure's own rule and claims no more than the rows it pins, refusal #1 U2,
+// and wb-gb3c and wb-iuhz restate each rule they widen):
 // R-ENCLOSED-STOP's (an open punctuation mark, Ps, other than a low-9 quotation mark, or the left bracket of one of the
 // six Pi and Pf bracket pairs, U+2E02 and U+2E03, U+2E04 and U+2E05, U+2E09 and U+2E0A, U+2E0C and U+2E0D, U+2E1C and
 // U+2E1D, U+2E20 and U+2E21, is open until a close one, Pe or the right bracket of such a pair, follows it, read in
 // order, each close one closing the latest one still open, so a close one with no open one before it closes nothing
-// (wb-gb3c, landing 650's F1(c)), and each kind of quotation mark, straight double, straight single, curly or low-9
+// (wb-gb3c, landing 650's F1(c)), and an emoticon's close mark, a ")" right after ":", closes nothing, except that where
+// it so leaves an enclosure open through the page's last reading, those last readings are read with it closing
+// (wb-iuhz, landing 700's F6: a later close mark shows the emoticon sits inside the enclosure, and with none it ends
+// it), and each kind of quotation mark, straight double, straight single, curly or low-9
 // double, curly or low-9 single, double guillemets, single guillemets and (wb-gb3c, landing 650's F2) the heavy double
 // comma quotation mark ornaments U+275D, U+275E and U+2760 with their sans-serif forms U+1F676 to U+1F678 and the heavy
 // single comma ones U+275B, U+275C and U+275F, is open while its count is odd, so a quotation reads in either
 // direction, where a straight single quotation mark or U+2019 inside a word, or (wb-gb3c, F1(c)'s neighbor) right after
-// a letter while none of its kind is open, is an apostrophe and counts as neither); R-HIDDEN-CONTENT's (an element the
+// a letter, or (wb-iuhz, landing 700's F6) right after a decimal digit, while none of its kind is open, is an apostrophe
+// or a prime and counts as neither); R-HIDDEN-CONTENT's (an element the
 // rendering section displays as none, a dialog without open, an element carrying hidden or one whose style attribute's
 // value holds display:none or visibility:hidden, in any letter case and with white space allowed around the colon, its
 // references decoded as an attribute value's (decodeAttributeValue: a numeric one, a closed name of NAMED_REFERENCES or
@@ -457,6 +469,19 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
 // feed written as a reference; and it pins four non-members the widened cures leave unflagged (a legacy name a letter
 // follows in an alt value, a value whose reference is written with &amp;, a CSS comment inside a property name, and a
 // quotation closed by a straight single quotation mark right after a letter). It claims no more than those rows.
+// wb-iuhz's residuals (the R694 follow-up of landing 700: F3 leads, F6 rides; its enumeration case) add no family either:
+// the wb-gb3c case reads every named cure over every one of its non-members, as its title quantifies them (F3), and a
+// fourth case pins as quiet rows F6's two R-ENCLOSED-STOP members, which that cure as widened above flags (an emoticon's
+// close mark inside an open parenthetical, and a straight single quotation mark right after a digit), with a seat-added
+// U+2019 right after a digit and the gate's U+2019 right after a letter beside them, and three seat-added non-members
+// the widened cure leaves unflagged (an emoticon's close mark that ends its parenthetical, no close mark following it, a
+// quotation closed by a straight single quotation mark right after a digit, and a parenthetical closed right after a
+// question mark, which is no emoticon, before a stray close mark); and it pins as fail-closed rows F6's two
+// members that no quiet row can hold, each refused by one leg: a raw textarea holding &NewLine;, a closed named
+// reference outside NAMED_REFERENCES, which the rendered leg records, so a live page holding it reds the main negative
+// (R-CONTROL-VALUE's cure decodes no such name and leaves it unflagged), and lone CR line endings between a row's HTML
+// blocks, which the source leg reads as one line, so it flags the page's one source sentence (R-SPLIT-HTML-ROW's cure
+// flags it too). It claims no more than those rows.
 const at = (code: number): string => String.fromCodePoint(code);
 /** The names the rendered leg decodes in a reference closed by ";"; any other closed named reference is recorded as unreadable. */
 const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
@@ -773,46 +798,63 @@ const RIGHT_BRACKET = /[\u{2e03}\u{2e05}\u{2e0a}\u{2e0d}\u{2e1d}\u{2e21}]/u;
 const OPEN_PUNCTUATION = /(?![\u{201a}\u{201e}])\p{Ps}/u;
 /**
  * Whether a quotation of `kind` opened in `text` is still open: its marks read in order, each opening or closing one,
- * except that a straight single quotation mark or U+2019 right after a letter while none of its kind is open is an
- * apostrophe and counts as neither (wb-gb3c, the neighbor of landing 650's F1(c), the gate's ge02: a word-final
- * possessive, such as users').
+ * except that a straight single quotation mark or U+2019 right after a letter, or (wb-iuhz, landing 700's F6, the gate's
+ * g9e12) right after a decimal digit, while none of its kind is open is an apostrophe or a prime and counts as neither
+ * (wb-gb3c, the neighbor of landing 650's F1(c), the gate's ge02: a word-final possessive, such as users'; wb-iuhz: a
+ * prime, such as 90').
  */
 function quotationOpen(text: string, kind: RegExp): boolean {
   let open = false;
   for (const mark of text.matchAll(kind)) {
     const index = mark.index ?? 0;
-    const apostrophe = !open && (mark[0] === "'" || mark[0] === "\u{2019}") && /\p{L}$/u.test(text.slice(Math.max(0, index - 2), index));
+    const apostrophe = !open && (mark[0] === "'" || mark[0] === "\u{2019}") && /[\p{L}\p{Nd}]$/u.test(text.slice(Math.max(0, index - 2), index));
     if (!apostrophe) open = !open;
   }
   return open;
 }
-/** Whether a parenthesis, bracket or quotation opened in `text` is still open (an apostrophe inside a word is no quotation mark). */
-function enclosureOpen(text: string): boolean {
+/**
+ * Whether a parenthesis, bracket or quotation opened in `text` is still open (an apostrophe inside a word is no quotation
+ * mark); unless `emoticonCloses`, a ")" right after ":", an emoticon's close mark, closes nothing (wb-iuhz, landing 700's
+ * F6, the gate's g9e03).
+ */
+function enclosureOpen(text: string, emoticonCloses: boolean): boolean {
   const bare = text.replace(/(?<=\p{L})['\u{2019}](?=\p{L})/gu, "");
   // An open punctuation mark (OPEN_PUNCTUATION) or a left bracket of those pairs is open until a close one (Pe, or a right
   // bracket of those pairs) follows it, read in order, each close one closing the latest one still open, so a close one
-  // with no open one before it closes nothing (wb-gb3c, landing 650's F1(c), the gate's ge01 and ge09); and each kind of
-  // quotation mark (quotationOpen).
+  // with no open one before it closes nothing (wb-gb3c, landing 650's F1(c), the gate's ge01 and ge09), and an emoticon's
+  // close mark closes nothing unless `emoticonCloses` (wb-iuhz); and each kind of quotation mark (quotationOpen).
   let depth = 0;
+  let previous = "";
   for (const character of bare) {
+    const emoticon = character === ")" && previous === ":";
     if (OPEN_PUNCTUATION.test(character) || LEFT_BRACKET.test(character)) depth += 1;
-    else if (/\p{Pe}/u.test(character) || RIGHT_BRACKET.test(character)) depth = Math.max(0, depth - 1);
+    else if ((/\p{Pe}/u.test(character) || RIGHT_BRACKET.test(character)) && (emoticonCloses || !emoticon)) depth = Math.max(0, depth - 1);
+    previous = character;
   }
   return depth > 0 || QUOTATION_KINDS.some(kind => quotationOpen(bare, kind));
 }
-/** R-ENCLOSED-STOP: the sentences re-joined while an enclosure opened before a split is still open. */
-const enclosedCure: ResidualCure = sentences => {
+/**
+ * The readings R-ENCLOSED-STOP's cure judges: `sentences` re-joined while an enclosure opened before a split is still open
+ * (enclosureOpen, an emoticon's close mark closing only when `emoticonCloses`); where an emoticon's close mark that closes
+ * nothing leaves an enclosure open through the last of them, those last readings are read again with it closing, as the
+ * landed rule reads them (wb-iuhz: a later close mark shows that the emoticon sits inside the enclosure, and with none the
+ * emoticon ends it).
+ */
+function enclosedReadings(sentences: readonly string[], emoticonCloses: boolean): string[] {
   const joined: string[] = [];
-  let open = "";
+  let open: string[] = [];
   for (const sentence of sentences) {
-    open = open === "" ? sentence : `${open} ${sentence}`;
-    if (!enclosureOpen(open)) {
-      joined.push(open);
-      open = "";
+    open = [...open, sentence];
+    if (!enclosureOpen(open.join(" "), emoticonCloses)) {
+      joined.push(open.join(" "));
+      open = [];
     }
   }
-  return [...joined, ...(open === "" ? [] : [open])].some(servedLeaf);
-};
+  if (open.length === 0) return joined;
+  return [...joined, ...(emoticonCloses ? [open.join(" ")] : enclosedReadings(open, true))];
+}
+/** R-ENCLOSED-STOP: the sentences re-joined while an enclosure opened before a split is still open (enclosedReadings, an emoticon's close mark first read as closing nothing). */
+const enclosedCure: ResidualCure = sentences => enclosedReadings(sentences, false).some(servedLeaf);
 /** R-UNLISTED-ABBREVIATION: the page's rendered text re-split with `abbreviation` added to ABBREVIATIONS. */
 const abbreviationCure =
   (abbreviation: string): ResidualCure =>
@@ -2117,6 +2159,17 @@ describe(NEGATIVES_SUITE, () => {
     // Each family's named cure flags every quiet row of its family and none of the non-members, and the leg flags none.
     expect(ROWS.map(([family, path, page, , cure]) => `${family} ${path}:${cure(sentencesOfPage(path), page)}`)).toEqual(ROWS.map(([family, path]) => `${family} ${path}:true`));
     expect(NON_MEMBERS.map(([family, path, page, , cure]) => `${family} ${path}:${cure(sentencesOfPage(path), page)}`)).toEqual(NON_MEMBERS.map(([family, path]) => `${family} ${path}:false`));
+    // Every named cure over every non-member, as this title quantifies them (wb-iuhz, landing 700's R694 F3): each family's
+    // rows carry its one named cure, the cures are those of the families this title names, and each of them read over each
+    // of the 4 non-members is a verdict, all false, so a cure that flags another family's non-member reds here.
+    const namedCures = new Map(ROWS.map(([family, , , , cure]) => [family, cure] as const));
+    expect(ROWS.map(([family, path, , , cure]) => `${family} ${path}:${cure === namedCures.get(family)}`)).toEqual(ROWS.map(([family, path]) => `${family} ${path}:true`));
+    expect([...namedCures.keys()].sort()).toEqual(familiesNamed(task.name));
+    const everyCureVerdicts = NON_MEMBERS.flatMap(([, path, page]) => [...namedCures].map(([family, cure]) => `${path} ${family}:${cure(sentencesOfPage(path), page)}`));
+    expect(everyCureVerdicts, "every named cure over every non-member, both counts read from this title").toHaveLength(
+      familiesNamed(task.name).length * Number(/\bnone of the (\d+) pinned non-members\b/.exec(task.name)?.[1]),
+    );
+    expect(everyCureVerdicts.filter(verdict => !verdict.endsWith(":false"))).toEqual([]);
     expect(judged.map(([family, path]) => `${family} ${path}:${sentencesOfPage(path).some(servedLeaf)}`)).toEqual(judged.map(([family, path]) => `${family} ${path}:false`));
     // The row lists' anchors outside this case's literals (the rule 16 CT5/CT6 kill shape, as in the enumeration cases
     // above): the out-of-file roster's gb3cResidualRows and gb3cNonMemberRows equal them row for row, the families this
@@ -2128,5 +2181,142 @@ describe(NEGATIVES_SUITE, () => {
     expect(NON_MEMBERS.map(([family, path]) => `${family} ${path}`), `${RESIDUAL_ROSTER} gb3cNonMemberRows, the anchor outside this file`).toEqual(rosterNonMembers);
     expect(familiesNamed(ROWS.map(([family]) => family).join(" "))).toEqual(familiesNamed(task.name));
     expect(NON_MEMBERS.length, "the non-member count this title states").toBe(Number(/\bnone of the (\d+) pinned non-members\b/.exec(task.name)?.[1]));
+  });
+
+  it("SCG-R15 negative, wb-iuhz residuals (landing 700's R694 F6): the 4 pinned quiet rows of R-ENCLOSED-STOP and its 3 pinned non-members are read and stay quiet, its named cure, as this bead widens it, flags every quiet row and neither non-member, the 2 pinned fail-closed rows of R-CONTROL-VALUE and R-SPLIT-HTML-ROW are each refused by one leg and read by their families' cures as pinned, and the out-of-file roster and this title anchor the three row lists", ({ task }) => {
+    const base = plantRoot("scg-r15-iuhz-residual-");
+    // [family, page path, page text, the page's rendered sentences, the family's named cure]; each page of this case but the
+    // four marked seat-added (one quiet row and the three non-members) is the gate's probe of that id at landing 700's PREP,
+    // as its probe list writes it.
+    const ROWS: ReadonlyArray<readonly [string, string, string, readonly string[], ResidualCure]> = [
+      // F6 (g9e03): an emoticon's close mark inside an open parenthetical, which a later close mark closes.
+      ["R-ENCLOSED-STOP", "docs/r-enclosed-emoticon-inside-open.md", "The rf graph impact leaf (ready :) and the plan. Yes) is served.", ["The rf graph impact leaf (ready :) and the plan.", "Yes) is served."], enclosedCure],
+      // F6 (g9e12): a straight single quotation mark right after a digit, a prime, before a single-quoted quotation.
+      [
+        "R-ENCLOSED-STOP",
+        "docs/r-enclosed-digit-prime.md",
+        "The rf graph impact leaf, which the 90' plan calls 'Phase 2. Final', is served.",
+        ["The rf graph impact leaf, which the 90' plan calls 'Phase 2.", "Final', is served."],
+        enclosedCure,
+      ],
+      // Seat-added beside it: U+2019 right after a digit before a curly single quotation.
+      [
+        "R-ENCLOSED-STOP",
+        "docs/r-enclosed-digit-right-quote.md",
+        `The rf graph impact leaf, which the 90${at(0x2019)} plan calls ${at(0x2018)}Phase 2. Final${at(0x2019)}, is served.`,
+        [`The rf graph impact leaf, which the 90${at(0x2019)} plan calls ${at(0x2018)}Phase 2.`, `Final${at(0x2019)}, is served.`],
+        enclosedCure,
+      ],
+      // The gate's g9e04 (its G4 at landing 700's PREP F4): U+2019 right after a letter, the landed branch of that rule.
+      [
+        "R-ENCLOSED-STOP",
+        "docs/r-enclosed-possessive-right-quote.md",
+        `The rf graph impact leaf, which the users${at(0x2019)} plan calls ${at(0x2018)}Phase 2. Final${at(0x2019)}, is served.`,
+        [`The rf graph impact leaf, which the users${at(0x2019)} plan calls ${at(0x2018)}Phase 2.`, `Final${at(0x2019)}, is served.`],
+        enclosedCure,
+      ],
+    ];
+    // The pinned non-members, all seat-added: pages the widened cure leaves unflagged, as a reader reads no served leaf
+    // there either - an emoticon's close mark that ends its parenthetical, no close mark following it; a quotation closed
+    // by a straight single quotation mark right after a digit; and a parenthetical closed right after a question mark, which
+    // is no emoticon, so the stray close mark after it reopens nothing.
+    const NON_MEMBERS: ReadonlyArray<readonly [string, string, string, readonly string[], ResidualCure]> = [
+      [
+        "R-ENCLOSED-STOP",
+        "docs/n-enclosed-emoticon-closing.md",
+        "The rf graph impact leaf (ready :) and the plan. The notes are served by this build.",
+        ["The rf graph impact leaf (ready :) and the plan.", "The notes are served by this build."],
+        enclosedCure,
+      ],
+      [
+        "R-ENCLOSED-STOP",
+        "docs/n-enclosed-closed-after-digit.md",
+        "The rf graph impact leaf, which the plan calls 'Phase 2'. The notes are served by this build.",
+        ["The rf graph impact leaf, which the plan calls 'Phase 2'.", "The notes are served by this build."],
+        enclosedCure,
+      ],
+      ["R-ENCLOSED-STOP", "docs/n-enclosed-question-close.md", "The rf graph impact leaf (ready?) and the plan. Yes) is served.", ["The rf graph impact leaf (ready?) and the plan.", "Yes) is served."], enclosedCure],
+    ];
+    // [family, page path, page text, the page's rendered sentences, the leg that refuses it, what that leg records for it,
+    // the family's named cure, its verdict]: F6's members that no quiet row can hold, as one leg refuses each.
+    const FAIL_CLOSED: ReadonlyArray<readonly [string, string, string, readonly string[], "rendered" | "source", string, ResidualCure, boolean]> = [
+      // F6 (g9c07): a textarea holding &NewLine;, a closed name outside NAMED_REFERENCES, which the rendered leg records as
+      // written, so a live page holding it reds the main negative; R-CONTROL-VALUE's cure decodes no such name and leaves it.
+      [
+        "R-CONTROL-VALUE",
+        "docs/f-control-textarea-named-newline.md",
+        'The rf <textarea placeholder="graph&#32;impact">&NewLine;</textarea> leaf is served by this build.',
+        ["The rf &NewLine; leaf is served by this build."],
+        "rendered",
+        "&NewLine;",
+        controlValueCure,
+        false,
+      ],
+      // F6 (g9s01): lone CR line endings between a row's HTML blocks, which the source leg reads as one line, so it flags the
+      // page's one source sentence; R-SPLIT-HTML-ROW's cure flags the row.
+      [
+        "R-SPLIT-HTML-ROW",
+        "docs/f-split-html-row-lone-cr.md",
+        "<table>\r<tr><td>The graph impact leaf.</td>\r\r<td>Served by this build.</td></tr>\r</table>",
+        ["The graph impact leaf.", "Served by this build."],
+        "source",
+        "<table>\r<tr><td>The graph impact leaf.</td>\r\r<td>Served by this build.</td></tr>\r</table>",
+        splitHtmlRowCure,
+        true,
+      ],
+    ];
+    const judged = [...ROWS, ...NON_MEMBERS];
+    const pages = [...judged, ...FAIL_CLOSED];
+    for (const [, path, page] of pages) plantFile(base, path, `${page}\n`);
+    plantFile(base, "docs/control.md", "The rf graph impact leaf is served.\n");
+    // The enumeration, row by row: the quiet rows, the non-members and the fail-closed rows, frozen at the cut.
+    expect(ROWS.map(([family, path]) => `${family} ${path}`)).toEqual([
+      "R-ENCLOSED-STOP docs/r-enclosed-emoticon-inside-open.md",
+      "R-ENCLOSED-STOP docs/r-enclosed-digit-prime.md",
+      "R-ENCLOSED-STOP docs/r-enclosed-digit-right-quote.md",
+      "R-ENCLOSED-STOP docs/r-enclosed-possessive-right-quote.md",
+    ]);
+    expect(NON_MEMBERS.map(([family, path]) => `${family} ${path}`)).toEqual([
+      "R-ENCLOSED-STOP docs/n-enclosed-emoticon-closing.md",
+      "R-ENCLOSED-STOP docs/n-enclosed-closed-after-digit.md",
+      "R-ENCLOSED-STOP docs/n-enclosed-question-close.md",
+    ]);
+    expect(FAIL_CLOSED.map(([family, path]) => `${family} ${path}`)).toEqual(["R-CONTROL-VALUE docs/f-control-textarea-named-newline.md", "R-SPLIT-HTML-ROW docs/f-split-html-row-lone-cr.md"]);
+    // Each page is read (it renders exactly its pinned sentences). The rendered leg reds only the control and records
+    // exactly the references of the fail-closed rows it refuses; the source leg reds only the control and the source
+    // sentences of the fail-closed rows it refuses; so each fail-closed row is refused by one leg, and no other page by any.
+    const unknown: string[] = [];
+    const read = renderedSentencesBelow(base, "docs", unknown);
+    const sentencesOfPage = (path: string): string[] => read.filter(([page]) => page === path).map(([, sentence]) => sentence);
+    expect(pages.map(([, path]) => sentencesOfPage(path))).toEqual(pages.map(([, , , sentences]) => [...sentences]));
+    expect(renderedServedLeafSentences(base, "docs")).toEqual(["docs/control.md: The rf graph impact leaf is served."]);
+    expect(unknown).toEqual(FAIL_CLOSED.filter(([, , , , leg]) => leg === "rendered").map(([, path, , , , record]) => `${path}: ${record}`));
+    expect(servedLeafSentences(base, "docs")).toEqual([
+      "docs/control.md: The rf graph impact leaf is served.",
+      ...FAIL_CLOSED.filter(([, , , , leg]) => leg === "source").map(([, path, , , , record]) => `${path}: ${record}`),
+    ]);
+    expect(pages.map(([family, path]) => `${family} ${path}:${sentencesOfPage(path).some(servedLeaf)}`)).toEqual(pages.map(([family, path]) => `${family} ${path}:false`));
+    // R-ENCLOSED-STOP's named cure, as this bead widens it, is every quiet row's and non-member's cure; it flags every quiet
+    // row and neither non-member; and each fail-closed row's family's named cure reads it as the row pins.
+    expect(judged.map(([family, path, , , cure]) => `${family} ${path}:${cure === enclosedCure}`)).toEqual(judged.map(([family, path]) => `${family} ${path}:true`));
+    expect(ROWS.map(([family, path, page, , cure]) => `${family} ${path}:${cure(sentencesOfPage(path), page)}`)).toEqual(ROWS.map(([family, path]) => `${family} ${path}:true`));
+    expect(NON_MEMBERS.map(([family, path, page, , cure]) => `${family} ${path}:${cure(sentencesOfPage(path), page)}`)).toEqual(NON_MEMBERS.map(([family, path]) => `${family} ${path}:false`));
+    expect(FAIL_CLOSED.map(([family, path, page, , , , cure]) => `${family} ${path}:${cure(sentencesOfPage(path), page)}`)).toEqual(
+      FAIL_CLOSED.map(([family, path, , , , , , verdict]) => `${family} ${path}:${verdict}`),
+    );
+    // The row lists' anchors outside this case's literals (the rule 16 CT5/CT6 kill shape, as in the residual cases above):
+    // the out-of-file roster's iuhzResidualRows, iuhzNonMemberRows and iuhzFailClosedRows equal them row for row, the
+    // families this title names are exactly the rows' families, and each count it states is its list's length.
+    const roster: unknown = JSON.parse(readFileSync(join(ROOT, RESIDUAL_ROSTER), "utf8"));
+    const rosterRows: unknown = roster !== null && typeof roster === "object" && "iuhzResidualRows" in roster ? roster.iuhzResidualRows : undefined;
+    const rosterNonMembers: unknown = roster !== null && typeof roster === "object" && "iuhzNonMemberRows" in roster ? roster.iuhzNonMemberRows : undefined;
+    const rosterFailClosed: unknown = roster !== null && typeof roster === "object" && "iuhzFailClosedRows" in roster ? roster.iuhzFailClosedRows : undefined;
+    expect(ROWS.map(([family, path]) => `${family} ${path}`), `${RESIDUAL_ROSTER} iuhzResidualRows, the anchor outside this file`).toEqual(rosterRows);
+    expect(NON_MEMBERS.map(([family, path]) => `${family} ${path}`), `${RESIDUAL_ROSTER} iuhzNonMemberRows, the anchor outside this file`).toEqual(rosterNonMembers);
+    expect(FAIL_CLOSED.map(([family, path]) => `${family} ${path}`), `${RESIDUAL_ROSTER} iuhzFailClosedRows, the anchor outside this file`).toEqual(rosterFailClosed);
+    expect(familiesNamed(pages.map(([family]) => family).join(" "))).toEqual(familiesNamed(task.name));
+    expect(ROWS.length, "the quiet row count this title states").toBe(Number(/\bthe (\d+) pinned quiet rows\b/.exec(task.name)?.[1]));
+    expect(NON_MEMBERS.length, "the non-member count this title states").toBe(Number(/\bits (\d+) pinned non-members\b/.exec(task.name)?.[1]));
+    expect(FAIL_CLOSED.length, "the fail-closed row count this title states").toBe(Number(/\bthe (\d+) pinned fail-closed rows\b/.exec(task.name)?.[1]));
   });
 });
