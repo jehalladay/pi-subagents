@@ -9,12 +9,15 @@
  * (R-B128: "wb-tz2.9's eventual re-cut is a MECHANICAL RESTATEMENT over this bead's landed fix"). The falsifier census is
  * test/workbench-hx-live-set-reader-census.test.ts. It holds every "- <word>: <claim>" line of this header equal, in order and byte
  * for byte, to the roster exported for its section, gives every word a calibration plant, and reds when the reader for a word is
- * removed (ReadOptions lists the words a reading uses; every word by default).
+ * removed (ReadOptions lists the words a reading uses; every word by default). CLAIMED_SUBFORMS registers the sub-forms the claims
+ * name that no calibration plant of a word pins - each a phrase standing verbatim in the READING paragraph, in a section's heading or
+ * in a word's claim - and the census gives each one or more falsifier rows of its own (wb-tz2.19 refusal #1: U1-U4).
  *
  * READING (liveReading). Active code only: comments are trivia. An HX LOCAL is a name a BINDING form binds; its entry reads
  * `<form> <name>`, in binding order. A file is LIVE when it binds an HX local or holds an M5 import. An HX CASE is a case
  * (REGISTRATION) whose body holds a reference (REFERENCE) or an M5 import. UNRESOLVED lists what the reader cannot read; OUTSIDE
- * lists every reference no PLACEMENT form places, each as `<line>: <its text, whitespace removed>`.
+ * lists every reference no PLACEMENT form places, each as `<line>: <its text, whitespace removed>`. WITNESSING lists the titles of the
+ * HX cases whose body ReadOptions.witness reads a claim in, none without it.
  * SPOTS (where a reference stands that no PLACEMENT form reaches, so it reads OUTSIDE): a hook; a describe body; a helper; a named function; a fixture; a table; a value; an unread registration form; the top level.
  * NOT READ (the census's named residual R-LIVE-INDIRECT, each member a pinned quiet row): an hx drive that reaches hx through no HX local and no M5 import.
  *
@@ -32,7 +35,7 @@
  * ENTRY (HX_ENTRIES; the names an HX ENTRY has):
  * - provider function: a function export of src/workbench/providers/hyperunix.ts, read from the module itself at run time
  * - sdk client: the SDK's client class HyperUnix, by its run-time name
- * UNWRAP (unwrap; what a source, a root, a callee, a specifier or a member key is read through, any number in any order):
+ * UNWRAP (unwrap; what a source, an assignment target, a target name, a member's base, a callee, a specifier, a member key or a title is read through, any number in any order):
  * - parentheses: a parenthesized expression
  * - as: an as expression
  * - satisfies: a satisfies expression
@@ -82,7 +85,7 @@
  * - element member: a case flag or a case method may be written ['name'], a string value, as well as .name
  * - chained: a test API may carry any number of case flags and case-method calls, in any order, before the call
  * - literal title: a call of a test API whose first argument is a string value registers a case of that title
- * - computed title: a call of a test API whose first argument is any other expression registers a case titled <computed: its text>
+ * - computed title: a call of a test API whose first argument is any other expression registers a case titled <computed: its text>, whitespace removed
  * - arrow body: a case's body may be an arrow function, the first argument after the title that is a body form
  * - function body: a case's body may be a function expression, the first argument after the title that is a body form
  * - beside: a case's registration chain is its callee's text, then every argument beside the title and the body (an options object, a timeout), whitespace removed
@@ -103,8 +106,8 @@
  * - skipIf: the skipIf method
  * UNRESOLVED (fail closed: what the reader cannot read):
  * - stray specifier: a string literal or no-substitution template naming an HX module that is neither a static import's specifier nor an M5 import's first argument (a require, a vi.importActual, a held specifier, an export-from, an import.meta.resolve)
- * - unread binding: an M5 or M6 declaration whose name is a binding pattern the reader cannot read (an array pattern, a pattern over a local that is no module local, an element with a computed key or a nested pattern)
- * - unread assignment: an M6 assignment whose target the reader cannot read (no name, no member chain rooted at a name, no object literal of named entries over a module local)
+ * - unread binding: an M5 or M6 declaration whose name is a binding pattern the reader cannot read (an array pattern, a pattern whose source is no module local, an element with a computed key that is no string value, or a nested pattern)
+ * - unread assignment: an M6 assignment whose target the reader cannot read: no name, no member chain rooted at a name and no object literal of named entries over a module local (an array target, a member chain rooted at a call, an object literal with a spread, a computed key that is no string value or a value that is no name, or an object literal over a source that is no module local)
  * REFERENCE (what OUTSIDE judges; a binding site is never a reference):
  * - local reference: an identifier spelled as an HX local, by spelling and never by scope (type positions, member names, object-literal keys, method names and type members included), unless it is a binding site
  * - inline import: an M5 import no declaration binds, the call itself
@@ -209,7 +212,7 @@ export const REGISTRATION_FORMS = claims([
   ["element member", "a case flag or a case method may be written ['name'], a string value, as well as .name"],
   ["chained", "a test API may carry any number of case flags and case-method calls, in any order, before the call"],
   ["literal title", "a call of a test API whose first argument is a string value registers a case of that title"],
-  ["computed title", "a call of a test API whose first argument is any other expression registers a case titled <computed: its text>"],
+  ["computed title", "a call of a test API whose first argument is any other expression registers a case titled <computed: its text>, whitespace removed"],
   ["arrow body", "a case's body may be an arrow function, the first argument after the title that is a body form"],
   ["function body", "a case's body may be a function expression, the first argument after the title that is a body form"],
   ["beside", "a case's registration chain is its callee's text, then every argument beside the title and the body (an options object, a timeout), whitespace removed"],
@@ -238,9 +241,9 @@ export const UNRESOLVED_FORMS = claims([
   ],
   [
     "unread binding",
-    "an M5 or M6 declaration whose name is a binding pattern the reader cannot read (an array pattern, a pattern over a local that is no module local, an element with a computed key or a nested pattern)",
+    "an M5 or M6 declaration whose name is a binding pattern the reader cannot read (an array pattern, a pattern whose source is no module local, an element with a computed key that is no string value, or a nested pattern)",
   ],
-  ["unread assignment", "an M6 assignment whose target the reader cannot read (no name, no member chain rooted at a name, no object literal of named entries over a module local)"],
+  ["unread assignment", "an M6 assignment whose target the reader cannot read: no name, no member chain rooted at a name and no object literal of named entries over a module local (an array target, a member chain rooted at a call, an object literal with a spread, a computed key that is no string value or a value that is no name, or an object literal over a source that is no module local)"],
 ]);
 export const REFERENCE_FORMS = claims([
   [
@@ -287,6 +290,78 @@ export const HEADER_SECTIONS: readonly { readonly name: string; readonly roster:
   { name: "REFERENCE", roster: REFERENCE_FORMS },
   { name: "PLACEMENT", roster: PLACEMENT_FORMS },
 ];
+/** A sub-form a claim names: its place (READING, a section's heading as <SECTION>, or a word's claim as <SECTION>/<word>) and its phrase. */
+export interface Subform {
+  readonly place: string;
+  readonly phrase: string;
+}
+/** The sub-forms the header's claims name that no calibration plant of a word pins, each with falsifier rows of its own in the census. */
+export const CLAIMED_SUBFORMS: readonly Subform[] = (
+  [
+    ["READING", "or holds an M5 import"],
+    ["READING", "or an M5 import"],
+    ["READING", "the titles of the HX cases whose body ReadOptions.witness reads a claim in"],
+    ["READING", "none without it"],
+    ["READING", "each as `<line>:"],
+    ["READING", "<its text, whitespace removed>"],
+    ["MODULE/sdk root", "a subpath such as @hyperunix/sdk/raw names none"],
+    ["MODULE/provider path", "ending in providers/hyperunix"],
+    ["MODULE/provider path", "after a slash"],
+    ["MODULE/provider path alone", "with nothing before it"],
+    ["UNWRAP", "a source"],
+    ["UNWRAP", "an assignment target"],
+    ["UNWRAP", "a target name"],
+    ["UNWRAP", "a member's base"],
+    ["UNWRAP", "a callee"],
+    ["UNWRAP", "a specifier"],
+    ["UNWRAP", "a member key"],
+    ["UNWRAP", "a title"],
+    ["UNWRAP", "any number in any order"],
+    ["BINDING/named", "a static import of an entry under its exported name"],
+    ["BINDING/named", "from any module"],
+    ["BINDING/default", "a static default import of an HX module"],
+    ["BINDING/destructured renamed", "its key written"],
+    ["BINDING/alias member", "an entry member .name"],
+    ["BINDING/alias element", "an entry member ['name']"],
+    ["BINDING/alias element", "the name a string value"],
+    ["BINDING/alias renamed", "its key written"],
+    ["BINDING/alias rest", "a rest element, which takes the module"],
+    ["BINDING/assigned renamed", "the name an entry's written key takes"],
+    ["BINDING/assigned shorthand", "an entry's shorthand property"],
+    ["BINDING/store element", "a string value"],
+    ["BINDING/fixpoint", "until a round binds nothing"],
+    ["REGISTRATION/vitest import", "it or test"],
+    ["REGISTRATION/vitest import", "imported from vitest"],
+    ["REGISTRATION/declared api", "a variable declared from a test API"],
+    ["REGISTRATION/element member", "or a case method"],
+    ["REGISTRATION/element member", "a string value"],
+    ["REGISTRATION/chained", "case flags"],
+    ["REGISTRATION/chained", "case-method calls"],
+    ["REGISTRATION/chained", "in any order"],
+    ["REGISTRATION/literal title", "a string value"],
+    ["REGISTRATION/computed title", "whitespace removed"],
+    ["REGISTRATION/arrow body", "the first argument after the title that is a body form"],
+    ["REGISTRATION/beside", "whitespace removed"],
+    ["UNRESOLVED/stray specifier", "a string literal or no-substitution template"],
+    ["UNRESOLVED/unread binding", "a pattern whose source is no module local"],
+    ["UNRESOLVED/unread binding", "a nested pattern"],
+    ["UNRESOLVED/unread assignment", "an array target"],
+    ["UNRESOLVED/unread assignment", "an object literal with a spread"],
+    ["UNRESOLVED/unread assignment", "a value that is no name"],
+    ["UNRESOLVED/unread assignment", "an object literal over a source that is no module local"],
+    ["REFERENCE/local reference", "type positions"],
+    ["REFERENCE/local reference", "member names"],
+    ["REFERENCE/local reference", "object-literal keys"],
+    ["REFERENCE/local reference", "method names"],
+    ["REFERENCE/local reference", "type members"],
+    ["REFERENCE/used assignment", "through parentheses only"],
+    ["PLACEMENT/declaration source", "whatever its pattern binds"],
+    ["PLACEMENT/assignment binding", "that binds a new local"],
+    ["PLACEMENT/bound store", "its entries"],
+    ["PLACEMENT/binding default", "and computed keys"],
+    ["PLACEMENT/binding default", "a shorthand property's default in an assignment target"],
+  ] as const
+).map(([place, phrase]) => ({ place, phrase }));
 /** The words a reading uses, per roster; a roster left out uses every word of it. */
 export interface ReadOptions {
   readonly modules?: readonly ModuleForm[];
