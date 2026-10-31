@@ -1,6 +1,6 @@
 {
   "bead": "wb-pyel.4",
-  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row. wb-0st4 (R694 follow-up of landing 546) adds git's tracked listing (git ls-files) as the independent anchor of both walks and of each reading's read set, each registry leg's descriptions as its fingerprint, the MARKDOWN_PAGE page form with every symlink below docs/ recorded and never followed, and the page walk's own synthetic-tree control. wb-kv0y (R694 follow-up of landing 612, hop 3 of the chain, R739's terminal enumerate-the-resolvable form) records each file a reading reads only through its judgment's own output, adds THE PLANTED READING to A2 and B2 (every file of the scope read again wrapped between its reader's own controls and a last part; the plants are pinned constants, and each witness pins the plant's own reading, its count, that it reads as the controls do, and the files it found unjudged or unwrapped) and walks WALK_CONTROL through docsWalk itself. Its cut #2 (refusal #1's U1 cure (b), U2 cure (a), F3) reads every file of A2's, B2's and B3's scope once, wrapped between the plant's parts, and takes every record, count and mention from that one judgment by the plant's pinned extent (the plant's last part is the controls again and the modifier, so every control form is judged at both of a file's ends); each witness pins the plant's own reading, its count and extent, the files whose ends do not hold it (unjudged) or whose own part miscounts (unwrapped), and the reader's own controls read as files (own); and walks WALK_CONTROL, root included, through claimPages.; extended by seat ws-04 (run g10-work-s147) on trunk 2211bdf plus the cut for wb-a6m9 (the R694 follow-up of landing 682): the combining-mark and escape controls and the R-ESCAPED quiet row Q7; re-measured by seat ws-04 (run g10-work-s153) on trunk bffdf2d, after wb-kv0y's landing 717: THE PLANTED READING's plants carry those controls (every SOURCE_CONTROLS module but the JSX one, every PAGE_CONTROLS page), so plantedModule, plantedPage and A2's and B2's planted witnesses are re-pinned",
+  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row. wb-0st4 (R694 follow-up of landing 546) adds git's tracked listing (git ls-files) as the independent anchor of both walks and of each reading's read set, each registry leg's descriptions as its fingerprint, the MARKDOWN_PAGE page form with every symlink below docs/ recorded and never followed, and the page walk's own synthetic-tree control. wb-kv0y (R694 follow-up of landing 612, hop 3 of the chain, R739's terminal enumerate-the-resolvable form) records each file a reading reads only through its judgment's own output, adds THE PLANTED READING to A2 and B2 (every file of the scope read again wrapped between its reader's own controls and a last part; the plants are pinned constants, and each witness pins the plant's own reading, its count, that it reads as the controls do, and the files it found unjudged or unwrapped) and walks WALK_CONTROL through docsWalk itself. Its cut #2 (refusal #1's U1 cure (b), U2 cure (a), F3) reads every file of A2's, B2's and B3's scope once, wrapped between the plant's parts, and takes every record, count and mention from that one judgment by the plant's pinned extent (the plant's last part is the controls again and the modifier, so every control form is judged at both of a file's ends); each witness pins the plant's own reading, its count and extent, the files whose ends do not hold it (unjudged) or whose own part miscounts (unwrapped), and the reader's own controls read as files (own); and walks WALK_CONTROL, root included, through claimPages.; extended by seat ws-04 (run g10-work-s147) on trunk 2211bdf plus the cut for wb-a6m9 (the R694 follow-up of landing 682): the combining-mark and escape controls and the R-ESCAPED quiet row Q7; re-measured by seat ws-04 (run g10-work-s153) on trunk bffdf2d, after wb-kv0y's landing 717: THE PLANTED READING's plants carry those controls (every SOURCE_CONTROLS module but the JSX one, every PAGE_CONTROLS page), so plantedModule, plantedPage and A2's and B2's planted witnesses are re-pinned; respun as cut #3 by seat ws-03 (run g10-work-s160) on trunk 379a945 plus the cut for wb-a6m9 refusal #2 (U1-U3, F4): THE FOLD SWEEP's verdict in A3 with its constants (foldClasses, precomposedLetter, foldUnion, foldFloors, foldCarriers); eleven more SOURCE_CONTROLS rows (the page plant's zero-width, full-width, precomposed, noncomposing, spacing, enclosing and joined-mark spellings, and the private-name, no-substitution, template-middle and template-tail escapes), which the module plant carries, so plantedModule and A2's planted witness (plant, count 53 -> 109, extent 12/13 -> 23/24, own) are re-pinned; and Q7's JSX attribute hex probe",
   "constants": {
     "stems": {
       "edc": "word",
@@ -224,15 +224,53 @@
       "private-name": "class Host { #edcBlock = 1; }",
       "cross-word": "const namedCount = 1; usedCarefully(namedCount);",
       "jsx.tsx": "export const view = <span>EDC integration</span>;",
+      "zero-width": "const label = \"E\u200bDC ships\";",
+      "full-width": "const label = \"\uff25\uff24\uff23 ships\";",
       "combining-mark": "const label = \"E\u0301DC ships\";",
+      "precomposed": "const label = \"\u00c9DC ships\";",
+      "noncomposing-mark": "const label = \"E\u0332DC ships\";",
+      "spacing-mark": "const label = \"E\u0903DC ships\";",
+      "enclosing-mark": "const label = \"E\u20ddDC ships\";",
+      "joined-mark": "const label = \"evide\u0301nce-directed context\";",
       "string-escape": "const label = \"\\x45DC ships\";",
       "template-escape": "const label = `\\x45DC ${name} ships`;",
-      "identifier-escape": "const \\u0045dcAssembler = 1;"
+      "identifier-escape": "const \\u0045dcAssembler = 1;",
+      "private-name-escape": "class Host { #\\u0065dcBlock = 1; }",
+      "no-substitution-escape": "const label = `\\x45DC ships`;",
+      "template-middle-escape": "const label = `${first} \\x45DC ${second} ships`;",
+      "template-tail-escape": "const label = `${name} \\x45DC ships`;"
+    },
+    "foldClasses": {
+      "Mn": "/^\\p{Mn}$/u",
+      "Mc": "/^\\p{Mc}$/u",
+      "Me": "/^\\p{Me}$/u",
+      "Cf": "/^\\p{Cf}$/u"
+    },
+    "precomposedLetter": "/^[A-Za-z]\\p{M}+$/u",
+    "foldUnion": [
+      "/^[\\p{M}\\p{Cf}]$/u",
+      "/^[A-Za-z]$/",
+      "/^\\p{M}$/u"
+    ],
+    "foldFloors": {
+      "Mn": 1800,
+      "Mc": 400,
+      "Me": 12,
+      "Cf": 150,
+      "precomposed": 450
+    },
+    "foldCarriers": {
+      "stems": [
+        "EDC",
+        "edc",
+        "evidence-directed",
+        "EVIDENCE-DIRECTED"
+      ]
     },
     "plantedModule": {
-      "first": "const EdcAssembler = 1;\nconst label = \"evidence-directed context\";\nconst label = `EDC ${name} ships`;\nimport { assemble } from \"@example/edc\";\nawait import(\"evidence_directed\");\nconst pattern = /EDC/;\nclass Host { #edcBlock = 1; }\nconst namedCount = 1; usedCarefully(namedCount);\nconst label = \"E\u0301DC ships\";\nconst label = \"\\x45DC ships\";\nconst label = `\\x45DC ${name} ships`;\nconst \\u0045dcAssembler = 1;",
+      "first": "const EdcAssembler = 1;\nconst label = \"evidence-directed context\";\nconst label = `EDC ${name} ships`;\nimport { assemble } from \"@example/edc\";\nawait import(\"evidence_directed\");\nconst pattern = /EDC/;\nclass Host { #edcBlock = 1; }\nconst namedCount = 1; usedCarefully(namedCount);\nconst label = \"E\u200bDC ships\";\nconst label = \"\uff25\uff24\uff23 ships\";\nconst label = \"E\u0301DC ships\";\nconst label = \"\u00c9DC ships\";\nconst label = \"E\u0332DC ships\";\nconst label = \"E\u0903DC ships\";\nconst label = \"E\u20ddDC ships\";\nconst label = \"evide\u0301nce-directed context\";\nconst label = \"\\x45DC ships\";\nconst label = `\\x45DC ${name} ships`;\nconst \\u0045dcAssembler = 1;\nclass Host { #\\u0065dcBlock = 1; }\nconst label = `\\x45DC ships`;\nconst label = `${first} \\x45DC ${second} ships`;\nconst label = `${name} \\x45DC ships`;",
       "gap": "\n",
-      "last": "const EdcAssembler = 1;\nconst label = \"evidence-directed context\";\nconst label = `EDC ${name} ships`;\nimport { assemble } from \"@example/edc\";\nawait import(\"evidence_directed\");\nconst pattern = /EDC/;\nclass Host { #edcBlock = 1; }\nconst namedCount = 1; usedCarefully(namedCount);\nconst label = \"E\u0301DC ships\";\nconst label = \"\\x45DC ships\";\nconst label = `\\x45DC ${name} ships`;\nconst \\u0045dcAssembler = 1;\nconst evidenceDirectedPlant = 1;"
+      "last": "const EdcAssembler = 1;\nconst label = \"evidence-directed context\";\nconst label = `EDC ${name} ships`;\nimport { assemble } from \"@example/edc\";\nawait import(\"evidence_directed\");\nconst pattern = /EDC/;\nclass Host { #edcBlock = 1; }\nconst namedCount = 1; usedCarefully(namedCount);\nconst label = \"E\u200bDC ships\";\nconst label = \"\uff25\uff24\uff23 ships\";\nconst label = \"E\u0301DC ships\";\nconst label = \"\u00c9DC ships\";\nconst label = \"E\u0332DC ships\";\nconst label = \"E\u0903DC ships\";\nconst label = \"E\u20ddDC ships\";\nconst label = \"evide\u0301nce-directed context\";\nconst label = \"\\x45DC ships\";\nconst label = `\\x45DC ${name} ships`;\nconst \\u0045dcAssembler = 1;\nclass Host { #\\u0065dcBlock = 1; }\nconst label = `\\x45DC ships`;\nconst label = `${first} \\x45DC ${second} ships`;\nconst label = `${name} \\x45DC ships`;\nconst evidenceDirectedPlant = 1;"
     },
     "plantedPage": {
       "first": "# EDC adoption\n\n---\n\nEvidence-directed context assembly ships today.\n\n---\n\n| EDC | Status |\n| --- | --- |\n| assembly | shipped |\n\n---\n\n| Feature | Status |\n| --- | --- |\n| EDC integration | shipped |\n\n---\n\n- EDC integration is supported\n\n---\n\n- outer item\n  - evidence directed assembly\n\n---\n\n- first\n\n- EDCs are wired\n\n---\n\n> The EDC path is available.\n\n---\n\n```ts\nimport { assemble } from './edc';\n```\n\n---\n\nThe `EvidenceDirected` reader ships.\n\n---\n\n[EDC integration](https://example.invalid/a)\n\n---\n\n**Evidence**-*directed* assembly ships.\n\n---\n\n~~EDC~~ shipped.\n\n---\n\nE&#68;C integration ships.\n\n---\n\nThe evidence-\ndirected assembly ships.\n\n---\n\nE\u200bDC integration ships.\n\n---\n\n\uff25\uff24\uff23 integration ships.\n\n---\n\nE\u0301DC integration ships.\n\n---\n\n\u00c9DC integration ships.\n\n---\n\nE\u0332DC integration ships.\n\n---\n\nE\u0903DC integration ships.\n\n---\n\nE\u20ddDC integration ships.\n\n---\n\nEvide\u0301nce-directed assembly ships.\n\n---\n\nThe EdcAssembler ships.\n\n---\n\n<details>\n<summary>EDC integration</summary>\n</details>\n\n---\n\nThe named capability is used carefully.\n\n---\n\nReedcraft and credcheck ship.\n\n---\n\n| Feature | Status |\n| --- | --- |\n| EDC<br>shipped | yes |\n",
@@ -295,7 +333,8 @@
       "regex-code-point": "export const pattern = /\\u{45}DC/u;",
       "jsx-decimal.tsx": "export const view = <span>&#69;DC integration</span>;",
       "jsx-hex.tsx": "export const view = <span>&#x45;DC integration</span>;",
-      "jsx-attribute.tsx": "export const view = <span title=\"&#69;DC integration\">view</span>;"
+      "jsx-attribute.tsx": "export const view = <span title=\"&#69;DC integration\">view</span>;",
+      "jsx-attribute-hex.tsx": "export const view = <span title=\"&#x45;DC integration\">view</span>;"
     },
     "escapedSourceTwins": {
       "regex": "export const pattern = /EDC/;",
@@ -385,8 +424,19 @@
                 "identifier|edc",
                 "string|edc",
                 "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|evidencedirected",
+                "string|edc",
                 "template|edc",
                 "identifier|edc",
+                "identifier|edc",
+                "string|edc",
+                "template|edc",
+                "template|edc",
                 "identifier|edc",
                 "string|evidencedirected",
                 "template|edc",
@@ -396,14 +446,25 @@
                 "identifier|edc",
                 "string|edc",
                 "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|edc",
+                "string|evidencedirected",
+                "string|edc",
                 "template|edc",
                 "identifier|edc",
+                "identifier|edc",
+                "string|edc",
+                "template|edc",
+                "template|edc",
                 "identifier|evidencedirected"
               ],
-              "count": 53,
+              "count": 109,
               "extent": {
-                "before": 12,
-                "after": 13
+                "before": 23,
+                "after": 24
               },
               "asControls": true,
               "unjudged": [],
@@ -434,8 +495,29 @@
                 "jsx.tsx": [
                   "jsx.tsx:1|jsx|edc"
                 ],
+                "zero-width": [
+                  "zero-width:1|string|edc"
+                ],
+                "full-width": [
+                  "full-width:1|string|edc"
+                ],
                 "combining-mark": [
                   "combining-mark:1|string|edc"
+                ],
+                "precomposed": [
+                  "precomposed:1|string|edc"
+                ],
+                "noncomposing-mark": [
+                  "noncomposing-mark:1|string|edc"
+                ],
+                "spacing-mark": [
+                  "spacing-mark:1|string|edc"
+                ],
+                "enclosing-mark": [
+                  "enclosing-mark:1|string|edc"
+                ],
+                "joined-mark": [
+                  "joined-mark:1|string|evidencedirected"
                 ],
                 "string-escape": [
                   "string-escape:1|string|edc"
@@ -445,6 +527,18 @@
                 ],
                 "identifier-escape": [
                   "identifier-escape:1|identifier|edc"
+                ],
+                "private-name-escape": [
+                  "private-name-escape:1|identifier|edc"
+                ],
+                "no-substitution-escape": [
+                  "no-substitution-escape:1|string|edc"
+                ],
+                "template-middle-escape": [
+                  "template-middle-escape:1|template|edc"
+                ],
+                "template-tail-escape": [
+                  "template-tail-escape:1|template|edc"
                 ]
               }
             }
@@ -500,8 +594,29 @@
               "jsx.tsx": [
                 "jsx.tsx:1|jsx|edc"
               ],
+              "zero-width": [
+                "zero-width:1|string|edc"
+              ],
+              "full-width": [
+                "full-width:1|string|edc"
+              ],
               "combining-mark": [
                 "combining-mark:1|string|edc"
+              ],
+              "precomposed": [
+                "precomposed:1|string|edc"
+              ],
+              "noncomposing-mark": [
+                "noncomposing-mark:1|string|edc"
+              ],
+              "spacing-mark": [
+                "spacing-mark:1|string|edc"
+              ],
+              "enclosing-mark": [
+                "enclosing-mark:1|string|edc"
+              ],
+              "joined-mark": [
+                "joined-mark:1|string|evidencedirected"
               ],
               "string-escape": [
                 "string-escape:1|string|edc"
@@ -511,7 +626,56 @@
               ],
               "identifier-escape": [
                 "identifier-escape:1|identifier|edc"
+              ],
+              "private-name-escape": [
+                "private-name-escape:1|identifier|edc"
+              ],
+              "no-substitution-escape": [
+                "no-substitution-escape:1|string|edc"
+              ],
+              "template-middle-escape": [
+                "template-middle-escape:1|template|edc"
+              ],
+              "template-tail-escape": [
+                "template-tail-escape:1|template|edc"
               ]
+            },
+            "sweep": {
+              "belowFloor": [],
+              "unswept": {
+                "marks": 0,
+                "precomposed": 0
+              },
+              "written": {
+                "mark": [
+                  "U+0045",
+                  "U+00AD",
+                  "U+0044",
+                  "U+00AD",
+                  "U+0043"
+                ],
+                "precomposed": [
+                  "U+0045",
+                  "U+0044",
+                  "U+00C7"
+                ]
+              },
+              "carriers": {
+                "EDC": [
+                  "edc"
+                ],
+                "edc": [
+                  "edc"
+                ],
+                "evidence-directed": [
+                  "evidencedirected"
+                ],
+                "EVIDENCE-DIRECTED": [
+                  "evidencedirected"
+                ]
+              },
+              "splitCount": 0,
+              "splits": []
             }
           }
         }
@@ -938,7 +1102,8 @@
               "regex-code-point": [],
               "jsx-decimal.tsx": [],
               "jsx-hex.tsx": [],
-              "jsx-attribute.tsx": []
+              "jsx-attribute.tsx": [],
+              "jsx-attribute-hex.tsx": []
             },
             "twins": {
               "regex": [

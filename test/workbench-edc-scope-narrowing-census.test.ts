@@ -58,12 +58,23 @@
  *    fold - the landed wb-pyel.4 vocabulary, its normal form cured in both EDC censuses by wb-a6m9: both folds start from NFKD
  *    (the compatibility mapping of NFKC, left decomposed) with format controls (Cf) and every combining mark (\p{M}: nonspacing,
  *    spacing and enclosing) removed, so a zero-width space never splits a stem, a combining mark never splits a stem or an axis
- *    word whether it is written after its letter or precomposed with it (E + U+0301 + DC and U+00C9 + DC both read EDC, and
- *    pre + U+0301 + cision reads precision), and full-width letters fold; the word fold splits an acronym's plural s, camel
- *    boundaries and every run outside a-z and 0-9). A text is read as the compiler reads it: an identifier's escapes and a
- *    string's or a template's escapes are decoded (\x45DC reads EDC), while a regular-expression literal, JSX text and a JSX
- *    attribute's string are read as written, so an escape or a character reference in them is not decoded (R-ESCAPED). Any
- *    mention reads the adoption PRESENT.
+ *    word whether it is written after its letter or precomposed with it (E + U+0301 + DC and U+00C9 + DC both read EDC, and pre +
+ *    U+0301 + cision reads precision), and full-width letters fold; the word fold splits an acronym's plural s, camel boundaries
+ *    and every run outside a-z and 0-9). THE FOLD SWEEP (wb-a6m9 cut #3) pins each removed class whole: every code point of
+ *    \p{Mn}, \p{Mc}, \p{Me} and \p{Cf} (FOLD_CLASSES, enumerated from U+0000 to U+10FFFF, held to an independent count of the same
+ *    range - FOLD_UNION for the marks and controls, the decomposition's parts for the precomposed letters: unswept reads 0 - and
+ *    each class at or above its floor) written twice into every carrier (FOLD_CARRIERS: each stem and each axis word, in both
+ *    cases, the carriers of each case reading every stem and every axis; after the carrier's first letter and before its last, the
+ *    first spelling of each kind pinned by code point: written), and every precomposed letter (a code point whose NFKD is one
+ *    ASCII letter and one or more marks) written for the first occurrence of its letter in every carrier that holds it, must read
+ *    what its carrier reads - the stems through stemsIn (A1), the axis words through axesOf (D1). A text is read as the compiler
+ *    reads it, and the census claims that reading for exactly these forms, each pinned by its SOURCE_CONTROLS row: an identifier's
+ *    and a private name's unicode escape (identifier-escape, private-name-escape) and the hex escape of a string (string-escape),
+ *    a no-substitution template (no-substitution-escape) and a template's head, middle and tail (template-escape,
+ *    template-middle-escape, template-tail-escape) are decoded (\x45DC reads EDC). R-ESCAPED's seven members (below: three escapes
+ *    in a regular-expression literal, two character references in JSX text and two in a JSX attribute's string) are read as
+ *    written, never decoded, each pinned by its Q15 probe. How any other escape or reference spelling is read, at those sites or
+ *    anywhere else, is NOT CLAIMED by this census. Any mention reads the adoption PRESENT.
  *  - D, the artifact. THE FORMS (DECLARATION_FORMS; the claim is exactly these seven forms, each pinned by its TRIPLE_CONTROLS
  *    rows): a name-carrying declaration is a node of one of the forms, read by its names -
  *     (1) members: an interface, a type literal or a class (declaration or expression) - its members' written names (properties,
@@ -161,8 +172,8 @@
  *   fold - split by a separator or an inner capital (fresh-ness, preCision, ceil_ing, E-D-C, EdC) - reads no stem and no axis
  *   (Q14); R-ESCAPED (wb-a6m9) a stem spelled through an escape the A reader reads as written - a hex, a unicode or a
  *   code-point escape in a regular-expression literal (/\x45DC/, /\u0045DC/, /\u{45}DC/u) and a decimal or hex character
- *   reference in JSX text or in a JSX attribute's string (&#69;DC, &#x45;DC) - reads no stem, while the plain twin at each site
- *   does (Q15).
+ *   reference in JSX text or in a JSX attribute's string (&#69;DC, &#x45;DC) - its seven members, each with its own
+ *   ESCAPED_CONTROLS probe (the attribute's hex probe since cut #3) - reads no stem, while the plain twin at each site does (Q15).
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, package.json, .beads and git's index are only read, and the
  * mirror rows build in-memory registries and curated tool servers only.
@@ -600,7 +611,8 @@ function curatedOutcome(bound: CuratedBound, value: number): string {
 // ---- the gate's readings (rows A and D) ----
 
 /** NFKD (the compatibility mapping of NFKC, left decomposed, so a combining mark on a letter drops instead of composing into
- * another letter) with format controls and every combining mark removed (wb-a6m9). */
+ * another letter) with format controls and every combining mark removed (wb-a6m9); THE FOLD SWEEP below pins every code point of
+ * each removed class and every precomposed letter, in the stems (A1) and the axis words (D1). */
 function normal(text: string): string {
   return text.normalize("NFKD").replace(/[\p{Cf}\p{M}]/gu, "");
 }
@@ -635,6 +647,116 @@ function pluralOf(word: string): string {
 /** The axes a set of names carries: an axis when one name has the axis word, or its plural, as a word of the word fold. */
 function axesOf(names: readonly string[]): Axis[] {
   return AXES.filter(axis => names.some(name => wordsOf(name).some(word => word === axis || word === pluralOf(axis))));
+}
+
+/** THE FOLD SWEEP's classes (wb-a6m9 cut #3, refusal #2's U1): the four general categories normal() removes, each enumerated whole
+ * over every code point from U+0000 to U+10FFFF but the surrogates (a lone surrogate is no character). Measured at the cut on
+ * Node 24.20.0 (Unicode 17.0): Mn 2059, Mc 471, Me 13, Cf 170, and 490 precomposed letters; each floor sits well below its measure
+ * (FOLD_FLOORS), so a sweep that reads one plane only or drops a class reds while a later Unicode version's additions do not. */
+const FOLD_CLASSES: Readonly<Record<string, RegExp>> = { Mn: /^\p{Mn}$/u, Mc: /^\p{Mc}$/u, Me: /^\p{Me}$/u, Cf: /^\p{Cf}$/u };
+/** A precomposed letter: a code point whose NFKD is one ASCII letter followed by one or more combining marks. */
+const PRECOMPOSED_LETTER = /^[A-Za-z]\p{M}+$/u;
+const FOLD_FLOORS = { Mn: 1800, Mc: 400, Me: 12, Cf: 150, precomposed: 450 } as const;
+/** The words each swept code point is written into: every stem as the A reader reads it and every axis word as the D reader
+ * reads it, each in both cases. */
+const FOLD_CARRIERS = {
+  stems: ["EDC", "edc", "evidence-directed", "EVIDENCE-DIRECTED"],
+  axes: ["freshness", "precision", "ceiling", "FRESHNESS", "PRECISION", "CEILING"],
+} as const;
+interface FoldSweep {
+  readonly counts: Readonly<Record<string, number>>;
+  readonly marks: readonly (readonly [string, string])[];
+  readonly precomposed: readonly string[];
+}
+/** Every code point of each class in FOLD_CLASSES, with its class, and every precomposed letter, in code point order. */
+function sweepCodePoints(): FoldSweep {
+  const counts: Record<string, number> = Object.fromEntries([...Object.keys(FOLD_CLASSES), "precomposed"].map(name => [name, 0]));
+  const marks: (readonly [string, string])[] = [];
+  const precomposed: string[] = [];
+  for (let point = 0; point <= 0x10ffff; point += 1) {
+    if (point >= 0xd800 && point <= 0xdfff) continue;
+    const character = String.fromCodePoint(point);
+    for (const [name, pattern] of Object.entries(FOLD_CLASSES)) {
+      if (!pattern.test(character)) continue;
+      counts[name] = (counts[name] ?? 0) + 1;
+      marks.push([name, character]);
+    }
+    const decomposed = character.normalize("NFKD");
+    if (decomposed !== character && PRECOMPOSED_LETTER.test(decomposed)) {
+      counts.precomposed = (counts.precomposed ?? 0) + 1;
+      precomposed.push(character);
+    }
+  }
+  return { counts, marks, precomposed };
+}
+const FOLD_SWEEP = sweepCodePoints();
+/** THE FOLD SWEEP's independent count over the same range, read another way: the marks and controls by one union class
+ * (FOLD_UNION), the precomposed letters by their decomposition's parts (an ASCII letter, then marks only). A sweep that skips any
+ * code point it claims leaves a difference here (unswept), whatever the Unicode version. */
+const FOLD_UNION = /^[\p{M}\p{Cf}]$/u;
+const ASCII_LETTER = /^[A-Za-z]$/;
+const ONE_MARK = /^\p{M}$/u;
+function unsweptCount(): { readonly marks: number; readonly precomposed: number } {
+  let marks = 0;
+  let precomposed = 0;
+  for (let point = 0; point <= 0x10ffff; point += 1) {
+    if (point >= 0xd800 && point <= 0xdfff) continue;
+    const character = String.fromCodePoint(point);
+    if (FOLD_UNION.test(character)) marks += 1;
+    const decomposed = character.normalize("NFKD");
+    if (decomposed === character) continue;
+    const [first = "", ...rest] = [...decomposed];
+    if (ASCII_LETTER.test(first) && rest.length > 0 && rest.every(part => ONE_MARK.test(part))) precomposed += 1;
+  }
+  return { marks: marks - FOLD_SWEEP.marks.length, precomposed: precomposed - FOLD_SWEEP.precomposed.length };
+}
+const FOLD_UNSWEPT = unsweptCount();
+/** A swept code point's record: its U+XXXX number, never the character itself. */
+function codePointLabel(character: string): string {
+  return `U+${(character.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`;
+}
+/** The spellings THE FOLD SWEEP writes into one carrier, each with its record: every mark or control written after the carrier's
+ * first letter and again before its last, then every precomposed letter written for the first occurrence of its letter. */
+function sweptSpellings(carrier: string): (readonly [string, string])[] {
+  const spellings: (readonly [string, string])[] = FOLD_SWEEP.marks.map(([name, mark]) => [
+    `${codePointLabel(mark)}|${name}`,
+    `${carrier.slice(0, 1)}${mark}${carrier.slice(1, -1)}${mark}${carrier.slice(-1)}`,
+  ]);
+  for (const letter of FOLD_SWEEP.precomposed) {
+    const at = carrier.indexOf(letter.normalize("NFKD").slice(0, 1));
+    if (at >= 0) spellings.push([`${codePointLabel(letter)}|precomposed`, `${carrier.slice(0, at)}${letter}${carrier.slice(at + 1)}`]);
+  }
+  return spellings;
+}
+/** The carriers of one case read every name of a reading's vocabulary (the stems, anchored to the bead's charter path, or the
+ * axes, anchored to its title), so no stem or axis word goes unswept in either case. */
+function carriersCover(carriers: readonly string[], read: (text: string) => readonly string[], names: readonly string[]): void {
+  for (const [label, inCase] of [["lower", (text: string) => text === text.toLowerCase()], ["upper", (text: string) => text === text.toUpperCase()]] as const) {
+    expect([...new Set(carriers.filter(inCase).flatMap(carrier => read(carrier)))].sort(), `the ${label}-case carriers read every name`).toEqual([...names].sort());
+  }
+}
+/** THE FOLD SWEEP's verdict for one reading over its carriers: the classes below their floors, the code points an independent
+ * count of the same range holds beyond the sweep's (unswept), the first mark spelling and the first precomposed spelling written
+ * into the first carrier, by code point (written), each carrier's own reading, and every swept spelling whose reading differs
+ * from its carrier's (the count and the first twelve, each `${U+XXXX}|${class}|${carrier}`). */
+function sweepVerdict(carriers: readonly string[], read: (text: string) => readonly string[]): JsonValue {
+  const splits: string[] = [];
+  for (const carrier of carriers) {
+    const own = JSON.stringify(read(carrier));
+    for (const [record, spelling] of sweptSpellings(carrier)) if (JSON.stringify(read(spelling)) !== own) splits.push(`${record}|${carrier}`);
+  }
+  const sample = sweptSpellings(carriers[0] ?? "");
+  const labels = (spelling: readonly [string, string] | undefined): string[] => [...(spelling?.[1] ?? "")].map(codePointLabel);
+  return json({
+    belowFloor: Object.entries(FOLD_FLOORS)
+      .filter(([name, floor]) => (FOLD_SWEEP.counts[name] ?? 0) < floor)
+      .map(([name]) => name),
+    unswept: FOLD_UNSWEPT,
+    written: { mark: labels(sample[0]), precomposed: labels(sample.find(([record]) => record.endsWith("|precomposed"))) },
+    carriers: Object.fromEntries(carriers.map(carrier => [carrier, [...read(carrier)]])),
+    splitCount: splits.length,
+    splits: splits.slice(0, 12),
+  });
 }
 
 /** Every script module kind below src, by extension, and the TypeScript script kind each one is parsed as. */
@@ -952,7 +1074,9 @@ const ENCLOSING_CIRCLE = String.fromCodePoint(0x20dd);
 const CAPITAL_E_ACUTE = String.fromCodePoint(0x00c9);
 const SMALL_E_ACUTE = String.fromCodePoint(0x00e9);
 const SMALL_I_DIAERESIS = String.fromCodePoint(0x00ef);
-/** Synthetic modules the adoption reader must read exactly as pinned (each a module body; none is compiled or run). */
+/** Synthetic modules the adoption reader must read exactly as pinned (each a module body; none is compiled or run). The escape
+ * rows pin the decoded forms the header names, one row per form (the private-name, no-substitution, template-middle and
+ * template-tail rows since cut #3, refusal #2's U2). */
 const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   identifier: "const EdcAssembler = 1;",
   string: `const label = "evidence-directed context";`,
@@ -974,6 +1098,10 @@ const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   "string-escape": 'const label = "\\x45DC scope";',
   "template-escape": `const label = \`\\x45DC \${name} scope\`;`,
   "identifier-escape": "const \\u0045dcAssembler = 1;",
+  "private-name-escape": "class Host { #\\u0065dcScope = 1; }",
+  "no-substitution-escape": "const label = `\\x45DC scope`;",
+  "template-middle-escape": `const label = \`\${first} \\x45DC \${second} scope\`;`,
+  "template-tail-escape": `const label = \`\${name} \\x45DC scope\`;`,
 };
 /** Synthetic manifests the adoption reader must read exactly as pinned. */
 const MANIFEST_CONTROLS: Readonly<Record<string, string>> = {
@@ -1266,8 +1394,9 @@ const SPLIT_TRIPLE_TWIN = 'interface Scope { "freshness": number; precision: num
 const SPLIT_SOURCE = 'export const label = "E-D-C assembly"; export const EdC = 1;';
 const SPLIT_SOURCE_TWIN = 'export const label = "EDC assembly";';
 /** R-ESCAPED's probes (wb-a6m9): a stem spelled through an escape the A reader reads as written - a hex, a unicode and a
- * code-point escape in a regular-expression literal, and a decimal and a hex character reference in JSX text and one in a JSX
- * attribute's string; and the plain twin at each site. */
+ * code-point escape in a regular-expression literal, and a decimal and a hex character reference in JSX text and in a JSX
+ * attribute's string (the attribute's hex probe since cut #3, refusal #2's U3) - one probe per member; and the plain twin at
+ * each site. */
 const ESCAPED_CONTROLS: Readonly<Record<string, string>> = {
   "regex-hex": "export const pattern = /\\x45DC/;",
   "regex-unicode": "export const pattern = /\\u0045DC/;",
@@ -1275,6 +1404,7 @@ const ESCAPED_CONTROLS: Readonly<Record<string, string>> = {
   "jsx-decimal.tsx": "export const view = <span>&#69;DC scope</span>;",
   "jsx-hex.tsx": "export const view = <span>&#x45;DC scope</span>;",
   "jsx-attribute.tsx": 'export const view = <span title="&#69;DC scope">view</span>;',
+  "jsx-attribute-hex.tsx": 'export const view = <span title="&#x45;DC scope">view</span>;',
 };
 const ESCAPED_TWINS: Readonly<Record<string, string>> = {
   regex: "export const pattern = /EDC/;",
@@ -1412,6 +1542,11 @@ function constants(): JsonValue {
     requiredDescriptors: REQUIRED_DESCRIPTORS,
     owed: OWED,
     sourceControls: SOURCE_CONTROLS,
+    foldClasses: Object.fromEntries(Object.entries(FOLD_CLASSES).map(([name, pattern]) => [name, `/${pattern.source}/${pattern.flags}`])),
+    precomposedLetter: `/${PRECOMPOSED_LETTER.source}/${PRECOMPOSED_LETTER.flags}`,
+    foldUnion: [FOLD_UNION, ASCII_LETTER, ONE_MARK].map(pattern => `/${pattern.source}/${pattern.flags}`),
+    foldFloors: FOLD_FLOORS,
+    foldCarriers: FOLD_CARRIERS,
     manifestControls: MANIFEST_CONTROLS,
     tripleControls: TRIPLE_CONTROLS,
     declarationForms: DECLARATION_FORMS,
@@ -1549,6 +1684,7 @@ const classesOf = (verdict: Verdict): string[] => [...new Set(verdict.violations
 
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
+    carriersCover(FOLD_CARRIERS.stems, stemsIn, Object.keys(STEMS));
     const reading = srcReading();
     const { manifestTexts, manifest, adoption } = adoptionReading();
     return json({
@@ -1564,6 +1700,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         scope: Object.fromEntries(Object.keys(SCRIPT_KINDS).map(extension => [`src/workbench/module${extension}`, inSrcScope(`src/workbench/module${extension}`)])),
         sources: Object.fromEntries(Object.entries(SOURCE_CONTROLS).map(([name, text]) => [name, readModule(text, name).mentions])),
         manifests: Object.fromEntries(Object.entries(MANIFEST_CONTROLS).map(([name, text]) => [name, manifestMentions(text, name)])),
+        sweep: sweepVerdict(FOLD_CARRIERS.stems, stemsIn),
       },
     });
   },
@@ -1644,6 +1781,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ),
     ),
   D1: async () => {
+    carriersCover(FOLD_CARRIERS.axes, text => axesOf([text]), AXES);
     const reading = srcReading();
     const { native: nativeReading, injected: injectedReading, artifact } = await artifactReading();
     const sources = Object.fromEntries(Object.entries(TRIPLE_CONTROLS).map(([name, text]) => [name, readModule(text, name).triples]));
@@ -1674,6 +1812,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       controls: {
         sources,
         descriptor: registryReading(plantedRegistry(PLANTED_DESCRIPTOR)).triples,
+        sweep: sweepVerdict(FOLD_CARRIERS.axes, text => axesOf([text])),
       },
     });
   },

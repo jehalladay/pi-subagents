@@ -1,6 +1,6 @@
 {
  "bead": "wb-pyel.6",
- "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut and for respin 2 by seat ws-03 (run g10-work-s138) on trunk a4cf24c plus the cut; the census holds its own literals to this file and its rows, quotes, partitions, axes, codes and stems to the bead's row in .beads/issues.jsonl; extended by seat ws-04 (run g10-work-s147) on trunk 2211bdf plus the cut for wb-a6m9 (the R694 follow-up of landing 682): the combining-mark and escape controls and the R-ESCAPED quiet row Q15",
+ "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut and for respin 2 by seat ws-03 (run g10-work-s138) on trunk a4cf24c plus the cut; the census holds its own literals to this file and its rows, quotes, partitions, axes, codes and stems to the bead's row in .beads/issues.jsonl; extended by seat ws-04 (run g10-work-s147) on trunk 2211bdf plus the cut for wb-a6m9 (the R694 follow-up of landing 682): the combining-mark and escape controls and the R-ESCAPED quiet row Q15; respun as cut #3 by seat ws-03 (run g10-work-s160) on trunk 379a945 plus the cut for wb-a6m9 refusal #2 (U1-U3): THE FOLD SWEEP's verdicts in A1 (the stems) and D1 (the axis words) with its constants (foldClasses, precomposedLetter, foldUnion, foldFloors, foldCarriers), the private-name, no-substitution, template-middle and template-tail escape controls read by A1, and Q15's JSX attribute hex probe",
  "constants": {
   "stems": {
    "edc": "word",
@@ -523,7 +523,46 @@
    "joined-mark": "const label = \"evide\u0301nce-directed context\";",
    "string-escape": "const label = \"\\x45DC scope\";",
    "template-escape": "const label = `\\x45DC ${name} scope`;",
-   "identifier-escape": "const \\u0045dcAssembler = 1;"
+   "identifier-escape": "const \\u0045dcAssembler = 1;",
+   "private-name-escape": "class Host { #\\u0065dcScope = 1; }",
+   "no-substitution-escape": "const label = `\\x45DC scope`;",
+   "template-middle-escape": "const label = `${first} \\x45DC ${second} scope`;",
+   "template-tail-escape": "const label = `${name} \\x45DC scope`;"
+  },
+  "foldClasses": {
+   "Mn": "/^\\p{Mn}$/u",
+   "Mc": "/^\\p{Mc}$/u",
+   "Me": "/^\\p{Me}$/u",
+   "Cf": "/^\\p{Cf}$/u"
+  },
+  "precomposedLetter": "/^[A-Za-z]\\p{M}+$/u",
+  "foldUnion": [
+   "/^[\\p{M}\\p{Cf}]$/u",
+   "/^[A-Za-z]$/",
+   "/^\\p{M}$/u"
+  ],
+  "foldFloors": {
+   "Mn": 1800,
+   "Mc": 400,
+   "Me": 12,
+   "Cf": 150,
+   "precomposed": 450
+  },
+  "foldCarriers": {
+   "stems": [
+    "EDC",
+    "edc",
+    "evidence-directed",
+    "EVIDENCE-DIRECTED"
+   ],
+   "axes": [
+    "freshness",
+    "precision",
+    "ceiling",
+    "FRESHNESS",
+    "PRECISION",
+    "CEILING"
+   ]
   },
   "manifestControls": {
    "dependency": "{ \"name\": \"x\", \"dependencies\": { \"@example/edc\": \"1.0.0\" } }",
@@ -901,7 +940,8 @@
    "regex-code-point": "export const pattern = /\\u{45}DC/u;",
    "jsx-decimal.tsx": "export const view = <span>&#69;DC scope</span>;",
    "jsx-hex.tsx": "export const view = <span>&#x45;DC scope</span>;",
-   "jsx-attribute.tsx": "export const view = <span title=\"&#69;DC scope\">view</span>;"
+   "jsx-attribute.tsx": "export const view = <span title=\"&#69;DC scope\">view</span>;",
+   "jsx-attribute-hex.tsx": "export const view = <span title=\"&#x45;DC scope\">view</span>;"
   },
   "escapedTwins": {
    "regex": "export const pattern = /EDC/;",
@@ -1068,6 +1108,18 @@
         ],
         "identifier-escape": [
          "identifier-escape:1|identifier|edc"
+        ],
+        "private-name-escape": [
+         "private-name-escape:1|identifier|edc"
+        ],
+        "no-substitution-escape": [
+         "no-substitution-escape:1|string|edc"
+        ],
+        "template-middle-escape": [
+         "template-middle-escape:1|template|edc"
+        ],
+        "template-tail-escape": [
+         "template-tail-escape:1|template|edc"
         ]
        },
        "manifests": {
@@ -1087,6 +1139,43 @@
          "shadowed-key#raw|edc"
         ],
         "clean": []
+       },
+       "sweep": {
+        "belowFloor": [],
+        "unswept": {
+         "marks": 0,
+         "precomposed": 0
+        },
+        "written": {
+         "mark": [
+          "U+0045",
+          "U+00AD",
+          "U+0044",
+          "U+00AD",
+          "U+0043"
+         ],
+         "precomposed": [
+          "U+0045",
+          "U+0044",
+          "U+00C7"
+         ]
+        },
+        "carriers": {
+         "EDC": [
+          "edc"
+         ],
+         "edc": [
+          "edc"
+         ],
+         "evidence-directed": [
+          "evidencedirected"
+         ],
+         "EVIDENCE-DIRECTED": [
+          "evidencedirected"
+         ]
+        },
+        "splitCount": 0,
+        "splits": []
        }
       }
      }
@@ -1773,7 +1862,62 @@
        },
        "descriptor": [
         "planted.scope.read.inputSchema.properties|requestFreshness+resultPrecision+resourceCeiling"
-       ]
+       ],
+       "sweep": {
+        "belowFloor": [],
+        "unswept": {
+         "marks": 0,
+         "precomposed": 0
+        },
+        "written": {
+         "mark": [
+          "U+0066",
+          "U+00AD",
+          "U+0072",
+          "U+0065",
+          "U+0073",
+          "U+0068",
+          "U+006E",
+          "U+0065",
+          "U+0073",
+          "U+00AD",
+          "U+0073"
+         ],
+         "precomposed": [
+          "U+0066",
+          "U+0072",
+          "U+00E8",
+          "U+0073",
+          "U+0068",
+          "U+006E",
+          "U+0065",
+          "U+0073",
+          "U+0073"
+         ]
+        },
+        "carriers": {
+         "freshness": [
+          "freshness"
+         ],
+         "precision": [
+          "precision"
+         ],
+         "ceiling": [
+          "ceiling"
+         ],
+         "FRESHNESS": [
+          "freshness"
+         ],
+         "PRECISION": [
+          "precision"
+         ],
+         "CEILING": [
+          "ceiling"
+         ]
+        },
+        "splitCount": 0,
+        "splits": []
+       }
       }
      }
     },
@@ -2073,7 +2217,8 @@
        "regex-code-point": [],
        "jsx-decimal.tsx": [],
        "jsx-hex.tsx": [],
-       "jsx-attribute.tsx": []
+       "jsx-attribute.tsx": [],
+       "jsx-attribute-hex.tsx": []
       },
       "twins": {
        "regex": [
