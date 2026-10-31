@@ -2,28 +2,34 @@
  * wb-jwc.8 (RFCLI-FEEDBACK-OPERATIONAL-CONVERGENCE-R5; the rule-19 structural-exit child of wb-jwc.5, orchestrator rulings
  * R-B74 and R-B86): the SEALED reference scan, full surface, shared so a src census rides it instead of carrying a copy.
  *
- * A census that reads a const's object or array literal as written (a descriptor id, a contract, an argv word) owes proof
- * that no reference rewrites that literal at run time. wb-jwc.5's census carried a scan that followed a const's bare name,
- * its imports and namespace-import members only, and failed closed on every const declared in a namespace body (CLOSED
- * CONSTS, cut #5). The gate measured what it did not follow: a namespace's const rewritten through its qualified name
- * (G-NS1), an import-equals alias (G-NS2), an import of the namespace (G-NS4), a const bound to the qualified reference
- * (G-NS6) or a namespace import of the namespace's module (G-NS7) - refusal #4 - and a module-scope const rewritten through
- * an import-equals alias rooted at a namespace import (P18-IE1..3), handed to a rewriting call inside a class extends
- * expression, which the old visit read as a part of a type (P18-HER1b, P18-HER2b), and the leaf reader's analogs
- * (P18-LEAF-IE, P18-LEAF-HER) - refusal #5. This scan follows every one of those channels.
+ * A census that reads a const's object or array literal as written (a descriptor id, a contract, an argv word) owes
+ * evidence that no reference rewrites that literal at run time; this scan judges the references it follows and no
+ * others. wb-jwc.5's census carried a scan that followed a const's bare name, its imports and namespace-import members
+ * only, and failed closed on every const declared in a namespace body (CLOSED CONSTS, cut #5). The gate measured what
+ * it did not follow: a namespace's const rewritten through its qualified name (G-NS1), an import-equals alias (G-NS2),
+ * an import of the namespace (G-NS4), a const bound to the qualified reference (G-NS6) or a namespace import of the
+ * namespace's module (G-NS7) - refusal #4 - and a module-scope const rewritten through an import-equals alias rooted at
+ * a namespace import (P18-IE1..3), handed to a rewriting call inside a class extends expression, which the old visit
+ * read as a part of a type (P18-HER1b, P18-HER2b), and the leaf reader's analogs (P18-LEAF-IE, P18-LEAF-HER) - refusal
+ * #5. This scan follows every one of those channels.
  *
  * THE CLAIM is SEALED_CLAIM, composed from SEALED_ROOT (what a sealed literal is), SEALED_VISIT (which identifiers the
  * scan visits), SEALED_FORMS (the channels a visited reference is followed through) and SEALED_USES (what a use other
  * than a read is). Each part is composed from its words: connective text and the sub-forms it names (ClaimPart.subforms,
  * each a phrase of its text), so the sub-forms a part claims are exactly the ones it lists.
  * test/workbench-sealed-reference-scan-census.test.ts holds SEALED_CLAIM (and READER_CLAIM, LITERAL_READER's words)
- * byte-for-byte in its header and names, for each listed sub-form, the planted pins that prove it; a channel this scan
- * does not follow is not claimed (the census names the known ones as residuals).
+ * byte-for-byte in its header and names, for each listed sub-form, the planted pins that hold it: the census claims
+ * exactly those pinned readings (its THE CRITERION paragraph), and a channel this scan does not follow is not claimed
+ * (the census names the known ones as residuals).
  *
  * wb-jwc.8 refusal #1 (gate s149) cured here: an exported import-equals alias of a module, and an export of such an
  * alias, re-export the module (use 5); only the global Object's freeze is transparent; a default export of a name is
  * followed (form 3); a literal a const's literal spreads is nested in it; the sub-forms are listed and pinned one by one;
  * isSealed (an unpinned export) is dropped - a caller reads { rootOf, open } itself, as wb-jwc.5's census does.
+ *
+ * wb-jwc.8 refusal #2 (gate s157) answered here, in the enumerate-the-resolvable form R-B170 binds: SEALED_ROOT's freeze
+ * clause lists as sub-forms of their own the one-argument rule and each binder kind of Object bindsObject counts (and
+ * the scope rule), so each is claimed exactly as far as its census pins hold it; the scan's behaviour is unchanged.
  *
  * READER: whether a visited reference only reads is the caller's question (ScanReader): a census passes its own value
  * reader (wb-jwc.5's raw-view readString), and LITERAL_READER is the default. The scan returns the same { rootOf, open }
@@ -125,7 +131,7 @@ function isConst(flags: ts.NodeFlags): boolean {
 type Literal = ts.ObjectLiteralExpression | ts.ArrayLiteralExpression;
 
 const objectBinders = new WeakMap<ts.SourceFile, boolean>();
-/** Whether a module binds the name Object at any scope (a declared name, a parameter or binding, an import or an alias of that name). */
+/** Whether a module binds the name Object at any scope: a variable, a parameter, a destructured binding, a function or class declaration or expression, an enum, a namespace, a default, namespace or named import, or an import-equals alias of that name (SEALED_ROOT's binder sub-forms). */
 function bindsObject(file: ts.SourceFile): boolean {
   const cached = objectBinders.get(file);
   if (cached !== undefined) return cached;
@@ -152,7 +158,7 @@ function bindsObject(file: ts.SourceFile): boolean {
   objectBinders.set(file, found);
   return found;
 }
-/** Whether a call is the global Object's freeze: the callee written `Object.freeze`, one argument, in a module that binds no Object of its own. */
+/** Whether a call is the global Object's freeze: the callee written `Object.freeze`, exactly one argument, in a module that binds no Object of its own. */
 function isGlobalFreeze(value: ts.Expression): value is ts.CallExpression {
   if (!ts.isCallExpression(value) || value.arguments.length !== 1) return false;
   const callee = value.expression;
@@ -282,7 +288,7 @@ export type UseId = "written" | "other" | "spread" | "whole" | "export-form";
 export interface ClaimPart<T extends string> {
   readonly id: T;
   readonly text: string;
-  /** The sub-forms the part names, in order: each a phrase of its text (the census names the pins proving each one). */
+  /** The sub-forms the part names, in order: each a phrase of its text (the census names the pins holding each one). */
   readonly subforms: readonly string[];
 }
 
@@ -292,12 +298,12 @@ function claimPart<T extends string>(id: T): (words: TemplateStringsArray, ...su
 }
 
 /** THE ROOT: what a sealed literal is (literalOf and nest). */
-export const SEALED_ROOT: ClaimPart<"root"> = claimPart("root")`a ${"const"}'s own ${"object literal"} or ${"array literal"}, written ${"bare"} or behind ${"parentheses"}, ${"as"}, ${"satisfies"}, ${"!"} or ${"a <T> type assertion"}, or handed to ${"a call written Object.freeze(...)"} (${"the global Object's freeze only, in a module that binds no Object at any scope"}; ${"no other callee named freeze"}), ${"those wrappers and calls nested in one another"}, and every object or array literal nested in it as ${"a property's value"}, ${"an array element"} or ${"a member or element of a literal it spreads"}, ${"at any depth"} and ${"behind those same wrappers and calls"}`;
+export const SEALED_ROOT: ClaimPart<"root"> = claimPart("root")`a ${"const"}'s own ${"object literal"} or ${"array literal"}, written ${"bare"} or behind ${"parentheses"}, ${"as"}, ${"satisfies"}, ${"!"} or ${"a <T> type assertion"}, or handed as ${"its one argument"} to ${"a call written Object.freeze(...)"} (${"the global Object's freeze"} only: in a module where no ${"variable"}, ${"parameter"}, ${"destructured binding"}, ${"function declaration"}, ${"function expression"}, ${"class declaration"}, ${"class expression"}, ${"enum"}, ${"namespace"}, ${"default import"}, ${"namespace import"}, ${"named import"} or ${"import-equals alias"} is named Object, ${"at any scope"}; ${"no other callee named freeze"}), ${"those wrappers and calls nested in one another"}, and every object or array literal nested in it as ${"a property's value"}, ${"an array element"} or ${"a member or element of a literal it spreads"}, ${"at any depth"} and ${"behind those same wrappers and calls"}`;
 
 /** THE VISIT: which identifiers the scan visits (isValueReference). */
 export const SEALED_VISIT: ClaimPart<"visit"> = claimPart("visit")`The scan visits every identifier of every module of the tree that is ${"a value reference"}: not ${"a part of a type"} (${"an implements clause"}, ${"an interface's extends clause"} and ${"a class extends clause's type arguments"} included), ${"a declared name"}, ${"a property or member name"} (${"a shorthand member's name is its value, and is visited"}), ${"a part of a qualified name"}, ${"an import, export or import-equals name or entity"} (${"export default X visits X"}), ${"a meta-property's name"} or ${"a label"}.`;
 
-/** THE FORMS, in claim order. Each is proven by the census's planted rows; hollowing one in this module reds them. */
+/** THE FORMS, in claim order. Each is measured by the census's planted rows (its designated pin F-<form>, and SUBFORMS' pins per sub-form). */
 export const SEALED_FORMS: readonly ClaimPart<FormId>[] = [
   claimPart("name")`its ${"name"} in its own module, ${"at any scope"} (a name stands for ${"every const literal"}, ${"every namespace"}, ${"every import-equals alias"} and ${"the import"} of that name the module holds)`,
   claimPart("import")`an import of it, ${"named"}, ${"aliased"} or ${"default"}`,
@@ -323,7 +329,7 @@ function joined(parts: readonly ClaimPart<string>[]): string {
   return parts.map((part, index) => `(${index + 1}) ${part.text}`).join("; ");
 }
 
-/** THE CLAIM, byte-for-byte: the census's header holds this paragraph, and its planted rows prove each listed sub-form. */
+/** THE CLAIM, byte-for-byte: the census's header holds this paragraph, and its planted rows hold each listed sub-form's pinned readings. */
 export const SEALED_CLAIM = `SEALED: ${SEALED_ROOT.text}, is sealed while no reference the scan visits opens it. ${SEALED_VISIT.text} From each it follows exactly these forms to a const literal: ${joined(SEALED_FORMS)}. A reference reaching a literal opens it when ${joined(SEALED_USES)}. Any other reference only reads, as the caller's reader decides; a reference the scan does not follow is not judged, and SEALED claims nothing about it.`;
 
 /* ---------------------------------------------------------------- resolution */
@@ -581,7 +587,7 @@ function reachesOf(r: Resolver, node: ts.Expression, file: ts.SourceFile, steps:
   const name = ts.isPropertyAccessExpression(node) ? node.name.text : literalText(node.argumentExpression);
   return name === undefined ? [] : memberReaches(r, owners, name, steps + 1);
 }
-/** LITERAL_READER's words, byte-for-byte in the census's header; each listed sub-form is proven by the census's READER pins. */
+/** LITERAL_READER's words, byte-for-byte in the census's header; each listed sub-form's readings are held by the census's READER pins. */
 export const READER_CLAIM: ClaimPart<"reader"> = claimPart("reader")`a member read chain reads as a string when it denotes ${"a string literal"} or ${"a no-substitution template"} as written: ${"a member of a const literal reached through the scan's own forms"}, ${"the last member of its key"}, in a literal ${"whose keys all read"} and that holds no ${"spread"}, ${"accessor"} or ${"method"} member, ${"an element access"} choosing the member its ${"string"} or ${"no-substitution template"} literal argument names; a spread copies strings when its value is ${"such a string"}, or ${"a literal every member or element of which is one"}. Nothing else reads.`;
 
 /** LITERAL_READER, the default reader (READER_CLAIM). */

@@ -8,12 +8,12 @@
  *
  * WHAT IS DELIVERED. The scan is test/helpers/sealed-reference-scan.ts (sealedScan), shared so a census rides it:
  * wb-jwc.5's census (blocked by this bead, R-B86; not on trunk) can take it in place of its own sealsOf, passing its
- * own value reader (ScanReader) and reading the { rootOf, open } shape its own sealsOf returns. This census proves the
- * scan with planted module trees and with the real src tree; src is only read. ARMED, UNREAD and C1 in the bead's lines
- * are wb-jwc.5's census verdicts; what they rest on is the scan reading this census pins: a gate plant's rewrite reads
- * OPEN through its channel (so a census reading through the const refuses it UNREAD, and its leaf reader reads the
- * rewritten word as a placeholder), a near control reads OPEN through a channel the old scan already followed, and a
- * ctl reads SEALED (so a census reads the committing initializers and arms on them).
+ * own value reader (ScanReader) and reading the { rootOf, open } shape its own sealsOf returns. This census measures
+ * the scan with planted module trees and with the real src tree; src is only read. ARMED, UNREAD and C1 in the bead's
+ * lines are wb-jwc.5's census verdicts; what they rest on is the scan reading this census pins: a gate plant's rewrite
+ * reads OPEN through its channel (so a census reading through the const refuses it UNREAD, and its leaf reader reads
+ * the rewritten word as a placeholder), a near control reads OPEN through a channel the old scan already followed, and
+ * a ctl reads SEALED (so a census reads the committing initializers and arms on them).
  *
  * A READING (each pin's witness, held to WITNESS): per const literal of the pin's tree, in module and source order,
  * `name:sealed`, or `name:open` and the forms that opened it, each `<channel>>...|<use>`, `|heritage` when the
@@ -34,17 +34,18 @@
  *   class extends expression today, its scan is live (modules, roots, both readings, the name and import channels in
  *   use), and every FORMS, USES and VISIT plant, placed in it, reads as it does alone. CLAIM: this header's SEALED
  *   paragraph equals SEALED_CLAIM and its LITERAL_READER paragraph equals READER_CLAIM byte-for-byte, the forms and
- *   uses the planted rows measure are exactly SEALED_FORMS and SEALED_USES (each proven by its designated pin F-<form>,
- *   U-<use>), and SUBFORMS answers the claim's sub-form lists (below).
- *  FORMS, USES, VISIT, READER: the claim's proof table, sub-form by sub-form. Each claim part (SEALED_ROOT,
+ *   uses the planted rows measure are exactly SEALED_FORMS and SEALED_USES (each measured by its designated pin
+ *   F-<form>, U-<use>), and SUBFORMS answers the claim's sub-form lists (below).
+ *  FORMS, USES, VISIT, READER: the claim's pinned table, sub-form by sub-form. Each claim part (SEALED_ROOT,
  *   SEALED_VISIT, each of SEALED_FORMS and SEALED_USES, READER_CLAIM) is composed from its words and lists the
  *   sub-forms it names (ClaimPart.subforms, each a phrase of the part's text); SUBFORMS names, for every listed
- *   sub-form in claim order, the planted pins that prove it - a form's or a use's pins each measure that form or use,
- *   and its quiet pins hold the quiet side (a reading that stays SEALED, or no root at all) - and every F-, U-, VISIT-
- *   and L- pin proves some listed sub-form. VISIT-OUT and VISIT-OUT-NAMES hold root names only where the scan must not
- *   visit (each would open a root if it were visited); VISIT-IN holds one value reference in each of 45 syntactic
- *   positions, each opening its own root. What the table proves is the listed sub-forms, one by one; a part's
- *   connective words are not sub-forms of their own.
+ *   sub-form in claim order, the planted pins that hold it - each pin a plant whose reading is held to WITNESS and
+ *   whose page is held to PAGES; a form's or a use's pins each measure that form or use, and its quiet pins hold the
+ *   quiet side (a reading that stays SEALED, or no root at all) - and every F-, U-, VISIT- and L- pin is named for some
+ *   listed sub-form. VISIT-OUT and VISIT-OUT-NAMES hold root names only where the scan must not visit (each would open
+ *   a root if it were visited); VISIT-IN holds one value reference in each of 45 syntactic positions, each opening its
+ *   own root. What the table claims is exactly those pinned readings, sub-form by sub-form (THE CRITERION, below); a
+ *   part's connective words are not sub-forms of their own.
  *  RESIDUALS: the named families below, each quiet row's reading pinned and its page held live by its modules' digest.
  *  REFUSAL #1 (gate s149, O:1453): its witness and divergence plants are pins of this census, verbatim
  *   (REFUSAL1_PLANTS): W-ANDAND U-written-logical-and, W-QQ U-written-nullish, W-DESTR-SPREAD U-written-rest-element,
@@ -58,12 +59,51 @@
  *   U-export-form-alias-exported, D-EF1c U-export-form-renamed, G-EF2 U-export-form-export-require, G-EF2c
  *   U-export-form-require, D-FRZ1 F-root-freeze-callee, D-FRZ2 F-root-freeze-callee-writes. The two require spellings
  *   (and F-namespace-import-require) are TS1202 under the repo's module setting; the scan reads them as written.
+ *  REFUSAL #2 (gate s157, O:1528): its fail-open witness plants are pins of this census, verbatim (REFUSAL2_PLANTS and,
+ *   for its F2, READER_PLANTS): W3-BO-PARAM F-root-freeze-binds-parameter, W3-BO-BINDING F-root-freeze-binds-binding,
+ *   W3-BO-FUNCTION F-root-freeze-binds-function, W3-BO-FUNCEXPR-EXPANDO F-root-freeze-binds-function-expression,
+ *   W3-BO-CLASS F-root-freeze-binds-class, W3-BO-CLASSEXPR F-root-freeze-binds-class-expression, W3-BO-MODULE
+ *   F-root-freeze-binds-namespace, W3-BO-IMPORT-DEFAULT F-root-freeze-binds-default-import, W3-BO-NAMESPACE-IMPORT
+ *   F-root-freeze-binds-namespace-import, W3-BO-IMPORT-SPECIFIER F-root-freeze-binds-named-import, W3-BO-IMPORT-EQUALS
+ *   F-root-freeze-binds-import-equals, W3-BO-VAR-SCOPE F-root-freeze-binds-inner-scope, W3-FRZ-NAME
+ *   F-root-freeze-other-method, W3-SPREAD-ACCESSOR U-spread-accessor, W3-WHOLE-NAMED-REEXPORT
+ *   U-whole-module-named-re-export, W3-RD-FIRST L-one-literal. W3-BO-VAR is F-root-freeze-shadowed's shape (its control
+ *   G3-BO-VAR-CTL already reds this census); W3-BO-FUNCEXPR and W3-BO-ENUM are TS2339 under the repo options, so the
+ *   expando witness and F-root-freeze-binds-elsewhere's enum (declared in a function, the freeze at module scope) stand
+ *   for them.
+ *
+ * THE CRITERION (cut #3, the enumerate-the-resolvable cut ruling R-B170 binds under rules 14 and 19(c): refusal #2's
+ * class, SUBFORMS claiming more than its pins on four listed sub-forms, frozen at its second failure): SUBFORMS claims
+ * exactly the PINNED SET - for each listed sub-form, the planted pins it names, each reading held to WITNESS and each
+ * page to PAGES - and no spelling of a sub-form beyond them. Refusal #2's four sub-forms are re-cut to it.
+ * SEALED_ROOT's freeze clause lists as sub-forms of their own the one-argument rule (its one argument), the global
+ * Object's freeze, each binder kind of Object the scan counts (variable, parameter, destructured binding, function and
+ * class declarations and expressions, enum, namespace, default, namespace and named imports, import-equals alias) and
+ * the scope rule (at any scope), each held by a pin that reds when the scan stops counting it: the gate's twelve binder
+ * witnesses, a kind's further spellings (a let and a var, a method's parameter, a renamed, an array and a parameter's
+ * destructured binding, a nested class and a nested namespace, a renamed named import), a binder in each further scope
+ * (a block, a namespace body, a class static block, a for-of head, a catch clause, an arrow function's parameter, a
+ * nested function) and a binder elsewhere than the freeze. 'a call written Object.freeze(...)' and 'its one argument'
+ * are each held on both sides: F-root-freeze reads a root, and the gate's other-method witness, an element-access, a
+ * parenthesized and a globalThis callee, two arguments and a spread argument read none. SEALED_USES (3)'s 'a member or
+ * element that is not a string' is held for a property or element whose value is not a string (a number) and for each
+ * other member and element kind: an accessor that runs, a getter returning a string, a setter, a method, a shorthand, a
+ * spread member, a hole and a spread element. SEALED_USES (4)'s 'the modules it re-exports' is held for export * and
+ * for named re-exports (every literal of the module, not only the names re-exported), and its neighbours 'a namespace'
+ * (every block of a merged one), 'bare' (a namespace reached through a member read, then used bare), 'its own const
+ * literals at any scope' (a module's exported, unexported and function-scope consts) and 'what it imports' (a default
+ * import re-exported). Every known unpinned mode is a NAMED RESIDUAL below with a pinned quiet row (R-PATCHED-GLOBAL is
+ * this cut's addition), and a newly found escape is a residual-list addition for the owner, not a claim this census
+ * makes, unless it contradicts a pinned claim. The battery of record names, member by member, the hollowings each pin
+ * was authored red against.
  *
  * THE CLAIM (test/helpers/sealed-reference-scan.ts SEALED_CLAIM, held here byte-for-byte; its parts' listed sub-forms are
  * SUBFORMS' rows):
  * SEALED: a const's own object literal or array literal, written bare or behind parentheses, as, satisfies, ! or a <T>
- * type assertion, or handed to a call written Object.freeze(...) (the global Object's freeze only, in a module that
- * binds no Object at any scope; no other callee named freeze), those wrappers and calls nested in one another, and
+ * type assertion, or handed as its one argument to a call written Object.freeze(...) (the global Object's freeze only:
+ * in a module where no variable, parameter, destructured binding, function declaration, function expression, class
+ * declaration, class expression, enum, namespace, default import, namespace import, named import or import-equals alias
+ * is named Object, at any scope; no other callee named freeze), those wrappers and calls nested in one another, and
  * every object or array literal nested in it as a property's value, an array element or a member or element of a
  * literal it spreads, at any depth and behind those same wrappers and calls, is sealed while no reference the scan
  * visits opens it. The scan visits every identifier of every module of the tree that is a value reference: not a part
@@ -122,12 +162,16 @@
  *   and 7 are not; and the same bound caps Object.freeze calls nested in one another, 32 followed (a root) and 33 not
  *   (no root). Each -BOUND row reads the deepest followed chain OPEN; the row after it reads the next one SEALED (or,
  *   for R-DEEP-FREEZE, holds no IDS root).
+ *  R-PATCHED-GLOBAL [rows: R-PATCHED-FREEZE, R-PATCHED-ITERATOR]: a built-in the scan reads as written, replaced at run
+ *   time: the global Object or its freeze reassigned (the literal handed to Object.freeze(...) still reads as a root)
+ *   and the array iterator a spread runs (a spread of strings still only reads).
  * NOT CLAIMED: how wb-jwc.5's census reads once it rides this scan (its file is not on trunk; the cutting seat's
- * differential run over its planted tables is a delivery-note receipt, not a pin); a connective word of a claim part
- * that the part does not list as a sub-form; and edits of this file alone, with no anchor outside it: a planted row
- * that no tracker line names, that is not a designated F-/U- pin and that is not the last pin SUBFORMS names for a
- * sub-form, removed together with its WITNESS, PAGES and SUBFORMS entries and its frozen counts; a residual removed
- * from this paragraph, the roster, WITNESS and PAGES together. The seat battery of record carries their falsifiers.
+ * differential run over its planted tables is a delivery-note receipt, not a pin); a spelling, binder or member kind of
+ * a listed sub-form that no planted pin holds (THE CRITERION); a connective word of a claim part that the part does not
+ * list as a sub-form; and edits of this file alone, with no anchor outside it: a planted row that no tracker line
+ * names, that is not a designated F-/U- pin and that is not the last pin SUBFORMS names for a sub-form, removed
+ * together with its WITNESS, PAGES and SUBFORMS entries and its frozen counts; a residual removed from this paragraph,
+ * the roster, WITNESS and PAGES together. The seat battery of record carries their falsifiers.
  * ANCHORS (outside this file): the tracker export (.beads/issues.jsonl): the bead's description lines and Acceptance
  * clauses and its R-B86 note's member lines are the ROWS' labels verbatim, and every gate plant a label names (G-NS*,
  * P18-*, with the near and ctl a label implies) is a pin of that row; the helper's SEALED_CLAIM, READER_CLAIM,
@@ -323,7 +367,7 @@ const GATE_PLANTS: Readonly<Record<string, Modules>> = {
   }),
 };
 
-/* ---------------------------------------------------------------- this census's plants: the bead's other forms, the claim's proof table, the residuals */
+/* ---------------------------------------------------------------- this census's plants: the bead's other forms, the claim's pinned table, the residuals */
 
 const IDS = 'export const IDS = { id: "forge.gate.commit" };\n';
 const WRITE = 'id = "reactivefiber.render.commit";\n';
@@ -412,6 +456,118 @@ const REFUSAL1_PLANTS: Readonly<Record<string, Modules>> = {
   "F-root-freeze-callee": under({ "ids.ts": 'const Swap = { freeze: (_o: object): { id: string } => ({ id: "reactivefiber.render.commit" }) };\nexport const IDS = Swap.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n' }),
   "F-root-freeze-callee-writes": under({
     "ids.ts": 'function writeId(o: { id: string }): { id: string } {\n  o.id = "reactivefiber.render.commit";\n  return o;\n}\nconst Writer = { freeze: writeId };\nexport const IDS = Writer.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+  }),
+};
+
+/** Refusal #2 (gate s157, PREP tools/leg2_table.py): the gate's fail-open witness modules, verbatim, each the page of the pin
+ * named for it, and this cut's own plants of the same sub-forms (the battery of record's S3 members red each one). */
+const REFUSAL2_PLANTS: Readonly<Record<string, Modules>> = {
+  // U1a (SEALED_ROOT's binder kinds and the scope rule): the gate's witnesses, verbatim.
+  "F-root-freeze-binds-parameter": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nexport function make(Object: { freeze: (value: object) => { id: string } }): string {\n  const IDS = Object.freeze({ id: "forge.gate.commit" });\n  return IDS.id;\n}\n' }),
+  "F-root-freeze-binds-binding": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nconst holder = { Object: { freeze: swap } };\nconst { Object } = holder;\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n' }),
+  "F-root-freeze-binds-function": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nfunction Object(): void {}\nObject.freeze = swap;\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n' }),
+  "F-root-freeze-binds-function-expression": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nexport const make = function Object(): string {\n  const IDS = Object.freeze({ id: "forge.gate.commit" });\n  return IDS.id;\n};\nmake.freeze = swap;\n' }),
+  "F-root-freeze-binds-class": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nclass Object {\n  static freeze(_value: object): { id: string } {\n    return { id: "reactivefiber.render.commit" };\n  }\n}\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n' }),
+  "F-root-freeze-binds-class-expression": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nexport const Maker = class Object {\n  static freeze(_value: object): { id: string } {\n    return { id: "reactivefiber.render.commit" };\n  }\n  static make(): string {\n    const IDS = Object.freeze({ id: "forge.gate.commit" });\n    return IDS.id;\n  }\n};\n' }),
+  "F-root-freeze-binds-namespace": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nnamespace Object {\n  export function freeze(_value: object): { id: string } {\n    return { id: "reactivefiber.render.commit" };\n  }\n}\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n' }),
+  "F-root-freeze-binds-default-import": under({
+    "swap.ts": 'export default { freeze: (_value: object): { id: string } => ({ id: "reactivefiber.render.commit" }) };\n',
+    "ids.ts": 'import Object from "./swap.js";\nexport const KEEP = { id: "forge.gate.keep" };\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+  }),
+  "F-root-freeze-binds-namespace-import": under({
+    "swap.ts": 'export function freeze(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\n',
+    "ids.ts": 'import * as Object from "./swap.js";\nexport const KEEP = { id: "forge.gate.keep" };\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+  }),
+  "F-root-freeze-binds-named-import": under({
+    "swap.ts": 'export const Object = { freeze: (_value: object): { id: string } => ({ id: "reactivefiber.render.commit" }) };\n',
+    "ids.ts": 'import { Object } from "./swap.js";\nexport const KEEP = { id: "forge.gate.keep" };\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+  }),
+  "F-root-freeze-binds-import-equals": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nnamespace Swaps {\n  export function freeze(_value: object): { id: string } {\n    return { id: "reactivefiber.render.commit" };\n  }\n}\nimport Object = Swaps;\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n' }),
+  "F-root-freeze-binds-inner-scope": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nexport function make(): string {\n  const Object = { freeze: swap };\n  const IDS = Object.freeze({ id: "forge.gate.commit" });\n  return IDS.id;\n}\n' }),
+  // U1b (a call written Object.freeze(...)): the gate's witness, verbatim.
+  "F-root-freeze-other-method": under({ "ids.ts": 'export const KEEP = { id: "forge.gate.keep" };\nexport const IDS = Object.getPrototypeOf({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n' }),
+  // U1c (SEALED_USES (3), a member or element that is not a string): the gate's witness, verbatim.
+  "U-spread-accessor": under({ "ids.ts": 'export const IDS = {\n  id: "forge.gate.commit",\n  get count(): number {\n    this.id = "reactivefiber.render.commit";\n    return 0;\n  },\n};\nexport const copy = { ...IDS };\n' }),
+  // U1d (SEALED_USES (4), the modules it re-exports): the gate's witness, verbatim.
+  "U-whole-module-named-re-export": under({
+    "ids.ts": 'export const IDS = { id: "forge.gate.commit" };\n',
+    "hub.ts": 'export { IDS } from "./ids.js";\n',
+    "top.ts": 'import * as hub from "./hub.js";\nfunction mutate(target: { IDS: { id: string } }): void {\n  target.IDS.id = "reactivefiber.render.commit";\n}\nmutate(hub);\n',
+  }),
+  // This cut's own plants of the same sub-forms: the global freeze not written Object.freeze(...), and not with one
+  // argument; a binder of Object in each scope (one module each); a binder elsewhere than the freeze (the enum among them);
+  // each binder kind's further spellings (one module each).
+  "F-root-freeze-other-spellings": under({
+    "frz-element.ts": 'export const KEEP = { id: "forge.gate.keep" };\nexport const IDS = Object["freeze"]({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+    "frz-paren.ts": 'export const KEEP = { id: "forge.gate.keep" };\nexport const IDS = (Object).freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+    "frz-global.ts": 'export const KEEP = { id: "forge.gate.keep" };\nexport const IDS = globalThis.Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+  }),
+  "F-root-freeze-arguments": under({
+    "frz-two-args.ts": 'export const KEEP = { id: "forge.gate.keep" };\nexport const IDS = Object.freeze({ id: "forge.gate.commit" }, ...([] as []));\nexport const id: string = IDS.id;\n',
+    "frz-spread-arg.ts": 'export const KEEP = { id: "forge.gate.keep" };\nexport const IDS = Object.freeze(...([{ id: "forge.gate.commit" }] as const));\nexport const id: string = IDS.id;\n',
+  }),
+  "F-root-freeze-binds-scopes": under({
+    "scope-block.ts": 'export const BLOCK = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nif (BLOCK.id !== "") {\n  const Object = { freeze: swap };\n  const IDS = Object.freeze({ id: "forge.gate.commit" });\n  void IDS.id;\n}\n',
+    "scope-namespace.ts": 'export const SPACE = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nexport namespace Scoped {\n  const Object = { freeze: swap };\n  export const IDS = Object.freeze({ id: "forge.gate.commit" });\n}\nexport const id: string = Scoped.IDS.id;\n',
+    "scope-static.ts": 'export const STATIC = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nexport class Holder {\n  static id = "";\n  static {\n    const Object = { freeze: swap };\n    const IDS = Object.freeze({ id: "forge.gate.commit" });\n    Holder.id = IDS.id;\n  }\n}\n',
+    "scope-for.ts": 'export const LOOPED = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nfor (const Object of [{ freeze: swap }]) {\n  const IDS = Object.freeze({ id: "forge.gate.commit" });\n  void IDS.id;\n}\n',
+    "scope-arrow.ts": 'export const ARROW = { id: "forge.gate.keep" };\nexport const make = (Object: { freeze: (value: object) => { id: string } }): string => {\n  const IDS = Object.freeze({ id: "forge.gate.commit" });\n  return IDS.id;\n};\n',
+    "scope-nested-function.ts": 'export const NESTED = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nexport function outer(): string {\n  function Object(): void {}\n  Object.freeze = swap;\n  const IDS = Object.freeze({ id: "forge.gate.commit" });\n  return IDS.id;\n}\n',
+    "scope-catch.ts": 'export const CAUGHT = { id: "forge.gate.keep" };\nclass Swapper {\n  freeze(_value: object): { id: string } {\n    return { id: "reactivefiber.render.commit" };\n  }\n}\nexport function caught(): string {\n  try {\n    throw new Swapper();\n  } catch (Object) {\n    if (Object instanceof Swapper) {\n      const IDS = Object.freeze({ id: "forge.gate.commit" });\n      return IDS.id;\n    }\n    return "";\n  }\n}\n',
+  }),
+  "F-root-freeze-binds-elsewhere": under({
+    "elsewhere-enum.ts": 'export const KEEP = { id: "forge.gate.keep" };\nexport function scoped(): number {\n  enum Object {\n    A,\n  }\n  return Object.A;\n}\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+    "elsewhere-const.ts": 'export const KEEP = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nexport function scoped(): string {\n  const Object = { freeze: swap };\n  return Object.freeze({ id: "forge.gate.local" }).id;\n}\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+  }),
+  "F-root-freeze-binds-variable-kinds": under({
+    "binds-let.ts": 'export const LET = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nlet Object = { freeze: swap };\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+    "binds-var.ts": 'export const VAR = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nvar Object = { freeze: swap };\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+  }),
+  "F-root-freeze-binds-parameter-kinds": under({ "binds-method-parameter.ts": 'export const METHOD = { id: "forge.gate.keep" };\nexport class Maker {\n  static make(Object: { freeze: (value: object) => { id: string } }): string {\n    const IDS = Object.freeze({ id: "forge.gate.commit" });\n    return IDS.id;\n  }\n}\n' }),
+  "F-root-freeze-binds-binding-kinds": under({
+    "binds-renamed-binding.ts": 'export const RENAMED = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nconst holder = { swapper: { freeze: swap } };\nconst { swapper: Object } = holder;\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+    "binds-array-binding.ts": 'export const ARRAY = { id: "forge.gate.keep" };\nfunction swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nconst [Object] = [{ freeze: swap }];\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+    "binds-parameter-binding.ts": 'export const DESTRUCTURED = { id: "forge.gate.keep" };\nexport function make({ Object }: { Object: { freeze: (value: object) => { id: string } } }): string {\n  const IDS = Object.freeze({ id: "forge.gate.commit" });\n  return IDS.id;\n}\n',
+  }),
+  "F-root-freeze-binds-nested-declarations": under({
+    "binds-nested-class.ts": 'export const NESTED_CLASS = { id: "forge.gate.keep" };\nexport function make(): string {\n  class Object {\n    static freeze(_value: object): { id: string } {\n      return { id: "reactivefiber.render.commit" };\n    }\n  }\n  const IDS = Object.freeze({ id: "forge.gate.commit" });\n  return IDS.id;\n}\n',
+    "binds-nested-namespace.ts": 'export const NESTED_SPACE = { id: "forge.gate.keep" };\nexport namespace Outer {\n  namespace Object {\n    export function freeze(_value: object): { id: string } {\n      return { id: "reactivefiber.render.commit" };\n    }\n  }\n  export const IDS = Object.freeze({ id: "forge.gate.commit" });\n}\nexport const id: string = Outer.IDS.id;\n',
+  }),
+  "F-root-freeze-binds-renamed-import": under({
+    "swap-named.ts": 'export const swapper = { freeze: (_value: object): { id: string } => ({ id: "reactivefiber.render.commit" }) };\n',
+    "binds-renamed-import.ts": 'import { swapper as Object } from "./swap-named.js";\nexport const RENAMED_IMPORT = { id: "forge.gate.keep" };\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+  }),
+  // ... every member and element kind of a spread literal but a string property, one module each.
+  "U-spread-member-kinds": under({
+    "spread-getter.ts": 'export const IDS = {\n  id: "forge.gate.commit",\n  get label(): string {\n    this.id = "reactivefiber.render.commit";\n    return "label";\n  },\n};\nexport const copy = { ...IDS };\n',
+    "spread-setter.ts": 'export const IDS = {\n  id: "forge.gate.commit",\n  set label(value: string) {\n    this.id = value;\n  },\n};\nexport const copy = { ...IDS };\n',
+    "spread-method.ts": 'export const IDS = {\n  id: "forge.gate.commit",\n  reset(): void {\n    this.id = "reactivefiber.render.commit";\n  },\n};\nexport const copy = { ...IDS };\n',
+    "spread-shorthand.ts": 'const inner = { id: "forge.gate.inner" };\nexport const IDS = { id: "forge.gate.commit", inner };\nexport const copy = { ...IDS };\n',
+    "spread-spread-member.ts": 'const BASE = { id: "forge.gate.base" };\nexport const IDS = { ...BASE, label: "forge.gate.commit" };\nexport const copy = { ...IDS };\n',
+    "spread-hole.ts": 'export const IDS = ["forge.gate.commit", , "forge.gate.list"];\nexport const copy = [...IDS];\n',
+    "spread-element-spread.ts": 'const BASE = ["forge.gate.base"];\nexport const IDS = [...BASE, "forge.gate.commit"];\nexport const copy = [...IDS];\n',
+  }),
+  // ... a whole use's paths: a default import re-exported, a module's consts at each scope, every literal of a module a
+  // named re-export names, every block of a merged namespace, and a namespace reached through a member read, then used bare.
+  "U-whole-module-default-import": under({
+    "d.ts": 'const D = { id: "forge.gate.commit" };\nexport { D as default };\n',
+    "hub.ts": 'import D from "./d.js";\nexport { D };\n',
+    "top.ts": 'import * as hub from "./hub.js";\nfunction mutate(target: { D: { id: string } }): void {\n  target.D.id = "reactivefiber.render.commit";\n}\nmutate(hub);\n',
+  }),
+  "U-whole-module-scopes": under({
+    "ids.ts": 'export const IDS = { id: "forge.gate.commit" };\nconst HIDDEN = { id: "forge.gate.hidden" };\nexport const id: string = HIDDEN.id;\nexport function local(): string {\n  const LOCAL = { id: "forge.gate.local" };\n  return LOCAL.id;\n}\n',
+    "top.ts": 'import * as ids from "./ids.js";\nfunction consume(_value: object): void {}\nconsume(ids);\n',
+  }),
+  "U-whole-module-re-export-reaches": under({
+    "ids.ts": 'export const IDS = { id: "forge.gate.commit" };\nexport const OTHER = { id: "forge.gate.other" };\nexport const id: string = OTHER.id;\n',
+    "hub.ts": 'export { IDS } from "./ids.js";\n',
+    "top.ts": 'import * as hub from "./hub.js";\nfunction consume(_value: object): void {}\nconsume(hub);\n',
+  }),
+  "U-whole-namespace-merged": under({ "ids.ts": 'export namespace Rf {\n  export const IDS = { id: "forge.gate.commit" };\n}\nexport namespace Rf {\n  export const OTHER = { id: "forge.gate.other" };\n}\nexport const keys = Object.keys(Rf);\n' }),
+  "U-whole-member-reached": under({
+    "ids.ts": 'export namespace Rf {\n  export namespace Inner {\n    export const IDS = { id: "forge.gate.commit" };\n  }\n}\nfunction mutate(target: { IDS: { id: string } }): void {\n  target.IDS.id = "reactivefiber.render.commit";\n}\nmutate(Rf.Inner);\n',
+    "space.ts": 'export namespace Box {\n  export const OTHER = { id: "forge.gate.other" };\n}\n',
+    "top.ts": 'import * as space from "./space.js";\nfunction consume(_value: object): void {}\nconsume(space.Box);\n',
   }),
 };
 
@@ -617,6 +773,7 @@ const OWN_PLANTS: Readonly<Record<string, Modules>> = {
   "U-export-form-reexported": under({ "ids.ts": IDS, "hub.ts": 'import * as ids from "./ids.js";\nexport { ids };\n' }),
   "U-export-form-reaches": under({ "ids.ts": `import { OTHER } from "./other.js";\n${IDS}export const id: string = OTHER.id;\n`, "other.ts": 'export const OTHER = { id: "forge.gate.other" };\n', "hub.ts": 'export * as all from "./ids.js";\n' }),
   ...REFUSAL1_PLANTS,
+  ...REFUSAL2_PLANTS,
   // VISIT: VISIT-OUT and VISIT-OUT-NAMES hold the root names only where the scan must not visit (each would open a root if
   // it were visited); VISIT-IN holds one value reference per syntactic position, each opening its own root.
   "VISIT-OUT": under({
@@ -661,6 +818,8 @@ const READER_PLANTS: Readonly<Record<string, Modules>> = {
     "ids.ts": 'export const A = { id: "forge.gate.a" };\nexport namespace Rf {\n  export const B = { id: "forge.gate.b" };\n}\n',
     "read.ts": 'import { A, Rf } from "./ids.js";\nimport * as ids from "./ids.js";\nimport Alias = Rf.B;\nexport const reads: string[] = [A.id, ids.A.id, Rf.B.id, ids.Rf.B.id, Alias.id, Rf["B"].id, ids["A"].id];\n',
   }),
+  // Refusal #2's F2 (gate s157), verbatim: a name reaching two const literals reads through neither.
+  "L-one-literal": under({ "ids.ts": 'function consume(_value: object): void {}\nexport const IDS = { id: "forge.gate.commit" };\nexport function run(): void {\n  const IDS = { id: { held: "forge.gate.local" } };\n  consume(IDS.id);\n}\n' }),
 };
 
 /** RESIDUALS: each quiet row's page holds its rewrite; the scan does not follow it, so the page reads SEALED. */
@@ -684,6 +843,12 @@ const RESIDUAL_PLANTS: Readonly<Record<string, Modules>> = {
   "R-DEEP-EXPORT-IMPORT": exportImportChain(7),
   "R-DEEP-FREEZE-BOUND": freezeChain(32),
   "R-DEEP-FREEZE": freezeChain(33),
+  // R-PATCHED-GLOBAL: a built-in the scan reads as written, replaced at run time.
+  "R-PATCHED-FREEZE": under({
+    "ids.ts": 'function swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nObject.freeze = swap as never;\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+    "global.ts": 'function swap(_value: object): { id: string } {\n  return { id: "reactivefiber.render.commit" };\n}\nObject = { freeze: swap } as never;\nexport const IDS = Object.freeze({ id: "forge.gate.commit" });\nexport const id: string = IDS.id;\n',
+  }),
+  "R-PATCHED-ITERATOR": under({ "ids.ts": 'Array.prototype[Symbol.iterator] = function* (this: string[]): Generator<string> {\n  this[0] = "reactivefiber.render.commit";\n  yield* this.values();\n} as never;\nexport const IDS = ["operation", "show"];\nexport const argv = ["--json", ...IDS];\n' }),
 };
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-CODE-IN-STRING": ["R-CODE-IN-STRING"],
@@ -703,6 +868,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
     "R-DEEP-FREEZE-BOUND",
     "R-DEEP-FREEZE",
   ],
+  "R-PATCHED-GLOBAL": ["R-PATCHED-FREEZE", "R-PATCHED-ITERATOR"],
 };
 
 /* ---------------------------------------------------------------- THE ROWS */
@@ -752,13 +918,13 @@ const ROWS: readonly Row[] = [
   { id: "RESIDUALS", from: "claim", label: "RESIDUALS", pins: Object.values(RESIDUALS).flat() },
 ];
 
-/** The sub-forms each claim part lists (SEALED_ROOT, SEALED_VISIT, SEALED_FORMS, SEALED_USES, READER_CLAIM), in claim order, each with the pins that prove it. */
+/** The sub-forms each claim part lists (SEALED_ROOT, SEALED_VISIT, SEALED_FORMS, SEALED_USES, READER_CLAIM), in claim order, each with the pins that hold it. */
 interface Subform {
   readonly part: string;
   readonly sub: string;
-  /** Planted pins that prove the sub-form; a form's or a use's pins each measure that form or use. */
+  /** Planted pins that hold the sub-form (the census claims their readings); a form's or a use's pins each measure that form or use. */
   readonly pins: readonly string[];
-  /** Planted pins that prove its quiet side (a reading that stays sealed, or no root at all). */
+  /** Planted pins that hold its quiet side (a reading that stays sealed, or no root at all). */
   readonly quiet?: readonly string[];
 }
 const SUBFORMS: readonly Subform[] = [
@@ -771,8 +937,23 @@ const SUBFORMS: readonly Subform[] = [
   { part: "root", sub: "satisfies", pins: ["F-root-satisfies"] },
   { part: "root", sub: "!", pins: ["F-root-non-null"] },
   { part: "root", sub: "a <T> type assertion", pins: ["F-root-type-assertion"] },
-  { part: "root", sub: "a call written Object.freeze(...)", pins: ["F-root-freeze"] },
-  { part: "root", sub: "the global Object's freeze only, in a module that binds no Object at any scope", pins: ["F-root-freeze-shadowed"] },
+  { part: "root", sub: "its one argument", pins: ["F-root-freeze"], quiet: ["F-root-freeze-arguments"] },
+  { part: "root", sub: "a call written Object.freeze(...)", pins: ["F-root-freeze"], quiet: ["F-root-freeze-other-method", "F-root-freeze-other-spellings"] },
+  { part: "root", sub: "the global Object's freeze", pins: ["F-root-freeze"] },
+  { part: "root", sub: "variable", pins: ["F-root-freeze-shadowed", "F-root-freeze-binds-variable-kinds"] },
+  { part: "root", sub: "parameter", pins: ["F-root-freeze-binds-parameter", "F-root-freeze-binds-parameter-kinds"] },
+  { part: "root", sub: "destructured binding", pins: ["F-root-freeze-binds-binding", "F-root-freeze-binds-binding-kinds"] },
+  { part: "root", sub: "function declaration", pins: ["F-root-freeze-binds-function"] },
+  { part: "root", sub: "function expression", pins: ["F-root-freeze-binds-function-expression"] },
+  { part: "root", sub: "class declaration", pins: ["F-root-freeze-binds-class", "F-root-freeze-binds-nested-declarations"] },
+  { part: "root", sub: "class expression", pins: ["F-root-freeze-binds-class-expression"] },
+  { part: "root", sub: "enum", pins: ["F-root-freeze-binds-elsewhere"] },
+  { part: "root", sub: "namespace", pins: ["F-root-freeze-binds-namespace", "F-root-freeze-binds-nested-declarations"] },
+  { part: "root", sub: "default import", pins: ["F-root-freeze-binds-default-import"] },
+  { part: "root", sub: "namespace import", pins: ["F-root-freeze-binds-namespace-import"] },
+  { part: "root", sub: "named import", pins: ["F-root-freeze-binds-named-import", "F-root-freeze-binds-renamed-import"] },
+  { part: "root", sub: "import-equals alias", pins: ["F-root-freeze-binds-import-equals"] },
+  { part: "root", sub: "at any scope", pins: ["F-root-freeze-binds-inner-scope", "F-root-freeze-binds-scopes", "F-root-freeze-binds-nested-declarations", "F-root-freeze-binds-elsewhere"] },
   { part: "root", sub: "no other callee named freeze", pins: ["F-root-freeze-callee", "F-root-freeze-callee-writes"] },
   { part: "root", sub: "those wrappers and calls nested in one another", pins: ["F-root-freeze-nested"] },
   { part: "root", sub: "a property's value", pins: ["F-root-nested"] },
@@ -863,16 +1044,16 @@ const SUBFORMS: readonly Subform[] = [
   { part: "other", sub: "called", pins: ["U-other-called"] },
   { part: "other", sub: "read as anything but a string", pins: ["U-other-non-string"] },
   { part: "spread", sub: "spread", pins: ["U-spread"] },
-  { part: "spread", sub: "a member or element that is not a string", pins: ["U-spread", "U-spread-array"] },
+  { part: "spread", sub: "a member or element that is not a string", pins: ["U-spread", "U-spread-array", "U-spread-accessor", "U-spread-member-kinds"] },
   { part: "spread", sub: "an object or array it shares", pins: ["U-spread-shares-object", "U-spread-shares-array"] },
-  { part: "whole", sub: "a namespace", pins: ["U-whole"] },
+  { part: "whole", sub: "a namespace", pins: ["U-whole", "U-whole-namespace-merged"] },
   { part: "whole", sub: "a namespace import", pins: ["U-whole-namespace-import"] },
-  { part: "whole", sub: "bare", pins: ["U-whole", "U-whole-namespace-import"] },
+  { part: "whole", sub: "bare", pins: ["U-whole", "U-whole-namespace-import", "U-whole-member-reached"] },
   { part: "whole", sub: "an element access whose argument does not read", pins: ["U-whole-element"] },
-  { part: "whole", sub: "its own const literals at any scope", pins: ["U-whole-namespace-reaches"] },
+  { part: "whole", sub: "its own const literals at any scope", pins: ["U-whole-namespace-reaches", "U-whole-module-scopes"] },
   { part: "whole", sub: "its import-equals aliases' targets", pins: ["U-whole-namespace-alias"] },
-  { part: "whole", sub: "the modules it re-exports", pins: ["U-whole-module-re-export"] },
-  { part: "whole", sub: "what it imports", pins: ["U-whole-module-reaches"] },
+  { part: "whole", sub: "the modules it re-exports", pins: ["U-whole-module-re-export", "U-whole-module-named-re-export", "U-whole-module-re-export-reaches"] },
+  { part: "whole", sub: "what it imports", pins: ["U-whole-module-reaches", "U-whole-module-default-import"] },
   { part: "export-form", sub: "export { M }", pins: ["U-export-form-reexported", "U-export-form-require"] },
   { part: "export-form", sub: "export { M as N }", pins: ["U-export-form-renamed"] },
   { part: "export-form", sub: "export import A = M", pins: ["U-export-form-export-import"] },
@@ -884,7 +1065,7 @@ const SUBFORMS: readonly Subform[] = [
   { part: "export-form", sub: "every literal the module reaches", pins: ["U-export-form-reaches"] },
   { part: "reader", sub: "a string literal", pins: ["U-other-read"] },
   { part: "reader", sub: "a no-substitution template", pins: ["L-template"] },
-  { part: "reader", sub: "a member of a const literal reached through the scan's own forms", pins: ["L-forms"] },
+  { part: "reader", sub: "a member of a const literal reached through the scan's own forms", pins: ["L-forms", "L-one-literal"] },
   { part: "reader", sub: "the last member of its key", pins: ["L-last-key"] },
   { part: "reader", sub: "whose keys all read", pins: ["L-unread-key"] },
   { part: "reader", sub: "spread", pins: ["L-spread-member"] },
@@ -1036,6 +1217,36 @@ const OWN_WITNESS: Readonly<Record<string, string>> = {
   "U-export-form-require": "IDS:open namespace-import|export-form",
   "F-root-freeze-callee": "Swap:open name|other",
   "F-root-freeze-callee-writes": "Writer:open name|other",
+  "F-root-freeze-binds-parameter": "KEEP:sealed",
+  "F-root-freeze-binds-binding": "KEEP:sealed; holder+1:open name|other",
+  "F-root-freeze-binds-function": "KEEP:sealed",
+  "F-root-freeze-binds-function-expression": "KEEP:sealed",
+  "F-root-freeze-binds-class": "KEEP:sealed",
+  "F-root-freeze-binds-class-expression": "KEEP:sealed",
+  "F-root-freeze-binds-namespace": "KEEP:sealed",
+  "F-root-freeze-binds-default-import": "KEEP:sealed",
+  "F-root-freeze-binds-namespace-import": "KEEP:sealed",
+  "F-root-freeze-binds-named-import": "KEEP:sealed; Object:open import>name|other",
+  "F-root-freeze-binds-import-equals": "KEEP:sealed",
+  "F-root-freeze-binds-inner-scope": "KEEP:sealed; Object:open name|other",
+  "F-root-freeze-other-method": "KEEP:sealed",
+  "U-spread-accessor": "IDS:open name|spread; copy:sealed",
+  "U-whole-module-named-re-export": "IDS:open namespace-import|whole",
+  "F-root-freeze-other-spellings": "KEEP:sealed; KEEP:sealed; KEEP:sealed",
+  "F-root-freeze-arguments": "KEEP:sealed; KEEP:sealed",
+  "F-root-freeze-binds-scopes": "ARROW:sealed; BLOCK:sealed; Object:open name|other; CAUGHT:sealed; LOOPED:sealed; SPACE:sealed; Object:open name|other; NESTED:sealed; STATIC:sealed; Object:open name|other",
+  "F-root-freeze-binds-elsewhere": "KEEP:sealed; Object:open name|other; KEEP:sealed",
+  "F-root-freeze-binds-variable-kinds": "LET:sealed; VAR:sealed",
+  "F-root-freeze-binds-parameter-kinds": "METHOD:sealed",
+  "F-root-freeze-binds-binding-kinds": "ARRAY:sealed; DESTRUCTURED:sealed; RENAMED:sealed; holder+1:open name|other",
+  "F-root-freeze-binds-nested-declarations": "NESTED_CLASS:sealed; NESTED_SPACE:sealed",
+  "F-root-freeze-binds-renamed-import": "RENAMED_IMPORT:sealed; swapper:open import>name|other",
+  "U-spread-member-kinds": "BASE:sealed; IDS:open name|spread; copy:sealed; IDS:open name|spread; copy:sealed; IDS:open name|spread; copy:sealed; IDS:open name|spread; copy:sealed; IDS:open name|spread; copy:sealed; inner:open name|other; IDS:open name|spread; copy:sealed; BASE:sealed; IDS:open name|spread; copy:sealed",
+  "U-whole-module-default-import": "D:open namespace-import|whole",
+  "U-whole-module-scopes": "IDS:open namespace-import|whole; HIDDEN:open namespace-import|whole; LOCAL:open namespace-import|whole",
+  "U-whole-module-re-export-reaches": "IDS:open namespace-import|whole; OTHER:open namespace-import|whole",
+  "U-whole-namespace-merged": "IDS:open name|whole; OTHER:open name|whole",
+  "U-whole-member-reached": "IDS:open name>namespace|whole; OTHER:open namespace-import>name|whole",
   "VISIT-OUT": "IDS:sealed; IDS:sealed; Iface:sealed; other:open name|written",
   "VISIT-OUT-NAMES": "IDS:sealed; IDS:sealed; meta:sealed; target:sealed; HUB:sealed; SPARE:sealed; obj:sealed",
   "VISIT-IN": "CALLEE:open name|other; ARG:open name|other; NEW_ARG:open name|other; RET:open name|other; INIT:open name|other; PROP:open name|other; prop:sealed; ELEMENT:open name|other; element:sealed; SPREAD_EL:open name|spread; spreadEl:sealed; SPREAD_PROP:open name|spread; spreadProp:sealed; TEMPLATE:open name|other; BINARY:open name|other; COND:open name|other; KEY:open name|other; COMPUTED:open name|other; computed:sealed; PARAM:open name|other; FIELD:open name|other; BIND:open name|other; ENUM_INIT:open name|other; FOR_OF:open name|other; THROWN:open name|other; AWAITED:open name|other; YIELDED:open name|other; TYPEOF:open name|other; VOIDED:open name|other; NEGATED:open name|other; ARROW:open name|other; AS:open name|other; SATISFIED:open name|other; NON_NULL:open name|other; ASSERTED:open name|other; PAREN:open name|other; SWITCHED:open name|other; CASED:open name|other; IF:open name|other; WHILE:open name|other; DO:open name|other; FOR_INIT:open name|other; FOR_COND:open name|other; FOR_INCR:open name|other; FOR_IN:open name|other; TAGGED:open name|other; DECORATOR:open name|other; STATEMENT:open name|other; IN_RIGHT:open name|other; OPTIONAL:open name|other",
@@ -1053,6 +1264,7 @@ const READER_WITNESS: Readonly<Record<string, string>> = {
   "L-spread-object-strings": "IDS:sealed; copy:sealed",
   "L-template": "IDS:sealed",
   "L-forms": "A:sealed; B:sealed; reads:sealed",
+  "L-one-literal": "IDS:open name|other; IDS+1:open name|other",
 };
 /** Each residual's quiet reading (and each R-DEEP-CHAIN bound row's open one). */
 const RESIDUAL_WITNESS: Readonly<Record<string, string>> = {
@@ -1074,6 +1286,8 @@ const RESIDUAL_WITNESS: Readonly<Record<string, string>> = {
   "R-DEEP-EXPORT-IMPORT": "IDS:sealed",
   "R-DEEP-FREEZE-BOUND": "KEEP:sealed; IDS:open name|written",
   "R-DEEP-FREEZE": "KEEP:sealed",
+  "R-PATCHED-FREEZE": "IDS:sealed; IDS:sealed",
+  "R-PATCHED-ITERATOR": "IDS:sealed; argv:sealed",
 };
 /** Every planted pin's page: the digest of its modules (paths and texts), measured at the cut. */
 const PAGES: Readonly<Record<string, string>> = {
@@ -1239,6 +1453,39 @@ const PAGES: Readonly<Record<string, string>> = {
   "R-DEEP-EXPORT-IMPORT": "58b399b5aa685a73",
   "R-DEEP-FREEZE-BOUND": "7dbe70b2e2b81634",
   "R-DEEP-FREEZE": "4e568751b542f398",
+  "F-root-freeze-binds-parameter": "c1238123c96b117b",
+  "F-root-freeze-binds-binding": "439e92ab79c27f0a",
+  "F-root-freeze-binds-function": "402dd8ba3293c0d0",
+  "F-root-freeze-binds-function-expression": "ab296dd134a6c526",
+  "F-root-freeze-binds-class": "a7a1e67ffbe4849c",
+  "F-root-freeze-binds-class-expression": "b7b51830c69fc75c",
+  "F-root-freeze-binds-namespace": "68448bdb9dbc6997",
+  "F-root-freeze-binds-default-import": "ae912665feb8f563",
+  "F-root-freeze-binds-namespace-import": "b7e3cfc8ee7f54ea",
+  "F-root-freeze-binds-named-import": "df55571b6fa82903",
+  "F-root-freeze-binds-import-equals": "30db06fd9a266ebc",
+  "F-root-freeze-binds-inner-scope": "351b532d248a3b71",
+  "F-root-freeze-other-method": "0bee1c7bf423424c",
+  "U-spread-accessor": "3e443c54ece602c3",
+  "U-whole-module-named-re-export": "e00210d8ed988b48",
+  "F-root-freeze-other-spellings": "d4992e9965a0523a",
+  "F-root-freeze-arguments": "71e8096bf6f6453b",
+  "F-root-freeze-binds-scopes": "8b1512d3d710f20f",
+  "F-root-freeze-binds-elsewhere": "dd9851da81b733c3",
+  "F-root-freeze-binds-variable-kinds": "d79d2a4670cf6a89",
+  "F-root-freeze-binds-parameter-kinds": "b07011748d274867",
+  "F-root-freeze-binds-binding-kinds": "213dfcdeb2e1d6c4",
+  "F-root-freeze-binds-nested-declarations": "3ec4d053336c8c43",
+  "F-root-freeze-binds-renamed-import": "1be4179bbe7b7792",
+  "U-spread-member-kinds": "fadc804171e68142",
+  "U-whole-module-default-import": "ed83169c14449551",
+  "U-whole-module-scopes": "a03ab0db1e5a68d5",
+  "U-whole-module-re-export-reaches": "de1e05eceb4afbaa",
+  "U-whole-namespace-merged": "2efeada53afaa47f",
+  "U-whole-member-reached": "18f9ed04bf4c0743",
+  "L-one-literal": "dbcf85a88e9693f3",
+  "R-PATCHED-FREEZE": "605e9f823a9fc287",
+  "R-PATCHED-ITERATOR": "64485351cb9f1cbb",
 };
 
 const PLANTS: Readonly<Record<string, Modules>> = { ...GATE_PLANTS, ...OWN_PLANTS, ...READER_PLANTS, ...RESIDUAL_PLANTS };
@@ -1387,7 +1634,7 @@ const PIN_CHECKS: Readonly<Record<string, () => void>> = {
     expect(Object.fromEntries(SEALED_USES.map((use) => [use.id, measured([`U-${use.id}`]).uses.includes(use.id)]))).toStrictEqual(Object.fromEntries(SEALED_USES.map((use) => [use.id, true])));
   },
   // CLAIM: SUBFORMS names exactly the sub-forms the claim parts list, in claim order, each a phrase of its part and each with
-  // planted pins; a form's or a use's pins each measure that form or use; every F-, U-, VISIT- and L- pin proves a listed sub-form.
+  // planted pins; a form's or a use's pins each measure that form or use; every F-, U-, VISIT- and L- pin is named for a listed sub-form.
   "subforms-pinned": () => {
     expect(SUBFORMS.map((entry) => `${entry.part}: ${entry.sub}`)).toStrictEqual(CLAIM_PARTS.flatMap((part) => part.subforms.map((sub) => `${part.id}: ${sub}`)));
     expect(CLAIM_PARTS.filter((part) => part.subforms.some((sub) => !part.text.includes(sub))).map((part) => part.id)).toStrictEqual([]);
@@ -1460,14 +1707,14 @@ describe("wb-jwc.8: the SEALED reference scan follows qualified, import-equals, 
       "HOLLOWINGS:1",
       "SRC:3",
       "CLAIM:5",
-      "FORMS:48",
-      "USES:51",
+      "FORMS:70",
+      "USES:59",
       "VISIT:3",
-      "READER:11",
-      "RESIDUALS:18",
+      "READER:12",
+      "RESIDUALS:20",
     ]);
     expect(SUBFORMS.map((entry) => `${entry.pins.length}+${entry.quiet?.length ?? 0}`).join(" ")).toBe(
-      "1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 2+0 2+0 1+0 1+0 2+0 2+0 1+0 2+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 0+1 1+0 1+0 1+0 1+0 1+1 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 0+1 1+0 1+0 1+0 1+0 1+0 5+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0 2+0 2+0 0+1 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0 2+0 1+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0",
+      "1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+1 1+2 1+0 2+0 2+0 2+0 1+0 1+0 2+0 1+0 1+0 2+0 1+0 1+0 2+0 1+0 4+0 2+0 1+0 1+0 1+0 1+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 2+0 2+0 1+0 1+0 2+0 2+0 1+0 2+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 0+1 1+0 1+0 1+0 1+0 1+1 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 0+1 1+0 1+0 1+0 1+0 1+0 5+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0 2+0 2+0 0+1 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 4+0 2+0 2+0 1+0 3+0 1+0 2+0 1+0 3+0 2+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 1+0 2+0",
     );
     expect(Object.keys(PIN_CHECKS)).toStrictEqual(CHECKED_ROWS.flatMap((id) => rowOf(id).pins));
     expect([...PLANTED_ROWS, ...CHECKED_ROWS].sort()).toStrictEqual(ROWS.map((row) => row.id).sort());
@@ -1481,6 +1728,7 @@ describe("wb-jwc.8: the SEALED reference scan follows qualified, import-equals, 
       "R-UNFOLLOWED-MODULE:R-DYNAMIC-IMPORT,R-REQUIRE-CALL,R-ABSOLUTE-SPECIFIER",
       "R-OUTSIDE-TREE:R-NON-TS-MODULE,R-OUTSIDE-SRC",
       "R-DEEP-CHAIN:R-DEEP-RE-EXPORT-BOUND,R-DEEP-RE-EXPORT,R-DEEP-EXPORT-STAR-BOUND,R-DEEP-EXPORT-STAR,R-DEEP-NAMESPACE-BOUND,R-DEEP-NAMESPACE,R-DEEP-ALIAS-BOUND,R-DEEP-ALIAS,R-DEEP-EXPORT-IMPORT-BOUND,R-DEEP-EXPORT-IMPORT,R-DEEP-FREEZE-BOUND,R-DEEP-FREEZE",
+      "R-PATCHED-GLOBAL:R-PATCHED-FREEZE,R-PATCHED-ITERATOR",
     ]);
     expect(residualParagraph()).toStrictEqual(roster);
   });
