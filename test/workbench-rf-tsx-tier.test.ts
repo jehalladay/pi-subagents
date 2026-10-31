@@ -13,13 +13,22 @@
  * command in a child vitest. Stub `rf` executables on scratch PATHs stand in for a provisioned
  * producer only to show that R9's rows are satisfiable and that each assertion bites; nothing here
  * is a live receipt or a TSX render (that receipt is R9, wb-693.7).
+ *
+ * wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2): a provisioned-shape run also puts a stand-in engine first on the success row's PATH
+ * (a text file the tier never executes) and has the stand-in rf report its sha256 as the host's pin, so the success row's
+ * Deno identity reading (test/helpers/rf-tsx-deno.ts) holds; the DENO_IDENTITY_SUITE cases show that it bites: a
+ * version-manager shim or no engine is refused before rf is launched, a mismatched or unpinned engine once the render
+ * reports the pin, and a passing row prints the resolved path, realpath and sha256 on its RF-TSX-ENGINE line while its
+ * RF-TSX-RECEIPT line keeps the four R9 fields.
  */
 import { spawnSync } from "node:child_process";
-import { chmodSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { join, relative } from "node:path";
+import { createHash } from "node:crypto";
+import { chmodSync, existsSync, mkdirSync, readFileSync, realpathSync, symlinkSync, writeFileSync } from "node:fs";
+import { delimiter, join, relative } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { REACTIVE_FIBER_CLI_SCHEMA } from "../src/workbench/providers/reactivefiber.js";
 import defaultConfig from "../vitest.config.js";
+import { DENO_ENGINE, DENO_IDENTITY_SUITE, DENO_REFUSAL, resolveOnPath } from "./helpers/rf-tsx-deno.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
@@ -38,6 +47,12 @@ const NODE = process.execPath;
 /** Environment variables std-env reads to decide that an agent drives the run (vitest then auto-selects its agent reporter). */
 const AGENT_MARKERS = ["AI_AGENT", "CLAUDECODE", "CLAUDE_CODE"] as const;
 const ID_TAIL = "0".repeat(26);
+/** wb-70xe: the stand-in engine's bytes (no #! line, never executed) and their sha256, the pin a provisioned stand-in rf reports. */
+const STAND_IN_ENGINE = "hermetic stand-in engine for the rf-preview-tsx wiring cases: a text file the tier never executes\n";
+const STAND_IN_DIGEST = createHash("sha256").update(STAND_IN_ENGINE, "utf8").digest("hex");
+const SUCCESS_RECEIPT = 'RF-TSX-RECEIPT {"row":"success"';
+/** wb-70xe: the mark of the success row's engine identity line. */
+const ENGINE_MARK = "RF-TSX-ENGINE {";
 
 /** R9's clauses as the tier labels its assertions; a failing clause names itself in the report. */
 const CLAUSE = {
@@ -155,18 +170,30 @@ function canonicalLaunch(launch: Launch, tier: Readonly<Record<string, string>>,
   return { status: child.status, receipts };
 }
 
+/** wb-70xe: every stdout line carrying `mark`, from the mark on (the tier writes each record newline-led and newline-terminated). */
+function recordLines(stdout: string, mark: string): string[] {
+  return stdout
+    .split("\n")
+    .filter(line => line.includes(mark))
+    .map(line => line.slice(line.indexOf(mark)));
+}
+
 function failureOf(row: RowResult): string {
   return row.failureMessages.join("\n");
 }
 
-/** A stand-in `rf` answering one context render with `answer` (workspace.root echoed from argv). Never a producer capture. */
-function stubRf(dir: string, answer: unknown, exit: number): string {
+/**
+ * A stand-in `rf` answering one context render with `answer` (workspace.root echoed from argv). Never a producer capture.
+ * With `launched` (wb-70xe) it also appends one line to that file per launch, so a row refused before rf runs is observable.
+ */
+function stubRf(dir: string, answer: unknown, exit: number, launched?: string): string {
   mkdirSync(dir, { recursive: true });
   const script = join(dir, "rf");
   writeFileSync(
     script,
     [
       `#!${NODE}`,
+      ...(launched === undefined ? [] : [`require("node:fs").appendFileSync(${JSON.stringify(launched)}, "launched\\n");`]),
       "const argv = process.argv.slice(2);",
       `const answer = ${JSON.stringify(answer)};`,
       'if (answer !== null && typeof answer === "object" && answer.workspace) answer.workspace.root = argv[argv.indexOf("--workspace") + 1];',
@@ -176,6 +203,30 @@ function stubRf(dir: string, answer: unknown, exit: number): string {
     ].join("\n"),
   );
   chmodSync(script, 0o700);
+  return dir;
+}
+
+/** wb-70xe: the stand-in engine (STAND_IN_ENGINE's bytes, executable, never executed) as `dir`/deno; returns `dir`. */
+function standInEngine(dir: string, bytes: string = STAND_IN_ENGINE): string {
+  mkdirSync(dir, { recursive: true });
+  writeFileSync(join(dir, DENO_ENGINE), bytes);
+  chmodSync(join(dir, DENO_ENGINE), 0o700);
+  return dir;
+}
+
+/**
+ * wb-70xe: a PATH entry holding only what the child vitest's launcher reads from PATH (node, and grep for a node wrapper),
+ * no engine. Each is a script that execs the parent's own tool by absolute path, since a version manager's node wrapper finds
+ * its install from the path it was invoked by.
+ */
+function engineFreeTools(dir: string): string {
+  mkdirSync(dir, { recursive: true });
+  for (const [name, target] of [["node", NODE], ["grep", resolveOnPath("grep", process.env.PATH)]] as const) {
+    if (target === undefined) continue;
+    if (target.includes("'")) throw new Error(`a tool path holds a quote: ${target}`);
+    writeFileSync(join(dir, name), `#!/bin/sh\nexec '${target}' "$@"\n`);
+    chmodSync(join(dir, name), 0o700);
+  }
   return dir;
 }
 
@@ -204,7 +255,7 @@ function tsxPreview(knobs: PreviewKnobs = {}): Record<string, unknown> {
     sdk_versions: {
       tsx_runtime: {
         distribution_version: knobs.distributionVersion ?? STUB_VERSION,
-        contract_fingerprint: knobs.contractFingerprint ?? `sha256:${"f".repeat(64)}`,
+        contract_fingerprint: knobs.contractFingerprint ?? `sha256:${STAND_IN_DIGEST}`,
       },
     },
   };
@@ -246,14 +297,25 @@ function refusal(code: string): Record<string, unknown> {
   };
 }
 
-/** A provisioned-shape run: `preview` answers on the ambient PATH, `absent` on the no-deno PATH (or the variable is left unset). */
-function provisionedRun(prefix: string, preview: unknown, absent: { readonly answer: unknown; readonly exit: number } | "unset"): TierRun {
+/**
+ * A provisioned-shape run: `preview` answers on the ambient PATH with the stand-in engine first on it (wb-70xe), `absent` on
+ * the no-deno PATH (or the variable is left unset). `success` (wb-70xe) replaces the success row's PATH entry: given the run's
+ * scratch dir and the stand-in rf's launch log, it plants the entry and returns the PATH the row runs with.
+ */
+function provisionedRun(
+  prefix: string,
+  preview: unknown,
+  absent: { readonly answer: unknown; readonly exit: number } | "unset",
+  success?: (dir: string, launched: string) => string,
+): TierRun & { readonly dir: string; readonly launched: string } {
   const dir = scratch(prefix);
   const workspace = join(dir, "workspace");
   mkdirSync(workspace);
   const tier: Record<string, string> = { [FIXTURE]: workspace };
   if (absent !== "unset") tier[NO_DENO_PATH] = stubRf(join(dir, "no-deno"), absent.answer, absent.exit);
-  return runTier(dir, tier, `${stubRf(join(dir, "tsx"), preview, 0)}:${process.env.PATH ?? ""}`);
+  const launched = join(dir, "tsx-rf-launched");
+  const path = success === undefined ? `${standInEngine(stubRf(join(dir, "tsx"), preview, 0, launched))}:${process.env.PATH ?? ""}` : success(dir, launched);
+  return { ...runTier(dir, tier, path), dir, launched };
 }
 
 const NO_SKIP_NO_TODO = { numTotalTests: 2, numPendingTests: 0, numTodoTests: 0 } as const;
@@ -344,7 +406,7 @@ describe("rf-preview-tsx encodes R9's receipt rows (wb-693.6, R8 -> R9)", () => 
       const workspace = join(dir, "workspace");
       mkdirSync(workspace);
       const tier = { [FIXTURE]: workspace, [NO_DENO_PATH]: stubRf(join(dir, "no-deno"), refusal("RF_COMPONENT_RUNTIME_ABSENT"), 1) };
-      const path = `${stubRf(join(dir, "tsx"), tsxPreview(), 0)}:${process.env.PATH ?? ""}`;
+      const path = `${standInEngine(stubRf(join(dir, "tsx"), tsxPreview(), 0))}:${process.env.PATH ?? ""}`;
       const agent = canonicalLaunch("agent", tier, path);
       const plain = canonicalLaunch("plain", tier, path);
       expect([agent.status, plain.status]).toEqual([0, 0]);
@@ -418,4 +480,103 @@ describe("rf-preview-tsx encodes R9's receipt rows (wb-693.6, R8 -> R9)", () => 
       RUN_BUDGET_MS,
     );
   }
+});
+
+describe(DENO_IDENTITY_SUITE, () => {
+  const ABSENT_REFUSAL = { answer: refusal("RF_COMPONENT_RUNTIME_ABSENT"), exit: 1 } as const;
+
+  /** A refused success row: failed with `reason`'s typed message, the runtime-absent row still passing, no success receipt printed. */
+  function expectRefused(run: TierRun, reason: string, detail: string): void {
+    expect(run.status).not.toBe(0);
+    expect(run.report).toMatchObject({ ...NO_SKIP_NO_TODO, numPassedTests: 1, numFailedTests: 1 });
+    expect(run.success.status).toBe("failed");
+    expect(failureOf(run.success)).toContain(`${reason}: `);
+    expect(failureOf(run.success)).toContain(detail);
+    expect(run.absent.status).toBe("passed");
+    expect(run.stdout).not.toContain(SUCCESS_RECEIPT);
+    expect(run.stdout).not.toContain(ENGINE_MARK);
+  }
+
+  it(
+    "a provisioned run passes the success row, whose engine line records the resolved deno, its realpath and its sha256 equal to the pin the render reports, beside the four-field receipt line",
+    () => {
+      const run = provisionedRun("rf-tsx-deno-pinned-", tsxPreview(), ABSENT_REFUSAL);
+      expect(run.report).toMatchObject({ ...NO_SKIP_NO_TODO, numPassedTests: 2, numFailedTests: 0 });
+      expect(run.status).toBe(0);
+      const engine = join(run.dir, "tsx", DENO_ENGINE);
+      const digest = `sha256:${STAND_IN_DIGEST}`;
+      expect(recordLines(run.stdout, ENGINE_MARK)).toEqual([`RF-TSX-ENGINE ${JSON.stringify({ deno_resolved: engine, deno_realpath: realpathSync(engine), deno_sha256: digest })}`]);
+      expect(recordLines(run.stdout, SUCCESS_RECEIPT)).toEqual([
+        `RF-TSX-RECEIPT ${JSON.stringify({ row: "success", cli_version: STUB_VERSION, tsx_worker_spawns: 1, distribution_version: STUB_VERSION, contract_fingerprint: digest })}`,
+      ]);
+      expect(run.stdout.indexOf(ENGINE_MARK)).toBeLessThan(run.stdout.indexOf(SUCCESS_RECEIPT));
+      expect(readFileSync(run.launched, "utf8")).toBe("launched\n");
+    },
+    RUN_BUDGET_MS,
+  );
+
+  it(
+    "a deno symlinked to a version manager's binary (the mise shim form) fails the success row typed rf_tsx_deno_shim before rf is launched",
+    () => {
+      const run = provisionedRun("rf-tsx-deno-manager-", tsxPreview(), ABSENT_REFUSAL, (dir, launched) => {
+        const tsx = stubRf(join(dir, "tsx"), tsxPreview(), 0, launched);
+        const manager = join(dir, "manager", "bin", "mise");
+        mkdirSync(join(dir, "manager", "bin"), { recursive: true });
+        writeFileSync(manager, STAND_IN_ENGINE);
+        chmodSync(manager, 0o700);
+        symlinkSync(manager, join(tsx, DENO_ENGINE));
+        return `${tsx}${delimiter}${process.env.PATH ?? ""}`;
+      });
+      expectRefused(run, DENO_REFUSAL.shim, "its realpath names mise, not deno");
+      expect(existsSync(run.launched)).toBe(false);
+    },
+    RUN_BUDGET_MS,
+  );
+
+  it(
+    "a deno that is a #! script fails the success row typed rf_tsx_deno_shim before rf is launched",
+    () => {
+      const run = provisionedRun("rf-tsx-deno-script-", tsxPreview(), ABSENT_REFUSAL, (dir, launched) => {
+        const tsx = standInEngine(stubRf(join(dir, "tsx"), tsxPreview(), 0, launched), "#!/bin/sh\nexit 0\n");
+        return `${tsx}${delimiter}${process.env.PATH ?? ""}`;
+      });
+      expectRefused(run, DENO_REFUSAL.shim, "it is a #! script, not the engine binary");
+      expect(existsSync(run.launched)).toBe(false);
+    },
+    RUN_BUDGET_MS,
+  );
+
+  it(
+    "no deno on the success row's PATH fails it typed rf_tsx_deno_unresolved before rf is launched",
+    () => {
+      const run = provisionedRun("rf-tsx-deno-absent-", tsxPreview(), ABSENT_REFUSAL, (dir, launched) => {
+        const tsx = stubRf(join(dir, "tsx"), tsxPreview(), 0, launched);
+        return `${tsx}${delimiter}${engineFreeTools(join(dir, "tools"))}`;
+      });
+      expectRefused(run, DENO_REFUSAL.unresolved, "no executable deno on PATH");
+      expect(existsSync(run.launched)).toBe(false);
+    },
+    RUN_BUDGET_MS,
+  );
+
+  it(
+    "a deno whose sha256 differs from the pin the render reports fails the success row typed rf_tsx_deno_mismatch and prints no success receipt",
+    () => {
+      const pinned = "f".repeat(64);
+      const run = provisionedRun("rf-tsx-deno-mismatch-", tsxPreview({ contractFingerprint: `sha256:${pinned}` }), ABSENT_REFUSAL);
+      expectRefused(run, DENO_REFUSAL.mismatch, `has sha256 ${STAND_IN_DIGEST}, not the sha256 ${pinned} the installed rf's runtime lock pins for this host`);
+      expect(readFileSync(run.launched, "utf8")).toBe("launched\n");
+    },
+    RUN_BUDGET_MS,
+  );
+
+  it(
+    "a render that reports no sha256 pin for the host (contract_fingerprint unknown) fails the success row typed rf_tsx_deno_unpinned",
+    () => {
+      const run = provisionedRun("rf-tsx-deno-unpinned-", tsxPreview({ contractFingerprint: "unknown" }), ABSENT_REFUSAL);
+      expectRefused(run, DENO_REFUSAL.unpinned, "contract_fingerprint unknown");
+      expect(readFileSync(run.launched, "utf8")).toBe("launched\n");
+    },
+    RUN_BUDGET_MS,
+  );
 });

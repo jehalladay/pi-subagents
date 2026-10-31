@@ -1,0 +1,250 @@
+/**
+ * wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2): the Deno identity reading of the rf-preview-tsx tier's success row, and the Deno
+ * install-shape matcher of the provisioning census (test/workbench-rf-tsx-deno-provisioning.test.ts).
+ *
+ * Authority: RFCLI ruling A4 (IMPLEMENTATION_AND_QA.md:149@82bd879eee52): "Deno is pinned to the exact version recorded in
+ * integrations/tsx/runtime-lock.json and provisioned per host into a versioned tool directory by the operator, never
+ * installed by a lane". rf resolves its engine by name on PATH and nothing else (runtime.tsx_engine.resolve_engine is
+ * shutil.which over the PATH the provider hands it, from the working directory Pi's own process holds, since the provider
+ * spawns rf without a cwd), and a version-manager shim on PATH is answered as the shim: executing a shim whose pin is not
+ * installed installs it over the network (RFCLI README.md:130, rfc-3fhh4.28).
+ *
+ * So this reading never executes the resolved file, and it reads no rf install layout: it reads the file's first two bytes
+ * and its sha256, as RFCLI's own doctor check RFDOCTOR-TSX-RUNTIME does (application/doctor.py, rfc-3fhh4.77: "the doctor
+ * can tell the pinned executable from any other without running either"). The pin is the one the render itself reports:
+ * provenance.sdk_versions.tsx_runtime is rf's reading of its packaged runtime lock (definitions.tsx_pins
+ * .engine_version_entries: distribution_version is the lock's exact engine version, contract_fingerprint is "sha256:" and
+ * the binary digest the lock pins for the host's target triple, or "unknown" when it pins none). The test modules that use
+ * it launch no engine: the worker-lifecycle census (wb-csbt.3, wb-jdpn) pins that no test module launches one.
+ *
+ * Two halves, so the shim check runs before rf ever starts (a shim it would execute is the network install path) and the
+ * digest check runs once the render has reported the pin:
+ *  - provisionedDeno(PATH): the engine rf will resolve; refuses rf_tsx_deno_unresolved when none resolves and
+ *    rf_tsx_deno_shim when the resolved file is a version-manager shim (its realpath is not named deno, it sits in a shims
+ *    directory, or it is a #! script rather than the engine binary);
+ *  - pinnedDenoDigest(engine, fingerprint): refuses rf_tsx_deno_unpinned when the render reports no sha256 pin for the host
+ *    and rf_tsx_deno_mismatch when the resolved file's sha256 differs from it; returns the measured "sha256:<hex>".
+ * A resolved file either half cannot read is refused rf_tsx_deno_unreadable. Every refusal is a DenoIdentityRefusal whose
+ * message starts with its reason: a typed failure, never a skip.
+ *
+ * NAMED RESIDUAL R-COPIED-MANAGER: the pre-render half recognizes a shim by those three marks only, so a version manager's
+ * binary copied or hard-linked under the engine's own name outside a shims directory passes it; the digest half then refuses
+ * it (rf_tsx_deno_mismatch, its sha256 is not the pin), after rf has run it. The provisioning test pins that quiet row.
+ *
+ * The lane census reads DENO_INSTALL_SHAPES, six closed families of install command, per line. NAMED RESIDUALS (each with
+ * a pinned quiet row in the census): R-MIRROR, an engine archive fetched from a host no shape names; R-COMPOSED, an install
+ * command assembled from parts at run time, which no source line spells (the census's own planted controls are built so).
+ */
+import { createHash } from "node:crypto";
+import { accessSync, closeSync, constants, openSync, readSync, realpathSync, statSync } from "node:fs";
+import { basename, delimiter, join, sep } from "node:path";
+
+/** The engine command rf resolves (runtime.tsx_engine.ENGINE_COMMAND). */
+export const DENO_ENGINE = "deno";
+
+/** The typed reasons of the identity reading, one per refusal. */
+export const DENO_REFUSAL = {
+  unresolved: "rf_tsx_deno_unresolved",
+  shim: "rf_tsx_deno_shim",
+  unpinned: "rf_tsx_deno_unpinned",
+  mismatch: "rf_tsx_deno_mismatch",
+  unreadable: "rf_tsx_deno_unreadable",
+} as const;
+export type DenoRefusalReason = (typeof DENO_REFUSAL)[keyof typeof DENO_REFUSAL];
+
+/**
+ * The describe of the tier wiring cases in test/workbench-rf-tsx-tier.test.ts. The docs07 census's row R10 binds its
+ * lock-pinned-engine half to exactly the cases the gate's own report collects under it.
+ */
+export const DENO_IDENTITY_SUITE = "rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe)";
+/**
+ * The describe of the lane census cases in test/workbench-rf-tsx-deno-provisioning.test.ts. The docs07 census's row R10
+ * binds its no-lane-install half to exactly the cases the gate's own report collects under it.
+ */
+export const DENO_LANE_SUITE = "no Pi lane carries a Deno install command (wb-70xe)";
+/** The describes the wb-70xe cases are registered under, each with its file, in order; row R10 has one half per entry. */
+export const DENO_CASE_SUITES: readonly { readonly suite: string; readonly file: string }[] = [
+  { suite: DENO_IDENTITY_SUITE, file: "test/workbench-rf-tsx-tier.test.ts" },
+  { suite: DENO_LANE_SUITE, file: "test/workbench-rf-tsx-deno-provisioning.test.ts" },
+];
+
+/** A typed refusal of the identity reading: the message is "<reason>: <detail>". */
+export class DenoIdentityRefusal extends Error {
+  readonly reason: DenoRefusalReason;
+  constructor(reason: DenoRefusalReason, detail: string) {
+    super(`${reason}: ${detail}`);
+    this.name = "DenoIdentityRefusal";
+    this.reason = reason;
+  }
+}
+
+/** The engine as PATH resolves it, and the file that path names after every symlink. */
+export interface ResolvedDeno {
+  readonly resolved: string;
+  readonly realpath: string;
+}
+
+const PRINTABLE_PATH = /^[\x20-\x7e]{1,4096}$/;
+const TOKEN = /^[0-9A-Za-z:._+-]{1,80}$/;
+/** A path is echoed only when it is printable ASCII; anything else is named <unrecognized>. */
+export function echoPath(value: string): string {
+  return PRINTABLE_PATH.test(value) ? value : "<unrecognized>";
+}
+function echoToken(value: unknown): string {
+  return typeof value === "string" && TOKEN.test(value) ? value : "<unrecognized>";
+}
+
+/**
+ * shutil.which(name) over `path`: the first entry, in order, where `name` is an existing non-directory file (symlinks
+ * followed) the current user may execute. An empty entry inside `path` joins to a relative path, read from the working
+ * directory, as it is for rf. An empty `path` resolves nothing, as shutil.which answers None for PATH "" (rf's Python 3.15,
+ * measured); an unset one resolves nothing too, since shutil.which would read the interpreter's CS_PATH there, which this
+ * reading does not guess - so the engine is refused unresolved, never passed.
+ */
+export function resolveOnPath(name: string, path: string | undefined): string | undefined {
+  if (path === undefined || path === "") return undefined;
+  for (const entry of path.split(delimiter)) {
+    const candidate = join(entry, name);
+    try {
+      if (statSync(candidate).isDirectory()) continue;
+      accessSync(candidate, constants.X_OK);
+      return candidate;
+    } catch {}
+  }
+  return undefined;
+}
+
+const SHIMS_DIRECTORY = "shims";
+const SCRIPT_MAGIC = "#!";
+
+function startsWithScriptMagic(file: string): boolean {
+  const head = Buffer.alloc(SCRIPT_MAGIC.length);
+  const descriptor = openSync(file, "r");
+  try {
+    const read = readSync(descriptor, head, 0, head.length, 0);
+    return head.subarray(0, read).toString("latin1") === SCRIPT_MAGIC;
+  } finally {
+    closeSync(descriptor);
+  }
+}
+
+/** Why the resolved engine is a version-manager shim, in a fixed order; empty when it is not one. */
+export function shimReasons(engine: ResolvedDeno): string[] {
+  const reasons: string[] = [];
+  const name = basename(engine.realpath);
+  if (name !== DENO_ENGINE) reasons.push(`its realpath names ${echoPath(name)}, not ${DENO_ENGINE}`);
+  if ([...engine.resolved.split(sep), ...engine.realpath.split(sep)].includes(SHIMS_DIRECTORY)) reasons.push(`it sits in a ${SHIMS_DIRECTORY} directory`);
+  if (startsWithScriptMagic(engine.realpath)) reasons.push("it is a #! script, not the engine binary");
+  return reasons;
+}
+
+/** `read` of the resolved file, its filesystem failure refused typed: an engine that cannot be read cannot be held to the pin. */
+function readEngine<T>(resolved: string, read: () => T): T {
+  try {
+    return read();
+  } catch (error) {
+    const code = error instanceof Error && "code" in error && typeof error.code === "string" ? error.code : "read failed";
+    throw new DenoIdentityRefusal(DENO_REFUSAL.unreadable, `the PATH-resolved deno ${echoPath(resolved)} cannot be read (${echoToken(code)}), so it cannot be held to the lock pin`);
+  }
+}
+
+/** The pre-render half: the engine rf will resolve on `path`, refusing an unresolved engine or a version-manager shim. */
+export function provisionedDeno(path: string | undefined): ResolvedDeno {
+  const resolved = resolveOnPath(DENO_ENGINE, path);
+  if (resolved === undefined) {
+    throw new DenoIdentityRefusal(DENO_REFUSAL.unresolved, "no executable deno on PATH; the operator provisions the pinned Deno (RFCLI ruling A4) and puts its bin directory first on PATH");
+  }
+  const { engine, reasons } = readEngine(resolved, () => {
+    const read: ResolvedDeno = { resolved, realpath: realpathSync(resolved) };
+    return { engine: read, reasons: shimReasons(read) };
+  });
+  if (reasons.length > 0) {
+    throw new DenoIdentityRefusal(
+      DENO_REFUSAL.shim,
+      `the PATH-resolved deno ${echoPath(engine.resolved)} (realpath ${echoPath(engine.realpath)}) is a version-manager shim (${reasons.join("; ")}); executing it can install Deno over the network (rfc-3fhh4.28), so rf is never launched with it`,
+    );
+  }
+  return engine;
+}
+
+const CHUNK = 1 << 20;
+/** The sha256 hex of `file`, read in chunks; the file is never executed. */
+export function sha256Of(file: string): string {
+  const hash = createHash("sha256");
+  const buffer = Buffer.alloc(CHUNK);
+  const descriptor = openSync(file, "r");
+  try {
+    for (let read = readSync(descriptor, buffer, 0, CHUNK, null); read > 0; read = readSync(descriptor, buffer, 0, CHUNK, null)) hash.update(buffer.subarray(0, read));
+  } finally {
+    closeSync(descriptor);
+  }
+  return hash.digest("hex");
+}
+
+const PINNED = /^sha256:([0-9a-f]{64})$/;
+
+/**
+ * The post-render half: the resolved engine's sha256 must equal the binary digest the render reports for the host
+ * (provenance.sdk_versions.tsx_runtime.contract_fingerprint, rf's reading of its packaged runtime-lock.json). Returns the
+ * measured digest as "sha256:<hex>".
+ */
+export function pinnedDenoDigest(engine: ResolvedDeno, fingerprint: unknown): string {
+  const pinned = typeof fingerprint === "string" ? PINNED.exec(fingerprint)?.[1] : undefined;
+  if (pinned === undefined) {
+    throw new DenoIdentityRefusal(
+      DENO_REFUSAL.unpinned,
+      `the render reports no pinned binary sha256 for this host (contract_fingerprint ${echoToken(fingerprint)}), so the PATH-resolved deno cannot be held to the lock pin`,
+    );
+  }
+  const measured = readEngine(engine.resolved, () => sha256Of(engine.realpath));
+  if (measured !== pinned) {
+    throw new DenoIdentityRefusal(
+      DENO_REFUSAL.mismatch,
+      `the PATH-resolved deno ${echoPath(engine.resolved)} (realpath ${echoPath(engine.realpath)}) has sha256 ${measured}, not the sha256 ${pinned} the installed rf's runtime lock pins for this host`,
+    );
+  }
+  return `sha256:${measured}`;
+}
+
+/** One closed family of Deno install commands the lane census reads (case-insensitive, per line). */
+export interface DenoInstallShape {
+  readonly id: string;
+  readonly label: string;
+  readonly source: string;
+}
+/**
+ * The install shapes, in order. Each source is spelled so that this file's own text matches none of them (the census walks
+ * this file and pins it quiet), and each has one planted positive control in the census.
+ */
+export const DENO_INSTALL_SHAPES: readonly DenoInstallShape[] = [
+  { id: "I1", label: "the Deno installer script", source: String.raw`deno\.land/(?:x/)?install` },
+  {
+    id: "I2",
+    label: "a Deno release download",
+    source: String.raw`dl\.deno\.land|github\.com/denoland/deno/releases|\bgh\s+release\s+download\b[^\n]*\bdenoland/deno\b`,
+  },
+  {
+    id: "I3",
+    label: "a version-manager install of the engine",
+    source: String.raw`\b(?:mise|rtx|asdf|proto|vfox)\s+(?:install|use|exec|x|i|plugin\s+add|global|local)\b[^\n]*\bdeno\b`,
+  },
+  {
+    id: "I4",
+    label: "a package-manager install of the engine",
+    source: [
+      String.raw`\b(?:npm|pnpm|yarn|bun)\s+(?:i|install|add)\b[^\n]*\bdeno\b`,
+      String.raw`\bnpx\s+(?:-\S+\s+)*deno\b`,
+      String.raw`\b(?:brew|cargo|snap|choco|scoop|winget|apt-get|apt|dnf|yum|pacman|nix-env|apk|pkg|port)\s+(?:install|add|-S|-iA)\b[^\n]*\bdeno\b`,
+      String.raw`\b(?:pip3?|pipx|uv\s+tool|uv\s+pip)\s+install\b[^\n]*\bdeno\b`,
+      String.raw`\bnix\s+(?:profile\s+install|shell|run)\b[^\n]*\bdeno\b`,
+    ].join("|"),
+  },
+  { id: "I5", label: "an engine self-upgrade", source: String.raw`\bdeno\s+upgrade\b` },
+  { id: "I6", label: "the Deno CI setup action or container image", source: String.raw`denoland/setup[-]deno|\b(?:FROM|image:)\s+(?:docker\.io/)?denoland/deno\b` },
+];
+
+/** The install shapes `text` holds, as "<line>:<shape id>" in line order (shape order within a line). */
+export function denoInstallHits(text: string): string[] {
+  const patterns = DENO_INSTALL_SHAPES.map(shape => ({ id: shape.id, pattern: new RegExp(shape.source, "i") }));
+  return text.split("\n").flatMap((line, index) => patterns.filter(shape => shape.pattern.test(line)).map(shape => `${index + 1}:${shape.id}`));
+}

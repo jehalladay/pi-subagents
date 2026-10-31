@@ -74,6 +74,17 @@
  * rendered view - so a pin, half or row removed from TABLE and from every literal here together still reds (CT5/CT6). A
  * renamed or deleted pinned case reds naming the row and its sentence (M5, DEL); docs/19's read example restates the arms.
  *
+ * Row R10 (wb-70xe, RF-NATIVE-TSX-COMPONENTS-R2) binds the RF sentence on the operator-provisioned Deno (RFCLI ruling A4: the
+ * operator provisions Deno at the installed rf's runtime-lock.json pin and no Pi lane installs it): its lock-pinned-engine half
+ * to the rf-preview-tsx tier wiring cases of test/workbench-rf-tsx-tier.test.ts (a passing row's RF-TSX-ENGINE line records the
+ * resolved deno, its realpath and its sha256 beside the four-field receipt line; a shim or an unresolved deno is refused
+ * before rf runs, a mismatched or unpinned one once the render reports the pin), its no-lane-install half to the lane census
+ * of test/workbench-rf-tsx-deno-provisioning.test.ts.
+ * Its quote and binding are frozen as literals (rule 16), the RF ANCHOR holds the quote to the live paragraph, and the REPORT
+ * ANCHOR holds each half to exactly the cases the gate's own report collects under that half's describe - the helper's
+ * DENO_IDENTITY_SUITE and DENO_LANE_SUITE (test/helpers/rf-tsx-deno.ts), which both test files register their cases under - so
+ * a pin removed from TABLE and from every literal here together still reds (CT5/CT6).
+ *
  * ORDERING GUARD (wb-693.9, RF-TSX-AND-EMBEDDING-R11): row R4 binds the RF sentence naming the "SDK package + revision"
  * fields the adapter records (provenance.cli_version, provenance.sdk_versions.tsx_runtime/tsx_sdk) to the cases that
  * assert them: the wb-693.1 R10 engine-identity cases and the wb-2j3.1 release cases, which absorbed requirement R4 under
@@ -113,6 +124,7 @@ import { type CapabilityDescriptor, CapabilityRegistry } from "../src/workbench/
 import { registerNativeReactiveFiberRender, registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
 import { RF_LIVE_DRIFT_SHAPE_SUITE, RF_LIVE_DRIFT_TITLE } from "./helpers/rf-release-drift.js";
+import { DENO_CASE_SUITES, DENO_IDENTITY_SUITE, DENO_LANE_SUITE } from "./helpers/rf-tsx-deno.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 type Tier = "default-gate" | "native-read";
@@ -197,6 +209,13 @@ const LOCATORS_SENTENCE = "RF_WORKSPACE and SWARM_RF_WORKSPACE are the allowlist
 const LEGACY_ARGV_SENTENCE = "The legacy {model, task} argv is frozen byte for byte (SCG-R025).";
 
 /**
+ * wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2): the RF paragraph's sentence on the operator-provisioned Deno. Row R10 quotes it whole;
+ * FROZEN_R10_QUOTE and FROZEN_R10_BINDING repeat it as literals (rule 16) and the gate's own report anchors the binding.
+ */
+const DENO_PROVISIONING_SENTENCE =
+  "The operator provisions Deno per RFCLI ruling A4 at the exact version and binary sha256 the installed rf's integrations/tsx/runtime-lock.json pins, and no Pi lane installs it: the rf-preview-tsx tier refuses, before rf runs, a deno that PATH resolves to a version-manager shim (a symlink to a binary of another name, a file in a shims directory or a #! script), refuses a deno whose sha256 differs from the pin the render reports, and records the deno it held to that pin (its PATH-resolved path, realpath and sha256) on one RF-TSX-ENGINE line beside the R9 receipt rows.";
+
+/**
  * wb-kku9.1 (MW-CAC-WORKFLOW-COMPOSITION-R1 (d)): the two observation-class sentences, the last of the HyperUnix and Agent
  * provider paragraphs. Rows H3 and A1 quote them whole; FROZEN_H3 and FROZEN_A1 repeat each row's identity as a literal.
  */
@@ -232,7 +251,7 @@ const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
     "Use public TypeScript client for runs.start/get/status/events/pause/stop as verified. Native Run/Work/Attempt and supervision semantics remain Furnace's. Future idempotent ensure/reconcile and convenience wait methods are upstream targets, not an assumed API. Ambiguous runs.start timeout -> uncertain/reconcile; do not issue second start blindly. A Furnace host may use ExecutorApp over the per-Attempt embedded bridge to call a MechanicalWorkflows function, with the application outcome mapped explicitly to the four-word Furnace execution result (only status is read; failure_class and data are not); failure and indeterminate park the Run rather than retrying, cancellation is a cooperative AbortSignal, and transport success is never domain verification.",
   "HyperUnix provider": `Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage. ${HX_OBSERVATION_SENTENCE}`,
   "ReactiveFiberCLI provider":
-    `Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. ${INPUT_ARMS_SENTENCE} ${WORKSPACE_ROOT_SENTENCE} ${LOCATORS_SENTENCE} ${LEGACY_ARGV_SENTENCE} For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. ${CONTRACT_SOURCE_SENTENCE} Fixture text is never reported as real generated context.`,
+    `Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. ${INPUT_ARMS_SENTENCE} ${WORKSPACE_ROOT_SENTENCE} ${LOCATORS_SENTENCE} ${LEGACY_ARGV_SENTENCE} For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. ${CONTRACT_SOURCE_SENTENCE} ${DENO_PROVISIONING_SENTENCE} Fixture text is never reported as real generated context.`,
   "Beads provider":
     "Beads retains readiness, formulas and logical task dependencies. Workbench may inspect supported scopes and surface linked work; it does not store an authoritative second readiness DAG. No assumed stable Beads SDK if only other integration contracts are available.",
   "Agent provider": `Use Claude Agent SDK for workflow agent(). Role-specific tool catalogs may include restricted Forge/HX/Furnace/RF actions through the provider edges, not a universal all-tools conversion. Native Claude SDK hooks/session records remain first-class. ${AGENT_OBSERVATION_SENTENCE}`,
@@ -705,6 +724,34 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     halves: whole([pin("provider-envelope-audit", "SCG-R3: the legacy argv is byte-identical to the measured 0.1.583 form", [ARMS_SUITE])]),
   },
   {
+    // wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2): the lock-pinned-engine half is the tier wiring cases of the rf-tsx tier test, the
+    // no-lane-install half the lane census of the provisioning test; each binds the describe its cases share (REPORT ANCHOR).
+    row: "R10",
+    section: "ReactiveFiberCLI provider",
+    source: "docs",
+    quote: DENO_PROVISIONING_SENTENCE,
+    halves: [
+      gate("lock-pinned-engine", [
+        pin("rf-tsx-tier", "a provisioned run passes the success row, whose engine line records the resolved deno, its realpath and its sha256 equal to the pin the render reports, beside the four-field receipt line", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno symlinked to a version manager's binary (the mise shim form) fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno that is a #! script fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "no deno on the success row's PATH fails it typed rf_tsx_deno_unresolved before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno whose sha256 differs from the pin the render reports fails the success row typed rf_tsx_deno_mismatch and prints no success receipt", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a render that reports no sha256 pin for the host (contract_fingerprint unknown) fails the success row typed rf_tsx_deno_unpinned", [DENO_IDENTITY_SUITE]),
+      ]),
+      gate("no-lane-install", [
+        pin(
+          "rf-tsx-deno-provisioning",
+          "the walk reads forge.toml, package.json, the root vitest configs and the .github, .agents, .pi, .codex, src, test and qa trees above their floors, this file, the helper and the tier among them",
+          [DENO_LANE_SUITE],
+        ),
+        pin("rf-tsx-deno-provisioning", "no walked file carries a Deno install command: 0 hits of the six shapes, this file and the helper judged with the rest", [DENO_LANE_SUITE]),
+        pin("rf-tsx-deno-provisioning", "each shape reads its planted control and only that shape, and the quiet lines read nothing", [DENO_LANE_SUITE]),
+        pin("rf-tsx-deno-provisioning", "a planted install line in a lane file reds the census, naming the file, the line and the shape", [DENO_LANE_SUITE]),
+      ]),
+    ],
+  },
+  {
     row: "B1",
     section: "Beads provider",
     source: "docs",
@@ -780,7 +827,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["W1", "F1", "F2", "F3", "F4", "F5", "F6", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "A1", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["W1", "F1", "F2", "F3", "F4", "F5", "F6", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "B1", "B2", "A1", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
 const UNPINNED_HALVES: readonly string[] = ["F3/whole", "F6/other-captions", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
@@ -881,6 +928,8 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "R8/both-hosts:3",
   "R8/documented-channel:1",
   "R9/whole:1",
+  "R10/lock-pinned-engine:6",
+  "R10/no-lane-install:4",
   "B1/whole:2",
   "B2/whole:2",
   "A1/claude-snapshots-only:1",
@@ -947,6 +996,21 @@ const FROZEN_R5_BINDING: readonly string[] = [
   "drift-wiring | test | test/workbench-rf-release-drift.test.ts | SCG-R12 frozen live row source shape (not a live-run claim) | R12-12 a missing workspace guard, renamed row, or commented string cannot satisfy the frozen AST",
   "drift-native | native-read | test/workbench-native-rf-preview.test.ts |  | SCG-R12 live drift guard: the installed rf version and the preview cli_version equal the release recorded in the contractSource carrier",
 ];
+/** wb-70xe (rule 16): row R10's quote and binding as literals, never derived from TABLE, in FROZEN_R5_BINDING's form. */
+const FROZEN_R10_QUOTE =
+  "The operator provisions Deno per RFCLI ruling A4 at the exact version and binary sha256 the installed rf's integrations/tsx/runtime-lock.json pins, and no Pi lane installs it: the rf-preview-tsx tier refuses, before rf runs, a deno that PATH resolves to a version-manager shim (a symlink to a binary of another name, a file in a shims directory or a #! script), refuses a deno whose sha256 differs from the pin the render reports, and records the deno it held to that pin (its PATH-resolved path, realpath and sha256) on one RF-TSX-ENGINE line beside the R9 receipt rows.";
+const FROZEN_R10_BINDING: readonly string[] = [
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run passes the success row, whose engine line records the resolved deno, its realpath and its sha256 equal to the pin the render reports, beside the four-field receipt line",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno symlinked to a version manager's binary (the mise shim form) fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a #! script fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | no deno on the success row's PATH fails it typed rf_tsx_deno_unresolved before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno whose sha256 differs from the pin the render reports fails the success row typed rf_tsx_deno_mismatch and prints no success receipt",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a render that reports no sha256 pin for the host (contract_fingerprint unknown) fails the success row typed rf_tsx_deno_unpinned",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | the walk reads forge.toml, package.json, the root vitest configs and the .github, .agents, .pi, .codex, src, test and qa trees above their floors, this file, the helper and the tier among them",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | no walked file carries a Deno install command: 0 hits of the six shapes, this file and the helper judged with the rest",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | each shape reads its planted control and only that shape, and the quiet lines read nothing",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | a planted install line in a lane file reds the census, naming the file, the line and the shape",
+];
 /**
  * wb-973.17 (rule 16 anchor): the one sentence of the live RF paragraph no row binds - a posture sentence (use the public
  * APIs, present the interop honestly) that states no adapter rule a case can falsify; R3 binds the falsifiable sentence
@@ -957,10 +1021,10 @@ const RF_UNBOUND_SENTENCES: readonly string[] = ["Use actual public render/conte
 const sentencesOf = (text: string): string[] => text.split(/(?<=\.) (?=[A-Z])/u);
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the thirty-two frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the thirty-three frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(32);
+    expect(TABLE).toHaveLength(33);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
@@ -1010,6 +1074,18 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
     expect(row.quote).toBe(FROZEN_R5_QUOTE);
     expect(row.halves.map(half => `${half.id}:${half.tier}:${half.reason ?? "pinned"}`)).toEqual(["recorded-release:default-gate:pinned", "drift-wiring:default-gate:pinned", "drift-native:native-read:pinned"]);
     expect(row.halves.flatMap(half => half.pins.map(entry => [half.id, tierCommand(half.tier), entry.file, (entry.suite ?? []).join(" > "), entry.title].join(" | ")))).toEqual(FROZEN_R5_BINDING);
+  });
+
+  it("AC1 (wb-70xe): row R10 quotes the Deno provisioning sentence whole, between the contractSource and fixture sentences, and binds its lock-pinned-engine and no-lane-install halves by file, describe path, verbatim title and tier, frozen as literals", () => {
+    const row = TABLE.find(candidate => candidate.row === "R10");
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe("ReactiveFiberCLI provider");
+    expect(row.source).toBe("docs");
+    expect(row.quote).toBe(FROZEN_R10_QUOTE);
+    expect(row.halves.map(half => `${half.id}:${half.tier}:${half.reason ?? "pinned"}`)).toEqual(["lock-pinned-engine:default-gate:pinned", "no-lane-install:default-gate:pinned"]);
+    expect(row.halves.flatMap(half => half.pins.map(entry => [half.id, tierCommand(half.tier), entry.file, (entry.suite ?? []).join(" > "), entry.title].join(" | ")))).toEqual(FROZEN_R10_BINDING);
+    expect((SECTION_MARKDOWN["ReactiveFiberCLI provider"] ?? "").split(`${CONTRACT_SOURCE_SENTENCE} ${row.quote} Fixture text is never reported`)).toHaveLength(2);
   });
 
   it("AC1 (wb-kku9.1): rows H3 and A1 quote the observation-class sentences whole, each its paragraph's last sentence, and bind every clause to the observation-class census by file and verbatim title, frozen as literals", () => {
@@ -1343,6 +1419,43 @@ describe("wb-973.20 row R5 drift anchors outside the census literals (gate F3 dr
       .map(test => `${DRIFT_FILE} | ${test.ancestorTitles.join(" > ")} | ${test.title}`);
     expect(collected.length, "the frozen-shape describe collects its cases in the gate's own report").toBeGreaterThan(0);
     expect(halfOf("drift-wiring")?.pins.map(pinLine)).toEqual(collected);
+  });
+});
+
+/**
+ * wb-70xe (rule 16 CT5/CT6): row R10's halves anchored OUTSIDE this file's literals. The helper's DENO_CASE_SUITES
+ * (test/helpers/rf-tsx-deno.ts) names each describe the wb-70xe cases are registered under and its file, and both test files
+ * register under those names; R10 must hold one half per entry, and each half must equal exactly the cases the gate's own
+ * report collects under that describe in that file, in report order. So a pin, or a whole half, removed from TABLE and from
+ * FROZEN_R10_BINDING and FROZEN_JUDGED_SHAPE together, or swapped for a passing case of another describe, reds here.
+ */
+describe("wb-70xe row R10 report anchor: each half binds exactly the cases the gate's own report collects under its describe", () => {
+  const halvesOf = (): readonly Half[] => TABLE.find(row => row.row === "R10")?.halves ?? [];
+  const collectedUnder = (file: string, suite: string): string[] => {
+    const parsed: unknown = JSON.parse(readFileSync(REPORT, "utf8"));
+    if (!isReportJson(parsed)) throw new Error(`${DEFAULT_TIER_REPORT} does not have vitest's JSON reporter shape`);
+    const modules = parsed.testResults.filter(entry => entry.name.endsWith(file));
+    expect(modules, `the gate's own report holds ${file} once`).toHaveLength(1);
+    return (modules[0]?.assertionResults ?? []).filter(test => JSON.stringify(test.ancestorTitles) === JSON.stringify([suite])).map(test => `${file} | ${suite} | ${test.title}`);
+  };
+
+  it("R10 holds one half per describe the helper names, each binding only that describe's file and path", () => {
+    expect(DENO_CASE_SUITES.map(entry => entry.suite)).toEqual([DENO_IDENTITY_SUITE, DENO_LANE_SUITE]);
+    const owners = DENO_CASE_SUITES.map(entry => halvesOf().filter(half => half.pins.length > 0 && half.pins.every(pinned => pinned.file === entry.file && JSON.stringify(pinned.suite) === JSON.stringify([entry.suite]))).map(half => half.id));
+    expect(owners).toEqual([["lock-pinned-engine"], ["no-lane-install"]]);
+    expect(halvesOf()).toHaveLength(DENO_CASE_SUITES.length);
+  });
+
+  it("each R10 half equals the cases the gate's own report collects under its describe, in report order, never a passing case of another describe", () => {
+    let checked = 0;
+    for (const entry of DENO_CASE_SUITES) {
+      const collected = collectedUnder(entry.file, entry.suite);
+      expect(collected.length, `${entry.suite} collects its cases in the gate's own report`).toBeGreaterThan(0);
+      const half = halvesOf().find(candidate => candidate.pins.some(pinned => pinned.file === entry.file));
+      expect(half?.pins.map(pinLine), entry.suite).toEqual(collected);
+      checked += 1;
+    }
+    expect(checked).toBe(2);
   });
 });
 
