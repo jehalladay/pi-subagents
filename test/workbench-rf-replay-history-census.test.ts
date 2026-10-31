@@ -44,7 +44,8 @@
  *    tagged places - inside $(...) and ${...} none of them closes it (R-NESTED-QUOTING and R-OVER-READ name forms whose end the
  *    reader misplaces; no other form or place is claimed) -
  *    and a backquoted command ends at its first backquote that no backslash escapes, at the TERMINAL FORM's BACKQUOTE places
- *    (wb-kls1, the wb-3l7x gate's F4).
+ *    (wb-kls1, the wb-3l7x gate's F4). Every reading this paragraph names is claimed over exactly the A2 control texts
+ *    (READER SCOPE below).
  *    Beside that reading A2 keeps the landed one verbatim (landing 372: the literal through a const bound to a literal or a
  *    template's text to its first span that is no literal, and the text's first whitespace word that is no NAME=value), so the
  *    cut only adds kills to the landed census (wb-3l7x U1). Controls: bare, aliased, namespace, method, template, path and const
@@ -87,7 +88,15 @@
  *    after head text; and, in the shell reading beside them, a backslash-escaped backquote right after a backquoted command's
  *    opening backquote and an escaped backslash glued to a word right before its closing one, a parameter expansion and a
  *    backquoted command each holding a double-quoted string inside a double-quoted env value, and a comment starting a later
- *    word; A3 no string or template
+ *    word; and one kill per reader mutant the wb-2mv7 gate's second refusal left surviving with a divergence (wb-2mv7 cut #3,
+ *    its U1-U3, F4 and F5 members, each its PREP twin): inside $(...) and inside ${...} a backslash-escaped double quote right
+ *    before a double-quoted string's closing quote, and inside $(...) two of them and one after a letter, a double-quoted
+ *    string holding an escaped backslash and an empty one; a nested command substitution that is empty, opens on a quoted
+ *    string or on a backslash escape, holds an arithmetic expansion or nests three deep, and a bare subshell pair opening on a
+ *    quoted string or on a backslash escape; a backslash-escaped closing parenthesis and a single-quoted string holding one,
+ *    three deep and glued to a word; a template span that is a conditional whose false branch is a conditional, alone and
+ *    before a second span; and a comment glued to the word after its #, at the line's start and after a prefix word; A3 no
+ *    string or template
  *    literal of any src module
  *    spells an rf replay verb (a template read with its literal and const spans folded in), no array literal or argument list
  *    has "context" before "replay" (a flag between them, a module-local const resolved), and no literal of an rf launch module
@@ -130,38 +139,58 @@
  * federation export, so the exported owner identity it would carry is held to the identities it already reads: the workspace id
  * and root, the operation id and the refusal's source_id (B3, B4, C3).
  * TERMINAL FORM (wb-2mv7: the R694 follow-up of the wb-9heo gate's F1, filed in the R739 enumerate-the-resolvable form at hop 7
- * of the landing-275 chain; cut #2 cures the wb-2mv7 gate's U1-U6): A2's expansion and span readings, and the operands and
- * branches A2 reads, are claimed over exactly the sub-forms below, each at exactly the places tagged beside the A2 kill
- * control(s) in its brackets, and over no other sub-form, place or depth, so a reader change confined to an unlisted sub-form
- * or place contradicts no claim of this census; forms the reader is known to misread are R-NESTED-QUOTING (no site where bash
- * runs rf) and R-OVER-READ (a site where bash runs none).
+ * of the landing-275 chain; cut #2 cures the wb-2mv7 gate's U1-U6; cut #3, the enumerate-the-resolvable cut of the R514/R515
+ * class frozen under rule 19(c), cures that gate's second-refusal U1-U3 and F4 and pins its F5 members): A2's expansion,
+ * backquote and span readings, and the operands and branches A2 reads, are claimed over exactly the texts of the A2 kill
+ * controls bracketed below - each control's whole text, read at its pinned count (the roster's A2 controls) - and over no
+ * other text. Each entry's words name the sub-form and the place its controls hold; any other spelling of that sub-form
+ * (other characters before, inside or after it, another content, opening character or depth of a nested pair, another place
+ * or another span shape) is NOT CLAIMED by this census, so a reader change that alters no control's count contradicts no
+ * claim of this census; forms the reader is known to misread are R-NESTED-QUOTING (no site where bash runs rf) and
+ * R-OVER-READ (a site where bash runs none).
  * PLACES (where a control puts its sub-form): SPACED right after a space, GLUED right after a word's character, OPERATOR
  * right after the ${...} expansion's :- operator, FIRST right after the opener ($( or a backquote), each directly inside the
  * expansion; NESTED-SPACED and NESTED-OPERATOR the same places inside a pair nested directly in the expansion
- * (`$(echo $(echo X) x)`, `${A:-${B:-X} x}`). Nesting is claimed two levels deep at most, and no ${...} sub-form is claimed
- * FIRST: bash refuses a ${ followed by a backslash or a quote as a bad substitution (R-OVER-READ).
+ * (`$(echo $(echo X) x)`, `${A:-${B:-X} x}`), and TWICE-NESTED-SPACED the same place inside a pair nested in that one
+ * (`$(echo $(echo $(echo X)) x)`). Nesting is claimed at the depths its controls spell, three levels at most, and no ${...}
+ * sub-form is claimed FIRST: bash refuses a ${ followed by a backslash or a quote as a bad substitution (R-OVER-READ).
  * EXPANSION: an empty substitution ends at its closing parenthesis [FIRST: shellSubstitutedEmpty, a word break in a later
  * substitution, since the kept landed reading masks the unbroken form], and none of these closes the expansion - a nested
- * pair: inside $(...) a command substitution [SPACED: shellSubstitutedNested] and one inside it [NESTED-SPACED:
- * shellSubstitutedTwoDeep], a bare subshell pair [SPACED: shellSubshellPair], the arithmetic expansion's second parenthesis
- * [FIRST: shellArithmeticSpaced] and a grouping pair inside it [NESTED-SPACED: shellArithmeticGrouped]; inside ${...} a
+ * pair: inside $(...) a command substitution [SPACED: shellSubstitutedNested; shellSubstitutedNestedEmpty (empty), the
+ * wb-2mv7 gate's second-refusal MX01; shellSubstitutedNestedDoubleQuoted, shellSubstitutedNestedSingleQuoted and
+ * shellSubstitutedNestedSingleQuotedClose (opening on a quoted string), its MX02; shellSubstitutedNestedEscaped and
+ * shellSubstitutedNestedEscapedClose (opening on a backslash escape), its MX04; shellSubstitutedNestedArithmetic (holding an
+ * arithmetic expansion), its MX03], one inside it [NESTED-SPACED: shellSubstitutedTwoDeep; shellSubstitutedTwoDeepEmpty
+ * (empty), its MX01] and one inside that [TWICE-NESTED-SPACED: shellSubstitutedThreeDeep, its MX06], a bare subshell pair
+ * [SPACED: shellSubshellPair; shellSubshellPairDoubleQuoted (opening on a quoted string), its MX02; shellSubshellPairEscaped
+ * (opening on a backslash escape), its MX04], the arithmetic expansion's second parenthesis [FIRST: shellArithmeticSpaced]
+ * and a grouping pair inside it [NESTED-SPACED: shellArithmeticGrouped]; inside ${...} a
  * parameter expansion [OPERATOR: shellExpandedNested] and one inside it [NESTED-OPERATOR: shellExpandedTwoDeep] (a bare
- * {...} pair inside ${...} is R-OVER-READ); a backslash-escaped closing bracket [SPACED: shellSubstitutedEscaped; OPERATOR:
- * shellExpandedEscapedClose; FIRST: shellSubstitutedEscapedFirst, the wb-2mv7 gate's GX16; NESTED-SPACED:
- * shellSubstitutedEscapedNested, its GX17; NESTED-OPERATOR: shellExpandedEscapedNested], opening bracket [SPACED:
+ * {...} pair inside ${...} is R-OVER-READ); a backslash-escaped closing bracket [SPACED: shellSubstitutedEscaped; GLUED:
+ * shellSubstitutedGluedEscaped, the wb-2mv7 gate's second-refusal MX13; OPERATOR: shellExpandedEscapedClose; FIRST:
+ * shellSubstitutedEscapedFirst, the wb-2mv7 gate's GX16; NESTED-SPACED: shellSubstitutedEscapedNested, its GX17;
+ * TWICE-NESTED-SPACED: shellSubstitutedEscapedThreeDeep, its second-refusal MX09; NESTED-OPERATOR:
+ * shellExpandedEscapedNested], opening bracket [SPACED:
  * shellSubstitutedEscapedOpen; OPERATOR: shellExpandedEscapedOpen], single quote [SPACED: shellSubstitutedEscapedSingleQuote;
  * OPERATOR: shellExpandedEscapedSingleQuote] or double quote [SPACED: shellSubstitutedEscapedDoubleQuote; OPERATOR:
  * shellExpandedEscapedDoubleQuote]; an escaped backslash right before the closing bracket [SPACED:
  * shellSubstitutedEscapedBackslash, shellExpandedEscapedBackslash]; a single-quoted string ('...', not $'...') holding the
- * closing bracket [SPACED: shellSubstitutedQuoted; OPERATOR: shellExpandedSingleQuotedClose; FIRST:
- * shellSubstitutedSingleQuotedFirst, the wb-2mv7 gate's GX28; NESTED-SPACED: shellSubstitutedSingleQuotedNested, its GX27;
- * NESTED-OPERATOR: shellExpandedSingleQuotedNested] or a backslash, which it keeps literal [SPACED:
+ * closing bracket [SPACED: shellSubstitutedQuoted; GLUED: shellSubstitutedGluedSingleQuoted, the wb-2mv7 gate's
+ * second-refusal MX14; OPERATOR: shellExpandedSingleQuotedClose; FIRST: shellSubstitutedSingleQuotedFirst, the wb-2mv7
+ * gate's GX28; NESTED-SPACED: shellSubstitutedSingleQuotedNested, its GX27; TWICE-NESTED-SPACED:
+ * shellSubstitutedSingleQuotedThreeDeep, its second-refusal MX10; NESTED-OPERATOR: shellExpandedSingleQuotedNested] or a
+ * backslash, which it keeps literal [SPACED:
  * shellSubstitutedSingleQuotedBackslash; OPERATOR: shellExpandedSingleQuotedBackslash, the wb-9heo gate's G19]; a
  * double-quoted string with no expansion inside it holding the closing bracket [SPACED: shellSubstitutedQuoted; OPERATOR:
  * shellExpandedQuotedClose; FIRST: shellSubstitutedDoubleQuotedFirst; NESTED-SPACED: shellSubstitutedDoubleQuotedNested;
- * NESTED-OPERATOR: shellExpandedDoubleQuotedNested] or a backslash-escaped double quote [SPACED: shellSubstitutedQuoted;
- * OPERATOR: shellExpandedQuotedEscapedQuote, the wb-9heo gate's G20]. The nesting pairs are the wb-2mv7 gate's U1-U2 twins
- * (GX01, GX02, GX04, GX05) and the bare-brace over-read its U3 (GX03).
+ * NESTED-OPERATOR: shellExpandedDoubleQuotedNested], a backslash-escaped double quote [SPACED: shellSubstitutedQuoted, one
+ * character between it and the closing quote; shellSubstitutedQuotedEscapedQuoteClosing, right before the closing quote,
+ * the wb-2mv7 gate's second-refusal MQ01; shellSubstitutedQuotedEscapedQuotePair, two of them;
+ * shellSubstitutedQuotedEscapedQuoteAfterLetter, one after a letter; OPERATOR: shellExpandedQuotedEscapedQuote, the wb-9heo
+ * gate's G20; shellExpandedQuotedEscapedQuoteClosing, right before the closing quote], an escaped backslash [SPACED:
+ * shellSubstitutedQuotedEscapedBackslash, its MQ02] or nothing [SPACED: shellSubstitutedQuotedEmpty, its MQ03]. The nesting
+ * pairs are the wb-2mv7 gate's U1-U2 twins (GX01, GX02, GX04, GX05) and its second refusal's U2-U3 twins (MX01, MX02, MX04),
+ * and the bare-brace over-read its U3 (GX03).
  * BACKQUOTE: a backquoted command ends at its first backquote that no backslash escapes - a backslash-escaped backquote
  * [SPACED, then GLUED: shellBackquotedEscaped; FIRST: shellBackquotedEscapedFirst] and an escaped backslash right before the
  * closing backquote [SPACED: shellBackquotedEscapedBackslash; GLUED: shellBackquotedGluedEscapedBackslash] never end it.
@@ -171,7 +200,9 @@
  * letTemplateLiteralSpanPrefix, the wb-9heo gate's G25]; a const bound to a fallback naming the program [read: constSpan]; a
  * let bound to a literal [read and folded: letSpanPrefix]; a conditional of two string literals, each branch [both naming rf:
  * conditionalSpan; the true branch read and folded: conditionalSpanTruePrefix; the false branch read: conditionalSpanFalse,
- * the wb-9heo gate's G21, read and folded: conditionalSpanFalsePrefix]; a ?? or a || fallback of one string literal and one
+ * the wb-9heo gate's G21, read and folded: conditionalSpanFalsePrefix]; a conditional whose false branch is a conditional of
+ * two string literals, its last reading naming rf [read: conditionalSpanNested, the wb-2mv7 gate's second-refusal MS04]; a ??
+ * or a || fallback of one string literal and one
  * non-literal, the literal on either side [?? right read: coalesceSpan, read and folded: coalesceSpanRightPrefix; ?? left
  * read: coalesceSpanLeft, the wb-9heo gate's G23, read and folded: coalesceSpanLeftPrefix; || right read: orSpan, read and
  * folded: orSpanRightPrefix; || left read: orSpanLeft, the wb-9heo gate's G24, read and folded: orSpanLeftPrefix]; a
@@ -179,14 +210,20 @@
  * [read and folded: letSpanAfterHead]. TWO SPANS (exactly two, each as its control spells it; three or more spans are not
  * claimed): every reading of the first span reads on past the second, a string literal folded in whole, the first a
  * conditional of two string literals with the program's prefix in either branch [spanTwoConditionalFalse, the wb-2mv7 gate's
- * GS06; spanTwoConditionalTrue] or a let bound to one [letSpanTwoConditional]; every reading of the second, a conditional of
- * two string literals with the prefix in either branch, folds in after a string-literal first span
+ * GS06; spanTwoConditionalTrue], a let bound to one [letSpanTwoConditional] or a conditional whose false branch is one, the
+ * prefix in its last reading [spanTwoConditionalNested, its second-refusal MS05]; every reading of the second, a conditional
+ * of two string literals with the prefix in either branch, folds in after a string-literal first span
  * [spanSecondConditionalFalse; spanSecondConditionalTrue]; and a reading the first span cuts (a concatenation's leading
  * piece) is kept past the second, a non-literal one [spanCutThenUnreadable, the wb-2mv7 gate's GS07] or a string literal
  * [spanCutThenLiteral].
  * ARGUMENT (outside a span, each read through a binding; the kept landed reading masks the argument forms): either operand of ??
  * [letCoalesceLeft; constFallback] and of || [letOrLeft; letOrRight], and either branch of a conditional [letConditionalTrue;
  * letConditionalFalse].
+ * READER SCOPE (cut #3: the TERMINAL FORM's bound, held for the rest of A2): every other sentence of this file that says how
+ * A2 reads a launch argument or a shell line - the A2 paragraph above (its binding, argument, span, quoting, opener, prefix,
+ * operator, comment and raw-path readings), the reader functions' docstrings and the A2 control comments - claims exactly
+ * the readings of the A2 control texts it describes, each at its pinned count, and no text that no control holds; a spelling
+ * of a described form that no control holds is NOT CLAIMED by this census.
  * RESIDUALS (named, each with a pinned quiet row): R-WITHHELD the native typed refusal and the adapter's projection carry the code
  * and withhold source_id with the producer's message and hint (quiet rows B2 and B4: no value named, sentinel invariance), so the
  * source_id rides only the registered reading (B3); R-COMPOSED a program name, verb, port name or label that no literal of its
@@ -567,7 +604,8 @@ interface LaunchReading {
  * initializer (wb-3l7x F1 and its PREP F2: every declaration of the name, a cycle reading nothing), through parentheses, a type
  * assertion or a non-null mark, either operand of ?? and ||, either branch of a conditional, the leftmost literal piece of a
  * concatenation and a template's leading text, each span folded while it reads whole, so a shell line composed after its first
- * word (`"rf context show " + id`) still names its program (what A2 claims of the span reading is the TERMINAL FORM's SPAN list). */
+ * word (`"rf context show " + id`) still names its program (what A2 claims of the span reading is the TERMINAL FORM's SPAN list,
+ * and of every reading here exactly its controls' texts: READER SCOPE). */
 function launchReadingsOf(node: ts.Expression | undefined, initializers: ReadonlyMap<string, readonly ts.Expression[]>, resolving: ReadonlySet<string> = new Set()): LaunchReading[] {
   if (node === undefined) return [];
   if (ts.isStringLiteralLike(node)) return [{ text: node.text, whole: true }];
@@ -605,7 +643,8 @@ function launchReadingsOf(node: ts.Expression | undefined, initializers: Readonl
  * the word it sits in, so `RF_HOME=$(pwd) rf ...` assigns before its program). Inside $(...) and ${...} every opening bracket of
  * its own kind that no quoted string (quotedEnd) or backslash escape hides nests - a bare {...} inside ${...} too, which bash does
  * not nest (R-OVER-READ) - and a quoted string and a backslash escape never close it (what A2 claims of this reading is the
- * TERMINAL FORM's EXPANSION list at its tagged places, no more); a backquoted command ends at its next backquote that
+ * TERMINAL FORM's EXPANSION and BACKQUOTE lists, each entry exactly its controls' texts, no more); a backquoted command ends
+ * at its next backquote that
  * no backslash escapes (wb-kls1, the wb-3l7x gate's F4: an env value holding a backquoted command with an escaped backquote inside,
  * the gate's G22-O08, still prefixes its program); an unclosed expansion runs to the end of the text. */
 function expansionEnd(text: string, at: number): number {
@@ -632,7 +671,8 @@ function expansionEnd(text: string, at: number): number {
   return Math.min(end, text.length);
 }
 /** The index just past the quoted string that opens at `at`: a single-quoted string ends at its next single quote, a double-quoted
- * one at its next double quote that no backslash escapes; an unclosed quote runs to the end of the text. */
+ * one at its next double quote that no backslash escapes; an unclosed quote runs to the end of the text (what A2 claims of it is
+ * the TERMINAL FORM's quoted-string entries, exactly their controls' texts: READER SCOPE). */
 function quotedEnd(text: string, at: number): number {
   const quote = text.charAt(at);
   let end = at + 1;
@@ -647,7 +687,9 @@ interface ShellToken {
 /** A shell line's tokens with its quoting removed (wb-3l7x F2): single quotes, double quotes (inside them a backslash escapes $, `,
  * ", \ and a newline), their $-prefixed forms ($'...' and $"...") and a backslash outside them (a backslash-newline joins the
  * lines); every unquoted operator is a token of its own and ends the word before it, and a # that starts a word comments out the
- * rest of its line. An expansion (expansionEnd), quoted or not, is kept verbatim inside its word (wb-3l7x U1). */
+ * rest of its line (at the line's start or after a prefix word, spaced from the word after it or glued to it: the comment
+ * controls). An expansion (expansionEnd), quoted or not, is kept verbatim inside its word (wb-3l7x U1). What A2 claims of this
+ * reading is exactly its controls' texts (READER SCOPE in the header). */
 function shellTokens(text: string): ShellToken[] {
   const tokens: ShellToken[] = [];
   let at = 0;
@@ -1371,12 +1413,53 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       // wb-2mv7 cut #2, this seat's battery beside the gate's members (the shell reading's own claims): a backslash-escaped
       // backquote right after a backquoted command's opening backquote and an escaped backslash glued to a word right before its
       // closing one never end it; a parameter expansion and a backquoted command, each holding a double-quoted string inside a
-      // double-quoted env value, stay inside the word; and a # starting a later word comments out the rest of its line.
+      // double-quoted env value, stay inside the word; and a # starting a later word, spaced from the word after it, comments
+      // out the rest of its line (the glued forms are cut #3's shellCommentGlued and shellCommentGluedAfterPrefix).
       shellBackquotedEscapedFirst: control('execSync("A=`\\\\`echo x\\\\`` rf --json status");'),
       shellBackquotedGluedEscapedBackslash: control('execSync("A=`echo x\\\\\\\\` rf --json status");'),
       shellQuotedExpansion: control(['execSync("RF_HOME=\\"$', '{A:-\\"a b\\"}\\" rf --json status");'].join("")),
       shellQuotedBackquotedQuote: control('execSync("RF_HOME=\\"`echo \\"a b\\"`\\" rf --json status");'),
       shellCommentAfterPrefix: control('execSync("RF_HOME=/w # x\\nrf --json status");'),
+      // wb-2mv7 cut #3 (refusal #2's U1-U3, F4 and F5 members; the R514/R515 class frozen under rule 19(c); the header's
+      // TERMINAL FORM brackets each control): one kill control per reader mutant that gate left surviving with a divergence,
+      // each its PREP twin verbatim, and bash runs rf after every one (measured). Inside $(...) and inside ${...} a
+      // double-quoted string whose backslash-escaped double quote sits right before its closing quote, and inside $(...) two
+      // such quotes and one after a letter (MQ01); an empty command substitution nested in $(...) and one nested in that
+      // (MX01); a nested command substitution opening on a single-quoted string that holds the closing parenthesis, on a
+      // double-quoted and on a single-quoted string, and a bare subshell pair opening on a double-quoted string (MX02); a
+      // nested command substitution opening on a backslash that escapes the closing parenthesis or a letter, and a bare
+      // subshell pair opening on a backslash-escaped letter (MX04); a # glued to the word after it, at the line's start and
+      // after a prefix word (F4, MT01); and the F5 members: an arithmetic expansion nested in $(...) (MX03), a command
+      // substitution nested three deep (MX06) and, inside it, a backslash-escaped closing parenthesis (MX09) and a
+      // single-quoted string holding one (MX10), a backslash-escaped closing parenthesis and a single-quoted string holding
+      // one, each glued to a word (MX13, MX14), a double-quoted string holding an escaped backslash and an empty one (MQ02,
+      // MQ03), and a template span that is a conditional nested in a conditional's false branch, alone and before a second
+      // string-literal span (MS04, MS05).
+      shellSubstitutedQuotedEscapedQuoteClosing: control(`execSync('RF_HOME=$(echo "\\\\"" x) rf --json status');`),
+      shellExpandedQuotedEscapedQuoteClosing: control(["execSync('RF_HOME=$", `{A:-"\\\\"" x} rf --json status');`].join("")),
+      shellSubstitutedQuotedEscapedQuotePair: control(`execSync('RF_HOME=$(echo "\\\\"\\\\"" x) rf --json status');`),
+      shellSubstitutedQuotedEscapedQuoteAfterLetter: control(`execSync('RF_HOME=$(echo "a\\\\"" x) rf --json status');`),
+      shellSubstitutedNestedEmpty: control('execSync("RF_HOME=$(echo $() x) rf --json status");'),
+      shellSubstitutedTwoDeepEmpty: control('execSync("RF_HOME=$(echo $(echo $()) x) rf --json status");'),
+      shellSubstitutedNestedSingleQuotedClose: control(`execSync("RF_HOME=$(echo $(')' x) y) rf --json status");`),
+      shellSubstitutedNestedDoubleQuoted: control(`execSync('RF_HOME=$(echo $("pwd") x) rf --json status');`),
+      shellSubshellPairDoubleQuoted: control(`execSync('RF_HOME=$( ("echo" x) ; echo y) rf --json status');`),
+      shellSubstitutedNestedSingleQuoted: control(`execSync("RF_HOME=$(echo $('pwd') x) rf --json status");`),
+      shellSubstitutedNestedEscapedClose: control('execSync("RF_HOME=$(echo $(\\\\) x) y) rf --json status");'),
+      shellSubshellPairEscaped: control('execSync("RF_HOME=$( (\\\\echo x) ; echo y) rf --json status");'),
+      shellSubstitutedNestedEscaped: control('execSync("RF_HOME=$(echo $(\\\\pwd) x) rf --json status");'),
+      shellCommentGlued: control('execSync("#status\\nrf --json status");'),
+      shellCommentGluedAfterPrefix: control('execSync("RF_HOME=/w #x\\nrf --json status");'),
+      shellSubstitutedNestedArithmetic: control('execSync("RF_HOME=$(echo $((1+1)) x) rf --json status");'),
+      shellSubstitutedThreeDeep: control('execSync("RF_HOME=$(echo $(echo $(echo $(pwd))) x) rf --json status");'),
+      shellSubstitutedEscapedThreeDeep: control('execSync("RF_HOME=$(echo $(echo $(echo \\\\))) x) rf --json status");'),
+      shellSubstitutedSingleQuotedThreeDeep: control(`execSync("RF_HOME=$(echo $(echo $(echo ')')) x) rf --json status");`),
+      shellSubstitutedGluedEscaped: control('execSync("RF_HOME=$(echo a\\\\) x) rf --json status");'),
+      shellSubstitutedGluedSingleQuoted: control(`execSync("RF_HOME=$(echo a')' x) rf --json status");`),
+      shellSubstitutedQuotedEscapedBackslash: control(`execSync('RF_HOME=$(echo "\\\\\\\\" x) rf --json status');`),
+      shellSubstitutedQuotedEmpty: control(`execSync('RF_HOME=$(echo "" x) rf --json status');`),
+      conditionalSpanNested: control(['execSync(`$', '{a ? "x" : b ? "y" : "rf"} --json status`);'].join("")),
+      spanTwoConditionalNested: control(['execSync(`$', '{a ? "x" : b ? "y" : "A=1"} $', '{"B=2"} rf --json status`);'].join("")),
       // R-WRAPPED quiet rows: rf behind a wrapper program or after another shell command is no A2 site.
       wrappedShell: control('spawn("sh", ["-c", "rf --json status"]);'),
       wrappedEnv: control('spawn("env", ["rf", "--json", "status"]);'),
