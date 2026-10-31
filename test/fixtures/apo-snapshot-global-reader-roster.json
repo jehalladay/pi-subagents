@@ -1,0 +1,764 @@
+{
+  "rows": [
+    {
+      "id": "F",
+      "label": "the free names: every ADMITTED_FREE name reads quiet and every other free name reds",
+      "pins": [
+        {
+          "id": "V-admitted-free",
+          "digest": "d18328415bd19e988e2b519cf3438c14f5088fcca98564a88bed374e269d1f7b"
+        },
+        {
+          "id": "Z-global-process",
+          "digest": "b076ed876b5a401e78dec377e0820f3c9cd39c691484a8eb968b9f507e236429"
+        },
+        {
+          "id": "Z-global-fetch",
+          "digest": "59eb8ac756eab440cd3893f2440d3ee1485aaf61d9b55bc895e5011ecb5b7de4"
+        },
+        {
+          "id": "Z-global-code",
+          "digest": "8b1f37c3c3b2a284494bb7d012e6d88ca11c85a7edee3885727502a996e34599"
+        },
+        {
+          "id": "Z-global-this",
+          "digest": "ddb6bf91cb40c737cf4f760c1cece593f2d40ccfd8f0803e50e8fe1f69461e7f"
+        },
+        {
+          "id": "Z-global-wrapper",
+          "digest": "59a32a5af82b14be25598f13e6aaf198a9c9302f708ee7b57243594579a1972f"
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the module rules (1)-(3) and the names read: a name binds only through a declaration of its own ES module, never a script's or a declaration file's",
+      "pins": [
+        {
+          "id": "R-shorthand",
+          "digest": "1ce21163d2932d0b44c6ef0173aa78351a5ee4b6fca18034f9de59f1ac901a3f"
+        },
+        {
+          "id": "R-export-local",
+          "digest": "11108f7d1a1b06a299577acc1654eb26abfbebb5e8b14106d71a52e1aafcbfa0"
+        },
+        {
+          "id": "R-ambient",
+          "digest": "9d83dcd602ac89983e55830ee467fd493d37fe88403b4a026d4011ba3c20c727"
+        },
+        {
+          "id": "R-extends",
+          "digest": "13bace507680fb4ed39404d7b375867b9307c94a3596c26db7eeba57c1cf0e6b"
+        },
+        {
+          "id": "R-enum-initializer",
+          "digest": "c51903bb062a1a481da705c2fc38e83929b2f99e08f06d2347fba7cf98a54c54"
+        },
+        {
+          "id": "R-closure-global",
+          "digest": "1e7f4cd4ec694deaeb8e3b06d4e0fd6146e52ad7f3e4afdda51886592671c510"
+        },
+        {
+          "id": "R-global-escaped",
+          "digest": "5bbf7b069746ac8ee0a8d699a5c0d6aeb58fcd6f4a778f0ba75e72cfe811f731"
+        },
+        {
+          "id": "R-script-var",
+          "digest": "3bf8fcfe8e0cf43b17c6b0bfb17a31979c28f638dac64a71c550f3f67deaa2f8"
+        },
+        {
+          "id": "R-script-typed",
+          "digest": "1489814c78a8556157ea20422d658cf3be5f16c69d7409c05f396f9cb4221cbf"
+        },
+        {
+          "id": "R-script-function",
+          "digest": "747ce58056db18ab7106663ff2d5dcae07ac6f22ea214e825d5e95bc456dfd7c"
+        },
+        {
+          "id": "R-script-require",
+          "digest": "540f2846a41ea9f585abe139f560ee0bd3f954ea12a0a15c552436ac5884a33e"
+        },
+        {
+          "id": "R-dts-script",
+          "digest": "568a09f711606f05efff6fd47c3a351133c39c3c5c30a2a08686df03e36a6c2c"
+        },
+        {
+          "id": "R-dts-module",
+          "digest": "6ddeeb7091cd1bcfc13650a02bf6288a3dfd5c016c8c3093abcf9bbc46d7d2ff"
+        },
+        {
+          "id": "R-type-only-value",
+          "digest": "1be8c39e5ec58902df779b64db6a6ea085e20cca821b3f4e39f811bd07770ec5"
+        },
+        {
+          "id": "R-type-only-erased",
+          "digest": "1661bc3554d3b028fb8d33bd815f24fe43897c2d15aee20eb52d5d5d656da3a9"
+        },
+        {
+          "id": "R-non-value-alias",
+          "digest": "0fdc6a25f55357de20781ce6a74ff0f49d350ede239d41f378f7a6c49b3e2080"
+        },
+        {
+          "id": "R-types-erased",
+          "digest": "7098e052dda55b5c5aa3cd99063c5874a61dd23b76aa990b3d9faf88af652634"
+        },
+        {
+          "id": "R-arguments",
+          "digest": "e7ba7c1fbfd9bf67d81cf17bd76897d1c34904a942af78aeea16653946b3fd4d"
+        },
+        {
+          "id": "R-bodiless",
+          "digest": "e77c3a616dda7428454afb7f0d762dd6c079e7e9944704b7e21522c0598d2172"
+        },
+        {
+          "id": "R-const-enum",
+          "digest": "ff7ad5afa23b7024c59264f647aa29b0a02e966d48ea17713f1a8ad55608f5d6"
+        },
+        {
+          "id": "R-not-references",
+          "digest": "a28c18fd9a6221a025b8550ed79a3ca27e1517f8c76138c9980f72e72a6f7806"
+        }
+      ]
+    },
+    {
+      "id": "U",
+      "label": "the binding allowlist (4) and the wrapper names (5): a declaration binds only in a form that emits a run-time binding, alone or merged",
+      "pins": [
+        {
+          "id": "U-GP1",
+          "digest": "49336378631d65ff79aef94d4d02d4c1b6bbdb93e08fa5babe436c0a94c54009"
+        },
+        {
+          "id": "U-GP1L",
+          "digest": "fbbaf55752d830cafd59835af2a0759c00ab29a545a37f122fd3d71cc443048c"
+        },
+        {
+          "id": "U-GP2",
+          "digest": "0d64c44172c1cea1766252bcbc1b6a654319daac059ab4cd9bbce227fc82eb02"
+        },
+        {
+          "id": "U-GP3",
+          "digest": "4a6f71fc642f77b1355ac5b24f066dc7bd22ea78ae1b674f0e22649eccd1230c"
+        },
+        {
+          "id": "U-GP3b",
+          "digest": "e33f08b0113e4a5f3dad4763e35cd30a4df038efef71fa422ba5a9305dbfdf18"
+        },
+        {
+          "id": "U-GP4",
+          "digest": "363f0ee6fd3a96a01ecad7d0e084ff614560135e67c6925a5c07973bd3349472"
+        },
+        {
+          "id": "U-GP4b",
+          "digest": "56dbda516fe78ae3ba5b431e8215ae53b0040dd07781a146a894900312774d6b"
+        },
+        {
+          "id": "U-GP5",
+          "digest": "7d56bf5a6a73fef71ebf0e0e66f9883a8490294b61ccebc2761fc76f560ed9df"
+        },
+        {
+          "id": "U-GP7",
+          "digest": "c787c14995d62bbb994ed15f4111a26c7e81b7237cf70911e759e86e0ccbf500"
+        },
+        {
+          "id": "U-GP8",
+          "digest": "cf477ffa80849d384ef909176e48d335f95b8e4f6100ee1b6dd0eb47276ddad6"
+        },
+        {
+          "id": "U-GP8b",
+          "digest": "ae9437e719cf21f3d762b0727ef858ece4faa248e597aaed3631fe64f2782901"
+        },
+        {
+          "id": "U-GP9",
+          "digest": "f3be8a5d30a8b026de5a4e4b64f19ee5b9146bbb3642b3134e1b47f2b67d7fb1"
+        },
+        {
+          "id": "U-GP10",
+          "digest": "c7cfd9e06494bad8e3d4ea75f1b4b4d9021a8771184984e7676d10a108b44b9d"
+        },
+        {
+          "id": "U-GP11",
+          "digest": "95b04194f4e0a98d0c87d3807c1f4123fd83d2616d79e962ceeb1b511ff3b930"
+        },
+        {
+          "id": "U-GP12",
+          "digest": "0840449588d0eb35359e56aa2bba5dadda2efee41c6520258d26761080095286"
+        },
+        {
+          "id": "U-GP13",
+          "digest": "a98fdd5d6a32db7aa1d68cf6559981695285a231a4c692021f34a2ffd379887f"
+        },
+        {
+          "id": "U-GP14",
+          "digest": "cee01b4d953a0b7fb7bd8b52fd6cbd759b155071d904112cbb4bccdb06417692"
+        },
+        {
+          "id": "U-GP17",
+          "digest": "31f233be33a92f3e7d3d6a71596975b3d035a33e363080c30c1c8b737130b44f"
+        },
+        {
+          "id": "U-GP6",
+          "digest": "9f3678e8ca4ecb389b23366ebfe2cdc807b5761748f866fdd5235496e18c646c"
+        },
+        {
+          "id": "U-GP15",
+          "digest": "1c6c14bd0b98afa4cdf4d8f325a4155f8c2e553ac7eb9e78595f2275fa76064b"
+        },
+        {
+          "id": "U-GP16",
+          "digest": "a8d7e542f67bf40dc8b0356e236d3b75c9e04bfad3f9a76c5dbb6b7d72ec8104"
+        },
+        {
+          "id": "U-GC1",
+          "digest": "78413be41bb65a28c8d0c4734d31e1965d037c50bfe0bfac83031ac58ca85875"
+        },
+        {
+          "id": "U-GC2",
+          "digest": "95b34a6d003845b2e30f5da48877e2d74956b7aeb0b023f0902593c097f2deae"
+        },
+        {
+          "id": "U-GC3",
+          "digest": "c3921e8525788f48edb5666e3b1714cf46e5efd3363af8af6e5b0e5c9fc0c0ec"
+        },
+        {
+          "id": "U-const-enum-companion",
+          "digest": "1b3728c090ae1a7a5b1196eea084bfcfc68947a2e98865904d9476eca4f30c89"
+        },
+        {
+          "id": "U-default-interface",
+          "digest": "f69c627d51c76fa081d0d97b4bf4dbff61b8b9b1db0984989bf28a8ad60e045c"
+        },
+        {
+          "id": "U-ambient-let-type",
+          "digest": "da8914d55c70c446141e0ae526be05cc178dfdcb9bcae140a6e24ff35d166283"
+        },
+        {
+          "id": "U-depth-two",
+          "digest": "1d480fb660afb16695563776d30a5acbb3afb746276bf7edbd85b4f282d91f57"
+        },
+        {
+          "id": "U-ambient-function-interface",
+          "digest": "2f680c871318f03851c88325fd4ee9f1bd797a63106e3741b74617fb0e07444c"
+        },
+        {
+          "id": "U-ambient-class-namespace",
+          "digest": "40bfc3700943199e95dee5e503b46b9c2dd9c0d3e0b0fc5d3dfe8515bd82b0cd"
+        },
+        {
+          "id": "U-ambient-namespace-interface",
+          "digest": "576eb60599a31409d2de276de11fb3c6bd4052b2b77e140f1ba8bf26e515d476"
+        },
+        {
+          "id": "U-string-module",
+          "digest": "f48404e4ef45a08c31a6d50a0933f3a74d48a1424beddf22b982edc0235e7fd1"
+        },
+        {
+          "id": "U-umd-export",
+          "digest": "cf6f26f30eeb355b6410ff6871116ac2b431a19e2b44d40d187eeed93739f580"
+        },
+        {
+          "id": "U-signature-parameters",
+          "digest": "6873280f7c0200ed9d735c8e05f8f2fe71dc0abd9850c3e273ea5a8086501411"
+        },
+        {
+          "id": "U-wrapper-var",
+          "digest": "778dfefe24840e1ab64758298a1619df7c4f0b7f0477a166dd73144ba879f0e3"
+        },
+        {
+          "id": "U-wrapper-forms",
+          "digest": "4384cfefd781de406e573b67179a0e00143c9d0cd7b9936ec8cdc6a319430d9b"
+        },
+        {
+          "id": "U-namespace-unbound",
+          "digest": "4db8b0ff3632dd27cbc159ea20fc883adf824b4c2f82cbe079658bb6c8d0a47d"
+        },
+        {
+          "id": "U-namespace-binds",
+          "digest": "7dd009e5259c01a287df117e3d1eda357cfb1be710c23484b49343103152c25a"
+        },
+        {
+          "id": "U-binds-values",
+          "digest": "2da8c59db4a4cab2bf4828b19524ac5b0e07c2271b0ffb5a5e2c70797c7316bf"
+        },
+        {
+          "id": "U-binds-merged",
+          "digest": "a2e4a585eedf4d00d33d55bd33b7857ecbe8fc6aa3599f8749c4fa3f6e8bc7e3"
+        },
+        {
+          "id": "U-binds-members",
+          "digest": "862cdfc54f8de37142766cc61026ac47be926695eeedba06c6a16474fd392cf7"
+        }
+      ]
+    },
+    {
+      "id": "NS",
+      "label": "namespace blocks (6): a member a namespace body declares binds only a reference inside that body",
+      "pins": [
+        {
+          "id": "U-NS1",
+          "digest": "6046976f8a897b613c52753de9ee3f81b3cf0a711d0d17bc9d08b126f351e363"
+        },
+        {
+          "id": "U-NS1L",
+          "digest": "42e65af040cfbd40772e94fbf581a556bcc30763cabe0eb9eecc731d9378c0a6"
+        },
+        {
+          "id": "U-NS2",
+          "digest": "c7dad77efc30527979339226bd4872ec5a89dd4d078e70c09acba121eea93893"
+        },
+        {
+          "id": "U-NS3",
+          "digest": "8066162407cc6ae0e158257fcfc1693ac44fcc3b830182e844daf3e866bee971"
+        },
+        {
+          "id": "U-NS3b",
+          "digest": "9d582b44e0a53aa5522d804631d1bc633978a3eff0ac369cb79a88408daba4df"
+        },
+        {
+          "id": "U-NS3bL",
+          "digest": "76ace15add1d0f59268fb5fb355194ab8270f4dd7a776eedcab49220313b30be"
+        },
+        {
+          "id": "U-NS4",
+          "digest": "2feda855a79caa417cb49145734537110f90227174f1492fef9ec3645de2a0be"
+        },
+        {
+          "id": "U-NS5",
+          "digest": "b7b490c42d1971baedbf9a29b18146d3a8e4cbf46631ebf9d1ec87f4cbf6aa3a"
+        },
+        {
+          "id": "U-NS6",
+          "digest": "1c43b82a3a4d608f674f08257435af824e0d78a77667976b9ad0e2f8c5ebda73"
+        },
+        {
+          "id": "U-NS7",
+          "digest": "1da6a829f60eab78ac30a75c952bd76599e7bd4f9f6ceefbd78e25bbe8c2df85"
+        },
+        {
+          "id": "U-NS8",
+          "digest": "173b7a3f0d8a8fd905e06f3f9bcae9f747730de67491dbba18fb2f716b5339ad"
+        },
+        {
+          "id": "U-NS9",
+          "digest": "4961f21d3b5f488dc651fadb6e22e785617a959c4e823ed7b355e0e1ab0f17cd"
+        },
+        {
+          "id": "U-NS10",
+          "digest": "7d0ece0aa15b37988efd7049d5b7dd645add8ff491734e2542a1e5fb01c20607"
+        },
+        {
+          "id": "U-NS11",
+          "digest": "4bacae0652c1af0a36225cc0dd436e7d466afee33dba4b30b4047269a4dc30e4"
+        },
+        {
+          "id": "U-NS-C1",
+          "digest": "32d7420cca9b92192345b42591b525f53d5cf96e5c538cfdb86b7a86d75a146d"
+        },
+        {
+          "id": "U-NS-C2",
+          "digest": "86cd3096601baef9cb5cef74ef0e7a32408b69e31903f7c28ff8f97a17d2070d"
+        },
+        {
+          "id": "U-NS-C3",
+          "digest": "33a9b2ad36585a1fd30e9ebbc4e6b8d01c89fe3167e31e7ffacd5a13c9833772"
+        },
+        {
+          "id": "U-NS-nested-cross",
+          "digest": "a8388f62adff1179c5bc1c8912bc0831595970a992ea64392f1e5f4a225c6fd2"
+        },
+        {
+          "id": "U-NS-cross-forms",
+          "digest": "25bd5b7a61de766ebaec9bac0acfa38ee2115b7310bcccb201eb5e38f85d5d14"
+        },
+        {
+          "id": "W-GK1-block-statement",
+          "digest": "a6107b79b9b5682cdb9d7753135e36726605727f396ec897d1bfcfce221eef6c"
+        },
+        {
+          "id": "W-GK1-class-field",
+          "digest": "7a5a2cc43b44cd36317cfd7baf57f2ea8575aa1b0372120e9f5839cebcfcdab0"
+        },
+        {
+          "id": "G4-NS-reverse-order",
+          "digest": "41ed467b82119abadb0d87207170dd90becfdbbd3f9a18568fa721bbddf9126d"
+        },
+        {
+          "id": "G4-NS-static-block",
+          "digest": "0cf311b8dad6595ffac4747384907e31656afbeaf7f1c6781f73b9bef6e0bd02"
+        },
+        {
+          "id": "G4-NS-decorator-free",
+          "digest": "d84e9a5ec6277bbd5514717d9cc7f496ba3d7f1e907321fed477e121ad2d2652"
+        },
+        {
+          "id": "NS-positions",
+          "digest": "a1db9c18a7ced3ea3083f83932e2d98bcb0880d6d0cdb2dd0bc87584880aa0ff"
+        }
+      ]
+    },
+    {
+      "id": "EN",
+      "label": "enum members (7): a member binds only its own name and a read after its declaration",
+      "pins": [
+        {
+          "id": "U-EN1",
+          "digest": "3ed6ceabe531372ececcb2add868e95236e04eda3ee5a71ad3f3a6948972b650"
+        },
+        {
+          "id": "U-EN2",
+          "digest": "02f99831ee011b3d4d4d34f733271425a2b44934c7ac49e17b41a1881fbdc7b8"
+        },
+        {
+          "id": "U-EN-forward",
+          "digest": "dc54be4d0a9ef1c3dc80663eba6946c7e2550acd7b2bd13bf083e3be676491a3"
+        },
+        {
+          "id": "U-EN-forward-merged",
+          "digest": "797a6977f5388abb7e8da1782331ccbfc06f0e1f5ce90639a10864c8c0ebeedb"
+        },
+        {
+          "id": "U-EN-self",
+          "digest": "8f95c27b61d5003b12b40dfeb36bc42dfe0ca631bcbcaf1d2e3445079dab4722"
+        },
+        {
+          "id": "W-GK3-namespace-enum-forward",
+          "digest": "3c31820dabbbcfa0c88902893462bbe1dc6dc0230cdcd77e3bdae5ed57cb91df"
+        },
+        {
+          "id": "G4-EN-forward-nested-arrow",
+          "digest": "ac79449b4feb3f12e538df5c655f32352ae55113f912a39d4f65218af8a312e7"
+        },
+        {
+          "id": "G4-EN-string-name-after",
+          "digest": "20e80348acd8e7b5a745ac7ce1155f6aa97f2851ddd7d4b184f8524ccd274115"
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the meta rule: import.meta reds wherever a value position reads it",
+      "pins": [
+        {
+          "id": "U-META1",
+          "digest": "4eb3ba293893a59734ca45c110699592e911a229bd8720ac2fcd58a91be12f4b"
+        },
+        {
+          "id": "U-META1L",
+          "digest": "3b3258c10e6d3cd1441de3c9a5fd1a607bc6458d7b3999ee2fedadafd87b4a10"
+        },
+        {
+          "id": "U-meta-forms",
+          "digest": "e19e25f129885b966e170b201adca7be2552637f6680fd7df12efa546ce23977"
+        },
+        {
+          "id": "W-GK2-module-statement",
+          "digest": "63263205f5c97dd56e800581ca33c75ea1312c3db03dae90e2b9ab45d3b5afea"
+        },
+        {
+          "id": "W-GK2-class-field",
+          "digest": "7d1cb92d6f1fb51f0109732cb0aa19a389f8cabaf6ed7c5272bbbcd6ef27076d"
+        },
+        {
+          "id": "M-positions",
+          "digest": "4e436f2ffea31544a04979056a5abecc76370e7d32f802cc47f0de4b5555c6a5"
+        }
+      ]
+    },
+    {
+      "id": "I",
+      "label": "instantiation expressions: an expression with type arguments outside a heritage clause is a value, read through its expression",
+      "pins": [
+        {
+          "id": "U-IE1",
+          "digest": "af2049ad104cb2ef7ade8a6693aceea9e4df54091b6a55819c598e207e4fe123"
+        },
+        {
+          "id": "U-IE1c",
+          "digest": "75c93b5a9035658ded7f65dd20b9818bda31c83796f48cab1d0e60828a5e14b4"
+        },
+        {
+          "id": "U-IE2",
+          "digest": "2ba502520a701c7099bdc2c8fa98e19dabb196e49e3faaf6b9262800babe0df7"
+        },
+        {
+          "id": "U-IE2c",
+          "digest": "9bc88bf699a61a327881f3e49ea4119a067f1faf038fe262ee22843a9bbc555a"
+        },
+        {
+          "id": "U-IE3",
+          "digest": "5531ddf9afbdf41bc08e7ae4a8e2a062716f747a950a04576e7c35a3cda56878"
+        },
+        {
+          "id": "U-IE3c",
+          "digest": "3746979aad6e34dad2b29c114b046102060077d2f455f67a8410e434b5b23b49"
+        },
+        {
+          "id": "U-IE4",
+          "digest": "3b16427200e0270012b6c5dff0d66a0d5d8676ef927a6b16726a64e69957126c"
+        },
+        {
+          "id": "U-IE4c",
+          "digest": "e9e0a8cba552063f8e06ce9ef1806d6cad29b73cd430a5f87aa3831f2afde0cf"
+        },
+        {
+          "id": "U-IE5",
+          "digest": "e91e29b4ad5f22a37cdd97cc9948bf4858b75676716325e06a7c344a5ebff8b5"
+        },
+        {
+          "id": "U-IE5c",
+          "digest": "c000ffffe55c4073317746eddfecf1683fd8b0209ade126abe94a09e26cee192"
+        },
+        {
+          "id": "U-IE5d",
+          "digest": "1dddb6af6da9b178f5d61eb7f294af2ecd11d6f97b18158a19b5c69b987a6f70"
+        },
+        {
+          "id": "U-IE6",
+          "digest": "1e3d5dcd9291c38a449c49acf9c4d924057cbf68d9b648b7406901fb36e4abff"
+        },
+        {
+          "id": "U-IE7",
+          "digest": "c35866a07ed0693189c3357f6322375dc917c4126df486596d3593eb9a241a81"
+        },
+        {
+          "id": "U-IE8",
+          "digest": "435e47c12720fa25839cc1ef6ae59c81d7ff54fa484c26621a61c5a7b7741159"
+        },
+        {
+          "id": "U-IE9",
+          "digest": "fb95938aef446f1e32169edbaea9849eb26c889a57f08fe2e5b487f2da015543"
+        },
+        {
+          "id": "U-IE10",
+          "digest": "5f64293def42032544dc7487c91f93129063f9f5359c9bec4ec2bf21511dc6e4"
+        },
+        {
+          "id": "U-IE11",
+          "digest": "686c4a1fafd315a2700665bc7239be49001ecd7deda7229a8eede38dd2ce67dc"
+        },
+        {
+          "id": "U-IE12",
+          "digest": "17157a4dcc5dfade9bda52451f7fd33f39c1b07ec96852d5935c0c3fdc11fdf5"
+        },
+        {
+          "id": "I-forms",
+          "digest": "342722af64023740ee701946ff221f1f1d073bd6e4ee80a8e69014599ffe2981"
+        },
+        {
+          "id": "I-heritage",
+          "digest": "c59fa8576f4c6c20ee696c3c752ca5719afa1cd877c37f071d4f08774f95ba73"
+        },
+        {
+          "id": "I-positions",
+          "digest": "685e19c99f367b1aa32ccc716b6f1132b55090a64a05487463884872b44bf2a8"
+        },
+        {
+          "id": "I-cross-block",
+          "digest": "9cb74b6c707fd14bbe909e6a11270a167179fd368399eab4ec3fb8cfe7082b61"
+        },
+        {
+          "id": "I-type-arguments",
+          "digest": "f89e3758aab0b5b0169c78e6f33092a07703b951f95dc662141d3a477836ca98"
+        }
+      ]
+    },
+    {
+      "id": "J",
+      "label": "the judge mutants of record, each killed by its witness",
+      "pins": [
+        {
+          "id": "U-GJ1",
+          "digest": "585b0707a80e102330e391fc3f1e4341728b975558194632fac6b1ad88c17157"
+        },
+        {
+          "id": "U-wrapper-scopes",
+          "digest": "6f1d0b7764bcebb963cb18df8207d74b9da66f310fbd7be14d0b4572bcb60e9f"
+        },
+        {
+          "id": "U-GJ4",
+          "digest": "f5cfbbd70b74d964aa99dd2a217bb83da081230f9a820417b859c3059dc55f8c"
+        },
+        {
+          "id": "U-GJ15",
+          "digest": "bce6769f481d6e942831f9b1a14bf5f1ae389ad652ced334866c2634efb2b382"
+        },
+        {
+          "id": "U-GJ16",
+          "digest": "87f99ecc920dc2e37a6a36962f414d94fbe3e2561f7fd54db738f8cd974f6042"
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the named residuals",
+      "pins": [
+        {
+          "id": "R-FIELD-MUTATION",
+          "digest": "a754b7355709c63dd51fada5c85a1d21e1321d2cae39a26024a20c6571eb8c50"
+        },
+        {
+          "id": "R-REFLECTIVE-REACH",
+          "digest": "e2a9bff229076952b2a1a61608d5800a4e98925fd0b94e548327867f21682706"
+        },
+        {
+          "id": "R-UNLINKED-IMPORT",
+          "digest": "0065800d0566c486a00f61c158bde7292f9414ecb04ac375dc2eb03d53448d1e"
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "F V-admitted-free",
+    "F Z-global-process",
+    "F Z-global-fetch",
+    "F Z-global-code",
+    "F Z-global-this",
+    "F Z-global-wrapper",
+    "R R-shorthand",
+    "R R-export-local",
+    "R R-ambient",
+    "R R-extends",
+    "R R-enum-initializer",
+    "R R-closure-global",
+    "R R-global-escaped",
+    "R R-script-var",
+    "R R-script-typed",
+    "R R-script-function",
+    "R R-script-require",
+    "R R-dts-script",
+    "R R-dts-module",
+    "R R-type-only-value",
+    "R R-type-only-erased",
+    "R R-non-value-alias",
+    "R R-types-erased",
+    "R R-arguments",
+    "R R-bodiless",
+    "R R-const-enum",
+    "R R-not-references",
+    "U U-GP1",
+    "U U-GP1L",
+    "U U-GP2",
+    "U U-GP3",
+    "U U-GP3b",
+    "U U-GP4",
+    "U U-GP4b",
+    "U U-GP5",
+    "U U-GP7",
+    "U U-GP8",
+    "U U-GP8b",
+    "U U-GP9",
+    "U U-GP10",
+    "U U-GP11",
+    "U U-GP12",
+    "U U-GP13",
+    "U U-GP14",
+    "U U-GP17",
+    "U U-GP6",
+    "U U-GP15",
+    "U U-GP16",
+    "U U-GC1",
+    "U U-GC2",
+    "U U-GC3",
+    "U U-const-enum-companion",
+    "U U-default-interface",
+    "U U-ambient-let-type",
+    "U U-depth-two",
+    "U U-ambient-function-interface",
+    "U U-ambient-class-namespace",
+    "U U-ambient-namespace-interface",
+    "U U-string-module",
+    "U U-umd-export",
+    "U U-signature-parameters",
+    "U U-wrapper-var",
+    "U U-wrapper-forms",
+    "U U-namespace-unbound",
+    "U U-namespace-binds",
+    "U U-binds-values",
+    "U U-binds-merged",
+    "U U-binds-members",
+    "NS U-NS1",
+    "NS U-NS1L",
+    "NS U-NS2",
+    "NS U-NS3",
+    "NS U-NS3b",
+    "NS U-NS3bL",
+    "NS U-NS4",
+    "NS U-NS5",
+    "NS U-NS6",
+    "NS U-NS7",
+    "NS U-NS8",
+    "NS U-NS9",
+    "NS U-NS10",
+    "NS U-NS11",
+    "NS U-NS-C1",
+    "NS U-NS-C2",
+    "NS U-NS-C3",
+    "NS U-NS-nested-cross",
+    "NS U-NS-cross-forms",
+    "NS W-GK1-block-statement",
+    "NS W-GK1-class-field",
+    "NS G4-NS-reverse-order",
+    "NS G4-NS-static-block",
+    "NS G4-NS-decorator-free",
+    "NS NS-positions",
+    "EN U-EN1",
+    "EN U-EN2",
+    "EN U-EN-forward",
+    "EN U-EN-forward-merged",
+    "EN U-EN-self",
+    "EN W-GK3-namespace-enum-forward",
+    "EN G4-EN-forward-nested-arrow",
+    "EN G4-EN-string-name-after",
+    "M U-META1",
+    "M U-META1L",
+    "M U-meta-forms",
+    "M W-GK2-module-statement",
+    "M W-GK2-class-field",
+    "M M-positions",
+    "I U-IE1",
+    "I U-IE1c",
+    "I U-IE2",
+    "I U-IE2c",
+    "I U-IE3",
+    "I U-IE3c",
+    "I U-IE4",
+    "I U-IE4c",
+    "I U-IE5",
+    "I U-IE5c",
+    "I U-IE5d",
+    "I U-IE6",
+    "I U-IE7",
+    "I U-IE8",
+    "I U-IE9",
+    "I U-IE10",
+    "I U-IE11",
+    "I U-IE12",
+    "I I-forms",
+    "I I-heritage",
+    "I I-positions",
+    "I I-cross-block",
+    "I I-type-arguments",
+    "J U-GJ1",
+    "J U-wrapper-scopes",
+    "J U-GJ4",
+    "J U-GJ15",
+    "J U-GJ16",
+    "Q R-FIELD-MUTATION",
+    "Q R-REFLECTIVE-REACH",
+    "Q R-UNLINKED-IMPORT",
+    "outside anchors: this bead's export row and the parent's records of refusals #1 to #4, each member a pin of its row with the polarity its record states",
+    "rule 16: every judged row and the residual families are frozen at their measured shape",
+    "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-snapshot-global-reader-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-FIELD-MUTATION": [
+      "Q R-FIELD-MUTATION"
+    ],
+    "R-REFLECTIVE-REACH": [
+      "Q R-REFLECTIVE-REACH"
+    ],
+    "R-UNLINKED-IMPORT": [
+      "Q R-UNLINKED-IMPORT"
+    ]
+  }
+}
