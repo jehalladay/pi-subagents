@@ -69,11 +69,11 @@
  *    wired (a --tools flag on the real argv, the reachable inference call's own argv shape, a tools variable in the child
  *    environment, a piped stdin); C2 an agent loop wired (a second spawn fed the first one's output, the real launch statement
  *    wrapped in a loop by AST surgery on the provider's own text, a static import of the agent runner, a dynamic import of the agent
- *    manager, a second launching module); C3 the checker's quiet controls.
+ *    manager, a second launching module); C3 the checker's quiet controls. wb-roxk widens all three (the HARDENING block after ROWS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label
  * and pins, every pin's witness, the spellings and their digests, the roots, the named catalogs, the enumerated flags, the
  * orchestration roots and the registered tests - is held to the out-of-file roster test/fixtures/ri-observation-authority-roster.json;
- * the last case walks this file's vitest task tree against the roster.
+ * the last case walks this file's vitest task tree against the roster and holds each pin's assertion count (wb-roxk F5).
  * THE GATE-OPENING SIGNAL: when Pi adds any call into rf's inference group - a spelling in a walked file (A1-A3), a second launch,
  * an argv off the context render group, a tools flag or variable, a piped stdin, a looped launch or an orchestrator import (A4,
  * with B1/B3 where the record or the child channels move), a registered capability reaching the group (A5, B2) - row A reds (the
@@ -81,7 +81,7 @@
  * for that call - every observation source and effect enumerated before it, an unlisted one refused with a typed reason - and to
  * re-cut this census to it. When RI ships the observation port (RI-DEC-04) and the effect integration (RI-DEC-10), the re-cut
  * re-measures the producer.
- * RESIDUALS (named, each with a pinned quiet row in A6): R-OTHER-CASE a spelling in another case is none of the three (the grep is
+ * RESIDUALS (named, each with a pinned quiet row in A6; wb-roxk's three more in C3, after ROWS): R-OTHER-CASE a spelling in another case is none of the three (the grep is
  * case-sensitive); R-SEPARATOR-RUN two or more characters between the words; R-COMPOSED a spelling assembled at runtime from
  * parts, this file's own mechanism, is invisible to any text scan; R-INTERRUPTED a zero-width code point inside a word;
  * R-ARGV-SPLIT the group and its verb as separate argv strings are no text site (Pi's one launch is read at runtime by A4 instead);
@@ -92,7 +92,7 @@
  * The stand-in rf runs under the node its PATH resolves, which may be a wrapper script adding names of its own (a library path, a
  * shell's working-directory and level names): one control spawn handed PATH alone measures them, and a name the child holds with
  * the control's own value is read as the interpreter's, so no host-specific name enters a witness.
- *
+ * HARDENING (wb-roxk): the block after ROWS adds the computed-load, wrapped-launch and environment readings, an outside anchor, records.
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src is only read.
  */
 import { spawnSync } from "node:child_process";
@@ -410,16 +410,16 @@ function argvOf(argv: readonly string[]): ArgvReading {
 const LAUNCHERS: ReadonlySet<string> = new Set(["spawn", "spawnSync", "execFile", "execFileSync", "exec", "execSync", "fork"]);
 const RF_BINARY = /^(?:\S*[\\/])?rf(?:\.(?:exe|cmd))?(?:\s|$)/i;
 function parsed(file: string, text: string): ts.SourceFile {
-  return ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  return parseOnce(file, text);
 }
 function lineAt(source: ts.SourceFile, node: ts.Node): string {
   return `${source.fileName}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1}`;
 }
-/** A child_process launcher called with the rf binary as its first argument: the landed helper's predicate, read independently. */
+/** A child_process launcher called with the rf binary as its first argument: the landed helper's predicate, read independently (launcherNameOf, wb-1f2w F5). */
 function isRfLaunch(node: ts.Node): node is ts.CallExpression {
   if (!ts.isCallExpression(node)) return false;
   const callee = node.expression;
-  const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : undefined;
+  const name = launcherNameOf(callee);
   const first = node.arguments[0];
   return name !== undefined && LAUNCHERS.has(name) && first !== undefined && ts.isStringLiteralLike(first) && RF_BINARY.test(first.text);
 }
@@ -429,13 +429,13 @@ interface LaunchSite {
   readonly start: number;
   readonly end: number;
 }
-/** Every rf launch of a module, with whether an iteration statement encloses it and the span of the statement holding it. */
+/** Every rf launch of a module (direct, or wrapped since wb-roxk F3), with whether a loop encloses it and its statement's span. */
 function launchesIn(file: string, text: string): LaunchSite[] {
   const source = parsed(file, text);
   const sites: LaunchSite[] = [];
   const visit = (node: ts.Node, inLoop: boolean): void => {
     const loop = inLoop || ts.isIterationStatement(node, false);
-    if (isRfLaunch(node)) {
+    if (isRfLaunch(node) || isWrappedRfLaunch(node)) {
       let statement: ts.Node = node;
       while (!ts.isBlock(statement.parent) && !ts.isSourceFile(statement.parent)) statement = statement.parent;
       sites.push({ at: lineAt(source, node), loop, start: statement.getStart(source), end: statement.getEnd() });
@@ -445,8 +445,8 @@ function launchesIn(file: string, text: string): LaunchSite[] {
   visit(source, false);
   return sites;
 }
-/** The module specifiers a module loads at runtime: static imports and export-froms that are not type-only, dynamic import() and
- * require() of a literal. */
+/** The module specifiers a module loads at runtime: static imports and export-froms that are not type-only, and a runtime loader
+ * call (import(), require(), createRequire(...)() or a loader member, and their indirect forms; isLoaderCall, wb-roxk F2, wb-1f2w F3, wb-tnig F1) of a literal. */
 function loadsOf(file: string, text: string): string[] {
   const source = parsed(file, text);
   const loads: string[] = [];
@@ -462,8 +462,8 @@ function loadsOf(file: string, text: string): string[] {
   }
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node)) {
-      const first = node.arguments[0];
-      const dynamic = node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require");
+      const first = loaderSpecifierOf(node);
+      const dynamic = isLoaderCall(node);
       if (dynamic && first !== undefined && ts.isStringLiteralLike(first)) loads.push(first.text);
     }
     ts.forEachChild(node, visit);
@@ -476,12 +476,12 @@ function resolvedFrom(file: string, specifier: string): string | undefined {
   if (!specifier.startsWith(".")) return undefined;
   return posix.normalize(posix.join(posix.dirname(file), specifier)).replace(/\.js$/, ".ts");
 }
-interface StaticRecord {
+interface StaticRecord extends Wiring {
   readonly launches: readonly { readonly module: string; readonly loop: boolean }[];
   readonly closure: readonly string[];
 }
-/** The static wiring of src, with some modules' texts replaced: every rf launch (module and loop ancestry) and the runtime import
- * closure of the launching modules within src. */
+/** The static wiring of src, with some modules' texts replaced: every rf launch (module and loop ancestry), the runtime import
+ * closure of the launching modules within src, and the closure's wiring facts (wiringOf, wb-roxk F2-F4). */
 function staticRecord(overrides: Readonly<Record<string, string>> = {}): StaticRecord {
   const scan = scanOf("src");
   const texts = new Map(scan.texts);
@@ -502,7 +502,7 @@ function staticRecord(overrides: Readonly<Record<string, string>> = {}): StaticR
       if (target !== undefined && texts.has(target) && !closure.includes(target)) queue.push(target);
     }
   }
-  return { launches, closure: closure.sort() };
+  return { launches, closure: closure.sort(), ...wiringOf(texts, closure) };
 }
 interface LaunchRecord {
   readonly spawns: readonly SpawnRecord[];
@@ -514,7 +514,7 @@ function violationsOf(record: LaunchRecord): string[] {
   const { launches, closure } = record.statics;
   if (launches.length !== 1 || launches.some(launch => launch.module !== PROVIDER)) codes.push("launches");
   if (launches.some(launch => launch.loop)) codes.push("loop");
-  if (ORCHESTRATION.some(root => closure.includes(root.module))) codes.push("orchestrator");
+  codes.push(...(ORCHESTRATION.some(root => closure.includes(root.module)) ? ["orchestrator"] : []), ...wiringCodes(record.statics));
   if (record.spawns.length !== 1) codes.push(record.spawns.length === 0 ? "no-spawn" : "respawn");
   const allowed = new Set(RF_CHILD_ENV_ALLOWLIST);
   for (const spawn of record.spawns) {
@@ -621,6 +621,530 @@ const ROWS: readonly Row[] = [
   },
 ];
 
+/*
+ * HARDENING (wb-roxk, the R694 follow-up of landing 319; gate of record cmd_a8cc487825ad, its LEG 2 survivors S01, S02, S09, H1
+ * and H2, the findings F2-F5). Three fail-closed wiring facts join the static record of the launch closure (wiringOf), each a
+ * violationsOf code, so A4 and every C case read them on the real tree:
+ *  F2 computed-load (S01): a runtime loader call - import(), require(), a require createRequire returns called in place, or
+ *    module.require() - whose specifier is no string literal (an array join, a concatenation, a method call, a variable) cannot be
+ *    resolved by the closure walk, so it is never read as clean; with a literal it is a load the walk follows (loadsOf reads the
+ *    same loader calls). The launch closure holds none today (its four modules: the provider, process-env, the capability registry
+ *    and redaction).
+ *  F3 wrapped (S02): a launcher call whose first argument is not the rf binary while a command text of its first two arguments
+ *    (any string literal or template piece, at any depth) names rf as a command word - at the start, after white space, a quote
+ *    or a shell separator, and followed by white space, a quote, a separator or the end - runs rf through a shell or a wrapper.
+ *    launchesIn reads it as an rf launch (a second launching module reds launches, and A4's agreement with the landed walk) and
+ *    the wrapping itself is a violation. Fail-closed: an argument that only mentions rf after white space reads as a command word
+ *    too; of src's 30 launcher calls none carries rf in a command text besides the provider's own direct launch today.
+ *  F4 env-read (S09): any use of the parent environment in the launch closure other than the whole process.env handed to
+ *    scrubbedEnvironment (the allowlist channel B3 reads at the child) - a named or computed read, a destructuring, an alias, a
+ *    spread or any other pass of the whole object, process itself (or process on globalThis or global) used other than as the
+ *    receiver of a literal member, a computed key of process, or a value import of node:process - is an observation source the
+ *    record does not enumerate, so a flag gated on an environment variable reds while that variable is unset where this census
+ *    runs. The launch closure holds exactly that one channel use today, and no other reference to process.
+ *  C1 pins F4's shapes, C2 F2's and F3's, and C3 their quiet controls and the residuals below.
+ *  F5 (H1, H2; the 6ze.39 self-hollow class the RI sibling censuses share). RECORD: each pin's case records its vitest assertion
+ *    count after its witness compares equal, and the registration case holds the counts to the roster, so a case that hands back
+ *    its roster witness without measuring (H1) reds. OUTSIDE ANCHOR: the owner filing's row of wb-tz4r.5 in the tracked bead
+ *    export (.beads/issues.jsonl at the tree under test). Its first `Acceptance:` line splits into exactly the clauses (a)-(c),
+ *    each, the three spellings its grep quotes written as their placeholders, equal to its row label; those spellings hash to
+ *    the roster's digests; each pin's covered phrases (COVERS) are verbatim spans of its row's clause, together they cover every
+ *    word of the clause (articles and conjunctions aside), and each pin covers a word no sibling covers. So a pin removed from
+ *    every literal of this file and its roster at once (H2) leaves its own words uncovered and reds. Only the first
+ *    `Acceptance:` line is read, so a note appended later never moves the reading, and a quiet control pins that. Not claimed: a
+ *    pin removed everywhere while its own words are handed to a sibling's phrases, or a case echoing its witness while its count
+ *    is edited in the roster with it (both anchors are this cut's own literals).
+ *  LINE DISCIPLINE: the sibling census test/workbench-ri-decision-seed-claim-census.test.ts admits this file's quotes of the owner
+ *    filing at :3, :9 and :614 and the roster's at :222 by path, line and text (its R-SIBLING-QUOTE residual), so this cut keeps
+ *    every line above :614 here and above :222 in the roster in place, and spells none of that census's needles anywhere else.
+ * FOLLOW-UP wb-1f2w (the R694 follow-up of landing 411, wb-roxk; gate of record cmd_2fab6b5f755a, its PREP LEG-2 probes P11,
+ *  P12, P03, P04, P08 and P17, the findings F1-F6). Each new reading is pinned by kill controls at its code and bounded by a quiet one:
+ *  F1/F2 env-read: a runtime load of the process module (P11 import("node:process"), P12 require("node:process"), the bare
+ *    specifier, a require createRequire returns, every loader form F3 reads) and a value re-export of it are environment uses
+ *    beside the static value import (C1); its type-only forms stay quiet (C3 processTypes).
+ *  F3 loads: a loader function (require, a require createRequire returns, module.require), read through unwrapped's wrappers
+ *    (parentheses, a comma operand, as, satisfies, a <T> assertion, a non-null !), and one run by its call or apply method or by
+ *    Reflect.apply with the loader as its target (P03), is a runtime load: a literal specifier is a load the closure walk follows,
+ *    any other (or none) is a computed load (C2); the call method and Reflect.apply of a function that is no loader stay quiet
+ *    (C3 nonLoaderCall).
+ *  F5 launches: both launch readings read a callee through launcherOf: by its own name, by a local name its module binds to a
+ *    launcher (an import specifier or a destructuring element keyed by a launcher's name, as an identifier or a quoted key - P08
+ *    renames spawn at its import - and a declaration whose initializer launcherOf reads as a launcher, to a fixed point), as a
+ *    member or by a quoted key, through the same wrappers (C2); a renamed import of no launcher stays quiet (C3 renamedOther). Real
+ *    src binds no such name today, so A4's two launch walks still agree.
+ *  F6 echo guard: each pin's runner refuses a case whose source reads the roster (rosterWitness, ROSTER or readRoster) before the
+ *    case runs, so P17 - A1's case padded to its count and handing back its roster witness - reds whatever its count, and so does
+ *    the F5 NOT CLAIMED echo whose count is edited in the roster with it; the judged set pins the guard on the P17 shape, on one
+ *    echo through each other reader and on R-INLINE-ECHO's quiet row, and the guard's assertion is part of every pin's count.
+ *  F4 is named, not read: R-EVALUATED-LOAD below (P04), the R-EVALUATED-ENV mechanism for loads.
+ * RESIDUALS (named families, each with a pinned quiet row in C3): R-ALIASED-LOADER a loader bound to another name (the require a
+ * createRequire call returns kept in a variable, an alias of require) is a load neither walk reads, so the closure misses its
+ * target; R-VARIABLE-COMMAND a shell command or a wrapper argv held in a variable carries no command text the wrapped reading sees;
+ * R-EVALUATED-ENV the environment reached through evaluated text (eval, Function), a computed or quoted key of globalThis, or
+ * process named by an object shorthand is no environment use. wb-1f2w's (quiet rows in C3, R-INLINE-ECHO's in the judged set):
+ * R-EVALUATED-LOAD a loader reached through evaluated text (eval, Function) is no load; R-INDIRECT-LOADER a loader run through any
+ * other expression (bind, an array or object element, a method of Function.prototype) is no load; R-PASSED-LAUNCHER a launcher
+ * reaching its call through an object property, a parameter (its argument: narrowed by wb-6njq F1, which reads a parameter's own
+ * default value), a return value (an awaited call's result among them, wb-6njq), a later assignment (a destructuring assignment's
+ * default among them, wb-6njq) or another module's export, or run by call, apply, bind or Reflect.apply, is no launch; R-INLINE-ECHO
+ * a case returning a copy of its witness, holding none of the
+ * roster's own objects, from a source the guard reads clean (copied inline, cloned or built anew by a helper, parsed anew from the
+ * roster file) is no echo either guard reads (narrowed by wb-tnig F3: a helper handing back the roster's own witness is one).
+ * FOLLOW-UP wb-tnig (the R694 follow-up of landing 509, wb-1f2w; gate of record cmd_fe04e868f28b, its PREP LEG-2 probes E01,
+ *  E11, E13, E14, E22 and E23, the findings F1-F3; INFO F4's E07 and E09 are read too). Each new reading is pinned by kill
+ *  controls at its code and bounded by a quiet one:
+ *  F1 loads: isLoaderFunction also reads a member of any object named require (process.mainModule.require, require.main.require;
+ *    module.require before), getBuiltinModule (the built-in module loader, process.getBuiltinModule) or _load (the module
+ *    system's), by its name or a quoted key, and createRequire read as a member; loaderFormOf reads a loader's call or apply method
+ *    and Reflect.apply by a quoted key too. So the gate's E01, process.getBuiltinModule("node:process"), and each such member
+ *    loading the process module are environment uses (C1), a computed specifier handed to one is a computed load and E07/E09 are
+ *    loads the walk follows (C2), and the built-in loader handed another module stays quiet (C3 builtinOther); environmentUsesIn's
+ *    runtime load is any loader form isLoaderCall reads.
+ *  F2 launches: launcherOf also reads, through alternativesOf, a conditional as either branch, a logical or an assignment
+ *    expression as either operand, an array literal as any element and an element access as its receiver (a quoted key reads by
+ *    itself only when it names a launcher); launcherAliasesOf also binds every name a destructuring declaration binds, at any
+ *    depth, read as its initializer, and every name a for...of declaration binds, read as the iterated expression. So the gate's
+ *    E11, E13 and E14 modules, || and && pickers, an assignment used in place, array elements, an object pattern over an array and
+ *    an iterated array launch rf, through a shell too (C2), and alternatives of no launcher stay quiet (C3 otherAlternatives).
+ *  F3 echo guard: each pin's runner reads its case's own source through the intrinsic Function.prototype.toString (so an own
+ *    toString changes nothing) and refuses, before the case runs, a source that reads the roster, one that reads as native code (a
+ *    bound case, the gate's E23) and one whose code, strings aside, names an evaluator (eval or the Function constructor: the
+ *    gate's E22 composes the reader's name); when the case has run it refuses a witness holding any object of the roster's own
+ *    witness for the pin (a route back to the parsed roster: a helper, as INFO E24, a bound or evaluated case, a shallow copy).
+ *    The judged set pins both readings on the gate's shapes, a disguised echo, E24's helper and R-INLINE-ECHO's quiet row; the
+ *    evaluated shapes are texts whose evaluator is composed at runtime, so this file runs no evaluated text. The identity
+ *    assertion is part of every pin's count. Not claimed: a runner whose own guard or identity reading is rewritten with every
+ *    count kept (the runner is this cut's own code, as F5's not-claimed pair's anchors are its own literals).
+ * RESIDUALS (wb-tnig; quiet row in C3): R-COMPUTED-LAUNCHER a launcher read by a computed key of an object or a module namespace (a
+ * key held in a variable or built at runtime) is no launch. R-ALIASED-LOADER's loader bound to another name includes the members
+ * F1 reads kept in a variable.
+ * FOLLOW-UP wb-6njq (the R694 follow-up of landing 595, wb-tnig; gate of record cmd_d74be369dbe0, its PREP LEG-2 probes G01-G04, G11b
+ *  and G12, the findings F1 and F2; its boundary control G32 is read too). Each new reading is pinned by kill controls at its code
+ *  and bounded by a quiet one:
+ *  F1 launches: launcherAliasesOf also binds every name a binding element binds, read as that element's own default value (an
+ *    element of an array or an object pattern, renamed or not, at any depth, in a declaration, a for...of declaration, a parameter or
+ *    a catch clause), and every name a parameter binds, read as the parameter's own default value; and unwrapped also reads an await
+ *    expression as its operand, so launcherOf, isLoaderFunction and loaderFormOf read a launcher or a loader reached through await as
+ *    themselves. So the gate's G01 (an array pattern), G02 (an object pattern) and G04 (a for...of declaration) modules, an element
+ *    default renamed, nested in a defaulted pattern, in a parameter's pattern and in a catch clause, the gate's G32 control (a
+ *    parameter default), the gate's G03 module and an awaited alias launch rf (C2), and an awaited loader loads the manager (C2) and
+ *    the process module (C1); defaults and awaits of no launcher stay quiet (C3 otherDefaults).
+ *  F2 echo guard: readRoster freezes the parsed roster throughout, so a helper swapping a pin's witness in it (the gate's G12) throws;
+ *    the identity reading also refuses a witness the structured clone algorithm refuses - a proxy at any depth, over the roster's own
+ *    objects or over a copy (the gate's G11b deep view, G11's shallow one), or a function: no measured witness holds one - and walks no
+ *    such witness; and every binding each pin's runner reads (its tables IMPL and REACHED, ROSTER and rosterWitness, the source
+ *    guard's readsRoster, INTRINSIC_SOURCE, sourceOf, NATIVE_SOURCE, EVALUATORS, evaluatesText and echoReasonsOf, the identity
+ *    reading's objectsIn, CLONE, cloneable and routesOf) is a const binding, so a helper rebinding one throws (a function declaration
+ *    is a mutable binding). The judged set pins the freeze, the swap, the binding kinds and the three views. Not claimed: a helper
+ *    patching a built-in or a library object a reader calls at run time (Object.values, Array.isArray, a Set's methods,
+ *    Function.prototype.call, RegExp.prototype.test, the TypeScript parser, vitest's expect) or editing the contents of a runner
+ *    table (IMPL, REACHED); the structured clone algorithm and the intrinsic source reader are the two captured at load.
+ * RESIDUALS (wb-6njq; quiet rows in C3): R-PASSED-LAUNCHER's parameter is the launcher a caller hands in as its argument (pinned by
+ * passedArgument; a parameter's own default value is read since F1), its return value includes an awaited call's result (an awaited
+ * promise of a launcher, pinned by awaitedReturn), and its later assignment includes a destructuring assignment's default (an
+ * assignment pattern binds nothing, pinned by assignedDefault).
+ */
+/** Each module text parsed once (wb-1f2w): every control re-reads src with one module replaced, and the widened readings walk each
+ * parse again for its launcher names, so a parse is kept per path and text (the readings never change a parse). */
+const PARSES = new Map<string, Map<string, ts.SourceFile>>();
+function parseOnce(file: string, text: string): ts.SourceFile {
+  const byText = PARSES.get(file) ?? new Map<string, ts.SourceFile>();
+  PARSES.set(file, byText);
+  const cached = byText.get(text);
+  if (cached !== undefined) return cached;
+  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  byText.set(text, source);
+  return source;
+}
+/** What the launch closure's static wiring holds beyond its launches and loads (wb-roxk F2-F4): each list a module:line reading. */
+interface Wiring {
+  /** Runtime loads of the closure whose specifier is no string literal (F2). */
+  readonly computed: readonly string[];
+  /** rf launches of src reached through a shell or a wrapper command (F3). */
+  readonly wrapped: readonly string[];
+  /** Uses of the parent environment in the closure outside the allowlist channel, each with its form (F4). */
+  readonly environment: readonly string[];
+}
+/** The callee the allowlist channel hands the whole parent environment to (src/workbench/process-env.ts). */
+const ALLOWLIST_CHANNEL = "scrubbedEnvironment";
+/** rf as a command word in a command text: the binary (any directory, an .exe or .cmd suffix) at the start or after white space, a
+ * quote or a shell separator, and followed by white space, a quote, a separator or the end. */
+const RF_COMMAND = /(?:^|[\s;&|`('"])(?:\S*[\\/])?rf(?:\.(?:exe|cmd))?(?=$|[\s;&|)`'"])/i;
+/** The texts a launcher call's first two arguments hold, at any depth: string literals and the pieces of template literals. */
+function commandTexts(node: ts.CallExpression): string[] {
+  const texts: string[] = [];
+  const visit = (child: ts.Node): void => {
+    if (ts.isStringLiteralLike(child)) texts.push(child.text);
+    else if (ts.isTemplateExpression(child)) texts.push(child.head.text, ...child.templateSpans.map(span => span.literal.text));
+    ts.forEachChild(child, visit);
+  };
+  for (const argument of node.arguments.slice(0, 2)) visit(argument);
+  return texts;
+}
+/** A launcher call (launcherNameOf, wb-1f2w F5) that runs rf through a shell or a wrapper: no direct rf launch, while one of its
+ * command texts names rf (F3). */
+function isWrappedRfLaunch(node: ts.Node): node is ts.CallExpression {
+  if (!ts.isCallExpression(node)) return false;
+  const callee = node.expression;
+  const name = launcherNameOf(callee);
+  // The direct predicate is read last: its false branch would narrow the call away.
+  return name !== undefined && LAUNCHERS.has(name) && commandTexts(node).some(text => RF_COMMAND.test(text)) && !isRfLaunch(node);
+}
+/** Every wrapped rf launch of a module (F3). */
+function wrappedLaunchesIn(file: string, text: string): string[] {
+  const source = parsed(file, text);
+  const sites: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (isWrappedRfLaunch(node)) sites.push(lineAt(source, node));
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return sites;
+}
+/** An expression read through its parentheses, type assertions and comma operands: `(0, require)` reads as require (wb-1f2w); and
+ * since wb-6njq F1 an await expression as its operand: `(await spawn)` reads as spawn. */
+function unwrapped(node: ts.Expression): ts.Expression {
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node) || ts.isSatisfiesExpression(node) || ts.isAwaitExpression(node)) {
+    return unwrapped(node.expression);
+  }
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.CommaToken) return unwrapped(node.right);
+  return node;
+}
+/** The name a member reads: a property by its name or an element by a quoted key; undefined for any other expression (wb-tnig F1). */
+function memberNameOf(node: ts.Expression): string | undefined {
+  if (ts.isPropertyAccessExpression(node)) return node.name.text;
+  if (ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression)) return node.argumentExpression.text;
+  return undefined;
+}
+/** The loader functions a member of any object names (wb-tnig F1): require (module.require, require.main.require,
+ * process.mainModule.require), the built-in module loader getBuiltinModule (process.getBuiltinModule) and the module system's _load. */
+const MEMBER_LOADERS: readonly string[] = ["require", "getBuiltinModule", "_load"];
+/** A loader function, read through unwrapped: require, or the require a createRequire call returns (F2); since wb-tnig F1 also a
+ * member of any object MEMBER_LOADERS names, by its name or a quoted key (module.require alone before), with createRequire read
+ * as a member too. */
+function isLoaderFunction(node: ts.Expression): boolean {
+  const callee = unwrapped(node);
+  if (ts.isIdentifier(callee)) return callee.text === "require";
+  if (ts.isCallExpression(callee)) {
+    const maker = unwrapped(callee.expression);
+    return (ts.isIdentifier(maker) && maker.text === "createRequire") || memberNameOf(maker) === "createRequire";
+  }
+  const member = memberNameOf(callee);
+  return member !== undefined && MEMBER_LOADERS.includes(member);
+}
+type LoaderForm = "direct" | "call" | "apply" | "reflect";
+/** How a call runs a loader: direct (import(), or a loader function called in place, F2), or through the loader's call or apply
+ * method or Reflect.apply with the loader as its target (wb-1f2w F3), each method by its name or, since wb-tnig, a quoted key
+ * (INFO F4's E07 and E09); undefined for a call that loads nothing. */
+function loaderFormOf(node: ts.CallExpression): LoaderForm | undefined {
+  const callee = unwrapped(node.expression);
+  if (callee.kind === ts.SyntaxKind.ImportKeyword || isLoaderFunction(callee)) return "direct";
+  if (!ts.isPropertyAccessExpression(callee) && !ts.isElementAccessExpression(callee)) return undefined;
+  const method = memberNameOf(callee);
+  if ((method === "call" || method === "apply") && isLoaderFunction(callee.expression)) return method;
+  const target = node.arguments[0];
+  const reflected = method === "apply" && ts.isIdentifier(callee.expression) && callee.expression.text === "Reflect";
+  return reflected && target !== undefined && isLoaderFunction(target) ? "reflect" : undefined;
+}
+/** A runtime loader call: import(), or a loader function (isLoaderFunction: require, the require a createRequire call returns, a
+ * loader member of any object) called in place (F2, wb-tnig F1), each also through parentheses or a comma operand, or run by its
+ * call or apply method or by Reflect.apply (wb-1f2w F3). */
+function isLoaderCall(node: ts.CallExpression): boolean {
+  return loaderFormOf(node) !== undefined;
+}
+/** The specifier a loader call hands over: its first argument (direct), the argument after the receiver (call), or the first
+ * element of a literal argument list (apply, Reflect.apply); undefined when the call names none (wb-1f2w F3). */
+function loaderSpecifierOf(node: ts.CallExpression): ts.Expression | undefined {
+  const form = loaderFormOf(node);
+  if (form === "direct") return node.arguments[0];
+  if (form === "call") return node.arguments[1];
+  const list = form === "apply" ? node.arguments[1] : form === "reflect" ? node.arguments[2] : undefined;
+  return list !== undefined && ts.isArrayLiteralExpression(list) ? list.elements[0] : undefined;
+}
+/** The binary operators whose value is one of their operands (wb-tnig F2): the logical ones and the assignments. */
+const OPERAND_VALUED: readonly ts.SyntaxKind[] = [
+  ts.SyntaxKind.QuestionQuestionToken,
+  ts.SyntaxKind.BarBarToken,
+  ts.SyntaxKind.AmpersandAmpersandToken,
+  ts.SyntaxKind.EqualsToken,
+  ts.SyntaxKind.QuestionQuestionEqualsToken,
+  ts.SyntaxKind.BarBarEqualsToken,
+  ts.SyntaxKind.AmpersandAmpersandEqualsToken,
+];
+/** The expressions whose value an expression may take (wb-tnig F2): a conditional's two branches, both operands of a logical or an
+ * assignment expression, every element of an array literal (a spread element as its own expression) and an element access's
+ * receiver (so an element of an array holding a launcher); undefined for any other expression. */
+function alternativesOf(node: ts.Expression): readonly ts.Expression[] | undefined {
+  if (ts.isConditionalExpression(node)) return [node.whenTrue, node.whenFalse];
+  if (ts.isBinaryExpression(node) && OPERAND_VALUED.includes(node.operatorToken.kind)) return [node.left, node.right];
+  if (ts.isArrayLiteralExpression(node)) return node.elements.map(element => (ts.isSpreadElement(element) ? element.expression : element));
+  if (ts.isElementAccessExpression(node)) return [node.expression];
+  return undefined;
+}
+/** The name an expression gives the launcher it reads, through unwrapped (wb-1f2w F5): an identifier by its own name or by the
+ * launcher an alias of its module is bound to, a member by its name or by a quoted key naming a launcher; and since wb-tnig F2 the
+ * first launcher among alternativesOf's expressions (a conditional's branch, a logical or an assignment operand, an array element,
+ * an element access's receiver), so a launcher among them is never read as none; undefined for any other expression (the caller
+ * holds the name to LAUNCHERS). Call sites and alias declarations read through it alike. */
+function launcherOf(node: ts.Expression, aliases: ReadonlyMap<string, string>): string | undefined {
+  const target = unwrapped(node);
+  if (ts.isIdentifier(target)) return aliases.get(target.text) ?? target.text;
+  if (ts.isPropertyAccessExpression(target)) return target.name.text;
+  if (ts.isElementAccessExpression(target) && ts.isStringLiteralLike(target.argumentExpression) && LAUNCHERS.has(target.argumentExpression.text)) {
+    return target.argumentExpression.text;
+  }
+  return alternativesOf(target)?.map(alternative => launcherOf(alternative, aliases)).find(name => name !== undefined && LAUNCHERS.has(name));
+}
+/** The launcher a callee names: launcherOf over its module's aliases (launcherAliasesOf, wb-1f2w F5). */
+function launcherNameOf(node: ts.Expression): string | undefined {
+  return launcherOf(node, launcherAliasesOf(node.getSourceFile()));
+}
+const launcherAliases = new WeakMap<ts.SourceFile, ReadonlyMap<string, string>>();
+/** The local names a module binds to a launcher, each with that launcher's own name (wb-1f2w F5): an import specifier or a
+ * destructuring element keyed by a launcher's name, as an identifier or a quoted key (renamed or not, from any module or
+ * initializer), and a declaration whose initializer launcherOf reads as a launcher - since wb-tnig F2 every name a destructuring
+ * declaration binds, read as its initializer, and every name a for...of declaration binds, read as the iterated expression; since
+ * wb-6njq F1 every name a binding element binds, read as the element's own default value, and every name a parameter binds, read
+ * as the parameter's own default value - followed to a fixed point (a function-scoped alias may name a module const declared after
+ * it). */
+function launcherAliasesOf(source: ts.SourceFile): ReadonlyMap<string, string> {
+  const cached = launcherAliases.get(source);
+  if (cached !== undefined) return cached;
+  const aliases = new Map<string, string>();
+  const declarations: { readonly name: string; readonly initializer: ts.Expression }[] = [];
+  const keyOf = (node: ts.Node): string | undefined => (ts.isIdentifier(node) || ts.isStringLiteralLike(node) ? node.text : undefined);
+  // wb-tnig F2: every name a binding binds, at any depth of its array or object pattern.
+  const boundNamesOf = (name: ts.BindingName): string[] => {
+    if (ts.isIdentifier(name)) return [name.text];
+    const elements: readonly ts.ArrayBindingElement[] = name.elements;
+    return elements.flatMap(element => (ts.isBindingElement(element) ? boundNamesOf(element.name) : []));
+  };
+  const collect = (node: ts.Node): void => {
+    if ((ts.isImportSpecifier(node) || ts.isBindingElement(node)) && ts.isIdentifier(node.name)) {
+      const key = keyOf(node.propertyName ?? node.name);
+      if (key !== undefined && LAUNCHERS.has(key)) aliases.set(node.name.text, key);
+    }
+    // A declared name reads as its initializer (a destructured one too, wb-tnig F2), and a for...of declaration's names as the
+    // iterated expression (wb-tnig F2).
+    if (ts.isVariableDeclaration(node) && node.initializer !== undefined) {
+      for (const name of boundNamesOf(node.name)) declarations.push({ name, initializer: node.initializer });
+    }
+    if (ts.isForOfStatement(node) && ts.isVariableDeclarationList(node.initializer)) {
+      for (const declaration of node.initializer.declarations) for (const name of boundNamesOf(declaration.name)) declarations.push({ name, initializer: node.expression });
+    }
+    // wb-6njq F1: a binding element's names read as the element's own default value too (an element of an array or an object
+    // pattern, at any depth, wherever the pattern stands), and a parameter's names as the parameter's own default value.
+    if ((ts.isBindingElement(node) || ts.isParameter(node)) && node.initializer !== undefined) {
+      for (const name of boundNamesOf(node.name)) declarations.push({ name, initializer: node.initializer });
+    }
+    ts.forEachChild(node, collect);
+  };
+  collect(source);
+  let grew = true;
+  while (grew) {
+    grew = false;
+    for (const { name, initializer } of declarations) {
+      const launcher = aliases.has(name) ? undefined : launcherOf(initializer, aliases);
+      if (launcher !== undefined && LAUNCHERS.has(launcher)) {
+        aliases.set(name, launcher);
+        grew = true;
+      }
+    }
+  }
+  launcherAliases.set(source, aliases);
+  return aliases;
+}
+/** The runtime loader calls of a module whose specifier is no string literal (F2; every loader form, wb-1f2w F3). */
+function computedLoadsIn(file: string, text: string): string[] {
+  const source = parsed(file, text);
+  const sites: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && isLoaderCall(node)) {
+      const first = loaderSpecifierOf(node);
+      if (first === undefined || !ts.isStringLiteralLike(first)) sites.push(lineAt(source, node));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return sites;
+}
+/** True for the process object: the identifier process, or process on globalThis or global. */
+function isProcessObject(node: ts.Node): boolean {
+  if (ts.isIdentifier(node)) return node.text === "process";
+  return ts.isPropertyAccessExpression(node) && node.name.text === "process" && ts.isIdentifier(node.expression) && ["globalThis", "global"].includes(node.expression.text);
+}
+/** True when an identifier names a member or a declaration (a property, a binding, an import) rather than referring to a value. */
+function isNamePosition(node: ts.Node): boolean {
+  const parent = node.parent;
+  if (ts.isPropertyAccessExpression(parent)) return parent.name === node;
+  const named = parent as ts.NamedDeclaration & { readonly propertyName?: ts.Node };
+  return named.name === node || named.propertyName === node;
+}
+/** True for process.env or process["env"] on the process object. */
+function isProcessEnv(node: ts.Node): boolean {
+  if (ts.isPropertyAccessExpression(node)) return node.name.text === "env" && isProcessObject(node.expression);
+  if (ts.isElementAccessExpression(node)) return ts.isStringLiteralLike(node.argumentExpression) && node.argumentExpression.text === "env" && isProcessObject(node.expression);
+  return false;
+}
+/** The process object's module names (wb-1f2w F1/F2). */
+const PROCESS_MODULES: readonly string[] = ["process", "node:process"];
+/** Every use of the parent environment in a module except the whole process.env handed to the allowlist channel, each with its
+ * form (F4): a named or a computed read, any other use of the whole object, process itself used other than as the receiver of a
+ * literal member, a computed key of process, and a value import of node:process - static, a runtime load in any loader form
+ * isLoaderCall reads (the built-in module loader and the other loader members since wb-tnig F1), or a value re-export (wb-1f2w
+ * F1/F2). */
+function environmentUsesIn(file: string, text: string): string[] {
+  const source = parsed(file, text);
+  const uses: string[] = [];
+  for (const statement of source.statements) {
+    if (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && PROCESS_MODULES.includes(statement.moduleSpecifier.text) && statement.importClause?.isTypeOnly !== true) {
+      uses.push(`${lineAt(source, statement)} import`);
+    } else if (ts.isExportDeclaration(statement) && !statement.isTypeOnly && statement.moduleSpecifier !== undefined && ts.isStringLiteral(statement.moduleSpecifier) && PROCESS_MODULES.includes(statement.moduleSpecifier.text)) {
+      // wb-1f2w: a value re-export of the process module hands the environment to every module importing it.
+      uses.push(`${lineAt(source, statement)} re-export`);
+    }
+  }
+  const visit = (node: ts.Node): void => {
+    // wb-1f2w F1/F2: a runtime load of the process module (any loader form isLoaderCall reads) is a value import of it.
+    const specifier = ts.isCallExpression(node) && isLoaderCall(node) ? loaderSpecifierOf(node) : undefined;
+    if (specifier !== undefined && ts.isStringLiteralLike(specifier) && PROCESS_MODULES.includes(specifier.text)) uses.push(`${lineAt(source, node)} load`);
+    if (isProcessEnv(node)) {
+      const parent = node.parent;
+      const channel = ts.isCallExpression(parent) && ts.isIdentifier(parent.expression) && parent.expression.text === ALLOWLIST_CHANNEL && parent.arguments[0] === node;
+      const named = ts.isPropertyAccessExpression(parent) && parent.expression === node ? parent.name.text : ts.isElementAccessExpression(parent) && parent.expression === node && ts.isStringLiteralLike(parent.argumentExpression) ? parent.argumentExpression.text : undefined;
+      const computed = ts.isElementAccessExpression(parent) && parent.expression === node && named === undefined;
+      if (!channel) uses.push(`${lineAt(source, node)} ${named !== undefined ? `read ${named}` : computed ? "computed read" : "whole"}`);
+      return;
+    }
+    if (isProcessObject(node) && !isNamePosition(node)) {
+      const parent = node.parent;
+      const receiver = (ts.isPropertyAccessExpression(parent) || ts.isElementAccessExpression(parent)) && parent.expression === node;
+      if (!receiver) uses.push(`${lineAt(source, node)} process`);
+      else if (ts.isElementAccessExpression(parent) && !ts.isStringLiteralLike(parent.argumentExpression)) uses.push(`${lineAt(source, node)} computed process key`);
+      return;
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return uses;
+}
+/** The wiring facts of src's texts for a launch closure: the computed loads and environment uses of the closure's modules, and
+ * the wrapped launches of every module. */
+function wiringOf(texts: ReadonlyMap<string, string>, closure: readonly string[]): Wiring {
+  const modules = [...texts.entries()].filter(([file]) => file.endsWith(".ts"));
+  const inClosure = modules.filter(([file]) => closure.includes(file));
+  return {
+    computed: inClosure.flatMap(([file, text]) => computedLoadsIn(file, text)),
+    wrapped: modules.flatMap(([file, text]) => wrappedLaunchesIn(file, text)),
+    environment: inClosure.flatMap(([file, text]) => environmentUsesIn(file, text)),
+  };
+}
+/** The violation codes of a record's wiring facts, in a fixed order (F2-F4). */
+function wiringCodes(statics: Wiring): string[] {
+  return [...(statics.computed.length > 0 ? ["computed-load"] : []), ...(statics.wrapped.length > 0 ? ["wrapped"] : []), ...(statics.environment.length > 0 ? ["env-read"] : [])];
+}
+/** The provider's argv statement and the gate's S09 shape of it (a --tools flag gated on a parent environment variable), its one
+ * direct launch, its allowlist channel call, and the module path the second-module mutants and controls write. */
+const ARGV_STATEMENT = 'return ["--workspace",workspaceRoot,"context","render",...select,"--no-commit","--no-input","--json"];';
+const ENV_GATED_STATEMENT =
+  'return ["--workspace",workspaceRoot,"context","render",...select,...(process.env.PI_S09_TOOLS===undefined?[]:["--tools",process.env.PI_S09_TOOLS]),"--no-commit","--no-input","--json"];';
+const DIRECT_SPAWN = 'spawn("rf",argv,';
+const ALLOWLIST_CALL = "scrubbedEnvironment(process.env,RF_CHILD_ENV_ALLOWLIST)";
+const SECOND_MODULE = "src/workbench/providers/agent-loop.ts";
+/** The provider's text with its one occurrence of `anchor` replaced (a provider that holds it never or twice fails the case). */
+function replaced(text: string, anchor: string, next: string): string {
+  const at = text.indexOf(anchor);
+  if (at < 0 || text.indexOf(anchor, at + 1) >= 0) throw new Error(`the provider holds no single ${JSON.stringify(anchor.slice(0, 48))}`);
+  return `${text.slice(0, at)}${next}${text.slice(at + anchor.length)}`;
+}
+
+/** The tracked bead export the outside anchor reads: the owner filing's row of BEAD, its first acceptance line (F5). */
+const EXPORT_FILE = ".beads/issues.jsonl";
+/** The export's row for `id` (every line must parse; a malformed export is refused, never skipped). */
+function exportRow(id: string): { [key: string]: unknown } {
+  const rows = readFileSync(join(REPO, EXPORT_FILE), "utf8")
+    .split("\n")
+    .filter(line => line.trim() !== "")
+    .map((line, index): unknown => {
+      try {
+        return JSON.parse(line);
+      } catch {
+        throw new Error(`${EXPORT_FILE} line ${index + 1} does not parse`);
+      }
+    });
+  const row = rows.find(entry => isObject(entry) && entry.id === id);
+  if (!isObject(row)) throw new Error(`${id} is missing from ${EXPORT_FILE}`);
+  return row;
+}
+/** Each pin's covered phrases: verbatim spans of its row's clause (the three spellings as placeholders). The outside anchor holds
+ * that together they cover every word of the clause and that each pin covers a word no sibling covers; C3 owns "fails", since a
+ * mutant's failure reads as one only beside the quiet controls C3 pins. Row B's phrases stop short of the sibling's needle. */
+const COVERS: Readonly<Record<string, readonly string[]>> = {
+  A1: ["over src", "= 0 at this read"],
+  A2: ["qa/docs/workbench", "= 0 at this read"],
+  A3: ["test", "= 0 at this read"],
+  A4: ["no Pi path passes tool handles, an orchestrator or observation sources into"],
+  A5: ["any inference call reachable from rf"],
+  A6: ["'<RF-INF>|<INF-RUN>|<INF.RUN>'"],
+  B1: ["enumerated in a Pi-owned authorization record before the call"],
+  B2: ["an unlisted source is refused with a typed reason"],
+  B3: ["every observation source and effect reaching the decision", "inference is enumerated"],
+  C1: ["wiring an unrestricted tool", "into the observation port"],
+  C2: ["an agent loop", "into the observation port"],
+  C3: ["fails"],
+};
+/** The words a clause's coverage never needs: articles and conjunctions. */
+const STOP: readonly string[] = ["a", "an", "the", "and", "or"];
+/** A clause's words: cut at white space, slashes, bars, commas, semicolons and parentheses; articles and conjunctions dropped. */
+function wordsOf(text: string): string[] {
+  return text.split(/[\s/|,;()]+/).filter(word => word !== "" && !STOP.includes(word));
+}
+interface Coverage {
+  /** Covered phrases that are no verbatim span of the clause. */
+  readonly outside: string[];
+  /** Clause words no pin of the row covers. */
+  readonly uncovered: string[];
+  /** Pins of the row that cover no word of their own. */
+  readonly withoutOwnWord: string[];
+}
+/** One clause's coverage by the pins of the row whose label carries its letter (no such row: every word is uncovered). */
+function coverageOf(clause: string, rows: readonly Row[], covers: Readonly<Record<string, readonly string[]>>): Coverage {
+  const body = clause.replace(/^\([a-z]\) [a-z]+: /, "");
+  const pins = rows.find(row => row.label.startsWith(clause.slice(0, 4)))?.pins ?? [];
+  const wordsBy = new Map(pins.map(pin => [pin, new Set((covers[pin] ?? []).flatMap(wordsOf))]));
+  const covered = new Set([...wordsBy.values()].flatMap(words => [...words]));
+  const outside = pins.flatMap(pin => (covers[pin] ?? []).filter(phrase => !body.includes(phrase)));
+  const uncovered = [...new Set(wordsOf(body).filter(word => !covered.has(word)))];
+  const withoutOwnWord = pins.filter(pin => {
+    const others = new Set(pins.filter(other => other !== pin).flatMap(other => [...(wordsBy.get(other) ?? [])]));
+    return [...(wordsBy.get(pin) ?? [])].every(word => others.has(word));
+  });
+  return { outside, uncovered, withoutOwnWord };
+}
+interface AnchorReading {
+  readonly labels: string[];
+  readonly digests: string[];
+  readonly coverage: { [letter: string]: Coverage };
+}
+/** The outside anchor's reading of the export row's notes: the first acceptance line only, so an appended note never moves it. */
+function anchorOf(notes: string, rows: readonly Row[] = ROWS, covers: Readonly<Record<string, readonly string[]>> = COVERS): AnchorReading {
+  const acceptance = /^Acceptance: (.*)$/m.exec(notes)?.[1] ?? "";
+  const clauses = acceptance === "" ? [] : acceptance.split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
+  const quoted = /\('([^']*)' over /.exec(clauses[0] ?? "")?.[1] ?? "";
+  const names = quoted === "" ? [] : quoted.split("|");
+  // A spelling is written as its placeholder only when one of SPELLINGS composes exactly that text.
+  const placeholderOf = (name: string): string => SPELLINGS.find(spelling => acceptanceText(spelling) === name)?.placeholder ?? name;
+  const labels = clauses.map(clause => names.reduce((text, name) => text.split(name).join(placeholderOf(name)), clause));
+  return { labels, digests: names.map(sha256), coverage: Object.fromEntries(labels.map(label => [label.charAt(1), coverageOf(label, rows, covers)])) };
+}
+/** `${pin}:${assertion count}`, pushed by each pin's case after its witness compares equal; the last case holds it to the roster. */
+const REACHED: string[] = [];
+interface RosterWiring {
+  readonly allowlistChannel: string;
+  readonly rfCommand: string;
+  readonly exportFile: string;
+}
+
 interface RosterPin {
   readonly id: string;
   readonly witness: JsonValue;
@@ -649,8 +1173,19 @@ interface Roster {
   readonly orchestration: readonly OrchestrationRoot[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  readonly reached: readonly string[];
+  readonly wiring: RosterWiring;
 }
-/** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
+/** wb-6njq F2: a value with itself and every object and array it holds frozen, depth first. */
+function frozenDeep<T>(value: T): T {
+  if (value !== null && typeof value === "object") {
+    for (const child of Object.values(value)) frozenDeep(child);
+    Object.freeze(value);
+  }
+  return value;
+}
+/** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster; since wb-6njq F2 the
+ * parsed roster is frozen throughout, so no case or helper swaps a witness in it (a write to it throws). */
 function readRoster(): Roster {
   const raw: unknown = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8"));
   if (!isObject(raw) || !Array.isArray(raw.rows) || !Array.isArray(raw.spellings) || !Array.isArray(raw.orchestration)) {
@@ -676,22 +1211,167 @@ function readRoster(): Roster {
     if (!isObject(entry) || typeof entry.module !== "string" || typeof entry.declares !== "string") throw new Error(`roster orchestration[${index}] needs a module and a declaration`);
     return { module: entry.module, declares: entry.declares };
   });
+  const wiring = raw.wiring;
+  if (!isObject(wiring) || typeof wiring.allowlistChannel !== "string" || typeof wiring.rfCommand !== "string" || typeof wiring.exportFile !== "string") {
+    throw new Error("roster wiring needs an allowlistChannel, an rfCommand and an exportFile");
+  }
   for (const field of ["bead", "riPin", "riProbe", "rfVersion", "rfCommit"] as const) {
     if (typeof raw[field] !== "string") throw new Error(`roster ${field} must be a string`);
   }
-  return {
+  return frozenDeep({
     bead: String(raw.bead), riPin: String(raw.riPin), riProbe: String(raw.riProbe), rfVersion: String(raw.rfVersion), rfCommit: String(raw.rfCommit),
     spellings, scanRoots: strings(raw.scanRoots, "scanRoots"), knownCatalogs: strings(raw.knownCatalogs, "knownCatalogs"),
     enumeratedFlags: strings(raw.enumeratedFlags, "enumeratedFlags"), orchestration, rows, tests: strings(raw.tests, "tests"),
-  };
+    reached: strings(raw.reached, "reached"), wiring: { allowlistChannel: wiring.allowlistChannel, rfCommand: wiring.rfCommand, exportFile: wiring.exportFile },
+  });
 }
 
 const ROSTER = readRoster();
 
-function rosterWitness(pin: string): JsonValue {
+/** A pin's witness in the parsed roster; like every reader each pin's runner calls, a const binding, so no helper rebinds it (wb-6njq
+ * F2: a function declaration is a mutable binding). */
+const rosterWitness = (pin: string): JsonValue => {
   const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
+};
+/** wb-1f2w F6: true when a case's source reads the roster - the witnesses it is held to (rosterWitness), the parsed roster
+ * (ROSTER) or the roster's reader (readRoster). */
+const readsRoster = (source: string): boolean => /\b(?:rosterWitness|ROSTER|readRoster)\b/.test(source);
+/** The intrinsic source reader, captured at load: Function.prototype.toString reads a function's own source text, which an own
+ * toString a case carries never changes (wb-tnig F3). */
+const INTRINSIC_SOURCE = Function.prototype.toString;
+/** A case's own source text, read through the intrinsic reader (wb-tnig F3). */
+const sourceOf = (fn: () => Promise<JsonValue>): string => INTRINSIC_SOURCE.call(fn);
+/** The names whose call runs evaluated text (wb-tnig F3): composed text can name a roster reader without spelling it. */
+const EVALUATOR = "eval";
+const FUNCTION_CONSTRUCTOR = "Function";
+const EVALUATORS: readonly string[] = [EVALUATOR, FUNCTION_CONSTRUCTOR];
+/** The source text native code reads as - a bound function, a proxy or a built-in - which shows no source at all (wb-tnig F3). */
+const NATIVE_SOURCE = /\{\s*\[native code\]\s*\}\s*$/;
+/** wb-tnig F3: true when a source's code, its strings aside (read by parsing it), names an evaluator, as a name or a member. */
+const evaluatesText = (source: string): boolean => {
+  const code = ts.createSourceFile("case.js", `(${source})`, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+  const names = (node: ts.Node): boolean => (ts.isIdentifier(node) && EVALUATORS.includes(node.text)) || ts.forEachChild(node, child => (names(child) ? true : undefined)) === true;
+  return names(code);
+};
+/** wb-1f2w F6, wb-tnig F3: why a case's source cannot vouch for the witness it returns, read over its own source before it runs:
+ * it reads the roster (reads-roster), it reads as native code, as a bound case does (native-source), or its code names an
+ * evaluator (evaluated-text); [] for a source the guard reads clean. */
+const echoReasonsOf = (source: string): string[] =>
+  [...(readsRoster(source) ? ["reads-roster"] : []), ...(NATIVE_SOURCE.test(source) ? ["native-source"] : []), ...(evaluatesText(source) ? ["evaluated-text"] : [])];
+/** The objects and arrays a JSON value holds, itself included (wb-tnig F3). */
+const objectsIn = (value: JsonValue): object[] => {
+  if (value === null || typeof value !== "object") return [];
+  const children: JsonValue[] = Array.isArray(value) ? value : Object.values(value);
+  return [value, ...children.flatMap(objectsIn)];
+};
+/** wb-6njq F2: the structured clone algorithm, captured at load, so the identity reading calls the one it read then. */
+const CLONE: <T>(value: T) => T = structuredClone;
+/** wb-6njq F2: true when the structured clone algorithm copies a value; false for one holding a proxy at any depth (the algorithm
+ * refuses a proxy without running any trap of it), a function or a symbol, none of which a measured witness holds. */
+const cloneable = (value: unknown): boolean => {
+  try {
+    CLONE(value);
+    return true;
+  } catch {
+    return false;
+  }
+};
+/** wb-tnig F3, wb-6njq F2: the routes back to the parsed roster a witness shows, read once its case has run: "uncloneable" when the
+ * structured clone algorithm refuses it - a proxy at any depth, a view whose reads go to its target, the roster's own objects or a
+ * copy (the gate's G11b deep view, G11's shallow one) - read no further, so no trap of it runs; otherwise "roster-object" when it
+ * holds an object of the parsed roster's own witness for its pin - the mark of a witness handed back from the roster by any route (a
+ * helper, a bound or an evaluated case, a shallow copy); [] for a witness showing neither. */
+const routesOf = (witness: JsonValue, pin: string): string[] => {
+  if (!cloneable(witness)) return ["uncloneable"];
+  const own = new Set<object>(objectsIn(rosterWitness(pin)));
+  return objectsIn(witness).some(node => own.has(node)) ? ["roster-object"] : [];
+};
+/** A helper handing a pin's witness back from the roster: E24's shape, whose callers name no roster reader (wb-tnig F3). */
+const witnessOf = (pin: string): JsonValue => rosterWitness(pin);
+/** wb-6njq F2: the gate's G11b deep view of a value (a proxy whose every read of a member is a deep view again) or G11's shallow
+ * view (a proxy reading through to its target); a primitive is its own view. */
+const viewOf = (value: JsonValue, deep: boolean): JsonValue => {
+  if (value === null || typeof value !== "object") return value;
+  return new Proxy(value, deep ? { get: (target, key) => viewOf(Reflect.get(target, key) as JsonValue, true) } : {});
+};
+/** The echo guard's controls, run only by the judged set's identity reading (each hands back pin A1's witness): the gate's P17 echo
+ * (three padding assertions, the witness handed back from the roster), an echo through the parsed roster and one through the
+ * roster read anew - one per reader the guard names; wb-tnig F3's E23 (the P17 echo bound, so its source reads as native code), an
+ * echo whose own toString disguises its source, E24 (the witness handed back through a helper, the source naming no reader) and a
+ * shallow copy of it; R-INLINE-ECHO, the P17 echo with its witness copied inline; and wb-6njq F2's views of the witness through a
+ * helper: the gate's G11b deep view, G11's shallow view and a shallow view over a deep copy. */
+const ECHOES: Readonly<Record<string, () => Promise<JsonValue>>> = {
+  rosterRowsEcho: async () => ROSTER.rows[0]?.pins[0]?.witness ?? null,
+  rereadEcho: async () => readRoster().rows[0]?.pins[0]?.witness ?? null,
+  rosterEcho: async () => {
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    return rosterWitness("A1");
+  },
+  boundEcho: (async () => {
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    return rosterWitness("A1");
+  }).bind(null),
+  disguisedEcho: Object.assign(async () => rosterWitness("A1"), { toString: () => "async () => ({})" }),
+  helperEcho: async () => witnessOf("A1"),
+  copiedEcho: async () => Object.assign({}, witnessOf("A1")),
+  "R-INLINE-ECHO": async () => {
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    return { files: { floor: true, allTs: true }, groupWord: true, sites: [] };
+  },
+  deepViewEcho: async () => viewOf(witnessOf("A1"), true),
+  shallowViewEcho: async () => viewOf(witnessOf("A1"), false),
+  copyViewEcho: async () => viewOf(structuredClone(witnessOf("A1")), false),
+};
+/** wb-tnig F3: the evaluated-text echo controls, as source texts whose evaluator is composed from its name at runtime, so this file
+ * runs no evaluated text and spells no evaluator call: the gate's E22 (a direct call composing the reader's name), the Function
+ * constructor's form, and a quiet text naming an evaluator only inside a string. */
+const EVALUATED_ECHOES: Readonly<Record<string, () => string>> = {
+  composedReader: () => `async () => {\n  return ${EVALUATOR}("roster" + "Witness")("A1");\n}`,
+  constructedFunction: () => `async () => new ${FUNCTION_CONSTRUCTOR}("return 1")()`,
+  quietString: () => `async () => ({ note: "${EVALUATOR} is named in a string only" })`,
+};
+/** wb-6njq F2: true when a value and every object and array it holds are frozen. */
+const frozenThroughout = (value: unknown): boolean =>
+  value === null || typeof value !== "object" || (Object.isFrozen(value) && Object.values(value).every(frozenThroughout));
+/** wb-6njq F2: the gate's G12 roster swap - a helper setting a pin's witness in the parsed roster to a copy of it - read as
+ * "refused" when the write throws a TypeError (a frozen roster), "swapped" when it lands. */
+function swapReading(roster: Roster, pin: string): string {
+  const entry = roster.rows.flatMap(row => row.pins).find(item => item.id === pin);
+  if (entry === undefined) throw new Error(`the roster holds no pin ${pin}`);
+  try {
+    (entry as { witness: JsonValue }).witness = structuredClone(entry.witness);
+    return "swapped";
+  } catch (error) {
+    return error instanceof TypeError ? "refused" : "other";
+  }
+}
+/** wb-6njq F2: every binding each pin's runner reads - its tables (IMPL, REACHED), the parsed roster, the witness reader, the source
+ * guard's readers and the values they read, and the identity reading's readers and the clone they call. */
+const RUNNER_BINDINGS: readonly string[] = [
+  "IMPL", "REACHED", "ROSTER", "rosterWitness", "readsRoster", "INTRINSIC_SOURCE", "sourceOf", "NATIVE_SOURCE", "EVALUATORS", "evaluatesText",
+  "echoReasonsOf", "objectsIn", "CLONE", "cloneable", "routesOf",
+];
+/** wb-6njq F2: how a file of test declares each name at its top level - "const", "let", "var", "function" or "missing". */
+function bindingKindsOf(file: string, names: readonly string[]): JsonObject {
+  const source = parsed(file, textOf(scanOf("test"), file));
+  const kinds = new Map<string, string>();
+  for (const statement of source.statements) {
+    if (ts.isFunctionDeclaration(statement) && statement.name !== undefined) kinds.set(statement.name.text, "function");
+    if (ts.isVariableStatement(statement)) {
+      const flags = statement.declarationList.flags;
+      const kind = (flags & ts.NodeFlags.Const) !== 0 ? "const" : (flags & ts.NodeFlags.Let) !== 0 ? "let" : "var";
+      for (const declaration of statement.declarationList.declarations) if (ts.isIdentifier(declaration.name)) kinds.set(declaration.name.text, kind);
+    }
+  }
+  return Object.fromEntries(names.map(name => [name, kinds.get(name) ?? "missing"]));
 }
 /** What a walked file of this census's own pair holds: walked, its sites and how many of the three placeholders it carries. */
 function ownRead(file: string): JsonObject {
@@ -860,13 +1540,54 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const real = await realRecord();
     const spawn = onlySpawn(real);
     const changed = (next: SpawnRecord): string[] => violationsOf({ ...real, spawns: [next] });
+    const provider = textOf(scanOf("src"), PROVIDER);
+    const environment = (text: string): string[] => violationsOf({ ...real, statics: staticRecord({ [PROVIDER]: text }) });
     const witness = {
       toolsFlag: changed({ ...spawn, argv: [...spawn.argv, "--tools", "/fixture/tools.json"] }),
       reachableCall: changed({ ...spawn, argv: ["--workspace", FIXTURE_ROOT, WORD.group, WORD.verb, "--render", "r1", "--tools", "/fixture/tools.json", "--json"] }),
       toolsVariable: changed({ ...spawn, env: [...spawn.env, "RF_TOOLS"].sort() }),
       pipedStdin: changed({ ...spawn, stdin: "pipe" }),
+      // wb-roxk F4 (S09): a tools flag gated on the parent environment reds while the variable is unset where this census runs,
+      // in every shape the environment reader takes: the gate's own argv edit, a destructuring, a computed read, an alias, env
+      // imported from node:process, and the whole environment handed to the child outside the allowlist channel.
+      envGatedFlag: environment(replaced(provider, ARGV_STATEMENT, ENV_GATED_STATEMENT)),
+      destructuredRead: environment(`${provider}\nexport function toolsFile(): string | undefined {\n  const { PI_TOOLS } = process.env;\n  return PI_TOOLS;\n}\n`),
+      computedRead: environment(`${provider}\nexport const toolsOf = (name: string): string | undefined => process.env[name];\n`),
+      aliasedEnvironment: environment(`${provider}\nconst parent = process.env;\nexport const toolsFile = (): string | undefined => parent.PI_TOOLS;\n`),
+      importedEnvironment: environment(`import { env } from "node:process";\n${provider}\nexport const toolsFile = (): string | undefined => env.PI_TOOLS;\n`),
+      unscrubbedChild: environment(replaced(provider, ALLOWLIST_CALL, "{...process.env}")),
+      destructuredProcess: environment(`${provider}\nexport function toolsFile(): string | undefined {\n  const { env } = process;\n  return env.PI_TOOLS;\n}\n`),
+      globalEnvironment: environment(`${provider}\nexport const toolsFile = (): string | undefined => globalThis.process.env.PI_TOOLS;\n`),
+      reflectedEnvironment: environment(`${provider}\nexport const toolsFile = (): unknown => Reflect.get(process, "env");\n`),
+      // wb-1f2w F1/F2: a runtime value load of the process module - the gate's P11 dynamic import and P12 require, the bare
+      // specifier, a require createRequire returns - and a value re-export of it are environment uses.
+      dynamicProcessImport: environment(`${provider}\nexport const p11 = async (): Promise<string | undefined> => (await import("node:process")).env.PI_TOOLS;\n`),
+      requiredProcess: environment(`${provider}\nexport const p12 = (): string | undefined => require("node:process").env.PI_TOOLS;\n`),
+      bareProcessImport: environment(`${provider}\nexport const toolsFile = async (): Promise<string | undefined> => (await import("process")).env.PI_TOOLS;\n`),
+      createRequiredProcess: environment(`import { createRequire } from "node:module";\n${provider}\nexport const toolsFile = (): string | undefined => createRequire(import.meta.url)("node:process").env.PI_TOOLS;\n`),
+      reexportedProcess: environment(`${provider}\nexport { env } from "node:process";\n`),
+      // wb-tnig F1: the process module loaded through the built-in module loader (the gate's E01 probe; on globalThis.process with
+      // the bare specifier; by a quoted key run by its call method) and through every other loader member the reading names -
+      // require on the main module and on require.main, createRequire read as a member of the module namespace, the module
+      // system's _load - is an environment use.
+      builtinProcess: environment(`${provider}\nexport const e01 = (): string | undefined => process.getBuiltinModule("node:process").env.PI_TOOLS;\n`),
+      builtinGlobal: environment(`${provider}\nexport const toolsFile = (): string | undefined => globalThis.process.getBuiltinModule("process").env.PI_TOOLS;\n`),
+      builtinKeyedCall: environment(`${provider}\nexport const toolsFile = (): string | undefined => process["getBuiltinModule"].call(null, "node:process").env.PI_TOOLS;\n`),
+      mainModuleProcess: environment(`${provider}\nexport const toolsFile = (): string | undefined => process.mainModule?.require("node:process").env.PI_TOOLS;\n`),
+      mainRequireProcess: environment(`${provider}\nexport const toolsFile = (): string | undefined => require.main?.require("node:process").env.PI_TOOLS;\n`),
+      namespaceCreateRequire: environment(`import * as nodeModule from "node:module";\n${provider}\nexport const toolsFile = (): string | undefined => nodeModule.createRequire(import.meta.url)("node:process").env.PI_TOOLS;\n`),
+      internalLoadProcess: environment(`import { Module } from "node:module";\n${provider}\nexport const toolsFile = (): string | undefined => Module._load("node:process").env.PI_TOOLS;\n`),
+      // wb-6njq F1: the process module loaded by a loader reached through await is an environment use.
+      awaitedProcessLoad: environment(`${provider}\nexport const toolsFile = async (): Promise<string | undefined> => (await require)("node:process").env.PI_TOOLS;\n`),
     };
-    expect(witness).toStrictEqual({ toolsFlag: ["tools"], reachableCall: ["group:inference", "commit", "tools", "flag:--render"], toolsVariable: ["env"], pipedStdin: ["stdin"] });
+    expect(witness).toStrictEqual({
+      toolsFlag: ["tools"], reachableCall: ["group:inference", "commit", "tools", "flag:--render"], toolsVariable: ["env"], pipedStdin: ["stdin"],
+      envGatedFlag: ["env-read"], destructuredRead: ["env-read"], computedRead: ["env-read"], aliasedEnvironment: ["env-read"], importedEnvironment: ["env-read"],
+      unscrubbedChild: ["env-read"], destructuredProcess: ["env-read"], globalEnvironment: ["env-read"], reflectedEnvironment: ["env-read"],
+      dynamicProcessImport: ["env-read"], requiredProcess: ["env-read"], bareProcessImport: ["env-read"], createRequiredProcess: ["env-read"], reexportedProcess: ["env-read"],
+      builtinProcess: ["env-read"], builtinGlobal: ["env-read"], builtinKeyedCall: ["env-read"], mainModuleProcess: ["env-read"], mainRequireProcess: ["env-read"],
+      namespaceCreateRequire: ["env-read"], internalLoadProcess: ["env-read"], awaitedProcessLoad: ["env-read"],
+    });
     return witness;
   },
   C2: async () => {
@@ -881,8 +1602,100 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       runnerImport: wired({ [PROVIDER]: `import { runAgent } from "../../agent-runner.js";\n${provider}` }),
       managerDynamic: wired({ [PROVIDER]: `${provider}\nexport const manager = () => import("../../agent-manager.js");\n` }),
       secondLauncher: wired({ "src/workbench/providers/agent-loop.ts": 'import { spawn } from "node:child_process";\nexport const again = (argv: string[]) => spawn("rf", argv);\n' }),
+      // wb-roxk F2 (S01): a runtime load whose specifier is computed is never read as clean - the gate's own array join, a
+      // concatenation, a method call and a variable.
+      managerJoined: wired({ [PROVIDER]: `${provider}\nexport const s01 = () => import(["../../agent", "manager.js"].join("-"));\n` }),
+      runnerConcatenated: wired({ [PROVIDER]: `${provider}\nexport const runner = () => import("../../agent-" + "runner.js");\n` }),
+      managerConcatCall: wired({ [PROVIDER]: `${provider}\nexport const manager = () => import("../../agent-".concat("manager.js"));\n` }),
+      runnerRequired: wired({ [PROVIDER]: `${provider}\nconst runnerPath = "../../agent-runner.js";\nexport const runner = () => require(runnerPath);\n` }),
+      // ...and a literal load through a require createRequire returns, called in place, is a load the closure walk follows.
+      managerCreateRequire: wired({ [PROVIDER]: `import { createRequire } from "node:module";\n${provider}\nexport const manager = () => createRequire(import.meta.url)("../../agent-manager.js");\n` }),
+      // wb-roxk F3 (S02): rf launched through a shell or a wrapper - the gate's own shell launcher in a second module, an env
+      // wrapper, a shell command string, and the provider's own launch moved behind a shell.
+      shellLauncher: wired({ "src/workbench/providers/s02-shell.ts": 'import { spawn } from "node:child_process";\nexport const s02 = () => spawn("sh", ["-c", "rf context render --no-commit --tools /fixture/tools.json"]);\n' }),
+      envWrapper: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = () => spawn("env", ["rf", "context", "render", "--no-commit"]);\n' }),
+      shellCommand: wired({ [SECOND_MODULE]: 'import { execSync } from "node:child_process";\nexport const again = () => execSync("cd /fixture/rf-workspace && rf context render --no-commit");\n' }),
+      providerShell: wired({ [PROVIDER]: replaced(provider, DIRECT_SPAWN, 'spawn("sh",["-c",["rf",...argv].join(" ")],') }),
+      // wb-1f2w F3: require called indirectly - the gate's P03 call, apply, Reflect.apply and a comma operand - is a load the walk
+      // follows, and one handing over no literal specifier is a computed load.
+      managerRequireCall: wired({ [PROVIDER]: `${provider}\nexport const p03 = () => require.call(null, "../../agent-manager.js");\n` }),
+      managerRequireApply: wired({ [PROVIDER]: `${provider}\nexport const manager = () => require.apply(null, ["../../agent-manager.js"]);\n` }),
+      managerReflectApply: wired({ [PROVIDER]: `${provider}\nexport const manager = () => Reflect.apply(require, null, ["../../agent-manager.js"]);\n` }),
+      managerCommaCall: wired({ [PROVIDER]: `${provider}\nexport const manager = () => (0, require)("../../agent-manager.js");\n` }),
+      runnerComputedCall: wired({ [PROVIDER]: `${provider}\nconst runnerPath = "../../agent-runner.js";\nexport const runner = () => require.call(null, runnerPath);\n` }),
+      runnerComputedApply: wired({ [PROVIDER]: `${provider}\nconst runnerPaths = ["../../agent-runner.js"];\nexport const runner = () => require.apply(null, runnerPaths);\n` }),
+      // wb-1f2w F5: a launcher renamed at its import (the gate's P08 module), destructured, bound to a declaration, read by a
+      // quoted key or through a comma operand launches rf as the launcher itself does.
+      renamedLauncher: wired({ "src/workbench/providers/p08-alias.ts": 'import { spawn as run } from "node:child_process";\nexport const p08 = () => run("sh", ["-c", "rf context render --no-commit --tools /fixture/tools.json"]);\n' }),
+      renamedDirect: wired({ [SECOND_MODULE]: 'import { spawn as launch } from "node:child_process";\nexport const again = (argv: string[]) => launch("rf", argv);\n' }),
+      destructuredLauncher: wired({ [SECOND_MODULE]: 'const { "execSync": shell } = require("node:child_process");\nexport const again = () => shell("rf context render --no-commit");\n' }),
+      boundLauncher: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nexport function again(argv: string[]) {\n  const run = launch;\n  return run("rf", argv);\n}\nconst launch = childProcess.spawn as typeof childProcess.spawn;\n' }),
+      keyedLauncher: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nexport const again = (argv: string[]) => childProcess["spawn"]("rf", argv);\n' }),
+      commaLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = (argv: string[]) => (0, spawn)("rf", argv);\n' }),
+      memberLauncher: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nexport const again = (argv: string[]) => childProcess.spawn("rf", argv);\n' }),
+      // ...and every wrapper unwrapped reads (parentheses, a comma operand, as, satisfies, a <T> assertion, a non-null !), one chain
+      // per reading, beside module.require (no control pinned it at the base).
+      launcherTypeWrapped: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = (argv: string[]) => (((0, (<typeof spawn>spawn)!) as typeof spawn) satisfies typeof spawn)("rf", argv);\n' }),
+      managerTypeWrapped: wired({ [PROVIDER]: `${provider}\nexport const manager = () => (((0, (<NodeRequire>require)!) as NodeRequire) satisfies NodeRequire)("../../agent-manager.js");\n` }),
+      managerModuleRequire: wired({ [PROVIDER]: `${provider}\nexport const manager = () => module.require("../../agent-manager.js");\n` }),
+      // wb-tnig F1: a computed specifier handed to the built-in module loader is a computed load; and INFO F4's E07 and E09 (require's
+      // call method and Reflect.apply, each read by a quoted key) are loads the walk follows, as the loader members read by one are.
+      builtinComputed: wired({ [PROVIDER]: `${provider}\nconst toolsModule = "node:process";\nexport const toolsFile = (): unknown => process.getBuiltinModule(toolsModule);\n` }),
+      managerRequireKeyedCall: wired({ [PROVIDER]: `${provider}\nexport const e07 = () => require["call"](null, "../../agent-manager.js");\n` }),
+      managerReflectKeyedApply: wired({ [PROVIDER]: `${provider}\nexport const e09 = () => Reflect["apply"](require, null, ["../../agent-manager.js"]);\n` }),
+      // wb-tnig F2: a launcher picked by a conditional (the gate's E11 module), bound from an array pattern (E13) or a logical
+      // initializer (E14), picked by || or &&, by an assignment used in place, as an element of an array literal or of a name bound
+      // to one (by an index or a quoted index), bound by an object pattern over an array or iterated from an array, launches rf as
+      // the launcher itself does; and a conditional's launcher through a shell is a wrapped launch.
+      conditionalLauncher: wired({ "src/workbench/providers/e11-pick.ts": 'import { execFile, spawn } from "node:child_process";\nexport const e11 = (argv: string[]) => (argv.length > 0 ? spawn : execFile)("rf", argv);\n' }),
+      arrayPatternLauncher: wired({ "src/workbench/providers/e13-array.ts": 'import { spawn } from "node:child_process";\nconst [run] = [spawn];\nexport const e13 = (argv: string[]) => run("rf", argv);\n' }),
+      logicalLauncher: wired({ "src/workbench/providers/e14-either.ts": 'import { execFile, spawn } from "node:child_process";\nconst run = spawn ?? execFile;\nexport const e14 = (argv: string[]) => run("rf", argv);\n' }),
+      orLauncher: wired({ [SECOND_MODULE]: 'import { execFile, spawn } from "node:child_process";\nexport const again = (argv: string[]) => (spawn || execFile)("rf", argv);\n' }),
+      andLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = (argv: string[]) => (argv.length > 0 && spawn)("rf", argv);\n' }),
+      assignedLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nlet run: typeof spawn | undefined;\nexport const again = (argv: string[]) => (run = spawn)("rf", argv);\n' }),
+      elementLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = (argv: string[]) => [spawn][0]("rf", argv);\n' }),
+      heldArrayLauncher: wired({ [SECOND_MODULE]: 'import { execFile, spawn } from "node:child_process";\nconst launchers = [execFile, spawn];\nexport const again = (argv: string[]) => launchers[1]("rf", argv);\n' }),
+      objectPatternLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nconst { 0: run } = [spawn];\nexport const again = (argv: string[]) => run("rf", argv);\n' }),
+      iteratedLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport function again(argv: string[]) {\n  for (const run of [spawn]) run("rf", argv);\n}\n' }),
+      conditionalWrapped: wired({ [SECOND_MODULE]: 'import { spawn, spawnSync } from "node:child_process";\nexport const again = (sync: boolean) => (sync ? spawnSync : spawn)("sh", ["-c", "rf context render --no-commit"]);\n' }),
+      keyedElementLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nconst launchers = [spawn];\nexport const again = (argv: string[]) => launchers["0"]("rf", argv);\n' }),
+      // wb-6njq F1: a launcher bound as a binding element's own default value - the gate's G01 (an array pattern) and G02 (an object
+      // pattern) modules, an element renamed, nested in a defaulted pattern, in a for...of declaration (the gate's G04), in a
+      // parameter's pattern or in a catch clause - or as a parameter's own default value (the gate's G32 boundary control), and one
+      // reached through await (the gate's G03 module, an awaited alias), launches rf as the launcher itself does; and a loader
+      // reached through await is a load the closure walk follows.
+      arrayDefaultLauncher: wired({ "src/workbench/providers/g01-default.ts": 'import { spawn } from "node:child_process";\nconst [run = spawn] = [];\nexport const g01 = (argv: string[]) => run("rf", argv);\n' }),
+      objectDefaultLauncher: wired({ "src/workbench/providers/g02-default.ts": 'import { spawn } from "node:child_process";\nconst { run = spawn }: { run?: typeof spawn } = {};\nexport const g02 = (argv: string[]) => run("rf", argv);\n' }),
+      renamedDefaultLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nconst { launcher: run = spawn }: { launcher?: typeof spawn } = {};\nexport const again = (argv: string[]) => run("rf", argv);\n' }),
+      nestedDefaultLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nconst [{ run = spawn } = {}] = [] as { run?: typeof spawn }[];\nexport const again = (argv: string[]) => run("rf", argv);\n' }),
+      iteratedDefaultLauncher: wired({ "src/workbench/providers/g04-loopdefault.ts": 'import { spawn } from "node:child_process";\nexport function g04(argv: string[]) { for (const [run = spawn] of [[]]) run("rf", argv); }\n' }),
+      parameterPatternLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = (argv: string[], { run = spawn }: { run?: typeof spawn } = {}) => run("rf", argv);\n' }),
+      catchDefaultLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport function again(argv: string[]) {\n  try {\n    throw {};\n  } catch ({ run = spawn }) {\n    return run("rf", argv);\n  }\n}\n' }),
+      parameterDefaultLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const g32 = (argv: string[], run = spawn) => run("rf", argv);\n' }),
+      awaitedLauncher: wired({ "src/workbench/providers/g03-await.ts": 'import { spawn } from "node:child_process";\nexport const g03 = async (argv: string[]) => (await spawn)("rf", argv);\n' }),
+      awaitedAlias: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport async function again(argv: string[]) {\n  const run = await spawn;\n  return run("rf", argv);\n}\n' }),
+      awaitedLoader: wired({ [PROVIDER]: `${provider}\nexport const manager = async () => (await require)("../../agent-manager.js");\n` }),
     };
-    expect(witness).toStrictEqual({ respawn: ["respawn"], loopedLaunch: ["loop"], runnerImport: ["orchestrator"], managerDynamic: ["orchestrator"], secondLauncher: ["launches"] });
+    // An orchestrator wired in brings its own environment reads into the launch closure (the agent runner's session directory and
+    // the agent directory's variable), so F4 reads them beside it.
+    expect(witness).toStrictEqual({
+      respawn: ["respawn"], loopedLaunch: ["loop"], runnerImport: ["orchestrator", "env-read"], managerDynamic: ["orchestrator", "env-read"], secondLauncher: ["launches"],
+      managerJoined: ["computed-load"], runnerConcatenated: ["computed-load"], managerConcatCall: ["computed-load"], runnerRequired: ["computed-load"],
+      managerCreateRequire: ["orchestrator", "env-read"],
+      shellLauncher: ["launches", "wrapped"], envWrapper: ["launches", "wrapped"], shellCommand: ["launches", "wrapped"], providerShell: ["wrapped"],
+      managerRequireCall: ["orchestrator", "env-read"], managerRequireApply: ["orchestrator", "env-read"], managerReflectApply: ["orchestrator", "env-read"],
+      managerCommaCall: ["orchestrator", "env-read"], runnerComputedCall: ["computed-load"], runnerComputedApply: ["computed-load"],
+      renamedLauncher: ["launches", "wrapped"], renamedDirect: ["launches"], destructuredLauncher: ["launches"], boundLauncher: ["launches"],
+      keyedLauncher: ["launches"], commaLauncher: ["launches"], memberLauncher: ["launches"], launcherTypeWrapped: ["launches"],
+      managerTypeWrapped: ["orchestrator", "env-read"], managerModuleRequire: ["orchestrator", "env-read"],
+      builtinComputed: ["computed-load"], managerRequireKeyedCall: ["orchestrator", "env-read"], managerReflectKeyedApply: ["orchestrator", "env-read"],
+      conditionalLauncher: ["launches"], arrayPatternLauncher: ["launches"], logicalLauncher: ["launches"], orLauncher: ["launches"], andLauncher: ["launches"],
+      assignedLauncher: ["launches"], elementLauncher: ["launches"], heldArrayLauncher: ["launches"], objectPatternLauncher: ["launches"],
+      iteratedLauncher: ["launches", "loop"], conditionalWrapped: ["launches", "wrapped"], keyedElementLauncher: ["launches"],
+      arrayDefaultLauncher: ["launches"], objectDefaultLauncher: ["launches"], renamedDefaultLauncher: ["launches"], nestedDefaultLauncher: ["launches"],
+      iteratedDefaultLauncher: ["launches", "loop"], parameterPatternLauncher: ["launches"], catchDefaultLauncher: ["launches"],
+      parameterDefaultLauncher: ["launches"], awaitedLauncher: ["launches"], awaitedAlias: ["launches"], awaitedLoader: ["orchestrator", "env-read"],
+    });
     return witness;
   },
   C3: async () => {
@@ -903,6 +1716,36 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       fewerNames: violationsOf({ ...real, spawns: [{ ...spawn, env: spawn.env.filter(name => name !== "PATH") }] }),
       unrelatedLoop: wired({ [PROVIDER]: `${provider}\nexport function passes(): number {\n  let total = 0;\n  for (const pass of [0, 1]) total += pass;\n  return total;\n}\n` }),
       typeOnlyImport: wired({ [PROVIDER]: `import type { AgentManager } from "../../agent-manager.js";\n${provider}` }),
+      // wb-roxk quiet controls of F2-F4: a literal runtime load of a closure module, a shell launcher running no rf, rf inside a
+      // word, an option value and a path of a launcher's arguments, and the parent environment read outside the launch closure.
+      literalLoad: wired({ [PROVIDER]: `${provider}\nexport const redaction = () => import("../redaction.js");\n` }),
+      shellOther: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const status = () => spawn("sh", ["-c", "git status --porcelain"]);\n' }),
+      rfInsideWords: wired({ [SECOND_MODULE]: 'import { execFileSync } from "node:child_process";\nexport const log = () => execFileSync("git", ["log", "--format=rf", "--", "/fixture/rf.log", "surf"]);\n' }),
+      environmentOutside: wired({ [SECOND_MODULE]: "export const home = (): string | undefined => process.env.HOME;\n" }),
+      // RESIDUALS (the HARDENING block): each escape stays unread, so its row is quiet, and the row reds when that changes.
+      "R-ALIASED-LOADER": wired({ [PROVIDER]: `import { createRequire } from "node:module";\n${provider}\nconst load = createRequire(import.meta.url);\nexport const manager = () => load("../../agent-manager.js");\n` }),
+      "R-VARIABLE-COMMAND": wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nconst command = ["rf", "context", "render"].join(" ");\nexport const again = () => spawn("sh", ["-c", command]);\n' }),
+      "R-EVALUATED-ENV": wired({ [PROVIDER]: `${provider}\nexport const toolsFile = (): unknown => new Function("return process.env.PI_TOOLS")();\n` }),
+      // wb-1f2w quiet controls: the process module in type positions only, the call method and Reflect.apply of a function that is
+      // no loader, and a renamed import of no launcher; then wb-1f2w's residual rows (the HARDENING block).
+      processTypes: wired({ [PROVIDER]: `${provider}\nexport type ProcessModule = typeof import("node:process");\nexport type { Process } from "node:process";\n` }),
+      nonLoaderCall: wired({ [PROVIDER]: `${provider}\nconst echoPath = (path: string): string => path;\nexport const manager = () => echoPath.call(null, "../../agent-manager.js");\nexport const reflected = () => Reflect.apply(echoPath, null, ["../../agent-manager.js"]);\n` }),
+      renamedOther: wired({ [SECOND_MODULE]: 'import { readFileSync as run } from "node:fs";\nexport const again = () => run("rf context render --no-commit");\n' }),
+      "R-EVALUATED-LOAD": wired({ [PROVIDER]: `${provider}\nexport const p04 = () => new Function("return import('../../agent-manager.js')")();\n` }),
+      "R-INDIRECT-LOADER": wired({ [PROVIDER]: `${provider}\nexport const manager = () => require.bind(null)("../../agent-manager.js");\n` }),
+      "R-PASSED-LAUNCHER": wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nconst launchers = { run: spawn };\nexport const again = (argv: string[]) => launchers.run("rf", argv);\n' }),
+      // wb-tnig quiet controls: the built-in module loader handed a module other than process, and a conditional, a logical
+      // expression and arrays of no launcher; then wb-tnig's residual row (the HARDENING block).
+      builtinOther: wired({ [PROVIDER]: `${provider}\nexport const fsModule = (): unknown => process.getBuiltinModule("node:fs");\n` }),
+      otherAlternatives: wired({ [SECOND_MODULE]: 'import { readFileSync, statSync } from "node:fs";\nconst [read] = [readFileSync];\nexport const pick = (flag: boolean) => (flag ? readFileSync : statSync)("rf");\nexport const first = () => [statSync][0]("rf");\nexport const either = () => (read ?? statSync)("rf");\n' }),
+      "R-COMPUTED-LAUNCHER": wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nconst method = "spawn";\nexport const again = (argv: string[]) => childProcess[method]("rf", argv);\n' }),
+      // wb-6njq quiet controls: binding-element and parameter defaults and awaits of no launcher; then R-PASSED-LAUNCHER's three members
+      // the new readings border (the HARDENING block): a launcher its caller hands in as a parameter's argument, an awaited call's
+      // result, and a destructuring assignment's default (an assignment pattern is no binding: a later assignment).
+      otherDefaults: wired({ [SECOND_MODULE]: 'import { readFileSync, statSync } from "node:fs";\nconst [read = readFileSync] = [];\nexport const first = () => read("rf");\nexport const pick = (stat = statSync) => stat("rf");\nexport const awaited = async () => (await statSync)("rf");\n' }),
+      passedArgument: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = (argv: string[], run: typeof spawn) => run("rf", argv);\nexport const caller = (argv: string[]) => again(argv, spawn);\n' }),
+      awaitedReturn: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = async (argv: string[]) => (await Promise.resolve(spawn))("rf", argv);\n' }),
+      assignedDefault: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nlet run: typeof spawn | undefined;\n[run = spawn] = [];\nexport const again = (argv: string[]) => run?.("rf", argv);\n' }),
     };
     expect(Object.values(witness)).toEqual(Object.keys(witness).map(() => []));
     return witness;
@@ -910,12 +1753,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 };
 
 describe("wb-tz4r.5 RI observation authority census (RI-UNIFIED-DECISION-INFERENCE-R5, gated on RI-DEC-04/10, until-then leg)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
+  it("the judged set: the frozen shape, the out-of-file roster and the cases agree", async () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:3", "C:3"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+    expect(Object.keys(COVERS).sort(), "every pin carries covered phrases of its clause").toEqual(ROWS.flatMap(row => row.pins).sort());
+    expect({ allowlistChannel: ALLOWLIST_CHANNEL, rfCommand: RF_COMMAND.toString(), exportFile: EXPORT_FILE }).toStrictEqual({ ...ROSTER.wiring });
     expect({
       bead: BEAD, riPin: RI_PIN, riProbe: RI_PROBE, rfVersion: RF_VERSION, rfCommit: RF_COMMIT,
       spellings: SPELLINGS.map(({ placeholder, words, separator }) => ({ placeholder, words: [...words], separator })),
@@ -930,6 +1775,58 @@ describe("wb-tz4r.5 RI observation authority census (RI-UNIFIED-DECISION-INFEREN
     expect(new Set(SPELLINGS.map(acceptanceText)).size).toBe(3);
     // The plain-dot form of the third alternative is the catalog's leaf path, and the provider's own argv is the render group.
     expect([acceptanceText(SPELLINGS[2] ?? SPELLINGS[0] ?? { placeholder: "", words: ["", ""], separator: "any" }), RENDER_LEAF]).toEqual([LEAF, RENDER_GROUP.join(".")]);
+    // wb-1f2w F6, wb-tnig F3: the guard each pin's runner applies, over each echo control's own source: the gate's P17 shape (a
+    // padded case handing back its roster witness), an echo through each other roster reader and the disguised echo read as reading
+    // the roster, E23's bound echo as native code, E22's composed reader and the Function constructor as evaluated text; E24's
+    // helper echo and its shallow copy, R-INLINE-ECHO (its pinned quiet row), a string naming an evaluator and wb-6njq F2's three
+    // views read as none.
+    expect(Object.fromEntries(Object.entries(ECHOES).map(([name, echo]) => [name, echoReasonsOf(sourceOf(echo))]))).toStrictEqual({
+      rosterRowsEcho: ["reads-roster"], rereadEcho: ["reads-roster"], rosterEcho: ["reads-roster"], boundEcho: ["native-source"],
+      disguisedEcho: ["reads-roster"], helperEcho: [], copiedEcho: [], "R-INLINE-ECHO": [], deepViewEcho: [], shallowViewEcho: [], copyViewEcho: [],
+    });
+    expect(Object.fromEntries(Object.entries(EVALUATED_ECHOES).map(([name, text]) => [name, echoReasonsOf(text())]))).toStrictEqual({
+      composedReader: ["evaluated-text"], constructedFunction: ["evaluated-text"], quietString: [],
+    });
+    // wb-6njq F2: the parsed roster is frozen throughout, so the gate's G12 swap throws, and every binding the runner reads is a const
+    // binding, so no helper rebinds one.
+    expect({ frozen: frozenThroughout(ROSTER), swap: swapReading(ROSTER, "A1"), bindings: bindingKindsOf(SELF, RUNNER_BINDINGS) }).toStrictEqual({
+      frozen: true, swap: "refused", bindings: Object.fromEntries(RUNNER_BINDINGS.map(name => [name, "const"])),
+    });
+    // ...and the identity reading over what each echo hands back: every route to the roster's own witness holds one of its objects,
+    // E24's helper echo and its shallow copy included, while the roster read anew and R-INLINE-ECHO hand back whole copies; and
+    // (wb-6njq F2) each view - the gate's G11b deep view, G11's shallow one and the view over a copy - is a proxy the structured
+    // clone algorithm refuses.
+    const handedBack: JsonObject = {};
+    for (const [name, echo] of Object.entries(ECHOES)) handedBack[name] = routesOf(await echo(), "A1");
+    expect(handedBack).toStrictEqual({
+      rosterRowsEcho: ["roster-object"], rereadEcho: [], rosterEcho: ["roster-object"], boundEcho: ["roster-object"], disguisedEcho: ["roster-object"],
+      helperEcho: ["roster-object"], copiedEcho: ["roster-object"], "R-INLINE-ECHO": [], deepViewEcho: ["uncloneable"], shallowViewEcho: ["uncloneable"],
+      copyViewEcho: ["uncloneable"],
+    });
+  });
+
+  it("the outside anchor: the owner filing's export row holds the three clauses, the three spellings and every pin's own words", () => {
+    const row = exportRow(BEAD);
+    const title = typeof row.title === "string" ? row.title : "";
+    const notes = typeof row.notes === "string" ? row.notes : "";
+    const reading = anchorOf(notes);
+    expect([row.id, title.includes(RI_PIN), notes.includes(RI_PIN)], "the row read is the owner filing, pinned in its title and its notes").toEqual([BEAD, true, true]);
+    const quiet: Coverage = { outside: [], uncovered: [], withoutOwnWord: [] };
+    expect(reading.labels, "each clause of the filing, its three spellings as placeholders, equals its row label").toEqual(ROWS.map(entry => entry.label));
+    expect(reading.digests, "the spellings the filing quotes against the composed alternatives").toEqual(SPELLINGS.map(spelling => sha256(acceptanceText(spelling))));
+    expect(reading.digests, "the spellings the filing quotes against the roster digests").toEqual(ROSTER.spellings.map(entry => entry.sha256));
+    expect(reading.coverage, "every clause word covered by its row's pins, each pin with a word of its own").toStrictEqual(Object.fromEntries(ROWS.map(entry => [entry.label.charAt(1), quiet])));
+    // Controls: an appended acceptance line leaves the reading unchanged; a pin dropped from its row and a word no phrase covers
+    // each show in the coverage.
+    const appended = anchorOf(`${notes}\nAcceptance: (a) a later line; (b) another one\n`);
+    const rowC = reading.labels[2] ?? "";
+    const droppedPin = coverageOf(rowC, ROWS.map(entry => (entry.id === "C" ? { ...entry, pins: entry.pins.filter(pin => pin !== "C3") } : entry)), COVERS);
+    const extraWord = coverageOf(`${rowC} quietly`, ROWS, COVERS);
+    expect({ appended: JSON.stringify(appended) === JSON.stringify(reading), droppedPin, extraWord }).toStrictEqual({
+      appended: true,
+      droppedPin: { outside: [], uncovered: ["fails"], withoutOwnWord: [] },
+      extraWord: { outside: [], uncovered: ["quietly"], withoutOwnWord: [] },
+    });
   });
 
   for (const row of ROWS) {
@@ -938,8 +1835,16 @@ describe("wb-tz4r.5 RI observation authority census (RI-UNIFIED-DECISION-INFEREN
         it(pin, { timeout: 120_000 }, async () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
+          // wb-1f2w F6, wb-tnig F3: a case measures its own witness; one whose own source reads the roster, reads as native code or
+          // names an evaluator cannot vouch for what it returns.
+          expect(impl === undefined ? ["no case"] : echoReasonsOf(sourceOf(impl)), `${pin}'s case cannot vouch for its witness`).toEqual([]);
           const witness = impl === undefined ? null : await impl();
+          // wb-tnig F3: a witness holding an object of the roster's own witness was handed back from the roster, by whatever route;
+          // wb-6njq F2: one the structured clone algorithm refuses (a proxy at any depth) cannot show where its reads go, so it is
+          // refused too, and the roster both readings hold it to is frozen.
+          expect(routesOf(witness, pin), `${pin}'s witness shows a route back to the roster`).toEqual([]);
           expect(witness, `witness ${pin}: ${JSON.stringify(witness)}`).toStrictEqual(rosterWitness(pin));
+          REACHED.push(`${pin}:${expect.getState().assertionCalls}`);
         });
       }
     });
@@ -962,5 +1867,6 @@ describe("wb-tz4r.5 RI observation authority census (RI-UNIFIED-DECISION-INFEREN
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
   });
 });

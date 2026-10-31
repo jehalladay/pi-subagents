@@ -74,6 +74,21 @@
     "anchor": "src/workbench/control.ts:./capability-registry.js",
     "identifierAnchor": "src/workbench/control.ts:isCoreMintedDecision",
     "detachedHost": "src/workbench/hosts/local-detached.ts:registryFor",
+    "detachedCapabilityTable": "src/workbench/hosts/local-detached.ts:NATIVE_CAPABILITIES",
+    "detachedRegistrars": [
+      "registerNativeForgeGateStatus@../providers/forge.js",
+      "registerNativeHyperUnixFind@../providers/hyperunix.js",
+      "registerNativeReactiveFiberRender@../providers/reactivefiber.js",
+      "registerNativeFurnaceRunInspect@../providers/furnace.js"
+    ],
+    "detachedArguments": [
+      "registry",
+      "request.cwd"
+    ],
+    "registerMember": "CapabilityRegistry.register",
+    "registryModule": "src/workbench/capability-registry.ts:CapabilityRegistry",
+    "inProcessHost": "src/index.ts",
+    "foreignProducer": "forge",
     "executorProviders": [
       "furnace",
       "claude-agent-sdk",
@@ -198,7 +213,10 @@
     "R-COMPOSED",
     "R-LOOKALIKE",
     "R-UNNAMED",
-    "R-INERT-TEXT"
+    "R-RUN-TOGETHER",
+    "R-SHAPE",
+    "R-INERT-TEXT",
+    "R-PRIVATE-STORE"
   ],
   "rows": [
     {
@@ -240,7 +258,9 @@
               "otherPackage": false,
               "mentionOnly": false,
               "transactionModule": false,
-              "composedSpecifier": false
+              "composedSpecifier": false,
+              "callArgumentMention": true,
+              "identifierCallMention": true
             }
           }
         },
@@ -261,6 +281,78 @@
               "reactivefiber",
               "furnace-observe"
             ],
+            "detachedEntries": {
+              "forge": [
+                "forge.gate.status@1.0.0 read [target] {forge:inspect}"
+              ],
+              "hyperunix": [
+                "hyperunix.find@1.0.0 read [kind,root] {hyperunix:read}"
+              ],
+              "reactivefiber": [
+                "reactivefiber.render.preview@1.0.0 read [] {reactivefiber:render}"
+              ],
+              "furnace-observe": [
+                "furnace.run.inspect@1.0.0 read [runId] {furnace:inspect}"
+              ]
+            },
+            "seam": {
+              "constructions": [
+                "src/index.ts:registryFor",
+                "src/workbench/hosts/local-detached.ts:registryFor"
+              ],
+              "registrations": [
+                "src/workbench/hosts/local-detached.ts:registryFor: module.register read",
+                "src/workbench/hosts/local-detached.ts:registryFor: registry.register read",
+                "src/workbench/hosts/local-detached.ts:registryFor: registry.register assign",
+                "src/workbench/hosts/local-detached.ts:registryFor: module.register call",
+                "src/workbench/providers/forge.ts:registerForgeGateStatus: registry.register call",
+                "src/workbench/providers/forge.ts:registerNativeForgeGateStatus: registry.register call",
+                "src/workbench/providers/furnace.ts:registerFurnaceRunInspect: registry.register call",
+                "src/workbench/providers/furnace.ts:registerNativeFurnaceRunInspect: registry.register call",
+                "src/workbench/providers/hyperunix.ts:registerHyperUnixFind: registry.register call",
+                "src/workbench/providers/hyperunix.ts:registerNativeHyperUnixFind: registry.register call",
+                "src/workbench/providers/reactivefiber.ts:registerReactiveFiberRender: registry.register call",
+                "src/workbench/providers/reactivefiber.ts:registerNativeReactiveFiberRender: registry.register call"
+              ],
+              "references": [
+                "src/workbench/hosts/local-detached.ts:<module>: registerNativeForgeGateStatus import",
+                "src/workbench/hosts/local-detached.ts:<module>: registerNativeFurnaceRunInspect import",
+                "src/workbench/hosts/local-detached.ts:<module>: registerNativeHyperUnixFind import",
+                "src/workbench/hosts/local-detached.ts:<module>: registerNativeReactiveFiberRender import",
+                "src/workbench/hosts/local-detached.ts:prepareBoot: registryFor call",
+                "src/workbench/hosts/local-detached.ts:registryFor: registerNativeForgeGateStatus call",
+                "src/workbench/hosts/local-detached.ts:registryFor: registerNativeFurnaceRunInspect call",
+                "src/workbench/hosts/local-detached.ts:registryFor: registerNativeHyperUnixFind call",
+                "src/workbench/hosts/local-detached.ts:registryFor: registerNativeReactiveFiberRender call",
+                "src/workbench/hosts/local-detached.ts:startDetachedHost: registryFor call",
+                "src/workbench/native-modules.ts:registerNativeProviders: registerNativeForgeGateStatus call",
+                "src/workbench/native-modules.ts:registerNativeProviders: registerNativeFurnaceRunInspect call",
+                "src/workbench/native-modules.ts:registerNativeProviders: registerNativeHyperUnixFind call",
+                "src/workbench/native-modules.ts:registerNativeProviders: registerNativeReactiveFiberRender call"
+              ],
+              "storeMembers": [
+                "providers"
+              ],
+              "storeReferences": [
+                "src/ui/workflow-inspector.ts:graphModelRows: supernode.providers read",
+                "src/workbench/capability-registry.ts:register: this.providers read",
+                "src/workbench/capability-registry.ts:register: this.providers read",
+                "src/workbench/capability-registry.ts:discover: this.providers read",
+                "src/workbench/capability-registry.ts:catalogSnapshot: this.providers read",
+                "src/workbench/capability-registry.ts:effectClassOf: this.providers read",
+                "src/workbench/capability-registry.ts:dispatch: this.providers read",
+                "src/workbench/hosts/local-detached.ts:validateRequest: \"providers\" literal",
+                "src/workbench/hosts/local-detached.ts:validateRequest: request.providers read",
+                "src/workbench/hosts/local-detached.ts:registryFor: request.providers read",
+                "src/workbench/hosts/local-detached.ts:prepareBoot: request.providers read",
+                "src/workbench/hosts/local-detached.ts:<module>: \"providers\" literal",
+                "src/workbench/hosts/local-detached.ts:providerManifest: \"providers\" literal",
+                "src/workbench/hosts/local-detached.ts:providerManifest: request.providers read",
+                "src/workbench/hosts/local-detached.ts:startDetachedHost: request.providers read",
+                "src/workbench/hyperunix-observer.ts:resultFacets: summary.providers read",
+                "src/workbench/latency.ts:bounded: item.providers read"
+              ]
+            },
             "tools": [
               "capability_discover()",
               "capability_contract(capabilityId,mode,capabilityVersion,ref)",
@@ -271,7 +363,32 @@
               "hostBoundaryEntry": true,
               "mountSchemaEntry": true,
               "sdkContractEntry": true,
-              "unnamedEntry": false
+              "unnamedEntry": false,
+              "extraInCase": true,
+              "fallThrough": true,
+              "inlineInCase": true,
+              "aliasedImport": true,
+              "besideSwitch": true,
+              "onReturned": true,
+              "newRegistrar": true,
+              "reflectedMember": true,
+              "composedMember": false,
+              "storeBesideSwitch": true,
+              "storeInProcess": true,
+              "storeInCase": true,
+              "storeOnReturned": true,
+              "storeElement": true,
+              "storeReflected": true,
+              "storeDestructured": true,
+              "storeAssigned": true,
+              "storeInClass": true,
+              "storeKeyed": false,
+              "storeEnumerated": false,
+              "storeEvaluated": false,
+              "composedStore": false,
+              "storeRenamed": true,
+              "storeHashPrivate": true,
+              "storePublicReach": true
             }
           }
         },
@@ -301,7 +418,9 @@
               "composedName": false,
               "lookalike": false,
               "invisible": true,
-              "comment": false
+              "comment": false,
+              "runTogether": false,
+              "shapeOnly": false
             }
           }
         }
@@ -355,6 +474,10 @@
               "observer/reversed/confirmed: observer-only calls=0",
               "observer/confirmed/unconfirmed: observer-only calls=0",
               "observer/confirmed/confirmed: observer-only calls=0",
+              "observer/refDropped/unconfirmed: observer-only calls=0",
+              "observer/refDropped/confirmed: observer-only calls=0",
+              "observer/foreignSource/unconfirmed: observer-only calls=0",
+              "observer/foreignSource/confirmed: observer-only calls=0",
               "otherVerb/none/unconfirmed: missing-exact-grant calls=0",
               "otherVerb/none/confirmed: missing-exact-grant calls=0",
               "otherVerb/causation/unconfirmed: missing-exact-grant calls=0",
@@ -363,6 +486,10 @@
               "otherVerb/reversed/confirmed: missing-exact-grant calls=0",
               "otherVerb/confirmed/unconfirmed: missing-exact-grant calls=0",
               "otherVerb/confirmed/confirmed: missing-exact-grant calls=0",
+              "otherVerb/refDropped/unconfirmed: missing-exact-grant calls=0",
+              "otherVerb/refDropped/confirmed: missing-exact-grant calls=0",
+              "otherVerb/foreignSource/unconfirmed: missing-exact-grant calls=0",
+              "otherVerb/foreignSource/confirmed: missing-exact-grant calls=0",
               "exact/none/unconfirmed: no-confirmed-ownership calls=0",
               "exact/none/confirmed: no-confirmed-ownership calls=0",
               "exact/causation/unconfirmed: no-confirmed-ownership calls=0",
@@ -370,7 +497,11 @@
               "exact/reversed/unconfirmed: no-confirmed-ownership calls=0",
               "exact/reversed/confirmed: no-confirmed-ownership calls=0",
               "exact/confirmed/unconfirmed: operator-confirmation calls=0",
-              "exact/confirmed/confirmed: ok:settled calls=1"
+              "exact/confirmed/confirmed: ok:settled calls=1",
+              "exact/refDropped/unconfirmed: no-confirmed-ownership calls=0",
+              "exact/refDropped/confirmed: no-confirmed-ownership calls=0",
+              "exact/foreignSource/unconfirmed: no-confirmed-ownership calls=0",
+              "exact/foreignSource/confirmed: no-confirmed-ownership calls=0"
             ],
             "invocations": {
               "plain": 1,

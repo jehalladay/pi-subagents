@@ -31,8 +31,27 @@
  *    accepts exactly the five kinds, the slice maps them one to one onto TOPOLOGY_RELATION_CLASSES with only inferred-hypothesis
  *    non-authoritative, the agent's read counts the same five, and a producer-stated hypothesis from the debug ref to the component
  *    reads inferred-hypothesis, non-authoritative, hypothesis-only. A3 the trigger: no src or qa file spells the mapping VOCABULARY
- *    (folded; ReactiveFiber's own spellings removed first), with floors, anchors and controls; a module spelling it must be bound in
- *    MAPPING_READERS and every binding must name such a module (empty both ways today).
+ *    (folded; ReactiveFiber's own spellings removed first), with floors, anchors and controls, and the files the scan judges are
+ *    exactly the files Node's own recursive listing names below each root (whole, wb-52pt F1); a module spelling it must be bound in
+ *    MAPPING_READERS and every binding must name such a module (empty both ways today). Its positive control is PLANTED (wb-u29w F1,
+ *    nested and multi-line since wb-52pt F1): each flagged control in a scratch module of its own, 1 to 5 directories below the plant
+ *    root (src and qa files reach 3) and alone, first, between quiet lines or last, the controls in code, a property read, an import,
+ *    an export line, a double-quoted, a single-quoted and a template string, a whole-line and a trailing line comment, a whole-line
+ *    and a trailing one-line block comment, a plain and a JSDoc block across three lines and lines indented by spaces and by a tab;
+ *    three long plants whose control sits last, first or in the middle of filler runs each longer than the longest src or qa text in
+ *    characters, in UTF-8 bytes and in lines; and a long-line plant whose control sits in the middle of one line, between filler runs
+ *    each longer than the longest src or qa line in characters and in bytes (wb-52pt cut #2; bytes since wb-y4c9 F2, each run checked
+ *    against both measures) - beside a quiet anchor module holding every quiet control, goes through the one scan src and qa go
+ *    through (vocabularyScan), which spells for each plant exactly the tokens its control spells. What the listing and the plants
+ *    prove, and no more (wb-52pt cut #2, answering the cut #1 refusal U1): a scan reds that walks less than the listed tree, or whose
+ *    judge keeps of each file only a head window, a tail window or a head-and-tail pair of a fixed number of lines or of characters
+ *    (or of bytes, wb-y4c9 F2), cuts each line to such a window of characters (or of bytes), or skips files or drops lines longer
+ *    than a fixed length (in characters or in bytes), whenever the window (each window of the pair) or the length is shorter than the
+ *    longest src or qa text or line in its measure - as it is whenever the read hides any part of one; and so does a judge that drops
+ *    or blanks any one of these: whole-line or trailing line comments, block comments on one line (whole-line or trailing) or across
+ *    lines (plain or JSDoc) or their continuation lines; double-quoted, single-quoted or template strings; import or export lines;
+ *    lines indented by spaces or by a tab; every other line (either parity). Any other partial read is not claimed (Not claimed,
+ *    below).
  *  B, the refusal, (b). B1 relate() refuses every identity spelling a mapping claim would state ("Unknown relationship kind.") and the
  *    ownership form without the owner's own confirmation, each with no effect. B2 a reader serving the claim as a stored row: the
  *    slice reads it as an unknown-relation-kind reference, never an edge, and the agent's read counts nothing and flags partial. B3 the
@@ -47,7 +66,24 @@
  *    vendor) read in block units (a paragraph, list item, table row, heading or fence line with its continuation lines): no unit
  *    couples the visual family (screenshot, React debug id, devtools, UI element) with a Fiber word (FiberOptics, Fiber ref or
  *    identity; rf's own ReactiveFiber spellings excluded), with floors, every named root and file read, and anchors on both families.
- *    C2 the judge's controls.
+ *    Its positive control is PLANTED (wb-u29w F1, nested and multi-unit since wb-gy3t and wb-52pt F1): each C2 control in a scratch
+ *    markdown file of its own - each flagged one at 1 to 6 path segments (Pi docs reach 4) and alone, first, between quiet units or
+ *    last, the flagged ones units of every kind (paragraphs, one of them on two lines, a bullet and a numbered list item, a table row,
+ *    a heading, a fence line with its continuation, a quote and an HTML unit); three long plants whose flagged unit sits last, first
+ *    or in the middle of filler runs each longer than the longest Pi doc in characters, in UTF-8 bytes and in units; and a long-unit
+ *    plant, one unit whose coupled sentence sits in its middle, between filler runs each longer than the longest Pi doc unit in
+ *    characters and in bytes (wb-52pt cut #2; bytes since wb-y4c9 F2, each run checked against both measures) - and a flagged one
+ *    below every DOC_SKIP root and two nested node_modules, go through the one scan the repository goes through (docScan, whose claim
+ *    judge is claimUnitsOf, the one C2 controls through claimUnitsIn): it reads exactly the flagged and quiet plants, its claims are
+ *    exactly the flagged controls' coupled units (one each, as C2 reads them), and the skip plants are on disk and unread (skipped,
+ *    held to the roster: wb-52pt F2). What the plants prove, and no more (wb-52pt cut #2, answering the cut #1 refusal U1b): a
+ *    docScan whose read or claim judge keeps of each file only a head window, a tail window or a head-and-tail pair of a fixed number
+ *    of units or of characters (or of bytes, wb-y4c9 F2), cuts each unit to such a window of characters (or of bytes), or skips files
+ *    or drops units longer than a fixed length (in characters or in bytes) reds, whenever the window (each window of the pair) or the
+ *    length is shorter than the longest Pi doc or unit in its measure - as it is whenever the read hides any part of one; and so does
+ *    one that drops paragraphs, headings, fence lines, quotes, HTML units, table rows, bullet or numbered list items or every other
+ *    unit (either parity), or joins no continuation line. Any other partial read is not claimed (Not claimed, below). C2 the judge's
+ *    controls.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the whole judged set - every row's id, label and
  * pins, every pin's witness, the constants, the vocabularies and the residual families and every registered test title - is held to
@@ -55,9 +91,31 @@
  * bead's own acceptance text in its owner filing, the first paragraph of its notes in the tracker export (.beads/issues.jsonl). No
  * case reads the whole notes: the lane appends a note after every cut and every gate and a ledger hop exports each one, so every
  * reading of the export goes through the owner filing, which the append-only notes keep byte-stable (Q6 holds its own reading to an
- * appended note). The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and
- * the set of pins that reached their witness. Not claimed: an edit of this file and the roster together - the bead text anchors
- * only the labels of rows A to C.
+ * appended note). The first case also reads the vitest task tree as collected (every registered test, the last case included, in
+ * roster order, in run mode, not inverted); the last case reads it as run (each other test in run mode, ran before it), and the two
+ * records every pin's case keeps (wb-u29w F2): COMPARED, each pin whose compare read the roster's witness (rosterWitness records
+ * every read), once and in row order, and REACHED, each pin that passed its compare with the witness it compared, held again to a
+ * fresh read of the roster - so a compare weakened to read no expected witness, or skipped behind a return with a forged record,
+ * reds the last case. Not claimed: an edit of this file and the roster together - the bead text anchors only the labels of rows A to
+ * C; a scan edited to tell the planted scratch from the repository (by its base or a plant's path) - the plants prove only the
+ * partial reads rows A3 and C1 name, not that the scans read whole texts, nor that they read the repository the way they read the
+ * plants; any partial read of another shape (wb-52pt cut #2, the cut #1 refusal U1 and U1b), among them a window sized as a share of
+ * each file, line or unit (a head-and-tail pair of shares can reach a middle control), a sampling of lines or units other than every
+ * other one, a judge that skips by path or by name a file the walk listed (no A3 plant path names a repository directory; C1's plants
+ * sit under docs/, docs/workbench/ and docs/workbench/receipts/, so a C1 judge that skips a file below one of those by path reds:
+ * wb-y4c9 F1), a read keyed on any syntax, word or text no plant holds, and a cut inside a reader the expectations share (tokensIn,
+ * wordsOf, unitsOf, claimUnitsOf; there only the in-case control checks stand guard); a case dropping or filtering its own scan's
+ * result after the scan ran; a read keeping only the lines or units the plants' controls sit on (the first, the second - the plain
+ * block control's text line, wb-y4c9 F1 - the fourth, the fifth - the JSDoc control's text line - the last and the long middle
+ * plants' middle one); a depth limit at or past every depth the plants and the repository reach (A3's plants 5 directories, src and
+ * qa 3; C1's plants 6 segments, Pi docs 4), which hides nothing today; a file reached only through a symlinked directory (neither the
+ * walks nor the listing follow one, and src, qa and the docs hold none today); a wb-52pt guard edited together with the cut it
+ * guards - whole (or its listing) with a walk cut short that no plant shows, a long plant's, the long line's or the long unit's reach
+ * (their sizing, together with the outreach check beside it since wb-y4c9 F2) with a read cut short past every other plant's control,
+ * the skipped record taken from the plant list with the skip plants unplanted; the DOC_SKIP set itself (the skip plants follow it; Q6
+ * holds it to the roster); a pin's compare weakened together with a REACHED record of the roster's own witness in place of the one
+ * its case computed; a last case that skips itself at run time, is weakened in place, or is removed together with the first case's
+ * collected-tree check.
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY a mapping reader reading only generic keys spells no vocabulary
  * token (Q1); R-PARAPHRASE a doc claim worded outside one family (no visual word, or no Fiber word) is not a coupled unit (Q2);
  * R-COMPOSED a token assembled from three or more parts at runtime is invisible to A3 (two-part joins are read: Q3); R-INTERRUPTED a
@@ -76,12 +134,13 @@
  * named parts, since the producer ships none. No mapping reader is added or faked here: a reader's own cut binds itself in
  * MAPPING_READERS and meets B4.
  *
- * Display paths added: none. Test-only: src, docs, qa and .beads are only read; nothing is written.
+ * Display paths added: none. Test-only: src, docs, qa and .beads are only read; the planted controls are written to makeScratch
+ * scratch only.
  */
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { type Dirent, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import type { JsonValue } from "../src/workbench/capability-registry.js";
 import { type ClaudeProjectionTopology, projectClaudeTopology } from "../src/workbench/claude-topology.js";
 import { buildGraphView } from "../src/workbench/graph-view.js";
@@ -96,6 +155,10 @@ import {
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { type LinkedTopology, selectLinkedTopology, TOPOLOGY_RELATION_CLASSES } from "../src/workbench/topology-slice.js";
 import type { ClaudeNativeObservation } from "../src/workflow/progress.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+// The planted positive controls live in makeScratch scratch (wb-u29w F1); the guard registers through the helper's own afterAll.
+installScratchLeakGuard();
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
@@ -238,10 +301,20 @@ function readRoster(): Roster {
 
 const ROSTER = readRoster();
 
-function rosterWitness(pin: string): JsonValue {
-  const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
+/** A pin's witness in a roster read. */
+function witnessIn(roster: Roster, pin: string): JsonValue {
+  const found = roster.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
+}
+/** The pins whose witness compare read the roster's witness, in run order (wb-u29w F2): rosterWitness records every call, so a
+ * compare that no longer reads the roster (weakened to toBeDefined) or is skipped behind a return leaves its pin out, and a second
+ * read of the same pin doubles it. */
+const COMPARED: string[] = [];
+/** The roster's witness for a pin, as the pin's compare reads it; each read is recorded in COMPARED. */
+function rosterWitness(pin: string): JsonValue {
+  COMPARED.push(pin);
+  return witnessIn(ROSTER, pin);
 }
 function producerPart(name: string): { [key: string]: JsonValue } {
   return objectOf(ROSTER.producer[name], `roster producer.${name}`);
@@ -278,10 +351,36 @@ function filesBelow(directory: string): string[] {
   }
   return files;
 }
+/** Every regular file below a directory as Node's own recursive listing names it, relative to the directory and sorted: the
+ * independent listing A3's walk is held to and C1's skip plants are read from (wb-52pt F1, F2). Node's listing descends into a
+ * symlinked directory, so what it reached through one is dropped: like filesBelow, the listing follows no symlink. */
+function listedBelow(directory: string): string[] {
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(directory, { recursive: true, withFileTypes: true });
+  } catch {
+    return [];
+  }
+  const below = (entry: Dirent): string => relative(directory, join(entry.parentPath, entry.name));
+  const links = entries.filter(entry => entry.isSymbolicLink()).map(entry => `${below(entry)}/`);
+  return entries.filter(entry => entry.isFile()).map(below).filter(file => !links.some(link => file.startsWith(link))).sort();
+}
+/** The order filesBelow and markdownFiles walk in: each directory's entries by name, a directory's whole subtree at its own place,
+ * so two paths compare at their first differing segment. */
+function walkOrder(left: string, right: string): number {
+  const a = left.split("/");
+  const b = right.split("/");
+  const at = a.findIndex((segment, index) => segment !== b[index]);
+  if (at < 0) return a.length - b.length;
+  const x = a[at] ?? "";
+  const y = b[at] ?? "";
+  return x < y ? -1 : x > y ? 1 : 0;
+}
 /** Top-level directories C1 never enters: dependencies, git, the test tree (R-SCOPE) and build or report output. */
 const DOC_SKIP: ReadonlySet<string> = new Set(["node_modules", ".git", "test", "dist", ".forge", "coverage"]);
-/** Every markdown file of the repository outside DOC_SKIP, repo-relative and sorted; node_modules is skipped at every depth. */
-function markdownFiles(directory: string = REPO): string[] {
+/** Every markdown file below `base` (the repository, or C1's planted scratch) outside DOC_SKIP, relative to `base` and sorted;
+ * node_modules is skipped at every depth. */
+function markdownFiles(base: string, directory: string = base): string[] {
   let entries: Dirent[];
   try {
     entries = readdirSync(directory, { withFileTypes: true });
@@ -292,9 +391,9 @@ function markdownFiles(directory: string = REPO): string[] {
   for (const entry of entries.sort(byName)) {
     const path = join(directory, entry.name);
     if (entry.isDirectory()) {
-      if (entry.name === "node_modules" || (directory === REPO && DOC_SKIP.has(entry.name))) continue;
-      files.push(...markdownFiles(path));
-    } else if (entry.isFile() && entry.name.endsWith(".md")) files.push(relative(REPO, path));
+      if (entry.name === "node_modules" || (directory === base && DOC_SKIP.has(entry.name))) continue;
+      files.push(...markdownFiles(base, path));
+    } else if (entry.isFile() && entry.name.endsWith(".md")) files.push(relative(base, path));
   }
   return files;
 }
@@ -345,9 +444,14 @@ function unitsOf(text: string): string[] {
 }
 const isVisual = (unit: string): boolean => tokensIn(unit, VISUAL).length > 0;
 const isFiber = (unit: string): boolean => fiberWordsIn(unit).length > 0;
-/** The units that couple a visual-family word with a Fiber word: C1's claim judge. */
+/** The units that couple a visual-family word with a Fiber word: C1's claim judge, which C1's scan calls on every file's units and
+ * C2 controls through claimUnitsIn (wb-u29w F1). */
+function claimUnitsOf(units: readonly string[]): string[] {
+  return units.filter(unit => isVisual(unit) && isFiber(unit));
+}
+/** A text's coupled units: C1's judge over the text's units. */
 function claimUnitsIn(text: string): string[] {
-  return unitsOf(text).filter(unit => isVisual(unit) && isFiber(unit));
+  return claimUnitsOf(unitsOf(text));
 }
 /** Words joined at runtime, so a composed control never sits on one source line. */
 function compose(...words: string[]): string {
@@ -366,6 +470,210 @@ const SCAN_ROOTS: readonly ScanRoot[] = [
   { root: "src", floor: 100, anchorFile: "src/workbench/reactivefiber-observer.ts", anchorToken: "reactivefiberTopology" },
   { root: "qa", floor: 50, anchorFile: "qa/workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts" },
 ];
+
+/** A scan root's reading: the floor, the quiet anchor and whether every file Node lists below the root was judged. */
+interface ScanReading {
+  readonly root: string;
+  readonly floor: boolean;
+  readonly anchor: boolean;
+  readonly whole: boolean;
+}
+/** A3's scan of one root below `base` (the repository, or A3's planted scratch): the files below the root, held to its floor and its
+ * quiet anchor file, each judged for the vocabulary tokens its text spells, as `<path below base>: <token>`, and the judged files
+ * held to the independent listing (whole, wb-52pt F1), so a walk that skips a depth, a name or a count of files reds on the
+ * repository itself. src, qa and the planted positive control go through this one scan, so a scan that reads no text or reads none
+ * into a token reds on the plants (wb-u29w F1), and so does each partial read row A3 names (wb-52pt F1) - not every partial read. */
+function vocabularyScan(base: string, scan: ScanRoot): { reading: ScanReading; spelled: string[] } {
+  const root = join(base, scan.root);
+  const files = filesBelow(root);
+  const anchor = join(base, scan.anchorFile);
+  const anchorRead = files.includes(anchor) && textOf(anchor).includes(scan.anchorToken) && vocabularyIn(textOf(anchor)).length === 0;
+  expect(files.length >= scan.floor, `${scan.root}: ${files.length} files walked, floor ${scan.floor}`).toBe(true);
+  expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was read and is quiet`).toBe(true);
+  const judged = files.map(file => ({ file, tokens: vocabularyIn(textOf(file)) }));
+  const listed = listedBelow(root);
+  const whole = JSON.stringify(judged.map(entry => relative(root, entry.file)).sort()) === JSON.stringify(listed);
+  expect(whole, `${scan.root}: ${judged.length} files judged, ${listed.length} listed below the root`).toBe(true);
+  const spelled = judged.flatMap(entry => entry.tokens.map(token => `${relative(base, entry.file)}: ${token}`));
+  return { reading: { root: scan.root, floor: files.length >= scan.floor, anchor: anchorRead, whole }, spelled };
+}
+/** A3's controls: each flagged text spells at least one vocabulary token, each quiet text none. The flagged ones sit in the contexts a
+ * judge could drop or blank: code, a property read, an import, a double-quoted string and a whole-line line comment since wb-4nut.1;
+ * a trailing line comment, a whole-line and a trailing one-line block comment, a JSDoc and a plain block comment across three lines, a
+ * single-quoted and a template string, an export line and lines indented by two spaces and by a tab since wb-52pt cut #2. */
+const A3_FLAGGED: readonly string[] = [
+  "const id = fiber.debugId;", 'node["__reactFiber$x9"]', 'import { NodeRef } from "fiber_optics/refs";', "// take a screenshot first",
+  'const tool = "React DevTools";', "uiElement.publicRef", "const MAPPING_TOKEN = 1;", "fiberIdentity(ref)", "props._debugSource",
+  "a debugging id", "screen capture", "FiberRef.parse(value)", "const ready = true; // React DevTools open", "/* the fiber identity */",
+  "const shot = 0; /* a screen grab */", "/**\n * Reads the debug owner of each node.\n */", "const kind = 'fiber mapping';",
+  "const hint = `take a screenshot`;", 'export const tool = "react-devtools";', "  return node._reactInternalInstance;", "\treturn node.debugSource;",
+  "/*\n * Keeps the debug id.\n */",
+];
+const A3_QUIET: readonly string[] = ["ReactiveFiber", "reactivefiber-observer", "reactive_fiber_tsx", "reactiveFiberRef", "nodeRef", "witness", "a debug build", "devtool", "Fiber"];
+/** The root the plants sit below in their scratch. */
+const PLANT_ROOT = "plants";
+/** Where a plant sets its flagged control among quiet filler (wb-52pt F1): alone, first, between quiet lines or units, or last. */
+type Place = "alone" | "first" | "middle" | "last";
+const PLACES: readonly Place[] = ["alone", "first", "middle", "last"];
+/** A control at its place: three filler lines or units before it (past the first line and the first 96 characters) and two after. */
+function placed(control: string, place: Place, filler: string, separator: string): string {
+  const fill = (count: number): string[] => Array.from({ length: count }, () => filler);
+  if (place === "alone") return control;
+  if (place === "first") return [control, ...fill(2)].join(separator);
+  if (place === "middle") return [...fill(3), control, ...fill(2)].join(separator);
+  return [...fill(3), control].join(separator);
+}
+/** Where a long plant sets its control among its filler runs (wb-52pt F1): after one run, before one, or between two. */
+type LongPlace = "first" | "middle" | "last";
+const LONG_PLACES: readonly LongPlace[] = ["first", "middle", "last"];
+/** A length in both measures a fixed-size read can count: UTF-16 characters (a string's length) and UTF-8 bytes (wb-y4c9 F2). */
+interface Reach {
+  readonly chars: number;
+  readonly bytes: number;
+}
+/** The longest of some texts in each measure on its own: a text holding characters past ASCII is longer in bytes than in characters,
+ * so it can be the longest in bytes and not in characters (wb-y4c9 F2). */
+function longestOf(texts: Iterable<string>): Reach {
+  let chars = 0;
+  let bytes = 0;
+  for (const text of texts) {
+    chars = Math.max(chars, text.length);
+    bytes = Math.max(bytes, Buffer.byteLength(text));
+  }
+  return { chars, bytes };
+}
+/** The filler runs beside a long plant's control: its text split at the control, without the empty side of a first or last one. */
+function runsBeside(text: string, control: string): string[] {
+  return text.split(control).filter(run => run.length > 0);
+}
+/** Whether every run outreaches `longest` in both measures, so a fixed window of either measure that hides any part of the longest
+ * text (line, unit) hides the control beyond the run as well (wb-y4c9 F2). */
+function outreaches(runs: readonly string[], longest: Reach): boolean {
+  return runs.length > 0 && runs.every(run => run.length > longest.chars && Buffer.byteLength(run) > longest.bytes);
+}
+/** A long plant's text: its control after a run of filler (last), before one (first) or between two (middle), each run longer than
+ * `longest` - the longest text the repository scan read - in each of the measures given (wb-52pt F1, cut #2): the count of lines or
+ * units, the characters and, since wb-y4c9 F2, the UTF-8 bytes. So a judge keeping only a head window of fixed size misses a last
+ * control, a tail window a first one, and a head-and-tail pair a middle one, whenever the window (each window of the pair) is shorter
+ * than the longest repository text in its own measure - which it is whenever it would hide any part of one. */
+function pastLongest(control: string, filler: string, separator: string, longest: Reach & { readonly count: number }, place: LongPlace): string {
+  const step: Reach = { chars: filler.length + separator.length, bytes: Buffer.byteLength(filler + separator) };
+  const count = Math.max(longest.count, Math.ceil(longest.chars / step.chars), Math.ceil(longest.bytes / step.bytes)) + 1;
+  const run = Array.from({ length: count }, () => filler);
+  return (place === "first" ? [control, ...run] : place === "middle" ? [...run, control, ...run] : [...run, control]).join(separator);
+}
+/** A3's quiet filler line: it spells no token, and beside a control it adds none across a line break (each plant is checked). */
+const A3_FILLER = 'export const quiet = "witness";';
+/** A3's plant directories below the plant root: depth 1 to 5, deeper than any src or qa file (both reach 3). */
+const A3_DIRS: readonly string[] = ["", "a/", "a/b/", "a/b/c/", "a/b/c/d/"];
+/** Scratch directories the cases planted; each is removed after its case. */
+const scratches: string[] = [];
+afterEach(() => {
+  removeScratch(...scratches.splice(0));
+});
+function plantScratch(prefix: string): string {
+  const folder = makeScratch(prefix);
+  scratches.push(folder);
+  return folder;
+}
+function plantFile(folder: string, path: string, text: string): void {
+  mkdirSync(dirname(join(folder, path)), { recursive: true });
+  writeFileSync(join(folder, path), `${text}\n`);
+}
+/** A3's planted positive control (wb-u29w F1, nested and multi-line since wb-52pt F1): in scratch, each flagged control in a module
+ * of its own, 1 to 5 directories below the planted root and alone, first, between quiet lines or last; three long plants whose control
+ * sits last (long.ts), first (long-first.ts) or in the middle (long-middle.ts) of filler runs each longer than `longest` (the longest
+ * src or qa text, in characters, bytes and lines); and a long-line plant (long-line.ts) whose control sits in the middle of one line,
+ * between filler runs each longer than the longest src or qa line in characters and in bytes (wb-52pt cut #2; bytes and the outreach
+ * check since wb-y4c9 F2) - beside the quiet anchor module holding every quiet
+ * control, read through vocabularyScan as src and qa are: the scan reads every plant and spells, for each flagged module, exactly the
+ * tokens its control spells read alone, and nothing for the anchor. */
+function plantedVocabulary(longest: { readonly text: Reach; readonly lines: number; readonly line: Reach }): { reading: ScanReading; spelled: string[] } {
+  const folder = plantScratch("fiber-debug-identity-a3-");
+  const flagged = A3_FLAGGED.map((control, index) => ({
+    path: `${PLANT_ROOT}/${A3_DIRS[index % A3_DIRS.length] ?? ""}flagged-${String(index).padStart(2, "0")}.ts`,
+    control,
+    text: placed(control, PLACES[index % PLACES.length] ?? "alone", A3_FILLER, "\n"),
+  }));
+  const control = A3_FLAGGED[0] ?? "";
+  const long = LONG_PLACES.map(place => ({
+    path: `${PLANT_ROOT}/${place === "last" ? "long" : `long-${place}`}.ts`,
+    control,
+    text: pastLongest(control, A3_FILLER, "\n", { ...longest.text, count: longest.lines }, place),
+  }));
+  const longLine = { path: `${PLANT_ROOT}/long-line.ts`, control, text: pastLongest(control, A3_FILLER, " ", { ...longest.line, count: 0 }, "middle") };
+  // wb-y4c9 F2: every filler run beside a long plant's control outreaches the longest src or qa text, and the long line's the longest
+  // line, in characters and in bytes, so a fixed window of either measure that hides any part of one hides the control too.
+  expect(long.map(plant => outreaches(runsBeside(plant.text, control), longest.text)), "each long plant's filler runs outreach the longest src or qa text in characters and in bytes").toEqual([true, true, true]);
+  expect(outreaches(runsBeside(longLine.text, control), longest.line), "the long line's filler runs outreach the longest src or qa line in characters and in bytes").toBe(true);
+  const plants = [...flagged, ...long, longLine].sort((left, right) => walkOrder(left.path, right.path));
+  for (const plant of plants) plantFile(folder, plant.path, plant.text);
+  plantFile(folder, `${PLANT_ROOT}/quiet.ts`, A3_QUIET.join("\n"));
+  expect(plants.map(plant => vocabularyIn(plant.text)), "each plant's filler spells nothing beside its control").toEqual(plants.map(plant => vocabularyIn(plant.control)));
+  const scan = vocabularyScan(folder, { root: PLANT_ROOT, floor: plants.length + 1, anchorFile: `${PLANT_ROOT}/quiet.ts`, anchorToken: A3_QUIET[0] ?? "" });
+  expect(scan.spelled, "each flagged plant spells its own tokens through the scan, the quiet anchor none").toEqual(
+    plants.flatMap(plant => vocabularyIn(plant.text).map(token => `${plant.path}: ${token}`)),
+  );
+  return scan;
+}
+/** C1's scan of every markdown file below `base` (the repository, or C1's planted scratch) outside DOC_SKIP: each file's block units,
+ * and the units among them claimUnitsOf judges coupled, as `<path below base>: <unit>`. The repository and the planted positive control
+ * go through this one scan, so a scan that reads no text, splits none into units or whose claim judge never matches reds on the plants
+ * (wb-u29w F1). */
+function docScan(base: string): { files: string[]; units: { file: string; units: string[] }[]; claims: string[] } {
+  const files = markdownFiles(base);
+  const units = files.map(file => ({ file, units: unitsOf(textOf(join(base, file))) }));
+  const claims = units.flatMap(entry => claimUnitsOf(entry.units).map(unit => `${entry.file}: ${unit.slice(0, 160)}`));
+  return { files, units, claims };
+}
+/** C1's quiet filler unit: it spells no visual and no Fiber word. */
+const C1_FILLER = "This quiet paragraph names neither family.";
+/** C1's plant directories below the plant base: 1 to 6 path segments, deeper than any Pi doc (they reach 4), so a claim filter shaped
+ * on path depth reds (wb-gy3t); the first is the landed docs/ plant's. */
+const C1_DIRS: readonly string[] = ["docs/", "docs/workbench/", "docs/workbench/receipts/", "docs/workbench/receipts/deep/", "docs/workbench/receipts/deep/er/", ""];
+/** C1's planted positive control (wb-u29w F1, nested and multi-unit since wb-gy3t and wb-52pt F1): in scratch, each flagged C2 control
+ * in a markdown file of its own at 1 to 6 path segments and alone, first, between quiet units or last; three long plants whose flagged
+ * unit sits last (long.md), first (long-first.md) or in the middle (long-middle.md) of filler runs each longer than `longest` (the
+ * longest Pi doc, in characters, bytes and units); a long-unit plant (long-unit.md), one unit whose coupled sentence sits in its
+ * middle, between filler runs each longer than the longest Pi doc unit in characters and in bytes (wb-52pt cut #2; bytes and the
+ * outreach check since wb-y4c9 F2); each quiet C2 control in one at the top; and a
+ * flagged control below every DOC_SKIP root and below two nested node_modules - read through docScan as the repository is: the scan
+ * reads exactly the flagged and quiet files, its claims are exactly the flagged controls' own coupled units (each control is one, as
+ * C2 reads it), and the skip plants are on disk and unread - the skipped record, held to the roster (wb-52pt F2). */
+function plantedDocs(longest: { readonly text: Reach; readonly units: number; readonly unit: Reach }): { files: string[]; claims: string[]; skipped: string[] } {
+  const folder = plantScratch("fiber-debug-identity-c1-");
+  const flagged = C2_FLAGGED.map((control, index) => ({
+    path: `${C1_DIRS[index % C1_DIRS.length] ?? ""}flagged-${index}.md`,
+    control,
+    text: placed(control, PLACES[index % PLACES.length] ?? "alone", C1_FILLER, "\n\n"),
+  }));
+  const control = C2_FLAGGED[0] ?? "";
+  const long = LONG_PLACES.map(place => ({
+    path: `docs/${place === "last" ? "long" : `long-${place}`}.md`,
+    control,
+    text: pastLongest(control, C1_FILLER, "\n\n", { ...longest.text, count: longest.units }, place),
+  }));
+  // The long unit is one line, so one unit, and it is its own control: its coupled sentence sits in its middle (wb-52pt cut #2).
+  const unit = pastLongest(control, C1_FILLER, " ", { ...longest.unit, count: 0 }, "middle");
+  // wb-y4c9 F2: every filler run beside a long plant's flagged unit outreaches the longest Pi doc, and the long unit's runs beside its
+  // coupled sentence the longest Pi doc unit, in characters and in bytes.
+  expect(long.map(plant => outreaches(runsBeside(plant.text, control), longest.text)), "each long plant's filler runs outreach the longest Pi doc in characters and in bytes").toEqual([true, true, true]);
+  expect(outreaches(runsBeside(unit, control), longest.unit), "the long unit's filler runs outreach the longest Pi doc unit in characters and in bytes").toBe(true);
+  const coupled = [...flagged, ...long, { path: "docs/long-unit.md", control: unit, text: unit }].sort((left, right) => walkOrder(left.path, right.path));
+  const quiet = C2_QUIET.map((text, index) => ({ path: `quiet-${index}.md`, text }));
+  const skipped = [...[...DOC_SKIP].sort().map(root => `${root}/skipped.md`), "docs/node_modules/skipped.md", "docs/workbench/receipts/node_modules/skipped.md"];
+  for (const plant of [...coupled, ...quiet]) plantFile(folder, plant.path, plant.text);
+  for (const path of skipped) plantFile(folder, path, C2_FLAGGED[0] ?? "");
+  const scan = docScan(folder);
+  expect(scan.files, "the scan reads every flagged and quiet plant and no skipped one").toEqual([...coupled, ...quiet].map(plant => plant.path).sort(walkOrder));
+  expect(coupled.map(plant => claimUnitsIn(plant.control).length), "each flagged plant's control is one coupled unit").toEqual(coupled.map(() => 1));
+  expect(scan.claims, "each flagged plant is its control's coupled unit through the scan, each quiet plant none").toEqual(
+    coupled.flatMap(plant => claimUnitsIn(plant.control).map(found => `${plant.path}: ${found.slice(0, 160)}`)),
+  );
+  const unread = listedBelow(folder).filter(path => path.endsWith(".md") && !scan.files.includes(path));
+  expect(unread, "every skip plant is on disk and unread").toEqual([...skipped].sort());
+  return { files: scan.files, claims: scan.claims, skipped: unread };
+}
 
 /** A mapping reader reads a claim that a UI/debug ref is a FiberOptics component or port. */
 interface MappingWitness {
@@ -595,7 +903,9 @@ function quoteOf(label: string): string {
   return label.replace(/^\([^)]*\) /, "");
 }
 
-/** C2's controls: each flagged text is one coupled unit, each quiet text none. */
+/** C2's controls: each flagged text is one coupled unit, each quiet text none. The flagged ones are units of every kind row C names:
+ * paragraphs, a table row and a bullet list item since wb-4nut.1; a heading, a fence line with its continuation (its closing fence line
+ * is a quiet unit of its own), a quote, an HTML unit, a numbered list item and a paragraph on two lines since wb-52pt cut #2. */
 const C2_FLAGGED: readonly string[] = [
   "Workbench maps a React debug id to its FiberOptics component.",
   "A screenshot is enough to identify the Fiber node it shows.",
@@ -603,6 +913,12 @@ const C2_FLAGGED: readonly string[] = [
   "- Hosted agents may upgrade a debugId into a FiberRef.",
   "The UI element resolves to the fiber_optics node behind it.",
   "React DevTools ids map onto Fiber Optics components.",
+  "## Screenshot to FiberOptics mapping",
+  "```text\nA screenshot maps to its FiberOptics node.\n```",
+  "> A screenshot is enough to identify its FiberRef.",
+  "<p>The UI element is its FiberOptics component.</p>",
+  "1. Map the debug id to its FiberOptics node.",
+  "A screenshot of the panel\nnames its FiberOptics node.",
 ];
 const C2_QUIET: readonly string[] = [
   "Add sections a change needs; use fenced text blocks or screenshots for UI changes.",
@@ -612,8 +928,9 @@ const C2_QUIET: readonly string[] = [
   "Reactive Fiber is not shown in a screenshot.",
 ];
 
-/** The pins that reached their witness compare, in run order; the last case holds it to every pin. */
-const REACHED: string[] = [];
+/** The pins that passed their witness compare, each with the witness it compared, in run order; the last case holds the pins to every
+ * pin and each witness to a fresh read of the roster, so a compare weakened in a pin's case still reds there (wb-u29w F2). */
+const REACHED: { readonly pin: string; readonly witness: JsonValue }[] = [];
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
@@ -679,30 +996,25 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
   },
   A3: async () => {
-    const roots = SCAN_ROOTS.map(scan => {
-      const files = filesBelow(join(REPO, scan.root));
-      const anchor = join(REPO, scan.anchorFile);
-      const anchorRead = files.includes(anchor) && textOf(anchor).includes(scan.anchorToken) && vocabularyIn(textOf(anchor)).length === 0;
-      expect(files.length >= scan.floor, `${scan.root}: ${files.length} files walked, floor ${scan.floor}`).toBe(true);
-      expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was read and is quiet`).toBe(true);
-      return { root: scan.root, floor: files.length >= scan.floor, anchor: anchorRead, files };
-    });
-    const spelled = roots.flatMap(scan => scan.files.flatMap(file => vocabularyIn(textOf(file)).map(token => `${relative(REPO, file)}: ${token}`)));
+    const scans = SCAN_ROOTS.map(scan => vocabularyScan(REPO, scan));
+    const spelled = scans.flatMap(scan => scan.spelled);
     const spellingModules = [...new Set(spelled.map(entry => entry.slice(0, entry.indexOf(":"))))];
     const bound = MAPPING_READERS.map(binding => binding.module);
-    const controls = {
-      flagged: [
-        "const id = fiber.debugId;", 'node["__reactFiber$x9"]', 'import { NodeRef } from "fiber_optics/refs";', "// take a screenshot first",
-        'const tool = "React DevTools";', "uiElement.publicRef", "const MAPPING_TOKEN = 1;", "fiberIdentity(ref)", "props._debugSource",
-        "a debugging id", "screen capture", "FiberRef.parse(value)",
-      ].map(vocabularyIn),
-      quiet: ["ReactiveFiber", "reactivefiber-observer", "reactive_fiber_tsx", "reactiveFiberRef", "nodeRef", "witness", "a debug build", "devtool", "Fiber"].map(vocabularyIn),
-    };
+    const controls = { flagged: A3_FLAGGED.map(vocabularyIn), quiet: A3_QUIET.map(vocabularyIn) };
+    // wb-u29w F1: the planted positive control goes through the scan src and qa went through; wb-52pt F1: its long plants reach past
+    // the longest text below either root, and its long line past the longest line (cut #2), by an independent read of every listed file,
+    // in characters and in bytes (wb-y4c9 F2).
+    const texts = SCAN_ROOTS.flatMap(scan => listedBelow(join(REPO, scan.root)).map(file => textOf(join(REPO, scan.root, file))));
+    const planted = plantedVocabulary({
+      text: longestOf(texts),
+      lines: Math.max(0, ...texts.map(text => text.split("\n").length)),
+      line: longestOf(texts.flatMap(text => text.split("\n"))),
+    });
     expect(spelled, "a src or qa file spelling the mapping vocabulary").toEqual([]);
     expect(spellingModules.filter(module => !bound.includes(module)), "a spelling module not bound in MAPPING_READERS").toEqual([]);
     expect(bound.filter(module => !spellingModules.includes(module)), "a binding naming no spelling module").toEqual([]);
     expect(controls.flagged.every(found => found.length > 0) && controls.quiet.every(found => found.length === 0), "the scan's controls").toBe(true);
-    return json({ roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })), spelled, bound, controls });
+    return json({ roots: scans.map(scan => scan.reading), spelled, bound, controls, planted });
   },
   B1: async () => {
     const { projection } = visualFixture();
@@ -781,10 +1093,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return json({ bound, synthetic });
   },
   C1: async () => {
-    const files = markdownFiles();
-    const units = files.map(file => ({ file, units: unitsOf(textOf(join(REPO, file))) }));
+    const { files, units, claims } = docScan(REPO);
     const all = units.flatMap(entry => entry.units);
-    const claims = units.flatMap(entry => entry.units.filter(unit => isVisual(unit) && isFiber(unit)).map(unit => `${entry.file}: ${unit.slice(0, 160)}`));
     const anchor = (file: string, family: (unit: string) => boolean): boolean => (units.find(entry => entry.file === file)?.units ?? []).some(family);
     const floors = { files: files.length >= 90, units: all.length >= 4500, visual: all.filter(isVisual).length >= 4, fiber: all.filter(isFiber).length >= 10 };
     const roots = Object.fromEntries(DOC_ROOTS.map(root => [root, files.some(file => rootOf(file) === root)]));
@@ -797,7 +1107,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(floors, `markdown files ${files.length}, units ${all.length}`).toStrictEqual({ files: true, units: true, visual: true, fiber: true });
     expect(Object.values(roots).every(Boolean) && Object.values(named).every(Boolean) && Object.values(anchors).every(Boolean), "every named root, file and anchor is read").toBe(true);
     expect(claims, "a Pi doc unit coupling a visual-family word with a Fiber word").toEqual([]);
-    return json({ floors, roots, named, anchors, claims });
+    // wb-u29w F1: the planted positive control goes through the scan the repository went through; wb-52pt F1: its long plants reach
+    // past the longest markdown file that scan read, in characters and in bytes (an independent read; bytes since wb-y4c9 F2) and in
+    // units, and its long unit past the longest unit in both measures (cut #2, an independent read).
+    const texts = files.map(file => textOf(join(REPO, file)));
+    const planted = plantedDocs({
+      text: longestOf(texts),
+      units: Math.max(0, ...units.map(entry => entry.units.length)),
+      unit: longestOf(texts.flatMap(text => unitsOf(text))),
+    });
+    return json({ floors, roots, named, anchors, claims, planted });
   },
   C2: async () => {
     const flagged = C2_FLAGGED.map(text => claimUnitsIn(text).length);
@@ -875,7 +1194,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 };
 
 describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION-R1)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the bead's acceptance text and the cases agree", () => {
+  it("the judged set: the frozen shape, the out-of-file roster, the bead's acceptance text and the cases agree", ({ task }) => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:5", "C:2", "Q:8"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
@@ -898,6 +1217,18 @@ describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION
     const filing = ownerFiling(notes);
     expect(filing.startsWith("Owner filing ("), "the notes' first paragraph is the owner filing").toBe(true);
     for (const row of ROWS.filter(entry => entry.id !== "Q")) expect(filing, `row ${row.id} quotes the owner filing's acceptance`).toContain(quoteOf(row.label));
+    // wb-u29w F2: the records live in the last case, so this case, run first, holds the tree as collected to the roster's tests - a
+    // test removed, renamed, added or skipped at collection (the last case included) reds here, before the last case could miss it.
+    const collected: { readonly name: string; readonly mode: string; readonly fails: boolean }[] = [];
+    const collect = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") collected.push({ name: child.name, mode: child.mode, fails: child.fails === true });
+        else if (child.type === "suite") collect(child.tasks);
+      }
+    };
+    collect(task.file.tasks);
+    expect(collected.map(entry => entry.name), "the collected tests, exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(collected.filter(entry => entry.mode !== "run" || entry.fails).map(entry => `${entry.name} | ${entry.mode}`), "a collected test not in run mode, or inverted").toEqual([]);
   });
 
   for (const row of ROWS) {
@@ -908,7 +1239,7 @@ describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
-          REACHED.push(pin);
+          REACHED.push({ pin, witness });
         });
       }
     });
@@ -938,6 +1269,10 @@ describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION
       walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read),
       "every other test is in run mode, not inverted, and ran before this case",
     ).toEqual([]);
-    expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    const pins = ROWS.flatMap(row => row.pins);
+    expect(COMPARED, "every pin's compare read the roster's witness once, in row order").toEqual(pins);
+    expect(REACHED.map(entry => entry.pin), "every pin reached its witness compare, in row order").toEqual(pins);
+    const fresh = readRoster();
+    expect(REACHED.map(entry => entry.witness), "every reached witness equals a fresh read of the roster").toStrictEqual(pins.map(pin => witnessIn(fresh, pin)));
   });
 });

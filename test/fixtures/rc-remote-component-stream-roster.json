@@ -4,7 +4,7 @@
   "citation": "docs/programs/native-interface-component-contract-2026-10-21/README.md:15@640a3b579a95",
   "scan": {
     "remoteFamily": "\\b(?:remote (?:components?|elements?|producers?|streams?)|components? streams?|rftsx elements?|crosswalks?|callback seriali[sz]ations?)\\b/",
-    "rcFamily": "(?<![\\w-])(?:vibranium-reactive-components|reactive[_-]components)(?![\\w-])/i",
+    "rcFamily": "(?<![\\w-])(?:vibranium[-_.]+reactive[-_.]+components|reactive[_-]components)(?!\\w|-(?!\\d))/i",
     "rcDistribution": "vibranium-reactive-components",
     "rcModule": "reactive_components",
     "censusInstrument": "^test\\/(?:[^/]+-census\\.test\\.ts|fixtures\\/[^/]+-roster\\.json)$/",
@@ -31,16 +31,75 @@
       "coverage",
       ".forge"
     ],
+    "gitData": ".git",
+    "ignoreFile": ".gitignore",
+    "plantedIgnore": [
+      "# a comment",
+      "#hashed",
+      "",
+      "kept",
+      ".dotted",
+      "/lead",
+      "trail/",
+      "/both/",
+      "  padded  ",
+      "*.glob",
+      "glob*",
+      "gl?b",
+      "[gb]lob",
+      "!negated",
+      "inner/slash",
+      "/inner/both/",
+      "two words",
+      "\\#escaped"
+    ],
+    "proseExtensions": [
+      ".md"
+    ],
+    "binaryExtensions": [
+      ".png",
+      ".mp4",
+      ".tgz"
+    ],
     "floors": {
-      "files": 760,
+      "files": 860,
       "modules": {
         "src": 100,
-        "test": 400,
-        "qa": 55
+        "test": 450,
+        "qa": 55,
+        "examples": 5
       },
-      "json": 55,
+      "json": 100,
+      "carriers": 10,
       "manifests": 4
     },
+    "rootFloors": {
+      ".": 20,
+      ".agents": 1,
+      ".codex": 1,
+      ".github": 1,
+      ".pi": 1,
+      "docs": 60,
+      "examples": 6,
+      "media": 2,
+      "new-feedback": 1,
+      "qa": 60,
+      "src": 100,
+      "test": 560,
+      "vendor": 3
+    },
+    "computedLoads": [
+      "qa/workbench/headless-census-child.mjs: import() entryUrl",
+      "qa/workbench/headless-census-child.mjs: import() distUrl(\"workflow/runtime.js\")",
+      "qa/workbench/headless-census-child.mjs: import() distUrl(\"workbench/capability-registry.js\")",
+      "qa/workbench/live-operator-receipt.mjs: import() join(repoRoot, \"dist\", \"workbench\", \"claude-host.js\")",
+      "qa/workbench/live-operator-receipt.mjs: import() join(repoRoot, \"dist\", \"workflow\", \"runtime.js\")",
+      "src/workbench/hosts/local-detached.ts: createRequire().resolve() specifier.text",
+      "src/workbench/hosts/local-detached.ts: createRequire()() request.localProvider.modulePath",
+      "test/e2e/isolated-provider.e2e.test.ts: import() mrUrl",
+      "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href",
+      "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href"
+    ],
     "walkAnchors": [
       "README.md:pi-subagents",
       "src/workbench/capability-registry.ts:CapabilityRegistry",
@@ -76,9 +135,14 @@
       "M-STREAM-RESOLVER",
       "M-EXECUTE-ACTION",
       "M-UNTYPED",
+      "M-BIND-UNKNOWN-ACTION",
+      "M-BARE-REFUSAL",
+      "M-RENDER-FIRST",
+      "M-MISCATEGORIZE",
       "M-FORWARD-UNDECLARED",
       "M-FUNCTION-PASS",
       "M-CALLBACK-REVIVE",
+      "M-EVALUATE-CALLBACK",
       "M-ANY-VERSION",
       "M-NULL-COERCE",
       "M-SORTED-KEYS"
@@ -88,12 +152,17 @@
         "M-RENDER-UNKNOWN",
         "M-STREAM-RESOLVER",
         "M-EXECUTE-ACTION",
-        "M-UNTYPED"
+        "M-UNTYPED",
+        "M-BIND-UNKNOWN-ACTION",
+        "M-BARE-REFUSAL",
+        "M-RENDER-FIRST",
+        "M-MISCATEGORIZE"
       ],
       "C2": [
         "M-FORWARD-UNDECLARED",
         "M-FUNCTION-PASS",
-        "M-CALLBACK-REVIVE"
+        "M-CALLBACK-REVIVE",
+        "M-EVALUATE-CALLBACK"
       ],
       "D2": [
         "M-ANY-VERSION",
@@ -106,7 +175,26 @@
       "accepting an unknown schema version": "M-ANY-VERSION",
       "coercing null": "M-NULL-COERCE",
       "deserializing a callback": "M-CALLBACK-REVIVE"
-    }
+    },
+    "findingKinds": [
+      "executed-action",
+      "evaluated-callback",
+      "untyped-refusal",
+      "bare-refusal",
+      "wrong-refusal",
+      "rendered-before-refusal",
+      "admitted",
+      "rendered-refused",
+      "deserialized-callback",
+      "forwarded-undeclared",
+      "resolved-unknown-component",
+      "resolved-through-stream",
+      "accepted-unknown-schema-version",
+      "bound-unknown-action",
+      "coerced-null",
+      "round-trip-changed",
+      "rendered-mismatch"
+    ]
   },
   "producer": {
     "repo": "ReactiveComponentsSDK",
@@ -210,12 +298,16 @@
     "R-INSTRUMENT",
     "R-OUTSIDE",
     "R-LOOKALIKE",
-    "R-COMMAND-STRING"
+    "R-COMMAND-STRING",
+    "R-BINARY",
+    "R-JSON-NAME",
+    "R-UNRESOLVED",
+    "R-ALIASED-LOADER"
   ],
   "rows": [
     {
       "id": "A",
-      "label": "(trigger, absent today) If Pi ever consumes a remote component stream: no judged module or JSON file names the remote-output family, nothing loads or runs the ReactiveComponents distribution, the nearest readers are reached and quiet, the instrument rule is load-bearing and the gating artifact is measured unshipped, so (d) today: zero remote-stream consumer sites in Pi",
+      "label": "(trigger, absent today) If Pi ever consumes a remote component stream: no judged module, JSON file or carrier names the remote-output family, nothing loads or runs the ReactiveComponents distribution, the nearest readers are reached and quiet, the instrument rule is load-bearing and the gating artifact is measured unshipped, so (d) today: zero remote-stream consumer sites in Pi",
       "pins": [
         {
           "id": "A1",
@@ -226,7 +318,9 @@
               "src": true,
               "test": true,
               "qa": true,
+              "examples": true,
               "json": true,
+              "carriers": true,
               "manifests": true
             },
             "anchorsWalked": true,
@@ -260,6 +354,7 @@
             },
             "planted": {
               "names": [
+                "qa/run.sh:1 token: --remote-stream",
                 "src/consumer.ts:1 identifier: RemoteComponent",
                 "test/x.test.ts:1 identifier: RemoteComponent"
               ],
@@ -272,10 +367,83 @@
               ],
               "files": [
                 "docs/notes.md",
+                "media/x.png",
+                "qa/run.sh",
                 "src/consumer.ts",
                 "test/fixtures/x-roster.json",
                 "test/x-census.test.ts",
                 "test/x.test.ts"
+              ]
+            },
+            "rootFloors": {
+              ".": true,
+              ".agents": true,
+              ".codex": true,
+              ".github": true,
+              ".pi": true,
+              "docs": true,
+              "examples": true,
+              "media": true,
+              "new-feedback": true,
+              "qa": true,
+              "src": true,
+              "test": true,
+              "vendor": true
+            },
+            "skipAnchor": {
+              "ignoreNames": [
+                ".DS_Store",
+                ".beads-credential-key",
+                ".claude",
+                ".dolt",
+                ".forge",
+                ".gitnexus",
+                ".idea",
+                ".scratch",
+                ".temp",
+                ".vscode",
+                "CLAUDE.md",
+                "Thumbs.db",
+                "build",
+                "coverage",
+                "dist",
+                "node_modules",
+                "plan",
+                "progress.md"
+              ],
+              "unanchored": [],
+              "planted": [
+                ".agents",
+                ".pi",
+                "new-feedback"
+              ],
+              "bare": [
+                "node_modules",
+                "dist",
+                "build",
+                "coverage",
+                ".forge"
+              ],
+              "plantedNames": [
+                "kept",
+                ".dotted",
+                "lead",
+                "trail",
+                "both",
+                "padded"
+              ]
+            },
+            "unreadable": {
+              "unreadable": [
+                "src/faulted",
+                "src/sealed",
+                "src/faulty.ts",
+                "src/foreign.ts",
+                "src/locked.ts",
+                "src/uncoded.ts"
+              ],
+              "read": [
+                "src/open.ts"
               ]
             }
           }
@@ -313,7 +481,119 @@
               "composedSpecifier": false,
               "shellArgument": false,
               "otherModule": false,
-              "proseManifest": false
+              "proseManifest": false,
+              "boundConst": true,
+              "boundLet": true,
+              "boundVar": true,
+              "boundDefault": true,
+              "boundDestructuredDefault": true,
+              "boundAssigned": true,
+              "boundCompound": true,
+              "boundNullishAssigned": true,
+              "boundLoop": true,
+              "boundChain": true,
+              "boundParenthesized": true,
+              "boundAsserted": true,
+              "boundSatisfies": true,
+              "boundNonNull": true,
+              "boundAngle": true,
+              "boundConditional": true,
+              "boundNullish": true,
+              "boundOr": true,
+              "boundConcatenated": true,
+              "boundTemplate": true,
+              "partialCommand": true,
+              "partialTemplate": true,
+              "boundCommand": true,
+              "boundModuleFlag": true,
+              "boundFlag": true,
+              "boundElsewhere": true,
+              "computedImport": true,
+              "computedRequire": true,
+              "computedRequireResolve": true,
+              "computedMetaResolve": true,
+              "computedCreateRequire": true,
+              "computedCreateResolve": true,
+              "computedModuleRequire": true,
+              "computedParameter": true,
+              "computedDestructured": true,
+              "computedCaught": true,
+              "computedImported": true,
+              "computedDefaultImport": true,
+              "computedNamespaceImport": true,
+              "computedImportEquals": true,
+              "computedLoopOther": true,
+              "computedForIn": true,
+              "computedLoopTarget": true,
+              "computedAppend": true,
+              "computedDestructuringAssigned": true,
+              "computedPartial": true,
+              "computedMember": true,
+              "computedUnbound": true,
+              "computedCycle": true,
+              "composedComputed": true,
+              "boundOther": false,
+              "computedLiteral": false,
+              "computedBound": false,
+              "computedLoop": false,
+              "computedOtherCall": false,
+              "aliasedLoader": false,
+              "workerLoader": false,
+              "composedAppend": false,
+              "composedCommand": false,
+              "memberCommand": false,
+              "callCommand": false,
+              "importedCommand": false,
+              "pep503Carrier": true,
+              "pep503Requirements": true,
+              "pep503Case": true,
+              "pep503Runs": true,
+              "pep503MixedRun": true,
+              "pep503JsonCommand": true,
+              "pep503CommandString": true,
+              "artifactWheel": true,
+              "artifactSdist": true,
+              "pep503Joined": false,
+              "pep503OtherDistribution": false,
+              "composedCarrier": false,
+              "composedQuotedCarrier": false,
+              "composedContinuedCarrier": false
+            },
+            "carrierHits": [],
+            "jsonCommands": [],
+            "computed": [
+              "qa/workbench/headless-census-child.mjs: import() entryUrl",
+              "qa/workbench/headless-census-child.mjs: import() distUrl(\"workflow/runtime.js\")",
+              "qa/workbench/headless-census-child.mjs: import() distUrl(\"workbench/capability-registry.js\")",
+              "qa/workbench/live-operator-receipt.mjs: import() join(repoRoot, \"dist\", \"workbench\", \"claude-host.js\")",
+              "qa/workbench/live-operator-receipt.mjs: import() join(repoRoot, \"dist\", \"workflow\", \"runtime.js\")",
+              "src/workbench/hosts/local-detached.ts: createRequire().resolve() specifier.text",
+              "src/workbench/hosts/local-detached.ts: createRequire()() request.localProvider.modulePath",
+              "test/e2e/isolated-provider.e2e.test.ts: import() mrUrl",
+              "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href",
+              "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href"
+            ],
+            "carriers": {
+              "hits": [
+                ".github/workflows/gate-pep503.yml:4 - run: pip install vibranium_reactive_components",
+                ".github/workflows/rc.yml:4 - run: pip install vibranium-reactive-components",
+                "bin/rc:2 exec python3 -m reactive_components",
+                "examples/rc.html:1 <script type=\"module\">import { Element } from \"vibranium-reactive-components\";</script>",
+                "forge.toml:2 command = \"python3 -m reactive_components serve\"",
+                "qa/requirements-gate.txt:1 vibranium.reactive.components==0.1.1",
+                "qa/tools/rc.py:1 import reactive_components",
+                "qa/workbench/rc.sh:2 python3 -m reactive_components serve --remote-stream"
+              ],
+              "jsonCommands": [
+                ".codex/hooks.json: command: python3 -m reactive_components serve",
+                "test/fixtures/broken.json:1 {\"command\": \"python3 -m reactive_components\",}"
+              ],
+              "instrumentCommands": [
+                "test/fixtures/x-roster.json: command: python3 -m reactive_components"
+              ],
+              "manifestHits": [
+                "qa/requirements-gate.txt"
+              ]
             }
           }
         },
@@ -357,7 +637,8 @@
                 "spellsFamily": true
               }
             ],
-            "instrumentsOnly": true
+            "instrumentsOnly": true,
+            "rosterCommands": true
           }
         },
         {
@@ -448,6 +729,105 @@
                 "U2:untyped-refusal",
                 "U4:untyped-refusal",
                 "U5:untyped-refusal"
+              ],
+              "M-BIND-UNKNOWN-ACTION": [
+                "U2:admitted",
+                "U2:rendered-refused",
+                "U2:bound-unknown-action",
+                "U5:admitted",
+                "U5:rendered-refused",
+                "U5:bound-unknown-action"
+              ],
+              "M-BARE-REFUSAL": [
+                "U1:bare-refusal",
+                "U2:bare-refusal",
+                "U2:wrong-refusal",
+                "U4:bare-refusal",
+                "U4:wrong-refusal",
+                "U5:bare-refusal",
+                "U5:wrong-refusal"
+              ],
+              "M-RENDER-FIRST": [
+                "U2:rendered-before-refusal",
+                "U5:rendered-before-refusal"
+              ],
+              "M-MISCATEGORIZE": [
+                "U1:wrong-refusal",
+                "U2:wrong-refusal",
+                "U4:wrong-refusal",
+                "U5:wrong-refusal"
+              ]
+            },
+            "reached": {
+              "executed-action": [
+                "M-EXECUTE-ACTION"
+              ],
+              "evaluated-callback": [
+                "M-EVALUATE-CALLBACK"
+              ],
+              "untyped-refusal": [
+                "M-UNTYPED"
+              ],
+              "bare-refusal": [
+                "M-BARE-REFUSAL"
+              ],
+              "wrong-refusal": [
+                "M-BARE-REFUSAL",
+                "M-MISCATEGORIZE",
+                "M-FORWARD-UNDECLARED",
+                "M-FUNCTION-PASS"
+              ],
+              "rendered-before-refusal": [
+                "M-RENDER-FIRST"
+              ],
+              "admitted": [
+                "M-RENDER-UNKNOWN",
+                "M-STREAM-RESOLVER",
+                "M-BIND-UNKNOWN-ACTION",
+                "M-FORWARD-UNDECLARED",
+                "M-CALLBACK-REVIVE",
+                "M-ANY-VERSION",
+                "M-NULL-COERCE"
+              ],
+              "rendered-refused": [
+                "M-RENDER-UNKNOWN",
+                "M-STREAM-RESOLVER",
+                "M-BIND-UNKNOWN-ACTION",
+                "M-FORWARD-UNDECLARED",
+                "M-CALLBACK-REVIVE",
+                "M-ANY-VERSION",
+                "M-NULL-COERCE"
+              ],
+              "deserialized-callback": [
+                "M-CALLBACK-REVIVE"
+              ],
+              "forwarded-undeclared": [
+                "M-STREAM-RESOLVER",
+                "M-FORWARD-UNDECLARED",
+                "M-CALLBACK-REVIVE"
+              ],
+              "resolved-unknown-component": [
+                "M-RENDER-UNKNOWN",
+                "M-STREAM-RESOLVER"
+              ],
+              "resolved-through-stream": [
+                "M-STREAM-RESOLVER"
+              ],
+              "accepted-unknown-schema-version": [
+                "M-ANY-VERSION"
+              ],
+              "bound-unknown-action": [
+                "M-BIND-UNKNOWN-ACTION"
+              ],
+              "coerced-null": [
+                "M-NULL-COERCE"
+              ],
+              "round-trip-changed": [
+                "M-NULL-COERCE",
+                "M-SORTED-KEYS"
+              ],
+              "rendered-mismatch": [
+                "M-NULL-COERCE"
               ]
             }
           }
@@ -500,6 +880,9 @@
                 "F4:admitted",
                 "F4:rendered-refused",
                 "F4:deserialized-callback"
+              ],
+              "M-EVALUATE-CALLBACK": [
+                "F1:evaluated-callback"
               ]
             }
           }

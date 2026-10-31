@@ -503,6 +503,15 @@
       "R-UNTYPED-FLOW",
       "R-NAMESAKE"
     ],
+    "rawControls": [
+      "F-RAW-PROSE",
+      "F-RAW-SHELL",
+      "Q-RAW-NO-DOMAIN"
+    ],
+    "walkControls": [
+      "W-EVERY-LEG",
+      "W-QUIET"
+    ],
     "comparatorMutants": [
       "M-PREFIX",
       "M-SUFFIX",
@@ -809,6 +818,12 @@
             "floorsMet": true,
             "callFloor": 150,
             "callFloorMet": true,
+            "listedByGit": {
+              "src": true,
+              "qa": true,
+              "examples": true
+            },
+            "judgedInFull": true,
             "spellings": [],
             "reads": [],
             "calls": [],
@@ -836,6 +851,27 @@
               "R-UNTYPED-FLOW residual posture=false call=false",
               "R-NAMESAKE residual posture=false call=false"
             ],
+            "rawControls": [
+              "F-RAW-PROSE flagged hits=1",
+              "F-RAW-SHELL flagged hits=1",
+              "Q-RAW-NO-DOMAIN quiet hits=0"
+            ],
+            "walkControls": {
+              "W-EVERY-LEG": {
+                "family": "flagged",
+                "modules": 2,
+                "others": 1,
+                "symlinks": 1,
+                "unreadable": 1
+              },
+              "W-QUIET": {
+                "family": "quiet",
+                "modules": 1,
+                "others": 1,
+                "symlinks": 0,
+                "unreadable": 0
+              }
+            },
             "outside": {
               "judged": true,
               "unjudged": false

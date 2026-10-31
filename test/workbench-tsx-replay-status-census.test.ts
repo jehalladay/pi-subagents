@@ -11,17 +11,53 @@
  * exact on checksum match fails; (c) Pi never synthesizes a replay status word; an unknown word stays unknown (wb-973.10, wb-2j3.2
  * never-synthesize rule)."
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-23; every producer fact rides the roster with its blob id): at the program pin
- * the producer (@reactive-fiber/tsx 0.1.668) closes the replay status words at REPLAY_STATUSES = matched | mismatched | failed
- * (src/replay/report.ts:39), the ReplayReport schema (tests/fixtures/docs/replay-report.schema.json) requires fourteen keys, admits
- * no other and closes status to the same three words, and the codes table (src/diagnostics/codes.ts, 199 rows, set-equal to the
- * frozen list tests/golden/diagnostic-codes.json) carries eight REPLAY rows (:1681-1745) and no RFTSX_REPLAY_VERSION_DRIFT; `git
- * grep` of the code and of replayable_exact over src/ and python/ matches no file. The TSX distribution the installed rf runs (rf
- * 0.1.832, integrations/tsx/runtime-lock.json: @reactive-fiber/tsx 0.1.649 from ReactiveFiberTSXSDK 5da03a7d49f4, an ancestor of
- * the pin) has the same eight rows and three words and no drift code either, and the installed rf package spells no RFTSX_REPLAY
- * code and no rftsx.replay-report or rftsx.render-capture name anywhere. replayable_exact is rf's replayability classification word
- * (the enum replayable_exact | replayable_with_captured_external_inputs | replayable_with_declared_variance | not_replayable of its
- * cli schemas); rf's context.render schema carries no replayability member, so the one rf envelope Pi reads cannot carry it.
+ * FOLLOW-UP wb-fgjz (R694, from the landing-301 gate verdict, cmd_64e5122a4201): F1 the A1 and B2 walk and application loops read
+ * planted controls - B2 records every root it walks and each root's walk reads a planted control after its real files, and each
+ * A1 application reads a planted control beside its real inputs, so the gate's single-file hollows P28 (B2 walks only its first
+ * root), P29 (B2's label application deleted), P30 (A1's descriptor application emptied) and P31 (A1's roster application
+ * emptied) red (that binds the planted half of each application only; that each one judges its REAL inputs is wb-gmx1's, below);
+ * F2 A2 pins the reading's source byte for byte at both placements, so P05b (the provider rewrites the provenance placement's
+ * status word) reds; F3 the coordinated census+roster probes P25 (a residual hollowed from both files), P26 (a pin re-pointed at
+ * another pin's case, its witness copied) and P27 (a vocabulary word dropped from both) red through anchors outside the two files
+ * (FROZEN SHAPE below); F4 C1's count of schema-valid fixtures is corrected to six and pinned.
+ *
+ * TERMINAL FOLLOW-UP wb-gmx1 (R694, from the landing-390 gate verdict, cmd_e24e4268e3e7; hop 3 of the landing-301 chain wb-fb2z.4
+ * -> wb-fgjz -> wb-gmx1, so the R739 TERMINAL enumerate-the-resolvable form): the four classes E1-E4 below are the criterion; each
+ * is cured here, the one escape left is named as a residual with a pinned quiet row (R-SELECTIVE, Q8), and the claims of A1, B2
+ * and the judged set are re-pinned to exactly this set, so a later survivor outside it is record-only unless it contradicts one.
+ * RECORDS: every judge application of A1 (the src modules; the native descriptors; rf's result roster read as one text and entry
+ * by entry) and of B2 (each surface root's files) takes the text its judges read from judgedText(), which records the input's
+ * name and the sha256 of that very text in the application's record as the application judges it. What a record owes is
+ * re-derived from the tree, the native registry and the fixture, never from the application's own lists (owedTrigger,
+ * owedSurface): the real inputs in walk order, then the planted controls. A1 and B2 hold their records to it in the case, their
+ * witnesses carry per application that the record is the owed one and that its anchor input (the root's anchor file with its
+ * token, the preview descriptor with its id, rf's provenance result key) was judged with its real text, and the registration
+ * case holds every record to a fresh re-derivation once more.
+ *  E1 dropped inputs (the gate's N01-N05 and N19, and the paired N01+P06, N02+P08, N03+P13 and N04+P09): an application that
+ *    judges fewer inputs than it owes - none, the first, any proper subset - leaves its record short and reds.
+ *  E2 substituted inputs: an application that judges as many inputs but not the owed ones (a stand-in, a repeat, another order),
+ *    or not their real text (blanked, cut or rewritten), records other names or digests and reds.
+ *  E3 skipped applications: an A1 or B2 case that never runs an application (the case returns its witness as a literal, or an
+ *    application's verdicts are written down instead of judged) leaves that record empty, and the registration case reds.
+ *  E4 the delivered heading (F3): wb-fb2z.4's notes carry exactly one "WHAT IS PINNED. Rows (frozen " heading, so a decoy block
+ *    before the delivered entry (H2) or after it (H1) reds the judged set, the decoy alone included.
+ * F2 (claim scope) is cured by the same re-pinning: the planted controls bind the planted half of each application, the real half
+ * is E1-E3's.
+ *
+ * MEASURED (read-only, by the cutting seat, 2026-10-23; every producer fact rides the roster with its blob id): at the program
+ * pin the producer (@reactive-fiber/tsx 0.1.668) closes the replay status words at REPLAY_STATUSES = matched | mismatched |
+ * failed (src/replay/report.ts:39), the ReplayReport schema (tests/fixtures/docs/replay-report.schema.json) requires fourteen
+ * keys, admits no other and closes status to the same three words, the two schema names are REPLAY_REPORT_SCHEMA =
+ * "rftsx.replay-report" (src/replay/report.ts:35) and RENDER_CAPTURE_SCHEMA = "rftsx.render-capture" (src/replay/replay.ts:83;
+ * both re-read by the wb-fgjz seat, 2026-10-24, with their blob ids in the roster), and the codes table
+ * (src/diagnostics/codes.ts, 199 rows, set-equal to the frozen list tests/golden/diagnostic-codes.json) carries eight REPLAY rows
+ * (:1681-1745) and no RFTSX_REPLAY_VERSION_DRIFT; `git grep` of the code and of replayable_exact over src/ and python/ matches no
+ * file. The TSX distribution the installed rf runs (rf 0.1.832, integrations/tsx/runtime-lock.json: @reactive-fiber/tsx 0.1.649
+ * from ReactiveFiberTSXSDK 5da03a7d49f4, an ancestor of the pin) has the same eight rows and three words and no drift code
+ * either, and the installed rf package spells no RFTSX_REPLAY code and no rftsx.replay-report or rftsx.render-capture name
+ * anywhere. replayable_exact is rf's replayability classification word (the enum replayable_exact |
+ * replayable_with_captured_external_inputs | replayable_with_declared_variance | not_replayable of its cli schemas); rf's
+ * context.render schema carries no replayability member, so the one rf envelope Pi reads cannot carry it.
  * THE FIXTURES (the roster's fixtures): base is the producer's own example report, verbatim from docs/guides/replay.md:160 at the
  * pin (the `json rftsx.replay-report` fence). Every other fixture is CONSTRUCTED from base by the delta the roster names: drift
  * follows the gating row's acceptance (BEADS-2026-10-21.md:29: "capture versions.package 0.1.600 replayed at 0.1.649 -> status
@@ -46,18 +82,28 @@
  *    every key and value of rf's frozen render result roster (test/fixtures/rf-result-keys.json) alike, with a floor, the nearest
  *    TSX reader as the anchor (src/workbench/reactivefiber-observer.ts reads only the TSX engine identity and worker counters,
  *    quiet), and controls; a module that spells one must be bound in TSX_REPLAY_READERS and every binding must name such a module
- *    (empty both ways today). A2 the native reader against a stand-in rf: a bare report on stdout is the transport refusal of an
- *    unrecognized envelope, never a reading; a report riding an otherwise valid render, as a result member (result.replay) or
- *    inside a member the adapter reads (result.provenance.replay), is admitted with the reading's source byte for byte, and the
- *    reader adapter's projection is byte-identical to the same render without it and surfaces none of the report's strings: Pi
- *    neither echoes nor labels it on any display path.
+ *    (empty both ways today). Each application also reads a PLANTED control beside its real inputs (wb-fgjz): a scratch module
+ *    spelling a vocabulary word and the specifier, a descriptor spelling a vocabulary word, one spelling the specifier, a roster
+ *    entry spelling a vocabulary word and a binding naming no module; the planted controls are the only hits, the planted module
+ *    the only unbound speller and the planted binding the only stale one, the planted roster entry is the only entry that spells
+ *    a word (read entry by entry, every real entry in that application's record, so no real hit hides behind the planted word),
+ *    and the real module, descriptor and roster entry counts each have a floor of their own; each application's record of what it
+ *    judged is the owed one (RECORDS, wb-gmx1). A2 the native reader against a stand-in rf: a bare report on stdout is the transport
+ *    refusal of an unrecognized envelope, never a reading; a report riding an otherwise valid render, as a result member
+ *    (result.replay) or inside a member the adapter reads (result.provenance.replay), is admitted with the reading's source byte
+ *    for byte (pinned at both placements), and the reader adapter's projection is byte-identical to the same render without it
+ *    and surfaces none of the report's strings: Pi neither echoes nor labels it on any display path.
  *  B, the guard, (a). B1 the pinned codes table: the drift code is absent from the REPLAY family, from the whole 199-code table and
  *    from the distribution's family, the family is the table's RFTSX_REPLAY_ prefix set, and the status words agree with the
  *    schema enum; B2 no file of src, docs, qa or the front matter spells an RFTSX code, an rftsx schema name or the exact label, and
  *    no unit (line, table cell or sentence) couples a TSX mention with a replay or capture word and an exactness word, with the
- *    judges read on controls.
- *  C, armed on landing, (b). C1 the fixture oracle: each fixture is base plus exactly its delta, and the four valid ones meet the
- *    pin's schema facts (key set, status enum, matched iff status matched, mode replay); C2 the armed check (violationsOf) on
+ *    judges read on controls; B2 records each root it walks (all four, in order), and each root's walk reads a planted scratch
+ *    control after its real files - one line per judge (an RFTSX code, an rftsx schema name, the exact label, a coupled claim) -
+ *    so each judge's application is read on each root and the planted controls are the only hits (wb-fgjz); each root's record of
+ *    what its judges read is its walked files and its planted control (RECORDS, wb-gmx1).
+ *  C, armed on landing, (b). C1 the fixture oracle: each fixture is base plus exactly its delta, and the six valid ones (base,
+ *    drift, equal, opaque, mismatched, failed) meet the pin's schema facts (key set, status enum, matched iff status matched, mode
+ *    replay, package and protocol versions), a list C1 pins; C2 the armed check (violationsOf) on
  *    synthetic readers: the honest echo passes every fixture, and the mutant that upgrades to exact on checksum match fails (it is
  *    honest when the checksums are not verified), as do the opaque-state exact label, the dropped, reworded or swapped drift
  *    diagnostic, a drift synthesized for equal versions, a re-labelled status word and a mismatched or failed report read as
@@ -71,11 +117,22 @@
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the whole judged set - every row's id, label and
  * pins, every pin's witness, the constants, the vocabulary, the residual families and every registered test title - is held to the
- * out-of-file roster, whose producer facts (the codes table, the schema, the status words, the guide's report) anchor the
- * constants outside this file, and the labels of rows A to D are held to the bead's own acceptance text in the tracker export
- * (.beads/issues.jsonl). The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before
- * it) and the set of pins that reached their witness. Not claimed: an edit of this file and the roster together - the bead text
- * anchors only the labels of rows A to D, so a pin removed from both stays green.
+ * out-of-file roster, whose producer facts (the codes table, the schema, the status words, the guide's report, the two schema
+ * names) anchor the constants outside this file, and the labels of rows A to D are held to the bead's own acceptance text in the
+ * tracker export (.beads/issues.jsonl). OUTSIDE BOTH FILES (wb-fgjz, the coordinated census+roster class): the delivered entry of
+ * the bead's notes in the same export (append-only; its "WHAT IS PINNED" block) states the frozen shape, the pins each row's line
+ * names and the residual families with their quiet rows, and the judged set holds this file to it - each delivered row keeps at
+ * least its delivered pins, each delivered pin stays judged in its row and each delivered family keeps its quiet row - so a pin,
+ * a row or a residual removed from this file and the roster together reds; VOCABULARY equals what the producer facts derive
+ * (each schema name's prefix and name, every required report key outside GENERIC_REPORT_KEYS, the drift code's tail and rf's
+ * exact classification word), so a word dropped from this file and the roster's constants together reds; and no two pins share a
+ * roster witness, so a pin re-pointed at another pin's case with that witness copied reds. The last case reads the vitest task
+ * tree (every registered test, in roster order, in run mode, ran before it) and the set of pins that reached their witness. NOT
+ * CLAIMED: an edit of this file and the roster that also rewrites the roster's producer facts, or that moves a key between
+ * VOCABULARY and GENERIC_REPORT_KEYS in both; a pin's case rewritten together with its roster witness to a new value of its own
+ * (the delivered entry names pins, not witnesses); a case other than A1 and B2 rewritten to return its present witness as a
+ * literal (the registration case re-derives only A1's and B2's applications); and an application edited together with what its
+ * record is held to (owedTrigger, owedSurface or the record comparison).
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY a reader reading only the generic keys (status, matched,
  * diagnostics, code, metadata) spells no vocabulary token and is invisible to A1 (Q1); R-PARAPHRASE a reworded exactness claim
  * (identical, byte for byte) is not caught by B2 or by the armed check's exact judge (Q2); R-COMPOSED a token or label assembled at
@@ -84,7 +141,12 @@
  * split by a zero-width code point, or a label spelled with a homoglyph letter, is not caught (Q5); R-RAW-READING the native
  * reading hands the rf render's result to its caller unchanged, so a report riding it reaches a workflow script verbatim while
  * the display path ignores it: the echo the statement owes binds the armed half, not today's adapter (Q6); R-UNIT a claim whose TSX
- * mention lies in a neighbouring unit (the previous sentence, a heading) is not judged by B2, which reads one unit at a time (Q7).
+ * mention lies in a neighbouring unit (the previous sentence, a heading) is not judged by B2, which reads one unit at a time (Q7);
+ * R-SELECTIVE an application that tells a planted control from a real input and judges only the planted one (or drops a real
+ * input's verdict after judging it) while every input still reaches its record is not caught: no real input carries a known
+ * positive verdict - Pi spells none of the vocabulary and no surface file meets a B2 judge - so a dropped real verdict reads as a
+ * quiet one (Q8, on constructed inputs: beside a quiet input and the planted control, a real input that spells the vocabulary or
+ * an RFTSX code is a hit of the honest application and not of the selective one, whose record is the owed one all the same).
  * SCOPE: the B2 judges and the armed check's exact judge do not read negation: any spelling reds, a sentence stating the
  * prohibition or denying exactness included, and B2's label judge reds an rf-only mention of the label too (OVER-READ, disclosed:
  * no Pi surface spells it today, and a page that must will re-measure this census). Tones of the known
@@ -96,6 +158,7 @@
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, qa and .beads are only read.
  */
+import { createHash } from "node:crypto";
 import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -138,8 +201,9 @@ const REPLAY_CODES = [
 /** The program's words for a cross-runtime mismatch (RFCLI-INTEROP.md:33); no producer status word at the pin. */
 const FUTURE_WORDS = ["incompatible", "unsupported"];
 /** The TSX capture/replay vocabulary: the producer's schema-name prefix, its distinctive report and capture names, the drift
- * code's tail and rf's exact classification word; no src module spells one at base 6653728. The generic keys (status, matched,
- * diagnostics, code, metadata, resources, effects, commits, mode) are left out and named under R-VOCABULARY. */
+ * code's tail and rf's exact classification word; no src module spells one at base 6653728. The report's generic keys
+ * (GENERIC_REPORT_KEYS) and the diagnostic's code and metadata are left out and named under R-VOCABULARY; the judged set derives
+ * the list from the roster's producer facts (derivedVocabulary). */
 const VOCABULARY = [
   "rftsx",
   "replay-report",
@@ -150,6 +214,9 @@ const VOCABULARY = [
   "replayable_exact",
   "version-drift",
 ];
+/** The required keys of the producer's ReplayReport schema that VOCABULARY leaves out as generic (R-VOCABULARY): every other
+ * required key is a vocabulary member, so the split is a partition of the schema's key list (wb-fgjz). */
+const GENERIC_REPORT_KEYS = ["schema", "schemaVersion", "status", "matched", "resources", "effects", "commits", "nodeRef", "transactionRef", "mode", "diagnostics"];
 /** The producer's package spelling in any separator form (@reactive-fiber/tsx, reactive_fiber_tsx, ReactiveFiberTSX). */
 const SPECIFIER = /reactive[\s_.:/@-]*fiber[\s_.:/@-]*tsx/gi;
 /** Each residual family and the quiet row that pins it. */
@@ -161,6 +228,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-INTERRUPTED": ["Q5"],
   "R-RAW-READING": ["Q6"],
   "R-UNIT": ["Q7"],
+  "R-SELECTIVE": ["Q8"],
 };
 
 interface Row {
@@ -188,7 +256,7 @@ const ROWS: readonly Row[] = [
     label: "(c) Pi never synthesizes a replay status word; an unknown word stays unknown (wb-973.10, wb-2j3.2 never-synthesize rule)",
     pins: ["D1", "D2"],
   },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"] },
 ];
 /** The fixture names: base, the five other forms the pin's schema admits, then the three future-producer forms. */
 const VALID_FIXTURES = ["drift", "equal", "opaque", "mismatched", "failed"] as const;
@@ -352,6 +420,8 @@ const SURFACE_ROOTS: readonly ScanRoot[] = [
   { root: "qa", floor: 50, anchorFile: "qa/workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts", files: () => filesBelow(join(REPO, "qa")) },
   { root: "front matter (root *.md, examples/)", floor: 10, anchorFile: "README.md", anchorToken: "@tintinweb/pi-subagents", files: frontMatter },
 ];
+/** The src modules A1 judges: a floor below the 115 measured at trunk f2e138e, so an emptied module filter reds (wb-fgjz). */
+const MODULE_FLOOR = 100;
 function walkRoot(scan: ScanRoot): { files: string[]; floorMet: boolean; anchorRead: boolean } {
   const files = scan.files();
   const floorMet = files.length >= scan.floor;
@@ -683,6 +753,102 @@ function spawnsOf(log: string): string[][] {
     .filter(Boolean)
     .map(line => JSON.parse(line) as string[]);
 }
+/** The prefix of every planted control's name: no repository path starts with it, so a planted hit never reads as a real one. */
+const PLANTED = "planted:";
+/** The planted control files written so far, by path: the name each judge reports for one. */
+const PLANTED_NAMES = new Map<string, string>();
+/** The name a judge reports for a walked file: the planted control's name, else the repository path. */
+function nameOf(file: string): string {
+  return PLANTED_NAMES.get(file) ?? relative(REPO, file);
+}
+/** Writes one planted control file into fresh makeScratch scratch (removed after the case) and returns its path. */
+function plantedFile(name: string, fileName: string, text: string): string {
+  const folder = makeScratch("tsx-replay-status-planted-");
+  scratches.push(folder);
+  const file = join(folder, fileName);
+  writeFileSync(file, text);
+  PLANTED_NAMES.set(file, `${PLANTED}${name}`);
+  return file;
+}
+/** The producer package spelling, composed at runtime (no source line of this file spells it whole). */
+const PLANTED_SPECIFIER = ["@reactive-fiber", "tsx"].join("/");
+/** The claim unit every planted surface control carries: a TSX mention, a replay word and an exactness word in one sentence. */
+const SURFACE_CLAIM = compose("The", "TSX", "replay", "is", "exact.");
+/** The text of B2's planted control (wb-fgjz): one line per judge - an RFTSX code, an rftsx schema name, the exact label and the
+ * coupled claim unit. */
+const SURFACE_CONTROL_TEXT = `${[["RFTSX", "REPLAY", "VERSION", "DRIFT"].join("_"), ["rftsx", "replay-report"].join("."), ["replayable", "exact"].join("_"), SURFACE_CLAIM].join("\n")}\n`;
+/** B2's planted control for one surface root (wb-fgjz), read after the root's real files, so every judge's application is read on
+ * every root's walk. */
+function plantSurfaceControl(root: string): string {
+  return plantedFile(root, "control.md", SURFACE_CONTROL_TEXT);
+}
+/** A1's planted controls (wb-fgjz), one per application: a module spelling a vocabulary word and the specifier, a descriptor
+ * spelling a vocabulary word, a descriptor spelling the specifier, a roster entry spelling a vocabulary word and a binding naming
+ * no module. Each rides the real inputs of its application, so the planted controls are the only hits. */
+function plantTriggerControls(): { module: string; descriptorIds: string[]; descriptorTexts: string[]; rosterEntry: string; binding: string } {
+  const texts = triggerTexts();
+  return {
+    module: plantedFile("trigger module", "control.ts", texts.module),
+    descriptorIds: texts.descriptors.map(entry => entry.id),
+    descriptorTexts: texts.descriptors.map(entry => JSON.stringify(entry)),
+    rosterEntry: texts.rosterEntry,
+    binding: texts.binding,
+  };
+}
+/** The texts of A1's planted controls (wb-fgjz), written by plantTriggerControls and re-derived by owedTrigger. */
+function triggerTexts(): { module: string; descriptors: { id: string; description: string }[]; rosterEntry: string; binding: string } {
+  return {
+    module: `${compose("export const KEYS = [", JSON.stringify(["first", "MismatchPath"].join("")), "]; //", PLANTED_SPECIFIER)}\n`,
+    descriptors: [
+      { id: `${PLANTED}vocabulary descriptor`, description: compose("reads", ["capture", "Versions"].join("")) },
+      { id: `${PLANTED}specifier descriptor`, description: compose("loads", PLANTED_SPECIFIER) },
+    ],
+    rosterEntry: ["reinitialized", "RuntimeOnlySlots"].join(""),
+    binding: `${PLANTED}stale binding`,
+  };
+}
+
+/** One input as a judge application judged it (wb-gmx1): the name the application reports for it and the sha256 of the very text
+ * its judges read. */
+interface JudgedInput {
+  readonly name: string;
+  readonly sha256: string;
+}
+/** What one application owes: its record, and the anchor input the record must hold judged with its real text and its token. */
+interface Owed {
+  readonly record: readonly JudgedInput[];
+  readonly anchor: { readonly name: string; readonly text: string; readonly token: string };
+}
+/** A1's four judge applications (wb-gmx1); B2 has one per surface root. */
+const TRIGGER_APPLICATIONS = ["A1 modules", "A1 descriptors", "A1 roster text", "A1 roster entries"] as const;
+function surfaceApplication(root: string): string {
+  return `B2 ${root}`;
+}
+/** Every A1 and B2 application's record, filled from inside the application as it judges; the registration case reads it last. */
+const RECORDS = new Map<string, JudgedInput[]>();
+function sha256Of(text: string): string {
+  return createHash("sha256").update(text).digest("hex");
+}
+/** Hands an application the text its judges read and records that input, by name and by the sha256 of that very text, in the
+ * application's record (wb-gmx1); Q8 passes a record map of its own. */
+function judgedText(application: string, name: string, text: string, records: Map<string, JudgedInput[]> = RECORDS): string {
+  const record = records.get(application) ?? [];
+  record.push({ name, sha256: sha256Of(text) });
+  records.set(application, record);
+  return text;
+}
+function owedRecord(inputs: readonly { readonly name: string; readonly text: string }[]): JudgedInput[] {
+  return inputs.map(({ name, text }) => ({ name, sha256: sha256Of(text) }));
+}
+/** One application's outcome: its record is the owed one, and it holds the anchor input judged with its real text and token. */
+function judgedOutcome(application: string, owed: Owed): { owed: boolean; anchor: boolean } {
+  const record = RECORDS.get(application) ?? [];
+  const digest = sha256Of(owed.anchor.text);
+  return {
+    owed: JSON.stringify(record) === JSON.stringify(owed.record),
+    anchor: owed.anchor.text.includes(owed.anchor.token) && record.some(entry => entry.name === owed.anchor.name && entry.sha256 === digest),
+  };
+}
 function invocationContext(): { grants: string[]; signal: AbortSignal } {
   return { grants: [...GRANTS], signal: new AbortController().signal };
 }
@@ -778,6 +944,55 @@ function nativeDescriptors(): Promise<{ ids: string[]; texts: string[] }> {
   return nativeTexts;
 }
 
+/** rf's frozen render result roster, whose keys and values A1 reads, and the entry its records must hold: the result member A2's
+ * provenance placement rides. */
+const RESULT_KEYS_PATH = join(HERE, "fixtures", "rf-result-keys.json");
+const RESULT_ANCHOR = "provenance";
+/** What A1's four applications owe, re-derived from the src walk, the native registry and the fixture, never from the case's
+ * lists (wb-gmx1): the real inputs in order, then the planted controls. */
+async function owedTrigger(): Promise<Record<string, Owed>> {
+  const scan = SURFACE_ROOTS[0];
+  if (scan === undefined) throw new Error("no src root");
+  const planted = triggerTexts();
+  const modules = walkRoot(scan).files.filter(file => file.endsWith(".ts"));
+  const native = await nativeDescriptors();
+  const entries = [...keysAndStrings(JSON.parse(textOf(RESULT_KEYS_PATH))), planted.rosterEntry];
+  const rosterName = relative(REPO, RESULT_KEYS_PATH);
+  return {
+    "A1 modules": {
+      record: owedRecord([...modules.map(file => ({ name: nameOf(file), text: textOf(file) })), { name: `${PLANTED}trigger module`, text: planted.module }]),
+      anchor: { name: scan.anchorFile, text: textOf(join(REPO, scan.anchorFile)), token: scan.anchorToken },
+    },
+    "A1 descriptors": {
+      record: owedRecord([
+        ...native.ids.map((id, index) => ({ name: id, text: native.texts[index] ?? "" })),
+        ...planted.descriptors.map(entry => ({ name: entry.id, text: JSON.stringify(entry) })),
+      ]),
+      anchor: { name: PREVIEW_ID, text: native.texts[native.ids.indexOf(PREVIEW_ID)] ?? "", token: PREVIEW_ID },
+    },
+    "A1 roster text": {
+      record: owedRecord([{ name: rosterName, text: entries.join("\n") }]),
+      anchor: { name: rosterName, text: entries.join("\n"), token: RESULT_ANCHOR },
+    },
+    "A1 roster entries": {
+      record: owedRecord(entries.map(entry => ({ name: entry, text: entry }))),
+      anchor: { name: RESULT_ANCHOR, text: RESULT_ANCHOR, token: RESULT_ANCHOR },
+    },
+  };
+}
+/** What B2's application on each surface root owes: the root's walked files, then its planted control (wb-gmx1). */
+function owedSurface(): Record<string, Owed> {
+  return Object.fromEntries(
+    SURFACE_ROOTS.map((scan): [string, Owed] => [
+      surfaceApplication(scan.root),
+      {
+        record: owedRecord([...walkRoot(scan).files.map(file => ({ name: nameOf(file), text: textOf(file) })), { name: `${PLANTED}${scan.root}`, text: SURFACE_CONTROL_TEXT }]),
+        anchor: { name: scan.anchorFile, text: textOf(join(REPO, scan.anchorFile)), token: scan.anchorToken },
+      },
+    ]),
+  );
+}
+
 /** The never-synthesize pins (c) cites: the describe each lives in and the case its rule rests on. */
 const NEVER_SYNTHESIZE_FILE = "test/workbench-reactivefiber-observer.test.ts";
 const NEVER_SYNTHESIZE = [
@@ -804,6 +1019,42 @@ function beadNotes(): string {
 function quoteOf(label: string): string {
   return label.replace(/^\([^)]*\) /, "");
 }
+/** What the delivered entry of the bead's notes pinned (wb-fb2z.4 DELIVERED, append-only in the tracker export): the frozen shape,
+ * the pin ids each row's line names and the residual families with their quiet rows - this file's anchor outside itself and the
+ * roster (wb-fgjz). */
+const DELIVERED_HEADING = "WHAT IS PINNED. Rows (frozen ";
+function deliveredEntry(notes: string): { headings: number; shape: string[]; pins: Record<string, string[]>; residuals: string[] } {
+  const headings = notes.split(DELIVERED_HEADING).length - 1;
+  const start = notes.indexOf(DELIVERED_HEADING);
+  const end = start < 0 ? -1 : notes.indexOf("\n\n", start);
+  const block = start < 0 ? "" : notes.slice(start, end < 0 ? undefined : end);
+  const shape = (/^WHAT IS PINNED\. Rows \(frozen ((?:[A-Z]:\d+ ?)+);/.exec(block)?.[1] ?? "").trim().split(" ").filter(Boolean);
+  const lines = block.split("\n");
+  const lineOf = (id: string): string => lines.find(line => line.startsWith(`- ${id} `)) ?? "";
+  const pins = Object.fromEntries(shape.map(entry => entry.split(":")[0] ?? "").map(id => [id, [...new Set(lineOf(id).match(new RegExp(`\\b${id}\\d+\\b`, "g")) ?? [])]]));
+  const residuals = [...lineOf("Q").matchAll(/\b(R-[A-Z][A-Z-]*[A-Z]) (Q\d+)\b/g)].map(match => `${match[1]} ${match[2]}`);
+  return { headings, shape, pins, residuals };
+}
+/** VOCABULARY as the roster's producer facts derive it, folded and sorted (wb-fgjz): each producer schema name's prefix and name,
+ * every required report key outside GENERIC_REPORT_KEYS, the drift code's tail and rf's exact classification word. */
+function derivedVocabulary(): string[] {
+  const schemaNames = Object.values(producerPart("schemaNames")).map(entry => String(objectOf(entry, "schemaNames entry").name));
+  const required = strings(producerPart("schema").required, "schema required");
+  const exact = strings(producerPart("rfClassification").words, "rfClassification words").filter(word => /exact/.test(word));
+  const words = [...schemaNames.flatMap(name => name.split(".")), ...required.filter(key => !GENERIC_REPORT_KEYS.includes(key)), DRIFT_CODE.replace(/^RFTSX_REPLAY_/, ""), ...exact];
+  return [...new Set(words.map(fold))].sort();
+}
+/** A JSON value's text with every object's keys sorted, so two equal witnesses compare equal whatever their key order. */
+function canonical(value: JsonValue): string {
+  if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+  if (value !== null && typeof value === "object") {
+    return `{${Object.keys(value)
+      .sort()
+      .map(key => `${JSON.stringify(key)}:${canonical(value[key] ?? null)}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
 
 /** The pins that reached their witness compare, in run order; the last case holds it to every pin. */
 const REACHED: string[] = [];
@@ -813,24 +1064,56 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
     const scan = SURFACE_ROOTS[0];
     if (scan === undefined) throw new Error("no src root");
+    for (const application of TRIGGER_APPLICATIONS) RECORDS.delete(application);
     const { files, floorMet, anchorRead } = walkRoot(scan);
-    const modules = files.filter(file => file.endsWith(".ts"));
+    const planted = plantTriggerControls();
+    const realModules = files.filter(file => file.endsWith(".ts"));
+    const modules = [...realModules, planted.module];
     const spelling = modules
-      .map(file => ({ module: relative(REPO, file), words: vocabularyIn(textOf(file)), specifiers: specifiersIn(textOf(file)) }))
+      .map(file => {
+        const text = judgedText("A1 modules", nameOf(file), textOf(file));
+        return { module: nameOf(file), words: vocabularyIn(text), specifiers: specifiersIn(text) };
+      })
       .filter(entry => entry.words.length > 0 || entry.specifiers.length > 0);
     const nearest = textOf(join(REPO, scan.anchorFile));
-    const { ids, texts } = await nativeDescriptors();
-    const descriptorHits = ids.filter((_, index) => vocabularyIn(texts[index] ?? "").length > 0 || specifiersIn(texts[index] ?? "").length > 0);
-    const resultRoster = keysAndStrings(JSON.parse(textOf(join(HERE, "fixtures", "rf-result-keys.json")))).join("\n");
-    const bound = Object.keys(TSX_REPLAY_READERS).sort();
+    const native = await nativeDescriptors();
+    const ids = [...native.ids, ...planted.descriptorIds];
+    const texts = [...native.texts, ...planted.descriptorTexts];
+    const descriptorHits = ids.filter((id, index) => {
+      const text = judgedText("A1 descriptors", id, texts[index] ?? "");
+      return vocabularyIn(text).length > 0 || specifiersIn(text).length > 0;
+    });
+    const realEntries = keysAndStrings(JSON.parse(textOf(RESULT_KEYS_PATH)));
+    const rosterEntries = [...realEntries, planted.rosterEntry];
+    const resultRoster = judgedText("A1 roster text", relative(REPO, RESULT_KEYS_PATH), rosterEntries.join("\n"));
+    const bound = [...Object.keys(TSX_REPLAY_READERS), planted.binding].sort();
     const unbound = spelling.map(entry => entry.module).filter(module => !bound.includes(module));
     const stale = bound.filter(module => !spelling.some(entry => entry.module === module));
-    expect(ids.length, "native descriptors registered").toBeGreaterThan(0);
-    expect(resultRoster.length, "rf's frozen render result roster was read").toBeGreaterThan(0);
+    expect(realModules.length, `src modules judged, floor ${MODULE_FLOOR}`).toBeGreaterThanOrEqual(MODULE_FLOOR);
+    expect(native.ids.length, "native descriptors registered").toBeGreaterThan(0);
+    expect(realEntries.length, "rf's frozen render result roster was read").toBeGreaterThan(0);
     expect(
       { spelling, descriptorHits, resultKeys: vocabularyIn(resultRoster), unbound, stale },
-      "a TSX replay reader binds itself in TSX_REPLAY_READERS",
-    ).toStrictEqual({ spelling: [], descriptorHits: [], resultKeys: [], unbound: [], stale: [] });
+      "a TSX replay reader binds itself in TSX_REPLAY_READERS; the planted controls are the only hits",
+    ).toStrictEqual({
+      spelling: [{ module: `${PLANTED}trigger module`, words: ["firstmismatchpath"], specifiers: ["reactive-fiber/tsx"] }],
+      descriptorHits: [`${PLANTED}vocabulary descriptor`, `${PLANTED}specifier descriptor`],
+      resultKeys: ["reinitializedruntimeonlyslots"],
+      unbound: [`${PLANTED}trigger module`],
+      stale: [`${PLANTED}stale binding`],
+    });
+    const rosterHits = rosterEntries.filter(entry => vocabularyIn(judgedText("A1 roster entries", entry, entry)).length > 0);
+    expect(rosterHits, "the planted entry is the only roster entry that spells the vocabulary (no real hit hides behind its word)").toStrictEqual([
+      planted.rosterEntry,
+    ]);
+    const owed = await owedTrigger();
+    const judged: Record<string, { owed: boolean; anchor: boolean }> = {};
+    for (const application of TRIGGER_APPLICATIONS) {
+      const entry = owed[application];
+      if (entry === undefined) throw new Error(`nothing owed for ${application}`);
+      expect(RECORDS.get(application) ?? [], `${application} judged exactly the inputs it owes (wb-gmx1)`).toStrictEqual(entry.record);
+      judged[application] = judgedOutcome(application, entry);
+    }
     const controls = {
       snake: vocabularyIn("const slots = report.reinitialized_runtime_only_slots;"),
       camel: vocabularyIn("const { captureVersions } = report;"),
@@ -846,16 +1129,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     };
     return {
       srcFloorMet: floorMet,
+      modulesFloorMet: realModules.length >= MODULE_FLOOR,
       anchorRead,
       nearestQuiet: vocabularyIn(nearest).length === 0 && specifiersIn(nearest).length === 0,
-      descriptorsRead: ids.length > 0,
+      descriptorsRead: native.ids.length > 0,
+      rosterRead: realEntries.length > 0,
       spelling,
       descriptorHits,
       resultKeys: vocabularyIn(resultRoster),
+      rosterHits,
       bound,
       unbound,
       stale,
       controls,
+      judged,
     };
   },
   A2: async () => {
@@ -867,10 +1154,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const embeddedWitness: Record<string, JsonValue> = {};
     for (const placement of PLACEMENTS) {
       const outcome = await embeddedOutcome(placement);
+      expect(outcome.sourceVerbatim, `the reading's source is the render byte for byte (${placement})`).toBe(true);
       expect(outcome.projectionUnchanged, `the adapter's projection ignores the report (${placement})`).toBe(true);
       expect(outcome.shown, `no display string carries the report (${placement})`).toStrictEqual([]);
       embeddedWitness[placement] = {
         admitted: outcome.admitted,
+        sourceVerbatim: outcome.sourceVerbatim,
         projectionUnchanged: outcome.projectionUnchanged,
         shown: [...outcome.shown],
         spawns: outcome.spawns,
@@ -912,25 +1201,44 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   B2: async () => {
     const found = { codes: [] as string[], schemas: [] as string[], labels: [] as string[], claims: [] as string[] };
+    const walked: string[] = [];
+    for (const scan of SURFACE_ROOTS) RECORDS.delete(surfaceApplication(scan.root));
     for (const scan of SURFACE_ROOTS) {
       const { files } = walkRoot(scan);
-      for (const file of files) {
-        const text = textOf(file);
-        const name = relative(REPO, file);
+      walked.push(scan.root);
+      for (const file of [...files, plantSurfaceControl(scan.root)]) {
+        const name = nameOf(file);
+        const text = judgedText(surfaceApplication(scan.root), name, textOf(file));
         if (CODE_SPELLING.test(text)) found.codes.push(name);
         if (SCHEMA_SPELLING.test(text)) found.schemas.push(name);
         if (LABEL_SPELLING.test(text)) found.labels.push(name);
         for (const unit of claimUnitsIn(text)) found.claims.push(`${name}: ${unit}`);
       }
     }
-    expect(found, "no Pi surface spells a TSX replay code, schema name or exact label").toStrictEqual({ codes: [], schemas: [], labels: [], claims: [] });
+    const planted = SURFACE_ROOTS.map(scan => `${PLANTED}${scan.root}`);
+    expect(walked, "B2 walks every surface root, in order").toStrictEqual(SURFACE_ROOTS.map(scan => scan.root));
+    expect(found, "no Pi surface spells a TSX replay code, schema name or exact label: each root's planted control is the only hit").toStrictEqual({
+      codes: planted,
+      schemas: planted,
+      labels: planted,
+      claims: planted.map(name => `${name}: ${SURFACE_CLAIM}`),
+    });
     const controls = {
       code: CODE_SPELLING.test(`see ${["RFTSX", "REPLAY", "VERSION", "DRIFT"].join("_")}`),
       schema: SCHEMA_SPELLING.test(`a ${["rftsx", "replay-report"].join(".")} document`),
       label: LABEL_SPELLING.test(compose("labelled", ["replayable", "exact"].join("_"))),
       claim: claimUnitsIn(compose("The", "TSX", "replay", "is", "exact.")).length,
     };
-    return { ...found, controls };
+    const owed = owedSurface();
+    const judged: Record<string, { owed: boolean; anchor: boolean }> = {};
+    for (const scan of SURFACE_ROOTS) {
+      const application = surfaceApplication(scan.root);
+      const entry = owed[application];
+      if (entry === undefined) throw new Error(`nothing owed for ${application}`);
+      expect(RECORDS.get(application) ?? [], `${application} judged exactly the inputs it owes (wb-gmx1)`).toStrictEqual(entry.record);
+      judged[application] = judgedOutcome(application, entry);
+    }
+    return { ...found, walked, controls, judged };
   },
   C1: async () => {
     const rebuiltEqual = Object.fromEntries(FIXTURE_NAMES.map(name => [name, JSON.stringify(rebuilt(name)) === JSON.stringify(FIXTURES[name])]));
@@ -938,11 +1246,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const drift = driftsOf(FIXTURES.drift);
     expect(rebuiltEqual, "every fixture is base plus exactly its delta").toStrictEqual(Object.fromEntries(FIXTURE_NAMES.map(name => [name, true])));
     expect(FIXTURES.drift.status, "the drift leaves the status unchanged").toBe(FIXTURES.base.status);
+    const schemaValid = FIXTURE_NAMES.filter(name => Object.values(schemaFacts(FIXTURES[name])).every(Boolean));
+    expect(schemaValid, "base and the five constructed forms the pin's schema admits meet every schema fact").toStrictEqual(["base", ...VALID_FIXTURES]);
     return {
       baseStatus: FIXTURES.base.status ?? null,
       drift: { status: FIXTURES.drift.status ?? null, code: DRIFT_CODE, pairs: drift },
       rebuilt: rebuiltEqual,
       facts,
+      schemaValid,
     };
   },
   C2: async () => {
@@ -1031,11 +1342,41 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const oneUnit = compose("The", "TSX", "capture", "replay", "is", "exact.");
     return { sentences: claimUnitsIn(sentences).length, heading: claimUnitsIn(heading).length, oneUnit: claimUnitsIn(oneUnit).length };
   },
+  Q8: async () => {
+    // R-SELECTIVE on constructed inputs: a real input that carries a hit, a quiet real input and the planted control, judged by an
+    // honest application and by a selective one that hands every input to its record but judges the planted control only.
+    const modules = [
+      { name: "constructed: a real module that spells the vocabulary", text: compose("const keys = [", JSON.stringify(["capture", "Versions"].join("")), "];"), real: true },
+      { name: "constructed: a quiet real module", text: "export const quiet = 1;", real: true },
+      { name: `${PLANTED}trigger module`, text: triggerTexts().module, real: false },
+    ];
+    const pages = [
+      { name: "constructed: a real page that spells an RFTSX code", text: compose("see", ["RFTSX", "REPLAY", "MISMATCH"].join("_")), real: true },
+      { name: "constructed: a quiet real page", text: "# Workbench", real: true },
+      { name: `${PLANTED}docs`, text: SURFACE_CONTROL_TEXT, real: false },
+    ];
+    const outcome = (inputs: typeof modules, judge: (text: string) => boolean, selective: boolean): { owed: boolean; hits: string[] } => {
+      const records = new Map<string, JudgedInput[]>();
+      const hits = inputs
+        .filter(({ name, text, real }) => {
+          const judgedOn = judgedText("Q8", name, text, records);
+          return judge(selective && real ? "" : judgedOn);
+        })
+        .map(entry => entry.name);
+      return { owed: JSON.stringify(records.get("Q8") ?? []) === JSON.stringify(owedRecord(inputs)), hits };
+    };
+    const spells = (text: string): boolean => vocabularyIn(text).length > 0 || specifiersIn(text).length > 0;
+    const meets = (text: string): boolean => CODE_SPELLING.test(text) || SCHEMA_SPELLING.test(text) || LABEL_SPELLING.test(text) || claimUnitsIn(text).length > 0;
+    return {
+      modules: { honest: outcome(modules, spells, false), selective: outcome(modules, spells, true) },
+      pages: { honest: outcome(pages, meets, false), selective: outcome(pages, meets, true) },
+    };
+  },
 };
 
 describe("wb-fb2z.4 TSX replay status census (TSX-COMPONENT-ASSEMBLY-R4)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead's acceptance text and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:2", "C:3", "D:2", "Q:7"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:2", "C:3", "D:2", "Q:8"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1049,6 +1390,7 @@ describe("wb-fb2z.4 TSX replay status census (TSX-COMPONENT-ASSEMBLY-R4)", () =>
       vocabulary: VOCABULARY,
       specifier: SPECIFIER.source,
       residuals: RESIDUALS,
+      genericReportKeys: GENERIC_REPORT_KEYS,
     }).toStrictEqual({ programPin: ROSTER.programPin, ...ROSTER.constants });
     expect(strings(producerPart("statusWords").words, "statusWords"), "the status words are the producer's").toStrictEqual(STATUS_WORDS);
     expect(strings(producerPart("codesTable").replayFamily, "replayFamily"), "the REPLAY codes are the producer's").toStrictEqual(REPLAY_CODES);
@@ -1056,6 +1398,32 @@ describe("wb-fb2z.4 TSX replay status census (TSX-COMPONENT-ASSEMBLY-R4)", () =>
     const notes = beadNotes();
     expect(notes.length, `${BEAD}'s notes were read from the tracker export`).toBeGreaterThan(0);
     for (const row of ROWS.filter(entry => entry.id !== "Q")) expect(notes, `row ${row.id} quotes the bead's acceptance`).toContain(quoteOf(row.label));
+    const delivered = deliveredEntry(notes);
+    expect(delivered.headings, `${BEAD}'s notes carry exactly one "${DELIVERED_HEADING}" heading (wb-gmx1, F3)`).toBe(1);
+    expect(delivered.shape.length, `${BEAD}'s delivered entry states the frozen shape`).toBeGreaterThan(0);
+    expect(Object.values(delivered.pins).flat().length, "the delivered row lines name every delivered pin").toBe(
+      delivered.shape.reduce((sum, entry) => sum + Number(entry.split(":")[1]), 0),
+    );
+    for (const entry of delivered.shape) {
+      const [id = "", count = "0"] = entry.split(":");
+      const pins = ROWS.find(row => row.id === id)?.pins ?? [];
+      expect(pins.length, `row ${id} keeps at least its ${count} delivered pins`).toBeGreaterThanOrEqual(Number(count));
+      for (const pin of delivered.pins[id] ?? []) expect(pins, `the delivered pin ${pin} stays judged in row ${id}`).toContain(pin);
+    }
+    expect(delivered.residuals.length, "the delivered entry names a family for every delivered quiet row").toBe(delivered.pins.Q?.length ?? -1);
+    for (const pair of delivered.residuals) {
+      const [family = "", quiet = ""] = pair.split(" ");
+      expect(RESIDUALS[family] ?? [], `the delivered residual ${family} keeps its quiet row ${quiet}`).toContain(quiet);
+    }
+    const required = strings(producerPart("schema").required, "schema required");
+    expect(GENERIC_REPORT_KEYS.filter(key => !required.includes(key)), "every generic key is a required report key").toEqual([]);
+    expect(derivedVocabulary(), "VOCABULARY is what the producer facts derive").toStrictEqual([...new Set(FOLDED_VOCABULARY)].sort());
+    expect(FIXTURES.base.schema, "the guide's report carries the producer's report schema name").toBe(objectOf(producerPart("schemaNames").replayReport, "replayReport").name);
+    const witnesses = ROSTER.rows.flatMap(row => row.pins.map(pin => ({ id: pin.id, text: canonical(pin.witness) })));
+    expect(
+      witnesses.filter((entry, index) => witnesses.findIndex(other => other.text === entry.text) !== index).map(entry => entry.id),
+      "no pin shares another pin's roster witness",
+    ).toEqual([]);
   });
 
   for (const row of ROWS) {
@@ -1072,7 +1440,7 @@ describe("wb-fb2z.4 TSX replay status census (TSX-COMPONENT-ASSEMBLY-R4)", () =>
     });
   }
 
-  it("the registered tests and the reached pins equal the roster, in order and both ways", ({ task }) => {
+  it("the registered tests and the reached pins equal the roster, in order and both ways", { timeout: 60_000 }, async ({ task }) => {
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
@@ -1097,5 +1465,10 @@ describe("wb-fb2z.4 TSX replay status census (TSX-COMPONENT-ASSEMBLY-R4)", () =>
       "every other test is in run mode, not inverted, and ran before this case",
     ).toEqual([]);
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    const owed = { ...(await owedTrigger()), ...owedSurface() };
+    expect(
+      Object.fromEntries(RECORDS),
+      "every A1 and B2 application judged exactly the inputs it owes, re-derived here (wb-gmx1): a case that never ran one reds",
+    ).toStrictEqual(Object.fromEntries(Object.entries(owed).map(([application, entry]) => [application, entry.record])));
   });
 });

@@ -64,11 +64,23 @@
  *    licence its spec names), the carriers survive the provider path, today's adapter projects each fixture equal to its twin, and
  *    every text is sanitizer-stable. B2 the armed check (violationsOf) on synthetic readers: the honest reader (today's projection
  *    plus one sanitized facet per admission record) passes every fixture, each mutant fails at least one, and every check fires.
+ *    The check reads every snapshot: the four (b) members pair by position, so a snapshot a reader adds or drops breaks them, and
+ *    the whole projection (every snapshot, relation and diagnostic) is held to the twin's (projection, README:69's "no
+ *    user-visible query semantic change"). A reader echoing each admission code into the diagnostics, noting the verdicts in the
+ *    title, relating a law node or appending a second snapshot fails it (wb-hqls, the R694 follow-up of landing 333: F1, G14/G15).
+ *    The check also reads each facet's own members: a facet holds exactly the five FACET_MEMBERS (law, verdict, code, profile,
+ *    provider: the members of every admission record the roster holds), as a set in any order (a reordered facet is the quiet
+ *    control), so a reader that adds a member to any facet, drops one or renames one fails facet-members. The added members
+ *    pinned: a neutral display hint on every facet, clause (c)'s readings on each rejected facet (statusTone 'failure'; coverage
+ *    'complete' with an answer 'known-empty') and complete coverage with a success tone on each accepted facet (wb-1vci, the R694
+ *    follow-up of landing 428: F1, P1 facetTone and P2 facetCoverage).
  *  C, (c), armed on landing. C1 a rejected-admission code read as a query failure, as complete coverage or as a known-empty answer
- *    fails on every fixture that carries one (the forbidden readings are the words clause (c) quotes). C2 the per-law trace: its
- *    provider-evidence sentinel reaches the adapter's input on the provider path and no output field of today's projection or of the
- *    honest reader, while a reader echoing the trace into a facet or a diagnostic fails on both traced fixtures. C3 every bound
- *    reader meets every check on every fixture (none bound today; the same loop over synthetic bindings is the non-vacuity control).
+ *    fails on every fixture that carries one, on today's snapshot or on a second one a reader appends (the forbidden readings are
+ *    the words clause (c) quotes, held on every snapshot; a facet carries none as a member of its own, since facet-members holds
+ *    every facet to its record's five members, B2). C2 the per-law trace: its provider-evidence sentinel reaches the
+ *    adapter's input on the provider path and no output field of today's projection or of the honest reader, while a reader echoing
+ *    the trace into a facet or a diagnostic fails on both traced fixtures. C3 every bound reader meets every check on every fixture
+ *    (none bound today; the same loop over synthetic bindings is the non-vacuity control).
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  * every pin's witness, the constants, the fixture specs, the checks, the readers, the residual families and every registered test
@@ -97,6 +109,15 @@
  * (OVER-READ, disclosed: neither file spells one today, and an edit that must will re-measure this census). The armed contract
  * reads "explain facets" as exactly one facet per admission record and holds a trace to nothing but the evidence withholding: a
  * reader that also surfaces a trace's reject reasons fails own-facet (OVER-READ of (b), disclosed; its own cut re-measures B2).
+ * It reads each facet as exactly its record's five members, so a reader that adds any member, a neutral display hint as well as
+ * a (c) reading, fails facet-members (OVER-READ of (b)'s "verbatim", disclosed; a reader whose own cut must add a facet member
+ * re-measures B2). Facet-members reads the member set only, as own enumerable string keys (what JSON carries): the
+ * values stay with verbatim and synthesized.
+ * Projection holds the whole projection of every fixture to its twin, so a reader that adds any diagnostic, relation or title
+ * text, an admission echo or not, fails it: the explain output rides the facets alone (README:69 and VC1's "without changing
+ * execution", read strictly - an OVER-READ of the four members (b) names, disclosed; a reader whose own cut must change the
+ * projection re-measures B2). Projection compares content, not member order: byte-identical holds the order, on carrier-less
+ * fixtures only.
  * The armed fixtures use one constructed carrier: a reader bound to the producer's real carrier re-measures the fixtures. Hostile
  * reason text is not judged here; display safety stays with the shared sanitizers' own pins. No HX admission reader is added or
  * faked: a reader's own cut binds itself in HX_ADMISSION_READERS and meets B2 and C.
@@ -114,6 +135,7 @@ import { describe, expect, it } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import {
   HYPERUNIX_EXECUTION_KINDS,
+  type HyperUnixObservedRelation,
   type HyperUnixProjectionTopology,
   type HyperUnixTopologyContext,
   hxLiveInvariant,
@@ -223,6 +245,10 @@ const CARRIER = "hx.law-admissions";
 const TRACE_CARRIER = "hx.law-traces";
 /** The facet bound the honest reader displays within (the adapter's diagnostic bound). */
 const FACET_LIMIT = 200;
+/** The members of every explain facet, exactly: the members of each admission record (the law, its verdict and code, and the
+ * checked profile and provider facts). facetKey reads their values; facet-members holds each facet's own member set to them, in
+ * any order (wb-1vci). */
+const FACET_MEMBERS = ["law", "verdict", "code", "profile", "provider"] as const satisfies readonly (keyof Facet)[];
 
 interface FixtureSpec {
   readonly name: string;
@@ -245,8 +271,9 @@ const FIXTURE_SPECS: readonly FixtureSpec[] = [
   { name: "traced", kind: "incomplete", licensed: false, admissions: ["rejected"], traced: true },
   { name: "trace-only", kind: "incomplete", licensed: false, admissions: [], traced: true },
 ];
-/** The checks the armed half runs, in the order a violation list reports them: the (b) checks, then the (c) checks. */
-const CHECKS = ["refused", "byte-identical", "unchanged", "verbatim", "own-facet", "synthesized", "failure", "absence", "evidence"] as const;
+/** The checks the armed half runs, in the order a violation list reports them: the (b) checks (projection, README:69's reading,
+ * beside the four members (b) names; facet-members, each facet's own member set), then the (c) checks. */
+const CHECKS = ["refused", "byte-identical", "unchanged", "projection", "verbatim", "own-facet", "synthesized", "facet-members", "failure", "absence", "evidence"] as const;
 type Check = (typeof CHECKS)[number];
 
 interface Row {
@@ -775,6 +802,11 @@ function withTopology(out: AdmittedProjection, when: boolean, patch: (snapshot: 
 function withFacets(out: AdmittedProjection, facets: readonly Facet[]): AdmittedProjection {
   return { ...out, facets };
 }
+/** The projection with one more snapshot after today's, derived from the first, whenever the reading carries an admission record. */
+function withSecond(out: AdmittedProjection, patch: (snapshot: NativeSnapshot) => NativeSnapshot): AdmittedProjection {
+  const [first] = out.topology.snapshots;
+  return out.facets.length === 0 || first === undefined ? out : { ...out, topology: { ...out.topology, snapshots: [...out.topology.snapshots, patch(first)] } };
+}
 const has = (out: AdmittedProjection, verdict: Verdict): boolean => out.facets.some(facet => facet.verdict === verdict);
 /** The provider evidence of each carried trace, as JSON text (short enough that the display bound keeps all of it). */
 const evidenceTexts = (value: JsonValue): string[] =>
@@ -888,6 +920,85 @@ const READERS: Readonly<Record<string, AdmissionReader>> = {
       ? out
       : { ...out, topology: { ...out.topology, diagnostics: [...out.topology.diagnostics, ...texts.map(text => shown(`per-law trace evidence: ${text}`))] } };
   },
+  codeInDiagnostics: (value, context) => {
+    const out = honest(value, context);
+    return out.facets.length === 0 ? out : { ...out, topology: { ...out.topology, diagnostics: [...out.topology.diagnostics, ...out.facets.map(facet => facet.code)] } };
+  },
+  titleNote: (value, context) => {
+    const out = honest(value, context);
+    return withTopology(out, out.facets.length > 0, snapshot => ({
+      ...snapshot,
+      node: { ...snapshot.node, title: `${snapshot.node.title} · ${out.facets.length} law verdicts` },
+    }));
+  },
+  lawRelation: (value, context) => {
+    const out = honest(value, context);
+    const [first] = out.topology.snapshots;
+    if (out.facets.length === 0 || first === undefined) return out;
+    const edges = out.facets.map(
+      (facet): HyperUnixObservedRelation => ({
+        scope: { ...first.scope },
+        from: { provider: "hyperunix", type: "law", id: facet.law, scope: first.scope.workspace },
+        to: { ...first.source },
+        kind: "grouping",
+        provenance: { source: "hyperunix", observedAt: first.observedAt },
+      }),
+    );
+    return { ...out, topology: { ...out.topology, relations: [...out.topology.relations, ...edges] } };
+  },
+  failureSnapshot: (value, context) =>
+    withSecond(honest(value, context), snapshot => ({ ...snapshot, node: { ...snapshot.node, statusTone: "failure", statusText: "rejected" } })),
+  knownEmptySnapshot: (value, context) =>
+    withSecond(honest(value, context), snapshot => ({
+      ...snapshot,
+      coverage: "complete",
+      node: { ...snapshot.node, statusTone: "success", statusText: "known-empty (runtime-licensed) · rows 0" },
+    })),
+  // The facet-member channel (wb-1vci, F1 of landing 428): P1 facetTone and P2 facetCoverage carry clause (c)'s readings as
+  // members of each rejected facet, facetRaise raises each accepted facet, facetHint adds a display hint to every facet, and
+  // facetDrop and facetRenamed each lose a member.
+  facetTone: (value, context) => {
+    const out = honest(value, context);
+    return withFacets(
+      out,
+      out.facets.map(facet => (facet.verdict === "rejected" ? { ...facet, statusTone: NEVER.statusTone } : facet)),
+    );
+  },
+  facetCoverage: (value, context) => {
+    const out = honest(value, context);
+    return withFacets(
+      out,
+      out.facets.map(facet => (facet.verdict === "rejected" ? { ...facet, coverage: NEVER.coverage, answer: NEVER.answer } : facet)),
+    );
+  },
+  facetRaise: (value, context) => {
+    const out = honest(value, context);
+    return withFacets(
+      out,
+      out.facets.map(facet => (facet.verdict === "accepted" ? { ...facet, coverage: "complete", statusTone: "success" } : facet)),
+    );
+  },
+  facetHint: (value, context) => {
+    const out = honest(value, context);
+    return withFacets(
+      out,
+      out.facets.map(facet => ({ ...facet, hint: `${facet.verdict}: ${facet.code}` })),
+    );
+  },
+  facetDrop: (value, context) => {
+    const out = honest(value, context);
+    return withFacets(
+      out,
+      out.facets.map(({ provider: _dropped, ...kept }) => kept as Facet),
+    );
+  },
+  facetRenamed: (value, context) => {
+    const out = honest(value, context);
+    return withFacets(
+      out,
+      out.facets.map(({ provider, ...kept }) => ({ ...kept, evidence: provider }) as unknown as Facet),
+    );
+  },
 };
 function readerOf(name: string): AdmissionReader {
   const read = READERS[name];
@@ -895,7 +1006,13 @@ function readerOf(name: string): AdmissionReader {
   return read;
 }
 /** The mutants C1 holds to the rejected-admission readings, and the ones C2 holds to the trace evidence, with the check each owes. */
-const REJECTED_MUTANTS: Readonly<Record<string, Check>> = { failureOnRejected: "failure", completeOnRejected: "absence", knownEmptyOnRejected: "absence" };
+const REJECTED_MUTANTS: Readonly<Record<string, Check>> = {
+  failureOnRejected: "failure",
+  completeOnRejected: "absence",
+  knownEmptyOnRejected: "absence",
+  failureSnapshot: "failure",
+  knownEmptySnapshot: "absence",
+};
 const TRACE_MUTANTS: readonly string[] = ["traceEcho", "traceInDiagnostics"];
 
 interface ArmedFixture {
@@ -939,14 +1056,20 @@ function armedFixtures(): Promise<ArmedFixture[]> {
   return armedCache;
 }
 
-const facetKey = (facet: Facet): string => JSON.stringify([facet.law, facet.verdict, facet.code, facet.profile, facet.provider]);
+/** A facet's identity: the values of its FACET_MEMBERS, in that order (a member the facet lacks reads null). */
+const facetKey = (facet: Facet): string => JSON.stringify(FACET_MEMBERS.map(member => facet[member]));
+/** The member set every facet holds, sorted: facet-members compares each facet's own sorted member names to it. */
+const FACET_MEMBER_SET: readonly string[] = [...FACET_MEMBERS].sort();
 function fieldOf(snapshot: NativeSnapshot, field: UnchangedField): JsonValue {
   if (field === "coverage") return snapshot.coverage ?? null;
   if (field === "statusTone") return snapshot.node.statusTone;
   if (field === "statusText") return snapshot.node.statusText;
   return json(snapshot.evidenceRefs ?? []);
 }
-/** The armed check: what one reader shows for one fixture, judged against today's projection of the fixture's twin. */
+/** The armed check: what one reader shows for one fixture, judged against today's projection of the fixture's twin. Every
+ * snapshot is read: the four (b) members pair by position (a snapshot one side lacks breaks them), the (c) readings hold on
+ * each snapshot, and the whole projection - every snapshot, relation and diagnostic - equals the twin's (projection). Every
+ * facet is read too: its own members are exactly FACET_MEMBERS, as a set in any order (facet-members). */
 function violationsOf(read: AdmissionReader, fixture: ArmedFixture): Check[] {
   const twin = hyperunixTopology(fixture.twin, CONTEXT);
   let out: AdmittedProjection;
@@ -956,21 +1079,24 @@ function violationsOf(read: AdmissionReader, fixture: ArmedFixture): Check[] {
     return ["refused"];
   }
   const failed = new Set<Check>();
-  const [snapshot] = out.topology.snapshots;
-  const [base] = twin.snapshots;
-  if (snapshot === undefined || base === undefined) return ["unchanged"];
+  const snapshots = out.topology.snapshots;
   if (fixture.admissions.length === 0 && !fixture.traced && (JSON.stringify(out.topology) !== JSON.stringify(twin) || out.facets.length > 0)) {
     failed.add("byte-identical");
   }
-  if (UNCHANGED_FIELDS.some(field => !isDeepStrictEqual(fieldOf(snapshot, field), fieldOf(base, field)))) failed.add("unchanged");
+  const paired = Array.from({ length: Math.max(snapshots.length, twin.snapshots.length) }, (_, index) => [snapshots[index], twin.snapshots[index]] as const);
+  const moved = ([snapshot, base]: (typeof paired)[number]): boolean =>
+    snapshot === undefined || base === undefined || UNCHANGED_FIELDS.some(field => !isDeepStrictEqual(fieldOf(snapshot, field), fieldOf(base, field)));
+  if (paired.some(moved)) failed.add("unchanged");
+  if (!isDeepStrictEqual(json(out.topology), json(twin))) failed.add("projection");
   const want = fixture.admissions.map(entry => facetKey(facetOf(entry)));
   const got = out.facets.map(facetKey);
   if (!want.every(key => got.includes(key))) failed.add("verbatim");
   if (got.length !== want.length) failed.add("own-facet");
   if (got.some(key => !want.includes(key))) failed.add("synthesized");
+  if (out.facets.some(facet => !isDeepStrictEqual(Object.keys(facet).sort(), FACET_MEMBER_SET))) failed.add("facet-members");
   if (fixture.admissions.some(entry => entry.verdict === "rejected")) {
-    if (snapshot.node.statusTone === NEVER.statusTone) failed.add("failure");
-    if (snapshot.coverage === NEVER.coverage || snapshot.node.statusText.includes(NEVER.answer)) failed.add("absence");
+    if (snapshots.some(snapshot => snapshot.node.statusTone === NEVER.statusTone)) failed.add("failure");
+    if (snapshots.some(snapshot => snapshot.coverage === NEVER.coverage || snapshot.node.statusText.includes(NEVER.answer))) failed.add("absence");
   }
   if (fixture.traced && JSON.stringify([out.topology, out.facets]).toLowerCase().includes(EVIDENCE_SENTINEL)) failed.add("evidence");
   return CHECKS.filter(check => failed.has(check));
@@ -1263,6 +1389,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(passing, "every mutant fails at least one fixture").toStrictEqual([]);
     const fired = new Set(Object.values(matrix).flatMap(found => Object.values(found).flat()));
     expect(CHECKS.filter(check => !fired.has(check)), "every armed check fires for some mutant and fixture").toStrictEqual([]);
+    const records = Object.values(objectOf(ROSTER.constants.admissions, "roster admissions"));
+    expect(
+      records.map(record => Object.keys(objectOf(record, "roster admission record")).sort()),
+      "FACET_MEMBERS are the members of every admission record the roster holds",
+    ).toStrictEqual(records.map(() => FACET_MEMBER_SET));
+    const reordered: AdmissionReader = (value, context) => {
+      const out = honest(value, context);
+      return withFacets(
+        out,
+        out.facets.map(facet => ({ provider: facet.provider, profile: facet.profile, code: facet.code, verdict: facet.verdict, law: facet.law })),
+      );
+    };
+    expect(await matrixOf(reordered), "a facet's own members in any order meet every check (the quiet control)").toStrictEqual({});
     return json(matrix);
   },
   C1: async () => {
@@ -1419,6 +1558,7 @@ describe("wb-z3ft.3 HX admission-reason census (HX-CERTIFIED-STRUCTURAL-OPTIMIZA
         carrier: CARRIER,
         traceCarrier: TRACE_CARRIER,
         facetLimit: FACET_LIMIT,
+        facetMembers: FACET_MEMBERS,
         fixtures: FIXTURE_SPECS,
         checks: CHECKS,
         readers: Object.keys(READERS),

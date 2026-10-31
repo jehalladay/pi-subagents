@@ -20,10 +20,27 @@
  *
  * READINGS
  * - (a) SCANNED: every file git lists (tracked or untracked, never ignored) below docs/, src/, qa/, examples/, test/, .agents/
- *   and .pi/ (Pi's installed skill copies; .claude/ when it exists) and the repository root's .md pages, read as UTF-8. That
- *   is the filing's three surfaces plus the qa, examples and test trees. An independent filesystem walk (symlinks refused,
- *   never followed) minus git's ignored set must equal that list. This file and its roster are EXEMPT: listed, never judged,
- *   and each exemption is load-bearing (judged, each carries findings).
+ *   and .pi/ (Pi's installed skill copies; .claude/ is named too, but git ignores it, so only its absence is pinned, by A1
+ *   and C1) and the repository root's .md pages, read as UTF-8. That is the filing's three surfaces plus the qa, examples
+ *   and test trees. An independent filesystem walk (symlinks refused, never followed) minus git's ignored set must equal that
+ *   list. This file and its roster are EXEMPT: judged in the same pass as every other listed file, their findings set aside
+ *   by path, and each exemption is load-bearing (the pass must find in the pair exactly what judging the pair alone finds).
+ * - COVERAGE (wb-3or6, the landing-306 follow-up): every real-tree scan carries known positives in the SAME pass and must
+ *   find exactly them - the live pass (A3) the exempt pair's own claims, the d75b68d judgment (A4) two in-memory claim texts,
+ *   the writer scan (C3) the five control writes, the fixture-copy scan (B1) two planted copy paths - so a pass that reads
+ *   nothing reds, and so does any finding the real tree adds. Each pass also returns what it visited, counted as it visits,
+ *   and its witness pins the visit: the live pass read exactly the listed files, at A1's per-root floors and a sentence
+ *   floor; the d75b68d pass judged exactly the files and sentences the roster holds (an immutable tree, so exact counts);
+ *   the writer pass parsed every src module git lists and examined their write calls (at a floor of 15); the copy pass
+ *   examined the git listing (at a floor of 650 paths). The same scan function then runs over a scratch git repository
+ *   (git init, files left untracked, so gitList reads it as it reads Pi's tree) holding plants it must find, so a scan that
+ *   reads less than the tree also reds.
+ * - EXACT COVERAGE (wb-vp5l, the landing-398 follow-up): a floor alone admits a partial read above it, so every moving count
+ *   of a real-tree pass is also held equal to a recount made outside the pass, from a fresh git listing and a fresh read of
+ *   each file: the live pass's listing equals a fresh gitList and the sentences it judged equal a per-file recount of that
+ *   listing (A3); the copy pass examined exactly a fresh gitList plus the two plants (B1); the write calls the writer pass
+ *   examined equal an independent count of the write calls in a fresh read of every src module (C3). The floors stay, so an
+ *   equality between two empty readings still reds.
  * - SENTENCE: a file's text cut after ".", "!", "?" or ";" before white space or the line end, at a blank line, around a line
  *   opening a table row ("|"), in a .md file before a line opening a list item, and in a data file (.json, .jsonl, .yaml,
  *   .yml, .toml) at every line end, so one key and its value are one sentence. A code comment's wrapped lines stay one.
@@ -41,7 +58,16 @@
  *   PATH, the injected registry, the curated MCP reply and the shared JSON sanitizer and its text form) and VIEWER
  *   (src/ui/conversation-viewer.ts, Pi's Markdown renderer, with the markdown mode on and off). The producer's file does not
  *   exist, so the document is a CONSTRUCTED STAND-IN that says so; B1 pins that no copy named after the gating files exists
- *   in Pi's tree while the gate reads ABSENT, so the real copy arrives only by a re-cut.
+ *   in Pi's tree while the gate reads ABSENT, so the real copy arrives only by a re-cut. B3 reads every carrier's render of
+ *   each producer label, with the next label as the label-axis control. The two R-DISPLAY-GAPS labels are carrier-axis
+ *   negative rows for the carriers that render a gap (wb-vp5l): those carriers do not hold them byte for byte, so a cell of
+ *   theirs that reads the input document instead of its carrier's render reds there. The byte carriers (the four skill
+ *   renders, rf native and injected, the viewer with markdown off) hold both gap labels byte for byte, so those rows cannot
+ *   attribute their cells; the CARRIER-ABSENT control does (wb-wnfb): each carrier family in turn (skill, display, rf,
+ *   viewer) renders a neutral document while the reader is handed the base label's document, so that family's cells read
+ *   false and every other family's true, and any cell that reads the input document instead of its own carrier's render
+ *   reds there (the label layout's identity cell reads the label alone, never a document; the gap and foreign rows
+ *   attribute it).
  * - (c) REFRESH PATH: Pi has no rf/TSX skill copy installed; its only skill reader is preloadSkills, called only by
  *   src/agent-runner.ts on each run; it re-reads the installed file every call (no cache), its only transform is trim, and no
  *   src module writes into a skill root (a writer scan over every src module, with planted positive controls).
@@ -53,15 +79,39 @@
  * by a family, each gated name diagnoses as a claim subject by itself (a check naming no family) and with its family, the
  * gated path expands to GATE, and each claim word diagnoses as itself. A family or claim word the bead spells, removed from
  * every literal of this file and the roster, therefore still reds.
+ * ROOTS AND MARKERS, ANCHORED OUTSIDE THIS FILE (wb-3or6): the filing's shipped-status sentence names the trees it grepped
+ * (docs, src and test) and the skill root it found absent (.claude/skills), and each must be scanned (the judged set);
+ * src/skill-loader.ts names the project skill roots Pi loads from (its join(cwd, ...) calls), and each must be scanned
+ * (A1); every top-level directory git tracks must be a scanned root or a named outside directory, so a root dropped from
+ * both lists or a new top-level directory reds (A1). SHIPPED ROOTS (wb-vp5l): the packaged artifact's boundary
+ * (qa/workbench/package-boundary.mjs TOP_LEVEL_ALLOWLIST) names what Pi ships, and every top-level directory it admits that
+ * git tracks must be scanned, except the directory package.json's file: dependencies resolve into (vendor/, where the
+ * vendored SDK tarballs live, an R-OUTSIDE-ROOTS member), so a shipped root such as qa or examples reclassified as outside in
+ * this file and the roster together still reds (A1). The statement gates its claim with one word followed by a condition
+ * ("until the producer publishes it with measured evidence"): that gating word must admit the statement's own claim, and no
+ * word of the condition may be a marker - each, appended to the claim as a qualifier, keeps it a finding (the judged set).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, vocabulary, constants and every pin's
  * witness are held to the out-of-file roster (test/fixtures/tsx-cost-comparison-label-roster.json); a last case reads that
  * every pin ran to its witness. Not claimed: a family alternative or inflection that the bead text never spells (for example
- * reactivefibercli, benchmark or finished) removed from the vocabulary, the roster and A2's probe together.
+ * reactivefibercli, benchmark or finished) removed from the vocabulary, the roster and A2's probe together; a marker word the
+ * statement's condition never spells (for example verified) added to the vocabulary and the roster together; a primitive
+ * that a pass and its recount share (gitList, sentences, WRITE_APIS) hollowed for both sides of an EXACT COVERAGE equality at
+ * once (A1's walk, A2's cutter rows, A4's exact counts at d75b68d and C3's five controls read those primitives too); a pass
+ * that visits a path, a sentence or a write call and then drops its verdict (the EXACT COVERAGE counts are visits, not
+ * verdicts; the in-pass positives and the replica plants judge verdicts only where they sit); a byte-carrier cell that reads
+ * its own carrier's input instead of its render (those carriers hold every B3 label byte for byte, so the two readings agree
+ * on every row, the carrier-absent rows included).
  * RESIDUALS (named; each has a pinned quiet row): R-OUTSIDE-ROOTS (A1) a claim in new-feedback/, vendor/, media/, .beads/,
- *   dist/, node_modules/ or a user-level skill root is not read; R-MARKER-ANYWHERE (A2) a marker anywhere in a sentence admits
+ *   dist/, node_modules/, .codex/ or .github/, in a root file that is not a .md page (package.json, forge.toml, LICENSE and
+ *   the like), or in one of the three user-level skill roots src/skill-loader.ts reads (getAgentDir()/skills,
+ *   ~/.agents/skills, ~/.pi/skills) is not read: each plant is a finding when read, the loader serves each user-level plant,
+ *   and the live pass finds none of them; R-MARKER-ANYWHERE (A2) a marker anywhere in a sentence admits
  *   it, whatever it qualifies; R-UNANCHORED (A2) a comparison word without both pair sides, or the pair without a comparison
- *   word; R-SPLIT (A2) a claim carried by a later sentence that names no family; R-PARAPHRASE (A2) a claim outside the claim
- *   words (final, ready, published, shipped); R-LOOKALIKE (A2) a look-alike letter or an inserted invisible inside a name;
+ *   word; R-SPLIT (A2) a claim and its subject in different sentences: a later sentence that names no family, an earlier
+ *   one, or a subject cut at an abbreviation's period (SDK vs. RFCLI); R-PARAPHRASE (A2) a claim outside the claim
+ *   words (final, ready, published, shipped); R-LOOKALIKE (A2) a look-alike letter or an inserted invisible inside a name or
+ *   a claim word; R-RENDERED-TEXT (A2) the guard reads raw text, so markup or a character reference inside a claim word
+ *   (com**plete**, comp&#108;ete) is silent, while a claim inside an HTML comment, which no reader sees, is still found;
  *   R-GATE-PARTIAL (B1) the gate reads the two files only, so the TSX-PF-05 skill updates and the bead's closure are not read;
  *   R-DISPLAY-GAPS (B3) the text, terminal and label layouts and the shared JSON sanitizer (so the curated reply) render a
  *   line break or a tab as a gap and the label layout also collapses a run of spaces, so a label is byte-identical there
@@ -71,8 +121,9 @@
  *   higher-precedence project copy (.pi/skills) shadows the producer's update installed in .agents/skills; R-INDIRECT-TARGET
  *   (C3) a write whose target is computed outside the call (a function result) escapes the writer scan.
  *
- * Display paths added: none. Test-only: the stand-in rf, the skill roots, the replica tree and the viewer stubs live in
- * makeScratch scratch or in memory; src, docs, qa, the skills and the bead export are only read.
+ * Display paths added: none. Test-only: the stand-in rf, the skill roots, the replica trees (the scratch git repositories
+ * included), the scratch home and the viewer stubs live in makeScratch scratch or in memory; HOME and PI_CODING_AGENT_DIR
+ * are set only around the user-level reads and restored; src, docs, qa, the skills and the bead export are only read.
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -83,6 +134,7 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { TOP_LEVEL_ALLOWLIST } from "../qa/workbench/package-boundary.mjs";
 import { buildAgentPrompt } from "../src/prompts.js";
 import { preloadSkills } from "../src/skill-loader.js";
 import type { AgentConfig, AgentRecord, EnvInfo } from "../src/types.js";
@@ -126,7 +178,7 @@ const ROSTER = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8")) as Rost
 const CONSTANTS: Constants = {
   roots: ["docs", "src", "qa", "examples", "test", ".agents", ".pi", ".claude"],
   skillRoots: [".pi/skills", ".agents/skills", ".claude/skills"],
-  outside: ["new-feedback", "vendor", "media", ".beads", "dist", "node_modules"],
+  outside: ["new-feedback", "vendor", "media", ".beads", "dist", "node_modules", ".codex", ".github"],
   gate: { directory: "docs/perf/programs/perf-f-2026-10-17", files: ["sdk-rfcli-cost-comparison.md", "sdk-rfcli-cost-comparison.json"] },
   filingRead: "d75b68d10a1a",
   exempt: [SELF, ROSTER_FILE],
@@ -229,8 +281,18 @@ function sentences(text: string, kind: TextKind): { readonly line: number; reado
   flush();
   return out;
 }
+/** One file's judgment: its findings and the number of sentences it judged (the scan's own coverage, counted as it judges). */
+function survey(path: string, text: string): { readonly findings: string[]; readonly sentences: number } {
+  let judged = 0;
+  const findings = sentences(text, kindOf(path)).flatMap(sentence => {
+    judged += 1;
+    const found = verdict(sentence.text);
+    return found === null ? [] : [`${path}:${sentence.line} ${found}`];
+  });
+  return { findings, sentences: judged };
+}
 function judgeText(path: string, text: string): string[] {
-  return sentences(text, kindOf(path)).flatMap(sentence => { const found = verdict(sentence.text); return found === null ? [] : [`${path}:${sentence.line} ${found}`]; });
+  return survey(path, text).findings;
 }
 
 // ------------------------------------------------------------------------------------------------------------- the file sets
@@ -270,15 +332,85 @@ function ignored(base: string, paths: readonly string[]): Set<string> {
   if (result.status !== 0 && result.status !== 1) throw new Error(`git check-ignore failed: ${result.stderr}`);
   return new Set(result.stdout.split("\0").filter(path => path !== ""));
 }
-function judgeFiles(base: string, paths: readonly string[]): { findings: string[]; unreadable: string[] } {
+interface Judgment { readonly findings: string[]; readonly read: string[]; readonly sentences: number }
+/** Judges each (path, text) in one pass and records what it read: the paths, in order, and the sentences judged. */
+function judgeAll(texts: readonly (readonly [string, string])[]): Judgment {
   const findings: string[] = [];
+  const read: string[] = [];
+  let judged = 0;
+  for (const [path, text] of texts) {
+    const one = survey(path, text);
+    findings.push(...one.findings);
+    read.push(path);
+    judged += one.sentences;
+  }
+  return { findings, read, sentences: judged };
+}
+function judgeFiles(base: string, paths: readonly string[]): Judgment & { readonly unreadable: string[] } {
+  const texts: [string, string][] = [];
   const unreadable: string[] = [];
   for (const path of paths) {
-    let text: string;
-    try { text = readFileSync(join(base, path), "utf8"); } catch { unreadable.push(path); continue; }
-    findings.push(...judgeText(path, text));
+    try { texts.push([path, readFileSync(join(base, path), "utf8")]); } catch { unreadable.push(path); }
   }
-  return { findings, unreadable };
+  return { ...judgeAll(texts), unreadable };
+}
+const FLOORS: Readonly<Record<string, number>> = { docs: 60, src: 100, qa: 50, examples: 5, test: 400, ".agents": 2, ".pi": 1, ".claude": 0 };
+const SENTENCE_FLOOR = 150_000;
+/** Each scanned root holds at least its floor of `paths`, and the repository root at least five .md pages. */
+function floorsMetBy(paths: readonly string[]): boolean {
+  return CONSTANTS.roots.every(root => paths.filter(path => path.startsWith(`${root}/`)).length >= (FLOORS[root] ?? Number.POSITIVE_INFINITY)) && paths.filter(path => PAGE.test(path)).length >= 5;
+}
+interface Pass extends Judgment { readonly listed: string[]; readonly unreadable: string[]; readonly exempt: Readonly<Record<string, number>> }
+const ownerOf = (finding: string): string | undefined => CONSTANTS.exempt.find(path => finding.startsWith(`${path}:`));
+/**
+ * The live guard's pass: every path git lists under `base`, the exempt pair included, judged at once. `findings` is every
+ * finding, `exempt` the count the pair carries (its in-pass positive control).
+ */
+function liveScan(base: string): Pass {
+  const listed = gitList(base);
+  const pass = judgeFiles(base, listed);
+  return { ...pass, listed, exempt: Object.fromEntries(CONSTANTS.exempt.map(path => [path, pass.findings.filter(finding => ownerOf(finding) === path).length])) };
+}
+/** A pass's findings outside the exempt pair (the guard's input; the replica runs it too). */
+const outside = (pass: Pass): string[] => pass.findings.filter(finding => ownerOf(finding) === undefined);
+/** The sentences of `paths` recounted outside any pass (wb-vp5l): each file read afresh and cut, nothing judged. */
+function sentenceRecount(base: string, paths: readonly string[]): number {
+  return paths.reduce((total, path) => total + sentences(readFileSync(join(base, path), "utf8"), kindOf(path)).length, 0);
+}
+/** The fixture-copy scan over a listing: every path whose file name is a gating file's, with how many paths it examined (counted as it examines). */
+function copiesAmong(listing: readonly string[]): { readonly copies: string[]; readonly examined: number } {
+  let examined = 0;
+  const copies = listing.filter(path => {
+    examined += 1;
+    return CONSTANTS.gate.files.includes(path.slice(path.lastIndexOf("/") + 1));
+  });
+  return { copies, examined };
+}
+/** The top-level directories git tracks: the repository's own listing, which the scanned and outside roots must partition. */
+function trackedTopDirectories(base: string): string[] {
+  const out = execFileSync("git", ["ls-files", "-z", "--cached"], { cwd: base, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path.includes("/")).map(path => path.slice(0, path.indexOf("/"))))].sort(byName);
+}
+/** The skill roots src/skill-loader.ts loads from, read from its join(<base>, ...literals, "skills") calls as `<base>/<segments>`. */
+function loaderRoots(): string[] {
+  const path = "src/skill-loader.ts";
+  const source = ts.createSourceFile(path, readFileSync(join(REPO, path), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const roots: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "join") {
+      const [first, ...rest] = node.arguments;
+      const segments = rest.flatMap(argument => (ts.isStringLiteralLike(argument) ? [argument.text] : []));
+      if (first !== undefined && segments.length > 0 && segments.length === rest.length && segments[segments.length - 1] === "skills") roots.push([first.getText(source), ...segments].join("/"));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return roots;
+}
+/** The top-level directories package.json's file: dependencies resolve into (where the vendored SDK tarballs live). */
+function vendoredDirectories(): string[] {
+  const manifest = JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")) as { readonly dependencies?: Readonly<Record<string, string>> };
+  return [...new Set(Object.values(manifest.dependencies ?? {}).filter(spec => spec.startsWith("file:")).map(spec => spec.slice("file:".length).split("/")[0] ?? ""))].sort(byName);
 }
 function gateOf(entries: readonly TreeEntry[]): Gate {
   const blobs = new Set(entries.filter(entry => entry.kind === "blob").map(entry => entry.path));
@@ -308,6 +440,30 @@ const scratches: string[] = [];
 const oldPath = process.env.PATH;
 afterEach(() => { process.env.PATH = oldPath; removeScratch(...scratches.splice(0)); });
 function scratch(prefix: string): string { const dir = makeScratch(prefix); scratches.push(dir); return dir; }
+/** A scratch git repository holding `files`, left untracked, so gitList reads it exactly as it reads Pi's tree. */
+function gitReplica(prefix: string, files: Readonly<Record<string, string>>): string {
+  const dir = scratch(prefix);
+  execFileSync("git", ["init", "-q"], { cwd: dir, stdio: "pipe" });
+  for (const [path, text] of Object.entries(files)) {
+    mkdirSync(dirname(join(dir, path)), { recursive: true });
+    writeFileSync(join(dir, path), text);
+  }
+  return dir;
+}
+/** Runs `work` with HOME at `home` and PI_CODING_AGENT_DIR unset (so getAgentDir() is <home>/.pi/agent), then restores both. */
+function withHome<T>(home: string, work: () => T): T {
+  const saved = { home: process.env.HOME, agentDir: process.env.PI_CODING_AGENT_DIR };
+  process.env.HOME = home;
+  delete process.env.PI_CODING_AGENT_DIR;
+  try {
+    return work();
+  } finally {
+    if (saved.home === undefined) delete process.env.HOME;
+    else process.env.HOME = saved.home;
+    if (saved.agentDir === undefined) delete process.env.PI_CODING_AGENT_DIR;
+    else process.env.PI_CODING_AGENT_DIR = saved.agentDir;
+  }
+}
 function object(value: JsonValue | undefined): Obj {
   if (value === null || value === undefined || typeof value !== "object" || Array.isArray(value)) throw new Error("expected an object");
   return value;
@@ -431,6 +587,28 @@ function viewerLines(text: string | null, mode: "assistant" | "off"): string[] {
   return viewer.render(200).map(line => line.replace(ANSI, ""));
 }
 const visible = (lines: readonly string[], line: string): boolean => lines.some(rendered => rendered.includes(line));
+/** The carrier families of B3's cells, in the reader's order; the carrier-absent control (wb-wnfb) takes each in turn. */
+const CARRIER_FAMILIES = ["skill", "display", "rf", "viewer"] as const;
+type CarrierFamily = (typeof CARRIER_FAMILIES)[number];
+/** What an absent carrier renders: the stand-in carrying a label no B3 row reads. */
+const NEUTRAL_DOC = standIn("Status: neutral");
+/**
+ * One render of `doc` through every carrier; the returned reader says which carriers hold a given label (B3's cells). The
+ * family named `absent` renders NEUTRAL_DOC instead of `doc`, so its cells must read false while the others read `doc`.
+ */
+async function holdersOf(doc: string, absent?: CarrierFamily): Promise<(label: string) => Obj> {
+  const input = (family: CarrierFamily): string => (family === absent ? NEUTRAL_DOC : doc);
+  const skill = Object.values(skillRender(input("skill")));
+  const shown = Object.values(display(input("display")));
+  const carried = Object.values(await rfCarried(input("rf")));
+  const viewer = [viewerLines(input("viewer"), "assistant"), viewerLines(input("viewer"), "off")];
+  return label => ({
+    skill: skill.map(value => value.includes(label)),
+    display: [...shown.map(value => value.includes(label)), sanitizeWorkbenchText(label, WORKBENCH_TEXT_LIMIT, "label") === label],
+    rf: carried.map(value => value.output.includes(label) && value.block.includes(label)),
+    viewer: viewer.map(rendered => visible(rendered, label)),
+  });
+}
 
 // --------------------------------------------------------------------------------------------------------- the writer scan
 const WRITE_APIS = new Set(["writeFile", "writeFileSync", "appendFile", "appendFileSync", "copyFile", "copyFileSync", "cp", "cpSync", "rename", "renameSync", "createWriteStream", "symlink", "symlinkSync", "link", "linkSync", "truncate", "truncateSync", "rm", "rmSync", "unlink", "unlinkSync"]);
@@ -450,10 +628,11 @@ function constant(node: ts.Node): string | undefined {
   }
   return undefined;
 }
-/** Write calls whose arguments spell skill (a skill root, SKILL.md or a skill-named identifier; literals constant-folded). */
-function writers(path: string, text: string): string[] {
+/** Write calls whose arguments spell skill (a skill root, SKILL.md or a skill-named identifier; literals constant-folded), and how many write calls were examined. */
+function writers(path: string, text: string): { readonly hits: string[]; readonly examined: number } {
   const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const hits: string[] = [];
+  let examined = 0;
   const names = (node: ts.Node): string[] => {
     const own = constant(node);
     const here = own !== undefined ? [own] : ts.isIdentifier(node) ? [node.text] : [];
@@ -462,16 +641,50 @@ function writers(path: string, text: string): string[] {
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node)) {
       const callee = ts.isIdentifier(node.expression) ? node.expression.text : ts.isPropertyAccessExpression(node.expression) ? node.expression.name.text : "";
-      if (WRITE_APIS.has(callee) && node.arguments.some(argument => names(argument).some(name => SKILL_NAME.test(name)))) {
-        hits.push(`${path}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1} ${callee}`);
+      if (WRITE_APIS.has(callee)) {
+        examined += 1;
+        if (node.arguments.some(argument => names(argument).some(name => SKILL_NAME.test(name)))) hits.push(`${path}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1} ${callee}`);
       }
     }
     ts.forEachChild(node, visit);
   };
   visit(source);
-  return hits;
+  return { hits, examined };
 }
-function srcModules(): string[] { return gitList(REPO).filter(path => path.startsWith("src/") && /\.tsx?$/.test(path)); }
+const isSrcModule = (path: string): boolean => path.startsWith("src/") && /\.tsx?$/.test(path);
+function srcModules(): string[] { return gitList(REPO).filter(isSrcModule); }
+/** Every src module git lists under `base`, with its text. */
+function srcSources(base: string): (readonly [string, string])[] {
+  return gitList(base).filter(isSrcModule).map(path => [path, readFileSync(join(base, path), "utf8")] as const);
+}
+/** The writer scan over named sources: each parsed, every write call examined, the skill-spelling ones reported. */
+function writerPass(sources: readonly (readonly [string, string])[]): { readonly hits: string[]; readonly parsed: string[]; readonly examined: number } {
+  const hits: string[] = [];
+  const parsed: string[] = [];
+  let examined = 0;
+  for (const [path, text] of sources) {
+    const one = writers(path, text);
+    hits.push(...one.hits);
+    parsed.push(path);
+    examined += one.examined;
+  }
+  return { hits, parsed, examined };
+}
+/** The write calls in `sources` counted outside the writer pass (wb-vp5l): a walk of its own, every call naming a write API, no skill predicate. */
+function writeCallCount(sources: readonly (readonly [string, string])[]): number {
+  let count = 0;
+  for (const [path, text] of sources) {
+    const visit = (node: ts.Node): void => {
+      if (ts.isCallExpression(node)) {
+        const callee = node.expression;
+        if (WRITE_APIS.has(ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : "")) count += 1;
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS));
+  }
+  return count;
+}
 function imports(path: string, text: string): string[] {
   const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   return source.statements.flatMap(statement => (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) ? [statement.moduleSpecifier.text] : []));
@@ -493,6 +706,16 @@ function calls(path: string, text: string, name: string): boolean {
 
 // ------------------------------------------------------------------------------------------------------------------- the pins
 const PLANT = "The SDK+RFCLI cost comparison is complete.";
+/** Root files that are not .md pages (R-OUTSIDE-ROOTS): the walk never reads them. */
+const ROOT_FILE_PLANTS: readonly string[] = ["PLANT.txt", "plant.json"];
+/** One plant per user-level skill root src/skill-loader.ts reads, by skill name: getAgentDir()/skills, ~/.agents/skills, ~/.pi/skills. */
+const USER_PLANTS: Readonly<Record<string, string>> = {
+  "csbt4-user-agent": ".pi/agent/skills/csbt4-user-agent/SKILL.md",
+  "csbt4-user-agents": ".agents/skills/csbt4-user-agents/SKILL.md",
+  "csbt4-user-legacy": ".pi/skills/csbt4-user-legacy.md",
+};
+const twinOf = (path: string): string => path.replace(/(\.[^./]+)$/, "-twin$1");
+const untie = (text: string): string => text.replace(/(complete|done|finished)/, "not $1");
 const REACHED = new Set<string>();
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
@@ -502,21 +725,43 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const walkAgreesWithGit = JSON.stringify(walked.files.filter(path => !skip.has(path))) === JSON.stringify(listed);
     expect(walked.links).toEqual([]);
     expect(walkAgreesWithGit).toBe(true);
-    const floors: Readonly<Record<string, number>> = { docs: 60, src: 100, qa: 50, examples: 5, test: 400, ".agents": 2, ".pi": 1, ".claude": 0 };
-    const counts = Object.fromEntries(CONSTANTS.roots.map(root => [root, listed.filter(path => path.startsWith(`${root}/`)).length]));
-    const floorsMet = CONSTANTS.roots.every(root => (counts[root] ?? 0) >= (floors[root] ?? Number.POSITIVE_INFINITY)) && listed.filter(path => PAGE.test(path)).length >= 5;
+    const floorsMet = floorsMetBy(listed);
     const anchors = ["AGENTS.md", "README.md", "docs/workbench/15-implementation-program.md", "docs/workbench/feature-matrix.md", "src/skill-loader.ts", "src/prompts.ts", "src/workbench/redaction.ts", "src/ui/conversation-viewer.ts", ".agents/skills/beads/SKILL.md", ".pi/agents/auditor.md", "qa/workbench/receipts-index.mjs", SELF, ROSTER_FILE];
     const { unreadable } = judgeFiles(REPO, listed.filter(path => !CONSTANTS.exempt.includes(path)));
-    // R-OUTSIDE-ROOTS quiet row: a replica plants the same claim in docs/ and in every tree outside the scanned roots.
+    // The roots, anchored outside this file (wb-3or6): every top-level directory git tracks is a scanned root or a named
+    // outside directory, and every project skill root src/skill-loader.ts loads from is scanned.
+    const trackedTop = trackedTopDirectories(REPO);
+    expect(trackedTop.filter(name => !CONSTANTS.roots.includes(name) && !CONSTANTS.outside.includes(name))).toEqual([]);
+    // The shipped roots, anchored outside this file (wb-vp5l): every tracked top-level directory the packaged artifact ships
+    // (qa/workbench/package-boundary.mjs TOP_LEVEL_ALLOWLIST) is scanned, except the directory package.json's file:
+    // dependencies resolve into (vendor/, an R-OUTSIDE-ROOTS member), so a shipped root reclassified as outside reds.
+    const shipped = trackedTop.filter(name => TOP_LEVEL_ALLOWLIST.includes(name));
+    const vendored = vendoredDirectories();
+    expect(shipped.filter(name => !vendored.includes(name) && !CONSTANTS.roots.includes(name))).toEqual([]);
+    const loaded = loaderRoots();
+    const projectSkillRoots = loaded.filter(root => root.startsWith("cwd/")).map(root => root.slice("cwd/".length));
+    expect(projectSkillRoots.length).toBeGreaterThan(0);
+    expect(projectSkillRoots.filter(root => !CONSTANTS.skillRoots.includes(root) || !CONSTANTS.roots.includes(root.slice(0, root.indexOf("/"))))).toEqual([]);
+    // R-OUTSIDE-ROOTS quiet row: a replica plants the same claim in docs/, in every tree outside the scanned roots and in two
+    // root files that are not .md pages; the walk reads docs/ only, while each other plant is a finding when it is read.
     const replica = scratch("csbt4-replica-");
-    const home = scratch("csbt4-home-");
     for (const directory of ["docs", ...CONSTANTS.outside]) { mkdirSync(join(replica, directory), { recursive: true }); writeFileSync(join(replica, directory, "plant.md"), `${PLANT}\n`); }
-    mkdirSync(join(home, ".agents", "skills", "rf"), { recursive: true });
-    writeFileSync(join(home, ".agents", "skills", "rf", "SKILL.md"), `${PLANT}\n`);
+    for (const name of ROOT_FILE_PLANTS) writeFileSync(join(replica, name), `${PLANT}\n`);
     const replicaWalk = walkTree(replica);
     const outsideQuiet = judgeFiles(replica, replicaWalk.files).findings;
     expect(outsideQuiet).toEqual(["docs/plant.md:1 N5: asserted-complete"]);
-    return { roots: Object.fromEntries(CONSTANTS.roots.map(root => [root, existsSync(join(REPO, root))])), floorsMet, anchorsListed: anchors.filter(path => !listed.includes(path)), walkAgreesWithGit, links: walked.links, unreadable, outsideQuiet, replicaFiles: replicaWalk.files };
+    const outsideWhenRead = judgeFiles(replica, [...CONSTANTS.outside.map(directory => `${directory}/plant.md`), ...ROOT_FILE_PLANTS]).findings;
+    // Its user-level member: Pi's loader serves a claim from each user-level root it reads, each claim is a finding when it is
+    // read, and the live pass over a project finds none of them.
+    const home = scratch("csbt4-home-");
+    for (const path of Object.values(USER_PLANTS)) { mkdirSync(dirname(join(home, path)), { recursive: true }); writeFileSync(join(home, path), `${PLANT}\n`); }
+    const project = gitReplica("csbt4-home-project-", { "docs/readme.md": "A project with no skill of its own.\n" });
+    const userLevel = withHome(home, () => ({
+      served: preloadSkills(Object.keys(USER_PLANTS), project).map(skill => skill.content === PLANT),
+      whenRead: judgeFiles(home, Object.values(USER_PLANTS)).findings,
+      livePass: liveScan(project).findings,
+    }));
+    return { roots: Object.fromEntries(CONSTANTS.roots.map(root => [root, existsSync(join(REPO, root))])), floorsMet, anchorsListed: anchors.filter(path => !listed.includes(path)), walkAgreesWithGit, links: walked.links, unreadable, outsideQuiet, replicaFiles: replicaWalk.files, trackedTop, shipped, vendored, loaderRoots: loaded, outsideWhenRead, userLevel };
   },
   A2: async () => {
     const spellings = [
@@ -545,19 +790,29 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const quiet = {
       "R-MARKER-ANYWHERE": verdict("The SDK+RFCLI cost comparison is complete and no rerun is planned."),
       "R-UNANCHORED": [verdict("The TSX cost comparison is complete."), verdict("The SDK+RFCLI pairing is complete."), verdict("The RFCLI cost comparison is complete.")],
-      "R-SPLIT": judgeText("docs/x.md", "We ran the SDK+RFCLI cost comparison. It is complete."),
+      "R-SPLIT": [judgeText("docs/x.md", "We ran the SDK+RFCLI cost comparison. It is complete."), judgeText("docs/x.md", "Status: complete. Subject: SDK+RFCLI cost comparison."), judgeText("docs/x.md", "SDK vs. RFCLI cost comparison: complete")],
       "R-PARAPHRASE": ["final", "ready", "published", "shipped"].map(word => verdict(`The SDK+RFCLI cost comparison is ${word}.`)),
-      "R-LOOKALIKE": [verdict(`The ${String.fromCodePoint(0x0405)}DK+RFCLI cost comparison is complete.`), verdict(`sdk-rf${String.fromCodePoint(0x200b)}cli-cost-comparison.md is complete.`)],
+      "R-LOOKALIKE": [verdict(`The ${String.fromCodePoint(0x0405)}DK+RFCLI cost comparison is complete.`), verdict(`sdk-rf${String.fromCodePoint(0x200b)}cli-cost-comparison.md is complete.`), verdict(`The SDK+RFCLI cost comparison is com${String.fromCodePoint(0x200b)}plete.`)],
+      "R-RENDERED-TEXT": [judgeText("docs/x.md", "The SDK+RFCLI cost comparison is com**plete**."), judgeText("docs/x.md", "The SDK+RFCLI cost comparison is comp&#108;ete."), judgeText("docs/x.md", "<!-- The SDK+RFCLI cost comparison is complete. -->")],
     };
+    // Each residual whose quiet row is A2 has exactly one entry here, in roster order.
+    expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "A2").map(residual => residual.id));
     return { spellings: spellings.map(verdict), claims, markers, cutter, producerRows, quiet };
   },
   A3: async () => {
     const gate = gateOf(ROSTER.producer.perfTree);
-    const listed = gitList(REPO);
-    const judged = listed.filter(path => !CONSTANTS.exempt.includes(path));
-    const { findings } = judgeFiles(REPO, judged);
-    expect(findings).toEqual([]);
-    const exemptionsLoadBearing = CONSTANTS.exempt.map(path => judgeText(path, readFileSync(join(REPO, path), "utf8")).length > 0);
+    // ONE pass over every listed file, the exempt pair included (wb-3or6): it must find in the pair exactly what judging the
+    // pair alone finds, so a pass that read nothing, or skipped the pair, reds - and it must find nothing outside the pair.
+    const live = liveScan(REPO);
+    const pair = [...CONSTANTS.exempt].sort(byName).flatMap(path => judgeText(path, readFileSync(join(REPO, path), "utf8")));
+    expect(pair.length).toBeGreaterThan(0);
+    expect(live.findings).toEqual(pair);
+    expect(outside(live)).toEqual([]);
+    const exemptionsLoadBearing = CONSTANTS.exempt.map(path => (live.exempt[path] ?? 0) > 0);
+    // Exact coverage (wb-vp5l): the listing equals a fresh git listing and the sentences judged equal a recount of it made
+    // outside the pass, so a partial read above the floors reds; the floors stay as non-vacuity guards.
+    const listing = gitList(REPO);
+    const coverage = { readAll: JSON.stringify(live.read) === JSON.stringify(live.listed) && live.unreadable.length === 0, floorsMet: floorsMetBy(live.read), sentencesFloorMet: live.sentences >= SENTENCE_FLOOR, listedAll: JSON.stringify(live.listed) === JSON.stringify(listing), sentencesAll: live.sentences === sentenceRecount(REPO, listing) };
     const plants: readonly (readonly [string, string])[] = [
       ["docs/workbench/plant.md", PLANT],
       ["src/workbench/plant.ts", 'const label = "TSX-PF-05: done";'],
@@ -566,8 +821,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ["qa/workbench/plant.mjs", "// rftsx-zblcp finished, so the perf-f-2026-10-17 page is done."],
     ];
     const planted = plants.flatMap(([path, text]) => judgeText(path, text));
-    const twins = plants.flatMap(([path, text]) => judgeText(path, text.replace(/(complete|done|finished)/, "not $1")));
-    return { gate, live: guard(gate, findings), findings, exemptionsLoadBearing, planted, plantedVerdict: guard("ABSENT", planted), standDown: guard("PRESENT", planted), twins };
+    const twins = plants.flatMap(([path, text]) => judgeText(path, untie(text)));
+    // The same pass over a scratch git repository holding the plants, their twins and a copy of the exempt pair: through
+    // gitList and judgeFiles it must find the plants, and only them, and set the pair aside.
+    const files: Record<string, string> = {};
+    for (const [path, text] of plants) { files[path] = `${text}\n`; files[twinOf(path)] = `${untie(text)}\n`; }
+    for (const path of CONSTANTS.exempt) files[path] = readFileSync(join(REPO, path), "utf8");
+    const mirror = liveScan(gitReplica("csbt4-live-", files));
+    const replica = { findings: outside(mirror), exemptionsLoadBearing: CONSTANTS.exempt.map(path => (mirror.exempt[path] ?? 0) > 0), read: mirror.read.length, verdict: guard("ABSENT", outside(mirror)) };
+    return { gate, live: guard(gate, outside(live)), findings: outside(live), exemptionsLoadBearing, planted, plantedVerdict: guard("ABSENT", planted), standDown: guard("PRESENT", planted), twins, coverage, replica };
   },
   A4: async () => {
     const ancestor = spawnSync("git", ["merge-base", "--is-ancestor", CONSTANTS.filingRead, "HEAD"], { cwd: REPO }).status === 0;
@@ -577,10 +839,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const links = inRoots.filter(entry => entry.mode === "120000").map(entry => entry.path);
     const blobs = inRoots.filter(entry => entry.type === "blob" && entry.mode !== "120000");
     const texts = readBlobs([...new Set(blobs.map(entry => entry.id))]);
-    const findings = blobs.flatMap(entry => judgeText(entry.path, texts.get(entry.id) ?? ""));
-    const grep = /sdk-rfcli|cost comparison/i;
-    const filingGrep = Object.fromEntries(["docs", "src", "test"].map(root => [root, blobs.filter(entry => entry.path.startsWith(`${root}/`) && grep.test(texts.get(entry.id) ?? "")).length]));
-    return { revision: CONSTANTS.filingRead, ancestor, judgedFloor: blobs.length >= 650, exemptAbsent: CONSTANTS.exempt.every(path => !blobs.some(entry => entry.path === path)), links, findings, filingGrep };
+    // ONE pass over the tree and two in-memory claim texts (wb-3or6): it must find exactly what the two find alone.
+    const positives = [["docs/workbench/plant.md", `${PLANT}\n`], ["src/workbench/plant.ts", 'const label = "TSX-PF-05: done";\n']] as const;
+    const alone = judgeAll(positives).findings;
+    expect(alone.length).toBe(positives.length);
+    const pass = judgeAll([...blobs.map(entry => [entry.path, texts.get(entry.id) ?? ""] as const), ...positives]);
+    expect(pass.findings).toEqual(alone);
+    // The filing's own grep, read from its shipped-status sentence: the terms and the trees it names.
+    const filing = filingOf(beadNotes());
+    const grep = new RegExp(filing.terms.map(term => term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|"), "i");
+    const filingGrep = Object.fromEntries(filing.roots.map(root => [root, blobs.filter(entry => entry.path.startsWith(`${root}/`) && grep.test(texts.get(entry.id) ?? "")).length]));
+    return { revision: CONSTANTS.filingRead, ancestor, judgedFloor: blobs.length >= 650, exemptAbsent: CONSTANTS.exempt.every(path => !blobs.some(entry => entry.path === path)), links, findings: pass.findings.filter(finding => !alone.includes(finding)), filingGrep, judged: { files: pass.read.length, sentences: pass.sentences } };
   },
   B1: async () => {
     const tree = ROSTER.producer.perfTree;
@@ -597,8 +866,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ["case-variant", [...tree, at(md.toUpperCase(), "blob"), at(json.toUpperCase(), "blob")]],
       ["root-level", [...tree, at(md, "blob", "docs/perf"), at(json, "blob", "docs/perf")]],
     ];
-    const fixtureCopies = gitList(REPO).filter(path => CONSTANTS.gate.files.includes(path.slice(path.lastIndexOf("/") + 1)));
-    return { pin: gateOf(tree), programs: tree.filter(entry => entry.kind === "tree" && /^docs\/perf\/programs\/[^/]+$/.test(entry.path)).map(entry => entry.path), present: gateOf(both), nearMisses: Object.fromEntries(nearMisses.map(([name, entries]) => [name, gateOf(entries)])), fixtureCopies };
+    // ONE pass over the listing and two planted copy paths (wb-3or6): it must find exactly the planted pair, and it must have
+    // examined exactly a fresh git listing plus the plants (wb-vp5l), so a partial listing above the floor of 650 reds.
+    const planted = [`test/fixtures/${md}`, `${CONSTANTS.gate.directory}/${json}`];
+    const pass = copiesAmong([...gitList(REPO), ...planted]);
+    expect(pass.copies).toEqual(planted);
+    const examinedAll = pass.examined === gitList(REPO).length + planted.length;
+    // The same scan over a scratch git repository holding two copies named after the gating files and three near names.
+    const mirror = copiesAmong(gitList(gitReplica("csbt4-copies-", { [`test/fixtures/${md}`]: "copy\n", [`${CONSTANTS.gate.directory}/${json}`]: "{}\n", [`test/fixtures/${md.toUpperCase()}`]: "case variant\n", [`test/fixtures/${md}.bak`]: "suffixed\n", [`docs/${md.replace(".md", "-notes.md")}`]: "longer name\n" })));
+    return { pin: gateOf(tree), programs: tree.filter(entry => entry.kind === "tree" && /^docs\/perf\/programs\/[^/]+$/.test(entry.path)).map(entry => entry.path), present: gateOf(both), nearMisses: Object.fromEntries(nearMisses.map(([name, entries]) => [name, gateOf(entries)])), fixtureCopies: pass.copies.filter(path => !planted.includes(path)), fixtureScan: { examinedFloorMet: pass.examined - planted.length >= 650, examinedAll }, replicaCopies: mirror.copies };
   },
   B2: async () => {
     const doc = standIn(BASE_LABEL);
@@ -615,25 +891,35 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   B3: async () => {
     const matrix: Record<string, JsonValue> = {};
-    for (const label of LABELS) {
-      const doc = standIn(label);
-      const skill = skillRender(doc);
-      const carried = await rfCarried(doc);
-      matrix[label] = {
-        skill: Object.values(skill).map(value => value.includes(label)),
-        display: [...Object.values(display(doc)).map(value => value.includes(label)), sanitizeWorkbenchText(label, WORKBENCH_TEXT_LIMIT, "label") === label],
-        rf: Object.values(carried).map(value => value.output.includes(label) && value.block.includes(label)),
-        viewer: [visible(viewerLines(doc, "assistant"), label), visible(viewerLines(doc, "off"), label)],
-      };
+    for (const [index, label] of LABELS.entries()) {
+      const holds = await holdersOf(standIn(label));
+      // In-census negative control (wb-3or6): the same render read for the next producer label, which its document does not
+      // carry, holds it nowhere (the last display cell is the label layout's identity on that label, so it stays true).
+      matrix[label] = { ...holds(label), foreign: holds(LABELS[(index + 1) % LABELS.length] ?? "") };
     }
+    const gapLabels = ["Status:  partial, two spaces", "Status:\tpartial, one tab"];
+    // Carrier-axis negative rows (wb-vp5l): each R-DISPLAY-GAPS label read through the same reader over its own document. The
+    // carriers that render a gap do not hold it byte for byte, so a cell of theirs that reads the input document reds here;
+    // the byte carriers hold both labels byte for byte, so their cells read the same either way (the carrier-absent control
+    // below attributes them).
+    for (const label of gapLabels) matrix[label] = (await holdersOf(standIn(label)))(label);
     // R-DISPLAY-GAPS quiet row: a run of spaces or a tab in the label line is rendered as a gap by the display layouts and the
     // shared JSON sanitizer (bytes change, words do not); the byte carriers keep it.
     const gaps: Record<string, JsonValue> = {};
-    for (const label of ["Status:  partial, two spaces", "Status:\tpartial, one tab"]) {
+    for (const label of gapLabels) {
       const carried = await rfCarried(standIn(label));
       gaps[label] = { label: carriage(label, sanitizeWorkbenchText(label, WORKBENCH_TEXT_LIMIT, "label")), text: carriage(label, sanitizeWorkbenchText(label, WORKBENCH_TEXT_LIMIT, "text")), rf: Object.fromEntries(Object.entries(carried).map(([name, value]) => [name, value.output.includes(label)])) };
     }
-    return { matrix, gaps };
+    // Carrier-absent control (wb-wnfb): each carrier family in turn renders NEUTRAL_DOC while the reader is handed the base
+    // label's document, so that family's cells read false (the label layout's identity cell reads the label alone and stays
+    // true) and every other family's read true. A cell that reads the input document instead of its own carrier's render
+    // reds here, the byte carriers' cells included (the four skill renders, rf native and injected, the viewer with markdown
+    // off). The control covers every family the reader reports.
+    const doc = standIn(BASE_LABEL);
+    expect(Object.keys((await holdersOf(doc))(BASE_LABEL))).toEqual([...CARRIER_FAMILIES]);
+    const absent: Record<string, JsonValue> = {};
+    for (const family of CARRIER_FAMILIES) absent[family] = (await holdersOf(doc, family))(BASE_LABEL);
+    return { matrix, gaps, absent };
   },
   B4: async () => {
     const deltas: Record<string, JsonValue> = {};
@@ -708,17 +994,31 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   C3: async () => {
     const samples = [standIn(BASE_LABEL), `  \n${standIn(LABELS[2] ?? BASE_LABEL)}\n\n`, `\n\n${standIn(LABELS[3] ?? BASE_LABEL)}   `];
     const trimOnly = samples.map(sample => skillRender(sample).directory === sample.trim());
-    const found = srcModules().flatMap(path => writers(path, readFileSync(join(REPO, path), "utf8")));
-    const controls = [
+    const controlTexts = [
       'writeFileSync(join(cwd, ".agents", "skills", "rf", "SKILL.md"), label);',
       'await fs.writeFile(path.join(root, "skills", name + ".md"), text);',
       'copyFileSync(update, join(skillDir, "README.md"));',
       "renameSync(tmp, skillPath);",
       'fs.appendFileSync(home + "/.pi/skills/rf.md", line);',
-    ].map(text => writers("control.ts", text));
+    ];
+    const controls = controlTexts.map(text => writers("control.ts", text).hits);
+    // ONE pass over every src module and the five controls (wb-3or6): it must find exactly what the controls find alone.
+    const named = controlTexts.map((text, index) => [`control-${index + 1}.ts`, text] as const);
+    const alone = writerPass(named);
+    expect(alone.hits.length).toBe(named.length);
+    const modules = srcSources(REPO);
+    const pass = writerPass([...modules, ...named]);
+    expect(pass.hits).toEqual(alone.hits);
     // R-INDIRECT-TARGET quiet row: a computed target escapes; an unrelated write stays quiet.
-    const quiet = ["writeFileSync(target(), text);", 'writeFileSync(join(cwd, "out.txt"), text);'].map(text => writers("quiet.ts", text));
-    return { trimOnly, writers: found, controls, quiet };
+    const quiet = ["writeFileSync(target(), text);", 'writeFileSync(join(cwd, "out.txt"), text);'].map(text => writers("quiet.ts", text).hits);
+    // The same scan over a scratch git repository: a src module writing into a skill root is found, an unrelated src write
+    // and a test module writing into a skill root (outside src) are not.
+    const plant = 'writeFileSync(join(cwd, ".agents", "skills", "rf", "SKILL.md"), label);\n';
+    const mirror = writerPass(srcSources(gitReplica("csbt4-writers-", { "src/plant.ts": plant, "src/quiet.ts": 'writeFileSync(join(cwd, "out.txt"), text);\n', "test/plant.ts": plant })));
+    // Exact coverage (wb-vp5l): the write calls the pass examined equal an independent count over a fresh read of every src
+    // module, so a pass that skips write calls above the floor of 15 reds; the floors stay as non-vacuity guards.
+    const scanned = { parsedAll: JSON.stringify(pass.parsed) === JSON.stringify([...srcModules(), ...named.map(([path]) => path)]), modulesFloorMet: pass.parsed.length - named.length >= 100, examinedFloorMet: pass.examined - alone.examined >= 15, examinedAll: pass.examined - alone.examined === writeCallCount(srcSources(REPO)) };
+    return { trimOnly, writers: pass.hits.filter(hit => !alone.hits.includes(hit)), controls, quiet, scanned, replica: mirror };
   },
 };
 
@@ -729,6 +1029,11 @@ function beadNotes(): string {
     if (value !== null && typeof value === "object" && "id" in value && value.id === BEAD && "notes" in value && typeof value.notes === "string") return value.notes;
   }
   throw new Error("bead export lacks the owner filing");
+}
+/** The filing's shipped-status sentence: the skill root it found absent, the terms it grepped and the trees it grepped. */
+function filingOf(notes: string): { readonly skillRoot: string; readonly terms: string[]; readonly roots: string[] } {
+  const found = /has no (\S+) directory and 0 hits for (.+?) in (.+?)\. Acceptance: /.exec(notes);
+  return { skillRoot: found?.[1] ?? "", terms: (found?.[2] ?? "").split(" or "), roots: (found?.[3] ?? "").split(/, | and /) };
 }
 function tiled(body: string, quotes: readonly string[]): boolean {
   let at = 0;
@@ -775,13 +1080,27 @@ describe("wb-csbt.4 TSX SDK + RFCLI cost comparison label census (TSX-RESOURCE-E
     expect([path, packet, bead].map(name => verdict(`${name} is ${word}.`) !== null)).toEqual([true, true, true]);
     expect([path, packet, bead].map(name => familiesOf(fold(name)))).toEqual([["N1", "N4", "N5"], ["N2"], ["N3"]]);
     expect(expand(path)).toEqual(CONSTANTS.gate.files.map(name => `${CONSTANTS.gate.directory}/${name}`));
+    // ROOTS (wb-3or6): the filing names the trees it grepped and the skill root it found absent; each is scanned.
+    const filing = filingOf(notes);
+    expect(filing.roots.filter(root => !CONSTANTS.roots.includes(root))).toEqual([]);
+    expect([CONSTANTS.skillRoots.includes(filing.skillRoot), CONSTANTS.roots.includes(filing.skillRoot.slice(0, filing.skillRoot.indexOf("/")))]).toEqual([true, true]);
+    // MARKER CLOSEDNESS (wb-3or6): the statement gates its claim with one word and a condition. The gating word admits the
+    // claim; no word of the condition is a marker, so each, appended to the claim as a qualifier, keeps it a finding.
+    const opening = `${item} ${word} `;
+    const clause = notes.slice(notes.indexOf(opening) + opening.length, notes.indexOf(" (gated: "));
+    const [, ...condition] = clause.split(" ");
+    expect(condition.length).toBeGreaterThan(0);
+    expect(verdict(`The ${item} is ${word} ${clause}.`)).toBeNull();
+    expect(condition.filter(term => MARKER.test(fold(term)))).toEqual([]);
+    expect(condition.map(term => verdict(`The ${item} is ${word} (${term}).`))).toEqual(condition.map(() => `N5: asserted-${word}`));
+    expect(verdict(`The ${item} is ${word}: ${condition.join(" ")}.`)).toBe(`N5: asserted-${word}`);
     expect(notes.includes(ROSTER.citation)).toBe(true);
     expect(ROSTER.citation.endsWith(`@${ROSTER.producer.pin.slice(0, 12)}`)).toBe(true);
     expect(ROSTER.producer.gate).toBe(gateOf(ROSTER.producer.perfTree));
     expect(ROSTER.producer.excerpts.map(excerpt => createHash("sha256").update(Buffer.from(excerpt.textBase64, "base64")).digest("hex"))).toEqual(ROSTER.producer.excerpts.map(excerpt => excerpt.sha256));
     expect(ROSTER.producer.excerpts.map(excerpt => notes.includes(excerpt.site.slice(excerpt.site.lastIndexOf("/") + 1)))).toEqual(ROSTER.producer.excerpts.map(() => true));
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-MARKER-ANYWHERE", "R-UNANCHORED", "R-SPLIT", "R-PARAPHRASE", "R-LOOKALIKE", "R-GATE-PARTIAL", "R-DISPLAY-GAPS", "R-COVERAGE-WORD", "R-SHADOWED-COPY", "R-INDIRECT-TARGET"]);
+    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-MARKER-ANYWHERE", "R-UNANCHORED", "R-SPLIT", "R-PARAPHRASE", "R-LOOKALIKE", "R-RENDERED-TEXT", "R-GATE-PARTIAL", "R-DISPLAY-GAPS", "R-COVERAGE-WORD", "R-SHADOWED-COPY", "R-INDIRECT-TARGET"]);
     expect(ROSTER.residuals.every(residual => pins.includes(residual.quietPin))).toBe(true);
   });
   for (const row of ROWS) {

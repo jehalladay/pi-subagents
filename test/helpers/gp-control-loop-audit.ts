@@ -19,27 +19,39 @@
  * - binary: the gp executable as a word, in any letter case: gp, gp.exe, gp.cmd or gp.ps1 (the shims npm installs on
  *   Windows). Before it stands the start of the text, whitespace, a path separator (/ or \), a shell separator or quote
  *   (; & | ( ` " ') or the = of an assignment; after it, the end of the text, whitespace, a backslash, or a shell
- *   separator, redirection or quote (; & | ) < > ` " '). So a bare name, a path, or a command line that runs gp
- *   anywhere in it: after a separator with or without a space, in a subshell, a $(...) or backtick substitution, quoted;
+ *   separator, redirection or quote (; & | ) < > ` " '). So a bare name, a path, or a command line that runs gp at
+ *   one of these boundaries: after a separator with or without a space, in a subshell, a $(...) or backtick
+ *   substitution, quoted (shell grammar outside these sets is a named residual of the suite, never a claim here);
  * - named: any other text naming graphpolicy, or gp's measured wire vocabulary (gp 0.1.0: the graphpolicy.cli.v1 and
  *   graphpolicy.rpc.v1 protocol ids, the gp.rpc.reply/v1 and gp.rpc.error/v1 reply schemas, and the GP_CLI_, GP_RPC_
  *   and GP_E_ code families).
  * A call site names its audited decision point with a `gp-decision-point: <id>[, <id>...]` comment attached to the
- * statement, class member or object property that holds it: above it, inside it up to the literal's own line, or
- * trailing its end on that line. A comment inside a nested block, class body or object literal of that statement
- * annotates that block's own members, and one that trails a later statement on the same line annotates that statement.
+ * unit that holds it - the child of its nearest member holder on the path to it (holdsMembers: a source file, block,
+ * module block, case or default clause, class-like node, object literal, interface, type literal or enum), so a
+ * statement, a case clause's label, a member of a class, object literal, interface, type literal or enum, or a class's
+ * or interface's type parameter or heritage clause or a class's decorator: above it, inside it up to the literal's own
+ * line, or trailing its end on that line. A comment inside a member holder nested in that unit (from the holder's
+ * first token, so a nested class expression's head too) annotates that holder's own members, and one that trails a
+ * later statement on the same line annotates that statement.
+ * Every comment of the module is read wherever it stands between tokens - after a comma, a parenthesis, the = of a
+ * declaration, a property's colon or a keyword too (wb-rdv6: wb-1xvp.3 gate F5, B06, a marker after a comma on the
+ * literal's own line was never read) - and this rule places each one. A comment that trails code on the line above the
+ * unit annotates that code: a previous statement, or the opening of the enclosing function, block or literal (gate A03).
  *
  * The audit document is read in its RENDERED view, through the landed census binding (test/helpers/census.ts
  * docsSection and sectionTables: one binding over marked's lexer). Each `## <name>` section must render exactly once,
  * under the level-1 title AUDIT_TITLE, and runs to the next level-1 or level-2 heading or the end. A section is
  * malformed when it carries HTML (a comment or a tag, in a table cell too), or when it does not render exactly one
  * top-level table: a table inside a code fence (nested or mismatched fences included), an indented code block or an
- * HTML comment renders none. A cell is read as it renders (the landed rule: inline markup renders its text, HTML none),
- * and a field is empty when what it renders holds no letter, number, punctuation or symbol other than a blank-rendering
- * filler (BLANK_FILLERS), each character reference read as the character it names (a named one the landed rule does
- * not decode as none).
+ * HTML comment renders none. A cell's VALUE is read as the cell renders on its own (the landed rule: inline markup
+ * renders its text, HTML none): a reference-style link, whose definition lies outside the cell, reads as its source, so
+ * a value written as one matches no id, stage, status, function name, key or path and fails closed. A field is EMPTY
+ * when what it renders - on its own, or in the document, where the document's link reference definitions resolve its
+ * reference-style links as the binding's own lex of the document does - holds no letter, number, punctuation or symbol
+ * other than a blank-rendering filler (BLANK_FILLERS), each character reference read as the character it names (a
+ * named one the landed rule does not decode as none); so an empty reference-style link or image is empty (wb-66f7).
  */
-import { Lexer, type Token } from "marked";
+import { Lexer, type Links, marked, type Token } from "marked";
 import ts from "typescript";
 import { docsSection, sectionTables } from "./census.js";
 
@@ -164,7 +176,13 @@ function shapeOf(node: StringText): CallSiteShape | undefined {
   return undefined;
 }
 
-/** Every comment the parser attaches to a node of the file (leading or trailing trivia), by position. */
+/**
+ * Every comment of the file, by position: the leading and trailing trivia of every node AND of every token between a
+ * node's children (getChildren yields the punctuation and keywords forEachChild skips), so a comment after a comma, a
+ * parenthesis, the = of a declaration, a property's colon or a keyword is read (wb-rdv6: wb-1xvp.3 gate F5, B06). A
+ * JSDoc block is read whole, as trivia, and never entered: its tags' positions lie inside the comment, where trivia read
+ * from them would count its marker twice.
+ */
 function commentsOf(source: ts.SourceFile): ts.CommentRange[] {
   const found = new Map<number, ts.CommentRange>();
   const add = (ranges: readonly ts.CommentRange[] | undefined): void => {
@@ -173,7 +191,7 @@ function commentsOf(source: ts.SourceFile): ts.CommentRange[] {
   const visit = (node: ts.Node): void => {
     add(ts.getLeadingCommentRanges(source.text, node.pos));
     add(ts.getTrailingCommentRanges(source.text, node.end));
-    ts.forEachChild(node, visit);
+    for (const child of node.getChildren(source)) if (!ts.isJSDoc(child)) visit(child);
   };
   visit(source);
   add(ts.getLeadingCommentRanges(source.text, source.endOfFileToken.pos));
@@ -195,14 +213,14 @@ function holdsMembers(node: ts.Node): boolean {
   );
 }
 
-/** The statement, class member or object property that holds `node`: the unit a gp-decision-point comment attaches to. */
+/** The unit a gp-decision-point comment attaches to: the child of `node`'s nearest member holder on the path to `node`. */
 function anchorOf(node: ts.Node): ts.Node {
   let current = node;
   while (current.parent !== undefined && !holdsMembers(current.parent)) current = current.parent;
   return current;
 }
 
-/** The spans of the blocks, class bodies and object literals nested in `anchor`: a comment inside one annotates its members. */
+/** The span of every member holder nested in `anchor`, from its first token to its end: a comment inside one annotates its members. */
 function nestedMemberSpans(source: ts.SourceFile, anchor: ts.Node): (readonly [number, number])[] {
   const spans: (readonly [number, number])[] = [];
   const visit = (node: ts.Node): void => {
@@ -244,11 +262,13 @@ export function callSites(files: ReadonlyMap<string, string>): CallSite[] {
   const sites: CallSite[] = [];
   for (const file of [...files.keys()].sort()) {
     const source = ts.createSourceFile(file, files.get(file) ?? "", ts.ScriptTarget.Latest, true, scriptKindOf(file));
-    const comments = commentsOf(source);
+    // The full token walk runs once per module, and only for a module that holds a call site (src holds none today).
+    let comments: ts.CommentRange[] | undefined;
     const visit = (node: ts.Node): void => {
       if (isStringText(node)) {
         const shape = shapeOf(node);
         if (shape !== undefined) {
+          comments ??= commentsOf(source);
           const line = source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1;
           sites.push({ file, line, shape, text: node.text, decisionPoints: decisionPointsOf(source, comments, node) });
         }
@@ -337,7 +357,11 @@ export function firstLine(stdout: string): string {
   return (stdout.split("\n")[0] ?? "").trim();
 }
 
-type Section = { readonly kind: "missing" } | { readonly kind: "malformed"; readonly reason: string } | { readonly kind: "ok"; readonly rows: readonly (readonly string[])[] };
+/** A known section: missing, malformed, or its body rows read two ways, each value on its own and what it shows in the document. */
+type Section =
+  | { readonly kind: "missing" }
+  | { readonly kind: "malformed"; readonly reason: string }
+  | { readonly kind: "ok"; readonly rows: readonly (readonly string[])[]; readonly shown: readonly (readonly string[])[] };
 
 const textOf = (token: Token): string => {
   const value: unknown = (token as { text?: unknown }).text;
@@ -363,8 +387,21 @@ function inlineText(tokens: readonly Token[]): string {
   return out;
 }
 
-/** A table cell, given as its source (sectionTables' grid), read as it renders: its inline text, whitespace collapsed. */
+/** A table cell, given as its source (sectionTables' grid), read as it renders on its own: its inline text, whitespace collapsed. */
 const rendered = (cell: string): string => inlineText(Lexer.lexInline(cell)).replace(/\s+/g, " ").trim();
+
+/**
+ * What a table cell shows in the document: its source lexed inline with the document's link reference definitions
+ * (`links`, as marked's lexer records them over the whole document), the way the census binding's own lex of the
+ * document renders the bound section's cells, so a reference-style link resolves to its text. Whitespace collapsed.
+ */
+function shownIn(links: Links): (cell: string) => string {
+  return (cell) => {
+    const lexer = new Lexer();
+    lexer.tokens.links = links;
+    return inlineText(lexer.inlineTokens(cell)).replace(/\s+/g, " ").trim();
+  };
+}
 
 const REFERENCE = /&(?:#[xX]([0-9a-fA-F]{1,6})|#(\d{1,7})|[A-Za-z][A-Za-z0-9]*);/g;
 const VISIBLE = /[\p{L}\p{N}\p{P}\p{S}]/u;
@@ -388,9 +425,10 @@ const DUPLICATE_HEADING = /^the heading ".*" occurs \d+ times in the rendered vi
 /**
  * One known section in the rendered view, through the landed census binding (docsSection and sectionTables share one
  * binding): the heading renders exactly once at level 2 under AUDIT_TITLE, the section runs to the next level-1 or
- * level-2 heading, carries no HTML, and renders exactly one top-level table whose header is `columns`.
+ * level-2 heading, carries no HTML, and renders exactly one top-level table whose header is `columns`. Each body cell is
+ * read on its own (its value) and as it shows in the document under the document's link reference definitions `links`.
  */
-function readSection(doc: string, name: string, columns: readonly string[]): Section {
+function readSection(doc: string, name: string, columns: readonly string[], links: Links): Section {
   const parents = [AUDIT_TITLE];
   const section = docsSection(doc, name, 2, parents);
   if (!section.ok) {
@@ -401,14 +439,20 @@ function readSection(doc: string, name: string, columns: readonly string[]): Sec
   const { grids } = sectionTables(doc, name, 2, parents);
   if (grids.length === 0) return { kind: "malformed", reason: "no table" };
   if (grids.length > 1) return { kind: "malformed", reason: "more than one table" };
-  const [header = [], ...rows] = (grids[0] ?? []).map((cells) => cells.map(rendered));
+  const grid = grids[0] ?? [];
+  const [header = [], ...rows] = grid.map((cells) => cells.map(rendered));
   if (header.map((cell) => cell.toLowerCase()).join(" | ") !== columns.join(" | ")) return { kind: "malformed", reason: `columns: ${header.join(" | ")}` };
-  return { kind: "ok", rows };
+  return { kind: "ok", rows, shown: grid.slice(1).map((cells) => cells.map(shownIn(links))) };
 }
 
-/** The audit's known sections, each read as the one table its rendered `## <name>` section shows. */
+/**
+ * The audit's known sections, each read as the one table its rendered `## <name>` section shows. The link reference
+ * definitions are the whole document's, from the same marked.lexer call the census binding makes (a definition is
+ * document-wide wherever it stands; one hidden in an HTML comment or a code block defines nothing).
+ */
 function readSections(doc: string): Map<string, Section> {
-  return new Map(SECTION_COLUMNS.map(([name, columns]) => [name, readSection(doc, name, columns)]));
+  const { links } = marked.lexer(doc);
+  return new Map(SECTION_COLUMNS.map(([name, columns]) => [name, readSection(doc, name, columns, links)]));
 }
 
 /**
@@ -430,19 +474,23 @@ export function auditFindings(inputs: AuditInputs): string[] {
     else if (section.kind === "malformed") findings.push(`section-malformed: ${name} (${section.reason})`);
   }
 
-  const decisionPoints = rowsOf("Decision points");
+  const decisionSection = sections.get("Decision points");
+  const decisionPoints = decisionSection?.kind === "ok" ? decisionSection.rows : undefined;
+  const decisionShown = decisionSection?.kind === "ok" ? decisionSection.shown : [];
   const ids = new Set<string>();
   if (decisionPoints !== undefined) {
     const covered = new Set<number>();
     decisionPoints.forEach((row, index) => {
       const [id = "", stage = "", ...fields] = row;
+      // What each field shows in the document: a field empty either way is empty (an empty reference-style link included).
+      const shownFields = (decisionShown[index] ?? []).slice(2);
       const reasons: string[] = [];
       if (!DECISION_POINT_ID.test(id)) reasons.push("id is not [A-Za-z0-9][A-Za-z0-9._-]*");
       else if (ids.has(id)) reasons.push("duplicate id");
       const stageNumber = /^[1-9]\d*$/.test(stage) ? Number(stage) : Number.NaN;
       if (!(stageNumber >= 1 && stageNumber <= LIFECYCLE_STAGES.length)) reasons.push(`stage "${stage}" is not 1-${LIFECYCLE_STAGES.length}`);
       DECISION_POINT_FIELDS.forEach((field, offset) => {
-        if (blank(fields[offset] ?? "")) reasons.push(`empty ${field}`);
+        if (blank(fields[offset] ?? "") || blank(shownFields[offset] ?? "")) reasons.push(`empty ${field}`);
       });
       if (reasons.length > 0) findings.push(`decision-point-invalid: ${id === "" ? `row ${index + 1}` : id} (${reasons.join(", ")})`);
       else {

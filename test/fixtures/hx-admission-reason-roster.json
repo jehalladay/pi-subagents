@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-z3ft.3 census roster: the judged rows and every pin's witness, measured by the cutting seat (ws-03, g10-work-s59) on trunk 4435e2e + the cut; producer facts read-only at the program pin by git show in the local HyperUnix-CLI checkout",
+  "provenance": "wb-z3ft.3 census roster: the judged rows and every pin's witness, measured by the cutting seat (ws-03, g10-work-s59) on trunk 4435e2e + the cut; producer facts read-only at the program pin by git show in the local HyperUnix-CLI checkout; wb-hqls (the R694 follow-up of landing 333, seat ws-02, g10-work-s84) re-measured the checks, readers and rejectedMutants constants and the B2, C1, C2 and C3 witnesses on trunk 84b50b4 + its cut, each equal to the prediction written before the run; wb-1vci (the R694 follow-up of landing 428, seat ws-01, g10-work-s103) added the facetMembers constant and re-measured the checks and readers constants and the B2 witness on trunk fced7bf + its cut, each equal to the prediction written before the run",
   "bead": "wb-z3ft.3",
   "programPin": "0091719d02887910fa0c2fb6693a32723e243600",
   "producer": {
@@ -181,6 +181,13 @@
     "carrier": "hx.law-admissions",
     "traceCarrier": "hx.law-traces",
     "facetLimit": 200,
+    "facetMembers": [
+      "law",
+      "verdict",
+      "code",
+      "profile",
+      "provider"
+    ],
     "fixtures": [
       {
         "name": "none",
@@ -285,9 +292,11 @@
       "refused",
       "byte-identical",
       "unchanged",
+      "projection",
       "verbatim",
       "own-facet",
       "synthesized",
+      "facet-members",
       "failure",
       "absence",
       "evidence"
@@ -310,12 +319,25 @@
       "completeOnRejected",
       "knownEmptyOnRejected",
       "traceEcho",
-      "traceInDiagnostics"
+      "traceInDiagnostics",
+      "codeInDiagnostics",
+      "titleNote",
+      "lawRelation",
+      "failureSnapshot",
+      "knownEmptySnapshot",
+      "facetTone",
+      "facetCoverage",
+      "facetRaise",
+      "facetHint",
+      "facetDrop",
+      "facetRenamed"
     ],
     "rejectedMutants": {
       "failureOnRejected": "failure",
       "completeOnRejected": "absence",
-      "knownEmptyOnRejected": "absence"
+      "knownEmptyOnRejected": "absence",
+      "failureSnapshot": "failure",
+      "knownEmptySnapshot": "absence"
     },
     "traceMutants": [
       "traceEcho",
@@ -1087,69 +1109,89 @@
             "honest": {},
             "raiseOnAccepted": {
               "accepted": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "mixed": [
                 "unchanged",
+                "projection",
                 "absence"
               ]
             },
             "evidenceRef": {
               "accepted": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "accepted-known-empty": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "rejected": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "rejected-licensed-incomplete": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "rejected-complete-unlicensed": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "rejected-complete-empty-unlicensed": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "mixed": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "repeated": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "traced": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ]
             },
             "answerText": {
               "accepted": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "accepted-known-empty": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "rejected": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "rejected-licensed-incomplete": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "rejected-complete-unlicensed": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "rejected-complete-empty-unlicensed": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "mixed": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "repeated": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ],
               "traced": [
-                "unchanged"
+                "unchanged",
+                "projection"
               ]
             },
             "codeOnly": {
@@ -1386,90 +1428,111 @@
             "failureOnRejected": {
               "rejected": [
                 "unchanged",
+                "projection",
                 "failure"
               ],
               "rejected-licensed-incomplete": [
                 "unchanged",
+                "projection",
                 "failure"
               ],
               "rejected-complete-unlicensed": [
                 "unchanged",
+                "projection",
                 "failure"
               ],
               "rejected-complete-empty-unlicensed": [
                 "unchanged",
+                "projection",
                 "failure"
               ],
               "mixed": [
                 "unchanged",
+                "projection",
                 "failure"
               ],
               "repeated": [
                 "unchanged",
+                "projection",
                 "failure"
               ],
               "traced": [
                 "unchanged",
+                "projection",
                 "failure"
               ]
             },
             "completeOnRejected": {
               "rejected": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "rejected-licensed-incomplete": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "rejected-complete-unlicensed": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "rejected-complete-empty-unlicensed": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "mixed": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "repeated": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "traced": [
                 "unchanged",
+                "projection",
                 "absence"
               ]
             },
             "knownEmptyOnRejected": {
               "rejected": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "rejected-licensed-incomplete": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "rejected-complete-unlicensed": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "rejected-complete-empty-unlicensed": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "mixed": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "repeated": [
                 "unchanged",
+                "projection",
                 "absence"
               ],
               "traced": [
                 "unchanged",
+                "projection",
                 "absence"
               ]
             },
@@ -1487,10 +1550,369 @@
             },
             "traceInDiagnostics": {
               "traced": [
+                "projection",
                 "evidence"
               ],
               "trace-only": [
+                "projection",
                 "evidence"
+              ]
+            },
+            "codeInDiagnostics": {
+              "accepted": [
+                "projection"
+              ],
+              "accepted-known-empty": [
+                "projection"
+              ],
+              "rejected": [
+                "projection"
+              ],
+              "rejected-licensed-incomplete": [
+                "projection"
+              ],
+              "rejected-complete-unlicensed": [
+                "projection"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "projection"
+              ],
+              "mixed": [
+                "projection"
+              ],
+              "repeated": [
+                "projection"
+              ],
+              "traced": [
+                "projection"
+              ]
+            },
+            "titleNote": {
+              "accepted": [
+                "projection"
+              ],
+              "accepted-known-empty": [
+                "projection"
+              ],
+              "rejected": [
+                "projection"
+              ],
+              "rejected-licensed-incomplete": [
+                "projection"
+              ],
+              "rejected-complete-unlicensed": [
+                "projection"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "projection"
+              ],
+              "mixed": [
+                "projection"
+              ],
+              "repeated": [
+                "projection"
+              ],
+              "traced": [
+                "projection"
+              ]
+            },
+            "lawRelation": {
+              "accepted": [
+                "projection"
+              ],
+              "accepted-known-empty": [
+                "projection"
+              ],
+              "rejected": [
+                "projection"
+              ],
+              "rejected-licensed-incomplete": [
+                "projection"
+              ],
+              "rejected-complete-unlicensed": [
+                "projection"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "projection"
+              ],
+              "mixed": [
+                "projection"
+              ],
+              "repeated": [
+                "projection"
+              ],
+              "traced": [
+                "projection"
+              ]
+            },
+            "failureSnapshot": {
+              "accepted": [
+                "unchanged",
+                "projection"
+              ],
+              "accepted-known-empty": [
+                "unchanged",
+                "projection"
+              ],
+              "rejected": [
+                "unchanged",
+                "projection",
+                "failure"
+              ],
+              "rejected-licensed-incomplete": [
+                "unchanged",
+                "projection",
+                "failure"
+              ],
+              "rejected-complete-unlicensed": [
+                "unchanged",
+                "projection",
+                "failure"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "unchanged",
+                "projection",
+                "failure"
+              ],
+              "mixed": [
+                "unchanged",
+                "projection",
+                "failure"
+              ],
+              "repeated": [
+                "unchanged",
+                "projection",
+                "failure"
+              ],
+              "traced": [
+                "unchanged",
+                "projection",
+                "failure"
+              ]
+            },
+            "knownEmptySnapshot": {
+              "accepted": [
+                "unchanged",
+                "projection"
+              ],
+              "accepted-known-empty": [
+                "unchanged",
+                "projection"
+              ],
+              "rejected": [
+                "unchanged",
+                "projection",
+                "absence"
+              ],
+              "rejected-licensed-incomplete": [
+                "unchanged",
+                "projection",
+                "absence"
+              ],
+              "rejected-complete-unlicensed": [
+                "unchanged",
+                "projection",
+                "absence"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "unchanged",
+                "projection",
+                "absence"
+              ],
+              "mixed": [
+                "unchanged",
+                "projection",
+                "absence"
+              ],
+              "repeated": [
+                "unchanged",
+                "projection",
+                "absence"
+              ],
+              "traced": [
+                "unchanged",
+                "projection",
+                "absence"
+              ]
+            },
+            "facetTone": {
+              "rejected": [
+                "facet-members"
+              ],
+              "rejected-licensed-incomplete": [
+                "facet-members"
+              ],
+              "rejected-complete-unlicensed": [
+                "facet-members"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "facet-members"
+              ],
+              "mixed": [
+                "facet-members"
+              ],
+              "repeated": [
+                "facet-members"
+              ],
+              "traced": [
+                "facet-members"
+              ]
+            },
+            "facetCoverage": {
+              "rejected": [
+                "facet-members"
+              ],
+              "rejected-licensed-incomplete": [
+                "facet-members"
+              ],
+              "rejected-complete-unlicensed": [
+                "facet-members"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "facet-members"
+              ],
+              "mixed": [
+                "facet-members"
+              ],
+              "repeated": [
+                "facet-members"
+              ],
+              "traced": [
+                "facet-members"
+              ]
+            },
+            "facetRaise": {
+              "accepted": [
+                "facet-members"
+              ],
+              "accepted-known-empty": [
+                "facet-members"
+              ],
+              "mixed": [
+                "facet-members"
+              ]
+            },
+            "facetHint": {
+              "accepted": [
+                "facet-members"
+              ],
+              "accepted-known-empty": [
+                "facet-members"
+              ],
+              "rejected": [
+                "facet-members"
+              ],
+              "rejected-licensed-incomplete": [
+                "facet-members"
+              ],
+              "rejected-complete-unlicensed": [
+                "facet-members"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "facet-members"
+              ],
+              "mixed": [
+                "facet-members"
+              ],
+              "repeated": [
+                "facet-members"
+              ],
+              "traced": [
+                "facet-members"
+              ]
+            },
+            "facetDrop": {
+              "accepted": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "accepted-known-empty": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "rejected": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "rejected-licensed-incomplete": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "rejected-complete-unlicensed": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "mixed": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "repeated": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "traced": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ]
+            },
+            "facetRenamed": {
+              "accepted": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "accepted-known-empty": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "rejected": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "rejected-licensed-incomplete": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "rejected-complete-unlicensed": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "mixed": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "repeated": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
+              ],
+              "traced": [
+                "verbatim",
+                "synthesized",
+                "facet-members"
               ]
             }
           }
@@ -1540,6 +1962,28 @@
                 "rejected-licensed-incomplete",
                 "repeated",
                 "traced"
+              ],
+              "failureSnapshot": [
+                "accepted",
+                "accepted-known-empty",
+                "mixed",
+                "rejected",
+                "rejected-complete-empty-unlicensed",
+                "rejected-complete-unlicensed",
+                "rejected-licensed-incomplete",
+                "repeated",
+                "traced"
+              ],
+              "knownEmptySnapshot": [
+                "accepted",
+                "accepted-known-empty",
+                "mixed",
+                "rejected",
+                "rejected-complete-empty-unlicensed",
+                "rejected-complete-unlicensed",
+                "rejected-licensed-incomplete",
+                "repeated",
+                "traced"
               ]
             }
           }
@@ -1566,9 +2010,11 @@
               },
               "traceInDiagnostics": {
                 "traced": [
+                  "projection",
                   "evidence"
                 ],
                 "trace-only": [
+                  "projection",
                   "evidence"
                 ]
               }
@@ -1586,30 +2032,37 @@
                 "synthetic/failure-on-rejected": {
                   "rejected": [
                     "unchanged",
+                    "projection",
                     "failure"
                   ],
                   "rejected-licensed-incomplete": [
                     "unchanged",
+                    "projection",
                     "failure"
                   ],
                   "rejected-complete-unlicensed": [
                     "unchanged",
+                    "projection",
                     "failure"
                   ],
                   "rejected-complete-empty-unlicensed": [
                     "unchanged",
+                    "projection",
                     "failure"
                   ],
                   "mixed": [
                     "unchanged",
+                    "projection",
                     "failure"
                   ],
                   "repeated": [
                     "unchanged",
+                    "projection",
                     "failure"
                   ],
                   "traced": [
                     "unchanged",
+                    "projection",
                     "failure"
                   ]
                 }

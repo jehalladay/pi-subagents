@@ -23,9 +23,12 @@
  *  B, acceptance (b), at the same observer, the reader adapter that projects an rf render. B1 the noncommitted attempt (render_id null,
  *    transaction_id null, ephemeral, 0 storage writes) shows as a noncommitted preview and no surfaced string claims a commit; a
  *    render-report-shaped record stating committed false, true or nothing, riding an open object of the result, leaves the
- *    projection byte-identical. B2 each committed shape (a render id, a commit sequence, a transaction id, ephemeral false, a
- *    storage write) is a typed refusal naming its field, never a projection. B3 a missing flag is never defaulted: each required one
- *    removed is refused, and the judge rejects a reader that defaults it.
+ *    projection byte-identical; and a bare commit flag (committed false or true, no record around it) planted on every object the
+ *    render holds (the envelope, the result and every object below them, array elements included) is carried unread, the
+ *    projection byte-identical, or refused as a typed validation error by a strict object, never read. B2 each committed shape (a
+ *    render id, a commit sequence, a transaction id, ephemeral false, a storage write) is a typed refusal naming its field, never a
+ *    projection. B3 a missing flag is never defaulted: each required one removed is refused, and the judge rejects a reader that
+ *    defaults it.
  *  C, acceptance (c), at the capability registry, which admits and bounds every workflow capability call (capability-registry.ts
  *    dispatch). C1 an admitted effectful request (write, external, unknown) whose client deadline fires reads uncertain-effect,
  *    attempted once, never cancelled, though the provider completes after the deadline. C2 the controls: a request still queued at
@@ -44,8 +47,13 @@
  *    rf's sibling SDK entries (result.provenance.sdk_versions fiber_optics, reactive_lenses, reactive_inference), where every render
  *    Pi reads names those producers, are never read. E2 a lexical scan of every src module (literals and identifiers, camelCase split)
  *    finds no H2 record term and no distinctive state word, with a floor and three anchors (the observer, the registry,
- *    telemetry.ts) scanned and quiet. E3 the detector's controls: flagged lines (every term and word flags one), quiet lines and the
- *    residuals' quiet rows.
+ *    telemetry.ts) scanned and quiet. E1's and E2's walks each equal an independent recursive listing of src (node:fs readdirSync
+ *    recursive, not filesBelow) and git's own listing of src (GIT_LISTING, a frozen roster constant: tracked or untracked files,
+ *    ignored ones included, regular files only, run through two node functions bound before any case runs, every path it tests
+ *    built through no node path function), so a walk narrowed by a subtree or a file reds whatever the floor's margin, and so does
+ *    a walk narrowed together with the in-file listing; E1 also replaces each of those two, and path's join and normalize, in node's
+ *    own module objects at run time and reads git's listing unchanged. E3 the detector's controls: flagged lines (every term and
+ *    word flags one), quiet lines and the residuals' quiet rows.
  * MEASURED PRODUCER FACTS (roster `producers`, read-only git show on the local checkouts, 2026-10-23): the program README at the four
  * pins the epic wb-4nut names (FiberOpticsSDK e803f66c5fb9, ReactiveFiberTSXSDK 76bbbffd9d4a, ReactiveInferenceSDK 485f3615db1e,
  * ReactiveLensesSDK bfe1f4ac7fa0), its blob and every line the filing cites (FO 25, 27, 35, 36, 44, 47; TSX 37, 48; RI 23, 24, 34,
@@ -56,10 +64,76 @@
  * (.beads/issues.jsonl, row wb-4nut.10): the acceptance rows' labels are its Acceptance line's clauses, in order, and row E's is its
  * Not P0 line; FO L25's words are read from its Authority line; its Quote and Authority quotes sit inside the roster's measured
  * lines; every gating id it lists heads the roster line it cites. So a row, a publication word or a gating id removed from every
- * literal of this file and the roster still reds. Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together
- * (the filing anchors rows, clauses and words, not pins); the native provider seam (providers/reactivefiber.ts isPreviewEnvelope,
- * which refuses the same committed shapes before a reading exists) and the control adapters' executions (claude-control.ts,
- * detached-control.ts: their exported outcome tables are read here, their suites execute them).
+ * literal of this file and the roster still reds.
+ * THE RECORD (wb-vgxn, the landing-312 gate's F1: a case could return early, or the registration case go missing, and the file
+ * stayed green): every case records its own end in REACHED as `${id}:${count}`, after its last assertion - the judged set at its
+ * end, each pin right after its witness comparison - where count is vitest's own tally of the case's assertions
+ * (expect.getState().assertionCalls), so an early return, a dropped assertion or a case that echoes its roster witness before
+ * measuring leaves its entry absent or its count short; each pin also keeps its witness in MEASURED. The judged set, which runs
+ * first, holds the collected task tree to the roster's tests (every title once, in roster order, set to run and not inverted), so
+ * a registration case deleted, renamed, skipped or inverted reds there. The registration case holds REACHED to the roster's
+ * reached list and MEASURED to the roster's witnesses a second time, then records its own end, and the file-end judge (afterAll)
+ * holds that end, so a registration case that returns early or skips itself at run time reds after it has run. The judge reads
+ * which cases were selected to run from the collected tree before the first case runs (beforeEach, once): under a test-name filter
+ * that deselects the registration case it holds nothing.
+ * THE WALK ANCHOR (wb-cd1r, the landing-400 gate's F1: filesBelow and the in-file listing narrowed by the same subtree, src/workflow,
+ * kept the census green, the two equal and the walk above the floor): the in-file listing is this file's own code, so it binds a
+ * walk narrowed alone, never one narrowed with it; git's listing comes from git's own walk of the checkout, read through two node
+ * functions this file binds before any case runs (below), so a walk and the in-file listing narrowed together still differ from it.
+ * Git runs with GIT_LISTING as it stands, its whole argv with the src pathspec in it, and the judged set holds GIT_LISTING to the
+ * roster, so an argument of it narrowed, dropped or added reds there whatever the walks do (wb-fugf, the landing-494 gate's F1: the
+ * src pathspec was in-file code at gitListedSrc's call site, which the roster did not hold). GIT_LISTING is frozen where it is
+ * declared, and the judged set holds that to the roster too (its Object.isFrozen reading against the roster's gitListingFrozen), so
+ * the argv the judged set holds is the argv gitListedSrc hands git: an edit of GIT_LISTING at run time (a push, a splice, an index
+ * or its length written) throws a TypeError where it is made, so the case it is made in reds (from a hook, the case the hook runs
+ * for; at module load, the file), the edits made after the judged set has read it included, and an edit caught where it is made
+ * leaves GIT_LISTING as the judged set read it, so walks narrowed with it still red at E1 and E2 (wb-iwhu, the landing-585 gate's
+ * F1: GIT_LISTING was a plain array, so a push made in D2 or in beforeEach after the judged set had read it, with both walks
+ * narrowed by the same path, kept the census green). gitListedSrc hands it to git through child_process's execFileSync and tests
+ * each path git lists through fs's lstatSync as this module's first statements bound them (BOUND_EXEC_FILE_SYNC and
+ * BOUND_LSTAT_SYNC, read from its imports before any case, hook or later module line runs), never through node's live imports, so
+ * a replacement of either in node's own module object installed after those lines (process.getBuiltinModule with
+ * module.syncBuiltinESMExports, which every import of it then reads), from a case, a hook or a later module line, never reaches
+ * git's argv, its output or the regular-file test, and walks narrowed with it still red at E1 and E2 (wb-ccea, the landing-633
+ * gate's F1: a replacement of execFileSync that added an exclude pathspec to git's argv, or dropped src/workflow from its output,
+ * installed in D2, in beforeEach or at module load, with both walks narrowed by the same path, kept the census green). The path the
+ * regular-file test reads is a template literal, REPO and the path git lists joined by '/', built through no node path function,
+ * so a replacement of path's join or normalize never reaches it either (wb-tsi6, the landing-697 gate's F1: a bound path.join held
+ * join's identity, not its behaviour, since join reads normalize off node's own path module object at every call, so one statement
+ * replacing normalize after the bindings, in D2, with both walks narrowed by src/workflow, kept the census green). E1 replaces
+ * each of those four in turn, reads the replacement live at this module's own import (normalize through its join) and reads git's
+ * listing unchanged, so a listing run through a live import of one of the four, or through a bound join, reds there; the control
+ * reads only the four functions it replaces (Not claimed).
+ * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows, clauses and words, not
+ * pins); an assertion removed from this file together with its pinned count in the roster; the file-end judge or the selection it
+ * reads removed (no claim rides them alone: the registration case still holds the record); every case of the file skipped at once
+ * (no case runs to read the tree, and vitest runs no hook for a file with nothing to run); the native provider seam
+ * (providers/reactivefiber.ts isPreviewEnvelope, which refuses the same committed shapes before a reading exists) and the control
+ * adapters' executions (claude-control.ts, detached-control.ts: their exported outcome tables are read here, their suites execute
+ * them); gitListedSrc's own code narrowed together with filesBelow and the in-file listing by the same path, whichever of its parts
+ * carries the edit: an argument added at its call site, its filter of git's output (regularFile included), the result it returns,
+ * there or where E1 or E2 reads it, or one of the two bindings it runs on made a narrowing wrapper over the function it read (an
+ * edit of three sites: the declared filter form and the landing-494 gate's G7 and G10, which no in-file check reads, and a wrapper
+ * binding, which E1's control runs through without telling it from node's function); GIT_LISTING narrowed in this file and the
+ * roster together with filesBelow and the in-file listing (the roster moving with the census, an edit of four sites visible in any
+ * diff: that gate's G4); GIT_LISTING's freeze removed together with the judged set's reading of it, in the roster (gitListingFrozen
+ * false) or in this file (the reading replaced by a literal true), and a run-time edit of it with filesBelow and the in-file listing
+ * narrowed by the same path (an edit of five sites, in this file alone or in this file and the roster, visible in any diff);
+ * gitListedSrc or regularFile made to run on node's live import of one of the four functions E1's control replaces (in place of a
+ * binding or of the template literal), or regularFile's path built through a bound join again, together with E1's control
+ * hollowed, a run-time replacement of that function and filesBelow and the in-file listing narrowed by the same path (in this
+ * file's code alone an edit of five sites or more visible in any diff; fewer when a run-time replacement of what the control or the
+ * walks run on does the hollowing or the narrowing); gitListedSrc or regularFile made to call a live import of a node function
+ * E1's control does not replace (child_process's spawnSync read at the call, say), together with a run-time replacement of it and
+ * filesBelow and the in-file listing narrowed by the same path (an edit of four sites visible in any diff, E1's control untouched:
+ * it reads only the four functions it replaces, so a listing re-routed to another node function passes it unread); and a run-time
+ * replacement the two bindings do not keep out, with both walks narrowed by the same path (in their code, or by a replacement of
+ * what they run on, fs's readdirSync among them): one of the two replaced before this module's first statements bind it, so the
+ * binding holds the replacement (in a setup file, in a module this file imports or on a line above the bindings), any other node
+ * function, object or setting git's listing runs on (Buffer's or Stats' methods, a node function one of the two reads off node's
+ * own module objects at call time, the environment git runs in: process.env and its PATH), or a language intrinsic
+ * (String.prototype.split, Array.prototype.filter or sort, Set): the census holds its own code and the two functions it binds, not
+ * the platform it runs on.
  * RESIDUALS (named families, each with a pinned quiet row): R-FOREIGN-VALUE the observer knows rf's two observed words only, so a
  * producer VALUE reads not observed, verbatim (A1's VALUE reading); R-LISTED-FOUR the observations note lists at most four distinct
  * words, a fifth is counted and marked, never renamed (A2's five-word note); R-REFUSED-FLAG a missing flag is refused rather than
@@ -74,15 +148,18 @@
  * spells a record term or state word: the reader FO-H2-02/03, TSX-H2-04, RI-H2-04/05 or RL-H2-04 calls for reds this census first,
  * and its cut re-pins (a) to (d) at that reader's own display.
  *
- * Display paths added: none. Test-only: no file is written and no process is spawned; src, package.json, node_modules' directory
- * names and the tracker export are only read.
+ * Display paths added: none. Test-only: no file is written and the one process spawned is `git ls-files` (a read-only listing below
+ * src); src, package.json, node_modules' directory names and the tracker export are only read; E1's control replaces four node
+ * functions in node's own module objects, each for one synchronous read, and puts each back before the next.
  */
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { type ExecFileSyncOptions, execFileSync } from "node:child_process";
+import { type Dirent, lstatSync, type PathLike, readdirSync, readFileSync, type StatSyncOptions } from "node:fs";
+import { syncBuiltinESMExports } from "node:module";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it, type RunnerTask } from "vitest";
 import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { CLAUDE_CONTROL_RECONCILE, CLAUDE_INTERRUPT_OUTCOMES } from "../src/workbench/claude-control.js";
 import { DETACHED_CONTROL_VERBS } from "../src/workbench/detached-control.js";
@@ -101,6 +178,17 @@ import {
   type TelemetryEvent,
 } from "../src/workbench/telemetry.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
+
+/** The two node functions git's listing runs on, bound as this module's first statements, before any case, hook or later module
+ * line runs (wb-ccea): gitListedSrc runs git through BOUND_EXEC_FILE_SYNC and regularFile tests each path git lists through
+ * BOUND_LSTAT_SYNC, never through node's live imports, so a replacement of either in node's own module object installed after these
+ * lines (process.getBuiltinModule with module.syncBuiltinESMExports, which every import then reads) never reaches git's argv, its
+ * output or the regular-file test. The path regularFile tests is built through no node path function (wb-tsi6: a bound path.join
+ * held join's identity, not its behaviour, since join reads normalize off node's own path module object at every call), so a
+ * replacement of path's join or normalize never reaches it either; E1's control replaces each of the four and reads git's listing
+ * unchanged. */
+const BOUND_EXEC_FILE_SYNC = execFileSync;
+const BOUND_LSTAT_SYNC = lstatSync;
 
 type JsonObject = { [key: string]: JsonValue };
 
@@ -123,6 +211,8 @@ const CONTROL_WORD = "zz-control";
 const UNLISTED = String.fromCodePoint(0x2026);
 /** Two open objects of an rf render result a render-report-shaped record can ride unread. */
 const REPORT_CARRIERS: readonly string[] = ["result.render_report", "result.provenance.render_report"];
+/** The key of a bare commit flag (no record around it) B1 plants on every object of a render. */
+const BARE_FLAG = "committed";
 /** The committed shapes, each the one edit that states a commit (the observer's reactivefiberTopology and previewSnapshot fences). */
 const COMMITTED_SHAPES: readonly string[] = ["transaction_id", "result.render_id", "result.commit_seq", "result.ephemeral", "result.work.storage_write_count"];
 /** The flags that state a render noncommitted and must be stated; commit_seq is the pinned schema's optional one. */
@@ -160,10 +250,21 @@ const STATE = new RegExp(`(?<![A-Za-z0-9])(?:${STATE_WORDS.join("|")})(?![A-Za-z
 const ANCHORS: readonly string[] = ["src/workbench/reactivefiber-observer.ts", "src/workbench/capability-registry.ts", "src/workbench/telemetry.ts"];
 /** Sits below the count measured at base 282caa0: 115 src files, every one a .ts module. */
 const MODULE_FLOOR = 100;
+/** The listing E1's and E2's walks are also held to (wb-cd1r): git's own list of the files below src, tracked or untracked with
+ * ignored ones included, so it names every file the walk reads, from a walk this file does not compute. It is git's whole argv,
+ * the src pathspec included, so the roster holds every argument git runs with (wb-fugf). It is frozen here, so no case, hook or
+ * module line edits it at run time, before the judged set reads it or after: an edit throws a TypeError where it is made (wb-iwhu). */
+const GIT_LISTING: readonly string[] = Object.freeze(["ls-files", "-z", "--cached", "--others", "--", "src"]);
 const RESIDUAL_FAMILIES: readonly string[] = [
   "R-FOREIGN-VALUE", "R-LISTED-FOUR", "R-REFUSED-FLAG", "R-OPTIONAL-COMMIT-SEQ", "R-READ-TIMEOUT", "R-COUNT-NOT-WORD", "R-COMPOSED",
   "R-GENERIC-WORD", "R-COMMENT",
 ];
+const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the collected cases and the filing's own notes agree";
+const REGISTRATION_TITLE =
+  "registration: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its end with its pinned assertion count";
+/** The record's ids for the two cases that are not pins. */
+const JUDGED_ID = "judged";
+const REGISTRATION_ID = "registration";
 
 interface Row {
   readonly id: string;
@@ -224,6 +325,10 @@ interface Roster {
   readonly residuals: readonly string[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  /** The ends every case before the registration case records, in run order (`${id}:${count}`). */
+  readonly reached: readonly string[];
+  /** The registration case's own end, held by the file-end judge. */
+  readonly registrationEnd: string;
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -247,6 +352,7 @@ function readRoster(): Roster {
   if (!isObject(raw) || typeof raw.bead !== "string" || !Array.isArray(raw.rows) || !Array.isArray(raw.producers) || !isObject(raw.constants)) {
     throw new Error("roster must be an object with bead, producers, constants and rows");
   }
+  if (typeof raw.registrationEnd !== "string") throw new Error("roster registrationEnd must be a string");
   const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
     if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) {
       throw new Error(`roster rows[${index}] needs an id, a label and a pins list`);
@@ -267,7 +373,7 @@ function readRoster(): Roster {
   });
   return {
     bead: raw.bead, producers, constants: objectOf(json(raw.constants), "roster constants"), residuals: strings(raw.residuals, "residuals"), rows,
-    tests: strings(raw.tests, "tests"),
+    tests: strings(raw.tests, "tests"), reached: strings(raw.reached, "reached"), registrationEnd: raw.registrationEnd,
   };
 }
 
@@ -330,6 +436,20 @@ function parentOf(envelope: JsonObject, path: string): { holder: JsonObject; key
   let holder = envelope;
   for (const step of steps) holder = objectOf(holder[step], step);
   return { holder, key };
+}
+/** Every object a JSON value holds (itself included, array elements entered), by dotted path from the value ("" is the value). */
+function objectPaths(value: JsonValue, path = ""): string[] {
+  if (Array.isArray(value)) return value.flatMap((item, index) => objectPaths(item, path === "" ? String(index) : `${path}.${index}`));
+  if (value === null || typeof value !== "object") return [];
+  return [path, ...Object.entries(value).flatMap(([key, item]) => objectPaths(item, path === "" ? key : `${path}.${key}`))];
+}
+/** The object at a dotted path of objectPaths (array indices included). */
+function objectAt(root: JsonObject, path: string): JsonObject {
+  let holder: JsonValue = root;
+  for (const step of path === "" ? [] : path.split(".")) {
+    holder = Array.isArray(holder) ? (holder[Number(step)] ?? null) : objectOf(holder, step)[step] ?? null;
+  }
+  return objectOf(holder, path === "" ? "the envelope" : path);
 }
 function withRows(statuses: readonly string[]): JsonObject {
   const envelope = cleanEnvelope();
@@ -550,6 +670,111 @@ function hitsOf(items: readonly string[]): string[] {
 function srcModules(): { file: string; items: string[] }[] {
   return filesBelow(join(REPO, "src")).map(path => ({ file: relative(REPO, path).split("\\").join("/"), items: lexiconOf(path, readFileSync(path, "utf8")) }));
 }
+/** Every file below src by an independent route (node:fs recursive readdir, not filesBelow), sorted: what E1's and E2's walks equal. */
+function listedSrc(): string[] {
+  return readdirSync(join(REPO, "src"), { recursive: true, withFileTypes: true })
+    .filter(entry => entry.isFile())
+    .map(entry => relative(REPO, join(entry.parentPath, entry.name)).split("\\").join("/"))
+    .sort();
+}
+/** Whether a repo-relative path is a regular file now (a symlink, a directory or a vanished path is not), tested through the bound
+ * lstatSync (wb-ccea) on REPO and the path joined by '/' in a template literal, through no node path function (wb-tsi6): git's -z
+ * output names each path repo-relative with '/' separators, so the literal names the file path.join would name. */
+function regularFile(path: string): boolean {
+  try {
+    return BOUND_LSTAT_SYNC(`${REPO}/${path}`).isFile();
+  } catch {
+    return false;
+  }
+}
+/** Every regular file git lists below src (GIT_LISTING), sorted: read from git, never from a walk of this file, so a walk and the
+ * in-file listing narrowed together still differ from it; a tracked path deleted from the checkout is no file. Git runs with
+ * GIT_LISTING as it stands, nothing added at this call site (wb-fugf), and frozen, it stands as the judged set read it (wb-iwhu);
+ * git runs through BOUND_EXEC_FILE_SYNC and each path is tested through BOUND_LSTAT_SYNC, never through node's live imports
+ * (wb-ccea), on a path built through no node path function (wb-tsi6). */
+function gitListedSrc(): string[] {
+  const out = BOUND_EXEC_FILE_SYNC("git", GIT_LISTING, { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path !== "" && regularFile(path)))].sort();
+}
+function walkedFiles(modules: readonly { readonly file: string }[]): string[] {
+  return modules.map(({ file }) => file).sort();
+}
+/** Runs read while node's own module object (the one process.getBuiltinModule returns) holds replacement at key, published to every
+ * import of it by module.syncBuiltinESMExports, and puts the original back, published the same way, before it returns or throws. */
+function whileReplaced<T>(holder: object, key: string, replacement: unknown, read: () => T): T {
+  const original: unknown = Reflect.get(holder, key);
+  if (!Reflect.set(holder, key, replacement)) throw new Error(`node's module object refused a replacement of ${key}`);
+  syncBuiltinESMExports();
+  try {
+    return read();
+  } finally {
+    Reflect.set(holder, key, original);
+    syncBuiltinESMExports();
+  }
+}
+interface BoundReading {
+  readonly binding: string;
+  /** This module's own import of the function (for normalize, this module's join, which reads it at the call), read while the
+   * replacement stands, reads the narrowed result. */
+  readonly liveNarrowed: boolean;
+  /** gitListedSrc, run while the replacement stands, lists exactly what E1 read before it. */
+  readonly gitListingUnchanged: boolean;
+}
+/** E1's control (wb-ccea, wb-tsi6): each of the two node functions git's listing runs on, and path's join and normalize (the path
+ * functions a regular-file path could be built with: join reads normalize off node's own path module object at every call), is
+ * replaced in turn, in node's own module object, by one that narrows that listing by one file (an exclude pathspec added to git's
+ * argv, the file's regular-file test failing, its joined or normalized path moved off it). While it stands this module's own import
+ * reads it, narrowed (normalize through this module's join), and gitListedSrc must still list what E1 read before it, so a listing
+ * that runs on a live import of one of the four, or builds its paths through a bound join, reds here; a listing re-routed to a node
+ * function the control does not replace is not read here (Not claimed). */
+function boundControl(gitListed: readonly string[]): BoundReading[] {
+  const target = gitListed[0];
+  if (target === undefined) throw new Error("git lists no src file for E1's control to narrow by");
+  const targetPath = join(REPO, target);
+  const unchanged = (): boolean => isDeepStrictEqual(gitListedSrc(), gitListed);
+  const childProcessModule = process.getBuiltinModule("node:child_process");
+  const fsModule = process.getBuiltinModule("node:fs");
+  const pathModule = process.getBuiltinModule("node:path");
+  const runGit = childProcessModule.execFileSync;
+  const statPath = fsModule.lstatSync;
+  const joinPath = pathModule.join;
+  const normalizePath = pathModule.normalize;
+  const narrowedRun = (file: string, args: readonly string[], options: ExecFileSyncOptions) => runGit(file, [...args, `:(exclude)${target}`], options);
+  const narrowedStat = (file: PathLike, options?: StatSyncOptions) => {
+    if (String(file) === targetPath) throw new Error("E1's control: the narrowed file's regular-file test fails");
+    return statPath(file, options);
+  };
+  const narrowedJoin = (...parts: string[]): string => {
+    const joined = joinPath(...parts);
+    return joined === targetPath ? `${joined}.narrowed` : joined;
+  };
+  const narrowedNormalize = (path: string): string => {
+    const normalized = normalizePath(path);
+    return normalized === targetPath ? `${normalized}.narrowed` : normalized;
+  };
+  const liveRegular = (): boolean => {
+    try {
+      return lstatSync(targetPath).isFile();
+    } catch {
+      return false;
+    }
+  };
+  return [
+    {
+      binding: "node:child_process execFileSync",
+      ...whileReplaced(childProcessModule, "execFileSync", narrowedRun, () => ({
+        liveNarrowed: !execFileSync("git", GIT_LISTING, { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 }).split("\0").includes(target),
+        gitListingUnchanged: unchanged(),
+      })),
+    },
+    { binding: "node:fs lstatSync", ...whileReplaced(fsModule, "lstatSync", narrowedStat, () => ({ liveNarrowed: !liveRegular(), gitListingUnchanged: unchanged() })) },
+    { binding: "node:path join", ...whileReplaced(pathModule, "join", narrowedJoin, () => ({ liveNarrowed: join(REPO, target) !== targetPath, gitListingUnchanged: unchanged() })) },
+    {
+      binding: "node:path normalize",
+      ...whileReplaced(pathModule, "normalize", narrowedNormalize, () => ({ liveNarrowed: join(REPO, target) !== targetPath, gitListingUnchanged: unchanged() })),
+    },
+  ];
+}
 /** Whether an edit of the clean render's result.provenance.sdk_versions leaves its projection byte-identical. */
 function siblingUnread(clean: string, edit: (versions: JsonObject) => void): boolean {
   const envelope = cleanEnvelope();
@@ -618,9 +843,24 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       }
     }
     expect(carried, "every planted render report carried unread").toHaveLength(REPORT_CARRIERS.length * 3);
+    // wb-vgxn (the 312 gate's F2, P05): a bare commit flag, false or true, on every object of the render, is carried unread or refused
+    // by a strict object as a typed validation error; a projection that moves, or any other refusal, is a read.
+    const bare: { unread: string[]; refused: string[]; read: string[] } = { unread: [], refused: [], read: [] };
+    for (const path of objectPaths(cleanEnvelope())) {
+      for (const committed of [false, true]) {
+        const envelope = cleanEnvelope();
+        objectAt(envelope, path)[BARE_FLAG] = committed;
+        const refusal = refusalOf(() => project(envelope));
+        const unread = refusal === null && JSON.stringify(project(envelope)) === JSON.stringify(clean);
+        const outcome = refusal === null ? (unread ? "unread" : "read") : refusal.category === "validation" ? "refused" : "read";
+        bare[outcome].push(`${path === "" ? "envelope" : path}:${committed}`);
+      }
+    }
+    expect(bare.read, "a bare commit flag read into the projection").toEqual([]);
+    expect(bare.unread, "the result and its provenance carry a bare commit flag unread").toEqual(expect.arrayContaining(["result:false", "result:true", "result.provenance:false", "result.provenance:true"]));
     return json({
       pin: "B1", kind: snapshot.kind, statusText: snapshot.node.statusText, preview: clean.diagnostics.find(text => text.startsWith("ephemeral ")) ?? null,
-      claims, carried,
+      claims, carried, bare,
     });
   },
   B2: async () => {
@@ -760,6 +1000,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const declared = declaredPackages().filter(name => H2_PACKAGE.test(name));
     const installed = installedPackages().filter(name => H2_PACKAGE.test(name));
     const modules = srcModules();
+    const listed = listedSrc();
+    const gitListed = gitListedSrc();
+    expect(walkedFiles(modules), "E1's walk is every file below src (an independent recursive listing)").toEqual(listed);
+    expect(walkedFiles(modules), "E1's walk is every file git lists below src (tracked or untracked, ignored ones included)").toEqual(gitListed);
+    // wb-ccea, wb-tsi6: git's listing runs on the two node functions this module bound before any case ran, never on node's live
+    // imports, and the path each regular-file test reads is built through no node path function.
+    const bound = boundControl(gitListed);
+    expect(bound, "each of the two node functions git's listing runs on, and path's join and normalize, replaced at run time, reads narrowed at this module's import and leaves git's listing as E1 read it").toEqual([
+      { binding: "node:child_process execFileSync", liveNarrowed: true, gitListingUnchanged: true },
+      { binding: "node:fs lstatSync", liveNarrowed: true, gitListingUnchanged: true },
+      { binding: "node:path join", liveNarrowed: true, gitListingUnchanged: true },
+      { binding: "node:path normalize", liveNarrowed: true, gitListingUnchanged: true },
+    ]);
     const named = modules.flatMap(({ file, items }) => items.filter(item => H2_PACKAGE.test(item)).map(item => `${file}: ${item}`));
     expect(declared, "an H2 producer package in package.json").toEqual([]);
     expect(installed, "an H2 producer package in node_modules").toEqual([]);
@@ -776,10 +1029,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       }),
     ]);
     expect(unread, "every sibling entry, changed and removed, is unread").toEqual(SIBLING_ENTRIES.flatMap(() => [true, true]));
-    return json({ pin: "E1", declared, installed, named, siblingEntries: SIBLING_ENTRIES.length, unread: unread.every(Boolean) });
+    return json({
+      pin: "E1", declared, installed, named, siblingEntries: SIBLING_ENTRIES.length, unread: unread.every(Boolean), walkComplete: isDeepStrictEqual(walkedFiles(modules), listed),
+      walkGitListed: isDeepStrictEqual(walkedFiles(modules), gitListed), bound,
+    });
   },
   E2: async () => {
     const modules = srcModules();
+    const listed = listedSrc();
+    const gitListed = gitListedSrc();
+    expect(walkedFiles(modules), "E2's walk is every file below src (an independent recursive listing)").toEqual(listed);
+    expect(walkedFiles(modules), "E2's walk is every file git lists below src (tracked or untracked, ignored ones included)").toEqual(gitListed);
     const nonModules = modules.filter(({ file }) => !file.endsWith(".ts")).map(({ file }) => file);
     const hits = modules.flatMap(({ file, items }) => hitsOf(items).map(hit => `${file}: ${hit}`));
     expect(nonModules, "a src file that is not a .ts module").toEqual([]);
@@ -790,7 +1050,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       return { file, scanned: found !== undefined && found.items.length > 0, hits: found === undefined ? null : hitsOf(found.items).length };
     });
     expect(anchors.map(anchor => anchor.scanned), "every anchor module was scanned").toEqual(ANCHORS.map(() => true));
-    return json({ pin: "E2", aboveFloor: modules.length >= MODULE_FLOOR, nonModules, hits, anchors });
+    return json({
+      pin: "E2", aboveFloor: modules.length >= MODULE_FLOOR, walkComplete: isDeepStrictEqual(walkedFiles(modules), listed),
+      walkGitListed: isDeepStrictEqual(walkedFiles(modules), gitListed), nonModules, hits, anchors,
+    });
   },
   E3: async () => {
     const lexicon = (text: string): string[] => lexiconOf("control.ts", text);
@@ -831,18 +1094,60 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
 };
 
+/** THE RECORD: each case's end, in run order, as `${id}:${count}` (vitest's tally of the case's assertions), pushed only after the
+ * case's last assertion; a pin's right after its witness comparison. */
+const REACHED: string[] = [];
+/** Each pin's witness as its case measured it; the registration case compares it against the roster a second time. */
+const MEASURED: Record<string, JsonValue> = {};
+/** The titles selected to run, read from the collected task tree before any case runs (a test-name filter deselects the rest). */
+const SELECTED: string[] = [];
+
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every test a collected task tree holds, in registration order; self marks the case doing the reading. */
+function registered(tasks: readonly RunnerTask[], self?: RunnerTask): Registered[] {
+  const walked: Registered[] = [];
+  for (const child of tasks) {
+    if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self });
+    else if (child.type === "suite") walked.push(...registered(child.tasks, self));
+  }
+  return walked;
+}
+/** A registered test's title with its collected mode, "+fails" marking an inverted one. */
+const modeLine = (entry: Registered): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""}`;
+
+// The selection, read once from the collected tree before the first case runs (no case has run, so every mode is the collected one).
+beforeEach(({ task }) => {
+  if (SELECTED.length === 0) SELECTED.push(...registered(task.file.tasks).filter(entry => entry.mode === "run").map(entry => entry.name));
+});
+// The file-end judge: a registration case selected to run reached its own end, after every other case's, with its pinned count.
+afterAll(() => {
+  if (!SELECTED.includes(REGISTRATION_TITLE)) return;
+  expect(REACHED, "every case of this file reached its end, the registration case last").toEqual([...ROSTER.reached, ROSTER.registrationEnd]);
+});
+
 describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-R10, gated on FO-H2-02/03, TSX-H2-04, RI-H2-04/05 and RL-H2-04, until-then leg)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the cases and the filing's own notes agree", () => {
+  it(JUDGED_TITLE, ({ task }) => {
+    // The collected cases, read before any other case runs: a registration case deleted, renamed, skipped or inverted reds here.
+    const collected = registered(task.file.tasks, task);
+    expect(collected.map(entry => entry.name), "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(collected.findIndex(entry => entry.self), "this case finds itself by task identity, registered first").toBe(0);
+    expect(collected.filter(entry => entry.mode !== "run" || entry.fails).map(modeLine), "every registered test is set to run and not inverted").toEqual([]);
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:3", "D:2", "E:3"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect({
-      bead: BEAD, publicationWords: PUBLICATION_WORDS, nonTerminal: NON_TERMINAL, controlWord: CONTROL_WORD, reportCarriers: REPORT_CARRIERS,
+      bead: BEAD, publicationWords: PUBLICATION_WORDS, nonTerminal: NON_TERMINAL, controlWord: CONTROL_WORD, reportCarriers: REPORT_CARRIERS, bareFlag: BARE_FLAG,
       committedShapes: COMMITTED_SHAPES, requiredFlags: REQUIRED_FLAGS, optionalFlag: OPTIONAL_FLAG, effectful: EFFECTFUL, deadlineMs: DEADLINE_MS,
       outcomeKeys: OUTCOME_KEYS, h2Packages: H2_PACKAGES, siblingEntries: SIBLING_ENTRIES, recordTerms: RECORD_TERMS, stateWords: STATE_WORDS,
-      anchors: ANCHORS, moduleFloor: MODULE_FLOOR, residuals: RESIDUAL_FAMILIES,
+      anchors: ANCHORS, moduleFloor: MODULE_FLOOR, gitListing: GIT_LISTING, gitListingFrozen: Object.isFrozen(GIT_LISTING), residuals: RESIDUAL_FAMILIES,
     }).toStrictEqual({ bead: ROSTER.bead, ...ROSTER.constants, residuals: [...ROSTER.residuals] });
     // The producer facts: the program README at the four pins, each with its blob and the cited lines.
     expect(ROSTER.producers.map(entry => [entry.short, entry.sha.length, entry.path, entry.blob.length, Object.keys(entry.lines)])).toEqual([
@@ -869,6 +1174,7 @@ describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-
     expect(gates.map(gate => gate.id)).toEqual(["FO-H2-02", "TSX-H2-04", "RI-H2-04", "FO-H2-03", "RI-H2-05", "RL-H2-04"]);
     expect(gates.filter(({ id, short, line }) => !producerLine(short, line).startsWith(`| ${id} |`)), "a gating id that does not head its measured line").toEqual([]);
     expect(notesLine(notes, "Gating artifact: ").endsWith("Shipped: no.")).toBe(true);
+    REACHED.push(`${JUDGED_ID}:${expect.getState().assertionCalls}`);
   });
 
   for (const row of ROWS) {
@@ -879,27 +1185,29 @@ describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          MEASURED[pin] = witness;
+          REACHED.push(`${pin}:${expect.getState().assertionCalls}`);
         });
       }
     });
   }
 
-  it("registration: every case of this file is registered once, in roster order, in run mode, and ran before this one", ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const walk = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") walk(child.tasks);
-      }
-    };
-    walk(task.file.tasks);
+  it(REGISTRATION_TITLE, ({ task }) => {
+    const walked = registered(task.file.tasks, task);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
-    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
+    const read = (entry: Registered): string => `${modeLine(entry)} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    // THE RECORD: every case before this one reached its end - the judged set first, then each pin right after its witness
+    // comparison - with its pinned assertion count, and each pin's measured witness equals the roster's a second time.
+    const pins = ROWS.flatMap(row => row.pins);
+    expect(REACHED, "every case before this one reached its end, in run order, with its pinned assertion count").toEqual([...ROSTER.reached]);
+    expect(REACHED.map(entry => entry.split(":")[0]), "the reached ids are the judged set, then the rows' pins").toEqual([JUDGED_ID, ...pins]);
+    expect(MEASURED, "every pin's measured witness, compared against the roster a second time").toStrictEqual(Object.fromEntries(pins.map(pin => [pin, rosterWitness(pin)])));
+    REACHED.push(`${REGISTRATION_ID}:${expect.getState().assertionCalls}`);
   });
 });

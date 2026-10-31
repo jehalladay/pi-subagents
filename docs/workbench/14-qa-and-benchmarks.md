@@ -259,3 +259,24 @@ The standing wb-tz2.10 census tests the following reader cases and refusal branc
 | F17 | a complete-empty answer that carries rows |
 | F18 | a reading of another workspace |
 | F19 | an operation reference aliasing the query node itself |
+
+## RF definition-source census residuals
+
+Named residuals of test/workbench-rf-definition-source-census.test.ts, the until-then docs census of the definition-source label (wb-973.13): one row per residual family the census names and does not claim to catch. Each row names the census quiet row that pins the family and the seam its named cure takes: the sentence judge, the sentence splitter, the walked scope, a page cure or the trigger's names rule. The census holds this table to its residual pins in both directions, so a family dropped, renamed or moved to another row or seam on either side reads red.
+
+| Quiet row | Residual family | Cure seam |
+| --- | --- | --- |
+| A3 | R-PARAPHRASE | judge |
+| A4 | R-ANAPHORA | splitter |
+| A5 | R-NEGATION-SCOPE | judge |
+| A6 | R-OUTSIDE-WALK | scope |
+| A12 | R-ABBREVIATION | splitter |
+| A13 | R-PREVIEW-WORDS | judge |
+| A14 | R-FOOTNOTE | page cure |
+| A15 | R-FOOTNOTE-REFERENCE | page cure |
+| A16 | R-FOOTNOTE-DEFINITION | page cure |
+| A17 | R-SUBSCRIPT | page cure |
+| A18 | R-NO-COMMIT | judge |
+| A19 | R-NEGATION-PHRASE | judge |
+| A20 | R-MARKER-RUN | page cure |
+| T4 | R-NESTED | names rule |

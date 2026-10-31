@@ -22,17 +22,45 @@
  * d75b68d10a1a (git grep), and the planted hits exactly. B1 reads every tracked Pi file (the store left out by name, its spellings
  * asserted), requires the stable exact anchors and the planted tally, and never pins the whole-tree tally (a compliant GP cut adds
  * exact spellings; B2 judges them). B2 every reading is exact; each variant class (major, invisible, compatibility, case,
- * namespace, separator, retired, proposed) is a finding. B3 src spells nothing and GP_SCHEMA_CARRIERS is empty; the carrier judge
+ * namespace, separator, retired, proposed) is a finding, and a major runs on through every suffix that a run of non-space
+ * separators or a plus sign leads (a dotted minor, a pre-release, a build mark), so v1.1 or v1-rc1 is a major variant, never exact
+ * (wb-364f F2); every such word, and the letters right after the major, is read in any script (wb-1du7 F1, enumerated below).
+ * B3 src spells nothing and GP_SCHEMA_CARRIERS is empty; the carrier judge
  * refuses an unregistered, duplicate or stale carrier; GP_SCHEMA_IDS below is this census's one carrier (one spelling per id) and
  * equals the producer's carrier lines. C1 no src module is a GP adapter (constants and names, never comments); GP_SCHEMA_ADAPTERS is
- * empty, and an adapter must land bound to three registered cases. C2-C4 the exchange judge those cases apply: a non-pinned id is
- * refused, typed, naming the id byte-identically; a producer namespace mismatch surfaces with its code and message byte-identical;
+ * empty, and an adapter must land bound to three registered cases, each named by a census-tier judge leg (wb-364f F1): a .census.ts
+ * file under test/ that imports the value judge from test/helpers/census.ts (the wb-u62 floor; an alias counts, import type and a
+ * type-only specifier do not, the module resolved from the leg's own directory) and names the case's file and title as string
+ * tokens. The first binding cut is thereby bound to the shared helper for the legs this source locator cannot read; the live judge
+ * reads the census-tier files only once a binding exists, and its tier control reads them for a constructed one. C2-C4 the exchange
+ * judge those cases apply: a non-pinned id is refused, typed, naming the id byte-identically; a producer namespace mismatch
+ * surfaces with its code and message byte-identical;
  * no request to the producer alters the namespace. Every finding code a pin reports shares a word with its bead quote (G-SWAPW).
  * Every row/pin quotes a slice of its bead-export Acceptance clause (spellings held as placeholders, so this file spells neither
  * needle); ordered quotes tile each clause, so a row or pin deleted from every census literal still reds there (CT5/CT6).
  * FROZEN SHAPE: A:3 B:3 C:4; the roster pins every label, quote and pin witness.
  * RESIDUALS, with quiet pins: R-COMPUTED, R-ENCODED, R-CONFUSABLE, R-MARKUP, R-LINE-BREAK (A2); R-ENVELOPE, R-NAMESPACE-ONLY (B1);
- * R-BOUND-CASE (C1).
+ * R-SUFFIX-BOUNDARY (B2); R-BOUND-CASE, R-JUDGE-LEG (C1). The judged set holds every residual to a quiet row of its pin's held
+ * witness, and every quiet row to a residual; the B2 and C1 residuals each carry a paired control one change away.
+ * wb-1du7 (hop 3, the last, of the chain wb-ojm5.1 334 -> wb-364f 425 -> wb-1du7: the R694 follow-up of the landing-425 gate's F1
+ * and F4, in the R739 TERMINAL enumerate-the-resolvable form under rules 14 and 19(c)). THE CRITERION: the B2 suffix reading and
+ * the C1 leg locator each claim exactly the classes below, every class pinned by its rows, never the escapes found so far.
+ * B2, F1 CURED: (S1) letters, marks or digits right after the major's digits continue it (major tail, greek tail, arabic-indic
+ * tail); (S2) a run of the non-space separators or a plus sign, then letters, marks or digits, continues it (the nine lead rows,
+ * the cooked and decoded suffixes) unless that word opens a GP namespace; S1 and S2 read a letter, mark or digit of any script
+ * (WORD), so the gate's L2-P15 and L2-P16 spellings read major (greek pre-release, arabic-indic minor; cjk build mark, mark-led word
+ * and tamil number give each property WORD names a row); (S3) whitespace, a lead outside the separators and the plus sign in any
+ * script, a separator run that no letter, mark or digit follows, and a separator-led namespace word each end the reading
+ * (R-SUFFIX-BOUNDARY: its quiet row and its paired control, the U+2010 HYPHEN and U+2192 RIGHTWARDS ARROW members added). The
+ * major's own digits are ASCII; one spelled in another script's digits (an Arabic-Indic one) is a homoglyph R-CONFUSABLE holds.
+ * C1, F4 CURED: a census-tier leg is (L1) a file under test/ (a leg under src/, qa/, docs/workbench/ or a test-prefixed sibling is
+ * none) (L2) named *.census.ts (a -census.ts name is none, nor is a default-tier file) that (L3) statically imports (a dynamic
+ * import is none) (L4) the value judge, aliased or not (no judge, a namespace import, import type or a type-only specifier is
+ * none) (L5) from test/helpers/census.ts by a relative specifier (a bare one is none) resolved from its own directory (another
+ * module or a nested copy is none) with a .js, a .ts or no extension, and (L6) names the case's file and title as string tokens in
+ * that one leg (another file or title, a comment, or a split across legs is none); a leg is never read by its judge call, its case
+ * or its verdicts (R-JUDGE-LEG). CHAIN TERMINAL (R739): a later survivor outside these classes is record-only unless it contradicts
+ * a claim above.
  * NOT CLAIMED: an edit of this census and its roster together (a coordinated hollow with the roster regenerated from the mutant's
  * own witnesses) beyond what the bead-export anchors kill; a mutant that branches on the live source; a body-and-witness swap
  * between pins whose witnesses carry no finding codes (A1-C1).
@@ -43,7 +71,7 @@
 import { execFileSync, spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
-import { join } from "node:path";
+import { join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
@@ -162,11 +190,22 @@ interface Reading {
 }
 /** A separator run: horizontal space or one of . _ / : * ` ~ -. A line break ends every reading (R-LINE-BREAK). */
 const SEP = "[ \\t\\f\\v._/:*`~-]";
+/**
+ * A letter, mark or digit of any script (wb-1du7 F1: a Greek, CJK or Arabic-Indic word continues a major as an ASCII one does);
+ * the reader is compiled with the u flag so these property escapes hold. The major's own digits stay ASCII (R-CONFUSABLE).
+ */
+const WORD = "[\\p{L}\\p{M}\\p{N}]";
+/**
+ * A suffix that continues the major (wb-364f F2): a run of non-space separators or a plus sign, then letters, marks or digits of
+ * any script (WORD, wb-1du7 F1), unless that word opens a GP namespace (a following id starts there, R-SUFFIX-BOUNDARY). v1.1,
+ * v1-rc1, v1+b5 and v1-<U+03B2>2 read as majors.
+ */
+const SUFFIX = `(?:[._/:*\`~+-]+(?!graph|decision)${WORD}+)*`;
 /** graphpolicy (any joint), the retired namespace graph, or the proposed decision namespace; then a family and a major. */
-const FAMILY_SOURCE = `(graph${SEP}*policy|graph|decision)(${SEP}+)(data|function|factor)(?:${SEP}*v${SEP}*(\\d+)([a-z0-9]*))?`;
-const FAMILY = new RegExp(FAMILY_SOURCE, "g");
+const FAMILY_SOURCE = `(graph${SEP}*policy|graph|decision)(${SEP}+)(data|function|factor)(?:${SEP}*v${SEP}*(\\d+)(${WORD}*${SUFFIX}))?`;
+const FAMILY = new RegExp(FAMILY_SOURCE, "gu");
 /** Non-global twin for the quick tests, so no lastIndex is shared with matchAll. */
-const FAMILY_ANY = new RegExp(FAMILY_SOURCE);
+const FAMILY_ANY = new RegExp(FAMILY_SOURCE, "u");
 const FORMAT = /\p{Cf}/u;
 const CODE = /\.(?:[cm]?[jt]s|[jt]sx)$/;
 function asciiOnly(text: string): boolean {
@@ -307,6 +346,9 @@ function variantClass(reading: Reading): string {
 }
 /** A reading described without its spelling, so a roster that records it spells no family member. */
 const described = (reading: Reading): string => `${reading.path}:${reading.line} ${reading.layer} ${reading.family}@${reading.namespace}${reading.major === null ? "" : `#${reading.major}`}`;
+/** A major as a witness records it: each non-ASCII code point written <U+XXXX>, so the roster stays ASCII (wb-1du7 F1). */
+const shown = (major: string | null): string =>
+  [...`${major}`].map(char => ((char.codePointAt(0) ?? 0) > 127 ? `<U+${(char.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}>` : char)).join("");
 const tally = (readings: readonly Reading[], label: (reading: Reading) => string): string[] => {
   const counts = new Map<string, number>();
   for (const reading of readings) counts.set(label(reading), (counts.get(label(reading)) ?? 0) + 1);
@@ -515,8 +557,63 @@ function caseState(file: string, text: string, title: string): "registered" | "h
   visit(ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS), false);
   return state;
 }
-function adapterFindings(adapters: readonly string[], bindings: readonly AdapterBinding[], read: (file: string) => string | undefined): string[] {
+/** The shared title-census floor (wb-u62) a judge leg imports judge from, as a repository path without its extension. */
+const SHARED_HELPER = "test/helpers/census";
+/** A census-tier file: what vitest.census.config.ts includes (a .census.ts file under test/), never a default-tier test file. */
+const isCensusTier = (path: string): boolean => path.startsWith("test/") && path.endsWith(".census.ts");
+const parsed = (file: string, text: string): ts.SourceFile => ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, scriptKind(file));
+/** True when a source imports the value judge, aliased or not, from the shared helper, its relative specifier resolved from the file. */
+function importsJudge(file: string, text: string): boolean {
+  return parsed(file, text).statements.some(statement => {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) return false;
+    const specifier = statement.moduleSpecifier.text;
+    if (!/^\.\.?\//.test(specifier) || posix.join(posix.dirname(file), specifier).replace(/\.[jt]s$/, "") !== SHARED_HELPER) return false;
+    const clause = statement.importClause;
+    const named = clause?.namedBindings;
+    return clause?.isTypeOnly !== true && named !== undefined && ts.isNamedImports(named) && named.elements.some(element => !element.isTypeOnly && (element.propertyName ?? element.name).text === "judge");
+  });
+}
+/** Every string token of a source, read through the parser, so a title written only in a comment names nothing. */
+function stringTokens(file: string, text: string): ReadonlySet<string> {
+  const found = new Set<string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) found.add(node.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(parsed(file, text));
+  return found;
+}
+/** The census-tier files of a walked tree, read only once a binding exists: an empty table reads none. */
+function censusTier(source: Source, walked: readonly string[], bindings: readonly AdapterBinding[]): ReadonlyMap<string, string> {
+  const tier = new Map<string, string>();
+  if (bindings.length === 0) return tier;
+  for (const path of walked.filter(isCensusTier)) {
+    const bytes = source.read(path);
+    if (bytes !== undefined) tier.set(path, bytes.toString("utf8"));
+  }
+  return tier;
+}
+const LEG_FILE = "test/workbench-gp-adapter.census.ts";
+/** The judge statement of a constructed leg. */
+const JUDGE_CALL = "expect(judge(DEFAULT_TIER_REPORT, PINS).filter(verdict => !verdict.ok)).toEqual([]);";
+/** A census-tier leg that judges the given cases through the shared helper, the shape a binding's leg takes. */
+function legSource(refs: readonly CaseRef[]): string {
+  return [
+    'import { expect, it } from "vitest";',
+    'import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, judge } from "./helpers/census.js";',
+    `const PINS: CasePin[] = [${refs.map(ref => `{ file: ${JSON.stringify(ref.file)}, title: ${JSON.stringify(ref.title)}, tier: DEFAULT_GATE_TIER }`).join(", ")}];`,
+    'it("judges every bound gp adapter case", () => {',
+    `  ${JUDGE_CALL}`,
+    "});",
+  ].join("\n");
+}
+/**
+ * Every refusal of the adapter table: an unbound adapter, a stale binding, a bound case the source locator does not read as
+ * registered, and a bound case no census-tier leg (census: file -> source) names beside an imported judge (wb-364f F1).
+ */
+function adapterFindings(adapters: readonly string[], bindings: readonly AdapterBinding[], read: (file: string) => string | undefined, census: ReadonlyMap<string, string>): string[] {
   const findings: string[] = [];
+  const legs = [...census].filter(([file, text]) => isCensusTier(file) && importsJudge(file, text)).map(([file, text]) => stringTokens(file, text));
   for (const file of adapters) if (!bindings.some(binding => binding.file === file)) findings.push(`${file}: a GP adapter lands unbound (wb-ojm5.1 (c)): bind it in GP_SCHEMA_ADAPTERS`);
   for (const binding of bindings) {
     if (!adapters.includes(binding.file)) findings.push(`${binding.file}: a stale binding, the file is no GP adapter`);
@@ -525,6 +622,8 @@ function adapterFindings(adapters: readonly string[], bindings: readonly Adapter
       const text = read(ref.file);
       const state = text === undefined ? "in an absent file" : caseState(ref.file, text, ref.title);
       if (state !== "registered") findings.push(`${binding.file}: ${clause} case ${JSON.stringify(ref.title)} is ${state}`);
+      if (!legs.some(tokens => tokens.has(ref.file) && tokens.has(ref.title)))
+        findings.push(`${binding.file}: ${clause} case ${JSON.stringify(ref.title)} of ${ref.file} is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)`);
     }
   }
   return findings;
@@ -592,6 +691,13 @@ function codesOffQuote(quote: string, witness: Json): string[] {
   return misses;
 }
 
+/** The quiet rows a pin's held witness carries, as pin:residual (the keys of its quiet object). */
+function quietRows(pin: string, witness: Json): string[] {
+  if (witness === null || typeof witness !== "object" || Array.isArray(witness)) return [];
+  const quiet = Object.entries(witness).find(([name]) => name === "quiet")?.[1];
+  return quiet === undefined || quiet === null || typeof quiet !== "object" || Array.isArray(quiet) ? [] : Object.keys(quiet).map(name => `${pin}:${name}`);
+}
+
 // ---- the planted tree ----
 
 /** One reading in every root (a deep src module, an untracked test file), one outside them, the excluded store, a binary payload. */
@@ -623,6 +729,18 @@ const plant = (): Tree => {
 
 // ---- the pins ----
 
+/**
+ * The non-ASCII controls of the B2 suffix reading (wb-1du7 F1) and the R-CONFUSABLE digit member, each spelled at run time so this
+ * file stays ASCII: a Greek letter, a CJK letter, a combining mark, an Arabic-Indic digit and a Tamil number continue a major; a
+ * Unicode hyphen leads no suffix and an arrow is no word (R-SUFFIX-BOUNDARY).
+ */
+const GREEK_BETA = String.fromCodePoint(0x03b2);
+const CJK_EDITION = String.fromCodePoint(0x7248);
+const COMBINING_ACUTE = String.fromCodePoint(0x0301);
+const ARABIC_INDIC_ONE = String.fromCodePoint(0x0661);
+const TAMIL_TEN = String.fromCodePoint(0x0bf0);
+const UNICODE_HYPHEN = String.fromCodePoint(0x2010);
+const RIGHTWARDS_ARROW = String.fromCodePoint(0x2192);
 const REACHED = new Set<string>();
 const IMPL: Readonly<Record<string, () => Json>> = {
   A1: () => {
@@ -677,7 +795,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const quiet = {
       "R-COMPUTED": readingsOf("a.ts", 'const id = ["graph", "data", "v1"].join(".");').length,
       "R-ENCODED": readingsOf("notes.md", `${Buffer.from(RETIRED).toString("base64")} ${encodeURIComponent(PROPOSED).replaceAll(".", "%2E")} ${RETIRED.replaceAll(".", "&#46;")}`).length,
-      "R-CONFUSABLE": readingsOf("notes.md", RETIRED.replace("a", String.fromCodePoint(0x0430))).length,
+      "R-CONFUSABLE": readingsOf("notes.md", `${RETIRED.replace("a", String.fromCodePoint(0x0430))} ${RETIRED.replace("1", ARABIC_INDIC_ONE)}`).length,
       "R-MARKUP": readingsOf("notes.md", RETIRED.replace("data", "<b>data</b>")).length,
       "R-LINE-BREAK": readingsOf("notes.md", RETIRED.replace(".", ".\n")).length,
     };
@@ -759,11 +877,56 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       ["retired function", variant(["graph", "function", "v1"].join("."))],
       ["proposed major 2", variant(PROPOSED.replace(/1$/, "2"))],
     ];
+    // wb-364f F2: a suffix a run of non-space separators or a plus sign leads continues the major, read as class:major.
+    const versioned = (text: string): string => {
+      const found = readingsOf("notes.md", `a ${text} b`);
+      expect(found, text).toHaveLength(1);
+      const [reading] = found;
+      return reading === undefined || isExact(reading) ? "exact" : `${variantClass(reading)}:${shown(reading.major)}`;
+    };
+    const layered = (path: string, text: string): string[] => readingsOf(path, text).map(reading => `${reading.layer}:${isExact(reading) ? "exact" : `${variantClass(reading)}:${shown(reading.major)}`}`);
+    const suffixes: Json = [
+      ["dotted minor", versioned(`${DATA}.1`)],
+      ["dotted patch", versioned(`${FUNCTION}.0.1`)],
+      ["pre-release", versioned(`${FUNCTION}-rc1`)],
+      ["underscore suffix", versioned(`${DATA}_2`)],
+      ["build mark", versioned(`${DATA}+build5`)],
+      ["slash suffix", versioned(`${FUNCTION}/2`)],
+      ["colon suffix", versioned(`${DATA}:2`)],
+      ["emphasis suffix", versioned(`*${DATA}*2`)],
+      ["code span suffix", versioned(`\`${DATA}\`-rc1`)],
+      ["strike suffix", versioned(`~~${FUNCTION}~~2`)],
+      ["sentence stop", versioned(`${DATA}.`)],
+      ["cooked suffix", layered("a.ts", `export const ID = "${DATA}" + ".1";`)],
+      ["decoded suffix", layered("a.json", `{"schema": "${DATA}\\u002e1"}`)],
+      ["listed pair", layered("notes.md", `${DATA}/${FUNCTION}`)],
+      ["code span pair", layered("notes.md", `\`${DATA}\`/\`${FUNCTION}\``)],
+      // wb-1du7 F1: every suffix word and the major's own trailing letters are read in any script, the gate's L2-P15 and L2-P16 first.
+      ["greek pre-release", versioned(`${DATA}-${GREEK_BETA}2`)],
+      ["arabic-indic minor", versioned(`${DATA}.${ARABIC_INDIC_ONE}`)],
+      ["cjk build mark", versioned(`${DATA}+${CJK_EDITION}2`)],
+      ["mark-led word", versioned(`${FUNCTION}_${COMBINING_ACUTE}x`)],
+      ["tamil number", versioned(`${DATA}:${TAMIL_TEN}`)],
+      ["greek tail", versioned(`${DATA}${GREEK_BETA}`)],
+      ["arabic-indic tail", versioned(`${FUNCTION}${ARABIC_INDIC_ONE}`)],
+    ];
+    /**
+     * R-SUFFIX-BOUNDARY: whitespace, a lead outside the separators and + in any script (U+2010 HYPHEN), a separator run that no
+     * letter, mark or digit follows (U+2192 RIGHTWARDS ARROW), or a word opening a GP namespace ends the reading (wb-1du7 F1).
+     */
+    const boundary = [`${DATA} rc1`, `${DATA}#2`, `${DATA}@2`, `${DATA}(2)`, `${DATA}-graph2`, `${FUNCTION}.decision`, `${DATA}${UNICODE_HYPHEN}rc1`, `${DATA}-${RIGHTWARDS_ARROW}2`];
+    const quiet = { "R-SUFFIX-BOUNDARY": boundary.map(versioned) };
+    expect(quiet).toEqual({ "R-SUFFIX-BOUNDARY": boundary.map(() => "exact") });
+    /**
+     * Paired control, one change away: each boundary turned into a lead (space, #, @, a bracket, the namespace word, U+2010) or into
+     * a word (the arrow, a Greek letter: the gate's L2-P15 spelling) reads major.
+     */
+    const control = { "R-SUFFIX-BOUNDARY": [`${DATA}-rc1`, `${DATA}.2`, `${DATA}+2`, `${DATA}_2)`, `${DATA}-grap2`, `${FUNCTION}.decide`, `${DATA}-rc1`, `${DATA}-${GREEK_BETA}2`].map(versioned) };
     const planted = plant()
       .readings.filter(reading => !isExact(reading))
       .map(reading => `${reading.path}:${reading.line} ${reading.layer} ${variantClass(reading)}`)
       .sort();
-    return { findings, controls, planted };
+    return { findings, controls, suffixes, quiet, control, planted };
   },
   B3: () => {
     const { readings } = tree();
@@ -791,10 +954,11 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     return { srcReadings: src.length, carriers: Object.entries(GP_SCHEMA_CARRIERS).map(([id, path]) => `${id}=${path}`), live, selfCarrier, producerCarrier, cases, planted };
   },
   C1: () => {
-    const adapters = adaptersOf(LIVE, tree().walked);
+    const { walked } = tree();
+    const adapters = adaptersOf(LIVE, walked);
     expect(adapters).toEqual([]);
     expect(GP_SCHEMA_ADAPTERS).toEqual([]);
-    const live = adapterFindings(adapters, GP_SCHEMA_ADAPTERS, path => LIVE.read(path)?.toString("utf8"));
+    const live = adapterFindings(adapters, GP_SCHEMA_ADAPTERS, path => LIVE.read(path)?.toString("utf8"), censusTier(LIVE, walked, GP_SCHEMA_ADAPTERS));
     const detection: Json = [
       ["schema literal", isAdapter("src/gp/a.ts", `export const SCHEMA = "${DATA}";`)],
       ["producer code", isAdapter("src/gp/a.ts", `export const refused = (code: string): boolean => code === "${MISMATCH}";`)],
@@ -821,19 +985,105 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     };
     const proofText = (member?: string): string => ['describe("gp schema adapter", () => {', body(titles.refusal), body(titles.verbatim, member), body(titles.noRetry), "});"].join("\n");
     const files = (text: string) => (path: string) => (path === proof ? text : undefined);
+    /** The census-tier leg a constructed binding is judged beside: it names the binding's three cases. */
+    const legOf = (bound: AdapterBinding): ReadonlyMap<string, string> => new Map([[LEG_FILE, legSource([bound.refusal, bound.verbatim, bound.noRetry])]]);
+    const leg = legOf(binding);
+    const absentTitle: AdapterBinding = { ...binding, noRetry: { file: proof, title: "an unregistered title" } };
     const cases: Json = [
-      ["bound to three registered cases", adapterFindings([adapter], [binding], files(proofText()))],
-      ["unbound adapter", adapterFindings([adapter], [], files(proofText()))],
-      ["stale binding", adapterFindings([], [binding], files(proofText()))],
-      ["absent proof file", adapterFindings([adapter], [binding], () => undefined)],
-      ["absent title", adapterFindings([adapter], [{ ...binding, noRetry: { file: proof, title: "an unregistered title" } }], files(proofText()))],
-      ...[...HELD].map(member => [`held by ${member}`, adapterFindings([adapter], [binding], files(proofText(member)))] as const),
-      ["held suite", adapterFindings([adapter], [binding], files(proofText().replace("describe(", `describe.${[...HELD][3]}(true)(`)))],
+      ["bound to three registered cases", adapterFindings([adapter], [binding], files(proofText()), leg)],
+      ["unbound adapter", adapterFindings([adapter], [], files(proofText()), leg)],
+      ["stale binding", adapterFindings([], [binding], files(proofText()), leg)],
+      ["absent proof file", adapterFindings([adapter], [binding], () => undefined, leg)],
+      ["absent title", adapterFindings([adapter], [absentTitle], files(proofText()), legOf(absentTitle))],
+      ...[...HELD].map(member => [`held by ${member}`, adapterFindings([adapter], [binding], files(proofText(member)), leg)] as const),
+      ["held suite", adapterFindings([adapter], [binding], files(proofText().replace("describe(", `describe.${[...HELD][3]}(true)(`)), leg)],
     ];
-    const quiet = { "R-BOUND-CASE": adapterFindings([adapter], [binding], files(proofText().replaceAll("expect(exchangeFindings(recorded())).toEqual([]);", ""))).length };
-    expect(quiet).toEqual({ "R-BOUND-CASE": 0 });
+    // wb-364f F1: a binding is admitted only beside a census-tier leg that imports judge and names each bound case.
+    const LEG = legSource([binding.refusal, binding.verbatim, binding.noRetry]);
+    const nested = "test/gp/workbench-gp-adapter.census.ts";
+    const judgedBeside = (census: readonly (readonly [string, string])[]): string[] => adapterFindings([adapter], [binding], files(proofText()), new Map(census));
+    const retitled = (title: string): CaseRef[] => [binding.refusal, binding.verbatim, binding.noRetry].map(ref => ({ ...ref, title }));
+    const refiled = (file: string): CaseRef[] => [binding.refusal, binding.verbatim, binding.noRetry].map(ref => ({ ...ref, file }));
+    const judgeLeg: Json = [
+      ["judged beside an imported judge", judgedBeside([[LEG_FILE, LEG]])],
+      ["an aliased judge", judgedBeside([[LEG_FILE, LEG.replace("judge }", "judge as judgeReport }").replace("expect(judge(", "expect(judgeReport(")]])],
+      ["a nested leg naming the helper by its relative path", judgedBeside([[nested, LEG.replace("./helpers/census.js", "../helpers/census.js")]])],
+      ["no census-tier leg", judgedBeside([])],
+      ["a leg importing no judge", judgedBeside([[LEG_FILE, LEG.replace(", judge }", " }")]])],
+      ["a judge from another module", judgedBeside([[LEG_FILE, LEG.replace("./helpers/census.js", "./helpers/judge.js")]])],
+      ["a judge from a nested copy of the helper", judgedBeside([[nested, LEG]])],
+      ["a namespace import of the helper", judgedBeside([[LEG_FILE, LEG.replace("{ type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, judge }", "* as census").replace("expect(judge(", "expect(census.judge(")]])],
+      ["an import type statement", judgedBeside([[LEG_FILE, LEG.replace("import { type CasePin,", "import type { CasePin,")]])],
+      ["a type-only judge specifier", judgedBeside([[LEG_FILE, LEG.replace(", judge }", ", type judge }")]])],
+      ["a default-tier file importing judge", judgedBeside([["test/workbench-gp-adapter-judge.test.ts", LEG]])],
+      // wb-1du7 F4: a leg is a census-tier file only under test/ and only named *.census.ts; its helper specifier is relative,
+      // with a .js, a .ts or no extension, and statically imported.
+      ["a judge-importing leg under src/", judgedBeside([["src/workbench-gp-adapter.census.ts", LEG.replace("./helpers/census.js", "../test/helpers/census.js")]])],
+      ["a judge-importing leg under qa/", judgedBeside([["qa/workbench-gp-adapter.census.ts", LEG.replace("./helpers/census.js", "../test/helpers/census.js")]])],
+      ["a judge-importing leg under docs/workbench/", judgedBeside([["docs/workbench/workbench-gp-adapter.census.ts", LEG.replace("./helpers/census.js", "../../test/helpers/census.js")]])],
+      ["a judge-importing leg under a test-prefixed sibling", judgedBeside([["tests/workbench-gp-adapter.census.ts", LEG.replace("./helpers/census.js", "../test/helpers/census.js")]])],
+      ["a -census.ts name", judgedBeside([["test/workbench-gp-adapter-census.ts", LEG]])],
+      ["a bare helper specifier", judgedBeside([[LEG_FILE, LEG.replace("./helpers/census.js", "helpers/census.js")]])],
+      ["a .ts helper specifier", judgedBeside([[LEG_FILE, LEG.replace("./helpers/census.js", "./helpers/census.ts")]])],
+      ["an extensionless helper specifier", judgedBeside([[LEG_FILE, LEG.replace("./helpers/census.js", "./helpers/census")]])],
+      ["a dynamic import of the helper", judgedBeside([[LEG_FILE, LEG.replace('import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, judge } from "./helpers/census.js";', 'const { DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, judge } = await import("./helpers/census.js");')]])],
+      ["a leg naming another test file", judgedBeside([[LEG_FILE, legSource(refiled("test/workbench-other.test.ts"))]])],
+      ["a leg naming another title", judgedBeside([[LEG_FILE, LEG.replace(JSON.stringify(titles.verbatim), JSON.stringify("surfaces the producer refusal"))]])],
+      ["a title named only in a comment", judgedBeside([[LEG_FILE, LEG.replace(JSON.stringify(titles.verbatim), `"" /* ${titles.verbatim} */`)]])],
+      ["the file named by one leg, the titles by another", judgedBeside([[LEG_FILE, legSource(retitled("another title"))], ["test/workbench-gp-titles.census.ts", legSource(refiled("test/workbench-other.test.ts"))]])],
+      ["an empty table owes no leg", adapterFindings([], [], files(proofText()), new Map())],
+    ];
+    // The live tier read for a constructed binding: every tracked census-tier file, only those, a real leg among them.
+    const tier = censusTier(LIVE, walked, [binding]);
+    const tierRead = {
+      everyTrackedLeg: listed("test").filter(isCensusTier).every(path => tier.has(path)),
+      onlyLegs: [...tier.keys()].every(isCensusTier),
+      aLegImportsJudge: [...tier].some(([file, text]) => importsJudge(file, text)),
+      emptyTableReadsNone: censusTier(LIVE, walked, []).size === 0,
+      tierConfig: readFileSync(join(REPO, "vitest.census.config.ts"), "utf8").includes('include: ["test/**/*.census.ts"]'),
+    };
+    expect(Object.entries(tierRead).filter(([, read]) => !read).map(([name]) => name)).toEqual([]);
+    // R-BOUND-CASE: the locator reads source, so a case that asserts nothing or never runs still reads registered (each form
+    // written around the verbatim case: the gate's six LEG-2 modes of wb-ojm5.1 F1, the hollow body and three siblings).
+    const assertion = "expect(exchangeFindings(recorded())).toEqual([]);";
+    /** The skip member, spelled at run time so no constructed proof or leg text writes a skip marker into this file. */
+    const skip = [...HELD][0];
+    const proofOf = (verbatim: string, open = 'describe("gp schema adapter", () => {'): string => [open, body(titles.refusal), verbatim, body(titles.noRetry), "});"].join("\n");
+    const at = (file: string): AdapterBinding => ({ file: adapter, refusal: { file, title: titles.refusal }, verbatim: { file, title: titles.verbatim }, noRetry: { file, title: titles.noRetry } });
+    /** A proof file the default tier never runs: a non-test helper path, and a file the default config excludes (a live tier's). */
+    const helperProof = "test/helpers/gp-adapter-proof.ts";
+    const excludedProof = "test/workbench-forge-control-live.test.ts";
+    const forms = (title: string): readonly (readonly [string, AdapterBinding, string, string])[] => [
+      ["hollow body", binding, proof, proofOf(body(title)).replaceAll(assertion, "")],
+      ["options skip", binding, proof, proofOf(`  it(${JSON.stringify(title)}, { skip: true }, () => { ${assertion} });`)],
+      ["context skip", binding, proof, proofOf(`  it(${JSON.stringify(title)}, (context) => { context.${skip}(); ${assertion} });`)],
+      ["describe options", binding, proof, proofOf(body(title), 'describe("gp schema adapter", { skip: true }, () => {')],
+      ["empty each", binding, proof, proofOf(`  it.each([])(${JSON.stringify(title)}, () => { ${assertion} });`)],
+      ["empty suite each", binding, proof, proofOf(body(title), 'describe.each([])("gp schema adapter", () => {')],
+      ["dead code", binding, proof, proofOf(`  if (false) it(${JSON.stringify(title)}, () => { ${assertion} });`)],
+      ["conditional registration", binding, proof, proofOf(`  if (process.env.GP_ADAPTER_PROOF === "1") it(${JSON.stringify(title)}, () => { ${assertion} });`)],
+      ["helper path", at(helperProof), helperProof, proofOf(body(title))],
+      ["excluded file", at(excludedProof), excludedProof, proofOf(body(title))],
+    ];
+    const formReads = (title: string): Record<string, number> =>
+      Object.fromEntries(forms(title).map(([form, bound, path, text]) => [form, adapterFindings([adapter], [bound], file => (file === path ? text : undefined), legOf(bound)).length]));
+    // R-JUDGE-LEG: the leg is located by its import and its string tokens, never by its judge call, registration or verdicts.
+    const legForms = (text: string): Record<string, string> => ({
+      "uncalled judge": text.replace(JUDGE_CALL, "void judge;"),
+      "verdict ignored": text.replace(JUDGE_CALL, "judge(DEFAULT_TIER_REPORT, PINS);"),
+      "skipped leg case": text.replace('it("judges every bound gp adapter case"', `it.${skip}("judges every bound gp adapter case"`),
+      "another tier": text.replaceAll("tier: DEFAULT_GATE_TIER", 'tier: "native-read"'),
+    });
+    const legReads = (text: string): Record<string, number> => Object.fromEntries(Object.entries(legForms(text)).map(([form, source]) => [form, judgedBeside([[LEG_FILE, source]]).length]));
+    const quiet = { "R-BOUND-CASE": formReads(titles.verbatim), "R-JUDGE-LEG": legReads(LEG) };
+    expect(quiet).toEqual({
+      "R-BOUND-CASE": { "hollow body": 0, "options skip": 0, "context skip": 0, "describe options": 0, "empty each": 0, "empty suite each": 0, "dead code": 0, "conditional registration": 0, "helper path": 0, "excluded file": 0 },
+      "R-JUDGE-LEG": { "uncalled judge": 0, "verdict ignored": 0, "skipped leg case": 0, "another tier": 0 },
+    });
+    /** Paired controls, one change away: the registered title renamed reads absent; the leg without its judge import judges nothing. */
+    const control = { "R-BOUND-CASE": formReads("an unregistered verbatim title"), "R-JUDGE-LEG": legReads(LEG.replace(", judge }", " }")) };
     const planted = adaptersOf(PLANT, plant().walked);
-    return { adapters, bindings: GP_SCHEMA_ADAPTERS.length, live, detection, cases, quiet, planted };
+    return { adapters, bindings: GP_SCHEMA_ADAPTERS.length, live, detection, cases, judgeLeg, tier: tierRead, quiet, control, planted };
   },
   C2: () => {
     expect(exchangeFindings({ inbound: RETIRED, requests: [], outcome: refusedBy(RETIRED) })).toEqual([]);
@@ -902,9 +1152,11 @@ describe("wb-ojm5.1 GP schema identity census (GPC-GRAPH-NATIVE-LLM-RLP-R1)", ()
     expect(excerpt(EXCERPT_SITES[0])).toBe(`6. Any change to ${DATA} or ${FUNCTION} needs a separately reviewed versioned migration; this program does not authorize one.`);
     expect(excerpt(EXCERPT_SITES[4]).endsWith(`Never mutate ${DATA} or ${FUNCTION} without a separately versioned migration.`)).toBe(true);
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(item => item.id)).toEqual(["R-COMPUTED", "R-ENCODED", "R-CONFUSABLE", "R-MARKUP", "R-LINE-BREAK", "R-ENVELOPE", "R-NAMESPACE-ONLY", "R-BOUND-CASE"]);
-    expect(ROSTER.residuals.map(item => item.quietPin)).toEqual(["A2", "A2", "A2", "A2", "A2", "B1", "B1", "C1"]);
+    expect(ROSTER.residuals.map(item => item.id)).toEqual(["R-COMPUTED", "R-ENCODED", "R-CONFUSABLE", "R-MARKUP", "R-LINE-BREAK", "R-ENVELOPE", "R-NAMESPACE-ONLY", "R-SUFFIX-BOUNDARY", "R-BOUND-CASE", "R-JUDGE-LEG"]);
+    expect(ROSTER.residuals.map(item => item.quietPin)).toEqual(["A2", "A2", "A2", "A2", "A2", "B1", "B1", "B2", "C1", "C1"]);
     expect(ROSTER.residuals.every(item => pins.includes(item.quietPin))).toBe(true);
+    // Every residual has its quiet row in its pin's held witness, and every quiet row there names a residual of that pin.
+    expect(ROSTER.rows.flatMap(row => row.pins.flatMap(pin => quietRows(pin.id, pin.witness)))).toEqual(ROSTER.residuals.map(item => `${item.quietPin}:${item.id}`));
   });
   for (const row of ROWS)
     describe(`${row.id} ${row.label}`, () => {

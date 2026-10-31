@@ -5,7 +5,9 @@
  * `receipt.input_snapshot` or `graph_digest` ..., it shall hash exactly the bytes it presented — compact
  * `JSON.stringify(graph)` for RPC, the file bytes for CLI — and shall never substitute `identities.graph` or
  * `canonical_digest` for that join key". Source: GraphPolicyCLI docs/programs/feedback-contract-audit-2026-10-21/
- * 02-contract-audit.md:26@0107c72992f3, "SHA-256 of the exact presented graph bytes (for RPC sample, compact
+ * 02-contract-audit.md:26@0107c72992f3 (program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics"), "SHA-256 of the exact
+ * presented graph bytes (for RPC sample, compact
  * `JSON.stringify(graph)` bytes) | Byte-exact invocation/journal join key | Whitespace and serialization affect the hash. Do
  * not substitute a canonical document/projection hash into an existing journal link", and :32 "An object passed to RPC is not
  * the bytes of a pretty-printed CLI file; equality of keys without equality of preimages is insufficient." That program states
@@ -38,6 +40,41 @@
  * sent to gp: it is the same text once NFC-normalized, so a site that normalizes before hashing joins a value it did not present.
  * RESIDUALS (named, each pinned by a quiet row): R-COMPUTED, R-ALIASED, R-TRANSITIVE and R-PATTERN (the scan); R-SHARED-NAME and
  * R-DRIVE-BYPASS (the registration judge).
+ * THE SCAN'S OWN CLAIMS (wb-5efc, the landing-324 hollowing probes P15-P18): TOUCHPOINTS pins a private name for a field
+ * (T-FIELD) and for the shared name (T-SHARED), and the dotted identities.graph path string beside the slashed one
+ * (T-IDENTITIES). WALKS plants one synthetic tree per property srcFiles claims, on rule-11 scratch: hidden files and
+ * directories, a nested extensionless file, a followed file link and directory link, each real directory walked once, a link
+ * loop, the root/src scope, the listing in srcFiles' own sort order (two names whose UTF-8 byte order, the order readdirSync
+ * returns, differs from their UTF-16 code-unit order), the depth-first listing (a directory's files at its name's place),
+ * and a FIFO that fails the walk closed. ORACLE pins both answers of the whitespace-only oracle the clause-(c) rows read:
+ * false for identical bytes, for a one-field value edit and for a space added inside a string value; true for the file
+ * respelled compact.
+ * THE SCAN'S TEXT READINGS (wb-yae1, the landing-417 under-report probes G19, G24 and G25): every landed text pin held its
+ * name at the end of its string, or as the whole string, and named it once, so a scan reading only a suffix or only the
+ * first occurrence stayed green. TOUCHPOINTS now holds each text reading away from the end and past the first occurrence:
+ * the identities path inside a longer path, slashed ("/identities/graph/0", G19) and dotted; a field name inside a dotted
+ * path string ("receipt.input_snapshot.value", G24); a whole-word field after a longer name that holds it
+ * ("xinput_snapshot input_snapshot", G25) and before one (the last-occurrence twin); and the shared name inside a dotted
+ * path.
+ * THE SCAN'S TEXT READINGS, EVERY BOUNDARY AND PART (wb-njkv, the landing-507 under-report probes GA4, GA5b and GA6 and the
+ * template probes GA7 and GA8): the landed pins bounded every whole word only by '/', '.', ' ', ',' and the text's ends, held
+ * each slashed identities path behind a leading '/', put a field's only bounded occurrence no later than its second, and put a
+ * field in no template middle and no template without substitutions, so a scan reading '-' as a word character (GA6), the slashed
+ * path only after a '/' (GA5b), only the first two occurrences (GA4), and no template middle (GA7) or substitution-free template
+ * (GA8) stayed green. TOUCHPOINTS now pins: both identities spellings, slashed and dotted, as the whole string and at the start,
+ * inside and at the end of a longer path; a field bounded on both sides by each printable ASCII character that is not a letter,
+ * digit, _ or $ (the hyphen among them); a field after two longer names that hold it (its third occurrence) and after sixteen;
+ * and a field in a template head, a template middle, a template tail and a template without substitutions.
+ * THE SCAN'S TEXT READINGS, THE OVER-REPORT SIDE AND EVERY KIND'S TEMPLATES (wb-sfgr, the landing-589 over-report probes
+ * GL1-GL5 and the template probes GL8 and GL10): every landed text pin held its name where the scan must report it, and the
+ * one longer-name pin (C-NEAR-NAMES) is an identifier, read by exact equality, so a scan with no whole-word test (GL1) or
+ * reading '_' (GL2), '$' (GL3), a digit (GL4) or an upper-case letter (GL5) as a boundary over-reported unseen; and only
+ * T-FIELD held a template, so a scan skipping the identities reading (GL8) or the shared-name reading (GL10) in every template
+ * part stayed green. CLEAN C-LONGER-NAMES now holds a field and the shared name in text only inside a longer name, one ASCII
+ * word character of each class (a lower-case letter, an upper-case letter, a digit, _ and $) directly before and directly
+ * after it, the other side a dot; T-IDENTITIES and T-SHARED now hold their names in a template head, a template middle, a
+ * template tail and a template without substitutions. Not claimed: a non-ASCII character beside a name (the scan's word class
+ * is ASCII only, so it reads one as a boundary).
  * Rule 16: the frozen-shape case pins every table's row and pin shape and the live subjects; the OUT-OF-FILE anchor
  * test/fixtures/gp-snapshot-join-roster.json (the hk9l/5jha roster pattern) carries every judged row (table, id, label, the
  * SHA-256 of each pin), every registered test title and the residual families, and the roster case judges this file against it
@@ -45,10 +82,11 @@
  *
  * Display paths added: none. Test-only: no src change, no gp adapter, seam or fake binary.
  */
-import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { lstatSync, mkdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import {
   CAPTURES,
   CASES,
@@ -63,6 +101,8 @@ import {
   MUTANTS,
   materialize,
   NEAR_NAMES,
+  ORACLE,
+  oracleText,
   outcomeFindings,
   PRODUCER,
   type Presented,
@@ -80,8 +120,12 @@ import {
   srcFiles,
   TOUCHPOINTS,
   type Touch,
+  WALKS,
   whitespaceOnly,
 } from "./helpers/gp-snapshot-join-census.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard(afterAll);
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ROSTER = "test/fixtures/gp-snapshot-join-roster.json";
@@ -228,6 +272,46 @@ describe("gp snapshot-join census (wb-gxd7.3, GPC-FEEDBACK-CONTRACT-AUDIT-R3)", 
     });
   }
 
+  for (const entry of WALKS) {
+    it(`WALKS ${entry.id}`, () => {
+      const root = makeScratch("gp-snapshot-join-walk-");
+      try {
+        for (const [rel, node] of Object.entries(entry.tree)) {
+          const path = join(root, rel);
+          mkdirSync(dirname(path), { recursive: true });
+          if (node.kind === "file") writeFileSync(path, node.text);
+          else if (node.kind === "symlink") symlinkSync(node.target, path);
+          else execFileSync("mkfifo", [path]);
+        }
+        // The planted tree is the shape its row names.
+        const planted = Object.keys(entry.tree).map(rel => {
+          const info = lstatSync(join(root, rel));
+          return `${rel}:${info.isFIFO() ? "fifo" : info.isSymbolicLink() ? "symlink" : info.isFile() ? "file" : "other"}`;
+        });
+        expect(planted).toEqual(Object.entries(entry.tree).map(([rel, node]) => `${rel}:${node.kind}`));
+        let walked: readonly string[] | string;
+        try {
+          walked = srcFiles(root);
+        } catch (error) {
+          walked = error instanceof Error ? error.message : String(error);
+        }
+        expect(walked).toEqual("throws" in entry.expect ? entry.expect.throws : entry.expect.files);
+      } finally {
+        removeScratch(root);
+      }
+    });
+  }
+
+  for (const entry of ORACLE) {
+    it(`ORACLE ${entry.id}`, () => {
+      const original = fileText(fixture(), entry.original);
+      const text = oracleText(fixture(), entry.text);
+      // The two texts are byte-identical exactly when the row names one text twice, so each answer is judged on the texts its label names.
+      expect(text === original, "the row's texts are byte-identical").toBe(entry.text === entry.original);
+      expect(whitespaceOnly(original, text)).toBe(entry.expect);
+    });
+  }
+
   it("live: the scan walks every regular file under src/ and reads Pi's own snapshotDigest members there", () => {
     const { files, touches } = live();
     expect(files.length).toBeGreaterThanOrEqual(MIN_SRC_FILES);
@@ -258,12 +342,13 @@ describe("gp snapshot-join census (wb-gxd7.3, GPC-FEEDBACK-CONTRACT-AUDIT-R3)", 
 
   it("rule 16: every judged table and the live subjects are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
-      "TOUCHPOINTS/T-FIELD:8",
-      "TOUCHPOINTS/T-IDENTITIES:7",
+      "TOUCHPOINTS/T-FIELD:48",
+      "TOUCHPOINTS/T-IDENTITIES:18",
       "TOUCHPOINTS/T-PREFIX:3",
-      "TOUCHPOINTS/T-SHARED:3",
+      "TOUCHPOINTS/T-SHARED:9",
       "CLEAN/C-PI-OWN:4",
       "CLEAN/C-NEAR-NAMES:5",
+      "CLEAN/C-LONGER-NAMES:20",
       "CLEAN/C-COMMENT:2",
       "RESIDUALS/R-COMPUTED:3",
       "RESIDUALS/R-ALIASED:2",
@@ -348,6 +433,20 @@ describe("gp snapshot-join census (wb-gxd7.3, GPC-FEEDBACK-CONTRACT-AUDIT-R3)", 
       "SITE_CASES/S-NEAR-REASON:1",
       "SITE_CASES/R-SHARED-NAME:1",
       "SITE_CASES/R-DRIVE-BYPASS:1",
+      "WALKS/W-HIDDEN:1",
+      "WALKS/W-EXTENSIONLESS:1",
+      "WALKS/W-SYMLINKED-FILE:1",
+      "WALKS/W-LINKED-DIRECTORY:1",
+      "WALKS/W-DIRECTORY-ALIAS:1",
+      "WALKS/W-DIRECTORY-LOOP:1",
+      "WALKS/W-SCOPE:1",
+      "WALKS/W-SORTED:1",
+      "WALKS/W-DEPTH-FIRST:1",
+      "WALKS/W-FIFO:1",
+      "ORACLE/O-UNCHANGED:1",
+      "ORACLE/O-RESPELLED:1",
+      "ORACLE/O-VALUE-EDIT:1",
+      "ORACLE/O-SPACE-IN-STRING:1",
     ]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-COMPUTED:RESIDUALS R-COMPUTED",

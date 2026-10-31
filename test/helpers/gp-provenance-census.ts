@@ -14,7 +14,8 @@
  *  (d) receiptFixtureFindings over the vendored receipt test/fixtures/gp-sample-receipt.json (RECEIPT_MUTANTS rows) and
  *      vendoredReceipts, the walk of every JSON file below the root for a gp decision receipt;
  *  the live leg's resolver resolvePinnedGp over an in-memory host (RESOLVE rows).
- * RESIDUALS names each measured blind spot as a family with a pinned quiet row.
+ * RESIDUALS names each measured blind spot as a family with a pinned quiet row. The receipt readers close the file: the
+ * ledger (wb-atq9), then the case and clause anchors and the permissive vocabularies' grounds (wb-pzbq).
  */
 import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
@@ -264,13 +265,17 @@ export const namesGp = (line: string): boolean => NAMES_GP.test(line);
 /** C1 identity tokens: a "gp 0.1.0"- or "graph-policy-cli@0.1.0"-shaped version (also GraphPolicyCLI), or the --version flag. */
 const VERSION_TOKEN = /(?:^|[^A-Za-z0-9_$.-])(?:gp|graph-policy-cli|GraphPolicyCLI)(?:\s+|@)v?\d+\.\d+\.\d+/i;
 const VERSION_FLAG = /--version(?![A-Za-z0-9_-])/;
-/** C2 verdict words (word-bounded, never the tail of a hyphenated word such as re-implemented) and the refusal codes. */
-const VERDICT = /(?:^|[^A-Za-z0-9_-])(?:not\s+implemented|unimplemented|implemented|unserved|not\s+served|served|serves|unsupported|not\s+supported|supported|unavailable|available)(?![A-Za-z0-9])|NOT_IMPLEMENTED|UNSUPPORTED/i;
+const escapeRegex = (word: string): string => word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** C2 verdict words, read word-bounded (never the tail of a hyphenated word such as re-implemented); a space reads any white space run. */
+export const VERDICT_WORDS: readonly string[] = ["not implemented", "unimplemented", "implemented", "unserved", "not served", "served", "serves", "unsupported", "not supported", "supported", "unavailable", "available"];
+/** C2 refusal codes, read anywhere and in any case (GP_CLI_NOT_IMPLEMENTED, GP_RPC_METHOD_UNSUPPORTED). */
+export const VERDICT_CODES: readonly string[] = ["NOT_IMPLEMENTED", "UNSUPPORTED"];
+/** The C2 verdict, built from its two vocabularies (wb-atq9: the receipt's ledger holds every member). */
+const VERDICT = new RegExp(`(?:^|[^A-Za-z0-9_-])(?:${VERDICT_WORDS.map((word) => word.split(" ").map(escapeRegex).join("\\s+")).join("|")})(?![A-Za-z0-9])|${VERDICT_CODES.map(escapeRegex).join("|")}`, "i");
 /** C2 capability nouns (the skill-prose form of a verb). */
-const NOUNS = ["compilation", "evaluation", "sampling", "training"];
+export const NOUNS: readonly string[] = ["compilation", "evaluation", "sampling", "training"];
 const HEX40 = /(?:^|[^0-9a-f])[0-9a-f]{40}(?![0-9a-f])/;
 const HEX64 = /(?:^|[^0-9a-f])[0-9a-f]{64}(?![0-9a-f])/;
-const escapeRegex = (word: string): string => word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export type DocClass = "C1" | "C2";
 
@@ -813,3 +818,379 @@ export const ROWS: readonly JudgedRow[] = [
   ...RESOLVE.map((entry) => row("RESOLVE", entry.id, entry.label, [JSON.stringify({ path: entry.path ?? null, files: entry.files, links: entry.links, expect: entry.expect })])),
   ...RESIDUALS.map((entry) => row("RESIDUALS", entry.id, entry.label, entry.pins.map((pin) => `${entry.probe}:${pin}${JSON.stringify(residualEdits(entry.probe, pin))}`))),
 ];
+
+// ---- the outside anchors (wb-atq9, the wb-gxd7.5 gate's F1 and F2) ------------------------------------------------------
+
+/**
+ * The census's closed vocabularies, each the list its judge reads, in the judge's order. The append-only receipt's ledger
+ * holds every member; the three gp names of the C1 tokens are held there through their D-C1 and D-QUIET pins.
+ */
+export const VOCABULARIES: Readonly<Record<string, readonly string[]>> = {
+  "verdict words": VERDICT_WORDS,
+  "verdict codes": VERDICT_CODES,
+  "capability nouns": NOUNS,
+  "revision keys": REVISION_KEYS,
+  "claim statuses": CLAIM_STATUSES,
+  "missing prerequisites": MISSING,
+  "receipt fields": RECEIPT_FIELDS,
+  "walk exclusions": SKIP_DIRS,
+};
+
+/** The follow-up bead whose append-only receipt anchors the judged set, and that receipt. */
+export const FOLLOW_UP = "wb-atq9";
+export const RECEIPT_DOC = `docs/workbench/receipts/${FOLLOW_UP}.md`;
+
+/** The opening of the owner filing (the notes' second paragraph) and of its acceptance sentence. */
+export const FILING_HEAD = "Owner filing (";
+export const ACCEPTANCE_HEAD = "Acceptance: ";
+
+/**
+ * The owner filing of a bead's notes: their second blank-line paragraph when it opens with FILING_HEAD, else "". bd appends
+ * every later note behind a blank line and never rewrites the first two paragraphs, so the filing stays byte-stable.
+ */
+export function ownerFiling(notes: string): string {
+  const filing = notes.split("\n\n")[1] ?? "";
+  return filing.startsWith(FILING_HEAD) ? filing : "";
+}
+
+/**
+ * The filing's acceptance clauses, each whole: the span after its one ACCEPTANCE_HEAD up to the end of that sentence (the
+ * first "." followed by a space or the paragraph's end), cut before each "; (<letter>) " marker. The clauses open (a), (b),
+ * ... in order; an absent or repeated head, or clauses out of order, read as [] (no reading).
+ */
+export function filingClauses(filing: string): string[] {
+  const start = filing.indexOf(ACCEPTANCE_HEAD);
+  if (start < 0 || filing.indexOf(ACCEPTANCE_HEAD, start + 1) >= 0) return [];
+  const tail = filing.slice(start + ACCEPTANCE_HEAD.length);
+  const stop = /\.(?: |$)/.exec(tail);
+  const clauses = (stop === null ? tail : tail.slice(0, stop.index)).split(/; (?=\([a-z]\) )/);
+  return clauses.every((clause, index) => clause.startsWith(`(${String.fromCharCode(97 + index)}) `)) ? clauses : [];
+}
+
+/** The opening of the landed delivery paragraph the orchestrator appended to the notes, and of its residual line. */
+export const DELIVERED_HEAD = "DELIVERED by the orchestrator collect step (";
+export const DELIVERED_RESIDUALS_HEAD = "RESIDUALS (named families, each with a pinned quiet row;";
+
+/**
+ * The residual families the landed delivery named: in the first paragraph opening DELIVERED_HEAD, its first line opening
+ * DELIVERED_RESIDUALS_HEAD, every R- name after that line's "): ". Written once at delivery, never rewritten.
+ */
+export function deliveredResiduals(notes: string): string[] {
+  const paragraph = notes.split("\n\n").find((item) => item.startsWith(DELIVERED_HEAD)) ?? "";
+  const line = paragraph.split("\n").find((item) => item.startsWith(DELIVERED_RESIDUALS_HEAD)) ?? "";
+  const at = line.indexOf("): ");
+  return at < 0 ? [] : [...line.slice(at + 3).matchAll(/\bR-[A-Z]+(?:-[A-Z]+)*/g)].map((match) => match[0]);
+}
+
+/** The receipt's ledger families: two that add members, two that remove them (applied in this order within a cut). */
+export type LedgerFamily = "Judged rows" | "Vocabularies" | "Removed rows" | "Removed vocabulary members";
+export const LEDGER_FAMILIES: readonly LedgerFamily[] = ["Judged rows", "Vocabularies", "Removed rows", "Removed vocabulary members"];
+/**
+ * The receipt's anchor families (wb-pzbq, the wb-atq9 gate's F1 and F2), folded by foldAnchors beside the ledger under the
+ * same headings and cut numbering: two that add members, two that remove them (applied in this order within a cut).
+ */
+export type AnchorFamily = "Cases" | "Clause tables" | "Removed cases" | "Removed clause tables";
+export const ANCHOR_FAMILIES: readonly AnchorFamily[] = ["Cases", "Clause tables", "Removed cases", "Removed clause tables"];
+/** Every family a level-3 section of the receipt binds: the ledger's and the anchors'. */
+export type ReceiptFamily = LedgerFamily | AnchorFamily;
+export const LEDGER_HEADERS: Readonly<Record<ReceiptFamily, readonly string[]>> = {
+  "Judged rows": ["Row", "Label", "Pins"],
+  Vocabularies: ["Vocabulary", "Members"],
+  "Removed rows": ["Row", "Label", "Pins"],
+  "Removed vocabulary members": ["Vocabulary", "Members"],
+  Cases: ["Case", "Title"],
+  "Clause tables": ["Clause", "Tables"],
+  "Removed cases": ["Case", "Title"],
+  "Removed clause tables": ["Clause", "Tables"],
+};
+
+/** A ledger section's heading: "<family>, wb-atq9 cut <n>" (n from 1, no leading zero), else undefined. */
+export function ledgerHeading(heading: string): { readonly family: ReceiptFamily; readonly cut: number } | undefined {
+  const match = /^(.+), (wb-[a-z0-9.]+) cut ([1-9][0-9]*)$/.exec(heading);
+  const family = [...LEDGER_FAMILIES, ...ANCHOR_FAMILIES].find((name) => name === match?.[1]);
+  if (match === null || family === undefined || match[2] !== FOLLOW_UP) return undefined;
+  return { family, cut: Number(match[3]) };
+}
+
+export interface LedgerSection {
+  readonly family: ReceiptFamily;
+  readonly cut: number;
+  /** The table's body rows, each its cells' source texts. */
+  readonly rows: readonly (readonly string[])[];
+}
+export interface LedgerRow {
+  readonly labels: readonly string[];
+  readonly pins: readonly string[];
+}
+/** A judged set as members: each row (TABLE/ID) with its label and pin digests, each vocabulary with its member digests; sorted. */
+export interface Ledger {
+  readonly rows: Readonly<Record<string, LedgerRow>>;
+  readonly vocabularies: Readonly<Record<string, readonly string[]>>;
+}
+export type LedgerReading = { readonly ok: true; readonly ledger: Ledger } | { readonly ok: false; readonly why: string };
+
+/** A member's ledger digest: the first 16 hex digits of its sha256 (a vocabulary member's too, so no docs page spells a judged word). */
+export const digest16 = (sha: string): string => sha.slice(0, 16);
+const HEX16 = /^[0-9a-f]{16}$/;
+const ROW_KEY = /^[A-Z_]+\/[A-Z0-9-]+$/;
+const sortedOf = (values: Iterable<string>): string[] => [...values].sort();
+const cellItems = (cell: string, separator: string): string[] => (cell.trim() === "" ? [] : cell.split(separator).map((item) => item.trim()));
+interface OpenRow {
+  readonly labels: Set<string>;
+  readonly pins: Set<string>;
+}
+
+/** Applies one table row of a ledger section to the standing members; returns why it cannot apply, else "". */
+function applyLedgerRow(family: LedgerFamily, cells: readonly string[], rows: Map<string, OpenRow>, vocabularies: Map<string, Set<string>>): string {
+  if (cells.length !== LEDGER_HEADERS[family].length) return `a row has ${cells.length} cells`;
+  if (family === "Judged rows" || family === "Removed rows") {
+    const [key = "", labelCell = "", pinsCell = ""] = cells;
+    const labels = cellItems(labelCell, " ");
+    const pins = cellItems(pinsCell, " ");
+    if (!ROW_KEY.test(key)) return `row key ${JSON.stringify(key)} is not TABLE/ID`;
+    if ([...labels, ...pins].some((item) => !HEX16.test(item))) return `row ${key} carries a digest that is not 16 hex digits`;
+    if (new Set(pins).size !== pins.length) return `row ${key} lists a pin twice`;
+    if (family === "Judged rows") {
+      if (labels.length !== 1 || pins.length === 0) return `row ${key} states ${labels.length} labels and ${pins.length} pins`;
+      const open = rows.get(key) ?? { labels: new Set<string>(), pins: new Set<string>() };
+      for (const label of labels) open.labels.add(label);
+      for (const pin of pins) open.pins.add(pin);
+      rows.set(key, open);
+      return "";
+    }
+    const open = rows.get(key);
+    if (open === undefined) return `the removal names row ${key}, which no cut added`;
+    if (labels.length + pins.length === 0) return `the removal of row ${key} names no member`;
+    for (const label of labels) {
+      if (!open.labels.delete(label)) return `the removal names label ${label} of row ${key}, which does not stand`;
+    }
+    for (const pin of pins) {
+      if (!open.pins.delete(pin)) return `the removal names pin ${pin} of row ${key}, which does not stand`;
+    }
+    if (open.labels.size === 0 && open.pins.size === 0) rows.delete(key);
+    return "";
+  }
+  const [name = "", membersCell = ""] = cells;
+  const members = cellItems(membersCell, " ");
+  if (name.trim() === "" || members.length === 0) return `vocabulary ${JSON.stringify(name)} lists no member`;
+  if (members.some((member) => !HEX16.test(member))) return `vocabulary ${name} carries a digest that is not 16 hex digits`;
+  if (new Set(members).size !== members.length) return `vocabulary ${name} lists a member twice`;
+  if (family === "Vocabularies") {
+    const open = vocabularies.get(name) ?? new Set<string>();
+    for (const member of members) open.add(member);
+    vocabularies.set(name, open);
+    return "";
+  }
+  const open = vocabularies.get(name);
+  if (open === undefined) return `the removal names vocabulary ${name}, which no cut added`;
+  for (const member of members) {
+    if (!open.delete(member)) return `the removal names member ${member} of ${name}, which does not stand`;
+  }
+  if (open.size === 0) vocabularies.delete(name);
+  return "";
+}
+
+/**
+ * The ledger the receipt's sections state, read cut by cut: the cut numbers run 1..k with no gap and cut 1 states the
+ * judged rows and the vocabularies; within a cut its additions apply first, then its removals. A member (a row's label, a
+ * row's pin, a vocabulary's member) stands once any cut adds it and leaves only when a Removed table of a cut names it, so
+ * a table that restates the set without a member removes nothing. A removal must name a standing member, and every
+ * standing row ends with exactly one label and at least one pin; any other shape is no reading. An anchor-family section
+ * (wb-pzbq) counts toward the cut numbering here and is folded by foldAnchors, never as a member of this ledger.
+ */
+export function foldLedger(sections: readonly LedgerSection[]): LedgerReading {
+  const refuse = (why: string): LedgerReading => ({ ok: false, why });
+  const cuts = [...new Set(sections.map((section) => section.cut))].sort((left, right) => left - right);
+  if (cuts.length === 0 || cuts.some((cut, index) => cut !== index + 1)) return refuse(`the ledger's cuts are [${cuts.join(", ")}], not 1..k without a gap`);
+  const first = sections.filter((section) => section.cut === 1).map((section) => section.family);
+  if (!first.includes("Judged rows") || !first.includes("Vocabularies")) return refuse("cut 1 states no judged rows or no vocabularies");
+  const rows = new Map<string, OpenRow>();
+  const vocabularies = new Map<string, Set<string>>();
+  for (const cut of cuts) {
+    for (const family of LEDGER_FAMILIES) {
+      for (const section of sections.filter((item) => item.cut === cut && item.family === family)) {
+        for (const cells of section.rows) {
+          const why = applyLedgerRow(family, cells, rows, vocabularies);
+          if (why !== "") return refuse(`cut ${cut} ${family}: ${why}`);
+        }
+      }
+    }
+  }
+  for (const [key, open] of rows) {
+    if (open.labels.size !== 1 || open.pins.size === 0) return refuse(`row ${key} stands with ${open.labels.size} labels and ${open.pins.size} pins`);
+  }
+  return {
+    ok: true,
+    ledger: {
+      rows: Object.fromEntries([...rows].map(([key, open]) => [key, { labels: sortedOf(open.labels), pins: sortedOf(open.pins) }])),
+      vocabularies: Object.fromEntries([...vocabularies].map(([name, members]) => [name, sortedOf(members)])),
+    },
+  };
+}
+
+/** The census's own judged set as a ledger: each row's label and pins and each vocabulary's members, as digest16 of their sha256. */
+export function judgedLedger(): Ledger {
+  return {
+    rows: Object.fromEntries(ROWS.map((entry) => [`${entry.table}/${entry.id}`, { labels: [digest16(sha256(entry.label))], pins: sortedOf(entry.pins.map(digest16)) }])),
+    vocabularies: Object.fromEntries(Object.entries(VOCABULARIES).map(([name, members]) => [name, sortedOf(members.map((member) => digest16(sha256(member))))])),
+  };
+}
+
+/** One section as a receipt cut states it: its heading, its family's header row and its body lines. */
+const sectionText = (family: ReceiptFamily, cut: number, lines: readonly string[]): string =>
+  [`### ${family}, ${FOLLOW_UP} cut ${cut}`, "", `| ${LEDGER_HEADERS[family].join(" | ")} |`, `| ${LEDGER_HEADERS[family].map(() => "---").join(" | ")} |`, ...lines].join("\n");
+
+/** The two ledger tables a receipt cut states for the census as it stands, in the census's own order. */
+export function ledgerEntryTables(cut: number): string {
+  const rows = ROWS.map((entry) => `| ${entry.table}/${entry.id} | ${digest16(sha256(entry.label))} | ${entry.pins.map(digest16).join(" ")} |`);
+  const vocabularies = Object.entries(VOCABULARIES).map(([name, members]) => `| ${name} | ${members.map((member) => digest16(sha256(member))).join(" ")} |`);
+  return `${sectionText("Judged rows", cut, rows)}\n\n${sectionText("Vocabularies", cut, vocabularies)}\n`;
+}
+
+// ---- the case and clause anchors (wb-pzbq, the wb-atq9 gate's F1 and F2) ------------------------------------------------
+
+/**
+ * The census's anchors as members: each standalone case (a registered test that is no judged row's test) by its key, with
+ * the digest of its title; each acceptance clause by its letter, with the judged tables it maps to; each list sorted.
+ */
+export interface Anchors {
+  readonly cases: Readonly<Record<string, readonly string[]>>;
+  readonly clauses: Readonly<Record<string, readonly string[]>>;
+}
+export type AnchorReading = { readonly ok: true; readonly anchors: Anchors } | { readonly ok: false; readonly why: string };
+
+/** A case key: lowercase words, digits and parenthesised letters ("bead", "live (a)", "rule 16"). */
+const CASE_KEY = /^[a-z][a-z0-9 ()]*[a-z0-9)]$/;
+const CLAUSE_KEY = /^\([a-z]\)$/;
+const TABLE_NAME = /^[A-Z_]+$/;
+
+/** A standalone case's key: its title's text before the first ": ", or "" when that text is no case key. */
+export function caseKey(title: string): string {
+  const at = title.indexOf(": ");
+  const key = at < 0 ? "" : title.slice(0, at);
+  return CASE_KEY.test(key) ? key : "";
+}
+
+/** The standalone cases among registered titles: every title that is no judged row's test, in registration order. */
+export function standaloneTitles(titles: readonly string[]): string[] {
+  const rowTests = new Set(ROWS.map((entry) => entry.test));
+  return titles.filter((title) => !rowTests.has(title));
+}
+
+/** The letter of the index-th acceptance clause, as the filing writes it: (a), (b), ... */
+const clauseLetter = (index: number): string => `(${String.fromCharCode(97 + index)})`;
+const sortedRecord = (members: ReadonlyMap<string, ReadonlySet<string>>): Record<string, string[]> => Object.fromEntries([...members].map(([key, values]) => [key, sortedOf(values)]));
+
+/** Applies one table row of an anchor section to the standing members; returns why it cannot apply, else "". */
+function applyAnchorRow(family: AnchorFamily, cells: readonly string[], cases: Map<string, Set<string>>, clauses: Map<string, Set<string>>): string {
+  if (cells.length !== LEDGER_HEADERS[family].length) return `a row has ${cells.length} cells`;
+  const [key = "", membersCell = ""] = cells;
+  const members = cellItems(membersCell, " ");
+  const ofCases = family === "Cases" || family === "Removed cases";
+  if (!(ofCases ? CASE_KEY : CLAUSE_KEY).test(key)) return `${ofCases ? "case key" : "clause letter"} ${JSON.stringify(key)} is malformed`;
+  if (members.length === 0) return `${key} names no member`;
+  if (members.some((member) => !(ofCases ? HEX16 : TABLE_NAME).test(member))) return `${key} carries a member that is not ${ofCases ? "16 hex digits" : "a table name"}`;
+  if (new Set(members).size !== members.length) return `${key} lists a member twice`;
+  const standing = ofCases ? cases : clauses;
+  if (family === "Cases" || family === "Clause tables") {
+    if (ofCases && members.length !== 1) return `case ${key} states ${members.length} titles`;
+    const open = standing.get(key) ?? new Set<string>();
+    for (const member of members) open.add(member);
+    standing.set(key, open);
+    return "";
+  }
+  const open = standing.get(key);
+  if (open === undefined) return `the removal names ${key}, which no cut added`;
+  for (const member of members) {
+    if (!open.delete(member)) return `the removal names ${member} of ${key}, which does not stand`;
+  }
+  if (open.size === 0) standing.delete(key);
+  return "";
+}
+
+/**
+ * The anchors the receipt's sections state, read cut by cut over the ledger's own cut numbering (1..k without a gap):
+ * within a cut its Cases and Clause tables apply first, then its removals. A case (its key) stands with the title digest a
+ * cut adds, a clause (its letter) with every table a cut adds, and either member leaves only when a Removed cases or Removed
+ * clause tables line of a cut names it, so a restated table without a member removes nothing, and a case retitled without
+ * its old title's removal stands with two titles, which is no reading; a removal must name a standing member.
+ */
+export function foldAnchors(sections: readonly LedgerSection[]): AnchorReading {
+  const refuse = (why: string): AnchorReading => ({ ok: false, why });
+  const cuts = [...new Set(sections.map((section) => section.cut))].sort((left, right) => left - right);
+  if (cuts.length === 0 || cuts.some((cut, index) => cut !== index + 1)) return refuse(`the ledger's cuts are [${cuts.join(", ")}], not 1..k without a gap`);
+  const cases = new Map<string, Set<string>>();
+  const clauses = new Map<string, Set<string>>();
+  for (const cut of cuts) {
+    for (const family of ANCHOR_FAMILIES) {
+      for (const section of sections.filter((item) => item.cut === cut && item.family === family)) {
+        for (const cells of section.rows) {
+          const why = applyAnchorRow(family, cells, cases, clauses);
+          if (why !== "") return refuse(`cut ${cut} ${family}: ${why}`);
+        }
+      }
+    }
+  }
+  for (const [key, titles] of cases) {
+    if (titles.size !== 1) return refuse(`case ${key} stands with ${titles.size} titles`);
+  }
+  return { ok: true, anchors: { cases: sortedRecord(cases), clauses: sortedRecord(clauses) } };
+}
+
+/**
+ * The census's own anchors: each standalone case among the registered titles by its key, with the digest16 of its title's
+ * sha256 (a malformed key reads as "" and two titles sharing a key share its list, so neither matches a receipt), and each
+ * clause of CLAUSE_TABLES by its letter, with its tables.
+ */
+export function judgedAnchors(titles: readonly string[]): Anchors {
+  const cases = new Map<string, Set<string>>();
+  for (const title of standaloneTitles(titles)) {
+    const key = caseKey(title);
+    cases.set(key, (cases.get(key) ?? new Set<string>()).add(digest16(sha256(title))));
+  }
+  return { cases: sortedRecord(cases), clauses: sortedRecord(new Map(CLAUSE_TABLES.map((tables, index) => [clauseLetter(index), new Set(tables)]))) };
+}
+
+/** The two anchor tables a receipt cut states for the census as it stands: its standalone cases in registration order, its clauses in order. */
+export function anchorEntryTables(cut: number, titles: readonly string[]): string {
+  const cases = standaloneTitles(titles).map((title) => `| ${caseKey(title)} | ${digest16(sha256(title))} |`);
+  const clauses = CLAUSE_TABLES.map((tables, index) => `| ${clauseLetter(index)} | ${tables.join(" ")} |`);
+  return `${sectionText("Cases", cut, cases)}\n\n${sectionText("Clause tables", cut, clauses)}\n`;
+}
+
+// ---- the permissive vocabularies' grounds (wb-pzbq, the wb-atq9 gate's F3) ----------------------------------------------
+
+/** The readers a claim of the census may come from: the reference reader, with and without its prerequisites (prose and version are mutants). */
+export const REFERENCE_READERS: readonly Reader[] = ["reference", "no-capture", "no-binary"];
+
+/**
+ * The claim statuses and the missing prerequisites the reference readers mint over the CAPABILITY cases (every case unless
+ * given) at a capture, sorted. claimFindings accepts every member of CLAIM_STATUSES and MISSING, so a member no reader mints
+ * only loosens it.
+ */
+export function mintedVocabularies(capture: Capture, cases: readonly CapabilityCase[] = CAPABILITY.flatMap((entry) => entry.cases)): { readonly statuses: readonly string[]; readonly missing: readonly string[] } {
+  const claims = cases.filter((item) => REFERENCE_READERS.includes(item.reader)).map((item) => readClaim(item, capture));
+  return { statuses: sortedOf(new Set(claims.map((claim) => claim.status))), missing: sortedOf(new Set(claims.flatMap((claim) => (claim.missing === undefined ? [] : [claim.missing])))) };
+}
+
+/** The VCS directory: git tracks nothing below it, so it is the one walk exclusion no ignore line has to name. */
+export const VCS_DIR = ".git";
+
+/** The directories an ignore file names by a plain "<name>/" line at any depth: one path segment, no glob, negation, anchor or comment. */
+export function ignoredDirectories(ignoreText: string): string[] {
+  return ignoreText
+    .split("\n")
+    .map((line) => line.trim())
+    .filter((line) => /^[A-Za-z0-9._-]+\/$/.test(line))
+    .map((line) => line.slice(0, -1));
+}
+
+/** Every tracked path that lies below a directory segment the walks skip (a file's own name is no directory, so it never counts). */
+export function trackedBelow(tracked: readonly string[], exclusions: readonly string[]): string[] {
+  return tracked.filter((path) =>
+    path
+      .split("/")
+      .slice(0, -1)
+      .some((segment) => exclusions.includes(segment)),
+  );
+}

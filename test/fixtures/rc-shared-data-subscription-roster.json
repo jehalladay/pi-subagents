@@ -1,0 +1,896 @@
+{
+  "bead": "wb-5ltg.2",
+  "quote": "Keep explicitly named typed data-output ports, source digest/revision, audience, producer identity, freshness and diagnostics. UI surfaces subscribe to authorized materialized values, not to arbitrary Python closures.",
+  "citation": "docs/programs/native-interface-component-contract-2026-10-21/README.md:12@640a3b579a95",
+  "filing": {
+    "length": 2437,
+    "sha256": "9a4eb5419cdc529e36f23ab21fa425c00774cd7371aa31ce338413cda7418d5e"
+  },
+  "scan": {
+    "nouns": [
+      {
+        "id": "MV",
+        "source": "\\bmateriali[sz]ed values?\\b"
+      },
+      {
+        "id": "IS",
+        "source": "\\binterface subscri(?:bers?|ptions?|bes?|bing)\\b"
+      },
+      {
+        "id": "DP",
+        "source": "\\b(?:typed data|data output|data|output) ports?\\b"
+      },
+      {
+        "id": "RS",
+        "source": "\\bremote (?:components?|streams?|outputs?)\\b|\\bcomponent streams?\\b"
+      },
+      {
+        "id": "PA",
+        "source": "\\bpublication authori[sz](?:ations?|e|ed|es|ing)\\b|\\bauthori[sz](?:e|ed|es|ing) publications?\\b"
+      },
+      {
+        "id": "CS",
+        "source": "\\bsubscribe changes\\b|\\bchange sinks?\\b|\\blens change publishers?\\b"
+      },
+      {
+        "id": "RM",
+        "source": "\\bmateriali[sz]e directives\\b"
+      },
+      {
+        "id": "IV",
+        "source": "\\binterface view(?:s|ing|ers?)?\\b"
+      },
+      {
+        "id": "CD",
+        "source": "\\bcontext disclosures?\\b|\\bdisclos(?:e|es|ed|ing) context\\b"
+      }
+    ],
+    "unshippedA": [
+      "MV",
+      "IS",
+      "RS"
+    ],
+    "unshippedB": [
+      "PA",
+      "IV",
+      "CD"
+    ],
+    "subscribeVerb": "\\b(?:subscribes?|subscriptions?|watch|follow|listen|stream|tail|observe|poll)\\b/",
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "jsonExtensions": [
+      ".json"
+    ],
+    "scriptExtensions": [
+      ".py",
+      ".sh",
+      ".bash"
+    ],
+    "testTree": "test/",
+    "launchers": [
+      "spawn",
+      "spawnSync",
+      "exec",
+      "execSync",
+      "execFile",
+      "execFileSync",
+      "fork"
+    ],
+    "pythonImportLine": "^\\s*(?:import|from)\\s+[\\w.]*reactive[\\s_.-]*components/im",
+    "manifest": "(?:^|\\/)(?:package\\.json|[^/]*-lock\\.json|npm-shrinkwrap\\.json|pyproject\\.toml|requirements[^/]*\\.txt|uv\\.lock|Pipfile(?:\\.lock)?|setup\\.(?:py|cfg)|poetry\\.lock)$/i",
+    "skippedRoots": [
+      ".git",
+      ".beads",
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      ".forge"
+    ],
+    "floors": {
+      "files": 760,
+      "modules": {
+        "src": 100,
+        "test": 400,
+        "qa": 55
+      },
+      "json": 55,
+      "manifests": 3,
+      "scripts": 4,
+      "project": 500,
+      "judged": {
+        "modules": 170,
+        "json": 3
+      }
+    },
+    "walkAnchors": [
+      "README.md:pi-subagents",
+      "src/workbench/providers/reactivefiber.ts:REACTIVE_FIBER_CONTRACT_SOURCE",
+      "qa/workbench/receipts-index.mjs:marked",
+      "package.json:@tintinweb/pi-subagents",
+      "test/fixtures/rf-version-leaves.json:sdk_versions",
+      "media/screenshot.png:PNG"
+    ],
+    "nearestReaders": [
+      "src/workbench/providers/reactivefiber.ts:REACTIVE_FIBER_CLI_SCHEMA",
+      "src/workbench/reactivefiber-observer.ts:ENVELOPE_KEYS",
+      "src/workbench/native-evidence.ts:nativeEvidence",
+      "test/helpers/rf-render-fixture.ts:<module>"
+    ],
+    "viewGrants": [
+      "discover:reactivefiber.render.preview",
+      "inspect:reactivefiber.render.preview",
+      "workbench:observe"
+    ],
+    "derivedGrants": [
+      "invoke:reactivefiber.render.preview",
+      "reactivefiber:*",
+      "reactivefiber",
+      "*",
+      "reactivefiber:render:view",
+      "Reactivefiber:Render",
+      " reactivefiber:render",
+      "reactivefiber:render ",
+      "discover:reactivefiber:render",
+      "inspect:reactivefiber:render",
+      "reactivefiber.render.preview",
+      "control:reactivefiber.render"
+    ]
+  },
+  "producer": {
+    "repo": "<SDK>SDK (the local producer checkout; read-only git show, ls-tree and grep, no fetch, 2026-10-23)",
+    "readme": {
+      "path": "docs/programs/native-interface-component-contract-2026-10-21/README.md",
+      "blob": "ea960adb38e04d89160a03152b7277ad07de500b",
+      "line12": "Keep explicitly named typed data-output ports, source digest/revision, audience, producer identity, freshness and diagnostics. UI surfaces subscribe to authorized materialized values, not to arbitrary Python closures. Rendering source facts to a context document is still bound by necessity/budget/visibility/omission logic; interface viewing is not automatically permission to disclose context material or vice versa.",
+      "line22": "RC-IF-02: stable producer materialization and source/audience provenance for read-only interface subscribers; independently authorize publication.",
+      "line24": "RC-IF-04: Python-defined remote component producer opt-in and resolver validation, only once actual Web/TUI hosts are installed consumers."
+    },
+    "sites": [
+      {
+        "site": "hosting.py:756",
+        "signature": "def subscribe(self, environment: LensChangePublisher) -> Callable[[], None]:",
+        "doc": "Subscribe the host's change sink to a publishing lens environment; returns the environment's unsubscribe."
+      },
+      {
+        "site": "hosting.py:194",
+        "signature": "def subscribe_changes(self, sink: LensChangeSink) -> Callable[[], None]: ...",
+        "doc": "A member of LensChangePublisher (hosting.py:188): a lens environment that publishes settled LensChangeSet records (pull or push environments)."
+      },
+      {
+        "site": "directive_transport.py:670",
+        "signature": "def materialize_directives(element: FiberElement) -> AssemblyInput:",
+        "doc": "Rebuild the native assembly tree from a stored render output (the canonical reverse materializer)."
+      }
+    ],
+    "pins": [
+      {
+        "label": "program",
+        "ref": "640a3b579a955f84388d7bacd385d13b232a3116",
+        "srcModules": 55,
+        "readmeBlob": "ea960adb38e04d89160a03152b7277ad07de500b",
+        "nouns": {
+          "MV": 0,
+          "IS": 0,
+          "DP": 16,
+          "RS": 0,
+          "PA": 0,
+          "CS": 1,
+          "RM": 3,
+          "IV": 0,
+          "CD": 0
+        }
+      },
+      {
+        "label": "probe",
+        "ref": "01187eb645a5e834144ae967de4c12ba0c9c6fdd",
+        "srcModules": 64,
+        "readmeBlob": "ea960adb38e04d89160a03152b7277ad07de500b",
+        "nouns": {
+          "MV": 0,
+          "IS": 0,
+          "DP": 16,
+          "RS": 0,
+          "PA": 0,
+          "CS": 1,
+          "RM": 3,
+          "IV": 0,
+          "CD": 0
+        }
+      },
+      {
+        "label": "distribution",
+        "ref": "0.1.1.20261018121500",
+        "srcModules": 55,
+        "readmeBlob": null,
+        "nouns": {
+          "MV": 0,
+          "IS": 0,
+          "DP": 16,
+          "RS": 0,
+          "PA": 0,
+          "CS": 1,
+          "RM": 3,
+          "IV": 0,
+          "CD": 0
+        }
+      }
+    ],
+    "rf": {
+      "version": "0.1.836",
+      "commit": "b3494ab13397",
+      "leaves": 79
+    }
+  },
+  "residuals": [
+    "R-COMPOSED",
+    "R-PATH-SPLIT",
+    "R-PROSE",
+    "R-INTERRUPTED",
+    "R-LOOKALIKE",
+    "R-ENCODED",
+    "R-SYNONYM",
+    "R-ALIASED-LOADER",
+    "R-OUTSIDE",
+    "R-TEST-TREE",
+    "R-INDIRECT-LAUNCH",
+    "R-ECHO"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(c) today: no Pi subscription to RC materialized values and no RC remote-stream consumer (census 0): the trigger (If Pi ever subscribes to <SDK> shared reactive data) has not fired - no judged module or JSON file names a program noun, nothing loads the producer, Pi's one rf launch is a one-shot context render, and its one registered rf capability is the invoke-only preview",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "floors": {
+              "files": true,
+              "src": true,
+              "test": true,
+              "qa": true,
+              "json": true
+            },
+            "judgedFloors": {
+              "modules": true,
+              "json": true
+            },
+            "anchorsWalked": true,
+            "projectAgrees": true,
+            "modules": [],
+            "jsonFiles": [],
+            "readers": [
+              {
+                "path": "src/workbench/providers/reactivefiber.ts",
+                "reached": true,
+                "quiet": true
+              },
+              {
+                "path": "src/workbench/reactivefiber-observer.ts",
+                "reached": true,
+                "quiet": true
+              },
+              {
+                "path": "src/workbench/native-evidence.ts",
+                "reached": true,
+                "quiet": true
+              },
+              {
+                "path": "test/helpers/rf-render-fixture.ts",
+                "reached": true,
+                "quiet": true
+              }
+            ],
+            "members": {
+              "MV": {
+                "identifier": [
+                  "MV"
+                ],
+                "jsonKey": [
+                  "MV"
+                ]
+              },
+              "IS": {
+                "identifier": [
+                  "IS"
+                ],
+                "jsonKey": [
+                  "IS"
+                ]
+              },
+              "DP": {
+                "identifier": [
+                  "DP"
+                ],
+                "jsonKey": [
+                  "DP"
+                ]
+              },
+              "RS": {
+                "identifier": [
+                  "RS"
+                ],
+                "jsonKey": [
+                  "RS"
+                ]
+              },
+              "PA": {
+                "identifier": [
+                  "PA"
+                ],
+                "jsonKey": [
+                  "PA"
+                ]
+              },
+              "CS": {
+                "identifier": [
+                  "CS"
+                ],
+                "jsonKey": [
+                  "CS"
+                ]
+              },
+              "RM": {
+                "identifier": [
+                  "RM"
+                ],
+                "jsonKey": [
+                  "RM"
+                ]
+              },
+              "IV": {
+                "identifier": [
+                  "IV"
+                ],
+                "jsonKey": [
+                  "IV"
+                ]
+              },
+              "CD": {
+                "identifier": [
+                  "CD"
+                ],
+                "jsonKey": [
+                  "CD"
+                ]
+              }
+            },
+            "flagged": {
+              "camelIdentifier": [
+                "MV"
+              ],
+              "typeName": [
+                "MV"
+              ],
+              "objectKey": [
+                "MV"
+              ],
+              "constant": [
+                "MV"
+              ],
+              "tokenLiteral": [
+                "MV"
+              ],
+              "tokenTemplate": [
+                "MV"
+              ],
+              "folded": [
+                "MV"
+              ],
+              "escaped": [
+                "MV"
+              ],
+              "regexLiteral": [
+                "MV"
+              ],
+              "pathEnd": [
+                "MV"
+              ],
+              "jsonValue": [
+                "MV"
+              ],
+              "jsonUnparsed": [
+                "MV"
+              ]
+            },
+            "quiet": {
+              "separateLiterals": [],
+              "materializeVerb": [],
+              "subscribeAlone": [],
+              "interfaceKeyword": [],
+              "remoteAlone": [],
+              "portAlone": [],
+              "disclosureAlone": [],
+              "viewAlone": [],
+              "outputAlone": []
+            },
+            "walkControls": {
+              "src/live.ts": true,
+              "qa/fixtures/stream.json": true,
+              "qa/view.mjs": true,
+              "nested/node_modules/pkg/index.js": true,
+              "notes/plan.md": false,
+              "src/link.ts": true
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "specifierAnchor": true,
+            "echoAnchor": true,
+            "manifestFloor": true,
+            "scriptFloor": true,
+            "loads": [],
+            "manifestLoads": [],
+            "scriptLoads": [],
+            "flagged": {
+              "bareImport": 1,
+              "scopedImport": 1,
+              "npmSpecifier": 1,
+              "typeOnly": 1,
+              "exportFrom": 1,
+              "dynamicImport": 1,
+              "requireCall": 1,
+              "requireResolve": 1,
+              "importEquals": 1,
+              "importType": 1,
+              "createdRequire": 1,
+              "foldedSpecifier": 1,
+              "pythonImport": 1,
+              "pythonFrom": 1,
+              "pythonModuleArgv": 1,
+              "pythonModuleText": 1,
+              "memberLauncher": 1,
+              "shellArgument": 1,
+              "installer": 1,
+              "pythonFile": true,
+              "shellScript": true,
+              "packageJson": true,
+              "pyproject": true,
+              "requirements": true
+            },
+            "quiet": {
+              "mentionOnly": 0,
+              "otherProducer": 0,
+              "proseMention": 0,
+              "notManifest": false,
+              "otherModuleRun": 0,
+              "pythonFileOther": false
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "pin": "A3",
+            "launches": 1,
+            "launchModules": [
+              "src/workbench/providers/reactivefiber.ts"
+            ],
+            "renderLeafListed": true,
+            "renderLeafSubscribes": false,
+            "arms": {
+              "legacy": {
+                "outcome": "ok",
+                "spawns": 1,
+                "group": [
+                  "context render"
+                ],
+                "noCommit": true,
+                "childGone": true
+              },
+              "view": {
+                "outcome": "ok",
+                "spawns": 1,
+                "group": [
+                  "context render"
+                ],
+                "noCommit": true,
+                "childGone": true
+              }
+            },
+            "verbs": {
+              "subscribe": true,
+              "watchLeaf": true,
+              "streamLeaf": true,
+              "renderLeaf": false,
+              "showLeaf": false
+            }
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "pin": "A4",
+            "catalogRead": true,
+            "rf": {
+              "native": [
+                {
+                  "id": "reactivefiber.render.preview",
+                  "effectClass": "read",
+                  "permissions": [
+                    "reactivefiber:render"
+                  ],
+                  "supportedModes": [
+                    "invoke"
+                  ],
+                  "carrier": true
+                }
+              ],
+              "injected": [
+                {
+                  "id": "reactivefiber.render.preview",
+                  "effectClass": "read",
+                  "permissions": [
+                    "reactivefiber:render"
+                  ],
+                  "supportedModes": [
+                    "invoke"
+                  ],
+                  "carrier": true
+                }
+              ]
+            },
+            "observing": [],
+            "reconcile": [
+              "reactivefiber.render.preview"
+            ]
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "pin": "A5",
+            "residuals": {
+              "R-COMPOSED": {
+                "concatenated": [],
+                "joined": [],
+                "composedSpecifier": 0,
+                "composedPython": 0
+              },
+              "R-PATH-SPLIT": {
+                "literal": [],
+                "jsonKey": []
+              },
+              "R-PROSE": {
+                "comment": [],
+                "proseLiteral": [],
+                "proseTemplate": [],
+                "jsonProse": [],
+                "markdown": 0
+              },
+              "R-INTERRUPTED": {
+                "insideWord": []
+              },
+              "R-LOOKALIKE": {
+                "cyrillic": []
+              },
+              "R-ENCODED": {
+                "rot13": [],
+                "base64": []
+              },
+              "R-SYNONYM": {
+                "liveValues": [],
+                "watchOutputs": [],
+                "viewGrant": []
+              },
+              "R-ALIASED-LOADER": {
+                "aliasedRequire": 0,
+                "wrapper": 0
+              },
+              "R-OUTSIDE": {
+                "node_modules/pkg/index.js": 0,
+                "dist/index.js": 0,
+                ".beads/issues.json": 0,
+                ".forge/report.json": 0,
+                "build/x.ts": 0,
+                "coverage/x.ts": 0,
+                ".git/x.ts": 0
+              },
+              "R-TEST-TREE": {
+                "testModule": 0,
+                "testJson": 0
+              },
+              "R-INDIRECT-LAUNCH": {
+                "heldText": 0,
+                "heldArgv": 0,
+                "otherCall": 0
+              },
+              "R-ECHO": {
+                "echoKey": 0,
+                "echoPath": 0,
+                "echoAccess": 0,
+                "echoCall": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) adoption fixture: a subscription admits only values carrying port name, source digest/revision, audience, producer identity, freshness and diagnostics; a value lacking any field, a callable/closure or an untyped value is refused typed: gated - the producer ships no interface-subscriber materialization at the pin, the probe or the distribution rf carries; until then Pi's one admitted producer-derived value, the preview envelope, is refused typed when it lacks a key or is untyped, and a callable input is refused typed before any spawn",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "shipped": false,
+            "spelled": [],
+            "beadSaysUnshipped": true,
+            "sitesCited": true,
+            "readmeSame": true,
+            "quoteIsLine12": true,
+            "distributionEchoed": true,
+            "kept": [
+              "program:DP=16,CS=1,RM=3",
+              "probe:DP=16,CS=1,RM=3",
+              "distribution:DP=16,CS=1,RM=3"
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "keys": [
+              "schema",
+              "ok",
+              "command",
+              "operation_id",
+              "workspace",
+              "transaction_id",
+              "result",
+              "diagnostics"
+            ],
+            "admitted": {
+              "outcome": "ok",
+              "spawns": 1
+            },
+            "lacking": {
+              "schema": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "ok": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "command": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "operation_id": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "workspace": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "transaction_id": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "result": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "diagnostics": {
+                "outcome": "transport",
+                "spawns": 1
+              }
+            },
+            "untyped": {
+              "nullValue": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "stringValue": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "numberValue": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "listValue": {
+                "outcome": "transport",
+                "spawns": 1
+              },
+              "notJson": {
+                "outcome": "transport",
+                "spawns": 1
+              }
+            },
+            "callables": {
+              "arrowInput": {
+                "outcome": "validation",
+                "spawns": 0
+              },
+              "closureField": {
+                "outcome": "validation",
+                "spawns": 0
+              },
+              "undefinedField": {
+                "outcome": "validation",
+                "spawns": 0
+              },
+              "bigintField": {
+                "outcome": "validation",
+                "spawns": 0
+              },
+              "symbolField": {
+                "outcome": "validation",
+                "spawns": 0
+              },
+              "dateField": {
+                "outcome": "validation",
+                "spawns": 0
+              },
+              "mapInput": {
+                "outcome": "validation",
+                "spawns": 0
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) an interface-view grant does not enable context disclosure for the same audience and vice versa; deriving one grant from the other fails: gated - the producer ships no interface-view or publication grant; until then Pi's viewing grants and the preview's grant are separate exact grants on the one seam, neither admitting the other, and no derived spelling admits the preview",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "shipped": false,
+            "spelled": [],
+            "merged": true,
+            "authority": true,
+            "sentence": true,
+            "line22": true
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "views": {
+              "discover:reactivefiber.render.preview": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "inspect:reactivefiber.render.preview": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "workbench:observe": {
+                "outcome": "authorization",
+                "spawns": 0
+              }
+            },
+            "allViews": {
+              "outcome": "authorization",
+              "spawns": 0
+            },
+            "derived": {
+              "\"invoke:reactivefiber.render.preview\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\"reactivefiber:*\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\"reactivefiber\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\"*\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\"reactivefiber:render:view\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\"Reactivefiber:Render\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\" reactivefiber:render\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\"reactivefiber:render \"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\"discover:reactivefiber:render\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\"inspect:reactivefiber:render\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\"reactivefiber.render.preview\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              },
+              "\"control:reactivefiber.render\"": {
+                "outcome": "authorization",
+                "spawns": 0
+              }
+            },
+            "exact": {
+              "outcome": "ok",
+              "spawns": 1
+            },
+            "discovered": {
+              "disclosure": [],
+              "view": [
+                "reactivefiber.render.preview"
+              ]
+            },
+            "inspected": {
+              "disclosure": "authorization",
+              "view": "unavailable"
+            },
+            "injected": {
+              "views": {
+                "outcome": "authorization",
+                "calls": 0
+              },
+              "derived": {
+                "outcome": "authorization",
+                "calls": 0
+              },
+              "exact": {
+                "outcome": "ok",
+                "calls": 1
+              }
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "records: every registered test ran once in run mode in roster order, every pin reached its end with its pinned assertion count, and no title spells a noun"
+  ],
+  "reached": [
+    "A1:10",
+    "A2:7",
+    "A3:5",
+    "A4:6",
+    "A5:4",
+    "B1:8",
+    "B2:7",
+    "C1:7",
+    "C2:8"
+  ]
+}

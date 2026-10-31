@@ -102,6 +102,8 @@ const CARRIERS: Readonly<Record<string, string>> = {
   "invalidation-basis/v2": "workbench/forge-observer.ts",
   // wb-a3s: the forge_gate_run tool's reply contract, spelled once where the registered tool composes its reply.
   "workbench.forge-gate-run/v1": "index.ts",
+  // wb-4ap.17: Forge's own result contract, carried once by the gate.run reader that reads a reply's run-start pin only under it.
+  "result-envelope/v1": "workbench/forge-operation-observer.ts",
 };
 
 /**

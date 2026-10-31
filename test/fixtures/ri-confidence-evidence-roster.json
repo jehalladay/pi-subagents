@@ -1528,6 +1528,97 @@
        "shippedNo": true,
        "quoteInLine": true
       },
+      "filingBound": {
+       "appendedRepeats": true,
+       "variants": [
+        {
+         "id": "shipped-yes",
+         "bounded": {
+          "gatingNamesGate": true,
+          "shippedNo": false,
+          "quoteInLine": true
+         },
+         "wholeNotes": {
+          "gatingNamesGate": true,
+          "shippedNo": true,
+          "quoteInLine": true
+         }
+        },
+        {
+         "id": "shipped-not-yet",
+         "bounded": {
+          "gatingNamesGate": true,
+          "shippedNo": false,
+          "quoteInLine": true
+         },
+         "wholeNotes": {
+          "gatingNamesGate": true,
+          "shippedNo": true,
+          "quoteInLine": true
+         }
+        },
+        {
+         "id": "shipped-off-line",
+         "bounded": {
+          "gatingNamesGate": true,
+          "shippedNo": false,
+          "quoteInLine": true
+         },
+         "wholeNotes": {
+          "gatingNamesGate": true,
+          "shippedNo": true,
+          "quoteInLine": true
+         }
+        },
+        {
+         "id": "gating-dropped",
+         "bounded": {
+          "gatingNamesGate": false,
+          "shippedNo": false,
+          "quoteInLine": true
+         },
+         "wholeNotes": {
+          "gatingNamesGate": false,
+          "shippedNo": true,
+          "quoteInLine": true
+         }
+        },
+        {
+         "id": "gating-after-filing",
+         "bounded": {
+          "gatingNamesGate": false,
+          "shippedNo": false,
+          "quoteInLine": true
+         },
+         "wholeNotes": {
+          "gatingNamesGate": true,
+          "shippedNo": true,
+          "quoteInLine": true
+         }
+        },
+        {
+         "id": "quote-after-filing",
+         "bounded": {
+          "gatingNamesGate": true,
+          "shippedNo": true,
+          "quoteInLine": false
+         },
+         "wholeNotes": {
+          "gatingNamesGate": true,
+          "shippedNo": true,
+          "quoteInLine": true
+         }
+        }
+       ],
+       "grounding": {
+        "vocable": "<S8>",
+        "filingGrounds": true,
+        "appendedGrounds": true,
+        "ungrounded": [
+         "<S8>"
+        ]
+       }
+      },
       "quotesHashed": true
      }
     },

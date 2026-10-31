@@ -37,7 +37,9 @@
  *    budget phrase that is rf's headroom verbatim at one and two occurrences alike; A4 a de-duplicating implementation (one block
  *    per definition, its total and counters re-derived) fails the judge Pi's own reading and display meet.
  *  B, acceptance (b). B1 both readings carry result.budget, and the whole envelope, byte for byte for every measured render, adding
- *    only their contract and workspace root, and the adapter's budget phrase is the stated terms; B2 never from rendered text:
+ *    only their contract and workspace root (the whole reading beside source is compared, so a Pi field of any type reds), and the
+ *    adapter's budget phrase is the stated terms, also on a variant whose stated available disagrees with its own terms (a display
+ *    re-deriving the headroom from the other terms, the estimating reference, then fails the judge); B2 never from rendered text:
  *    variants replacing result.output.text (alone, and with its size_bytes) leave the adapter's status line and notes byte-identical
  *    while its payload reference moves (the text is hashed, never priced); a recomputing implementation (rf's own utf8-bytes/4
  *    rule applied to the text) fails the same judge.
@@ -51,19 +53,39 @@
  *    render names a model-reported or prompt-cache count (a render calls no model); D2 Pi labels no kind and sums none: across
  *    every projection here its surfaced strings spell no kind word and its one token phrase is the producer's two stated terms; a
  *    summing implementation fails the judge.
- *  E, the until-then posture. E1 Pi depends on, installs and imports no H2 producer package (RC, RI, TSX, FiberOptics or Lenses);
- *    E2 its rf roster is the preview alone and no registered descriptor spells an H2 receipt or rf priced field; E3 a lexical scan
- *    of every src module (string, no-substitution and template literals, every identifier) finds no RECEIPT_TERMS or PRICING_TERMS
- *    word, with floors, three anchors (the observer and the provider, which read rf's formula terms, and src/usage.ts, which spells
- *    pi's own cache fields; each scanned and quiet) and every src file a parsed .ts module; E4 the detector's controls: flagged
- *    lines, one per vocabulary word at least (each word's own reading pinned), quiet lines and the residuals' quiet rows.
+ *  E, the until-then posture. E1 Pi depends on, installs and imports no H2 producer package (RC, RI, TSX, FiberOptics or Lenses),
+ *    each reader held by positive controls read alone: a planted manifest per dependency list (dependencies, dev, peer, optional,
+ *    bundled and npm's own bundleDependencies spelling) and a planted module per specifier form (import-from, export-star,
+ *    export-from, import-equals, import(), require()), each naming one H2 producer; E2 its rf roster is the preview alone and no
+ *    registered descriptor spells an H2 receipt or rf priced field, the selector held by one planted descriptor per branch (id
+ *    prefix reactivefiber. and rf., permission family, contract source; a neutral one excluded) and the spelling reader by one per
+ *    vocabulary; E3 a lexical scan of every src module (string, no-substitution and template literals, every identifier) finds no
+ *    RECEIPT_TERMS or PRICING_TERMS word and no USAGE_KEYS wire spelling (the snake_case keys), with floors, four anchors (the
+ *    observer and the provider, which read rf's formula terms, src/usage.ts, which spells pi's own cache fields, and
+ *    src/workbench/claude-host.ts, which spells the Claude SDK's modelUsage fields; each scanned and quiet) and every src file a
+ *    parsed .ts module; E4 the detector's controls: flagged lines, one per vocabulary word and usage key at least (each word's and
+ *    key's own reading pinned) and one per lexicon branch (a template-only and a no-substitution-template line), quiet lines (the
+ *    usage keys' word boundary among them) and the residuals' quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label
  * and pins, every pin's witness, the constants, the vocabularies and every registered test title - is held to the out-of-file
  * roster, whose measured envelopes anchor the counts outside this file; the acceptance rows' labels are held, in order, to the
- * clauses of the bead's own Acceptance line in the tracker export (.beads/issues.jsonl), and row E's to its Not P0 line. The last
- * case walks this file's vitest task tree against the roster. Not claimed: a pin removed from ROWS, the literal, IMPL and the
- * roster together (the filing anchors rows, not pins), or a vocabulary word removed from this file, the roster and E4's witness
- * together.
+ * clauses of the bead's own Acceptance line in the tracker export (.beads/issues.jsonl), and row E's to its Not P0 line.
+ * REGISTRATION (wb-66yx F1, the reached-record class): rosterWitness is each pin's compare's expected value and records the pin as
+ * it is evaluated (COMPARED), and the pin records its measured witness after that compare passes (REACHED). The judged set, run
+ * first, reads the collected vitest task tree: every registered test of this file is the roster's list, once each and in order,
+ * in run mode and not inverted, the closing case's own included. The closing case, run last, reads the tree after the run: every
+ * other case ran, and every pin that passed is in COMPARED and in REACHED, once each and in roster order, its recorded witness equal
+ * to a fresh roster read, and the judged set, if it passed, ran to its end. So a compare removed, guarded away (an early return) or
+ * swapped for a matcher that takes no expected value (toBeDefined) reds the closing case, and a skip on the closing case or its
+ * deletion reds the judged set. A pin that failed has reported itself and is not read again, so one red stays one red. An afterAll
+ * close holds the closing case, collected to run (as the judged set read it before any pin ran) and not failed, to its end, so a
+ * runtime skip or a guarded return there reds the file; a closing case collected skipped (a name-filtered run) is the judged set's
+ * to read. Not claimed: a pin removed from ROWS,
+ * the literal, IMPL and the roster together (the filing anchors rows, not pins); a vocabulary word removed from this file, the
+ * roster and E4's witness together; a compare swapped for a weaker matcher that still takes rosterWitness as its expected value
+ * (toEqual is equivalent over JSON witnesses), or a harness hollow that evaluates rosterWitness apart from the compare and records
+ * the roster's own witness; a judge of the closing case or the afterAll close weakened in place, or a skip on the judged set and the
+ * closing case together (left to the delivered-file marker scan).
  * THE GATE-OPENING SIGNAL: E1 reds when an H2 producer package is depended on or imported, and E2/E3 when a descriptor or src module
  * spells a receipt or priced field: the reader RC-H2-02, TSX-H2-04, RI-H2-01 or RI-H2-03 calls for reds this census first, and its
  * cut re-pins (a) to (d) at that reader's own display (A to D already pin the echo the posture keeps).
@@ -75,9 +97,21 @@
  *   kind word in any surfaced string); R-PI-USAGE Pi's own spend accounting (src/usage.ts) sums pi's input, output and cacheWrite
  *   into its display total and adds cacheRead to the totalTokens it reports: those are pi's own Usage fields from pi's own message
  *   events, not an H2 receipt, so (d) as filed does not reach them and E3's vocabulary does not cover them (E3's usage anchor and
- *   E4's R-PI-USAGE control read 0); R-COMPOSED a receipt or priced field composed at runtime or read through a computed key is
- *   invisible to E3 (E4 reads 0); R-GENERIC-WALK a reader that walks result.budget generically surfaces priced fields without
- *   spelling one (E4 reads 0).
+ *   E4's R-PI-USAGE control read 0); R-HOST-USAGE camelCase usage fields - the Claude SDK result's modelUsage inputTokens,
+ *   outputTokens, cacheReadInputTokens and cacheCreationInputTokens, which the Claude host's usage() (src/workbench/claude-host.ts)
+ *   sums into the tokens it reports today - are the SDK's own result fields, not an H2 receipt, so (d) as filed does not reach them
+ *   and E3's usage keys (the snake_case wire spellings) read none of them, there or in any other module (E3's claude-host anchor
+ *   and E4's R-HOST-USAGE control read 0); R-COMPOSED a receipt
+ *   or priced field composed at runtime or read through a computed key is invisible to E3 (E4 reads 0); R-GENERIC-WALK a reader
+ *   that walks result.budget generically surfaces priced fields without spelling one (E4 reads 0); R-SPELLING a receipt name joined
+ *   into one lowercase word (contextprojection) or abbreviated (readCtxProjection) escapes the word patterns, which need a
+ *   separator or a case boundary between whole words (E4 reads 0).
+ * FOLLOW-UP (wb-66yx, the R694 follow-up of landing 314; cut on trunk 63c8a04): the gate's LEG 2 survivors of wb-4nut.7 cut #1
+ * are cured here. F1 (lead) by REGISTRATION above: M08 (a guarded return before every pin's compare), M13 (the compare swapped
+ * for toBeDefined) and their consequences K1, K5 and K6 red the closing case. F2 by the positive controls of E1, E2 and E4: I04 (no
+ * template literals), I06 (the dependencies list alone), I07 (no import()/require()), I08 (no export-from), I09 and I10 (a
+ * selector branch dropped) and their consequences K2, K3 and K4 red. F3: S05 reds B1 (the disagreeing variant), S06 reds the
+ * readings (the whole-reading compare), S19 reds E3 (the usage keys), and S20/S21 are the named residual R-SPELLING.
  * SCOPE: the envelopes are producer facts at the installed rf; Pi vendors no rf schema, so a producer change is seen only when the
  * roster is re-measured. "Pi" in (a) to (d) is src/, the product modules; qa/ and test/ carry no Pi surface. The four kinds of RI
  * L21 are exact counted prompt tokens (rf's measured), tokenizer estimate (rf's estimated), model-reported usage and prompt-cache
@@ -154,6 +188,12 @@ const USAGE_KEYS: readonly string[] = [
   "usage", "input_tokens", "output_tokens", "prompt_tokens", "completion_tokens", "cache_read_input_tokens", "cache_creation_input_tokens",
   "cacheRead", "cacheWrite", "cached_tokens",
 ];
+/** USAGE_KEYS' wire spellings (snake_case, as a usage receipt a host meets spells them), read as whole words in every src module;
+ * the camelCase ones are pi's own Usage fields (R-PI-USAGE). */
+const SNAKE_USAGE_KEYS: readonly string[] = USAGE_KEYS.filter(key => key.includes("_"));
+const USAGE_KEY = new RegExp(`\\b(?:${SNAKE_USAGE_KEYS.join("|")})\\b`, "i");
+/** B1's disagreeing variant (wb-66yx F3): a stated available that the variant's other terms do not yield. */
+const DISAGREEING_AVAILABLE = 123456;
 
 interface Row {
   readonly id: string;
@@ -316,7 +356,21 @@ function readRoster(): Roster {
 const ROSTER = readRoster();
 const ENVELOPES = ROSTER.envelopes;
 
+/** wb-66yx F1 (the reached-record class): every pin whose witness compare evaluated the roster's witness as its expected value, in
+ * run order. rosterWitness records the pin as it is evaluated, so a compare removed, guarded away or swapped for a matcher that
+ * takes no expected value records nothing; the closing case reads it. */
+const COMPARED: string[] = [];
+/** Each pin's measured witness, recorded after its compare passed; the closing case re-compares it to a fresh roster read. */
+const REACHED = new Map<string, JsonValue>();
+/** Set by the last line of the judged set and of the closing case; the closing case and the afterAll close read them. The judged
+ * set keeps, on its first lines, this file's task tree and the closing case's mode as collected (vitest rewrites a case's mode to
+ * skip when it skips at runtime, so the collected mode is read before any pin runs); the afterAll close reads both after the run. */
+const CLOSED: { judged: boolean; closing: boolean; tree: readonly TaskNode[] | undefined; closingCollected: string | undefined } = {
+  judged: false, closing: false, tree: undefined, closingCollected: undefined,
+};
+
 function rosterWitness(pin: string): JsonValue {
+  COMPARED.push(pin);
   const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
@@ -476,7 +530,8 @@ async function injectedRead(answer: Envelope): Promise<{ reading: JsonObject; ca
 }
 /** Both registered readings of `build(fixture)`, asserted byte for byte against the same build over a FRESH roster read serialized
  * before the invocations (so a reading mutated in place cannot pass as verbatim); each reader ran once, the native one spawned the
- * render argv once, and the only strings Pi adds are its contract and workspace root. Returns the witness and the native source. */
+ * render argv once, and the only fields Pi adds are its contract and workspace root: the whole reading beside source is compared,
+ * not its string leaves alone, so a Pi field of any type reds (wb-66yx F3, S06). Returns the witness and the native source. */
 async function verbatimReadings(name: FixtureName, build: (envelope: Envelope) => Envelope): Promise<{ witness: JsonObject; source: Envelope }> {
   const before = JSON.stringify(build(readRoster().envelopes[name]));
   const native = await nativeRead(build(ENVELOPES[name]));
@@ -491,8 +546,16 @@ async function verbatimReadings(name: FixtureName, build: (envelope: Envelope) =
   const injectedStrings = stringLeaves({ ...injected.reading, source: null });
   expect(nativeStrings).toStrictEqual([REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, FIXTURE_ROOT]);
   expect(injectedStrings).toStrictEqual([REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, FIXTURE_ROOT]);
+  const piFields = { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: FIXTURE_ROOT, source: null };
+  expect({ ...native.reading, source: null }, "the native reading beside source").toStrictEqual(piFields);
+  expect({ ...injected.reading, source: null }, "the injected reading beside source").toStrictEqual(piFields);
+  const nativeKeys = Object.keys(native.reading ?? {});
+  const injectedKeys = Object.keys(injected.reading);
   return {
-    witness: { native: { verbatim: true, spawns: native.spawns.length, verb: verbOf(native.spawns), piStrings: nativeStrings }, injected: { verbatim: true, calls: injected.calls, piStrings: injectedStrings } },
+    witness: {
+      native: { verbatim: true, spawns: native.spawns.length, verb: verbOf(native.spawns), piStrings: nativeStrings, piKeys: nativeKeys },
+      injected: { verbatim: true, calls: injected.calls, piStrings: injectedStrings, piKeys: injectedKeys },
+    },
     source: envelopeOf(native.reading?.source, `${name} native reading source`),
   };
 }
@@ -753,7 +816,7 @@ interface Lexicon {
   readonly specifiers: string[];
 }
 /** One module's lexicon: its string, no-substitution and template literals (a template's literal parts joined by a space), every
- * identifier, and every module specifier it imports, re-exports, import()s or require()s. */
+ * identifier, and every module specifier it imports, re-exports, import-equals, import()s or require()s. */
 function lexiconOf(fileName: string, text: string): Lexicon {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const literals: string[] = [];
@@ -762,6 +825,8 @@ function lexiconOf(fileName: string, text: string): Lexicon {
   const visit = (node: ts.Node): void => {
     if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier)) {
       specifiers.push(node.moduleSpecifier.text);
+    } else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteralLike(node.moduleReference.expression)) {
+      specifiers.push(node.moduleReference.expression.text);
     } else if (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require"))) {
       const first = node.arguments[0];
       if (first !== undefined && ts.isStringLiteralLike(first)) specifiers.push(first.text);
@@ -781,6 +846,11 @@ function normalized(text: string): string {
 function termHits(lexicon: Lexicon, pattern: RegExp): string[] {
   return [...lexicon.literals, ...lexicon.identifiers].filter(item => pattern.test(normalized(item)));
 }
+/** The literals and identifiers spelling a usage key (wb-66yx F3, S19): read as written, whole words, so max_output_tokens is not
+ * output_tokens. */
+function usageHits(lexicon: Lexicon, pattern: RegExp = USAGE_KEY): string[] {
+  return [...lexicon.literals, ...lexicon.identifiers].filter(item => pattern.test(item));
+}
 let srcLexica: Lexicon[] | undefined;
 /** Every src .ts module's lexicon, parsed once. */
 function srcLexicon(): Lexicon[] {
@@ -791,16 +861,18 @@ function srcLexicon(): Lexicon[] {
 function unparsedSrc(): string[] {
   return filesBelow(join(REPO, "src")).filter(file => !file.endsWith(".ts")).map(file => relative(REPO, file));
 }
-/** An anchor: the module is scanned, spells every one of `spelled` among its identifiers, and the vocabularies read nothing there. */
+/** An anchor: the module is scanned, spells every one of `spelled` among its identifiers, and the vocabularies and the usage keys
+ * read nothing there. */
 function anchorOf(lexica: readonly Lexicon[], file: string, spelled: readonly string[]): boolean {
   const lexicon = lexica.find(entry => entry.file === file);
   if (lexicon === undefined) return false;
-  return spelled.every(name => lexicon.identifiers.includes(name)) && termHits(lexicon, RECEIPT).length === 0 && termHits(lexicon, PRICING).length === 0;
+  return spelled.every(name => lexicon.identifiers.includes(name)) && termHits(lexicon, RECEIPT).length === 0 && termHits(lexicon, PRICING).length === 0 &&
+    usageHits(lexicon).length === 0;
 }
-/** A control line's reading: how many receipt and priced-field words it spells. */
+/** A control line's reading: how many receipt and priced-field words and usage keys it spells. */
 function controlReading(text: string): JsonObject {
   const lexicon = lexiconOf("control.ts", text);
-  return { receipt: termHits(lexicon, RECEIPT).length, pricing: termHits(lexicon, PRICING).length };
+  return { receipt: termHits(lexicon, RECEIPT).length, pricing: termHits(lexicon, PRICING).length, usage: usageHits(lexicon).length };
 }
 const E4_FLAGGED: Readonly<Record<string, string>> = {
   projectionExport: "const projection = await components.exportContextProjection(render);",
@@ -827,6 +899,15 @@ const E4_FLAGGED: Readonly<Record<string, string>> = {
   truncatedTokens: "const cut = budget.truncated_tokens;",
   unknownCostCount: "const unpriced = budget.unknown_cost_count;",
   tokenCost: "const cost = block.token_cost.tokens;",
+  // wb-66yx F2: one line per lexicon branch no other control needs - a word only in a template's literal parts, and a word only in a
+  // no-substitution template.
+  templateOnly: ["const note = `$", "{count} budget receipts`;"].join(""),
+  noSubstitution: "const label = `usage receipt`;",
+  // wb-66yx F3 (S19): the usage keys, as identifiers (member and binding names) and as element-access literals.
+  wireUsage: "const spent = message.usage.input_tokens + message.usage.output_tokens;",
+  wireCache: 'const cached = usage["cache_read_input_tokens"] + usage["cache_creation_input_tokens"];',
+  chatUsage: "const { prompt_tokens: prompt, completion_tokens: completion } = usage;",
+  chatCache: "const hit = usage.prompt_tokens_details.cached_tokens;",
 };
 const E4_QUIET: Readonly<Record<string, string>> = {
   formulaReader: "const window = Number(formula.context_window); const available = formula.available_context_tokens;",
@@ -834,11 +915,15 @@ const E4_QUIET: Readonly<Record<string, string>> = {
   inclusionCount: ["const note = `inclusion: $", "{blocks.length} blocks included`;"].join(""),
   piTokensFormat: "const shown = formatTokens(getLifetimeTotal(record.lifetimeUsage));",
   cachePlane: 'const description = "disposable, reconstructible cache-plane writes may occur";',
+  // The usage keys read whole words: a request's max_output_tokens is not a usage count.
+  requestLimit: "const limit = request.max_output_tokens;",
 };
 const E4_RESIDUALS: Readonly<Record<string, string>> = {
   "R-COMPOSED": 'const key = ["included", "tokens"].join("_"); export const total = budget[key];',
   "R-GENERIC-WALK": ["export const shown = Object.entries(result.budget).map(([key, value]) => `$", "{key}=$", "{String(value)}`);"].join(""),
   "R-PI-USAGE": "export const total = usage.input + usage.output + usage.cacheWrite + (usage.cacheRead ?? 0);",
+  "R-HOST-USAGE": "export const tokens = models.reduce((total, item) => total + item.inputTokens + item.outputTokens + item.cacheReadInputTokens + item.cacheCreationInputTokens, 0);",
+  "R-SPELLING": 'export const KIND = "contextprojection"; export const readCtxProjection = (value: unknown): unknown => value;',
 };
 
 let nativeCatalog: Promise<CapabilityDescriptor[]> | undefined;
@@ -851,6 +936,30 @@ function nativeDescriptors(): Promise<CapabilityDescriptor[]> {
   });
   return nativeCatalog;
 }
+/** A planted descriptor (wb-66yx F2), complete so it reads exactly as a registered one does. */
+function plantedDescriptor(id: string, permissions: readonly string[], extra: Partial<CapabilityDescriptor> = {}): CapabilityDescriptor {
+  return { id, version: "1.0.0", description: "a planted control", inputSchema: { type: "object" }, effectClass: "read", permissions, supportedModes: ["invoke"], ...extra };
+}
+/** E2's selector controls: one descriptor per selector branch, each selected alone, and a neutral one the selector excludes. */
+const E2_SELECTOR: Readonly<Record<string, CapabilityDescriptor>> = {
+  reactivefiberId: plantedDescriptor("reactivefiber.context.explain", ["workbench:read"]),
+  rfId: plantedDescriptor("rf.render", ["workbench:read"]),
+  permissionOnly: plantedDescriptor("workbench.fiber.preview2", ["reactivefiber:render"]),
+  contractOnly: plantedDescriptor("workbench.explain", ["workbench:read"], { contractSource: "reactive-fiber.cli/v1 context.explain" }),
+  neutral: plantedDescriptor("workbench.status", ["workbench:read"]),
+};
+/** E2's spelling controls: a receipt word in an id, an rf priced field in a description, and a neutral descriptor. */
+const E2_SPELLING: Readonly<Record<string, CapabilityDescriptor>> = {
+  receiptId: plantedDescriptor("workbench.context.projection", ["workbench:read"]),
+  pricedDescription: plantedDescriptor("workbench.status", ["workbench:read"], { description: "shows rf's token accounting" }),
+  neutral: plantedDescriptor("workbench.status", ["workbench:read"]),
+};
+/** Whether a descriptor spells an H2 receipt or an rf priced field anywhere in its serialized form. */
+function spells(descriptor: CapabilityDescriptor): boolean {
+  const serialized = normalized(JSON.stringify(descriptor));
+  return RECEIPT.test(serialized) || PRICING.test(serialized);
+}
+
 /** The rf descriptors of a catalog, by any of the three selectors: id prefix, permission family or contract source. */
 function rfIds(descriptors: readonly CapabilityDescriptor[]): string[] {
   return descriptors
@@ -875,10 +984,10 @@ function acceptanceClauses(notes: string): string[] {
   return line.slice("Acceptance: ".length).replace(/\.$/, "").split(/; (?=\([b-z]\) )/);
 }
 
-/** The package names a package.json declares, across every dependency list. */
-function declaredPackages(): { lists: JsonObject; names: string[] } {
-  const manifest: unknown = JSON.parse(textOf(join(REPO, "package.json")));
-  if (!isObject(manifest)) throw new Error("package.json must be an object");
+/** The package names a manifest declares, across every dependency list: the four maps and both bundle lists (npm reads
+ * bundleDependencies and its bundledDependencies alias alike). */
+function declaredPackagesOf(manifest: unknown, what: string): { lists: JsonObject; names: string[] } {
+  if (!isObject(manifest)) throw new Error(`${what} must be an object`);
   const lists: JsonObject = {};
   const names: string[] = [];
   for (const list of ["dependencies", "devDependencies", "peerDependencies", "optionalDependencies"]) {
@@ -887,11 +996,39 @@ function declaredPackages(): { lists: JsonObject; names: string[] } {
     lists[list] = keys.length;
     names.push(...keys);
   }
-  const bundled = manifest.bundledDependencies;
-  const bundledNames = Array.isArray(bundled) ? bundled.filter((name): name is string => typeof name === "string") : [];
-  lists.bundledDependencies = bundledNames.length;
-  names.push(...bundledNames);
+  for (const list of ["bundledDependencies", "bundleDependencies"]) {
+    const bundled = manifest[list];
+    const bundledNames = Array.isArray(bundled) ? bundled.filter((name): name is string => typeof name === "string") : [];
+    lists[list] = bundledNames.length;
+    names.push(...bundledNames);
+  }
   return { lists, names };
+}
+/** The package names package.json declares. */
+function declaredPackages(): { lists: JsonObject; names: string[] } {
+  return declaredPackagesOf(JSON.parse(textOf(join(REPO, "package.json"))), "package.json");
+}
+/** E1's positive controls (wb-66yx F2): per dependency list, a planted manifest naming one H2 producer in that list alone, and per
+ * specifier form, a planted module importing one; each is read alone by the reader the live tree goes through. */
+const E1_LISTS: Readonly<Record<string, string>> = {
+  dependencies: "reactive-components",
+  devDependencies: "@reactive-fiber/tsx",
+  peerDependencies: "reactive-inference",
+  optionalDependencies: "fiber-optics",
+  bundledDependencies: "reactive-lenses",
+  bundleDependencies: "@reactive/inference",
+};
+const E1_FORMS: Readonly<Record<string, { readonly line: string; readonly name: string }>> = {
+  importFrom: { line: 'import { render } from "reactive-components";', name: "reactive-components" },
+  exportStar: { line: 'export * from "@reactive-fiber/tsx";', name: "@reactive-fiber/tsx" },
+  exportFrom: { line: 'export { infer } from "reactive-inference";', name: "reactive-inference" },
+  importEquals: { line: 'import optics = require("fiber-optics");', name: "fiber-optics" },
+  dynamicImport: { line: 'export const lenses = (): Promise<unknown> => import("reactive-lenses");', name: "reactive-lenses" },
+  requireCall: { line: 'export const sdk = (): unknown => require("@reactive/inference");', name: "@reactive/inference" },
+};
+/** A planted manifest with one name in one list: a map for the four maps, a name list for the bundle lists. */
+function plantedManifest(list: string, name: string): JsonObject {
+  return { [list]: list.startsWith("bundle") ? [name] : { [name]: "0.0.0" } };
 }
 /** The package directories installed at the top of node_modules, scoped ones as @scope/name. */
 function installedPackages(): string[] {
@@ -912,6 +1049,40 @@ function installedPackages(): string[] {
     }
   });
 }
+
+/** A node of this file's vitest task tree, read structurally: a test, or a suite with its tasks. */
+interface TaskNode {
+  readonly type: string;
+  readonly name: string;
+  readonly mode: string;
+  readonly fails?: boolean;
+  readonly result?: { readonly state?: string };
+  readonly tasks?: readonly TaskNode[];
+}
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every test below `tasks` in registration order (wb-66yx F1: the judged set, the closing case and the afterAll close read it);
+ * `self` marks the reading case by task identity. */
+function registeredOf(tasks: readonly TaskNode[], self: unknown): Registered[] {
+  const walked: Registered[] = [];
+  const walk = (nodes: readonly TaskNode[]): void => {
+    for (const child of nodes) {
+      if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self });
+      else if (child.type === "suite" && child.tasks !== undefined) walk(child.tasks);
+    }
+  };
+  walk(tasks);
+  return walked;
+}
+const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+const readEntry = (entry: Registered): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
+/** The roster's last test: the closing case. */
+const CLOSING_TITLE = ROSTER.tests[ROSTER.tests.length - 1] ?? "";
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
@@ -995,6 +1166,21 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       expect(failures).toEqual([]);
       witness[name] = { ...own, budgetVerbatim: budget, budgetKeys: Object.keys(budgetOf(source)).length, shown, failures };
     }
+    // wb-66yx F3 (S05): a stated available its own terms do not yield; both readings carry it, the adapter shows it, and a display
+    // re-deriving the headroom from the other terms (the estimating reference) fails the same judge.
+    const disagreeing = (envelope: Envelope): Envelope => figureVariant(envelope, formula => {
+      formula.available_context_tokens = DISAGREEING_AVAILABLE;
+    });
+    const { witness: own } = await verbatimReadings("twoOccurrences", disagreeing);
+    const variant = disagreeing(ENVELOPES.twoOccurrences);
+    const shown = budgetShown(shownOf(variant).statusText);
+    const failures = budgetFailures(shown, variant);
+    const derived = estimatedBudget(variant);
+    const derivedFailures = budgetFailures(derived, variant);
+    expect(derived.available, "the variant's other terms yield another headroom").not.toBe(DISAGREEING_AVAILABLE);
+    expect(failures).toEqual([]);
+    expect(derivedFailures.length).toBeGreaterThan(0);
+    witness.disagreeing = { ...own, stated: DISAGREEING_AVAILABLE, shown, failures, derived, derivedFailures };
     return witness;
   },
   B2: async () => {
@@ -1115,7 +1301,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(declaredH2, "an H2 producer package in package.json").toEqual([]);
     expect(installedH2, "an H2 producer package in node_modules").toEqual([]);
     expect(importedH2, "a src module importing an H2 producer package").toEqual([]);
-    return { floors, bundledRead, patternRead, ownRf, declaredH2, installedH2, importedH2 };
+    // wb-66yx F2: each list and each specifier form, planted alone, reads its one H2 name through the readers above.
+    const listReadings = Object.fromEntries(Object.entries(E1_LISTS).map(([list, name]) => [list, declaredPackagesOf(plantedManifest(list, name), `the ${list} control`).names.filter(found => H2_PACKAGE.test(found))]));
+    const formReadings = Object.fromEntries(Object.entries(E1_FORMS).map(([form, { line }]) => [form, lexiconOf("control.ts", line).specifiers.filter(found => H2_PACKAGE.test(found))]));
+    expect(listReadings, "every dependency list's planted H2 name").toStrictEqual(Object.fromEntries(Object.entries(E1_LISTS).map(([list, name]) => [list, [name]])));
+    expect(formReadings, "every specifier form's planted H2 name").toStrictEqual(Object.fromEntries(Object.entries(E1_FORMS).map(([form, { name }]) => [form, [name]])));
+    return { floors, bundledRead, patternRead, ownRf, declaredH2, installedH2, importedH2, controls: { lists: listReadings, forms: formReadings } };
   },
   E2: async () => {
     const injected = new CapabilityRegistry();
@@ -1125,9 +1316,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const native = rfIds(descriptors);
     const injectedIds = rfIds(injectedDescriptors);
     const reconcile = [...(RECONCILE_EVIDENCE_READS.reactivefiber ?? [])];
-    const spelling = [...descriptors, ...injectedDescriptors]
-      .filter(descriptor => RECEIPT.test(normalized(JSON.stringify(descriptor))) || PRICING.test(normalized(JSON.stringify(descriptor))))
-      .map(descriptor => descriptor.id);
+    const spelling = [...descriptors, ...injectedDescriptors].filter(spells).map(descriptor => descriptor.id);
+    // wb-66yx F2: each selector branch and each vocabulary, planted alone, reads through the same selector and spelling reader.
+    const selector = Object.fromEntries(Object.entries(E2_SELECTOR).map(([name, descriptor]) => [name, rfIds([descriptor])]));
+    const spelled = Object.fromEntries(Object.entries(E2_SPELLING).map(([name, descriptor]) => [name, spells(descriptor)]));
     // Non-vacuity: the selector read a catalog holding at least one provider that is not rf, and excluded it.
     const catalogRead = native.length > 0 && descriptors.length > native.length;
     expect(catalogRead, `native descriptors ${descriptors.length}, rf ${native.length}`).toBe(true);
@@ -1135,7 +1327,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(injectedIds).toStrictEqual([PREVIEW_ID]);
     expect(reconcile).toStrictEqual([PREVIEW_ID]);
     expect(spelling, "a registered descriptor spelling an H2 receipt or rf priced field").toEqual([]);
-    return { catalogRead, native, injected: injectedIds, reconcile, spelling };
+    expect(selector, "each selector branch selects its planted descriptor alone; the neutral one is excluded").toStrictEqual({
+      reactivefiberId: ["reactivefiber.context.explain"], rfId: ["rf.render"], permissionOnly: ["workbench.fiber.preview2"], contractOnly: ["workbench.explain"], neutral: [],
+    });
+    expect(spelled, "each vocabulary's planted descriptor spells; the neutral one does not").toStrictEqual({ receiptId: true, pricedDescription: true, neutral: false });
+    return { catalogRead, native, injected: injectedIds, reconcile, spelling, controls: { selector, spelled } };
   },
   E3: async () => {
     const lexica = srcLexicon();
@@ -1143,40 +1339,64 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const identifiers = lexica.reduce((sum, lexicon) => sum + lexicon.identifiers.length, 0);
     const receipt = lexica.flatMap(lexicon => termHits(lexicon, RECEIPT).map(item => `${lexicon.file}: ${item.slice(0, 120)}`));
     const pricing = lexica.flatMap(lexicon => termHits(lexicon, PRICING).map(item => `${lexicon.file}: ${item.slice(0, 120)}`));
+    const usage = lexica.flatMap(lexicon => usageHits(lexicon).map(item => `${lexicon.file}: ${item.slice(0, 120)}`));
     const floors = { modules: lexica.length >= 100, literals: literals >= 5000, identifiers: identifiers >= 50000 };
     const anchors = {
       observer: anchorOf(lexica, "src/workbench/reactivefiber-observer.ts", ["formula_terms", "available_context_tokens", "necessity_eval_count"]),
       provider: anchorOf(lexica, "src/workbench/providers/reactivefiber.ts", ["formula_terms", "available_context_tokens"]),
       usage: anchorOf(lexica, "src/usage.ts", ["cacheRead", "cacheWrite", "getLifetimeTotal"]),
+      // R-HOST-USAGE's anchor (wb-66yx F3): the Claude host spells the SDK's camelCase modelUsage fields, and E3 reads 0 there.
+      claudeHost: anchorOf(lexica, "src/workbench/claude-host.ts", ["modelUsage", "inputTokens", "outputTokens", "cacheReadInputTokens", "cacheCreationInputTokens"]),
     };
     const unparsed = unparsedSrc();
     expect(floors, `src modules ${lexica.length}, literals ${literals}, identifiers ${identifiers}`).toStrictEqual({ modules: true, literals: true, identifiers: true });
-    expect(anchors).toStrictEqual({ observer: true, provider: true, usage: true });
+    expect(anchors).toStrictEqual({ observer: true, provider: true, usage: true, claudeHost: true });
     expect(unparsed, "a src file the lexical scan does not parse").toEqual([]);
     expect(receipt, "a src literal or identifier spelling an H2 receipt or count-kind label").toEqual([]);
     expect(pricing, "a src literal or identifier spelling an rf priced field or estimator").toEqual([]);
-    return { floors, anchors, unparsed, receipt, pricing };
+    expect(usage, "a src literal or identifier spelling a usage receipt's count key").toEqual([]);
+    return { floors, anchors, unparsed, receipt, pricing, usage };
   },
   E4: async () => {
     const flagged = Object.fromEntries(Object.entries(E4_FLAGGED).map(([name, text]) => [name, controlReading(text)]));
     const quiet = Object.fromEntries(Object.entries(E4_QUIET).map(([name, text]) => [name, controlReading(text)]));
     const residuals = Object.fromEntries(Object.entries(E4_RESIDUALS).map(([name, text]) => [name, controlReading(text)]));
-    const hits = (reading: JsonValue): number => Number(objectOf(reading, "reading").receipt) + Number(objectOf(reading, "reading").pricing);
+    const hits = (reading: JsonValue): number => {
+      const counts = objectOf(reading, "reading");
+      return Number(counts.receipt) + Number(counts.pricing) + Number(counts.usage);
+    };
     // Per term: how many flagged controls each vocabulary word reads on its own, so a word dropped from the detector reds here.
     const perTerm = Object.fromEntries([...RECEIPT_TERMS, ...PRICING_TERMS].map(term => {
       const pattern = termPattern([term]);
       return [term, Object.values(E4_FLAGGED).filter(text => termHits(lexiconOf("control.ts", text), pattern).length > 0).length];
     }));
     expect(Object.values(flagged).map(reading => hits(reading) > 0)).toEqual(Object.keys(E4_FLAGGED).map(() => true));
+    // wb-66yx F3: and how many each usage key reads on its own, so a key dropped from E3's reading reds here.
+    const perKey = Object.fromEntries(SNAKE_USAGE_KEYS.map(key => {
+      const pattern = new RegExp(`\\b${key}\\b`, "i");
+      return [key, Object.values(E4_FLAGGED).filter(text => usageHits(lexiconOf("control.ts", text), pattern).length > 0).length];
+    }));
     expect(Object.values(perTerm).map(count => count > 0), "every vocabulary word reads at least one flagged control").toEqual([...RECEIPT_TERMS, ...PRICING_TERMS].map(() => true));
+    expect(Object.values(perKey).map(count => count > 0), "every usage key reads at least one flagged control").toEqual(SNAKE_USAGE_KEYS.map(() => true));
     expect(Object.values(quiet).map(hits)).toEqual(Object.keys(E4_QUIET).map(() => 0));
     expect(Object.values(residuals).map(hits)).toEqual(Object.keys(E4_RESIDUALS).map(() => 0));
-    return { flagged, perTerm, quiet, residuals };
+    return { flagged, perTerm, perKey, quiet, residuals };
   },
 };
 
 describe("wb-4nut.7 H2 budget echo census (TSX-HARNESS2-REACTIVE-EVOLUTION-R7, gated on RC-H2-02, TSX-H2-04, RI-H2-01 and RI-H2-03, until-then leg)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the cases and the bead's own notes agree", () => {
+  afterAll(() => {
+    // wb-66yx F1, the afterAll close: the closing case, collected to run and not failed, ran to its end (a runtime skip or a guarded
+    // return there leaves CLOSED.closing unset). One collected skipped (a name-filtered run) is the judged set's to read, one that
+    // failed has reported itself, and a run that never reached the judged set holds no tree here.
+    const closing = registeredOf(CLOSED.tree ?? [], null).find(entry => entry.name === CLOSING_TITLE);
+    if (closing === undefined || CLOSED.closingCollected !== "run" || closing.state === "fail") return;
+    expect(closing.state === "pass" && CLOSED.closing, "the closing case ran to its end").toBe(true);
+  });
+
+  it("the judged set: the frozen shape, the out-of-file roster, the cases and the bead's own notes agree", ({ task }) => {
+    CLOSED.tree = task.file.tasks;
+    CLOSED.closingCollected = registeredOf(task.file.tasks, task).find(entry => entry.name === CLOSING_TITLE)?.mode;
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:2", "C:2", "D:2", "E:4"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
@@ -1209,6 +1429,16 @@ describe("wb-4nut.7 H2 budget echo census (TSX-HARNESS2-REACTIVE-EVOLUTION-R7, g
     expect(MEASURED.map(name => ENVELOPES[name].workspace?.root ?? null)).toEqual(MEASURED.map(() => FIXTURE_ROOT));
     expect(new Set(MEASURED.map(name => ENVELOPES[name].workspace?.id)).size).toBe(2);
     expect(new Set(MEASURED.map(name => ENVELOPES[name].operation_id)).size).toBe(4);
+    // wb-66yx F1: the collected task tree, read before any pin runs - every case of this file registered as the roster lists it, once
+    // each and in order, in run mode and not inverted, the closing case's own included, so a skip on it or its deletion reds here
+    // (and the afterAll close reads the closing case's collected mode kept above).
+    const collected = registeredOf(task.file.tasks, task);
+    const collectedTitles = collected.map(entry => entry.name);
+    expect(collectedTitles, "every collected test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(collectedTitles.filter((name, index) => collectedTitles.indexOf(name) !== index), "titles collected twice").toEqual([]);
+    expect(collected.findIndex(entry => entry.self), "this case finds itself by task identity, collected first").toBe(0);
+    expect(collected.filter(entry => entry.mode !== "run" || entry.fails).map(readEntry), "every case collected in run mode and not inverted").toEqual([]);
+    CLOSED.judged = true;
   });
 
   for (const row of ROWS) {
@@ -1219,27 +1449,31 @@ describe("wb-4nut.7 H2 budget echo census (TSX-HARNESS2-REACTIVE-EVOLUTION-R7, g
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          REACHED.set(pin, json(witness));
         });
       }
     });
   }
 
-  it("registration: every case of this file is registered once, in roster order, in run mode, and ran before this one", ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const walk = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") walk(child.tasks);
-      }
-    };
-    walk(task.file.tasks);
+  it("registration: every case of this file is registered once, in roster order, in run mode, and ran before this one, and every pin that passed reached its witness compare with the roster's witness", ({ task }) => {
+    const walked = registeredOf(task.file.tasks, task);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
-    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
-    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
-    expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(readEntry), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    // wb-66yx F1, the reached record: every pin that passed evaluated the roster's witness as its compare's expected value (COMPARED)
+    // and passed that compare (REACHED), once each and in roster order, and its recorded witness equals a fresh roster read; a pin
+    // that failed has reported itself. The judged set, if it passed, ran to its end.
+    const fresh = readRoster();
+    const passed = fresh.rows.flatMap(row => row.pins.map(pin => pin.id)).filter(pin => walked.some(entry => entry.name === pin && entry.state === "pass"));
+    expect(COMPARED.filter(pin => passed.includes(pin)), "the passing pins whose compare evaluated the roster's witness, in roster order, once each").toEqual(passed);
+    expect([...REACHED.keys()], "the pins that passed their witness compare, in roster order").toEqual(passed);
+    expect(Object.fromEntries(REACHED), "each reached pin's recorded witness against a fresh roster read").toStrictEqual(
+      Object.fromEntries(fresh.rows.flatMap(row => row.pins).filter(pin => passed.includes(pin.id)).map(pin => [pin.id, pin.witness])),
+    );
+    expect(walked[0]?.state !== "pass" || CLOSED.judged, "the judged set, passing, ran to its end").toBe(true);
+    CLOSED.closing = true;
   });
 });

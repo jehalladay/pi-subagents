@@ -32,7 +32,8 @@
  *    are refused with a typed CapabilityError, at the observer and through a stand-in rf at the native seam, which carries an
  *    open-object record verbatim and unread. B2 that path's one status-word reader (the observation rows of a render) reads
  *    the word UNKNOWN as it reads any other not-observed word: the projection of an UNKNOWN row is the projection of a control
- *    word's row with that word swapped in, and a row stating kind QueryView or query projects as the row without it.
+ *    word's row with that word swapped in, and a row stating kind QueryView or query projects as the row without it; the same
+ *    comparison over the observed word (a word rf reads as a value) does not hold, the divergence control (wb-blzr F6).
  *  C, acceptance (b). C1 no walked module but this file holds a mirror of either enum - a declaration (variable, type alias or
  *    enum) whose name, lower-cased without separators, ends with a MIRROR_SUFFIXES member, or an array literal or literal union
  *    holding a distinctive kind - and every mirror found must equal the producer's tuple verbatim: the judge's controls admit
@@ -56,26 +57,64 @@
  * 2026-10-23): at 76bbbffd9d4a419f972d6fefc8b7f9dc524df8df (that checkout's origin/main at its last fetch), src/resources/types.ts
  * (blob 47b41d82af9d) declares RESOURCE_KINDS at lines 40-47 and RESOURCE_ENTRY_STATUSES at line 75; the cited BEADS page (blob
  * 80427fdf9c89) holds the quoted acceptance on line 28; no tree entry is named API-PIN.md or harness2-api-pin; no src file
- * spells QueryView. Pi vendors none of these; a producer change is seen only when a cut re-measures the roster.
+ * spells QueryView. PRODUCER BYTES (wb-nbp3 F2): the roster vendors that types module verbatim (producer typesBase64, its bytes
+ * at the pin, base64 as the landed producer excerpts are, so no Pi text census reads the producer's prose or identifiers as Pi
+ * text); their git blob id must be typesBlob and must start with the blob the bead row's PRODUCER FACTS line measured
+ * ("types.ts blob 47b41d82af9d"), so the producer's resource exports (every name the module exports at its top level that
+ * spells Resource or RESOURCE, read by the TypeScript compiler, in file order) and its RESOURCE_KINDS and
+ * RESOURCE_ENTRY_STATUSES declarations (their lines and literals, which the owner's gating sentence states) are read from the
+ * producer's own bytes: the roster's export list must equal them and RESOURCE_VOCABULARY must match every one (the judged set
+ * and A1). The selection is anchored outside this file (wb-blzr F2): the exports PRODUCER_RESOURCE_NAME selects must be exactly
+ * the exports whose name spells, in any case, the stem of the producer module's directory as the bead row's gating sentence
+ * names it (src/resources, stem resource), so a filter narrowed here and in the roster reds the judged set. Pi vendors no other
+ * producer file; a producer change is seen only when a cut re-measures the roster.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every
- * pin's witness (each carries its pin id), the scan constants, the fixture records, the residual families and the registered
- * test titles are held to the out-of-file roster (test/fixtures/tsx-resource-closure-roster.json). OUTSIDE ANCHOR: the owner
+ * pin's witness (each carries its pin id), the scan constants, the fixture records, the residual families, the quiet rows and
+ * the firing controls, and the registered test titles are held to the out-of-file roster
+ * (test/fixtures/tsx-resource-closure-roster.json). OUTSIDE ANCHOR: the owner
  * filing's row in the tracked bead export (.beads/issues.jsonl, row wb-4nut.3): its acceptance clauses sit verbatim in exactly
  * one row label each and its trigger in row A's, every row carries one of them, its quote and citation equal the roster's, its
  * gating sentence names the API pin A3 reads absent and lists the six kinds and two statuses C2 holds, so a row or a tuple
- * member removed from every literal of this file and the roster still reds. Not claimed: a pin removed from ROWS, the literal,
- * IMPL and the roster together (the bead row anchors rows, clauses and tuples, not pins).
+ * member removed from every literal of this file and the roster still reds. PIN ANCHOR (wb-nbp3 F1): each pin quotes a slice
+ * of the owner text its row carries (PINS, held to the roster): the trigger as the title states it with its gate (A1-A3), or
+ * an acceptance clause after its "(x) " marker (B1-D2). Every quote sits in exactly one such unit, the unit belongs to the
+ * pin's row, and each unit's pins tile it in quote order with separator-only gaps (TILING_GAP), so a pin removed from ROWS,
+ * the literals, IMPL, PINS and the roster together leaves its slice of the owner text untiled and reds; the pin-to-unit
+ * placement is pinned as a literal.
+ * MEASUREMENT GUARD (wb-nbp3 F3): each pin's case runs under a guard that records the live sources it consults (SOURCES: the
+ * bead row, the module judge, the native seam, the observer, a planted tree, the vendored producer bytes, the repository
+ * walk) and every roster witness it reads; a case must consult exactly the sources PINS declares for it (at least one, wb-blzr
+ * F4) and read no roster witness, so a case that returns a copy of its own roster witness reds although the copy equals the
+ * roster's. Every pin's witness in the parsed roster is an accessor that records each read against the running case (wb-blzr
+ * F1), so a witness read inside a case through rosterWitness, a direct reach of ROSTER.rows, a re-parse by readRoster, a
+ * spread or a serialization of a pin is recorded alike (a read of the roster file's own bytes is R-REREAD below).
+ * FIRING CONTROLS (wb-blzr F5, held to the roster's guardControls): the judged set shows every arm of the guard and of the
+ * pin-anchor judges fire on a planted case or quote set: a witness read through rosterWitness and one read straight from
+ * ROSTER.rows, a declared source left unconsulted, an undeclared source consulted, two quotes exchanged between rows
+ * (misplaced) and a dropped pin of a multi-pin unit (A2) and of a single-pin unit (D2) (untiled).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run
  * mode, not inverted, ran; every pin's case reached its end (REACHED).
- * RESIDUALS (named families, each with a pinned quiet row in the controls): R-COMPOSED a vocabulary name, kind or specifier
- * assembled at runtime from a variable, a call or a join (A1 composedJoin, composedSpecifier; C1 composedMirror); R-ENCODED an
- * encoding the compiler does not decode, such as ROT13 (A1 rot13); R-GENERIC a mirror spelled with only the four generic kind
- * words under a name outside MIRROR_SUFFIXES (C1 genericMirror); R-DATA a kind list held as JSON or prose data, which no
- * module declares (C1 jsonData); R-OUTSIDE a reader below test/ or a skipped root, outside the judged roots (A1 testRoot,
- * distRoot; A2 testRoot; C1 distRoot); R-UNNAMED an H2 artifact read under a schema id or path the program has not named yet,
- * which H2_FAMILY cannot know (A2 unnamedArtifact).
+ * RESIDUALS (named families, each with a pinned quiet row, in a pin's controls or in the judged set): R-COMPOSED a vocabulary
+ * name, kind or specifier assembled at runtime from a variable, a call or a join (A1 composedJoin, composedSpecifier; C1
+ * composedMirror); R-ENCODED an encoding the compiler does not decode, such as ROT13 (A1 rot13); R-GENERIC a mirror spelled
+ * with only the four generic kind words under a name outside MIRROR_SUFFIXES (C1 genericMirror); R-DATA a kind list held as
+ * JSON or prose data, which no module declares (C1 jsonData); R-OUTSIDE a reader below test/ or a skipped root, outside the
+ * judged roots (A1 testRoot, distRoot; A2 testRoot; C1 distRoot); R-UNNAMED an H2 artifact read under a schema id or path the
+ * program has not named yet, which H2_FAMILY cannot know (A2 unnamedArtifact); R-RETILED a pin removed from every literal and
+ * the roster while a neighbouring pin's quote is widened over its slice, or while the gap rule is widened to any text in this
+ * file and the roster (TILING_GAP, scan.tilingGap: wb-blzr F3, the gap rule has no anchor outside them), keeps every unit tiled
+ * (the judged set's retiled and retiledGap readings); R-IDLE-READ a case that consults its declared sources and still returns a
+ * copy of its roster witness taken outside its run passes the guard (the judged set's idle-read reading, on A3); R-REREAD a
+ * case that reads its witness from the roster file's bytes itself (its own read and parse of ROSTER_FILE, never the parsed
+ * roster) passes the guard (the judged set's reread reading, on A3; wb-blzr F1); R-SOURCES a pin's declared sources narrowed
+ * in this file and the roster together, to a non-empty list its case then consults, keep the guard quiet: the declared lists
+ * have no anchor outside them (the judged set's narrowed reading, on A2; wb-blzr F4); R-UNDERIVED a case that consults its
+ * declared sources and returns a witness, or a field of one, that it did not derive from them (an inline literal or its roster
+ * constant) passes the guard, which judges consultation and roster reads, never derivation (the judged set's underived
+ * reading, on B2; wb-blzr F6).
  * Display paths added: none. Test-only: it spawns only the stand-in rf below makeScratch scratch and plants control files there.
  */
+import { createHash } from "node:crypto";
 import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -131,7 +170,13 @@ const CLOSED_CARRIERS = ["result.engine_metrics", "result.work"];
 const NEEDLES = ["UNKNOWN", "QueryView", "query"];
 /** The control status word B2 compares UNKNOWN with: not one of rf's statuses, a bounded token the note lists. */
 const CONTROL_WORD = "zz-control";
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ENCODED", "R-GENERIC", "R-DATA", "R-OUTSIDE", "R-UNNAMED"];
+const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ENCODED", "R-GENERIC", "R-DATA", "R-OUTSIDE", "R-UNNAMED", "R-RETILED", "R-IDLE-READ", "R-REREAD", "R-SOURCES", "R-UNDERIVED"];
+/** A name of the producer's types module that spells a resource: its resource exports, read from its bytes (wb-nbp3 F2). */
+const PRODUCER_RESOURCE_NAME = /Resource|RESOURCE/;
+/** What may sit before, between or after the quotes that tile a unit of the owner text: separators only (wb-nbp3 F1). */
+const TILING_GAP = /^[\s,;:]*$/;
+/** The live sources a pin's case can consult; each records itself when a running case consults it (wb-nbp3 F3). */
+const SOURCES = ["bead", "module", "native", "observer", "plant", "producer", "tree"];
 
 interface Row {
   readonly id: string;
@@ -167,8 +212,24 @@ const ROWS: readonly Row[] = [
   },
 ];
 
+/** wb-nbp3: each pin's slice of the owner text its row carries (F1, the pin anchor) and the live sources its case measures (F3,
+ * the measurement guard), in row order; held to the roster. */
+const PINS: Readonly<Record<string, { readonly quote: string; readonly sources: readonly string[] }>> = {
+  A1: { quote: "If Pi ever reads TSX-SDK resource records", sources: ["module", "plant", "producer", "tree"] },
+  A2: { quote: "or an H2 versioned artifact", sources: ["module", "plant", "tree"] },
+  A3: { quote: "(gated TSX-H2-00 API pin rftsx-auqdi, API-PIN.md and its audit test ABSENT at the pin; RI/RC/FO/TSX H2 schemas unshipped)", sources: ["bead"] },
+  B1: { quote: "a Pi reader fed status 'UNKNOWN' or kind 'query'/'QueryView' refuses or reads not-observed", sources: ["native", "observer"] },
+  B2: { quote: "never mapping either to a Pi status word", sources: ["observer"] },
+  C1: { quote: "any Pi enum mirror equals exactly the six kinds and two statuses at the pinned sha", sources: ["module", "plant", "tree"] },
+  C2: { quote: "a seventh kind in a fixture is rejected", sources: ["bead"] },
+  D1: { quote: "a major version above Pi's pin yields a typed refusal and no parse of the body", sources: ["native", "observer"] },
+  D2: { quote: "an artifact with no version keeps the version absent in every Pi field (no default)", sources: ["native", "observer"] },
+};
+
 interface RosterPin {
   readonly id: string;
+  readonly quote: string;
+  readonly sources: readonly string[];
   readonly witness: JsonValue;
 }
 interface RosterRow {
@@ -185,6 +246,7 @@ interface Producer {
   readonly repo: string;
   readonly sha: string;
   readonly typesBlob: string;
+  readonly typesBase64: string;
   readonly citedBlob: string;
   readonly kinds: Tuple;
   readonly statuses: Tuple;
@@ -204,6 +266,8 @@ interface Roster {
   readonly producer: Producer;
   readonly fixtures: readonly Fixture[];
   readonly residuals: readonly string[];
+  readonly quietRows: JsonObject;
+  readonly guardControls: JsonObject;
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
 }
@@ -227,6 +291,16 @@ function tupleOf(value: unknown, field: string): Tuple {
   return { file: text(value.file, `${field}.file`), lines: text(value.lines, `${field}.lines`), values: strings(value.values, `${field}.values`) };
 }
 
+/** wb-nbp3 F3, the measurement guard: the pin whose case is running, the live sources each case consulted (SOURCES) and the
+ * roster witnesses each case read. */
+let running: string | undefined;
+const consulted = new Map<string, Set<string>>();
+const witnessReads = new Map<string, string[]>();
+/** wb-blzr F1: a roster witness was read; while a case runs the read is recorded against it, whatever path reached the witness. */
+function witnessRead(pin: string): void {
+  if (running !== undefined) witnessReads.get(running)?.push(pin);
+}
+
 /** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
 function readRoster(): Roster {
   const raw: unknown = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8"));
@@ -237,7 +311,18 @@ function readRoster(): Roster {
     if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) throw new Error(`roster rows[${index}] needs an id, a label and pins`);
     const pins = row.pins.map((pin: unknown, at: number): RosterPin => {
       if (!isObject(pin) || typeof pin.id !== "string" || !Object.hasOwn(pin, "witness")) throw new Error(`roster rows[${index}].pins[${at}] needs an id and a witness`);
-      return { id: pin.id, witness: json(pin.witness) };
+      const id = pin.id;
+      const witness = json(pin.witness);
+      // wb-blzr F1: the witness is reachable only through this accessor, so every read of it inside a case records itself.
+      return {
+        id,
+        quote: text(pin.quote, `rows[${index}].pins[${at}].quote`),
+        sources: strings(pin.sources, `rows[${index}].pins[${at}].sources`),
+        get witness(): JsonValue {
+          witnessRead(id);
+          return witness;
+        },
+      };
     });
     return { id: row.id, label: row.label, pins };
   });
@@ -250,6 +335,10 @@ function readRoster(): Roster {
   if (!isObject(apiPin)) throw new Error("roster producer.apiPin must be an object");
   const scan = json(raw.scan);
   if (!isObject(scan)) throw new Error("roster scan must be an object");
+  const quietRows = json(raw.quietRows);
+  if (!isObject(quietRows)) throw new Error("roster quietRows must be an object");
+  const guardControls = json(raw.guardControls);
+  if (!isObject(guardControls)) throw new Error("roster guardControls must be an object");
   return {
     bead: text(raw.bead, "bead"),
     quote: text(raw.quote, "quote"),
@@ -259,6 +348,7 @@ function readRoster(): Roster {
       repo: text(producer.repo, "producer.repo"),
       sha: text(producer.sha, "producer.sha"),
       typesBlob: text(producer.typesBlob, "producer.typesBlob"),
+      typesBase64: text(producer.typesBase64, "producer.typesBase64"),
       citedBlob: text(producer.citedBlob, "producer.citedBlob"),
       kinds: tupleOf(producer.kinds, "producer.kinds"),
       statuses: tupleOf(producer.statuses, "producer.statuses"),
@@ -268,6 +358,8 @@ function readRoster(): Roster {
     },
     fixtures,
     residuals: strings(raw.residuals, "residuals"),
+    quietRows: quietRows as JsonObject,
+    guardControls: guardControls as JsonObject,
     rows,
     tests: strings(raw.tests, "tests"),
   };
@@ -275,6 +367,39 @@ function readRoster(): Roster {
 
 const ROSTER = readRoster();
 
+/** A live source (one of SOURCES) records that the running case consulted it. */
+function consult(source: string): void {
+  if (!SOURCES.includes(source)) throw new Error(`no live source ${source}`);
+  if (running !== undefined) consulted.get(running)?.add(source);
+}
+interface Guarded {
+  readonly witness: JsonValue;
+  readonly consulted: readonly string[];
+  readonly witnessReads: readonly string[];
+}
+/** Runs `pin`'s case under the guard: what it returned, the sources it consulted (sorted) and the roster witnesses it read. */
+async function guarded(pin: string, run: () => JsonValue | Promise<JsonValue>): Promise<Guarded> {
+  running = pin;
+  consulted.set(pin, new Set());
+  witnessReads.set(pin, []);
+  try {
+    const witness = await run();
+    return { witness, consulted: [...(consulted.get(pin) ?? [])].sort(), witnessReads: [...(witnessReads.get(pin) ?? [])] };
+  } finally {
+    running = undefined;
+  }
+}
+/** What the guard refuses in one run of `pin`'s case: a declared source it never consulted, a source it consulted undeclared,
+ * a roster witness it read. */
+function guardMisses(pin: string, run: Guarded, declared: readonly string[] = PINS[pin]?.sources ?? []): string[] {
+  return [
+    ...declared.filter(source => !run.consulted.includes(source)).map(source => `unconsulted: ${source}`),
+    ...run.consulted.filter(source => !declared.includes(source)).map(source => `undeclared: ${source}`),
+    ...run.witnessReads.map(read => `witness read: ${read}`),
+  ];
+}
+
+/** A pin's roster witness, read through the parsed roster: the witness's accessor records the read (wb-blzr F1). */
 function rosterWitness(pin: string): JsonValue {
   const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
@@ -292,6 +417,7 @@ interface BeadRow {
 }
 /** The owner filing's row in the tracked bead export, found by id on a line that parses. */
 function readBeadRow(): BeadRow {
+  consult("bead");
   for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
     if (!line.includes(BEAD)) continue;
     const row: unknown = JSON.parse(line);
@@ -323,6 +449,87 @@ function gatingTuples(notes: string): { kindsLines: string; kinds: string[]; sta
     statusesLines: found[3] ?? "",
     statuses: (found[4] ?? "").split(",").map(value => value.replace(/^'|'$/g, "")),
   };
+}
+
+/** The vendored producer types module (wb-nbp3 F2): its git blob id, the names it exports at its top level that spell a
+ * resource (in file order), and the line range and literals of each exported array declaration. */
+interface ProducerTypes {
+  readonly blob: string;
+  readonly exports: readonly string[];
+  readonly resourceExports: readonly string[];
+  readonly arrays: ReadonlyMap<string, { readonly lines: string; readonly values: readonly string[] | null }>;
+}
+/** Reads a types module's bytes with the TypeScript compiler; git's blob id is sha1 over "blob <size>", a NUL and the bytes. */
+function readProducerTypes(bytes: Buffer): ProducerTypes {
+  const text = bytes.toString("utf8");
+  const blob = createHash("sha1").update(`blob ${bytes.length}\u0000`).update(bytes).digest("hex");
+  const file = ts.createSourceFile(ROSTER.producer.kinds.file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const lineOf = (position: number): number => file.getLineAndCharacterOfPosition(position).line + 1;
+  const exported: string[] = [];
+  const arrays = new Map<string, { readonly lines: string; readonly values: readonly string[] | null }>();
+  for (const statement of file.statements) {
+    if (ts.isExportDeclaration(statement) && statement.exportClause !== undefined && ts.isNamedExports(statement.exportClause)) {
+      exported.push(...statement.exportClause.elements.map(element => element.name.text));
+      continue;
+    }
+    if (!ts.canHaveModifiers(statement) || !(ts.getModifiers(statement) ?? []).some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword)) continue;
+    if (ts.isVariableStatement(statement)) {
+      for (const declaration of statement.declarationList.declarations) {
+        if (!ts.isIdentifier(declaration.name)) continue;
+        exported.push(declaration.name.text);
+        const value = declaration.initializer === undefined ? undefined : unwrap(declaration.initializer);
+        if (value === undefined || !ts.isArrayLiteralExpression(value)) continue;
+        const [start, end] = [lineOf(statement.getStart(file)), lineOf(statement.getEnd())];
+        arrays.set(declaration.name.text, { lines: start === end ? `${start}` : `${start}-${end}`, values: arrayValues(value) });
+      }
+    } else if (
+      (ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement) || ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isEnumDeclaration(statement)) &&
+      statement.name !== undefined
+    ) {
+      exported.push(statement.name.text);
+    }
+  }
+  return { blob, exports: exported, resourceExports: exported.filter(name => PRODUCER_RESOURCE_NAME.test(name)), arrays };
+}
+/** wb-blzr F2: the producer module's directory as the bead row's gating sentence names it ("at the pin src/resources/types.ts:"),
+ * lower-cased and singular - the stem every resource export of that module spells. */
+function resourceStemOf(notes: string): string {
+  const path = /\bat the pin (\S+?)\/[^/\s]+\.ts:\d/.exec(noteLine(notes, "Gating artifact: "))?.[1] ?? "";
+  const directory = path.slice(path.lastIndexOf("/") + 1).toLowerCase();
+  return directory.endsWith("s") ? directory.slice(0, -1) : directory;
+}
+let producerReading: ProducerTypes | undefined;
+/** The roster's vendored producer bytes (typesBase64, decoded), read once; a live source of the cases that read it. */
+function producerTypes(): ProducerTypes {
+  consult("producer");
+  producerReading ??= readProducerTypes(Buffer.from(ROSTER.producer.typesBase64, "base64"));
+  return producerReading;
+}
+
+/** A unit of the owner text the pins tile (wb-nbp3 F1): `key` sits in exactly one row label, `body` is what its pins tile. */
+interface Unit {
+  readonly id: string;
+  readonly key: string;
+  readonly body: string;
+}
+/** The trigger as the title states it with its gate (its gate-less form is the one row A's label carries) and each acceptance
+ * clause after its "(x) " marker (the whole clause is what its row's label carries). */
+function ownerUnits(bead: BeadRow): Unit[] {
+  const trigger = /^\[[^\]]+\] (If Pi ever .+?) \(gated /.exec(bead.title)?.[1] ?? "";
+  const gated = /^\[[^\]]+\] (If Pi ever .+? \(gated [^)]*\))/.exec(bead.title)?.[1] ?? "";
+  const clauses = acceptanceClauses(bead.notes).map(clause => ({ id: clause.slice(0, 3), key: clause, body: clause.slice(4) }));
+  return [{ id: "trigger", key: trigger, body: gated }, ...clauses];
+}
+const quoteIn = (unit: Unit, quote: string | undefined): boolean => quote !== undefined && quote.length > 0 && unit.body.includes(quote);
+/** Do `quotes`, taken in the order they occur in `body`, cover it with `gap`-only gaps (separators) and no overlap? */
+function tiled(body: string, quotes: readonly string[], gap: RegExp = TILING_GAP): boolean {
+  const spans = quotes.map(quote => ({ start: body.indexOf(quote), end: body.indexOf(quote) + quote.length })).sort((left, right) => left.start - right.start);
+  let at = 0;
+  for (const span of spans) {
+    if (span.start < at || !gap.test(body.slice(at, span.start))) return false;
+    at = span.end;
+  }
+  return spans.length > 0 && gap.test(body.slice(at));
 }
 
 const posix = (path: string): string => path.split(sep).join("/");
@@ -458,6 +665,7 @@ interface ModuleReading {
  * folded literals (A1, A2), its module specifiers and the literal first argument of every call or new expression with the SDK
  * loads among them (A1), and its enum mirrors (C1). Comments are never read: a comment is no reader. */
 function readModule(path: string, source: string): ModuleReading {
+  consult("module");
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const vocabulary: string[] = [];
   const kindLiterals: string[] = [];
@@ -601,6 +809,7 @@ function readTree(root: string): TreeReading {
 let live: TreeReading | undefined;
 /** The repository's own reading, taken once. */
 function liveTree(): TreeReading {
+  consult("tree");
   live ??= readTree(REPO);
   return live;
 }
@@ -608,6 +817,7 @@ const modulesBelow = (tree: TreeReading, root: string): number => [...tree.modul
 
 /** Plants `files` in a fresh scratch root and reads that tree. */
 function plantedTree(files: Readonly<Record<string, string>>): TreeReading {
+  consult("plant");
   const root = makeScratch("tsx-resource-closure-");
   try {
     for (const [path, content] of Object.entries(files)) {
@@ -663,6 +873,7 @@ function refusalOf(error: unknown): string {
 }
 /** The observer's projection of one reading, as plain JSON, or its typed refusal. */
 function projected(reading: JsonValue): { topology?: JsonValue; refusal?: string } {
+  consult("observer");
   try {
     return { topology: json(reactivefiberTopology(reading, CONTEXT)) };
   } catch (error) {
@@ -688,6 +899,7 @@ function shapeOf(topology: JsonValue | undefined): JsonValue {
 /** One native render through a stand-in rf: the only PATH entry, a script of this run's node that prints `source` and exits 0,
  * so the provider's own envelope checks decide; the reading it returns, or its typed refusal. */
 async function natively(source: JsonValue): Promise<{ reading?: JsonValue; refusal?: string }> {
+  consult("native");
   const dir = makeScratch("tsx-resource-closure-rf-");
   const before = process.env.PATH;
   try {
@@ -768,7 +980,9 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       specifier: anchor?.specifiers.includes(ANCHORS.specifier) === true,
     };
     // The vocabulary is the producer's own: every resource name its types module exports matches, the TSX counter name never.
-    const vocabularyCovers = ROSTER.producer.resourceExports.length > 0 && ROSTER.producer.resourceExports.every(name => RESOURCE_VOCABULARY.test(name));
+    // wb-nbp3 F2: the export list is the one the vendored producer bytes declare, not a list the roster states.
+    const { resourceExports } = producerTypes();
+    const vocabularyCovers = resourceExports.length > 0 && resourceExports.every(name => RESOURCE_VOCABULARY.test(name));
     expect(floorsMet, `files ${tree.walk.files.length}; modules src ${modulesBelow(tree, "src")}, test ${modulesBelow(tree, "test")}, qa ${modulesBelow(tree, "qa")}, examples ${modulesBelow(tree, "examples")}`).toBe(true);
     expect(anchors, `the readers read ${ANCHOR_MODULE}'s identifier, literal and specifier`).toStrictEqual({ identifier: true, literal: true, specifier: true });
     expect(vocabularyCovers, "RESOURCE_VOCABULARY matches every resource name the producer exports at the pin").toBe(true);
@@ -904,15 +1118,25 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const observed = shapeFor([observationRow("observed")]);
     const unknown = shapeFor([observationRow("UNKNOWN")]);
     const control = fullFor([observationRow(CONTROL_WORD)]);
+    // A word's row against the control word's (wb-blzr F6: one comparison, run on UNKNOWN and on the divergence control): does it
+    // project as the control's row with the word swapped in, and does the control's projection spell the word itself?
+    const swapOf = (word: string): { readonly swapEqual: boolean; readonly spelled: boolean } => ({
+      swapEqual: fullFor([observationRow(word)]).split(word).join(CONTROL_WORD) === control,
+      spelled: control.includes(word),
+    });
     // UNKNOWN reads as the control word does: the two projections differ only by the word the note lists.
-    const generic = fullFor([observationRow("UNKNOWN")]).split("UNKNOWN").join(CONTROL_WORD) === control && !control.includes("UNKNOWN");
+    const unknownSwap = swapOf("UNKNOWN");
+    const generic = unknownSwap.swapEqual && !unknownSwap.spelled;
+    // wb-blzr F6, the divergence control: an observed word (rf reads "observed" as a value) does not read as the control word.
+    const divergent = swapOf("observed");
     const kindUnread = {
       observedQueryView: fullFor([observationRow("observed", { kind: "QueryView" })]) === fullFor([observationRow("observed")]),
       unknownQuery: fullFor([observationRow("UNKNOWN", { kind: "query" })]) === fullFor([observationRow("UNKNOWN")]),
     };
     expect(generic, "the UNKNOWN row projects as the control word's row with the word swapped in").toBe(true);
+    expect(divergent.swapEqual, "an observed word's row does not project as the control word's row").toBe(false);
     expect(kindUnread, "a row's kind is never read").toStrictEqual({ observedQueryView: true, unknownQuery: true });
-    return done("B2", { observed, unknown, generic, kindUnread });
+    return done("B2", { observed, unknown, generic, kindUnread, divergent });
   },
   C1: () => {
     const tree = liveTree();
@@ -1051,10 +1275,21 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
 const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
 describe("wb-4nut.3 TSX resource-record closure census (TSX-HARNESS2-REACTIVE-EVOLUTION-R3, absent-today leg and armed guard)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, () => {
+  it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, async () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:2", "C:2", "D:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+    expect(Object.keys(PINS), "every pin, and only a pin, carries a quote and its sources, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    expect(Object.fromEntries(ROSTER.rows.flatMap(row => row.pins).map(pin => [pin.id, { quote: pin.quote, sources: [...pin.sources] }]))).toStrictEqual(
+      Object.fromEntries(Object.entries(PINS).map(([pin, entry]) => [pin, { quote: entry.quote, sources: [...entry.sources] }])),
+    );
+    // wb-blzr F4, the floor: every pin's case measures at least one live source.
+    expect(
+      Object.entries(PINS)
+        .filter(([, entry]) => entry.sources.length === 0)
+        .map(([pin]) => pin),
+      "every pin declares at least one live source",
+    ).toEqual([]);
     expect({
       bead: BEAD,
       scan: {
@@ -1079,6 +1314,9 @@ describe("wb-4nut.3 TSX resource-record closure census (TSX-HARNESS2-REACTIVE-EV
         controlWord: CONTROL_WORD,
         outOfClosure: OUT_OF_CLOSURE,
         inClosure: IN_CLOSURE,
+        producerResourceName: `${PRODUCER_RESOURCE_NAME.source}/${PRODUCER_RESOURCE_NAME.flags}`,
+        tilingGap: `${TILING_GAP.source}/${TILING_GAP.flags}`,
+        sources: SOURCES,
       },
       residuals: RESIDUAL_FAMILIES,
       fixtures: [...OUT_OF_CLOSURE, ...IN_CLOSURE],
@@ -1097,6 +1335,130 @@ describe("wb-4nut.3 TSX resource-record closure census (TSX-HARNESS2-REACTIVE-EV
     expect({ quote: quote?.[1], citation: quote?.[2] }).toStrictEqual({ quote: ROSTER.quote, citation: ROSTER.citation });
     expect(bead.title.endsWith(ROSTER.citation), "the title cites the roster's citation").toBe(true);
     expect(ROSTER.citation.endsWith(`@${ROSTER.producer.sha.slice(0, 12)}`), "the citation pins the producer sha the roster measured").toBe(true);
+    // wb-nbp3 F1, the pin anchor: every pin's quote sits in exactly one unit of the owner text, the unit is its row's, and each
+    // unit's pins tile it, so a pin removed from every literal of this file and the roster leaves its slice of a unit untiled.
+    const units = ownerUnits(bead);
+    const pinIds = ROWS.flatMap(row => row.pins);
+    const homes = (pin: string): Unit[] => units.filter(unit => quoteIn(unit, PINS[pin]?.quote));
+    const ownerOf = (unit: Unit): string | undefined => {
+      const owners = ROWS.filter(row => unit.key.length > 0 && row.label.includes(unit.key));
+      return owners.length === 1 ? owners[0]?.id : undefined;
+    };
+    expect(units.map(unit => unit.id), "the owner text's units: the gated trigger and the four acceptance clauses").toEqual(["trigger", "(a)", "(b)", "(c)", "(d)"]);
+    expect(
+      pinIds.map(pin => `${pin}:${homes(pin).map(unit => unit.id).join("+")}`),
+      "each pin's quote sits in exactly one unit of the owner text",
+    ).toEqual(["A1:trigger", "A2:trigger", "A3:trigger", "B1:(a)", "B2:(a)", "C1:(b)", "C2:(b)", "D1:(c)", "D2:(d)"]);
+    // The placement and tiling judges run over a quote set, so the firing controls below run the very judges (wb-blzr F5).
+    const quoteOf = (pin: string): string => PINS[pin]?.quote ?? "";
+    const misplacedIn = (quotes: Readonly<Record<string, string>>): string[] =>
+      Object.keys(quotes).filter(pin => units.some(unit => quoteIn(unit, quotes[pin]) && ownerOf(unit) !== ROWS.find(row => row.pins.includes(pin))?.id));
+    const untiledIn = (quotes: readonly string[], gap?: RegExp): string[] => units.filter(unit => !tiled(unit.body, quotes.filter(quote => quoteIn(unit, quote)), gap)).map(unit => unit.id);
+    const misplaced = misplacedIn(Object.fromEntries(pinIds.map(pin => [pin, quoteOf(pin)])));
+    const untiled = untiledIn(pinIds.map(quoteOf));
+    expect({ misplaced, untiled }, "every unit is its row's and its pins tile it with separator-only gaps").toStrictEqual({ misplaced: [], untiled: [] });
+    // wb-blzr F5, the firing controls: each arm of the guard and of the pin-anchor judges fires on a planted case or quote set.
+    const exchanged = Object.fromEntries(pinIds.map(pin => [pin, quoteOf(pin === "B2" ? "C2" : pin === "C2" ? "B2" : pin)]));
+    const firing = {
+      witnessRead: guardMisses(
+        "A3",
+        await guarded("A3", () => {
+          readBeadRow();
+          return rosterWitness("A3");
+        }),
+      ),
+      directRead: guardMisses(
+        "A3",
+        await guarded("A3", () => {
+          readBeadRow();
+          return ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === "A3")?.witness ?? null;
+        }),
+      ),
+      unconsulted: guardMisses("A3", await guarded("A3", () => null)),
+      undeclared: guardMisses(
+        "A3",
+        await guarded("A3", () => {
+          readBeadRow();
+          producerTypes();
+          return null;
+        }),
+      ),
+      misplaced: misplacedIn(exchanged),
+      untiled: untiledIn(pinIds.filter(pin => pin !== "A2" && pin !== "D2").map(quoteOf)),
+    };
+    expect(firing, "every arm of the guard and of the pin-anchor judges fires on its planted case").toStrictEqual(ROSTER.guardControls);
+    // wb-nbp3 F2, the producer anchor: the vendored types module is the blob the bead row's PRODUCER FACTS line measured, it
+    // declares the gating sentence's tuples on the lines that sentence names, and its resource exports are the roster's list,
+    // each one matched by RESOURCE_VOCABULARY.
+    const types = producerTypes();
+    const measured = /\btypes\.ts blob ([0-9a-f]{12}) /.exec(noteLine(bead.notes, "PRODUCER FACTS "))?.[1] ?? "";
+    const gating = gatingTuples(bead.notes);
+    expect(
+      {
+        blob: types.blob,
+        measured: measured.length === 12 && types.blob.startsWith(measured),
+        kinds: types.arrays.get("RESOURCE_KINDS") ?? null,
+        statuses: types.arrays.get("RESOURCE_ENTRY_STATUSES") ?? null,
+        resourceExports: [...types.resourceExports],
+        unmatched: types.resourceExports.filter(name => !RESOURCE_VOCABULARY.test(name)),
+      },
+      "the vendored producer bytes are the measured blob, declare the gating tuples and export the roster's resource names",
+    ).toStrictEqual({
+      blob: ROSTER.producer.typesBlob,
+      measured: true,
+      kinds: { lines: gating.kindsLines, values: gating.kinds },
+      statuses: { lines: gating.statusesLines, values: gating.statuses },
+      resourceExports: [...ROSTER.producer.resourceExports],
+      unmatched: [],
+    });
+    // wb-blzr F2, the selection's outside anchor: the filter selects exactly the exports of the vendored bytes whose name spells
+    // the producer module's directory stem (read from the bead row's gating sentence) in any case.
+    const stem = resourceStemOf(bead.notes);
+    expect(
+      { stem, selected: types.exports.filter(name => name.toLowerCase().includes(stem)) },
+      "PRODUCER_RESOURCE_NAME selects exactly the producer exports that spell its module's directory stem",
+    ).toStrictEqual({ stem: "resource", selected: [...types.resourceExports] });
+    // The quiet rows. R-RETILED: B2 dropped while B1's quote is widened over B2's slice - every unit still tiles.
+    const widened = pinIds.filter(pin => pin !== "B2").map(pin => (pin === "B1" ? `${PINS.B1?.quote}, ${PINS.B2?.quote}` : (PINS[pin]?.quote ?? "")));
+    const retiled = units.filter(unit => !tiled(unit.body, widened.filter(quote => quoteIn(unit, quote)))).map(unit => unit.id);
+    // wb-blzr F3, R-RETILED widened: A2 dropped while the gap rule is widened to any text - every unit still tiles.
+    const anyGap = /^[\s\S]*$/;
+    const gapRetiled = untiledIn(pinIds.filter(pin => pin !== "A2").map(quoteOf), anyGap);
+    // R-IDLE-READ: a case that consults A3's declared source and returns a copy of A3's roster witness taken before its run.
+    const copy = rosterWitness("A3");
+    const idle = await guarded("A3", () => {
+      readBeadRow();
+      return copy;
+    });
+    // wb-blzr F1, R-REREAD: a case that consults A3's declared source and returns A3's witness from the roster file's own bytes.
+    const reread = await guarded("A3", () => {
+      readBeadRow();
+      const raw: unknown = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8"));
+      const rows = isObject(raw) && Array.isArray(raw.rows) ? raw.rows : [];
+      const found: unknown = rows.flatMap((row: unknown) => (isObject(row) && Array.isArray(row.pins) ? row.pins : [])).find((pin: unknown) => isObject(pin) && pin.id === "A3");
+      return isObject(found) ? json(found.witness) : null;
+    });
+    // wb-blzr F4, R-SOURCES: A2's declared sources narrowed to the bead row, its case consulting the bead row alone.
+    const narrowed = await guarded("A2", () => {
+      readBeadRow();
+      return null;
+    });
+    // wb-blzr F6, R-UNDERIVED: B2's case consults the observer and states its generic reading as a constant.
+    const underived = await guarded("B2", () => {
+      projected(readingOf(cleanRender()));
+      return { generic: true };
+    });
+    expect(
+      {
+        retiled: { dropped: "B2", widened: "B1", untiled: retiled },
+        idleRead: { pin: "A3", misses: guardMisses("A3", idle), copied: JSON.stringify(idle.witness) === JSON.stringify(copy) },
+        retiledGap: { dropped: "A2", gap: `${anyGap.source}/${anyGap.flags}`, untiled: gapRetiled },
+        reread: { pin: "A3", misses: guardMisses("A3", reread), copied: JSON.stringify(reread.witness) === JSON.stringify(copy) },
+        narrowed: { pin: "A2", declared: ["bead"], misses: guardMisses("A2", narrowed, ["bead"]) },
+        underived: { pin: "B2", misses: guardMisses("B2", underived), witness: underived.witness },
+      },
+      "the quiet rows of R-RETILED, R-IDLE-READ, R-REREAD, R-SOURCES and R-UNDERIVED",
+    ).toStrictEqual(ROSTER.quietRows);
   });
 
   for (const row of ROWS) {
@@ -1105,8 +1467,10 @@ describe("wb-4nut.3 TSX resource-record closure census (TSX-HARNESS2-REACTIVE-EV
         it(pin, { timeout: 180_000 }, async () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
-          const witness = impl === undefined ? null : await impl();
-          expect(witness).toStrictEqual(rosterWitness(pin));
+          const run = impl === undefined ? undefined : await guarded(pin, impl);
+          expect(run?.witness ?? null).toStrictEqual(rosterWitness(pin));
+          // wb-nbp3 F3: the case measured exactly its declared live sources and read no roster witness.
+          expect(run === undefined ? ["no run"] : guardMisses(pin, run), `${pin}'s case measures its declared sources and copies no roster witness`).toEqual([]);
         });
       }
     });
