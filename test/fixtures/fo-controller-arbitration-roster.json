@@ -451,6 +451,7 @@
               "links": [
                 "examples",
                 "src/zz-link.ts",
+                "src/zz-linked-dir",
                 "zz-root-link.mjs"
               ]
             },
@@ -537,7 +538,8 @@
               "not-data:requested_range": "not-data:requested_range",
               "not-data:observed_versions": "not-data:observed_versions",
               "not-data:min_interval": "not-data:min_interval",
-              "not-data:actuator_id": "not-data:actuator_id"
+              "not-data:actuator_id": "not-data:actuator_id",
+              "not-data:controller_id": "not-data:controller_id"
             },
             "hosts": {
               "honest": [],
@@ -555,7 +557,8 @@
                 "malformed-applied:not-data:requested_range",
                 "malformed-applied:not-data:observed_versions",
                 "malformed-applied:not-data:min_interval",
-                "malformed-applied:not-data:actuator_id"
+                "malformed-applied:not-data:actuator_id",
+                "malformed-applied:not-data:controller_id"
               ],
               "lax-timer": [
                 "malformed-applied:missing:controller_id",
@@ -571,7 +574,25 @@
                 "malformed-applied:not-data:requested_range",
                 "malformed-applied:not-data:observed_versions",
                 "malformed-applied:not-data:min_interval",
-                "malformed-applied:not-data:actuator_id"
+                "malformed-applied:not-data:actuator_id",
+                "malformed-applied:not-data:controller_id"
+              ],
+              "lax-arbiter-timer": [
+                "malformed-applied:missing:controller_id",
+                "malformed-applied:missing:observed_versions",
+                "malformed-applied:missing:state_epoch",
+                "malformed-applied:missing:actuator_id",
+                "malformed-applied:missing:requested_range",
+                "malformed-applied:missing:reason",
+                "malformed-applied:missing:min_interval",
+                "malformed-applied:extra:apply",
+                "malformed-applied:not-data:reason",
+                "malformed-applied:not-data:state_epoch",
+                "malformed-applied:not-data:requested_range",
+                "malformed-applied:not-data:observed_versions",
+                "malformed-applied:not-data:min_interval",
+                "malformed-applied:not-data:actuator_id",
+                "malformed-applied:not-data:controller_id"
               ]
             }
           }
@@ -606,6 +627,9 @@
               "silent-apply": [
                 "arbiter-applied-nothing"
               ],
+              "misnamed-apply": [
+                "arbiter-applied-nothing"
+              ],
               "refused-apply": [
                 "arbiter-applied-nothing"
               ]
@@ -615,8 +639,8 @@
               "appliesAfterTheTimer": 2,
               "malformed": {
                 "violations": [],
-                "freshHosts": 14,
-                "movedAfterTheTimers": 14
+                "freshHosts": 15,
+                "movedAfterTheTimers": 15
               }
             }
           }
