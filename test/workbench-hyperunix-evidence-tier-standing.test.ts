@@ -42,14 +42,24 @@
  *      once in protocol/decoder.js, at its declaration, and once in index.js, in its re-export, and nowhere else; its 3
  *      EMPTY_BODY_KINDS and its EVIDENCE_STATUSES. No declared name (a kind, a key or a status) holds a tier, and that reading fires
  *      on a copy of the tables holding a tier name in each of those five places. THE SAME VIEW (wb-b9ot): the package the cases
- *      read is the one this file executes, the repository's installed copy. SDK_DIST, the dist/ directory this file's own import
- *      of '@hyperunix/sdk' resolves to (import.meta.resolve: Node's resolution from test/, where a git-ignored test/node_modules
- *      copy would resolve first), is SDK_INSTALLED (../node_modules/@hyperunix/sdk/dist/), compared by real path; each of the
- *      five functions this file imports from the package (decodeResultStream, assembleQueryResult, evidenceOf, resultFromJson and
- *      resultToJson, which with ProtocolError are every value its own import declaration names, read with the TypeScript parser)
- *      raises, called on null, from its own frame in SDK_DIST's result.js; and a decoder refusal is this file's
- *      ProtocolError raised from StreamChecker.fail in SDK_DIST's protocol/decoder.js (a test-config alias, which Node's
- *      resolution does not see, raises from the aliased copy's modules). THE BYTES: the installed package's package.json and
+ *      read is the one this file and the provider execute, the repository's installed copy, on exactly these four pinned routes.
+ *      (1) SDK_DIST, the dist/ directory this file's own import of '@hyperunix/sdk' resolves to (import.meta.resolve: Node's
+ *      resolution from test/, where a git-ignored test/node_modules copy would resolve first), is SDK_INSTALLED
+ *      (../node_modules/@hyperunix/sdk/dist/), compared by real path. (2) Each value this file's import declaration names (read with
+ *      the TypeScript parser: decodeResultStream, assembleQueryResult, evidenceOf, resultFromJson, resultToJson and ProtocolError) is
+ *      that copy's own export, the same object (Object.is) as the export of SDK_INSTALLED's index.js loaded unmocked by its file URL
+ *      (vi.importActual), so a test-config alias or a module mock that substitutes one of them, a call-through included, reds T2.
+ *      (3) Each of the five functions raises, called on null, from its own frame in SDK_DIST's result.js as Node loads it (a file:
+ *      URL frame), and the first frame outside SDK_DIST is this file's; a decoder refusal is this file's ProtocolError raised from
+ *      StreamChecker.fail in SDK_DIST's protocol/decoder.js, the first frame outside SDK_DIST again this file's. (4) Of the three
+ *      READER_MODULES only the provider (PROVIDER, src/workbench/providers/hyperunix.ts) imports the package (its value names Bounds,
+ *      HyperUnix and resultToJson; each import and export declaration and import() call of the three read with the TypeScript
+ *      parser); Node's resolution from its own path (module.findPackageJSON) finds the installed package, compared by real path (a
+ *      git-ignored node_modules copy under src/ would resolve first for it alone); and its registration, handed a null result,
+ *      raises from resultToJson's own frame in SDK_DIST's result.js, the first frame outside SDK_DIST the provider's (the same
+ *      reading of a stand-in registration in this file reads its own function and this file). An import of the package by a module
+ *      outside READER_MODULES, code other than those files' bytes served under their own URLs (a loader hook), and Pi's own modules
+ *      substituted by a test configuration are NOT CLAIMED by this census. THE BYTES: the installed package's package.json and
  *      its 27 shipped modules equal SDK_BYTES, one sha256 each, so a change to any of them (a table, a refusal site or any other
  *      line) reds T2. PROBED through decodeResultStream: each closed body refuses each of the 12
  *      TIER_MEMBERS under each of the 11 TIER_VALUES (the ten words and their list) as SDK_PROTOCOL_MALFORMED at body.<member>
@@ -104,11 +114,12 @@
  *      and its witness list (wb-b9ot), each of the decoder module's unknown-key refusals that T2 reads no key set from (measured
  *      from the module) and each kind of facet the adapter relays (measured from the adapter) is a string one of those frozen
  *      readings holds, so R-ACCEPTANCE or R-VALUE removed with its witness and its gap still reds there (the other five families'
- *      gaps are anchored by the witness list alone).
+ *      gaps are anchored by the witness list alone); and R-VALUE's deviating judge fires at each of its 12220 cells and reads which
+ *      labels move, not how many (valueEchoes()'s liveness below).
  * T1-T4, R0 and R1 assert today's tier-blindness and are re-pinned by the on-landing leg (each failure message names it); A1, A2 and
  * P1 assert only the licence axis and the pre-landing snapshot, which the statement and its acceptance keep unchanged at landing.
- * RESIDUALS (named, each with its pinned quiet row in Q; a quiet row reds when its family stops reading quiet, and the family is
- * then promoted to a pinned case):
+ * RESIDUALS (named, each with its pinned quiet row in Q; a quiet row reads its family at the readings and cells it names, by the
+ * comparison it states, and reds when the family stops reading quiet there; the family is then promoted to a pinned case):
  *   R-SPELLING a tier member under a spelling the 12 TIER_MEMBERS do not probe (OFF_ROSTER: kebab, upper snake, a qualified plural
  *      and another qualifier). Closed outside the roster by T1's type walk and name scans and R0's traced reads and code scan; in the
  *      decoder T2's declared texts hold no tier name under any spelling and its byte pin reds a changed byte, while which keys the
@@ -126,12 +137,18 @@
  *   R-VALUE a tier word as the value of a field a reader reads (the view, a listed provider's version, a conflict code, an incomplete
  *      region's scope and target, the execution id, and every other string a reader reads). Quiet row: each of the first five is
  *      relayed by its own field's meaning (its facet, the native id) and the licence axis does not move; and (wb-b9ot) at each of
- *      the 17 strings the complete full reading holds at a path READS names (the contract, representation, operation, batch id,
- *      execution kind, diagnostic code, view, incomplete region's target and scope, support id, derivation handle, listed provider
- *      and its version, execution id, workspace root, runtime version and runtime digest), under each licence, each of the ten
- *      TIER_WORDS moves, against its reversed word, exactly the outputs (the projection or its refusal, the live verdict and the
- *      native evidence, read by label, not by value) that the neutral word moves against its own: the site's echoes, none or the
- *      field's own relays.
+ *      the 1222 string read sites of the 104 base readings (a string at a path READS names: 9 in each weak and strong reading, 12 in
+ *      each certified one and 17 in each full one, the contract, representation, operation, batch id, execution kind, diagnostic
+ *      code, view, incomplete region's target and scope, support id, derivation handle, listed provider and its version, execution
+ *      id, workspace root, runtime version and runtime digest), each of the ten TIER_WORDS moves, against the reading's own string,
+ *      exactly the output labels (of the projection or its refusal, the live verdict and the native evidence) that the neutral
+ *      word moves there: 12220 cells, none deviating. Absolute against the reading's own string: the neutral word's labels at the
+ *      17 sites of the complete full reading under each licence are frozen (echoes), and the sites at which it moves the licence
+ *      axis (axisOf) of a base reading are exactly the five frozen in axisSites, each with the axis labels it moves there (the
+ *      contract, representation, execution kind, workspace root and runtime digest, at each of which it refuses the reading), so
+ *      at every other site neither the neutral word nor a tier word moves the licence axis of a base reading. The row
+ *      reads which labels move, not their values: at a label the neutral word moves too, the value a tier word writes there is NOT
+ *      CLAIMED by this census.
  *   R-UNSEEN-READING a reading outside the 104 base readings and the live twin (other row, certificate, provider, sidecar-frame or
  *      diagnostic counts), a read gated on such a reading included when its member's name is never spelled in code (built at run
  *      time), which neither R0's traced reads nor its code scan reaches. Quiet row: a held-out reading with two of each is read
@@ -164,21 +181,28 @@
  * departure() (an open body departs from a refusal, a closed one from a decode), the placement control (every cell carries what it
  * names), promotion() (the licensed complete readings, and an unlicensed reading judged as licensed, flag each of its seven clauses),
  * the instrument's four stand-ins, firstFrame() (a frame in another copy reads as its own URL, one in this copy by its path from
- * SDK_DIST), differing() (a changed leaf, an added member and a longer list each read by label), valueEchoes()'s deviating judge
- * (a stand-in reader promoting on a lower tier word as the runtime version deviates at exactly those cells) and unheld() (with no
- * residual, every unread refusal and relayed facet kind is unheld). Pure: no HX binary, scratch directory, clock, network or file write; the files read
- * are the installed SDK's package.json, shipped declaration files and modules, and the three READER_MODULES (and the real paths
- * of SDK_DIST and SDK_INSTALLED). Display paths added: none (test-only). */
+ * SDK_DIST), callerOf() (a caller frame outside the repository reads whole, one in it by its path from the root, and a stack with no
+ * frame outside SDK_DIST reads as none), substituted() (a substituted binding reads by name), sdkImportsOf() (a control text's
+ * imports of the package read in each form, type-only names and other packages left out), differing() (a changed leaf, an added
+ * member and a longer list each read by label), valueEchoes()'s deviating judge (a stand-in that also counts the tier words a reading
+ * holds, in any case, deviates at each of the 12220 cells, and one that relays a tier-word runtime version at another label than the
+ * neutral word's deviates at exactly the 1040 runtime.version cells) and unheld() (with no residual, every unread refusal and
+ * relayed facet kind is unheld). Pure: no HX binary, scratch directory, clock, network or file write; the files read are the
+ * installed SDK's package.json, shipped declaration files and modules, the src tree's modules (their imports; the three
+ * READER_MODULES' code), this file's own source (its import declaration), and the real paths of SDK_DIST, SDK_INSTALLED and the
+ * package.json Node resolves for the provider. Display paths added: none (test-only). */
 import {createHash} from 'node:crypto';
 import {readdirSync, readFileSync, realpathSync} from 'node:fs';
+import {findPackageJSON} from 'node:module';
+import {fileURLToPath} from 'node:url';
 import {isDeepStrictEqual} from 'node:util';
 import {
   assembleQueryResult, type ClaimBody, type Coverage, type CoverageSummary, decodeResultStream, type EvidenceSummary, type ExecutionStatus,
   evidenceOf, type ProcessResult, ProtocolError, type QueryResult, resultFromJson, resultToJson, type StreamSummary, type TransportTelemetry,
 } from '@hyperunix/sdk';
 import ts from 'typescript';
-import {describe, expect, expectTypeOf, it} from 'vitest';
-import {CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
+import {describe, expect, expectTypeOf, it, vi} from 'vitest';
+import {type CapabilityProvider, CapabilityRegistry, type JsonValue} from '../src/workbench/capability-registry.js';
 import {
   HYPERUNIX_CONSUMED_FIELDS, HYPERUNIX_EXECUTION_KINDS, type HyperUnixLiveVerdict, type HyperUnixProjectionTopology,
   type HyperUnixTopologyContext, hxLiveInvariant, hyperunixTopology,
@@ -201,12 +225,18 @@ const context: HyperUnixTopologyContext = {scope: SCOPE, target: {kind: 'hx.fs/r
 const invokedContext: HyperUnixTopologyContext = {...context, invocationId: 'wf_hx_tz2.12',
   operationRef: {provider: 'pi-workflow', type: 'node-call', id: 'wf_hx_tz2.12:0'}};
 const CAPABILITY_CONTEXT = {grants: ['hyperunix:read'], signal: new AbortController().signal};
+/** The runtime version every provided reading carries (providedResult's runtime). */
+const RUNTIME_VERSION = '0.1.0';
 /** Where npm ci installs the package: the repository root's node_modules/@hyperunix/sdk (package-lock.json's entry). */
 const SDK_INSTALLED = new URL('../node_modules/@hyperunix/sdk/dist/', import.meta.url);
 /** The dist/ directory of the package this file's own import of '@hyperunix/sdk' resolves to (import.meta.resolve: Node's resolution
  * from test/, so a git-ignored test/node_modules copy would resolve first). Every read of the package below reads it; T2 holds it to
  * SDK_INSTALLED and holds the functions this file imports to its modules (THE SAME VIEW). */
 const SDK_DIST = new URL('./', import.meta.resolve('@hyperunix/sdk'));
+/** The repository root: the directory test/ sits in. */
+const ROOT = new URL('../', import.meta.url);
+/** The one READER_MODULES module whose imports name '@hyperunix/sdk' (T2 reads them): the hyperunix.find provider. */
+const PROVIDER = 'src/workbench/providers/hyperunix.ts';
 
 /** The statement this leg holds before its trigger, verbatim (the bead's title). */
 const STATEMENT = 'When a GC-D13 ADR plus an SDK result field carry provider evidence tiers (14-decisions-and-migration.md:19@6ed14cab8d; '
@@ -248,8 +278,11 @@ const QUIET = 'wb-tz2.12 residual: its family stopped reading quiet; promote it 
 const BYTES_MOVED = 'wb-tz2.12: the installed @hyperunix/sdk runtime bytes moved; if the SDK now carries a provider evidence tier, '
   + 'build the on-landing leg first, else re-read the decoder (its tables, refusal sites and envelope keys: R-ACCEPTANCE, wb-tz2.18) '
   + 'before re-pinning SDK_BYTES';
-const SAME_VIEW = "wb-b9ot: the @hyperunix/sdk this file executes is not the repository's installed copy (a test/node_modules copy or a "
-  + 'test-config alias resolved first); SDK_BYTES and every decoder reading pin the installed copy, so remove the other copy and re-read';
+const SAME_VIEW = "wb-b9ot: the @hyperunix/sdk this file or the provider executes is not the repository's installed copy (a node_modules "
+  + 'copy under test/ or src/, a test-config alias or a module mock came first); SDK_BYTES and every decoder reading pin the installed '
+  + 'copy, so remove the other copy and re-read';
+const SDK_IMPORTS = 'wb-b9ot: a reader module other than the provider now imports @hyperunix/sdk, or the provider imports other names; pin '
+  + "that module's resolution and frames as the provider's are pinned before re-pinning this roster";
 
 /** The words of a name: split at each run of characters other than letters and digits, at each lower-to-upper camelCase step and
  * inside an upper run before its last capital (XTier), each word lowercased. */
@@ -466,7 +499,7 @@ function contentOf(reading: JsonValue): Json {
 /** What a reader returns for a result: the real hyperunix.find registration, invoked through the registry. */
 async function providedResult(native: QueryResult<ClaimBody>): Promise<JsonValue> {
   const registry = new CapabilityRegistry();
-  registerHyperUnixFind(registry, {find: async () => native, runtime: async () => ({version: '0.1.0', binarySha256: BINARY}),
+  registerHyperUnixFind(registry, {find: async () => native, runtime: async () => ({version: RUNTIME_VERSION, binarySha256: BINARY}),
     close: async () => {}}, WS);
   return registry.invoke('hyperunix.find', {kind: 'hx.fs/regular-file', root: 'src'}, CAPABILITY_CONTEXT);
 }
@@ -677,10 +710,82 @@ function firstFrame(stack: string): string {
   if (match === null) return `unread: ${frame.trim()}`;
   return `${match[1]} ${match[2].startsWith(SDK_DIST.href) ? match[2].slice(SDK_DIST.href.length) : match[2]}`;
 }
-/** Where a call raises from: the first frame of what it throws. */
+/** A frame location as this file names it: a file inside the repository by its path from the root, any other location whole. */
+function located(location: string): string {
+  const path = location.startsWith('file://') ? fileURLToPath(location) : location;
+  const root = fileURLToPath(ROOT);
+  return path.startsWith(root) ? path.slice(root.length) : location;
+}
+/** This file, as frames name it (its copies name themselves). */
+const SELF = located(import.meta.url);
+/** The first frame of a stack whose location lies outside SDK_DIST, by its location (located()): the frame that called into the
+ * package; a stack with no such frame reads 'no caller frame'. */
+function callerOf(stack: string): string {
+  for (const line of stack.split('\n')) {
+    const location = line.match(/^ {4}at (?:.*\()?([^()\s]+):\d+:\d+\)?$/)?.[1];
+    if (location !== undefined && !location.startsWith(SDK_DIST.href)) return located(location);
+  }
+  return 'no caller frame';
+}
+/** Where a call raises from and who called into the package: the first frame of what it throws, then its first frame outside SDK_DIST. */
 function raisedFrom(call: () => unknown): string {
   const error = thrown(call);
-  return error instanceof Error ? firstFrame(error.stack ?? '') : `not an Error: ${String(error)}`;
+  return error instanceof Error ? `${firstFrame(error.stack ?? '')} from ${callerOf(error.stack ?? '')}` : `not an Error: ${String(error)}`;
+}
+/** The values this file imports from '@hyperunix/sdk', by name: T2 holds them to its import declaration and to the installed copy's own
+ * exports. */
+const BOUND: Readonly<Record<string, unknown>> = {decodeResultStream, assembleQueryResult, evidenceOf, resultFromJson, resultToJson,
+  ProtocolError};
+/** The names among the given bindings that are not the module's own export of that name (Object.is). */
+const substituted = (bound: Readonly<Record<string, unknown>>, module: Readonly<Record<string, unknown>>): string[] =>
+  Object.keys(bound).filter(name => !Object.is(bound[name], module[name]));
+/** What a module source imports from '@hyperunix/sdk' or a path below it, read with the TypeScript parser and sorted: each value name of
+ * an import or export declaration naming it ('default' for a default import), and '*' for a namespace import or export, a bare import
+ * and an import() call naming it; type-only names and declarations left out. */
+function sdkImportsOf(source: string): string[] {
+  const names: string[] = [];
+  const sdk = (node: ts.Node | undefined): boolean =>
+    node !== undefined && ts.isStringLiteralLike(node) && (node.text === '@hyperunix/sdk' || node.text.startsWith('@hyperunix/sdk/'));
+  const visit = (node: ts.Node): void => {
+    if (ts.isImportDeclaration(node) && sdk(node.moduleSpecifier) && node.importClause?.isTypeOnly !== true) {
+      const clause = node.importClause;
+      const bindings = clause?.namedBindings;
+      if (clause?.name !== undefined) names.push('default');
+      if (clause === undefined || (bindings !== undefined && ts.isNamespaceImport(bindings))) names.push('*');
+      if (bindings !== undefined && ts.isNamedImports(bindings)) names.push(...bindings.elements.filter(element => !element.isTypeOnly).map(element => element.name.text));
+    } else if (ts.isExportDeclaration(node) && sdk(node.moduleSpecifier) && !node.isTypeOnly) {
+      const clause = node.exportClause;
+      if (clause === undefined || ts.isNamespaceExport(clause)) names.push('*');
+      else names.push(...clause.elements.filter(element => !element.isTypeOnly).map(element => element.name.text));
+    } else if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword && sdk(node.arguments[0])) {
+      names.push('*');
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(ts.createSourceFile('module.ts', source, ts.ScriptTarget.Latest, true));
+  return names.sort();
+}
+/** What each of the READER_MODULES imports from '@hyperunix/sdk' (sdkImportsOf), by module. */
+const sdkImporters = (): Record<string, string[]> =>
+  Object.fromEntries(READER_MODULES.map(path => [path, sdkImportsOf(readFileSync(new URL(path, ROOT), 'utf8'))] as const));
+/** A stand-in registration in this file: its invoke applies resultFromJson to what its reader finds (registrationRaised's control). */
+const standInRegistration: typeof registerHyperUnixFind = (registry, reader) =>
+  registry.register({invoke: async () => json(resultFromJson(json(await reader.find({kind: 'hx.fs/regular-file'}))))} as unknown as CapabilityProvider);
+/** Where a hyperunix.find registration raises when its reader hands it a null result (raisedFrom's form). The registration is captured
+ * by a registry stand-in that keeps what is registered and invoked directly: the registry reports a provider's failure as its own. */
+async function registrationRaised(register: typeof registerHyperUnixFind): Promise<string> {
+  const registered: CapabilityProvider[] = [];
+  const capture = {register: (provider: CapabilityProvider): void => { registered.push(provider); }};
+  register(capture as unknown as CapabilityRegistry, {find: async () => null as unknown as QueryResult<ClaimBody>,
+    runtime: async () => ({version: RUNTIME_VERSION, binarySha256: BINARY}), close: async () => {}}, WS);
+  if (registered.length !== 1) return `registered ${registered.length}`;
+  let error: unknown;
+  try {
+    await registered[0].invoke({kind: 'hx.fs/regular-file', root: 'src'}, CAPABILITY_CONTEXT);
+  } catch (caught) {
+    error = caught;
+  }
+  return error instanceof Error ? `${firstFrame(error.stack ?? '')} from ${callerOf(error.stack ?? '')}` : `not an Error: ${String(error)}`;
 }
 /** The value bindings this file imports from '@hyperunix/sdk': its own import declaration, read with the TypeScript parser, type-only
  * names left out. */
@@ -990,32 +1095,43 @@ function differing(a: JsonValue | undefined, b: JsonValue | undefined, path: Pat
   }
   return [label(path)];
 }
-/** The word of a tier word's length and characters that is no tier word: the word reversed. */
-const reversedWord = (word: string): string => [...word].reverse().join('');
-/** A word that is neither a tier word nor holds one: the baseline each string read site's echoes are measured with. */
+/** A word that is no tier word in any case and holds no tier: the replacement R-VALUE's echoes are measured with. */
 const NEUTRAL_WORD = 'neutral';
-/** What a word at each string a reader reads moves: at each string read site of the complete full reading under each licence, the
- * outputs (by default the three readers': the projection or its refusal, the live verdict and the native evidence) the neutral word
- * moves against its reversed word (the site's echoes), and every site and tier word whose word moves other outputs against its own
- * reversed word (deviating). */
-async function valueEchoes(outputs: (reading: JsonValue) => unknown = outputsOf): Promise<{echoes: Json; deviating: string[]}> {
+/** The tier words, case-folded. */
+const FOLDED_TIER_WORDS: ReadonlySet<string> = new Set(TIER_WORDS.map(word => word.toLowerCase()));
+/** Whether a string is a tier word, in any case. */
+const isTierWord = (text: string): boolean => FOLDED_TIER_WORDS.has(text.toLowerCase());
+/** The value a reading holds at a path. */
+const valueAt = (reading: JsonValue, path: Path): JsonValue | undefined =>
+  path.reduce<JsonValue | undefined>((node, step) => typeof step === 'number' ? asList(node)[step] : asRecord(node)[step], reading);
+/** What R-VALUE reads of a word at each string a reader reads (wb-b9ot). A word's moves at a string read site (readStrings) of a base
+ * reading are the output labels (outputs: by default the three readers': the projection or its refusal, the live verdict and the
+ * native evidence) that differ from the reading's own when the word stands at that site in place of the reading's own string. echoes:
+ * the neutral word's moves at each site of the complete full readings, under each licence; axisSites: each site, with the axis labels
+ * (axisOf) that differ, at which the neutral word moves the licence axis of a base reading; deviating: each base reading, site and
+ * tier word whose moves are not the neutral word's. */
+function valueEchoes(bases: readonly Base[], outputs: (reading: JsonValue) => unknown = outputsOf): {echoes: Json; axisSites: string[];
+  deviating: string[]} {
   const echoes: Json = {};
+  const axisSites = new Set<string>();
   const deviating: string[] = [];
-  for (const licensed of LICENCES) {
-    const reading = deepFrozen(await provided(baseDocument('complete', licensed, 'full')));
-    for (const path of readStrings(reading)) {
-      const site = `${licensed ? 'licensed' : 'unlicensed'} ${readLabel(path)}`;
-      const movedBy = (word: string): string[] =>
-        differing(json(outputs(valued(reading, path, word))), json(outputs(valued(reading, path, reversedWord(word)))));
-      const neutral = movedBy(NEUTRAL_WORD);
-      echoes[site] = neutral;
-      for (const word of TIER_WORDS) if (!isDeepStrictEqual(movedBy(word), neutral)) deviating.push(`${site} ${word}`);
+  for (const base of bases) {
+    const own = json(outputs(base.reading));
+    const ownAxis = json(axisOf(base.reading));
+    for (const path of readStrings(base.reading)) {
+      const site = readLabel(path);
+      const moves = (word: string): string[] => differing(json(outputs(valued(base.reading, path, word))), own);
+      const neutral = moves(NEUTRAL_WORD);
+      if (base.kind === 'complete' && base.shape === 'full') echoes[`${base.licensed ? 'licensed' : 'unlicensed'} ${site}`] = neutral;
+      const axis = differing(json(axisOf(valued(base.reading, path, NEUTRAL_WORD))), ownAxis);
+      if (axis.length > 0) axisSites.add(`${site}: ${axis.join(', ')}`);
+      for (const word of TIER_WORDS) if (!isDeepStrictEqual(moves(word), neutral)) deviating.push(`${base.name} ${site} ${word}`);
     }
   }
-  return {echoes, deviating};
+  return {echoes, axisSites: [...axisSites].sort(), deviating};
 }
-/** A named residual family and its quiet row: the reading the row measures today, which reds when the family stops reading quiet
- * (its family is then promoted to a pinned case). */
+/** A named residual family and its quiet row: the reading the row measures today at the readings and cells it names, which reds when
+ * the family stops reading quiet there (its family is then promoted to a pinned case). */
 interface Residual {
   readonly id: string;
   readonly family: string;
@@ -1029,7 +1145,7 @@ const RESIDUALS: readonly Residual[] = [
   {id: 'R-SYNONYM', family: 'a tier carried under a name that holds no tier word (SYNONYMS: level, grade, rank, evidence_level, evidencetier): the word scans and the roster do not see it',
     quiet: () => familyQuiet(SYNONYMS),
     reading: {refusedBy: [11, 11, 11, 11, 11], roundTripCarried: [...CARRIED], roundTripOther: [], live: [], readers: []}},
-  {id: 'R-VALUE', family: "a tier word as the value of a field a reader reads (the view, a listed provider's version, a conflict code, an incomplete region's scope and target, the execution id, and every other string a reader reads: the 17 string read sites of the complete full reading): each is read by its own field's meaning",
+  {id: 'R-VALUE', family: "a tier word as the value of a field a reader reads (the view, a listed provider's version, a conflict code, an incomplete region's scope and target, the execution id, and every other string a reader reads: the 1222 string read sites of the 104 base readings)",
     quiet: async () => {
       const document = baseDocument('complete', false, 'full');
       document.view = 'Contextual';
@@ -1039,52 +1155,66 @@ const RESIDUALS: readonly Residual[] = [
       document.execution_id = 'Inventory';
       const reading = await provided(document);
       const reference = await provided(baseDocument('complete', false, 'full'));
-      // Every other string a reader reads (wb-b9ot, gate plant GP-VAL): at each string read site of the complete full reading under
-      // each licence, each tier word moves, against its reversed word, exactly the outputs a neutral word moves against its own.
-      const {echoes, deviating} = await valueEchoes();
+      // Every other string a reader reads (wb-b9ot, gate plant GP-VAL, refusal #1 U3): at each string read site of each base reading,
+      // each tier word moves, against the reading's own string, exactly the output labels the neutral word moves; the neutral word's
+      // labels at the complete full readings and the sites at which it moves the licence axis are frozen below.
+      const {echoes, axisSites, deviating} = valueEchoes(await baseReadings(HYPERUNIX_EXECUTION_KINDS));
       return json({facets: hyperunixTopology(reading, context).facets, axisMoved: moved(axisOf, reading, axisOf(reference)),
-        native: nativeEvidence('hyperunix.find', reading), echoes, deviating});
+        native: nativeEvidence('hyperunix.find', reading), echoes, axisSites, deviating});
     },
     reading: {facets: [{kind: 'view', view: 'Contextual'}, {kind: 'provider-version', provider: 'hx.fs/builtin', version: 'Parsed'},
       {kind: 'conflict', code: 'HX-CONTEXTUAL-TIER-CONFLICT'}, {kind: 'incomplete-region', scope: 'Contextual', target: 'Parsed'}],
       axisMoved: false, native: {provider: 'hyperunix', nativeId: 'Inventory', domainStatus: 'complete',
         evidenceRefs: ['hx-fs/b1/s1', 'hx-fs/b1/s1/dependency[0]:file:c3Jj']},
       echoes: {
-        'licensed contract': [],
-        'licensed source.representation': [],
+        'licensed contract': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'native.provider', 'native.evidenceRefs', 'native.nativeId', 'native.domainStatus'],
+        'licensed source.representation': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'native.provider', 'native.evidenceRefs', 'native.nativeId', 'native.domainStatus'],
         'licensed source.operation': ['projection.snapshots[0].source.id', 'projection.snapshots[0].node.title', 'projection.diagnostics[0]'],
         'licensed source.coverage[].batch_id': ['projection.snapshots[0].source.id', 'projection.snapshots[0].evidenceRefs[1]'],
-        'licensed source.execution_status.kind': ['native.domainStatus'],
-        'licensed source.diagnostics[].code': [],
+        'licensed source.execution_status.kind': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'verdict.holds', 'verdict.violations[0]', 'verdict.violations[1]', 'verdict.absenceLicensed', 'native.domainStatus'],
+        'licensed source.diagnostics[].code': ['projection.facets[2].kind', 'projection.facets[2].scope', 'projection.facets[2].target', 'projection.facets[2].code', 'projection.facets[3]'],
         'licensed source.view': ['projection.facets[0].view'],
         'licensed source.coverage_summary.incomplete_regions[].target': ['projection.facets[3].target'],
         'licensed source.coverage_summary.incomplete_regions[].scope': ['projection.facets[3].scope'],
         'licensed source.evidence.support_ids[]': ['native.evidenceRefs[0]'],
         'licensed source.evidence.derivation_handles[]': ['native.evidenceRefs[1]'],
-        'licensed source.evidence.providers[]': [],
+        'licensed source.evidence.providers[]': ['projection.facets[1].kind', 'projection.facets[1].code', 'projection.facets[1].provider', 'projection.facets[1].version', 'projection.facets[2].kind', 'projection.facets[2].scope', 'projection.facets[2].target', 'projection.facets[2].code', 'projection.facets[3]'],
         'licensed source.evidence.provider_versions.hx.fs/builtin': ['projection.facets[1].version'],
         'licensed source.execution_id': ['native.nativeId'],
-        'licensed workspaceRoot': [],
+        'licensed workspaceRoot': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets'],
         'licensed runtime.version': ['projection.snapshots[0].sourceVersion'],
-        'licensed runtime.binarySha256': [],
-        'unlicensed contract': [],
-        'unlicensed source.representation': [],
+        'licensed runtime.binarySha256': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'verdict.holds', 'verdict.violations[0]', 'verdict.absenceLicensed'],
+        'unlicensed contract': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'native.provider', 'native.evidenceRefs', 'native.nativeId', 'native.domainStatus'],
+        'unlicensed source.representation': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'native.provider', 'native.evidenceRefs', 'native.nativeId', 'native.domainStatus'],
         'unlicensed source.operation': ['projection.snapshots[0].source.id', 'projection.snapshots[0].node.title', 'projection.diagnostics[0]'],
         'unlicensed source.coverage[].batch_id': ['projection.snapshots[0].source.id', 'projection.snapshots[0].evidenceRefs[1]'],
-        'unlicensed source.execution_status.kind': ['native.domainStatus'],
-        'unlicensed source.diagnostics[].code': [],
+        'unlicensed source.execution_status.kind': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'verdict.holds', 'verdict.violations[0]', 'native.domainStatus'],
+        'unlicensed source.diagnostics[].code': ['projection.facets[2].kind', 'projection.facets[2].scope', 'projection.facets[2].target', 'projection.facets[2].code', 'projection.facets[3]'],
         'unlicensed source.view': ['projection.facets[0].view'],
         'unlicensed source.coverage_summary.incomplete_regions[].target': ['projection.facets[3].target'],
         'unlicensed source.coverage_summary.incomplete_regions[].scope': ['projection.facets[3].scope'],
         'unlicensed source.evidence.support_ids[]': ['native.evidenceRefs[0]'],
         'unlicensed source.evidence.derivation_handles[]': ['native.evidenceRefs[1]'],
-        'unlicensed source.evidence.providers[]': [],
+        'unlicensed source.evidence.providers[]': ['projection.facets[1].kind', 'projection.facets[1].code', 'projection.facets[1].provider', 'projection.facets[1].version', 'projection.facets[2].kind', 'projection.facets[2].scope', 'projection.facets[2].target', 'projection.facets[2].code', 'projection.facets[3]'],
         'unlicensed source.evidence.provider_versions.hx.fs/builtin': ['projection.facets[1].version'],
         'unlicensed source.execution_id': ['native.nativeId'],
-        'unlicensed workspaceRoot': [],
+        'unlicensed workspaceRoot': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets'],
         'unlicensed runtime.version': ['projection.snapshots[0].sourceVersion'],
-        'unlicensed runtime.binarySha256': [],
+        'unlicensed runtime.binarySha256': ['projection.refused', 'projection.snapshots', 'projection.relations', 'projection.diagnostics', 'projection.facets', 'verdict.holds', 'verdict.violations[0]'],
       },
+      axisSites: [
+        'contract: refused',
+        'contract: refused, coverage, statusTone, statusText',
+        'runtime.binarySha256: refused',
+        'runtime.binarySha256: refused, absenceLicensed, coverage, statusTone, statusText',
+        'runtime.binarySha256: refused, coverage, statusTone, statusText',
+        'source.execution_status.kind: refused',
+        'source.execution_status.kind: refused, absenceLicensed, coverage, statusTone, statusText',
+        'source.execution_status.kind: refused, coverage, statusTone, statusText',
+        'source.representation: refused',
+        'source.representation: refused, coverage, statusTone, statusText',
+        'workspaceRoot: refused, coverage, statusTone, statusText',
+      ],
       deviating: []}},
   {id: 'R-UNSEEN-READING', family: 'a reading outside the 104 base readings and the live twin (more rows, certificates, listed providers, sidecar frames or diagnostics)',
     quiet: async () => {
@@ -1349,16 +1479,24 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       .toStrictEqual(['supportIds', 'evidenceClasses', 'derivationHandles', 'providers', 'providerVersions']);
   });
 
-  it('T2: read as declarations, never as what the decoder accepts, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export) and its 3 empty-body kinds are exactly these and hold no tier, the package this file imports @hyperunix/sdk from is the installed copy (its import resolves there, and each function it imports and a decoder refusal raise from its modules) and its package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
-    // THE SAME VIEW (wb-b9ot, gate plant G13): the package these cases read is the one this file executes. Its import resolves to
-    // the installed copy (a git-ignored test/node_modules copy would resolve first; real paths, so a symlinked node_modules reads as
-    // its target); each function it imports raises, called on null, from its own frame in that copy's result.js; and a decoder
-    // refusal is this file's ProtocolError raised from StreamChecker.fail in its protocol/decoder.js (a test-config alias, which
-    // import.meta.resolve does not see, raises from the aliased copy's modules).
+  it('T2: read as declarations, never as what the decoder accepts, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export) and its 3 empty-body kinds are exactly these and hold no tier, the package this file imports @hyperunix/sdk from is the installed copy (its import resolves there, each value it imports is that copy\'s own export, unmocked, and each function it imports and a decoder refusal raise from its modules, called from this file), as is the provider\'s, the one of the three reader modules importing it (it resolves there and its resultToJson raises from that copy, called from the provider), and its package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', async () => {
+    // THE SAME VIEW (wb-b9ot, gate plant G13 and refusal #1's S1-S3): the package these cases read is the one this file and the provider
+    // execute. (1) This file's import resolves to the installed copy (a git-ignored test/node_modules copy would resolve first; real
+    // paths, so a symlinked node_modules reads as its target).
     expect(realpathSync(SDK_DIST), SAME_VIEW).toBe(realpathSync(SDK_INSTALLED));
+    // (2) Each value its import declaration names is that copy's own export: the same object as the export of SDK_INSTALLED's index.js
+    // loaded unmocked by its file URL, so a test-config alias or a module mock substituting a binding (a call-through included) reds;
+    // the reading names a substituted binding.
+    const installed = await vi.importActual<Record<string, unknown>>(new URL('index.js', SDK_INSTALLED).href);
+    expect(Object.keys(BOUND).sort()).toStrictEqual(sdkBindings().sort());
+    expect(substituted(BOUND, installed), SAME_VIEW).toStrictEqual([]);
+    expect(substituted({...BOUND, resultToJson: () => null}, installed)).toStrictEqual(['resultToJson']);
+    // (3) Each function it imports raises, called on null, from its own frame in that copy's result.js, called from this file's own
+    // frame; and a decoder refusal is this file's ProtocolError raised from StreamChecker.fail in its protocol/decoder.js, the first
+    // frame outside the copy again this file's.
     const refusal = thrown(() => decodeResultStream(envelopeStream({unknown_key: 'r1'})));
-    expect([refusal instanceof ProtocolError, refusal instanceof Error ? firstFrame(refusal.stack ?? '') : 'not an Error'], SAME_VIEW)
-      .toStrictEqual([true, 'StreamChecker.fail protocol/decoder.js']);
+    expect([refusal instanceof ProtocolError, refusal instanceof Error ? `${firstFrame(refusal.stack ?? '')} from ${callerOf(refusal.stack ?? '')}`
+      : 'not an Error'], SAME_VIEW).toStrictEqual([true, `StreamChecker.fail protocol/decoder.js from ${SELF}`]);
     const raised: Record<string, string> = {
       decodeResultStream: raisedFrom(() => decodeResultStream(null as unknown as string)),
       assembleQueryResult: raisedFrom(() => assembleQueryResult('find', null as unknown as ProcessResult, WS)),
@@ -1366,14 +1504,32 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       resultFromJson: raisedFrom(() => resultFromJson(null)),
       resultToJson: raisedFrom(() => resultToJson(null as unknown as QueryResult<ClaimBody>)),
     };
-    expect(raised, SAME_VIEW).toStrictEqual({decodeResultStream: 'decodeResultStream result.js', assembleQueryResult: 'assembleQueryResult result.js',
-      evidenceOf: 'evidenceOf result.js', resultFromJson: 'resultFromJson result.js', resultToJson: 'resultToJson result.js'});
+    expect(raised, SAME_VIEW).toStrictEqual(Object.fromEntries(['decodeResultStream', 'assembleQueryResult', 'evidenceOf', 'resultFromJson',
+      'resultToJson'].map(name => [name, `${name} result.js from ${SELF}`])));
     // Those are every value this file imports from the package: its own import declaration names exactly them and ProtocolError.
     expect(sdkBindings().sort()).toStrictEqual([...Object.keys(raised), 'ProtocolError'].sort());
-    // The frame reader can fire: a frame in another copy reads as its own URL, one in this copy by its path from SDK_DIST.
+    // (4) Of the READER_MODULES only the provider imports the package; Node's resolution from its own path finds the installed package
+    // (a git-ignored node_modules copy under src/ would resolve first for it alone); and its registration, handed a null result,
+    // raises from resultToJson's own frame in the installed copy's result.js, called from the provider's own frame, where a stand-in
+    // registration in this file reads its own function and this file.
+    expect(sdkImporters(), SDK_IMPORTS).toStrictEqual({[PROVIDER]: ['Bounds', 'HyperUnix', 'resultToJson'], 'src/workbench/hyperunix-observer.ts': [],
+      'src/workbench/native-evidence.ts': []});
+    const resolved = findPackageJSON('@hyperunix/sdk', new URL(PROVIDER, ROOT));
+    expect(resolved === undefined ? 'unresolved' : realpathSync(resolved), SAME_VIEW).toBe(realpathSync(new URL('../package.json', SDK_INSTALLED)));
+    expect([await registrationRaised(registerHyperUnixFind), await registrationRaised(standInRegistration)], SAME_VIEW)
+      .toStrictEqual([`resultToJson result.js from ${PROVIDER}`, `resultFromJson result.js from ${SELF}`]);
+    // The readers can fire: a first frame in another copy reads as its own URL, one in this copy by its path from SDK_DIST; a caller
+    // frame outside the repository reads whole, one in it by its path from the root; and the import reader reads each form.
     expect([firstFrame('E\n    at resultFromJson (file:///elsewhere/@hyperunix/sdk/dist/result.js:526:15)'),
       firstFrame(`E\n    at resultFromJson (${new URL('result.js', SDK_DIST).href}:526:15)`)])
       .toStrictEqual(['resultFromJson file:///elsewhere/@hyperunix/sdk/dist/result.js', 'resultFromJson result.js']);
+    const inCopy = `E\n    at fail (${new URL('protocol/decoder.js', SDK_DIST).href}:1:2)\n    at decodeResultStream (${new URL('result.js', SDK_DIST).href}:3:4)`;
+    expect([callerOf(`${inCopy}\n    at decodeResultStream (file:///elsewhere/shim/index.js:5:6)`), callerOf(`${inCopy}\n    at ${fileURLToPath(new URL(PROVIDER, ROOT))}:7:8`),
+      callerOf(inCopy)]).toStrictEqual(['file:///elsewhere/shim/index.js', PROVIDER, 'no caller frame']);
+    expect(sdkImportsOf("import {a, type b} from '@hyperunix/sdk'; import type {c} from '@hyperunix/sdk'; import d, * as e from '@hyperunix/sdk/raw';\n"
+      + "import '@hyperunix/sdk/protocol'; export {f, type g} from '@hyperunix/sdk'; export * from '@hyperunix/sdk'; export type {h} from '@hyperunix/sdk';\n"
+      + "const i = import('@hyperunix/sdk'); import {j} from '@hyperunix/sdkx'; import {k} from 'other';"))
+      .toStrictEqual(['*', '*', '*', '*', 'a', 'default', 'f']);
     // THE BYTES: the package.json and each of the 27 shipped modules equal SDK_BYTES, so a change to any of them reds here.
     expect(sdkBytes(), BYTES_MOVED).toStrictEqual(SDK_BYTES);
     const tables = decoderTables();
@@ -1671,7 +1827,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     }
   });
 
-  it('Q: the seven named residual families, each with its pinned quiet row: R-SPELLING, R-SYNONYM, R-VALUE, R-UNSEEN-READING, R-OPEN-BODY, R-LIVE-UNSEEN and R-ACCEPTANCE read exactly their frozen readings, and each unknown-key refusal of the decoder that T2 reads no key set from and each facet kind the adapter relays is held by one of those readings', async () => {
+  it('Q: the seven named residual families, each with its pinned quiet row: R-SPELLING, R-SYNONYM, R-VALUE, R-UNSEEN-READING, R-OPEN-BODY, R-LIVE-UNSEEN and R-ACCEPTANCE read exactly their frozen readings, each unknown-key refusal of the decoder that T2 reads no key set from and each facet kind the adapter relays is held by one of those readings, and the value row\'s deviating judge fires at each of its 12220 cells and reads which labels move, not how many', async () => {
     expect(RESIDUALS.map(residual => residual.id)).toStrictEqual(['R-SPELLING', 'R-SYNONYM', 'R-VALUE', 'R-UNSEEN-READING', 'R-OPEN-BODY',
       'R-LIVE-UNSEEN', 'R-ACCEPTANCE']);
     // The title claims exactly the table's families, each row's pins are pinned by count, and each family answers a measured gap.
@@ -1681,7 +1837,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     const pins = (reading: JsonValue): string => Array.isArray(reading) ? reading.map(row => asList(row)[0]).join('+') : Object.keys(asRecord(reading)).join('+');
     expect(RESIDUALS.map(residual => `${residual.id}:${pins(residual.reading)}:${residual.family.length}`)).toStrictEqual([
       'R-SPELLING:refusedBy+roundTripCarried+roundTripOther+live+readers:174', 'R-SYNONYM:refusedBy+roundTripCarried+roundTripOther+live+readers:157',
-      'R-VALUE:facets+axisMoved+native+echoes+deviating:301',
+      'R-VALUE:facets+axisMoved+native+echoes+axisSites+deviating:258',
       'R-UNSEEN-READING:outside+nodes+moved:132', 'R-OPEN-BODY:decodedAndCarried+liveOutcomes+moved:130',
       'R-LIVE-UNSEEN:node-claim.attributes.nested+node-claim.identities[0]+node-claim.kinds[0]+node-claim.locators[0]+coverage.scope.path[0]:173',
       'R-ACCEPTANCE:envelope+unread:265']);
@@ -1697,14 +1853,27 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     expect([unreadRefusals().length > 0, relayed.length > 0]).toStrictEqual([true, true]);
     expect(await unheld(RESIDUALS)).toStrictEqual({refusals: [], facets: []});
     expect(await unheld([])).toStrictEqual({refusals: unreadRefusals(), facets: relayed});
-    // differing(), R-VALUE's echo judge, can fire: a changed leaf, an added member and a longer list each read by label; and the
-    // deviating judge fires on a stand-in reader that promotes a reading whose runtime version is a lower tier word (gate plant
-    // GP-VAL's shape): exactly the six LOWER_WORDS at runtime.version under each licence deviate.
+    // differing(), R-VALUE's label judge, can fire: a changed leaf, an added member and a longer list each read by label.
     expect(differing({a: {b: 1, c: [1]}}, {a: {b: 2, c: [1, 2]}, d: 0})).toStrictEqual(['a.b', 'a.c[1]', 'd']);
-    const promoting = (reading: JsonValue): unknown =>
-      ({...outputsOf(reading), promoted: LOWER_WORDS.includes(String(asRecord(asRecord(reading).runtime).version))});
-    expect((await valueEchoes(promoting)).deviating).toStrictEqual(LICENCES.flatMap(licensed =>
-      LOWER_WORDS.map(word => `${licensed ? 'licensed' : 'unlicensed'} runtime.version ${word}`)));
+    // R-VALUE's deviating judge fires at each cell it claims (wb-b9ot, refusal #1 U2), enumerated here: each base reading, each string
+    // read site of it and each tier word (12220 cells; no base reading holds the neutral word or a tier word, in any case, at one). A
+    // stand-in that also counts the tier words a reading holds, in any case, deviates at each of them; and the judge reads which labels
+    // move, not how many: a stand-in relaying a tier-word runtime version at another label than the neutral word's deviates at exactly
+    // the 1040 runtime.version cells.
+    const bases = await baseReadings(HYPERUNIX_EXECUTION_KINDS);
+    const cells = bases.flatMap(base => readStrings(base.reading).flatMap(path => TIER_WORDS.map(word => `${base.name} ${readLabel(path)} ${word}`)));
+    expect(cells.length).toBe(12220);
+    expect(Object.fromEntries(SHAPES.map(shape => [shape, [...new Set(bases.filter(base => base.shape === shape).map(base => readStrings(base.reading).length))]])))
+      .toStrictEqual({weak: [9], strong: [9], full: [17], certified: [12]});
+    expect([isTierWord(NEUTRAL_WORD), holdsTier(NEUTRAL_WORD), bases.flatMap(base => readStrings(base.reading).map(path => String(valueAt(base.reading, path))))
+      .filter(text => text === NEUTRAL_WORD || isTierWord(text))]).toStrictEqual([false, false, []]);
+    const marking = (reading: JsonValue): unknown => ({...outputsOf(reading), tierWords: stringsOf(reading).filter(isTierWord).length});
+    expect(valueEchoes(bases, marking).deviating).toStrictEqual(cells);
+    const swapping = (reading: JsonValue): unknown => {
+      const version = String(asRecord(asRecord(reading).runtime).version);
+      return isTierWord(version) ? {...outputsOf(valued(reading, ['runtime', 'version'], RUNTIME_VERSION)), relayed: version} : outputsOf(reading);
+    };
+    expect(valueEchoes(bases, swapping).deviating).toStrictEqual(cells.filter(cell => / runtime\.version \S+$/.test(cell)));
     const readings: Record<string, JsonValue> = {};
     for (const residual of RESIDUALS) readings[residual.id] = await residual.quiet();
     for (const residual of RESIDUALS) expect(readings[residual.id], `${residual.id}: ${QUIET}`).toStrictEqual(residual.reading);
