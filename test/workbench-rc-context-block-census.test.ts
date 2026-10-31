@@ -68,22 +68,87 @@
  *    reading; M2 the identifier word splitter and the CONTROL words; M3 the sentence cutter and the two sentence rules, over
  *    every reading of a file. C3's own instruments
  *    are held live in its case: the TUI loads (UI_LOAD_PROBES) and one probe module per read form and per result-expression
- *    form the parse-aware reading names (READ_PROBES) or leaves quiet (QUIET_PROBES).
+ *    or declaration form the parse-aware reading names or fails closed on (READ_PROBES) or leaves quiet (QUIET_PROBES).
  *  R, the residuals' pinned quiet rows.
- * PARSE-AWARE READING (C3, wb-ycir F1, widened by wb-qnl8 F2; resultReadsOf): RF_READING reads the rf result's members
- * spelled after "result.", so a UI module also must not reach a RESULT_MEMBERS member off a result expression by any of these
- * forms: a member read through a name bound to the result, an element access keyed by a member or by a key that resolves to
- * no constant string, a destructuring (declared, assigned, a parameter of a local function a result is handed to, or a pattern
- * nested under a `result` property) naming a member, computing a key or gathering a rest, and a spread, a for-in walk, a
- * reflective read (REFLECTIVE_READS) or a keyed read (KEYED_READS, keyed as an element access is) of the result. A result
- * expression is a result member read (`.result`, `?.result`, or an element access keyed "result"), a name bound to one (the
- * initializer of a declaration, a parameter or a binding element; an assignment, a logical one included; either arm of "??",
- * "||", "&&" or "?:"; a destructured `result` property; an element of an array binding over an array literal, by position,
- * and past the literal's first spread any later item; a
- * for-of declaration or target over an array literal holding one; an argument of a call of a function the module declares)
- * or any name result, with its parentheses, type assertions, satisfies clauses, non-null marks, awaits and a comma
- * expression's left operands taken off; a bare name result is read for members, keys and destructurings only, never for a
- * spread or a reflective read, which Pi's agent and tool results take.
+ * PARSE-AWARE READING (C3, wb-ycir F1, widened by wb-qnl8 F2 and wb-qnls F2, U2 and cut #3 U1, failing closed by cut #4;
+ * resultReadsOf). The brackets after a
+ * form name the probes that hold it live: READ_PROBES rows the reading must name and QUIET_PROBES rows it must leave quiet; C3
+ * holds the bracketed keys of this header equal to the two tables (headerProbeIds). A probe holds its form live at the shapes
+ * its text spells - an argument's or an item's place, a wrapper, an operator, a kind of declaration -, each probe's reading
+ * pinned in the roster: a reading narrowed within a form to shapes no probe of it spells is not claimed to be discriminated
+ * (wb-qnls cut #2). RF_READING reads the rf result's members spelled after "result.", so a UI module also must not reach a
+ * RESULT_MEMBERS member off a result expression by any of these READS: a member read [alias-member, named-member], one of
+ * another member reading nothing [string-result]; an element access keyed by a member [literal-key, computed-key,
+ * element-result] or by a key that resolves to no constant string [parameter-key, named-result, comma-key, comma-const-key],
+ * one keyed by another member or by a number reading nothing [other-member, numeric-key]; a destructuring naming a member,
+ * computing a key or gathering a rest - declared [destructured, renamed, binding-computed, rest, named-destructured,
+ * string-key-binding], a parameter's pattern [parameter-pattern], an assignment's pattern, off a bare name result too
+ * [assigned, assigned-renamed, assigned-rest, assigned-computed, named-assigned], or a pattern nested under a `result`
+ * property [nested, nested-assigned] -, one naming another member reading nothing [bare-other-member]; and, off a result
+ * member read or a name bound to one but never off a bare name result, which Pi's agent and tool results take [bare-spread,
+ * bare-for-in, bare-reflective, bare-keyed], an expression one arm of which is one counting as one [mixed-arms]: an object or
+ * array spread [spread, array-spread], a for-in walk [for-in], a REFLECTIVE_READS call, its callee the call's dotted name with
+ * any white space [reflective-spaced-callee], handed it as any argument [reflective, reflective-<call>,
+ * reflective-later-argument, reflective-third-argument, reflective-first-of-three] and a KEYED_READS call keyed as an element
+ * access is [reflect-get, descriptor, reflect-get-computed, reflect-get-const-key], one keyed by another member reading
+ * nothing [reflect-other-member, descriptor-other-member]. A KEY resolves to a constant string when it is a string, template
+ * or number literal [literal-key, template-key, numeric-key], a "+" sum or a template whose parts all resolve [sum-key,
+ * template-expression-key], or a name every variable, parameter and binding element of which holds that one string, each a
+ * const declaration whose initializer is that string or template literal [computed-key, template-const-key], read through its
+ * wrappers [asserted-key]; a let [let-key], two different const strings [conflicting-key], and a parameter or a binding
+ * element beside a const of its name [shadowed-parameter-key, shadowed-binding-key] resolve to none.
+ * A RESULT EXPRESSION is a result member read - `.result` [literal-key], `?.result` [optional-key] or an element access keyed
+ * "result" [element-result] -, a name bound to one, or any name result [named-result, named-member]. A name is bound to a
+ * result member read or to a name so bound, never to a bare name result [named-alias]: by a declaration's initializer
+ * [alias-member], a parameter's default [parameter-default] or a binding element's default, of an object or an array pattern
+ * [binding-default, array-binding-default]; by an assignment to the name, plain [assigned-name] or logical - "??="
+ * [logical-assigned], "||=" [or-assigned] or "&&=" [and-assigned] -, the name bare or through parentheses
+ * [paren-assigned-target, paren-logical-target], type assertions [asserted-assigned-target, angle-asserted-target], a
+ * satisfies clause [satisfied-target] or a non-null mark [non-null-assigned-target]; by a
+ * destructured `result` property of a binding pattern, renamed or shorthand [result-binding, result-shorthand-binding]; as an
+ * element of an array binding over an array literal, read through its wrappers [array-binding-asserted], by position
+ * [array-binding], nested [nested-array-binding] and, at or past the position of the literal's first spread, taking any later
+ * item [array-after-spread, array-first-after-spread, array-third-after-spread], the element beside a result reading nothing
+ * [array-other-element]; as a for-of declaration's name or object pattern [for-of-name, for-of] or a for-of target name, bare
+ * or through the same wrappers [for-of-target, paren-for-of-target, asserted-for-of-target, angle-asserted-for-of-target,
+ * satisfied-for-of-target, non-null-for-of-target], over an array literal read through its wrappers [for-of-asserted-list]
+ * any item of which, a spread aside, is one - first, between two others or last [for-of-first-item, for-of-later-item,
+ * for-of-third-item] -, a bound item counting over a bare name result beside it [mixed-items]; and as a parameter, an object
+ * or array pattern included [parameter-pattern, parameter-array-pattern], of a function handed it by position, a later
+ * argument as the first [direct-later-argument]: every function the FUNCTION TABLE below holds under the callee's name or,
+ * for a member callee, its property name [member-callee-function], or an inline arrow or function expression called in place
+ * [iife, iife-function]; called directly, a member callee named call or apply included [call-named-method,
+ * apply-named-method], by fn.call from its second argument on [call-method, call-inline, call-later-argument,
+ * call-member-relay, call-function-expression], its callee read through its wrappers [call-wrapped-callee], or by fn.apply
+ * over the items of an array literal read through its wrappers [apply-method, apply-later-item, apply-member-relay,
+ * apply-inline, apply-function-expression, apply-asserted-list] - a relay reaching exactly the functions a direct call of its
+ * callee reaches, a method the table holds under a string-literal name included [call-string-named-relay,
+ * apply-string-named-relay] -, a declared `this` parameter taking no argument [this-parameter-direct, call-this-parameter].
+ * The FUNCTION TABLE (wb-qnls cut #3, ruling R-B121: exactly the declarations resultReadsOf's collect admits, nothing else;
+ * cut #4, ruling R-B151: a method's name exactly the pinned kinds, failing closed outside them)
+ * holds a function declaration [function-helper] or a method - of an object literal, a class declaration or a class
+ * expression [method-helper, class-method-helper, class-expression-method-helper], static or not [static-method-helper] -
+ * under its name's constant string (propertyKeyOf), the name of one of the PINNED KINDS: an identifier, a #private name
+ * [private-method-helper], a string literal, held under its value with any escape decoded [string-named-method,
+ * string-named-class-method, string-named-static-method, escaped-string-named-method], or a computed name whose key resolves to
+ * a constant string by the KEY rule above [const-named-method, const-named-class-method, literal-named-method,
+ * template-named-method, sum-named-method, template-expression-named-method], a computed name that resolves to none holding
+ * nothing [unresolved-named-method]. FAIL CLOSED (cut #4): a method named by any other kind - a number literal, in an object
+ * literal [numeric-named-method, infinity-named-method], a class declaration, static or not [numeric-named-class-method,
+ * numeric-named-static-method], or a class expression [numeric-named-class-expression-method], or a bigint literal
+ * [bigint-named-method] - is held under no name, so no call hands it an argument (refusal #3 measured TypeScript holding a
+ * number literal's name under its value's string, 1e999 under "Infinity", which a member callee spells: the gate's q18),
+ * and the reading notes its name instead ("declaration unpinned"), which refuses its module whether or not anything calls
+ * it; what the table would hold such a name under is child wb-zmez's. And it holds a
+ * variable declared by a name, in any declaration list - const [local-helper], let [let-helper] or var [var-helper] -, under
+ * that name when its initializer, read through its wrappers [wrapped-helper-initializer], is an arrow or a function
+ * expression [function-expression-helper]. An expression's value is read
+ * through its parentheses, type assertions [type-assertion], satisfies clauses [satisfied], non-null marks [non-null] and
+ * awaits [awaited], as a comma expression's last operand, itself wrapped or not [comma, comma-wrapped-operand], as a plain
+ * assignment's right side, a bound name included [assignment-value, chained-assign, assignment-value-name], and as either arm
+ * of "??" [alias-member], "||" [or-arm], "&&" [and-arm], "?:" - its true or its false arm [conditional-arm,
+ * conditional-false-arm] - or a logical assignment, a bound name included [nullish-assignment-value, or-assignment-value,
+ * and-assignment-value, logical-assignment-left, logical-assignment-value-name].
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the
  * constants, the registered test titles and each pin's assertion count are held to the out-of-file roster
  * (test/fixtures/rc-context-block-roster.json).
@@ -108,12 +173,36 @@
  * the filing names it (clause (a)'s three control words, clause (c)'s surfaces and names, the two fixture names); the rows, the
  * pins and the residual list are anchored as above, but which pin covers which words is this census's reading (COVERS); an
  * edit of the tracked bead export itself is outside every anchor (it is machine-written at each ledger hop). The parse-aware
- * reading reads one module at a time and follows a result by name only: a result value handed to another module, or held by a
- * name that no initializer, assignment, destructuring or local call binds (a callback's parameter, a value an imported
- * function returns), is not followed, nor is one held in an object's member or a class field, returned by a local function,
- * gathered by an array binding's rest element or walked by a for-of over anything but an array literal.
+ * reading reads one module at a time and binds a name to a result by the forms PARSE-AWARE READING lists only; it follows no
+ * other, and leaves quiet: a result handed to another module [other-module]; a function's return value, imported or local
+ * [imported-return, local-return]; a callback's parameter, of an inline or a declared function [callback-parameter,
+ * callback-function]; an object's member or a class field holding one [object-member, class-field]; an array binding's rest
+ * element [array-rest], and an array pattern nested at or past an array literal's first spread (past it the reading binds a
+ * name, never a nested array pattern; the gate's q64) [nested-array-after-spread]; a for-of or an fn.apply over an array a
+ * name holds [for-of-variable, apply-list]; a for-of
+ * declaration's array pattern and a for-of target's pattern [for-of-array-pattern, for-of-pattern-target]; a name a
+ * destructuring assignment binds - a renamed `result` target, an array pattern's element, a target's default -
+ * [assigned-result-property, array-assignment-pattern, assigned-target-default]; a function a later assignment, an object
+ * property, a class field, a getter, a destructuring, a parameter's default or a conditional's arm holds [assigned-helper,
+ * property-arrow-helper, class-field-arrow-helper, getter-helper, destructured-helper, parameter-default-helper,
+ * conditional-helper]; a parameter of a constructor or of a function `new` calls, a function expression or a declaration
+ * [constructor-parameter, new-function-expression, new-function-declaration]; an item of a rest parameter at a constant
+ * index (the reading binds the rest name itself as the parameter at its position) [rest-parameter, rest-parameter-later]; a
+ * spread argument [spread-argument], and so an argument or an fn.apply item after one at its runtime position (the reading
+ * hands by written position, a spread counting as one) [spread-before-argument, apply-list-spread]; a callee reached by an
+ * element access or a comma expression [element-callee, comma-callee]; a tagged
+ * template's substitution [tagged-template]; a partial application by fn.bind, and a call of the function it returns
+ * [bind-partial, bind-then-call]; Reflect.apply [reflect-apply]; a result handed as a call's `this` [this-argument]; a
+ * REFLECTIVE_READS or KEYED_READS call spelled otherwise than its dotted name - an element access, an optional chain, an alias
+ * [reflective-element-callee, reflective-optional-callee, reflective-alias]; and a key name an import also binds, which
+ * resolves by the module's variables, parameters and binding elements alone [imported-key].
  * It binds by name for the whole module, not by scope (wb-qnl8 F5): a name bound to a result in one function reads as bound
- * in every other, a same-named parameter of an unrelated function included, an over-read that can only refuse.
+ * in every other, a same-named parameter of an unrelated function included [module-wide-name], and a call hands its
+ * arguments to every function the FUNCTION TABLE holds under its callee's name or property name, however many
+ * [collision-third-declaration] and whichever of them is declared first - a nested function, an arrow, an object or a class
+ * method beside it [collision-nested-function, collision-nested-arrow, collision-object-method, collision-class-method,
+ * collision-relay, collision-relay-earlier, collision-earlier-declaration]: over-reads that can only refuse (wb-qnls cut #2
+ * U2; the table restated by cut #3).
  * RESIDUALS (named families, each with a pinned quiet row in row R): R1 R-STATUS-WORD a control word rf states as an observation
  *   status surfaces as a status word (the filing admits status words); R2 R-PRODUCER-IDENTITY a control word stated as a bounded
  *   producer identity (cli_version, an engine version) surfaces as that identity; R3 R-PROSE-NAME the document name as two words
@@ -156,6 +245,39 @@
  * claimed result-expression and read form, and keyed quiet rows; F4 the UTF-16 floor and parity pinned at their bounds, a
  * UTF-32 page read by its mark, and an unmarked UTF-16 page under the floor named under R5 with its quiet row; F5 the
  * module-wide binding disclosed.
+ * FOLLOW-UP wb-qnls (landing 598's findings): F1 a read probe per claimed binding form the rows before it reached only through
+ * another form ("||=", "&&=", a for-of target, an array binding's first element past a spread, a for-of item past the first,
+ * a nested array binding, an array-pattern parameter), each red against the gate's mutant of its form (MG-F2c, F2d, F2g, F2i1,
+ * F2o, F2k, F2n); F2 an assignment's value, an inline function called in place and fn.call and fn.apply are parse-aware
+ * readings (the gate's P31-P33), every form NOT CLAIMED names is pinned by a quiet row, and the header's bracketed forms are
+ * held equal to the two probe tables. Refusal #1's respin (cut #2): U1 a probe per shape the gate's surviving mutants narrowed
+ * a claimed form to (GM01-GM07, GM14, GM15, GM20: a later direct argument, fn.call and fn.apply past their first handed item,
+ * a direct call of a function declaring `this`, a class, static and #private method, the relays over a method, an inline
+ * arrow and a function expression) and per weaker survivor (GM08-GM11, GM13, GM16, GM19), and one per shape the seat's battery
+ * found unspelled (the key forms, a wrapped comma operand, array literal, apply list and relay callee, either-arm and any-item
+ * priority, a shorthand `result` binding, an assignment pattern off a bare name result, a spaced reflective callee), each red
+ * against its mutant; U2 an assignment and a for-of target read through their wrappers, every same-named function a callee
+ * names handed the arguments, and each form the reading leaves quiet (a name bound to a bare name result, a function a later
+ * assignment holds, the gate's unnamed forms) named in NOT CLAIMED beside its quiet row. Liveness is claimed at the shapes the
+ * probes spell (PARSE-AWARE READING), never as closed over every narrowing of a form. Refusal #2's respin (cut #3, the
+ * enumerate-the-resolvable form ruling R-B121 binds on the declaration-name family): U1 the FUNCTION TABLE holds a method
+ * under its name's constant string - a string literal or a computed name whose key resolves - (the gate's k01, k02, k41 and
+ * k03, and the relays k40 and k57 over one, each a read probe that reds cut #2's reader), and the header states the table
+ * exactly: what it holds, each beside a probe, and what it leaves out (a computed name resolving
+ * to none, a getter, a destructuring, a parameter's default, a conditional's arm, a `new` call), each beside a quiet row;
+ * refusal #2's seven GN survivors are pinned, a read probe each (GN04 a for-of target through a satisfies clause, a non-null
+ * mark or an angle assertion; GN06 a third same-named declaration; GN18 a class expression's method; GN19 a let and a var
+ * helper; GN26 a member callee named call or apply called directly; GN29 an array pattern element's default; GN30 a
+ * KEYED_READS key a const holds); and its F5 forms (a rest parameter's items, an argument or an fn.apply item after a spread)
+ * are named in NOT CLAIMED beside quiet rows. Refusal #3's respin (cut #4, the FAIL-CLOSED CORE ruling R-B151 binds; the
+ * number-literal reader coverage moved to child wb-zmez): U1 cut #3's table held a number-literal method name under its
+ * value's string as TypeScript normalizes it (1e999 under "Infinity", which a member callee spells: the gate's q18 and its
+ * mutant GP09), never under the digits its header named, so cut #3's "a number literal's digits" is withdrawn; the table
+ * now holds a method only under a name of a pinned kind and fails closed on any other, a number or a bigint literal, a read
+ * probe per shape (an object literal's number-named method, reached by an element access or as q18 by a member callee, a
+ * class declaration's, static or not, a class expression's, and an uncalled bigint-named method); F2 the gate's q64, an
+ * array pattern nested past a spread, is named in NOT CLAIMED beside its quiet row; F3 the gate's MF01 shape, an escaped
+ * string-literal method name, is pinned by a read probe.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -334,8 +456,14 @@ const SURFACE_PINS: Readonly<Record<string, string>> = { "Pi type": "C2", "UI ha
 const UI_LOAD_PROBES: Readonly<Record<string, boolean>> = { [UI_PACKAGE]: true, [`${UI_PACKAGE}/dist/index.js`]: true, [`${UI_PACKAGE}-extra`]: false };
 /** A UI module's way to the rf result of a preview reading, as the probes below spell it. */
 const PROBE_RESULT = "(reading as { source: { result: Record<string, unknown> } }).source.result";
-/** C3's read forms (wb-ycir F1; wb-qnl8 F2 and F3 add one per claimed result-expression and read form): each probe module
- * reaches an rf result member without spelling "result.<member>", and the parse-aware reading must name it. */
+/** C3's read forms (wb-ycir F1; wb-qnl8 F2 and F3 add one per claimed result-expression and read form; wb-qnls F1 and F2 one per
+ * binding form the gate's F1 mutants and P31-P33 named, cut #2 one per shape a refusal #1 U1 or F4 mutant or a seat mutant
+ * narrowed a form to and per form U2 widens, cut #3 one per FUNCTION TABLE form and per refusal #2 GN survivor's shape, and
+ * cut #4 one per shape of a method the table fails closed on and the gate's MF01 shape): each probe module reaches an rf
+ * result member without spelling "result.<member>" or declares a method the table fails closed on, and the parse-aware
+ * reading must name it. Each key is named in brackets beside its form in the header's
+ * PARSE-AWARE READING, and C3 holds the two to each other (headerProbeIds); a probe holds its form live at the shapes it
+ * spells, never beyond them. */
 const READ_PROBES: Readonly<Record<string, string>> = {
   "computed-key": `const part = "blocks";\nexport const rows = ${PROBE_RESULT}[part];\n`,
   "parameter-key": `export const rows = (key: string) => ${PROBE_RESULT}[key];\n`,
@@ -380,10 +508,160 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   // POSITIVE-PROTECTION (owner ruling R754): a comma key resolves to no constant string, so it stays the landed computed read.
   "comma-key": `export const schema = ${PROBE_RESULT}[(0, "schema")];\n`,
   "comma-const-key": `const part = (0, "schema");\nexport const schema = ${PROBE_RESULT}[part];\n`,
+  // wb-qnls F1 (landing 598's PREP F1, the gate's MG-F2c/d/g/i1/o and MG-F2k/n): a probe for each binding form those mutants
+  // narrowed, each reaching the result through that form alone.
+  "or-assigned": `let envelope: Record<string, unknown> | undefined;\nenvelope ||= ${PROBE_RESULT};\nexport const rows = envelope.blocks;\n`,
+  "and-assigned": `let envelope: Record<string, unknown> | undefined = {};\nenvelope &&= ${PROBE_RESULT};\nexport const rows = envelope.blocks;\n`,
+  "for-of-target": `let envelope: Record<string, unknown> = {};\nexport const rows: unknown[] = [];\nfor (envelope of [${PROBE_RESULT}]) rows.push(envelope.blocks);\n`,
+  "array-first-after-spread": `const [envelope] = [...([] as unknown[]), ${PROBE_RESULT}];\nexport const rows = envelope.blocks;\n`,
+  "for-of-later-item": `export const rows: unknown[] = [];\nfor (const envelope of [{} as Record<string, unknown>, ${PROBE_RESULT}, {} as Record<string, unknown>]) rows.push(envelope.blocks);\n`,
+  "nested-array-binding": `const [[envelope]] = [[${PROBE_RESULT}]];\nexport const rows = envelope.blocks;\n`,
+  "parameter-array-pattern": `const blocksOf = ([envelope]: Record<string, unknown>[]) => envelope.blocks;\nexport const rows = blocksOf([${PROBE_RESULT}]);\n`,
+  // wb-qnls F2 (landing 598's PREP F2, the gate's P31-P33): an assignment's value, an inline function called in place, and
+  // fn.call and fn.apply hand a result on.
+  "chained-assign": `let a: Record<string, unknown> = {};\nlet b: Record<string, unknown> = {};\na = b = ${PROBE_RESULT};\nexport const rows = [a.blocks, b];\n`,
+  "assignment-value": `const holder: { envelope?: Record<string, unknown> } = {};\nexport const rows = (holder.envelope = ${PROBE_RESULT}).blocks;\n`,
+  "nullish-assignment-value": `const holder: { envelope?: Record<string, unknown> } = {};\nexport const rows = (holder.envelope ??= ${PROBE_RESULT}).blocks;\n`,
+  "or-assignment-value": `const holder: { envelope?: Record<string, unknown> } = {};\nexport const rows = (holder.envelope ||= ${PROBE_RESULT}).blocks;\n`,
+  "and-assignment-value": `const holder: { envelope?: Record<string, unknown> } = { envelope: {} };\nexport const rows = (holder.envelope &&= ${PROBE_RESULT}).blocks;\n`,
+  "logical-assignment-left": `let envelope: Record<string, unknown> | undefined = ${PROBE_RESULT};\nexport const rows = (envelope ||= {}).blocks;\n`,
+  iife: `export const rows = ((envelope: Record<string, unknown>) => envelope.blocks)(${PROBE_RESULT});\n`,
+  "iife-function": `export const rows = (function (envelope: Record<string, unknown>) {\n  return envelope.blocks;\n})(${PROBE_RESULT});\n`,
+  "call-method": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.call(undefined, ${PROBE_RESULT});\n`,
+  "call-inline": `export const rows = ((envelope: Record<string, unknown>) => envelope.blocks).call(undefined, ${PROBE_RESULT});\n`,
+  "apply-method": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.apply(undefined, [${PROBE_RESULT}]);\n`,
+  "call-this-parameter": `function blocksOf(this: unknown, envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf.call(undefined, ${PROBE_RESULT});\n`,
+  // wb-qnls cut #1: probes for landed forms the rows above reached only through another form - each kind of function the
+  // module declares, a bare name result's member read and destructuring, an assignment pattern's renamed key and rest, an
+  // array spread, a computed keyed read, a reflective read handed the result after another argument, and each reflective read.
+  "function-helper": `function blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "method-helper": `const helpers = {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "function-expression-helper": `const blocksOf = function (envelope: Record<string, unknown>) {\n  return envelope.blocks;\n};\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "named-member": "export const rows = (result: Record<string, unknown>) => result?.blocks;\n",
+  "named-destructured": "export const rows = (result: { blocks: unknown }) => {\n  const { blocks } = result;\n  return blocks;\n};\n",
+  "assigned-renamed": `let rows: unknown;\n({ blocks: rows } = ${PROBE_RESULT});\n`,
+  "assigned-rest": `let all: Record<string, unknown> = {};\n({ ...all } = ${PROBE_RESULT});\n`,
+  "array-spread": `export const items = [...(${PROBE_RESULT} as unknown as unknown[])];\n`,
+  "reflect-get-computed": `export const rows = (key: string) => Reflect.get(${PROBE_RESULT}, key);\n`,
+  "reflective-later-argument": `export const copy = Object.assign({}, ${PROBE_RESULT});\n`,
+  // wb-qnls cut #2 U1 (refusal #1, the gate's GM01-GM07, GM14, GM15 and GM20): the shapes those mutants narrowed a claimed form
+  // to - a later direct argument, fn.call and fn.apply past their first handed item, a direct call of a function declaring
+  // `this`, a class, static and #private method, and the relays over a method, an inline arrow and a function expression.
+  "direct-later-argument": `function blocksOf(_first: unknown, _second: unknown, envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf({}, {}, ${PROBE_RESULT});\n`,
+  "call-later-argument": `const blocksOf = (_first: unknown, _second: unknown, envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.call(undefined, {}, {}, ${PROBE_RESULT});\n`,
+  "apply-later-item": `const blocksOf = (_first: unknown, _second: unknown, envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.apply(undefined, [{}, {}, ${PROBE_RESULT}]);\n`,
+  "this-parameter-direct": `function blocksOf(this: unknown, envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "class-method-helper": `class Helpers {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\n`,
+  "static-method-helper": `class Helpers {\n  static blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = Helpers.blocksOf(${PROBE_RESULT});\n`,
+  "private-method-helper": `class Helpers {\n  #blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n  rows() {\n    return this.#blocksOf(${PROBE_RESULT});\n  }\n}\nexport const rows = new Helpers().rows();\n`,
+  "call-member-relay": `const helpers = {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf.call(helpers, ${PROBE_RESULT});\n`,
+  "apply-member-relay": `const helpers = {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf.apply(helpers, [${PROBE_RESULT}]);\n`,
+  "apply-inline": `export const rows = ((envelope: Record<string, unknown>) => envelope.blocks).apply(undefined, [${PROBE_RESULT}]);\n`,
+  "call-function-expression": `export const rows = (function (this: { label: string }, envelope: Record<string, unknown>) {\n  return [this.label, envelope.blocks];\n}).call({ label: "probe" }, ${PROBE_RESULT});\n`,
+  "apply-function-expression": `export const rows = (function (this: { label: string }, envelope: Record<string, unknown>) {\n  return [this.label, envelope.blocks];\n}).apply({ label: "probe" }, [${PROBE_RESULT}]);\n`,
+  // wb-qnls cut #2 F4 (the gate's weaker survivors GM08-GM11, GM13 by collision-earlier-declaration below, GM16 by
+  // call-function-expression above, GM19): a reflective call's third and first-of-three argument, a for-of item first and last
+  // of three, an array binding's item three past a spread, a bound name as an assignment's value, a conditional's false arm.
+  "reflective-third-argument": `export const copy = Object.assign({}, {}, ${PROBE_RESULT});\n`,
+  "reflective-first-of-three": `export const text = JSON.stringify(${PROBE_RESULT}, null, 2);\n`,
+  "for-of-first-item": `export const rows: unknown[] = [];\nfor (const envelope of [${PROBE_RESULT}, {} as Record<string, unknown>, {} as Record<string, unknown>]) rows.push(envelope.blocks);\n`,
+  "for-of-third-item": `export const rows: unknown[] = [];\nfor (const envelope of [{} as Record<string, unknown>, {} as Record<string, unknown>, ${PROBE_RESULT}]) rows.push(envelope.blocks);\n`,
+  "array-third-after-spread": `const [envelope] = [...([] as unknown[]), {} as Record<string, unknown>, {} as Record<string, unknown>, ${PROBE_RESULT}];\nexport const rows = envelope.blocks;\n`,
+  "assignment-value-name": `const envelope = ${PROBE_RESULT};\nconst holder: { value?: Record<string, unknown> } = {};\nexport const rows = (holder.value = envelope).blocks;\n`,
+  "logical-assignment-value-name": `const envelope = ${PROBE_RESULT};\nconst holder: { value?: Record<string, unknown> } = {};\nexport const rows = (holder.value ??= envelope).blocks;\n`,
+  "conditional-false-arm": `export const rows = (flag: boolean) => (flag ? {} : ${PROBE_RESULT}).blocks;\n`,
+  // wb-qnls cut #2 (the seat's battery over the reader's branches): a shape per branch no row above spelled - a wrapped comma
+  // operand, the key forms, a string-keyed binding, either-arm and any-item priority, a wrapped array literal, apply list and
+  // relay callee, a shorthand `result` binding, an assignment pattern off a bare name result, a spaced reflective callee, an
+  // assignment pattern's computed key, and the module-wide name binding.
+  "comma-wrapped-operand": `export const rows = (0, ${PROBE_RESULT} as Record<string, unknown>).blocks;\n`,
+  "let-key": `let part = "blocks";\npart = "blocks";\nexport const rows = ${PROBE_RESULT}[part];\n`,
+  "conflicting-key": `export const rows = () => {\n  const part = "blocks";\n  return ${PROBE_RESULT}[part];\n};\nexport const other = () => {\n  const part = "schema";\n  return part;\n};\n`,
+  "shadowed-parameter-key": `const part = "schema";\nexport const rows = (part: string) => ${PROBE_RESULT}[part];\n`,
+  "shadowed-binding-key": `const part = "schema";\nexport const rows = ({ part }: { part: string }) => ${PROBE_RESULT}[part];\n`,
+  "template-const-key": `const part = \`blocks\`;\nexport const rows = ${PROBE_RESULT}[part];\n`,
+  "template-key": `export const rows = ${PROBE_RESULT}[\`blocks\`];\n`,
+  "sum-key": `export const rows = ${PROBE_RESULT}["blo" + "cks"];\n`,
+  "template-expression-key": `const part = "block";\nexport const rows = ${PROBE_RESULT}[\`\${part}s\`];\n`,
+  "asserted-key": `export const rows = ${PROBE_RESULT}["blocks" as string];\n`,
+  "string-key-binding": `export const { "blocks": rows } = ${PROBE_RESULT};\n`,
+  "mixed-arms": `export const copy = (result: object) => ({ ...(result ?? ${PROBE_RESULT}) });\n`,
+  "mixed-items": `export const rows = (result: Record<string, unknown>) => {\n  const found: unknown[] = [];\n  for (const envelope of [result, ${PROBE_RESULT}]) found.push(envelope.blocks);\n  return found;\n};\n`,
+  "array-binding-asserted": `const [, envelope] = [{}, ${PROBE_RESULT}] as const;\nexport const rows = envelope.blocks;\n`,
+  "apply-asserted-list": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.apply(undefined, [${PROBE_RESULT}] as const);\n`,
+  "call-wrapped-callee": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = (blocksOf.call)(undefined, ${PROBE_RESULT});\n`,
+  "result-shorthand-binding": "const { result } = (reading as { source: { result: Record<string, unknown> } }).source;\nexport const copy = { ...result };\n",
+  "for-of-asserted-list": `export const rows: unknown[] = [];\nfor (const envelope of [${PROBE_RESULT}] as const) rows.push(envelope.blocks);\n`,
+  "named-assigned": "export const rows = (result: { blocks: unknown }) => {\n  let blocks: unknown;\n  ({ blocks } = result);\n  return blocks;\n};\n",
+  "reflective-spaced-callee": `export const rows = Object\n  .values(${PROBE_RESULT});\n`,
+  "assigned-computed": `let rows: unknown;\nexport const read = (key: string) => ({ [key]: rows } = ${PROBE_RESULT});\n`,
+  "module-wide-name": `export const first = (envelope = ${PROBE_RESULT}) => envelope;\nexport const second = (envelope: Record<string, unknown>) => envelope.blocks;\n`,
+  // wb-qnls cut #2 U2 (refusal #1): an assignment or for-of target through its wrappers, and every same-named function a
+  // callee names, whichever is declared first (each reads nothing on cut #1's reader).
+  "paren-assigned-target": `let envelope: Record<string, unknown> = {};\n(envelope) = ${PROBE_RESULT};\nexport const rows = envelope.blocks;\n`,
+  "paren-logical-target": `let envelope: Record<string, unknown> | undefined;\n(envelope) ||= ${PROBE_RESULT};\nexport const rows = envelope.blocks;\n`,
+  "asserted-assigned-target": `let envelope: unknown;\n(envelope as Record<string, unknown>) = ${PROBE_RESULT};\nexport const rows = (envelope as Record<string, unknown>).blocks;\n`,
+  "angle-asserted-target": `let envelope: unknown;\n(<Record<string, unknown>>envelope) = ${PROBE_RESULT};\nexport const rows = (envelope as Record<string, unknown>).blocks;\n`,
+  "satisfied-target": `let envelope: Record<string, unknown> = {};\n(envelope satisfies Record<string, unknown>) = ${PROBE_RESULT};\nexport const rows = envelope.blocks;\n`,
+  "non-null-assigned-target": `let envelope: Record<string, unknown> | undefined;\nenvelope! = ${PROBE_RESULT};\nexport const rows = envelope.blocks;\n`,
+  "paren-for-of-target": `let envelope: Record<string, unknown> = {};\nexport const rows: unknown[] = [];\nfor ((envelope) of [${PROBE_RESULT}]) rows.push(envelope.blocks);\n`,
+  "asserted-for-of-target": `let envelope: unknown;\nexport const rows: unknown[] = [];\nfor ((envelope as Record<string, unknown>) of [${PROBE_RESULT}]) rows.push((envelope as Record<string, unknown>).blocks);\n`,
+  "collision-nested-function": `function blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\nexport function other() {\n  function blocksOf(item: unknown) {\n    return item;\n  }\n  return blocksOf(1);\n}\n`,
+  "collision-nested-arrow": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf(${PROBE_RESULT});\nexport const other = () => {\n  const blocksOf = (item: unknown) => item;\n  return blocksOf(1);\n};\n`,
+  "collision-object-method": `function blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\nexport const helpers = {\n  blocksOf(item: unknown) {\n    return item;\n  },\n};\n`,
+  "collision-class-method": `function blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\nexport class Other {\n  blocksOf(item: unknown) {\n    return item;\n  }\n}\n`,
+  "collision-relay": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.call(undefined, ${PROBE_RESULT});\nexport const helpers = {\n  blocksOf(item: unknown) {\n    return item;\n  },\n};\n`,
+  "collision-relay-earlier": `export const helpers = {\n  blocksOf(item: unknown) {\n    return item;\n  },\n};\nconst blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.call(undefined, ${PROBE_RESULT});\n`,
+  "collision-earlier-declaration": `export function other() {\n  function blocksOf(item: unknown) {\n    return item;\n  }\n  return blocksOf(1);\n}\nfunction blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  // wb-qnls cut #3 U1 (refusal #2, the gate's k01, k02, k41, k03, k40 and k57; ruling R-B121): the FUNCTION TABLE holds a
+  // method under its name's constant string - a string literal or a computed name whose key resolves -, reached directly and by
+  // the relays; each reads nothing on cut #2's reader.
+  "string-named-method": `const helpers = {\n  "blocksOf"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "string-named-class-method": `class Helpers {\n  "blocksOf"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\n`,
+  "string-named-static-method": `class Helpers {\n  static "blocksOf"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = Helpers.blocksOf(${PROBE_RESULT});\n`,
+  "const-named-method": `const name = "blocksOf";\nconst helpers = {\n  [name](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "const-named-class-method": `const name = "blocksOf";\nclass Helpers {\n  [name](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\n`,
+  "literal-named-method": `const helpers = {\n  ["blocksOf"](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "template-named-method": `const helpers = {\n  [\`blocksOf\`](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "sum-named-method": `const helpers = {\n  ["blocks" + "Of"](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "template-expression-named-method": `const prefix = "blocks";\nconst helpers = {\n  [\`\${prefix}Of\`](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "call-string-named-relay": `const helpers = {\n  "blocksOf"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf.call(helpers, ${PROBE_RESULT});\n`,
+  "apply-string-named-relay": `const helpers = {\n  "blocksOf"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf.apply(helpers, [${PROBE_RESULT}]);\n`,
+  // wb-qnls cut #3 (refusal #2's F1, the gate's seven GN survivors, each a shape a claimed form was narrowed at): a for-of
+  // target through a satisfies clause, a non-null mark or an angle assertion (GN04), a third same-named declaration (GN06), a
+  // class expression's method (GN18), a let and a var helper (GN19), a member callee named call or apply called directly
+  // (GN26), an array pattern element's default (GN29) and a KEYED_READS key a const holds (GN30); and two forms the FUNCTION
+  // TABLE's statement claims besides: a helper initializer through its wrappers and a member callee reaching a function.
+  "satisfied-for-of-target": `let envelope: Record<string, unknown> = {};\nexport const rows: unknown[] = [];\nfor ((envelope satisfies Record<string, unknown>) of [${PROBE_RESULT}]) rows.push(envelope.blocks);\n`,
+  "non-null-for-of-target": `let envelope: Record<string, unknown> | undefined;\nexport const rows: unknown[] = [];\nfor (envelope! of [${PROBE_RESULT}]) rows.push(envelope.blocks);\n`,
+  "angle-asserted-for-of-target": `let envelope: unknown;\nexport const rows: unknown[] = [];\nfor ((<Record<string, unknown>>envelope) of [${PROBE_RESULT}]) rows.push((envelope as Record<string, unknown>).blocks);\n`,
+  "collision-third-declaration": `export const first = {\n  blocksOf(item: unknown) {\n    return item;\n  },\n};\nexport const second = {\n  blocksOf(item: unknown) {\n    return item;\n  },\n};\nfunction blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "class-expression-method-helper": `const Helpers = class {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\n`,
+  "let-helper": `let blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "var-helper": `var blocksOf = function (envelope: Record<string, unknown>) {\n  return envelope.blocks;\n};\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "call-named-method": `const helpers = {\n  call(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.call(${PROBE_RESULT});\n`,
+  "apply-named-method": `const helpers = {\n  apply(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.apply(${PROBE_RESULT});\n`,
+  "array-binding-default": `const [envelope = ${PROBE_RESULT}] = [] as Record<string, unknown>[];\nexport const rows = envelope.blocks;\n`,
+  "reflect-get-const-key": `const part = "blocks";\nexport const rows = Reflect.get(${PROBE_RESULT}, part);\n`,
+  "wrapped-helper-initializer": `const blocksOf = ((envelope: Record<string, unknown>) => envelope.blocks) as (envelope: Record<string, unknown>) => unknown;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "member-callee-function": `function blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nconst helpers = { blocksOf };\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  // wb-qnls cut #4 (refusal #3 U1, ruling R-B151's FAIL-CLOSED CORE): a method a number literal names - of an object literal,
+  // reached by an element access or, for 1e999, which TypeScript holds under "Infinity", by a member callee (the gate's q18),
+  // of a class declaration, static or not, or of a class expression - and an uncalled method a bigint literal names each
+  // refuse their module; and (refusal #3 F3, the gate's MF01) a string-literal name is held under its value, escapes decoded.
+  "numeric-named-method": `const helpers = {\n  0(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers[0](${PROBE_RESULT});\n`,
+  "infinity-named-method": `const helpers = {\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "numeric-named-class-method": `class Helpers {\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().Infinity(${PROBE_RESULT});\n`,
+  "numeric-named-static-method": `class Helpers {\n  static 1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = Helpers.Infinity(${PROBE_RESULT});\n`,
+  "numeric-named-class-expression-method": `const Helpers = class {\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\nexport const rows = new Helpers().Infinity(${PROBE_RESULT});\n`,
+  "bigint-named-method": "export const helpers = {\n  1n(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\n",
+  "escaped-string-named-method": `const helpers = {\n  "blocks\\u004ff"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  ...Object.fromEntries(REFLECTIVE_READS.map(call => [`reflective-${call}`, `export const rows = ${call}(${PROBE_RESULT});\n`])),
 };
 /** The forms C3's parse-aware reading leaves quiet: a constant key naming another member, a bare name result spread, read for
  * another member or used as a string (today's Pi UI code reads agent and tool results so), a keyed read keyed by another member
- * (wb-qnl8 F3) and the element of an array binding beside a result (wb-qnl8 F2). */
+ * (wb-qnl8 F3), the element of an array binding beside a result (wb-qnl8 F2), a bare name result walked or read reflectively
+ * (wb-qnls), and every form the header's NOT CLAIMED names (wb-qnls F2), each key in brackets beside its form there. */
 const QUIET_PROBES: Readonly<Record<string, string>> = {
   "other-member": `export const schema = ${PROBE_RESULT}["schema"];\n`,
   "bare-spread": "export const copy = (result: object) => ({ ...result, usage: 1 });\n",
@@ -394,6 +672,63 @@ const QUIET_PROBES: Readonly<Record<string, string>> = {
   "descriptor-other-member": `export const schema = Object.getOwnPropertyDescriptor(${PROBE_RESULT}, "schema");\n`,
   // wb-qnl8 F2: an array binding binds by position, so the element beside a result reads nothing.
   "array-other-element": `const [envelope, other] = [${PROBE_RESULT}, {} as Record<string, unknown>];\nexport const rows = [envelope, other.blocks];\n`,
+  // wb-qnls: a bare name result is never read for a for-in walk, a reflective read or a keyed read (bare-spread: nor spread).
+  "bare-for-in": "export const keys = (result: object) => {\n  const found: string[] = [];\n  for (const key in result) found.push(key);\n  return found;\n};\n",
+  "bare-reflective": "export const values = (result: object) => Object.values(result);\n",
+  "bare-keyed": 'export const rows = (result: object) => Reflect.get(result, "blocks");\n',
+  // wb-qnls F2: every form NOT CLAIMED names, each pinned quiet, so a reading widened to follow one moves its row to READ_PROBES.
+  "other-module": `import { blocksOf } from "./elsewhere.js";\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "imported-return": 'import { resultOf } from "./elsewhere.js";\nexport const rows = resultOf().blocks;\n',
+  "local-return": `const resultOf = () => ${PROBE_RESULT};\nexport const rows = resultOf().blocks;\n`,
+  "callback-parameter": `export const rows = [${PROBE_RESULT}].map(envelope => envelope.blocks);\n`,
+  "object-member": `const holder = { envelope: ${PROBE_RESULT} };\nexport const rows = holder.envelope.blocks;\n`,
+  "class-field": `class Holder {\n  envelope = ${PROBE_RESULT};\n}\nexport const rows = new Holder().envelope.blocks;\n`,
+  "array-rest": `const [...rest] = [${PROBE_RESULT}];\nexport const rows = rest[0]?.blocks;\n`,
+  "for-of-variable": `const list = [${PROBE_RESULT}];\nexport const rows: unknown[] = [];\nfor (const envelope of list) rows.push(envelope.blocks);\n`,
+  "apply-list": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nconst list = [${PROBE_RESULT}];\nexport const rows = blocksOf.apply(undefined, list);\n`,
+  "assigned-result-property": "let envelope: Record<string, unknown> = {};\n({ result: envelope } = (reading as { source: { result: Record<string, unknown> } }).source);\nexport const rows = envelope.blocks;\n",
+  "array-assignment-pattern": `let envelope: Record<string, unknown> = {};\n[envelope] = [${PROBE_RESULT}];\nexport const rows = envelope.blocks;\n`,
+  "assigned-target-default": `let envelope: Record<string, unknown> = {};\n({ envelope = ${PROBE_RESULT} } = {} as { envelope?: Record<string, unknown> });\nexport const rows = envelope.blocks;\n`,
+  "bind-partial": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.bind(undefined, ${PROBE_RESULT})();\n`,
+  "reflect-apply": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = Reflect.apply(blocksOf, undefined, [${PROBE_RESULT}]);\n`,
+  "this-argument": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.call(${PROBE_RESULT}, {});\n`,
+  // wb-qnls cut #2 (F3 and U2 of refusal #1, and the gate's unnamed forms): each form NOT CLAIMED adds, pinned quiet; a key
+  // keyed by a number reads nothing too.
+  "named-alias": "export const rows = (result: Record<string, unknown>) => {\n  const envelope = result;\n  return envelope.blocks;\n};\n",
+  "callback-function": `function blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = [${PROBE_RESULT}].map(blocksOf);\n`,
+  "for-of-array-pattern": `export const rows: unknown[] = [];\nfor (const [envelope] of [[${PROBE_RESULT}]]) rows.push(envelope.blocks);\n`,
+  "for-of-pattern-target": `let blocks: unknown;\nfor ({ blocks } of [${PROBE_RESULT}]) void blocks;\nexport const rows = blocks;\n`,
+  "assigned-helper": `let blocksOf: (envelope: Record<string, unknown>) => unknown;\nblocksOf = envelope => envelope.blocks;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "property-arrow-helper": `const helpers = { blocksOf: (envelope: Record<string, unknown>) => envelope.blocks };\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "class-field-arrow-helper": `class Helpers {\n  blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\n}\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\n`,
+  "constructor-parameter": `class Holder {\n  rows: unknown;\n  constructor(envelope: Record<string, unknown>) {\n    this.rows = envelope.blocks;\n  }\n}\nexport const rows = new Holder(${PROBE_RESULT}).rows;\n`,
+  "new-function-expression": `export const rows = new (function (this: { rows: unknown }, envelope: Record<string, unknown>) {\n  this.rows = envelope.blocks;\n} as unknown as new (envelope: Record<string, unknown>) => { rows: unknown })(${PROBE_RESULT}).rows;\n`,
+  "spread-argument": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf(...[${PROBE_RESULT}]);\n`,
+  "element-callee": `const helpers = {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nconst name = "blocksOf";\nexport const rows = helpers[name](${PROBE_RESULT});\n`,
+  "comma-callee": `function blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = (0, blocksOf)(${PROBE_RESULT});\n`,
+  "tagged-template": `const blocksOf = (_strings: TemplateStringsArray, envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf\`\${${PROBE_RESULT}}\`;\n`,
+  "bind-then-call": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nconst bound = blocksOf.bind(undefined);\nexport const rows = bound(${PROBE_RESULT});\n`,
+  "reflective-element-callee": `export const rows = Object["values"](${PROBE_RESULT});\n`,
+  "reflective-optional-callee": `export const rows = Object?.values(${PROBE_RESULT});\n`,
+  "reflective-alias": `const { values } = Object;\nexport const rows = values(${PROBE_RESULT});\n`,
+  "imported-key": `import { part } from "./elsewhere.js";\nexport const rows = ${PROBE_RESULT}[part];\nexport const other = () => {\n  const part = "schema";\n  return part;\n};\n`,
+  "numeric-key": `export const first = ${PROBE_RESULT}[0];\n`,
+  // wb-qnls cut #3 (refusal #2's F5 and the FUNCTION TABLE's statement): each form NOT CLAIMED or the table's statement adds,
+  // pinned quiet - a rest parameter's items, an argument or an fn.apply item after a spread, a getter, a destructuring, a
+  // parameter's default or a conditional's arm holding a function, a function declaration `new` calls and a computed name
+  // resolving to none (cut #3's quiet number-named method reads since cut #4, which fails closed on it).
+  "rest-parameter": `function blocksOf(...envelopes: Record<string, unknown>[]) {\n  return envelopes[0]?.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "rest-parameter-later": `function blocksOf(...envelopes: Record<string, unknown>[]) {\n  return envelopes[1]?.blocks;\n}\nexport const rows = blocksOf({}, ${PROBE_RESULT});\n`,
+  "spread-before-argument": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf(...([] as []), ${PROBE_RESULT});\n`,
+  "apply-list-spread": `const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf.apply(undefined, [...([] as []), ${PROBE_RESULT}]);\n`,
+  "getter-helper": `const helpers = {\n  get blocksOf() {\n    return (envelope: Record<string, unknown>) => envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "destructured-helper": `const { blocksOf } = { blocksOf: (envelope: Record<string, unknown>) => envelope.blocks };\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "parameter-default-helper": `export const rows = (blocksOf = (envelope: Record<string, unknown>) => envelope.blocks) => blocksOf(${PROBE_RESULT});\n`,
+  "conditional-helper": `export const rows = (flag: boolean) => {\n  const blocksOf = flag ? (envelope: Record<string, unknown>) => envelope.blocks : (envelope: Record<string, unknown>) => envelope.output;\n  return blocksOf(${PROBE_RESULT});\n};\n`,
+  "new-function-declaration": `function Holder(this: { rows: unknown }, envelope: Record<string, unknown>) {\n  this.rows = envelope.blocks;\n}\nexport const rows = new (Holder as unknown as new (envelope: Record<string, unknown>) => { rows: unknown })(${PROBE_RESULT}).rows;\n`,
+  "unresolved-named-method": `let blocksOf = "blocksOf";\nblocksOf = "blocksOf";\nconst helpers = {\n  [blocksOf](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  // wb-qnls cut #4 (refusal #3 F2, the gate's q64): an array pattern nested at or past an array literal's first spread.
+  "nested-array-after-spread": `const [[envelope]] = [...([] as Record<string, unknown>[][]), [${PROBE_RESULT}]];\nexport const rows = envelope.blocks;\n`,
 };
 
 function needleNamed(id: string): string {
@@ -637,6 +972,15 @@ function headerResiduals(): string[] {
   if (start < 0 || end < 0) throw new Error("this file's header holds no RESIDUALS list");
   const block = text.slice(start, end).replace(/\n \*\s*/g, " ");
   return [...block.matchAll(/\bR(\d+) (R-[A-Z]+(?:-[A-Z]+)*)/g)].map(match => `R${match[1]} ${match[2]}`);
+}
+/** The probe keys this file's header names in brackets (wb-qnls): the PARSE-AWARE READING forms and the NOT CLAIMED forms,
+ * `reflective-<call>` read as one key per REFLECTIVE_READS call, sorted and each once. */
+function headerProbeIds(): string[] {
+  const text = readFileSync(fileURLToPath(import.meta.url), "utf8");
+  const header = text.slice(0, text.indexOf(" */")).replace(/\n \*\s*/g, " ");
+  const named = [...header.matchAll(/\[([a-z<>.-]+(?:, [a-z<>.-]+)*)\]/g)].flatMap(match => (match[1] ?? "").split(", "));
+  const keys = named.flatMap(name => (name === "reflective-<call>" ? REFLECTIVE_READS.map(call => `reflective-${call}`) : [name]));
+  return [...new Set(keys)].sort();
 }
 
 /** A text as the census reads it: NFKC-folded, every default-ignorable code point (an invisible joiner or space) removed. */
@@ -1134,6 +1478,13 @@ function unwrapped(node: ts.Expression): ts.Expression {
   }
   return current;
 }
+/** An assignment's or a for-of's target name (wb-qnls cut #2 U2): the identifier the target is, bare or through parentheses,
+ * type assertions, a satisfies clause or a non-null mark (unwrapped, which takes an await off too: never a valid target);
+ * undefined for any other target. */
+function targetName(node: ts.Expression): ts.Identifier | undefined {
+  const target = unwrapped(node);
+  return ts.isIdentifier(target) ? target : undefined;
+}
 /** The value a result expression stands for (wb-qnl8 F2): unwrapped, a comma expression read as its last operand. Keys keep the
  * landed reading: a comma key resolves to no constant string (keyOf), so it stays a computed read and no landed refusal is lost. */
 function heldValue(node: ts.Expression): ts.Expression {
@@ -1157,8 +1508,9 @@ function constStringsOf(file: ts.SourceFile): Map<string, string | null> {
   visit(file);
   return values;
 }
-/** A key's constant string: a string or number literal, a template or a "+" sum whose parts all resolve, or a name every binding of
- * which holds that one const string; undefined when it resolves to none. */
+/** A key's constant string: a string or number literal, a template or a "+" sum whose parts all resolve, or a name every
+ * variable, parameter and binding element of which holds that one const string (constStringsOf; an import of the name is not
+ * counted, NOT CLAIMED's [imported-key]); undefined when it resolves to none. */
 function keyOf(node: ts.Expression, consts: ReadonlyMap<string, string | null>): string | undefined {
   const key = unwrapped(node);
   if (ts.isStringLiteral(key) || ts.isNoSubstitutionTemplateLiteral(key) || ts.isNumericLiteral(key)) return key.text;
@@ -1194,29 +1546,48 @@ const ASSIGNMENTS: readonly ts.SyntaxKind[] = [
   ts.SyntaxKind.BarBarEqualsToken,
   ts.SyntaxKind.AmpersandAmpersandEqualsToken,
 ];
-/** C3's parse-aware reading of one module (wb-ycir F1, widened by wb-qnl8 F2): every read of a RESULT_MEMBERS member off a result
- * expression, as `<line> <form>`, so a UI module that reaches the rf result's blocks without spelling "result.<member>" reads as
- * one that spells it. A result expression is a result member read, a name bound to one (the initializer of a declaration, a
- * parameter or a binding element, an assignment's right side - a logical assignment's too -, either arm of "??", "||", "&&" or
- * "?:", a destructured `result` property, an element of an array binding over an array literal, a for-of declaration or target
- * over an array literal holding one, or an argument of a call of a function the module declares, which binds its parameter), or
- * any name result; parentheses, type assertions, satisfies clauses, non-null marks and awaits are taken off, and off a result
- * expression a comma expression's left operands too (heldValue; a comma key stays a computed one). A read off one is a
- * member read of a member ("member"), an element access keyed by a member or by a key that resolves to no constant string
- * ("element"), a destructuring - a declaration, a parameter so bound, an assignment, or a pattern nested under a `result`
- * property - naming a member, computing a key that resolves to one or to none, or gathering a rest ("binding", "assigned");
- * and, off a result member read or a name bound to one (never a bare name result, which Pi's agent and tool results use), a
- * spread, a for-in walk, a REFLECTIVE_READS call, or a KEYED_READS call keyed as an element access is ("spread", "for-in",
- * "reflective"). */
+/** The logical assignments (wb-qnls F2): the value of one is its left side's or its right side's, as an ARMS operator's is. */
+const LOGICAL_ASSIGNMENTS: readonly ts.SyntaxKind[] = ASSIGNMENTS.filter(kind => kind !== ts.SyntaxKind.EqualsToken);
+/** C3's parse-aware reading of one module (wb-ycir F1, widened by wb-qnl8 F2 and by wb-qnls F2 and U2): every read of a RESULT_MEMBERS member
+ * off a result expression, as `<line> <form>` - "member", "element", "binding", "assigned", "spread", "for-in" or "reflective",
+ * with the member read, "computed" for a key that resolves to no constant string, or "rest" -, and every method named outside
+ * the FUNCTION TABLE's pinned kinds, as "declaration unpinned" (cut #4, failing closed), so a UI module that reaches the
+ * rf result's blocks without spelling "result.<member>" reads as one that spells it. The reads, the result expressions and the
+ * forms it leaves quiet are the header's PARSE-AWARE READING and NOT CLAIMED lists, each form beside the probes that hold it
+ * (READ_PROBES, QUIET_PROBES). Names bind to a result in passes until none grows - a declaration's, a parameter's or a binding
+ * element's initializer, an assignment to a name, bare or wrapped (targetName; a logical one included), a destructured `result`
+ * property, an array binding over an array literal, a for-of over one to its declared or target name, and the parameters of
+ * every same-named FUNCTION TABLE function (collect, wb-qnls cut #3) a call hands its arguments to (handOffsOf) -, then every read
+ * off a result expression (holdOf: a result member read, a name bound to one or any name result, through heldValue, either
+ * arm of ARMS, "?:" or a logical assignment, and a plain assignment's right side) is noted; off a bare name result only the
+ * member, element and destructuring reads are. */
 function resultReadsOf(file: ts.SourceFile): string[] {
   const consts = constStringsOf(file);
-  const functions = new Map<string, readonly ts.ParameterDeclaration[]>();
+  // The FUNCTION TABLE (wb-qnls cut #3 U1, ruling R-B121): a function declaration or a method under its name's constant string
+  // (propertyKeyOf: an identifier, a #private name, a string literal, or a computed name whose key resolves; cut #4, ruling
+  // R-B151, fails closed on a method named by any other kind, a number or a bigint literal), and a
+  // variable a name declares whose initializer, read through its wrappers, is an arrow or a function expression; nothing else.
+  // Each same-named declaration is kept (wb-qnls cut #2 U2): a call hands its arguments to all of them, so a name collision
+  // over-reads and never hides the function the call site means.
+  const functions = new Map<string, (readonly ts.ParameterDeclaration[])[]>();
+  const declare = (name: string, parameters: readonly ts.ParameterDeclaration[]): void => {
+    functions.set(name, [...(functions.get(name) ?? []), parameters]);
+  };
+  const unpinned: ts.PropertyName[] = [];
   const collect = (node: ts.Node): void => {
-    if ((ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) && node.name !== undefined && (ts.isIdentifier(node.name) || ts.isPrivateIdentifier(node.name))) {
-      functions.set(node.name.text, node.parameters);
+    // FAIL CLOSED (wb-qnls cut #4, ruling R-B151): a method named outside the pinned kinds - an identifier, a #private name,
+    // a string literal, a computed name -, so by a number or a bigint literal, is held under no name; its name is noted.
+    if (ts.isMethodDeclaration(node) && !(ts.isIdentifier(node.name) || ts.isPrivateIdentifier(node.name) || ts.isStringLiteral(node.name) || ts.isComputedPropertyName(node.name))) {
+      unpinned.push(node.name);
+      ts.forEachChild(node, collect);
+      return;
+    }
+    if ((ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) && node.name !== undefined) {
+      const name = propertyKeyOf(node.name, consts);
+      if (name !== undefined) declare(name, node.parameters);
     } else if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
       const value = unwrapped(node.initializer);
-      if (ts.isArrowFunction(value) || ts.isFunctionExpression(value)) functions.set(node.name.text, value.parameters);
+      if (ts.isArrowFunction(value) || ts.isFunctionExpression(value)) declare(node.name.text, value.parameters);
     }
     ts.forEachChild(node, collect);
   };
@@ -1227,7 +1598,9 @@ function resultReadsOf(file: ts.SourceFile): string[] {
     const value = heldValue(node);
     if ((ts.isPropertyAccessExpression(value) && value.name.text === "result") || (ts.isElementAccessExpression(value) && keyOf(value.argumentExpression, consts) === "result")) return "bound";
     if (ts.isIdentifier(value)) return bound.has(value.text) ? "bound" : value.text === "result" ? "named" : undefined;
-    const either = ts.isBinaryExpression(value) && ARMS.includes(value.operatorToken.kind);
+    // wb-qnls F2: a plain assignment's value is its right side; a logical assignment's is either side, as an ARMS operator's.
+    if (ts.isBinaryExpression(value) && value.operatorToken.kind === ts.SyntaxKind.EqualsToken) return holdOf(value.right);
+    const either = ts.isBinaryExpression(value) && (ARMS.includes(value.operatorToken.kind) || LOGICAL_ASSIGNMENTS.includes(value.operatorToken.kind));
     const arms = ts.isConditionalExpression(value) ? [value.whenTrue, value.whenFalse] : either ? [value.left, value.right] : [];
     const holds = arms.map(holdOf);
     return holds.includes("bound") ? "bound" : holds.includes("named") ? "named" : undefined;
@@ -1266,28 +1639,55 @@ function resultReadsOf(file: ts.SourceFile): string[] {
     }
     return grown;
   };
+  /** The parameter lists of the functions a callee names, a declared `this` parameter aside (it takes no argument; wb-qnls F2):
+   * an inline function's own (wb-qnls F2), or those of every function the module declares under the callee's name or its
+   * property name (wb-qnls cut #2 U2: each same-named declaration); none for any other callee. */
+  const parametersOf = (callee: ts.Expression): (readonly ts.ParameterDeclaration[])[] => {
+    const target = unwrapped(callee);
+    const name = ts.isIdentifier(target) ? target.text : ts.isPropertyAccessExpression(target) ? target.name.text : undefined;
+    const declared = ts.isArrowFunction(target) || ts.isFunctionExpression(target) ? [target.parameters] : name === undefined ? [] : (functions.get(name) ?? []);
+    return declared.map(parameters => parameters.filter(parameter => !(ts.isIdentifier(parameter.name) && parameter.name.text === "this")));
+  };
+  /** What a call hands to which parameters, each by position: its arguments to every function its callee names, and (wb-qnls
+   * F2) for fn.call its arguments from the second on, for fn.apply the items of an array literal second argument, to every
+   * fn's. */
+  const handOffsOf = (call: ts.CallExpression): { parameters: readonly ts.ParameterDeclaration[]; handed: readonly ts.Expression[] }[] => {
+    const callee = unwrapped(call.expression);
+    const found: { parameters: readonly ts.ParameterDeclaration[]; handed: readonly ts.Expression[] }[] = [];
+    const direct = parametersOf(callee);
+    for (const parameters of direct) found.push({ parameters, handed: call.arguments });
+    if (!ts.isPropertyAccessExpression(callee)) return found;
+    const relayed = parametersOf(callee.expression);
+    const list = call.arguments[1] === undefined ? undefined : unwrapped(call.arguments[1]);
+    for (const parameters of relayed) {
+      if (callee.name.text === "call") found.push({ parameters, handed: call.arguments.slice(1) });
+      if (callee.name.text === "apply" && list !== undefined && ts.isArrayLiteralExpression(list)) found.push({ parameters, handed: list.elements });
+    }
+    return found;
+  };
   let grew = true;
   while (grew) {
     grew = false;
     const visit = (node: ts.Node): void => {
       if ((ts.isVariableDeclaration(node) || ts.isParameter(node)) && node.initializer !== undefined) grew = bindValue(node.name, node.initializer) || grew;
-      else if (ts.isBinaryExpression(node) && ASSIGNMENTS.includes(node.operatorToken.kind) && ts.isIdentifier(node.left)) grew = bind(node.left, holdOf(node.right)) || grew;
-      else if (ts.isBindingElement(node) && node.dotDotDotToken === undefined) {
+      else if (ts.isBinaryExpression(node) && ASSIGNMENTS.includes(node.operatorToken.kind)) {
+        const target = targetName(node.left);
+        if (target !== undefined) grew = bind(target, holdOf(node.right)) || grew;
+      } else if (ts.isBindingElement(node) && node.dotDotDotToken === undefined) {
         const property = node.propertyName ?? (ts.isIdentifier(node.name) ? node.name : undefined);
         if (property !== undefined && propertyKeyOf(property, consts) === "result") grew = bind(node.name, "bound") || grew;
         if (node.initializer !== undefined) grew = bindValue(node.name, node.initializer) || grew;
       } else if (ts.isForOfStatement(node)) {
-        const target = ts.isVariableDeclarationList(node.initializer) ? node.initializer.declarations[0]?.name : ts.isIdentifier(node.initializer) ? node.initializer : undefined;
+        const target = ts.isVariableDeclarationList(node.initializer) ? node.initializer.declarations[0]?.name : targetName(node.initializer);
         const walked = unwrapped(node.expression);
         if (target !== undefined && ts.isArrayLiteralExpression(walked)) grew = bind(target, itemsHold(walked.elements)) || grew;
       } else if (ts.isCallExpression(node)) {
-        const callee = unwrapped(node.expression);
-        const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : undefined;
-        const parameters = name === undefined ? undefined : functions.get(name);
-        node.arguments.forEach((argument, index) => {
-          const parameter = parameters?.[index];
-          if (parameter !== undefined) grew = bindValue(parameter.name, argument) || grew;
-        });
+        for (const { parameters, handed } of handOffsOf(node)) {
+          handed.forEach((argument, index) => {
+            const parameter = parameters[index];
+            if (parameter !== undefined) grew = bindValue(parameter.name, argument) || grew;
+          });
+        }
       }
       ts.forEachChild(node, visit);
     };
@@ -1315,6 +1715,8 @@ function resultReadsOf(file: ts.SourceFile): string[] {
       nestedAssigned(property.initializer);
     }
   };
+  // FAIL CLOSED (cut #4): a method collect holds under no name refuses its module, whatever calls it.
+  for (const name of unpinned) note(name, "declaration unpinned");
   const visit = (node: ts.Node): void => {
     if (ts.isPropertyAccessExpression(node)) {
       if (holdOf(node.expression) !== undefined && RESULT_MEMBERS.includes(node.name.text)) note(node, `member ${node.name.text}`);
@@ -1942,6 +2344,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(probes.loads, "the TUI package and any subpath of it make a UI module, a lookalike package does not").toStrictEqual(UI_LOAD_PROBES);
     expect(Object.entries(probes.reads).filter(([, found]) => found.length === 0).map(([id]) => id), "every read form a probe states is read").toStrictEqual([]);
     expect(Object.entries(probes.quiet).filter(([, found]) => found.length > 0).map(([id]) => id), "the quiet forms read nothing").toStrictEqual([]);
+    // wb-qnls: the header claims exactly the pinned forms - every probe is named in its brackets, and every bracketed name is a probe.
+    expect(headerProbeIds(), "the header's bracketed forms: exactly the read and quiet probes").toStrictEqual([...Object.keys(READ_PROBES), ...Object.keys(QUIET_PROBES)].sort());
     expect(loaders.length > 0 && !loaders.includes("reactivefiber"), "the evidence loader roster holds no reactivefiber row").toBe(true);
     // wb-qnl8 F1: a UI module read two ways is parsed, loaded from and spelled in both.
     const twoReadings: Walked = {
