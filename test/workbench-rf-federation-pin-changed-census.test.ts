@@ -48,8 +48,12 @@
  *    default of a binding element in a declaration's or a parameter's destructuring pattern (function f(w, argv = [...]),
  *    const { argv = [...] } = opts, const [argv = [...]] = lists; a parameter's scope, its pattern's included, is its function;
  *    wb-shnw F1; an object and an array pattern each hold a quiet control of their own, patternScoped and arrayPatternScoped;
- *    wb-gdqz; a pattern nested in a pattern holds one too, nestedPatternScoped, so the climb past one pattern level is pinned;
- *    wb-ia9d): a .push or ["push"] call, its callee and receiver read through the same wrappers, made on the literal's name
+ *    wb-gdqz; six nests of the two kinds hold one each, so a declarationScope loop that climbs one of them to anything but its
+ *    parameter reds A1: two levels deep, one per pairing, an array in an array (nestedPatternScoped), an array in an object
+ *    (arrayInObjectScoped), an object in an array (objectInArrayScoped) and an object in an object (objectInObjectScoped); three
+ *    levels deep, one per kind, three array patterns (threeArrayScoped) and three object patterns (threeObjectScoped); a deeper
+ *    nest, or a three-level one mixing the kinds, holds none (NOT CLAIMED); wb-ia9d): a .push or ["push"] call, its callee and
+ *    receiver read through the same wrappers, made on the literal's name
  *    ((argv as string[]).push, argv!.push) or on a name declared to that name in its scope after it (const same = argv, let and
  *    var too, a wrapped initializer, an alias of an alias; wb-29wk F1; a parameter's or a binding element's default too:
  *    function f(argv = [...], same = argv), const { same = argv } = opts; wb-shnw F1), never a push made or an alias declared
@@ -146,7 +150,9 @@
  * residual to other quiet pins, that drops a control together with its entry in the pin's roster witness (A1's wb-29wk,
  * wb-shnw, wb-gdqz and wb-ia9d controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals
  * the landed note named and the clause tags of rows B to D; nor an edit of the per-pin wrapper's own guard lines; nor an edit of
- * an A1 control's source text alone that keeps its counts (the roster holds each control's counts, never its source; wb-gdqz).
+ * an A1 control's source text alone that keeps its counts (the roster holds each control's counts, never its source; wb-gdqz);
+ * nor declarationScope's loop climbing a nest no A1 control holds - a pattern nested deeper than three levels, or three levels
+ * deep mixing the two kinds: a loop that stops short of such a nest's parameter stays green (wb-ia9d).
  * SCOPE: the code, metadata shape and record fields are producer facts at the pin; Pi vendors no rf schema, so a producer-side
  * change is seen only when the roster is re-read. The armed half (a committing capability with --idempotency-key and rf operation
  * show reconciliation) is owner-reserved under wb-jwc.5: no committing capability, argv or reader is added here, and the committing
@@ -1345,9 +1351,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       // wb-gdqz: patternScoped's array-pattern twin, so each pattern arm of declarationScope's loop holds a quiet row of its own
       // (deleting the ObjectBindingPattern arm reds patternScoped, deleting the ArrayBindingPattern arm reds arrayPatternScoped).
       arrayPatternScoped: control('function f([argv = ["context"]]: string[][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
-      // wb-ia9d: arrayPatternScoped's nested twin, an array pattern inside an array pattern, so declarationScope's loop is pinned
-      // past one pattern level (a climb of exactly one level, if (ts.isBindingElement(at)) at = at.parent.parent, reds it).
+      // wb-ia9d: six nests of the two pattern kinds, each a quiet row of its own, so a declarationScope loop that climbs one of
+      // them to anything but its parameter reds A1 (no other nest: NOT CLAIMED). Two levels deep, one per pairing: an array in an
+      // array (GX-ONELEVEL, a climb of exactly one level, if (ts.isBindingElement(at)) at = at.parent.parent, reds it), an array
+      // in an object (G2-OBJONCE, an object arm climbing only the declaration's own pattern, reds it), an object in an array
+      // (G2-OBJTOP, an object arm climbing only a top-level pattern, reds it) and an object in an object (both of those red it);
+      // three levels deep, one per kind (G2-TWOLEVEL, a loop climbing at most two pattern levels, reds both).
       nestedPatternScoped: control('function f([[argv = ["context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrayInObjectScoped: control('function f({ lists: [argv = ["context"]] }: { lists: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      objectInArrayScoped: control('function f([{ argv = ["context"] }]: Options[]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      objectInObjectScoped: control('function f({ opts: { argv = ["context"] } }: { opts: Options }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      threeArrayScoped: control('function f([[[argv = ["context"]]]]: string[][][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      threeObjectScoped: control('function f({ a: { b: { argv = ["context"] } } }: { a: { b: Options } }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
       // R-INDIRECT-PUSH members named, each a pinned quiet row: wb-shnw F2's aliases declared to a comma, conditional or nullish
       // expression or destructured from a literal holding the argv, F3's member receiver and bound push, and beside them the
       // literal itself destructured from a literal holding it and a literal bound by an assignment or an assignment pattern.
@@ -1395,6 +1410,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       bindingAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, paramScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       patternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrayPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       nestedPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrayInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectInArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      objectInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, threeArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      threeObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       commaAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       conditionalAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, nullishAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       arrayPatternAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectPatternLiteral: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
