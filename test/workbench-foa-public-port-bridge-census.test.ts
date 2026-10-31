@@ -19,7 +19,13 @@
  * each new reading with a mutant only it kills (M-SEAM-CROSS-ALIAS another message's status, M-SEAM-KIND-ALIAS its kind,
  * M-SEAM-ADMITTED-ALIAS another admitted message, M-SEAM-LATER-ALIAS a later one), both halves are claimed at exactly their
  * listed members, and the four modes are residual members with pinned quiet rows (its U2: Q8's visibility-case-folded, Q9's
- * absent-version-skipped, absent-schema-skipped and absent-source-skipped).
+ * absent-version-skipped, absent-schema-skipped and absent-source-skipped). Its cut #2 answers refusal #1 (2026-10-30: one-edit
+ * narrowings of aliasedIn to one sub-form of a member kept the census green): each half's members are stated as a source's
+ * status, place and kind, and each member has a fixture on which only its reading kills an alias mutant - the own message at a
+ * delta and at a resync call (M-SEAM-OWN-DELTA-ALIAS, M-SEAM-OWN-RESYNC-ALIAS) and the five F-ALIAS fixtures (a rejected
+ * resync for both halves; an earlier admitted delta and resync; a later rejected snapshot, resync and effect; a later admitted
+ * delta and resync); the endpoint a source sits on, and the seam call or read slot another message's object reaches, are not
+ * claimed.
  * Statement (the bead's tracker-export title, verbatim): "Gating artifact: released FiberOpticsSDK PublicPortBridge
  * (unshipped) + a wb-x32 committing decision connecting a Pi runtime over it; then Pi supplies the full bridge contract
  * (visibility/schema/direction through resync on gaps), keeps one authority per runtime domain, admits no private endpoint
@@ -122,11 +128,13 @@
  *    at its own endpoint with an equal value in delivery order, a signal reached it, or a seam call named no message), reject
  *    (a rejected message reached the seam or was not rejected), diagnostic, resync (the endpoints asked to resync are exactly
  *    the gapped ones, each once per call, in the order they gapped), aliased (exactly two halves, each reading every wire
- *    message of the call and claimed at its listed members only: a seam call holds an object of its own message, of an
- *    earlier rejected message of a value kind, of a rejected effect, of an earlier admitted message or of a later message;
- *    or the read holds an object of a message it applied, of an earlier rejected message or of a rejected effect), merged
- *    (the read is not each runtime's own values) and the three claim checks over the label.
- *    Thirty-five fixtures; the honest host meets every check on every fixture, each of 116 mutants fails at least one, every
+ *    message of the call and claimed at its listed members only, each member a source's status, place and kind: a seam call
+ *    holds an object of its own message, at a snapshot, a delta or a resync call, of an earlier or a later rejected
+ *    snapshot, delta, resync or effect, or of an earlier or a later admitted snapshot, delta or resync; or the read holds an
+ *    object of a message it applied, a snapshot, a delta or a resync, or of an earlier rejected snapshot, delta, resync or
+ *    effect; the endpoint a source sits on, and the seam call or read slot another message's object reaches, are not
+ *    claimed), merged (the read is not each runtime's own values) and the three claim checks over the label.
+ *    Forty fixtures; the honest host meets every check on every fixture, each of 118 mutants fails at least one, every
  *    check fires, every check is the only check some mutant fails, and C1's witness holds each check's isolating mutants
  *    and, per mutant, the messages whose receipt it departs on.
  *    CLASS TABLE (a class with the oracle's reading of it, then its members: fixture messages that each break one part, with
@@ -183,19 +191,31 @@
  *      (M-RESYNC-SORTED).
  *    The seam and the read: M-SIGNAL-APPLIED, M-DOUBLE-APPLY, M-REJECTED-APPLIED, M-SEAM-PORT, M-SEAM-BLANK, M-SEAM-REVERSED
  *    and M-SEAM-PHANTOM, a seam call naming no message (admit or reject); M-ADMITTED-DIAGNOSTIC, a diagnostic on each
- *    admitted receipt (admit); the aliased mutants, each by the half that kills it: M-SHARED-REF (the wire's own object
- *    handed to the seam and kept in the read: both halves), M-SEAM-ALIAS (handed to the seam only: the seam half alone,
- *    through its own-message reading), M-SEAM-CROSS-ALIAS (the seam gets, for an admitted value message, the wire object of
- *    an earlier rejected message of a value kind with a deep-equal value, as a resend's rejected first attempt, nine
- *    fixtures from F-EPOCH to F-PRIVATE: the seam half alone, through its status reading), M-SEAM-KIND-ALIAS (the same, only
- *    from a rejected message of a kind off the value kinds: F-READ-KIND's effect ek1 for ek2 and F-DUPLICATE-REJECTED's
- *    effect rr2 for its resend, through its kind reading), M-SEAM-ADMITTED-ALIAS (from an earlier admitted message, another
- *    endpoint's equal snapshot: F-GAP-ORDER's l1 for l2 and F-GAP-HOLD-RUNTIME's hl1 for hl2, through its reading of
- *    another message), M-SEAM-LATER-ALIAS (from a later message: F-DUPLICATE, F-GAP-ORDER and F-GAP-HOLD-RUNTIME, through
- *    its place reading), M-READ-ALIAS (kept in the read only), M-READ-CROSS-ALIAS (the read keeps, for an admitted value
+ *    admitted receipt (admit); the aliased mutants, each by the half that kills it and the source form each of its fixtures
+ *    carries (every member of the aliased check has a fixture on which only its reading kills one of them): M-SHARED-REF
+ *    (the wire's own object handed to the seam and kept in the read: both halves), M-SEAM-ALIAS (handed to the seam only:
+ *    the seam half alone, through its own-message reading; its snapshot-only fixtures, F-READ among them, hold the
+ *    snapshot call), M-SEAM-OWN-DELTA-ALIAS and M-SEAM-OWN-RESYNC-ALIAS (the same at delta calls only and at resync calls
+ *    only: the own message at a delta and at a resync call), M-SEAM-CROSS-ALIAS (the seam gets, for an admitted value
+ *    message, the wire object of an earlier rejected message of a value kind with a deep-equal value, as a resend's
+ *    rejected first attempt, nine fixtures from F-EPOCH to F-PRIVATE, plus F-ALIAS-REJECTED-RESYNC's rejected resync ar2
+ *    for ar3 and F-ALIAS-LATER-REJECTED's rejected snapshot aj2 for aj3: the seam half alone, through its status reading,
+ *    an earlier rejected snapshot, delta or resync), M-SEAM-KIND-ALIAS (the same, only from a rejected message of a kind
+ *    off the value kinds: F-READ-KIND's effect ek1 for ek2 and F-DUPLICATE-REJECTED's effect rr2 for its resend, through
+ *    its kind reading, an earlier rejected effect), M-SEAM-ADMITTED-ALIAS (from an earlier admitted message: another
+ *    endpoint's equal snapshot, F-GAP-ORDER's l1 for l2 and F-GAP-HOLD-RUNTIME's hl1 for hl2; the same endpoint's
+ *    snapshot, F-ALIAS-REJECTED-RESYNC's ar1 for ar3 and F-ALIAS-LATER-REJECTED's aj1 for aj3; a resync,
+ *    F-ALIAS-ADMITTED-RESYNC's aa2 for aa3; a delta, F-ALIAS-ADMITTED-DELTA's ad2 for ad3: through its reading of another
+ *    message), M-SEAM-LATER-ALIAS (from a later message: a rejected delta, F-DUPLICATE's repeated u2 for the first; a
+ *    rejected resync, snapshot and effect, F-ALIAS-REJECTED-RESYNC's ar2 for ar1, F-ALIAS-LATER-REJECTED's aj2 for aj1 and
+ *    F-ALIAS-LATER-EFFECT's ae2 for ae1; an admitted snapshot, F-GAP-ORDER and F-GAP-HOLD-RUNTIME; an admitted delta and
+ *    resync, F-ALIAS-ADMITTED-RESYNC's aa3 for aa2 and F-ALIAS-ADMITTED-DELTA's ad3 for ad2: through its place reading),
+ *    M-READ-ALIAS (kept in the read only: a message it applied, each of a snapshot, a delta and a resync the last applied
+ *    value on some fixture, F-GAP-REGAP's resync rg3 among them), M-READ-CROSS-ALIAS (the read keeps, for an admitted value
  *    message, the wire object of an earlier rejected message with a deep-equal value, as a resend's rejected first attempt:
- *    the read half alone, through its status reading) and M-READ-KIND-ALIAS (the same, only from a rejected message of a kind
- *    off the value kinds: F-READ-KIND's effect ek1 for its snapshot ek2, the read half alone, through its kind reading);
+ *    the read half alone, through its status reading, a rejected snapshot, delta, resync, F-ALIAS-REJECTED-RESYNC's ar2, or
+ *    effect) and M-READ-KIND-ALIAS (the same, only from a rejected message of a kind off the value kinds: F-READ-KIND's
+ *    effect ek1 for its snapshot ek2, the read half alone, through its kind reading);
  *    M-SIGNAL-READ (an ack's value kept in the read: F-GAP-ACK's closing ack c5, merged); M-CODE-COLLAPSED (diagnostic),
  *    M-REFUSE-ALL. Two fixture messages break
  *    two parts each and bind two precedences: o4 (foreign authority before stale epoch: M-LOCAL-SPOOF) and F-DUPLICATE's
@@ -218,8 +238,9 @@
  *  N, the falsifier, one pin per claim family: no file of any root spells the family (each root at its floor, every planted
  *    control read and every quiet control quiet), the honest host's label of a two-runtime read spells no claim and names
  *    each runtime's own epoch and sequence, and the family's mutants fail: N1 order (M-ORDER-LABEL), N2 shared memory
- *    (the nine aliased mutants M-SHARED-REF, M-SEAM-ALIAS, M-READ-ALIAS, M-READ-CROSS-ALIAS, M-READ-KIND-ALIAS,
- *    M-SEAM-CROSS-ALIAS, M-SEAM-KIND-ALIAS, M-SEAM-ADMITTED-ALIAS and M-SEAM-LATER-ALIAS, and M-SHARED-LABEL), N3
+ *    (the eleven aliased mutants M-SHARED-REF, M-SEAM-ALIAS, M-READ-ALIAS, M-READ-CROSS-ALIAS, M-READ-KIND-ALIAS,
+ *    M-SEAM-CROSS-ALIAS, M-SEAM-KIND-ALIAS, M-SEAM-ADMITTED-ALIAS, M-SEAM-LATER-ALIAS, M-SEAM-OWN-DELTA-ALIAS and
+ *    M-SEAM-OWN-RESYNC-ALIAS, and M-SHARED-LABEL), N3
  *    implicit conflict merge (M-MERGE keys the read by port across runtimes, M-MERGE-LABEL).
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's
@@ -263,12 +284,18 @@
  * no outside anchor). The armed contract claims nothing off its CLASS TABLE members and its residual rows' listed members:
  * outside them it fails closed (C1's certification), and this file claims no departure there as judged, as a residual
  * member or as complete. The departures the record knows outside the pinned set, each dropped from the claim and none a
- * residual member: the aliased check's readings no member isolates, landing 684's PREP F5-F7, carried by the follow-up bead
- * wb-vf3r (a holder its data walk does not reach: objectsIn follows own enumerable string-keyed properties only, so an
- * object held through a non-enumerable property is read by neither half; an object shared only below a wire value's top
- * level, which both halves read and no member shares; a source message of a kind off the value kinds other than an
- * effect, an invoke, an ack or a gap, which both halves read and no member carries) and certification's plural beyond one
- * failed check (C1 pins one host with exactly one, landing 684's PREP F8, wb-vf3r's); cut #4's general entries beyond the
+ * residual member: the aliased check's readings beyond its members' status, place and kind (wb-2wiv.3 cut #2), which both
+ * halves read and no member isolates - the endpoint a member's source sits on (a source on another endpoint than its
+ * fixtures carry; F-DUPLICATE-REJECTED's resends of rr3 and rr5 take rejected deltas on browser/secret and browser/bare
+ * beside same-endpoint sources, so no fixture isolates another endpoint's rejected delta), the seam call or the read slot
+ * another message's object reaches (by its kind or its endpoint), the class that rejected a rejected source, a later
+ * rejected message's object kept in the read, and any other form of a member finer than its status, place and kind (each
+ * member is claimed at the instances its fixtures carry); landing 684's PREP F5-F7, carried by the follow-up bead wb-vf3r
+ * (a holder its data walk does not reach: objectsIn follows own enumerable string-keyed properties only, so an object held
+ * through a non-enumerable property is read by neither half; an object shared only below a wire value's top level, which
+ * both halves read and no member shares; a source message of a kind off the value kinds other than an effect, an invoke,
+ * an ack or a gap, which both halves read and no member carries) and certification's plural beyond one failed check (C1
+ * pins one host with exactly one, landing 684's PREP F8, wb-vf3r's); cut #4's general entries beyond the
  * members their rows pin (any other
  * precedence, any other class left unjudged on a kind its members do not carry, any other absent field, an owner in
  * another case, an invalidation word other than the contract's own, any other payload nested deeper than j3, any other
@@ -972,6 +999,56 @@ const FIXTURES: readonly Fixture[] = [
   { id: "F-READ", messages: [message("r1", "browser/view", "snapshot", 1, { rows: [1, 2] }), message("r2", "server/view", "snapshot", 1, { rows: [3] })] },
   /** The read half's kind reading: a rejected effect ek1 carries the value the admitted snapshot ek2 then applies (M-READ-KIND-ALIAS). */
   { id: "F-READ-KIND", messages: [message("ek1", "browser/view", "effect", 1, { rows: [1] }), snap("ek2")] },
+  /**
+   * The alias-source fixtures (wb-2wiv.3 cut #2): each carries the deep-equal values the source forms it names need, and on each
+   * every cross-message alias mutant that fires there (M-SEAM-CROSS-ALIAS, M-SEAM-ADMITTED-ALIAS, M-SEAM-LATER-ALIAS,
+   * M-READ-CROSS-ALIAS) aliases through exactly one source form, so that form's reading is the only one that kills it there.
+   * A rejected resync ar2 (stale epoch) carries the value the re-basing resync ar3 applies (M-SEAM-CROSS-ALIAS and
+   * M-READ-CROSS-ALIAS: an earlier rejected resync) and is the first later message deep-equal to the snapshot ar1
+   * (M-SEAM-LATER-ALIAS: a later rejected resync); ar1 is ar3's earlier admitted source (M-SEAM-ADMITTED-ALIAS: the same
+   * endpoint's snapshot).
+   */
+  {
+    id: "F-ALIAS-REJECTED-RESYNC",
+    messages: [
+      message("ar1", "browser/view", "snapshot", 1, { rows: [4] }),
+      message("ar2", "browser/view", "resync", 4, { rows: [4] }, { epoch: 2 }),
+      message("ar3", "browser/view", "resync", 4, { rows: [4] }),
+    ],
+  },
+  /** A rejected effect ae2 later than the snapshot ae1 whose value it carries (M-SEAM-LATER-ALIAS: a later rejected effect). */
+  { id: "F-ALIAS-LATER-EFFECT", messages: [message("ae1", "browser/view", "snapshot", 1, { rows: [1] }), message("ae2", "browser/view", "effect", 2, { rows: [1] })] },
+  /**
+   * A rejected snapshot aj2 (stale epoch) later than the snapshot aj1 whose value it carries (M-SEAM-LATER-ALIAS: a later rejected
+   * snapshot); the delta aj3 repeats that value (M-SEAM-ADMITTED-ALIAS: an earlier admitted snapshot on the same endpoint;
+   * M-SEAM-CROSS-ALIAS and M-READ-CROSS-ALIAS: an earlier rejected snapshot, aj2).
+   */
+  {
+    id: "F-ALIAS-LATER-REJECTED",
+    messages: [
+      message("aj1", "browser/view", "snapshot", 1, { rows: [1] }),
+      message("aj2", "browser/view", "snapshot", 1, { rows: [1] }, { epoch: 2 }),
+      message("aj3", "browser/view", "delta", 2, { rows: [1] }),
+    ],
+  },
+  /** An admitted resync aa2 whose value the delta aa3 repeats (M-SEAM-ADMITTED-ALIAS: an earlier admitted resync; M-SEAM-LATER-ALIAS: a later admitted delta). */
+  {
+    id: "F-ALIAS-ADMITTED-RESYNC",
+    messages: [
+      message("aa1", "browser/view", "snapshot", 1, { rows: [1] }),
+      message("aa2", "browser/view", "resync", 4, { rows: [4] }),
+      message("aa3", "browser/view", "delta", 5, { rows: [4] }),
+    ],
+  },
+  /** An admitted delta ad2 whose value the resync ad3 repeats (M-SEAM-ADMITTED-ALIAS: an earlier admitted delta; M-SEAM-LATER-ALIAS: a later admitted resync). */
+  {
+    id: "F-ALIAS-ADMITTED-DELTA",
+    messages: [
+      message("ad1", "browser/view", "snapshot", 1, { rows: [1] }),
+      message("ad2", "browser/view", "delta", 2, { rows: [2] }),
+      message("ad3", "browser/view", "resync", 6, { rows: [2] }),
+    ],
+  },
   { id: "F-VERSION", messages: [snap("v1"), delta("v2", { version: "2" }), delta("v3", { version: "0" })] },
   { id: "F-SCHEMA", messages: [snap("h1"), delta("h2", { schema: "view/v2" }), delta("h3", { schema: "status/v1" })] },
   {
@@ -1376,6 +1453,12 @@ interface Shape {
   /** Hand the seam the wire's own value while the read keeps a copy: only the aliased check's seam half reads it. */
   readonly seamAlias?: boolean;
   /**
+   * Hand the seam the wire's own value for an admitted message of these kinds only, while the read keeps a copy: the seam half's
+   * own-message reading at a delta call (M-SEAM-OWN-DELTA-ALIAS) and at a resync call (M-SEAM-OWN-RESYNC-ALIAS), each call kind
+   * with a mutant only that kind's reading kills (wb-2wiv.3 cut #2; M-SEAM-ALIAS's snapshot-only fixtures pin the snapshot call).
+   */
+  readonly seamAliasKinds?: readonly string[];
+  /**
    * Keep in the read, for an admitted value message, the wire object of an earlier rejected message whose value is deep-equal,
    * else a copy (the seam takes a copy): rejected, a message of any kind (a resend's rejected first attempt); off-kind, only a
    * message of a kind off the value kinds (a rejected effect). Only the read half's every-message reading reads either.
@@ -1504,7 +1587,7 @@ function hostOf(shape: Shape): BridgeHost {
       if (shape.seamCrossAlias === "later") return call.messages.slice(index + 1).find(item => equal(item.value));
       return undefined;
     };
-    const toSeam =(id: string, value: unknown, index: number): void => {
+    const toSeam = (id: string, value: unknown, index: number): void => {
       if (shape.seam === "reversed") pending.unshift([id, value, index]);
       else call.apply(id, value, index);
     };
@@ -1632,7 +1715,7 @@ function hostOf(shape: Shape): BridgeHost {
       shape.side?.();
       const value = shape.alias === true ? entry.value : copyOf(entry.value);
       const crossed = crossWire(entry, index);
-      toSeam(shape.seam === "port" ? split(endpoint.id).port : endpoint.id, shape.seam === "blank" ? {} : shape.seamAlias === true ? entry.value : crossed !== undefined ? crossed.value : value, index);
+      toSeam(shape.seam === "port" ? split(endpoint.id).port : endpoint.id, shape.seam === "blank" ? {} : shape.seamAlias === true || shape.seamAliasKinds?.includes(kind) === true ? entry.value : crossed !== undefined ? crossed.value : value, index);
       if (shape.doubleApply === true) toSeam(endpoint.id, copyOf(entry.value), index);
       if (shape.resyncSpurious === true && kind === "snapshot") askResync(endpoint.id);
       last.set(sequenceKey(endpoint.id), entry.sequence);
@@ -1744,6 +1827,8 @@ const MUTANTS: Readonly<Record<string, Shape>> = {
   "M-SEAM-KIND-ALIAS": { seamCrossAlias: "off-kind" },
   "M-SEAM-ADMITTED-ALIAS": { seamCrossAlias: "admitted" },
   "M-SEAM-LATER-ALIAS": { seamCrossAlias: "later" },
+  "M-SEAM-OWN-DELTA-ALIAS": { seamAliasKinds: ["delta"] },
+  "M-SEAM-OWN-RESYNC-ALIAS": { seamAliasKinds: ["resync"] },
   "M-GAP-APPLY": { gap: "apply" },
   "M-GAP-SILENT": { gap: "silent" },
   "M-GAP-RESUME": { gap: "resume" },
@@ -1792,12 +1877,15 @@ type Check = (typeof CHECKS)[number];
 /**
  * The aliased check's reading, exactly its two halves, each comparing with the value of every wire message of the call (the SEAM
  * half reads every message from wb-2wiv.3 on; ruling R-B80's cut read it against the one message a call names). Each half is
- * claimed at its listed members only, each a mutant only that half kills: the SEAM half, a seam call holding an object of its
- * own message (M-SEAM-ALIAS), of an earlier rejected message of a value kind (M-SEAM-CROSS-ALIAS, a resend's rejected first
- * attempt: the status reading), of a rejected effect (M-SEAM-KIND-ALIAS: the kind reading), of an earlier admitted message
- * (M-SEAM-ADMITTED-ALIAS, another endpoint's equal snapshot) or of a later message (M-SEAM-LATER-ALIAS: the place reading); the
- * READ half, the read holding an object of a message it applied (M-READ-ALIAS), of an earlier rejected message
- * (M-READ-CROSS-ALIAS: the status reading) or of a rejected effect (M-READ-KIND-ALIAS, at F-READ-KIND: the kind reading).
+ * claimed at its listed members only, each member a source's status, place and kind with a fixture on which only its reading
+ * kills an alias mutant (wb-2wiv.3 cut #2): the SEAM half, a seam call holding an object of its own message at a snapshot call
+ * (M-SEAM-ALIAS), a delta call (M-SEAM-OWN-DELTA-ALIAS) or a resync call (M-SEAM-OWN-RESYNC-ALIAS), of an earlier rejected
+ * snapshot, delta or resync (M-SEAM-CROSS-ALIAS: the status reading) or effect (M-SEAM-KIND-ALIAS: the kind reading), of an
+ * earlier admitted snapshot, delta or resync (M-SEAM-ADMITTED-ALIAS: the reading of another message) or of a later rejected or
+ * admitted snapshot, delta or resync or a later rejected effect (M-SEAM-LATER-ALIAS: the place reading); the READ half, the read
+ * holding an object of a message it applied, a snapshot, a delta or a resync (M-READ-ALIAS), or of an earlier rejected snapshot,
+ * delta or resync (M-READ-CROSS-ALIAS: the status reading) or effect (M-READ-KIND-ALIAS, at F-READ-KIND: the kind reading). The
+ * endpoint a source sits on, and the seam call or read slot another message's object reaches, are not claimed (NOT CLAIMED).
  */
 function aliasedIn(entry: Fixture, run: Drive): boolean {
   const wire = entry.messages.map(sent => sent.value);
@@ -2472,6 +2560,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "M-SEAM-KIND-ALIAS",
       "M-SEAM-ADMITTED-ALIAS",
       "M-SEAM-LATER-ALIAS",
+      "M-SEAM-OWN-DELTA-ALIAS",
+      "M-SEAM-OWN-RESYNC-ALIAS",
     ];
     const departures = mapOf(MUTANTS, shape => {
       const host = hostOf(shape);
@@ -2717,6 +2807,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "M-SEAM-KIND-ALIAS": mutant("M-SEAM-KIND-ALIAS"),
       "M-SEAM-ADMITTED-ALIAS": mutant("M-SEAM-ADMITTED-ALIAS"),
       "M-SEAM-LATER-ALIAS": mutant("M-SEAM-LATER-ALIAS"),
+      "M-SEAM-OWN-DELTA-ALIAS": mutant("M-SEAM-OWN-DELTA-ALIAS"),
+      "M-SEAM-OWN-RESYNC-ALIAS": mutant("M-SEAM-OWN-RESYNC-ALIAS"),
       "M-SHARED-LABEL": mutant("M-SHARED-LABEL"),
     };
   },
@@ -3010,6 +3102,8 @@ describe(SUITE, () => {
       "M-SEAM-KIND-ALIAS",
       "M-SEAM-ADMITTED-ALIAS",
       "M-SEAM-LATER-ALIAS",
+      "M-SEAM-OWN-DELTA-ALIAS",
+      "M-SEAM-OWN-RESYNC-ALIAS",
       "M-GAP-APPLY",
       "M-GAP-SILENT",
       "M-GAP-RESUME",
@@ -3046,6 +3140,11 @@ describe(SUITE, () => {
       "F-SESSION:4",
       "F-READ:2",
       "F-READ-KIND:2",
+      "F-ALIAS-REJECTED-RESYNC:3",
+      "F-ALIAS-LATER-EFFECT:2",
+      "F-ALIAS-LATER-REJECTED:3",
+      "F-ALIAS-ADMITTED-RESYNC:3",
+      "F-ALIAS-ADMITTED-DELTA:3",
       "F-VERSION:3",
       "F-SCHEMA:3",
       "F-DIGEST:4",
