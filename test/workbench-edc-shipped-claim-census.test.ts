@@ -18,7 +18,9 @@
  * claim pages, 0 of the 116 src modules, 0 of the 8 registered descriptors, 0 of package.json and the 372 package-lock.json
  * packages. RE-MEASURED at the wb-kv0y cut (seat ws-04, run g10-work-s141, 2026-10-29, on trunk 57cb1c0): 81 tracked claim pages and
  * 117 tracked src modules (all .ts, so none of a JSX script kind), with no mention; and at its cut #2 (seat ws-01, run g10-work-s145,
- * 2026-10-30, on trunk c2695d7): the same 81 pages and 117 modules, each read once through THE PLANTED READING, with no mention.
+ * 2026-10-30, on trunk c2695d7): the same 81 pages and 117 modules, each read once through THE PLANTED READING, with no mention; and
+ * at the wb-a6m9 respin (seat ws-04, run g10-work-s153, 2026-10-30, on trunk bffdf2d): the same 81 pages and 117 modules, each read
+ * once through THE PLANTED READING, whose plants now carry wb-a6m9's combining-mark and escape controls, with no mention.
  *
  * THE VOCABULARY: both stems are derived from the title's charter path (docs/programs/<slug>-<date>.md, slug
  * evidence-directed-computation): its INITIALS, the acronym the title spells (edc, read as a whole word or its plural "edcs"),
@@ -108,7 +110,10 @@
  *     (THE TRACKED LISTING), and each file it skips loses the plant's findings at both of its ends (unjudged);
  *  K2 it judges every file but drops all the findings of some files of its scope;
  *  K3 it skips, in the whole handed text of some files of its scope, a form one of its controls carries a stem in (a SOURCE_CONTROLS
- *     module but the JSX one, a PAGE_CONTROLS page; refusal #1's G3k selects its files by content);
+ *     module but the JSX one, a PAGE_CONTROLS page; refusal #1's G3k selects its files by content; since wb-a6m9 the controls carry
+ *     a stem through a combining, precomposed, spacing or enclosing mark and through a string's or a template head's hex escape and
+ *     an identifier's unicode escape, and at its respin a skip of the marked or escaped texts of some files of the scope red A2 or
+ *     B2 through unjudged, where trunk's census before the merge stayed green);
  *  K4 it skips the judgment of the whole handed text of a file selected by that text's size, content or list place (refusal #1's G1,
  *     G2 and G3 family), or judges a handed text, or one form in it that a control carries a stem in, only up to before its end or
  *     only from after its start (refusal #1's U2 members G10 and G11 truncate one form's tail).
@@ -137,8 +142,10 @@
  * extent-keyed skip the control run shares reds through own); a judgment that skips some or all of a file's own texts or blocks,
  * selected by their content or by their place strictly between the plant's two ends (the plant stands in for each control form at a
  * file's two ends, not for every text the file holds); a judged form no control carries a stem in (a template middle or tail, a
- * no-substitution template literal, an escape, a named character reference), skipped for part or all of the scope, and JSX text,
- * which no tracked src module holds at the cut; a case that drops part of the file's own findings after splitByPlant returns them,
+ * no-substitution template literal, an escape other than the three the controls carry since wb-a6m9 - a string's or a template
+ * head's hex escape and an identifier's unicode escape - and a named character reference), skipped for part or all of the scope,
+ * and JSX text, which no tracked src module holds at the cut;
+ * a case that drops part of the file's own findings after splitByPlant returns them,
  * or a verdict helper (unjudgedOf, unwrappedOf) that returns an empty list without reading (the partial forms of a case that echoes
  * its witness; a dropped record reds through git's listing); the text reader DISK_TEXT handing the planted reading and the
  * unwrapped count the same part of a file's text (each judges what it is handed: a part that ends inside an unclosed construct reds
