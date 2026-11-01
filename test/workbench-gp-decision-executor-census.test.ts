@@ -44,15 +44,18 @@
  *    reply-unconverted) is computed by basisOf and held to the fixture's own field. Six CHECKS judge the record:
  *    effect-unvalidated (the seam was called for a reply whose converted decision fails basis validation), effect-unpermitted
  *    (handed a decision whose verdict is not 'permitted'), effect-unminted (handed a value isCoreMintedDecision refuses),
- *    effect-unrequested (handed a decision whose receipt answers no request this call issued, a call that issued none
- *    included; pinned for a call issuing up to four requests and handing up to three decisions, at each position: the drive
- *    records, in the order returned, a copy of each request its requestOf returned, taken at the return, so an in-place edit
- *    of any member of a returned object afterwards edits no record; the check reads every handed decision, the first, middle
- *    and last of three, against every recorded request, at each position of one to four; a receipt answers a
- *    request when its scope, principal, target, action, invocationId and requestedAt each equal that request's and its grant
- *    is one of that request's grants; every request a call issues, the first, second, third and last of four, carries that
- *    call's own serial in its invocationId, and of two calls in a row over one fixture neither issues an invocationId the
- *    other issued), mismatch-receipt (a snapshot-mismatch reply lacks exactly one receipt of status conflict or
+ *    effect-unrequested (handed a decision whose receipt answers() no request the drive recorded for this call, a call that
+ *    recorded none included; claimed only in the forms A3 plants below (its mutants and its reader controls), each at each
+ *    of its positions: for the drive, a call asking requestOf once each for the snapshot's first one to four can_execute
+ *    candidates, in the snapshot's order; for the check, a record of one to four requests and one to three handed
+ *    decisions. In those forms the drive records a copy of each returned request, taken at the return, so an in-place edit
+ *    of every member of a returned object afterwards edits no record; every request of such a call, the first, second,
+ *    third and last of four, carries that call's own serial in its invocationId, and of two calls in a row over one fixture
+ *    neither issues an invocationId the other issued; the check reads every handed decision, the first, middle and last of
+ *    three, against every recorded request, at each position of one to four; answers() reads a receipt's scope,
+ *    principal, target, action, invocationId and requestedAt against a request's and its grant against the request's
+ *    grants, in the forms the echo control plants. Every other form is NOT CLAIMED, the unplanted forms named below
+ *    deferred to wb-kbh1), mismatch-receipt (a snapshot-mismatch reply lacks exactly one receipt of status conflict or
  *    refused naming snapshot-mismatch) and current-unexecuted (F1, the one reply every clause admits, did not reach the seam
  *    exactly once with a core-minted permit: the drive's positive control, without which a decision point that never issues
  *    anything would meet the clause's "unless" vacuously). A1 the bound decision points (none) and the synthetic bindings:
@@ -60,16 +63,17 @@
  *    is the computed one. A2 a point skipping either basis member or the conversion's candidate check reaches the seam on F2,
  *    F4 or F5 (effect-unvalidated). A3 a denied decision executed anyway fails effect-unpermitted; today even an exact grant
  *    for a GraphPolicyCLI verb reads unknown-action; and a permit decideControl returned for a request this call did not
- *    issue fails effect-unrequested: on F3 (observer grant only) M-FORGED-GRANT appends the exact grant to the own grants
- *    array of the object requestOf returned, in place, then asks the core (A3 reads that object back after the call: its own
- *    grants array, the grant appended, and the seam handed a core-minted permit; and reads forged() itself on a planted
- *    object: the object it was handed, its own grants array, the grant appended); M-REPLAYED-PERMIT hands the seam the first
+ *    issue fails effect-unrequested in the forms A3 plants: on F3 (observer grant only) M-FORGED-GRANT appends the exact
+ *    grant to the own grants array of the object requestOf returned, in place, then asks the core (A3 reads that object
+ *    back after the call: its own grants array, the grant appended, and the seam handed a core-minted permit; and reads
+ *    forged() itself on a planted object: the object it was handed, its own grants array, the grant appended);
+ *    M-REPLAYED-PERMIT hands the seam the first
  *    permit it minted (F1's); M-NO-REQUEST-REPLAY, once it holds that permit, asks requestOf nothing more and hands it over,
  *    so its later calls issue no request (A3 reads 0 issued on F3 and on the next F1); each replay hands F3 and the same
  *    point's next F1 call the very permit F1's call handed the seam, and fails both. A3's reader controls: the record (a
  *    planted point driven over each fixture asking requestOf once for each of the snapshot's first one, two, three and four
  *    can_execute candidates, then editing every member of each returned object in place, reads a record equal to its own
- *    copies taken at the return, in order, and reads its own edits back: every member differs from its copy, and each
+ *    copies taken at the return, element by element, and reads its own edits back: every member differs from its copy, and each
  *    object or array member still holds the object it held, and its records name the fixture driven);
  *    the serial (the same four requests asked by a planted point driven over each fixture twice in a row: every request of
  *    each call carries that call's serial, driveSerial as its drive left it, and not the other call's, as one whole
@@ -80,13 +84,15 @@
  *    check; the second hands the seam that same permit, which answers none of its requests, and fails effect-unrequested
  *    alone); the check over a record (a core-minted
  *    permit handed with no request issued fails it on every fixture, beside that fixture's other checks; on F1, with its own
- *    request at each position of a call issuing one, two, three or four requests it passes, and with none of one, two,
- *    three or four requests answering it it fails; of two decisions handed in one F3 call, either
- *    one answering no issued request fails it, and both answering an issued request pass; of three, the first, the middle or
- *    the last answering none fails it, and all three answering pass; each decision control reads which handed decision
- *    answers an issued request beside the checks the call fails); the echo (a minted
- *    receipt answers the request it was minted for, with that request's grants in either order, and answers it no longer with
- *    any one echoed field or its grant altered). A4 a hand-built look-alike permit and a spread copy of a minted one fail
+ *    request at each position of a call issuing one, two, three or four requests it passes, and with one, two, three or four
+ *    requests recorded and none its own (other candidates' requests, then its own candidate's under another serial) it
+ *    fails; of two decisions handed in one F3 call, either one minted for another candidate's request the call did not
+ *    record fails it, and both minted for recorded requests pass; of three, the first, the middle or the last minted for
+ *    such a request fails it, and all three minted for recorded requests pass; each decision control reads, per handed
+ *    decision, whether a recorded request answers its receipt, beside the checks the call fails); the echo (the permit's
+ *    receipt answers the request it was minted for, with that request's grants in either order, and answers it no longer
+ *    with one echoed field or its grant altered alone as planted: a string or the grant gaining a final ~, an object
+ *    gaining a member). A4 a hand-built look-alike permit and a spread copy of a minted one fail
  *    effect-unminted; isCoreMintedDecision is false for the reply, its typed conversion, a copy, a JSON round trip and a
  *    denial. B1 the mismatch condition: F2's presented bytes hash to a digest the reply does not carry, while F1's bytes hash
  *    to the reply's own. B2 the honest point records one conflict receipt naming snapshot-mismatch; a point dropping the
@@ -145,7 +151,19 @@
  * fixture, a planted control or a reader control removed from its table or case, the frozen literal and the roster together
  * while every check still fires; row Q or a residual member removed from every literal and the roster together (no source
  * outside this cut names the residual families before its delivery note lands); a pin's case replaced by one that echoes its
- * roster witness.
+ * roster witness. DEFERRED TO wb-kbh1 (filed by the rule-19 structural exit R-B249 to pin these forms or name them residuals)
+ * and NOT CLAIMED here: every effect-unrequested form A3 does not plant, among them whether the check holds a receipt's
+ * echoed fields and its grant to ONE recorded request when a record holds two or more (a receipt whose fields are split
+ * across recorded requests, each held by some and all by none: Y01, Y01b, Y01c), and whether it reads a receipt's scope,
+ * principal, target, action and requestedAt over a record at all (every control's unanswering request differs from the
+ * receipt in its invocationId, M-FORGED-GRANT's and M-LOOKALIKE's on F3 in the grant alone); how answers() reads a
+ * difference the echo control does not plant (an echoed object lacking a member the request's holds, or holding another
+ * value under the same members; a string or a grant differing other than by a final ~, a case variant included; a grant
+ * that is a prefix or a part of one of the request's grants; a receipt holding no grant: Y09, Y07, Y07b, Y16); the
+ * record's order where a call asks in another order than the snapshot's can_execute order (that order sorts as the
+ * invocationIds do, so a record kept in the order returned and one sorted by invocationId read alike: Y02); and a call
+ * asking requestOf for one candidate twice, or for a candidate outside the snapshot's can_execute relations (no control
+ * asks either).
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a vocabulary spelling the token reader does not read: camel case, a member composed at run time, a name
  * lower-cased), R-SIDE-PATH (Q2, a decision point that reaches an effect outside the injected seam: the checks observe the seam
@@ -176,10 +194,16 @@
  * points condition pin the lead reader's clauses and the anchor's conditions. Cut #3 (refusal #2 of cut #2, gate-prep-2 /
  * g10-gate-s167: unmet U1-U3; the class frozen and this cut bound to the enumerate-the-resolvable form by ruling R-B216):
  * U1 the serial control (every fixture, two calls in a row, each of the four positions) and the replay control (each
- * position, F1) pin every request's serial; U2 the check controls place the permit's own request at each of the four
- * positions, the third included; U3 the check controls hand three decisions, each position in turn answering none; the
- * refusal's F1 LOW: A3 reads M-FORGED-GRANT's grant back on the object requestOf returned; and a lead plant pins the cure
- * phrase's closing words.
+ * position, F1) pin the serial of each of a call's four requests; U2 the check controls place the permit's own request at
+ * each of the four positions, the third included; U3 the check controls hand three decisions, each position in turn
+ * minted for a request the call did not record; the refusal's F1 LOW: A3 reads M-FORGED-GRANT's grant back on the object
+ * requestOf returned; and a lead plant pins the cure phrase's closing words. Cut #4 (refusal #3 of cut #3, gate-prep-10 /
+ * g10-gate-s174: unmet U1-U4, claims wider than pins; the rule-19 structural exit R-B249 binds this cut to the fail-closed
+ * core and files wb-kbh1 for the coverage): the effect-unrequested claims are narrowed to the forms A3's controls plant
+ * (the CHECKS parenthetical, A3's sentences on its record, check and echo controls, the record's and answers()'s docs, and
+ * A3's record, check, decision and echo messages), and U1 (Y01, Y01b, Y01c), U2 (Y09), U3 (Y07, Y07b, Y16) and U4 (Y02)
+ * are NOT CLAIMED above, their pins wb-kbh1's; no reading, control, pin, witness or test title changes, only comments and
+ * assertion messages do.
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI dependency, adapter, seam or fake binary.
  */
 import { execFileSync } from "node:child_process";
@@ -419,7 +443,7 @@ const targetIdOf = (decision: unknown): unknown => own(own(own(decision, "receip
 interface Drive {
   readonly receipts: readonly DecisionReceipt[];
   readonly calls: readonly { readonly decision: unknown; readonly answer: string }[];
-  /** Every request this call's requestOf returned, each a copy taken at the return: a later edit of the object edits no record (A3's record control issues one to four). */
+  /** A copy of each request this call's requestOf returned, taken at the return: a later edit of the object edits no record (A3's record control asks one to four distinct can_execute candidates, once each; the header's NOT CLAIMED names the rest). */
   readonly issued: readonly NativeControlRequest[];
 }
 /** The drives so far; a drive's serial is this count after its own increment (A3's serial control reads it). */
@@ -444,7 +468,7 @@ function drive(point: DecisionPoint, fixture: Fixture): Drive {
 }
 /** The request fields a minted receipt echoes (control.ts core(), held to the core's own receipt in A3). */
 const ECHOED = ["scope", "principal", "target", "action", "invocationId", "requestedAt"] as const;
-/** Whether a receipt answers a request: each echoed field equals the request's, and its grant is one of the request's grants. */
+/** Whether a receipt answers a request, each echoed field read against the request's and its grant against the request's grants: claimed only in the forms A3's echo and check controls plant (the header's NOT CLAIMED names the rest). */
 function answers(receipt: unknown, request: NativeControlRequest): boolean {
   const grant = own(receipt, "grant");
   return ECHOED.every(field => isDeepStrictEqual(own(receipt, field), request[field])) && typeof grant === "string" && strings(request.grants) && request.grants.includes(grant);
@@ -474,8 +498,9 @@ type RecordReading = {
 };
 /**
  * The record control, over one fixture: a planted point asks requestOf once for each of the snapshot's first `size`
- * can_execute candidates, keeps its own copy of each at the return, then edits every member of each returned object in
- * place and executes nothing; the drive's record must equal those copies, in order. It also reads its own edits back
+ * can_execute candidates, in the snapshot's order, keeps its own copy of each at the return, then edits every member of
+ * each returned object in place and executes nothing; the drive's record must equal those copies element by element (that
+ * order sorts as the invocationIds do, so the record's own order is NOT CLAIMED). It also reads its own edits back
  * (edited, inPlace).
  */
 function recordReading(entry: Fixture, size: number): RecordReading {
@@ -1040,7 +1065,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       inPlace: members.filter(key => typeof own(mintedFor, key) === "object"),
       named: [id],
     });
-    expect(recorded, "on every fixture, for a call issuing one, two, three or four requests, the drive records a copy of every request its requestOf returned, in order, taken at the return: an in-place edit of any member afterwards edits no record").toEqual(
+    expect(recorded, "on every fixture, for a call asking requestOf once for each of the snapshot's first one, two, three or four can_execute candidates, the drive records a copy of each returned request, taken at the return and equal element by element to the planted point's own copies: an in-place edit of every member afterwards edits no record").toEqual(
       Object.fromEntries(FIXTURES.map(entry => [entry.id, [1, 2, 3, 4].map(size => copiedAtReturn(size, entry.id))])),
     );
     const serial = Object.fromEntries(FIXTURES.map(entry => [entry.id, serialReading(entry)]));
@@ -1096,7 +1121,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       ...Object.fromEntries(Object.entries(records).map(([label, issued]) => [label, judged(issued)])),
       ...Object.fromEntries(sizes.map(size => [`none of ${size}`, judged(unanswering.slice(0, size))])),
     };
-    expect(answered, "a permit handed with no request issued fails the check on every fixture; its own request issued at each position of a call issuing one to four requests passes; with none of one to four answering it fails").toEqual({
+    expect(answered, "a permit handed with no request issued fails the check on every fixture; its own request issued at each position of a call issuing one to four requests passes; with one to four requests recorded and none its own (other candidates' requests, then its own candidate's under another serial) it fails").toEqual({
       none: {
         F1: ["effect-unrequested"],
         F2: ["effect-unvalidated", "effect-unrequested", "mismatch-receipt"],
@@ -1132,7 +1157,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "the last of three answering none": decided([permit, permit, foreign], [mintedFor]),
       "all three answering": decided([permit, foreign, permit], [mintedFor, otherRequest]),
     };
-    expect(decisions, "of two or three decisions handed in one F3 call, the one at each position answering no issued request fails the check, and all answering pass").toEqual({
+    expect(decisions, "of two or three decisions handed in one F3 call, the one at each position minted for a request the call did not record fails the check, and all minted for recorded requests pass").toEqual({
       "a first decision answering none": { answering: [false, true], found: ["effect-unrequested"] },
       "a second decision answering none": { answering: [true, false], found: ["effect-unrequested"] },
       "both decisions answering": { answering: [true, true], found: [] },
@@ -1143,7 +1168,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     });
     const receipt = own(permit, "receipt");
     const echoedByCore = record(receipt) ? Object.keys(receipt).filter(key => Object.hasOwn(mintedFor, key) && isDeepStrictEqual(own(receipt, key), own(mintedFor, key))) : [];
-    expect(echoedByCore, "the request fields the core's own receipt echoes are the ones the check reads").toEqual([...ECHOED]);
+    expect(echoedByCore, "the request fields the core's own receipt echoes are the ones answers() reads (ECHOED)").toEqual([...ECHOED]);
     const altered = (value: unknown): unknown => (typeof value === "string" ? `${value}~` : record(value) ? { ...value, altered: true } : null);
     const read = [...ECHOED, "grant"];
     const echo = {
@@ -1151,7 +1176,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       grantsReversed: answers(receipt, { ...mintedFor, grants: [...(mintedFor.grants ?? [])].reverse() }),
       altered: Object.fromEntries(read.map(field => [field, answers(record(receipt) ? { ...receipt, [field]: altered(own(receipt, field)) } : null, mintedFor)])),
     };
-    expect(echo, "a minted receipt answers its own request, with that request's grants in either order, and no longer with any one echoed field or its grant altered").toEqual({
+    expect(echo, "a minted receipt answers its own request, with that request's grants in either order, and no longer with one echoed field or its grant altered alone as planted (a string or the grant gaining a final ~, an object gaining a member)").toEqual({
       minted: true,
       grantsReversed: true,
       altered: Object.fromEntries(read.map(field => [field, false])),
