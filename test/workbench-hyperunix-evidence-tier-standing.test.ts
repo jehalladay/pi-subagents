@@ -41,28 +41,46 @@
  *      these 11 kinds are the bodies this file calls closed; its exported ENVELOPE_KEYS constant, which the 27 shipped modules spell
  *      once in protocol/decoder.js, at its declaration, and once in index.js, in its re-export, and nowhere else; its 3
  *      EMPTY_BODY_KINDS and its EVIDENCE_STATUSES. No declared name (a kind, a key or a status) holds a tier, and that reading fires
- *      on a copy of the tables holding a tier name in each of those five places. THE SAME VIEW (wb-b9ot): the package the cases
- *      read is the one this file and the provider execute, the repository's installed copy, on exactly these four pinned routes.
- *      (1) SDK_DIST, the dist/ directory this file's own import of '@hyperunix/sdk' resolves to (import.meta.resolve: Node's
- *      resolution from test/, where a git-ignored test/node_modules copy would resolve first), is SDK_INSTALLED
- *      (../node_modules/@hyperunix/sdk/dist/), compared by real path. (2) Each value this file's import declaration names (read with
- *      the TypeScript parser: decodeResultStream, assembleQueryResult, evidenceOf, resultFromJson, resultToJson and ProtocolError) is
- *      that copy's own export, the same object (Object.is) as the export of SDK_INSTALLED's index.js loaded unmocked by its file URL
- *      (vi.importActual), so a test-config alias or a module mock that substitutes one of them, a call-through included, reds T2.
- *      (3) Each of the five functions raises, called on null, from its own frame in SDK_DIST's result.js as Node loads it (a file:
- *      URL frame), and the first frame outside SDK_DIST is this file's; a decoder refusal is this file's ProtocolError raised from
- *      StreamChecker.fail in SDK_DIST's protocol/decoder.js, the first frame outside SDK_DIST again this file's. (4) Of the three
- *      READER_MODULES only the provider (PROVIDER, src/workbench/providers/hyperunix.ts) imports the package (its value names Bounds,
- *      HyperUnix and resultToJson; each import and export declaration and import() call of the three read with the TypeScript
- *      parser); Node's resolution from its own path (module.findPackageJSON) finds the installed package, compared by real path (a
- *      git-ignored node_modules copy under src/ would resolve first for it alone); and its registration, handed a null result,
- *      raises from resultToJson's own frame in SDK_DIST's result.js, the first frame outside SDK_DIST the provider's (the same
- *      reading of a stand-in registration in this file reads its own function and this file). An import of the package by a module
- *      outside READER_MODULES, code other than those files' bytes served under their own URLs (a loader hook), and Pi's own modules
- *      substituted by a test configuration are NOT CLAIMED by this census. THE BYTES: the installed package's package.json and
- *      its 27 shipped modules equal SDK_BYTES, one sha256 each, so a change to any of them (a table, a refusal site or any other
- *      line) reds T2. PROBED through decodeResultStream: each closed body refuses each of the 12
- *      TIER_MEMBERS under each of the 11 TIER_VALUES (the ten words and their list) as SDK_PROTOCOL_MALFORMED at body.<member>
+ *      on a copy of the tables holding a tier name in each of those five places. THE SAME VIEW (wb-b9ot; cut #3, in the
+ *      enumerate-the-resolvable form ruling R-B238 binds): T2 claims exactly the readings (1)-(4) below of the package this file and
+ *      the provider execute, each pinned with its falsifiers, and no wider conclusion. THE PACKAGE'S MODULES (the pinned modules) are
+ *      the 27 SDK_BYTES pins (its dist/ keys): the frame readings count a frame as the package's only at one of those modules' own
+ *      file: URLs under SDK_DIST, and THE BYTES, spelledIn() and T1 read the .js files under dist/ (T1 also the .d.ts files), so a
+ *      file under dist/ outside the 27 is never the package's: a .js or .d.ts one reds T1's count (a .js one THE BYTES too), and one
+ *      of any other extension (an .mjs shim, a source map) is read by no case, a frame in it reading by its own location. (1)
+ *      SDK_DIST, the dist/ directory import.meta.resolve names for this file's '@hyperunix/sdk' (Node's resolution from test/, where
+ *      a git-ignored test/node_modules copy would resolve first; a test-config alias or plugin, which it does not see, is left to (2)
+ *      and (3)), is SDK_INSTALLED (../node_modules/@hyperunix/sdk/dist/), compared by real path. (2) Each value this file's import
+ *      declaration names (read with the TypeScript parser: decodeResultStream, assembleQueryResult, evidenceOf, resultFromJson,
+ *      resultToJson and ProtocolError) is the same object (Object.is) as the export of that name of the module vi.importActual loads
+ *      for SDK_INSTALLED's index.js file URL, so an alias or a module mock of the bare specifier that substitutes one of them (a
+ *      call-through included) while that URL loads the installed copy reds T2; an alias of that URL too is left to (3). (3) Each of
+ *      the five functions, called on null, throws an error whose stack (Error.stack as the realm writes it) reads first its own frame
+ *      in SDK_DIST's result.js as Node loads it (a file: URL frame) and first outside the pinned modules this file's frame; a decoder
+ *      refusal is a ProtocolError (this file's binding) whose stack reads first StreamChecker.fail in SDK_DIST's protocol/decoder.js
+ *      and first outside the pinned modules this file's frame. A frame of the stack that names no location is skipped only in a
+ *      built-in's form ('at Array.map (<anonymous>)'), and any other one (an eval or new Function frame) reads as the caller. So a
+ *      substitute of one of the five that is on the stack its null call throws with (a call-through, or one that throws itself),
+ *      wherever its code lies but the pinned modules, reds T2: under SDK_DIST included (gate member G21-S5, an .mjs shim there
+ *      reached through an alias of the bare specifier and of the installed index.js URL) and in code built by eval or new Function.
+ *      (4) Of the three READER_MODULES only the provider (PROVIDER, src/workbench/providers/hyperunix.ts) imports the package (its
+ *      value names Bounds, HyperUnix and resultToJson; each import and export declaration and import() call of the three read with
+ *      the TypeScript parser); Node's resolution from its own path (module.findPackageJSON) finds the installed package, compared by
+ *      real path (a git-ignored node_modules copy under src/ would resolve first for it alone); and its registration, handed a null
+ *      result, throws an error whose stack reads first resultToJson's own frame in SDK_DIST's result.js and first outside the pinned
+ *      modules the provider's frame (the same reading of a stand-in registration in this file reads its own function and this file),
+ *      so a substitute of its resultToJson on that stack, wherever its code lies but the pinned modules, reds T2: under SDK_DIST
+ *      included (gate member G21-S6, an .mjs shim there reached through a redirect of src importers). NOT CLAIMED by this census: an
+ *      import of the package by a module outside READER_MODULES; the provider's Bounds and HyperUnix bindings (its registration hands
+ *      its reader a Bounds value, and the readers the cases hand it are this file's stand-ins, which never read one); the content of
+ *      a file under dist/ that is neither a .js module nor a .d.ts declaration file (a source map, an .mjs or a .cjs file), which no
+ *      case reads (a frame in one reads by its own location, as above); code other than the pinned modules' or this file's bytes
+ *      served under their own URLs (a loader hook, or a plugin's transform of this file); a substitute whose frame the stack does not
+ *      show (one that rewrites the stacks of what it throws, or native code); a test configuration that changes the realm's Error
+ *      stacks, its built-ins or the installed copy's exported objects; and Pi's own modules substituted by a test configuration. THE
+ *      BYTES: the installed package's package.json and its 27 shipped modules equal SDK_BYTES, one sha256 each, so a change to any of
+ *      them (a table, a refusal site or any other line) reds T2. PROBED through decodeResultStream: each closed body refuses each of
+ *      the 12 TIER_MEMBERS under each of the 11 TIER_VALUES (the ten words and their list) as SDK_PROTOCOL_MALFORMED at body.<member>
  *      (native code HX-PROTOCOL-FRAME-INVALID), the empty-body kinds refuse them at body and the frame envelope at the member, and
  *      a diagnostic frame, an open body, decodes each of them; each decoder evidence status decodes and becomes exactly that
  *      evidence class, and every tier word but parsed is refused as an evidence status (SDK_PROTOCOL_INCOMPATIBLE at body.status,
@@ -180,17 +198,18 @@
  * function a control shows can fire: moved() (a changed runtime digest moves every base reading's outputs and axis, and the twin's),
  * departure() (an open body departs from a refusal, a closed one from a decode), the placement control (every cell carries what it
  * names), promotion() (the licensed complete readings, and an unlicensed reading judged as licensed, flag each of its seven clauses),
- * the instrument's four stand-ins, firstFrame() (a frame in another copy reads as its own URL, one in this copy by its path from
- * SDK_DIST), callerOf() (a caller frame outside the repository reads whole, one in it by its path from the root, and a stack with no
- * frame outside SDK_DIST reads as none), substituted() (a substituted binding reads by name), sdkImportsOf() (a control text's
- * imports of the package read in each form, type-only names and other packages left out), differing() (a changed leaf, an added
- * member and a longer list each read by label), valueEchoes()'s deviating judge (a stand-in that also counts the tier words a reading
- * holds, in any case, deviates at each of the 12220 cells, and one that relays a tier-word runtime version at another label than the
- * neutral word's deviates at exactly the 1040 runtime.version cells) and unheld() (with no residual, every unread refusal and
- * relayed facet kind is unheld). Pure: no HX binary, scratch directory, clock, network or file write; the files read are the
- * installed SDK's package.json, shipped declaration files and modules, the src tree's modules (their imports; the three
- * READER_MODULES' code), this file's own source (its import declaration), and the real paths of SDK_DIST, SDK_INSTALLED and the
- * package.json Node resolves for the provider. Display paths added: none (test-only). */
+ * the instrument's four stand-ins, firstFrame() (a frame in another copy or in a file under SDK_DIST outside the pinned modules reads
+ * as its own URL, one in a pinned module by its path from SDK_DIST), callerOf() (a caller frame outside the repository reads whole,
+ * one in it by its path from the root, a file under SDK_DIST outside the pinned modules included, a built-in's frame is skipped, an
+ * eval frame reads as the caller, and a stack with no frame outside the pinned modules reads as none), substituted() (a substituted
+ * binding reads by name), sdkImportsOf() (a control text's imports of the package read in each form, type-only names and other
+ * packages left out), differing() (a changed leaf, an added member and a longer list each read by label), valueEchoes()'s deviating
+ * judge (a stand-in that also counts the tier words a reading holds, in any case, deviates at each of the 12220 cells, and one that
+ * relays a tier-word runtime version at another label than the neutral word's deviates at exactly the 1040 runtime.version cells) and
+ * unheld() (with no residual, every unread refusal and relayed facet kind is unheld). Pure: no HX binary, scratch directory, clock,
+ * network or file write; the files read are the installed SDK's package.json, shipped declaration files and modules, the three
+ * READER_MODULES (their code and their import and export declarations), this file's own source (its import declaration), and the real
+ * paths of SDK_DIST, SDK_INSTALLED and the package.json Node resolves for the provider. Display paths added: none (test-only). */
 import {createHash} from 'node:crypto';
 import {readdirSync, readFileSync, realpathSync} from 'node:fs';
 import {findPackageJSON} from 'node:module';
@@ -229,9 +248,9 @@ const CAPABILITY_CONTEXT = {grants: ['hyperunix:read'], signal: new AbortControl
 const RUNTIME_VERSION = '0.1.0';
 /** Where npm ci installs the package: the repository root's node_modules/@hyperunix/sdk (package-lock.json's entry). */
 const SDK_INSTALLED = new URL('../node_modules/@hyperunix/sdk/dist/', import.meta.url);
-/** The dist/ directory of the package this file's own import of '@hyperunix/sdk' resolves to (import.meta.resolve: Node's resolution
- * from test/, so a git-ignored test/node_modules copy would resolve first). Every read of the package below reads it; T2 holds it to
- * SDK_INSTALLED and holds the functions this file imports to its modules (THE SAME VIEW). */
+/** The dist/ directory import.meta.resolve names for this file's '@hyperunix/sdk' (Node's resolution from test/, so a git-ignored
+ * test/node_modules copy would resolve first; a test-config alias or plugin it does not see). Every read of the package below reads
+ * it; T2 holds it to SDK_INSTALLED and holds the functions this file imports to its pinned modules (THE SAME VIEW). */
 const SDK_DIST = new URL('./', import.meta.resolve('@hyperunix/sdk'));
 /** The repository root: the directory test/ sits in. */
 const ROOT = new URL('../', import.meta.url);
@@ -279,8 +298,8 @@ const BYTES_MOVED = 'wb-tz2.12: the installed @hyperunix/sdk runtime bytes moved
   + 'build the on-landing leg first, else re-read the decoder (its tables, refusal sites and envelope keys: R-ACCEPTANCE, wb-tz2.18) '
   + 'before re-pinning SDK_BYTES';
 const SAME_VIEW = "wb-b9ot: the @hyperunix/sdk this file or the provider executes is not the repository's installed copy (a node_modules "
-  + 'copy under test/ or src/, a test-config alias or a module mock came first); SDK_BYTES and every decoder reading pin the installed '
-  + 'copy, so remove the other copy and re-read';
+  + 'copy under test/ or src/, a test-config alias, a module mock or code outside the 27 modules SDK_BYTES pins, under dist/ included, '
+  + 'came first); SDK_BYTES and every decoder reading pin the installed copy, so remove the other copy and re-read';
 const SDK_IMPORTS = 'wb-b9ot: a reader module other than the provider now imports @hyperunix/sdk, or the provider imports other names; pin '
   + "that module's resolution and frames as the provider's are pinned before re-pinning this roster";
 
@@ -702,13 +721,20 @@ const sdkBytes = (): Record<string, string> => ({'package.json': sha256(readFile
 /** How many times each shipped module spells a text, the modules that never spell it left out. */
 const spelledIn = (text: string): Record<string, number> => Object.fromEntries(shippedModules()
   .map(name => [name, readFileSync(new URL(name, SDK_DIST), 'utf8').split(text).length - 1] as const).filter(([, count]) => count > 0));
-/** The first frame of a stack, as its function and its module: a module under SDK_DIST by its path from there, any other by its own
- * URL; a first frame of another form is reported whole. */
+/** THE PACKAGE'S MODULES (wb-b9ot cut #3): the module a frame location is, by its path from SDK_DIST, when it is the own file: URL of one
+ * of the 27 modules SDK_BYTES pins (its dist/ keys), else none, so a file under SDK_DIST outside them (an .mjs shim) is never the
+ * package's here, as it is not in THE BYTES. */
+function pinnedModuleAt(location: string): string | undefined {
+  return Object.keys(SDK_BYTES).filter(key => key.startsWith('dist/')).map(key => key.slice('dist/'.length))
+    .find(module => new URL(module, SDK_DIST).href === location);
+}
+/** The first frame of a stack, as its function and its module: a pinned module by its path from SDK_DIST, any other module (another
+ * copy's, or a file under SDK_DIST outside the pinned modules) by its own URL; a first frame of another form is reported whole. */
 function firstFrame(stack: string): string {
   const frame = stack.split('\n').find(line => line.startsWith('    at ')) ?? 'no frame';
   const match = frame.match(/^ {4}at (\S+) \((file:\/\/\/[^)]+):\d+:\d+\)$/);
   if (match === null) return `unread: ${frame.trim()}`;
-  return `${match[1]} ${match[2].startsWith(SDK_DIST.href) ? match[2].slice(SDK_DIST.href.length) : match[2]}`;
+  return `${match[1]} ${pinnedModuleAt(match[2]) ?? match[2]}`;
 }
 /** A frame location as this file names it: a file inside the repository by its path from the root, any other location whole. */
 function located(location: string): string {
@@ -718,16 +744,24 @@ function located(location: string): string {
 }
 /** This file, as frames name it (its copies name themselves). */
 const SELF = located(import.meta.url);
-/** The first frame of a stack whose location lies outside SDK_DIST, by its location (located()): the frame that called into the
- * package; a stack with no such frame reads 'no caller frame'. */
+/** A frame the realm writes for a built-in that names no location: its function, then (<anonymous>), (native) or (index <n>). */
+const BUILT_IN_FRAME = /^ {4}at (?:async |new )?[\w$.<>[\] ]+ \((?:<anonymous>|native|index \d+)\)$/;
+/** The first frame of a stack outside the pinned modules: the frame that called into the package, by its location (located()); a frame
+ * naming no location is skipped only in a built-in's form (BUILT_IN_FRAME), and any other one (an eval or new Function frame) reads
+ * as the caller, whole; a stack with no such frame reads 'no caller frame'. */
 function callerOf(stack: string): string {
-  for (const line of stack.split('\n')) {
-    const location = line.match(/^ {4}at (?:.*\()?([^()\s]+):\d+:\d+\)?$/)?.[1];
-    if (location !== undefined && !location.startsWith(SDK_DIST.href)) return located(location);
+  for (const line of stack.split('\n').filter(frame => frame.startsWith('    at '))) {
+    const location = line.match(/^ {4}at (?:async )?(?:.*\()?([^()\s]+):\d+:\d+\)?$/)?.[1];
+    if (location === undefined) {
+      if (!BUILT_IN_FRAME.test(line)) return `unread: ${line.trim()}`;
+    } else if (pinnedModuleAt(location) === undefined) {
+      return located(location);
+    }
   }
   return 'no caller frame';
 }
-/** Where a call raises from and who called into the package: the first frame of what it throws, then its first frame outside SDK_DIST. */
+/** Where a call raises from and who called into the package: the first frame of what it throws, then its first frame outside the
+ * pinned modules. */
 function raisedFrom(call: () => unknown): string {
   const error = thrown(call);
   return error instanceof Error ? `${firstFrame(error.stack ?? '')} from ${callerOf(error.stack ?? '')}` : `not an Error: ${String(error)}`;
@@ -1479,21 +1513,22 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       .toStrictEqual(['supportIds', 'evidenceClasses', 'derivationHandles', 'providers', 'providerVersions']);
   });
 
-  it('T2: read as declarations, never as what the decoder accepts, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export) and its 3 empty-body kinds are exactly these and hold no tier, the package this file imports @hyperunix/sdk from is the installed copy (its import resolves there, each value it imports is that copy\'s own export, unmocked, and each function it imports and a decoder refusal raise from its modules, called from this file), as is the provider\'s, the one of the three reader modules importing it (it resolves there and its resultToJson raises from that copy, called from the provider), and its package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', async () => {
-    // THE SAME VIEW (wb-b9ot, gate plant G13 and refusal #1's S1-S3): the package these cases read is the one this file and the provider
-    // execute. (1) This file's import resolves to the installed copy (a git-ignored test/node_modules copy would resolve first; real
-    // paths, so a symlinked node_modules reads as its target).
+  it('T2: read as declarations, never as what the decoder accepts, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export) and its 3 empty-body kinds are exactly these and hold no tier, Node\'s resolution of this file\'s @hyperunix/sdk (import.meta.resolve) names the installed copy, each value it imports is the export vi.importActual loads from that copy\'s index.js URL, and each function it imports and a decoder refusal throw from their own frames in its modules, the first frame outside its 27 pinned modules this file\'s, and for the provider, the one of the three reader modules importing it, Node\'s resolution from its path (findPackageJSON) names that package and its registration\'s resultToJson throws from that copy\'s result.js, the first frame outside the pinned modules the provider\'s, and its package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', async () => {
+    // THE SAME VIEW (wb-b9ot: gate plant G13, refusal #1's S1-S3, refusal #2's G21-S5 and G21-S6): exactly these readings of the package
+    // this file and the provider execute. (1) Node's resolution of this file's import (import.meta.resolve) names the installed copy
+    // (a git-ignored test/node_modules copy would resolve first; real paths, so a symlinked node_modules reads as its target).
     expect(realpathSync(SDK_DIST), SAME_VIEW).toBe(realpathSync(SDK_INSTALLED));
-    // (2) Each value its import declaration names is that copy's own export: the same object as the export of SDK_INSTALLED's index.js
-    // loaded unmocked by its file URL, so a test-config alias or a module mock substituting a binding (a call-through included) reds;
-    // the reading names a substituted binding.
+    // (2) Each value its import declaration names is the same object as the export of the module vi.importActual loads for
+    // SDK_INSTALLED's index.js file URL, so an alias or a module mock of the bare specifier substituting a binding (a call-through
+    // included) while that URL loads the installed copy reds; an alias of that URL too is left to (3); the reading names a
+    // substituted binding.
     const installed = await vi.importActual<Record<string, unknown>>(new URL('index.js', SDK_INSTALLED).href);
     expect(Object.keys(BOUND).sort()).toStrictEqual(sdkBindings().sort());
     expect(substituted(BOUND, installed), SAME_VIEW).toStrictEqual([]);
     expect(substituted({...BOUND, resultToJson: () => null}, installed)).toStrictEqual(['resultToJson']);
-    // (3) Each function it imports raises, called on null, from its own frame in that copy's result.js, called from this file's own
-    // frame; and a decoder refusal is this file's ProtocolError raised from StreamChecker.fail in its protocol/decoder.js, the first
-    // frame outside the copy again this file's.
+    // (3) Each function it imports, called on null, throws with its own frame in that copy's result.js first and this file's frame first
+    // outside the 27 pinned modules (a file under SDK_DIST outside them, an .mjs shim, is outside); and a decoder refusal is this file's
+    // ProtocolError thrown with StreamChecker.fail in its protocol/decoder.js first, this file's frame again first outside them.
     const refusal = thrown(() => decodeResultStream(envelopeStream({unknown_key: 'r1'})));
     expect([refusal instanceof ProtocolError, refusal instanceof Error ? `${firstFrame(refusal.stack ?? '')} from ${callerOf(refusal.stack ?? '')}`
       : 'not an Error'], SAME_VIEW).toStrictEqual([true, `StreamChecker.fail protocol/decoder.js from ${SELF}`]);
@@ -1510,22 +1545,27 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     expect(sdkBindings().sort()).toStrictEqual([...Object.keys(raised), 'ProtocolError'].sort());
     // (4) Of the READER_MODULES only the provider imports the package; Node's resolution from its own path finds the installed package
     // (a git-ignored node_modules copy under src/ would resolve first for it alone); and its registration, handed a null result,
-    // raises from resultToJson's own frame in the installed copy's result.js, called from the provider's own frame, where a stand-in
-    // registration in this file reads its own function and this file.
+    // throws with resultToJson's own frame in the installed copy's result.js first and the provider's frame first outside the pinned
+    // modules, where a stand-in registration in this file reads its own function and this file.
     expect(sdkImporters(), SDK_IMPORTS).toStrictEqual({[PROVIDER]: ['Bounds', 'HyperUnix', 'resultToJson'], 'src/workbench/hyperunix-observer.ts': [],
       'src/workbench/native-evidence.ts': []});
     const resolved = findPackageJSON('@hyperunix/sdk', new URL(PROVIDER, ROOT));
     expect(resolved === undefined ? 'unresolved' : realpathSync(resolved), SAME_VIEW).toBe(realpathSync(new URL('../package.json', SDK_INSTALLED)));
     expect([await registrationRaised(registerHyperUnixFind), await registrationRaised(standInRegistration)], SAME_VIEW)
       .toStrictEqual([`resultToJson result.js from ${PROVIDER}`, `resultFromJson result.js from ${SELF}`]);
-    // The readers can fire: a first frame in another copy reads as its own URL, one in this copy by its path from SDK_DIST; a caller
-    // frame outside the repository reads whole, one in it by its path from the root; and the import reader reads each form.
+    // The readers can fire: a first frame in another copy, or in a file under SDK_DIST outside the pinned modules (an .mjs shim), reads
+    // as its own URL, one in a pinned module by its path from SDK_DIST; a caller frame outside the repository reads whole, one in it by
+    // its path from the root (a file under SDK_DIST outside the pinned modules included), a built-in's frame is skipped and an eval
+    // frame reads as the caller; and the import reader reads each form.
     expect([firstFrame('E\n    at resultFromJson (file:///elsewhere/@hyperunix/sdk/dist/result.js:526:15)'),
-      firstFrame(`E\n    at resultFromJson (${new URL('result.js', SDK_DIST).href}:526:15)`)])
-      .toStrictEqual(['resultFromJson file:///elsewhere/@hyperunix/sdk/dist/result.js', 'resultFromJson result.js']);
-    const inCopy = `E\n    at fail (${new URL('protocol/decoder.js', SDK_DIST).href}:1:2)\n    at decodeResultStream (${new URL('result.js', SDK_DIST).href}:3:4)`;
+      firstFrame(`E\n    at resultFromJson (${new URL('result.js', SDK_DIST).href}:526:15)`), firstFrame(`E\n    at resultFromJson (${new URL('zz-shim.mjs', SDK_DIST).href}:5:15)`)])
+      .toStrictEqual(['resultFromJson file:///elsewhere/@hyperunix/sdk/dist/result.js', 'resultFromJson result.js', `resultFromJson ${new URL('zz-shim.mjs', SDK_DIST).href}`]);
+    const inCopy = `E\n    at fail (${new URL('protocol/decoder.js', SDK_DIST).href}:1:2)\n    at Array.map (<anonymous>)\n    at decodeResultStream (${new URL('result.js', SDK_DIST).href}:3:4)`;
+    const evalFrame = 'at decodeResultStream (eval at <anonymous> (file:///elsewhere/shim/index.js:3:24), <anonymous>:1:42)';
     expect([callerOf(`${inCopy}\n    at decodeResultStream (file:///elsewhere/shim/index.js:5:6)`), callerOf(`${inCopy}\n    at ${fileURLToPath(new URL(PROVIDER, ROOT))}:7:8`),
-      callerOf(inCopy)]).toStrictEqual(['file:///elsewhere/shim/index.js', PROVIDER, 'no caller frame']);
+      callerOf(`${inCopy}\n    at decodeResultStream (${new URL('zz-shim.mjs', SDK_DIST).href}:5:6)`), callerOf(`${inCopy}\n    ${evalFrame}\n    at ${fileURLToPath(new URL(PROVIDER, ROOT))}:7:8`),
+      callerOf(inCopy)]).toStrictEqual(['file:///elsewhere/shim/index.js', PROVIDER, 'node_modules/@hyperunix/sdk/dist/zz-shim.mjs', `unread: ${evalFrame}`,
+      'no caller frame']);
     expect(sdkImportsOf("import {a, type b} from '@hyperunix/sdk'; import type {c} from '@hyperunix/sdk'; import d, * as e from '@hyperunix/sdk/raw';\n"
       + "import '@hyperunix/sdk/protocol'; export {f, type g} from '@hyperunix/sdk'; export * from '@hyperunix/sdk'; export type {h} from '@hyperunix/sdk';\n"
       + "const i = import('@hyperunix/sdk'); import {j} from '@hyperunix/sdkx'; import {k} from 'other';"))
