@@ -48,7 +48,13 @@
  * a declaration's name, the shorthand and variable handler tests, memberOf (an assigned member, a host UI member, a pi
  * register member), receiverName (a receiver named with the word ui), the callee (matchesKey), Key and its member by
  * A-escaped-names (the scanner shape at each); the require test by F-require-escaped; and the pi receiver by A-pi-collapse
- * (a receiver whose node.text collapses to pi while its runtime name is pXi or plugini registers no pi surface).
+ * (a receiver whose node.text collapses to pi while its runtime name is pXi or plugini registers no pi surface). The pi
+ * receiver is also held to nameOf's decoding at its site by A-pi-escaped (wb-9s21): receivers spelled pi with escapes,
+ * each in one shape and its only spelling - a four-digit or a braced escape of its p or of its i, and both letters
+ * escaped (four-digit then braced) - register their pi surface by register*, and a four-digit and a braced escape of
+ * its p register by on, so a reader at that site that decodes no escape, or only one escape form, misses one. MEASURED
+ * (TypeScript 6.0.3, by the cutting seat): node.text reads each of those spellings as pi, so A-pi-collapse, not
+ * A-pi-escaped, holds the site against node.text.
  * LITERALS: a module's literals are every string literal and every no-substitution template by its value, every template
  * part (its head, each middle and its tail) by its text - each with its escapes decoded by TypeScript - every
  * regular-expression literal by its source (its escapes not decoded: R-REGEX-ESCAPE), and every chain of "+" whose
@@ -78,9 +84,10 @@
  * receiver named with the word ui that is not the host's handle reads as one too (fail-closed: an unknown member reds
  * as UNCLASSIFIED); any other receiver (an alias named otherwise, a call result, a container element) and a member
  * reached indirectly (.call, .bind) is R-HOST-ALIAS. A pi surface is a register* or on call on the bare identifier pi, by
- * its nameOf name (a receiver whose node.text collapses to pi while its runtime name differs is not pi: A-pi-collapse);
- * any other receiver (an alias, this.pi, options.pi, pi behind a wrapper) is R-PI-ALIAS. A module with any affordance is
- * an AFFORDANCE module; the VIEW SURFACE is the affordance modules plus every module under src/ui/.
+ * its nameOf name (a receiver whose node.text collapses to pi while its runtime name differs is not pi: A-pi-collapse;
+ * pi spelled with unicode escapes is pi: A-pi-escaped); any other receiver (an alias, this.pi, options.pi, pi behind a
+ * wrapper) is R-PI-ALIAS. A module with any affordance is an AFFORDANCE module; the VIEW SURFACE is the affordance
+ * modules plus every module under src/ui/.
  * FINDINGS (fail-closed, each a line): REACH (an affordance module whose runtime closure holds a PATH module - itself
  * included - tagged [APO view] when the module holds a ROLE text), ENTRY (the entry's runtime closure holds a PATH module),
  * OFFER (a PATH text inside a view-surface module), PACKAGE (a package specifier in a judged closure whose words read as a
@@ -579,6 +586,12 @@ const REGISTER_PROVIDER_ESC = `r${u4("0065")}gisterProvid${ub("65")}r`;
 /** Receivers TypeScript's node.text collapses to pi (the scanner shape), while the runtime and nameOf read pXi and plugini. */
 const PI_COLLAPSE = `${u4("0070")}X${ub("69")}`;
 const PI_COLLAPSE2 = `${ub("70")}lugin${ub("69")}`;
+/** Receivers spelled pi with unicode escapes, one shape each: a four-digit or a braced escape of its p or of its i, and both letters escaped (four-digit then braced). */
+const PI_ESCAPED_4DIGIT_P = `${u4("0070")}i`;
+const PI_ESCAPED_BRACED_P = `${ub("70")}i`;
+const PI_ESCAPED_4DIGIT_I = `p${u4("0069")}`;
+const PI_ESCAPED_BRACED_I = `p${ub("69")}`;
+const PI_ESCAPED_BOTH = `${u4("0070")}${ub("69")}`;
 /** A planted extension module calling `call` on its parameter `receiver`. */
 const piExt = (receiver: string, call: string): string =>
   `export function setup(${receiver}: { registerWidget(): void; on(event: string, fn: () => void): void }): void {\n  ${receiver}.${call};\n}\n`;
@@ -899,6 +912,28 @@ export const ROWS: readonly Row[] = [
           "src/ext-pi-case.ts": piExt("Pi", "registerWidget()"),
         },
         findings: ["UNCLASSIFIED src/ext-pi.ts pi.registerWidget"],
+      },
+      {
+        id: "A-pi-escaped",
+        what: "the pi receiver spelled with unicode escapes is read as pi by its nameOf name at that site, so a reader there that decodes no escape, or only one escape form, misses a pi surface: receivers spelled pi with a four-digit and with a braced escape of its p (src/ext-esc-pi-4digit-p.ts, src/ext-esc-pi-braced-p.ts) and of its i (src/ext-esc-pi-4digit-i.ts, src/ext-esc-pi-braced-i.ts) and with both letters escaped, four-digit then braced (src/ext-esc-pi-both.ts), each its only spelling, register a pi surface by register* (an unclassified one reds), and a four-digit and a braced escape of its p register one by on (src/ext-esc-pi-on-4digit-p.ts, src/ext-esc-pi-on-braced-p.ts)",
+        files: {
+          "src/ext-esc-pi-4digit-p.ts": piExt(PI_ESCAPED_4DIGIT_P, "registerWidget()"),
+          "src/ext-esc-pi-braced-p.ts": piExt(PI_ESCAPED_BRACED_P, "registerWidget()"),
+          "src/ext-esc-pi-4digit-i.ts": piExt(PI_ESCAPED_4DIGIT_I, "registerWidget()"),
+          "src/ext-esc-pi-braced-i.ts": piExt(PI_ESCAPED_BRACED_I, "registerWidget()"),
+          "src/ext-esc-pi-both.ts": piExt(PI_ESCAPED_BOTH, "registerWidget()"),
+          "src/ext-esc-pi-on-4digit-p.ts": piExt(PI_ESCAPED_4DIGIT_P, 'on("agent_end", () => {})'),
+          "src/ext-esc-pi-on-braced-p.ts": piExt(PI_ESCAPED_BRACED_P, 'on("agent_end", () => {})'),
+        },
+        findings: [
+          "UNCLASSIFIED src/ext-esc-pi-4digit-i.ts pi.registerWidget",
+          "UNCLASSIFIED src/ext-esc-pi-4digit-p.ts pi.registerWidget",
+          "UNCLASSIFIED src/ext-esc-pi-both.ts pi.registerWidget",
+          "UNCLASSIFIED src/ext-esc-pi-braced-i.ts pi.registerWidget",
+          "UNCLASSIFIED src/ext-esc-pi-braced-p.ts pi.registerWidget",
+          "UNCLASSIFIED src/ext-esc-pi-on-4digit-p.ts pi.on:agent_end",
+          "UNCLASSIFIED src/ext-esc-pi-on-braced-p.ts pi.on:agent_end",
+        ],
       },
     ],
   },

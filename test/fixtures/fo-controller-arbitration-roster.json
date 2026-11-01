@@ -440,14 +440,23 @@
             },
             "wholeControl": {
               "read": [
-                "src/zz-link.ts"
+                "src/zz-deep/zz-link.ts",
+                "src/zz-link.ts",
+                "zz-root-link.mjs"
               ],
               "findings": [
-                "src/zz-link.ts:1 control-directive"
+                "src/zz-deep/zz-link.ts:1 control-directive",
+                "src/zz-link.ts:1 control-directive",
+                "zz-root-link.mjs:1 control-directive"
               ],
               "whole": false,
               "links": [
-                "src/zz-link.ts"
+                "examples",
+                "src/zz-deep/zz-link.ts",
+                "src/zz-deep/zz-linked-dir",
+                "src/zz-link.ts",
+                "src/zz-linked-dir",
+                "zz-root-link.mjs"
               ]
             },
             "synonyms": [
@@ -531,7 +540,11 @@
               "not-data:reason": "not-data:reason",
               "not-data:state_epoch": "not-data:state_epoch",
               "not-data:requested_range": "not-data:requested_range",
-              "not-data:observed_versions": "not-data:observed_versions"
+              "not-data:observed_versions": "not-data:observed_versions",
+              "not-data:min_interval": "not-data:min_interval",
+              "not-data:actuator_id": "not-data:actuator_id",
+              "not-data:controller_id": "not-data:controller_id",
+              "not-data:requested_range:undefined-element": "not-data:requested_range"
             },
             "hosts": {
               "honest": [],
@@ -547,7 +560,47 @@
                 "malformed-applied:not-data:reason",
                 "malformed-applied:not-data:state_epoch",
                 "malformed-applied:not-data:requested_range",
-                "malformed-applied:not-data:observed_versions"
+                "malformed-applied:not-data:observed_versions",
+                "malformed-applied:not-data:min_interval",
+                "malformed-applied:not-data:actuator_id",
+                "malformed-applied:not-data:controller_id",
+                "malformed-applied:not-data:requested_range:undefined-element"
+              ],
+              "lax-timer": [
+                "malformed-applied:missing:controller_id",
+                "malformed-applied:missing:observed_versions",
+                "malformed-applied:missing:state_epoch",
+                "malformed-applied:missing:actuator_id",
+                "malformed-applied:missing:requested_range",
+                "malformed-applied:missing:reason",
+                "malformed-applied:missing:min_interval",
+                "malformed-applied:extra:apply",
+                "malformed-applied:not-data:reason",
+                "malformed-applied:not-data:state_epoch",
+                "malformed-applied:not-data:requested_range",
+                "malformed-applied:not-data:observed_versions",
+                "malformed-applied:not-data:min_interval",
+                "malformed-applied:not-data:actuator_id",
+                "malformed-applied:not-data:controller_id",
+                "malformed-applied:not-data:requested_range:undefined-element"
+              ],
+              "lax-arbiter-timer": [
+                "malformed-applied:missing:controller_id",
+                "malformed-applied:missing:observed_versions",
+                "malformed-applied:missing:state_epoch",
+                "malformed-applied:missing:actuator_id",
+                "malformed-applied:missing:requested_range",
+                "malformed-applied:missing:reason",
+                "malformed-applied:missing:min_interval",
+                "malformed-applied:extra:apply",
+                "malformed-applied:not-data:reason",
+                "malformed-applied:not-data:state_epoch",
+                "malformed-applied:not-data:requested_range",
+                "malformed-applied:not-data:observed_versions",
+                "malformed-applied:not-data:min_interval",
+                "malformed-applied:not-data:actuator_id",
+                "malformed-applied:not-data:controller_id",
+                "malformed-applied:not-data:requested_range:undefined-element"
               ]
             }
           }
@@ -575,11 +628,40 @@
               ],
               "inert-arbiter": [
                 "arbiter-applied-nothing"
+              ],
+              "claims-apply": [
+                "arbiter-applied-nothing"
+              ],
+              "silent-apply": [
+                "arbiter-applied-nothing"
+              ],
+              "misnamed-apply": [
+                "arbiter-applied-nothing"
+              ],
+              "extended-apply": [
+                "arbiter-applied-nothing"
+              ],
+              "prefixed-apply": [
+                "arbiter-applied-nothing"
+              ],
+              "truncated-apply": [
+                "arbiter-applied-nothing"
+              ],
+              "recased-apply": [
+                "arbiter-applied-nothing"
+              ],
+              "refused-apply": [
+                "arbiter-applied-nothing"
               ]
             },
             "lateApply": {
               "violations": [],
-              "appliesAfterTheTimer": 2
+              "appliesAfterTheTimer": 2,
+              "malformed": {
+                "violations": [],
+                "freshHosts": 16,
+                "movedAfterTheTimers": 16
+              }
             }
           }
         }

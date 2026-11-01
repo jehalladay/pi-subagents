@@ -834,6 +834,26 @@
                 "messages": [
                   "RF reading workspace differs from observer scope."
                 ]
+              },
+              "atAuthorizedRoot": {
+                "readings": 57,
+                "kinds": [
+                  "projected"
+                ],
+                "equal": 57,
+                "differsFromScope": true
+              },
+              "envelopeRootDiffers": {
+                "readings": 114,
+                "kinds": [
+                  "refused"
+                ],
+                "categories": [
+                  "validation"
+                ],
+                "messages": [
+                  "ReactiveFiber topology refused: source.workspace needs an rfw_ id and the reading workspace root."
+                ]
               }
             },
             "(read admission independent of scoring)": {
@@ -860,7 +880,9 @@
               "term": "or observer workspace-scope checks",
               "facts": [
                 "outOfScope",
-                "authorizedRoot"
+                "authorizedRoot",
+                "atAuthorizedRoot",
+                "envelopeRootDiffers"
               ]
             },
             {

@@ -1,4 +1,12 @@
 /**
+ * wb-i3p4: test/workbench-ri-decision-state-echo-census.test.ts A1-D4, the judged set, records and the two named residual
+ * quiet rows below (R-PADDED-WITNESS-ECHO and R-COORDINATED-CASE-WITNESS): witness/count equality and its measured limits.
+ * R739 TERMINAL enumerate-the-resolvable form, hop 3 of wb-tz4r.2 -> wb-wgsh -> wb-i3p4. The original A1-D4 behaviors and
+ * independent falsifiers are listed below; the additive residual rows use the SAME caseReading as the live pin runner. Each
+ * quiet page carries its member's edit and its measured quiet report, beside an uncoordinated or unpadded bound. Silencing
+ * that page's padding, returning the original witness instead of the rewritten one, or silencing its comparator reds its row.
+ * No new native decision-envelope coverage is claimed. Arbitrary consulted-input binding is NOT CLAIMED by this census.
+ *
  * wb-tz4r.2 (RI-UNIFIED-DECISION-INFERENCE-R2, program-triage-2026-10-22), the absent-today leg. <ENGINE> stands for the name of
  * the ReactiveInference module that holds the typed decision contracts (src/reactive_inference/<ENGINE>/ at the pin). This file
  * and its roster never spell it joined: ENGINE composes it at runtime from the roster's parts (residual R-COMPOSED names what that
@@ -67,12 +75,18 @@
  * in row D's, A1 reads the listed words from clause (a)'s braces, D4 reads its "Shipped: no" sentence, its quote and citation equal
  * the roster's, and the landed first cut's delivery record in the same row ("15 registered tests: the judged set, 13 pins in rows
  * A-D, the records case; frozen shape A:3 B:3 C:3 D:4") fixes the pins: each row's pins are its letter and the ordinals up to its
- * count, and the registered tests are that many, so a pin removed from ROWS, the frozen literal, IMPL and the roster together
+ * count, and the original A-D registered set has that many tests, so a pin removed from ROWS, the frozen literal, IMPL and the roster together
  * leaves its row short of the record and reds the judged set, which also re-reads every single-pin removal as exactly that one
  * missing pin (wb-wgsh F1, gate probes G1/G1b); wb-973.10's row and the landed observer (C3); README.md's architecture map (D1).
- * NOT CLAIMED: the record fixes which pins exist and the count how many assertions a case makes, not what a case measures, so a
- * case rewritten together with what the roster holds for it (its witness, its count) under the same pin id, or a case that echoes
- * its witness while padding its count with unrelated assertions, is anchored by nothing outside these two files.
+ * NAMED RESIDUAL R-PADDED-WITNESS-ECHO (quiet row titled with that id, after D4): a case that echoes its witness while
+ * padding its count with unrelated assertions. The row measures all 13 A1-D4 padded pages (N1-ALL; B2 is N1-B2) under the live
+ * witness/count reader; every page has its original witness and exactly its pinned count, so it is quiet. Removing padding
+ * leaves assertion-count; changing only the witness leaves witness. Those are the row's independent falsifiers.
+ * NAMED RESIDUAL R-COORDINATED-CASE-WITNESS (next quiet row): D3's case and witness rewritten together under its unchanged id
+ * and count (N2-D3) read quiet. The page actually replaces the D3 witness, and the same case against the original roster
+ * reads witness, while removing its padding reads assertion-count: the row pins both bounds. The record fixes which pins
+ * exist, and the count how many assertions a case makes, not what inputs it consulted. No other coordinated rewrite is
+ * claimed covered. The two quiet rows are additive: they do not replace, weaken or remove an A-D pin or its outside anchor.
  * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran;
  * every pin's case reached its end; the judged set and every pin's case made the assertion count the roster pins for it (the
  * witness comparison included), so a case replaced by one that echoes its roster witness and makes none of its own assertions
@@ -88,12 +102,15 @@
  * result's index, paraphrase or boolean at a path no decided answer travels (B3 sideIndex, sideParaphrase, sideBoolean);
  * R-SUCCESS-SYNONYM a success word outside SUCCESS_WORDS or inside a longer string (C2 synonym, successInProse);
  * R-COUNT-COINCIDENCE a reading that states only its total, which equals the undecided count on a one-result envelope (C2
- * totalOnly: quiet on the singles, refused on the tally).
+ * totalOnly: quiet on the singles, refused on the tally); R-PADDED-WITNESS-ECHO and R-COORDINATED-CASE-WITNESS (their two
+ * separately registered, titled quiet rows after D4, described above).
  * Display paths added: none. Test-only: it spawns nothing; the walk controls plant files in makeScratch scratch only.
  */
+
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
 import type { JsonValue } from "../src/workbench/capability-registry.js";
@@ -161,6 +178,8 @@ const RESIDUAL_FAMILIES = [
   "R-SIDE-PATH",
   "R-SUCCESS-SYNONYM",
   "R-COUNT-COINCIDENCE",
+  "R-PADDED-WITNESS-ECHO",
+  "R-COORDINATED-CASE-WITNESS",
 ];
 const CYRILLIC_A = String.fromCodePoint(0x0430);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
@@ -1239,10 +1258,44 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   },
 };
 
+/** The same witness/count reading the live pin runner uses. Only a case's witness and assertion count are compared, never
+ * which inputs the case consulted. The residual pages below exercise that precise boundary, not a stronger reader. */
+function caseReading(impl: () => Json, expected: Json, asserted: number): { witness: Json; assertions: number; gaps: string[] } {
+  const before = expect.getState().assertionCalls;
+  const witness = impl();
+  // The live runner's function-shape and witness/count comparison assertions sit outside impl.
+  const assertions = expect.getState().assertionCalls - before + 2;
+  return { witness, assertions, gaps: caseGaps(witness, expected, assertions, asserted) };
+}
+
+function caseGaps(witness: Json, expected: Json, assertions: number, asserted: number): string[] {
+  return [...(isDeepStrictEqual(witness, expected) ? [] : ["witness"]), ...(assertions === asserted ? [] : ["assertion-count"])];
+}
+
+const PADDED_TITLE = "RESIDUAL R-PADDED-WITNESS-ECHO: B2 and all A1-D4 padded echo pages read quiet under the live witness/count reading";
+const COORDINATED_TITLE = "RESIDUAL R-COORDINATED-CASE-WITNESS: D3 and its witness replaced together read quiet under the live witness/count reading";
+
+/** A page that replaces a case with a witness echo and unrelated assertions. Each quiet row also measures the same page
+ * without padding, so it reds when its own page stops carrying the disclosed escape. */
+function paddedEcho(expected: Json, ownAssertions: number): () => Json {
+  return () => {
+    for (let index = 0; index < ownAssertions; index += 1) {
+      expect(0).toBe(0);
+    }
+    return expected;
+  };
+}
+
+function pinnedCount(pin: string): number {
+  const held = ROSTER.asserted.find(entry => entry.startsWith(`${pin}:`));
+  if (held === undefined) throw new Error(`no assertion count for ${pin}`);
+  return Number(held.slice(pin.length + 1));
+}
+
 /** A describe title: the row id and label (the label keeps the engine placeholder). */
 const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
-describe("wb-tz4r.2 ReactiveInference decision state echo census (program-triage-2026-10-22 R2, absent-today leg)", () => {
+describe("wb-i3p4 RI echo census: A1-D4 witness/count readings and the padded-echo/coordinated-D3 quiet rows", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:3", "D:4"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
@@ -1289,7 +1342,7 @@ describe("wb-tz4r.2 ReactiveInference decision state echo census (program-triage
     const delivered = deliveredRecord(bead.notes);
     const pinned = ROWS.map((row): PinSet => ({ id: row.id, pins: [...row.pins] }));
     expect(pinned, "every row's pins, in order, are the ones the landed delivery record fixes").toStrictEqual(delivered.rows);
-    expect({ pins: pinned.flatMap(row => row.pins).length, tests: ROSTER.tests.length }, "the delivery record's pin and registered-test counts").toStrictEqual({
+    expect({ pins: pinned.flatMap(row => row.pins).length, tests: ROSTER.tests.filter(title => ![PADDED_TITLE, COORDINATED_TITLE].includes(title)).length }, "the delivery record's pin and registered-test counts").toStrictEqual({
       pins: delivered.pins,
       tests: delivered.tests,
     });
@@ -1297,6 +1350,15 @@ describe("wb-tz4r.2 ReactiveInference decision state echo census (program-triage
       const hollowed = pinned.map(row => ({ id: row.id, pins: row.pins.filter(entry => entry !== pin) }));
       expect(recordGaps(hollowed, delivered), `${pin} removed from every literal is the one pin the record misses`).toEqual([pin]);
     }
+    expect([PADDED_TITLE, COORDINATED_TITLE], "the residual quiet rows have a frozen, two-member shape").toEqual([
+      "RESIDUAL R-PADDED-WITNESS-ECHO: B2 and all A1-D4 padded echo pages read quiet under the live witness/count reading",
+      "RESIDUAL R-COORDINATED-CASE-WITNESS: D3 and its witness replaced together read quiet under the live witness/count reading",
+    ]);
+    const followUp = readBeadRow("wb-i3p4").notes;
+    expect(followUp.includes("N1-B2") && followUp.includes("N1-ALL") && followUp.includes("N2-D3"), "the follow-up's independently recorded members anchor the two residual families").toBe(true);
+    const residualTitles = ROSTER.tests.filter(title => title.startsWith("RESIDUAL "));
+    expect(residualTitles).toEqual([PADDED_TITLE, COORDINATED_TITLE]);
+    expect(residualTitles.length, "one quiet row per independently recorded lead/ride finding").toBe(followUp.split("\n").filter(line => /^\[(?:leads|rides)\] - F[12] /.test(line)).length);
     ASSERTED.push(`judged:${expect.getState().assertionCalls}`);
   });
 
@@ -1306,13 +1368,42 @@ describe("wb-tz4r.2 ReactiveInference decision state echo census (program-triage
         it(pin, { timeout: 180_000 }, () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
-          const witness = impl === undefined ? null : impl();
-          expect(witness).toStrictEqual(rosterWitness(pin));
+          const reading = caseReading(impl ?? (() => null), rosterWitness(pin), pinnedCount(pin));
+          expect(reading.gaps, `${pin}: the witness and count reading`).toEqual([]);
           ASSERTED.push(`${pin}:${expect.getState().assertionCalls}`);
         });
       }
     });
   }
+
+  it(PADDED_TITLE, () => {
+    const pins = ROWS.flatMap(row => row.pins);
+    const pages = pins.map(pin => {
+      const expected = rosterWitness(pin);
+      const count = pinnedCount(pin);
+      const reading = caseReading(paddedEcho(expected, count - 2), expected, count);
+      const silenced = caseReading(paddedEcho(expected, 0), expected, count);
+      return { pin, witness: reading.witness, assertions: reading.assertions, gaps: reading.gaps, silenced: silenced.gaps };
+    });
+    expect(pages.map(({ pin, assertions, gaps, silenced }) => ({ pin, assertions, gaps, silenced }))).toEqual(
+      pins.map(pin => ({ pin, assertions: pinnedCount(pin), gaps: [], silenced: ["assertion-count"] })),
+    );
+    expect(pages.map(({ pin, witness }) => ({ pin, witness }))).toStrictEqual(pins.map(pin => ({ pin, witness: rosterWitness(pin) })));
+    expect(pages.find(page => page.pin === "B2")?.assertions, "N1-B2 has exactly one unrelated assertion plus the runner's two").toBe(3);
+    const wrong = caseReading(paddedEcho({ pin: "B2", unrelated: true }, 1), rosterWitness("B2"), 3);
+    expect(wrong.gaps, "a changed witness without its roster is not the padded-echo family").toEqual(["witness"]);
+  });
+
+  it(COORDINATED_TITLE, () => {
+    const expected = { pin: "D3", replacement: "coordinated unrelated case" };
+    const page = caseReading(paddedEcho(expected, 1), expected, 3);
+    expect(page, "N2-D3: a rewritten case plus its rewritten witness keeps the count and reads quiet").toStrictEqual({ witness: expected, assertions: 3, gaps: [] });
+    expect(page.witness, "the page actually changes the witness, rather than re-reading original D3").not.toStrictEqual(rosterWitness("D3"));
+    const uncoordinated = caseReading(paddedEcho(expected, 1), rosterWitness("D3"), 3);
+    expect(uncoordinated.gaps, "the same replacement against the original witness is seen").toEqual(["witness"]);
+    const silenced = caseReading(paddedEcho(expected, 0), expected, 3);
+    expect(silenced.gaps, "without the unrelated assertion the page no longer preserves D3's count").toEqual(["assertion-count"]);
+  });
 
   it("records: every registered test ran once in run mode in roster order, every pin reached its end, every case made its pinned assertion count, and no title spells the engine family", { timeout: 60_000 }, ({ task }) => {
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];

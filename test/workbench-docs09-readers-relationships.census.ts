@@ -1389,6 +1389,13 @@ const withoutPin = (rows: readonly Row[], key: string, title: string): Row[] =>
   rows.map(row => ({ ...row, halves: row.halves.map(half => (halfKey(row, half) === key && isPinned(half) ? { ...half, pins: half.pins.filter(entry => entry.title !== title) } : half)) }));
 /** A copy of the table with every pin stripped from every half: the anchor's reading must not move (NOT CLAIMED). */
 const stripPins = (rows: readonly Row[]): Row[] => rows.map((row): Row => ({ ...row, halves: row.halves.map((half): Half => (isPinned(half) ? { ...half, pins: [] } : half)) }));
+/**
+ * The pins a copy of the table carries, in table order: one half's by its key ("RA10/a"), or every half's. wb-nz86 (R694
+ * follow-up of wb-kw2r landing 638, gate F3): each withoutPin page is read back through it next to its use - RA10/a 2 -> 1
+ * pins with POLL_BUDGET kept, the whole table exactly one pin short - so a withoutPin that drops nothing (gate-authored
+ * gw1), the wrong pin or more than one pin reds the quiet row that uses the page instead of leaving it green.
+ */
+const pinsOf = (rows: readonly Row[], key?: string): Pin[] => rows.flatMap(row => row.halves.filter(half => key === undefined || halfKey(row, half) === key).flatMap(half => [...half.pins]));
 
 describe("wb-vm71 every row is anchored like RA6: the table's identity is frozen, and the LIVE docs/09 sections are tiled by its clauses", () => {
   it("FROZEN_ROWS (rule 16): every row's identity - each half's clause, then each pin by file, describe path and verbatim title - equals the literal", () => {
@@ -1438,7 +1445,9 @@ describe("wb-vm71 every row is anchored like RA6: the table's identity is frozen
       const stripped = stripPins(ROWS);
       expect(stripped.flatMap(row => row.halves).every(half => half.pins.length === 0)).toBe(true);
       expect(tableAnchor(live(), stripped)).toEqual(frozen);
-      expect(tableAnchor(live(), withoutPin(ROWS, "RA10/a", IDLE_CANCEL.title))).toEqual(frozen);
+      const dropped = withoutPin(ROWS, "RA10/a", IDLE_CANCEL.title);
+      expect({ before: pinsOf(ROWS, "RA10/a"), after: pinsOf(dropped, "RA10/a"), lost: pinsOf(ROWS).length - pinsOf(dropped).length }).toEqual({ before: [POLL_BUDGET, IDLE_CANCEL], after: [POLL_BUDGET], lost: 1 });
+      expect(tableAnchor(live(), dropped)).toEqual(frozen);
     });
   });
 
@@ -1760,7 +1769,9 @@ describe("wb-kw2r each half is bound to its own rendered span: neighbouring clau
     expect(binding.unmarked).toEqual(UNMARKED_JOINS);
     expect(binding.movable).toEqual(WHOLE_SPAN_JOINS);
     expect(spanBinding(live(), stripPins(ROWS))).toEqual(binding);
-    expect(spanBinding(live(), withoutPin(ROWS, "RA10/a", IDLE_CANCEL.title))).toEqual(binding);
+    const dropped = withoutPin(ROWS, "RA10/a", IDLE_CANCEL.title);
+    expect({ before: pinsOf(ROWS, "RA10/a"), after: pinsOf(dropped, "RA10/a"), lost: pinsOf(ROWS).length - pinsOf(dropped).length }).toEqual({ before: [POLL_BUDGET, IDLE_CANCEL], after: [POLL_BUDGET], lost: 1 });
+    expect(spanBinding(live(), dropped)).toEqual(binding);
   });
 
   describe("the gate's boundary and swap probes now red against the LIVE document: the TABLE ANCHOR reads each exactly as the frozen table (the finding, reproduced) and SPAN BINDING adds exactly its own failure", () => {

@@ -475,3 +475,168 @@ describe("wb-4ap.15 note 2026-10-17b rows: closed envelope, const status and aut
     expect(stored?.trace?.correlationIds?.episode_id).toBe("live:landing-queue:7:restack-first");
   });
 });
+
+/**
+ * wb-95tn (the R694 follow-up of wb-4ap.15's landing 644; gate cmd_af88b64da162, PREP F1-F3, CONFIRMED there by gate mutants G18,
+ * G23 and G26, each re-measured surviving this file's 84 cases at trunk 9ad61f3 before these rows were written). Three behaviours
+ * of the boundary that held but were unpinned:
+ * F1 THE NAMED RESIDUAL of the wb-4ap.15 park note's owed item 3, "(3) if the negotiation defines a producer pin, refuse a
+ *    well-formed but foreign producer_revision (today 'tampered' reads as outside the schema's ^sha256:[0-9a-f]{64}$ contract - a
+ *    well-formed foreign revision is the named residual)". Today such a revision is ADMITTED and applied in every mode (fixture,
+ *    replay and live) and carried verbatim; the quiet rows below assert exactly that admission, so the cut that adopts a producer
+ *    pin from the T0 freeze - for every mode or for live feeds only - flips them into refusal rows (they are the residual's pinned
+ *    rows: turned, never deleted).
+ * F2 the diagnostic order when the envelope and the host's receipt reference are both bad: the receipt is judged only after the
+ *    whole envelope reads, so the envelope's own refusal wins and a refused envelope never reports receipt-missing.
+ * F3 duplicate evidence references are kept as given, in order ("every value is the envelope's or the host's own, copied
+ *    verbatim", collectiveObservationEvent): the reading, the event handed to ingest(), the node and the stored event carry them.
+ */
+describe("wb-95tn: the named residual (a well-formed foreign producer_revision), the envelope-before-receipt order and verbatim duplicate evidence", () => {
+  const OWN_REVISION = String(envelope(1).producer_revision);
+  const OWN_EVIDENCE = String((envelope(1).evidence_refs as readonly unknown[])[0]);
+  const ROOT_DIGEST = String((envelope(1).episode_root as { readonly digest: unknown }).digest);
+  /** The vendored schema's own producer_revision pattern: the well-formedness anchor outside the boundary's constants. */
+  const SCHEMA_REVISION = new RegExp(member(SCHEMA, "producer_revision").pattern ?? "");
+  const FOREIGN: readonly (readonly [string, string])[] = [
+    ["the all-zero digest", `sha256:${"0".repeat(64)}`],
+    ["the all-f digest", `sha256:${"f".repeat(64)}`],
+    ["the producer's own revision with its last digit changed", `${OWN_REVISION.slice(0, -1)}${OWN_REVISION.endsWith("0") ? "1" : "0"}`],
+    ["the episode root's digest", ROOT_DIGEST],
+  ];
+  it.each(FOREIGN)("RESIDUAL F1 (quiet row): a well-formed foreign producer_revision, %s, is admitted and applied today in every mode and carried verbatim - a producer pin from the T0 freeze flips this row", (_name, foreign) => {
+    expect(SCHEMA_REVISION.test(foreign)).toBe(true);
+    expect(foreign).not.toBe(OWN_REVISION);
+    expect(COLLECTIVE_EVENT_MODES.length).toBeGreaterThan(0);
+    for (const mode of COLLECTIVE_EVENT_MODES) {
+      const value = { ...envelope(1), mode, producer_revision: foreign };
+      expect(readEvent(value).producer_revision).toBe(foreign);
+      const run = recorded();
+      expect(run.ingest(value)).toEqual({ admitted: true, ingest: "applied", ref: collectiveEventRef(String(envelope(1).event_id)), relations: [] });
+      expect(run.results).toEqual(["applied"]);
+      expect(run.ingested.map(event => [event.trace?.correlationIds?.mode, event.trace?.correlationIds?.producer_revision])).toEqual([[mode, foreign]]);
+      const [stored] = run.projection.events({ scope: SCOPE, limit: 10 }).events;
+      expect(stored?.trace?.correlationIds?.producer_revision).toBe(foreign);
+    }
+  });
+
+  const BAD_RECEIPTS: readonly string[] = ["", String.fromCodePoint(0x202e)];
+  const BOTH_BAD: readonly (readonly [string, unknown, CollectiveEventDiagnostic])[] = [
+    ["an unknown version (the first member the reading judges)", { ...envelope(1), schema: "collective.event.v2" }, refusal("schema", "schema-unrecognized")],
+    ["a null envelope", null, refusal("envelope", "wrong-type")],
+    ["a tampered producer_revision", { ...envelope(1), producer_revision: "sha256:abc" }, refusal("producer_revision", "revision-malformed")],
+    ["authority owner (the last member the reading judges)", { ...envelope(1), authority: "owner" }, refusal("authority", "authority-not-observation-only")],
+  ];
+  it.each(BOTH_BAD)("ORDER F2: %s beside a bad receipt reference - the envelope's own refusal wins over receipt-missing, and ingest() is not called", (_name, value, expected) => {
+    for (const receiptRef of BAD_RECEIPTS) {
+      const run = recorded();
+      expect(diagnosticOf(run.ingest(value, { ...OPTIONS, receiptRef }))).toEqual(expected);
+      untouched(run);
+    }
+  });
+
+  it("ORDER F2 control: the same bad receipt references beside a well-formed envelope read receipt-missing, so the order, not a lost receipt check, decides the rows above", () => {
+    for (const receiptRef of BAD_RECEIPTS) {
+      const run = recorded();
+      expect(diagnosticOf(run.ingest(envelope(1), { ...OPTIONS, receiptRef }))).toEqual(refusal("receipt", "receipt-missing"));
+      untouched(run);
+    }
+  });
+
+  it("DUPLICATES F3: duplicate evidence references are copied verbatim - kept, in order, by the reading, the event handed to ingest(), the node and the stored event", () => {
+    const second = `sha256:${"e".repeat(64)}`;
+    const refs = [OWN_EVIDENCE, OWN_EVIDENCE, second, OWN_EVIDENCE];
+    expect(new Set(refs).size).toBe(2);
+    const value = { ...envelope(1), evidence_refs: refs };
+    expect(readEvent(value).evidence_refs).toEqual(refs);
+    const run = recorded();
+    expect(run.ingest(value)).toMatchObject({ admitted: true, ingest: "applied" });
+    expect(run.ingested.map(event => event.evidenceRefs)).toEqual([refs]);
+    const [node] = run.projection.query({ scope: SCOPE, limit: 1 }).nodes;
+    expect(node?.evidenceRefs).toEqual(refs);
+    const [stored] = run.projection.events({ scope: SCOPE, limit: 1 }).events;
+    expect(stored?.evidenceRefs).toEqual(refs);
+  });
+});
+
+/**
+ * wb-ctnw (the R694 follow-up of wb-95tn's landing 694; gate cmd_051ba6dde937, PREP PF1, CONFIRMED there by measurement on
+ * probe fbfe927d): "pin the envelope-wins-over-receipt-missing order for every refusal field of the collective-event reading,
+ * not only the 4 that the order rows sample". The ORDER F2 rows above sample 4 of the reading's 13 refusal fields (envelope,
+ * schema, producer_revision, authority), so the per-field precedence plant GP-B8 - receipt-missing wins only over a refusal on
+ * one field - reds them on each sampled field and survives them on the 9 others (episode_id, mode, episode_root, event_id,
+ * actor_id, subject, causal_parents, evidence_refs, status).
+ * The rows below iterate every refusal arm readCollectiveEvent has at this base: each of its 21 refusals with a literal field
+ * and reason, the member-missing loop once per member it can reach (11: an absent schema is refused as a version first) and
+ * closedMembers' two reasons at each of its two sites (episode_root, subject), 36 arms. Three of those arms also get a row for
+ * each further way they refuse: the not-a-plain-object arm as null, as an array and as a string; the version arm with its
+ * member absent and foreign; the subject-text arm on its uri and on its revision - 40 rows. Each row stands beside both bad
+ * receipt references (the empty string and U+202E), the PD3 shape, and first reads its value alone, so the row is anchored
+ * to the refusal it names.
+ * ENFORCED here: every refusal field and reason the boundary names but the receipt's own (COLLECTIVE_EVENT_FIELDS,
+ * COLLECTIVE_EVENT_REASONS) has a row, so each per-field precedence plant meets one, and the member-missing rows are derived
+ * from COLLECTIVE_EVENT_MEMBERS (an absent schema excepted); a field or reason the boundary names later with no row here reds
+ * the coverage row, and a member it gains later gets its member-missing row by that derivation. DESCRIBED, not enforced: the
+ * one-row-per-arm correspondence above, read from the reading at this base.
+ * NOT CLAIMED: these are behaviour rows like the ORDER F2 rows above, not a frozen table - a refusal arm the reading gains
+ * later on a field and reason that already have a row, or a row removed while its field and reason keep another, is not
+ * detected here; the further failure modes inside a predicate (isId, isRevision, isMode, isText) are not iterated one by one.
+ */
+describe("wb-ctnw: the envelope-before-receipt order for every refusal arm of the reading, each beside both bad receipt references", () => {
+  const BAD_RECEIPTS: readonly string[] = ["", String.fromCodePoint(0x202e)];
+  const ROOT = envelope(1).episode_root as { readonly id: string; readonly digest: string };
+  const SUBJECT = envelope(1).subject as { readonly uri: string; readonly revision: string };
+  const without = (name: string): Envelope => Object.fromEntries(Object.entries(envelope(1)).filter(([key]) => key !== name));
+  const ARMS: readonly (readonly [string, unknown, CollectiveEventDiagnostic])[] = [
+    ["a null envelope (not a plain object)", null, refusal("envelope", "wrong-type")],
+    ["an array envelope (not a plain object)", [envelope(1)], refusal("envelope", "wrong-type")],
+    ["a string envelope (not a plain object)", JSON.stringify(envelope(1)), refusal("envelope", "wrong-type")],
+    ["no schema member (the version, absent)", without("schema"), refusal("schema", "schema-unrecognized")],
+    ["an unknown version (the version, foreign)", { ...envelope(1), schema: "collective.event.v2" }, refusal("schema", "schema-unrecognized")],
+    ["a member outside the schema", { ...envelope(1), confirmed: true }, refusal("envelope", "member-unexpected")],
+    ...COLLECTIVE_EVENT_MEMBERS.filter(name => name !== "schema").map((name): readonly [string, unknown, CollectiveEventDiagnostic] => [`no ${name} member`, without(name), refusal(name, "member-missing")]),
+    ["episode_id malformed", { ...envelope(1), episode_id: "bad id" }, refusal("episode_id", "id-malformed")],
+    ["mode unrecognized", { ...envelope(1), mode: "production" }, refusal("mode", "mode-unrecognized")],
+    ["episode_root not a plain object", { ...envelope(1), episode_root: ROOT.id }, refusal("episode_root", "wrong-type")],
+    ["episode_root with a member outside its set", { ...envelope(1), episode_root: { ...ROOT, mode: "live" } }, refusal("episode_root", "member-unexpected")],
+    ["episode_root without its digest", { ...envelope(1), episode_root: { id: ROOT.id } }, refusal("episode_root", "member-missing")],
+    ["episode_root id malformed", { ...envelope(1), episode_root: { id: "bad id", digest: ROOT.digest } }, refusal("episode_root", "id-malformed")],
+    ["episode_root digest malformed", { ...envelope(1), episode_root: { id: ROOT.id, digest: "sha256:abc" } }, refusal("episode_root", "revision-malformed")],
+    ["event_id malformed", { ...envelope(1), event_id: "" }, refusal("event_id", "id-malformed")],
+    ["actor_id malformed", { ...envelope(1), actor_id: 7 }, refusal("actor_id", "id-malformed")],
+    ["producer_revision malformed", { ...envelope(1), producer_revision: "sha256:abc" }, refusal("producer_revision", "revision-malformed")],
+    ["subject not a plain object", { ...envelope(1), subject: [SUBJECT.uri, SUBJECT.revision] }, refusal("subject", "wrong-type")],
+    ["subject with a member outside its set", { ...envelope(1), subject: { ...SUBJECT, owner: "pi" } }, refusal("subject", "member-unexpected")],
+    ["subject without its revision", { ...envelope(1), subject: { uri: SUBJECT.uri } }, refusal("subject", "member-missing")],
+    ["subject uri empty", { ...envelope(1), subject: { uri: "", revision: SUBJECT.revision } }, refusal("subject", "text-malformed")],
+    ["subject revision empty", { ...envelope(1), subject: { uri: SUBJECT.uri, revision: "" } }, refusal("subject", "text-malformed")],
+    ["causal_parents not an array", { ...envelope(1), causal_parents: "replay:a/event:1" }, refusal("causal_parents", "wrong-type")],
+    ["causal_parents over the bound", { ...envelope(1), causal_parents: Array.from({ length: COLLECTIVE_EVENT_MAX_REFS + 1 }, (_, n) => `parent-${n}`) }, refusal("causal_parents", "over-limit")],
+    ["a causal parent malformed", { ...envelope(1), causal_parents: ["replay:a/event:1", "bad id"] }, refusal("causal_parents", "id-malformed")],
+    ["evidence_refs not an array", { ...envelope(1), evidence_refs: { 0: "sha256:x" } }, refusal("evidence_refs", "wrong-type")],
+    ["evidence_refs over the bound", { ...envelope(1), evidence_refs: Array.from({ length: COLLECTIVE_EVENT_MAX_REFS + 1 }, (_, n) => `ref-${n}`) }, refusal("evidence_refs", "over-limit")],
+    ["an evidence reference empty", { ...envelope(1), evidence_refs: ["sha256:ok", ""] }, refusal("evidence_refs", "text-malformed")],
+    ["status not observed", { ...envelope(1), status: "confirmed" }, refusal("status", "status-not-observed")],
+    ["authority not observation-only", { ...envelope(1), authority: "owner" }, refusal("authority", "authority-not-observation-only")],
+  ];
+
+  it("COVERAGE: every refusal field and reason the boundary names but the receipt's own has a row below, the member-missing rows are the members' own, and both receipt references read receipt-missing beside a well-formed envelope", () => {
+    expect([...new Set(ARMS.map(([, , expected]) => expected.field))].sort()).toEqual(COLLECTIVE_EVENT_FIELDS.filter(field => field !== "receipt").sort());
+    expect([...new Set(ARMS.map(([, , expected]) => expected.reason))].sort()).toEqual(COLLECTIVE_EVENT_REASONS.filter(reason => reason !== "receipt-missing").sort());
+    expect(ARMS.filter(([name]) => name.startsWith("no ") && name.endsWith(" member")).map(([, , expected]) => expected.field)).toEqual(COLLECTIVE_EVENT_MEMBERS.filter(name => name !== "schema"));
+    expect(BAD_RECEIPTS).toEqual(["", String.fromCodePoint(0x202e)]);
+    for (const receiptRef of BAD_RECEIPTS) {
+      const run = recorded();
+      expect(diagnosticOf(run.ingest(envelope(1), { ...OPTIONS, receiptRef }))).toEqual(refusal("receipt", "receipt-missing"));
+      untouched(run);
+    }
+  });
+
+  it.each(ARMS)("ORDER (every arm): %s beside each bad receipt reference - the envelope's own refusal wins over receipt-missing, and ingest() is not called", (_name, value, expected) => {
+    expect(readCollectiveEvent(value)).toEqual({ ok: false, diagnostic: expected });
+    for (const receiptRef of BAD_RECEIPTS) {
+      const run = recorded();
+      expect(diagnosticOf(run.ingest(value, { ...OPTIONS, receiptRef }))).toEqual(expected);
+      untouched(run);
+    }
+  });
+});
