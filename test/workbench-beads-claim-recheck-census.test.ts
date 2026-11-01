@@ -105,12 +105,13 @@
  * after it reads as shown where a browser hides it (wb-38nd; endTagRecovery: an end tag whose element is out of scope past a
  * button, a list or a table cell, one of another name that meets a special element opened inside its element, a formatting
  * element's end tag past a marker element or across a block - the adoption agency's furthest block - and a form end tag, which
- * removes the form alone); and a waiting formatting element is re-opened here before text and before a formatting element's
- * start tag only, while the tree builder re-opens it before other start tags as well, so a textarea - the one body read without
- * re-opening - after or inside an element whose start tag re-opens it there reads as shown where a browser hides it (the
- * wb-38nd gate's U1; startTagReconstruction: inside a span, a label, a button or a custom element, and after a closed or empty
- * span, a br, an img, an input, a wbr, an area, an embed, a keygen, an image, an end tag br, an empty xmp, or a closed select,
- * option, svg, math, marquee or object) (Q5); R-CONTROLLER the
+ * removes the form alone); and one hiding formatting element waiting alone after its paragraph's end tag (the form each of
+ * these rows plants, and claimed there only) is re-opened here before text and before a formatting element's start tag only,
+ * while the tree builder re-opens it before other start tags as well, so a textarea - the one body read without re-opening -
+ * after or inside an element whose start tag re-opens it there reads as shown where a browser hides it (the wb-38nd gate's U1;
+ * startTagReconstruction: inside a span, a label, a button or a custom element, and after a closed or empty span, a br, an img,
+ * an input, a wbr, an area, an embed, a keygen, an image, an end tag br, an empty xmp, or a closed select, option, svg, math,
+ * marquee or object) (Q5); R-CONTROLLER the
  * VC-4 tier's launcher starts a Furnace Run whose Work is claimed and executed by Furnace's authority in a disposable store, and B1
  * reads the launcher as no claim site (Q6); R-ALIAS B2's static scan reads a write spelled on the module-scope name, so a write
  * through an alias escapes it (the two-read case still sees a cache that changes a reading) (Q7); R-REMEASURE the generation is
@@ -148,18 +149,19 @@
  * carrying a script (an element or an event-handler attribute), CSS (a style element or attribute, a stylesheet link), a meta
  * refresh, a hidden html or body start tag or a bidi override shows nothing at all (Q5's hiding rows, with canvas, audio and
  * math content and a hidden html start tag in hidingMembers);
- * the list keeps no marker, so a hiding formatting element is re-opened inside a table cell or a caption and outlives an
- * applet, a marquee, an object or a template it was opened in; it never ends an open a or nobr at a second one's start tag, so
- * the first stays open around the second; and its re-opening, before text and before a formatting element's start tag only (a
- * textarea's body excepted, as in the tree builder), re-opens a waiting hiding formatting element inside an element opened while
- * it waited, so its end tag leaves that element open; and it keeps the earliest of four alike entries (one name, the same
- * attributes), which the tree builder drops from its list, so that entry re-opens where a browser shows the text after it
- * (reconstructionOverHide: markerCell, markerCaption, markerApplet, markerMarquee, markerObject, markerTemplate, secondAnchor,
- * secondNobr, openedWhileWaiting, fourthAlike). Pinned against Q5's direction,
- * showing what a browser hides, are the R-INSTRUCTION members RESIDUALS names, each with its quiet rows: presentationalColour,
- * widgetContent, endTagRecovery, and startTagReconstruction, where the same re-opening, made before no other start tag, leaves a
- * textarea after or inside an element whose start tag the tree builder re-opens a waiting element at outside the re-opened
- * element. None of them is in the instruction files today; a tag still separates words (wb-dugi's reading).
+ * and, each in the form its reconstructionOverHide row plants and claimed there only, the list keeps no marker, so a hiding
+ * formatting element is re-opened inside a table cell or a caption and outlives an applet, a marquee, an object or a template it
+ * was opened in; it never ends an open a or nobr at a second one's start tag, so the first stays open around the second; and its
+ * re-opening, before text and before a formatting element's start tag only (a textarea's body excepted, as in the tree builder),
+ * re-opens a waiting hiding formatting element inside an element opened while it waited, so its end tag leaves that element
+ * open; and it keeps the earliest of four alike entries (one name, the same attributes), which the tree builder drops from its
+ * list, so that entry re-opens where a browser shows the text after it (reconstructionOverHide: markerCell, markerCaption,
+ * markerApplet, markerMarquee, markerObject, markerTemplate, secondAnchor, secondNobr, openedWhileWaiting, fourthAlike). Pinned
+ * against Q5's direction, showing what a browser hides, are the R-INSTRUCTION members RESIDUALS names, each with its quiet rows:
+ * presentationalColour, widgetContent, endTagRecovery, and startTagReconstruction, where the same re-opening, made before no
+ * other start tag, leaves a textarea after or inside an element whose start tag the tree builder re-opens a waiting element at
+ * outside the re-opened element (one hiding formatting element waiting alone, as each of its rows plants). None of them is in
+ * the instruction files today; a tag still separates words (wb-dugi's reading).
  *
  * wb-xogu (the R694 follow-up the wb-kku9.3 gate routed at landing 340: F1 leads, F2-F7 ride, F8 shared). F1 the seam is read by
  * the TypeScript parser, so the gate's G16a optional method, G16b readonly optional property and G16d generic method red B1 beside
@@ -200,9 +202,10 @@
  * wb-38nd (the R694 follow-up the wb-dcsb gate routed at landing 611: F1 leads, F2 rides). F1 visibleTextOf keeps the tree
  * builder's list of active formatting elements (FORMATTING_ELEMENTS): one an enclosing element's end tag closes is re-opened, its
  * attributes with it, before the next text (a textarea's body excepted, which the tree builder inserts without re-opening) and
- * before a formatting element's start tag, until the end tag of its own name removes it, so the gate's L3 plant (a b carrying
- * hidden, left open across a paragraph's end tag) hides the claim after it, as a browser does, for each of the fourteen; its
- * paired L3c control (a span, not a formatting element) still reads shown (reconstruction controls, Q5). SCOPE names the
+ * before a formatting element's start tag, until the end tag of its own name removes it - claimed in the forms Q5's
+ * reconstruction rows plant only (visibleTextOf's doc, wb-38nd cut #4) - so the gate's L3 plant (a b carrying hidden, left open
+ * alone across a paragraph's end tag) hides the claim after it, as a browser does, for each of the fourteen; its paired L3c
+ * control (a span, not a formatting element) still reads shown (reconstruction controls, Q5). SCOPE names the
  * departures the reading still leaves by direction: the over-hides with pinned rows, and the end-tag recovery a browser applies
  * and the reading does not, which joins R-INSTRUCTION with pinned quiet rows (Q5). F2 B3's import and read judges read every file
  * under IMPORT_ROOTS - a file neither code nor JSON in its raw text, a JSON file also in its cooked strings - so the gate's L1 (a
@@ -215,10 +218,10 @@
  * gate's G-RS1 to G-RS9 among them, with controls the tree builder agrees with), its over-hide twin stays openedWhileWaiting,
  * the marker rows gain the applet, object and template SCOPE names, a meter's and a progress element's content joins as
  * widgetContent, and SCOPE is restated by direction, any departure it does not name NOT CLAIMED. U2 Q5's reconstruction rows
- * put two entries waiting at one re-opening point (the hiding one first, then last), three (the hiding one between; cut #3 adds
- * the rest, below) and whitespace-only text before a textarea, so the gate's M1, M2 and M7 red Q5, beside two rows the seat's
- * own mutants needed (a shown formatting element re-opened closes a hiding element opened inside it at its end tag; entries
- * re-open in list order). F3 B3's walk reaches a
+ * put two entries of distinct names waiting at one re-opening point (the hiding one first, then last), three (the hiding one
+ * between; cut #3 adds the rest, below) and whitespace-only text before a textarea, so the gate's M1, M2 and M7 red Q5, beside
+ * two rows the seat's own mutants needed (a shown b re-opened closes a hiding span opened inside it at its end tag; a hiding b
+ * and a shown i re-open in list order, so the i's end tag leaves the b open around a textarea). F3 B3's walk reaches a
  * file with no extension (one walk call reads the import roots and B1's Beads-hooks root, whose anchor has none) and both
  * judges read an extensionless script (non-code controls), so the gate's M11 reds B3. F4 R-COMPOSED's
  * raw-only members are each pinned at the judges the family names (Q4 otherSyntaxes, rawOnlyB1 and rawOnlyB3, the gate's X3 shell
@@ -229,14 +232,22 @@
  * reads every new row as the reading does): G01, which stops the walk back at an open element of a waiting entry's name, through
  * a hiding entry waiting while an element of its name is open (in a block, inline, and before a textarea) and a hiding entry
  * waiting before one whose namesake is open; G03 and G05, which re-open at most two or three entries, through three and four
- * waiting entries and the run of every formatting element, the hiding one last (and first, against re-opening only the last
- * few); G10, which skips a waiting entry when a later one of its name waits, through two waiting entries of one name, the hiding
- * one first (and last, against the mirror). visibleTextOf's doc names the subset Q5 pins; a waiting run longer than the fourteen
- * formatting elements is NOT CLAIMED by this census. The seat's own probes found one more over-hide, now pinned: the tree builder
- * drops the earliest of four alike entries from its list (its Noah's Ark clause), which the list here keeps (fourthAlike, beside
- * the threeAlikeEnded control). F2 B3's walk holds an anchor per non-code kind the import roots hold today
- * (IMPORT_NON_CODE.kindAnchors: a Markdown page, a JSON receipt and a shell script, each read and quiet under both judges), so
- * the gate's G20 and G21 walk filters red B3.
+ * waiting entries of distinct names and the run of every formatting element, the hiding one last (and first, against
+ * re-opening only the last few); G10, which skips a waiting entry when a later one of its name waits, through two waiting
+ * entries of one name, one hiding and one shown, the hiding one first (and last, against the mirror). visibleTextOf's doc
+ * names the subset Q5 pins; a waiting run longer than the fourteen formatting elements is NOT CLAIMED by this census. The
+ * seat's own probes found one more over-hide, now pinned: the tree builder drops the earliest of four alike entries from its
+ * list (its Noah's Ark clause), which the list here keeps (fourthAlike, beside the threeAlikeEnded control). F2 B3's walk holds
+ * an anchor per non-code kind the import roots hold today (IMPORT_NON_CODE.kindAnchors: a Markdown page, a JSON receipt and a
+ * shell script, each read and quiet under both judges), so the gate's G20 and G21 walk filters red B3.
+ *
+ * wb-38nd cut #4 (the fail-closed core the rule-19 structural exit R-B285 binds at refusal #3 of cut #3: its U1 and U2, rider
+ * F2). The reconstruction claims are narrowed to the pages Q5 plants: visibleTextOf's doc (its listing, end-tag and re-opening
+ * sentences and cut #3's pinned-subset sentence), FORMATTING_ELEMENTS' and renderedOf's docs, SCOPE's over-hide and
+ * startTagReconstruction sentences, R-INSTRUCTION's, the wb-38nd paragraphs above, the Q5 comments and the reconstruction
+ * message. The forms the wb-38nd gate found unpinned are NOT CLAIMED and DEFERRED TO wb-pvab (U1's GP29, GP31, GP32 and GP35;
+ * F2's GP01 and GP09), beside the forms this cut's seat found (visibleTextOf's doc names each). No reading, row, control, pin,
+ * witness, roster byte or test title changes: only comments and the reconstruction message do.
  *
  * Display paths added: none. Test-only: src, qa, examples, the root manifests, the instruction files, .beads, tsconfig.json with
  * the files its program reads, and the node_modules/.bin link the walk's control reads are only read; nothing is written (the
@@ -928,7 +939,8 @@ const HIDING_ELEMENTS: readonly string[] = ["template", "datalist", "rp", "video
  * its start tag until the end tag of its own name removes it (or a marker element's end tag clears it from the list, which the
  * reading does not model: SCOPE), so one an enclosing element's end tag closes is re-opened, its attributes with it (a hiding
  * attribute among them), around the content after it - it reconstructs the active formatting elements, before text and before
- * other start tags; visibleTextOf re-opens it before text and before a formatting element's start tag only (SCOPE). */
+ * other start tags; visibleTextOf re-opens it before text and before a formatting element's start tag only (SCOPE), claimed in
+ * the forms Q5's reconstruction rows plant only (visibleTextOf's doc names what is NOT CLAIMED). */
 const FORMATTING_ELEMENTS: readonly string[] = ["a", "b", "big", "code", "em", "font", "i", "nobr", "s", "small", "strike", "strong", "tt", "u"];
 const isHtmlSpace = (char: string | undefined): boolean => char === "\t" || char === "\n" || char === "\f" || char === " ";
 const isAsciiAlpha = (char: string | undefined): boolean => char !== undefined && /^[A-Za-z]$/.test(char);
@@ -1036,19 +1048,33 @@ interface OpenElement {
  * override character in its shown text (the text may be shown reversed), shows nothing at all. Entities are decoded in text and
  * RCDATA. An element is open from its start tag (a self-closing slash on an element that is not void closes nothing) until an end
  * tag closes it, or to the end of the document when none does; an end tag closes the element it names with every element opened
- * inside it. The end tag of an element that is not a formatting element names the last open element of its name (nested
- * same-name elements counted). A formatting element (FORMATTING_ELEMENTS; wb-38nd F1) is also listed, as the tree builder's list
- * of active formatting elements holds it, from its start tag until an end tag of its name removes it (the tree builder also
- * drops the earliest of four alike entries, which this list keeps: an over-hide, SCOPE): that end tag names the last listed
- * element of its name, removes it from the list and closes it when it is still open (one closed already is only removed). A
- * listed element an end tag closed is re-opened, with its hiding, before the next text (whitespace-only text among it; a
- * textarea's body excepted, which the tree builder inserts without re-opening) and before a formatting element's start tag -
- * every listed element after the last one still open, in order, as the tree builder reconstructs the active formatting elements
- * there - and before no other start tag, where the tree builder re-opens them too (SCOPE; R-INSTRUCTION's startTagReconstruction).
- * That re-opening is pinned (Q5's reconstruction rows, wb-38nd cut #3) for: a walk back that stops at a listed element only when
- * that element itself is still open, never because another open element shares its name; every waiting element re-opened, two
- * of one name among them; and waiting runs of one to four elements and the run of all fourteen, the hiding one first or last (and
- * between, at three). A waiting run longer than fourteen is NOT CLAIMED by this census. */
+ * inside it (a formatting element's end tag as below). The end tag of an element that is not a formatting element names the last
+ * open element of its name (nested same-name elements counted). A formatting element (FORMATTING_ELEMENTS; wb-38nd F1) is also
+ * listed, as the tree builder's list of active formatting elements holds it, from its start tag until an end tag of its name
+ * removes it (the tree builder also drops the earliest of four alike entries, which this list keeps: an over-hide, SCOPE): that
+ * end tag names the last listed element of its name, removes it from the list and closes it when it is still open (one closed
+ * already is only removed). A listed element an end tag closed waits; reconstruct re-opens the waiting elements (those listed
+ * after the last one still open, each with its hiding, in list order) before the next text (whitespace-only text among it; a
+ * textarea's body excepted, which the tree builder inserts without re-opening) and before a formatting element's start tag, and
+ * before no other start tag, where the tree builder re-opens them too (SCOPE; R-INSTRUCTION's startTagReconstruction).
+ * CLAIMED ONLY on the pages Q5 reads (wb-38nd cut #4, the fail-closed core the rule-19 structural exit R-B285 binds): the
+ * listing, a formatting element's end tag and the re-opening read as the tree builder does on each reconstruction row Q5's
+ * comment names with its form (every hiding row quiet, every control shown), and as Q5 pins each other row and the instruction
+ * files (the over-hides SCOPE discloses, R-INSTRUCTION's quiet rows and their controls). NOT CLAIMED by this census: the
+ * listing, the end tags and the re-opening on any other page. Among those, DEFERRED TO wb-pvab (filed by R-B285 to pin each
+ * form or name it a residual; the wb-38nd gate's refusal #3 of cut #3): the same-name waiting-entry reconstruction (its U1:
+ * GP29, GP31, GP32 and GP35) - three or more entries of one name on the list (three waiting entries of one name, the hiding one
+ * first; a run of four holding three of one name), two waiting entries of one name that both hide (before a textarea) and
+ * three alike hiding entries - and the walk back's shapes no row plants (its F2: GP01 and GP09, which only hide more): a
+ * waiting run of odd length directly above a still-open listed element that its own end tag closes later, and a listed element
+ * still open at the bottom of the stack of open elements. NOT CLAIMED either, named as scope only (the cut #4 seat's one-edit
+ * probes, each 0 failed | 21 passed (21) on this census; the planted sameNameShown and waitingNameOpenShown controls aside):
+ * two waiting entries of one name that are both shown, and a waiting entry while an element alike to it (its name and its
+ * hiding) is open; a listed element already open as the current node when the text inside it is read, then ended by its own
+ * end tag with text after it in its parent (a hiding b ended inside its paragraph, the claim after it in that paragraph); a
+ * formatting element's end tag for a listed element at the bottom of the stack of open elements; the hiding of a shown entry
+ * re-opened after a hiding one, read after that one's end tag; the re-opening while another open element hides; and a waiting
+ * run longer than the fourteen formatting elements (the gate's GP06 at refusal #3). */
 function visibleTextOf(html: string): string {
   const source = html.replace(/\r\n?/g, "\n");
   const shown: string[] = [];
@@ -1135,8 +1161,9 @@ function visibleTextOf(html: string): string {
 /** A Markdown text as its reader sees it rendered (wb-dugi F3 and F4; wb-xogu F6; wb-dcsb F4; wb-38nd F1): marked renders it to HTML,
  * where code (a fence, an indented block, an inline span) is escaped text, so an HTML comment inside code renders literally and is
  * kept; then visibleTextOf reads the HTML as a browser's tokenizer does, with the tree builder's re-opening of formatting elements
- * before text and before a formatting element's start tag, and keeps the text it reads as shown - SCOPE names, in each direction,
- * the departures from what a browser shows that Q5 pins, and any other is NOT CLAIMED. A link reference definition renders nothing;
+ * before text and before a formatting element's start tag (claimed in the forms Q5's reconstruction rows plant only:
+ * visibleTextOf's doc), and keeps the text it reads as shown - SCOPE names, in each direction, the departures from what a
+ * browser shows that Q5 pins, and any other is NOT CLAIMED. A link reference definition renders nothing;
  * the text inside an element that hides nothing is kept. */
 function renderedOf(text: string): string {
   return visibleTextOf(MARKDOWN.parse(text, { async: false }));
@@ -2422,27 +2449,33 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       impliedEnd: 0,
       closedSummary: 0,
     });
-    // wb-38nd F1: the tree builder's reconstruction. A formatting element carrying the hidden or the popover attribute, left open
-    // across a paragraph's end tag (the gate's L3 plant, for each of FORMATTING_ELEMENTS) or a division's, is re-opened around the
-    // text after it, as is an inner one its formatting parent's end tag closes, one re-opened before another formatting element's
-    // start tag, one re-opened around an xmp's or a plaintext's body, an outer one an end tag of its name leaves open when the end
-    // tag removes a waiting inner one (before text and before a textarea, whose body is not re-opened around), and an outer one an
-    // inner same-named one's end tag leaves listed - each shows nothing. Shown, the controls: the gate's L3c span (not a formatting
-    // element: the paragraph's end tag ends it), a formatting element ended by its own end tag inside the paragraph, after it, or
-    // after it was re-opened once, one that hides nothing, and a textarea's body, which the tree builder inserts without re-opening.
-    // The wb-38nd gate's U2: two entries waiting at one re-opening point, the hiding one first or last, and three, the hiding one
-    // between, are each re-opened (its M1 and M2 re-open the last or the first alone), and whitespace-only text re-opens them before
-    // a textarea (its M7 re-opens before other text only). And the seat's own mutants: a shown formatting element is re-opened too,
-    // so its end tag closes a hiding span opened inside it (re-opening the hiding entries alone keeps the span open), and the
-    // entries re-open in list order, so an inner one's end tag leaves the outer hiding one open around a textarea (re-opening in
-    // reverse closes both). The wb-38nd gate's U1 at refusal #2 (cut #3; parse5 7.3.0 reads each row as the reading does): the walk
-    // back stops at the waiting entry itself, never at an open element of its name, so a hiding entry waiting while an element of
-    // its name is open is re-opened, in a block, inline and before a textarea, as is a hiding entry waiting before one whose
-    // namesake is open (its G01 stops at the name); every waiting entry is re-opened, three and four of them and the run of every
-    // formatting element, the hiding one first or last (its G03 and G05 re-open two or three at most; re-opening the last few
-    // alone fails the first-placed rows); two waiting entries of one name are both re-opened, the hiding one first (b, and i around
-    // a b) or last (its G10 skips an entry a later one of its name follows). Shown, their controls: the same pages hiding nothing,
-    // and three alike entries, each ended by its own end tag (the fourth alike is an over-hide, below).
+    // wb-38nd F1: the tree builder's reconstruction, claimed ONLY on these pages, each as planted (wb-38nd cut #4; visibleTextOf's
+    // doc names what is NOT CLAIMED, DEFERRED TO wb-pvab among it). Each shows nothing: a formatting element carrying hidden,
+    // waiting alone after its paragraph's end tag, the claim in the next paragraph (the gate's L3 plant, for each of
+    // FORMATTING_ELEMENTS), a b carrying popover so (popover), and an i carrying hidden after a division's end tag
+    // (acrossDivision); a hiding i inside a shown b whose end tag closes both, the claim after it in the paragraph
+    // (innerFormatting); a hiding b waiting alone before an i's start tag (beforeFormatting), before an xmp's or a plaintext's body
+    // (xmpBody, plaintextBody) and, past whitespace-only text, before a textarea (whitespaceTextarea); a hiding b left open when the
+    // end tag of its name removes a waiting inner b, before text and before a textarea (endedWaiting, endedWaitingRaw); and a
+    // hiding b an inner b's end tag leaves listed, re-opened after its paragraph (nestedSameName). Shown, the controls: the gate's
+    // L3c span (not a formatting element: the paragraph's end tag ends it); a hiding b ended by its own end tag inside its
+    // paragraph, the claim in the next paragraph (endedInside), one ended after its paragraph (endedAfter) and one re-opened once in
+    // the next paragraph and ended there before the claim (endedReopened); a b that hides nothing (shownFormatting); and a hiding b
+    // before a textarea's body, which the tree builder inserts without re-opening (textareaBody). The wb-38nd gate's U2 (cut #2):
+    // two waiting entries of distinct names, the hiding one first or last, and three, the hiding one between, each show nothing
+    // (its M1 and M2 re-open the last or the first alone; its M7, re-opening before other text only, fails whitespaceTextarea).
+    // And the seat's own mutants: a shown b re-opened in the next paragraph closes a hiding span opened inside it at its end tag,
+    // the claim after it shown (reopenedShownClosesHiding; re-opening the hiding entries alone keeps the span open), and a hiding b
+    // and a shown i re-open in list order, so the i's end tag leaves the b open around a textarea (reopenedInOrder; re-opening in
+    // reverse closes both). The wb-38nd gate's U1 at refusal #2 (cut #3; parse5 7.3.0 reads each row as the reading does): a hiding
+    // b waiting while a shown b is open, in a block, inline and before a textarea, and a hiding i waiting before a b while a b is
+    // open, each show nothing (waitingNameOpen, waitingNameOpenInline, waitingNameOpenTextarea, hidingBeforeNameOpen; its G01 stops
+    // the walk back at the name); waiting runs of distinct names - three and four, the hiding one first or last, and the fourteen
+    // formatting elements, the hiding one first or last - show nothing (its G03 and G05 re-open two or three at most; re-opening
+    // the last few alone fails the first-placed rows); and two waiting entries of one name, one hiding and one shown - a hiding b
+    // then a b, a hiding i around a b then an i, a b then a hiding b - show nothing (its G10 skips an entry a later one of its name
+    // follows). Shown, their controls: the same pages hiding nothing (waitingNameOpenShown, everyFormattingShown, sameNameShown),
+    // and three alike hiding b's, each ended by its own end tag (threeAlikeEnded; the fourth alike is an over-hide, below).
     const leftOpen = (element: string, attribute = "hidden"): string => `<p><${element} ${attribute}>Note.</p>\n\nbd update fx-1 --claim\n`;
     const waitingRun = (elements: readonly string[], hiding: number): string =>
       `<p>${elements.map((element, index) => (index === hiding ? `<${element} hidden>` : `<${element}>`)).join("")}Note.</p>\n\nbd update fx-1 --claim\n`;
@@ -2488,7 +2521,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       threeAlikeEnded: "<p><b hidden>1<b hidden>2<b hidden>3</b></b></b></p>\n\nbd update fx-1 --claim\n",
     };
     const reconstructionClaims = Object.fromEntries(Object.entries(reconstruction).map(([name, source]) => [name, claimLaunchesIn(renderedOf(source)).length]));
-    expect(reconstructionClaims, "the reconstruction controls: a hiding formatting element re-opened hides the text after it; the controls show").toStrictEqual({
+    expect(reconstructionClaims, "the reconstruction rows, each as planted: every hiding page reads quiet as the tree builder does; every control shows").toStrictEqual({
       "leftOpen:a": 0,
       "leftOpen:b": 0,
       "leftOpen:big": 0,
@@ -2542,8 +2575,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       sameNameShown: 1,
       threeAlikeEnded: 1,
     });
-    // wb-38nd: what the reading leaves of the tree builder's recovery, by direction (SCOPE). In Q5's direction, over-hides (a
-    // browser shows each claim): the list keeps no marker, so a hiding b is re-opened inside a table cell and a caption and outlives
+    // wb-38nd: what the reading leaves of the tree builder's recovery, by direction (SCOPE), each row claimed as planted only. In
+    // Q5's direction, over-hides (a browser shows each claim): the list keeps no marker, so a hiding b is re-opened inside a table
+    // cell and a caption and outlives
     // an applet, a marquee, an object and a template it was opened in; a second a or nobr leaves the first open; and a b's end tag
     // inside a span opened while the b waited leaves the span open; and of four alike hiding b's, each ended by its own end tag,
     // the list keeps the earliest, which the tree builder drops (its Noah's Ark clause), so it re-opens (fourthAlike). Against it, R-INSTRUCTION's quiet rows (a browser hides each claim): an end tag the tree builder ignores
@@ -2591,8 +2625,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       },
       endTagRecovery: { scopeButton: 1, scopeList: 1, scopeCell: 1, specialStop: 1, formEnd: 1, furthestBlock: 1, pastMarker: 1 },
     });
-    // The wb-38nd gate's U1, against Q5's direction (R-INSTRUCTION's startTagReconstruction quiet rows): the tree builder re-opens a
-    // waiting formatting element before other start tags than a formatting element's as well, where the reading does not, so a
+    // The wb-38nd gate's U1, against Q5's direction (R-INSTRUCTION's startTagReconstruction quiet rows, each claimed as planted):
+    // the tree builder re-opens a hiding formatting element waiting alone (each row's waiting page) before other start tags than a
+    // formatting element's as well, where the reading does not, so a
     // textarea - the one body read without re-opening - inside a span, a label, a button or a custom element, or after a closed or
     // empty span, a br, an img, an input, a wbr, an area, an embed, a keygen, an image, an end tag br, an empty xmp, or a closed
     // select, option, svg, math, marquee or object reads as shown where a browser hides it (the gate's G-RS1 to G-RS9 among them,
