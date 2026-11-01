@@ -154,9 +154,10 @@
  *    element named with a Kelvin sign where blockquote has its k is no separator (M5's fifth fusing control). After a
  *    start tag left open past its html block's end, G1's README read reads the copy in the two spellings Q12's fourth
  *    and fifth README copies hold (its closing angle bracket missing; a quoted value left open after a name, a space
- *    and an equals sign), a member of R-HTML-RENDERING; the fifth's spelling with a tab, a line feed or a form feed in
- *    place of the space, and the site that gives the reading (the tag cut taking the tag as text, or the attribute
- *    read reading no attribute of a tag the cut takes), are NOT CLAIMED (the HOLES at TAG_SPACE; wb-3bjx).
+ *    and an equals sign), a member of R-HTML-RENDERING, and in the fifth's spelling with a tab, a line feed or a form
+ *    feed in place of the space (Q12's open-space copies: FOLLOW-UP, wb-3bjx below); the site that gives the reading
+ *    (the tag cut taking the tag as text, or the attribute read reading no attribute of a tag the cut takes) is NOT
+ *    CLAIMED (the HOLES at TAG_SPACE).
  *  F2, one control per attributeStretches sub-behaviour the gate's LEG 2 mutants hollowed (G1 readmeControls): an
  *    element the hidden attribute hides, left unclosed, hides to the page's end, so a later label is not counted
  *    (unclosedHiddenCopy, L2M1); a details element carrying the hidden attribute hides its summary too
@@ -260,6 +261,37 @@
  *  sections above (wb-psx0 cuts #2 and #3) and F1 record what those cuts added; their reading sentences are claimed
  *  only as the PINNED list states them since this cut.
  *
+ * FOLLOW-UP, wb-3bjx (the R694 follow-up wb-psx0's rule-19 structural exit filed, ruling R-B182 at refusal #3 of
+ * wb-psx0's cut #3 e9b74e02; its scope is that refusal's U1-U3, the white space wb-psx0 cut #4 left as HOLES in the tag
+ * cut and in alt 2's lookahead; each is cured where named by controls or quiet rows, the gate's twins taken verbatim
+ * with each character built from its code point, and no landed row, pin, plant, control, quiet row, witness entry,
+ * vocabulary entry or line of the reader is removed or changed):
+ *  U1, a tag's name in the tag cut: a tab, a line feed or a form feed after it ends the name there, so the quoted
+ *    value after it holds its greater-than sign and the tag ends after the hidden attribute, which hides the copy (G1
+ *    readmeControls tagNameEndQuotedCopies, the gate's T-CUT1-TAB, -LF and -FF); the gate's G25-CUT1-DEL-TAB, -LF and
+ *    -FF and G25i-CUT1-DEL-TAB, with the S4 battery's S4-B1-CUT-DEL-TAB, -LF and -FF, run the name on to the quoted
+ *    greater-than sign, end the tag there and red G1.
+ *  U2, an unquoted value in the tag cut: likewise after an unquoted value (unquotedEndQuotedCopies, the gate's
+ *    T-CUT5-TAB, -LF and -FF); G25-CUT5-DEL-TAB, -LF and -FF and G25i-CUT5-DEL-TAB, with S4-B5-CUT-DEL-TAB, -LF and
+ *    -FF, red G1.
+ *  U3, the open-quote quiet reading: the fifth README copy's form with a tab, a line feed or a form feed in place of
+ *    its space (Q12's open-space copies, the gate's T-TS3-TAB, -LF and -FF) is read as the fifth is - the page's
+ *    tokenizer runs each tag on to the page's end, so the page draws neither table, while G1's read reads the copy;
+ *    G25-TS3-DEL-TAB, -LF and -FF, with S4-TS3-BOTH-DEL-TAB, -LF and -FF, take alt 2's valueless reading of the name
+ *    there, cut a tag carrying the hidden attribute and red Q12. Which of the grammar's sites gives that reading stays
+ *    NOT CLAIMED (an edit at one site alone leaves it: the HOLES at TAG_SPACE).
+ *  NOT CLAIMED by this follow-up: a run of more than one white-space character at a TAG_SPACE position (the wb-psx0
+ *  landing gate's GP11-Q-TS1-BOUND2-CUT and GP11-Q-TS2-BOUND2-READ scope witnesses), the white-space holes at the
+ *  other bodies and sites the HOLES list names, and a start tag left open in any spelling Q12 does not hold.
+ *  Each control's and each quiet row's page reading is measured by this seat with the gate's instrument (parse5 7.1.2
+ *  over marked 18.0.11's HTML): each control's equals G1's read, and each quiet row's page draws no table while G1's
+ *  read reads the copy. The PINNED list at TAG_SPACE claims these readings at bodies 1 and 5 in the tag cut and at
+ *  position 3 in both sites, the HOLES list drops their members, and the wb-psx0 cut #4 section's U1-U3 sentences
+ *  that name them HOLES are read as this section states them. This seat's battery (wb-psx0 cut #4's S4 list of record,
+ *  the gate's G25 and G25i members of this scope, the L2M carry, cut #3's and this follow-up's pin flips and
+ *  CT-BATTERY v2, each a throwaway copy of this census) leaves green exactly the HOLES and EQUIVALENT members the
+ *  PINNED list states.
+ *
  * THE RENDERED VIEW: a Markdown page of the population (a file whose extension, in any case, is one of
  * MARKDOWN_EXTENSIONS) is read in the rendered view, line by line, by the rules below: this census's own reading of the
  * page's Markdown and HTML, held to marked's own HTML by the hold check, never a browser's drawing of the page.
@@ -274,9 +306,8 @@
  * greater-than sign outside a quoted value in the HTML it is read from, so a tag left open there is text; the forms
  * the grammar is pinned on, and the TAG_SPACE positions and the sites (the tag cut, the attribute read, the name read)
  * at which each is pinned, are the PINNED list at TAG_SPACE, and any other form, or a named form at a position or a
- * site the list does not name for it, is NOT CLAIMED (the HOLES there, among them a tab, a line feed or a form feed
- * ending a tag's name or an unquoted value in the tag cut alone, and a tag left open in a spelling no row holds:
- * wb-psx0 cut #4, the white-space coverage wb-3bjx's); inside an element the
+ * site the list does not name for it, is NOT CLAIMED (the HOLES there, among them a tag left open in a spelling no
+ * row holds: wb-psx0 cut #4 and wb-3bjx); inside an element the
  * parser reads as raw text or RCDATA, where the page's tokenizer cuts no tag but that element's end tag, this read
  * still cuts tags: R-HTML-RENDERING); a tag paints one space when the element its name
  * builds (its ASCII letters in any case, renamed as the
@@ -437,9 +468,11 @@
  *    opening an attribute's name after a quoted value or an unquoted value after an equals sign; a vertical tab or a
  *    no-break space ending an unquoted value or a tag's name), which the page's tokenizer runs on to the page's end,
  *    so it draws neither table, while the read reads the copy (parse5 7.1.2 over marked 18.0.11's HTML, measured:
- *    wb-psx0 cut #3); a start tag left open in any other spelling (the fifth README copy's with a tab, a line feed or
- *    a form feed in place of its space among them), and which of the grammar's sites gives these rows' reading, are
- *    NOT CLAIMED (the HOLES at TAG_SPACE: wb-psx0 cut #4, the white-space coverage wb-3bjx's); Q13
+ *    wb-psx0 cut #3), and the open-space copies, the fifth README copy's form with a tab, a line feed or a form feed
+ *    in place of its space, which the page's tokenizer runs on to the page's end, so it draws neither table, while
+ *    the read reads the copy (parse5 7.1.2 over marked 18.0.11's HTML, measured: wb-3bjx); a start tag left open in
+ *    any other spelling, and which of the grammar's sites gives these rows' reading, are NOT CLAIMED (the HOLES at
+ *    TAG_SPACE: wb-psx0 cut #4 and wb-3bjx); Q13
  *    R-OTHER-MARKUP a page whose extension is not a
  *    Markdown one is read raw, so another
  *    markup's syntax (reStructuredText strong, AsciiDoc strong, an HTML page's tags) and Markdown named .txt or with no
@@ -835,8 +868,7 @@ const decodeReferences = (text: string): string =>
  * readings below, at the TAG_SPACE positions and the sites the PINNED list names for each, and no further: this
  * paragraph spells the classes as written, and what a control holds of them is that list, its HOLES NOT CLAIMED): a
  * less-than sign, a solidus for an end tag, an ASCII letter, then the rest of the name, every character up to white
- * space, a solidus or the greater-than sign (a tab, a line feed or a form feed ending it in the tag cut alone is a
- * HOLE); then the attributes, up to the
+ * space, a solidus or the greater-than sign; then the attributes, up to the
  * greater-than sign. An
  * attribute's name is every character up to white space, a solidus, an equals sign or the greater-than sign (white
  * space or a solidus ending it in the tag cut alone, and the greater-than sign ending it in the attribute read alone,
@@ -845,9 +877,9 @@ const decodeReferences = (text: string): string =>
  * one, save straight after another attribute's name and white space, where it opens that attribute's value); its value,
  * after an equals sign with white space around it allowed, is double- or single-quoted (a greater-than sign inside the
  * quotes is part of it), unquoted (every character up to white space or the greater-than sign, a quote, an equals sign,
- * a less-than sign or a grave accent inside it included; it never opens with a quote; a tab, a line feed or a form
- * feed ending it in the tag cut alone, the greater-than sign ending or opening it, a single quote inside it or opening
- * it, and a double quote opening it in the attribute read alone are HOLES) or empty before the greater-than
+ * a less-than sign or a grave accent inside it included; it never opens with a quote; the greater-than sign ending
+ * or opening it, a single quote inside it or opening it, and a double quote opening it in the attribute read alone
+ * are HOLES) or empty before the greater-than
  * sign. White space or a solidus separates two attributes (a solidus not before the greater-than sign is read as a
  * separator: unexpected-solidus-in-tag), and after a quoted value nothing need (missing-whitespace-between-attributes).
  * White space is the tokenizer's own: tab, line feed, form feed and space, and the carriage return the input stream's
@@ -861,9 +893,10 @@ const decodeReferences = (text: string): string =>
  * the PINNED list's last form). The cut is the data state's: inside an element the parser reads as raw text
  * or RCDATA the page's tokenizer cuts no tag but that element's end tag, while this read still cuts them (the parser's
  * context, R-HTML-RENDERING; the stretch a HIDDEN_ELEMENTS raw-text element opens hides every tag cut inside it).
- * PINNED (wb-psx0 cuts #2, #3 and #4; G1 readmeControls unless another row is named; each named form is a control
- * whose reading equals the page's, parse5 7.1.2 over marked 18.0.11's HTML, measured by the cut #2 and cut #3 respin
- * seats, or, where named, one of Q12's quiet rows; cut #4 adds and changes no control). Cut #4, the fail-closed core
+ * PINNED (wb-psx0 cuts #2, #3 and #4 and wb-3bjx; G1 readmeControls unless another row is named; each named form is a
+ * control whose reading equals the page's, parse5 7.1.2 over marked 18.0.11's HTML, measured by the cut #2 and cut #3
+ * respin seats and the wb-3bjx seat, or, where named, one of Q12's quiet rows; cut #4 adds and changes no control,
+ * and wb-3bjx adds the controls and quiet rows its lines name). Cut #4, the fail-closed core
  * of ruling R-B182, narrows every line to what its pins hold. A line names, for one class body (or one of TAG_SPACE's
  * three positions), a reading, the controls whose inputs hold it, and the sites at which its single-character edit
  * reds this census: the edit of the body's constant, read at every site the constant feeds (S4-K<n>, the gate-prep-12
@@ -886,11 +919,12 @@ const decodeReferences = (text: string): string =>
  *    the attribute read alone, in both, and in the constant). After an equals sign (position 2) a vertical tab or a
  *    no-break space is none, so it opens an unquoted value and a quote after it opens no quoted value
  *    (unquotedOpenCopies; in the attribute read, in both sites and in the constant). In alt 2's lookahead (position 3,
- *    no equals sign after the white space): the space, in both sites together (Q12's fifth README copy).
+ *    no equals sign after the white space): each character, in both sites together (Q12's fifth README copy for the
+ *    space; its open-space copies for the tab, the line feed and the form feed: wb-3bjx).
  *  1 a tag name's rest: white space ends the name - each character in the name read (tagNameEndCopies; for the space
- *    also the README controls, M5, M7, Q9 and Q12) and in the constant, the space alone in the tag cut
- *    (valueHiddenCopies; Q12); a vertical tab or a no-break space is part of it, in the tag cut and in the constant
- *    (tagNameHoldCopies).
+ *    also the README controls, M5, M7, Q9 and Q12), in the constant and in the tag cut (tagNameEndQuotedCopies for
+ *    the tab, the line feed and the form feed: wb-3bjx; valueHiddenCopies and Q12 for the space); a vertical tab or a
+ *    no-break space is part of it, in the tag cut and in the constant (tagNameHoldCopies).
  *  2 an attribute name's first character: a vertical tab or a no-break space after a quoted value opens a name, in
  *    the tag cut, in the attribute read and in the constant (nameOpenCopies, nameValueCopies); white space opens
  *    none, a separator taking it first (bodies 9 and 10), in the tag cut and in the constant (Q12's open-tag copies).
@@ -902,9 +936,10 @@ const decodeReferences = (text: string): string =>
  *    attribute read and in the constant (unquotedOpenCopies); white space opens none, body 0 skipping it first, in the
  *    tag cut and in the constant (Q12's open-tag copies).
  *  5 an unquoted value's rest: white space ends the value - each character in the attribute read (unquotedEndCopies
- *    for the tab, the line feed and the form feed, tokenizerHiddenCopies for the space) and in the constant, the
- *    space alone in the tag cut (Q12's open-tag copies); a vertical tab or a no-break space is part of it, in the tag
- *    cut, in the attribute read and in the constant (unquotedHoldCopies).
+ *    for the tab, the line feed and the form feed, tokenizerHiddenCopies for the space), in the constant and in the
+ *    tag cut (unquotedEndQuotedCopies for the tab, the line feed and the form feed: wb-3bjx; Q12's open-tag copies
+ *    for the space); a vertical tab or a no-break space is part of it, in the tag cut, in the attribute read and in
+ *    the constant (unquotedHoldCopies).
  *  6 after an unquoted value: white space may follow it, each character in the tag cut, in the attribute read and in
  *    the constant (unquotedEndCopies for the tab, the line feed and the form feed; the space, G1's README read in the
  *    tag cut and tokenizerHiddenCopies in the attribute read); a vertical tab or a no-break space ends none, the
@@ -935,21 +970,16 @@ const decodeReferences = (text: string): string =>
  * tag, in the constant (notTagCopy); names lowered in their ASCII letters alone (tokenizerHiddenCopies[5],
  * openDetailsCopy, M5's Kelvin case); and, after a start tag left open past its html block's end, G1's README read
  * reading the copy in the spellings Q12 holds - its fourth README copy (no closing angle bracket), its fifth (a quoted
- * value left open after a name, a space and an equals sign) and its open-tag copies (R-HTML-RENDERING).
- * HOLES (NOT CLAIMED; wb-psx0 cut #4, the fail-closed core of ruling R-B182: the white-space coverage these lack is
- * child wb-3bjx's, and every other hole is a scope boundary, no residual and no follow-up). Each member named here
- * leaves this census at 0 failed | 35 passed, on the cut #3 census and on this one; the readings it departs from are
- * claimed nowhere:
- *  - in the tag cut alone, a tab, a line feed or a form feed ending a tag's name (S4-B1-CUT-DEL-TAB, -LF and -FF;
- *    refusal #3's U1, the gate's G25-CUT1-DEL-TAB, -LF and -FF and G25i-CUT1-DEL-TAB) or an unquoted value
- *    (S4-B5-CUT-DEL-TAB, -LF and -FF; U2, G25-CUT5-DEL-TAB, -LF and -FF and G25i-CUT5-DEL-TAB): tagNameEndCopies and
- *    unquotedEndCopies read the same whether the cut ends the name or the value there or runs it on, while the
- *    gate's witnesses with a quoted greater-than sign after the white space tell the two apart;
- *  - TAG_SPACE in alt 2's lookahead (position 3): a tab, a line feed or a form feed in both sites
- *    (S4-TS3-BOTH-DEL-TAB, -LF and -FF; U3, G25-TS3-DEL-TAB, -LF and -FF, on the fifth README copy's form with that
- *    character in place of its space), each white-space character dropped and a vertical tab or a no-break space added
- *    at one site alone, the space among them (S4-TS3-CUT-* and S4-TS3-READ-*, save the carriage return's, EQUIVALENT
- *    below: an edit at one site alone leaves G1's reading of Q12's fifth copy unchanged), a vertical tab or a no-break
+ * value left open after a name, a space and an equals sign), its open-space copies (the fifth's form with a tab, a
+ * line feed or a form feed in place of the space: wb-3bjx) and its open-tag copies (R-HTML-RENDERING).
+ * HOLES (NOT CLAIMED; wb-psx0 cut #4, the fail-closed core of ruling R-B182, less the white space wb-3bjx pins in the
+ * tag cut at bodies 1 and 5 and in both sites at position 3: every hole below is a scope boundary, no residual and no
+ * follow-up). Each member named here leaves this census at 0 failed | 35 passed, on the cut #3 census, on the cut #4
+ * census and on this one; the readings it departs from are claimed nowhere:
+ *  - TAG_SPACE in alt 2's lookahead (position 3): each white-space character dropped and a vertical tab or a no-break
+ *    space added at one site alone, the space among them (S4-TS3-CUT-* and S4-TS3-READ-*, save the carriage return's,
+ *    EQUIVALENT below: an edit at one site alone leaves G1's reading of Q12's fifth copy and of its open-space copies
+ *    unchanged), a vertical tab or a no-break
  *    space added in both sites (S4-TS3-BOTH-ADD-*), and the lookahead's white space dropped or the lookahead removed at
  *    one site alone (P4-S-V1d-LOOKAHEAD-CUT and -READ, R4-TS3-NOLOOK-CUT and -READ); so which of the grammar's sites
  *    gives G1's reading of a start tag whose quoted value is left open is not claimed, nor is that reading in any
@@ -1001,7 +1031,7 @@ const decodeReferences = (text: string): string =>
 const TAG_SPACE = "[\\t\\n\\f\\r ]";
 const TAG_NAME_SOURCE = "[A-Za-z][^\\t\\n\\f\\r />]*";
 const ATTRIBUTE_NAME_SOURCE = "[^\\t\\n\\f\\r />][^\\t\\n\\f\\r />=]*";
-/** What follows an attribute's name: an equals sign and its value, or nothing, its name ending at white space, a solidus or the greater-than sign with no equals sign after the white space (that lookahead's white space pinned for the space alone, in both sites together: PINNED body 0, position 3). */
+/** What follows an attribute's name: an equals sign and its value, or nothing, its name ending at white space, a solidus or the greater-than sign with no equals sign after the white space (that lookahead's white space pinned for each character, in both sites together: PINNED body 0, position 3). */
 const ATTRIBUTE_VALUE_SOURCE = `(?:${TAG_SPACE}*=${TAG_SPACE}*(?:"[^"]*"|'[^']*'|[^\\t\\n\\f\\r >"'][^\\t\\n\\f\\r >]*(?=[\\t\\n\\f\\r >])|(?=>))|(?!${TAG_SPACE}*=)(?=[\\t\\n\\f\\r />]))`;
 /** The parts of raw HTML a page never shows: comments, processing instructions, declarations, CDATA, and every tag with its attributes (the tokenizer's tag, above). */
 const HTML_HIDDEN = new RegExp(
@@ -2518,8 +2548,9 @@ const NOT_TAG_COPY = tagOpenCopy("<1 hidden>");
  * on one side or both and the value unquoted or quoted (U1: hidden is the attribute, the equals sign opens its value);
  * after a valueless attribute's name; after a tag's name; and after an unquoted value. These inputs hold those
  * readings at the sites the PINNED list at TAG_SPACE names (an attribute's name and an unquoted value ended in the
- * attribute read, a tag's name in the name read); where the tag cut ends a tag's name or an unquoted value at these
- * three characters is a HOLE there (wb-psx0 cut #4).
+ * attribute read, a tag's name in the name read); they read the same whether the tag cut ends a tag's name or an
+ * unquoted value at these three characters or runs it on, so the tag cut's reading is held by the wb-3bjx controls
+ * below.
  */
 const ENDING_SPACES = [TAB, LINE_FEED, FORM_FEED];
 const NAME_END_COPIES: readonly string[] = ENDING_SPACES.flatMap(space => [`<div hidden${space}=x>`, `<div hidden${space}=${space}x>`, `<div hidden${space}=${space}"x">`]).map(open =>
@@ -2528,6 +2559,19 @@ const NAME_END_COPIES: readonly string[] = ENDING_SPACES.flatMap(space => [`<div
 const VALUELESS_END_COPIES: readonly string[] = ENDING_SPACES.map(space => wrappedCopy(`<div a${space}hidden>`, "</div>"));
 const TAG_NAME_END_COPIES: readonly string[] = ENDING_SPACES.map(space => wrappedCopy(`<div${space}hidden>`, "</div>"));
 const UNQUOTED_END_COPIES: readonly string[] = ENDING_SPACES.map(space => wrappedCopy(`<div a=b${space}hidden>`, "</div>"));
+/**
+ * G1's grammar controls, wb-3bjx (the R694 follow-up of wb-psx0's rule-19 structural exit, ruling R-B182: refusal #3's
+ * U1 and U2 of wb-psx0, the gate's twins T-CUT1-TAB, -LF and -FF and T-CUT5-TAB, -LF and -FF taken verbatim, each
+ * character built from its code point; each reading equals the page's, parse5 7.1.2 over marked 18.0.11's HTML,
+ * measured by the wb-3bjx seat): a tab, a line feed or a form feed after a tag's name, or after an unquoted value, ends
+ * the name or the value in the tag cut, so the quoted value after it holds its greater-than sign and the tag ends at
+ * the greater-than sign after the hidden attribute: the copy is hidden. A tag cut that ran the name or the value on
+ * through that character would end the tag at the quoted greater-than sign, before the hidden attribute, and show the
+ * copy (the gate's G25-CUT1-DEL-TAB, -LF and -FF and G25i-CUT1-DEL-TAB; G25-CUT5-DEL-TAB, -LF and -FF and
+ * G25i-CUT5-DEL-TAB).
+ */
+const TAG_NAME_END_QUOTED_COPIES: readonly string[] = ENDING_SPACES.map(space => wrappedCopy(`<div${space}a="b>c" hidden>`, "</div>"));
+const UNQUOTED_END_QUOTED_COPIES: readonly string[] = ENDING_SPACES.map(space => wrappedCopy(`<div a=b${space}c="x>y" hidden>`, "</div>"));
 /**
  * The vertical tab and the no-break space, no white space in a tag, each form's reading the copy's fate: after a quoted
  * value either opens the next attribute's name (U2), so an attribute after that name and a space is read, and
@@ -2574,8 +2618,8 @@ const UNCLOSED_SUMMARY_COPY = `<details><summary>\n\n${rootsTable(ROOTS_ROWS)}\n
  * fallback, or one after a start tag left open past its html block's end (no closing angle bracket before the block's
  * blank line; a quoted value left open after a name, a space and an equals sign): the page's tokenizer runs the tag on
  * into the copy's table start tag, while G1's read still reads each copy in place of the visible table (the fifth's
- * spelling with a tab, a line feed or a form feed in place of the space, and which site gives the reading, are HOLES
- * at TAG_SPACE: wb-psx0 cut #4).
+ * spelling with a tab, a line feed or a form feed in place of the space is README_OPEN_SPACE_COPIES below, wb-3bjx;
+ * which site gives the reading is a HOLE at TAG_SPACE: wb-psx0 cut #4).
  */
 const README_RENDERING_COPIES: readonly string[] = [
   wrappedCopy('<div style="display:none">', "</div>"),
@@ -2584,6 +2628,16 @@ const README_RENDERING_COPIES: readonly string[] = [
   wrappedCopy('<div title="x" hidden', "</div>"),
   wrappedCopy('<div a ="x hidden>', "</div>"),
 ];
+/**
+ * Row Q12's open-space copies (wb-3bjx: refusal #3's U3 of wb-psx0, the gate's twins T-TS3-TAB, -LF and -FF taken
+ * verbatim): the fifth README copy's form with a tab, a line feed or a form feed in place of its space, a quoted value
+ * left open after a name, that character and an equals sign. The page's tokenizer runs each tag on to the page's end,
+ * so the page draws neither table, while G1's read reads the copy, as it reads the fifth's (which of the grammar's
+ * sites gives that reading is NOT CLAIMED: the HOLES at TAG_SPACE). A read that took alt 2's valueless reading of the
+ * name before that character would cut the tag with the hidden attribute and hide the copy (the gate's
+ * G25-TS3-DEL-TAB, -LF and -FF).
+ */
+const README_OPEN_SPACE_COPIES: readonly string[] = ENDING_SPACES.map(space => wrappedCopy(`<div a${space}="x hidden>`, "</div>"));
 /**
  * Row Q12's open-tag copies (wb-psx0 cut #3): a start tag with a quoted value left open, in each form where a read that
  * took another of the grammar's alternatives on backtracking would cut the tag and hide the copy: white space (a tab, a
@@ -2656,6 +2710,8 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
         valuelessEndCopies: VALUELESS_END_COPIES.map(readmeRootsOf),
         tagNameEndCopies: TAG_NAME_END_COPIES.map(readmeRootsOf),
         unquotedEndCopies: UNQUOTED_END_COPIES.map(readmeRootsOf),
+        tagNameEndQuotedCopies: TAG_NAME_END_QUOTED_COPIES.map(readmeRootsOf),
+        unquotedEndQuotedCopies: UNQUOTED_END_QUOTED_COPIES.map(readmeRootsOf),
         nameOpenCopies: NAME_OPEN_COPIES.map(readmeRootsOf),
         verticalTabNameCopy: readmeRootsOf(VERTICAL_TAB_NAME_COPY),
         nameValueCopies: NAME_VALUE_COPIES.map(readmeRootsOf),
@@ -2766,6 +2822,14 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
         readmeControls.unquotedEndCopies,
         "a tab, a line feed or a form feed after an unquoted value ends the value the attribute read reads and separates, so the hidden after it is an attribute: the table is hidden",
       ).toEqual(UNQUOTED_END_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.tagNameEndQuotedCopies,
+        "a tab, a line feed or a form feed after a tag's name ends the name in the tag cut, so the quoted value after it holds its greater-than sign and the tag ends after the hidden attribute: the table is hidden",
+      ).toEqual(TAG_NAME_END_QUOTED_COPIES.map(() => visibleTable));
+      expect(
+        readmeControls.unquotedEndQuotedCopies,
+        "a tab, a line feed or a form feed after an unquoted value ends the value in the tag cut, so the quoted value after it holds its greater-than sign and the tag ends after the hidden attribute: the table is hidden",
+      ).toEqual(UNQUOTED_END_QUOTED_COPIES.map(() => visibleTable));
       expect(
         readmeControls.nameOpenCopies,
         "a vertical tab or a no-break space after a quoted value opens the next attribute's name, so the hidden after that name and a space is an attribute: the table is hidden",
@@ -3112,6 +3176,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const paired = RENDERING_PAIRED_CONTROLS.map(plantChanges);
     const readme = README_RENDERING_COPIES.map(copy => readmeRootsOf(copy).roots);
     const openTags = OPEN_TAG_COPIES.map(copy => readmeRootsOf(copy).roots);
+    const openSpaces = README_OPEN_SPACE_COPIES.map(copy => readmeRootsOf(copy).roots);
     expect(quiet).toEqual(RENDERING_CASES.map(() => []));
     expect(control).toEqual(["served@+1"]);
     expect(paired, "each later member with its hiding construct taken out reads served").toEqual([["served@+3"], ["served@+1"], ["served@+1"]]);
@@ -3121,7 +3186,11 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect(openTags, "G1's README read reads the copy after each of these start tags whose quoted value is left open, the page running the tag on").toEqual(
       OPEN_TAG_COPIES.map(() => ["<cwd>/.pi/skills", "~/.pi/agent/skills"]),
     );
-    return { quiet, control, paired, readme, openTags };
+    expect(
+      openSpaces,
+      "G1's README read reads the copy after the fifth README copy's start tag with a tab, a line feed or a form feed in place of its space, the page running the tag on",
+    ).toEqual(README_OPEN_SPACE_COPIES.map(() => ["<cwd>/.pi/skills", "~/.pi/agent/skills"]));
+    return { quiet, control, paired, readme, openTags, openSpaces };
   },
   Q13: () => {
     const quiet = OTHER_MARKUP_CASES.map(([path, text]) => {
