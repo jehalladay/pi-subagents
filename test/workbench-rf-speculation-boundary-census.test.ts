@@ -62,13 +62,16 @@
  *   substitution included) whose first word, any directory prefix dropped, is rf ("rf", "/usr/local/bin/rf" and the command
  *   string "rf --json --version" each name rf; "rfc" and "surf" do not), with its arguments after the program, each as written
  *   (white space removed), and, from the first object literal among those arguments (a launch without one reads an env of null
- *   and no member), the env initializer as written (null when that literal carries none), the members after the env property
- *   that can override env (a spread, a member named env, a computed name), as written, and every accessor, before or after env
- *   and under any name (a get or set member, as its kind and its name as written): LAUNCH fails closed on an accessor, a setter
- *   (which Node's options copy never calls) and a getter whose body sets nothing read all the same (strict direction). Which
- *   argument Node takes as the options when it runs is not read: an object in parentheses, under a type assertion or returned by
- *   a call is not an object literal, so it is read only as written, among the arguments. A RegExp exec over such a literal reads
- *   as a launch too (strict direction).
+ *   and no member), the initializer, as written, of its env property, the first of its members written as the bare identifier
+ *   env, a colon and a value (null when that literal carries none: an env member written any other way, a string key in either
+ *   quote style, an escaped identifier, a computed name, a shorthand member, a method, a getter or a setter, is not one, so a
+ *   literal whose env is written only so reads an env of null and no after-member, and a bare-identifier env after such a
+ *   member is the env property), the members after the env property that can override env (a spread, a member named env, a
+ *   computed name), as written, and every accessor, before or after env and under any name (a get or set member, as its kind
+ *   and its name as written): LAUNCH fails closed on an accessor, a setter (which Node's options copy never calls) and a getter
+ *   whose body sets nothing read all the same (strict direction). Which argument Node takes as the options when it runs is not
+ *   read: an object in parentheses, under a type assertion or returned by a call is not an object literal, so it is read only
+ *   as written, among the arguments. A RegExp exec over such a literal reads as a launch too (strict direction).
  * - BINDINGS (row C): for each launch LAUNCH reads, the binding of every identifier its callee, its second argument and its env
  *   initializer hold (a property name after a dot or before a colon, and a name in a type, excepted), each distinct reading once
  *   in source order, resolved by the TypeScript checker over the launch's module alone (a shorthand member's name, {argv}, read as
@@ -113,8 +116,11 @@
  *    under a type assertion in the args position, and with its N1b, a JSON.parse there, each read as written beside the
  *    third-argument literal it reads its env from; an object literal in the args position before another, read as the first, and
  *    the same object in parentheses, read only as written, the literal after it read as the first; an object literal after an
- *    undefined third argument; an env object whose member names BINDINGS excepts); and BINDINGS reads every form of its table
- *    (named and renamed imports, namespace and default imports, an import from another module, a module-scope const and
+ *    undefined third argument; an env object whose member names BINDINGS excepts; an env member written as a string key in
+ *    either quote style, an escaped identifier, a computed name, a shorthand member, a method or a setter, the literal's only
+ *    env member, read as no env property (an env of null and no after-member); a bare-identifier env after a string-keyed one,
+ *    read as the env property; and a second bare-identifier env, read as an after-member); and BINDINGS reads every form of its
+ *    table (named and renamed imports, namespace and default imports, an import from another module, a module-scope const and
  *    function, an inner const over an import, a parameter, a hoisted var and a local process) (planted legs: an inherited-env rf
  *    launch module after the real ones; a module after them whose spawn carries the provider's env text through a local scrub
  *    with a spread after it; and the inherited-env launch appended to every real module).
@@ -153,8 +159,9 @@
  *   reached through an element access or another name, a wrapper program (sh -c, env) whose command names rf, a quoted program
  *   word (src/workflow/host.ts executeGate runs a workflow's gate command that way, through GATE_SHELL with pi.exec's own
  *   environment; what that environment holds is not measured here), a program word naming rf in another case or with an
- *   extension ("RF", "rf.exe"), or a program built in a template with a substitution, while the paired control, the program
- *   "./rf", is read; R-SELF-ANCHORED (Q7) no anchor outside this file names a pin
+ *   extension ("RF", "rf.exe"), a program built in a template with a substitution, a launcher called through its call method
+ *   or through Reflect.apply, a program in parentheses or under a type assertion, or a callee in parentheses or under a non-null
+ *   assertion, while the paired control, the program "./rf", is read; R-SELF-ANCHORED (Q7) no anchor outside this file names a pin
  *   or rows M and Q: the outside anchors read the labels of A to D alone, and Q7 shows every pin removed singly, rows M and Q
  *   removed and their labels changed reading no anchor finding, beside the A to D removals and relabels that do; R-RENDERED (Q8)
  *   a sentence naming the vocabulary only in the rendered view is not read: D2 cuts raw sentences, so a mark, code span or link
@@ -202,6 +209,15 @@
  *   BINDINGS's colon exception, a shorthand member read as the name it references); R-INDIRECT-LAUNCH enumerates landing 673's
  *   F13 members beside a read control; R-VISUAL-ONLY reads NFKC's fold (refusal #2's F4); R-CASE-BREAK names the case-split
  *   spelling, with its quiet row Q11 (refusal #2's F5).
+ * FOLLOW-UP wb-to1g (the R694 carry of landing 756: PREP F1 leads, F2 rides): LAUNCH's reading names the env property it reads,
+ *   the first member written as the bare identifier env, a colon and a value, and the table pins the other ways of writing the
+ *   literal's only env member (a string key in either quote style, an escaped identifier, a computed name, a shorthand member, a
+ *   method, a setter; a getter was pinned already) as no env property, a bare-identifier env after a string-keyed one as the
+ *   env property and a second bare-identifier env as an after-member (F1: the reading said the env initializer as written while
+ *   a string-keyed or escaped first env read an env of null, and the gate's reader mutant RM2, reading such a member as env,
+ *   survived 0|23); R-INDIRECT-LAUNCH enumerates F2's members, a launcher called through its call method or Reflect.apply, a
+ *   program in parentheses or under a type assertion and a callee in parentheses or under a non-null assertion, each a member
+ *   of Q6.
  *
  * Display paths added: none. Test-only: every plant is an in-memory text; src, docs, two test files and the bead export are only
  * read, and C1 sets RF_ADAPTIVE in this process's own environment around each of its two synchronous live scrub calls and
@@ -567,6 +583,7 @@ function rfLaunches(fileName: string, source: string): Launch[] {
       if (callee !== undefined && LAUNCHERS.has(callee) && namesRf(node.arguments[0])) {
         const options = node.arguments.find(argument => ts.isObjectLiteralExpression(argument));
         const literal = options !== undefined && ts.isObjectLiteralExpression(options) ? options : undefined;
+        // The env property: the first member written as the bare identifier env, a colon and a value (LAUNCH).
         const env = literal?.properties.find(property => ts.isPropertyAssignment(property) && property.name.getText(file) === "env");
         const initializer = env !== undefined && ts.isPropertyAssignment(env) ? env.initializer : undefined;
         const types = checked();
@@ -679,6 +696,12 @@ const INDIRECT_LAUNCHES: readonly string[] = [
   'spawn("RF", ["--json"]);',
   'spawn("rf.exe", ["--json"]);',
   TEMPLATE_PROGRAM_LAUNCH,
+  'spawn.call(undefined, "rf", ["--json"]);',
+  'Reflect.apply(spawn, undefined, ["rf", ["--json"]]);',
+  'spawn(("rf"), ["--json"]);',
+  'spawn("rf" as string, ["--json"]);',
+  '(spawn)("rf", ["--json"]);',
+  'spawn!("rf", ["--json"]);',
 ];
 /** R-RUN-TIME-VALUE's forms (Q10): the same launch beside an argv bound to an array, bound to a non-array object and rebound after
  * its declaration, and the object written as a literal in the args position (the control). */
@@ -777,6 +800,15 @@ const LAUNCH_FORMS: readonly { readonly text: string; readonly launches: readonl
   { text: 'spawn("rf", ({ env: process.env }), { env: only });', launches: [{ site: "form.ts spawn", args: ["({env:process.env})", "{env:only}"], env: "only", after: [], accessors: [], bindings: ["spawn <- global", "process <- global", "only <- global"] }] },
   { text: 'spawn("rf", [], undefined, { env: process.env });', launches: [{ site: "form.ts spawn", args: ["[]", "undefined", "{env:process.env}"], env: "process.env", after: [], accessors: [], bindings: ["spawn <- global", "process <- global"] }] },
   { text: 'spawn("rf", [], { env: { PATH: path } });', launches: [{ site: "form.ts spawn", args: ["[]", "{env:{PATH:path}}"], env: "{PATH:path}", after: [], accessors: [], bindings: ["spawn <- global", "path <- global"] }] },
+  { text: 'spawn("rf", [], { "env": process.env });', launches: [{ site: "form.ts spawn", args: ["[]", '{"env":process.env}'], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+  { text: "spawn(\"rf\", [], { 'env': process.env });", launches: [{ site: "form.ts spawn", args: ["[]", "{'env':process.env}"], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+  { text: 'spawn("rf", [], { \\u0065nv: process.env });', launches: [{ site: "form.ts spawn", args: ["[]", "{\\u0065nv:process.env}"], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+  { text: 'spawn("rf", [], { ["env"]: process.env });', launches: [{ site: "form.ts spawn", args: ["[]", '{["env"]:process.env}'], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+  { text: 'spawn("rf", [], { env });', launches: [{ site: "form.ts spawn", args: ["[]", "{env}"], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+  { text: 'spawn("rf", [], { env() { return process.env; } });', launches: [{ site: "form.ts spawn", args: ["[]", "{env(){returnprocess.env;}}"], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+  { text: 'spawn("rf", [], { "env": first, env: second });', launches: [{ site: "form.ts spawn", args: ["[]", '{"env":first,env:second}'], env: "second", after: [], accessors: [], bindings: ["spawn <- global", "second <- global"] }] },
+  { text: 'spawn("rf", [], { env: first, env: second });', launches: [{ site: "form.ts spawn", args: ["[]", "{env:first,env:second}"], env: "first", after: ["env:second"], accessors: [], bindings: ["spawn <- global", "first <- global"] }] },
+  { text: 'spawn("rf", [], { set env(value) {} });', launches: [{ site: "form.ts spawn", args: ["[]", "{setenv(value){}}"], env: null, after: [], accessors: ["set env"], bindings: ["spawn <- global"] }] },
 ];
 /** BINDINGS' table: each binding form, as one module's text beside the provider, and the bindings of each rf launch in it. */
 const BINDING_FORM_PATH = "src/workbench/providers/zz-binding-form.ts";
@@ -1138,7 +1170,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const control = rfLaunches("plant.ts", 'spawn("./rf", ["--json"]);');
     expect(
       indirect,
-      "an rf launch through a variable program, an element access, another name, a wrapper, a quoted program word, another case or an extension, or a template with a substitution",
+      "an rf launch through a variable program, an element access, another name, a wrapper, a quoted program word, another case or an extension, a template with a substitution, the launcher's call method or Reflect.apply, a program in parentheses or under a type assertion, or a callee in parentheses or under a non-null assertion",
     ).toEqual([]);
     expect(
       members.filter(member => member.launches.length > 0).map(member => member.text),
@@ -1302,6 +1334,15 @@ const WITNESS: Readonly<Record<string, Json>> = {
       { text: 'spawn("rf", ({ env: process.env }), { env: only });', launches: [{ site: "form.ts spawn", args: ["({env:process.env})", "{env:only}"], env: "only", after: [], accessors: [], bindings: ["spawn <- global", "process <- global", "only <- global"] }] },
       { text: 'spawn("rf", [], undefined, { env: process.env });', launches: [{ site: "form.ts spawn", args: ["[]", "undefined", "{env:process.env}"], env: "process.env", after: [], accessors: [], bindings: ["spawn <- global", "process <- global"] }] },
       { text: 'spawn("rf", [], { env: { PATH: path } });', launches: [{ site: "form.ts spawn", args: ["[]", "{env:{PATH:path}}"], env: "{PATH:path}", after: [], accessors: [], bindings: ["spawn <- global", "path <- global"] }] },
+      { text: 'spawn("rf", [], { "env": process.env });', launches: [{ site: "form.ts spawn", args: ["[]", '{"env":process.env}'], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+      { text: "spawn(\"rf\", [], { 'env': process.env });", launches: [{ site: "form.ts spawn", args: ["[]", "{'env':process.env}"], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+      { text: 'spawn("rf", [], { \\u0065nv: process.env });', launches: [{ site: "form.ts spawn", args: ["[]", "{\\u0065nv:process.env}"], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+      { text: 'spawn("rf", [], { ["env"]: process.env });', launches: [{ site: "form.ts spawn", args: ["[]", '{["env"]:process.env}'], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+      { text: 'spawn("rf", [], { env });', launches: [{ site: "form.ts spawn", args: ["[]", "{env}"], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+      { text: 'spawn("rf", [], { env() { return process.env; } });', launches: [{ site: "form.ts spawn", args: ["[]", "{env(){returnprocess.env;}}"], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }] },
+      { text: 'spawn("rf", [], { "env": first, env: second });', launches: [{ site: "form.ts spawn", args: ["[]", '{"env":first,env:second}'], env: "second", after: [], accessors: [], bindings: ["spawn <- global", "second <- global"] }] },
+      { text: 'spawn("rf", [], { env: first, env: second });', launches: [{ site: "form.ts spawn", args: ["[]", "{env:first,env:second}"], env: "first", after: ["env:second"], accessors: [], bindings: ["spawn <- global", "first <- global"] }] },
+      { text: 'spawn("rf", [], { set env(value) {} });', launches: [{ site: "form.ts spawn", args: ["[]", "{setenv(value){}}"], env: null, after: [], accessors: ["set env"], bindings: ["spawn <- global"] }] },
     ],
     bindingForms: [
       {
@@ -1443,6 +1484,12 @@ const WITNESS: Readonly<Record<string, Json>> = {
       { text: 'spawn("RF", ["--json"]);', launches: [] },
       { text: 'spawn("rf.exe", ["--json"]);', launches: [] },
       { text: TEMPLATE_PROGRAM_LAUNCH, launches: [] },
+      { text: 'spawn.call(undefined, "rf", ["--json"]);', launches: [] },
+      { text: 'Reflect.apply(spawn, undefined, ["rf", ["--json"]]);', launches: [] },
+      { text: 'spawn(("rf"), ["--json"]);', launches: [] },
+      { text: 'spawn("rf" as string, ["--json"]);', launches: [] },
+      { text: '(spawn)("rf", ["--json"]);', launches: [] },
+      { text: 'spawn!("rf", ["--json"]);', launches: [] },
     ],
     control: [{ site: "plant.ts spawn", args: ['["--json"]'], env: null, after: [], accessors: [], bindings: ["spawn <- global"] }],
   },
