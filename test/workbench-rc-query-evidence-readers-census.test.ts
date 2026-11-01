@@ -5,14 +5,17 @@
  * covers every declared tier including the default, narrowed out of wb-km7q.3's fail-closed core (rule-19 structural exit)".
  *
  * WHAT IS DELIVERED. The readers are test/helpers/rc-query-evidence-readers.ts (notPlain, stringsOf, declaredViews,
- *  sizeMembers, layoutBands, tierDraws), shared so wb-km7q.3's census (blocked by this bead, R-B143; not on trunk) takes them in
- *  place of its own notPlain, stringsOf, declaredViews, sizeMembers and DRAW. This census proves them: src, docs/10 and the
- *  export are only read, and every plant is made on a copy (a value, a module's or a doc's text in memory, or the drawer the
- *  census passes), never on disk. Cut #2 also escapes docs/10's '>=120' band ('- \>=120:'): unescaped, the '>' opens a block
- *  quote, so the rendered view showed '=120: ...' inside a quote and no '>=120' band (LAYOUT, item, 'a greater-than sign that
- *  opens a quote' pins that form failing closed). Cut #3 (the enumerate-the-resolvable form ruling R-B236 binds) changes no
- *  reader body and no doc: it widens the LAYOUT roster so that every qualifier of a band lead the LAYOUT claim spells is held
- *  by a falsifier, and pins each band's whole rendered text (REFUSAL #2 CURES below).
+ *  sizeMembers, layoutBands, tierDraws), shared so wb-km7q.3's census (blocked by this bead, R-B143; not on trunk) takes
+ *  them in place of its own notPlain, stringsOf, declaredViews, sizeMembers and DRAW. This census proves them: src, docs/10
+ *  and the export are only read, and every plant is made on a copy (a value, a module's or a doc's text in memory, or the
+ *  drawer the census passes), never on disk. Cut #2 also escapes docs/10's '>=120' band ('- \>=120:'): unescaped, the '>'
+ *  opens a block quote, so the rendered view showed '=120: ...' inside a quote and no '>=120' band (LAYOUT, item, 'a
+ *  greater-than sign that opens a quote' pins that form failing closed). Cut #3 (the enumerate-the-resolvable form ruling
+ *  R-B236 binds) changes no reader body and no doc: it widens the LAYOUT roster so that every qualifier of a band lead the
+ *  LAYOUT claim spells is held by a falsifier, and pins each band's whole rendered text (REFUSAL #2 CURES below). Cut #4
+ *  (the fail-closed core ruling R-B267 binds after refusal #3) changes no reader body, no doc and no falsifier's plant or
+ *  reading: it narrows the LAYOUT claim words to the places and spellings its falsifiers plant and names the rest NOT
+ *  CLAIMED (REFUSAL #3 below).
  *
  * PINNED READER SET. 'the rows' (12 cases: one per pin of ROWS, each reading its gate plant both ways, its twin and its
  *  control, and pinning WITNESS), 'the anchors' (4 cases: ROWS against the export, FROZEN SHAPE, the title), 'the rosters' (6
@@ -47,7 +50,8 @@
  *  binding (docsSection): the bands tierDraws opens. test/helpers/rc-query-evidence-readers.ts: every roster form's examples,
  *  which name this census's falsifiers.
  *
- * THE CLAIMS (test/helpers/rc-query-evidence-readers.ts; each composed from its rosters and held here byte-for-byte):
+ * THE CLAIMS (test/helpers/rc-query-evidence-readers.ts; each composed from its rosters, the LAYOUT claim also from
+ *  LAYOUT_SCOPE, and held here byte-for-byte):
  * R14 CLAIM: notPlain walks every own string-keyed property of every object, whatever its name (a name, length, a numeric
  *  name); every own string-keyed property of every array but its length (an index, a named property); the data value of every
  *  property it walks, at any depth (64 levels down, under a property that is not enumerable), and fails closed on each of these
@@ -101,31 +105,38 @@
  *  reads both declare (an override in InspectorSize, a member two merged declarations repeat); InspectorSize declared nowhere
  *  at top level as an interface, or beside one as a type alias, a class or an enum (no declaration, a type alias alone, a class
  *  alone, an interface beside a class, an interface beside a type alias, an interface beside an enum).
- * LAYOUT CLAIM: layoutBands reads the bands of the section docsSection (test/helpers/census.ts) binds as docs/10's '## Layout
- *  responsiveness' under its title: that heading rendered exactly once, the section running to the next level-1 or level-2
- *  heading or the end (the real section, a level-1 heading after its list); each item of each list in the section, by its
- *  rendered text, whatever the list's marker (a - item, a * item, a + item, a 1. item, a 1) item); as a band holding its item's
- *  whole rendered text, an item whose rendered text opens with one of these leads, N and M whole numbers from 1 written in
- *  decimal digits alone and without a leading zero, then ': ' and a description holding no digit (<N columns or <M rows, <N
- *  columns, N to M with an en dash and N at most M, >=N, a lead in bold, an N of four digits); as prose and no band, an item
- *  whose rendered text holds no digit (the resize item alone, a note with a colon). It fails closed on a section docsSection
- *  refuses (a missing heading, a heading rendered twice, the heading under another parent, a code fence hiding a heading line);
- *  a section that carries HTML (a comment, a tag); a block in the section that is no list (a paragraph, a code block, a
- *  heading, a blockquote, a table); an item holding a digit outside a lead it reads (a lead it cannot read, a range from more
- *  to less, a zero, a leading zero, a greater-than-or-equal sign, a greater-than sign that opens a quote, a band nested under
- *  another band, a digit in a band's description, no space after the colon); an item whose lead is a band lead with a
- *  comparison sign dropped, replaced or spaced (> in place of >=, a space after >=, a space inside >=, no < before the column
- *  count, no < before the row count, a space after the first <, a space after the second <, a less-than-or-equal sign); an item
- *  whose lead is a below lead with a word or a space of it changed (column in the singular, row in the singular, cols in place
- *  of columns, and in place of or, a comma in place of or, no space before columns, no space before or, no space after or, no
- *  space before rows); an item whose lead is a range lead with its en dash replaced, spaced or dropped (a hyphen, an em dash, a
- *  space before the en dash, a space after the en dash, no dash between the counts); an item whose lead is a band lead with a
- *  count that is no whole number from 1 written in decimal digits alone without a leading zero (a zero wherever a count stands,
- *  a leading zero wherever a count stands, a decimal point wherever a count stands, a thousands separator, an exponent, a plus
- *  sign); an item whose text up to its first ': ' is a band lead with more around it (a word before each lead, a word after
- *  each lead, a space before the colon of each lead); an item holding a digit after its first ': ' (a note over 160 columns, a
- *  note whose only digit is a zero, a band lead with a digit after a word of its description, a band lead whose description's
- *  only digit is a zero).
+ * LAYOUT CLAIM: layoutBands reads the bands of the section docsSection (test/helpers/census.ts) binds as docs/10's '##
+ *  Layout responsiveness' under its title: that heading rendered exactly once, the section running to the next level-1 or
+ *  level-2 heading or the end (the real section, a level-1 heading after its list); each item of each list in the section,
+ *  by its rendered text, whatever the list's marker (a - item, a * item, a + item, a 1. item, a 1) item); as a band holding
+ *  its item's whole rendered text, an item whose rendered text opens with one of these leads, N and M whole numbers from 1
+ *  written in decimal digits alone and without a leading zero, then ': ' and a description holding no digit, a count written
+ *  otherwise claimed to fail closed only where an example below plants it (<N columns or <M rows, <N columns, N to M with an
+ *  en dash and N at most M, >=N, a lead in bold, an N of four digits); as prose and no band, an item whose rendered text
+ *  holds no digit (the resize item alone, a note with a colon). It fails closed on a section docsSection refuses for one of
+ *  these reasons (a missing heading, a heading rendered twice, the heading under another parent, a code fence hiding a
+ *  heading line); a section that carries HTML (a comment, a tag); a block in the section of one of these kinds (a paragraph,
+ *  a code block, a heading, a blockquote, a table); an item holding a digit outside a lead it reads (a lead it cannot read,
+ *  a range from more to less, a zero, a leading zero, a greater-than-or-equal sign, a greater-than sign that opens a quote,
+ *  a band nested under another band, a digit in a band's description, no space after the colon); an item whose lead is a
+ *  band lead with its comparison sign changed in one of these ways (> in place of >=, a space after >=, a space inside >=,
+ *  no < before the count of a <N columns lead, no < before the row count, a space after the first < of a <N columns or <M
+ *  rows lead, a space after the second <, a less-than-or-equal sign in place of the first < of a <N columns or <M rows
+ *  lead); an item whose lead is a <N columns or <M rows lead with one of these changes to its words or spaces (column in the
+ *  singular, row in the singular, cols in place of columns, and in place of or, a comma in place of or, no space before
+ *  columns, no space before or, no space after or, no space before rows); an item whose lead is an N to M lead with its en
+ *  dash changed in one of these ways (a hyphen, an em dash, a space before the en dash and none after, a space after the en
+ *  dash and none before, no dash between the counts); an item whose lead is a band lead with one of these counts, a count
+ *  standing at the <N columns count, the <M rows count, either count of N to M or the >=N count (a zero wherever a count
+ *  stands, a leading zero wherever a count stands, a decimal point wherever a count stands, a thousands separator in the >=N
+ *  count, an exponent in the >=N count, a plus sign in the >=N count); an item whose text up to its first ': ' is a <N
+ *  columns, an N to M or a >=N lead with one of these additions (a word before each of those leads, a word after each of
+ *  those leads, a space before the colon of each of those leads); an item holding a digit after its first ': ' (a note over
+ *  160 columns, a note whose only digit is a zero, a band lead with a digit after a word of its description, a band lead
+ *  whose description's only digit is a zero). A digit is one of the ASCII digits 0 to 9. Each fail-closed form is claimed
+ *  only in the examples it lists, and each example only in the spellings, at the count places and in the leads its falsifier
+ *  in the readers census plants: an item, a block or a section written otherwise is NOT CLAIMED by the readers census to
+ *  fail closed, whatever the bands form says a band count is.
  * TIER CLAIM: tierDraws draws every declared tier of the inspector: the default tier, no draw option given (at 120x40, at every
  *  width and row count); each draw option sizeMembers reads that is optional with its type spelled boolean, absent, false and
  *  true, in every combination (the real ascii and panes, a third option); each combination at one width inside every band
@@ -151,28 +162,62 @@
  *  pins all four fields of every member). F5: each vendored reader below states its differences from cut #5.
  *
  * REFUSAL #2 CURES (refusal #2 on cut #2 b7576690, gate-prep-18, g10-gate-s167, O:1621; ruling R-B236 binds cut #3 to the
- *  enumerate-the-resolvable form; REFUSAL2 below, each item held to the line its head leads in the export's notes): each gate
- *  mutant the item's line names has the falsifier the seat measured killing it. The kills are measured outside this census, by
- *  the mutant runs the delivery note records; this census holds that each such falsifier ran and pins the reading of the
- *  witness the line quotes (for U1 and U2, the quoted docs/10 witness's lead, unread). U1 (the band-lead
- *  qualifiers): lb-from-gt LAYOUT/sign/> in place of >=, lb-from-space LAYOUT/sign/a space after >=, lb-range-anydash
- *  LAYOUT/dash/a hyphen, lb-below-lt LAYOUT/sign/no < before the column count, lb-below-rows-lt LAYOUT/sign/no < before the
+ *  enumerate-the-resolvable form; REFUSAL2 below, each item held to the line its head leads in the export's notes): each
+ *  gate mutant the item's line names has the falsifier the seat measured killing it. The kills are measured outside this
+ *  census, by the mutant runs the delivery note records; this census holds that each such falsifier ran and pins the reading
+ *  of the witness the line quotes (for U1 and U2, the quoted docs/10 witness's lead, unread). U1 (the band-lead qualifiers):
+ *  lb-from-gt LAYOUT/sign/> in place of >=, lb-from-space LAYOUT/sign/a space after >=, lb-range-anydash LAYOUT/dash/a
+ *  hyphen, lb-below-lt LAYOUT/sign/no < before the count of a <N columns lead, lb-below-rows-lt LAYOUT/sign/no < before the
  *  row count, lb-columns-singular LAYOUT/words/column in the singular, lb-rows-singular LAYOUT/words/row in the singular,
  *  lb-count-decimal LAYOUT/count/a decimal point wherever a count stands. U2 (a digit after the colon): lb-digit-leadonly
- *  LAYOUT/digits/a note over 160 columns. F1 (a band's text): lb-text-leadonly LAYOUT/binding/the real section - every LAYOUT
- *  falsifier pins each band's whole rendered text, and so does the real-tree docs/10 case. U3 (the Acceptance clause): the
- *  LAYOUT claim spells no qualifier of a band lead that no falsifier holds; beyond the nine, the sign, words, dash, count,
- *  bounds and digits forms hold each qualifier dropped, replaced or spaced, at every place it stands, and 'an N of four
- *  digits' holds the whole-number words from the reading side. F2 (a value under a property that is not enumerable):
- *  np-nonenum-norecurse R14/depth/under a property that is not enumerable, the gate's own plant. F3 (a pin's witness anchored
- *  only by its literal): every pin whose witness reads its plant under the cure and under cut #5's reader asserts the two
- *  readings differ, so a pin witnessing its twin reds. F4: THE ROWS above names where each pin reads its control. The
- *  tier claim shares R13/D1-F3, so its words got the same reading: TIERS/rows/a one-digit row bound holds 'ascending' as a
- *  numeric order, and the TIERS case holds 'in name order' for a size reading that lists its options backwards.
+ *  LAYOUT/digits/a note over 160 columns. F1 (a band's text): lb-text-leadonly LAYOUT/binding/the real section - every
+ *  LAYOUT falsifier pins each band's whole rendered text, and so does the real-tree docs/10 case. U3 (the Acceptance
+ *  clause): the LAYOUT claim spells no qualifier of a band lead that no falsifier holds; beyond the nine, the sign, words,
+ *  dash, count, bounds and digits forms hold each qualifier their examples name at the places and in the leads those
+ *  examples name, and at no other (cut #4 narrowed the words to those places, REFUSAL #3 below), and 'an N of four digits'
+ *  holds the whole-number words from the reading side. F2 (a value under a property that is not enumerable):
+ *  np-nonenum-norecurse R14/depth/under a property that is not enumerable, the gate's own plant. F3 (a pin's witness
+ *  anchored only by its literal): every pin whose witness reads its plant under the cure and under cut #5's reader asserts
+ *  the two readings differ, so a pin witnessing its twin reds. F4: THE ROWS above names where each pin reads its control.
+ *  The tier claim shares R13/D1-F3, so its words got the same reading: TIERS/rows/a one-digit row bound holds 'ascending' as
+ *  a numeric order, and the TIERS case holds 'in name order' for a size reading that lists its options backwards.
  *
- * NOT CLAIMED. An import, a namespace or a value declared under the name InspectorView or InspectorSize is NOT CLAIMED by this
- *  census: declaredViews and sizeMembers count only top-level interfaces, classes, enums and type aliases. A band whose column
- *  count is spelled in words reads as prose and is NOT CLAIMED by this census.
+ * REFUSAL #3 (refusal #3 on cut #3 a8358a49, gate-prep-8, g10-gate-s176, O:1694; the rule-19 structural exit R-B267 files
+ *  wb-km7q.14 for the coverage and binds this cut #4 to the fail-closed core: narrowing only, no new claim words, no new
+ *  channels): 16 single-site gate mutants of layoutBands' BELOW and RANGE regexes keep this census green and read FAIL-OPEN
+ *  on a docs/10 witness at forms the cut #3 words named. U1: a thousands separator, an exponent or a plus sign at the <N
+ *  columns count, the <M rows count or either count of N to M (lb-below-cols-sep, lb-below-rows-sep, lb-below-cols-exp,
+ *  lb-below-rows-exp, lb-below-cols-plus, lb-below-rows-plus, lb-range-from-exp, lb-range-to-exp, lb-range-from-plus,
+ *  lb-range-to-plus). U2: a less-than-or-equal sign in place of the second < (lb-below-rows-le). U3: a word after, or a
+ *  space before the colon of, the <N columns or <M rows lead (lb-below-rows-word-after, lb-below-rows-space-colon). U4: a
+ *  letter's case changed in a below lead, and a figure dash or a minus sign in place of the en dash (lb-below-case,
+ *  lb-range-figure-dash, lb-range-minus-sign). A seventeenth is equivalent: lb-range-from-sep, as Number reads '1,000' as
+ *  NaN and N at most M fails it closed. Cut #4 narrows the words those forms rode: the count form's thousands separator,
+ *  exponent and plus sign to the >=N count and its lead to its examples at the five count places it names; the sign form's
+ *  first-< examples to the leads their falsifiers plant (lb-below-lt's cure is its renamed falsifier, LAYOUT/sign/no <
+ *  before the count of a <N columns lead); the words form to the <N columns or <M rows lead; the dash form's spaces to one
+ *  side of the en dash; the bounds form to the <N columns, N to M and >=N leads; the refused and block leads to their
+ *  examples; the bands form's count words so that a count written otherwise is claimed to fail closed only where a
+ *  fail-closed example plants it; and U3's sentence above to the places the examples name. LAYOUT_SCOPE closes the claim: it
+ *  names a digit one of the ASCII digits 0 to 9 (refusal #3 F2) and bounds every fail-closed form to the spellings, count
+ *  places and leads its falsifiers plant. Each U1-U4 form is NOT CLAIMED below, its coverage wb-km7q.14's; no falsifier's
+ *  plant, reading or count changes, so each of the 16 still keeps this census green and its twin at a held place still reds
+ *  it.
+ *
+ * NOT CLAIMED. An import, a namespace or a value declared under the name InspectorView or InspectorSize is NOT CLAIMED by
+ *  this census: declaredViews and sizeMembers count only top-level interfaces, classes, enums and type aliases. A band whose
+ *  column count is spelled in words reads as prose and is NOT CLAIMED by this census. Failing closed on any spelling of a
+ *  docs/10 item, block or section other than those the LAYOUT falsifiers plant is NOT CLAIMED by this census (LAYOUT_SCOPE),
+ *  whatever the bands form says a band count is. Among those spellings are the refusal #3 forms, deferred to wb-km7q.14: a
+ *  thousands separator, an exponent or a plus sign at the <N columns count, the <M rows count or either count of N to M; a
+ *  less-than-or-equal sign in place of the second <; a word after, or a space before the colon of, the <N columns or <M rows
+ *  lead; a letter's case changed in a below lead; and a figure dash or a minus sign in place of the en dash. Among them too
+ *  are the spellings this cut's seat measured surviving the same way: a word other than columns or rows, a comma before or,
+ *  a slash in place of or, a row bound repeated, a unit after a count, a period after a lead, a fullwidth sign, => in place
+ *  of >=, a hyphen-like dash other than those the dash form lists, a space on both sides of the en dash, a tilde in place of
+ *  it, a range whose N is one more than its M, an underscore in a count, a hexadecimal or a fullwidth count, a digit after a
+ *  colon that no falsifier plants (a 9, for one), and a thematic break. What an item states whose only digits lie outside
+ *  ASCII 0 to 9 (fullwidth digits, for one) is NOT CLAIMED by this census: the LAYOUT claim's digit is ASCII.
  *
  * RESIDUAL. R-UNLISTED: a proxy that reports another prototype, or answers or hides a key, is read only through what
  *  reflection reports. Its quiet row is 'the residuals' case 'R-UNLISTED quiet row', which reds if either claim stops naming it
@@ -1098,11 +1143,11 @@ const LAYOUT_FALSIFIERS: Falsifiers<string, LayoutReading> = {
     ["> in place of >=", ...added(">160")],
     ["a space after >=", ...fromAs(">= 120")],
     ["a space inside >=", ...fromAs("> =120")],
-    ["no < before the column count", ...added("160 columns")],
+    ["no < before the count of a <N columns lead", ...added("160 columns")],
     ["no < before the row count", ...belowAs("<80 columns or 20 rows")],
-    ["a space after the first <", ...belowAs("< 80 columns or <20 rows")],
+    ["a space after the first < of a <N columns or <M rows lead", ...belowAs("< 80 columns or <20 rows")],
     ["a space after the second <", ...belowAs("<80 columns or < 20 rows")],
-    ["a less-than-or-equal sign", ...belowAs(`${LE}80 columns or <20 rows`)],
+    ["a less-than-or-equal sign in place of the first < of a <N columns or <M rows lead", ...belowAs(`${LE}80 columns or <20 rows`)],
   ],
   words: [
     ["column in the singular", ...belowAs("<80 column or <20 rows")],
@@ -1118,22 +1163,22 @@ const LAYOUT_FALSIFIERS: Falsifiers<string, LayoutReading> = {
   dash: [
     ["a hyphen", ...added("160-199")],
     ["an em dash", ...added(`160${EM_DASH}199`)],
-    ["a space before the en dash", ...added(`160 ${EN_DASH}199`)],
-    ["a space after the en dash", ...added(`160${EN_DASH} 199`)],
+    ["a space before the en dash and none after", ...added(`160 ${EN_DASH}199`)],
+    ["a space after the en dash and none before", ...added(`160${EN_DASH} 199`)],
     ["no dash between the counts", ...added("12")],
   ],
   count: [
     ["a zero wherever a count stands", ...added("<0 columns", "<80 columns or <0 rows", `0${EN_DASH}119`, `80${EN_DASH}0`, ">=0")],
     ["a leading zero wherever a count stands", ...added("<080 columns", "<80 columns or <020 rows", `080${EN_DASH}119`, `80${EN_DASH}0119`, ">=0120")],
     ["a decimal point wherever a count stands", ...added("<80.5 columns", "<80 columns or <20.5 rows", `160.5${EN_DASH}199`, `160${EN_DASH}199.5`, ">=160.5")],
-    ["a thousands separator", ...added(">=1,000")],
-    ["an exponent", ...added(">=1e3")],
-    ["a plus sign", ...added(">=+160")],
+    ["a thousands separator in the >=N count", ...added(">=1,000")],
+    ["an exponent in the >=N count", ...added(">=1e3")],
+    ["a plus sign in the >=N count", ...added(">=+160")],
   ],
   bounds: [
-    ["a word before each lead", ...added("Under <160 columns", `From 160${EN_DASH}199`, "From >=160")],
-    ["a word after each lead", ...added("<160 columns wide", `160${EN_DASH}199 columns`, ">=160 columns")],
-    ["a space before the colon of each lead", ...added("<160 columns ", `160${EN_DASH}199 `, ">=160 ")],
+    ["a word before each of those leads", ...added("Under <160 columns", `From 160${EN_DASH}199`, "From >=160")],
+    ["a word after each of those leads", ...added("<160 columns wide", `160${EN_DASH}199 columns`, ">=160 columns")],
+    ["a space before the colon of each of those leads", ...added("<160 columns ", `160${EN_DASH}199 `, ">=160 ")],
   ],
   digits: [
     ["a note over 160 columns", after120("- Note: over 160 columns, four panes.\n"), { bands: REAL_BANDS, unread: [digit("Note")] }],
@@ -1376,7 +1421,7 @@ const REFUSAL2: readonly { readonly id: string; readonly lead: string; readonly 
       { mutant: "lb-from-gt", cure: "LAYOUT/sign/> in place of >=", quote: "- \\>160:", reading: digit(">160") },
       { mutant: "lb-from-space", cure: "LAYOUT/sign/a space after >=", quote: "- \\>= 120:", reading: digit(">= 120") },
       { mutant: "lb-range-anydash", cure: "LAYOUT/dash/a hyphen", quote: "- 160-199:", reading: digit("160-199") },
-      { mutant: "lb-below-lt", cure: "LAYOUT/sign/no < before the column count", quote: "- 160 columns:", reading: digit("160 columns") },
+      { mutant: "lb-below-lt", cure: "LAYOUT/sign/no < before the count of a <N columns lead", quote: "- 160 columns:", reading: digit("160 columns") },
       { mutant: "lb-below-rows-lt", cure: "LAYOUT/sign/no < before the row count", quote: "<80 columns or 20 rows", reading: digit("<80 columns or 20 rows") },
       { mutant: "lb-columns-singular", cure: "LAYOUT/words/column in the singular", quote: "<80 column or <20 rows", reading: digit("<80 column or <20 rows") },
       { mutant: "lb-rows-singular", cure: "LAYOUT/words/row in the singular", quote: "<80 columns or <20 row", reading: digit("<80 columns or <20 row") },

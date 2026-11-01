@@ -5,8 +5,9 @@
  *
  * Every reader's claim is composed from its rosters. A roster form is a lead and the examples it lists in parentheses, so a
  * claim names exactly the examples its rosters hold, and test/workbench-rc-query-evidence-readers-census.test.ts holds one
- * falsifier per example, named by it, pinning the reader's whole reading of it. The module readers and the docs reader never
- * throw on a form they cannot read: they return it in `unread`, and a census reading them fails closed on a non-empty `unread`.
+ * falsifier per example, named by it, pinning the reader's whole reading of it. The module readers and the docs reader report
+ * what they leave unread in `unread` instead of throwing, which forms each claim says (the bands claim only as its falsifiers
+ * plant them: LAYOUT_SCOPE), and a census reading them fails closed on a non-empty `unread`.
  */
 import ts from "typescript";
 import type { InspectorSize } from "../../src/ui/workflow-inspector.js";
@@ -312,16 +313,16 @@ export const LAYOUT_FORMS: readonly ReaderForm[] = [
   { id: "lists", lead: "each item of each list in the section, by its rendered text, whatever the list's marker", examples: ["a - item", "a * item", "a + item", "a 1. item", "a 1) item"] },
   {
     id: "bands",
-    lead: "as a band holding its item's whole rendered text, an item whose rendered text opens with one of these leads, N and M whole numbers from 1 written in decimal digits alone and without a leading zero, then ': ' and a description holding no digit",
+    lead: "as a band holding its item's whole rendered text, an item whose rendered text opens with one of these leads, N and M whole numbers from 1 written in decimal digits alone and without a leading zero, then ': ' and a description holding no digit, a count written otherwise claimed to fail closed only where an example below plants it",
     examples: ["<N columns or <M rows", "<N columns", "N to M with an en dash and N at most M", ">=N", "a lead in bold", "an N of four digits"],
   },
   { id: "prose", lead: "as prose and no band, an item whose rendered text holds no digit", examples: ["the resize item alone", "a note with a colon"] },
 ];
 /** The forms layoutBands fails closed on. */
 export const LAYOUT_UNREAD_FORMS: readonly ReaderForm[] = [
-  { id: "refused", lead: "a section docsSection refuses", examples: ["a missing heading", "a heading rendered twice", "the heading under another parent", "a code fence hiding a heading line"] },
+  { id: "refused", lead: "a section docsSection refuses for one of these reasons", examples: ["a missing heading", "a heading rendered twice", "the heading under another parent", "a code fence hiding a heading line"] },
   { id: "html", lead: "a section that carries HTML", examples: ["a comment", "a tag"] },
-  { id: "block", lead: "a block in the section that is no list", examples: ["a paragraph", "a code block", "a heading", "a blockquote", "a table"] },
+  { id: "block", lead: "a block in the section of one of these kinds", examples: ["a paragraph", "a code block", "a heading", "a blockquote", "a table"] },
   {
     id: "item",
     lead: "an item holding a digit outside a lead it reads",
@@ -329,29 +330,50 @@ export const LAYOUT_UNREAD_FORMS: readonly ReaderForm[] = [
   },
   {
     id: "sign",
-    lead: "an item whose lead is a band lead with a comparison sign dropped, replaced or spaced",
-    examples: ["> in place of >=", "a space after >=", "a space inside >=", "no < before the column count", "no < before the row count", "a space after the first <", "a space after the second <", "a less-than-or-equal sign"],
+    lead: "an item whose lead is a band lead with its comparison sign changed in one of these ways",
+    examples: [
+      "> in place of >=",
+      "a space after >=",
+      "a space inside >=",
+      "no < before the count of a <N columns lead",
+      "no < before the row count",
+      "a space after the first < of a <N columns or <M rows lead",
+      "a space after the second <",
+      "a less-than-or-equal sign in place of the first < of a <N columns or <M rows lead",
+    ],
   },
   {
     id: "words",
-    lead: "an item whose lead is a below lead with a word or a space of it changed",
+    lead: "an item whose lead is a <N columns or <M rows lead with one of these changes to its words or spaces",
     examples: ["column in the singular", "row in the singular", "cols in place of columns", "and in place of or", "a comma in place of or", "no space before columns", "no space before or", "no space after or", "no space before rows"],
   },
-  { id: "dash", lead: "an item whose lead is a range lead with its en dash replaced, spaced or dropped", examples: ["a hyphen", "an em dash", "a space before the en dash", "a space after the en dash", "no dash between the counts"] },
+  {
+    id: "dash",
+    lead: "an item whose lead is an N to M lead with its en dash changed in one of these ways",
+    examples: ["a hyphen", "an em dash", "a space before the en dash and none after", "a space after the en dash and none before", "no dash between the counts"],
+  },
   {
     id: "count",
-    lead: "an item whose lead is a band lead with a count that is no whole number from 1 written in decimal digits alone without a leading zero",
-    examples: ["a zero wherever a count stands", "a leading zero wherever a count stands", "a decimal point wherever a count stands", "a thousands separator", "an exponent", "a plus sign"],
+    lead: "an item whose lead is a band lead with one of these counts, a count standing at the <N columns count, the <M rows count, either count of N to M or the >=N count",
+    examples: ["a zero wherever a count stands", "a leading zero wherever a count stands", "a decimal point wherever a count stands", "a thousands separator in the >=N count", "an exponent in the >=N count", "a plus sign in the >=N count"],
   },
-  { id: "bounds", lead: "an item whose text up to its first ': ' is a band lead with more around it", examples: ["a word before each lead", "a word after each lead", "a space before the colon of each lead"] },
+  {
+    id: "bounds",
+    lead: "an item whose text up to its first ': ' is a <N columns, an N to M or a >=N lead with one of these additions",
+    examples: ["a word before each of those leads", "a word after each of those leads", "a space before the colon of each of those leads"],
+  },
   {
     id: "digits",
     lead: "an item holding a digit after its first ': '",
     examples: ["a note over 160 columns", "a note whose only digit is a zero", "a band lead with a digit after a word of its description", "a band lead whose description's only digit is a zero"],
   },
 ];
-/** The bands claim (R13, D1-F3), composed from LAYOUT_FORMS and LAYOUT_UNREAD_FORMS. */
-export const LAYOUT_CLAIM = `layoutBands reads the bands of ${listed(LAYOUT_FORMS)}. It fails closed on ${listed(LAYOUT_UNREAD_FORMS)}.`;
+/** The bounds of the bands claim (cut #4, the fail-closed core ruling R-B267 binds): what a digit is, and that each fail-closed
+ * form is claimed only as its falsifiers plant it, so no word of the claim reaches a spelling no falsifier holds. */
+export const LAYOUT_SCOPE =
+  "A digit is one of the ASCII digits 0 to 9. Each fail-closed form is claimed only in the examples it lists, and each example only in the spellings, at the count places and in the leads its falsifier in the readers census plants: an item, a block or a section written otherwise is NOT CLAIMED by the readers census to fail closed, whatever the bands form says a band count is.";
+/** The bands claim (R13, D1-F3), composed from LAYOUT_FORMS, LAYOUT_UNREAD_FORMS and LAYOUT_SCOPE. */
+export const LAYOUT_CLAIM = `layoutBands reads the bands of ${listed(LAYOUT_FORMS)}. It fails closed on ${listed(LAYOUT_UNREAD_FORMS)}. ${LAYOUT_SCOPE}`;
 const COUNT = "([1-9]\\d*)";
 const BELOW = new RegExp(`^<${COUNT} columns(?: or <${COUNT} rows)?$`);
 const RANGE = new RegExp(`^${COUNT}${String.fromCodePoint(0x2013)}${COUNT}$`);
