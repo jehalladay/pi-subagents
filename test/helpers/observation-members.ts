@@ -10,12 +10,14 @@
  * "a mechanical restatement of B1's claims over the child's landed member reader"). This reader READS the same-module merges
  * (DECLARATION) and reads a member's type as holding no members only when every node of it is a LEAF form, so it keeps no set of
  * declared or imported names at all. Its cut #2 answers this bead's refusal #1 (U1-U5, F1-F5): a module block of observation.ts
- * without the declare modifier is no augmentation (the checker merges none), and every claim word is stated no wider than the census
- * pins it. The falsifier census is test/workbench-observation-members-census.test.ts. It holds every "- <word>: <claim>" line of this
- * header equal, in order and byte for byte, to the roster exported for its section, gives every word a calibration plant whose
- * reading without the word differs, pins every identifier slot and node kind TypeScript's own AST types admit (CONTEXTS, UNIVERSE),
- * and holds every reading the reader makes to the TypeScript checker's reading of the same text (ReadOptions lists the words a
- * reading uses; every word by default).
+ * without the declare modifier is no augmentation (the checker merges none). Its cut #3, the enumerate-the-resolvable cut ruling
+ * R-B242 orders after refusal #2 (U1-U6), changes no reading: it states the reach of THE SYNTAX TREE and of LEAF as exactly what the
+ * census pins, and every claim word is stated no wider than the census pins it. The falsifier census is
+ * test/workbench-observation-members-census.test.ts. It holds every "- <word>: <claim>" line of this header equal, in order and byte
+ * for byte, to the roster exported for its section, gives every word a calibration plant whose reading without the word differs,
+ * pins every identifier slot, slot edge and node kind TypeScript's own AST types admit (CONTEXTS, EDGES, UNIVERSE) and every type
+ * kind at each nested position of a LEAF form (NESTED), and holds every reading the reader makes to the TypeScript checker's reading
+ * of the same text (ReadOptions lists the words a reading uses; every word by default).
  *
  * READING (observationMembers). It reads one text, the source of src/workbench/observation.ts, through the TypeScript parser and
  * nothing else. The ROOTS are NativeSnapshot and ObservationEvent; a READ NAME is a root or a name a root member expands through
@@ -27,7 +29,11 @@
  * list is not claimed (THE MEMBER CHECK compares sorted lists).
  * THE SYNTAX TREE (REFUSAL elsewhere, LEAF Readonly and Record): an identifier stands in it when a ts.forEachChild walk from the
  * source file meets it, at whatever node kind and slot holds it. A comment holds none (JSDoc included: TypeScript attaches it as
- * node.jsDoc, never as a child), and a string's or a template's text is no identifier.
+ * node.jsDoc, never as a child), and a string's or a template's text is no identifier. Its reach is claimed one slot, edge or kind
+ * at a time: every identifier slot and every slot edge TypeScript's own AST types admit lies on the path from the source file to an
+ * identifier some census row reads fails closed (CONTEXTS, EDGES), and so does every node kind that can stand above one (UNIVERSE),
+ * unless a parse shows it unreachable; a walk or a guard that tells two paths apart by more than one slot, edge or kind (the kind
+ * of the node at an edge, two edges at once, a depth) is not claimed.
  *
  * DECLARATION (DECLARATION_FORMS; the declarations of a read name whose members are read):
  * - interface: a top-level interface declaration of the name, every one of them (interface merging)
@@ -46,7 +52,7 @@
  * - type literal: an optional root property whose whole type is a type literal reads as that literal's members, `<member>.<name>` each
  * - read interface: an optional root property whose whole type is a bare type reference (an identifier, no type arguments) to a name with a top-level interface declaration reads as that read name's members, `<member>.<name>` each, or as `<member>.?` when that name reads `?`
  * - inner interface: an expanded property whose whole type is a bare type reference to a name with a top-level interface declaration reads `<member>.<name>`, whatever that name's REFUSAL forms hold, that interface's own members unread
- * LEAF (LEAF_FORMS; a property's type holds no members only when every node of it is one of these forms; any other node anywhere in it, and a property written with no type, makes it read `<member>.?`):
+ * LEAF (LEAF_FORMS; a property's type holds no members only when every node of it is one of these forms; any other node at its top or at a nested position of the form at its top (a union's first, middle or last arm, a readonly array's element, Readonly's argument, Record's key or value), and a property written with no type, makes it read `<member>.?`; a node deeper than that is not claimed):
  * - string: the string keyword
  * - number: the number keyword
  * - string literal: a string literal type, a quoted string

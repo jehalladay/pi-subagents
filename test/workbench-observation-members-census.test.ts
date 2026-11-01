@@ -4,7 +4,10 @@
  * (observationMembers, the reader of wb-km7q.4's THE MEMBER CHECK). Statement (the bead's export title): "observationMembers reads
  * merged same-module declarations (NativeSnapshot/ObservationTrace class merges, augmentation blocks) or the B1 claims state the
  * top-level-interface scope, narrowed out of wb-km7q.4's fail-closed core (rule-19 structural exit)". This cut takes the first
- * branch: the reader reads those merges, and states in its header exactly what it reads and what it does not.
+ * branch: the reader reads those merges, and states in its header exactly what it reads and what it does not. Cut #3 is the
+ * enumerate-the-resolvable cut ruling R-B242 orders after refusal #2 (U1-U6): it changes no reading, pins every member refusal #2
+ * names (ITEM RF2-U1 to RF2-U6, through the EDGES and NESTED tables and the FORMS and CONTEXTS rows marked cut #3), and states the
+ * reach of THE SYNTAX TREE and of LEAF as exactly what those rows pin.
  *
  * ACCEPTANCE (the description's acceptance line, verbatim in ACCEPTANCE below and held to the tracker export): "each plant reds the
  * unmodified census and greens under the cure; claim text (header, LIMITS, comment, delivery note) and reader coverage agree
@@ -15,7 +18,11 @@
  * node kind TypeScript's parser yields for a type, a type member, a class member, a property name and a modifier has a row pinning
  * what the reader reads of it; every slot and every node kind at or above which TypeScript's own AST types admit an identifier has a
  * CONTEXTS row pinning what the reader reads of a read name, of Readonly and of Record standing there, or an UNREACHABLE entry shown
- * by a parse (UNIVERSE); and the TypeScript checker reads every row's text no narrower than the reader (AGREEMENT).
+ * by a parse (UNIVERSE); every slot edge those types admit on a kind that can stand above an identifier lies on the path from the
+ * source file to the identifier of a fails-closed CONTEXTS or EDGES row, or is UNREACHABLE by a parse (UNIVERSE); every type kind
+ * the TYPES table reads as no leaf, at each nested position of a LEAF form, has a NESTED row reading it as no leaf, or is UNREACHABLE
+ * there by a parse; every member refusal #2 names maps to a row this census holds (ITEM; that the row reds under the member is the
+ * seat's battery's measurement); and the TypeScript checker reads every row's text no narrower than the reader (AGREEMENT).
  *
  * MEMBER CHECK MODEL: wb-km7q.4's B1 feeds exactly the entries of the real module's reading (its comparisons are equal on the real
  * module, which that census asserts), so a plant reds THE MEMBER CHECK exactly when its reading differs from BASE as a multiset
@@ -27,7 +34,12 @@
  *   wb-km7q.4's notes the items fold (refusal #4's U1, refusal #5's U1 and U2), each with its label (the line's head before its
  *   first '. ', the whole line when it holds none) and the member names its line holds (O<n>, O<n>b and O<n>bt; GP-<name> and GM-<name>); R-B140's members are the GM
  *   names whose mutant clause its note spells (MUTANT_CLAUSES); U2's are the two sentences it refuses, which the helper header holds
- *   nowhere.
+ *   nowhere. Cut #3 adds this bead's refusal #2 lines U1-U6 (RF2-U1 to RF2-U6), each held by its slug (the line's text before its
+ *   first ': ') with the member names its line holds (SP-<Kind>.<slot>, H2-<n>, L2-<n>, N-<n>, E-<Kind> and T-<Kind>) and, for each,
+ *   the row the seat's battery measured redding under it (`cures <member> <table>:<id>`; an SP member's row is the EDGES row of its
+ *   edge), or `equivalent` (H2-02: the declare check read as NodeFlags.Ambient, which a top-level statement of a .ts text carries
+ *   only through its declare modifier). ITEM holds that every member a line names maps to a row this census holds; that the row
+ *   reds under the member is the battery's measurement.
  *  GATE: one row per member the three refusal lines name, in their order; each plant is the gate's text (quoted by the line where it
  *   quotes it, `quotes <n>` counting those quotes, each held to the planted text) and pins its reading. The journey twins O7b, O7bt,
  *   O15b and O15bt are their merge plus a stand-in behaviour edit (an exported function reading the merged or declared member): the
@@ -35,6 +47,8 @@
  *   the witness's plant: the mutant made cut #5 read that witness as BASE, and this reader keeps no name set for it to lose.
  *  BASE: the real module's two lists, entry by entry.
  *  FORMS: one or more calibration plants per roster word, each with its reading under every word and under every word but its own.
+ *   Cut #3 adds elsewhere's export-only and nested module blocks (refusal #2's U2 and F2) and five inner interface rows: an extends
+ *   clause, type parameters, a class merge, a class modifier and an augmentation of the inner name (U3).
  *  TYPES: one or more rows per node kind ts.isTypeNode accepts, each a NativeSnapshot.subjectBasis type holding that kind, except the
  *   two kinds the parser never yields there (UNREACHABLE: intrinsic reads as a type reference in a member, and an expression with
  *   type arguments stands only in a heritage clause or an expression), each shown by a parse.
@@ -50,39 +64,64 @@
  *   names the reading by name (CONTEXT_PINS): fails closed (Interval reads `?` and ends the interval expansion; Readonly or Record
  *   ends the LEAF form, so trace.correlationIds reads trace.?), type reference (all three read BASE) and elsewhere exempt (the name
  *   of a declaration a DECLARATION form reads, or an extends or implements clause entry's expression: Interval reads BASE; Readonly
- *   and Record end the LEAF form).
- *  UNIVERSE: the anchor of CONTEXTS, read from TypeScript itself. Every slot ts.forEachChild visits whose type in TypeScript's own
- *   lib/typescript.d.ts admits an Identifier (the checker's isTypeAssignableTo; a slot that file leaves undeclared takes the type its
- *   name has on the node interfaces that declare it) is a CONTEXTS row's slot or an UNREACHABLE entry; and every node kind whose slots
- *   can hold an identifier there or below (the same types, closed transitively) stands above the added identifier of a fails-closed
- *   CONTEXTS row or is UNREACHABLE. UNREACHABLE: the slots and kinds a .ts parse never fills with, or puts above, an identifier the
- *   walk meets (UNREACHABLE_SLOTS and UNREACHABLE_KINDS, each shown by a parse of a text that writes the name there), and three
- *   families by TypeScript's own kind ranges and names (JSDoc: attached as node.jsDoc and never a child; JSX: a .ts text parses none;
- *   the kinds after the JSDoc range: made by the emitter, never by the parser), each shown by a parse.
+ *   and Record end the LEAF form). Cut #3 adds the extends and implements clause entries of a declaration in a namespace, a function
+ *   body, a declare global block and an augmentation, and of a class expression (refusal #2's U4), each elsewhere exempt.
+ *  EDGES (cut #3, refusal #2's U1 and U5): one row per slot edge no fails-closed CONTEXTS row's path holds, each a text appended to
+ *   the module that adds exactly ONE identifier, at `at`, whose path from the source file passes `via` <Kind>.<slot> (the edge the
+ *   row is named for) and no other EDGES row's edge; read like a CONTEXTS row with Interval, Readonly and Record, each pinned fails
+ *   closed. A statement or body slot holds a block (refusal #2's guard members test an identifier inside a block under if); a type
+ *   parameter list or a parameter list holds the name as a type parameter's or a parameter's name, so no row passes another's edge.
+ *  NESTED (cut #3, refusal #2's U6): for each nested position of a LEAF form (POSITIONS: a union's first, middle and last arm, a
+ *   readonly array's element, Readonly's argument, Record's key and Record's value) and each type kind the TYPES table reads as no
+ *   leaf (NESTED_ATOMS: one type of each kind ts.isTypeNode accepts but the string and number keywords and TYPES' UNREACHABLE kinds),
+ *   NativeSnapshot.subjectBasis typed by the position's composite of the atom (LEAF_POSITIONS) reads `subjectBasis.?`; a pair whose
+ *   composite's parse places no node of the kind at the position is UNREACHABLE (NESTED_UNREACHABLE, shown by that parse).
+ *  UNIVERSE: the anchor of CONTEXTS and EDGES, read from TypeScript itself. Every slot ts.forEachChild visits whose type in
+ *   TypeScript's own lib/typescript.d.ts admits an Identifier (the checker's isTypeAssignableTo; a slot that file leaves undeclared
+ *   takes the type its name has on the node interfaces that declare it) is a CONTEXTS row's slot or an UNREACHABLE entry; every node
+ *   kind whose slots can hold an identifier there or below (the same types, closed transitively) stands above the added identifier
+ *   of a fails-closed CONTEXTS row or is UNREACHABLE; and (cut #3) every slot edge of such a kind whose type admits an Identifier or a
+ *   node of such a kind lies on the path from the source file to the added identifier of a fails-closed CONTEXTS or EDGES row, or is
+ *   UNREACHABLE (its kind is; or it is an UNREACHABLE_EDGES entry; or an UNREACHABLE_SLOTS entry whose text's parse puts no
+ *   identifier below the slot). UNREACHABLE: the slots and kinds a .ts parse never fills with, or puts above, an identifier the walk
+ *   meets (UNREACHABLE_SLOTS and UNREACHABLE_KINDS, each shown by a parse of a text that writes the name there;
+ *   TypeParameter.expression and ModuleDeclaration.body hold no identifier but hold one below them, so neither is an unreachable
+ *   edge), the slot edges a .ts parse never puts above one (UNREACHABLE_EDGES, cut #3: a function type's modifiers, an index
+ *   signature's type parameters and a property or shorthand assignment's modifiers, each shown by a parse that puts the written name
+ *   on another path), and three families by TypeScript's own kind ranges and names (JSDoc: attached as node.jsDoc and never a child;
+ *   JSX: a .ts text parses none; the kinds after the JSDoc range: made by the emitter, never by the parser), each shown by a parse.
  *  AUGMENTATION PATHS: namesThisModule (DECLARATION augmentation's path clause) asked of every extension spelling of the module, each
  *   as ./, as ../workbench/, bare and capitalized, answers exactly as the augmentation claim's own path list says.
  *
- * ANCHORS OUTSIDE THIS FILE (standing rule 16, CT5 and CT6): the tracker export .beads/issues.jsonl (wb-km7q.11's description lines
- * and its R-B140 note; wb-km7q.4's notes, each the FIRST line opening with its prefix, so a later note quoting one binds nothing):
- * the GATE rows are exactly the members its three refusal lines name, and the quotes are its quotes; the helper's exported rosters
- * (every word a FORMS row, every NOT READ word a RESIDUALS row); TypeScript's ts.isTypeNode, ts.isTypeElement, ts.isClassElement,
- * ts.isPropertyName and ts.isModifier over every SyntaxKind (the TYPES and MEMBERS kinds); TypeScript's ts.forEachChild and its
- * lib/typescript.d.ts read through its checker (UNIVERSE: the CONTEXTS slots and kinds); the TypeScript checker (BASE, and the
- * AGREEMENT of every row); src/workbench/observation.ts read from disk (BASE).
+ * ANCHORS OUTSIDE THIS FILE (standing rule 16, CT5 and CT6): the tracker export .beads/issues.jsonl (wb-km7q.11's description
+ * lines, its R-B140 note and its refusal #2 lines; wb-km7q.4's notes, each the FIRST line opening with its prefix, so a later note
+ * quoting one binds nothing): the GATE rows are exactly the members its three refusal lines name, and the quotes are its quotes;
+ * every member a refusal #2 line names maps to a row (ITEM RF2); the helper's exported rosters (every word a FORMS row, every NOT READ
+ * word a RESIDUALS row); TypeScript's ts.isTypeNode, ts.isTypeElement, ts.isClassElement, ts.isPropertyName and ts.isModifier over
+ * every SyntaxKind (the TYPES and MEMBERS kinds; with TYPES' readings, the NESTED kinds); TypeScript's ts.forEachChild and its
+ * lib/typescript.d.ts read through its checker (UNIVERSE: the CONTEXTS slots and kinds, the EDGES edges); the TypeScript checker
+ * (BASE, and the AGREEMENT of every row); src/workbench/observation.ts read from disk (BASE).
  * SELF-ANCHORED (held only by this file's literals; a coordinated removal from all of them reads green, and that is NOT claimed): a
  * FORMS row of a word that keeps another FORMS row; a TYPES or MEMBERS row of a kind that keeps another row; a RESIDUALS row of a
  * word that keeps another row; a GATE row's plant beyond the quotes its line gives; a CONTEXTS row of a slot that keeps another row
  * when no kind's coverage rests on it alone; the text of an UNREACHABLE entry; the spellings AUGMENTATION PATHS asks namesThisModule
- * of (each reads exactly as the augmentation claim's own path list says).
+ * of (each reads exactly as the augmentation claim's own path list says); an EDGES row's text beyond its edge, slot and reading; a
+ * NESTED atom beyond its kind; a cut #3 FORMS or CONTEXTS row that no cures pin names (elsewhere/nestedAugmentationBlock, inner
+ * interface/classModifierInnerName and /augmentedInnerName, the heritage rows but nestedHeritage); which row a cures pin names,
+ * beyond its existence.
  * FROZEN SHAPE (standing rule 16): one literal pins every row as <table>:<id>:<pin count>.
  *
  * NOT CLAIMED: anything of wb-km7q.4's census beyond the reader (its journeys, its comparisons' fed lists, its other legs); that a
- * plant type-checks (the gate's plants did; the TYPES, MEMBERS and CONTEXTS rows are syntax and many are not type-correct, which the
- * reader, a parser reading, does not judge); the NOT READ families, each held to a pinned quiet row; the checker's reading where the
- * reader reads `?` (AGREEMENT is one-sided: a reader entry is never wider than the checker's member, and `?` stands for anything);
- * that an UNREACHABLE slot or kind is unreachable in every text (each is shown by its parse, as TYPES' UNREACHABLE is); refusal #1's
- * own lines, which the tracker export at this cut's base does not yet hold (its members are cured through CONTEXTS, TYPES, MEMBERS
- * and FORMS rows, and measured, not read from the export).
+ * plant type-checks (the gate's plants did; the TYPES, MEMBERS, CONTEXTS, EDGES and NESTED rows are syntax and many are not
+ * type-correct, which the reader, a parser reading, does not judge); the NOT READ families, each held to a pinned quiet row; the
+ * checker's reading where the reader reads `?` (AGREEMENT is one-sided: a reader entry is never wider than the checker's member, and
+ * `?` stands for anything); that an UNREACHABLE slot, edge, kind or NESTED pair is unreachable in every text (each is shown by its
+ * parse, as TYPES' UNREACHABLE is); refusal #1's lines as rows (the tracker export holds them since cut #2's entry base; their
+ * members are cured through CONTEXTS, TYPES, MEMBERS and FORMS rows, measured by the gate at refusal #2, not read from the export
+ * here); that a cures pin's row reds under its member (the seat's battery measures it, not this census). A walk or guard edit that
+ * tells two paths apart by more than one slot, edge or kind (the kind of the node standing at an edge, where an EDGES or CONTEXTS
+ * row lays one kind; two slots or edges at once; a depth) is NOT CLAIMED by this census. A LEAF edit keyed on a node below a nested
+ * position (two or more positions under the top of a type, where NESTED pins one) is NOT CLAIMED by this census.
  *
  * Display paths added: none. Test-only: it spawns nothing and writes nothing; it reads the helper, the tracker export,
  * src/workbench/observation.ts and TypeScript's lib/typescript.d.ts, lays every plant over that text in memory, and runs the
@@ -142,6 +181,10 @@ const headOf = (line: string): string => (line.includes(". ") ? line.slice(0, li
 const unique = (names: readonly string[]): string[] => [...new Set(names)];
 /** The gate member names a refusal line holds, in order of first appearance. */
 const memberNames = (line: string): string[] => unique([...line.matchAll(/\bO\d+(?:bt|b)?\b|\bG[PM]-[A-Za-z]+\b/gu)].map(match => match[0]));
+/** The member names a line of this bead's refusal #2 holds (cut #3), in order of first appearance: the gate's slot-prune walk mutants
+ * (SP-<Kind>.<slot>), its hand mutants (H2-<n>, L2-<n> and N-<n>) and the guard exemption members it names (E-<Kind>, T-<Kind>). */
+const respinMembers = (line: string): string[] =>
+  unique([...line.matchAll(/\bSP-[A-Za-z]+\.[A-Za-z]+\b|\b(?:H2|L2|N)-\d+\b|\b[ET]-[A-Z][A-Za-z]+\b/gu)].map(match => match[0]));
 /** The quotes a refusal line gives one member: refusal #4's `O<n> (a )'<text>'`, and every backtick quote between the member's first
  * name and the next member name on a refusal #5 line. */
 function quotesOf(line: string, member: string): string[] {
@@ -270,6 +313,13 @@ const MUTANT_CLAUSES: Readonly<Record<string, string>> = {
 };
 const ACCEPTANCE =
   "Acceptance: each plant reds the unmodified census and greens under the cure; claim text (header, LIMITS, comment, delivery note) and reader coverage agree byte-for-byte with the falsifier roster.";
+/** A refusal #2 row's pins (cut #3): the slug of its line (its text before its first ': '), the member names the line holds, and the
+ * row of this census each member maps to (`equivalent` for the one member measured equivalent). */
+const respin = (slug: string, cures: readonly (readonly [string, string])[]): readonly string[] => [
+  `slug ${slug}`,
+  `members ${cures.map(([member]) => member).join(" ")}`,
+  ...cures.map(([member, row]) => `cures ${member} ${row}`),
+];
 const ITEM_ROWS: readonly ItemRow[] = [
   { id: "U1", home: "child description", pins: [`label ${U1}`, "members O7 O15 O8 O7b O15b"] },
   {
@@ -293,10 +343,86 @@ const ITEM_ROWS: readonly ItemRow[] = [
     home: "parent notes",
     pins: [`label ${RF5_U2}`, "members GM-importEquals GP-importEqualsBrand GM-importDefault GP-defaultImportFile GM-typeNamesInterface GP-topShapeBrand GM-holdsShallow GP-deepBrand"],
   },
+  {
+    id: "RF2-U1",
+    home: "child notes",
+    pins: respin("- U1-HIGH-CONFIRMED-R514-R515-R668-WALK-SLOT-REACH-UNPINNED", [
+      ["SP-ClassDeclaration.heritageClauses", "EDGES:ClassDeclaration.heritageClauses"],
+      ["SP-IfStatement.thenStatement", "EDGES:IfStatement.thenStatement"],
+      ["SP-Parameter.type", "EDGES:Parameter.type"],
+      ["SP-TypeReference.typeArguments", "EDGES:TypeReference.typeArguments"],
+      ["SP-MethodDeclaration.modifiers", "EDGES:MethodDeclaration.modifiers"],
+      ["SP-ExportDeclaration.attributes", "EDGES:ExportDeclaration.attributes"],
+      ["SP-ImportType.argument", "EDGES:ImportType.argument"],
+      ["SP-ImportType.attributes", "EDGES:ImportType.attributes"],
+      ["SP-ImportType.typeArguments", "EDGES:ImportType.typeArguments"],
+      ["SP-TypePredicate.type", "EDGES:TypePredicate.type"],
+      ["SP-VariableStatement.modifiers", "EDGES:VariableStatement.modifiers"],
+      ["E-IfStatement", "CONTEXTS:ifTest"],
+      ["T-IfStatement", "CONTEXTS:ifTest"],
+      ["N-01", "EDGES:IfStatement.thenStatement"],
+    ]),
+  },
+  {
+    id: "RF2-U2",
+    home: "child notes",
+    pins: respin("- U2-MEDIUM-CONFIRMED-R514-R515-R668-AUGMENTATION-DECLARE-MODIFIER-UNPINNED", [
+      ["H2-01", "FORMS:elsewhere/exportModuleBlock"],
+      ["H2-03", "FORMS:elsewhere/exportModuleBlock"],
+      ["H2-02", "equivalent"],
+    ]),
+  },
+  {
+    id: "RF2-U3",
+    home: "child notes",
+    pins: respin("- U3-MEDIUM-CONFIRMED-R514-R515-EXPANSION-INNER-INTERFACE-REFUSAL-SCOPE-UNPINNED", [
+      ["H2-04", "FORMS:inner interface/heritageInnerName"],
+      ["H2-05", "FORMS:inner interface/typeParametersInnerName"],
+      ["H2-06", "FORMS:inner interface/classMergeInnerName"],
+    ]),
+  },
+  {
+    id: "RF2-U4",
+    home: "child notes",
+    pins: respin("- U4-MEDIUM-CONFIRMED-R514-R515-R668-HERITAGE-EXEMPTION-SCOPE-UNPINNED", [
+      ["H2-12", "CONTEXTS:nestedHeritage"],
+      ["H2-09", "CONTEXTS:instantiation"],
+      ["H2-10", "CONTEXTS:heritageImplements"],
+      ["H2-11", "CONTEXTS:heritageImplements"],
+    ]),
+  },
+  {
+    id: "RF2-U5",
+    home: "child notes",
+    pins: respin("- U5-HIGH-CONFIRMED-R514-R515-R668-IDENTIFIER-GUARD-STATEMENT-SCOPE-UNPINNED", [
+      ["H2-16", "EDGES:IfStatement.thenStatement"],
+      ["H2-18", "EDGES:IfStatement.thenStatement"],
+      ["N-01", "EDGES:IfStatement.thenStatement"],
+      ["N-02", "EDGES:MethodDeclaration.body"],
+      ["N-03", "EDGES:Parameter.type"],
+      ["N-04", "EDGES:TypeReference.typeArguments"],
+      ["N-05", "EDGES:TryStatement.tryBlock"],
+      ["N-06", "EDGES:MethodDeclaration.modifiers"],
+    ]),
+  },
+  {
+    id: "RF2-U6",
+    home: "child notes",
+    pins: respin("- U6-MEDIUM-CONFIRMED-R514-R515-R668-LEAF-NESTED-POSITION-UNPINNED", [
+      ["L2-01", "NESTED:Record key/ParenthesizedType"],
+      ["L2-02", "NESTED:Readonly argument/ParenthesizedType"],
+      ["L2-03", "NESTED:last union arm/ParenthesizedType"],
+      ["L2-04", "NESTED:readonly array element/ParenthesizedType"],
+      ["L2-05", "NESTED:Record value/ParenthesizedType"],
+    ]),
+  },
 ];
 const homeText = (home: Home): string => (home === "child description" ? CHILD.description : home === "child notes" ? CHILD.notes : PARENT_TEXT.notes);
-/** An item's line in its home: the first line opening with its label (the acceptance line whole). */
+/** An item's line in its home: the first line opening with its slug and ': ' (refusal #2), or with its label (the acceptance line
+ * whole). */
 function itemLine(row: ItemRow): string {
+  const slug = pinsWith(row.pins, "slug ")[0]?.slice("slug ".length);
+  if (slug !== undefined) return firstLine(homeText(row.home), `${slug}: `);
   const label = pinsWith(row.pins, "label ")[0]?.slice("label ".length);
   if (label !== undefined) return firstLine(homeText(row.home), label);
   const line = pinsWith(row.pins, "line ")[0]?.slice("line ".length) ?? "";
@@ -305,6 +431,7 @@ function itemLine(row: ItemRow): string {
 /** The members an item's line names: gate names, or (R-B140) the GM names of the mutant clauses it spells. */
 function itemMembers(row: ItemRow, line: string): string[] {
   if (row.id === "R-B140") return Object.entries(MUTANT_CLAUSES).flatMap(([clause, name]) => (line.includes(clause) ? [name] : []));
+  if (row.id.startsWith("RF2-")) return respinMembers(line);
   return memberNames(line);
 }
 
@@ -424,6 +551,8 @@ const INTERVAL_REFUSED = "-interval.startedAt -interval.endedAt +interval.?";
 const ALL_SNAPSHOT = BASE_ROW.pins[0].slice("snapshot ".length).split(" ");
 const ALL_EVENT = BASE_ROW.pins[1].slice("event ".length).split(" ");
 const removedAll = (entries: readonly string[]): string => entries.map(entry => `-${entry}`).join(" ");
+/** An inner interface row's pins: node.presentation still reads, and without the word it reads node.? (cut #3). */
+const INNER_READ = ["snapshot =", "event =", "without snapshot =", "without event -node.presentation +node.?"];
 const FORM_ROWS: readonly FormRow[] = [
   form("interface", "declaredTwice", appended("export interface ObservationEvent { region?: string }"), ["snapshot =", "event +region", "without snapshot ?", "without event ?"]),
   form("interface", "redeclaredMember", appended("export interface NativeSnapshot { cursor?: string }"), ["snapshot +cursor", "event =", "without snapshot ?", "without event ?"]),
@@ -578,6 +707,22 @@ const FORM_ROWS: readonly FormRow[] = [
     "without snapshot =",
     "without event =",
   ]),
+  // DECLARATION augmentation's declare modifier (cut #3, refusal #2 U2, gate mutants H2-01 and H2-03): a module block carrying export
+  // and no declare is no augmentation either, so its interface stands elsewhere.
+  form("elsewhere", "exportModuleBlock", appended('export module "./observation.js" { interface NativeSnapshot { region?: string } }'), [
+    "snapshot ?",
+    "event =",
+    "without snapshot =",
+    "without event =",
+  ]),
+  // DECLARATION augmentation's "directly in the body" (cut #3, refusal #2 F2): an interface in a module block nested in an augmentation
+  // is no statement of the augmentation's body, so it stands elsewhere.
+  form(
+    "elsewhere",
+    "nestedAugmentationBlock",
+    appended('declare module "./observation.js" { module "./observation.js" { interface NativeSnapshot { region?: string } } }'),
+    ["snapshot ?", "event =", "without snapshot =", "without event ="],
+  ),
   form("heritage", "extendsClause", both(afterName("NativeSnapshot", " extends Base"), appended("interface Base { region?: string }")), [
     "snapshot ?",
     "event =",
@@ -642,6 +787,13 @@ const FORM_ROWS: readonly FormRow[] = [
   // EXPANSION inner interface reads <member>.<name> whatever the inner name's REFUSAL forms hold (refusal #1 F2, gate mutant g28):
   // a function named Presentation makes Presentation stand elsewhere, and node.presentation still reads.
   form("inner interface", "refusedInnerName", appended("export function Presentation(): void {}"), ["snapshot =", "event =", "without snapshot =", "without event -node.presentation +node.?"]),
+  // The same for each other REFUSAL form and declaration of the inner name (cut #3, refusal #2 U3, gate mutants H2-04 to H2-06): an
+  // extends clause, type parameters, a class merge, a class modifier and an augmentation of Presentation each leave node.presentation.
+  form("inner interface", "heritageInnerName", both(afterName("Presentation", " extends PresentationBase"), appended("interface PresentationBase {}")), INNER_READ),
+  form("inner interface", "typeParametersInnerName", afterName("Presentation", "<T = string>"), INNER_READ),
+  form("inner interface", "classMergeInnerName", appended("export declare class Presentation {}"), INNER_READ),
+  form("inner interface", "classModifierInnerName", appended("export declare abstract class Presentation {}"), INNER_READ),
+  form("inner interface", "augmentedInnerName", appended('declare module "./observation.js" { interface Presentation { region?: string } }'), INNER_READ),
   form("string", "asIs", asIs, [
     "snapshot =",
     "event =",
@@ -853,6 +1005,163 @@ const modifierRows = (): KindRow[] => {
 };
 const KIND_ROWS: readonly KindRow[] = [...TYPE_ROWS, ...MEMBER_ROWS, ...modifierRows()];
 
+// ---------------------------------------------------------------------------------------------------------- NESTED
+/** The nested positions of the LEAF forms (cut #3): a union's first, middle and last arm, a readonly array's element, Readonly's
+ * argument, Record's key and value. */
+type Position = "first union arm" | "middle union arm" | "last union arm" | "readonly array element" | "Readonly argument" | "Record key" | "Record value";
+const POSITIONS: readonly Position[] = ["first union arm", "middle union arm", "last union arm", "readonly array element", "Readonly argument", "Record key", "Record value"];
+interface LeafPosition {
+  /** The type text that writes `type` at the position. */
+  readonly compose: (type: string) => string;
+  /** The nodes of a composite's type standing at the position. */
+  readonly at: (node: ts.TypeNode) => readonly ts.TypeNode[];
+}
+const typeArgument =
+  (name: string, index: number, count: number) =>
+  (node: ts.TypeNode): readonly ts.TypeNode[] =>
+    ts.isTypeReferenceNode(node) && ts.isIdentifier(node.typeName) && node.typeName.text === name && (node.typeArguments ?? []).length === count
+      ? (node.typeArguments ?? []).slice(index, index + 1)
+      : [];
+const LEAF_POSITIONS: Readonly<Record<Position, LeafPosition>> = {
+  "first union arm": { compose: type => `${type} | string`, at: node => (ts.isUnionTypeNode(node) ? node.types.slice(0, 1) : []) },
+  "middle union arm": { compose: type => `string | ${type} | number`, at: node => (ts.isUnionTypeNode(node) && node.types.length > 2 ? node.types.slice(1, -1) : []) },
+  "last union arm": { compose: type => `string | ${type}`, at: node => (ts.isUnionTypeNode(node) ? node.types.slice(-1) : []) },
+  "readonly array element": {
+    compose: type => `readonly ${type}[]`,
+    at: node => (ts.isTypeOperatorNode(node) && node.operator === ts.SyntaxKind.ReadonlyKeyword && ts.isArrayTypeNode(node.type) ? [node.type.elementType] : []),
+  },
+  "Readonly argument": { compose: type => `Readonly<${type}>`, at: typeArgument("Readonly", 0, 1) },
+  "Record key": { compose: type => `Record<${type}, string>`, at: typeArgument("Record", 0, 2) },
+  "Record value": { compose: type => `Record<string, ${type}>`, at: typeArgument("Record", 1, 2) },
+};
+/** One type of each kind TYPES reads as no leaf, in SyntaxKind order: the text a NESTED row writes at a position. */
+const NESTED_ATOMS: Readonly<Record<string, string>> = {
+  VoidKeyword: "void",
+  AnyKeyword: "any",
+  BooleanKeyword: "boolean",
+  NeverKeyword: "never",
+  ObjectKeyword: "object",
+  SymbolKeyword: "symbol",
+  UndefinedKeyword: "undefined",
+  UnknownKeyword: "unknown",
+  BigIntKeyword: "bigint",
+  TypePredicate: "value is string",
+  TypeReference: "Date",
+  FunctionType: "() => string",
+  ConstructorType: "new () => object",
+  TypeQuery: "typeof MAX_DEFAULT",
+  TypeLiteral: "{ region?: string }",
+  ArrayType: "string[]",
+  TupleType: "[string]",
+  OptionalType: "string?",
+  RestType: "...string[]",
+  UnionType: "string | object",
+  IntersectionType: 'string & "region"',
+  ConditionalType: "string extends string ? string : number",
+  InferType: "infer T",
+  ParenthesizedType: "(string)",
+  ThisType: "this",
+  TypeOperator: "keyof string",
+  IndexedAccessType: 'string["length"]',
+  MappedType: '{ [key in "region"]?: string }',
+  LiteralType: "1",
+  NamedTupleMember: "region: string",
+  TemplateLiteralType: TEMPLATE_TYPE,
+  TemplateLiteralTypeSpan: `\${string}-region`,
+  ImportType: 'import("./basis.js").Basis',
+  JSDocAllType: "*",
+  JSDocUnknownType: "?",
+  JSDocNullableType: "?string",
+  JSDocNonNullableType: "string!",
+  JSDocOptionalType: "string=",
+  JSDocFunctionType: "function(string): string",
+  JSDocVariadicType: "...string",
+};
+/** The kinds a position's composite places nowhere at the position (each shown by that composite's parse). */
+const NESTED_UNREACHABLE: Readonly<Record<Position, readonly string[]>> = {
+  "first union arm": [
+    "TypePredicate",
+    "FunctionType",
+    "ConstructorType",
+    "OptionalType",
+    "RestType",
+    "UnionType",
+    "ConditionalType",
+    "NamedTupleMember",
+    "TemplateLiteralTypeSpan",
+    "JSDocNullableType",
+    "JSDocOptionalType",
+    "JSDocFunctionType",
+    "JSDocVariadicType",
+  ],
+  "middle union arm": [
+    "TypePredicate",
+    "FunctionType",
+    "ConstructorType",
+    "OptionalType",
+    "RestType",
+    "UnionType",
+    "ConditionalType",
+    "NamedTupleMember",
+    "TemplateLiteralTypeSpan",
+    "JSDocNullableType",
+    "JSDocOptionalType",
+    "JSDocFunctionType",
+    "JSDocVariadicType",
+  ],
+  "last union arm": [
+    "TypePredicate",
+    "OptionalType",
+    "RestType",
+    "UnionType",
+    "ConditionalType",
+    "NamedTupleMember",
+    "TemplateLiteralTypeSpan",
+    "JSDocUnknownType",
+    "JSDocOptionalType",
+    "JSDocVariadicType",
+  ],
+  "readonly array element": [
+    "TypePredicate",
+    "FunctionType",
+    "ConstructorType",
+    "OptionalType",
+    "RestType",
+    "UnionType",
+    "IntersectionType",
+    "ConditionalType",
+    "InferType",
+    "TypeOperator",
+    "NamedTupleMember",
+    "TemplateLiteralTypeSpan",
+    "JSDocUnknownType",
+    "JSDocNullableType",
+    "JSDocOptionalType",
+    "JSDocFunctionType",
+    "JSDocVariadicType",
+  ],
+  "Readonly argument": ["TypePredicate", "OptionalType", "RestType", "NamedTupleMember", "TemplateLiteralTypeSpan", "JSDocOptionalType", "JSDocVariadicType"],
+  "Record key": ["TypePredicate", "OptionalType", "RestType", "NamedTupleMember", "TemplateLiteralTypeSpan", "JSDocOptionalType", "JSDocVariadicType"],
+  "Record value": ["TypePredicate", "OptionalType", "RestType", "NamedTupleMember", "TemplateLiteralTypeSpan", "JSDocOptionalType", "JSDocVariadicType"],
+};
+interface NestedRow {
+  readonly id: string;
+  readonly position: Position;
+  readonly kind: string;
+  readonly pins: readonly string[];
+}
+/** One row per position and atom: NativeSnapshot.subjectBasis typed by the composite reads as no leaf, or the pair is unreachable. */
+const NESTED_ROWS: readonly NestedRow[] = POSITIONS.flatMap(position =>
+  Object.keys(NESTED_ATOMS).map(kind => ({
+    id: `${position}/${kind}`,
+    position,
+    kind,
+    pins: NESTED_UNREACHABLE[position].includes(kind) ? [`kind ${kind}`, "unreachable"] : [`kind ${kind}`, ...NON_LEAF],
+  })),
+);
+/** A NESTED row's text: NativeSnapshot.subjectBasis typed by its position's composite of its kind's atom. */
+const nestedText = (row: NestedRow): string => subject(LEAF_POSITIONS[row.position].compose(NESTED_ATOMS[row.kind] ?? ""))(MODULE_TEXT);
+
 // ---------------------------------------------------------------------------------------------------------- RESIDUALS
 interface ResidualRow {
   readonly word: string;
@@ -1005,6 +1314,14 @@ const CONTEXT_ROWS: readonly ContextRow[] = [
   context("heritageExtends", "ExpressionWithTypeArguments.expression", "export interface Probe extends $N {}", "elsewhere exempt"),
   context("heritageImplements", "ExpressionWithTypeArguments.expression", "export declare class Probe implements $N {}", "elsewhere exempt"),
   context("heritageClassExtends", "ExpressionWithTypeArguments.expression", "export declare class Probe extends $N {}", "elsewhere exempt"),
+  // An extends or implements clause entry at any depth (cut #3, refusal #2 U4, gate mutant H2-12): a declaration in a namespace, a
+  // function body, a declare global block or an augmentation, and a class expression, each keep the entry's expression exempt.
+  context("nestedHeritage", "ExpressionWithTypeArguments.expression", "export namespace probeNs { export interface Probe extends $N {} }", "elsewhere exempt"),
+  context("localHeritage", "ExpressionWithTypeArguments.expression", "export function probe(): void { interface Local extends $N {} }", "elsewhere exempt"),
+  context("globalHeritage", "ExpressionWithTypeArguments.expression", "declare global { interface Probe extends $N {} }", "elsewhere exempt"),
+  context("augmentationHeritage", "ExpressionWithTypeArguments.expression", 'declare module "./observation.js" { interface Probe extends $N {} }', "elsewhere exempt"),
+  context("classExpressionHeritage", "ExpressionWithTypeArguments.expression", "export const probe = class extends $N {};", "elsewhere exempt"),
+  context("classExpressionImplements", "ExpressionWithTypeArguments.expression", "export const probe = class implements $N {};", "elsewhere exempt"),
   context("instantiation", "ExpressionWithTypeArguments.expression", "export const probe = $N<string>;"),
   context("heritageQualified", "PropertyAccessExpression.name", "export interface Probe extends probeNs.$N {}"),
   context("asOperand", "AsExpression.expression", "export const probe = $N as string;"),
@@ -1071,8 +1388,132 @@ const CONTEXT_ROWS: readonly ContextRow[] = [
   context("enumMemberName", "EnumMember.name", "export enum Probe { $N }"),
   context("enumMemberInitializer", "EnumMember.initializer", "export enum Probe { A = $N }"),
 ];
-/** A CONTEXTS row's text read with `name`: the module with the row's text appended. */
-const contextText = (row: ContextRow, name: string): string => appended(row.text.replaceAll("$N", name))(MODULE_TEXT);
+/** A CONTEXTS or EDGES row's text read with `name`: the module with the row's text appended. */
+const contextText = (row: { readonly text: string }, name: string): string => appended(row.text.replaceAll("$N", name))(MODULE_TEXT);
+
+// ---------------------------------------------------------------------------------------------------------- EDGES
+/** An EDGES row (cut #3): a text whose one added identifier stands at `at`, on its path from the source file through `via`. */
+interface EdgeRow {
+  readonly id: string;
+  /** The text appended to the module, `$N` standing for the name it is read with. */
+  readonly text: string;
+  readonly pins: readonly string[];
+}
+const edge = (via: string, at: string, text: string): EdgeRow => ({ id: via, text, pins: [`via ${via}`, `at ${at}`] });
+/** One row per slot edge no fails-closed CONTEXTS row's path holds (UNIVERSE), each the only fails-closed path through its edge; a
+ * statement or body slot holds a block. */
+const EDGE_ROWS: readonly EdgeRow[] = [
+  edge("ArrowFunction.parameters", "Parameter.name", "export const probe = ($N: string): void => {};"),
+  edge("ArrowFunction.type", "TypeQuery.exprName", "export const probe = (): typeof $N => probeSource;"),
+  edge("ArrowFunction.typeParameters", "TypeParameter.name", "export const probe = <$N>(): void => {};"),
+  edge("AsExpression.type", "TypeQuery.exprName", "export const probe = probeSource as typeof $N;"),
+  edge("CallExpression.typeArguments", "TypeQuery.exprName", "export const probe = probeFn<typeof $N>();"),
+  edge("CallSignature.type", "TypeQuery.exprName", "export interface Probe { (): typeof $N }"),
+  edge("CallSignature.typeParameters", "TypeParameter.name", "export interface Probe { <$N>(): void }"),
+  edge("CaseClause.statements", "ExpressionStatement.expression", "switch (probe) { case 1: { $N; } }"),
+  edge("CatchClause.block", "ExpressionStatement.expression", "try {} catch { $N; }"),
+  edge("ClassDeclaration.heritageClauses", "PropertyAccessExpression.name", "export declare class Probe extends probeNs.$N {}"),
+  edge("ClassDeclaration.typeParameters", "TypeParameter.name", "export declare class Probe<$N> {}"),
+  edge("ClassExpression.heritageClauses", "PropertyAccessExpression.name", "export const probe = class extends probeNs.$N {};"),
+  edge("ClassExpression.members", "PropertyDeclaration.initializer", "export const probe = class { value = $N; };"),
+  edge("ClassExpression.modifiers", "Decorator.expression", "export const probe = @$N class {};"),
+  edge("ClassExpression.typeParameters", "TypeParameter.name", "export const probe = class<$N> {};"),
+  edge("ClassStaticBlockDeclaration.modifiers", "Decorator.expression", "export class Probe { @$N static {} }"),
+  edge("ConditionalType.checkType", "TypeQuery.exprName", "export type Probe = typeof $N extends string ? 1 : 2;"),
+  edge("ConditionalType.falseType", "TypeQuery.exprName", "export type Probe = string extends number ? 1 : typeof $N;"),
+  edge("ConditionalType.trueType", "TypeQuery.exprName", "export type Probe = string extends number ? typeof $N : 2;"),
+  edge("ConstructSignature.type", "TypeQuery.exprName", "export interface Probe { new (): typeof $N }"),
+  edge("ConstructSignature.typeParameters", "TypeParameter.name", "export interface Probe { new <$N>(): Probe }"),
+  edge("Constructor.body", "ExpressionStatement.expression", "export class Probe { constructor() { $N; } }"),
+  edge("Constructor.modifiers", "Decorator.expression", "export class Probe { @$N constructor() {} }"),
+  edge("Constructor.type", "TypeQuery.exprName", "export declare class Probe { constructor(): typeof $N }"),
+  edge("Constructor.typeParameters", "TypeParameter.name", "export declare class Probe { constructor<$N>() }"),
+  edge("ConstructorType.type", "TypeQuery.exprName", "export type Probe = new () => typeof $N;"),
+  edge("ConstructorType.typeParameters", "TypeParameter.name", "export type Probe = new <$N>() => object;"),
+  edge("DoStatement.statement", "ExpressionStatement.expression", "do { $N; } while (probe);"),
+  edge("EnumDeclaration.modifiers", "Decorator.expression", "@$N export enum Probe { A }"),
+  edge("ExportAssignment.modifiers", "Decorator.expression", "@$N export default probe;"),
+  edge("ExportDeclaration.attributes", "ImportAttribute.value", 'export * from "./other.js" with { type: $N };'),
+  edge("ExportDeclaration.modifiers", "Decorator.expression", '@$N export * from "./other.js";'),
+  edge("ExpressionWithTypeArguments.typeArguments", "TypeQuery.exprName", "export interface Probe extends Box<typeof $N> {}"),
+  edge("ForInStatement.statement", "ExpressionStatement.expression", "for (const key in probe) { $N; }"),
+  edge("ForOfStatement.statement", "ExpressionStatement.expression", "for (const item of probe) { $N; }"),
+  edge("FunctionDeclaration.modifiers", "Decorator.expression", "@$N export function probe(): void {}"),
+  edge("FunctionDeclaration.typeParameters", "TypeParameter.name", "export function probe<$N>(): void {}"),
+  edge("FunctionExpression.body", "ExpressionStatement.expression", "export const probe = function (): void { $N; };"),
+  edge("FunctionExpression.parameters", "Parameter.name", "export const probe = function ($N: string): void {};"),
+  edge("FunctionExpression.type", "TypeQuery.exprName", "export const probe = function (): typeof $N { return probeSource; };"),
+  edge("FunctionExpression.typeParameters", "TypeParameter.name", "export const probe = function <$N>(): void {};"),
+  edge("FunctionType.type", "TypeQuery.exprName", "export type Probe = () => typeof $N;"),
+  edge("FunctionType.typeParameters", "TypeParameter.name", "export type Probe = <$N>() => void;"),
+  edge("GetAccessor.body", "ReturnStatement.expression", "export class Probe { get value(): unknown { return $N; } }"),
+  edge("GetAccessor.modifiers", "Decorator.expression", 'export class Probe { @$N get value(): string { return ""; } }'),
+  edge("GetAccessor.parameters", "Parameter.name", "export declare class Probe { get value($N: string): string }"),
+  edge("GetAccessor.type", "TypeQuery.exprName", "export declare class Probe { get value(): typeof $N }"),
+  edge("GetAccessor.typeParameters", "TypeParameter.name", "export declare class Probe { get value<$N>(): string }"),
+  edge("IfStatement.elseStatement", "ExpressionStatement.expression", "if (probe) {} else { $N; }"),
+  edge("IfStatement.thenStatement", "ExpressionStatement.expression", "if (probe) { $N; }"),
+  edge("ImportDeclaration.modifiers", "Decorator.expression", '@$N import probe from "./other.js";'),
+  edge("ImportEqualsDeclaration.modifiers", "Decorator.expression", '@$N import probe = require("./other.js");'),
+  edge("ImportType.argument", "TypeQuery.exprName", "export type Probe = import(typeof $N);"),
+  edge("ImportType.attributes", "ImportAttribute.value", 'export type Probe = import("./other.js", { with: { type: $N } });'),
+  edge("ImportType.typeArguments", "TypeQuery.exprName", 'export type Probe = import("./other.js").Box<typeof $N>;'),
+  edge("IndexSignature.modifiers", "Decorator.expression", "export declare class Probe { @$N [key: string]: unknown }"),
+  edge("IndexSignature.type", "TypeQuery.exprName", "export interface Probe { [key: string]: typeof $N }"),
+  edge("IndexedAccessType.objectType", "TypeQuery.exprName", 'export type Probe = (typeof $N)["length"];'),
+  edge("InterfaceDeclaration.modifiers", "Decorator.expression", "@$N export interface Probe {}"),
+  edge("InterfaceDeclaration.typeParameters", "TypeParameter.name", "export interface Probe<$N> {}"),
+  edge("LabeledStatement.statement", "ExpressionStatement.expression", "probeLabel: { $N; }"),
+  edge("MappedType.members", "TypeQuery.exprName", 'export type Probe = { [K in "a"]: string; value: typeof $N };'),
+  edge("MappedType.nameType", "TypeQuery.exprName", 'export type Probe = { [K in "a" as typeof $N]: string };'),
+  edge("MappedType.type", "TypeQuery.exprName", 'export type Probe = { [K in "a"]: typeof $N };'),
+  edge("MethodDeclaration.body", "ExpressionStatement.expression", "export class Probe { method(): void { $N; } }"),
+  edge("MethodDeclaration.modifiers", "Decorator.expression", "export class Probe { @$N method(): void {} }"),
+  edge("MethodDeclaration.parameters", "Parameter.name", "export declare class Probe { method($N: string): void }"),
+  edge("MethodDeclaration.type", "TypeQuery.exprName", "export declare class Probe { method(): typeof $N }"),
+  edge("MethodDeclaration.typeParameters", "TypeParameter.name", "export declare class Probe { method<$N>(): void }"),
+  edge("MethodSignature.parameters", "Parameter.name", "export interface Probe { method($N: string): void }"),
+  edge("MethodSignature.type", "TypeQuery.exprName", "export interface Probe { method(): typeof $N }"),
+  edge("MethodSignature.typeParameters", "TypeParameter.name", "export interface Probe { method<$N>(): void }"),
+  edge("ModuleDeclaration.modifiers", "Decorator.expression", "@$N export namespace probeNs {}"),
+  edge("NamedTupleMember.type", "TypeQuery.exprName", "export type Probe = [value: typeof $N];"),
+  edge("NamespaceExportDeclaration.modifiers", "Decorator.expression", "@$N export as namespace probeNs;"),
+  edge("NewExpression.typeArguments", "TypeQuery.exprName", "export const probe = new ProbeClass<typeof $N>();"),
+  edge("Parameter.modifiers", "Decorator.expression", "export class Probe { constructor(@$N value: string) {} }"),
+  edge("Parameter.type", "TypeQuery.exprName", "export function probe(value: typeof $N): void {}"),
+  edge("PropertyDeclaration.modifiers", "Decorator.expression", "export class Probe { @$N value = 1; }"),
+  edge("PropertyDeclaration.type", "TypeQuery.exprName", "export declare class Probe { value: typeof $N }"),
+  edge("SatisfiesExpression.type", "TypeQuery.exprName", "export const probe = probeSource satisfies typeof $N;"),
+  edge("SetAccessor.body", "ExpressionStatement.expression", "export class Probe { set value(next: unknown) { $N; } }"),
+  edge("SetAccessor.modifiers", "Decorator.expression", "export class Probe { @$N set value(next: unknown) {} }"),
+  edge("SetAccessor.parameters", "Parameter.name", "export declare class Probe { set value($N: string) }"),
+  edge("SetAccessor.type", "TypeQuery.exprName", "export declare class Probe { set value(next: string): typeof $N }"),
+  edge("SetAccessor.typeParameters", "TypeParameter.name", "export declare class Probe { set value<$N>(next: string) }"),
+  edge("TaggedTemplateExpression.template", "TemplateSpan.expression", `export const probe = probeTag\`a\${$N}b\`;`),
+  edge("TaggedTemplateExpression.typeArguments", "TypeQuery.exprName", "export const probe = probeTag<typeof $N>`text`;"),
+  edge("TryStatement.finallyBlock", "ExpressionStatement.expression", "try {} finally { $N; }"),
+  edge("TryStatement.tryBlock", "ExpressionStatement.expression", "try { $N; } catch {}"),
+  edge("TypeAliasDeclaration.modifiers", "Decorator.expression", "@$N export type Probe = string;"),
+  edge("TypeAssertionExpression.type", "TypeQuery.exprName", "export const probe = <typeof $N>probeSource;"),
+  edge("TypeParameter.constraint", "TypeQuery.exprName", "export type Probe<T extends typeof $N> = T;"),
+  edge("TypeParameter.default", "TypeQuery.exprName", "export type Probe<T = typeof $N> = T;"),
+  edge("TypeParameter.expression", "PrefixUnaryExpression.operand", "export type Probe<T extends ++$N> = T;"),
+  edge("TypePredicate.type", "TypeQuery.exprName", "export declare function probe(value: unknown): value is typeof $N;"),
+  edge("TypeQuery.typeArguments", "TypeQuery.exprName", "export type Probe = typeof probeFn<typeof $N>;"),
+  edge("TypeReference.typeArguments", "TypeQuery.exprName", "export type Probe = Box<typeof $N>;"),
+  edge("VariableDeclaration.type", "TypeQuery.exprName", "export const probe: typeof $N = probeSource;"),
+  edge("VariableStatement.modifiers", "Decorator.expression", "@$N export const probe = 1;"),
+  edge("WhileStatement.statement", "ExpressionStatement.expression", "while (probe) { $N; }"),
+  edge("WithStatement.statement", "ExpressionStatement.expression", "with (probe) { $N; }"),
+];
+/** The slot edges no parse of a .ts text puts above an identifier the walk meets (cut #3), each with a text that writes the name
+ * below the slot: its parse puts the identifier on another path. */
+const UNREACHABLE_EDGES: Readonly<Record<string, string>> = {
+  "FunctionType.modifiers": "export type Probe = @$N () => void;",
+  "IndexSignature.typeParameters": "export interface Probe { [key: string]<$N>: unknown }",
+  "PropertyAssignment.modifiers": "export const probe = { @$N value: 1 };",
+  "ShorthandPropertyAssignment.modifiers": "export const probe = { @$N value };",
+};
 /** The slots no parse of a .ts text fills with an identifier the walk meets, each with a text that writes the name into the slot: its
  * parse leaves the slot empty or fills it with another kind. */
 const UNREACHABLE_SLOTS: Readonly<Record<string, string>> = {
@@ -1295,28 +1736,31 @@ function oracleReadings(texts: ReadonlyMap<string, string>, siblings: ReadonlyMa
 
 // ---------------------------------------------------------------------------------------------------------- frozen shape
 const FROZEN_SHAPE: readonly string[] = [
-  "ITEM:U1:2", "ITEM:U2:4", "ITEM:ACCEPTANCE:1", "ITEM:R-B140:2", "ITEM:RF4-U1:2", "ITEM:RF5-U1:2", "ITEM:RF5-U2:2", "GATE:O7:3", "GATE:O15:3", "GATE:O8:3",
-  "GATE:O7b:3", "GATE:O15b:3", "GATE:O7bt:3", "GATE:O15bt:3", "GATE:GP-globalBrandSnapshot:3", "GATE:GP-globalBrandEvent:3", "GATE:GP-globalBrandInner:3",
-  "GATE:GP-globalLeafSnapshot:3", "GATE:GP-topBrandSnapshot:3", "GATE:GP-topBrandEvent:3", "GATE:GP-topBrandInner:3", "GATE:GP-topLeafSnapshot:3",
-  "GATE:GP-inlineBrandSnapshot:3", "GATE:GP-globalAliasSnapshot:3", "GATE:GP-globalAliasEvent:3", "GATE:GP-globalAliasInner:3", "GATE:GP-globalInterfaceUnion:3",
-  "GATE:GP-topInterfaceUnion:3", "GATE:GP-thisUnion:3", "GATE:GP-selfRefUnion:3", "GATE:GM-importEquals:4", "GATE:GP-importEqualsBrand:3", "GATE:GM-importDefault:4",
-  "GATE:GP-defaultImportFile:3", "GATE:GM-typeNamesInterface:4", "GATE:GP-topShapeBrand:3", "GATE:GM-holdsShallow:4", "GATE:GP-deepBrand:3", "BASE:observation.ts:2",
-  "FORMS:interface/declaredTwice:4", "FORMS:interface/redeclaredMember:4", "FORMS:class merge/O7:4", "FORMS:class merge/escapedClassMerge:4",
-  "FORMS:class merge/classWithBody:4", "FORMS:augmentation/O8:4", "FORMS:augmentation/noExtension:4", "FORMS:augmentation/tsExtension:4",
-  "FORMS:augmentation/parentPath:4", "FORMS:augmentation/exportDeclare:4", "FORMS:missing/renamedSnapshot:4", "FORMS:missing/classOnly:4",
-  "FORMS:missing/augmentationOnly:4", "FORMS:elsewhere/functionOfName:4", "FORMS:elsewhere/namespaceOfName:4", "FORMS:elsewhere/interfaceInNamespace:4",
-  "FORMS:elsewhere/variableOfName:4", "FORMS:elsewhere/enumOfName:4", "FORMS:elsewhere/typeAliasInNamespace:4", "FORMS:elsewhere/importOfName:4",
-  "FORMS:elsewhere/exportSpecifier:4", "FORMS:elsewhere/propertyNamed:4", "FORMS:elsewhere/parameterNamed:4", "FORMS:elsewhere/typeQueryOfName:4",
-  "FORMS:elsewhere/qualifiedName:4", "FORMS:elsewhere/globalBlock:4", "FORMS:elsewhere/otherModuleBlock:4", "FORMS:elsewhere/mjsSpecifier:4",
-  "FORMS:elsewhere/bareSpecifier:4", "FORMS:elsewhere/caseSpecifier:4", "FORMS:elsewhere/indexSpecifier:4", "FORMS:elsewhere/namespaceInAugmentation:4",
-  "FORMS:elsewhere/classInAugmentation:4", "FORMS:elsewhere/undeclaredModuleBlock:4", "FORMS:elsewhere/nestedModuleBlock:4", "FORMS:elsewhere/dtsSpecifier:4",
-  "FORMS:elsewhere/mtsSpecifier:4", "FORMS:heritage/extendsClause:4", "FORMS:heritage/classExtends:4", "FORMS:heritage/classImplements:4",
-  "FORMS:heritage/augmentationExtends:4", "FORMS:type parameters/interfaceTypeParameters:4", "FORMS:type parameters/classTypeParameters:4",
-  "FORMS:type parameters/augmentationTypeParameters:4", "FORMS:class modifier/abstractClass:4", "FORMS:class modifier/defaultClass:4",
-  "FORMS:class modifier/decoratedClass:4", "FORMS:property/asIs:4", "FORMS:other member/methodMember:4", "FORMS:type literal/asIs:4", "FORMS:read interface/asIs:4",
-  "FORMS:inner interface/asIs:4", "FORMS:inner interface/refusedInnerName:4", "FORMS:string/asIs:4", "FORMS:number/asIs:4", "FORMS:string literal/asIs:4",
-  "FORMS:union/asIs:4", "FORMS:readonly array/asIs:4", "FORMS:Readonly/asIs:4", "FORMS:Record/asIs:4", "TYPES:string:3", "TYPES:number:3", "TYPES:any:3",
-  "TYPES:unknown:3", "TYPES:never:3", "TYPES:void:3", "TYPES:object:3", "TYPES:symbol:3", "TYPES:undefined:3", "TYPES:boolean:3", "TYPES:bigint:3",
+  "ITEM:U1:2", "ITEM:U2:4", "ITEM:ACCEPTANCE:1", "ITEM:R-B140:2", "ITEM:RF4-U1:2", "ITEM:RF5-U1:2", "ITEM:RF5-U2:2", "ITEM:RF2-U1:16", "ITEM:RF2-U2:5", "ITEM:RF2-U3:5",
+  "ITEM:RF2-U4:6", "ITEM:RF2-U5:10", "ITEM:RF2-U6:7", "GATE:O7:3", "GATE:O15:3", "GATE:O8:3", "GATE:O7b:3", "GATE:O15b:3", "GATE:O7bt:3", "GATE:O15bt:3",
+  "GATE:GP-globalBrandSnapshot:3", "GATE:GP-globalBrandEvent:3", "GATE:GP-globalBrandInner:3", "GATE:GP-globalLeafSnapshot:3", "GATE:GP-topBrandSnapshot:3",
+  "GATE:GP-topBrandEvent:3", "GATE:GP-topBrandInner:3", "GATE:GP-topLeafSnapshot:3", "GATE:GP-inlineBrandSnapshot:3", "GATE:GP-globalAliasSnapshot:3",
+  "GATE:GP-globalAliasEvent:3", "GATE:GP-globalAliasInner:3", "GATE:GP-globalInterfaceUnion:3", "GATE:GP-topInterfaceUnion:3", "GATE:GP-thisUnion:3",
+  "GATE:GP-selfRefUnion:3", "GATE:GM-importEquals:4", "GATE:GP-importEqualsBrand:3", "GATE:GM-importDefault:4", "GATE:GP-defaultImportFile:3",
+  "GATE:GM-typeNamesInterface:4", "GATE:GP-topShapeBrand:3", "GATE:GM-holdsShallow:4", "GATE:GP-deepBrand:3", "BASE:observation.ts:2", "FORMS:interface/declaredTwice:4",
+  "FORMS:interface/redeclaredMember:4", "FORMS:class merge/O7:4", "FORMS:class merge/escapedClassMerge:4", "FORMS:class merge/classWithBody:4",
+  "FORMS:augmentation/O8:4", "FORMS:augmentation/noExtension:4", "FORMS:augmentation/tsExtension:4", "FORMS:augmentation/parentPath:4",
+  "FORMS:augmentation/exportDeclare:4", "FORMS:missing/renamedSnapshot:4", "FORMS:missing/classOnly:4", "FORMS:missing/augmentationOnly:4",
+  "FORMS:elsewhere/functionOfName:4", "FORMS:elsewhere/namespaceOfName:4", "FORMS:elsewhere/interfaceInNamespace:4", "FORMS:elsewhere/variableOfName:4",
+  "FORMS:elsewhere/enumOfName:4", "FORMS:elsewhere/typeAliasInNamespace:4", "FORMS:elsewhere/importOfName:4", "FORMS:elsewhere/exportSpecifier:4",
+  "FORMS:elsewhere/propertyNamed:4", "FORMS:elsewhere/parameterNamed:4", "FORMS:elsewhere/typeQueryOfName:4", "FORMS:elsewhere/qualifiedName:4",
+  "FORMS:elsewhere/globalBlock:4", "FORMS:elsewhere/otherModuleBlock:4", "FORMS:elsewhere/mjsSpecifier:4", "FORMS:elsewhere/bareSpecifier:4",
+  "FORMS:elsewhere/caseSpecifier:4", "FORMS:elsewhere/indexSpecifier:4", "FORMS:elsewhere/namespaceInAugmentation:4", "FORMS:elsewhere/classInAugmentation:4",
+  "FORMS:elsewhere/undeclaredModuleBlock:4", "FORMS:elsewhere/nestedModuleBlock:4", "FORMS:elsewhere/dtsSpecifier:4", "FORMS:elsewhere/mtsSpecifier:4",
+  "FORMS:elsewhere/exportModuleBlock:4", "FORMS:elsewhere/nestedAugmentationBlock:4", "FORMS:heritage/extendsClause:4", "FORMS:heritage/classExtends:4",
+  "FORMS:heritage/classImplements:4", "FORMS:heritage/augmentationExtends:4", "FORMS:type parameters/interfaceTypeParameters:4",
+  "FORMS:type parameters/classTypeParameters:4", "FORMS:type parameters/augmentationTypeParameters:4", "FORMS:class modifier/abstractClass:4",
+  "FORMS:class modifier/defaultClass:4", "FORMS:class modifier/decoratedClass:4", "FORMS:property/asIs:4", "FORMS:other member/methodMember:4",
+  "FORMS:type literal/asIs:4", "FORMS:read interface/asIs:4", "FORMS:inner interface/asIs:4", "FORMS:inner interface/refusedInnerName:4",
+  "FORMS:inner interface/heritageInnerName:4", "FORMS:inner interface/typeParametersInnerName:4", "FORMS:inner interface/classMergeInnerName:4",
+  "FORMS:inner interface/classModifierInnerName:4", "FORMS:inner interface/augmentedInnerName:4", "FORMS:string/asIs:4", "FORMS:number/asIs:4",
+  "FORMS:string literal/asIs:4", "FORMS:union/asIs:4", "FORMS:readonly array/asIs:4", "FORMS:Readonly/asIs:4", "FORMS:Record/asIs:4", "TYPES:string:3", "TYPES:number:3",
+  "TYPES:any:3", "TYPES:unknown:3", "TYPES:never:3", "TYPES:void:3", "TYPES:object:3", "TYPES:symbol:3", "TYPES:undefined:3", "TYPES:boolean:3", "TYPES:bigint:3",
   "TYPES:typePredicate:3", "TYPES:Readonly:3", "TYPES:Record:3", "TYPES:libReference:3", "TYPES:moduleReference:3", "TYPES:moduleReferenceTypeArguments:3",
   "TYPES:readInterfaceTypeArguments:3", "TYPES:parenthesizedTypeLiteral:3", "TYPES:typeLiteralOrUndefined:3", "TYPES:parenthesizedReference:3",
   "TYPES:referenceOrUndefined:3", "TYPES:qualifiedReference:3", "TYPES:moduleClassReference:3", "TYPES:ReadonlyTwoArguments:3", "TYPES:ReadonlyNoArgument:3",
@@ -1359,21 +1803,130 @@ const FROZEN_SHAPE: readonly string[] = [
   "CONTEXTS:arrowBody:2", "CONTEXTS:deleteOperand:2", "CONTEXTS:typeofOperand:2", "CONTEXTS:voidOperand:2", "CONTEXTS:awaitOperand:2", "CONTEXTS:prefixOperand:2",
   "CONTEXTS:postfixOperand:2", "CONTEXTS:binaryLeft:2", "CONTEXTS:binaryRight:2", "CONTEXTS:conditionalTest:2", "CONTEXTS:conditionalTrue:2",
   "CONTEXTS:conditionalFalse:2", "CONTEXTS:yieldOperand:2", "CONTEXTS:spreadElement:2", "CONTEXTS:classExpressionName:2", "CONTEXTS:heritageExtends:2",
-  "CONTEXTS:heritageImplements:2", "CONTEXTS:heritageClassExtends:2", "CONTEXTS:instantiation:2", "CONTEXTS:heritageQualified:2", "CONTEXTS:asOperand:2",
-  "CONTEXTS:nonNullOperand:2", "CONTEXTS:importMetaName:2", "CONTEXTS:newMetaName:2", "CONTEXTS:satisfiesOperand:2", "CONTEXTS:templateSpan:2",
-  "CONTEXTS:expressionStatement:2", "CONTEXTS:staticBlockStatement:2", "CONTEXTS:defaultClauseStatement:2", "CONTEXTS:ifTest:2", "CONTEXTS:doTest:2",
-  "CONTEXTS:whileTest:2", "CONTEXTS:forInitializer:2", "CONTEXTS:forCondition:2", "CONTEXTS:forIncrementor:2", "CONTEXTS:forInInitializer:2",
-  "CONTEXTS:forInExpression:2", "CONTEXTS:forOfInitializer:2", "CONTEXTS:forOfExpression:2", "CONTEXTS:continueLabel:2", "CONTEXTS:breakLabel:2",
-  "CONTEXTS:returnOperand:2", "CONTEXTS:withObject:2", "CONTEXTS:switchTest:2", "CONTEXTS:label:2", "CONTEXTS:throwOperand:2", "CONTEXTS:variableName:2",
-  "CONTEXTS:catchVariable:2", "CONTEXTS:variableInitializer:2", "CONTEXTS:functionName:2", "CONTEXTS:classRead:2", "CONTEXTS:classNested:2", "CONTEXTS:interfaceRead:2",
-  "CONTEXTS:interfaceAugmentation:2", "CONTEXTS:interfaceNested:2", "CONTEXTS:interfaceUndeclaredBlock:2", "CONTEXTS:typeAliasName:2", "CONTEXTS:enumName:2",
-  "CONTEXTS:namespaceName:2", "CONTEXTS:umdName:2", "CONTEXTS:importEqualsName:2", "CONTEXTS:importEqualsReference:2", "CONTEXTS:importFromName:2",
-  "CONTEXTS:defaultImport:2", "CONTEXTS:namespaceImport:2", "CONTEXTS:importPropertyName:2", "CONTEXTS:importName:2", "CONTEXTS:exportDefault:2",
-  "CONTEXTS:exportFromName:2", "CONTEXTS:namespaceExport:2", "CONTEXTS:exportPropertyName:2", "CONTEXTS:exportName:2", "CONTEXTS:requireArgument:2",
-  "CONTEXTS:caseTest:2", "CONTEXTS:attributeName:2", "CONTEXTS:attributeValue:2", "CONTEXTS:propertyAssignmentName:2", "CONTEXTS:propertyAssignmentValue:2",
-  "CONTEXTS:shorthandName:2", "CONTEXTS:shorthandInitializer:2", "CONTEXTS:spreadAssignment:2", "CONTEXTS:enumMemberName:2", "CONTEXTS:enumMemberInitializer:2",
-  "UNREACHABLE:TypeParameter.expression:1", "UNREACHABLE:Constructor.name:1", "UNREACHABLE:ModuleDeclaration.body:1", "UNREACHABLE:LiteralType:1",
-  "UNREACHABLE:ImportTypeAssertionContainer:1", "UNREACHABLE:jsdoc:1", "UNREACHABLE:jsx:1", "UNREACHABLE:transformation:1",
+  "CONTEXTS:heritageImplements:2", "CONTEXTS:heritageClassExtends:2", "CONTEXTS:nestedHeritage:2", "CONTEXTS:localHeritage:2", "CONTEXTS:globalHeritage:2",
+  "CONTEXTS:augmentationHeritage:2", "CONTEXTS:classExpressionHeritage:2", "CONTEXTS:classExpressionImplements:2", "CONTEXTS:instantiation:2",
+  "CONTEXTS:heritageQualified:2", "CONTEXTS:asOperand:2", "CONTEXTS:nonNullOperand:2", "CONTEXTS:importMetaName:2", "CONTEXTS:newMetaName:2",
+  "CONTEXTS:satisfiesOperand:2", "CONTEXTS:templateSpan:2", "CONTEXTS:expressionStatement:2", "CONTEXTS:staticBlockStatement:2", "CONTEXTS:defaultClauseStatement:2",
+  "CONTEXTS:ifTest:2", "CONTEXTS:doTest:2", "CONTEXTS:whileTest:2", "CONTEXTS:forInitializer:2", "CONTEXTS:forCondition:2", "CONTEXTS:forIncrementor:2",
+  "CONTEXTS:forInInitializer:2", "CONTEXTS:forInExpression:2", "CONTEXTS:forOfInitializer:2", "CONTEXTS:forOfExpression:2", "CONTEXTS:continueLabel:2",
+  "CONTEXTS:breakLabel:2", "CONTEXTS:returnOperand:2", "CONTEXTS:withObject:2", "CONTEXTS:switchTest:2", "CONTEXTS:label:2", "CONTEXTS:throwOperand:2",
+  "CONTEXTS:variableName:2", "CONTEXTS:catchVariable:2", "CONTEXTS:variableInitializer:2", "CONTEXTS:functionName:2", "CONTEXTS:classRead:2", "CONTEXTS:classNested:2",
+  "CONTEXTS:interfaceRead:2", "CONTEXTS:interfaceAugmentation:2", "CONTEXTS:interfaceNested:2", "CONTEXTS:interfaceUndeclaredBlock:2", "CONTEXTS:typeAliasName:2",
+  "CONTEXTS:enumName:2", "CONTEXTS:namespaceName:2", "CONTEXTS:umdName:2", "CONTEXTS:importEqualsName:2", "CONTEXTS:importEqualsReference:2",
+  "CONTEXTS:importFromName:2", "CONTEXTS:defaultImport:2", "CONTEXTS:namespaceImport:2", "CONTEXTS:importPropertyName:2", "CONTEXTS:importName:2",
+  "CONTEXTS:exportDefault:2", "CONTEXTS:exportFromName:2", "CONTEXTS:namespaceExport:2", "CONTEXTS:exportPropertyName:2", "CONTEXTS:exportName:2",
+  "CONTEXTS:requireArgument:2", "CONTEXTS:caseTest:2", "CONTEXTS:attributeName:2", "CONTEXTS:attributeValue:2", "CONTEXTS:propertyAssignmentName:2",
+  "CONTEXTS:propertyAssignmentValue:2", "CONTEXTS:shorthandName:2", "CONTEXTS:shorthandInitializer:2", "CONTEXTS:spreadAssignment:2", "CONTEXTS:enumMemberName:2",
+  "CONTEXTS:enumMemberInitializer:2", "EDGES:ArrowFunction.parameters:2", "EDGES:ArrowFunction.type:2", "EDGES:ArrowFunction.typeParameters:2",
+  "EDGES:AsExpression.type:2", "EDGES:CallExpression.typeArguments:2", "EDGES:CallSignature.type:2", "EDGES:CallSignature.typeParameters:2",
+  "EDGES:CaseClause.statements:2", "EDGES:CatchClause.block:2", "EDGES:ClassDeclaration.heritageClauses:2", "EDGES:ClassDeclaration.typeParameters:2",
+  "EDGES:ClassExpression.heritageClauses:2", "EDGES:ClassExpression.members:2", "EDGES:ClassExpression.modifiers:2", "EDGES:ClassExpression.typeParameters:2",
+  "EDGES:ClassStaticBlockDeclaration.modifiers:2", "EDGES:ConditionalType.checkType:2", "EDGES:ConditionalType.falseType:2", "EDGES:ConditionalType.trueType:2",
+  "EDGES:ConstructSignature.type:2", "EDGES:ConstructSignature.typeParameters:2", "EDGES:Constructor.body:2", "EDGES:Constructor.modifiers:2",
+  "EDGES:Constructor.type:2", "EDGES:Constructor.typeParameters:2", "EDGES:ConstructorType.type:2", "EDGES:ConstructorType.typeParameters:2",
+  "EDGES:DoStatement.statement:2", "EDGES:EnumDeclaration.modifiers:2", "EDGES:ExportAssignment.modifiers:2", "EDGES:ExportDeclaration.attributes:2",
+  "EDGES:ExportDeclaration.modifiers:2", "EDGES:ExpressionWithTypeArguments.typeArguments:2", "EDGES:ForInStatement.statement:2", "EDGES:ForOfStatement.statement:2",
+  "EDGES:FunctionDeclaration.modifiers:2", "EDGES:FunctionDeclaration.typeParameters:2", "EDGES:FunctionExpression.body:2", "EDGES:FunctionExpression.parameters:2",
+  "EDGES:FunctionExpression.type:2", "EDGES:FunctionExpression.typeParameters:2", "EDGES:FunctionType.type:2", "EDGES:FunctionType.typeParameters:2",
+  "EDGES:GetAccessor.body:2", "EDGES:GetAccessor.modifiers:2", "EDGES:GetAccessor.parameters:2", "EDGES:GetAccessor.type:2", "EDGES:GetAccessor.typeParameters:2",
+  "EDGES:IfStatement.elseStatement:2", "EDGES:IfStatement.thenStatement:2", "EDGES:ImportDeclaration.modifiers:2", "EDGES:ImportEqualsDeclaration.modifiers:2",
+  "EDGES:ImportType.argument:2", "EDGES:ImportType.attributes:2", "EDGES:ImportType.typeArguments:2", "EDGES:IndexSignature.modifiers:2", "EDGES:IndexSignature.type:2",
+  "EDGES:IndexedAccessType.objectType:2", "EDGES:InterfaceDeclaration.modifiers:2", "EDGES:InterfaceDeclaration.typeParameters:2", "EDGES:LabeledStatement.statement:2",
+  "EDGES:MappedType.members:2", "EDGES:MappedType.nameType:2", "EDGES:MappedType.type:2", "EDGES:MethodDeclaration.body:2", "EDGES:MethodDeclaration.modifiers:2",
+  "EDGES:MethodDeclaration.parameters:2", "EDGES:MethodDeclaration.type:2", "EDGES:MethodDeclaration.typeParameters:2", "EDGES:MethodSignature.parameters:2",
+  "EDGES:MethodSignature.type:2", "EDGES:MethodSignature.typeParameters:2", "EDGES:ModuleDeclaration.modifiers:2", "EDGES:NamedTupleMember.type:2",
+  "EDGES:NamespaceExportDeclaration.modifiers:2", "EDGES:NewExpression.typeArguments:2", "EDGES:Parameter.modifiers:2", "EDGES:Parameter.type:2",
+  "EDGES:PropertyDeclaration.modifiers:2", "EDGES:PropertyDeclaration.type:2", "EDGES:SatisfiesExpression.type:2", "EDGES:SetAccessor.body:2",
+  "EDGES:SetAccessor.modifiers:2", "EDGES:SetAccessor.parameters:2", "EDGES:SetAccessor.type:2", "EDGES:SetAccessor.typeParameters:2",
+  "EDGES:TaggedTemplateExpression.template:2", "EDGES:TaggedTemplateExpression.typeArguments:2", "EDGES:TryStatement.finallyBlock:2", "EDGES:TryStatement.tryBlock:2",
+  "EDGES:TypeAliasDeclaration.modifiers:2", "EDGES:TypeAssertionExpression.type:2", "EDGES:TypeParameter.constraint:2", "EDGES:TypeParameter.default:2",
+  "EDGES:TypeParameter.expression:2", "EDGES:TypePredicate.type:2", "EDGES:TypeQuery.typeArguments:2", "EDGES:TypeReference.typeArguments:2",
+  "EDGES:VariableDeclaration.type:2", "EDGES:VariableStatement.modifiers:2", "EDGES:WhileStatement.statement:2", "EDGES:WithStatement.statement:2",
+  "NESTED:first union arm/VoidKeyword:3", "NESTED:first union arm/AnyKeyword:3", "NESTED:first union arm/BooleanKeyword:3", "NESTED:first union arm/NeverKeyword:3",
+  "NESTED:first union arm/ObjectKeyword:3", "NESTED:first union arm/SymbolKeyword:3", "NESTED:first union arm/UndefinedKeyword:3",
+  "NESTED:first union arm/UnknownKeyword:3", "NESTED:first union arm/BigIntKeyword:3", "NESTED:first union arm/TypePredicate:2",
+  "NESTED:first union arm/TypeReference:3", "NESTED:first union arm/FunctionType:2", "NESTED:first union arm/ConstructorType:2", "NESTED:first union arm/TypeQuery:3",
+  "NESTED:first union arm/TypeLiteral:3", "NESTED:first union arm/ArrayType:3", "NESTED:first union arm/TupleType:3", "NESTED:first union arm/OptionalType:2",
+  "NESTED:first union arm/RestType:2", "NESTED:first union arm/UnionType:2", "NESTED:first union arm/IntersectionType:3", "NESTED:first union arm/ConditionalType:2",
+  "NESTED:first union arm/InferType:3", "NESTED:first union arm/ParenthesizedType:3", "NESTED:first union arm/ThisType:3", "NESTED:first union arm/TypeOperator:3",
+  "NESTED:first union arm/IndexedAccessType:3", "NESTED:first union arm/MappedType:3", "NESTED:first union arm/LiteralType:3",
+  "NESTED:first union arm/NamedTupleMember:2", "NESTED:first union arm/TemplateLiteralType:3", "NESTED:first union arm/TemplateLiteralTypeSpan:2",
+  "NESTED:first union arm/ImportType:3", "NESTED:first union arm/JSDocAllType:3", "NESTED:first union arm/JSDocUnknownType:3",
+  "NESTED:first union arm/JSDocNullableType:2", "NESTED:first union arm/JSDocNonNullableType:3", "NESTED:first union arm/JSDocOptionalType:2",
+  "NESTED:first union arm/JSDocFunctionType:2", "NESTED:first union arm/JSDocVariadicType:2", "NESTED:middle union arm/VoidKeyword:3",
+  "NESTED:middle union arm/AnyKeyword:3", "NESTED:middle union arm/BooleanKeyword:3", "NESTED:middle union arm/NeverKeyword:3",
+  "NESTED:middle union arm/ObjectKeyword:3", "NESTED:middle union arm/SymbolKeyword:3", "NESTED:middle union arm/UndefinedKeyword:3",
+  "NESTED:middle union arm/UnknownKeyword:3", "NESTED:middle union arm/BigIntKeyword:3", "NESTED:middle union arm/TypePredicate:2",
+  "NESTED:middle union arm/TypeReference:3", "NESTED:middle union arm/FunctionType:2", "NESTED:middle union arm/ConstructorType:2",
+  "NESTED:middle union arm/TypeQuery:3", "NESTED:middle union arm/TypeLiteral:3", "NESTED:middle union arm/ArrayType:3", "NESTED:middle union arm/TupleType:3",
+  "NESTED:middle union arm/OptionalType:2", "NESTED:middle union arm/RestType:2", "NESTED:middle union arm/UnionType:2", "NESTED:middle union arm/IntersectionType:3",
+  "NESTED:middle union arm/ConditionalType:2", "NESTED:middle union arm/InferType:3", "NESTED:middle union arm/ParenthesizedType:3",
+  "NESTED:middle union arm/ThisType:3", "NESTED:middle union arm/TypeOperator:3", "NESTED:middle union arm/IndexedAccessType:3", "NESTED:middle union arm/MappedType:3",
+  "NESTED:middle union arm/LiteralType:3", "NESTED:middle union arm/NamedTupleMember:2", "NESTED:middle union arm/TemplateLiteralType:3",
+  "NESTED:middle union arm/TemplateLiteralTypeSpan:2", "NESTED:middle union arm/ImportType:3", "NESTED:middle union arm/JSDocAllType:3",
+  "NESTED:middle union arm/JSDocUnknownType:3", "NESTED:middle union arm/JSDocNullableType:2", "NESTED:middle union arm/JSDocNonNullableType:3",
+  "NESTED:middle union arm/JSDocOptionalType:2", "NESTED:middle union arm/JSDocFunctionType:2", "NESTED:middle union arm/JSDocVariadicType:2",
+  "NESTED:last union arm/VoidKeyword:3", "NESTED:last union arm/AnyKeyword:3", "NESTED:last union arm/BooleanKeyword:3", "NESTED:last union arm/NeverKeyword:3",
+  "NESTED:last union arm/ObjectKeyword:3", "NESTED:last union arm/SymbolKeyword:3", "NESTED:last union arm/UndefinedKeyword:3", "NESTED:last union arm/UnknownKeyword:3",
+  "NESTED:last union arm/BigIntKeyword:3", "NESTED:last union arm/TypePredicate:2", "NESTED:last union arm/TypeReference:3", "NESTED:last union arm/FunctionType:3",
+  "NESTED:last union arm/ConstructorType:3", "NESTED:last union arm/TypeQuery:3", "NESTED:last union arm/TypeLiteral:3", "NESTED:last union arm/ArrayType:3",
+  "NESTED:last union arm/TupleType:3", "NESTED:last union arm/OptionalType:2", "NESTED:last union arm/RestType:2", "NESTED:last union arm/UnionType:2",
+  "NESTED:last union arm/IntersectionType:3", "NESTED:last union arm/ConditionalType:2", "NESTED:last union arm/InferType:3",
+  "NESTED:last union arm/ParenthesizedType:3", "NESTED:last union arm/ThisType:3", "NESTED:last union arm/TypeOperator:3", "NESTED:last union arm/IndexedAccessType:3",
+  "NESTED:last union arm/MappedType:3", "NESTED:last union arm/LiteralType:3", "NESTED:last union arm/NamedTupleMember:2", "NESTED:last union arm/TemplateLiteralType:3",
+  "NESTED:last union arm/TemplateLiteralTypeSpan:2", "NESTED:last union arm/ImportType:3", "NESTED:last union arm/JSDocAllType:3",
+  "NESTED:last union arm/JSDocUnknownType:2", "NESTED:last union arm/JSDocNullableType:3", "NESTED:last union arm/JSDocNonNullableType:3",
+  "NESTED:last union arm/JSDocOptionalType:2", "NESTED:last union arm/JSDocFunctionType:3", "NESTED:last union arm/JSDocVariadicType:2",
+  "NESTED:readonly array element/VoidKeyword:3", "NESTED:readonly array element/AnyKeyword:3", "NESTED:readonly array element/BooleanKeyword:3",
+  "NESTED:readonly array element/NeverKeyword:3", "NESTED:readonly array element/ObjectKeyword:3", "NESTED:readonly array element/SymbolKeyword:3",
+  "NESTED:readonly array element/UndefinedKeyword:3", "NESTED:readonly array element/UnknownKeyword:3", "NESTED:readonly array element/BigIntKeyword:3",
+  "NESTED:readonly array element/TypePredicate:2", "NESTED:readonly array element/TypeReference:3", "NESTED:readonly array element/FunctionType:2",
+  "NESTED:readonly array element/ConstructorType:2", "NESTED:readonly array element/TypeQuery:3", "NESTED:readonly array element/TypeLiteral:3",
+  "NESTED:readonly array element/ArrayType:3", "NESTED:readonly array element/TupleType:3", "NESTED:readonly array element/OptionalType:2",
+  "NESTED:readonly array element/RestType:2", "NESTED:readonly array element/UnionType:2", "NESTED:readonly array element/IntersectionType:2",
+  "NESTED:readonly array element/ConditionalType:2", "NESTED:readonly array element/InferType:2", "NESTED:readonly array element/ParenthesizedType:3",
+  "NESTED:readonly array element/ThisType:3", "NESTED:readonly array element/TypeOperator:2", "NESTED:readonly array element/IndexedAccessType:3",
+  "NESTED:readonly array element/MappedType:3", "NESTED:readonly array element/LiteralType:3", "NESTED:readonly array element/NamedTupleMember:2",
+  "NESTED:readonly array element/TemplateLiteralType:3", "NESTED:readonly array element/TemplateLiteralTypeSpan:2", "NESTED:readonly array element/ImportType:3",
+  "NESTED:readonly array element/JSDocAllType:3", "NESTED:readonly array element/JSDocUnknownType:2", "NESTED:readonly array element/JSDocNullableType:2",
+  "NESTED:readonly array element/JSDocNonNullableType:3", "NESTED:readonly array element/JSDocOptionalType:2", "NESTED:readonly array element/JSDocFunctionType:2",
+  "NESTED:readonly array element/JSDocVariadicType:2", "NESTED:Readonly argument/VoidKeyword:3", "NESTED:Readonly argument/AnyKeyword:3",
+  "NESTED:Readonly argument/BooleanKeyword:3", "NESTED:Readonly argument/NeverKeyword:3", "NESTED:Readonly argument/ObjectKeyword:3",
+  "NESTED:Readonly argument/SymbolKeyword:3", "NESTED:Readonly argument/UndefinedKeyword:3", "NESTED:Readonly argument/UnknownKeyword:3",
+  "NESTED:Readonly argument/BigIntKeyword:3", "NESTED:Readonly argument/TypePredicate:2", "NESTED:Readonly argument/TypeReference:3",
+  "NESTED:Readonly argument/FunctionType:3", "NESTED:Readonly argument/ConstructorType:3", "NESTED:Readonly argument/TypeQuery:3",
+  "NESTED:Readonly argument/TypeLiteral:3", "NESTED:Readonly argument/ArrayType:3", "NESTED:Readonly argument/TupleType:3", "NESTED:Readonly argument/OptionalType:2",
+  "NESTED:Readonly argument/RestType:2", "NESTED:Readonly argument/UnionType:3", "NESTED:Readonly argument/IntersectionType:3",
+  "NESTED:Readonly argument/ConditionalType:3", "NESTED:Readonly argument/InferType:3", "NESTED:Readonly argument/ParenthesizedType:3",
+  "NESTED:Readonly argument/ThisType:3", "NESTED:Readonly argument/TypeOperator:3", "NESTED:Readonly argument/IndexedAccessType:3",
+  "NESTED:Readonly argument/MappedType:3", "NESTED:Readonly argument/LiteralType:3", "NESTED:Readonly argument/NamedTupleMember:2",
+  "NESTED:Readonly argument/TemplateLiteralType:3", "NESTED:Readonly argument/TemplateLiteralTypeSpan:2", "NESTED:Readonly argument/ImportType:3",
+  "NESTED:Readonly argument/JSDocAllType:3", "NESTED:Readonly argument/JSDocUnknownType:3", "NESTED:Readonly argument/JSDocNullableType:3",
+  "NESTED:Readonly argument/JSDocNonNullableType:3", "NESTED:Readonly argument/JSDocOptionalType:2", "NESTED:Readonly argument/JSDocFunctionType:3",
+  "NESTED:Readonly argument/JSDocVariadicType:2", "NESTED:Record key/VoidKeyword:3", "NESTED:Record key/AnyKeyword:3", "NESTED:Record key/BooleanKeyword:3",
+  "NESTED:Record key/NeverKeyword:3", "NESTED:Record key/ObjectKeyword:3", "NESTED:Record key/SymbolKeyword:3", "NESTED:Record key/UndefinedKeyword:3",
+  "NESTED:Record key/UnknownKeyword:3", "NESTED:Record key/BigIntKeyword:3", "NESTED:Record key/TypePredicate:2", "NESTED:Record key/TypeReference:3",
+  "NESTED:Record key/FunctionType:3", "NESTED:Record key/ConstructorType:3", "NESTED:Record key/TypeQuery:3", "NESTED:Record key/TypeLiteral:3",
+  "NESTED:Record key/ArrayType:3", "NESTED:Record key/TupleType:3", "NESTED:Record key/OptionalType:2", "NESTED:Record key/RestType:2", "NESTED:Record key/UnionType:3",
+  "NESTED:Record key/IntersectionType:3", "NESTED:Record key/ConditionalType:3", "NESTED:Record key/InferType:3", "NESTED:Record key/ParenthesizedType:3",
+  "NESTED:Record key/ThisType:3", "NESTED:Record key/TypeOperator:3", "NESTED:Record key/IndexedAccessType:3", "NESTED:Record key/MappedType:3",
+  "NESTED:Record key/LiteralType:3", "NESTED:Record key/NamedTupleMember:2", "NESTED:Record key/TemplateLiteralType:3", "NESTED:Record key/TemplateLiteralTypeSpan:2",
+  "NESTED:Record key/ImportType:3", "NESTED:Record key/JSDocAllType:3", "NESTED:Record key/JSDocUnknownType:3", "NESTED:Record key/JSDocNullableType:3",
+  "NESTED:Record key/JSDocNonNullableType:3", "NESTED:Record key/JSDocOptionalType:2", "NESTED:Record key/JSDocFunctionType:3", "NESTED:Record key/JSDocVariadicType:2",
+  "NESTED:Record value/VoidKeyword:3", "NESTED:Record value/AnyKeyword:3", "NESTED:Record value/BooleanKeyword:3", "NESTED:Record value/NeverKeyword:3",
+  "NESTED:Record value/ObjectKeyword:3", "NESTED:Record value/SymbolKeyword:3", "NESTED:Record value/UndefinedKeyword:3", "NESTED:Record value/UnknownKeyword:3",
+  "NESTED:Record value/BigIntKeyword:3", "NESTED:Record value/TypePredicate:2", "NESTED:Record value/TypeReference:3", "NESTED:Record value/FunctionType:3",
+  "NESTED:Record value/ConstructorType:3", "NESTED:Record value/TypeQuery:3", "NESTED:Record value/TypeLiteral:3", "NESTED:Record value/ArrayType:3",
+  "NESTED:Record value/TupleType:3", "NESTED:Record value/OptionalType:2", "NESTED:Record value/RestType:2", "NESTED:Record value/UnionType:3",
+  "NESTED:Record value/IntersectionType:3", "NESTED:Record value/ConditionalType:3", "NESTED:Record value/InferType:3", "NESTED:Record value/ParenthesizedType:3",
+  "NESTED:Record value/ThisType:3", "NESTED:Record value/TypeOperator:3", "NESTED:Record value/IndexedAccessType:3", "NESTED:Record value/MappedType:3",
+  "NESTED:Record value/LiteralType:3", "NESTED:Record value/NamedTupleMember:2", "NESTED:Record value/TemplateLiteralType:3",
+  "NESTED:Record value/TemplateLiteralTypeSpan:2", "NESTED:Record value/ImportType:3", "NESTED:Record value/JSDocAllType:3", "NESTED:Record value/JSDocUnknownType:3",
+  "NESTED:Record value/JSDocNullableType:3", "NESTED:Record value/JSDocNonNullableType:3", "NESTED:Record value/JSDocOptionalType:2",
+  "NESTED:Record value/JSDocFunctionType:3", "NESTED:Record value/JSDocVariadicType:2", "UNREACHABLE:TypeParameter.expression:1", "UNREACHABLE:Constructor.name:1",
+  "UNREACHABLE:ModuleDeclaration.body:1", "UNREACHABLE:LiteralType:1", "UNREACHABLE:ImportTypeAssertionContainer:1", "UNREACHABLE:jsdoc:1", "UNREACHABLE:jsx:1",
+  "UNREACHABLE:transformation:1", "UNREACHABLE:FunctionType.modifiers:1", "UNREACHABLE:IndexSignature.typeParameters:1", "UNREACHABLE:PropertyAssignment.modifiers:1",
+  "UNREACHABLE:ShorthandPropertyAssignment.modifiers:1",
 ];
 
 // ---------------------------------------------------------------------------------------------------------- the census
@@ -1455,6 +2008,23 @@ const SITE_KINDS: Readonly<Record<Site, readonly string[]>> = {
   "signature modifier": [...kindsWhere(byKind(ts.isModifier))].filter(kind => NOT_MODIFIERS["signature modifier"]?.[kind] === undefined),
 };
 const rowText = (plant: Plant): string => plant(MODULE_TEXT);
+/** Every row of every table, as <table>:<id>:<pin count> (FROZEN SHAPE; ITEM's cures name rows by its <table>:<id>). */
+function shapeOf(): string[] {
+  return [
+    ...ITEM_ROWS.map(row => `ITEM:${row.id}:${row.pins.length}`),
+    ...GATE_ROWS.map(row => `GATE:${row.id}:${row.pins.length}`),
+    `BASE:${BASE_ROW.id}:${BASE_ROW.pins.length}`,
+    ...FORM_ROWS.map(row => `FORMS:${row.word}/${row.id}:${row.pins.length}`),
+    ...KIND_ROWS.map(row => `${row.site === "type" ? "TYPES" : "MEMBERS"}:${row.id}:${row.pins.length}`),
+    ...RESIDUAL_ROWS.map(row => `RESIDUALS:${row.word}/${row.id}:${row.pins.length}`),
+    ...CONTEXT_ROWS.map(row => `CONTEXTS:${row.id}:${row.pins.length}`),
+    ...EDGE_ROWS.map(row => `EDGES:${row.id}:${row.pins.length}`),
+    ...NESTED_ROWS.map(row => `NESTED:${row.id}:${row.pins.length}`),
+    ...[...Object.keys(UNREACHABLE_SLOTS), ...Object.keys(UNREACHABLE_KINDS), ...Object.keys(UNREACHABLE_FAMILIES), ...Object.keys(UNREACHABLE_EDGES)].map(
+      entry => `UNREACHABLE:${entry}:1`,
+    ),
+  ];
+}
 const sameList = (a: readonly string[], b: readonly string[]): boolean => a.length === b.length && a.every((entry, index) => entry === b[index]);
 
 // ---------------------------------------------------------------------------------------------------------- UNIVERSE
@@ -1489,6 +2059,9 @@ interface DeclaredAst {
   readonly admits: readonly string[];
   /** Every kind with a slot whose declared type admits an Identifier or a node of such a kind, closed transitively. */
   readonly holds: ReadonlySet<ts.SyntaxKind>;
+  /** Every <Kind>.<slot> ts.forEachChild visits on a kind of `holds` whose declared type admits an Identifier or a node of a kind of
+   * `holds` (cut #3, EDGES). */
+  readonly edges: readonly string[];
 }
 /** The identifier slots and kinds of TypeScript's AST, read through its checker from lib/typescript.d.ts: a kind's node types are the
  * non-generic interfaces whose kind is that SyntaxKind member; a slot's type is its property's type on them (a NodeArray read as its
@@ -1549,13 +2122,21 @@ function declaredAst(): DeclaredAst {
       }
     }
   }
-  return { admits, holds };
+  const holding = [...holds].flatMap(kind => byKind.get(kind) ?? []);
+  const edges = [...holds].flatMap(kind =>
+    (typed.get(kind) ?? [])
+      .filter(([, types]) => admitsIdentifier(types) || types.some(type => holding.some(holder => checker.isTypeAssignableTo(holder, type))))
+      .map(([slot]) => `${kindName(kind)}.${slot}`),
+  );
+  return { admits, holds, edges };
 }
 /** An identifier a text adds: where it stands, as <Kind>.<slot> (its parent's kind and the forEachChild slot holding it), and the
  * kinds above it, its parent up to the source file. */
 interface Added {
   readonly at: string;
   readonly above: readonly ts.SyntaxKind[];
+  /** Every slot edge on its path, <Kind>.<slot> from its parent up to the source file (cut #3, EDGES). */
+  readonly path: readonly string[];
 }
 const parsed = (text: string): ts.SourceFile => ts.createSourceFile(OBSERVATION_MODULE, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
 /** Every node a forEachChild walk from `root` meets, `root` included. */
@@ -1573,15 +2154,30 @@ function addedIdentifiers(text: string, name: string): Added[] {
   const source = parsed(text);
   return walked(source).flatMap((node): Added[] => {
     if (!ts.isIdentifier(node) || node.text !== name || node.getStart(source) < MODULE_TEXT.length) return [];
-    const parent = node.parent;
-    const slot = (FOR_EACH_CHILD_SLOTS.get(parent.kind) ?? []).find(entry => {
-      const value: unknown = Reflect.get(parent, entry);
-      return value === node || (Array.isArray(value) && value.includes(node));
-    });
     const above: ts.SyntaxKind[] = [];
-    for (let current: ts.Node | undefined = parent; current !== undefined; current = current.parent) above.push(current.kind);
-    return [{ at: `${kindName(parent.kind)}.${slot ?? "?"}`, above }];
+    const path: string[] = [];
+    let child: ts.Node = node;
+    let current: ts.Node | undefined = node.parent;
+    while (current !== undefined) {
+      const holder: ts.Node = current;
+      const slot = (FOR_EACH_CHILD_SLOTS.get(holder.kind) ?? []).find(entry => {
+        const value: unknown = Reflect.get(holder, entry);
+        return value === child || (Array.isArray(value) && value.includes(child));
+      });
+      above.push(holder.kind);
+      path.push(`${kindName(holder.kind)}.${slot ?? "?"}`);
+      child = holder;
+      current = holder.parent;
+    }
+    return [{ at: path[0] ?? "", above, path }];
   });
+}
+/** The kinds a NESTED row's composite places at its position. */
+function nestedKinds(row: NestedRow, text: string): string[] {
+  const snapshot = parsed(text).statements.find((statement): statement is ts.InterfaceDeclaration => ts.isInterfaceDeclaration(statement) && statement.name.text === "NativeSnapshot");
+  const member = snapshot?.members.find(entry => ts.isPropertySignature(entry) && ts.isIdentifier(entry.name) && entry.name.text === "subjectBasis");
+  const type = member !== undefined && ts.isPropertySignature(member) ? member.type : undefined;
+  return type === undefined ? [] : LEAF_POSITIONS[row.position].at(type).map(node => kindName(node.kind));
 }
 const contextPins = (reads: string): Readonly<Record<ContextName, readonly string[]>> | undefined => Object.entries(CONTEXT_PINS).find(([key]) => key === reads)?.[1];
 const atOf = (row: ContextRow): string => pinsWith(row.pins, "at ")[0]?.slice("at ".length) ?? "";
@@ -1611,6 +2207,7 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
 
   it("ITEM: each item's line stands in the tracker export with its label and names exactly its members; U2's refused sentences stand nowhere in the helper", () => {
     const failures: string[] = [];
+    const rows = new Set(shapeOf().map(entry => entry.slice(0, entry.lastIndexOf(":"))));
     for (const row of ITEM_ROWS) {
       const line = itemLine(row);
       if (line === "") {
@@ -1629,6 +2226,19 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
           const phrase = pin.slice("refused ".length);
           if (!line.includes(`'${phrase}'`)) failures.push(`${row.id}: the line quotes no '${phrase}'`);
           if (HELPER_TEXT.includes(phrase)) failures.push(`${row.id}: the helper holds '${phrase}'`);
+        }
+      }
+      const cures = pinsWith(row.pins, "cures ").map(pin => pin.slice("cures ".length));
+      if (cures.length > 0) {
+        const named = itemMembers(row, line);
+        const mapped = cures.map(entry => entry.slice(0, entry.indexOf(" ")));
+        if (!sameList(mapped, named)) failures.push(`${row.id}: cures ${mapped.join(" ")} vs the line's members ${named.join(" ")}`);
+        for (const entry of cures) {
+          const member = entry.slice(0, entry.indexOf(" "));
+          const target = entry.slice(entry.indexOf(" ") + 1);
+          if (target === "equivalent") continue;
+          if (!rows.has(target)) failures.push(`${row.id}: ${member} maps to ${target}, no row of this census`);
+          if (member.startsWith("SP-") && target !== `EDGES:${member.slice("SP-".length)}`) failures.push(`${row.id}: ${member} maps to ${target}, not the EDGES row of its edge`);
         }
       }
     }
@@ -1798,6 +2408,56 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
   );
 
   it(
+    "EDGES: every row adds exactly one identifier, at its slot, on a path through its edge that no other fails-closed row's path holds, and reads fails closed with Interval, Readonly and Record",
+    () => {
+      const failures: string[] = [];
+      const fails = [...CONTEXT_ROWS.filter(row => row.pins.includes("reads fails closed")), ...EDGE_ROWS];
+      const pathsOf = (row: { readonly id: string; readonly text: string }): readonly string[] => addedIdentifiers(contextText(row, CONTEXT_NAMES[0]), CONTEXT_NAMES[0]).flatMap(entry => entry.path);
+      const paths = new Map(fails.map(row => [row, pathsOf(row)] as const));
+      for (const row of EDGE_ROWS) {
+        const via = pinsWith(row.pins, "via ")[0]?.slice("via ".length) ?? "";
+        const at = pinsWith(row.pins, "at ")[0]?.slice("at ".length) ?? "";
+        if (via !== row.id || at === "" || row.pins.length !== 2) failures.push(`${row.id}: pins ${JSON.stringify(row.pins)}`);
+        const others = fails.filter(other => other !== row && (paths.get(other) ?? []).includes(via)).map(other => other.id);
+        if (others.length > 0) failures.push(`${row.id}: ${others.join(", ")} already pass ${via}`);
+        for (const name of CONTEXT_NAMES) {
+          const text = contextText(row, name);
+          const added = addedIdentifiers(text, name);
+          if (!sameList(added.map(entry => entry.at), [at])) failures.push(`${row.id}/${name}: adds ${JSON.stringify(added.map(entry => entry.at))}`);
+          if (!added.every(entry => entry.path.includes(via))) failures.push(`${row.id}/${name}: no path through ${via}: ${JSON.stringify(added.map(entry => entry.path))}`);
+          const reading = readingPins(observationMembers(text));
+          if (!sameList(reading, CONTEXT_PINS["fails closed"][name])) failures.push(`${row.id}/${name}: reads ${JSON.stringify(reading)}`);
+        }
+      }
+      expect(failures).toEqual([]);
+    },
+    BUDGET_MS,
+  );
+
+  it(
+    "NESTED: every type kind TYPES reads as no leaf, at each nested position of a LEAF form, reads as no leaf there or is UNREACHABLE there by a parse",
+    () => {
+      const failures: string[] = [];
+      const kinds = SITE_KINDS.type.filter(kind => TYPE_ROWS.some(row => row.pins[0] === `kind ${kind}` && !sameList(pinsWith(row.pins, "snapshot ", "event "), LEAF)));
+      if (!sameList(Object.keys(NESTED_ATOMS), kinds)) failures.push(`NESTED_ATOMS ${Object.keys(NESTED_ATOMS).join(",")} vs the kinds TYPES reads as no leaf ${kinds.join(",")}`);
+      for (const position of POSITIONS) {
+        for (const kind of NESTED_UNREACHABLE[position]) if (NESTED_ATOMS[kind] === undefined) failures.push(`NESTED_UNREACHABLE ${position}: ${kind} is no NESTED kind`);
+      }
+      for (const row of NESTED_ROWS) {
+        const text = nestedText(row);
+        const placed = nestedKinds(row, text);
+        const unreachable = row.pins.includes("unreachable");
+        if (placed.includes(row.kind) === unreachable) failures.push(`${row.id}: ${unreachable ? "UNREACHABLE, yet its composite places the kind there" : `its composite places ${JSON.stringify(placed)} there`}`);
+        if (unreachable) continue;
+        const reading = readingPins(observationMembers(text));
+        if (!sameList(reading, pinsWith(row.pins, "snapshot ", "event "))) failures.push(`${row.id}: reads ${JSON.stringify(reading)}`);
+      }
+      expect(failures).toEqual([]);
+    },
+    BUDGET_MS,
+  );
+
+  it(
     "UNIVERSE: every identifier slot, and every kind that can stand above an identifier, that TypeScript's own AST types admit has a CONTEXTS row or is UNREACHABLE",
     () => {
       const ast = declaredAst();
@@ -1824,6 +2484,20 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
         const declared = kindOf(kind);
         if (declared === undefined || !ast.holds.has(declared)) failures.push(`UNREACHABLE_KINDS ${kind}: no kind TypeScript's AST types let hold an identifier`);
       }
+      // The slot edges (cut #3): each one on a kind that can stand above an identifier lies on a fails-closed row's path, or is UNREACHABLE.
+      const fails = [...CONTEXT_ROWS.filter(row => row.pins.includes("reads fails closed")), ...EDGE_ROWS];
+      const reached = new Set(fails.flatMap(row => addedIdentifiers(contextText(row, CONTEXT_NAMES[0]), CONTEXT_NAMES[0]).flatMap(entry => entry.path)));
+      const slotEdgeMet = (slot: string): boolean => {
+        const template = UNREACHABLE_SLOTS[slot] ?? "";
+        return CONTEXT_NAMES.some(name => addedIdentifiers(appended(template.replaceAll("$N", name))(MODULE_TEXT), name).some(entry => entry.path.includes(slot)));
+      };
+      for (const slot of ast.edges) {
+        const kind = kindOf(slot.slice(0, slot.indexOf(".")));
+        if (kind === undefined || familyOf(kind) !== undefined || UNREACHABLE_KINDS[kindName(kind)] !== undefined) continue;
+        const unreachable = UNREACHABLE_EDGES[slot] !== undefined || (UNREACHABLE_SLOTS[slot] !== undefined && !slotEdgeMet(slot));
+        if (unreachable === reached.has(slot)) failures.push(`edge ${slot}: ${unreachable ? "UNREACHABLE yet on a fails-closed row's path" : "on no fails-closed CONTEXTS or EDGES row's path and not UNREACHABLE"}`);
+      }
+      for (const slot of Object.keys(UNREACHABLE_EDGES)) if (!ast.edges.includes(slot)) failures.push(`UNREACHABLE_EDGES ${slot}: no slot edge TypeScript declares`);
       expect(failures).toEqual([]);
     },
     BUDGET_MS,
@@ -1851,6 +2525,10 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
         for (const [kind, template] of Object.entries(UNREACHABLE_KINDS)) {
           const added = addedIdentifiers(appended(template.replaceAll("$N", name))(MODULE_TEXT), name);
           if (added.length === 0 || added.some(entry => entry.above.some(above => kindName(above) === kind))) failures.push(`${kind}/${name}: adds ${JSON.stringify(added.map(entry => entry.above.map(kindName)))}`);
+        }
+        for (const [slot, template] of Object.entries(UNREACHABLE_EDGES)) {
+          const added = addedIdentifiers(appended(template.replaceAll("$N", name))(MODULE_TEXT), name);
+          if (added.length === 0 || added.some(entry => entry.path.includes(slot))) failures.push(`${slot}/${name}: adds ${JSON.stringify(added.map(entry => entry.path))}`);
         }
         for (const [family, template] of Object.entries(UNREACHABLE_FAMILIES)) {
           const text = appended(template.replaceAll("$N", name))(MODULE_TEXT);
@@ -1889,6 +2567,8 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
         texts.set(`RESIDUALS/${row.word}/${row.id}/twin`, rowText(row.twin));
       }
       for (const row of CONTEXT_ROWS) for (const name of CONTEXT_NAMES) texts.set(`CONTEXTS/${row.id}/${name}`, contextText(row, name));
+      for (const row of EDGE_ROWS) for (const name of CONTEXT_NAMES) texts.set(`EDGES/${row.id}/${name}`, contextText(row, name));
+      for (const row of NESTED_ROWS) if (!row.pins.includes("unreachable")) texts.set(`NESTED/${row.id}`, nestedText(row));
       const oracle = oracleReadings(texts);
       const failures: string[] = [];
       for (const [id, text] of texts) {
@@ -1902,16 +2582,6 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
   );
 
   it("FROZEN SHAPE: every row of every table, as <table>:<id>:<pin count>", () => {
-    const shape = [
-      ...ITEM_ROWS.map(row => `ITEM:${row.id}:${row.pins.length}`),
-      ...GATE_ROWS.map(row => `GATE:${row.id}:${row.pins.length}`),
-      `BASE:${BASE_ROW.id}:${BASE_ROW.pins.length}`,
-      ...FORM_ROWS.map(row => `FORMS:${row.word}/${row.id}:${row.pins.length}`),
-      ...KIND_ROWS.map(row => `${row.site === "type" ? "TYPES" : "MEMBERS"}:${row.id}:${row.pins.length}`),
-      ...RESIDUAL_ROWS.map(row => `RESIDUALS:${row.word}/${row.id}:${row.pins.length}`),
-      ...CONTEXT_ROWS.map(row => `CONTEXTS:${row.id}:${row.pins.length}`),
-      ...[...Object.keys(UNREACHABLE_SLOTS), ...Object.keys(UNREACHABLE_KINDS), ...Object.keys(UNREACHABLE_FAMILIES)].map(entry => `UNREACHABLE:${entry}:1`),
-    ];
-    expect(shape).toEqual(FROZEN_SHAPE);
+    expect(shapeOf()).toEqual(FROZEN_SHAPE);
   });
 });
