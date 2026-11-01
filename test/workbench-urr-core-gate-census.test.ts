@@ -7,6 +7,22 @@
  * Until-then clause (owner filing notes, verbatim): "Until both gates exist, no src or docs change and no Pi claim of an embedded
  * Fiber core; rf CLI envelope consumption stays owned by the wb-x32/wb-973/wb-693 families."
  *
+ * WB-NNM7 CUT #4 (the FINAL cut, the FAIL-CLOSED CORE of refusal #3: gate run g10-gate-s166, BIND gate-prep-9, on cut #3 2e5daa8f;
+ * seat ws-05, run g10-work-s172, on trunk 644e70d4), bound by orchestrator ruling R-B229 (rule 19's structural exit; the coverage
+ * refusal #3 asked for is deferred to child bead wb-gmj9). Cut #3's frozen shape is kept as it is: no title, row, pin, control,
+ * form, residual row, premise, reading or roster entry is added, removed or changed, and no code changes; only THE ALT READ's claim
+ * sentences are narrowed to what the pins hold, each with its NOT CLAIMED scope. Refusal #3's two unmet items, each NARROWED:
+ *  U1 (THE ALT READ's comparison): the comparison is claimed only in its pinned forms, named in THE ALT READ (below) - in THE ALT
+ *    READ, THE RENDERED LEG and the WB-NNM7 paragraph and in the IMAGE_ALT, spaced and inlineRendered doc comments. Any other
+ *    difference between the two readings, a white space run at an end of the alt among them (refusal #3's GP9-L2-12, which trims
+ *    both readings), is NOT CLAIMED.
+ *  U2 (THE ALT READ's records of the image's children's reading): the records are claimed only as the pinned forms and controls
+ *    hold them - in THE PINNED SET (below), THE ALT READ, THE RAW STATE, row D1's control list, the RAW_STATE, IMAGE_ALT and
+ *    inlineRendered doc comments and the D1 controls' comment. Any arrangement no pin holds is NOT CLAIMED: a children's reading
+ *    holding one record twice (GP9-L2-03), THE HTML READ's record of refused markup other than a processing instruction in an alt
+ *    (GP9-L2-06), and a raw-state text token or a nested image in an alt holding a named reference outside NAMED_REFERENCES
+ *    (GP9-L2-21, GP9-L2-22) among them.
+ *
  * WB-NNM7 CUT #3 (the respin of refusal #2, gate run g10-gate-s159, BIND gate-prep-11, on cut #2 0c51ef65; seat ws-05, run
  * g10-work-s160, on trunk 0b4120ca), bound by orchestrator ruling R-B192 (rule 19's second-stage cap: THE ALT READ's class FROZEN, this
  * cut in the enumerate-the-resolvable form, R739's terminal form). Cut #2's frozen shape is kept and only added to: no title, row, pin,
@@ -20,18 +36,23 @@
  *    match that removes the first record, not the matched one) codeSpanSameNameBefore, each on B1, B2 and D1, as do their mirrors from
  *    the alt's end (codeSpanNameAfter, codeSpanSameNameAfter) and a dedup of the found references beyond the records (codeSpanPair).
  *  U2 (THE ALT READ's records: the image's children's reading's records other than references), PINNED (the route's option (a)): three
- *    D1 controls pin each such family with its refusal - altRawState (a raw-state text token in an alt, the gate's
+ *    D1 controls pin one member of each such family with its refusal (only those members are claimed, cut #4) - altRawState (a
+ *    raw-state text token in an alt, the gate's
  *    docs/zz-gp11-w-rawalt.md), altNestedImage (an image in an image's alt whose own alt marked writes otherwise, the gate's
  *    docs/zz-gp11-w-nested.md) and altRefusedMarkup (THE HTML READ's refused markup in an alt, a processing instruction, recorded ahead
  *    of the image's own refusal). So GA-FOUNDONLY and GA-FOUNDONLY2 (the found references alone) red each of the three controls on D1,
  *    and codeSpanNameBefore and codeSpanSameNameBefore on B1, B2 and D1, whose records they reorder.
- *  THE PINNED SET of THE ALT READ's references and records (this cut's enumerate-the-resolvable claim, stated in THE ALT READ below):
+ *  THE PINNED SET of THE ALT READ's references and records (this cut's enumerate-the-resolvable claim, stated in THE ALT READ below;
+ *    narrowed by cut #4 to the records the pins hold):
  *    a named reference outside NAMED_REFERENCES that a Markdown image's written alt holds is refused and recorded as written, the unit
  *    recording the children's reading's records and then each found reference beyond them, counted, not deduplicated, a record matching
- *    one found reference of its own name - each reading pinned by exactly the forms and controls THE ALT READ names. Which names the
- *    records carry, and in which order, in any other arrangement (an alt holding three or more distinct such names among them) is NOT
- *    CLAIMED by this census. No residual is added or changed. A judged-set premise pins marked writing a code span's and a text
- *    token's named references into one alt as written, in source order.
+ *    one found reference of its own name - each reading pinned by exactly the forms and controls THE ALT READ names, and claimed only
+ *    in those (cut #4). Which names the records carry, and in which order, in any other arrangement (an alt holding three or more
+ *    distinct such names among them) is NOT CLAIMED by this census, nor (cut #4, refusal #3's U2) which records the unit carries for
+ *    a children's reading in any arrangement no pinned form or control holds (one holding one record twice, THE HTML READ's record of
+ *    refused markup other than a processing instruction in an alt, a raw-state text token or a nested image in an alt holding a named
+ *    reference outside NAMED_REFERENCES, among them). No residual is added or changed. A judged-set premise pins marked writing a code
+ *    span's and a text token's named references into one alt as written, in source order.
  *  MEASURED AT BASE (0b4120ca with cut #2 merged; read-only, by the seat with marked 18.0.11 over git's listing, not judged here): the
  *    309 tracked product files hold 88 Markdown texts with 0 Markdown image tokens, and the wb-x32 row's 51 keys and strings hold none,
  *    so THE ALT READ refuses nothing on the live tree (B1, B2 and D1 read unchanged).
@@ -61,7 +82,8 @@
  *  F1 (ALT-BR, class (c)), B1, B2 and D1, FAIL-CLOSED (the route's second option, taken for the whole class): marked 18.0.11 writes a
  *    Markdown image's alt through its text renderer, a hard break as nothing, so "Pi ![embed wa  \nsm](x.png) core." renders the alt
  *    "embed wasm" while the children's reading cuts the wasm token at a line end. THE ALT READ (below) computes the alt as marked
- *    writes it and REFUSES an image whose alt, so written, differs from its children's reading (and, cut #2, each named reference
+ *    writes it and REFUSES an image whose alt, so written, differs from its children's reading in a form it pins (narrowed by cut #4;
+ *    and, cut #2, each named reference
  *    outside NAMED_REFERENCES the alt so written holds beyond the children's reading's records), so PREP's GP2-D1a to GP2-D1c, GP2-B2a and
  *    GP2-B1a red as refusals; ALT_FORMS pins one checkable item per form on D1, B2 and B1 - both hard breaks and the class's other
  *    members the seat measured: a code span's reference, an inline html token's markup, an em's, a strong's and a del's text as its
@@ -262,7 +284,8 @@
  * raw state is REFUSED (THE RAW STATE, below); a code span and an escape are their text as written; a hard break is a line end
  * (wb-nnm7: the D1 controls paragraphBreak and paragraphBackslashBreak); a task checkbox is nothing; a Markdown image is an image
  * piece, its alt text (its children's reading) in place, gone in the twin that shows the image, and REFUSED besides when marked
- * writes its alt otherwise (THE ALT READ, wb-nnm7); a link, em, strong or del token is its children's reading; a code block is left
+ * writes its alt otherwise in a form THE ALT READ pins (wb-nnm7; narrowed by cut #4); a link, em, strong or del token is its
+ * children's reading; a code block is left
  * to the raw leg. A
  * character reference is
  * decoded by CommonMark's rule (REFERENCE: "&#" and 1 to 7 decimal digits, "&#x" and 1 to 6 hexadecimal digits, or "&" and a name,
@@ -287,7 +310,8 @@
  * token marked escaped is REFUSED (FAIL-CLOSED), recorded as "<path>:<line>: rendered unknown raw-state text "<its text by
  * writtenForm>"", its text still read in the run beside the refusal, and any other text token is read as its text (the D1 controls
  * rawStateReference, quiet, and rawStateReferenceClaim, read); one in a Markdown image's alt is refused as one of the image's records
- * (wb-nnm7 cut #3: the D1 control altRawState).
+ * where it is the one record of an alt holding no named reference outside NAMED_REFERENCES (wb-nnm7 cut #3: the D1 control
+ * altRawState; in any other arrangement NOT CLAIMED, cut #4).
  * THE ALT READ (wb-nnm7, landing 699's F1 under R694; rows B and D; its references restated by cut #2, refusal #1's U1): marked 18.0.11
  * writes a Markdown image's alt attribute through its text renderer - its image renderer's call, the Parser's inline pass over the
  * image's child tokens with a TextRenderer: each child's text as its source spells it (a link's, an em's, a strong's, a del's and a
@@ -300,7 +324,8 @@
  * the written alt holds beyond those the children's reading records (unrecorded), counted, not deduplicated, and (cut #3, refusal #2's
  * U1) matched by name: each record matches one found reference of its own name. The unit records the children's reading's records -
  * THE HTML READ's, THE RAW STATE's and a nested image's THE ALT READ refusals among them (cut #3, refusal #2's U2) - and then those
- * beyond them. Pinned exactly so (cut #3, the enumerate-the-resolvable claim): one a code span or an escape carries into the alt, which
+ * beyond them, claimed only as pinned here (cut #4, refusal #3's U2 under ruling R-B229). Pinned exactly so (cut #3, the
+ * enumerate-the-resolvable claim): one a code span or an escape carries into the alt, which
  * the children's reading holds as written, is refused (ALT_FORMS codeSpanUnknownReference and escapeUnknownReference on D1, B2 and B1,
  * &sopf; spelling the wasm word; the D1 control altCoreReference, &Copf; a core name); one in a text token keeps its one record, the
  * children's reading's (the D1 control altTextReference); one in each of a text token and a code span reads two records
@@ -308,13 +333,28 @@
  * &sopf;, the text token's record and then the code span's (ALT_FORMS codeSpanNameBefore and codeSpanNameAfter); with a code span's
  * &sopf; before a text token's &Copf; and &sopf;, or after a text token's &sopf; and &Copf;, the text token's two in its order and
  * then the code span's, the one the children's reading did not record (ALT_FORMS codeSpanSameNameBefore and codeSpanSameNameAfter);
- * and a raw-state text token, an image whose own alt marked writes otherwise, and THE HTML READ's refused markup, each in an alt, their
- * refusals as the unit's records ahead of the image's own (the D1 controls altRawState, altNestedImage and altRefusedMarkup). Which
- * names the records carry, and in which order, in any other arrangement (three or more distinct such names in one alt among them) is
- * NOT CLAIMED by this census. Where the alt so written and decoded differs from the image's children's reading
- * once each white space run of both is read as one space, the census REFUSES the image (FAIL-CLOSED), recorded as "<path>:<line>:
- * rendered unknown image alt "<the written alt by writtenForm>"", the children's reading still read in place beside each refusal
- * (ALT_FORMS on D1, B2 and B1; the D1 controls altBreakItem, altEmphasisJoin and altStrongBreak).
+ * and a raw-state text token and an image whose own alt marked writes otherwise, each the one record of an alt holding no named
+ * reference outside NAMED_REFERENCES, their refusals as the unit's records (the D1 controls altRawState and altNestedImage), and THE
+ * HTML READ's refused markup of a processing instruction in such an alt, its refusal recorded ahead of the image's own (the D1
+ * control altRefusedMarkup). Which names the records carry, and in which order, in any other arrangement (three or more distinct such
+ * names in one alt among them) is NOT CLAIMED by this census; nor (cut #4) which records the unit carries for a children's reading in
+ * any arrangement no pinned form or control holds - one holding one record twice (refusal #3's GP9-L2-03), THE HTML READ's record of
+ * refused markup other than a processing instruction in an alt (GP9-L2-06, a refused element), and a raw-state text token or a
+ * nested image in an alt holding a named reference outside NAMED_REFERENCES (GP9-L2-21, GP9-L2-22) among them.
+ * THE ALT READ's comparison, claimed only in its pinned forms (narrowed by cut #4, refusal #3's U1 under ruling R-B229): where the
+ * alt so written and decoded differs from the image's children's reading, each white space run of both read as one space, in one
+ * of these forms, the census REFUSES the image (FAIL-CLOSED), recorded as "<path>:<line>: rendered unknown image alt "<the written
+ * alt by writtenForm>"", the children's reading still read in place beside the refusal (the D1 control altRefusedMarkup): a hard
+ * break between two letters of the alt, which marked writes as nothing (ALT_FORMS spaceBreak and backslashBreak; the D1 control
+ * altBreakItem, in a list item), and a code span's reference, an inline html token's markup, an em's, a strong's and a del's text
+ * as its source spells it (a link's destination in it) and a link's text as its source spells it (a code span's reference in it),
+ * each written into the alt where the children's reading holds other text (ALT_FORMS codeSpanReference, htmlAttribute,
+ * emDestination, strongDestination, delDestination and linkCodeSpan), each ALT_FORMS form on D1, B2 and B1. An alt marked writes as
+ * its children read it is read in place (the D1 control altEmphasisJoin), and a strong's hard break, which marked writes as its
+ * source spells it, reads quiet (the D1 control altStrongBreak). Which other differences between the two readings the census
+ * refuses is NOT CLAIMED by this census - a white space run at an end of the alt among them, a hard break opening it (refusal #3's
+ * GP9-L2-12, a comparison that trims both readings, reads the census unchanged; refusal #3 measured marked 18.0.11 writing such an
+ * alt after "wa" as "sm", so a reader who is not shown the image reads "Pi embeds wasm runtime."; the coverage is wb-gmj9's).
  * THE HTML READ (cut #5, refusal #4's U1 under ruling R-B76; rows B and D; restated by cut #6 to the token kinds read: exactly
  * marked's html tokens - an HTML block and each of marked's inline html tokens -, the only tokens whose markup the rendered leg
  * reads, the raw HTML an escaped text token carries being THE RAW STATE's refusal): their markup, left to right. Its white space is the HTML Standard's ASCII
@@ -450,7 +490,8 @@
  *    reference's merged raw-state text (quiet, and read as a claim when it holds the words); and - wb-nnm7 cut #2 - a code span's
  *    core-name reference in an alt (refused), a text token's reference in an alt (refused once) and one in each of a text token and a
  *    code span (refused twice); and - wb-nnm7 cut #3 - a raw-state text token, an image whose own alt marked writes otherwise, and THE
- *    HTML READ's refused markup, each in an alt (refused, each as one of the image's records))
+ *    HTML READ's refused markup of a processing instruction, each in an alt holding no named reference outside NAMED_REFERENCES
+ *    (refused, each as one of the image's records; narrowed by cut #4))
  *    and near
  *    misses stay quiet (a receipt's rf_identity sdk_versions key, the workflow VM's wasm option, split sentences, a table's rows,
  *    list items, a code span, a lock whose embed and wasm words sit in different values, YAML lines that pair them only as prose
@@ -1272,18 +1313,21 @@ const BIDI_CONTROL = /[\u061C\u200E\u200F\u202A-\u202E\u2066-\u2069]/gu;
  * there carries no mark - the "[" of a failed reference after a token that is no text token, the raw-state text lexed after it merging
  * into it - so its text is written escaped. The rendered leg reads no HTML out of a text token: it REFUSES every inline text token
  * marked escaped (FAIL-CLOSED), recorded as `raw-state text "<the token's text as written>"`, and reads any other as its text; one in a
- * Markdown image's alt is recorded as one of the image's records (wb-nnm7 cut #3: the D1 control altRawState).
+ * Markdown image's alt is recorded as one of the image's records where it is the one record of an alt holding no named reference
+ * outside NAMED_REFERENCES (wb-nnm7 cut #3: the D1 control altRawState; in any other arrangement NOT CLAIMED, cut #4).
  */
 const RAW_STATE = "raw-state text";
 /**
  * THE ALT READ (wb-nnm7, landing 699's F1 under R694): a Markdown image whose alt text marked 18.0.11 writes otherwise than its
- * children's reading (writtenAlt), once each white space run is read as one space, is REFUSED (FAIL-CLOSED), recorded as
+ * children's reading (writtenAlt), once each white space run is read as one space, is REFUSED (FAIL-CLOSED) in the forms THE ALT READ
+ * pins (narrowed by cut #4: any other difference, a white space run at an end of the alt among them, is NOT CLAIMED), recorded as
  * `image alt "<the alt as marked writes it, its references decoded, by writtenForm>"`. Its references are decoded by REFERENCE with
  * the image's own collector (cut #2, refusal #1's U1): a named reference outside NAMED_REFERENCES in the alt so written - one a code
  * span or an escape carries there, which the children's reading holds as written, among them - is REFUSED as REFERENCE refuses one in
  * a text token (`unknown <the reference as written>`), for each one beyond those the children's reading records (unrecorded, matched by
  * name: cut #3, refusal #2's U1). The unit records the children's reading's records - THE HTML READ's, THE RAW STATE's and a nested
- * image's refusals among them (cut #3, refusal #2's U2) - and then those beyond them, each reading pinned as THE ALT READ names.
+ * image's refusals among them (cut #3, refusal #2's U2) - and then those beyond them, each reading pinned as THE ALT READ names
+ * (cut #4: in any arrangement no pinned form or control holds, which records the unit carries is NOT CLAIMED).
  */
 const IMAGE_ALT = "image alt";
 /**
@@ -1425,7 +1469,7 @@ function newlines(text: string): number {
 function writtenAlt(image: Tokens.Image): string {
   return new Parser({}).parseInline(image.tokens, new TextRenderer());
 }
-/** A text with each white space run read as one space, as a reader is shown an image's alt text (THE ALT READ's comparison). */
+/** A text with each white space run read as one space (THE ALT READ's comparison, claimed only in its pinned forms: cut #4). */
 function spaced(text: string): string {
   return text.replace(/\s+/g, " ");
 }
@@ -1453,14 +1497,15 @@ function unrecorded(found: readonly string[], recorded: readonly string[]): stri
  * Inline tokens read kind by kind, as pieces (THE RENDERED LEG, restated by cut #6): an inline html token adds only THE HTML READ's
  * image pieces, a task checkbox nothing, a code span and an escape their text as written, a hard break a line end, a Markdown image
  * an image piece (its alt text in place, or gone) - REFUSED besides when marked writes its alt otherwise than that reading, white space
- * runs read as one space (THE ALT READ, wb-nnm7), and for each named reference outside NAMED_REFERENCES its written alt holds beyond
+ * runs read as one space, in a form THE ALT READ pins (wb-nnm7; cut #4: any other difference NOT CLAIMED), and for each named
+ * reference outside NAMED_REFERENCES its written alt holds beyond
  * those the children's reading records (THE ALT READ's references, wb-nnm7 cut #2: unrecorded) -, a link, em, strong or del token its
  * children's reading, and an inline text token its text with its references decoded - one marked lexed in its raw state also REFUSED
  * (THE RAW STATE). Beside the run, extras collects an inline tag's attribute values and a link's or image's destination and title (an
  * image's alt text is its children, read in the run); unknown collects THE HTML READ's, THE RAW STATE's and THE ALT READ's refused forms
  * and each named reference REFERENCE refuses - a Markdown image's children's reading collecting its own (recorded), which the unit
  * records ahead of the alt's references beyond them (wb-nnm7 cut #3, refusal #2's U2: each family in an alt pinned by the D1 controls
- * altRefusedMarkup, altRawState, altNestedImage and altTextReference).
+ * altRefusedMarkup, altRawState, altNestedImage and altTextReference, and claimed only in those arrangements - cut #4).
  */
 function inlineRendered(tokens: readonly Token[], unknown: string[], extras: string[]): Piece[] {
   const out: Piece[] = [];
@@ -1947,10 +1992,11 @@ const CLAIM_CONTROLS: Readonly<Record<string, PlantedText>> = {
   altCoreReference: { path: "docs/alt-core.md", text: "Pi embeds the ![`Fiber &Copf;ore`](x.png).\n" },
   altTextReference: { path: "docs/alt-text-reference.md", text: "Pi embeds a ![wa&sopf;m](x.png) runtime.\n" },
   altMixedReference: { path: "docs/alt-mixed-reference.md", text: "Pi embeds a ![wa&sopf;m `wa&sopf;m`](x.png) runtime.\n" },
-  // THE ALT READ's records (wb-nnm7 cut #3, refusal #2's U2 under ruling R-B192): the unit records the image's children's reading's
-  // refusals ahead of the alt's references - a raw-state text token in an alt (the gate's docs/zz-gp11-w-rawalt.md), an image in an
-  // image's alt whose own alt marked writes otherwise (docs/zz-gp11-w-nested.md) and THE HTML READ's refused markup in an alt (a
-  // processing instruction, recorded ahead of the image's own refusal while its children's reading reads the claim in place).
+  // THE ALT READ's records (wb-nnm7 cut #3, refusal #2's U2 under ruling R-B192; narrowed by cut #4): the unit records the image's
+  // children's reading's refusals - a raw-state text token in an alt (the gate's docs/zz-gp11-w-rawalt.md), an image in an image's
+  // alt whose own alt marked writes otherwise (docs/zz-gp11-w-nested.md) and THE HTML READ's refused markup in an alt (a processing
+  // instruction, recorded ahead of the image's own refusal while its children's reading reads the claim in place) - each alt holding
+  // no named reference outside NAMED_REFERENCES; any other arrangement is NOT CLAIMED.
   altRawState: { path: "docs/alt-raw-state.md", text: "Pi embeds the <code>![x](x.png)</code>.\n" },
   altNestedImage: { path: "docs/alt-nested-image.md", text: "Pi embeds a ![![wa  \nsm](y.png)](x.png) runtime.\n" },
   altRefusedMarkup: { path: "docs/alt-refused-markup.md", text: "Pi embeds a ![wa<?x?>sm](x.png) runtime.\n" },
