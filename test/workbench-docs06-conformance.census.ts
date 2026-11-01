@@ -47,6 +47,7 @@
  * afterAll asserts that set equals FROZEN_JUDGED_SHAPE, so a narrowed it.each table reads red (so does a name-filtered
  * run of this file, fail-closed).
  */
+import { createHash } from "node:crypto";
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -801,6 +802,8 @@ interface CallSite {
   readonly names: readonly string[];
   /** Every binding the registration declares outside its guarded body, as "<name> in a <construct> at <line:column>". */
   readonly declares: readonly string[];
+  /** R717 (wb-ouo3 cut #4): the registration call's own text, byte for byte (comments included); the call-site text reading digests it, so an edit of the registration that no name or state reading sees (W-BODY-RETURN-BARE: an early return written with no name) reads at collection. */
+  readonly text: string;
 }
 /** A file's hook roster (R687) and, from R692 (wb-ouo3), its describe calls and every direct call of withinHookBudget. */
 interface HookRoster {
@@ -822,6 +825,10 @@ interface HookRoster {
   readonly uncalled: readonly string[];
   /** R692 second respin (wb-ouo3 refusal #2 U1): every each-table case (it.each / test.each through vitest's own import), as 'the case "<title>" | each over <its table as written> -> <what the checker binds a lone identifier table to>'. */
   readonly tables: readonly string[];
+  /** R717 (wb-ouo3 cut #4): every variable, parameter, destructured element, function or class declaration named withinHookBudget, anywhere, as "<construct> at file scope | <its own text, byte for byte>" ("nested" for any other place). */
+  readonly guardDeclarations: readonly string[];
+  /** R717 (wb-ouo3 cut #4): every name a function declaration of withinHookBudget reads but does not declare itself, in source order, as "<name> -> <the declaration the checker binds it to>". */
+  readonly guardNames: readonly string[];
 }
 
 function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), "utf8"), watched: readonly string[] = [], calledOnly: readonly string[] = []): HookRoster {
@@ -1046,7 +1053,7 @@ function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), 
     };
     walk(registration);
     const own = ts.isBlock(callback.body) ? callback.body.statements.map(statement => kindName(statement.kind)).join(", ") || "(none)" : `(a concise body) ${kindName(callback.body.kind)}`;
-    callSites.push({ guards: guard.arguments[0]?.getText(sf) ?? "(no argument)", shape: `${callback.parameters.length} parameters | ${own}`, names, declares });
+    callSites.push({ guards: guard.arguments[0]?.getText(sf) ?? "(no argument)", shape: `${callback.parameters.length} parameters | ${own}`, names, declares, text: registration.getText(sf) });
   };
   /** The statement a node sits in, as written with its whitespace collapsed: the nearest node of a statement list. */
   const statementOf = (node: ts.Node): string => {
@@ -1074,8 +1081,29 @@ function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), 
   const guards: string[] = [];
   const registrations: HookRegistration[] = [];
   const findings: string[] = [];
+  const guardDeclarations: string[] = [];
+  const guardNames: string[] = [];
+  /** R717 (wb-ouo3 cut #4): every name a function reads that the checker binds outside it, in source order. */
+  const namesReadBy = (fn: ts.FunctionDeclaration): string[] => {
+    const read: string[] = [];
+    const walk = (node: ts.Node): void => {
+      if (ts.isIdentifier(node) && isReference(node)) {
+        const [bound] = checker.getSymbolAtLocation(node)?.declarations ?? [];
+        if (bound === undefined || !within(bound, fn)) read.push(`${node.text} -> ${resolution(node)}`);
+      }
+      ts.forEachChild(node, walk);
+    };
+    ts.forEachChild(fn, walk);
+    return read;
+  };
   const visit = (node: ts.Node, chain: readonly string[]): void => {
     let inner = chain;
+    const declaredAs = declaredName(node);
+    if (declaredAs !== undefined && declaredAs.text === "withinHookBudget") {
+      const fileScope = ts.isFunctionDeclaration(node) ? node.parent === sf : ts.isVariableDeclaration(node) && ts.isVariableDeclarationList(node.parent) && ts.isVariableStatement(node.parent.parent) && node.parent.parent.parent === sf;
+      guardDeclarations.push(`${kindName(node.kind)} ${fileScope ? "at file scope" : "nested"} | ${node.getText(sf)}`);
+      if (ts.isFunctionDeclaration(node)) guardNames.push(...namesReadBy(node));
+    }
     if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "describe") {
       const title = node.arguments[0];
       inner = [...chain, title !== undefined && ts.isStringLiteralLike(title) ? title.text : `(a non-literal title at ${at(node)})`];
@@ -1133,7 +1161,7 @@ function hookRoster(file: string, text: string = readFileSync(join(ROOT, file), 
     ts.forEachChild(node, child => visit(child, inner));
   };
   visit(sf, []);
-  return { registrations, findings, describes, guards, references, guardBodies, callSites, statements, uncalled, tables };
+  return { registrations, findings, describes, guards, references, guardBodies, callSites, statements, uncalled, tables, guardDeclarations, guardNames };
 }
 
 const rosterLine = (registration: HookRegistration): string =>
@@ -1251,20 +1279,55 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  *   narrowed table, or a forged entry that pushes a key for a half whose pins it does not judge, reads red here too;
  * - expect is only called: every use of vitest's expect in this file is a direct call that resolves to its named import,
  *   so expect.extend, expect.addEqualityTesters, an alias, an aliased import or a shadowing declaration reads red;
- * - named residual, with its pinned quiet row: the code the guarded body calls without naming a binding - the matcher
- *   behind toEqual, the array's sort and spread, localeCompare - can be tampered with, beyond expect's own members (bound
- *   above) and the global object (the run-time escape residual, which names global from this respin on), only through a
- *   prototype; this file spells no prototype route (prototype, __proto__, getPrototypeOf, setPrototypeOf,
- *   defineProperty, defineProperties) as an identifier, a member name or any string, and the quiet row reds the moment
- *   one is written. A route built from parts at run time is read as nothing: the disclosed edge of the quiet row, not
- *   claimed;
+ * - named residual, with its pinned quiet row: this file spells no prototype route (prototype, __proto__, getPrototypeOf,
+ *   setPrototypeOf, defineProperty, defineProperties) as an identifier, a member name or any string, and the quiet row
+ *   reds the moment one is written. Cut #3 said here that the code the guarded body calls without naming a binding - the
+ *   matcher behind toEqual, the array's sort and spread, localeCompare - can be tampered with, beyond expect's own members
+ *   and the global object, "only through a prototype". Refusal #3 falsified it (U2 (a), R717 (3)): T-CHAI overwrote the
+ *   matcher through chai's public plugin API from a static import (import { Assertion } from "chai", then
+ *   Assertion.overwriteMethod("toEqual", ...) at module scope), and T-DESC-SORT found Array's prototype among the values
+ *   of Object.getOwnPropertyDescriptors(Array), its key never written, and replaced its sort; each read 66/66 green with
+ *   -t 'AC2 bullet 1' exiting 0 at cut #3. That code's surface includes expect's own members, the global object, a
+ *   prototype route, another module's API (T-CHAI), a reflective route (T-DESC-SORT), a member write and a name built from
+ *   parts at run time, and this census does not claim that list complete: cut #4 claims exactly its enumerated classes
+ *   (R717 below) and names the rest NOT CLAIMED. A route built from parts at run time - an object's own keys or
+ *   descriptors enumerated through a name built that way included - is read as nothing: the disclosed edge of the quiet
+ *   row, not claimed;
  * - the fail-closed leg (at the end of this file): a name filter skips every row, so collection re-reads the call-site
  *   binding at module scope, where no binding can shadow the reader, with no matcher, against the literals the rows pin,
- *   and throws on any difference - every run of this file, -t 'AC2 bullet 1' included, then exits 1 (the delivered bytes'
- *   filtered run exits 1 on the hook's own check, as landed); the fifth row pins the leg and shows it is no constant;
+ *   and throws on any difference in a reading it names, so that run of this file, -t 'AC2 bullet 1' included, exits 1
+ *   (the delivered bytes' filtered run exits 1 on the hook's own check, as landed); the fifth row pins the leg and shows
+ *   it is no constant. Cut #3 said every run "then exits 1", and its delivery note "under every member": that held for
+ *   the members whose edits a reading of the leg names, and refusal #3's W-SWALLOW-T, T-CHAI, T-DESC-SORT and
+ *   W-BODY-SKIP-T changed no reading the leg then read, each exiting 0 under the filter (U2 (b)); cut #4 claims the exit 1
+ *   for its enumerated classes only (R717 below);
  * - out of the class, not claimed: the call-site check binds that every frozen judged half ran its AC2 case once; what an
  *   AC2 case asserts after its push is that case's own body (the census helper's three legs judge the pinned cases it
  *   reads), not the call-site check's.
+ * The enumerate-the-resolvable cut (cut #4: wb-ouo3 refusal #3 at M:13504, owner R717, orchestrator R-B215; rule 19 (c):
+ * the class - the docs06 AC2 call-site check's own leg - is frozen). R717 (1): TAMPER_CLASSES_OF_RECORD is the closed
+ * named list of the tamper classes the call-site check detects at collection, one per reading of the fail-closed leg, in
+ * the leg's order; a class is the edits of this file's text that change its reading's output on that text (each reader's
+ * doc says what it outputs). The R717 rows bind the list to the readings the leg runs, read from the leg's own source
+ * (legReadings), and prove each class red-first: every planted member - an edit of this file's own text, made in memory -
+ * is refused by the leg naming exactly the readings it changes (one row per member, by its id), every class has a
+ * planted member, and the delivered text reads no difference (the fail-closed leg row: green after). Six readings are
+ * cut #4's: the modules loaded, the reflective routes spelled, the property writes, the call-site text, the guard's
+ * declaration and the guard's names. Refusal #3's members, each a planted row of its id: W-SWALLOW-T (an edit of
+ * withinHookBudget's own text: the guard's declaration), W-SWALLOW and W-BODY-SKIP-T (the guard's declaration, and the
+ * guard's names: each edit reads the global undefined), T-CHAI (the modules loaded), T-CHAI-NARROW (the each-tables and
+ * the modules loaded) and T-DESC-SORT (the reflective routes spelled and the property writes); the seat of the respin
+ * that died found W-BODY-RETURN-BARE (an early return written with no name before the guarded check: the call-site
+ * text). The frozen shape (rule 16) pins every class with the number of its planted members and every member with the
+ * number of readings refusing it.
+ * NOT CLAIMED by this census (R717 (2): a tamper outside the enumerated classes is not this leg's): a tamper made outside
+ * this file's text - in another module (each module of the modules-loaded record included), in vitest, its config or
+ * setup files, or in the runtime; a name built from parts at run time - a computed key reaching a route, a writer API or
+ * a key, an object's own keys or descriptors enumerated through such a name included; a builtin replaced by an
+ * assignment to its global name; an edit of FROZEN_JUDGED_SHAPE's own declaration, which the leg does not read (the AC1
+ * rows and the rule 16 battery judge it in a full run); and an edit that also changes what the leg computes - one of its
+ * readers, records or digests, its refusal, or a builtin its readers run on - which the full run's rows judge (the
+ * fail-closed leg row, the R717 rows and the hollowing batteries), never collection.
  */
 /** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */
 const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };
@@ -1397,11 +1460,14 @@ function namedAnywhere(file: string, text: string, names: readonly string[]): re
   return out;
 }
 /**
- * R692 second respin (wb-ouo3 refusal #2, the named residual of its class): the code the call-site check calls without
- * naming a binding - the matcher behind toEqual, the array's sort and spread, localeCompare - can be tampered with, beyond
- * expect's own members and the global object, only through a prototype. PROTOTYPE_ROUTE names the routes as a pattern,
- * never as strings, so the list spells none of them;
- * spelledAnywhere lists every identifier, member name and string of any kind that spells one.
+ * R692 second respin (wb-ouo3 refusal #2, the named residual of its class): the prototype routes - one way to tamper with
+ * the code the call-site check calls without naming a binding (the matcher behind toEqual, the array's sort and spread,
+ * localeCompare). Cut #3 said here that such code can be tampered with, beyond expect's own members and the global
+ * object, "only through a prototype"; refusal #3's T-CHAI (chai's Assertion.overwriteMethod from a static import) and
+ * T-DESC-SORT (Array's prototype reached through Object.getOwnPropertyDescriptors) falsified it (U2 (a), R717 (3)), and
+ * cut #4 reads the modules loaded, the reflective routes spelled and the property writes beside it. PROTOTYPE_ROUTE names
+ * the routes as a pattern, never as strings, so the list spells none of them; spelledAnywhere lists every identifier,
+ * member name and string of any kind that spells one.
  */
 const PROTOTYPE_ROUTE = /^(prototype|__proto__|getPrototypeOf|setPrototypeOf|defineProperty|defineProperties)$/;
 function spelledAnywhere(file: string, text: string, pattern: RegExp): readonly string[] {
@@ -1416,6 +1482,94 @@ function spelledAnywhere(file: string, text: string, pattern: RegExp): readonly 
   };
   visit(sf);
   return out;
+}
+/**
+ * R717 (wb-ouo3 cut #4, the modules-loaded class): every module a source loads - each import or export-from declaration
+ * of any module as "<module> | <what it binds>", and each import(), require() call and import x = require() as "<the
+ * code as written> | loaded at run time". vitestImports reads the vitest family alone, so chai's Assertion imported beside
+ * it (refusal #3 T-CHAI, with Assertion.overwriteMethod("toEqual", ...) at module scope: no expect member, no global and
+ * no prototype route written) read as nothing at cut #3; this reading names each of those loads, of any module.
+ */
+function moduleImports(file: string, text: string): readonly string[] {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const out: string[] = [];
+  const binds = (node: ts.ImportDeclaration): string => {
+    const clause = node.importClause;
+    const bound: string[] = [];
+    if (clause?.name !== undefined) bound.push(`default as ${clause.name.text}`);
+    const bindings = clause?.namedBindings;
+    if (bindings !== undefined && ts.isNamespaceImport(bindings)) bound.push(`* as ${bindings.name.text}`);
+    if (bindings !== undefined && ts.isNamedImports(bindings)) {
+      for (const element of bindings.elements) bound.push(`${element.isTypeOnly ? "type " : ""}${element.propertyName === undefined ? element.name.text : `${element.propertyName.getText(sf)} as ${element.name.text}`}`);
+    }
+    return `${clause?.isTypeOnly === true ? "type " : ""}${bound.join(", ") || "(nothing bound)"}`;
+  };
+  const visit = (node: ts.Node): void => {
+    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined) {
+      const from = ts.isStringLiteral(node.moduleSpecifier) ? node.moduleSpecifier.text : node.moduleSpecifier.getText(sf);
+      out.push(`${from} | ${ts.isImportDeclaration(node) ? binds(node) : `re-exports ${node.exportClause?.getText(sf) ?? "*"}`}`);
+    } else if (ts.isImportEqualsDeclaration(node) || (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require")))) {
+      out.push(`${node.getText(sf)} | loaded at run time`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sf);
+  return out;
+}
+/**
+ * R717 (wb-ouo3 cut #4, the reflective-routes class; refusal #3 U3): the reflective routes this census reads - the APIs
+ * that reach a property through its descriptor, through the list of an object's own keys or through its accessor, so a
+ * prototype is reached with its key never written (refusal #3 T-DESC-SORT: Array's prototype found among the values of
+ * Object.getOwnPropertyDescriptors(Array)). A pattern, never strings, so the list spells none of them; spelledAnywhere
+ * reads each as an identifier, a member name or a string of any kind.
+ */
+const REFLECTIVE_ROUTE = /^(getOwnPropertyDescriptor|getOwnPropertyDescriptors|getOwnPropertyNames|getOwnPropertySymbols|ownKeys|__lookupGetter__|__lookupSetter__)$/;
+/**
+ * R717 (wb-ouo3 cut #4, the property-writes class): the writer APIs this census reads - builtins that write a property
+ * with no member write in the source (Object.assign, Reflect.set, Reflect.deleteProperty and the legacy accessor
+ * definers; defineProperty, defineProperties and setPrototypeOf are PROTOTYPE_ROUTE's). A pattern, never strings.
+ */
+const WRITER_ROUTE = /^(assign|set|deleteProperty|__defineGetter__|__defineSetter__)$/;
+/**
+ * R717 (wb-ouo3 cut #4, the property-writes class): every write a source makes to a member - an assignment of any
+ * assignment operator, an increment or a decrement whose target is a member access (through parentheses, a type
+ * assertion, a non-null or satisfies expression, a spread, or an array or object pattern), a member written by a for-in
+ * or for-of head, and every delete - as "<the write> <the target as written> at <line:column>", then every writer API
+ * WRITER_ROUTE names, as spelledAnywhere reads it. This file makes no such write and names no such API, so a member
+ * write in its text reads here whatever route reached the object (refusal #3 T-DESC-SORT's arrayMethods.sort; cut #3's
+ * T-SORT and T-PROTO wrote their tamper the same way).
+ */
+function propertyWrites(file: string, text: string): readonly string[] {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const out: string[] = [];
+  const place = (node: ts.Node): string => {
+    const { line, character } = sf.getLineAndCharacterOfPosition(node.getStart(sf));
+    return `${line + 1}:${character + 1}`;
+  };
+  const isMember = (node: ts.Node): boolean => ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node);
+  const targets = (node: ts.Node): readonly ts.Node[] => {
+    if (isMember(node)) return [node];
+    if (ts.isParenthesizedExpression(node) || ts.isSpreadElement(node) || ts.isSpreadAssignment(node) || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node) || ts.isSatisfiesExpression(node)) return targets(node.expression);
+    if (ts.isArrayLiteralExpression(node)) return node.elements.flatMap(targets);
+    if (ts.isObjectLiteralExpression(node)) return node.properties.flatMap(targets);
+    if (ts.isPropertyAssignment(node)) return targets(node.initializer);
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) return targets(node.left);
+    return [];
+  };
+  const visit = (node: ts.Node): void => {
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
+      for (const target of targets(node.left)) out.push(`an assignment to ${target.getText(sf)} at ${place(node)}`);
+    } else if (ts.isDeleteExpression(node)) {
+      out.push(`a delete of ${node.expression.getText(sf)} at ${place(node)}`);
+    } else if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) {
+      for (const target of targets(node.operand)) out.push(`an update of ${target.getText(sf)} at ${place(node)}`);
+    } else if ((ts.isForInStatement(node) || ts.isForOfStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) {
+      for (const target of targets(node.initializer)) out.push(`a loop head writing ${target.getText(sf)} at ${place(node)}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(sf);
+  return [...out, ...spelledAnywhere(file, text, WRITER_ROUTE).map(entry => `a writer named ${entry}`)];
 }
 const R687_SUITE = "R687 (wb-9rto): the AC2 call-site hook is registered with its backstop, read from this file's AST and the runner's record";
 const R692_SUITE = "R692 (wb-ouo3): the held-hook census - every suite walked through vitest's record, bound to the roster, and every guard call placed";
@@ -1450,14 +1604,60 @@ const CALL_SITE_STATE_OF_RECORD: readonly string[] = [
   'FROZEN_JUDGED_SHAPE | expect(judgedShape(narrowed)).not.toEqual(FROZEN_JUDGED_SHAPE); | the case "M10: a judged predicate narrowed to the larger halves leaves the table and its count shape untouched and is red by the frozen judged subset (CT7)" @ wb-6hb.6 liveness: the adopted judge is not accept-all (the real report, no fabricated verdict)',
   `AC2_CHECKED | expect(AC2_CHECKED, "the call-site hook's completion record: its assertion statement returned and the record followed, once").toEqual([CALL_SITE_HOOK]); | the case "the call-site check is the check (U3): its guarded body is the landed assertion and then its completion record, and the record says that statement returned, once (what its names bind: the second respin's rows)" @ ${R692_SUITE}`,
 ];
-/** The AC2 cases' each-table (refusal #2 U1). */
+/** Every each-table case of this file: the AC2 cases' (refusal #2 U1) and, from cut #4, the R717 planted members'. */
 const CALL_SITE_TABLES_OF_RECORD: readonly string[] = [
   `the case "AC2 bullet $row.bullet/$half.id: every pinned case is collected once, passed and asserting in the default gate's own report" | each over JUDGED -> a file-scope const`,
+  `the case "R717 planted member $id: the leg refuses this file's text with the member planted in memory, naming exactly the readings it changes" | each over PLANTED_MEMBERS -> a file-scope const`,
 ];
 /** Beside them the leg re-reads, restated from the rows that pin them: the hook roster (R687), the vitest import and the runner reads (the runtime-handle row). */
 const CALL_SITE_REGISTRATIONS_OF_RECORD: readonly string[] = ["afterAll @ wb-6hb.6 docs/workbench/06 conformance census (report mode) | guards CALL_SITE_HOOK | timeout CALL_SITE_HOOK_BACKSTOP_MS (a file-scope const)"];
 const VITEST_IMPORTS_OF_RECORD: readonly string[] = ["vitest | afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner"];
 const RUNNER_READS_OF_RECORD: readonly string[] = [`TestRunner.getSuiteHooks | a case @ ${R687_SUITE}`, `TestRunner.getSuiteHooks | a case @ ${R687_SUITE}`, `TestRunner.getSuiteHooks | a case @ ${R692_SUITE}`];
+/** R717 (wb-ouo3 cut #4): the sha256 of a text, as hex: the call-site registration and the guard are pinned by their own text's digest, so no record repeats the source it pins. */
+const sha256 = (text: string): string => createHash("sha256").update(text).digest("hex");
+/** "<what> | <text>" as "<what> | sha256 <the text's digest>". */
+const digestLine = (line: string): string => `${line.slice(0, line.indexOf(" | "))} | sha256 ${sha256(line.slice(line.indexOf(" | ") + 3))}`;
+/** R717 (wb-ouo3 cut #4): every module this file loads, with what it binds (vitestImports reads the vitest family alone). */
+const MODULE_IMPORTS_OF_RECORD: readonly string[] = [
+  "node:crypto | createHash",
+  "node:fs | readFileSync",
+  "node:path | basename, dirname, join",
+  "node:url | fileURLToPath",
+  "typescript | default as ts",
+  "vitest | afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner",
+  "./helpers/census.js | type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure",
+];
+/** R717 (wb-ouo3 cut #4): the call-site registration's own text, byte for byte, as the guard it calls and the text's sha256. */
+const CALL_SITE_TEXT_OF_RECORD: readonly string[] = ["CALL_SITE_HOOK | sha256 910f7973da000f5515b4d701b33180cbbd2999fabcb2586df70c58bfb3c45c5d"];
+/** R717 (wb-ouo3 cut #4): every declaration named withinHookBudget, as its construct, its place and its own text's sha256. */
+const GUARD_DECLARATIONS_OF_RECORD: readonly string[] = ["FunctionDeclaration at file scope | sha256 232f29f9b6834b1aa9d721c324666c00101ed698d180661e4f86747d3555be70"];
+/** R717 (wb-ouo3 cut #4): every name the guard's declaration reads but does not declare itself, in source order, with what the checker binds it to. */
+const GUARD_NAMES_OF_RECORD: readonly string[] = [
+  "performance -> no declaration in this file",
+  "Promise -> no declaration in this file",
+  "setTimeout -> no declaration in this file",
+  "Promise -> no declaration in this file",
+  "Promise -> no declaration in this file",
+  "Math -> no declaration in this file",
+  "performance -> no declaration in this file",
+  "HOOK_READINGS -> a file-scope const",
+  "expect -> a named import from \"vitest\"",
+  "clearTimeout -> no declaration in this file",
+];
+
+/**
+ * R717 (wb-ouo3 cut #4): the explicit budget of every row that runs the fail-closed leg on a text - the fail-closed leg
+ * row (this file's text and four planted sources) and each R717 planted-member row - file-local like JUDGE_BUDGET_MS, so
+ * no such row rides vitest's default 5000 ms: one run of the leg builds the binder and checker over this whole file twice
+ * and parses it seven more times.
+ * Sized as 5 x the measured p99 of the costliest such row (the fail-closed leg row), rounded up to a whole 5 s, then
+ * doubled for host load: measured 2026-10-31 at load1 118-145, about a third of the load1 357.8-395.0 the JUDGE_BUDGET_MS
+ * sizing above read, over 14 runs of this file alone (6 sequential, 4 rounds of 2-way): the fail-closed leg row min 2120
+ * ms, median 2786 ms, p99 3994 ms; the planted-member rows median 611 ms, p99 926 ms. 5 x 3994 ms = 19970 ms, rounded up
+ * to 20000 ms, doubled: 40000 ms.
+ */
+const LEG_BUDGET_MS = 40_000;
+const LEG: { readonly timeout: number } = { timeout: LEG_BUDGET_MS };
 
 describe("R692 (wb-ouo3): the held-hook census - every suite walked through vitest's record, bound to the roster, and every guard call placed", () => {
   it("the walk reaches every suite of this file: the suites vitest collected are exactly the describe calls the roster reads", ({ task }) => {
@@ -1843,8 +2043,9 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
       'Object.defineProperty(String.prototype, "localeCompare", { value: compare });',
       'const p = Reflect.get(Array, "prototype");',
       "const q = Array[`defineProperties`];",
+      'const r = holder.myprototype + holder.prototypes + "xgetPrototypeOf" + "definePropertyOf";',
     ].join("\n");
-    expect(spelledAnywhere("routes.ts", routes, PROTOTYPE_ROUTE), "a member name, a string argument and a template key, each read as it stands").toEqual([
+    expect(spelledAnywhere("routes.ts", routes, PROTOTYPE_ROUTE), "a member name, a string argument and a template key, each read as it stands; a longer name or string reads as nothing").toEqual([
       "getPrototypeOf at 1:8",
       "prototype at 2:7",
       "__proto__ at 3:4",
@@ -1856,7 +2057,7 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
     ]);
   });
 
-  it("the fail-closed leg (refusal #2): collection re-reads the call-site binding at module scope with no matcher and refuses on any difference, so a name-filtered run fails closed; the leg is no constant", () => {
+  it("the fail-closed leg (refusal #2): collection re-reads the call-site binding at module scope with no matcher and refuses on any difference, so a name-filtered run fails closed; the leg is no constant", LEG, () => {
     expect(CALL_SITE_BINDING_BROKEN, "the call-site binding of record holds at collection").toEqual([]);
     expect(
       hookRoster(SELF, readRepo(SELF), ["CALL_SITE_BINDING_BROKEN"]).statements.map(line => line.slice(0, line.indexOf(" | ", line.indexOf(" | ") + 3)).split("`")[0]),
@@ -1880,11 +2081,465 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
       sources.map(source => callSiteBindingBroken(source).map(line => line.slice(0, line.indexOf(":")))),
       "a shadow in the hook's callback, a planted push, a matcher extended and a read of the frozen shape outside the rows, each named by the readings it breaks",
     ).toEqual([
-      ["the call-site registrations", "the call-site declarations", "the call-site names", "the call-site state"],
+      ["the call-site registrations", "the call-site declarations", "the call-site names", "the call-site state", "the call-site text"],
       ["the call-site state"],
       ["the uses of expect"],
       ["the call-site state"],
     ]);
+  });
+});
+
+/**
+ * R717 (wb-ouo3 cut #4, enumerate-the-resolvable): the readings of the fail-closed leg as its own source names them - the
+ * first argument of each differs call in callSiteBindingBroken's body, in source order - so the closed list of tamper
+ * classes below is bound to the readings the leg runs, an anchor outside the list itself.
+ */
+function legReadings(file: string, text: string): readonly string[] {
+  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const out: string[] = [];
+  const visit = (node: ts.Node, inLeg: boolean): void => {
+    const leg = inLeg || (ts.isFunctionDeclaration(node) && node.name !== undefined && node.name.text === "callSiteBindingBroken");
+    if (leg && ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "differs") {
+      const [reading] = node.arguments;
+      out.push(reading !== undefined && ts.isStringLiteralLike(reading) ? reading.text : `(a reading named by ${reading?.getText(sf) ?? "nothing"})`);
+    }
+    ts.forEachChild(node, child => visit(child, leg));
+  };
+  visit(sf, false);
+  return out;
+}
+/**
+ * R717 (1) (wb-ouo3 cut #4): the closed named list of the tamper classes the call-site check detects at collection - one
+ * class per reading of the fail-closed leg, in the leg's order. A class is the edits of this file's text that change its
+ * reading's output on that text (each reader's doc says what it outputs); the census claims no other class.
+ */
+const TAMPER_CLASSES_OF_RECORD: readonly string[] = [
+  "the roster's findings",
+  "the hook registrations",
+  "the call-site registrations",
+  "the call-site declarations",
+  "the call-site names",
+  "the call-site state",
+  "the each-tables",
+  "the uses of expect",
+  "the vitest imports",
+  "the runner reads",
+  "the run-time escapes spelled",
+  "the prototype routes spelled",
+  "the modules loaded",
+  "the reflective routes spelled",
+  "the property writes",
+  "the call-site text",
+  "the guard's declaration",
+  "the guard's names",
+];
+/** R717 (wb-ouo3 cut #4): one member planted on this file's own text, in memory (never on disk), with the leg's readings that refuse it. */
+interface PlantedMember {
+  readonly id: string;
+  /** What the member edits, and where it comes from. */
+  readonly what: string;
+  readonly plant: (text: string) => string;
+  /** The readings the leg names on the planted text, in the leg's order: the classes this member proves. */
+  readonly refusedBy: readonly string[];
+}
+/** A planted edit: the first occurrence of an anchor replaced (a function replacer, so no replacement pattern applies). */
+const replacingFirst =
+  (anchor: string, by: string) =>
+  (text: string): string =>
+    text.replace(anchor, () => by);
+/** A planted edit: module code appended at the end of the text. */
+const appending =
+  (...lines: readonly string[]) =>
+  (text: string): string =>
+    `${text}\n${lines.join("\n")}\n`;
+/** Two planted edits, in order. */
+const both =
+  (first: (text: string) => string, second: (text: string) => string) =>
+  (text: string): string =>
+    second(first(text));
+/** The anchors the members edit, each a fragment whose first occurrence is the code it names (the guard's race, the guarded check, the call-site return, the AC2 each-table, the judging count). */
+const GUARD_RACE_BODY = ".then(body).then(";
+const CALL_SITE_CHECK_START = "    expect([...AC2_RAN].sort(";
+const CALL_SITE_RETURN = "    return withinHookBudget(CALL_SITE_HOOK,";
+const AC2_EACH = "it.each(JUDGED)(";
+const JUDGING_COUNT = "JUDGING_CASES = 11;";
+const CHAI_IMPORT = 'import { Assertion } from "chai";';
+const CHAI_OVERWRITE = 'Assertion.overwriteMethod("toEqual", () => function (this: unknown) { return this; });';
+const NARROWED = both(replacingFirst(AC2_EACH, "it.each(JUDGED.slice(0, 4))("), replacingFirst(JUDGING_COUNT, "JUDGING_CASES = 10;"));
+/** R717 (wb-ouo3 cut #4): the planted members - refusal #3's members (M:13504), the died respin seat's W-BODY-RETURN-BARE, and one or more members of every other class. */
+const PLANTED_MEMBERS: readonly PlantedMember[] = [
+  {
+    id: "W-SWALLOW-T",
+    what: "refusal #3: withinHookBudget's race catches its body's error and rethrows it unless the budget is CALL_SITE_HOOK_BUDGET_MS (1 edit in the guard's own text)",
+    plant: replacingFirst(GUARD_RACE_BODY, '.then(body).catch((error: unknown) => { if (budget !== "CALL_SITE_HOOK_BUDGET_MS") throw error; }).then('),
+    refusedBy: ["the guard's declaration"],
+  },
+  {
+    id: "W-SWALLOW",
+    what: "refusal #3 (control): withinHookBudget's race swallows every body's error (1 edit in the guard's own text)",
+    plant: replacingFirst(GUARD_RACE_BODY, ".then(body).catch(() => undefined).then("),
+    refusedBy: ["the guard's declaration", "the guard's names"],
+  },
+  {
+    id: "W-BODY-SKIP-T",
+    what: "refusal #3: withinHookBudget never calls its body when the budget is CALL_SITE_HOOK_BUDGET_MS (1 edit in the guard's own text)",
+    plant: replacingFirst(GUARD_RACE_BODY, '.then(budget === "CALL_SITE_HOOK_BUDGET_MS" ? () => undefined : body).then('),
+    refusedBy: ["the guard's declaration", "the guard's names"],
+  },
+  {
+    id: "T-CHAI",
+    what: "refusal #3: chai's Assertion imported and toEqual overwritten through its public plugin API at module scope (2 edits, appended)",
+    plant: appending(CHAI_IMPORT, CHAI_OVERWRITE),
+    refusedBy: ["the modules loaded"],
+  },
+  {
+    id: "T-CHAI-NARROW",
+    what: "refusal #3: T-CHAI with the AC2 each-table narrowed to four halves and the judging count to 10",
+    plant: both(appending(CHAI_IMPORT, CHAI_OVERWRITE), NARROWED),
+    refusedBy: ["the each-tables", "the modules loaded"],
+  },
+  {
+    id: "T-DESC-SORT",
+    what: "refusal #3: Array's prototype found among the values of Object.getOwnPropertyDescriptors(Array) and its sort replaced (module code, appended)",
+    plant: appending(
+      "const arrayMethods = Object.values(Object.getOwnPropertyDescriptors(Array))",
+      "  .map(descriptor => descriptor.value as unknown)",
+      "  .find(value => Array.isArray(value)) as string[];",
+      "const realSort = arrayMethods.sort;",
+      "arrayMethods.sort = function (this: string[], compare?: (a: string, b: string) => number): string[] {",
+      "  const out = realSort.call(this, compare) as string[];",
+      '  return out.length === 1 && out[0] === "1/guard:6" ? ["1/guard:6", "2/guard:4", "3/guard:2", "4/guard:4", "5/digest-mismatch:3"] : out;',
+      "} as typeof realSort;",
+    ),
+    refusedBy: ["the reflective routes spelled", "the property writes"],
+  },
+  {
+    id: "W-BODY-RETURN-BARE",
+    what: "the died respin seat's member: an early return written with no name before the guarded check (1 edit in the call-site registration)",
+    plant: replacingFirst(CALL_SITE_CHECK_START, `    if ([].length === 0) return;\n${CALL_SITE_CHECK_START}`),
+    refusedBy: ["the call-site text"],
+  },
+  {
+    id: "C-ALIAS-REGISTRAR",
+    what: "a registrar named as a value, never called",
+    plant: appending("const later = afterAll;"),
+    refusedBy: ["the roster's findings"],
+  },
+  {
+    id: "C-EXTRA-HOOK",
+    what: "a second afterAll registered at file scope",
+    plant: appending("afterAll(() => undefined);"),
+    refusedBy: ["the hook registrations"],
+  },
+  {
+    id: "C-CALLBACK-SHADOW",
+    what: "expect shadowed in the call-site registration's callback, outside the guarded body (the D-EXPECT-SHADOW shape)",
+    plant: replacingFirst(CALL_SITE_RETURN, `    const expect = (): undefined => undefined;\n${CALL_SITE_RETURN}`),
+    refusedBy: ["the call-site registrations", "the call-site declarations", "the call-site names", "the uses of expect", "the call-site text"],
+  },
+  {
+    id: "C-PLANTED-PUSH",
+    what: "a push of the call-site state from module code",
+    plant: appending('AC2_RAN.push("planted");'),
+    refusedBy: ["the call-site state"],
+  },
+  {
+    id: "C-NARROW",
+    what: "the AC2 each-table narrowed to four halves and the judging count to 10 (the D-NARROW-ONLY shape)",
+    plant: NARROWED,
+    refusedBy: ["the each-tables"],
+  },
+  {
+    id: "C-EXPECT-EXTEND",
+    what: "expect used as a value: a matcher extended",
+    plant: appending("expect.extend({});"),
+    refusedBy: ["the uses of expect"],
+  },
+  {
+    id: "C-VITEST-SUITE",
+    what: "the runner's own registrar imported from vitest/suite",
+    plant: appending('import { getCurrentSuite } from "vitest/suite";'),
+    refusedBy: ["the vitest imports", "the modules loaded"],
+  },
+  {
+    id: "C-RUNNER-ON",
+    what: "the runner reached outside the census rows",
+    plant: appending("TestRunner.getCurrentSuite();"),
+    refusedBy: ["the runner reads"],
+  },
+  {
+    id: "C-GLOBAL",
+    what: "the global object named",
+    plant: appending("const w = globalThis;"),
+    refusedBy: ["the run-time escapes spelled"],
+  },
+  {
+    id: "C-PROTOTYPE",
+    what: "a prototype read",
+    plant: appending("const p = Array.prototype;"),
+    refusedBy: ["the prototype routes spelled"],
+  },
+  {
+    id: "C-OWN-NAMES",
+    what: "an object's own keys enumerated",
+    plant: appending("const n = Object.getOwnPropertyNames(Array);"),
+    refusedBy: ["the reflective routes spelled"],
+  },
+  {
+    id: "C-MEMBER-WRITE",
+    what: "a member written",
+    plant: appending("const box = { value: 0 };", "box.value = 1;"),
+    refusedBy: ["the property writes"],
+  },
+  {
+    id: "C-SECOND-GUARD",
+    what: "a second declaration named withinHookBudget, nested",
+    plant: appending("function nested(): void {", "  function withinHookBudget(): void {}", "}"),
+    refusedBy: ["the guard's declaration"],
+  },
+  {
+    id: "C-SHADOW-BUILTIN",
+    what: "a builtin the guard reads shadowed at file scope",
+    plant: appending("const performance = { now: (): number => 0 };"),
+    refusedBy: ["the guard's names"],
+  },
+];
+/** R717 frozen shape (rule 16): every class with the number of planted members proving it, in the leg's order. */
+const TAMPER_CLASSES_SHAPE: readonly string[] = [
+  "the roster's findings:1",
+  "the hook registrations:1",
+  "the call-site registrations:1",
+  "the call-site declarations:1",
+  "the call-site names:1",
+  "the call-site state:1",
+  "the each-tables:2",
+  "the uses of expect:2",
+  "the vitest imports:1",
+  "the runner reads:1",
+  "the run-time escapes spelled:1",
+  "the prototype routes spelled:1",
+  "the modules loaded:3",
+  "the reflective routes spelled:2",
+  "the property writes:2",
+  "the call-site text:2",
+  "the guard's declaration:4",
+  "the guard's names:3",
+];
+/** R717 frozen shape (rule 16): every planted member with the number of readings refusing it, in table order. */
+const PLANTED_MEMBERS_SHAPE: readonly string[] = [
+  "W-SWALLOW-T:1",
+  "W-SWALLOW:2",
+  "W-BODY-SKIP-T:2",
+  "T-CHAI:1",
+  "T-CHAI-NARROW:2",
+  "T-DESC-SORT:2",
+  "W-BODY-RETURN-BARE:1",
+  "C-ALIAS-REGISTRAR:1",
+  "C-EXTRA-HOOK:1",
+  "C-CALLBACK-SHADOW:5",
+  "C-PLANTED-PUSH:1",
+  "C-NARROW:1",
+  "C-EXPECT-EXTEND:1",
+  "C-VITEST-SUITE:2",
+  "C-RUNNER-ON:1",
+  "C-GLOBAL:1",
+  "C-PROTOTYPE:1",
+  "C-OWN-NAMES:1",
+  "C-MEMBER-WRITE:1",
+  "C-SECOND-GUARD:1",
+  "C-SHADOW-BUILTIN:1",
+];
+
+describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed leg's readings, each proven by members planted on this file's text", () => {
+  it("R717 (1) the closed list: the tamper classes of record are exactly the fail-closed leg's readings, read from the leg's own source, and each is proven by a planted member", () => {
+    expect(legReadings(SELF, readRepo(SELF)), "the readings the leg runs, in its order").toEqual([...TAMPER_CLASSES_OF_RECORD]);
+    expect(
+      TAMPER_CLASSES_OF_RECORD.filter(reading => !PLANTED_MEMBERS.some(member => member.refusedBy.includes(reading))),
+      "a class no planted member proves",
+    ).toEqual([]);
+    expect(
+      PLANTED_MEMBERS.flatMap(member => member.refusedBy.filter(reading => !TAMPER_CLASSES_OF_RECORD.includes(reading)).map(reading => `${member.id}: ${reading}`)),
+      "a planted member refused by a reading outside the closed list",
+    ).toEqual([]);
+    const leg = ["function callSiteBindingBroken(): void {", '  differs("a reading", [], []);', "  differs(READING, [], []);", "}", "function elsewhere(): void {", '  differs("not the leg", [], []);', "}"].join("\n");
+    expect(legReadings("leg.ts", leg), "the leg's readings, a literal and a name, never another function's").toEqual(["a reading", "(a reading named by READING)"]);
+  });
+
+  it("R717 frozen shape (rule 16): every class with the number of planted members proving it, and every planted member with the number of readings refusing it, is the literal list", () => {
+    expect(
+      TAMPER_CLASSES_OF_RECORD.map(reading => `${reading}:${PLANTED_MEMBERS.filter(member => member.refusedBy.includes(reading)).length}`),
+      "class:members",
+    ).toEqual([...TAMPER_CLASSES_SHAPE]);
+    expect(
+      PLANTED_MEMBERS.map(member => `${member.id}:${member.refusedBy.length}`),
+      "member:readings",
+    ).toEqual([...PLANTED_MEMBERS_SHAPE]);
+  });
+
+  it.each(PLANTED_MEMBERS)("R717 planted member $id: the leg refuses this file's text with the member planted in memory, naming exactly the readings it changes", LEG, member => {
+    const text = readRepo(SELF);
+    const planted = member.plant(text);
+    expect(planted, `${member.id} edits this file's text`).not.toBe(text);
+    expect(
+      callSiteBindingBroken(planted).map(line => line.slice(0, line.indexOf(": read ["))),
+      `${member.id}: ${member.what}`,
+    ).toEqual([...member.refusedBy]);
+  });
+
+  it("R717 budget: exactly the rows that run the fail-closed leg on a text carry LEG_BUDGET_MS, never vitest's default 5000 ms", ({ task }) => {
+    const timeouts: number[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") timeouts.push(child.timeout);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    expect(LEG_BUDGET_MS, "the leg budget is above vitest's default test timeout").toBeGreaterThan(5_000);
+    expect(LEG_BUDGET_MS, "a budget of its own, never the judging cases'").not.toBe(JUDGE_BUDGET_MS);
+    expect(timeouts.filter(timeout => timeout === LEG_BUDGET_MS), "the fail-closed leg row and every planted-member row").toHaveLength(1 + PLANTED_MEMBERS.length);
+  });
+
+  it("the modules loaded (R717): this file loads exactly the modules of record, and the reader names each load form as written", () => {
+    expect(moduleImports(SELF, readRepo(SELF)), "every module this file loads, with what it binds").toEqual([...MODULE_IMPORTS_OF_RECORD]);
+    const loads = ['import a from "a";', 'import * as b from "b";', 'import { c, d as e } from "c";', 'import type { F } from "f";', 'import "g";', 'export * from "h";', 'export { i } from "i";', 'const j = await import("j");', 'const k = require("k");', 'import l = require("l");', "export { z };", 'const m = load("m");'].join("\n");
+    expect(moduleImports("loads.ts", loads), "a default, namespace, named, type-only and bare import, two re-exports, import(), require() and import = require(); a local export and another call read as nothing").toEqual([
+      "a | default as a",
+      "b | * as b",
+      "c | c, d as e",
+      "f | type F",
+      "g | (nothing bound)",
+      "h | re-exports *",
+      "i | re-exports { i }",
+      'import("j") | loaded at run time',
+      'require("k") | loaded at run time',
+      'import l = require("l"); | loaded at run time',
+    ]);
+  });
+
+  it("the reflective routes (R717, refusal #3 U3): this file spells no reflective route, and the reader sees each spelling as written", () => {
+    expect(spelledAnywhere(SELF, readRepo(SELF), REFLECTIVE_ROUTE), "getOwnPropertyDescriptor(s), getOwnPropertyNames, getOwnPropertySymbols, ownKeys, __lookupGetter__ or __lookupSetter__, spelled anywhere in this file").toEqual([]);
+    const routes = [
+      "const a = Object.values(Object.getOwnPropertyDescriptors(Array));",
+      "const b = Object.getOwnPropertyDescriptor(Array, key);",
+      "const c = Reflect.ownKeys(Array);",
+      'const d = Object["getOwnPropertyNames"];',
+      "const e = Object.getOwnPropertySymbols;",
+      "const f = holder.__lookupGetter__(key);",
+      "const g = `__lookupSetter__`;",
+      'const h = holder.ownKeysOf + holder.myownKeys + "getOwnPropertyNamesOf" + "xgetOwnPropertyNames";',
+    ].join("\n");
+    expect(spelledAnywhere("reflective.ts", routes, REFLECTIVE_ROUTE), "a member name, a string key and a template, each read as it stands; a longer name or string reads as nothing").toEqual([
+      "getOwnPropertyDescriptors at 1:32",
+      "getOwnPropertyDescriptor at 2:18",
+      "ownKeys at 3:19",
+      "getOwnPropertyNames at 4:18 (a string)",
+      "getOwnPropertySymbols at 5:18",
+      "__lookupGetter__ at 6:18",
+      "__lookupSetter__ at 7:11 (a string)",
+    ]);
+  });
+
+  it("the property writes (R717): this file writes no member and names no writer API, and the reader sees each write form as written", () => {
+    expect(propertyWrites(SELF, readRepo(SELF)), "every member write and writer API in this file").toEqual([]);
+    const writes = [
+      "a.b = 1;",
+      "a[k] += 1;",
+      "a.c ??= 2;",
+      "a.x ^= 1;",
+      "delete a.d;",
+      "a.e++;",
+      "--a[f];",
+      "(a.y)++;",
+      "[a.g] = list;",
+      "({ h: a.i } = source);",
+      "(a.p) = 1;",
+      "[...a.q] = list;",
+      "({ ...a.r } = source);",
+      "(a.s as number) = 1;",
+      "(<number>a.t) = 1;",
+      "a.u! = 1;",
+      "(a.v satisfies number) = 1;",
+      "[a.w = 1] = list;",
+      "for (a.j of list) {}",
+      "for (a.z in source) {}",
+      "Object.assign(a, b);",
+      "Reflect.set(a, k, 1);",
+      "Reflect.deleteProperty(a, k);",
+      "a.__defineGetter__(k, g);",
+      "a.__defineSetter__(k, g);",
+      "const settle = a.assignee + a.asset;",
+      "x = 1;",
+      "x++;",
+    ].join("\n");
+    expect(propertyWrites("writes.ts", writes), "the first and last assignment operators and two between, a delete, updates, every unwrapped and destructuring target, both loop heads and each writer API; a name write and a longer name read as nothing").toEqual([
+      "an assignment to a.b at 1:1",
+      "an assignment to a[k] at 2:1",
+      "an assignment to a.c at 3:1",
+      "an assignment to a.x at 4:1",
+      "a delete of a.d at 5:1",
+      "an update of a.e at 6:1",
+      "an update of a[f] at 7:1",
+      "an update of a.y at 8:1",
+      "an assignment to a.g at 9:1",
+      "an assignment to a.i at 10:2",
+      "an assignment to a.p at 11:1",
+      "an assignment to a.q at 12:1",
+      "an assignment to a.r at 13:2",
+      "an assignment to a.s at 14:1",
+      "an assignment to a.t at 15:1",
+      "an assignment to a.u at 16:1",
+      "an assignment to a.v at 17:1",
+      "an assignment to a.w at 18:1",
+      "an assignment to a.w at 18:2",
+      "a loop head writing a.j at 19:1",
+      "a loop head writing a.z at 20:1",
+      "a writer named assign at 21:8",
+      "a writer named set at 22:9",
+      "a writer named deleteProperty at 23:9",
+      "a writer named __defineGetter__ at 24:3",
+      "a writer named __defineSetter__ at 25:3",
+    ]);
+  });
+
+  it("the guard's declaration and names, and the call-site text (R717): each is its record, and the readers keep a declaration's and a registration's own text and the names a guard reads", () => {
+    const roster = hookRoster(SELF);
+    expect(roster.guardDeclarations.map(digestLine), "every declaration named withinHookBudget, by its text's sha256").toEqual([...GUARD_DECLARATIONS_OF_RECORD]);
+    expect(roster.guardNames, "every name the guard reads but does not declare, with what the checker binds it to").toEqual([...GUARD_NAMES_OF_RECORD]);
+    expect(
+      roster.callSites.map(entry => `${entry.guards} | sha256 ${sha256(entry.text)}`),
+      "the guarded registration, by its text's sha256",
+    ).toEqual([...CALL_SITE_TEXT_OF_RECORD]);
+    const site = ["afterAll(() => {", "  // kept", '  return withinHookBudget(HOOK, "B", 1, () => check());', "}, 2)"].join("\n");
+    const guarded = [
+      'import { afterAll } from "vitest";',
+      "function withinHookBudget(hook: string, budget: string, ms: number, body: () => void): number {",
+      "  return Math.max(ms, floor);",
+      "}",
+      "const floor = 1;",
+      "const withinHookBudget = (): number => 1;",
+      `${site};`,
+      "function nested(withinHookBudget: number): void {",
+      "  const { withinHookBudget } = source;",
+      "  function withinHookBudget(): void {}",
+      "  const f = function withinHookBudget(): void {};",
+      "  class withinHookBudget {}",
+      "  const c = class withinHookBudget {};",
+      "}",
+    ].join("\n");
+    const read = hookRoster("guarded.ts", guarded);
+    expect(read.guardDeclarations, "a function and a const at file scope, and a parameter, a destructured element, a function, a function expression, a class and a class expression nested, each with its own text").toEqual([
+      "FunctionDeclaration at file scope | function withinHookBudget(hook: string, budget: string, ms: number, body: () => void): number {\n  return Math.max(ms, floor);\n}",
+      "VariableDeclaration at file scope | withinHookBudget = (): number => 1",
+      "Parameter nested | withinHookBudget: number",
+      "BindingElement nested | withinHookBudget",
+      "FunctionDeclaration nested | function withinHookBudget(): void {}",
+      "FunctionExpression nested | function withinHookBudget(): void {}",
+      "ClassDeclaration nested | class withinHookBudget {}",
+      "ClassExpression nested | class withinHookBudget {}",
+    ]);
+    expect(read.guardNames, "a global and a file-scope const the guard reads, never its own parameters").toEqual(["Math -> no declaration in this file", "floor -> a file-scope const"]);
+    expect(read.callSites.map(entry => entry.text), "the guarded registration's own text, comment included").toEqual([site]);
   });
 });
 
@@ -1896,14 +2551,20 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
  * S-EXPECT-DESTRUCT exited 0 under the filter at cut #2), and a tamper of the matcher hollows the rows' own toEqual as
  * well (T-EXTEND and T-PROTO read every row green at cut #2, and over this respin's rows before the leg). This file's
  * collection therefore re-reads the call-site binding at
- * module scope - where no binding can shadow the reader - with no matcher, against the literals the rows above pin: on
- * any difference collection throws, so every run of this file, a name-filtered one included, exits 1, the error naming
- * each reading that differs. Read here: the roster's findings and registrations, the call-site registration's shape,
- * declarations and names, every statement naming the call-site state but the frozen shape's own declaration (that
- * literal is the AC1 rows' and the rule 16 battery's, which a full run judges), the AC2 each-table, every use of expect,
- * the vitest import, the runner reads, and the spellings of the two named residuals. The comparisons index the arrays
- * directly; the readers run on the runtime's own builtins, so a tamper of those builtins (written with a route the
- * residual names) that also hollows the reading naming it is the residual's disclosed edge, not claimed.
+ * module scope - where no binding can shadow the reader - with no matcher, against the literals the rows above pin:
+ * collection throws on any difference in a reading it names, so that run of this file, a name-filtered one included,
+ * exits 1, the error naming each reading that differs. Read here: the roster's findings and registrations, the call-site
+ * registration's shape, declarations and names, every statement naming the call-site state but the frozen shape's own
+ * declaration (that literal is the AC1 rows' and the rule 16 battery's, which a full run judges), every each-table case
+ * (the AC2 cases' and the R717 planted members'), every use of expect, the vitest import, the runner reads, the
+ * spellings of the two named residuals and, from cut #4 (R717), the modules loaded, the reflective routes spelled, the
+ * property writes, the call-site text, the guard's declaration and the guard's names - the closed list
+ * TAMPER_CLASSES_OF_RECORD. Cut #3 said here that every run exits 1 on any difference; refusal #3's W-SWALLOW-T, T-CHAI,
+ * T-DESC-SORT and W-BODY-SKIP-T changed no reading read here at cut #3 and exited 0 under the filter (U2 (b)), so the
+ * exit 1 is claimed for the enumerated classes only. The comparisons index the arrays directly; the readers run on the
+ * runtime's own builtins and on this file's own readers and records, so an edit that also changes what the leg computes
+ * (a builtin its readers run on, a reader, a record or the refusal) is NOT CLAIMED at collection: the full run's rows
+ * judge it.
  */
 function callSiteBindingBroken(text: string = readRepo(SELF)): readonly string[] {
   const broken: string[] = [];
@@ -1926,6 +2587,12 @@ function callSiteBindingBroken(text: string = readRepo(SELF)): readonly string[]
   differs("the runner reads", hookRoster(SELF, text, ["TestRunner"]).references, RUNNER_READS_OF_RECORD);
   differs("the run-time escapes spelled", namedAnywhere(SELF, text, RUNTIME_ESCAPES), []);
   differs("the prototype routes spelled", spelledAnywhere(SELF, text, PROTOTYPE_ROUTE), []);
+  differs("the modules loaded", moduleImports(SELF, text), MODULE_IMPORTS_OF_RECORD);
+  differs("the reflective routes spelled", spelledAnywhere(SELF, text, REFLECTIVE_ROUTE), []);
+  differs("the property writes", propertyWrites(SELF, text), []);
+  differs("the call-site text", roster.callSites.map(entry => `${entry.guards} | sha256 ${sha256(entry.text)}`), CALL_SITE_TEXT_OF_RECORD);
+  differs("the guard's declaration", roster.guardDeclarations.map(digestLine), GUARD_DECLARATIONS_OF_RECORD);
+  differs("the guard's names", roster.guardNames, GUARD_NAMES_OF_RECORD);
   return broken;
 }
 const CALL_SITE_BINDING_BROKEN = callSiteBindingBroken();
