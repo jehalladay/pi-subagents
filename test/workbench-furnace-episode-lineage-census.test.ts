@@ -7,13 +7,15 @@
  * typed edge (never causation, never ownership without a native confirmation reference), with absent keys keeping
  * today's output byte-identical."
  *
- * MEASURED (read-only, 2026-10-28/30; by cut #1 at base f5589e0 and 695105d, re-read by cut #2 at 51f4db4 and by cut #3
+ * MEASURED (read-only, 2026-10-28/31; by cut #1 at base f5589e0 and 695105d, re-read by cut #2 at 51f4db4 and by cut #3
  * at c843ed5, whose landings 596-653 touched neither the vendored SDK nor the observer, and by wb-uwk7, the landing-662
- * follow-up, at 577493f and by its respin 1 at 87b34f3, no commit since c843ed5 touching vendor/ or
- * src/workbench/furnace-observer.ts). The installed @furnace/sdk is 0.1.0 from vendor/furnace-sdk-0.1.0.tgz: 128
+ * follow-up, at 577493f and by its respin 1 at 87b34f3, and by wb-u6bv, the landing-739 follow-up, at f63d389, no
+ * commit since c843ed5 touching vendor/ or src/workbench/furnace-observer.ts). The installed @furnace/sdk is 0.1.0
+ * from vendor/furnace-sdk-0.1.0.tgz: 128
  * regular files in 12 directories and no entry of any other kind (byte-identical to the tarball's package tree at cut #3
  * and at respin 1; at wb-uwk7 no entry's name starts with a dot, no directory is empty or named node_modules, the
- * deepest entry is four path components down, the largest file is contract/registry/conformance-cases.json at 135370
+ * deepest entry is four path components down (at wb-u6bv the 128 files are 2 of one path component, 1 of two, 71 of
+ * three and 54 of four), the largest file is contract/registry/conformance-cases.json at 135370
  * bytes, and every file decodes as UTF-8; at respin 1 the tarball, which package.json's @furnace/sdk spec names and
  * vendor/README.md pins by sha256 aaa57dcfb1c205ec1f23f07cdffd6af32901bc4b972d81301758a7467ea865a9, is a gzipped
  * ustar archive of 128 regular-file members under package/, none of another type and none with a ustar prefix), 28 of
@@ -92,8 +94,10 @@
  * no release file spells "episode" or "lineage" by path or content (the content reading is proven live by finding the
  * release's own superseded_by, spelled today only in dist/src/protocol.d.ts, and the path reading by a planted file
  * map, wb-uwk7, in which a file name, a directory name and a first path component two directories above its file
- * (respin 1) that spell a record word are found while their contents spell none; both readings ignore letter case); a
- * re-vendor that brings an FRC-01 word to a place
+ * (respin 1) that spell a record word are found while their contents spell none, and so, wb-u6bv, is a record word in
+ * each component in turn of a planted path of one, two and four components, so that the map spells one in every
+ * component of every depth the installed release's paths have, one to four (MEASURED), once inside a longer name;
+ * both readings ignore letter case); a re-vendor that brings an FRC-01 word to a place
  * READER matches, an open slot, another root or a record word anywhere in the release reds T1 as well. T2 the same
  * reader reads a planted release: an FRC-01 word through an interface parent, a type-alias parent, a generic-wrapped
  * parent (Partial) and a second type-alias parent of RunStatusDto that is an intersection, nested in an array of
@@ -145,8 +149,10 @@
  * common measurement, and the second reader replaced by the walk of the installed release (both readers are this
  * file's own: vendor/README.md and package-lock.json pin only the tarball's bytes, and nothing outside this file reads
  * its package tree); a row removed from T1's pathPlant (with its expected path when it has one), or a planted content
- * there changed to spell a record word (no outside anchor names the planted paths or contents); a planted dotfile,
- * dot-directory, empty directory or
+ * there changed to spell a record word (no outside anchor names the planted paths or contents); a hollow of T1's path
+ * reading keyed to a path of five or more components (the installed release's paths and pathPlant's are four
+ * components at the deepest, MEASURED; a re-vendor that adds a deeper path changes an installed entry, so T0 reds
+ * it); a planted dotfile, dot-directory, empty directory or
  * node_modules removed from PLANTED_TREE (or PLANTED_EMPTY), PLANTED_TREE_ENTRIES, the frozen-shape literal and the
  * planted-kinds expectation together (no outside anchor names the planted kinds; the deep entry and the large file
  * are held to the installed tree's depth and size).
@@ -1259,11 +1265,22 @@ describe("wb-4ap.12 Furnace episode-lineage census (until F2 ships)", () => {
     // record word are found while their contents spell none, and so is a first path component two directories above its
     // file (respin 1, the rider F1: a reading of a path's last two components alone, or one that drops its first, misses
     // it); a content spelling is found under a neutral path, and a neutral file is not found; the capitalized directory
-    // name and the camel-case content spelling show that both readings ignore letter case.
+    // name and the camel-case content spelling show that both readings ignore letter case. The installed release's paths
+    // are one to four components long (MEASURED), and the three-component rows put a record word in each component of
+    // their depth; so do the rows of one, two and four components (wb-u6bv, the landing-739 F1: a reading of a path's
+    // last three components alone, or one that drops the first of four, misses lineage/x/y/z.json), one of them inside
+    // a longer name.
     const pathPlant = new Map([
       ["dist/src/episode.json", "{}\n"],
       ["dist/Lineage/index.d.ts", "export {};\n"],
       ["lineage/x/y.json", "{}\n"],
+      ["EPISODE.md", "{}\n"],
+      ["episode/z.json", "{}\n"],
+      ["x/subepisode.json", "{}\n"],
+      ["lineage/x/y/z.json", "{}\n"],
+      ["x/lineage/y/z.json", "{}\n"],
+      ["x/y/lineage/z.json", "{}\n"],
+      ["x/y/z/lineage.json", "{}\n"],
       ["dist/src/note.js", "export const EpisodeRef = 1;\n"],
       ["dist/src/plain.d.ts", "export {};\n"],
     ]);
@@ -1271,6 +1288,13 @@ describe("wb-4ap.12 Furnace episode-lineage census (until F2 ships)", () => {
       "dist/src/episode.json",
       "dist/Lineage/index.d.ts",
       "lineage/x/y.json",
+      "EPISODE.md",
+      "episode/z.json",
+      "x/subepisode.json",
+      "lineage/x/y/z.json",
+      "x/lineage/y/z.json",
+      "x/y/lineage/z.json",
+      "x/y/z/lineage.json",
       "dist/src/note.js",
     ]);
   });
