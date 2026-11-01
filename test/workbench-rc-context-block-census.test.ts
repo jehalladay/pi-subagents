@@ -70,8 +70,8 @@
  *    are held live in its case: the TUI loads (UI_LOAD_PROBES) and one probe module per read form and per result-expression
  *    or declaration form the parse-aware reading names or fails closed on (READ_PROBES) or leaves quiet (QUIET_PROBES).
  *  R, the residuals' pinned quiet rows.
- * PARSE-AWARE READING (C3, wb-ycir F1, widened by wb-qnl8 F2 and wb-qnls F2, U2 and cut #3 U1, failing closed by cut #4;
- * resultReadsOf). The brackets after a
+ * PARSE-AWARE READING (C3, wb-ycir F1, widened by wb-qnl8 F2 and wb-qnls F2, U2 and cut #3 U1, failing closed by cut #4,
+ * a number literal's name held by wb-zmez; resultReadsOf). The brackets after a
  * form name the probes that hold it live: READ_PROBES rows the reading must name and QUIET_PROBES rows it must leave quiet; C3
  * holds the bracketed keys of this header equal to the two tables (headerProbeIds). A probe holds its form live at the shapes
  * its text spells - an argument's or an item's place, a wrapper, an operator, a kind of declaration -, each probe's reading
@@ -125,7 +125,8 @@
  * callee reaches, a method the table holds under a string-literal name included [call-string-named-relay,
  * apply-string-named-relay] -, a declared `this` parameter taking no argument [this-parameter-direct, call-this-parameter].
  * The FUNCTION TABLE (wb-qnls cut #3, ruling R-B121: exactly the declarations resultReadsOf's collect admits, nothing else;
- * cut #4, ruling R-B151: a method's name exactly the pinned kinds, failing closed outside them)
+ * cut #4, ruling R-B151: a method's name exactly the pinned kinds, failing closed outside them; wb-zmez: a number literal's
+ * name held as TypeScript normalizes it)
  * holds a function declaration [function-helper] or a method - of an object literal, a class declaration or a class
  * expression [method-helper, class-method-helper, class-expression-method-helper], static or not [static-method-helper] -
  * under its name's constant string (propertyKeyOf), the name of one of the PINNED KINDS: an identifier, a #private name
@@ -134,12 +135,19 @@
  * a constant string by the KEY rule above [const-named-method, const-named-class-method, literal-named-method,
  * template-named-method, sum-named-method, template-expression-named-method], a computed name that resolves to none holding
  * nothing [unresolved-named-method]. FAIL CLOSED (cut #4): a method named by any other kind - a number literal, in an object
- * literal [numeric-named-method, infinity-named-method], a class declaration, static or not [numeric-named-class-method,
- * numeric-named-static-method], or a class expression [numeric-named-class-expression-method], or a bigint literal
- * [bigint-named-method] - is held under no name, so no call hands it an argument (refusal #3 measured TypeScript holding a
- * number literal's name under its value's string, 1e999 under "Infinity", which a member callee spells: the gate's q18),
- * and the reading notes its name instead ("declaration unpinned"), which refuses its module whether or not anything calls
- * it; what the table would hold such a name under is child wb-zmez's. And it holds a
+ * literal [numeric-named-method, infinity-named-method, overflow-named-method], a class declaration, static or not
+ * [numeric-named-class-method, numeric-named-static-method], or a class expression [numeric-named-class-expression-method],
+ * or a bigint literal [bigint-named-method] - has its name noted ("declaration unpinned"), which refuses its module whether
+ * or not anything calls it. A bigint literal's method is held under no name (its text, digits and "n", is a name no callee
+ * spells). A number literal's is held as well (wb-zmez), under its name's value string as TypeScript normalizes it
+ * (propertyKeyOf: the literal's text, the key the method has at run time), so a call whose callee's name or property name
+ * spells that string hands it its arguments, as it does any method the table holds: where the literal's value overflows a
+ * double the string is "Infinity", which a member callee spells - 1e999, the gate's q18 [infinity-named-method,
+ * numeric-named-class-method, numeric-named-static-method, numeric-named-class-expression-method], and 1e309
+ * [overflow-named-method], each reading its member blocks beside its note -; otherwise the string is a numeral (0 under
+ * "0", 0x10 under "16", 1e3 and 1_000 under "1000", 1.7976931348623158e308 under "1.7976931348623157e+308"), which no
+ * callee name spells, so no call hands such a method an argument and the note alone refuses its module
+ * [numeric-named-method]: the hold is read only as "Infinity". And it holds a
  * variable declared by a name, in any declaration list - const [local-helper], let [let-helper] or var [var-helper] -, under
  * that name when its initializer, read through its wrappers [wrapped-helper-initializer], is an arrow or a function
  * expression [function-expression-helper]. An expression's value is read
@@ -272,12 +280,19 @@
  * are named in NOT CLAIMED beside quiet rows. Refusal #3's respin (cut #4, the FAIL-CLOSED CORE ruling R-B151 binds; the
  * number-literal reader coverage moved to child wb-zmez): U1 cut #3's table held a number-literal method name under its
  * value's string as TypeScript normalizes it (1e999 under "Infinity", which a member callee spells: the gate's q18 and its
- * mutant GP09), never under the digits its header named, so cut #3's "a number literal's digits" is withdrawn; the table
- * now holds a method only under a name of a pinned kind and fails closed on any other, a number or a bigint literal, a read
+ * mutant GP09), which is its digits only for a canonical literal, so cut #3's "a number literal's digits" is withdrawn;
+ * cut #4's table held a method only under a name of a pinned kind and failed closed on any other, a number or a bigint
+ * literal, a read
  * probe per shape (an object literal's number-named method, reached by an element access or as q18 by a member callee, a
  * class declaration's, static or not, a class expression's, and an uncalled bigint-named method); F2 the gate's q64, an
  * array pattern nested past a spread, is named in NOT CLAIMED beside its quiet row; F3 the gate's MF01 shape, an escaped
  * string-literal method name, is pinned by a read probe.
+ * FOLLOW-UP wb-zmez (ruling R-B151's child at wb-qnls refusal #3, rule 19's structural exit: the number-literal reader
+ * coverage cut #4 moved off the parent): U1 the FUNCTION TABLE holds a number-literal method name as well, under its value's
+ * string as TypeScript normalizes it, and still notes it (the fail-closed core is kept, so no refusal of the landed census
+ * is lost): a member callee spelling "Infinity" hands a method 1e999 or 1e309 names its arguments and the reading reads its
+ * body beside the note - the four 1e999 rows and the 1e309 row [overflow-named-method] read their member blocks too -, so
+ * the gate's mutant GP09, a number-literal name never held, reds them where cut #4 left it equivalent by construction.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -459,7 +474,8 @@ const PROBE_RESULT = "(reading as { source: { result: Record<string, unknown> } 
 /** C3's read forms (wb-ycir F1; wb-qnl8 F2 and F3 add one per claimed result-expression and read form; wb-qnls F1 and F2 one per
  * binding form the gate's F1 mutants and P31-P33 named, cut #2 one per shape a refusal #1 U1 or F4 mutant or a seat mutant
  * narrowed a form to and per form U2 widens, cut #3 one per FUNCTION TABLE form and per refusal #2 GN survivor's shape, and
- * cut #4 one per shape of a method the table fails closed on and the gate's MF01 shape): each probe module reaches an rf
+ * cut #4 one per shape of a method the table fails closed on and the gate's MF01 shape, wb-zmez a second spelling, 1e309, of a
+ * number-literal name the table holds under "Infinity"): each probe module reaches an rf
  * result member without spelling "result.<member>" or declares a method the table fails closed on, and the parse-aware
  * reading must name it. Each key is named in brackets beside its form in the header's
  * PARSE-AWARE READING, and C3 holds the two to each other (headerProbeIds); a probe holds its form live at the shapes it
@@ -649,8 +665,11 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   // reached by an element access or, for 1e999, which TypeScript holds under "Infinity", by a member callee (the gate's q18),
   // of a class declaration, static or not, or of a class expression - and an uncalled method a bigint literal names each
   // refuse their module; and (refusal #3 F3, the gate's MF01) a string-literal name is held under its value, escapes decoded.
+  // wb-zmez: a number literal's name is held as well, under its value's string, so each 1e999 method a member callee reaches
+  // as Infinity reads its member blocks beside its note, as one 1e309 names, another spelling whose value overflows, does.
   "numeric-named-method": `const helpers = {\n  0(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers[0](${PROBE_RESULT});\n`,
   "infinity-named-method": `const helpers = {\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "overflow-named-method": `const helpers = {\n  1e309(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
   "numeric-named-class-method": `class Helpers {\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().Infinity(${PROBE_RESULT});\n`,
   "numeric-named-static-method": `class Helpers {\n  static 1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = Helpers.Infinity(${PROBE_RESULT});\n`,
   "numeric-named-class-expression-method": `const Helpers = class {\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\nexport const rows = new Helpers().Infinity(${PROBE_RESULT});\n`,
@@ -1551,7 +1570,8 @@ const LOGICAL_ASSIGNMENTS: readonly ts.SyntaxKind[] = ASSIGNMENTS.filter(kind =>
 /** C3's parse-aware reading of one module (wb-ycir F1, widened by wb-qnl8 F2 and by wb-qnls F2 and U2): every read of a RESULT_MEMBERS member
  * off a result expression, as `<line> <form>` - "member", "element", "binding", "assigned", "spread", "for-in" or "reflective",
  * with the member read, "computed" for a key that resolves to no constant string, or "rest" -, and every method named outside
- * the FUNCTION TABLE's pinned kinds, as "declaration unpinned" (cut #4, failing closed), so a UI module that reaches the
+ * the FUNCTION TABLE's pinned kinds, as "declaration unpinned" (cut #4, failing closed; wb-zmez holds a number literal's as
+ * well), so a UI module that reaches the
  * rf result's blocks without spelling "result.<member>" reads as one that spells it. The reads, the result expressions and the
  * forms it leaves quiet are the header's PARSE-AWARE READING and NOT CLAIMED lists, each form beside the probes that hold it
  * (READ_PROBES, QUIET_PROBES). Names bind to a result in passes until none grows - a declaration's, a parameter's or a binding
@@ -1565,7 +1585,8 @@ function resultReadsOf(file: ts.SourceFile): string[] {
   const consts = constStringsOf(file);
   // The FUNCTION TABLE (wb-qnls cut #3 U1, ruling R-B121): a function declaration or a method under its name's constant string
   // (propertyKeyOf: an identifier, a #private name, a string literal, or a computed name whose key resolves; cut #4, ruling
-  // R-B151, fails closed on a method named by any other kind, a number or a bigint literal), and a
+  // R-B151, fails closed on a method named by any other kind, a number or a bigint literal, and wb-zmez holds a number
+  // literal's as well, under its value's string as TypeScript normalizes it), and a
   // variable a name declares whose initializer, read through its wrappers, is an arrow or a function expression; nothing else.
   // Each same-named declaration is kept (wb-qnls cut #2 U2): a call hands its arguments to all of them, so a name collision
   // over-reads and never hides the function the call site means.
@@ -1576,11 +1597,15 @@ function resultReadsOf(file: ts.SourceFile): string[] {
   const unpinned: ts.PropertyName[] = [];
   const collect = (node: ts.Node): void => {
     // FAIL CLOSED (wb-qnls cut #4, ruling R-B151): a method named outside the pinned kinds - an identifier, a #private name,
-    // a string literal, a computed name -, so by a number or a bigint literal, is held under no name; its name is noted.
+    // a string literal, a computed name -, so by a number or a bigint literal, has its name noted; a bigint literal's is held
+    // under no name. wb-zmez: a number literal's is held as well, below, under propertyKeyOf's reading of it, the literal's
+    // text, which is its value's string as TypeScript normalizes it (1e999 under "Infinity", which a member callee spells).
     if (ts.isMethodDeclaration(node) && !(ts.isIdentifier(node.name) || ts.isPrivateIdentifier(node.name) || ts.isStringLiteral(node.name) || ts.isComputedPropertyName(node.name))) {
       unpinned.push(node.name);
-      ts.forEachChild(node, collect);
-      return;
+      if (!ts.isNumericLiteral(node.name)) {
+        ts.forEachChild(node, collect);
+        return;
+      }
     }
     if ((ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) && node.name !== undefined) {
       const name = propertyKeyOf(node.name, consts);
@@ -1715,7 +1740,7 @@ function resultReadsOf(file: ts.SourceFile): string[] {
       nestedAssigned(property.initializer);
     }
   };
-  // FAIL CLOSED (cut #4): a method collect holds under no name refuses its module, whatever calls it.
+  // FAIL CLOSED (cut #4): a method collect notes refuses its module, whatever calls it (wb-zmez: a number literal's is held too).
   for (const name of unpinned) note(name, "declaration unpinned");
   const visit = (node: ts.Node): void => {
     if (ts.isPropertyAccessExpression(node)) {

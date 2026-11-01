@@ -407,6 +407,7 @@
    "member-callee-function",
    "numeric-named-method",
    "infinity-named-method",
+   "overflow-named-method",
    "numeric-named-class-method",
    "numeric-named-static-method",
    "numeric-named-class-expression-method",
@@ -1602,16 +1603,24 @@
          "2 declaration unpinned"
         ],
         "infinity-named-method": [
-         "2 declaration unpinned"
+         "2 declaration unpinned",
+         "3 member blocks"
+        ],
+        "overflow-named-method": [
+         "2 declaration unpinned",
+         "3 member blocks"
         ],
         "numeric-named-class-method": [
-         "2 declaration unpinned"
+         "2 declaration unpinned",
+         "3 member blocks"
         ],
         "numeric-named-static-method": [
-         "2 declaration unpinned"
+         "2 declaration unpinned",
+         "3 member blocks"
         ],
         "numeric-named-class-expression-method": [
-         "2 declaration unpinned"
+         "2 declaration unpinned",
+         "3 member blocks"
         ],
         "bigint-named-method": [
          "2 declaration unpinned"
