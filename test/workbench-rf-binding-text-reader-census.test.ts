@@ -5,11 +5,15 @@
  * identifiers by BINDING not by name (let/parameter shadows of same-file consts under-report), narrowed out of wb-jwc.7's
  * fail-closed core (rule-19 structural exit)".
  *
- * CUT #3 IS IN THE ENUMERATE-THE-RESOLVABLE FORM the second-stage cap R-B189 binds (rule 19(c), the R739 terminal form): THIS
- * CENSUS CLAIMS EXACTLY ITS PINS. Each part of the claim claims its words over exactly the forms its row's pages plant, the
- * falsifier roster naming them pin by pin, and every known family no row plants is a NAMED RESIDUAL in the claim's NOT CLAIMED
- * section, its row a pinned quiet row that reads one form of the family as the reader reads it today. A form no page plants
- * is not claimed, and no row's silence about a form is a claim about it.
+ * CUT #4 IS THE FAIL-CLOSED CORE the rule-19 structural exit R-B233 binds (the orchestrator's ruling at refusal #3, O:1611;
+ * child wb-jwc.13). It stands on cut #3, the ENUMERATE-THE-RESOLVABLE FORM the second-stage cap R-B189 bound (rule 19(c), the
+ * R739 terminal form), and narrows each claim word refusal #3 measured wider than its pins to exactly the planted sub-forms,
+ * naming the rest NOT CLAIMED in the part itself: every edit narrows a claim word or names a form NOT CLAIMED, no form is
+ * newly claimed and no page is newly planted, so every row, pin and page of cut #3 stands byte for byte. THIS CENSUS CLAIMS
+ * EXACTLY ITS PINS. Each part of the claim claims its words over exactly the forms its row's pages plant, the falsifier roster
+ * naming them pin by pin, and every known family no row plants is a NAMED RESIDUAL in the claim's NOT CLAIMED section, its row
+ * a pinned quiet row that reads one form of the family as the reader reads it today. A form no page plants is not claimed, and
+ * no row's silence about a form is a claim about it.
  *
  * WHAT IS DELIVERED. The readers are test/helpers/binding-text-reader.ts (bindingTextReader), shared so a census rides them:
  * wb-jwc.7's census (blocked by this bead, R-B115; not on trunk) can take their resolve, alternatives, exact, words, program,
@@ -68,6 +72,21 @@
  * later spread or computed member could set it (the d3 and d5 rows of XF-OVERRIDES); the helper now relabels it, the last such
  * member's label kept.
  *
+ * REFUSAL #3 (gate-prep-13, run g10-gate-s166, O:1611), ITS UNMET ITEMS AND HOW CUT #4 NARROWS EACH (no new pin; their
+ * coverage is deferred to wb-jwc.13): U1a (n03, an eval call with two or more arguments uncounted) by BINDING (5) claiming a
+ * call with no argument or with one string literal argument, any other argument list NOT CLAIMED; U1b (n23, a trailing .bat or
+ * .com dropped) by READINGS (2) naming a trailing extension no words row page plants NOT CLAIMED; U1c (n31, a catch variable
+ * typed with the any keyword read as other) by BINDING (3)'s catch claiming no type annotation or the annotation unknown, any
+ * other annotation NOT CLAIMED; U1d (n18, the EFFECT dedupe dropped) by READINGS (5)'s EFFECT no longer claiming each once,
+ * two alternatives that render alike NOT CLAIMED; U2 (n30 and n35, the bound labels read raw) by TEXT (12) stating the
+ * whitespace-collapsed label TEXT (10) reads, a bound expression whose source text holds a whitespace run other than one space
+ * NOT CLAIMED. Its F3 word is taken: BINDING (5) claims each planted position with the call the whole statement, expression or
+ * returned expression there, so a nested call (n04 to n07) is at a position NOT CLAIMED (1) names. Found by this cut's own
+ * probes on the cut #3 helper, each surviving it at 0 failed | 164 passed, the same class beside those members: an eval call
+ * with one argument other than a string literal (beside U1a), a catch variable annotated other than unknown (beside U1c), a
+ * spread's, a computed key's and an accessor's label read raw (beside U2, READINGS (5)) and a program label collapsing runs of
+ * spaces only (beside U2, READINGS (3)); each such sub-form is NOT CLAIMED in its part.
+ *
  * THE CLAIM (test/helpers/binding-text-reader.ts BINDING_TEXT_CLAIM, held here byte-for-byte; its numbered parts are
  * BINDING_FORMS, TEXT_FORMS, READING_FORMS and RESIDUAL_FORMS, each pinned by its row):
  * BINDING: (1) an identifier is read through the declaration TypeScript's checker binds it to by scope, in a program over its
@@ -87,70 +106,78 @@
  * declaration); destructuring (an element of a destructuring pattern, whatever declares the pattern: a const, let or var
  * declaration, a parameter or a catch clause); let (a let declaration, declare let and a let exported from a namespace body
  * included); var (a var declaration, declare var and a var exported from a namespace body included); using (a using or await
- * using declaration); catch (a catch clause variable, with a type annotation or without); no-initializer (a const with no
- * initializer); ambient (a const in an ambient context); namespace (a namespace, or a const exported from a namespace body);
- * parameter; function (a function declaration, or a named function expression's own name); class (a class declaration, or a
- * named class expression's own name); enum (an enum or an enum member); other (a declaration of any other kind); (4) an
- * identifier inside a with statement's body, at any depth (nested blocks, functions, classes and with statements included),
- * reads as <opaque NAME:with>, whatever it binds; (5) every identifier of a module that calls eval by name reads as <opaque
- * NAME:eval>, whatever it binds, a with statement's body included: a call, optional or not and with or without arguments,
- * whose callee is the identifier eval itself (evaluate, preval, Eval, EVAL, ev and evalx are other names) inside any
- * parentheses, as, satisfies, non-null !, type assertion or await, as a statement at the top level or in a function, an async
- * function, a class method or a with body, or inside an object literal's method, a template substitution, an arrow function's
- * body, a const's initializer, a parameter default, a class static block, a class field's initializer, a getter's body, a
- * computed property key, an enum member's initializer, a return statement or a call's argument; a new expression, a tagged
- * template and an uncalled decorator are no call; (6) an identifier whose const's initializer reaches that same const (the
- * same declaration, not a same-named one) again reads, at the repeated reach, as <opaque NAME:cycle>, NAME the identifier
- * there, the expression's other alternatives read as usual. TEXT: an expression's alternatives are (1) a string or
- * no-substitution template literal: its text, each escape sequence read as the character it stands for, as TypeScript cooks it
- * (\x, \u, \u{...}, \n, \t, \\, \", \', \0, an octal escape and a line continuation); (2) an identifier: as BINDING reads it;
- * (3) a template with substitutions: every combination of its literal parts' texts (escape sequences read) and its
- * substitutions' alternatives, in order; (4) a + join: every combination of its left side's and its right side's alternatives;
- * (5) a ?: expression: its two branches' alternatives, its condition unread; (6) a ?? expression: both sides' alternatives;
- * (7) a || expression: both sides' alternatives; (8) a && expression: both sides' alternatives; (9) parentheses, as,
- * satisfies, a non-null !, a type assertion and await: the inner expression's alternatives; (10) any other expression (every
- * binary operator but +, ??, || and &&, the plain and compound assignments and the comma included, every prefix and postfix
- * operator, void, typeof and delete, a call, optional or not, a new expression, a property or element access, optional or not,
- * a property access through a non-null !, a number, bigint or regular expression literal, true, false, null, this, a property
- * of super, a tagged template, an arrow function, a function or class expression, a spread, yield, import.meta, new.target, an
- * instantiation expression and an object or array literal): one <opaque TEXT>, TEXT its source text with each run of the
- * characters JavaScript's \s class matches read as one space (U+0085 and U+200B, which it does not match, stay); (11) each
- * combination with an opaque part reads as its first opaque part's alternative, and each combination without one as its joined
- * text, so a join keeps its exact alternatives beside its opaque ones; (12) a template or + join with more than 64
- * combinations (counted before any two are found to read alike), or an expression read more than 16 levels deep (each wrapper,
- * each identifier followed to its initializer, and each side, branch or substitution read counting one level), reads, where
- * the bound is passed, as one <opaque TEXT:bound>, TEXT that expression's source text; (13) the alternatives are listed in
- * source order (a left side's or a true branch's first, a combination's by its parts, the first part varying slowest), each
- * once, a text and an opaque part with the same label being two alternatives. READINGS: (1) an expression's texts: its
- * alternatives' texts, in order, when none is opaque; unresolved otherwise; (2) a command's words: every alternative's text
- * split at each run of whitespace (the characters JavaScript's \s class matches), quotes (" ' and `, at a word's end or inside
- * it) and the shell operators ; & | ( ) < >, and at no other printable ASCII character (U+0085 and U+200B split nothing
- * either), each word then cut to the text after its last / or \ and a trailing .exe or .cmd (either case) dropped, so a word
- * can cut to the empty word; each word once, the empty word included, in order of first appearance; unresolved when any
- * alternative is opaque; (3) a launch program: when every alternative is a text with a first word (READINGS (2)'s first word,
- * the empty word included), those first words, sorted, each once, joined by |; otherwise <opaque TEXT>, TEXT the program
- * expression's source text with each whitespace run read as TEXT (10) reads it; (4) an object literal's fields, member by
- * member in source order, a later member overriding: a property assignment whose key is a name, a string or numeric literal,
- * or a computed key whose expression, inside any of the wrappers TEXT (9) names, is a string or no-substitution template
- * literal sets its field, and so does a shorthand property; a method, getter or setter with such a key makes its own field
- * opaque; a spread whose expression, inside any of those wrappers, is an identifier BINDING resolves to a const whose
- * initializer, inside any of those wrappers, is an object literal whose own fields hold no opaque member (a method, getter or
- * setter included; spreads nested at most 8 deep) sets the fields it holds; any other member (a spread of anything else, or a
- * member with any other key, a computed number included) is opaque and may set every field; (5) a registration: an object
- * literal whose id field has a text alternative starting reactivefiber. (reactivefiber, reactivefiberx.b, ReactiveFiber.d,
- * forge.reactivefiber.c and a text with a leading space start no such text), read as one ID:EFFECT entry per such text and per
- * opaque alternative of that id, the object's entries sorted, each once, ID the text or <opaque LABEL>; EFFECT its effectClass
- * field's alternatives (a text as itself, an opaque one as <opaque LABEL>), sorted, each once, joined by |, or <none> when it
- * has no effectClass field; a field an opaque member may set after its last setting, or in place of one, reads <opaque
- * MEMBER>, MEMBER the label of the last such member (...expression for a spread, its key's source text, or get name, set name
- * or name() for an accessor or method). Each part claims its words over exactly the forms its census row's pages plant, the
- * roster naming them pin by pin. NOT CLAIMED (named residuals, each read today by its quiet row): (1) an eval call at a
- * position no eval row page plants, whose quiet row reads a module calling eval in a switch statement's head; (2) a JavaScript
- * module's require declaration in a form no const or import page plants, whose quiet row reads a require reached through a
- * comma expression; (3) a path in a form no scope page plants, whose quiet row reads the JavaScript page at a path ending
- * .Mjs; (4) an expression kind no other row page plants, whose quiet row reads a JSX element and fragment in a .tsx module;
- * (5) a character no words row page plants, whose quiet row reads a command word holding a letter outside ASCII. No reading
- * claims more than these parts state.
+ * using declaration); catch (a catch clause variable with no type annotation or with the annotation unknown, while one with
+ * any other annotation is NOT CLAIMED); no-initializer (a const with no initializer); ambient (a const in an ambient context);
+ * namespace (a namespace, or a const exported from a namespace body); parameter; function (a function declaration, or a named
+ * function expression's own name); class (a class declaration, or a named class expression's own name); enum (an enum or an
+ * enum member); other (a declaration of any other kind); (4) an identifier inside a with statement's body, at any depth
+ * (nested blocks, functions, classes and with statements included), reads as <opaque NAME:with>, whatever it binds; (5) every
+ * identifier of a module that calls eval by name reads as <opaque NAME:eval>, whatever it binds, a with statement's body
+ * included: a call, optional or not, with no argument or with one string literal argument, whose callee is the identifier eval
+ * itself (evaluate, preval, Eval, EVAL, ev and evalx are other names) inside any parentheses, as, satisfies, non-null !, type
+ * assertion or await, as a statement at the top level or in a function, an async function, a class method or a with body, or
+ * inside an object literal's method, a template substitution, an arrow function's body, a const's initializer, a parameter
+ * default, a class static block, a class field's initializer, a getter's body, a computed property key, an enum member's
+ * initializer, a return statement or a call's argument, the call being the whole statement, the whole expression or the whole
+ * returned expression there (a call nested inside another expression there, parentheses around the whole call included, is at
+ * a position NOT CLAIMED (1) names); an eval call with two or more arguments, or with one argument other than a string
+ * literal, is NOT CLAIMED; a new expression, a tagged template and an uncalled decorator are no call; (6) an identifier whose
+ * const's initializer reaches that same const (the same declaration, not a same-named one) again reads, at the repeated reach,
+ * as <opaque NAME:cycle>, NAME the identifier there, the expression's other alternatives read as usual. TEXT: an expression's
+ * alternatives are (1) a string or no-substitution template literal: its text, each escape sequence read as the character it
+ * stands for, as TypeScript cooks it (\x, \u, \u{...}, \n, \t, \\, \", \', \0, an octal escape and a line continuation); (2)
+ * an identifier: as BINDING reads it; (3) a template with substitutions: every combination of its literal parts' texts (escape
+ * sequences read) and its substitutions' alternatives, in order; (4) a + join: every combination of its left side's and its
+ * right side's alternatives; (5) a ?: expression: its two branches' alternatives, its condition unread; (6) a ?? expression:
+ * both sides' alternatives; (7) a || expression: both sides' alternatives; (8) a && expression: both sides' alternatives; (9)
+ * parentheses, as, satisfies, a non-null !, a type assertion and await: the inner expression's alternatives; (10) any other
+ * expression (every binary operator but +, ??, || and &&, the plain and compound assignments and the comma included, every
+ * prefix and postfix operator, void, typeof and delete, a call, optional or not, a new expression, a property or element
+ * access, optional or not, a property access through a non-null !, a number, bigint or regular expression literal, true,
+ * false, null, this, a property of super, a tagged template, an arrow function, a function or class expression, a spread,
+ * yield, import.meta, new.target, an instantiation expression and an object or array literal): one <opaque TEXT>, TEXT its
+ * source text with each run of the characters JavaScript's \s class matches read as one space (U+0085 and U+200B, which it
+ * does not match, stay); (11) each combination with an opaque part reads as its first opaque part's alternative, and each
+ * combination without one as its joined text, so a join keeps its exact alternatives beside its opaque ones; (12) a template
+ * or + join with more than 64 combinations (counted before any two are found to read alike), or an expression read more than
+ * 16 levels deep (each wrapper, each identifier followed to its initializer, and each side, branch or substitution read
+ * counting one level), reads, where the bound is passed, as one <opaque TEXT:bound>, TEXT that expression's source text with
+ * each whitespace run read as TEXT (10) reads it (a bound expression whose source text holds a whitespace run other than one
+ * space, a line break among them, is NOT CLAIMED); (13) the alternatives are listed in source order (a left side's or a true
+ * branch's first, a combination's by its parts, the first part varying slowest), each once, a text and an opaque part with the
+ * same label being two alternatives. READINGS: (1) an expression's texts: its alternatives' texts, in order, when none is
+ * opaque; unresolved otherwise; (2) a command's words: every alternative's text split at each run of whitespace (the
+ * characters JavaScript's \s class matches), quotes (" ' and `, at a word's end or inside it) and the shell operators ; & | (
+ * ) < >, and at no other printable ASCII character (U+0085 and U+200B split nothing either), each word then cut to the text
+ * after its last / or \ and a trailing .exe or .cmd (either case) dropped (whether a word drops a trailing extension no words
+ * row page plants, .bat and .com among them, is NOT CLAIMED), so a word can cut to the empty word; each word once, the empty
+ * word included, in order of first appearance; unresolved when any alternative is opaque; (3) a launch program: when every
+ * alternative is a text with a first word (READINGS (2)'s first word, the empty word included), those first words, sorted,
+ * each once, joined by |; otherwise <opaque TEXT>, TEXT the program expression's source text with each whitespace run read as
+ * TEXT (10) reads it (a program expression whose source text holds a whitespace character other than a space, a line break
+ * among them, is NOT CLAIMED); (4) an object literal's fields, member by member in source order, a later member overriding: a
+ * property assignment whose key is a name, a string or numeric literal, or a computed key whose expression, inside any of the
+ * wrappers TEXT (9) names, is a string or no-substitution template literal sets its field, and so does a shorthand property; a
+ * method, getter or setter with such a key makes its own field opaque; a spread whose expression, inside any of those
+ * wrappers, is an identifier BINDING resolves to a const whose initializer, inside any of those wrappers, is an object literal
+ * whose own fields hold no opaque member (a method, getter or setter included; spreads nested at most 8 deep) sets the fields
+ * it holds; any other member (a spread of anything else, or a member with any other key, a computed number included) is opaque
+ * and may set every field; (5) a registration: an object literal whose id field has a text alternative starting reactivefiber.
+ * (reactivefiber, reactivefiberx.b, ReactiveFiber.d, forge.reactivefiber.c and a text with a leading space start no such
+ * text), read as one ID:EFFECT entry per such text and per opaque alternative of that id, the object's entries sorted, each
+ * once, ID the text or <opaque LABEL>; EFFECT its effectClass field's alternatives (a text as itself, an opaque one as <opaque
+ * LABEL>), sorted, joined by |, or <none> when it has no effectClass field (how EFFECT reads two alternatives that render
+ * alike, a text spelling an opaque one's <opaque LABEL>, is NOT CLAIMED); a field an opaque member may set after its last
+ * setting, or in place of one, reads <opaque MEMBER>, MEMBER the label of the last such member (...expression for a spread,
+ * its key's source text, or get name, set name or name() for an accessor or method; a label whose source text holds a
+ * whitespace run other than one space is NOT CLAIMED). Each part claims its words over exactly the forms its census row's
+ * pages plant, the roster naming them pin by pin. NOT CLAIMED (named residuals, each read today by its quiet row): (1) an eval
+ * call at a position no eval row page plants, whose quiet row reads a module calling eval in a switch statement's head; (2) a
+ * JavaScript module's require declaration in a form no const or import page plants, whose quiet row reads a require reached
+ * through a comma expression; (3) a path in a form no scope page plants, whose quiet row reads the JavaScript page at a path
+ * ending .Mjs; (4) an expression kind no other row page plants, whose quiet row reads a JSX element and fragment in a .tsx
+ * module; (5) a character no words row page plants, whose quiet row reads a command word holding a letter outside ASCII. No
+ * reading claims more than these parts state.
  *
  * ANCHORS (outside this file): the tracker export (.beads/issues.jsonl, the bead's title, description items and Acceptance
  * line) for S1, S2, S3, PREMISE and ACCEPTANCE; the helper's BINDING_FORMS, TEXT_FORMS, READING_FORMS and RESIDUAL_FORMS for
@@ -162,10 +189,11 @@
  * its refusal #4 members through these readers is a delivery-note receipt, not a pin); which calls load or launch a module
  * (the loads and programs probes above are this census's own locators, by callee name, and a riding census keeps its own);
  * what a module does at run time beyond its source text (a CommonJS exports object reassigned, a prototype patched, source
- * evaluated), which the readers never see; any form outside the planted ones, the claim's named residuals among them; and the
- * gate members' notes: MEMBERS anchors R-B115's members and refusal #1's and #2's members by naming each one's source (the
- * tracker export carries their notes in the bead's notes field), and this census reads only the export's title and
- * description, never its notes.
+ * evaluated), which the readers never see; any form outside the planted ones, the claim's named residuals among them; the
+ * sub-forms cut #4's narrowed parts name NOT CLAIMED (refusal #3's U1a to U1d and U2, whose coverage wb-jwc.13 carries, and
+ * the same-class forms beside them); and the gate members' notes: MEMBERS anchors R-B115's members and refusal #1's and #2's
+ * members by naming each one's source (the tracker export carries their notes in the bead's notes field), and this census
+ * reads only the export's title and description, never its notes.
  */
 
 import { createHash } from "node:crypto";

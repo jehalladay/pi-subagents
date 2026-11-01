@@ -9,13 +9,16 @@
  * program with an unresolvable part reads as its resolvable part (refusal #4's E1 and E2), and a registration id whose
  * reactivefiber.* alternative is not its first readable side registers nothing (refusal #4's R-ALT1, R-ALT2 and R-ALT4).
  *
- * WHAT. bindingTextReader(path, text) parses one module, binds it with TypeScript's checker in a program over that module alone,
- * and reads its expressions as BINDING_TEXT_CLAIM states, part by part (BINDING_FORMS, TEXT_FORMS and READING_FORMS), each part
- * claimed over exactly the forms its census row plants; RESIDUAL_FORMS names the families no row plants (NOT CLAIMED, each with a
- * quiet row). The census test/workbench-rf-binding-text-reader-census.test.ts holds the claim byte-for-byte and pins every part
- * with planted modules. wb-jwc.7's census (blocked by this bead, R-B115) can take these readers in place of its own nameResolved,
- * textsOf, commandText and rfRegistrations; MEMBERS names the gate members folded into this bead (ruling R-B115's, refusal #1's
- * and refusal #2's), each bound to the part whose row pins it.
+ * WHAT. bindingTextReader(path, text) parses one module, binds it with TypeScript's checker in a program over that module
+ * alone, and reads its expressions as BINDING_TEXT_CLAIM states, part by part (BINDING_FORMS, TEXT_FORMS and READING_FORMS),
+ * each part claimed over exactly the forms its census row plants; RESIDUAL_FORMS names the families no row plants (NOT
+ * CLAIMED, each with a quiet row). Cut #4 (R-B233, the fail-closed core) narrows BINDING (3) and (5), TEXT (12) and READINGS
+ * (2), (3) and (5) to their planted sub-forms and names the rest NOT CLAIMED in the part itself: refusal #3's U1a to U1d and
+ * U2, whose coverage is deferred to wb-jwc.13, the child R-B233 files, and the same-class forms the cutting seat's probes
+ * found beside them. The census test/workbench-rf-binding-text-reader-census.test.ts holds the claim byte-for-byte and pins
+ * every part with planted modules. wb-jwc.7's census (blocked by this bead, R-B115) can take these readers in place of its own
+ * nameResolved, textsOf, commandText and rfRegistrations; MEMBERS names the gate members folded into this bead (ruling
+ * R-B115's, refusal #1's and refusal #2's), each bound to the part whose row pins it.
  */
 import ts from "typescript";
 
@@ -43,7 +46,7 @@ export const BINDING_FORMS: readonly ClaimPart<BindingFormId>[] = [
   },
   {
     id: "kinds",
-    text: "any other binding does not resolve and reads as <opaque NAME:KIND>, NAME the identifier and KIND the first of these that names the binding: import (a binding the checker binds as an alias: an import or import-equals, merged or not, and in a JavaScript module a require declaration - a const, let or var declaration, or a top-level element of its object or array pattern, a defaulted one included, initialized directly by require with one string or no-substitution template argument or by a property access of such a call, not exported - while an exported, parenthesized, joined-argument, two-argument, nested-pattern, module.require or JSDoc-typed require declaration is no alias); unbound (no declaration in the module, a type's name in a value position included); merged (more than one declaration); destructuring (an element of a destructuring pattern, whatever declares the pattern: a const, let or var declaration, a parameter or a catch clause); let (a let declaration, declare let and a let exported from a namespace body included); var (a var declaration, declare var and a var exported from a namespace body included); using (a using or await using declaration); catch (a catch clause variable, with a type annotation or without); no-initializer (a const with no initializer); ambient (a const in an ambient context); namespace (a namespace, or a const exported from a namespace body); parameter; function (a function declaration, or a named function expression's own name); class (a class declaration, or a named class expression's own name); enum (an enum or an enum member); other (a declaration of any other kind)",
+    text: "any other binding does not resolve and reads as <opaque NAME:KIND>, NAME the identifier and KIND the first of these that names the binding: import (a binding the checker binds as an alias: an import or import-equals, merged or not, and in a JavaScript module a require declaration - a const, let or var declaration, or a top-level element of its object or array pattern, a defaulted one included, initialized directly by require with one string or no-substitution template argument or by a property access of such a call, not exported - while an exported, parenthesized, joined-argument, two-argument, nested-pattern, module.require or JSDoc-typed require declaration is no alias); unbound (no declaration in the module, a type's name in a value position included); merged (more than one declaration); destructuring (an element of a destructuring pattern, whatever declares the pattern: a const, let or var declaration, a parameter or a catch clause); let (a let declaration, declare let and a let exported from a namespace body included); var (a var declaration, declare var and a var exported from a namespace body included); using (a using or await using declaration); catch (a catch clause variable with no type annotation or with the annotation unknown, while one with any other annotation is NOT CLAIMED); no-initializer (a const with no initializer); ambient (a const in an ambient context); namespace (a namespace, or a const exported from a namespace body); parameter; function (a function declaration, or a named function expression's own name); class (a class declaration, or a named class expression's own name); enum (an enum or an enum member); other (a declaration of any other kind)",
   },
   {
     id: "with",
@@ -51,7 +54,7 @@ export const BINDING_FORMS: readonly ClaimPart<BindingFormId>[] = [
   },
   {
     id: "eval",
-    text: "every identifier of a module that calls eval by name reads as <opaque NAME:eval>, whatever it binds, a with statement's body included: a call, optional or not and with or without arguments, whose callee is the identifier eval itself (evaluate, preval, Eval, EVAL, ev and evalx are other names) inside any parentheses, as, satisfies, non-null !, type assertion or await, as a statement at the top level or in a function, an async function, a class method or a with body, or inside an object literal's method, a template substitution, an arrow function's body, a const's initializer, a parameter default, a class static block, a class field's initializer, a getter's body, a computed property key, an enum member's initializer, a return statement or a call's argument; a new expression, a tagged template and an uncalled decorator are no call",
+    text: "every identifier of a module that calls eval by name reads as <opaque NAME:eval>, whatever it binds, a with statement's body included: a call, optional or not, with no argument or with one string literal argument, whose callee is the identifier eval itself (evaluate, preval, Eval, EVAL, ev and evalx are other names) inside any parentheses, as, satisfies, non-null !, type assertion or await, as a statement at the top level or in a function, an async function, a class method or a with body, or inside an object literal's method, a template substitution, an arrow function's body, a const's initializer, a parameter default, a class static block, a class field's initializer, a getter's body, a computed property key, an enum member's initializer, a return statement or a call's argument, the call being the whole statement, the whole expression or the whole returned expression there (a call nested inside another expression there, parentheses around the whole call included, is at a position NOT CLAIMED (1) names); an eval call with two or more arguments, or with one argument other than a string literal, is NOT CLAIMED; a new expression, a tagged template and an uncalled decorator are no call",
   },
   {
     id: "cycle",
@@ -83,7 +86,7 @@ export const TEXT_FORMS: readonly ClaimPart<TextFormId>[] = [
   },
   {
     id: "bounds",
-    text: "a template or + join with more than 64 combinations (counted before any two are found to read alike), or an expression read more than 16 levels deep (each wrapper, each identifier followed to its initializer, and each side, branch or substitution read counting one level), reads, where the bound is passed, as one <opaque TEXT:bound>, TEXT that expression's source text",
+    text: "a template or + join with more than 64 combinations (counted before any two are found to read alike), or an expression read more than 16 levels deep (each wrapper, each identifier followed to its initializer, and each side, branch or substitution read counting one level), reads, where the bound is passed, as one <opaque TEXT:bound>, TEXT that expression's source text with each whitespace run read as TEXT (10) reads it (a bound expression whose source text holds a whitespace run other than one space, a line break among them, is NOT CLAIMED)",
   },
   {
     id: "order",
@@ -96,11 +99,11 @@ export const READING_FORMS: readonly ClaimPart<ReadingFormId>[] = [
   { id: "texts", text: "an expression's texts: its alternatives' texts, in order, when none is opaque; unresolved otherwise" },
   {
     id: "words",
-    text: "a command's words: every alternative's text split at each run of whitespace (the characters JavaScript's \\s class matches), quotes (\" ' and `, at a word's end or inside it) and the shell operators ; & | ( ) < >, and at no other printable ASCII character (U+0085 and U+200B split nothing either), each word then cut to the text after its last / or \\ and a trailing .exe or .cmd (either case) dropped, so a word can cut to the empty word; each word once, the empty word included, in order of first appearance; unresolved when any alternative is opaque",
+    text: "a command's words: every alternative's text split at each run of whitespace (the characters JavaScript's \\s class matches), quotes (\" ' and `, at a word's end or inside it) and the shell operators ; & | ( ) < >, and at no other printable ASCII character (U+0085 and U+200B split nothing either), each word then cut to the text after its last / or \\ and a trailing .exe or .cmd (either case) dropped (whether a word drops a trailing extension no words row page plants, .bat and .com among them, is NOT CLAIMED), so a word can cut to the empty word; each word once, the empty word included, in order of first appearance; unresolved when any alternative is opaque",
   },
   {
     id: "program",
-    text: "a launch program: when every alternative is a text with a first word (READINGS (2)'s first word, the empty word included), those first words, sorted, each once, joined by |; otherwise <opaque TEXT>, TEXT the program expression's source text with each whitespace run read as TEXT (10) reads it",
+    text: "a launch program: when every alternative is a text with a first word (READINGS (2)'s first word, the empty word included), those first words, sorted, each once, joined by |; otherwise <opaque TEXT>, TEXT the program expression's source text with each whitespace run read as TEXT (10) reads it (a program expression whose source text holds a whitespace character other than a space, a line break among them, is NOT CLAIMED)",
   },
   {
     id: "properties",
@@ -108,7 +111,7 @@ export const READING_FORMS: readonly ClaimPart<ReadingFormId>[] = [
   },
   {
     id: "registration",
-    text: "a registration: an object literal whose id field has a text alternative starting reactivefiber. (reactivefiber, reactivefiberx.b, ReactiveFiber.d, forge.reactivefiber.c and a text with a leading space start no such text), read as one ID:EFFECT entry per such text and per opaque alternative of that id, the object's entries sorted, each once, ID the text or <opaque LABEL>; EFFECT its effectClass field's alternatives (a text as itself, an opaque one as <opaque LABEL>), sorted, each once, joined by |, or <none> when it has no effectClass field; a field an opaque member may set after its last setting, or in place of one, reads <opaque MEMBER>, MEMBER the label of the last such member (...expression for a spread, its key's source text, or get name, set name or name() for an accessor or method)",
+    text: "a registration: an object literal whose id field has a text alternative starting reactivefiber. (reactivefiber, reactivefiberx.b, ReactiveFiber.d, forge.reactivefiber.c and a text with a leading space start no such text), read as one ID:EFFECT entry per such text and per opaque alternative of that id, the object's entries sorted, each once, ID the text or <opaque LABEL>; EFFECT its effectClass field's alternatives (a text as itself, an opaque one as <opaque LABEL>), sorted, joined by |, or <none> when it has no effectClass field (how EFFECT reads two alternatives that render alike, a text spelling an opaque one's <opaque LABEL>, is NOT CLAIMED); a field an opaque member may set after its last setting, or in place of one, reads <opaque MEMBER>, MEMBER the label of the last such member (...expression for a spread, its key's source text, or get name, set name or name() for an accessor or method; a label whose source text holds a whitespace run other than one space is NOT CLAIMED)",
   },
 ];
 

@@ -934,7 +934,7 @@
     {
      "pin": "XR-FORMS",
      "page": "6a8fcdd52b392fdc",
-     "falsifies": "the id texts forge.render.commit, an opaque-only id and a reactivefiber field that is no id register nothing; no effectClass reads <none>; effectClass alternatives read sorted and joined (read|write), an opaque one as <opaque p:parameter>; two id texts read one entry each; a conditional of one effect text twice reads it once"
+     "falsifies": "the id texts forge.render.commit, an opaque-only id and a reactivefiber field that is no id register nothing; no effectClass reads <none>; effectClass alternatives read sorted and joined (read|write), an opaque one as <opaque p:parameter>; two id texts read one entry each; a conditional of one effect text twice reads it once, its alternatives each once as TEXT (13) lists them"
     },
     {
      "pin": "M12",
