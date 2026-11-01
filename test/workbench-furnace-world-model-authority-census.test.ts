@@ -52,6 +52,14 @@
  * the first 2000 alone under the release's dist and the last 2000 alone under its contract/registry; this cut adds EVERY
  * and BESIDE's class plants of every channel (Z1) for them, and names under NOT CLAIMED the walks it measured that keep
  * the census green (no stems, or identifiers and private names alone, for the modules a file-name mark picks).
+ * RE-MEASURED by the follow-up seat ws-02 (run g10-work-s172, wb-tkf5: landing 751's F2) on trunk 644e70d: the same 117
+ * .ts modules under src (57 under src/workbench) in 6 directories, no file under src with another extension, the release
+ * unchanged (128 files in 9 directories, 16 classes); landing 751's F2 survivor replayed on the landed bytes - a src arm
+ * that drops every no-substitution template's token (GP10-X1), also with a src/workbench module whose only spelling is a
+ * no-substitution template, which alone reds Z1 - kept the census 17 passed (17), and so did a src arm that drops every
+ * template head and one that drops every template middle, each also with a src/workbench module spelling a record only
+ * there, which alone reds Z1; this cut adds Z1's templateHead, templateMiddle and noSubstitutionTemplate channels (with
+ * their class plants) for them, and names under NOT CLAIMED the places no channel plants a kind.
  * Pi's Beads and Furnace readers take their native clients as parameters, the seams this census drives: the Beads work reader
  * (src/workbench/beads-observer.ts,
  * seam BeadsReadClient: show) and the program readiness reader (src/workbench/beads-program-readiness.ts, seam
@@ -121,25 +129,31 @@
  *  Z, "released world-model record surface alongside live Beads/Furnace state" (the gating artifact). Z1 until it is released
  *    no Pi reader of the records exists: no file of the installed @furnace/sdk release names one, read as the NFKC fold of
  *    the file's whole text (lower-cased, every character outside a-z and 0-9 removed) holding a STEMS member, and no .ts
- *    module under src names one in its code, read as the same fold of each code token alone (every identifier, private name
- *    included, and every string, template and regular-expression literal of the parsed module, a regular expression's \x,
- *    \u and \u{} escapes decoded before the fold; comments are never read, so prose citing the program, such as a bead tag,
- *    is no reader), with floors on the modules the walk read. The walk that reads the tree reads Z1's plants in the same
- *    call: a planted spelling of each stem is found as an identifier, a private name, a string, a template, a
- *    regular-expression literal and a regular expression whose every character is escaped (in each of the three forms) by
- *    the src arm, and inside a comment by the release arm. BESIDE: each channel plant's path sits under its arm's own root
+ *    module under src names one in its code, read as the same fold of each code token alone (the parsed module's tokens of
+ *    these kinds: an identifier, a private name, a string literal, the text of a template in each of the four token kinds
+ *    the parser makes of one - a no-substitution template, and a substitution template's head, middle and tail - and a
+ *    regular-expression literal, a regular expression's \x, \u and \u{} escapes decoded before the fold; comments are never
+ *    read, so prose citing the program, such as a bead tag, is no reader), with floors on the modules the walk read. The
+ *    walk that reads the tree reads Z1's plants in the same call: a planted spelling of each stem is found by the src arm in
+ *    each of those kinds, through its eleven code channels - an interface's name (identifier), a class field's private name
+ *    (privateName), a const's string (string), the tail, the head and the middle of a template an arrow function returns
+ *    (template, templateHead, templateMiddle), a const's no-substitution template (noSubstitutionTemplate), a const's
+ *    regular-expression literal (regex) and a const's regular expression whose every character is escaped, in each of the
+ *    three forms (regexHex, regexUnicode, regexCodePoint) - and inside a comment by the release arm; so a src arm that drops
+ *    the tokens of one of those kinds in every module loses that kind's channel plants and its class plants and reds Z1.
+ *    Each kind is planted in those places only (NOT CLAIMED). BESIDE: each channel plant's path sits under its arm's own root
  *    (src, the release's directory) beside the tree's modules, and the head and tail channels put the src arm's identifier
  *    and the release arm's comment before and after the whole text of the longest module that arm reads; every class of
  *    module the tree's listing hands an arm (a module's own directory with its extension, the file name from its first dot:
  *    src 6 classes, the release 16 at c947b21 and at 7290d91, each arm held to a floor, CLASS_FLOORS) holds, in that
- *    directory with that extension, one class plant per stem for each of the arm's channels (the src arm's eight code
+ *    directory with that extension, one class plant per stem for each of the arm's channels (the src arm's eleven code
  *    channels and its head and tail, the release arm's comment and its head and tail; a class's head and tail plants put
  *    the arm's plant before and after the whole text of the longest module of that class), and the witness lists by arm
  *    every class whose plants the walk did not read as their stems (none). A class plant carries its class's directory and
  *    extension but no file name of the class's modules: so a walk that picks the modules of one class by a mark its plants
- *    carry - the directory (by its path, or by a path prefix that stops short of the file names: src/workbench, src/work,
+ *    carry - the directory (by its path, or by a path prefix that stops short of the file names: src/workbench, src/workflow,
  *    src/workbench/providers, the release's dist or any other) or the extension - and reads none of them, computes no stems
- *    for them, reads only some of the src arm's eight code channels in them, or reads only each one's first or last
+ *    for them, reads only some of the src arm's eleven code channels in them, or reads only each one's first or last
  *    characters, loses those plants' readings too. EVERY: the witness lists by arm every module the walk was handed (the
  *    tree's modules and the plants) that it handed back no reading of (none), so a walk that skips a module it is handed,
  *    picked by any mark - a file name (the release's README.md or package.json, each the only module of its class), a path
@@ -223,7 +237,16 @@
  * because that class's head and tail plants carry the module's text; identifiers and private names alone for the src
  * modules whose file name starts furnace- keeps 17 passed (17), also with a src/workbench/furnace-* module whose only
  * spelling is a string literal, which alone reds Z1; no stems for the src modules whose file name starts furnace- keeps 17
- * passed (17), also with a src/workbench/furnace-* module naming a record, which alone reds Z1); and a module the tree's
+ * passed (17), also with a src/workbench/furnace-* module naming a record, which alone reds Z1); a src arm that reads each
+ * kind where Z1's channels plant it but drops it in another place: each kind is planted only in the places Z1 names (an
+ * identifier as an interface's name, also before and after a module's whole text; a private name as a class field's; a
+ * string, a no-substitution template and a regular expression as a const's value; a template's head, middle and tail in
+ * the template an arrow function returns), so a reading that drops a kind only in another place (an identifier that is a
+ * reference, a property name or an import or export specifier, a string that is a module specifier or a property name, a
+ * tagged template's text, or a template's second or later middle) is NOT CLAIMED by this census (measured: dropping every
+ * tagged template's text keeps 17 passed (17), also with a src/workbench module whose only spelling is a tagged
+ * template's text, which alone reds Z1; and so does dropping every template middle after a template's first, also with a
+ * src/workbench module spelling a record only in a second middle, which alone reds Z1); and a module the tree's
  * listing never hands the walk (the listing narrowed before the walk): the
  * walk never reads it, and a class the listing drops whole holds no plant, so the floors and O's seam roster, which reads
  * the same listing, are its only guards (measured: a listing without src/workbench/providers reds O; one without src/ui
@@ -755,9 +778,10 @@ const regexText = (literal: string): string =>
     const hex = hex2 ?? braced ?? hex4;
     return hex === undefined ? (other ?? "") : codePoint(hex, written);
   });
-/** A parsed module's code tokens: every identifier (private names included) and every string, template and
- * regular-expression literal, a regular expression's escapes decoded. Comments are trivia the walk never visits
- * (forEachChild reaches no JSDoc node). */
+/** A parsed module's code tokens: the identifiers (private names included), string literals, template tokens (a
+ * no-substitution template, and a substitution template's head, middles and tail) and regular-expression literals that
+ * forEachChild reaches, a regular expression's escapes decoded; Z1's channels plant each kind in the places the header
+ * names. Comments are trivia the walk never visits (forEachChild reaches no JSDoc node). */
 function codeTokens(file: string, value: string): readonly string[] {
   const tokens: string[] = [];
   const visit = (node: ts.Node): void => {
@@ -807,7 +831,8 @@ const modulesUnder = (dir: string, keep: (name: string) => boolean): readonly Mo
   filesUnder(join(REPO, dir), keep).map(file => ({ path: relative(REPO, file), text: readFileSync(file, "utf8") }));
 /** The modules tsconfig.json compiles: its include is the .ts files under src. */
 const isTs = (name: string): boolean => name.endsWith(".ts");
-/** The planted spellings, one per stem in STEMS order: as written (a string, a template, a comment) and as an identifier. */
+/** The planted spellings, one per stem in STEMS order: as written (a string, a template in each of its token kinds, a
+ * regular expression, a comment) and as an identifier. */
 const SPELLINGS = ["FurnaceObservedTransition", "counterfactual_candidate", "Synthetic Attempt State", "world-model", "predicted_distribution"] as const;
 const IDENTIFIER_SPELLINGS = ["FurnaceObservedTransition", "CounterfactualCandidate", "SyntheticAttemptState", "WorldModel", "predicted_distribution"] as const;
 /** A spelling with every character written as a regular-expression escape, one escape form at a time. */
@@ -841,6 +866,9 @@ const Z1_CHANNELS: Readonly<Record<string, { readonly arm: Arm; readonly text: (
   privateName: { arm: "src", text: index => `export class Plant {\n  #${IDENTIFIER_SPELLINGS[index]} = 1;\n}\n` },
   string: { arm: "src", text: index => `export const plant = ${JSON.stringify(SPELLINGS[index])};\n` },
   template: { arm: "src", text: index => `export const plant = (id: string): string => \`\${id} ${SPELLINGS[index]}\`;\n` },
+  templateHead: { arm: "src", text: index => `export const plant = (id: string): string => \`${SPELLINGS[index]} \${id}\`;\n` },
+  templateMiddle: { arm: "src", text: index => `export const plant = (id: string): string => \`\${id} ${SPELLINGS[index]} \${id}\`;\n` },
+  noSubstitutionTemplate: { arm: "src", text: index => `export const plant = \`${SPELLINGS[index]}\`;\n` },
   regex: { arm: "src", text: index => `export const plant = /${SPELLINGS[index]}/;\n` },
   regexHex: { arm: "src", text: index => `export const plant = /${ESCAPES.regexHex(SPELLINGS[index])}/u;\n` },
   regexUnicode: { arm: "src", text: index => `export const plant = /${ESCAPES.regexUnicode(SPELLINGS[index])}/u;\n` },
@@ -873,7 +901,7 @@ const extensionOf = (path: string): string => {
 const classOf = (path: string): string => join(dirname(path), `*${extensionOf(path)}`);
 /** A class plant's path: the class's own directory, a plant file name naming its channel, the class's own extension. */
 const classPlantPath = (path: string, channel: string, index: number): string => join(dirname(path), `world-model-z1-plant-${channel}-${index}${extensionOf(path)}`);
-/** The channels of one arm, in Z1_CHANNELS order: the src arm's eight code channels and its head and tail, the release arm's
+/** The channels of one arm, in Z1_CHANNELS order: the src arm's eleven code channels and its head and tail, the release arm's
  * comment and its head and tail. */
 const armChannels = (arm: Arm) => Object.entries(Z1_CHANNELS).filter(([, channel]) => channel.arm === arm);
 /** BESIDE's class plants for one arm: in every class of module the tree's listing hands the arm, one plant per stem for each of
