@@ -52,7 +52,12 @@
  *    since is skipped) above its floor, the rf provider and this file among them, and met no symlink and no failed read. An
  *    entry whose name is not UTF-8 is a failed read (its name decodes lossily, so neither the walk nor the compiler can open it
  *    by that name: P-NAME-NOT-UTF8), and so is a module the compiler's reader reads no text from (P-NO-TEXT: a planted module
- *    whose mode denies every read, which the compiler host's getSourceFile reads no text from either). A3 the
+ *    whose mode denies every read, which the compiler host's getSourceFile reads no text from either). P-NO-TEXT's premise is
+ *    A2's first assertion, with its own line (NO_TEXT_PREMISE, which names the runner): the compiler's reader (ts.sys.readFile)
+ *    reads no text from the planted module (the witness's premise.planted: no miss). The premise's read is held on the module's
+ *    readable twin (NO_TEXT_TWIN: the adoption at mode 0o444, readable to every user, as a runner that ignores file modes reads
+ *    the plant), where it reads NO_TEXT_PREMISE: N-NO-TEXT-PREMISE-ON-A-READABLE-TWIN, and the witness's premise.readableTwin
+ *    holds the line to the roster. A3 the
  *    producer gate reads closed over the roster's measured facts: no src/ or python/ site, no site in a published file and no
  *    export key beyond the measured six at any revision; each opening fact, planted alone, reads open.
  *  B acceptance (a), armed at adoption. B1 the title's five forbidden acts in render, each traced to its :17 phrase; B2 the title's
@@ -76,8 +81,13 @@
  *   the compiler host's, P-DECODE-AS-HOST), so an encoding removed from every literal of both together stays green.
  *   The walk's failed-read controls: P-NAME-NOT-UTF8 and P-NO-TEXT are held to this file and the roster (P-NO-TEXT's module is
  *   held to the compiler host's reading, which reads no text from it either), so a control removed from every literal of both
- *   together stays green. The converse of P-NO-TEXT's read, a module gone since the walk read as skipped and not as a failed
- *   read, has no control: a reader that reads such a module as a failed read stays green.
+ *   together stays green, and so does N-NO-TEXT-PREMISE-ON-A-READABLE-TWIN removed, or the premise's line (NO_TEXT_PREMISE and
+ *   the witness's premise) changed, in both together. The converse of P-NO-TEXT's read, a module gone since the walk read as
+ *   skipped and not as a failed read, has no control: a reader that reads such a module as a failed read stays green. A2's
+ *   premise assertion is NOT CLAIMED by this census: the premise holds on a runner that enforces file modes, so there the
+ *   assertion removed, or the premise's planted read pointed at another path the compiler's reader reads no text from, stays
+ *   green. The premise's read of the two modules is what is pinned; the line A2 reds with on a runner that reads the plant is
+ *   NOT CLAIMED by this census (no case runs on such a runner).
  * OUTSIDE ANCHORS (the judged-set case): the owner filing's row in the tracked bead export (row wb-km7q.5: its title, and its first
  *   line opening "Citations: ", so appended notes are safe). The trigger is row A's label; the acceptance, split at " plus ", is row
  *   B's and row C's labels; the title's four duties (split at "; ") are DUTIES, and DUTIES' pins are derived from them (a duty that
@@ -112,8 +122,8 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the rows, the row states, every pin's witness, the
  *   residual families with their quiet rows and the registered test titles are held to the roster.
  * Display paths added: none. Test-only: every plant is an in-memory text except the planted trees (DECODINGS', R-UNDECODED's,
- * P-NAME-NOT-UTF8's and P-NO-TEXT's modules), written once to rule-11 scratch (test/helpers/scratch.ts) and removed after they
- * are read; the tree, the roster and the bead export are only read.
+ * P-NAME-NOT-UTF8's and P-NO-TEXT's modules, and the latter's readable twin), written once to rule-11 scratch
+ * (test/helpers/scratch.ts) and removed after they are read; the tree, the roster and the bead export are only read.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -273,8 +283,16 @@ const PLANTED_MODULE = "src/planted.tsx";
 const NAME_TREE = "name-not-utf8";
 /** The planted tree whose one module the compiler's reader reads no text from (A2's P-NO-TEXT): the adoption is written at
  * PLANTED_MODULE, then the module's mode is set to deny every read, so ts.sys.readFile and the compiler host read nothing while
- * lstat still reads a regular file. A runner that ignores file modes (root) reads the module, and the control reads false there. */
+ * lstat still reads a regular file. A runner that ignores file modes (root, or a filesystem that ignores modes) reads the module,
+ * and A2 asserts that premise (NO_TEXT_PREMISE) before it judges the control. */
 const NO_TEXT_TREE = "no-text";
+/** The planted module's readable twin: the adoption at mode 0o444, readable to every user, as a runner that ignores file modes
+ * reads the planted module. Only P-NO-TEXT's premise reads it (N-NO-TEXT-PREMISE-ON-A-READABLE-TWIN). */
+const NO_TEXT_TWIN = "no-text-readable-twin";
+/** P-NO-TEXT's premise miss, the line A2's first assertion names the runner by when the compiler's reader reads text from the
+ * planted module. */
+const NO_TEXT_PREMISE =
+  "the runner read a mode-0o000 module (a runner that ignores file modes: root, or a filesystem that ignores modes), so the P-NO-TEXT plant has text on this runner and its control cannot be judged here";
 
 // ---- the roster ----
 
@@ -820,12 +838,19 @@ interface PlantedTree {
   /** The planted module's text as the judge reads it (moduleText) and as the compiler host's getSourceFile reads it. */
   readonly text: string | undefined;
   readonly hostText: string | undefined;
+  /** NO_TEXT_TREE only: P-NO-TEXT's premise (noTextPremiseMisses) read on the planted module and on its readable twin. */
+  readonly premise?: { readonly planted: readonly string[]; readonly readableTwin: readonly string[] };
+}
+/** P-NO-TEXT's premise, read on one module: no miss when the compiler's reader (ts.sys.readFile) reads no text from it, and
+ * NO_TEXT_PREMISE when it reads text. */
+function noTextPremiseMisses(file: string): string[] {
+  return ts.sys.readFile(file) === undefined ? [] : [NO_TEXT_PREMISE];
 }
 let plantedTreesReading: Readonly<Record<string, PlantedTree>> | undefined;
 /** The planted trees, written once to rule-11 scratch and each read by readTree, the live tree's own reader: one tree per
  * encoding of DECODINGS and UNDECODED, holding the adoption's text in it at PLANTED_MODULE, and one tree holding the adoption
  * in a module named by bytes that are not UTF-8 (NAME_TREE), and one tree holding it in a module whose mode denies every read
- * (NO_TEXT_TREE). */
+ * (NO_TEXT_TREE), beside that module's readable twin (NO_TEXT_TWIN), which only P-NO-TEXT's premise reads. */
 function plantedTrees(): Readonly<Record<string, PlantedTree>> {
   if (plantedTreesReading !== undefined) return plantedTreesReading;
   const scratch = makeScratch("tsx-render-purity-");
@@ -847,7 +872,16 @@ function plantedTrees(): Readonly<Record<string, PlantedTree>> {
     mkdirSync(dirname(unreadable), { recursive: true });
     writeFileSync(unreadable, adoptionText());
     chmodSync(unreadable, 0o000);
-    trees[NO_TEXT_TREE] = { reading: readTree(join(scratch, NO_TEXT_TREE)), text: moduleText(unreadable), hostText: host.getSourceFile(unreadable, ts.ScriptTarget.Latest)?.text };
+    const twin = join(scratch, NO_TEXT_TWIN, PLANTED_MODULE);
+    mkdirSync(dirname(twin), { recursive: true });
+    writeFileSync(twin, adoptionText());
+    chmodSync(twin, 0o444);
+    trees[NO_TEXT_TREE] = {
+      reading: readTree(join(scratch, NO_TEXT_TREE)),
+      text: moduleText(unreadable),
+      hostText: host.getSourceFile(unreadable, ts.ScriptTarget.Latest)?.text,
+      premise: { planted: noTextPremiseMisses(unreadable), readableTwin: noTextPremiseMisses(twin) },
+    };
     plantedTreesReading = trees;
     return trees;
   } finally {
@@ -877,9 +911,9 @@ function decodingControls(): Controls {
   controls["P-DECODE-AS-HOST"] = [...DECODINGS, ...UNDECODED].every(({ id }) => trees[id]?.text !== undefined && trees[id]?.text === trees[id]?.hostText);
   return controls;
 }
-/** A2's controls: what the walk's path predicate reads, the failed read a name that is not UTF-8 makes, and the failed read a
+/** A2's controls: what the walk's path predicate reads, the failed read a name that is not UTF-8 makes, the failed read a
  * module the compiler's reader reads no text from makes (that module's text read by the judge's reader and by the compiler
- * host's getSourceFile: none). */
+ * host's getSourceFile: none), and P-NO-TEXT's premise read on that module's readable twin (it reads NO_TEXT_PREMISE there). */
 function walkControls(): Controls {
   const trees = plantedTrees();
   const named = trees[NAME_TREE]?.reading;
@@ -895,6 +929,7 @@ function walkControls(): Controls {
       noText.hostText === undefined &&
       noText.reading.readings.length === 0 &&
       JSON.stringify(noText.reading.failures) === JSON.stringify([`${PLANTED_MODULE}: the compiler's reader read no text`]),
+    "N-NO-TEXT-PREMISE-ON-A-READABLE-TWIN": (noText?.premise?.readableTwin ?? []).length === 0,
     "Q-OUTSIDE": SKIPPED_ROOTS.some(root => walkReads(`${root}/x.ts`)),
     "Q-NONMODULE": ["docs/workbench/x.md", ROSTER_FILE, "bin/script", "notes.txt"].some(walkReads),
   };
@@ -983,6 +1018,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     return done("A1", { findings, planted: [...plant.findings], positions, controls: { ...nameControls(), ...decodingControls() } });
   },
   A2: () => {
+    // P-NO-TEXT's premise first, with its own line (NO_TEXT_PREMISE names the runner), before the control is judged.
+    const premise = plantedTrees()[NO_TEXT_TREE]?.premise ?? { planted: ["(no premise reading)"], readableTwin: [] };
+    expect(premise.planted, `P-NO-TEXT's premise, asserted before its control is judged: ${premise.planted.join("; ")}`).toEqual([]);
     const tree = liveTree();
     const walked = new Set(tree.modules);
     const missing = tree.listed.filter(path => !walked.has(path) && isFile(path));
@@ -993,7 +1031,15 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(floorMet, `modules read: ${tree.readings.length}`).toBe(true);
     const anchors = { provider: walked.has(PROVIDER), self: walked.has(SELF) };
     expect(anchors).toStrictEqual({ provider: true, self: true });
-    return done("A2", { missing, symlinks: [...tree.walk.symlinks], failures: [...tree.failures], floorMet, anchors, controls: walkControls() });
+    return done("A2", {
+      missing,
+      symlinks: [...tree.walk.symlinks],
+      failures: [...tree.failures],
+      floorMet,
+      anchors,
+      premise: { planted: [...premise.planted], readableTwin: [...premise.readableTwin] },
+      controls: walkControls(),
+    });
   },
   A3: () => {
     const revisions = ROSTER.producer.revisions;
