@@ -7,6 +7,11 @@
  * takes the section's bounds from the lexer itself (the offset at which its top-level step for each token began, recorded by a block
  * extension that never returns a token) and slices the page's own text between them, CR and CRLF line endings and every definition
  * included, as the page spells them.
+ *
+ * The binding reads each top-level heading by its TOKEN TEXT: the text marked's inline tokens carry, an HTML token none and markup its
+ * children's text. marked carries a character reference as spelled, never decoded (18.0.11 keeps '&nbsp;', '&#32;' and '&#x41;' in a
+ * text token's text), so a heading spelled with one is another heading here, though marked's tokens hold it as a level-2 heading too
+ * (the census pins that family as its RESIDUAL REFERENCE-TWIN).
  */
 import { createHash } from "node:crypto";
 import { Marked, marked, type Token, type Tokens } from "marked";
@@ -21,7 +26,7 @@ export interface SectionToken {
 }
 
 export interface SectionSource {
-  /** The section binds: marked's top-level tokens of the page hold exactly one level-2 heading whose rendered text is the heading. */
+  /** The section binds: marked's top-level tokens of the page hold exactly one level-2 heading whose token text is the heading. */
   readonly ok: boolean;
   /** Why the reading is refused (empty when it binds). */
   readonly why: string;
@@ -48,13 +53,16 @@ const sha256 = (text: string): string => createHash("sha256").update(text, "utf8
 
 const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
 
-/** An inline token list's rendered text as the token view reads a heading: HTML renders none, markup renders its children's text. */
-function renderedInline(tokens: readonly Token[]): string {
+/**
+ * An inline token list's TOKEN TEXT, as the binding reads a heading: an HTML token carries none, a token with child tokens carries
+ * theirs, and any other token its own text as marked carries it (a character reference as spelled, never decoded).
+ */
+function inlineTokenText(tokens: readonly Token[]): string {
   return tokens
     .map(token => {
       if (token.type === "html") return "";
       const children: unknown = (token as { tokens?: unknown }).tokens;
-      if (Array.isArray(children) && children.length > 0) return renderedInline(children as Token[]);
+      if (Array.isArray(children) && children.length > 0) return inlineTokenText(children as Token[]);
       const text: unknown = (token as { text?: unknown }).text;
       return typeof text === "string" ? text : "";
     })
@@ -111,7 +119,7 @@ const refused = (why: string): SectionSource => ({ ok: false, why, start: 0, end
 
 /**
  * The section under the level-2 heading given: marked's top-level tokens of the page must hold exactly one level-2 heading whose
- * rendered text (white space collapsed, trimmed) is the heading, and the section runs to the next top-level level-1 or level-2 heading
+ * token text (inlineTokenText, white space collapsed, trimmed) is the heading, and the section runs to the next top-level level-1 or level-2 heading
  * or the page's end. Refused, with an empty source, when no such heading or more than one exists, or when the instrumented lexer's
  * tokens are not marked.lexer's own or its steps do not account for every token.
  */
@@ -120,10 +128,10 @@ export function sectionSource(page: string, heading: string): SectionSource {
   if (JSON.stringify(lexed.tokens) !== JSON.stringify(marked.lexer(page))) return refused("the instrumented lexer's tokens are not marked.lexer's");
   if (!lexed.stepwise || lexed.starts.some(start => start < 0)) return refused("the lexer's top-level steps do not account for every token");
   const matches = lexed.tokens.flatMap((token, index) =>
-    isHeading(token) && token.depth === 2 && renderedInline(token.tokens).replace(/\s+/g, " ").trim() === heading ? [index] : [],
+    isHeading(token) && token.depth === 2 && inlineTokenText(token.tokens).replace(/\s+/g, " ").trim() === heading ? [index] : [],
   );
   const first = matches[0];
-  if (matches.length !== 1 || first === undefined) return refused(`marked's top-level tokens hold ${matches.length} level-2 headings "${heading}"; the section needs exactly one`);
+  if (matches.length !== 1 || first === undefined) return refused(`marked's top-level tokens hold ${matches.length} level-2 headings whose token text is "${heading}"; the section needs exactly one`);
   const after = lexed.tokens.findIndex((token, index) => index > first && isHeading(token) && token.depth <= 2);
   const last = after === -1 ? lexed.tokens.length : after;
   const offsets = pageOffsets(page);
