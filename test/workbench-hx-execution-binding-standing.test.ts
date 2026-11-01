@@ -1,12 +1,14 @@
 /**
  * wb-tz2.5 (HX-ORIGINAL-GOALS-CLOSURE-R5), STANDING leg only (cut #2, the respin of gate refusal #1; wb-thq3 adds the pins of the
- * landing-651 follow-up F1 and F2): until HyperUnix ships its execution-binding key, the HX query id stays a labelled derived
- * digest and no digest becomes an execution identity at the sites the cases below pin: the topology (S1, S2, within the bounds
- * S1 states), native-evidence's projection and execution reference (S3), the workflow node entries' native-evidence fields (S4,
- * S5) and the node rows the live and replayed runs journal (S5). A site outside those, such as a node entry member outside its
- * native-evidence fields, is NOT CLAIMED by this file. Every claim below is over the 132 READINGS this file builds and the three
- * workflow runs over them, except where a case names other inputs (G1: the vendored SDK's types, its shipped declaration and the
- * measured live read's document; S1: 24 mutation-outcome documents built beside the readings); none reaches past those.
+ * landing-651 follow-up F1 and F2; wb-omkr adds the pin of the landing-745 follow-up F1): until HyperUnix ships its
+ * execution-binding key, the HX query id stays a labelled derived digest and no digest becomes an execution identity at the sites
+ * the cases below pin: the topology (S1, S2, within the bounds S1 states), native-evidence's projection and execution reference
+ * (S3), the native-evidence fields of the done node entries of all three workflow runs (S4's unjournaled live run; S5's journaled
+ * live run and its replay) and the node rows the live and replayed runs journal (S5). A site outside those, such as a node entry
+ * member outside its native-evidence fields or a node entry in a state other than done (the start entries a run emits before a
+ * node settles), is NOT CLAIMED by this file. Every claim below is over the 132 READINGS this file builds and the three workflow
+ * runs over them, except where a case names other inputs (G1: the vendored SDK's types, its shipped declaration and the measured
+ * live read's document; S1: 24 mutation-outcome documents built beside the readings); none reaches past those.
  *
  * The bead's statement: "When an accepted GC-D02 ADR plus an SDK result field carry the execution-binding key ..., Pi shall
  * adopt it as the HX query node identity and nativeRef id, replacing the derived digest; until then the derived key stays
@@ -71,12 +73,13 @@
  * S4 one live workflow run with a hyperunix.find node per reading: each done node's native-evidence fields are exactly the S3
  *    projection of its reading (no nativeId unless execution_id is stated, then STATED_EXECUTION_ID).
  * S5 the S4 workflow journaled live, then replayed from that journal under the same host basis (refusal #1's F1, the replay
- *    path): all 132 nodes replay (cached, stale, the host never called) and each done node's native-evidence fields are
- *    exactly the S3 projection of its reading. The live run journals exactly 132 rows, one per reading in node order, each
- *    exactly {kind 'node', index, key (nodeJournalKey of the capability and that node's input), ok true, capabilityId,
- *    effectClass 'read', text (the reading's provider output as JSON), basis BASIS}: no nativeRefs and no other member (wb-thq3
- *    F1, gate mutant GP3: no execution reference on a read row, digest-bearing readings included), and the replay run journals
- *    exactly the same 132 rows.
+ *    path). Each of the journaled live run's 132 done nodes has exactly the S3 projection of its reading in its native-evidence
+ *    fields (wb-omkr, landing-745 F1, gate mutant G40: a run that journals gives no node a digest as nativeId). All 132 nodes
+ *    replay (cached, stale, the host never called) and each replayed done node's native-evidence fields are exactly the S3
+ *    projection of its reading. The live run journals exactly 132 rows, one per reading in node order, each exactly {kind 'node',
+ *    index, key (nodeJournalKey of the capability and that node's input), ok true, capabilityId, effectClass 'read', text (the
+ *    reading's provider output as JSON), basis BASIS}: no nativeRefs and no other member (wb-thq3 F1, gate mutant GP3: no
+ *    execution reference on a read row, digest-bearing readings included), and the replay run journals exactly the same 132 rows.
  *
  * Display paths added: none (test-only). No scratch directory is allocated: WS is a string, never created or read.
  */
@@ -440,12 +443,21 @@ describe('wb-tz2.5 standing leg over the 132 readings: the HX query id stays a l
     }
   }, 60_000);
 
-  it('S5: the S4 workflow journaled live, then replayed under the same host basis: all 132 nodes replay cached and stale, each with the S3 projection of its reading; both runs journal exactly one read row per reading, its provider output as text and no nativeRefs', async () => {
+  it('S5: the S4 workflow journaled live, then replayed under the same host basis: each of the 132 done nodes of the live run has the S3 projection of its reading, and all 132 nodes replay cached and stale, each with that projection; both runs journal exactly one read row per reading, its provider output as text and no nativeRefs', async () => {
     const readings = await allReadings();
     const recorded: WorkflowJournalEntry[] = [];
     const first = await runWorkflow({script: script(readings.length), host: readingHost(readings, {replayBasis: BASIS}),
       journal: {append: entry => { recorded.push(entry); }}});
     expect(first.status).toBe('completed');
+    // wb-omkr (landing-745 F1, gate mutant G40): the journaled live run's own done nodes, in node order, each carry exactly the
+    // S3 projection of their reading in their native-evidence fields, so a run that journals gives no node a digest as nativeId.
+    const live = doneNodes(first);
+    expect(live.map(entry => entry.index)).toStrictEqual(readings.map((_, index) => index));
+    for (const [index, entry] of live.entries()) {
+      const reading = readings[index];
+      expect(entry, reading.label).toMatchObject({capabilityId: CAPABILITY, freshness: 'unknown'});
+      expect(evidenceFieldsOf(entry), reading.label).toStrictEqual(projectionOf(reading));
+    }
     const journaled = recorded.filter(entry => entry.kind === 'node');
     expect(journaled).toHaveLength(readings.length);
     expect(journaled.filter(entry => entry.effectClass === 'read' && entry.basis === BASIS)).toHaveLength(readings.length);
