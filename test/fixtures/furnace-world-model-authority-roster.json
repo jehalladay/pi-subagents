@@ -227,6 +227,10 @@
    "log-keys",
    "log-line"
   ],
+  "crossSources": [
+   "furnace",
+   "beads"
+  ],
   "scopedSeams": [
    "src/workbench/furnace-control.ts:VendoredFurnaceControlClient",
    "src/workbench/hosts/furnace-hosted.ts:FurnaceHostedClient"
@@ -240,7 +244,11 @@
    "regexHex",
    "regexUnicode",
    "regexCodePoint",
-   "releaseComment"
+   "head",
+   "tail",
+   "releaseComment",
+   "releaseHead",
+   "releaseTail"
   ],
   "seamForms": [
    "modifier-interface",
@@ -291,7 +299,9 @@
   ],
   "floors": {
    "src": 100,
-   "sdk": 100
+   "sdk": 100,
+   "srcClasses": 5,
+   "sdkClasses": 12
   }
  },
  "witnesses": {
@@ -440,7 +450,65 @@
     1
    ],
    "populatedIdentical": true,
-   "edgesAdded": 9
+   "edgesAdded": 9,
+   "rollUp": {
+    "statements": 36,
+    "edges": {
+     "snapshotsOnly": 12,
+     "populated": 12
+    },
+    "identical": {
+     "snapshotsOnly": true,
+     "populated": true
+    },
+    "runChildren": {
+     "snapshotsOnly": 0,
+     "populated": 1
+    },
+    "countersMoved": {
+     "snapshotsOnly": true,
+     "populated": true
+    }
+   },
+   "listing": {
+    "populated": {
+     "nodes": [
+      3,
+      3,
+      3
+     ],
+     "identical": [
+      true,
+      true
+     ]
+    },
+    "snapshotsOnly": {
+     "nodes": [
+      3,
+      3
+     ],
+     "identical": [
+      true
+     ]
+    }
+   },
+   "order": {
+    "statements": 45,
+    "before": {
+     "nodes": 3,
+     "listing": true,
+     "rollUp": true
+    },
+    "again": {
+     "refreshed": [
+      "applied",
+      "applied",
+      "applied"
+     ],
+     "listing": true,
+     "rollUp": true
+    }
+   }
   },
   "C2": {
    "cases": 24,
@@ -539,7 +607,9 @@
   "Z1": {
    "floors": {
     "src": true,
-    "sdk": true
+    "sdk": true,
+    "srcClasses": true,
+    "sdkClasses": true
    },
    "release": "@furnace/sdk",
    "mentions": [],
@@ -680,6 +750,40 @@
       "predicteddistribution"
      ]
     ],
+    "head": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "tail": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
     "releaseComment": [
      [
       "observedtransition"
@@ -696,7 +800,49 @@
      [
       "predicteddistribution"
      ]
+    ],
+    "releaseHead": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "releaseTail": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
     ]
+   },
+   "classesUnread": {
+    "src": [],
+    "@furnace/sdk": []
+   },
+   "modulesUnread": {
+    "src": [],
+    "@furnace/sdk": []
    }
   },
   "Q1": {
@@ -735,6 +881,16 @@
     "synthetic\\w+attempt",
     "counterf(?:a|4)ctual",
     "\\167orld-model"
+   ],
+   "confusable": [
+    "cyrillic-o",
+    "greek-omicron",
+    "cyrillic-a"
+   ],
+   "twins": [
+    "cyrillic-o",
+    "greek-omicron",
+    "cyrillic-a"
    ]
   },
   "Q4": {
