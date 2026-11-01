@@ -75,9 +75,11 @@
  *    space around a keyword and a type that starts with one (spacedType, typeTrailingSpace, keywordPrefixType,
  *    keywordPluralType), a value with white space around it and a white-space value beside a placeholder (valueWithSpaces,
  *    spaceValue). Beside them, the items the seat's own one-edit members of the readers called for: a space, a tab, a line feed,
- *    a form feed, a carriage return and a vertical tab (which is none) in each of the five tag states where white space changes
- *    where a tag ends - before an attribute's name, the self-closing state, before a value, after an unquoted value and after a
- *    quoted value (beforeAttributeSpace to afterQuotedVerticalTab, 30 items); a run of white space before an attribute's name
+ *    a form feed, a carriage return and a vertical tab (which is none) in each of five tag states where white space changes where
+ *    a tag ends - before an attribute's name, the self-closing state, before a value, after an unquoted value and after a quoted
+ *    value (beforeAttributeSpace to afterQuotedVerticalTab, 30 items; restated by cut #4, refusal #3's F4: the tag-name state, where
+ *    white space also changes where a tag ends, holds cut #2's tabTagSpace, lineFeedTagSpace, formFeedTagSpace,
+ *    carriageReturnTagSpace and verticalTabNoSpace); a run of white space before an attribute's name
  *    opened by "=" (spaceRunEqualsName); an unquoted value holding "/" and "=" (unquotedSolidusEquals); a single quote within a
  *    double-quoted value (singleQuoteInDoubleQuoted); "<" before "-" (lessThanDash); a bogus comment and a markup declaration
  *    holding a quote, each to its first ">" (instructionQuote, declarationQuote); three comments opened by dashes after "<!--" -
@@ -86,10 +88,20 @@
  *    point (carriageReturnReference, deleteReference, noncharacterReference); a placeholder and a button's value that are white
  *    space (spacePlaceholder, spaceButtonValue). Each item's reading was decided before the census ran - by the parse5 7.1.2
  *    data-state tokenizer, or for an input by the HTML Standard's rendering over parse5's attributes - and D1 holds THE PAGE
- *    READ's or THE INPUT READ's reading to it; the five carriage-return items and the three comment items are decided by the
- *    tokenizer alone (a page never hands THE PAGE READ such a text: marked 18.0.11 reads a carriage return as a line feed and
- *    lexes those comments as html tokens of their own). PAGE_READ_FORMS grows from 89 to 154 items and INPUT_READ_FORMS from 40
- *    to 48.
+ *    READ's or THE INPUT READ's reading to it; the five carriage-return items and closedEmptyComment are decided by the tokenizer
+ *    alone (a page never hands THE PAGE READ such a text: marked 18.0.11 reads a carriage return as a line feed and lexes "<!---->"
+ *    as an html token of its own). Restated by cut #4 (refusal #3's U2): overlappingBangClose and dashBangNoGreaterThan, comments
+ *    marked's inline html rule does not close (it closes one only at a "-->"), each reach THE PAGE READ through a page as one
+ *    raw-state text token, so 59 of the 65 new page items do - measured at cut #4 with the repo's marked 18.0.11 in "Pi embeds the
+ *    <code>ITEM</code>.", a measurement no case pins. PAGE_READ_FORMS grows from 89 to 154 items and INPUT_READ_FORMS from 40 to
+ *    48.
+ *  CUT #4 (the FINAL cut: orchestrator ruling R-B228's FAIL-CLOSED CORE at rule 19's structural exit after refusal #3, gate run
+ *    g10-gate-s166 on cut #3 8ae1332c, child bead wb-2wiv.5 carrying the coverage; seat ws-04, run g10-work-s172, trunk 644e70d
+ *    merged in): text only - no title, row, pin, control, residual row, refusal, reading, item or reader is added, removed or
+ *    changed. It narrows the PAGE_TWIN_FORMS docstring to its five items and states THE PAGE TWIN's "adding only the findings its
+ *    unit lacks" NOT CLAIMED (refusal #3's U1, gate member G8-PT-UNIT; THE PAGE TWIN and NOT CLAIMED say so too), restates the CUT
+ *    #3 paragraph's page reach to the measured 59 of the 65 new page items (U2) and its tag states to five beside the tag-name state
+ *    (F4).
  *
  * CUT #6 (the FINAL cut: the respin of refusal #5, gate run g10-gate-s142 on cut #5 b70da137; seat ws-03, run g10-work-s141), bound
  * by orchestrator ruling R-B93 (rule 19's structural exit) to the FAIL-CLOSED CORE: the rendered-reading claim restated to exactly
@@ -341,7 +353,8 @@
  * token in a Markdown image's alt text is no page piece: it is read in the image's reading as written, and refused (marked escapes
  * the alt text into the attribute, so a reader shows it as written). Cut #3: these rules state the delivered reader, pinned at
  * exactly PAGE_TWIN_FORMS' items (CLAIM WORDS -> FALSIFIERS); a reading that departs from them at a text no item holds is NOT
- * CLAIMED.
+ * CLAIMED. Cut #4 (R-B228): no item holds "adding only the findings its unit lacks", so a page twin that re-adds findings its unit
+ * has is NOT CLAIMED (PAGE_TWIN_FORMS).
  * THE PAGE READ (wb-2wiv.4, the RB family): a raw-state text token's text as the page holds it - marked writes it there unescaped,
  * as raw HTML - read within the token as the HTML Standard's tokenizer reads text in its data state. MARKUP is removed, as the page
  * shows none of it: from a "<" before an ASCII letter of either case, "/", "!" or "?", a comment ("<!--") to its first "-->" or
@@ -571,7 +584,10 @@
  * a reader that departs from a rule of THE PAGE TWIN, THE PAGE READ or THE INPUT READ only at a text no PAGE_TWIN_FORMS,
  * PAGE_READ_FORMS or INPUT_READ_FORMS item holds - the rules state the delivered readers, their falsifiers are those items alone
  * - and such an item removed or re-read in this file, in the roster's constants and in D1's reading together (no text in the
- * repository holds the items' readings).
+ * repository holds the items' readings); and (wb-2wiv.4 cut #4, R-B228) THE PAGE TWIN's "adding only the findings its unit lacks",
+ * which no item holds (a page twin read as a unit of its own, re-adding the findings its unit has: gate member G8-PT-UNIT; wb-2wiv.5
+ * carries the item), and the page reach wb-2wiv.4's CUT #3 paragraph states (measured at cut #4; no case reads an item through a
+ * page).
  * RESIDUALS (named, each with its pinned quiet row): R-COMPOSED a name composed at run time from parts no one of which holds it
  * ("Host" + "CapabilitySet", a join, a split template, "r" + "f", String.fromCharCode) is read by no scan and by neither census
  * (Q1); R-GENERIC-ABI the ABI spelled only through its generic entries (initialize, inspect, subscribe, snapshot, close) is not
@@ -2534,10 +2550,13 @@ function inputReadPage(tag: string): string {
   return `<div>Pi embeds the ${tag} core.</div>\n`;
 }
 /**
- * THE PAGE TWIN's forms (wb-2wiv.4; one checkable item per rule its claim states, each a Markdown text read on D1 and by its reader
- * view): a bidirectional control and an invisible split that only the page reading decodes (refused in the twin), an image beside a
- * raw-state token (shown as the run first shows it), a raw-state token in an image's alt text (no page piece) and a raw-state token in
- * a link's children (its page reading in the run's).
+ * THE PAGE TWIN's forms (wb-2wiv.4; each a Markdown text read on D1 and by its reader view - restated by cut #4, refusal #3's U1 under
+ * ruling R-B228: these five items, not an item for each rule THE PAGE TWIN's claim states, are what is pinned): a bidirectional control
+ * and an invisible split that only the page reading decodes (refused in the twin), an image beside a raw-state token (shown as the run
+ * first shows it), a raw-state token in an image's alt text (no page piece) and a raw-state token in a link's children (its page
+ * reading in the run's). THE PAGE TWIN's "adding only the findings its unit lacks" holds no item: a page twin read as a unit of its
+ * own, re-adding the findings its unit has (gate member G8-PT-UNIT), reds none of them, so that rule is NOT CLAIMED by this census
+ * (its item is wb-2wiv.5's).
  */
 const PAGE_TWIN_FORMS: Readonly<Record<string, string>> = {
   bidiReference: "Pi embeds the <code>a&#x202Ez</code>.\n",
