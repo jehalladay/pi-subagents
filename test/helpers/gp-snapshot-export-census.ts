@@ -12,10 +12,18 @@
  * the landed wb-gxd7.3 export reader (test/helpers/gp-snapshot-join-census.ts) and the landed docs binding
  * (docsSection/sectionTables of test/helpers/census.ts); a table cell's shown text follows the landed binding's own rendering
  * rule (inlineText, copied verbatim as the landed control-loop audit's test/helpers/gp-control-loop-audit.ts copies it).
+ * The last section (wb-0lf.8, the rule-19 structural-exit child ruling R-B73 filed) holds the full surface: the forms its
+ * tables list, each a pinned falsifier through the claim's own reader, and none of them a form of the R-B73 fail-closed core
+ * but the sixteen CORE_OVERLAP names (nine forms the core holds byte for byte and seven spellings its source forms refuse; a
+ * form outside these tables is outside every claim, where the fail-closed readers refuse it), and the code reader
+ * (codeShapeKeysOf, codeComposedOf: the TypeScript parse of a residual source member) that reads S2's liveness from the
+ * member's parse, where a comment is trivia and a string's content is no code, and of whose literal tokens only the
+ * double-quoted strings compose (COMPOSE_PLANTS).
  */
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual, types } from "node:util";
 import { Lexer, type Links, marked, type Token, type Tokens } from "marked";
+import ts from "typescript";
 import { NATIVE_CONTROL_ACTIONS } from "../../src/workbench/control.js";
 import { type NativeRef, ObservationProjection, type ObservationScope, type Presentation, type RelationKind } from "../../src/workbench/observation.js";
 import { docsSection, sectionTables } from "./census.js";
@@ -2615,4 +2623,415 @@ export const FAIL_CLOSED: readonly FailClosedForm[] = [
     word: "GraphPolicy",
     anchor: { bead: CARRIED_BEAD, name: "L2-NR-NO-CACHED" },
   },
+];
+
+// ---- the full surface (wb-0lf.8, the rule-19 structural-exit child R-B73 filed): the forms these tables list, each pinned
+// through the claim's own reader in the full-surface row, none of them R-B73's own forms but CORE_OVERLAP's sixteen; no form
+// outside them is claimed ----
+
+/** The bead whose row in the tracker export enumerates the full surface: its description's U1-U5 lines. */
+export const SURFACE_BEAD = "wb-0lf.8";
+/** A bead's description in the tracker export (one JSON row per line), or undefined when no row of that id carries one. */
+export function descriptionOf(exportText: string, bead: string): string | undefined {
+  for (const line of exportText.split("\n")) {
+    if (!line.includes(`"id":"${bead}"`)) continue;
+    const row: unknown = JSON.parse(line);
+    if (typeof row !== "object" || row === null) continue;
+    const { id, description } = row as { readonly id?: unknown; readonly description?: unknown };
+    if (id === bead && typeof description === "string") return description;
+  }
+  return undefined;
+}
+/** Each "- U<n> " line of a description, in order, with the hollowings (RH-...) and the residual families (Q<n>) it names. */
+export const surfaceItems = (description: string): Record<string, readonly string[]> =>
+  Object.fromEntries([...description.matchAll(/^- (U\d+) (.*)$/gm)].map(match => [match[1] ?? "", [...(match[2] ?? "").matchAll(/\b(?:RH-[A-Z0-9-]+|Q\d)\b/g)].map(found => found[0])]));
+/** A full-surface spelling: none of its claim's pinned spellings (G1's 48, D3's 12; CORE_OVERLAP names the seven that FAIL_CLOSED's source forms refuse), the wb-0lf.8 item it belongs to and the hollowing it kills. */
+export interface SurfaceSpelling extends Spelling {
+  readonly item: "U1" | "U2";
+  /** Refusal #5's reader hollowing (wb-0lf.8's member name) that this spelling is a pinned falsifier of, or the item itself (U1, U2) where wb-0lf.8's row names no hollowing for its family (the per-part case mixes). */
+  readonly answers: string;
+}
+/** U1's and U2's case forms: lower-first camelCase (the first part lower case, the others as written) and sentence case (the first part capitalized, the others lower case). */
+export const SURFACE_CASES: readonly { readonly id: string; readonly of: (part: string, index: number) => string }[] = [
+  { id: "camel", of: (part, index) => (index === 0 ? part.toLowerCase() : part) },
+  { id: "sentence", of: (part, index) => (index === 0 ? `${part.slice(0, 1).toUpperCase()}${part.slice(1).toLowerCase()}` : part.toLowerCase()) },
+];
+/** WORD_JOINERS' joiners of one character: the characters of the landed vocabulary's joiner class, which the census reads back from the live patterns. */
+const CLASS_JOINERS = WORD_JOINERS.filter(joiner => joiner.text.length === 1);
+/** U1's long runs' lengths (RH-RUN-LONG, stated bound): four to eight of one class character; a run of three is RH-RUN3-SAME's. */
+export const SURFACE_RUN_LENGTHS: readonly number[] = [4, 5, 6, 7, 8];
+/** U1's runs: three of one class character (each character in turn), each SURFACE_RUN_LENGTHS length of one, and mixed runs of four and of eight characters. */
+export const SURFACE_RUNS: readonly { readonly id: string; readonly answers: string; readonly text: string }[] = [
+  ...CLASS_JOINERS.map(joiner => ({ id: `${joiner.id}x3`, answers: "RH-RUN3-SAME", text: joiner.text.repeat(3) })),
+  ...SURFACE_RUN_LENGTHS.flatMap(length => CLASS_JOINERS.map(joiner => ({ id: `${joiner.id}x${length}`, answers: "RH-RUN-LONG", text: joiner.text.repeat(length) }))),
+  { id: "mixed4", answers: "RH-RUN-LONG", text: " -- " },
+  { id: "mixed8", answers: "RH-RUN-LONG", text: " .-_\t_-." },
+];
+/** U1's uneven gaps: GraphDataIR's two gaps filled by two different WORD_JOINERS joiners (none, a class character, the repeated run or the mixed run), every ordered pair. */
+export const SURFACE_GAPS: readonly { readonly id: string; readonly first: string; readonly second: string }[] = WORD_JOINERS.flatMap(first =>
+  WORD_JOINERS.filter(second => second !== first).map(second => ({ id: `${first.id}+${second.id}`, first: first.text, second: second.text })),
+);
+/** A word's parts in one case form, the gap before the index-th part (from the second on) taken from gaps. */
+const spelledWith = (word: string, form: { readonly of: (part: string, index: number) => string }, gaps: readonly string[]): string =>
+  (WORD_PARTS[word] ?? []).map((part, index) => `${index === 0 ? "" : (gaps[index - 1] ?? "")}${form.of(part, index)}`).join("");
+/** Every assignment of one WORD_CASES case form to each of count parts, the first part's form varying slowest. */
+const caseAssignments = (count: number): (typeof WORD_CASES)[number][][] => (count <= 0 ? [[]] : caseAssignments(count - 1).flatMap(prefix => WORD_CASES.map(form => [...prefix, form])));
+/**
+ * U1's and U2's per-part case mixes: a word's parts each in its own WORD_CASES form (every assignment, caseAssignments' order),
+ * joined by one joiner in every gap, less every spelling a uniform WORD_CASES form or a SURFACE_CASES form already spells over
+ * that joiner, each spelling once (the first assignment that spells it names it): GRAPHpolicy, graphDATAir, EXECUTORrequest.
+ */
+export const caseMixesOf = (word: string, joiner: { readonly id: string; readonly text: string }): { readonly id: string; readonly spelling: string }[] => {
+  const parts = WORD_PARTS[word] ?? [];
+  const gaps = parts.map(() => joiner.text);
+  const spelled = new Set([...WORD_CASES, ...SURFACE_CASES].map(form => spelledWith(word, form, gaps)));
+  return caseAssignments(parts.length).flatMap(forms => {
+    const spelling = spelledWith(word, { of: (part, index) => forms[index]?.of(part) ?? part }, gaps);
+    if (spelled.has(spelling)) return [];
+    spelled.add(spelling);
+    return [{ id: `${word}/${joiner.id}/${forms.map(form => form.id).join("+")}`, spelling }];
+  });
+};
+/**
+ * G1's full surface (U1): each site word's parts in SURFACE_CASES' two forms over every WORD_JOINERS joiner (RH-CAMEL,
+ * RH-SENTENCE), in WORD_CASES' three forms over every SURFACE_RUNS run (RH-RUN3-SAME, RH-RUN-LONG), GraphDataIR's parts in
+ * WORD_CASES' three forms over every SURFACE_GAPS pair (RH-UNEVEN), and each site word's per-part case mixes over every
+ * WORD_JOINERS joiner (caseMixesOf, answering U1): 32 + 192 + 168 + 136 spellings, none of them SITE_WORD_SPELLINGS'.
+ */
+export const SURFACE_SITE_SPELLINGS: readonly SurfaceSpelling[] = [
+  ...SITE_WORDS.flatMap(word =>
+    WORD_JOINERS.flatMap(joiner => SURFACE_CASES.map(form => ({ id: `${word}/${joiner.id}/${form.id}`, word, spelling: spelledWith(word, form, [joiner.text, joiner.text]), item: "U1" as const, answers: form.id === "camel" ? "RH-CAMEL" : "RH-SENTENCE" }))),
+  ),
+  ...SITE_WORDS.flatMap(word => SURFACE_RUNS.flatMap(run => WORD_CASES.map(form => ({ id: `${word}/${run.id}/${form.id}`, word, spelling: spelledWith(word, form, [run.text, run.text]), item: "U1" as const, answers: run.answers })))),
+  ...SURFACE_GAPS.flatMap(gap => WORD_CASES.map(form => ({ id: `GraphDataIR/${gap.id}/${form.id}`, word: "GraphDataIR", spelling: spelledWith("GraphDataIR", form, [gap.first, gap.second]), item: "U1" as const, answers: "RH-UNEVEN" }))),
+  ...SITE_WORDS.flatMap(word => WORD_JOINERS.flatMap(joiner => caseMixesOf(word, joiner).map(mix => ({ ...mix, word, item: "U1" as const, answers: "U1" })))),
+];
+/**
+ * D3's full surface (U2): "executor request" in SURFACE_CASES' two forms over each EXECUTOR_JOINERS joiner (RH-D3-CAMEL,
+ * RH-D3-SENTENCE), and its per-part case mixes over each of them (caseMixesOf, answering U2): 8 + 16 spellings.
+ */
+export const SURFACE_REQUEST_SPELLINGS: readonly SurfaceSpelling[] = [
+  ...EXECUTOR_JOINERS.flatMap(joiner =>
+    SURFACE_CASES.map(form => ({ id: `ExecutorRequest/${joiner.id}/${form.id}`, word: "ExecutorRequest", spelling: spelledWith("ExecutorRequest", form, [joiner.text]), item: "U2" as const, answers: form.id === "camel" ? "RH-D3-CAMEL" : "RH-D3-SENTENCE" })),
+  ),
+  ...EXECUTOR_JOINERS.flatMap(joiner => caseMixesOf("ExecutorRequest", joiner).map(mix => ({ ...mix, word: "ExecutorRequest", item: "U2" as const, answers: "U2" }))),
+];
+/**
+ * G3's owner-cell analog of U1's case forms (refusal #5's F5, pinned for symmetry with U1): GraphPolicy in SURFACE_CASES' two
+ * forms over every WORD_JOINERS joiner, each the owner cell of a second row of the GraphPolicyCLI table (the D-GP-SPELLED form),
+ * read by namesGraphPolicy and counted beside the GraphPolicyCLI row (ownership-rows).
+ */
+export const SURFACE_OWNERS: readonly (SurfaceSpelling & { readonly edit: (page: string) => string })[] = SURFACE_SITE_SPELLINGS.filter(
+  entry => entry.word === "GraphPolicy" && (entry.answers === "RH-CAMEL" || entry.answers === "RH-SENTENCE"),
+).map(entry => ({ ...entry, id: `G3-OWNER-${spellingTag(entry)}`, answers: "U1", edit: (page: string): string => afterGpRow(page, seamRowOwnedBy(entry.spelling)) }));
+/** A planted src module naming one full-surface spelling in a string literal, the index-th of its table (three digits, so path order is table order). */
+export const surfaceSite = (table: string, entry: Spelling, index: number): { readonly path: string; readonly text: string } => ({
+  path: `src/workbench/zz-surface-${table}-${String(index).padStart(3, "0")}.ts`,
+  text: `export const LABEL = "${entry.spelling}";\n`,
+});
+/**
+ * R-NON-ASCII-PART (G1's named residual, refusal #5's F6, pinned quiet in the full-surface row): a site word with one part's
+ * ASCII letter written as a letter outside ASCII, another script's look-alike (a Cyrillic a, a Greek omicron) or a fullwidth
+ * compatibility form of the same Latin letter; the live patterns match ASCII letters only, so neither G1 reader reads it.
+ * Each is built through String.fromCodePoint, so these files stay ASCII.
+ */
+export const NON_ASCII_PARTS: readonly { readonly id: string; readonly word: string; readonly spelling: string; readonly latin: string }[] = [
+  { id: "cyrillic-a-in-graph", word: "GraphPolicy", spelling: `Gr${String.fromCodePoint(0x430)}phPolicy`, latin: "a" },
+  { id: "greek-omicron-in-policy", word: "GraphPolicy", spelling: `GraphP${String.fromCodePoint(0x3bf)}licy`, latin: "o" },
+  { id: "cyrillic-a-in-data", word: "GraphDataIR", spelling: `GraphD${String.fromCodePoint(0x430)}taIR`, latin: "a" },
+  { id: "fullwidth-p-in-policy", word: "GraphPolicy", spelling: `Graph${String.fromCodePoint(0xff30)}olicy`, latin: "P" },
+];
+/** A NON_ASCII_PARTS spelling with its one letter outside ASCII written as the Latin letter it stands for: the site word it is near. */
+export const latinOf = (entry: (typeof NON_ASCII_PARTS)[number]): string => entry.spelling.replace(/[^\x00-\x7f]/gu, entry.latin);
+
+/** The keys of marked's gfm block grammar (Lexer.rules.block.gfm), the lexer the landed binding reads docs/03 with, in sorted order. */
+export const gfmBlockRules = (): string[] => Object.keys(Lexer.rules.block.gfm).sort();
+/** The gfm rules no boundary lead is pinned by: newline (a blank line, no block), paragraph (the lead the claim admits) and text (a list item's own line). */
+export const LEAD_RULES_OUTSIDE: readonly string[] = ["newline", "paragraph", "text"];
+/**
+ * The gfm rules no ownership-other block is pinned by: hr (a thematic break holds no text), lheading (a setext heading is of
+ * level 1 or 2, so it ends the section rather than sitting in it), newline, table (a top-level table's body rows are
+ * ownership-rows') and text.
+ */
+export const OTHER_RULES_OUTSIDE: readonly string[] = ["hr", "lheading", "newline", "table", "text"];
+/** The gfm rule that lexes a block: its first token's type, a heading split into heading (ATX) and lheading (setext), code into code (indented) and fences. */
+export function gfmRuleOf(block: string): string {
+  const token = marked.lexer(block).find(entry => entry.type !== "space");
+  if (token === undefined) return "none";
+  if (token.type === "heading") return token.raw.trimStart().startsWith("#") ? "heading" : "lheading";
+  if (token.type === "code") return (token as Tokens.Code).codeBlockStyle === "indented" ? "code" : "fences";
+  return token.type;
+}
+/** The boundary section's first block in the binding's view, a block of HTML comments only passed over (docs03Reading's own rule): its kind, an other block's type after a colon, or nothing. */
+export function boundaryLead(page: string): string {
+  const lead = docsSection(page, BOUNDARY_HEADING, 2, [DOCS_03_TITLE]).blocks.find(block => block.kind !== "html" || !commentOnly(block.raw));
+  return lead === undefined ? "nothing" : lead.kind === "other" ? `other:${lead.type}` : lead.kind;
+}
+/** A full-surface docs form: an in-memory edit of the live docs/03 by one planted block, the gfm rule that lexes it, how the binding reads it and the docs rules it is refused with. */
+export interface SurfaceDocs {
+  readonly id: string;
+  readonly item: "U3" | "U4";
+  /** Refusal #5's reader hollowing it kills, or the item itself where wb-0lf.8's row names no hollowing for the form. */
+  readonly answers: string;
+  /** The key of marked's gfm block rules that lexes the planted block. */
+  readonly rule: string;
+  /** A boundary lead: boundaryLead's reading; an ownership block: its token type in sectionSources. */
+  readonly reads: string;
+  /** An ownership block's place among the section's top-level tables (U4). */
+  readonly position?: (typeof SURFACE_POSITIONS)[number];
+  readonly block: string;
+  readonly edit: (page: string) => string;
+  readonly expect: readonly string[];
+}
+/** U3's leads: a block of each gfm rule but LEAD_RULES_OUTSIDE planted first in the boundary section, each in the syntax forms marked lexes it by, an empty fenced code block of each fence marker among them. */
+const LEAD_BLOCKS: readonly { readonly id: string; readonly answers: string; readonly rule: string; readonly reads: string; readonly block: string }[] = [
+  { id: "L-HEADING-3", answers: "RH-FIRST-HEADING", rule: "heading", reads: "heading", block: "### Status" },
+  { id: "L-HEADING-4", answers: "RH-FIRST-HEADING", rule: "heading", reads: "heading", block: "#### Status" },
+  { id: "L-HEADING-5", answers: "RH-FIRST-HEADING", rule: "heading", reads: "heading", block: "##### Status" },
+  { id: "L-HEADING-6", answers: "RH-FIRST-HEADING", rule: "heading", reads: "heading", block: "###### Status" },
+  { id: "L-BREAK-DASHES", answers: "RH-FIRST-HR", rule: "hr", reads: "other:hr", block: "---" },
+  { id: "L-BREAK-STARS", answers: "RH-FIRST-HR", rule: "hr", reads: "other:hr", block: "***" },
+  { id: "L-BREAK-UNDERSCORES", answers: "RH-FIRST-HR", rule: "hr", reads: "other:hr", block: "___" },
+  { id: "L-SETEXT-2", answers: "U3", rule: "lheading", reads: "nothing", block: "Status\n------" },
+  { id: "L-SETEXT-1", answers: "U3", rule: "lheading", reads: "nothing", block: "Status\n======" },
+  { id: "L-CODE-INDENTED", answers: "U3", rule: "code", reads: "code", block: "    Status: no exporter" },
+  { id: "L-FENCE-BACKTICKS", answers: "U3", rule: "fences", reads: "code", block: "```\nStatus: no exporter\n```" },
+  { id: "L-FENCE-TILDES", answers: "U3", rule: "fences", reads: "code", block: "~~~\nStatus: no exporter\n~~~" },
+  { id: "L-FENCE-EMPTY-BACKTICKS", answers: "U3", rule: "fences", reads: "code", block: "```\n```" },
+  { id: "L-FENCE-EMPTY-TILDES", answers: "U3", rule: "fences", reads: "code", block: "~~~\n~~~" },
+  { id: "L-BLOCKQUOTE", answers: "U3", rule: "blockquote", reads: "other:blockquote", block: "> Status: no exporter" },
+  { id: "L-LIST-DASH", answers: "U3", rule: "list", reads: "list", block: "- Status: no exporter" },
+  { id: "L-LIST-STAR", answers: "U3", rule: "list", reads: "list", block: "* Status: no exporter" },
+  { id: "L-LIST-PLUS", answers: "U3", rule: "list", reads: "list", block: "+ Status: no exporter" },
+  { id: "L-LIST-ORDERED", answers: "U3", rule: "list", reads: "list", block: "1. Status: no exporter" },
+  { id: "L-HTML", answers: "U3", rule: "html", reads: "html", block: "<div>Status: no exporter</div>" },
+  { id: "L-HTML-EMPTY", answers: "U3", rule: "html", reads: "html", block: "<div></div>" },
+  { id: "L-TABLE", answers: "U3", rule: "table", reads: "other:table", block: "| Field | Value |\n| --- | --- |\n| status | none |" },
+  { id: "L-DEF", answers: "U3", rule: "def", reads: "other:def", block: "[gp-status]: #graphpolicycli-boundary" },
+];
+export const SURFACE_LEADS: readonly SurfaceDocs[] = LEAD_BLOCKS.map(lead => ({
+  ...lead,
+  item: "U3",
+  edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n${lead.block}\n\n`),
+  expect: ["boundary-first"],
+}));
+/** U4's blocks: one holding GraphPolicyCLI for each gfm rule but OTHER_RULES_OUTSIDE, with the token type sectionSources reads it as. */
+const OTHER_BLOCKS: readonly { readonly rule: string; readonly reads: string; readonly block: string }[] = [
+  { rule: "blockquote", reads: "blockquote", block: `> ${GP_OWNER} decides policy scores` },
+  { rule: "code", reads: "code", block: `    ${GP_OWNER} decides policy scores` },
+  { rule: "def", reads: "def", block: `[gp-note]: #graphpolicycli-boundary "${GP_OWNER}"` },
+  { rule: "fences", reads: "code", block: `\`\`\`\n${GP_OWNER} decides policy scores\n\`\`\`` },
+  { rule: "heading", reads: "heading", block: `### ${GP_OWNER} seams` },
+  { rule: "html", reads: "html", block: `<p>${GP_OWNER} decides policy scores</p>` },
+  { rule: "list", reads: "list", block: `- ${GP_OWNER} decides policy scores` },
+  { rule: "paragraph", reads: "paragraph", block: `${GP_OWNER} decides policy scores through the gp seam at src/workbench/gp-seam.ts.` },
+];
+/**
+ * The places an ownership-other block is planted at: between the section's heading and its table, between its table and a
+ * second top-level table, after its one table, and after a second top-level table that follows its table (after-second).
+ */
+export const SURFACE_POSITIONS = ["before", "between", "after", "after-second"] as const;
+/** The second top-level table a between plant adds after its block and an after-second plant before it: no body row's second cell names GraphPolicy. */
+const SECOND_TABLE = "| Added concern | Owner | Workbench may do |\n| --- | --- | --- |\n| Status reports | Workbench | none |";
+const otherAt = (page: string, position: (typeof SURFACE_POSITIONS)[number], block: string): string =>
+  position === "before"
+    ? onceIn(page, `## ${OWNERSHIP_HEADING}\n\n`, `## ${OWNERSHIP_HEADING}\n\n${block}\n\n`)
+    : onceIn(
+        page,
+        `\n## ${NEXT_HEADING}\n`,
+        position === "after" ? `\n${block}\n\n## ${NEXT_HEADING}\n` : position === "between" ? `\n${block}\n\n${SECOND_TABLE}\n\n## ${NEXT_HEADING}\n` : `\n${SECOND_TABLE}\n\n${block}\n\n## ${NEXT_HEADING}\n`,
+      );
+export const SURFACE_OTHERS: readonly SurfaceDocs[] = SURFACE_POSITIONS.flatMap(position =>
+  OTHER_BLOCKS.map(other => ({
+    id: `O-${position.toUpperCase()}-${other.rule.toUpperCase()}`,
+    item: "U4" as const,
+    answers: position === "before" ? "RH-OTHER-LEAD" : "U4",
+    rule: other.rule,
+    reads: other.reads,
+    position,
+    block: other.block,
+    edit: (page: string) => otherAt(page, position, other.block),
+    expect: ["ownership-other"],
+  })),
+);
+/** The top-level block types sectionSources reads for a planted ownership block at its place: the section's one table, the block, and a between or after-second plant's second table. */
+export const otherBlocks = (form: SurfaceDocs): string[] =>
+  form.position === "before" ? [form.reads, "table"] : form.position === "after" ? ["table", form.reads] : form.position === "between" ? ["table", form.reads, "table"] : ["table", "table", form.reads];
+
+/** A residual source member's code as TypeScript parses it (wb-0lf.8 U5): a comment is trivia and a string's content is no code. The code reader parses TypeScript (ScriptKind.TS); literalTokensOf's TSX control alone parses another kind. */
+const memberCode = (text: string, kind: ts.ScriptKind = ts.ScriptKind.TS): ts.SourceFile => ts.createSourceFile(kind === ts.ScriptKind.TSX ? "member.tsx" : "member.ts", text, ts.ScriptTarget.Latest, true, kind);
+const eachNode = (node: ts.Node, visit: (node: ts.Node) => void): void => {
+  visit(node);
+  ts.forEachChild(node, child => eachNode(child, visit));
+};
+/** R-UNNAMED's liveness read from code (wb-0lf.8 U5): the names of the properties the member's object literals assign that are keys of the given document, each once in order. */
+export const codeShapeKeysOf = (text: string, keys: ReadonlySet<string>): string[] => {
+  const named: string[] = [];
+  eachNode(memberCode(text), node => {
+    if ((ts.isPropertyAssignment(node) || ts.isShorthandPropertyAssignment(node)) && ts.isIdentifier(node.name)) named.push(node.name.text);
+  });
+  return [...new Set(named.filter(key => keys.has(key)))];
+};
+/** R-COMPOSED's liveness read from code (wb-0lf.8 U5): the member's double-quoted string literals, each as TypeScript decodes it, joined in order; no other literal token composes (COMPOSE_PLANTS). */
+export const codeComposedOf = (text: string): string => {
+  const source = memberCode(text);
+  const parts: string[] = [];
+  eachNode(source, node => {
+    if (ts.isStringLiteral(node) && source.text.charAt(node.getStart(source)) === '"') parts.push(node.text);
+  });
+  return parts.join("");
+};
+/**
+ * U5's silencings: a residual source member's whole text written where no code runs, in each WORD_PLACES place but code (a
+ * line, a block and a doc comment, a double-quoted, a single-quoted and a template string) and in a regular expression
+ * literal; the code reader reads each as defining nothing.
+ */
+export const SILENCINGS: readonly { readonly id: string; readonly silence: (text: string) => string }[] = [
+  { id: "line-comment", silence: commentedOut },
+  { id: "block-comment", silence: text => `/*\n${text}*/\n` },
+  { id: "doc-comment", silence: text => `/**\n${text
+    .split("\n")
+    .map(line => (line === "" ? line : ` * ${line}`))
+    .join("\n")}*/\n` },
+  { id: "double-quoted", silence: text => `export const silenced = ${JSON.stringify(text)};\n` },
+  { id: "single-quoted", silence: text => `export const silenced = '${text.replace(/[\\']/g, character => `\\${character}`).replace(/\n/g, "\\n")}';\n` },
+  { id: "template", silence: text => `export const silenced = \`${text.replace(/[\\`$]/g, character => `\\${character}`)}\`;\n` },
+  { id: "regex", silence: text => `export const silenced = /${text.replace(/[\\^$.*+?()[\]{}|/]/g, character => `\\${character}`).replace(/\n/g, "\\n")}/;\n` },
+];
+/** R-UNREACHABLE (S2's named residual, pinned quiet in the full-surface row): the member placed after a top-level throw never runs, yet its code reads as before - the code reader reads syntax, not reachability. */
+export const unreachable = (text: string): string => `throw 0;\n${text}`;
+
+// ---- refusal #1's F5 and refusal #2's F1 (R660, cured in the enumerate-the-resolvable cut): the code reader composes no
+// literal token but a double-quoted string ----
+
+/**
+ * Every literal token of TypeScript's grammar by its SyntaxKind name, in the live enum's order (FirstLiteralToken to
+ * LastTemplateToken; the full-surface row holds the names to that range): the code reader composes the double-quoted string
+ * literals among them and no other.
+ */
+export const LITERAL_KINDS: readonly (keyof typeof ts.SyntaxKind)[] = [
+  "NumericLiteral",
+  "BigIntLiteral",
+  "StringLiteral",
+  "JsxText",
+  "JsxTextAllWhiteSpaces",
+  "RegularExpressionLiteral",
+  "NoSubstitutionTemplateLiteral",
+  "TemplateHead",
+  "TemplateMiddle",
+  "TemplateTail",
+];
+/**
+ * The literal tokens of JSX text, which the code reader's parse holds no node of: it parses TypeScript (ScriptKind.TS), not
+ * TSX, so JSX_SHAPED holds no JSX text node there, while its TSX parse holds a JsxText node (the control).
+ */
+export const LITERAL_KINDS_OUTSIDE: readonly (keyof typeof ts.SyntaxKind)[] = ["JsxText", "JsxTextAllWhiteSpaces"];
+/** A module shaped as JSX: the code reader's .ts parse holds no JSX text node in it, and a regular expression token where its closing tag stands (the full-surface row holds both parses' tokens to the roster). */
+export const JSX_SHAPED = "export const view = <b>GraphPolicy</b>;\n";
+/** The literal tokens of a member's parse (the code reader's, ScriptKind.TS, unless the TSX control asks for another), in source order, each by its LITERAL_KINDS name, a string literal's followed by its opening quote. */
+export const literalTokensOf = (text: string, kind: ts.ScriptKind = ts.ScriptKind.TS): string[] => {
+  const source = memberCode(text, kind);
+  const named = new Map(LITERAL_KINDS.map(name => [ts.SyntaxKind[name], name] as const));
+  const tokens: string[] = [];
+  eachNode(source, node => {
+    const name = named.get(node.kind);
+    if (name !== undefined) tokens.push(name === "StringLiteral" ? `${name}${source.text.charAt(node.getStart(source))}` : name);
+  });
+  return tokens;
+};
+/**
+ * COMPOSE_PLANTS (refusal #1's F5 and refusal #2's F1): one module per literal token kind the code reader does not compose,
+ * each beside or holding a site word's parts - a no-substitution template beside a double-quoted part (refusal #1's F5 plant),
+ * a single-quoted string beside one and a regular expression holding the whole word (refusal #2's F1 plants), and a template
+ * whose head, middle and tail hold GraphDataIR's parts around a numeric and a bigint substitution. Their literal tokens,
+ * their double-quoted strings aside, are of every LITERAL_KINDS kind but LITERAL_KINDS_OUTSIDE's, and each composes exactly
+ * its double-quoted literals, so the word another literal completes or holds composes no site word.
+ */
+export const COMPOSE_PLANTS: readonly { readonly id: string; readonly text: string }[] = [
+  { id: "template", text: 'export const head = `Graph`;\nexport const tail = "Policy";\n' },
+  { id: "single-quoted", text: "export const head = 'Graph';\nexport const tail = \"Policy\";\n" },
+  { id: "regex", text: "export const pattern = /GraphPolicy/;\n" },
+  { id: "template-parts", text: `export const label = \`Graph\${0}Data\${1n}IR\`;\n` },
+];
+
+// ---- CORE OVERLAP (refusal #2's U1 under R-B164, the enumerate-the-resolvable cut): the full-surface forms that are the core's ----
+
+/** A form the overlap reading compares: its table, its id, and the text compared (a spelling, an edit of the live page or a member text). */
+export interface Keyed {
+  readonly table: string;
+  readonly id: string;
+  readonly key: string;
+}
+/**
+ * Every full-surface form as the overlap reading compares it, in table order: U1's and U2's spellings and R-NON-ASCII-PART's
+ * members by their spelling; U3's leads, U4's ownership blocks and the owner cells by their edit of the live page; U5's
+ * silencings of each residual source member, R-UNREACHABLE's placement of each and COMPOSE_PLANTS by their member text.
+ */
+export const surfaceForms = (page: string, members: readonly SourceResidual[]): Keyed[] => [
+  ...SURFACE_SITE_SPELLINGS.map(entry => ({ table: "SURFACE_SITE_SPELLINGS", id: entry.id, key: entry.spelling })),
+  ...SURFACE_REQUEST_SPELLINGS.map(entry => ({ table: "SURFACE_REQUEST_SPELLINGS", id: entry.id, key: entry.spelling })),
+  ...NON_ASCII_PARTS.map(entry => ({ table: "NON_ASCII_PARTS", id: entry.id, key: entry.spelling })),
+  ...SURFACE_LEADS.map(form => ({ table: "SURFACE_LEADS", id: form.id, key: form.edit(page) })),
+  ...SURFACE_OTHERS.map(form => ({ table: "SURFACE_OTHERS", id: form.id, key: form.edit(page) })),
+  ...SURFACE_OWNERS.map(form => ({ table: "SURFACE_OWNERS", id: form.id, key: form.edit(page) })),
+  ...members.flatMap(member => SILENCINGS.map(form => ({ table: "SILENCINGS", id: `${member.path} ${form.id}`, key: form.silence(member.text) }))),
+  ...members.map(member => ({ table: "unreachable", id: `${member.path} unreachable`, key: unreachable(member.text) })),
+  ...COMPOSE_PLANTS.map(plant => ({ table: "COMPOSE_PLANTS", id: `compose ${plant.id}`, key: plant.text })),
+];
+/** The core's spelling tables (G1's and D3's), by name: the spellings each word reader reads, holds quiet or holds outside its pattern. */
+const CORE_SPELLING_TABLES: readonly (readonly [string, readonly string[]])[] = [
+  ["SITE_WORD_SPELLINGS", SITE_WORD_SPELLINGS.map(entry => entry.spelling)],
+  ["SITE_WORD_HITS", SITE_WORD_HITS],
+  ["SITE_WORD_QUIET", SITE_WORD_QUIET],
+  ["EXECUTOR_REQUEST_SPELLINGS", EXECUTOR_REQUEST_SPELLINGS.map(entry => entry.spelling)],
+  ["EXECUTOR_REQUEST_HITS", EXECUTOR_REQUEST_HITS],
+  ["EXECUTOR_REQUEST_QUIET", EXECUTOR_REQUEST_QUIET],
+  ["EXECUTOR_REQUEST_OUTSIDE", EXECUTOR_REQUEST_OUTSIDE.map(entry => entry.spelling)],
+];
+/**
+ * Every form of the fail-closed core (wb-0lf.2's census as R-B73 narrowed it) the overlap reading compares against, in table
+ * order: the spellings G1's and D3's tables write and each match FAIL_CLOSED's source forms refuse; the edits of the live page
+ * DOCS_PLANTS, FAIL_CLOSED's docs forms and the residual docs members (Q9's) make; and the residual source members' own texts
+ * and FAIL_CLOSED's member edits of them.
+ */
+export const coreForms = (page: string, members: readonly SourceResidual[]): Keyed[] => [
+  ...CORE_SPELLING_TABLES.flatMap(([table, spellings]) => spellings.map((key, index) => ({ table, id: `${table}#${index}`, key }))),
+  ...FAIL_CLOSED.flatMap(form => (form.kind === "source" ? form.unpinned.map(entry => ({ table: "FAIL_CLOSED source", id: form.id, key: entry.match })) : [])),
+  ...DOCS_PLANTS.map(plant => ({ table: "DOCS_PLANTS", id: plant.id, key: plant.edit(page) })),
+  ...FAIL_CLOSED.flatMap(form => (form.kind === "docs" ? [{ table: "FAIL_CLOSED docs", id: form.id, key: form.edit(page) }] : [])),
+  ...Object.values(RESIDUALS).flatMap(family => family.flatMap(member => (member.kind === "docs" ? [{ table: "RESIDUALS docs", id: member.id, key: member.edit(page) }] : []))),
+  ...members.map(member => ({ table: "RESIDUALS source", id: member.path, key: member.text })),
+  ...FAIL_CLOSED.flatMap(form => (form.kind === "member" ? [{ table: "FAIL_CLOSED member", id: form.id, key: form.edit(members.find(member => member.path === form.member)?.text ?? "") }] : [])),
+];
+/** CORE OVERLAP's reader: each full-surface form whose compared text is some core form's, with the id of every such core form in core order; a form with none is dropped. */
+export const coreOverlapOf = (surface: readonly Keyed[], core: readonly Keyed[]): { readonly form: string; readonly core: readonly string[] }[] =>
+  surface.flatMap(entry => {
+    const same = core.filter(other => other.key === entry.key).map(other => other.id);
+    return same.length === 0 ? [] : [{ form: entry.id, core: same }];
+  });
+/**
+ * CORE OVERLAP (refusal #2's U1, R-B164): the sixteen full-surface forms that are forms of the fail-closed core, each with the
+ * core forms it is, as the full-surface row computes them (coreOverlapOf over surfaceForms and coreForms) and the census header
+ * names them: seven spellings FAIL_CLOSED's source forms refuse (five of U1's, two of U2's), two boundary leads and the
+ * paragraph before the Ownership table that are FAIL_CLOSED's G3 forms, four ownership blocks after the table that are
+ * DOCS_PLANTS' D-OTHER plants, and the line-comment silencings of q1-shape.ts and q2-joined.ts that are FAIL_CLOSED's S2 forms.
+ * The full-surface row reads each again; no other full-surface form is a core form.
+ */
+export const CORE_OVERLAP: readonly { readonly form: string; readonly core: readonly string[] }[] = [
+  { form: "GraphPolicy/none/camel", core: ["FC-G1-CAMEL", "FC-G1-EVERY-MATCH"] },
+  { form: "GraphPolicy/space/sentence", core: ["FC-G1-SENTENCE"] },
+  { form: "GraphPolicy/underscorex3/lower", core: ["FC-G1-RUN3-SAME"] },
+  { form: "GraphPolicy/mixed4/lower", core: ["FC-G1-RUN-LONG"] },
+  { form: "GraphDataIR/underscore+none/upper", core: ["FC-G1-UNEVEN", "FC-G1-EVERY-MATCH"] },
+  { form: "ExecutorRequest/none/camel", core: ["FC-D3-CAMEL", "FC-D3-EVERY-MATCH"] },
+  { form: "ExecutorRequest/space/sentence", core: ["FC-D3-SENTENCE"] },
+  { form: "L-HEADING-3", core: ["FC-G3-LEAD-HEADING"] },
+  { form: "L-BREAK-DASHES", core: ["FC-G3-LEAD-BREAK"] },
+  { form: "O-BEFORE-PARAGRAPH", core: ["FC-G3-OTHER-LEAD"] },
+  { form: "O-AFTER-DEF", core: ["D-OTHER-DEF"] },
+  { form: "O-AFTER-FENCES", core: ["D-OTHER-CODE"] },
+  { form: "O-AFTER-HEADING", core: ["D-OTHER-HEADING"] },
+  { form: "O-AFTER-PARAGRAPH", core: ["D-OTHER-PARAGRAPH"] },
+  { form: "src/workbench/q1-shape.ts line-comment", core: ["FC-S2-Q1-COMMENTED"] },
+  { form: "src/workbench/q2-joined.ts line-comment", core: ["FC-S2-Q2-COMMENTED"] },
 ];
