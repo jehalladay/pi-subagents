@@ -36,29 +36,42 @@
  *      absence licensed on exactly COMPLETE_KINDS under the first and on no kind under the second (wb-aced, so a coordinated
  *      edit of LICENCES and its frozen literal reds under any annotation), VERDICT_FRAMES distinct and exactly the fixture
  *      builder's frame union at type level (T2 also counts it absolutely), and NOT_APPLICABLE the bead's own spelling followed
- *      by its forms under the three SDK styles the declaration witnesses. A failing Completeness join names both of its
- *      causes: an edited roster or a moved SDK vocabulary.
- *      Each case's expected cell count is computed once at module scope from these rosters (EXPECTED_CELLS, wb-aced, the
- *      landing-696 F1 follow-up), T2's fixture-validity half included, and so is the sequence of cells each case drives
- *      (EXPECTED_VISITS, wb-aced cut #2): T2, K1, K2, C1, C2 and C3 record every innermost cell they drive (the loop values
- *      they hand the SDK or the adapter; C2 and C3 also the branch the cell took) and compare that record with
- *      EXPECTED_VISITS, member for member and in order, after their count guards. So a case that drives other cells than the
- *      module rosters define, because it rebinds an iterated or branch roster in its own scope (the imported
- *      HYPERUNIX_EXECUTION_KINDS included) or substitutes, narrows, widens or reorders the roster expression at one of its
- *      loop sites, reds its own case, at the latest at that guard, whether or not its cell count moves.
+ *      by its forms under the three SDK styles the declaration witnesses. The imported HYPERUNIX_EXECUTION_KINDS (the roster
+ *      READ_KINDS derives from, R0's kind joins filter, EXPECTED_CELLS counts, and EXPECTED_VISITS and the kind loops of C2
+ *      and C3 iterate) joins the SDK as this file binds it (wb-ey9p, the landing-746 F1 follow-up): its element type is
+ *      exactly the SDK ExecutionStatusKind at type level, and at run time it equals the ExecutionStatus kinds of the
+ *      installed declaration, member for member and in declaration order. So a module-scope shadow or rebinding of the
+ *      import, or an edit of the adapter tuple itself (src/workbench/hyperunix-observer.ts), that substitutes, drops,
+ *      duplicates, adds or reorders a kind reds R0 whether or not its count moves, and a shadow that changes no member but
+ *      gives the binding another element type (wider or narrower) fails typing. A failing Completeness join names both of
+ *      its causes, an edited roster or a moved SDK vocabulary, and so does a failing kind join: an edited binding or a moved
+ *      SDK vocabulary.
+ *      Each case's expected cell count is computed once at module scope from these rosters, the imported one included
+ *      (EXPECTED_CELLS, wb-aced, the landing-696 F1 follow-up), T2's fixture-validity half included, and so is the sequence
+ *      of cells each case drives (EXPECTED_VISITS, wb-aced cut #2): T2, K1, K2, C1, C2 and C3 record every innermost cell
+ *      they drive (the loop values they hand the SDK or the adapter; C2 and C3 also the branch the cell took) and compare
+ *      that record with EXPECTED_VISITS, member for member and in order, after their count guards. So a case that drives
+ *      other cells than the module rosters define, because it rebinds an iterated or branch roster in its own scope (the
+ *      imported HYPERUNIX_EXECUTION_KINDS included) or substitutes, narrows, widens or reorders the roster expression at one
+ *      of its loop sites, reds its own case, at the latest at that guard, whether or not its cell count moves.
  *      Not claimed, and none is a residual (no quiet row pins any): a rewrite of the bead's own spelling itself (the
  *      roster's first member and the frozen literal together: the bead text lives in the tracker, which this file does not
  *      read); which HXS frame kinds carry a completeness verdict (T2 refuses the word on both listed frames; the SDK's
  *      frame set is not read); an edit of a guard or of a record (a case-local EXPECTED_CELLS or EXPECTED_VISITS, or a
  *      recorded value other than the driven one); an edit that hands the SDK or the adapter a value other than the recorded
- *      loop value (inside a loop body, or a case-local rebinding of a helper such as reading or sdkDocument); and a
- *      rebinding that changes no driven cell (K1's kind-set assertion reads HYPERUNIX_EXECUTION_KINDS without iterating it).
+ *      loop value (inside a loop body, or a case-local rebinding of a helper such as reading or sdkDocument); a case-local
+ *      rebinding that changes no driven cell (K1's kind-set assertion reads HYPERUNIX_EXECUTION_KINDS without iterating it);
+ *      and an edit of the installed SDK declaration together with the binding, or a rebinding of the imported
+ *      ExecutionStatusKind type (the kind join's anchors moved with it; the observer suite reads the src export against
+ *      that declaration).
  * T1, T2, C1 and R0's Completeness join state the vendored SDK 0.1.0 and move with an amended SDK (each names this bead's
- * on-landing leg); K1, K2, C2, C3 and R0's other joins hold before and after it. Pure: no HX binary, scratch directory, clock,
- * network or file write; the only file read is the installed SDK declaration (by T1 and R0). */
+ * on-landing leg); R0's kind join states the SDK's ExecutionStatus kinds and moves with an amended SDK only when they move, as
+ * the observer suite's tuple pins do; K1, K2, C2, C3 and R0's other joins hold before and after it. Pure: no HX binary, scratch
+ * directory, clock, network or file write; the only file read is the installed SDK declaration (by T1 and R0). */
 import {readFileSync} from 'node:fs';
 import {
-  type Completeness, type CoverageSummary, coverageSummaryOf, decodeResultStream, ProtocolError, resultFromJson, resultToJson,
+  type Completeness, type CoverageSummary, coverageSummaryOf, decodeResultStream, type ExecutionStatusKind, ProtocolError,
+  resultFromJson, resultToJson,
 } from '@hyperunix/sdk';
 import {describe, expect, expectTypeOf, it} from 'vitest';
 import {CapabilityError, type JsonValue} from '../src/workbench/capability-registry.js';
@@ -82,8 +95,9 @@ const FRAME_VALUES = PRE_EXISTING.filter((value): value is Completeness => value
 /** The two HXS frames whose verdict carries completeness (T2), exactly the frame union verdictStream builds. */
 const VERDICT_FRAMES = ['result-coverage', 'answer-coverage'] as const;
 const MUTATION_KINDS: ReadonlySet<string> = new Set(['mutation-rejected', 'mutation-partial']);
-/** The adapter's read kinds (its closed tuple, pinned to the SDK ExecutionStatusKind by the observer suite) and the two whose
- * reading is complete (hyperunix-observer.ts READING); R0 joins both, and MUTATION_KINDS, to hxLiveInvariant's own readings. */
+/** The adapter's read kinds (its closed tuple as imported here, which R0 joins to the SDK ExecutionStatusKind and to the
+ * installed declaration, as the observer suite pins the src export) and the two whose reading is complete
+ * (hyperunix-observer.ts READING); R0 joins both, and MUTATION_KINDS, to hxLiveInvariant's own readings. */
 const READ_KINDS = HYPERUNIX_EXECUTION_KINDS.filter(kind => !MUTATION_KINDS.has(kind));
 const COMPLETE_KINDS: ReadonlySet<string> = new Set(['complete', 'complete-empty']);
 const LICENCES = [true, false] as const;
@@ -95,7 +109,15 @@ const TRIGGER = 'wb-tz2.4 trigger: the vendored @hyperunix/sdk Completeness voca
 const COMPLETENESS_JOIN = 'wb-tz2.4 R0 Completeness join: PRE_EXISTING or FRAME_VALUES disagrees with the installed @hyperunix/sdk '
   + 'Completeness declaration. Either the roster was edited (restore it to the shipped Completeness in declaration order, then '
   + 'null) or the SDK vocabulary moved (' + TRIGGER + ')';
-/** Each case's expected cell count, computed once here from the R0-pinned module rosters (wb-aced, the landing-696 F1 follow-up):
+/** R0's kind join message (wb-ey9p): the join fails when this file's HYPERUNIX_EXECUTION_KINDS binding and the ExecutionStatus
+ * kinds of the installed declaration disagree, which an edit of either side causes, so it names both causes. */
+const KIND_JOIN = 'wb-tz2.4 R0 kind join: HYPERUNIX_EXECUTION_KINDS as this file binds it disagrees with the ExecutionStatus '
+  + 'kinds of the installed @hyperunix/sdk declaration (member for member, in declaration order). Either the binding was edited '
+  + '(a shadow or rebinding of the import here, or an edit of the adapter tuple in src/workbench/hyperunix-observer.ts: restore '
+  + 'the declared kinds in declaration order) or the SDK vocabulary moved (re-pin the adapter tuple and its H5 pins in '
+  + 'test/workbench-hyperunix-observer.test.ts first)';
+/** Each case's expected cell count, computed once here from the R0-pinned rosters, the module rosters and the imported
+ * HYPERUNIX_EXECUTION_KINDS (wb-aced, the landing-696 F1 follow-up; the import pinned since wb-ey9p):
  * a case that rebinds a roster locally, or narrows the roster it iterates at its loop site, cannot move its own guard with it.
  * T2's refusal half keeps the absolute frame count (two verdict frames), which a widened VERDICT_FRAMES cannot follow; its
  * fixture-validity half has a guard of its own. These guards pin each case's cell count only; EXPECTED_VISITS pins the cells. */
@@ -111,11 +133,12 @@ const EXPECTED_CELLS = Object.freeze({
 });
 /** One driven cell as a case records it: its loop values, outermost first (C2 and C3 add the branch the cell took). */
 type Visit = readonly (string | boolean | null)[];
-/** The cells each case drives, in order, computed once here from the same R0-pinned module rosters (wb-aced cut #2, the
- * refusal-#1 U1 cure): each case records every innermost cell it drives and compares the record with its entry after its
- * count guard, so a case that drives other cells than these rosters define (a roster rebound in its own scope, or a roster
- * expression substituted, narrowed, widened or reordered at a loop site) reds even when its cell count does not move. C2
- * leaves out the cells it skips (the licence on a complete kind, where the runtime itself licensed absence), as the case does. */
+/** The cells each case drives, in order, computed once here from the same R0-pinned rosters, the imported
+ * HYPERUNIX_EXECUTION_KINDS included (wb-aced cut #2, the refusal-#1 U1 cure): each case records every innermost cell it
+ * drives and compares the record with its entry after its count guard, so a case that drives other cells than these rosters
+ * define (a roster rebound in its own scope, or a roster expression substituted, narrowed, widened or reordered at a loop
+ * site) reds even when its cell count does not move. C2 leaves out the cells it skips (the licence on a complete kind, where
+ * the runtime itself licensed absence), as the case does. */
 const EXPECTED_VISITS: Readonly<Record<'t2Refusals' | 't2Validity' | 'k1' | 'k2' | 'c1' | 'c2' | 'c3', readonly Visit[]>> = Object.freeze({
   t2Refusals: VERDICT_FRAMES.flatMap(frame => NOT_APPLICABLE.map(spelling => [frame, spelling])),
   t2Validity: VERDICT_FRAMES.flatMap(frame => FRAME_VALUES.map(value => [frame, value])),
@@ -189,6 +212,16 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     const completeness = declared('Completeness');
     expect(PRE_EXISTING, COMPLETENESS_JOIN).toStrictEqual([...completeness, null]);
     expect(FRAME_VALUES, COMPLETENESS_JOIN).toStrictEqual(completeness);
+    // HYPERUNIX_EXECUTION_KINDS as this file binds it (wb-ey9p): exactly the SDK ExecutionStatusKind at type level, and at run
+    // time the ExecutionStatus kinds of the installed declaration, member for member and in declaration order, so an edit of
+    // its members or their order reds here before the kind joins below, EXPECTED_CELLS or EXPECTED_VISITS can move with it.
+    expectTypeOf<(typeof HYPERUNIX_EXECUTION_KINDS)[number]>().toEqualTypeOf<ExecutionStatusKind>();
+    const statusStart = declaration.indexOf('export type ExecutionStatus =');
+    const statusEnd = declaration.indexOf('export type ExecutionStatusKind', statusStart);
+    expect(statusStart, KIND_JOIN).toBeGreaterThanOrEqual(0);
+    expect(statusEnd, KIND_JOIN).toBeGreaterThan(statusStart);
+    const declaredKinds = [...declaration.slice(statusStart, statusEnd).matchAll(/readonly kind: "([^"]+)";/g)].map(match => match[1]);
+    expect(HYPERUNIX_EXECUTION_KINDS, KIND_JOIN).toStrictEqual(declaredKinds);
     // COMPLETE_KINDS is the adapter's own licensed reading; MUTATION_KINDS is its read-outcome clause and READ_KINDS the rest.
     const readOutcome = HYPERUNIX_EXECUTION_KINDS.filter(kind => hxLiveInvariant(reading(kind, false)).violations.includes('read-outcome'));
     expect([...COMPLETE_KINDS]).toStrictEqual(HYPERUNIX_EXECUTION_KINDS.filter(kind => hxLiveInvariant(reading(kind, true)).absenceLicensed));
