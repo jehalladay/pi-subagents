@@ -331,6 +331,18 @@
         {
           "id": "U-wrapper-statements",
           "digest": "af8136f91dcf1fe47972e0c54212fff90fdd292c1697c742d4bc9057f24d57b4"
+        },
+        {
+          "id": "S-U-wrapper-forms",
+          "digest": "1263166a02fa5f1f25d9b548270a6fad2b25bf74f6b1da6ed2303a3d62281681"
+        },
+        {
+          "id": "S-W-G14-E7",
+          "digest": "056707ab15f92ce38ad8b11040acf34f92a96005f16f111d52f1271af5535b6d"
+        },
+        {
+          "id": "S-U-wrapper-imports",
+          "digest": "4c9f05a1132800ebe90bb222f90942df63ffb6d65af53b73f3374bb7ee138a20"
         }
       ]
     },
@@ -501,6 +513,18 @@
         {
           "id": "NS-import-equals-namespace",
           "digest": "636aa992befe7a0ee510764f5a516d807f0bc0647ab4298e582fcadaccdc0afc"
+        },
+        {
+          "id": "W-G7-N1",
+          "digest": "73d7439054ca877b2904ef86b7478813666b1abd3f7176cd0fedd3a3736fff3b"
+        },
+        {
+          "id": "W-G7-N2",
+          "digest": "dbf790c9ff4f09616ad09e6ef7c77903da56d3a958c7aa7e44bc7202bc28b01f"
+        },
+        {
+          "id": "S-W-G14-R34",
+          "digest": "1b014ba5f4ce59bc101454782169f9c08f75c9656e808cf2ce828a5cc1f1c07a"
         }
       ]
     },
@@ -567,6 +591,10 @@
         {
           "id": "EN-second-module",
           "digest": "155b2310b271f0bcc3a80bb4443619f2a3a86a965c6764eabfd766c75319535c"
+        },
+        {
+          "id": "S-U-EN-self",
+          "digest": "66c55a8dda114e076da624c02d8d53e7ecd6b69d9ab94741f5afc8eed6f81083"
         }
       ]
     },
@@ -645,6 +673,26 @@
         {
           "id": "M-contexts",
           "digest": "6d93c2140e2069a0a8ff6a2a1068240a027117de13ed4bc5f04afea0c29a8ee6"
+        },
+        {
+          "id": "W-G7-M1",
+          "digest": "2d5eea81d2d844fe93e97d9f020cb0f72ed6e710dfb8d0f5cbf46c3ffc3bef0e"
+        },
+        {
+          "id": "W-G7-M2",
+          "digest": "25b55cab72d1c42c27a23c090febca3093f9a41f971d9d55866003840d322571"
+        },
+        {
+          "id": "W-G7-M3",
+          "digest": "90367f50f801b532f360f7db529172622589e543fe8e76b172a789cd70ac22ef"
+        },
+        {
+          "id": "S-W-G14-M10",
+          "digest": "ab8e607950535d7a845ee173d68d62f29d09ed731d8055935680e2ebf2ec9194"
+        },
+        {
+          "id": "S-W-G14-M20",
+          "digest": "d7db5462bf4d23c6e7b494e1daacc8380b9aaa98461343bbe6fea1631623f5a3"
         }
       ]
     },
@@ -807,6 +855,22 @@
         {
           "id": "I-contexts",
           "digest": "1a12023ec478ee1b7c0beadbac1d6fd6b221d71e4cf620c4f689d7331398022f"
+        },
+        {
+          "id": "W-G14-I11",
+          "digest": "7d748d00362aed27907afd8183715a3a441f0971948741a7d1855c9a18f8b783"
+        },
+        {
+          "id": "W-G7-I1",
+          "digest": "77b727fb0ac7ab920722436b65a9a9e1964933d7137931f86345a3b6e4c7dd2d"
+        },
+        {
+          "id": "W-G7-I2",
+          "digest": "3483ab76228d18ed6210e9480c1c659125a33c5d13e3802a25837f7495e40ea8"
+        },
+        {
+          "id": "S-W-G14-I5",
+          "digest": "27e570e8e96a3767166390c0ca27592e987205cbb022bcf0bea094ab55a9d722"
         }
       ]
     },
@@ -935,6 +999,9 @@
     "U U-wrapper-imports",
     "U U-alias-reads-bound",
     "U U-wrapper-statements",
+    "U S-U-wrapper-forms",
+    "U S-W-G14-E7",
+    "U S-U-wrapper-imports",
     "NS U-NS1",
     "NS U-NS1L",
     "NS U-NS2",
@@ -976,6 +1043,9 @@
     "NS NS-positions-2",
     "NS NS-contexts",
     "NS NS-import-equals-namespace",
+    "NS W-G7-N1",
+    "NS W-G7-N2",
+    "NS S-W-G14-R34",
     "EN U-EN1",
     "EN U-EN2",
     "EN U-EN-forward",
@@ -991,6 +1061,7 @@
     "EN EN-forward-positions",
     "EN EN-contexts",
     "EN EN-second-module",
+    "EN S-U-EN-self",
     "M U-META1",
     "M U-META1L",
     "M U-meta-forms",
@@ -1009,6 +1080,11 @@
     "M W-G14-M20",
     "M M-positions-2",
     "M M-contexts",
+    "M W-G7-M1",
+    "M W-G7-M2",
+    "M W-G7-M3",
+    "M S-W-G14-M10",
+    "M S-W-G14-M20",
     "I U-IE1",
     "I U-IE1c",
     "I U-IE2",
@@ -1048,6 +1124,10 @@
     "I W-G14-I18",
     "I I-positions-2",
     "I I-contexts",
+    "I W-G14-I11",
+    "I W-G7-I1",
+    "I W-G7-I2",
+    "I S-W-G14-I5",
     "J U-GJ1",
     "J U-wrapper-scopes",
     "J U-GJ4",
@@ -1056,9 +1136,10 @@
     "Q R-FIELD-MUTATION",
     "Q R-REFLECTIVE-REACH",
     "Q R-UNLINKED-IMPORT",
-    "outside anchors: this bead's export row with its refusal #1 record and the parent's records of refusals #1 to #4, each member a pin of its row with the polarity its record states",
-    "rule 16: every judged row and the residual families are frozen at their measured shape",
-    "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-snapshot-global-reader-roster.json, in order and both ways"
+    "outside anchors: this bead's export row with its refusal #1 and #2 records and the parent's records of refusals #1 to #4, each member a pin of its row with the polarity its record states",
+    "collapse guard (refusal #2, R-B268): each GLOBAL line of each pin holds one reading of its name, except the collapsed lines COLLAPSED_SPLITS lists, each split by its named pin into one reading per line",
+    "rule 16: every judged row, the residual families and the collapsed lines are frozen at their measured shape",
+    "roster: the judged rows, the registered tests, the residual families and the collapsed lines equal test/fixtures/apo-snapshot-global-reader-roster.json, in order and both ways"
   ],
   "residuals": {
     "R-FIELD-MUTATION": [
@@ -1070,5 +1151,15 @@
     "R-UNLINKED-IMPORT": [
       "Q R-UNLINKED-IMPORT"
     ]
+  },
+  "collapsed": {
+    "U U-wrapper-forms": "S-U-wrapper-forms",
+    "U W-G14-E7": "S-W-G14-E7",
+    "U U-wrapper-imports": "S-U-wrapper-imports",
+    "NS W-G14-R34": "S-W-G14-R34",
+    "EN U-EN-self": "S-U-EN-self",
+    "M W-G14-M10": "S-W-G14-M10",
+    "M W-G14-M20": "S-W-G14-M20",
+    "I W-G14-I5": "S-W-G14-I5"
   }
 }

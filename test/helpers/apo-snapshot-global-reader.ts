@@ -7,8 +7,10 @@
  * test/helpers/apo-snapshot-census.ts :319-510) with one reading added - instantiation expressions, below - and its
  * view-census readings (views, closures, EFFECT, PACKAGE, UNRESOLVED, UNREADABLE, CONSTRUCTOR, the seams) left in
  * wb-021.2's census, which is not on trunk; wb-021.2's eventual re-cut restates its census over this reader (R-B166).
- * This bead's cut #2 answers its refusal #1 (UNMET U1-U7): it adds pins and narrows claim words, and the reader's code
- * is cut #1's, byte for byte.
+ * This bead's cut #2 answered its refusal #1 (UNMET U1-U7) with pins and narrowed claim words. Cut #3 answers its refusal
+ * #2 (UNMET U1-U3, the collapsed-slot members of that class; ruling R-B268: the class frozen, this cut in the
+ * enumerate-the-resolvable form) with refusal #2's gate witnesses, a split pin for each collapsed GLOBAL line
+ * (COLLAPSED_SPLITS) and the census's collapse guard; the reader's code is cut #1's, byte for byte.
  *
  * WHAT THE READER RETURNS. judgeGlobals reads each file of a tree as one module of one TypeScript program (noLib,
  * noResolve, the checker over exactly those files) and returns one line `GLOBAL <file>:<line> <name>` per free name of
@@ -19,6 +21,13 @@
  * parentheses, each pin's message naming its own plant (rows F, R, U, NS, EN, M, I, J and Q of ROWS). Where a reading
  * describes a rule of the reader's code, the description is of the code and the census claims the rule at the pinned
  * forms. A form or a position no pin holds is NOT CLAIMED by this census.
+ * ONE READING PER LINE (refusal #2's class). A GLOBAL line is the census's observable, so two readings of one name on one
+ * line are falsified together and never alone; a reading is claimed at a position where a pin holds it as the one
+ * reading of its name on its line. The eight pins COLLAPSED_SPLITS lists hold a line with two (W-G14-M10, W-G14-M20,
+ * W-G14-I5, W-G14-R34, W-G14-E7, U-wrapper-forms, U-wrapper-imports and U-EN-self): each is claimed at that line as a
+ * line, and its readings are claimed at their positions through its split S-<pin>, the same program token for token
+ * with line breaks added, each reading on a line of its own (the census's collapse guard holds the list, the token
+ * identity and one reading per line for every other pin).
  *
  * FREE NAMES (row F). Each ADMITTED_FREE name read once reads quiet (V-admitted-free, whose list the census holds to
  * ADMITTED_FREE in order); process, fetch, Function, eval, globalThis, global and the module-wrapper names require,
@@ -78,9 +87,11 @@
  * one in a top-level block counts) of a name in WRAPPER_NAMES - a CommonJS module wrapper's parameters exports,
  * require, module, __filename, __dirname, jitiImport and jitiESMResolve (jiti 2.7.0's wrapper, Pi's extension loader)
  * and the wrapper's own arguments - bind nothing: a var (U-wrapper-var); a var with a self initializer, an enum, an
- * instantiated namespace, a function declaration, a let, a class and a var in a top-level block (U-wrapper-forms); a
- * const (W-G14-E15) and a destructured const (W-G14-E7); a named, a default, a namespace and an import-equals import, a
- * catch variable and an array-destructured const (U-wrapper-imports); a function declaration in a top-level block, a
+ * instantiated namespace, a function declaration, a let, a class and a var in a top-level block (U-wrapper-forms; the
+ * self-initialized var's line split by S-U-wrapper-forms); a const (W-G14-E15) and a destructured const (W-G14-E7; its
+ * declaration line, the destructured name red and the initializer's same-named key quiet, split by S-W-G14-E7); a named,
+ * a default, a namespace and an import-equals import, a catch variable and an array-destructured const
+ * (U-wrapper-imports; the catch variable's line split by S-U-wrapper-imports); a function declaration in a top-level block, a
  * function declaration in a case clause, a class in a default clause and a dotted namespace's inner name
  * (U-wrapper-statements). Under the wrapper the var forms keep the wrapper's value; the other pinned forms are the
  * reader's conservative reading (fresh bindings at run time, held red). The pinned declarations of a wrapper name
@@ -105,8 +116,11 @@
  * member's initializer and a destructuring default of the second block; refusal #1's thirteen U2 members, each its gate
  * witness - a destructured member (W-G14-R12), a new callee (W-G14-R24), binary operands (W-G14-R27), an element access
  * (W-G14-R28), a template span (W-G14-R29), a typeof operand (W-G14-R30), a spread (W-G14-R31), a conditional
- * (W-G14-R34), a constructor (W-G14-R36), a getter (W-G14-R37), a function expression (W-G14-R38), a parameter default
- * (W-G14-R39) and a decorator (W-G14-R40); and the cut #2 seat's NS-positions-2 (26 positions), NS-contexts (47 parent
+ * (W-G14-R34, claimed at its line: its condition and its whenTrue branch read one name), a constructor (W-G14-R36), a
+ * getter (W-G14-R37), a function expression (W-G14-R38), a parameter default (W-G14-R39) and a decorator (W-G14-R40);
+ * refusal #2's two U3 members, each its gate witness - a conditional's condition (W-G7-N1) and its whenTrue branch
+ * (W-G7-N2) - and W-G14-R34's split S-W-G14-R34 (its condition, whenTrue branch and whenFalse branch, one line each);
+ * and the cut #2 seat's NS-positions-2 (26 positions), NS-contexts (47 parent
  * and ancestor kinds) and NS-import-equals-namespace, each position named in its pin's message. A reference inside the
  * declaring body (U-NS-C2) or inside a namespace nested in it (U-NS-C3) binds. An unexported member of the first block
  * (U-NS-C1) and an enum's member read from a namespace merged with the enum (U-NS9) red as free names. A reference
@@ -115,7 +129,8 @@
  * after the member's declaration, and a reference before it or inside its own initializer binds nothing - jiti's enum
  * transform qualifies a bare member name once it has read that member (the seat's readback). The census claims the rule
  * at these pinned reads: a forward read as an as-cast operand (U-EN-forward), in an earlier declaration of the same
- * enum (U-EN-forward-merged), inside the member's own initializer (U-EN-self), inside an enum a namespace block holds
+ * enum (U-EN-forward-merged), inside the member's own initializer (U-EN-self, claimed at its line; its split
+ * S-U-EN-self holds the member's own name quiet and the read red, one line each), inside an enum a namespace block holds
  * (W-GK3-namespace-enum-forward: refusal #4's GK3 witness), inside an arrow an earlier initializer calls
  * (G4-EN-forward-nested-arrow), refusal #1's four U4 members - a forward read before a member named by a string literal
  * (W-G14-R5), as a property receiver (W-G14-R5c), as a binary operand (W-G14-R5e) and as the whole initializer
@@ -133,8 +148,12 @@
  * class static block and a parameter default (M-positions), a key read inside a handler (R-not-references) and inside
  * an instantiation expression (U-IE3, U-IE12); refusal #1's ten U1 members, each its gate witness - a typeof operand
  * (W-G14-M4), a return operand (W-G14-M5), an arrow's concise body (W-G14-M6), an array element (W-G14-M9), a binary
- * operand (W-G14-M10), an arrow's block body (W-G14-M11), a second module (W-G14-M15), a function expression
- * (W-G14-M16), a getter (W-G14-M17) and a conditional branch (W-G14-M20); and the cut #2 seat's M-positions-2 (39
+ * expression's two operands on one line (W-G14-M10, claimed at its line), an arrow's block body (W-G14-M11), a second
+ * module (W-G14-M15), a function expression (W-G14-M16), a getter (W-G14-M17) and a conditional's two branches on one
+ * line (W-G14-M20, claimed at its line); refusal #2's three U1 members, each its gate witness - a binary expression's
+ * left operand (W-G7-M1), a conditional's whenTrue branch (W-G7-M2) and its whenFalse branch (W-G7-M3) - and the splits
+ * S-W-G14-M10 (the left and the right operand of ===) and S-W-G14-M20 (the whenTrue and the whenFalse branch), one line
+ * each; and the cut #2 seat's M-positions-2 (39
  * positions) and M-contexts (46 parent and ancestor kinds), each position named in its pin's message. A position no row
  * M pin holds is NOT CLAIMED by this census.
  * INSTANTIATION EXPRESSIONS (row I; refusal #4's class U1, folded into this bead by R-B166; refusal #1's U3). An
@@ -152,10 +171,15 @@
  * clause, a nested instantiation and a template span (I-positions), U-IE1 to U-IE5 each exactly as its control without
  * type arguments reads (U-IE1c, U-IE2c, U-IE3c, U-IE4c, U-IE5c) and U-IE5 as a call with type arguments reads (U-IE5d);
  * refusal #1's fourteen U3 members, each its gate witness - an arrow's concise body (W-G14-I1), an array element
- * (W-G14-I2), a property value (W-G14-I3), a conditional branch (W-G14-I5), an await operand (W-G14-I7), a typeof
+ * (W-G14-I2), a property value (W-G14-I3), a conditional's two branches on one line (W-G14-I5, claimed at its line),
+ * an await operand (W-G14-I7), a typeof
  * operand (W-G14-I8), a cast operand (W-G14-I9), a property receiver (W-G14-I10), a new argument (W-G14-I12), an
  * arrow's block body (W-G14-I14), an enum member's initializer (W-G14-I15), a destructuring default (W-G14-I16), a
- * throw operand (W-G14-I17) and a class decorator (W-G14-I18); and the cut #2 seat's I-positions-2 (23 positions) and
+ * throw operand (W-G14-I17) and a class decorator (W-G14-I18); refusal #2's two U2 members, each its gate witness - a
+ * conditional's whenTrue branch (W-G7-I1) and its whenFalse branch (W-G7-I2) - W-G14-I5's split S-W-G14-I5 (its two
+ * branches, one line each) and an optional call's callee (W-G14-I11: refusal #1's edit G14-I11, refusal #2's F1 rider;
+ * TypeScript 6.0.3 parses structuredClone<string>?.("x") with no diagnostic as an optional call whose callee is the
+ * instantiation expression); and the cut #2 seat's I-positions-2 (23 positions) and
  * I-contexts (42 parent and ancestor kinds), each position named in its pin's message. The namespace-block rule (6)
  * holds inside one, a cross-block reference red and a same-block one bound (I-cross-block; the seat's jiti twin reads
  * the member); its type arguments are erased, a typeof type argument quiet (I-type-arguments); a class's extends clause
@@ -166,7 +190,9 @@
  * reader binding a dotted namespace with an empty innermost body) are each killed by its witness, held byte-for-byte:
  * U-GJ1 (quiet), U-GJ4, U-GJ15 and U-GJ16 (each red), with U-wrapper-scopes (quiet) beside U-GJ1; refusal #4's GK1, GK2
  * and GK3 by their witnesses in rows NS, EN and M; refusal #1's 48 named members of record (the 45 of U1-U7 and the
- * three F1 rides) by the W-G14-* witnesses of rows R, U, NS, EN, M and I.
+ * three F1 rides) by the W-G14-* witnesses of rows R, U, NS, EN, M and I; refusal #2's seven named members of record
+ * (U1 G7-M1, G7-M2 and G7-M3, U2 G7-I1 and G7-I2, U3 G7-N1 and G7-N2) by the W-G7-* witnesses of rows M, I and NS, with
+ * the splits, and its F1 rider G14-I11 by W-G14-I11.
  * NOT CLAIMED (scope sentences): a form or a position no pin holds is NOT CLAIMED by this census; member reads are NOT
  * CLAIMED by this census - the reader reads free names and not the members of a value, so a reach or a write through a
  * member (a function value's constructor among them) reads quiet unless a free name on its path reds (the residuals
@@ -1600,6 +1626,96 @@ export const ROWS: readonly Row[] = [
         },
         findings: [globalAt(2, "require"), globalAt(3, "module"), globalAt(4, "exports"), globalAt(5, "__filename")],
       },
+      {
+        kind: "plant",
+        id: "S-U-wrapper-forms",
+        what: "U-wrapper-forms split (the collapse guard): its program token for token with a line break added inside the self-initialized var, so the var's own name require and its initializer require each sit alone on a line and each red; every other reading as in U-wrapper-forms, one line later (GLOBAL)",
+        files: {
+          [V]: view(
+            "APO resource pressure",
+            [HOST],
+            ["void [require, jitiImport, module, exports, __filename, __dirname, jitiESMResolve, scoped, Inner, fresh, made, Holder];"],
+            [
+              "var require =",
+              "  require;",
+              "enum jitiImport {",
+              "  Early,",
+              "}",
+              "namespace module {",
+              "  export const level = 1;",
+              "}",
+              "function exports(): void {}",
+              'let __filename = "";',
+              "class __dirname {}",
+              "{",
+              "  var jitiESMResolve: unknown;",
+              "}",
+              "function scoped(): unknown {",
+              "  var require: unknown;",
+              "  return require;",
+              "}",
+              "namespace Inner {",
+              "  var jitiImport: unknown;",
+              "  void jitiImport;",
+              "}",
+              "const fresh = function exports(): unknown {",
+              "  return exports;",
+              "};",
+              "const made = class module {",
+              "  static self(): unknown {",
+              "    return module;",
+              "  }",
+              "};",
+              "class Holder {",
+              "  static {",
+              "    var require: unknown;",
+              "    void require;",
+              "  }",
+              "}",
+            ],
+          ),
+        },
+        findings: [globalAt(3, "require"), globalAt(4, "require"), globalAt(5, "jitiImport"), globalAt(8, "module"), globalAt(11, "exports"), globalAt(12, "__filename"), globalAt(13, "__dirname"), globalAt(15, "jitiESMResolve"), globalAt(43, "require"), globalAt(43, "jitiImport"), globalAt(43, "module"), globalAt(43, "exports"), globalAt(43, "__filename"), globalAt(43, "__dirname"), globalAt(43, "jitiESMResolve")],
+      },
+      {
+        kind: "plant",
+        id: "S-W-G14-E7",
+        what: "W-G14-E7 split (the collapse guard): its program token for token with a line break added after the initializer's opening brace, so the destructured const require (red at the declaration) and the object literal's same-named key require (a member name, read and quiet) each sit alone on a line; require reds at the declaration and at the call (GLOBAL)",
+        files: { [V]: planted("export const { require } = {", "  require: (id: string): unknown => id };", 'export const os = require("node:os");') },
+        findings: [globalAt(2, "require"), globalAt(4, "require")],
+      },
+      {
+        kind: "plant",
+        id: "S-U-wrapper-imports",
+        what: "U-wrapper-imports split (the collapse guard): its program token for token with line breaks added inside the catch clause, so the module-scope catch variable __dirname and its read each sit alone on a line and each red; every other reading as in U-wrapper-imports, two lines later after the catch clause (GLOBAL)",
+        files: {
+          [V]: planted(
+            'import { require } from "./a.js";',
+            'import module from "./b.js";',
+            'import * as exports from "./c.js";',
+            'namespace Other { export const name = "x"; }',
+            "import __filename = Other.name;",
+            "try { void 0; } catch (__dirname) {",
+            "  void __dirname;",
+            "}",
+            "export const uses = [require, module, exports, __filename];",
+            "export const [jitiImport] = [(): unknown => 0];",
+          ),
+        },
+        findings: [
+          globalAt(2, "require"),
+          globalAt(3, "module"),
+          globalAt(4, "exports"),
+          globalAt(6, "__filename"),
+          globalAt(7, "__dirname"),
+          globalAt(8, "__dirname"),
+          globalAt(10, "__filename"),
+          globalAt(10, "exports"),
+          globalAt(10, "module"),
+          globalAt(10, "require"),
+          globalAt(11, "jitiImport"),
+        ],
+      },
     ],
   },
   {
@@ -2280,6 +2396,27 @@ export const ROWS: readonly Row[] = [
         },
         findings: [globalAt(8, "Inner")],
       },
+      {
+        kind: "plant",
+        id: "W-G7-N1",
+        what: "wb-021.8 refusal #2 member G7-N1's witness as the gate wrote it (G7-NS-slot-cond-test: rule (6) lets a cross-block reference reach as a conditional's condition): in the second block of an exported namespace N, the first block's exported const process as a conditional's condition, the one reading of process on its line, reds at the use (GLOBAL; under Pi's jiti 2.7.0 the gate's read-only twin read the host process)",
+        files: { [V]: planted("export namespace N {", "  export const process = { pid: 0 };", "}", "export namespace N {", "  export const tested = process ? 1 : 0;", "}") },
+        findings: [globalAt(6, "process")],
+      },
+      {
+        kind: "plant",
+        id: "W-G7-N2",
+        what: "wb-021.8 refusal #2 member G7-N2's witness as the gate wrote it (G7-NS-slot-cond-true: lets a cross-block reference reach as a conditional's whenTrue branch): the first block's exported const process as the whenTrue branch in the second block, the one reading of process on its line, reds at the use (GLOBAL; under Pi's jiti 2.7.0 the gate's read-only twin read the host process)",
+        files: { [V]: planted("export namespace N {", "  export const process = { pid: 0 };", "}", "export namespace N {", "  export const branch = Date.now() > 0 ? process : undefined;", "}") },
+        findings: [globalAt(6, "process")],
+      },
+      {
+        kind: "plant",
+        id: "S-W-G14-R34",
+        what: "W-G14-R34 split (the collapse guard): its program token for token with line breaks added inside the conditional, so the cross-block reads chosen (the condition), chosen (the whenTrue branch) and other (the whenFalse branch) each sit alone on a line and each red at the use (GLOBAL)",
+        files: { [V]: planted("namespace N {", "  export const chosen = 1;", "  export const other = 2;", "}", "namespace N {", "  export const pick = chosen", "    ? chosen", "    : other;", "}") },
+        findings: [globalAt(7, "chosen"), globalAt(8, "chosen"), globalAt(9, "other")],
+      },
     ],
   },
   {
@@ -2540,6 +2677,13 @@ export const ROWS: readonly Row[] = [
           "src/apo/ops.ts": ["export enum E {", "  a = process.pid,", "  process = 1,", "}", ""].join("\n"),
         },
         findings: [globalAt(2, "process", "src/apo/ops.ts")],
+      },
+      {
+        kind: "plant",
+        id: "S-U-EN-self",
+        what: "U-EN-self split (the collapse guard): its program token for token with a line break added after the member's =, so the member's own name process (read and quiet) and the bare read process inside its own initializer (red at the read) each sit alone on a line (GLOBAL)",
+        files: { [V]: view("APO resource pressure", [HOST], ["void E.process;"], ["enum E {", "  process =", "    (process as unknown as { pid: number }).pid,", "}"]) },
+        findings: [globalAt(5, "process")],
       },
     ],
   },
@@ -2879,6 +3023,41 @@ export const ROWS: readonly Row[] = [
           globalAt(49, "import.meta"),
           globalAt(50, "import.meta"),
         ],
+      },
+      {
+        kind: "plant",
+        id: "W-G7-M1",
+        what: "wb-021.8 refusal #2 member G7-M1's witness as the gate wrote it (G7-M-slot-bin-left: the meta rule leaves import.meta unread as a binary expression's left operand): import.meta as the left operand of !==, the one reading of import.meta on its line, reds at the meta-property (GLOBAL)",
+        files: { [V]: planted("export const metaFirst = import.meta !== undefined;") },
+        findings: [globalAt(2, "import.meta")],
+      },
+      {
+        kind: "plant",
+        id: "W-G7-M2",
+        what: "wb-021.8 refusal #2 member G7-M2's witness as the gate wrote it (G7-M-slot-cond-true: unread as a conditional's whenTrue branch): import.meta as the whenTrue branch, the one reading of import.meta on its line, reds at the meta-property (GLOBAL)",
+        files: { [V]: planted("export const chosenMeta = Date.now() > 0 ? import.meta : undefined;") },
+        findings: [globalAt(2, "import.meta")],
+      },
+      {
+        kind: "plant",
+        id: "W-G7-M3",
+        what: "wb-021.8 refusal #2 member G7-M3's witness as the gate wrote it (G7-M-slot-cond-false: unread as a conditional's whenFalse branch): import.meta as the whenFalse branch, the one reading of import.meta on its line, reds at the meta-property (GLOBAL)",
+        files: { [V]: planted("export const otherMeta = Date.now() > 0 ? undefined : import.meta;") },
+        findings: [globalAt(2, "import.meta")],
+      },
+      {
+        kind: "plant",
+        id: "S-W-G14-M10",
+        what: "W-G14-M10 split (the collapse guard): its program token for token with a line break added after ===, so its left operand import.meta (line 2) and its right operand import.meta (line 3) each sit alone on a line and each red at the meta-property (GLOBAL)",
+        files: { [V]: planted("export const same = import.meta ===", "  import.meta;") },
+        findings: [globalAt(2, "import.meta"), globalAt(3, "import.meta")],
+      },
+      {
+        kind: "plant",
+        id: "S-W-G14-M20",
+        what: "W-G14-M20 split (the collapse guard): its program token for token with line breaks added inside the conditional, so its whenTrue branch import.meta (line 3) and its whenFalse branch import.meta (line 4) each sit alone on a line and each red at the meta-property (GLOBAL)",
+        files: { [V]: planted("export const meta = true", "  ? import.meta", "  : import.meta;") },
+        findings: [globalAt(3, "import.meta"), globalAt(4, "import.meta")],
       },
     ],
   },
@@ -3385,6 +3564,34 @@ export const ROWS: readonly Row[] = [
           globalAt(46, "structuredClone"),
         ],
       },
+      {
+        kind: "plant",
+        id: "W-G14-I11",
+        what: "wb-021.8 refusal #1 edit G14-I11's witness as refusal #2's gate wrote it (its F1 rider; G14-I11 leaves an instantiation expression unread as a call's callee): an optional call whose callee is the instantiation expression structuredClone<string> (TypeScript 6.0.3 parses it with no diagnostic) reads structuredClone through its expression (GLOBAL)",
+        files: { [V]: planted('export const cloned = structuredClone<string>?.("x");') },
+        findings: [globalAt(2, "structuredClone")],
+      },
+      {
+        kind: "plant",
+        id: "W-G7-I1",
+        what: "wb-021.8 refusal #2 member G7-I1's witness as the gate wrote it (G7-I-slot-cond-true: the instantiation branch leaves an instantiation expression unread as a conditional's whenTrue branch): structuredClone<number> as the whenTrue branch, the one reading of structuredClone on its line, reads structuredClone through its expression (GLOBAL; under Pi's jiti 2.7.0 the gate's twin reached the host's structuredClone)",
+        files: { [V]: planted("export const cloneA = Date.now() > 0 ? structuredClone<number> : undefined;") },
+        findings: [globalAt(2, "structuredClone")],
+      },
+      {
+        kind: "plant",
+        id: "W-G7-I2",
+        what: "wb-021.8 refusal #2 member G7-I2's witness as the gate wrote it (G7-I-slot-cond-false: unread as a conditional's whenFalse branch): structuredClone<number> as the whenFalse branch, the one reading of structuredClone on its line, reads structuredClone through its expression (GLOBAL; under Pi's jiti 2.7.0 the gate's twin reached the host's structuredClone)",
+        files: { [V]: planted("export const cloneB = Date.now() > 0 ? undefined : structuredClone<number>;") },
+        findings: [globalAt(2, "structuredClone")],
+      },
+      {
+        kind: "plant",
+        id: "S-W-G14-I5",
+        what: "W-G14-I5 split (the collapse guard): its program token for token with line breaks added inside the conditional, so its whenTrue branch structuredClone<number> (line 3) and its whenFalse branch structuredClone<number> (line 4) each sit alone on a line and each read structuredClone through its expression (GLOBAL)",
+        files: { [V]: planted("export const reach = true", "  ? structuredClone<number>", "  : structuredClone<number>;") },
+        findings: [globalAt(3, "structuredClone"), globalAt(4, "structuredClone")],
+      },
     ],
   },
   {
@@ -3512,6 +3719,22 @@ export const ROWS: readonly Row[] = [
 
 /** Refusal #1's U1 members of record (wb-021.2's notes), each cured by the row R pin named. */
 export const REFUSAL_1_CURES: Readonly<Record<string, string>> = { G01: "R-script-var", G01b: "R-script-require", G01c: "R-script-function", G01d: "R-script-typed", G02: "R-dts-script" };
+
+/**
+ * The collapsed GLOBAL lines of record (refusal #2's class; the census's collapse guard): each pin, keyed `<row> <pin>`,
+ * with a GLOBAL line holding two readings of its name, mapped to the pin of its row that splits it - the same program
+ * token for token with line breaks added, each reading on a line of its own.
+ */
+export const COLLAPSED_SPLITS: Readonly<Record<string, string>> = {
+  "U U-wrapper-forms": "S-U-wrapper-forms",
+  "U W-G14-E7": "S-W-G14-E7",
+  "U U-wrapper-imports": "S-U-wrapper-imports",
+  "NS W-G14-R34": "S-W-G14-R34",
+  "EN U-EN-self": "S-U-EN-self",
+  "M W-G14-M10": "S-W-G14-M10",
+  "M W-G14-M20": "S-W-G14-M20",
+  "I W-G14-I5": "S-W-G14-I5",
+};
 
 /** The named residual families: one per row Q pin, each its own pinned quiet row. */
 export const RESIDUAL_FAMILIES: Readonly<Record<string, readonly string[]>> = Object.fromEntries((ROWS.find(row => row.id === "Q")?.pins ?? []).map(pin => [pin.id, [`Q ${pin.id}`]]));
