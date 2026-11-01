@@ -10,8 +10,10 @@
  *
  * MEASURED (read-only, by the cutting seat, 2026-10-28, at base cd8927f; re-run green at bb96515, whose landing 597 touched
  * one other census and .beads only; the rf readings below re-read unchanged by the cut #2 seat at dab445f, by the cut #3
- * seat at 5ffe345, by the cut #4 seat at aec4521 and by the cut #5 seat at 04123dc). The installed rf
- * reads 0.1.845 (`rf --json --version`: 80 leaves, context.render and operation.show both served_reachable). `rf context
+ * seat at 5ffe345, by the cut #4 seat at aec4521 and by the cut #5 seat at 04123dc; the cut #6 seat at f20dad2 read rf
+ * 0.1.875, 89 leaves, context.render and operation.show still served_reachable, and both help sentences quoted below
+ * unchanged). The installed rf read 0.1.845 at those cuts (`rf --json --version`: 80 leaves, context.render and
+ * operation.show both served_reachable). `rf context
  * render --help` serves `--idempotency-key KEY` ("the same key with the same request replays the committed receipt ... the
  * same key with a different request is exit 4 RF_IDEMPOTENCY_KEY_CONFLICT, and a key with --no-commit is exit 2"). `rf
  * operation show --help` reads "Read the durable receipt of an invocation from the journal by its rfo_ operation id:
@@ -86,7 +88,16 @@
  * reference. The consts that unfollowed references are known to reach through a namespace object or an ambient declaration fail
  * closed instead (CLOSED CONSTS, under VALUES: they never read); every other channel known to reach a const unvisited stays a
  * NAMED RESIDUAL. Following the namespace channels through the scan (a qualified name, an import-equals alias, an import of a
- * namespace, a namespace import of its module, a const bound to a qualified reference) is wb-jwc.8's work, not this census's.
+ * namespace, a namespace import of its module, a const bound to a qualified reference) was wb-jwc.8's work (CUT #6).
+ * CUT #6, THE CORE OVER THE SHARED SCAN (orchestrator ruling R-B86 at refusal #5: no cut on this bead until child wb-jwc.8
+ * landed the scan work, landing 777; this cut is the mechanical restatement over that scan; the CUT #4 FORM and CUT #5's
+ * CLOSED CONSTS still bind): the census's own SEALED scan is removed, and its sealed() predicate reads the shared one,
+ * sealedScan of test/helpers/sealed-reference-scan.ts under its default reader, LITERAL_READER (its rootOf and open; the
+ * census passes no other reader). The claims are cut #5's except where the shared scan's readings move them, each move stated
+ * with its rows under SEALED and R-LEAF-UNREAD-ELEMENT, and where SEALED's sentences are narrowed to the forms their rows
+ * pin: refusal #5's channels are followed, an import-equals alias of a namespace import's member (U1) and a class extends
+ * expression (U2), so their rewrites read UNREAD; a read that LITERAL_READER does not read as a string opens its literal; and
+ * the LEAF READER reads an element of a literal so opened as a placeholder, a NAMED RESIDUAL (R-LEAF-UNREAD-ELEMENT; U3).
  *
  * THE PINNED SET, SRC READER (A1). The src tree is every .ts module under src (the srcFiles walk); a planted tree's src tree is
  * likewise the .ts modules it holds under src/, and nothing else it holds is read (R-OUTSIDE-TREE). Detected: every object
@@ -116,8 +127,9 @@
  * through the qualified name [rows: nsQualifiedWrite], an import-equals alias [rows: nsImportEqualsWrite], an import of the
  * namespace [rows: nsSetupWrite], a namespace import of its module [rows: nsModuleNamespaceWrite], a const bound to the
  * qualified reference [rows: nsAliasWrite] or the namespace object handed to a call (a string const rewritten by
- * `Object.assign`) [rows: nsStringAssign], none of which the SEALED scan follows to the const; so such a const is UNREAD with
- * no rewrite as well [rows: nsInitializers, nsLocalConst]. An ambient const's value is whatever the run time defines, not its
+ * `Object.assign`) [rows: nsStringAssign]; CLOSED CONSTS decides each of them whatever the SEALED scan reads of these
+ * channels (this census claims nothing of that reading: SEALED, form (7)), so such a const is UNREAD with no rewrite as
+ * well [rows: nsInitializers, nsLocalConst]. An ambient const's value is whatever the run time defines, not its
  * initializer, whether a `declare` statement or a `declare global` block declares it [rows: ambientConst, ambientGlobal].
  * EXPORTS: a module's own export of a name decides it, whatever its form. It reads only as an exported const with an
  * initializer, a local export alias (`export { X }`, `export { X as Y }`, `export { X as default }`) [rows: exportAlias,
@@ -126,37 +138,54 @@
  * `export default` or `export =` of any expression (a name included), a function or a class [rows: ownLet, ownVar,
  * ownDestructured, ownDeclared, ownFunction, ownClass, ownEnum, ownNamespace, ownImportEquals, ownNamespaceExport,
  * namespaceExport, ownDefault, ownDefaultName]. A name the module does not itself export is forwarded by `export * from` only
- * from the one star module that exports it, through nested stars too [rows: exportStar, nestedExportStar, ambiguousStar],
+ * from the one star module that exports it, through nested stars too [rows: exportStar, nestedExportStar, ambiguousStar,
+ * ambiguousStarStrings],
  * and a default never [rows: starDefault]. Only a module's top-level statements export: a namespace body's own `export` is
  * not a module export [rows: innerExportNotModule].
  * MEMBERS: a member of a SEALED const object literal reads (a CLOSED CONST's literal never does) [rows: constObject,
  * importedFrozenObject], the last member of its key winning [rows: lastKeyWins] (Object.freeze({...}) is followed unless the
  * module declares its own `Object` [rows: shadowedFreeze]); no member of an object literal reads when it holds a spread member
  * [rows: spreadObjectMember] or a member whose key does not read [rows: computedOverride, nestedComputedOverride,
- * importedComputedOverride, numericKey]; an accessor or method member never reads [rows: accessorMember].
- * SEALED: a const's own object or array literal (through wrappers and `.freeze(...)`), and every object or array literal nested
- * in its members or elements, is sealed when every reference to it that the SEALED scan visits is either the object of a member
- * read chain that is not the target of an assignment of any operator, of ++/--, of delete, of a destructuring assignment or of
- * a for-in/for-of head, and that reads as a string where it is used (a callee, a function, an object, an array or a number
- * never does); or a spread (`...`) every value of which reads as a string [rows: sealedReads]. The scan visits the identifiers
- * that are value references (never a declared name, a property or member name, a part of a qualified name, an import, export or
- * import-equals name or entity, a label or a part of a type) and two export forms, and through the identifiers it follows
- * exactly these references: the const's name in its own module, a use of a name that is not such a read opening every const and
- * import of that name the module holds whatever its scope [rows: memberWrite, shadowedImportWrite]; an import of it, named
- * [rows: setupModule], aliased [rows: aliasedImportWrite] or default [rows: defaultAliasWrite], followed through local export
- * aliases [rows: exportAliasWrite], named re-exports [rows: reExportWrite] and `export *` [rows: starExportWrite]; and a member
- * access off a namespace import of a module that exports it, by name or through an element access whose argument reads [rows:
- * namespaceWrite, namespaceElementWrite]. Any other use of a visited reference (the object passed, bound, returned or placed in
- * a literal, a shorthand member included) leaves the literal OPEN, with every literal nested in it: members of an open object,
- * and elements of an open array, do not read. A namespace import used other than through member reads whose names read opens
- * every literal its module reaches [rows: namespaceWhole, namespaceComputedWrite], and so do the two export forms: a namespace
- * import re-exported [rows: namespaceReExported] and a module re-exported by `export * as` [rows: namespaceReExport]; a local
- * export alias (`export { X }`) is not a use, its importers' references are. Each rewrite form leaves it open [rows:
- * elementWrite, computedWrite, compoundWrite, logicalWrite, updateWrite, updateStringWrite, deleteWrite, destructuringWrite,
- * arrayDestructuringWrite, forOfWrite, objectAssign, defineProperty, reflectSet, alias, parameter, shorthandMember, methodThis,
- * nestedAlias, spreadCopyWrite, defaultExport]. A reference the scan does not visit is not judged here, and SEALED claims
- * nothing about it: the channels known to reach a const that way fail closed (CLOSED CONSTS) or are NAMED RESIDUALS
- * (R-CODE-IN-STRING, R-UNFOLLOWED-MODULE, R-OUTSIDE-TREE, R-REPLACED-GLOBAL).
+ * importedComputedOverride, numericKey]; an accessor or method member never reads [rows: accessorMember]; and the same rules
+ * hold for a literal no const holds, which SEALED does not decide (a spread, a computed override, a numeric key, a getter)
+ * [rows: inlineMembers].
+ * SEALED (restated at cut #6 over the shared scan). sealed() reads a const's own object or array literal, and every literal
+ * nested in it, while the SEALED scan leaves its root sealed: it takes sealedScan(tree) of
+ * test/helpers/sealed-reference-scan.ts (wb-jwc.8) under its default reader, LITERAL_READER, and a literal reads while
+ * Seals.rootOf maps it to a root that Seals.open does not hold (a literal no const holds, an inline one, always reads). What
+ * the scan seals and visits, the channels it follows and the uses that open are its claim, SEALED_CLAIM (SEALED_ROOT,
+ * SEALED_VISIT, SEALED_FORMS, SEALED_USES), and what only reads is LITERAL_READER's, READER_CLAIM; wb-jwc.8's census pins
+ * both sub-form by sub-form. This census claims of them exactly the readings of the rows this paragraph cites. A literal
+ * stays sealed while every visited reference to it is the object of a member read chain that is not written (the target of an
+ * assignment of any operator, of ++/--, of delete, of a destructuring assignment or of a for-in/for-of head) and reads as a
+ * string where it is used, or a spread every value of which reads as a string [rows: sealedReads]. A chain reads as a string
+ * only as LITERAL_READER reads it, a string or no-substitution template literal as written, so a read of a member whose value
+ * is a name [rows: nameMemberRead], a `+` concatenation or a template with substitutions [rows: composedMemberRead], or of a
+ * literal holding a computed key that is not such a literal [rows: computedKeyRead], is a use other than a read. Among the
+ * identifiers the scan visits are those inside a class declaration's [rows: heritageWrite] or a class expression's [rows:
+ * classExpressionHeritageWrite] extends expression, outside its type arguments (SEALED_FORMS (9)), and among the channels it
+ * follows: the const's name in its own module [rows: memberWrite], a name standing for the import of that name too where the
+ * module also declares a const of it [rows: shadowedImportWrite]; an import of it, named [rows: setupModule], aliased [rows:
+ * aliasedImportWrite] or default [rows: defaultAliasWrite], followed through local export aliases [rows: exportAliasWrite],
+ * named re-exports [rows: reExportWrite] and `export *` [rows: starExportWrite]; a member access off a namespace import of a
+ * module that exports it, by name or through an element access whose argument reads [rows: namespaceWrite,
+ * namespaceElementWrite]; and an import-equals alias whose entity is such a member (SEALED_FORMS (8)), written at module
+ * scope [rows: importEqualsWrite], exported by `export import` and written by an importer [rows: exportedImportEqualsWrite],
+ * or declared and written in a namespace body [rows: namespaceImportEqualsWrite]. Any other use of a visited reference leaves
+ * the literal OPEN, with every literal nested in it (members of an open object, and elements of an open array, do not read):
+ * the object passed [rows: objectAssign, defineProperty, reflectSet, parameter], bound [rows: alias, nestedAlias], placed in
+ * a literal as a shorthand member [rows: shorthandMember], called [rows: methodThis], spread with a value that is not a
+ * string [rows: spreadCopyWrite], or exported as default (`export default X`) [rows: defaultExport]. A namespace import used
+ * other than through member reads whose names read opens its module's own const literals [rows: namespaceWhole,
+ * namespaceComputedWrite], and so do the two export forms: a namespace import re-exported [rows: namespaceReExported] and a
+ * module re-exported by `export * as` [rows: namespaceReExport]; a local export alias (`export { X }`) is not a use, its
+ * importers' references are. Each write form leaves it open [rows: elementWrite, computedWrite, compoundWrite, logicalWrite,
+ * updateWrite, updateStringWrite, deleteWrite, destructuringWrite, arrayDestructuringWrite, forOfWrite]. A TypeScript
+ * namespace's own consts are CLOSED CONSTS here, which never read whatever the scan reads of them, so a namespace's member
+ * (SEALED_FORMS (7)) is NOT CLAIMED by this census, and nor is any sub-form of SEALED_CLAIM or READER_CLAIM that no row here
+ * cites (wb-jwc.8's census holds them). A reference the scan does not follow is not judged, and SEALED claims nothing about
+ * it: the channels known to reach a const that way are NAMED RESIDUALS (R-CODE-IN-STRING, R-UNFOLLOWED-MODULE,
+ * R-OUTSIDE-TREE, R-REPLACED-GLOBAL), and an ambient const, whose value the run time defines, is a CLOSED CONST.
  * JUDGED, UNREAD, EXCEPTED: rf-ness is decided by the id (a reactivefiber.* string) or by RF_CONTRACT over the contract's static
  * text (each unread part a placeholder), and a literal that is not rf-driving needs only its id to read [rows: notRf,
  * notRfUnreadEffect]; a contract read through a sealed base is judged as it reads [rows: readableBase]. A literal is UNREAD when
@@ -231,10 +260,14 @@
  *   provider is test-only, so its key derivation and its never-kill custody prove nothing about a future provider's - B pins
  *   Pi's registry, runtime and resume around it).
  *  R-LEAF-REWRITE [rows: addsLeaf, removesLeaf]: a rewritten const word array, which the LEAF READER does not expand either way.
- *  R-LEAF-UNREAD-ELEMENT [rows: unreadElements, namespaceElements]: an element that does not read - a member of a literal
- *   holding a key that does not read, a call's result, a value past the hop bound, a CLOSED CONST or a member of its literal
- *   (a namespace's const, rewritten through its qualified name or not; an ambient const) - is a placeholder, so `operation`
- *   beside it is not a spelling.
+ *  R-LEAF-UNREAD-ELEMENT [rows: unreadElements, namespaceElements, importEqualsElements, heritageElements,
+ *   literalReaderElements]: an element that does not read - a member of a literal holding a key that does not read, a call's
+ *   result, a value past the hop bound, a CLOSED CONST or a member of its literal (a namespace's const, rewritten through its
+ *   qualified name or not; an ambient const), or a member or a spread of a literal the SEALED scan opens (cut #6: rewritten
+ *   through an import-equals alias of a namespace import's member or inside a class extends expression; or read where
+ *   LITERAL_READER reads no string: a spread of an array holding a name, a member whose value is a name, a `+` concatenation
+ *   or a template with substitutions, a literal holding a computed key that is no string or no-substitution template literal)
+ *   - is a placeholder, never a word, so no spelling holds it (`operation` or `show` beside it included).
  *  R-LEAF-ACROSS-STATEMENTS [rows: acrossStatements]: a leaf assembled across statements or calls (two pushes, a `+=`).
  *  R-LEAF-METHOD [rows: methodBuilt]: a leaf built by a string or array method (concat; map then join).
  *  R-TIMER-GAP [rows: timeoutTimer, settleTimer]: a registry timer that differs from its deadlineMs field - the timeout arm's
@@ -253,7 +286,8 @@
  * ANCHORS (outside this file): the tracker export (.beads/issues.jsonl, the bead's title and description only; later store
  * writes change neither) holds ACCEPTANCE verbatim, and each row's pins are exactly the clauses of its item, split
  * mechanically on "; " and " and "; src (the registrations, the descriptor literals, the register sites, the custody and
- * NATIVE_GRANTS).
+ * NATIVE_GRANTS); and the shared scan (test/helpers/sealed-reference-scan.ts: sealedScan under LITERAL_READER decides
+ * SEALED, its own census pinning its claim).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal and WITNESS's keys are exactly the pins; the
  * RESIDUALS roster is pinned as a `${family}:${rows}` literal, equal to the RESIDUALS paragraph above (families in order,
  * each with exactly its rows); every bracketed rows citation of this header names a planted row, and every planted row (the
@@ -294,6 +328,7 @@ import { type EvidenceReceipt, RECONCILE_EVIDENCE_READS, reconcileGrant } from "
 import { runWorkflow, type WorkflowControl, type WorkflowHost } from "../src/workflow/runtime.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+import { sealedScan } from "./helpers/sealed-reference-scan.js";
 
 installScratchLeakGuard(afterAll);
 
@@ -451,10 +486,8 @@ function committing(changes: Partial<DescriptorFacts>): DescriptorFacts {
 /** A tree of modules by repo-relative path: src on disk (the census's subject), or a planted set (constructed cases). */
 interface ModuleTree {
   readonly module: (path: string) => ts.SourceFile | undefined;
-  /** Every module of the tree: the scope of the SEALED reference scan. */
+  /** Every module of the tree: the scope of the SEALED reference scan (the shared scan reads the same shape). */
   readonly paths: () => readonly string[];
-  /** A raw view reads values as written, seals aside: the SEALED scan's own reads. */
-  readonly raw?: true;
 }
 function parse(path: string, text: string): ts.SourceFile {
   return ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -786,7 +819,7 @@ function arrayWords(node: ts.Expression, at: At, hops: number): string[] | undef
   const target = definitionOf(value, at, hops + 1);
   return target === undefined ? undefined : arrayWords(target.node, target.at, hops + 1);
 }
-/* ---------------------------------------------------------------- SEALED (the SRC READER's write scan, see the header) */
+/* ---------------------------------------------------------------- SEALED (the shared scan, see the header) */
 
 /** A node that passes its expression through unchanged: parentheses, `as`, `satisfies`, `!` and a type assertion. */
 function isWrapper(node: ts.Node | undefined): node is ts.ParenthesizedExpression | ts.AsExpression | ts.SatisfiesExpression | ts.NonNullExpression | ts.TypeAssertion {
@@ -798,252 +831,12 @@ function wrapped(node: ts.Node): ts.Node {
   while (isWrapper(current.parent) && current.parent.expression === current) current = current.parent;
   return current;
 }
-/** A const initializer's own literal: an object or array literal, through wrappers and `.freeze(...)` calls. */
-function literalOf(node: ts.Expression | undefined): ts.ObjectLiteralExpression | ts.ArrayLiteralExpression | undefined {
-  let value = node === undefined ? undefined : unwrap(node);
-  for (let step = 0; value !== undefined && step <= MAX_HOPS; step++) {
-    if (ts.isObjectLiteralExpression(value) || ts.isArrayLiteralExpression(value)) return value;
-    value = ts.isCallExpression(value) && value.arguments.length === 1 && ts.isPropertyAccessExpression(value.expression) && value.expression.name.text === "freeze" ? unwrap(value.arguments[0]) : undefined;
-  }
-  return undefined;
-}
-/** Map a root literal, and every object or array literal nested in its members or elements, to that root. */
-function nest(literal: ts.ObjectLiteralExpression | ts.ArrayLiteralExpression, root: ts.Node, rootOf: Map<ts.Node, ts.Node>): void {
-  rootOf.set(literal, root);
-  const children = ts.isObjectLiteralExpression(literal)
-    ? literal.properties.flatMap((member) => (ts.isPropertyAssignment(member) ? [member.initializer] : []))
-    : literal.elements.filter((element) => !ts.isSpreadElement(element));
-  for (const child of children) {
-    const inner = literalOf(child);
-    if (inner !== undefined && !rootOf.has(inner)) nest(inner, root, rootOf);
-  }
-}
-/** Whether a member read chain (its outermost wrapper) is written: an assignment of any operator, ++/--, delete, or a destructuring or for-in/for-of target. */
-function isWritten(use: ts.Node): boolean {
-  const parent = use.parent;
-  if (ts.isBinaryExpression(parent) && parent.left === use && parent.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && parent.operatorToken.kind <= ts.SyntaxKind.LastAssignment) return true;
-  if ((ts.isPrefixUnaryExpression(parent) || ts.isPostfixUnaryExpression(parent)) && (parent.operator === ts.SyntaxKind.PlusPlusToken || parent.operator === ts.SyntaxKind.MinusMinusToken)) return true;
-  if (ts.isDeleteExpression(parent)) return true;
-  if ((ts.isForOfStatement(parent) || ts.isForInStatement(parent)) && parent.initializer === use) return true;
-  let pattern: ts.Node = use;
-  while (
-    ts.isArrayLiteralExpression(pattern.parent) ||
-    ts.isObjectLiteralExpression(pattern.parent) ||
-    ts.isSpreadElement(pattern.parent) ||
-    ts.isSpreadAssignment(pattern.parent) ||
-    ts.isParenthesizedExpression(pattern.parent) ||
-    (ts.isPropertyAssignment(pattern.parent) && pattern.parent.initializer === pattern)
-  ) {
-    pattern = pattern.parent;
-  }
-  if (pattern === use) return false;
-  const head = pattern.parent;
-  return (ts.isBinaryExpression(head) && head.left === pattern && head.operatorToken.kind === ts.SyntaxKind.EqualsToken) || ((ts.isForOfStatement(head) || ts.isForInStatement(head)) && head.initializer === pattern);
-}
-/** Whether an identifier is a value reference (not a declared name, a property or member name, a specifier, a label or a type). */
-function isReference(name: ts.Identifier): boolean {
-  const parent = name.parent;
-  if (ts.isPropertyAccessExpression(parent)) return parent.expression === name;
-  if (ts.isPropertyAssignment(parent) || ts.isPropertyDeclaration(parent) || ts.isVariableDeclaration(parent) || ts.isParameter(parent) || ts.isBindingElement(parent) || ts.isEnumMember(parent)) return parent.initializer === name;
-  if (
-    ts.isQualifiedName(parent) ||
-    ts.isMethodDeclaration(parent) ||
-    ts.isGetAccessorDeclaration(parent) ||
-    ts.isSetAccessorDeclaration(parent) ||
-    ts.isPropertySignature(parent) ||
-    ts.isMethodSignature(parent) ||
-    ts.isFunctionDeclaration(parent) ||
-    ts.isFunctionExpression(parent) ||
-    ts.isClassDeclaration(parent) ||
-    ts.isClassExpression(parent) ||
-    ts.isEnumDeclaration(parent) ||
-    ts.isInterfaceDeclaration(parent) ||
-    ts.isTypeAliasDeclaration(parent) ||
-    ts.isModuleDeclaration(parent) ||
-    ts.isTypeParameterDeclaration(parent) ||
-    ts.isImportClause(parent) ||
-    ts.isNamespaceImport(parent) ||
-    ts.isImportSpecifier(parent) ||
-    ts.isExportSpecifier(parent) ||
-    ts.isImportEqualsDeclaration(parent) ||
-    ts.isNamespaceExport(parent) ||
-    ts.isLabeledStatement(parent) ||
-    ts.isBreakStatement(parent) ||
-    ts.isContinueStatement(parent) ||
-    ts.isMetaProperty(parent)
-  ) {
-    return false;
-  }
-  for (let node: ts.Node | undefined = parent; node !== undefined && !ts.isStatement(node) && !ts.isSourceFile(node); node = node.parent) if (ts.isTypeNode(node)) return false;
-  return true;
-}
-/** A member read chain grown from an expression: the outermost property or element access whose object it is. */
-function chainOf(node: ts.Expression): ts.Expression {
-  const outer = wrapped(node);
-  const parent = outer.parent;
-  return (ts.isPropertyAccessExpression(parent) || ts.isElementAccessExpression(parent)) && parent.expression === outer ? chainOf(parent) : node;
-}
-/** Whether a spread of a value copies strings only: a string, or an object or array literal every member or element of which reads as one. */
-function copiesStrings(node: ts.Expression, at: At): boolean {
-  if (readString(node, at) !== undefined) return true;
-  const object = objectOf(node, at, 0);
-  if (object !== undefined) return object.node.properties.every((member) => !ts.isSpreadAssignment(member) && readString(memberValue(member), object.at) !== undefined);
-  const words = arrayWords(node, at, 0);
-  return words?.every((word) => word !== UNREAD) === true;
-}
-interface Seals {
-  /** Each const's own object or array literal, and every literal nested in one, mapped to its root (the const's literal). */
-  readonly rootOf: Map<ts.Node, ts.Node>;
-  /** The roots a reference leaves open. */
-  readonly open: Set<ts.Node>;
-}
-const sealCache = new WeakMap<ModuleTree, Seals>();
-const rawViews = new WeakMap<ModuleTree, ModuleTree>();
-/** The tree read as written, seals aside: what the SEALED scan reads values through. */
-function rawView(tree: ModuleTree): ModuleTree {
-  const cached = rawViews.get(tree);
-  if (cached !== undefined) return cached;
-  const view: ModuleTree = { module: tree.module, paths: tree.paths, raw: true };
-  rawViews.set(tree, view);
-  return view;
-}
-/** Whether a literal's members or elements read (SEALED): an inline literal's always; a const's literal, or one nested in it, while its root is not open. */
+/** Whether a literal's members or elements read (SEALED): a literal no const holds always; a const's literal, or one nested in it,
+ * while the shared scan (sealedScan under its default reader, LITERAL_READER) leaves its root sealed. */
 function sealed(literal: ts.Node, tree: ModuleTree): boolean {
-  if (tree.raw === true) return true;
-  const seals = sealsOf(tree);
+  const seals = sealedScan(tree);
   const root = seals.rootOf.get(literal);
   return root === undefined || !seals.open.has(root);
-}
-function addTo<T>(map: Map<string, T[]>, key: string, value: T): void {
-  const list = map.get(key);
-  if (list === undefined) map.set(key, [value]);
-  else list.push(value);
-}
-/** The SEALED scan of a tree: its const literals, and every reference its modules hold to one, judged as the header states. */
-function sealsOf(tree: ModuleTree): Seals {
-  const cached = sealCache.get(tree);
-  if (cached !== undefined) return cached;
-  const seals: Seals = { rootOf: new Map(), open: new Set() };
-  sealCache.set(tree, seals);
-  const raw = rawView(tree);
-  const files = tree.paths().flatMap((path) => {
-    const file = tree.module(path);
-    return file === undefined ? [] : [file];
-  });
-  const consts = new Map<ts.SourceFile, Map<string, ts.Node[]>>();
-  const named = new Map<ts.SourceFile, Map<string, { readonly from: string | undefined; readonly name: string }[]>>();
-  const spaces = new Map<ts.SourceFile, Map<string, (string | undefined)[]>>();
-  for (const file of files) {
-    const local = new Map<string, ts.Node[]>();
-    const imported = new Map<string, { readonly from: string | undefined; readonly name: string }[]>();
-    const space = new Map<string, (string | undefined)[]>();
-    visit(file, (node) => {
-      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && (ts.getCombinedNodeFlags(node) & ts.NodeFlags.Const) === ts.NodeFlags.Const) {
-        const root = literalOf(node.initializer);
-        if (root !== undefined) {
-          nest(root, root, seals.rootOf);
-          addTo(local, node.name.text, root);
-        }
-      } else if (ts.isImportDeclaration(node) && node.importClause !== undefined && !node.importClause.isTypeOnly) {
-        const from = moduleOf(tree, file.fileName, node.moduleSpecifier);
-        const clause = node.importClause;
-        if (clause.name !== undefined) addTo(imported, clause.name.text, { from, name: "default" });
-        const bindings = clause.namedBindings;
-        if (bindings !== undefined && ts.isNamespaceImport(bindings)) addTo(space, bindings.name.text, from);
-        if (bindings !== undefined && ts.isNamedImports(bindings)) {
-          for (const element of bindings.elements) if (!element.isTypeOnly) addTo(imported, element.name.text, { from, name: (element.propertyName ?? element.name).text });
-        }
-      }
-    });
-    consts.set(file, local);
-    named.set(file, imported);
-    spaces.set(file, space);
-  }
-  /** The roots a name of a module may denote: its consts of that name (any scope) and its imports of that name, followed. */
-  const namedRoots = (file: ts.SourceFile, name: string, seen: Set<string>): ts.Node[] => [
-    ...(consts.get(file)?.get(name) ?? []),
-    ...(named.get(file)?.get(name) ?? []).flatMap((entry) => exportRoots(entry.from, entry.name, seen)),
-  ];
-  /** The roots a module's export of a name may denote, through local export aliases, named re-exports and `export *`. */
-  const exportRoots = (path: string | undefined, name: string, seen: Set<string>): ts.Node[] => {
-    const file = path === undefined ? undefined : tree.module(path);
-    if (file === undefined || seen.has(`${path}\0${name}`)) return [];
-    seen.add(`${path}\0${name}`);
-    const out: ts.Node[] = [];
-    for (const statement of file.statements) {
-      if (ts.isVariableStatement(statement) && statement.modifiers?.some((modifier) => modifier.kind === ts.SyntaxKind.ExportKeyword)) {
-        if (statement.declarationList.declarations.some((declaration) => ts.isIdentifier(declaration.name) && declaration.name.text === name)) out.push(...namedRoots(file, name, seen));
-      } else if (ts.isExportDeclaration(statement) && !statement.isTypeOnly) {
-        const from = statement.moduleSpecifier === undefined ? undefined : moduleOf(tree, file.fileName, statement.moduleSpecifier);
-        if (statement.exportClause === undefined) {
-          if (name !== "default") out.push(...exportRoots(from, name, seen));
-        } else if (ts.isNamedExports(statement.exportClause)) {
-          for (const element of statement.exportClause.elements) {
-            if (element.isTypeOnly || element.name.text !== name) continue;
-            const local = (element.propertyName ?? element.name).text;
-            out.push(...(statement.moduleSpecifier === undefined ? namedRoots(file, local, seen) : exportRoots(from, local, seen)));
-          }
-        }
-      }
-    }
-    return out;
-  };
-  /** Every root a module's namespace object can reach: its own consts, every module it re-exports from, every import it holds. */
-  const everyRoot = (path: string | undefined, seen: Set<string>): ts.Node[] => {
-    const file = path === undefined ? undefined : tree.module(path);
-    if (file === undefined || seen.has(path ?? "")) return [];
-    seen.add(path ?? "");
-    const out = [...(consts.get(file)?.values() ?? [])].flat();
-    for (const statement of file.statements) {
-      if (ts.isExportDeclaration(statement) && statement.moduleSpecifier !== undefined) out.push(...everyRoot(moduleOf(tree, file.fileName, statement.moduleSpecifier), seen));
-    }
-    for (const entries of named.get(file)?.values() ?? []) for (const entry of entries) out.push(...exportRoots(entry.from, entry.name, new Set()));
-    for (const froms of spaces.get(file)?.values() ?? []) for (const from of froms) out.push(...everyRoot(from, seen));
-    return out;
-  };
-  /** Whether a reference (an identifier, or a namespace member access) is only read as SEALED allows. */
-  const readsOnly = (reference: ts.Expression, file: ts.SourceFile): boolean => {
-    const chain = chainOf(reference);
-    const use = wrapped(chain);
-    const parent = use.parent;
-    if (isWritten(use)) return false;
-    const at: At = { tree: raw, file };
-    if (ts.isSpreadElement(parent) || ts.isSpreadAssignment(parent)) return copiesStrings(chain, at);
-    return readString(chain, at) !== undefined;
-  };
-  const openAll = (roots: readonly ts.Node[]): void => {
-    for (const root of roots) seals.open.add(root);
-  };
-  for (const file of files) {
-    const space = spaces.get(file) ?? new Map<string, (string | undefined)[]>();
-    visit(file, (node) => {
-      if (ts.isExportDeclaration(node) && node.exportClause !== undefined && ts.isNamespaceExport(node.exportClause)) openAll(everyRoot(moduleOf(tree, file.fileName, node.moduleSpecifier), new Set()));
-      if (ts.isExportSpecifier(node) && node.parent.parent.moduleSpecifier === undefined) {
-        for (const from of space.get((node.propertyName ?? node.name).text) ?? []) openAll(everyRoot(from, new Set()));
-      }
-      if (!ts.isIdentifier(node) || !isReference(node)) return;
-      const roots = namedRoots(file, node.text, new Set());
-      if (roots.length > 0 && !readsOnly(node, file)) openAll(roots);
-      for (const from of space.get(node.text) ?? []) {
-        const outer = wrapped(node);
-        const access = outer.parent;
-        const member =
-          ts.isPropertyAccessExpression(access) && access.expression === outer
-            ? { access, name: access.name.text }
-            : ts.isElementAccessExpression(access) && access.expression === outer
-              ? { access, name: readString(access.argumentExpression, { tree: raw, file }) }
-              : undefined;
-        const name = member?.name;
-        if (member === undefined || name === undefined) {
-          openAll(everyRoot(from, new Set()));
-          continue;
-        }
-        const via = exportRoots(from, name, new Set());
-        if (via.length > 0 && !readsOnly(member.access, file)) openAll(via);
-      }
-    });
-  }
-  return seals;
 }
 interface LiteralFacts extends DescriptorFacts {
   readonly file: string;
@@ -1563,6 +1356,32 @@ function ownExport(own: string): Readonly<Record<string, string>> {
     "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import { RF_IDS } from "./ids.js";\n'),
   };
 }
+/**
+ * cut #6, refusal #5's gate plants (gate-prep-18 LEG 2 and LEG 2b, table_p18.py and table_p18b.py, module texts verbatim): a
+ * module-scope const rewritten through a channel the cut #5 scan did not visit - an import-equals alias of a namespace
+ * import's member (U1) and a class extends expression (U2) - and the leaf reader's analogs (U3).
+ */
+const P18_IDS = "src/workbench/providers/rf-commit-ids.ts";
+const P18_REG = "src/workbench/providers/rf-commit.ts";
+const P18_SETUP = "src/workbench/providers/rf-commit-setup.ts";
+const P18_WORDS = "src/workbench/providers/rf-receipt-words.ts";
+const P18_LEAF = "src/workbench/providers/rf-receipt.ts";
+const P18_LEAF_SETUP = "src/workbench/providers/rf-receipt-setup.ts";
+/** The twin each leaf page holds beside its plant (cut #6): the rewritten word object's noun beside a literal show. */
+const P18_SHOWN = "src/workbench/providers/rf-receipt-shown.ts";
+const P18_HERITAGE = "/** gate probe helper: a base class whose argument is evaluated for its effect, then ignored. */\nfunction heritage(_effect: object): ObjectConstructor {\n  return Object;\n}\n";
+const P18_REWRITE = `/** gate probe helper: writes the members of the object it is handed. */\nfunction rewrite(ids: { id: string; contract: string }): object {\n  ids.id = ${PLANTED_ID};\n  ids.contract = ${PLANTED_CONTRACT};\n  return ids;\n}\n`;
+function p18Ids(extra = ""): string {
+  return `/** gate probe ids module: a module-scope const object. */\nexport const IDS = { id: ${FORGE_COMMIT_ID}, contract: ${FORGE_COMMIT_CONTRACT} };\n${extra}`;
+}
+function p18Registration(tag: string, setup = true): string {
+  return `import type { CapabilityRegistry } from "../capability-registry.js";\n${setup ? 'import "./rf-commit-setup.js";\n' : ""}import { IDS } from "./rf-commit-ids.js";\n\n/** gate probe ${tag}: registers through the imported module-scope const IDS (MEMBERS + VALUES). */\nexport function registerCommit(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: { id: IDS.id, version: "1.0.0", description: "commit", inputSchema: { type: "object" }, effectClass: "read", permissions: ["reactivefiber:render"], supportedModes: ["invoke"], contractSource: IDS.contract }, invoke: async () => null });\n}\n`;
+}
+const P18_LIST_WORDS = '/** gate probe word module: a module-scope const object. */\nexport const WORDS = { noun: "operation", verb: "list" };\n';
+function p18Leaf(tag: string): string {
+  return `import "./rf-receipt-setup.js";\nimport { WORDS } from "./rf-receipt-words.js";\n\n/** gate probe ${tag}: an rf receipt argv built from the imported module-scope word object. */\nexport function receiptArgv(id: string): string[] {\n  return ["--json", WORDS.noun, WORDS.verb, id];\n}\n`;
+}
+const P18_SHOWN_ARGV = 'import "./rf-receipt-setup.js";\nimport { WORDS } from "./rf-receipt-words.js";\n\nexport function shownArgv(id: string): string[] {\n  return ["--json", WORDS.noun, "show", id];\n}\n';
 /** One tree per value form the SRC READER reads: each registration reads as that committing literal. */
 const PLANTED_FORMS: PlantedTrees = {
   importedConsts: { "src/p/ids.ts": PLANTED_IDS, "src/p/reg.ts": plantedRegistration("RF_COMMIT_CAPABILITY", "RF_COMMIT_CONTRACT", 'import { RF_COMMIT_CAPABILITY, RF_COMMIT_CONTRACT } from "./ids.js";\n') },
@@ -1600,7 +1419,7 @@ const PLANTED_FORMS: PlantedTrees = {
     "src/reg.ts": plantedRegistration("RF_COMMIT_CAPABILITY", "RF_COMMIT_CONTRACT", 'import { RF_COMMIT_CAPABILITY, RF_COMMIT_CONTRACT } from "./p/barrel.js";\n'),
   },
   lastKeyWins: {
-    "src/p/reg.ts": `const KEY = "commit";\nconst CONTRACT_KEY = "contract";\nconst IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit", [KEY]: ${PLANTED_ID}, [CONTRACT_KEY]: ${PLANTED_CONTRACT} };\n${THROUGH_IDS}`,
+    "src/p/reg.ts": `const IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit", ["commit"]: ${PLANTED_ID}, ["contract"]: ${PLANTED_CONTRACT} };\n${THROUGH_IDS}`,
   },
   familyAt: { "src/p/reg.ts": plantedRegistration(JSON.stringify("pi.render.commit"), JSON.stringify("rf@0.1.845 context.render")) },
   familyReactiveFiber: { "src/p/reg.ts": plantedRegistration(JSON.stringify("pi.render.commit"), JSON.stringify("ReactiveFiberCLI context.render")) },
@@ -1673,7 +1492,8 @@ const PLANTED_REFUSED: PlantedTrees = {
   alias: rewritten(`const alias = IDS;\nalias.commit = ${PLANTED_ID};\n`),
   parameter: rewritten(`function rewrite(ids: { commit: string }): void {\n  ids.commit = ${PLANTED_ID};\n}\nrewrite(IDS);\n`),
   shorthandMember: rewritten("audit({ IDS });\n"),
-  methodThis: { "src/p/reg.ts": `const IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit", fix(): void { this.commit = ${PLANTED_ID}; } };\nIDS.fix();\n${THROUGH_IDS}` },
+  // cut #6 respelling: the rewrite is a function the literal holds as a member value, not a method (LITERAL_READER reads no member of a literal holding a method, so the call is the one use that opens it)
+  methodThis: { "src/p/reg.ts": `const IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit", fix: fixCommit };\nfunction fixCommit(this: { commit: string }): void {\n  this.commit = ${PLANTED_ID};\n}\nIDS.fix();\n${THROUGH_IDS}` },
   nestedAlias: {
     "src/p/reg.ts": `const IDS = { render: { commit: "forge.gate.commit" }, contract: "@forge/sdk@0.1.0:GateFacade.commit" };\nconst render = IDS.render;\nrender.commit = ${PLANTED_ID};\n${plantedRegistration("IDS.render.commit", "IDS.contract")}`,
   },
@@ -1683,11 +1503,12 @@ const PLANTED_REFUSED: PlantedTrees = {
   namespaceWrite: { ...SHARED_IDS, "src/p/setup.ts": `import * as ids from "./ids.js";\nids.IDS.commit = ${PLANTED_ID};\n` },
   namespaceWhole: { ...SHARED_IDS, "src/p/setup.ts": 'import * as ids from "./ids.js";\nrewriteAll(ids);\n' },
   reExportWrite: { ...SHARED_IDS, "src/p/barrel.ts": 'export { IDS } from "./ids.js";\n', "src/p/setup.ts": `import { IDS } from "./barrel.js";\nIDS.commit = ${PLANTED_ID};\n` },
-  namespaceReExport: { ...SHARED_IDS, "src/p/barrel.ts": 'export * as ids from "./ids.js";\n', "src/p/setup.ts": `import { ids } from "./barrel.js";\nids.IDS.commit = ${PLANTED_ID};\n` },
-  namespaceReExported: { ...SHARED_IDS, "src/p/barrel.ts": 'import * as ids from "./ids.js";\nexport { ids };\n', "src/p/setup.ts": `import { ids } from "./barrel.js";\nids.IDS.commit = ${PLANTED_ID};\n` },
+  // cut #6 respellings: the rewrite reaches the export through a dynamic import (R-UNFOLLOWED-MODULE), so the export form or the default export is the one use that opens it
+  namespaceReExport: { ...SHARED_IDS, "src/p/barrel.ts": 'export * as ids from "./ids.js";\n', "src/p/setup.ts": `void import("./barrel.js").then((barrel) => {\n  barrel.ids.IDS.commit = ${PLANTED_ID};\n});\n` },
+  namespaceReExported: { ...SHARED_IDS, "src/p/barrel.ts": 'import * as ids from "./ids.js";\nexport { ids };\n', "src/p/setup.ts": `void import("./barrel.js").then((barrel) => {\n  barrel.ids.IDS.commit = ${PLANTED_ID};\n});\n` },
   defaultExport: {
     "src/p/ids.ts": `${FORGE_IDS}export default IDS;\nexport { IDS };\n`,
-    "src/p/setup.ts": `import ids from "./ids.js";\nids.commit = ${PLANTED_ID};\n`,
+    "src/p/setup.ts": `void import("./ids.js").then((ids) => {\n  ids.default.commit = ${PLANTED_ID};\n});\n`,
     "src/p/reg.ts": plantedRegistration("IDS.commit", "IDS.contract", 'import { IDS } from "./ids.js";\n'),
   },
   shadowedImportWrite: {
@@ -1732,6 +1553,15 @@ const PLANTED_REFUSED: PlantedTrees = {
     "src/p/reg.ts": plantedRegistration("IDS.commit", "IDS.contract", 'import { IDS } from "./ids.js";\n'),
   },
   accessorMember: { "src/p/reg.ts": `const IDS = { get commit(): string { return ${PLANTED_ID}; }, contract: ${PLANTED_CONTRACT} };\n${THROUGH_IDS}` },
+  // cut #6: the MEMBERS rules on literals no const holds, which SEALED does not decide (the shared scan opens a const literal holding a spread, an unread key or an accessor at its first read, so the const rows above no longer isolate the rules)
+  inlineMembers: {
+    "src/p/reg.ts": [
+      plantedRegistration(`({ ...BASE_IDS, commit: ${PLANTED_ID} }).commit`, PLANTED_CONTRACT),
+      plantedRegistration(`({ commit: "forge.gate.commit", [String("commit")]: ${PLANTED_ID} }).commit`, PLANTED_CONTRACT),
+      plantedRegistration(`({ 0: "forge.gate.commit", commit: ${PLANTED_ID} }).commit`, PLANTED_CONTRACT),
+      plantedRegistration(`({ get commit(): string { return ${PLANTED_ID}; } }).commit`, PLANTED_CONTRACT),
+    ].join(""),
+  },
   rfIdOnly: { "src/p/entry.ts": `export const ENTRY = { id: ${PLANTED_ID}, label: "commit" };\n` },
   deepChain: deepChain(40),
   numericKey: { "src/p/reg.ts": `const IDS = { 0: "forge.gate.commit", commit: ${PLANTED_ID}, contract: ${PLANTED_CONTRACT} };\n${THROUGH_IDS}` },
@@ -1772,6 +1602,13 @@ const PLANTED_REFUSED: PlantedTrees = {
     "src/p/ids.ts": 'export * from "./real.js";\nexport * from "./forge.js";\n',
     "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import { RF_IDS } from "./ids.js";\n'),
   },
+  // cut #6: the one-star rule on string consts, which the shared scan leaves alone (it opens every candidate of an ambiguous star read of an object const)
+  ambiguousStarStrings: {
+    "src/p/forge.ts": 'export const RF_COMMIT_CAPABILITY = "forge.gate.commit";\nexport const RF_COMMIT_CONTRACT = "@forge/sdk@0.1.0:GateFacade.commit";\n',
+    "src/p/real.ts": PLANTED_IDS,
+    "src/p/ids.ts": 'export * from "./real.js";\nexport * from "./forge.js";\n',
+    "src/p/reg.ts": plantedRegistration("RF_COMMIT_CAPABILITY", "RF_COMMIT_CONTRACT", 'import { RF_COMMIT_CAPABILITY, RF_COMMIT_CONTRACT } from "./ids.js";\n'),
+  },
   // cut #4, D: an import-equals alias and a namespace declare their names, so a same-named const no longer reads (declared twice)
   importEqualsShadow: {
     "src/p/reg.ts": `const ID = "forge.gate.commit";\nconst CONTRACT = "@forge/sdk@0.1.0:GateFacade.commit";\nnamespace Rf {\n  export const commitId = ${PLANTED_ID};\n  export const commitContract = ${PLANTED_CONTRACT};\n}\nnamespace Commit {\n  import ID = Rf.commitId;\n  import CONTRACT = Rf.commitContract;\n  ${plantedRegistration("ID", "CONTRACT")}}\nexport const forgeIds = [ID, CONTRACT];\n`,
@@ -1809,6 +1646,40 @@ const PLANTED_REFUSED: PlantedTrees = {
     "src/p/reg.ts": `import "./setup.js";\ndeclare global {\n  const RF_COMMIT_ID = ${FORGE_COMMIT_ID};\n  const RF_COMMIT_CONTRACT = ${FORGE_COMMIT_CONTRACT};\n}\n${plantedRegistration("RF_COMMIT_ID", "RF_COMMIT_CONTRACT")}`,
     "src/p/setup.ts": `Object.assign(globalThis, { RF_COMMIT_ID: ${PLANTED_ID}, RF_COMMIT_CONTRACT: ${PLANTED_CONTRACT} });\n`,
   },
+  // cut #6, the shared scan (ruling R-B86): refusal #5's gate plants verbatim, each rewrite reaching a module-scope const - an import-equals alias of a namespace import's member (U1), a class extends expression (U2)
+  importEqualsWrite: {
+    [P18_IDS]: p18Ids(),
+    [P18_REG]: p18Registration("P18-IE1"),
+    [P18_SETUP]: `import * as ids from "./rf-commit-ids.js";\n\n/** gate probe P18-IE1: an import-equals alias of the namespace-import member, written. */\nimport CommitIds = ids.IDS;\nCommitIds.id = ${PLANTED_ID};\nCommitIds.contract = ${PLANTED_CONTRACT};\n`,
+  },
+  exportedImportEqualsWrite: {
+    [P18_IDS]: p18Ids(),
+    [P18_REG]: p18Registration("P18-IE2"),
+    "src/workbench/providers/rf-commit-hub.ts": 'import * as ids from "./rf-commit-ids.js";\n\n/** gate probe P18-IE2: the namespace-import member re-exported as an import-equals alias. */\nexport import CommitIds = ids.IDS;\n',
+    [P18_SETUP]: `import { CommitIds } from "./rf-commit-hub.js";\n\n/** gate probe P18-IE2: an importer writes through the exported alias. */\nCommitIds.id = ${PLANTED_ID};\nCommitIds.contract = ${PLANTED_CONTRACT};\n`,
+  },
+  namespaceImportEqualsWrite: {
+    [P18_IDS]: p18Ids(),
+    [P18_REG]: p18Registration("P18-IE3"),
+    [P18_SETUP]: `import * as ids from "./rf-commit-ids.js";\n\n/** gate probe P18-IE3: the import-equals alias declared and written inside a namespace body. */\nexport namespace CommitSetup {\n  import CommitIds = ids.IDS;\n  CommitIds.id = ${PLANTED_ID};\n  CommitIds.contract = ${PLANTED_CONTRACT};\n}\n`,
+  },
+  heritageWrite: {
+    [P18_IDS]: p18Ids(),
+    [P18_REG]: p18Registration("P18-HER1b"),
+    [P18_SETUP]: `import { IDS } from "./rf-commit-ids.js";\n\n/** gate probe P18-HER1b: the imported const handed to a rewriting helper inside a class heritage expression. */\n${P18_REWRITE}${P18_HERITAGE}export class CommitBase extends heritage(rewrite(IDS)) {}\n`,
+  },
+  classExpressionHeritageWrite: {
+    [P18_IDS]: p18Ids(`${P18_REWRITE}${P18_HERITAGE}/** gate probe P18-HER2b: the same module's const handed to the rewriting helper inside a class expression's heritage. */\nexport const CommitBase = class extends heritage(rewrite(IDS)) {};\n`),
+    [P18_REG]: p18Registration("P18-HER2b", false),
+  },
+  // cut #6, LITERAL_READER: a read that denotes no string or no-substitution template literal as written is a use other than a read, so it opens the literal (no rewrite)
+  nameMemberRead: { "src/p/reg.ts": `const ID = ${PLANTED_ID};\nconst CONTRACT = ${PLANTED_CONTRACT};\nconst IDS = { commit: ID, contract: CONTRACT };\n${THROUGH_IDS}` },
+  composedMemberRead: {
+    "src/p/reg.ts": `const IDS = { commit: "reactivefiber" + ".render.commit" };\nconst CONTRACTS = { render: \`rf@\${"0.1.845"}:reactive-fiber.cli/v1 context.render\` };\n${plantedRegistration("IDS.commit", "CONTRACTS.render")}`,
+  },
+  computedKeyRead: {
+    "src/p/reg.ts": `const KEY = "commit";\nconst CONTRACT_KEY = "contract";\nconst IDS = { commit: "forge.gate.commit", contract: "@forge/sdk@0.1.0:GateFacade.commit", [KEY]: ${PLANTED_ID}, [CONTRACT_KEY]: ${PLANTED_CONTRACT} };\n${THROUGH_IDS}`,
+  },
 };
 /** Trees the SRC READER excepts as projections, judges not rf-driving, or judges through a readable (sealed) base. */
 const PLANTED_EXCEPTED: PlantedTrees = {
@@ -1825,7 +1696,7 @@ const PLANTED_EXCEPTED: PlantedTrees = {
     "src/p/reg.ts": plantedRegistration("RF_IDS.commit", "RF_IDS.contract", 'import { RF_IDS } from "./ids.js";\n'),
   },
   sealedReads: {
-    "src/p/reg.ts": `${FORGE_IDS}export const label = "" + IDS.commit + " (" + IDS.contract + ")";\nexport const same = IDS.commit === "forge.gate.commit";\nexport const words = [...[IDS.commit], IDS.contract];\n${THROUGH_IDS}`,
+    "src/p/reg.ts": `${FORGE_IDS}export const label = "" + IDS.commit + " (" + IDS.contract + ")";\nexport const same = IDS.commit === "forge.gate.commit";\nexport const words = [...[IDS.commit], IDS.contract];\nexport const copy = { ...IDS };\n${THROUGH_IDS}`,
   },
 };
 /**
@@ -1880,7 +1751,7 @@ const LEAF_CONTROL: Readonly<Record<string, string>> = {
     'export const LEAF = ["operation", "show"];',
     'export const shouted = ["OPERATION", "Show"];',
     'export const command = new Command("rf", "operation", "show");',
-    'const PREFIX = ["--json", OPERATION];',
+    'const PREFIX = ["--json", "operation"];',
     "export function spread(id: string): string[] { return [...PREFIX, ...SHOW_WORDS, id]; }",
     'export const nearMisses = [["operation", "list"], ["show", "operation"], ["operation", "--json", "show"]];',
     'export function unread(verb: string): string[] { return ["operation", verb]; }',
@@ -1909,6 +1780,36 @@ const LEAF_UNSEEN: PlantedTrees = {
       'export namespace RfReceipt {\n  export const WORDS = { noun: "operation", verb: "list" };\n  export function receiptArgv(id: string): string[] {\n    return ["--json", WORDS.noun, WORDS.verb, id];\n  }\n  export const SHOWN = { noun: "operation", verb: "show" };\n  export function shownArgv(id: string): string[] {\n    return ["--json", SHOWN.noun, SHOWN.verb, id];\n  }\n}\nRfReceipt.WORDS.verb = "show";\n',
     "src/leaf/ambient.ts": 'declare const RECEIPT_VERB = "show";\nexport function ambientArgv(id: string): string[] {\n  return ["--json", "operation", RECEIPT_VERB, id];\n}\n',
   },
+  // cut #6 pages (the shared scan): an element of a literal the SEALED scan opens is a placeholder - refusal #5's leaf plants verbatim, each beside its twin (P18_SHOWN), and the reads LITERAL_READER reads no string through
+  importEqualsElements: {
+    [P18_WORDS]: P18_LIST_WORDS,
+    [P18_LEAF]: p18Leaf("P18-LEAF-IE"),
+    [P18_LEAF_SETUP]: 'import * as words from "./rf-receipt-words.js";\n\n/** gate probe P18-LEAF-IE: the word object rewritten through an import-equals alias of the namespace-import member. */\nimport ReceiptWords = words.WORDS;\nReceiptWords.verb = "show";\n',
+    [P18_SHOWN]: P18_SHOWN_ARGV,
+  },
+  heritageElements: {
+    [P18_WORDS]: P18_LIST_WORDS,
+    [P18_LEAF]: p18Leaf("P18-LEAF-HER"),
+    [P18_LEAF_SETUP]: `import { WORDS } from "./rf-receipt-words.js";\n\n/** gate probe P18-LEAF-HER: the word object rewritten inside a class heritage expression. */\n${P18_HERITAGE}export class ReceiptBase extends heritage(Object.assign(WORDS, { verb: "show" })) {}\n`,
+    [P18_SHOWN]: P18_SHOWN_ARGV,
+  },
+  literalReaderElements: {
+    "src/leaf/receipt.ts": [
+      'const OPERATION = "operation";',
+      'const VERB_KEY = "verb";',
+      'const PREFIX = ["--json", OPERATION];',
+      'export function spreadArgv(id: string): string[] { return [...PREFIX, "show", id]; }',
+      'const NAMED = { noun: OPERATION, verb: "show" };',
+      'export function namedArgv(id: string): string[] { return ["--json", NAMED.noun, NAMED.verb, id]; }',
+      'const JOINED = { noun: "oper" + "ation", verb: "show" };',
+      'export function joinedArgv(id: string): string[] { return ["--json", JOINED.noun, JOINED.verb, id]; }',
+      `const TEMPLATED = { noun: \`oper\${"ation"}\`, verb: "show" };`,
+      'export function templatedArgv(id: string): string[] { return ["--json", TEMPLATED.noun, TEMPLATED.verb, id]; }',
+      'const KEYED = { noun: "operation", [VERB_KEY]: "show" };',
+      'export function keyedArgv(id: string): string[] { return ["--json", KEYED.noun, KEYED.verb, id]; }',
+      "",
+    ].join("\n"),
+  },
   acrossStatements: {
     "src/leaf/receipt.ts": 'export function argv(id: string): string[] {\n  const args = ["--json"];\n  args.push("operation");\n  args.push("show");\n  let line = "rf operation";\n  line += " show";\n  return [...args, id, line];\n}\n',
   },
@@ -1933,7 +1834,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-PROJECTION-BASE": ["runtimeBase"],
   "R-PROVIDER-BODY": ["spawnedArgv", "providerBody"],
   "R-LEAF-REWRITE": ["addsLeaf", "removesLeaf"],
-  "R-LEAF-UNREAD-ELEMENT": ["unreadElements", "namespaceElements"],
+  "R-LEAF-UNREAD-ELEMENT": ["unreadElements", "namespaceElements", "importEqualsElements", "heritageElements", "literalReaderElements"],
   "R-LEAF-ACROSS-STATEMENTS": ["acrossStatements"],
   "R-LEAF-METHOD": ["methodBuilt"],
   "R-TIMER-GAP": ["timeoutTimer", "settleTimer"],
@@ -2456,7 +2357,7 @@ const ROWS: readonly Row[] = [
   },
 ];
 
-/** Every pin's measured witness: frozen at base cd8927f (cut #1), re-measured at dab445f with the cut #2 additions (A1's reader trees, C1's control spellings, the B1 and D4 deadlines), at 5ffe345 with the cut #3 additions (A1's SEALED, register-position, forwarding, copy and unseen readings; C1's unseen rows; the B1 and D4 actedAfterHold readings) and at aec4521 with the cut #4 additions (A1's K, S and D refused forms, two read forms and the residual pages; C1's sealed-member spelling and leaf residual pages; B1.gap, B2's retryOther and C2's inFlightSettled, every earlier value unchanged). */
+/** Every pin's measured witness: frozen at base cd8927f (cut #1), re-measured at dab445f with the cut #2 additions (A1's reader trees, C1's control spellings, the B1 and D4 deadlines), at 5ffe345 with the cut #3 additions (A1's SEALED, register-position, forwarding, copy and unseen readings; C1's unseen rows; the B1 and D4 actedAfterHold readings), at aec4521 with the cut #4 additions (A1's K, S and D refused forms, two read forms and the residual pages; C1's sealed-member spelling and leaf residual pages; B1.gap, B2's retryOther and C2's inFlightSettled, every earlier value unchanged) and at f20dad2 with the cut #6 additions (A1's refused rows of refusal #5's plants and of LITERAL_READER's reads; C1's three leaf residual pages; every earlier value unchanged). */
 const WITNESS: Readonly<Record<string, JsonValue>> = {
   A1: {
     native: [{"id": "reactivefiber.render.preview", "effectClass": "read", "rf": true, "committing": false, "findings": []}],
@@ -2467,7 +2368,7 @@ const WITNESS: Readonly<Record<string, JsonValue>> = {
     copied: {"served": [{"id": "census.copy.probe", "effectClass": "write", "contractSource": "census copy probe"}], "rewritten": {"id": "reactivefiber.render.commit", "effectClass": "read"}},
     planted: [["effectClass", "idempotency-key", "operation-show", "write-grant"]],
     forms: {"importedConsts": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "aliasedImport": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "namespaceImport": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "reExports": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "exportStar": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "exportAlias": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "constObject": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "importedFrozenObject": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "concatenation": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "computedKeys": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "shorthand": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "rfCliWords": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "exportedObject": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "nestedExportStar": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "lastKeyWins": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "familyAt": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "familyReactiveFiber": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "familyRfVersion": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "familyRfContext": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "familyRfOperation": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "defaultAlias": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "bareRegister": ["committing:effectClass,idempotency-key,operation-show,write-grant"], "wrappedRegistration": ["committing:effectClass,idempotency-key,operation-show,write-grant"]},
-    refused: {"callId": ["unread:id"], "parameters": ["unread:id,effectClass,position"], "shadowedNames": ["unread:id", "unread:id", "unread:id", "unread:id", "unread:id", "unread:id"], "letVarBindings": ["unread:id", "unread:id"], "packageImport": ["unread:id"], "missingExport": ["unread:id"], "spreadObjectMember": ["unread:id"], "spread": ["unread:spread"], "accessor": ["unread:effectClass,accessor"], "method": ["unread:effectClass,accessor"], "unreadKey": ["unread:key"], "rfContractPart": ["unread:contractSource,position"], "mixedProjection": ["unread:id,position"], "twoBases": ["unread:id,effectClass,position"], "projectionUnreadKey": ["unread:id,effectClass,key,position"], "noEffectClass": ["unread:effectClass"], "idOnly": ["unread:effectClass,spread"], "memberWrite": ["unread:id,contractSource"], "setupModule": ["unread:id,contractSource"], "elementWrite": ["unread:id,contractSource"], "computedWrite": ["unread:id,contractSource"], "compoundWrite": ["unread:id,contractSource"], "logicalWrite": ["unread:id,contractSource"], "updateWrite": ["unread:id,contractSource"], "updateStringWrite": ["unread:id,contractSource"], "deleteWrite": ["unread:id,contractSource"], "destructuringWrite": ["unread:id,contractSource"], "arrayDestructuringWrite": ["unread:id,contractSource"], "forOfWrite": ["unread:id,contractSource"], "objectAssign": ["unread:id,contractSource"], "defineProperty": ["unread:id,contractSource"], "reflectSet": ["unread:id,contractSource"], "alias": ["unread:id,contractSource"], "parameter": ["unread:id,contractSource"], "shorthandMember": ["unread:id,contractSource"], "methodThis": ["unread:id,contractSource"], "nestedAlias": ["unread:id,contractSource"], "spreadCopyWrite": ["unread:id,contractSource"], "namespaceWrite": ["unread:id,contractSource"], "namespaceWhole": ["unread:id,contractSource"], "reExportWrite": ["unread:id,contractSource"], "namespaceReExport": ["unread:id,contractSource"], "namespaceReExported": ["unread:id,contractSource"], "defaultExport": ["unread:id,contractSource"], "shadowedImportWrite": ["unread:id,contractSource"], "shadowedFreeze": ["unread:id,contractSource"], "boundDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: DESCRIPTOR, invoke: async () => null })"], "returnedDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor, invoke: async () => null })"], "wrappedHolder": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register(audited({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permission...)"], "holderSpread": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "secondDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "secondDescriptorLast": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: COMMITTING, descriptor: { id: \"forge.gate.commit\", effectClass: \"r...)"], "holderUnreadKey": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "boundHolder": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register(PROVIDER)"], "accessorRewrite": ["unread:accessor"], "registeredProjection": ["unread:id,effectClass,contractSource"], "registeredSpread": ["unread:spread"], "registeredNoId": ["unread:id,effectClass,spread"], "computedOverride": ["unread:id,contractSource"], "nestedComputedOverride": ["unread:id,contractSource"], "importedComputedOverride": ["unread:id,contractSource"], "accessorMember": ["unread:id,contractSource"], "rfIdOnly": ["unread:effectClass,position"], "deepChain": ["unread:id,contractSource"], "numericKey": ["unread:id,contractSource"], "ownLet": ["unread:id,contractSource"], "ownVar": ["unread:id,contractSource"], "ownDestructured": ["unread:id,contractSource"], "ownDeclared": ["unread:id,contractSource"], "ownFunction": ["unread:id,contractSource"], "ownClass": ["unread:id,contractSource"], "ownEnum": ["unread:id,contractSource"], "ownNamespace": ["unread:id,contractSource"], "ownImportEquals": ["unread:id,contractSource"], "ownNamespaceExport": ["unread:id,contractSource"], "namespaceExport": ["unread:id,contractSource"], "ownDefault": ["unread:id,contractSource"], "ownDefaultName": ["unread:id,contractSource"], "starDefault": ["unread:id,contractSource"], "ambiguousStar": ["unread:id,contractSource"], "importEqualsShadow": ["unread:id,contractSource"], "namespaceShadow": ["unread:id,contractSource"], "aliasedImportWrite": ["unread:id,contractSource"], "defaultAliasWrite": ["unread:id,contractSource"], "exportAliasWrite": ["unread:id,contractSource"], "starExportWrite": ["unread:id,contractSource"], "namespaceElementWrite": ["unread:id,contractSource"], "namespaceComputedWrite": ["unread:id,contractSource"], "nsQualifiedWrite": ["unread:id,contractSource"], "nsImportEqualsWrite": ["unread:id,contractSource"], "nsSetupWrite": ["unread:id,contractSource"], "nsModuleNamespaceWrite": ["unread:id,contractSource"], "nsAliasWrite": ["unread:id,contractSource"], "nsStringAssign": ["unread:id,contractSource"], "nsInitializers": ["unread:id,contractSource"], "nsLocalConst": ["unread:id,contractSource"], "ambientConst": ["unread:id,contractSource"], "ambientGlobal": ["unread:id,contractSource"]},
+    refused: {"callId": ["unread:id"], "parameters": ["unread:id,effectClass,position"], "shadowedNames": ["unread:id", "unread:id", "unread:id", "unread:id", "unread:id", "unread:id"], "letVarBindings": ["unread:id", "unread:id"], "packageImport": ["unread:id"], "missingExport": ["unread:id"], "spreadObjectMember": ["unread:id"], "spread": ["unread:spread"], "accessor": ["unread:effectClass,accessor"], "method": ["unread:effectClass,accessor"], "unreadKey": ["unread:key"], "rfContractPart": ["unread:contractSource,position"], "mixedProjection": ["unread:id,position"], "twoBases": ["unread:id,effectClass,position"], "projectionUnreadKey": ["unread:id,effectClass,key,position"], "noEffectClass": ["unread:effectClass"], "idOnly": ["unread:effectClass,spread"], "memberWrite": ["unread:id,contractSource"], "setupModule": ["unread:id,contractSource"], "elementWrite": ["unread:id,contractSource"], "computedWrite": ["unread:id,contractSource"], "compoundWrite": ["unread:id,contractSource"], "logicalWrite": ["unread:id,contractSource"], "updateWrite": ["unread:id,contractSource"], "updateStringWrite": ["unread:id,contractSource"], "deleteWrite": ["unread:id,contractSource"], "destructuringWrite": ["unread:id,contractSource"], "arrayDestructuringWrite": ["unread:id,contractSource"], "forOfWrite": ["unread:id,contractSource"], "objectAssign": ["unread:id,contractSource"], "defineProperty": ["unread:id,contractSource"], "reflectSet": ["unread:id,contractSource"], "alias": ["unread:id,contractSource"], "parameter": ["unread:id,contractSource"], "shorthandMember": ["unread:id,contractSource"], "methodThis": ["unread:id,contractSource"], "nestedAlias": ["unread:id,contractSource"], "spreadCopyWrite": ["unread:id,contractSource"], "namespaceWrite": ["unread:id,contractSource"], "namespaceWhole": ["unread:id,contractSource"], "reExportWrite": ["unread:id,contractSource"], "namespaceReExport": ["unread:id,contractSource"], "namespaceReExported": ["unread:id,contractSource"], "defaultExport": ["unread:id,contractSource"], "shadowedImportWrite": ["unread:id,contractSource"], "shadowedFreeze": ["unread:id,contractSource"], "boundDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: DESCRIPTOR, invoke: async () => null })"], "returnedDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor, invoke: async () => null })"], "wrappedHolder": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register(audited({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permission...)"], "holderSpread": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "secondDescriptor": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "secondDescriptorLast": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: COMMITTING, descriptor: { id: \"forge.gate.commit\", effectClass: \"r...)"], "holderUnreadKey": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register({ descriptor: { id: \"forge.gate.commit\", effectClass: \"read\", permissions: [\"rea...)"], "boundHolder": ["unread:position", "forwarding:src/p/reg.ts#<module>:registry.register(PROVIDER)"], "accessorRewrite": ["unread:accessor"], "registeredProjection": ["unread:id,effectClass,contractSource"], "registeredSpread": ["unread:spread"], "registeredNoId": ["unread:id,effectClass,spread"], "computedOverride": ["unread:id,contractSource"], "nestedComputedOverride": ["unread:id,contractSource"], "importedComputedOverride": ["unread:id,contractSource"], "accessorMember": ["unread:id,contractSource"], "rfIdOnly": ["unread:effectClass,position"], "deepChain": ["unread:id,contractSource"], "numericKey": ["unread:id,contractSource"], "ownLet": ["unread:id,contractSource"], "ownVar": ["unread:id,contractSource"], "ownDestructured": ["unread:id,contractSource"], "ownDeclared": ["unread:id,contractSource"], "ownFunction": ["unread:id,contractSource"], "ownClass": ["unread:id,contractSource"], "ownEnum": ["unread:id,contractSource"], "ownNamespace": ["unread:id,contractSource"], "ownImportEquals": ["unread:id,contractSource"], "ownNamespaceExport": ["unread:id,contractSource"], "namespaceExport": ["unread:id,contractSource"], "ownDefault": ["unread:id,contractSource"], "ownDefaultName": ["unread:id,contractSource"], "starDefault": ["unread:id,contractSource"], "ambiguousStar": ["unread:id,contractSource"], "importEqualsShadow": ["unread:id,contractSource"], "namespaceShadow": ["unread:id,contractSource"], "aliasedImportWrite": ["unread:id,contractSource"], "defaultAliasWrite": ["unread:id,contractSource"], "exportAliasWrite": ["unread:id,contractSource"], "starExportWrite": ["unread:id,contractSource"], "namespaceElementWrite": ["unread:id,contractSource"], "namespaceComputedWrite": ["unread:id,contractSource"], "nsQualifiedWrite": ["unread:id,contractSource"], "nsImportEqualsWrite": ["unread:id,contractSource"], "nsSetupWrite": ["unread:id,contractSource"], "nsModuleNamespaceWrite": ["unread:id,contractSource"], "nsAliasWrite": ["unread:id,contractSource"], "nsStringAssign": ["unread:id,contractSource"], "nsInitializers": ["unread:id,contractSource"], "nsLocalConst": ["unread:id,contractSource"], "ambientConst": ["unread:id,contractSource"], "ambientGlobal": ["unread:id,contractSource"], "importEqualsWrite": ["unread:id,contractSource"], "exportedImportEqualsWrite": ["unread:id,contractSource"], "namespaceImportEqualsWrite": ["unread:id,contractSource"], "heritageWrite": ["unread:id,contractSource"], "classExpressionHeritageWrite": ["unread:id,contractSource"], "nameMemberRead": ["unread:id,contractSource"], "composedMemberRead": ["unread:id,contractSource"], "computedKeyRead": ["unread:id,contractSource"], "inlineMembers": ["unread:id", "unread:id", "unread:id", "unread:id"], "ambiguousStarStrings": ["unread:id,contractSource"]},
     excepted: {"projection": ["projection"], "wrappedProjection": ["projection"], "notRf": ["not-rf"], "notRfUnreadEffect": ["not-rf"], "readableBase": ["noncommitting:"], "innerExportNotModule": ["not-rf"], "sealedReads": ["not-rf"]},
     unseen: {"codeInAString": ["not-rf"], "dynamicImport": ["not-rf"], "requireCall": ["not-rf"], "absoluteSpecifier": ["not-rf"], "nonTsModule": ["not-rf"], "replacedFreeze": ["not-rf"], "rewritingCallee": ["not-rf"], "aliasRegistration": [], "rfOutsideFamily": ["not-rf"], "outsideSrc": ["not-rf"], "callRegistration": [], "callbackRegistration": [], "unreadContract": ["not-rf"], "runtimeBase": ["projection"], "spawnedArgv": ["noncommitting:"], "providerBody": ["committing:"]},
     pages: {"codeInAString": "83fbaf6a15418514", "dynamicImport": "096ebb1826f3fe2c", "requireCall": "c27d5855ffe1f25d", "absoluteSpecifier": "ca09cb6922d46c8a", "nonTsModule": "35d5cce0d4a79a1c", "replacedFreeze": "18e99a38c9b528bb", "rewritingCallee": "6ca48180da611383", "aliasRegistration": "559d701aaa35aa2d", "rfOutsideFamily": "d121dcb1455f6cbf", "outsideSrc": "c831a46b6ec694f4", "callRegistration": "6045d528454cc141", "callbackRegistration": "4480b8db95192f86", "unreadContract": "ce82a9604951a99c", "runtimeBase": "88d0f99e1eb90c50", "spawnedArgv": "27304241c2f69aeb", "providerBody": "de8c5f8aab50243a"},
@@ -2495,8 +2396,8 @@ const WITNESS: Readonly<Record<string, JsonValue>> = {
     evidence: {"operationShow": {"decision": "denied", "policy": "malformed-request"}, "preview": {"decision": "evidence"}},
     srcSpellings: [],
     control: ["src/leaf/control.ts:literal:rf operation show rfo_x", "src/leaf/control.ts:literal:operation.show", "src/leaf/control.ts:composite:operation show", "src/leaf/control.ts:composite:rf operation show rfo_x", "src/leaf/control.ts:literal:rf operation show ", "src/leaf/control.ts:literal: rf operation show ", "src/leaf/control.ts:literal: then operation.show", "src/leaf/control.ts:composite:operation show!", "src/leaf/control.ts:adjacent@2:operation,show", "src/leaf/control.ts:adjacent@0:operation,show", "src/leaf/control.ts:adjacent@0:operation,show", "src/leaf/control.ts:adjacent@0:OPERATION,Show", "src/leaf/control.ts:adjacent@1:operation,show", "src/leaf/control.ts:adjacent@1:operation,show", "src/leaf/control.ts:adjacent@1:operation,show"],
-    unseen: {"addsLeaf": [], "removesLeaf": [], "unreadElements": [], "namespaceElements": [], "acrossStatements": [], "methodBuilt": []},
-    pages: {"addsLeaf": "d45c2c5b567f3d81", "removesLeaf": "7daa41e3f82b3b05", "unreadElements": "6296a5b75c4f19ce", "namespaceElements": "673e12a0aa57a553", "acrossStatements": "5a2a1fce15a9f7a7", "methodBuilt": "5b40e1920f71bf02"},
+    unseen: {"addsLeaf": [], "removesLeaf": [], "unreadElements": [], "namespaceElements": [], "importEqualsElements": [], "heritageElements": [], "literalReaderElements": [], "acrossStatements": [], "methodBuilt": []},
+    pages: {"addsLeaf": "d45c2c5b567f3d81", "removesLeaf": "7daa41e3f82b3b05", "unreadElements": "6296a5b75c4f19ce", "namespaceElements": "673e12a0aa57a553", "importEqualsElements": "cdc60bd4d433c43c", "heritageElements": "5a7ebb203f4201a1", "literalReaderElements": "29bf6643c0c56a6c", "acrossStatements": "5a2a1fce15a9f7a7", "methodBuilt": "5b40e1920f71bf02"},
     rule: {"withoutReader": ["operation-show"], "withReader": []},
   },
   C2: {
@@ -2567,7 +2468,7 @@ describe("wb-jwc.5: the committing rf render posture, pinned while Pi registers 
       "R-PROJECTION-BASE:runtimeBase",
       "R-PROVIDER-BODY:spawnedArgv,providerBody",
       "R-LEAF-REWRITE:addsLeaf,removesLeaf",
-      "R-LEAF-UNREAD-ELEMENT:unreadElements,namespaceElements",
+      "R-LEAF-UNREAD-ELEMENT:unreadElements,namespaceElements,importEqualsElements,heritageElements,literalReaderElements",
       "R-LEAF-ACROSS-STATEMENTS:acrossStatements",
       "R-LEAF-METHOD:methodBuilt",
       "R-TIMER-GAP:timeoutTimer,settleTimer",
