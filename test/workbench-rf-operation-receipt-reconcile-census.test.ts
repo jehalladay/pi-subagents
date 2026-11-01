@@ -4,7 +4,10 @@
  * ruling R-B88 (the rule 19 structural exit at refusal #4) binds it to the FAIL-CLOSED CORE, in the enumerate-the-resolvable form
  * (standing rule 19(c), engaged at refusal #3): this header and every pinned requirement claim exactly what the readers below
  * resolve, for the inputs and the one run they measure, and every known mode they do not pin is a NAMED RESIDUAL with a pinned
- * quiet row (row R). The cross-run registrar work and the per-category N/H probes belong to child wb-jwc.9 (blocked by this bead).
+ * quiet row (row R). This is cut #5 re-entered as the MECHANICAL RESTATEMENT orchestrator ruling R-B109 binds over child
+ * wb-jwc.9's landed fix (the rule 19 dependency inversion at refusal #5; wb-jwc.9 landed at landing 778): the N and H
+ * acceptance.3.1 probes now feed exactly the FED SET of that child's helper (FED SET below), H acceptance.3.2 feeds its fresh
+ * reads beside its own two synthetic ones, and N's and H's claims are restated to those reads.
  *
  * OWNER FILING (the outside anchor): the tracked bead export .beads/issues.jsonl, row wb-jwc.6, read through its description
  * only, so a note a lane appends later changes nothing read. Its STATEMENT ("When <trigger> (<conjuncts>), Pi shall <duty>;
@@ -89,20 +92,35 @@
  *     every distinct character of the section's rendered text outside printable ASCII is listed (respin 4, the gate's D30: an
  *     invisible or look-alike character inside an id hides it from the registry's word test), so a character outside printable
  *     ASCII the section does not already hold (today U+2014 and U+2192), added to it, moves the witness.
- *   N statement.3, never commit evidence: with only a genuine preview read in hand - fresh, failed with the unavailable category
- *     (the one failure category fed, respin 4 U1) or unprojected - no effect-absent acknowledgement is producer-confirmed, so an
- *     override after it carries possible-duplicate and must accept that risk. A read failed with any other category src's
- *     CapabilityErrorCategory declares is not fed, so this claim does not cover it: residual R-FAILURE-CATEGORY names each one.
+ *   FED SET (R-B109, the restatement): the preview reads N and H acceptance.3.1 feed are exactly the vocabulary honestyReads() of
+ *     test/helpers/rf-operation-receipt-honesty.ts (wb-jwc.9, landed) builds over src's CapabilityErrorCategory union (read from
+ *     src/workbench/capability-registry.ts), each run through that helper's previewReceipt() - src's own registration, the
+ *     reconcile core's evidence action and mintEvidenceReceipt, against that helper's journaled
+ *     {reactivefiber, operation, rfo_journaledcommit000000000} row - and cited alone in that helper's acknowledgeWith() and
+ *     overrideAfter(). Eighteen reads: five fresh, each carrying the fresh rfo_ (the bare output-text result, the smallest result
+ *     the native preview admits and the full rf 0.1.845 result through the injectable registration; the latter two through the
+ *     native registration from a stand-in rf too); seven failed (one per member of src's CapabilityErrorCategory, thrown by the
+ *     injectable seam, plus the two failures the native registration mints from a stand-in's output: a line that is not JSON, and
+ *     an rf refusal); and six unprojected (a context.show envelope and a reactive-fiber.cli/v2 context.render envelope, each
+ *     around the bare and the full result; no envelope at all; a v1 context.render envelope with no operation_id). N checks that
+ *     the failed reads the injectable seam throws are exactly src's categories. The landed honesty census
+ *     (test/workbench-rf-operation-receipt-honesty-census.test.ts, rows F, C and U) pins the same reads one by one.
+ *   N statement.3, never commit evidence: with no read (an uncited acknowledgement stating the producer unavailable) or with only
+ *     the receipt of one read of the FED SET in hand, no effect-absent acknowledgement is producer-confirmed, so an override after
+ *     it carries possible-duplicate and must accept that risk (citing a fresh read's receipt, the acknowledgement is denied). A
+ *     read outside the FED SET is not fed, so this claim does not cover it: residuals R-FRESH-SHAPE, R-UNPROJECTED-FORM and
+ *     R-PROBE-CONTEXT name the families.
  *   H acceptance.3, the honesty core: one pin per claim of the item (split at its dash). H acceptance.3.1: for every
- *     determination the src EffectDetermination union declares, cited and uncited, over a genuine fresh read, a read failed with
- *     the unavailable category (the one fed; R-FAILURE-CATEGORY names the others) or an unprojected read, the acknowledgement is
- *     denied or operator-asserted, never producer-confirmed. H acceptance.3.2: two fresh preview reads carrying two distinct
- *     synthetic rfo_ ids (standing in for rf's per-invocation mint, which this test does not read) each bind unbound against the
- *     journaled rfo_, and neither id is the journaled one.
+ *     determination the src EffectDetermination union declares, uncited (stating the producer unavailable) and citing exactly the
+ *     receipt of one read of the FED SET, the acknowledgement is denied or operator-asserted, never producer-confirmed. H
+ *     acceptance.3.2: two fresh preview reads, bare results through this file's own injectable seam,
+ *     carrying two distinct synthetic rfo_ ids (standing in for rf's per-invocation mint, which this test does not read) each
+ *     bind unbound against the journaled rfo_, and neither id is the journaled one; and each fresh read of the FED SET binds
+ *     unbound under the fresh rfo_, never the journaled one.
  *   R the NAMED RESIDUALS (no filing clause; NOT CLAIMED), each a pinned quiet row. The row exists while an outside anchor calls for
- *     one of its pins (respin 3 H1, respin 4: src holds a self-identifying reconcile read, src's CapabilityErrorCategory declares a
- *     category the failed read does not feed, src holds an rf registrar, or a pin's requirement is this file's words alone), so the
- *     row removed from every literal reds.
+ *     one of its pins (respin 3 H1, respin 4, R-B109: src holds a self-identifying reconcile read, the FED SET holds a fresh read,
+ *     an unprojected read or any read, src holds an rf registrar, or a pin's requirement is this file's words alone), so the row
+ *     removed from every literal reds.
  *     R-ECHO (R:echo, one pin per reactivefiber reconcile read whose projection takes the envelope's own top-level operation_id
  *     as nativeId; today the preview): an envelope under the preview contract that echoes the journaled rfo_ binds
  *     journal-recorded and confirms producer-confirmed, and its effect-absent acknowledgement overrides at duplicate risk none: Pi
@@ -110,12 +128,20 @@
  *     today's behaviour: hardening it (the preview's reference never binds, whatever its id) reds R and moves the case into N. A
  *     receipt read that projected its own invocation id instead of the receipt's operation_id (acceptance.2) would generate an R
  *     pin this table does not hold.
- *     R-FAILURE-CATEGORY (R:failure-category; respin 4 U1, the gate's H10 and H10u): N and H feed one failed preview read, of
- *     the unavailable category, so a read failed with any other member of src's CapabilityErrorCategory (read from
- *     src/workbench/capability-registry.ts the way EffectDetermination is read) is not probed, and N's and H's claims do not
- *     cover it; the filing's N words stay universal, so this row names each such category. The quiet row lists src's
- *     categories, the one fed (measured by running each read N and H feed) and each one not fed, so a category src adds or
- *     removes, or a failed read fed with another category, moves it.
+ *     R-FRESH-SHAPE (R:fresh-shape; refusal #5 U1, R-B109): N and H acceptance.3.1 feed exactly the FED SET's fresh reads, each
+ *     carrying the fresh rfo_ (H acceptance.3.2 adds its two synthetic bare reads, for their binding alone), so a fresh read in any
+ *     other shape (another subset of the optional result keys the native preview admits, observation rows, another release,
+ *     digest, workspace or id value) is not probed by them. The quiet row lists each fed fresh read with its operation_id and its
+ *     result keys, so a fresh read the FED SET adds, drops or reshapes moves it.
+ *     R-UNPROJECTED-FORM (R:unprojected-form; refusal #5 U2, R-B109): N and H acceptance.3.1 feed exactly the FED SET's
+ *     unprojected reads (H acceptance.3.2 feeds none), so a returned read projecting no native reference in any other form
+ *     (another schema id or command, another malformed identity, another result, another workspace root) is not probed by them.
+ *     The quiet row lists each fed unprojected read with its envelope's schema, command and operation_id, so a form the FED SET
+ *     adds, drops or changes moves it.
+ *     R-PROBE-CONTEXT (R:probe-context; R-B109): every read of the FED SET is fed in one request context (one task, position,
+ *     principal, session, workspace, grant set and clock) against one journaled row, so a FED SET read's binding conditioned on
+ *     any other is not probed (this file's own reads - the uncited acknowledgement, H acceptance.3.2's synthetic reads and
+ *     R-ECHO's - run in this file's own context). The quiet row lists the FED SET's context and row.
  *     R-REGISTRAR-RUNTIME (R:registrar-runtime; respin 4 U2, the gate's R1 and R2): each src rf registrar is measured in one
  *     run, with the census's arguments in this process's environment, so a registration whose id, effect class or permissions
  *     depend on a registrar's arguments or on the environment is read for that run only. The quiet row lists each registrar
@@ -134,9 +160,10 @@
  *     and moves G:bin.
  *   PARKED the duty of statement.2 itself, acceptance.1, acceptance.2 and acceptance.4: owed in the change that opens the gate on
  *     Pi's side (wb-jwc.5's committing capability under wb-x32's decision). G is their re-entry; S names each one's surface.
- * GATE (measured read-only at the cut, outside this test): the installed rf 0.1.845 serves operation.show (served_reachable) and
- *   context render --idempotency-key, and FOC-ADR-03 is accepted (ADR-RFC-060, recorded on the bead); wb-x32 is open with no
- *   committing decision and Pi's one rf argv carries --no-commit. The gate stays CLOSED.
+ * GATE (measured read-only at the cut, outside this test; re-read at the R-B109 restatement): the installed rf (0.1.845 at cut
+ *   #5, 0.1.875 at the restatement) serves operation.show (served_reachable) and context render --idempotency-key, and
+ *   FOC-ADR-03 is accepted (ADR-RFC-060, recorded on the bead); wb-x32 is open with no committing decision and Pi's one rf argv
+ *   carries --no-commit. The gate stays CLOSED.
  * FROZEN SHAPE (standing rule 16): the row shape `${row}:${clause}:${pins}`, every clause key's row, and every pin's line
  *   `${id} | ${requirement} | ${witness}` (PIN_LINES, the witness measured from the subject) are literals; one case per pin runs
  *   against its line. Pins are generated from the anchors above, so a member dropped from a table here leaves its generated pin
@@ -169,6 +196,16 @@
  *   characters outside printable ASCII (S), and the docs-id non-claim is restated to what the reader does. The core also narrows
  *   the S runtime requirement to its one measured stand-in run, reads import-equals declarations and import types among the
  *   specifiers that may leave src/, and counts --idempotency-key over template text too.
+ * REFUSAL 5 AND THE RESTATEMENT (gate verdict on cut #5 c12af96, refusal #5, unmet U1-U2; orchestrator ruling R-B109 executes
+ *   the dependency inversion R-B88 pre-binds: the members fold into child wb-jwc.9 and this bead waits on it): U1 found the N and
+ *   H probes fed one fresh envelope, {output:{text}}, a result the native preview refuses as transport, while their claims covered
+ *   every genuine fresh read (gate plants G20s142-F1, F2 and F3 in mintEvidenceReceipt read 0|23); U2 found 'an unprojected read'
+ *   measured with one context.show envelope (plant G20s142-U1, a schema-drifted render, 0|23). wb-jwc.9 landed the FED SET and a
+ *   census pinning each of its reads. This restatement feeds that set to N and H through the helper (cure route (a) of both
+ *   members), restates N's and H's claims to it, names R-FRESH-SHAPE, R-UNPROJECTED-FORM and R-PROBE-CONTEXT with pinned quiet
+ *   rows, and retires R-FAILURE-CATEGORY: every member of src's CapabilityErrorCategory is now fed, so its anchor calls for no row.
+ *   The G and S readers and the R-ECHO, R-REGISTRAR-RUNTIME, R-SELF-ANCHORED and R-ARGV-RUNTIME readers are unchanged
+ *   (R-SELF-ANCHORED's quiet row now also lists the three new rows).
  * Not claimed: the rf-side conjuncts (measured at the cut, not here); the receipt projection's five-state vocabulary (the bead's
  *   2026-10-17b note, owed with acceptance.2); an rf capability id that no whole string token spells (concatenation, a template
  *   with substitutions) or that a `kind` property holds, except where a reader above reads every spelling - a register call's
@@ -187,11 +224,15 @@
  *   is not read as an id even where it would render as one; S lists the section's characters outside printable ASCII, respin 4
  *   D30); a hyphen-only
  *   id under a producer RECONCILE_EVIDENCE_READS does not key, named outside the allowlist sentence; a host path other than the
- *   Claude workflow host's node() journaling; the named residuals (R).
+ *   Claude workflow host's node() journaling; for N and H acceptance.3.1, a read outside the FED SET, an uncited acknowledgement
+ *   stating any other reason, an acknowledgement or override made in any other request context or with any other reason text or
+ *   override parameters (the probes hold each fixed), and an acknowledgement citing any receipt beside the one read's own; the
+ *   named residuals (R).
  *
- * Display paths added: none. Test-only: writes nothing but one tracked scratch directory (test/helpers/scratch.ts, removed after
- * the probe) holding the recording stand-in rf and its argv log, and starts no process but that stand-in, the only PATH entry
- * while the probe runs (a POSIX shell script of builtins only); WS is a string, never created. Reads the bead export, the src
+ * Display paths added: none. Test-only: writes nothing but tracked scratch directories (test/helpers/scratch.ts, each removed after
+ * its use): one holding the recording stand-in rf and its argv log (G:bin's probe), and, through the helper, one per native read
+ * of the FED SET holding that helper's stand-in rf and its one output line; starts no process but those stand-ins, each the only
+ * PATH entry while it runs (a POSIX shell script of builtins only); WS is a string, never created. Reads the bead export, the src
  * tree and docs/workbench/08-lifecycle-and-recovery.md.
  */
 import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
@@ -208,6 +249,7 @@ import type { WorkflowJournalEntry } from "../src/workflow/journal.js";
 import { ACKNOWLEDGEMENT_VALUE_CONTRACT, type EvidenceReceipt, producerOf, RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { runWorkflow } from "../src/workflow/runtime.js";
 import { docsSection, type RenderedBlock } from "./helpers/census.js";
+import * as honesty from "./helpers/rf-operation-receipt-honesty.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
@@ -244,10 +286,8 @@ const PROBE_COMMANDS = ["context.render", "operation.show"];
 const EM_DASH = String.fromCodePoint(0x2014);
 const HEAD = 'export const meta = { name: "rf-operation-receipt", description: "wb-jwc.6 census probe" };\n';
 const RECONCILE_TS = "src/workflow/reconcile.ts";
-/** src's failure vocabulary (respin 4 U1): the CapabilityErrorCategory union R-FAILURE-CATEGORY reads. */
+/** src's failure vocabulary (respin 4 U1): the CapabilityErrorCategory union the FED SET feeds one failed read per member of (R-B109). */
 const CAPABILITY_REGISTRY_TS = "src/workbench/capability-registry.ts";
-/** The one failure category the N and H probes feed (respin 4 U1, R-B88): every other member of src's union is R-FAILURE-CATEGORY's. */
-const FAILED_CATEGORY: CapabilityErrorCategory = "unavailable";
 /** The producer src's producerOf names for every rf capability id. */
 const RF_PRODUCER = "reactivefiber";
 /** A whole string token naming the rf binary: rf itself, a path whose last segment is rf, or a command text whose first word is either. */
@@ -744,30 +784,25 @@ function previewEnvelope(operationId: string, result: JsonValue = { output: { te
   return { schema: REACTIVE_FIBER_CLI_SCHEMA, ok: true, command, operation_id: operationId, workspace: { id: WORKSPACE_ID, root: WS }, transaction_id: null, result, diagnostics: [] };
 }
 /**
- * The preview reads a reconcile is fed: a genuine fresh one, one that fails with FAILED_CATEGORY (the one failure category fed,
- * respin 4 U1), and one whose envelope names no identity.
+ * The FED SET (R-B109, the restatement over wb-jwc.9's landed fix): the helper's honestyReads() vocabulary over src's
+ * CapabilityErrorCategory union - five fresh reads, one failed read per member of the union plus the native registration's two,
+ * and six unprojected reads - each run through the helper's previewReceipt() and cited alone in its acknowledgeWith().
  */
-const VARIANTS: Readonly<Record<string, () => Promise<PreviewEnvelope>>> = {
-  fresh: async () => previewEnvelope(FRESH),
-  failed: async () => {
-    throw new CapabilityError(FAILED_CATEGORY, "rf is not reachable from this census");
-  },
-  unprojected: async () => previewEnvelope(FRESH, { output: { text: "census context" } }, "context.show"),
-};
-/** The failure categories the reads above feed, measured by running each one (respin 4 U1: R-FAILURE-CATEGORY's quiet row). */
-async function fedFailureCategories(): Promise<string[]> {
-  const fed: string[] = [];
-  for (const read of Object.values(VARIANTS)) {
-    try {
-      await read();
-    } catch (error) {
-      fed.push(error instanceof CapabilityError ? error.category : "<not a CapabilityError>");
-    }
+const FED_READS: readonly honesty.HonestyRead[] = honesty.honestyReads(srcUnion(CAPABILITY_REGISTRY_TS, "CapabilityErrorCategory") as CapabilityErrorCategory[]);
+/** The categories the FED SET's injectable failed reads throw, read from each read's serve (N checks they are exactly src's union). */
+const fedFailureCategories = (): string[] => FED_READS.flatMap(read => (read.kind === "failed" && read.serve.answer === "throw" ? [read.serve.category] : []));
+/** What a read of the FED SET serves: the seam's envelope, the stand-in's line parsed, else undefined (a thrown or unparsable read). */
+function servedEnvelope(read: honesty.HonestyRead): JsonValue | undefined {
+  if (read.serve.answer === "envelope") return read.serve.envelope;
+  if (read.serve.answer !== "print") return undefined;
+  try {
+    return JSON.parse(read.serve.stdout) as JsonValue;
+  } catch {
+    return undefined;
   }
-  return [...new Set(fed)];
 }
-/** The members of src's CapabilityErrorCategory the failed read does not feed (respin 4 U1): R-FAILURE-CATEGORY's row exists while one does. */
-const unfedFailureCategories = (): string[] => srcUnion(CAPABILITY_REGISTRY_TS, "CapabilityErrorCategory").filter(category => category !== FAILED_CATEGORY);
+/** One field of a served envelope as text: its string value, else <none>. */
+const envelopeField = (envelope: JsonValue | undefined, key: string): string => (isRecord(envelope) && typeof envelope[key] === "string" ? envelope[key] : "<none>");
 /** The committed render the stand-in returns: the identity a committing rf effect would carry. */
 function committedReading(): JsonValue {
   return {
@@ -1080,12 +1115,13 @@ const N_PINS: Readonly<Record<string, PinBody>> = {
   "statement.3": {
     requirement: FILING.clauses.get("statement.3") ?? "<statement.3 missing>",
     witness: async () => {
+      expect(fedFailureCategories(), "the FED SET's injectable failed reads throw exactly src's CapabilityErrorCategory members").toStrictEqual(srcUnion(CAPABILITY_REGISTRY_TS, "CapabilityErrorCategory"));
       const uncited = acknowledgeWith("effect-absent", []);
       const parts = [`uncited: ${outcomeOf(uncited)} ${overrideAfter(uncited)}`];
-      for (const [variant, read] of Object.entries(VARIANTS)) {
-        const receipt = await previewReceipt(read);
-        const acknowledgement = acknowledgeWith("effect-absent", [receipt]);
-        parts.push(`${variant}(${receipt.outcome}): ${outcomeOf(acknowledgement)}${acknowledgement.decision === "acknowledge" ? ` ${overrideAfter(acknowledgement)}` : ""}`);
+      for (const read of FED_READS) {
+        const receipt = await honesty.previewReceipt(read);
+        const acknowledgement = honesty.acknowledgeWith("effect-absent", [receipt]);
+        parts.push(`${read.key}(${receipt.outcome}): ${outcomeOf(acknowledgement)}${acknowledgement.decision === "acknowledge" ? ` ${honesty.overrideAfter(acknowledgement)}` : ""}`);
       }
       const text = parts.join("; ");
       expect(text, "a preview-only effect-absent never overrides at duplicate risk none").not.toContain("override:none");
@@ -1100,9 +1136,9 @@ const H_PINS: Readonly<Record<string, PinBody>> = {
     witness: async () => {
       const determinations = srcUnion(RECONCILE_TS, "EffectDetermination");
       const parts = [`uncited: ${determinations.map(determination => `${determination}=${outcomeOf(acknowledgeWith(determination, []))}`).join(" ")}`];
-      for (const [variant, read] of Object.entries(VARIANTS)) {
-        const receipt = await previewReceipt(read);
-        parts.push(`${variant}(${receipt.outcome}/${receipt.binding}): ${determinations.map(determination => `${determination}=${outcomeOf(acknowledgeWith(determination, [receipt]))}`).join(" ")}`);
+      for (const read of FED_READS) {
+        const receipt = await honesty.previewReceipt(read);
+        parts.push(`${read.key}(${receipt.outcome}/${receipt.binding}): ${determinations.map(determination => `${determination}=${outcomeOf(honesty.acknowledgeWith(determination, [receipt]))}`).join(" ")}`);
       }
       const text = parts.join("; ");
       expect(text, "a preview-only reconcile is never producer-confirmed").not.toContain("producer-confirmed");
@@ -1114,11 +1150,16 @@ const H_PINS: Readonly<Record<string, PinBody>> = {
     witness: async () => {
       const receipts = [await previewReceipt(async () => previewEnvelope(FRESH)), await previewReceipt(async () => previewEnvelope(FRESH_SECOND))];
       const ids = receipts.map(receipt => receipt.nativeRef?.id ?? "none");
-      return `journaled=${JOURNALED}; preview refs=${ids.join(",")} distinct=${new Set(ids).size === ids.length} journaled-among=${ids.includes(JOURNALED)}; bindings=${receipts.map(receipt => receipt.binding).join(",")}`;
+      const fed: string[] = [];
+      for (const read of FED_READS.filter(entry => entry.kind === "fresh")) {
+        const receipt = await honesty.previewReceipt(read);
+        fed.push(`${read.key}=${receipt.binding}/${receipt.nativeRef?.id ?? "none"}`);
+      }
+      return `journaled=${JOURNALED}; preview refs=${ids.join(",")} distinct=${new Set(ids).size === ids.length} journaled-among=${ids.includes(JOURNALED)}; bindings=${receipts.map(receipt => receipt.binding).join(",")}; FED SET fresh reads=${fed.join(",")}`;
     },
   },
 };
-/** R: the named residuals - R-ECHO (one quiet row per self-identifying reconcile read), R-FAILURE-CATEGORY and R-REGISTRAR-RUNTIME (respin 4), R-SELF-ANCHORED. */
+/** R: the named residuals - R-ECHO (one quiet row per self-identifying reconcile read), R-FRESH-SHAPE, R-UNPROJECTED-FORM and R-PROBE-CONTEXT (R-B109), R-REGISTRAR-RUNTIME (respin 4), R-SELF-ANCHORED. */
 const R_PINS: Readonly<Record<string, PinBody>> = {
   [`echo:${PREVIEW_ID}`]: {
     requirement: "NAMED RESIDUAL R-ECHO, not claimed: an envelope under the preview contract that echoes the journaled rfo_ binds and confirms, because Pi takes the envelope's operation_id as given and never checks it is fresh",
@@ -1128,12 +1169,28 @@ const R_PINS: Readonly<Record<string, PinBody>> = {
       return `echo ref=${receipt.nativeRef?.id ?? "none"} binding=${receipt.binding}; effect-confirmed=${outcomeOf(acknowledgeWith("effect-confirmed", [receipt]))}; effect-absent=${outcomeOf(absent)} ${overrideAfter(absent)}`;
     },
   },
-  "failure-category": {
-    requirement: "NAMED RESIDUAL R-FAILURE-CATEGORY, not claimed: N and H feed one failed preview read, of the unavailable category, so a read failed with any other category src's CapabilityErrorCategory declares is not probed and N's and H's claims do not cover it; src's categories are listed, with the one fed and each one not fed",
+  "fresh-shape": {
+    requirement: "NAMED RESIDUAL R-FRESH-SHAPE, not claimed: N and H acceptance.3.1 feed exactly the FED SET's fresh reads, each carrying the fresh rfo_, so a fresh read in any other shape (another subset of the optional result keys the native preview admits, observation rows, another release, digest, workspace or id value) is not probed by them; each fed fresh read is listed with its operation_id and its result keys",
+    witness: async () => FED_READS.filter(read => read.kind === "fresh").map(read => {
+      const envelope = servedEnvelope(read);
+      const keys = isRecord(envelope) && isRecord(envelope.result) ? Object.keys(envelope.result) : [];
+      return `${read.key} operation_id=${envelopeField(envelope, "operation_id")} result keys=${keys.join(",")}`;
+    }).join("; "),
+  },
+  "unprojected-form": {
+    requirement: "NAMED RESIDUAL R-UNPROJECTED-FORM, not claimed: N and H acceptance.3.1 feed exactly the FED SET's unprojected reads, so a returned read projecting no native reference in any other form (another schema id or command, another malformed identity, another result, another workspace root) is not probed by them; each fed unprojected read is listed with its envelope's schema, command and operation_id",
+    witness: async () => FED_READS.filter(read => read.kind === "unprojected").map(read => {
+      const envelope = servedEnvelope(read);
+      return `${read.key} schema=${envelopeField(envelope, "schema")} command=${envelopeField(envelope, "command")} operation_id=${envelopeField(envelope, "operation_id")}`;
+    }).join("; "),
+  },
+  "probe-context": {
+    requirement: "NAMED RESIDUAL R-PROBE-CONTEXT, not claimed: every read of the FED SET is fed in one request context against one journaled row, so a FED SET read's binding conditioned on any other task, position, principal, session, workspace, grant set, clock or journaled row is not probed; the FED SET's context and row are listed",
     witness: async () => {
-      const categories = srcUnion(CAPABILITY_REGISTRY_TS, "CapabilityErrorCategory");
-      const fed = await fedFailureCategories();
-      return `src CapabilityErrorCategory=${categories.join(",")}; fed to N and H as a failed preview read=${fed.join(",")}; not fed, so not probed and not claimed=${categories.filter(category => !fed.includes(category)).join(",")}`;
+      const context = honesty.PROBE_CONTEXT;
+      const row = honesty.COMMIT_ROW;
+      const refs = (row.nativeRefs ?? []).map(ref => `${ref.provider}/${ref.type}/${ref.id}`).join(",");
+      return `task=${context.taskId} position=${context.position} principal=${context.principal} session=${context.session} workspace=${context.workspace} observedAt=${context.observedAt} grants=${context.grants.join(",")}; journaled row index=${row.index} kind=${row.kind ?? "agent"} capability=${row.capabilityId ?? "none"} effectClass=${row.effectClass ?? "none"} nativeRefs=${refs}`;
     },
   },
   "registrar-runtime": {
@@ -1173,7 +1230,9 @@ const GENERATED: Readonly<Record<RowId, () => string[]>> = {
   H: () => FILING.honestyClaims.map((_, index) => `H:acceptance.3.${index + 1}`),
   R: () => [
     ...selfIdentifyingReads().map(id => `R:echo:${id}`),
-    ...(unfedFailureCategories().length > 0 ? ["R:failure-category"] : []),
+    ...(FED_READS.some(read => read.kind === "fresh") ? ["R:fresh-shape"] : []),
+    ...(FED_READS.some(read => read.kind === "unprojected") ? ["R:unprojected-form"] : []),
+    ...(FED_READS.length > 0 ? ["R:probe-context"] : []),
     ...(rfRegistrars().length > 0 ? ["R:registrar-runtime"] : []),
     ...(selfAnchoredPins().length > 0 ? ["R:self-anchored"] : []),
   ],
@@ -1196,12 +1255,12 @@ function selfAnchoredPins(): string[] {
   return PINS.filter(pin => !description.includes(pin.requirement)).map(pin => pin.id);
 }
 /**
- * The residual rows the outside anchors call for (respin 3 H1, respin 4): row R while src holds a self-identifying reconcile read
- * (R-ECHO), src's CapabilityErrorCategory declares a category the failed read does not feed (R-FAILURE-CATEGORY), src holds an rf
- * registrar (R-REGISTRAR-RUNTIME), or a pin's requirement is this file's words alone (R-SELF-ANCHORED).
+ * The residual rows the outside anchors call for (respin 3 H1, respin 4, R-B109): row R while src holds a self-identifying
+ * reconcile read (R-ECHO), the FED SET holds a read (R-FRESH-SHAPE, R-UNPROJECTED-FORM, R-PROBE-CONTEXT), src holds an rf registrar
+ * (R-REGISTRAR-RUNTIME), or a pin's requirement is this file's words alone (R-SELF-ANCHORED).
  */
 const residualRowsCalledFor = (): RowId[] =>
-  selfIdentifyingReads().length > 0 || unfedFailureCategories().length > 0 || rfRegistrars().length > 0 || selfAnchoredPins().length > 0 ? ["R"] : [];
+  selfIdentifyingReads().length > 0 || FED_READS.length > 0 || rfRegistrars().length > 0 || selfAnchoredPins().length > 0 ? ["R"] : [];
 const CLAUSE_ROWS: Readonly<Record<string, RowId | "PARKED">> = {
   "statement.1": "G",
   "statement.2": "S",
@@ -1211,7 +1270,7 @@ const CLAUSE_ROWS: Readonly<Record<string, RowId | "PARKED">> = {
   "acceptance.3": "H",
   "acceptance.4": "PARKED",
 };
-const SHAPE = ["G:statement.1:2", "S:statement.2:4", "N:statement.3:1", "H:acceptance.3:2", "R:residual:4"];
+const SHAPE = ["G:statement.1:2", "S:statement.2:4", "N:statement.3:1", "H:acceptance.3:2", "R:residual:6"];
 const PIN_LINES: Readonly<Record<string, string>> = {
   "G:id:reactivefiber.render.preview":
     "G:id:reactivefiber.render.preview | every file under src/ is read, each module parsed with its own script kind and every other file listed, and no relative specifier a src module writes as a whole string token in an import, export or import-equals declaration, an import type, an import() call or a require() call leaves src/; the one rf capability id a whole src string token spells is the preview: every naming site is listed, the functions whose judged register calls carry an rf id are the registrars measured here, and each of them, in its one measured run (the census's arguments, this process's environment), has registered the preview alone, with effect class read and the permission reactivefiber:render, when it returns; every unjudged register spelling is listed by owner and syntax | src files no reader parses=none; relative specifiers leaving src/=none; sites=src/workbench/hosts/local-detached.ts#NATIVE_CAPABILITIES, src/workbench/native-evidence.ts#nativeEvidence, src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender, src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender, src/workflow/reconcile.ts#RECONCILE_EVIDENCE_READS; registered=registerReactiveFiberRender:reactivefiber.render.preview=read/reactivefiber:render, registerNativeReactiveFiberRender:reactivefiber.render.preview=read/reactivefiber:render; id-shaped kinds (not capabilities)=reactivefiber.render.preview.snapshot@src/workbench/reactivefiber-observer.ts#reactivefiberTopology; unjudged register spellings=src/workbench/capability-registry.ts#CapabilityRegistry MethodDeclaration, src/workbench/hosts/local-detached.ts#registryFor PropertySignature, src/workbench/hosts/local-detached.ts#registryFor TypeOfExpression, src/workbench/hosts/local-detached.ts#registryFor VariableDeclaration, src/workbench/hosts/local-detached.ts#registryFor PropertyAccessExpression, src/workbench/hosts/local-detached.ts#registryFor BinaryExpression, src/workbench/hosts/local-detached.ts#registryFor CallExpression, src/workbench/hosts/local-detached.ts#registryFor register call, provider Identifier",
@@ -1226,19 +1285,23 @@ const PIN_LINES: Readonly<Record<string, string>> = {
   "S:docs/workbench/08-lifecycle-and-recovery.md":
     "S:docs/workbench/08-lifecycle-and-recovery.md | the operator reconcile journey's rendered section holds one evidence allowlist sentence, the ids it names (its rendered words the registry accepts) are exactly the reads RECONCILE_EVIDENCE_READS holds, no other sentence of the section names a read in such a word, and every distinct character of the section's rendered text outside printable ASCII is listed | one allowlist sentence, in paragraph prose: allowlist=furnace.run.inspect,forge.gate.status,hyperunix.find,reactivefiber.render.preview; binding words (src EvidenceBinding)=journal-recorded,operator-asserted; equals RECONCILE_EVIDENCE_READS=true; other sentences' ids=workbench.reconcile.acknowledgement, each the name of src ACKNOWLEDGEMENT_VALUE_CONTRACT=true; rendered characters outside printable ASCII=U+2014,U+2192",
   "N:statement.3":
-    "N:statement.3 | the preview read shall never serve as commit evidence | uncited: ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; fresh(returned): deny:evidence-identity-mismatch; failed(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; unprojected(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate",
+    "N:statement.3 | the preview read shall never serve as commit evidence | uncited: ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:bare(returned): deny:evidence-identity-mismatch; injectable:minimal(returned): deny:evidence-identity-mismatch; injectable:full(returned): deny:evidence-identity-mismatch; native:minimal(returned): deny:evidence-identity-mismatch; native:full(returned): deny:evidence-identity-mismatch; injectable:validation(validation): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:authorization(authorization): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:unavailable(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:transport(transport): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:uncertain-effect(uncertain-effect): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; native:malformed(transport): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; native:refused(unavailable): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:show-bare(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:show-full(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:drift-bare(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:drift-full(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:no-source(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate; injectable:no-identity(returned): ack:operator-asserted override unaccepted=deny:duplicate-risk-unaccepted accepted=override:possible-duplicate",
   "H:acceptance.3.1":
-    "H:acceptance.3.1 | a reconcile fed only a preview envelope for a committed-effect journal row is asserted NOT producer-confirmed | uncited: effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; fresh(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; failed(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; unprojected(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted",
+    "H:acceptance.3.1 | a reconcile fed only a preview envelope for a committed-effect journal row is asserted NOT producer-confirmed | uncited: effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:bare(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:minimal(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:full(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; native:minimal(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; native:full(returned/unbound): effect-confirmed=deny:evidence-identity-mismatch effect-absent=deny:evidence-identity-mismatch indeterminate=deny:evidence-identity-mismatch; injectable:validation(validation/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:authorization(authorization/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:unavailable(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:transport(transport/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:uncertain-effect(uncertain-effect/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; native:malformed(transport/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; native:refused(unavailable/operator-asserted): effect-confirmed=deny:effect-confirmed-without-evidence effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:show-bare(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:show-full(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:drift-bare(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:drift-full(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:no-source(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted; injectable:no-identity(returned/operator-asserted): effect-confirmed=ack:operator-asserted effect-absent=ack:operator-asserted indeterminate=ack:operator-asserted",
   "H:acceptance.3.2":
-    "H:acceptance.3.2 | the preview's freshly-minted rfo_ cannot bind the journaled rfo_ | journaled=rfo_journaledcommit000000000; preview refs=rfo_freshpreview0000000000,rfo_freshpreviewsecond0000 distinct=true journaled-among=false; bindings=unbound,unbound",
+    "H:acceptance.3.2 | the preview's freshly-minted rfo_ cannot bind the journaled rfo_ | journaled=rfo_journaledcommit000000000; preview refs=rfo_freshpreview0000000000,rfo_freshpreviewsecond0000 distinct=true journaled-among=false; bindings=unbound,unbound; FED SET fresh reads=injectable:bare=unbound/rfo_freshpreview0000000000,injectable:minimal=unbound/rfo_freshpreview0000000000,injectable:full=unbound/rfo_freshpreview0000000000,native:minimal=unbound/rfo_freshpreview0000000000,native:full=unbound/rfo_freshpreview0000000000",
   "R:echo:reactivefiber.render.preview":
     "R:echo:reactivefiber.render.preview | NAMED RESIDUAL R-ECHO, not claimed: an envelope under the preview contract that echoes the journaled rfo_ binds and confirms, because Pi takes the envelope's operation_id as given and never checks it is fresh | echo ref=rfo_journaledcommit000000000 binding=journal-recorded; effect-confirmed=ack:producer-confirmed; effect-absent=ack:producer-confirmed override unaccepted=override:none accepted=override:none",
-  "R:failure-category":
-    "R:failure-category | NAMED RESIDUAL R-FAILURE-CATEGORY, not claimed: N and H feed one failed preview read, of the unavailable category, so a read failed with any other category src's CapabilityErrorCategory declares is not probed and N's and H's claims do not cover it; src's categories are listed, with the one fed and each one not fed | src CapabilityErrorCategory=validation,authorization,unavailable,transport,uncertain-effect; fed to N and H as a failed preview read=unavailable; not fed, so not probed and not claimed=validation,authorization,transport,uncertain-effect",
+  "R:fresh-shape":
+    "R:fresh-shape | NAMED RESIDUAL R-FRESH-SHAPE, not claimed: N and H acceptance.3.1 feed exactly the FED SET's fresh reads, each carrying the fresh rfo_, so a fresh read in any other shape (another subset of the optional result keys the native preview admits, observation rows, another release, digest, workspace or id value) is not probed by them; each fed fresh read is listed with its operation_id and its result keys | injectable:bare operation_id=rfo_freshpreview0000000000 result keys=output; injectable:minimal operation_id=rfo_freshpreview0000000000 result keys=output,provenance,budget,diagnostics_summary,work,ephemeral,render_id; injectable:full operation_id=rfo_freshpreview0000000000 result keys=output,budget,diagnostics_summary,blocks,components,provenance,work_metrics,work,engine_metrics,scope,audience,bundle_revision_id,observations,necessity,judge_context,judge_context_layers,attempts,superseded_transaction_ids,retry_work,fiber_transaction_refs,replay_of_operation_id,render_id,ephemeral,commit_seq,session_id,effects,plan; native:minimal operation_id=rfo_freshpreview0000000000 result keys=output,provenance,budget,diagnostics_summary,work,ephemeral,render_id; native:full operation_id=rfo_freshpreview0000000000 result keys=output,budget,diagnostics_summary,blocks,components,provenance,work_metrics,work,engine_metrics,scope,audience,bundle_revision_id,observations,necessity,judge_context,judge_context_layers,attempts,superseded_transaction_ids,retry_work,fiber_transaction_refs,replay_of_operation_id,render_id,ephemeral,commit_seq,session_id,effects,plan",
+  "R:unprojected-form":
+    "R:unprojected-form | NAMED RESIDUAL R-UNPROJECTED-FORM, not claimed: N and H acceptance.3.1 feed exactly the FED SET's unprojected reads, so a returned read projecting no native reference in any other form (another schema id or command, another malformed identity, another result, another workspace root) is not probed by them; each fed unprojected read is listed with its envelope's schema, command and operation_id | injectable:show-bare schema=reactive-fiber.cli/v1 command=context.show operation_id=rfo_freshpreview0000000000; injectable:show-full schema=reactive-fiber.cli/v1 command=context.show operation_id=rfo_freshpreview0000000000; injectable:drift-bare schema=reactive-fiber.cli/v2 command=context.render operation_id=rfo_freshpreview0000000000; injectable:drift-full schema=reactive-fiber.cli/v2 command=context.render operation_id=rfo_freshpreview0000000000; injectable:no-source schema=<none> command=<none> operation_id=<none>; injectable:no-identity schema=reactive-fiber.cli/v1 command=context.render operation_id=<none>",
+  "R:probe-context":
+    "R:probe-context | NAMED RESIDUAL R-PROBE-CONTEXT, not claimed: every read of the FED SET is fed in one request context against one journaled row, so a FED SET read's binding conditioned on any other task, position, principal, session, workspace, grant set, clock or journaled row is not probed; the FED SET's context and row are listed | task=wf_rfhonesty-census position=0 principal=local-operator:1:s1 session=s1 workspace=/workspace/rf-operation-receipt-honesty observedAt=2026-10-30T06:00:00Z grants=workbench:observe,reactivefiber:render,reconcile:reactivefiber.acknowledge,reconcile:reactivefiber.override; journaled row index=0 kind=node capability=reactivefiber.render.commit effectClass=write nativeRefs=reactivefiber/operation/rfo_journaledcommit000000000",
   "R:registrar-runtime":
     "R:registrar-runtime | NAMED RESIDUAL R-REGISTRAR-RUNTIME, not claimed: each src rf registrar is run once here, with the census's arguments in this process's environment, so a registration whose id, effect class or permissions depend on a registrar's arguments or on the environment is read for that one run only; each registrar's src parameters and the arguments this file states the census passes it are listed | src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender(registry, invoke, workspaceRoot) run once with (a fresh CapabilityRegistry, a seam answering a fresh preview envelope, /workspace/rf-operation-receipt-census); src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender(registry, workspaceRoot) run once with (a fresh CapabilityRegistry, /workspace/rf-operation-receipt-census); environment=this census process's own",
   "R:self-anchored":
-    "R:self-anchored | NAMED RESIDUAL R-SELF-ANCHORED, not claimed: a requirement in this file's words alone, shortened together with its frozen line, or this file's judging code edited together with the literals it feeds, stays green; the pins whose requirement no outside text holds are listed, measured against the filing | requirements in this file's words alone=G:id:reactivefiber.render.preview, G:bin:nativeReactiveFiberRender, S:src/workflow/reconcile.ts, S:src/workbench/native-evidence.ts, S:src/workflow/runtime.ts, S:docs/workbench/08-lifecycle-and-recovery.md, R:echo:reactivefiber.render.preview, R:failure-category, R:registrar-runtime, R:self-anchored; requirements in the filing's own words=N:statement.3, H:acceptance.3.1, H:acceptance.3.2; judging code (the it.each arguments, the each-liveness lists, the generators and the readers) held by this file alone",
+    "R:self-anchored | NAMED RESIDUAL R-SELF-ANCHORED, not claimed: a requirement in this file's words alone, shortened together with its frozen line, or this file's judging code edited together with the literals it feeds, stays green; the pins whose requirement no outside text holds are listed, measured against the filing | requirements in this file's words alone=G:id:reactivefiber.render.preview, G:bin:nativeReactiveFiberRender, S:src/workflow/reconcile.ts, S:src/workbench/native-evidence.ts, S:src/workflow/runtime.ts, S:docs/workbench/08-lifecycle-and-recovery.md, R:echo:reactivefiber.render.preview, R:fresh-shape, R:unprojected-form, R:probe-context, R:registrar-runtime, R:self-anchored; requirements in the filing's own words=N:statement.3, H:acceptance.3.1, H:acceptance.3.2; judging code (the it.each arguments, the each-liveness lists, the generators and the readers) held by this file alone",
 };
 const PINS = ROWS.flatMap(entry => entry.pins);
 /** EACH-LIVENESS (respin U1): the ids the row cases and the pin cases recorded as their last statement this run, in run order. */
