@@ -300,7 +300,9 @@
  *    and each Q1 and Q2 source member's liveness is read from its code as well (wb-0lf.8 U5: codeShapeKeysOf, codeComposedOf
  *    over the member's TypeScript parse, held to the roster as the witnesses' codeLive), so a member silenced where no code runs
  *    reds its row; the full-surface row pins every Q1 and Q2 source member silenced in each SILENCINGS place as reading nothing
- *    through the code reader, and the code reader composing no literal token but a double-quoted string (COMPOSE_PLANTS). A
+ *    through the code reader, the code reader composing no literal token but a double-quoted string (COMPOSE_PLANTS), its parse
+ *    kind pinned on each of its readers (PARSE_PLANTS, JSX_SHAPED; wb-4z24's F1) and its shape reader reading no key from a
+ *    type literal's members or a destructuring's bindings (SHAPE_QUIET; wb-4z24's F2). A
  *    member whose code is made unreachable still reads live (R-UNREACHABLE, FULL SURFACE).
  * FAIL CLOSED (R-B73, the final cut's fail-closed core, in R-B67's form): every claim above is exactly its pinned set, and
  * outside it the census refuses with a typed refusal instead of passing. G1's fail-closed reader (unpinnedSiteFindings) and
@@ -349,9 +351,18 @@
  * template plant, refusal #2's F1 single-quoted and regular-expression plants, and a template whose head, middle and tail hold
  * GraphDataIR's parts around a numeric and a bigint substitution), whose literal tokens, their double-quoted strings aside, are
  * of every kind of TypeScript's grammar (LITERAL_KINDS, held to the live enum's range) but LITERAL_KINDS_OUTSIDE's JSX text
- * (the code reader's .ts parse holds no JSX text node: JSX_SHAPED holds none there and one in its TSX control), each read as
+ * (the code reader's .ts parse holds no JSX text node: JSX_SHAPED, read through literalTokensOf at the code reader's own parse
+ * kind, holds none there and one in its TSX control, and composes nothing through codeComposedOf under either), each read as
  * composing exactly its double-quoted literals, so the word another literal completes or holds composes no site word
- * (refusal #1's F5, refusal #2's F1). Two named residuals
+ * (refusal #1's F5, refusal #2's F1); and wb-4z24's two tables (the R694 follow-up from this row's landing 757): PARSE_PLANTS'
+ * two type-assertion plants, one per live kind of the Q1 and Q2 source members, each read through that kind's code reader
+ * (codeComposedOf: GraphPolicy, a site word; codeShapeKeysOf: four keys of the vendored v1 document) as its TypeScript parse
+ * reads it and, under that reader's TSX control, as nothing (a TSX parse reads a type assertion as a JSX element: its tokens
+ * hold JSX text, the TypeScript parse's none), so the code
+ * reader's parse kind is pinned on each of its readers (F1); and SHAPE_QUIET's two plants, keys of the vendored v1 document
+ * held as a type literal's members (PropertySignature names) and as a destructuring's bindings (BindingElement names), each
+ * held name read by its node kind (heldNamesOf) and every one of them a key of the document, read through codeShapeKeysOf as
+ * no key, with the raw proxy's reading recorded beside (F2). Two named residuals
  * carry their pinned quiet readings in the same row: R-NON-ASCII-PART (G1, refusal #5's F6: a site-word part with one letter
  * written outside ASCII, another script's look-alike or a fullwidth form, built through String.fromCodePoint, reads as no
  * site word through either G1 reader, while its Latin spelling reads as the word) and
@@ -371,7 +382,7 @@
  * `O-AFTER-FENCES=D-OTHER-CODE`, `O-AFTER-HEADING=D-OTHER-HEADING` and `O-AFTER-PARAGRAPH=D-OTHER-PARAGRAPH` (four DOCS_PLANTS
  * edits), and `src/workbench/q1-shape.ts line-comment=FC-S2-Q1-COMMENTED` and
  * `src/workbench/q2-joined.ts line-comment=FC-S2-Q2-COMMENTED` (FAIL_CLOSED's two S2 member edits). Every other full-surface
- * form is none of the core's: the row compares each of surfaceForms' 671 forms (a spelling, an edit of the live page or a
+ * form is none of the core's: the row compares each of surfaceForms' 675 forms (a spelling, an edit of the live page or a
  * member text) with each of coreForms' 203 (the spellings G1's and D3's tables write and each match FAIL_CLOSED's source forms
  * refuse; the edits DOCS_PLANTS, FAIL_CLOSED's docs forms and the residual docs members make; the residual source members'
  * texts and FAIL_CLOSED's member edits of them) by coreOverlapOf, text against text, holds both lists to the tables they are
@@ -416,7 +427,8 @@
  * gRaphPolicy or eXecutorRequest; a GraphPolicy owner cell in a case mix such as GRAPHpolicyCLI; a lead or an ownership block
  * in another syntax form; another arrangement of the section's tables: refused by the fail-closed readers or by G3's
  * default-deny rules, pinned on no form); a coordinated removal, from every literal of these files and from the roster
- * together, of a residual member, of a FAIL_CLOSED form, of the fail-closed row, or of a full-surface member whose rule or
+ * together, of a residual member, of a FAIL_CLOSED form, of the fail-closed row, of a SHAPE_QUIET plant (wb-4z24's F2: no
+ * anchor binds its node kinds), or of a full-surface member whose rule or
  * family another member of its table still covers (a lead of SURFACE_LEADS beside another lead of its gfm rule, one of
  * SURFACE_RUN_LENGTHS' lengths or of the two mixed runs, a SURFACE_POSITIONS place after the first, a NON_ASCII_PARTS member,
  * the regular-expression silencing): the census's own choices, whose rules, families and characters marked's grammar, the
@@ -426,7 +438,10 @@
  * surfaceForms or coreForms together with the row's reading of them, CORE_OVERLAP, this header's CORE OVERLAP pairs and the
  * roster in these files, and a core form of another kind than CORE OVERLAP compares (the mutants, cases, controls, probes and
  * planted modules of rows A-G, none of them a spelling of G1's or D3's tables, an edit of the live page or a residual member's
- * text); a literal token's syntactic place in a module (COMPOSE_PLANTS pins the kinds, not the places).
+ * text); a literal token's syntactic place in a module (COMPOSE_PLANTS pins the kinds, not the places); a parse kind other
+ * than TypeScript's and TSX's (PARSE_PLANTS separate those two only); a key written under another node kind than an object
+ * literal's property assignments and SHAPE_QUIET's two (a method, an accessor, a class or enum member, a parameter) or under a
+ * string-literal, numeric or computed name (codeShapeKeysOf reads identifier names only).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, every residual family's member
  * count, the mutant and case ids per pin, the rule list, the registry, the docs plants with their rules, the docs rules,
  * READ_METHODS, the walk's probes with their facets, its facets and walked kinds, the equivalence controls, the read proof's
@@ -435,8 +450,8 @@
  * (a source member's kind, a drive member's effect) and FAIL_CLOSED's forms (each one's id, claim and word with its match,
  * docs rules or member) and the full surface's tables (its case forms, run lengths, runs, gaps, spellings with their family
  * counts, D3's spellings, the non-ASCII residual's members, the leads, the ownership blocks with their places, the owner-cell spellings, the rules outside, the
- * silencings and the unreachable form, the literal kinds with the kinds outside, the JSX-shaped module, the compose plants and
- * the core overlap) as literals; the judged set (every row's id, label
+ * silencings and the unreachable form, the literal kinds with the kinds outside, the JSX-shaped module, the compose plants,
+ * the parse plants, the shape-quiet plants and the core overlap) as literals; the judged set (every row's id, label
  * and pins, every pin's quote and witness, each residual source member's comment-opener count among them, the residual
  * members, FAIL_CLOSED's refusals, one reading per form, the full-surface row's readings, each source member's code
  * reading among the Q1 and Q2 witnesses, every registered test title) is held to the out-of-file
@@ -453,15 +468,16 @@
  * answer (the full-surface row reads it) and, listing its items, binds the full-surface row's registration (the last case
  * reads it); marked's gfm block grammar (Lexer.rules.block.gfm) holds the rules every full-surface lead and ownership block
  * is pinned by; TypeScript's SyntaxKind enum (FirstLiteralToken to LastTemplateToken) holds the literal token kinds
- * COMPOSE_PLANTS covers; and the core's own tables (G1's and D3's spelling tables, FAIL_CLOSED, DOCS_PLANTS and RESIDUALS)
- * hold the forms CORE OVERLAP is computed against. So a judged row of ROWS (A-G) removed from every literal of this file, the
+ * COMPOSE_PLANTS covers; the residual source members (RESIDUALS' Q1 and Q2) hold the live kinds, and so the code readers,
+ * PARSE_PLANTS covers, one plant each; and the core's own tables (G1's and D3's spelling tables, FAIL_CLOSED, DOCS_PLANTS and
+ * RESIDUALS) hold the forms CORE OVERLAP is computed against. So a judged row of ROWS (A-G) removed from every literal of this file, the
  * helper and the roster together still reds, and so do the full-surface row, a member of a generated full-surface spelling
  * table (SURFACE_SITE_SPELLINGS, SURFACE_REQUEST_SPELLINGS, SURFACE_OWNERS), which the full-surface row derives again from the
  * word parts and the tables it is built from, a full-surface lead or ownership block that is its gfm rule's only one at its
  * place, a silencing of a WORD_PLACES place and a SURFACE_CASES form, which wb-0lf.8's row names, a compose plant, each its
- * literal kind's only one, and a CORE_OVERLAP pair, which the full-surface row computes again from the tables; these anchors
- * bind the full surface's rules, families and generated products, not a member another member of its table still covers, the
- * residual members, the fail-closed row or FAIL_CLOSED's forms (NOT CLAIMED, refusal #1's F1). The last case reads the vitest task
+ * literal kind's only one, a parse plant, each its live kind's only one, and a CORE_OVERLAP pair, which the full-surface row
+ * computes again from the tables; these anchors bind the full surface's rules, families and generated products, not a member
+ * another member of its table still covers, a SHAPE_QUIET plant, the residual members, the fail-closed row or FAIL_CLOSED's forms (NOT CLAIMED, refusal #1's F1). The last case reads the vitest task
  * tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness
  * compare, and each compare's result).
  *
@@ -528,6 +544,7 @@ import {
   gfmRuleOf,
   graphShapeFindings,
   HELD_PROVIDER,
+  heldNamesOf,
   JSX_SHAPED,
   judgeCaseOf,
   type Keyed,
@@ -550,6 +567,7 @@ import {
   otherBlocks,
   ownerCells,
   PADDED_REVISION,
+  PARSE_PLANTS,
   PLACES,
   PLANTED_EXECUTOR_REQUEST,
   PLANTED_NAMESPACE,
@@ -575,6 +593,7 @@ import {
   ruleOf,
   rulesOf,
   SCOPES,
+  SHAPE_QUIET,
   SILENCINGS,
   SITE_CASES,
   SITE_WORD_HITS,
@@ -1388,6 +1407,14 @@ describe(SUITE, () => {
       'regex:"export const pattern = /GraphPolicy/;\\n"',
       `template-parts:"export const label = \`Graph\${0}Data\${1n}IR\`;\\n"`,
     ]);
+    expect(PARSE_PLANTS.map(plant => `${plant.id}:${plant.live}:${JSON.stringify(plant.text)}`)).toEqual([
+      'type-assertion-composed:composed:"export const label = <string>\\"Graph\\" + \\"Policy\\";\\n"',
+      'type-assertion-shape:shape:"export const shape = <unknown>{ schema_ref: { namespace: \\"x\\" }, entities: [], relations: [] };\\n"',
+    ]);
+    expect(SHAPE_QUIET.map(plant => `${plant.id}:${plant.holds}:${JSON.stringify(plant.text)}`)).toEqual([
+      'type-literal:PropertySignature:"export type Snapshot = { schema_ref: { namespace: string }; entities: unknown[]; relations: [] };\\n"',
+      'destructuring:BindingElement:"export const keysOf = (input: Record<string, unknown>): unknown[] => {\\n  const { schema_ref, entities, relations } = input;\\n  return [schema_ref, entities, relations];\\n};\\n"',
+    ]);
     expect(CORE_OVERLAP.map(entry => `${entry.form}=${entry.core.join(",")}`)).toEqual([
       "GraphPolicy/none/camel=FC-G1-CAMEL,FC-G1-EVERY-MATCH",
       "GraphPolicy/space/sentence=FC-G1-SENTENCE",
@@ -1679,9 +1706,10 @@ describe(SUITE, () => {
     // their double-quoted strings aside, are of every other kind; and each plant composes exactly its double-quoted literals.
     const literalRange = Array.from({ length: ts.SyntaxKind.LastTemplateToken - ts.SyntaxKind.FirstLiteralToken + 1 }, (_, index) => ts.SyntaxKind.FirstLiteralToken + index);
     expect(LITERAL_KINDS.map(name => ts.SyntaxKind[name]), "LITERAL_KINDS names every literal token of TypeScript's grammar once, in the live enum's order").toEqual(literalRange);
-    const jsx = { ts: literalTokensOf(JSX_SHAPED), tsx: literalTokensOf(JSX_SHAPED, ts.ScriptKind.TSX) };
+    const jsx = { ts: literalTokensOf(JSX_SHAPED), tsx: literalTokensOf(JSX_SHAPED, ts.ScriptKind.TSX), composed: [codeComposedOf(JSX_SHAPED), codeComposedOf(JSX_SHAPED, ts.ScriptKind.TSX)] };
     const jsxText = (tokens: readonly string[]): string[] => tokens.filter(token => LITERAL_KINDS_OUTSIDE.some(kind => kind === token));
     expect([jsxText(jsx.ts), jsxText(jsx.tsx)], "the code reader's .ts parse holds no JSX text node in a JSX-shaped module, while its TSX control holds one").toEqual([[], ["JsxText"]]);
+    expect(jsx.composed, "and codeComposedOf composes nothing from it under either parse: a JSX text node composes no part").toEqual(["", ""]);
     const compose = Object.fromEntries(
       COMPOSE_PLANTS.map(plant => {
         const composed = codeComposedOf(plant.text);
@@ -1696,6 +1724,34 @@ describe(SUITE, () => {
       Object.fromEntries(Object.entries(compose).map(([id, reading]) => [id, { composed: reading.composed, words: reading.words }])),
       "each plant composes exactly its double-quoted literals: the word another literal completes or holds reads as no site word",
     ).toEqual({ template: { composed: "Policy", words: [] }, "single-quoted": { composed: "Policy", words: [] }, regex: { composed: "", words: [] }, "template-parts": { composed: "", words: [] } });
+    // wb-4z24's F1 (PARSE_PLANTS): the code reader's parse kind pinned on each of its readers. One type-assertion plant per live
+    // kind of the Q1 and Q2 source members, read through that kind's code reader as its TypeScript parse reads it and, under
+    // the reader's TSX control, as nothing (a TSX parse reads a type assertion as a JSX element: its tokens hold JSX text).
+    expect(PARSE_PLANTS.map(plant => plant.live).sort(), "one parse plant per live kind of the Q1 and Q2 source members, each kind's code reader's").toEqual([...new Set(sources.map(entry => entry.member.live))].sort());
+    const parse = Object.fromEntries(
+      PARSE_PLANTS.map(plant => [
+        plant.id,
+        plant.live === "shape"
+          ? { ts: codeShapeKeysOf(plant.text, keys), tsx: codeShapeKeysOf(plant.text, keys, ts.ScriptKind.TSX), jsx: [jsxText(literalTokensOf(plant.text)), jsxText(literalTokensOf(plant.text, ts.ScriptKind.TSX))] }
+          : { ts: codeComposedOf(plant.text), tsx: codeComposedOf(plant.text, ts.ScriptKind.TSX), words: siteWords(codeComposedOf(plant.text)), jsx: [jsxText(literalTokensOf(plant.text)), jsxText(literalTokensOf(plant.text, ts.ScriptKind.TSX))] },
+      ]),
+    );
+    expect(parse, "each code reader reads its parse plant as TypeScript parses it (codeComposedOf: GraphPolicy, a site word; codeShapeKeysOf: four keys of the vendored v1 document) and as nothing under its TSX control, whose parse holds JSX text where the TypeScript parse holds none").toEqual({
+      "type-assertion-composed": { ts: "GraphPolicy", tsx: "", words: ["GraphPolicy"], jsx: [[], ["JsxText"]] },
+      "type-assertion-shape": { ts: ["schema_ref", "namespace", "entities", "relations"], tsx: [], jsx: [[], ["JsxText", "JsxText"]] },
+    });
+    // wb-4z24's F2 (SHAPE_QUIET): keys of the vendored v1 document held as a type literal's members and as a destructuring's
+    // bindings, each held name read by its node kind and every one a key of the document, read as no key through
+    // codeShapeKeysOf (the raw proxy's reading recorded beside).
+    const shapeQuiet = Object.fromEntries(SHAPE_QUIET.map(plant => [plant.id, { holds: heldNamesOf(plant), code: codeShapeKeysOf(plant.text, keys), raw: shapeKeysOf(plant.text, keys) }]));
+    expect(
+      Object.entries(shapeQuiet).flatMap(([id, reading]) => (reading.holds.length > 0 && reading.holds.every(name => keys.has(name)) ? [] : [id])),
+      "each SHAPE_QUIET plant holds names of its node kind, every one a key of the vendored v1 document",
+    ).toEqual([]);
+    expect(
+      Object.entries(shapeQuiet).flatMap(([id, reading]) => (reading.code.length > 0 ? [id] : [])),
+      "and codeShapeKeysOf reads no key from either: a type literal's members and a destructuring's bindings assign none",
+    ).toEqual([]);
     // CORE OVERLAP (refusal #2's U1 under R-B164): the full-surface forms that are forms of the fail-closed core, computed from the
     // tables by coreOverlapOf over surfaceForms and coreForms, both lists held to the tables they are read from, the reader proven
     // on every form of each (each one planted on the other side is read as itself, and no full-surface form as a near twin of
@@ -1713,6 +1769,8 @@ describe(SUITE, () => {
       ...members.flatMap(member => SILENCINGS.map(form => ({ table: "SILENCINGS", id: `${member.path} ${form.id}`, key: form.silence(member.text) }))),
       ...members.map(member => ({ table: "unreachable", id: `${member.path} unreachable`, key: unreachable(member.text) })),
       ...COMPOSE_PLANTS.map(plant => ({ table: "COMPOSE_PLANTS", id: `compose ${plant.id}`, key: plant.text })),
+      ...PARSE_PLANTS.map(plant => ({ table: "PARSE_PLANTS", id: `parse ${plant.id}`, key: plant.text })),
+      ...SHAPE_QUIET.map(plant => ({ table: "SHAPE_QUIET", id: `quiet ${plant.id}`, key: plant.text })),
     ]);
     const spellingTables: readonly (readonly [string, readonly string[]])[] = [
       ["SITE_WORD_SPELLINGS", SITE_WORD_SPELLINGS.map(entry => entry.spelling)],
@@ -1732,7 +1790,7 @@ describe(SUITE, () => {
       ...members.map(member => ({ table: "RESIDUALS source", id: member.path, key: member.text })),
       ...FAIL_CLOSED.flatMap(form => (form.kind === "member" ? [{ table: "FAIL_CLOSED member", id: form.id, key: form.edit(members.find(member => member.path === form.member)?.text ?? "") }] : [])),
     ]);
-    expect([surface.length, core.length], "671 full-surface forms against 203 core forms").toEqual([671, 203]);
+    expect([surface.length, core.length], "675 full-surface forms against 203 core forms").toEqual([675, 203]);
     const plantedSurface = coreOverlapOf(
       surface,
       surface.map((form, index) => ({ ...form, id: `planted #${index}` })),
@@ -1777,6 +1835,8 @@ describe(SUITE, () => {
       unreached,
       compose,
       jsx,
+      parse,
+      shapeQuiet,
       coreOverlap: { surface: tally(surface), core: tally(core), pairs: overlap },
     });
     expect(readings, "and every reading equals the roster's (fullSurface), so a form removed from its table and from its frozen literal still reds").toStrictEqual(ROSTER.fullSurface);
