@@ -663,7 +663,750 @@
          "<cwd>/.pi/skills",
          "~/.pi/agent/skills"
         ]
-       }
+       },
+       "noSpaceHiddenCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "noSpaceTemplateCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "tokenizerHiddenCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "noSpaceOpenDetailsCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "unquotedRunCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "nameSpaceCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "paragraphTagCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "unclosedHiddenCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "hiddenDetailsSummaryCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "voidBeforeSummaryCopy": {
+        "labels": 2,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "quotedValueOpenCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "quotedValueHiddenCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "unclosedSummaryCopy": {
+        "labels": 2,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "whiteSpaceHiddenCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "noBreakSpaceCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "carriageReturnRefusal": "the lexed tokens do not rebuild the page",
+       "unquotedSpaceCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "valueHiddenCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "spacedValueCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "nameHiddenCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "tagNameCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "notTagCopy": {
+        "labels": 2,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "nameEndCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "valuelessEndCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "tagNameEndCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "unquotedEndCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "tagNameEndQuotedCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "unquotedEndQuotedCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "nameOpenCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "verticalTabNameCopy": {
+        "labels": 1,
+        "roots": [
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "nameValueCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "nameHoldCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "unquotedHoldCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "unquotedOpenCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "tagNameHoldCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ]
       },
       "targets": [
        "~/.skills/hyper-unix",
@@ -1478,6 +2221,10 @@
        [
         "a3bc9b15cbd5bbe9",
         "served@+1"
+       ],
+       [
+        "45358ac0b4b98640",
+        "served@+1"
        ]
       ],
       "fusedHeld": [
@@ -1735,6 +2482,7 @@
        [],
        [],
        [],
+       [],
        []
       ],
       "shown": [
@@ -1804,6 +2552,78 @@
        ]
       ],
       "readme": [
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ]
+      ],
+      "openTags": [
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ]
+      ],
+      "openSpaces": [
        [
         "<cwd>/.pi/skills",
         "~/.pi/agent/skills"

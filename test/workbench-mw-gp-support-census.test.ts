@@ -33,7 +33,14 @@
  * FOLLOW-UP wb-lmme (the R694 carry of landing 660, gate cmd_f8015b42a20b; F1 leads, F2 and F3 ride): A4b's witness carries
  * unread, the echo guard states its count in the measured vocabulary, and NOT CLAIMED names the changes that keep the count
  * (F1); the empty-support case's a-near and the grant-matching mutants M23-M29 put grant matching looser than exact
- * equality in reach of S1's parity and K-LEGAL (F2); NOT CLAIMED names the runner's own use of the copy and the floor (F3).
+ * equality by the seven NEAR_GRANTS kinds in reach of S1's parity and K-LEGAL (F2); NOT CLAIMED names the runner's own
+ * use of the copy and the floor (F3).
+ * FOLLOW-UP wb-s51u (the R694 carry of landing 707, gate cmd_f38c2660edc1; F1 leads, F2 rides): A1b ties each
+ * grant-matching mutant's matcher to its declared kind (one mutant per NEAR_GRANTS kind, and each matcher accepts every
+ * near grant of its declared kind), and A1b's witness carries what each matcher accepts, derived from NEAR_GRANTS and the
+ * registry's catalog: the kinds, and each near grant with the required grants it stands in for. M29's containment accepts
+ * the padded grants beside the longer ones; THE CHECKS and the LOOSE_MATCHING texts say what each matcher accepts (F1).
+ * The wb-lmme FOLLOW-UP line is scoped to the seven NEAR_GRANTS kinds (F2).
  *
  * READINGS.
  * - THE MODEL (this file; test-only, src untouched): a pre-sampling basis (a revision, agents with a capacity and grants,
@@ -60,8 +67,11 @@
  *   its count its pair count), K-OUTSIDE (every candidate of the agent x task grid, plus a ghost agent and a ghost task, is
  *   admitted exactly when inside the support and refused typed otherwise). MUTANTS: 29 adapters, each refused by exactly
  *   its declared checks, and every check refuses one alone. M23-M29 (LOOSE_MATCHING) loosen the reference's exact grant
- *   matching by one NEAR_GRANTS kind each, and each gains a-near a pair through an explicit permission and through the open
- *   capability's exact invoke:<id> (A1b).
+ *   matching, one per NEAR_GRANTS kind in NEAR_GRANTS order, each built for its declared kind: its matcher accepts every
+ *   near grant of that kind. A1b pins, derived from NEAR_GRANTS and the registry's catalog, every kind and every near grant
+ *   each matcher accepts, with the required grants each near grant stands in for: M23-M28 accept their declared kind's near
+ *   grants and no other, and M29's containment, built for the longer grants, also accepts the padded ones. Each gains
+ *   a-near a pair through an explicit permission and through the open capability's exact invoke:<id> (A1b).
  * - THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its adapter there,
  *   and every check then judges it beside the reference; an unregistered naming module, a stale registration and a duplicate
  *   are findings.
@@ -127,7 +137,9 @@
  * producer block's line texts beyond the two quotes the source citations carry (the seats read them equal at the pin; the
  * census never re-reads the producer); that R-COMPOSED's eight members exhaust the ways a text reading misses a word; that
  * a grant matching looser than exact equality is seen when no NEAR_GRANTS entry exercises it (NEAR_GRANTS are fixtures, not
- * an enumeration of loose matchings). Nor does it claim that these removals red when made in every literal of this file and
+ * an enumeration of loose matchings); that a grant-matching mutant's matcher traded for another that accepts the same near
+ * grants for the same required grants is seen (A1b pins what a matcher accepts over NEAR_GRANTS, never the matcher itself).
+ * Nor does it claim that these removals red when made in every literal of this file and
  * the roster together (the self-anchored CT6 / 6ze.39 class): row Q (its label, its pins Q1-Q4, its residual families and
  * their members), which no source outside this file names; a pin merge (a pin's case deleted and its quote re-homed into a
  * neighbouring pin of its row), since the row still tiles its label, so the deleted case's checks (such as A4b's src floor
@@ -570,11 +582,11 @@ const looseLegal =
 interface LooseMatching {
   readonly id: string;
   readonly name: string;
-  /** The NEAR_GRANTS kind the loosened matching accepts. */
+  /** The NEAR_GRANTS kind the loosened matching is built for: it accepts every near grant of that kind (A1b's witness carries every kind it accepts). */
   readonly kind: string;
   readonly matches: (held: string, required: string) => boolean;
 }
-/** The grant-matching mutants (M23-M29), one per NEAR_GRANTS kind: each loosens the exact matching by that kind. */
+/** The grant-matching mutants (M23-M29), one per NEAR_GRANTS kind: each loosens the exact matching for that kind and accepts every near grant of it; M29's containment also accepts the padded grants (A1b). */
 const LOOSE_MATCHING: readonly LooseMatching[] = [
   { id: "M23", name: "grant-matched-as-prefix", kind: "prefix", matches: (held, required) => required.startsWith(held) },
   { id: "M24", name: "grant-matched-as-suffix", kind: "suffix", matches: (held, required) => required.endsWith(held) },
@@ -584,6 +596,18 @@ const LOOSE_MATCHING: readonly LooseMatching[] = [
   { id: "M28", name: "grant-matched-compatibility-folded", kind: "compatibility", matches: (held, required) => held.normalize("NFKC") === required.normalize("NFKC") },
   { id: "M29", name: "grant-matched-when-contained", kind: "longer", matches: (held, required) => held.includes(required) },
 ];
+/** The grants a near grant can stand in for, read from the registry's catalog: each task's registered permissions, or its exact invoke:<id> when the descriptor requires none (an unregistered capability requires none), each once, in task order. */
+const requiredGrants = (catalog: Catalog): string[] => [
+  ...new Set(
+    TASKS.flatMap(task => {
+      const permissions = catalog.permissions(task.capability);
+      if (permissions === undefined) return [];
+      return permissions.length === 0 ? [`invoke:${task.capability}`] : [...permissions];
+    }),
+  ),
+];
+/** The required grants a grant-matching mutant's matcher holds a near grant for. */
+const standsIn = (entry: LooseMatching, grant: string, required: readonly string[]): string[] => required.filter(need => entry.matches(grant, need));
 const MUTANTS: readonly Mutant[] = [
   { id: "M01", name: "capacity-ignored", refusedBy: ["K-LEGAL"], adapter: withLegal((catalog, agent, task) => permits(catalog, task.capability, agent.grants)) },
   {
@@ -1183,7 +1207,20 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
         .map(([id]) => id),
       "each grant-matching mutant gains a-near a pair through an explicit permission and through the open capability's exact invoke:<id>",
     ).toEqual([]);
-    return { support, judged, mutants, near };
+    const required = requiredGrants(catalog);
+    expect(
+      LOOSE_MATCHING.map(entry => entry.kind),
+      "one grant-matching mutant per NEAR_GRANTS kind, in NEAR_GRANTS order",
+    ).toEqual([...new Set(NEAR_GRANTS.map(([kind]) => kind))]);
+    expect(
+      LOOSE_MATCHING.filter(entry => !NEAR_GRANTS.every(([kind, grant]) => kind !== entry.kind || standsIn(entry, grant, required).length > 0)).map(entry => entry.id),
+      "each grant-matching mutant's matcher accepts every near grant of its declared kind",
+    ).toEqual([]);
+    const kinds = Object.fromEntries(LOOSE_MATCHING.map(entry => [entry.id, [...new Set(NEAR_GRANTS.filter(([, grant]) => standsIn(entry, grant, required).length > 0).map(([kind]) => kind))]]));
+    const through = Object.fromEntries(
+      LOOSE_MATCHING.map(entry => [entry.id, NEAR_GRANTS.flatMap(([kind, grant]) => standsIn(entry, grant, required).map(need => `${kind}:${JSON.stringify(grant)}->${need}`))]),
+    );
+    return { support, judged, mutants, near, required, kinds, through };
   },
   A2a: () => {
     const records = RECORDS.map(record => ({ id: record.id, kind: record.source.kind, admitted: record.source.admitted.map(key) }));

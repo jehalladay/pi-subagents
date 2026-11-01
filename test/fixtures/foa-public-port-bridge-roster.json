@@ -56,7 +56,8 @@
     "Q9",
     "Q10",
     "Q11",
-    "Q12"
+    "Q12",
+    "Q13"
    ]
   }
  ],
@@ -82,7 +83,8 @@
   "Q9": "R-VALUE-DOMAIN",
   "Q10": "R-PAYLOAD-HOLDER",
   "Q11": "R-HOST-STATE",
-  "Q12": "R-LABEL-TEXT"
+  "Q12": "R-LABEL-TEXT",
+  "Q13": "R-ALIAS-HOLDER"
  },
  "residuals": {
   "Q1": [
@@ -138,7 +140,8 @@
    "digest-case-folded",
    "identity-case-folded",
    "version-numeric",
-   "basis-trim"
+   "basis-trim",
+   "visibility-case-folded"
   ],
   "Q9": [
    "effect-denylist",
@@ -149,7 +152,10 @@
    "absent-epoch-stale",
    "absent-identity-unseen",
    "executable-depth-five",
-   "no-base-later"
+   "no-base-later",
+   "absent-version-skipped",
+   "absent-schema-skipped",
+   "absent-source-skipped"
   ],
   "Q10": [
    "set",
@@ -165,6 +171,10 @@
   ],
   "Q12": [
    "label-unnamed"
+  ],
+  "Q13": [
+   "seam-nonenum",
+   "read-nonenum"
   ]
  },
  "witnesses": {
@@ -456,12 +466,37 @@
     "M-SIGNAL-READ": [
      "F-GAP-ACK:merged",
      "refused:outside-the-pinned-set"
+    ],
+    "M-DUPLICATE-AT-CHECK": [
+     "F-DUPLICATE-REJECTED:admit",
+     "F-DUPLICATE-REJECTED:merged",
+     "F-GAP-IDENTITY:admit",
+     "refused:outside-the-pinned-set"
+    ],
+    "M-CALLABLES-TOP-ONLY": [
+     "F-EXECUTABLE-SEQUENCE:reject",
+     "F-EXECUTABLE-SEQUENCE:diagnostic",
+     "F-EXECUTABLE-DEPTH:reject",
+     "F-EXECUTABLE-DEPTH:diagnostic",
+     "F-EXECUTABLE-NESTING:reject",
+     "F-EXECUTABLE-NESTING:diagnostic",
+     "refused:outside-the-pinned-set"
     ]
    },
    "fixtures": [
     "F-SESSION",
     "F-READ",
     "F-READ-KIND",
+    "F-ALIAS-REJECTED-RESYNC",
+    "F-ALIAS-LATER-EFFECT",
+    "F-ALIAS-LATER-REJECTED",
+    "F-ALIAS-ADMITTED-RESYNC",
+    "F-ALIAS-ADMITTED-DELTA",
+    "F-READ-INVOKE",
+    "F-READ-ACK",
+    "F-READ-GAP",
+    "F-READ-RESYNC",
+    "F-READ-OWN",
     "F-VERSION",
     "F-SCHEMA",
     "F-DIGEST",
@@ -508,6 +543,49 @@
     ],
     "F-READ-KIND": [
      "rejected:unauthorized-effect",
+     "admitted"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "admitted",
+     "rejected:stale-epoch",
+     "admitted"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "admitted",
+     "rejected:unauthorized-effect"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "admitted",
+     "rejected:stale-epoch",
+     "admitted"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "admitted",
+     "admitted",
+     "admitted"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "admitted",
+     "admitted",
+     "admitted"
+    ],
+    "F-READ-INVOKE": [
+     "rejected:unauthorized-effect",
+     "admitted"
+    ],
+    "F-READ-ACK": [
+     "rejected:private-endpoint",
+     "admitted"
+    ],
+    "F-READ-GAP": [
+     "rejected:private-endpoint",
+     "admitted"
+    ],
+    "F-READ-RESYNC": [
+     "rejected:private-endpoint",
+     "admitted"
+    ],
+    "F-READ-OWN": [
      "admitted"
     ],
     "F-VERSION": [
@@ -796,6 +874,36 @@
      "M-SEAM-ALIAS",
      "M-READ-CROSS-ALIAS",
      "M-READ-KIND-ALIAS",
+     "M-SEAM-CROSS-ALIAS",
+     "M-SEAM-KIND-ALIAS",
+     "M-SEAM-ADMITTED-ALIAS",
+     "M-SEAM-LATER-ALIAS",
+     "M-SEAM-OWN-DELTA-ALIAS",
+     "M-SEAM-OWN-RESYNC-ALIAS",
+     "M-READ-SNAPSHOT-ALIAS",
+     "M-READ-DELTA-ALIAS",
+     "M-READ-ACK-ALIAS",
+     "M-READ-GAP-ALIAS",
+     "M-READ-RESYNC-ALIAS",
+     "M-READ-EFFECT-ALIAS",
+     "M-READ-INVOKE-ALIAS",
+     "M-SEAM-SUB-ALIAS",
+     "M-READ-SUB-ALIAS",
+     "M-SEAM-OWN-ALIAS",
+     "M-READ-OWN-ALIAS",
+     "M-READ-CROSS-SUB-ALIAS",
+     "M-READ-KIND-SUB-ALIAS",
+     "M-READ-SNAPSHOT-SUB-ALIAS",
+     "M-READ-DELTA-SUB-ALIAS",
+     "M-READ-ACK-SUB-ALIAS",
+     "M-READ-GAP-SUB-ALIAS",
+     "M-READ-RESYNC-SUB-ALIAS",
+     "M-READ-EFFECT-SUB-ALIAS",
+     "M-READ-INVOKE-SUB-ALIAS",
+     "M-SEAM-CROSS-SUB-ALIAS",
+     "M-SEAM-KIND-SUB-ALIAS",
+     "M-SEAM-ADMITTED-SUB-ALIAS",
+     "M-SEAM-LATER-SUB-ALIAS",
      "M-SHARED-REF"
     ],
     "merged": [
@@ -1022,6 +1130,14 @@
      ]
     },
     "M-EPOCH": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "reject",
+      "diagnostic"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "reject",
+      "diagnostic"
+     ],
      "F-EPOCH": [
       "admit",
       "reject",
@@ -1280,6 +1396,27 @@
      "F-READ-KIND": [
       "diagnostic"
      ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "diagnostic"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "diagnostic"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "diagnostic"
+     ],
+     "F-READ-INVOKE": [
+      "diagnostic"
+     ],
+     "F-READ-ACK": [
+      "diagnostic"
+     ],
+     "F-READ-GAP": [
+      "diagnostic"
+     ],
+     "F-READ-RESYNC": [
+      "diagnostic"
+     ],
      "F-VERSION": [
       "diagnostic"
      ],
@@ -1384,6 +1521,51 @@
       "merged"
      ],
      "F-READ-KIND": [
+      "admit",
+      "merged"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit",
+      "merged"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit",
+      "merged"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit",
+      "merged"
+     ],
+     "F-READ-INVOKE": [
+      "admit",
+      "merged"
+     ],
+     "F-READ-ACK": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-READ-GAP": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-READ-RESYNC": [
+      "admit",
+      "diagnostic",
+      "merged"
+     ],
+     "F-READ-OWN": [
       "admit",
       "merged"
      ],
@@ -1589,6 +1771,36 @@
      "F-READ-KIND": [
       "admit"
      ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-READ-INVOKE": [
+      "admit"
+     ],
+     "F-READ-ACK": [
+      "admit"
+     ],
+     "F-READ-GAP": [
+      "admit"
+     ],
+     "F-READ-RESYNC": [
+      "admit"
+     ],
+     "F-READ-OWN": [
+      "admit"
+     ],
      "F-VERSION": [
       "admit"
      ],
@@ -1688,6 +1900,27 @@
     },
     "M-REJECTED-APPLIED": {
      "F-READ-KIND": [
+      "reject"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "reject"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "reject"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "reject"
+     ],
+     "F-READ-INVOKE": [
+      "reject"
+     ],
+     "F-READ-ACK": [
+      "reject"
+     ],
+     "F-READ-GAP": [
+      "reject"
+     ],
+     "F-READ-RESYNC": [
       "reject"
      ],
      "F-VERSION": [
@@ -1792,6 +2025,36 @@
       "admit"
      ],
      "F-READ-KIND": [
+      "admit"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-READ-INVOKE": [
+      "admit"
+     ],
+     "F-READ-ACK": [
+      "admit"
+     ],
+     "F-READ-GAP": [
+      "admit"
+     ],
+     "F-READ-RESYNC": [
+      "admit"
+     ],
+     "F-READ-OWN": [
       "admit"
      ],
      "F-VERSION": [
@@ -1901,6 +2164,36 @@
      "F-READ-KIND": [
       "admit"
      ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-READ-INVOKE": [
+      "admit"
+     ],
+     "F-READ-ACK": [
+      "admit"
+     ],
+     "F-READ-GAP": [
+      "admit"
+     ],
+     "F-READ-RESYNC": [
+      "admit"
+     ],
+     "F-READ-OWN": [
+      "admit"
+     ],
      "F-VERSION": [
       "admit"
      ],
@@ -2005,6 +2298,18 @@
      "F-READ": [
       "admit"
      ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
      "F-DIGEST": [
       "admit"
      ],
@@ -2079,6 +2384,36 @@
       "admit"
      ],
      "F-READ-KIND": [
+      "admit"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-READ-INVOKE": [
+      "admit"
+     ],
+     "F-READ-ACK": [
+      "admit"
+     ],
+     "F-READ-GAP": [
+      "admit"
+     ],
+     "F-READ-RESYNC": [
+      "admit"
+     ],
+     "F-READ-OWN": [
       "admit"
      ],
      "F-VERSION": [
@@ -2188,6 +2523,36 @@
      "F-READ-KIND": [
       "admit"
      ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "admit"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "admit"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "admit"
+     ],
+     "F-READ-INVOKE": [
+      "admit"
+     ],
+     "F-READ-ACK": [
+      "admit"
+     ],
+     "F-READ-GAP": [
+      "admit"
+     ],
+     "F-READ-RESYNC": [
+      "admit"
+     ],
+     "F-READ-OWN": [
+      "admit"
+     ],
      "F-VERSION": [
       "admit"
      ],
@@ -2293,6 +2658,36 @@
       "aliased"
      ],
      "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ],
+     "F-READ-OWN": [
       "aliased"
      ],
      "F-VERSION": [
@@ -2402,6 +2797,36 @@
      "F-READ-KIND": [
       "aliased"
      ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ],
+     "F-READ-OWN": [
+      "aliased"
+     ],
      "F-VERSION": [
       "aliased"
      ],
@@ -2503,6 +2928,24 @@
      "F-READ-KIND": [
       "aliased"
      ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ],
      "F-EPOCH": [
       "aliased"
      ],
@@ -2524,6 +2967,753 @@
     },
     "M-READ-KIND-ALIAS": {
      "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-CROSS-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-KIND-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-ADMITTED-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-LATER-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-OWN-DELTA-ALIAS": {
+     "F-SESSION": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-DIGEST": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP": [
+      "aliased"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "aliased"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "aliased"
+     ],
+     "F-GAP-BACKWARD": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "aliased"
+     ],
+     "F-GAP-PORTS": [
+      "aliased"
+     ],
+     "F-GAP-SIGNAL": [
+      "aliased"
+     ],
+     "F-GAP-ACK": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-OWN-RESYNC-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-GAP": [
+      "aliased"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "aliased"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "aliased"
+     ],
+     "F-GAP-SIGNAL": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ],
+     "F-GAP-REGAP": [
+      "aliased"
+     ]
+    },
+    "M-READ-SNAPSHOT-ALIAS": {
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-READ-DELTA-ALIAS": {
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ]
+    },
+    "M-READ-ACK-ALIAS": {
+     "F-READ-ACK": [
+      "aliased"
+     ]
+    },
+    "M-READ-GAP-ALIAS": {
+     "F-READ-GAP": [
+      "aliased"
+     ]
+    },
+    "M-READ-RESYNC-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ]
+    },
+    "M-READ-EFFECT-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ]
+    },
+    "M-READ-INVOKE-ALIAS": {
+     "F-READ-INVOKE": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-SUB-ALIAS": {
+     "F-SESSION": [
+      "aliased"
+     ],
+     "F-READ": [
+      "aliased"
+     ],
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ],
+     "F-VERSION": [
+      "aliased"
+     ],
+     "F-SCHEMA": [
+      "aliased"
+     ],
+     "F-DIGEST": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-BASIS": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP": [
+      "aliased"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "aliased"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "aliased"
+     ],
+     "F-GAP-BACKWARD": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-PORTS": [
+      "aliased"
+     ],
+     "F-GAP-SIGNAL": [
+      "aliased"
+     ],
+     "F-GAP-ACK": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ],
+     "F-GAP-REGAP": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "aliased"
+     ],
+     "F-EFFECT": [
+      "aliased"
+     ]
+    },
+    "M-READ-SUB-ALIAS": {
+     "F-SESSION": [
+      "aliased"
+     ],
+     "F-READ": [
+      "aliased"
+     ],
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ],
+     "F-VERSION": [
+      "aliased"
+     ],
+     "F-SCHEMA": [
+      "aliased"
+     ],
+     "F-DIGEST": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-BASIS": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP": [
+      "aliased"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "aliased"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "aliased"
+     ],
+     "F-GAP-BACKWARD": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-PORTS": [
+      "aliased"
+     ],
+     "F-GAP-SIGNAL": [
+      "aliased"
+     ],
+     "F-GAP-ACK": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ],
+     "F-GAP-REGAP": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-SEQUENCE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-DEPTH": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-NESTING": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-CASE": [
+      "aliased"
+     ],
+     "F-EXECUTABLE-KEY-VALUES": [
+      "aliased"
+     ],
+     "F-EFFECT": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-OWN-ALIAS": {
+     "F-READ-OWN": [
+      "aliased"
+     ],
+     "F-DIGEST": [
+      "aliased"
+     ]
+    },
+    "M-READ-OWN-ALIAS": {
+     "F-READ-OWN": [
+      "aliased"
+     ]
+    },
+    "M-READ-CROSS-SUB-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-READ-KIND-SUB-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ]
+    },
+    "M-READ-SNAPSHOT-SUB-ALIAS": {
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-READ-DELTA-SUB-ALIAS": {
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ]
+    },
+    "M-READ-ACK-SUB-ALIAS": {
+     "F-READ-ACK": [
+      "aliased"
+     ]
+    },
+    "M-READ-GAP-SUB-ALIAS": {
+     "F-READ-GAP": [
+      "aliased"
+     ]
+    },
+    "M-READ-RESYNC-SUB-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ]
+    },
+    "M-READ-EFFECT-SUB-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ]
+    },
+    "M-READ-INVOKE-SUB-ALIAS": {
+     "F-READ-INVOKE": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-CROSS-SUB-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-READ-RESYNC": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-DISPOSITION": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-AUTHORITY": [
+      "aliased"
+     ],
+     "F-PRIVATE": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-KIND-SUB-ALIAS": {
+     "F-READ-KIND": [
+      "aliased"
+     ],
+     "F-READ-INVOKE": [
+      "aliased"
+     ],
+     "F-READ-ACK": [
+      "aliased"
+     ],
+     "F-READ-GAP": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-ADMITTED-SUB-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-LATER-SUB-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-EFFECT": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-GAP-ORDER": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
       "aliased"
      ]
     }
@@ -2642,12 +3832,15 @@
     ],
     "M-EFFECT": [
      "F-READ-KIND#0:ek1",
+     "F-ALIAS-LATER-EFFECT#1:ae2",
+     "F-READ-INVOKE#0:iv1",
      "F-DUPLICATE-REJECTED#3:rr2",
      "F-DUPLICATE-REJECTED#4:rr2",
      "F-EFFECT#1:f2",
      "F-EFFECT#2:f3"
     ],
     "M-EFFECT-NAMED-ONLY": [
+     "F-READ-INVOKE#0:iv1",
      "F-EFFECT#2:f3"
     ],
     "M-PRIVATE": [
@@ -2656,6 +3849,9 @@
      "F-PRIVATE#2:q4"
     ],
     "M-UNDECLARED-OPEN": [
+     "F-READ-ACK#0:ak1",
+     "F-READ-GAP#0:ga1",
+     "F-READ-RESYNC#0:rx1",
      "F-PRIVATE#1:q2"
     ],
     "M-PRIVATE-NAMED-ONLY": [
@@ -2724,6 +3920,8 @@
      "F-DIGEST#3:d4"
     ],
     "M-EPOCH": [
+     "F-ALIAS-REJECTED-RESYNC#1:ar2",
+     "F-ALIAS-LATER-REJECTED#1:aj2",
      "F-EPOCH#1:e2",
      "F-EPOCH#2:e3",
      "F-EPOCH#3:e4",
@@ -2908,6 +4106,13 @@
     ],
     "M-CODE-COLLAPSED": [
      "F-READ-KIND#0:ek1",
+     "F-ALIAS-REJECTED-RESYNC#1:ar2",
+     "F-ALIAS-LATER-EFFECT#1:ae2",
+     "F-ALIAS-LATER-REJECTED#1:aj2",
+     "F-READ-INVOKE#0:iv1",
+     "F-READ-ACK#0:ak1",
+     "F-READ-GAP#0:ga1",
+     "F-READ-RESYNC#0:rx1",
      "F-VERSION#1:v2",
      "F-VERSION#2:v3",
      "F-SCHEMA#1:h2",
@@ -2996,6 +4201,27 @@
      "F-READ#0:r1",
      "F-READ#1:r2",
      "F-READ-KIND#1:ek2",
+     "F-ALIAS-REJECTED-RESYNC#0:ar1",
+     "F-ALIAS-REJECTED-RESYNC#1:ar2",
+     "F-ALIAS-REJECTED-RESYNC#2:ar3",
+     "F-ALIAS-LATER-EFFECT#0:ae1",
+     "F-ALIAS-LATER-REJECTED#0:aj1",
+     "F-ALIAS-LATER-REJECTED#1:aj2",
+     "F-ALIAS-LATER-REJECTED#2:aj3",
+     "F-ALIAS-ADMITTED-RESYNC#0:aa1",
+     "F-ALIAS-ADMITTED-RESYNC#1:aa2",
+     "F-ALIAS-ADMITTED-RESYNC#2:aa3",
+     "F-ALIAS-ADMITTED-DELTA#0:ad1",
+     "F-ALIAS-ADMITTED-DELTA#1:ad2",
+     "F-ALIAS-ADMITTED-DELTA#2:ad3",
+     "F-READ-INVOKE#1:iv2",
+     "F-READ-ACK#0:ak1",
+     "F-READ-ACK#1:ak2",
+     "F-READ-GAP#0:ga1",
+     "F-READ-GAP#1:ga2",
+     "F-READ-RESYNC#0:rx1",
+     "F-READ-RESYNC#1:rx2",
+     "F-READ-OWN#0:ow1",
      "F-VERSION#0:v1",
      "F-VERSION#1:v2",
      "F-VERSION#2:v3",
@@ -3174,6 +4400,22 @@
      "F-READ#0:r1",
      "F-READ#1:r2",
      "F-READ-KIND#1:ek2",
+     "F-ALIAS-REJECTED-RESYNC#0:ar1",
+     "F-ALIAS-REJECTED-RESYNC#2:ar3",
+     "F-ALIAS-LATER-EFFECT#0:ae1",
+     "F-ALIAS-LATER-REJECTED#0:aj1",
+     "F-ALIAS-LATER-REJECTED#2:aj3",
+     "F-ALIAS-ADMITTED-RESYNC#0:aa1",
+     "F-ALIAS-ADMITTED-RESYNC#1:aa2",
+     "F-ALIAS-ADMITTED-RESYNC#2:aa3",
+     "F-ALIAS-ADMITTED-DELTA#0:ad1",
+     "F-ALIAS-ADMITTED-DELTA#1:ad2",
+     "F-ALIAS-ADMITTED-DELTA#2:ad3",
+     "F-READ-INVOKE#1:iv2",
+     "F-READ-ACK#1:ak2",
+     "F-READ-GAP#1:ga2",
+     "F-READ-RESYNC#1:rx2",
+     "F-READ-OWN#0:ow1",
      "F-VERSION#0:v1",
      "F-SCHEMA#0:h1",
      "F-DIGEST#0:d1",
@@ -3266,6 +4508,36 @@
     "M-SEAM-ALIAS": [],
     "M-READ-CROSS-ALIAS": [],
     "M-READ-KIND-ALIAS": [],
+    "M-SEAM-CROSS-ALIAS": [],
+    "M-SEAM-KIND-ALIAS": [],
+    "M-SEAM-ADMITTED-ALIAS": [],
+    "M-SEAM-LATER-ALIAS": [],
+    "M-SEAM-OWN-DELTA-ALIAS": [],
+    "M-SEAM-OWN-RESYNC-ALIAS": [],
+    "M-READ-SNAPSHOT-ALIAS": [],
+    "M-READ-DELTA-ALIAS": [],
+    "M-READ-ACK-ALIAS": [],
+    "M-READ-GAP-ALIAS": [],
+    "M-READ-RESYNC-ALIAS": [],
+    "M-READ-EFFECT-ALIAS": [],
+    "M-READ-INVOKE-ALIAS": [],
+    "M-SEAM-SUB-ALIAS": [],
+    "M-READ-SUB-ALIAS": [],
+    "M-SEAM-OWN-ALIAS": [],
+    "M-READ-OWN-ALIAS": [],
+    "M-READ-CROSS-SUB-ALIAS": [],
+    "M-READ-KIND-SUB-ALIAS": [],
+    "M-READ-SNAPSHOT-SUB-ALIAS": [],
+    "M-READ-DELTA-SUB-ALIAS": [],
+    "M-READ-ACK-SUB-ALIAS": [],
+    "M-READ-GAP-SUB-ALIAS": [],
+    "M-READ-RESYNC-SUB-ALIAS": [],
+    "M-READ-EFFECT-SUB-ALIAS": [],
+    "M-READ-INVOKE-SUB-ALIAS": [],
+    "M-SEAM-CROSS-SUB-ALIAS": [],
+    "M-SEAM-KIND-SUB-ALIAS": [],
+    "M-SEAM-ADMITTED-SUB-ALIAS": [],
+    "M-SEAM-LATER-SUB-ALIAS": [],
     "M-GAP-APPLY": [
      "F-GAP#1:g2",
      "F-GAP#2:g3",
@@ -3361,6 +4633,10 @@
     "M-RESYNC-REPEATED": [],
     "M-RESYNC-PER-EPISODE": [],
     "M-RESYNC-SOLICITED-ONLY": [
+     "F-ALIAS-REJECTED-RESYNC#2:ar3",
+     "F-ALIAS-ADMITTED-RESYNC#1:aa2",
+     "F-ALIAS-ADMITTED-RESYNC#2:aa3",
+     "F-ALIAS-ADMITTED-DELTA#2:ad3",
      "F-GAP-ENDPOINTS#7:m8",
      "F-GAP-HOLD-RUNTIME#5:hl6"
     ],
@@ -3369,6 +4645,39 @@
     "M-ORDER-LABEL": [],
     "M-SHARED-LABEL": [],
     "M-MERGE-LABEL": []
+   },
+   "maxima": {
+    "entries": {
+     "value": 138,
+     "hosts": [
+      "M-REFUSE-ALL"
+     ]
+    },
+    "perFixture": {
+     "value": 5,
+     "hosts": [
+      "M-DIGEST",
+      "M-EPOCH",
+      "M-GAP-GLOBAL-HOLD"
+     ]
+    },
+    "fixtures": 45
+   },
+   "boundary": {
+    "changed": {
+     "entries": [],
+     "perFixture": []
+    },
+    "past": {
+     "entries": {
+      "failed": 183,
+      "capped": 138
+     },
+     "perFixture": {
+      "failed": 56,
+      "capped": 55
+     }
+    }
    }
   },
   "C2": {
@@ -3795,6 +5104,36 @@
     "F-READ-KIND": [
      "resync"
     ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "resync"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "resync"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "resync"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "resync"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "resync"
+    ],
+    "F-READ-INVOKE": [
+     "resync"
+    ],
+    "F-READ-ACK": [
+     "resync"
+    ],
+    "F-READ-GAP": [
+     "resync"
+    ],
+    "F-READ-RESYNC": [
+     "resync"
+    ],
+    "F-READ-OWN": [
+     "resync"
+    ],
     "F-VERSION": [
      "resync"
     ],
@@ -4003,6 +5342,17 @@
     ]
    },
    "M-RESYNC-SOLICITED-ONLY": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "admit"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "admit",
+     "resync",
+     "merged"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "admit"
+    ],
     "F-GAP-ENDPOINTS": [
      "admit",
      "merged"
@@ -4099,6 +5449,20 @@
     ]
    },
    "M-UNDECLARED-OPEN": {
+    "F-READ-ACK": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-READ-GAP": [
+     "reject",
+     "diagnostic",
+     "resync"
+    ],
+    "F-READ-RESYNC": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
     "F-PRIVATE": [
      "reject",
      "diagnostic",
@@ -4430,6 +5794,14 @@
      "reject",
      "diagnostic"
     ],
+    "F-ALIAS-LATER-EFFECT": [
+     "reject",
+     "diagnostic"
+    ],
+    "F-READ-INVOKE": [
+     "reject",
+     "diagnostic"
+    ],
     "F-DUPLICATE-REJECTED": [
      "admit",
      "reject",
@@ -4442,6 +5814,10 @@
     ]
    },
    "M-EFFECT-NAMED-ONLY": {
+    "F-READ-INVOKE": [
+     "reject",
+     "diagnostic"
+    ],
     "F-EFFECT": [
      "reject",
      "diagnostic",
@@ -4519,6 +5895,36 @@
      "claim-order"
     ],
     "F-READ-KIND": [
+     "claim-order"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "claim-order"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "claim-order"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "claim-order"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "claim-order"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "claim-order"
+    ],
+    "F-READ-INVOKE": [
+     "claim-order"
+    ],
+    "F-READ-ACK": [
+     "claim-order"
+    ],
+    "F-READ-GAP": [
+     "claim-order"
+    ],
+    "F-READ-RESYNC": [
+     "claim-order"
+    ],
+    "F-READ-OWN": [
      "claim-order"
     ],
     "F-VERSION": [
@@ -4689,6 +6095,36 @@
     "F-READ-KIND": [
      "aliased"
     ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-READ-OWN": [
+     "aliased"
+    ],
     "F-VERSION": [
      "aliased"
     ],
@@ -4794,6 +6230,36 @@
      "aliased"
     ],
     "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-READ-OWN": [
      "aliased"
     ],
     "F-VERSION": [
@@ -4903,6 +6369,36 @@
     "F-READ-KIND": [
      "aliased"
     ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-READ-OWN": [
+     "aliased"
+    ],
     "F-VERSION": [
      "aliased"
     ],
@@ -5004,6 +6500,24 @@
     "F-READ-KIND": [
      "aliased"
     ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
     "F-EPOCH": [
      "aliased"
     ],
@@ -5026,6 +6540,753 @@
    "M-READ-KIND-ALIAS": {
     "F-READ-KIND": [
      "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-CROSS-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-KIND-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-ADMITTED-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-LATER-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-OWN-DELTA-ALIAS": {
+    "F-SESSION": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "aliased"
+    ],
+    "F-GAP-BACKWARD": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-PORTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-ACK": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-OWN-RESYNC-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ],
+    "F-GAP-REGAP": [
+     "aliased"
+    ]
+   },
+   "M-READ-SNAPSHOT-ALIAS": {
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-READ-DELTA-ALIAS": {
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ]
+   },
+   "M-READ-ACK-ALIAS": {
+    "F-READ-ACK": [
+     "aliased"
+    ]
+   },
+   "M-READ-GAP-ALIAS": {
+    "F-READ-GAP": [
+     "aliased"
+    ]
+   },
+   "M-READ-RESYNC-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ]
+   },
+   "M-READ-EFFECT-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ]
+   },
+   "M-READ-INVOKE-ALIAS": {
+    "F-READ-INVOKE": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-SUB-ALIAS": {
+    "F-SESSION": [
+     "aliased"
+    ],
+    "F-READ": [
+     "aliased"
+    ],
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-VERSION": [
+     "aliased"
+    ],
+    "F-SCHEMA": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-BASIS": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "aliased"
+    ],
+    "F-GAP-BACKWARD": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-PORTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-ACK": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ],
+    "F-GAP-REGAP": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "aliased"
+    ],
+    "F-EFFECT": [
+     "aliased"
+    ]
+   },
+   "M-READ-SUB-ALIAS": {
+    "F-SESSION": [
+     "aliased"
+    ],
+    "F-READ": [
+     "aliased"
+    ],
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-VERSION": [
+     "aliased"
+    ],
+    "F-SCHEMA": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-BASIS": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "aliased"
+    ],
+    "F-GAP-BACKWARD": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-PORTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-ACK": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ],
+    "F-GAP-REGAP": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-SEQUENCE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-DEPTH": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-NESTING": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-CASE": [
+     "aliased"
+    ],
+    "F-EXECUTABLE-KEY-VALUES": [
+     "aliased"
+    ],
+    "F-EFFECT": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-OWN-ALIAS": {
+    "F-READ-OWN": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ]
+   },
+   "M-READ-OWN-ALIAS": {
+    "F-READ-OWN": [
+     "aliased"
+    ]
+   },
+   "M-READ-CROSS-SUB-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-READ-KIND-SUB-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ]
+   },
+   "M-READ-SNAPSHOT-SUB-ALIAS": {
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-READ-DELTA-SUB-ALIAS": {
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ]
+   },
+   "M-READ-ACK-SUB-ALIAS": {
+    "F-READ-ACK": [
+     "aliased"
+    ]
+   },
+   "M-READ-GAP-SUB-ALIAS": {
+    "F-READ-GAP": [
+     "aliased"
+    ]
+   },
+   "M-READ-RESYNC-SUB-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ]
+   },
+   "M-READ-EFFECT-SUB-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ]
+   },
+   "M-READ-INVOKE-SUB-ALIAS": {
+    "F-READ-INVOKE": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-CROSS-SUB-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-READ-RESYNC": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-DISPOSITION": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-AUTHORITY": [
+     "aliased"
+    ],
+    "F-PRIVATE": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-KIND-SUB-ALIAS": {
+    "F-READ-KIND": [
+     "aliased"
+    ],
+    "F-READ-INVOKE": [
+     "aliased"
+    ],
+    "F-READ-ACK": [
+     "aliased"
+    ],
+    "F-READ-GAP": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-ADMITTED-SUB-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-LATER-SUB-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-GAP-ORDER": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
     ]
    },
    "M-SHARED-LABEL": {
@@ -5036,6 +7297,36 @@
      "claim-shared"
     ],
     "F-READ-KIND": [
+     "claim-shared"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "claim-shared"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "claim-shared"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "claim-shared"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "claim-shared"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "claim-shared"
+    ],
+    "F-READ-INVOKE": [
+     "claim-shared"
+    ],
+    "F-READ-ACK": [
+     "claim-shared"
+    ],
+    "F-READ-GAP": [
+     "claim-shared"
+    ],
+    "F-READ-RESYNC": [
+     "claim-shared"
+    ],
+    "F-READ-OWN": [
      "claim-shared"
     ],
     "F-VERSION": [
@@ -5231,6 +7522,36 @@
     "F-READ-KIND": [
      "merged"
     ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "merged"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "merged"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "merged"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "merged"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "merged"
+    ],
+    "F-READ-INVOKE": [
+     "merged"
+    ],
+    "F-READ-ACK": [
+     "merged"
+    ],
+    "F-READ-GAP": [
+     "merged"
+    ],
+    "F-READ-RESYNC": [
+     "merged"
+    ],
+    "F-READ-OWN": [
+     "merged"
+    ],
     "F-VERSION": [
      "merged"
     ],
@@ -5336,6 +7657,36 @@
      "claim-merge"
     ],
     "F-READ-KIND": [
+     "claim-merge"
+    ],
+    "F-ALIAS-REJECTED-RESYNC": [
+     "claim-merge"
+    ],
+    "F-ALIAS-LATER-EFFECT": [
+     "claim-merge"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "claim-merge"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "claim-merge"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "claim-merge"
+    ],
+    "F-READ-INVOKE": [
+     "claim-merge"
+    ],
+    "F-READ-ACK": [
+     "claim-merge"
+    ],
+    "F-READ-GAP": [
+     "claim-merge"
+    ],
+    "F-READ-RESYNC": [
+     "claim-merge"
+    ],
+    "F-READ-OWN": [
      "claim-merge"
     ],
     "F-VERSION": [
@@ -5674,6 +8025,21 @@
      "label",
      "seam"
     ]
+   },
+   "visibility-case-folded": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
    }
   },
   "Q9": {
@@ -5810,6 +8176,46 @@
      "label",
      "seam"
     ]
+   },
+   "absent-version-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "absent-schema-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "reject",
+     "diagnostic",
+     "merged"
+    ],
+    "differs": [
+     "receipts",
+     "values",
+     "label",
+     "seam"
+    ]
+   },
+   "absent-source-skipped": {
+    "fixtures": {},
+    "honest": [],
+    "probe": [
+     "diagnostic"
+    ],
+    "differs": [
+     "receipts"
+    ]
    }
   },
   "Q10": {
@@ -5923,6 +8329,74 @@
     "differs": [
      "label"
     ]
+   }
+  },
+  "Q13": {
+   "seam-nonenum": {
+    "fixtures": {},
+    "seam": 101,
+    "read": [],
+    "certification": [
+     "refused:outside-the-pinned-set"
+    ]
+   },
+   "read-nonenum": {
+    "fixtures": {},
+    "seam": 0,
+    "read": [
+     "F-SESSION",
+     "F-READ",
+     "F-READ-KIND",
+     "F-ALIAS-REJECTED-RESYNC",
+     "F-ALIAS-LATER-EFFECT",
+     "F-ALIAS-LATER-REJECTED",
+     "F-ALIAS-ADMITTED-RESYNC",
+     "F-ALIAS-ADMITTED-DELTA",
+     "F-READ-INVOKE",
+     "F-READ-ACK",
+     "F-READ-GAP",
+     "F-READ-RESYNC",
+     "F-READ-OWN",
+     "F-VERSION",
+     "F-SCHEMA",
+     "F-DIGEST",
+     "F-EPOCH",
+     "F-DUPLICATE",
+     "F-DUPLICATE-SCOPE",
+     "F-DUPLICATE-REJECTED",
+     "F-BASIS",
+     "F-DISPOSITION",
+     "F-FEEDBACK",
+     "F-GAP",
+     "F-GAP-ANNOUNCED",
+     "F-GAP-SNAPSHOT",
+     "F-GAP-BACKWARD",
+     "F-GAP-NO-BASE",
+     "F-GAP-ENDPOINTS",
+     "F-GAP-ORDER",
+     "F-GAP-PORTS",
+     "F-GAP-SIGNAL",
+     "F-GAP-ACK",
+     "F-GAP-IDENTITY",
+     "F-GAP-HOLD-RUNTIME",
+     "F-GAP-REGAP",
+     "F-AUTHORITY",
+     "F-PRIVATE",
+     "F-EXECUTABLE",
+     "F-EXECUTABLE-SEQUENCE",
+     "F-EXECUTABLE-DEPTH",
+     "F-EXECUTABLE-NESTING",
+     "F-EXECUTABLE-CASE",
+     "F-EXECUTABLE-KEY-VALUES",
+     "F-EFFECT"
+    ],
+    "certification": [
+     "refused:outside-the-pinned-set"
+    ]
+   },
+   "honest": {
+    "seam": 0,
+    "read": []
    }
   }
  },
@@ -6042,6 +8516,10 @@
   "Q12": [
    "host",
    "claim-judge"
+  ],
+  "Q13": [
+   "host",
+   "claim-judge"
   ]
  },
  "tests": [
@@ -6067,8 +8545,9 @@
   "Q10: R-PAYLOAD-HOLDER",
   "Q11: R-HOST-STATE",
   "Q12: R-LABEL-TEXT",
+  "Q13: R-ALIAS-HOLDER",
   "rule 16: the rows, the residual families, the classes, the contract parts, the claim families, the checks, the mutants, the fixtures, the contract's endpoints, the words, the reading forms (script and markup extensions, named entities), the walks (roots, pathspecs, judges, floors, anchors and exclusions) and the hosts are frozen at their measured shape",
-  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading and the record's own line",
+  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe, its first refusal's U1-U3 lines the members they owe, and its second refusal's U1-U3 lines the member-depth mutants and the maxima they owe",
   "roster: the judged rows, the quotes, the residual members, the readers and the registered tests equal test/fixtures/foa-public-port-bridge-roster.json, in order and both ways; every pin reached its witness compare"
  ],
  "producer": {
