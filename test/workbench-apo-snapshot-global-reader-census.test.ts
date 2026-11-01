@@ -2,64 +2,85 @@
  * wb-021.8 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2; the rule-19 structural-exit child of wb-021.2, rulings R-B134 and R-B166),
  * the APO snapshot GLOBAL binding reader census: the falsifier census over the reader that wb-021.2's eventual re-cut
  * restates its census over (test/helpers/apo-snapshot-global-reader.ts, whose header is the reading of record and names the
- * pins of every reading).
+ * pins of each reading). Cut #2 answers this bead's refusal #1 (UNMET U1-U7, the record-honesty class R514/R515/R668):
+ * each member it names is pinned by its gate witness, and the claim words are narrowed to the pinned forms.
  * Statement (the bead's tracker-export title, verbatim): "The APO snapshot census's GLOBAL binding reader resolves
  * cross-block references of merged instantiated namespaces (jiti wraps the IIFE unqualified, so they bind the host global)
  * and reads import.meta.env as Pi's process.env alias; judge mutants GJ1/GJ4/GJ15/GJ16 killed". Ruling R-B166 (the bead's
  * notes) folds wb-021.2 refusal #4's unmet members into it: the instantiation-expression hole (IE1-IE12) joins its
  * reader-coverage scope, and the judge mutants GK1, GK2 and GK3 owe kills.
  *
- * THE PINNED READER SET (this file; each case id is `<row id> <pin id>`, registered in ROWS order, 138 cases): for every pin
- * of rows F (6), R (21), U (41), NS (25), EN (8), M (6), I (23), J (5) and Q (3), the assertion target is judgeGlobals over
+ * THE PINNED READER SET (this file; each case id is `<row id> <pin id>`, registered in ROWS order, 200 cases): for each pin
+ * of rows F (6), R (23), U (50), NS (41), EN (15), M (18), I (39), J (5) and Q (3), the assertion target is judgeGlobals over
  * the pin's planted tree, written to rule-11 scratch, and the observed result is the pin's findings, exactly and in order
  * (the sorted GLOBAL lines `GLOBAL <file>:<line> <name>`; [] for a quiet pin). Each pin's planted files and findings are held
  * by its digest in test/fixtures/apo-snapshot-global-reader-roster.json. Three further cases: the outside anchors, rule 16's
  * frozen shape and the roster (registered last).
  *
- * CLAIMS (each claims the pinned set it names; the falsifier of each is the named pin's own case):
- * - NS, the bead's first item (class U1 of record, refusal #3): a reference from another block of a merged instantiated
- *   namespace reds at the use - refusal #3's members U-NS1, U-NS1L, U-NS2, U-NS3bL, U-NS4, U-NS5, U-NS6, U-NS7, U-NS8,
- *   U-NS10 and U-NS11 (the bead's nine admitted plants NS1L, NS2, NS4, NS5, NS6, NS7, NS8, NS10 and NS11 among them), the
- *   refusal #3 gate's U-NS3 and U-NS3b, U-NS-nested-cross and U-NS-cross-forms; refusal #4's GK1 witnesses W-GK1-block-statement and
- *   W-GK1-class-field (outside every function-like); the refusal #4 gate's extra positions G4-NS-reverse-order,
- *   G4-NS-static-block and G4-NS-decorator-free; and the seat's NS-positions (an enum initializer and a destructuring
- *   default, each outside every function-like). Controls: U-NS-C1 and U-NS9 red, U-NS-C2 and U-NS-C3 quiet.
- * - META, the bead's second item (class U2 of record, refusal #3): import.meta reds at each value position row M holds -
- *   U-META1, U-META1L (the src-landable form), U-meta-forms, refusal #4's GK2 witnesses W-GK2-module-statement and
- *   W-GK2-class-field and the seat's M-positions (an enum initializer, a static block, a parameter default) - and at
- *   R-not-references' key read, U-IE3's and U-IE12's.
+ * CLAIMS (each claims exactly the pinned set it names, and no wider; the falsifier of each is the named pin's own case):
+ * - NS, the bead's first item (class U1 of record, refusal #3; refusal #1's U2): a reference from another block of a merged
+ *   instantiated namespace reds at the use at the reference positions and declaration kinds row NS's pins hold - refusal
+ *   #3's members U-NS1, U-NS1L, U-NS2, U-NS3bL, U-NS4, U-NS5, U-NS6, U-NS7, U-NS8, U-NS10 and U-NS11 (the bead's nine
+ *   admitted plants NS1L, NS2, NS4, NS5, NS6, NS7, NS8, NS10 and NS11 among them), the refusal #3 gate's U-NS3 and U-NS3b,
+ *   U-NS-nested-cross and U-NS-cross-forms; refusal #4's GK1 witnesses W-GK1-block-statement and W-GK1-class-field; the
+ *   refusal #4 gate's extra positions G4-NS-reverse-order, G4-NS-static-block and G4-NS-decorator-free; the cut #1 seat's
+ *   NS-positions; refusal #1's U2 witnesses W-G14-R12, W-G14-R24, W-G14-R27, W-G14-R28, W-G14-R29, W-G14-R30, W-G14-R31,
+ *   W-G14-R34, W-G14-R36, W-G14-R37, W-G14-R38, W-G14-R39 and W-G14-R40; and the cut #2 seat's NS-positions-2, NS-contexts
+ *   and NS-import-equals-namespace, each at the positions its message names. Controls: U-NS-C1 and U-NS9 red, U-NS-C2 and
+ *   U-NS-C3 quiet.
+ * - META, the bead's second item (class U2 of record, refusal #3; refusal #1's U1): import.meta reds at the meta-property at
+ *   the positions row M's pins hold - U-META1, U-META1L (the src-landable form), U-meta-forms, refusal #4's GK2 witnesses
+ *   W-GK2-module-statement and W-GK2-class-field, the cut #1 seat's M-positions, refusal #1's U1 witnesses W-G14-M4,
+ *   W-G14-M5, W-G14-M6, W-G14-M9, W-G14-M10, W-G14-M11, W-G14-M15, W-G14-M16, W-G14-M17 and W-G14-M20, and the cut #2
+ *   seat's M-positions-2 and M-contexts, each at the positions its message names - and at R-not-references' key read, U-IE3's
+ *   and U-IE12's.
  * - GJ, the bead's third item: refusal #3's judge mutants GJ1, GJ4, GJ15 and GJ16 are killed by their row J witnesses
  *   (U-GJ1 quiet; U-GJ4, U-GJ15 and U-GJ16 red), which these cases hold; each kill is measured by the seat's mutant battery
  *   on these bytes (the delivery note's battery line), not by a case of this file.
- * - IE (R-B166, class U1 of record, refusal #4): an expression with type arguments outside a heritage clause is read
- *   through its expression - refusal #4's admitted plants U-IE1 to U-IE7 and U-IE9 to U-IE12 (U-IE10, U-IE11 and U-IE12
- *   src-landable by the gate's measurement) and U-IE8 (its free name require) red, U-IE1 to U-IE5 each exactly as its
- *   control without type arguments reads (U-IE1c 2 lines; U-IE2c, U-IE3c, U-IE4c and U-IE5c one each) and U-IE5 as the
- *   call with type arguments U-IE5d reads; the seat's I-forms (an export default, a return, a property access, a call
- *   argument and an optional chain) and I-positions (a parameter default, a class field, a static block, a class
- *   expression's extends, a nested instantiation, a template span) red;
- *   I-cross-block holds rule (6) inside one (cross-block red, same-block quiet); I-type-arguments holds the erased type
- *   arguments (quiet); I-heritage holds the heritage boundary (a class's extends expression reds with type arguments, an
- *   implements clause stays quiet).
+ * - IE (R-B166, class U1 of record, refusal #4; refusal #1's U3): an expression with type arguments outside a heritage
+ *   clause is read through its expression at the positions row I's pins hold - refusal #4's admitted plants U-IE1 to U-IE7
+ *   and U-IE9 to U-IE12 (U-IE10, U-IE11 and U-IE12 src-landable by the gate's measurement) and U-IE8 (its free name require)
+ *   red, U-IE1 to U-IE5 each exactly as its control without type arguments reads (U-IE1c 2 lines; U-IE2c, U-IE3c, U-IE4c and
+ *   U-IE5c one each) and U-IE5 as the call with type arguments U-IE5d reads; the cut #1 seat's I-forms and I-positions;
+ *   refusal #1's U3 witnesses W-G14-I1, W-G14-I2, W-G14-I3, W-G14-I5, W-G14-I7, W-G14-I8, W-G14-I9, W-G14-I10, W-G14-I12,
+ *   W-G14-I14, W-G14-I15, W-G14-I16, W-G14-I17 and W-G14-I18; and the cut #2 seat's I-positions-2 and I-contexts, each at
+ *   the positions its message names; I-cross-block holds rule (6) inside one (cross-block red, same-block quiet);
+ *   I-type-arguments holds the erased type arguments (quiet); I-heritage holds the heritage boundary (a class's extends
+ *   expression reds with type arguments, an implements clause stays quiet).
  * - GK (R-B166, class U3 of record, refusal #4): GK1's, GK2's and GK3's witnesses are pins of rows NS, M and EN (above and
  *   W-GK3-namespace-enum-forward), each red at exactly one GLOBAL line; each kill is measured by the seat's mutant battery.
- * - The reader's other readings (rows F, R, U and EN's U-EN pins, G4-EN-forward-nested-arrow and G4-EN-string-name-after):
- *   each reading the helper's header states, for the forms its pins hold.
+ * - EN (refusal #1's U4): the forward, self and later enum reads row EN's pins hold, each at the read its message names -
+ *   U-EN-forward, U-EN-forward-merged, U-EN-self, W-GK3-namespace-enum-forward, G4-EN-forward-nested-arrow, refusal #1's U4
+ *   witnesses W-G14-R5, W-G14-R5c, W-G14-R5e and W-G14-R5f and the cut #2 seat's EN-forward-positions, EN-contexts and
+ *   EN-second-module red; U-EN1, U-EN2 and G4-EN-string-name-after quiet.
+ * - U (refusal #1's U5 and U6, and its F1 riders): the declaration forms row U's pins hold, each as its message names -
+ *   W-G14-N10 (a namespace holding an import-equals alias alone, red), W-G14-E7 and W-G14-E15 (a destructured and a const
+ *   wrapper name, red), the cut #2 seat's U-wrapper-imports and U-wrapper-statements (red) and U-alias-reads-bound (quiet),
+ *   and the F1 riders W-G14-MN and W-G14-N8 (quiet) and W-G14-B3 (process red, pid quiet).
+ * - THE NAMES READ (refusal #1's U7): the positions R-names-read-positions names and W-G14-V1's class decorator, each red.
+ * - REFUSAL #1 OF RECORD (this bead's, on cut #1): each U1-U7 member its record names is a W-G14 witness pin of its row (U1
+ *   row M, U2 row NS, U3 row I, U4 row EN, U5 and U6 row U, U7 row R) with a GLOBAL line, and each F1 rider is a W-G14 pin of
+ *   row U holding the count its record states before the arrow; each kill is measured by the seat's mutant battery.
+ * - The reader's other readings (rows F, R and U): each reading the helper's header states, for the forms its pins hold.
  * OUTSIDE ANCHORS (their own case): this bead's export row (.beads/issues.jsonl) - its requirement id, the parent it names,
  * the NS plants, META member and GJ mutants its description names and the GK mutants its notes name, each a pin of its
- * row; and the parent's records in the same export (wb-021.2's notes, which only append) - refusal #1's members, each cured
- * by the row R pin REFUSAL_1_CURES names (the map holding exactly the record's members), refusal #2's members, each a row
- * U pin red through GLOBAL, refusal #3's CLASSES OF RECORD (its NS members admitted and its red controls, each a row NS pin
- * with a GLOBAL line, its quiet control a row NS pin with none, its META member a row M pin and its GJ mutants row J pins)
- * and refusal #4's CLASSES OF RECORD (its admitted IE members and IE8, each a row I pin with a GLOBAL line, each control a
- * row I pin with exactly the count of GLOBAL lines the record states, and its GK witnesses, each a pin with exactly one).
+ * row, and its refusal #1 record (its notes' first UNMET block: U1-U7, each slug's member count equal to the members its
+ * item names first, each member a W-G14 pin of its row with a GLOBAL line; and its F1 riders, each a row U pin with the
+ * count before the arrow); and the parent's records in the same export (wb-021.2's notes, which only append) - refusal
+ * #1's members, each cured by the row R pin REFUSAL_1_CURES names (the map holding exactly the record's members), refusal
+ * #2's members, each a row U pin red through GLOBAL, refusal #3's CLASSES OF RECORD (its NS members admitted and its red
+ * controls, each a row NS pin with a GLOBAL line, its quiet control a row NS pin with none, its META member a row M pin and
+ * its GJ mutants row J pins) and refusal #4's CLASSES OF RECORD (its admitted IE members and IE8, each a row I pin with a
+ * GLOBAL line, each control a row I pin with exactly the count of GLOBAL lines the record states, and its GK witnesses,
+ * each a pin with exactly one). Each span is the first occurrence of its key in the export, so appended notes leave it be.
  * Internal checks: V-admitted-free references exactly ADMITTED_FREE, in order; each U-IE<n> for n of 1-5 reads exactly
  * its control U-IE<n>c; and the residual families equal this header's RESIDUALS line.
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row's id, label and pin digests, the
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; each row's id, label and pin digests, the
  * registered test titles and the residual families are held to the out-of-file roster.
- * NOT CLAIMED (scope sentences): a form no pin holds is NOT CLAIMED by this census; member reads are NOT CLAIMED by this
- * census (the reader reads free names, never a member of a value: a reach or a write through a member reads quiet unless a
- * free name on its path reds); the internals of any package are NOT CLAIMED by this census; the view census's other
+ * NOT CLAIMED (scope sentences): a form or a position no pin holds is NOT CLAIMED by this census; member reads are NOT
+ * CLAIMED by this census (the reader reads free names and not the members of a value: a reach or a write through a member
+ * reads quiet unless a free name on its path reds); a form TypeScript parses only under error recovery (a grammar error) is
+ * NOT CLAIMED by this census; the internals of any package are NOT CLAIMED by this census; the view census's other
  * readings - wb-021.2's views, closures, EFFECT, PACKAGE, UNRESOLVED, UNREADABLE, CONSTRUCTOR and seams - are NOT CLAIMED
  * by this census; any code outside a planted tree is NOT CLAIMED by this census.
  * RESIDUALS (named, each with its pinned quiet row in row Q): R-FIELD-MUTATION, R-REFLECTIVE-REACH, R-UNLINKED-IMPORT.
@@ -161,7 +182,7 @@ describe("APO snapshot GLOBAL binding reader census (wb-021.8, MW-ADAPTIVE-POLIC
     for (const pin of row.pins) it(titleOf(row, pin), { timeout: PLANT_BUDGET_MS }, () => expect(judgePlant(pin), pin.what).toEqual([...pin.findings].sort()));
   }
 
-  it("outside anchors: this bead's export row and the parent's records of refusals #1 to #4, each member a pin of its row with the polarity its record states", () => {
+  it("outside anchors: this bead's export row with its refusal #1 record and the parent's records of refusals #1 to #4, each member a pin of its row with the polarity its record states", () => {
     const own = exportRow(BEAD);
     expect(/^\[([^\]]+)\] /.exec(own.title)?.[1], "the export row's requirement id").toBe(REQUIREMENT);
     expect(own.description.startsWith(`Rule-19 structural-exit child of ${PARENT} `), "the export row's description names the parent").toBe(true);
@@ -174,6 +195,30 @@ describe("APO snapshot GLOBAL binding reader census (wb-021.8, MW-ADAPTIVE-POLIC
     expect(nsAdmitted.filter(member => globalCount(pinOf("NS", `U-${member}`)) < 1), "every NS plant the bead names admitted is a row NS pin with a GLOBAL line").toEqual([]);
     expect(meta.filter(member => pinOf("M", `U-${member}`)?.findings.some(finding => finding.endsWith(" import.meta")) !== true), "the bead's META member is a row M pin red at import.meta").toEqual([]);
     expect(gj.filter(member => pinOf("J", `U-${member}`) === undefined), "each GJ mutant the bead names has its row J witness").toEqual([]);
+    // This bead's refusal #1 (on cut #1): its UNMET U1-U7 members, each a W-G14 witness pin of its row red through GLOBAL, and its F1 riders.
+    const unmet = span(own.notes, "UNMET (record.unmet verbatim; 7 items, each led by its ledger slug):\n", "\n\nRESPIN SCOPE");
+    const named = new Set<string>();
+    const items = [...unmet.matchAll(/^- (U\d): ([^\n]*)/gm)].map(match => {
+      const text = match[2] ?? "";
+      const members = tokens(text, /\bG14-[A-Z]\d+[a-z]?\b/g).filter(member => !named.has(member));
+      for (const member of members) named.add(member);
+      return { id: match[1] ?? "", count: Number(/-(\d+)-GATE-MUTANTS?-SURVIVE/.exec(text)?.[1] ?? "-1"), members };
+    });
+    expect(
+      items.map(item => `${item.id}:${item.count}:${item.members.length}`),
+      "refusal #1's record names U1-U7, each slug's member count equal to the members its item names first",
+    ).toEqual(["U1:10:10", "U2:13:13", "U3:14:14", "U4:4:4", "U5:1:1", "U6:2:2", "U7:1:1"]);
+    const CURE_ROW: Readonly<Record<string, string>> = { U1: "M", U2: "NS", U3: "I", U4: "EN", U5: "U", U6: "U", U7: "R" };
+    expect(
+      items.flatMap(item => item.members.filter(member => globalCount(pinOf(CURE_ROW[item.id] ?? "", `W-${member}`)) < 1).map(member => `${item.id} ${member}`)),
+      "each U1-U7 member refusal #1's record names is a W-G14 witness pin of its row with a GLOBAL line",
+    ).toEqual([]);
+    const riders = [...span(own.notes, "- F1 LOW RIDES: ", "\n- F2 INFO").matchAll(/\b(G14-[A-Z]+\d*)-[a-z-]+: [\s\S]*?(\d+) -> \d+/g)].map(match => [match[1] ?? "", Number(match[2])] as const);
+    expect(riders.map(([member]) => member), "refusal #1's F1 names three riders").toEqual(["G14-MN", "G14-B3", "G14-N8"]);
+    expect(
+      riders.filter(([member, count]) => globalCount(pinOf("U", `W-${member}`)) !== count).map(([member]) => member),
+      "each F1 rider is a W-G14 witness pin of row U holding the GLOBAL line count its record states before the arrow",
+    ).toEqual([]);
     const parent = exportRow(PARENT);
     // Refusal #4's CLASSES OF RECORD: its admitted IE members and IE8 red, each control red at the count it states, each GK witness red once.
     const record4 = span(parent.notes, "CLASSES OF RECORD (BIND's statement for identity at the inversion ruling or in any child bead", "BIND READINGS");
@@ -237,7 +282,7 @@ describe("APO snapshot GLOBAL binding reader census (wb-021.8, MW-ADAPTIVE-POLIC
   });
 
   it("rule 16: every judged row and the residual families are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["F:6", "R:21", "U:41", "NS:25", "EN:8", "M:6", "I:23", "J:5", "Q:3"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["F:6", "R:23", "U:50", "NS:41", "EN:15", "M:18", "I:39", "J:5", "Q:3"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual(["R-FIELD-MUTATION:Q R-FIELD-MUTATION", "R-REFLECTIVE-REACH:Q R-REFLECTIVE-REACH", "R-UNLINKED-IMPORT:Q R-UNLINKED-IMPORT"]);
   });
 
