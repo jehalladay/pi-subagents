@@ -159,13 +159,17 @@
   "R-RELAYED",
   "R-COMPUTED-SPECIFIER",
   "R-SEPARATOR",
-  "R-ENCODED"
+  "R-ENCODED",
+  "R-UNNAMED-LOADER",
+  "R-OUTSIDE-PROGRAM",
+  "R-NESTED-MEMBER"
  ],
  "unclaimed": [
   "the title's last clause, no query engine is expected inside the inference SDK: a producer-side duty (execution.py:437 'no query engine enters this package'); Pi expects nothing of the SDK while it composes nothing",
   "the title's two armed duties on an actual composition and receipt (no query recomputation or UNKNOWN->TRUE change directly calls a model; a QueryView source witness entering a model context basis is retained as typed provenance on the existing request identifier/receipt): they bind when C1 reads PRESENT, and the adopting cut hands falsify() its composition and its own evidence source (provider, type, kind, title, nodes per arm) and witnessViolations() its receipt; the falsifier refuses what it presents, never a composition keyed on evidence it is not handed (R-SOURCE-KEYED) or on more flips than the source presents (R-FLIP-COUNT)",
   "the producer's INF-RQ1..INF-RQ5 tests themselves: C2 reads their gate state from the charter, never re-runs them",
-  "wb-km7q.7 (R19): whether a Pi model-call site is reachable from an evidence path beyond the projection module, and the speculative-inference opt-in checklist"
+  "wb-km7q.7 (R19): whether a Pi model-call site is reachable from an evidence path beyond the projection module, and the speculative-inference opt-in checklist",
+  "a form, position, member, input or loading mechanism that no pinned row exercises: every reading the census header names (THE CLOSURE, THE ENTRIES, THE RECORDS, the SPELLING and the rest) is claimed at its pinned rows only, and each ends with its own scope sentence; a pair split by more than one line break, a hollowing outside B2's list, a worker thread, a child process and a bundler glob import are among the modes it leaves"
  ],
  "witnesses": {
   "A1": {
@@ -228,6 +232,15 @@
      "violations": [
       "call-on:refresh:flip",
       "call-on:ingest:flip"
+     ]
+    },
+    "chained-past-drain": {
+     "calls": 2,
+     "late": 0,
+     "otherSeam": 0,
+     "violations": [
+      "call-on:refresh:recompute",
+      "call-on:ingest:recompute"
      ]
     }
    },
@@ -325,6 +338,18 @@
       "violations": []
      },
      "title-keyed": {
+      "calls": 0,
+      "late": 0,
+      "otherSeam": 0,
+      "violations": []
+     },
+     "presentation-type-keyed:census": {
+      "calls": 0,
+      "late": 0,
+      "otherSeam": 0,
+      "violations": []
+     },
+     "presentation-type-keyed:adopter": {
       "calls": 0,
       "late": 0,
       "otherSeam": 0,
@@ -465,6 +490,246 @@
       "src/workbench/observation.ts createRequire",
       "src/workbench/observation.ts getBuiltinModule"
      ]
+    },
+    "uncalledRequire": {
+     "unread": [],
+     "opaque": [
+      "src/workbench/observation.ts require"
+     ]
+    },
+    "emptyRequire": {
+     "unread": [],
+     "opaque": [
+      "src/workbench/observation.ts require()"
+     ]
+    }
+   },
+   "evaluators": {
+    "GP7-obs-eval": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts eval",
+      "src/workbench/observation.ts literal import("
+     ]
+    },
+    "GP7-obs-function": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts Function",
+      "src/workbench/observation.ts literal import("
+     ]
+    },
+    "GP7-obs-function2": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts Function",
+      "src/workbench/observation.ts literal import("
+     ]
+    },
+    "GP7-obs-ctor": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts constructor",
+      "src/workbench/observation.ts literal import("
+     ]
+    },
+    "directEval": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts eval"
+     ]
+    },
+    "indirectEval": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts eval"
+     ]
+    },
+    "memberEval": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts eval"
+     ]
+    },
+    "keyedEval": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts eval"
+     ]
+    },
+    "aliasedEval": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts eval"
+     ]
+    },
+    "shorthandEval": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts eval"
+     ]
+    },
+    "newFunction": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts Function"
+     ]
+    },
+    "callFunction": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts Function"
+     ]
+    },
+    "extendsFunction": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts Function"
+     ]
+    },
+    "asyncFunction": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts AsyncFunction"
+     ]
+    },
+    "generatorFunction": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts GeneratorFunction"
+     ]
+    },
+    "asyncGeneratorFunction": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts AsyncGeneratorFunction"
+     ]
+    },
+    "memberConstructor": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts constructor"
+     ]
+    },
+    "keyedConstructor": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts constructor"
+     ]
+    },
+    "destructuredConstructor": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts constructor"
+     ]
+    },
+    "keyedFunction": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts Function"
+     ]
+    },
+    "keyedAsyncFunction": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts AsyncFunction"
+     ]
+    },
+    "keyedGeneratorFunction": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts GeneratorFunction"
+     ]
+    },
+    "keyedAsyncGeneratorFunction": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts AsyncGeneratorFunction"
+     ]
+    },
+    "keyedRequire": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts require"
+     ]
+    },
+    "keyedCreateRequire": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts createRequire"
+     ]
+    },
+    "keyedBuiltin": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts getBuiltinModule"
+     ]
+    },
+    "importText": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts literal import("
+     ]
+    },
+    "requireText": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts literal require("
+     ]
+    },
+    "templateText": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts literal import("
+     ]
+    },
+    "escapedText": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts literal require("
+     ]
+    },
+    "spacedText": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts literal import("
+     ]
+    },
+    "noSubstitutionText": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts literal import("
+     ]
+    },
+    "templateMiddleText": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts literal import("
+     ]
+    },
+    "templateTailText": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts literal require("
+     ]
+    },
+    "vmBuiltin": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts node:vm"
+     ]
+    },
+    "vmBare": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts vm"
+     ]
+    },
+    "vmRequire": {
+     "reaches": [],
+     "opaque": [
+      "src/workbench/observation.ts node:vm"
+     ]
     }
    },
    "forms": {
@@ -503,12 +768,29 @@
     ],
     "piAiComplete": [
      "@earendil-works/pi-ai:complete"
+    ],
+    "dynamicImport": [
+     "@anthropic-ai/claude-agent-sdk:*"
+    ],
+    "exportAlias": [
+     "@anthropic-ai/claude-agent-sdk:query"
     ]
    },
+   "typeOnlyForms": {
+    "typeExport": [],
+    "typeElementExport": [],
+    "typeImport": []
+   },
    "residuals": {
-    "R-OTHER-ENTRY": [],
+    "R-OTHER-ENTRY": {
+     "unlisted": [],
+     "providerSdk": []
+    },
     "R-RELAYED": [],
-    "R-COMPUTED-SPECIFIER": []
+    "R-COMPUTED-SPECIFIER": {
+     "computed": [],
+     "evaluated": []
+    }
    },
    "closure": {
     "modules": [
@@ -548,7 +830,38 @@
     "toolEntryOnly": [],
     "typeEntryOnly": [],
     "resolveOnly": [],
-    "resolveClosure": []
+    "resolveClosure": [],
+    "sideEffect": [
+     "@anthropic-ai/claude-agent-sdk",
+     "src/workbench/claude-host.ts"
+    ],
+    "requireLiteral": [
+     "@anthropic-ai/claude-agent-sdk",
+     "src/workbench/claude-host.ts"
+    ],
+    "dynamicRelative": [
+     "@anthropic-ai/claude-agent-sdk",
+     "src/workbench/claude-host.ts"
+    ],
+    "importEquals": [
+     "@anthropic-ai/claude-agent-sdk"
+    ],
+    "literalCall": [
+     "@anthropic-ai/claude-agent-sdk"
+    ],
+    "unread": [
+     "src/workbench/zz-missing.ts"
+    ],
+    "R-UNNAMED-LOADER": {
+     "computedKey": {
+      "reaches": [],
+      "opaque": []
+     },
+     "handedLoader": {
+      "reaches": [],
+      "opaque": []
+     }
+    }
    }
   },
   "A3": {
@@ -700,6 +1013,29 @@
      "intersection": [
       "witness"
      ]
+    },
+    "R-NESTED-MEMBER": {
+     "nestedMember": [],
+     "unionArm": [],
+     "indexSignature": []
+    },
+    "augmented": {
+     "augmentation": [
+      "witness"
+     ],
+     "declarationFile": [
+      "witness"
+     ],
+     "otherDirectory": [
+      "witness"
+     ],
+     "importedAugmentation": [
+      "witness"
+     ]
+    },
+    "R-OUTSIDE-PROGRAM": {
+     "testModule": [],
+     "mtsModule": []
     }
    }
   },
@@ -809,6 +1145,33 @@
    ],
    "findings": [],
    "reading": "ABSENT",
+   "readSet": [
+    "examples/a.ts",
+    "qa/a.mjs",
+    "root.ts",
+    "src/a.cjs",
+    "src/a.cts",
+    "src/a.d.ts",
+    "src/a.js",
+    "src/a.jsx",
+    "src/a.mjs",
+    "src/a.mts",
+    "src/a.ts",
+    "src/a.tsx"
+   ],
+   "planted": {
+    "modules": 5,
+    "findings": [
+     "examples/e.tsx:1 query",
+     "qa/q.mjs:1 inference",
+     "root.ts:1 inference",
+     "src/tracked.ts:1 query",
+     "src/untracked.ts:1 inference",
+     "package.json:dependencies:@acme/query-view query",
+     "package.json:4 query",
+     "package.json:7 query"
+    ]
+   },
    "plants": {
     "importSpecifier": [
      "src/plant.ts:1 query"
@@ -847,6 +1210,12 @@
     "specGit": [
      "package.json:dependencies:evidence-engine:spec query"
     ],
+    "optionalField": [
+     "package.json:optionalDependencies:@acme/reactive-query query"
+    ],
+    "peerField": [
+     "package.json:peerDependencies:reactive-inference-sdk inference"
+    ],
     "escapedUnicode": [
      "src/plant.ts:1 query"
     ],
@@ -868,10 +1237,22 @@
     "innerInvisible": [
      "src/plant.ts:1 inference"
     ],
+    "ignorableSplit": [
+     "src/plant.ts:1 query"
+    ],
     "blockContinued": [
      "src/plant.ts:1 query"
     ],
+    "hashContinued": [
+     "src/plant.ts:1 query"
+    ],
     "htmlEntity": [
+     "src/plant.ts:1 query"
+    ],
+    "htmlHexEntity": [
+     "src/plant.ts:1 query"
+    ],
+    "controlEscape": [
      "src/plant.ts:1 query"
     ],
     "percentEncoded": [

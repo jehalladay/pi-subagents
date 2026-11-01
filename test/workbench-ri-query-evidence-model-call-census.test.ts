@@ -7,20 +7,61 @@
  * SDK." Acceptance (owner filing, verbatim, read from the tracked bead export; the labels of rows A and B joined by one space are
  * this clause word for word): "adoption-time falsifier that an UNKNOWN->TRUE flip alone produces zero model calls and that a
  * model request receipt retains the QueryView source witness as typed provenance". Row C's label is the title's gate clause.
- * CLAIMED (cut #2, to the measured scope): that clause as an until-then falsifier. falsify(composition, source) presents the
- * evidence source it is handed (provider, type, event kind, title and nodes per arm; the census's own source by default) and
- * refuses every pinned mutant composition: the seven mutants over the census source, and five compositions each keyed on one
- * attribute of a query-shaped source (its provider, type, kind or title, or a call from its third flip on) when that source is
- * handed in. It runs over Pi's session as it stands on both sources (0 calls). The gate (row C) reads CLOSED; a Pi code module,
- * or package.json, that spells a subject within the READINGS flips it and reds this census until the adopting cut hands
- * falsify() its own composition and its own evidence source, and witnessViolations() its receipt. The falsifier refuses what it
- * presents and nothing else: a composition keyed on evidence it is not handed (R-SOURCE-KEYED) or on more flips than the source
- * presents (R-FLIP-COUNT) reads quiet, each a named residual with a pinned quiet row.
- * NOT CLAIMED (ROSTER.unclaimed): the title's last clause (no query engine is expected inside the inference SDK: a producer-side
- * duty the producer states at execution.py:437, "no query engine enters this package"; Pi expects nothing of the SDK while it
- * composes nothing); the title's two armed duties on an actual composition and receipt (they bind when C1 reads PRESENT); the
- * producer's own INF-RQ1..INF-RQ5 tests (C2 reads their gate state, never re-runs them); wb-km7q.7's (R19) standing posture -
- * whether any Pi model-call site is reachable from an evidence path beyond the projection module, and the opt-in checklist.
+ *
+ * CUT #3 FORM (R-B215: enumerate-the-resolvable, the R739 terminal form). Every reading this header names is claimed at its
+ * pinned rows, and the roster witness holds each pin's output exactly; a form, position, member, input or loading mechanism
+ * that no pinned row exercises is NOT CLAIMED by this census. Refusal #2's six named members are pinned in-file: the four A2
+ * members (GP7-obs-eval, GP7-obs-function, GP7-obs-function2, GP7-obs-ctor: an evaluated loader in the projection module)
+ * are evaluator rows under their own names, and the two B1 members (GP7-augment, GP7-augment-dts: a module augmentation of
+ * WorkflowSpawnResult that no record module imports, as a .ts and as a .d.ts module below src) are the augmentation and
+ * declarationFile rows of the planted tsconfig.json program; planted on the real tree, each of the six reds this census
+ * (measured at this cut).
+ *
+ * PINNED READER SET (this file, describe "wb-km7q.8 query evidence and model calls: the adoption-time falsifier
+ * (INF-RQ1..INF-RQ5)"; each pin case's output is held to its witness in test/fixtures/ri-query-evidence-model-call-roster.json;
+ * observed at this cut: 9 passed (9)):
+ * - "judged set: ..." asserts the frozen shape A:3 B:2 C:2, the rows and residuals equal to the roster's, the labels equal to
+ *   the bead export's Acceptance clause and title gate clause, and the citations at the producer pin; observed pass.
+ * - "A1 adoption-time falsifier" asserts that falsify() refuses each of the eight MUTANTS over the census source and each of
+ *   the five keyed compositions fed the query-shaped source, with the read-only composition and the quiet rows of R-LATE,
+ *   R-OTHER-SEAM, R-SOURCE-KEYED and R-FLIP-COUNT; observed pass.
+ * - "A2 that an UNKNOWN->TRUE flip alone" asserts the flip on both arms of both sources, the live projection closure (one
+ *   module, no package, nothing unread, nothing opaque), each loader and evaluator row of THE CLOSURE, the model-call set and
+ *   each entry-form row of THE ENTRIES, and the quiet rows of R-OBSERVER-PATH, R-OTHER-ENTRY, R-RELAYED, R-COMPUTED-SPECIFIER
+ *   and R-UNNAMED-LOADER; observed pass.
+ * - "A3 produces zero model calls" asserts 0 calls for Pi's session as it stands on every arm of both sources, a live counter
+ *   and R-EXPLICIT's quiet row; observed pass.
+ * - "B1 and that a model request receipt" asserts THE RECORDS' live members, the run-time keys and the replay basis, the
+ *   witness-member controls, the member-form rows and the augmentation rows, with the quiet rows of R-OTHER-RECORD,
+ *   R-OUTSIDE-PROGRAM and R-NESTED-MEMBER; observed pass.
+ * - "B2 retains the QueryView source witness as typed provenance" asserts witnessViolations over the retained witness and each
+ *   hollowing fixture, with R-SAME-VALUE's quiet row; observed pass.
+ * - "C1 If Pi ever composes ..." asserts the live seam ABSENT, the read set's extensions, the seam reading over a planted git
+ *   tree, each reader plant PRESENT, each quiet row and each role place; observed pass.
+ * - "C2 (gated INF-RQ1..INF-RQ5)" asserts every vendored line's sha256, the range ids, producerGateOf NOT-PASSED, gateOf CLOSED
+ *   and the near misses; observed pass.
+ * - "records: ..." asserts that every pin ran once to its witness, that every named residual has a quiet row in a pin's
+ *   witness, and the witnesses anchored to a source outside the runners; observed pass.
+ *
+ * CLAIMED (cut #3; each sentence at the rows named): falsify(composition, source) presents the evidence source it is handed
+ * (provider, type, event kind, title and nodes per arm; the census's own source by default) and refuses each pinned mutant
+ * composition: the eight MUTANTS over the census source, and the five compositions each keyed on one attribute of a
+ * query-shaped source (its provider, type, kind or title, or a call from its third flip on) when that source is handed in
+ * (A1). Pi's session as it stands reads 0 calls on every arm of both sources (A3). The gate (row C) reads CLOSED; a file of
+ * the C1 read set (row C1: the git-listed .js, .cjs, .mjs, .ts, .cts, .mts, .jsx and .tsx files below src/, qa/ and examples/
+ * and at the repository root, and the root package.json) that spells a subject within the READINGS flips it and reds this
+ * census, until the adopting cut hands falsify() its own composition and its own evidence source, and witnessViolations() its
+ * receipt (C1, C2). The falsifier refuses a composition only through the calls its counting seam counts inside a step's window
+ * or the settle: a composition keyed on evidence it is not handed (R-SOURCE-KEYED) or on more flips than the source presents
+ * (R-FLIP-COUNT) reads quiet, each a named residual with a pinned quiet row.
+ * NOT CLAIMED (ROSTER.unclaimed; scope sentences, not residuals): the title's last clause (no query engine is expected inside
+ * the inference SDK: a producer-side duty the producer states at execution.py:437, "no query engine enters this package"; Pi
+ * expects nothing of the SDK while it composes nothing) is NOT CLAIMED by this census. The title's two armed duties on an
+ * actual composition and receipt are NOT CLAIMED by this census (they bind when C1 reads PRESENT). The producer's own
+ * INF-RQ1..INF-RQ5 tests are NOT CLAIMED by this census (C2 reads their gate state, never re-runs them). wb-km7q.7's (R19)
+ * standing posture (whether any Pi model-call site is reachable from an evidence path beyond the projection module, and the
+ * opt-in checklist) is NOT CLAIMED by this census. A form, position, member, input or loading mechanism that no pinned row
+ * exercises is NOT CLAIMED by this census (THE CLOSURE, THE ENTRIES and THE RECORDS each end with their own scope sentence).
  *
  * THE PRODUCER AT THE PINS (the roster's `producer` block; measured read-only with git show in the local ReactiveInferenceSDK
  * checkout by the cut #1 seat on 2026-10-28 and re-verified by the cut #2 seat on 2026-10-29, no fetch, every vendored line and
@@ -36,16 +77,16 @@
  * line end).
  * THE GATE: producerGateOf reads PASSED only when the status line no longer carries "design only" and the acceptance line still
  * names every gate the title's range INF-RQ1..INF-RQ5 expands to (a missing line fails closed); the Pi seam (C1) reads PRESENT
- * once a git-listed JS/TS module below the code roots or at the root, or package.json (the names and specs of its four
- * dependency fields, and its whole text), spells a subject within the READINGS. gateOf is CLOSED while the seam reads ABSENT;
- * ADOPTED-BEFORE-GATE when it reads PRESENT under a NOT-PASSED producer and ADOPTED-FALSIFIER-OWED under a PASSED one, both red
- * here: the adoption is the FLIP of this freeze-and-flip, and the adopting cut re-measures this census with its composition and
- * its evidence source handed to falsify() and its receipt to witnessViolations().
+ * once a file of the C1 read set (row C1 below) spells a subject within the READINGS. gateOf is CLOSED while the seam reads
+ * ABSENT; ADOPTED-BEFORE-GATE when it reads PRESENT under a NOT-PASSED producer and ADOPTED-FALSIFIER-OWED under a PASSED
+ * one, both red here: the adoption is the FLIP of this freeze-and-flip, and the adopting cut re-measures this census with its
+ * composition and its evidence source handed to falsify() and its receipt to witnessViolations().
  *
  * READINGS
  * - SPELLING: every text is read as written and with its escapes decoded (JS \u{X}, \uXXXX and \xXX; a control escape as a
- *   space and any other escaped character as itself; HTML numeric character references; URL percent escapes), each in its
- *   visible spelling: format and default-ignorable characters removed, then NFKC, so an invisible never splits a name.
+ *   space and any other escaped character as itself; HTML numeric character references, decimal and hex; URL percent
+ *   escapes), each in its visible spelling: format and default-ignorable characters removed, then NFKC, so an invisible never
+ *   splits a name. Pinned by C1's plants (one per escape form, the invisible splits, the entity and percent spellings).
  * - WORDS: a break at each lower-to-upper case change and before the last capital of a capital run, lower case, the runs
  *   of a-z and 0-9 (ReactiveQuerySDK reads reactive query sdk; reactive_inference reads reactive inference).
  * - SUBJECTS (never a literal here: vocabularyOf derives them from the bead title): the title's CamelCase names
@@ -57,8 +98,8 @@
  * - SEGMENTS: two words are adjacent only inside one run of letters, digits, white space, "_", "-", "." and "/" (prose, a name,
  *   a path, a package name); any other character ends the run, so claude-host.ts's `config.query ?? sdkQuery` (measured at the
  *   first red of cut #1: it read "query sdk" across the operator) reads nothing, while "the reactive query engine" and
- *   "@acme/reactive-query" do. A pair split across a line break is read at its first line, the next line's leading comment
- *   marker (//, /*, *, #) dropped.
+ *   "@acme/reactive-query" do. A pair split across one line break is read at its first line, the next line's leading comment
+ *   marker (//, /*, *, #) dropped; a pair split by more than one line break is NOT CLAIMED by this census.
  * - THE FLIP (the house analog: Pi holds no QueryView): Pi's real ObservationProjection defaults an observed node it has no
  *   presentation for to statusText "UNKNOWN" and statusTone "unknown" (observation.ts ingest); the flip is the same source read
  *   back as statusText "TRUE", statusTone "success", on two arms per node (a refresh snapshot with coverage complete; an ingest
@@ -68,46 +109,94 @@
  *   demand - lets the composition attach to the session (it may wrap the projection) and hands it every evidence step of the
  *   source's arms as it lands. A step's window runs from before the step lands until its handler settles and a DRAIN_TURNS
  *   microtask drain completes (no timer runs inside a drain): a call the step's landing or its handler makes, awaits or chains
- *   through fewer microtask turns is counted there, `call-on:<arm>:<step>` (a longer chain lands in a later window, still a
- *   violation). Calls landing after the last window and before the read (a SETTLE_MS real-time settle) are `deferred:<n>`;
- *   calls after the read are counted as late after it releases readOver and settles once more (R-LATE).
+ *   through fewer microtask turns is counted there, `call-on:<arm>:<step>`; a chain past the drain lands in a later window,
+ *   still a violation (pinned: chained-past-drain). Calls landing after the last window and before the read (a SETTLE_MS
+ *   real-time settle) are `deferred:<n>` (pinned: deferred-on-flip); calls after the read are counted as late after it releases
+ *   readOver and settles once more (R-LATE).
+ * - THE CLOSURE (A2, closureOf over moduleReadsOf, the TypeScript parser over each module's text): from the projection module
+ *   it follows the specifier of an import declaration that is not `import type` (a side-effect import among them), of an
+ *   export declaration that is not `export type`, of an import-equals of an external module that is not type-only, of an
+ *   import() or require() call whose first argument is a string literal, and of any other call (a call of a member named
+ *   resolve excepted: it loads nothing) whose first argument is a string literal naming a listed model package; a bare
+ *   specifier is recorded as its package, a relative one ending .js is read as the .ts module it names, and a module that
+ *   does not read is unread. It fails closed (opaque) on: an import() or require() call with any other first argument or
+ *   none; an identifier require that is not a call's callee; an identifier, or a string literal, spelled createRequire,
+ *   getBuiltinModule, eval, Function, AsyncFunction, GeneratorFunction, AsyncGeneratorFunction or constructor (a string
+ *   literal spelled require too); a string or template literal whose cooked text holds import or require, optional white
+ *   space and "("; a specifier "vm" or "node:vm".
+ *   Pinned edge rows: a named import chained through a local module, a side-effect import, a re-export, an import-equals, an
+ *   import() and a require() of a relative literal, an import() of a model package, another call with a literal model
+ *   package, a resolution (no edge), a type-only import (no edge) and a module that does not read (unread).
+ *   Pinned fail-closed rows: refusal #2's four evaluated loaders verbatim; eval called, called indirectly, as a member, by a
+ *   string key, aliased and as a shorthand property; Function constructed, called and extended; the three kin names; Function
+ *   and each kin by a string key; constructor as a member, by a string key and destructured; require, createRequire and
+ *   getBuiltinModule by a string key; import( and require( in a string, escaped, with white space before "(", in a
+ *   no-substitution template and in a template's head, middle and tail; the vm builtin imported with and without node: and
+ *   required; a computed import(), a computed require(), an empty require(), an uncalled require, createRequire and
+ *   getBuiltinModule.
+ *   A load or an evaluation reached through no name or literal the closure reads is the named residual R-UNNAMED-LOADER
+ *   (quiet rows: a computed member key, a loader a caller hands in); every other loading mechanism (a worker thread, a child
+ *   process, a bundler glob import) is NOT CLAIMED by this census.
+ * - THE ENTRIES (A2, modelCallsOf over each git-listed JS/TS module below src/): `<package>:<name>` for a named import, or a
+ *   named re-export, of a listed entry (an alias read by its imported name); `<package>:*` for a default or namespace import,
+ *   `export *` (plain or `as`), an import-equals, and any call (a call of a member named resolve excepted) whose first
+ *   argument is a string literal naming a model package (import(), require(), a created require); a package is read at any
+ *   subpath; `import type`, `export type` and an inline `type` element name no entry. A module naming an entry in any other
+ *   form is a named residual (R-RELAYED, R-COMPUTED-SPECIFIER, R-OTHER-ENTRY) or NOT CLAIMED by this census.
+ * - THE RECORDS (B1): each record's property names are what checker.getPropertiesOfType returns for its declared type in the
+ *   program the repository's tsconfig.json declares (its file set, every .ts module below src with each .d.ts among them, and
+ *   its compiler options, as ts.parseJsonConfigFileContent reads them; noEmit added), so own members, members inherited
+ *   through extends, members of merged declarations and of module augmentations inside that file set, and computed literal
+ *   keys are read. Pinned: the four records' live members; the member forms in in-memory programs (an extends clause, a merged
+ *   declaration before or after, a computed literal key, an imported base, an intersection); and in one planted
+ *   tsconfig.json program, a module augmentation no record module imports (a .ts module beside the record, a .d.ts module
+ *   beside it, a .ts module in another directory) and one the record module imports. A member merged in from a module outside
+ *   that file set (R-OUTSIDE-PROGRAM: a test/ module, a .mts module) or one getPropertiesOfType does not return for the
+ *   declared type (R-NESTED-MEMBER: a member of a member's own type, a member on one arm of a union, an index signature) is a
+ *   named residual; any other source of a member is NOT CLAIMED by this census.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; each pin's phrases tile its row's label, and
  * every witness is held to the roster):
  *  A "adoption-time falsifier that an UNKNOWN->TRUE flip alone produces zero model calls": A1 the falsifier fails each mutant
  *    composition over the census source (a demand on the flip, a direct call on the recomputation, a call deferred inside the
  *    settle, a projection whose refresh or ingest is wrapped to call on the flip, a call chained through a microtask on the
- *    flip, a call resolving the UNKNOWN reading) and each composition keyed on one attribute of the query-shaped source when it
- *    is handed in (provider, type, kind, title; a call from the third flip on), with its pinned quiet rows (read-only, R-LATE,
- *    R-OTHER-SEAM, R-SOURCE-KEYED: the four keyed compositions over the census source, R-FLIP-COUNT: the third-flip composition
- *    over two flips); A2 the flip on both arms through Pi's real projection (every step's return code and its before and after
- *    readings), the four flips of the query-shaped source, and the projection's isolation: its value-import closure (every
- *    static value form; a loader with no literal specifier fails it closed) reaches no model-call module and no model package
- *    at any subpath, and the src modules that name a listed model-call entry by value in a static form are an exact set (the
- *    falsifier's own host module among them), with the closure and entry readers' controls and the quiet rows R-OBSERVER-PATH,
- *    R-OTHER-ENTRY, R-RELAYED and R-COMPUTED-SPECIFIER; A3 Pi's session as it stands (no composition: C1 reads ABSENT) reads 0
- *    calls on every arm of both sources, the counter is live (one explicit demand afterwards counts exactly one call carrying its
- *    prompt) and R-EXPLICIT's quiet row.
+ *    flip, a call chained past the drain on the flip, a call resolving the UNKNOWN reading) and each composition keyed on one
+ *    attribute of the query-shaped source when it is handed in (provider, type, kind, title; a call from the third flip on),
+ *    with its pinned quiet rows (read-only, R-LATE, R-OTHER-SEAM, R-SOURCE-KEYED: the four keyed compositions over the census
+ *    source and a composition keyed on the presentation type falsify() fixes, over both sources, R-FLIP-COUNT: the third-flip
+ *    composition over two flips); A2 the flip on both arms through Pi's real projection (every step's return code and its
+ *    before and after readings), the four flips of the query-shaped source, and the projection's isolation as THE CLOSURE reads
+ *    it (the closure of the projection module reaches no module of the model-call set and no listed model package at any
+ *    subpath, leaves nothing unread and fails closed on nothing), and the model-call set as THE ENTRIES read it, held exactly
+ *    (the falsifier's own host module among them), with the closure, loader, evaluator and entry-form rows and the quiet rows
+ *    R-OBSERVER-PATH, R-OTHER-ENTRY, R-RELAYED, R-COMPUTED-SPECIFIER and R-UNNAMED-LOADER; A3 Pi's session as it stands (no
+ *    composition: C1 reads ABSENT) reads 0 calls on every arm of both sources, the counter is live (one explicit demand
+ *    afterwards counts exactly one call carrying its prompt) and R-EXPLICIT's quiet row.
  *  B "and that a model request receipt retains the QueryView source witness as typed provenance": B1 Pi's existing model request
- *    identifier and receipt (ClaudeCallIdentity, WorkflowSpawnRequest, WorkflowSpawnResult, WorkflowJournalEntry, read through
- *    the TypeScript checker with tsconfig.json's module settings: every own, inherited, merged and computed-literal member) and the keys
- *    the demand's call, settled result and journal row carry at run time name no witness member today (NO-WITNESS-SEAM); the
- *    journal row's basis is the host's replay basis (the nearest Pi analog of a model context basis: the host's own
- *    configuration as a JSON array); with its controls (the member vocabulary, and a witness carried through an extends clause,
- *    a merged declaration before or after, a computed key, an imported base and an intersection, each read) and
- *    R-OTHER-RECORD's quiet row; B2 witnessViolations, typed by the producer's own SourceWitness lines, accepts a retained
- *    witness and refuses each hollowing (dropped, null, stringified, folded into text, an array, a renamed, retyped, changed,
- *    missing or extra field, a fractional, NaN, unsafe or string epoch, a boolean generation, a nested wrap, a nulled digest, an
- *    all-null witness, an alias member, upper-case keys, an empty trace), with R-SAME-VALUE's quiet row.
+ *    identifier and receipt (ClaudeCallIdentity, WorkflowSpawnRequest, WorkflowSpawnResult, WorkflowJournalEntry, read as THE
+ *    RECORDS read them) and the top-level keys the demand's call, settled result and journal rows carry at run time name no
+ *    witness member today (NO-WITNESS-SEAM; each run-time key is a member of its record); the journal row's basis is the
+ *    host's replay basis (the nearest Pi analog of a model context basis: the host's own configuration as a JSON array); with
+ *    its controls (the member vocabulary, the member forms and the augmentation rows, each read) and the quiet rows of
+ *    R-OTHER-RECORD, R-OUTSIDE-PROGRAM and R-NESTED-MEMBER; B2 witnessViolations, typed by the producer's own SourceWitness
+ *    lines, accepts a retained witness and refuses each of these hollowings: dropped, null, stringified, folded into text, an
+ *    array, a receipt that is not an object, a renamed, retyped, changed, missing or extra field, a fractional, NaN, unsafe or
+ *    string epoch, a boolean generation, a nested wrap, a nulled digest, an all-null witness, an alias member, upper-case keys,
+ *    an empty trace; with R-SAME-VALUE's quiet row (a hollowing outside that list is NOT CLAIMED by this census).
  *  C "If Pi ever composes ReactiveQuerySDK evidence with ReactiveInferenceSDK-mediated execution (gated INF-RQ1..INF-RQ5)": C1 the
- *    Pi seam reads ABSENT (every git-listed JS/TS module, tracked or untracked and never ignored, below src/, qa/ and examples/ and
- *    at the root, read line by line and across each line break in the SPELLING; and package.json: its four dependency fields'
- *    names and specs and its whole text), the reader's plants read PRESENT (among them a dependency spec as an npm alias, a file
- *    tarball and a git spec, the escaped, invisible-split, comment-continued, entity and percent spellings), its quiet rows
- *    (R-OUTSIDE-ROOTS, R-COMPOSED, R-LOOKALIKE, R-RF-INTERNAL, R-SEPARATOR, R-ENCODED) stay quiet and the role places read in
- *    their role (each title name, producer lines :35 and :37); C2 the producer facts (every vendored line's text against its
- *    recorded sha256, the title's range expanded to the five ids the acceptance line names, the status line's "design only"),
- *    producerGateOf NOT-PASSED, gateOf CLOSED and the gate's near misses.
+ *    Pi seam reads ABSENT over the C1 read set: every git-listed file (tracked, or untracked and not ignored) ending .js, .cjs,
+ *    .mjs, .ts, .cts, .mts, .jsx or .tsx below src/, qa/ and examples/ and at the root, read line by line and across each line
+ *    break in the SPELLING; and the root package.json: the names and string specs of its four dependency fields and its whole
+ *    text. Pinned: a read-set row (one path per extension below each code root, and one at the root) and a seam reading over a
+ *    planted git tree (a tracked, an untracked and an ignored module below src/, a module below qa/, below examples/ and at
+ *    the root, a module below docs/ and one below test/, and a package.json whose subject sits on a script line and in a
+ *    dependency name, each finding held to the roster); the reader's plants read PRESENT (among them a dependency name in each
+ *    of the four fields, a dependency spec as an npm alias, a file tarball and a git spec, the escaped, invisible-split,
+ *    comment-continued, entity and percent spellings), its quiet rows (R-OUTSIDE-ROOTS, R-COMPOSED, R-LOOKALIKE,
+ *    R-RF-INTERNAL, R-SEPARATOR, R-ENCODED) stay quiet and the role places read in their role (each title name,
+ *    producer lines :35 and :37); C2 the producer facts (every vendored line's text against its recorded sha256, the title's
+ *    range expanded to the five ids the acceptance line names, the status line's "design only"), producerGateOf NOT-PASSED,
+ *    gateOf CLOSED and the gate's near misses.
  * OUTSIDE ANCHORS. The judged-set case reads wb-km7q.8's row of the tracked bead export (.beads/issues.jsonl; the first notes
  *   line opening "Citations: ", so appended notes never move it): the rows' labels joined in order equal its Acceptance clause
  *   followed by its title's gate clause (the title from its tag to its first ", "); each label is its pins' phrases joined; the
@@ -115,7 +204,7 @@
  *   are vendored in the roster at that pin; the line it cites for the acceptance gates names exactly the ids of the title's
  *   range; and its title spells the subjects (vocabularyOf) and the range (gateIdsOf). The records case holds pin witnesses to a
  *   source outside their runners and the roster: the gate pin (whose phrase is the title's range) carries the title's ids and
- *   the citation's pins, C1 the title's vocabulary, B2 the producer's typed fields, B1 the records as the checker reads src, A2
+ *   the citation's pins, C1 the title's vocabulary, B2 the producer's typed fields, B1 the records as THE RECORDS read src, A2
  *   the projection closure and the model-call modules as src reads; A1 and A3 are anchored to Pi's live session (the real
  *   projection, host and runtime), not to a record outside it. The producer's own lines type the witness check (B2) and anchor
  *   the role places (C1). The vendored lines' sha256 values are an integrity record that a reader re-verifies against the
@@ -127,30 +216,38 @@
  * RESIDUALS (named; each has a pinned quiet row in the pin named): R-LATE (A1) a call deferred past the settle lands after the
  *   read; R-OTHER-SEAM (A1) a model call through another seam (the SDK called directly, Pi's Agent tool session in
  *   agent-runner.ts, the mention clone) is not counted; R-SOURCE-KEYED (A1) a composition keyed on evidence falsify() is not
- *   handed (another provider, type, kind or title; the scope, node ids, stamps or sequences, which no source supplies) is never
- *   presented that evidence; R-FLIP-COUNT (A1) a composition that calls only past the 2 x nodes flips the source presents;
- *   R-OBSERVER-PATH (A2) the closure covers the projection module, so an observer that couples a flip to a model call before it
- *   hands evidence to the projection is not read (wb-km7q.7's reachability); R-OTHER-ENTRY (A2) an export of a model package
- *   that MODEL_CALL_ENTRIES does not list (pi-coding-agent's compact or generateSummary, pi-ai's provider streams, the SDK's
- *   bridge sessions); R-RELAYED (A2) a module that reaches an entry through a local module (a barrel's consumer, a wrapper's
- *   caller) is not itself in the set, the barrel or wrapper is; R-COMPUTED-SPECIFIER (A2) a src module outside the projection
- *   closure that loads a package through a computed specifier; R-EXPLICIT (A3) an explicit demand carrying the flipped answer as
- *   conditioning data (charter :35) is demand, never a flip's call; R-OTHER-RECORD (B1) a witness member on a record other than
- *   the four is not read; R-SAME-VALUE (B2) the check judges value and type against the witness handed in, so a copy with equal
- *   fields passes; R-OUTSIDE-ROOTS (C1) docs, test/, vendor/, .beads/ and every non-JS/TS file but package.json (this census and
- *   its roster spell every subject) are not read; R-COMPOSED (C1) a subject assembled from parts that split its words;
+ *   handed (another provider, type, kind or title) or on a field falsify() fixes for every source (the presentation type
+ *   sdk-operation, statusText TRUE and statusTone success, the refresh coverage complete, the scope, node ids, stamps or
+ *   sequences) is never presented that evidence; R-FLIP-COUNT (A1) a composition that calls only past the 2 x nodes flips the
+ *   source presents; R-OBSERVER-PATH (A2) the closure covers the projection module, so an observer that couples a flip to a
+ *   model call before it hands evidence to the projection is not read (wb-km7q.7's reachability); R-OTHER-ENTRY (A2) an export
+ *   of a model package that MODEL_CALL_ENTRIES does not list (pi-coding-agent's compact or generateSummary, pi-ai's provider
+ *   streams, the SDK's bridge sessions) and the provider SDK packages installed in Pi's tree that it does not list
+ *   (@anthropic-ai/sdk, openai, @google/genai, @aws-sdk/client-bedrock-runtime); R-RELAYED (A2) a module that reaches an entry
+ *   through a local module (a barrel's consumer, a wrapper's caller) is not itself in the set, the barrel or wrapper is;
+ *   R-COMPUTED-SPECIFIER (A2) a src module outside the projection closure that loads a package through a computed or an
+ *   evaluated specifier; R-UNNAMED-LOADER (A2) a load or an evaluation in the closure reached through no name or literal THE
+ *   CLOSURE reads (a computed member key, a loader handed in by a caller); R-EXPLICIT (A3) an explicit demand carrying the
+ *   flipped answer as conditioning data (charter :35) is demand, never a flip's call; R-OTHER-RECORD (B1) a witness member on a
+ *   record other than the four is not read; R-OUTSIDE-PROGRAM (B1) a member merged into a record from a module outside
+ *   tsconfig.json's file set (a test/ module, a .mts module); R-NESTED-MEMBER (B1) a member getPropertiesOfType does not
+ *   return for a record's declared type (a member of a member's own type, a member on one arm of a union, an index signature);
+ *   R-SAME-VALUE (B2) the check judges value and type against the witness handed in, so a copy with equal fields passes;
+ *   R-OUTSIDE-ROOTS (C1) every directory but src/, qa/ and examples/ (docs/, test/, vendor/, .beads/ among them; this census
+ *   and its roster spell every subject) and every non-JS/TS file but the root package.json are not read; R-COMPOSED (C1) a subject assembled from parts that split its words;
  *   R-LOOKALIKE (C1) a look-alike letter NFKC does not fold; R-RF-INTERNAL (C1) rf's own composition (its sdk_versions names
  *   reactive_inference) read by a module that never spells it; R-SEPARATOR (C1) a subject whose words a character outside the
  *   SEGMENTS set joins (`reactive:query`); R-ENCODED (C1) a subject spelled through an encoding the SPELLING does not decode
  *   (base64, a byte array, rot13).
  *
- * Display paths added: none. Test-only: no src file is edited, no scratch is allocated (the projection, the host and the counting
- * query live in memory; the host's cwd is the repository root, which it only checks; the checker's plant programs are in
- * memory), and every stand-in lives in this file.
+ * Display paths added: none. Test-only: no src file is edited. One scratch directory per run is allocated through
+ * test/helpers/scratch.ts (makeScratch and removeScratch, the leak guard installed at module scope) for B1's planted
+ * tsconfig.json program; the projection, the host and the counting query live in memory, the host's cwd is the repository
+ * root (which it only checks), the in-memory plant programs read no file, and every stand-in lives in this file.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
@@ -160,6 +257,9 @@ import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/cla
 import { type NativeRef, type ObservationEvent, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
 import type { WorkflowJournalEntry } from "../src/workflow/journal.js";
 import { runWorkflow, type WorkflowHost, type WorkflowRunResult, type WorkflowSpawnResult } from "../src/workflow/runtime.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard();
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 
@@ -255,6 +355,9 @@ const RESIDUALS = [
   "R-COMPUTED-SPECIFIER",
   "R-SEPARATOR",
   "R-ENCODED",
+  "R-UNNAMED-LOADER",
+  "R-OUTSIDE-PROGRAM",
+  "R-NESTED-MEMBER",
 ];
 /** The bounded real-time settle every falsifier read waits for (no fake clock). */
 const SETTLE_MS = 150;
@@ -423,17 +526,22 @@ function findingsOf(path: string, text: string, vocabulary: readonly SubjectPair
 const CODE_ROOTS = ["examples", "qa", "src"];
 const CODE_FILE = /\.(?:[cm]?[jt]s|[jt]sx)$/;
 const DEPENDENCY_FIELDS = ["dependencies", "devDependencies", "optionalDependencies", "peerDependencies"];
-/** The read set: JS and TS modules below the code roots and at the repository root (R-OUTSIDE-ROOTS reads the rest). */
+/** The C1 read set: the CODE_FILE files below the code roots and at the repository root (R-OUTSIDE-ROOTS names the rest). */
 function selectCode(paths: readonly string[]): string[] {
   return paths.filter(path => CODE_FILE.test(path) && (!path.includes("/") || CODE_ROOTS.includes(path.split("/")[0]))).sort();
 }
-function listedCode(): string[] {
+/** The C1 read set below one root: what git lists there for the code roots and the root (tracked, or untracked and not ignored). */
+function listedCodeIn(root: string, env: NodeJS.ProcessEnv = process.env): string[] {
   const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...CODE_ROOTS, ":(glob)*"], {
-    cwd: REPO,
+    cwd: root,
+    env,
     encoding: "utf8",
     maxBuffer: 1 << 26,
   });
-  return selectCode(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))));
+  return selectCode(out.split("\0").filter(path => path !== "" && existsSync(join(root, path))));
+}
+function listedCode(): string[] {
+  return listedCodeIn(REPO);
 }
 function manifestFindings(manifest: { [key: string]: Json }, vocabulary: readonly SubjectPair[]): string[] {
   const findings: string[] = [];
@@ -454,17 +562,44 @@ interface SeamReading {
 let SEAM: SeamReading | undefined;
 /** The live seam reading, read once per run. */
 function liveSeam(): SeamReading {
-  SEAM ??= seamReading(VOCABULARY);
+  SEAM ??= seamReading(REPO, VOCABULARY);
   return SEAM;
 }
-function seamReading(vocabulary: readonly SubjectPair[]): SeamReading {
-  const modules = listedCode();
-  const code = modules.flatMap(path => findingsOf(path, readFileSync(join(REPO, path), "utf8"), vocabulary));
-  const manifestText = readFileSync(join(REPO, "package.json"), "utf8");
+/** The seam reading below one root: its C1 read set and its package.json. */
+function seamReading(root: string, vocabulary: readonly SubjectPair[], env: NodeJS.ProcessEnv = process.env): SeamReading {
+  const modules = listedCodeIn(root, env);
+  const code = modules.flatMap(path => findingsOf(path, readFileSync(join(root, path), "utf8"), vocabulary));
+  const manifestText = readFileSync(join(root, "package.json"), "utf8");
   const manifest = JSON.parse(manifestText) as { [key: string]: Json };
   // The whole manifest text too (overrides, bundled names, scripts), beside its four dependency fields' names and specs.
   const whole = findingsOf("package.json", manifestText, vocabulary);
   return { modules: modules.length, findings: [...code, ...manifestFindings(manifest, vocabulary), ...whole] };
+}
+
+/** The seam reading over a planted tree in one scratch git repository (the paths in `tracked` added to its index, the rest untracked). */
+function plantedSeam(tree: Readonly<Record<string, string>>, tracked: readonly string[], vocabulary: readonly SubjectPair[]): SeamReading {
+  const root = makeScratch("km7q8-seam-");
+  try {
+    for (const [file, text] of Object.entries(tree)) {
+      mkdirSync(dirname(join(root, file)), { recursive: true });
+      writeFileSync(join(root, file), text);
+    }
+    // A repository of its own: no inherited GIT_* variable and no global or system git config (so no host excludes file)
+    // reaches its git, and its top level is asserted to be the scratch directory.
+    const env: NodeJS.ProcessEnv = {
+      ...Object.fromEntries(Object.entries(process.env).filter(([key]) => !key.startsWith("GIT_"))),
+      GIT_CONFIG_GLOBAL: "/dev/null",
+      GIT_CONFIG_SYSTEM: "/dev/null",
+    };
+    const git = (...args: string[]): string => execFileSync("git", args, { cwd: root, env, encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }).trim();
+    git("init", "-q");
+    const top = git("rev-parse", "--show-toplevel");
+    if (top !== realpathSync(root)) throw new Error(`the planted seam repository's top level ${top} is not its scratch directory ${root}`);
+    git("add", "--", ...tracked);
+    return seamReading(root, vocabulary, env);
+  } finally {
+    removeScratch(root);
+  }
 }
 
 /* ----------------------------------------------------------------------------------------------------------------------- *
@@ -496,9 +631,10 @@ function gateOf(producer: ProducerGate, seam: readonly string[]): Gate {
  * ----------------------------------------------------------------------------------------------------------------------- */
 
 /**
- * The model packages Pi depends on and the model-call entries this census lists for each (R-OTHER-ENTRY: any other export
- * that reaches a model is not listed): the Claude Agent SDK's query, pi-coding-agent's session factories and session
- * classes, pi-ai's complete and stream calls. A package is read at any subpath.
+ * The model packages this census lists and, for each, the model-call entries it lists, exactly these names: the Claude Agent
+ * SDK's query; pi-coding-agent's AgentSession, AgentSessionRuntime and three session factories; pi-ai's complete and stream
+ * calls. A package is read at any subpath. Any other export that reaches a model, and the provider SDK packages also installed
+ * in Pi's tree (@anthropic-ai/sdk, openai, @google/genai, @aws-sdk/client-bedrock-runtime), are R-OTHER-ENTRY.
  */
 const MODEL_CALL_ENTRIES: Readonly<Record<string, readonly string[]>> = {
   "@anthropic-ai/claude-agent-sdk": ["query"],
@@ -507,6 +643,16 @@ const MODEL_CALL_ENTRIES: Readonly<Record<string, readonly string[]>> = {
 };
 /** Names that reach a loader with no literal specifier: the projection closure fails closed on any of them. */
 const OPAQUE_LOADERS = ["createRequire", "getBuiltinModule"];
+/**
+ * Names that reach evaluated code (refusal #2's cure set): eval, the Function constructor and the names of its async and
+ * generator kin, and a member named constructor (how a function value reaches its own constructor). The closure fails closed
+ * on an identifier, or on a string literal, spelled one of these (or one of OPAQUE_LOADERS, or require).
+ */
+const EVALUATORS = ["AsyncFunction", "AsyncGeneratorFunction", "Function", "GeneratorFunction", "constructor", "eval"];
+/** A string or template literal whose cooked text calls a loader (evaluated code that loads a module). */
+const LOADER_TEXT = /\b(import|require)\s*\(/;
+/** The builtin that evaluates code text, as a module specifier with or without its node: prefix. */
+const EVALUATING_BUILTINS = ["node:vm", "vm"];
 /** A bare specifier's package (`@scope/name` or `name`); a node: builtin is itself. */
 function packageOf(specifier: string): string {
   if (specifier.startsWith("node:")) return specifier;
@@ -515,7 +661,7 @@ function packageOf(specifier: string): string {
     .slice(0, specifier.startsWith("@") ? 2 : 1)
     .join("/");
 }
-/** A resolution call (`import.meta.resolve`, `require.resolve`, a created require's `resolve`): it reads a path and loads nothing. */
+/** A call of any member named resolve (`import.meta.resolve`, `require.resolve`, a created require's `resolve`): read as a resolution that loads nothing. */
 function isResolution(call: ts.CallExpression): boolean {
   return ts.isPropertyAccessExpression(call.expression) && call.expression.name.text === "resolve";
 }
@@ -530,9 +676,17 @@ function sourceOf(path: string, text: string): ts.SourceFile {
   return ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true);
 }
 interface ModuleReads {
-  /** Every value specifier: imports and re-exports that are not type-only, import-equals, a loader call with a literal, any call naming a model package. */
+  /**
+   * Every value specifier: an import declaration that is not `import type`, an export declaration that is not `export type`, an
+   * import-equals that is not type-only, an import() or require() call whose first argument is a string literal, and any other
+   * call (a resolution excepted) whose first argument is a string literal naming a model package.
+   */
   readonly specifiers: readonly string[];
-  /** Every loader reached with no literal specifier (import(id), require(id), a require that is not called, createRequire, getBuiltinModule). */
+  /**
+   * Every loader or evaluator the module reaches with no literal specifier: import(id) and require(id); a require that is not
+   * called; an identifier, or a string literal, spelled one of OPAQUE_LOADERS or EVALUATORS (a string literal spelled require
+   * too); a string or template literal holding import( or require(; a specifier naming the vm builtin.
+   */
   readonly opaque: readonly string[];
 }
 function moduleReadsOf(path: string, text: string): ModuleReads {
@@ -552,14 +706,19 @@ function moduleReadsOf(path: string, text: string): ModuleReads {
       if (first !== undefined && ts.isStringLiteralLike(first)) {
         if (loader || (isModelPackage(first.text) && !isResolution(node))) specifiers.push(first.text);
       } else if (loader) opaque.add(callee.kind === ts.SyntaxKind.ImportKeyword ? "import()" : "require()");
-    } else if (ts.isIdentifier(node) && OPAQUE_LOADERS.includes(node.text)) {
+    } else if (ts.isIdentifier(node) && (OPAQUE_LOADERS.includes(node.text) || EVALUATORS.includes(node.text))) {
       opaque.add(node.text);
     } else if (ts.isIdentifier(node) && node.text === "require" && !(ts.isCallExpression(node.parent) && node.parent.expression === node)) {
       opaque.add("require");
+    } else if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
+      if (OPAQUE_LOADERS.includes(node.text) || EVALUATORS.includes(node.text) || node.text === "require") opaque.add(node.text);
+      const loads = LOADER_TEXT.exec(node.text);
+      if (loads !== null) opaque.add(`literal ${loads[1]}(`);
     }
     ts.forEachChild(node, visit);
   };
   visit(sourceOf(path, text));
+  for (const specifier of specifiers) if (EVALUATING_BUILTINS.includes(specifier)) opaque.add(specifier);
   return { specifiers, opaque: [...opaque].sort() };
 }
 function resolveRelative(from: string, specifier: string): string {
@@ -570,7 +729,7 @@ interface Closure {
   readonly modules: readonly string[];
   readonly packages: readonly string[];
   readonly unread: readonly string[];
-  /** `<module> <loader>` for every loader the closure reaches with no literal specifier: the closure fails closed. */
+  /** `<module> <form>` for every loader or evaluator form (ModuleReads.opaque) a closure module carries: the closure fails closed. */
   readonly opaque: readonly string[];
 }
 function closureOf(entry: string, read: ReadModule): Closure {
@@ -598,12 +757,13 @@ function closureOf(entry: string, read: ReadModule): Closure {
   return { modules: [...modules].sort(), packages: [...packages].sort(), unread: [...unread].sort(), opaque: [...opaque].sort() };
 }
 /**
- * The model-call entries one module names by value, in every static form: `<package>:<name>` for a named import or
- * re-export of a listed entry; `<package>:*` for a default or namespace import, `export *` (plain or `as`), import-equals,
- * or any call whose literal argument names a model package (import(), require(), a created require; a resolution call such as
- * import.meta.resolve loads nothing and is not read). A package is read at any
- * subpath. R-RELAYED (a module reaching an entry through a local module), R-COMPUTED-SPECIFIER (a computed specifier) and
- * R-OTHER-ENTRY (an export the list does not name) are the named families this reading leaves.
+ * The model-call entries one module names by value, in the forms read here (THE ENTRIES): `<package>:<name>` for a named
+ * import or a named re-export of a listed entry (an alias read by its imported name); `<package>:*` for a default or
+ * namespace import, `export *` (plain or `as`), an import-equals, or any call (a resolution excepted) whose first argument
+ * is a string literal naming a model package (import(), require(), a created require). A package is read at any subpath;
+ * `import type`, `export type` and an inline `type` element name no entry. R-RELAYED (a module reaching an entry through a
+ * local module), R-COMPUTED-SPECIFIER (a computed or evaluated specifier) and R-OTHER-ENTRY (an export the list does not name)
+ * are the named families this reading leaves; any other form is NOT CLAIMED by this census.
  */
 function modelCallsOf(path: string, text: string): string[] {
   const calls = new Set<string>();
@@ -937,6 +1097,17 @@ const MUTANTS: readonly Composition[] = [
       }
     },
   },
+  {
+    name: "chained-past-drain",
+    onEvidence(step, session) {
+      if (isFlip(step)) {
+        void (async () => {
+          for (let turn = 0; turn < DRAIN_TURNS + 8; turn += 1) await Promise.resolve();
+          await session.direct(`chained ${step.arm}`);
+        })();
+      }
+    },
+  },
 ];
 /** The projection node a step landed on. */
 function nodeOf(session: Session, step: EvidenceStep): ReturnType<ObservationProjection["query"]>["nodes"][number] | undefined {
@@ -969,6 +1140,13 @@ const SOURCED: readonly Composition[] = [
     },
   },
 ];
+/** A composition keyed on a presentation field falsify() fixes for every source (the type sdk-operation): quiet on any source (R-SOURCE-KEYED). */
+const FIXED_KEYED: Composition = {
+  name: "presentation-type-keyed",
+  async onEvidence(step, session) {
+    if (isFlip(step) && nodeOf(session, step)?.presentation.type === ADOPTER_SOURCE.type) await session.direct(`presentation-type-keyed ${step.arm}`);
+  },
+};
 /** A composition that calls from the third flip on: refused when the source presents it, quiet when not (R-FLIP-COUNT). */
 function countKeyed(): Composition {
   let flips = 0;
@@ -1023,7 +1201,7 @@ const RECEIPT_TYPES: readonly (readonly [string, string])[] = [
   ["src/workflow/runtime.ts", "WorkflowSpawnResult"],
   ["src/workflow/journal.ts", "WorkflowJournalEntry"],
 ];
-/** A record's property names as the checker resolves its declared type: own, inherited, merged and computed-literal members. */
+/** A record's property names as checker.getPropertiesOfType returns them for its declared type (THE RECORDS; R-NESTED-MEMBER names what it does not return). */
 function checkedMembers(program: ts.Program, file: string, name: string): string[] | null {
   const source = program.getSourceFile(file);
   const declaration = source?.statements.find(
@@ -1034,7 +1212,7 @@ function checkedMembers(program: ts.Program, file: string, name: string): string
   const symbol = checker.getSymbolAtLocation(declaration.name);
   return symbol === undefined ? null : checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(property => property.name);
 }
-/** tsconfig.json's target, module and resolution (ES2022, bundler); no ambient @types package is auto-included. */
+/** The in-memory plant programs' options: tsconfig.json's target, module and resolution (ES2022, bundler); no ambient @types package. */
 const CHECKER_OPTIONS: ts.CompilerOptions = {
   target: ts.ScriptTarget.ES2022,
   module: ts.ModuleKind.ES2022,
@@ -1043,14 +1221,38 @@ const CHECKER_OPTIONS: ts.CompilerOptions = {
   noEmit: true,
   types: [],
 };
+/**
+ * The records program below one root: the program the root's tsconfig.json declares, its file set (its include pattern: every
+ * .ts module below src, a .d.ts among them) and its compiler options as ts.parseJsonConfigFileContent reads them, noEmit added.
+ * A config that does not read yields a program with no file.
+ */
+function recordsProgram(root: string): ts.Program {
+  const configFile = join(root, "tsconfig.json");
+  const config = ts.readConfigFile(configFile, ts.sys.readFile);
+  if (config.error !== undefined) return ts.createProgram({ rootNames: [], options: { noEmit: true } });
+  const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, root, undefined, configFile);
+  return ts.createProgram({ rootNames: parsed.fileNames, options: { ...parsed.options, noEmit: true } });
+}
 let LIVE_RECORDS: ts.Program | undefined;
-/** The four records as src declares them: one program over their modules with the default lib, imports resolved through src and packages. */
+/** The four records as src declares them: read in the repository's own tsconfig.json program. */
 function liveRecordMembers(path: string, name: string): string[] | null {
-  LIVE_RECORDS ??= ts.createProgram(
-    [...new Set(RECEIPT_TYPES.map(([file]) => join(REPO, file)))],
-    CHECKER_OPTIONS,
-  );
+  LIVE_RECORDS ??= recordsProgram(REPO);
   return checkedMembers(LIVE_RECORDS, join(REPO, path), name);
+}
+/** The records program over a planted tree: the repository's tsconfig.json beside the planted modules in one scratch directory. */
+function plantedRecords(tree: Readonly<Record<string, string>>, records: readonly (readonly [string, string])[]): Record<string, string[] | null> {
+  const root = makeScratch("km7q8-records-");
+  try {
+    writeFileSync(join(root, "tsconfig.json"), readFileSync(join(REPO, "tsconfig.json")));
+    for (const [file, text] of Object.entries(tree)) {
+      mkdirSync(dirname(join(root, file)), { recursive: true });
+      writeFileSync(join(root, file), text);
+    }
+    const program = recordsProgram(root);
+    return Object.fromEntries(records.map(([file, name]) => [file, checkedMembers(program, join(root, file), name)]));
+  } finally {
+    removeScratch(root);
+  }
 }
 /** A record read through the checker over in-memory modules (relative imports between them resolve; no lib, no package). */
 function recordMembersOf(files: Readonly<Record<string, string>>, path: string, name: string): string[] | null {
@@ -1177,6 +1379,8 @@ function keysOf(value: Json): string[] {
 const BACKSLASH = String.fromCodePoint(0x5c);
 const ZERO_WIDTH = String.fromCodePoint(0x200b);
 const SOFT_HYPHEN = String.fromCodePoint(0x00ad);
+/** U+034F COMBINING GRAPHEME JOINER: default-ignorable but not a format character (Mn). */
+const GRAPHEME_JOINER = String.fromCodePoint(0x034f);
 const BEAD_ROW = beadRow();
 const VOCABULARY = vocabularyOf(BEAD_ROW.title);
 const RECORDED = new Map<string, Json>();
@@ -1198,6 +1402,10 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     expect(quiet["R-LATE"]).toMatchObject({ calls: 0, late: 2 });
     expect(quiet["R-OTHER-SEAM"]).toMatchObject({ calls: 0, otherSeam: 2 });
     expect((mutants["microtask-on-flip"] as { violations: Json }).violations, "a call chained through microtasks is its step's own").toEqual(["call-on:refresh:flip", "call-on:ingest:flip"]);
+    expect((mutants["chained-past-drain"] as { violations: Json }).violations, "a call chained past the drain lands in a later window, still a violation").toEqual([
+      "call-on:refresh:recompute",
+      "call-on:ingest:recompute",
+    ]);
     const sourced: { [key: string]: Json } = {};
     const keyedQuiet: { [key: string]: Json } = {};
     for (const composition of [...SOURCED, countKeyed()]) {
@@ -1212,6 +1420,14 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     }
     const fewer = await falsify(countKeyed(), CENSUS_SOURCE);
     expect(fewer.violations, "count-keyed under three flips is R-FLIP-COUNT's quiet row").toEqual([]);
+    for (const [label, source] of [
+      ["census", CENSUS_SOURCE],
+      ["adopter", ADOPTER_SOURCE],
+    ] as const) {
+      const fixed = await falsify(FIXED_KEYED, source);
+      expect(fixed.violations, `${FIXED_KEYED.name} on the ${label} source is R-SOURCE-KEYED's quiet row`).toEqual([]);
+      keyedQuiet[`${FIXED_KEYED.name}:${label}`] = judged(fixed);
+    }
     quiet["R-SOURCE-KEYED"] = keyedQuiet;
     quiet["R-FLIP-COUNT"] = judged(fewer);
     return { mutants, sourced, quiet };
@@ -1232,6 +1448,7 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     expect(closure.opaque).toEqual([]);
     expect(reachesModel(closure, models)).toEqual([]);
     const plantedModels = [HOST_MODULE];
+    const plantedHost = 'import { query as sdkQuery } from "@anthropic-ai/claude-agent-sdk";\nexport const createClaudeWorkflowHost = sdkQuery;\n';
     const controls: { [key: string]: Json } = {
       chained: reachesModel(
         closureOf(
@@ -1264,12 +1481,30 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       typeEntryOnly: modelCallsOf("src/x.ts", 'import { type query } from "@anthropic-ai/claude-agent-sdk";\nexport type Q = typeof query;\n'),
       resolveOnly: modelCallsOf("src/x.ts", 'export const path = import.meta.resolve("@anthropic-ai/claude-agent-sdk");\n'),
       resolveClosure: reachesModel(closureOf(PROJECTION_MODULE, readMap({ [PROJECTION_MODULE]: 'export const path = import.meta.resolve("@anthropic-ai/claude-agent-sdk");\n' })), plantedModels),
+      sideEffect: reachesModel(closureOf(PROJECTION_MODULE, readMap({ [PROJECTION_MODULE]: 'import "./claude-host.js";\n', [HOST_MODULE]: plantedHost })), plantedModels),
+      requireLiteral: reachesModel(
+        closureOf(PROJECTION_MODULE, readMap({ [PROJECTION_MODULE]: 'const host = require("./claude-host.js");\nexport const h = host;\n', [HOST_MODULE]: plantedHost })),
+        plantedModels,
+      ),
+      dynamicRelative: reachesModel(
+        closureOf(PROJECTION_MODULE, readMap({ [PROJECTION_MODULE]: 'export const load = (): Promise<unknown> => import("./claude-host.js");\n', [HOST_MODULE]: plantedHost })),
+        plantedModels,
+      ),
+      importEquals: reachesModel(closureOf(PROJECTION_MODULE, readMap({ [PROJECTION_MODULE]: 'import sdk = require("@anthropic-ai/claude-agent-sdk");\nexport const s = sdk;\n' })), plantedModels),
+      literalCall: reachesModel(
+        closureOf(PROJECTION_MODULE, readMap({ [PROJECTION_MODULE]: 'declare const load: (id: string) => unknown;\nexport const sdk = load("@anthropic-ai/claude-agent-sdk");\n' })),
+        plantedModels,
+      ),
+      unread: [...closureOf(PROJECTION_MODULE, readMap({ [PROJECTION_MODULE]: 'import "./zz-missing.js";\n' })).unread],
     };
     expect(controls.resolveOnly, "a resolution call loads nothing").toEqual([]);
     expect(controls.resolveClosure, "a resolution call is no value edge").toEqual([]);
     expect(controls.chained).toEqual(["@anthropic-ai/claude-agent-sdk", HOST_MODULE]);
     expect(controls.dynamic).toEqual(["@anthropic-ai/claude-agent-sdk"]);
     expect(controls["R-OBSERVER-PATH"]).toEqual([]);
+    for (const edge of ["sideEffect", "requireLiteral", "dynamicRelative"]) expect(controls[edge], `${edge} is an edge to the host module`).toEqual(["@anthropic-ai/claude-agent-sdk", HOST_MODULE]);
+    for (const edge of ["importEquals", "literalCall"]) expect(controls[edge], `${edge} is an edge`).toEqual(["@anthropic-ai/claude-agent-sdk"]);
+    expect(controls.unread, "a module that does not read is unread").toEqual(["src/workbench/zz-missing.ts"]);
     const adopter = await falsify(PI_TODAY, ADOPTER_SOURCE);
     const adopterFlips = adopter.steps.filter(isFlip).map(step => `${step.arm}:${step.name}`);
     expect(adopterFlips).toEqual(["refresh:flip", "refresh-2:flip", "ingest:flip", "ingest-2:flip"]);
@@ -1282,8 +1517,67 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       computedRequire: opaque("export function f(id: string) { return require(id); }\n"),
       createRequire: opaque('import { createRequire } from "node:module";\nexport const load = createRequire(import.meta.url);\n'),
       builtinRequire: opaque('const load = process.getBuiltinModule("node:module").createRequire(import.meta.url);\nexport const sdk = load("@anthropic-ai/claude-agent-sdk");\n'),
+      uncalledRequire: opaque("const load = require;\nexport const sdk = (id: string): unknown => load(id);\n"),
+      emptyRequire: opaque("export const x = (): unknown => require();\n"),
     };
     for (const [loader, reading] of Object.entries(loaders)) expect((reading as { opaque: Json[] }).opaque, `${loader} fails the closure closed`).not.toEqual([]);
+    const evaluated = (text: string): Json => {
+      const planted = closureOf(PROJECTION_MODULE, readMap({ [PROJECTION_MODULE]: text }));
+      return { reaches: reachesModel(planted, plantedModels), opaque: [...planted.opaque] };
+    };
+    const evaluators: { [key: string]: Json } = {
+      "GP7-obs-eval": evaluated('export const gp7Load = (): Promise<unknown> => (0, eval)("import(\\"./claude-host.js\\")");\n'),
+      "GP7-obs-function": evaluated('export const gp7Load = new Function("return import(\\"./claude-host.js\\")") as () => Promise<unknown>;\n'),
+      "GP7-obs-function2": evaluated(
+        'const gp7Import = new Function("specifier", "return import(specifier)") as (specifier: string) => Promise<unknown>;\nexport const gp7Load = (): Promise<unknown> => gp7Import(new URL("./claude-host.js", import.meta.url).href);\n',
+      ),
+      "GP7-obs-ctor": evaluated(
+        'const gp7Import = (async () => {}).constructor("specifier", "return import(specifier)") as (specifier: string) => Promise<unknown>;\nexport const gp7Load = (): Promise<unknown> => gp7Import(new URL("./claude-host.js", import.meta.url).href);\n',
+      ),
+      directEval: evaluated("export const run = (code: string): unknown => eval(code);\n"),
+      indirectEval: evaluated("export const run = (code: string): unknown => (0, eval)(code);\n"),
+      memberEval: evaluated("export const run = (code: string): unknown => globalThis.eval(code);\n"),
+      keyedEval: evaluated('export const run = (scope: Record<string, (code: string) => unknown>, code: string): unknown => scope["eval"]?.(code);\n'),
+      aliasedEval: evaluated("const run = eval;\nexport const go = (code: string): unknown => run(code);\n"),
+      shorthandEval: evaluated("export const table = { eval };\n"),
+      newFunction: evaluated("export const make = (body: string): unknown => new Function(body);\n"),
+      callFunction: evaluated("export const make = (body: string): unknown => Function(body);\n"),
+      extendsFunction: evaluated("export class Make extends Function {}\n"),
+      asyncFunction: evaluated("declare const AsyncFunction: new (body: string) => unknown;\nexport const make = (body: string): unknown => new AsyncFunction(body);\n"),
+      generatorFunction: evaluated("declare const GeneratorFunction: new (body: string) => unknown;\nexport const make = (body: string): unknown => new GeneratorFunction(body);\n"),
+      asyncGeneratorFunction: evaluated("declare const AsyncGeneratorFunction: new (body: string) => unknown;\nexport const make = (body: string): unknown => new AsyncGeneratorFunction(body);\n"),
+      memberConstructor: evaluated("export const make = (body: string): unknown => (function* () {}).constructor(body);\n"),
+      keyedConstructor: evaluated('export const make = (body: string): unknown => (() => 0)["constructor"](body);\n'),
+      destructuredConstructor: evaluated("const { constructor: make } = async () => {};\nexport const go = make;\n"),
+      keyedFunction: evaluated('export const make = (scope: Record<string, (body: string) => unknown>, body: string): unknown => scope["Function"]?.(body);\n'),
+      keyedAsyncFunction: evaluated('export const make = (scope: Record<string, (body: string) => unknown>, body: string): unknown => scope["AsyncFunction"]?.(body);\n'),
+      keyedGeneratorFunction: evaluated('export const make = (scope: Record<string, (body: string) => unknown>, body: string): unknown => scope["GeneratorFunction"]?.(body);\n'),
+      keyedAsyncGeneratorFunction: evaluated(
+        'export const make = (scope: Record<string, (body: string) => unknown>, body: string): unknown => scope["AsyncGeneratorFunction"]?.(body);\n',
+      ),
+      keyedRequire: evaluated('export const load = (scope: Record<string, (id: string) => unknown>, id: string): unknown => scope["require"]?.(id);\n'),
+      keyedCreateRequire: evaluated('export const load = (scope: Record<string, (url: string) => unknown>): unknown => scope["createRequire"]?.(import.meta.url);\n'),
+      keyedBuiltin: evaluated('export const load = (scope: Record<string, (id: string) => unknown>): unknown => scope["getBuiltinModule"]?.("node:module");\n'),
+      importText: evaluated('export const code = "return import(\\"./claude-host.js\\")";\n'),
+      requireText: evaluated('export const code = "return require(specifier)";\n'),
+      templateText: evaluated(`export const code = (specifier: string): string => \`return import(\${JSON.stringify(specifier)})\`;\n`),
+      escapedText: evaluated(`export const code = "return requ${BACKSLASH}u0069re(specifier)";\n`),
+      spacedText: evaluated('export const code = "return import (specifier)";\n'),
+      noSubstitutionText: evaluated("export const code = `return import(specifier)`;\n"),
+      templateMiddleText: evaluated(`export const code = (head: string, specifier: string): string => \`\${head}return import(\${specifier})\`;\n`),
+      templateTailText: evaluated(`export const code = (head: string): string => \`\${head}return require(specifier)\`;\n`),
+      vmBuiltin: evaluated('import { runInThisContext } from "node:vm";\nexport const run = runInThisContext;\n'),
+      vmBare: evaluated('import vm from "vm";\nexport const run = vm.runInThisContext;\n'),
+      vmRequire: evaluated('const vm = require("node:vm");\nexport const run = vm.runInThisContext;\n'),
+    };
+    for (const [form, reading] of Object.entries(evaluators)) expect((reading as { opaque: Json[] }).opaque, `${form} fails the closure closed`).not.toEqual([]);
+    const unnamed: { [key: string]: Json } = {
+      computedKey: evaluated(
+        'const key = ["con", "structor"].join("");\nconst make = ((async () => {}) as unknown as Record<string, (body: string) => () => Promise<unknown>>)[key];\nexport const load = (): Promise<unknown> | undefined => make?.(["return imp", "ort(\\"./claude-host.js\\")"].join(""))();\n',
+      ),
+      handedLoader: evaluated('export function attach(load: (specifier: string) => Promise<unknown>): Promise<unknown> {\n  return load("./claude-host.js");\n}\n'),
+    };
+    expect(unnamed, "a load reached through no name or literal the closure reads is R-UNNAMED-LOADER's quiet row").toEqual({ computedKey: { reaches: [], opaque: [] }, handedLoader: { reaches: [], opaque: [] } });
     const forms: { [key: string]: Json } = {
       exportFrom: modelCallsOf("src/b.ts", 'export { query } from "@anthropic-ai/claude-agent-sdk";\n'),
       exportStar: modelCallsOf("src/b.ts", 'export * from "@anthropic-ai/claude-agent-sdk";\n'),
@@ -1297,23 +1591,42 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       sessionRuntime: modelCallsOf("src/s.ts", 'import { createAgentSessionRuntime } from "@earendil-works/pi-coding-agent";\nexport const go = createAgentSessionRuntime;\n'),
       sessionClass: modelCallsOf("src/s.ts", 'import { AgentSession } from "@earendil-works/pi-coding-agent";\nexport const go = AgentSession;\n'),
       piAiComplete: modelCallsOf("src/s.ts", 'import { complete } from "@earendil-works/pi-ai/compat";\nexport const go = complete;\n'),
+      dynamicImport: modelCallsOf("src/d.ts", 'export const load = (): Promise<unknown> => import("@anthropic-ai/claude-agent-sdk");\n'),
+      exportAlias: modelCallsOf("src/b.ts", 'export { query as ask } from "@anthropic-ai/claude-agent-sdk";\n'),
     };
     for (const [form, calls] of Object.entries(forms)) expect(calls, `${form} names a model-call entry`).not.toEqual([]);
-    const residuals: { [key: string]: Json } = {
-      "R-OTHER-ENTRY": modelCallsOf("src/s.ts", 'import { generateSummary } from "@earendil-works/pi-coding-agent";\nexport const go = generateSummary;\n'),
-      "R-RELAYED": modelCallsOf("src/c.ts", 'import { query } from "./b.js";\nexport const go = query;\n'),
-      "R-COMPUTED-SPECIFIER": modelCallsOf("src/c.ts", 'const id = ["@anthropic-ai", "claude-agent-sdk"].join("/");\nexport async function f() { return import(id); }\n'),
+    const typeOnlyForms: { [key: string]: Json } = {
+      typeExport: modelCallsOf("src/b.ts", 'export type { query } from "@anthropic-ai/claude-agent-sdk";\n'),
+      typeElementExport: modelCallsOf("src/b.ts", 'export { type query } from "@anthropic-ai/claude-agent-sdk";\n'),
+      typeImport: modelCallsOf("src/b.ts", 'import type { query } from "@anthropic-ai/claude-agent-sdk";\nexport type Q = typeof query;\n'),
     };
-    for (const [row, calls] of Object.entries(residuals)) expect(calls, `${row} is a pinned quiet row`).toEqual([]);
+    for (const [form, calls] of Object.entries(typeOnlyForms)) expect(calls, `${form} names no entry by value`).toEqual([]);
+    const residuals: { [key: string]: Json } = {
+      "R-OTHER-ENTRY": {
+        unlisted: modelCallsOf("src/s.ts", 'import { generateSummary } from "@earendil-works/pi-coding-agent";\nexport const go = generateSummary;\n'),
+        providerSdk: modelCallsOf(
+          "src/s.ts",
+          'import Anthropic from "@anthropic-ai/sdk";\nimport OpenAI from "openai";\nimport { GoogleGenAI } from "@google/genai";\nimport { BedrockRuntimeClient } from "@aws-sdk/client-bedrock-runtime";\nexport const go = [Anthropic, OpenAI, GoogleGenAI, BedrockRuntimeClient];\n',
+        ),
+      },
+      "R-RELAYED": modelCallsOf("src/c.ts", 'import { query } from "./b.js";\nexport const go = query;\n'),
+      "R-COMPUTED-SPECIFIER": {
+        computed: modelCallsOf("src/c.ts", 'const id = ["@anthropic-ai", "claude-agent-sdk"].join("/");\nexport async function f() { return import(id); }\n'),
+        evaluated: modelCallsOf("src/c.ts", 'export const load = new Function("return import(\\"@anthropic-ai/claude-agent-sdk\\")") as () => Promise<unknown>;\n'),
+      },
+    };
+    expect(residuals, "each is a pinned quiet row").toEqual({ "R-OTHER-ENTRY": { unlisted: [], providerSdk: [] }, "R-RELAYED": [], "R-COMPUTED-SPECIFIER": { computed: [], evaluated: [] } });
     return {
       steps: today.steps.map(stepJson),
       adopterFlips,
       loaders,
+      evaluators,
       forms,
+      typeOnlyForms,
       residuals,
       closure: { modules: [...closure.modules], packages: [...closure.packages], unread: [...closure.unread], opaque: [...closure.opaque] },
       modelCallModules: models,
-      controls,
+      controls: { ...controls, "R-UNNAMED-LOADER": unnamed },
     };
   },
   async A3() {
@@ -1395,6 +1708,40 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
     };
     for (const [form, found] of Object.entries(forms)) expect(found, `${form} carries the witness member`).toContain("witness");
     controls.forms = forms;
+    controls["R-NESTED-MEMBER"] = {
+      nestedMember: witnessOf({ "src/p.ts": `interface Gate { witness?: ${shape} }\ninterface WorkflowSpawnResult { ok: boolean; gate?: Gate }\n` }),
+      unionArm: witnessOf({ "src/p.ts": `type WorkflowSpawnResult = { ok: boolean } | { ok: boolean; witness?: ${shape} };\n` }),
+      indexSignature: witnessOf({ "src/p.ts": "interface WorkflowSpawnResult { ok: boolean; [key: string]: unknown }\n" }),
+    };
+    expect(controls["R-NESTED-MEMBER"], "a member the checker does not return for the declared type is R-NESTED-MEMBER's quiet row").toEqual({ nestedMember: [], unionArm: [], indexSignature: [] });
+    // The records program over one planted tree (the repository's tsconfig.json at its root): each record module beside a module
+    // augmentation of it (refusal #2's GP7-augment shape) that no record module imports, as .ts, as .d.ts and from another
+    // directory; a control whose record module imports its augmentation; and two augmentations outside tsconfig.json's file set.
+    const augmentation = (target: string): string => `import type {} from "${target}";\n\ndeclare module "${target}" {\n  interface WorkflowSpawnResult {\n    witness?: ${shape};\n  }\n}\n`;
+    const record = "export interface WorkflowSpawnResult {\n  ok: boolean;\n}\n";
+    const planted = plantedRecords(
+      {
+        "src/a/runtime.ts": record,
+        "src/a/zz-augment.ts": augmentation("./runtime.js"),
+        "src/b/runtime.ts": record,
+        "src/b/zz-augment.d.ts": augmentation("./runtime.js"),
+        "src/c/runtime.ts": record,
+        "src/zz-augment-c.ts": augmentation("./c/runtime.js"),
+        "src/f/runtime.ts": `import "./zz-augment.js";\n\n${record}`,
+        "src/f/zz-augment.ts": augmentation("./runtime.js"),
+        "src/d/runtime.ts": record,
+        "test/zz-augment-d.ts": augmentation("../src/d/runtime.js"),
+        "src/e/runtime.ts": record,
+        "src/e/zz-augment.mts": augmentation("./runtime.js"),
+      },
+      ["a", "b", "c", "f", "d", "e"].map(dir => [`src/${dir}/runtime.ts`, "WorkflowSpawnResult"] as const),
+    );
+    const witnessIn = (dir: string): string[] => (planted[`src/${dir}/runtime.ts`] ?? []).filter(member => isWitnessMember(member, vocabulary, VOCABULARY));
+    const augmented: { [key: string]: Json } = { augmentation: witnessIn("a"), declarationFile: witnessIn("b"), otherDirectory: witnessIn("c"), importedAugmentation: witnessIn("f") };
+    for (const [form, found] of Object.entries(augmented)) expect(found, `${form} carries the witness member`).toEqual(["witness"]);
+    controls.augmented = augmented;
+    controls["R-OUTSIDE-PROGRAM"] = { testModule: witnessIn("d"), mtsModule: witnessIn("e") };
+    expect(controls["R-OUTSIDE-PROGRAM"], "an augmentation outside tsconfig.json's file set is R-OUTSIDE-PROGRAM's quiet row").toEqual({ testModule: [], mtsModule: [] });
     return {
       declared,
       witnessMembers,
@@ -1439,6 +1786,8 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       specAlias: manifestFindings({ dependencies: { rq: "npm:reactive-query-sdk@1.0.0" } }, VOCABULARY),
       specFile: manifestFindings({ dependencies: { "@acme/evidence": "file:vendor/reactive-query-sdk-0.1.0.tgz" } }, VOCABULARY),
       specGit: manifestFindings({ dependencies: { "evidence-engine": "github:example/ReactiveQuerySDK" } }, VOCABULARY),
+      optionalField: manifestFindings({ optionalDependencies: { "@acme/reactive-query": "1.0.0" } }, VOCABULARY),
+      peerField: manifestFindings({ peerDependencies: { "reactive-inference-sdk": "*" } }, VOCABULARY),
       escapedUnicode: read(`import { open } from "reactive-${BACKSLASH}u0071uery-sdk";`),
       escapedHex: read(`const pkg = "reactive-${BACKSLASH}x71uery-sdk";`),
       escapedBrace: read(`const pkg = "Reactive${BACKSLASH}u{51}uerySDK";`),
@@ -1446,11 +1795,50 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       zeroWidthSplit: read(`const n = "Reactive${ZERO_WIDTH}Inference${ZERO_WIDTH}SDK";`),
       softHyphenSplit: read(`const n = "Reactive${SOFT_HYPHEN}Query${SOFT_HYPHEN}SDK";`),
       innerInvisible: read(`const n = "Reac${ZERO_WIDTH}tiveInference";`),
+      ignorableSplit: read(`const n = "Reactive${GRAPHEME_JOINER}Query";`),
       blockContinued: read("// handed to the reactive\n/* query engine */"),
+      hashContinued: read("# handed to the reactive\n# query engine"),
       htmlEntity: read('const s = "Reactive&#81;uery";'),
+      htmlHexEntity: read('const s = "Reactive&#x51;uery";'),
+      controlEscape: read(`const s = "reactive${BACKSLASH}nquery";`),
       percentEncoded: read('const u = "https://example.invalid/Reactive%20Query%20SDK";'),
     };
     for (const [plant, findings] of Object.entries(plants)) expect(findings, plant).not.toEqual([]);
+    // The read set's extensions and roots, and the seam reading over a planted git tree: a tracked module, an untracked one, an
+    // ignored one, the code roots and the root, two paths outside them, and a package.json whose subject sits in a script line.
+    const readSet = selectCode([
+      "src/a.js",
+      "src/a.cjs",
+      "src/a.mjs",
+      "src/a.ts",
+      "src/a.cts",
+      "src/a.mts",
+      "src/a.jsx",
+      "src/a.tsx",
+      "src/a.d.ts",
+      "qa/a.mjs",
+      "examples/a.ts",
+      "root.ts",
+    ]);
+    expect(readSet, "every CODE_FILE extension below a code root and at the root is read").toHaveLength(12);
+    const engine = (subject: string): string => `export const engine = "reactive-${subject}-sdk";\n`;
+    const plantedTree = plantedSeam(
+      {
+        ".gitignore": "src/ignored.ts\n",
+        "package.json": `${JSON.stringify({ name: "km7q8-plant", scripts: { probe: "node reactive-query-sdk" }, dependencies: { "@acme/query-view": "1.0.0" } }, null, 2)}\n`,
+        "src/tracked.ts": engine("query"),
+        "src/untracked.ts": engine("inference"),
+        "src/ignored.ts": engine("query"),
+        "qa/q.mjs": engine("inference"),
+        "examples/e.tsx": engine("query"),
+        "root.ts": engine("inference"),
+        "docs/d.ts": engine("query"),
+        "test/t.ts": engine("inference"),
+      },
+      [".gitignore", "package.json", "src/tracked.ts"],
+      VOCABULARY,
+    );
+    const planted = { modules: plantedTree.modules, findings: [...plantedTree.findings] };
     const quiet: { [key: string]: Json } = {
       projectionQuery: read("projection.query({ scope, limit: 64 });"),
       typeInference: read("// TypeScript type inference narrows the view"),
@@ -1477,6 +1865,8 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       vocabulary: VOCABULARY.map(pair => `${pair.words.join(" ")}: ${pair.subject}`),
       findings: [...live.findings],
       reading: live.findings.length === 0 ? "ABSENT" : "PRESENT",
+      readSet,
+      planted,
       plants,
       quiet,
       roles,
