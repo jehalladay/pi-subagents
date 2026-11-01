@@ -88,15 +88,28 @@
  *    each directory holding a tracked file of its own (docs/workbench, docs/workbench/receipts); A1 holds that the walk keeps at least
  *    that many files and, of each measured directory still on disk, a file of its own. Floors, never equalities: an added page never
  *    reds them, and a cut that deletes pages re-measures walkFloor in the same commit.
- * THE ARM PLANTS (wb-59u1 F2). Each of A1's six arms is one function that the live walk and a scratch git repository
- *    (test/helpers/scratch.ts, leak guard installed) read alike, and A1 holds each arm's reading of its own plant: BOTH WAYS a page
- *    below a plain .git directory (walked, never listed by git) and an untracked symlink page (listed by git, never a walked file);
- *    TRACKED FLOOR the scratch's own count read against itself (quiet) and against one more (short); DIRECTORY FLOOR a measured
- *    directory absent from disk (quiet) and present but empty (unwalked); MARKDOWN a .txt page; OPENING LINES a page without a
- *    level-1 heading and a receipt whose first line is not its bead's, beside a good page and a good receipt; SENTENCE FLOOR a page
- *    one sentence short of SENTENCE_FLOOR in each leg (short) and the same page read with a one-sentence plant (quiet). So an arm
- *    hollowed in this file - an empty both-ways list, a floor compared with 0, an emptied directory list, a hollowed heading, receipt
- *    or markdown check - reds A1 although the live tree still passes it.
+ * THE ARM PLANTS (wb-59u1 F2; the near-misses wb-fity F1). Each of A1's six arms is one function that the live walk and a scratch
+ *    git repository (test/helpers/scratch.ts, leak guard installed) read alike, and A1 holds each arm's reading of its own plant:
+ *    BOTH WAYS a page below a plain .git directory (walked, never listed by git) and an untracked symlink page (listed by git, never
+ *    a walked file); TRACKED FLOOR the scratch's own count read against itself (quiet) and against one more (short); DIRECTORY
+ *    FLOOR a measured directory absent from disk (quiet), present but empty (unwalked) and holding a file only below it, in a
+ *    directory of its own (unwalked); MARKDOWN a .txt page and a .md.txt page; OPENING LINES a page without a level-1 heading, a page
+ *    opening with a level-2 heading and a page whose level-1 heading comes after its first line, and receipts whose first line is a
+ *    wrong title, its bead alone ('# wb-c'), its bead with no space after the colon, or another bead's first line, beside a good
+ *    page and a good receipt; SENTENCE FLOOR a page one sentence short of SENTENCE_FLOOR in each leg (short), the same page read
+ *    with a one-sentence plant (quiet), each leg short alone: a sentence inside an HTML comment brings the raw leg to the floor
+ *    while the rendered view removes it (rendered short), and two sentences joined by a numeric space reference bring the rendered
+ *    leg to it while the raw leg reads one sentence there (raw short); and both legs short at different counts, each way round: the
+ *    comment page one sentence shorter (raw 3999, rendered 3998) and the reference page one sentence shorter (raw 3998, rendered
+ *    3999). So an arm hollowed in this file - an empty both-ways list, a floor compared with 0, an emptied directory list, a hollowed
+ *    heading, receipt or markdown check - reds A1 although the live tree still passes it, and so does each partial weakening those
+ *    near-misses tell apart: the sentence floor judged for both legs by the raw count, by the rendered count, by the lesser or the
+ *    greater of the two or by the legs' counts exchanged, or for one leg alone by the lesser or the greater; a short leg's count
+ *    reported as the raw count for both legs, as the rendered count for both, as the lesser or the greater of the two for both, as
+ *    the legs' counts exchanged, as the lesser or the greater for one leg alone, or as one fixed count for every short leg, or its
+ *    floor reported as one more than its count; the page check read as any '#' opening, as any heading level or on any line; the
+ *    receipt check read without its ': ', without the space after its colon, or as any bead's first line; a directory's own file
+ *    read anywhere below it; '.md' read anywhere in a path.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  *    every pin's witness, the constants and every registered test title - is held to the out-of-file roster
  *    (test/fixtures/mw-gp-citation-status-roster.json). RECORD: each pin's case records how many assertions its own case made and
@@ -117,7 +130,11 @@
  *    landed record names the quiet rows and the family count, never a family's name or which row is its own); a residual added
  *    after the landed record (the floors bound only Q1-Q13); a control, plant or probe removed or edited in IMPL and the roster
  *    together while every remaining one holds; a live arm's reading in A1 replaced by its expected empty list (THE ARM PLANTS hold
- *    each arm's function, not the live call that reads the tree through it); a pin folded into a neighbour where neither quote carries a quoted element (the bead
+ *    each arm's function, not the live call that reads the tree through it); a partial weakening of an arm that none of THE ARM
+ *    PLANTS' near-misses tells apart (they pin each arm at the near-misses they name, never every relaxation of its check: e.g. the
+ *    markdown check read case-blind or as 'md' without its dot, a heading read after leading spaces or after leading blank lines, or
+ *    a short leg's count reported right only at the counts the plants read, 3999 and 3998, as when clamped from below at the floor
+ *    less two); a pin folded into a neighbour where neither quote carries a quoted element (the bead
  *    text anchors each clause and its quoted elements, not the boundary between two unquoted parts); a seat-added vocabulary member
  *    (the joiners, MW and GraphPolicy, production and deployed, schedul-, assign-, dispatch- and orchestrat-, the GUARD, GUARD_AFTER
  *    and negation words, the NUMBER and WORD_BREAK shapes, the RECEIPT form, the NAMED_REFERENCES) removed with every control naming
@@ -152,6 +169,14 @@
  *  F3 the residual families' anchor outside this file and the roster (OUTSIDE ANCHORS above): the bead's export row carries the
  *    landed delivery record and gate verdict, so a residual removed from ROWS, the literal, IMPL, RESIDUALS and the roster together
  *    (CT6 on Q13, 29/29 green on the landed census) reds against text no census cut edits.
+ * FOLLOW-UP wb-fity (R694, from the landing-606 gate cmd_a2c86a422431 PASS-WITH-FINDING; F1 leads): F1's three partial weakenings,
+ *    each 30/30 green on the landed census - L2-SFL-COLLAPSE (sentenceShort judging both legs by the raw count), L2-OPEN-H2 (the
+ *    page check read as startsWith('#')) and L2-RCPT-PREFIX (the receipt check read as '# <bead>', no ': ') - red A1 at THE ARM
+ *    PLANTS' near-misses above (the cure shape's comment-sentence page, level-2 page and '# wb-c' receipt), as do the class's other
+ *    members those near-misses tell apart; NOT CLAIMED names the rest of the class. Respin 1 (refusal #1, U1): the claim 'reporting
+ *    one leg's count for both' was wider than the plants - no page had both legs short at different counts, so the gate's
+ *    G-SFL-PRINT-MIN (the lesser count reported for both legs) passed 30/30; the two pages with both legs short at different counts
+ *    red it, and THE ARM PLANTS now name each judgement and report form of the sentence floor those near-misses tell apart.
  * SCOPE: the judges read words, not meaning. Display paths added: none (test-only; docs/workbench is read, never edited). Scratch:
  *    A1's arm plants, D2 and D3 compose makeScratch/removeScratch with the leak guard installed; docs, .beads and the roster are
  *    otherwise only read, and the census reads no git history (the filing pin is the seat's measurement, held in the roster).
@@ -884,10 +909,17 @@ function scratchScope(prefix: string, files: readonly FileText[], bound: readonl
 interface ArmPlants {
   readonly bothWays: { readonly walkOnly: readonly string[]; readonly gitOnly: readonly string[] };
   readonly trackedFloor: { readonly atCount: readonly string[]; readonly oneMore: readonly string[] };
-  readonly directoryFloor: { readonly absent: readonly string[]; readonly empty: readonly string[] };
+  readonly directoryFloor: { readonly absent: readonly string[]; readonly empty: readonly string[]; readonly belowOnly: readonly string[] };
   readonly markdownOnly: readonly string[];
   readonly openingLines: readonly string[];
-  readonly sentenceFloor: { readonly short: readonly string[]; readonly atFloor: readonly string[] };
+  readonly sentenceFloor: {
+    readonly short: readonly string[];
+    readonly atFloor: readonly string[];
+    readonly renderedShort: readonly string[];
+    readonly rawShort: readonly string[];
+    readonly bothShortRenderedFewer: readonly string[];
+    readonly bothShortRawFewer: readonly string[];
+  };
 }
 function armPlants(): ArmPlants {
   const page: FileText = { path: "docs/workbench/a.md", text: "# A\n\nThe page.\n" };
@@ -905,23 +937,66 @@ function armPlants(): ArmPlants {
       oneMore: trackedShort(files, { ...ROSTER.walkFloor, tracked: files.length + 1 }),
     };
   });
-  const directoryFloor = inScratchRepo("wb-59u1-directory-", [page], root => {
-    const absent = unwalkedDirectories(root, gitList(root), ROSTER.walkFloor);
-    mkdirSync(join(root, RECEIPTS));
-    return { absent, empty: unwalkedDirectories(root, gitList(root), ROSTER.walkFloor) };
-  });
-  const markdownOnly = inScratchRepo("wb-59u1-markdown-", [page, { path: "docs/workbench/notes.txt", text: "# Notes\n" }], root => notMarkdown(gitList(root)));
+  const directoryFloor = {
+    ...inScratchRepo("wb-59u1-directory-", [page], root => {
+      const absent = unwalkedDirectories(root, gitList(root), ROSTER.walkFloor);
+      mkdirSync(join(root, RECEIPTS));
+      return { absent, empty: unwalkedDirectories(root, gitList(root), ROSTER.walkFloor) };
+    }),
+    // wb-fity: docs/workbench holding a file only below it (the receipt), in a directory of its own, keeps no file of its own.
+    belowOnly: inScratchRepo("wb-fity-directory-below-", [receipt], root => unwalkedDirectories(root, gitList(root), ROSTER.walkFloor)),
+  };
+  const markdownOnly = inScratchRepo(
+    "wb-59u1-markdown-",
+    [page, { path: "docs/workbench/notes.txt", text: "# Notes\n" }, { path: "docs/workbench/notes.md.txt", text: "# Notes\n" }],
+    root => notMarkdown(gitList(root)),
+  );
+  // wb-fity: beside the page without a heading and the wrong-title receipt, each check's near-misses - a page opening with a level-2
+  // heading, a page whose level-1 heading comes after its first line; receipts whose first line is the bead alone, the bead with no
+  // space after its colon, and another bead's first line.
   const openingLines = inScratchRepo(
     "wb-59u1-opening-",
-    [page, receipt, { path: "docs/workbench/b.md", text: "A page without a heading.\n" }, { path: "docs/workbench/receipts/wb-b.md", text: "# wrong title\n" }],
+    [
+      page,
+      receipt,
+      { path: "docs/workbench/b.md", text: "A page without a heading.\n" },
+      { path: "docs/workbench/c.md", text: "## A level-2 heading\n" },
+      { path: "docs/workbench/d.md", text: "A first line.\n\n# A later level-1 heading\n" },
+      { path: "docs/workbench/receipts/wb-b.md", text: "# wrong title\n" },
+      { path: "docs/workbench/receipts/wb-c.md", text: "# wb-c\n" },
+      { path: "docs/workbench/receipts/wb-d.md", text: "# wb-d:no space\n" },
+      { path: "docs/workbench/receipts/wb-e.md", text: "# wb-a: a\n" },
+    ],
     root => openingMisses(root, gitList(root)),
   );
   // A heading and SENTENCE_FLOOR - 2 sentences: one short of the floor in each leg, and at it with a one-sentence plant.
   const sentences = Array.from({ length: SENTENCE_FLOOR - 2 }, () => "S.").join(" ");
-  const sentenceFloor = inScratchRepo("wb-59u1-sentences-", [{ path: "docs/workbench/s.md", text: `# S\n\n${sentences}\n` }], root => ({
-    short: sentenceShort(readScope(root, [], BOUND).sentences),
-    atFloor: sentenceShort(readScope(root, [{ path: "docs/workbench/zz-s.md", text: "S.\n" }], BOUND).sentences),
-  }));
+  // wb-fity: each leg short alone. A sentence inside an HTML comment brings the raw leg to the floor while the rendered view removes
+  // it; two sentences joined by a numeric space reference bring the rendered leg to it while the raw leg reads one sentence there.
+  const joined = `${Array.from({ length: SENTENCE_FLOOR - 3 }, () => "S.").join(" ")} S.&#32;S.`;
+  // wb-fity respin 1 (U1): both legs short at different counts, each way round - the comment page one sentence shorter (raw 3999,
+  // rendered 3998) and the reference page one sentence shorter (raw 3998, rendered 3999). No one count reported for both legs matches
+  // both legs of either page, and a leg reporting the lesser or the greater count misreports itself on one of the two.
+  const fewer = Array.from({ length: SENTENCE_FLOOR - 3 }, () => "S.").join(" ");
+  const joinedFewer = `${Array.from({ length: SENTENCE_FLOOR - 4 }, () => "S.").join(" ")} S.&#32;S.`;
+  const sentenceFloor = {
+    ...inScratchRepo("wb-59u1-sentences-", [{ path: "docs/workbench/s.md", text: `# S\n\n${sentences}\n` }], root => ({
+      short: sentenceShort(readScope(root, [], BOUND).sentences),
+      atFloor: sentenceShort(readScope(root, [{ path: "docs/workbench/zz-s.md", text: "S.\n" }], BOUND).sentences),
+    })),
+    renderedShort: inScratchRepo("wb-fity-sentences-comment-", [{ path: "docs/workbench/s.md", text: `# S\n\n${sentences}\n\n<!--S.-->\n` }], root =>
+      sentenceShort(readScope(root, [], BOUND).sentences),
+    ),
+    rawShort: inScratchRepo("wb-fity-sentences-reference-", [{ path: "docs/workbench/s.md", text: `# S\n\n${joined}\n` }], root =>
+      sentenceShort(readScope(root, [], BOUND).sentences),
+    ),
+    bothShortRenderedFewer: inScratchRepo("wb-fity-sentences-apart-comment-", [{ path: "docs/workbench/s.md", text: `# S\n\n${fewer}\n\n<!--S.-->\n` }], root =>
+      sentenceShort(readScope(root, [], BOUND).sentences),
+    ),
+    bothShortRawFewer: inScratchRepo("wb-fity-sentences-apart-reference-", [{ path: "docs/workbench/s.md", text: `# S\n\n${joinedFewer}\n` }], root =>
+      sentenceShort(readScope(root, [], BOUND).sentences),
+    ),
+  };
   return { bothWays, trackedFloor, directoryFloor, markdownOnly, openingLines, sentenceFloor };
 }
 /** A text's citing sentences in both legs, as BOUND would hold them. */
@@ -961,18 +1036,40 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       gitOnly: ["docs/workbench/link.md"],
     });
     expect(plants.trackedFloor, "the tracked floor: quiet at the scratch's own count, short against one more").toEqual({ atCount: [], oneMore: ["2 < 3"] });
-    expect(plants.directoryFloor, "the directory floor: a measured directory absent from disk is quiet; present but empty, it is unwalked").toEqual({
+    expect(
+      plants.directoryFloor,
+      "the directory floor: a measured directory absent from disk is quiet; present but empty, or holding a file only below it, it is unwalked",
+    ).toEqual({
       absent: [],
       empty: ["docs/workbench/receipts"],
+      belowOnly: ["docs/workbench"],
     });
-    expect(plants.markdownOnly, "the markdown arm: a .txt page is not a markdown page").toEqual(["docs/workbench/notes.txt"]);
-    expect(plants.openingLines, "the opening lines: a page without a level-1 heading, a receipt whose first line is not its bead's").toEqual([
-      "docs/workbench/b.md",
-      "docs/workbench/receipts/wb-b.md",
+    expect(plants.markdownOnly, "the markdown arm: a .txt page and a .md.txt page are not markdown pages").toEqual([
+      "docs/workbench/notes.md.txt",
+      "docs/workbench/notes.txt",
     ]);
-    expect(plants.sentenceFloor, "the sentence floor: one sentence short in each leg, quiet at the floor").toEqual({
+    expect(
+      plants.openingLines,
+      "the opening lines: a page without a level-1 heading, opening with a level-2 heading or with its level-1 heading after its first line; a receipt whose first line is a wrong title, its bead alone, its bead with no space after the colon, or another bead's",
+    ).toEqual([
+      "docs/workbench/b.md",
+      "docs/workbench/c.md",
+      "docs/workbench/d.md",
+      "docs/workbench/receipts/wb-b.md",
+      "docs/workbench/receipts/wb-c.md",
+      "docs/workbench/receipts/wb-d.md",
+      "docs/workbench/receipts/wb-e.md",
+    ]);
+    expect(
+      plants.sentenceFloor,
+      "the sentence floor: one sentence short in each leg, quiet at the floor, each leg short alone, and both legs short at different counts each way round",
+    ).toEqual({
       short: ["raw 3999 < 4000", "rendered 3999 < 4000"],
       atFloor: [],
+      renderedShort: ["rendered 3999 < 4000"],
+      rawShort: ["raw 3999 < 4000"],
+      bothShortRenderedFewer: ["raw 3999 < 4000", "rendered 3998 < 4000"],
+      bothShortRawFewer: ["raw 3998 < 4000", "rendered 3999 < 4000"],
     });
     return json({
       root: SCOPE_ROOT,

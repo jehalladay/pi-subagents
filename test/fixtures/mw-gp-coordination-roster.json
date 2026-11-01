@@ -1,5 +1,5 @@
 {
-  "comment": "wb-e66.5 (MW-GRAPH-POLICY-COORDINATION-R10; the hk9l/5jha roster pattern): the OUT-OF-FILE anchor of test/workbench-mw-gp-coordination-census.test.ts. rows: every judged row of test/helpers/gp-mw-coordination-census.ts in census order (id, label, pins). quotes: each pin's quote (the quotes of a row tile its label). witnesses: each pin's witness as measured at the cut (the census compares every pin's witness with this one). residuals: the members of each named residual family (each a pinned quiet row; R-COORDINATED's (Q7) members are the hollows of the judged set Q7 applies, by id, wb-5esj F1). tests: every test the census file registers, in order. producer: MechanicalWorkflows docs/programs/graph-policy-coordination-2026-10-18/README.md line 23 at the bead's pin, read with git show from the local checkout (the census never re-reads the producer). wb-5esj cut #2 (its refusal #1): B1 adds the opening and bound controls, B2 the shown-text controls, S2 and S3 the wrapped-callee and wrapped version-probe controls, Q2 four R-COMPUTED-LAUNCH members. wb-5esj cut #3 (its refusal #2, the third-cut enumerate-the-resolvable form): row Q gains Q8 R-HTML-COMMENT (its residuals entry lists its members by label, its witness each member's block and its admission); a text family's witness holds each member's leg, path and text (refusal #2 F2); Q7's witness holds each seen control's and each export-row edit's report label by label (refusal #1 F4); B1's between controls, B2's shown controls and the S2 and S3 controls gain the cut-3 forms.",
+  "comment": "wb-e66.5 (MW-GRAPH-POLICY-COORDINATION-R10; the hk9l/5jha roster pattern): the OUT-OF-FILE anchor of test/workbench-mw-gp-coordination-census.test.ts. rows: every judged row of test/helpers/gp-mw-coordination-census.ts in census order (id, label, pins). quotes: each pin's quote (the quotes of a row tile its label). witnesses: each pin's witness as measured at the cut (the census compares every pin's witness with this one). residuals: the members of each named residual family (each a pinned quiet row; R-COORDINATED's (Q7) members are the hollows of the judged set Q7 applies, by id, wb-5esj F1). tests: every test the census file registers, in order. producer: MechanicalWorkflows docs/programs/graph-policy-coordination-2026-10-18/README.md line 23 at the bead's pin, read with git show from the local checkout (the census never re-reads the producer). wb-5esj cut #2 (its refusal #1): B1 adds the opening and bound controls, B2 the shown-text controls, S2 and S3 the wrapped-callee and wrapped version-probe controls, Q2 four R-COMPUTED-LAUNCH members. wb-5esj cut #3 (its refusal #2, the third-cut enumerate-the-resolvable form): row Q gains Q8 R-HTML-COMMENT (its residuals entry lists its members by label, its witness each member's block and its admission); a text family's witness holds each member's leg, path and text (refusal #2 F2); Q7's witness holds each seen control's and each export-row edit's report label by label (refusal #1 F4); B1's between controls, B2's shown controls and the S2 and S3 controls gain the cut-3 forms. wb-5hcx (the landing-656 verdict's F1-F3): Q8 gains twenty R-HTML-COMMENT members (the verdict's fourteen, X1-X8, X11-X14, X16 and X17, and six more of the class), B1's between controls the eighteen new twins among theirs, and Q4 five R-OTHER-LAUNCHER members (a require reached through .apply, .bind or Reflect.apply, and two imports a JSDoc comment holds).",
   "bead": "wb-e66.5",
   "rows": [
     {
@@ -961,6 +961,294 @@
         },
         "noframes content before an HTML level-2 heading": {
           "block": "<noframes></noframes><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a processing instruction before an HTML level-2 heading": {
+          "block": "<? a note ?><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a DOCTYPE declaration before an HTML level-2 heading": {
+          "block": "<!DOCTYPE html><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a bogus declaration before an HTML level-2 heading": {
+          "block": "<!x a note><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "CDATA in HTML content before an HTML level-2 heading": {
+          "block": "<![CDATA[ a note ]]><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "xmp content before an HTML level-2 heading": {
+          "block": "<div><xmp>a note</xmp><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "noembed content before an HTML level-2 heading": {
+          "block": "<div><noembed>a note</noembed><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "noscript content before an HTML level-2 heading": {
+          "block": "<div><noscript>a note</noscript><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a CDATA section in svg content before an HTML level-2 heading": {
+          "block": "<div><svg><![CDATA[a note]]></svg><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a processing instruction before an HTML level-2 heading in an HTML block": {
+          "block": "<div><? a note ?><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an end tag's attribute value before an HTML level-2 heading": {
+          "block": "<div></div title=\"a note\"><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a closed comment before an HTML level-2 heading in a block quote": {
+          "block": "> <!-- a note --> <h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an HTML level-2 heading between two closed comments in a list item": {
+          "block": "- <!-- a --> <h2>another entry</h2> <!-- b -->",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an attribute value before an HTML level-2 heading in a nested block quote": {
+          "block": "> > <div title=\"a note\"><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an attribute name before an HTML level-2 heading": {
+          "block": "<div title ><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an unquoted end tag's attribute value before an HTML level-2 heading": {
+          "block": "<div></div title=note><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a CDATA section in math content before an HTML level-2 heading": {
+          "block": "<div><math><![CDATA[a note]]></math><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a closed comment before an HTML level-2 heading in an ordered list item": {
+          "block": "1. <!-- a note --> <h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a closed comment before an HTML level-2 heading in a list item in a block quote": {
+          "block": "> - <!-- a note --> <h2>another entry</h2>",
           "findings": [
             "src/workbench/gp-shadow.ts: names GraphPolicy",
             "src/workbench/gp-shadow.ts: imports graph-policy-cli",
@@ -2102,6 +2390,31 @@
           "leg": "src",
           "path": "src/workbench/q4-const-specifier.ts",
           "text": "const SPEC = \"gp\";\nexport const gp: unknown = require(SPEC);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-require-apply.ts",
+          "text": "export const gp: unknown = require.apply(undefined, [\"gp\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-require-bind.ts",
+          "text": "export const gp: unknown = require.bind(undefined)(\"gp\");\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-reflect-require.ts",
+          "text": "export const gp: unknown = Reflect.apply(require, undefined, [\"gp\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-jsdoc-type.js",
+          "text": "/** @type {import(\"gp\").Sample} */\nexport let sample;\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-jsdoc-import.js",
+          "text": "/** @import { Sample } from \"gp\" */\n/** @type {Sample} */\nexport let sample;\n"
         }
       ],
       "findings": []
@@ -2416,6 +2729,86 @@
         {
           "label": "a comment closed by '--!>'",
           "block": "<!-- a --!> <h2>another entry</h2> <!-- b -->"
+        },
+        {
+          "label": "a '<!--' in a processing instruction (X1)",
+          "block": "<? <!-- ?><h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in a DOCTYPE declaration (X2)",
+          "block": "<!DOCTYPE <!-- ><h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in a bogus declaration (X3)",
+          "block": "<!x <!-- ><h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in CDATA in HTML content (X4)",
+          "block": "<![CDATA[ <!-- ]]><h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in xmp content (X5)",
+          "block": "<div><xmp><!--</xmp><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a '<!--' in noembed content (X6)",
+          "block": "<div><noembed><!--</noembed><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a '<!--' in noscript content, scripting enabled (X7)",
+          "block": "<div><noscript><!--</noscript><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a '<!--' in a CDATA section in svg content (X8)",
+          "block": "<div><svg><![CDATA[<!--]]></svg><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a '<!--' in a processing instruction in an HTML block (X14)",
+          "block": "<div><? <!-- ?><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a '<!--' in an end tag's attribute value (X17)",
+          "block": "<div></div title=\"<!--\"><h2>another entry</h2>"
+        },
+        {
+          "label": "an empty comment <!--> in a block quote (X11)",
+          "block": "> <!--> <h2>another entry</h2>"
+        },
+        {
+          "label": "a comment closed by '--!>' in a list item (X12)",
+          "block": "- <!-- a --!> <h2>another entry</h2> <!-- b -->"
+        },
+        {
+          "label": "a '<!--' in an attribute value in a nested block quote (X13)",
+          "block": "> > <div title=\"<!--\"><h2>another entry</h2></div>"
+        },
+        {
+          "label": "an empty comment <!---> in a block quote in a list item (X16)",
+          "block": "- > <!---> <h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' as an attribute name",
+          "block": "<div <!-- ><h2>another entry</h2></div>"
+        },
+        {
+          "label": "an unquoted '<!--' in an end tag's attribute",
+          "block": "<div></div title=<!--><h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in a CDATA section in math content",
+          "block": "<div><math><![CDATA[<!--]]></math><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a comment closed by '---!>'",
+          "block": "<!-- a ---!> <h2>another entry</h2> <!-- b -->"
+        },
+        {
+          "label": "an empty comment in an ordered list item",
+          "block": "1. <!--> <h2>another entry</h2>"
+        },
+        {
+          "label": "an empty comment in a list item in a block quote",
+          "block": "> - <!--> <h2>another entry</h2>"
         }
       ],
       "admitted": {
@@ -2437,7 +2830,27 @@
         "a '<!--' in title content": [],
         "a '<!--' in iframe content": [],
         "a '<!--' in noframes content": [],
-        "a comment closed by '--!>'": []
+        "a comment closed by '--!>'": [],
+        "a '<!--' in a processing instruction (X1)": [],
+        "a '<!--' in a DOCTYPE declaration (X2)": [],
+        "a '<!--' in a bogus declaration (X3)": [],
+        "a '<!--' in CDATA in HTML content (X4)": [],
+        "a '<!--' in xmp content (X5)": [],
+        "a '<!--' in noembed content (X6)": [],
+        "a '<!--' in noscript content, scripting enabled (X7)": [],
+        "a '<!--' in a CDATA section in svg content (X8)": [],
+        "a '<!--' in a processing instruction in an HTML block (X14)": [],
+        "a '<!--' in an end tag's attribute value (X17)": [],
+        "an empty comment <!--> in a block quote (X11)": [],
+        "a comment closed by '--!>' in a list item (X12)": [],
+        "a '<!--' in an attribute value in a nested block quote (X13)": [],
+        "an empty comment <!---> in a block quote in a list item (X16)": [],
+        "a '<!--' as an attribute name": [],
+        "an unquoted '<!--' in an end tag's attribute": [],
+        "a '<!--' in a CDATA section in math content": [],
+        "a comment closed by '---!>'": [],
+        "an empty comment in an ordered list item": [],
+        "an empty comment in a list item in a block quote": []
       },
       "twins": {
         "an empty comment <!--> before an HTML level-2 heading (FA1)": {
@@ -2515,6 +2928,86 @@
         "a comment closed by '--!>'": {
           "twin": "an HTML level-2 heading between two closed comments",
           "bound": true
+        },
+        "a '<!--' in a processing instruction (X1)": {
+          "twin": "a processing instruction before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in a DOCTYPE declaration (X2)": {
+          "twin": "a DOCTYPE declaration before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in a bogus declaration (X3)": {
+          "twin": "a bogus declaration before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in CDATA in HTML content (X4)": {
+          "twin": "CDATA in HTML content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in xmp content (X5)": {
+          "twin": "xmp content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in noembed content (X6)": {
+          "twin": "noembed content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in noscript content, scripting enabled (X7)": {
+          "twin": "noscript content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in a CDATA section in svg content (X8)": {
+          "twin": "a CDATA section in svg content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in a processing instruction in an HTML block (X14)": {
+          "twin": "a processing instruction before an HTML level-2 heading in an HTML block",
+          "bound": true
+        },
+        "a '<!--' in an end tag's attribute value (X17)": {
+          "twin": "an end tag's attribute value before an HTML level-2 heading",
+          "bound": true
+        },
+        "an empty comment <!--> in a block quote (X11)": {
+          "twin": "a closed comment before an HTML level-2 heading in a block quote",
+          "bound": true
+        },
+        "a comment closed by '--!>' in a list item (X12)": {
+          "twin": "an HTML level-2 heading between two closed comments in a list item",
+          "bound": true
+        },
+        "a '<!--' in an attribute value in a nested block quote (X13)": {
+          "twin": "an attribute value before an HTML level-2 heading in a nested block quote",
+          "bound": true
+        },
+        "an empty comment <!---> in a block quote in a list item (X16)": {
+          "twin": "a closed comment before an HTML level-2 heading in a block quote in a list item",
+          "bound": true
+        },
+        "a '<!--' as an attribute name": {
+          "twin": "an attribute name before an HTML level-2 heading",
+          "bound": true
+        },
+        "an unquoted '<!--' in an end tag's attribute": {
+          "twin": "an unquoted end tag's attribute value before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in a CDATA section in math content": {
+          "twin": "a CDATA section in math content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a comment closed by '---!>'": {
+          "twin": "an HTML level-2 heading between two closed comments",
+          "bound": true
+        },
+        "an empty comment in an ordered list item": {
+          "twin": "a closed comment before an HTML level-2 heading in an ordered list item",
+          "bound": true
+        },
+        "an empty comment in a list item in a block quote": {
+          "twin": "a closed comment before an HTML level-2 heading in a list item in a block quote",
+          "bound": true
         }
       }
     }
@@ -2553,7 +3046,12 @@
       "src/workbench/q4-require-alias.ts",
       "src/workbench/q4-require-call.ts",
       "src/workbench/q4-require-element.ts",
-      "src/workbench/q4-const-specifier.ts"
+      "src/workbench/q4-const-specifier.ts",
+      "src/workbench/q4-require-apply.ts",
+      "src/workbench/q4-require-bind.ts",
+      "src/workbench/q4-reflect-require.ts",
+      "src/workbench/q4-jsdoc-type.js",
+      "src/workbench/q4-jsdoc-import.js"
     ],
     "Q5": [
       "test/q5-guard.test.ts",
@@ -2593,7 +3091,27 @@
       "a '<!--' in title content",
       "a '<!--' in iframe content",
       "a '<!--' in noframes content",
-      "a comment closed by '--!>'"
+      "a comment closed by '--!>'",
+      "a '<!--' in a processing instruction (X1)",
+      "a '<!--' in a DOCTYPE declaration (X2)",
+      "a '<!--' in a bogus declaration (X3)",
+      "a '<!--' in CDATA in HTML content (X4)",
+      "a '<!--' in xmp content (X5)",
+      "a '<!--' in noembed content (X6)",
+      "a '<!--' in noscript content, scripting enabled (X7)",
+      "a '<!--' in a CDATA section in svg content (X8)",
+      "a '<!--' in a processing instruction in an HTML block (X14)",
+      "a '<!--' in an end tag's attribute value (X17)",
+      "an empty comment <!--> in a block quote (X11)",
+      "a comment closed by '--!>' in a list item (X12)",
+      "a '<!--' in an attribute value in a nested block quote (X13)",
+      "an empty comment <!---> in a block quote in a list item (X16)",
+      "a '<!--' as an attribute name",
+      "an unquoted '<!--' in an end tag's attribute",
+      "a '<!--' in a CDATA section in math content",
+      "a comment closed by '---!>'",
+      "an empty comment in an ordered list item",
+      "an empty comment in a list item in a block quote"
     ]
   },
   "tests": [

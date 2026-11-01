@@ -49,15 +49,21 @@
  *    opening output.text); B7 both tiers route through the tripwire (the live row holds its failures to [] and its tier config
  *    and forge command select it).
  *  C, the docs census. C1 no sentence of docs/workbench, raw or normalized, names a what-if or speculative term (SPECULATIVE_TERM)
- *    together with a served term (SERVED_TERM); C2 the forward guard: no sentence names a SPECULATIVE_TERM at all today (the
- *    roster's allowlist docsSpeculativeSentences is empty), so the first docs sentence about speculative RF context is added there
- *    and C1 judges it. C1 reads co-occurrence, not polarity: a refusal sentence names its refusal ('refuses'), never a served word.
+ *    together with a served term (SERVED_TERM); C2 the forward guard: no sentence names a SPECULATIVE_TERM outside the roster's
+ *    allowlist docsSpeculativeSentences, held to the frozen DOCS_SPECULATIVE_SENTENCES (the three sentences of docs/18's "RF
+ *    speculation boundary:" paragraph, wb-km7q.9, on rf's passive speculation-policy default, each in the raw view and in the
+ *    normalized view, whose INLINE_MARKS step drops the label's opening "**" and the code spans' backticks; C1 judges all six
+ *    quiet), and every allowlisted sentence is a unit the walk reads (an entry no sentence matches is stale), so the first docs
+ *    sentence about speculative RF context is added there and C1 judges it. C1 reads co-occurrence, not polarity: a refusal
+ *    sentence names its refusal ('refuses'), never a served word.
  *  M, the matchers rows A to C read: M1-M5 the spellings each must catch and pass (M5 the rendered text of inline marks and named
  *    references: the gate's P-D16 to P-D19 and their class read, a mark or a reference a reader sees shown stays, and the decoded
  *    table's size and digest); Q1-Q10 the pinned quiet rows.
  *  PLANTED LEGS (wb-dkru F4): A2, C1 and C2 each run their own judge (srcHits, servedHits, speculativeHits) over the real units and
  *    then over the real units with a planted one after them, and hold the planted run's hits to exactly the plant's, so a judge
- *    forced quiet, a literal reader emptied or C2's allowlist read inverted reds although the real tree is clean.
+ *    forced quiet, a literal reader emptied or C2's allowlist read inverted reds although the real tree is clean. C2's stale-entry
+ *    judge (staleAllowed, wb-km7q.9) runs over the real units with the plant's allowed sentence added to the allowlist but not
+ *    planted, and holds its stale hits to exactly that sentence.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label and
  * pins, every pin's witness and reached assertion count, the citations, the measured releases and the registered test titles - is
  * held to the out-of-file roster, whose measured vocabulary also anchors the helper's (B1). A pin deleted, relabelled, swapped for
@@ -198,6 +204,19 @@ const SRC_ROOT = { root: "src", floor: 100, anchorFile: "src/workbench/providers
 /** The docs walk C reads: 72 markdown pages and 5919 raw sentence units at base dc72a6d (floors 60 and 4000). Its anchor is the
  * frozen TRACEABILITY page (rule 13), whose "served-model journey" sentence keeps C1's served half live on today's docs. */
 const DOCS_ROOT = { root: "docs/workbench", floor: 60, sentenceFloor: 4000, anchorFile: "docs/workbench/TRACEABILITY.md", anchorToken: "served-model journey" };
+/** C2's allowlist, frozen (wb-km7q.9): the three sentences of docs/18's "RF speculation boundary:" paragraph that name rf's
+ * speculation policy - its passive default, the RF_ADAPTIVE seat no Pi-launched rf receives, and the tighten-only rule for a
+ * future Pi declaration - each as the C walk reads it, first in the raw view, then in the normalized view (INLINE_MARKS drops the
+ * label's opening "**", the closing one follows a colon and stays, and every code span's backticks). None names a SERVED_TERM,
+ * so C1 judges each quiet; none is about speculative RF context. */
+const DOCS_SPECULATIVE_SENTENCES: readonly string[] = [
+  "**RF speculation boundary:** rf's local default speculation policy stays passive/disabled and Pi documents no other default.",
+  "rf 0.1.845 ships `ResourceBrokerLimits` and `SpeculationBoundary` as values its host resource broker reads, with no CLI surface, and the one way an rf process opts into its speculative policy is the process-scoped `RF_ADAPTIVE` seat, which no rf child Pi launches receives: that child's environment holds only the `RF_CHILD_ENV_ALLOWLIST` names of `src/workbench/process-env.ts`.",
+  "Any Pi-declared SpeculationBoundary or broker-limit configuration may only tighten ResourceBrokerLimits and never overrides Pi host hard caps, the 60 s render deadline and the 256 KiB stdout and stderr bounds of `src/workbench/providers/reactivefiber.ts`.",
+  "RF speculation boundary:** rf's local default speculation policy stays passive/disabled and Pi documents no other default.",
+  "rf 0.1.845 ships ResourceBrokerLimits and SpeculationBoundary as values its host resource broker reads, with no CLI surface, and the one way an rf process opts into its speculative policy is the process-scoped RF_ADAPTIVE seat, which no rf child Pi launches receives: that child's environment holds only the RF_CHILD_ENV_ALLOWLIST names of src/workbench/process-env.ts.",
+  "Any Pi-declared SpeculationBoundary or broker-limit configuration may only tighten ResourceBrokerLimits and never overrides Pi host hard caps, the 60 s render deadline and the 256 KiB stdout and stderr bounds of src/workbench/providers/reactivefiber.ts.",
+];
 /** The two tiers that hold a result to the SCG-R11 roster through diffAgainstRoster. */
 const LIVE_TIER = { file: "test/workbench-native-rf-preview.test.ts", config: "vitest.rf.config.ts", command: "rf-preview" };
 const FIXTURE_TIER = "test/workbench-rf-result-fixture.test.ts";
@@ -546,6 +565,10 @@ function speculativeHits(units: readonly DocsUnit[], allowed: ReadonlySet<string
   const named = units.filter(entry => SPECULATIVE_TERM.test(entry.sentence));
   return [...new Set(named.filter(entry => !allowed.has(entry.sentence)).map(entry => `${entry.file}: ${entry.sentence.slice(0, 160)}`))];
 }
+/** C2's stale-entry judge over sentence units and an allowlist: each allowlisted sentence no unit matches, in allowlist order. */
+function staleAllowed(units: readonly DocsUnit[], allowed: ReadonlySet<string>): string[] {
+  return [...allowed].filter(sentence => !units.some(entry => entry.sentence === sentence));
+}
 /** A2's plant, judged after the real modules: an rf launch whose literals spell the scenario flag. */
 const SRC_PLANT: SourceUnit = { path: "planted/scenario-arm.ts", text: 'spawn("rf", ["context", "render", "--scenario", plan]);' };
 /** C1's and C2's plant, judged after the real pages: a served speculative sentence, a speculative sentence C2's planted run allows,
@@ -693,15 +716,21 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
     const listed = gitListed(DOCS_ROOT.root, ".md");
     const allowed = new Set(ROSTER.docsSpeculativeSentences);
     const hits = speculativeHits(docs.sentences, allowed);
+    const stale = staleAllowed(docs.sentences, allowed);
     const planted = speculativeHits([...docs.sentences, ...plantedDocsUnits()], new Set([...allowed, DOCS_PLANT.allowed]));
+    const stalePlanted = staleAllowed(docs.sentences, new Set([...allowed, DOCS_PLANT.allowed]));
     expect(docs.floorMet && docs.sentenceFloorMet && docs.anchorRead).toBe(true);
     expect([...docs.read].sort(), "the C walk read exactly git's own listing of docs/workbench/**/*.md").toStrictEqual(listed);
-    expect(ROSTER.docsSpeculativeSentences).toEqual([]);
+    expect(ROSTER.docsSpeculativeSentences).toEqual(DOCS_SPECULATIVE_SENTENCES);
     expect(hits).toEqual([]);
+    expect(stale, "every allowlisted sentence is a unit the C walk reads: an entry no docs/workbench sentence matches is stale").toEqual([]);
     expect(planted, "the same judge reads the planted page after the real pages, the plant's what-if sentence allowed: the sentence it does not allow is its one hit").toStrictEqual([
       `${DOCS_PLANT.file}: ${DOCS_PLANT.served}`,
     ]);
-    return { floorMet: docs.floorMet, walkAgreesWithGit: sameList(docs.read, listed), allowed: [...allowed], hits, planted };
+    expect(stalePlanted, "the same stale-entry judge over the real pages, the plant's what-if sentence allowed but not planted: that sentence is its one stale entry").toStrictEqual([
+      DOCS_PLANT.allowed,
+    ]);
+    return { floorMet: docs.floorMet, walkAgreesWithGit: sameList(docs.read, listed), allowed: [...allowed], hits, stale, planted, stalePlanted };
   },
   M1: () =>
     verdicts(body => docsVerdict(body).c2, [

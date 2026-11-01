@@ -14,8 +14,9 @@
  * optional pin keys under dependentRequired: present together or absent together). At cut #3 and cut #4 the same release and
  * commit are installed, and those three schema files hold 0, 3 and 8 hits; at the wb-rqfx cut (2026-10-27) the same release is
  * installed at provenance commit 7e6ed89a09f6, and the three files still hold 0, 3 and 8. R11's fixture record
- * (test/fixtures/rf-result-keys.json, rf 0.1.784, source captured) names it in no key list. So this census lands the acceptance's
- * until-then half and its trigger; the 'Armed on landing' clauses become the trigger's checks (ARMED), never observer behaviour.
+ * (test/fixtures/rf-result-keys.json, rf 0.1.845, source captured; re-read 2026-10-29 at the wb-er9e cut) names it in no key list.
+ * So this census lands the acceptance's until-then half and its trigger; the 'Armed on landing' clauses become the trigger's
+ * checks (ARMED), never observer behaviour.
  *
  * FORM (standing rule 19(c), engaged at this bead's refusal #3): enumerate-the-resolvable. The pinned set is the cut #3 baseline
  * (22 pins in four rows), no pin of it removed, narrowed or re-scoped, plus the residual pins A15-A19 and A20 (wb-rqfx, the

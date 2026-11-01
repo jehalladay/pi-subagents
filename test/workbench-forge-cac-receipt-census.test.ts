@@ -34,7 +34,8 @@
  *     shipped, the acceptance on landing is owed (A's and B's not-due spans, their fixtures replacing A1 and A2); if it did
  *     not, the roster's release reading is re-measured.
  *   A2 the "only" half of the title's rule, standing: while no receipt is read, no Pi-authored src module (each
- *     src/**\/*.ts file git lists, which the src walk below reads whole) spells a member of WORD's family, and no output of
+ *     src/**\/*.ts file git lists, whatever characters its path holds, which the src walk below reads whole, its bytes
+ *     decoded as TypeScript's own reader decodes them) spells a member of WORD's family, and no output of
  *     the rendered set below holds one (they render the word-free READINGS and replies; B2 shows a producer-supplied WORD
  *     quoted verbatim, never minted). WORD is the title's spelling, VERIFIED_HISTORICAL; its
  *     family is its two words in either order (the second word, HISTORICAL, may read HISTORICALLY in either order), separated
@@ -62,6 +63,16 @@
  *     is checked against the planted texts. The src walk reads the whole text (literals, identifiers and comments) of every
  *     src/**\/*.ts module git lists (tracked or untracked, never ignored) plus two planted modules last: a short literal
  *     plant, and one longer than every real module with the word in a comment on its last line.
+ *     A listed path is in scope when it starts src/ and ends .ts with at least one character of any kind between (inScope
+ *     reads with the s flag, so LF, CR, U+2028 and U+2029 count there like a space or any other character). The listing's
+ *     own parse (listedIn, the split and filter gitModules runs over git's NUL-separated output), fed a planted listing,
+ *     keeps a plain name, a .d.ts name and names holding a space or one of those four line terminators, and drops a .tsx
+ *     name, a .mts name, a name with LF after its .ts and a path outside src. Each module's text is its bytes decoded as
+ *     TypeScript's own reader (ts.sys.readFile) decodes them: a UTF-16 byte order mark decodes UTF-16 in its byte order, a
+ *     UTF-8 byte order mark is dropped, and any other bytes are read as UTF-8. The decoded text of every listed module
+ *     equals ts.sys.readFile's, and the comment module planted as UTF-8 with and without a byte order mark and as UTF-16
+ *     with one in each byte order decodes to its own text and reads its word (R-SRC-ENCODING names the bytes that decoding
+ *     does not read as the text they encode).
  *     The judged list equals the listing plus the plants, a filesystem walk lists the same modules, no symlink sits under src,
  *     the listing holds at least SRC_FLOOR modules, and the only hits are the plants'. The rendered outputs (forgeGateTopology,
  *     readForgeOperationEvidence and nativeEvidence over READINGS, forgeOperationStartedSnapshot, forgeGateStepTopology,
@@ -149,6 +160,10 @@
  *     turns into a run of them (quiet: U+2043 HYPHEN BULLET, U+2212 MINUS SIGN, U+00B7 MIDDLE DOT, U+2800 BRAILLE PATTERN
  *     BLANK and U+203F UNDERTIE between the words, and U+2017 DOUBLE LOW LINE, which NFKC turns into a space and U+0333
  *     COMBINING DOUBLE LOW LINE, a mark; twin: U+2010 HYPHEN, which Pd holds).
+ *   R-SRC-ENCODING (A2) a module whose bytes TypeScript's own reader does not decode as the text they encode: the walk reads
+ *     them as that reader does, so their letters reach the judge NUL-interleaved (quiet: the comment module as UTF-16LE with
+ *     no byte order mark, which it reads as UTF-8, and as UTF-32LE with one, whose leading FF FE it reads as UTF-16LE's;
+ *     twin: the comment module as UTF-16LE with its byte order mark, which it decodes).
  *   R-OTHER-NAME (A1) a receipt type the release ships under another name, without the word and without both field words
  *     (quiet: a ForgeVerificationRecord declaration, and a ForgePredicateRecord declaration spelling "predicate" alone; twin:
  *     a declaration named after the artifact).
@@ -157,9 +172,10 @@
  *     six-character escape backslash-u005f; twin: a release .d.ts spelling the word whole).
  *   R-UNPLANTED-SPELLING (B1) a receipt under spellings no cell plants is not claimed by B1; its quiet row (one such record)
  *     reads identical, its twin (a read key) reads differing.
- * The judged set binds the table to the planted inputs: every planted text, module and release file A1 and A2 read quiet is a
- * named non-claim (NON_CLAIMS: the bare words, today's own labels and the gating artifact's name) or exactly one residual's
- * quiet row, so a residual dropped from the table (and its literals) leaves its quiet row unaccounted for.
+ * The judged set binds the table to the planted inputs: every planted text, module (the planted encodings among them) and
+ * release file A1 and A2 read quiet is a named non-claim (NON_CLAIMS: the bare words, today's own labels and the gating
+ * artifact's name) or exactly one residual's quiet row, so a residual dropped from the table (and its literals) leaves its
+ * quiet row unaccounted for.
  * LIMITS (stated, not residuals):
  *   - a pin rewritten so that it still returns its roster witness is not detected: through a helper, a module-level value or
  *     a path it composes from pieces (the SELF-READ reads a pin's own body only); with one of its readers replaced by another
@@ -186,7 +202,13 @@
  *     over the freed words, with the word-count literal and the roster in step), the change is not detected; it relabels words
  *     and drops no pin;
  *   - C freezes the adapters over READINGS only;
- *   - A2's src walk reads the src/**\/*.ts modules git lists and no other file: a src file of another kind is outside A2;
+ *   - A2's src walk reads the src/**\/*.ts modules git lists and no other file: a src file of another kind is outside A2
+ *     (the planted .tsx and .mts names read unlisted);
+ *   - the planted listing and encodings run through listedIn, inScope and the decoding only, never through git, the
+ *     filesystem walk or the src read itself: a listing, walk or read that bypasses them (the old inScope regex written
+ *     into gitModules or the walk's filter, say, or a src read that decodes UTF-8 alone) is not detected while no live path
+ *     holds a line terminator and no live module begins with a byte order mark (the walk equal to the listing and every
+ *     decoded text equal to ts.sys.readFile's are held over the live tree only);
  *   - A1 reads the installed release's paths and bytes, never their metadata (mode, owner, timestamps), the vendored tarball,
  *     the lock file, Forge's tree or the installed forge executable: a re-vendor that changes only metadata, or one not yet
  *     installed, does not red A1, and a receipt Forge serves only as new gate.status payload keys with no client release
@@ -194,19 +216,26 @@
  *
  * MEASURED AT THE CUT (seat records, read-only, not assertions): cut #1 at trunk 061c2ac; cut #2 (the respin curing cut #1's
  * refusal items U1 and U2) at trunk 5fbe25e; cut #3 (the respin curing cut #2's refusal items U1 and U2) at trunk c843ed5;
- * this cut (#4, the enumerate-the-resolvable respin curing cut #3's refusal item U1) at trunk b3d410f, 2026-10-29. src
- * holds 117 files, every one a .ts module, and 0 hits of WORD's family as A2 reads it now; at cut #1's base test, qa and
- * docs held 0 lines of the family as well (the census and roster spell it, as their own data). At cut #2, Forge origin/main
- * d248b17bd91f (2026-10-28T17:07:14Z) spelled ForgeCACReceiptV0 only in
+ * cut #4 (the enumerate-the-resolvable respin curing cut #3's refusal item U1) at trunk b3d410f, 2026-10-29; this cut
+ * (wb-hyjd, the R694 follow-up of landing 670's gate findings F1, A2's path scope, and F2, A2's decoding) at trunk
+ * ee48709, 2026-10-30. src holds 117 files at both, every one a .ts module, and 0 hits of WORD's family as A2 reads it
+ * now; at cut #1's base test, qa and docs held 0 lines of the family as well (the census and roster spell it, as their own
+ * data). At cut #2, Forge origin/main d248b17bd91f (2026-10-28T17:07:14Z) spelled ForgeCACReceiptV0 only in
  * docs/programs/cac-evidence-assurance-2026-10-18/01-contract-qa.md (its section heading :3 reads 'Proposed read-only export
  * (not shipped)'), and WORD's family only in docs: that file and docs/package-views/11-sdk-cli-and-developer-experience.md:16
  * ('verified historical result/refusal', a design view present at cut #1's a2ab95fa933b too); the installed forge 0.2.1 (rev
  * a2ab95fa933b) site-packages spelled neither (6778 files); both by a case-insensitive PCRE grep for the family's two orders
- * with \s, underscore and Pd runs (plain text only, no NFKC or label reading); this cut did not re-measure Forge. The installed
- * @forge/sdk 0.1.0 holds 49 regular files, one directory (dist) and no link or other entry, and spells neither (A1's own
- * reading), and no file of it spells "predicate" or "checker". The label census of wb-b9n.3
+ * with \s, underscore and Pd runs (plain text only, no NFKC or label reading); cut #4 did not re-measure Forge, nor did this
+ * cut. The installed @forge/sdk 0.1.0 holds 49 regular files, one directory (dist) and no link or other entry, and spells
+ * neither (A1's own reading), and no file of it spells "predicate" or "checker". The label census of wb-b9n.3
  * (test/workbench-forge-cac-label-census.test.ts) holds the 'CAC verified' label and the src-side name trigger; this census
- * holds the receipt reader's word, the release-side trigger, the receipt cells and the byte-identical adapters.
+ * holds the receipt reader's word, the release-side trigger, the receipt cells and the byte-identical adapters. At this cut:
+ * no src path holds a line terminator, no src module begins with a byte order mark, and every one is valid UTF-8; in a
+ * scratch git repo, git ls-files -z listed names holding LF, CR, U+2028 and U+2029, which inScope dropped before the s flag
+ * and keeps with it, and a name holding the byte 0xff listed as U+FFFD, whose read fails (ENOENT), so A2's src read throws
+ * on such a name; and the decoding agreed with ts.sys.readFile (TypeScript 6.0.3) on 14 byte shapes (UTF-8 with and
+ * without a byte order mark, UTF-16 with one in each byte order at even and odd lengths, each byte order mark alone,
+ * UTF-16LE without one, invalid UTF-8, a lone FF byte, EF BB alone and no bytes).
  *
  * Display paths added: none. Test-only: every fixture lives in memory (no scratch; the only spawn is git ls-files); src, the
  * installed release and the bead export are only read.
@@ -514,14 +543,50 @@ const PLANTED_MODULES: Readonly<Record<string, string>> = {
 };
 const PLANT = "src/workbench/forge-cac-receipt-plant.ts";
 const PLANT_BIG = "src/workbench/forge-cac-receipt-plant-big.ts";
+/** A2's planted listing: names git could list, each read by the listing's own parse (listed when in scope, unlisted when not). */
+const PLANTED_PATHS: Readonly<Record<string, string>> = {
+  plain: "src/workbench/zz-plant.ts",
+  space: "src/workbench/zz plant.ts",
+  lineFeed: `src/workbench/zz${fromCodePoints(0x0a)}plant.ts`,
+  carriageReturn: `src/workbench/zz${fromCodePoints(0x0d)}plant.ts`,
+  lineSeparator: `src/workbench/zz${fromCodePoints(0x2028)}plant.ts`,
+  paragraphSeparator: `src/workbench/zz${fromCodePoints(0x2029)}plant.ts`,
+  declaration: "src/workbench/zz-plant.d.ts",
+  tsx: "src/workbench/zz-plant.tsx",
+  mts: "src/workbench/zz-plant.mts",
+  afterExtension: `src/workbench/zz-plant.ts${fromCodePoints(0x0a)}`,
+  outsideSrc: "test/zz-plant.ts",
+};
+/** UTF-32LE bytes of a text, code point by code point (Node has no UTF-32 encoder). */
+const utf32le = (text: string): Buffer =>
+  Buffer.concat(
+    [...text].map(unit => {
+      const bytes = Buffer.alloc(4);
+      bytes.writeUInt32LE(unit.codePointAt(0) ?? 0);
+      return bytes;
+    }),
+  );
+/** The comment module, the text every planted encoding encodes. */
+const COMMENT_MODULE = PLANTED_MODULES.comment ?? "";
+/** A2's planted encodings: the comment module's bytes, each read through the walk's decoding (R-SRC-ENCODING's quiet rows and twin among them). */
+const PLANTED_ENCODINGS: Readonly<Record<string, Buffer>> = {
+  utf8: Buffer.from(COMMENT_MODULE, "utf8"),
+  utf8Bom: Buffer.concat([Buffer.from([0xef, 0xbb, 0xbf]), Buffer.from(COMMENT_MODULE, "utf8")]),
+  utf16le: Buffer.concat([Buffer.from([0xff, 0xfe]), Buffer.from(COMMENT_MODULE, "utf16le")]),
+  utf16be: Buffer.concat([Buffer.from([0xfe, 0xff]), Buffer.from(COMMENT_MODULE, "utf16le").swap16()]),
+  utf16leNoBom: Buffer.from(COMMENT_MODULE, "utf16le"),
+  utf32le: Buffer.concat([Buffer.from([0xff, 0xfe, 0x00, 0x00]), utf32le(COMMENT_MODULE)]),
+};
 
 // ----------------------------------------------------------------------------------------------------------- the src walk
 interface TextFile { readonly path: string; readonly text: string }
-const inScope = (path: string): boolean => /^src\/.+\.ts$/.test(path);
+/** A src module path: src/, then at least one character of any kind (the s flag: line terminators too), then .ts. */
+const inScope = (path: string): boolean => /^src\/.+\.ts$/s.test(path);
+/** The in-scope paths a NUL-separated listing names (git ls-files -z ends each path with NUL), each once, in name order. */
+const listedIn = (listing: string): string[] => [...new Set(listing.split("\0").filter(inScope))].sort(byName);
 /** What git would commit below src: tracked or untracked, never ignored. */
 function gitModules(): string[] {
-  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "src"], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
-  return [...new Set(out.split("\0").filter(inScope))].sort(byName);
+  return listedIn(execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "src"], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 }));
 }
 function walkFiles(root: string, from: string, keep: (path: string) => boolean): { files: string[]; links: string[] } {
   const files: string[] = [];
@@ -537,7 +602,18 @@ function walkFiles(root: string, from: string, keep: (path: string) => boolean):
   visit(from);
   return { files: files.sort(byName), links: links.sort(byName) };
 }
-const srcModules = (): TextFile[] => gitModules().map(path => ({ path, text: readFileSync(join(REPO, path), "utf8") }));
+/**
+ * A module's text as TypeScript's own reader (ts.sys.readFile) decodes its bytes: a UTF-16 byte order mark decodes UTF-16 in
+ * its byte order (a big-endian module's byte pairs swapped, an odd last byte dropped), a UTF-8 byte order mark is dropped, and
+ * any other bytes are read as UTF-8.
+ */
+function decoded(bytes: Buffer): string {
+  if (bytes[0] === 0xfe && bytes[1] === 0xff) return Buffer.from(bytes.subarray(0, bytes.length - (bytes.length % 2))).swap16().toString("utf16le", 2);
+  if (bytes[0] === 0xff && bytes[1] === 0xfe) return bytes.toString("utf16le", 2);
+  if (bytes[0] === 0xef && bytes[1] === 0xbb && bytes[2] === 0xbf) return bytes.toString("utf8", 3);
+  return bytes.toString("utf8");
+}
+const srcModules = (): TextFile[] => gitModules().map(path => ({ path, text: decoded(readFileSync(join(REPO, path))) }));
 /** Every module judged, and each hit as "<path> <the matched text>". */
 function judgeModules(modules: readonly TextFile[]): { judged: string[]; hits: string[] } {
   const judged: string[] = [];
@@ -857,7 +933,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const text = PLANTED_TEXTS[id];
       if (text !== undefined) return isWord(text) ? 1 : 0;
       const module = PLANTED_MODULES[id];
-      return module === undefined ? undefined : judgeModules([{ path: PLANT, text: module }]).hits.length;
+      if (module !== undefined) return judgeModules([{ path: PLANT, text: module }]).hits.length;
+      const bytes = PLANTED_ENCODINGS[id];
+      return bytes === undefined ? undefined : judgeModules([{ path: PLANT, text: decoded(bytes) }]).hits.length;
     };
     for (const residual of RESIDUALS.filter(entry => entry.quietPin === "A2")) {
       const loud = residual.quiet.filter(id => wordReading(id) !== 0);
@@ -874,6 +952,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const real = srcModules();
     const big = bigPlant(PLANT_BIG, real, `// ${PLANTED_TEXTS.sentence ?? ""}\n`);
     const walk = judgeModules([...real, { path: PLANT, text: PLANTED_MODULES.literal ?? "" }, big]);
+    // The planted listing runs through the listing's own parse, NUL-separated and NUL-ended as git ls-files -z writes it.
+    const keptPaths = listedIn(`${Object.values(PLANTED_PATHS).join("\0")}\0`);
+    const encodingReading = (bytes: Buffer): string => {
+      const text = decoded(bytes);
+      return `hits=${judgeModules([{ path: PLANT, text }]).hits.length} decodes=${text === COMMENT_MODULE ? 1 : 0} ${bytesDigest(bytes)} ${bytes.length} bytes`;
+    };
     const { rendered, outputs } = await renderedOutputs();
     const strings = outputs.flatMap(stringsOf);
     // The control holds the word once as a key and once inside an array, so the walk must read both to count 2.
@@ -886,6 +970,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         bigPlantLongest: big.text.length > Math.max(0, ...real.map(module => module.text.length)),
         gitEqualsWalk: JSON.stringify(listed) === JSON.stringify(walked.files), links: walked.links, floorMet: listed.length >= SRC_FLOOR,
         hits: walk.hits,
+        paths: Object.fromEntries(Object.entries(PLANTED_PATHS).map(([id, path]) => [id, `${keptPaths.includes(path) ? "listed" : "unlisted"} ${shownText(path)}`])),
+        encodings: Object.fromEntries(Object.entries(PLANTED_ENCODINGS).map(([id, bytes]) => [id, encodingReading(bytes)])),
+        decodedAsTypeScript: real.every(module => ts.sys.readFile(join(REPO, module.path)) === module.text),
       },
       rendered: { tags: rendered, fixtureDigest: FIXTURE_DIGEST, walked: strings.length > 0, hits: strings.filter(isWord), control },
     };
@@ -1018,6 +1105,7 @@ const RESIDUALS: readonly Residual[] = [
   { id: "R-PARAPHRASE", quietPin: "A2", quiet: ["passed", "atSnapshot"], twin: ["adverb"] },
   { id: "R-SIBLING", quietPin: "A2", quiet: ["current"], twin: ["title"] },
   { id: "R-OTHER-SEPARATOR", quietPin: "A2", quiet: ["hyphenBullet", "minusSign", "middleDot", "brailleBlank", "undertie", "doubleLowLine"], twin: ["pd2010"] },
+  { id: "R-SRC-ENCODING", quietPin: "A2", quiet: ["utf16leNoBom", "utf32le"], twin: ["utf16le"] },
   { id: "R-OTHER-NAME", quietPin: "A1", quiet: ["otherName", "oneField"], twin: ["named"] },
   { id: "R-COMPOSED-RELEASE", quietPin: "A1", quiet: ["pieces", "unicodeEscape"], twin: ["spelled"] },
   { id: "R-UNPLANTED-SPELLING", quietPin: "B1", quiet: ["otherSpelling"], twin: ["readKey"] },
@@ -1058,10 +1146,12 @@ describe("wb-b9n.1 Forge CAC receipt census (FORGE-CAC-EVIDENCE-ASSURANCE-R2)", 
     // The title's word is read by the family and its gating artifact is not; the neutral word is the word's byte length and read by none.
     expect([isWord(WORD), isWord(GATING), GATING.length > 0, WORD.includes("_"), Buffer.byteLength(NEUTRAL) === Buffer.byteLength(WORD), isWord(NEUTRAL)]).toEqual([true, false, true, true, true, false]);
     expect(Object.keys(FIELD_KEYS)).toEqual(FIELDS);
-    expect(RESIDUALS.map(residual => residual.id)).toEqual(["R-COMPOSED", "R-EMBEDDED", "R-LOOKALIKE", "R-PARAPHRASE", "R-SIBLING", "R-OTHER-SEPARATOR", "R-OTHER-NAME", "R-COMPOSED-RELEASE", "R-UNPLANTED-SPELLING"]);
+    expect(RESIDUALS.map(residual => residual.id)).toEqual(["R-COMPOSED", "R-EMBEDDED", "R-LOOKALIKE", "R-PARAPHRASE", "R-SIBLING", "R-OTHER-SEPARATOR", "R-SRC-ENCODING", "R-OTHER-NAME", "R-COMPOSED-RELEASE", "R-UNPLANTED-SPELLING"]);
     expect(ROSTER.residuals).toEqual(RESIDUALS);
     const plantedOf: Readonly<Record<string, readonly string[]>> = {
-      A1: Object.keys(PLANTED_RELEASE), A2: [...Object.keys(PLANTED_TEXTS), ...Object.keys(PLANTED_MODULES)], B1: Object.keys(UNPLANTED),
+      A1: Object.keys(PLANTED_RELEASE),
+      A2: [...Object.keys(PLANTED_TEXTS), ...Object.keys(PLANTED_MODULES), ...Object.keys(PLANTED_ENCODINGS)],
+      B1: Object.keys(UNPLANTED),
     };
     expect(RESIDUALS.flatMap(residual => [...residual.quiet, ...residual.twin].filter(id => !(plantedOf[residual.quietPin] ?? []).includes(id)).map(id => `${residual.id}:${id}`))).toEqual([]);
     // Every planted input A1 and A2 read quiet is a named non-claim or one residual's quiet row, never both: a residual dropped
@@ -1069,11 +1159,12 @@ describe("wb-b9n.1 Forge CAC receipt census (FORGE-CAC-EVIDENCE-ASSURANCE-R2)", 
     const quietOf = (pin: string): string[] => RESIDUALS.filter(residual => residual.quietPin === pin).flatMap(residual => residual.quiet);
     const quietTexts = Object.keys(PLANTED_TEXTS).filter(id => !isWord(PLANTED_TEXTS[id] ?? ""));
     const quietModules = Object.keys(PLANTED_MODULES).filter(id => judgeModules([{ path: PLANT, text: PLANTED_MODULES[id] ?? "" }]).hits.length === 0);
+    const quietEncodings = Object.keys(PLANTED_ENCODINGS).filter(id => judgeModules([{ path: PLANT, text: decoded(PLANTED_ENCODINGS[id] ?? Buffer.alloc(0)) }]).hits.length === 0);
     const quietRelease = Object.keys(PLANTED_RELEASE).filter(id => {
       const one = releaseReading([PLANTED_RELEASE[id] ?? { path: "", text: "" }]);
       return one.gating.length + one.word.length + one.receiptShaped.length === 0;
     });
-    expect([...quietTexts, ...quietModules].sort(byName)).toEqual([...NON_CLAIMS, ...quietOf("A2")].sort(byName));
+    expect([...quietTexts, ...quietModules, ...quietEncodings].sort(byName)).toEqual([...NON_CLAIMS, ...quietOf("A2")].sort(byName));
     expect(quietRelease).toEqual(quietOf("A1"));
     // A1 judges the family with A2's own judge: the roster's A1 family readings equal A2's readings of the same planted texts.
     const familyHeld = ROSTER.rows.flatMap(row => row.pins).find(pin => pin.id === "A1")?.witness;
