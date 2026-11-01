@@ -8,7 +8,9 @@
  * readers (gate-prep-16's 12, gate-prep-18's 11), 22 find their text here exactly once; the 23rd, GP18-RG-beadrow-uncounted,
  * edits the export reader beadRow, which was not moved. Cut #2 of this bead narrowed four comments to what this code reads
  * (LOCKS, the carriers, THE EFFECT CLASS, the run guard's counter) and changed no code line; cut #3 narrowed two more to the forms
- * the census holds (shownText's links, unwrapped's assertions) and changed no code line.
+ * the census holds (shownText's links, unwrapped's assertions) and changed no code line; cut #4 narrowed seven more to the forms the
+ * census holds (FOOTNOTE, spansBlankLine, carrierView, sourceUnits, the template view, THE JUDGE, THE BINDING) and changed no code
+ * line.
  * Display paths added: none (test-only; nothing here renders, it reads texts handed to it).
  */
 import { Lexer, type Links, marked, type Token, type Tokens } from "marked";
@@ -79,7 +81,7 @@ export const FENCE = /^\s{0,3}(?:`{3,}|~{3,})/;
 export const UNSHOWN: readonly string[] = ["html", "image", "def", "del", "space", "hr"];
 /** An html token opening or closing an element: an attribute or a style can hide the text between its tags, so its view is opaque. */
 export const ELEMENT = /^<\/?[A-Za-z]/;
-/** Footnote syntax shows no carrier: a reference renders as a number (never its label), a definition apart from its paragraph. */
+/** Footnote syntax shows no carrier: a reference renders as a number (never its label), and the definitions the census holds ([^n]: two spaces in and after one '> ') are dropped from their units. */
 export const FOOTNOTE = { reference: /\[\^[^\]\n]+\]/g, definition: /^\s*(?:>\s*)*\[\^[^\]\n]+\]:/ };
 
 /** A markdown line's place in its document's own rendering: rendered with its unit, shown verbatim as code, hidden, or opaque. */
@@ -96,7 +98,7 @@ export function textField(token: Token): string {
   const value: unknown = (token as { text?: unknown }).text;
   return typeof value === "string" ? value : "";
 }
-/** A list or quote whose raw HTML crosses a blank line (a line of white space and '>' marks only, as BLANK reads it): the census's units cannot see where that HTML ends. */
+/** Opacity: the census holds a three-line html block comment ending a one-item list or quote, or that list or quote nested once, whose crossing line BLANK reads (white space and '>' marks only); the census's units cannot see where that HTML ends. */
 export function spansBlankLine(token: Token): boolean {
   return childrenOf(token).some(child => (child.type === "html" && /\n[\s>]*\n/.test(child.raw)) || spansBlankLine(child));
 }
@@ -137,7 +139,7 @@ export function shownText(tokens: readonly Token[], separator: string, view: { o
     })
     .join(separator);
 }
-/** A unit's carrier view: opaque when any line is; else its hidden lines dropped, shown verbatim when every line is code or hidden, and otherwise rendered on its own (indentation of spaces and tabs removed, footnote syntax removed, the document's definitions preloaded). */
+/** A unit's carrier view: opaque when its line is opaque (the census holds one-line units inside the comment); else its hidden lines dropped, shown verbatim when every line is code or hidden, and otherwise rendered on its own (of indentation the census holds a tab and four spaces removed, footnote references and the held definitions removed, the document's definitions preloaded). */
 export function carrierView(lines: readonly string[], places: readonly LineShow[], links: Links): CarrierView {
   if (places.includes("opaque")) return { text: "", opaque: true };
   const kept = lines.filter((_, index) => places[index] !== "hidden");
@@ -201,7 +203,7 @@ export function scriptKindOf(path: string): ts.ScriptKind {
   if (/\.[cm]?jsx?$/.test(path)) return path.endsWith("x") ? ts.ScriptKind.JSX : ts.ScriptKind.JS;
   return path.endsWith("x") ? ts.ScriptKind.TSX : ts.ScriptKind.TS;
 }
-/** Script units through the TypeScript AST: strings (cooked), templates, comments (leading and same-line trailing ranges), and identifiers as code. */
+/** Script units through the TypeScript AST: strings (cooked), templates (the census holds one or two substitutions), comments (leading and same-line trailing ranges; the census holds one comment at a place), and identifiers as code. */
 export function sourceUnits(path: string, text: string): Unit[] {
   const file = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const units: Unit[] = [];
@@ -221,7 +223,7 @@ export function sourceUnits(path: string, text: string): Unit[] {
       units.push({ line: lineOf(node.getStart(file)), kind: "string", text: node.text });
     } else if (ts.isTemplateExpression(node)) {
       const body = node.head.text + node.templateSpans.map(span => `\${${span.expression.getText(file)}}${span.literal.text}`).join("");
-      /** THE CARRIER VIEW of a template: its cooked parts, each substitution shown as nothing. */
+      /** THE CARRIER VIEW of a template: its cooked parts, each substitution shown as nothing (the census holds one or two substitutions). */
       const shown = node.head.text + node.templateSpans.map(span => span.literal.text).join("");
       units.push({ line: lineOf(node.getStart(file)), kind: "string", text: body, view: () => ({ text: shown, opaque: false }) });
     } else if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) {
@@ -309,7 +311,7 @@ export function squeezed(text: string): string {
 /** The run guard's counter: each judgeFiles call raises it by one (THE RUN GUARD; the parent's export reader, not moved here, raised it too). */
 export const READS = { calls: 0 };
 
-/** THE JUDGE: every unit of every file, the carriers a citing doc unit or string owes, then each banner module's effect classes. */
+/** THE JUDGE: every unit of every file, the carriers a citing doc unit or string owes, then each banner module's effect classes (the census holds one non-read setting per module). */
 export function judgeFiles(files: readonly FileText[]): Judgement {
   READS.calls += 1;
   const kinds: Record<FileKind, number> = { lock: 0, binary: 0, markdown: 0, script: 0, text: 0 };
@@ -345,7 +347,7 @@ export function judgeFiles(files: readonly FileText[]): Judgement {
 export function causesOf(path: string, text: string): string[] {
   return judgeFiles([{ path, text }]).findings.map(finding => finding.slice(finding.indexOf(" ") + 1));
 }
-/** THE BINDING: a citing unit no BOUND entry names is unbound; a BOUND entry no citing unit carries is stale. */
+/** THE BINDING: the census holds a citing unit with an empty BOUND list (unbound), with a BOUND list of its key alone (bound) and with its key then a retired key (the retired key stale). */
 export function bindingOf(citing: readonly Citing[], bound: readonly string[]): string[] {
   const keys = citing.map(entry => entry.key);
   return [...citing.filter(entry => !bound.includes(entry.key)).map(entry => `${entry.at} unbound`), ...bound.filter(entry => !keys.includes(entry)).map(entry => `${entry} stale`)];
