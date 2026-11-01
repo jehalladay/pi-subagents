@@ -9,28 +9,48 @@
  * Acceptance (the owner filing's, verbatim): "per-view interaction falsifier - every handler path is projection-read-only
  * with zero capability invokes and zero journal/native writes." (the filing's dash is U+2014).
  *
- * MEASURED (read-only, by the cutting seats, 2026-10-29 at trunk 57cb1c0 and 2026-10-30 at trunks c2695d7 and 360919f, whose
- * src is unchanged since 04123dc): git lists 117 files under src/, all TypeScript and none a declaration file, and no src text
+ * MEASURED (read-only, by the cutting seats, 2026-10-29 at trunk 57cb1c0, 2026-10-30 at trunks c2695d7 and 360919f, whose
+ * src is unchanged since 04123dc, and 2026-11-01 at trunk 19024ab, whose src differs from 04123dc in one doc comment of
+ * src/workbench/hyperunix-observer.ts): git lists 117 files under src/, all TypeScript and none a declaration file, and no src text
  * names the program, so no src module presents APO state and no APO view closure exists to judge. Pi's effect seams as
  * src declares them: ObservationProjection's 18 public members (12 read, 6 admission), CapabilityRegistry's 7,
  * CapabilityProvider's 3 and src/workflow/journal.ts's 4 exported values (SEAMS classifies each).
  *
- * THE FALSIFIER (a fail-closed core; the judge, its readings and every finding are defined in
- * test/helpers/apo-snapshot-census.ts, whose header is the reading of record and names, per form, the pin that holds each
- * reading form): an APO view module (a module the wb-021.4 ROLE reading reads as naming the program) is admitted only when
- * its whole runtime closure holds no finding. Every other form refuses with a typed finding - UNREADABLE, UNRESOLVED,
- * PACKAGE (no specifier that is not relative is admitted, so node:fs, node:child_process, every native client package, an
- * absolute path, a URL and a dot-led bare specifier refuse), EFFECT (a text holding a statement or acceptance verb, or a
- * whole text that is a seam effect name), GLOBAL (a name with no run-time binding of its own module, outside ADMITTED_FREE:
- * a name binds only through a declaration of its own ES module that emits a binding, by an allowlist - so a script's or a
- * declaration file's declarations, an ambient (or string-named-module) or type-only one, a bodiless function or
- * signature's parameter, a const enum, an interface, a type alias, an export as namespace and an uninstantiated namespace
- * bind nothing, alone or merged with a value: refusal #2's GP1-GP17 merges red; a module-scope declaration of a CommonJS
- * wrapper's parameter or arguments binds nothing, since under the wrapper it keeps the wrapper's value; a declaration a
- * namespace body holds binds only a reference inside that body, so a reference from another block of a merged namespace
- * reds: refusal #3's NS members; an enum member binds only its own name and a read after its declaration, so a forward or
- * self read reds; and a value use passes over an alias of no value - and import.meta reds wherever a
- * value position reads it, no meta-property key being parsed: refusal #3's META1) and CONSTRUCTOR.
+ * THE PINNED SET (this file; each pin's case id is `<row id> <pin id>`, registered in ROWS order, 176 cases, then seven
+ * cases): for each plant of rows L, V, N, P, Z, R, U and Q the assertion target is judgeTree over the pin's planted tree
+ * (written to rule-11 scratch, its copies byte-for-byte from the repository) and the observed result is the pin's views
+ * and findings, exactly (the sorted finding lines); for each reading pin (R-families, R-words) effectReading over the
+ * pin's texts; for each live pin the src tree as git lists it - L1-src's views and findings and each S seam pin's members
+ * read from src; for each seam reader pin (S-reader-*) seamMembers over the pin's source. The seven cases - outside
+ * anchors, rule 16, composition, shared pins, refusal #4 of record, provenance and roster (registered last) - are named
+ * in the paragraphs below, each with what it holds.
+ *
+ * THE FALSIFIER (the judge, its readings and every finding are defined in test/helpers/apo-snapshot-census.ts, whose
+ * header is the reading of record and names, per form, the pin that holds each reading form; its CLAIM SCOPE: each reading
+ * is claimed at the forms its pins hold, and no wider): an APO view module (a module the wb-021.4 ROLE reading reads as
+ * naming the program) is admitted only when its whole runtime closure holds no finding, and each form a pin holds with a
+ * finding refuses with that typed finding - UNREADABLE, UNRESOLVED, PACKAGE (no specifier that is not relative is
+ * admitted, so node:fs, node:child_process, every native client package, an absolute path, a URL and a dot-led bare
+ * specifier refuse), EFFECT (a text holding a statement or acceptance verb, or a whole text that is a seam effect name),
+ * GLOBAL (a free name of a closure module as wb-021.8's landed GLOBAL binding reader reads it,
+ * test/helpers/apo-snapshot-global-reader.ts, imported unedited; the reader's readings are claimed at its census's pinned
+ * set, test/workbench-apo-snapshot-global-reader-census.test.ts, and this census claims their COMPOSITION, below) and
+ * CONSTRUCTOR.
+ * COMPOSITION (ruling R-B166: this cut restates the census over the reader wb-021.8 landed at landing 803, after refusal #4
+ * on cut #4; the census claims what the reader's census pins, composed through judgeTree, and no wider): (a) every pin of
+ * the reader's ROWS, its files planted beside an entry view that imports each of them (src/apo/composition-entry.ts),
+ * reads through judgeTree at exactly the pin's GLOBAL lines - module, line and name, none for a quiet pin - of each
+ * module judgeTree reads and at no other GLOBAL line, and a module wb-021.4's moduleFacts cannot read reds UNREADABLE in
+ * place of its lines
+ * (UNREADABLE_IN_COMPOSITION names the one such pin, W-G14-I10); (b) each pin of this census that shares an id with a
+ * reader pin plants exactly that pin's files and copies none, each GLOBAL line it holds is a line of that pin, and every
+ * row U pin is one; (c) refusal #4's members of record (its CLASSES OF RECORD in the export row's notes: eleven admitted
+ * instantiation-expression members, IE8, six controls and five GK witnesses) each red judgeTree at the count of GLOBAL
+ * lines the record states; and (d) PROVENANCE: the helper imports freeNamesOf and ADMITTED_FREE from the reader,
+ * judgeTree calls that freeNamesOf, the helper declares no binding of that name of its own, no function of the helper
+ * shares a name with one the reader declares, and the helper's ADMITTED_FREE is the reader's array. Falsifiers: the
+ * composition case for (a), the shared-pins case for (b), the refusal #4 case for (c) and the provenance case for (d),
+ * each a registered test of this file.
  *
  * ROWS (rows L, V and N tile the statement and rows P and Z tile the acceptance, each label a verbatim segment held to the
  * export row by the outside-anchor case). L: the src tree presents no APO state (L1 - ARMED: the first module that names
@@ -44,27 +64,30 @@
  * edge kind (static, export-from, dynamic, require, import-equals). Z: a capability invoke, inspect and registration, a
  * journal write handed in, a journal module in the closure, a native file write, a native process spawn and a native
  * client package, the free names process, fetch, Function, eval and globalThis, global and every module-wrapper name, and
- * the constructor route, each red. R: every reading form the helper's header claims, per form, each held by a plant, a
+ * the constructor route, each red. R: the reading forms the helper's header names, per form, each held by a plant, a
  * reading pin or a line of its own with its own expected finding: the EFFECT texts and their folds; UNRESOLVED and
- * PACKAGE by every edge kind and specifier form; resolveRelative's candidates; every finding kind one and two edges from
- * the view; every GLOBAL binding rule (a script shim, a declaration file, an ambient, type-only or bodiless
- * declaration, a const enum, the arguments object, an alias or a namespace of no value) and every name position, the
- * erased type declarations included; and CONSTRUCTOR in
- * every text form EFFECT reads. U: GLOBAL's binding family, enumerated (standing rule 19, ruling R-B106, class U1 of
- * record): one pin per member of record - refusal #2's GP1, GP1L (the src-landable form), GP2-GP5, GP3b, GP4b, GP7-GP14
+ * PACKAGE by every edge kind and the specifier forms its pins plant; resolveRelative's candidates; the finding kinds one
+ * and two edges from the view (R-closure-depth: every kind but UNREADABLE); each view of a tree judged, the second of two
+ * views red at its own finding (R-views-each-judged); the GLOBAL forms its pins plant (a script
+ * shim, a declaration file, an ambient, type-only or bodiless declaration, a const enum, the arguments object, an alias
+ * or a namespace of no value) and the name positions they plant, the erased type declarations included (the pins among
+ * them that share an id with a reader pin plant its files: the shared-pins case); and CONSTRUCTOR in
+ * every text form EFFECT reads. U: GLOBAL's binding family through wb-021.8's landed reader, enumerated (standing rule 19,
+ * ruling R-B106, class U1 of record), each pin the reader's pin of the same id (the shared-pins case holds its files):
+ * one pin per member of record - refusal #2's GP1, GP1L (the src-landable form), GP2-GP5, GP3b, GP4b, GP7-GP14
  * with GP8b, GP17, the gate's killed GP6, GP15 and GP16 and its controls GC1-GC3, each red at the use, and the members
  * the cut #3 seat found (a const enum or an ambient class with an empty namespace, an export default interface, an
  * ambient let with a type, a merge two edges away, an ambient function or namespace with an interface, a string-named
  * module, a bodiless signature's parameter, and a module-scope declaration of a wrapper name), an export as namespace
- * (red under both judges, held as a guard), and one per binding form of the allowlist, the namespace rule and the
- * member names (each quiet); and refusal #3's members (ruling R-B134): class U1's NS1, NS1L and NS3bL (the src-landable
+ * (red under both judges, held as a guard), and the binding forms of the reader's allowlist, its namespace rule and the
+ * member names its pins plant (each quiet); and refusal #3's members (ruling R-B134): class U1's NS1, NS1L and NS3bL (the src-landable
  * forms), NS2, NS4-NS8, NS10 and NS11 and the gate's NS3 and NS3b, each red at the use, its controls NS-C1 and NS9 (red)
  * and NS-C2 (quiet), the seat's NS-C3 (quiet), NS-nested-cross and NS-cross-forms (red), the gate's EN1 and EN2
  * (quiet) and the seat's forward enum reads EN-forward, EN-forward-merged and EN-self (red, a U1 member family the cut #4
  * seat found); class U2's META1 and META1L and the meta forms, each red; and class U3's judge mutants GJ1, GJ4, GJ15 and
- * GJ16, each killed by the row U pin U-<mutant> holding its witness, and the wrapper scopes the GJ1 witness leaves out
- * (quiet). S: each seam's members read from src equal its classification (S-projection,
- * S-registry, S-provider, S-journal; the projection's read members read no EFFECT text), and the seam reader's member
+ * GJ16, each held by the row U pin U-<mutant> holding its witness (each kill is measured by the seat's mutant battery
+ * against the landed reader, not by a case of this file), and the wrapper scopes the GJ1 witness leaves out (quiet).
+ * S: each seam's members read from src equal its classification (S-projection, S-registry, S-provider, S-journal; the projection's read members read no EFFECT text), and the seam reader's member
  * forms (S-reader-class, S-reader-interface, S-reader-exports, S-reader-exports-unnamed, S-reader-missing). Q: the
  * residuals.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row's id, label and pin digests, the
@@ -80,10 +103,18 @@
  * each cured by the row R pin REFUSAL_1_CURES names (the map holding exactly the record's members); and refusal #3's
  * CLASSES OF RECORD in the same notes, which names class U1's third-failure members and controls, class U2's member and
  * class U3's judge mutants, each a row U pin U-<member> - every member it names admitted, each control it names red and
- * the U2 member carrying a GLOBAL finding, the control it names quiet carrying none. The same case holds
- * V-admitted-free's list to ADMITTED_FREE (an internal check, not an outside anchor). The live redaction module the two V
+ * the U2 member carrying a GLOBAL finding, the control it names quiet carrying none. The outside-anchors case also holds
+ * V-admitted-free's list to ADMITTED_FREE (an internal check, not an outside anchor). The composition case's anchors: the
+ * reader's ROWS (test/helpers/apo-snapshot-global-reader.ts) and its out-of-file roster
+ * (test/fixtures/apo-snapshot-global-reader-roster.json), which the composed pins equal in order; the shared-pins case's:
+ * the reader's ROWS; the refusal #4 case's: refusal #4's CLASSES OF RECORD in the export row's notes (each span its key's
+ * first occurrence, so appended notes leave it be); the provenance case's: this census's helper source and the reader's
+ * source, each parsed as TypeScript. The live redaction module the two V
  * plants copy is plant content, held by their pins and the roster, not an outside anchor.
- * NOT CLAIMED: the internals of any package (none is admitted, so none is read); an effect performed by code handed in at
+ * NOT CLAIMED: a GLOBAL reading no pin of the reader's census and no pin of this one holds is NOT CLAIMED by this census;
+ * member reads are NOT CLAIMED by GLOBAL (the reader reads free names and not the members of a value; EFFECT and
+ * CONSTRUCTOR read member names as texts at the forms their pins hold); the internals of any package (none is admitted,
+ * so none is read); an effect performed by code handed in at
  * run time - a member called by a name outside the EFFECT families and the seam names (R-UNNAMED-EFFECT), or code reached
  * without a call site, through a coercion, a getter or a thenable (R-IMPLICIT-CALL); a write into a handed-in object's or
  * an admitted built-in's fields or collections (R-FIELD-MUTATION); a module presenting APO state without naming the
@@ -92,7 +123,7 @@
  * a text built at run time (R-COMPUTED-TEXT); a code constructor reached by reflection over an admitted built-in with a
  * computed key (R-REFLECTIVE-REACH); regular-expression literals and comments, never read (R-UNREAD-TEXT); whether an
  * import's relative target exports the name it imports - the import's own declaration binds either way, and at run time a
- * missing export reads undefined or fails to link, never a host global (R-UNLINKED-IMPORT); any code outside src/.
+ * missing export reads undefined or fails to link, not a host global (R-UNLINKED-IMPORT); any code outside src/.
  * RESIDUALS (named, each with its pinned quiet row in row Q): R-UNNAMED-VIEW, R-LOOKALIKE-VIEW, R-UNNAMED-EFFECT,
  * R-IMPLICIT-CALL, R-FIELD-MUTATION, R-COMPUTED-TEXT, R-REFLECTIVE-REACH, R-UNREAD-TEXT, R-UNLINKED-IMPORT.
  *
@@ -100,7 +131,7 @@
  */
 import { execFileSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { dirname, join, posix } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
@@ -129,6 +160,7 @@ import {
   titleOf,
   VIEW_CLASSES,
 } from "./helpers/apo-snapshot-census.js";
+import { ADMITTED_FREE as READER_ADMITTED_FREE, ROWS as READER_ROWS, type PlantPin as ReaderPin } from "./helpers/apo-snapshot-global-reader.js";
 import { EDGE_KINDS, roleReading } from "./helpers/apo-ui-publish-census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -260,7 +292,94 @@ interface Roster {
 }
 const readRoster = (): Roster => JSON.parse(readFileSync(join(ROOT, ROSTER), "utf8")) as Roster;
 
-describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2)", () => {
+/** wb-021.8's landed GLOBAL binding reader (landing 803) and its out-of-file roster, and this census's helper: read by the composition and provenance cases. */
+const READER = "test/helpers/apo-snapshot-global-reader.ts";
+const READER_ROSTER = "test/fixtures/apo-snapshot-global-reader-roster.json";
+const HELPER = "test/helpers/apo-snapshot-census.ts";
+/** The composition entry: a planted APO view that imports each planted module of a reader pin, so each is a module of a view's runtime closure. */
+const ENTRY = "src/apo/composition-entry.ts";
+/** The composition and refusal #4 cases plant and judge every reader pin's tree once per run (216 at landing 803), so they carry this budget. */
+const COMPOSITION_BUDGET_MS = 300_000;
+
+/** The entry's specifier for a planted module, relative to the entry: a .ts module through its .js form (the P plants' form), a declaration file as written (R-resolve-forms). */
+function entrySpecifier(file: string): string {
+  const relative = posix.relative(posix.dirname(ENTRY), file);
+  const dotted = relative.startsWith("../") ? relative : `./${relative}`;
+  return file.endsWith(".d.ts") ? dotted : dotted.replace(/\.ts$/, ".js");
+}
+
+/**
+ * The reader pins whose planted module wb-021.4's moduleFacts cannot read (a parse diagnostic TypeScript reports): judgeTree
+ * reds that module UNREADABLE and reads no GLOBAL line of it (R-unreadable), so the composition case holds these modules
+ * UNREADABLE in place of the reader's GLOBAL lines there. W-G14-I10's view reads an instantiation expression followed by a
+ * property access, which TypeScript 6.0.3 reports as a grammar error.
+ */
+const UNREADABLE_IN_COMPOSITION: Readonly<Record<string, readonly string[]>> = { "I W-G14-I10": ["src/apo/view.ts"] };
+
+interface Composed {
+  readonly views: readonly string[];
+  /** The modules judgeTree reds UNREADABLE, sorted. */
+  readonly unreadable: readonly string[];
+  /** Each GLOBAL finding of judgeTree read as the reader's line `GLOBAL <module>:<line> <name>` (its view and route dropped), sorted and unique. */
+  readonly lines: readonly string[];
+}
+/** One reader pin's planted files, with the entry view beside them, written to rule-11 scratch and judged by this census's judgeTree. */
+function composedPlant(pin: ReaderPin): Composed {
+  const files = Object.keys(pin.files).sort();
+  if (files.includes(ENTRY)) throw new Error(`reader pin ${pin.id} plants the entry's path ${ENTRY}`);
+  const planted: Record<string, string> = {
+    ...pin.files,
+    [ENTRY]: [...files.map(file => `import ${JSON.stringify(entrySpecifier(file))};`), 'export const VIEW_TITLE = "APO composition entry";', ""].join("\n"),
+  };
+  const root = makeScratch("apo-snapshot-composition-");
+  try {
+    for (const [file, text] of Object.entries(planted)) {
+      mkdirSync(dirname(join(root, file)), { recursive: true });
+      writeFileSync(join(root, file), text);
+    }
+    const judgment = judgeTree({ root, files: Object.keys(planted) });
+    const lines = judgment.findings.flatMap(finding => {
+      const match = /^GLOBAL \S+ -> (\S+:\d+ \S+) via /.exec(finding);
+      return match === null ? [] : [`GLOBAL ${match[1]}`];
+    });
+    const unreadable = judgment.findings.flatMap(finding => {
+      const match = /^UNREADABLE (\S+?): /.exec(finding);
+      return match === null ? [] : [match[1] ?? ""];
+    });
+    return { views: judgment.views, unreadable: [...new Set(unreadable)].sort(), lines: [...new Set(lines)].sort() };
+  } finally {
+    removeScratch(root);
+  }
+}
+
+let composedCache: ReadonlyMap<string, Composed> | undefined;
+/** Every reader pin composed once per run, keyed by its reader title `<row id> <pin id>`, in the reader's ROWS order. */
+function composedAll(): ReadonlyMap<string, Composed> {
+  if (composedCache === undefined) composedCache = new Map(READER_ROWS.flatMap(row => row.pins.map(pin => [`${row.id} ${pin.id}`, composedPlant(pin)] as const)));
+  return composedCache;
+}
+
+/** The text between a record's key and the end marker after it (the first occurrence: the notes only append), or "". */
+function span(text: string, key: string, end: string): string {
+  const start = text.indexOf(key);
+  const stop = start < 0 ? -1 : text.indexOf(end, start + key.length);
+  return start < 0 || stop < 0 ? "" : text.slice(start + key.length, stop);
+}
+const uniqueTokens = (text: string, pattern: RegExp): string[] => [...new Set([...text.matchAll(pattern)].map(match => match[0]))];
+
+/** A parsed module of the repository and the names of the function declarations it holds, at any depth. */
+const parseModule = (file: string): ts.SourceFile => ts.createSourceFile(file, readFileSync(join(ROOT, file), "utf8"), ts.ScriptTarget.ESNext, true, ts.ScriptKind.TS);
+function functionNames(sf: ts.SourceFile): string[] {
+  const names: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isFunctionDeclaration(node) && node.name !== undefined) names.push(node.name.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(sf);
+  return names;
+}
+
+describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2): judgeTree over each pinned plant reads exactly its views and findings, the reading, live and seam pins read their texts, src and seams, and each pin of wb-021.8's landed GLOBAL reader reads through judgeTree at exactly its GLOBAL lines", () => {
   for (const row of ROWS) {
     for (const pin of row.pins) {
       if (pin.kind === "live") it(titleOf(row, pin), { timeout: LIVE_BUDGET_MS }, () => checkLive(pin));
@@ -373,7 +492,7 @@ describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2)", 
   });
 
   it("rule 16: every judged row and the residual families are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:9", "V:8", "N:5", "P:6", "Z:14", "R:42", "U:73", "S:9", "Q:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:9", "V:8", "N:5", "P:6", "Z:14", "R:43", "U:73", "S:9", "Q:9"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-UNNAMED-VIEW:Q R-UNNAMED-VIEW",
       "R-LOOKALIKE-VIEW:Q R-LOOKALIKE-VIEW",
@@ -385,6 +504,109 @@ describe("APO snapshot census (wb-021.2, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R2)", 
       "R-UNREAD-TEXT:Q R-UNREAD-TEXT",
       "R-UNLINKED-IMPORT:Q R-UNLINKED-IMPORT",
     ]);
+  });
+
+  it("composition: every pin of the landed GLOBAL reader's ROWS, planted with the entry view, reads through judgeTree at exactly the pin's GLOBAL lines of each module judgeTree reads and at no other, UNREADABLE_IN_COMPOSITION's modules red UNREADABLE, the composed pins being the reader roster's", { timeout: COMPOSITION_BUDGET_MS }, () => {
+    const readerRoster = JSON.parse(readFileSync(join(ROOT, READER_ROSTER), "utf8")) as { readonly rows: readonly { readonly id: string; readonly pins: readonly { readonly id: string }[] }[] };
+    const composed = composedAll();
+    expect([...composed.keys()], "the composed pins are the reader roster's pins, in order").toEqual(readerRoster.rows.flatMap(row => row.pins.map(pin => `${row.id} ${pin.id}`)));
+    expect(
+      [...composed].filter(([, entry]) => !entry.views.includes(ENTRY)).map(([title]) => title),
+      "the entry is a view of every composed tree",
+    ).toEqual([]);
+    expect(
+      [...composed].filter(([title, entry]) => JSON.stringify(entry.unreadable) !== JSON.stringify(UNREADABLE_IN_COMPOSITION[title] ?? [])).map(([title, entry]) => `${title}: ${JSON.stringify(entry.unreadable)}`),
+      "judgeTree reds UNREADABLE exactly the modules UNREADABLE_IN_COMPOSITION names, and no module of any other composed tree",
+    ).toEqual([]);
+    const moduleOf = (line: string): string => line.slice("GLOBAL ".length, line.lastIndexOf(":"));
+    expect(
+      Object.entries(UNREADABLE_IN_COMPOSITION).flatMap(([title, modules]) => {
+        const pin = READER_ROWS.flatMap(row => row.pins.filter(candidate => `${row.id} ${candidate.id}` === title))[0];
+        return modules.filter(module => pin === undefined || !pin.findings.some(line => moduleOf(line) === module)).map(module => `${title} ${module}`);
+      }),
+      "each module UNREADABLE_IN_COMPOSITION names holds a GLOBAL line of its reader pin, read UNREADABLE instead",
+    ).toEqual([]);
+    const diverging = READER_ROWS.flatMap(row =>
+      row.pins.flatMap(pin => {
+        const title = `${row.id} ${pin.id}`;
+        const lines = composed.get(title)?.lines ?? [];
+        const unread = UNREADABLE_IN_COMPOSITION[title] ?? [];
+        const expected = [...pin.findings].filter(line => !unread.includes(moduleOf(line))).sort();
+        return JSON.stringify(lines) === JSON.stringify(expected) ? [] : [`${title}: judgeTree ${JSON.stringify(lines)}, the reader's pin ${JSON.stringify(expected)}`];
+      }),
+    );
+    expect(diverging, "every reader pin reads through judgeTree at exactly its GLOBAL lines (module, line and name) of each module judgeTree reads, and at no other").toEqual([]);
+  });
+
+  it("shared pins: each pin of this census that shares an id with a pin of the landed reader's ROWS plants exactly that pin's files and copies none, each GLOBAL line it holds is a line of that pin, and every row U pin is one", () => {
+    // This census's own pins that share an id with a reader pin: each plants exactly that pin's files and copies none, each
+    // GLOBAL line it holds (its view and route dropped) is a line of that pin, and every row U pin is one (the row U label).
+    const readerPins = new Map(READER_ROWS.flatMap(row => row.pins.map(pin => [pin.id, pin] as const)));
+    const filesKey = (files: Readonly<Record<string, string>>): string => JSON.stringify(Object.keys(files).sort().map(file => [file, files[file]]));
+    const shared = ROWS.flatMap(row => row.pins.flatMap(pin => (pin.kind === "plant" && readerPins.has(pin.id) ? [{ title: titleOf(row, pin), pin, reader: readerPins.get(pin.id) }] : [])));
+    expect(shared.length, "pins of this census share an id with a reader pin").toBeGreaterThan(0);
+    expect(
+      shared.filter(({ pin, reader }) => (pin.copies ?? []).length > 0 || reader === undefined || filesKey(pin.files) !== filesKey(reader.files)).map(({ title }) => title),
+      "each pin of this census that shares an id with a reader pin plants exactly that pin's files and copies none",
+    ).toEqual([]);
+    expect(
+      shared.flatMap(({ title, pin, reader }) =>
+        pin.findings.flatMap(finding => {
+          const match = /^GLOBAL \S+ -> (\S+:\d+ \S+) via /.exec(finding);
+          return match !== null && reader?.findings.includes(`GLOBAL ${match[1]}`) !== true ? [`${title}: ${finding}`] : [];
+        }),
+      ),
+      "each GLOBAL line a shared pin holds is a line of the reader's pin of the same id",
+    ).toEqual([]);
+    expect(
+      rowOf("U")
+        .pins.filter(pin => !readerPins.has(pin.id))
+        .map(pin => pin.id),
+      "every row U pin shares its id with a reader pin",
+    ).toEqual([]);
+  });
+
+  it("refusal #4 of record: each IE member its CLASSES OF RECORD names admitted, and IE8, reds judgeTree through GLOBAL, each control at the count of GLOBAL lines it states and each GK witness at exactly one", { timeout: COMPOSITION_BUDGET_MS }, () => {
+    const record4 = span(exportRow().notes, "CLASSES OF RECORD (BIND's statement for identity at the inversion ruling or in any child bead", "BIND READINGS");
+    const admitted4 = uniqueTokens(span(record4, "Admitted with findings []: ", " (IE10"), /\bIE\d+\b/g);
+    const unread4 = uniqueTokens(span(record4, "src-landable); ", "'s require edge"), /\bIE\d+\b/g);
+    const controls4 = span(record4, "Controls without type arguments red: ", ". Claims it contradicts");
+    const counted = [...controls4.matchAll(/((?:IE\d+[a-z](?:, | and )?)+)(?: \([^)]*\))? (\d+)/g)].flatMap(match => uniqueTokens(match[1] ?? "", /\bIE\d+[a-z]\b/g).map(member => [member, Number(match[2])] as const));
+    const witnesses = uniqueTokens(span(record4, "with witnesses ", " (each 1 -> 0"), /\bW-GK\d+-[a-z]+(?:-[a-z]+)*/g);
+    expect([admitted4.length, unread4, counted.length, witnesses.length], "refusal #4's record names eleven admitted IE members, IE8, six controls and five GK witnesses").toEqual([11, ["IE8"], 6, 5]);
+    const composed = composedAll();
+    /** The composed GLOBAL line count of the one reader pin with this id, or -1 when no pin, or more than one, has it. */
+    const count = (id: string): number => {
+      const titles = [...composed.keys()].filter(title => title.slice(title.indexOf(" ") + 1) === id);
+      return titles.length === 1 ? (composed.get(titles[0] ?? "")?.lines.length ?? -1) : -1;
+    };
+    expect([...admitted4, ...unread4].filter(member => count(`U-${member}`) < 1), "every IE member the record names admitted, and IE8, reds judgeTree through GLOBAL").toEqual([]);
+    expect(counted.filter(([member, lines]) => count(`U-${member}`) !== lines).map(([member]) => member), "each control the record names reds judgeTree at the count of GLOBAL lines it states").toEqual([]);
+    expect(witnesses.filter(id => count(id) !== 1), "each GK witness the record names reds judgeTree at exactly one GLOBAL line").toEqual([]);
+  });
+
+  it("provenance: judgeTree's GLOBAL reading is the landed reader's - the helper imports freeNamesOf and ADMITTED_FREE from it, judgeTree calls that freeNamesOf, no function of the helper shares a name with one the reader declares, and the helper's ADMITTED_FREE is the reader's", () => {
+    const helper = parseModule(HELPER);
+    const imported = helper.statements.filter(ts.isImportDeclaration).flatMap(declaration => {
+      const bindings = declaration.importClause?.namedBindings;
+      const fromReader = ts.isStringLiteral(declaration.moduleSpecifier) && declaration.moduleSpecifier.text === "./apo-snapshot-global-reader.js";
+      return fromReader && declaration.importClause?.isTypeOnly !== true && bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.filter(element => !element.isTypeOnly).map(element => (element.propertyName ?? element.name).text) : [];
+    });
+    expect([...imported].sort(), "the helper's value imports from ./apo-snapshot-global-reader.js").toEqual(["ADMITTED_FREE", "freeNamesOf"]);
+    const readerFunctions = functionNames(parseModule(READER));
+    expect(readerFunctions.includes("freeNamesOf"), "the reader declares freeNamesOf").toBe(true);
+    expect(functionNames(helper).filter(name => readerFunctions.includes(name)), "no function of the helper shares a name with a function the reader declares").toEqual([]);
+    const own: string[] = [];
+    const calls: string[] = [];
+    const visit = (node: ts.Node, inJudge: boolean): void => {
+      if ((ts.isFunctionDeclaration(node) || ts.isVariableDeclaration(node) || ts.isClassDeclaration(node) || ts.isParameter(node) || ts.isBindingElement(node)) && node.name !== undefined && ts.isIdentifier(node.name) && node.name.text === "freeNamesOf") own.push(node.kind === ts.SyntaxKind.Parameter ? "parameter" : ts.SyntaxKind[node.kind]);
+      if (inJudge && ts.isCallExpression(node) && ts.isIdentifier(node.expression)) calls.push(node.expression.text);
+      ts.forEachChild(node, child => visit(child, inJudge || (ts.isFunctionDeclaration(node) && node.name?.text === "judgeTree")));
+    };
+    visit(helper, false);
+    expect(own, "the helper declares no binding named freeNamesOf of its own, so the name judgeTree calls is the import").toEqual([]);
+    expect(calls.includes("freeNamesOf"), "judgeTree calls freeNamesOf").toBe(true);
+    expect(ADMITTED_FREE, "the helper's ADMITTED_FREE is the reader's array").toBe(READER_ADMITTED_FREE);
   });
 
   it("roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-snapshot-roster.json, in order and both ways", ({ task }) => {

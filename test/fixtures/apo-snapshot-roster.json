@@ -201,7 +201,7 @@
     },
     {
       "id": "R",
-      "label": "the judge's readings, each failing closed",
+      "label": "the judge's readings, each at the forms its pins plant",
       "pins": [
         {
           "id": "R-families",
@@ -289,7 +289,7 @@
         },
         {
           "id": "R-ambient",
-          "digest": "405199eb0c32402adcaa7ff78b1f106374260a59da8a36fa61414507eeb00e90"
+          "digest": "4a902d8812b30efe539cb60b418cb009b3e78d9d0a0dfa129f90ea5c5b82333f"
         },
         {
           "id": "R-extends",
@@ -306,6 +306,10 @@
         {
           "id": "R-closure-depth",
           "digest": "d20dc4021e81e3c080eb2e32d2573f7f30b32b5a0f11d8d5f0c4517ecaba46eb"
+        },
+        {
+          "id": "R-views-each-judged",
+          "digest": "85ea75708f40b3341342254d933230092e8c87d3efc91766d807bb2bb0afccf6"
         },
         {
           "id": "R-global-escaped",
@@ -337,23 +341,23 @@
         },
         {
           "id": "R-type-only-value",
-          "digest": "090976badaee22132859d046c48f3a5e1b2347102409cfd991927de8383f78e9"
+          "digest": "a592bd2852a7bc6b40a9046c392ec8733426e7cb2447431327d2cb68c1c1285b"
         },
         {
           "id": "R-type-only-erased",
-          "digest": "4fa0e7e8638188631d6b0760ecdc532eb27d2ac1c7f9ac2c9840fb239de83330"
+          "digest": "bef9fee4e2612f7faea4716e158db32d6ac80f46d618ab9641a5b45fed506c72"
         },
         {
           "id": "R-non-value-alias",
-          "digest": "db924de8b69e90ab6aeea376f4f579ef695f60f018b5ca23c292c0aefcb10dcf"
+          "digest": "773f9f4ae8cb6d12494c6f72866371e31a9c9a360d9b66043f49bdfd9052b313"
         },
         {
           "id": "R-types-erased",
-          "digest": "91726f0047470301b336b635653c385fd2e32c72081288e6d69ac2d758a56714"
+          "digest": "cc28a4ffffa8d89af6b69a4f3648a4e565b8beb7511c1c8b16f2cf6bf99e6f46"
         },
         {
           "id": "R-arguments",
-          "digest": "4c73d61411ec4f312d1c910ae02ccb03794b54e1c75c72998da996d90b263fa4"
+          "digest": "1405584117a34e7dc0cd7e01901ec7967a531f163745c0e4141346e1edbd1a2f"
         },
         {
           "id": "R-bodiless",
@@ -365,7 +369,7 @@
         },
         {
           "id": "R-not-references",
-          "digest": "6557d8f724972c9782f07cf5130290d5574753214c145477085314238ac27346"
+          "digest": "b0e91a45236ae28b3397593e2e6895187af91fbce194394ffe183a9d6b1282dd"
         },
         {
           "id": "R-constructor-forms",
@@ -375,11 +379,11 @@
     },
     {
       "id": "U",
-      "label": "GLOBAL's binding family and the meta-property (classes U1, U2 and U3 of record), enumerated: a name binds only through a declaration of its own module that emits a run-time binding of its own and, for a namespace member, only inside the block that declares it and, for an enum member, only after it; import.meta binds nothing; each form held by a pin of its own",
+      "label": "GLOBAL's binding family and the meta-property (classes U1, U2 and U3 of record), enumerated through wb-021.8's landed reader: each member of record and each binding form held by a pin of its own, which plants the files of the reader's pin of the same id",
       "pins": [
         {
           "id": "U-GP1",
-          "digest": "7c4f1eae5c6eedf69a4f85fc0f71f9a5e981ded40dc39d640229be3121f33b55"
+          "digest": "00faabd13cd1c8e67f54333c9561aafe63c45e189bde3e05d63f295134413ec4"
         },
         {
           "id": "U-GP1L",
@@ -395,7 +399,7 @@
         },
         {
           "id": "U-GP3b",
-          "digest": "1f37906a7a3ccc2b6c358ff4a99a1a0ea961d25b4af7b25de36bce46623990cb"
+          "digest": "07c8ee059a4965832893d12e5e51b6e5b8c494a84ca9ac720efd9e6808f796eb"
         },
         {
           "id": "U-GP4",
@@ -451,7 +455,7 @@
         },
         {
           "id": "U-GP6",
-          "digest": "3e9a7cacd0ca94124f1583345a8523a5a4b6f09b58468f4a3aac89540d6be6f2"
+          "digest": "67333a9089cbcf541cf648d001bd68107098cb50da12e75962599ce8e9691c7f"
         },
         {
           "id": "U-GP15",
@@ -511,7 +515,7 @@
         },
         {
           "id": "U-signature-parameters",
-          "digest": "88d786534798282be2f92918df2d1bee139570aae18135aac921bd4f39c01803"
+          "digest": "75d65121b3efd8da52ecc0f61fa4501902060bf9724b9733357f21bd1c7ae0e4"
         },
         {
           "id": "U-wrapper-var",
@@ -519,27 +523,27 @@
         },
         {
           "id": "U-wrapper-forms",
-          "digest": "cd748ed04099781cbd31f227ac843a16dc42bbfbc114527dcf211f15537849b9"
+          "digest": "f6ca250e427fb9768f201a5a80166142fd2e0c4682463f3f37a34412ae6740fb"
         },
         {
           "id": "U-namespace-unbound",
-          "digest": "b0e38aed8bc2ff415440c31dbbebbf880eed038c14bd818e9dd517eb9e765e77"
+          "digest": "b419a93ad919f2628a868fbe840bfed134284073ba95333ebc7ef82cbf57fd8c"
         },
         {
           "id": "U-namespace-binds",
-          "digest": "933ac60f920bad73e559b37fe215ce7872c373cbcb19420586d1ea008d1461af"
+          "digest": "312cf3a4d7a6feb8c6107090fdd1d8ac031d2e0e76bc992b165b6290513df129"
         },
         {
           "id": "U-binds-values",
-          "digest": "822d37584e731d339a4353dbb21df241db68b099f92d11e8bd3dc34a64955024"
+          "digest": "a4e42fcab90a4db0fcf593c721b1102a0dc47728a18617ce15fd425f8fb638e2"
         },
         {
           "id": "U-binds-merged",
-          "digest": "babf891e039883998dbd65ac605f8324397ac18033c87e77b44f97690dbb7d4e"
+          "digest": "5e6e932e8bfedc4000ed7a9b8d3ed55992873793340154d1b40bd7ade124ee8b"
         },
         {
           "id": "U-binds-members",
-          "digest": "426164bd9f2ccf6a75668ed19ad45699afa58287e8e21b32887ebd257d0698af"
+          "digest": "c857bc4471b9f600516ad28156b73d94f36a4f68ff64cea5798a730081166ed8"
         },
         {
           "id": "U-NS1",
@@ -555,7 +559,7 @@
         },
         {
           "id": "U-NS3",
-          "digest": "5496176c811c0213c47425cfe3a88e7e653b40af3e1f4964198df6d0a518f413"
+          "digest": "17973bec6e845a34df4e7d40c20bf87599dcfb030eaaa3c868f2911e5d3505b4"
         },
         {
           "id": "U-NS3b",
@@ -587,7 +591,7 @@
         },
         {
           "id": "U-NS9",
-          "digest": "ea5cd2254daf24d67b044e2f6770acb553775fbb7cbd12a5529ecbdc9a7fe823"
+          "digest": "d4f1625cede4894df9f38c3a98c4c38257eb7684a9dd1a4eb31d271377ec7195"
         },
         {
           "id": "U-NS10",
@@ -599,7 +603,7 @@
         },
         {
           "id": "U-NS-C1",
-          "digest": "e594ae5296660b8fe8a2befd51b7ec9ce2c38753527cca775eb87b0511d4f513"
+          "digest": "a4e29bb92877e1a671f5e09d99637383d7dfdd29a3f3e8c5fdcd8c4fbc393060"
         },
         {
           "id": "U-NS-C2",
@@ -615,7 +619,7 @@
         },
         {
           "id": "U-NS-cross-forms",
-          "digest": "071a76b1929742287c8c647d31197b049d818617aea43d7657042efad134a8de"
+          "digest": "3e888114616a7b666ea36c88bed3b009525bce285c9de45ddf9468819b39b07d"
         },
         {
           "id": "U-EN1",
@@ -627,7 +631,7 @@
         },
         {
           "id": "U-EN-forward",
-          "digest": "57d67210ff3192faf3628aba16225b932acd47a6b8868e68cce6cf9fbcde27a7"
+          "digest": "ae2efe19e05e97935d927a091d9e690edfbb3e90515b689d01ffb5ba9e8937ce"
         },
         {
           "id": "U-EN-forward-merged",
@@ -647,7 +651,7 @@
         },
         {
           "id": "U-meta-forms",
-          "digest": "07d16964fe2248b039be55a43a41da9ee58e0d8235d1b9f28c86b461cbecf8cf"
+          "digest": "b0746b358c3b446c13c0f040c3c4f12eece6078871aa27b5c5200736794170cd"
         },
         {
           "id": "U-GJ1",
@@ -659,15 +663,15 @@
         },
         {
           "id": "U-GJ4",
-          "digest": "4ccdc1663d0e53822e585e121864de0eb7de6c4cc4dfbe0b043a28cfd1b9ca29"
+          "digest": "4f22c36d85c2db1515892ebdc5dac72731542003f70dbe78c95a0e79ea393a2e"
         },
         {
           "id": "U-GJ15",
-          "digest": "9038c08efbeea9a79fd6a3f5b1ba0565dee8f583f44ddc65ce76b5fff14620c9"
+          "digest": "5ecca9418752ff187470640f0a13864bb836b4f8ad6a1a5a6e2b81bf94692464"
         },
         {
           "id": "U-GJ16",
-          "digest": "c7d62558d0f5202182b4b592e14e52d39901733f807d615664364f4d9efeb717"
+          "digest": "a67981e2dd9ea0a10fe09a6706727c53970654ff424770870810039a51565911"
         }
       ]
     },
@@ -751,7 +755,7 @@
         },
         {
           "id": "R-UNLINKED-IMPORT",
-          "digest": "b2fc7215e7b93e94bebef46ed81c76bf6def2b418eab0618a6db718fbca79d7f"
+          "digest": "5eec0314fcb51b6833ba07663a371b31ed261a7441efbdc4616d658b4d4de36a"
         }
       ]
     }
@@ -825,6 +829,7 @@
     "R R-enum-initializer",
     "R R-closure-global",
     "R R-closure-depth",
+    "R R-views-each-judged",
     "R R-global-escaped",
     "R R-script-var",
     "R R-script-typed",
@@ -934,6 +939,10 @@
     "Q R-UNLINKED-IMPORT",
     "outside anchors: the export row, its view classes and verbs, the seams it names, the shared edge kinds and the residual families",
     "rule 16: every judged row and the residual families are frozen at their measured shape",
+    "composition: every pin of the landed GLOBAL reader's ROWS, planted with the entry view, reads through judgeTree at exactly the pin's GLOBAL lines of each module judgeTree reads and at no other, UNREADABLE_IN_COMPOSITION's modules red UNREADABLE, the composed pins being the reader roster's",
+    "shared pins: each pin of this census that shares an id with a pin of the landed reader's ROWS plants exactly that pin's files and copies none, each GLOBAL line it holds is a line of that pin, and every row U pin is one",
+    "refusal #4 of record: each IE member its CLASSES OF RECORD names admitted, and IE8, reds judgeTree through GLOBAL, each control at the count of GLOBAL lines it states and each GK witness at exactly one",
+    "provenance: judgeTree's GLOBAL reading is the landed reader's - the helper imports freeNamesOf and ADMITTED_FREE from it, judgeTree calls that freeNamesOf, no function of the helper shares a name with one the reader declares, and the helper's ADMITTED_FREE is the reader's",
     "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-snapshot-roster.json, in order and both ways"
   ],
   "residuals": {
