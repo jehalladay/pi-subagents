@@ -48,27 +48,37 @@
  *    (TABLE_FACTORIES) one per entry and an API factory (API_FACTORIES) a further registrar - and a one-row head is a row
  *    only where it runs once, in the file body or in the body of a one-row suite (SUITE_REGISTRARS); every other reference
  *    (a table or API factory, an alias, an argument, a row in a loop, a branch, a table suite, a row's callback or another
- *    function) is unaccounted, a finding. C2 claims to read a vitest import declaration only where it sits in the module's
- *    leading run of them (no statement that is not a vitest import declaration precedes it; a comment is no statement)
- *    and its clause binds one kind (a default import alone, a namespace import alone, or named bindings). It REFUSES,
- *    fail-closed, the other vitest import declarations its REFUSED IMPORTS spell: refusedVitestImports() names each one and
- *    tierReadingOf() reports it unaccounted, so a tier holding one reds C2 whatever its rows read, and what
- *    registrarBindings() reads from a module holding one is NOT CLAIMED by this census. C2's REFUSED IMPORTS pin one
- *    refusal after each statement of their `before` table, each exactly as it spells it ('"use strict";', 'const title =
- *    "s";', 'setup();', 'type Api = unknown;', 'interface Api {}', 'function setup(): void {}', a function setup with a
- *    one-call body, ';', 'export { helper } from "./helpers/rows.js";', 'import fs = require("node:fs");', 'import {
- *    helper } from "./helpers/rows.js";', 'import type { Api } from "./helpers/rows.js";' and 'import
- *    "./helpers/setup.js";'), before the same named vitest import; one for each late type-only, bare, namespace and
- *    default vitest import after 'const title = "s";', as the table spells each; two for two late declarations; one for a
- *    default import beside named bindings and for one beside a namespace import; and none for the declaration that
- *    follows such a clause in the leading run. Their leading run (named, type-only, namespace, default and bare vitest
- *    imports, then another module's import and a const declaration) reads no refusal, as no C2 control, HEAD SHAPES or
- *    SHADOW SHAPES source does. Whether C2 refuses a vitest import declaration that the REFUSED IMPORTS do not spell, or
- *    one after a statement or module specifier they do not spell - another statement kind (a class), another spelling of
- *    a kind they spell (a let declaration, a call with an argument), another late or combined clause - is NOT CLAIMED by
- *    this census, and C2 claims no reading of such a declaration either way; wb-6fr4 is the home of reading the refused
- *    forms (refusal #3 of wb-8avz: an import scan that stops at the first statement that is no import declaration, or at
- *    the first import from another module, and a default import beside other bindings). Which callee
+ *    function) is unaccounted, a finding. C2 reads the tier with tierReadingOf(), imported from
+ *    test/helpers/rf-tsx-registrar-readers.ts, the module that holds it and the readers it calls since wb-6fr4 moved them
+ *    there byte for byte from this census's cut #4; its readers census
+ *    (test/workbench-rf-tsx-registrar-readers-census.test.ts) holds registrarBindings()' and tierReadingOf()'s readings of
+ *    its probes to literals. C2 claims to read a vitest import declaration only where it sits in the module's leading run
+ *    of them (no statement that is not a vitest import declaration precedes it; a comment is no statement) and its clause
+ *    binds one kind (a default import alone, a namespace import alone, or named bindings). It REFUSES, fail-closed, the
+ *    other vitest import declarations its REFUSED IMPORTS spell: refusedVitestImports() names such a declaration and
+ *    tierReadingOf() reports it unaccounted, a finding. That a reading carries the refusal is pinned on two sets of module
+ *    texts only, and on any other module text (the live tier's included) whether it does is NOT CLAIMED by this census.
+ *    C2's REFUSED IMPORTS, sources that register no row, pin one refusal after each statement of their `before` table,
+ *    each exactly as it spells it ('"use strict";', 'const title = "s";', 'setup();', 'type Api = unknown;', 'interface
+ *    Api {}', 'function setup(): void {}', a function setup with a one-call body, ';', 'export { helper } from
+ *    "./helpers/rows.js";', 'import fs = require("node:fs");', 'import { helper } from "./helpers/rows.js";', 'import type
+ *    { Api } from "./helpers/rows.js";' and 'import "./helpers/setup.js";'), before the same named vitest import; one for
+ *    each late type-only, bare, namespace and default vitest import after 'const title = "s";', as the table spells each;
+ *    two for two late declarations; one for a default import beside named bindings and for one beside a namespace import;
+ *    and none for the declaration that follows such a clause in the leading run. Their leading run (named, type-only,
+ *    namespace, default and bare vitest imports, then another module's import and a const declaration) reads no refusal,
+ *    as no C2 control, HEAD SHAPES or SHADOW SHAPES source does. Beside registered rows, the readers census pins it on its
+ *    fourteen tier probes that register a row (row R's ten, under its pins N-A1 and N-A3, and row M's dStmtFirst,
+ *    dStmtFirstStep, dConstFirst and dOtherModuleFirst), each read with every refused declaration it holds unaccounted
+ *    beside its rows: a vitest import after '"use strict";', after 'const title = "s";' (one, two in a row, or one after a
+ *    leading vitest import and that const), after 'import { helper } from "./helpers/rows.js";', and a default import
+ *    beside named bindings, each in its probe's own text; so beside registered rows each REFUSED IMPORTS form those probes
+ *    do not hold is NOT CLAIMED by this census. What registrarBindings() reads from a module holding a refused declaration
+ *    is NOT CLAIMED by this census either (the readers census holds that on its row M probes). Whether C2 refuses a vitest
+ *    import declaration that the REFUSED IMPORTS do not spell, or one after a statement or module specifier they do not
+ *    spell - another statement kind (a class), another spelling of a kind they spell (a let declaration, a call with an
+ *    argument), another late or combined clause - is NOT CLAIMED by this census, and C2 claims no reading of such a
+ *    declaration either way. Which callee
  *    heads a suite (suiteReference()) is pinned on both sides by C2's HEAD SHAPES: every registrar's root - its own name (a
  *    global, or a vitest import), a renamed vitest import under a local name no registrar has (renamed), a vitest
  *    namespace's member by property or by element access (the namespace's local name vt) - bare and under each single
@@ -170,8 +180,17 @@
  * the gate's M1, M2 and M3 left the census green on its live plants P-STMT, P-OTHER and P-DEFAULT) under ruling R-B179's
  * fail-closed core: C2 claims to read a vitest import declaration only in the module's leading run and only where its
  * clause binds one kind, and refuses the others its REFUSED IMPORTS spell (refusedVitestImports(), unaccounted; 22
- * readings), so each of those plants reds C2 under the real reader and under its member; every C2 claim names the forms
- * its pins spell, a form they do not spell is NOT CLAIMED, and wb-6fr4 carries the reading of the refused forms.
+ * readings, each in a source that registers no row); at that cut each of those plants read red at C2 under the real reader
+ * and under its member. Refusal #4 found cut #4's claim that the refusal reds C2 whatever the tier's rows read wider than
+ * those pins - no pin read a refused declaration beside a row, so the gate's N-A1 (the refusal reported only where the
+ * module registers no row) and N-A3 kept the census green - and ruling R-B218 inverted the dependency: wb-6fr4 moved C2's
+ * readers byte for byte into test/helpers/rf-tsx-registrar-readers.ts and pinned their readings, the refusal beside
+ * registered rows among them, in its readers census. The R-B218 re-cut, after that landing, imports C2's readers from that
+ * helper - this file's copies of the 22 declarations wb-6fr4 moved are deleted, with the doc comments above them, so rows
+ * A and B also read through the imported extensionOf(), scriptKindOf() and fold(), and the judged set's scan compare reads
+ * the imported constants - and narrows the claim to what the pins hold: the refusal on C2's REFUSED IMPORTS sources (no
+ * row) and, beside registered rows, on the readers census's fourteen tier probes that register a row; on any other module
+ * text it is NOT CLAIMED.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -180,6 +199,18 @@ import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
 import rfTsxConfig from "../vitest.rf-tsx.config.js";
+import {
+  API_FACTORIES,
+  CLAIM_FAMILY,
+  extensionOf,
+  fold,
+  ROW_REGISTRARS,
+  SUITE_REGISTRARS,
+  scriptKindOf,
+  TABLE_FACTORIES,
+  type TierReading,
+  tierReadingOf,
+} from "./helpers/rf-tsx-registrar-readers.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard(afterAll);
@@ -200,8 +231,6 @@ const HOOK_FAMILY = /use[_.-]*remote[_.-]*resources?/i;
 /** The TSX SDK package (installed rf's packaged import map), as any specifier names it: bare, a subpath, npm:, jsr: or a URL. */
 const SDK = "@reactive-fiber/tsx";
 const SDK_FAMILY = /@reactive-fiber\/tsx(?![\w-])/i;
-/** What a tier row claiming (b) or (c) would have to name. */
-const CLAIM_FAMILY = /federat|use[_.-]*remote[_.-]*resources?|network|read[\s_-]*set|resolved[\s_-]*revision|imported[\s_-]*dependenc/i;
 /** A module file name: a .tsx or .jsx extension after a name character. */
 const TSX_NAME = /[\w-]\.(?:tsx|jsx)$/i;
 const MODULE_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
@@ -227,13 +256,6 @@ const WALK_ANCHORS: readonly (readonly [string, string])[] = [
 ];
 const ORACLE = "test/workbench-unsafe-display-oracle.test.ts";
 const TIER_COMMAND = "rf-preview-tsx";
-/** C2's registrars: vitest's row registrars and its suite registrars (a suite body runs once unless a table repeats it). On a
- * registrar's head a table factory registers one row per table entry and an API factory returns a further registrar; every
- * other member is a modifier (concurrent, fails, sequential and the rest) or a condition, whose call returns the registrar. */
-const ROW_REGISTRARS = ["it", "test"];
-const SUITE_REGISTRARS = ["describe", "suite"];
-const TABLE_FACTORIES = ["each", "for"];
-const API_FACTORIES = ["extend", "scoped"];
 /** A Shipped: in the bead row's notes that reads other than no, the key and the no each a whole word in any letter case
  * (C1's controls: a now reads otherwise, an Unshipped: is no key). */
 const SHIPPED_OTHERWISE = /\bshipped:(?!\s*no\b)\s*\S*/gi;
@@ -404,11 +426,6 @@ function acceptanceClauses(notes: string): string[] {
 }
 
 const posix = (path: string): string => path.split(sep).join("/");
-function extensionOf(path: string): string {
-  const base = path.slice(path.lastIndexOf("/") + 1);
-  const dot = base.lastIndexOf(".");
-  return dot <= 0 ? "" : base.slice(dot).toLowerCase();
-}
 const isModule = (path: string): boolean => MODULE_EXTENSIONS.includes(extensionOf(path));
 const isTsxModule = (path: string): boolean => TSX_EXTENSIONS.includes(extensionOf(path));
 
@@ -480,37 +497,6 @@ function byteFindings(path: string, buffer: Buffer): string[] {
     else if (HOOK_FAMILY.test(decodeEscapes(value))) found.push(`${path}: ${encoding}+decoded`);
   }
   return found;
-}
-
-function scriptKindOf(path: string): ts.ScriptKind {
-  const extension = extensionOf(path);
-  if (extension === ".tsx") return ts.ScriptKind.TSX;
-  if (extension === ".ts" || extension === ".mts" || extension === ".cts") return ts.ScriptKind.TS;
-  return ts.ScriptKind.JSX;
-}
-/** A string literal; a parenthesized or type-asserted one (as, satisfies, a non-null or an angle-bracket assertion) or a comma
- * sequence's last operand; a `+` concatenation of foldable parts or a template whose every span folds. */
-function fold(node: ts.Node): string | undefined {
-  if (ts.isStringLiteralLike(node)) return node.text;
-  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node)) {
-    return fold(node.expression);
-  }
-  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.CommaToken) return fold(node.right);
-  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
-    const left = fold(node.left);
-    const right = fold(node.right);
-    return left === undefined || right === undefined ? undefined : left + right;
-  }
-  if (ts.isTemplateExpression(node)) {
-    let folded = node.head.text;
-    for (const span of node.templateSpans) {
-      const value = fold(span.expression);
-      if (value === undefined) return undefined;
-      folded += value + span.literal.text;
-    }
-    return folded;
-  }
-  return undefined;
 }
 
 interface ModuleReading {
@@ -677,255 +663,6 @@ function utf16be(value: string): Buffer {
 /** The module judges over one snippet read as `path`: does it spell the hook (B1), does it import the SDK (A2)? */
 const spelledIn = (path: string, source: string): boolean => readModule(path, source).spellings.length > 0;
 const importsSdk = (path: string, source: string): boolean => readModule(path, source).sdkImports.length > 0;
-interface TierReading {
-  /** The one-row registrations, by title (a title that does not fold reads as COMPUTED). */
-  readonly titles: string[];
-  /** Every other reference to a row registrar, with why it is no one-row registration: each is a finding. */
-  readonly unaccounted: string[];
-  /** The literals that name a claim of (b) or (c). */
-  readonly claims: string[];
-}
-/** A title or member key that does not fold to a literal. */
-const COMPUTED = "<computed>";
-type HeadStep = { readonly member: string } | { readonly call: ts.CallExpression };
-/** The head a registrar reference starts: each member access it is the object of (a property, or an element whose key folds)
- * and each call it is the callee of, in order, seen through parentheses and type assertions (as, satisfies, non-null and
- * angle-bracket; C2 holds a row control and a suite control per arm). */
-function headOf(reference: ts.Expression): HeadStep[] {
-  const steps: HeadStep[] = [];
-  let current = reference;
-  for (;;) {
-    const parent = current.parent;
-    if ((ts.isParenthesizedExpression(parent) || ts.isNonNullExpression(parent) || ts.isAsExpression(parent) || ts.isSatisfiesExpression(parent) || ts.isTypeAssertionExpression(parent)) && parent.expression === current) {
-      current = parent;
-    } else if (ts.isPropertyAccessExpression(parent) && parent.expression === current) {
-      steps.push({ member: parent.name.text });
-      current = parent;
-    } else if (ts.isElementAccessExpression(parent) && parent.expression === current) {
-      steps.push({ member: fold(parent.argumentExpression) ?? COMPUTED });
-      current = parent;
-    } else if (ts.isCallExpression(parent) && parent.expression === current) {
-      steps.push({ call: parent });
-      current = parent;
-    } else return steps;
-  }
-}
-/** A head's reading: the call that registers one row (the head's last step, every earlier call a condition's), or why the
- * head is no one-row registration. */
-function headReading(steps: readonly HeadStep[]): { readonly call: ts.CallExpression } | { readonly reason: string } {
-  const last = steps.at(-1);
-  if (last === undefined || !("call" in last)) return { reason: "a registrar referenced outside a call (an alias, an argument, an export)" };
-  for (const [index, step] of steps.entries()) {
-    if ("member" in step) {
-      if (step.member === COMPUTED) return { reason: "a computed member" };
-      if (TABLE_FACTORIES.includes(step.member)) return { reason: `a table factory (${step.member}: one row per entry)` };
-      if (API_FACTORIES.includes(step.member)) return { reason: `an API factory (${step.member}: a further registrar)` };
-    } else if (index < steps.length - 1) {
-      // An earlier call is a condition's only when a member names it; a call of a call's result registers nothing known.
-      const before = index > 0 ? steps[index - 1] : undefined;
-      if (before === undefined || !("member" in before)) return { reason: "a call of a registration's result" };
-    }
-  }
-  return { call: last.call };
-}
-interface RegistrarBindings {
-  readonly rows: ReadonlySet<string>;
-  readonly suites: ReadonlySet<string>;
-  readonly namespaces: ReadonlySet<string>;
-}
-/** The names a module binds to vitest's registrars: each registrar's own name (a global or a plain import), a renamed import
- * from vitest, and a vitest namespace import (whose registrar members are read). It scans every vitest import declaration,
- * and C2 claims what it reads only from the declarations C2 claims to read - the module's leading run of them, each clause
- * of one kind; tierReadingOf() refuses the others C2's REFUSED IMPORTS spell (refusedVitestImports()), and what this scan
- * reads from a module holding one is NOT CLAIMED by this census (wb-6fr4). A vitest import declaration C2 reads binds
- * each value import's local name to what it imports and to nothing else, shadowing that name's own-name reading (wb-8avz
- * refusal #1 U4 and F1; an import it does not read, another module's or an import-equals, shadows nothing: R-HELPER): a named
- * import's local name reads as the registrar it names - a row registrar under a suite registrar's name is a row only, a
- * suite registrar under a row registrar's name a suite only - or as no registrar (another export; expect is the one C2
- * pins), a namespace import's local name as the namespace only, and a default import's local name as no registrar (vitest
- * exports no default); a type-only import or specifier binds no value and shadows nothing (C2 pins describe's under a row
- * registrar's name and it's under a suite registrar's). C2's SHADOW SHAPES pin each of these forms under each
- * registrar's own name (it, test, describe, suite), bare and under each single step, and C2's shadow controls pin bare
- * heads under a row registrar's name and under a suite registrar's name; C2 claims these readings for the forms its pins
- * spell, and a form they do not spell is NOT CLAIMED (the header names some). */
-function registrarBindings(file: ts.SourceFile): RegistrarBindings {
-  const rows = new Set(ROW_REGISTRARS);
-  const suites = new Set(SUITE_REGISTRARS);
-  const namespaces = new Set<string>();
-  // A local name a value import of a vitest import declaration binds leaves the own-name readings first: the import is
-  // what it reads as.
-  const shadow = (local: ts.Identifier): string => {
-    rows.delete(local.text);
-    suites.delete(local.text);
-    return local.text;
-  };
-  for (const statement of file.statements) {
-    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || statement.moduleSpecifier.text !== "vitest") continue;
-    const clause = statement.importClause;
-    if (clause === undefined || clause.isTypeOnly) continue;
-    if (clause.name !== undefined) shadow(clause.name);
-    const bindings = clause.namedBindings;
-    if (bindings !== undefined && ts.isNamespaceImport(bindings)) namespaces.add(shadow(bindings.name));
-    else if (bindings !== undefined) {
-      for (const element of bindings.elements) {
-        if (element.isTypeOnly) continue;
-        const imported = (element.propertyName ?? element.name).text;
-        const local = shadow(element.name);
-        if (ROW_REGISTRARS.includes(imported)) rows.add(local);
-        if (SUITE_REGISTRARS.includes(imported)) suites.add(local);
-      }
-    }
-  }
-  return { rows, suites, namespaces };
-}
-/** The vitest import declarations C2 refuses (wb-8avz cut #4, the fail-closed core of ruling R-B179): C2 claims to read a
- * vitest import declaration only in the module's leading run of them (no statement that is not one precedes it) and only
- * where its clause binds one kind, so this names the declarations after the run's end and those whose clause binds a
- * default import beside named or namespace bindings, and tierReadingOf() reports each unaccounted. C2 claims the refusal
- * only for the statements and clauses its REFUSED IMPORTS spell, which pin both arms; for any other, whether this names
- * it is NOT CLAIMED (the header). */
-function refusedVitestImports(file: ts.SourceFile): ts.ImportDeclaration[] {
-  const refused: ts.ImportDeclaration[] = [];
-  let leading = true;
-  for (const statement of file.statements) {
-    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || statement.moduleSpecifier.text !== "vitest") {
-      leading = false;
-      continue;
-    }
-    const clause = statement.importClause;
-    const mixed = clause !== undefined && clause.name !== undefined && clause.namedBindings !== undefined;
-    if (!leading || mixed) refused.push(statement);
-  }
-  return refused;
-}
-/** Is the identifier a reference to a binding (not a member or key name, an import binding's own name, or a label)? */
-function isReference(node: ts.Identifier): boolean {
-  const parent = node.parent;
-  if (ts.isPropertyAccessExpression(parent)) return parent.name !== node;
-  if (ts.isQualifiedName(parent)) return parent.right !== node;
-  if (ts.isImportSpecifier(parent) || ts.isImportClause(parent) || ts.isNamespaceImport(parent) || ts.isImportEqualsDeclaration(parent)) return false;
-  if (ts.isBindingElement(parent)) return parent.propertyName !== node;
-  if (ts.isLabeledStatement(parent) || ts.isBreakOrContinueStatement(parent)) return parent.label !== node;
-  if (
-    ts.isPropertyAssignment(parent) ||
-    ts.isPropertyDeclaration(parent) ||
-    ts.isPropertySignature(parent) ||
-    ts.isMethodDeclaration(parent) ||
-    ts.isMethodSignature(parent) ||
-    ts.isGetAccessorDeclaration(parent) ||
-    ts.isSetAccessorDeclaration(parent) ||
-    ts.isEnumMember(parent) ||
-    ts.isJsxAttribute(parent)
-  ) {
-    return parent.name !== node;
-  }
-  return true;
-}
-/** A vitest namespace reference's member access and the member's name, if the reference is the object of one. */
-function memberOf(node: ts.Identifier): { readonly access: ts.Expression; readonly name: string } | undefined {
-  const parent = node.parent;
-  if (ts.isPropertyAccessExpression(parent) && parent.expression === node) return { access: parent, name: parent.name.text };
-  if (ts.isElementAccessExpression(parent) && parent.expression === node) return { access: parent, name: fold(parent.argumentExpression) ?? COMPUTED };
-  return undefined;
-}
-/** The suite registrar a callee descends to (a suite binding, or a vitest namespace's suite member by property or by
- * element access), if any, through each member (by property or by element access) and each call (a condition's) of the
- * head, seen through parentheses and the type assertions headOf sees through (C2 holds a suite control per arm, and a
- * non-suite control each for the identifier arm's suite-binding test and the namespace arm's suite-member test). C2's HEAD
- * SHAPES pin both outcomes of both checks for every registrar root - each of ROW_REGISTRARS and SUITE_REGISTRARS by its
- * own name (a global, or a vitest import), by a renamed vitest import (the local name renamed), and as a vitest
- * namespace's member (the local name vt) by property and by element access - bare and under each single step (the
- * concurrent modifier by property or by element access, the run-if condition's call, parentheses, or a non-null, as,
- * satisfies or angle-bracket assertion): a suite registrar's head descends to its suite reference, a row registrar's head
- * to none. C2's SHADOW SHAPES pin both checks for each registrar's own name as the local name of each import form the
- * header lists, bare and under each single step: the name descends to a suite only where a suite registrar's named import
- * binds it or a type-only import leaves its own-name suite reading, so a row registrar's or expect's named import, a
- * default import or a namespace import under a suite registrar's name heads no suite. Not claimed: a form the pins do not
- * spell (the header names some: two or more steps, another member or condition, a local name, an import form or an
- * imported name the pins do not spell, two imports binding one local name, a vitest import declaration C2 refuses). */
-function suiteReference(callee: ts.Expression, bindings: RegistrarBindings): ts.Expression | undefined {
-  let current = callee;
-  for (;;) {
-    if (ts.isIdentifier(current)) return bindings.suites.has(current.text) ? current : undefined;
-    if ((ts.isPropertyAccessExpression(current) || ts.isElementAccessExpression(current)) && ts.isIdentifier(current.expression) && bindings.namespaces.has(current.expression.text)) {
-      const member = memberOf(current.expression);
-      return member !== undefined && SUITE_REGISTRARS.includes(member.name) ? current : undefined;
-    }
-    if (
-      ts.isPropertyAccessExpression(current) ||
-      ts.isElementAccessExpression(current) ||
-      ts.isCallExpression(current) ||
-      ts.isParenthesizedExpression(current) ||
-      ts.isNonNullExpression(current) ||
-      ts.isAsExpression(current) ||
-      ts.isSatisfiesExpression(current) ||
-      ts.isTypeAssertionExpression(current)
-    ) {
-      current = current.expression;
-    } else return undefined;
-  }
-}
-/** Is the call the one-row registration of a suite registrar's head (its body then runs once per run of the suite call)? */
-function isOneRowSuite(call: ts.CallExpression, bindings: RegistrarBindings): boolean {
-  const reference = suiteReference(call.expression, bindings);
-  if (reference === undefined) return false;
-  const reading = headReading(headOf(reference));
-  return "call" in reading && reading.call === call;
-}
-/** Does a registration call run once: in the file body, or in the body of a one-row suite that itself runs once? */
-function runsOnce(call: ts.CallExpression, bindings: RegistrarBindings): boolean {
-  let node: ts.Node = call;
-  for (;;) {
-    const parent = node.parent;
-    if (ts.isSourceFile(parent)) return true;
-    if (ts.isExpressionStatement(parent) || ts.isBlock(parent)) node = parent;
-    else if ((ts.isArrowFunction(parent) || ts.isFunctionExpression(parent)) && ts.isCallExpression(parent.parent) && parent.parent.arguments.some(argument => argument === parent) && isOneRowSuite(parent.parent, bindings)) {
-      node = parent.parent;
-    } else return false;
-  }
-}
-/** A tier text's registered rows and the literals in it that name a claim of (b) or (c): every reference to a row registrar
- * (by its own name where no vitest import declaration C2 reads binds that name to a value otherwise, by a renamed vitest
- * import, or as a vitest namespace member: registrarBindings(); C2's SHADOW SHAPES pin the row reading for each
- * registrar's own name as each listed import form's local name, bare and under each single step) is read through its
- * whole head, a one-row head that runs once is a row, and every other reference is unaccounted; so is every vitest import
- * declaration C2 refuses (refusedVitestImports(); C2's REFUSED IMPORTS), whatever the rows read. */
-function tierReadingOf(path: string, source: string): TierReading {
-  const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
-  const bindings = registrarBindings(file);
-  const titles: string[] = [];
-  const unaccounted: string[] = [];
-  const claims: string[] = [];
-  const line = (node: ts.Node): number => file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1;
-  for (const declaration of refusedVitestImports(file)) {
-    unaccounted.push(`${path}:${line(declaration)} a vitest import declaration C2 refuses (after the leading run, or a default import beside other bindings): NOT CLAIMED, wb-6fr4`);
-  }
-  const row = (reference: ts.Expression): void => {
-    const reading = headReading(headOf(reference));
-    if ("reason" in reading) unaccounted.push(`${path}:${line(reference)} ${reading.reason}`);
-    else if (!runsOnce(reading.call, bindings)) unaccounted.push(`${path}:${line(reference)} a row in a loop, a branch, a table suite, a row's callback or another function`);
-    else {
-      const title = reading.call.arguments[0];
-      titles.push((title === undefined ? undefined : fold(title)) ?? COMPUTED);
-    }
-  };
-  const visit = (node: ts.Node): void => {
-    if (ts.isIdentifier(node) && isReference(node)) {
-      if (bindings.rows.has(node.text)) row(node);
-      else if (bindings.namespaces.has(node.text)) {
-        const member = memberOf(node);
-        if (member === undefined) unaccounted.push(`${path}:${line(node)} a vitest namespace referenced whole`);
-        else if (ROW_REGISTRARS.includes(member.name)) row(member.access);
-      }
-    }
-    if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
-      if (CLAIM_FAMILY.test(node.text)) claims.push(`${path}: ${node.text}`);
-    }
-    ts.forEachChild(node, visit);
-  };
-  visit(file);
-  return { titles, unaccounted, claims };
-}
 /** The tier file's reading, from the working tree. */
 const tierReading = (path: string): TierReading => tierReadingOf(path, readFileSync(join(REPO, path), "utf8"));
 
@@ -1394,7 +1131,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     // declaration only in the module's leading run of them and only where its clause binds one kind; tierReadingOf()
     // refuses the others these sources spell (refusedVitestImports()), unaccounted. No source here references a registrar,
     // so a reading is the refusal count alone: 0|1 one refused declaration, 0|2 two, 0|0 none. Each statement of `before`
-    // precedes the same vitest import.
+    // precedes the same vitest import. The refusal beside registered rows is the readers census's pin (wb-6fr4), not these
+    // sources'.
     const late = 'import { it } from "vitest";\n';
     const before: Readonly<Record<string, string>> = {
       directive: '"use strict";\n',
