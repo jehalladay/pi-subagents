@@ -105,7 +105,10 @@
  *      of places a joint reading sets, read from JOINT_K3S), and K1 (a)'s own two legs, run over probes in place of the readers on
  *      one cell, read quiet a probe moved only by an exemplar's values beside a planted status, and flag its twins: the same values
  *      without a planted status (the registration leg, at the exemplar's own reading) and each of the exemplar's places alone
- *      beside a planted status (the variant leg, on every variant); for each of R2's, the channel reads or detects the planted
+ *      beside a planted status (the variant leg, on every variant); and that probe's positive control, built outside the legs on
+ *      the same cell: each variant (a planted status) with the exemplar's values set on it fires the probe and its registration
+ *      twin, and the field-less reading with them set fires the twin alone, so a reading at the exemplar's values beside a planted
+ *      status fires the probe the legs read quiet; for each of R2's, the channel reads or detects the planted
  *      member of a traced reading while the tracer records nothing (util.inspect shows it, util.types.isProxy tells the proxy, a
  *      structured clone refuses it while the plain reading clones with the member).
  * RESIDUALS (standing rule 19(c), the enumerate-the-resolvable form: each a named family one instrument here does not read, each
@@ -147,6 +150,9 @@
  * completeness both unknown, the pairing the SDK itself makes; X6, a live clause on truth and the summary completeness both unknown).
  * (a) now sets the joint readings, K1's title and the residual sentence above say which readings each leg sets, and R-JOINT-BESIDE
  * names the joint readings it does not set beside a planted status.
+ * wb-hoda (the R694 follow-up of landing 716, its gate's F2): nothing showed Q's R-JOINT-BESIDE probe could fire, so a probe no
+ * reading moves (the gate's Z6 emptied its values) read quiet through the legs and Q stayed green. Q now holds each exemplar's probe
+ * to its positive control above, on every variant of Q's cell.
  * Display paths added: none (test-only). Pure: no HX binary, scratch directory, clock, network or file write; the only files read
  * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2). */
 import {readFileSync} from 'node:fs';
@@ -1162,7 +1168,7 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     expect(pinned).toBe(BASELINE.length * 2);
   });
 
-  it('Q: the named residuals, each pinned by its quiet row: K1\'s judge reads no exemplar of its seven families and reads each one\'s nearest named form, K1 (a)\'s legs read quiet a probe moved only by an R-JOINT-BESIDE exemplar beside a planted status and flag each of its twins, and R2\'s tracer records nothing for the channels that read or detect a traced reading', {timeout: 60_000}, async () => {
+  it('Q: the named residuals, each pinned by its quiet row: K1\'s judge reads no exemplar of its seven families and reads each one\'s nearest named form, K1 (a)\'s legs read quiet a probe moved only by an R-JOINT-BESIDE exemplar beside a planted status (a probe the exemplar\'s values fire beside every planted status, outside the legs) and flag each of its twins, and R2\'s tracer records nothing for the channels that read or detect a traced reading', {timeout: 60_000}, async () => {
     expect([...WORD_RESIDUALS, ...JOINT_RESIDUALS, ...TRAP_RESIDUALS].map(([id, members]) => `${id}:${members.length}`)).toStrictEqual([
       'R-INFLECTED:3', 'R-SYNONYM:6', 'R-SPLIT:4', 'R-CONFUSABLE:2', 'R-ENCODED:4', 'R-ADMISSION-CASE:6', 'R-UNSERIALIZED:2',
       'R-JOINT-BESIDE:4', 'R-UNTRAPPED:1', 'R-PROXY-AWARE:2']);
@@ -1249,6 +1255,26 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
       const values = valuesOf(reading);
       return probes.filter(probe => probe.values === values && (!probe.beside || planted(reading))).map(probe => probe.id);
     };
+    // The exemplar's probe has a positive control, built outside k3Legs (wb-hoda): on every variant (each a planted status), the
+    // variant with the exemplar's values set on it fires that probe and its registration twin, and the field-less reading with them
+    // set fires the twin alone. The control's readings are one per variant and pairwise distinct, so none stands in for another. So
+    // the probe the legs read quiet is one such a reading fires: a probe whose values no reading holds, or that fired never reports,
+    // reds here, where the legs alone read it quiet.
+    let controlled = 0;
+    for (const [id, joints] of JOINT_RESIDUALS) {
+      for (const joint of joints) {
+        const label = `${id} ${k3Label(joint)}`;
+        const twin = `${label} (registration twin)`;
+        expect(fired(k3Reading(cell.reading, joint)), `${label} (field-less control)`).toStrictEqual([twin]);
+        const readings = variants.map(variant => k3Reading(variant.reading, joint));
+        expect(new Set(readings.map(reading => JSON.stringify(reading))).size, `${label} (positive control)`).toBe(variants.length);
+        for (const [index, reading] of readings.entries()) {
+          expect(fired(reading), `${label} (positive control, ${variants[index].label})`).toStrictEqual([label, twin]);
+          controlled++;
+        }
+      }
+    }
+    expect(controlled).toBe(JOINT_RESIDUALS.reduce((sum, [, joints]) => sum + joints.length, 0) * variants.length);
     const moved = new Map<string, string[]>(probes.map(probe => [probe.id, []]));
     const legs = await k3Legs(cell, fired, (actual, expected, label) => {
       for (const id of [...actual.filter(one => !expected.includes(one)), ...expected.filter(one => !actual.includes(one))]) {
