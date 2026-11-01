@@ -29,8 +29,8 @@
  *    transparent wrapper (parentheses, a non-null assertion, an as or satisfies expression, a type assertion, a parenthesized
  *    type) and rooted at a name, this, a type name or a type query (claimed only as deep as its reading controls spell each link
  *    kind, two links of a property access, an element access or an indexed access type and three of a qualified name: a reading
- *    limited at those depths or past them is R-CHAIN-DEPTH); any other root (a call, an element access by a computed key, a comma
- *    or any other expression) is computed and not part of it - every nested key path of object keys, type members and
+ *    limited at those depths or past them is R-CHAIN-DEPTH; a mixed-kind four-link chain is read by its own control); any other
+ *    root (a call, an element access by a computed key, a comma or any other expression) is computed and not part of it - every nested key path of object keys, type members and
  *    binding patterns, and every regex literal's pattern, each character escape (\x2E, \u002E, \u{2E}) read as the character it
  *    names and every other escape (a class, property, back-reference, assertion, control or digit escape, each read whole) and
  *    the pattern syntax (a brace quantifier with its counts read whole) as separators, an escaped character (an identity-escaped
@@ -51,7 +51,8 @@
  *    (f n r t v) spelled between the term's two words, one literal per member: wb-jdz6, the landing-594 gate's F1 and F2; a
  *    qualified name two links deep, its left side itself a qualified name (Rec.Owner.Epoch): wb-jdz6 cut #2, refusal #1's F2; a
  *    qualified name three links deep (A.Rec.Owner.Epoch): wb-jdz6 cut #3, refusal #2's F4; the chain reading bounded to the depths
- *    those controls spell, a reading limited at them or past them named R-CHAIN-DEPTH: wb-jdz6 cut #4, refusal #3's F4) and
+ *    those controls spell, including a mixed-kind chain of four total links (wb-2hdl F3), a reading limited below these depths
+ *    named R-CHAIN-DEPTH: wb-jdz6 cut #4, refusal #3's F4) and
  *    the TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
  *    the token readings - every node of a src module's syntax tree that carries its own text (an identifier, a private name, a
  *    string, a template part, a regex, a number) must be one a token reading read, so a token reading removed together with its
@@ -196,14 +197,15 @@
  *   no key path - a key and the value it holds, a name and its type, a key and a call's argument, a declaration and its member - is
  *   two names read one at a time, quiet (A2); R-CHAIN-DEPTH a chain read only to a finite depth - a link read only while its run
  *   of links of one kind is that long or shorter - reads every reading control whole at or past the runs they spell, two links of
- *   a property access, an element access or an indexed access type and three of a qualified name (its quiet row: those runs, read
- *   by link kind from the controls' sources apart from linkOf), so A2's chain reading is claimed only to those depths (A2).
+ *   a property access, an element access or an indexed access type and three of a qualified name; a mixed-kind
+ *   chain of four total links (quiet row: each kind's longest run and the longest total chain from the controls'
+ *   sources, read apart from linkOf). A2 claims these depths only: a three-total-link reader loses the mixed control.
  * SELF-READ RESIDUALS (wb-jdz6 cut #4: the reader narrowings outside THE PINNED SET, by named family; each family's members are
  *   rows of SELF_READ_RESIDUALS - two spellings that differ in the member alone and the member's model, a text substitution - and
  *   each member's pinned quiet row is measured in the judged set right after the reader's controls and held to the roster: whether
  *   the model erases the member, the controls whose verdict it changes - none, but for the file-only member below, whose narrowing
- *   never reaches a control - and how many pinned statements it reads otherwise - none, so today's pinned statements carry no
- *   member): R-SELF-SELECTIVE a member read otherwise for some of its spellings and not others - by a spelling's place in its
+ *   never reaches a control - and how many pinned statements it reads otherwise; the count measures token changes
+ *   under a coordinated reading of both sides, not failed cases): R-SELF-SELECTIVE a member read otherwise for some of its spellings and not others - by a spelling's place in its
  *   statement, its length, its line span, its count past the two block comments the count control holds, its neighbours or its
  *   own text - since each control holds one spelling of its member (a doubled space read as one only after the word drift, a
  *   third block comment dropped, a keyword merged into a name only after typeof); R-SELF-FILE-ONLY a reading narrowed for this
@@ -213,8 +215,11 @@
  *   dropped: its row names the three block-comment controls that the same model would red were it read there); R-SELF-OPERATOR an
  *   operator read as another, other than == as === and != as !== or the reverse (<= as <, !== as ===); R-SELF-TEXT a name, a
  *   keyword, a number, a regex's flags or a comment's words read otherwise (a name or a comment's words case-folded, let as const,
- *   0x10 as 16, the u flag dropped); R-SELF-COMMENT-ORDER the count, order or place of line comments and JSDoc blocks, since the
- *   count, order and place controls are block comments (a second JSDoc block dropped, two line comments' order, a line comment's
+ *   0x10 as 16, the u flag dropped; a string's, a template part's or a regex pattern's own letters
+ *   case-folded: wb-2hdl F1's out-of-pinned-set family, with one quiet row per literal kind); R-SELF-PUNCTUATION
+ *   a punctuation token read as nothing (semicolon, comma, parenthesis, bracket, brace or dot: wb-2hdl F2's
+ *   out-of-pinned-set family, with quiet rows for each token); R-SELF-COMMENT-ORDER the count, order or place of line
+ *   comments and JSDoc blocks, since the count, order and place controls are block comments (a second JSDoc block dropped, two line comments' order, a line comment's
  *   place); R-SELF-COOKED a literal read by its value, its quotes or its escapes (single quotes as double, a hex escape as the
  *   letter it names); R-SELF-EDGE a space at a literal's or a comment's edge read otherwise (trimmed); R-SELF-INNER-WS inside a
  *   literal or a comment, a doubled space read as another run than one space or none, or a run of three or more spaces, a tab, a
@@ -322,13 +327,15 @@ const COMPOSED_CONTROL = 'const word = ["owner", "epoch"].join(" ");';
  * qualified name read only when its left side is a name kept every control true, each of them one link deep), and so has one
  * three links deep (wb-jdz6 cut #3, refusal #2's F4: a qualified name read only when its left side is a name, or a qualified
  * name whose left side is a name, kept every control true), so a qualified name read only one or two links deep loses the term;
- * a reading limited at three links or past them keeps every control (R-CHAIN-DEPTH, wb-jdz6 cut #4, refusal #3's F4). */
+ * a reading limited at three links or past them kept every prior control; wb-2hdl F3 adds a mixed-kind four-total-link
+ * control. */
 const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["identifier", "identifier", "let ownerEpoch = 0;"],
   ["private name", "identifier", "class Holder { #ownerEpoch = 0; }"],
   ["string", "literal", 'const s = "owner epoch";'],
   ["template part", "literal", `const t = \`\${a} owner epoch \${b}\`;`],
   ["property access", "chain", "const e = record.owner.epoch;"],
+  ["mixed-kind four-link chain", "chain", 'const e = (globalThis as unknown as X).a["b-c"]?.owner["epoch-at"];'],
   ["computed root", "chain", "const e = load().owner.epoch;"],
   ["element access", "chain", 'const e = record["owner"]?.["epoch"];'],
   ["qualified name", "chain", "type E = Owner.Epoch;"],
@@ -483,6 +490,18 @@ const SELF_READ_RESIDUALS: readonly SelfReadResidual[] = [
   ["R-SELF-TEXT", "a number read by its value (0x10 as 16)", "const n = 0x10;", "const n = 16;", "0x10", "16"],
   ["R-SELF-TEXT", "a regex's flags dropped (u)", "const r = /owner/u;", "const r = /owner/;", "/u;", "/;"],
   ["R-SELF-TEXT", "a comment's words read case-folded", "MEASURED[pin] = /* One */ witness;", "MEASURED[pin] = /* one */ witness;", "/* One */", "/* one */"],
+  ["R-SELF-TEXT", "a string literal's own letters read case-folded", 'const s = "MIXEDCASE";', 'const s = "mixedcase";', "MIXEDCASE", "mixedcase"],
+  ["R-SELF-TEXT", "a template part's own letters read case-folded", 'const s = `MIXEDCASE ${' + 'pin}`;', 'const s = `mixedcase ${' + 'pin}`;', "MIXEDCASE", "mixedcase"],
+  ["R-SELF-TEXT", "a regex pattern's own letters read case-folded", "const r = /MIXEDCASE/;", "const r = /mixedcase/;", "MIXEDCASE", "mixedcase"],
+  ["R-SELF-PUNCTUATION", "a semicolon token read as nothing", "const n = 1;", "const n = 1", ";", ""],
+  ["R-SELF-PUNCTUATION", "a comma token read as nothing", "const n = [1,2];", "const n = [1 2];", ",", ""],
+  ["R-SELF-PUNCTUATION", "a parenthesis token read as nothing", "const n = (1);", "const n = 1);", "(", ""],
+  ["R-SELF-PUNCTUATION", "a closing parenthesis token read as nothing", "const n = (1);", "const n = (1;", ")", ""],
+  ["R-SELF-PUNCTUATION", "an opening bracket token read as nothing", "const n = [1];", "const n = 1];", "[", ""],
+  ["R-SELF-PUNCTUATION", "a closing bracket token read as nothing", "const n = [1];", "const n = [1;", "]", ""],
+  ["R-SELF-PUNCTUATION", "an opening brace token read as nothing", "const n = {a: 1};", "const n = a: 1};", "{", ""],
+  ["R-SELF-PUNCTUATION", "a closing brace token read as nothing", "const n = {a: 1};", "const n = {a: 1;", "}", ""],
+  ["R-SELF-PUNCTUATION", "a dot token read as nothing", "const n = a.b;", "const n = a b;", ".", ""],
   ["R-SELF-COMMENT-ORDER", "a second JSDoc block between the same two tokens dropped", "const f = /** a */ /** a */ (x: number) => x;", "const f = /** a */ (x: number) => x;", "/** a */ /** a */", "/** a */"],
   ["R-SELF-COMMENT-ORDER", "two line comments' order between the same two tokens", "MEASURED[pin] = // one\n// other\nwitness;", "MEASURED[pin] = // other\n// one\nwitness;", "// one\n// other", "// other\n// one"],
   ["R-SELF-COMMENT-ORDER", "a line comment's place among the tokens", "MEASURED[pin] // one\n= witness;", "MEASURED[pin] = // one\nwitness;", "// one\n= witness", "= // one\nwitness"],
@@ -884,10 +903,19 @@ function chainControlDepths(): JsonObject {
     ["indexed access type", node => (ts.isIndexedAccessTypeNode(node) ? node.objectType : undefined)],
   ];
   const longest: Record<string, number> = Object.fromEntries(kinds.map(([kind]) => [kind, 0]));
+  let total = 0;
   for (const [, reading, source] of READING_CONTROLS) {
     if (reading !== "chain") continue;
     const file = ts.createSourceFile("control.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
     const visit = (node: ts.Node): void => {
+      let chainLength = 0;
+      for (let at: ts.Node | undefined = node; at !== undefined; ) {
+        const link = linkOf(at);
+        if (link === undefined) break;
+        chainLength += 1;
+        at = link.inner;
+      }
+      total = Math.max(total, chainLength);
       for (const [kind, innerOf] of kinds) {
         let run = 0;
         for (let inner = innerOf(node); inner !== undefined; inner = innerOf(unwrapped(inner))) run += 1;
@@ -897,7 +925,7 @@ function chainControlDepths(): JsonObject {
     };
     visit(file);
   }
-  return json(longest) as JsonObject;
+  return json({ ...longest, "total links": total }) as JsonObject;
 }
 /** A member that states a key: an object key, a class or type member, or an element of a binding pattern. */
 type Keyed =
@@ -1775,14 +1803,35 @@ function spelledCount(statements: readonly (readonly string[])[], literal: strin
 /** A SELF-READ residual member's pinned quiet row (wb-jdz6 cut #4): whether its model erases the member (the two spellings differ
  * and are one text under it); the spelling controls whose verdict the model changes (none but R-SELF-FILE-ONLY's three
  * block-comment controls, which a reading of this file's statements alone never reads: no control holds a member); and how many
- * of the pinned statements (COMPARISONS, OPERANDS and PIN_CASE, each read by heldSpelling) the model reads otherwise (none: today's
- * pinned statements carry nothing a model changes). */
+ * of the pinned statements (COMPARISONS, OPERANDS and PIN_CASE, each read by heldSpelling) the model reads otherwise
+ * (a coordinated change to both their live and held readings stays quiet even when this count is nonzero). */
 function selfReadQuietRow([family, member, one, other, from, to]: SelfReadResidual): JsonObject {
-  const model = (spelling: string): string => spelling.split(from).join(to);
-  const verdict = (a: string, b: string): boolean => sameSpelling(heldSpelling(a), heldSpelling(b));
-  const controls = SPELLING_CONTROLS.filter(([, a, b]) => verdict(model(a), model(b)) !== verdict(a, b)).map(([label]) => label);
-  const pinned = [...COMPARISONS, ...OPERANDS, ...PIN_CASE].filter(statement => !sameSpelling(heldSpelling(model(statement)), heldSpelling(statement))).length;
-  return { family, member, erased: one !== other && model(one) === model(other), controls, pinned };
+  const tokens = (spelling: string): string[] => heldSpelling(spelling);
+  // wb-2hdl F1/F2 model a TOKEN reading, not a blanket text replacement: punctuation inside
+  // literals is not punctuation, and a literal's own letters do not change identifiers.
+  const tokenModel = (spelling: string): string[] => {
+    if (family === "R-SELF-PUNCTUATION") return tokens(spelling).filter(token => token !== from);
+    if (family === "R-SELF-TEXT" && member.includes("own letters")) {
+      const kind = member.includes("string literal") ? "string" : member.includes("template part") ? "template" : "regex";
+      return tokens(spelling).map(token => {
+        const target = kind === "string" ? token.startsWith('"') || token.startsWith("'")
+          : kind === "template" ? token.startsWith("`") || token.startsWith("}")
+            : token.startsWith("/") && token.lastIndexOf("/") > 0;
+        if (!target) return token;
+        if (kind === "regex") {
+          const end = token.lastIndexOf("/");
+          return token.slice(0, end).split(from).join(to) + token.slice(end);
+        }
+        return token.split(from).join(to);
+      });
+    }
+    const changed = spelling.split(from).join(to);
+    return tokens(changed);
+  };
+  const verdict = (a: string, b: string): boolean => sameSpelling(tokens(a), tokens(b));
+  const controls = SPELLING_CONTROLS.filter(([, a, b]) => sameSpelling(tokenModel(a), tokenModel(b)) !== verdict(a, b)).map(([label]) => label);
+  const pinned = [...COMPARISONS, ...OPERANDS, ...PIN_CASE].filter(statement => !sameSpelling(tokenModel(statement), tokens(statement))).length;
+  return { family, member, erased: one !== other && sameSpelling(tokenModel(one), tokenModel(other)), controls, pinned };
 }
 /** The residual families the header's RESIDUALS paragraphs name, in the order first named (wb-jdz6 cut #4, the wb-jwc.7 CT7
  * class: the anchor of RESIDUAL_FAMILIES and SELF_READ_RESIDUALS outside their own literals and the roster): every R- name between
@@ -1888,6 +1937,8 @@ describe("wb-4nut.9 H2 identity and reuse census (TSX-HARNESS2-REACTIVE-EVOLUTIO
       bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows, comparisons: [...ROSTER.comparisons], operands: [...ROSTER.operands],
       pinCase: [...ROSTER.pinCase], spellingControls: [...ROSTER.spellingControls], selfReadResiduals: [...ROSTER.selfReadResiduals],
     });
+    // wb-2hdl F1/F2/F3: the residual families and mixed-kind reading are held by the roster's
+    // selfReadResiduals and scan.readingControls, not by a second self-authored list.
     // SELF-READ: the reader first - each spelling control reads as one spelling or two, as its row says (wb-jdz6 cut #2, U1).
     expect(SPELLING_CONTROLS.filter(([, one, other, same]) => sameSpelling(heldSpelling(one), heldSpelling(other)) !== same).map(([label]) => label), "the spelling controls tokensOf reads otherwise than their rows say").toEqual([]);
     // SELF-READ RESIDUALS (wb-jdz6 cut #4): each member's quiet row, measured, and every residual family named in the header.
