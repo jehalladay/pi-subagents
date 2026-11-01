@@ -4,17 +4,16 @@
  * shared so that census (blocked by this bead, not on trunk) can take them in place of its own readers:
  *  - entryExposures: D3's WALK, which reads a named re-export AT an entry as well as past it (the chain-length hole closed),
  *    every exported and imported name cooked, a DEEP module identified by its stem (its TypeScript twin included), and a
- *    specifier read the way a URL parser and a file path read it (RESOLUTION);
+ *    specifier read through RESOLUTION's steps of a URL parser's and a file path's reading;
  *  - entryTextNames: D3's ENTRY TEXT READ;
  *  - pathReading, spellsDeep and holdsDeep: D1's PATH reading (ASCII tab, LF and CR dropped);
  *  - renderedBlocks: U1's reading of vendor/README.md, a hard line break read as the line break marked renders;
  *  - registerMethods: D4's register-method count, a computed literal name read.
  * Each reader's claim is a ClaimPart below, composed from its words and the sub-forms it lists; the census
  * test/workbench-furnace-sdk-entry-readers-census.test.ts holds each claim byte-for-byte in its header and names, for every
- * listed sub-form, planted falsifiers that carry its mark in what they add or read: an "every" pinned by two occurrences, a
- * "first" by a later second one, an order ("then", "in order") by both candidates of each adjacent pair present, a plural
- * by its second member, the WALK's reach by a chain of sixteen followed modules and an "or" by each half alone. Nothing
- * here reads the file system: callers pass the tarball's entries, the README's text and the scripts' text.
+ * listed sub-form, planted falsifiers that carry its mark in what they add or read. Which sub-readings those plants pin is
+ * stated by the census header (its CUT #2 and CUT #3 paragraphs, its RESIDUALS and its NOT CLAIMED paragraph), not by this
+ * comment. Nothing here reads the file system: callers pass the tarball's entries, the README's text and the scripts' text.
  */
 import { posix } from "node:path";
 import { marked, type Token, type Tokens } from "marked";
@@ -63,7 +62,7 @@ export const WALK_FORMS: readonly ClaimPart<ExposureForm>[] = [
 /** RESOLUTION: how the WALK reads a specifier and which tarball entry it names. */
 export const RESOLUTION_CLAIM: ClaimPart<"resolution"> = claimPart(
   "resolution",
-)`a specifier is read through exactly these steps of a URL parser's and a file path's reading - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, ${"a query cut off"} (from its first ?) and ${"a fragment cut off"} (from its first #), then ${"every %XX escape decoded"} and then ${"every backslash read as /"} - and resolves when it is ${"relative"} (./ or ../, ${"joined to the naming module's directory"}) or ${"the package's own name"} (@furnace/sdk/<path>, read under package/), its ${". segments dropped"} and ${".. segments resolved"} (posix.normalize), and the tarball carries the first of its candidates ${"in order"}: from a declaration file (.d.ts, .d.mts or .d.cts), ${"an exact TypeScript path"} as written (${"an exact .ts"}, ${"an exact .tsx"}, ${"an exact .mts"} or ${"an exact .cts"}, ${"a declaration file's own path"} included); for ${"a .js path"}, its .ts, ${"then its .tsx"} and ${"then its .d.ts twin"}; for ${"a .jsx path"}, ${"the same three"}; for ${"a .mjs path"}, its .mts and ${"then its .d.mts twin"}; for ${"a .cjs path"}, its .cts and ${"then its .d.cts twin"}; for ${"an extensionless path"}, its .ts, ${"its .tsx"}, ${"its .d.ts"}, ${"its /index.ts"}, ${"its /index.tsx"} and ${"its /index.d.ts"}; and from any other module, ${"the exact path"}, ${"then its .js"} and ${"then its /index.js"}`;
+)`a specifier is read through these steps of a URL parser's and a file path's reading - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, ${"a query cut off"} (from its first ?) and ${"a fragment cut off"} (from its first #), then ${"every %XX escape decoded"} and then ${"every backslash read as /"} - and resolves when it is ${"relative"} (./ or ../, ${"joined to the naming module's directory"}) or ${"the package's own name"} (@furnace/sdk/<path>, read under package/), its ${". segments dropped"} and ${".. segments resolved"} (posix.normalize), and the tarball carries the first of its candidates ${"in order"}: from a declaration file (.d.ts, .d.mts or .d.cts), ${"an exact TypeScript path"} as written (${"an exact .ts"}, ${"an exact .tsx"}, ${"an exact .mts"} or ${"an exact .cts"}, ${"a declaration file's own path"} included); for ${"a .js path"}, its .ts, ${"then its .tsx"} and ${"then its .d.ts twin"}; for ${"a .jsx path"}, ${"the same three"}; for ${"a .mjs path"}, its .mts and ${"then its .d.mts twin"}; for ${"a .cjs path"}, its .cts and ${"then its .d.cts twin"}; for ${"an extensionless path"}, its .ts, ${"its .tsx"}, ${"its .d.ts"}, ${"its /index.ts"}, ${"its /index.tsx"} and ${"its /index.d.ts"}; and from any other module, ${"the exact path"}, ${"then its .js"} and ${"then its /index.js"}`;
 
 /** DEEP: which tarball modules are the DEEP rows' modules. */
 export const DEEP_CLAIM: ClaimPart<"deep"> = claimPart(
@@ -78,7 +77,7 @@ export const TEXT_CLAIM: ClaimPart<"text"> = claimPart(
 /** D1's PATH reading of a literal's cooked text, and what it spells or holds. */
 export const PATH_CLAIM: ClaimPart<"path"> = claimPart(
   "path",
-)`a literal's cooked text is read through exactly these steps - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, then ${"every %XX escape decoded"} and then ${"every backslash read as /"}, then posix.normalize (${"empty segments dropped"}, ${". segments dropped"} and ${".. segments resolved"}) - and the text spells a deep @furnace/sdk/<path> when ${"the cooked text itself"} or ${"its PATH reading"} ${"begins with @furnace/sdk/"} or holds ${"node_modules/@furnace/sdk/ at its start"} or ${"node_modules/@furnace/sdk/ after a /"}, and holds one when either ${"holds @furnace/sdk/ anywhere"}`;
+)`a literal's cooked text is read through these steps - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, then ${"every %XX escape decoded"} and then ${"every backslash read as /"}, then posix.normalize (${"empty segments dropped"}, ${". segments dropped"} and ${".. segments resolved"}) - and the text spells a deep @furnace/sdk/<path> when ${"the cooked text itself"} or ${"its PATH reading"} ${"begins with @furnace/sdk/"} or holds ${"node_modules/@furnace/sdk/ at its start"} or ${"node_modules/@furnace/sdk/ after a /"}, and holds one when either ${"holds @furnace/sdk/ anywhere"}`;
 
 /** U1's rendered reading of vendor/README.md. */
 export const RENDER_CLAIM: ClaimPart<"render"> = claimPart(

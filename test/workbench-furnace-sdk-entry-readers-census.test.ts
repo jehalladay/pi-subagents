@@ -10,17 +10,37 @@
  * proves each reader with planted trees and reads the real tree through each; src/, vendor/ and the tracker export are only
  * read. Against wb-lrz.4's readers at the cuts the bead's items name, the cure is: the WALK reads a named re-export AT an entry
  * as well as past it, whatever its specifier resolves to (the chain-length hole closed, refusal #4 U1); a DEEP module is
- * identified by its stem, so its TypeScript twin is DEEP (refusal #5 U1); RESOLUTION reads a specifier the way a URL parser and
- * a file path read it (refusal #5 U3); a hard line break renders as a break (refusal #4 U2); a computed literal register name
- * is counted (refusal #5 U2); and D1's PATH reading drops ASCII tab, LF and CR (refusal #4 U3, as wb-lrz.4's cut #5 read it).
+ * identified by its stem, so its TypeScript twin is DEEP (refusal #5 U1); RESOLUTION reads a specifier through steps of a URL
+ * parser's and a file path's reading (refusal #5 U3); a hard line break renders as a break (refusal #4 U2); a computed
+ * literal register name is counted (refusal #5 U2); and D1's PATH reading drops ASCII tab, LF and CR (refusal #4 U3, as
+ * wb-lrz.4's cut #5 read it).
  *
- * CUT #2 (refusal #1's U1-U6; the class guard of rule 19(b)/(d)): each claim part's quantified, positional, ordered, plural
- * and either-half sub-readings are pinned - an "every" by two occurrences, a "first" by a later second one, an order
- * ("then", "in order") by both candidates of each adjacent pair present, a plural by its second member, the WALK's reach
- * by a chain of sixteen followed modules past an entry and an "or" by each half alone. The ENTRY TEXT READ's claim is
- * narrowed to its regex's word characters (a $ or a non-ASCII letter beside a name is a word boundary, so the name is
- * read), RENDERED's "trimmed" is dropped (no judge observes a block's edges), and SUBFORMS binds each sub-form to its
- * plants by a mark that each of them carries in what it adds or reads.
+ * CUT #2 (refusal #1's U1-U6; the class guard of rule 19(b)/(d)): refusal #1's 31 named sub-readings are pinned - an
+ * "every" by two occurrences, a "first" by a later second one, an order ("then", "in order") by both candidates of each
+ * adjacent pair present, a plural by its second member, the WALK's reach for an export * by a chain of sixteen followed
+ * modules past the types entry and an "or" by each half alone. The ENTRY TEXT READ's claim is narrowed to its regex's word
+ * characters (a $ or a non-ASCII letter beside a name is a word boundary, so the name is read), RENDERED's "trimmed" is
+ * dropped (no judge observes a block's edges), and SUBFORMS binds each sub-form to its plants by a mark that each of them
+ * carries in what it adds or reads.
+ *
+ * CUT #3 (refusal #2's U1-U7; ruling R-B235, the enumerate-the-resolvable form of rule 19(c)): each of refusal #2's 17
+ * surviving mutants is killed by its paired real-tree witness, checked in as a plant whose name cites it - forms (3)
+ * and (4) in the entry itself, form (1)'s export * as and a followed export * as past the entry, and forms (2) and (3)
+ * three modules down (U1); a clause's member after a non-member in a named re-export, an import and a local export
+ * clause (U2); the package's own name from a declaration file and a declaration file's own .d.mts and .d.cts path
+ * (U3); the after side of the $ and the non-ASCII boundary (U4); a list item's second token, nested and loose (U5);
+ * and a form feed and a vertical tab, which neither reading drops (U6, residual members below). The WALK is then
+ * pinned per form at each of these modules, every form in each: the types entry and the main entry; each entry's
+ * protocol module; one module of each other module kind (.ts, .tsx, .mts, .cts, .jsx, .mjs, .cjs, .d.mts and .d.cts)
+ * in a subdirectory; and the sixteenth followed module of a declaration-file chain and of a JavaScript chain whose
+ * hops alternate an export * and an export * as; a named re-export is read cooked past the entry as well as at it.
+ * RESOLUTION's steps, the package's own name and its . and .. segments are pinned from a declaration file as well as
+ * from the main entry, the package's own name and a step on an import's specifier too, and an extensionless path's .js
+ * and /index.js and the package's own name from a .ts module as well. RENDERED's block containers hold the record in
+ * their first member before a later one as well as in a later member: a list's first item, a list item's first token,
+ * a table's first header cell, first body row and a row's first cell, and a blockquote's first paragraph, and an
+ * ordered list's second item. RESOLUTION's and the PATH reading's "exactly" is dropped: the characters each keeps are
+ * named residual members with pinned quiet rows (Q-SPECIFIER-CONTROL, Q-PATH-CONTROL).
  *
  * THE ROWS (ROWS; a row's label is the line it answers, verbatim from the bead's row of the tracker export):
  *  E-U1, E-U2, E-U3: the description's enumerated items U1-U3. E-U4 (the note contact count) is DROPPED (below).
@@ -61,17 +81,17 @@
  * WALK FORM (4) local-module: a local export of a name a default import of a DEEP module or a namespace import of a
  * DEEP module binds
  *
- * RESOLUTION: a specifier is read through exactly these steps of a URL parser's and a file path's reading - every
- * ASCII tab dropped, every LF dropped and every CR dropped, a query cut off (from its first ?) and a fragment cut off
- * (from its first #), then every %XX escape decoded and then every backslash read as / - and resolves when it is
- * relative (./ or ../, joined to the naming module's directory) or the package's own name (@furnace/sdk/<path>, read
- * under package/), its . segments dropped and .. segments resolved (posix.normalize), and the tarball carries the
- * first of its candidates in order: from a declaration file (.d.ts, .d.mts or .d.cts), an exact TypeScript path as
- * written (an exact .ts, an exact .tsx, an exact .mts or an exact .cts, a declaration file's own path included); for a
- * .js path, its .ts, then its .tsx and then its .d.ts twin; for a .jsx path, the same three; for a .mjs path, its .mts
- * and then its .d.mts twin; for a .cjs path, its .cts and then its .d.cts twin; for an extensionless path, its .ts,
- * its .tsx, its .d.ts, its /index.ts, its /index.tsx and its /index.d.ts; and from any other module, the exact path,
- * then its .js and then its /index.js
+ * RESOLUTION: a specifier is read through these steps of a URL parser's and a file path's reading - every ASCII tab
+ * dropped, every LF dropped and every CR dropped, a query cut off (from its first ?) and a fragment cut off (from its
+ * first #), then every %XX escape decoded and then every backslash read as / - and resolves when it is relative (./ or
+ * ../, joined to the naming module's directory) or the package's own name (@furnace/sdk/<path>, read under package/),
+ * its . segments dropped and .. segments resolved (posix.normalize), and the tarball carries the first of its
+ * candidates in order: from a declaration file (.d.ts, .d.mts or .d.cts), an exact TypeScript path as written (an
+ * exact .ts, an exact .tsx, an exact .mts or an exact .cts, a declaration file's own path included); for a .js path,
+ * its .ts, then its .tsx and then its .d.ts twin; for a .jsx path, the same three; for a .mjs path, its .mts and then
+ * its .d.mts twin; for a .cjs path, its .cts and then its .d.cts twin; for an extensionless path, its .ts, its .tsx,
+ * its .d.ts, its /index.ts, its /index.tsx and its /index.d.ts; and from any other module, the exact path, then its
+ * .js and then its /index.js
  *
  * DEEP: a tarball module is DEEP when its path, with its one module extension taken off (a .d.ts, a .d.mts, a .d.cts,
  * a .ts, a .tsx, a .mts, a .cts, a .js, a .jsx, a .mjs or a .cjs), is a DEEP row's path with its .js taken off, so a
@@ -83,12 +103,11 @@
  * a name with a word character (an ASCII letter, a digit or an underscore) just before it or just after it not read,
  * and a name beside a $ or a non-ASCII letter read (each a word boundary)
  *
- * PATH READING: a literal's cooked text is read through exactly these steps - every ASCII tab dropped, every LF
- * dropped and every CR dropped, then every %XX escape decoded and then every backslash read as /, then posix.normalize
- * (empty segments dropped, . segments dropped and .. segments resolved) - and the text spells a deep
- * @furnace/sdk/<path> when the cooked text itself or its PATH reading begins with @furnace/sdk/ or holds
- * node_modules/@furnace/sdk/ at its start or node_modules/@furnace/sdk/ after a /, and holds one when either holds
- * @furnace/sdk/ anywhere
+ * PATH READING: a literal's cooked text is read through these steps - every ASCII tab dropped, every LF dropped and
+ * every CR dropped, then every %XX escape decoded and then every backslash read as /, then posix.normalize (empty
+ * segments dropped, . segments dropped and .. segments resolved) - and the text spells a deep @furnace/sdk/<path> when
+ * the cooked text itself or its PATH reading begins with @furnace/sdk/ or holds node_modules/@furnace/sdk/ at its
+ * start or node_modules/@furnace/sdk/ after a /, and holds one when either holds @furnace/sdk/ anywhere
  *
  * RENDERED: vendor/README.md is read through marked's lexer, each top-level block to its text, whitespace collapsed
  * (every run one space): a hard line break (a br token, a backslash before a line ending or two or more spaces before
@@ -102,8 +121,8 @@
  * string escape reads as the name it spells), or a computed name whose expression, through parentheses, is a computed
  * string literal or a computed no-substitution template literal
  *
- * RESIDUALS (named; what the readers leave unread; each family is one quiet plant of row Q, reading as nothing, with a twin in
- * a read form that reads its line):
+ * RESIDUALS (named; what the readers leave unread; each family has a quiet plant of row Q - R-WALK-SPECIFIER and R-PATH-UNREAD
+ * two - reading as nothing, with a twin in a read form that reads its line):
  *  R-INDEX-INDIRECT [Q-INDIRECT]: a DEEP class a module of the WALK reaches through anything but the WALK's forms - a value
  *   or a type declared from it, a default export of it, a module augmentation re-exporting it, a named re-export chain through
  *   a module the WALK does not follow, a namespace import of a module that star-exports it exported locally, an import-equals
@@ -112,9 +131,13 @@
  *   package.json, a TypeScript-extension specifier whose file the tarball lacks, a bare specifier that is not the package's own
  *   name, and a URL-parser reading its steps do not take, such as a trailing space a URL parser strips (a path mapping or a
  *   symlink is the same family).
- *  R-PATH-UNREAD [Q-PATH]: a literal whose path the PATH reading does not assemble - a form feed inside it (only tab, LF and CR
- *   are dropped), an encoded tab (%09, decoded after the drop), a letter-case spelling (@Furnace/SDK/) that only a file system
- *   ignoring case loads.
+ *  R-WALK-SPECIFIER [Q-SPECIFIER-CONTROL]: the family's control-character members - a specifier holding an inner form feed,
+ *   an inner vertical tab or an inner NUL, none one of RESOLUTION's drops, so it resolves to no tarball module.
+ *  R-PATH-UNREAD [Q-PATH]: a literal whose path the PATH reading does not assemble - a form feed inside it (not one of the
+ *   reading's drops), an encoded tab (%09, decoded after the drop), a letter-case spelling (@Furnace/SDK/) that only a file
+ *   system ignoring case loads.
+ *  R-PATH-UNREAD [Q-PATH-CONTROL]: the family's kept-character members - a literal holding an inner vertical tab, an inner
+ *   NUL or an inner space, none one of the PATH reading's drops.
  *  R-RENDER-UNREAD [Q-RENDER]: a record the rendered reading does not show as a browser does - one spelled through a character
  *   reference (marked's tokens hold the reference) or split by a default-ignorable character (a browser hides it); wb-lrz.4's
  *   U1 refuses both on its own page.
@@ -127,7 +150,9 @@
  * the PATH reading as its own instrument, not as D1's load reading. The order exposures are read in, the WALK's visit of a
  * module once, and the tar reading of the vendored tarball (regular entries only) are this census's instruments. The trim
  * of a rendered block's text is NOT CLAIMED by this census: u1 matches records inside a block, so no judge observes a
- * block's edges.
+ * block's edges. The WALK past the sixteenth followed module is NOT CLAIMED by this census. A character inside a specifier
+ * or a literal that neither reading drops, other than the members R-WALK-SPECIFIER and R-PATH-UNREAD name, is NOT CLAIMED
+ * by this census. A record in a code block or a code span is NOT CLAIMED by this census.
  *
  * FROZEN SHAPE (standing rule 16): FROZEN_SHAPE pins each row's `${id}:${pins.length}`, PAGES' key order (every plant, in
  * ROWS order) every row's pin ids, PAGES each plant's page digest, REAL_READINGS each judge's reading of the real tree (a
@@ -351,6 +376,48 @@ const DEEP_CHAIN = Array.from({ length: 16 }, (_, index) => `dist/src/zzh${index
 /** A src/ module planted beside the real scripts, and the path its lines name. */
 const d1File = (slug: string): string => `src/workbench/plant-d1-${slug}.ts`;
 const shim = (member: string): string => `class ShimApp {\n  ${member} {\n    return this;\n  }\n}`;
+/** W-DEEP-FORMS-TYPES' and W-DEEP-FORMS-MAIN's sixteen followed modules: a declaration-file chain and a JavaScript chain. */
+const FORMS_CHAIN_D = Array.from({ length: 16 }, (_, index) => `dist/src/zzd${index + 1}.d.ts`);
+const FORMS_CHAIN_J = Array.from({ length: 16 }, (_, index) => `dist/src/zzj${index + 1}.js`);
+/** W-FORMS-KINDS' modules: one of each module kind but .d.ts and .js, in a subdirectory, each following the next by its exact path. */
+const KIND_CHAIN = ["m1.ts", "m2.tsx", "m3.mts", "m4.cts", "m5.jsx", "m6.mjs", "m7.cjs", "m8.d.mts", "m9.d.cts"].map((file) => `dist/src/zzk/${file}`);
+/** Every WALK form in one module, its DEEP specifiers under `up`: an export * and an export * as of a DEEP module, a named re-export, and local exports of a class-named, a default and a namespace import. */
+const allForms = (up: string): string =>
+  [
+    `export * from "${up}embedded.js";`,
+    `export * as zzres from "${up}resident_session.js";`,
+    `export { EmbeddedHost as DeepHost } from "${up}embedded.js";`,
+    `import { ResidentSession } from "${up}resident_session.js";`,
+    `import Host from "${up}embedded.js";`,
+    `import * as hosting from "${up}resident_session.js";`,
+    "export { ResidentSession, Host, hosting };",
+  ].join("\n");
+/** The six lines allForms reads in the last module of `chain`, its DEEP modules resolved to `emb` and `res`. */
+const allFormsLines = (field: "types" | "main", chain: readonly string[], emb: string, res: string): string[] => [
+  walkLine(field, "star", EH, ...chain, emb),
+  walkLine(field, "star", RS, ...chain, res),
+  walkLine(field, "named", EH, ...chain),
+  walkLine(field, "local-import", RS, ...chain),
+  walkLine(field, "local-module", EH, ...chain),
+  walkLine(field, "local-module", RS, ...chain),
+];
+/** `entry` follows `hops` in turn, the last holding allForms; the hop into hop k is an export * as when k's oddness is `asOdd`, else an export *. */
+function formsChain(real: Tree, entry: string, hops: readonly string[], asOdd: boolean): Tree {
+  const into = (k: number): string => {
+    const target = `./${(hops[k - 1] ?? "").slice("dist/src/".length).replace(/\.d\.ts$/, ".js")}`;
+    return (k % 2 === 1) === asOdd ? `export * as zzhop${k} from "${target}";` : `export * from "${target}";`;
+  };
+  const tree = hops.reduce((built, hop, index) => addEntry(built, `package/${hop}`, `${index + 1 < hops.length ? into(index + 2) : allForms("./")}\n`), real);
+  return appended(tree, entry, into(1));
+}
+/** W-FORMS-KINDS: the types entry follows KIND_CHAIN in turn, each module holding allForms and following the next. */
+function kindsChain(real: Tree): Tree {
+  const tree = KIND_CHAIN.reduce((built, module, index) => {
+    const next = KIND_CHAIN[index + 1];
+    return addEntry(built, `package/${module}`, `${allForms("../")}\n${next === undefined ? "" : `export * from "./${next.slice("dist/src/zzk/".length)}";\n`}`);
+  }, real);
+  return appended(tree, TYPES, 'export * from "./zzk/m1.js";');
+}
 
 // ---- the plants -----------------------------------------------------------------------------------------------------
 
@@ -1382,6 +1449,264 @@ const PLANTS: Readonly<Record<string, Plant>> = {
     added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D)],
   },
 
+  // ---- cut #3 (refusal #2's U1-U7, ruling R-B235: the enumerate-the-resolvable form of rule 19(c)): each of refusal #2's
+  // 17 surviving mutants is killed by its paired real-tree witness, checked in as a plant whose name cites it (G13-*); the
+  // plants after them pin the same classes at the positions the claims name.
+
+  // E-U1: a clause's DEEP member after a non-member, a named re-export from the package root and from a bare specifier,
+  // the after side of the ENTRY TEXT READ's $ and non-ASCII boundaries, and a name in a block comment.
+  "E1-CLAUSE-AFTER-NONDEEP": {
+    name: "the types entry re-exports EmbeddedHost after a name that is not a DEEP class, in one clause (refusal #2 G13-N-STOP-AT-NONDEEP)",
+    tree: (real) => appended(real, TYPES, 'export { zzOther, EmbeddedHost } from "./embedded.js";'),
+    added: [`text types ${EH}`, walkLine("types", "named", EH, IDX_D)],
+  },
+  "E1-NAMED-OWN-BARE": {
+    name: "the types entry re-exports EmbeddedHost from the package root and the main entry ResidentSession from a bare specifier (read whatever the specifier resolves to)",
+    tree: (real) => appended(appended(real, TYPES, `export { EmbeddedHost } from "${SDK}";`), MAIN, 'export { ResidentSession } from "zzgate";'),
+    added: [`text types ${EH}`, walkLine("types", "named", EH, IDX_D), `text main ${RS}`, walkLine("main", "named", RS, IDX_J)],
+  },
+  "E1-TEXT-DOLLAR-AFTER": {
+    name: "the types entry declares EmbeddedHost$ (a $ just after the name is a word boundary for \\b: read; refusal #2 G13-T-DOLLAR-AFTER)",
+    tree: (real) => appended(real, TYPES, "export declare const EmbeddedHost$: unique symbol;"),
+    added: [`text types ${EH}`],
+  },
+  "E1-TEXT-NONASCII-AFTER": {
+    name: "the types entry declares the name just before a non-ASCII letter (a word boundary for \\b: read; refusal #2 G13-T-NONASCII-AFTER)",
+    tree: (real) => appended(real, TYPES, `export declare const EmbeddedHost${E_ACUTE}: unique symbol;`),
+    added: [`text types ${EH}`],
+  },
+  "E1-TEXT-BLOCK": {
+    name: "the types entry names EmbeddedHost only in a block comment (the ENTRY TEXT READ reads a block comment as it reads a line comment)",
+    tree: (real) => appended(real, TYPES, "/* EmbeddedHost stays a deep import */"),
+    added: [`text types ${EH}`],
+  },
+
+  // E-U2: a list item's later token (nested and loose) and an ordered list's second item.
+  "U2-ITEM-NESTED": {
+    name: "a second record in a list item's second token, a nested list (refusal #2 G13-U-ITEM-FIRST-TOKEN)",
+    tree: (real) => withReadme(real, `- other\n  - ${RECORD_TEXT}`),
+    added: [SECOND],
+  },
+  "U2-ITEM-LOOSE": {
+    name: "a second record in a loose list item's second paragraph (refusal #2 G13-U-ITEM-FIRST-TOKEN, loose)",
+    tree: (real) => withReadme(real, `- other\n\n  ${RECORD_TEXT}`),
+    added: [SECOND],
+  },
+  "U2-ORDERED": {
+    name: "a second record, with emphasis, in an ordered list's second item",
+    tree: (real) => withReadme(real, "1. other\n2. furnace-sdk-0.2.0.tgz was *re-packaged* on 2026-11-01 (wb-zby) from Furnace revision abcdef0123"),
+    added: [SECOND],
+  },
+  "U2-LIST-FIRST": {
+    name: "a second record in a list's first item, another item after it (a list reads by every item's tokens, the first included)",
+    tree: (real) => withReadme(real, `- ${RECORD_TEXT}\n- other`),
+    added: [SECOND],
+  },
+  "U2-ITEM-FIRST": {
+    name: "a second record in a list item's first token, a nested list after it",
+    tree: (real) => withReadme(real, `- ${RECORD_TEXT}\n  - other`),
+    added: [SECOND],
+  },
+  "U2-TABLE-HEAD-FIRST": {
+    name: "a second record in a table's first header cell, another header cell after it",
+    tree: (real) => withReadme(real, `| ${RECORD_TEXT} | a |\n| --- | --- |\n| x | y |`),
+    added: [SECOND],
+  },
+  "U2-TABLE-ROW-FIRST": {
+    name: "a second record in a table's first body row, another row after it",
+    tree: (real) => withReadme(real, `| h |\n| --- |\n| ${RECORD_TEXT} |\n| x |`),
+    added: [SECOND],
+  },
+  "U2-TABLE-CELL-FIRST": {
+    name: "a second record in a body row's first cell, another cell after it",
+    tree: (real) => withReadme(real, `| h | i |\n| --- | --- |\n| ${RECORD_TEXT} | y |`),
+    added: [SECOND],
+  },
+  "U2-QUOTE-FIRST": {
+    name: "a second record in a blockquote's first paragraph, another paragraph after it",
+    tree: (real) => withReadme(real, `> ${RECORD_TEXT}\n>\n> other`),
+    added: [SECOND],
+  },
+
+  // F-U3: RESOLUTION's steps read from a declaration file (every S-* plant above names its specifier from the main entry).
+  "S-DECL-STEPS": {
+    name: "the types entry (a declaration file) star-exports the embedded module through a tab, an LF, a CR, a %XX escape, a backslash and a query",
+    tree: (real) => appended(real, TYPES, 'export * from ".\\\\embed\\t\\n\\rde%64.js?gate";'),
+    added: [walkLine("types", "star", EH, IDX_D, EMB_D)],
+  },
+  "S-DECL-FRAGMENT": {
+    name: "the types entry star-exports the embedded module through a fragment (cut off from a declaration file's specifier too)",
+    tree: (real) => appended(real, TYPES, 'export * from "./embedded.js#gate";'),
+    added: [walkLine("types", "star", EH, IDX_D, EMB_D)],
+  },
+
+  // W: the WALK's forms and follows at each position, RESOLUTION from a declaration file and from a .ts module.
+  "W-LOCAL-ENTRY-TYPES": {
+    name: "the types entry's local export of an imported EmbeddedHost (form (3) in the entry itself; refusal #2 G13-W-LOCALIMPORT-ENTRY)",
+    tree: (real) => appended(real, TYPES, 'import { EmbeddedHost } from "./embedded.js";', "export { EmbeddedHost };"),
+    added: [`text types ${EH}`, walkLine("types", "local-import", EH, IDX_D)],
+  },
+  "W-LOCAL-ENTRY-MAIN": {
+    name: "the main entry's local export of an imported ResidentSession (refusal #2 G13-W-LOCALIMPORT-ENTRY, main)",
+    tree: (real) => appended(real, MAIN, 'import { ResidentSession } from "./resident_session.js";', "export { ResidentSession };"),
+    added: [`text main ${RS}`, walkLine("main", "local-import", RS, IDX_J)],
+  },
+  "W-FOLLOW-STAR-AS-PAST": {
+    name: "the protocol module's export * as of a module that star-exports the embedded module (followed past the entry; refusal #2 G13-W-STARAS-FOLLOW-ENTRY)",
+    tree: (real) => appended(addEntry(real, "package/dist/src/zzas.d.ts", 'export * from "./embedded.js";\n'), PROTOCOL_D, 'export * as zzns from "./zzas.js";'),
+    added: [walkLine("types", "star", EH, IDX_D, PROTO_D, "dist/src/zzas.d.ts", EMB_D)],
+  },
+  "W-STAR-AS-PAST": {
+    name: "the protocol module's export * as of the embedded module (form (1)'s export * as past the entry; refusal #2 G13-W-STARAS-DEEP-ENTRY)",
+    tree: (real) => appended(real, PROTOCOL_D, 'export * as zzns from "./embedded.js";'),
+    added: [walkLine("types", "star", EH, IDX_D, PROTO_D, EMB_D)],
+  },
+  "W-NAMED-DEPTH3": {
+    name: "a named re-export of EmbeddedHost three modules down, index.d.ts -> protocol.d.ts -> zzhop.d.ts (refusal #2 G13-W-NAMED-DEPTH2)",
+    tree: (real) => appended(addEntry(real, "package/dist/src/zzhop.d.ts", 'export { EmbeddedHost } from "./embedded.js";\n'), PROTOCOL_D, 'export * from "./zzhop.js";'),
+    added: [walkLine("types", "named", EH, IDX_D, PROTO_D, "dist/src/zzhop.d.ts")],
+  },
+  "W-LOCAL-DEPTH3": {
+    name: "a local export of an imported EmbeddedHost three modules down (refusal #2 G13-W-LOCAL-DEPTH2)",
+    tree: (real) => appended(addEntry(real, "package/dist/src/zzhop.d.ts", 'import { EmbeddedHost } from "./embedded.js";\nexport { EmbeddedHost };\n'), PROTOCOL_D, 'export * from "./zzhop.js";'),
+    added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D, "dist/src/zzhop.d.ts")],
+  },
+  "W-LOCAL-DEFAULT-ENTRY": {
+    name: "the types entry's local export of a default import of the embedded module (form (4) in the entry itself; refusal #2 G13-LM-DEFAULT-PAST-ONLY)",
+    tree: (real) => appended(real, TYPES, 'import Host from "./embedded.js";', "export { Host };"),
+    added: [walkLine("types", "local-module", EH, IDX_D)],
+  },
+  "W-LOCAL-NS-MAIN": {
+    name: "the main entry's local export of the embedded module's namespace (form (4) in a JavaScript module; refusal #2 G13-LM-DECL-ONLY)",
+    tree: (real) => appended(real, MAIN, 'import * as embedded from "./embedded.js";', "export { embedded };"),
+    added: [walkLine("main", "local-module", EH, IDX_J)],
+  },
+  "W-LOCAL-IMPORT-AFTER": {
+    name: "a starred module's import clause binds EmbeddedHost after a binding that is not a class name (refusal #2 G13-LI-STOP-AT-NONDEEP)",
+    tree: (real) => appended(real, PROTOCOL_D, 'import { ExecutionResult, EmbeddedHost } from "./embedded.js";', "export { EmbeddedHost };"),
+    added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D)],
+  },
+  "W-LOCAL-EXPORT-AFTER": {
+    name: "a starred module's local export clause exports the bound EmbeddedHost after a name no import binds (refusal #2 G13-LE-STOP-AT-UNBOUND)",
+    tree: (real) => appended(real, PROTOCOL_D, 'import { EmbeddedHost } from "./embedded.js";', "declare const zzOther: unique symbol;", "export { zzOther, EmbeddedHost };"),
+    added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D)],
+  },
+  "R-OWN-DECL": {
+    name: "the types entry (a declaration file) star-exports the embedded module through the package's own name (refusal #2 G13-R-OWN-DECL)",
+    tree: (real) => appended(real, TYPES, `export * from "${SDK}/dist/src/embedded.js";`),
+    added: [walkLine("types", "star", EH, IDX_D, EMB_D)],
+  },
+  "R-EXACT-DMTS": {
+    name: "the types entry star-exports a .d.mts twin of the embedded module by its exact path, a declaration file's own path (refusal #2 G13-R-EXACT-DECL-FLAVOURS)",
+    tree: (real) => appended(twinOf(real, "package/dist/src/embedded.d.mts"), TYPES, 'export * from "./embedded.d.mts";'),
+    added: [walkLine("types", "star", EH, IDX_D, "dist/src/embedded.d.mts")],
+  },
+  "R-EXACT-DCTS": {
+    name: "the same for a .d.cts twin (refusal #2 G13-R-EXACT-DECL-FLAVOURS, cts)",
+    tree: (real) => appended(twinOf(real, "package/dist/src/embedded.d.cts"), TYPES, 'export * from "./embedded.d.cts";'),
+    added: [walkLine("types", "star", EH, IDX_D, "dist/src/embedded.d.cts")],
+  },
+  "W-LOCAL-DEFAULT-MAIN": {
+    name: "the main entry's local export of a default import of the embedded module",
+    tree: (real) => appended(real, MAIN, 'import Host from "./embedded.js";', "export { Host };"),
+    added: [walkLine("main", "local-module", EH, IDX_J)],
+  },
+  "W-FOLLOW-STAR-AS-MAIN": {
+    name: "the main entry's export * as of a module that star-exports the embedded module (followed from a JavaScript entry)",
+    tree: (real) => appended(addEntry(real, "package/dist/src/zzasm.js", 'export * from "./embedded.js";\n'), MAIN, 'export * as zzns from "./zzasm.js";'),
+    added: [walkLine("main", "star", EH, IDX_J, "dist/src/zzasm.js", EMB_J)],
+  },
+  "W-FORMS-MAIN-PAST": {
+    name: "the JavaScript protocol module's export * as of the embedded module and local exports of a default and a namespace import (forms (1) and (4) past a JavaScript entry)",
+    tree: (real) => appended(real, PROTOCOL_J, 'export * as zzns from "./embedded.js";', 'import Host from "./embedded.js";', 'import * as hosting from "./resident_session.js";', "export { Host, hosting };"),
+    added: [walkLine("main", "star", EH, IDX_J, PROTO_J, EMB_J), walkLine("main", "local-module", EH, IDX_J, PROTO_J), walkLine("main", "local-module", RS, IDX_J, PROTO_J)],
+  },
+  "W-FOLLOW-MAIN-PAST": {
+    name: "the JavaScript protocol module's export * of a module that star-exports the embedded module (followed past a JavaScript entry, three modules down)",
+    tree: (real) => appended(addEntry(real, "package/dist/src/zzjhop.js", 'export * from "./embedded.js";\n'), PROTOCOL_J, 'export * from "./zzjhop.js";'),
+    added: [walkLine("main", "star", EH, IDX_J, PROTO_J, "dist/src/zzjhop.js", EMB_J)],
+  },
+  "W-DEEP-FORMS-TYPES": {
+    name: "every WALK form sixteen followed modules past the types entry, the hops alternating export * and export * as",
+    tree: (real) => formsChain(real, TYPES, FORMS_CHAIN_D, false),
+    added: allFormsLines("types", [IDX_D, ...FORMS_CHAIN_D], EMB_D, RES_D),
+  },
+  "W-DEEP-FORMS-MAIN": {
+    name: "every WALK form sixteen followed JavaScript modules past the main entry, the hops alternating export * as and export *",
+    tree: (real) => formsChain(real, MAIN, FORMS_CHAIN_J, true),
+    added: allFormsLines("main", [IDX_J, ...FORMS_CHAIN_J], EMB_J, RES_J),
+  },
+  "W-FORMS-KINDS": {
+    name: "every WALK form in one module of each other module kind (.ts, .tsx, .mts, .cts, .jsx, .mjs, .cjs, .d.mts, .d.cts) in a subdirectory, each module following the next",
+    tree: kindsChain,
+    added: KIND_CHAIN.flatMap((module, index) => {
+      const declaration = /\.d\.[cm]ts$/.test(module);
+      return allFormsLines("types", [IDX_D, ...KIND_CHAIN.slice(0, index + 1)], declaration ? EMB_D : EMB_J, declaration ? RES_D : RES_J);
+    }),
+  },
+  "W-LOCAL-UNRESOLVED": {
+    name: "a starred module's local export of a class-named import from a module the tarball does not carry (read by the name the import binds)",
+    tree: (real) => appended(real, PROTOCOL_D, 'import { EmbeddedHost } from "./missing.js";', "export { EmbeddedHost };"),
+    added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D)],
+  },
+  "W-LOCAL-THEN-STAR": {
+    name: "a starred module's local export followed by an export * of the resident session module (each top-level statement after a local export is read)",
+    tree: (real) => appended(real, PROTOCOL_D, 'import { EmbeddedHost } from "./embedded.js";', "export { EmbeddedHost };", 'export * from "./resident_session.js";'),
+    added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D), walkLine("types", "star", RS, IDX_D, PROTO_D, RES_D)],
+  },
+  "W-LOCAL-EXPORT-ESC": {
+    name: "a starred module's local exports of an import binding spelled by an identifier escape and of a binding exported by one (each name read cooked)",
+    tree: (real) =>
+      appended(real, PROTOCOL_D, 'import { EmbeddedHost as \\u0045mbedded } from "./embedded.js";', 'import { ResidentSession as Session } from "./resident_session.js";', "export { Embedded, \\u0053ession };"),
+    added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D), walkLine("types", "local-import", RS, IDX_D, PROTO_D)],
+  },
+  "W-DEEP-STOP-AS": {
+    name: "a DEEP module reached by an export * as is read as an exposure and never followed: the twin's own export * of the resident module is not read",
+    tree: (real) => appended(addEntry(real, "package/dist/src/embedded.ts", 'export * from "./resident_session.js";\n'), TYPES, 'export * as zzhost from "./embedded.js";'),
+    added: [walkLine("types", "star", EH, IDX_D, "dist/src/embedded.ts")],
+  },
+  "R-OWN-DECL-DOTDOT": {
+    name: "the types entry star-exports the embedded module through the package's own name with a . and a .. segment (normalized from a declaration file)",
+    tree: (real) => appended(real, TYPES, `export * from "${SDK}/dist/./gate/../src/embedded.js";`),
+    added: [walkLine("types", "star", EH, IDX_D, EMB_D)],
+  },
+  "R-OTHER-TS-JS": {
+    name: "a .ts module (not a declaration file) star-exports the embedded module extensionless: its .js is taken",
+    tree: (real) => appended(addEntry(real, "package/dist/src/zzot.ts", 'export * from "./embedded";\n'), TYPES, 'export * from "./zzot.js";'),
+    added: [walkLine("types", "star", EH, IDX_D, "dist/src/zzot.ts", EMB_J)],
+  },
+  "R-OTHER-TS-INDEX": {
+    name: "a .ts module star-exports a directory extensionless: its /index.js is taken",
+    tree: (real) => appended(addEntry(addEntry(real, "package/dist/src/zzoi.ts", 'export * from "./zzoidir";\n'), "package/dist/src/zzoidir/index.js", 'export * from "../embedded.js";\n'), TYPES, 'export * from "./zzoi.js";'),
+    added: [walkLine("types", "star", EH, IDX_D, "dist/src/zzoi.ts", "dist/src/zzoidir/index.js", EMB_J)],
+  },
+  "W-NESTED-IMPORT": {
+    name: "an import of EmbeddedHost and its local export inside a module declaration (not top-level statements: not read)",
+    tree: (real) => appended(real, PROTOCOL_D, 'declare module "@furnace/sdk/gate" {', '  import { EmbeddedHost } from "./embedded.js";', "  export { EmbeddedHost };", "}"),
+    added: [],
+    twin: { tree: (real) => appended(real, PROTOCOL_D, 'import { EmbeddedHost } from "./embedded.js";', "export { EmbeddedHost };"), added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D)] },
+  },
+  "W-LOCAL-DEFAULT-NONDEEP": {
+    name: "a starred module's local export of a default import of a module that is not DEEP, beside one of the embedded module (only the DEEP module's binding is read)",
+    tree: (real) => appended(real, PROTOCOL_D, 'import Models from "./models.js";', 'import Host from "./embedded.js";', "export { Models, Host };"),
+    added: [walkLine("types", "local-module", EH, IDX_D, PROTO_D)],
+  },
+  "W-LOCAL-OWN-STEPS": {
+    name: "the types entry's local exports of a namespace import named through the package's own name and a default import whose specifier holds a tab (an import's specifier is read through RESOLUTION too)",
+    tree: (real) => appended(real, TYPES, `import * as embedded from "${SDK}/dist/src/embedded.js";`, 'import Host from "./embed\\tded.js";', "export { embedded, Host };"),
+    added: [walkLine("types", "local-module", EH, IDX_D), walkLine("types", "local-module", EH, IDX_D)],
+  },
+  "R-OTHER-TS-OWN": {
+    name: "a .ts module star-exports the embedded module through the package's own name (the exact path taken from a module that is not a declaration file)",
+    tree: (real) => appended(addEntry(real, "package/dist/src/zzoo.ts", `export * from "${SDK}/dist/src/embedded.js";\n`), TYPES, 'export * from "./zzoo.js";'),
+    added: [walkLine("types", "star", EH, IDX_D, "dist/src/zzoo.ts", EMB_J)],
+  },
+  "W-NAMED-PAST-ESC": {
+    name: "both protocol modules re-export a DEEP class past the entry, one by an identifier escape and one by a string export name (a named re-export read cooked in every module the WALK reaches)",
+    tree: (real) => appended(appended(real, PROTOCOL_D, 'export { \\u0045mbeddedHost as Host } from "./embedded.js";'), PROTOCOL_J, 'export { "ResidentSession" as Session } from "./resident_session.js";'),
+    added: [walkLine("types", "named", EH, IDX_D, PROTO_D), walkLine("main", "named", RS, IDX_J, PROTO_J)],
+  },
+
   // Q: the residuals' quiet rows.
   "Q-INDIRECT": {
     name: "R-INDEX-INDIRECT: a value and a type declared from the class, a default export of it, a module augmentation, a named re-export chain, a namespace import of a starring module and an import-equals, each exported",
@@ -1459,6 +1784,26 @@ const PLANTS: Readonly<Record<string, Plant>> = {
     added: [],
     twin: { tree: (real) => appended(real, EXECUTOR, shim("register()")), added: ["register identifier"] },
   },
+  "Q-SPECIFIER-CONTROL": {
+    name: "R-WALK-SPECIFIER's control-character members: specifiers holding an inner form feed, an inner vertical tab and an inner NUL, none one of RESOLUTION's drops (refusal #2 G13-R-FF-DROPPED)",
+    tree: (real) => appended(real, MAIN, 'export * from "./embed\\fded.js";', 'export * from "./embed\\vded.js";', 'export * from "./embed\\0ded.js";'),
+    added: [],
+    twin: { tree: (real) => appended(real, MAIN, 'export * from "./embed\\tded.js";'), added: [walkLine("main", "star", EH, IDX_J, EMB_J)] },
+  },
+  "Q-PATH-CONTROL": {
+    name: "R-PATH-UNREAD's kept-character members: literals holding an inner vertical tab, an inner NUL and an inner space, none one of the PATH reading's drops (refusal #2 G13-P-VT-DROPPED)",
+    tree: (real) =>
+      withFile(
+        real,
+        d1File("control"),
+        'export const vertical = import.meta.resolve("../../node_modules/@furnace/sd\\vk/dist/src/host_client.js");\nexport const nul = import.meta.resolve("../../node_modules/@furnace/sd\\0k/dist/src/host_client.js");\nexport const spaced = import.meta.resolve("../../node_modules/@furnace/sd k/dist/src/host_client.js");\n',
+      ),
+    added: [],
+    twin: {
+      tree: (real) => withFile(real, d1File("control"), 'export const vertical = import.meta.resolve("../../node_modules/@furnace/sd\\tk/dist/src/host_client.js");\n'),
+      added: [spellsLine(d1File("control"), `../../node_modules/@furnace/sd${TAB}k/dist/src/host_client.js`)],
+    },
+  },
 };
 
 // ---- rows, the roster and the frozen literals -----------------------------------------------------------------------
@@ -1502,6 +1847,11 @@ const ROWS: readonly Row[] = [
       "E1-TEXT-DOLLAR",
       "E1-TEXT-NONASCII",
       "E1-TEXT-MAIN",
+      "E1-CLAUSE-AFTER-NONDEEP",
+      "E1-NAMED-OWN-BARE",
+      "E1-TEXT-DOLLAR-AFTER",
+      "E1-TEXT-NONASCII-AFTER",
+      "E1-TEXT-BLOCK",
     ],
   },
   {
@@ -1509,7 +1859,7 @@ const ROWS: readonly Row[] = [
     from: "description",
     label: "- U2 backslash hard-break rendered reading (the refusal's U2 member).",
     judge: "u1",
-    pins: ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS", "U2-BR-SPACES", "U2-LIST", "U2-TABLE", "U2-TABLE-HEAD", "U2-HEADING", "U2-QUOTE", "U2-EMPHASIS", "U2-STRONG", "U2-LINK", "U2-HTML", "U2-HTML-INLINE", "U2-DEF", "U2-IMAGE", "U2-LIST-SECOND", "U2-TABLE-HEAD-SECOND", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND", "U2-RUNS", "U2-BR-SPACES3", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED"],
+    pins: ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS", "U2-BR-SPACES", "U2-LIST", "U2-TABLE", "U2-TABLE-HEAD", "U2-HEADING", "U2-QUOTE", "U2-EMPHASIS", "U2-STRONG", "U2-LINK", "U2-HTML", "U2-HTML-INLINE", "U2-DEF", "U2-IMAGE", "U2-LIST-SECOND", "U2-TABLE-HEAD-SECOND", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND", "U2-RUNS", "U2-BR-SPACES3", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-ITEM-NESTED", "U2-ITEM-LOOSE", "U2-ORDERED", "U2-LIST-FIRST", "U2-ITEM-FIRST", "U2-TABLE-HEAD-FIRST", "U2-TABLE-ROW-FIRST", "U2-TABLE-CELL-FIRST", "U2-QUOTE-FIRST"],
   },
   {
     id: "E-U3",
@@ -1538,7 +1888,7 @@ const ROWS: readonly Row[] = [
     from: "notes",
     label: "- U3 (LOW, rides): the unresolved-specifier family members named in the refusal - cure or state.",
     judge: "d3",
-    pins: ["S-TAB", "S-LF", "S-CR", "S-PCT", "S-PCT-NAMED", "S-QUERY-NAMED", "S-QUERY", "S-FRAGMENT", "S-BACKSLASH", "S-TAB2", "S-LF2", "S-CR2", "S-QUERY-FIRST", "S-FRAGMENT-FIRST", "S-PCT2", "S-PCT-LOWER", "S-BACKSLASH3", "S-ORDER-BSDEC", "S-ORDER-DECODE"],
+    pins: ["S-TAB", "S-LF", "S-CR", "S-PCT", "S-PCT-NAMED", "S-QUERY-NAMED", "S-QUERY", "S-FRAGMENT", "S-BACKSLASH", "S-TAB2", "S-LF2", "S-CR2", "S-QUERY-FIRST", "S-FRAGMENT-FIRST", "S-PCT2", "S-PCT-LOWER", "S-BACKSLASH3", "S-ORDER-BSDEC", "S-ORDER-DECODE", "S-DECL-STEPS", "S-DECL-FRAGMENT"],
   },
   {
     id: "W",
@@ -1609,19 +1959,51 @@ const ROWS: readonly Row[] = [
       "W-FOLLOW-DEEP",
       "W-STATEMENTS",
       "W-LOCAL-SECOND",
+      "W-LOCAL-ENTRY-TYPES",
+      "W-LOCAL-ENTRY-MAIN",
+      "W-FOLLOW-STAR-AS-PAST",
+      "W-STAR-AS-PAST",
+      "W-NAMED-DEPTH3",
+      "W-LOCAL-DEPTH3",
+      "W-LOCAL-DEFAULT-ENTRY",
+      "W-LOCAL-NS-MAIN",
+      "W-LOCAL-IMPORT-AFTER",
+      "W-LOCAL-EXPORT-AFTER",
+      "R-OWN-DECL",
+      "R-EXACT-DMTS",
+      "R-EXACT-DCTS",
+      "W-LOCAL-DEFAULT-MAIN",
+      "W-FOLLOW-STAR-AS-MAIN",
+      "W-FORMS-MAIN-PAST",
+      "W-FOLLOW-MAIN-PAST",
+      "W-DEEP-FORMS-TYPES",
+      "W-DEEP-FORMS-MAIN",
+      "W-FORMS-KINDS",
+      "W-LOCAL-UNRESOLVED",
+      "W-LOCAL-THEN-STAR",
+      "W-LOCAL-EXPORT-ESC",
+      "W-DEEP-STOP-AS",
+      "R-OWN-DECL-DOTDOT",
+      "R-OTHER-TS-JS",
+      "R-OTHER-TS-INDEX",
+      "W-NESTED-IMPORT",
+      "W-LOCAL-DEFAULT-NONDEEP",
+      "W-LOCAL-OWN-STEPS",
+      "R-OTHER-TS-OWN",
+      "W-NAMED-PAST-ESC",
     ],
   },
-  { id: "Q", from: "residuals", label: "the residuals' pinned quiet rows (RESIDUALS)", judge: "d3", pins: ["Q-INDIRECT", "Q-SPECIFIER", "Q-PATH", "Q-RENDER", "Q-REGISTER"] },
+  { id: "Q", from: "residuals", label: "the residuals' pinned quiet rows (RESIDUALS)", judge: "d3", pins: ["Q-INDIRECT", "Q-SPECIFIER", "Q-PATH", "Q-RENDER", "Q-REGISTER", "Q-SPECIFIER-CONTROL", "Q-PATH-CONTROL"] },
 ];
 /** Each quiet plant's own judge (row Q mixes the four). */
-const QUIET_JUDGE: Readonly<Record<string, JudgeId>> = { "Q-INDIRECT": "d3", "Q-SPECIFIER": "d3", "Q-PATH": "d1", "Q-RENDER": "u1", "Q-REGISTER": "d4" };
+const QUIET_JUDGE: Readonly<Record<string, JudgeId>> = { "Q-INDIRECT": "d3", "Q-SPECIFIER": "d3", "Q-PATH": "d1", "Q-RENDER": "u1", "Q-REGISTER": "d4", "Q-SPECIFIER-CONTROL": "d3", "Q-PATH-CONTROL": "d1" };
 const judgeOf = (row: Row, pin: string): JudgeId => (row.id === "Q" ? (QUIET_JUDGE[pin] ?? row.judge) : row.judge);
 
 /** The dropped item: the description's U4, answered by no row (the header's E-U4 DROPPED paragraph says why). */
 const DROPPED: Readonly<Record<string, string>> = { "E-U4": "- U4 the note contact count (UNDETERMINED at refusal; measure and pin or drop)." };
 
 /** The RESIDUALS families, each with its quiet plant (the header's RESIDUALS paragraph names the same pairs). */
-const RESIDUALS: readonly string[] = ["R-INDEX-INDIRECT:Q-INDIRECT", "R-WALK-SPECIFIER:Q-SPECIFIER", "R-PATH-UNREAD:Q-PATH", "R-RENDER-UNREAD:Q-RENDER", "R-REGISTER-UNREAD:Q-REGISTER"];
+const RESIDUALS: readonly string[] = ["R-INDEX-INDIRECT:Q-INDIRECT", "R-WALK-SPECIFIER:Q-SPECIFIER", "R-PATH-UNREAD:Q-PATH", "R-RENDER-UNREAD:Q-RENDER", "R-REGISTER-UNREAD:Q-REGISTER", "R-WALK-SPECIFIER:Q-SPECIFIER-CONTROL", "R-PATH-UNREAD:Q-PATH-CONTROL"];
 
 /**
  * For every listed sub-form of every claim part, in claim order: the plants that prove it, and its mark - a pattern each of
@@ -1631,47 +2013,47 @@ const RESIDUALS: readonly string[] = ["R-INDEX-INDIRECT:Q-INDIRECT", "R-WALK-SPE
  */
 const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[] = [
   ["walk", "the types entry", ["E1-TYPES-ESC", "D-DTS"], /^walk types /m],
-  ["walk", "the main entry", ["E1-MAIN-ESC", "D-JS"], /^walk main /m],
-  ["walk", "following an export *", ["W-FOLLOW-STAR", "G5", "W-FOLLOW-DEEP"], /^walk \S+ star \S+ via (?:\S+ -> ){2,}\S+$/m],
-  ["walk", "following an export * as", ["W-FOLLOW-STAR-AS"], /export \* as \w+ from [\s\S]*^walk \S+ star \S+ via (?:\S+ -> ){2,}\S+$/m],
-  ["walk", "a module that is not DEEP", ["W-DEEP-STOP"], /embedded\.ts: export \* from "\.\/resident_session\.js";[\s\S]*^walk types star EmbeddedHost via \S+ -> dist\/src\/embedded\.ts$/m],
-  ["walk", "top-level statements", ["W-NESTED", "W-STATEMENTS"], /declare module "[^"]+" \{\n {2}export \* from |export \* from "\.\/resident_session\.js";\nexport declare const /],
+  ["walk", "the main entry", ["E1-MAIN-ESC", "D-JS", "W-LOCAL-ENTRY-MAIN", "W-LOCAL-NS-MAIN"], /^walk main /m],
+  ["walk", "following an export *", ["W-FOLLOW-STAR", "G5", "W-FOLLOW-DEEP", "W-FOLLOW-MAIN-PAST", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS", "R-OTHER-TS-INDEX"], /^walk \S+ star \S+ via (?:\S+ -> ){2,}\S+$/m],
+  ["walk", "following an export * as", ["W-FOLLOW-STAR-AS", "W-FOLLOW-STAR-AS-PAST", "W-FOLLOW-STAR-AS-MAIN", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN"], /export \* as \w+ from [\s\S]*^walk \S+ star \S+ via (?:\S+ -> ){2,}\S+$/m],
+  ["walk", "a module that is not DEEP", ["W-DEEP-STOP", "W-DEEP-STOP-AS"], /embedded\.ts: export \* from "\.\/resident_session\.js";[\s\S]*^walk types star EmbeddedHost via \S+ -> dist\/src\/embedded\.ts$/m],
+  ["walk", "top-level statements", ["W-NESTED", "W-STATEMENTS", "W-NESTED-IMPORT", "W-LOCAL-THEN-STAR"], /declare module "[^"]+" \{\n {2}(?:export \* from |import )|export \* from "\.\/resident_session\.js";\nexport declare const |export \{ \w+ \};\nexport \* from /],
   ["walk", "comments never read", ["W-COMMENT"], /\/\/ export \* from /],
-  ["walk", "the entry itself", ["E1-TYPES-ESC", "D-DTS", "W-LOCAL-NS"], /^walk \S+ (?:named|local-import|local-module) \S+ via dist\/src\/index\.(?:d\.ts|js)$|^walk \S+ star \S+ via dist\/src\/index\.(?:d\.ts|js) -> \S+$/m],
-  ["walk", "every module it reaches", ["W-NAMED-PAST", "W-LOCAL-IMPORT", "G5", "W-FOLLOW-DEEP"], /^walk \S+ (?:named|local-import|local-module) \S+ via \S+ -> |^walk \S+ star \S+ via \S+ -> \S+ -> /m],
-  ["star", "export * of a DEEP module", ["D-DTS", "D-JS", "G1"], /export \* from "[^"]+";[\s\S]*^walk \S+ star /m],
-  ["star", "export * as of a DEEP module", ["W-STAR-AS", "G4", "G1R"], /export \* as \w+ from "[^"]+";[\s\S]*^walk \S+ star /m],
-  ["named", "export { X } from", ["E1-TYPE-DECL", "E1-UNRESOLVED", "E1-TWO", "W-NAMED-PAST"], /export (?:type )?\{[^}]+\} from [\s\S]*^walk \S+ named /m],
-  ["named", "aliased as another name", ["E1-PLAIN", "W-NAMED-PAST-ALIAS"], /export \{ \w+ as \w+ \} from /],
+  ["walk", "the entry itself", ["E1-TYPES-ESC", "D-DTS", "W-LOCAL-NS", "W-LOCAL-ENTRY-TYPES", "W-LOCAL-ENTRY-MAIN", "W-LOCAL-DEFAULT-ENTRY", "W-LOCAL-NS-MAIN", "W-LOCAL-DEFAULT-MAIN"], /^walk \S+ (?:named|local-import|local-module) \S+ via dist\/src\/index\.(?:d\.ts|js)$|^walk \S+ star \S+ via dist\/src\/index\.(?:d\.ts|js) -> \S+$/m],
+  ["walk", "every module it reaches", ["W-NAMED-PAST", "W-LOCAL-IMPORT", "G5", "W-FOLLOW-DEEP", "W-STAR-AS-PAST", "W-NAMED-DEPTH3", "W-LOCAL-DEPTH3", "W-FORMS-MAIN-PAST", "W-FOLLOW-MAIN-PAST", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS", "W-NAMED-PAST-ESC"], /^walk \S+ (?:named|local-import|local-module) \S+ via \S+ -> |^walk \S+ star \S+ via \S+ -> \S+ -> /m],
+  ["star", "export * of a DEEP module", ["D-DTS", "D-JS", "G1", "W-LOCAL-THEN-STAR", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS"], /export \* from "[^"]+";[\s\S]*^walk \S+ star /m],
+  ["star", "export * as of a DEEP module", ["W-STAR-AS", "G4", "G1R", "W-STAR-AS-PAST", "W-FORMS-MAIN-PAST", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS", "W-DEEP-STOP-AS"], /export \* as \w+ from "[^"]+";[\s\S]*^walk \S+ star /m],
+  ["named", "export { X } from", ["E1-TYPE-DECL", "E1-UNRESOLVED", "E1-TWO", "W-NAMED-PAST", "E1-CLAUSE-AFTER-NONDEEP", "W-NAMED-DEPTH3", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS"], /export (?:type )?\{[^}]+\} from [\s\S]*^walk \S+ named /m],
+  ["named", "aliased as another name", ["E1-PLAIN", "W-NAMED-PAST-ALIAS", "W-DEEP-FORMS-TYPES"], /export \{ \w+ as \w+ \} from /],
   ["named", "type-only by its declaration", ["E1-TYPE-DECL"], /export type \{ \w+ \} from /],
   ["named", "type-only by its specifier", ["E1-TYPE-SPEC"], /export \{ type \w+/],
   ["named", "an identifier", ["E1-PLAIN", "E1-TYPES-ESC"], /export \{ (?:\\u[0-9A-Fa-f]{4}|[A-Za-z])\w* as /],
-  ["named", "a string export name", ["E1-TYPES-STR", "E1-MAIN-STR-U"], /export \{ "/],
-  ["named", "an identifier escape", ["E1-TYPES-ESC", "E1-MAIN-ESC", "E1-BOTH-ESC", "E1-RESIDENT-ESC", "E1-MAIN-RES-ESC"], /export \{ [A-Za-z]*\\u/],
+  ["named", "a string export name", ["E1-TYPES-STR", "E1-MAIN-STR-U", "W-NAMED-PAST-ESC"], /export \{ "/],
+  ["named", "an identifier escape", ["E1-TYPES-ESC", "E1-MAIN-ESC", "E1-BOTH-ESC", "E1-RESIDENT-ESC", "E1-MAIN-RES-ESC", "W-NAMED-PAST-ESC"], /export \{ [A-Za-z]*\\u/],
   ["named", "a string escape", ["E1-STR-HEX", "E1-STR-BRACE", "E1-MAIN-STR-U", "E1-MAIN-STR-LC", "E1-MAIN-STR-CHAR"], /export \{ "[^"]*\\/],
-  ["named", "whatever its specifier resolves to", ["E1-UNRESOLVED", "S-PCT-NAMED", "S-QUERY-NAMED"], /\} from "[^"]*(?:missing|%|\?)[^"]*";/],
-  ["local-import", "export { x }", ["W-LOCAL-IMPORT", "W-LOCAL-TWO", "W-LOCAL-SECOND"], /^export \{ \w+(?:, \w+)* \};$[\s\S]*^walk \S+ local-import /m],
+  ["named", "whatever its specifier resolves to", ["E1-UNRESOLVED", "S-PCT-NAMED", "S-QUERY-NAMED", "E1-NAMED-OWN-BARE"], /\} from "(?:[^"]*(?:missing|%|\?)[^"]*|@furnace\/sdk|zzgate)";/],
+  ["local-import", "export { x }", ["W-LOCAL-IMPORT", "W-LOCAL-TWO", "W-LOCAL-SECOND", "W-LOCAL-ENTRY-TYPES", "W-LOCAL-ENTRY-MAIN", "W-LOCAL-DEPTH3", "W-LOCAL-IMPORT-AFTER", "W-LOCAL-EXPORT-AFTER", "W-LOCAL-UNRESOLVED", "W-LOCAL-THEN-STAR", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS"], /^export \{ \w+(?:, \w+)* \};$[\s\S]*^walk \S+ local-import /m],
   ["local-import", "aliased on export", ["W-LOCAL-ALIAS"], /^export \{ \w+ as \w+ \};$/m],
-  ["local-import", "read cooked", ["W-LOCAL-ESC"], /import \{ \\u/],
+  ["local-import", "read cooked", ["W-LOCAL-ESC", "W-LOCAL-EXPORT-ESC"], /(?:import|export) \{ [^}]*\\u/],
   ["local-import", "the import aliased", ["W-LOCAL-ALIAS", "W-LOCAL-STRING"], /import \{ (?:type )?(?:\w+|"\w+") as \w+ \}/],
   ["local-import", "a type-only import declaration", ["W-LOCAL-TYPE"], /import type \{/],
   ["local-import", "a type-only import specifier", ["W-LOCAL-TYPE-SPEC"], /import \{ type /],
   ["local-import", "a string import name", ["W-LOCAL-STRING"], /import \{ "/],
-  ["local-import", "from a module that is not DEEP", ["W-LOCAL-NONDEEP"], /import \{ \w+ \} from "\.\/models\.js";\nexport \{ \w+ \};/],
-  ["local-module", "default import of a DEEP module", ["W-LOCAL-DEFAULT", "W-LOCAL-BOTH"], /^import \w+(?:, \* as \w+)? from "\.\/embedded\.js";$/m],
-  ["local-module", "namespace import of a DEEP module", ["W-LOCAL-NS", "G3", "W-LOCAL-BOTH"], /import (?:\w+, )?\* as \w+ from "\.\/embedded\.js";/],
-  ["resolution", "every ASCII tab dropped", ["S-TAB", "S-TAB2"], /export \* from "[^"]*\\t[^"]*";/],
-  ["resolution", "every LF dropped", ["S-LF", "S-LF2"], /export \* from "[^"]*\\n[^"]*";/],
-  ["resolution", "every CR dropped", ["S-CR", "S-CR2"], /export \* from "[^"]*\\r[^"]*";/],
-  ["resolution", "a query cut off", ["S-QUERY", "S-QUERY-FIRST"], /export \* from "[^"]*\?[^"]*";/],
-  ["resolution", "a fragment cut off", ["S-FRAGMENT", "S-FRAGMENT-FIRST"], /export \* from "[^"]*#[^"]*";/],
-  ["resolution", "every %XX escape decoded", ["S-PCT", "S-PCT2", "S-PCT-LOWER", "S-ORDER-BSDEC", "S-ORDER-DECODE"], /export \* from "[^"]*%[0-9A-Fa-f]{2}[^"]*";/],
-  ["resolution", "every backslash read as /", ["S-BACKSLASH", "S-BACKSLASH3", "S-ORDER-BSDEC"], /export \* from "[^"]*(?:\\\\|%5C)[^"]*";/],
+  ["local-import", "from a module that is not DEEP", ["W-LOCAL-NONDEEP", "W-LOCAL-UNRESOLVED"], /import \{ \w+ \} from "\.\/(?:models|missing)\.js";\nexport \{ \w+ \};/],
+  ["local-module", "default import of a DEEP module", ["W-LOCAL-DEFAULT", "W-LOCAL-BOTH", "W-LOCAL-DEFAULT-ENTRY", "W-LOCAL-DEFAULT-MAIN", "W-FORMS-MAIN-PAST", "W-LOCAL-DEFAULT-NONDEEP", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS"], /^import \w+(?:, \* as \w+)? from "\.\.?\/embedded\.js";$/m],
+  ["local-module", "namespace import of a DEEP module", ["W-LOCAL-NS", "G3", "W-LOCAL-BOTH", "W-LOCAL-NS-MAIN", "W-FORMS-MAIN-PAST", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS", "W-LOCAL-OWN-STEPS"], /import (?:\w+, )?\* as \w+ from "(?:\.\.?\/|@furnace\/sdk\/dist\/src\/)(?:embedded|resident_session)\.js";/],
+  ["resolution", "every ASCII tab dropped", ["S-TAB", "S-TAB2", "S-DECL-STEPS", "W-LOCAL-OWN-STEPS"], /(?:export \* |import [^;\n]*? )from "[^"]*\\t[^"]*";/],
+  ["resolution", "every LF dropped", ["S-LF", "S-LF2", "S-DECL-STEPS"], /export \* from "[^"]*\\n[^"]*";/],
+  ["resolution", "every CR dropped", ["S-CR", "S-CR2", "S-DECL-STEPS"], /export \* from "[^"]*\\r[^"]*";/],
+  ["resolution", "a query cut off", ["S-QUERY", "S-QUERY-FIRST", "S-DECL-STEPS"], /export \* from "[^"]*\?[^"]*";/],
+  ["resolution", "a fragment cut off", ["S-FRAGMENT", "S-FRAGMENT-FIRST", "S-DECL-FRAGMENT"], /export \* from "[^"]*#[^"]*";/],
+  ["resolution", "every %XX escape decoded", ["S-PCT", "S-PCT2", "S-PCT-LOWER", "S-ORDER-BSDEC", "S-ORDER-DECODE", "S-DECL-STEPS"], /export \* from "[^"]*%[0-9A-Fa-f]{2}[^"]*";/],
+  ["resolution", "every backslash read as /", ["S-BACKSLASH", "S-BACKSLASH3", "S-ORDER-BSDEC", "S-DECL-STEPS"], /export \* from "[^"]*(?:\\\\|%5C)[^"]*";/],
   ["resolution", "relative", ["D-DTS", "D-JS"], /export \* from "\.\//],
   ["resolution", "joined to the naming module's directory", ["R-JOINED", "R-NONE-INDEX-TS", "R-JS-INDEX"], /export \* from "\.\.\//],
-  ["resolution", "the package's own name", ["R-OWN"], /export \* from "@furnace\/sdk\//],
-  ["resolution", ". segments dropped", ["R-OWN-DOT", "R-OWN-DOT2"], /export \* from "[^"]*\/\.\/[^"]*";/],
-  ["resolution", ".. segments resolved", ["R-OWN-DOTDOT", "R-OWN-DOTDOT2"], /export \* from "@furnace\/sdk\/[^"]*\/\.\.\/[^"]*";/],
+  ["resolution", "the package's own name", ["R-OWN", "R-OWN-DECL", "R-OWN-DECL-DOTDOT", "R-OTHER-TS-OWN", "W-LOCAL-OWN-STEPS"], /(?:export \*|import [^;\n]*?) from "@furnace\/sdk\//],
+  ["resolution", ". segments dropped", ["R-OWN-DOT", "R-OWN-DOT2", "R-OWN-DECL-DOTDOT"], /export \* from "[^"]*\/\.\/[^"]*";/],
+  ["resolution", ".. segments resolved", ["R-OWN-DOTDOT", "R-OWN-DOTDOT2", "R-OWN-DECL-DOTDOT"], /export \* from "@furnace\/sdk\/[^"]*\/\.\.\/[^"]*";/],
   [
     "resolution",
     "in order",
@@ -1693,12 +2075,12 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
     ],
     /package\/dist\/src\/(zz\w+)[./][\w./]*: [\s\S]*package\/dist\/src\/\1[./]|via \S+ -> dist\/src\/embedded\.ts$/m,
   ],
-  ["resolution", "an exact TypeScript path", ["R-EXACT-DTS", "R-EXACT-TS"], /export \* from "[^"]*\.(?:d\.)?[cm]?tsx?";/],
+  ["resolution", "an exact TypeScript path", ["R-EXACT-DTS", "R-EXACT-TS", "R-EXACT-DMTS", "R-EXACT-DCTS"], /export \* from "[^"]*\.(?:d\.)?[cm]?tsx?";/],
   ["resolution", "an exact .ts", ["R-EXACT-TS"], /export \* from "[^"]*(?<!\.d)\.ts";/],
   ["resolution", "an exact .tsx", ["R-EXACT-TSX"], /export \* from "[^"]*\.tsx";/],
   ["resolution", "an exact .mts", ["R-EXACT-MTS"], /export \* from "[^"]*(?<!\.d)\.mts";/],
   ["resolution", "an exact .cts", ["R-EXACT-CTS"], /export \* from "[^"]*(?<!\.d)\.cts";/],
-  ["resolution", "a declaration file's own path", ["R-EXACT-DTS"], /export \* from "[^"]*\.d\.ts";/],
+  ["resolution", "a declaration file's own path", ["R-EXACT-DTS", "R-EXACT-DMTS", "R-EXACT-DCTS"], /export \* from "[^"]*\.d\.[cm]?ts";/],
   ["resolution", "a .js path", ["R-JS-TS", "G1", "R-ORD-TS-TSX"], /export \* from "[^"]*\.js";[\s\S]*^walk \S+ star \S+ via \S+ -> \S+(?<!\.d)\.ts(?: |$)/m],
   ["resolution", "then its .tsx", ["R-JS-TSX", "G2", "R-ORD-TS-TSX"], /export \* from "[^"]*\.js";[\s\S]*\.tsx: /],
   ["resolution", "then its .d.ts twin", ["R-JS-DTS", "D-DTS", "R-ORD-TSX-DTS"], /export \* from "[^"]*\.js";[\s\S]*(?<!\/index)\.d\.ts(?:: |$)/m],
@@ -1715,8 +2097,8 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["resolution", "its /index.tsx", ["R-NONE-INDEX-TSX", "R-ORD-NONE-INDEX-TSX", "R-ORD-NONE-INDEX-DTS"], /export \* from "\.\/\w+";[\s\S]*\/index\.tsx(?:: |$)/m],
   ["resolution", "its /index.d.ts", ["R-JOINED", "R-ORD-NONE-INDEX-DTS"], /export \* from "\.\/\w+";[\s\S]*\/index\.d\.ts(?:: |$)/m],
   ["resolution", "the exact path", ["D-JS", "D-JSX"], /^walk main star \S+ via dist\/src\/index\.js -> dist\/src\/embedded\.jsx?$/m],
-  ["resolution", "then its .js", ["R-JS-JS", "D-NOEXT"], /^export \* from "\.\/\w+";$[\s\S]*^walk main /m],
-  ["resolution", "then its /index.js", ["R-JS-INDEX", "R-ORD-JS-INDEX"], /package\/dist\/src\/\w+\/index\.js: /],
+  ["resolution", "then its .js", ["R-JS-JS", "D-NOEXT", "R-OTHER-TS-JS"], /^export \* from "\.\/\w+";$[\s\S]*^walk main |\.ts: export \* from "\.\/\w+";\n[\s\S]*-> dist\/src\/embedded\.js$/m],
+  ["resolution", "then its /index.js", ["R-JS-INDEX", "R-ORD-JS-INDEX", "R-OTHER-TS-INDEX"], /package\/dist\/src\/\w+\/index\.js: /],
   ["deep", "its one module extension", ["D-NOEXT", "D-MULTI"], /package\/dist\/src\/embedded(?:\.js\.d\.ts)?: /],
   ["deep", "a .d.ts", ["D-DTS"], / -> dist\/src\/embedded\.d\.ts$/m],
   ["deep", "a .d.mts", ["D-DMTS"], / -> dist\/src\/embedded\.d\.mts$/m],
@@ -1735,15 +2117,15 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["text", "the types entry's", ["E1-PLAIN", "E1-TEXT-COMMENT"], /^text types /m],
   ["text", "the main entry's", ["E1-TEXT-MAIN"], /^text main /m],
   ["text", "a name in its code", ["E1-PLAIN", "E1-TYPES-STR"], /^export [^\n]*EmbeddedHost[^\n]*$[\s\S]*^text types EmbeddedHost$/m],
-  ["text", "a name in a comment", ["E1-TEXT-COMMENT", "E1-TEXT-MAIN"], /^\/\/ \w+ stays a deep import$[\s\S]*^text \w+ \w+$/m],
+  ["text", "a name in a comment", ["E1-TEXT-COMMENT", "E1-TEXT-MAIN", "E1-TEXT-BLOCK"], /^(?:\/\/ \w+ stays a deep import|\/\* \w+ stays a deep import \*\/)$[\s\S]*^text \w+ \w+$/m],
   ["text", "escape sequences never decoded", ["E1-TEXT-ESCAPE", "E1-TYPES-ESC"], /\\u0045mbeddedHost/],
   ["text", "an ASCII letter", ["E1-TEXT-LONGER", "E1-TEXT-WORDCHARS"], /[A-Za-z]EmbeddedHost|EmbeddedHost[A-Za-z]/],
   ["text", "a digit", ["E1-TEXT-WORDCHARS"], /\dEmbeddedHost|EmbeddedHost\d/],
   ["text", "an underscore", ["E1-TEXT-WORDCHARS"], /_EmbeddedHost|EmbeddedHost_/],
   ["text", "just before it", ["E1-TEXT-WORDCHARS"], /\wEmbeddedHost/],
   ["text", "just after it", ["E1-TEXT-LONGER", "E1-TEXT-WORDCHARS"], /EmbeddedHost\w/],
-  ["text", "a $", ["E1-TEXT-DOLLAR"], /\$EmbeddedHost[\s\S]*^text types EmbeddedHost$/m],
-  ["text", "a non-ASCII letter", ["E1-TEXT-NONASCII"], /\u00e9EmbeddedHost[\s\S]*^text types EmbeddedHost$/m],
+  ["text", "a $", ["E1-TEXT-DOLLAR", "E1-TEXT-DOLLAR-AFTER"], /(?:\$EmbeddedHost|EmbeddedHost\$)[\s\S]*^text types EmbeddedHost$/m],
+  ["text", "a non-ASCII letter", ["E1-TEXT-NONASCII", "E1-TEXT-NONASCII-AFTER"], /(?:\u00e9EmbeddedHost|EmbeddedHost\u00e9)[\s\S]*^text types EmbeddedHost$/m],
   ["path", "every ASCII tab dropped", ["P-RESOLVE-TAB", "P-URL-TAB", "P-HOLDS-PATH", "P-TAB2"], /"[^"\n]*\\t[^"\n]*"/],
   ["path", "every LF dropped", ["P-RESOLVE-LF", "P-LF2"], /"[^"\n]*\\n[^"\n]*"/],
   ["path", "every CR dropped", ["P-RESOLVE-CR", "P-CR2"], /"[^"\n]*\\r[^"\n]*"/],
@@ -1762,18 +2144,18 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["render", "every run one space", ["U2-RUNS"], /re-packaged {2,}on 2026-11-01\n\(wb-zby\) from Furnace \t revision/],
   ["render", "a backslash before a line ending", ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS"], /\\\n/],
   ["render", "two or more spaces before a line ending", ["U2-BR-SPACES", "U2-BR-SPACES3"], /\S {2,}\n/],
-  ["render", "a list", ["U2-LIST", "U2-LIST-SECOND"], /^- /m],
-  ["render", "its items' tokens", ["U2-LIST-SECOND"], /^- other\n- furnace-sdk-0\.2\.0\.tgz /m],
+  ["render", "a list", ["U2-LIST", "U2-LIST-SECOND", "U2-ORDERED", "U2-LIST-FIRST"], /^(?:- |\d+\. )/m],
+  ["render", "its items' tokens", ["U2-LIST-SECOND", "U2-ITEM-NESTED", "U2-ITEM-LOOSE", "U2-ORDERED", "U2-ITEM-FIRST"], /^(?:- other\n(?:- | {2}- |\n {2})|1\. other\n2\. )furnace-sdk-0\.2\.0\.tgz |^- furnace-sdk-0\.2\.0\.tgz [^\n]*\n {2}- other$/m],
   ["render", "a table", ["U2-TABLE", "U2-TABLE-HEAD"], /^\| --- \|$/m],
-  ["render", "header cells' tokens", ["U2-TABLE-HEAD", "U2-TABLE-HEAD-SECOND"], /^\|[^\n]*furnace-sdk-0\.2\.0\.tgz[^\n]*\|\n\| --- /m],
-  ["render", "row cells' tokens", ["U2-TABLE", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND"], /^\| --- [^\n]*\n(?:\|[^\n]*\n)*\|[^\n]*furnace-sdk-0\.2\.0\.tgz/m],
+  ["render", "header cells' tokens", ["U2-TABLE-HEAD", "U2-TABLE-HEAD-SECOND", "U2-TABLE-HEAD-FIRST"], /^\|[^\n]*furnace-sdk-0\.2\.0\.tgz[^\n]*\|\n\| --- /m],
+  ["render", "row cells' tokens", ["U2-TABLE", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND", "U2-TABLE-ROW-FIRST", "U2-TABLE-CELL-FIRST"], /^\| --- [^\n]*\n(?:\|[^\n]*\n)*\|[^\n]*furnace-sdk-0\.2\.0\.tgz/m],
   ["render", "a paragraph", ["U2-EMPHASIS", "U2-STRONG", "U2-LINK"], /vendor\/README\.md: \nfurnace-sdk-0\.2\.0\.tgz was /],
   ["render", "a heading", ["U2-HEADING"], /^## furnace-sdk/m],
-  ["render", "a blockquote", ["U2-QUOTE", "U2-QUOTE-SECOND"], /^> /m],
+  ["render", "a blockquote", ["U2-QUOTE", "U2-QUOTE-SECOND", "U2-QUOTE-FIRST"], /^> /m],
   ["render", "emphasis", ["U2-EMPHASIS", "U2-BR-EMPHASIS", "U2-EMPHASIS-NESTED"], /(?<![*_])[*_]re-/],
   ["render", "strong text", ["U2-STRONG", "U2-STRONG-NESTED"], /(?:\*\*|__)re-/],
   ["render", "a link", ["U2-LINK", "U2-LINK-NESTED"], /\[re-[^\]]*\]\(https:\/\/example\.invalid\/r\)/],
-  ["render", "by those tokens", ["U2-EMPHASIS", "U2-HEADING", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED"], /[*_]re-|\[re-|^> other$/m],
+  ["render", "by those tokens", ["U2-EMPHASIS", "U2-HEADING", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-QUOTE-FIRST"], /[*_]re-|\[re-|^> other$/m],
   ["render", "raw HTML", ["U2-HTML", "U2-HTML-INLINE"], /<!-- |<b>/],
   ["render", "an HTML block", ["U2-HTML"], /^<!-- /m],
   ["render", "inline HTML", ["U2-HTML-INLINE"], /<b>\(wb-zby\)<\/b>/],
@@ -1792,7 +2174,7 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
 ];
 
 /** Each row's id and pin count, frozen at this cut (PAGES' key order, every plant in ROWS order, freezes the pin ids). */
-const FROZEN_SHAPE = ["E-U1:23", "E-U2:26", "E-U3:31", "F-U1:20", "F-U2:11", "F-U3:19", "W:63", "Q:5"] as const;
+const FROZEN_SHAPE = ["E-U1:28", "E-U2:35", "E-U3:31", "F-U1:20", "F-U2:11", "F-U3:21", "W:95", "Q:7"] as const;
 /** The header labels of the claim parts' paragraphs, in CLAIM_PARTS order. */
 const CLAIM_LABELS: Readonly<Record<string, string>> = {
   walk: "WALK",
@@ -1839,6 +2221,11 @@ const PAGES: Readonly<Record<string, string>> = {
   "E1-TEXT-DOLLAR": "90da3335898579c3",
   "E1-TEXT-NONASCII": "8cbcdae7e7077007",
   "E1-TEXT-MAIN": "0ccc856a6a130381",
+  "E1-CLAUSE-AFTER-NONDEEP": "476f126f897d1a28",
+  "E1-NAMED-OWN-BARE": "4d794607971c8b9f",
+  "E1-TEXT-DOLLAR-AFTER": "42e37a4d25c10e8d",
+  "E1-TEXT-NONASCII-AFTER": "a7673c3578ffc207",
+  "E1-TEXT-BLOCK": "1a24a8c53b434102",
   "U2-BR-WBZBY": "43d19beaa985f656",
   "U2-BR-REVISION": "f9c449db53aafc83",
   "U2-BR-EMPHASIS": "abe2a5dc34144781",
@@ -1865,6 +2252,15 @@ const PAGES: Readonly<Record<string, string>> = {
   "U2-EMPHASIS-NESTED": "3f32bdb3aea2c255",
   "U2-STRONG-NESTED": "f5dbc56cfb315cce",
   "U2-LINK-NESTED": "3358ae5eefd558a5",
+  "U2-ITEM-NESTED": "80df8a08b11473f2",
+  "U2-ITEM-LOOSE": "ac98d0f5fd1de2fe",
+  "U2-ORDERED": "34ba69bbd22734ed",
+  "U2-LIST-FIRST": "d8f5ae44cea3bd94",
+  "U2-ITEM-FIRST": "192abf008b84032a",
+  "U2-TABLE-HEAD-FIRST": "4dc987e95f1eb51e",
+  "U2-TABLE-ROW-FIRST": "aaaa7e62315b602d",
+  "U2-TABLE-CELL-FIRST": "8c2656f945627dc3",
+  "U2-QUOTE-FIRST": "5db07fa25482b0b0",
   "P-RESOLVE-TAB": "a8ca4f775c04c596",
   "P-RESOLVE-LF": "95699034de8657d8",
   "P-RESOLVE-CR": "7f8f5bc711533181",
@@ -1946,6 +2342,8 @@ const PAGES: Readonly<Record<string, string>> = {
   "S-BACKSLASH3": "093516c4a471f801",
   "S-ORDER-BSDEC": "ce83acc256948224",
   "S-ORDER-DECODE": "ab0f5a7cc83e2b29",
+  "S-DECL-STEPS": "97d29609f3a3b834",
+  "S-DECL-FRAGMENT": "19de9e778714282d",
   "W-STAR-AS": "898c640c15f3a59a",
   "W-FOLLOW-STAR": "5edbb2ef10259307",
   "W-FOLLOW-STAR-AS": "e2d926fdc7301aeb",
@@ -2009,11 +2407,45 @@ const PAGES: Readonly<Record<string, string>> = {
   "W-FOLLOW-DEEP": "669b55608911eb14",
   "W-STATEMENTS": "30525a58473202c7",
   "W-LOCAL-SECOND": "a8ba2dde6c8b29cb",
+  "W-LOCAL-ENTRY-TYPES": "a238b0c30389a29f",
+  "W-LOCAL-ENTRY-MAIN": "28f4d74dd66973c5",
+  "W-FOLLOW-STAR-AS-PAST": "45591ecd0e3f0529",
+  "W-STAR-AS-PAST": "cc0aacf8b9b365a6",
+  "W-NAMED-DEPTH3": "8d5e7e7934c02cd6",
+  "W-LOCAL-DEPTH3": "988887f333d74376",
+  "W-LOCAL-DEFAULT-ENTRY": "f7463343aaf9c23f",
+  "W-LOCAL-NS-MAIN": "df3d4a3cf190ded2",
+  "W-LOCAL-IMPORT-AFTER": "59ac00003b2d614d",
+  "W-LOCAL-EXPORT-AFTER": "6faec8c5997af442",
+  "R-OWN-DECL": "f15beaa437fe387d",
+  "R-EXACT-DMTS": "4f61d8ad78bfb5e4",
+  "R-EXACT-DCTS": "a235a60433c5c32d",
+  "W-LOCAL-DEFAULT-MAIN": "9af8be2f36310070",
+  "W-FOLLOW-STAR-AS-MAIN": "9a15593f10e7978f",
+  "W-FORMS-MAIN-PAST": "ba8ce984ed44aac5",
+  "W-FOLLOW-MAIN-PAST": "56a0d704ee7a2a5c",
+  "W-DEEP-FORMS-TYPES": "292993bfa877bb96",
+  "W-DEEP-FORMS-MAIN": "c43b9a535186d198",
+  "W-FORMS-KINDS": "66a6a254ebc49780",
+  "W-LOCAL-UNRESOLVED": "633017ecc74cfc45",
+  "W-LOCAL-THEN-STAR": "ee84d11dcb4e0d8f",
+  "W-LOCAL-EXPORT-ESC": "fbd2c8bae06fdbbd",
+  "W-DEEP-STOP-AS": "438fffeee2be8e1f",
+  "R-OWN-DECL-DOTDOT": "58bc02fc5f9e8166",
+  "R-OTHER-TS-JS": "e7873c0e9e85069c",
+  "R-OTHER-TS-INDEX": "8ed2c719337eb62a",
+  "W-NESTED-IMPORT": "c8f8b3ae54e64720",
+  "W-LOCAL-DEFAULT-NONDEEP": "4814f708139e0335",
+  "W-LOCAL-OWN-STEPS": "badd6c22e3e2e34a",
+  "R-OTHER-TS-OWN": "aa8882c785612fb3",
+  "W-NAMED-PAST-ESC": "60423e857291badb",
   "Q-INDIRECT": "d9b14d62cbf925b1",
   "Q-SPECIFIER": "f4e476325adeb73f",
   "Q-PATH": "66eb94d9cf0dc889",
   "Q-RENDER": "e357eb9aebb9e45c",
   "Q-REGISTER": "a699b95ca45fa1b8",
+  "Q-SPECIFIER-CONTROL": "876b4b6fe5e61852",
+  "Q-PATH-CONTROL": "096f476041a1fd31",
 };
 
 const REAL = readTree();
