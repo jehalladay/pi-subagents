@@ -23,7 +23,24 @@
  * image alt, a definition, a raw HTML element, struck text, a footnote label, an HTML block or a comment across blank lines
  * as unqualified, and markup a reader sees through - link text, a code span, an escape, emphasis - as qualifying); F4 the
  * anchored-element binding (OUTSIDE ANCHORS) reds a re-tiling that folds a pin into a neighbour (G-MERGE and its siblings);
- * F5 stays NOT CLAIMED below (no outside anchor in this census's scope names the residual families).
+ * F5 stayed NOT CLAIMED at that cut (no outside anchor named the residual families); wb-ubhh's RESIDUAL ANCHOR below cures it.
+ *
+ * wb-ubhh (the R694 follow-up of landing 442, gate cmd_2514e41685b1: its F5 leads, its F6 and F7 ride and are cured here, its F4
+ * rides and stays NOT CLAIMED below). RESIDUAL ANCHOR (F5): the residual families are anchored OUTSIDE this census's two files,
+ * in docs/14's "MW workflow-composition citation-status census residuals" table, the wb-64x.1 form (Quiet row | Residual family
+ * | Exemplar | Clear form | Clear form reads). Its own case, registered third, reads that section from marked's tokens of the
+ * page: the page's one heading of that text, a top-level level-2 heading under the docs/14 title with no other level-1 heading
+ * before it, bounded at the next level-1 or level-2 heading or EOF, exactly an intro paragraph and one table of those columns, no
+ * raw HTML, each exemplar and clear form a whole-cell code span (`\n` a line break). Its rows are held to RESIDUALS and to the Q
+ * row's pins, in order and both ways, so a family removed from ROWS, the literal, IMPL, RESIDUALS and the roster together
+ * (landing 442's G-CT6-Q4, the CT6 coordinated hollow) reds against the row docs/14 keeps. F7: each row binds its family to its
+ * quiet row's probe - the probe the pin's own case returns carries the exemplar exactly once and reads quiet, and with the
+ * exemplar replaced by the clear form it reads the causes the table gives - so a quiet case swapped together with its roster
+ * witness to another family's probe (X22-QUIET-SWAP-COORD) reds; R-SCOPE's probe is Q1's outside list, one path a line, read
+ * as the clause (a) scopes whose roots would list each path. The section's units cite nothing (judged in the same case), and
+ * its rows as read at this cut are a frozen literal there, so a docs-side edit the judge still accepts reds too. F6: A5's
+ * footnote-definition control holds a status that only a footnote definition line inside the citing unit carries as
+ * unqualified, pinning FOOTNOTE.definition (the gate's M22-FOOTNOTE-DEF-NEVER).
  *
  * MEASURED (read-only, by the cutting seat, 2026-10-23, at this census's base caad951). Producer (the local MechanicalWorkflows
  * checkout at 5ce2a07f891f, git show / ls-tree; the roster's producer block holds the lines and blobs, the hermetic census
@@ -38,7 +55,8 @@
  * line spells CACWorkflowCompositionV0 or a bridge checker - so clause (a) passes empty today, as filed. The adapter subject's
  * spelling occurs twice, never in a citing unit: "the Pi adapter itself never retries" (TRACEABILITY.md:260) and "the Pi
  * adapter never retries" (feature-matrix.md:174), both the Furnace-hosted adapter. At the filing pin d75b68d the lists hold 25,
- * 39 and 115 files and no unit cites the program. No docs, src or tracker text is edited by this cut.
+ * 39 and 115 files and no unit cites the program. No docs, src or tracker text is edited by the wb-kku9.2 cut
+ * (wb-ubhh's cut adds docs/14's residual section, which cites nothing).
  *
  * THE UNITS. A unit is the smallest text the judges read as one "paragraph". Markdown (every docs/workbench file is .md): a
  * blank-line-delimited block, where a heading, a table row and each line inside a code fence are units of their own and a
@@ -82,8 +100,9 @@
  * src type declaration flags as code); B3 the mutant committed into a scratch git repository (test/helpers/scratch.ts, leak
  * guard installed) at a path of each clause (a) scope, read through readScope's own git listing: each scope flags it, and the
  * qualified twin is quiet. C, clause (c): C1 the condition (docs/07's one level-2 heading naming MechanicalWorkflows, its
- * section read; wb-klr7's clause (c) text read from the tracker export; a planted sentence in the live section is the only
- * citing unit); C2 the status duty over the live section and its plants; C3 the binding duty: every citing unit of the section
+ * section read; wb-klr7's clause (c) text read from the tracker export; the condition is MET since wb-klr7's cut: the live
+ * section's one citing unit is wb-klr7's clause (c) sentence, held verbatim by the docs07 census, and a planted sentence cites
+ * beside it and nothing else in the section does); C2 the status duty over the live section and its plants; C3 the binding duty: every citing unit of the section
  * is held verbatim in test/workbench-docs07-provider-rules.census.ts (read live; a planted bound twin is quiet). E, the
  * statement's second duty, one pin per subject: E1 CACWorkflowCompositionV0, E2 a bridge checker, E3 a Pi MW adapter - each
  * the existence judge on its controls (the filing's quoted MW facts quiet) and a docs walk judging its planted claim. Q, the
@@ -104,16 +123,19 @@
  * and the census's scopes, clause (c)'s wb-klr7 sentence and holder, row E's three subjects - so a re-tiling that folds a pin
  * into a neighbour in every literal and the roster reds whenever the folded quote names one (G-MERGE: A6 into A5). The last
  * case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin
- * reached its witness compare, and each compare's own result).
- * NOT CLAIMED (edits of this file and the roster together): a residual row removed from ROWS, the literal, IMPL, RESIDUALS and
- * the roster (no outside anchor names the residual families: landing 343's F5, CT6 on Q4, measured 30/30 at this cut - an
- * external anchor would be a docs table outside this census's two files, the wb-64x.1 form); a re-tiling that folds A7 ("in
- * the same paragraph") or C2 ("it carries the status verbatim"), the two quotes naming no anchored element, into a neighbour
- * in every literal and the roster (measured 30/30 at this cut); a control removed from IMPL and the roster together while
- * every remaining control holds; a plant edited in IMPL and the roster together; a floor lowered in FLOORS and the roster
- * together (git's list equal to the filesystem walk stays the narrowing guard); a seat-added vocabulary member (of EXISTS,
- * GUARD or the negation lists) removed with every control naming it, in IMPL and the roster together (only the bead text's
- * words are anchored outside); the outside-anchor case or the closing case removed with its roster title.
+ * reached its witness compare, and each compare's own result). RESIDUAL ANCHOR (its own registered case, wb-ubhh above): docs/14's
+ * residual table holds every residual family with its quiet row, an exemplar of its probe and a clear form.
+ * NOT CLAIMED (edits of this file and the roster together, unless named otherwise): a re-tiling that folds A7 ("in the same
+ * paragraph") or C2 ("it carries the status verbatim"), the two quotes naming no anchored element, into a neighbour in every
+ * literal and the roster (landing 442's F4: measured 30/30 at wb-3cql's cut; not re-measured by wb-ubhh); a control removed from
+ * IMPL and the roster together while every remaining control holds; a plant edited in IMPL and the roster together; a floor
+ * lowered in FLOORS and the roster together (git's list equal to the filesystem walk stays the narrowing guard); a seat-added
+ * vocabulary
+ * member (of EXISTS, GUARD or the negation lists) removed with every control naming it, in IMPL and the roster together (only
+ * the bead text's words are anchored outside); a residual probe rewritten in IMPL and the roster to another text that still
+ * carries its row's exemplar once, reads quiet and reads the table's causes under its clear form; a residual family or its row
+ * edited in this file, the roster and docs/14 together; the outside-anchor case, the residual-anchor case or the closing case
+ * removed with its roster title.
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE clause (a)'s union only - qa/, test/, the root pages and docs/
  * outside docs/workbench are not judged (Q1); R-REQUIREMENT-ID a unit whose only matches sit in a requirement-id spelling
  * (MW-CAC-WORKFLOW-COMPOSITION-R2) does not cite (Q2); R-PARAPHRASE-CITE a citation spelling none of the program's words in
@@ -123,7 +145,8 @@
  * subject and its predicate in different clauses (a pronoun across a sentence end) are not read (Q7); R-SUBJECT-SPELLING a
  * subject spelled outside SUBJECTS is not read (Q8); R-SPLIT-SOURCE a src citation split across a string concatenation is not
  * read (Q9); R-ESCAPED-SPELLING a markdown-escaped or entity-spelled needle does not cite (Q10); R-DOCUMENT-SCOPE an existence
- * claim in a unit that does not cite is not judged, even in a document that cites elsewhere (Q11).
+ * claim in a unit that does not cite is not judged, even in a document that cites elsewhere (Q11). Each family is also a row of
+ * docs/14's residual table (RESIDUAL ANCHOR).
  * SCOPE: the judges read words, not meaning. OVER-READS (disclosed; none today): a citing paragraph whose only status is a
  * paraphrase ("design only", a README.md:21 fragment) flags; a "Pi adapter" in a citing unit reads as the Pi MW adapter; a
  * code symbol that merely names the program (a status constant) flags as code; a status carried only by a heading or a
@@ -783,6 +806,78 @@ function tiles(clause: string, quotes: readonly string[]): boolean {
   return /^[\s,;:()]*$/.test(clause.slice(at));
 }
 
+/**
+ * RESIDUAL ANCHOR (wb-ubhh, landing 442's F5 and F7): docs/14's residual table, the residual families' anchor outside this
+ * census's two files (the wb-64x.1 form). Each row names a quiet row, its family, an exemplar its probe carries exactly once, a
+ * clear form that undoes the family, and what the probe reads with the exemplar replaced by the clear form.
+ */
+const RESIDUAL_DOC = "docs/workbench/14-qa-and-benchmarks.md";
+const RESIDUAL_DOC_TITLE = `14 ${String.fromCodePoint(0x2014)} Test strategy, conformance suite, benchmark and adversarial controls`;
+const RESIDUAL_HEADING = "MW workflow-composition citation-status census residuals";
+const RESIDUAL_COLUMNS: readonly string[] = ["Quiet row", "Residual family", "Exemplar", "Clear form", "Clear form reads"];
+const RESIDUAL_ANCHOR_TITLE =
+  "the residual anchor: docs/14's residual table names exactly the residual families and their quiet rows, each row's exemplar is its quiet row's probe's, and its clear form reads what the table says";
+interface AnchorRow {
+  readonly pin: string;
+  readonly family: string;
+  readonly exemplar: string;
+  readonly clear: string;
+  readonly reads: string;
+}
+const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
+/** A token list's tokens, nested ones (list items, quotes, table cells) included. */
+function allTokens(tokens: readonly Token[]): Token[] {
+  return tokens.flatMap(token => [token, ...allTokens(childrenOf(token)), ...(isTable(token) ? [...token.header, ...token.rows.flat()].flatMap(cell => allTokens(cell.tokens)) : [])]);
+}
+/** A whole-cell code span's text as written: an exemplar or a clear form is literal source text (`\n` a line break). */
+function codeCell(cell: Tokens.TableCell | undefined): string | undefined {
+  const only = cell?.tokens.length === 1 ? cell.tokens[0] : undefined;
+  return only?.type === "codespan" ? textField(only) : undefined;
+}
+/** docs/14's residual section: its shape faults, its rows (cells as written) and its source text. */
+function residualAnchor(markdown: string): { readonly shape: readonly string[]; readonly rows: readonly AnchorRow[]; readonly raw: string } {
+  const tokens = marked.lexer(markdown);
+  const named = allTokens(tokens).filter(token => isHeading(token) && token.text === RESIDUAL_HEADING);
+  const heading = named.length === 1 ? named[0] : undefined;
+  const start = heading !== undefined && isHeading(heading) && heading.depth === 2 ? tokens.indexOf(heading) : -1;
+  if (start < 0) return { shape: [`${RESIDUAL_DOC} holds exactly one top-level level-2 heading '${RESIDUAL_HEADING}'`], rows: [], raw: "" };
+  const shape: string[] = [];
+  const title = tokens.find(isHeading);
+  if (title === undefined || title.depth !== 1 || title.text !== RESIDUAL_DOC_TITLE) shape.push("the page opens with the docs/14 title");
+  if (tokens.slice(0, start).some(token => isHeading(token) && token.depth === 1 && token !== title)) shape.push("no other level-1 heading stands before the residual section");
+  const after = tokens.slice(start + 1);
+  const end = after.findIndex(token => isHeading(token) && token.depth <= 2);
+  const section = end < 0 ? after : after.slice(0, end);
+  const raw = section.map(token => token.raw).join("");
+  if (allTokens(section).some(token => token.type === "html")) shape.push("the residual section holds no raw HTML");
+  const blocks = section.filter(token => token.type !== "space");
+  const table = blocks[1];
+  if (blocks.length !== 2 || blocks[0]?.type !== "paragraph" || table === undefined || !isTable(table)) return { shape: [...shape, "the residual section is exactly its intro paragraph and one table"], rows: [], raw };
+  const columns = table.header.map(cell => cell.text.trim());
+  if (!isDeepStrictEqual(columns, RESIDUAL_COLUMNS)) shape.push(`the residual table's columns are ${RESIDUAL_COLUMNS.join(" | ")}`);
+  const rows: AnchorRow[] = [];
+  for (const [index, cells] of table.rows.entries()) {
+    const exemplar = codeCell(cells[2]);
+    const clear = codeCell(cells[3]);
+    if (cells.length !== RESIDUAL_COLUMNS.length || exemplar === undefined || clear === undefined) shape.push(`residual row ${index + 1} is five cells with a code-span exemplar and clear form`);
+    else rows.push({ pin: cells[0]?.text.trim() ?? "", family: cells[1]?.text.trim() ?? "", exemplar, clear, reads: cells[4]?.text.trim() ?? "" });
+  }
+  return { shape, rows, raw };
+}
+/** The clause (a) scopes whose roots would list a path (git's list under the root, the excluded prefix dropped). */
+function scopesListing(path: string): string[] {
+  return SCOPE_PINS.filter(pin => path.startsWith(`${SCOPES[pin].root}/`) && (SCOPES[pin].exclude === "" || !path.startsWith(SCOPES[pin].exclude))).map(pin => SCOPES[pin].word);
+}
+/** A quiet row's probe as the anchor reads it: R-SCOPE's is Q1's outside list (one path a line, read as the scopes that would list
+ * each), every other family's is its probe's text, read as its causes at its path. */
+function anchorProbe(witness: JsonValue): { readonly text: string; readonly read: (text: string) => string[] } | undefined {
+  const probe = probeOf(witness);
+  if (probe !== undefined) return { text: probe.text, read: text => causesOf(probe.path, text) };
+  if (!isObject(witness) || !Array.isArray(witness.outside)) return undefined;
+  const outside = witness.outside.filter((path): path is string => typeof path === "string");
+  return { text: outside.join("\n"), read: text => text.split("\n").flatMap(scopesListing) };
+}
+
 /** The pins that reached their witness compare, in run order, each with the compare's own result. */
 const REACHED: { pin: string; same: boolean }[] = [];
 
@@ -856,6 +951,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "element", text: `Pi reads the ${cite} program. <span hidden>design-only</span>`, causes: ["unqualified"] },
       { id: "struck", text: `${cite} is ~~design-only~~.`, causes: ["unqualified"] },
       { id: "footnote-label", text: `Pi reads the ${cite} program[^design-only].\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      // wb-ubhh F6: a footnote definition line inside the citing unit shows no carrier (FOOTNOTE.definition).
+      { id: "footnote-definition", text: `Pi reads the ${cite} program[^s].\n[^s]: design-only`, causes: ["unqualified"] },
       { id: "hidden-citation", text: `<!-- ${cite} is design-only. -->`, causes: ["unqualified"] },
       { id: "shown-link-text", text: `${cite} is [design-only](https://example.invalid).`, causes: [] },
       { id: "shown-code-span", text: `${cite} is \`design-only\`.`, causes: [] },
@@ -1004,11 +1101,16 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const plant = "Composition metadata of cac-workflow-composition-2026-10-18 (design-only) is never a source of identity.";
     const planted = `${section.body}\n${plant}\n`;
     const citing = markdownUnits(planted).filter(unit => judgeUnit(unit).cites);
+    // The condition is met (wb-klr7's cut): the live section cites in exactly one unit, wb-klr7's clause (c) sentence, which the
+    // docs07 census holds verbatim; the plant cites beside it, and no other unit of the section does.
+    const live = markdownUnits(section.body).filter(unit => judgeUnit(unit).cites).map(unit => squeezed(unit.text));
+    expect(live, "the live section cites in exactly one unit, wb-klr7's clause (c) sentence").toHaveLength(1);
+    expect(squeezed(textOf(DOCS07_CENSUS)).includes(live[0] ?? "\u0000"), "the docs07 census holds that unit verbatim").toBe(true);
     expect(
-      citing.map(unit => unit.text),
-      "the planted sentence is the section's only citing unit",
-    ).toEqual(citing.filter(unit => unit.text.includes(plant)).map(unit => unit.text));
-    expect(citing.length, "the plant cites").toBeGreaterThanOrEqual(1);
+      citing.map(unit => squeezed(unit.text)),
+      "beside the live sentence, the planted sentence is the section's only citing unit",
+    ).toEqual([...live, ...citing.filter(unit => unit.text.includes(plant)).map(unit => squeezed(unit.text))]);
+    expect(citing.filter(unit => unit.text.includes(plant)).length, "the plant cites").toBe(1);
     return json({ klr7: sentence, heading: section.heading, headings: section.headings, plantCites: citing.some(unit => unit.text.includes(plant)) });
   },
   C2: () => {
@@ -1120,6 +1222,7 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
         filingPin: FILING_PIN,
         plants: PLANTS,
         residuals: RESIDUALS,
+        residualAnchor: { doc: RESIDUAL_DOC, title: RESIDUAL_DOC_TITLE, heading: RESIDUAL_HEADING, columns: RESIDUAL_COLUMNS },
       }),
     ).toStrictEqual(ROSTER.constants);
     for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);
@@ -1222,6 +1325,53 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
     expect(String(mw.readme17).includes(facts[1] ?? "-"), "README.md:17 carries the Pi adapter fact").toBe(true);
     expect(String(mw.contracts4).includes(facts[0] ?? "-"), "01-composition-contracts.md:4 carries the bridge checker fact").toBe(true);
     expect(String(mw.contracts6).includes("CACWorkflowCompositionV0") && String(mw.contracts6).includes("as a concept only"), "01-composition-contracts.md:6 reads the type as a concept only").toBe(true);
+  });
+
+  it(RESIDUAL_ANCHOR_TITLE, { timeout: 60_000 }, () => {
+    const anchor = residualAnchor(textOf(RESIDUAL_DOC));
+    expect(anchor.shape, `${RESIDUAL_DOC}'s residual section`).toEqual([]);
+    expect(
+      anchor.rows.map(row => `${row.pin} | ${row.family}`),
+      "docs/14 names exactly the residual families, each with its quiet row, in RESIDUALS order and both ways",
+    ).toEqual(Object.entries(RESIDUALS).flatMap(([family, members]) => members.map(member => `${member} | ${family}`)));
+    expect(
+      anchor.rows.map(row => row.pin),
+      "the table's quiet rows are the Q row's pins",
+    ).toEqual([...(ROWS.find(row => row.id === "Q")?.pins ?? [])]);
+    expect(
+      markdownUnits(anchor.raw)
+        .filter(unit => judgeUnit(unit).cites)
+        .map(unit => unit.text),
+      "the residual section cites nothing: it names the families, never the program",
+    ).toEqual([]);
+    for (const row of anchor.rows) {
+      const impl = IMPL[row.pin];
+      const probe = impl === undefined ? undefined : anchorProbe(json(impl()));
+      expect(probe, `${row.pin}: its case returns a probe`).toBeDefined();
+      if (probe === undefined) continue;
+      const exemplar = row.exemplar.replaceAll("\\n", "\n");
+      const clear = row.clear.replaceAll("\\n", "\n");
+      expect(probe.text.split(exemplar).length - 1, `${row.pin} (${row.family}): its probe carries the exemplar exactly once`).toBe(1);
+      expect(probe.read(probe.text), `${row.pin} (${row.family}): its probe reads quiet`).toEqual([]);
+      expect(probe.read(probe.text.replace(exemplar, () => clear)), `${row.pin} (${row.family}): its clear form reads what docs/14 says`).toEqual(row.reads.split(", "));
+    }
+    // Rule 16: the residual table as read at this cut (cells as written), so a docs-side edit the judge still accepts reds too.
+    expect(
+      anchor.rows.map(row => [row.pin, row.family, row.exemplar, row.clear, row.reads].join(" | ")),
+      "the residual table as read at this cut",
+    ).toEqual([
+      "Q1 | R-SCOPE | README.md | docs/workbench/README.md | docs/workbench",
+      "Q2 | R-REQUIREMENT-ID | COMPOSITION-R1 | COMPOSITION | unqualified",
+      "Q3 | R-PARAPHRASE-CITE | assurance | workflow composition | unqualified",
+      "Q4 | R-NEGATION-DISTANCE | not, as of today, | not | unqualified",
+      "Q5 | R-PARAPHRASE-EXISTS | vets | runs | exists:v0, exists:bridge-checker",
+      "Q6 | R-GUARD-WORD | If anything, | Indeed, | exists:v0",
+      "Q7 | R-CROSS-CLAUSE | . It | , and it | exists:v0",
+      "Q8 | R-SUBJECT-SPELLING | checker for the bridge | bridge checker | exists:bridge-checker",
+      'Q9 | R-SPLIT-SOURCE | Workflow" + "Composition | WorkflowComposition | unqualified',
+      "Q10 | R-ESCAPED-SPELLING | \\-workflow\\- | -workflow- | unqualified",
+      "Q11 | R-DOCUMENT-SCOPE | \\n\\n | \\n | exists:pi-mw-adapter",
+    ]);
   });
 
   for (const row of ROWS) {

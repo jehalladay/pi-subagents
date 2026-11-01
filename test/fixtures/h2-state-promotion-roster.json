@@ -676,6 +676,11 @@
         "binding": "node:path join",
         "liveNarrowed": true,
         "gitListingUnchanged": true
+       },
+       {
+        "binding": "node:path normalize",
+        "liveNarrowed": true,
+        "gitListingUnchanged": true
        }
       ]
      }
