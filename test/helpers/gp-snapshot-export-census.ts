@@ -18,7 +18,9 @@
  * form outside these tables is outside every claim, where the fail-closed readers refuse it), and the code reader
  * (codeShapeKeysOf, codeComposedOf: the TypeScript parse of a residual source member) that reads S2's liveness from the
  * member's parse, where a comment is trivia and a string's content is no code, and of whose literal tokens only the
- * double-quoted strings compose (COMPOSE_PLANTS).
+ * double-quoted strings compose (COMPOSE_PLANTS); wb-4z24 (the R694 follow-up from wb-0lf.8's landing 757) pins the code
+ * reader's parse kind on each of its readers (PARSE_PLANTS, JSX_SHAPED) and the shape reader reading no key from a type
+ * literal's members or a destructuring's bindings (SHAPE_QUIET).
  */
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual, types } from "node:util";
@@ -2858,23 +2860,28 @@ export const SURFACE_OTHERS: readonly SurfaceDocs[] = SURFACE_POSITIONS.flatMap(
 export const otherBlocks = (form: SurfaceDocs): string[] =>
   form.position === "before" ? [form.reads, "table"] : form.position === "after" ? ["table", form.reads] : form.position === "between" ? ["table", form.reads, "table"] : ["table", "table", form.reads];
 
-/** A residual source member's code as TypeScript parses it (wb-0lf.8 U5): a comment is trivia and a string's content is no code. The code reader parses TypeScript (ScriptKind.TS); literalTokensOf's TSX control alone parses another kind. */
+/**
+ * A residual source member's code as TypeScript parses it (wb-0lf.8 U5): a comment is trivia and a string's content is no
+ * code. The code reader (codeShapeKeysOf, codeComposedOf) and literalTokensOf, which reads its literal tokens, parse TypeScript
+ * (ScriptKind.TS), this default, unless a TSX control passes another kind; the full-surface row pins that kind on each of the
+ * three (wb-4z24's F1): PARSE_PLANTS through codeShapeKeysOf and codeComposedOf, JSX_SHAPED through literalTokensOf.
+ */
 const memberCode = (text: string, kind: ts.ScriptKind = ts.ScriptKind.TS): ts.SourceFile => ts.createSourceFile(kind === ts.ScriptKind.TSX ? "member.tsx" : "member.ts", text, ts.ScriptTarget.Latest, true, kind);
 const eachNode = (node: ts.Node, visit: (node: ts.Node) => void): void => {
   visit(node);
   ts.forEachChild(node, child => eachNode(child, visit));
 };
-/** R-UNNAMED's liveness read from code (wb-0lf.8 U5): the names of the properties the member's object literals assign that are keys of the given document, each once in order. */
-export const codeShapeKeysOf = (text: string, keys: ReadonlySet<string>): string[] => {
+/** R-UNNAMED's liveness read from code (wb-0lf.8 U5): the identifier names of the properties the member's object literals assign that are keys of the given document, each once in order (no type literal's member and no destructuring's binding: SHAPE_QUIET); kind is a TSX control's (PARSE_PLANTS). */
+export const codeShapeKeysOf = (text: string, keys: ReadonlySet<string>, kind?: ts.ScriptKind): string[] => {
   const named: string[] = [];
-  eachNode(memberCode(text), node => {
+  eachNode(memberCode(text, kind), node => {
     if ((ts.isPropertyAssignment(node) || ts.isShorthandPropertyAssignment(node)) && ts.isIdentifier(node.name)) named.push(node.name.text);
   });
   return [...new Set(named.filter(key => keys.has(key)))];
 };
-/** R-COMPOSED's liveness read from code (wb-0lf.8 U5): the member's double-quoted string literals, each as TypeScript decodes it, joined in order; no other literal token composes (COMPOSE_PLANTS). */
-export const codeComposedOf = (text: string): string => {
-  const source = memberCode(text);
+/** R-COMPOSED's liveness read from code (wb-0lf.8 U5): the member's double-quoted string literals, each as TypeScript decodes it, joined in order; no other literal token composes (COMPOSE_PLANTS), nor a JSX text node under a TSX control (JSX_SHAPED); kind is a TSX control's (PARSE_PLANTS). */
+export const codeComposedOf = (text: string, kind?: ts.ScriptKind): string => {
+  const source = memberCode(text, kind);
   const parts: string[] = [];
   eachNode(source, node => {
     if (ts.isStringLiteral(node) && source.text.charAt(node.getStart(source)) === '"') parts.push(node.text);
@@ -2926,10 +2933,10 @@ export const LITERAL_KINDS: readonly (keyof typeof ts.SyntaxKind)[] = [
  * TSX, so JSX_SHAPED holds no JSX text node there, while its TSX parse holds a JsxText node (the control).
  */
 export const LITERAL_KINDS_OUTSIDE: readonly (keyof typeof ts.SyntaxKind)[] = ["JsxText", "JsxTextAllWhiteSpaces"];
-/** A module shaped as JSX: the code reader's .ts parse holds no JSX text node in it, and a regular expression token where its closing tag stands (the full-surface row holds both parses' tokens to the roster). */
+/** A module shaped as JSX: the code reader's .ts parse holds no JSX text node in it, and a regular expression token where its closing tag stands, and codeComposedOf composes nothing from it under either parse (the full-surface row holds both parses' tokens and compositions to the roster). */
 export const JSX_SHAPED = "export const view = <b>GraphPolicy</b>;\n";
-/** The literal tokens of a member's parse (the code reader's, ScriptKind.TS, unless the TSX control asks for another), in source order, each by its LITERAL_KINDS name, a string literal's followed by its opening quote. */
-export const literalTokensOf = (text: string, kind: ts.ScriptKind = ts.ScriptKind.TS): string[] => {
+/** The literal tokens of a member's parse (the code reader's: memberCode's default kind, unless the TSX control passes another; wb-4z24's F1, so JSX_SHAPED reads the code reader's own kind), in source order, each by its LITERAL_KINDS name, a string literal's followed by its opening quote. */
+export const literalTokensOf = (text: string, kind?: ts.ScriptKind): string[] => {
   const source = memberCode(text, kind);
   const named = new Map(LITERAL_KINDS.map(name => [ts.SyntaxKind[name], name] as const));
   const tokens: string[] = [];
@@ -2954,6 +2961,39 @@ export const COMPOSE_PLANTS: readonly { readonly id: string; readonly text: stri
   { id: "template-parts", text: `export const label = \`Graph\${0}Data\${1n}IR\`;\n` },
 ];
 
+// ---- wb-4z24 (the R694 follow-up from wb-0lf.8's landing 757): the code reader's parse kind pinned on each reader itself (F1)
+// and the shape reader's quiet type-literal members and destructuring bindings (F2) ----
+
+/**
+ * PARSE_PLANTS (wb-4z24's F1): one module per live kind of the residual source members, each read by that kind's code reader
+ * (codeComposedOf, codeShapeKeysOf) as its TypeScript parse reads it and otherwise under a TSX parse: a type assertion, which
+ * TSX parses as a JSX element. Through the code reader the composed plant composes GraphPolicy and the shape plant assigns four
+ * keys of the vendored v1 document; under each reader's TSX control the composed plant composes nothing and the shape plant
+ * assigns no key. So each reader's own parse kind is pinned on that reader.
+ */
+export const PARSE_PLANTS: readonly { readonly id: string; readonly live: SourceResidual["live"]; readonly text: string }[] = [
+  { id: "type-assertion-composed", live: "composed", text: 'export const label = <string>"Graph" + "Policy";\n' },
+  { id: "type-assertion-shape", live: "shape", text: 'export const shape = <unknown>{ schema_ref: { namespace: "x" }, entities: [], relations: [] };\n' },
+];
+/**
+ * SHAPE_QUIET (wb-4z24's F2): keys of the vendored v1 document written where no object literal assigns them, one plant per
+ * node kind: a type literal's members (PropertySignature names; a type, where no code runs) and a destructuring's bindings
+ * (BindingElement names). Each plant holds names of its node kind (heldNamesOf) that are keys of the document, and the code
+ * reader reads no key from either.
+ */
+export const SHAPE_QUIET: readonly { readonly id: string; readonly holds: "PropertySignature" | "BindingElement"; readonly text: string }[] = [
+  { id: "type-literal", holds: "PropertySignature", text: "export type Snapshot = { schema_ref: { namespace: string }; entities: unknown[]; relations: [] };\n" },
+  { id: "destructuring", holds: "BindingElement", text: "export const keysOf = (input: Record<string, unknown>): unknown[] => {\n  const { schema_ref, entities, relations } = input;\n  return [schema_ref, entities, relations];\n};\n" },
+];
+/** The identifier names a SHAPE_QUIET plant holds in its node kind (PropertySignature or BindingElement), in source order, as the code reader's parse holds them. */
+export const heldNamesOf = (plant: (typeof SHAPE_QUIET)[number]): string[] => {
+  const names: string[] = [];
+  eachNode(memberCode(plant.text), node => {
+    if ((ts.isPropertySignature(node) || ts.isBindingElement(node)) && node.kind === ts.SyntaxKind[plant.holds] && ts.isIdentifier(node.name)) names.push(node.name.text);
+  });
+  return names;
+};
+
 // ---- CORE OVERLAP (refusal #2's U1 under R-B164, the enumerate-the-resolvable cut): the full-surface forms that are the core's ----
 
 /** A form the overlap reading compares: its table, its id, and the text compared (a spelling, an edit of the live page or a member text). */
@@ -2965,7 +3005,8 @@ export interface Keyed {
 /**
  * Every full-surface form as the overlap reading compares it, in table order: U1's and U2's spellings and R-NON-ASCII-PART's
  * members by their spelling; U3's leads, U4's ownership blocks and the owner cells by their edit of the live page; U5's
- * silencings of each residual source member, R-UNREACHABLE's placement of each and COMPOSE_PLANTS by their member text.
+ * silencings of each residual source member, R-UNREACHABLE's placement of each, COMPOSE_PLANTS and wb-4z24's PARSE_PLANTS and
+ * SHAPE_QUIET by their member text.
  */
 export const surfaceForms = (page: string, members: readonly SourceResidual[]): Keyed[] => [
   ...SURFACE_SITE_SPELLINGS.map(entry => ({ table: "SURFACE_SITE_SPELLINGS", id: entry.id, key: entry.spelling })),
@@ -2977,6 +3018,8 @@ export const surfaceForms = (page: string, members: readonly SourceResidual[]): 
   ...members.flatMap(member => SILENCINGS.map(form => ({ table: "SILENCINGS", id: `${member.path} ${form.id}`, key: form.silence(member.text) }))),
   ...members.map(member => ({ table: "unreachable", id: `${member.path} unreachable`, key: unreachable(member.text) })),
   ...COMPOSE_PLANTS.map(plant => ({ table: "COMPOSE_PLANTS", id: `compose ${plant.id}`, key: plant.text })),
+  ...PARSE_PLANTS.map(plant => ({ table: "PARSE_PLANTS", id: `parse ${plant.id}`, key: plant.text })),
+  ...SHAPE_QUIET.map(plant => ({ table: "SHAPE_QUIET", id: `quiet ${plant.id}`, key: plant.text })),
 ];
 /** The core's spelling tables (G1's and D3's), by name: the spellings each word reader reads, holds quiet or holds outside its pattern. */
 const CORE_SPELLING_TABLES: readonly (readonly [string, readonly string[]])[] = [

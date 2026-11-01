@@ -4275,7 +4275,68 @@
       ],
       "tsx": [
         "JsxText"
+      ],
+      "composed": [
+        "",
+        ""
       ]
+    },
+    "parse": {
+      "type-assertion-composed": {
+        "ts": "GraphPolicy",
+        "tsx": "",
+        "words": [
+          "GraphPolicy"
+        ],
+        "jsx": [
+          [],
+          [
+            "JsxText"
+          ]
+        ]
+      },
+      "type-assertion-shape": {
+        "ts": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ],
+        "tsx": [],
+        "jsx": [
+          [],
+          [
+            "JsxText",
+            "JsxText"
+          ]
+        ]
+      }
+    },
+    "shapeQuiet": {
+      "type-literal": {
+        "holds": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ],
+        "code": [],
+        "raw": [
+          "schema_ref",
+          "namespace",
+          "entities",
+          "relations"
+        ]
+      },
+      "destructuring": {
+        "holds": [
+          "schema_ref",
+          "entities",
+          "relations"
+        ],
+        "code": [],
+        "raw": []
+      }
     },
     "coreOverlap": {
       "surface": {
@@ -4287,7 +4348,9 @@
         "SURFACE_OWNERS": 16,
         "SILENCINGS": 35,
         "unreachable": 5,
-        "COMPOSE_PLANTS": 4
+        "COMPOSE_PLANTS": 4,
+        "PARSE_PLANTS": 2,
+        "SHAPE_QUIET": 2
       },
       "core": {
         "SITE_WORD_SPELLINGS": 48,
