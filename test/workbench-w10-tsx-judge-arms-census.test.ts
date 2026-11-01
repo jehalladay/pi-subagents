@@ -33,7 +33,32 @@
  * argument-list spreads of a new expression and a method call (AF153), an object spread and a parenthesized callee refused
  * (AU130, AU131), the returns of entered functions and of judgeTsxRow (AF143, AF145), an unshift's arguments (AF144) and a name a
  * parameter and a body var both declare (AU127). Every count and depth a claim word ranges over now names the figure its probes
- * reach, and the next one past it is NOT CLAIMED (below).
+ * reach, and the next one past it is NOT CLAIMED (below). Cut #3 (seat ws-04, g10-work-s172; the enumerate-the-resolvable form
+ * ruling R-B278 binds) answers refusal #2 (gate-prep-13, g10-gate-s176: R514/R515/R668, claim words wider than their pins, the
+ * class frozen at its second failure): each of its twelve unmet members is killed by its paired witness, pinned verbatim - U1
+ * G13-OWNER-NOMETHOD by GW13-OM, GW13-CM and GW13-OA (AU132, AU133, AU134), G13-OWNER-NOACCESSOR by GW13-OA (AU134),
+ * G13-FLOWSOUT-RETSTMT-NOOWN by GW13-RS and GW13-RSD (AU135, AU136), G13-FLOWSOUT-OBJ-NOOWN by GW13-OO and GW13-OOB (AU137,
+ * AU138); U2 G13-PS-SHORTHAND by GW13-PSS (AU141); U3 G13-LIST-TYPEARGS, G13-ITEM-TYPEARGS and G13-HELD-TYPEARGS by GW13-TA-LIST,
+ * GW13-TA-ITEM and GW13-TA-HELD (AF154, AF155, AF156), G13-PS-POSONLY by GW13-POS and GW13-POSF (AF158, AF159),
+ * G13-SAMEVALUE-NONAME by GW13-SV (AF160), G13-VARIABLE-CALLEXPR by GW13-VC (AU143); U4 G13-HELD-KEY-ACCESS by GW13-HK (AF161).
+ * The findings' members are answered too: F1's G13-LINE-OFF by T-ARMS-ENTRY, F2's G13-CLASSIFY-USING by GW13-AU (AU145), and F2's
+ * G13-VET-NEWOK and F3's G13-RETURNS-NOCLASS stand among the EQUIVALENTS. Beside the witnesses stand the same-class plants: every
+ * other closure kind handing a traced list out, alone or as the one member of an object literal it returns (AU139, AU140), a
+ * shorthand name in a function expression and in an object literal's method of a parameter default (AU142), the unshift and push
+ * members passed to a helper's and a method's call (AU144), and optional calls with type arguments and a generic const arrow's
+ * call (AF157). Each claim item those members contradicted now names exactly the forms these probes write: the closure kinds, the
+ * calls with type arguments, the module-level function declared after judgeTsxRow, the shorthand name, the push member as an
+ * argument, the holder's other property and the holder call's position. Cut #3's own screen of 867 more one-edit readJudgeArms()
+ * members (condition drops, forced checks and branches, flipped comparisons, symbol-API swaps, dropped unwraps and scopes, key
+ * positions moved to a node's end or pos, and added guards on optional syntax) found 66 more that kept cut #2's probes green;
+ * each is killed here by a plant naming its form: a binding element with a default and a declare const (AU146, AU147), a
+ * destructuring assignment's default, a same-name export alias, flowsOut()'s comma, parameter-default and spread-member shapes
+ * and a parenthesized push member (AU148 to AU151, AU153), a holder callee returning no object literal (AU152), a constructor
+ * handing the list out (AU156), entered and vetted functions exported, generic or unannotated (AF169, AU154), PARAMETER SCOPE in
+ * thirteen more host forms (AU155), judgeTsxRow and the shared view exported, generic, unannotated or an exported const (AF172 to
+ * AF179), a named function expression's own name (AF162), the member test's property branch (AF163, AF164, AF171), arm order by a
+ * call's start and by each arm's own position (AF165, AF166, AF168), a nested holder callee's own list (AF167), a setter's bare
+ * return (AF170), and refuse()'s line at a node's first token (T-ARMS-ENTRY's three-line call).
  * HOST: every probe is written into the guard's own source (test/workbench-w10-stamped-claim-guard.test.ts, read from disk),
  * whose judge reads as 26 arms and no unread entry (T-ARMS-LIVE). The guard's own rows (the pins that draw its arms, T-ARMS,
  * T-ROSTER) stay the guard's and are NOT CLAIMED by this census.
@@ -54,114 +79,137 @@
  * parameter lists), its words name how far its probes reach, and nothing past that figure is claimed (NOT CLAIMED (counts and
  * depths)). The claim lists, item by item: READ: the diagnosis flow followed back from the first seven return statements of the
  * module-level judgeTsxRow, at its place among the guard's statements or after up to 64 top-level statements written before it: a
- * function declaration, a const bound to a function expression or an arrow function, or a const bound to a function expression
- * after one or two other names in its statement [AF1, AF114, AF115, AF122, AF131, AF145, AF37]; a LIST is an array literal of up
- * to three elements, each element one diagnosis and each spread a list [AF8, AF19, AF127]; a conditional of lists [AF4]; a call
- * of a name T-ARMS enters, that bare name its callee, plain or optional (f?.()), each of its first eleven returns a list [AF5,
- * AF8, AF31, AF107, AF132]; a TRACED LIST, the name of a const declared in the same top-level function, a function declaration or
- * a function expression or an arrow function bound to a module-level const, inside a function expression or an arrow nested in
- * it, up to two such closures deep, included: its initializer [AF14, AF123, AF112, AF113]; the arguments of every push() called
- * on it among its first 39 references, up to five arguments, a spread argument a list and any other one diagnosis [AF1, AF5,
- * AF35, AF109, AF125]; the arguments of every unshift() called on it, up to five, read the same way [AF6, AF126, AF144]; a push
- * on a traced list in each of these places in the function declaring it, no other place claimed: inside an arrow or a function
- * expression passed as a callback; a method, a constructor, a field initializer, a static block, a static method or an accessor
- * of a class declared there; a method or an accessor of an object literal; a nested function declaration, an async arrow or a
- * generator function expression; directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else,
- * each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, a block or a throw
- * statement; an arrow that decorates a class; the first or the second substitution of a template literal, or the first of a
- * tagged template; the test or either branch of a conditional; either operand of && or ||, or the right operand of ??; the first
- * or the second element of an array literal; the value of the first or the second property of an object literal; a computed
- * property name; the first or the second argument of a call, the argument of a new expression or of an element access; either
- * operand of a comma expression; parentheses or a type assertion (as, satisfies, the non-null !, <T>); the operand of void,
- * typeof, await, ! or unary -; the right operand of +, = or +=, or the left operand of > or ===; the object of a property read;
- * an optional chain (findings?.push(), findings.push?.()); a parameter initializer of a closure; or a class's extends expression
- * [AF13, AF102, AF101, AF103, AF124, AF121, AF125, AF23, AF21]; a traced list FLOWS OUT unchanged: spread in an array literal or
- * an argument list, or returned by the function declaring it, alone or as the value of the one member, a shorthand or a property
- * assignment, of a returned object literal, the list alone or inside parentheses or a type assertion (as, satisfies, the non-null
- * !, <T>), each kind the innermost, up to seven of them, and the object alone or inside them, up to four, each taken off; a
- * holder's list property flows out the same ways [AF14, AF113, AF153, AF34, AF147, AF150, AF130, AF139, AF151, AF138, AF19,
- * AF140, AF152]; the traced lists of every function T-ARMS enters, not only judgeTsxRow's [AF2, AF7]; a property read from a
+ * function declaration, plain, exported, with a type parameter or without its return type annotation, a const bound to a function
+ * expression or an arrow function, an exported const bound to a function expression, or a const bound to a function expression
+ * after one or two other names in its statement [AF1, AF114, AF115, AF122, AF131, AF145, AF37, AF172, AF173, AF174, AF175]; a
+ * LIST is an array literal of up to three elements, each element one diagnosis and each spread a list [AF8, AF19, AF127]; a
+ * conditional of lists [AF4]; a call of a name T-ARMS enters, that bare name its callee, plain or optional (f?.()), with or
+ * without type arguments (f<T>(), f?.<T>()), each of its first eleven returns a list [AF5, AF8, AF31, AF107, AF132, AF154,
+ * AF157]; a TRACED LIST, the name of a const declared in the same top-level function, a function declaration or a function
+ * expression or an arrow function bound to a module-level const, in every form T-ARMS enters, inside a function expression or an
+ * arrow nested in it, up to two such closures deep, included: its initializer [AF14, AF123, AF112, AF113, AF169]; the arguments
+ * of every push() called on it among its first 39 references, up to five arguments, a spread argument a list and any other one
+ * diagnosis [AF1, AF5, AF35, AF109, AF125]; the arguments of every unshift() called on it, up to five, read the same way [AF6,
+ * AF126, AF144]; a push on a traced list in each of these places in the function declaring it, no other place claimed: inside an
+ * arrow or a function expression passed as a callback; a method, a constructor, a field initializer, a static block, a static
+ * method or an accessor of a class declared there; a method or an accessor of an object literal; a nested function declaration,
+ * an async arrow or a generator function expression; directly inside a for, for-in, for-of, while or do loop, a labeled
+ * statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of
+ * a switch, a block or a throw statement; an arrow that decorates a class; the first or the second substitution of a template
+ * literal, or the first of a tagged template; the test or either branch of a conditional; either operand of && or ||, or the
+ * right operand of ??; the first or the second element of an array literal; the value of the first or the second property of an
+ * object literal; a computed property name; the first or the second argument of a call, the argument of a new expression or of an
+ * element access; either operand of a comma expression; parentheses or a type assertion (as, satisfies, the non-null !, <T>); the
+ * operand of void, typeof, await, ! or unary -; the right operand of +, = or +=, or the left operand of > or ===; the object of a
+ * property read; an optional chain (findings?.push(), findings.push?.()); a parameter initializer of a closure; or a class's
+ * extends expression [AF13, AF102, AF101, AF103, AF124, AF121, AF125, AF23, AF21]; a traced list FLOWS OUT unchanged: spread in
+ * an array literal or an argument list, or returned by the function declaring it, by a return statement of its own body (a
+ * closure's return is REFUSED), alone or as the value of the one member, a shorthand or a property assignment, of a returned
+ * object literal (a member reading a property of another value being no second member carrying it), the list alone or inside
+ * parentheses or a type assertion (as, satisfies, the non-null !, <T>), each kind the innermost, up to seven of them, and the
+ * object alone or inside them, up to four, each taken off; a holder's list property, read plain or optional, flows out the same
+ * ways, a member reading another property of the same holder, the same property of another holder or a literal being no second
+ * member carrying it [AF14, AF113, AF153, AF34, AF147, AF150, AF130, AF139, AF151, AF138, AF19, AF140, AF152, AF160, AF164,
+ * AF163, AF171]; the traced lists of every function T-ARMS enters, not only judgeTsxRow's [AF2, AF7]; a property read from a
  * HOLDER, plain or optional (holder?.property), the name of a const of the same top-level function bound to a call of a name
- * T-ARMS enters, that bare name its callee, plain or optional (f?.()), the call alone or inside parentheses or a type assertion
- * (as, satisfies, the non-null !, <T>), up to four of them, each taken off: that property, a shorthand or a property assignment
- * among the first four members, of each of the first five object literals the callee returns, each alone or inside parentheses or
- * a type assertion (as, satisfies, the non-null !, <T>), up to four of them, each taken off [AF2, AF19, AF36, AF110, AF111,
- * AF128, AF134, AF135, AF136, AF137, AF138, AF139, AF148]; a DIAGNOSIS is a string literal, one arm, its text matched literally
+ * T-ARMS enters (a function of the module or of that top-level function), that bare name its callee, plain or optional (f?.()),
+ * with or without type arguments (f<T>(), f?.<T>()), the call alone or inside parentheses or a type assertion (as, satisfies, the
+ * non-null !, <T>), up to four of them, each taken off: that property, a shorthand or a property assignment among the first four
+ * members, of each of the first five object literals the callee returns, each alone or inside parentheses or a type assertion
+ * (as, satisfies, the non-null !, <T>), up to four of them, each taken off [AF2, AF19, AF36, AF110, AF111, AF128, AF134, AF135,
+ * AF136, AF137, AF138, AF139, AF148, AF156, AF157, AF167]; a DIAGNOSIS is a string literal, one arm, its text matched literally
  * (each regular-expression metacharacter escaped) [AF1, AF146]; a no-substitution template, one arm, its text matched literally
  * [AF25, AF149]; a template literal of up to four substitutions, one arm, each substitution read as any text and the text around
  * them matched literally [AF11, AF129, AF149]; a conditional of diagnoses [AF12]; the name of a const of a function whose
  * initializer is one diagnosis [AF3]; the name of a module-level const whose initializer is one diagnosis [AF9]; a call of a name
- * T-ARMS enters, that bare name its callee, plain or optional (f?.()), each of its first eleven returns one diagnosis [AF10,
- * AF133, AF143]; any list or diagnosis inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), each kind the
- * outermost, up to seven of them, each taken off [AF24, AF34, AF141, AF142]; T-ARMS ENTERS a name whose one declaration is a
- * function declaration with a body, not a generator [AF8, AF10]; or a const bound to an arrow function, not a generator [AF5]; or
- * a const bound to a function expression, not a generator [AF26]; either one inside parentheses or a type assertion (as,
- * satisfies, the non-null !, <T>), up to four of them, each taken off [AF108, AF109]; it reads every return statement of that
- * function's own body, at any depth of its statements, with up to seven syntax nodes between the return and that body: under an
- * if or its else, in a block or a labeled statement, in a for, for-in, for-of, while or do loop, in a try block, a catch clause
- * or a finally block, in a case or the default clause of a switch; or an arrow's expression body [AF31, AF4, AF5, AF104, AF105,
- * AF106, AF107]; never a return of a function or a class nested in it [AF27]; and never its declared return type [AF16]; each
- * NAME is read as the declaration the TypeScript checker binds that reference to: a local helper shadowing a reached one in the
- * scope of its call is the one read, the reached one's arms out of reach [AF15]; a module-level helper is read past a same-named
- * const in a closure that does not enclose the call [AF17]; a same-named copy of a reached helper in a closure that does not
- * enclose its call leaves the reached helper read [AF18]; a function of another scope sharing the shared W10 view's name is
- * entered like any other [AF19]; a module-level helper called in a parameter initializer of a closure in judgeTsxRow is read when
- * no declaration in that closure's body shares its name [AF23]; and when a const of that body shares it, the checker giving a
- * variable the parameter scope's binding [AF22]; a parameter's own name is no PARAMETER SCOPE name, though a var of that
- * function's body redeclares it [AF32]; nor is a name in a parameter's type annotation, a type position, its type node up to four
- * syntax nodes above the name (a typeof query of the name, of a property of it or of a nested property of it, a computed key of a
- * type literal), though the checker binds it into the body [AF33, AF118, AF119]; a reached helper named in a TYPE POSITION, an
- * annotation, a type argument or a typeof query, is no reference [AF20]; nor is a traced list named in a typeof query of a
- * property or of a nested property of it, in an annotation inside the function declaring it [AF120]; nor in an interface's
- * extends clause or a class's implements clause [AF29]; a class's extends expression is a value, never a type position: a push
- * there is read [AF21]; the SHARED W10 VIEW, the module-level declaration named SHARED_VIEW, a function declaration or a const
- * bound to a function expression or an arrow function, is never entered: a holder of its call carries the view's findings, which
- * the stamped-claim tables judge, so they are not read as arms [AF30, AF116, AF117]; ARMS are ordered by the source positions of
- * the calls, holder calls and const references the flow passes through to reach each, then by its own position [AF2, AF7, AF9,
- * AF15, AF36]; an arm reached along several flows keeps the earliest [AF28, AF38]; a diagnosis reached through a chain of 64
- * const references, the depth bound, is read [AF37]. REFUSED: in a list or diagnosis position, any expression no READ item names,
- * for example a method call [AU7, AU10, AU72, AU82, AU83]; a property read in a diagnosis position, or in a list position from
- * anything but a name [AU72, AU73]; an element access [AU72, AU73]; an operator, binary or unary [AU6, AU72, AU73, AU82, AU83]; a
- * comma expression [AU52, AU73]; a tagged template [AU13, AU73]; a new expression [AU73]; a hole [AU35]; a call whose callee is a
- * name inside parentheses, in a list or a diagnosis position or bound to a holder [AU131]; a call of a name T-ARMS does not
- * enter: a generator function, declared or a const function expression, alone, inside parentheses or inside an as assertion
- * [AU27, AU28, AU29, AU114]; the shared W10 view [AU33]; a function declaration without a body [AU53]; a const bound to anything
- * but an arrow or function expression [AU54]; a let [AU55]; a var [AU56]; a parameter [AU57]; an import [AU58]; a class [AU59]; a
- * destructured name [AU60]; an undeclared name [AU5]; a name with more than one declaration: an overload signature, a second
+ * T-ARMS enters, that bare name its callee, plain or optional (f?.()), with or without type arguments (f<T>(), f?.<T>()), each of
+ * its first eleven returns one diagnosis [AF10, AF133, AF143, AF155, AF157]; any list or diagnosis inside parentheses or a type
+ * assertion (as, satisfies, the non-null !, <T>), each kind the outermost, up to seven of them, each taken off [AF24, AF34,
+ * AF141, AF142]; T-ARMS ENTERS a name whose one declaration is a function declaration with a body, not a generator, plain,
+ * exported, with a type parameter or without a return type annotation [AF8, AF10, AF169]; or a const bound to an arrow function,
+ * not a generator, with or without a type parameter or a return type annotation [AF5, AF169]; or a const bound to a function
+ * expression, not a generator, anonymous or named, with or without a type parameter or a return type annotation, the name of a
+ * named one used inside it never refused [AF26, AF162, AF169]; either one inside parentheses or a type assertion (as, satisfies,
+ * the non-null !, <T>), up to four of them, each taken off [AF108, AF109]; it reads every return statement of that function's own
+ * body, at any depth of its statements, with up to seven syntax nodes between the return and that body: under an if or its else,
+ * in a block or a labeled statement, in a for, for-in, for-of, while or do loop, in a try block, a catch clause or a finally
+ * block, in a case or the default clause of a switch; or an arrow's expression body [AF31, AF4, AF5, AF104, AF105, AF106, AF107];
+ * never a return of a function or a class nested in it, an object literal's setter included [AF27, AF170]; and never its declared
+ * return type [AF16]; each NAME is read as the declaration the TypeScript checker binds that reference to: a local helper
+ * shadowing a reached one in the scope of its call is the one read, the reached one's arms out of reach [AF15]; a module-level
+ * helper is read past a same-named const in a closure that does not enclose the call [AF17]; a same-named copy of a reached
+ * helper in a closure that does not enclose its call leaves the reached helper read [AF18]; a function of another scope sharing
+ * the shared W10 view's name is entered like any other [AF19]; a module-level helper called in a parameter initializer of a
+ * closure in judgeTsxRow, declared before judgeTsxRow or after it, is read when no declaration in that closure's body shares its
+ * name [AF23, AF159]; and when a const of that body shares it, the checker giving a variable the parameter scope's binding
+ * [AF22]; a parameter's own name is no PARAMETER SCOPE name, though a var of that function's body redeclares it [AF32]; nor is a
+ * name in a parameter's type annotation, a type position, its type node up to four syntax nodes above the name (a typeof query of
+ * the name, of a property of it or of a nested property of it, a computed key of a type literal), though the checker binds it
+ * into the body [AF33, AF118, AF119]; nor is the name of a module-level function declared after judgeTsxRow, called in a
+ * parameter initializer of a closure in judgeTsxRow, its declaration past that closure's body [AF158, AF159]; a reached helper
+ * named in a TYPE POSITION, an annotation, a type argument or a typeof query, is no reference [AF20]; nor is a traced list named
+ * in a typeof query of a property or of a nested property of it, in an annotation inside the function declaring it [AF120]; nor
+ * in an interface's extends clause or a class's implements clause [AF29]; a class's extends expression is a value, never a type
+ * position: a push there is read [AF21]; the SHARED W10 VIEW, the module-level declaration named SHARED_VIEW, a function
+ * declaration, plain, exported, with a type parameter or without its return type annotation, a const bound to a function
+ * expression or an arrow function, or an exported const bound to a function expression, is never entered: a holder of its call
+ * carries the view's findings, which the stamped-claim tables judge, so they are not read as arms [AF30, AF116, AF117, AF176,
+ * AF177, AF178, AF179]; ARMS are ordered by the source positions (each node's start) of the calls, holder calls and const
+ * references the flow passes through to reach each, then by its own position, whatever the order the flow reaches them in; a
+ * holder's arms at its call, never at its property read, and a call's or a holder call's arms before a push written inside its
+ * argument list [AF2, AF7, AF9, AF15, AF36, AF161, AF165, AF166, AF168]; an arm reached along several flows keeps the earliest
+ * [AF28, AF38]; a diagnosis reached through a chain of 64 const references, the depth bound, is read [AF37]. REFUSED: in a list
+ * or diagnosis position, any expression no READ item names, for example a method call [AU7, AU10, AU72, AU82, AU83, AU150]; a
+ * property read in a diagnosis position, or in a list position from anything but a name [AU72, AU73]; an element access [AU72,
+ * AU73]; an operator, binary or unary [AU6, AU72, AU73, AU82, AU83]; a comma expression [AU52, AU73]; a tagged template [AU13,
+ * AU73]; a new expression [AU73]; a hole [AU35]; a call whose callee is a name inside parentheses, in a list or a diagnosis
+ * position or bound to a holder [AU131]; a call of a name T-ARMS does not enter: a generator function, declared or a const
+ * function expression, alone, inside parentheses or inside an as assertion [AU27, AU28, AU29, AU114]; the shared W10 view [AU33];
+ * a function declaration without a body [AU53]; a const bound to anything but an arrow or function expression [AU54]; a let
+ * [AU55]; a var [AU56]; a parameter [AU57]; an import [AU58]; a class [AU59]; a destructured name, with or without a default
+ * value [AU60, AU146]; an undeclared name [AU5]; a name with more than one declaration: an overload signature, a second
  * implementation [AU36, AU75]; a list name that is not a const of the same top-level function: a module-level list, a let list, a
- * parameter's default list [AU8, AU9, AU14]; a diagnosis name that is not a const: a parameter, a destructured const [AU23,
- * AU37]; every reference to a traced list among its first 39 references, outside type positions, other than as the object of a
- * push() or unshift() call or as a FLOW OUT: a splice, an element write, an alias, an object spread, an argument of a helper or
- * of a global, an iteration, a length write, a push through an element access, a closure handing it out, an object literal that
- * is not returned, a second member carrying it among the object's first four members, a property assignment or a shorthand, its
- * value alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), up to four of them; a splice
- * directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try
- * block, a catch clause, a finally block, a case or the default clause of a switch, or a block [AU1, AU2, AU3, AU4, AU130, AU18,
- * AU16, AU17, AU20, AU21, AU25, AU30, AU108, AU109, AU120, AU124, AU125, AU128]; a property read as a list from a name that is
- * not a holder: a const not bound to a call, one bound to a call of a name T-ARMS does not enter, a module-level const [AU40,
- * AU80, AU69]; every reference to a holder among its first 48 references, outside type positions, other than as the object of a
- * property read, its first reference and one directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if
- * or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a
- * block included [AU19, AU118, AU126]; every read of a holder's list property among the holder's first 48 references, other than
- * a FLOW OUT, the shared W10 view's included, and a splice of one directly inside a for, for-in, for-of, while or do loop, a
+ * parameter's default list, a destructured const's default list [AU8, AU9, AU14, AU146]; a diagnosis name that is not a const
+ * with an initializer: a parameter, a destructured const, with or without a default value, a module-level await using
+ * declaration, a module-level declare const [AU23, AU37, AU145, AU146, AU147]; every reference to a traced list among its first
+ * 39 references, outside type positions, other than as the object of a push() or unshift() call or as a FLOW OUT: a splice, an
+ * element write, an alias, a destructuring assignment's shorthand default included, an object spread, an argument of a helper or
+ * of a global, its push or unshift member passed as an argument of a call included, an iteration, a length write, the right
+ * operand of a comma expression or a parameter's default in a return, a push through an element access or through parentheses, a
+ * closure handing it out by its return, alone or as the one member of an object literal it returns: an arrow, expression-bodied,
+ * block-bodied or async; a function expression, anonymous, named, async or generator; a nested function declaration; an object
+ * literal's method, getter, async method or generator method; a class declaration's method, static method, getter or constructor;
+ * a class expression's method, an object literal that is not returned, a second member carrying it among the object's first four
+ * members, a property assignment or a shorthand, its value alone or inside parentheses or a type assertion (as, satisfies, the
+ * non-null !, <T>), up to four of them; a splice directly inside a for, for-in, for-of, while or do loop, a labeled statement, an
+ * if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or
+ * a block [AU1, AU2, AU3, AU4, AU130, AU18, AU16, AU17, AU20, AU21, AU25, AU30, AU108, AU109, AU120, AU124, AU125, AU128, AU143,
+ * AU144, AU132, AU133, AU134, AU135, AU136, AU137, AU138, AU139, AU140, AU156, AU148, AU150, AU151]; a property read as a list
+ * from a name that is not a holder: a const not bound to a call, one bound to a call of a name T-ARMS does not enter, a
+ * module-level const [AU40, AU80, AU69]; every reference to a holder among its first 48 references, outside type positions, other
+ * than as the object of a property read, its first reference and one directly inside a for, for-in, for-of, while or do loop, a
  * labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default
- * clause of a switch, or a block [AU12, AU118]; among the first five returns of a holder's callee and the first four members of
- * each, a return that is not an object literal, alone or inside parentheses or a type assertion (as, satisfies, the non-null !,
- * <T>), up to four of them, made only of identifier-named property and shorthand assignments with exactly one member of that
- * name: no such member, a spread, a computed member, a member named by a string or a numeric literal, a method, an accessor, two
- * members of that name [AU11, AU26, AU39, AU111, AU112, AU61, AU79, AU123]; any property but findings read as a list from a
- * holder of the shared W10 view [AU34]; a reference to a function declaration T-ARMS enters (judgeTsxRow, a function entered
- * through a call, a holder's callee), among its first 23 references, outside type positions, at module level, in judgeTsxRow or
- * in a function it enters, and directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else,
- * each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block in
- * judgeTsxRow, other than as the callee of a call, plain or optional: an identifier the checker binds to it, reassigned, rebound
- * in a class's extends expression, named in an instantiation expression or passed as an argument of a call, or an export
- * specifier whose local target it is, plain or aliased [AU32, AU41, AU51, AU78, AU49, AU50, AU74, AU119]; a call whose callee,
- * its parentheses and type assertions (as, satisfies, the non-null !, <T>) aside, up to four of them, is the name eval, an
- * optional call included, in each of these places in the guard: in judgeTsxRow, in another function, at module level, in a
- * parameter's default value, in a class's field initializer or static block, in an object literal's method, in an arrow's
- * expression body, in a method or a static block of a module-level class, in a method of a module-level object literal, or
- * directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try
+ * clause of a switch, or a block included [AU19, AU118, AU126]; every read of a holder's list property among the holder's first
+ * 48 references, other than a FLOW OUT, the shared W10 view's included, and a splice of one directly inside a for, for-in,
+ * for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally
+ * block, a case or the default clause of a switch, or a block [AU12, AU118]; among the first five returns of a holder's callee
+ * and the first four members of each, a return that is not an object literal, alone or inside parentheses or a type assertion
+ * (as, satisfies, the non-null !, <T>), up to four of them, made only of identifier-named property and shorthand assignments with
+ * exactly one member of that name: no such member, a spread, a computed member, a member named by a string or a numeric literal,
+ * a method, an accessor, two members of that name [AU11, AU26, AU39, AU111, AU112, AU61, AU79, AU123, AU152, AU153]; any property
+ * but findings read as a list from a holder of the shared W10 view [AU34]; a reference to a function declaration T-ARMS enters
+ * (judgeTsxRow, a function entered through a call, a holder's callee), plain, exported, with a type parameter or without a return
+ * type annotation, among its first 23 references, outside type positions, at module level, in judgeTsxRow or in a function it
+ * enters, and directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or
+ * not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow, other
+ * than as the callee of a call, plain or optional: an identifier the checker binds to it, reassigned, rebound in a class's
+ * extends expression, named in an instantiation expression or passed as an argument of a call, or an export specifier whose local
+ * target it is, plain or aliased, to its own name included [AU32, AU41, AU51, AU78, AU49, AU50, AU74, AU119, AU149, AU154]; a
+ * call whose callee, its parentheses and type assertions (as, satisfies, the non-null !, <T>) aside, up to four of them, is the
+ * name eval, an optional call included, in each of these places in the guard: in judgeTsxRow, in another function, at module
+ * level, in a parameter's default value, in a class's field initializer or static block, in an object literal's method, in an
+ * arrow's expression body, in a method or a static block of a module-level class, in a method of a module-level object literal,
+ * or directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try
  * block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow [AU31, AU70, AU71,
  * AU113, AU115, AU116, AU129]; a return without a value in a function T-ARMS enters [AU38]; a recursive flow, through a call or a
  * holder call [AU15, AU63]; a list read inside its own flow [AU22]; a diagnosis reached through more than 64 calls, holder calls
@@ -169,30 +217,38 @@
  * it enters, in a module-level class, and directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or
  * its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a
  * block in judgeTsxRow), a name in the parameter list of a function declaration or expression, plain, generator or async, an
- * arrow, plain or async, a method of a class or an object literal, plain, generator or async, a constructor or a setter, in an
- * initializer, the parameter's own or a binding element's, at any depth of its expressions, with up to nine syntax nodes between
- * the name and the parameter (a conditional, an array or an object literal, a template, plain or tagged, parentheses or a type
- * assertion, a unary or a binary operator, a new expression, an element access, a comma expression, typeof, void, a spread
- * argument, an optional call), in a computed key of its binding pattern or in a closure created there (an arrow; a function
- * expression, plain, async, generator or named; a class expression's method, static method, constructor, accessor, field
- * initializer, static field or static block; an object literal's method or accessor; a function or a class declared inside one of
- * them), that the checker binds to a declaration in the body of a function whose parameter list encloses it, up to three such
- * parameter lists nested one inside another (a host created in another host's parameter list), a name a parameter and a var of
- * that body both declare included [AU42, AU43, AU44, AU45, AU46, AU47, AU48, AU62, AU64, AU65, AU66, AU67, AU68, AU76, AU77,
- * AU101, AU102, AU103, AU104, AU105, AU106, AU107, AU117, AU121, AU122, AU127]; a source with no module-level judgeTsxRow T-ARMS
- * enters: the empty source, or a judgeTsxRow bound by let [BARE, AU110]. RESIDUAL: the reading assumes JavaScript's standard
- * semantics for what it reads (push() and unshift() on an array, a spread of one, the conditional operator, string and template
- * literals): a standard-library object altered anywhere, in the judge or outside it, is never read, Array.prototype.push replaced
- * at module level and Array.prototype.unshift replaced inside judgeTsxRow for two [AR1, AR3]; the shared W10 view's exemption
- * holds whatever its call's argument: a holder of a call on another input carries findings that are never read [AR2].
+ * arrow, plain or async, a method of a class or an object literal, plain, generator or async, a constructor or a setter, and
+ * these too: a function declaration, a function expression, an arrow and a class method each with a type parameter or without a
+ * return type annotation, a named function expression, an optional class method, a private constructor's parameter property, a
+ * static setter's destructured parameter and a function declaration's rest parameter pattern, in an initializer, the parameter's
+ * own or a binding element's, at any depth of its expressions, with up to nine syntax nodes between the name and the parameter (a
+ * conditional, an array or an object literal, a template, plain or tagged, parentheses or a type assertion, a unary or a binary
+ * operator, a new expression, an element access, a comma expression, typeof, void, a spread argument, an optional call), in a
+ * computed key of its binding pattern or in a closure created there (an arrow; a function expression, plain, async, generator or
+ * named; a class expression's method, static method, constructor, accessor, field initializer, static field or static block; an
+ * object literal's method or accessor; a function or a class declared inside one of them), that the checker binds to a
+ * declaration in the body of a function whose parameter list encloses it, up to three such parameter lists nested one inside
+ * another (a host created in another host's parameter list), a name a parameter and a var of that body both declare included, and
+ * a shorthand property name, the checker binding it as its value, in an arrow, a function expression or an object literal's
+ * method created there [AU42, AU43, AU44, AU45, AU46, AU47, AU48, AU62, AU64, AU65, AU66, AU67, AU68, AU76, AU77, AU101, AU102,
+ * AU103, AU104, AU105, AU106, AU107, AU117, AU121, AU122, AU127, AU141, AU142, AU155]; a source with no module-level judgeTsxRow
+ * T-ARMS enters: the empty source, or a judgeTsxRow bound by let [BARE, AU110]. RESIDUAL: the reading assumes JavaScript's
+ * standard semantics for what it reads (push() and unshift() on an array, a spread of one, the conditional operator, string and
+ * template literals): a standard-library object altered anywhere, in the judge or outside it, is never read, Array.prototype.push
+ * replaced at module level and Array.prototype.unshift replaced inside judgeTsxRow for two [AR1, AR3]; the shared W10 view's
+ * exemption holds whatever its call's argument: a holder of a call on another input carries findings that are never read [AR2].
  * T-ARMS-FORMS pins each probe: armProbe() writes it into the guard's source with the TypeScript parser (its code before the last
  * statement of the function it names, its declaration before that function, or, for a rebind, that function declared instead as a
- * module-level const or let) and readJudgeArms() reads it back as its frozen reading, the arms it adds where the judge's order
- * puts them, the live arms it takes out of reach and each unread reason in order; a source with no judgeTsxRow reads no arm and
- * that one unread entry (BARE); FORMS-SHAPE freezes the probes and T-ARMS-CLAIMS the claim items (standing rule 16).
- * T-ARMS-ANCHORED pins every live arm on a sample built from its literal pieces with a line break inside every substitution: the
- * sample reads as the arm, and no arm with a literal head (11 of 26) reads a character before it, none with a literal tail (20 of
- * 26) one after it.
+ * module-level const, an exported const or a let, or its own declaration exported, given a type parameter or stripped of its
+ * return type annotation) and readJudgeArms() reads it back as its frozen reading, the arms it adds where the judge's order puts
+ * them, the live arms it takes out of reach and each unread reason in order; a source with no judgeTsxRow reads no arm and that
+ * one unread entry (BARE); FORMS-SHAPE freezes the probes and T-ARMS-CLAIMS the claim items (standing rule 16). T-ARMS-ANCHORED
+ * pins every live arm on a sample built from its literal pieces with a line break inside every substitution: the sample reads as
+ * the arm, and no arm with a literal head (11 of 26) reads a character before it, none with a literal tail (20 of 26) one after
+ * it. T-ARMS-ENTRY pins the full text of two unread entries on a source of its own (a module-level call of eval written over
+ * three lines, and a splice inside a four-line statement longer than 120 characters in a block of judgeTsxRow): each is its
+ * reason, then ' (line <n>): ' with n the 1-based line of the refused node's first token, then the first 120 characters of the
+ * statement enclosing that node (its outermost node directly under the source file or a block), each white-space run one space.
  * EQUIVALENTS (no probe can falsify them): RH27, PARAMETER SCOPE narrowed to body function declarations, and S3-HERITAGE, an
  * implements clause and an interface's extends clause read as values, keep this census green; wb-m14y cut #4's seat measured both
  * equivalent (the TypeScript 6.0.3 checker binds a parameter-list name only to a body function declaration, var, let, class and
@@ -202,10 +258,16 @@
  * arrow-body branch in flowsOut() (an expression-bodied arrow declares no const of its own to carry); a get accessor dropped from
  * bodyOf() (a get accessor takes no parameter, TS1054); as, satisfies or <T> exempted as the outermost node of eval's callee (a
  * callee needs parentheses around each); and index() reading only a symbol's first two declarations (no name a parameter list
- * sees has two declarations outside that body before one inside).
+ * sees has two declarations outside that body before one inside). Refusal #2's gate measured two more that are equivalent within
+ * valid code, and they are held so: G13-VET-NEWOK, a new expression accepted as a call of an entered function declaration (its
+ * only witness is TS7009 under strict), and G13-RETURNS-NOCLASS, returnsOf() walking into a class nested in an entered function
+ * (a return there sits in a function-like member the walk already skips, or in a static block, TS18041). Cut #3's seat holds
+ * every other green member of its own screen equivalent within valid code, for the reasons its delivery note gives member by
+ * member; none of them is a claim of this census.
  * NOT CLAIMED (pin grain): a T-ARMS-FORMS probe removed from every literal of this file stays cited by the header's claim lists,
  * which T-ARMS-CLAIMS reads outside the literals; removed together with its claim-list item and the header's words for it, it
- * leaves this file green unless it is an AU probe raising a reason no other probe raises, which T-ARMS-REASONS reds.
+ * leaves this file green unless it is an AU probe raising a reason no other probe raises, which T-ARMS-REASONS reds. Beside
+ * T-ARMS-ENTRY's two entries, an unread entry is compared by its reason alone: its line and statement text are not claimed.
  * NOT CLAIMED (binding and reach): beyond the PARAMETER SCOPE item, the one disagreement between the checker's binding and the
  * run-time binding this census names and refuses, the reading claims no agreement between the two; and nothing outside the claim
  * lists is claimed: a diagnosis that reaches the judge's output in a way no READ, REFUSED or RESIDUAL item names is not claimed
@@ -259,9 +321,11 @@ interface ArmForm {
   /** A return type the probe writes over `into`'s own. */
   retype?: string;
   /** `into` declared instead as a module-level const bound to a function expression ("function") or to an arrow function
-   * ("arrow"), as a let bound to a function expression ("let"), or as a const bound to a function expression after one other
-   * name ("pair") or after two other names ("triple") in the same statement. */
-  rebind?: "function" | "arrow" | "let" | "pair" | "triple";
+   * ("arrow"), as a let bound to a function expression ("let"), as a const bound to a function expression after one other name
+   * ("pair") or after two other names ("triple") in the same statement, or as an exported const bound to a function expression
+   * ("exportconst"); or `into`'s own declaration exported ("export"), given a type parameter ("generic") or written without its
+   * return type annotation ("untyped"). */
+  rebind?: "function" | "arrow" | "let" | "pair" | "triple" | "exportconst" | "export" | "generic" | "untyped";
   at: number | "end";
   added: readonly string[];
   drops?: number;
@@ -288,7 +352,12 @@ const UNREAD_HELPER_REFERENCE = "the function tsxRecordFindings referenced other
  * #2's: the paired witnesses of refusal #1's gate (gate-prep-11, g10-gate-s174) verbatim - GW-AE2 AF127, GW-HR2 AF128, GW-TS3
  * AF129, GW-FLOW-PA AF130, GW-ATMOD3 AF131, GW-OC-LIST AF132, GW-OC-ITEM AF133, GW-OH AF134, GW-OHC AF135, GW-RET-AS AF136,
  * GW-PS-OUTER AU121 - and the plants that pin each wrapper kind and depth, member, return, argument and nesting a claim word names
- * (AF137 to AF153, AU122 to AU131). */
+ * (AF137 to AF153, AU122 to AU131). AF154 to AF161 and AU132 to AU145 are wb-5mco cut #3's: the paired witnesses of refusal
+ * #2's gate (gate-prep-13, g10-gate-s176) verbatim - GW13-TA-LIST AF154, GW13-TA-ITEM AF155, GW13-TA-HELD AF156, GW13-POS
+ * AF158, GW13-POSF AF159, GW13-SV AF160, GW13-HK AF161, GW13-OM AU132, GW13-CM AU133, GW13-OA AU134, GW13-RS AU135, GW13-RSD
+ * AU136, GW13-OO AU137, GW13-OOB AU138, GW13-PSS AU141, GW13-VC AU143, GW13-AU AU145 - and the same-class plants beside them
+ * (AF157, AU139, AU140, AU142, AU144); AF162 to AF179 and AU146 to AU156 are cut #3's self-audit plants, each killing a
+ * measured one-edit reader member that kept cut #2's probes green (its delivery note names each). */
 const ARM_FORMS: readonly ArmForm[] = [
   { id: "AF1", label: "a string pushed in judgeTsxRow (IP-A1)", into: "judgeTsxRow", code: 'findings.push("probe AF1");', at: "end", added: ["^probe AF1$"], unread: [] },
   { id: "AF2", label: "a push in tsxReceiptView, whose declared return is an object (IP-E1)", into: "tsxReceiptView", code: 'findings.push("probe AF2");', at: 6, added: ["^probe AF2$"], unread: [] },
@@ -1005,6 +1074,255 @@ const ARM_FORMS: readonly ArmForm[] = [
     label: "the traced list spread into the argument lists of a new expression and of a method call on a string, each a flow out",
     into: "judgeTsxRow",
     code: "const probe_AF153_copy = new Array<string>(...findings);\n  const probe_AF153_joined = \"\".concat(...findings);\n  void [probe_AF153_copy, probe_AF153_joined];",
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF154",
+    label: "a call with a type argument of an entered helper in a list position is entered (the gate's GW13-TA-LIST witness of G13-LIST-TYPEARGS, verbatim)",
+    into: "judgeTsxRow",
+    declaration: "function probe_GW13_TL<T>(): string[] | T[] {\n  return [\"probe GW13-TL\"];\n}",
+    code: "findings.push(...probe_GW13_TL<string>());",
+    at: "end",
+    added: ["^probe GW13-TL$"],
+    unread: [],
+  },
+  {
+    id: "AF155",
+    label: "a call with a type argument of an entered helper in a diagnosis position is entered (the gate's GW13-TA-ITEM witness of G13-ITEM-TYPEARGS, verbatim)",
+    into: "judgeTsxRow",
+    declaration: "function probe_GW13_TI<T>(): string | T {\n  return \"probe GW13-TI\";\n}",
+    code: "findings.push(probe_GW13_TI<string>());",
+    at: "end",
+    added: ["^probe GW13-TI$"],
+    unread: [],
+  },
+  {
+    id: "AF156",
+    label: "a holder bound to a call with a type argument of an entered helper carries its callee's list (the gate's GW13-TA-HELD witness of G13-HELD-TYPEARGS, verbatim)",
+    into: "judgeTsxRow",
+    declaration: "function probe_GW13_TH<T>(): { findings: string[]; extra?: T } {\n  return { findings: [\"probe GW13-TH\"] };\n}",
+    code: "const probe_GW13_TH_read = probe_GW13_TH<number>();\n  findings.push(...probe_GW13_TH_read.findings);",
+    at: "end",
+    added: ["^probe GW13-TH$"],
+    unread: [],
+  },
+  {
+    id: "AF157",
+    label: "optional calls with a type argument in a list position, in a diagnosis position and bound to a holder, and a call with a type argument of a const generic arrow, each entered",
+    into: "judgeTsxRow",
+    declaration: "function probe_AF157_list<T>(): string[] | T[] {\n  return [\"probe AF157 list\"];\n}\nfunction probe_AF157_item<T>(): string | T {\n  return \"probe AF157 item\";\n}\nfunction probe_AF157_make<T>(): { findings: string[]; extra?: T } {\n  return { findings: [\"probe AF157 holder\"] };\n}\nconst probe_AF157_arrow = <T>(): string[] | T[] => [\"probe AF157 arrow\"];",
+    code: "findings.push(...probe_AF157_list?.<string>());\n  findings.push(probe_AF157_item?.<string>());\n  const probe_AF157_read = probe_AF157_make?.<number>();\n  findings.push(...probe_AF157_read.findings);\n  findings.push(...probe_AF157_arrow<string>());",
+    at: "end",
+    added: ["^probe AF157 list$", "^probe AF157 item$", "^probe AF157 holder$", "^probe AF157 arrow$"],
+    unread: [],
+  },
+  {
+    id: "AF158",
+    label: "a module-level function declared after judgeTsxRow, called in a parameter initializer of an arrow in judgeTsxRow, is no PARAMETER SCOPE name (the gate's GW13-POS witness of G13-PS-POSONLY, verbatim)",
+    into: "judgeTsxRow",
+    code: "const probe_GW13_POS = (count: number = receiptTsxFields(\"\").length): number => count;\n  probe_GW13_POS();",
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF159",
+    label: "a push in a parameter initializer of an arrow in judgeTsxRow calling a module-level helper declared after judgeTsxRow is read (the gate's GW13-POSF witness of G13-PS-POSONLY, verbatim)",
+    into: "judgeTsxRow",
+    code: "const probe_GW13_POSF = (pushed: number = findings.push(...tierReceiptFields(\"\"))): number => pushed;\n  probe_GW13_POSF();",
+    at: "end",
+    added: ["^[\\s\\S]*?:[\\s\\S]*?$"],
+    unread: [],
+  },
+  {
+    id: "AF160",
+    label: "a holder's list property returned as the one member of an object literal whose other member reads another property of the same holder flows out (the gate's GW13-SV witness of G13-SAMEVALUE-NONAME, verbatim)",
+    into: "judgeTsxRow",
+    declaration: "function probe_GW13_SV_make(): { findings: string[]; count: number } {\n  return { findings: [\"probe GW13-SV\"], count: 1 };\n}\nfunction probe_GW13_SV_member(): { findings: string[]; count: number } {\n  const held = probe_GW13_SV_make();\n  return { findings: held.findings, count: held.count };\n}",
+    code: "const probe_GW13_SV_read = probe_GW13_SV_member();\n  findings.push(...probe_GW13_SV_read.findings);",
+    at: "end",
+    added: ["^probe GW13-SV$"],
+    unread: [],
+  },
+  {
+    id: "AF161",
+    label: "an arm a holder carries is ordered by the holder's call, before a push written between that call and the property read (the gate's GW13-HK witness of G13-HELD-KEY-ACCESS, verbatim)",
+    into: "judgeTsxRow",
+    declaration: "function probe_GW13_HK_make(): { findings: string[] } {\n  return { findings: [\"probe GW13-HK held\"] };\n}",
+    code: "const probe_GW13_HK_read = probe_GW13_HK_make();\n  findings.push(\"probe GW13-HK between\");\n  findings.push(...probe_GW13_HK_read.findings);",
+    at: "end",
+    added: ["^probe GW13-HK held$", "^probe GW13-HK between$"],
+    unread: [],
+  },
+  {
+    id: "AF162",
+    label: "a const bound to a named function expression whose body names itself other than as a callee is entered, its own name no reference vetted",
+    into: "judgeTsxRow",
+    declaration: "const probe_AF162 = function probe_AF162_self(): string[] {\n  void probe_AF162_self.name;\n  return [\"probe AF162\"];\n};",
+    code: "findings.push(...probe_AF162());",
+    at: "end",
+    added: ["^probe AF162$"],
+    unread: [],
+  },
+  {
+    id: "AF163",
+    label: "a holder's list property returned as the one member carrying it beside the same property of another holder of the same callee and a literal member",
+    into: "judgeTsxRow",
+    declaration: "function probe_AF163_make(): { findings: string[] } {\n  return { findings: [\"probe AF163\"] };\n}\nfunction probe_AF163_member(): { findings: string[]; also: string[]; count: number } {\n  const held = probe_AF163_make();\n  const other = probe_AF163_make();\n  return { findings: held.findings, also: other.findings, count: 1 };\n}",
+    code: "const probe_AF163_read = probe_AF163_member();\n  findings.push(...probe_AF163_read.findings);",
+    at: "end",
+    added: ["^probe AF163$"],
+    unread: [],
+  },
+  {
+    id: "AF164",
+    label: "a traced list returned as the one member carrying it, a shorthand, beside a member reading a property of another value",
+    into: "judgeTsxRow",
+    declaration: "function probe_AF164_make(): { findings: string[]; size: number } {\n  const findings = [\"probe AF164\"];\n  return { findings, size: \"x\".length };\n}",
+    code: "const probe_AF164_read = probe_AF164_make();\n  findings.push(...probe_AF164_read.findings);",
+    at: "end",
+    added: ["^probe AF164$"],
+    unread: [],
+  },
+  {
+    id: "AF165",
+    label: "arms one call reaches are ordered by their own positions, a push in a nested function declaration written before the list's declaration first, though the flow reads the initializer first",
+    into: "judgeTsxRow",
+    declaration: "function probe_AF165(): string[] {\n  function early(): number {\n    return out.push(\"probe AF165 early\");\n  }\n  const out: string[] = [\"probe AF165 late\"];\n  void early;\n  return out;\n}",
+    code: "findings.push(...probe_AF165());",
+    at: "end",
+    added: ["^probe AF165 early$", "^probe AF165 late$"],
+    unread: [],
+  },
+  {
+    id: "AF166",
+    label: "arms an entered call reaches are ordered at the call's start, before a push written inside its argument list",
+    into: "judgeTsxRow",
+    declaration: "function probe_AF166(flag: boolean): string[] {\n  return [flag ? \"probe AF166 when\" : \"probe AF166 otherwise\"];\n}",
+    code: "findings.push(...probe_AF166(findings.push(\"probe AF166 inner\") > 0));",
+    at: "end",
+    added: ["^probe AF166 when$", "^probe AF166 otherwise$", "^probe AF166 inner$"],
+    unread: [],
+  },
+  {
+    id: "AF167",
+    label: "a holder bound to a call of an arrow declared in judgeTsxRow carries that arrow's own const list, a traced list of judgeTsxRow",
+    into: "judgeTsxRow",
+    code: "const probe_AF167_make = (): { findings: string[] } => {\n    const out = [\"probe AF167\"];\n    return { findings: out };\n  };\n  const probe_AF167_read = probe_AF167_make();\n  findings.push(...probe_AF167_read.findings);",
+    at: "end",
+    added: ["^probe AF167$"],
+    unread: [],
+  },
+  {
+    id: "AF168",
+    label: "arms a holder carries are ordered at the start of the holder's call, before a push written inside its argument list",
+    into: "judgeTsxRow",
+    declaration: "function probe_AF168_make(flag: boolean): { findings: string[] } {\n  return { findings: [flag ? \"probe AF168 held\" : \"probe AF168 other\"] };\n}",
+    code: "const probe_AF168_read = probe_AF168_make(findings.push(\"probe AF168 inner\") > 0);\n  findings.push(...probe_AF168_read.findings);",
+    at: "end",
+    added: ["^probe AF168 held$", "^probe AF168 other$", "^probe AF168 inner$"],
+    unread: [],
+  },
+  {
+    id: "AF169",
+    label: "an exported, a generic and an unannotated function declaration, a generic and an unannotated const arrow, and a named, a generic and an unannotated const function expression, each entered and each carrying its own const list",
+    into: "judgeTsxRow",
+    declaration: "export function probe_AF169_exported(): string[] {\n  const out = [\"probe AF169 exported\"];\n  return out;\n}\nfunction probe_AF169_generic<T>(): string[] | T[] {\n  const out = [\"probe AF169 generic\"];\n  return out;\n}\nfunction probe_AF169_untyped() {\n  const out = [\"probe AF169 untyped\"];\n  return out;\n}\nconst probe_AF169_arrow_generic = <T>(): string[] | T[] => {\n  const out = [\"probe AF169 arrow generic\"];\n  return out;\n};\nconst probe_AF169_arrow_untyped = () => {\n  const out = [\"probe AF169 arrow untyped\"];\n  return out;\n};\nconst probe_AF169_named = function probe_AF169_named_self(): string[] {\n  const out = [\"probe AF169 named\"];\n  return out;\n};\nconst probe_AF169_fn_generic = function <T>(): string[] | T[] {\n  const out = [\"probe AF169 function generic\"];\n  return out;\n};\nconst probe_AF169_fn_untyped = function () {\n  const out = [\"probe AF169 function untyped\"];\n  return out;\n};",
+    code: "findings.push(...probe_AF169_exported(), ...probe_AF169_generic<string>(), ...probe_AF169_untyped(), ...probe_AF169_arrow_generic<string>(), ...probe_AF169_arrow_untyped());\n  findings.push(...probe_AF169_named(), ...probe_AF169_fn_generic<string>(), ...probe_AF169_fn_untyped());",
+    at: "end",
+    added: ["^probe AF169 exported$", "^probe AF169 generic$", "^probe AF169 untyped$", "^probe AF169 arrow generic$", "^probe AF169 arrow untyped$", "^probe AF169 named$", "^probe AF169 function generic$", "^probe AF169 function untyped$"],
+    unread: [],
+  },
+  {
+    id: "AF170",
+    label: "a return without a value inside an object literal's setter in an entered helper is no return of the helper",
+    into: "judgeTsxRow",
+    declaration: "function probe_AF170(): string[] {\n  const box = {\n    set value(next: string) {\n      if (next === \"\") return;\n      void next;\n    },\n  };\n  void box;\n  return [\"probe AF170\"];\n}",
+    code: "findings.push(...probe_AF170());",
+    at: "end",
+    added: ["^probe AF170$"],
+    unread: [],
+  },
+  {
+    id: "AF171",
+    label: "a holder's list property read optionally (held?.findings) returned as the one member of an object literal flows out",
+    into: "judgeTsxRow",
+    declaration: "function probe_AF171_make(): { findings: string[] } {\n  return { findings: [\"probe AF171\"] };\n}\nfunction probe_AF171_member(): { findings: string[] } {\n  const held = probe_AF171_make();\n  return { findings: held?.findings };\n}",
+    code: "const probe_AF171_read = probe_AF171_member();\n  findings.push(...probe_AF171_read.findings);",
+    at: "end",
+    added: ["^probe AF171$"],
+    unread: [],
+  },
+  {
+    id: "AF172",
+    label: "judgeTsxRow exported is read as the judge",
+    into: "judgeTsxRow",
+    rebind: "export",
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF173",
+    label: "judgeTsxRow given a type parameter is read as the judge",
+    into: "judgeTsxRow",
+    rebind: "generic",
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF174",
+    label: "judgeTsxRow written without its return type annotation is read as the judge",
+    into: "judgeTsxRow",
+    rebind: "untyped",
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF175",
+    label: "judgeTsxRow declared as an exported module-level const bound to a function expression is read as the judge",
+    into: "judgeTsxRow",
+    rebind: "exportconst",
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF176",
+    label: "the shared W10 view exported is still the shared view, never entered",
+    into: "w10View",
+    rebind: "export",
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF177",
+    label: "the shared W10 view given a type parameter is still the shared view, never entered",
+    into: "w10View",
+    rebind: "generic",
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF178",
+    label: "the shared W10 view written without its return type annotation is still the shared view, never entered",
+    into: "w10View",
+    rebind: "untyped",
+    at: 0,
+    added: [],
+    unread: [],
+  },
+  {
+    id: "AF179",
+    label: "the shared W10 view declared as an exported module-level const bound to a function expression is still the shared view, never entered",
+    into: "w10View",
+    rebind: "exportconst",
     at: 0,
     added: [],
     unread: [],
@@ -1974,6 +2292,237 @@ const ARM_FORMS: readonly ArmForm[] = [
     unread: ["a diagnosis list in a form T-ARMS does not trace", "a diagnosis in a form T-ARMS does not read", "a diagnosis list read from a value T-ARMS does not trace"],
   },
   {
+    id: "AU132",
+    label: "a traced list handed out by the return of an object literal's method in judgeTsxRow, refused (the gate's GW13-OM witness of G13-OWNER-NOMETHOD, verbatim)",
+    into: "judgeTsxRow",
+    code: "const probe_GW13_OM = {\n    take(): string[] {\n      return findings;\n    },\n  };\n  probe_GW13_OM.take().push(\"probe GW13-OM\");",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE],
+  },
+  {
+    id: "AU133",
+    label: "a traced list handed out by the return of a method of a class declared in judgeTsxRow, refused (the gate's GW13-CM witness of G13-OWNER-NOMETHOD, verbatim)",
+    into: "judgeTsxRow",
+    code: "class probe_GW13_CM {\n    take(): string[] {\n      return findings;\n    }\n  }\n  new probe_GW13_CM().take().push(\"probe GW13-CM\");",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE],
+  },
+  {
+    id: "AU134",
+    label: "a traced list handed out by the return of an object literal's getter in judgeTsxRow, refused (the gate's GW13-OA witness of G13-OWNER-NOACCESSOR and G13-OWNER-NOMETHOD, verbatim)",
+    into: "judgeTsxRow",
+    code: "const probe_GW13_OA = {\n    get all(): string[] {\n      return findings;\n    },\n  };\n  probe_GW13_OA.all.push(\"probe GW13-OA\");",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE],
+  },
+  {
+    id: "AU135",
+    label: "a traced list handed out by a return statement of a block-bodied arrow in judgeTsxRow, refused (the gate's GW13-RS witness of G13-FLOWSOUT-RETSTMT-NOOWN, verbatim)",
+    into: "judgeTsxRow",
+    code: "const probe_GW13_RS = (): string[] => {\n    return findings;\n  };\n  probe_GW13_RS().push(\"probe GW13-RS\");",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE],
+  },
+  {
+    id: "AU136",
+    label: "a traced list handed out by a return statement of a function declaration nested in judgeTsxRow, refused (the gate's GW13-RSD witness of G13-FLOWSOUT-RETSTMT-NOOWN, verbatim)",
+    into: "judgeTsxRow",
+    code: "function probe_GW13_RSD(): string[] {\n    return findings;\n  }\n  probe_GW13_RSD().push(\"probe GW13-RSD\");",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE],
+  },
+  {
+    id: "AU137",
+    label: "a traced list handed out as the one member of an object literal an arrow in judgeTsxRow returns, refused (the gate's GW13-OO witness of G13-FLOWSOUT-OBJ-NOOWN, verbatim)",
+    into: "judgeTsxRow",
+    code: "const probe_GW13_OO = (): { findings: string[] } => ({ findings });\n  probe_GW13_OO().findings.push(\"probe GW13-OO\");",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE],
+  },
+  {
+    id: "AU138",
+    label: "a traced list handed out as the one member of an object literal a block-bodied arrow in judgeTsxRow returns, refused (the gate's GW13-OOB witness of G13-FLOWSOUT-OBJ-NOOWN and G13-FLOWSOUT-RETSTMT-NOOWN, verbatim)",
+    into: "judgeTsxRow",
+    code: "const probe_GW13_OOB = (): { findings: string[] } => {\n    return { findings: findings };\n  };\n  probe_GW13_OOB().findings.push(\"probe GW13-OOB\");",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE],
+  },
+  {
+    id: "AU139",
+    label: "a traced list handed out by a return of every other closure kind declared in judgeTsxRow, each refused: a function expression, anonymous, named, async and generator, a class's static method and getter, a class expression's method, an object literal's async and generator methods, and an async arrow's expression body",
+    into: "judgeTsxRow",
+    code: "const probe_AU139_fn = function (): string[] {\n    return findings;\n  };\n  const probe_AU139_named = function probe_AU139_inner(): string[] {\n    return findings;\n  };\n  const probe_AU139_async = async function (): Promise<string[]> {\n    return findings;\n  };\n  const probe_AU139_gen = function* (): Generator<never, string[]> {\n    return findings;\n  };\n  class probe_AU139_class {\n    static take(): string[] {\n      return findings;\n    }\n    get all(): string[] {\n      return findings;\n    }\n  }\n  const probe_AU139_kept = class {\n    take(): string[] {\n      return findings;\n    }\n  };\n  const probe_AU139_object = {\n    async take(): Promise<string[]> {\n      return findings;\n    },\n    *walk(): Generator<never, string[]> {\n      return findings;\n    },\n  };\n  const probe_AU139_arrow = async (): Promise<string[]> => findings;\n  void [probe_AU139_fn, probe_AU139_named, probe_AU139_async, probe_AU139_gen, probe_AU139_class, probe_AU139_kept, probe_AU139_object, probe_AU139_arrow];",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE],
+  },
+  {
+    id: "AU140",
+    label: "a traced list handed out as the one member of an object literal returned by every closure kind declared in judgeTsxRow, each refused: a nested function declaration, a function expression, anonymous, named, async and generator, an async arrow's expression body, an object literal's method, getter, async method and generator method, a class's method, static method and getter, and a class expression's method",
+    into: "judgeTsxRow",
+    code: "function probe_AU140_decl(): { findings: string[] } {\n    return { findings };\n  }\n  const probe_AU140_fn = function (): { findings: string[] } {\n    return { findings: findings };\n  };\n  const probe_AU140_named = function probe_AU140_inner(): { findings: string[] } {\n    return { findings };\n  };\n  const probe_AU140_async = async function (): Promise<{ findings: string[] }> {\n    return { findings };\n  };\n  const probe_AU140_gen = function* (): Generator<never, { findings: string[] }> {\n    return { findings };\n  };\n  const probe_AU140_arrow = async (): Promise<{ findings: string[] }> => ({ findings });\n  const probe_AU140_object = {\n    take(): { findings: string[] } {\n      return { findings };\n    },\n    get all(): { findings: string[] } {\n      return { findings };\n    },\n    async later(): Promise<{ findings: string[] }> {\n      return { findings };\n    },\n    *walk(): Generator<never, { findings: string[] }> {\n      return { findings };\n    },\n  };\n  class probe_AU140_class {\n    take(): { findings: string[] } {\n      return { findings };\n    }\n    static make(): { findings: string[] } {\n      return { findings };\n    }\n    get all(): { findings: string[] } {\n      return { findings };\n    }\n  }\n  const probe_AU140_kept = class {\n    take(): { findings: string[] } {\n      return { findings };\n    }\n  };\n  void [probe_AU140_decl, probe_AU140_fn, probe_AU140_named, probe_AU140_async, probe_AU140_gen, probe_AU140_arrow, probe_AU140_object, probe_AU140_class, probe_AU140_kept];",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE, UNREAD_LIST_USE],
+  },
+  {
+    id: "AU141",
+    label: "a PARAMETER SCOPE shorthand property name in a closure in an arrow host's parameter default, bound by the checker (its value) to a function of the host's body, refused (the gate's GW13-PSS witness of G13-PS-SHORTHAND, verbatim)",
+    into: "judgeTsxRow",
+    code: "const probe_GW13_PSS = (get: () => { probe_GW13_PSS_fn: () => number } = () => ({ probe_GW13_PSS_fn })): number => {\n    function probe_GW13_PSS_fn(): number {\n      return 0;\n    }\n    return get().probe_GW13_PSS_fn() + probe_GW13_PSS_fn();\n  };\n  probe_GW13_PSS();",
+    at: 0,
+    added: [],
+    unread: [unreadParameterScope("probe_GW13_PSS_fn")],
+  },
+  {
+    id: "AU142",
+    label: "a PARAMETER SCOPE shorthand property name in a function expression and in an object literal's method created in an arrow host's parameter defaults, bound by the checker (its value) to a function of the host's body, each refused",
+    into: "judgeTsxRow",
+    code: "const probe_AU142 = (\n    get: () => { probe_AU142_fn: () => number } = function (): { probe_AU142_fn: () => number } {\n      return { probe_AU142_fn };\n    },\n    box: { take(): { probe_AU142_fn: () => number } } = {\n      take(): { probe_AU142_fn: () => number } {\n        return { probe_AU142_fn };\n      },\n    },\n  ): number => {\n    function probe_AU142_fn(): number {\n      return 0;\n    }\n    return get().probe_AU142_fn() + box.take().probe_AU142_fn() + probe_AU142_fn();\n  };\n  probe_AU142();",
+    at: 0,
+    added: [],
+    unread: [unreadParameterScope("probe_AU142_fn"), unreadParameterScope("probe_AU142_fn")],
+  },
+  {
+    id: "AU143",
+    label: "the traced list's push member passed as an argument of a global call beside a string, refused (the gate's GW13-VC witness of G13-VARIABLE-CALLEXPR, verbatim)",
+    into: "judgeTsxRow",
+    code: "void Array.of<unknown>(findings.push, \"probe GW13-VC\");",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE],
+  },
+  {
+    id: "AU144",
+    label: "the traced list's unshift member passed as an argument of a helper's call and its push member as an argument of a method call, each refused",
+    into: "judgeTsxRow",
+    code: "const probe_AU144_take = (adder: unknown): unknown => adder;\n  probe_AU144_take(findings.unshift);\n  const probe_AU144_box = { take: (adder: unknown): unknown => adder };\n  probe_AU144_box.take(findings.push);",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE, UNREAD_LIST_USE],
+  },
+  {
+    id: "AU145",
+    label: "a module-level await using declaration read as a diagnosis name, refused as no const (the gate's GW13-AU witness of G13-CLASSIFY-USING, verbatim)",
+    into: "judgeTsxRow",
+    declaration: "await using PROBE_GW13_AU = \"probe GW13-AU\" as unknown as AsyncDisposable & string;",
+    code: "findings.push(PROBE_GW13_AU);",
+    at: 0,
+    added: [],
+    unread: ["a diagnosis read from PROBE_GW13_AU, which is not a const value"],
+  },
+  {
+    id: "AU146",
+    label: "destructured consts with default values read as a diagnosis name, as a list name and as a callee, each refused",
+    into: "judgeTsxRow",
+    code: "const { probe_AU146_item = \"probe AU146 item\", probe_AU146_list = [\"probe AU146 list\"], probe_AU146_fn = (): string[] => [\"probe AU146 fn\"] } = {} as { probe_AU146_item?: string; probe_AU146_list?: string[]; probe_AU146_fn?: () => string[] };\n  findings.push(probe_AU146_item);\n  findings.push(...probe_AU146_list);\n  findings.push(...probe_AU146_fn());",
+    at: 0,
+    added: [],
+    unread: ["a diagnosis read from probe_AU146_item, which is not a const value", "a diagnosis list probe_AU146_list that is not a const of the function returning it", "a call of probe_AU146_fn, not a function of this file T-ARMS enters"],
+  },
+  {
+    id: "AU147",
+    label: "a module-level declare const, which has no initializer, read as a diagnosis name, refused",
+    into: "judgeTsxRow",
+    declaration: "declare const PROBE_AU147: string;",
+    code: "findings.push(PROBE_AU147);",
+    at: 0,
+    added: [],
+    unread: ["a diagnosis read from PROBE_AU147, which is not a const value"],
+  },
+  {
+    id: "AU148",
+    label: "the traced list as the default of a shorthand in a destructuring assignment, refused",
+    into: "judgeTsxRow",
+    code: "let probe_AU148: string[] | undefined;\n  ({ probe_AU148 = findings } = {} as { probe_AU148?: string[] });\n  void probe_AU148;",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE],
+  },
+  {
+    id: "AU149",
+    label: "a reached helper handed out by an export specifier aliased to its own name, written over three lines, refused once",
+    into: "judgeTsxRow",
+    declaration: "export {\n  tsxRecordFindings as\n    tsxRecordFindings,\n};",
+    at: 0,
+    added: [],
+    unread: ["the function tsxRecordFindings referenced other than as the callee of a call"],
+  },
+  {
+    id: "AU150",
+    label: "an entered helper's traced list returned as the right operand of a comma expression and as the default of a parameter of an arrow it returns (cast), each return and each reference refused",
+    into: "judgeTsxRow",
+    declaration: "function probe_AU150(flag: number): string[] {\n  const out = [\"probe AU150\"];\n  if (flag === 0) return (String(flag), out);\n  if (flag === 1) return ((seen = out) => seen) as unknown as string[];\n  return out;\n}",
+    code: "findings.push(...probe_AU150(2));",
+    at: "end",
+    added: ["^probe AU150$"],
+    unread: ["a diagnosis list in a form T-ARMS does not trace", "a diagnosis list in a form T-ARMS does not trace", "the diagnosis list out used outside the forms T-ARMS reads", "the diagnosis list out used outside the forms T-ARMS reads"],
+  },
+  {
+    id: "AU151",
+    label: "the traced list's push and unshift members called through parentheses, each refused",
+    into: "judgeTsxRow",
+    code: "(findings.push)(\"probe AU151\");\n  (findings.unshift)(\"probe AU151 unshift\");",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE, UNREAD_LIST_USE],
+  },
+  {
+    id: "AU152",
+    label: "a holder's callee returning a const that holds an object literal, not an object literal, refused",
+    into: "judgeTsxRow",
+    declaration: "function probe_AU152(): { findings: string[] } {\n  const made = { findings: [\"probe AU152\"] };\n  return made;\n}",
+    code: "const probe_AU152_read = probe_AU152();\n  findings.push(...probe_AU152_read.findings);",
+    at: 0,
+    added: [],
+    unread: ["a return of probe_AU152 that does not carry exactly one findings"],
+  },
+  {
+    id: "AU153",
+    label: "a holder's callee returning its list in a plain object literal and beside a spread member: the spread return refused, its list reference no second member's",
+    into: "judgeTsxRow",
+    declaration: "function probe_AU153(flag: boolean): { findings: string[] } {\n  const out = [\"probe AU153\"];\n  if (flag) return { findings: out, ...{} };\n  return { findings: out };\n}",
+    code: "const probe_AU153_read = probe_AU153(true);\n  findings.push(...probe_AU153_read.findings);",
+    at: "end",
+    added: ["^probe AU153$"],
+    unread: ["a return of probe_AU153 that does not carry exactly one findings"],
+  },
+  {
+    id: "AU154",
+    label: "an exported, a generic and an unannotated entered function declaration, each referenced other than as the callee of a call, each refused",
+    into: "judgeTsxRow",
+    declaration: "export function probe_AU154_exported(): string[] {\n  return [\"probe AU154 exported\"];\n}\nfunction probe_AU154_generic<T>(): string[] | T[] {\n  return [\"probe AU154 generic\"];\n}\nfunction probe_AU154_untyped() {\n  return [\"probe AU154 untyped\"];\n}",
+    code: "findings.push(...probe_AU154_exported(), ...probe_AU154_generic<string>(), ...probe_AU154_untyped());\n  void [probe_AU154_exported, probe_AU154_generic, probe_AU154_untyped];",
+    at: "end",
+    added: ["^probe AU154 exported$", "^probe AU154 generic$", "^probe AU154 untyped$"],
+    unread: ["the function probe_AU154_exported referenced other than as the callee of a call", "the function probe_AU154_generic referenced other than as the callee of a call", "the function probe_AU154_untyped referenced other than as the callee of a call"],
+  },
+  {
+    id: "AU155",
+    label: "PARAMETER SCOPE in more host forms in judgeTsxRow, each refused: a generic and an unannotated function declaration, a named, a generic and an unannotated function expression, a generic and an unannotated arrow, a generic, an unannotated and an optional class method, a private constructor's parameter property, a static setter's destructured parameter and a function declaration's rest parameter pattern",
+    into: "judgeTsxRow",
+    code: "function probe_AU155_generic<T>(seen: () => number = () => probe_AU155_a()): number {\n    function probe_AU155_a(): number {\n      return 0;\n    }\n    return seen();\n  }\n  function probe_AU155_untyped(seen = () => probe_AU155_b()) {\n    function probe_AU155_b(): number {\n      return 0;\n    }\n    return seen();\n  }\n  const probe_AU155_named = function probe_AU155_self(seen: () => number = () => probe_AU155_c()): number {\n    function probe_AU155_c(): number {\n      return 0;\n    }\n    return seen();\n  };\n  const probe_AU155_fn_generic = function <T>(seen: () => number = () => probe_AU155_d()): number {\n    function probe_AU155_d(): number {\n      return 0;\n    }\n    return seen();\n  };\n  const probe_AU155_fn_untyped = function (seen = () => probe_AU155_e()) {\n    function probe_AU155_e(): number {\n      return 0;\n    }\n    return seen();\n  };\n  const probe_AU155_arrow_generic = <T>(seen: () => number = () => probe_AU155_f()): number => {\n    function probe_AU155_f(): number {\n      return 0;\n    }\n    return seen();\n  };\n  const probe_AU155_arrow_untyped = (seen = () => probe_AU155_g()) => {\n    function probe_AU155_g(): number {\n      return 0;\n    }\n    return seen();\n  };\n  class probe_AU155_class {\n    run<T>(seen: () => number = () => probe_AU155_h()): number {\n      function probe_AU155_h(): number {\n        return 0;\n      }\n      return seen();\n    }\n    walk(seen = () => probe_AU155_i()) {\n      function probe_AU155_i(): number {\n        return 0;\n      }\n      return seen();\n    }\n    maybe?(seen: () => number = () => probe_AU155_j()): number {\n      function probe_AU155_j(): number {\n        return 0;\n      }\n      return seen();\n    }\n    private constructor(private seen: () => number = () => probe_AU155_k()) {\n      function probe_AU155_k(): number {\n        return 0;\n      }\n      void this.seen;\n    }\n    static set probe_AU155_value({ seen = () => probe_AU155_l() }: { seen?: () => number }) {\n      function probe_AU155_l(): number {\n        return 0;\n      }\n      void seen;\n    }\n  }\n  function probe_AU155_rest(...[seen = () => probe_AU155_m()]: Array<() => number>): number {\n    function probe_AU155_m(): number {\n      return 0;\n    }\n    return seen();\n  }\n  void [probe_AU155_generic, probe_AU155_untyped, probe_AU155_named, probe_AU155_fn_generic, probe_AU155_fn_untyped, probe_AU155_arrow_generic, probe_AU155_arrow_untyped, probe_AU155_class, probe_AU155_rest];",
+    at: 0,
+    added: [],
+    unread: [unreadParameterScope("probe_AU155_a"), unreadParameterScope("probe_AU155_b"), unreadParameterScope("probe_AU155_c"), unreadParameterScope("probe_AU155_d"), unreadParameterScope("probe_AU155_e"), unreadParameterScope("probe_AU155_f"), unreadParameterScope("probe_AU155_g"), unreadParameterScope("probe_AU155_h"), unreadParameterScope("probe_AU155_i"), unreadParameterScope("probe_AU155_j"), unreadParameterScope("probe_AU155_k"), unreadParameterScope("probe_AU155_l"), unreadParameterScope("probe_AU155_m")],
+  },
+  {
+    id: "AU156",
+    label: "a traced list handed out by a class constructor's return, alone (a class extending Array<string>) and as the one member of an object literal (a class with a findings property), each refused",
+    into: "judgeTsxRow",
+    code: "class probe_AU156_list extends Array<string> {\n    constructor() {\n      super();\n      return findings;\n    }\n  }\n  class probe_AU156_object {\n    findings: string[] = [];\n    constructor() {\n      return { findings };\n    }\n  }\n  void [probe_AU156_list, probe_AU156_object];",
+    at: 0,
+    added: [],
+    unread: [UNREAD_LIST_USE, UNREAD_LIST_USE],
+  },
+  {
     id: "AR1",
     label: "residual, pinned quiet: Array.prototype.push replaced at module level is never read",
     into: "judgeTsxRow",
@@ -2008,21 +2557,30 @@ const armFormShape = (form: ArmForm): string =>
 
 /** `source` with one T-ARMS-FORMS probe written in, located with the TypeScript parser: its code before the last statement of
  * the top-level function it names, its return type over that function's own, its declaration as a top-level statement before that
- * function; or, for a rebind, that function declared instead as a module-level const (or let) bound to a function expression or an
- * arrow function with the same parameters, return type and body (a pair or a triple: the const statement declares one or two other
- * names first). */
+ * function; or, for a rebind, that function declared instead as a module-level const (or let, or an exported const) bound to a
+ * function expression or an arrow function with the same parameters, return type and body (a pair or a triple: the const statement
+ * declares one or two other names first), or its own declaration exported, given a type parameter T or stripped of its return type
+ * annotation. */
 function armProbe(source: string, form: ArmForm): string {
   const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const target = file.statements.find((statement): statement is ts.FunctionDeclaration => ts.isFunctionDeclaration(statement) && statement.name?.text === form.into);
   const last = target?.body?.statements.at(-1);
   if (target === undefined || last === undefined) throw new Error(`mutant authoring: no top-level function ${form.into} with a body`);
   if (form.rebind !== undefined) {
-    const { name, body } = target;
+    const { name, body, type } = target;
     if (name === undefined || body === undefined || form.code !== undefined || form.retype !== undefined || form.declaration !== undefined) {
       throw new Error(`mutant authoring: ${form.id} rebinds ${form.into} and writes nothing else`);
     }
+    if (form.rebind === "export") return `${source.slice(0, target.getStart(file))}export ${source.slice(target.getStart(file))}`;
+    if (form.rebind === "generic") return `${source.slice(0, name.end)}<T>${source.slice(name.end)}`;
+    if (form.rebind === "untyped") {
+      if (type === undefined) throw new Error(`mutant authoring: ${form.into} declares no return type`);
+      return `${source.slice(0, source.lastIndexOf(":", type.getStart(file)))}${source.slice(type.end)}`;
+    }
     const head =
-      form.rebind === "arrow"
+      form.rebind === "exportconst"
+        ? `export const ${form.into} = function `
+        : form.rebind === "arrow"
         ? `const ${form.into} = `
         : form.rebind === "pair"
           ? `const ${form.into}_kept = 0, ${form.into} = function `
@@ -2057,49 +2615,50 @@ const BARE_REASON = "no judgeTsxRow function";
 
 /** The header's claim lists, item by item, in the header's order (READ, then REFUSED, then RESIDUAL). */
 const ARM_CLAIMS: readonly ArmClaim[] = [
-  { list: "read", item: "the diagnosis flow followed back from the first seven return statements of the module-level judgeTsxRow, at its place among the guard's statements or after up to 64 top-level statements written before it: a function declaration, a const bound to a function expression or an arrow function, or a const bound to a function expression after one or two other names in its statement", probes: ["AF1", "AF114", "AF115", "AF122", "AF131", "AF145", "AF37"] },
+  { list: "read", item: "the diagnosis flow followed back from the first seven return statements of the module-level judgeTsxRow, at its place among the guard's statements or after up to 64 top-level statements written before it: a function declaration, plain, exported, with a type parameter or without its return type annotation, a const bound to a function expression or an arrow function, an exported const bound to a function expression, or a const bound to a function expression after one or two other names in its statement", probes: ["AF1", "AF114", "AF115", "AF122", "AF131", "AF145", "AF37", "AF172", "AF173", "AF174", "AF175"] },
   { list: "read", item: "a LIST is an array literal of up to three elements, each element one diagnosis and each spread a list", probes: ["AF8", "AF19", "AF127"] },
   { list: "read", item: "a conditional of lists", probes: ["AF4"] },
-  { list: "read", item: "a call of a name T-ARMS enters, that bare name its callee, plain or optional (f?.()), each of its first eleven returns a list", probes: ["AF5", "AF8", "AF31", "AF107", "AF132"] },
-  { list: "read", item: "a TRACED LIST, the name of a const declared in the same top-level function, a function declaration or a function expression or an arrow function bound to a module-level const, inside a function expression or an arrow nested in it, up to two such closures deep, included: its initializer", probes: ["AF14", "AF123", "AF112", "AF113"] },
+  { list: "read", item: "a call of a name T-ARMS enters, that bare name its callee, plain or optional (f?.()), with or without type arguments (f<T>(), f?.<T>()), each of its first eleven returns a list", probes: ["AF5", "AF8", "AF31", "AF107", "AF132", "AF154", "AF157"] },
+  { list: "read", item: "a TRACED LIST, the name of a const declared in the same top-level function, a function declaration or a function expression or an arrow function bound to a module-level const, in every form T-ARMS enters, inside a function expression or an arrow nested in it, up to two such closures deep, included: its initializer", probes: ["AF14", "AF123", "AF112", "AF113", "AF169"] },
   { list: "read", item: "the arguments of every push() called on it among its first 39 references, up to five arguments, a spread argument a list and any other one diagnosis", probes: ["AF1", "AF5", "AF35", "AF109", "AF125"] },
   { list: "read", item: "the arguments of every unshift() called on it, up to five, read the same way", probes: ["AF6", "AF126", "AF144"] },
   { list: "read", item: "a push on a traced list in each of these places in the function declaring it, no other place claimed: inside an arrow or a function expression passed as a callback; a method, a constructor, a field initializer, a static block, a static method or an accessor of a class declared there; a method or an accessor of an object literal; a nested function declaration, an async arrow or a generator function expression; directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, a block or a throw statement; an arrow that decorates a class; the first or the second substitution of a template literal, or the first of a tagged template; the test or either branch of a conditional; either operand of && or ||, or the right operand of ??; the first or the second element of an array literal; the value of the first or the second property of an object literal; a computed property name; the first or the second argument of a call, the argument of a new expression or of an element access; either operand of a comma expression; parentheses or a type assertion (as, satisfies, the non-null !, <T>); the operand of void, typeof, await, ! or unary -; the right operand of +, = or +=, or the left operand of > or ===; the object of a property read; an optional chain (findings?.push(), findings.push?.()); a parameter initializer of a closure; or a class's extends expression", probes: ["AF13", "AF102", "AF101", "AF103", "AF124", "AF121", "AF125", "AF23", "AF21"] },
-  { list: "read", item: "a traced list FLOWS OUT unchanged: spread in an array literal or an argument list, or returned by the function declaring it, alone or as the value of the one member, a shorthand or a property assignment, of a returned object literal, the list alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), each kind the innermost, up to seven of them, and the object alone or inside them, up to four, each taken off; a holder's list property flows out the same ways", probes: ["AF14", "AF113", "AF153", "AF34", "AF147", "AF150", "AF130", "AF139", "AF151", "AF138", "AF19", "AF140", "AF152"] },
+  { list: "read", item: "a traced list FLOWS OUT unchanged: spread in an array literal or an argument list, or returned by the function declaring it, by a return statement of its own body (a closure's return is REFUSED), alone or as the value of the one member, a shorthand or a property assignment, of a returned object literal (a member reading a property of another value being no second member carrying it), the list alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), each kind the innermost, up to seven of them, and the object alone or inside them, up to four, each taken off; a holder's list property, read plain or optional, flows out the same ways, a member reading another property of the same holder, the same property of another holder or a literal being no second member carrying it", probes: ["AF14", "AF113", "AF153", "AF34", "AF147", "AF150", "AF130", "AF139", "AF151", "AF138", "AF19", "AF140", "AF152", "AF160", "AF164", "AF163", "AF171"] },
   { list: "read", item: "the traced lists of every function T-ARMS enters, not only judgeTsxRow's", probes: ["AF2", "AF7"] },
-  { list: "read", item: "a property read from a HOLDER, plain or optional (holder?.property), the name of a const of the same top-level function bound to a call of a name T-ARMS enters, that bare name its callee, plain or optional (f?.()), the call alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), up to four of them, each taken off: that property, a shorthand or a property assignment among the first four members, of each of the first five object literals the callee returns, each alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), up to four of them, each taken off", probes: ["AF2", "AF19", "AF36", "AF110", "AF111", "AF128", "AF134", "AF135", "AF136", "AF137", "AF138", "AF139", "AF148"] },
+  { list: "read", item: "a property read from a HOLDER, plain or optional (holder?.property), the name of a const of the same top-level function bound to a call of a name T-ARMS enters (a function of the module or of that top-level function), that bare name its callee, plain or optional (f?.()), with or without type arguments (f<T>(), f?.<T>()), the call alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), up to four of them, each taken off: that property, a shorthand or a property assignment among the first four members, of each of the first five object literals the callee returns, each alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), up to four of them, each taken off", probes: ["AF2", "AF19", "AF36", "AF110", "AF111", "AF128", "AF134", "AF135", "AF136", "AF137", "AF138", "AF139", "AF148", "AF156", "AF157", "AF167"] },
   { list: "read", item: "a DIAGNOSIS is a string literal, one arm, its text matched literally (each regular-expression metacharacter escaped)", probes: ["AF1", "AF146"] },
   { list: "read", item: "a no-substitution template, one arm, its text matched literally", probes: ["AF25", "AF149"] },
   { list: "read", item: "a template literal of up to four substitutions, one arm, each substitution read as any text and the text around them matched literally", probes: ["AF11", "AF129", "AF149"] },
   { list: "read", item: "a conditional of diagnoses", probes: ["AF12"] },
   { list: "read", item: "the name of a const of a function whose initializer is one diagnosis", probes: ["AF3"] },
   { list: "read", item: "the name of a module-level const whose initializer is one diagnosis", probes: ["AF9"] },
-  { list: "read", item: "a call of a name T-ARMS enters, that bare name its callee, plain or optional (f?.()), each of its first eleven returns one diagnosis", probes: ["AF10", "AF133", "AF143"] },
+  { list: "read", item: "a call of a name T-ARMS enters, that bare name its callee, plain or optional (f?.()), with or without type arguments (f<T>(), f?.<T>()), each of its first eleven returns one diagnosis", probes: ["AF10", "AF133", "AF143", "AF155", "AF157"] },
   { list: "read", item: "any list or diagnosis inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), each kind the outermost, up to seven of them, each taken off", probes: ["AF24", "AF34", "AF141", "AF142"] },
-  { list: "read", item: "T-ARMS ENTERS a name whose one declaration is a function declaration with a body, not a generator", probes: ["AF8", "AF10"] },
-  { list: "read", item: "or a const bound to an arrow function, not a generator", probes: ["AF5"] },
-  { list: "read", item: "or a const bound to a function expression, not a generator", probes: ["AF26"] },
+  { list: "read", item: "T-ARMS ENTERS a name whose one declaration is a function declaration with a body, not a generator, plain, exported, with a type parameter or without a return type annotation", probes: ["AF8", "AF10", "AF169"] },
+  { list: "read", item: "or a const bound to an arrow function, not a generator, with or without a type parameter or a return type annotation", probes: ["AF5", "AF169"] },
+  { list: "read", item: "or a const bound to a function expression, not a generator, anonymous or named, with or without a type parameter or a return type annotation, the name of a named one used inside it never refused", probes: ["AF26", "AF162", "AF169"] },
   { list: "read", item: "either one inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), up to four of them, each taken off", probes: ["AF108", "AF109"] },
   { list: "read", item: "it reads every return statement of that function's own body, at any depth of its statements, with up to seven syntax nodes between the return and that body: under an if or its else, in a block or a labeled statement, in a for, for-in, for-of, while or do loop, in a try block, a catch clause or a finally block, in a case or the default clause of a switch; or an arrow's expression body", probes: ["AF31", "AF4", "AF5", "AF104", "AF105", "AF106", "AF107"] },
-  { list: "read", item: "never a return of a function or a class nested in it", probes: ["AF27"] },
+  { list: "read", item: "never a return of a function or a class nested in it, an object literal's setter included", probes: ["AF27", "AF170"] },
   { list: "read", item: "and never its declared return type", probes: ["AF16"] },
   { list: "read", item: "each NAME is read as the declaration the TypeScript checker binds that reference to: a local helper shadowing a reached one in the scope of its call is the one read, the reached one's arms out of reach", probes: ["AF15"] },
   { list: "read", item: "a module-level helper is read past a same-named const in a closure that does not enclose the call", probes: ["AF17"] },
   { list: "read", item: "a same-named copy of a reached helper in a closure that does not enclose its call leaves the reached helper read", probes: ["AF18"] },
   { list: "read", item: "a function of another scope sharing the shared W10 view's name is entered like any other", probes: ["AF19"] },
-  { list: "read", item: "a module-level helper called in a parameter initializer of a closure in judgeTsxRow is read when no declaration in that closure's body shares its name", probes: ["AF23"] },
+  { list: "read", item: "a module-level helper called in a parameter initializer of a closure in judgeTsxRow, declared before judgeTsxRow or after it, is read when no declaration in that closure's body shares its name", probes: ["AF23", "AF159"] },
   { list: "read", item: "and when a const of that body shares it, the checker giving a variable the parameter scope's binding", probes: ["AF22"] },
   { list: "read", item: "a parameter's own name is no PARAMETER SCOPE name, though a var of that function's body redeclares it", probes: ["AF32"] },
   { list: "read", item: "nor is a name in a parameter's type annotation, a type position, its type node up to four syntax nodes above the name (a typeof query of the name, of a property of it or of a nested property of it, a computed key of a type literal), though the checker binds it into the body", probes: ["AF33", "AF118", "AF119"] },
+  { list: "read", item: "nor is the name of a module-level function declared after judgeTsxRow, called in a parameter initializer of a closure in judgeTsxRow, its declaration past that closure's body", probes: ["AF158", "AF159"] },
   { list: "read", item: "a reached helper named in a TYPE POSITION, an annotation, a type argument or a typeof query, is no reference", probes: ["AF20"] },
   { list: "read", item: "nor is a traced list named in a typeof query of a property or of a nested property of it, in an annotation inside the function declaring it", probes: ["AF120"] },
   { list: "read", item: "nor in an interface's extends clause or a class's implements clause", probes: ["AF29"] },
   { list: "read", item: "a class's extends expression is a value, never a type position: a push there is read", probes: ["AF21"] },
-  { list: "read", item: "the SHARED W10 VIEW, the module-level declaration named SHARED_VIEW, a function declaration or a const bound to a function expression or an arrow function, is never entered: a holder of its call carries the view's findings, which the stamped-claim tables judge, so they are not read as arms", probes: ["AF30", "AF116", "AF117"] },
-  { list: "read", item: "ARMS are ordered by the source positions of the calls, holder calls and const references the flow passes through to reach each, then by its own position", probes: ["AF2", "AF7", "AF9", "AF15", "AF36"] },
+  { list: "read", item: "the SHARED W10 VIEW, the module-level declaration named SHARED_VIEW, a function declaration, plain, exported, with a type parameter or without its return type annotation, a const bound to a function expression or an arrow function, or an exported const bound to a function expression, is never entered: a holder of its call carries the view's findings, which the stamped-claim tables judge, so they are not read as arms", probes: ["AF30", "AF116", "AF117", "AF176", "AF177", "AF178", "AF179"] },
+  { list: "read", item: "ARMS are ordered by the source positions (each node's start) of the calls, holder calls and const references the flow passes through to reach each, then by its own position, whatever the order the flow reaches them in; a holder's arms at its call, never at its property read, and a call's or a holder call's arms before a push written inside its argument list", probes: ["AF2", "AF7", "AF9", "AF15", "AF36", "AF161", "AF165", "AF166", "AF168"] },
   { list: "read", item: "an arm reached along several flows keeps the earliest", probes: ["AF28", "AF38"] },
   { list: "read", item: "a diagnosis reached through a chain of 64 const references, the depth bound, is read", probes: ["AF37"] },
-  { list: "refused", item: "in a list or diagnosis position, any expression no READ item names, for example a method call", probes: ["AU7", "AU10", "AU72", "AU82", "AU83"] },
+  { list: "refused", item: "in a list or diagnosis position, any expression no READ item names, for example a method call", probes: ["AU7", "AU10", "AU72", "AU82", "AU83", "AU150"] },
   { list: "refused", item: "a property read in a diagnosis position, or in a list position from anything but a name", probes: ["AU72", "AU73"] },
   { list: "refused", item: "an element access", probes: ["AU72", "AU73"] },
   { list: "refused", item: "an operator, binary or unary", probes: ["AU6", "AU72", "AU73", "AU82", "AU83"] },
@@ -2117,24 +2676,24 @@ const ARM_CLAIMS: readonly ArmClaim[] = [
   { list: "refused", item: "a parameter", probes: ["AU57"] },
   { list: "refused", item: "an import", probes: ["AU58"] },
   { list: "refused", item: "a class", probes: ["AU59"] },
-  { list: "refused", item: "a destructured name", probes: ["AU60"] },
+  { list: "refused", item: "a destructured name, with or without a default value", probes: ["AU60", "AU146"] },
   { list: "refused", item: "an undeclared name", probes: ["AU5"] },
   { list: "refused", item: "a name with more than one declaration: an overload signature, a second implementation", probes: ["AU36", "AU75"] },
-  { list: "refused", item: "a list name that is not a const of the same top-level function: a module-level list, a let list, a parameter's default list", probes: ["AU8", "AU9", "AU14"] },
-  { list: "refused", item: "a diagnosis name that is not a const: a parameter, a destructured const", probes: ["AU23", "AU37"] },
-  { list: "refused", item: "every reference to a traced list among its first 39 references, outside type positions, other than as the object of a push() or unshift() call or as a FLOW OUT: a splice, an element write, an alias, an object spread, an argument of a helper or of a global, an iteration, a length write, a push through an element access, a closure handing it out, an object literal that is not returned, a second member carrying it among the object's first four members, a property assignment or a shorthand, its value alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), up to four of them; a splice directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block", probes: ["AU1", "AU2", "AU3", "AU4", "AU130", "AU18", "AU16", "AU17", "AU20", "AU21", "AU25", "AU30", "AU108", "AU109", "AU120", "AU124", "AU125", "AU128"] },
+  { list: "refused", item: "a list name that is not a const of the same top-level function: a module-level list, a let list, a parameter's default list, a destructured const's default list", probes: ["AU8", "AU9", "AU14", "AU146"] },
+  { list: "refused", item: "a diagnosis name that is not a const with an initializer: a parameter, a destructured const, with or without a default value, a module-level await using declaration, a module-level declare const", probes: ["AU23", "AU37", "AU145", "AU146", "AU147"] },
+  { list: "refused", item: "every reference to a traced list among its first 39 references, outside type positions, other than as the object of a push() or unshift() call or as a FLOW OUT: a splice, an element write, an alias, a destructuring assignment's shorthand default included, an object spread, an argument of a helper or of a global, its push or unshift member passed as an argument of a call included, an iteration, a length write, the right operand of a comma expression or a parameter's default in a return, a push through an element access or through parentheses, a closure handing it out by its return, alone or as the one member of an object literal it returns: an arrow, expression-bodied, block-bodied or async; a function expression, anonymous, named, async or generator; a nested function declaration; an object literal's method, getter, async method or generator method; a class declaration's method, static method, getter or constructor; a class expression's method, an object literal that is not returned, a second member carrying it among the object's first four members, a property assignment or a shorthand, its value alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), up to four of them; a splice directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block", probes: ["AU1", "AU2", "AU3", "AU4", "AU130", "AU18", "AU16", "AU17", "AU20", "AU21", "AU25", "AU30", "AU108", "AU109", "AU120", "AU124", "AU125", "AU128", "AU143", "AU144", "AU132", "AU133", "AU134", "AU135", "AU136", "AU137", "AU138", "AU139", "AU140", "AU156", "AU148", "AU150", "AU151"] },
   { list: "refused", item: "a property read as a list from a name that is not a holder: a const not bound to a call, one bound to a call of a name T-ARMS does not enter, a module-level const", probes: ["AU40", "AU80", "AU69"] },
   { list: "refused", item: "every reference to a holder among its first 48 references, outside type positions, other than as the object of a property read, its first reference and one directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block included", probes: ["AU19", "AU118", "AU126"] },
   { list: "refused", item: "every read of a holder's list property among the holder's first 48 references, other than a FLOW OUT, the shared W10 view's included, and a splice of one directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block", probes: ["AU12", "AU118"] },
-  { list: "refused", item: "among the first five returns of a holder's callee and the first four members of each, a return that is not an object literal, alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), up to four of them, made only of identifier-named property and shorthand assignments with exactly one member of that name: no such member, a spread, a computed member, a member named by a string or a numeric literal, a method, an accessor, two members of that name", probes: ["AU11", "AU26", "AU39", "AU111", "AU112", "AU61", "AU79", "AU123"] },
+  { list: "refused", item: "among the first five returns of a holder's callee and the first four members of each, a return that is not an object literal, alone or inside parentheses or a type assertion (as, satisfies, the non-null !, <T>), up to four of them, made only of identifier-named property and shorthand assignments with exactly one member of that name: no such member, a spread, a computed member, a member named by a string or a numeric literal, a method, an accessor, two members of that name", probes: ["AU11", "AU26", "AU39", "AU111", "AU112", "AU61", "AU79", "AU123", "AU152", "AU153"] },
   { list: "refused", item: "any property but findings read as a list from a holder of the shared W10 view", probes: ["AU34"] },
-  { list: "refused", item: "a reference to a function declaration T-ARMS enters (judgeTsxRow, a function entered through a call, a holder's callee), among its first 23 references, outside type positions, at module level, in judgeTsxRow or in a function it enters, and directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow, other than as the callee of a call, plain or optional: an identifier the checker binds to it, reassigned, rebound in a class's extends expression, named in an instantiation expression or passed as an argument of a call, or an export specifier whose local target it is, plain or aliased", probes: ["AU32", "AU41", "AU51", "AU78", "AU49", "AU50", "AU74", "AU119"] },
+  { list: "refused", item: "a reference to a function declaration T-ARMS enters (judgeTsxRow, a function entered through a call, a holder's callee), plain, exported, with a type parameter or without a return type annotation, among its first 23 references, outside type positions, at module level, in judgeTsxRow or in a function it enters, and directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow, other than as the callee of a call, plain or optional: an identifier the checker binds to it, reassigned, rebound in a class's extends expression, named in an instantiation expression or passed as an argument of a call, or an export specifier whose local target it is, plain or aliased, to its own name included", probes: ["AU32", "AU41", "AU51", "AU78", "AU49", "AU50", "AU74", "AU119", "AU149", "AU154"] },
   { list: "refused", item: "a call whose callee, its parentheses and type assertions (as, satisfies, the non-null !, <T>) aside, up to four of them, is the name eval, an optional call included, in each of these places in the guard: in judgeTsxRow, in another function, at module level, in a parameter's default value, in a class's field initializer or static block, in an object literal's method, in an arrow's expression body, in a method or a static block of a module-level class, in a method of a module-level object literal, or directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow", probes: ["AU31", "AU70", "AU71", "AU113", "AU115", "AU116", "AU129"] },
   { list: "refused", item: "a return without a value in a function T-ARMS enters", probes: ["AU38"] },
   { list: "refused", item: "a recursive flow, through a call or a holder call", probes: ["AU15", "AU63"] },
   { list: "refused", item: "a list read inside its own flow", probes: ["AU22"] },
   { list: "refused", item: "a diagnosis reached through more than 64 calls, holder calls and const references", probes: ["AU24", "AU81"] },
-  { list: "refused", item: "PARAMETER SCOPE: in each of these places in the guard (inside judgeTsxRow, inside a function it enters, in a module-level class, and directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow), a name in the parameter list of a function declaration or expression, plain, generator or async, an arrow, plain or async, a method of a class or an object literal, plain, generator or async, a constructor or a setter, in an initializer, the parameter's own or a binding element's, at any depth of its expressions, with up to nine syntax nodes between the name and the parameter (a conditional, an array or an object literal, a template, plain or tagged, parentheses or a type assertion, a unary or a binary operator, a new expression, an element access, a comma expression, typeof, void, a spread argument, an optional call), in a computed key of its binding pattern or in a closure created there (an arrow; a function expression, plain, async, generator or named; a class expression's method, static method, constructor, accessor, field initializer, static field or static block; an object literal's method or accessor; a function or a class declared inside one of them), that the checker binds to a declaration in the body of a function whose parameter list encloses it, up to three such parameter lists nested one inside another (a host created in another host's parameter list), a name a parameter and a var of that body both declare included", probes: ["AU42", "AU43", "AU44", "AU45", "AU46", "AU47", "AU48", "AU62", "AU64", "AU65", "AU66", "AU67", "AU68", "AU76", "AU77", "AU101", "AU102", "AU103", "AU104", "AU105", "AU106", "AU107", "AU117", "AU121", "AU122", "AU127"] },
+  { list: "refused", item: "PARAMETER SCOPE: in each of these places in the guard (inside judgeTsxRow, inside a function it enters, in a module-level class, and directly inside a for, for-in, for-of, while or do loop, a labeled statement, an if or its else, each braced or not, a try block, a catch clause, a finally block, a case or the default clause of a switch, or a block in judgeTsxRow), a name in the parameter list of a function declaration or expression, plain, generator or async, an arrow, plain or async, a method of a class or an object literal, plain, generator or async, a constructor or a setter, and these too: a function declaration, a function expression, an arrow and a class method each with a type parameter or without a return type annotation, a named function expression, an optional class method, a private constructor's parameter property, a static setter's destructured parameter and a function declaration's rest parameter pattern, in an initializer, the parameter's own or a binding element's, at any depth of its expressions, with up to nine syntax nodes between the name and the parameter (a conditional, an array or an object literal, a template, plain or tagged, parentheses or a type assertion, a unary or a binary operator, a new expression, an element access, a comma expression, typeof, void, a spread argument, an optional call), in a computed key of its binding pattern or in a closure created there (an arrow; a function expression, plain, async, generator or named; a class expression's method, static method, constructor, accessor, field initializer, static field or static block; an object literal's method or accessor; a function or a class declared inside one of them), that the checker binds to a declaration in the body of a function whose parameter list encloses it, up to three such parameter lists nested one inside another (a host created in another host's parameter list), a name a parameter and a var of that body both declare included, and a shorthand property name, the checker binding it as its value, in an arrow, a function expression or an object literal's method created there", probes: ["AU42", "AU43", "AU44", "AU45", "AU46", "AU47", "AU48", "AU62", "AU64", "AU65", "AU66", "AU67", "AU68", "AU76", "AU77", "AU101", "AU102", "AU103", "AU104", "AU105", "AU106", "AU107", "AU117", "AU121", "AU122", "AU127", "AU141", "AU142", "AU155"] },
   { list: "refused", item: "a source with no module-level judgeTsxRow T-ARMS enters: the empty source, or a judgeTsxRow bound by let", probes: ["BARE", "AU110"] },
   { list: "residual", item: "the reading assumes JavaScript's standard semantics for what it reads (push() and unshift() on an array, a spread of one, the conditional operator, string and template literals): a standard-library object altered anywhere, in the judge or outside it, is never read, Array.prototype.push replaced at module level and Array.prototype.unshift replaced inside judgeTsxRow for two", probes: ["AR1", "AR3"] },
   { list: "residual", item: "the shared W10 view's exemption holds whatever its call's argument: a holder of a call on another input carries findings that are never read", probes: ["AR2"] },
@@ -2207,7 +2766,7 @@ describe("T-ARMS reader census (wb-5mco): readJudgeArms() over the W10 guard's T
       ).toEqual(form.unread);
       ran++;
     }
-    expect(ran).toBe(208);
+    expect(ran).toBe(259);
     const bare = readJudgeArms("");
     expect([bare.arms.length, ...bare.unread.map((entry) => entry.slice(0, entry.indexOf(" (line ")))], "a source with no judgeTsxRow").toEqual([0, "no judgeTsxRow function"]);
   }, 240_000);
@@ -2231,6 +2790,31 @@ describe("T-ARMS reader census (wb-5mco): readJudgeArms() over the W10 guard's T
     expect([arms.length, heads, tails]).toEqual([26, 11, 20]);
   });
 
+  it("T-ARMS-ENTRY (refusal #2's finding F1, G13-LINE-OFF; outside anchor, a source of its own): a module-level eval call written over three lines and a splice in a block of judgeTsxRow read back as their full unread entries - each reason, the 1-based line of the refused node and the first 120 characters of its enclosing statement, each white-space run one space", () => {
+    const reading = readJudgeArms(
+      [
+        `${DIRECT_EVAL}(`,
+        '  "probe T-ARMS-ENTRY",',
+        ");",
+        "function judgeTsxRow(): string[] {",
+        "  const findings: string[] = [];",
+        "  {",
+        "    void [",
+        '      "probe T-ARMS-ENTRY: one statement written over four lines and longer than the 120 characters an unread entry keeps",',
+        "      findings.splice(0, 0),",
+        "    ];",
+        "  }",
+        "  return findings;",
+        "}",
+      ].join("\n"),
+    );
+    expect(reading.arms, "the source's judge reads no arm").toEqual([]);
+    expect(reading.unread).toEqual([
+      `a direct ${DIRECT_EVAL}, whose code T-ARMS does not read (line 1): ${DIRECT_EVAL}( "probe T-ARMS-ENTRY", );`,
+      `${UNREAD_LIST_USE} (line 9): void [ "probe T-ARMS-ENTRY: one statement written over four lines and longer than the 120 characters an unread entry kee`,
+    ]);
+  });
+
   it("T-ARMS-CLAIMS (outside anchor, the header's claim lists): the header's READ, REFUSED and RESIDUAL lists are exactly ARM_CLAIMS item by item, every item cites probes whose reading its list states, and every probe is cited", () => {
     const header = headerText(readText(CENSUS));
     expect([header.split(CLAIMS_OPEN).length - 1, header.split(CLAIMS_CLOSE).length - 1], "the header opens its claim lists once and closes them once").toEqual([1, 1]);
@@ -2250,51 +2834,52 @@ describe("T-ARMS reader census (wb-5mco): readJudgeArms() over the W10 guard's T
       }
     }
     expect(ARM_FORMS.map((form) => form.id).filter((id) => !ARM_CLAIMS.some((claim) => claim.probes.includes(id))), "a probe no claim item cites").toEqual([]);
-    expect([ARM_CLAIMS.length, cited]).toEqual([81, 251]);
+    expect([ARM_CLAIMS.length, cited]).toEqual([82, 311]);
     expect(ARM_CLAIMS.map((claim) => `${claim.list} [${claim.probes.join(", ")}]`)).toEqual([
-      "read [AF1, AF114, AF115, AF122, AF131, AF145, AF37]",
+      "read [AF1, AF114, AF115, AF122, AF131, AF145, AF37, AF172, AF173, AF174, AF175]",
       "read [AF8, AF19, AF127]",
       "read [AF4]",
-      "read [AF5, AF8, AF31, AF107, AF132]",
-      "read [AF14, AF123, AF112, AF113]",
+      "read [AF5, AF8, AF31, AF107, AF132, AF154, AF157]",
+      "read [AF14, AF123, AF112, AF113, AF169]",
       "read [AF1, AF5, AF35, AF109, AF125]",
       "read [AF6, AF126, AF144]",
       "read [AF13, AF102, AF101, AF103, AF124, AF121, AF125, AF23, AF21]",
-      "read [AF14, AF113, AF153, AF34, AF147, AF150, AF130, AF139, AF151, AF138, AF19, AF140, AF152]",
+      "read [AF14, AF113, AF153, AF34, AF147, AF150, AF130, AF139, AF151, AF138, AF19, AF140, AF152, AF160, AF164, AF163, AF171]",
       "read [AF2, AF7]",
-      "read [AF2, AF19, AF36, AF110, AF111, AF128, AF134, AF135, AF136, AF137, AF138, AF139, AF148]",
+      "read [AF2, AF19, AF36, AF110, AF111, AF128, AF134, AF135, AF136, AF137, AF138, AF139, AF148, AF156, AF157, AF167]",
       "read [AF1, AF146]",
       "read [AF25, AF149]",
       "read [AF11, AF129, AF149]",
       "read [AF12]",
       "read [AF3]",
       "read [AF9]",
-      "read [AF10, AF133, AF143]",
+      "read [AF10, AF133, AF143, AF155, AF157]",
       "read [AF24, AF34, AF141, AF142]",
-      "read [AF8, AF10]",
-      "read [AF5]",
-      "read [AF26]",
+      "read [AF8, AF10, AF169]",
+      "read [AF5, AF169]",
+      "read [AF26, AF162, AF169]",
       "read [AF108, AF109]",
       "read [AF31, AF4, AF5, AF104, AF105, AF106, AF107]",
-      "read [AF27]",
+      "read [AF27, AF170]",
       "read [AF16]",
       "read [AF15]",
       "read [AF17]",
       "read [AF18]",
       "read [AF19]",
-      "read [AF23]",
+      "read [AF23, AF159]",
       "read [AF22]",
       "read [AF32]",
       "read [AF33, AF118, AF119]",
+      "read [AF158, AF159]",
       "read [AF20]",
       "read [AF120]",
       "read [AF29]",
       "read [AF21]",
-      "read [AF30, AF116, AF117]",
-      "read [AF2, AF7, AF9, AF15, AF36]",
+      "read [AF30, AF116, AF117, AF176, AF177, AF178, AF179]",
+      "read [AF2, AF7, AF9, AF15, AF36, AF161, AF165, AF166, AF168]",
       "read [AF28, AF38]",
       "read [AF37]",
-      "refused [AU7, AU10, AU72, AU82, AU83]",
+      "refused [AU7, AU10, AU72, AU82, AU83, AU150]",
       "refused [AU72, AU73]",
       "refused [AU72, AU73]",
       "refused [AU6, AU72, AU73, AU82, AU83]",
@@ -2312,24 +2897,24 @@ describe("T-ARMS reader census (wb-5mco): readJudgeArms() over the W10 guard's T
       "refused [AU57]",
       "refused [AU58]",
       "refused [AU59]",
-      "refused [AU60]",
+      "refused [AU60, AU146]",
       "refused [AU5]",
       "refused [AU36, AU75]",
-      "refused [AU8, AU9, AU14]",
-      "refused [AU23, AU37]",
-      "refused [AU1, AU2, AU3, AU4, AU130, AU18, AU16, AU17, AU20, AU21, AU25, AU30, AU108, AU109, AU120, AU124, AU125, AU128]",
+      "refused [AU8, AU9, AU14, AU146]",
+      "refused [AU23, AU37, AU145, AU146, AU147]",
+      "refused [AU1, AU2, AU3, AU4, AU130, AU18, AU16, AU17, AU20, AU21, AU25, AU30, AU108, AU109, AU120, AU124, AU125, AU128, AU143, AU144, AU132, AU133, AU134, AU135, AU136, AU137, AU138, AU139, AU140, AU156, AU148, AU150, AU151]",
       "refused [AU40, AU80, AU69]",
       "refused [AU19, AU118, AU126]",
       "refused [AU12, AU118]",
-      "refused [AU11, AU26, AU39, AU111, AU112, AU61, AU79, AU123]",
+      "refused [AU11, AU26, AU39, AU111, AU112, AU61, AU79, AU123, AU152, AU153]",
       "refused [AU34]",
-      "refused [AU32, AU41, AU51, AU78, AU49, AU50, AU74, AU119]",
+      "refused [AU32, AU41, AU51, AU78, AU49, AU50, AU74, AU119, AU149, AU154]",
       "refused [AU31, AU70, AU71, AU113, AU115, AU116, AU129]",
       "refused [AU38]",
       "refused [AU15, AU63]",
       "refused [AU22]",
       "refused [AU24, AU81]",
-      "refused [AU42, AU43, AU44, AU45, AU46, AU47, AU48, AU62, AU64, AU65, AU66, AU67, AU68, AU76, AU77, AU101, AU102, AU103, AU104, AU105, AU106, AU107, AU117, AU121, AU122, AU127]",
+      "refused [AU42, AU43, AU44, AU45, AU46, AU47, AU48, AU62, AU64, AU65, AU66, AU67, AU68, AU76, AU77, AU101, AU102, AU103, AU104, AU105, AU106, AU107, AU117, AU121, AU122, AU127, AU141, AU142, AU155]",
       "refused [BARE, AU110]",
       "residual [AR1, AR3]",
       "residual [AR2]",
@@ -2345,9 +2930,9 @@ describe("T-ARMS reader census (wb-5mco): readJudgeArms() over the W10 guard's T
   });
 
   it("U3 (EACH-LIVENESS) and FORMS-SHAPE (standing rule 16 frozen shape): T-ARMS-FORMS holds exactly its named probes, each with its frozen probe and reading, and the reader's constants are their frozen literal", () => {
-    expect(ARM_FORMS).toHaveLength(208);
-    expect(["AF", "AU", "AR"].map((kind) => ARM_FORMS.filter((form) => form.id.startsWith(kind)).length)).toEqual([91, 114, 3]);
-    expect(ARM_FORMS.map((form) => form.id)).toEqual(["AF1", "AF2", "AF3", "AF4", "AF5", "AF6", "AF7", "AF8", "AF9", "AF10", "AF11", "AF12", "AF13", "AF14", "AF15", "AF16", "AF17", "AF18", "AF19", "AF20", "AF21", "AF22", "AF23", "AF24", "AF25", "AF26", "AF27", "AF28", "AF29", "AF30", "AF31", "AF32", "AF33", "AF34", "AF35", "AF36", "AF37", "AF38", "AF101", "AF102", "AF103", "AF104", "AF105", "AF106", "AF107", "AF108", "AF109", "AF110", "AF111", "AF112", "AF113", "AF114", "AF115", "AF116", "AF117", "AF118", "AF119", "AF120", "AF121", "AF122", "AF123", "AF124", "AF125", "AF126", "AF127", "AF128", "AF129", "AF130", "AF131", "AF132", "AF133", "AF134", "AF135", "AF136", "AF137", "AF138", "AF139", "AF140", "AF141", "AF142", "AF143", "AF144", "AF145", "AF146", "AF147", "AF148", "AF149", "AF150", "AF151", "AF152", "AF153", "AU1", "AU2", "AU3", "AU4", "AU5", "AU6", "AU7", "AU8", "AU9", "AU10", "AU11", "AU12", "AU13", "AU14", "AU15", "AU16", "AU17", "AU18", "AU19", "AU20", "AU21", "AU22", "AU23", "AU24", "AU25", "AU26", "AU27", "AU28", "AU29", "AU30", "AU31", "AU32", "AU33", "AU34", "AU35", "AU36", "AU37", "AU38", "AU39", "AU40", "AU41", "AU42", "AU43", "AU44", "AU45", "AU46", "AU47", "AU48", "AU49", "AU50", "AU51", "AU52", "AU53", "AU54", "AU55", "AU56", "AU57", "AU58", "AU59", "AU60", "AU61", "AU62", "AU63", "AU64", "AU65", "AU66", "AU67", "AU68", "AU69", "AU70", "AU71", "AU72", "AU73", "AU74", "AU75", "AU76", "AU77", "AU78", "AU79", "AU80", "AU81", "AU82", "AU83", "AU101", "AU102", "AU103", "AU104", "AU105", "AU106", "AU107", "AU108", "AU109", "AU110", "AU111", "AU112", "AU113", "AU114", "AU115", "AU116", "AU117", "AU118", "AU119", "AU120", "AU121", "AU122", "AU123", "AU124", "AU125", "AU126", "AU127", "AU128", "AU129", "AU130", "AU131", "AR1", "AR2", "AR3"]);
+    expect(ARM_FORMS).toHaveLength(259);
+    expect(["AF", "AU", "AR"].map((kind) => ARM_FORMS.filter((form) => form.id.startsWith(kind)).length)).toEqual([117, 139, 3]);
+    expect(ARM_FORMS.map((form) => form.id)).toEqual(["AF1", "AF2", "AF3", "AF4", "AF5", "AF6", "AF7", "AF8", "AF9", "AF10", "AF11", "AF12", "AF13", "AF14", "AF15", "AF16", "AF17", "AF18", "AF19", "AF20", "AF21", "AF22", "AF23", "AF24", "AF25", "AF26", "AF27", "AF28", "AF29", "AF30", "AF31", "AF32", "AF33", "AF34", "AF35", "AF36", "AF37", "AF38", "AF101", "AF102", "AF103", "AF104", "AF105", "AF106", "AF107", "AF108", "AF109", "AF110", "AF111", "AF112", "AF113", "AF114", "AF115", "AF116", "AF117", "AF118", "AF119", "AF120", "AF121", "AF122", "AF123", "AF124", "AF125", "AF126", "AF127", "AF128", "AF129", "AF130", "AF131", "AF132", "AF133", "AF134", "AF135", "AF136", "AF137", "AF138", "AF139", "AF140", "AF141", "AF142", "AF143", "AF144", "AF145", "AF146", "AF147", "AF148", "AF149", "AF150", "AF151", "AF152", "AF153", "AF154", "AF155", "AF156", "AF157", "AF158", "AF159", "AF160", "AF161", "AF162", "AF163", "AF164", "AF165", "AF166", "AF167", "AF168", "AF169", "AF170", "AF171", "AF172", "AF173", "AF174", "AF175", "AF176", "AF177", "AF178", "AF179", "AU1", "AU2", "AU3", "AU4", "AU5", "AU6", "AU7", "AU8", "AU9", "AU10", "AU11", "AU12", "AU13", "AU14", "AU15", "AU16", "AU17", "AU18", "AU19", "AU20", "AU21", "AU22", "AU23", "AU24", "AU25", "AU26", "AU27", "AU28", "AU29", "AU30", "AU31", "AU32", "AU33", "AU34", "AU35", "AU36", "AU37", "AU38", "AU39", "AU40", "AU41", "AU42", "AU43", "AU44", "AU45", "AU46", "AU47", "AU48", "AU49", "AU50", "AU51", "AU52", "AU53", "AU54", "AU55", "AU56", "AU57", "AU58", "AU59", "AU60", "AU61", "AU62", "AU63", "AU64", "AU65", "AU66", "AU67", "AU68", "AU69", "AU70", "AU71", "AU72", "AU73", "AU74", "AU75", "AU76", "AU77", "AU78", "AU79", "AU80", "AU81", "AU82", "AU83", "AU101", "AU102", "AU103", "AU104", "AU105", "AU106", "AU107", "AU108", "AU109", "AU110", "AU111", "AU112", "AU113", "AU114", "AU115", "AU116", "AU117", "AU118", "AU119", "AU120", "AU121", "AU122", "AU123", "AU124", "AU125", "AU126", "AU127", "AU128", "AU129", "AU130", "AU131", "AU132", "AU133", "AU134", "AU135", "AU136", "AU137", "AU138", "AU139", "AU140", "AU141", "AU142", "AU143", "AU144", "AU145", "AU146", "AU147", "AU148", "AU149", "AU150", "AU151", "AU152", "AU153", "AU154", "AU155", "AU156", "AR1", "AR2", "AR3"]);
     expect(ARM_FORMS.map(armFormShape)).toEqual([
       "AF1 a string pushed in judgeTsxRow (IP-A1) [judgeTsxRow]: \"\" + \"findings.push(\\\"probe AF1\\\");\" -> +^probe AF1$ at end, -0; unread none",
       "AF2 a push in tsxReceiptView, whose declared return is an object (IP-E1) [tsxReceiptView]: \"\" + \"findings.push(\\\"probe AF2\\\");\" -> +^probe AF2$ at 6, -0; unread none",
@@ -2440,6 +3025,32 @@ describe("T-ARMS reader census (wb-5mco): readJudgeArms() over the W10 guard's T
       "AF151 a traced list as the value of the one member of a holder callee's returned object literals inside parentheses, as, satisfies, the non-null !, <T>, each the innermost, and seven nested, each a flow out [judgeTsxRow]: \"function probe_AF151(flag: number): { findings: string[] } {\\n  const out = [\\\"probe AF151\\\"];\\n  if (flag === 0) return { findings: (out) };\\n  if (flag === 1) return { findings: out as string[] };\\n  if (flag === 2) return { findings: out satisfies string[] };\\n  if (flag === 3) return { findings: out! };\\n  if (flag === 4) return { findings: <string[]>out };\\n  return { findings: ((<string[]>(out as string[])) satisfies string[])! };\\n}\" + \"const probe_AF151_read = probe_AF151(cmd.length);\\n  findings.push(...probe_AF151_read.findings);\" -> +^probe AF151$ at end, -0; unread none",
       "AF152 a holder's list property returned by the function declaring the holder inside parentheses, as, satisfies, the non-null !, <T>, each the innermost, and seven nested, each a flow out [judgeTsxRow]: \"function probe_AF152_make(): { findings: string[] } {\\n  return { findings: [\\\"probe AF152\\\"] };\\n}\\nfunction probe_AF152(flag: number): string[] {\\n  const held = probe_AF152_make();\\n  if (flag === 0) return (held.findings);\\n  if (flag === 1) return held.findings as string[];\\n  if (flag === 2) return held.findings satisfies string[];\\n  if (flag === 3) return held.findings!;\\n  if (flag === 4) return <string[]>held.findings;\\n  return ((<string[]>(held.findings as string[])) satisfies string[])!;\\n}\" + \"findings.push(...probe_AF152(cmd.length));\" -> +^probe AF152$ at end, -0; unread none",
       "AF153 the traced list spread into the argument lists of a new expression and of a method call on a string, each a flow out [judgeTsxRow]: \"\" + \"const probe_AF153_copy = new Array<string>(...findings);\\n  const probe_AF153_joined = \\\"\\\".concat(...findings);\\n  void [probe_AF153_copy, probe_AF153_joined];\" -> +none at 0, -0; unread none",
+      "AF154 a call with a type argument of an entered helper in a list position is entered (the gate's GW13-TA-LIST witness of G13-LIST-TYPEARGS, verbatim) [judgeTsxRow]: \"function probe_GW13_TL<T>(): string[] | T[] {\\n  return [\\\"probe GW13-TL\\\"];\\n}\" + \"findings.push(...probe_GW13_TL<string>());\" -> +^probe GW13-TL$ at end, -0; unread none",
+      "AF155 a call with a type argument of an entered helper in a diagnosis position is entered (the gate's GW13-TA-ITEM witness of G13-ITEM-TYPEARGS, verbatim) [judgeTsxRow]: \"function probe_GW13_TI<T>(): string | T {\\n  return \\\"probe GW13-TI\\\";\\n}\" + \"findings.push(probe_GW13_TI<string>());\" -> +^probe GW13-TI$ at end, -0; unread none",
+      "AF156 a holder bound to a call with a type argument of an entered helper carries its callee's list (the gate's GW13-TA-HELD witness of G13-HELD-TYPEARGS, verbatim) [judgeTsxRow]: \"function probe_GW13_TH<T>(): { findings: string[]; extra?: T } {\\n  return { findings: [\\\"probe GW13-TH\\\"] };\\n}\" + \"const probe_GW13_TH_read = probe_GW13_TH<number>();\\n  findings.push(...probe_GW13_TH_read.findings);\" -> +^probe GW13-TH$ at end, -0; unread none",
+      "AF157 optional calls with a type argument in a list position, in a diagnosis position and bound to a holder, and a call with a type argument of a const generic arrow, each entered [judgeTsxRow]: \"function probe_AF157_list<T>(): string[] | T[] {\\n  return [\\\"probe AF157 list\\\"];\\n}\\nfunction probe_AF157_item<T>(): string | T {\\n  return \\\"probe AF157 item\\\";\\n}\\nfunction probe_AF157_make<T>(): { findings: string[]; extra?: T } {\\n  return { findings: [\\\"probe AF157 holder\\\"] };\\n}\\nconst probe_AF157_arrow = <T>(): string[] | T[] => [\\\"probe AF157 arrow\\\"];\" + \"findings.push(...probe_AF157_list?.<string>());\\n  findings.push(probe_AF157_item?.<string>());\\n  const probe_AF157_read = probe_AF157_make?.<number>();\\n  findings.push(...probe_AF157_read.findings);\\n  findings.push(...probe_AF157_arrow<string>());\" -> +^probe AF157 list$ +^probe AF157 item$ +^probe AF157 holder$ +^probe AF157 arrow$ at end, -0; unread none",
+      "AF158 a module-level function declared after judgeTsxRow, called in a parameter initializer of an arrow in judgeTsxRow, is no PARAMETER SCOPE name (the gate's GW13-POS witness of G13-PS-POSONLY, verbatim) [judgeTsxRow]: \"\" + \"const probe_GW13_POS = (count: number = receiptTsxFields(\\\"\\\").length): number => count;\\n  probe_GW13_POS();\" -> +none at 0, -0; unread none",
+      "AF159 a push in a parameter initializer of an arrow in judgeTsxRow calling a module-level helper declared after judgeTsxRow is read (the gate's GW13-POSF witness of G13-PS-POSONLY, verbatim) [judgeTsxRow]: \"\" + \"const probe_GW13_POSF = (pushed: number = findings.push(...tierReceiptFields(\\\"\\\"))): number => pushed;\\n  probe_GW13_POSF();\" -> +^[\\s\\S]*?:[\\s\\S]*?$ at end, -0; unread none",
+      "AF160 a holder's list property returned as the one member of an object literal whose other member reads another property of the same holder flows out (the gate's GW13-SV witness of G13-SAMEVALUE-NONAME, verbatim) [judgeTsxRow]: \"function probe_GW13_SV_make(): { findings: string[]; count: number } {\\n  return { findings: [\\\"probe GW13-SV\\\"], count: 1 };\\n}\\nfunction probe_GW13_SV_member(): { findings: string[]; count: number } {\\n  const held = probe_GW13_SV_make();\\n  return { findings: held.findings, count: held.count };\\n}\" + \"const probe_GW13_SV_read = probe_GW13_SV_member();\\n  findings.push(...probe_GW13_SV_read.findings);\" -> +^probe GW13-SV$ at end, -0; unread none",
+      "AF161 an arm a holder carries is ordered by the holder's call, before a push written between that call and the property read (the gate's GW13-HK witness of G13-HELD-KEY-ACCESS, verbatim) [judgeTsxRow]: \"function probe_GW13_HK_make(): { findings: string[] } {\\n  return { findings: [\\\"probe GW13-HK held\\\"] };\\n}\" + \"const probe_GW13_HK_read = probe_GW13_HK_make();\\n  findings.push(\\\"probe GW13-HK between\\\");\\n  findings.push(...probe_GW13_HK_read.findings);\" -> +^probe GW13-HK held$ +^probe GW13-HK between$ at end, -0; unread none",
+      "AF162 a const bound to a named function expression whose body names itself other than as a callee is entered, its own name no reference vetted [judgeTsxRow]: \"const probe_AF162 = function probe_AF162_self(): string[] {\\n  void probe_AF162_self.name;\\n  return [\\\"probe AF162\\\"];\\n};\" + \"findings.push(...probe_AF162());\" -> +^probe AF162$ at end, -0; unread none",
+      "AF163 a holder's list property returned as the one member carrying it beside the same property of another holder of the same callee and a literal member [judgeTsxRow]: \"function probe_AF163_make(): { findings: string[] } {\\n  return { findings: [\\\"probe AF163\\\"] };\\n}\\nfunction probe_AF163_member(): { findings: string[]; also: string[]; count: number } {\\n  const held = probe_AF163_make();\\n  const other = probe_AF163_make();\\n  return { findings: held.findings, also: other.findings, count: 1 };\\n}\" + \"const probe_AF163_read = probe_AF163_member();\\n  findings.push(...probe_AF163_read.findings);\" -> +^probe AF163$ at end, -0; unread none",
+      "AF164 a traced list returned as the one member carrying it, a shorthand, beside a member reading a property of another value [judgeTsxRow]: \"function probe_AF164_make(): { findings: string[]; size: number } {\\n  const findings = [\\\"probe AF164\\\"];\\n  return { findings, size: \\\"x\\\".length };\\n}\" + \"const probe_AF164_read = probe_AF164_make();\\n  findings.push(...probe_AF164_read.findings);\" -> +^probe AF164$ at end, -0; unread none",
+      "AF165 arms one call reaches are ordered by their own positions, a push in a nested function declaration written before the list's declaration first, though the flow reads the initializer first [judgeTsxRow]: \"function probe_AF165(): string[] {\\n  function early(): number {\\n    return out.push(\\\"probe AF165 early\\\");\\n  }\\n  const out: string[] = [\\\"probe AF165 late\\\"];\\n  void early;\\n  return out;\\n}\" + \"findings.push(...probe_AF165());\" -> +^probe AF165 early$ +^probe AF165 late$ at end, -0; unread none",
+      "AF166 arms an entered call reaches are ordered at the call's start, before a push written inside its argument list [judgeTsxRow]: \"function probe_AF166(flag: boolean): string[] {\\n  return [flag ? \\\"probe AF166 when\\\" : \\\"probe AF166 otherwise\\\"];\\n}\" + \"findings.push(...probe_AF166(findings.push(\\\"probe AF166 inner\\\") > 0));\" -> +^probe AF166 when$ +^probe AF166 otherwise$ +^probe AF166 inner$ at end, -0; unread none",
+      "AF167 a holder bound to a call of an arrow declared in judgeTsxRow carries that arrow's own const list, a traced list of judgeTsxRow [judgeTsxRow]: \"\" + \"const probe_AF167_make = (): { findings: string[] } => {\\n    const out = [\\\"probe AF167\\\"];\\n    return { findings: out };\\n  };\\n  const probe_AF167_read = probe_AF167_make();\\n  findings.push(...probe_AF167_read.findings);\" -> +^probe AF167$ at end, -0; unread none",
+      "AF168 arms a holder carries are ordered at the start of the holder's call, before a push written inside its argument list [judgeTsxRow]: \"function probe_AF168_make(flag: boolean): { findings: string[] } {\\n  return { findings: [flag ? \\\"probe AF168 held\\\" : \\\"probe AF168 other\\\"] };\\n}\" + \"const probe_AF168_read = probe_AF168_make(findings.push(\\\"probe AF168 inner\\\") > 0);\\n  findings.push(...probe_AF168_read.findings);\" -> +^probe AF168 held$ +^probe AF168 other$ +^probe AF168 inner$ at end, -0; unread none",
+      "AF169 an exported, a generic and an unannotated function declaration, a generic and an unannotated const arrow, and a named, a generic and an unannotated const function expression, each entered and each carrying its own const list [judgeTsxRow]: \"export function probe_AF169_exported(): string[] {\\n  const out = [\\\"probe AF169 exported\\\"];\\n  return out;\\n}\\nfunction probe_AF169_generic<T>(): string[] | T[] {\\n  const out = [\\\"probe AF169 generic\\\"];\\n  return out;\\n}\\nfunction probe_AF169_untyped() {\\n  const out = [\\\"probe AF169 untyped\\\"];\\n  return out;\\n}\\nconst probe_AF169_arrow_generic = <T>(): string[] | T[] => {\\n  const out = [\\\"probe AF169 arrow generic\\\"];\\n  return out;\\n};\\nconst probe_AF169_arrow_untyped = () => {\\n  const out = [\\\"probe AF169 arrow untyped\\\"];\\n  return out;\\n};\\nconst probe_AF169_named = function probe_AF169_named_self(): string[] {\\n  const out = [\\\"probe AF169 named\\\"];\\n  return out;\\n};\\nconst probe_AF169_fn_generic = function <T>(): string[] | T[] {\\n  const out = [\\\"probe AF169 function generic\\\"];\\n  return out;\\n};\\nconst probe_AF169_fn_untyped = function () {\\n  const out = [\\\"probe AF169 function untyped\\\"];\\n  return out;\\n};\" + \"findings.push(...probe_AF169_exported(), ...probe_AF169_generic<string>(), ...probe_AF169_untyped(), ...probe_AF169_arrow_generic<string>(), ...probe_AF169_arrow_untyped());\\n  findings.push(...probe_AF169_named(), ...probe_AF169_fn_generic<string>(), ...probe_AF169_fn_untyped());\" -> +^probe AF169 exported$ +^probe AF169 generic$ +^probe AF169 untyped$ +^probe AF169 arrow generic$ +^probe AF169 arrow untyped$ +^probe AF169 named$ +^probe AF169 function generic$ +^probe AF169 function untyped$ at end, -0; unread none",
+      "AF170 a return without a value inside an object literal's setter in an entered helper is no return of the helper [judgeTsxRow]: \"function probe_AF170(): string[] {\\n  const box = {\\n    set value(next: string) {\\n      if (next === \\\"\\\") return;\\n      void next;\\n    },\\n  };\\n  void box;\\n  return [\\\"probe AF170\\\"];\\n}\" + \"findings.push(...probe_AF170());\" -> +^probe AF170$ at end, -0; unread none",
+      "AF171 a holder's list property read optionally (held?.findings) returned as the one member of an object literal flows out [judgeTsxRow]: \"function probe_AF171_make(): { findings: string[] } {\\n  return { findings: [\\\"probe AF171\\\"] };\\n}\\nfunction probe_AF171_member(): { findings: string[] } {\\n  const held = probe_AF171_make();\\n  return { findings: held?.findings };\\n}\" + \"const probe_AF171_read = probe_AF171_member();\\n  findings.push(...probe_AF171_read.findings);\" -> +^probe AF171$ at end, -0; unread none",
+      "AF172 judgeTsxRow exported is read as the judge [judgeTsxRow rebound export]: \"\" + \"\" -> +none at 0, -0; unread none",
+      "AF173 judgeTsxRow given a type parameter is read as the judge [judgeTsxRow rebound generic]: \"\" + \"\" -> +none at 0, -0; unread none",
+      "AF174 judgeTsxRow written without its return type annotation is read as the judge [judgeTsxRow rebound untyped]: \"\" + \"\" -> +none at 0, -0; unread none",
+      "AF175 judgeTsxRow declared as an exported module-level const bound to a function expression is read as the judge [judgeTsxRow rebound exportconst]: \"\" + \"\" -> +none at 0, -0; unread none",
+      "AF176 the shared W10 view exported is still the shared view, never entered [w10View rebound export]: \"\" + \"\" -> +none at 0, -0; unread none",
+      "AF177 the shared W10 view given a type parameter is still the shared view, never entered [w10View rebound generic]: \"\" + \"\" -> +none at 0, -0; unread none",
+      "AF178 the shared W10 view written without its return type annotation is still the shared view, never entered [w10View rebound untyped]: \"\" + \"\" -> +none at 0, -0; unread none",
+      "AF179 the shared W10 view declared as an exported module-level const bound to a function expression is still the shared view, never entered [w10View rebound exportconst]: \"\" + \"\" -> +none at 0, -0; unread none",
       "AU1 a splice [judgeTsxRow]: \"\" + \"findings.splice(0, 0, \\\"probe AU1\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
       "AU2 an element write [judgeTsxRow]: \"\" + \"findings[findings.length] = \\\"probe AU2\\\";\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
       "AU3 an alias [judgeTsxRow]: \"\" + \"const probe_AU3 = findings;\\n  probe_AU3.push(\\\"probe AU3\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
@@ -2554,6 +3165,31 @@ describe("T-ARMS reader census (wb-5mco): readJudgeArms() over the W10 guard's T
       `AU129 a call of eval whose callee sits inside parentheses, ! and as nested, refused [judgeTsxRow]: "" + "((${DIRECT_EVAL} as typeof ${DIRECT_EVAL})!)(\\"probe AU129\\");" -> +none at 0, -0; unread a direct ${DIRECT_EVAL}, whose code T-ARMS does not read`,
       "AU130 a traced list spread into an object literal, an object spread being no flow out [judgeTsxRow]: \"\" + \"const probe_AU130 = { ...findings };\\n  void probe_AU130;\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
       "AU131 a call whose callee is a name inside parentheses in a list position, in a diagnosis position and bound to a holder, each refused [judgeTsxRow]: \"function probe_AU131_list(): string[] {\\n  return [\\\"probe AU131 list\\\"];\\n}\\nfunction probe_AU131_item(): string {\\n  return \\\"probe AU131 item\\\";\\n}\\nfunction probe_AU131_make(): { findings: string[] } {\\n  return { findings: [\\\"probe AU131 holder\\\"] };\\n}\" + \"findings.push(...(probe_AU131_list)());\\n  findings.push((probe_AU131_item)());\\n  const probe_AU131_read = (probe_AU131_make)();\\n  findings.push(...probe_AU131_read.findings);\" -> +none at 0, -0; unread a diagnosis list in a form T-ARMS does not trace | a diagnosis in a form T-ARMS does not read | a diagnosis list read from a value T-ARMS does not trace",
+      "AU132 a traced list handed out by the return of an object literal's method in judgeTsxRow, refused (the gate's GW13-OM witness of G13-OWNER-NOMETHOD, verbatim) [judgeTsxRow]: \"\" + \"const probe_GW13_OM = {\\n    take(): string[] {\\n      return findings;\\n    },\\n  };\\n  probe_GW13_OM.take().push(\\\"probe GW13-OM\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU133 a traced list handed out by the return of a method of a class declared in judgeTsxRow, refused (the gate's GW13-CM witness of G13-OWNER-NOMETHOD, verbatim) [judgeTsxRow]: \"\" + \"class probe_GW13_CM {\\n    take(): string[] {\\n      return findings;\\n    }\\n  }\\n  new probe_GW13_CM().take().push(\\\"probe GW13-CM\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU134 a traced list handed out by the return of an object literal's getter in judgeTsxRow, refused (the gate's GW13-OA witness of G13-OWNER-NOACCESSOR and G13-OWNER-NOMETHOD, verbatim) [judgeTsxRow]: \"\" + \"const probe_GW13_OA = {\\n    get all(): string[] {\\n      return findings;\\n    },\\n  };\\n  probe_GW13_OA.all.push(\\\"probe GW13-OA\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU135 a traced list handed out by a return statement of a block-bodied arrow in judgeTsxRow, refused (the gate's GW13-RS witness of G13-FLOWSOUT-RETSTMT-NOOWN, verbatim) [judgeTsxRow]: \"\" + \"const probe_GW13_RS = (): string[] => {\\n    return findings;\\n  };\\n  probe_GW13_RS().push(\\\"probe GW13-RS\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU136 a traced list handed out by a return statement of a function declaration nested in judgeTsxRow, refused (the gate's GW13-RSD witness of G13-FLOWSOUT-RETSTMT-NOOWN, verbatim) [judgeTsxRow]: \"\" + \"function probe_GW13_RSD(): string[] {\\n    return findings;\\n  }\\n  probe_GW13_RSD().push(\\\"probe GW13-RSD\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU137 a traced list handed out as the one member of an object literal an arrow in judgeTsxRow returns, refused (the gate's GW13-OO witness of G13-FLOWSOUT-OBJ-NOOWN, verbatim) [judgeTsxRow]: \"\" + \"const probe_GW13_OO = (): { findings: string[] } => ({ findings });\\n  probe_GW13_OO().findings.push(\\\"probe GW13-OO\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU138 a traced list handed out as the one member of an object literal a block-bodied arrow in judgeTsxRow returns, refused (the gate's GW13-OOB witness of G13-FLOWSOUT-OBJ-NOOWN and G13-FLOWSOUT-RETSTMT-NOOWN, verbatim) [judgeTsxRow]: \"\" + \"const probe_GW13_OOB = (): { findings: string[] } => {\\n    return { findings: findings };\\n  };\\n  probe_GW13_OOB().findings.push(\\\"probe GW13-OOB\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU139 a traced list handed out by a return of every other closure kind declared in judgeTsxRow, each refused: a function expression, anonymous, named, async and generator, a class's static method and getter, a class expression's method, an object literal's async and generator methods, and an async arrow's expression body [judgeTsxRow]: \"\" + \"const probe_AU139_fn = function (): string[] {\\n    return findings;\\n  };\\n  const probe_AU139_named = function probe_AU139_inner(): string[] {\\n    return findings;\\n  };\\n  const probe_AU139_async = async function (): Promise<string[]> {\\n    return findings;\\n  };\\n  const probe_AU139_gen = function* (): Generator<never, string[]> {\\n    return findings;\\n  };\\n  class probe_AU139_class {\\n    static take(): string[] {\\n      return findings;\\n    }\\n    get all(): string[] {\\n      return findings;\\n    }\\n  }\\n  const probe_AU139_kept = class {\\n    take(): string[] {\\n      return findings;\\n    }\\n  };\\n  const probe_AU139_object = {\\n    async take(): Promise<string[]> {\\n      return findings;\\n    },\\n    *walk(): Generator<never, string[]> {\\n      return findings;\\n    },\\n  };\\n  const probe_AU139_arrow = async (): Promise<string[]> => findings;\\n  void [probe_AU139_fn, probe_AU139_named, probe_AU139_async, probe_AU139_gen, probe_AU139_class, probe_AU139_kept, probe_AU139_object, probe_AU139_arrow];\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU140 a traced list handed out as the one member of an object literal returned by every closure kind declared in judgeTsxRow, each refused: a nested function declaration, a function expression, anonymous, named, async and generator, an async arrow's expression body, an object literal's method, getter, async method and generator method, a class's method, static method and getter, and a class expression's method [judgeTsxRow]: \"\" + \"function probe_AU140_decl(): { findings: string[] } {\\n    return { findings };\\n  }\\n  const probe_AU140_fn = function (): { findings: string[] } {\\n    return { findings: findings };\\n  };\\n  const probe_AU140_named = function probe_AU140_inner(): { findings: string[] } {\\n    return { findings };\\n  };\\n  const probe_AU140_async = async function (): Promise<{ findings: string[] }> {\\n    return { findings };\\n  };\\n  const probe_AU140_gen = function* (): Generator<never, { findings: string[] }> {\\n    return { findings };\\n  };\\n  const probe_AU140_arrow = async (): Promise<{ findings: string[] }> => ({ findings });\\n  const probe_AU140_object = {\\n    take(): { findings: string[] } {\\n      return { findings };\\n    },\\n    get all(): { findings: string[] } {\\n      return { findings };\\n    },\\n    async later(): Promise<{ findings: string[] }> {\\n      return { findings };\\n    },\\n    *walk(): Generator<never, { findings: string[] }> {\\n      return { findings };\\n    },\\n  };\\n  class probe_AU140_class {\\n    take(): { findings: string[] } {\\n      return { findings };\\n    }\\n    static make(): { findings: string[] } {\\n      return { findings };\\n    }\\n    get all(): { findings: string[] } {\\n      return { findings };\\n    }\\n  }\\n  const probe_AU140_kept = class {\\n    take(): { findings: string[] } {\\n      return { findings };\\n    }\\n  };\\n  void [probe_AU140_decl, probe_AU140_fn, probe_AU140_named, probe_AU140_async, probe_AU140_gen, probe_AU140_arrow, probe_AU140_object, probe_AU140_class, probe_AU140_kept];\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU141 a PARAMETER SCOPE shorthand property name in a closure in an arrow host's parameter default, bound by the checker (its value) to a function of the host's body, refused (the gate's GW13-PSS witness of G13-PS-SHORTHAND, verbatim) [judgeTsxRow]: \"\" + \"const probe_GW13_PSS = (get: () => { probe_GW13_PSS_fn: () => number } = () => ({ probe_GW13_PSS_fn })): number => {\\n    function probe_GW13_PSS_fn(): number {\\n      return 0;\\n    }\\n    return get().probe_GW13_PSS_fn() + probe_GW13_PSS_fn();\\n  };\\n  probe_GW13_PSS();\" -> +none at 0, -0; unread the name probe_GW13_PSS_fn in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see",
+      "AU142 a PARAMETER SCOPE shorthand property name in a function expression and in an object literal's method created in an arrow host's parameter defaults, bound by the checker (its value) to a function of the host's body, each refused [judgeTsxRow]: \"\" + \"const probe_AU142 = (\\n    get: () => { probe_AU142_fn: () => number } = function (): { probe_AU142_fn: () => number } {\\n      return { probe_AU142_fn };\\n    },\\n    box: { take(): { probe_AU142_fn: () => number } } = {\\n      take(): { probe_AU142_fn: () => number } {\\n        return { probe_AU142_fn };\\n      },\\n    },\\n  ): number => {\\n    function probe_AU142_fn(): number {\\n      return 0;\\n    }\\n    return get().probe_AU142_fn() + box.take().probe_AU142_fn() + probe_AU142_fn();\\n  };\\n  probe_AU142();\" -> +none at 0, -0; unread the name probe_AU142_fn in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU142_fn in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see",
+      "AU143 the traced list's push member passed as an argument of a global call beside a string, refused (the gate's GW13-VC witness of G13-VARIABLE-CALLEXPR, verbatim) [judgeTsxRow]: \"\" + \"void Array.of<unknown>(findings.push, \\\"probe GW13-VC\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU144 the traced list's unshift member passed as an argument of a helper's call and its push member as an argument of a method call, each refused [judgeTsxRow]: \"\" + \"const probe_AU144_take = (adder: unknown): unknown => adder;\\n  probe_AU144_take(findings.unshift);\\n  const probe_AU144_box = { take: (adder: unknown): unknown => adder };\\n  probe_AU144_box.take(findings.push);\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU145 a module-level await using declaration read as a diagnosis name, refused as no const (the gate's GW13-AU witness of G13-CLASSIFY-USING, verbatim) [judgeTsxRow]: \"await using PROBE_GW13_AU = \\\"probe GW13-AU\\\" as unknown as AsyncDisposable & string;\" + \"findings.push(PROBE_GW13_AU);\" -> +none at 0, -0; unread a diagnosis read from PROBE_GW13_AU, which is not a const value",
+      "AU146 destructured consts with default values read as a diagnosis name, as a list name and as a callee, each refused [judgeTsxRow]: \"\" + \"const { probe_AU146_item = \\\"probe AU146 item\\\", probe_AU146_list = [\\\"probe AU146 list\\\"], probe_AU146_fn = (): string[] => [\\\"probe AU146 fn\\\"] } = {} as { probe_AU146_item?: string; probe_AU146_list?: string[]; probe_AU146_fn?: () => string[] };\\n  findings.push(probe_AU146_item);\\n  findings.push(...probe_AU146_list);\\n  findings.push(...probe_AU146_fn());\" -> +none at 0, -0; unread a diagnosis read from probe_AU146_item, which is not a const value | a diagnosis list probe_AU146_list that is not a const of the function returning it | a call of probe_AU146_fn, not a function of this file T-ARMS enters",
+      "AU147 a module-level declare const, which has no initializer, read as a diagnosis name, refused [judgeTsxRow]: \"declare const PROBE_AU147: string;\" + \"findings.push(PROBE_AU147);\" -> +none at 0, -0; unread a diagnosis read from PROBE_AU147, which is not a const value",
+      "AU148 the traced list as the default of a shorthand in a destructuring assignment, refused [judgeTsxRow]: \"\" + \"let probe_AU148: string[] | undefined;\\n  ({ probe_AU148 = findings } = {} as { probe_AU148?: string[] });\\n  void probe_AU148;\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU149 a reached helper handed out by an export specifier aliased to its own name, written over three lines, refused once [judgeTsxRow]: \"export {\\n  tsxRecordFindings as\\n    tsxRecordFindings,\\n};\" + \"\" -> +none at 0, -0; unread the function tsxRecordFindings referenced other than as the callee of a call",
+      "AU150 an entered helper's traced list returned as the right operand of a comma expression and as the default of a parameter of an arrow it returns (cast), each return and each reference refused [judgeTsxRow]: \"function probe_AU150(flag: number): string[] {\\n  const out = [\\\"probe AU150\\\"];\\n  if (flag === 0) return (String(flag), out);\\n  if (flag === 1) return ((seen = out) => seen) as unknown as string[];\\n  return out;\\n}\" + \"findings.push(...probe_AU150(2));\" -> +^probe AU150$ at end, -0; unread a diagnosis list in a form T-ARMS does not trace | a diagnosis list in a form T-ARMS does not trace | the diagnosis list out used outside the forms T-ARMS reads | the diagnosis list out used outside the forms T-ARMS reads",
+      "AU151 the traced list's push and unshift members called through parentheses, each refused [judgeTsxRow]: \"\" + \"(findings.push)(\\\"probe AU151\\\");\\n  (findings.unshift)(\\\"probe AU151 unshift\\\");\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads",
+      "AU152 a holder's callee returning a const that holds an object literal, not an object literal, refused [judgeTsxRow]: \"function probe_AU152(): { findings: string[] } {\\n  const made = { findings: [\\\"probe AU152\\\"] };\\n  return made;\\n}\" + \"const probe_AU152_read = probe_AU152();\\n  findings.push(...probe_AU152_read.findings);\" -> +none at 0, -0; unread a return of probe_AU152 that does not carry exactly one findings",
+      "AU153 a holder's callee returning its list in a plain object literal and beside a spread member: the spread return refused, its list reference no second member's [judgeTsxRow]: \"function probe_AU153(flag: boolean): { findings: string[] } {\\n  const out = [\\\"probe AU153\\\"];\\n  if (flag) return { findings: out, ...{} };\\n  return { findings: out };\\n}\" + \"const probe_AU153_read = probe_AU153(true);\\n  findings.push(...probe_AU153_read.findings);\" -> +^probe AU153$ at end, -0; unread a return of probe_AU153 that does not carry exactly one findings",
+      "AU154 an exported, a generic and an unannotated entered function declaration, each referenced other than as the callee of a call, each refused [judgeTsxRow]: \"export function probe_AU154_exported(): string[] {\\n  return [\\\"probe AU154 exported\\\"];\\n}\\nfunction probe_AU154_generic<T>(): string[] | T[] {\\n  return [\\\"probe AU154 generic\\\"];\\n}\\nfunction probe_AU154_untyped() {\\n  return [\\\"probe AU154 untyped\\\"];\\n}\" + \"findings.push(...probe_AU154_exported(), ...probe_AU154_generic<string>(), ...probe_AU154_untyped());\\n  void [probe_AU154_exported, probe_AU154_generic, probe_AU154_untyped];\" -> +^probe AU154 exported$ +^probe AU154 generic$ +^probe AU154 untyped$ at end, -0; unread the function probe_AU154_exported referenced other than as the callee of a call | the function probe_AU154_generic referenced other than as the callee of a call | the function probe_AU154_untyped referenced other than as the callee of a call",
+      "AU155 PARAMETER SCOPE in more host forms in judgeTsxRow, each refused: a generic and an unannotated function declaration, a named, a generic and an unannotated function expression, a generic and an unannotated arrow, a generic, an unannotated and an optional class method, a private constructor's parameter property, a static setter's destructured parameter and a function declaration's rest parameter pattern [judgeTsxRow]: \"\" + \"function probe_AU155_generic<T>(seen: () => number = () => probe_AU155_a()): number {\\n    function probe_AU155_a(): number {\\n      return 0;\\n    }\\n    return seen();\\n  }\\n  function probe_AU155_untyped(seen = () => probe_AU155_b()) {\\n    function probe_AU155_b(): number {\\n      return 0;\\n    }\\n    return seen();\\n  }\\n  const probe_AU155_named = function probe_AU155_self(seen: () => number = () => probe_AU155_c()): number {\\n    function probe_AU155_c(): number {\\n      return 0;\\n    }\\n    return seen();\\n  };\\n  const probe_AU155_fn_generic = function <T>(seen: () => number = () => probe_AU155_d()): number {\\n    function probe_AU155_d(): number {\\n      return 0;\\n    }\\n    return seen();\\n  };\\n  const probe_AU155_fn_untyped = function (seen = () => probe_AU155_e()) {\\n    function probe_AU155_e(): number {\\n      return 0;\\n    }\\n    return seen();\\n  };\\n  const probe_AU155_arrow_generic = <T>(seen: () => number = () => probe_AU155_f()): number => {\\n    function probe_AU155_f(): number {\\n      return 0;\\n    }\\n    return seen();\\n  };\\n  const probe_AU155_arrow_untyped = (seen = () => probe_AU155_g()) => {\\n    function probe_AU155_g(): number {\\n      return 0;\\n    }\\n    return seen();\\n  };\\n  class probe_AU155_class {\\n    run<T>(seen: () => number = () => probe_AU155_h()): number {\\n      function probe_AU155_h(): number {\\n        return 0;\\n      }\\n      return seen();\\n    }\\n    walk(seen = () => probe_AU155_i()) {\\n      function probe_AU155_i(): number {\\n        return 0;\\n      }\\n      return seen();\\n    }\\n    maybe?(seen: () => number = () => probe_AU155_j()): number {\\n      function probe_AU155_j(): number {\\n        return 0;\\n      }\\n      return seen();\\n    }\\n    private constructor(private seen: () => number = () => probe_AU155_k()) {\\n      function probe_AU155_k(): number {\\n        return 0;\\n      }\\n      void this.seen;\\n    }\\n    static set probe_AU155_value({ seen = () => probe_AU155_l() }: { seen?: () => number }) {\\n      function probe_AU155_l(): number {\\n        return 0;\\n      }\\n      void seen;\\n    }\\n  }\\n  function probe_AU155_rest(...[seen = () => probe_AU155_m()]: Array<() => number>): number {\\n    function probe_AU155_m(): number {\\n      return 0;\\n    }\\n    return seen();\\n  }\\n  void [probe_AU155_generic, probe_AU155_untyped, probe_AU155_named, probe_AU155_fn_generic, probe_AU155_fn_untyped, probe_AU155_arrow_generic, probe_AU155_arrow_untyped, probe_AU155_class, probe_AU155_rest];\" -> +none at 0, -0; unread the name probe_AU155_a in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_b in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_c in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_d in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_e in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_f in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_g in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_h in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_i in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_j in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_k in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_l in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see | the name probe_AU155_m in a parameter list, bound by the checker to a declaration in that function's body, which the run-time parameter scope does not see",
+      "AU156 a traced list handed out by a class constructor's return, alone (a class extending Array<string>) and as the one member of an object literal (a class with a findings property), each refused [judgeTsxRow]: \"\" + \"class probe_AU156_list extends Array<string> {\\n    constructor() {\\n      super();\\n      return findings;\\n    }\\n  }\\n  class probe_AU156_object {\\n    findings: string[] = [];\\n    constructor() {\\n      return { findings };\\n    }\\n  }\\n  void [probe_AU156_list, probe_AU156_object];\" -> +none at 0, -0; unread the diagnosis list findings used outside the forms T-ARMS reads | the diagnosis list findings used outside the forms T-ARMS reads",
       "AR1 residual, pinned quiet: Array.prototype.push replaced at module level is never read [judgeTsxRow]: \"Array.prototype.push = function probe_AR1(this: unknown[], ...items: unknown[]): number {\\n  return items.length;\\n};\" + \"\" -> +none at 0, -0; unread none",
       "AR2 residual, pinned quiet: a holder of the shared W10 view called on another input carries findings T-ARMS does not read (the wb-m14y second gate's SV1) [judgeTsxRow]: \"\" + \"const probe_AR2 = w10View(\\\"\\\");\\n  findings.push(...probe_AR2.findings);\" -> +none at 0, -0; unread none",
       "AR3 residual, pinned quiet: Array.prototype.unshift replaced inside judgeTsxRow is never read [judgeTsxRow]: \"\" + \"Array.prototype.unshift = function probe_AR3(this: unknown[], ...items: unknown[]): number {\\n    return items.length;\\n  };\" -> +none at 0, -0; unread none",
