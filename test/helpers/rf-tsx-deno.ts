@@ -24,10 +24,13 @@
  * Two halves, so the shim check runs before rf ever starts (a shim it would execute is the network install path) and the
  * digest check runs once the render has reported the pin:
  *  - provisionedDeno(PATH): the engine rf will resolve; refuses rf_tsx_deno_unresolved when none resolves and
- *    rf_tsx_deno_shim when the resolved file is a version-manager shim (its realpath is not named deno, it sits in a shims
- *    directory, or it is a #! script rather than the engine binary);
+ *    rf_tsx_deno_shim when the resolved file carries any of three version-manager shim marks: its realpath's file name is
+ *    not exactly deno (a name compared whole and case-sensitively, so a deno-prefixed, deno-suffixed or case-variant name
+ *    is another name), a directory named exactly shims sits on its resolved path or on its realpath at any depth, or its
+ *    first two bytes are #! (a script rather than the engine binary);
  *  - pinnedDenoDigest(engine, fingerprint): refuses rf_tsx_deno_unpinned when the render reports no sha256 pin for the host
- *    and rf_tsx_deno_mismatch when the resolved file's sha256 differs from it; returns the measured "sha256:<hex>".
+ *    and rf_tsx_deno_mismatch when the resolved file's sha256 differs from it in any of its 64 hex positions (the whole
+ *    digest is compared); returns the measured "sha256:<hex>".
  * A resolved file either half cannot read is refused rf_tsx_deno_unreadable. Every refusal is a DenoIdentityRefusal whose
  * message starts with its reason: a typed failure, never a skip.
  *
@@ -36,10 +39,17 @@
  * it (rf_tsx_deno_mismatch, its sha256 is not the pin), after rf has run it. The provisioning test pins that quiet row.
  *
  * The lane census reads DENO_INSTALL_SHAPES, six closed families of install command, per line; the docs/workbench/07 Deno
- * sentence names the same six families, label for label. NAMED RESIDUALS (each with a pinned quiet row in the census):
- * R-MIRROR, an engine archive fetched from a host no shape names; R-COMPOSED, an install command assembled from parts at run
- * time, which no source line spells (the census's own planted controls are built so); R-UNNAMED-MANAGER, an install through
- * a version or package manager no shape names.
+ * sentence names the same six families, label for label. Each shape is held to the forms its planted controls spell (the
+ * census's frozen per-shape count); a form no control spells is not claimed. NAMED RESIDUALS, the install forms no shape
+ * reads, each with pinned quiet rows in the census: R-MIRROR, an engine archive or installer script fetched from a host no
+ * shape names; R-COMPOSED, an install command assembled from parts at run time, which no source line spells (the census's
+ * own planted controls are built so); R-UNNAMED-MANAGER, an install through a version or package manager no shape names;
+ * R-UNNAMED-VERB, an install through a named manager by a verb, subcommand or runner its shape does not spell;
+ * R-DECLARED-TOOL, the engine declared in a version manager's tool file, which a bare install verb then installs;
+ * R-IMAGE-FORM, the engine image used by a form the image shape does not spell (a flag before the image, a container key,
+ * a docker command, a copy from the image); R-THIRD-PARTY-ACTION, a CI setup action from another owner; R-RELEASE-API, the
+ * release metadata read through the forge's REST API; R-SPLIT-LINE, an install command continued over several lines, which
+ * a per-line read never sees whole.
  */
 import { createHash } from "node:crypto";
 import { accessSync, closeSync, constants, openSync, readSync, realpathSync, statSync } from "node:fs";
@@ -92,7 +102,11 @@ export interface ResolvedDeno {
 
 const PRINTABLE_PATH = /^[\x20-\x7e]{1,4096}$/;
 const TOKEN = /^[0-9A-Za-z:._+-]{1,80}$/;
-/** A path is echoed only when it is printable ASCII; anything else is named <unrecognized>. */
+/**
+ * A path is echoed verbatim only when it is 1 to 4096 characters, each printable ASCII (U+0020 space through U+007E tilde);
+ * anything else is named <unrecognized>: a C0 control (U+0000-U+001F), DEL (U+007F), any character past U+007E, an empty
+ * string or a longer one. No resolvable path is longer than 4096 characters (Linux PATH_MAX counts its terminating NUL).
+ */
 export function echoPath(value: string): string {
   return PRINTABLE_PATH.test(value) ? value : "<unrecognized>";
 }
@@ -249,8 +263,28 @@ export const DENO_INSTALL_SHAPES: readonly DenoInstallShape[] = [
   { id: "I6", label: "the Deno CI setup action or container image", source: String.raw`denoland/setup[-]deno|\b(?:FROM|image:)\s+(?:docker\.io/)?denoland/deno\b` },
 ];
 
+/** One read of a text by the shapes: how many lines it offered them, and the install hits among those lines. */
+export interface DenoInstallScan {
+  readonly lines: number;
+  readonly hits: readonly string[];
+}
+
+/**
+ * Every line of `text`, each offered whole to every shape: `lines` counts the lines this read offered (so a read that stops
+ * early counts fewer than the text holds), and `hits` is "<line>:<shape id>" in line order (shape order within a line).
+ */
+export function denoInstallScan(text: string): DenoInstallScan {
+  const patterns = DENO_INSTALL_SHAPES.map(shape => ({ id: shape.id, pattern: new RegExp(shape.source, "i") }));
+  const hits: string[] = [];
+  let lines = 0;
+  for (const line of text.split("\n")) {
+    lines += 1;
+    for (const shape of patterns) if (shape.pattern.test(line)) hits.push(`${lines}:${shape.id}`);
+  }
+  return { lines, hits };
+}
+
 /** The install shapes `text` holds, as "<line>:<shape id>" in line order (shape order within a line). */
 export function denoInstallHits(text: string): string[] {
-  const patterns = DENO_INSTALL_SHAPES.map(shape => ({ id: shape.id, pattern: new RegExp(shape.source, "i") }));
-  return text.split("\n").flatMap((line, index) => patterns.filter(shape => shape.pattern.test(line)).map(shape => `${index + 1}:${shape.id}`));
+  return [...denoInstallScan(text).hits];
 }
