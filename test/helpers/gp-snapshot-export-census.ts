@@ -2992,7 +2992,8 @@ const CORE_SPELLING_TABLES: readonly (readonly [string, readonly string[]])[] = 
  * Every form of the fail-closed core (wb-0lf.2's census as R-B73 narrowed it) the overlap reading compares against, in table
  * order: the spellings G1's and D3's tables write and each match FAIL_CLOSED's source forms refuse; the edits of the live page
  * DOCS_PLANTS, FAIL_CLOSED's docs forms and the residual docs members (Q9's) make; and the residual source members' own texts
- * and FAIL_CLOSED's member edits of them.
+ * and FAIL_CLOSED's member edits of them (its eight S2 forms). FAIL_CLOSED's two listing forms, scratch repositories, are no
+ * core form this reader reads.
  */
 export const coreForms = (page: string, members: readonly SourceResidual[]): Keyed[] => [
   ...CORE_SPELLING_TABLES.flatMap(([table, spellings]) => spellings.map((key, index) => ({ table, id: `${table}#${index}`, key }))),
@@ -3014,8 +3015,9 @@ export const coreOverlapOf = (surface: readonly Keyed[], core: readonly Keyed[])
  * core forms it is, as the full-surface row computes them (coreOverlapOf over surfaceForms and coreForms) and the census header
  * names them: seven spellings FAIL_CLOSED's source forms refuse (five of U1's, two of U2's), two boundary leads and the
  * paragraph before the Ownership table that are FAIL_CLOSED's G3 forms, four ownership blocks after the table that are
- * DOCS_PLANTS' D-OTHER plants, and the line-comment silencings of q1-shape.ts and q2-joined.ts that are FAIL_CLOSED's S2 forms.
- * The full-surface row reads each again; no other full-surface form is a core form.
+ * DOCS_PLANTS' D-OTHER plants, and the line-comment silencings of q1-shape.ts and q2-joined.ts that are FAIL_CLOSED's two
+ * commented-out S2 forms (its six other S2 forms, wb-0x41's, are no full-surface form). The full-surface row reads each again;
+ * no other full-surface form is a core form.
  */
 export const CORE_OVERLAP: readonly { readonly form: string; readonly core: readonly string[] }[] = [
   { form: "GraphPolicy/none/camel", core: ["FC-G1-CAMEL", "FC-G1-EVERY-MATCH"] },

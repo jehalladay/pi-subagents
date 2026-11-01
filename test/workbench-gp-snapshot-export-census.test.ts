@@ -294,9 +294,10 @@
  *    is the no-integration sentence both as rendered and in its source, case included (boundary-opening: D-SENTENCE-CASE among
  *    its plants).
  *  - Q1-Q9: every member of every residual family quiet in its row, and its liveness read in the same row by the static
- *    reading RESIDUALS above names, so a member whose reading no longer holds reds its row; a source member's text holding a
- *    comment opener is refused (R-COMMENTED), and each source member's comment-opener count is held to the roster (the Q1 and
- *    Q2 witnesses), so a source member commented out reds its row (FAIL_CLOSED's FC-S2-Q1-COMMENTED and FC-S2-Q2-COMMENTED);
+ *    reading RESIDUALS above names, so a member whose reading no longer holds reds its row; a source member's text holding
+ *    comment openers as one of FAIL_CLOSED's S2 forms' texts holds them is refused (R-COMMENTED, FAIL CLOSED), and each
+ *    source member's comment-opener count is held to the roster (the Q1 and Q2 witnesses), so a source member commented out
+ *    reds its row (FAIL_CLOSED's FC-S2-Q1-COMMENTED and FC-S2-Q2-COMMENTED);
  *    and each Q1 and Q2 source member's liveness is read from its code as well (wb-0lf.8 U5: codeShapeKeysOf, codeComposedOf
  *    over the member's TypeScript parse, held to the roster as the witnesses' codeLive), so a member silenced where no code runs
  *    reds its row; the full-surface row pins every Q1 and Q2 source member silenced in each SILENCINGS place as reading nothing
@@ -342,11 +343,20 @@
  * with lstat). FAIL_CLOSED, the one pinned row, holds twenty-two forms outside the pinned sets: refusal #5's twelve U1-U5
  * plants (G1's lower-first camelCase, sentence case, run of four joiners, run of three underscores and uneven GraphDataIR
  * gaps; D3's camelCase and sentence case; G3's lower-heading and thematic-break leads and a paragraph before the Ownership
- * table; S2's q1-shape and q2-joined commented out) and two of this cut's own (FC-G1-EVERY-MATCH, FC-D3-EVERY-MATCH: an
- * unpinned spelling after a pinned one in one module, so each fail-closed reader is proven on every match and, for G1, on
- * each word), each refused with exactly its typed refusals in one call after the tracked files; a match in another
- * unpinned spelling is refused by the same tests but pinned on no form. The fail-closed row claims those fourteen refusals;
- * the full-surface pinning of the families they come from (U1-U5) is the full-surface row's (FULL SURFACE, wb-0lf.8).
+ * table; S2's q1-shape and q2-joined commented out), two of cut #6's own (FC-G1-EVERY-MATCH, FC-D3-EVERY-MATCH: an unpinned
+ * spelling after a pinned one in one module, so each fail-closed reader is proven on every match and, for G1, on each word),
+ * wb-0x41's two (the R694 follow-up landing 677 filed, each the gate plant its carried finding names): FC-S2-Q1-BLOCK-COMMENT
+ * (F2, G15-P-S2-Q1-BLOCKCOMMENT: q1-shape with a block comment before its text, so R-COMMENTED's block half is pinned beside
+ * its line half while the member's static proxy alone still reads it live) and FC-LISTING-SYMLINK (F1, G15-P-G1-SYMLINK: the
+ * landed listers list the regular files only, G1's reader names the module read through the src link, and S-NONREGULAR names
+ * each of the four links git would commit), and wb-0x41 cut #2's six (its refusal #1: each answers the gate hollowing its
+ * UNMET line names and is that hollowing's falsifier): FC-S2-Q1-BLOCK-MID-LINE (L2-CO-BLOCK-TEXT-START),
+ * FC-S2-Q1-LINE-INDENTED (L2-CO-LINE-LINE-START), FC-S2-Q1-LINE-TRAILING (L2-CO-BOTH-LINE-START), FC-S2-Q1-BLOCK-UNSPACED
+ * (L2-CO-BLOCK-SPACE), FC-S2-Q1-BLOCK-MULTI-LINE (L2-CO-BLOCK-SAME-LINE) and FC-LISTING-TRACKED (L2-NR-NO-CACHED). Each is
+ * refused with exactly its typed refusals in one call after the tracked files (each listing form in its own scratch
+ * repository); a match in another unpinned spelling is refused by the same tests but pinned on no form. Each form answers its
+ * outside anchor (OUTSIDE ANCHORS). The fail-closed row claims those twenty-two refusals and the listing's silence
+ * today; the full-surface pinning of the families they come from (U1-U5) is the full-surface row's (FULL SURFACE, wb-0lf.8).
  * FULL SURFACE (wb-0lf.8, the rule-19 structural-exit child R-B73 filed; one registered row, after the fail-closed row): the
  * forms the tables below list and no other, each a pinned falsifier through its claim's own reader and none of them a form
  * of the fail-closed core but CORE OVERLAP's sixteen, which the row reads again, each family answering its item of
@@ -396,9 +406,10 @@
  * `O-BEFORE-PARAGRAPH=FC-G3-OTHER-LEAD` (FAIL_CLOSED's three G3 edits of the live page), `O-AFTER-DEF=D-OTHER-DEF`,
  * `O-AFTER-FENCES=D-OTHER-CODE`, `O-AFTER-HEADING=D-OTHER-HEADING` and `O-AFTER-PARAGRAPH=D-OTHER-PARAGRAPH` (four DOCS_PLANTS
  * edits), and `src/workbench/q1-shape.ts line-comment=FC-S2-Q1-COMMENTED` and
- * `src/workbench/q2-joined.ts line-comment=FC-S2-Q2-COMMENTED` (FAIL_CLOSED's two S2 member edits). Every other full-surface
+ * `src/workbench/q2-joined.ts line-comment=FC-S2-Q2-COMMENTED` (FAIL_CLOSED's two commented-out S2 member edits; its six
+ * other S2 member edits, wb-0x41's, are none of the full surface's forms). Every other full-surface
  * form is none of the core's: the row compares each of surfaceForms' 671 forms (a spelling, an edit of the live page or a
- * member text) with each of coreForms' 203 (the spellings G1's and D3's tables write and each match FAIL_CLOSED's source forms
+ * member text) with each of coreForms' 209 (the spellings G1's and D3's tables write and each match FAIL_CLOSED's source forms
  * refuse; the edits DOCS_PLANTS, FAIL_CLOSED's docs forms and the residual docs members make; the residual source members'
  * texts and FAIL_CLOSED's member edits of them) by coreOverlapOf, text against text, holds both lists to the tables they are
  * read from, table by table, proves the reader on every form of each (each one planted on the other side is read as itself,
@@ -442,27 +453,40 @@
  * gRaphPolicy or eXecutorRequest; a GraphPolicy owner cell in a case mix such as GRAPHpolicyCLI; a lead or an ownership block
  * in another syntax form; another arrangement of the section's tables: refused by the fail-closed readers or by G3's
  * default-deny rules, pinned on no form); a coordinated removal, from every literal of these files and from the roster
- * together, of a residual member, of a FAIL_CLOSED form, of the fail-closed row, or of a full-surface member whose rule or
+ * together, of a residual member, of the fail-closed row, or of a full-surface member whose rule or
  * family another member of its table still covers (a lead of SURFACE_LEADS beside another lead of its gfm rule, one of
  * SURFACE_RUN_LENGTHS' lengths or of the two mixed runs, a SURFACE_POSITIONS place after the first, a NON_ASCII_PARTS member,
  * the regular-expression silencing): the census's own choices, whose rules, families and characters marked's grammar, the
- * live class, wb-0lf.8's row and WORD_PLACES anchor but not those members (refusal #1's F1); a src entry listed as a
- * symlink (the landed listers read regular files only), the block-comment half of R-COMMENTED and an exported anchor for
- * FAIL_CLOSED's forms (landing 677's carried findings, the follow-up bead wb-0x41's); a coordinated edit of coreOverlapOf,
+ * live class, wb-0lf.8's row and WORD_PLACES anchor but not those members (refusal #1's F1; a FAIL_CLOSED form is no such
+ * choice: each answers its outside anchor, OUTSIDE ANCHORS); a comment opener in a text no S2 form pins (outside
+ * R-COMMENTED's claim, wb-0x41 cut #3): other characters beside it (a tab, a run of spaces, another letter, digit or mark, so
+ * a doc comment's /** or a run of three slashes), another position (after code ending in another character, inside a
+ * single-quoted or template string or a regular expression literal), three or more on one line, or a two-opener line with
+ * other spacing than the helper's TRAILING_LINES c1-c5; an entry git would commit that is no regular file in a kind other
+ * than a symbolic link (a
+ * gitlink's or a nested repository's directory: refused S-NONREGULAR by the same reader, pinned on no form), a listing outside
+ * LISTED_SCOPES (the census reads none), and the landed wb-e66.5, wb-1xvp.2 and wb-gxd7.4 guards' own listings, which landing
+ * 677's F1 names as sharing the landed listers' regular-file reading (wb-0x41 leaves those censuses as landed); a coordinated
+ * edit of one FAIL_CLOSED form's content (an S2 form's edit and opener count, a listing form's tree) together with its frozen
+ * literal and its roster reading in these files (those three hold a form's content; the form as a whole answers its outside
+ * anchor); a coordinated edit of coreOverlapOf,
  * surfaceForms or coreForms together with the row's reading of them, CORE_OVERLAP, this header's CORE OVERLAP pairs and the
  * roster in these files, and a core form of another kind than CORE OVERLAP compares (the mutants, cases, controls, probes and
  * planted modules of rows A-G, none of them a spelling of G1's or D3's tables, an edit of the live page or a residual member's
- * text); a literal token's syntactic place in a module (COMPOSE_PLANTS pins the kinds, not the places).
+ * text, and FAIL_CLOSED's two listing forms, scratch repositories coreForms does not read); a literal token's syntactic place
+ * in a module (COMPOSE_PLANTS pins the kinds, not the places).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, every residual family's member
  * count, the mutant and case ids per pin, the rule list, the registry, the docs plants with their rules, the docs rules,
  * READ_METHODS, the walk's probes with their facets, its facets and walked kinds, the equivalence controls, the read proof's
  * places and controls, the site words and their planted modules, the joiners, the case forms, the word places, the spelled words' parts, every
  * spelling of SITE_WORD_SPELLINGS, EXECUTOR_REQUEST_SPELLINGS and EXECUTOR_REQUEST_OUTSIDE, each residual member's liveness
- * (a source member's kind, a drive member's effect) and FAIL_CLOSED's forms (each one's id, claim and word with its match,
- * docs rules or member) and the full surface's tables (its case forms, run lengths, runs, gaps, spellings with their family
- * counts, D3's spellings, the non-ASCII residual's members, the leads, the ownership blocks with their places, the owner-cell spellings, the rules outside, the
- * silencings and the unreachable form, the literal kinds with the kinds outside, the JSX-shaped module, the compose plants and
- * the core overlap) as literals; the judged set (every row's id, label
+ * (a source member's kind, a drive member's effect), FAIL_CLOSED's forms (each one's id, claim and word with its match,
+ * docs rules, member with its opener count and its edit read on EDIT_SAMPLE, or scratch tree with its tracked, ignored and
+ * removed paths, and each one's outside anchor), LISTED_SCOPES and the full surface's tables (its case forms, run lengths,
+ * runs, gaps, spellings with their family counts, D3's spellings, the non-ASCII residual's members, the leads, the ownership
+ * blocks with their places, the owner-cell spellings, the rules outside, the silencings and the unreachable form, the literal
+ * kinds with the kinds outside, the JSX-shaped module, the compose plants and the core overlap) as literals; the judged set
+ * (every row's id, label
  * and pins, every pin's quote and witness, each residual source member's comment-opener count among them, the residual
  * members, FAIL_CLOSED's refusals, one reading per form, the full-surface row's readings, each source member's code
  * reading among the Q1 and Q2 witnesses, every registered test title) is held to the out-of-file
@@ -477,19 +501,32 @@
  * (readPattern reads them back in G1 and D3) and the characters of the full surface's runs and gaps; the vendored fixture's
  * keys hold what Q1's members name; wb-0lf.8's own row names the hollowings and residual families the full-surface families
  * answer (the full-surface row reads it) and, listing its items, binds the full-surface row's registration (the last case
- * reads it); marked's gfm block grammar (Lexer.rules.block.gfm) holds the rules every full-surface lead and ownership block
+ * reads it); the rows that filed FAIL_CLOSED's forms (wb-0x41's F4, read in the fail-closed row): wb-0lf.8's description,
+ * whose five "- U<n> " lines name refusal #5's ten hollowings (U1-U4) and its residual families Q1 and Q2 (U5), each line with
+ * its claim (refusalItemsOf), this bead's notes, whose landed cut #6 note names its two own forms (ownFormsOf), wb-0x41's
+ * filing note, whose carried lines name its two gate plants (carriedPlantsOf), and wb-0x41's refusal #1, whose two UNMET lines
+ * name the gate's six hollowings (unmetHollowingsOf: U1's L2-NR-NO-CACHED and U2's five commentOpeners hollowings, each U2 one
+ * written with its pattern) - every form answers exactly one of those twenty-two names and every name is answered, a form
+ * answering a refusal #5 item holds its line's claim, a form answering a refusal #1 hollowing refuses with the typed refusal
+ * its line names, each S2 form answering a U2 hollowing is that hollowing's falsifier (its pattern, read from the export,
+ * counts none of the openers the form's text holds), the listing form answering U1's holds links only git's index lists, and
+ * an S2 form edits a member of the family its anchor names or, answering a refusal #1 hollowing, a residual source member;
+ * marked's gfm block grammar (Lexer.rules.block.gfm) holds the rules every full-surface lead and ownership block
  * is pinned by; TypeScript's SyntaxKind enum (FirstLiteralToken to LastTemplateToken) holds the literal token kinds
  * COMPOSE_PLANTS covers; and the core's own tables (G1's and D3's spelling tables, FAIL_CLOSED, DOCS_PLANTS and RESIDUALS)
- * hold the forms CORE OVERLAP is computed against. So a judged row of ROWS (A-G) removed from every literal of this file, the
- * helper and the roster together still reds, and so do the full-surface row, a member of a generated full-surface spelling
+ * hold the forms CORE OVERLAP is computed against. So a judged row of ROWS (A-G) or a FAIL_CLOSED form removed from every
+ * literal of this file, the helper and the roster together still reds, and so do the full-surface row, a member of a
+ * generated full-surface spelling
  * table (SURFACE_SITE_SPELLINGS, SURFACE_REQUEST_SPELLINGS, SURFACE_OWNERS), which the full-surface row derives again from the
  * word parts and the tables it is built from, a full-surface lead or ownership block that is its gfm rule's only one at its
  * place, a silencing of a WORD_PLACES place and a SURFACE_CASES form, which wb-0lf.8's row names, a compose plant, each its
  * literal kind's only one, and a CORE_OVERLAP pair, which the full-surface row computes again from the tables; these anchors
- * bind the full surface's rules, families and generated products, not a member another member of its table still covers, the
- * residual members, the fail-closed row or FAIL_CLOSED's forms (NOT CLAIMED, refusal #1's F1). The last case reads the vitest task
- * tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness
- * compare, and each compare's result).
+ * bind the full surface's rules, families and generated products and FAIL_CLOSED's forms, not a member another member of its
+ * table still covers, the residual members or the fail-closed row (NOT CLAIMED, refusal #1's F1). The last case reads the
+ * vitest task tree (every registered test, in roster order, in run mode, ran before it), REACHED (every pin reached its
+ * witness compare, and each compare's result) and ENDS (wb-0x41 cut #2, refusal #1's F1: the rule 16 and outside-anchors
+ * cases reached their ends, the fail-closed case each of its five blocks), and holds its own assertion count
+ * (expect.assertions).
  *
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI exporter, seam, package or fake binary.
  */
@@ -564,8 +601,10 @@ import {
   KNOWN_STATUS,
   keyParts,
   LEAD_RULES_OUTSIDE,
+  LISTED_SCOPES,
   LITERAL_KINDS,
   LITERAL_KINDS_OUTSIDE,
+  type ListedEntry,
   latinOf,
   literalTokensOf,
   MUTANTS,
@@ -573,6 +612,7 @@ import {
   NON_ASCII_PARTS,
   namesGraphPolicy,
   namespaceNamers,
+  nonRegularFindings,
   OTHER_RULES_OUTSIDE,
   OVER_BUDGET_CODE,
   OWNER_SPELLINGS,
@@ -1181,10 +1221,11 @@ const vendoredKeys = (): Set<string> => {
  * them), and every member's static reading holds (R-B66 and rule 19's residual definition, narrowed by R-B73 to what the row
  * reads: a member whose reading no longer holds reds its row): a shape member's raw text names keys of the vendored v1
  * document before a colon (shapeKeysOf), a composed member's double-quoted literals, decoded and joined (composedOf), are
- * read by a source reader, each over a text holding no comment opener (R-COMMENTED refuses one, and the row's witness holds
- * each source member's count), and read from its code as well (wb-0lf.8 U5: codeShapeKeysOf and codeComposedOf over the member's
- * TypeScript parse, where a comment is trivia and a string's content is no code, so a member silenced where no code runs reds
- * its row; the row's witness holds each reading), an outcome member's edit changes the reference's export (its first
+ * read by a source reader, each over a text holding no comment opener (R-COMMENTED, refused on the texts FAIL_CLOSED's S2
+ * forms pin, and the row's witness holds each source member's count), and read from its code as well (wb-0lf.8 U5:
+ * codeShapeKeysOf and codeComposedOf over the member's TypeScript parse, where a comment is trivia and a string's content is
+ * no code, so a member silenced where no code runs reds its row; the row's witness holds each reading), an outcome member's
+ * edit changes the reference's export (its first
  * difference named), a drive member does what its family names as driveEffects reads it (the reference drive reading as
  * NO_EFFECTS), and a docs member lands in the section's tables.
  */
@@ -1556,6 +1597,7 @@ describe(SUITE, () => {
       "src/workbench/q1-shape.ts line-comment=FC-S2-Q1-COMMENTED",
       "src/workbench/q2-joined.ts line-comment=FC-S2-Q2-COMMENTED",
     ]);
+    ENDS.push("rule 16");
   });
 
   it("the outside anchors: the bead's own row binds the rows and the pin quotes; the vendored producer fixture, the registry and the live control import bind the judge's spellings", () => {
@@ -1984,7 +2026,7 @@ describe(SUITE, () => {
       ...members.map(member => ({ table: "RESIDUALS source", id: member.path, key: member.text })),
       ...FAIL_CLOSED.flatMap(form => (form.kind === "member" ? [{ table: "FAIL_CLOSED member", id: form.id, key: form.edit(members.find(member => member.path === form.member)?.text ?? "") }] : [])),
     ]);
-    expect([surface.length, core.length], "671 full-surface forms against 203 core forms").toEqual([671, 203]);
+    expect([surface.length, core.length], "671 full-surface forms against 209 core forms (FAIL_CLOSED's eight S2 member edits among them)").toEqual([671, 209]);
     const plantedSurface = coreOverlapOf(
       surface,
       surface.map((form, index) => ({ ...form, id: `planted #${index}` })),
@@ -2035,8 +2077,9 @@ describe(SUITE, () => {
   });
 
   it("roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-snapshot-export-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {
-    // wb-0x41 cut #2 (refusal #1's F1): this case holds its own assertion count, so a return before its last line reds it.
-    expect.assertions(16);
+    // wb-0x41 cut #2 (refusal #1's F1): this case holds its own assertion count, so a return before its last line reds it
+    // (seventeen since the trunk merge: wb-0lf.8's full-surface registration check rides in this case).
+    expect.assertions(17);
     expect(ROSTER.bead, "the roster is this bead's").toBe(BEAD);
     expect(ROWS, "the judged rows equal the roster rows exactly and in order").toEqual(ROSTER.rows);
     expect(QUOTES, "the pin quotes equal the roster's").toEqual(ROSTER.quotes);
