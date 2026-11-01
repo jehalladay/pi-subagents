@@ -1,0 +1,1165 @@
+{
+  "rows": [
+    {
+      "id": "F",
+      "label": "the free names: each ADMITTED_FREE name reads quiet and each other free name its pins plant reds",
+      "pins": [
+        {
+          "id": "V-admitted-free",
+          "digest": "51041ba35c44df0f99d0b59ca66f7063e69ff49ab5b12d50f977b8b49fa5b88b"
+        },
+        {
+          "id": "Z-global-process",
+          "digest": "b076ed876b5a401e78dec377e0820f3c9cd39c691484a8eb968b9f507e236429"
+        },
+        {
+          "id": "Z-global-fetch",
+          "digest": "59eb8ac756eab440cd3893f2440d3ee1485aaf61d9b55bc895e5011ecb5b7de4"
+        },
+        {
+          "id": "Z-global-code",
+          "digest": "8b1f37c3c3b2a284494bb7d012e6d88ca11c85a7edee3885727502a996e34599"
+        },
+        {
+          "id": "Z-global-this",
+          "digest": "ddb6bf91cb40c737cf4f760c1cece593f2d40ccfd8f0803e50e8fe1f69461e7f"
+        },
+        {
+          "id": "Z-global-wrapper",
+          "digest": "59a32a5af82b14be25598f13e6aaf198a9c9302f708ee7b57243594579a1972f"
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the module rules (1)-(3) and the names read, for the forms its pins hold",
+      "pins": [
+        {
+          "id": "R-shorthand",
+          "digest": "1ce21163d2932d0b44c6ef0173aa78351a5ee4b6fca18034f9de59f1ac901a3f"
+        },
+        {
+          "id": "R-export-local",
+          "digest": "11108f7d1a1b06a299577acc1654eb26abfbebb5e8b14106d71a52e1aafcbfa0"
+        },
+        {
+          "id": "R-ambient",
+          "digest": "f692e4ef3b7ec0554101394695fc0956f53a98aaae20a9f53d8fb735fa67846a"
+        },
+        {
+          "id": "R-extends",
+          "digest": "13bace507680fb4ed39404d7b375867b9307c94a3596c26db7eeba57c1cf0e6b"
+        },
+        {
+          "id": "R-enum-initializer",
+          "digest": "c51903bb062a1a481da705c2fc38e83929b2f99e08f06d2347fba7cf98a54c54"
+        },
+        {
+          "id": "R-closure-global",
+          "digest": "1e7f4cd4ec694deaeb8e3b06d4e0fd6146e52ad7f3e4afdda51886592671c510"
+        },
+        {
+          "id": "R-global-escaped",
+          "digest": "5bbf7b069746ac8ee0a8d699a5c0d6aeb58fcd6f4a778f0ba75e72cfe811f731"
+        },
+        {
+          "id": "R-script-var",
+          "digest": "3bf8fcfe8e0cf43b17c6b0bfb17a31979c28f638dac64a71c550f3f67deaa2f8"
+        },
+        {
+          "id": "R-script-typed",
+          "digest": "1489814c78a8556157ea20422d658cf3be5f16c69d7409c05f396f9cb4221cbf"
+        },
+        {
+          "id": "R-script-function",
+          "digest": "747ce58056db18ab7106663ff2d5dcae07ac6f22ea214e825d5e95bc456dfd7c"
+        },
+        {
+          "id": "R-script-require",
+          "digest": "540f2846a41ea9f585abe139f560ee0bd3f954ea12a0a15c552436ac5884a33e"
+        },
+        {
+          "id": "R-dts-script",
+          "digest": "568a09f711606f05efff6fd47c3a351133c39c3c5c30a2a08686df03e36a6c2c"
+        },
+        {
+          "id": "R-dts-module",
+          "digest": "6ddeeb7091cd1bcfc13650a02bf6288a3dfd5c016c8c3093abcf9bbc46d7d2ff"
+        },
+        {
+          "id": "R-type-only-value",
+          "digest": "396cbea8112bfaca35b62989d370a8ef5fdcf6b92ebab8e24c03da482199fb5a"
+        },
+        {
+          "id": "R-type-only-erased",
+          "digest": "70f4b0635f8d5969a87948b0bb9c3e1628cdaaaa3d3c41f9ee453e7956c62715"
+        },
+        {
+          "id": "R-non-value-alias",
+          "digest": "685035174373072e6655396e6b12b0b56980c7efcc5a4ede636c285c36354221"
+        },
+        {
+          "id": "R-types-erased",
+          "digest": "2f51aa3d0208e12880245918fb5add2c9544083bb69b881edc64b68cda9c718b"
+        },
+        {
+          "id": "R-arguments",
+          "digest": "7c0d3bef22b2712e60cd0bf45ecf891390bf7df4607abc0b936c45ba8b1a3586"
+        },
+        {
+          "id": "R-bodiless",
+          "digest": "e77c3a616dda7428454afb7f0d762dd6c079e7e9944704b7e21522c0598d2172"
+        },
+        {
+          "id": "R-const-enum",
+          "digest": "ff7ad5afa23b7024c59264f647aa29b0a02e966d48ea17713f1a8ad55608f5d6"
+        },
+        {
+          "id": "R-not-references",
+          "digest": "2017d4538a57bbf15a0e60acce9e2126488b66f1479d788558b015a91d17eefb"
+        },
+        {
+          "id": "W-G14-V1",
+          "digest": "21a79bd5dc0b4fba7415c4910c855365502c17b178f49fc81938e6c877eaf192"
+        },
+        {
+          "id": "R-names-read-positions",
+          "digest": "7a56ada263ef68522809e0253b11a785b755a247bef71786aab4b33e6bb2c2fd"
+        }
+      ]
+    },
+    {
+      "id": "U",
+      "label": "the binding allowlist (4) and the wrapper names (5), for the declaration forms its pins hold",
+      "pins": [
+        {
+          "id": "U-GP1",
+          "digest": "9f16af0ae401b713122dc4e6c08ed07ae3cfa22f4bca62493b47a37733d99c5f"
+        },
+        {
+          "id": "U-GP1L",
+          "digest": "fbbaf55752d830cafd59835af2a0759c00ab29a545a37f122fd3d71cc443048c"
+        },
+        {
+          "id": "U-GP2",
+          "digest": "0d64c44172c1cea1766252bcbc1b6a654319daac059ab4cd9bbce227fc82eb02"
+        },
+        {
+          "id": "U-GP3",
+          "digest": "4a6f71fc642f77b1355ac5b24f066dc7bd22ea78ae1b674f0e22649eccd1230c"
+        },
+        {
+          "id": "U-GP3b",
+          "digest": "b6c790fb74227a917c9fc30acd2ef4304a6909a84c82018cc7fa31a1482bf0ea"
+        },
+        {
+          "id": "U-GP4",
+          "digest": "363f0ee6fd3a96a01ecad7d0e084ff614560135e67c6925a5c07973bd3349472"
+        },
+        {
+          "id": "U-GP4b",
+          "digest": "56dbda516fe78ae3ba5b431e8215ae53b0040dd07781a146a894900312774d6b"
+        },
+        {
+          "id": "U-GP5",
+          "digest": "7d56bf5a6a73fef71ebf0e0e66f9883a8490294b61ccebc2761fc76f560ed9df"
+        },
+        {
+          "id": "U-GP7",
+          "digest": "c787c14995d62bbb994ed15f4111a26c7e81b7237cf70911e759e86e0ccbf500"
+        },
+        {
+          "id": "U-GP8",
+          "digest": "cf477ffa80849d384ef909176e48d335f95b8e4f6100ee1b6dd0eb47276ddad6"
+        },
+        {
+          "id": "U-GP8b",
+          "digest": "ae9437e719cf21f3d762b0727ef858ece4faa248e597aaed3631fe64f2782901"
+        },
+        {
+          "id": "U-GP9",
+          "digest": "f3be8a5d30a8b026de5a4e4b64f19ee5b9146bbb3642b3134e1b47f2b67d7fb1"
+        },
+        {
+          "id": "U-GP10",
+          "digest": "c7cfd9e06494bad8e3d4ea75f1b4b4d9021a8771184984e7676d10a108b44b9d"
+        },
+        {
+          "id": "U-GP11",
+          "digest": "95b04194f4e0a98d0c87d3807c1f4123fd83d2616d79e962ceeb1b511ff3b930"
+        },
+        {
+          "id": "U-GP12",
+          "digest": "0840449588d0eb35359e56aa2bba5dadda2efee41c6520258d26761080095286"
+        },
+        {
+          "id": "U-GP13",
+          "digest": "a98fdd5d6a32db7aa1d68cf6559981695285a231a4c692021f34a2ffd379887f"
+        },
+        {
+          "id": "U-GP14",
+          "digest": "cee01b4d953a0b7fb7bd8b52fd6cbd759b155071d904112cbb4bccdb06417692"
+        },
+        {
+          "id": "U-GP17",
+          "digest": "31f233be33a92f3e7d3d6a71596975b3d035a33e363080c30c1c8b737130b44f"
+        },
+        {
+          "id": "U-GP6",
+          "digest": "9a276735957a7205d363664c86797a1446d79dbf3a6749e3340001806a2193de"
+        },
+        {
+          "id": "U-GP15",
+          "digest": "1c6c14bd0b98afa4cdf4d8f325a4155f8c2e553ac7eb9e78595f2275fa76064b"
+        },
+        {
+          "id": "U-GP16",
+          "digest": "a8d7e542f67bf40dc8b0356e236d3b75c9e04bfad3f9a76c5dbb6b7d72ec8104"
+        },
+        {
+          "id": "U-GC1",
+          "digest": "78413be41bb65a28c8d0c4734d31e1965d037c50bfe0bfac83031ac58ca85875"
+        },
+        {
+          "id": "U-GC2",
+          "digest": "95b34a6d003845b2e30f5da48877e2d74956b7aeb0b023f0902593c097f2deae"
+        },
+        {
+          "id": "U-GC3",
+          "digest": "c3921e8525788f48edb5666e3b1714cf46e5efd3363af8af6e5b0e5c9fc0c0ec"
+        },
+        {
+          "id": "U-const-enum-companion",
+          "digest": "1b3728c090ae1a7a5b1196eea084bfcfc68947a2e98865904d9476eca4f30c89"
+        },
+        {
+          "id": "U-default-interface",
+          "digest": "f69c627d51c76fa081d0d97b4bf4dbff61b8b9b1db0984989bf28a8ad60e045c"
+        },
+        {
+          "id": "U-ambient-let-type",
+          "digest": "da8914d55c70c446141e0ae526be05cc178dfdcb9bcae140a6e24ff35d166283"
+        },
+        {
+          "id": "U-depth-two",
+          "digest": "1d480fb660afb16695563776d30a5acbb3afb746276bf7edbd85b4f282d91f57"
+        },
+        {
+          "id": "U-ambient-function-interface",
+          "digest": "2f680c871318f03851c88325fd4ee9f1bd797a63106e3741b74617fb0e07444c"
+        },
+        {
+          "id": "U-ambient-class-namespace",
+          "digest": "40bfc3700943199e95dee5e503b46b9c2dd9c0d3e0b0fc5d3dfe8515bd82b0cd"
+        },
+        {
+          "id": "U-ambient-namespace-interface",
+          "digest": "576eb60599a31409d2de276de11fb3c6bd4052b2b77e140f1ba8bf26e515d476"
+        },
+        {
+          "id": "U-string-module",
+          "digest": "f48404e4ef45a08c31a6d50a0933f3a74d48a1424beddf22b982edc0235e7fd1"
+        },
+        {
+          "id": "U-umd-export",
+          "digest": "cf6f26f30eeb355b6410ff6871116ac2b431a19e2b44d40d187eeed93739f580"
+        },
+        {
+          "id": "U-signature-parameters",
+          "digest": "22934050927c41dd44082118d0a9f1770f0d9e9d6b54f609cfe418012d142ef1"
+        },
+        {
+          "id": "U-wrapper-var",
+          "digest": "778dfefe24840e1ab64758298a1619df7c4f0b7f0477a166dd73144ba879f0e3"
+        },
+        {
+          "id": "U-wrapper-forms",
+          "digest": "2bbb9e6b3bd239966671ba86ee1d22cd2fcb10fb5bf07f24b3dba1b22b555d89"
+        },
+        {
+          "id": "U-namespace-unbound",
+          "digest": "598a41f15eb3453c9aae8a74f9b637a5d445716b6b592eee9a4dcfa9fc121c6c"
+        },
+        {
+          "id": "U-namespace-binds",
+          "digest": "b4a22df1060a8c0f2e776ab5ff38a6606d927eaee56cc8b5d34c9c003bb1a63b"
+        },
+        {
+          "id": "U-binds-values",
+          "digest": "b37b6c236038e407b85454803366397f6dc9527a66cb6f5881d13cf37a8d976c"
+        },
+        {
+          "id": "U-binds-merged",
+          "digest": "b6c5bcfeddd1e27e4b899c122e4e7929e354ad01b5810aadbc192ba984456510"
+        },
+        {
+          "id": "U-binds-members",
+          "digest": "bc0b33ed9f9b156eceeed5f177fb0f0d9b601e2a511174ed99eaa4026d4f1463"
+        },
+        {
+          "id": "W-G14-N10",
+          "digest": "ee2f2191d5dc28bb52ed53bc76f993c5facb6c6b99bcc15171535e40750728e9"
+        },
+        {
+          "id": "W-G14-E7",
+          "digest": "417e614399e1559f8f269f529adee485860f4afb63814002e59b7033d36d27c4"
+        },
+        {
+          "id": "W-G14-E15",
+          "digest": "857e5ed6a9089997cae7e1ba565a36fe2f189685576cafb5a30a7e5b3b6143ac"
+        },
+        {
+          "id": "W-G14-MN",
+          "digest": "9fead69772ee08467bb00284de25fc2ef6f0d9c155cc968944fee6e347eac0f7"
+        },
+        {
+          "id": "W-G14-B3",
+          "digest": "3aaee5e872289203a4a9332fd2f2d5bace60c7509706d046c110608c50c96566"
+        },
+        {
+          "id": "W-G14-N8",
+          "digest": "796ded17bf178cca6132759ae3dcc81fef93442ad69c19bf271bbc31f17aff52"
+        },
+        {
+          "id": "U-wrapper-imports",
+          "digest": "f9352e0070ef187f1fae035943bbc3cf2459b8c5a570c8b7151640a0a500668e"
+        },
+        {
+          "id": "U-alias-reads-bound",
+          "digest": "be700008197a0c7307f95b497933f1134d4f70402ea99b38c72fd0d5ef1b815c"
+        },
+        {
+          "id": "U-wrapper-statements",
+          "digest": "af8136f91dcf1fe47972e0c54212fff90fdd292c1697c742d4bc9057f24d57b4"
+        },
+        {
+          "id": "S-U-wrapper-forms",
+          "digest": "1263166a02fa5f1f25d9b548270a6fad2b25bf74f6b1da6ed2303a3d62281681"
+        },
+        {
+          "id": "S-W-G14-E7",
+          "digest": "056707ab15f92ce38ad8b11040acf34f92a96005f16f111d52f1271af5535b6d"
+        },
+        {
+          "id": "S-U-wrapper-imports",
+          "digest": "4c9f05a1132800ebe90bb222f90942df63ffb6d65af53b73f3374bb7ee138a20"
+        }
+      ]
+    },
+    {
+      "id": "NS",
+      "label": "namespace blocks (6): a cross-block reference reds at each position its pins hold",
+      "pins": [
+        {
+          "id": "U-NS1",
+          "digest": "6046976f8a897b613c52753de9ee3f81b3cf0a711d0d17bc9d08b126f351e363"
+        },
+        {
+          "id": "U-NS1L",
+          "digest": "42e65af040cfbd40772e94fbf581a556bcc30763cabe0eb9eecc731d9378c0a6"
+        },
+        {
+          "id": "U-NS2",
+          "digest": "c7dad77efc30527979339226bd4872ec5a89dd4d078e70c09acba121eea93893"
+        },
+        {
+          "id": "U-NS3",
+          "digest": "8956cc4fc1ca0f2558f2b3206215e095a7da242a53919eeb681ef4feea2436a1"
+        },
+        {
+          "id": "U-NS3b",
+          "digest": "9d582b44e0a53aa5522d804631d1bc633978a3eff0ac369cb79a88408daba4df"
+        },
+        {
+          "id": "U-NS3bL",
+          "digest": "76ace15add1d0f59268fb5fb355194ab8270f4dd7a776eedcab49220313b30be"
+        },
+        {
+          "id": "U-NS4",
+          "digest": "2feda855a79caa417cb49145734537110f90227174f1492fef9ec3645de2a0be"
+        },
+        {
+          "id": "U-NS5",
+          "digest": "b7b490c42d1971baedbf9a29b18146d3a8e4cbf46631ebf9d1ec87f4cbf6aa3a"
+        },
+        {
+          "id": "U-NS6",
+          "digest": "1c43b82a3a4d608f674f08257435af824e0d78a77667976b9ad0e2f8c5ebda73"
+        },
+        {
+          "id": "U-NS7",
+          "digest": "1da6a829f60eab78ac30a75c952bd76599e7bd4f9f6ceefbd78e25bbe8c2df85"
+        },
+        {
+          "id": "U-NS8",
+          "digest": "173b7a3f0d8a8fd905e06f3f9bcae9f747730de67491dbba18fb2f716b5339ad"
+        },
+        {
+          "id": "U-NS9",
+          "digest": "c3477c71344894a8e852ac78f4a7304fa1df60b6f325201026fc1bd072b3177a"
+        },
+        {
+          "id": "U-NS10",
+          "digest": "7d0ece0aa15b37988efd7049d5b7dd645add8ff491734e2542a1e5fb01c20607"
+        },
+        {
+          "id": "U-NS11",
+          "digest": "4bacae0652c1af0a36225cc0dd436e7d466afee33dba4b30b4047269a4dc30e4"
+        },
+        {
+          "id": "U-NS-C1",
+          "digest": "01bdec32a233f75e0eb0240ca54f55c9865f03f104317778f4f92e3c110bd746"
+        },
+        {
+          "id": "U-NS-C2",
+          "digest": "86cd3096601baef9cb5cef74ef0e7a32408b69e31903f7c28ff8f97a17d2070d"
+        },
+        {
+          "id": "U-NS-C3",
+          "digest": "33a9b2ad36585a1fd30e9ebbc4e6b8d01c89fe3167e31e7ffacd5a13c9833772"
+        },
+        {
+          "id": "U-NS-nested-cross",
+          "digest": "a8388f62adff1179c5bc1c8912bc0831595970a992ea64392f1e5f4a225c6fd2"
+        },
+        {
+          "id": "U-NS-cross-forms",
+          "digest": "a695c3a1e2299e3e6047ea7806146387965bca3a2d9eeea15fe7f96c9c9a9573"
+        },
+        {
+          "id": "W-GK1-block-statement",
+          "digest": "7ceda6b46dda8634cee06cf1baec1117d91d6acfa386819ec6577035bd1ea4a0"
+        },
+        {
+          "id": "W-GK1-class-field",
+          "digest": "e12e8cf1be85127e68450a0af2b1b6205b0265ad382094848cc73026a398f8d1"
+        },
+        {
+          "id": "G4-NS-reverse-order",
+          "digest": "41ed467b82119abadb0d87207170dd90becfdbbd3f9a18568fa721bbddf9126d"
+        },
+        {
+          "id": "G4-NS-static-block",
+          "digest": "0cf311b8dad6595ffac4747384907e31656afbeaf7f1c6781f73b9bef6e0bd02"
+        },
+        {
+          "id": "G4-NS-decorator-free",
+          "digest": "d84e9a5ec6277bbd5514717d9cc7f496ba3d7f1e907321fed477e121ad2d2652"
+        },
+        {
+          "id": "NS-positions",
+          "digest": "1036031e2bcb0e840a02c01212d33c255703bc5ced8e23e361426ec1067ddac4"
+        },
+        {
+          "id": "W-G14-R12",
+          "digest": "ba4b54372e5b47143148e52c4f1d8f07d08a54ade315f7bedb8ef6a3151d41e1"
+        },
+        {
+          "id": "W-G14-R24",
+          "digest": "15ce9349610131541a792a9d91db549eecb16f97be983898693a2a85be745dfa"
+        },
+        {
+          "id": "W-G14-R27",
+          "digest": "351aeb2688d8f1f7bef328abc8c45b94c12db6fde32786b30fb5b247863b019d"
+        },
+        {
+          "id": "W-G14-R28",
+          "digest": "5c71ec904376d10d92cee09a2761ad55e13c95dcbe80d11fcfff76af2dc69732"
+        },
+        {
+          "id": "W-G14-R29",
+          "digest": "800e18c46d487ede0ee3c528a4f8142966fb01a1234bbf051baa56d584ab7a55"
+        },
+        {
+          "id": "W-G14-R30",
+          "digest": "203cb9118f239960bc3f38f1f9cc1d345407ca0495f323ea097049aa5293fa23"
+        },
+        {
+          "id": "W-G14-R31",
+          "digest": "366fd27c50c69c9aaaebad5da4355c8f48df1747aca342082182dfe2b3e8f67f"
+        },
+        {
+          "id": "W-G14-R34",
+          "digest": "bc2975ae0f1abf7611e26bf66ea4938d3ce94a47c085ffb7d99f2b39e633ab2a"
+        },
+        {
+          "id": "W-G14-R36",
+          "digest": "37ed53d1c8b2d0dfd21ce6e23dc817762a947b09e329b277d637cb1548e7d482"
+        },
+        {
+          "id": "W-G14-R37",
+          "digest": "434eb10ae1ffcc616f6ea4f6bd43a18954caecc216e775ce04e49ba30cde27ae"
+        },
+        {
+          "id": "W-G14-R38",
+          "digest": "4bc77a7807ec2fbf526287e84bea4aff97f689a3abbc34d280867e30e5e8525f"
+        },
+        {
+          "id": "W-G14-R39",
+          "digest": "e3ac10e98996b4132c039510a141369bfacde4626d7bc1a3af3e2307c966cd79"
+        },
+        {
+          "id": "W-G14-R40",
+          "digest": "824a726227b4491978e8db76a4aa817bb669c0147de86c15fd11ce2980572850"
+        },
+        {
+          "id": "NS-positions-2",
+          "digest": "9e3749f736c4ffd52bcec563bc753a1c6642823c37a6fbedaaac6ceb79ee737a"
+        },
+        {
+          "id": "NS-contexts",
+          "digest": "aa74e9a2de7e5cbf40f47bcfd3d35dba94a1f22d5511914cdb957cdfcf1bde8f"
+        },
+        {
+          "id": "NS-import-equals-namespace",
+          "digest": "636aa992befe7a0ee510764f5a516d807f0bc0647ab4298e582fcadaccdc0afc"
+        },
+        {
+          "id": "W-G7-N1",
+          "digest": "73d7439054ca877b2904ef86b7478813666b1abd3f7176cd0fedd3a3736fff3b"
+        },
+        {
+          "id": "W-G7-N2",
+          "digest": "dbf790c9ff4f09616ad09e6ef7c77903da56d3a958c7aa7e44bc7202bc28b01f"
+        },
+        {
+          "id": "S-W-G14-R34",
+          "digest": "1b014ba5f4ce59bc101454782169f9c08f75c9656e808cf2ce828a5cc1f1c07a"
+        }
+      ]
+    },
+    {
+      "id": "EN",
+      "label": "enum members (7): the forward, self and later reads its pins hold",
+      "pins": [
+        {
+          "id": "U-EN1",
+          "digest": "3ed6ceabe531372ececcb2add868e95236e04eda3ee5a71ad3f3a6948972b650"
+        },
+        {
+          "id": "U-EN2",
+          "digest": "02f99831ee011b3d4d4d34f733271425a2b44934c7ac49e17b41a1881fbdc7b8"
+        },
+        {
+          "id": "U-EN-forward",
+          "digest": "ba1739c7dfcd1afcc56f4a82757df665315aaa2a3d7b18e30e644be2598fc2ed"
+        },
+        {
+          "id": "U-EN-forward-merged",
+          "digest": "797a6977f5388abb7e8da1782331ccbfc06f0e1f5ce90639a10864c8c0ebeedb"
+        },
+        {
+          "id": "U-EN-self",
+          "digest": "8f95c27b61d5003b12b40dfeb36bc42dfe0ca631bcbcaf1d2e3445079dab4722"
+        },
+        {
+          "id": "W-GK3-namespace-enum-forward",
+          "digest": "5dcb24195ce0e8b6c4454e6ab91a219583838bb5e2d950bba5477a174ee704b4"
+        },
+        {
+          "id": "G4-EN-forward-nested-arrow",
+          "digest": "ac79449b4feb3f12e538df5c655f32352ae55113f912a39d4f65218af8a312e7"
+        },
+        {
+          "id": "G4-EN-string-name-after",
+          "digest": "20e80348acd8e7b5a745ac7ce1155f6aa97f2851ddd7d4b184f8524ccd274115"
+        },
+        {
+          "id": "W-G14-R5",
+          "digest": "9287c6209ea0c61b3eb482ce4360975d168e9483535833d3dcb1e6c722dcb16c"
+        },
+        {
+          "id": "W-G14-R5c",
+          "digest": "5e20d59c5805798eb3cb180991250e7c31f388bcae747f0bb63a21e61a1e8de0"
+        },
+        {
+          "id": "W-G14-R5e",
+          "digest": "05bb979a8ddd605af3666eb267223e1ecabc8e13b99b2b73fe0e3f80220afdf4"
+        },
+        {
+          "id": "W-G14-R5f",
+          "digest": "4a3b0dbf0479f3fdcc659f759144ba3c9ff0cd6bfd9d413cd3e278c39bd83227"
+        },
+        {
+          "id": "EN-forward-positions",
+          "digest": "617859364448f7d15dc62c05befadde3df8d114d950fe93a9b54c194892e1c46"
+        },
+        {
+          "id": "EN-contexts",
+          "digest": "13337fc58e79e7e47626ccbfe3b2fc07a8f3fff94aa42344f415dfd0fc553d04"
+        },
+        {
+          "id": "EN-second-module",
+          "digest": "155b2310b271f0bcc3a80bb4443619f2a3a86a965c6764eabfd766c75319535c"
+        },
+        {
+          "id": "S-U-EN-self",
+          "digest": "66c55a8dda114e076da624c02d8d53e7ecd6b69d9ab94741f5afc8eed6f81083"
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the meta rule: import.meta reds at each position its pins hold",
+      "pins": [
+        {
+          "id": "U-META1",
+          "digest": "4eb3ba293893a59734ca45c110699592e911a229bd8720ac2fcd58a91be12f4b"
+        },
+        {
+          "id": "U-META1L",
+          "digest": "3b3258c10e6d3cd1441de3c9a5fd1a607bc6458d7b3999ee2fedadafd87b4a10"
+        },
+        {
+          "id": "U-meta-forms",
+          "digest": "75b02e6df9cf0c74cff9ae834cfd8ec35137a3e64d60d287ed730ec70cfea296"
+        },
+        {
+          "id": "W-GK2-module-statement",
+          "digest": "5d135af733349ef2a7520b648352015afae5c09ed4aaaaf028de2c7a3eb3a3bd"
+        },
+        {
+          "id": "W-GK2-class-field",
+          "digest": "6bf08a8e50d0c9d8b057085ca4d18bedb4fb7a2c55e99ac556fbe529c541c66a"
+        },
+        {
+          "id": "M-positions",
+          "digest": "78ade7d4e24c099a219e2a47903d0b787265818ab8c5ce2146f935c410313109"
+        },
+        {
+          "id": "W-G14-M4",
+          "digest": "3bc404daee9d827f248f200417a05c1cbf5a910ca0cf0b103548dc74aa525d19"
+        },
+        {
+          "id": "W-G14-M5",
+          "digest": "24fc39e9fd661220f7a426be75690ec1dae60ef930a583de61bdb46d6d33344f"
+        },
+        {
+          "id": "W-G14-M6",
+          "digest": "f723a971c3321e6c17a54c26de0eca898a7ae140d49b47ab8a5d13921a79b792"
+        },
+        {
+          "id": "W-G14-M9",
+          "digest": "37b44aab7c3d096a164e6d276133b3e960c38dfd1257e6b3c7a78fc184ad0d3c"
+        },
+        {
+          "id": "W-G14-M10",
+          "digest": "a76ea297530448d34b5ac99a91f32286e812fc2bde6a4aeb45bf40b9d0c812d8"
+        },
+        {
+          "id": "W-G14-M11",
+          "digest": "8372c3d7251a33bb79b2a0547a706a80639ff71e00671262713cc3e53e78a8c5"
+        },
+        {
+          "id": "W-G14-M15",
+          "digest": "1c6b576d886298204c1d95d5b88f5aaa0d6a7212144074d02559f33a3dfcc281"
+        },
+        {
+          "id": "W-G14-M16",
+          "digest": "cc5261dbc56be86dad41a6c4e0292c05f0397ff91d66c3cb4c5c68543faeaed4"
+        },
+        {
+          "id": "W-G14-M17",
+          "digest": "7e39c011544be84e8cb52fd51214a9bc9bdaf1ddc6a558482fde15c5249348ad"
+        },
+        {
+          "id": "W-G14-M20",
+          "digest": "63600d472a2e160819b59a6b425135207b72c15e6f118d6ca9c36b50025b4919"
+        },
+        {
+          "id": "M-positions-2",
+          "digest": "73b4c46c3a4e331e40b972650afd8c83332e9f991bb66d9fbe6a2434b8d82457"
+        },
+        {
+          "id": "M-contexts",
+          "digest": "6d93c2140e2069a0a8ff6a2a1068240a027117de13ed4bc5f04afea0c29a8ee6"
+        },
+        {
+          "id": "W-G7-M1",
+          "digest": "2d5eea81d2d844fe93e97d9f020cb0f72ed6e710dfb8d0f5cbf46c3ffc3bef0e"
+        },
+        {
+          "id": "W-G7-M2",
+          "digest": "25b55cab72d1c42c27a23c090febca3093f9a41f971d9d55866003840d322571"
+        },
+        {
+          "id": "W-G7-M3",
+          "digest": "90367f50f801b532f360f7db529172622589e543fe8e76b172a789cd70ac22ef"
+        },
+        {
+          "id": "S-W-G14-M10",
+          "digest": "ab8e607950535d7a845ee173d68d62f29d09ed731d8055935680e2ebf2ec9194"
+        },
+        {
+          "id": "S-W-G14-M20",
+          "digest": "d7db5462bf4d23c6e7b494e1daacc8380b9aaa98461343bbe6fea1631623f5a3"
+        }
+      ]
+    },
+    {
+      "id": "I",
+      "label": "instantiation expressions: read through their expression at each position its pins hold",
+      "pins": [
+        {
+          "id": "U-IE1",
+          "digest": "af2049ad104cb2ef7ade8a6693aceea9e4df54091b6a55819c598e207e4fe123"
+        },
+        {
+          "id": "U-IE1c",
+          "digest": "75c93b5a9035658ded7f65dd20b9818bda31c83796f48cab1d0e60828a5e14b4"
+        },
+        {
+          "id": "U-IE2",
+          "digest": "2ba502520a701c7099bdc2c8fa98e19dabb196e49e3faaf6b9262800babe0df7"
+        },
+        {
+          "id": "U-IE2c",
+          "digest": "9bc88bf699a61a327881f3e49ea4119a067f1faf038fe262ee22843a9bbc555a"
+        },
+        {
+          "id": "U-IE3",
+          "digest": "5531ddf9afbdf41bc08e7ae4a8e2a062716f747a950a04576e7c35a3cda56878"
+        },
+        {
+          "id": "U-IE3c",
+          "digest": "3746979aad6e34dad2b29c114b046102060077d2f455f67a8410e434b5b23b49"
+        },
+        {
+          "id": "U-IE4",
+          "digest": "3b16427200e0270012b6c5dff0d66a0d5d8676ef927a6b16726a64e69957126c"
+        },
+        {
+          "id": "U-IE4c",
+          "digest": "e9e0a8cba552063f8e06ce9ef1806d6cad29b73cd430a5f87aa3831f2afde0cf"
+        },
+        {
+          "id": "U-IE5",
+          "digest": "e91e29b4ad5f22a37cdd97cc9948bf4858b75676716325e06a7c344a5ebff8b5"
+        },
+        {
+          "id": "U-IE5c",
+          "digest": "c000ffffe55c4073317746eddfecf1683fd8b0209ade126abe94a09e26cee192"
+        },
+        {
+          "id": "U-IE5d",
+          "digest": "1dddb6af6da9b178f5d61eb7f294af2ecd11d6f97b18158a19b5c69b987a6f70"
+        },
+        {
+          "id": "U-IE6",
+          "digest": "1e3d5dcd9291c38a449c49acf9c4d924057cbf68d9b648b7406901fb36e4abff"
+        },
+        {
+          "id": "U-IE7",
+          "digest": "c35866a07ed0693189c3357f6322375dc917c4126df486596d3593eb9a241a81"
+        },
+        {
+          "id": "U-IE8",
+          "digest": "435e47c12720fa25839cc1ef6ae59c81d7ff54fa484c26621a61c5a7b7741159"
+        },
+        {
+          "id": "U-IE9",
+          "digest": "fb95938aef446f1e32169edbaea9849eb26c889a57f08fe2e5b487f2da015543"
+        },
+        {
+          "id": "U-IE10",
+          "digest": "5f64293def42032544dc7487c91f93129063f9f5359c9bec4ec2bf21511dc6e4"
+        },
+        {
+          "id": "U-IE11",
+          "digest": "686c4a1fafd315a2700665bc7239be49001ecd7deda7229a8eede38dd2ce67dc"
+        },
+        {
+          "id": "U-IE12",
+          "digest": "17157a4dcc5dfade9bda52451f7fd33f39c1b07ec96852d5935c0c3fdc11fdf5"
+        },
+        {
+          "id": "I-forms",
+          "digest": "342722af64023740ee701946ff221f1f1d073bd6e4ee80a8e69014599ffe2981"
+        },
+        {
+          "id": "I-heritage",
+          "digest": "e32789e424663cc3a38d3d28bbd0f2d38bae7fa15f88ed28f6b9b6a057444ca8"
+        },
+        {
+          "id": "I-positions",
+          "digest": "685e19c99f367b1aa32ccc716b6f1132b55090a64a05487463884872b44bf2a8"
+        },
+        {
+          "id": "I-cross-block",
+          "digest": "9cb74b6c707fd14bbe909e6a11270a167179fd368399eab4ec3fb8cfe7082b61"
+        },
+        {
+          "id": "I-type-arguments",
+          "digest": "432e8cd71dff040da4fd01788388cdd8e393251771882329afcf18f1ace7892f"
+        },
+        {
+          "id": "W-G14-I1",
+          "digest": "ca657331cf5edcff987845fb1e202688d540becbdccb588589a68db2c282d168"
+        },
+        {
+          "id": "W-G14-I2",
+          "digest": "10949e13875d4eb995db6b0c226c64e12a66663be5d96c67bedc6907aa26b3a7"
+        },
+        {
+          "id": "W-G14-I3",
+          "digest": "5b3b8f9aaeb2aa5a30ccab54155e3d939a8d24624a675da7f05c04681764d8f3"
+        },
+        {
+          "id": "W-G14-I5",
+          "digest": "7f23ea4c51d07f1d66c48d8b643e5713ac99487bece4e22f34c8465647bc2b55"
+        },
+        {
+          "id": "W-G14-I7",
+          "digest": "67ed88b132622ab13d9dc17b44958f769876e91e8fefdd1b1f08eb762428c7eb"
+        },
+        {
+          "id": "W-G14-I8",
+          "digest": "9d2758613d2141d007170d70f99d364915c19bd70b029ef527e59ef5b3e13f25"
+        },
+        {
+          "id": "W-G14-I9",
+          "digest": "0bbce7adadf20e98c41644a970717278411aa8c0355dd26ccd4b1379f1e9aba1"
+        },
+        {
+          "id": "W-G14-I10",
+          "digest": "1496c8d2dd8289383b171750c8183875eda275525c00bae3df68b270ff9fb016"
+        },
+        {
+          "id": "W-G14-I12",
+          "digest": "2ed29284c34bcc978d0cd19b09c487b55c370fdf0748af0ca5814c01fed36a1a"
+        },
+        {
+          "id": "W-G14-I14",
+          "digest": "6c2414a9c1e03f124a8bb7dba2f5c3dd1547eaf768af33679e2753c2e559aedc"
+        },
+        {
+          "id": "W-G14-I15",
+          "digest": "09f798729799c35ef1c2078921586926c64a702179453c219084574d24433cb6"
+        },
+        {
+          "id": "W-G14-I16",
+          "digest": "9723e869e6f2ecad06591d5a688d838f244ffdbb9cebf2ae6fdd0214acbc6f60"
+        },
+        {
+          "id": "W-G14-I17",
+          "digest": "e662d606ed14857162ee216e1e0de1b0aac8775900136494d511342d7fdac2bc"
+        },
+        {
+          "id": "W-G14-I18",
+          "digest": "ff400235ed1ecd22ad83d4a8cf8ea8acafa0b9cc0438c15cc9b93bb330f98089"
+        },
+        {
+          "id": "I-positions-2",
+          "digest": "566fb03d1af97c3a080363a10f4708dccad7770dfeee46112bd292f71498bf9e"
+        },
+        {
+          "id": "I-contexts",
+          "digest": "1a12023ec478ee1b7c0beadbac1d6fd6b221d71e4cf620c4f689d7331398022f"
+        },
+        {
+          "id": "W-G14-I11",
+          "digest": "7d748d00362aed27907afd8183715a3a441f0971948741a7d1855c9a18f8b783"
+        },
+        {
+          "id": "W-G7-I1",
+          "digest": "77b727fb0ac7ab920722436b65a9a9e1964933d7137931f86345a3b6e4c7dd2d"
+        },
+        {
+          "id": "W-G7-I2",
+          "digest": "3483ab76228d18ed6210e9480c1c659125a33c5d13e3802a25837f7495e40ea8"
+        },
+        {
+          "id": "S-W-G14-I5",
+          "digest": "27e570e8e96a3767166390c0ca27592e987205cbb022bcf0bea094ab55a9d722"
+        }
+      ]
+    },
+    {
+      "id": "J",
+      "label": "the judge mutants of record, each killed by its witness",
+      "pins": [
+        {
+          "id": "U-GJ1",
+          "digest": "585b0707a80e102330e391fc3f1e4341728b975558194632fac6b1ad88c17157"
+        },
+        {
+          "id": "U-wrapper-scopes",
+          "digest": "6f1d0b7764bcebb963cb18df8207d74b9da66f310fbd7be14d0b4572bcb60e9f"
+        },
+        {
+          "id": "U-GJ4",
+          "digest": "3075dc36be12089b12a5e1736b6a53b35055111d3fb62c2a015ac63efe058d50"
+        },
+        {
+          "id": "U-GJ15",
+          "digest": "d656175226ebbda349dd1eb3b4b1105bc1f5c2869b8b0a2b6d590a042528e7aa"
+        },
+        {
+          "id": "U-GJ16",
+          "digest": "44c6c6a8ebe743e149a5a1eca97eb8304a694fde2bca51253dd435e184148646"
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the named residuals",
+      "pins": [
+        {
+          "id": "R-FIELD-MUTATION",
+          "digest": "a754b7355709c63dd51fada5c85a1d21e1321d2cae39a26024a20c6571eb8c50"
+        },
+        {
+          "id": "R-REFLECTIVE-REACH",
+          "digest": "e2a9bff229076952b2a1a61608d5800a4e98925fd0b94e548327867f21682706"
+        },
+        {
+          "id": "R-UNLINKED-IMPORT",
+          "digest": "9101dbd81dd7e529b589f14f6da58d805ee2eadb16c878d23e810b2699719a95"
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "F V-admitted-free",
+    "F Z-global-process",
+    "F Z-global-fetch",
+    "F Z-global-code",
+    "F Z-global-this",
+    "F Z-global-wrapper",
+    "R R-shorthand",
+    "R R-export-local",
+    "R R-ambient",
+    "R R-extends",
+    "R R-enum-initializer",
+    "R R-closure-global",
+    "R R-global-escaped",
+    "R R-script-var",
+    "R R-script-typed",
+    "R R-script-function",
+    "R R-script-require",
+    "R R-dts-script",
+    "R R-dts-module",
+    "R R-type-only-value",
+    "R R-type-only-erased",
+    "R R-non-value-alias",
+    "R R-types-erased",
+    "R R-arguments",
+    "R R-bodiless",
+    "R R-const-enum",
+    "R R-not-references",
+    "R W-G14-V1",
+    "R R-names-read-positions",
+    "U U-GP1",
+    "U U-GP1L",
+    "U U-GP2",
+    "U U-GP3",
+    "U U-GP3b",
+    "U U-GP4",
+    "U U-GP4b",
+    "U U-GP5",
+    "U U-GP7",
+    "U U-GP8",
+    "U U-GP8b",
+    "U U-GP9",
+    "U U-GP10",
+    "U U-GP11",
+    "U U-GP12",
+    "U U-GP13",
+    "U U-GP14",
+    "U U-GP17",
+    "U U-GP6",
+    "U U-GP15",
+    "U U-GP16",
+    "U U-GC1",
+    "U U-GC2",
+    "U U-GC3",
+    "U U-const-enum-companion",
+    "U U-default-interface",
+    "U U-ambient-let-type",
+    "U U-depth-two",
+    "U U-ambient-function-interface",
+    "U U-ambient-class-namespace",
+    "U U-ambient-namespace-interface",
+    "U U-string-module",
+    "U U-umd-export",
+    "U U-signature-parameters",
+    "U U-wrapper-var",
+    "U U-wrapper-forms",
+    "U U-namespace-unbound",
+    "U U-namespace-binds",
+    "U U-binds-values",
+    "U U-binds-merged",
+    "U U-binds-members",
+    "U W-G14-N10",
+    "U W-G14-E7",
+    "U W-G14-E15",
+    "U W-G14-MN",
+    "U W-G14-B3",
+    "U W-G14-N8",
+    "U U-wrapper-imports",
+    "U U-alias-reads-bound",
+    "U U-wrapper-statements",
+    "U S-U-wrapper-forms",
+    "U S-W-G14-E7",
+    "U S-U-wrapper-imports",
+    "NS U-NS1",
+    "NS U-NS1L",
+    "NS U-NS2",
+    "NS U-NS3",
+    "NS U-NS3b",
+    "NS U-NS3bL",
+    "NS U-NS4",
+    "NS U-NS5",
+    "NS U-NS6",
+    "NS U-NS7",
+    "NS U-NS8",
+    "NS U-NS9",
+    "NS U-NS10",
+    "NS U-NS11",
+    "NS U-NS-C1",
+    "NS U-NS-C2",
+    "NS U-NS-C3",
+    "NS U-NS-nested-cross",
+    "NS U-NS-cross-forms",
+    "NS W-GK1-block-statement",
+    "NS W-GK1-class-field",
+    "NS G4-NS-reverse-order",
+    "NS G4-NS-static-block",
+    "NS G4-NS-decorator-free",
+    "NS NS-positions",
+    "NS W-G14-R12",
+    "NS W-G14-R24",
+    "NS W-G14-R27",
+    "NS W-G14-R28",
+    "NS W-G14-R29",
+    "NS W-G14-R30",
+    "NS W-G14-R31",
+    "NS W-G14-R34",
+    "NS W-G14-R36",
+    "NS W-G14-R37",
+    "NS W-G14-R38",
+    "NS W-G14-R39",
+    "NS W-G14-R40",
+    "NS NS-positions-2",
+    "NS NS-contexts",
+    "NS NS-import-equals-namespace",
+    "NS W-G7-N1",
+    "NS W-G7-N2",
+    "NS S-W-G14-R34",
+    "EN U-EN1",
+    "EN U-EN2",
+    "EN U-EN-forward",
+    "EN U-EN-forward-merged",
+    "EN U-EN-self",
+    "EN W-GK3-namespace-enum-forward",
+    "EN G4-EN-forward-nested-arrow",
+    "EN G4-EN-string-name-after",
+    "EN W-G14-R5",
+    "EN W-G14-R5c",
+    "EN W-G14-R5e",
+    "EN W-G14-R5f",
+    "EN EN-forward-positions",
+    "EN EN-contexts",
+    "EN EN-second-module",
+    "EN S-U-EN-self",
+    "M U-META1",
+    "M U-META1L",
+    "M U-meta-forms",
+    "M W-GK2-module-statement",
+    "M W-GK2-class-field",
+    "M M-positions",
+    "M W-G14-M4",
+    "M W-G14-M5",
+    "M W-G14-M6",
+    "M W-G14-M9",
+    "M W-G14-M10",
+    "M W-G14-M11",
+    "M W-G14-M15",
+    "M W-G14-M16",
+    "M W-G14-M17",
+    "M W-G14-M20",
+    "M M-positions-2",
+    "M M-contexts",
+    "M W-G7-M1",
+    "M W-G7-M2",
+    "M W-G7-M3",
+    "M S-W-G14-M10",
+    "M S-W-G14-M20",
+    "I U-IE1",
+    "I U-IE1c",
+    "I U-IE2",
+    "I U-IE2c",
+    "I U-IE3",
+    "I U-IE3c",
+    "I U-IE4",
+    "I U-IE4c",
+    "I U-IE5",
+    "I U-IE5c",
+    "I U-IE5d",
+    "I U-IE6",
+    "I U-IE7",
+    "I U-IE8",
+    "I U-IE9",
+    "I U-IE10",
+    "I U-IE11",
+    "I U-IE12",
+    "I I-forms",
+    "I I-heritage",
+    "I I-positions",
+    "I I-cross-block",
+    "I I-type-arguments",
+    "I W-G14-I1",
+    "I W-G14-I2",
+    "I W-G14-I3",
+    "I W-G14-I5",
+    "I W-G14-I7",
+    "I W-G14-I8",
+    "I W-G14-I9",
+    "I W-G14-I10",
+    "I W-G14-I12",
+    "I W-G14-I14",
+    "I W-G14-I15",
+    "I W-G14-I16",
+    "I W-G14-I17",
+    "I W-G14-I18",
+    "I I-positions-2",
+    "I I-contexts",
+    "I W-G14-I11",
+    "I W-G7-I1",
+    "I W-G7-I2",
+    "I S-W-G14-I5",
+    "J U-GJ1",
+    "J U-wrapper-scopes",
+    "J U-GJ4",
+    "J U-GJ15",
+    "J U-GJ16",
+    "Q R-FIELD-MUTATION",
+    "Q R-REFLECTIVE-REACH",
+    "Q R-UNLINKED-IMPORT",
+    "outside anchors: this bead's export row with its refusal #1 and #2 records and the parent's records of refusals #1 to #4, each member a pin of its row with the polarity its record states",
+    "collapse guard (refusal #2, R-B268): each GLOBAL line of each pin holds one reading of its name, except the collapsed lines COLLAPSED_SPLITS lists, each split by its named pin into one reading per line",
+    "rule 16: every judged row, the residual families and the collapsed lines are frozen at their measured shape",
+    "roster: the judged rows, the registered tests, the residual families and the collapsed lines equal test/fixtures/apo-snapshot-global-reader-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-FIELD-MUTATION": [
+      "Q R-FIELD-MUTATION"
+    ],
+    "R-REFLECTIVE-REACH": [
+      "Q R-REFLECTIVE-REACH"
+    ],
+    "R-UNLINKED-IMPORT": [
+      "Q R-UNLINKED-IMPORT"
+    ]
+  },
+  "collapsed": {
+    "U U-wrapper-forms": "S-U-wrapper-forms",
+    "U W-G14-E7": "S-W-G14-E7",
+    "U U-wrapper-imports": "S-U-wrapper-imports",
+    "NS W-G14-R34": "S-W-G14-R34",
+    "EN U-EN-self": "S-U-EN-self",
+    "M W-G14-M10": "S-W-G14-M10",
+    "M W-G14-M20": "S-W-G14-M20",
+    "I W-G14-I5": "S-W-G14-I5"
+  }
+}
