@@ -280,3 +280,21 @@ Named residuals of test/workbench-rf-definition-source-census.test.ts, the until
 | A19 | R-NEGATION-PHRASE | judge |
 | A20 | R-MARKER-RUN | page cure |
 | T4 | R-NESTED | names rule |
+
+## MW workflow-composition citation-status census residuals
+
+Named residuals of test/workbench-mw-cac-citation-status-census.test.ts: one row per family the census names and does not claim to catch. Each row names the family's quiet row, an exemplar its probe carries exactly once and that reads quiet, and a clear form that undoes that family: with the exemplar replaced by the clear form, the probe must read the causes given. The census judges this table against its residual families and quiet probes in both directions, so a family dropped, renamed or moved to another quiet row reds. R-SCOPE's probe is Q1's outside list (one path a line), read as the clause (a) scopes whose roots would list each path; all other probes are read at their path by the census's unit judge. In an exemplar or clear form, `\n` stands for a line break. The Q9 exemplar is only the split seam, not a type declaration or a claim that any type is shipped; these rows describe the reader, not an integration.
+
+| Quiet row | Residual family | Exemplar | Clear form | Clear form reads |
+| --- | --- | --- | --- | --- |
+| Q1 | R-SCOPE | `README.md` | `docs/workbench/README.md` | docs/workbench |
+| Q2 | R-REQUIREMENT-ID | `COMPOSITION-R1` | `COMPOSITION` | unqualified |
+| Q3 | R-PARAPHRASE-CITE | `assurance` | `workflow composition` | unqualified |
+| Q4 | R-NEGATION-DISTANCE | `not, as of today,` | `not` | unqualified |
+| Q5 | R-PARAPHRASE-EXISTS | `vets` | `runs` | exists:v0, exists:bridge-checker |
+| Q6 | R-GUARD-WORD | `If anything,` | `Indeed,` | exists:v0 |
+| Q7 | R-CROSS-CLAUSE | `. It` | `, and it` | exists:v0 |
+| Q8 | R-SUBJECT-SPELLING | `checker for the bridge` | `bridge checker` | exists:bridge-checker |
+| Q9 | R-SPLIT-SOURCE | `Workflow" + "Composition` | `WorkflowComposition` | unqualified |
+| Q10 | R-ESCAPED-SPELLING | `\-workflow\-` | `-workflow-` | unqualified |
+| Q11 | R-DOCUMENT-SCOPE | `\n\n` | `\n` | exists:pi-mw-adapter |
