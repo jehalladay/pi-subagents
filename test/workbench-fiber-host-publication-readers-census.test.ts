@@ -1,6 +1,7 @@
 /**
  * wb-pyel.7 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1, program-triage-2026-10-18; the rule-19 structural exit of wb-pyel.1 under
- * orchestrator rulings R-B105 and R-B135), cut #2: the census of the Fiber host-publication census's A1 and A3 readers,
+ * orchestrator rulings R-B105 and R-B135), cut #3 (the enumerate-the-resolvable cut orchestrator ruling R-B234 bound at refusal #2):
+ * the census of the Fiber host-publication census's A1 and A3 readers,
  * test/helpers/fiber-host-publication-readers.ts, which wb-pyel.1's census composes when it re-cuts. Statement (bead title,
  * verbatim): "A1 pip-manifest readers cover .pip, extensionless and requirements-directory name forms and A3 registration coverage
  * closes, narrowed out of wb-pyel.1's fail-closed core (rule-19 structural exit)". Acceptance (the bead description's Acceptance
@@ -12,8 +13,8 @@
  * clause names is a pin, and no clause names none. Every quantifier in a clause ranges over a planted bound or table named in its
  * words (DEPTH_BOUND, LINE_BOUND, NEST_BOUND, CASE_FORMS, POSITION_FORMS, DIRECTORY_FORMS, PIP_EXTENSIONS, TEST_ROOT_PLANTS,
  * FOLD_FORMS, FOLD_QUIET, RF_FORMS, CARRIER_FORMS, PLANTED_EFFECTS, MODE_SETS, FLAG_FORMS, NEEDLE_FORMS, SCRIPT_PLANTS,
- * REGISTER_NAME_PLANTS, the planted modules and fields, the readers' vocabulary): the claims are claimed over those plants and no
- * wider.
+ * REGISTER_NAME_PLANTS, LIST_POSITIONS, NEAR_BEFORE, NEAR_AFTER, SPLIT_SEPARATORS, the planted modules and fields, the readers'
+ * vocabulary): the claims are claimed over those plants and no wider.
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  M  the description's A1 item, its label read from the tracker export: refusal #3's A1 members (wb-pyel.1's notes, its U1 line)
@@ -26,7 +27,8 @@
  *     description's three name forms (N-DIRECTORY also a member with every PIP_EXTENSIONS extension, or none, below each word's
  *     directory); N-OTHER the word held beside other text, another extension, the test/ tree left unread and a hit's line;
  *     N-ROOT-READERS the root npm pair's own readers (package.json read whole: a manifest per planted dependency list, a key, a
- *     nested value and a raw shadowed duplicate key; package-lock.json by installed path and name field; two near misses quiet).
+ *     nested value and a raw shadowed duplicate key; package-lock.json by installed path and name field, each at every LIST_POSITIONS
+ *     position of the installed packages; two near misses quiet).
  *  R  the description's A3 item, its label read from the tracker export: refusal #3's A3 members (wb-pyel.1's notes, its U2 line),
  *     each a planted module in the probe's shape (an exported const-arrow registerValuePublish calling the registry): L3-R1 .call,
  *     L3-R2 an element access by a string key, L3-R3 a Reflect.apply argument, L3-R4 a parenthesized callee, the controls L3-Rc1 a
@@ -64,6 +66,21 @@
  *     NEEDLE_FORMS spelling; G25 every publication entry,
  *     snake, camel and spaced; G26 every SCRIPT_PLANTS module; G27 a word on line 3, on every line 1 to LINE_BOUND and on line
  *     LINE_BOUND alone; G28 every REGISTER_NAME_PLANTS name, read and quiet.
+ *  V1 refusal #2's U1 members (wb-pyel.7's own notes, refusal #2's UNMET list, its U1 block), the label its slug: G31 and G32,
+ *     the gate's fail-open reader hollowings of A3's list positions. Each pin plants the inputs its member line spells and the
+ *     axis its claim word ranges over, read directly through the A3 descriptor readers, through registryReading (a registry
+ *     plant) and through manifestHits (a package.json plant), each reading's claimed field declared beside its plant and held to
+ *     it: G31 every FOLD_FORMS spelling in a permission at every LIST_POSITIONS position, every FOLD_QUIET one and the word split
+ *     across two permissions quiet, and a registry of four whose three family members stand first, third and fourth; G32 a
+ *     hosting needle as an item at every LIST_POSITIONS position of the permissions, an input-schema enum and an input-schema
+ *     list of objects (in a string and as a key), the stem at every position of package.json's string and object lists (in a
+ *     string and as a key), and the member line's live shape.
+ *  V2 refusal #2's U2 members (the same list's U2 block), the label its slug: G33-G36, the gate's over-read hollowings of A1's
+ *     name predicates. Each pin plants its line's paths and its axis in NEAR_DIR, read through readManifests, every plant's
+ *     selecting form declared beside it: G33 every MANIFEST_NAMES entry after every NEAR_BEFORE text, G34 before every
+ *     NEAR_AFTER text, G35 between the two at the same index and with its first or last letter dropped, each unselected and
+ *     the entry itself selected; G36 every PIP_FAMILY_WORDS word cut at every inner position by every SPLIT_SEPARATORS
+ *     character and with its first or last letter dropped, each unselected and the word itself selected.
  *  L  the live tree through the same readers (cut #1's delivery note names the three): LIVE-A1 the root npm pair by their own
  *     readers and every other selected manifest's hits (none; the selected list is never pinned, so an unrelated manifest a later
  *     cut adds reds nothing); LIVE-A3-STATIC the static reading of every tracked file below src, pinned whole with duplicates;
@@ -80,28 +97,35 @@
  * refusal #4's U1 line names; KILLS holds exactly the hollowings those two lines name, each mapped to the pin that kills it; row D
  * holds exactly the P-A3 ids cut #1's own-battery line names and row L exactly the LIVE ids its fold-duty line names; rows U1 and
  * U2 hold exactly the member ids of refusal #1's U1 and U2 blocks, each label the block's slug, each pin's spelled words and
- * planted inputs read in its member line; RESIDUALS holds exactly the families refusal #1's U3 line names and row Q exactly its
- * quiet-row pins. The readers' vocabulary in the helper anchors the plant sets (N-NAMES and G01 every MANIFEST_NAMES entry, G03
- * every entry in every CASE_FORMS spelling, N-WORDS every PIP_FAMILY_WORDS word in every spelling, S-POSITIONS every JUDGED_KINDS
- * kind, S-KINDS every DECLARATION_KINDS kind, S-WORDS every REGISTRATION_WORDS word, G26 every SCRIPT_KINDS key, G24 and G25 every
- * hosting needle and publication entry). The last case reads the vitest task tree (every registered test, in roster order, in run
- * mode, ran before it) and the pins that reached their witness.
+ * planted inputs read in its member line; rows V1 and V2 hold exactly the member ids of refusal #2's U1 and U2 blocks, each
+ * label the block's slug, each pin's spelled words and planted inputs read in its `- <id>: ` member line; RESIDUALS holds
+ * exactly the families refusal #1's U3 line names and row Q exactly its quiet-row pins. The readers' vocabulary in the helper
+ * anchors the plant sets (N-NAMES and G01 every MANIFEST_NAMES entry, G03 every entry in every CASE_FORMS spelling, G33-G35 every
+ * entry beside every near-miss text, N-WORDS every PIP_FAMILY_WORDS word in every spelling, G36 every word cut and trimmed,
+ * S-POSITIONS every JUDGED_KINDS kind, S-KINDS every DECLARATION_KINDS kind, S-WORDS every REGISTRATION_WORDS word, G26 every
+ * SCRIPT_KINDS key, G24 and G25 every hosting needle and publication entry). The last case reads the vitest task tree (every
+ * registered test, in roster order, in run mode, ran before it) and the pins that reached their witness.
  * NOT CLAIMED (scope sentences: what no plant holds; the readers apply the same rule to it, but this census proves nothing there):
  * a path deeper than DEPTH_BOUND segments, a raw line past LINE_BOUND, a key or string under more than NEST_BOUND nested objects,
  * a letter-case spelling outside CASE_FORMS, a family word at a position outside POSITION_FORMS and DIRECTORY_FORMS, an extension
  * outside PIP_EXTENSIONS, a spelling outside FOLD_FORMS and FOLD_QUIET, a contract outside RF_FORMS, CARRIER_FORMS and FLAG_FORMS,
  * an effect or mode set outside the planted ones, a declared name outside REGISTER_NAME_PLANTS, a module extension outside
  * SCRIPT_PLANTS, a call spelling outside S-SPELLINGS' list, a judged text at a syntactic position no planted module holds, a family
- * directory other than requirements at an index or distance beyond the planted ones, and a needle in a descriptor field no plant
- * holds it in are NOT CLAIMED by this census. Edits of this file and the roster
+ * directory other than requirements at an index or distance beyond the planted ones, a list item at a position outside
+ * LIST_POSITIONS (a list longer than three, a list inside a list), a lock package or a registry's family member at a position no
+ * plant holds, a near miss of a listed name other than the NEAR_BEFORE, NEAR_AFTER, same-index and one-letter-dropped forms, a
+ * family word cut by a character outside SPLIT_SEPARATORS, by two characters or missing more than its first or last letter, and
+ * a needle in a descriptor field no plant holds it in are NOT CLAIMED by this census. Edits of this file and the roster
  * together: a plant removed from its table and the roster together where no outside anchor names it, and a pin a later cut adds
  * beyond the export's member lists and the claims, removed whole, are NOT CLAIMED.
  * RESIDUALS (named, each member with its pinned quiet reading in its row): R-UNREAD-MANIFEST a dependency stated in a file no form
- * selects (a Dockerfile, a setup script, a tox.ini, a pip -r file of another name, the singular requirement.txt, a lock of an
- * unlisted format, a manifest of an unlisted name, a family word or a manifest name spelled with a non-ASCII case-equivalent
- * letter, U+017F long s or U+0131 dotless i) or below test/ is not read (Q1); R-UNREAD-REGISTRATION a registry member name
- * composed at run time, a write to the registry's private provider map, and a call of a register* function by reference (a further
- * call of a name the module declares or imports, a namespace member) are not read, only the declaration and the import (Q2).
+ * selects (a Dockerfile, a setup script, a tox.ini, a pip -r file of another name, a family word cut by a hyphen or missing its
+ * first letter among them, the singular requirement.txt, a lock of an unlisted format, a manifest of an unlisted name, a
+ * prefixed, a suffixed and a wrapped near miss of a listed one among them, a family word or a manifest name spelled with a
+ * non-ASCII case-equivalent letter, U+017F long s or U+0131 dotless i) or below test/ is not read (Q1); R-UNREAD-REGISTRATION a
+ * registry member name composed at run time, a write to the registry's private provider map, and a call of a register* function by
+ * reference (a further call of a name the module declares or imports, a namespace member) are not read, only the declaration and
+ * the import (Q2).
  *
  * Display paths added: none. Test-only: the planted trees live in makeScratch scratch with its leak guard installed; src, the
  * manifests, the fixtures and the bead export are only read.
@@ -189,6 +213,9 @@ const ANCHORS = {
   gateU1: "- U1: U1-HIGH-CONFIRMED-R-B98-",
   gateU2: "- U2: U2-HIGH-CONFIRMED-R-B98-",
   gateU3: "- U3: U3-MEDIUM-CONFIRMED-RIDES-RULE-16-",
+  cut2U1: "- U1: U1-HIGH-CONFIRMED-CUT2-R-B98-",
+  cut2U2: "- U2: U2-MEDIUM-CONFIRMED-CUT2-R-B98-",
+  cut2End: "RED (record.red verbatim):",
 } as const;
 /** The description's three A1 name forms, each held by the N pin that plants it (the A1 item's list, in order). */
 const PHRASES: Readonly<Record<string, string>> = {
@@ -347,13 +374,15 @@ const FLAG_FORMS: Readonly<Record<string, string | null>> = {
 };
 /** The reason the flag forms state, verbatim from publishingReasons. */
 const FLAG_REASON = `contract not ending with " ${NO_COMMIT}"`;
-/** One hosted class's spellings: the four that fold to its needle within one segment, the three a space or a path separator splits (quiet). */
+/** One hosted class's spellings: the four that fold to its needle within one segment, the five a space, a tab, a newline or a path separator splits (quiet). */
 const NEEDLE_FORMS: Readonly<Record<string, string>> = {
   snake: "fiber_runtime",
   upper: "FIBERRUNTIME",
   hyphen: "fiber-runtime",
   dotted: "fiber.runtime",
   "space-split": "Fiber Runtime",
+  "tab-split": "Fiber\tRuntime",
+  "newline-split": "Fiber\nRuntime",
   "slash-split": "Fiber/Runtime",
   "backslash-split": "Fiber\\Runtime",
 };
@@ -371,6 +400,37 @@ const REGISTER_NAME_PLANTS = {
   read: ["register", "register$", "register$x", "register$$", "register_", "register_x", "register2", "registerX", "registerValue", "register$value", "registerNativeProviders"],
   quiet: ["registered", "registering", "registers", "registerx", "Register", "REGISTER", "xregister", "_register", "$register"],
 } as const;
+/** The positions a planted item takes in a planted list, W standing for the item and F for the next filler: alone, first and last of two, first, middle and last of three. */
+const LIST_POSITIONS: Readonly<Record<string, readonly string[]>> = {
+  only: ["W"],
+  "first of two": ["W", "F"],
+  "last of two": ["F", "W"],
+  "first of three": ["W", "F", "F"],
+  "middle of three": ["F", "W", "F"],
+  "last of three": ["F", "F", "W"],
+};
+/** A planted list at a LIST_POSITIONS position: the item at W, the two fillers at the F slots in order. */
+function listAt<T>(slots: readonly string[], item: T, fillers: readonly [T, T]): T[] {
+  return slots.map((slot, index) => (slot === "W" ? item : fillers[slots.slice(0, index).filter(earlier => earlier === "F").length]));
+}
+/** The index the item takes at a LIST_POSITIONS position. */
+function itemIndex(slots: readonly string[]): number {
+  return slots.indexOf("W");
+}
+/** The texts a near miss of a listed name carries before it (the last a space). */
+const NEAR_BEFORE = ["x", "my", "my-", "old-", " "] as const;
+/** The texts a near miss of a listed name carries after it (the last a space). */
+const NEAR_AFTER = [".bak", ".orig", "x", "~", " "] as const;
+/** The characters a near miss of a family word is cut by, at every inner position (the four refusal #2's G36 strips). */
+const SPLIT_SEPARATORS = ["-", "_", ".", " "] as const;
+/** A word cut at every inner position by a separator. */
+function cutsOf(word: string, separator: string): string[] {
+  return Array.from({ length: word.length - 1 }, (_, index) => `${word.slice(0, index + 1)}${separator}${word.slice(index + 1)}`);
+}
+/** A name with its first letter dropped, then with its last letter dropped. */
+function trimmed(name: string): string[] {
+  return [name.slice(1), name.slice(0, -1)];
+}
 
 // ---- the claims ----
 
@@ -386,8 +446,16 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["N-NAMES", "G01", "G02", "G03"],
     },
     {
+      words: "equal is the whole name: every entry after every NEAR_BEFORE text, before every NEAR_AFTER text, between the two at the same index, and with its first or last letter dropped is no manifest-name and is left unselected, the entry itself beside them selected",
+      falsifiers: ["G33", "G34", "G35"],
+    },
+    {
       words: "pip-name: a base name holding requirements, constraints or pylock, read for each word in every CASE_FORMS spelling and at every depth from 1 to DEPTH_BOUND",
       falsifiers: ["N-WORDS", "L3-M5", "G01"],
+    },
+    {
+      words: "holding is the word's letters in one run: each word cut at every inner position by every SPLIT_SEPARATORS character, and with its first or last letter dropped, is not held and its name is left unselected, the word itself beside them selected",
+      falsifiers: ["G36"],
     },
     {
       words: "the word at every POSITION_FORMS position in the name: alone, beside a letter, a digit, -, _, . or a space on either side, inside letters, and as the extension",
@@ -402,6 +470,10 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
     {
       words: "only outside test/: every TEST_ROOT_PLANTS path below test/ is left unread and every one beside it is read; each selected path is read as raw lines but the root package.json and package-lock.json, read by their own readers; every raw line from 1 to LINE_BOUND is read, a hit named by its line",
       falsifiers: ["N-OTHER", "N-ROOT-READERS", "LIVE-A1", "G09", "G10", "G11"],
+    },
+    {
+      words: "the root readers read their file whole: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field",
+      falsifiers: ["N-ROOT-READERS", "G32"],
     },
   ],
   A3: [
@@ -428,8 +500,12 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
     { words: "in any other file every raw line's REGISTRATION_WORDS segments, every line from 1 to LINE_BOUND", falsifiers: ["S-RAW", "G27"] },
     { words: "near misses are not read: registered, RegisterHost, unregister, a registerTool call, and registering, $register and register_x in a string", falsifiers: ["S-QUIET"] },
     {
-      words: "Fiber family: a descriptor whose id folds to hold fiber, or a permission does, or its contract does, each FOLD_FORMS spelling read alone in each of the three and each FOLD_QUIET spelling in none; or whose contract starts with rf@ byte for byte, each RF_FORMS contract read alone; each criterion read alone",
-      falsifiers: ["P-A3-FAM-ID", "P-A3-PERM", "P-A3-CONTRACT", "P-A3-FAM-RF", "G12", "G13", "G14", "G15", "G16"],
+      words: "Fiber family: a descriptor whose id folds to hold fiber, or a permission does (each permission folded alone, at every LIST_POSITIONS position of its permissions, a word split across two permissions held by neither), or its contract does, each FOLD_FORMS spelling read alone in each of the three and each FOLD_QUIET spelling in none; or whose contract starts with rf@ byte for byte, each RF_FORMS contract read alone; each criterion read alone",
+      falsifiers: ["P-A3-FAM-ID", "P-A3-PERM", "P-A3-CONTRACT", "P-A3-FAM-RF", "G12", "G13", "G14", "G15", "G16", "G31"],
+    },
+    {
+      words: "a registry's reading states every Fiber-family member in registration order: a planted registry of four whose family members stand first, third and fourth states all three",
+      falsifiers: ["G31"],
     },
     {
       words: "carrier: a family member's contract is the provider's own REACTIVE_FIBER_CONTRACT_SOURCE byte for byte: no other CARRIER_FORMS contract is, nor a contract that merely ends --no-commit",
@@ -440,8 +516,8 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["P-A3-PUB-WRITE", "P-A3-PUB-OBSERVE", "P-A3-FAM-ID", "G20", "G21", "G22"],
     },
     {
-      words: "needles: a descriptor's keys and strings are read in every planted field (its id, description, permissions, contract and input schema, the schema down to NEST_BOUND nested objects as a string and as a key) for the stem, each hosted class and each publication entry, each NEEDLE_FORMS spelling read",
-      falsifiers: ["P-A3-NEEDLES", "G24", "G25"],
+      words: "needles: a descriptor's keys and strings are read in every planted field (its id, description, permissions, contract and input schema, the schema down to NEST_BOUND nested objects as a string and as a key), and every item of a planted list at every LIST_POSITIONS position (its permissions, an input-schema enum of strings and an input-schema list of objects, an object item read in a string and as a key), for the stem, each hosted class and each publication entry, each NEEDLE_FORMS spelling read",
+      falsifiers: ["P-A3-NEEDLES", "G24", "G25", "G32"],
     },
     { words: "the live src's static reading and the live registrations' readings are pinned whole", falsifiers: ["LIVE-A3-STATIC", "LIVE-A3-REGISTRIES"] },
   ],
@@ -501,12 +577,23 @@ const ROOT_MANIFEST_CONTROLS: Readonly<Record<string, JsonValue>> = {
   nearMissRf: { dependencies: { "reactive-fiber-cli": "1.0.0" } },
   nearMissSplit: { keywords: ["fiber", "optics"] },
 };
+/** The two installed packages around a lock plant (neither path nor name holds the stem). */
+const LOCK_FILLERS: readonly [[string, JsonValue], [string, JsonValue]] = [
+  ["node_modules/alpha", { version: "1.0.0" }],
+  ["node_modules/beta", { version: "1.0.0" }],
+];
 /** A raw manifest whose first dependencies key JSON.parse shadows with the second: only the raw-line reading sees it. */
 const SHADOWED_MANIFEST = '{ "dependencies": { "fiber-optics": "1.0.0" }, "dependencies": {} }';
 const ROOT_LOCK_CONTROLS: Readonly<Record<string, JsonValue>> = {
   lockPath: { packages: { "node_modules/fiber-optics": { version: "0.1.0" } } },
   lockName: { packages: { "node_modules/alias": { name: "FiberOpticsSDK", version: "0.1.0" } } },
   lockQuiet: { packages: { "node_modules/reactive-fiber": { version: "1.0.0" } } },
+  ...Object.fromEntries(
+    Object.entries(LIST_POSITIONS).flatMap(([position, slots]): [string, JsonValue][] => [
+      [`lockPath ${position}`, { packages: Object.fromEntries(listAt<[string, JsonValue]>(slots, ["node_modules/fiber-optics", { version: "0.1.0" }], LOCK_FILLERS)) }],
+      [`lockName ${position}`, { packages: Object.fromEntries(listAt<[string, JsonValue]>(slots, ["node_modules/alias", { name: "FiberOpticsSDK", version: "0.1.0" }], LOCK_FILLERS)) }],
+    ]),
+  ),
 };
 const MODULE_HEAD = 'import type { CapabilityProvider, CapabilityRegistry } from "../capability-registry.js";\ndeclare const PROVIDER: CapabilityProvider;\n';
 /** Row R: each member's planted module, src/workbench/providers/value-publish.ts in the refusal #3 probe's shape. */
@@ -668,6 +755,11 @@ const UNREAD_MANIFESTS: readonly string[] = [
   `py/host/P${String.fromCodePoint(0x131)}pfile`,
   "web/bun.lock",
   "web/package.yaml",
+  "web/my-package.json",
+  "web/package.json.bak",
+  "web/xpackage.jsonx",
+  "tools/value-host/require-ments.txt",
+  "tools/value-host/equirements.txt",
   "test/fixtures/host/pyproject.toml",
   "test/fixtures/host/requirements.pip",
 ];
@@ -1065,6 +1157,170 @@ const GATE: Readonly<Record<string, GateMember>> = {
   },
 };
 
+// ---- rows V1 and V2: refusal #2's members, each pin the inputs its member line spells and the axis its claim word ranges over ----
+
+/** A registry plant: its descriptors registered together, with the family ids (in registration order) and hosting hits its reading states. */
+interface RegistryPlant {
+  readonly descriptors: readonly CapabilityDescriptor[];
+  readonly family: readonly string[];
+  readonly hosting: readonly string[];
+}
+/** A root package.json plant, read by manifestHits, with the hits its reading states. */
+interface PackagePlant {
+  readonly manifest: JsonValue;
+  readonly hits: readonly string[];
+}
+interface Cut2Member extends GateMember {
+  readonly registries?: Readonly<Record<string, RegistryPlant>>;
+  readonly packages?: Readonly<Record<string, PackagePlant>>;
+}
+/** The directory V2's near-miss plants sit in (no family word, no manifest name). */
+const NEAR_DIR = "near";
+/** The two permissions around a G31 plant (neither folds to hold fiber). */
+const PERMISSION_FILLERS: readonly [string, string] = ["value:read", "value:write"];
+/** The seven paths refusal #2's G33 and G34 lines spell. */
+const NEAR_MEMBER_PATHS = ["my-package.json", "examples/host/xpackage.json", "tools/old-Cargo.toml", "web/mypyproject.toml", "package.json.bak", "Cargo.toml.orig", "web/yarn.lock.bak"] as const;
+/** G31's axis: every FOLD_FORMS spelling in a permission at every LIST_POSITIONS position (meeting the criterion), every FOLD_QUIET one (meeting none). */
+function permissionPositionPlants(): Record<string, DescriptorPlant> {
+  const at = (spelling: string, slots: readonly string[]): CapabilityDescriptor => plainDescriptor({ permissions: listAt(slots, `${spelling}:publish`, PERMISSION_FILLERS) });
+  return Object.fromEntries(
+    Object.entries(LIST_POSITIONS).flatMap(([position, slots]): [string, DescriptorPlant][] => [
+      ...Object.entries(FOLD_FORMS).map(([name, spelling]): [string, DescriptorPlant] => [`permission ${name} ${position}`, { descriptor: at(spelling, slots), criteria: ["permission"] }]),
+      ...Object.entries(FOLD_QUIET).map(([name, spelling]): [string, DescriptorPlant] => [`permission quiet ${name} ${position}`, { descriptor: at(spelling, slots), criteria: [] }]),
+    ]),
+  );
+}
+/** G32's descriptor axis: a hosting needle as an item at every LIST_POSITIONS position of the permissions, an input-schema enum and an input-schema list of objects (in a string and as a key). */
+function listItemPlants(): Record<string, DescriptorPlant> {
+  return Object.fromEntries(
+    Object.entries(LIST_POSITIONS).flatMap(([position, slots]): [string, DescriptorPlant][] => [
+      [`permission ${position}`, { descriptor: needleDescriptor({ permissions: listAt(slots, "fiberruntime:read", ["planted:read", "value:write"]) }), needles: ["fiberruntime"] }],
+      [
+        `enum ${position}`,
+        { descriptor: needleDescriptor({ inputSchema: { type: "object", properties: { kind: { type: "string", enum: listAt(slots, "FiberGraph", ["other", "another"]) } } } }), needles: ["fibergraph"] },
+      ],
+      [
+        `objects ${position}`,
+        { descriptor: needleDescriptor({ inputSchema: { type: "object", anyOf: listAt<JsonValue>(slots, { description: "a FiberScheduler queue" }, [{ type: "string" }, { type: "number" }]) } }), needles: ["fiberscheduler"] },
+      ],
+      [
+        `keyed objects ${position}`,
+        { descriptor: needleDescriptor({ inputSchema: { type: "object", examples: listAt<JsonValue>(slots, { FiberRuntime: "handle" }, [{ other: "x" }, { another: "y" }]) } }), needles: ["fiberruntime"] },
+      ],
+    ]),
+  );
+}
+/** G32's package.json axis: the stem as an item at every LIST_POSITIONS position of a string list and of an object list (in a string and as a key). */
+function packageListPlants(): Record<string, PackagePlant> {
+  return Object.fromEntries(
+    Object.entries(LIST_POSITIONS).flatMap(([position, slots]): [string, PackagePlant][] => [
+      [`keywords ${position}`, { manifest: { keywords: listAt(slots, "fiber-optics", ["context", "render"]) }, hits: [`keywords ${position}.keywords[${itemIndex(slots)}]: ${STEM}`] }],
+      [
+        `contributors ${position}`,
+        { manifest: { contributors: listAt<JsonValue>(slots, { name: "fiber-optics" }, [{ name: "alpha" }, { name: "beta" }]) }, hits: [`contributors ${position}.contributors[${itemIndex(slots)}].name: ${STEM}`] },
+      ],
+      [
+        `keyed ${position}`,
+        { manifest: { overrides: listAt<JsonValue>(slots, { "fiber-optics": "0.1.0" }, [{ alpha: "1.0.0" }, { beta: "1.0.0" }]) }, hits: [`keyed ${position}.overrides[${itemIndex(slots)}]{fiber-optics}: ${STEM}`] },
+      ],
+    ]),
+  );
+}
+/** Refusal #2's U1 and U2 members: each member's line inputs first, then its axis. */
+const CUT2_GATE: Readonly<Record<string, Cut2Member>> = {
+  G31: {
+    spelled: ["only the last permission", "descriptor.permissions.slice(-1)"],
+    planted: ["fiber:publish", "value:read", "Fiber:Publish", "value:write", "forge:inspect"],
+    descriptors: {
+      "Fiber:Publish first of three": { descriptor: plainDescriptor({ permissions: ["Fiber:Publish", "value:read", "value:write"] }), criteria: ["permission"] },
+      "live shape": { descriptor: plantedDescriptor({ id: "forge.gate.status", permissions: ["fiber:publish", "forge:inspect"], contractSource: "forge@0.1.0:GateFacade.status" }), criteria: ["permission"] },
+      "split across two": { descriptor: plainDescriptor({ permissions: ["planted:fi", "ber:read"] }), criteria: [] },
+      ...permissionPositionPlants(),
+    },
+    registries: {
+      "three family members": {
+        descriptors: [
+          plantedDescriptor({ id: "forge.gate.status", permissions: ["fiber:publish", "forge:inspect"], contractSource: "forge@0.1.0:GateFacade.status" }),
+          plantedDescriptor({ id: "workbench.value.read" }),
+          plainDescriptor({ permissions: ["value:read", "Fiber:Publish", "value:write"] }),
+          plantedDescriptor({ id: "fiber.value.publish", contractSource: "value-host@1.0.0:Host.publish --no-commit" }),
+        ],
+        family: ["forge.gate.status", "value.host", "fiber.value.publish"],
+        hosting: [],
+      },
+    },
+  },
+  G32: {
+    spelled: ["only an array's last item", "index === value.length - 1"],
+    planted: ["fiberruntime:read", "planted:read", "FiberGraph", "other", "fiber-optics", "context", "queue_value_publication:read", "forge:inspect"],
+    descriptors: listItemPlants(),
+    registries: {
+      "live shape": {
+        descriptors: [plantedDescriptor({ id: "forge.gate.status", permissions: ["queue_value_publication:read", "forge:inspect"], contractSource: "forge@0.1.0:GateFacade.status" })],
+        family: [],
+        hosting: ["forge.gate.status: queuevaluepublication"],
+      },
+    },
+    packages: packageListPlants(),
+  },
+  G33: {
+    spelled: ["lower.endsWith(entry.toLowerCase())"],
+    planted: ["my-package.json", "examples/host/xpackage.json", "tools/old-Cargo.toml", "web/mypyproject.toml"],
+    manifests: {
+      ...plants(null, ["my-package.json", "examples/host/xpackage.json", "tools/old-Cargo.toml", "web/mypyproject.toml"]),
+      ...plants("manifest-name", MANIFEST_NAMES.map(name => `${NEAR_DIR}/${name}`)),
+      ...plants(
+        null,
+        MANIFEST_NAMES.flatMap(name => NEAR_BEFORE.map(before => `${NEAR_DIR}/${before}${name}`)),
+      ),
+    },
+  },
+  G34: {
+    spelled: ["lower.startsWith(entry.toLowerCase())"],
+    planted: ["package.json.bak", "Cargo.toml.orig", "web/yarn.lock.bak"],
+    manifests: {
+      ...plants(null, ["package.json.bak", "Cargo.toml.orig", "web/yarn.lock.bak"]),
+      ...plants("manifest-name", MANIFEST_NAMES.map(name => `${NEAR_DIR}/${name}`)),
+      ...plants(
+        null,
+        MANIFEST_NAMES.flatMap(name => NEAR_AFTER.map(after => `${NEAR_DIR}/${name}${after}`)),
+      ),
+    },
+  },
+  G35: {
+    spelled: ["lower.includes(entry.toLowerCase())", "All seven paths from G33 and G34"],
+    planted: [],
+    manifests: {
+      ...plants(null, NEAR_MEMBER_PATHS),
+      ...plants("manifest-name", MANIFEST_NAMES.map(name => `${NEAR_DIR}/${name}`)),
+      ...plants(
+        null,
+        MANIFEST_NAMES.flatMap(name => NEAR_BEFORE.map((before, index) => `${NEAR_DIR}/${before}${name}${NEAR_AFTER[index]}`)),
+      ),
+      ...plants(
+        null,
+        MANIFEST_NAMES.flatMap(name => trimmed(name).map(cut => `${NEAR_DIR}/${cut}`)),
+      ),
+    },
+  },
+  G36: {
+    spelled: ["lower.replace(/[-_. ]/g, '').includes(word)"],
+    planted: ["require-ments.txt", "py-lock.toml", "con_straints.in"],
+    manifests: {
+      ...plants(null, ["require-ments.txt", "py-lock.toml", "con_straints.in"]),
+      ...plants("pip-name", PIP_WORDS.map(word => `${NEAR_DIR}/${word}.txt`)),
+      ...plants(
+        null,
+        PIP_WORDS.flatMap(word => SPLIT_SEPARATORS.flatMap(separator => cutsOf(word, separator).map(cut => `${NEAR_DIR}/${cut}.txt`))),
+      ),
+      ...plants(
+        null,
+        PIP_WORDS.flatMap(word => trimmed(word).map(cut => `${NEAR_DIR}/${cut}.txt`)),
+      ),
+    },
+  },
+};
+
 // ---- the judged rows ----
 
 interface Row {
@@ -1102,6 +1358,8 @@ const ROWS: readonly Row[] = [
     label: "U2-HIGH-CONFIRMED-R-B98-R514-R515-R668-A3-CLAIM-WORDS-SURVIVE-16-GATE-READER-HOLLOWINGS",
     pins: ["G12", "G13", "G14", "G15", "G16", "G17", "G18", "G19", "G20", "G21", "G22", "G24", "G25", "G26", "G27", "G28"],
   },
+  { id: "V1", label: "U1-HIGH-CONFIRMED-CUT2-R-B98-R514-R515-R668-A3-PERMISSION-POSITION-FAIL-OPEN-2-GATE-READER-HOLLOWINGS", pins: ["G31", "G32"] },
+  { id: "V2", label: "U2-MEDIUM-CONFIRMED-CUT2-R-B98-R514-R515-R668-A1-NAME-PREDICATE-OVER-READS-4-GATE-READER-HOLLOWINGS", pins: ["G33", "G34", "G35", "G36"] },
   { id: "L", label: "the live tree, read through the same readers", pins: ["LIVE-A1", "LIVE-A3-STATIC", "LIVE-A3-REGISTRIES"] },
   { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2"] },
 ];
@@ -1263,6 +1521,14 @@ function gateReading(member: GateMember): JsonValue {
   if (member.descriptors !== undefined) return json(Object.fromEntries(Object.entries(member.descriptors).map(([label, plant]) => [label, descriptorWitness(plant.descriptor)])));
   return plantedRegistrations(member.modules ?? {});
 }
+/** A refusal #2 member's reading: its plants read as rows U1 and U2 read theirs, each registry plant through registryReading, each package.json plant through manifestHits. */
+function cut2Reading(member: Cut2Member): JsonValue {
+  return json({
+    plants: gateReading(member),
+    registries: Object.fromEntries(Object.entries(member.registries ?? {}).map(([label, plant]) => [label, familyReading(...plant.descriptors)])),
+    packages: Object.fromEntries(Object.entries(member.packages ?? {}).map(([label, plant]) => [label, manifestHits(plant.manifest, undefined, label)])),
+  });
+}
 
 // ---- the pins ----
 
@@ -1275,6 +1541,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   ...Object.fromEntries(Object.entries(FAMILY_CONTROLS).map(([pin, descriptor]) => [pin, async () => familyReading(descriptor)])),
   ...Object.fromEntries(Object.entries(DESCRIPTOR_CONTROLS).map(([pin, descriptors]) => [pin, async () => familyReading(...descriptors)])),
   ...Object.fromEntries(Object.entries(GATE).map(([pin, member]) => [pin, async () => gateReading(member)])),
+  ...Object.fromEntries(Object.entries(CUT2_GATE).map(([pin, member]) => [pin, async () => cut2Reading(member)])),
   "N-ROOT-READERS": async () =>
     json({
       manifestControls: Object.fromEntries(Object.entries(ROOT_MANIFEST_CONTROLS).map(([name, manifest]) => [name, manifestHits(manifest, undefined, name)])),
@@ -1309,7 +1576,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 
 describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1, A1 name forms and A3 coverage)", () => {
   it("the judged set: the frozen shape, the claims, the out-of-file roster, the tracker export and the readers' vocabulary agree", { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["M:8", "N:7", "R:8", "S:6", "F:5", "D:3", "U1:11", "U2:16", "L:3", "Q:2"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["M:8", "N:7", "R:8", "S:6", "F:5", "D:3", "U1:11", "U2:16", "V1:2", "V2:4", "L:3", "Q:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     const pins = ROWS.flatMap(row => row.pins);
     expect(Object.keys(IMPL).sort(), "one case per pin").toEqual([...pins].sort());
@@ -1385,6 +1652,17 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
         lineTexts: LINE_TEXTS,
         moduleDir: MODULE_DIR,
         gateWords: Object.fromEntries(Object.entries(GATE).map(([pin, member]) => [pin, { spelled: member.spelled, planted: member.planted }])),
+        listPositions: LIST_POSITIONS,
+        nearBefore: NEAR_BEFORE,
+        nearAfter: NEAR_AFTER,
+        splitSeparators: SPLIT_SEPARATORS,
+        nearDir: NEAR_DIR,
+        nearMemberPaths: NEAR_MEMBER_PATHS,
+        permissionFillers: PERMISSION_FILLERS,
+        lockFillers: LOCK_FILLERS,
+        cut2Words: Object.fromEntries(Object.entries(CUT2_GATE).map(([pin, member]) => [pin, { spelled: member.spelled, planted: member.planted }])),
+        cut2Registries: Object.fromEntries(Object.entries(CUT2_GATE).map(([pin, member]) => [pin, member.registries ?? {}])),
+        cut2Packages: Object.fromEntries(Object.entries(CUT2_GATE).map(([pin, member]) => [pin, member.packages ?? {}])),
       }),
       "the constants are the roster's",
     ).toStrictEqual(ROSTER.constants);
@@ -1460,6 +1738,27 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
     }
     expect(Object.keys(RESIDUALS), "RESIDUALS holds exactly the families refusal #1's U3 line names").toEqual(idsIn(u3, /R-UNREAD-[A-Z]+/g));
     expect(rowPins("Q"), "row Q holds exactly the quiet-row pins refusal #1's U3 line names").toEqual(idsIn(u3, /\bQ\d+\b/g));
+    const cut2U1 = firstLine(own.notes, ANCHORS.cut2U1);
+    const cut2U2 = firstLine(own.notes, ANCHORS.cut2U2);
+    for (const [name, line] of Object.entries({ cut2U1, cut2U2 })) expect(line.length, `${BEAD}'s refusal #2 ${name} line was read`).toBeGreaterThan(0);
+    const cut2Ids = (lines: readonly string[]): string[] => lines.flatMap(line => /^- (G\d{2}): /.exec(line)?.[1] ?? []);
+    expect(ROWS.find(row => row.id === "V1")?.label, "row V1's label is refusal #2's U1 slug").toBe(slug(cut2U1));
+    expect(ROWS.find(row => row.id === "V2")?.label, "row V2's label is refusal #2's U2 slug").toBe(slug(cut2U2));
+    expect(rowPins("V1"), "row V1 holds exactly refusal #2's U1 members").toEqual(cut2Ids(block(ANCHORS.cut2U1, ANCHORS.cut2U2)));
+    expect(rowPins("V2"), "row V2 holds exactly refusal #2's U2 members").toEqual(cut2Ids(block(ANCHORS.cut2U2, ANCHORS.cut2End)));
+    expect(Object.keys(CUT2_GATE), "CUT2_GATE holds exactly rows V1 and V2's pins, in order").toEqual([...rowPins("V1"), ...rowPins("V2")]);
+    for (const [pin, member] of Object.entries(CUT2_GATE)) {
+      const line = firstLine(own.notes, `- ${pin}: `);
+      expect(line.length, `${pin}'s member line was read`).toBeGreaterThan(0);
+      for (const word of [...member.spelled, ...member.planted]) expect(line, `${pin}'s member line spells ${word}`).toContain(word);
+      const inputs = JSON.stringify([
+        Object.keys(member.manifests ?? {}),
+        Object.values(member.descriptors ?? {}).map(plant => plant.descriptor),
+        Object.values(member.registries ?? {}).map(plant => plant.descriptors),
+        Object.values(member.packages ?? {}).map(plant => plant.manifest),
+      ]);
+      for (const word of member.planted) expect(inputs, `${pin} plants ${word}`).toContain(word);
+    }
 
     // the gate members' declared readings, as the roster holds them: every plant's selecting form, every descriptor's claimed field
     for (const [pin, member] of Object.entries(GATE)) {
@@ -1479,6 +1778,34 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
         if (plant.reasons !== undefined) expect(entry.reasons, `${pin} ${label}: its publishing reasons`).toEqual(plant.reasons);
         if (plant.needles !== undefined) expect(reading.needles, `${pin} ${label}: its needles`).toEqual(plant.needles);
       }
+    }
+    for (const [pin, member] of Object.entries(CUT2_GATE)) {
+      const witness = objectAt(rosterWitness(pin));
+      const read = objectAt(witness.plants);
+      if (member.manifests !== undefined) {
+        const forms = objectAt(objectAt(read.reading).forms);
+        expect(
+          Object.fromEntries(Object.keys(member.manifests).map(path => [path, forms[path] ?? null])),
+          `${pin}: every plant is read by the form declared beside it`,
+        ).toStrictEqual(Object.fromEntries(Object.entries(member.manifests).map(([path, plant]) => [path, plant.form])));
+      }
+      for (const [label, plant] of Object.entries(member.descriptors ?? {})) {
+        const reading = objectAt(objectAt(read[label]).reading);
+        if (plant.criteria !== undefined) expect(reading.criteria, `${pin} ${label}: its criteria`).toEqual(plant.criteria);
+        if (plant.needles !== undefined) expect(reading.needles, `${pin} ${label}: its needles`).toEqual(plant.needles);
+      }
+      for (const [label, plant] of Object.entries(member.registries ?? {})) {
+        const reading = objectAt(objectAt(witness.registries)[label]);
+        const family = Array.isArray(reading.family) ? reading.family.map(entry => objectAt(entry).id) : [];
+        expect(family, `${pin} ${label}: every family member, in registration order`).toEqual(plant.family);
+        expect(reading.hosting, `${pin} ${label}: its hosting hits`).toEqual(plant.hosting);
+      }
+      for (const [label, plant] of Object.entries(member.packages ?? {})) expect(objectAt(witness.packages)[label], `${pin} ${label}: its package.json hits`).toEqual(plant.hits);
+    }
+    const lockHits = objectAt(objectAt(rosterWitness("N-ROOT-READERS")).lockControls);
+    for (const position of Object.keys(LIST_POSITIONS)) {
+      expect(lockHits[`lockPath ${position}`], `N-ROOT-READERS: the stem in a lock package's path is read ${position}`).toEqual(["node_modules/fiber-optics: fiberoptics"]);
+      expect(lockHits[`lockName ${position}`], `N-ROOT-READERS: the stem in a lock package's name field is read ${position}`).toEqual(["node_modules/alias name: fiberoptics"]);
     }
     const moduleReading = (pin: string): { [module: string]: string[] } => {
       return Object.fromEntries(Object.entries(objectAt(rosterWitness(pin))).map(([module, entries]) => [module, Array.isArray(entries) ? entries.map(String) : []]));
@@ -1529,6 +1856,43 @@ describe("wb-pyel.7 Fiber host-publication readers census (SDK-EVIDENCE-DIRECTED
     expect(HOSTED_CLASSES.filter(name => !Object.hasOwn(HOSTING_SPELLINGS, name)), "G24 plants every hosted class").toEqual([]);
     expect(Object.values(HOSTING_SPELLINGS), "G24 plants the stem and every hosted class's needle").toEqual([STEM, ...HOSTED_CLASSES.map(name => name.toLowerCase())]);
     expect(PUBLICATION_ENTRIES.filter(entry => !Object.hasOwn(GATE.G25?.descriptors ?? {}, `snake ${entry}`)), "G25 plants every publication entry").toEqual([]);
+    const cut2Missing = (pin: string, paths: readonly string[]): string[] => {
+      const have = new Set(Object.keys(CUT2_GATE[pin]?.manifests ?? {}));
+      return paths.filter(path => !have.has(path));
+    };
+    for (const pin of ["G33", "G34", "G35"]) expect(cut2Missing(pin, MANIFEST_NAMES.map(name => `${NEAR_DIR}/${name}`)), `${pin} plants every MANIFEST_NAMES entry itself`).toEqual([]);
+    expect(cut2Missing("G33", MANIFEST_NAMES.flatMap(name => NEAR_BEFORE.map(before => `${NEAR_DIR}/${before}${name}`))), "G33 plants every entry after every NEAR_BEFORE text").toEqual([]);
+    expect(cut2Missing("G34", MANIFEST_NAMES.flatMap(name => NEAR_AFTER.map(after => `${NEAR_DIR}/${name}${after}`))), "G34 plants every entry before every NEAR_AFTER text").toEqual([]);
+    expect(
+      cut2Missing("G35", MANIFEST_NAMES.flatMap(name => [...NEAR_BEFORE.map((before, index) => `${NEAR_DIR}/${before}${name}${NEAR_AFTER[index]}`), `${NEAR_DIR}/${name.slice(1)}`, `${NEAR_DIR}/${name.slice(0, -1)}`])),
+      "G35 plants every entry between the two texts at each index and with its first or last letter dropped",
+    ).toEqual([]);
+    expect(cut2Missing("G35", NEAR_MEMBER_PATHS), "G35 plants the seven paths of the G33 and G34 lines").toEqual([]);
+    const cutWords = PIP_FAMILY_WORDS.flatMap(word => [
+      `${NEAR_DIR}/${word}.txt`,
+      ...SPLIT_SEPARATORS.flatMap(separator => upTo(word.length - 1).map(at => `${NEAR_DIR}/${word.slice(0, at)}${separator}${word.slice(at)}.txt`)),
+      `${NEAR_DIR}/${word.slice(1)}.txt`,
+      `${NEAR_DIR}/${word.slice(0, -1)}.txt`,
+    ]);
+    expect(cut2Missing("G36", cutWords), "G36 plants every family word itself, cut at every inner position by every SPLIT_SEPARATORS character and trimmed at either end").toEqual([]);
+    const cut2Labels = (pin: string): Set<string> => new Set(Object.keys(CUT2_GATE[pin]?.descriptors ?? {}));
+    const positions = Object.keys(LIST_POSITIONS);
+    expect(
+      positions.flatMap(position => [...Object.keys(FOLD_FORMS).map(name => `permission ${name} ${position}`), ...Object.keys(FOLD_QUIET).map(name => `permission quiet ${name} ${position}`)]).filter(label => !cut2Labels("G31").has(label)),
+      "G31 plants every FOLD_FORMS and FOLD_QUIET spelling in a permission at every LIST_POSITIONS position",
+    ).toEqual([]);
+    expect(
+      positions.flatMap(position => [`permission ${position}`, `enum ${position}`, `objects ${position}`, `keyed objects ${position}`]).filter(label => !cut2Labels("G32").has(label)),
+      "G32 plants a needle at every LIST_POSITIONS position of the permissions, an enum and a list of objects (in a string and as a key)",
+    ).toEqual([]);
+    expect(
+      positions.flatMap(position => [`keywords ${position}`, `contributors ${position}`, `keyed ${position}`]).filter(label => !Object.hasOwn(CUT2_GATE.G32?.packages ?? {}, label)),
+      "G32 plants the stem at every LIST_POSITIONS position of a package.json string list and object list (in a string and as a key)",
+    ).toEqual([]);
+    expect(
+      Object.values(LIST_POSITIONS).map(slots => `${slots.filter(slot => slot === "W").length}:${slots.filter(slot => slot === "F").length}`),
+      "every LIST_POSITIONS position holds one item and at most two fillers",
+    ).toEqual(["1:0", "1:1", "1:1", "1:2", "1:2", "1:2"]);
 
     // the outside anchors: the readers' vocabulary
     const exact = (WORD_PLANTS["N-NAMES"] ?? []).map(path => path.slice(path.lastIndexOf("/") + 1)).filter(name => (MANIFEST_NAMES as readonly string[]).includes(name));

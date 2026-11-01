@@ -12,11 +12,25 @@
         ]
       },
       {
+        "words": "equal is the whole name: every entry after every NEAR_BEFORE text, before every NEAR_AFTER text, between the two at the same index, and with its first or last letter dropped is no manifest-name and is left unselected, the entry itself beside them selected",
+        "falsifiers": [
+          "G33",
+          "G34",
+          "G35"
+        ]
+      },
+      {
         "words": "pip-name: a base name holding requirements, constraints or pylock, read for each word in every CASE_FORMS spelling and at every depth from 1 to DEPTH_BOUND",
         "falsifiers": [
           "N-WORDS",
           "L3-M5",
           "G01"
+        ]
+      },
+      {
+        "words": "holding is the word's letters in one run: each word cut at every inner position by every SPLIT_SEPARATORS character, and with its first or last letter dropped, is not held and its name is left unselected, the word itself beside them selected",
+        "falsifiers": [
+          "G36"
         ]
       },
       {
@@ -67,6 +81,13 @@
           "G09",
           "G10",
           "G11"
+        ]
+      },
+      {
+        "words": "the root readers read their file whole: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field",
+        "falsifiers": [
+          "N-ROOT-READERS",
+          "G32"
         ]
       }
     ],
@@ -124,7 +145,7 @@
         ]
       },
       {
-        "words": "Fiber family: a descriptor whose id folds to hold fiber, or a permission does, or its contract does, each FOLD_FORMS spelling read alone in each of the three and each FOLD_QUIET spelling in none; or whose contract starts with rf@ byte for byte, each RF_FORMS contract read alone; each criterion read alone",
+        "words": "Fiber family: a descriptor whose id folds to hold fiber, or a permission does (each permission folded alone, at every LIST_POSITIONS position of its permissions, a word split across two permissions held by neither), or its contract does, each FOLD_FORMS spelling read alone in each of the three and each FOLD_QUIET spelling in none; or whose contract starts with rf@ byte for byte, each RF_FORMS contract read alone; each criterion read alone",
         "falsifiers": [
           "P-A3-FAM-ID",
           "P-A3-PERM",
@@ -134,7 +155,14 @@
           "G13",
           "G14",
           "G15",
-          "G16"
+          "G16",
+          "G31"
+        ]
+      },
+      {
+        "words": "a registry's reading states every Fiber-family member in registration order: a planted registry of four whose family members stand first, third and fourth states all three",
+        "falsifiers": [
+          "G31"
         ]
       },
       {
@@ -159,11 +187,12 @@
         ]
       },
       {
-        "words": "needles: a descriptor's keys and strings are read in every planted field (its id, description, permissions, contract and input schema, the schema down to NEST_BOUND nested objects as a string and as a key) for the stem, each hosted class and each publication entry, each NEEDLE_FORMS spelling read",
+        "words": "needles: a descriptor's keys and strings are read in every planted field (its id, description, permissions, contract and input schema, the schema down to NEST_BOUND nested objects as a string and as a key), and every item of a planted list at every LIST_POSITIONS position (its permissions, an input-schema enum of strings and an input-schema list of objects, an object item read in a string and as a key), for the stem, each hosted class and each publication entry, each NEEDLE_FORMS spelling read",
         "falsifiers": [
           "P-A3-NEEDLES",
           "G24",
-          "G25"
+          "G25",
+          "G32"
         ]
       },
       {
@@ -299,7 +328,10 @@
       "foldDuty": "FOLD DUTY (for the landing, not owed by the seat): ",
       "gateU1": "- U1: U1-HIGH-CONFIRMED-R-B98-",
       "gateU2": "- U2: U2-HIGH-CONFIRMED-R-B98-",
-      "gateU3": "- U3: U3-MEDIUM-CONFIRMED-RIDES-RULE-16-"
+      "gateU3": "- U3: U3-MEDIUM-CONFIRMED-RIDES-RULE-16-",
+      "cut2U1": "- U1: U1-HIGH-CONFIRMED-CUT2-R-B98-",
+      "cut2U2": "- U2: U2-MEDIUM-CONFIRMED-CUT2-R-B98-",
+      "cut2End": "RED (record.red verbatim):"
     },
     "phrases": {
       "N-PIP": ".pip extensions",
@@ -747,6 +779,144 @@
             "version": "1.0.0"
           }
         }
+      },
+      "lockPath only": {
+        "packages": {
+          "node_modules/fiber-optics": {
+            "version": "0.1.0"
+          }
+        }
+      },
+      "lockName only": {
+        "packages": {
+          "node_modules/alias": {
+            "name": "FiberOpticsSDK",
+            "version": "0.1.0"
+          }
+        }
+      },
+      "lockPath first of two": {
+        "packages": {
+          "node_modules/fiber-optics": {
+            "version": "0.1.0"
+          },
+          "node_modules/alpha": {
+            "version": "1.0.0"
+          }
+        }
+      },
+      "lockName first of two": {
+        "packages": {
+          "node_modules/alias": {
+            "name": "FiberOpticsSDK",
+            "version": "0.1.0"
+          },
+          "node_modules/alpha": {
+            "version": "1.0.0"
+          }
+        }
+      },
+      "lockPath last of two": {
+        "packages": {
+          "node_modules/alpha": {
+            "version": "1.0.0"
+          },
+          "node_modules/fiber-optics": {
+            "version": "0.1.0"
+          }
+        }
+      },
+      "lockName last of two": {
+        "packages": {
+          "node_modules/alpha": {
+            "version": "1.0.0"
+          },
+          "node_modules/alias": {
+            "name": "FiberOpticsSDK",
+            "version": "0.1.0"
+          }
+        }
+      },
+      "lockPath first of three": {
+        "packages": {
+          "node_modules/fiber-optics": {
+            "version": "0.1.0"
+          },
+          "node_modules/alpha": {
+            "version": "1.0.0"
+          },
+          "node_modules/beta": {
+            "version": "1.0.0"
+          }
+        }
+      },
+      "lockName first of three": {
+        "packages": {
+          "node_modules/alias": {
+            "name": "FiberOpticsSDK",
+            "version": "0.1.0"
+          },
+          "node_modules/alpha": {
+            "version": "1.0.0"
+          },
+          "node_modules/beta": {
+            "version": "1.0.0"
+          }
+        }
+      },
+      "lockPath middle of three": {
+        "packages": {
+          "node_modules/alpha": {
+            "version": "1.0.0"
+          },
+          "node_modules/fiber-optics": {
+            "version": "0.1.0"
+          },
+          "node_modules/beta": {
+            "version": "1.0.0"
+          }
+        }
+      },
+      "lockName middle of three": {
+        "packages": {
+          "node_modules/alpha": {
+            "version": "1.0.0"
+          },
+          "node_modules/alias": {
+            "name": "FiberOpticsSDK",
+            "version": "0.1.0"
+          },
+          "node_modules/beta": {
+            "version": "1.0.0"
+          }
+        }
+      },
+      "lockPath last of three": {
+        "packages": {
+          "node_modules/alpha": {
+            "version": "1.0.0"
+          },
+          "node_modules/beta": {
+            "version": "1.0.0"
+          },
+          "node_modules/fiber-optics": {
+            "version": "0.1.0"
+          }
+        }
+      },
+      "lockName last of three": {
+        "packages": {
+          "node_modules/alpha": {
+            "version": "1.0.0"
+          },
+          "node_modules/beta": {
+            "version": "1.0.0"
+          },
+          "node_modules/alias": {
+            "name": "FiberOpticsSDK",
+            "version": "0.1.0"
+          }
+        }
       }
     },
     "unreadManifests": [
@@ -759,6 +929,11 @@
       "py/host/P\u0131pfile",
       "web/bun.lock",
       "web/package.yaml",
+      "web/my-package.json",
+      "web/package.json.bak",
+      "web/xpackage.jsonx",
+      "tools/value-host/require-ments.txt",
+      "tools/value-host/equirements.txt",
       "test/fixtures/host/pyproject.toml",
       "test/fixtures/host/requirements.pip"
     ],
@@ -977,6 +1152,8 @@
       "hyphen": "fiber-runtime",
       "dotted": "fiber.runtime",
       "space-split": "Fiber Runtime",
+      "tab-split": "Fiber\tRuntime",
+      "newline-split": "Fiber\nRuntime",
       "slash-split": "Fiber/Runtime",
       "backslash-split": "Fiber\\Runtime"
     },
@@ -1282,6 +1459,531 @@
           "register$x"
         ]
       }
+    },
+    "listPositions": {
+      "only": [
+        "W"
+      ],
+      "first of two": [
+        "W",
+        "F"
+      ],
+      "last of two": [
+        "F",
+        "W"
+      ],
+      "first of three": [
+        "W",
+        "F",
+        "F"
+      ],
+      "middle of three": [
+        "F",
+        "W",
+        "F"
+      ],
+      "last of three": [
+        "F",
+        "F",
+        "W"
+      ]
+    },
+    "nearBefore": [
+      "x",
+      "my",
+      "my-",
+      "old-",
+      " "
+    ],
+    "nearAfter": [
+      ".bak",
+      ".orig",
+      "x",
+      "~",
+      " "
+    ],
+    "splitSeparators": [
+      "-",
+      "_",
+      ".",
+      " "
+    ],
+    "nearDir": "near",
+    "nearMemberPaths": [
+      "my-package.json",
+      "examples/host/xpackage.json",
+      "tools/old-Cargo.toml",
+      "web/mypyproject.toml",
+      "package.json.bak",
+      "Cargo.toml.orig",
+      "web/yarn.lock.bak"
+    ],
+    "permissionFillers": [
+      "value:read",
+      "value:write"
+    ],
+    "lockFillers": [
+      [
+        "node_modules/alpha",
+        {
+          "version": "1.0.0"
+        }
+      ],
+      [
+        "node_modules/beta",
+        {
+          "version": "1.0.0"
+        }
+      ]
+    ],
+    "cut2Words": {
+      "G31": {
+        "spelled": [
+          "only the last permission",
+          "descriptor.permissions.slice(-1)"
+        ],
+        "planted": [
+          "fiber:publish",
+          "value:read",
+          "Fiber:Publish",
+          "value:write",
+          "forge:inspect"
+        ]
+      },
+      "G32": {
+        "spelled": [
+          "only an array's last item",
+          "index === value.length - 1"
+        ],
+        "planted": [
+          "fiberruntime:read",
+          "planted:read",
+          "FiberGraph",
+          "other",
+          "fiber-optics",
+          "context",
+          "queue_value_publication:read",
+          "forge:inspect"
+        ]
+      },
+      "G33": {
+        "spelled": [
+          "lower.endsWith(entry.toLowerCase())"
+        ],
+        "planted": [
+          "my-package.json",
+          "examples/host/xpackage.json",
+          "tools/old-Cargo.toml",
+          "web/mypyproject.toml"
+        ]
+      },
+      "G34": {
+        "spelled": [
+          "lower.startsWith(entry.toLowerCase())"
+        ],
+        "planted": [
+          "package.json.bak",
+          "Cargo.toml.orig",
+          "web/yarn.lock.bak"
+        ]
+      },
+      "G35": {
+        "spelled": [
+          "lower.includes(entry.toLowerCase())",
+          "All seven paths from G33 and G34"
+        ],
+        "planted": []
+      },
+      "G36": {
+        "spelled": [
+          "lower.replace(/[-_. ]/g, '').includes(word)"
+        ],
+        "planted": [
+          "require-ments.txt",
+          "py-lock.toml",
+          "con_straints.in"
+        ]
+      }
+    },
+    "cut2Registries": {
+      "G31": {
+        "three family members": {
+          "descriptors": [
+            {
+              "version": "1.0.0",
+              "description": "planted",
+              "inputSchema": {
+                "type": "object"
+              },
+              "effectClass": "read",
+              "permissions": [
+                "fiber:publish",
+                "forge:inspect"
+              ],
+              "supportedModes": [
+                "invoke"
+              ],
+              "id": "forge.gate.status",
+              "contractSource": "forge@0.1.0:GateFacade.status"
+            },
+            {
+              "version": "1.0.0",
+              "description": "planted",
+              "inputSchema": {
+                "type": "object"
+              },
+              "effectClass": "read",
+              "permissions": [
+                "planted:read"
+              ],
+              "supportedModes": [
+                "invoke"
+              ],
+              "id": "workbench.value.read"
+            },
+            {
+              "version": "1.0.0",
+              "description": "planted",
+              "inputSchema": {
+                "type": "object"
+              },
+              "effectClass": "read",
+              "permissions": [
+                "value:read",
+                "Fiber:Publish",
+                "value:write"
+              ],
+              "supportedModes": [
+                "invoke"
+              ],
+              "id": "value.host",
+              "contractSource": "value-host@1.0.0:Host.read"
+            },
+            {
+              "version": "1.0.0",
+              "description": "planted",
+              "inputSchema": {
+                "type": "object"
+              },
+              "effectClass": "read",
+              "permissions": [
+                "planted:read"
+              ],
+              "supportedModes": [
+                "invoke"
+              ],
+              "id": "fiber.value.publish",
+              "contractSource": "value-host@1.0.0:Host.publish --no-commit"
+            }
+          ],
+          "family": [
+            "forge.gate.status",
+            "value.host",
+            "fiber.value.publish"
+          ],
+          "hosting": []
+        }
+      },
+      "G32": {
+        "live shape": {
+          "descriptors": [
+            {
+              "version": "1.0.0",
+              "description": "planted",
+              "inputSchema": {
+                "type": "object"
+              },
+              "effectClass": "read",
+              "permissions": [
+                "queue_value_publication:read",
+                "forge:inspect"
+              ],
+              "supportedModes": [
+                "invoke"
+              ],
+              "id": "forge.gate.status",
+              "contractSource": "forge@0.1.0:GateFacade.status"
+            }
+          ],
+          "family": [],
+          "hosting": [
+            "forge.gate.status: queuevaluepublication"
+          ]
+        }
+      },
+      "G33": {},
+      "G34": {},
+      "G35": {},
+      "G36": {}
+    },
+    "cut2Packages": {
+      "G31": {},
+      "G32": {
+        "keywords only": {
+          "manifest": {
+            "keywords": [
+              "fiber-optics"
+            ]
+          },
+          "hits": [
+            "keywords only.keywords[0]: fiberoptics"
+          ]
+        },
+        "contributors only": {
+          "manifest": {
+            "contributors": [
+              {
+                "name": "fiber-optics"
+              }
+            ]
+          },
+          "hits": [
+            "contributors only.contributors[0].name: fiberoptics"
+          ]
+        },
+        "keyed only": {
+          "manifest": {
+            "overrides": [
+              {
+                "fiber-optics": "0.1.0"
+              }
+            ]
+          },
+          "hits": [
+            "keyed only.overrides[0]{fiber-optics}: fiberoptics"
+          ]
+        },
+        "keywords first of two": {
+          "manifest": {
+            "keywords": [
+              "fiber-optics",
+              "context"
+            ]
+          },
+          "hits": [
+            "keywords first of two.keywords[0]: fiberoptics"
+          ]
+        },
+        "contributors first of two": {
+          "manifest": {
+            "contributors": [
+              {
+                "name": "fiber-optics"
+              },
+              {
+                "name": "alpha"
+              }
+            ]
+          },
+          "hits": [
+            "contributors first of two.contributors[0].name: fiberoptics"
+          ]
+        },
+        "keyed first of two": {
+          "manifest": {
+            "overrides": [
+              {
+                "fiber-optics": "0.1.0"
+              },
+              {
+                "alpha": "1.0.0"
+              }
+            ]
+          },
+          "hits": [
+            "keyed first of two.overrides[0]{fiber-optics}: fiberoptics"
+          ]
+        },
+        "keywords last of two": {
+          "manifest": {
+            "keywords": [
+              "context",
+              "fiber-optics"
+            ]
+          },
+          "hits": [
+            "keywords last of two.keywords[1]: fiberoptics"
+          ]
+        },
+        "contributors last of two": {
+          "manifest": {
+            "contributors": [
+              {
+                "name": "alpha"
+              },
+              {
+                "name": "fiber-optics"
+              }
+            ]
+          },
+          "hits": [
+            "contributors last of two.contributors[1].name: fiberoptics"
+          ]
+        },
+        "keyed last of two": {
+          "manifest": {
+            "overrides": [
+              {
+                "alpha": "1.0.0"
+              },
+              {
+                "fiber-optics": "0.1.0"
+              }
+            ]
+          },
+          "hits": [
+            "keyed last of two.overrides[1]{fiber-optics}: fiberoptics"
+          ]
+        },
+        "keywords first of three": {
+          "manifest": {
+            "keywords": [
+              "fiber-optics",
+              "context",
+              "render"
+            ]
+          },
+          "hits": [
+            "keywords first of three.keywords[0]: fiberoptics"
+          ]
+        },
+        "contributors first of three": {
+          "manifest": {
+            "contributors": [
+              {
+                "name": "fiber-optics"
+              },
+              {
+                "name": "alpha"
+              },
+              {
+                "name": "beta"
+              }
+            ]
+          },
+          "hits": [
+            "contributors first of three.contributors[0].name: fiberoptics"
+          ]
+        },
+        "keyed first of three": {
+          "manifest": {
+            "overrides": [
+              {
+                "fiber-optics": "0.1.0"
+              },
+              {
+                "alpha": "1.0.0"
+              },
+              {
+                "beta": "1.0.0"
+              }
+            ]
+          },
+          "hits": [
+            "keyed first of three.overrides[0]{fiber-optics}: fiberoptics"
+          ]
+        },
+        "keywords middle of three": {
+          "manifest": {
+            "keywords": [
+              "context",
+              "fiber-optics",
+              "render"
+            ]
+          },
+          "hits": [
+            "keywords middle of three.keywords[1]: fiberoptics"
+          ]
+        },
+        "contributors middle of three": {
+          "manifest": {
+            "contributors": [
+              {
+                "name": "alpha"
+              },
+              {
+                "name": "fiber-optics"
+              },
+              {
+                "name": "beta"
+              }
+            ]
+          },
+          "hits": [
+            "contributors middle of three.contributors[1].name: fiberoptics"
+          ]
+        },
+        "keyed middle of three": {
+          "manifest": {
+            "overrides": [
+              {
+                "alpha": "1.0.0"
+              },
+              {
+                "fiber-optics": "0.1.0"
+              },
+              {
+                "beta": "1.0.0"
+              }
+            ]
+          },
+          "hits": [
+            "keyed middle of three.overrides[1]{fiber-optics}: fiberoptics"
+          ]
+        },
+        "keywords last of three": {
+          "manifest": {
+            "keywords": [
+              "context",
+              "render",
+              "fiber-optics"
+            ]
+          },
+          "hits": [
+            "keywords last of three.keywords[2]: fiberoptics"
+          ]
+        },
+        "contributors last of three": {
+          "manifest": {
+            "contributors": [
+              {
+                "name": "alpha"
+              },
+              {
+                "name": "beta"
+              },
+              {
+                "name": "fiber-optics"
+              }
+            ]
+          },
+          "hits": [
+            "contributors last of three.contributors[2].name: fiberoptics"
+          ]
+        },
+        "keyed last of three": {
+          "manifest": {
+            "overrides": [
+              {
+                "alpha": "1.0.0"
+              },
+              {
+                "beta": "1.0.0"
+              },
+              {
+                "fiber-optics": "0.1.0"
+              }
+            ]
+          },
+          "hits": [
+            "keyed last of three.overrides[2]{fiber-optics}: fiberoptics"
+          ]
+        }
+      },
+      "G33": {},
+      "G34": {},
+      "G35": {},
+      "G36": {}
     }
   },
   "tests": [
@@ -1350,6 +2052,12 @@
     "G26",
     "G27",
     "G28",
+    "G31",
+    "G32",
+    "G33",
+    "G34",
+    "G35",
+    "G36",
     "LIVE-A1",
     "LIVE-A3-STATIC",
     "LIVE-A3-REGISTRIES",
@@ -2020,7 +2728,43 @@
               "lockName": [
                 "node_modules/alias name: fiberoptics"
               ],
-              "lockQuiet": []
+              "lockQuiet": [],
+              "lockPath only": [
+                "node_modules/fiber-optics: fiberoptics"
+              ],
+              "lockName only": [
+                "node_modules/alias name: fiberoptics"
+              ],
+              "lockPath first of two": [
+                "node_modules/fiber-optics: fiberoptics"
+              ],
+              "lockName first of two": [
+                "node_modules/alias name: fiberoptics"
+              ],
+              "lockPath last of two": [
+                "node_modules/fiber-optics: fiberoptics"
+              ],
+              "lockName last of two": [
+                "node_modules/alias name: fiberoptics"
+              ],
+              "lockPath first of three": [
+                "node_modules/fiber-optics: fiberoptics"
+              ],
+              "lockName first of three": [
+                "node_modules/alias name: fiberoptics"
+              ],
+              "lockPath middle of three": [
+                "node_modules/fiber-optics: fiberoptics"
+              ],
+              "lockName middle of three": [
+                "node_modules/alias name: fiberoptics"
+              ],
+              "lockPath last of three": [
+                "node_modules/fiber-optics: fiberoptics"
+              ],
+              "lockName last of three": [
+                "node_modules/alias name: fiberoptics"
+              ]
             }
           }
         }
@@ -6987,6 +7731,32 @@
                 "contract not ending with \" --no-commit\""
               ]
             },
+            "spelling tab-split": {
+              "input": "{\"version\":\"1.0.0\",\"description\":\"a Fiber\\tRuntime handle\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+              "reading": {
+                "criteria": [],
+                "publishing": [],
+                "needles": []
+              },
+              "family": false,
+              "carrier": false,
+              "reasons": [
+                "contract not ending with \" --no-commit\""
+              ]
+            },
+            "spelling newline-split": {
+              "input": "{\"version\":\"1.0.0\",\"description\":\"a Fiber\\nRuntime handle\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+              "reading": {
+                "criteria": [],
+                "publishing": [],
+                "needles": []
+              },
+              "family": false,
+              "carrier": false,
+              "reasons": [
+                "contract not ending with \" --no-commit\""
+              ]
+            },
             "spelling slash-split": {
               "input": "{\"version\":\"1.0.0\",\"description\":\"a Fiber/Runtime handle\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
               "reading": {
@@ -7395,6 +8165,3100 @@
       ]
     },
     {
+      "id": "V1",
+      "label": "U1-HIGH-CONFIRMED-CUT2-R-B98-R514-R515-R668-A3-PERMISSION-POSITION-FAIL-OPEN-2-GATE-READER-HOLLOWINGS",
+      "pins": [
+        {
+          "id": "G31",
+          "witness": {
+            "plants": {
+              "Fiber:Publish first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"Fiber:Publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "live shape": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fiber:publish\",\"forge:inspect\"],\"supportedModes\":[\"invoke\"],\"id\":\"forge.gate.status\",\"contractSource\":\"forge@0.1.0:GateFacade.status\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "split across two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"planted:fi\",\"ber:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission lower only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fiber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission upper only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"FIBER:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission capital only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"Fiber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission mixed only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fIbEr:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission hyphen only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi-ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission underscore only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi_ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission dot only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi.ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission space only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission spelled only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"f-i-b-e-r:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission colon only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi:ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission slash only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi/ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission fullwidth only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"\uff46\uff49\uff42\uff45\uff52:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission ligature only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"\ufb01ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibre only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fibre:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibe only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fibe:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet digit only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"f1ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet accented only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"f\u00edber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet combining only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi\u0301ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet cyrillic only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fib\u0435r:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission lower first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fiber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission upper first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"FIBER:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission capital first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"Fiber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission mixed first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fIbEr:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission hyphen first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi-ber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission underscore first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi_ber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission dot first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi.ber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission space first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi ber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission spelled first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"f-i-b-e-r:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission colon first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi:ber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission slash first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi/ber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission fullwidth first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"\uff46\uff49\uff42\uff45\uff52:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission ligature first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"\ufb01ber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibre first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fibre:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibe first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fibe:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet digit first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"f1ber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet accented first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"f\u00edber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet combining first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi\u0301ber:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet cyrillic first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fib\u0435r:publish\",\"value:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission lower last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fiber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission upper last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"FIBER:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission capital last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"Fiber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission mixed last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fIbEr:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission hyphen last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi-ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission underscore last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi_ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission dot last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi.ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission space last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission spelled last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"f-i-b-e-r:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission colon last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi:ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission slash last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi/ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission fullwidth last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"\uff46\uff49\uff42\uff45\uff52:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission ligature last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"\ufb01ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibre last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fibre:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibe last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fibe:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet digit last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"f1ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet accented last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"f\u00edber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet combining last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi\u0301ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet cyrillic last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fib\u0435r:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission lower first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fiber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission upper first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"FIBER:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission capital first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"Fiber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission mixed first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fIbEr:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission hyphen first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi-ber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission underscore first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi_ber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission dot first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi.ber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission space first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi ber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission spelled first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"f-i-b-e-r:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission colon first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi:ber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission slash first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi/ber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission fullwidth first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"\uff46\uff49\uff42\uff45\uff52:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission ligature first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"\ufb01ber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibre first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fibre:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibe first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fibe:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet digit first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"f1ber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet accented first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"f\u00edber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet combining first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fi\u0301ber:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet cyrillic first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fib\u0435r:publish\",\"value:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission lower middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fiber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission upper middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"FIBER:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission capital middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"Fiber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission mixed middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fIbEr:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission hyphen middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi-ber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission underscore middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi_ber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission dot middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi.ber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission space middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi ber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission spelled middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"f-i-b-e-r:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission colon middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi:ber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission slash middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi/ber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission fullwidth middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"\uff46\uff49\uff42\uff45\uff52:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission ligature middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"\ufb01ber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibre middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fibre:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibe middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fibe:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet digit middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"f1ber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet accented middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"f\u00edber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet combining middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fi\u0301ber:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet cyrillic middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"fib\u0435r:publish\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission lower last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fiber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission upper last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"FIBER:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission capital last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"Fiber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission mixed last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fIbEr:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission hyphen last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fi-ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission underscore last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fi_ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission dot last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fi.ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission space last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fi ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission spelled last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"f-i-b-e-r:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission colon last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fi:ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission slash last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fi/ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission fullwidth last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"\uff46\uff49\uff42\uff45\uff52:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission ligature last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"\ufb01ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": []
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibre last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fibre:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet fibe last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fibe:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet digit last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"f1ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet accented last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"f\u00edber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet combining last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fi\u0301ber:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission quiet cyrillic last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"value:read\",\"value:write\",\"fib\u0435r:publish\"],\"supportedModes\":[\"invoke\"],\"id\":\"value.host\",\"contractSource\":\"value-host@1.0.0:Host.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": []
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              }
+            },
+            "registries": {
+              "three family members": {
+                "hosting": [],
+                "family": [
+                  {
+                    "id": "forge.gate.status",
+                    "criteria": [
+                      "permission"
+                    ],
+                    "effectClass": "read",
+                    "supportedModes": [
+                      "invoke"
+                    ],
+                    "permissions": [
+                      "fiber:publish",
+                      "forge:inspect"
+                    ],
+                    "carrier": false,
+                    "description": "planted",
+                    "publishing": [
+                      "contract not ending with \" --no-commit\""
+                    ]
+                  },
+                  {
+                    "id": "value.host",
+                    "criteria": [
+                      "permission"
+                    ],
+                    "effectClass": "read",
+                    "supportedModes": [
+                      "invoke"
+                    ],
+                    "permissions": [
+                      "value:read",
+                      "Fiber:Publish",
+                      "value:write"
+                    ],
+                    "carrier": false,
+                    "description": "planted",
+                    "publishing": [
+                      "contract not ending with \" --no-commit\""
+                    ]
+                  },
+                  {
+                    "id": "fiber.value.publish",
+                    "criteria": [
+                      "id"
+                    ],
+                    "effectClass": "read",
+                    "supportedModes": [
+                      "invoke"
+                    ],
+                    "permissions": [
+                      "planted:read"
+                    ],
+                    "carrier": false,
+                    "description": "planted",
+                    "publishing": []
+                  }
+                ]
+              }
+            },
+            "packages": {}
+          }
+        },
+        {
+          "id": "G32",
+          "witness": {
+            "plants": {
+              "permission only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fiberruntime:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "enum only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"kind\":{\"type\":\"string\",\"enum\":[\"FiberGraph\"]}}},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fibergraph"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "objects only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"anyOf\":[{\"description\":\"a FiberScheduler queue\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberscheduler"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "keyed objects only": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"examples\":[{\"FiberRuntime\":\"handle\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fiberruntime:read\",\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "enum first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"kind\":{\"type\":\"string\",\"enum\":[\"FiberGraph\",\"other\"]}}},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fibergraph"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "objects first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"anyOf\":[{\"description\":\"a FiberScheduler queue\"},{\"type\":\"string\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberscheduler"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "keyed objects first of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"examples\":[{\"FiberRuntime\":\"handle\"},{\"other\":\"x\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"planted:read\",\"fiberruntime:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "enum last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"kind\":{\"type\":\"string\",\"enum\":[\"other\",\"FiberGraph\"]}}},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fibergraph"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "objects last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"anyOf\":[{\"type\":\"string\"},{\"description\":\"a FiberScheduler queue\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberscheduler"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "keyed objects last of two": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"examples\":[{\"other\":\"x\"},{\"FiberRuntime\":\"handle\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"fiberruntime:read\",\"planted:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "enum first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"kind\":{\"type\":\"string\",\"enum\":[\"FiberGraph\",\"other\",\"another\"]}}},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fibergraph"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "objects first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"anyOf\":[{\"description\":\"a FiberScheduler queue\"},{\"type\":\"string\"},{\"type\":\"number\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberscheduler"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "keyed objects first of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"examples\":[{\"FiberRuntime\":\"handle\"},{\"other\":\"x\"},{\"another\":\"y\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"planted:read\",\"fiberruntime:read\",\"value:write\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "enum middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"kind\":{\"type\":\"string\",\"enum\":[\"other\",\"FiberGraph\",\"another\"]}}},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fibergraph"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "objects middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"anyOf\":[{\"type\":\"string\"},{\"description\":\"a FiberScheduler queue\"},{\"type\":\"number\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberscheduler"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "keyed objects middle of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"examples\":[{\"other\":\"x\"},{\"FiberRuntime\":\"handle\"},{\"another\":\"y\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "permission last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\"},\"effectClass\":\"read\",\"permissions\":[\"planted:read\",\"value:write\",\"fiberruntime:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [
+                    "permission"
+                  ],
+                  "publishing": [
+                    "contract not ending with \" --no-commit\""
+                  ],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": true,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "enum last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"properties\":{\"kind\":{\"type\":\"string\",\"enum\":[\"other\",\"another\",\"FiberGraph\"]}}},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fibergraph"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "objects last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"anyOf\":[{\"type\":\"string\"},{\"type\":\"number\"},{\"description\":\"a FiberScheduler queue\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberscheduler"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              },
+              "keyed objects last of three": {
+                "input": "{\"version\":\"1.0.0\",\"description\":\"planted\",\"inputSchema\":{\"type\":\"object\",\"examples\":[{\"other\":\"x\"},{\"another\":\"y\"},{\"FiberRuntime\":\"handle\"}]},\"effectClass\":\"read\",\"permissions\":[\"planted:read\"],\"supportedModes\":[\"invoke\"],\"id\":\"workbench.value.read\"}",
+                "reading": {
+                  "criteria": [],
+                  "publishing": [],
+                  "needles": [
+                    "fiberruntime"
+                  ]
+                },
+                "family": false,
+                "carrier": false,
+                "reasons": [
+                  "contract not ending with \" --no-commit\""
+                ]
+              }
+            },
+            "registries": {
+              "live shape": {
+                "hosting": [
+                  "forge.gate.status: queuevaluepublication"
+                ],
+                "family": []
+              }
+            },
+            "packages": {
+              "keywords only": [
+                "keywords only.keywords[0]: fiberoptics"
+              ],
+              "contributors only": [
+                "contributors only.contributors[0].name: fiberoptics"
+              ],
+              "keyed only": [
+                "keyed only.overrides[0]{fiber-optics}: fiberoptics"
+              ],
+              "keywords first of two": [
+                "keywords first of two.keywords[0]: fiberoptics"
+              ],
+              "contributors first of two": [
+                "contributors first of two.contributors[0].name: fiberoptics"
+              ],
+              "keyed first of two": [
+                "keyed first of two.overrides[0]{fiber-optics}: fiberoptics"
+              ],
+              "keywords last of two": [
+                "keywords last of two.keywords[1]: fiberoptics"
+              ],
+              "contributors last of two": [
+                "contributors last of two.contributors[1].name: fiberoptics"
+              ],
+              "keyed last of two": [
+                "keyed last of two.overrides[1]{fiber-optics}: fiberoptics"
+              ],
+              "keywords first of three": [
+                "keywords first of three.keywords[0]: fiberoptics"
+              ],
+              "contributors first of three": [
+                "contributors first of three.contributors[0].name: fiberoptics"
+              ],
+              "keyed first of three": [
+                "keyed first of three.overrides[0]{fiber-optics}: fiberoptics"
+              ],
+              "keywords middle of three": [
+                "keywords middle of three.keywords[1]: fiberoptics"
+              ],
+              "contributors middle of three": [
+                "contributors middle of three.contributors[1].name: fiberoptics"
+              ],
+              "keyed middle of three": [
+                "keyed middle of three.overrides[1]{fiber-optics}: fiberoptics"
+              ],
+              "keywords last of three": [
+                "keywords last of three.keywords[2]: fiberoptics"
+              ],
+              "contributors last of three": [
+                "contributors last of three.contributors[2].name: fiberoptics"
+              ],
+              "keyed last of three": [
+                "keyed last of three.overrides[2]{fiber-optics}: fiberoptics"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "V2",
+      "label": "U2-MEDIUM-CONFIRMED-CUT2-R-B98-R514-R515-R668-A1-NAME-PREDICATE-OVER-READS-4-GATE-READER-HOLLOWINGS",
+      "pins": [
+        {
+          "id": "G33",
+          "witness": {
+            "plants": {
+              "unselected": [
+                "my-package.json",
+                "examples/host/xpackage.json",
+                "tools/old-Cargo.toml",
+                "web/mypyproject.toml",
+                "near/xpackage.json",
+                "near/mypackage.json",
+                "near/my-package.json",
+                "near/old-package.json",
+                "near/ package.json",
+                "near/xpackage-lock.json",
+                "near/mypackage-lock.json",
+                "near/my-package-lock.json",
+                "near/old-package-lock.json",
+                "near/ package-lock.json",
+                "near/xnpm-shrinkwrap.json",
+                "near/mynpm-shrinkwrap.json",
+                "near/my-npm-shrinkwrap.json",
+                "near/old-npm-shrinkwrap.json",
+                "near/ npm-shrinkwrap.json",
+                "near/xyarn.lock",
+                "near/myyarn.lock",
+                "near/my-yarn.lock",
+                "near/old-yarn.lock",
+                "near/ yarn.lock",
+                "near/xpnpm-lock.yaml",
+                "near/mypnpm-lock.yaml",
+                "near/my-pnpm-lock.yaml",
+                "near/old-pnpm-lock.yaml",
+                "near/ pnpm-lock.yaml",
+                "near/xpyproject.toml",
+                "near/mypyproject.toml",
+                "near/my-pyproject.toml",
+                "near/old-pyproject.toml",
+                "near/ pyproject.toml",
+                "near/xsetup.py",
+                "near/mysetup.py",
+                "near/my-setup.py",
+                "near/old-setup.py",
+                "near/ setup.py",
+                "near/xsetup.cfg",
+                "near/mysetup.cfg",
+                "near/my-setup.cfg",
+                "near/old-setup.cfg",
+                "near/ setup.cfg",
+                "near/xPipfile",
+                "near/myPipfile",
+                "near/my-Pipfile",
+                "near/old-Pipfile",
+                "near/ Pipfile",
+                "near/xPipfile.lock",
+                "near/myPipfile.lock",
+                "near/my-Pipfile.lock",
+                "near/old-Pipfile.lock",
+                "near/ Pipfile.lock",
+                "near/xpoetry.lock",
+                "near/mypoetry.lock",
+                "near/my-poetry.lock",
+                "near/old-poetry.lock",
+                "near/ poetry.lock",
+                "near/xuv.lock",
+                "near/myuv.lock",
+                "near/my-uv.lock",
+                "near/old-uv.lock",
+                "near/ uv.lock",
+                "near/xpdm.lock",
+                "near/mypdm.lock",
+                "near/my-pdm.lock",
+                "near/old-pdm.lock",
+                "near/ pdm.lock",
+                "near/xenvironment.yml",
+                "near/myenvironment.yml",
+                "near/my-environment.yml",
+                "near/old-environment.yml",
+                "near/ environment.yml",
+                "near/xenvironment.yaml",
+                "near/myenvironment.yaml",
+                "near/my-environment.yaml",
+                "near/old-environment.yaml",
+                "near/ environment.yaml",
+                "near/xCargo.toml",
+                "near/myCargo.toml",
+                "near/my-Cargo.toml",
+                "near/old-Cargo.toml",
+                "near/ Cargo.toml",
+                "near/xCargo.lock",
+                "near/myCargo.lock",
+                "near/my-Cargo.lock",
+                "near/old-Cargo.lock",
+                "near/ Cargo.lock"
+              ],
+              "reading": {
+                "selected": [
+                  "near/package.json",
+                  "near/package-lock.json",
+                  "near/npm-shrinkwrap.json",
+                  "near/yarn.lock",
+                  "near/pnpm-lock.yaml",
+                  "near/pyproject.toml",
+                  "near/setup.py",
+                  "near/setup.cfg",
+                  "near/Pipfile",
+                  "near/Pipfile.lock",
+                  "near/poetry.lock",
+                  "near/uv.lock",
+                  "near/pdm.lock",
+                  "near/environment.yml",
+                  "near/environment.yaml",
+                  "near/Cargo.toml",
+                  "near/Cargo.lock"
+                ],
+                "forms": {
+                  "near/package.json": "manifest-name",
+                  "near/package-lock.json": "manifest-name",
+                  "near/npm-shrinkwrap.json": "manifest-name",
+                  "near/yarn.lock": "manifest-name",
+                  "near/pnpm-lock.yaml": "manifest-name",
+                  "near/pyproject.toml": "manifest-name",
+                  "near/setup.py": "manifest-name",
+                  "near/setup.cfg": "manifest-name",
+                  "near/Pipfile": "manifest-name",
+                  "near/Pipfile.lock": "manifest-name",
+                  "near/poetry.lock": "manifest-name",
+                  "near/uv.lock": "manifest-name",
+                  "near/pdm.lock": "manifest-name",
+                  "near/environment.yml": "manifest-name",
+                  "near/environment.yaml": "manifest-name",
+                  "near/Cargo.toml": "manifest-name",
+                  "near/Cargo.lock": "manifest-name"
+                },
+                "raw": [
+                  "near/package.json",
+                  "near/package-lock.json",
+                  "near/npm-shrinkwrap.json",
+                  "near/yarn.lock",
+                  "near/pnpm-lock.yaml",
+                  "near/pyproject.toml",
+                  "near/setup.py",
+                  "near/setup.cfg",
+                  "near/Pipfile",
+                  "near/Pipfile.lock",
+                  "near/poetry.lock",
+                  "near/uv.lock",
+                  "near/pdm.lock",
+                  "near/environment.yml",
+                  "near/environment.yaml",
+                  "near/Cargo.toml",
+                  "near/Cargo.lock"
+                ],
+                "hits": [
+                  "near/package.json:2: fiberoptics",
+                  "near/package-lock.json:2: fiberoptics",
+                  "near/npm-shrinkwrap.json:2: fiberoptics",
+                  "near/yarn.lock:2: fiberoptics",
+                  "near/pnpm-lock.yaml:2: fiberoptics",
+                  "near/pyproject.toml:2: fiberoptics",
+                  "near/setup.py:2: fiberoptics",
+                  "near/setup.cfg:2: fiberoptics",
+                  "near/Pipfile:2: fiberoptics",
+                  "near/Pipfile.lock:2: fiberoptics",
+                  "near/poetry.lock:2: fiberoptics",
+                  "near/uv.lock:2: fiberoptics",
+                  "near/pdm.lock:2: fiberoptics",
+                  "near/environment.yml:2: fiberoptics",
+                  "near/environment.yaml:2: fiberoptics",
+                  "near/Cargo.toml:2: fiberoptics",
+                  "near/Cargo.lock:2: fiberoptics"
+                ]
+              }
+            },
+            "registries": {},
+            "packages": {}
+          }
+        },
+        {
+          "id": "G34",
+          "witness": {
+            "plants": {
+              "unselected": [
+                "package.json.bak",
+                "Cargo.toml.orig",
+                "web/yarn.lock.bak",
+                "near/package.json.bak",
+                "near/package.json.orig",
+                "near/package.jsonx",
+                "near/package.json~",
+                "near/package.json ",
+                "near/package-lock.json.bak",
+                "near/package-lock.json.orig",
+                "near/package-lock.jsonx",
+                "near/package-lock.json~",
+                "near/package-lock.json ",
+                "near/npm-shrinkwrap.json.bak",
+                "near/npm-shrinkwrap.json.orig",
+                "near/npm-shrinkwrap.jsonx",
+                "near/npm-shrinkwrap.json~",
+                "near/npm-shrinkwrap.json ",
+                "near/yarn.lock.bak",
+                "near/yarn.lock.orig",
+                "near/yarn.lockx",
+                "near/yarn.lock~",
+                "near/yarn.lock ",
+                "near/pnpm-lock.yaml.bak",
+                "near/pnpm-lock.yaml.orig",
+                "near/pnpm-lock.yamlx",
+                "near/pnpm-lock.yaml~",
+                "near/pnpm-lock.yaml ",
+                "near/pyproject.toml.bak",
+                "near/pyproject.toml.orig",
+                "near/pyproject.tomlx",
+                "near/pyproject.toml~",
+                "near/pyproject.toml ",
+                "near/setup.py.bak",
+                "near/setup.py.orig",
+                "near/setup.pyx",
+                "near/setup.py~",
+                "near/setup.py ",
+                "near/setup.cfg.bak",
+                "near/setup.cfg.orig",
+                "near/setup.cfgx",
+                "near/setup.cfg~",
+                "near/setup.cfg ",
+                "near/Pipfile.bak",
+                "near/Pipfile.orig",
+                "near/Pipfilex",
+                "near/Pipfile~",
+                "near/Pipfile ",
+                "near/Pipfile.lock.bak",
+                "near/Pipfile.lock.orig",
+                "near/Pipfile.lockx",
+                "near/Pipfile.lock~",
+                "near/Pipfile.lock ",
+                "near/poetry.lock.bak",
+                "near/poetry.lock.orig",
+                "near/poetry.lockx",
+                "near/poetry.lock~",
+                "near/poetry.lock ",
+                "near/uv.lock.bak",
+                "near/uv.lock.orig",
+                "near/uv.lockx",
+                "near/uv.lock~",
+                "near/uv.lock ",
+                "near/pdm.lock.bak",
+                "near/pdm.lock.orig",
+                "near/pdm.lockx",
+                "near/pdm.lock~",
+                "near/pdm.lock ",
+                "near/environment.yml.bak",
+                "near/environment.yml.orig",
+                "near/environment.ymlx",
+                "near/environment.yml~",
+                "near/environment.yml ",
+                "near/environment.yaml.bak",
+                "near/environment.yaml.orig",
+                "near/environment.yamlx",
+                "near/environment.yaml~",
+                "near/environment.yaml ",
+                "near/Cargo.toml.bak",
+                "near/Cargo.toml.orig",
+                "near/Cargo.tomlx",
+                "near/Cargo.toml~",
+                "near/Cargo.toml ",
+                "near/Cargo.lock.bak",
+                "near/Cargo.lock.orig",
+                "near/Cargo.lockx",
+                "near/Cargo.lock~",
+                "near/Cargo.lock "
+              ],
+              "reading": {
+                "selected": [
+                  "near/package.json",
+                  "near/package-lock.json",
+                  "near/npm-shrinkwrap.json",
+                  "near/yarn.lock",
+                  "near/pnpm-lock.yaml",
+                  "near/pyproject.toml",
+                  "near/setup.py",
+                  "near/setup.cfg",
+                  "near/Pipfile",
+                  "near/Pipfile.lock",
+                  "near/poetry.lock",
+                  "near/uv.lock",
+                  "near/pdm.lock",
+                  "near/environment.yml",
+                  "near/environment.yaml",
+                  "near/Cargo.toml",
+                  "near/Cargo.lock"
+                ],
+                "forms": {
+                  "near/package.json": "manifest-name",
+                  "near/package-lock.json": "manifest-name",
+                  "near/npm-shrinkwrap.json": "manifest-name",
+                  "near/yarn.lock": "manifest-name",
+                  "near/pnpm-lock.yaml": "manifest-name",
+                  "near/pyproject.toml": "manifest-name",
+                  "near/setup.py": "manifest-name",
+                  "near/setup.cfg": "manifest-name",
+                  "near/Pipfile": "manifest-name",
+                  "near/Pipfile.lock": "manifest-name",
+                  "near/poetry.lock": "manifest-name",
+                  "near/uv.lock": "manifest-name",
+                  "near/pdm.lock": "manifest-name",
+                  "near/environment.yml": "manifest-name",
+                  "near/environment.yaml": "manifest-name",
+                  "near/Cargo.toml": "manifest-name",
+                  "near/Cargo.lock": "manifest-name"
+                },
+                "raw": [
+                  "near/package.json",
+                  "near/package-lock.json",
+                  "near/npm-shrinkwrap.json",
+                  "near/yarn.lock",
+                  "near/pnpm-lock.yaml",
+                  "near/pyproject.toml",
+                  "near/setup.py",
+                  "near/setup.cfg",
+                  "near/Pipfile",
+                  "near/Pipfile.lock",
+                  "near/poetry.lock",
+                  "near/uv.lock",
+                  "near/pdm.lock",
+                  "near/environment.yml",
+                  "near/environment.yaml",
+                  "near/Cargo.toml",
+                  "near/Cargo.lock"
+                ],
+                "hits": [
+                  "near/package.json:2: fiberoptics",
+                  "near/package-lock.json:2: fiberoptics",
+                  "near/npm-shrinkwrap.json:2: fiberoptics",
+                  "near/yarn.lock:2: fiberoptics",
+                  "near/pnpm-lock.yaml:2: fiberoptics",
+                  "near/pyproject.toml:2: fiberoptics",
+                  "near/setup.py:2: fiberoptics",
+                  "near/setup.cfg:2: fiberoptics",
+                  "near/Pipfile:2: fiberoptics",
+                  "near/Pipfile.lock:2: fiberoptics",
+                  "near/poetry.lock:2: fiberoptics",
+                  "near/uv.lock:2: fiberoptics",
+                  "near/pdm.lock:2: fiberoptics",
+                  "near/environment.yml:2: fiberoptics",
+                  "near/environment.yaml:2: fiberoptics",
+                  "near/Cargo.toml:2: fiberoptics",
+                  "near/Cargo.lock:2: fiberoptics"
+                ]
+              }
+            },
+            "registries": {},
+            "packages": {}
+          }
+        },
+        {
+          "id": "G35",
+          "witness": {
+            "plants": {
+              "unselected": [
+                "my-package.json",
+                "examples/host/xpackage.json",
+                "tools/old-Cargo.toml",
+                "web/mypyproject.toml",
+                "package.json.bak",
+                "Cargo.toml.orig",
+                "web/yarn.lock.bak",
+                "near/xpackage.json.bak",
+                "near/mypackage.json.orig",
+                "near/my-package.jsonx",
+                "near/old-package.json~",
+                "near/ package.json ",
+                "near/xpackage-lock.json.bak",
+                "near/mypackage-lock.json.orig",
+                "near/my-package-lock.jsonx",
+                "near/old-package-lock.json~",
+                "near/ package-lock.json ",
+                "near/xnpm-shrinkwrap.json.bak",
+                "near/mynpm-shrinkwrap.json.orig",
+                "near/my-npm-shrinkwrap.jsonx",
+                "near/old-npm-shrinkwrap.json~",
+                "near/ npm-shrinkwrap.json ",
+                "near/xyarn.lock.bak",
+                "near/myyarn.lock.orig",
+                "near/my-yarn.lockx",
+                "near/old-yarn.lock~",
+                "near/ yarn.lock ",
+                "near/xpnpm-lock.yaml.bak",
+                "near/mypnpm-lock.yaml.orig",
+                "near/my-pnpm-lock.yamlx",
+                "near/old-pnpm-lock.yaml~",
+                "near/ pnpm-lock.yaml ",
+                "near/xpyproject.toml.bak",
+                "near/mypyproject.toml.orig",
+                "near/my-pyproject.tomlx",
+                "near/old-pyproject.toml~",
+                "near/ pyproject.toml ",
+                "near/xsetup.py.bak",
+                "near/mysetup.py.orig",
+                "near/my-setup.pyx",
+                "near/old-setup.py~",
+                "near/ setup.py ",
+                "near/xsetup.cfg.bak",
+                "near/mysetup.cfg.orig",
+                "near/my-setup.cfgx",
+                "near/old-setup.cfg~",
+                "near/ setup.cfg ",
+                "near/xPipfile.bak",
+                "near/myPipfile.orig",
+                "near/my-Pipfilex",
+                "near/old-Pipfile~",
+                "near/ Pipfile ",
+                "near/xPipfile.lock.bak",
+                "near/myPipfile.lock.orig",
+                "near/my-Pipfile.lockx",
+                "near/old-Pipfile.lock~",
+                "near/ Pipfile.lock ",
+                "near/xpoetry.lock.bak",
+                "near/mypoetry.lock.orig",
+                "near/my-poetry.lockx",
+                "near/old-poetry.lock~",
+                "near/ poetry.lock ",
+                "near/xuv.lock.bak",
+                "near/myuv.lock.orig",
+                "near/my-uv.lockx",
+                "near/old-uv.lock~",
+                "near/ uv.lock ",
+                "near/xpdm.lock.bak",
+                "near/mypdm.lock.orig",
+                "near/my-pdm.lockx",
+                "near/old-pdm.lock~",
+                "near/ pdm.lock ",
+                "near/xenvironment.yml.bak",
+                "near/myenvironment.yml.orig",
+                "near/my-environment.ymlx",
+                "near/old-environment.yml~",
+                "near/ environment.yml ",
+                "near/xenvironment.yaml.bak",
+                "near/myenvironment.yaml.orig",
+                "near/my-environment.yamlx",
+                "near/old-environment.yaml~",
+                "near/ environment.yaml ",
+                "near/xCargo.toml.bak",
+                "near/myCargo.toml.orig",
+                "near/my-Cargo.tomlx",
+                "near/old-Cargo.toml~",
+                "near/ Cargo.toml ",
+                "near/xCargo.lock.bak",
+                "near/myCargo.lock.orig",
+                "near/my-Cargo.lockx",
+                "near/old-Cargo.lock~",
+                "near/ Cargo.lock ",
+                "near/ackage.json",
+                "near/package.jso",
+                "near/ackage-lock.json",
+                "near/package-lock.jso",
+                "near/pm-shrinkwrap.json",
+                "near/npm-shrinkwrap.jso",
+                "near/arn.lock",
+                "near/yarn.loc",
+                "near/npm-lock.yaml",
+                "near/pnpm-lock.yam",
+                "near/yproject.toml",
+                "near/pyproject.tom",
+                "near/etup.py",
+                "near/setup.p",
+                "near/etup.cfg",
+                "near/setup.cf",
+                "near/ipfile",
+                "near/Pipfil",
+                "near/ipfile.lock",
+                "near/Pipfile.loc",
+                "near/oetry.lock",
+                "near/poetry.loc",
+                "near/v.lock",
+                "near/uv.loc",
+                "near/dm.lock",
+                "near/pdm.loc",
+                "near/nvironment.yml",
+                "near/environment.ym",
+                "near/nvironment.yaml",
+                "near/environment.yam",
+                "near/argo.toml",
+                "near/Cargo.tom",
+                "near/argo.lock",
+                "near/Cargo.loc"
+              ],
+              "reading": {
+                "selected": [
+                  "near/package.json",
+                  "near/package-lock.json",
+                  "near/npm-shrinkwrap.json",
+                  "near/yarn.lock",
+                  "near/pnpm-lock.yaml",
+                  "near/pyproject.toml",
+                  "near/setup.py",
+                  "near/setup.cfg",
+                  "near/Pipfile",
+                  "near/Pipfile.lock",
+                  "near/poetry.lock",
+                  "near/uv.lock",
+                  "near/pdm.lock",
+                  "near/environment.yml",
+                  "near/environment.yaml",
+                  "near/Cargo.toml",
+                  "near/Cargo.lock"
+                ],
+                "forms": {
+                  "near/package.json": "manifest-name",
+                  "near/package-lock.json": "manifest-name",
+                  "near/npm-shrinkwrap.json": "manifest-name",
+                  "near/yarn.lock": "manifest-name",
+                  "near/pnpm-lock.yaml": "manifest-name",
+                  "near/pyproject.toml": "manifest-name",
+                  "near/setup.py": "manifest-name",
+                  "near/setup.cfg": "manifest-name",
+                  "near/Pipfile": "manifest-name",
+                  "near/Pipfile.lock": "manifest-name",
+                  "near/poetry.lock": "manifest-name",
+                  "near/uv.lock": "manifest-name",
+                  "near/pdm.lock": "manifest-name",
+                  "near/environment.yml": "manifest-name",
+                  "near/environment.yaml": "manifest-name",
+                  "near/Cargo.toml": "manifest-name",
+                  "near/Cargo.lock": "manifest-name"
+                },
+                "raw": [
+                  "near/package.json",
+                  "near/package-lock.json",
+                  "near/npm-shrinkwrap.json",
+                  "near/yarn.lock",
+                  "near/pnpm-lock.yaml",
+                  "near/pyproject.toml",
+                  "near/setup.py",
+                  "near/setup.cfg",
+                  "near/Pipfile",
+                  "near/Pipfile.lock",
+                  "near/poetry.lock",
+                  "near/uv.lock",
+                  "near/pdm.lock",
+                  "near/environment.yml",
+                  "near/environment.yaml",
+                  "near/Cargo.toml",
+                  "near/Cargo.lock"
+                ],
+                "hits": [
+                  "near/package.json:2: fiberoptics",
+                  "near/package-lock.json:2: fiberoptics",
+                  "near/npm-shrinkwrap.json:2: fiberoptics",
+                  "near/yarn.lock:2: fiberoptics",
+                  "near/pnpm-lock.yaml:2: fiberoptics",
+                  "near/pyproject.toml:2: fiberoptics",
+                  "near/setup.py:2: fiberoptics",
+                  "near/setup.cfg:2: fiberoptics",
+                  "near/Pipfile:2: fiberoptics",
+                  "near/Pipfile.lock:2: fiberoptics",
+                  "near/poetry.lock:2: fiberoptics",
+                  "near/uv.lock:2: fiberoptics",
+                  "near/pdm.lock:2: fiberoptics",
+                  "near/environment.yml:2: fiberoptics",
+                  "near/environment.yaml:2: fiberoptics",
+                  "near/Cargo.toml:2: fiberoptics",
+                  "near/Cargo.lock:2: fiberoptics"
+                ]
+              }
+            },
+            "registries": {},
+            "packages": {}
+          }
+        },
+        {
+          "id": "G36",
+          "witness": {
+            "plants": {
+              "unselected": [
+                "require-ments.txt",
+                "py-lock.toml",
+                "con_straints.in",
+                "near/r-equirements.txt",
+                "near/re-quirements.txt",
+                "near/req-uirements.txt",
+                "near/requ-irements.txt",
+                "near/requi-rements.txt",
+                "near/requir-ements.txt",
+                "near/require-ments.txt",
+                "near/requirem-ents.txt",
+                "near/requireme-nts.txt",
+                "near/requiremen-ts.txt",
+                "near/requirement-s.txt",
+                "near/r_equirements.txt",
+                "near/re_quirements.txt",
+                "near/req_uirements.txt",
+                "near/requ_irements.txt",
+                "near/requi_rements.txt",
+                "near/requir_ements.txt",
+                "near/require_ments.txt",
+                "near/requirem_ents.txt",
+                "near/requireme_nts.txt",
+                "near/requiremen_ts.txt",
+                "near/requirement_s.txt",
+                "near/r.equirements.txt",
+                "near/re.quirements.txt",
+                "near/req.uirements.txt",
+                "near/requ.irements.txt",
+                "near/requi.rements.txt",
+                "near/requir.ements.txt",
+                "near/require.ments.txt",
+                "near/requirem.ents.txt",
+                "near/requireme.nts.txt",
+                "near/requiremen.ts.txt",
+                "near/requirement.s.txt",
+                "near/r equirements.txt",
+                "near/re quirements.txt",
+                "near/req uirements.txt",
+                "near/requ irements.txt",
+                "near/requi rements.txt",
+                "near/requir ements.txt",
+                "near/require ments.txt",
+                "near/requirem ents.txt",
+                "near/requireme nts.txt",
+                "near/requiremen ts.txt",
+                "near/requirement s.txt",
+                "near/c-onstraints.txt",
+                "near/co-nstraints.txt",
+                "near/con-straints.txt",
+                "near/cons-traints.txt",
+                "near/const-raints.txt",
+                "near/constr-aints.txt",
+                "near/constra-ints.txt",
+                "near/constrai-nts.txt",
+                "near/constrain-ts.txt",
+                "near/constraint-s.txt",
+                "near/c_onstraints.txt",
+                "near/co_nstraints.txt",
+                "near/con_straints.txt",
+                "near/cons_traints.txt",
+                "near/const_raints.txt",
+                "near/constr_aints.txt",
+                "near/constra_ints.txt",
+                "near/constrai_nts.txt",
+                "near/constrain_ts.txt",
+                "near/constraint_s.txt",
+                "near/c.onstraints.txt",
+                "near/co.nstraints.txt",
+                "near/con.straints.txt",
+                "near/cons.traints.txt",
+                "near/const.raints.txt",
+                "near/constr.aints.txt",
+                "near/constra.ints.txt",
+                "near/constrai.nts.txt",
+                "near/constrain.ts.txt",
+                "near/constraint.s.txt",
+                "near/c onstraints.txt",
+                "near/co nstraints.txt",
+                "near/con straints.txt",
+                "near/cons traints.txt",
+                "near/const raints.txt",
+                "near/constr aints.txt",
+                "near/constra ints.txt",
+                "near/constrai nts.txt",
+                "near/constrain ts.txt",
+                "near/constraint s.txt",
+                "near/p-ylock.txt",
+                "near/py-lock.txt",
+                "near/pyl-ock.txt",
+                "near/pylo-ck.txt",
+                "near/pyloc-k.txt",
+                "near/p_ylock.txt",
+                "near/py_lock.txt",
+                "near/pyl_ock.txt",
+                "near/pylo_ck.txt",
+                "near/pyloc_k.txt",
+                "near/p.ylock.txt",
+                "near/py.lock.txt",
+                "near/pyl.ock.txt",
+                "near/pylo.ck.txt",
+                "near/pyloc.k.txt",
+                "near/p ylock.txt",
+                "near/py lock.txt",
+                "near/pyl ock.txt",
+                "near/pylo ck.txt",
+                "near/pyloc k.txt",
+                "near/equirements.txt",
+                "near/requirement.txt",
+                "near/onstraints.txt",
+                "near/constraint.txt",
+                "near/ylock.txt",
+                "near/pyloc.txt"
+              ],
+              "reading": {
+                "selected": [
+                  "near/requirements.txt",
+                  "near/constraints.txt",
+                  "near/pylock.txt"
+                ],
+                "forms": {
+                  "near/requirements.txt": "pip-name",
+                  "near/constraints.txt": "pip-name",
+                  "near/pylock.txt": "pip-name"
+                },
+                "raw": [
+                  "near/requirements.txt",
+                  "near/constraints.txt",
+                  "near/pylock.txt"
+                ],
+                "hits": [
+                  "near/requirements.txt:2: fiberoptics",
+                  "near/constraints.txt:2: fiberoptics",
+                  "near/pylock.txt:2: fiberoptics"
+                ]
+              }
+            },
+            "registries": {},
+            "packages": {}
+          }
+        }
+      ]
+    },
+    {
       "id": "L",
       "label": "the live tree, read through the same readers",
       "pins": [
@@ -7538,6 +11402,11 @@
               "py/host/P\u0131pfile",
               "web/bun.lock",
               "web/package.yaml",
+              "web/my-package.json",
+              "web/package.json.bak",
+              "web/xpackage.jsonx",
+              "tools/value-host/require-ments.txt",
+              "tools/value-host/equirements.txt",
               "test/fixtures/host/pyproject.toml",
               "test/fixtures/host/requirements.pip"
             ]
