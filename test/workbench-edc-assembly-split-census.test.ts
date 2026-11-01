@@ -92,6 +92,24 @@
  * these controls add no case, mutant, row or registered title. Other placements or probe sizes are NOT CLAIMED by these
  * added controls. The existing census's rows and armed registrations remain as described above.
  *
+ * WB-J517 CUT #3 (seat ws-04, run g10-work-s172; refusal #2 U1-U3, authored in the enumerate-the-resolvable form orchestrator
+ * ruling R-B251 binds for refusal #2's frozen class, the index order claimed wider than its pins): the pinned reader set is
+ * still this file's case S3c: to query providers, mint coverage or admit work, which gains its indexOrder witness, and THE
+ * INDEX ORDER (THE CHECKS, below) claims exactly the arrays that witness, the indexReader witness and the battery pin. U1's
+ * three one-edit comparators of indexKeysOf are killed by those pins: G01 SORT-INT32 misreads the ORDER_KEYS array (its
+ * keys from 2^31 up sort first), G03 SORT-TWO-DIGITS the ORDER_KEYS array and the dense arrays of 101 and 1000 items (an
+ * index from 100 up sorts by its first two digits), and G02 SORT-CLAMP10 every array behind the probe that holds items at
+ * two or more indices from 10 up (the clamp ties them and the probe lists them last index first). On each array a member
+ * misreads, the in-order twin K-DEMAND admits is refused (order, or subjects for the demand's subjects), and under each
+ * member the ORDER_KEYS blocks read demand:order through the whole judge. U2's G06 PRESENT-TRUNCATE-64 is killed by the
+ * dense arrays of 101 and 1000 items (presentItems' items, itemsOf's holes, K-DEMAND's placement and demand readings,
+ * K-SPLIT's content). U3 is the delivery note's (its targeted set's measured composition). The ORDER_KEYS array sits behind
+ * the probe, never on a plain array of length 2^32 - 1, so a reading that walks its length reads unreadable:<reading> at the
+ * probe instead of stalling the judge (FAIL CLOSED). The claim words refusal #2 read as wider than their pins - K-DEMAND's
+ * 'the blocks in demand order', the own-index-key sentence's 'in index order', and indexKeysOf's, presentItems', itemsOf's
+ * and the probe control's comments - now name THE INDEX ORDER, and every array it does not name is NOT CLAIMED. These
+ * controls add no registered case, mutant, row or title.
+ *
  * MEASURED (read-only). Producer, by cut #1's seat (ws-06, run g10-work-s125, 2026-10-28, at trunk a423a25): the local
  * ReactiveComponentsSDK checkout, git show at the bead pin 44b72145b1756908585c94da2327ab8809a3ca9a:
  * docs/programs/evidence-directed-computation-2026-10-18.md (blob de04229d9cdad063e4704d732f3cbcee1f001e68, the same blob
@@ -125,7 +143,9 @@
  *  to the seam (a seam is handed only the frozen world, whose one own key is the effect function).
  *  K-DEMAND every run's wiring's demand is the host's (owner host, the request's subjects in its order), and R1's and R2's
  *  documents place exactly those subjects, each once, the blocks in demand order and the unmet in demand order (cases C10 and
- *  C11 leave two subjects unmet in opposite orders of their numbers, so the unmet order is read both ways).
+ *  C11 leave two subjects unmet in opposite orders of their numbers, so the unmet order is read both ways); each of these
+ *  arrays - the demand's subjects, the blocks and the unmet - is read in THE INDEX ORDER (below), and its order is claimed
+ *  only on the arrays THE INDEX ORDER names.
  *  K-PURE R2 leaves its wiring's data (its demand, evidence and sources, as JSON) untouched - data that cannot be read as JSON
  *  before or after the run is a finding - and R3's document deep-strict-equals R2's (node's util.isDeepStrictEqual: whatever
  *  it leaves unread of a document's keys, prototypes and proxies, K-SPLIT reads on both; attribute flags and extensibility
@@ -141,11 +161,35 @@
  *  documents carry each present block's subject's evidence (deep strict) and source verbatim, a demanded subject being a
  *  block exactly when its evidence and source are both in hand (R3's content is K-PURE's: it equals R2's).
  *  K-DEMAND's placement and demand readings and K-SPLIT's content read every array they read - the blocks, the unmet and the
- *  demand's subjects - through its own index keys, in index order (presentItems): never by walking its length and never
- *  through its iteration or methods; neither own method steers these readings (M76's own iterator and M77's
+ *  demand's subjects - through its own index keys, sorted into THE INDEX ORDER (presentItems; below): never by walking its
+ *  length and never through its iteration or methods; neither own method steers these readings (M76's own iterator and M77's
  *  own filter are K-SPLIT's shape findings and are never called: M76's admitted unmet entries are K-DEMAND's placement
  *  finding, M77's covered text K-SPLIT's content finding); a hole in the unmet or the subjects is an entry that names no
  *  subject, counted from the length (itemsOf; M58, M64).
+ *  THE INDEX ORDER (wb-j517 cut #3, the enumerate-the-resolvable form of orchestrator ruling R-B251): presentItems sorts an
+ *  array's own index keys by their numbers (indexKeysOf) and reads its items in that order, itemsOf counts the rest of its
+ *  length as holes, K-DEMAND reads the blocks, the unmet and the demand's subjects so, and K-SPLIT's content reads every present
+ *  block. CLAIMED on exactly these arrays, each pinned by the battery or by row S3c's witness: the battery's documents and
+ *  wirings (items at the indices 0 to 2, plain, or behind the probe for M78-M80); the indexReader arrays (eleven items at the
+ *  indices 0 to 10, plain and behind the probe; two blocks at the indices 2 and 10, in both orders); and the indexOrder arrays:
+ *  the ORDER_KEYS array - one item at each of the indices 0, 1 and 2, 10^d - 1, 10^d and 10^d + 1 for every d from 1 to 9,
+ *  2^31 - 1, 2^31 and 2^31 + 1, and the two largest, 2^32 - 3 and 2^32 - 2, on an array of length 2^32 - 1 behind the probe
+ *  (its own keys listed last index first) - and the DENSE_COUNTS arrays, 12, 101 and 1000 items at the indices 0 to count - 1,
+ *  plain (the engine lists its own keys ascending), behind the probe, and behind the probe at length 2^32 - 1. presentItems
+ *  reads every present item of each in index order; itemsOf counts the holes of the ORDER_KEYS array and of the plain and
+ *  length-2^32 - 1 dense ones; K-DEMAND's placement reading admits the ORDER_KEYS blocks, and the dense blocks and unmet (plain
+ *  and behind the probe), in demand order and refuses each out-of-order twin with order - two neighbouring items swapped, at
+ *  every neighbouring pair of ORDER_KEYS and at the last two items of each dense array; its demand reading admits the dense
+ *  subjects (plain and behind the probe) in the request's order and refuses that twin with subjects; K-SPLIT's content reads
+ *  the ORDER_KEYS blocks and the dense blocks with no finding; and through the whole judge a control request of 35 answerable
+ *  subjects whose blocks sit one at each ORDER_KEYS index reads K-DEMAND ok, and demand:order with the blocks at the two
+ *  largest indices swapped. Row S3c also pins each indexOrder array's listing (its first three own keys), a walk of the length
+ *  of each dense array of its own length (filter: it ends) and, on each array of length 2^32 - 1, three reads of absent
+ *  indices (has, get and own descriptor: the third is probed) - no control walks an array of length 2^32 - 1 - so a control
+ *  that left the probe or its listing reds. Every other array - other index keys, another listing of its own keys
+ *  (the ORDER_KEYS listed ascending among them), more than 1000 present items - is NOT CLAIMED by this census: a comparator,
+ *  or a reading of the present items, that errs only there is outside these pins. THE INDEX ORDER names no residual: refusal
+ *  #2's members are killed by these pins, and what no pin reads is a scope sentence (NOT CLAIMED), never a residual.
  *  FAIL CLOSED: every reading above is guarded - a reading that throws is the finding unreadable:<reading>, so its check
  *  refuses and the judge goes on: the wiring (M74), demand (M75), placement and content (M72) readings and K-PURE's input
  *  datum (M73, M75) and repeat comparison (M72); the shape reading reads keys, descriptors and prototypes only and stops at
@@ -940,20 +984,23 @@ function shapeFindings(value: unknown, shape: Shape, path: string): string[] {
   }
   return findings;
 }
-/** The own index keys of an array, in index order: the keys its items sit under, read from its own keys, never by walking its length. */
+/** The own index keys of an array, sorted by their numbers - THE INDEX ORDER (the census header; claimed only on the arrays it names): the keys its
+ * items sit under, read from its own keys, never by walking its length. */
 const indexKeysOf = (items: readonly unknown[]): string[] =>
   Reflect.ownKeys(items)
     .filter((key): key is string => typeof key === "string" && isArrayIndex(key))
     .sort((left, right) => Number(left) - Number(right));
-/** The items an array holds at its present indices, in index order (a hole holds none; K-SPLIT's shape reading names it), read through its own index
- * keys, sorted: never by walking its length and never through its iteration or methods. The pinned oversized arrays end; own iteration and methods
+/** The items an array holds at its present indices, in THE INDEX ORDER (a hole holds none; K-SPLIT's shape reading names it), read through its own
+ * index keys, sorted: never by walking its length and never through its iteration or methods. Every present item, and their order, are claimed only
+ * on the arrays THE INDEX ORDER names (the census header; the largest holds 1000 items). The pinned oversized arrays end; own iteration and methods
  * cannot steer this reading (a proxy's traps still can; K-SPLIT refuses the proxy). wb-j517 F1: items.filter did not return at length 2^32 - 1. */
 function presentItems<T>(items: readonly T[]): T[] {
   if (!Array.isArray(items)) throw new TypeError("no array");
   return indexKeysOf(items).map(key => items[Number(key)]);
 }
 /** An array's items as the placement and demand readings read them: its present items, and its holes - the indices below its length that hold no own
- * item, each an entry that names no subject (as cut #4's spread read a hole: M58, M64) - counted from its length, never walked. */
+ * item, each an entry that names no subject (as cut #4's spread read a hole: M58, M64) - counted from its length, never walked (the count is
+ * claimed on the arrays THE INDEX ORDER names, the census header). */
 function itemsOf<T>(items: readonly T[]): { readonly present: readonly T[]; readonly holes: number } {
   const present = presentItems(items);
   return { present, holes: items.length - present.length };
@@ -1239,7 +1286,8 @@ const MOMENT: readonly string[] = ["M49", "M55", "M56"];
 
 /** The probe's own control (wb-j517 F1), over an array of length 1000 behind it, so a probe that missed a walk ends instead of stopping the judge: each
  * walk of the length - filter (has), a spread (get) and an own-descriptor loop - is probed, and the bounded readings - presentItems, and node's
- * util.isDeepStrictEqual of two such arrays - end; presentItems reads the items in index order, though the probe lists its own keys last index first. */
+ * util.isDeepStrictEqual of two such arrays - end; presentItems reads its two items as s1,s2, though the probe lists its own keys last index first
+ * (THE INDEX ORDER, the census header, names the arrays an order is claimed on). */
 function probeReadings(): Readonly<Record<string, string>> {
   const items = (): string[] => probed(["s1", "s2"], 1000);
   const readings: Readonly<Record<string, () => unknown>> = {
@@ -1263,8 +1311,8 @@ function probeReadings(): Readonly<Record<string, string>> {
   );
 }
 
-/** wb-j517 U1-U2: numeric order past single-digit indices and the array-kind guard, read through K-DEMAND.
- * These are paired reading controls, not additions to the eleven-case seam battery. */
+/** wb-j517 cut #2 (refusal #1 U1-U2): numeric order over the indices 0 to 10 (eleven items, plain and behind the probe) and over two blocks at the
+ * indices 2 and 10, and the array-kind guard, read through K-DEMAND. These are paired reading controls, not additions to the eleven-case seam battery. */
 function indexReaderReadings(): unknown {
   const subjects = ["s1", "s2", "s3", "s4", "s5", "s6", "s7", "s8", "s9", "s10", "s11"];
   const request: Request = { subjects, evidence: [], sources: [] };
@@ -1335,6 +1383,116 @@ function probeBoundaryReadings(): unknown {
       const run = runOnce(mutantById(id).factory, caseById("C2"));
       return [id, id === "M78" ? run.document.blocks.length : id === "M79" ? run.document.unmet.length : run.wiring.demand.subjects.length];
     })),
+  };
+}
+/** THE INDEX ORDER's own index keys (wb-j517 cut #3; the census header), ascending: 0, 1 and 2; 10^d - 1, 10^d and 10^d + 1 for every d from 1 to 9
+ * (each decimal digit-count boundary); 2^31 - 1, 2^31 and 2^31 + 1 (the int32 boundary); and the two largest array indices, 2^32 - 3 and 2^32 - 2. */
+const ORDER_KEYS: readonly number[] = [
+  0, 1, 2, 9, 10, 11, 99, 100, 101, 999, 1000, 1001, 9999, 10000, 10001, 99999, 100000, 100001, 999999, 1000000, 1000001, 9999999, 10000000, 10000001,
+  99999999, 100000000, 100000001, 999999999, 1000000000, 1000000001, 2147483647, 2147483648, 2147483649, 4294967293, 4294967294,
+];
+/** THE INDEX ORDER's dense arrays: these counts of items, each array holding one at every index from 0 to its count - 1. */
+const DENSE_COUNTS: readonly number[] = [12, 101, 1000];
+/** wb-j517 cut #3 (refusal #2 U1-U2): THE INDEX ORDER's indexOrder arrays (the census header) - ORDER_KEYS on an array of length 2^32 - 1 behind the
+ * probe, and the DENSE_COUNTS arrays, plain, behind the probe and behind the probe at length 2^32 - 1 - read by presentItems and itemsOf,
+ * K-DEMAND's placement and demand readings (each order as an in-order twin and an out-of-order twin, two neighbouring items swapped) and K-SPLIT's
+ * content, and the ORDER_KEYS blocks through the whole judge. These are paired reading controls, not additions to the eleven-case seam battery. */
+function indexOrderReadings(): unknown {
+  const named = (count: number): string[] => Array.from({ length: count }, (_, index) => `s${index + 1}`);
+  const requestOf = (subjects: readonly string[]): Request => ({
+    subjects,
+    evidence: subjects.map(subject => evidenceOf(subject, `${subject} holds`)),
+    sources: subjects.map(subject => sourceOf(subject)),
+  });
+  const blockOf = (subject: string): Block => ({ subject, text: `source of ${subject}`, evidence: [evidenceOf(subject, `${subject} holds`)] });
+  const wiringOf = (subjects: readonly string[]): Wiring => ({ demand: { owner: "host", subjects }, evidence: [], sources: [], ports: {} });
+  /** A copy of the items with the two at the positions at and at + 1 swapped (the out-of-order twin). */
+  const swapped = <T>(items: readonly T[], at: number): T[] => items.map((item, index) => (index === at ? items[at + 1] : index === at + 1 ? items[at] : item) as T);
+  /** The items placed one at each ORDER_KEYS index, in order, on an array of length 2^32 - 1 behind the probe (defined through the proxy, which has
+   * no defineProperty trap, so placing an item probes nothing): never a plain array of that length, on which a reading that walks the length
+   * would stall the judge instead of reading unreadable:<reading> at the probe (FAIL CLOSED). */
+  const stairs = <T>(items: readonly T[]): T[] => {
+    const array = probed<T>([], INDEX_LIMIT);
+    for (const [rank, key] of ORDER_KEYS.entries()) Reflect.defineProperty(array, String(key), { value: items[rank], writable: true, enumerable: true, configurable: true });
+    return array;
+  };
+  /** The same reading of a plain array and of one behind the probe. */
+  const listings = <R>(read: (probe: boolean) => R): { readonly plain: R; readonly probed: R } => ({ plain: read(false), probed: read(true) });
+  /** An array's listing: its first three own keys, as Reflect.ownKeys lists them. */
+  const listingOf = (array: readonly unknown[]): string[] => Reflect.ownKeys(array).slice(0, 3).map(String);
+  /** A walk of the length (filter visits every index below it), read only on the dense arrays of their own length, where it ends: no control
+   * walks an array of length 2^32 - 1 (with the probe blind to has, as under P06, such a walk would not end). */
+  const walked = (items: readonly unknown[]): string => {
+    try {
+      return `ends:${items.filter(() => true).length}`;
+    } catch (error) {
+      return error instanceof RangeError ? "probed" : "threw";
+    }
+  };
+  /** Three reads of an array's absent indices from at, one each through has, get and own descriptor, without walking its length: behind the probe
+   * the third is probed (HOLE_PROBES), so the reading pins that an array of length 2^32 - 1 sits behind it; on a plain one all three end. */
+  const absentReads = (items: readonly unknown[], at: number): string[] =>
+    [() => Reflect.has(items, String(at)), () => Reflect.get(items, String(at + 1)), () => Reflect.getOwnPropertyDescriptor(items, String(at + 2))].map(read => {
+      try {
+        read();
+        return "ends";
+      } catch (error) {
+        return error instanceof RangeError ? "probed" : "threw";
+      }
+    });
+  const keyed = ORDER_KEYS.map(key => `at:${key}`);
+  const stairSubjects = named(ORDER_KEYS.length);
+  const stairRequest = requestOf(stairSubjects);
+  const stairBlocks = stairSubjects.map(blockOf);
+  const stairCase: Case = { id: "index-order", label: "THE INDEX ORDER's control request", request: stairRequest, providers: {}, expected: "-" };
+  const pairs = ORDER_KEYS.slice(1).map((key, at) => ({ pair: `${ORDER_KEYS[at]}/${key}`, at }));
+  const placedSeam = (at?: number): SeamFactory =>
+    plantedSeam(document => ({ blocks: stairs(at === undefined ? document.blocks : swapped(document.blocks, at)), unmet: document.unmet }));
+  const dense = (count: number): unknown => {
+    const subjects = named(count);
+    const request = requestOf(subjects);
+    const blocks = subjects.map(blockOf);
+    const last = count - 2;
+    const listed = <T>(items: readonly T[], probe: boolean): T[] => (probe ? probed(items, items.length) : [...items]);
+    return {
+      present: {
+        plain: presentItems(subjects).join(","),
+        probed: presentItems(probed(subjects, count)).join(","),
+        oversized: presentItems(probed(subjects, INDEX_LIMIT)).join(","),
+      },
+      holes: { plain: itemsOf(subjects).holes, oversized: itemsOf(probed(subjects, INDEX_LIMIT)).holes },
+      listing: { ...listings(probe => listingOf(listed(subjects, probe))), oversized: listingOf(probed(subjects, INDEX_LIMIT)) },
+      walk: listings(probe => walked(listed(subjects, probe))),
+      absent: absentReads(probed(subjects, INDEX_LIMIT), count),
+      blocks: listings(probe => ({
+        ordered: placementFindings({ blocks: listed(blocks, probe), unmet: [] }, request),
+        swapped: placementFindings({ blocks: listed(swapped(blocks, last), probe), unmet: [] }, request),
+      })),
+      unmet: listings(probe => ({
+        ordered: placementFindings({ blocks: [], unmet: listed(subjects, probe) }, request),
+        swapped: placementFindings({ blocks: [], unmet: listed(swapped(subjects, last), probe) }, request),
+      })),
+      subjects: listings(probe => ({
+        ordered: demandFindings(wiringOf(listed(subjects, probe)), request),
+        swapped: demandFindings(wiringOf(listed(swapped(subjects, last), probe)), request),
+      })),
+      content: listings(probe => contentFindings({ blocks: listed(blocks, probe), unmet: [] }, request)),
+    };
+  };
+  return {
+    stairs: {
+      present: presentItems(stairs(keyed)),
+      holes: itemsOf(stairs(keyed)).holes,
+      listing: listingOf(stairs(keyed)),
+      absent: absentReads(stairs(keyed), 3),
+      blocks: {
+        ordered: placementFindings({ blocks: stairs(stairBlocks), unmet: [] }, stairRequest),
+        swapped: Object.fromEntries(pairs.map(({ pair, at }) => [pair, placementFindings({ blocks: stairs(swapped(stairBlocks, at)), unmet: [] }, stairRequest)])),
+      },
+      content: contentFindings({ blocks: stairs(stairBlocks), unmet: [] }, stairRequest),
+      judge: { ordered: readingsOf(placedSeam(), stairCase), swapped: readingsOf(placedSeam(ORDER_KEYS.length - 2), stairCase) },
+    },
+    dense: Object.fromEntries(DENSE_COUNTS.map(count => [String(count), dense(count)])),
   };
 }
 
@@ -2335,6 +2493,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     probe: probeReadings(),
     indexReader: indexReaderReadings(),
     probeBoundary: probeBoundaryReadings(),
+    indexOrder: indexOrderReadings(),
     erased: readingsOf(mutantById("M71").factory, caseById("C2"))["K-EFFECT"],
     indexBoundary: Object.fromEntries(
       ["4294967294", INDEX_LIKE_KEY, "99999999999999999999", "01"].map(key => [key, shapeFindings({ blocks: [], unmet: Object.assign([] as string[], { [key]: "s3" }) }, DOCUMENT_SHAPE, "document")]),
@@ -2697,6 +2856,19 @@ describe(SUITE, () => {
       "4294967295",
     ]);
     expect(HOLE_PROBES, "the most probes of an absent index key a bounded reading makes of one array").toBe(2);
+    const boundaries = Array.from({ length: 9 }, (_, digits) => 10 ** (digits + 1)).flatMap(power => [power - 1, power, power + 1]);
+    expect(ORDER_KEYS, "THE INDEX ORDER's keys: 0 to 2, every decimal digit-count boundary, the int32 boundary and the two largest indices").toEqual([
+      0,
+      1,
+      2,
+      ...boundaries,
+      2 ** 31 - 1,
+      2 ** 31,
+      2 ** 31 + 1,
+      INDEX_LIMIT - 2,
+      INDEX_LIMIT - 1,
+    ]);
+    expect([ORDER_KEYS.length, DENSE_COUNTS], "THE INDEX ORDER's key count and dense counts").toEqual([35, [12, 101, 1000]]);
     expect(shapeLine(DOCUMENT_SHAPE), "the closed document shape").toBe("{blocks:[{subject:string,text:string,evidence:[{subject:string,claim:string,value:string,evaluatedBy:string}]}],unmet:[string]}");
     expect([CARRIERS, WIRING_CARRIERS, DOCUMENT_NODES, DOCUMENT_OBJECTS, LEAVES, WIRING_NODES, WIRING_OBJECTS], "the carrier tables").toEqual([
       ["listed", "hidden", "symbol", "accessor", "inherited", "proxy", "index-like"],
