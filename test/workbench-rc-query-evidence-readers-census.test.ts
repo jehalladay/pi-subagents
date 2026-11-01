@@ -10,14 +10,17 @@
  *  export are only read, and every plant is made on a copy (a value, a module's or a doc's text in memory, or the drawer the
  *  census passes), never on disk. Cut #2 also escapes docs/10's '>=120' band ('- \>=120:'): unescaped, the '>' opens a block
  *  quote, so the rendered view showed '=120: ...' inside a quote and no '>=120' band (LAYOUT, item, 'a greater-than sign that
- *  opens a quote' pins that form failing closed).
+ *  opens a quote' pins that form failing closed). Cut #3 (the enumerate-the-resolvable form ruling R-B236 binds) changes no
+ *  reader body and no doc: it widens the LAYOUT roster so that every qualifier of a band lead the LAYOUT claim spells is held
+ *  by a falsifier, and pins each band's whole rendered text (REFUSAL #2 CURES below).
  *
  * PINNED READER SET. 'the rows' (12 cases: one per pin of ROWS, each reading its gate plant both ways, its twin and its
  *  control, and pinning WITNESS), 'the anchors' (4 cases: ROWS against the export, FROZEN SHAPE, the title), 'the rosters' (6
  *  cases: every example of every roster form of the six claims is one falsifier, named by it, whose whole reading is pinned,
  *  and each claim is restated here byte-for-byte), 'the residuals' (1 case: R-UNLISTED's quiet row), 'the real tree' (3 cases:
- *  src's views and draw options, docs/10's three rendered bands, today's surfaces) and 'records' (4 cases: every pin, roster,
- *  falsifier and refusal-#1 cure ran).
+ *  src's views and draw options, docs/10's three rendered bands with each band's whole rendered text, today's surfaces) and
+ *  'records' (5 cases: every pin, roster, falsifier and refusal-#1 cure ran, and every refusal-#2 member is a gate mutant its
+ *  line in the export names, whose falsifier ran pinning the reading of the witness that line quotes).
  *
  * THE ROWS (ROWS: a row's label is the requirement text it answers, verbatim from the export; one test per pin). U1, U2 and
  *  RIDER are the description's three enumerated items, F-U1, F-U2 and F-U3 the three members R-B143 folded into the bead's note,
@@ -26,7 +29,9 @@
  *  G10-OBS-INDEX-4294967295, G10-INS-UNICODE-PAYLOAD, G10-INS-UNICODE-TIER) or of refusal #5 (gate-prep-13, g10-gate-s154:
  *  G13-SIZE-MERGED, G13-SIZE-QUOTED, G13-SIZE-HERITAGE, G13-VIEW-ALIAS, G13-OBS-KEY-UNKNOWN-ON-ZERO), and reads it both ways:
  *  the cure reads the plant, and cut #5's reader (BEFORE, vendored below, each copy's differences from cut #5 stated on it)
- *  passes it; the gate's twin is read by both and the unplanted control by neither. The plants on src modules are the gate's
+ *  passes it; the gate's twin is read by both and the unplanted control by neither (U1-A, U2-PAYLOAD, RIDER-FALSE and F-U3-KEY
+ *  read their control in their own case; U1-B, F-U1-MERGED, F-U1-QUOTED, F-U1-HERITAGE and F-U2-ALIAS rely on U1-A's control
+ *  and on 'the real tree' cases: refusal #2 F4). The plants on src modules are the gate's
  *  anchors replaced once in the module's text; the two inspector-tier plants are made through the drawer the census passes (it
  *  draws the gate's line in the default glyph tier only), because the census never writes src. The ACCEPT pins read the
  *  claims: each reader's claim is composed from its rosters and restated byte-for-byte in this header.
@@ -45,20 +50,20 @@
  * THE CLAIMS (test/helpers/rc-query-evidence-readers.ts; each composed from its rosters and held here byte-for-byte):
  * R14 CLAIM: notPlain walks every own string-keyed property of every object, whatever its name (a name, length, a numeric
  *  name); every own string-keyed property of every array but its length (an index, a named property); the data value of every
- *  property it walks, at any depth (64 levels down), and fails closed on each of these forms: an object that is no array whose
- *  prototype is neither Object.prototype nor null (a Map, a Set, a class instance, an object inheriting a value); an array
- *  whose prototype is not Array.prototype, whatever it inherits (the gate's class-instance array, a class-instance array
- *  holding nothing of its own, an array without a prototype); a symbol key (on an object, on an array); on an array, an own key
- *  that is no array index: no canonical numeric string, or one at or above 4294967295 (a name, 01, 4294967295, 4294967296); a
- *  property that is not enumerable (on an object, at an index of an array); an accessor (a getter, a setter, a getter at an
- *  index of an array); a value of type undefined, function, symbol or bigint (undefined, a function, a symbol, a bigint); a
- *  number that is not finite (NaN, an infinity, a negative infinity). It passes null, a string, a finite number and a boolean
- *  (null, a string, an empty string, 0, a negative fraction, true, false); a plain or null-prototype object whose properties
- *  pass (a plain object, a null-prototype object, an empty object, an object with numeric length); a plain array whose
- *  properties pass, its length never read (a plain array, a sparse array, an empty array, nested arrays). It reads a value
- *  through what reflection reports and only the keys the value lists: a proxy that reports another prototype, or answers or
- *  hides a key, is R-UNLISTED, a named residual whose quiet row is the readers census's case 'R-UNLISTED quiet row'. A value
- *  nested deeper than the stack throws, failing a census, never passing it.
+ *  property it walks, at any depth (64 levels down, under a property that is not enumerable), and fails closed on each of these
+ *  forms: an object that is no array whose prototype is neither Object.prototype nor null (a Map, a Set, a class instance, an
+ *  object inheriting a value); an array whose prototype is not Array.prototype, whatever it inherits (the gate's class-instance
+ *  array, a class-instance array holding nothing of its own, an array without a prototype); a symbol key (on an object, on an
+ *  array); on an array, an own key that is no array index: no canonical numeric string, or one at or above 4294967295 (a name,
+ *  01, 4294967295, 4294967296); a property that is not enumerable (on an object, at an index of an array); an accessor (a
+ *  getter, a setter, a getter at an index of an array); a value of type undefined, function, symbol or bigint (undefined, a
+ *  function, a symbol, a bigint); a number that is not finite (NaN, an infinity, a negative infinity). It passes null, a
+ *  string, a finite number and a boolean (null, a string, an empty string, 0, a negative fraction, true, false); a plain or
+ *  null-prototype object whose properties pass (a plain object, a null-prototype object, an empty object, an object with
+ *  numeric length); a plain array whose properties pass, its length never read (a plain array, a sparse array, an empty array,
+ *  nested arrays). It reads a value through what reflection reports and only the keys the value lists: a proxy that reports
+ *  another prototype, or answers or hides a key, is R-UNLISTED, a named residual whose quiet row is the readers census's case
+ *  'R-UNLISTED quiet row'. A value nested deeper than the stack throws, failing a census, never passing it.
  * READINGS CLAIM: stringsOf reads every string a value lists, in order: a string itself (at the top, 64 arrays down); the value
  *  of each own enumerable index of an array, never the index itself (an index, the largest index); the value of each own
  *  enumerable string-keyed property of an object (a data property, a getter); the name of each own enumerable string-keyed
@@ -99,27 +104,40 @@
  * LAYOUT CLAIM: layoutBands reads the bands of the section docsSection (test/helpers/census.ts) binds as docs/10's '## Layout
  *  responsiveness' under its title: that heading rendered exactly once, the section running to the next level-1 or level-2
  *  heading or the end (the real section, a level-1 heading after its list); each item of each list in the section, by its
- *  rendered text, whatever the list's marker (a - item, a * item, a + item, a 1. item, a 1) item); as a band, an item whose
- *  rendered text opens with one of these leads, N and M whole numbers from 1 written without a leading zero, then ': ' and a
- *  description holding no digit (<N columns or <M rows, <N columns, N to M with an en dash and N at most M, >=N, a lead in
- *  bold); as prose and no band, an item whose rendered text holds no digit (the resize item alone, a note with a colon). It
- *  fails closed on a section docsSection refuses (a missing heading, a heading rendered twice, the heading under another
- *  parent, a code fence hiding a heading line); a section that carries HTML (a comment, a tag); a block in the section that is
- *  no list (a paragraph, a code block, a heading, a blockquote, a table); an item holding a digit outside a lead it reads (a
- *  lead it cannot read, a range from more to less, a zero, a leading zero, a greater-than-or-equal sign, a greater-than sign
- *  that opens a quote, a band nested under another band, a digit in a band's description, no space after the colon).
+ *  rendered text, whatever the list's marker (a - item, a * item, a + item, a 1. item, a 1) item); as a band holding its item's
+ *  whole rendered text, an item whose rendered text opens with one of these leads, N and M whole numbers from 1 written in
+ *  decimal digits alone and without a leading zero, then ': ' and a description holding no digit (<N columns or <M rows, <N
+ *  columns, N to M with an en dash and N at most M, >=N, a lead in bold, an N of four digits); as prose and no band, an item
+ *  whose rendered text holds no digit (the resize item alone, a note with a colon). It fails closed on a section docsSection
+ *  refuses (a missing heading, a heading rendered twice, the heading under another parent, a code fence hiding a heading line);
+ *  a section that carries HTML (a comment, a tag); a block in the section that is no list (a paragraph, a code block, a
+ *  heading, a blockquote, a table); an item holding a digit outside a lead it reads (a lead it cannot read, a range from more
+ *  to less, a zero, a leading zero, a greater-than-or-equal sign, a greater-than sign that opens a quote, a band nested under
+ *  another band, a digit in a band's description, no space after the colon); an item whose lead is a band lead with a
+ *  comparison sign dropped, replaced or spaced (> in place of >=, a space after >=, a space inside >=, no < before the column
+ *  count, no < before the row count, a space after the first <, a space after the second <, a less-than-or-equal sign); an item
+ *  whose lead is a below lead with a word or a space of it changed (column in the singular, row in the singular, cols in place
+ *  of columns, and in place of or, a comma in place of or, no space before columns, no space before or, no space after or, no
+ *  space before rows); an item whose lead is a range lead with its en dash replaced, spaced or dropped (a hyphen, an em dash, a
+ *  space before the en dash, a space after the en dash, no dash between the counts); an item whose lead is a band lead with a
+ *  count that is no whole number from 1 written in decimal digits alone without a leading zero (a zero wherever a count stands,
+ *  a leading zero wherever a count stands, a decimal point wherever a count stands, a thousands separator, an exponent, a plus
+ *  sign); an item whose text up to its first ': ' is a band lead with more around it (a word before each lead, a word after
+ *  each lead, a space before the colon of each lead); an item holding a digit after its first ': ' (a note over 160 columns, a
+ *  note whose only digit is a zero, a band lead with a digit after a word of its description, a band lead whose description's
+ *  only digit is a zero).
  * TIER CLAIM: tierDraws draws every declared tier of the inspector: the default tier, no draw option given (at 120x40, at every
  *  width and row count); each draw option sizeMembers reads that is optional with its type spelled boolean, absent, false and
  *  true, in every combination (the real ascii and panes, a third option); each combination at one width inside every band
  *  layoutBands reads, the band's lowest stated column count or one below the column bound it states, in band order (the real
  *  three bands, a fourth band, a band listed first, two bands sharing a width); each width at the census's row count and at one
- *  below every row bound a band states, ascending (the real row bound, no row bound, a row bound at the census's row count);
- *  each draw named <width>x<rows>, then per option in name order -<option> for false or +<option> for true, the first option
- *  varying fastest (the real 54 draws). It fails closed on a draw option that is neither optional with its type spelled boolean
- *  nor required with its type spelled number and named width or rows (a union type, a required number of another name, a
- *  required boolean, a width spelled string, an optional width, an optional rows, a boolean spelled with undefined); a module
- *  that declares no width or no rows draw option (no width, no rows); anything sizeMembers or layoutBands leave unread (a
- *  method member, a band lead it cannot read, a refused section); no band at all (a section with no band item).
+ *  below every row bound a band states, ascending (the real row bound, no row bound, a row bound at the census's row count, a
+ *  one-digit row bound); each draw named <width>x<rows>, then per option in name order -<option> for false or +<option> for
+ *  true, the first option varying fastest (the real 54 draws). It fails closed on a draw option that is neither optional with
+ *  its type spelled boolean nor required with its type spelled number and named width or rows (a union type, a required number
+ *  of another name, a required boolean, a width spelled string, an optional width, an optional rows, a boolean spelled with
+ *  undefined); a module that declares no width or no rows draw option (no width, no rows); anything sizeMembers or layoutBands
+ *  leave unread (a method member, a band lead it cannot read, a refused section); no band at all (a section with no band item).
  *
  * REFUSAL #1 CURES (refusal #1 on cut #1 571838b3, gate-prep-14, g10-gate-s159, O:1561; CURES below, each falsifier must run):
  *  U1 (an object's own length) R14/object-keys/length. U2 (stringsOf's canonical-numeric-key handling) READINGS/array-key/01
@@ -132,6 +150,26 @@
  *  extended interface. F2 TIERS/required/no rows. F3 SIZE/fields/a member an extended interface declares (every SIZE falsifier
  *  pins all four fields of every member). F5: each vendored reader below states its differences from cut #5.
  *
+ * REFUSAL #2 CURES (refusal #2 on cut #2 b7576690, gate-prep-18, g10-gate-s167, O:1621; ruling R-B236 binds cut #3 to the
+ *  enumerate-the-resolvable form; REFUSAL2 below, each item held to the line its head leads in the export's notes): each gate
+ *  mutant the item's line names has the falsifier the seat measured killing it. The kills are measured outside this census, by
+ *  the mutant runs the delivery note records; this census holds that each such falsifier ran and pins the reading of the
+ *  witness the line quotes (for U1 and U2, the quoted docs/10 witness's lead, unread). U1 (the band-lead
+ *  qualifiers): lb-from-gt LAYOUT/sign/> in place of >=, lb-from-space LAYOUT/sign/a space after >=, lb-range-anydash
+ *  LAYOUT/dash/a hyphen, lb-below-lt LAYOUT/sign/no < before the column count, lb-below-rows-lt LAYOUT/sign/no < before the
+ *  row count, lb-columns-singular LAYOUT/words/column in the singular, lb-rows-singular LAYOUT/words/row in the singular,
+ *  lb-count-decimal LAYOUT/count/a decimal point wherever a count stands. U2 (a digit after the colon): lb-digit-leadonly
+ *  LAYOUT/digits/a note over 160 columns. F1 (a band's text): lb-text-leadonly LAYOUT/binding/the real section - every LAYOUT
+ *  falsifier pins each band's whole rendered text, and so does the real-tree docs/10 case. U3 (the Acceptance clause): the
+ *  LAYOUT claim spells no qualifier of a band lead that no falsifier holds; beyond the nine, the sign, words, dash, count,
+ *  bounds and digits forms hold each qualifier dropped, replaced or spaced, at every place it stands, and 'an N of four
+ *  digits' holds the whole-number words from the reading side. F2 (a value under a property that is not enumerable):
+ *  np-nonenum-norecurse R14/depth/under a property that is not enumerable, the gate's own plant. F3 (a pin's witness anchored
+ *  only by its literal): every pin whose witness reads its plant under the cure and under cut #5's reader asserts the two
+ *  readings differ, so a pin witnessing its twin reds. F4: THE ROWS above names where each pin reads its control. The
+ *  tier claim shares R13/D1-F3, so its words got the same reading: TIERS/rows/a one-digit row bound holds 'ascending' as a
+ *  numeric order, and the TIERS case holds 'in name order' for a size reading that lists its options backwards.
+ *
  * NOT CLAIMED. An import, a namespace or a value declared under the name InspectorView or InspectorSize is NOT CLAIMED by this
  *  census: declaredViews and sizeMembers count only top-level interfaces, classes, enums and type aliases. A band whose column
  *  count is spelled in words reads as prose and is NOT CLAIMED by this census.
@@ -141,7 +179,9 @@
  *  or either reader reads a proxy otherwise.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, held to the export's member counts; every pin
- *  ran to its witness (WITNESS), and every example of every roster form ran its falsifier.
+ *  ran to its witness (WITNESS), and every example of every roster form ran its falsifier. REFUSAL2 pins
+ *  `${id}:${members.length}` as a literal (U1:8, U2:1, F1:1, F2:1), held to the mutant ids its items' lines in the export name,
+ *  and its members are every gate mutant refusal #2's record in the export names (its verdict line to its BIND-rows line).
  */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -290,11 +330,14 @@ const WITNESSED = new Map<string, string>();
 function witnessed(pin: string, witness: unknown): void {
   const text = JSON.stringify(witness);
   expect(text, `${pin}'s witness`).toBe(WITNESS[pin]);
+  if (typeof witness === "object" && witness !== null && "cured" in witness && "before" in witness)
+    expect(JSON.stringify(witness.cured), `${pin}: the cure reads its plant apart from cut #5's reader (refusal #2 F3)`).not.toBe(JSON.stringify(witness.before));
   WITNESSED.set(pin, text);
 }
 const ROSTER_RAN = new Set<string>();
-/** Every falsifier that ran, as `<roster>/<form id>/<example>`. */
+/** Every falsifier that ran, as `<roster>/<form id>/<example>`, and the reading it pins. */
 const FALSIFIED = new Set<string>();
+const EXPECTED = new Map<string, unknown>();
 
 // ------------------------------------------------------------------------------------------------------- outside anchors
 const isRecord = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === "object" && !Array.isArray(value);
@@ -607,6 +650,7 @@ function misreadings<I, E>(roster: string, falsifiers: Falsifiers<I, E>, read: (
   return Object.entries(falsifiers).flatMap(([id, plants]) =>
     plants.flatMap(([example, input, expected]) => {
       FALSIFIED.add(`${roster}/${id}/${example}`);
+      EXPECTED.set(`${roster}/${id}/${example}`, expected);
       const reading = JSON.stringify(read(input));
       return reading === JSON.stringify(expected) ? [] : [`${id}/${example}: ${reading}`];
     }),
@@ -626,7 +670,10 @@ const NOT_PLAIN_WALK_FALSIFIERS: Falsifiers<unknown, readonly string[]> = {
     ["an index", [map()], ["plant.0: no plain object"]],
     ["a named property", Object.assign(["query"], { verdict: map() }), ["plant.verdict: a named property on an array", "plant.verdict: no plain object"]],
   ],
-  depth: [["64 levels down", nested(map(), 64), [`plant${".nested.0".repeat(32)}: no plain object`]]],
+  depth: [
+    ["64 levels down", nested(map(), 64), [`plant${".nested.0".repeat(32)}: no plain object`]],
+    ["under a property that is not enumerable", Object.defineProperty({}, "verdict", { value: new Map([["v", "FALSE"]]), enumerable: false }), ["plant.verdict: not enumerable", "plant.verdict: no plain object"]],
+  ],
 };
 /** One falsifier per example of notPlain's fail-closed forms, each failing closed with its form's message only. */
 const NOT_PLAIN_FALSIFIERS: Falsifiers<unknown, readonly string[]> = {
@@ -939,26 +986,51 @@ const BAND_BELOW = "- <80 columns or <20 rows: single-column compact tree; detai
 const BAND_80 = `- 80${EN_DASH}119: two-pane tree + details or timeline summary; scrollable pane cap.\n`;
 const BAND_120 = "- \\>=120: left hierarchy, center graph/timeline, right details when viable; cap width and height.\n";
 const FOURTH = "\\>=160: four panes when viable.\n";
+/** The real bands' descriptions as docs/10 writes them, and each real band's whole rendered text (refusal #2 F1). */
+const BELOW_DESC = "single-column compact tree; details as subview, no side-by-side graph.";
+const FROM_80_DESC = "two-pane tree + details or timeline summary; scrollable pane cap.";
+const FROM_120_DESC = "left hierarchy, center graph/timeline, right details when viable; cap width and height.";
+const FOURTH_DESC = "four panes when viable.";
+const BELOW_TEXT = `<80 columns or <20 rows: ${BELOW_DESC}`;
+const FROM_80_TEXT = `80${EN_DASH}119: ${FROM_80_DESC}`;
+const FROM_120_TEXT = `>=120: ${FROM_120_DESC}`;
+const LE = String.fromCodePoint(0x2264);
+const EM_DASH = String.fromCodePoint(0x2014);
 const docs = (old: string, replacement: string): string => once(DOCS10_TEXT, old, replacement);
 /** docs/10 with `text` inserted after the >=120 item, or at the end of the section. */
 const after120 = (text: string): string => docs(BAND_120, `${BAND_120}${text}`);
 const atEnd = (text: string): string => docs("\n## Navigation", `\n${text}\n## Navigation`);
 const NO_BANDS = DOCS10_TEXT.replace(BAND_BELOW, "").replace(BAND_80, "").replace(BAND_120, "");
-/** A bands reading: each band as `<lead>=<from>/<columns below>/<rows below>`, and what is unread. */
-const bandsView = (reading: ModuleReading<LayoutBand>): { readonly bands: string[]; readonly unread: readonly string[] } => ({
-  bands: reading.members.map(band => `${band.text.split(": ")[0] ?? ""}=${band.from ?? ""}/${band.columnsBelow ?? ""}/${band.rowsBelow ?? ""}`),
+/** A bands reading: each band as `<its whole rendered text>=<from>/<columns below>/<rows below>`, and what is unread. */
+interface LayoutReading {
+  readonly bands: readonly string[];
+  readonly unread: readonly string[];
+}
+const bandsView = (reading: ModuleReading<LayoutBand>): LayoutReading => ({
+  bands: reading.members.map(band => `${band.text}=${band.from ?? ""}/${band.columnsBelow ?? ""}/${band.rowsBelow ?? ""}`),
   unread: reading.unread,
 });
-const BELOW_80 = "<80 columns or <20 rows=/80/20";
-const FROM_80 = `80${EN_DASH}119=80//`;
-const FROM_120 = ">=120=120//";
-const FROM_160 = ">=160=160//";
+const BELOW_80 = `${BELOW_TEXT}=/80/20`;
+const FROM_80 = `${FROM_80_TEXT}=80//`;
+const FROM_120 = `${FROM_120_TEXT}=120//`;
+const FROM_160 = `>=160: ${FOURTH_DESC}=160//`;
 const REAL_BANDS = [BELOW_80, FROM_80, FROM_120];
 const digit = (lead: string): string => `docs/10: "${lead}" holds a digit outside a band lead the reader reads`;
+/** A rendered lead as docs/10 writes it: a lead opening with '>' is escaped, or the '>' would open a block quote. */
+const written = (lead: string): string => (lead.startsWith(">") ? `\\${lead}` : lead);
+/** Each rendered lead as an item `- <lead>: four panes when viable.` after the >=120 item: the real bands, each lead unread. */
+const added = (...leads: readonly string[]): readonly [string, LayoutReading] => [
+  after120(leads.map(lead => `- ${written(lead)}: ${FOURTH_DESC}\n`).join("")),
+  { bands: REAL_BANDS, unread: leads.map(digit) },
+];
+/** The below band's lead rendered as `lead`: the other two bands, the below item unread. */
+const belowAs = (lead: string): readonly [string, LayoutReading] => [docs("- <80 columns or <20 rows:", `- ${lead}:`), { bands: [FROM_80, FROM_120], unread: [digit(lead)] }];
+/** The >=120 band's lead rendered as `lead`: the other two bands, the >=120 item unread. */
+const fromAs = (lead: string): readonly [string, LayoutReading] => [docs("- \\>=120:", `- ${written(lead)}:`), { bands: [BELOW_80, FROM_80], unread: [digit(lead)] }];
 const block = (kind: string): string => `docs/10: a ${kind} block in the section`;
 const HTML = "docs/10: the section carries HTML";
 /** One falsifier per example of layoutBands' forms: a docs/10 text and the whole reading. */
-const LAYOUT_FALSIFIERS: Falsifiers<string, { readonly bands: readonly string[]; readonly unread: readonly string[] }> = {
+const LAYOUT_FALSIFIERS: Falsifiers<string, LayoutReading> = {
   binding: [
     ["the real section", DOCS10_TEXT, { bands: REAL_BANDS, unread: [] }],
     ["a level-1 heading after its list", atEnd(`# Appendix\n\n- ${FOURTH}`), { bands: REAL_BANDS, unread: [] }],
@@ -972,10 +1044,11 @@ const LAYOUT_FALSIFIERS: Falsifiers<string, { readonly bands: readonly string[];
   ],
   bands: [
     ["<N columns or <M rows", DOCS10_TEXT, { bands: REAL_BANDS, unread: [] }],
-    ["<N columns", docs("- <80 columns or <20 rows:", "- <80 columns:"), { bands: ["<80 columns=/80/", FROM_80, FROM_120], unread: [] }],
-    ["N to M with an en dash and N at most M", docs(`- 80${EN_DASH}119:`, `- 80${EN_DASH}80:`), { bands: [BELOW_80, `80${EN_DASH}80=80//`, FROM_120], unread: [] }],
-    [">=N", docs("- \\>=120:", "- \\>=1:"), { bands: [BELOW_80, FROM_80, ">=1=1//"], unread: [] }],
+    ["<N columns", docs("- <80 columns or <20 rows:", "- <80 columns:"), { bands: [`<80 columns: ${BELOW_DESC}=/80/`, FROM_80, FROM_120], unread: [] }],
+    ["N to M with an en dash and N at most M", docs(`- 80${EN_DASH}119:`, `- 80${EN_DASH}80:`), { bands: [BELOW_80, `80${EN_DASH}80: ${FROM_80_DESC}=80//`, FROM_120], unread: [] }],
+    [">=N", docs("- \\>=120:", "- \\>=1:"), { bands: [BELOW_80, FROM_80, `>=1: ${FROM_120_DESC}=1//`], unread: [] }],
     ["a lead in bold", docs("- \\>=120:", "- **\\>=120**:"), { bands: REAL_BANDS, unread: [] }],
+    ["an N of four digits", docs("- \\>=120:", "- \\>=1000:"), { bands: [BELOW_80, FROM_80, `>=1000: ${FROM_120_DESC}=1000//`], unread: [] }],
   ],
   prose: [
     ["the resize item alone", NO_BANDS, { bands: [], unread: [] }],
@@ -1021,6 +1094,53 @@ const LAYOUT_FALSIFIERS: Falsifiers<string, { readonly bands: readonly string[];
     ["a digit in a band's description", docs("- \\>=120: left hierarchy", "- \\>=120: 3 panes, left hierarchy"), { bands: [BELOW_80, FROM_80], unread: [digit(">=120")] }],
     ["no space after the colon", docs("- \\>=120: left hierarchy", "- \\>=120:left hierarchy"), { bands: [BELOW_80, FROM_80], unread: [digit(">=120:left hierarchy, center graph/timeline, right details when viable; cap width and height.")] }],
   ],
+  sign: [
+    ["> in place of >=", ...added(">160")],
+    ["a space after >=", ...fromAs(">= 120")],
+    ["a space inside >=", ...fromAs("> =120")],
+    ["no < before the column count", ...added("160 columns")],
+    ["no < before the row count", ...belowAs("<80 columns or 20 rows")],
+    ["a space after the first <", ...belowAs("< 80 columns or <20 rows")],
+    ["a space after the second <", ...belowAs("<80 columns or < 20 rows")],
+    ["a less-than-or-equal sign", ...belowAs(`${LE}80 columns or <20 rows`)],
+  ],
+  words: [
+    ["column in the singular", ...belowAs("<80 column or <20 rows")],
+    ["row in the singular", ...belowAs("<80 columns or <20 row")],
+    ["cols in place of columns", ...belowAs("<80 cols or <20 rows")],
+    ["and in place of or", ...belowAs("<80 columns and <20 rows")],
+    ["a comma in place of or", ...belowAs("<80 columns, <20 rows")],
+    ["no space before columns", ...belowAs("<80columns or <20 rows")],
+    ["no space before or", ...belowAs("<80 columnsor <20 rows")],
+    ["no space after or", ...belowAs("<80 columns or<20 rows")],
+    ["no space before rows", ...belowAs("<80 columns or <20rows")],
+  ],
+  dash: [
+    ["a hyphen", ...added("160-199")],
+    ["an em dash", ...added(`160${EM_DASH}199`)],
+    ["a space before the en dash", ...added(`160 ${EN_DASH}199`)],
+    ["a space after the en dash", ...added(`160${EN_DASH} 199`)],
+    ["no dash between the counts", ...added("12")],
+  ],
+  count: [
+    ["a zero wherever a count stands", ...added("<0 columns", "<80 columns or <0 rows", `0${EN_DASH}119`, `80${EN_DASH}0`, ">=0")],
+    ["a leading zero wherever a count stands", ...added("<080 columns", "<80 columns or <020 rows", `080${EN_DASH}119`, `80${EN_DASH}0119`, ">=0120")],
+    ["a decimal point wherever a count stands", ...added("<80.5 columns", "<80 columns or <20.5 rows", `160.5${EN_DASH}199`, `160${EN_DASH}199.5`, ">=160.5")],
+    ["a thousands separator", ...added(">=1,000")],
+    ["an exponent", ...added(">=1e3")],
+    ["a plus sign", ...added(">=+160")],
+  ],
+  bounds: [
+    ["a word before each lead", ...added("Under <160 columns", `From 160${EN_DASH}199`, "From >=160")],
+    ["a word after each lead", ...added("<160 columns wide", `160${EN_DASH}199 columns`, ">=160 columns")],
+    ["a space before the colon of each lead", ...added("<160 columns ", `160${EN_DASH}199 `, ">=160 ")],
+  ],
+  digits: [
+    ["a note over 160 columns", after120("- Note: over 160 columns, four panes.\n"), { bands: REAL_BANDS, unread: [digit("Note")] }],
+    ["a note whose only digit is a zero", after120("- Note: 0 panes fit.\n"), { bands: REAL_BANDS, unread: [digit("Note")] }],
+    ["a band lead with a digit after a word of its description", docs("- \\>=120: left hierarchy,", "- \\>=120: left hierarchy, 3 panes,"), { bands: [BELOW_80, FROM_80], unread: [digit(">=120")] }],
+    ["a band lead whose description's only digit is a zero", docs("- \\>=120: left hierarchy,", "- \\>=120: left hierarchy, 0 extra panes,"), { bands: [BELOW_80, FROM_80], unread: [digit(">=120")] }],
+  ],
 };
 /** The ids tierDraws names, as a grid: every width, then every row count, then every option suffix (an independent literal). */
 const grid = (widths: readonly number[], heights: readonly number[], suffixes: readonly string[]): string[] => widths.flatMap(width => heights.flatMap(height => suffixes.map(suffix => `${width}x${height}${suffix}`)));
@@ -1060,6 +1180,7 @@ const TIER_FALSIFIERS: Falsifiers<readonly [string, string], { readonly ids: rea
     ["the real row bound", [SIZE_DECLARED, DOCS10_TEXT], REAL_TIERS],
     ["no row bound", [SIZE_DECLARED, docs("- <80 columns or <20 rows:", "- <80 columns:")], { ids: grid(WIDTHS, [ROWS_DRAWN], SUFFIXES), unread: [] }],
     ["a row bound at the census's row count", [SIZE_DECLARED, docs("- <80 columns or <20 rows:", "- <80 columns or <41 rows:")], { ids: grid(WIDTHS, [ROWS_DRAWN], SUFFIXES), unread: [] }],
+    ["a one-digit row bound", [SIZE_DECLARED, docs("- <80 columns or <20 rows:", "- <80 columns or <10 rows:")], { ids: grid(WIDTHS, [9, ROWS_DRAWN], SUFFIXES), unread: [] }],
   ],
   ids: [["the real 54 draws", [SIZE_DECLARED, DOCS10_TEXT], REAL_TIERS]],
   "option-kind": [
@@ -1155,6 +1276,8 @@ describe("the rosters: every example of every claim form holds one falsifier, an
       }), "every falsifier draws as it pins").toEqual([]);
     expect(Object.values(TIER_FALSIFIERS).flatMap(plants => plants.flatMap(([example, input]) => tierView(input).misnamed.map(id => `${example}: ${id}`))), "every draw is at the size its id names").toEqual([]);
     expect(CURED_DRAWS().members.find(draw => draw.id === "120x40")?.size, "the default draw gives no option").toEqual({ width: 120, rows: 40 });
+    const listedBackwards: ModuleReading<SizeMember> = { members: [...sizeMembers(INSPECTOR_TEXT, INSPECTOR).members].reverse(), unread: [] };
+    expect(tierDraws(listedBackwards, layoutBands(DOCS10_TEXT), ROWS_DRAWN).members.map(draw => draw.id), "options in name order, whatever order the size reading lists them").toEqual(REAL_IDS);
     expect(headerClaim("TIER CLAIM:"), "the header restates the claim").toBe(TIER_CLAIM);
     ROSTER_RAN.add("TIERS");
   });
@@ -1212,6 +1335,7 @@ describe("the real tree", () => {
       [],
     ]);
     expect(bands.members.map(band => band.text.split(": ")[0]), "each band's rendered lead").toEqual(["<80 columns or <20 rows", `80${EN_DASH}119`, ">=120"]);
+    expect(bands.members.map(band => band.text), "each band's whole rendered text (refusal #2 F1)").toEqual([BELOW_TEXT, FROM_80_TEXT, FROM_120_TEXT]);
   });
   it("today's surfaces read clean under the cure: the topology passes notPlain, and its keys are read", () => {
     const topology = topologyOf();
@@ -1234,6 +1358,57 @@ const CURES: readonly (readonly [string, readonly string[]])[] = [
   ["F2", ["TIERS/required/no rows"]],
   ["F3", ["SIZE/fields/a member an extended interface declares"]],
 ];
+/** Refusal #2's unmet items and its findings with a gate mutant (refusal #2 on cut #2 b7576690, gate-prep-18, g10-gate-s167,
+ * O:1621), each by the head of its line in the export's notes. Each member: a gate mutant the line names, the falsifier the seat
+ * measured killing it (`<roster>/<form id>/<example>`; the kill is measured outside this census, by the mutant runs the delivery
+ * note records), the witness the line quotes, and the reading of it the falsifier pins (for U1 and U2 derived from the quote). */
+interface Refusal2Member {
+  readonly mutant: string;
+  readonly cure: string;
+  readonly quote: string;
+  readonly reading: string;
+}
+const REFUSAL2: readonly { readonly id: string; readonly lead: string; readonly members: readonly Refusal2Member[] }[] = [
+  {
+    id: "U1",
+    lead: "U1-LOW-CONFIRMED-RECORD-HONESTY-R514-R515-R668-LAYOUT-LEAD-GRAMMAR-QUALIFIERS-WIDER-THAN-PINS (FAIL-OPEN, 8 members)",
+    members: [
+      { mutant: "lb-from-gt", cure: "LAYOUT/sign/> in place of >=", quote: "- \\>160:", reading: digit(">160") },
+      { mutant: "lb-from-space", cure: "LAYOUT/sign/a space after >=", quote: "- \\>= 120:", reading: digit(">= 120") },
+      { mutant: "lb-range-anydash", cure: "LAYOUT/dash/a hyphen", quote: "- 160-199:", reading: digit("160-199") },
+      { mutant: "lb-below-lt", cure: "LAYOUT/sign/no < before the column count", quote: "- 160 columns:", reading: digit("160 columns") },
+      { mutant: "lb-below-rows-lt", cure: "LAYOUT/sign/no < before the row count", quote: "<80 columns or 20 rows", reading: digit("<80 columns or 20 rows") },
+      { mutant: "lb-columns-singular", cure: "LAYOUT/words/column in the singular", quote: "<80 column or <20 rows", reading: digit("<80 column or <20 rows") },
+      { mutant: "lb-rows-singular", cure: "LAYOUT/words/row in the singular", quote: "<80 columns or <20 row", reading: digit("<80 columns or <20 row") },
+      { mutant: "lb-count-decimal", cure: "LAYOUT/count/a decimal point wherever a count stands", quote: "160.5 (en dash) 199", reading: digit(`160.5${EN_DASH}199`) },
+    ],
+  },
+  {
+    id: "U2",
+    lead: "U2-LOW-CONFIRMED-RECORD-HONESTY-R514-R515-LAYOUT-PROSE-DIGIT-AFTER-COLON-WIDER-THAN-PINS (FAIL-OPEN, 1 member)",
+    members: [{ mutant: "lb-digit-leadonly", cure: "LAYOUT/digits/a note over 160 columns", quote: "- Note: over 160 columns, four panes.", reading: digit("Note") }],
+  },
+  {
+    id: "F1",
+    lead: "- F1 LOW RIDES: [PREP 'LOW RIDES (names-only projection)'; rides this bead's own cut #3]",
+    members: [{ mutant: "lb-text-leadonly", cure: "LAYOUT/binding/the real section", quote: "its item's rendered text", reading: FROM_120 }],
+  },
+  {
+    id: "F2",
+    lead: "- F2 INFO: [PREP 'INFO (verdict-equivalent, the F4 class)']",
+    members: [{ mutant: "np-nonenum-norecurse", cure: "R14/depth/under a property that is not enumerable", quote: "plant.verdict: no plain object", reading: "plant.verdict: no plain object" }],
+  },
+];
+/** A U1/U2 witness as its line quotes it, read as the lead of its item: the list marker, the escape and the colon dropped. */
+const witnessLead = (quote: string): string => (quote.replace(/^- /, "").replace(/^\\>/, ">").replace(" (en dash) ", EN_DASH).split(":")[0] ?? "");
+/** The head of a line of refusal #2's record: an unmet item's text before its first ': ', a finding's text through its first ']'. */
+const headOf = (line: string): string => (line.startsWith("- F") ? line.slice(0, line.indexOf("]") + 1) : (line.split(": ")[0] ?? ""));
+/** Refusal #2's record in the export's notes: from its verdict line to the line naming the rows written before its note. */
+const RECORD2_FROM = "GATE VERDICT wb-km7q.10: REFUSED (RESPIN)";
+const RECORD2_AT = "refusal #2 on cut #2";
+const RECORD2_TO = "BIND rows written before this note: M:43568";
+/** The gate mutants a line names (`lb-<words>` or `np-<words>`), in order, each once. */
+const mutantsOf = (line: string): string[] => [...new Set(line.match(/\b(?:lb|np)-[a-z]+(?:-[a-z]+)*/g) ?? [])];
 /** Every example of every roster form, as `<roster>/<form id>/<example>`. */
 const ROSTERS: readonly (readonly [string, readonly ReaderForm[]])[] = [
   ["R14", [...NOT_PLAIN_WALK, ...NOT_PLAIN_FORMS, ...NOT_PLAIN_PASS]],
@@ -1258,5 +1433,26 @@ describe("records", () => {
   it("every refusal-#1 cure ran", () => {
     expect(CURES.flatMap(([item, cures]) => cures.filter(cure => !FALSIFIED.has(cure)).map(cure => `${item}: ${cure}`))).toEqual([]);
     expect(CURES.map(([item]) => item)).toEqual(["U1", "U2", "U3", "U4", "U5", "U6", "U7", "F1", "F2", "F3"]);
+  });
+  it("every refusal-#2 member is a gate mutant its line in the export names, whose falsifier ran pinning the witness the line quotes", () => {
+    const notes = exportRow().notes.split("\n");
+    expect(
+      REFUSAL2.map(({ id, lead }) => [id, mutantsOf(notes.find(line => line.startsWith(lead)) ?? "")]),
+      "the mutants each item's line names",
+    ).toEqual(REFUSAL2.map(({ id, members }) => [id, members.map(({ mutant }) => mutant)]));
+    expect(REFUSAL2.map(({ id, lead }) => [id, headOf(notes.find(line => line.startsWith(lead)) ?? "")]), "each lead is its line's whole head").toEqual(REFUSAL2.map(({ id, lead }) => [id, lead]));
+    expect(REFUSAL2.flatMap(({ id, members }) => members.filter(({ cure }) => !FALSIFIED.has(cure)).map(({ mutant, cure }) => `${id} ${mutant}: ${cure}`)), "every cure ran").toEqual([]);
+    const lineOf = (lead: string): string => notes.find(line => line.startsWith(lead)) ?? "";
+    expect(REFUSAL2.flatMap(({ id, lead, members }) => members.filter(({ quote }) => !lineOf(lead).includes(`'${quote}'`)).map(({ mutant }) => `${id} ${mutant}`)), "each witness is quoted on its line").toEqual([]);
+    expect(
+      REFUSAL2.filter(({ id }) => id.startsWith("U")).flatMap(({ id, members }) => members.filter(({ quote, reading }) => reading !== digit(witnessLead(quote))).map(({ mutant }) => `${id} ${mutant}`)),
+      "each U1/U2 reading is the quoted witness's lead, unread",
+    ).toEqual([]);
+    expect(REFUSAL2.flatMap(({ id, members }) => members.filter(({ cure, reading }) => !JSON.stringify(EXPECTED.get(cure) ?? null).includes(JSON.stringify(reading))).map(({ mutant, cure }) => `${id} ${mutant}: ${cure}`)), "each cure pins its member's reading").toEqual([]);
+    expect(REFUSAL2.map(({ id, members }) => `${id}:${members.length}`), "REFUSAL2's frozen shape").toEqual(["U1:8", "U2:1", "F1:1", "F2:1"]);
+    const from = notes.findIndex(line => line.startsWith(RECORD2_FROM) && line.includes(RECORD2_AT));
+    const to = notes.findIndex(line => line.startsWith(RECORD2_TO));
+    const named = from < 0 || to < from ? [] : [...new Set(notes.slice(from, to + 1).flatMap(mutantsOf))].sort();
+    expect(named, "every gate mutant refusal #2's record names is a member, and no other").toEqual(REFUSAL2.flatMap(({ members }) => members.map(({ mutant }) => mutant)).sort());
   });
 });
