@@ -440,16 +440,20 @@
             },
             "wholeControl": {
               "read": [
+                "src/zz-deep/zz-link.ts",
                 "src/zz-link.ts",
                 "zz-root-link.mjs"
               ],
               "findings": [
+                "src/zz-deep/zz-link.ts:1 control-directive",
                 "src/zz-link.ts:1 control-directive",
                 "zz-root-link.mjs:1 control-directive"
               ],
               "whole": false,
               "links": [
                 "examples",
+                "src/zz-deep/zz-link.ts",
+                "src/zz-deep/zz-linked-dir",
                 "src/zz-link.ts",
                 "src/zz-linked-dir",
                 "zz-root-link.mjs"
@@ -539,7 +543,8 @@
               "not-data:observed_versions": "not-data:observed_versions",
               "not-data:min_interval": "not-data:min_interval",
               "not-data:actuator_id": "not-data:actuator_id",
-              "not-data:controller_id": "not-data:controller_id"
+              "not-data:controller_id": "not-data:controller_id",
+              "not-data:requested_range:undefined-element": "not-data:requested_range"
             },
             "hosts": {
               "honest": [],
@@ -558,7 +563,8 @@
                 "malformed-applied:not-data:observed_versions",
                 "malformed-applied:not-data:min_interval",
                 "malformed-applied:not-data:actuator_id",
-                "malformed-applied:not-data:controller_id"
+                "malformed-applied:not-data:controller_id",
+                "malformed-applied:not-data:requested_range:undefined-element"
               ],
               "lax-timer": [
                 "malformed-applied:missing:controller_id",
@@ -575,7 +581,8 @@
                 "malformed-applied:not-data:observed_versions",
                 "malformed-applied:not-data:min_interval",
                 "malformed-applied:not-data:actuator_id",
-                "malformed-applied:not-data:controller_id"
+                "malformed-applied:not-data:controller_id",
+                "malformed-applied:not-data:requested_range:undefined-element"
               ],
               "lax-arbiter-timer": [
                 "malformed-applied:missing:controller_id",
@@ -592,7 +599,8 @@
                 "malformed-applied:not-data:observed_versions",
                 "malformed-applied:not-data:min_interval",
                 "malformed-applied:not-data:actuator_id",
-                "malformed-applied:not-data:controller_id"
+                "malformed-applied:not-data:controller_id",
+                "malformed-applied:not-data:requested_range:undefined-element"
               ]
             }
           }
@@ -630,6 +638,18 @@
               "misnamed-apply": [
                 "arbiter-applied-nothing"
               ],
+              "extended-apply": [
+                "arbiter-applied-nothing"
+              ],
+              "prefixed-apply": [
+                "arbiter-applied-nothing"
+              ],
+              "truncated-apply": [
+                "arbiter-applied-nothing"
+              ],
+              "recased-apply": [
+                "arbiter-applied-nothing"
+              ],
               "refused-apply": [
                 "arbiter-applied-nothing"
               ]
@@ -639,8 +659,8 @@
               "appliesAfterTheTimer": 2,
               "malformed": {
                 "violations": [],
-                "freshHosts": 15,
-                "movedAfterTheTimers": 15
+                "freshHosts": 16,
+                "movedAfterTheTimers": 16
               }
             }
           }
