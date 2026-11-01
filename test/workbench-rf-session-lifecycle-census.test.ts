@@ -15,13 +15,13 @@
  * census pins that state, the measured producer behaviour each clause depends on, and every surface the obligation already
  * reaches:
  *  A, acceptance (a). A1 the src launch inventory as launchInventory reads it (every .ts file below src/, read from disk and
- *    scanned by launchesOf): the scan binds child_process launchers through the forms the A1 controls pin - named, aliased,
- *    string-named, namespace, default and default-plus-named imports, import-equals, require and dynamic-import bindings (whole,
- *    destructured, shorthand and string-keyed, the import awaited), launchers called on a require or a dynamic import,
- *    template-literal specifiers, the load wrappers pinned below and every launcher name, each control as its source is written -
- *    and folds each command from literals (a string, a template, parentheses, a `+`); over the listed src modules it reads
- *    exactly one launch naming rf (the provider) and one launch whose command is not a literal, the detached host's
- *    process.execPath.
+ *    scanned by launchesOf, its judgement claimed at the PLANTED EXTENTS below only): the scan binds child_process launchers
+ *    through the forms the A1 controls pin - named, aliased, string-named, namespace, default and default-plus-named imports,
+ *    import-equals, require and dynamic-import bindings (whole, destructured, shorthand and string-keyed, the import awaited),
+ *    launchers called on a require or a dynamic import, template-literal specifiers, the load wrappers pinned below and every
+ *    launcher name, each control as its source is written - and folds each command from literals (a string, a template,
+ *    parentheses, a `+`); over the listed src modules, at those extents, it reads exactly one launch naming rf (the provider)
+ *    and one launch whose command is not a literal, the detached host's process.execPath.
  *    A2 N ticks of the registered native preview (three legacy, three view) against a stand-in rf: N spawns, each argv carrying
  *    --no-commit and no --session or --commit word, N readings admitted, each stating result.session_id null; the measured legacy
  *    argv of A4 is that argv. A3 the rf roster, selected by a reactivefiber: permission or an rf@ contractSource (never by id
@@ -32,20 +32,22 @@
  *    count constant and reported that id; the zero-mint journey of rfc-s24ro.7 is absent at the pin and at origin/main, as the
  *    bead row's "Shipped: no." states, so a re-measure that finds it flips A4 red until the committed loop lands with (a).
  *  B, acceptance (b). B1 the walked tree as readTree reads it (every regular file below the root, the skipped root entries aside,
- *    read as UTF-8 and judged as written and as rendered: compatibility forms folded by NFKC, default-ignorable code points such
- *    as a zero-width space or a soft hyphen removed, intraword emphasis asterisks dropped): the judge flags a sentence in which a
- *    session word sits within WINDOWS.rf words of an rf word and within WINDOWS.expiry words of an expiry term, unless a negator
- *    appears in that sentence before the later of the session word and the expiry term - the B1 controls and the vocabulary page
- *    pin that reading - and it flags no judged file; the walk meets no symlink (refused, never followed) and no unreadable entry.
+ *    read as UTF-8 and judged as written and as rendered - compatibility forms folded by NFKC, default-ignorable code points such
+ *    as a zero-width space or a soft hyphen removed, intraword emphasis asterisks dropped - its judgement claimed at the
+ *    PLANTED EXTENTS below only): the judge flags a sentence in which a session word sits within WINDOWS.rf words of an rf word
+ *    and within WINDOWS.expiry words of an expiry term, unless a negator appears in that sentence before the later of the session
+ *    word and the expiry term - the B1 controls and the vocabulary page pin that reading - and, at those extents, it flags no
+ *    judged file; the walk meets no symlink (refused, never followed) and no unreadable entry.
  *    B2 the rf reader closure (the src import closure of the provider and its adapter) as stateInventory reads it holds no session
- *    state: through the forms the B2 controls pin, sessionStateOf reads no identifier or property name carrying a session word and
- *    no literal (a cooked string, a template literal or a template part, or a folded `+` concatenation) naming a session flag, a
- *    session_id field, a dotted session leaf or an rfs_ id. B3 each exemption is load-bearing: this file and its roster are
- *    walked, not judged, and both read as expiry findings, so lifting either reds B1.
- *  C, acceptance (c). C1, as verbInventory and the descriptor judge read them, no src module and no native descriptor's JSON text
- *    spells an rf session verb through a form a C1 control pins (an argv "session" followed by a verb, a dotted session.<verb>
- *    leaf, an `rf ... session <verb>` command text, in a string, a template literal or a template's parts) or a --session flag,
- *    while the render argv is read (non-vacuity). C2 the measured producer serves session open/show/list/close only (no
+ *    state: through the forms the B2 controls pin, at the PLANTED EXTENTS below, sessionStateOf reads no identifier or property
+ *    name carrying a session word and no literal (a cooked string, a template literal or a template part, or a folded `+`
+ *    concatenation) naming a session flag, a session_id field, a dotted session leaf or an rfs_ id. B3 each exemption is
+ *    load-bearing: this file and its roster are walked, not judged, and both read as expiry findings, so lifting either reds B1.
+ *  C, acceptance (c). C1, as verbInventory and the descriptor judge read them, no src module at the PLANTED EXTENTS below and no
+ *    native descriptor in a place its canaries fill (the whole value of a DESCRIPTOR_CANARY_FIELDS field, as below) spells an rf
+ *    session verb through a form a C1 control pins (an argv "session" followed by a verb, a dotted session.<verb> leaf, an
+ *    `rf ... session <verb>` command text, in a string, a template literal or a template's parts) or a --session flag, while the
+ *    render argv is read (non-vacuity). C2 the measured producer serves session open/show/list/close only (no
  *    recover, handoff, resume or attach leaf: README C6 is proposed), addresses show and close by the session id, keeps --name a
  *    field separate from --id and states an unnamed session's name null; rca-C055 leaves duplicate-name acceptance
  *    undetermined, so Pi pins id-only.
@@ -61,11 +63,14 @@
  * recovery path, since none exists.
  * LISTING ANCHORS (wb-khhg F1): each walk is held to a listing it does not compute, read from the judge's own record (the file
  * each scan judged, recorded by the scan; each file B1's judge read, recorded after the judgement), never to a count floor
- * alone: B1 judges every file git lists (`git ls-files --cached --others --exclude-standard`) but the bead export (.beads, the
- * one skipped root git lists) and the exempt pair; A1 and C1 scan every file git lists below src/; B2 scans exactly the closure
- * TypeScript resolves (each module's ts.preProcessFile imports resolved by ts.resolveModuleName under tsconfig.json's options);
- * C1 reads exactly the descriptors a second native registration lists. The listing is itself checked sound (it meets the files
- * floor and names every walk anchor and reader module), so no anchor passes on an empty listing; the FLOORS stay beside them.
+ * alone: B1's judge reads every file git lists (`git ls-files --cached --others --exclude-standard`) but the bead export
+ * (.beads, the one skipped root git lists) and the exempt pair; A1 and C1 scan every file git lists below src/; B2 scans exactly
+ * the closure TypeScript resolves (each module's ts.preProcessFile imports resolved by ts.resolveModuleName under tsconfig.json's
+ * options); C1 reads exactly the descriptors a second native registration lists. The listing is itself checked sound (it meets
+ * the files floor and names every walk anchor and reader module), so no anchor passes on an empty listing; the FLOORS stay
+ * beside them. The anchors record names (each file read or scanned, each descriptor id read), so they pin which files and
+ * descriptors are read, never how far into a file or a descriptor the judgement reaches: that is the PLANTED EXTENTS' reach,
+ * below.
  * PATH CONTROLS (wb-khhg cut #3, the enumerate-the-resolvable form R-B247 binds; they replace cut #2's one-payload exact-path
  * canaries): every control of A1, B1, B2 and C1 is read again at every listed path, through the reading the live tree gets. Each
  * control's source is planted byte for byte at every listed src path (A1, C1), every TypeScript-resolved closure path (B2) or
@@ -79,12 +84,27 @@
  * no two alike (vocabulary). C1 places each session form (each dotted leaf, each rf session command, the flag) in each field of
  * DESCRIPTOR_CANARY_FIELDS of every native descriptor, read through the same descriptorJudge (descriptorCanariesMissed []). So
  * one edit to a judge that keys on a directory, a file name, a prefix or an extension and drops a pinned form's judgement at a
- * listed path reds that pin, as does one keyed on a descriptor id that drops a form in a field: the gate's GA1-GA4, GB1, GB3,
- * GB4, GC1 and GC2 die this way, each with its paired plant. GB2 is the residual R-LIVE-ROOT. NOT CLAIMED by this census: a drop
- * keyed on content no control, page sentence or descriptor canary carries (an argv identifier, a sentence's other words, a
- * marker the planted text lacks); a drop keyed on a path git's listing does not name (an ignored file a walk reads); a form no
- * control writes, beside the named residuals below; edits that narrow a walk and its independent listing together (K03), a
- * path control and the asserted reading together, or that remove a pin from every literal together (H05/H06).
+ * listed path reds that pin, as does one keyed on a descriptor id that drops a form in a canary field: the gate's GA1-GA4,
+ * GB1, GB3, GB4, GC1 and GC2 die this way, each with its paired plant. GB2 is the residual R-LIVE-ROOT. NOT CLAIMED by this
+ * census: a drop keyed on content no control, page sentence or descriptor canary carries (an argv identifier, a sentence's
+ * other words, a marker the planted text lacks); a drop keyed on a path git's listing does not name (an ignored file a walk
+ * reads); a form no control writes, beside the named residuals below; edits that narrow a walk and its independent listing
+ * together (K03), a path control and the asserted reading together, or that remove a pin from every literal together (H05/H06).
+ * PLANTED EXTENTS (wb-khhg cut #4, the fail-closed core ruling R-B273 binds after refusal #3; the coverage this narrowing defers is
+ * wb-4zgj's): each path control, and B1's vocabulary page, is planted as a whole file holding only its own text, so what the A1, B1,
+ * B2 and C1 path controls pin is the judgement of a form at an offset where a text planted for that pin holds one, in a file no
+ * longer than the longest such text; C1's descriptor canaries pin a session form only as the whole value of a
+ * DESCRIPTOR_CANARY_FIELDS field (a string field's value, a list field's only element, a schema field holding only a top-level
+ * description). The A1, B1, B2 and C1 sentences above say so in place, and every other claim word here that rests on those readings
+ * claims at those extents and in those fields only: the opening's "Pi commits no rf render today", "its one rf launch", "Pi drives
+ * no rf session verb" and "the recovery paths of (c) and (d) do not exist yet", and the row labels' "Pi's one rf launch" (A), "no
+ * walked file states an rf session expiry" and "the rf reader closure holds no session state" (B) and "no src module or native
+ * descriptor spells an rf session verb or flag" (C). A form at an offset where no text planted for its pin holds one - such as a
+ * launch, a literal or a sentence past the end of every such text, past byte 64 KiB of src/index.ts or of
+ * docs/workbench/feature-matrix.md (the gate's GO1, GO2 and GS1) - and a judgement drop keyed on a file's length or on a form's
+ * offset are NOT CLAIMED by this census. A form anywhere in a native descriptor but as the whole value of a DESCRIPTOR_CANARY_FIELDS
+ * field - its id field, a nested schema entry such as a property's description (the gate's GD1 and GD2), a list element beside
+ * others, a longer field value or a field that list does not name - is NOT CLAIMED by this census.
  * U2 LOAD WRAPPERS: A1 controls wrap require and awaited dynamic import in parentheses, await, as, satisfies, non-null and
  * angle-bracket assertions, singly and in the pinned nested composition, for whole/destructured bindings and direct calls.
  * A wrapper on a launcher callee is the residual R-CALLEE-WRAPPER; wrappers on a command other than parentheses, or on a
@@ -97,7 +117,8 @@
  * C2 checks captured session leaves; D1-D3 check the captured refusal's native/injected/projected handling; records checks
  * execution and end reach. Each positive is falsifiable by its paired real-tree plant, roster-witness flip, or the CT
  * frozen-shape battery; the U1 falsifiers K01/K02/K04/K05/K06/K11, U2 K08/K08b and refusal #2's GA1-GA4, GB1-GB4, GC1-GC2 and X1
- * are independently gate-authored.
+ * are independently gate-authored. A1, B1, B2 and C1 claim their judgement at the PLANTED EXTENTS and C1 its descriptors in the
+ * canary fields only; refusal #3's GD1, GD2, GS1, GO1 and GO2 fall outside that pinned set (NOT CLAIMED above; wb-4zgj's).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness, the scan constants, the residual families and the registered test titles are held to the out-of-file roster
  * (test/fixtures/rf-session-lifecycle-roster.json). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export
