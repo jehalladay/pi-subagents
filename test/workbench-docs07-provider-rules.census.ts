@@ -77,9 +77,11 @@
  * Row R10 (wb-70xe, RF-NATIVE-TSX-COMPONENTS-R2) binds the RF sentence on the operator-provisioned Deno (RFCLI ruling A4: the
  * operator provisions Deno at the installed rf's runtime-lock.json pin and no Pi lane installs it): its lock-pinned-engine half
  * to the rf-preview-tsx tier wiring cases of test/workbench-rf-tsx-tier.test.ts (a passing row's RF-TSX-ENGINE line records the
- * resolved deno, its realpath and its sha256 beside the four-field receipt line; a shim or an unresolved deno is refused
- * before rf runs, a mismatched or unpinned one once the render reports the pin), its no-lane-install half to the lane census
- * of test/workbench-rf-tsx-deno-provisioning.test.ts.
+ * resolved deno, its realpath and its sha256 beside the four-field receipt line, over a regular file, the operator's
+ * versioned symlink layout and a path that is not printable ASCII; each of the sentence's three shim forms and an unresolved
+ * deno are refused before rf runs and a mismatched or unpinned one once the render reports the pin, each by its literal typed
+ * code), its no-lane-install half to the lane census of test/workbench-rf-tsx-deno-provisioning.test.ts (whose six shapes
+ * are held to this sentence's six command families and whose walk is held to the repository's git index).
  * Its quote and binding are frozen as literals (rule 16), the RF ANCHOR holds the quote to the live paragraph, and the REPORT
  * ANCHOR holds each half to exactly the cases the gate's own report collects under that half's describe - the helper's
  * DENO_IDENTITY_SUITE and DENO_LANE_SUITE (test/helpers/rf-tsx-deno.ts), which both test files register their cases under - so
@@ -213,7 +215,7 @@ const LEGACY_ARGV_SENTENCE = "The legacy {model, task} argv is frozen byte for b
  * FROZEN_R10_QUOTE and FROZEN_R10_BINDING repeat it as literals (rule 16) and the gate's own report anchors the binding.
  */
 const DENO_PROVISIONING_SENTENCE =
-  "The operator provisions Deno per RFCLI ruling A4 at the exact version and binary sha256 the installed rf's integrations/tsx/runtime-lock.json pins, and no Pi lane installs it: the rf-preview-tsx tier refuses, before rf runs, a deno that PATH resolves to a version-manager shim (a symlink to a binary of another name, a file in a shims directory or a #! script), refuses a deno whose sha256 differs from the pin the render reports, and records the deno it held to that pin (its PATH-resolved path, realpath and sha256) on one RF-TSX-ENGINE line beside the R9 receipt rows.";
+  "The operator provisions Deno per RFCLI ruling A4 at the exact version and binary sha256 the installed rf's integrations/tsx/runtime-lock.json pins, and no Pi lane installs it (the lane census reads the root files and the lane trees for six command families: the Deno installer script, a Deno release download, a version-manager install of the engine, a package-manager install of the engine, an engine self-upgrade and the Deno CI setup action or container image): the rf-preview-tsx tier refuses, before rf runs, a deno that PATH resolves to a version-manager shim (a symlink to a binary of another name, a file in a shims directory or a #! script), refuses a deno whose sha256 differs from the pin the render reports, and records the deno it held to that pin (its PATH-resolved path and realpath, a path that is not printable ASCII replaced by a placeholder, and its sha256) on one RF-TSX-ENGINE line beside the R9 receipt rows.";
 
 /**
  * wb-kku9.1 (MW-CAC-WORKFLOW-COMPOSITION-R1 (d)): the two observation-class sentences, the last of the HyperUnix and Agent
@@ -733,21 +735,22 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     halves: [
       gate("lock-pinned-engine", [
         pin("rf-tsx-tier", "a provisioned run passes the success row, whose engine line records the resolved deno, its realpath and its sha256 equal to the pin the render reports, beside the four-field receipt line", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a provisioned run through the operator's versioned layout (bin/deno a symlink through a current link to tools/deno/2.9.7/bin/deno) records the symlink as deno_resolved and the versioned binary as deno_realpath", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a provisioned run whose deno path is not printable ASCII names its resolved path and its realpath <unrecognized> on the engine line, never verbatim", [DENO_IDENTITY_SUITE]),
         pin("rf-tsx-tier", "a deno symlinked to a version manager's binary (the mise shim form) fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
+        pin("rf-tsx-tier", "a deno that is a file in a shims directory, with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
         pin("rf-tsx-tier", "a deno that is a #! script fails the success row typed rf_tsx_deno_shim before rf is launched", [DENO_IDENTITY_SUITE]),
         pin("rf-tsx-tier", "no deno on the success row's PATH fails it typed rf_tsx_deno_unresolved before rf is launched", [DENO_IDENTITY_SUITE]),
         pin("rf-tsx-tier", "a deno whose sha256 differs from the pin the render reports fails the success row typed rf_tsx_deno_mismatch and prints no success receipt", [DENO_IDENTITY_SUITE]),
         pin("rf-tsx-tier", "a render that reports no sha256 pin for the host (contract_fingerprint unknown) fails the success row typed rf_tsx_deno_unpinned", [DENO_IDENTITY_SUITE]),
       ]),
       gate("no-lane-install", [
-        pin(
-          "rf-tsx-deno-provisioning",
-          "the walk reads forge.toml, package.json, the root vitest configs and the .github, .agents, .pi, .codex, src, test and qa trees above their floors, this file, the helper and the tier among them",
-          [DENO_LANE_SUITE],
-        ),
+        pin("rf-tsx-deno-provisioning", "the walk reads every regular file at the repository root and the .github, .agents, .pi, .codex, examples, src, test and qa trees above their floors, this file, the helper and the tier among them", [DENO_LANE_SUITE]),
+        pin("rf-tsx-deno-provisioning", "the walked trees and UNWALKED_ROOTS, each named with why, partition the repository's tracked top-level directories, and the walk reads every tracked root file (the git index, an anchor outside this census)", [DENO_LANE_SUITE]),
         pin("rf-tsx-deno-provisioning", "no walked file carries a Deno install command: 0 hits of the six shapes, this file and the helper judged with the rest", [DENO_LANE_SUITE]),
         pin("rf-tsx-deno-provisioning", "each shape reads its planted control and only that shape, and the quiet lines read nothing", [DENO_LANE_SUITE]),
         pin("rf-tsx-deno-provisioning", "a planted install line in a lane file reds the census, naming the file, the line and the shape", [DENO_LANE_SUITE]),
+        pin("rf-tsx-deno-provisioning", "the six shapes are the six command families the docs/workbench/07 Deno sentence names, label for label in order, each with its frozen count of planted controls, and that sentence's paragraph reads quiet (an anchor outside this census)", [DENO_LANE_SUITE]),
       ]),
     ],
   },
@@ -928,8 +931,8 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "R8/both-hosts:3",
   "R8/documented-channel:1",
   "R9/whole:1",
-  "R10/lock-pinned-engine:6",
-  "R10/no-lane-install:4",
+  "R10/lock-pinned-engine:9",
+  "R10/no-lane-install:6",
   "B1/whole:2",
   "B2/whole:2",
   "A1/claude-snapshots-only:1",
@@ -998,18 +1001,23 @@ const FROZEN_R5_BINDING: readonly string[] = [
 ];
 /** wb-70xe (rule 16): row R10's quote and binding as literals, never derived from TABLE, in FROZEN_R5_BINDING's form. */
 const FROZEN_R10_QUOTE =
-  "The operator provisions Deno per RFCLI ruling A4 at the exact version and binary sha256 the installed rf's integrations/tsx/runtime-lock.json pins, and no Pi lane installs it: the rf-preview-tsx tier refuses, before rf runs, a deno that PATH resolves to a version-manager shim (a symlink to a binary of another name, a file in a shims directory or a #! script), refuses a deno whose sha256 differs from the pin the render reports, and records the deno it held to that pin (its PATH-resolved path, realpath and sha256) on one RF-TSX-ENGINE line beside the R9 receipt rows.";
+  "The operator provisions Deno per RFCLI ruling A4 at the exact version and binary sha256 the installed rf's integrations/tsx/runtime-lock.json pins, and no Pi lane installs it (the lane census reads the root files and the lane trees for six command families: the Deno installer script, a Deno release download, a version-manager install of the engine, a package-manager install of the engine, an engine self-upgrade and the Deno CI setup action or container image): the rf-preview-tsx tier refuses, before rf runs, a deno that PATH resolves to a version-manager shim (a symlink to a binary of another name, a file in a shims directory or a #! script), refuses a deno whose sha256 differs from the pin the render reports, and records the deno it held to that pin (its PATH-resolved path and realpath, a path that is not printable ASCII replaced by a placeholder, and its sha256) on one RF-TSX-ENGINE line beside the R9 receipt rows.";
 const FROZEN_R10_BINDING: readonly string[] = [
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run passes the success row, whose engine line records the resolved deno, its realpath and its sha256 equal to the pin the render reports, beside the four-field receipt line",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run through the operator's versioned layout (bin/deno a symlink through a current link to tools/deno/2.9.7/bin/deno) records the symlink as deno_resolved and the versioned binary as deno_realpath",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a provisioned run whose deno path is not printable ASCII names its resolved path and its realpath <unrecognized> on the engine line, never verbatim",
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno symlinked to a version manager's binary (the mise shim form) fails the success row typed rf_tsx_deno_shim before rf is launched",
+  "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a file in a shims directory, with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched",
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno that is a #! script fails the success row typed rf_tsx_deno_shim before rf is launched",
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | no deno on the success row's PATH fails it typed rf_tsx_deno_unresolved before rf is launched",
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a deno whose sha256 differs from the pin the render reports fails the success row typed rf_tsx_deno_mismatch and prints no success receipt",
   "lock-pinned-engine | test | test/workbench-rf-tsx-tier.test.ts | rf-preview-tsx holds the PATH-resolved deno to the lock pin the render reports (wb-70xe) | a render that reports no sha256 pin for the host (contract_fingerprint unknown) fails the success row typed rf_tsx_deno_unpinned",
-  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | the walk reads forge.toml, package.json, the root vitest configs and the .github, .agents, .pi, .codex, src, test and qa trees above their floors, this file, the helper and the tier among them",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | the walk reads every regular file at the repository root and the .github, .agents, .pi, .codex, examples, src, test and qa trees above their floors, this file, the helper and the tier among them",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | the walked trees and UNWALKED_ROOTS, each named with why, partition the repository's tracked top-level directories, and the walk reads every tracked root file (the git index, an anchor outside this census)",
   "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | no walked file carries a Deno install command: 0 hits of the six shapes, this file and the helper judged with the rest",
   "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | each shape reads its planted control and only that shape, and the quiet lines read nothing",
   "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | a planted install line in a lane file reds the census, naming the file, the line and the shape",
+  "no-lane-install | test | test/workbench-rf-tsx-deno-provisioning.test.ts | no Pi lane carries a Deno install command (wb-70xe) | the six shapes are the six command families the docs/workbench/07 Deno sentence names, label for label in order, each with its frozen count of planted controls, and that sentence's paragraph reads quiet (an anchor outside this census)",
 ];
 /**
  * wb-973.17 (rule 16 anchor): the one sentence of the live RF paragraph no row binds - a posture sentence (use the public

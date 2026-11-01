@@ -15,11 +15,19 @@
  * is a live receipt or a TSX render (that receipt is R9, wb-693.7).
  *
  * wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2): a provisioned-shape run also puts a stand-in engine first on the success row's PATH
- * (a text file the tier never executes) and has the stand-in rf report its sha256 as the host's pin, so the success row's
- * Deno identity reading (test/helpers/rf-tsx-deno.ts) holds; the DENO_IDENTITY_SUITE cases show that it bites: a
- * version-manager shim or no engine is refused before rf is launched, a mismatched or unpinned engine once the render
- * reports the pin, and a passing row prints the resolved path, realpath and sha256 on its RF-TSX-ENGINE line while its
- * RF-TSX-RECEIPT line keeps the four R9 fields.
+ * (a text file with no #! line) and has the stand-in rf report its sha256 as the host's pin, so the success row's Deno
+ * identity reading (test/helpers/rf-tsx-deno.ts) holds; the DENO_IDENTITY_SUITE cases show that it bites: each of the three
+ * shim forms (a symlink to a binary of another name, a file in a shims directory, a #! script) and an unresolved engine are
+ * refused before rf is launched, a mismatched or unpinned engine once the render reports the pin, each refused row's first
+ * failure opening with its literal typed code, and a passing row prints the resolved path, realpath and sha256 on its
+ * RF-TSX-ENGINE line while its RF-TSX-RECEIPT line keeps the four R9 fields. The engine line is held field by field over
+ * three layouts: a regular file (its resolved path is its realpath), the operator's versioned layout (a bin/deno symlink
+ * through a current link to tools/deno/2.9.7/bin/deno, so the two paths differ) and a path that is not printable ASCII
+ * (both paths named <unrecognized>). That the identity reading never executes the engine is observed by the identity unit
+ * cases' execution markers (test/workbench-rf-tsx-deno-provisioning.test.ts), not by these cases. NOT CLAIMED by these
+ * cases: a version reading of the PATH deno (the binary is held to the lock's sha256 and never asked its version; the
+ * render's distribution_version stays an R9 receipt field), and a live receipt of record carrying the RF-TSX-ENGINE line
+ * (no live run is part of this cut).
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -28,7 +36,7 @@ import { delimiter, join, relative } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import { REACTIVE_FIBER_CLI_SCHEMA } from "../src/workbench/providers/reactivefiber.js";
 import defaultConfig from "../vitest.config.js";
-import { DENO_ENGINE, DENO_IDENTITY_SUITE, DENO_REFUSAL, resolveOnPath } from "./helpers/rf-tsx-deno.js";
+import { DENO_ENGINE, DENO_IDENTITY_SUITE, resolveOnPath } from "./helpers/rf-tsx-deno.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
@@ -47,8 +55,8 @@ const NODE = process.execPath;
 /** Environment variables std-env reads to decide that an agent drives the run (vitest then auto-selects its agent reporter). */
 const AGENT_MARKERS = ["AI_AGENT", "CLAUDECODE", "CLAUDE_CODE"] as const;
 const ID_TAIL = "0".repeat(26);
-/** wb-70xe: the stand-in engine's bytes (no #! line, never executed) and their sha256, the pin a provisioned stand-in rf reports. */
-const STAND_IN_ENGINE = "hermetic stand-in engine for the rf-preview-tsx wiring cases: a text file the tier never executes\n";
+/** wb-70xe: the stand-in engine's bytes (no #! line) and their sha256, the pin a provisioned stand-in rf reports. */
+const STAND_IN_ENGINE = "hermetic stand-in engine for the rf-preview-tsx wiring cases: a text file with no #! line\n";
 const STAND_IN_DIGEST = createHash("sha256").update(STAND_IN_ENGINE, "utf8").digest("hex");
 const SUCCESS_RECEIPT = 'RF-TSX-RECEIPT {"row":"success"';
 /** wb-70xe: the mark of the success row's engine identity line. */
@@ -206,7 +214,7 @@ function stubRf(dir: string, answer: unknown, exit: number, launched?: string): 
   return dir;
 }
 
-/** wb-70xe: the stand-in engine (STAND_IN_ENGINE's bytes, executable, never executed) as `dir`/deno; returns `dir`. */
+/** wb-70xe: the stand-in engine (STAND_IN_ENGINE's bytes, executable, no #! line) as `dir`/deno; returns `dir`. */
 function standInEngine(dir: string, bytes: string = STAND_IN_ENGINE): string {
   mkdirSync(dir, { recursive: true });
   writeFileSync(join(dir, DENO_ENGINE), bytes);
@@ -485,12 +493,17 @@ describe("rf-preview-tsx encodes R9's receipt rows (wb-693.6, R8 -> R9)", () => 
 describe(DENO_IDENTITY_SUITE, () => {
   const ABSENT_REFUSAL = { answer: refusal("RF_COMPONENT_RUNTIME_ABSENT"), exit: 1 } as const;
 
-  /** A refused success row: failed with `reason`'s typed message, the runtime-absent row still passing, no success receipt printed. */
-  function expectRefused(run: TierRun, reason: string, detail: string): void {
+  /**
+   * A refused success row: failed, its first failure opening with the typed refusal and `code` (each caller spells its code
+   * as a literal, never through the helper's constant), carrying `detail`; the runtime-absent row still passing; no success
+   * receipt and no engine line printed.
+   */
+  function expectRefused(run: TierRun, code: string, detail: string): void {
     expect(run.status).not.toBe(0);
     expect(run.report).toMatchObject({ ...NO_SKIP_NO_TODO, numPassedTests: 1, numFailedTests: 1 });
     expect(run.success.status).toBe("failed");
-    expect(failureOf(run.success)).toContain(`${reason}: `);
+    const head = `DenoIdentityRefusal: ${code}: `;
+    expect(run.success.failureMessages[0]?.slice(0, head.length), failureOf(run.success)).toBe(head);
     expect(failureOf(run.success)).toContain(detail);
     expect(run.absent.status).toBe("passed");
     expect(run.stdout).not.toContain(SUCCESS_RECEIPT);
@@ -516,6 +529,45 @@ describe(DENO_IDENTITY_SUITE, () => {
   );
 
   it(
+    "a provisioned run through the operator's versioned layout (bin/deno a symlink through a current link to tools/deno/2.9.7/bin/deno) records the symlink as deno_resolved and the versioned binary as deno_realpath",
+    () => {
+      const run = provisionedRun("rf-tsx-deno-versioned-", tsxPreview(), ABSENT_REFUSAL, (dir, launched) => {
+        const tsx = stubRf(join(dir, "tsx"), tsxPreview(), 0, launched);
+        standInEngine(join(dir, "tools", "deno", "2.9.7", "bin"));
+        symlinkSync(join(dir, "tools", "deno", "2.9.7"), join(dir, "tools", "deno", "current"));
+        mkdirSync(join(dir, "bin"));
+        symlinkSync(join(dir, "tools", "deno", "current", "bin", DENO_ENGINE), join(dir, "bin", DENO_ENGINE));
+        return [join(dir, "bin"), tsx, process.env.PATH ?? ""].join(delimiter);
+      });
+      expect(run.report).toMatchObject({ ...NO_SKIP_NO_TODO, numPassedTests: 2, numFailedTests: 0 });
+      expect(run.status).toBe(0);
+      const resolved = join(run.dir, "bin", DENO_ENGINE);
+      const versioned = realpathSync(join(run.dir, "tools", "deno", "2.9.7", "bin", DENO_ENGINE));
+      expect(new Set([resolved, join(run.dir, "tools", "deno", "current", "bin", DENO_ENGINE), versioned]).size).toBe(3);
+      expect(recordLines(run.stdout, ENGINE_MARK)).toEqual([`RF-TSX-ENGINE ${JSON.stringify({ deno_resolved: resolved, deno_realpath: versioned, deno_sha256: `sha256:${STAND_IN_DIGEST}` })}`]);
+      expect(readFileSync(run.launched, "utf8")).toBe("launched\n");
+    },
+    RUN_BUDGET_MS,
+  );
+
+  it(
+    "a provisioned run whose deno path is not printable ASCII names its resolved path and its realpath <unrecognized> on the engine line, never verbatim",
+    () => {
+      const odd = `odd${String.fromCodePoint(0xe9)}`;
+      const run = provisionedRun("rf-tsx-deno-echo-", tsxPreview(), ABSENT_REFUSAL, (dir, launched) => {
+        const tsx = stubRf(join(dir, "tsx"), tsxPreview(), 0, launched);
+        return [standInEngine(join(dir, odd, "bin")), tsx, process.env.PATH ?? ""].join(delimiter);
+      });
+      expect(run.report).toMatchObject({ ...NO_SKIP_NO_TODO, numPassedTests: 2, numFailedTests: 0 });
+      expect(run.status).toBe(0);
+      expect(recordLines(run.stdout, ENGINE_MARK)).toEqual([`RF-TSX-ENGINE ${JSON.stringify({ deno_resolved: "<unrecognized>", deno_realpath: "<unrecognized>", deno_sha256: `sha256:${STAND_IN_DIGEST}` })}`]);
+      expect(run.stdout).not.toContain(odd);
+      expect(readFileSync(run.launched, "utf8")).toBe("launched\n");
+    },
+    RUN_BUDGET_MS,
+  );
+
+  it(
     "a deno symlinked to a version manager's binary (the mise shim form) fails the success row typed rf_tsx_deno_shim before rf is launched",
     () => {
       const run = provisionedRun("rf-tsx-deno-manager-", tsxPreview(), ABSENT_REFUSAL, (dir, launched) => {
@@ -527,7 +579,20 @@ describe(DENO_IDENTITY_SUITE, () => {
         symlinkSync(manager, join(tsx, DENO_ENGINE));
         return `${tsx}${delimiter}${process.env.PATH ?? ""}`;
       });
-      expectRefused(run, DENO_REFUSAL.shim, "its realpath names mise, not deno");
+      expectRefused(run, "rf_tsx_deno_shim", "is a version-manager shim (its realpath names mise, not deno);");
+      expect(existsSync(run.launched)).toBe(false);
+    },
+    RUN_BUDGET_MS,
+  );
+
+  it(
+    "a deno that is a file in a shims directory, with the engine's own name and bytes, fails the success row typed rf_tsx_deno_shim before rf is launched",
+    () => {
+      const run = provisionedRun("rf-tsx-deno-shims-", tsxPreview(), ABSENT_REFUSAL, (dir, launched) => {
+        const tsx = stubRf(join(dir, "tsx"), tsxPreview(), 0, launched);
+        return [standInEngine(join(dir, "manager", "shims")), tsx, process.env.PATH ?? ""].join(delimiter);
+      });
+      expectRefused(run, "rf_tsx_deno_shim", "is a version-manager shim (it sits in a shims directory);");
       expect(existsSync(run.launched)).toBe(false);
     },
     RUN_BUDGET_MS,
@@ -540,7 +605,7 @@ describe(DENO_IDENTITY_SUITE, () => {
         const tsx = standInEngine(stubRf(join(dir, "tsx"), tsxPreview(), 0, launched), "#!/bin/sh\nexit 0\n");
         return `${tsx}${delimiter}${process.env.PATH ?? ""}`;
       });
-      expectRefused(run, DENO_REFUSAL.shim, "it is a #! script, not the engine binary");
+      expectRefused(run, "rf_tsx_deno_shim", "is a version-manager shim (it is a #! script, not the engine binary);");
       expect(existsSync(run.launched)).toBe(false);
     },
     RUN_BUDGET_MS,
@@ -553,7 +618,7 @@ describe(DENO_IDENTITY_SUITE, () => {
         const tsx = stubRf(join(dir, "tsx"), tsxPreview(), 0, launched);
         return `${tsx}${delimiter}${engineFreeTools(join(dir, "tools"))}`;
       });
-      expectRefused(run, DENO_REFUSAL.unresolved, "no executable deno on PATH");
+      expectRefused(run, "rf_tsx_deno_unresolved", "no executable deno on PATH");
       expect(existsSync(run.launched)).toBe(false);
     },
     RUN_BUDGET_MS,
@@ -564,7 +629,7 @@ describe(DENO_IDENTITY_SUITE, () => {
     () => {
       const pinned = "f".repeat(64);
       const run = provisionedRun("rf-tsx-deno-mismatch-", tsxPreview({ contractFingerprint: `sha256:${pinned}` }), ABSENT_REFUSAL);
-      expectRefused(run, DENO_REFUSAL.mismatch, `has sha256 ${STAND_IN_DIGEST}, not the sha256 ${pinned} the installed rf's runtime lock pins for this host`);
+      expectRefused(run, "rf_tsx_deno_mismatch", `has sha256 ${STAND_IN_DIGEST}, not the sha256 ${pinned} the installed rf's runtime lock pins for this host`);
       expect(readFileSync(run.launched, "utf8")).toBe("launched\n");
     },
     RUN_BUDGET_MS,
@@ -574,7 +639,7 @@ describe(DENO_IDENTITY_SUITE, () => {
     "a render that reports no sha256 pin for the host (contract_fingerprint unknown) fails the success row typed rf_tsx_deno_unpinned",
     () => {
       const run = provisionedRun("rf-tsx-deno-unpinned-", tsxPreview({ contractFingerprint: "unknown" }), ABSENT_REFUSAL);
-      expectRefused(run, DENO_REFUSAL.unpinned, "contract_fingerprint unknown");
+      expectRefused(run, "rf_tsx_deno_unpinned", "contract_fingerprint unknown");
       expect(readFileSync(run.launched, "utf8")).toBe("launched\n");
     },
     RUN_BUDGET_MS,

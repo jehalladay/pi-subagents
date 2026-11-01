@@ -2,19 +2,23 @@
  * wb-70xe (RF-NATIVE-TSX-COMPONENTS-R2): the Deno identity reading of the rf-preview-tsx tier's success row, and the Deno
  * install-shape matcher of the provisioning census (test/workbench-rf-tsx-deno-provisioning.test.ts).
  *
- * Authority: RFCLI ruling A4 (IMPLEMENTATION_AND_QA.md:149@82bd879eee52): "Deno is pinned to the exact version recorded in
- * integrations/tsx/runtime-lock.json and provisioned per host into a versioned tool directory by the operator, never
- * installed by a lane". rf resolves its engine by name on PATH and nothing else (runtime.tsx_engine.resolve_engine is
- * shutil.which over the PATH the provider hands it, from the working directory Pi's own process holds, since the provider
- * spawns rf without a cwd), and a version-manager shim on PATH is answered as the shim: executing a shim whose pin is not
- * installed installs it over the network (RFCLI README.md:130, rfc-3fhh4.28).
+ * Authority: RFCLI ruling A4, as the owner filing on the bead quotes it (IMPLEMENTATION_AND_QA.md:149@82bd879eee52, not
+ * re-read here): "Deno is pinned to the exact version recorded in integrations/tsx/runtime-lock.json and provisioned per host
+ * into a versioned tool directory by the operator, never installed by a lane". At render time rf resolves its engine by name
+ * on PATH and nothing else: runtime.tsx_engine.resolve_engine (read in the installed rf 0.1.875) is shutil.which over the
+ * PATH the provider hands it, from the working directory Pi's own process holds (the provider spawns rf without a cwd), and
+ * its docstring states that "A version manager's shim on PATH is answered as the shim"; the same module's docstring records
+ * that a mise shim run for a pinned but uninstalled engine downloads one over the network (rfc-3fhh4.28).
  *
  * So this reading never executes the resolved file, and it reads no rf install layout: it reads the file's first two bytes
- * and its sha256, as RFCLI's own doctor check RFDOCTOR-TSX-RUNTIME does (application/doctor.py, rfc-3fhh4.77: "the doctor
- * can tell the pinned executable from any other without running either"). The pin is the one the render itself reports:
- * provenance.sdk_versions.tsx_runtime is rf's reading of its packaged runtime lock (definitions.tsx_pins
- * .engine_version_entries: distribution_version is the lock's exact engine version, contract_fingerprint is "sha256:" and
- * the binary digest the lock pins for the host's target triple, or "unknown" when it pins none). The test modules that use
+ * and its sha256. RFCLI's own doctor check RFDOCTOR-TSX-RUNTIME hashes the binary it resolves the same way (rf 0.1.875,
+ * application/doctor.py _sha256_of, in 1 MiB reads, whose docstring says "Never executes the file."), but unlike this
+ * reading the doctor's preflight (runtime.tsx_engine.preflight_engine, rfc-2s2o2.27) also asks a manager shim for its
+ * concrete binary and runs one bounded version probe on that binary; this reading runs neither. The pin is the one the
+ * render itself reports: provenance.sdk_versions.tsx_runtime is rf's reading of its packaged runtime lock
+ * (definitions.tsx_pins.engine_version_entries, rf 0.1.875: distribution_version is the lock's exact engine version,
+ * contract_fingerprint is "sha256:" and the binary digest the lock pins for the host's target triple, or "unknown" when it
+ * pins none). The test modules that use
  * it launch no engine: the worker-lifecycle census (wb-csbt.3, wb-jdpn) pins that no test module launches one.
  *
  * Two halves, so the shim check runs before rf ever starts (a shim it would execute is the network install path) and the
@@ -31,9 +35,11 @@
  * binary copied or hard-linked under the engine's own name outside a shims directory passes it; the digest half then refuses
  * it (rf_tsx_deno_mismatch, its sha256 is not the pin), after rf has run it. The provisioning test pins that quiet row.
  *
- * The lane census reads DENO_INSTALL_SHAPES, six closed families of install command, per line. NAMED RESIDUALS (each with
- * a pinned quiet row in the census): R-MIRROR, an engine archive fetched from a host no shape names; R-COMPOSED, an install
- * command assembled from parts at run time, which no source line spells (the census's own planted controls are built so).
+ * The lane census reads DENO_INSTALL_SHAPES, six closed families of install command, per line; the docs/workbench/07 Deno
+ * sentence names the same six families, label for label. NAMED RESIDUALS (each with a pinned quiet row in the census):
+ * R-MIRROR, an engine archive fetched from a host no shape names; R-COMPOSED, an install command assembled from parts at run
+ * time, which no source line spells (the census's own planted controls are built so); R-UNNAMED-MANAGER, an install through
+ * a version or package manager no shape names.
  */
 import { createHash } from "node:crypto";
 import { accessSync, closeSync, constants, openSync, readSync, realpathSync, statSync } from "node:fs";

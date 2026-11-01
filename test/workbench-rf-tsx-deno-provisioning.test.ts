@@ -8,25 +8,43 @@
  *
  * This file holds two parts. The first pins the identity reading's refusals and passes (test/helpers/rf-tsx-deno.ts) on
  * scratch files, none of them ever executed: each planted engine is a text file without a #! line whose body, if any shell
- * ever ran it, would write a marker, and every case that plants one asserts the marker is absent. The empty-PATH branch of
+ * ever ran it, would write a marker, and every case that plants one asserts the marker is absent. Every refusal case reads
+ * its typed code as a literal, both as the refusal's reason and as the head of its message. The empty-PATH branch of
  * resolveOnPath is NOT CLAIMED by a falsifier: the repository root holds no deno, so its working-directory lookup and
- * shutil.which's None read alike there. The tier wiring of the same reading
- * (refused before rf runs, refused after the render reports the pin, the receipt fields) is pinned by the wb-70xe cases of
- * test/workbench-rf-tsx-tier.test.ts. The second part is the lane census for (c)'s first clause: every lane definition
- * (forge.toml, package.json, the root vitest configs) and every tree a lane runs or reads instructions from (.github,
- * .agents, .pi, .codex, src, test, qa) carries no Deno install command of the six closed shapes in DENO_INSTALL_SHAPES,
- * measured 0 over the whole tracked tree at the cut's base; this file and the helper are walked and judged, never exempt, so
- * every planted control below is composed at run time and no line of this file spells a shape.
+ * shutil.which's None read alike there. The tier wiring of the same reading (refused before rf runs, refused after the
+ * render reports the pin, the engine line's fields) is pinned by the wb-70xe cases of test/workbench-rf-tsx-tier.test.ts.
+ *
+ * The second part is the lane census for (c)'s first clause. It walks every regular file at the repository root (AGENTS.md,
+ * forge.toml, package.json and the root vitest configs among them) and the .github, .agents, .pi, .codex, examples, src,
+ * test and qa trees, and reads no line carrying a Deno install command of the six closed shapes in DENO_INSTALL_SHAPES: 0
+ * hits over the walked set. This file and the helper are walked and judged, never exempt, so every planted control below is
+ * composed at run time and no line of this file spells a shape. Two anchors sit outside this census's own literals: the
+ * repository's git index, whose tracked top-level directories the walked trees and UNWALKED_ROOTS (each named with why)
+ * must partition and whose tracked root files the walk must read; and the docs/workbench/07 Deno sentence, which names the
+ * six command families the shapes must equal label for label. Outside the walk, the seat's scans of the tracked tree at
+ * trunks 538377bf and 5a84c7a0 each read 3 matcher hits, none in a lane: docs/workbench/receipts/wb-693.7.md:11 (I3, prose
+ * naming the mise install of the engine) and this bead's exported notes in .beads/issues.jsonl (I3, I5); a record, not a
+ * claim of this census.
+ *
+ * NOT CLAIMED by this census: untracked top-level directories (node_modules, .forge, a .git directory), the trees
+ * UNWALKED_ROOTS names and any symlink at the repository root (a worktree may link its node_modules; root links are never
+ * followed); a Deno package declared as an npm dependency (package.json and package-lock.json are read for the six command
+ * shapes only); Pi lane session transcripts (the census reads the tracked lane definitions and trees); and, inside one
+ * shape, a coordinated removal of one alternative (a manager, a verb, a host) from the matcher, its planted controls and
+ * the frozen count together, since the docs anchor names the families, not their tokens. NAMED RESIDUALS, each a named
+ * family and its pinned quiet row in RESIDUAL_QUIET (a matcher that starts catching one reds it): R-MIRROR, an engine
+ * archive from a host no shape names; R-COMPOSED, an install command assembled at run time, which no source line spells;
+ * R-UNNAMED-MANAGER, an install through a version or package manager no shape names.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { chmodSync, copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, realpathSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
-import { delimiter, join, relative } from "node:path";
+import { delimiter, join } from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   DENO_ENGINE,
   DENO_INSTALL_SHAPES,
   DENO_LANE_SUITE,
-  DENO_REFUSAL,
   DenoIdentityRefusal,
   denoInstallHits,
   echoPath,
@@ -72,6 +90,11 @@ function refusalOf(run: () => unknown): DenoIdentityRefusal {
   throw new Error("expected a DenoIdentityRefusal, the reading returned");
 }
 
+/** `refusal` carries `code` (each caller spells it as a literal, never through the helper's constant) as its reason and as its message's head. */
+function expectCode(refusal: DenoIdentityRefusal, code: string): void {
+  expect([refusal.reason, refusal.message.slice(0, code.length + 2)]).toEqual([code, `${code}: `]);
+}
+
 describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test/helpers/rf-tsx-deno.ts)", () => {
   it("resolveOnPath reads PATH in order as shutil.which does: a directory, a non-executable file and a broken symlink are passed over, the first executable file wins", () => {
     const dir = scratch("deno-which-");
@@ -111,7 +134,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
   it("an unresolved engine is refused typed rf_tsx_deno_unresolved, never a skip", () => {
     const dir = scratch("deno-absent-");
     const refusal = refusalOf(() => provisionedDeno(join(dir, "empty")));
-    expect(refusal.reason).toBe(DENO_REFUSAL.unresolved);
+    expectCode(refusal, "rf_tsx_deno_unresolved");
     expect(refusal.message).toMatch(/^rf_tsx_deno_unresolved: no executable deno on PATH/);
   });
 
@@ -122,7 +145,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     mkdirSync(join(dir, "path"));
     symlinkSync(manager, join(dir, "path", DENO_ENGINE));
     const refusal = refusalOf(() => provisionedDeno(join(dir, "path")));
-    expect(refusal.reason).toBe(DENO_REFUSAL.shim);
+    expectCode(refusal, "rf_tsx_deno_shim");
     expect(refusal.message).toContain(`realpath ${realpathSync(manager)}`);
     expect(refusal.message).toContain("its realpath names mise, not deno");
     expect(refusal.message).toContain("so rf is never launched with it");
@@ -134,7 +157,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     const marker = join(dir, "executed");
     plantEngine(join(dir, "shims"), marker);
     const refusal = refusalOf(() => provisionedDeno(join(dir, "shims")));
-    expect(refusal.reason).toBe(DENO_REFUSAL.shim);
+    expectCode(refusal, "rf_tsx_deno_shim");
     expect(refusal.message).toContain("it sits in a shims directory");
     expect(refusal.message).not.toContain("its realpath names");
     expect(existsSync(marker)).toBe(false);
@@ -147,7 +170,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     mkdirSync(join(dir, "shims"));
     symlinkSync(engine, join(dir, "shims", DENO_ENGINE));
     const refusal = refusalOf(() => provisionedDeno(join(dir, "shims")));
-    expect(refusal.reason).toBe(DENO_REFUSAL.shim);
+    expectCode(refusal, "rf_tsx_deno_shim");
     expect(refusal.message).toContain(`(realpath ${realpathSync(engine)}) is a version-manager shim (it sits in a shims directory)`);
     expect(existsSync(marker)).toBe(false);
   });
@@ -159,7 +182,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     mkdirSync(join(dir, "bin"));
     symlinkSync(engine, join(dir, "bin", DENO_ENGINE));
     const refusal = refusalOf(() => provisionedDeno(join(dir, "bin")));
-    expect(refusal.reason).toBe(DENO_REFUSAL.shim);
+    expectCode(refusal, "rf_tsx_deno_shim");
     expect(refusal.message).toContain(`the PATH-resolved deno ${join(dir, "bin", DENO_ENGINE)} (realpath ${realpathSync(engine)}) is a version-manager shim (it sits in a shims directory)`);
     expect(existsSync(marker)).toBe(false);
   });
@@ -171,7 +194,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     writeFileSync(join(dir, "bin", DENO_ENGINE), `#!/bin/sh\necho executed > '${marker}'\n`);
     chmodSync(join(dir, "bin", DENO_ENGINE), 0o700);
     const refusal = refusalOf(() => provisionedDeno(join(dir, "bin")));
-    expect(refusal.reason).toBe(DENO_REFUSAL.shim);
+    expectCode(refusal, "rf_tsx_deno_shim");
     expect(refusal.message).toContain("it is a #! script, not the engine binary");
     expect(existsSync(marker)).toBe(false);
   });
@@ -192,7 +215,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     const resolved = provisionedDeno(join(dir, "bin"));
     const pinned = "f".repeat(64);
     const refusal = refusalOf(() => pinnedDenoDigest(resolved, `sha256:${pinned}`));
-    expect(refusal.reason).toBe(DENO_REFUSAL.mismatch);
+    expectCode(refusal, "rf_tsx_deno_mismatch");
     expect(refusal.message).toContain(`has sha256 ${sha256Of(engine)}, not the sha256 ${pinned} the installed rf's runtime lock pins for this host`);
     expect(existsSync(marker)).toBe(false);
   });
@@ -204,7 +227,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
       const marker = join(dir, "executed");
       plantEngine(join(dir, "bin"), marker);
       const refusal = refusalOf(() => pinnedDenoDigest(provisionedDeno(join(dir, "bin")), fingerprint));
-      expect(refusal.reason).toBe(DENO_REFUSAL.unpinned);
+      expectCode(refusal, "rf_tsx_deno_unpinned");
       expect(refusal.message).toMatch(/^rf_tsx_deno_unpinned: the render reports no pinned binary sha256 for this host/);
       expect(existsSync(marker)).toBe(false);
     },
@@ -217,7 +240,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     const resolved = provisionedDeno(join(dir, "bin"));
     rmSync(engine);
     const refusal = refusalOf(() => pinnedDenoDigest(resolved, `sha256:${"f".repeat(64)}`));
-    expect(refusal.reason).toBe(DENO_REFUSAL.unreadable);
+    expectCode(refusal, "rf_tsx_deno_unreadable");
     expect(refusal.message).toBe(`rf_tsx_deno_unreadable: the PATH-resolved deno ${join(dir, "bin", DENO_ENGINE)} cannot be read (ENOENT), so it cannot be held to the lock pin`);
   });
 
@@ -231,7 +254,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
         expect(provisionedDeno(join(dir, "bin")).realpath).toBe(realpathSync(engine));
       } else {
         const refusal = refusalOf(() => provisionedDeno(join(dir, "bin")));
-        expect(refusal.reason).toBe(DENO_REFUSAL.unreadable);
+        expectCode(refusal, "rf_tsx_deno_unreadable");
         expect(refusal.message).toContain("cannot be read (EACCES)");
       }
     } finally {
@@ -250,7 +273,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     const engine = provisionedDeno(join(dir, "bin"));
     expect(engine).toEqual({ resolved: join(dir, "bin", DENO_ENGINE), realpath: realpathSync(join(dir, "bin", DENO_ENGINE)) });
     const refusal = refusalOf(() => pinnedDenoDigest(engine, `sha256:${"0".repeat(64)}`));
-    expect(refusal.reason).toBe(DENO_REFUSAL.mismatch);
+    expectCode(refusal, "rf_tsx_deno_mismatch");
     expect(existsSync(marker)).toBe(false);
   });
 
@@ -261,28 +284,36 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     const odd = join(dir, `odd${String.fromCodePoint(0xe9)}`, "shims");
     plantEngine(odd, marker);
     const refusal = refusalOf(() => provisionedDeno(odd));
-    expect(refusal.reason).toBe(DENO_REFUSAL.shim);
+    expectCode(refusal, "rf_tsx_deno_shim");
     expect(refusal.message).toContain("the PATH-resolved deno <unrecognized> (realpath <unrecognized>)");
     expect(refusal.message).not.toContain(String.fromCodePoint(0xe9));
     expect(existsSync(marker)).toBe(false);
   });
 });
 
-/** The lane definitions at the repository root: forge.toml, package.json and every root vitest config. */
-const LANE_FILES: readonly string[] = ["forge.toml", "package.json"];
-const VITEST_CONFIG = /^vitest\..*config\.ts$/;
-/** The trees a lane runs or takes instructions from, each with a floor below its count at the cut's base (2, 2, 1, 2, 116, 665, 67 files). */
+/** The trees a lane runs or takes instructions from, each with a floor below its count at the cut's base (2, 2, 1, 2, 7, 117, 778, 67 files). */
 const LANE_ROOTS: readonly { readonly root: string; readonly floor: number }[] = [
   { root: ".github", floor: 1 },
   { root: ".agents", floor: 1 },
   { root: ".pi", floor: 1 },
   { root: ".codex", floor: 1 },
+  { root: "examples", floor: 5 },
   { root: "src", floor: 100 },
   { root: "test", floor: 500 },
   { root: "qa", floor: 55 },
 ];
-/** Root vitest configs at the cut's base: 13. */
-const VITEST_FLOOR = 12;
+/**
+ * The tracked top-level directories the walk leaves out, each with why. With LANE_ROOTS they partition the repository's
+ * tracked top-level directories, read from git (an anchor outside this census), so a tree dropped from the walk and from
+ * every literal of this file still reds until it is named here with a reason.
+ */
+const UNWALKED_ROOTS: readonly { readonly root: string; readonly why: string }[] = [
+  { root: ".beads", why: "the bd issue export: bead records, never a lane step (this bead's exported notes name install shapes)" },
+  { root: "docs", why: "documentation, never a lane step: the docs07 census binds its Deno sentence, and receipts quote measured runs" },
+  { root: "media", why: "a demo video and a screenshot" },
+  { root: "new-feedback", why: "findings filed for upstream tools: prose, never a lane step" },
+  { root: "vendor", why: "the vendored SDK tarballs package.json installs as file: dependencies, their README and their lock" },
+];
 
 interface LaneWalk {
   readonly files: readonly string[];
@@ -291,11 +322,12 @@ interface LaneWalk {
   readonly hits: readonly string[];
 }
 
+const byName = (a: { readonly name: string }, b: { readonly name: string }): number => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+
 /** Every regular file under `root/dir`, as repository-relative paths in sorted order; symlinks are listed apart, never followed. */
 function walk(root: string, dir: string, symlinks: string[]): string[] {
   const files: string[] = [];
-  const entries = readdirSync(join(root, dir), { withFileTypes: true }).sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
-  for (const entry of entries) {
+  for (const entry of readdirSync(join(root, dir), { withFileTypes: true }).sort(byName)) {
     const path = join(dir, entry.name);
     if (entry.isSymbolicLink()) symlinks.push(path);
     else if (entry.isDirectory()) files.push(...walk(root, path, symlinks));
@@ -304,13 +336,18 @@ function walk(root: string, dir: string, symlinks: string[]): string[] {
   return files;
 }
 
-/** The lane census over `root`: the walked files, the per-root counts, the symlinks and every install hit as "<file>:<line>:<shape>". */
+/**
+ * The lane census over `root`: every regular file at the root in sorted order (a root symlink is neither followed nor
+ * listed), then each LANE_ROOTS tree; the per-tree counts, the symlinks inside the trees and every install hit as
+ * "<file>:<line>:<shape>".
+ */
 function laneCensus(root: string): LaneWalk {
   const symlinks: string[] = [];
-  const counts: Record<string, number> = {};
-  const configs = readdirSync(root).filter(name => VITEST_CONFIG.test(name)).sort();
-  counts.vitest = configs.length;
-  const files: string[] = [...LANE_FILES, ...configs];
+  const files = readdirSync(root, { withFileTypes: true })
+    .sort(byName)
+    .filter(entry => entry.isFile())
+    .map(entry => entry.name);
+  const counts: Record<string, number> = { root: files.length };
   for (const { root: tree } of LANE_ROOTS) {
     const found = existsSync(join(root, tree)) ? walk(root, tree, symlinks) : [];
     counts[tree] = found.length;
@@ -318,6 +355,13 @@ function laneCensus(root: string): LaneWalk {
   }
   const hits = files.flatMap(file => denoInstallHits(readFileSync(join(root, file), "utf8")).map(hit => `${file}:${hit}`));
   return { files, counts, symlinks, hits };
+}
+
+let rootWalk: LaneWalk | undefined;
+/** The lane census over the repository, walked once for every case that reads it. */
+function rootCensus(): LaneWalk {
+  rootWalk ??= laneCensus(ROOT);
+  return rootWalk;
 }
 
 /** One planted control per shape, composed at run time so this file's own lines never spell one. */
@@ -363,34 +407,58 @@ const TOKEN_PLANTS: readonly { readonly shape: string; readonly line: string }[]
   { shape: "I6", line: ["image:", `denoland/${DENO_ENGINE}:2.9.7`].join(" ") },
   { shape: "I6", line: ["FROM", `docker.io/denoland/${DENO_ENGINE}:2.9.7`].join(" ") },
 ];
-/** The named residuals' quiet rows: R-MIRROR (an archive from a host no shape names) and R-COMPOSED (a planted control's own source line). */
+/** The frozen count of planted controls per shape (rule 16): PLANTS, EXTRA_PLANTS and TOKEN_PLANTS together, in shape order. */
+const FROZEN_SHAPE_PLANTS: readonly string[] = ["I1:2", "I2:3", "I3:14", "I4:40", "I5:2", "I6:4"];
+/**
+ * The named residuals' quiet rows: R-MIRROR (an archive from a host no shape names), R-COMPOSED (a planted control's own
+ * source line) and R-UNNAMED-MANAGER (a package manager no shape names, and a version manager that installs the engine
+ * without naming it).
+ */
 const RESIDUAL_QUIET: readonly { readonly id: string; readonly line: string }[] = [
   { id: "R-MIRROR", line: ["curl -fsSLO https://mirror", "example", `invalid/engines/${DENO_ENGINE}-2.9.7.zip`].join(".") },
   { id: "R-COMPOSED", line: '  { shape: "I3", line: ["mise", "use", "-g", "deno@2.9.7"].join(" ") },' },
+  { id: "R-UNNAMED-MANAGER", line: ["zypper", "install", DENO_ENGINE].join(" ") },
+  { id: "R-UNNAMED-MANAGER", line: ["dvm", "install", "2.9.7"].join(" ") },
 ];
-/** Lines that name the engine or a manager without installing anything: each reads quiet. */
-const QUIET: readonly string[] = [
-  ["mise", "exec", "--", "pnpm", "exec", "vitest", "run"].join(" "),
-  [DENO_ENGINE, "--version"].join(" "),
-  "The operator provisions Deno per RFCLI ruling A4 at the exact version and binary sha256 the installed rf's integrations/tsx/runtime-lock.json pins, and no Pi lane installs it: the rf-preview-tsx tier refuses, before rf runs, a deno that PATH resolves to a version-manager shim (a symlink to a binary of another name, a file in a shims directory or a #! script), refuses a deno whose sha256 differs from the pin the render reports, and records the deno it held to that pin (its PATH-resolved path, realpath and sha256) on one RF-TSX-ENGINE line beside the R9 receipt rows.",
-  ["npm", "install", "--no-audit"].join(" "),
-];
+/** Lines that name the engine or a manager without installing anything: each reads quiet (the docs/07 paragraph is read by the anchor case). */
+const QUIET: readonly string[] = [["mise", "exec", "--", "pnpm", "exec", "vitest", "run"].join(" "), [DENO_ENGINE, "--version"].join(" "), ["npm", "install", "--no-audit"].join(" ")];
+
+const DOCS_FILE = "docs/workbench/07-native-integrations.md";
+/** The docs/07 Deno sentence's list of the command families the lane census reads. */
+const DOCS_FAMILIES = /no Pi lane installs it \(the lane census reads the root files and the lane trees for six command families: ([^()]+)\):/g;
+/** The labels of an "A, B, ..., E and F" list, in order. */
+function familiesOf(list: string): string[] {
+  const parts = list.split(", ");
+  const last = parts.pop() ?? "";
+  return [...parts, ...last.split(" and ")];
+}
 
 describe(DENO_LANE_SUITE, () => {
-  it("the walk reads forge.toml, package.json, the root vitest configs and the .github, .agents, .pi, .codex, src, test and qa trees above their floors, this file, the helper and the tier among them", () => {
-    const census = laneCensus(ROOT);
-    expect(census.counts.vitest ?? 0).toBeGreaterThanOrEqual(VITEST_FLOOR);
+  it("the walk reads every regular file at the repository root and the .github, .agents, .pi, .codex, examples, src, test and qa trees above their floors, this file, the helper and the tier among them", () => {
+    const census = rootCensus();
     for (const { root, floor } of LANE_ROOTS) expect(census.counts[root] ?? 0, root).toBeGreaterThanOrEqual(floor);
-    expect(LANE_ROOTS.map(entry => entry.root)).toEqual([".github", ".agents", ".pi", ".codex", "src", "test", "qa"]);
-    const anchors = [".github/workflows/ci.yml", ".agents/skills/beads/SKILL.md", ".pi/agents/auditor.md", ".codex/config.toml", "src/workbench/providers/reactivefiber.ts", SELF, "qa/workbench/receipts-index.mjs"];
-    expect(LANE_ROOTS.map(entry => anchors.filter(anchor => anchor.startsWith(`${entry.root}/`)).length)).toEqual([1, 1, 1, 1, 1, 1, 1]);
-    for (const file of [...LANE_FILES, "vitest.rf-tsx.config.ts", ...anchors, HELPER, TIER]) expect(census.files, file).toContain(file);
+    expect(LANE_ROOTS.map(entry => entry.root)).toEqual([".github", ".agents", ".pi", ".codex", "examples", "src", "test", "qa"]);
+    const anchors = [".github/workflows/ci.yml", ".agents/skills/beads/SKILL.md", ".pi/agents/auditor.md", ".codex/config.toml", "examples/agent-tool-description.md", "src/workbench/providers/reactivefiber.ts", SELF, "qa/workbench/receipts-index.mjs"];
+    expect(LANE_ROOTS.map(entry => anchors.filter(anchor => anchor.startsWith(`${entry.root}/`)).length)).toEqual([1, 1, 1, 1, 1, 1, 1, 1]);
+    for (const file of ["AGENTS.md", "forge.toml", "package.json", "vitest.config.ts", "vitest.rf-tsx.config.ts", ...anchors, HELPER, TIER]) expect(census.files, file).toContain(file);
     expect(census.symlinks).toEqual([]);
+  });
+
+  it("the walked trees and UNWALKED_ROOTS, each named with why, partition the repository's tracked top-level directories, and the walk reads every tracked root file (the git index, an anchor outside this census)", () => {
+    const tracked = execFileSync("git", ["ls-files", "-z"], { cwd: ROOT, encoding: "utf8", maxBuffer: 1 << 26 })
+      .split("\0")
+      .filter(path => path !== "");
+    const trees = [...new Set(tracked.filter(path => path.includes("/")).map(path => path.slice(0, path.indexOf("/"))))].sort();
+    const walked = LANE_ROOTS.map(entry => entry.root);
+    expect(UNWALKED_ROOTS.filter(entry => walked.includes(entry.root) || entry.why === "")).toEqual([]);
+    expect([...walked, ...UNWALKED_ROOTS.map(entry => entry.root)].sort()).toEqual(trees);
+    const census = rootCensus();
+    expect(tracked.filter(path => !path.includes("/") && !census.files.includes(path))).toEqual([]);
   });
 
   it("no walked file carries a Deno install command: 0 hits of the six shapes, this file and the helper judged with the rest", () => {
     expect(DENO_INSTALL_SHAPES.map(shape => shape.id)).toEqual(["I1", "I2", "I3", "I4", "I5", "I6"]);
-    expect(laneCensus(ROOT).hits).toEqual([]);
+    expect(rootCensus().hits).toEqual([]);
   });
 
   it("each shape reads its planted control and only that shape, and the quiet lines read nothing", () => {
@@ -400,6 +468,7 @@ describe(DENO_LANE_SUITE, () => {
     expect(TOKEN_PLANTS).toHaveLength(2 + MANAGERS.length + MANAGER_VERBS.length + JS_MANAGERS.length + JS_VERBS.length + OS_MANAGERS.length + OS_VERBS.length + PY_MANAGERS.length + NIX_VERBS.length + 3);
     for (const plant of TOKEN_PLANTS) expect(denoInstallHits(plant.line), plant.line).toEqual([`1:${plant.shape}`]);
     for (const line of QUIET) expect(denoInstallHits(line), line).toEqual([]);
+    expect(RESIDUAL_QUIET.map(residual => residual.id)).toEqual(["R-MIRROR", "R-COMPOSED", "R-UNNAMED-MANAGER", "R-UNNAMED-MANAGER"]);
     for (const residual of RESIDUAL_QUIET) expect(denoInstallHits(residual.line), residual.id).toEqual([]);
     expect(PLANTS.find(plant => plant.shape === "I3")?.line).toBe(["mise", "use", "-g", "deno@2.9.7"].join(" "));
     expect(denoInstallHits(["quiet", PLANTS[2]?.line ?? "", "quiet", PLANTS[4]?.line ?? ""].join("\n"))).toEqual(["2:I3", "4:I5"]);
@@ -407,17 +476,36 @@ describe(DENO_LANE_SUITE, () => {
 
   it("a planted install line in a lane file reds the census, naming the file, the line and the shape", () => {
     const dir = scratch("deno-lane-");
+    writeFileSync(join(dir, "AGENTS.md"), `# Agents\n\nRun ${PLANTS[4]?.line ?? ""} before the tier.\n`);
     writeFileSync(join(dir, "forge.toml"), `[build.commands.setup]\ncommand = "${PLANTS[0]?.line ?? ""}"\n`);
     writeFileSync(join(dir, "package.json"), `{\n  "scripts": {\n    "pretest": "${PLANTS[3]?.line ?? ""}"\n  }\n}\n`);
     writeFileSync(join(dir, "vitest.config.ts"), "export default {};\n");
     mkdirSync(join(dir, ".github", "workflows"), { recursive: true });
     writeFileSync(join(dir, ".github", "workflows", "ci.yml"), `steps:\n${PLANTS[5]?.line ?? ""}\n`);
+    mkdirSync(join(dir, "examples"));
+    writeFileSync(join(dir, "examples", "setup.md"), `${PLANTS[1]?.line ?? ""}\n`);
     mkdirSync(join(dir, "qa"));
     writeFileSync(join(dir, "qa", "provision.mjs"), `execSync("${PLANTS[2]?.line ?? ""}");\n`);
     symlinkSync(join(dir, "qa", "provision.mjs"), join(dir, "qa", "linked.mjs"));
+    symlinkSync(join(dir, "AGENTS.md"), join(dir, "linked.md"));
     const census = laneCensus(dir);
-    expect(census.hits).toEqual(["forge.toml:2:I1", "package.json:3:I4", ".github/workflows/ci.yml:2:I6", "qa/provision.mjs:1:I3"]);
+    expect(census.hits).toEqual(["AGENTS.md:3:I5", "forge.toml:2:I1", "package.json:3:I4", ".github/workflows/ci.yml:2:I6", "examples/setup.md:1:I2", "qa/provision.mjs:1:I3"]);
     expect(census.symlinks).toEqual(["qa/linked.mjs"]);
-    expect(relative(dir, join(dir, census.files[0] ?? ""))).toBe("forge.toml");
+    expect(census.files.slice(0, 4)).toEqual(["AGENTS.md", "forge.toml", "package.json", "vitest.config.ts"]);
+    expect(census.files).not.toContain("linked.md");
+  });
+
+  it("the six shapes are the six command families the docs/workbench/07 Deno sentence names, label for label in order, each with its frozen count of planted controls, and that sentence's paragraph reads quiet (an anchor outside this census)", () => {
+    const docs = readFileSync(join(ROOT, DOCS_FILE), "utf8");
+    const lists = [...docs.matchAll(DOCS_FAMILIES)];
+    expect(lists).toHaveLength(1);
+    const [list] = lists;
+    expect(DENO_INSTALL_SHAPES.map(shape => shape.label)).toEqual(familiesOf(list?.[1] ?? ""));
+    const planted = [...PLANTS, ...EXTRA_PLANTS, ...TOKEN_PLANTS];
+    expect(DENO_INSTALL_SHAPES.map(shape => `${shape.id}:${planted.filter(plant => plant.shape === shape.id).length}`)).toEqual(FROZEN_SHAPE_PLANTS);
+    expect(planted.filter(plant => !DENO_INSTALL_SHAPES.some(shape => shape.id === plant.shape))).toEqual([]);
+    const paragraph = docs.split("\n").filter(line => line.includes(list?.[0] ?? "\0"));
+    expect(paragraph).toHaveLength(1);
+    expect(denoInstallHits(paragraph[0] ?? "")).toEqual([]);
   });
 });
