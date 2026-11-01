@@ -37,12 +37,14 @@
  *     LOADER_FACTORIES, BINDING_ASSIGNMENTS, LOGICAL_ASSIGNMENTS, EITHER_OPERAND, CHILD_PROCESS, IO_GLOBALS, GLOBAL_OBJECTS,
  *     PROCESS_READS), one module per site spelling every entry there, so dropping one entry at one site reds that site's pin.
  *  F  the form roster: cut #5's 139 REACH_FORMS in its families (entries, follow, escapes, exports, strings, loads, heritage,
- *     instantiation, scope, logical, merged, ambient, arrays), the forms this cut adds (bindings, bounds, entry edges, array
- *     reads, var scopes), cut #5's planted module and the script kinds.
- *  P  the position roster: cut #5's 106 REFERENCE_POSITIONS and this cut's 26, one pin per kind (value, discarded, written,
- *     export, name, type), each position probed with HELD as WebSocket, globalThis, process and a held child_process namespace
- *     (heldReading) and held to its kind.
- *  Q  the residual's pinned quiet row (RESIDUALS).
+ *     instantiation, scope, logical, merged, ambient, arrays), the forms cut #1 added (bindings, bounds, entry edges, array
+ *     reads, var scopes), the forms this respin adds (RESPIN_FORMS: write targets, array reaches, the scope matrix, entry
+ *     candidates, loader spellings, flows, literal keys, optional chains, specifier slots), cut #5's planted module and the
+ *     script kinds.
+ *  P  the position roster: cut #5's 106 REFERENCE_POSITIONS, then ADDED_POSITIONS (cut #1's 26 and this respin's 129), one pin
+ *     per kind (value, discarded, written, export, name, type), each position probed with HELD as WebSocket, globalThis,
+ *     process and a held child_process namespace (heldReading) and held to its kind.
+ *  Q  the residual's pinned quiet row (RESIDUALS), member by member (RESIDUE_MEMBERS).
  *
  * CURES (each a pin named by the claims, each named hollowing executed by the KILLS case):
  *  - refusal #5 U1 (claim words without a falsifier): every claim word is a pin that reds when its reader branch is hollowed -
@@ -59,6 +61,18 @@
  *  - the same class, named at cut time: an array element called through an instantiation expression read the array as only
  *    read (elementRead now climbs every WRAPPERS kind), and a type-wrapped write target read its old value as a <reference>
  *    (isWriteTarget now climbs WRAPPERS).
+ * RESPIN (wb-pyel.9 refusal #1, cut #1 bee8c260; the helper's bytes unchanged - every cure is a pin or a narrowed claim):
+ *  - U1 (claim words wider than pins): KILLS executes the gate's seventeen one-edit mutants G01..G17 on the helper's own bytes,
+ *    each held to its exact red set, and for every U1 member (G01, G03-G07, G09-G13) and G02, G14, G15, G16 also to its
+ *    witness forms (each reads differently) and its twin forms (each reads the same), the gate's archived modules verbatim; the claim
+ *    words now say exactly what the forms pin (every compound operator, a prefix decrement, a pattern at any depth, an optional
+ *    call, an export under any name, a var in a function of any kind, a parameter's and a catch variable's and an expression
+ *    name's own scope, a class or enum in its block, any resolved candidate, a no-substitution template wherever a string is).
+ *  - U2 (the KILLS loader is a computed load): test/workbench-rc-remote-component-stream-census.test.ts's COMPUTED_LOADS and
+ *    its roster now judge it ("test/workbench-edc-static-reach-readers-census.test.ts: import() pathToFileURL(file).href").
+ *  - U3 (the carried positions' anchor was a lower bound): the positions after the carried 106 are exactly ADDED_POSITIONS.
+ *  - U4 (the residual's prose was not anchored to its quiet row): RESIDUE_MEMBERS holds every probe to one named member, the
+ *    residual claim names every member, and the first five are the forms wb-pyel.5's Q6 sentence names.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set (every row's id, label and pins,
  * every pin's witness, the claims, the kills, the constants and every registered test title) is held to the out-of-file roster
@@ -67,7 +81,9 @@
  * name, and wb-pyel.5's R-B123 line names LA4, LA5 and NS2; wb-pyel.5's cut #5 FORM line counts the carried forms (139) and
  * positions (106); wb-pyel.5's notes name the residual family R-STATIC-FORMS; and once the export carries wb-pyel.5's refusal #5
  * unmet items (each a paragraph), KILLS holds exactly the hollowings its U1 item names, U holds every witness it spells and the
- * plant and control its U2 item names (the tracker holds those items at cut time; the export carries them from its next hop).
+ * plant and control its U2 item names (the tracker holds those items at cut time; the export carries them from its next hop);
+ * wb-pyel.5's Q6 sentence names the residual's first five members; and once the export carries wb-pyel.9's refusal #1 U1 item,
+ * KILLS holds every gate mutant it names.
  * The helper itself:
  * row S holds exactly the vocabulary use sites its source holds, each site module spelling every entry; every predicate
  * isNameSlot and isWriteTarget test has a pinned position; each scriptKind pattern has a script form in either letter case; and
@@ -78,14 +94,15 @@
  * outside anchor names it; a form's probe edited in both; a reading of a module the readers are never given (the readers read
  * one module; the module closure is the composing census's).
  * RESIDUALS (named, each with its pinned quiet row): R-STATIC-FORMS the forms the readers do not parse (Q-STATIC-FORMS: one probe
- * per form, its reading by every reader pinned) - a launch-named call on a value the tracer does not hold whose command does
- * not resolve, outside a namespace body and an enum declaration (a parameter's or a let's command, a conditional with an arm
- * that does not resolve, a spread or unbound array, a string index, a computed callee key, a command past RESOLVE_DEPTH); a
- * launch through a value the module does not bind from child_process (a parameter, a function a call returns); a package's own
- * launcher; a global reached without its name; a write through the allowed process.env read; a launch whose arguments carry rf
- * through a shell; another builtin's process or thread API; a loader reached through a call the loader reader does not parse or
- * a binding it does not read (an alias of require, a renamed createRequire, a createRequire result held in a property, a
- * parameter's default or an operand); code evaluated at run time; and a process-internal binding.
+ * per form, its reading by every reader pinned), member by member as RESIDUE_MEMBERS names them and the residual claim spells
+ * them - a launch through an API that is no child_process binding with an unresolved command; a launch through a value the
+ * module does not bind; a package's own launcher read by its specifier alone; a constructor-chain global; a write through the
+ * allowed process.env read; a launch whose arguments carry rf through a shell; another builtin's process or thread API; a loader
+ * reached through a call the loader reader does not parse; a loader reached through a binding the loader reader does not read (an
+ * alias of require, a renamed createRequire, a createRequire result held in a property, a parameter's default or an operand);
+ * code evaluated at run time; a process-internal binding; and a launch-named call on a value the tracer does not hold whose
+ * command does not resolve (outside a namespace body and an enum declaration: a conditional with an arm that does not resolve,
+ * either arm, a spread or unbound array, a string index, a computed callee key).
  *
  * Display paths added: none. Test-only: the KILLS case writes each hollowed copy of the helper into makeScratch scratch with
  * the leak guard installed; src, the helper, the fixture, tsconfig.json and the bead export are only read.
@@ -389,6 +406,234 @@ const EXTRA_FORMS: Readonly<Record<string, string>> = {
   "logical-member-value": "import * as cp from \"node:child_process\";\nconst go = (cp.spawn ||= fallback);\ngo(\"rf\", []);\n",
   "loader-second-argument": "declare function require(...ids: string[]): unknown;\nrequire(\"planted\", \"node:child_process\");\n",
 };
+/** The forms this respin adds (wb-pyel.9 refusal #1, U1): the gate's witness and twin modules for its U1 members and for G14 and G15
+ * (verbatim from its archive), the respin's own witness or twin forms for G02, G14, G15 and G16, and the forms the respin's
+ * battery found each claim word's reader branch needs. */
+const RESPIN_FORMS: Readonly<Record<string, string>> = {
+  "g01-predec-array": "declare const api: { exec(command: string, args: string[]): void };\n// TOOLS[0] is any so the prefix decrement type-checks\nconst TOOLS: any[] = [\"git\"];\n--TOOLS[0];\napi.exec(TOOLS[0], []);\n",
+  "g01-predec-held": "import * as cp from \"node:child_process\";\nlet held: unknown = cp;\n--(held as number);\n",
+  "g01-postdec-twin": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0]--;\napi.exec(TOOLS[0], []);\n",
+  "g03-nested-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: [string] = [\"git\"];\n[[TOOLS[0]]] = [[\"rf\"]];\napi.exec(TOOLS[0], []);\n",
+  "g03-nested-held": "import * as cp from \"node:child_process\";\nlet held: unknown = cp;\n[[held]] = [[0]];\n",
+  "g03-flat-twin": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: [string] = [\"git\"];\n[TOOLS[0]] = [\"rf\"];\napi.exec(TOOLS[0], []);\n",
+  "compound-minus-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] -= other;\napi.exec(TOOLS[0], []);\n",
+  "compound-times-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] *= other;\napi.exec(TOOLS[0], []);\n",
+  "compound-power-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] **= other;\napi.exec(TOOLS[0], []);\n",
+  "compound-divide-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] /= other;\napi.exec(TOOLS[0], []);\n",
+  "compound-remainder-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] %= other;\napi.exec(TOOLS[0], []);\n",
+  "compound-shl-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] <<= other;\napi.exec(TOOLS[0], []);\n",
+  "compound-shr-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] >>= other;\napi.exec(TOOLS[0], []);\n",
+  "compound-ushr-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] >>>= other;\napi.exec(TOOLS[0], []);\n",
+  "compound-and-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] &= other;\napi.exec(TOOLS[0], []);\n",
+  "compound-or-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] |= other;\napi.exec(TOOLS[0], []);\n",
+  "compound-xor-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0] ^= other;\napi.exec(TOOLS[0], []);\n",
+  "wrapped-logical-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\n(TOOLS[0] as any) ||= other;\napi.exec(TOOLS[0], []);\n",
+  "for-in-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nfor (TOOLS[0] in table) hand();\napi.exec(TOOLS[0], []);\n",
+  "for-in-pattern-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nfor ([TOOLS[0]] in table) hand();\napi.exec(TOOLS[0], []);\n",
+  "for-of-pattern-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nfor ({ a: TOOLS[0] } of list) hand();\napi.exec(TOOLS[0], []);\n",
+  "for-await-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nfor await (TOOLS[0] of list) hand();\napi.exec(TOOLS[0], []);\n",
+  "nested-object-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\n({ a: { b: TOOLS[0] } } = other);\napi.exec(TOOLS[0], []);\n",
+  "object-in-array-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\n[{ a: TOOLS[0] }] = list;\napi.exec(TOOLS[0], []);\n",
+  "default-target-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\n[TOOLS[0] = 1] = list;\napi.exec(TOOLS[0], []);\n",
+  "computed-key-target-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\n({ [key]: TOOLS[0] } = other);\napi.exec(TOOLS[0], []);\n",
+  "string-key-target-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\n({ \"a\": TOOLS[0] } = other);\napi.exec(TOOLS[0], []);\n",
+  "nested-rest-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\n[...[TOOLS[0]]] = list;\napi.exec(TOOLS[0], []);\n",
+  "g04-optional-call": "import { spawn } from \"node:child_process\";\nconst TOOLS: [string, (this: [string, unknown]) => void] = [\n  \"git\",\n  function (this: [string, unknown]): void {\n    this[0] = \"rf\";\n  },\n];\nTOOLS[1]?.();\nspawn(TOOLS[0], []);\n",
+  "g04-call-twin": "import { spawn } from \"node:child_process\";\nconst TOOLS: [string, (this: [string, unknown]) => void] = [\n  \"git\",\n  function (this: [string, unknown]): void {\n    this[0] = \"rf\";\n  },\n];\nTOOLS[1]();\nspawn(TOOLS[0], []);\n",
+  "g05-export-alias": "import { spawn } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nexport { TOOLS as LIST };\nspawn(TOOLS[0], []);\n",
+  "g05-plain-twin": "import { spawn } from \"node:child_process\";\nconst TOOLS = [\"git\"];\nexport { TOOLS };\nspawn(TOOLS[0], []);\n",
+  "called-with-element": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\nTOOLS[1](TOOLS[0]);\napi.exec(TOOLS[0], []);\n",
+  "instantiated-call": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\nTOOLS[1]<T>();\napi.exec(TOOLS[0], []);\n",
+  "optional-element-read": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\nTOOLS?.[1];\napi.exec(TOOLS[0], []);\n",
+  "parenthesized-delete": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\ndelete (TOOLS[0]);\napi.exec(TOOLS[0], []);\n",
+  "optional-element-call": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\nTOOLS?.[1]();\napi.exec(TOOLS[0], []);\n",
+  "wrapped-optional-call": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\n(TOOLS[1] as F)?.();\napi.exec(TOOLS[0], []);\n",
+  "new-element": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\nnew TOOLS[1]();\napi.exec(TOOLS[0], []);\n",
+  "export-as-default": "declare const api: { exec(command: string, args: string[]): void };\nconst OTHER = 1;\nconst TOOLS = [\"git\"];\nexport { TOOLS as default };\napi.exec(TOOLS[0], []);\n",
+  "export-type-only": "declare const api: { exec(command: string, args: string[]): void };\nconst OTHER = 1;\nconst TOOLS = [\"git\"];\nexport { type TOOLS };\napi.exec(TOOLS[0], []);\n",
+  "export-string-alias": "declare const api: { exec(command: string, args: string[]): void };\nconst OTHER = 1;\nconst TOOLS = [\"git\"];\nexport { TOOLS as \"list\" };\napi.exec(TOOLS[0], []);\n",
+  "export-default-array": "declare const api: { exec(command: string, args: string[]): void };\nconst OTHER = 1;\nconst TOOLS = [\"git\"];\nexport default TOOLS;\napi.exec(TOOLS[0], []);\n",
+  "optional-index-command": "const TOOLS = [\"rf\"];\nconst NESTED = [[\"rf\"]];\napi.exec(TOOLS?.[0], []);\n",
+  "string-index-read-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS = [\"rf\"];\nhand(TOOLS[\"length\"]);\napi.exec(TOOLS[0], []);\n",
+  "identifier-index-read-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS = [\"rf\"];\nhand(TOOLS[index]);\napi.exec(TOOLS[0], []);\n",
+  "template-index-read-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS = [\"rf\"];\nhand(TOOLS[`length`]);\napi.exec(TOOLS[0], []);\n",
+  "non-null-logical-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\"];\nTOOLS[0]! ||= \"rf\";\napi.exec(TOOLS[0], []);\n",
+  "parenthesized-logical-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"\"];\nhand((TOOLS[0] ||= \"rf\"));\napi.exec(TOOLS[0], []);\n",
+  "chained-logical-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"\"];\nother = TOOLS[0] ||= \"rf\";\napi.exec(TOOLS[0], []);\n",
+  "element-logical-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"\"];\nhand([TOOLS[0] ||= \"rf\"]);\napi.exec(TOOLS[0], []);\n",
+  "two-argument-call-array": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = [\"git\", function (this: string[]): void {\n  this[0] = \"rf\";\n}];\nTOOLS[1](0, 1);\napi.exec(TOOLS[0], []);\n",
+  "substitution-tag-array": `declare const api: { exec(command: string, args: string[]): void };\nconst TOOLS: any[] = ["git", function (this: string[]): void {\n  this[0] = "rf";\n}];\nTOOLS[1]\`run \${flag}\`;\napi.exec(TOOLS[0], []);\n`,
+  "late-spread-array-command": "declare const api: { exec(command: string, args: string[]): void };\napi.exec([\"rf\", ...others][0], []);\n",
+  "nested-true-arm-array-command": "declare const api: { exec(command: string, args: string[]): void };\napi.exec((flag ? flag ? [\"rf\"] : [\"git\"] : [\"forge\"])[0], []);\n",
+  "chained-conditional-array-command": "declare const api: { exec(command: string, args: string[]): void };\napi.exec((flag ? [\"rf\"] : flag ? [\"git\"] : [\"forge\"])[0], []);\n",
+  "nested-true-arm-command": "declare const api: { exec(command: string, args: string[]): void };\napi.exec(flag ? flag ? \"rf\" : \"git\" : \"forge\", []);\n",
+  "exported-typed-array-command": "declare const api: { exec(command: string, args: string[]): void };\nexport const TOOLS: string[] = [\"git\"];\napi.exec(TOOLS[0], []);\n",
+  "exported-uninitialized-same-name": "declare const api: { exec(command: string, args: string[]): void };\nexport let TOOLS: string[];\nexport function f(): void {\n  const TOOLS = [\"git\"];\n  api.exec(TOOLS[0], []);\n}\n",
+  "g06-var-arrow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const decoy = (): string => {\n  var TOOL = \"git\";\n  return TOOL;\n};\napi.exec(TOOL, []);\n",
+  "g06-var-method": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class Holder {\n  decoy(): string {\n    var TOOL = \"git\";\n    return TOOL;\n  }\n}\napi.exec(TOOL, []);\n",
+  "g06-var-function-twin": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function decoy(): string {\n  var TOOL = \"git\";\n  return TOOL;\n}\napi.exec(TOOL, []);\n",
+  "g07-param-arrow-tracer": "import { spawn } from \"node:child_process\";\nconst TOOL = \"git\";\nexport const launch = (TOOL: string): void => {\n  spawn(TOOL, []);\n};\n",
+  "g07-param-arrow-api": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"git\";\nexport const launch = (TOOL: string): void => {\n  api.exec(TOOL, []);\n};\n",
+  "g07-param-function-twin": "import { spawn } from \"node:child_process\";\nconst TOOL = \"git\";\nexport function launch(TOOL: string): void {\n  spawn(TOOL, []);\n}\n",
+  "g10-function-name": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const decoy = function TOOL(): void {};\napi.exec(TOOL, []);\n",
+  "g10-class-name": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const Decoy = class TOOL {};\napi.exec(TOOL, []);\n",
+  "g10-inside-twin": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const decoy = function TOOL(): void {\n  api.exec(TOOL as unknown as string, []);\n};\n",
+  "g11-catch": "declare const api: { exec(command: string, args: string[]): void };\ndeclare function hand(...values: unknown[]): void;\nconst TOOL = \"rf\";\ntry {\n  hand();\n} catch (TOOL) {\n  hand(TOOL);\n}\napi.exec(TOOL, []);\n",
+  "g11-inside-twin": "declare const api: { exec(command: string, args: string[]): void };\ndeclare function hand(...values: unknown[]): void;\nconst TOOL = \"rf\";\ntry {\n  hand();\n} catch (TOOL) {\n  api.exec(TOOL as string, []);\n}\n",
+  "g12-param": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function decoy(TOOL: string): string {\n  return TOOL;\n}\napi.exec(TOOL, []);\n",
+  "g12-inside-twin": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function decoy(TOOL: string): void {\n  api.exec(TOOL, []);\n}\n",
+  "g13-block-class": "declare const api: { exec(command: string, args: string[]): void };\ndeclare function hand(...values: unknown[]): void;\nconst TOOL = \"rf\";\nexport function launch(): void {\n  api.exec(TOOL, []);\n  {\n    class TOOL {}\n    hand(TOOL);\n  }\n}\n",
+  "g13-block-enum": "declare const api: { exec(command: string, args: string[]): void };\ndeclare function hand(...values: unknown[]): void;\nconst TOOL = \"rf\";\nexport function launch(): void {\n  api.exec(TOOL, []);\n  {\n    enum TOOL {\n      Rf,\n    }\n    hand(TOOL);\n  }\n}\n",
+  "g13-same-block-twin": "declare const api: { exec(command: string, args: string[]): void };\ndeclare function hand(...values: unknown[]): void;\nconst TOOL = \"rf\";\nexport function launch(): void {\n  class TOOL {}\n  hand(TOOL);\n  api.exec(\"rf\", []);\n}\n",
+  "var-function-expression-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const f = function (): void {\n  var TOOL = \"git\";\n  hand();\n};\napi.exec(TOOL, []);\n",
+  "var-constructor-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class K {\n  constructor() {\n    var TOOL = \"git\";\n    hand();\n  }\n}\napi.exec(TOOL, []);\n",
+  "var-getter-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class K {\n  get g(): number {\n    var TOOL = \"git\";\n    hand();\n    return 1;\n  }\n}\napi.exec(TOOL, []);\n",
+  "var-setter-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class K {\n  set s(v: number) {\n    var TOOL = \"git\";\n    hand();\n  }\n}\napi.exec(TOOL, []);\n",
+  "param-arrow-pattern-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const f = ([TOOL]: string[]): void => {\n  api.exec(TOOL, []);\n};\n",
+  "param-function-expression-pattern-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const f = function ({ TOOL }: { TOOL: string }): void {\n  api.exec(TOOL, []);\n};\n",
+  "param-method-default-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class K {\n  m(TOOL = \"git\"): void {\n    api.exec(TOOL, []);\n  }\n}\n",
+  "param-setter-rest-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class K {\n  set s(...TOOL: string[]) {\n    api.exec(TOOL, []);\n  }\n}\n",
+  "param-constructor-pattern-default-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class K {\n  constructor({ TOOL = \"git\" }: { TOOL?: string }) {\n    api.exec(TOOL, []);\n  }\n}\n",
+  "param-property-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class K {\n  constructor(private TOOL: string) {\n    api.exec(TOOL, []);\n  }\n}\n",
+  "param-pattern-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function f({ TOOL }: { TOOL: string }): void {\n  hand();\n}\napi.exec(TOOL, []);\n",
+  "catch-pattern-finally-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\ntry {\n  hand();\n} catch ({ TOOL }) {\n  hand(TOOL);\n} finally {\n  api.exec(TOOL, []);\n}\n",
+  "function-name-argument-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nhand(function TOOL(): void {\n  hand();\n});\napi.exec(TOOL, []);\n",
+  "function-name-parenthesized-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const decoy = (function TOOL(): void {\n  api.exec(TOOL, []);\n});\n",
+  "function-name-array-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const decoys = [function TOOL(): void {\n  api.exec(TOOL, []);\n}];\n",
+  "generator-name-argument-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nhand(function* TOOL(): Generator<void> {\n  api.exec(TOOL, []);\n});\n",
+  "class-name-argument-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nhand(class TOOL {\n  m(): void {\n    api.exec(TOOL, []);\n  }\n});\n",
+  "class-name-parenthesized-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const decoy = (class TOOL {\n  m(): void {\n    api.exec(TOOL, []);\n  }\n});\n",
+  "enum-block-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\n{\n  enum TOOL { A }\n  hand();\n}\napi.exec(TOOL, []);\n",
+  "let-try-block-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\ntry {\n  let TOOL = \"git\";\n  hand();\n} catch {}\napi.exec(TOOL, []);\n",
+  "let-catch-block-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\ntry {\n} catch {\n  let TOOL = \"git\";\n  hand();\n}\napi.exec(TOOL, []);\n",
+  "for-await-const-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nfor await (const TOOL of tools) {\n  hand();\n}\napi.exec(TOOL, []);\n",
+  "const-enum-constructor-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class K {\n  constructor() {\n    const enum TOOL { A }\n    api.exec(TOOL, []);\n  }\n}\n",
+  "case-function-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nswitch (flag) {\n  case 1:\n    function TOOL(): string { return \"git\"; }\n    api.exec(TOOL, []);\n}\n",
+  "case-class-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nswitch (flag) {\n  case 1:\n    class TOOL {}\n    api.exec(TOOL, []);\n}\n",
+  "generator-function-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function launch(): void {\n  function* TOOL(): Generator<string> {\n    yield \"git\";\n  }\n  api.exec(TOOL, []);\n}\n",
+  "for-of-const-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nfor (const TOOL of tools) {\n  api.exec(TOOL, []);\n}\n",
+  "case-const-across-clauses": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nswitch (flag) {\n  case 1:\n    const TOOL = \"git\";\n    hand(TOOL);\n    break;\n  case 2:\n    api.exec(TOOL, []);\n}\n",
+  "case-function-across-clauses": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nswitch (flag) {\n  case 1:\n    function TOOL(): string {\n      return \"git\";\n    }\n    hand(TOOL);\n    break;\n  case 2:\n    api.exec(TOOL, []);\n}\n",
+  "case-class-across-clauses": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nswitch (flag) {\n  case 1:\n    class TOOL {}\n    hand(TOOL);\n    break;\n  case 2:\n    api.exec(TOOL, []);\n}\n",
+  "default-before-body-function": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function f(value = api.exec(TOOL, [])): void {\n  const TOOL = \"git\";\n  hand(TOOL, value);\n}\n",
+  "default-before-body-arrow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const f = (value = api.exec(TOOL, [])): void => {\n  const TOOL = \"git\";\n  hand(TOOL, value);\n};\n",
+  "default-before-body-function-expression": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const f = function (value = api.exec(TOOL, [])): void {\n  const TOOL = \"git\";\n  hand(TOOL, value);\n};\n",
+  "default-before-body-method": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class K {\n  m(value = api.exec(TOOL, [])): void {\n    const TOOL = \"git\";\n  hand(TOOL, value);\n  }\n}\n",
+  "default-before-body-constructor": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport class K {\n  constructor(value = api.exec(TOOL, [])) {\n    const TOOL = \"git\";\n  hand(TOOL, value);\n  }\n}\n",
+  "for-condition-before-body": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nfor (let i = 0; hand(api.exec(TOOL, [])), i < 1; i++) {\n  const TOOL = \"git\";\n  hand(TOOL);\n}\n",
+  "for-of-expression-before-body": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nfor (const item of hand(api.exec(TOOL, []))) {\n  const TOOL = \"git\";\n  hand(TOOL, item);\n}\n",
+  "for-in-expression-before-body": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nfor (const key in hand(api.exec(TOOL, []))) {\n  const TOOL = \"git\";\n  hand(TOOL, key);\n}\n",
+  "dotted-namespace-const-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nnamespace A.B {\n  const TOOL = \"git\";\n  hand(TOOL);\n}\napi.exec(TOOL, []);\n",
+  "conditionless-for-const-leak": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nfor (const TOOL = \"git\"; ; ) {\n  hand(TOOL);\n  break;\n}\napi.exec(TOOL, []);\n",
+  "function-name-sibling-argument": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nhand(function TOOL(): void {}, api.exec(TOOL, []));\n",
+  "nested-object-binding-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function f(): void {\n  const { a: { TOOL } } = source;\n  api.exec(TOOL, []);\n}\n",
+  "nested-array-binding-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function f(): void {\n  const [[TOOL]] = list;\n  api.exec(TOOL, []);\n}\n",
+  "rest-binding-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function f(): void {\n  const { ...TOOL } = source;\n  api.exec(TOOL, []);\n}\n",
+  "renamed-binding-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function f(): void {\n  const { a: TOOL } = source;\n  api.exec(TOOL, []);\n}\n",
+  "array-rest-binding-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport function f(): void {\n  const [...TOOL] = list;\n  api.exec(TOOL, []);\n}\n",
+  "ambient-module-var-scope": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\ndeclare module \"x\" {\n  var TOOL: string;\n}\napi.exec(TOOL, []);\n",
+  "dotted-namespace-var-scope": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nnamespace A.B {\n  var TOOL = \"git\";\n  hand(TOOL);\n}\napi.exec(TOOL, []);\n",
+  "class-expression-static-var-scope": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nexport const K = class {\n  static {\n    var TOOL = \"git\";\n    hand(TOOL);\n  }\n};\napi.exec(TOOL, []);\n",
+  "block-enum-command": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\n{\n  enum E {\n    A = api.exec(TOOL, []).length,\n  }\n  hand(E);\n}\n",
+  "for-in-const-shadow": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nfor (const TOOL in table) {\n  api.exec(TOOL, []);\n}\n",
+  "dotted-namespace-command": "declare const api: { exec(command: string, args: string[]): void };\nconst TOOL = \"rf\";\nnamespace N.M {\n  api.exec(TOOL, []);\n}\n",
+  "g09-conditional-loader": "declare const flag: boolean;\ndeclare const command: string;\nconst cp: typeof import(\"node:child_process\") = require(flag ? \"fs\" : \"node:child_process\");\ncp.spawn(command, []);\n",
+  "g09-order-twin": "declare const flag: boolean;\ndeclare const command: string;\nconst cp: typeof import(\"node:child_process\") = require(flag ? \"node:child_process\" : \"node:fs\");\ncp.spawn(command, []);\n",
+  "nested-conditional-loader": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nconst cp = load(flag ? \"fs\" : flag ? \"assert\" : \"child_process\");\ncp.spawn(command, []);\n",
+  "conditional-import": "const cp = await import(flag ? \"fs\" : \"node:child_process\");\ncp.spawn(command, []);\n",
+  "conditional-builtin": "const cp = process.getBuiltinModule(flag ? \"fs\" : \"node:child_process\");\ncp.spawn(command, []);\n",
+  "const-conditional-require": "const CP = flag ? \"assert\" : \"child_process\";\nconst cp = require(CP);\ncp.spawn(command, []);\n",
+  "array-conditional-require": "const cp = require((flag ? [\"fs\"] : [\"node:child_process\"])[0]);\ncp.spawn(command, []);\n",
+  "type-only-export-from": "export type { spawn } from \"node:child_process\";\n",
+  "named-export-from": "export { spawn, exec as run } from \"node:child_process\";\n",
+  "empty-specifier": "import \"\";\nimport empty = require(\"\");\nhand(empty);\n",
+  "chained-loader-assignment": "import { createRequire } from \"node:module\";\nlet load;\nlet other;\nother = load = createRequire(import.meta.url);\nload(name);\n",
+  "default-target-loader": "import { createRequire } from \"node:module\";\nlet load;\n[load = createRequire(import.meta.url)] = list;\nload(name);\nload(\"node:child_process\").spawn(command, []);\n",
+  "for-init-loader": "import { createRequire } from \"node:module\";\nfor (const load = createRequire(import.meta.url); flag; ) {\n  load(name);\n  break;\n}\nload(name);\nload(\"node:child_process\").spawn(command, []);\n",
+  "typed-loader-declaration": "import { createRequire } from \"node:module\";\nconst load: NodeRequire = createRequire(import.meta.url);\nload(name);\nload(\"node:child_process\").spawn(command, []);\n",
+  "instantiated-factory-binding": "import { createRequire } from \"node:module\";\nconst load = createRequire<T>(import.meta.url);\nload(name);\n",
+  "element-factory-binding": "import { createRequire } from \"node:module\";\nconst load = m[\"createRequire\"](import.meta.url);\nload(name);\n",
+  "optional-factory-binding": "import { createRequire } from \"node:module\";\nconst load = createRequire?.(import.meta.url);\nload(name);\n",
+  "parenthesized-factory-call": "import { createRequire } from \"node:module\";\n(createRequire)(import.meta.url)(name);\n",
+  "instantiated-factory-call": "import { createRequire } from \"node:module\";\ncreateRequire<T>(import.meta.url)(name);\n",
+  "two-argument-factory-call": "import { createRequire } from \"node:module\";\ncreateRequire(import.meta.url, other)(name);\n",
+  "optional-factory-result-call": "import { createRequire } from \"node:module\";\ncreateRequire(import.meta.url)?.(name);\n",
+  "require-of-call-result": "import { createRequire } from \"node:module\";\nmake().require(name);\n",
+  "instantiated-require": "import { createRequire } from \"node:module\";\nrequire<T>(name);\n",
+  "parenthesized-factory-binding": "import { createRequire } from \"node:module\";\nconst load = (createRequire)(import.meta.url);\nload(name);\n",
+  "two-argument-factory-binding": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url, other);\nload(name);\n",
+  "optional-factory-result": "import { createRequire } from \"node:module\";\ncreateRequire?.(import.meta.url)(name);\n",
+  "parenthesized-assignment-loader": "import { createRequire } from \"node:module\";\nlet load;\nhand((load = createRequire(import.meta.url)));\nload(name);\n",
+  "assigned-nested-array-in-object": "import * as cp from \"node:child_process\";\nlet x;\n({ a: [x] } = cp);\nx.spawn(\"rf\", []);\n",
+  "assigned-nested-object": "import * as cp from \"node:child_process\";\nlet y;\n({ a: { b: y } } = cp);\ny.spawn(\"rf\", []);\n",
+  "assigned-nested-array": "import * as cp from \"node:child_process\";\nlet y;\n[[y]] = cp;\ny.spawn(\"rf\", []);\n",
+  "assigned-object-in-array": "import * as cp from \"node:child_process\";\nlet y;\n[{ a: y }] = cp;\ny.spawn(\"rf\", []);\n",
+  "assigned-nested-rest": "import * as cp from \"node:child_process\";\nlet y;\n[...[y]] = cp;\ny.spawn(\"rf\", []);\n",
+  "assigned-rest-object": "import * as cp from \"node:child_process\";\nlet y;\n[...{ length: y }] = cp;\ny.spawn(\"rf\", []);\n",
+  "assigned-numeric-key": "import * as cp from \"node:child_process\";\nlet y;\n({ 0: y } = cp);\ny.spawn(\"rf\", []);\n",
+  "assigned-string-key": "import * as cp from \"node:child_process\";\nlet y;\n({ \"spawn\": y } = cp);\ny.spawn(\"rf\", []);\n",
+  "assigned-shorthand-default": "import * as cp from \"node:child_process\";\nlet y;\n({ y = 1 } = cp);\ny.spawn(\"rf\", []);\n",
+  "assigned-default-object": "import * as cp from \"node:child_process\";\nlet y;\n[{ a: y } = {}] = cp;\ny.spawn(\"rf\", []);\n",
+  "assigned-default-array": "import * as cp from \"node:child_process\";\nlet y;\n({ a: [y] = [] } = cp);\ny.spawn(\"rf\", []);\n",
+  "declared-default": "import * as cp from \"node:child_process\";\nconst { spawn: x = other } = cp;\nx.spawn(\"rf\", []);\n",
+  "declared-array-default": "import * as cp from \"node:child_process\";\nconst [y = other] = cp;\ny.spawn(\"rf\", []);\n",
+  "held-as-target-default": "import * as cp from \"node:child_process\";\nlet y;\n[y = cp] = list;\ny.spawn(\"rf\", []);\n",
+  "for-init-binding": "import * as cp from \"node:child_process\";\nfor (const y = cp; flag; ) {\n  y.spawn(\"rf\", []);\n  break;\n}\ny.spawn(\"rf\", []);\n",
+  "chained-assignment": "import * as cp from \"node:child_process\";\nlet x;\nlet y;\nx = y = cp;\nx.spawn(\"rf\", []);\n",
+  "chained-logical-assignment": "import * as cp from \"node:child_process\";\nlet x = cp;\nlet y;\ny = x ||= other;\ny.spawn(\"rf\", []);\n",
+  "stored-value": "import * as cp from \"node:child_process\";\nconst y = (holder.x = cp);\ny.spawn(\"rf\", []);\n",
+  "stored-element-value": "import * as cp from \"node:child_process\";\nconst y = (holder[\"x\"] = cp);\ny.spawn(\"rf\", []);\n",
+  "nested-conditional-arm": "import * as cp from \"node:child_process\";\nconst y = flag ? a : flag ? b : cp;\ny.spawn(\"rf\", []);\n",
+  "parenthesized-conditional": "import * as cp from \"node:child_process\";\nconst y = (flag ? cp : a);\ny.spawn(\"rf\", []);\n",
+  "nested-either-operand": "import * as cp from \"node:child_process\";\nconst y = (cp || a) ?? b;\ny.spawn(\"rf\", []);\n",
+  "typed-launch-call": "import * as cp from \"node:child_process\";\ncp.spawn<never>(\"rf\", []);\ny.spawn(\"rf\", []);\n",
+  "numeric-member": "import * as cp from \"node:child_process\";\nconst KEY = \"spawn\";\nconst KT = `spawn`;\nconst KEYS = [\"spawn\"];\nhand(cp[0]);\n",
+  "void-discard": "import * as cp from \"node:child_process\";\nvoid cp;\nx.spawn(\"rf\", []);\n",
+  "comma-statement-discard": "import * as cp from \"node:child_process\";\ncp, other;\nx.spawn(\"rf\", []);\n",
+  "type-only-local-export": "import * as cp from \"node:child_process\";\nconst x = cp;\nexport { type x };\nx.spawn(\"rf\", []);\n",
+  "default-alias-export": "import * as cp from \"node:child_process\";\nconst x = cp;\nexport { x as default };\nx.spawn(\"rf\", []);\n",
+  "parenthesized-default-target": "import * as cp from \"node:child_process\";\nlet y;\n[(y) = other] = cp;\ny.spawn(\"rf\", []);\n",
+  "non-null-default-target": "import * as cp from \"node:child_process\";\nlet y;\n[y! = other] = cp;\ny.spawn(\"rf\", []);\n",
+  "either-element-left": "import * as cp from \"node:child_process\";\nconst go = other[\"fallback\"] || cp.spawn;\ngo(\"rf\", []);\n",
+  "either-asserted-left": "import * as cp from \"node:child_process\";\nconst go = other as any || cp.spawn;\ngo(\"rf\", []);\n",
+  "either-non-null-left": "import * as cp from \"node:child_process\";\nconst go = other! || cp.spawn;\ngo(\"rf\", []);\n",
+  "discarded-either": "import * as cp from \"node:child_process\";\ncp.spawn || fallback;\n",
+  "either-chain-left": "import * as cp from \"node:child_process\";\nconst go = cp.spawn || fallback || other;\ngo(\"rf\", []);\n",
+  "nested-conditional-true-arm": "import * as cp from \"node:child_process\";\nconst go = flag ? flag ? a : b : cp.spawn;\ngo(\"rf\", []);\n",
+  "g14-template-command": "declare const api: { exec(command: string, args: string[]): void };\napi.exec(`rf`, []);\n",
+  "g14-template-specifier": "declare const command: string;\nconst cp = await import(`node:child_process`);\ncp.spawn(command, []);\n",
+  "g14-string-twin": "const KEY = \"exec\";\nconst ARGS = [\"rf\"];\napi.exec(\"rf\");\n",
+  "g15-process-template-key": "export const home = process[`env`].HOME;\n",
+  "g15-global-template-key": "export const go = globalThis[`fetch`];\n",
+  "g15-process-string-twin": "export const home = process[\"env\"].HOME;\n",
+  "g15-global-string-twin": "export const go = globalThis[\"fetch\"];\n",
+  "g16-template-callee": "const TOOL = \"rf\";\nconst TT = `rf`;\nconst TC = flag ? \"rf\" : \"git\";\nconst T1 = \"rf\";\nconst T2 = T1;\nconst TOOLS = [\"rf\"];\nconst KEY = \"exec\";\napi[`exec`](\"rf\", []);\n",
+  "g16-string-twin": "const TOOL = \"rf\";\nconst TT = `rf`;\nconst TC = flag ? \"rf\" : \"git\";\nconst T1 = \"rf\";\nconst T2 = T1;\nconst TOOLS = [\"rf\"];\nconst KEY = \"exec\";\napi[\"exec\"](\"rf\", []);\n",
+  "template-member-key": "import * as cp from \"node:child_process\";\nconst KEY = \"spawn\";\nconst KT = `spawn`;\nconst KEYS = [\"spawn\"];\ncp[`spawn`](\"rf\", []);\n",
+  "template-global-key": "hand(self[`XMLHttpRequest`]);\n",
+  "template-binding-key": "import * as cp from \"node:child_process\";\nlet y;\n({ [`spawn`]: y } = cp);\ny.spawn(\"rf\", []);\n",
+  "numeric-global-key": "hand(globalThis[0]);\n",
+  "parenthesized-global-key": "hand(globalThis[(\"fetch\")]);\n",
+  "parenthesized-member-key": "import * as cp from \"node:child_process\";\ncp[(\"spawn\")](\"rf\", []);\n",
+  "numeric-binding-key-one": "import * as cp from \"node:child_process\";\nconst { 1: second } = cp;\nsecond(\"rf\", []);\n",
+  "optional-element-member": "import * as cp from \"node:child_process\";\nconst KEY = \"spawn\";\nconst KT = `spawn`;\nconst KEYS = [\"spawn\"];\ncp?.[\"spawn\"](\"rf\", []);\n",
+  "optional-default-member": "import * as cp from \"node:child_process\";\nconst KEY = \"spawn\";\nconst KT = `spawn`;\nconst KEYS = [\"spawn\"];\ncp?.default?.spawn(\"rf\", []);\n",
+  "optional-global-member": "hand(window?.fetch);\n",
+  "optional-global-element": "hand(globalThis?.[\"fetch\"]);\n",
+  "optional-launch-call": "const TOOL = \"rf\";\nconst TT = `rf`;\nconst TC = flag ? \"rf\" : \"git\";\nconst T1 = \"rf\";\nconst T2 = T1;\nconst TOOLS = [\"rf\"];\nconst KEY = \"exec\";\napi.exec?.(flag ? \"rf\" : \"git\", []);\n",
+  "instantiated-launch-call": "const TOOL = \"rf\";\nconst TT = `rf`;\nconst TC = flag ? \"rf\" : \"git\";\nconst T1 = \"rf\";\nconst T2 = T1;\nconst TOOLS = [\"rf\"];\nconst KEY = \"exec\";\napi.exec<T>(flag ? \"rf\" : \"git\", []);\n",
+  "nested-conditional-command": "const TOOL = \"rf\";\nconst TT = `rf`;\nconst TC = flag ? \"rf\" : \"git\";\nconst T1 = \"rf\";\nconst T2 = T1;\nconst TOOLS = [\"rf\"];\nconst KEY = \"exec\";\napi.exec(flag ? (flag ? \"rf\" : \"git\") : \"forge\", []);\n",
+  "parenthesized-specifier": "const c = require((\"node:child_process\"));\nc.spawn(command, []);\n",
+  "asserted-specifier": "const c = require(\"node:child_process\" as string);\nc.spawn(command, []);\n",
+  "conditional-specifier": "const c = require(flag ? \"node:child_process\" : \"node:fs\");\nc.spawn(command, []);\n",
+  "parenthesized-import-specifier": "const c = await import((\"node:child_process\"));\nc.spawn(command, []);\n",
+  "second-argument-specifier": "const c = require(\"node:fs\", \"node:child_process\");\nc.spawn(command, []);\n",
+  "optional-call-specifier": "const c = require?.(\"node:child_process\");\nc.spawn(command, []);\n",
+  "element-loader-specifier": "const c = module[\"require\"](\"node:child_process\");\nc.spawn(command, []);\n",
+  "parenthesized-loader-specifier": "const c = (require)(\"node:child_process\");\nc.spawn(command, []);\n",
+  "two-argument-loader-specifier": "const c = require(\"node:child_process\", other);\nc.spawn(command, []);\n",
+  "instantiated-loader-specifier": "const c = require<T>(\"node:child_process\");\nc.spawn(command, []);\n",
+};
 /** The script kinds: one JSX module under every extension parseSource reads with JSX, in either letter case. */
 const SCRIPT_FORMS: Readonly<Record<string, string>> = {
   "view.tsx": "import * as cp from \"node:child_process\";\nexport const view = <b>{cp.spawn(\"rf\", [])}</b>;\n",
@@ -402,7 +647,8 @@ const SCRIPT_FORMS: Readonly<Record<string, string>> = {
 };
 /** wb-pyel.5 cut #5's planted module (A5's control), byte for byte: every reader reads its own sites in it. */
 const PLANTED_REACH = "import { spawn as run, execFileSync } from \"node:child_process\";\nimport * as cp from \"child_process\";\nimport childProcess from \"node:child_process\";\nimport cpEquals = require(\"child_process\");\nexport { exec as reexported } from \"node:child_process\";\nexport * from \"./planted-peer.js\";\nimport q = require(\"planted-required\");\nconst lazy = await import(\"planted-lazy\");\nconst LAZY_NAME = \"planted-const-lazy\";\nconst constLazy = await import(LAZY_NAME);\nconst computedLazy = await import(pickName());\nconst required = require(\"planted-require-call\");\nconst { spawnSync: launchSync } = require(\"node:child_process\");\nconst loaded = process.getBuiltinModule(\"node:child_process\");\nconst TOOL = \"hx\";\nconst SHELLS = flag ? [\"cmd\", \"/c\"] : [\"sh\", \"-c\"];\nconst PICKED = flag ? \"git\" : \"forge\";\nrun(\"hx\", []);\nrun(\"rf\", []);\nexecFileSync(command);\ncp.fork(\"worker.js\");\ncp.exec(PICKED);\nchildProcess.execFileSync(TOOL);\ncpEquals.exec(\"git\");\nlaunchSync(SHELLS[0]);\nloaded.spawn(\"rf\");\nconst alias = run;\nServerConnection.spawn(\"forge\");\npi.exec(\"git\", []);\npi.exec(SHELLS[0], []);\nmanager.spawn(pi);\nconst reply = await fetch(\"https://example.invalid/\");\nconst socket = new WebSocket(\"wss://example.invalid/\");\nconst viaGlobal = globalThis.fetch;\nconst viaIndex = self[\"XMLHttpRequest\"];\nconst holder = global;\nconst code = eval(source);\nconst fs = process.getBuiltinModule(\"node:fs\");\nconst env = process.env;\nsettings.fetch = 1;\nconst typed: typeof globalThis.fetch = reply;\nclass PlantedNamedChild extends run {}\nclass PlantedNamespaceChild extends cp.ChildProcess {}\nclass PlantedDefaultChild extends childProcess.ChildProcess {}\nclass PlantedEqualsChild extends cpEquals.ChildProcess {}\nclass PlantedLoadedChild extends loaded.ChildProcess {}\nconst PlantedExpressionChild = class extends cp.ChildProcess {};\nclass PlantedSocketChild extends WebSocket {}\nclass PlantedGlobalChild extends globalThis.EventTarget {}\nclass PlantedProcessChild extends process.constructor {}\nconst instantiated = run<never>;\ninstantiated(\"rf\");\nclass PlantedTypedChild implements cp.ChildProcess {}\ninterface PlantedShape extends WebSocket, NodeJS.Process {}\nclass PlantedTypeArgument extends Base<typeof globalThis.fetch> {}\n";
-/** Row P: every position a name can take, one probe each with HELD at it and the kind of position it is (the carried 106 first, byte for byte). */
+/** Row P: every position a name can take, one probe each with HELD at it and the kind of position it is (the carried 106 first, byte for byte,
+ * then ADDED_POSITIONS: cut #1's 26 and this respin's, in order). */
 const POSITIONS: Readonly<Record<string, { readonly probe: string; readonly kind: PositionKind }>> = {
   argument: { probe: "hand(HELD);\n", kind: "value" },
   callee: { probe: "hand(HELD());\n", kind: "value" },
@@ -536,6 +782,135 @@ const POSITIONS: Readonly<Record<string, { readonly probe: string; readonly kind
   "property-target": { probe: "({ alias: HELD } = other);\n", kind: "written" },
   "for-in-target": { probe: "for (HELD in table) hand();\n", kind: "written" },
   "wrapped-target": { probe: "(HELD as unknown) = other;\n", kind: "written" },
+  "pre-dec": { probe: "--HELD;\n", kind: "written" },
+  "pre-dec-value": { probe: "hand(--HELD);\n", kind: "written" },
+  "post-dec-value": { probe: "hand(HELD--);\n", kind: "written" },
+  "post-inc-value": { probe: "hand(HELD++);\n", kind: "written" },
+  "pre-inc-value": { probe: "hand(++HELD);\n", kind: "written" },
+  "pre-dec-wrapped": { probe: "--(HELD as any);\n", kind: "written" },
+  "post-inc-wrapped": { probe: "(HELD!)++;\n", kind: "written" },
+  "sub-assign": { probe: "HELD -= 1;\n", kind: "written" },
+  "mul-assign": { probe: "HELD *= 1;\n", kind: "written" },
+  "pow-assign": { probe: "HELD **= 1;\n", kind: "written" },
+  "div-assign": { probe: "HELD /= 1;\n", kind: "written" },
+  "mod-assign": { probe: "HELD %= 1;\n", kind: "written" },
+  "shl-assign": { probe: "HELD <<= 1;\n", kind: "written" },
+  "shr-assign": { probe: "HELD >>= 1;\n", kind: "written" },
+  "ushr-assign": { probe: "HELD >>>= 1;\n", kind: "written" },
+  "and-assign": { probe: "HELD &= 1;\n", kind: "written" },
+  "or-assign": { probe: "HELD |= 1;\n", kind: "written" },
+  "xor-assign": { probe: "HELD ^= 1;\n", kind: "written" },
+  "assign-value": { probe: "hand(HELD = other);\n", kind: "written" },
+  "compound-value": { probe: "hand(HELD += 1);\n", kind: "written" },
+  "nested-array-target": { probe: "[[HELD]] = list;\n", kind: "written" },
+  "object-in-array-target": { probe: "[{ a: HELD }] = list;\n", kind: "written" },
+  "array-in-object-target": { probe: "({ a: [HELD] } = other);\n", kind: "written" },
+  "object-in-object-target": { probe: "({ a: { b: HELD } } = other);\n", kind: "written" },
+  "shorthand-in-array-target": { probe: "[{ HELD }] = list;\n", kind: "written" },
+  "array-hole-target": { probe: "[, HELD] = list;\n", kind: "written" },
+  "array-default-target": { probe: "[HELD = 1] = list;\n", kind: "written" },
+  "object-default-target": { probe: "({ a: HELD = 1 } = other);\n", kind: "written" },
+  "rest-nested-target": { probe: "[...[HELD]] = list;\n", kind: "written" },
+  "nested-default-target": { probe: "[[HELD] = []] = list;\n", kind: "written" },
+  "computed-key-target": { probe: "({ [key]: HELD } = other);\n", kind: "written" },
+  "string-key-target": { probe: "({ \"a\": HELD } = other);\n", kind: "written" },
+  "for-of-array-target": { probe: "for ([HELD] of list) hand();\n", kind: "written" },
+  "for-of-object-target": { probe: "for ({ a: HELD } of list) hand();\n", kind: "written" },
+  "for-in-array-target": { probe: "for ([HELD] in table) hand();\n", kind: "written" },
+  "for-of-wrapped-target": { probe: "for ((HELD as any) of list) hand();\n", kind: "written" },
+  "for-await-target": { probe: "for await (HELD of list) hand();\n", kind: "written" },
+  "for-of-nested-target": { probe: "for ([[HELD]] of list) hand();\n", kind: "written" },
+  "wrapped-nn-target": { probe: "HELD! = other;\n", kind: "written" },
+  "wrapped-ta-target": { probe: "(<any>HELD) = other;\n", kind: "written" },
+  "wrapped-sat-target": { probe: "(HELD satisfies unknown) = other;\n", kind: "written" },
+  "wrapped-paren-target": { probe: "(HELD) = other;\n", kind: "written" },
+  "wrapped-double-target": { probe: "((HELD as any)!) = other;\n", kind: "written" },
+  "wrapped-in-array-target": { probe: "[(HELD as any)] = list;\n", kind: "written" },
+  "wrapped-in-object-target": { probe: "({ a: (HELD as any) } = other);\n", kind: "written" },
+  "destructuring-value": { probe: "hand([HELD] = list);\n", kind: "written" },
+  "logical-in-array": { probe: "hand([HELD ||= other]);\n", kind: "value" },
+  "logical-wrapped": { probe: "hand((HELD as any) ||= other);\n", kind: "value" },
+  negate: { probe: "hand(-HELD);\n", kind: "value" },
+  bitnot: { probe: "hand(~HELD);\n", kind: "value" },
+  plus: { probe: "hand(+HELD);\n", kind: "value" },
+  "not-not": { probe: "hand(!!HELD);\n", kind: "value" },
+  "array-element-read-nested": { probe: "hand([[HELD]]);\n", kind: "value" },
+  "array-literal-member": { probe: "[HELD].length;\n", kind: "value" },
+  "array-for-of-iterable": { probe: "for (const x of [HELD]) hand(x);\n", kind: "value" },
+  "object-literal-value-nested": { probe: "hand({ a: { b: HELD } });\n", kind: "value" },
+  "array-in-call": { probe: "hand([HELD])[0] = 1;\n", kind: "value" },
+  "array-assign-right": { probe: "other = [HELD];\n", kind: "value" },
+  "logical-or-statement": { probe: "HELD ||= other;\n", kind: "discarded" },
+  "logical-and-statement": { probe: "HELD &&= other;\n", kind: "discarded" },
+  "block-statement": { probe: "{\n  HELD;\n}\n", kind: "discarded" },
+  "namespace-statement": { probe: "namespace N {\n  HELD;\n}\n", kind: "discarded" },
+  "parenthesized-comma-left": { probe: "hand(((HELD), 0));\n", kind: "discarded" },
+  "asserted-comma-left": { probe: "hand((HELD as any, 0));\n", kind: "discarded" },
+  "non-null-comma-left": { probe: "hand((HELD!, 0));\n", kind: "discarded" },
+  "member-comma-left": { probe: "hand((HELD.member, 0));\n", kind: "discarded" },
+  "element-comma-left": { probe: "hand((HELD[\"member\"], 0));\n", kind: "discarded" },
+  "triple-comma-left": { probe: "hand((HELD, 0, 1));\n", kind: "discarded" },
+  "block-class-extends": { probe: "{\n  class Holder extends HELD {}\n  hand(Holder);\n}\n", kind: "value" },
+  "namespace-class-extends": { probe: "namespace N {\n  export class Holder extends HELD {}\n}\n", kind: "value" },
+  "case-class-extends": { probe: "switch (flag) {\n  case 1:\n    class Holder extends HELD {}\n    hand(Holder);\n}\n", kind: "value" },
+  "argument-class-extends": { probe: "hand(class extends HELD {});\n", kind: "value" },
+  "parenthesized-class-extends": { probe: "hand((class extends HELD {}));\n", kind: "value" },
+  "case-bare-class-name": { probe: "switch (flag) {\n  case 1:\n    class HELD {}\n}\n", kind: "name" },
+  "default-parameter-name": { probe: "export function read(HELD = 1): void {}\n", kind: "name" },
+  "key-object-value": { probe: "hand({ HELD: {} });\n", kind: "name" },
+  "key-array-value": { probe: "hand({ HELD: [] });\n", kind: "name" },
+  "key-binary-value": { probe: "hand({ HELD: 1 + 1 });\n", kind: "name" },
+  "for-in-object-target": { probe: "for ({ a: HELD } in table) hand();\n", kind: "written" },
+  "for-of-decl": { probe: "for (const HELD of list) hand();\n", kind: "name" },
+  "for-in-decl": { probe: "for (const HELD in table) hand();\n", kind: "name" },
+  "for-decl": { probe: "for (let HELD = 0; flag; ) break;\n", kind: "name" },
+  "catch-binding": { probe: "try {\n  hand();\n} catch (HELD) {\n  hand();\n}\n", kind: "name" },
+  "catch-destructured": { probe: "try {\n  hand();\n} catch ({ HELD }) {\n  hand();\n}\n", kind: "name" },
+  "block-function-name": { probe: "{\n  function HELD(): void {}\n}\n", kind: "name" },
+  "namespace-function-name": { probe: "namespace N {\n  function HELD(): void {}\n}\n", kind: "name" },
+  "case-function-name": { probe: "switch (flag) {\n  case 1:\n    function HELD(): void {}\n}\n", kind: "name" },
+  "nested-function-name": { probe: "export function f(): void {\n  function HELD(): void {}\n}\n", kind: "name" },
+  "generator-name": { probe: "export function* HELD(): Generator<void> {}\n", kind: "name" },
+  "async-function-name": { probe: "export async function HELD(): Promise<void> {}\n", kind: "name" },
+  "block-class-name": { probe: "{\n  class HELD {}\n}\n", kind: "name" },
+  "namespace-class-name": { probe: "namespace N {\n  class HELD {}\n}\n", kind: "name" },
+  "case-class-name": { probe: "switch (flag) {\n  case 1: {\n    class HELD {}\n  }\n}\n", kind: "name" },
+  "nested-class-name": { probe: "export function f(): void {\n  class HELD {}\n}\n", kind: "name" },
+  "fnexpr-name-var": { probe: "const f = function HELD(): void {};\nhand(f);\n", kind: "name" },
+  "fnexpr-name-paren": { probe: "hand((function HELD(): void {}));\n", kind: "name" },
+  "fnexpr-name-array": { probe: "hand([function HELD(): void {}]);\n", kind: "name" },
+  "genexpr-name": { probe: "hand(function* HELD(): Generator<void> {});\n", kind: "name" },
+  "classexpr-name-var": { probe: "const K = class HELD {};\nhand(K);\n", kind: "name" },
+  "classexpr-name-paren": { probe: "hand((class HELD {}));\n", kind: "name" },
+  "block-enum-name": { probe: "{\n  enum HELD {\n    A,\n  }\n}\n", kind: "name" },
+  "const-enum-name": { probe: "const enum HELD {\n  A,\n}\n", kind: "name" },
+  "declare-enum-name": { probe: "declare enum HELD {\n  A,\n}\n", kind: "name" },
+  "namespace-enum-name": { probe: "namespace N {\n  enum HELD {\n    A,\n  }\n}\n", kind: "name" },
+  "type-import-specifier": { probe: "import { type HELD } from \"other\";\n", kind: "name" },
+  "import-specifier-alias": { probe: "import { other as HELD } from \"other\";\n", kind: "name" },
+  "namespace-import-equals-name": { probe: "namespace N {\n  import HELD = Other.X;\n}\n", kind: "name" },
+  "type-import-equals-name": { probe: "import type HELD = require(\"other\");\n", kind: "name" },
+  "export-import-equals-name": { probe: "export import HELD = require(\"other\");\n", kind: "name" },
+  "qualified-middle": { probe: "import alias = Outer.HELD.Inner;\nhand(alias);\n", kind: "name" },
+  "property-name-chained": { probe: "hand(other.member.HELD);\n", kind: "name" },
+  "property-name-of-call": { probe: "hand(make().HELD);\n", kind: "name" },
+  "optional-property-name": { probe: "hand(other?.HELD);\n", kind: "name" },
+  "parameter-arrow": { probe: "export const read = (HELD: unknown): void => {};\n", kind: "name" },
+  "parameter-method": { probe: "export class Holder {\n  read(HELD: unknown): void {}\n}\n", kind: "name" },
+  "parameter-ctor": { probe: "export class Holder {\n  constructor(HELD: unknown) {}\n}\n", kind: "name" },
+  "parameter-property": { probe: "export class Holder {\n  constructor(private HELD: unknown) {}\n}\n", kind: "name" },
+  "parameter-setter": { probe: "export class Holder {\n  set value(HELD: unknown) {}\n}\n", kind: "name" },
+  "parameter-fnexpr": { probe: "hand(function (HELD: unknown): void {});\n", kind: "name" },
+  "parameter-rest": { probe: "export function read(...HELD: unknown[]): void {}\n", kind: "name" },
+  "binding-name-nested": { probe: "const { a: { HELD } } = other;\n", kind: "name" },
+  "binding-name-array": { probe: "const [HELD] = list;\n", kind: "name" },
+  "binding-name-rest": { probe: "const { ...HELD } = other;\n", kind: "name" },
+  "binding-default-name": { probe: "const { HELD = 1 } = other;\n", kind: "name" },
+  "key-string": { probe: "hand({ \"HELD\": 1 });\n", kind: "name" },
+  "key-method": { probe: "hand({ HELD(): void {} });\n", kind: "name" },
+  "label-continue": { probe: "HELD: for (;;) {\n  continue HELD;\n}\n", kind: "name" },
+  "export-specifier-alias-key": { probe: "const other = 1;\nexport { other as HELD };\n", kind: "name" },
+  "re-export-specifier": { probe: "export { HELD } from \"other\";\n", kind: "name" },
 };
 /** Row Q: R-STATIC-FORMS, one probe per form the readers do not parse (cut #5's 13 Q6 probes first, byte for byte), its quiet reading pinned. */
 const STATIC_RESIDUE: Readonly<Record<string, string>> = {
@@ -561,6 +936,7 @@ const STATIC_RESIDUE: Readonly<Record<string, string>> = {
   "or-operand-loader": "import { createRequire } from \"node:module\";\nconst picked = load || createRequire(import.meta.url);\nload(name);\n",
   "string-index-array-command": "const TOOLS = [\"rf\"];\napi.exec(TOOLS[\"0\"], []);\n",
   "string-indexed-command": "const abc = [\"rf\"];\napi.exec(\"abc\"[0], []);\n",
+  "partial-first-arm-array-command": "declare const api: { exec(command: string, args: string[]): void };\napi.exec((flag ? others : [\"rf\"])[0], []);\n",
 };
 /** Row F's families: every carried form (in cut #5's order) and every added form in exactly one family, each family one pin. */
 const FAMILIES: Readonly<Record<string, readonly string[]>> = {
@@ -582,60 +958,87 @@ const FAMILIES: Readonly<Record<string, readonly string[]>> = {
   "F-ENTRY-EDGES": ["ambient-module-name", "untraced-key", "untraced-argument", "type-only-import-reexport", "type-only-specifier-reexport", "type-only-import-equals-reexport", "side-effect-import", "other-import-equals", "re-export-namespace", "re-export-from-beside-held", "loader-no-argument", "loader-second-argument"],
   "F-ARRAY-READS": ["exported-other-beside-array", "local-export-other-beside-array", "re-export-same-name-beside-array", "typed-read-array", "string-named-array", "keyed-by-array", "member-of-array", "element-operand-array", "element-logical-value-array", "element-member-array"],
   "F-VAR-SCOPES": ["for-of-const-scope", "for-in-const-scope", "static-block-var-scope", "function-var-scope", "namespace-var-scope", "module-var-command"],
+  "F-WRITE-TARGETS": ["g01-predec-array", "g01-predec-held", "g01-postdec-twin", "g03-nested-array", "g03-nested-held", "g03-flat-twin", "compound-minus-array", "compound-times-array", "compound-power-array", "compound-divide-array", "compound-remainder-array", "compound-shl-array", "compound-shr-array", "compound-ushr-array", "compound-and-array", "compound-or-array", "compound-xor-array", "wrapped-logical-array", "for-in-array", "for-in-pattern-array", "for-of-pattern-array", "for-await-array", "nested-object-array", "object-in-array-array", "default-target-array", "computed-key-target-array", "string-key-target-array", "nested-rest-array"],
+  "F-ARRAY-REACH": ["g04-optional-call", "g04-call-twin", "g05-export-alias", "g05-plain-twin", "called-with-element", "instantiated-call", "optional-element-read", "parenthesized-delete", "optional-element-call", "wrapped-optional-call", "new-element", "export-as-default", "export-type-only", "export-string-alias", "export-default-array", "optional-index-command", "string-index-read-array", "identifier-index-read-array", "template-index-read-array", "non-null-logical-array", "parenthesized-logical-array", "chained-logical-array", "element-logical-array", "two-argument-call-array", "substitution-tag-array", "late-spread-array-command", "nested-true-arm-array-command", "chained-conditional-array-command", "nested-true-arm-command", "exported-typed-array-command", "exported-uninitialized-same-name"],
+  "F-SCOPE-MATRIX": ["g06-var-arrow", "g06-var-method", "g06-var-function-twin", "g07-param-arrow-tracer", "g07-param-arrow-api", "g07-param-function-twin", "g10-function-name", "g10-class-name", "g10-inside-twin", "g11-catch", "g11-inside-twin", "g12-param", "g12-inside-twin", "g13-block-class", "g13-block-enum", "g13-same-block-twin", "var-function-expression-leak", "var-constructor-leak", "var-getter-leak", "var-setter-leak", "param-arrow-pattern-shadow", "param-function-expression-pattern-shadow", "param-method-default-shadow", "param-setter-rest-shadow", "param-constructor-pattern-default-shadow", "param-property-shadow", "param-pattern-leak", "catch-pattern-finally-leak", "function-name-argument-leak", "function-name-parenthesized-shadow", "function-name-array-shadow", "generator-name-argument-shadow", "class-name-argument-shadow", "class-name-parenthesized-shadow", "enum-block-leak", "let-try-block-leak", "let-catch-block-leak", "for-await-const-leak", "const-enum-constructor-shadow", "case-function-shadow", "case-class-shadow", "generator-function-shadow", "for-of-const-shadow", "case-const-across-clauses", "case-function-across-clauses", "case-class-across-clauses", "default-before-body-function", "default-before-body-arrow", "default-before-body-function-expression", "default-before-body-method", "default-before-body-constructor", "for-condition-before-body", "for-of-expression-before-body", "for-in-expression-before-body", "dotted-namespace-const-leak", "conditionless-for-const-leak", "function-name-sibling-argument", "nested-object-binding-shadow", "nested-array-binding-shadow", "rest-binding-shadow", "renamed-binding-shadow", "array-rest-binding-shadow", "ambient-module-var-scope", "dotted-namespace-var-scope", "class-expression-static-var-scope", "block-enum-command", "for-in-const-shadow", "dotted-namespace-command"],
+  "F-ENTRY-CANDIDATES": ["g09-conditional-loader", "g09-order-twin", "nested-conditional-loader", "conditional-import", "conditional-builtin", "const-conditional-require", "array-conditional-require", "type-only-export-from", "named-export-from", "empty-specifier"],
+  "F-LOADER-SPELLINGS": ["chained-loader-assignment", "default-target-loader", "for-init-loader", "typed-loader-declaration", "instantiated-factory-binding", "element-factory-binding", "optional-factory-binding", "parenthesized-factory-call", "instantiated-factory-call", "two-argument-factory-call", "optional-factory-result-call", "require-of-call-result", "instantiated-require", "parenthesized-factory-binding", "two-argument-factory-binding", "optional-factory-result", "parenthesized-assignment-loader"],
+  "F-FLOWS": ["assigned-nested-array-in-object", "assigned-nested-object", "assigned-nested-array", "assigned-object-in-array", "assigned-nested-rest", "assigned-rest-object", "assigned-numeric-key", "assigned-string-key", "assigned-shorthand-default", "assigned-default-object", "assigned-default-array", "declared-default", "declared-array-default", "held-as-target-default", "for-init-binding", "chained-assignment", "chained-logical-assignment", "stored-value", "stored-element-value", "nested-conditional-arm", "parenthesized-conditional", "nested-either-operand", "typed-launch-call", "numeric-member", "void-discard", "comma-statement-discard", "type-only-local-export", "default-alias-export", "parenthesized-default-target", "non-null-default-target", "either-element-left", "either-asserted-left", "either-non-null-left", "discarded-either", "either-chain-left", "nested-conditional-true-arm"],
+  "F-LITERAL-KEYS": ["g14-template-command", "g14-template-specifier", "g14-string-twin", "g15-process-template-key", "g15-global-template-key", "g15-process-string-twin", "g15-global-string-twin", "g16-template-callee", "g16-string-twin", "template-member-key", "template-global-key", "template-binding-key", "numeric-global-key", "parenthesized-global-key", "parenthesized-member-key", "numeric-binding-key-one"],
+  "F-OPTIONAL-CHAINS": ["optional-element-member", "optional-default-member", "optional-global-member", "optional-global-element", "optional-launch-call", "instantiated-launch-call", "nested-conditional-command"],
+  "F-SPECIFIER-SLOTS": ["parenthesized-specifier", "asserted-specifier", "conditional-specifier", "parenthesized-import-specifier", "second-argument-specifier", "optional-call-specifier", "element-loader-specifier", "parenthesized-loader-specifier", "two-argument-loader-specifier", "instantiated-loader-specifier"],
 };
 /** The row F pins that read one module (cut #5's planted module) and the script kinds, beside the families. */
 const PLANTED_PIN = "F-PLANTED";
 const SCRIPTS_PIN = "F-SCRIPTS";
 /** The residual families and the quiet-row pins that hold them. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = { "R-STATIC-FORMS": ["Q-STATIC-FORMS"] };
+/** Every position after the carried 106, in order: cut #1's 26 and this respin's (anchors the carried positions exactly). */
+const ADDED_POSITIONS: readonly string[] = ["qualified-left", "member-store-base", "element-store-base", "shorthand-default", "rest-target", "object-rest-target", "shorthand-target", "prefix-increment", "decrement", "function-expression-name", "class-expression-name", "getter-name", "setter-name", "property-signature-name", "method-signature-name", "enum-name", "type-alias-name", "interface-name", "namespace-name", "type-parameter-name", "default-import-name", "namespace-import-name", "import-equals-name", "property-target", "for-in-target", "wrapped-target", "pre-dec", "pre-dec-value", "post-dec-value", "post-inc-value", "pre-inc-value", "pre-dec-wrapped", "post-inc-wrapped", "sub-assign", "mul-assign", "pow-assign", "div-assign", "mod-assign", "shl-assign", "shr-assign", "ushr-assign", "and-assign", "or-assign", "xor-assign", "assign-value", "compound-value", "nested-array-target", "object-in-array-target", "array-in-object-target", "object-in-object-target", "shorthand-in-array-target", "array-hole-target", "array-default-target", "object-default-target", "rest-nested-target", "nested-default-target", "computed-key-target", "string-key-target", "for-of-array-target", "for-of-object-target", "for-in-array-target", "for-of-wrapped-target", "for-await-target", "for-of-nested-target", "wrapped-nn-target", "wrapped-ta-target", "wrapped-sat-target", "wrapped-paren-target", "wrapped-double-target", "wrapped-in-array-target", "wrapped-in-object-target", "destructuring-value", "logical-in-array", "logical-wrapped", "negate", "bitnot", "plus", "not-not", "array-element-read-nested", "array-literal-member", "array-for-of-iterable", "object-literal-value-nested", "array-in-call", "array-assign-right", "logical-or-statement", "logical-and-statement", "block-statement", "namespace-statement", "parenthesized-comma-left", "asserted-comma-left", "non-null-comma-left", "member-comma-left", "element-comma-left", "triple-comma-left", "block-class-extends", "namespace-class-extends", "case-class-extends", "argument-class-extends", "parenthesized-class-extends", "case-bare-class-name", "default-parameter-name", "key-object-value", "key-array-value", "key-binary-value", "for-in-object-target", "for-of-decl", "for-in-decl", "for-decl", "catch-binding", "catch-destructured", "block-function-name", "namespace-function-name", "case-function-name", "nested-function-name", "generator-name", "async-function-name", "block-class-name", "namespace-class-name", "case-class-name", "nested-class-name", "fnexpr-name-var", "fnexpr-name-paren", "fnexpr-name-array", "genexpr-name", "classexpr-name-var", "classexpr-name-paren", "block-enum-name", "const-enum-name", "declare-enum-name", "namespace-enum-name", "type-import-specifier", "import-specifier-alias", "namespace-import-equals-name", "type-import-equals-name", "export-import-equals-name", "qualified-middle", "property-name-chained", "property-name-of-call", "optional-property-name", "parameter-arrow", "parameter-method", "parameter-ctor", "parameter-property", "parameter-setter", "parameter-fnexpr", "parameter-rest", "binding-name-nested", "binding-name-array", "binding-name-rest", "binding-default-name", "key-string", "key-method", "label-continue", "export-specifier-alias-key", "re-export-specifier"];
+/** R-STATIC-FORMS's members, each named once and each held to its quiet-row probes (every probe is exactly one member's); the first
+ * five are the five forms wb-pyel.5's Q6 sentence names, in its words and order. */
+const RESIDUE_MEMBERS: Readonly<Record<string, readonly string[]>> = {
+  "a launch through an API that is no child_process binding with an unresolved command": ["unbound-api-launch"],
+  "a launch through a value the module does not bind": ["unbound-value-launch"],
+  "a package's own launcher read by its specifier alone": ["package-launcher"],
+  "a constructor-chain global": ["constructor-chain-global"],
+  "a write through the allowed process.env read": ["env-write"],
+  "a launch whose arguments carry rf through a shell": ["argument-carried"],
+  "another builtin's process or thread API": ["other-builtin-launch"],
+  "a loader reached through a call the loader reader does not parse": ["unparsed-loader"],
+  "a loader reached through a binding the loader reader does not read": ["aliased-loader", "renamed-loader-factory", "held-loader-factory", "parameter-default-loader", "or-operand-loader"],
+  "code evaluated at run time": ["composed-code"],
+  "a process-internal binding": ["process-binding"],
+  "a launch-named call on a value the tracer does not hold whose command does not resolve": ["partial-conditional-command", "partial-conditional-array-command", "partial-first-arm-array-command", "spread-array-command", "unbound-array-command", "computed-callee-command", "string-index-array-command", "string-indexed-command"],
+};
 /** Row P's pins, one per position kind. */
 const KIND_PINS: Readonly<Record<string, PositionKind>> = { "P-VALUE": "value", "P-DISCARDED": "discarded", "P-WRITTEN": "written", "P-EXPORT": "export", "P-NAME": "name", "P-TYPE": "type" };
 /** The positions each predicate of isNameSlot and isWriteTarget answers for: every ts.is* test either function makes. */
 const PREDICATE_POSITIONS: Readonly<Record<"isNameSlot" | "isWriteTarget", Readonly<Record<string, readonly string[]>>>> = {
   isNameSlot: {
-    isPropertyAccessExpression: ["property-name"],
-    isQualifiedName: ["qualified-right", "qualified-left"],
-    isBindingElement: ["binding-name", "binding-key"],
-    isImportSpecifier: ["import-name"],
-    isExportSpecifier: ["export-alias-name"],
+    isPropertyAccessExpression: ["property-name", "property-name-chained", "property-name-of-call", "optional-property-name"],
+    isQualifiedName: ["qualified-right", "qualified-left", "qualified-middle"],
+    isBindingElement: ["binding-name", "binding-key", "binding-name-nested", "binding-name-array", "binding-name-rest", "binding-default-name"],
+    isImportSpecifier: ["import-name", "type-import-specifier", "import-specifier-alias"],
+    isExportSpecifier: ["export-alias-name", "export-specifier-alias-key", "re-export-specifier"],
     isImportClause: ["default-import-name"],
     isNamespaceImport: ["namespace-import-name"],
     isNamespaceExport: ["namespace-export"],
-    isLabeledStatement: ["label"],
-    isBreakOrContinueStatement: ["label"],
-    isImportEqualsDeclaration: ["import-equals-name"],
-    isVariableDeclaration: ["declaration"],
-    isFunctionDeclaration: ["function-name"],
-    isFunctionExpression: ["function-expression-name"],
-    isClassDeclaration: ["class-name"],
-    isClassExpression: ["class-expression-name"],
-    isParameter: ["parameter"],
-    isMethodDeclaration: ["method-name"],
+    isLabeledStatement: ["label", "label-continue"],
+    isBreakOrContinueStatement: ["label", "label-continue"],
+    isImportEqualsDeclaration: ["import-equals-name", "namespace-import-equals-name", "type-import-equals-name", "export-import-equals-name"],
+    isVariableDeclaration: ["declaration", "for-of-decl", "for-in-decl", "for-decl", "catch-binding"],
+    isFunctionDeclaration: ["function-name", "block-function-name", "namespace-function-name", "case-function-name", "nested-function-name", "generator-name", "async-function-name"],
+    isFunctionExpression: ["function-expression-name", "fnexpr-name-var", "fnexpr-name-paren", "fnexpr-name-array", "genexpr-name"],
+    isClassDeclaration: ["class-name", "block-class-name", "namespace-class-name", "case-class-name", "nested-class-name", "case-bare-class-name"],
+    isClassExpression: ["class-expression-name", "classexpr-name-var", "classexpr-name-paren"],
+    isParameter: ["parameter", "parameter-arrow", "parameter-method", "parameter-ctor", "parameter-property", "parameter-setter", "parameter-fnexpr", "parameter-rest", "default-parameter-name"],
+    isMethodDeclaration: ["method-name", "key-method"],
     isPropertyDeclaration: ["field-name"],
-    isPropertyAssignment: ["key"],
+    isPropertyAssignment: ["key", "key-object-value", "key-array-value", "key-binary-value"],
     isPropertySignature: ["property-signature-name"],
     isMethodSignature: ["method-signature-name"],
     isGetAccessorDeclaration: ["getter-name"],
     isSetAccessorDeclaration: ["setter-name"],
     isEnumMember: ["enum-member-name"],
-    isEnumDeclaration: ["enum-name"],
+    isEnumDeclaration: ["enum-name", "block-enum-name", "const-enum-name", "declare-enum-name", "namespace-enum-name"],
     isTypeAliasDeclaration: ["type-alias-name"],
     isInterfaceDeclaration: ["interface-name"],
     isModuleDeclaration: ["namespace-name"],
     isTypeParameterDeclaration: ["type-parameter-name"],
   },
   isWriteTarget: {
-    isArrayLiteralExpression: ["destructuring-target"],
-    isObjectLiteralExpression: ["property-target", "shorthand-target"],
+    isArrayLiteralExpression: ["destructuring-target", "nested-array-target", "array-hole-target", "array-default-target", "rest-nested-target", "nested-default-target", "for-of-array-target", "for-in-array-target", "for-of-nested-target", "wrapped-in-array-target"],
+    isObjectLiteralExpression: ["property-target", "shorthand-target", "object-in-array-target", "array-in-object-target", "object-in-object-target", "shorthand-in-array-target", "computed-key-target", "string-key-target", "for-of-object-target", "for-in-object-target", "wrapped-in-object-target"],
     isSpreadAssignment: ["object-rest-target"],
-    isSpreadElement: ["rest-target"],
-    isPropertyAssignment: ["property-target"],
-    isShorthandPropertyAssignment: ["shorthand-target", "shorthand-default"],
-    isBinaryExpression: ["assignment-target", "compound-target", "logical-or-target"],
-    isForInStatement: ["for-in-target"],
-    isForOfStatement: ["for-of-target"],
-    isPrefixUnaryExpression: ["prefix-increment"],
-    isPostfixUnaryExpression: ["increment", "decrement"],
+    isSpreadElement: ["rest-target", "rest-nested-target"],
+    isPropertyAssignment: ["property-target", "array-in-object-target", "object-in-object-target", "computed-key-target", "string-key-target", "for-of-object-target", "for-in-object-target", "wrapped-in-object-target"],
+    isShorthandPropertyAssignment: ["shorthand-target", "shorthand-default", "shorthand-in-array-target"],
+    isBinaryExpression: ["assignment-target", "compound-target", "logical-or-target", "sub-assign", "mul-assign", "pow-assign", "div-assign", "mod-assign", "shl-assign", "shr-assign", "ushr-assign", "and-assign", "or-assign", "xor-assign", "assign-value", "compound-value", "array-default-target", "object-default-target"],
+    isForInStatement: ["for-in-target", "for-in-array-target", "for-in-object-target"],
+    isForOfStatement: ["for-of-target", "for-of-array-target", "for-of-object-target", "for-of-wrapped-target", "for-await-target", "for-of-nested-target"],
+    isPrefixUnaryExpression: ["prefix-increment", "pre-dec", "pre-dec-value", "pre-inc-value", "pre-dec-wrapped"],
+    isPostfixUnaryExpression: ["increment", "decrement", "post-dec-value", "post-inc-value", "post-inc-wrapped"],
   },
 };
 /** The vocabularies whose every use site in the helper is a row S pin (unwrap and isWrapper carry WRAPPERS). */
@@ -645,7 +1048,7 @@ const WRAPPER_PLUMBING = ["unwrap", "isWrapper"];
 
 // ---- the outside anchors: tracker-export lines, each read at its first occurrence ----
 
-/** The line prefixes (and one phrase) the judged set is anchored to in wb-pyel.9's description and wb-pyel.5's notes. */
+/** The line prefixes (and one phrase) the judged set is anchored to in wb-pyel.9's description and notes and wb-pyel.5's notes. */
 const ANCHORS = {
   laItem: "- LA (assignment-operator launch values): ",
   nsItem: "- NS (merged namespace scope): ",
@@ -655,6 +1058,7 @@ const ANCHORS = {
   residual: "New residual R-STATIC-FORMS (Q6)",
   u1: "U1-HIGH-CONFIRMED-R-B123-R515: ",
   u2: "U2-HIGH-CONFIRMED-R515-R668-R514: ",
+  refusal1: "U1-HIGH-CONFIRMED-R-B123-R-B161-R514-R515-R668-CLAIM-WORDS-WIDER-THAN-PINS-11-GATE-READER-MUTANTS-",
 } as const;
 /** The counts wb-pyel.5's FORM line states for cut #5's rosters (carried here byte for byte). */
 const CARRIED_COUNTS = { reachForms: 139, referencePositions: 106 } as const;
@@ -671,28 +1075,32 @@ interface Kill {
   readonly edits: readonly Edit[];
   /** Every pin whose witness the hollowing changes, in row order (measured: exactly these, both ways). */
   readonly reds: readonly string[];
+  /** Refusal #1's members: the forms whose reading the hollowing changes (its witnesses) and the paired forms it leaves (its twins). */
+  readonly witnesses?: readonly string[];
+  readonly twins?: readonly string[];
 }
 const WRAPPER_LOOP = "(isWrapper(wrapper) || ts.isAwaitExpression(wrapper))";
 const loopWithout = (test: string): Edit => ({ from: WRAPPER_LOOP, to: `((isWrapper(wrapper) && !ts.${test}(wrapper)) || ts.isAwaitExpression(wrapper))` });
-/** Refusal #5's U1 hollowings H1-AS..H11-UTYPE, its U2 hoisting, and cut #4's readings of the description's LA and NS. */
+/** Refusal #5's U1 hollowings H1-AS..H11-UTYPE, its U2 hoisting, cut #4's readings of the description's LA and NS, and wb-pyel.9 refusal #1's
+ * LEG 2: the gate's seventeen one-edit mutants G01..G17, verbatim (the eleven U1 survivors G01, G03-G07, G09-G13 and the rest). */
 const KILLS: Readonly<Record<string, Kill>> = {
-  "H1-AS": { hollows: "consume's wrapper loop without ts.isAsExpression", edits: [loopWithout("isAsExpression")], reds: ["W-AS", "W-BAND", "isWrapper@consume#1", "unwrap@consume#1"] },
+  "H1-AS": { hollows: "consume's wrapper loop without ts.isAsExpression", edits: [loopWithout("isAsExpression")], reds: ["W-AS", "W-BAND", "isWrapper@consume#1", "unwrap@consume#1", "P-DISCARDED"] },
   "H2-SAT": { hollows: "consume's wrapper loop without ts.isSatisfiesExpression", edits: [loopWithout("isSatisfiesExpression")], reds: ["W-SAT", "isWrapper@consume#1", "unwrap@consume#1"] },
   "H3-TA": { hollows: "consume's wrapper loop without ts.isTypeAssertionExpression", edits: [loopWithout("isTypeAssertionExpression")], reds: ["W-TA", "isWrapper@consume#1", "unwrap@consume#1"] },
-  "H4-NN": { hollows: "consume's wrapper loop without ts.isNonNullExpression", edits: [loopWithout("isNonNullExpression")], reds: ["W-NN", "isWrapper@consume#1", "unwrap@consume#1"] },
+  "H4-NN": { hollows: "consume's wrapper loop without ts.isNonNullExpression", edits: [loopWithout("isNonNullExpression")], reds: ["W-NN", "isWrapper@consume#1", "unwrap@consume#1", "P-DISCARDED"] },
   "H5-BAND": {
     hollows: "BINDING_ASSIGNMENTS without AmpersandAmpersandEqualsToken (the tracer's right-side binding and loaderNames)",
     edits: [{ from: '  "=": ts.SyntaxKind.EqualsToken,\n  "||=": ts.SyntaxKind.BarBarEqualsToken,\n  "&&=": ts.SyntaxKind.AmpersandAmpersandEqualsToken,\n', to: '  "=": ts.SyntaxKind.EqualsToken,\n  "||=": ts.SyntaxKind.BarBarEqualsToken,\n' }],
     reds: ["W-BAND", "W-BAND-LOADER", "BINDING_ASSIGNMENTS@loaderNames#1", "BINDING_ASSIGNMENTS@consume#1"],
   },
-  "H6-OR": { hollows: "EITHER_OPERAND without BarBarToken", edits: [{ from: '  "||": ts.SyntaxKind.BarBarToken,\n', to: "" }], reds: ["LA4c2", "W-OR", "EITHER_OPERAND@consume#1"] },
+  "H6-OR": { hollows: "EITHER_OPERAND without BarBarToken", edits: [{ from: '  "||": ts.SyntaxKind.BarBarToken,\n', to: "" }], reds: ["LA4c2", "W-OR", "EITHER_OPERAND@consume#1", "F-FLOWS"] },
   "H7-ANDOP": { hollows: "EITHER_OPERAND without AmpersandAmpersandToken", edits: [{ from: '  "&&": ts.SyntaxKind.AmpersandAmpersandToken,\n', to: "" }], reds: ["W-ANDOP", "EITHER_OPERAND@consume#1"] },
   "H8-ELEM": {
     hollows: "calleeName without its literal-element-name branch (the launch-call reader and the loader reader)",
     edits: [{ from: "  if (ts.isElementAccessExpression(callee) && ts.isStringLiteralLike(callee.argumentExpression)) return callee.argumentExpression.text;\n", to: "" }],
-    reds: ["W-ELEM", "W-ELEM-LOADER", "LOADER_CALLS@isLoaderCall#1", "LOADER_FACTORIES@isLoaderCall#1"],
+    reds: ["W-ELEM", "W-ELEM-LOADER", "LOADER_CALLS@isLoaderCall#1", "LOADER_FACTORIES@isLoaderCall#1", "F-LOADER-SPELLINGS", "F-LITERAL-KEYS", "F-OPTIONAL-CHAINS", "F-SPECIFIER-SLOTS"],
   },
-  "H9-FORIN": { hollows: "isWriteTarget without the ForInStatement head", edits: [{ from: "ts.isForInStatement(parent) || ts.isForOfStatement(parent)", to: "ts.isForOfStatement(parent)" }], reds: ["W-FORIN", "P-WRITTEN"] },
+  "H9-FORIN": { hollows: "isWriteTarget without the ForInStatement head", edits: [{ from: "ts.isForInStatement(parent) || ts.isForOfStatement(parent)", to: "ts.isForOfStatement(parent)" }], reds: ["W-FORIN", "F-WRITE-TARGETS", "P-WRITTEN"] },
   "H10-CWRAP": {
     hollows: "calleeName unwraps only parentheses and instantiation expressions (no type wrapper on a launch or loader callee)",
     edits: [
@@ -703,7 +1111,7 @@ const KILLS: Readonly<Record<string, Kill>> = {
     ],
     reds: ["W-CWRAP", "W-BAND-LOADER", "W-CWRAP-LOADER", "unwrap@calleeName#1"],
   },
-  "H11-UTYPE": { hollows: "the <untraced> string read without !inType", edits: [{ from: "      !specifierSlot(node) &&\n      !inType(node)\n", to: "      !specifierSlot(node)\n" }], reds: ["W-UTYPE", "CHILD_PROCESS@childProcessLaunchesAt#1"] },
+  "H11-UTYPE": { hollows: "the <untraced> string read without !inType", edits: [{ from: "      !specifierSlot(node) &&\n      !inType(node)\n", to: "      !specifierSlot(node)\n" }], reds: ["W-UTYPE", "CHILD_PROCESS@childProcessLaunchesAt#1", "F-ENTRY-CANDIDATES"] },
   "BF1-HOIST": {
     hollows: "declarations() declaring a function at its block and at the enclosing function's scope (sloppy-script hoisting)",
     edits: [
@@ -714,12 +1122,29 @@ const KILLS: Readonly<Record<string, Kill>> = {
     ],
     reds: ["BF1", "F-SCOPE"],
   },
-  "LA-WRITE": { hollows: "isWriteTarget reading a logical assignment's target as written (cut #4's tracer)", edits: [{ from: " && !holds(LOGICAL_ASSIGNMENTS, kind);", to: ";" }], reds: ["LA4", "LA5", "unwrap@consume#1", "LOGICAL_ASSIGNMENTS@isWriteTarget#1", "LOGICAL_ASSIGNMENTS@consume#1", "F-LOGICAL", "P-VALUE"] },
+  "LA-WRITE": { hollows: "isWriteTarget reading a logical assignment's target as written (cut #4's tracer)", edits: [{ from: " && !holds(LOGICAL_ASSIGNMENTS, kind);", to: ";" }], reds: ["LA4", "LA5", "unwrap@consume#1", "LOGICAL_ASSIGNMENTS@isWriteTarget#1", "LOGICAL_ASSIGNMENTS@consume#1", "F-LOGICAL", "F-FLOWS", "P-VALUE"] },
   "NS-BLOCK": {
     hollows: "inMergedScope never true: names in a namespace body or an enum resolve through the per-block chain (cut #4's resolver)",
     edits: [{ from: "  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) if (ts.isModuleBlock(at) || ts.isEnumDeclaration(at)) return true;\n  return false;", to: "  return false;" }],
-    reds: ["NS2", "F-SCOPE", "F-MERGED"],
+    reds: ["NS2", "F-SCOPE", "F-MERGED", "F-SCOPE-MATRIX"],
   },
+  "G01-PREDEC": { hollows: "isWriteTarget: a prefix decrement is no write target (postfix decrement and both increments kept)", edits: [{ from: "      return parent.operator === ts.SyntaxKind.PlusPlusToken || parent.operator === ts.SyntaxKind.MinusMinusToken;", to: "      return parent.operator === ts.SyntaxKind.PlusPlusToken || (parent.operator === ts.SyntaxKind.MinusMinusToken && ts.isPostfixUnaryExpression(parent));" }], reds: ["F-WRITE-TARGETS", "P-WRITTEN"], witnesses: ["g01-predec-array", "g01-predec-held"], twins: ["g01-postdec-twin"] },
+  "G02-COMPOUND-PLUS": { hollows: "isWriteTarget: of the compound assignments only += is a write (=, += kept; -=, *=, **=, /=, %=, shifts, &=, |=, ^= read)", edits: [{ from: "kind <= ts.SyntaxKind.LastAssignment && !holds(LOGICAL_ASSIGNMENTS, kind);", to: "kind <= ts.SyntaxKind.PlusEqualsToken && !holds(LOGICAL_ASSIGNMENTS, kind);" }], reds: ["F-WRITE-TARGETS", "P-WRITTEN"], witnesses: ["compound-minus-array", "compound-xor-array"], twins: ["compound-array-command"] },
+  "G03-NESTED-ARRAY": { hollows: "isWriteTarget: an array literal nested directly in an array literal stops the climb (a nested array destructuring target is not written)", edits: [{ from: "|| ts.isArrayLiteralExpression(parent) || ts.isObjectLiteralExpression(parent) ||", to: "|| (ts.isArrayLiteralExpression(parent) && !ts.isArrayLiteralExpression(at)) || ts.isObjectLiteralExpression(parent) ||" }], reds: ["F-WRITE-TARGETS", "F-FLOWS", "P-WRITTEN"], witnesses: ["g03-nested-array", "g03-nested-held"], twins: ["g03-flat-twin"] },
+  "G04-OPTCALL": { hollows: "elementRead: an optional call of an element is no call (the array reads as only read)", edits: [{ from: "  if (ts.isCallExpression(parent) && parent.expression === value) return false;", to: "  if (ts.isCallExpression(parent) && parent.expression === value && parent.questionDotToken === undefined) return false;" }], reds: ["F-ARRAY-REACH"], witnesses: ["g04-optional-call"], twins: ["g04-call-twin"] },
+  "G05-EXPORT-ALIAS": { hollows: "readOnlyArray: a local export is matched by its exported name only (export { TOOLS as LIST } leaves TOOLS only read)", edits: [{ from: "&& (node.propertyName ?? node.name).text === name) only = false;", to: "&& node.name.text === name) only = false;" }], reds: ["F-ARRAY-REACH"], witnesses: ["g05-export-alias"], twins: ["g05-plain-twin"] },
+  "G06-VAR-FNDECL": { hollows: "functionScope: a var's function scope is a function declaration only (a var in an arrow, method or function expression binds at the next outer scope)", edits: [{ from: "  while (!(ts.isSourceFile(at) || ts.isModuleBlock(at) || ts.isFunctionLike(at) || ts.isClassStaticBlockDeclaration(at))) at = at.parent;", to: "  while (!(ts.isSourceFile(at) || ts.isModuleBlock(at) || ts.isFunctionDeclaration(at) || ts.isClassStaticBlockDeclaration(at))) at = at.parent;" }], reds: ["F-SCOPE-MATRIX"], witnesses: ["g06-var-arrow", "g06-var-method"], twins: ["g06-var-function-twin"] },
+  "G07-PARAM-FNDECL": { hollows: "declarations: only a function declaration's parameters bind (an arrow's, method's or function expression's parameter does not shadow)", edits: [{ from: "    } else if (ts.isParameter(node)) {", to: "    } else if (ts.isParameter(node) && ts.isFunctionDeclaration(node.parent)) {" }], reds: ["F-SCOPE-MATRIX"], witnesses: ["g07-param-arrow-tracer", "g07-param-arrow-api"], twins: ["g07-param-function-twin"] },
+  "G08-PATH-DEPTH": { hollows: "consume: a member path reads <reference> only past PATH_DEPTH + 1 members", edits: [{ from: "    if (path.length > PATH_DEPTH) {", to: "    if (path.length > PATH_DEPTH + 1) {" }], reds: ["F-FOLLOW"] },
+  "G09-NAMES-FIRST": { hollows: "names: a specifier names child_process only through its first resolved candidate", edits: [{ from: "(resolveTexts(source, expression) ?? []).some(text => text.includes(CHILD_PROCESS));", to: "(resolveTexts(source, expression) ?? []).slice(0, 1).some(text => text.includes(CHILD_PROCESS));" }], reds: ["F-ENTRY-CANDIDATES"], witnesses: ["g09-conditional-loader"], twins: ["g09-order-twin"] },
+  "G10-FNEXPR-SCOPE": { hollows: "declarations: a function or class expression's name binds in the enclosing block, not in the expression", edits: [{ from: "      declare(node.name, node);", to: "      declare(node.name, blockScope(node));" }], reds: ["F-SCOPE-MATRIX"], witnesses: ["g10-function-name", "g10-class-name"], twins: ["g10-inside-twin"] },
+  "G11-CATCH-SCOPE": { hollows: "declarations: a catch variable binds in the block enclosing the try statement", edits: [{ from: "      if (ts.isCatchClause(node.parent)) {\n        declare(node.name, node.parent);", to: "      if (ts.isCatchClause(node.parent)) {\n        declare(node.name, blockScope(node.parent));" }], reds: ["F-SCOPE-MATRIX"], witnesses: ["g11-catch"], twins: ["g11-inside-twin"] },
+  "G12-PARAM-SCOPE": { hollows: "declarations: a parameter binds in the block enclosing its function", edits: [{ from: "    } else if (ts.isParameter(node)) {\n      declare(node.name, node.parent);", to: "    } else if (ts.isParameter(node)) {\n      declare(node.name, blockScope(node.parent));" }], reds: ["F-SCOPE-MATRIX"], witnesses: ["g12-param"], twins: ["g12-inside-twin"] },
+  "G13-CLASS-FNSCOPE": { hollows: "declarations: a class, enum or import-equals declaration binds at its function scope (hoisted out of a block)", edits: [{ from: "    } else if (ts.isClassDeclaration(node) || ts.isEnumDeclaration(node) || ts.isImportEqualsDeclaration(node)) {\n      declare(node.name, blockScope(node));", to: "    } else if (ts.isClassDeclaration(node) || ts.isEnumDeclaration(node) || ts.isImportEqualsDeclaration(node)) {\n      declare(node.name, functionScope(node));" }], reds: ["F-SCOPE-MATRIX"], witnesses: ["g13-block-class", "g13-block-enum"], twins: ["g13-same-block-twin"] },
+  "G14-TEMPLATE-RESOLVE": { hollows: "resolveTexts: only a string literal resolves (a no-substitution template does not)", edits: [{ from: "  if (ts.isStringLiteralLike(node)) return [node.text];", to: "  if (ts.isStringLiteral(node)) return [node.text];" }], reds: ["F-LITERAL-KEYS"], witnesses: ["g14-template-command", "g14-template-specifier"], twins: ["g14-string-twin"] },
+  "G15-GLOBAL-TEMPLATE-KEY": { hollows: "memberRead: a no-substitution template key reads [<computed>]", edits: [{ from: `    return ts.isStringLiteralLike(parent.argumentExpression) ? \`[\${parent.argumentExpression.text}]\` : "[<computed>]";`, to: `    return ts.isStringLiteral(parent.argumentExpression) ? \`[\${parent.argumentExpression.text}]\` : "[<computed>]";` }], reds: ["F-LITERAL-KEYS"], witnesses: ["g15-process-template-key", "g15-global-template-key"], twins: ["g15-process-string-twin", "g15-global-string-twin"] },
+  "G16-CALLEE-TEMPLATE-KEY": { hollows: "calleeName: a no-substitution template element name is no callee name", edits: [{ from: "  if (ts.isElementAccessExpression(callee) && ts.isStringLiteralLike(callee.argumentExpression)) return callee.argumentExpression.text;", to: "  if (ts.isElementAccessExpression(callee) && ts.isStringLiteral(callee.argumentExpression)) return callee.argumentExpression.text;" }], reds: ["F-LITERAL-KEYS"], witnesses: ["g16-template-callee"], twins: ["g16-string-twin"] },
+  "G17-BLOCKSCOPE-FOR": { hollows: "blockScope: a for statement's head is no scope (its const binds in the enclosing block)", edits: [{ from: "|| ts.isCaseBlock(at) || ts.isForStatement(at) || ts.isForInStatement(at) || ts.isForOfStatement(at) ||", to: "|| ts.isCaseBlock(at) || ts.isForInStatement(at) || ts.isForOfStatement(at) ||" }], reds: ["F-SCOPE", "F-SCOPE-MATRIX"] },
 };
 
 // ---- the claims ----
@@ -739,93 +1164,102 @@ const CLAIMS: Readonly<Record<string, readonly Clause[]>> = {
   ],
   specifiers: [
     {
-      words: "the specifier reader names every import declaration's specifier (a type-only one included), every export-from's, every import-equals of an external module's, and every loader call's first argument through resolution, <expression> when it does not resolve or is absent",
-      falsifiers: ["F-ENTRIES", "F-LOADS", "F-ENTRY-EDGES", "F-PLANTED"],
+      words: "the specifier reader names every import declaration's specifier (a type-only one and an empty one included), every export-from's, every import-equals of an external module's, and every loader call's first argument through resolution (every candidate, sorted), <expression> when it does not resolve or is absent",
+      falsifiers: ["F-ENTRIES", "F-LOADS", "F-ENTRY-EDGES", "F-PLANTED", "F-ENTRY-CANDIDATES", "F-SPECIFIER-SLOTS"],
     },
   ],
   loader: [
     {
-      words: "the loader reader reads import(), every call whose callee is spelled with a LOADER_CALLS name (a name, a property name or a literal element name), a LOADER_FACTORIES call's result called directly, and a call of a name that a variable declaration with a plain name, or a BINDING_ASSIGNMENTS assignment to a name, binds to a LOADER_FACTORIES call",
-      falsifiers: ["LOADER_CALLS@isLoaderCall#1", "LOADER_FACTORIES@factory#1", "LOADER_FACTORIES@isLoaderCall#1", "BINDING_ASSIGNMENTS@loaderNames#1", "W-BAND-LOADER", "W-ELEM-LOADER", "W-CWRAP-LOADER", "F-LOADS"],
+      words: "the loader reader reads import(), every call whose callee is spelled with a LOADER_CALLS name (a name, a property name or a literal element name: a string or a no-substitution template), a LOADER_FACTORIES call's result called directly, and a call of a name that a variable declaration with a plain name, or a BINDING_ASSIGNMENTS assignment to a name, binds to a LOADER_FACTORIES call (each callee and factory read through WRAPPERS, with type arguments, optional calls and any arguments; a bound name is read by its name in every scope)",
+      falsifiers: ["LOADER_CALLS@isLoaderCall#1", "LOADER_FACTORIES@factory#1", "LOADER_FACTORIES@isLoaderCall#1", "BINDING_ASSIGNMENTS@loaderNames#1", "W-BAND-LOADER", "W-ELEM-LOADER", "W-CWRAP-LOADER", "F-LOADS", "F-LOADER-SPELLINGS"],
     },
     {
       words: "each such call whose first argument does not resolve or is absent is read once, labelled as spelled: import(), <callee>(), <factory>()() for a factory result called directly",
-      falsifiers: ["F-LOADS", "F-ENTRY-EDGES", "unwrap@loaderLabel#1"],
+      falsifiers: ["F-LOADS", "F-ENTRY-EDGES", "unwrap@loaderLabel#1", "F-LOADER-SPELLINGS"],
     },
   ],
   identifiers: [
     {
-      words: "the I/O-global reader reads every reference to an IO_GLOBALS name, and every reference to a GLOBAL_OBJECTS name with the member read off it (.name, [text] or [<computed>])",
-      falsifiers: ["IO_GLOBALS@ioGlobalReferences#1", "GLOBAL_OBJECTS@ioGlobalReferences#1", "P-VALUE"],
+      words: "the I/O-global reader reads every reference to an IO_GLOBALS name, and every reference to a GLOBAL_OBJECTS name with the member read off it (.name, through an optional chain too; [text] for a string or no-substitution template key; [<computed>] for any other key, a numeric or parenthesized one included)",
+      falsifiers: ["IO_GLOBALS@ioGlobalReferences#1", "GLOBAL_OBJECTS@ioGlobalReferences#1", "P-VALUE", "F-LITERAL-KEYS", "F-OPTIONAL-CHAINS"],
     },
-    { words: "the process reader reads every reference to process but a PROCESS_READS member read (.env or [env])", falsifiers: ["PROCESS_READS@processReferences#1", "P-VALUE"] },
+    { words: "the process reader reads every reference to process but a PROCESS_READS member read (.env, or [env] with a string or no-substitution template key)", falsifiers: ["PROCESS_READS@processReferences#1", "P-VALUE", "F-LITERAL-KEYS"] },
     {
-      words: "a reference is an identifier outside a name slot (every predicate isNameSlot tests: a declaration's, a property's or key's, an import or export specifier's, a label's name) and outside a type (inType: a type node; a class's extends expression and an instantiation expression are values, their type arguments types)",
+      words: "a reference is an identifier outside a name slot (every predicate isNameSlot tests: a declaration's, a parameter's, a function's, class's or enum's (a declaration's in any block, namespace body or case clause, or an expression's), a property's or key's, an import or export specifier's, a label's name) and outside a type (inType: a type node; a class's extends expression, in any block or argument, and an instantiation expression are values, their type arguments types)",
       falsifiers: ["P-NAME", "P-TYPE", "P-VALUE", "F-HERITAGE", "F-INSTANTIATION"],
     },
   ],
   tracer: [
     {
-      words: "entries: every import whose clause is not type-only (a type-only specifier binds nothing), every import-equals that is not type-only and every export-from whose specifier names child_process (CHILD_PROCESS, through resolution), and every loader call whose specifier does",
-      falsifiers: ["CHILD_PROCESS@names#1", "F-ENTRIES", "F-ENTRY-EDGES"],
+      words: "entries: every import whose clause is not type-only (a type-only specifier binds nothing), every import-equals that is not type-only and every export-from (a type-only one included) whose specifier names child_process (CHILD_PROCESS, through resolution), and every loader call whose specifier does (any of its resolved candidates)",
+      falsifiers: ["CHILD_PROCESS@names#1", "F-ENTRIES", "F-ENTRY-EDGES", "F-ENTRY-CANDIDATES"],
     },
     { words: "it follows a held value through WRAPPERS and await", falsifiers: ["isWrapper@consume#1", "W-AS", "W-SAT", "W-TA", "W-NN", "F-INSTANTIATION"] },
-    { words: "member reads by name, by a key that resolves to one text (<computed> otherwise); a default read off the module is the module itself", falsifiers: ["F-FOLLOW", "F-BINDINGS"] },
     {
-      words: "declarations and BINDING_ASSIGNMENTS assignments to a name or a destructuring pattern at any depth (rest elements, defaults and holes included), the target through WRAPPERS, and the assignment's value",
-      falsifiers: ["BINDING_ASSIGNMENTS@consume#1", "unwrap@bindTarget#1", "W-BAND", "F-ENTRIES", "F-BINDINGS"],
+      words: "member reads by name, by a key that resolves to one text (a string, a no-substitution template or a const, through WRAPPERS; <computed> otherwise), optional ones like plain ones; a default read off the module is the module itself",
+      falsifiers: ["F-FOLLOW", "F-BINDINGS", "F-LITERAL-KEYS", "F-OPTIONAL-CHAINS"],
     },
     {
-      words: "a LOGICAL_ASSIGNMENTS assignment whose target is a held name, through WRAPPERS, is followed through the assignment's value (the target's old value when kept); a member target is a property store",
-      falsifiers: ["LOGICAL_ASSIGNMENTS@consume#1", "unwrap@consume#1", "LA4", "LA5", "F-LOGICAL", "F-BINDINGS"],
+      words: "declarations and BINDING_ASSIGNMENTS assignments to a name or a destructuring pattern at any depth (rest elements, defaults and holes included, a pattern or default nested in one, a key of any spelling), the target through WRAPPERS (a default's target too), and the assignment's value (after a property store too, and along a chain of assignments)",
+      falsifiers: ["BINDING_ASSIGNMENTS@consume#1", "unwrap@bindTarget#1", "W-BAND", "F-ENTRIES", "F-BINDINGS", "F-FLOWS", "F-LITERAL-KEYS"],
     },
-    { words: "the result of an EITHER_OPERAND operator (??, ||, &&), a comma's right operand and a conditional's arms", falsifiers: ["EITHER_OPERAND@consume#1", "W-OR", "W-ANDOP", "LA4c2", "F-FOLLOW"] },
-    { words: "a call of a held LAUNCH_CALLS member reads its command (resolution; <expression> when it does not resolve or is absent)", falsifiers: ["LAUNCH_CALLS@consume#1", "F-FOLLOW", "F-BINDINGS"] },
-    { words: "an export of a held value (a declaration, a local export, an export assignment, an exported import-equals, an export-from of child_process) reads <re-export>", falsifiers: ["F-EXPORTS", "F-ENTRY-EDGES", "P-EXPORT"] },
     {
-      words: "a value a statement, void or a comma's left operand discards reads nothing, and so does a name's old value at a write target (every predicate isWriteTarget tests: an =, compound or destructuring assignment's target, a for-in or for-of head, an increment or a decrement, each through WRAPPERS)",
-      falsifiers: ["P-DISCARDED", "P-WRITTEN", "isWrapper@isWriteTarget#1", "LOGICAL_ASSIGNMENTS@isWriteTarget#1", "W-FORIN"],
+      words: "a LOGICAL_ASSIGNMENTS assignment whose target is a held name, through WRAPPERS, is followed through the assignment's value (the target's old value when kept), in a chain too; a member target is a property store",
+      falsifiers: ["LOGICAL_ASSIGNMENTS@consume#1", "unwrap@consume#1", "LA4", "LA5", "F-LOGICAL", "F-BINDINGS", "F-FLOWS"],
+    },
+    {
+      words: "the result of an EITHER_OPERAND operator (??, ||, &&) whichever operand holds the value, beside an operand of any kind and along a chain, a comma's right operand and a conditional's arms (a nested conditional's too)",
+      falsifiers: ["EITHER_OPERAND@consume#1", "W-OR", "W-ANDOP", "LA4c2", "F-FOLLOW", "F-FLOWS"],
+    },
+    { words: "a call of a held LAUNCH_CALLS member, with type arguments or optional too, reads its command (resolution; <expression> when it does not resolve or is absent)", falsifiers: ["LAUNCH_CALLS@consume#1", "F-FOLLOW", "F-BINDINGS", "F-FLOWS", "F-OPTIONAL-CHAINS"] },
+    {
+      words: "an export of a held value (a declaration, a local export under any name, a type-only one included, an export assignment, an exported import-equals, an export-from of child_process) reads <re-export>",
+      falsifiers: ["F-EXPORTS", "F-ENTRY-EDGES", "P-EXPORT", "F-FLOWS", "F-ENTRY-CANDIDATES"],
+    },
+    {
+      words: "a value a statement (in any block or namespace body), void or a comma's left operand (through WRAPPERS, or a member read off it) discards reads nothing, so does the result of an EITHER_OPERAND operator a statement discards, and so does a name's old value at a write target (every predicate isWriteTarget tests: an = or compound assignment's target (every compound operator), a destructuring assignment's target at any depth (a default's or a rest's target included), a for-in or for-of head (a pattern head included), a prefix or postfix increment or decrement, each through WRAPPERS)",
+      falsifiers: ["P-DISCARDED", "P-WRITTEN", "isWrapper@isWriteTarget#1", "LOGICAL_ASSIGNMENTS@isWriteTarget#1", "W-FORIN", "F-WRITE-TARGETS", "F-FLOWS"],
     },
     {
       words: "every other use reads <reference>: a call of the module or of another member, an argument, a return, a property store, a class field, a class's extends, an element, an operator's operand, a condition, a member path deeper than PATH_DEPTH",
-      falsifiers: ["F-ESCAPES", "F-HERITAGE", "F-BINDINGS", "P-VALUE"],
+      falsifiers: ["F-ESCAPES", "F-HERITAGE", "F-BINDINGS", "P-VALUE", "F-FLOWS"],
     },
     {
-      words: "a string or template part holding child_process outside a specifier slot (an import's or export's specifier, an external module reference, an ambient module's name, a loader call's first argument) and outside a type reads <untraced>",
-      falsifiers: ["CHILD_PROCESS@childProcessLaunchesAt#1", "W-UTYPE", "F-STRINGS", "F-ENTRY-EDGES", "F-HERITAGE"],
+      words: "a string or template part holding child_process outside a specifier slot (an import's or export's specifier, an external module reference, an ambient module's name, a loader call's first argument itself: a string inside a wrapped or conditional first argument, or in a later argument, is outside it) and outside a type reads <untraced>",
+      falsifiers: ["CHILD_PROCESS@childProcessLaunchesAt#1", "W-UTYPE", "F-STRINGS", "F-ENTRY-EDGES", "F-HERITAGE", "F-SPECIFIER-SLOTS", "F-ENTRY-CANDIDATES"],
     },
     { words: "it reads in rounds, each deepening a binding by one step; a module still binding after TRACE_ROUNDS rounds reads <reference> at its start", falsifiers: ["F-BOUNDS"] },
   ],
   launches: [
     {
-      words: "the launch-call reader reads every call whose callee is spelled with a LAUNCH_CALLS name (a name, a property name or a literal element name) and whose command resolves",
-      falsifiers: ["LAUNCH_CALLS@launchSitesAt#1", "unwrap@calleeName#1", "W-ELEM", "W-CWRAP", "BF1", "BF1c", "NS2c"],
+      words: "the launch-call reader reads every call whose callee is spelled with a LAUNCH_CALLS name (a name, a property name or a literal element name: a string or a no-substitution template; through WRAPPERS, with type arguments or an optional call) and whose command resolves",
+      falsifiers: ["LAUNCH_CALLS@launchSitesAt#1", "unwrap@calleeName#1", "W-ELEM", "W-CWRAP", "BF1", "BF1c", "NS2c", "F-LITERAL-KEYS", "F-OPTIONAL-CHAINS"],
     },
     {
       words: "and, its command <expression>, every such call in a namespace body or an enum declaration whose command does not resolve, and every such call whose command resolves only by trusting what resolution refuses (an ambient const's initializer, an index into a const array that is not only read)",
-      falsifiers: ["NS2", "F-MERGED", "F-AMBIENT", "F-ARRAYS", "F-BOUNDS"],
+      falsifiers: ["NS2", "F-MERGED", "F-AMBIENT", "F-ARRAYS", "F-BOUNDS", "F-ARRAY-REACH", "F-WRITE-TARGETS"],
     },
     { words: "launchUnion reads both readers' sites, one per call and callee", falsifiers: ["F-FOLLOW", "F-ENTRIES", "F-SCRIPTS"] },
   ],
   resolution: [
     {
-      words: "commands, specifiers and member keys resolve through string literals, a conditional's arms, the const binding a name resolves to in its scope, and a literal numeric index into a const array literal (no spread) whose name is only read; otherwise they do not resolve",
-      falsifiers: ["F-SCOPE", "F-ARRAYS", "F-ARRAY-READS", "F-FOLLOW"],
+      words: "commands, specifiers and member keys resolve through string literals and no-substitution templates, a conditional's arms (a nested conditional's too), the const binding a name resolves to in its scope, and a literal numeric index into a const array literal (no spread anywhere in it) whose name is only read; otherwise they do not resolve; the candidates are deduplicated and sorted",
+      falsifiers: ["F-SCOPE", "F-ARRAYS", "F-ARRAY-READS", "F-FOLLOW", "F-LITERAL-KEYS", "F-ARRAY-REACH", "F-ENTRY-CANDIDATES"],
     },
     { words: "resolution follows at most RESOLVE_DEPTH steps (a conditional's arm, a name's initializer, an indexed array and an element are each one step); past them nothing resolves", falsifiers: ["F-BOUNDS"] },
     {
-      words: "the nearest scope enclosing the reference that binds the name decides (a block-scoped binding's scope: the block, module, namespace body, case block, for statement or static block holding it; a var's: the nearest function, static block, namespace body or module); a let, var, using, parameter, function, class, enum, import-equals, catch or destructured binding there does not resolve, nor does an ambient const, an ES import or a name nothing in the module binds",
-      falsifiers: ["F-SCOPE", "F-VAR-SCOPES", "F-AMBIENT"],
+      words: "the nearest scope enclosing the reference that binds the name decides (a block-scoped binding's scope: the block, module, namespace body (a dotted namespace's innermost), case block (every clause of it), for statement (with or without a condition) or static block holding it, a function's body block never reaching its parameters and a loop's body block never reaching its head; a var's: the nearest function of any kind (a declaration, an expression, an arrow, a method, a constructor or an accessor), static block (a class expression's too), namespace or ambient module body (a dotted namespace's innermost), or module; a parameter's: its function; a catch variable's: its catch clause; a function or class expression's name: the expression itself); a let, var, using, parameter, function, class, enum, import-equals, catch or destructured binding there (nested, renamed or rest included) does not resolve, nor does an ambient const, an ES import or a name nothing in the module binds",
+      falsifiers: ["F-SCOPE", "F-VAR-SCOPES", "F-AMBIENT", "F-SCOPE-MATRIX"],
     },
-    { words: "every module is read as strict code: a function declaration binds its name in the block that holds it, never in an enclosing function's scope (tsconfig strict)", falsifiers: ["BF1", "BF1c", "F-SCOPE"] },
-    { words: "no name resolves in a namespace body or an enum declaration: TypeScript merges their declarations, and the resolver models neither merge", falsifiers: ["NS2", "NS2c", "F-MERGED"] },
+    { words: "every module is read as strict code: a function declaration binds its name in the block that holds it, never in an enclosing function's scope (tsconfig strict)", falsifiers: ["BF1", "BF1c", "F-SCOPE", "F-SCOPE-MATRIX"] },
+    { words: "no name resolves in a namespace body (a dotted one included) or an enum declaration (in any block): TypeScript merges their declarations, and the resolver models neither merge", falsifiers: ["NS2", "NS2c", "F-MERGED", "F-SCOPE-MATRIX"] },
     {
-      words: "a const array's name is only read when no declaration of the name is exported or locally exported and every reference to it is an element read, through WRAPPERS, that no assignment (LOGICAL_ASSIGNMENTS included), delete, call or tagged template reaches",
-      falsifiers: ["F-ARRAYS", "F-ARRAY-READS", "isWrapper@elementRead#1", "LOGICAL_ASSIGNMENTS@elementRead#1"],
+      words: "a const array's name is only read when no declaration of the name is exported (a typed or an uninitialized one included, in any scope) or locally exported (under any exported name, a type-only export included) and every reference to it is an element read (by any key), through WRAPPERS, that no assignment (LOGICAL_ASSIGNMENTS included, through WRAPPERS and along a chain), delete, call (an optional one, one with any arguments and one through an optional chain included; a new expression is no call) or tagged template (with or without substitutions) reaches",
+      falsifiers: ["F-ARRAYS", "F-ARRAY-READS", "isWrapper@elementRead#1", "LOGICAL_ASSIGNMENTS@elementRead#1", "F-ARRAY-REACH", "F-WRITE-TARGETS"],
     },
   ],
   scripts: [{ words: "a module is parsed by its extension in any letter case: .tsx as TSX, .jsx as JSX, .js, .mjs and .cjs as JavaScript, every other as TypeScript", falsifiers: ["F-SCRIPTS"] }],
-  residuals: [{ words: "R-STATIC-FORMS: every form the readers do not parse reads as its quiet row pins", falsifiers: ["Q-STATIC-FORMS"] }],
+  residuals: [{ words: "R-STATIC-FORMS: every form the readers do not parse reads as its quiet row pins, member by member (RESIDUE_MEMBERS): a launch through an API that is no child_process binding with an unresolved command; a launch through a value the module does not bind; a package's own launcher read by its specifier alone; a constructor-chain global; a write through the allowed process.env read; a launch whose arguments carry rf through a shell; another builtin's process or thread API; a loader reached through a call the loader reader does not parse; a loader reached through a binding the loader reader does not read; code evaluated at run time; a process-internal binding; a launch-named call on a value the tracer does not hold whose command does not resolve", falsifiers: ["Q-STATIC-FORMS"] }],
 };
 
 // ---- the rows ----
@@ -1036,7 +1470,7 @@ const READERS: Readers = { moduleReading, heldReading, parseSource };
 function isReaders(value: unknown): value is Readers {
   return isObject(value) && typeof value.moduleReading === "function" && typeof value.heldReading === "function" && typeof value.parseSource === "function";
 }
-const FORMS: Readonly<Record<string, string>> = { ...CARRIED_FORMS, ...EXTRA_FORMS };
+const FORMS: Readonly<Record<string, string>> = { ...CARRIED_FORMS, ...EXTRA_FORMS, ...RESPIN_FORMS };
 function readModule(readers: Readers, path: string, text: string): string[] {
   return readers.moduleReading(path, readers.parseSource(path, text));
 }
@@ -1092,12 +1526,15 @@ function judgedConstants(): Json {
     memberForms: MEMBER_FORMS,
     siteForms: SITE_FORMS,
     extraForms: EXTRA_FORMS,
+    respinForms: RESPIN_FORMS,
     scriptForms: SCRIPT_FORMS,
     plantedReach: PLANTED_REACH,
     positions: POSITIONS,
     staticResidue: STATIC_RESIDUE,
     families: FAMILIES,
     residuals: RESIDUALS,
+    addedPositions: ADDED_POSITIONS,
+    residueMembers: RESIDUE_MEMBERS,
     kindPins: KIND_PINS,
     predicatePositions: PREDICATE_POSITIONS,
     siteVocabularies: SITE_VOCABULARIES,
@@ -1134,7 +1571,7 @@ const REACHED: string[] = [];
 
 describe("wb-pyel.9 EDC static-reach readers census (SDK-EVIDENCE-DIRECTED-COMPUTATION-R3, the full-surface readers of wb-pyel.5's A5)", () => {
   it(TITLES.judged, { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["D:5", "U:16", "S:29", "F:20", "P:6", "Q:1"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["D:5", "U:16", "S:29", "F:29", "P:6", "Q:1"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     const pins = ROWS.flatMap(row => row.pins);
     expect(pins.filter((pin, index) => pins.indexOf(pin) !== index), "no pin is held twice").toEqual([]);
@@ -1147,10 +1584,18 @@ describe("wb-pyel.9 EDC static-reach readers census (SDK-EVIDENCE-DIRECTED-COMPU
       for (const edit of kill.edits) expect(occurrences(HELPER_TEXT, edit.from), `${name}: its edit's text occurs once in the helper`).toBe(1);
       expect(kill.reds.filter(pin => !pins.includes(pin)), `${name} reds pins`).toEqual([]);
       expect(kill.reds.length, `${name} reds at least one pin`).toBeGreaterThan(0);
+      expect([...(kill.witnesses ?? []), ...(kill.twins ?? [])].filter(form => FORMS[form] === undefined), `${name}'s witnesses and twins are forms`).toEqual([]);
     }
     expect(judgedConstants(), "the constants are the roster's").toStrictEqual(ROSTER.constants);
     for (const [family, quiet] of Object.entries(RESIDUALS)) for (const pin of quiet) expect(ROWS.find(row => row.id === "Q")?.pins, `${family}'s ${pin} is a quiet-row pin`).toContain(pin);
-    const forms = [...Object.keys(CARRIED_FORMS), ...Object.keys(EXTRA_FORMS)];
+    // the residual's members are its quiet row's probes: every probe one member's, every member at least one probe and named by its claim
+    const memberProbes = Object.values(RESIDUE_MEMBERS).flat();
+    expect([...memberProbes].sort(), "every quiet-row probe is a residual member's, and every member's probe is a quiet-row probe").toEqual(Object.keys(STATIC_RESIDUE).sort());
+    expect(memberProbes.filter((probe, index) => memberProbes.indexOf(probe) !== index), "no probe is two members'").toEqual([]);
+    expect(Object.entries(RESIDUE_MEMBERS).filter(([, probes]) => probes.length === 0).map(([member]) => member), "every member has a probe").toEqual([]);
+    const residualWords = CLAIMS.residuals?.map(clause => clause.words).join(" ") ?? "";
+    expect(Object.keys(RESIDUE_MEMBERS).filter(member => !residualWords.includes(member)), "the residual claim names every member").toEqual([]);
+    const forms = [...Object.keys(CARRIED_FORMS), ...Object.keys(EXTRA_FORMS), ...Object.keys(RESPIN_FORMS)];
     const placed = Object.values(FAMILIES).flat();
     expect([...placed].sort(), "every form is in exactly one family").toEqual([...forms].sort());
 
@@ -1167,8 +1612,11 @@ describe("wb-pyel.9 EDC static-reach readers census (SDK-EVIDENCE-DIRECTED-COMPU
     expect(Number(/reachForms \d+ -> (\d+)/.exec(form)?.[1]), "cut #5's FORM line counts the carried forms").toBe(CARRIED_COUNTS.reachForms);
     expect(Number(/referencePositions \d+ -> (\d+)/.exec(form)?.[1]), "cut #5's FORM line counts the carried positions").toBe(CARRIED_COUNTS.referencePositions);
     expect(Object.keys(CARRIED_FORMS).length, "every carried form is held").toBe(CARRIED_COUNTS.reachForms);
-    expect(Object.keys(POSITIONS).slice(0, CARRIED_COUNTS.referencePositions).length, "every carried position is held").toBe(CARRIED_COUNTS.referencePositions);
+    expect(Object.keys(POSITIONS).length - ADDED_POSITIONS.length, "every carried position is held, and only those").toBe(CARRIED_COUNTS.referencePositions);
+    expect(Object.keys(POSITIONS).slice(CARRIED_COUNTS.referencePositions), "the positions after the carried ones are exactly ADDED_POSITIONS, in order").toEqual([...ADDED_POSITIONS]);
     expect(parent.notes.includes(ANCHORS.residual) && Object.hasOwn(RESIDUALS, "R-STATIC-FORMS"), `${PARENT}'s notes name R-STATIC-FORMS and it is a residual here`).toBe(true);
+    const q6 = parent.notes.slice(parent.notes.indexOf(ANCHORS.residual)).split(").")[0] ?? "";
+    expect(Object.keys(RESIDUE_MEMBERS).slice(0, 5).map(member => q6.includes(member)), `the first five members are the forms ${PARENT}'s Q6 sentence names`).toEqual([true, true, true, true, true]);
     // refusal #5's unmet items (each a paragraph), from the export hop that carries them (the tracker holds them at cut time)
     const u1 = firstBlock(parent.notes, ANCHORS.u1);
     const u2 = firstBlock(parent.notes, ANCHORS.u2);
@@ -1178,6 +1626,9 @@ describe("wb-pyel.9 EDC static-reach readers census (SDK-EVIDENCE-DIRECTED-COMPU
       expect(uPins.filter(pin => /^W-[A-Z]+$/.test(pin)), "row U holds every witness refusal #5's U1 item spells").toEqual(idsIn(u1, /\bW-[A-Z]+\b/g));
     }
     if (u2 !== "") expect(uPins.filter(pin => /^BF\d/.test(pin)), "row U holds the plant and control refusal #5's U2 item names").toEqual(idsIn(u2, /\bBF\d+c?\b/g));
+    // wb-pyel.9 refusal #1's U1 item, from the export hop that carries it (the tracker holds it at cut time): KILLS holds every member it names
+    const refusal1 = firstLine(own.notes, ANCHORS.refusal1);
+    if (refusal1 !== "") expect(idsIn(refusal1, /\bG\d\d\b/g).filter(id => !Object.keys(KILLS).some(name => name.startsWith(`${id}-`))), "KILLS holds every gate mutant refusal #1's U1 item names").toEqual([]);
 
     // the outside anchors: the helper's own source
     expect(Object.keys(SITE_FORMS).sort(), "row S holds exactly the helper's vocabulary use sites").toEqual(helperSites().sort());
@@ -1227,6 +1678,9 @@ describe("wb-pyel.9 EDC static-reach readers census (SDK-EVIDENCE-DIRECTED-COMPU
         const readers = await hollowed(dir, name, kill);
         const reds = pins.filter(pin => JSON.stringify(witnessOf(pin, readers)) !== JSON.stringify(rosterWitness(pin)));
         expect(reds, `${name} (${kill.hollows}) reds exactly its pins`).toEqual([...kill.reds]);
+        const differs = (form: string): boolean => JSON.stringify(readModule(readers, `forms/${form}.ts`, FORMS[form] ?? "")) !== JSON.stringify(readModule(READERS, `forms/${form}.ts`, FORMS[form] ?? ""));
+        expect((kill.witnesses ?? []).filter(form => !differs(form)), `${name}: each of its witnesses reads differently`).toEqual([]);
+        expect((kill.twins ?? []).filter(form => differs(form)), `${name}: each of its twins reads the same`).toEqual([]);
       }
     } finally {
       removeScratch(dir);
