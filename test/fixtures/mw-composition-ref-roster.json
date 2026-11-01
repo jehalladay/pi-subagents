@@ -4172,7 +4172,8 @@
    "leadGap": [
     "0020"
    ],
-   "leadSecond": []
+   "leadSecond": [],
+   "leadBefore": []
   }
  }
 }
