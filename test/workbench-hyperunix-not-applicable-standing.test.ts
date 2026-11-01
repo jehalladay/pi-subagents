@@ -43,17 +43,28 @@
  *      ExecutionStatusKind at type level, and at run time its members equal the ExecutionStatus kinds of the installed
  *      declaration, member for member and in declaration order (the kind join). A binding can hold those members while its
  *      filter, flatMap or iteration hands on other kinds (wb-ey9p cut #2), so what it hands on is joined as well: READ_KINDS
- *      joins the declared kinds outside the read-outcome clause, R0's visit join requires the cells C1, C2 and C3 must
- *      record (EXPECTED_VISITS's c1, c2 and c3, built through READ_KINDS and the binding's flatMap) to equal the same cells
- *      built over the declared kinds, and those three cases compare what their own loops drive with the same entries. So a
+ *      joins the declared kinds outside the read-outcome clause, and R0's visit join requires the cells C1, C2 and C3 must
+ *      record (EXPECTED_VISITS's c1, c2 and c3, built through READ_KINDS and the binding's flatMap) to equal, as R0 reads
+ *      them, the same cells built over the declared kinds. What a binding hands on can also change after R0 has read it (a
+ *      handed cell that is an accessor, or a reference the binding keeps and rewrites; an iteration switched by the running
+ *      test or by a count: wb-ey9p cut #3), so C1, C2 and C3 compare the record of what their own loops drove first with
+ *      their EXPECTED_VISITS entry and then with their DECLARED_VISITS entry (the declared-visit guard): the same cells
+ *      built once at module scope, before any case runs, by loops of its own (the cases' loop shape, not kindVisits) over
+ *      the ExecutionStatus kinds read from the installed declaration and never through the binding, and frozen, cells
+ *      included. R0's declared join requires kindVisits over R0's own reading of the declaration to equal DECLARED_VISITS,
+ *      so an edit that moves the cells built on one side of that join (kindVisits or R0's reading of the declaration on one
+ *      side, DECLARED_VISITS's loops or its reading on the other) reds R0 unless the other side moves with it. So a
  *      module-scope shadow or rebinding of the import, or an edit of the adapter tuple itself
- *      (src/workbench/hyperunix-observer.ts), that substitutes, drops, duplicates, adds or reorders a kind, whether in its
- *      members, in what its filter or flatMap hands READ_KINDS and EXPECTED_VISITS, or in what its iteration hands the kind
- *      loops of C2 and C3 (or READ_KINDS's iteration the kind loop of C1), reds R0 or, at the latest at its visit guard, the
- *      case whose loop it feeds, whether or not its count moves; a shadow that changes no member but gives the binding
- *      another element type (wider or narrower) fails typing. A failing Completeness join names both of its causes, an
- *      edited roster or a moved SDK vocabulary, and so do a failing kind join (an edited binding or a moved SDK vocabulary)
- *      and a failing visit join (a binding that hands on other kinds than its members, or an edited EXPECTED_VISITS).
+ *      (src/workbench/hyperunix-observer.ts), that substitutes, drops, duplicates, adds or reorders a kind in what R0 reads
+ *      of it (its members, and what its filter or flatMap hands READ_KINDS and EXPECTED_VISITS) reds R0, and one that does
+ *      so in what a case's kind loop drives (what its iteration hands the kind loops of C2 and C3, or READ_KINDS's iteration
+ *      the kind loop of C1), whether from the start or only after R0, reds that case at the latest at its declared-visit
+ *      guard, whether or not its count moves; a shadow that changes no member but gives the binding another element type
+ *      (wider or narrower) fails typing. A failing Completeness join names both of its causes, an edited roster or a moved
+ *      SDK vocabulary, and so do a failing kind join (an edited binding or a moved SDK vocabulary), a failing visit join (a
+ *      binding that hands on other kinds than its members, or an edited EXPECTED_VISITS), a failing declared join (an edited
+ *      DECLARED_VISITS, kindVisits or reading of the declaration) and a failing declared-visit guard (a binding that hands
+ *      the case's kind loop other kinds than its members after R0, or an edited case loop, record or DECLARED_VISITS).
  *      Each case's expected cell count is computed once at module scope from these rosters, the imported one included
  *      (EXPECTED_CELLS, wb-aced, the landing-696 F1 follow-up), T2's fixture-validity half included, and so is the sequence
  *      of cells each case drives (EXPECTED_VISITS, wb-aced cut #2): T2, K1, K2, C1, C2 and C3 record every innermost cell
@@ -65,21 +76,24 @@
  *      latest at that guard, whether or not its cell count moves.
  *      Not claimed, and none is a residual (no quiet row pins any): a rewrite of the bead's own spelling itself (the
  *      roster's first member and the frozen literal together: the bead text lives in the tracker, which this file does not
- *      read); which HXS frame kinds carry a completeness verdict (T2 refuses the word on both listed frames; the SDK's
- *      frame set is not read); an edit of a guard or of a record (a case-local EXPECTED_CELLS or EXPECTED_VISITS, or a
- *      recorded value other than the driven one); an edit that hands the SDK or the adapter a value other than the recorded
- *      loop value (inside a loop body, or a case-local rebinding of a helper such as reading or sdkDocument); a case-local
- *      rebinding that changes no driven cell (K1's kind-set assertion reads HYPERUNIX_EXECUTION_KINDS but drives no cell from
- *      it); an edit of the installed SDK declaration, or of R0's reading of it, together with the binding, or a rebinding of
- *      the imported ExecutionStatusKind type (the kind join's anchors moved with it; the observer suite reads the src export
- *      against that declaration); an override of a literal roster's own methods (its iteration, filter, flatMap or map, or a
- *      set's has) that keeps its members (R0's frozen shapes compare members, and both sides of the visit join are built
- *      through the same literal rosters); and a patch of a shared prototype (an Array or Set method of the realm, which can
- *      move the declared side of a join with the binding).
+ *      read); which HXS frame kinds carry a completeness verdict (T2 refuses the word on both listed frames; the SDK's frame
+ *      set is not read); an edit of a guard or of a record (a case-local EXPECTED_CELLS or EXPECTED_VISITS, a declared-visit
+ *      guard, or a recorded value other than the driven one); an edit that hands the SDK or the adapter a value other than
+ *      the recorded loop value (inside a loop body, or a case-local rebinding of a helper such as reading or sdkDocument); a
+ *      case-local rebinding that changes no driven cell (K1's kind-set assertion reads HYPERUNIX_EXECUTION_KINDS but drives
+ *      no cell from it), and what any binding hands that assertion when K1 reads it (R0 holds the members as R0 reads them);
+ *      an edit of the installed SDK declaration, or edits that move both sides of R0's declared join together (kindVisits or
+ *      R0's reading of the declaration, with DECLARED_VISITS's loops or its reading), together with the binding, or a
+ *      rebinding of the imported ExecutionStatusKind type (the kind join's anchors moved with it; the observer suite reads
+ *      the src export against that declaration); an override of a literal roster's own methods (its iteration, filter,
+ *      flatMap or map, or a set's has) that keeps its members (R0's frozen shapes compare members, and every visit build,
+ *      the cases' records included, is driven through the same literal rosters); and a patch of a shared prototype (an Array
+ *      or Set method of the realm, which can move the declared side of a join with the binding). RESIDUALS: none.
  * T1, T2, C1 and R0's Completeness join state the vendored SDK 0.1.0 and move with an amended SDK (each names this bead's
  * on-landing leg); R0's kind join states the SDK's ExecutionStatus kinds and moves with an amended SDK only when they move, as
  * the observer suite's tuple pins do; K1, K2, C2, C3 and R0's other joins hold before and after it. Pure: no HX binary, scratch
- * directory, clock, network or file write; the only file read is the installed SDK declaration (by T1 and R0). */
+ * directory, clock, network or file write; the only file read is the installed SDK declaration (by T1, R0 and, once at module
+ * scope, DECLARED_VISITS). */
 import {readFileSync} from 'node:fs';
 import {
   type Completeness, type CoverageSummary, coverageSummaryOf, decodeResultStream, type ExecutionStatusKind, ProtocolError,
@@ -136,6 +150,19 @@ const VISIT_JOIN = 'wb-tz2.4 R0 visit join: the cells C1, C2 and C3 must drive (
   + 'kinds of the installed @hyperunix/sdk declaration, while the binding holds those kinds. Either its filter or flatMap hands on '
   + 'other kinds than its members (a shadow or rebinding of the import here, or an override in the adapter tuple in '
   + 'src/workbench/hyperunix-observer.ts: restore a plain tuple of the declared kinds) or EXPECTED_VISITS was edited';
+/** R0's declared join message (wb-ey9p cut #3): DECLARED_VISITS, the anchor of the declared-visit guards of C1, C2 and C3, and
+ * kindVisits over the reading of the declaration in R0 disagree, which an edit of either side causes. */
+const DECLARED_JOIN = 'wb-tz2.4 R0 declared join: DECLARED_VISITS (the cells C1, C2 and C3 must drive, built by its own loops at '
+  + 'module scope over the installed @hyperunix/sdk declaration) disagrees with kindVisits over the reading of that declaration '
+  + 'in R0. Either DECLARED_VISITS, its loops or the reading it is built over was edited, or kindVisits or the reading in R0 was';
+/** The declared-visit guard message (wb-ey9p cut #3): reached only once the case passed its EXPECTED_VISITS guard, so the case
+ * drove what its entry there holds and yet not the cells the declaration defines; it names both causes. */
+const DECLARED_VISIT = 'wb-tz2.4 declared-visit guard: the cells this case drove agree with its EXPECTED_VISITS entry but not '
+  + 'with DECLARED_VISITS, the same cells built at module scope over the ExecutionStatus kinds of the installed @hyperunix/sdk '
+  + 'declaration. Either the binding hands this kind loop, and the entry it built, other kinds than its members after R0 (a '
+  + 'shadow or rebinding of HYPERUNIX_EXECUTION_KINDS here, or an override in the adapter tuple in '
+  + 'src/workbench/hyperunix-observer.ts: restore a plain tuple of the declared kinds) or this case loop, its record or '
+  + 'DECLARED_VISITS was edited';
 /** Each case's expected cell count, computed once here from the R0-pinned rosters, the module rosters and the imported
  * HYPERUNIX_EXECUTION_KINDS (wb-aced, the landing-696 F1 follow-up; the import pinned since wb-ey9p):
  * a case that rebinds a roster locally, or narrows the roster it iterates at its loop site, cannot move its own guard with it.
@@ -157,7 +184,8 @@ type Visit = readonly (string | boolean | null)[];
  * (the kinds outside MUTATION_KINDS). C2 leaves out the cells it skips (the licence on a complete kind, where the runtime
  * itself licensed absence), as the case does. EXPECTED_VISITS builds these cells through the imported binding and READ_KINDS;
  * R0's visit join builds them again over the ExecutionStatus kinds of the installed declaration (wb-ey9p cut #2), and the two
- * builds must agree. */
+ * builds must agree; DECLARED_VISITS builds the same cells once at module scope by loops of its own over the kinds it reads
+ * from the declaration (wb-ey9p cut #3), and R0's declared join requires this build over the reading in R0 to equal it. */
 function kindVisits(kinds: readonly string[], readKinds: readonly string[]): Record<'c1' | 'c2' | 'c3', Visit[]> {
   return {
     c1: NOT_APPLICABLE.flatMap(spelling => readKinds.flatMap(kind => LICENCES.map(licensed => [spelling, kind, licensed]))),
@@ -174,7 +202,8 @@ function kindVisits(kinds: readonly string[], readKinds: readonly string[]): Rec
  * drives and compares the record with its entry after its count guard, so a case that drives other cells than these rosters
  * define (a roster rebound in its own scope, or a roster expression substituted, narrowed, widened or reordered at a loop
  * site) reds even when its cell count does not move. C1's, C2's and C3's entries are kindVisits over the binding and
- * READ_KINDS, which R0's visit join holds to kindVisits over the installed declaration's kinds (wb-ey9p cut #2). */
+ * READ_KINDS, which R0's visit join holds to kindVisits over the installed declaration's kinds as R0 reads them (wb-ey9p
+ * cut #2); what C1, C2 and C3 drive is also held to DECLARED_VISITS when each case compares it (wb-ey9p cut #3). */
 const EXPECTED_VISITS: Readonly<Record<'t2Refusals' | 't2Validity' | 'k1' | 'k2' | 'c1' | 'c2' | 'c3', readonly Visit[]>> = Object.freeze({
   t2Refusals: VERDICT_FRAMES.flatMap(frame => NOT_APPLICABLE.map(spelling => [frame, spelling])),
   t2Validity: VERDICT_FRAMES.flatMap(frame => FRAME_VALUES.map(value => [frame, value])),
@@ -182,6 +211,45 @@ const EXPECTED_VISITS: Readonly<Record<'t2Refusals' | 't2Validity' | 'k1' | 'k2'
   k2: NOT_APPLICABLE.flatMap(spelling => LICENCES.map(licensed => [spelling, licensed])),
   ...kindVisits(HYPERUNIX_EXECUTION_KINDS, READ_KINDS),
 });
+/** The cells C1, C2 and C3 must drive (wb-ey9p cut #3, the refusal-#2 U1 and U2 cure), built once here at module scope, before
+ * any case runs, over the ExecutionStatus kinds read from the installed declaration in declaration order, by loops of its own
+ * in the cases' loop shape (not kindVisits): this build never reads the binding, its filter, flatMap or iteration. Each of the
+ * three cases compares the record of what its own loops drove with its entry here after its EXPECTED_VISITS guard (the
+ * declared-visit guard), so what the binding hands a case's kind loop is held when the case runs, even where it differs from
+ * what R0 read (a handed cell that is an accessor or a reference the binding keeps and rewrites, an iteration switched by the
+ * running test or by a count); it is frozen, cells included, so nothing writes into it once it is built; R0's declared join
+ * requires kindVisits over the reading of the declaration in R0 to equal it. */
+const DECLARED_VISITS = ((): Readonly<Record<'c1' | 'c2' | 'c3', readonly Visit[]>> => {
+  const declaration = readFileSync(new URL('../node_modules/@hyperunix/sdk/dist/result.d.ts', import.meta.url), 'utf8');
+  const start = declaration.indexOf('export type ExecutionStatus =');
+  const kinds = [...declaration.slice(start, declaration.indexOf('export type ExecutionStatusKind', start))
+    .matchAll(/readonly kind: "([^"]+)";/g)].map(match => match[1]);
+  const built: Record<'c1' | 'c2' | 'c3', Visit[]> = {c1: [], c2: [], c3: []};
+  for (const spelling of NOT_APPLICABLE) {
+    for (const kind of kinds) {
+      if (MUTATION_KINDS.has(kind)) continue;
+      for (const licensed of LICENCES) built.c1.push([spelling, kind, licensed]);
+    }
+  }
+  for (const spelling of NOT_APPLICABLE) {
+    for (const kind of kinds) {
+      for (const licensed of LICENCES) {
+        if (MUTATION_KINDS.has(kind)) built.c2.push([spelling, kind, licensed, 'refused']);
+        else if (!(licensed && COMPLETE_KINDS.has(kind))) built.c2.push([spelling, kind, licensed, 'projected']);
+      }
+    }
+  }
+  for (const value of PRE_EXISTING) {
+    for (const kind of kinds) {
+      for (const licensed of LICENCES) built.c3.push([value, kind, licensed, MUTATION_KINDS.has(kind) ? 'refused' : 'projected']);
+    }
+  }
+  for (const entry of [built.c1, built.c2, built.c3]) {
+    for (const cell of entry) Object.freeze(cell);
+    Object.freeze(entry);
+  }
+  return Object.freeze(built);
+})();
 
 /** The provider output shape of the measured live read (test/workbench-hyperunix-observer.test.ts measured()), with the
  * execution kind, the runtime licence and any further coverage_summary members set. */
@@ -259,6 +327,9 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     // must agree, member for member and in order, and C1, C2 and C3 compare what their own loops drive with the same entries.
     const {c1, c2, c3} = EXPECTED_VISITS;
     expect({c1, c2, c3}, VISIT_JOIN).toStrictEqual(kindVisits(declaredKinds, declaredKinds.filter(kind => !MUTATION_KINDS.has(kind))));
+    // The declared join (wb-ey9p cut #3): DECLARED_VISITS, which C1, C2 and C3 compare what their loops drove with after their
+    // EXPECTED_VISITS guards, built by its own loops over its own reading, equals kindVisits over this reading of the declaration.
+    expect(DECLARED_VISITS, DECLARED_JOIN).toStrictEqual(kindVisits(declaredKinds, declaredKinds.filter(kind => !MUTATION_KINDS.has(kind))));
     // COMPLETE_KINDS is the adapter's own licensed reading; MUTATION_KINDS is its read-outcome clause and READ_KINDS the rest,
     // each read over the declared kinds (wb-ey9p cut #2), never through the binding's own filter.
     const readOutcome = declaredKinds.filter(kind => hxLiveInvariant(reading(kind, false)).violations.includes('read-outcome'));
@@ -379,6 +450,7 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     }
     expect(cells).toBe(EXPECTED_CELLS.c1);
     expect(visits).toStrictEqual(EXPECTED_VISITS.c1);
+    expect(visits, DECLARED_VISIT).toStrictEqual(DECLARED_VISITS.c1);
   });
 
   it('C2: a reading carrying the word past the decoder never reads complete, success or known-empty and never licenses absence without the runtime licence', () => {
@@ -413,6 +485,7 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     expect(projected).toBe(EXPECTED_CELLS.c2Projected);
     expect(refused).toBe(EXPECTED_CELLS.c2Refused);
     expect(visits).toStrictEqual(EXPECTED_VISITS.c2);
+    expect(visits, DECLARED_VISIT).toStrictEqual(DECLARED_VISITS.c2);
   });
 
   it('C3: every pre-existing completeness value projects byte-identically to the completeness-free reading, for every kind and licence', () => {
@@ -438,5 +511,6 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     }
     expect(cells).toBe(EXPECTED_CELLS.c3);
     expect(visits).toStrictEqual(EXPECTED_VISITS.c3);
+    expect(visits, DECLARED_VISIT).toStrictEqual(DECLARED_VISITS.c3);
   });
 });
