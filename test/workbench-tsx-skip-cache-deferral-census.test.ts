@@ -75,13 +75,15 @@
  *   gate is OPEN once a verdict reads anything but DEFER or REJECT (ADOPT, or no verdict word at all) or TSX-PF-03 leaves the
  *   not-created packets (its heading drops "not created" or its row is gone); a confirmed ADR status keeps it closed.
  * KNOWN FINDINGS (re-measured on the export of trunk f63d3896, landing 753; reported, never admitted; prior measure was
- * trunk 4435e2e, landing 304, and before that the hop-edccd80 re-measure): C1 reads exactly wb-km7q.11 and wb-km7q.6, and
- * C2 reads exactly wb-csbt.2, wb-km7q.11 and wb-km7q.6. wb-km7q.6 carries no sentence naming ADR-0032 beside a deferral
- * word; wb-csbt.2 left C1 at ledger hop edccd80 (landing 287), where its delivery note gained a sentence naming ADR-0032
- * beside a deferral word (R-WORDING-ANYWHERE); wb-km7q.11 is a gate-respin filing of the reader-helper family whose store
- * rows quote its cut's census subject, carrying neither the wording nor an edge to the gate.
- * KNOWN pins both sets exactly, so a further finding, or a known row whose reading changes, reds; whether the two rows gain
- * the wording and the edge, or whether (c) binds only beads filed after the filing, is the owner's ruling, not this census's.
+ * trunk 4435e2e, landing 304, and before that cut #1's measure at base 6653728 (landing 282)): C1 reads exactly wb-km7q.11
+ * and wb-km7q.6, and C2 reads exactly wb-csbt.2, wb-km7q.11 and wb-km7q.6. wb-km7q.6 carries no sentence naming ADR-0032
+ * beside a deferral word; wb-csbt.2 left C1 at ledger hop edccd80 (landing 287), where its delivery note gained a sentence
+ * naming ADR-0032 beside a deferral word (R-WORDING-ANYWHERE); wb-km7q.11, the rule-19 structural-exit child of wb-km7q.4
+ * (a flywheel filing labelled orchestrator-exit and rule-19-structural; ruling R-B140 inverted their dependency), quotes
+ * its cut's census subject in a delivery note and carries neither the wording nor an edge to the gate.
+ * KNOWN pins both sets exactly, so a further finding, or a known row whose reading changes, reds; whether the three rows
+ * KNOWN names gain the wording and the edge they lack, or whether (c) binds only beads filed after the filing, is the
+ * owner's ruling, not this census's.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label with the families replaced):
  *  A, the statement and acceptance (a). A1 the walk (floors, anchors, no symlink, nothing unreadable, each exemption
@@ -105,6 +107,14 @@
  * registered test titles are held to the out-of-file roster (test/fixtures/tsx-skip-cache-deferral-roster.json). RECORDS: the
  * last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode, not
  * inverted, ran; every pin's case reached its end; no registered suite or test title names a family.
+ * KNOWN RECORD (wb-4fpf; the case after the judged set) reads this file's own text, never git or the export: the header holds
+ * one KNOWN FINDINGS paragraph (from its opening line to the next blank header line), which opens with its re-measure (trunk
+ * and landing); the doc comment on the line above KNOWN's declaration reads exactly "KNOWN FINDINGS (header): exact,
+ * re-measured on the export of <that re-measure>."; the paragraph's one "C1 reads exactly ..., and C2 reads exactly ..."
+ * sentence lists KNOWN's C1 and C2 rows in the literal's order; and its one "whether the <number> rows KNOWN names" phrase
+ * counts those rows in words. A KNOWN edit that leaves the doc comment, either row list or the count behind therefore reds.
+ * The case reads no other sentence of the paragraph and no other text of this file. Whether KNOWN was measured at the named
+ * trunk and landing is NOT CLAIMED by this census, and neither is the prior-measure history.
  * RESIDUALS (named families, each with pinned quiet rows in QUIET, read false in the roster witnesses): R-MARKER-ANYWHERE a
  * marker anywhere in a sentence admits it, whatever the marker qualifies (a list inside a code comment, or a comment and the
  * code lines after it, read as one sentence, so one marker covers them); R-PARAPHRASE the skip or the cache named outside the
@@ -253,11 +263,55 @@ const WALK_ANCHORS: readonly (readonly [string, string])[] = [
 const POSTURE_ANCHORS: readonly string[] = ["wb-csbt.1.title:1 S,K", "wb-csbt.2.title:1 S"];
 /** The rows whose judged fields cite the program at base (the epic and its four children, by tag and path). */
 const CITED_ROW_ANCHORS: readonly string[] = ["wb-csbt", "wb-csbt.1", "wb-csbt.2", "wb-csbt.3", "wb-csbt.4"];
-/** KNOWN FINDINGS (header): exact, measured on the export of trunk 4435e2e. */
+/** KNOWN FINDINGS (header): exact, re-measured on the export of trunk f63d3896, landing 753. */
 const KNOWN: Readonly<Record<string, readonly string[]>> = {
   C1: ["wb-km7q.11 no-deferral-wording", "wb-km7q.6 no-deferral-wording"],
   C2: ["wb-csbt.2 no-related-edge", "wb-km7q.11 no-related-edge", "wb-km7q.6 no-related-edge"],
 };
+/** The KNOWN record (header KNOWN RECORD): the header's KNOWN paragraph opens on a line with this prefix and runs to the next
+ * blank header line; it opens with its re-measure, and its one C1/C2 sentence and its one count phrase are read by every match. */
+const KNOWN_PARAGRAPH_OPENING = " * KNOWN FINDINGS (";
+const KNOWN_MEASURE_SOURCE = String.raw`^KNOWN FINDINGS \(re-measured on the export of (trunk [0-9a-f]{7,40}, landing [0-9]+); `;
+const KNOWN_SETS_SOURCE = String.raw`\bC1 reads exactly .+?, and C2 reads exactly .+?\.(?=\s|$)`;
+const KNOWN_COUNT_SOURCE = String.raw`\bwhether the ([a-z]+) rows\b`;
+const KNOWN_ANTECEDENT_SOURCE = String.raw`\bwhether the [a-z]+ rows KNOWN names\b`;
+const KNOWN_DECLARATION = "const KNOWN: ";
+const NUMBER_WORDS: readonly string[] = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+interface KnownRecord {
+  readonly paragraphs: number;
+  readonly measure: string | null;
+  readonly docComment: string | null;
+  readonly sets: readonly string[];
+  readonly counts: readonly string[];
+  readonly antecedent: boolean;
+}
+/** The KNOWN record as this file's text holds it: the header block runs to its first closing line, a paragraph line's comment
+ * prefix is dropped and the lines are joined by one space; the doc comment is the line above the one declaration of KNOWN. */
+function knownRecord(text: string): KnownRecord {
+  const lines = text.split("\n");
+  const header = lines.slice(0, Math.max(lines.indexOf(" */"), 0));
+  const openings = header.flatMap((line, index) => (line.startsWith(KNOWN_PARAGRAPH_OPENING) ? [index] : []));
+  const start = openings[0] ?? -1;
+  const end = start < 0 ? -1 : header.findIndex((line, index) => index > start && line.trimEnd() === " *");
+  const paragraph = (start < 0 ? [] : header.slice(start, end < 0 ? header.length : end))
+    .map(line => line.replace(/^ \* ?/, ""))
+    .join(" ")
+    .replace(/\s+/g, " ");
+  const declarations = lines.flatMap((line, index) => (line.startsWith(KNOWN_DECLARATION) ? [index] : []));
+  const declaration = declarations.length === 1 ? (declarations[0] ?? 0) : 0;
+  return {
+    paragraphs: openings.length,
+    measure: new RegExp(KNOWN_MEASURE_SOURCE).exec(paragraph)?.[1] ?? null,
+    docComment: declaration > 0 ? (lines[declaration - 1] ?? null) : null,
+    sets: [...paragraph.matchAll(new RegExp(KNOWN_SETS_SOURCE, "g"))].map(match => match[0]),
+    counts: [...paragraph.matchAll(new RegExp(KNOWN_COUNT_SOURCE, "g"))].map(match => match[1] ?? ""),
+    antecedent: new RegExp(KNOWN_ANTECEDENT_SOURCE).test(paragraph),
+  };
+}
+/** An English list: "a", "a and b", "a, b and c". */
+const englishList = (items: readonly string[]): string => (items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`);
+/** A KNOWN finding's row id: the text before its first space. */
+const knownRowOf = (finding: string): string => finding.split(" ")[0] ?? "";
 const RESIDUAL_FAMILIES: readonly string[] = [
   "R-MARKER-ANYWHERE",
   "R-PARAPHRASE",
@@ -1444,6 +1498,19 @@ describe("wb-csbt.1 TSX skip and cache deferral census (TSX-RESOURCE-EFFICIENCY-
     expect(bead.title.includes(GATE_CLAUSE), "the title names the gating clause").toBe(true);
     // Each pin answers, by position, one atom the bead row yields.
     expect(ROWS.flatMap(row => row.pins).map(rosterAnchor), "each pin's anchor is the bead row's atom at its position").toEqual(pinAtoms(bead));
+  });
+
+  it("the KNOWN record: the header's KNOWN paragraph and KNOWN's doc comment name one re-measure, and the paragraph names KNOWN's C1 and C2 rows in order and counts the rows KNOWN names", { timeout: 60_000 }, () => {
+    const record = knownRecord(readFileSync(join(REPO, SELF), "utf8"));
+    const rows = [...new Set(Object.values(KNOWN).flatMap(findings => findings.map(knownRowOf)))];
+    expect(record, "this file's KNOWN record, read from its own text").toStrictEqual({
+      paragraphs: 1,
+      measure: expect.stringMatching(/^trunk [0-9a-f]{7,40}, landing [0-9]+$/),
+      docComment: `/** KNOWN FINDINGS (header): exact, re-measured on the export of ${record.measure ?? "(no re-measure read)"}. */`,
+      sets: [`C1 reads exactly ${englishList((KNOWN.C1 ?? []).map(knownRowOf))}, and C2 reads exactly ${englishList((KNOWN.C2 ?? []).map(knownRowOf))}.`],
+      counts: [NUMBER_WORDS[rows.length] ?? String(rows.length)],
+      antecedent: true,
+    });
   });
 
   for (const row of ROWS) {

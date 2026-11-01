@@ -674,6 +674,7 @@
  ],
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the owner filing agree",
+  "the KNOWN record: the header's KNOWN paragraph and KNOWN's doc comment name one re-measure, and the paragraph names KNOWN's C1 and C2 rows in order and counts the rows KNOWN names",
   "A1",
   "A2",
   "B1",
