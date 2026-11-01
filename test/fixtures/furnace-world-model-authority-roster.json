@@ -240,6 +240,9 @@
    "privateName",
    "string",
    "template",
+   "templateHead",
+   "templateMiddle",
+   "noSubstitutionTemplate",
    "regex",
    "regexHex",
    "regexUnicode",
@@ -666,6 +669,57 @@
      ]
     ],
     "template": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "templateHead": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "templateMiddle": [
+     [
+      "observedtransition"
+     ],
+     [
+      "counterfactual"
+     ],
+     [
+      "syntheticattempt"
+     ],
+     [
+      "worldmodel"
+     ],
+     [
+      "predicteddistribution"
+     ]
+    ],
+    "noSubstitutionTemplate": [
      [
       "observedtransition"
      ],
