@@ -134,6 +134,126 @@
    "wb-km7q.6 no-related-edge"
   ]
  },
+ "knownRecord": {
+  "live": {
+   "paragraphs": 1,
+   "measure": "trunk f63d3896, landing 753",
+   "docComment": "/** KNOWN FINDINGS (header): exact, re-measured on the export of trunk f63d3896, landing 753. */",
+   "sets": [
+    "C1 reads exactly wb-km7q.11 and wb-km7q.6, and C2 reads exactly wb-csbt.2, wb-km7q.11 and wb-km7q.6."
+   ],
+   "counts": [
+    "three"
+   ],
+   "antecedent": true
+  },
+  "wellFormed": {
+   "paragraphs": 1,
+   "measure": "trunk 1234567, landing 7",
+   "docComment": "/** KNOWN FINDINGS (header): exact, re-measured on the export of trunk 1234567, landing 7. */",
+   "sets": [
+    "C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other."
+   ],
+   "counts": [
+    "three"
+   ],
+   "antecedent": true
+  },
+  "controls": {
+   "secondOpening": {
+    "paragraphs": 2
+   },
+   "longHeader": {
+    "paragraphs": 2
+   },
+   "secondSentence": {
+    "sets": [
+     "C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other.",
+     "C1 reads exactly wb-y, and C2 reads exactly wb-x."
+    ]
+   },
+   "repeatedSentence": {
+    "sets": [
+     "C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other.",
+     "C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other."
+    ]
+   },
+   "secondCount": {
+    "counts": [
+     "three",
+     "two"
+    ]
+   },
+   "repeatedCount": {
+    "counts": [
+     "three",
+     "three"
+    ]
+   },
+   "longParagraph": {
+    "counts": [
+     "three",
+     "two"
+    ]
+   },
+   "noAntecedent": {
+    "antecedent": false
+   },
+   "measureLater": {
+    "measure": null
+   },
+   "measureNoSemicolon": {
+    "measure": null
+   },
+   "measureElsewhere": {
+    "measure": null
+   },
+   "noOpening": {
+    "paragraphs": 0,
+    "measure": null,
+    "sets": [],
+    "counts": [],
+    "antecedent": false
+   },
+   "noHeader": {
+    "paragraphs": 0,
+    "measure": null,
+    "sets": [],
+    "counts": [],
+    "antecedent": false
+   },
+   "noBlank": {
+    "sets": [
+     "C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other.",
+     "C1 reads exactly wb-y, and C2 reads exactly wb-x."
+    ],
+    "counts": [
+     "three",
+     "two"
+    ]
+   },
+   "noDeclaration": {
+    "docComment": null
+   },
+   "twoDeclarations": {
+    "docComment": null
+   },
+   "detachedDocComment": {
+    "docComment": ""
+   },
+   "trailingSpaceBlank": {},
+   "spacing": {},
+   "belowHeader": {},
+   "quietColonOpening": {},
+   "quietSpacedOpening": {},
+   "quietCasedOpening": {},
+   "quietOtherSentence": {},
+   "quietNumeralCount": {},
+   "quietCapitalCount": {},
+   "quietCapitalPhrase": {},
+   "quietSecondMeasure": {}
+  }
+ },
  "residuals": [
   "R-MARKER-ANYWHERE",
   "R-PARAPHRASE",
@@ -674,7 +794,8 @@
  ],
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the owner filing agree",
-  "the KNOWN record: the header's KNOWN paragraph and KNOWN's doc comment name one re-measure, and the paragraph names KNOWN's C1 and C2 rows in order and counts the rows KNOWN names",
+  "the KNOWN record: in the forms knownRecord reads, the header has one KNOWN paragraph, it opens with the re-measure KNOWN's doc comment names, and its one C1/C2 sentence and one count phrase list KNOWN's rows in order and count them",
+  "the KNOWN record's controls: knownRecord reads the well-formed synthetic text and each control of KNOWN_CONTROLS exactly as the roster's knownRecord readings hold them",
   "A1",
   "A2",
   "B1",
