@@ -48,7 +48,10 @@
  * (M-SEAM-CROSS-SUB-ALIAS, M-SEAM-KIND-SUB-ALIAS, M-SEAM-ADMITTED-SUB-ALIAS, M-SEAM-LATER-SUB-ALIAS), so the aliased check
  * is claimed at exactly its listed members, each a source read at one depth of its value; and U3, the certification's 'every
  * one of them', restated to the judged hosts, with the judged population's maxima pinned, a boundary row reading two hosts
- * past them, and the certification of a host beyond them NOT CLAIMED.
+ * past them, and the certification of a host beyond them NOT CLAIMED. That bead's cut #4 (the fail-closed core of ruling
+ * R-B224, the rule-19 structural exit at its refusal #3) answers refusal #3's U1 (the seam half's own-message member
+ * reach claimed past its pins) by narrowing that reach to the one call kind its fixtures pin, a snapshot call; the same
+ * reach at a delta and at a resync call is NOT CLAIMED (below), its coverage carried by the child bead wb-doja.
  * Statement (the bead's tracker-export title, verbatim): "Gating artifact: released FiberOpticsSDK PublicPortBridge
  * (unshipped) + a wb-x32 committing decision connecting a Pi runtime over it; then Pi supplies the full bridge contract
  * (visibility/schema/direction through resync on gaps), keeps one authority per runtime domain, admits no private endpoint
@@ -231,7 +234,7 @@
  *    call), at a delta call (M-SEAM-OWN-DELTA-ALIAS) and at a resync call (M-SEAM-OWN-RESYNC-ALIAS), its value's own object
  *    alone where that value holds no object member, at a delta and at a snapshot call (M-SEAM-OWN-ALIAS: the wire's own
  *    value where it holds no object member, else a copy, killed at F-DIGEST's d3 and F-READ-OWN's ow1), and an object one of
- *    its value's own members holds, at every call kind (M-SEAM-SUB-ALIAS: a copy whose own members are the wire's own, only
+ *    its value's own members holds, at a snapshot call (M-SEAM-SUB-ALIAS: a copy whose own members are the wire's own, only
  *    the value's own object new); and another message, each source as twins, the whole wire object and a copy whose own
  *    members are that object's own (only the value's own object new; the member-depth twins are wb-vf3r cut #3's): an
  *    earlier rejected snapshot, delta or resync whose value the call's admitted message repeats, as a resend's rejected
@@ -401,6 +404,13 @@
  * host, and its boundary row reads two (183 failed checks; 6 on one fixture) only so far as a certification capped at the
  * judged maxima changes theirs, so the gate's G28:C7 and G28:C8 red that row, as does a judged host that passes the maxima,
  * while a cap at or above those two hosts' own sizes is outside the pinned set (refusal #2's U3).
+ * And wb-vf3r's cut #4 limit (ruling R-B224's fail-closed core of its refusal #3's U1): the seam half's reach to an object
+ * one of its own message's value's own members holds, at a delta and at a resync call, is NOT CLAIMED by this census.
+ * M-SEAM-SUB-ALIAS hands its copy at those calls as at a snapshot one, and every fixture on which it fails aliased holds a
+ * snapshot call whose reading reads it, so a seam half that reads the own message at its own object alone at a delta or
+ * a resync call (the gate's GP7:S1, S1d and S1r) changes no judged host's verdict, and a host that departs there alone
+ * (the gate's plants seam-sub-at-delta and seam-sub-at-resync) is outside the pinned set, where the census fails closed;
+ * that coverage is the child bead wb-doja's.
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a spelling the mention judges do not read: an abbreviation, words split across statements, base64, a YAML
  * or TOML escape, a markdown link splitting the words, a homoglyph letter, a digit for a letter), R-INDIRECT-LOAD (Q2, a
@@ -2109,7 +2119,8 @@ type Check = (typeof CHECKS)[number];
  * each claimed at its listed members only (the header's aliased members): a member is a source, a wire message of a status,
  * a place and a kind, read at one depth of its value, with a mutant only its reading kills. The SEAM half: its own message,
  * whole at a snapshot, a delta and a resync call (M-SEAM-ALIAS, M-SEAM-OWN-DELTA-ALIAS, M-SEAM-OWN-RESYNC-ALIAS), its own
- * object alone (M-SEAM-OWN-ALIAS) and a member's object (M-SEAM-SUB-ALIAS); another message, whole and a member's object, an
+ * object alone at a delta and a snapshot call (M-SEAM-OWN-ALIAS) and a member's object at a snapshot call (M-SEAM-SUB-ALIAS);
+ * another message, whole and a member's object, an
  * earlier rejected snapshot, delta or resync (M-SEAM-CROSS-ALIAS, M-SEAM-CROSS-SUB-ALIAS: the status reading), an earlier
  * rejected effect, invoke, ack or gap (M-SEAM-KIND-ALIAS, M-SEAM-KIND-SUB-ALIAS: the kind reading), an earlier admitted
  * snapshot, delta or resync (M-SEAM-ADMITTED-ALIAS, M-SEAM-ADMITTED-SUB-ALIAS: the reading of another message) and a later
