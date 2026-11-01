@@ -27,7 +27,7 @@
    "id": "hyperunix.find"
   },
   "filingPin": "4ae04701b750f86bd07faaad19158a58f0922e1f",
-  "script": "\\.(?:[cm]?[jt]sx?)$",
+  "script": "\\.(?:[cm]?[jt]s|[jt]sx)$",
   "floors": {
    "srcFiles": 100,
    "srcScripts": 100,
@@ -86,6 +86,14 @@
     "path": "src/workbench/zz-spelling-plural.ts",
     "text": "// Lists the APOs.\nexport {};\n"
    },
+   "pluralCapital": {
+    "path": "src/workbench/zz-spelling-plural-capital.ts",
+    "text": "export const APOsView = 1;\n"
+   },
+   "dotted": {
+    "path": "src/workbench/zz-spelling-dotted.ts",
+    "text": "export const CAPABILITY = \"mw.adaptive.policy.organizations\";\n"
+   },
    "digits": {
     "path": "src/workbench/zz-spelling-digits.ts",
     "text": "export const APO020 = 1;\n"
@@ -93,6 +101,14 @@
    "digitLetter": {
     "path": "src/workbench/zz-spelling-digit-letter.ts",
     "text": "export const LABEL = \"020APO\";\n"
+   },
+   "lowerDigit": {
+    "path": "src/workbench/zz-spelling-lower-digit.ts",
+    "text": "// the apo2 view\nexport {};\n"
+   },
+   "digitLower": {
+    "path": "src/workbench/zz-spelling-digit-lower.ts",
+    "text": "// the 2apo view\nexport {};\n"
    },
    "escaped": {
     "path": "src/workbench/zz-spelling-escaped.ts",
@@ -110,6 +126,10 @@
     "path": "src/workbench/zz-spelling-folded-parenthesized.ts",
     "text": "export const LABEL = \"A\" + (\"P\" + \"O graph\");\n"
    },
+   "foldedTemplate": {
+    "path": "src/workbench/zz-spelling-folded-template.ts",
+    "text": "export const LABEL = \"A\" + `PO graph`;\n"
+   },
    "template": {
     "path": "src/workbench/zz-spelling-template.ts",
     "text": "export const LABEL = `apo ${1} view`;\n"
@@ -117,6 +137,46 @@
    "templateSpan": {
     "path": "src/workbench/zz-spelling-template-span.ts",
     "text": "export const LABEL = `view ${1} \\u0041PO`;\n"
+   },
+   "templateMiddle": {
+    "path": "src/workbench/zz-spelling-template-middle.ts",
+    "text": "export const LABEL = `x ${1} \\u0041PO ${2} y`;\n"
+   },
+   "templateLast": {
+    "path": "src/workbench/zz-spelling-template-last.ts",
+    "text": "export const LABEL = `x ${1} y ${2} \\u0041PO`;\n"
+   },
+   "kindTs": {
+    "path": "src/workbench/zz-spelling-kind.ts",
+    "text": "export const LABEL = <string>\"\\u0041PO graph\";\n"
+   },
+   "kindMts": {
+    "path": "src/workbench/zz-spelling-kind.mts",
+    "text": "export const LABEL = <string>\"\\u0041PO graph\";\n"
+   },
+   "kindCts": {
+    "path": "src/workbench/zz-spelling-kind.cts",
+    "text": "export const LABEL = <string>\"\\u0041PO graph\";\n"
+   },
+   "kindTsx": {
+    "path": "src/workbench/zz-spelling-kind.tsx",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "kindJsx": {
+    "path": "src/workbench/zz-spelling-kind.jsx",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "kindJs": {
+    "path": "src/workbench/zz-spelling-kind.js",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "kindMjs": {
+    "path": "src/workbench/zz-spelling-kind.mjs",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
+   },
+   "kindCjs": {
+    "path": "src/workbench/zz-spelling-kind.cjs",
+    "text": "export const LABEL = \"\\u0041PO graph\";\n"
    },
    "path": {
     "path": "src/workbench/apo-graph-view.ts",
@@ -145,6 +205,7 @@
    "paraphrase": {
     "unordered": "// policy adaptive organizations\nexport {};\n",
     "incomplete": "// adaptive organizations and policy organizations\nexport {};\n",
+    "interrupted": "// adaptive 2 policy organizations\nexport {};\n",
     "separated": "// the A.P.O. view and the a p o list\nexport {};\n",
     "shortened": "// adaptive-policy-organs\nexport {};\n"
    },
@@ -152,17 +213,22 @@
     "substitution": "export const LABEL = `${\"A\"}PO view`;\n",
     "join": "export const LABEL = [\"A\", \"P\", \"O\"].join(\"\");\n",
     "codes": "export const LABEL = String.fromCodePoint(65, 80, 79);\n",
-    "mixed": "export const LABEL = String(1) + \"A\" + \"PO view\";\n"
+    "mixed": "export const LABEL = String(1) + \"A\" + \"PO view\";\n",
+    "otherOperator": "export const LABEL = \"A\" || \"PO view\";\n"
    },
    "interior": {
     "formatCharacter": "// the AP<U+200B>O view\nexport {};\n",
     "softHyphen": "// Adaptive Pol<U+00AD>icy Organizations\nexport {};\n",
     "confusable": "export const LABEL = \"<U+0410>PO view\";\n",
-    "fullwidth": "export const LABEL = \"<U+FF21><U+FF30><U+FF2F> view\";\n"
+    "fullwidth": "export const LABEL = \"<U+FF21><U+FF30><U+FF2F> view\";\n",
+    "caseless": "// adaptive<U+4E00>policy<U+4E00>organizations\nexport {};\n"
    },
    "joined": {
     "joined": "// the apoview list\nexport {};\n",
+    "joinedAccent": "// the apo<U+00F1> list\nexport {};\n",
     "suffixed": "export const APOv1 = 1;\n",
+    "suffixedWord": "// the APOstatus view\nexport {};\n",
+    "foldedSuffix": "export const LABEL = \"A\" + \"PO\" + \"x\";\n",
     "inflected": "// two Apos and three APOS\nexport {};\n",
     "slugJoined": "// adaptivepolicyorganizations\nexport {};\n"
    },
@@ -172,9 +238,71 @@
     "comment": "// \\u0041PO view\nexport {};\n"
    }
   },
-  "binaryPlant": {
-   "path": "src/workbench/zz-binary-plant.bin",
-   "text": "APO view<U+0000>\n"
+  "jsxAttribute": {
+   "text": "export const V = <div title=\"\\u0041PO\">x</div>;\n",
+   "kinds": [
+    ".tsx",
+    ".jsx",
+    ".js",
+    ".mjs",
+    ".cjs"
+   ],
+   "paths": [
+    "src/workbench/zz-quiet-escaped-jsx-attribute.tsx",
+    "src/workbench/zz-quiet-escaped-jsx-attribute.jsx",
+    "src/workbench/zz-quiet-escaped-jsx-attribute.js",
+    "src/workbench/zz-quiet-escaped-jsx-attribute.mjs",
+    "src/workbench/zz-quiet-escaped-jsx-attribute.cjs"
+   ]
+  },
+  "binaryPlants": {
+   "first": {
+    "path": "src/workbench/zz-binary-first.bin",
+    "head": "<U+0000>APO view\n",
+    "padding": 0,
+    "tail": ""
+   },
+   "early": {
+    "path": "src/workbench/zz-binary-plant.bin",
+    "head": "APO view",
+    "padding": 0,
+    "tail": "<U+0000>\n"
+   },
+   "late": {
+    "path": "src/workbench/zz-binary-late.bin",
+    "head": "APO view\n",
+    "padding": 100000,
+    "tail": "<U+0000>"
+   }
+  },
+  "paddingLine": "// padding\n",
+  "listingPlant": {
+   "gitignore": "*.log\nnode_modules/\n",
+   "files": [
+    "src/tracked.ts",
+    "src/untracked.ts",
+    "src/ignored.log",
+    "src/node_modules/ignored.ts",
+    "src/deleted.ts",
+    "outside/inner.ts"
+   ],
+   "links": {
+    "src/link.ts": "tracked.ts",
+    "src/linkdir": "../outside"
+   },
+   "staged": [
+    "src/tracked.ts",
+    "src/deleted.ts"
+   ],
+   "deleted": [
+    "src/deleted.ts"
+   ]
+  },
+  "livenessPlants": {
+   "ordered": "await registry.invoke(\"hyperunix.find\", {});",
+   "reordered": "// find hyperunix",
+   "partial": "// the hyperunix reader",
+   "split": "// hyper unix find"
   },
   "pinPlant": {
    "path": "src/workbench/zz-pin-plant.ts",
@@ -222,6 +350,44 @@
     ]
    }
   ],
+  "dualPlants": [
+   [
+    {
+     "id": "census.dual.first",
+     "effectClass": "read",
+     "description": "Census plant.",
+     "permissions": [
+      "census:plant"
+     ]
+    },
+    {
+     "id": "census.dual.second",
+     "effectClass": "write",
+     "description": "Census plant.",
+     "permissions": [
+      "census:plant"
+     ]
+    }
+   ],
+   [
+    {
+     "id": "census.dual.first",
+     "effectClass": "write",
+     "description": "Census plant.",
+     "permissions": [
+      "census:plant"
+     ]
+    },
+    {
+     "id": "census.dual.second",
+     "effectClass": "read",
+     "description": "Census plant.",
+     "permissions": [
+      "census:plant"
+     ]
+    }
+   ]
+  ],
   "fieldPlants": [
    {
     "id": "apo.field.view",
@@ -257,6 +423,16 @@
     ]
    },
    {
+    "id": "census.field.permissions.middle",
+    "effectClass": "read",
+    "description": "Census plant.",
+    "permissions": [
+     "census:plant",
+     "apo:admit",
+     "census:other"
+    ]
+   },
+   {
     "id": "census.field.none",
     "effectClass": "read",
     "description": "Census plant.",
@@ -283,13 +459,17 @@
   },
   "handlerPlants": {
    "src/workbench/zz-handler-read.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO decision-graph view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await registry.invoke(`hyperunix.find`, { kind: \"y\" });\n  return await registry.invoke(\"hyperunix.find\", { kind: \"x\" });\n}\n",
-   "src/workbench/zz-handler-write.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO policy view handler.\nexport async function apply(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-write.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO policy view handler.\nexport async function apply(registry: Registry): Promise<unknown> {\n  await registry.invoke(\"mw.apo.admit\", {});\n  await registry.invoke(\"workbench.decision.authorize\", {});\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-dual.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO dual view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await registry.invoke(\"census.dual.first\", {});\n  return await registry.invoke(\"census.dual.second\", {});\n}\n",
    "src/workbench/zz-handler-unknown.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO ancestry view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"census.missing.view\", {});\n}\n",
    "src/workbench/zz-handler-computed.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO resource view handler.\nconst FIND = \"hyperunix.find\";\nexport async function view(registry: Registry, args: { capabilityId: string }): Promise<unknown> {\n  await registry.invoke((\"hyperunix.find\"), {});\n  await registry.invoke(FIND, {});\n  return await registry.invoke(args.capabilityId, {});\n}\n",
    "src/workbench/zz-handler-inspect.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO certificate view handler.\nexport async function view(registry: Registry, ref: { capabilityId: string }): Promise<unknown> {\n  await registry.inspect();\n  return await registry.inspect(ref.capabilityId, ref);\n}\n",
-   "src/workbench/zz-handler-element.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO gradient view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry[\"invoke\"](\"apo.policy.apply\", {});\n}\n",
-   "src/workbench/zz-handler-wrapped.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO resource-pressure view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await (registry.invoke)(\"apo.policy.apply\", {});\n  await registry.invoke!(\"apo.policy.apply\", {});\n  await (registry.invoke as Registry[\"invoke\"])(\"apo.policy.apply\", {});\n  await (registry.invoke satisfies Registry[\"invoke\"])(\"apo.policy.apply\", {});\n  return await (<Registry[\"invoke\"]>registry.invoke)(\"apo.policy.apply\", {});\n}\n",
-   "src/workbench/zz-handler-unnamed.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// Decision-graph view handler.\nexport async function view(registry: Registry, args: { capabilityId: string }): Promise<unknown> {\n  return await registry.invoke(args.capabilityId, {});\n}\n"
+   "src/workbench/zz-handler-element.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO gradient view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await registry[`invoke`](\"apo.policy.apply\", {});\n  return await registry[\"invoke\"](\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-wrapped.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO resource-pressure view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  await registry?.invoke(\"apo.policy.apply\", {});\n  await registry.invoke?.(\"apo.policy.apply\", {});\n  await (registry.invoke)(\"apo.policy.apply\", {});\n  await registry.invoke!(\"apo.policy.apply\", {});\n  await (registry.invoke as Registry[\"invoke\"])(\"apo.policy.apply\", {});\n  await (registry.invoke satisfies Registry[\"invoke\"])(\"apo.policy.apply\", {});\n  return await (<Registry[\"invoke\"]>registry.invoke)(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-unnamed.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// Decision-graph view handler.\nexport async function view(registry: Registry, args: { capabilityId: string }): Promise<unknown> {\n  return await registry.invoke(args.capabilityId, {});\n}\n",
+   "src/workbench/zz-handler-script.mjs": "// APO script view handler.\nexport async function view(registry) {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n",
+   "src/workbench/zz-handler-text.md": "// APO text view handler.\nregistry.invoke(\"apo.policy.apply\", {});\n",
+   "src/workbench/zz-handler-binary.ts": "type Registry = { invoke(...args: unknown[]): Promise<unknown>; inspect(...args: unknown[]): Promise<unknown> };\n// APO binary view handler.\nexport async function view(registry: Registry): Promise<unknown> {\n  return await registry.invoke(\"apo.policy.apply\", {});\n}\n<U+0000>"
   },
   "residualModules": {
    "unnamed": {
@@ -322,7 +502,20 @@
    "src/workbench/zz-register-method.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport class PlantHost {\n  registerPlantMethod(registry: Registry): void {\n    registry.register({ descriptor: { id: \"census.plant.method\" } });\n  }\n}\n",
    "src/workbench/zz-register-callback.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantCallback(registries: Registry[]): void {\n  registries.forEach(registry => registry.register({ descriptor: { id: \"census.plant.callback\" } }));\n}\n",
    "src/workbench/zz-register-toplevel.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\ndeclare const registry: Registry;\nregistry.register({ descriptor: { id: \"census.plant.toplevel\" } });\n",
-   "src/workbench/zz-register-shorthand.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantShorthand(registry: Registry): void {\n  registry.register({ descriptor });\n  registry.register({ entry: descriptor });\n}\n"
+   "src/workbench/zz-register-shorthand.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantShorthand(registry: Registry): void {\n  registry.register({ descriptor });\n  registry.register({ entry: descriptor });\n  registry.register({ \"descriptor\": { id: \"census.plant.quoted\" } });\n}\n",
+   "src/workbench/zz-register-escaped.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantEscaped(registry: Registry): void {\n  registry.register({ \\u0064escriptor: { id: \"census.plant.escaped\" } });\n}\n",
+   "src/workbench/zz-register-script.mjs": "export function registerPlantScript(registry) {\n  registry.register({ descriptor: { id: \"census.plant.script\" } });\n}\n",
+   "src/workbench/zz-register-text.md": "registry.register({ descriptor: { id: \"census.plant.text\" } });\n",
+   "src/workbench/zz-register-binary.ts": "type Registry = { register(provider: object): void };\nconst descriptor = {};\nexport function registerPlantBinary(registry: Registry): void {\n  registry.register({ descriptor: { id: \"census.plant.binary\" } });\n}\n<U+0000>"
+  },
+  "registrarPlants": {
+   "src/workbench/providers/zz-registrar-exported.ts": "export function registerPlantExported(): void {}\n",
+   "src/workbench/providers/zz-registrar-script.mjs": "export function registerPlantScript() {}\n",
+   "src/workbench/providers/zz-registrar-hidden.ts": "function registerPlantHidden(): void {}\nexport {};\n",
+   "src/workbench/providers/zz-registrar-unprefixed.ts": "export function plantRegister(): void {}\n",
+   "src/workbench/providers/zz-registrar-arrow.ts": "export const registerPlantArrow = (): void => {};\n",
+   "src/workbench/providers/zz-registrar-text.md": "export function registerPlantText(): void {}\n",
+   "src/workbench/zz-registrar-outside.ts": "export function registerPlantOutside(): void {}\n"
   },
   "residuals": {
    "R-TRACKER": "Q1",
@@ -376,7 +569,8 @@
      "quote": "a guard",
      "claims": {
       "a guard": [
-       "spellingForms"
+       "spellingForms",
+       "plantFindings"
       ]
      },
      "witness": {
@@ -411,11 +605,24 @@
        "plural": [
         "raw"
        ],
+       "pluralCapital": [
+        "raw"
+       ],
+       "dotted": [
+        "cooked",
+        "raw"
+       ],
        "digits": [
         "raw"
        ],
        "digitLetter": [
         "cooked",
+        "raw"
+       ],
+       "lowerDigit": [
+        "raw"
+       ],
+       "digitLower": [
         "raw"
        ],
        "escaped": [
@@ -430,6 +637,9 @@
        "foldedParenthesized": [
         "folded"
        ],
+       "foldedTemplate": [
+        "folded"
+       ],
        "template": [
         "cooked",
         "raw"
@@ -437,10 +647,77 @@
        "templateSpan": [
         "cooked"
        ],
+       "templateMiddle": [
+        "cooked"
+       ],
+       "templateLast": [
+        "cooked"
+       ],
+       "kindTs": [
+        "cooked"
+       ],
+       "kindMts": [
+        "cooked"
+       ],
+       "kindCts": [
+        "cooked"
+       ],
+       "kindTsx": [
+        "cooked"
+       ],
+       "kindJsx": [
+        "cooked"
+       ],
+       "kindJs": [
+        "cooked"
+       ],
+       "kindMjs": [
+        "cooked"
+       ],
+       "kindCjs": [
+        "cooked"
+       ],
        "path": [
         "path"
        ]
-      }
+      },
+      "plantFindings": [
+       "src/workbench/apo-graph-view.ts",
+       "src/workbench/zz-spelling-acronym.ts",
+       "src/workbench/zz-spelling-capability.ts",
+       "src/workbench/zz-spelling-constant.ts",
+       "src/workbench/zz-spelling-digit-letter.ts",
+       "src/workbench/zz-spelling-digit-lower.ts",
+       "src/workbench/zz-spelling-digits.ts",
+       "src/workbench/zz-spelling-dotted.ts",
+       "src/workbench/zz-spelling-escaped-template.ts",
+       "src/workbench/zz-spelling-escaped.ts",
+       "src/workbench/zz-spelling-folded-parenthesized.ts",
+       "src/workbench/zz-spelling-folded-template.ts",
+       "src/workbench/zz-spelling-folded.ts",
+       "src/workbench/zz-spelling-identifier.ts",
+       "src/workbench/zz-spelling-kind.cjs",
+       "src/workbench/zz-spelling-kind.cts",
+       "src/workbench/zz-spelling-kind.js",
+       "src/workbench/zz-spelling-kind.jsx",
+       "src/workbench/zz-spelling-kind.mjs",
+       "src/workbench/zz-spelling-kind.mts",
+       "src/workbench/zz-spelling-kind.ts",
+       "src/workbench/zz-spelling-kind.tsx",
+       "src/workbench/zz-spelling-lower-digit.ts",
+       "src/workbench/zz-spelling-pascal.ts",
+       "src/workbench/zz-spelling-plural-capital.ts",
+       "src/workbench/zz-spelling-plural.ts",
+       "src/workbench/zz-spelling-requirement.ts",
+       "src/workbench/zz-spelling-slug.ts",
+       "src/workbench/zz-spelling-template-last.ts",
+       "src/workbench/zz-spelling-template-middle.ts",
+       "src/workbench/zz-spelling-template-span.ts",
+       "src/workbench/zz-spelling-template.ts",
+       "src/workbench/zz-spelling-words.ts",
+       "src/workbench/zz-surface-tool.ts",
+       "src/workbench/zz-surface-view.ts"
+      ]
      }
     },
     {
@@ -450,18 +727,41 @@
       "pins": [
        "scope",
        "listedEqualsWalked",
+       "listingPlant",
        "judgedEqualsListed",
        "filesAtFloor",
        "scriptsAtFloor",
        "binaries"
       ],
       "today's": [
-       "liveness"
+       "liveness",
+       "livenessPlants"
       ]
      },
      "witness": {
       "scope": "src/",
       "listedEqualsWalked": true,
+      "listingPlant": {
+       "listed": [
+        "src/link.ts",
+        "src/linkdir",
+        "src/tracked.ts",
+        "src/untracked.ts"
+       ],
+       "walked": [
+        "src/ignored.log",
+        "src/link.ts",
+        "src/linkdir",
+        "src/node_modules/ignored.ts",
+        "src/tracked.ts",
+        "src/untracked.ts"
+       ],
+       "ignored": [
+        "src/ignored.log",
+        "src/node_modules/ignored.ts"
+       ],
+       "agrees": true
+      },
       "judgedEqualsListed": true,
       "filesAtFloor": true,
       "scriptsAtFloor": true,
@@ -471,6 +771,12 @@
         "cooked",
         "raw"
        ]
+      },
+      "livenessPlants": {
+       "ordered": true,
+       "reordered": false,
+       "partial": false,
+       "split": false
       }
      }
     },
@@ -514,7 +820,8 @@
      "quote": "once any APO surface",
      "claims": {
       "once": [
-       "fired"
+       "fired",
+       "firedPlants"
       ],
       "any APO surface": [
        "surfaceKinds",
@@ -523,6 +830,11 @@
      },
      "witness": {
       "fired": false,
+      "firedPlants": {
+       "module": true,
+       "role": true,
+       "none": false
+      },
       "surfaceKinds": {
        "views": [
         "cooked",
@@ -549,6 +861,9 @@
        "census.field.permissions": [
         "permissions"
        ],
+       "census.field.permissions.middle": [
+        "permissions"
+       ],
        "census.field.none": []
       }
      }
@@ -563,7 +878,8 @@
        "exportedRegistrars",
        "nativeComposition",
        "plantSites",
-       "plantNonLiteral"
+       "plantNonLiteral",
+       "plantRegistrars"
       ]
      },
      "witness": {
@@ -602,11 +918,17 @@
        "src/workbench/zz-register-expression.ts:registerPlantExpression",
        "src/workbench/zz-register-method.ts:registerPlantMethod",
        "src/workbench/zz-register-callback.ts:registerPlantCallback",
-       "src/workbench/zz-register-toplevel.ts:<none>"
+       "src/workbench/zz-register-toplevel.ts:<none>",
+       "src/workbench/zz-register-escaped.ts:registerPlantEscaped",
+       "src/workbench/zz-register-script.mjs:registerPlantScript"
       ],
       "plantNonLiteral": {
-       "src/workbench/zz-register-shorthand.ts": 2
-      }
+       "src/workbench/zz-register-shorthand.ts": 3
+      },
+      "plantRegistrars": [
+       "src/workbench/providers/zz-registrar-exported.ts:registerPlantExported",
+       "src/workbench/providers/zz-registrar-script.mjs:registerPlantScript"
+      ]
      }
     }
    ]
@@ -759,6 +1081,12 @@
         "read"
        ],
        "src/workbench/zz-handler-write.ts": [
+        "non-read",
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-dual.ts": [
+        "non-read",
         "non-read"
        ],
        "src/workbench/zz-handler-unknown.ts": [
@@ -774,9 +1102,12 @@
         "computed"
        ],
        "src/workbench/zz-handler-element.ts": [
+        "non-read",
         "non-read"
        ],
        "src/workbench/zz-handler-wrapped.ts": [
+        "non-read",
+        "non-read",
         "non-read",
         "non-read",
         "non-read",
@@ -785,10 +1116,21 @@
        ],
        "src/workbench/zz-handler-unnamed.ts": [
         "computed"
-       ]
+       ],
+       "src/workbench/zz-handler-script.mjs": [
+        "non-read"
+       ],
+       "src/workbench/zz-handler-text.md": [],
+       "src/workbench/zz-handler-binary.ts": []
       },
       "handlerViolations": {
        "src/workbench/zz-handler-write.ts": [
+        "non-read",
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-dual.ts": [
+        "non-read",
         "non-read"
        ],
        "src/workbench/zz-handler-unknown.ts": [
@@ -804,6 +1146,7 @@
         "computed"
        ],
        "src/workbench/zz-handler-element.ts": [
+        "non-read",
         "non-read"
        ],
        "src/workbench/zz-handler-wrapped.ts": [
@@ -811,12 +1154,19 @@
         "non-read",
         "non-read",
         "non-read",
+        "non-read",
+        "non-read",
+        "non-read"
+       ],
+       "src/workbench/zz-handler-script.mjs": [
         "non-read"
        ]
       },
       "handlerQuiet": [
        "src/workbench/zz-handler-read.ts",
-       "src/workbench/zz-handler-unnamed.ts"
+       "src/workbench/zz-handler-unnamed.ts",
+       "src/workbench/zz-handler-text.md",
+       "src/workbench/zz-handler-binary.ts"
       ]
      }
     }
@@ -868,6 +1218,7 @@
       "read": {
        "unordered": false,
        "incomplete": false,
+       "interrupted": false,
        "separated": false,
        "shortened": false
       }
@@ -883,7 +1234,8 @@
        "substitution": false,
        "join": false,
        "codes": false,
-       "mixed": false
+       "mixed": false,
+       "otherOperator": false
       }
      }
     },
@@ -897,7 +1249,8 @@
        "formatCharacter": false,
        "softHyphen": false,
        "confusable": false,
-       "fullwidth": false
+       "fullwidth": false,
+       "caseless": false
       }
      }
     },
@@ -968,7 +1321,10 @@
       "residual": "R-JOINED",
       "read": {
        "joined": false,
+       "joinedAccent": false,
        "suffixed": false,
+       "suffixedWord": false,
+       "foldedSuffix": false,
        "inflected": false,
        "slugJoined": false
       }
@@ -980,8 +1336,26 @@
      "claims": null,
      "witness": {
       "residual": "R-BINARY",
-      "binary": true,
-      "forms": []
+      "plants": {
+       "first": {
+        "binary": true,
+        "forms": [],
+        "nulAt": 0,
+        "bytes": 10
+       },
+       "early": {
+        "binary": true,
+        "forms": [],
+        "nulAt": 8,
+        "bytes": 10
+       },
+       "late": {
+        "binary": true,
+        "forms": [],
+        "nulAt": 1100009,
+        "bytes": 1100010
+       }
+      }
      }
     },
     {
@@ -994,6 +1368,13 @@
        "identifier": false,
        "regex": false,
        "comment": false
+      },
+      "jsxAttribute": {
+       ".tsx": false,
+       ".jsx": false,
+       ".js": false,
+       ".mjs": false,
+       ".cjs": false
       }
      }
     }
