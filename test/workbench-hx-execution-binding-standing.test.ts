@@ -1,16 +1,21 @@
 /**
- * wb-tz2.5 (HX-ORIGINAL-GOALS-CLOSURE-R5), STANDING leg only (cut #2, the respin of gate refusal #1): until HyperUnix ships its
- * execution-binding key, the HX query id stays a labelled derived digest and no digest becomes an execution identity. Every
- * claim below is over the 132 READINGS this file builds and the three workflow runs over them; none reaches past them.
+ * wb-tz2.5 (HX-ORIGINAL-GOALS-CLOSURE-R5), STANDING leg only (cut #2, the respin of gate refusal #1; wb-thq3 adds the pins of the
+ * landing-651 follow-up F1 and F2): until HyperUnix ships its execution-binding key, the HX query id stays a labelled derived
+ * digest and no digest becomes an execution identity at the sites the cases below pin: the topology (S1, S2, within the bounds
+ * S1 states), native-evidence's projection and execution reference (S3), the workflow node entries' native-evidence fields (S4,
+ * S5) and the node rows the live and replayed runs journal (S5). A site outside those, such as a node entry member outside its
+ * native-evidence fields, is NOT CLAIMED by this file. Every claim below is over the 132 READINGS this file builds and the three
+ * workflow runs over them, except where a case names other inputs (G1: the vendored SDK's types, its shipped declaration and the
+ * measured live read's document; S1: 24 mutation-outcome documents built beside the readings); none reaches past those.
  *
  * The bead's statement: "When an accepted GC-D02 ADR plus an SDK result field carry the execution-binding key ..., Pi shall
  * adopt it as the HX query node identity and nativeRef id, replacing the derived digest; until then the derived key stays
  * labelled derived and a digest is never treated as execution identity." Its standing acceptance: "the derived-id diagnostic
- * stays pinned (hyperunix-observer.ts:157-158,:175@9df9a03; DERIVED label, observer test :35)." At this cut's base (a5eecf0)
- * those sites are src/workbench/hyperunix-observer.ts:77 (the DERIVED text), :208-210 (the derived id and its 'query'
- * reference) and :226 (the diagnostic); src/workbench/native-evidence.ts:79 reads execution_id; and src/workflow/runtime.ts
- * spreads native-evidence's projection into a workflow node's progress entry on the live path (:1621-1624) and on the replay
- * path (:1536).
+ * stays pinned (hyperunix-observer.ts:157-158,:175@9df9a03; DERIVED label, observer test :35)." At wb-tz2.5 cut #2's base
+ * (a5eecf0), and still at wb-thq3's base (9ad61f3), those sites are src/workbench/hyperunix-observer.ts:77 (the DERIVED text),
+ * :208-210 (the derived id and its 'query' reference) and :226 (the diagnostic); src/workbench/native-evidence.ts:79 reads
+ * execution_id; and src/workflow/runtime.ts spreads native-evidence's projection into a workflow node's progress entry on the
+ * live path (:1621-1624) and on the replay path (:1536).
  *
  * NOT delivered: the "On landing" leg ("native-evidence.ts hyperunix branch reads the new field as the id ...; the observer uses
  * it for ref identity; a test asserts the derived label disappears exactly when the native key is present and persists when
@@ -44,8 +49,20 @@
  *    (Coverage, ExecutionStatus and the others) are not expanded, so a change inside one of those is not claimed.
  * S1 each of the 132 readings carries one snapshot under the derived id (recomputed here: sha256 hex over JSON.stringify of
  *    the workspace, the operation, the target kind, the target root and the sorted batch ids), typed 'query', with exactly one
- *    DERIVED diagnostic, first. The two vendored kinds outside READ_KINDS are the mutation outcomes the adapter refuses, and
- *    the snapshots span every NativeSnapshot coverage value (complete, partial, unknown).
+ *    DERIVED diagnostic, first. The host context names neither an invocation nor an operation, and each topology has exactly
+ *    the members snapshots, relations and diagnostics, with no relation (wb-thq3 F1, gate mutant GP1: no grouping edge from an
+ *    execution reference); its snapshot has exactly the nine members source, scope, capturedAt, observedAt, coverage, node,
+ *    kind, sourceVersion and evidenceRefs, so no trace (F1, GP2: no digest as the trace invocation id), and each of those but
+ *    coverage and node holds the value restated here (QUERY_REF; the host scope and clock readings; 'hyperunix.query.snapshot';
+ *    the runtime version '0.1.0'; the binary reference, then one reference per coverage batch in certificate order). The
+ *    derived id's 64 hex characters occur exactly once in the topology's JSON text, as the snapshot source id. A rewritten form
+ *    of the derived id (a prefix, a re-encoding) inside node or in a diagnostic after the first is NOT CLAIMED by S1; S2's
+ *    equality is what holds the readings' result digests and execution_id out of the topology (a topology that varies with
+ *    either fails it). The two vendored kinds outside READ_KINDS are the mutation outcomes the adapter refuses: each is built
+ *    over LICENCES x EXECUTION_IDS x DIGESTS by readingDocument (24 documents, F2), its provider source is that document plus
+ *    local_digest and structural_digest null, and every one is refused with a CapabilityError naming it a mutation outcome (F2,
+ *    gate mutant GP5: the refusal holds under either licence). The snapshots span every NativeSnapshot coverage value
+ *    (complete, partial, unknown).
  * S2 per read kind and licence, each of the five readings that state execution_id, a digest, or both has a whole topology
  *    deep-equal to the reading that states neither (110 comparisons).
  * S3 native-evidence over the 132 readings: the 66 without execution_id project exactly provider and domain status (no
@@ -55,7 +72,11 @@
  *    projection of its reading (no nativeId unless execution_id is stated, then STATED_EXECUTION_ID).
  * S5 the S4 workflow journaled live, then replayed from that journal under the same host basis (refusal #1's F1, the replay
  *    path): all 132 nodes replay (cached, stale, the host never called) and each done node's native-evidence fields are
- *    exactly the S3 projection of its reading.
+ *    exactly the S3 projection of its reading. The live run journals exactly 132 rows, one per reading in node order, each
+ *    exactly {kind 'node', index, key (nodeJournalKey of the capability and that node's input), ok true, capabilityId,
+ *    effectClass 'read', text (the reading's provider output as JSON), basis BASIS}: no nativeRefs and no other member (wb-thq3
+ *    F1, gate mutant GP3: no execution reference on a read row, digest-bearing readings included), and the replay run journals
+ *    exactly the same 132 rows.
  *
  * Display paths added: none (test-only). No scratch directory is allocated: WS is a string, never created or read.
  */
@@ -71,7 +92,7 @@ import {HYPERUNIX_EXECUTION_KINDS, type HyperUnixTopologyContext, hyperunixTopol
 import {type NativeEvidence, nativeEvidence, nativeRefOf} from '../src/workbench/native-evidence.js';
 import type {NativeRef, NativeSnapshot, ObservationScope} from '../src/workbench/observation.js';
 import {registerHyperUnixFind} from '../src/workbench/providers/hyperunix.js';
-import type {WorkflowJournalEntry} from '../src/workflow/journal.js';
+import {nodeJournalKey, type WorkflowJournalEntry} from '../src/workflow/journal.js';
 import type {WorkflowNodeEntry} from '../src/workflow/progress.js';
 import {runWorkflow, type WorkflowHost, type WorkflowNodeRequest, type WorkflowRunResult} from '../src/workflow/runtime.js';
 
@@ -152,6 +173,11 @@ const EVIDENCE_KEYS = ['provider', 'nativeId', 'domainStatus', 'evidenceRefs', '
 const EVIDENCE_KEY_SET: ReadonlySet<string> = new Set(EVIDENCE_KEYS);
 /** NativeSnapshot's coverage values, pinned to its type in S1: the readings' snapshots span all three. */
 const COVERAGES = ['complete', 'partial', 'unknown'] as const;
+/** The members each reading's snapshot states, sorted (S1): every optional NativeSnapshot member the adapter does not write,
+ * trace included, is absent. */
+const SNAPSHOT_MEMBERS = ['capturedAt', 'coverage', 'evidenceRefs', 'kind', 'node', 'observedAt', 'scope', 'source', 'sourceVersion'];
+/** Each reading's snapshot evidence references: the provider's binary, then one per certified coverage batch in certificate order. */
+const EVIDENCE_REFS = [`hx-binary:sha256:${BINARY}`, ...BATCHES.map(batch => `hx-coverage:${batch}`)];
 
 /** The kind axis: every vendored SDK kind but the two mutation outcomes the read adapter refuses (S1 checks both sides). */
 const READ_KINDS = HYPERUNIX_EXECUTION_KINDS.filter(kind => !kind.startsWith('mutation-'));
@@ -270,6 +296,12 @@ function doneNodes(result: WorkflowRunResult): WorkflowNodeEntry[] {
 function evidenceFieldsOf(entry: WorkflowNodeEntry): Record<string, unknown> {
   return Object.fromEntries(Object.entries(entry).filter(([key]) => EVIDENCE_KEY_SET.has(key)));
 }
+/** The journal row a run under BASIS settles for the read at node position `index` (S5): a read keeping its provider output as
+ * text, keyed by the journal's node key for the input the script passes there, and no nativeRefs. */
+function readRow(reading: Reading, index: number): WorkflowJournalEntry {
+  return {kind: 'node', index, key: nodeJournalKey(CAPABILITY, JSON.stringify({...TARGET, cell: index})), ok: true,
+    capabilityId: CAPABILITY, effectClass: 'read', text: JSON.stringify(reading.value), basis: BASIS};
+}
 
 describe('wb-tz2.5 standing leg over the 132 readings: the HX query id stays a labelled derived digest until an execution-binding key ships', () => {
   it('G1: the vendored SDK still states the gate closed: 20 QueryResult members by name and declared type, 23 wire keys, and the 132 readings round-trip it unchanged', async () => {
@@ -311,15 +343,32 @@ describe('wb-tz2.5 standing leg over the 132 readings: the HX query id stays a l
     }
   });
 
-  it('S1: each of the 132 readings keeps one snapshot under the derived id typed query, with exactly one DERIVED diagnostic, first', async () => {
-    // READ_KINDS is exactly what the adapter projects: the two vendored kinds outside it are the mutation outcomes it refuses.
+  it('S1: each of the 132 readings keeps one snapshot under the derived id typed query, with exactly one DERIVED diagnostic, first, no relation, no trace and no other verbatim occurrence of the derived id; the two mutation outcomes are refused over all 24 of their documents', async () => {
+    // READ_KINDS is exactly what the adapter projects: the two vendored kinds outside it are the mutation outcomes it refuses,
+    // over the same licence, execution_id and digest cells as the readings (wb-thq3 F2: 24 documents, not one per kind).
     const refused = HYPERUNIX_EXECUTION_KINDS.filter(kind => !READ_KINDS.includes(kind));
     expect(refused).toHaveLength(2);
+    let refusals = 0;
     for (const kind of refused) {
-      const value = await providerOutput(readingDocument(kind, false, undefined, DIGESTS[0]));
-      expect(() => hyperunixTopology(value, context), kind).toThrow(CapabilityError);
-      expect(() => hyperunixTopology(value, context), kind).toThrow(`${kind} is a mutation outcome`);
+      for (const licensed of LICENCES) {
+        for (const executionId of EXECUTION_IDS) {
+          for (const digest of DIGESTS) {
+            const document = readingDocument(kind, licensed, executionId, digest);
+            const label = `${kind} licenses_absence=${licensed} execution_id=${executionId === undefined ? 'null' : 'stated'} ${digest.name}`;
+            const value = await providerOutput(document);
+            // The provider source is the document plus the two digests resultToJson writes null, so each refusal is measured on
+            // the document its label names.
+            expect(sourceOf(value), label).toStrictEqual({...document, local_digest: null, structural_digest: null});
+            expect(() => hyperunixTopology(value, context), label).toThrow(CapabilityError);
+            expect(() => hyperunixTopology(value, context), label).toThrow(`${kind} is a mutation outcome`);
+            refusals++;
+          }
+        }
+      }
     }
+    // Every cell of the readings' licence, execution_id and digest axes, for each refused kind: 2 x (2 x 2 x 3).
+    expect(refusals).toBe(refused.length * LICENCES.length * EXECUTION_IDS.length * DIGESTS.length);
+    expect(refusals).toBe(24);
     expectTypeOf<(typeof COVERAGES)[number]>().toEqualTypeOf<NonNullable<NativeSnapshot['coverage']>>();
     const readings = await allReadings();
     expect(readings).toHaveLength(132);
@@ -330,6 +379,19 @@ describe('wb-tz2.5 standing leg over the 132 readings: the HX query id stays a l
       expect(topology.snapshots[0].source, reading.label).toStrictEqual(QUERY_REF);
       expect(topology.diagnostics[0], reading.label).toBe(`${DERIVED}: ${TITLE}`);
       expect(topology.diagnostics.filter(text => text.startsWith(`${DERIVED}: `)), reading.label).toHaveLength(1);
+      // wb-thq3 F1: the host names neither an invocation nor an operation, and the topology states no relation and no trace
+      // (GP1, GP2) and no member beyond the ones the adapter writes.
+      expect(Object.keys(topology).sort(), reading.label).toStrictEqual(['diagnostics', 'relations', 'snapshots']);
+      expect(topology.relations, reading.label).toStrictEqual([]);
+      const [snapshot] = topology.snapshots;
+      expect(Object.keys(snapshot).sort(), reading.label).toStrictEqual(SNAPSHOT_MEMBERS);
+      expect({source: snapshot.source, scope: snapshot.scope, capturedAt: snapshot.capturedAt, observedAt: snapshot.observedAt,
+        kind: snapshot.kind, sourceVersion: snapshot.sourceVersion, evidenceRefs: snapshot.evidenceRefs}, reading.label).toStrictEqual({
+        source: QUERY_REF, scope, capturedAt: context.capturedAt, observedAt: context.observedAt, kind: 'hyperunix.query.snapshot',
+        sourceVersion: '0.1.0', evidenceRefs: EVIDENCE_REFS});
+      // The derived id's 64 hex characters occur once in the topology's JSON text, as the snapshot source id (QUERY_REF above):
+      // no other member carries them verbatim.
+      expect(JSON.stringify(topology).split(DERIVED_ID), reading.label).toHaveLength(2);
       coverages.add(topology.snapshots[0].coverage);
     }
     expect(coverages).toStrictEqual(new Set(COVERAGES));
@@ -378,7 +440,7 @@ describe('wb-tz2.5 standing leg over the 132 readings: the HX query id stays a l
     }
   }, 60_000);
 
-  it('S5: the S4 workflow journaled live, then replayed under the same host basis: all 132 nodes replay cached and stale, each with the S3 projection of its reading', async () => {
+  it('S5: the S4 workflow journaled live, then replayed under the same host basis: all 132 nodes replay cached and stale, each with the S3 projection of its reading; both runs journal exactly one read row per reading, its provider output as text and no nativeRefs', async () => {
     const readings = await allReadings();
     const recorded: WorkflowJournalEntry[] = [];
     const first = await runWorkflow({script: script(readings.length), host: readingHost(readings, {replayBasis: BASIS}),
@@ -387,14 +449,20 @@ describe('wb-tz2.5 standing leg over the 132 readings: the HX query id stays a l
     const journaled = recorded.filter(entry => entry.kind === 'node');
     expect(journaled).toHaveLength(readings.length);
     expect(journaled.filter(entry => entry.effectClass === 'read' && entry.basis === BASIS)).toHaveLength(readings.length);
+    // wb-thq3 F1 (GP3): the whole live journal is one read row per reading, and no row carries nativeRefs or any other member.
+    expect(recorded).toStrictEqual(readings.map(readRow));
     let replayCalls = 0;
     const replayHost = readingHost(readings, {replayBasis: BASIS, callNode: async () => {
       replayCalls++;
       throw new Error('a journaled read must not re-run');
     }});
-    const second = await runWorkflow({script: script(readings.length), host: replayHost, journal: {entries: recorded}});
+    const rejournaled: WorkflowJournalEntry[] = [];
+    const second = await runWorkflow({script: script(readings.length), host: replayHost,
+      journal: {entries: recorded, append: entry => { rejournaled.push(entry); }}});
     expect(second.status).toBe('completed');
     expect(replayCalls).toBe(0);
+    // The replay path journals the same rows, so a replayed read gains no reference either.
+    expect(rejournaled).toStrictEqual(readings.map(readRow));
     expect(second.replayedNodeCount).toBe(readings.length);
     const done = doneNodes(second);
     expect(done.map(entry => entry.index)).toStrictEqual(readings.map((_, index) => index));
