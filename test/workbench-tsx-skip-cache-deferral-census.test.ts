@@ -74,10 +74,12 @@
  * - (gate) D1 reads the roster's producer facts: each measured Verdict line's bold verdict word, the packet heading and row. The
  *   gate is OPEN once a verdict reads anything but DEFER or REJECT (ADOPT, or no verdict word at all) or TSX-PF-03 leaves the
  *   not-created packets (its heading drops "not created" or its row is gone); a confirmed ADR status keeps it closed.
- * KNOWN FINDINGS (measured on the export of trunk 4435e2e, landing 304; reported, never admitted): C1 reads exactly wb-km7q.6
- * and C2 reads exactly wb-csbt.2 and wb-km7q.6, two owner filings that name the skip family and ADR-0032 and hold only their
- * parent-child edge. wb-km7q.6 carries no sentence naming ADR-0032 beside a deferral word; wb-csbt.2 left C1 at ledger hop
- * edccd80 (landing 287), where its delivery note gained a sentence naming ADR-0032 beside a deferral word (R-WORDING-ANYWHERE).
+ * KNOWN FINDINGS (re-measured on the export of trunk f63d3896, landing 753; reported, never admitted; prior measure was
+ * trunk 4435e2e, landing 304, and before that the hop-edccd80 re-measure): C1 reads exactly wb-km7q.11 and wb-km7q.6, and
+ * C2 reads exactly wb-csbt.2, wb-km7q.11 and wb-km7q.6. wb-km7q.6 carries no sentence naming ADR-0032 beside a deferral
+ * word; wb-csbt.2 left C1 at ledger hop edccd80 (landing 287), where its delivery note gained a sentence naming ADR-0032
+ * beside a deferral word (R-WORDING-ANYWHERE); wb-km7q.11 is a gate-respin filing of the reader-helper family whose store
+ * rows quote its cut's census subject, carrying neither the wording nor an edge to the gate.
  * KNOWN pins both sets exactly, so a further finding, or a known row whose reading changes, reds; whether the two rows gain
  * the wording and the edge, or whether (c) binds only beads filed after the filing, is the owner's ruling, not this census's.
  *
@@ -253,8 +255,8 @@ const POSTURE_ANCHORS: readonly string[] = ["wb-csbt.1.title:1 S,K", "wb-csbt.2.
 const CITED_ROW_ANCHORS: readonly string[] = ["wb-csbt", "wb-csbt.1", "wb-csbt.2", "wb-csbt.3", "wb-csbt.4"];
 /** KNOWN FINDINGS (header): exact, measured on the export of trunk 4435e2e. */
 const KNOWN: Readonly<Record<string, readonly string[]>> = {
-  C1: ["wb-km7q.6 no-deferral-wording"],
-  C2: ["wb-csbt.2 no-related-edge", "wb-km7q.6 no-related-edge"],
+  C1: ["wb-km7q.11 no-deferral-wording", "wb-km7q.6 no-deferral-wording"],
+  C2: ["wb-csbt.2 no-related-edge", "wb-km7q.11 no-related-edge", "wb-km7q.6 no-related-edge"],
 };
 const RESIDUAL_FAMILIES: readonly string[] = [
   "R-MARKER-ANYWHERE",
