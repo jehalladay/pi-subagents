@@ -22,7 +22,11 @@
  * SUB-READINGS rows (U1); cut #3's T rows each pin a reading that distinguishes the delivered readers from a hollowing of the
  * seat's own sweep, or that is red on the readers before cut #3's three code fixes, or a control beside one; and the CLAIM row is
  * stated as the names-only check it is (U2). Which hollowing reds which row is measured by the seat on scratch
- * copies of the helper (the handoff's evidence), not by this census.
+ * copies of the helper (the handoff's evidence), not by this census. Cut #4 is the FAIL-CLOSED CORE orchestrator ruling R-B230
+ * binds after refusal #3 (gate-prep-12 / g10-gate-s166): no plant is added; the helper header's SCOPE paragraph bounds every
+ * claim line to the syntactic forms its rows plant, each line names NOT CLAIMED the forms a measured one-edit hollowing of the
+ * readers leaves green (refusal #3's U1 and U2 members and the seat's sibling probes), and the SCOPE row holds that paragraph
+ * verbatim; covering those forms is deferred to wb-tz2.20.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -59,13 +63,16 @@
  *   name resolves to a census row (names only: the row does not exercise a named row against its line, refusal #2 U2); the
  *   header's "- <word>:" entry words equal BINDING_KINDS, ROOT_FORMS, C2_FORMS, DRIVER_FORMS
  *   (word [reason]), SHAPE_FORMS, WRAPPER_FLAG_FORMS, UNESCAPE_FORMS and RESIDUAL_FAMILIES (id: family) in order; and every plant
- *   roster here equals its helper roster.
+ *   roster here equals its helper roster; and the helper header's SCOPE paragraph stands verbatim right before the claim block
+ *   (cut #4, R-B230).
  *  FROZEN SHAPE (standing rule 16): one literal pins every table row as table:id:digest, the digest over the row's own JSON.
  *
  * NOT CLAIMED (scope sentences; no residual semantics): which helper hollowing reds which row is NOT CLAIMED by this census (the
  * seat measures it on scratch copies); that a CLAIM_LINES row's named rows exercise its line is NOT CLAIMED by this census (names
  * only, refusal #2 U2); a copy of @hyperunix/sdk at a path neither starting with the package name nor under node_modules
- * (a vendored copy) as an HX module is NOT CLAIMED by this census (T0118 pins that HX_MODULE reads it as none).
+ * (a vendored copy) as an HX module is NOT CLAIMED by this census (T0118 pins that HX_MODULE reads it as none); a syntactic
+ * form a claim line's rows do not plant is NOT CLAIMED by this census (the helper header's SCOPE paragraph), among them each
+ * form refusal #3's members and the seat's sibling probes leave green, named NOT CLAIMED on its line.
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
  * tracker export, and parses planted text in memory.
@@ -1703,43 +1710,43 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L006", line: "- global: the symbol has no declaration in the file, or only declarations in an ambient context", pins: ["BINDING:global", "SUB:A01", "SUB:A02", "SUB:A03d", "SUB:S0589", "SUB:S0591", "SUB:T0078", "SUB:T0079", "SUB:T0080"] },
   { id: "L007", line: "- local: any other declaration in the file", pins: ["BINDING:local", "SUB:A04", "SUB:A06", "SUB:T0043"] },
   { id: "L008", line: "VALUES (stringValues): a string literal or a no-substitution template, or an identifier whose own binding is a local const", pins: ["VALUES", "SUB:A14", "SUB:S1284"] },
-  { id: "L009", line: "declaration of that name initialized by one (its one variable declaration: a namespace merged with it holds no value), through a chain of such names (a cycle reads no value); parentheses, as,", pins: ["SUB:A15", "SUB:S1082", "SUB:A10", "SUB:T0131", "SUB:T0132", "SUB:T0133"] },
+  { id: "L009", line: "declaration of that name initialized by one (its one variable declaration: a namespace merged with it holds no value; a no-substitution template reached through a const name is NOT CLAIMED), through a chain of such names (a cycle reads no value); parentheses, as,", pins: ["SUB:A15", "SUB:S1082", "SUB:A10", "SUB:T0131", "SUB:T0132", "SUB:T0133"] },
   { id: "L010", line: "satisfies, non-null and <T> assertions are read through. Any other value (a let or var binding, an ambient const, a member,", pins: ["SUB:A11", "SUB:A12", "SUB:A13", "SUB:S1284"] },
   { id: "L011", line: "a parameter, an imported name, a computed string) is no value.", pins: ["SUB:S1081", "SUB:A17", "SUB:T0134"] },
-  { id: "L012", line: "CHAINS (calleeChains): a member, or an element whose key has a value (any other key reads <computed>), as dotted text, with", pins: ["CHAINS", "SUB:A25", "SUB:S0580", "SUB:T0031", "SUB:T0157"] },
+  { id: "L012", line: "CHAINS (calleeChains): a member, or an element whose key has a value (any other key reads <computed>), as dotted text (an optional member or element, and an element key written as a template, are NOT CLAIMED), with", pins: ["CHAINS", "SUB:A25", "SUB:S0580", "SUB:T0031", "SUB:T0157"] },
   { id: "L013", line: "a leading globalThis. or global. dropped; a root identifier reads as its own spelling and, when its own binding is a const", pins: ["SUB:A20", "SUB:A21", "SUB:W17a", "SUB:W17b", "SUB:T0158"] },
   { id: "L014", line: "initialized by a member chain or a name, as that chain's spellings too.", pins: ["SUB:A22", "SUB:A23", "SUB:S0562", "SUB:T0030", "SUB:T0032"] },
   { id: "L015", line: "ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global (a call, a this, a literal or any", pins: ["SUB:U1-F1", "SUB:A05", "SUB:T0045", "SUB:T0160", "SUB:T0161"] },
   { id: "L016", line: "other root is not); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:", pins: ["ROOT:initializer", "ROOT:reassignment", "SUB:T0042", "SUB:T0046"] },
   { id: "L017", line: "- initializer: a variable's initializer", pins: ["ROOT:initializer"] },
-  { id: "L018", line: "- reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??=", pins: ["ROOT:reassignment", "SUB:A30", "SUB:A31", "SUB:A32", "SUB:A33", "SUB:S1292", "SUB:S1100", "SUB:S0611", "SUB:W23", "SUB:T0041"] },
-  { id: "L019", line: "- destructured: a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index; a rest element holds a copy and reads nothing), and its own default", pins: ["ROOT:destructured", "SUB:A34", "SUB:A35", "SUB:A36", "SUB:A37", "SUB:S0620", "SUB:S1297", "SUB:W21", "SUB:T0037", "SUB:T0038", "SUB:T0039", "SUB:T0040"] },
-  { id: "L020", line: "- for-of element: a for-of variable's elements when the iterable is an array literal, directly or through a const name", pins: ["ROOT:for-of element", "SUB:A38", "SUB:S0631", "SUB:S1085", "SUB:W131", "SUB:T0034"] },
-  { id: "L021", line: "- parameter default: a parameter's default value", pins: ["ROOT:parameter default"] },
-  { id: "L022", line: "- call argument: the argument at a parameter's position in every call of its function through a name whose own binding is the function's declaration or a variable initialized by the function (read through parentheses and assertions); a rest parameter reads nothing", pins: ["ROOT:call argument", "SUB:A39", "SUB:A40", "SUB:S0645", "SUB:S1092", "SUB:S1093", "SUB:S1094", "SUB:S0647", "SUB:S1091", "SUB:S1295", "SUB:W44", "SUB:T0033", "SUB:T0035"] },
+  { id: "L018", line: "- reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)", pins: ["ROOT:reassignment", "SUB:A30", "SUB:A31", "SUB:A32", "SUB:A33", "SUB:S1292", "SUB:S1100", "SUB:S0611", "SUB:W23", "SUB:T0041"] },
+  { id: "L019", line: "- destructured: a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index; a rest element holds a copy and reads nothing), and its own default (the own default of an element with a property name or of an array element is NOT CLAIMED)", pins: ["ROOT:destructured", "SUB:A34", "SUB:A35", "SUB:A36", "SUB:A37", "SUB:S0620", "SUB:S1297", "SUB:W21", "SUB:T0037", "SUB:T0038", "SUB:T0039", "SUB:T0040"] },
+  { id: "L020", line: "- for-of element: a for-of variable's elements when the iterable is an array literal, directly or through a const name (a let or var variable and a for await...of loop are NOT CLAIMED)", pins: ["ROOT:for-of element", "SUB:A38", "SUB:S0631", "SUB:S1085", "SUB:W131", "SUB:T0034"] },
+  { id: "L021", line: "- parameter default: a parameter's default value (a default of an arrow function's, a function expression's, a method's, a constructor's or an accessor's parameter is NOT CLAIMED)", pins: ["ROOT:parameter default"] },
+  { id: "L022", line: "- call argument: the argument at a parameter's position in every call of its function through a name whose own binding is the function's declaration or a variable initialized by the function (read through parentheses and assertions; an optional call, and a let or var variable, are NOT CLAIMED); a rest parameter reads nothing", pins: ["ROOT:call argument", "SUB:A39", "SUB:A40", "SUB:S0645", "SUB:S1092", "SUB:S1093", "SUB:S1094", "SUB:S0647", "SUB:S1091", "SUB:S1295", "SUB:W44", "SUB:T0033", "SUB:T0035"] },
   { id: "L023", line: "- immediately invoked: the argument at a parameter's position when its function is itself the callee", pins: ["ROOT:immediately invoked", "SUB:S0651"] },
-  { id: "L024", line: "- call() argument: the argument one place later in a call() of the function by either route", pins: ["ROOT:call() argument", "SUB:A41", "SUB:A43", "SUB:S1090", "SUB:T0036", "SUB:T0159"] },
+  { id: "L024", line: "- call() argument: the argument one place later in a call() of the function by either route (an optional call() is NOT CLAIMED)", pins: ["ROOT:call() argument", "SUB:A41", "SUB:A43", "SUB:S1090", "SUB:T0036", "SUB:T0159"] },
   { id: "L025", line: "A chain under process.env is the environment, which the stubbed HyperUnix.open makes inert, and is not read, unless it", pins: ["SUB:A44", "SUB:A45", "SUB:A47", "SUB:S0787", "SUB:T0047", "SUB:T0048"] },
   { id: "L026", line: "leaves the environment object through constructor, __proto__ or prototype (refusal #4 F3).", pins: ["SUB:A46", "SUB:A48", "SUB:R:PROTOTYPE_LINKS:constructor", "SUB:R:PROTOTYPE_LINKS:__proto__", "SUB:R:PROTOTYPE_LINKS:prototype", "SUB:W25"] },
   { id: "L027", line: "", pins: [] },
   { id: "L028", line: "C2 TAMPER FORMS (tampersIn, C2_FORMS; each finding is \"<what> :<line>\"):", pins: ["C2:assignment", "SUB:W01", "SUB:W02", "SUB:T0141"] },
-  { id: "L029", line: "- spy: a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, \"open\"), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose \"open\" is a value", pins: ["C2:spy", "SUB:SP1", "SUB:SP1c", "SUB:SP2", "SUB:A50", "SUB:A51", "SUB:S0838", "SUB:S0841", "SUB:S0844", "SUB:S1107", "SUB:W108", "SUB:T0055", "SUB:T0129", "SUB:T0130", "SUB:T0139"] },
-  { id: "L030", line: "- global stub: a GLOBAL_STUBS call", pins: ["C2:global stub", "SUB:A52"] },
-  { id: "L031", line: "- watched reference: a WATCHED callee chain read other than as a call's callee (an argument, an alias, call / apply / bind of it)", pins: ["C2:watched reference", "SUB:A53", "SUB:S0862", "SUB:S0866", "SUB:W26"] },
+  { id: "L029", line: "- spy: a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, \"open\"), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose \"open\" is a value (an optional call, and a callee spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:spy", "SUB:SP1", "SUB:SP1c", "SUB:SP2", "SUB:A50", "SUB:A51", "SUB:S0838", "SUB:S0841", "SUB:S0844", "SUB:S1107", "SUB:W108", "SUB:T0055", "SUB:T0129", "SUB:T0130", "SUB:T0139"] },
+  { id: "L030", line: "- global stub: a GLOBAL_STUBS call (an optional call or member, and a callee in parentheses, spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:global stub", "SUB:A52"] },
+  { id: "L031", line: "- watched reference: a WATCHED callee chain read other than as a call's callee (an argument, an alias, call / apply / bind of it; a chain returned, exported as a default, in an array, an object, a template, a spread, a conditional, a typeof, a new, an assertion, an element access or a concise arrow body, as a statement of its own or read through an optional member, and a callee in a non-null or as assertion, are NOT CLAIMED)", pins: ["C2:watched reference", "SUB:A53", "SUB:S0862", "SUB:S0866", "SUB:W26"] },
   { id: "L032", line: "- destructured watched: a WATCHED member destructured from its owner (the declaration's initializer) in a declaration (a rest element holds every member)", pins: ["C2:destructured watched", "SUB:A54", "SUB:A55", "SUB:W28", "SUB:T0050", "SUB:T0051", "SUB:T0053", "SUB:T0138"] },
   { id: "L033", line: "- destructuring-assigned watched: a WATCHED member destructured from its owner by a destructuring assignment (a rest element holds every member)", pins: ["C2:destructuring-assigned watched", "SUB:S0880", "SUB:S0881", "SUB:S1102", "SUB:T0052", "SUB:T0137"] },
   { id: "L034", line: "- assignment: = on an outside target, every element of an array or object destructuring-assignment pattern included (nested, spread and rest)", pins: ["C2:assignment", "SUB:A56", "SUB:A57", "SUB:A58", "SUB:A59", "SUB:A60", "SUB:W132", "SUB:T0049", "SUB:T0056"] },
   { id: "L035", line: "- compound operator: an assignment by any other assignment operator (+=, &&=, ??= and the rest) on an outside target", pins: ["C2:compound operator", "SUB:A61", "SUB:A62", "SUB:A63", "SUB:A63b", "SUB:T0054", "SUB:T0057"] },
-  { id: "L036", line: "- for-of target: an outside for-of assignment target", pins: ["C2:for-of target", "SUB:A71", "SUB:T0058"] },
-  { id: "L037", line: "- for-in target: an outside for-in assignment target", pins: ["C2:for-in target", "SUB:U1-W6", "SUB:T0059"] },
-  { id: "L038", line: "- delete: delete of an outside chain", pins: ["C2:delete", "SUB:A73", "SUB:S0735", "SUB:T0060"] },
+  { id: "L036", line: "- for-of target: an outside for-of assignment target (a for await...of loop, and a target in parentheses or written as an element access, are NOT CLAIMED)", pins: ["C2:for-of target", "SUB:A71", "SUB:T0058"] },
+  { id: "L037", line: "- for-in target: an outside for-in assignment target (a target in parentheses or written as an element access is NOT CLAIMED)", pins: ["C2:for-in target", "SUB:U1-W6", "SUB:T0059"] },
+  { id: "L038", line: "- delete: delete of an outside chain (an optional chain and an operand in parentheses are NOT CLAIMED)", pins: ["C2:delete", "SUB:A73", "SUB:S0735", "SUB:T0060"] },
   { id: "L039", line: "- update: ++ or -- (prefix or postfix) of an outside chain", pins: ["C2:update", "SUB:A64", "SUB:A64b", "SUB:A65", "SUB:T0061"] },
-  { id: "L040", line: "- mutator call: a MUTATORS call (read through calleeChains) whose first argument is outside", pins: ["C2:mutator call", "SUB:A66", "SUB:A67", "SUB:A68", "SUB:T0062", "SUB:T0064"] },
-  { id: "L041", line: "- legacy accessor definer: __defineGetter__ or __defineSetter__ called as a member of an outside chain (refusal #4 F4)", pins: ["C2:legacy accessor definer", "SUB:A69", "SUB:A70", "SUB:W133", "SUB:T0063", "SUB:T0065", "SUB:T0140"] },
+  { id: "L040", line: "- mutator call: a MUTATORS call (read through calleeChains) whose first argument is outside (an optional call or member, a callee in parentheses or reached through an alias, and a first argument other than a name or a dotted member - in parentheses, an assertion or an element access - are NOT CLAIMED)", pins: ["C2:mutator call", "SUB:A66", "SUB:A67", "SUB:A68", "SUB:T0062", "SUB:T0064"] },
+  { id: "L041", line: "- legacy accessor definer: __defineGetter__ or __defineSetter__ called as a member of an outside chain (refusal #4 F4; an optional call or member is NOT CLAIMED)", pins: ["C2:legacy accessor definer", "SUB:A69", "SUB:A70", "SUB:W133", "SUB:T0063", "SUB:T0065", "SUB:T0140"] },
   { id: "L042", line: "A write whose target is a bare name bound to a local declaration rebinds that local and reaches no value it held or receives", pins: ["SUB:P-REBIND-1", "SUB:P-REBIND-2", "SUB:W29b", "SUB:W29c"] },
   { id: "L043", line: "(writtenChains), so the assignment, compound operator, for-of target, for-in target, delete and update forms read nothing for it.", pins: ["SUB:P-REBIND-3", "SUB:P-REBIND-4", "SUB:P-REBIND-5", "SUB:P-REBIND-6"] },
-  { id: "L044", line: "MOCKS (moduleMockSpecifiers): every call whose callee chains hold a MODULE_MOCKS name, with each value of its first argument,", pins: ["SUB:A76", "SUB:R:MODULE_MOCKS:vi.doMock", "SUB:T0067", "SUB:T0142"] },
-  { id: "L045", line: "or of the import() its first argument is.", pins: ["SUB:A75", "SUB:S0898", "SUB:W134", "SUB:T0066"] },
+  { id: "L044", line: "MOCKS (moduleMockSpecifiers): every call whose callee chains hold a MODULE_MOCKS name (an optional call or member, and a callee spelled as an element access or reached through an alias of the mock, are NOT CLAIMED), with each value of its first argument (a template is NOT CLAIMED),", pins: ["SUB:A76", "SUB:R:MODULE_MOCKS:vi.doMock", "SUB:T0067", "SUB:T0142"] },
+  { id: "L045", line: "or of the import() its first argument is (a template argument is NOT CLAIMED).", pins: ["SUB:A75", "SUB:S0898", "SUB:W134", "SUB:T0066"] },
   { id: "L046", line: "", pins: [] },
   { id: "L047", line: "C7 DRIVER FORMS (hxDrivers, DRIVER_FORMS; the DRIVER_REASONS reason in brackets; an HX module is read by HX_MODULE):", pins: ["DRIVER:value import", "SUB:A113", "SUB:W37b", "SUB:W38b", "SUB:W63", "SUB:T0109", "SUB:T0110", "SUB:T0111", "SUB:T0112", "SUB:T0113", "SUB:T0114", "SUB:T0115", "SUB:T0116", "SUB:T0117", "SUB:T0118", "SUB:T0119"] },
   { id: "L048", line: "- value import [import]: an import declaration of an HX module with a clause that is not type-only", pins: ["DRIVER:value import", "SUB:A80", "SUB:A81", "SUB:A82", "SUB:A83", "SUB:S0911", "SUB:S0913"] },
@@ -1747,24 +1754,24 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L050", line: "- export-from [import]: an export declaration from an HX module that is not type-only, named or namespace", pins: ["DRIVER:export-from", "SUB:A84", "SUB:A85", "SUB:A86", "SUB:S0917", "SUB:S0920", "SUB:S0924", "SUB:W40"] },
   { id: "L051", line: "- import-equals [import]: an import-equals of an HX module value that is not type-only", pins: ["DRIVER:import-equals", "SUB:A87", "SUB:S0928", "SUB:T0123"] },
   { id: "L052", line: "- dynamic import [import]: an import() call whose first argument is an HX module value", pins: ["DRIVER:dynamic import", "SUB:S0935"] },
-  { id: "L053", line: "- loader call [import]: a LOADERS call (read through calleeChains) whose first argument is an HX module value", pins: ["DRIVER:loader call", "SUB:A89", "SUB:A90", "SUB:A91", "SUB:S0939", "SUB:W75"] },
-  { id: "L054", line: "- created require [import]: a call of a call, or of a name whose own binding is a const initialized by a call, whose first argument is an HX module value (refusal #4 F2)", pins: ["DRIVER:created require", "SUB:A92", "SUB:S0949", "SUB:S1280", "SUB:W89", "SUB:T0120"] },
-  { id: "L055", line: "- invoke [invoke]: a call whose callee chains end .invoke and whose first argument's value is hyperunix.find", pins: ["DRIVER:invoke", "SUB:A93", "SUB:A94", "SUB:S0960", "SUB:T0125", "SUB:T0126"] },
-  { id: "L056", line: "- override member [override]: HYPERUNIX_HX as a member name, an element key value or a type member on any receiver", pins: ["DRIVER:override member", "SUB:A95", "SUB:S0964", "SUB:S0965"] },
+  { id: "L053", line: "- loader call [import]: a LOADERS call (read through calleeChains) whose first argument is an HX module value (a callee spelled as an element access is NOT CLAIMED)", pins: ["DRIVER:loader call", "SUB:A89", "SUB:A90", "SUB:A91", "SUB:S0939", "SUB:W75"] },
+  { id: "L054", line: "- created require [import]: a call of a call, or of a name whose own binding is a const initialized by a call, whose first argument is an HX module value (refusal #4 F2; an inner call whose callee is not the bare name createRequire, and an optional call, are NOT CLAIMED)", pins: ["DRIVER:created require", "SUB:A92", "SUB:S0949", "SUB:S1280", "SUB:W89", "SUB:T0120"] },
+  { id: "L055", line: "- invoke [invoke]: a call whose callee chains end .invoke and whose first argument's value is hyperunix.find (a callee spelled as an element access or through an optional member is NOT CLAIMED)", pins: ["DRIVER:invoke", "SUB:A93", "SUB:A94", "SUB:S0960", "SUB:T0125", "SUB:T0126"] },
+  { id: "L056", line: "- override member [override]: HYPERUNIX_HX as a member name, an element key value or a type member on any receiver (one read through an optional chain is NOT CLAIMED)", pins: ["DRIVER:override member", "SUB:A95", "SUB:S0964", "SUB:S0965"] },
   { id: "L057", line: "- override destructuring [override]: HYPERUNIX_HX as a destructuring key", pins: ["DRIVER:override destructuring", "SUB:S0973"] },
   { id: "L058", line: "- override destructuring assignment [override]: HYPERUNIX_HX as a destructuring-assignment key", pins: ["DRIVER:override destructuring assignment", "SUB:S0977"] },
-  { id: "L059", line: "- override object key [override]: HYPERUNIX_HX as a key of an object literal that is no destructuring-assignment target", pins: ["DRIVER:override object key", "SUB:A97", "SUB:A98", "SUB:T0127"] },
-  { id: "L060", line: "- override in [override]: HYPERUNIX_HX as the value of the left operand of in", pins: ["DRIVER:override in", "SUB:A99", "SUB:S0993"] },
-  { id: "L061", line: "- override env call [override]: HYPERUNIX_HX as an argument value of an ENV_CALLS call", pins: ["DRIVER:override env call", "SUB:A100", "SUB:A101", "SUB:A102", "SUB:A104", "SUB:A105", "SUB:S1000", "SUB:S1002", "SUB:T0121"] },
-  { id: "L062", line: "- override env method [override]: HYPERUNIX_HX as an argument value of an ENV_METHODS method call", pins: ["DRIVER:override env method", "SUB:A103", "SUB:S1008", "SUB:T0128"] },
+  { id: "L059", line: "- override object key [override]: HYPERUNIX_HX as a key of an object literal that is no destructuring-assignment target (a shorthand, method or accessor key is NOT CLAIMED)", pins: ["DRIVER:override object key", "SUB:A97", "SUB:A98", "SUB:T0127"] },
+  { id: "L060", line: "- override in [override]: HYPERUNIX_HX as the value of the left operand of in (a template operand is NOT CLAIMED)", pins: ["DRIVER:override in", "SUB:A99", "SUB:S0993"] },
+  { id: "L061", line: "- override env call [override]: HYPERUNIX_HX as an argument value of an ENV_CALLS call (an optional call, and a callee spelled as an element access, are NOT CLAIMED)", pins: ["DRIVER:override env call", "SUB:A100", "SUB:A101", "SUB:A102", "SUB:A104", "SUB:A105", "SUB:S1000", "SUB:S1002", "SUB:T0121"] },
+  { id: "L062", line: "- override env method [override]: HYPERUNIX_HX as an argument value of an ENV_METHODS method call (an optional call is NOT CLAIMED)", pins: ["DRIVER:override env method", "SUB:A103", "SUB:S1008", "SUB:T0128"] },
   { id: "L063", line: "C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):", pins: ["SUB:R:MEMBER_SHAPES:kill:F1", "SUB:A211", "SUB:S1145", "SUB:S1147", "SUB:S1150", "SUB:S1045", "SUB:T0088", "SUB:T0135", "SUB:T0148", "SUB:T0149"] },
-  { id: "L064", line: "- member: a member name read as .name, called or not", pins: ["SHAPE:member", "SUB:A211", "SUB:T0143"] },
-  { id: "L065", line: "- element key: an element key value read as [\"name\"]", pins: ["SHAPE:element key", "SUB:S1230"] },
+  { id: "L064", line: "- member: a member name read as .name, called or not (one read through an optional chain, or one that is itself the receiver of another member, is NOT CLAIMED)", pins: ["SHAPE:member", "SUB:A211", "SUB:T0143"] },
+  { id: "L065", line: "- element key: an element key value read as [\"name\"] (one read through an optional chain is NOT CLAIMED)", pins: ["SHAPE:element key", "SUB:S1230"] },
   { id: "L066", line: "- type member: the right side of a qualified name in a type", pins: ["SHAPE:type member", "SUB:S1233", "SUB:T0144"] },
   { id: "L067", line: "- destructuring: a destructuring key", pins: ["SHAPE:destructuring", "SUB:S1016", "SUB:T0069"] },
   { id: "L068", line: "- destructuring assignment: a destructuring-assignment key (a shorthand's default value is no target)", pins: ["SHAPE:destructuring assignment", "SUB:S1128", "SUB:S1132", "SUB:S1134", "SUB:S1240"] },
   { id: "L069", line: "- import: an import or export specifier's imported name", pins: ["SHAPE:import", "SUB:S1156", "SUB:S1224", "SUB:T0145"] },
-  { id: "L070", line: "- bare call: a call of the bare name kill", pins: ["SHAPE:bare call", "SUB:S1182", "SUB:T0150"] },
+  { id: "L070", line: "- bare call: a call of the bare name kill (an optional call is NOT CLAIMED)", pins: ["SHAPE:bare call", "SUB:S1182", "SUB:T0150"] },
   { id: "L071", line: "- identifier: an identifier holding the ESRCH word that is no member key", pins: ["SHAPE:identifier", "SUB:S1030", "SUB:S1217", "SUB:S1218", "SUB:S1219", "SUB:T0006", "SUB:T0007", "SUB:T0008", "SUB:T0009", "SUB:T0011", "SUB:T0012", "SUB:T0013", "SUB:T0014", "SUB:T0015", "SUB:T0151"] },
   { id: "L072", line: "- regular expression: a regular expression holding the ESRCH word (regexText)", pins: ["SHAPE:regular expression", "SUB:S1033", "SUB:S1079", "SUB:W08b", "SUB:T0005"] },
   { id: "L073", line: "- key: a key literal holding the ESRCH word that is no member key", pins: ["SHAPE:key", "SUB:S1042", "SUB:S1159", "SUB:S1157", "SUB:T0010", "SUB:T0070", "SUB:T0152"] },
@@ -1776,12 +1783,12 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L079", line: "F3 COMMAND HEADS (commandHeads): the modelled heads (modelledCommandHeads) together with cut #4's fail-closed spelling read", pins: ["FLAG:lone dash", "SUB:S0174"] },
   { id: "L080", line: "(failClosedCommandHeads: every fragment of every word past a WRAPPERS wrapper or a SHELLS shell in head position). The", pins: ["SUB:S0180", "SUB:S0426", "SUB:T0098", "SUB:T0099", "SUB:T0100", "SUB:T0101", "SUB:T0102", "SUB:T0103", "SUB:T0104", "SUB:T0105", "SUB:T0106", "SUB:T0107", "SUB:T0108"] },
   { id: "L081", line: "modelled reader splits a text at COMMAND_SEPARATOR, reads each piece as shell words (shellWords: single quotes literal,", pins: ["SUB:R:COMMAND_SEPARATOR:semicolon", "SUB:H28", "SUB:S0143", "SUB:W33c", "SUB:W33d", "SUB:T0086", "SUB:T0087"] },
-  { id: "L082", line: "double quotes and a backslash escaping the next character, the quotes removed), passes VAR=value words and SHELL_KEYWORDS, and", pins: ["SUB:H32", "SUB:S1122", "SUB:R:SHELL_KEYWORDS:!", "SUB:T0068", "SUB:T0083", "SUB:T0084", "SUB:T0085"] },
-  { id: "L083", line: "reads a command head by basename through these flag forms. WRAPPER_FLAG_FORMS:", pins: ["SUB:H07", "FLAG:option argument"] },
+  { id: "L082", line: "double quotes and a backslash escaping the next character, the quotes removed; a backslash before white space, a quote or another backslash, and one inside double quotes, are NOT CLAIMED), passes VAR=value words and SHELL_KEYWORDS, and", pins: ["SUB:H32", "SUB:S1122", "SUB:R:SHELL_KEYWORDS:!", "SUB:T0068", "SUB:T0083", "SUB:T0084", "SUB:T0085"] },
+  { id: "L083", line: "reads a command head by basename (a relative head with a directory, and a shell head with a directory, are NOT CLAIMED) through these flag forms. WRAPPER_FLAG_FORMS:", pins: ["SUB:H07", "FLAG:option argument"] },
   { id: "L084", line: "- lone dash: a lone \"-\" among a wrapper's options is a flag (su's --login, env's -i)", pins: ["FLAG:lone dash", "SUB:H34"] },
   { id: "L085", line: "- options end: \"--\" ends a wrapper's options, so a dash word after it is the command head", pins: ["FLAG:options end", "SUB:H10", "SUB:H35", "SUB:T0089"] },
   { id: "L086", line: "- option argument: an option of a wrapper's table taking an argument takes the next word", pins: ["FLAG:option argument", "SUB:H03", "SUB:H38"] },
-  { id: "L087", line: "- attached argument: a short option taking an argument takes the rest of its word when the word continues (-uroot)", pins: ["FLAG:attached argument"] },
+  { id: "L087", line: "- attached argument: a short option taking an argument takes the rest of its word when the word continues (-uroot; a rest starting with a digit or a punctuation mark is NOT CLAIMED)", pins: ["FLAG:attached argument"] },
   { id: "L088", line: "- long value: a long option written --name=value carries its value in its word", pins: ["FLAG:long value", "SUB:H21", "SUB:H39", "SUB:T0090"] },
   { id: "L089", line: "- short cluster: a word of short flags is read letter by letter, an option taking an argument or a command ending it", pins: ["FLAG:short cluster", "SUB:H33", "SUB:T0091"] },
   { id: "L090", line: "- command option: an option of a wrapper's command table reads its argument, attached or the next word, as a command", pins: ["FLAG:command option", "SUB:H11", "SUB:H14", "SUB:H22", "SUB:T0092", "SUB:T0097"] },
@@ -1802,6 +1809,13 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L105", line: "- R-WRAPPER: a process-table tool run through a word outside WRAPPERS, SHELL_KEYWORDS and SHELLS (a leading redirection included), by a script file a shell runs, or inside another language's inline program reads as no command head", pins: ["RESIDUAL:R-WRAPPER"] },
   { id: "L106", line: "- R-INDIRECT: a module specifier, override name or capability id reached through anything but a literal or a const chain to one (a let or var binding, an object member, a parameter, an imported name), or an environment call reached through call, apply or Reflect.apply, reads as no value", pins: ["RESIDUAL:R-INDIRECT", "SUB:S1002"] },
   { id: "L107", line: "- R-FLOW: a local root whose value arrives through a flow ROOT_FORMS does not follow (a parameter of a function the file only passes on as a value, such as a callback, or reaches only through a parameter default; a catch variable; a destructured for-of binding; a return value; an object member) reads as no outside chain, and a WATCHED member destructured in a for-of binding reads as no reference", pins: ["RESIDUAL:R-FLOW", "SUB:S1295", "SUB:S1297", "SUB:S1111"] },
+];
+/** Cut #4's SCOPE paragraph (orchestrator ruling R-B230): the helper header holds it verbatim right before its claim block. */
+const SCOPE_LINES: readonly string[] = [
+  "SCOPE (cut #4, the fail-closed core; orchestrator ruling R-B230): the census claims each line of the claim block below only in",
+  "the syntactic forms its own rows plant (the CLAIM_LINES pins); a form no row plants is NOT CLAIMED, and each form a measured",
+  "one-edit hollowing of these readers leaves green (refusal #3's members and the seat's sibling probes) is named NOT CLAIMED",
+  "on its own line. Covering those forms is deferred to wb-tz2.20.",
 ];
 /** Every table row as table:id:digest (digest: sha-256 of the row's JSON, 12 hex). */
 const FROZEN: readonly string[] = [
@@ -2923,43 +2937,43 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L006:32967b116f62",
   "CLAIM_LINES:L007:5e4f8125e724",
   "CLAIM_LINES:L008:d7af9d88c849",
-  "CLAIM_LINES:L009:a47cc53334d9",
+  "CLAIM_LINES:L009:0fe7ac5fcbcd",
   "CLAIM_LINES:L010:ddb0f335d63b",
   "CLAIM_LINES:L011:f27fa4d28c4d",
-  "CLAIM_LINES:L012:f13691ff0ab6",
+  "CLAIM_LINES:L012:8e1bea49b41c",
   "CLAIM_LINES:L013:9438e106cc75",
   "CLAIM_LINES:L014:981b4577cfc0",
   "CLAIM_LINES:L015:a45f4d5d620f",
   "CLAIM_LINES:L016:8cf2689e6c22",
   "CLAIM_LINES:L017:66455025707b",
-  "CLAIM_LINES:L018:19e65f8a6354",
-  "CLAIM_LINES:L019:232c403aa4d7",
-  "CLAIM_LINES:L020:939934ca4efa",
-  "CLAIM_LINES:L021:3f2fe0458b17",
-  "CLAIM_LINES:L022:4b102578a73d",
+  "CLAIM_LINES:L018:42d24a1a4ebc",
+  "CLAIM_LINES:L019:48738256f3b2",
+  "CLAIM_LINES:L020:aa97eb126f8b",
+  "CLAIM_LINES:L021:0e53e1e5f958",
+  "CLAIM_LINES:L022:08abd3b865d8",
   "CLAIM_LINES:L023:230ef19effc2",
-  "CLAIM_LINES:L024:1528e6c05121",
+  "CLAIM_LINES:L024:2895c97ee2d3",
   "CLAIM_LINES:L025:c36986c6373d",
   "CLAIM_LINES:L026:3a968b4bf1a6",
   "CLAIM_LINES:L027:40d747567628",
   "CLAIM_LINES:L028:9267de5ddc50",
-  "CLAIM_LINES:L029:fe519305f010",
-  "CLAIM_LINES:L030:67c374904e67",
-  "CLAIM_LINES:L031:cecc699176f5",
+  "CLAIM_LINES:L029:eacb785f1c05",
+  "CLAIM_LINES:L030:cd886e38694c",
+  "CLAIM_LINES:L031:02b6ae9dd8ba",
   "CLAIM_LINES:L032:a772d2b5285a",
   "CLAIM_LINES:L033:c4f23b087f3a",
   "CLAIM_LINES:L034:ac490b833653",
   "CLAIM_LINES:L035:e860c2e80ba7",
-  "CLAIM_LINES:L036:821e0ca944d7",
-  "CLAIM_LINES:L037:9f07f40733e3",
-  "CLAIM_LINES:L038:94cc2fcc65e8",
+  "CLAIM_LINES:L036:c4611867a0ba",
+  "CLAIM_LINES:L037:a6ef8a53b2e0",
+  "CLAIM_LINES:L038:904637d961e4",
   "CLAIM_LINES:L039:76da315d35ad",
-  "CLAIM_LINES:L040:b7828eff11e7",
-  "CLAIM_LINES:L041:ecfc29d57f30",
+  "CLAIM_LINES:L040:198fa7341710",
+  "CLAIM_LINES:L041:91b53d7cf97a",
   "CLAIM_LINES:L042:1dad0a82ae3f",
   "CLAIM_LINES:L043:f6ec4def6c87",
-  "CLAIM_LINES:L044:a42e79706ca8",
-  "CLAIM_LINES:L045:94501778fcee",
+  "CLAIM_LINES:L044:48a9aaba8529",
+  "CLAIM_LINES:L045:0a2615a72e20",
   "CLAIM_LINES:L046:ed80aed8078d",
   "CLAIM_LINES:L047:94bd841e1b70",
   "CLAIM_LINES:L048:b794bcc5b386",
@@ -2967,24 +2981,24 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L050:8f9e76f2ea1c",
   "CLAIM_LINES:L051:5d54d3b59c0e",
   "CLAIM_LINES:L052:ac1b47189e13",
-  "CLAIM_LINES:L053:98181ff3634e",
-  "CLAIM_LINES:L054:1639089d57b1",
-  "CLAIM_LINES:L055:ab42d2c0f7f2",
-  "CLAIM_LINES:L056:f16632e09d37",
+  "CLAIM_LINES:L053:a2e7397d418b",
+  "CLAIM_LINES:L054:a77199332366",
+  "CLAIM_LINES:L055:7cabc556c415",
+  "CLAIM_LINES:L056:89d50483ad11",
   "CLAIM_LINES:L057:faef80fb2add",
   "CLAIM_LINES:L058:03e447fcc7b0",
-  "CLAIM_LINES:L059:490d3886890e",
-  "CLAIM_LINES:L060:12fe0558e4fd",
-  "CLAIM_LINES:L061:33625867d92a",
-  "CLAIM_LINES:L062:3136af918954",
+  "CLAIM_LINES:L059:9f6eaed313e1",
+  "CLAIM_LINES:L060:1fa3b9795ff7",
+  "CLAIM_LINES:L061:a8c5ed3f0311",
+  "CLAIM_LINES:L062:efb3683fc7d3",
   "CLAIM_LINES:L063:70676d295d9c",
-  "CLAIM_LINES:L064:10d0a4d5fd6a",
-  "CLAIM_LINES:L065:4f231a59b9c4",
+  "CLAIM_LINES:L064:d4fb3b497e7f",
+  "CLAIM_LINES:L065:ed26bb838dbe",
   "CLAIM_LINES:L066:1bce78dfcbac",
   "CLAIM_LINES:L067:1b24afdc34ed",
   "CLAIM_LINES:L068:ced5ced294ad",
   "CLAIM_LINES:L069:bdff4745ff29",
-  "CLAIM_LINES:L070:e6063215d7df",
+  "CLAIM_LINES:L070:97df15e07ddb",
   "CLAIM_LINES:L071:62503c50216b",
   "CLAIM_LINES:L072:ab22df66e288",
   "CLAIM_LINES:L073:b55e53c2dc19",
@@ -2996,12 +3010,12 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L079:30a93aa4a003",
   "CLAIM_LINES:L080:f5a44d48ff0e",
   "CLAIM_LINES:L081:0ae5079f10a4",
-  "CLAIM_LINES:L082:223fc8d9ff6a",
-  "CLAIM_LINES:L083:573d2428bc36",
+  "CLAIM_LINES:L082:9557ae556b83",
+  "CLAIM_LINES:L083:6083d53fedda",
   "CLAIM_LINES:L084:93e29749fd0f",
   "CLAIM_LINES:L085:80126fee528e",
   "CLAIM_LINES:L086:aea334370746",
-  "CLAIM_LINES:L087:3aa5f680fe4f",
+  "CLAIM_LINES:L087:59c6a8c33c23",
   "CLAIM_LINES:L088:f170393f68a4",
   "CLAIM_LINES:L089:40d14fa8fc2f",
   "CLAIM_LINES:L090:769ac8fda456",
@@ -3264,6 +3278,14 @@ describe(SUITE, () => {
         unpinned: CLAIM_LINES.filter(row => row.line !== "" && row.pins.length === 0).map(row => row.id),
         unresolved: CLAIM_LINES.flatMap(row => row.pins.filter(pin => !resolves(pin)).map(pin => `${row.id} ${pin}`)),
       }).toStrictEqual({ lines: CLAIM_LINES.map(row => row.line), unpinned: [], unresolved: [] });
+    });
+    it("the helper header's SCOPE paragraph (cut #4, R-B230) stands verbatim right before its claim block, after a blank line and before one", () => {
+      const header = read(HELPER)
+        .slice(0, read(HELPER).indexOf("*/"))
+        .split("\n")
+        .map(line => line.replace(/^ \* ?/, ""));
+      const start = header.findIndex(line => line.startsWith("BINDINGS (bindingOf)"));
+      expect(start < 0 ? [] : header.slice(start - SCOPE_LINES.length - 2, start)).toStrictEqual(["", ...SCOPE_LINES, ""]);
     });
     it("every section's entry words equal the roster the helper exports, in order (entry words only: the row above holds each line whole)", () => {
       expect({
