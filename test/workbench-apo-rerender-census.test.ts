@@ -157,7 +157,8 @@
  * an assignment, an object literal's property, a return under the written type of a function that is neither async nor a
  * generator, a cast). Every other stand-in the readings meet, outside the named residuals' quiet pages (R-NARROWED-BRANCH's
  * narrowed branch, R-STRUCTURAL-STAND-IN's held value, R-ERASED-ACCESS's erased module and arguments object, R-DEEP-CARRIER's
- * deep carrier), fails closed with the typed row FAIL_CLOSED names beside the row that plants it: unresolved-stand-in (STAND-IN-RECEIVERS), overload (R-OVERLOADS), parameter-property
+ * deep carrier; WB-VGRI below adds R-HELD-VALUE's held literal and callback, R-THIS-BINDING's bound value and member-call
+ * receiver and R-NARROWED-BRANCH's class instance and literal so chosen), fails closed with the typed row FAIL_CLOSED names beside the row that plants it: unresolved-stand-in (STAND-IN-RECEIVERS), overload (R-OVERLOADS), parameter-property
  * (R-PARAMETER-PROPERTIES), structural-stand-in (R-STRUCTURAL-STAND-IN: a class instance or a class's static side flowing
  * into a type its class does not declare), async-return (ASYNC-RETURNS: an async function's return under a written type
  * that holds a type handing the projection), generator-yield (GENERATOR-YIELDS: a generator's yield or return so written),
@@ -177,6 +178,107 @@
  * pinned. Measured on src: the live reach map and src's forms and refused uses read byte for byte the same under this cut's
  * scans as under cut #7's (25 modules each, at trunk 93133f0 and again at trunks e3022a1, 9fdd6d9 and 1ad30c3, each merged, whose src equals 4350926's), so src holds none of the shapes
  * this cut fails closed.
+ *
+ * WB-VGRI (the R694 follow-up of landing 672, gate cmd_6219d6dbd6a8: PREP F5 leads, F6-F8 ride; residual-list additions under
+ * ruling R-B67 (4), none contradicting a pinned label). Cut #8's shape stands: 0 pins removed or changed; two NAMED RESIDUAL
+ * rows and families are added (R-HELD-VALUE, R-THIS-BINDING), R-NARROWED-BRANCH gains ten pages, the DISPATCH and
+ * R-NARROWED-BRANCH labels are restated to what is read, and one anchor row is added. F5: an object literal not written where
+ * it flows and a callback that hides the projection, held inside another value, read quiet - the flow reading judges the
+ * holder's type at the flow, never the held element (flowOf names no array or tuple element, and a library generic's type
+ * argument is inferred from the held value) - so R-HELD-VALUE pins each held form beside its read twins (the literal as an
+ * object literal's property, refused context-less-literal; the callback at an annotated initializer, refused initializer;
+ * Promise.resolve given its type argument explicitly, refused for both). F6: a class instance chosen against a value of the
+ * target type by a ??, a conditional or a || reads quiet, subtype reduction narrowing the expression's type to the target,
+ * and so does a literal chosen by a ??; R-NARROWED-BRANCH pins each beside two twins that make no such choice and are
+ * refused (structural-stand-in): a conditional between two undeclared instances, and a && whose right operand is the
+ * instance. F7: a class instance bound as this by call or apply reads quiet - the call's type parameter is inferred from
+ * the instance - so R-THIS-BINDING pins call, apply, a method's call and a keeping instance beside two read twins: bind
+ * given its this argument alone, whose this argument is typed by the function's this parameter, and a call given the this
+ * parameter's type as its type argument (each refused, structural-stand-in; both twins restated to the measured set at
+ * respin 1, and at final cut #4 to a value written with no spread before it, below). F8: FAIL_CLOSED is anchored
+ * outside the census - the record anchor row holds
+ * it, each kind with the row that plants it and in order, equal to the one enumeration the cut #8 delivery record carries in
+ * the bead's export notes, so the gate's coordinated hollow of a kind (the row, FAIL_CLOSED's entry, the refusal, both
+ * literal elements and the roster together) reds there; the anchor F8 suggests, wb-021.7's export row, lists the forms it
+ * resolves in prose and names no generator yield or stand-in hand-back among them, so it could anchor only part of the
+ * twelve kinds. No reading of the helper is edited, so src's live reach map, forms and refused uses read as at cut #8.
+ *
+ * WB-VGRI RESPIN 1 (the respin of refusal #1, gate run g10-gate-s154: U1 leads, F1, F2 and F7 ride; the claim narrowed to
+ * the measured set, the R-B60 posture: no reading of the helper is edited). Cut #1's shape stands: 0 rows added or removed,
+ * 0 pins removed or changed; R-THIS-BINDING gains twenty pages and R-NARROWED-BRANCH four, and the DISPATCH,
+ * R-NARROWED-BRANCH and R-THIS-BINDING labels, their RESIDUALS sentences, the F7 sentence above and one NOT CLAIMED
+ * parenthetical are restated to what is read. U1 (bind given an argument after its this argument reads quiet, while the
+ * three texts said bind is read and refused): bind resolves to its second overload there (an argument; respin 2 restates
+ * the spread case: a spread of a value the checker types as the empty tuple itself resolves the first overload and refuses,
+ * a spread of any other type measured the second), which types its this argument by a type parameter inferred from the
+ * value, as call's does, so the value flows into a type it is; bind given its this argument alone resolves to its first
+ * overload, which types it as the function's this parameter, and refuses it (final cut #4: written with no spread before it;
+ * after two spreads of the empty tuple it reads quiet, R-THIS-BINDING's hole, and after one spread of the literal [] or of
+ * [] as [] it still refuses). So R-THIS-BINDING pins bind given an argument
+ * (a function's and a method's, called, a function's held at an annotated initializer, and a keeping instance) beside the
+ * this-only twins (a function's, a method's, with a spread of the literal [] - respin 2: an empty spread of an array type
+ * resolves the second overload and reads quiet -, and a class's static side). The measured set also corrects the
+ * type-argument clause - a call given the instance's own class as its type argument reads quiet, and one given the this
+ * parameter's type refuses (call, bind given an argument, Reflect.apply; final cut #4: with no spread written before the
+ * value) - and names beside them a class's static side, an
+ * object literal and a callback so bound, and a member call's receiver, each pinned. F1: Reflect.apply binds this the same
+ * way (its first overload; its second, taken for an argument list the first refuses, types it any) and reads quiet, pinned
+ * beside its explicit twin. F2: an object literal not written where it flows chosen by a || or by a conditional against a
+ * kept value reads quiet, pinned beside two literal twins (a conditional between two literals and a &&, refused
+ * context-less-literal). F7: NOT CLAIMED states which row reds when a fail-closed kind or its row is removed. No reading of
+ * the helper is edited, so src's live reach map, forms and refused uses read as at cut #8.
+ *
+ * WB-VGRI RESPIN 2 (the respin of refusal #2, gate run g10-gate-s156: U1 leads, F3 rides, F4 kept; the
+ * enumerate-the-resolvable cut orchestrator ruling R-B165 binds at the class's second failure, in the R-B60 posture: no
+ * reading of the helper is edited). Cut #2's shape stands: 0 rows added or removed, 0 pins removed or changed;
+ * R-THIS-BINDING gains fifty-three pages, and the DISPATCH and R-THIS-BINDING labels, the R-THIS-BINDING RESIDUALS
+ * sentence, the REACH paragraph's twin clause and the WB-VGRI RESPIN 1 paragraph's two spread clauses are restated to what
+ * is read. U1 (bind given its this argument and an empty spread of an array type - a never[] value - read quiet, while the
+ * three texts said an empty spread resolves bind's first overload and is refused): which overload bind resolves is the
+ * checker's, read page by page, and the claim is enumerated to it with its this argument written first (final cut #4) -
+ * the first where it stands alone or is followed only by spreads of a value the checker types as the empty tuple itself
+ * (the literal [], a value typed [] or
+ * readonly [], [] as [], [] as readonly [], [] as const, a rest parameter typed []), refusing an instance, a keeping
+ * instance, a static side, an object literal and a callback as refusal #2's twin refuses the instance; the second where an
+ * argument or a spread of any other type measured follows it (a [number] value; a never[] value bound to a function,
+ * through an element access, an optional call, a typed variable and a generic this, held, bound to a method, and as a
+ * keeping instance, a static side, a literal and a callback; two never[] values; a never[] value then [] as []; readonly
+ * never[], number[] and unknown[] values; [] as never[]; Array<never>(); any; never; the arguments object; a never[] rest
+ * parameter; and a rest parameter typed by a type parameter constrained to [], which the checker does not type as the empty
+ * tuple), where, with no type argument written, the this parameter is never read: a hole, named in R-THIS-BINDING with its
+ * quiet pages pinned beside the first-overload twins that refuse. F3: Function.prototype.bind handed the function and the
+ * value by call with no type argument written (final cut #4) types the value any (the untyped Function interface's bind) and
+ * reads quiet; R-THIS-BINDING and DISPATCH
+ * name it, and R-THIS-BINDING pins it with Function.prototype.bind's apply, Function.prototype.call's and
+ * Function.prototype.apply's call, Function.prototype.call's bind and Reflect.apply over Function.prototype.bind. F4
+ * (CT6-v, the coordinated hollow of R-THIS-BINDING from every literal, survives: the 6ze.39 class) stays disclosed in NOT
+ * CLAIMED. No reading of the helper is edited, so src's live reach map, forms and refused uses read as at cut #8.
+ *
+ * WB-VGRI FINAL CUT #4 (the respin of refusal #3, gate run g10-gate-s161: U1 leads, F3 and F4 ride; orchestrator ruling
+ * R-B207, the rule-19 structural exit at the class's third failure on cut #3, binds this cut as the FAIL-CLOSED CORE: each
+ * R-THIS-BINDING claim narrowed to the pages it pins and the reader coverage carried by bead wb-97ah, in the R-B60 posture:
+ * no reading of the helper is edited). Cut #3's shape stands: 0 rows added or removed, 0 pins removed or changed;
+ * R-THIS-BINDING gains twenty-one pages, and the DISPATCH and R-THIS-BINDING labels, the R-THIS-BINDING RESIDUALS sentence,
+ * the F7 sentence above, the WB-VGRI RESPIN 1 and RESPIN 2 paragraphs' bind-alone, type-argument, overload and F3 clauses
+ * and NOT CLAIMED are restated to what is read. U1 (bind resolved to its first overload after two spreads of the empty
+ * tuple written before the value, and a type argument written as the this parameter's type after one, read the value quiet,
+ * and so does a value handed to Function.prototype.bind or call by call with type arguments written, while the checker
+ * types it by the function's this parameter's type and the three texts said it is judged against that type and refused):
+ * the claims are narrowed - the value is judged against the type the checker resolves for the library parameter as the this
+ * argument of a function's own call, apply or bind or of Reflect.apply with no spread written before it among the call's
+ * arguments, and the into-any clause holds with no type argument written - and the members are named as a hole, its quiet
+ * pages pinned (bind's first overload after two spreads of the literal [] - a hiding instance bound to a function and to a
+ * method, a keeping instance, a static side, an object literal and a callback - or of a value typed [], a hiding instance;
+ * a call, a method's call, an apply, a bind given an argument and a Reflect.apply given the this parameter's type after one
+ * spread; Function.prototype.bind, call and apply handed the value by call with type arguments written) beside twins that
+ * refuse (one spread of the literal [] before the instance at bind's first overload, a function's and a method's, or of []
+ * as [], a function's; and the no-spread twins, to which a keeping instance bound alone, a method's call and an apply given
+ * the this parameter's type are added). F3 (the same written-index reading at an ordinary call's argument and at an
+ * argument after the this argument with a written rest type argument, against R-STRUCTURAL-STAND-IN's and DISPATCH's landed
+ * fail-closed claims) is not cured here: the claims it names are trunk-landed, this cut restates neither
+ * R-STRUCTURAL-STAND-IN's label nor DISPATCH's fail-closed clause, and refusal #3 proposes its route (bead wb-021.10, the
+ * home of argumentTarget's indexing, or wb-021.7's fail-closed home). F4 (CT6-v, the 6ze.39 class) stays disclosed in NOT
+ * CLAIMED. No reading of the helper is edited, so src's live reach map, forms and refused uses read as at cut #8.
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
@@ -260,7 +362,9 @@
  * INHERITED-IMPLEMENTATIONS, CONTEXT-LESS-LITERALS, SPREADS, CALLBACK-RETURNS and STAND-IN-RETURNS plant each further shape
  * the readings never read, refused with its typed row beside its read twins and quiet pages, and UNLISTED-STAND-INS pins
  * that a stand-in whose type the readings do not list refuses (cut #8, the fail-closed core). What neither scan reads is named:
- * R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH, and the three fail-closed families.
+ * R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH, and the three fail-closed families; R-HELD-VALUE and R-THIS-BINDING
+ * (wb-vgri) plant the held and the bound stand-ins the flow reading never judges as the type they stand in for, their quiet
+ * pages beside read twins (respin 2: R-THIS-BINDING's label names each of its pages).
  * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
  * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
  * plants, the interface forms INTERFACE-FORMS plants and the heritage and signature shapes INTERFACE-HERITAGE plants, and
@@ -296,9 +400,10 @@
  * FORMS, CLASS ELEMENTS, MEMBERS, EFFECT CLASSES, DIALOG ACTIONS), the pinned typescript's declaration file (CLASS ELEMENTS:
  * the class-element kinds and their SyntaxKinds) and the bead's export row (every table quote, the filing's bytes, the
  * title's bytes, the judged statement the quotes and their pinned junctions compose right after the requirement id, the
- * two tilings, the program's two spellings in the title, the absence of bd's other requirement fields), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class
- * plant, a dialog-action plant or a class-element kind removed from the helper, the frozen literal and the roster together
- * still reds.
+ * two tilings, the program's two spellings in the title, the absence of bd's other requirement fields; and, in its notes, the
+ * cut #8 delivery record's one enumeration of FAIL_CLOSED, each kind with the row that plants it, in order: wb-vgri), so a
+ * SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant, a class-element kind or a
+ * fail-closed kind removed from the helper, the frozen literal and the roster together still reds.
  * RESIDUALS (named, each with its pinned quiet row): R-DEFERRED-EFFECT an invocation, an admission or a host effect a
  * render schedules past the settle window - three rounds of immediates, so a timer of any delay, 0 ms included, can land
  * past it while an immediate does not - each pinned with its own timer (INVOCATION); R-SIDE-CHANNEL an effect through a channel the world does not hold - a module global, a file,
@@ -330,19 +435,61 @@
  * (NAMES); R-NARROWED-BRANCH a callback or a holder that does not itself expose the projection, chosen by a conditional or a
  * ?? operand, is judged by that expression's type, which subtype reduction narrows to the branch that keeps the projection, so
  * a conditional or a ?? choosing a callback that hides it reads quiet to the forms judge, while the hiding callback's own
- * flow is refused, and so does a field or a getter stand-in whose function is so chosen (cut #7) (REACH); R-OVERLOADS the
+ * flow is refused, and so does a field or a getter stand-in whose function is so chosen (cut #7), and a class instance whose
+ * class does not declare the type it flows into, chosen against a value of that type by a ??, a conditional or a ||, and an
+ * object literal not written where it flows chosen by a ??, a || or a conditional (wb-vgri, landing 672 F6 and respin 1 F2;
+ * a choice with no branch of the target type - a conditional between two such instances or two such literals, a && whose
+ * right operand is the instance or the literal - is refused) (REACH); R-OVERLOADS the
  * implementation behind a src overload set's visible signatures is never read through them: a field, a getter or a static
  * override typed by them, and such a set flowing as a callback, fail closed where the projection is handed, whether the
  * implementation keeps it or hides it (REACH); R-PARAMETER-PROPERTIES a constructor parameter property is never read as a
  * stand-in: it fails closed where a base member of its name hands the projection, whatever its declared type (REACH);
  * R-STRUCTURAL-STAND-IN a class instance, or a class's static side, flowing into an object type its class does not declare is never read as a stand-in:
  * it fails closed where a member of that type it also has hands the projection, whatever its own member does, and an
- * instance held inside another value (an array's element, a library generic's type argument such as a promise's: cut #8) entering such a type reads quiet (REACH).
+ * instance held inside another value (an array's element, a library generic's type argument such as a promise's: cut #8) entering such a type reads quiet (REACH);
+ * R-HELD-VALUE (wb-vgri, landing 672 F5) a stand-in held inside another value is never judged at the element - the flow
+ * reading judges the holder's type at the flow - so an object literal not written where it flows and a callback that hides
+ * the projection, held as an array's or a tuple's element or as a library generic's type argument (Array.of, Promise.resolve,
+ * a Map's entries, a Set's elements), read quiet, while an object literal's property is a flow the reading reads and a
+ * library generic given its type argument explicitly judges the argument against it (REACH);
+ * R-THIS-BINDING (wb-vgri, landing 672 F7; respin 1, refusal #1 U1 and F1; respin 2, refusal #2 U1 and F3, ruling R-B165;
+ * final cut #4, refusal #3 U1, ruling R-B207: each claim holds for the pages it pins, and bead wb-97ah is the home of the
+ * reading of every other value) a value bound as a function's this - a class instance or a class's static side, an object
+ * literal, a callback - is judged, as the this argument of a function's own call, apply or bind or of Reflect.apply with no
+ * spread written before it among the call's arguments, against the type the checker resolves for that library parameter: a
+ * function's own call and apply, bind resolved to its second overload and Reflect.apply resolved to its first type it by a
+ * type parameter inferred from the value, so with no type argument written the value flows into a type it is and reads
+ * quiet whatever its member does (a type argument written as the instance's own class reads the same), Reflect.apply's
+ * second overload and the untyped Function interface's bind, call and apply read off Function.prototype and handed the
+ * function and the value with no type argument written type it any, which hands nothing, and each pinned value so handed
+ * reads quiet, and a member call's receiver is bound by no flow the reading reads and reads quiet, while bind resolved to
+ * its first overload, whose this argument the checker types as the function's this parameter, and a type argument written
+ * as the this parameter's type read the value written with no spread before it there as at any flow into that type (an
+ * instance, a keeping instance or a static side refused, structural-stand-in; an object literal not written where it flows,
+ * context-less-literal; a hiding callback, argument). Which overload bind resolves is the checker's, measured page by page
+ * as the label lists the pages, its this argument written first: the first where it stands alone or is followed only by
+ * spreads of a value the checker types as the empty tuple itself (the literal [], a value typed [] or readonly [], [] as
+ * [], [] as readonly [] and [] as const, a rest parameter typed []), and the second where an argument or a spread of any
+ * other type measured follows it (a [number] value, a never[], readonly never[], number[] or unknown[] value, [] as
+ * never[], Array<never>(), a value typed any or never, the arguments object, a never[] rest parameter, a rest parameter
+ * typed by a type parameter constrained to []) - a hole: with no type argument written, the this parameter is never read
+ * there, so each pinned value the first overload refuses at its twins reads quiet; and a second hole (final cut #4): with
+ * spreads written before the value - two of the literal [] at bind's first overload (a hiding instance bound to a function
+ * and to a method, a keeping instance, a static side, an object literal and a callback) or two of a value typed [] (a
+ * hiding instance), and one at a function's own call and a method's call, an apply, a bind given an argument and a
+ * Reflect.apply given the this parameter's type as their type argument - and with type arguments written where
+ * Function.prototype.bind, call and apply are handed the value by call, the checker types each pinned value by the
+ * function's this parameter's type, yet each reads quiet, beside twins that refuse: the no-spread twins, and one spread of
+ * the literal [] or of [] as [] before the instance at bind's first overload (REACH).
  * NOT CLAIMED. In src: an instance member's own code - its body, initializer, parameters and types - is not read statically
  * (REPROJECTION's runtime reading and MEMBERS judge it), nor is a parameter decorator (the compiler refuses one under the
- * repo's standard decorators, TS1206). As edits of this file, its helper and the roster together: a plant row of IDENTITY, QUIET,
+ * repo's standard decorators, TS1206). In the residual rows: R-THIS-BINDING's reading of a value bound as this other than
+ * the pages it pins - a value written after spreads, or handed through written type arguments, outside the hole's pinned
+ * forms included - is NOT CLAIMED by this census (final cut #4; bead wb-97ah is the home of that reading). As edits of this
+ * file, its helper and the roster together: a plant row of IDENTITY, QUIET,
  * WRITE-ANY-ROUTE, OTHER-ROUTES, EVIDENCE-ABORTS, a READERS, REACH or NAMES row or a residual row removed with its
- * frozen-literal element and roster entry (no outside anchor names those plants); a case and its expected reading
+ * frozen-literal element and roster entry (no outside anchor names those plants, R-HELD-VALUE's and R-THIS-BINDING's
+ * included); a case and its expected reading
  * re-authored together; the reach scan's key reading or its marker removed from the helper together with the REACH rows
  * that plant them, and a resolvable form or a refusal of the forms judge removed from the helper together with its REACH
  * cases, RESOLVABLE_FORMS's element and the frozen literal (the src plants recorded with the cut are their falsifiers;
@@ -350,7 +497,9 @@
  * reading (classInternal, STAND_IN) changed in the helper together with its REACH cases and the frozen literal (the src plants
  * recorded with the cut are its falsifiers; the kinds themselves, each with its SyntaxKind, are anchored by typescript's
  * declaration file); a fail-closed check (FAIL_CLOSED) changed in the helper together with its row's pages and the
- * roster (the src plants recorded with cuts #7 and #8 are its falsifiers); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
+ * roster, its kind and row kept (the src plants recorded with cuts #7 and #8 are its falsifiers; a kind removed, with or
+ * without its row, reds the cut #8 record anchor, wb-vgri, and its row removed with the kind kept reds rule 16's
+ * fail-closed check instead, which then finds no planted case of the kind, wb-vgri respin 1 F7); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
  * stays green, since every real surface reads QUIET on every field, and the anchor's section reading widened back to
  * the whole row stays green on the clean export: the src and export plants recorded with the cut are those readings'
  * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); the
@@ -469,6 +618,8 @@ const CLASSES = "live: the invocation plants invoke every effect class the regis
 const ACTIONS =
   "live: the effect plants perform every WorkflowDialogActions member, as the checker reads the interface (the name forms, heritage and signature shapes NAMES plants; signatures fail closed)";
 const ABSENCE_WALK = "live: no src module spells the program, by path or text; the walk is every src module";
+const FAIL_CLOSED_ANCHOR =
+  "anchor: the fail-closed shapes, each with the REACH row that plants it, are exactly the kind:row pairs the cut #8 delivery record in the bead's export row enumerates, in its order (.beads/issues.jsonl, wb-021.5; wb-vgri)";
 const ANCHOR =
   "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
 const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK]);
@@ -596,6 +747,22 @@ function filingOf(notes: string): string {
   return `${header}\n\n${acceptance}`;
 }
 const occurrences = (text: string, quote: string): number => text.split(quote).length - 1;
+/** The cut #8 delivery record in the export notes (wb-vgri, landing 672 F8): the one notes line opening with the delivered claim's closed form. */
+const CUT8_RECORD = "THE CLAIM (census header CUT #8, closed form): ";
+/** In that line, the fail-closed roster as delivered: its count, then each kind:row, comma-separated. */
+const FAIL_CLOSED_RECORD = /rule-16 pinned, (\d+) entries: ([^)]*)\)/g;
+/** The fail-closed kinds with their rows as the cut #8 delivery record enumerates them: one record line, one enumeration in it, its count equal to its entries. */
+function failClosedRecord(notes: string): string[] {
+  const lines = notes.split("\n").filter(line => line.startsWith(CUT8_RECORD));
+  const [line] = lines;
+  if (lines.length !== 1 || !line) throw new Error(`the export notes hold ${lines.length} cut #8 claim records; the anchor reads exactly one`);
+  const found = [...line.matchAll(FAIL_CLOSED_RECORD)];
+  const [only] = found;
+  if (found.length !== 1 || !only) throw new Error(`the cut #8 claim record holds ${found.length} fail-closed enumerations; the anchor reads exactly one`);
+  const entries = (only[2] ?? "").split(", ");
+  if (String(entries.length) !== only[1]) throw new Error(`the record counts ${only[1]} entries and lists ${entries.length}`);
+  return entries;
+}
 
 const plantMembers = (): AdmissionMember[] =>
   (ADMISSION.rows.find(row => row.id === "EVERY-ADMISSION-MEMBER")?.cases ?? []).flatMap(item => (item.subject.plant === "admit" ? [item.subject.member] : []));
@@ -809,6 +976,20 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     }
   });
 
+  it(FAIL_CLOSED_ANCHOR, () => {
+    expect(
+      Object.entries(FAIL_CLOSED).map(([kind, id]) => `${kind}:${id}`),
+      "the fail-closed shapes and their rows, as the cut #8 delivery record in the export notes enumerates them",
+    ).toEqual(failClosedRecord(exportRow().notes));
+    // Non-vacuity: the reading takes the one record line's one enumeration, held to its own count, wherever the line sits in the notes, and refuses any other shape.
+    const planted = `${CUT8_RECORD}READ - a plant; FAIL CLOSED (rule-16 pinned, 2 entries: spread:SPREADS, overload:R-OVERLOADS), each row a plant.`;
+    expect(failClosedRecord(`Owner filing\n\n${planted}\nLATER NOTE`), "a planted record").toEqual(["spread:SPREADS", "overload:R-OVERLOADS"]);
+    expect(() => failClosedRecord(`${planted}\n${planted}`), "two record lines").toThrow();
+    expect(() => failClosedRecord(`LATER NOTE quoting ${planted}`), "the record quoted inside another line").toThrow();
+    expect(() => failClosedRecord(planted.replace("2 entries", "3 entries")), "a count its list does not meet").toThrow();
+    expect(() => failClosedRecord(`${planted} (rule-16 pinned, 1 entries: spread:SPREADS)`), "two enumerations in the record line").toThrow();
+  });
+
   it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the fail-closed shapes with the rows that plant them, the requirement fields and src's forms are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
       "SURFACES/GRAPH-VIEW:3",
@@ -865,10 +1046,12 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/STAND-IN-KINDS:8",
       "REACH/STAND-IN-RECEIVERS:23",
       "REACH/CALLBACK-RECEIVERS:6",
-      "REACH/R-NARROWED-BRANCH:5",
+      "REACH/R-NARROWED-BRANCH:19",
       "REACH/R-OVERLOADS:15",
       "REACH/R-PARAMETER-PROPERTIES:8",
       "REACH/R-STRUCTURAL-STAND-IN:22",
+      "REACH/R-HELD-VALUE:21",
+      "REACH/R-THIS-BINDING:100",
       "REACH/ASYNC-RETURNS:14",
       "REACH/GENERATOR-YIELDS:6",
       "REACH/INHERITED-IMPLEMENTATIONS:14",
@@ -918,6 +1101,8 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "R-OVERLOADS:REACH R-OVERLOADS",
       "R-PARAMETER-PROPERTIES:REACH R-PARAMETER-PROPERTIES",
       "R-STRUCTURAL-STAND-IN:REACH R-STRUCTURAL-STAND-IN",
+      "R-HELD-VALUE:REACH R-HELD-VALUE",
+      "R-THIS-BINDING:REACH R-THIS-BINDING",
     ]);
     // The fail-closed shapes (cut #7, ruling R-B60; cut #8, ruling R-B67), each with the REACH row that plants it: the row reads it refused under its typed row and holds a quiet page beside it.
     expect(Object.entries(FAIL_CLOSED).map(([kind, id]) => `${kind}:${id}`)).toEqual([

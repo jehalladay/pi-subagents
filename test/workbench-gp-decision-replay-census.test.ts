@@ -80,20 +80,29 @@
  *    duplicate, it adds no row naming its id and no application of it, and a fresh presentation is never refused duplicate)
  *    and worker-failure (a failed worker's verdict is refused or unavailable, and no row records its decision and applied()
  *    never holds it, at any step until its id is presented again).
- *    The honest REFERENCE host meets every check over the journal and every fixture; each of the forty-one MUTANTS fails
+ *    The honest REFERENCE host meets every check over the journal and every fixture; each of the forty-seven MUTANTS fails
  *    exactly its declared checks; every check is failed by some mutant and every check but four-fields by a mutant alone (each
- *    four-fields mutant leaves an expected-admitted decision without a replayable row, so it fails replay too). Eleven MUTANTS
+ *    four-fields mutant leaves an expected-admitted decision without a replayable row, so it fails replay too). Fifteen MUTANTS
  *    are TRANSIENT: each lists a row or an application only from the presentation it answers to the host's next event, and
  *    reads as the reference at the last step (the same verdicts, last rows and last applications: settledBy), so only a check
  *    that reads the affected step fails it: a phantom application d0 while the host answers the stale presentation
  *    (replay), the stale decision's row and its application (stale), a duplicate's extra row and its re-application at its
- *    duplicate step, at both duplicates (d1 at step 5, d2 at step 10) or at d2's only (duplicate), and a failed worker's row
- *    and its application at its own step, at both failed workers (d4 at step 6, d7 at step 11) or at d7's only
- *    (worker-failure). Six MUTANTS act at the later presentation only, d2's duplicate (presented with other fields than the
- *    admitted d2) and d7's worker kill: an admitted verdict, a transient row and a transient application at each. So a check
- *    that reads only the first duplicate's verdict, rows or applications, or skips a duplicate presented with other fields,
- *    or that reads only the first failed worker's verdict or window, misses one of them and reds this census (the gate's
- *    JMDF, JMD1 and JWF among such checks).
+ *    duplicate step, at both duplicates (d1 at step 5, d2 at step 10), at d1's only or at d2's only (duplicate), and a failed
+ *    worker's row and its application at its own step, at both failed workers (d4 at step 6, d7 at step 11), at d4's only or
+ *    at d7's only (worker-failure). Six MUTANTS act at the later presentation only, d2's duplicate (presented with other
+ *    fields than the admitted d2) and d7's worker kill: an admitted verdict, a transient row and a transient application at
+ *    each. So a check that reads only the first duplicate's verdict, rows or applications, or skips a duplicate presented with
+ *    other fields, or that reads only the first failed worker's verdict or window, misses one of them and reds this census
+ *    (the gate's JMDF, JMD1 and JWF among such checks). Six more act at the first presentation only (wb-xhqa F2), d1's
+ *    duplicate (presented with its own fields: the twists read a duplicate whose fields are the admitted decision's) and d4's
+ *    worker fault (the twists read a worker fault): the same three acts at each. So a check that reads only the last
+ *    duplicate's verdict, rows or applications, or skips a duplicate presented with its own fields, or that reads only the
+ *    last failed worker's verdict or window, or skips a worker fault, misses one of them and reds this census too (the gate's
+ *    JL1, JL2, JL12, JL4, JL7 and JL47 and the seat's XJ1 to XJ4 among such checks). Rows A4b and A5a pin
+ *    where and how each of these twelve presentation-specific twists departs from the reference over the journal (departsBy:
+ *    the one step, 5 or 10 for a duplicate and 6 or 11 for a failed worker, and the one reading, its verdict, its rows or its
+ *    applications, at which its run differs), so a twist moved to the other presentation, or one of its acts swapped for
+ *    another, reds this census.
  *    A1 the honest rows, four-fields' reading of four planted rows (FIELD_CONTROLS) and the structural mutants; the pairs
  *    differing in one input differ in that field and the outcome only, a replay with one of d1's fields swapped for its pair's
  *    reads the pair's outcome, and the real gp receipt records the four as separate members. A2 the honest replays reconstruct
@@ -107,14 +116,18 @@
  *    re-admit, dedupe by content,
  *    answer admitted, re-apply, re-record the original row, refuse with the reason stale, or refuse a fresh decision duplicate
  *    for an admitted one's outcome on the same basis, or record or apply a duplicate only at its duplicate step, at both
- *    duplicates (transient-duplicate-record, transient-duplicate-application), and the three that act at d2's duplicate only:
+ *    duplicates (transient-duplicate-record, transient-duplicate-application), the three that act at d2's duplicate only:
  *    answer it admitted, or record or apply it only at its duplicate step (differing-duplicate-success,
- *    transient-differing-duplicate-record, transient-differing-duplicate-application). A5 the four NEGATIVE_FIXTURES, named as the clause names them: each a
+ *    transient-differing-duplicate-record, transient-differing-duplicate-application), and the three that act at d1's
+ *    duplicate only, the same three acts (same-duplicate-success, transient-same-duplicate-record,
+ *    transient-same-duplicate-application). A5 the four NEGATIVE_FIXTURES, named as the clause names them: each a
  *    frozen in-memory journal with one decision the reference admits, met by the reference and failed by its member mutant
- *    through exactly its check, while seven more mutants (a row for a failed worker, an admitted verdict for one, and a row or
+ *    through exactly its check, while ten more mutants (a row for a failed worker, an admitted verdict for one, and a row or
  *    an application of a failed worker's decision at its own step only: transient-failure-record, transient-failure-application;
- *    and the three that act at d7's worker kill only: an admitted verdict, or its row or its application at its own step only,
- *    kill-as-admitted, transient-kill-record, transient-kill-application) fail worker-failure over the journal; two runs of
+ *    the three that act at d7's worker kill only: an admitted verdict, or its row or its application at its own step only,
+ *    kill-as-admitted, transient-kill-record, transient-kill-application; and the three that act at d4's worker fault only,
+ *    the same three acts: fault-as-admitted, transient-fault-record, transient-fault-application) fail worker-failure over the
+ *    journal; two runs of
  *    each fixture are identical, and every digest each presents resolves in the
  *    in-memory store. A5c the default gate: forge.toml's gate list (the gate key of its [build] table) and its test step's
  *    command; the package test script read against a closed flag list (vitest run with only reporter, outputFile,
@@ -163,8 +176,9 @@
  *    exactly once reads needle-miss, its own reason, at the witness compare, never a throw before it. The in-memory HEAD
  *    re-spacing control, not a claim that every whitespace rewrite of the on-disk page leaves every other reader unchanged,
  *    witnesses the sites and their plant readings: the HEAD page re-spaced at its plants' sites (its carrier re-wrapped across
- *    two lines, broken at
- *    the first space from its middle on with the continuation indented under its list marker; its heading's line re-spaced,
+ *    two lines, broken at a whitespace run between two of its words, the first that ends after its middle or, when none
+ *    does, the last before it, the whole run replaced (a run of tabs or line breaks breaks as a space does: wb-xhqa F1, the
+ *    gate's GR3, GR4 and GR10), with the continuation indented under its list marker; its heading's line re-spaced,
  *    with the run of blank lines after it dropped, a page with none dropping nothing; every line break written CRLF) reads
  *    holds and each plant over it its pinned reason.
  *    A second HEAD control with its carrier's source doubled reads each carrier plant needle-miss (D5 there reads carriers:2, D6
@@ -172,10 +186,16 @@
  *    reasons: the carrier's list marker moved to a line of its own (checking the marker is kept at the start of the carrier
  *    site), the run of blank lines after the heading's line dropped (a page with none dropping nothing, so the control needs
  *    no blank line on disk), and the heading's first between-word space doubled. Every reading above (the page, its plants
- *    and the three HEAD controls) is read again over three HEAD variants and pinned to the HEAD page's own: the run of blank
- *    lines after the heading's line dropped, that run replaced by one line of spaces and a tab, and a level-3 heading of the
- *    same words added at the page's end (the gate's GW7/GW7b, GWWS/GWWSb and GWL3/GWL3b, in memory); each variant is built
- *    at the heading's whole line, so none needs the on-disk blank line. An edit that leaves a section holding while a site
+ *    and the three HEAD controls) is read again over six HEAD variants and pinned to the HEAD page's own. Three are built at
+ *    the heading's whole line, so none needs the on-disk blank line: the run of blank lines after the heading's line dropped,
+ *    that run replaced by one line of spaces and a tab, and a level-3 heading of the same words added at the page's end (the
+ *    gate's GW7/GW7b, GWWS/GWWSb and GWL3/GWL3b, in memory). Three are built at the carrier's own source (ownSource), so none
+ *    needs the on-disk carrier's spacing: each run of spaces between two of its words on one line that ends after its middle
+ *    written as a tab (the gate's GR3 and GR4), each whitespace run between two of its words that ends after its middle
+ *    written as one line break with no indent, its words from there on one per line as lazy continuations (GR10), and its
+ *    last line ended by a run of tabs as long as the source, so no whitespace run between two of its words follows its
+ *    middle and the re-spacing control breaks at the last before it (all three in memory, wb-xhqa F1). An edit that leaves a
+ *    section holding while a site
  *    stops occurring exactly once in its page reds this census at every reading that plants or builds at that site until it
  *    is re-measured: the carrier's source words repeated elsewhere in the page (the carrier plants and every HEAD control,
  *    over the page and over each variant), and the heading's line repeated inside a code fence or an HTML comment, the
@@ -227,8 +247,10 @@
  * docs control or a HEAD variant swapped for another edit that reads the same pinned reason, and a docs control or a HEAD
  * variant removed from its witness and its pinned reading together (the docs plants are pinned by id, anchor and reason,
  * never by their edits, and no source outside this file names the controls or the variants: a re-spacing control that keeps
- * the blank run, a blank-run edit that drops one blank line only or reads only an empty line as blank, and a level-3 variant
- * left as the HEAD page each read 0 failed | 29 passed); a pin merged into a neighbouring
+ * the blank run, a blank-run edit that drops one blank line only or reads only an empty line as blank, a level-3 variant
+ * left as the HEAD page, a re-spacing control that breaks at another whitespace run of the carrier's source (the first run
+ * when none ends after its middle, one character of the run, or a trailing run), a carrier variant left as the HEAD page and
+ * a lazy variant split at runs of spaces and tabs only each read 0 failed | 29 passed); a pin merged into a neighbouring
  * pin of its row in every literal (its quote joined to the neighbour's, its case dropped, its row's count lowered in the frozen
  * literal: the gate's GH1, A5b into A5a, and GH2, S1b into S1a, each read 0 failed | 27 passed on cut #1; on cut #2 GH1 reads
  * 0 failed | 28 passed, and the plain GH2 reds the frozen-shape case alone, its docs anchor left without its pin), since the
@@ -455,7 +477,8 @@ type Twist =
   | "transient-phantom-application" | "transient-stale-record" | "transient-stale-application" | "transient-failure-record"
   | "transient-failure-application" | "transient-duplicate-record" | "transient-duplicate-application" | "differing-duplicate-success"
   | "transient-differing-duplicate-record" | "transient-differing-duplicate-application" | "kill-as-admitted" | "transient-kill-record"
-  | "transient-kill-application" | "stale-first" | "refuse-represented" | "sample-member";
+  | "transient-kill-application" | "same-duplicate-success" | "transient-same-duplicate-record" | "transient-same-duplicate-application"
+  | "fault-as-admitted" | "transient-fault-record" | "transient-fault-application" | "stale-first" | "refuse-represented" | "sample-member";
 interface Mutant { readonly twist: Twist; readonly refusedBy: readonly Check[] }
 const MUTANTS: readonly Mutant[] = [
   { twist: "combined-basis", refusedBy: ["four-fields", "replay"] },
@@ -479,6 +502,7 @@ const MUTANTS: readonly Mutant[] = [
   { twist: "content-dedupe", refusedBy: ["replay", "duplicate"] },
   { twist: "idempotent-success", refusedBy: ["duplicate"] },
   { twist: "differing-duplicate-success", refusedBy: ["duplicate"] },
+  { twist: "same-duplicate-success", refusedBy: ["duplicate"] },
   { twist: "reapply", refusedBy: ["duplicate"] },
   { twist: "duplicate-row", refusedBy: ["duplicate"] },
   { twist: "duplicate-as-stale", refusedBy: ["duplicate"] },
@@ -491,14 +515,19 @@ const MUTANTS: readonly Mutant[] = [
   { twist: "failure-recorded", refusedBy: ["worker-failure"] },
   { twist: "failure-as-admitted", refusedBy: ["worker-failure"] },
   { twist: "kill-as-admitted", refusedBy: ["worker-failure"] },
+  { twist: "fault-as-admitted", refusedBy: ["worker-failure"] },
   { twist: "transient-failure-record", refusedBy: ["worker-failure"] },
   { twist: "transient-failure-application", refusedBy: ["worker-failure"] },
   { twist: "transient-kill-record", refusedBy: ["worker-failure"] },
   { twist: "transient-kill-application", refusedBy: ["worker-failure"] },
+  { twist: "transient-fault-record", refusedBy: ["worker-failure"] },
+  { twist: "transient-fault-application", refusedBy: ["worker-failure"] },
   { twist: "transient-duplicate-record", refusedBy: ["duplicate"] },
   { twist: "transient-duplicate-application", refusedBy: ["duplicate"] },
   { twist: "transient-differing-duplicate-record", refusedBy: ["duplicate"] },
   { twist: "transient-differing-duplicate-application", refusedBy: ["duplicate"] },
+  { twist: "transient-same-duplicate-record", refusedBy: ["duplicate"] },
+  { twist: "transient-same-duplicate-application", refusedBy: ["duplicate"] },
 ];
 
 /** What a transient twist lists from the presentation it answers to the next event: its rows and its applications. */
@@ -558,7 +587,9 @@ function reference(twist?: Twist): DecisionHost {
           const guess = SNAPSHOTS.get(presentation.snapshotDigest)?.candidates[0]?.id ?? "";
           return admit({ ...presentation, kind: "presented", sourceOutcome: guess });
         }
-        if (twist === "failure-as-admitted" || (twist === "kill-as-admitted" && presentation.worker === "kill")) return ADMITTED;
+        if (twist === "failure-as-admitted" || (twist === "kill-as-admitted" && presentation.worker === "kill") || (twist === "fault-as-admitted" && presentation.worker === "fault")) {
+          return ADMITTED;
+        }
         const { decision, programId, checkpointId, snapshotDigest } = presentation;
         const row: Row = { decision, programId, checkpointId, snapshotDigest, sourceOutcome: "unavailable" };
         if (twist === "failure-recorded") records.push(row);
@@ -566,6 +597,8 @@ function reference(twist?: Twist): DecisionHost {
         if (twist === "transient-failure-application") flash = { rows: [], applied: [decision] };
         if (twist === "transient-kill-record" && presentation.worker === "kill") flash = { rows: [row], applied: [] };
         if (twist === "transient-kill-application" && presentation.worker === "kill") flash = { rows: [], applied: [decision] };
+        if (twist === "transient-fault-record" && presentation.worker === "fault") flash = { rows: [row], applied: [] };
+        if (twist === "transient-fault-application" && presentation.worker === "fault") flash = { rows: [], applied: [decision] };
         return UNAVAILABLE;
       }
       const prior = admitted.get(presentation.decision);
@@ -574,13 +607,15 @@ function reference(twist?: Twist): DecisionHost {
       if (prior !== undefined) {
         if (twist === "readmit" || (twist === "content-dedupe" && !isDeepStrictEqual(decisionOf(prior), decisionOf(presentation)))) return admit(presentation);
         const differs = !isDeepStrictEqual(decisionOf(prior), decisionOf(presentation));
-        if (twist === "idempotent-success" || (twist === "differing-duplicate-success" && differs)) return ADMITTED;
+        if (twist === "idempotent-success" || (twist === "differing-duplicate-success" && differs) || (twist === "same-duplicate-success" && !differs)) return ADMITTED;
         if (twist === "reapply") effects.push(presentation.decision);
         if (twist === "duplicate-row") records.push(rowOf(prior, twist));
         if (twist === "transient-duplicate-record") flash = { rows: [rowOf(prior, twist)], applied: [] };
         if (twist === "transient-duplicate-application") flash = { rows: [], applied: [presentation.decision] };
         if (twist === "transient-differing-duplicate-record" && differs) flash = { rows: [rowOf(prior, twist)], applied: [] };
         if (twist === "transient-differing-duplicate-application" && differs) flash = { rows: [], applied: [presentation.decision] };
+        if (twist === "transient-same-duplicate-record" && !differs) flash = { rows: [rowOf(prior, twist)], applied: [] };
+        if (twist === "transient-same-duplicate-application" && !differs) flash = { rows: [], applied: [presentation.decision] };
         return refusal(twist === "duplicate-as-stale" ? "stale" : "duplicate");
       }
       if (twist === "refuse-represented" && refusedStale.has(presentation.decision)) return refusal("duplicate");
@@ -1079,16 +1114,22 @@ function needled<T>(read: () => T): T | "needle-miss" {
 }
 /**
  * The page re-spaced at its plants' sites, every block left as it was: its carrier's source re-wrapped across two lines
- * (broken at the first space from its middle on, the continuation indented under its list marker), its heading's line
+ * (broken at a whitespace run between two of its words, the first that ends after its middle or, when none does, the last
+ * before it, the whole run replaced by the line break and the continuation indented under its list marker; a run of
+ * tabs or line breaks breaks as a space does, and a trailing run or a line's indent is never the break), its heading's line
  * re-spaced (a second space after the hashes, a trailing space), edited as its whole line, with the run of blank lines after
- * it dropped (a page with none drops nothing), and every line break written CRLF.
+ * it dropped (a page with none drops nothing), and every line break written CRLF. A holding section's carrier is a list
+ * item, so its source holds at least the run after its marker.
  */
 function respaced(text: string, anchor: DocsAnchor): string {
   const own = ownSource(text, anchor);
-  const middle = own.indexOf(" ", Math.floor(own.length / 2));
-  if (middle < 0) throw new NeedleMiss(`${anchor.pin}: the carrier's source has no space to break at`);
+  const middle = Math.floor(own.length / 2);
+  const gaps = [...own.matchAll(/(?<=\S)\s+(?=\S)/g)];
+  const gap = gaps.find(found => (found.index ?? 0) + found[0].length > middle) ?? gaps.at(-1);
+  if (gap === undefined) throw new NeedleMiss(`${anchor.pin}: the carrier's source has no whitespace run between two words to break at`);
+  const at = gap.index ?? 0;
   const indent = " ".repeat(/^ *(?:\d+[.)]|[-*+]) +/.exec(own)?.[0].length ?? 0);
-  const wrapped = once(text, own, `${own.slice(0, middle)}\n${indent}${own.slice(middle + 1)}`);
+  const wrapped = once(text, own, `${own.slice(0, at)}\n${indent}${own.slice(at + gap[0].length)}`);
   const line = headingLine(wrapped, anchor);
   return onceLine(blankRun(wrapped, line, []), line, `${line.replace("## ", "##  ")} `).split("\n").join("\r\n");
 }
@@ -1128,6 +1169,20 @@ function anchorWitness(anchor: DocsAnchor): Readonly<Record<string, unknown>> {
         noBlank: read(noBlank), betweenWords: read(betweenWords) };
     }),
   });
+  /**
+   * The whole HEAD reading over the HEAD page with its carrier's own source edited in memory at that source (ownSource), so
+   * no variant needs the on-disk carrier's spacing: each run of spaces between two of its words on one line that ends after
+   * its middle written as a tab (the gate's GR3/GR4), each whitespace run between two of its words that ends after its
+   * middle written as one line break with no indent, so its words from there on stand one per line as lazy continuations
+   * (GR10; a run holding a line break and its indent is one run, so an already wrapped source gains no blank line), and its
+   * last line ended by a run of tabs as long as the source (no whitespace run between two of its words follows its middle).
+   */
+  const carrierVariant = (pattern: RegExp, replacement: string) =>
+    needled(() => {
+      const own = ownSource(head, anchor);
+      const middle = Math.floor(own.length / 2);
+      return headReading(once(head, own, own.replace(pattern, (found: string, index: number) => (index + found.length > middle ? replacement : found))));
+    });
   return {
     pin: anchorReading(pin, anchor),
     controls: {
@@ -1139,6 +1194,12 @@ function anchorWitness(anchor: DocsAnchor): Readonly<Record<string, unknown>> {
       bare: needled(() => headReading(blankRun(head, headingLine(head, anchor), []))),
       spaced: needled(() => headReading(blankRun(head, headingLine(head, anchor), [" \t "]))),
       deeper: headReading(`${head.trimEnd()}\n\n### ${anchor.heading}\n\nA later subsection under the same words.\n`),
+      tabbed: carrierVariant(/(?<=\S) +(?=\S)/g, "\t"),
+      lazy: carrierVariant(/(?<=\S)\s+(?=\S)/g, "\n"),
+      trailing: needled(() => {
+        const own = ownSource(head, anchor);
+        return headReading(once(head, own, `${own}${"\t".repeat(own.length)}`));
+      }),
     },
   };
 }
@@ -1279,6 +1340,19 @@ const byTwist = (...twists: Twist[]): Record<string, Check[]> => Object.fromEntr
 const settledBy = (...twists: Twist[]): Record<string, boolean> => {
   const last = (result: Run): unknown => ({ verdicts: result.verdicts, rows: result.rows.at(-1), applied: result.applied.at(-1) });
   return Object.fromEntries(twists.map(twist => [twist, isDeepStrictEqual(last(run(() => reference(twist))), last(honest()))]));
+};
+/** Where and how each twist's run departs from the reference's over the journal: each step (1-based) whose verdict, rows or applications differ, naming which. */
+const departsBy = (...twists: Twist[]): Record<string, string[]> => {
+  const baseline = honest();
+  return Object.fromEntries(
+    twists.map(twist => {
+      const result = run(() => reference(twist));
+      return [twist, JOURNAL.flatMap((_, step) => {
+        const parts = (["verdicts", "rows", "applied"] as const).filter(part => !isDeepStrictEqual(result[part][step], baseline[part][step]));
+        return parts.length === 0 ? [] : [`${step + 1}:${parts.join("+")}`];
+      })];
+    }),
+  );
 };
 const stepsOf = (want: Expectation, journal: readonly JournalEvent[] = JOURNAL): number[] =>
   expectations(journal).flatMap((expectation, step) => (expectation === want ? [step] : []));
@@ -1443,17 +1517,25 @@ const PINS: Readonly<Record<string, () => void>> = {
   },
   A4b: () => {
     witness("A4b", {
-      ...byTwist("idempotent-success", "differing-duplicate-success", "reapply", "duplicate-row", "duplicate-as-stale", "outcome-dedupe", "transient-duplicate-record",
-        "transient-duplicate-application", "transient-differing-duplicate-record", "transient-differing-duplicate-application"),
-      settled: settledBy("transient-duplicate-record", "transient-duplicate-application", "transient-differing-duplicate-record", "transient-differing-duplicate-application"),
+      ...byTwist("idempotent-success", "differing-duplicate-success", "same-duplicate-success", "reapply", "duplicate-row", "duplicate-as-stale", "outcome-dedupe",
+        "transient-duplicate-record", "transient-duplicate-application", "transient-differing-duplicate-record", "transient-differing-duplicate-application",
+        "transient-same-duplicate-record", "transient-same-duplicate-application"),
+      settled: settledBy("transient-duplicate-record", "transient-duplicate-application", "transient-differing-duplicate-record", "transient-differing-duplicate-application",
+        "transient-same-duplicate-record", "transient-same-duplicate-application"),
+      departs: departsBy("differing-duplicate-success", "transient-differing-duplicate-record", "transient-differing-duplicate-application", "same-duplicate-success",
+        "transient-same-duplicate-record", "transient-same-duplicate-application"),
     }, {
-      "idempotent-success": ["duplicate"], "differing-duplicate-success": ["duplicate"], reapply: ["duplicate"], "duplicate-row": ["duplicate"],
-      "duplicate-as-stale": ["duplicate"], "outcome-dedupe": ["four-fields", "replay", "duplicate"],
+      "idempotent-success": ["duplicate"], "differing-duplicate-success": ["duplicate"], "same-duplicate-success": ["duplicate"], reapply: ["duplicate"],
+      "duplicate-row": ["duplicate"], "duplicate-as-stale": ["duplicate"], "outcome-dedupe": ["four-fields", "replay", "duplicate"],
       "transient-duplicate-record": ["duplicate"], "transient-duplicate-application": ["duplicate"], "transient-differing-duplicate-record": ["duplicate"],
-      "transient-differing-duplicate-application": ["duplicate"],
+      "transient-differing-duplicate-application": ["duplicate"], "transient-same-duplicate-record": ["duplicate"], "transient-same-duplicate-application": ["duplicate"],
       settled: {
         "transient-duplicate-record": true, "transient-duplicate-application": true, "transient-differing-duplicate-record": true,
-        "transient-differing-duplicate-application": true,
+        "transient-differing-duplicate-application": true, "transient-same-duplicate-record": true, "transient-same-duplicate-application": true,
+      },
+      departs: {
+        "differing-duplicate-success": ["10:verdicts"], "transient-differing-duplicate-record": ["10:rows"], "transient-differing-duplicate-application": ["10:applied"],
+        "same-duplicate-success": ["5:verdicts"], "transient-same-duplicate-record": ["5:rows"], "transient-same-duplicate-application": ["5:applied"],
       },
     });
   },
@@ -1463,9 +1545,12 @@ const PINS: Readonly<Record<string, () => void>> = {
       honest: NEGATIVE_FIXTURES.map(fixture => judge(honest(fixture.journal), fixture.journal)),
       verdicts: NEGATIVE_FIXTURES.map(fixture => honest(fixture.journal).verdicts.filter(verdict => verdict !== null)),
       members: NEGATIVE_FIXTURES.map(fixture => `${fixture.member}:${failsOf(fixture.member, fixture.journal).join("+")}`),
-      ...byTwist("failure-recorded", "failure-as-admitted", "kill-as-admitted", "transient-failure-record", "transient-failure-application", "transient-kill-record",
-        "transient-kill-application"),
-      settled: settledBy("transient-failure-record", "transient-failure-application", "transient-kill-record", "transient-kill-application"),
+      ...byTwist("failure-recorded", "failure-as-admitted", "kill-as-admitted", "fault-as-admitted", "transient-failure-record", "transient-failure-application",
+        "transient-kill-record", "transient-kill-application", "transient-fault-record", "transient-fault-application"),
+      settled: settledBy("transient-failure-record", "transient-failure-application", "transient-kill-record", "transient-kill-application", "transient-fault-record",
+        "transient-fault-application"),
+      departs: departsBy("kill-as-admitted", "transient-kill-record", "transient-kill-application", "fault-as-admitted", "transient-fault-record",
+        "transient-fault-application"),
     }, {
       names: ["worker fault", "stale basis", "worker kill", "duplicate replay"], honest: [[], [], [], []],
       verdicts: [
@@ -1473,10 +1558,17 @@ const PINS: Readonly<Record<string, () => void>> = {
         [{ verdict: "unavailable" }, { verdict: "admitted" }], [{ verdict: "admitted" }, { verdict: "refused", reason: "duplicate" }],
       ],
       members: ["fault-admitted:worker-failure", "apply-stale:stale", "kill-admitted:worker-failure", "readmit:duplicate"],
-      "failure-recorded": ["worker-failure"], "failure-as-admitted": ["worker-failure"], "kill-as-admitted": ["worker-failure"],
+      "failure-recorded": ["worker-failure"], "failure-as-admitted": ["worker-failure"], "kill-as-admitted": ["worker-failure"], "fault-as-admitted": ["worker-failure"],
       "transient-failure-record": ["worker-failure"], "transient-failure-application": ["worker-failure"], "transient-kill-record": ["worker-failure"],
-      "transient-kill-application": ["worker-failure"],
-      settled: { "transient-failure-record": true, "transient-failure-application": true, "transient-kill-record": true, "transient-kill-application": true },
+      "transient-kill-application": ["worker-failure"], "transient-fault-record": ["worker-failure"], "transient-fault-application": ["worker-failure"],
+      settled: {
+        "transient-failure-record": true, "transient-failure-application": true, "transient-kill-record": true, "transient-kill-application": true,
+        "transient-fault-record": true, "transient-fault-application": true,
+      },
+      departs: {
+        "kill-as-admitted": ["11:verdicts"], "transient-kill-record": ["11:rows"], "transient-kill-application": ["11:applied"],
+        "fault-as-admitted": ["6:verdicts"], "transient-fault-record": ["6:rows"], "transient-fault-application": ["6:applied"],
+      },
     });
   },
   A5b: () => {
@@ -1538,7 +1630,7 @@ const PINS: Readonly<Record<string, () => void>> = {
       pjj: { pin: statusAt(pinText(EXPORT), "wb-pjj"), head: statusAt(headText(EXPORT), "wb-pjj") },
     }, {
       line: true, pin: "holds", controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading,
-      variants: { bare: reading, spaced: reading, deeper: reading }, pjj: { pin: "closed", head: "closed" },
+      variants: { bare: reading, spaced: reading, deeper: reading, tabbed: reading, lazy: reading, trailing: reading }, pjj: { pin: "closed", head: "closed" },
     });
   },
   S2a: () => {
@@ -1564,7 +1656,8 @@ const PINS: Readonly<Record<string, () => void>> = {
     };
     witness("S2b", { line: lineOf(pinText(anchor.path), anchor.line), ...anchorWitness(anchor) }, {
       line: "2. Replay duplicate/out-of-order events; no double count or status regression.", pin: "holds",
-      controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading, variants: { bare: reading, spaced: reading, deeper: reading },
+      controls: { line: "line", carrier: "carrier-text", twice: "carriers:2" }, ...reading,
+      variants: { bare: reading, spaced: reading, deeper: reading, tabbed: reading, lazy: reading, trailing: reading },
     });
   },
   S3a: () => {
@@ -1697,12 +1790,14 @@ describe(SUITE, () => {
       "lazy-checkpoint:replay", "lazy-digest:replay", "unprefixed-digest:replay", "mapped-outcome:replay", "apply-stale:stale", "rebase-stale:stale",
       "untyped-stale:stale", "frozen-basis:four-fields+replay+stale", "settling-stale:four-fields+replay+stale", "retry-stale:stale", "silent-apply-stale:stale",
       "transient-stale-record:stale", "transient-stale-application:stale", "readmit:replay+duplicate", "content-dedupe:replay+duplicate", "idempotent-success:duplicate",
-      "differing-duplicate-success:duplicate", "reapply:duplicate", "duplicate-row:duplicate",
+      "differing-duplicate-success:duplicate", "same-duplicate-success:duplicate", "reapply:duplicate", "duplicate-row:duplicate",
       "duplicate-as-stale:duplicate", "outcome-dedupe:four-fields+replay+duplicate", "phantom-row:replay", "phantom-application:replay",
       "transient-phantom-application:replay", "fault-admitted:worker-failure", "kill-admitted:worker-failure", "failure-recorded:worker-failure",
-      "failure-as-admitted:worker-failure", "kill-as-admitted:worker-failure", "transient-failure-record:worker-failure", "transient-failure-application:worker-failure",
-      "transient-kill-record:worker-failure", "transient-kill-application:worker-failure", "transient-duplicate-record:duplicate", "transient-duplicate-application:duplicate",
-      "transient-differing-duplicate-record:duplicate", "transient-differing-duplicate-application:duplicate",
+      "failure-as-admitted:worker-failure", "kill-as-admitted:worker-failure", "fault-as-admitted:worker-failure", "transient-failure-record:worker-failure",
+      "transient-failure-application:worker-failure", "transient-kill-record:worker-failure", "transient-kill-application:worker-failure",
+      "transient-fault-record:worker-failure", "transient-fault-application:worker-failure", "transient-duplicate-record:duplicate",
+      "transient-duplicate-application:duplicate", "transient-differing-duplicate-record:duplicate", "transient-differing-duplicate-application:duplicate",
+      "transient-same-duplicate-record:duplicate", "transient-same-duplicate-application:duplicate",
     ]);
     expect(failsOf(), "the reference meets every check over the journal").toEqual([]);
     expect(NEGATIVE_FIXTURES.map(fixture => failsOf(undefined, fixture.journal)), "and over every fixture").toEqual([[], [], [], []]);
