@@ -3,16 +3,18 @@
  * citation-status census, moved here from that bead's FINAL cut #5 (cdea135d4932a0bfdec599c6f2e43b3fd40e85e1,
  * test/workbench-apo-citation-status-census.test.ts) so the child's census (test/workbench-apo-citation-status-judge-census.test.ts)
  * can hold the judge under the one-edit mutants the wb-021.6 gates named, and the parent's re-cut can read the landed judge.
- * Every block below is that cut's text byte for byte (its lines 362-363, 368-369, 371-372, 398-410, 551-566, 568-789,
- * 804-830, 833-834 and 841-882), each top-level declaration gaining `export ` and nothing else, so every one-edit mutant
- * the wb-021.6 gates authored over the cut's readers finds its text here exactly once.
+ * The code below is that cut's lines 362-363, 368-369, 371-372, 398-410, 551-566, 568-789, 804-830, 833-834 and 841-882,
+ * each top-level declaration gaining `export `. Of the 23 one-edit mutants the wb-021.6 gates authored over that cut's
+ * readers (gate-prep-16's 12, gate-prep-18's 11), 22 find their text here exactly once; the 23rd, GP18-RG-beadrow-uncounted,
+ * edits the export reader beadRow, which was not moved. Cut #2 of this bead narrowed four comments to what this code reads
+ * (LOCKS, the carriers, THE EFFECT CLASS, the run guard's counter) and changed no code line.
  * Display paths added: none (test-only; nothing here renders, it reads texts handed to it).
  */
 import { Lexer, type Links, marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { roleReading } from "./apo-ui-publish-census.js";
 
-/** The two dependency locks, set aside by name: an integrity value in each (line 4620) splits into the word apo (R-LOCKFILE). */
+/** The two dependency locks, set aside by exact path: an integrity value can split into the word apo (package-lock.json's do; R-LOCKFILE). */
 export const LOCKS: readonly string[] = ["package-lock.json", "vendor/dependency-lock.json"];
 
 export const EFFECT_PROPERTY = "effectClass";
@@ -21,7 +23,7 @@ export const READ = "read";
 export const cp = (...points: number[]): string => String.fromCodePoint(...points);
 export const NUL = cp(0);
 
-/** The statement's two carriers (the anchor case derives both words from the bead title) and the producer's own status sentence. */
+/** The statement's two carriers (the parent census's anchor case derived both words from the wb-021.6 title) and the producer's own status sentence. */
 export const STATUS_WORD = "design-stage";
 export const SCOPE_WORD = "non-effectful";
 export const STATUS_LITERAL = "accepted design direction; documentation only";
@@ -258,7 +260,7 @@ export function accessNameOf(node: ts.Expression): string | undefined {
   if (ts.isElementAccessExpression(at)) return literalOf(at.argumentExpression);
   return undefined;
 }
-/** THE EFFECT CLASS: every effectClass a module sets (a property, a class field, an assignment) whose value is not the literal "read". */
+/** THE EFFECT CLASS: each effectClass this reader finds a module setting (a property assignment or a shorthand property, a class field with an initializer, or a plain `=` assignment to a property or element access) whose value is not the literal "read"; a compound assignment, and a key or element argument that does not unwrap to a string or plain template literal, are not read. */
 export function effectClasses(path: string, text: string): { line: number; value: string }[] {
   const file = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const found: { line: number; value: string }[] = [];
@@ -303,7 +305,7 @@ export function squeezed(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
 
-/** The run guard's counter: the judge and the export reader raise it (THE RUN GUARD). */
+/** The run guard's counter: each judgeFiles call raises it by one (THE RUN GUARD; the parent's export reader, not moved here, raised it too). */
 export const READS = { calls: 0 };
 
 /** THE JUDGE: every unit of every file, the carriers a citing doc unit or string owes, then each banner module's effect classes. */
