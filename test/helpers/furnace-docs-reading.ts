@@ -1,8 +1,9 @@
 /**
  * wb-aalz: reusable docs/09 sentence reader extracted from the unlanded wb-s876 census.
- * A bound rendered section is inspected by unit and refuses a claim whenever a second subject,
- * an unrecognised named reference or a control character reaches that unit. The parent can import
- * this helper after the child lands; it is not a production reader or an observer authority.
+ * A bound rendered section is inspected by unit and refuses a claim when a second subject, an unrecognised named
+ * reference or a control character reaches that unit in a form test/workbench-furnace-nested-rendering-census.test.ts
+ * pins; that census names its residuals and states every other form NOT CLAIMED. The parent can import this helper
+ * after the child lands; it is not a production reader or an observer authority.
  */
 import { docsSection, type RenderedBlock } from "./census.js";
 
@@ -16,9 +17,8 @@ function namedEntity(name: string): string | undefined {
   return Object.hasOwn(NAMED_ENTITIES, key) ? NAMED_ENTITIES[key] : undefined;
 }
 /**
- * The HTML standard's numeric character reference table (its numeric character reference end state; wb-s876 cut #3): a
- * reference to one of these C1 code points decodes to the Windows-1252 character beside it - &#146; and &#x92; to U+2019 -
- * and a reference to 0x81, 0x8D, 0x8F, 0x90 or 0x9D decodes to itself.
+ * The HTML standard's numeric character reference table (its numeric character reference end state), copied from
+ * wb-s876 cut #3. The census pins one entry, &#146; and &#x92; to U+2019; the other entries are NOT CLAIMED by it.
  */
 const NUMERIC_REFERENCES: ReadonlyMap<number, number> = new Map([
   [0x80, 0x20ac],
@@ -49,12 +49,12 @@ const NUMERIC_REFERENCES: ReadonlyMap<number, number> = new Map([
   [0x9e, 0x17e],
   [0x9f, 0x178],
 ]);
-/** The code point a numeric character reference decodes to under the HTML standard: 0, a surrogate and a code point above 0x10FFFF to U+FFFD, a code point of NUMERIC_REFERENCES to its character, any other to itself. */
+/** decodedMarkup's decoding of one numeric character reference's code point (wb-s876 cut #3). */
 function numericReference(code: number): number {
   if (code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff)) return 0xfffd;
   return NUMERIC_REFERENCES.get(code) ?? code;
 }
-/** A markup text with each numeric character reference (spelled with its semicolon) replaced by what decode makes of its code point, and the six named entities (amp, lt, gt, quot, apos, nbsp) decoded. */
+/** The reference pass decodedMarkup and decodedCodePoints share (wb-s876 cut #3). */
 function decodedReferences(text: string, decode: (code: number, whole: string) => string): string {
   return text.replace(/&(?:#(\d+)|#x([0-9a-f]+)|(\w+));/gi, (whole, decimal: string | undefined, hex: string | undefined, name: string | undefined) => {
     const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
@@ -62,27 +62,25 @@ function decodedReferences(text: string, decode: (code: number, whole: string) =
     return namedEntity(name ?? "") ?? whole;
   });
 }
-/** A markup file's text with its numeric character references decoded as the HTML standard decodes them (numericReference) and the six named entities decoded: the reading subjectText matches the subject words in. */
+/** The reading subjectText matches the subject words in (wb-s876 cut #3). */
 function decodedMarkup(text: string): string {
   return decodedReferences(text, code => String.fromCodePoint(numericReference(code)));
 }
 /**
- * A markup file's text with each numeric character reference decoded to its own code point - the landed census's reading,
- * and how XML and CommonMark read a reference into 0x80-0x9F (its C1 control) - one above 0x10FFFF left as written, and
- * the six named entities decoded (wb-s876 cut #3): THE JUDGE reads a mention in this reading as well as in decodedMarkup's,
- * and controlCharacters reads both, so neither reading narrows the other.
+ * The second reading controlCharacters reads, beside decodedMarkup's (wb-s876 cut #3): each numeric reference up to
+ * 0x10FFFF decoded to its own code point, so a reference into 0x80-0x9F reads as its C1 control.
  */
 function decodedCodePoints(text: string): string {
   return decodedReferences(text, (code, whole) => (code <= 0x10ffff ? String.fromCodePoint(code) : whole));
 }
-/** What the census reads of docs/09's Furnace sentences: the section binding, every subject word's blocks, every clause found, and the reads and verbs. */
+/** What docs09Reading returns for docs/09's bound Furnace section. */
 export interface Docs09Reading {
   readonly binds: boolean;
   readonly why: string;
   readonly html: boolean;
   /** Each named character reference in the section's units that decodedMarkup does not decode, as written (wb-s876 U2). */
   readonly undecoded: readonly string[];
-  /** Each control character in the section's units once their references are decoded either way - a bidi control or any other \p{Cc} code point but tab, line feed, form feed and carriage return - as U+XXXX (wb-s876 U2, cut #3). */
+  /** Each control character in the section's units once their references are decoded either way - a bidi control or any other \p{Cc} code point but tab, line feed, form feed and carriage return - as U+XXXX (wb-s876 U2, cut #3). A raw U+000B reaches the unit as a space (the rendered view collapses whitespace first), so it is not among them: wb-aalz RESIDUAL R3 RAW-VT. */
   readonly controls: readonly string[];
   /** For each subject word (DOCS09_SUBJECTS), the block kind of each of its occurrences in the section's text units (docs09Units; wb-s876 F1). */
   readonly subjects: { readonly [word: string]: readonly string[] };
@@ -99,7 +97,11 @@ const DOCS09_SUBJECTS: Readonly<Record<string, RegExp>> = {
   poll: /poll/giu,
   attach: /attach/giu,
 };
-/** Decode references, fold compatibility characters, and remove format/default-ignorable characters before matching. */
+/**
+ * Decode references, fold compatibility characters, and remove format/default-ignorable characters before matching. A raw
+ * U+FEFF reaches the unit as a space (the rendered view collapses whitespace first), so it is not removed here:
+ * wb-aalz RESIDUAL R2 RAW-FEFF.
+ */
 function subjectText(text: string): string {
   return decodedMarkup(text)
     .normalize("NFKC")
@@ -120,7 +122,7 @@ interface Docs09Unit {
   readonly text: string;
 }
 /**
- * One unit per top-level block (or top-level list item), using the shared rendered view.
+ * The bound section's text units, one per top-level list item and per other top-level text block, using the shared rendered view.
  * Nested blockquotes recursively carry their lists and subsequent children after wb-aalz.
  */
 function docs09Units(blocks: readonly RenderedBlock[]): Docs09Unit[] {
@@ -131,8 +133,7 @@ function docs09Units(blocks: readonly RenderedBlock[]): Docs09Unit[] {
     return [{ kind: block.kind, text: block.text.replace(/\s+/g, " ").trim() }];
   });
 }
-/** The bounded docs/09 section is STATED only when its subject words occur once each in paragraphs,
- * its frames occur once each, and no unit contains unrecognised references or controls. */
+/** The bounded docs/09 section is STATED only when its subject words occur once each in paragraphs and no unit contains unrecognised references or controls. */
 export function docs09Reading(text: string): Docs09Reading {
   const section = docsSection(text, DOCS09_SECTION, 2, [DOCS09_TITLE]);
   const units = docs09Units(section.blocks);
