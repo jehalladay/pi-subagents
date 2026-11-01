@@ -64,8 +64,9 @@
  * which readRoster reads before any other statement of this file's module body runs (THE ORDER) and freezes through every member (THE
  * FREEZE), so no in-place write this file makes changes what they are held to; ROWS and the object and list constants held to it are
  * frozen where they are declared too (THE FREEZE, wb-5333), and each of them, like the strings, the titles and the patterns, is one
- * top-level const of literals that no statement of this file re-assigns and that the judged set re-binds by no declaration the
- * SELF-READ reads (THE BINDINGS and the binding rule, wb-5333 cut #3). OUTSIDE
+ * top-level const whose initializer names no identifier but deepFrozen and TRIGGER, that no statement of this file re-assigns and
+ * that the judged set re-binds by no declaration the SELF-READ reads (THE BINDINGS and the binding rule, wb-5333 cut #3; a side
+ * computed at run time through no identifier (deepFrozen and TRIGGER aside) is NOT CLAIMED by this census, wb-5333 cut #4). OUTSIDE
  * ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-tz4r.3): each acceptance clause is
  * exactly one row label, the trigger sits in row A's, and the quote pin, the quote and the gating artifacts are in its notes.
  * PIN ANCHOR (wb-3xmr F1): each row's pin quotes, in pin order, tile its owner text with separator-only gaps (the wb-if7q.2 and
@@ -182,23 +183,33 @@
  * statement declares at any depth (above) - but the native descriptor cache (MUTABLE_BINDINGS: nativeIds), and each in-file side
  * (IN_FILE_SIDES: BEAD, PROGRAM_TAG, TRIGGER, QUOTE_PIN, QUOTE, GATING_ARTIFACTS, INVOCATION, FIELDS, REF_KIND, MEMBER, RI_ROOT,
  * FIELD_SPELLINGS, REF_PREFIX, JUDGED_TITLE, RECORD_TITLE, ROWS, SEPARATOR, HARNESS, RECORD and HOOKS) not declared by exactly one
- * top-level const statement, not ambient, whose initializer reads no name but deepFrozen and TRIGGER (LITERAL_READS: a string, a
- * regular expression, or deepFrozen over a list or an object of them, row A's label composing TRIGGER; member names, property keys
- * and types aside). A const is not re-assigned - assigning one throws a TypeError (measured: the judged set assigning the roster's
- * rows to ROWS, beside row B's label cut and alone, reds the judged set with 'Assignment to constant variable.') - so no statement of
- * this file re-assigns an in-file side, and none is a global, an import, an enum, a value no code is emitted for (`declare const`) or
- * a value computed when the file runs (from another side - TRIGGER in row A's label aside -, the bead export, the roster file read
- * afresh, a helper or an accessor).
- * Five planted sources pin it beside a control: a let ROWS the judged set assigns the roster's rows to; top-level names bound by a
- * let, a var and a var in a loop head, assigned by the judged set and a top-level helper; INVOCATION a global property; the sides
- * declared otherwise (an ambient const with a literal, a const in a top-level block, an import, an enum, a using declaration, a const
- * binding pattern and a const declared twice); the sides computed when the source runs; and the control, every side a top-level const
- * of literals and the cache a let. Measured on the wb-5333 cut #2, each 0 failed there and failing at collection now: la1-la7 and
- * g01 (la2, a let INVOCATION assigned, refused by the typing step there; the halves la1h, la2h and g01h, the edit without the
- * assignment or the shadow, 1 failed there each), and this seat's d01
- * - INVOCATION computed from a roster file read afresh, beside that roster's task edited (its half, the roster edit alone, 1 failed
- * there). So THE FREEZE, the binding rule and THE BINDINGS refuse, for an in-file side, an in-place write, a re-binding by the judged
- * set through any declaration the SELF-READ reads, and a re-assignment or a declaration in any other form; what replaces the runtime
+ * top-level const statement, not ambient, whose initializer names no identifier but deepFrozen and TRIGGER (LITERAL_READS; readNames
+ * reads each identifier of the initializer but a member access's name, a property assignment's key and what a type names - its
+ * names, never its form). A const is not re-assigned - assigning one throws a TypeError (measured: the judged set assigning the
+ * roster's rows to ROWS, beside row B's label cut and alone, reds the judged set with 'Assignment to constant variable.') - so no
+ * statement of this file re-assigns an in-file side, none is bound as a global, an import, an enum or a value no code is emitted for
+ * (`declare const`), and none is computed when the file runs from a source its initializer names as an identifier, deepFrozen and
+ * TRIGGER aside: another side, the bead export's reader, the roster file's reader or path, a helper, or an accessor named by an
+ * identifier.
+ * LITERAL_READS admits deepFrozen and TRIGGER in every side's initializer, TRIGGER in row A's label and in any other, and readNames
+ * reads no initializer's form, so a side computed at run time through no identifier (deepFrozen and TRIGGER aside) is NOT CLAIMED by
+ * this census - for example through an import() call or an await, a member of a call's or a literal's result, a string-keyed
+ * accessor, or TRIGGER composed into another side (the wb-5333 gate's X1, X1k, X2, X2k, X3k, X4, X4k and X5b, each 0 failed on the
+ * wb-5333 cut #3, lint- and type-clean there); its coverage is deferred to wb-26dh (wb-5333 cut #4, R-B222).
+ * Five planted sources pin it beside a control and a sixth source that pins its boundary: a let ROWS the judged set assigns the
+ * roster's rows to; top-level names bound by a let, a var and a var in a loop head, assigned by the judged set and a top-level
+ * helper; INVOCATION a global property; the sides declared otherwise (an ambient const with a literal, a const in a top-level block,
+ * an import, an enum, a using declaration, a const binding pattern and a const declared twice); the sides computed when the source
+ * runs through an identifier their initializer names (another side, the bead export's reader, the roster file's reader and path, a
+ * helper and an accessor's name); the control, every side a top-level const of literals and the cache a let; and the boundary, the
+ * wb-5333 gate's X5b, X3k, X1k, X4k and X2k forms, which read clean (NOT CLAIMED, above). Measured on the wb-5333 cut #2, each 0
+ * failed there and failing at collection now: la1-la7 and g01 (la2, a let INVOCATION assigned, refused by the typing step there; the
+ * halves la1h, la2h and g01h, the edit without the assignment or the shadow, 1 failed there each), and this seat's d01
+ * - INVOCATION computed from a roster file read afresh through JSON.parse and readFileSync, beside that roster's task edited (its half,
+ * the roster edit alone, 1 failed there). So THE FREEZE, the binding rule and THE BINDINGS refuse, for an in-file side, an in-place
+ * write, a re-binding by the judged set through any declaration the SELF-READ reads, a re-assignment, a declaration other than one
+ * top-level const that is not ambient, and an initializer naming an identifier but deepFrozen and TRIGGER; a side computed at run
+ * time through no identifier (deepFrozen and TRIGGER aside) is NOT CLAIMED by this census (above, wb-26dh), what replaces the runtime
  * is R-RUNTIME, and an edit of the reader itself is NOT CLAIMED (below).
  * THE ORDER (wb-5333 F2: the wb-b93c gate's e10 - top-level statements placed before ROSTER's declaration read the roster file through
  * a composed path, dropped a mutant from D3's witness through a computed key, wrote the file back, let readRoster read it and restored
@@ -1317,7 +1328,8 @@ const READ_FIRST = "const ROSTER = readRoster();";
 /**
  * THE BINDINGS (wb-5333 cut #3): the in-file sides - each string, object and list constant the judged set compares against the roster
  * or the bead export, the titles the record compares against the roster, ROWS, and the patterns the judged set and the cases read
- * through - in their order of declaration. Each is one top-level const of literals in a source shaped like this file.
+ * through - in their order of declaration. In a source shaped like this file each is one top-level const whose initializer names no
+ * identifier but LITERAL_READS (a side computed at run time through no identifier is NOT CLAIMED, wb-5333 cut #4).
  */
 const IN_FILE_SIDES: readonly string[] = [
   "BEAD",
@@ -1343,9 +1355,9 @@ const IN_FILE_SIDES: readonly string[] = [
 ];
 /** The one module-scope name this file binds by let (THE BINDINGS, wb-5333 cut #3): the native descriptor cache, which no comparison reads. */
 const MUTABLE_BINDINGS: readonly string[] = ["nativeIds"];
-/** The names an in-file side's initializer may read (THE BINDINGS, wb-5333 cut #3): THE FREEZE's deepFrozen, and TRIGGER in row A's label. */
+/** The names an in-file side's initializer may read (THE BINDINGS, wb-5333 cut #3): THE FREEZE's deepFrozen and TRIGGER, in every side's initializer (row A's label composes TRIGGER). */
 const LITERAL_READS: readonly string[] = ["deepFrozen", "TRIGGER"];
-/** The names an expression reads (wb-5333 cut #3): each identifier in it but a member's name, a property's key and what a type names. */
+/** The names an expression reads (wb-5333 cut #3): each identifier in it but a member access's name, a property assignment's key and what a type names - its names, never its form (wb-5333 cut #4). */
 function readNames(root: ts.Node): string[] {
   const found: string[] = [];
   const visit = (node: ts.Node): void => {
@@ -1528,8 +1540,9 @@ function selfRead(text: string): string[] {
   const reader = file.statements.some(statement => ts.isFunctionDeclaration(statement) && statement.name?.text === "readRoster");
   if (declared === undefined && reader) found.push("ROSTER is not readRoster() alone");
   // THE BINDINGS (wb-5333 cut #3): in a source shaped like this file (ROSTER declared beside readRoster), no module-scope name is a let
-  // or a var but the native descriptor cache, and each in-file side is one top-level const of literals, so none is re-assigned, a global
-  // or computed when the file runs (this seat's la1-la7 and g01, each 18/18 on the wb-5333 cut #2).
+  // or a var but the native descriptor cache, and each in-file side is one top-level const whose initializer names no identifier but
+  // LITERAL_READS, so none is re-assigned, a global or computed from a source its initializer names (this seat's la1-la7 and g01, each
+  // 18/18 on the wb-5333 cut #2); a side computed at run time through no identifier is NOT CLAIMED (wb-5333 cut #4, wb-26dh).
   if (declared !== undefined && reader) found.push(...bindingsRead(file));
   for (const statement of file.statements) {
     if (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isImportDeclaration(statement)) continue;
@@ -1655,9 +1668,9 @@ const PLANTED_SOURCES: Readonly<Record<string, Pinned>> = {
   },
   // THE BINDINGS (wb-5333 cut #3): in a source shaped like this file, no module-scope name is a let or a var but the native descriptor
   // cache (this seat's la1-la7: ROWS a let or a top-level var, row B's label cut in source, then assigned the roster's rows by the
-  // judged set or a top-level helper, stayed 18/18 on the wb-5333 cut #2), and each in-file side is one top-level const of literals
-  // (this seat's g01: INVOCATION a global property set at the top level and declared in another file, its task edited, stayed 18/18
-  // there).
+  // judged set or a top-level helper, stayed 18/18 on the wb-5333 cut #2), and each in-file side is one top-level const whose
+  // initializer names no identifier but LITERAL_READS (this seat's g01: INVOCATION a global property set at the top level and declared
+  // in another file, its task edited, stayed 18/18 there).
   "a let ROWS the judged set assigns the roster's rows to (this seat's la1)": {
     source: plantedSides({ ROWS: 'let ROWS: unknown[] = [{ id: "B", label: "(a) adoption fixture" }];' }, plantedJudgedSet(["ROWS = [...ROSTER.rows];", "expect(ROWS).toHaveLength(4);"])),
     reads: ["ROWS is bound by let or var", "ROWS is not one top-level const of literals"],
@@ -1701,7 +1714,7 @@ const PLANTED_SOURCES: Readonly<Record<string, Pinned>> = {
       "INVOCATION is not one top-level const of literals",
     ],
   },
-  "sides computed when the source runs: from another side, the bead export, the roster file read afresh, a helper and an accessor": {
+  "sides computed when the source runs through an identifier their initializer names: another side, the bead export's reader, the roster file's reader and path, a helper and an accessor's name": {
     source: plantedSides({
       BEAD: "const BEAD = QUOTE_PIN;",
       QUOTE: "const QUOTE = exportRow().notes;",
@@ -1716,6 +1729,19 @@ const PLANTED_SOURCES: Readonly<Record<string, Pinned>> = {
       "FIELDS is not one top-level const of literals",
       "MEMBER is not one top-level const of literals",
     ],
+  },
+  // wb-5333 cut #4 (R-B222, the fail-closed core), THE BINDINGS' boundary: readNames reads names, never an initializer's form, so a
+  // side computed at run time through no identifier but deepFrozen and TRIGGER reads clean - NOT CLAIMED by this census (the wb-5333
+  // gate's X5b, X3k, X1k, X4k and X2k, each 0 failed on the wb-5333 cut #3; their coverage is deferred to wb-26dh).
+  "sides computed when the source runs through no identifier but deepFrozen and TRIGGER: TRIGGER outside row A's label, a dynamic import read through its members and a string-keyed accessor (NOT CLAIMED, the wb-5333 gate's X5b, X3k, X1k, X4k and X2k)": {
+    source: plantedSides({
+      QUOTE_PIN: `const QUOTE_PIN = \`\${TRIGGER.slice(0, 0)}docs/programs/unified-decision-inference-2026-10-21/01-contracts.md:14@485f3615db1e\`;`,
+      QUOTE: 'const QUOTE: string = (await import("node:fs")).readFileSync("/fixture/export.jsonl", "utf8").match(/Preserve [^.]*/)?.[0] ?? "";',
+      INVOCATION: 'const INVOCATION = deepFrozen((await import("node:module")).createRequire("/fixture/test/anchor.ts")("./fixtures/roster.json").invocation);',
+      MEMBER: 'const MEMBER = deepFrozen({\n  get "riEndpoint"(): string {\n    return "riEndpoint";\n  },\n});',
+      ROWS: 'const ROWS = deepFrozen((await import("./helper.js")).rows);',
+    }),
+    reads: [],
   },
   "every side one top-level const of literals reading deepFrozen and TRIGGER alone, and the native descriptor cache a let (control)": {
     source: plantedSides(
