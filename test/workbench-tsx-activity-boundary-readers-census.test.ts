@@ -7,16 +7,22 @@
  * the unmodified census and greens under the cure, and the claim text and the readers' coverage agree byte for byte with the
  * falsifier roster. Read here as: every gate member outbox row O:1415 names (wb-km7q.6 refusal #4: the 16 Q6 members), the two
  * members R-B150 folds in from O:1499 (wb-km7q.6 refusal #5: G1-A01 and G1-A04) and every reader member O:1499 routes to this bead
- * (G1-R01, G1-R02, G1-R03, G1-S04, G1-S05, G1-M03, G1-M04 and G1-D08), and every member this bead's own refusal #1 (outbox row
+ * (G1-R01, G1-R02, G1-R03, G1-S04, G1-S05, G1-M03, G1-M04 and G1-D08), every member this bead's own refusal #1 (outbox row
  * O:1569) names unmet (GM-W01, GM-W03, GM-W05, GM-W06, GM-W07, GM-W08, GM-W10, GM-W11, GM-W12, GM-W13 and GM-F01) with its LOW
- * member GM-W17, is a FALSIFIERS row naming the pin and the witness keys that hold its input; every line of the helper header's
- * claim block equals its CLAIM_LINES row byte for byte and names the pins that hold it; and the FALSIFIER ROSTER block below
- * equals FALSIFIERS byte for byte.
+ * member GM-W17, and every member its refusal #2 (outbox row O:1624) names unmet (L2-D01, L2-F01, L2-F01b, L2-F01c, L2-F02 and
+ * L2-F03) with its LOW member L2-C02, is a FALSIFIERS row naming the pin and the witness keys that hold its input; every line of
+ * the helper header's claim block equals its CLAIM_LINES row byte for byte and names the pins that hold it; and the FALSIFIER ROSTER
+ * block below equals FALSIFIERS byte for byte.
  * NOT CARRIED (each changes a reading wb-km7q.6's census keeps for itself, not a reader moved here): G1-M06 (a nested qa/src/ path
  * read as a surface: the surface set) and G1-P03 (the status phrase read short: the producer reading).
  * CUT #2 (refusal #1, O:1569: claims wider than their pins, R514/R515/R668): U1.1's three break-step classes are held whole by
  *   U1-CLASSES (claim line U1.6) and the steps argument's order by U1-ORDERINGS (U1.7, the LOW member GM-W17); U2.5 is held over the
  *   kinds U2-FILE plants, a character device among them, and claims no kind it does not plant.
+ * CUT #3 (refusal #2, O:1624; the class frozen at R-B237, so this cut is the enumerate-the-resolvable form): U2.5 claims exactly
+ *   the paths U2-FILE plants, an empty file, a mixed-case name, a trailing-slash path and an absolute path now among them, and
+ *   names the rest the residual R-FILE-PATH; U1.4 claims exactly the entry values U1-FIELDS plants (one of each JSON kind, and the
+ *   empty string) and names the rest the residual R-DEPENDENCY-VALUE; U2-PROBES reads an absolute importer (the LOW member L2-C02)
+ *   and U2.2 names no importer outside its corpus; R-STEP-TEXT holds one longer text per break step (refusal #2 F7).
  *
  * ROWS (one test per pin, titled by the pin id under its row; every pin's output is held to its WITNESS entry):
  *  U1 ADOPTION 'read by WORDS': U1-STEPS each WORDS step's calibration names, recorded with every step and unrecorded with that
@@ -25,14 +31,16 @@
  *   (claimedWords), and each class as the step reads it; U1-ORDERINGS every ordering of every subset of the steps as the steps
  *   argument; U1-NAMES the recorded and unrecorded names of one manifest; U1-SEPARATORS every Unicode scalar value
  *   between the two words (and, over the Basic Multilingual Plane, the manifest reading agreeing with it); U1-FIELDS the four read
- *   fields (each a table's keys; an array, a string or null holds none) and the never-read ones; U1-TWICE a name in two read
+ *   fields (each a table's keys; an array, a string or null holds none), a key under each entry value it plants (one of each JSON
+ *   kind, and the empty string) and a key nested in an object value, and the never-read ones; U1-TWICE a name in two read
  *   fields, and the sort order.
  *  U2 C2 'No other candidate is tried': U2-ALONE each candidate alone; U2-ORDER each adjacent pair together (the earlier wins), a
- *   directory candidate passed over, a dot form and the dot specifier; U2-PROBES the probe log of every importer and specifier of
- *   the corpus and of ./zz.<e> for every U3 sweep suffix, against claimedCandidates (this census's own statement of the five), and
- *   the stop at the first accepted one; U2-NON every non-candidate (each read unresolved with its file present); U2-ESCAPE the
- *   ".." filter; U2-FILE the default probe over the kinds it plants (a character device among them), each beside the kind the
- *   census reads its path as.
+ *   directory candidate passed over, a dot form and the dot specifier; U2-PROBES the probe log of every importer (an absolute one
+ *   among them) and specifier of the corpus and of ./zz.<e> for every U3 sweep suffix, against claimedCandidates (this census's
+ *   own statement of the five), and the stop at the first accepted one; U2-NON every non-candidate (each read unresolved with its
+ *   file present); U2-ESCAPE the ".." filter; U2-FILE the default probe over the paths it plants (a character device, an empty
+ *   file, a mixed-case name, a trailing-slash path and an absolute path among them), each beside the kind the census reads its
+ *   path as.
  *  U3 PLAUSIBLE: the page and module closed-set complements: U3-PAGE and U3-MODULE, each the sweep (at the root, below docs/ and
  *   below src/ui/) and the named paths.
  *  SPEC the C2 '/' specifier reading: SPEC-LOCAL the local-specifier sweep and the named forms; SPEC-ROOT and SPEC-ABSOLUTE the
@@ -40,8 +48,8 @@
  *  Each scratch pin reads every specifier twice: through the default probe (the resolution held) and through a recording probe
  *   over the same tree (every path asked, in order).
  * RESIDUALS (named; each has a pinned quiet row beside its loud twin, held under `quiet` in its pin's witness): R-STEP-TEXT
- *   (U1-CLASSES), R-DEPENDENCY-NAME (U1-NAMES), R-DEPENDENCY-FIELD (U1-FIELDS), R-UNTRIED-CANDIDATE (U2-NON), R-PAGE-NAME
- *   (U3-PAGE), R-MODULE-NAME (U3-MODULE) and R-SPECIFIER-FORM (SPEC-LOCAL).
+ *   (U1-CLASSES), R-DEPENDENCY-NAME (U1-NAMES), R-DEPENDENCY-FIELD and R-DEPENDENCY-VALUE (U1-FIELDS), R-UNTRIED-CANDIDATE
+ *   (U2-NON), R-FILE-PATH (U2-FILE), R-PAGE-NAME (U3-PAGE), R-MODULE-NAME (U3-MODULE) and R-SPECIFIER-FORM (SPEC-LOCAL).
  * OUTSIDE ANCHORS (standing rule 16, CT5 and CT6; outside this file's literals): the tracked bead export's wb-km7q.12 row - its
  *   title's and its description's Q6 counts equal the O:1415 members, each description item's parenthesized label is its row's
  *   label (the item ids are the U rows), and the R-B150 paragraph's member ids are the O:1499 SPEC members and its quoted reading
@@ -50,9 +58,11 @@
  *   claim block also names each O:1569 member on the line whose pins hold it, and WORD_STEPS names the break steps that
  *   BREAK_STEPS lists and BREAK_CLASSES states.
  * PIN ANCHORS (refusal #1 F5): each pin is held by its IMPL entry against its own WITNESS literal; the anchors outside those two
- *   literals read keys (the helper's tables, the roster's keys, the residuals' quiet keys), the export's counts and labels and the
- *   U3 sweeps' dotted suffixes, never a pin's whole output, so a tautological IMPL entry (one returning its own WITNESS) and a
- *   coordinated swap of two pins' IMPL and WITNESS entries are NOT CLAIMED by this census for any pin.
+ *   literals read keys (the helper's tables, the roster's keys, the residuals' quiet keys and, since cut #3 (refusal #2 F8), each
+ *   residual's quiet rows, which its claim line names), the export's counts and labels and the U3 sweeps' dotted suffixes, never a
+ *   pin's whole output, so a tautological IMPL entry (one returning its own WITNESS) and a coordinated swap of two pins' IMPL and
+ *   WITNESS entries are NOT CLAIMED by this census for any pin; a quiet row removed from both literals, or a quiet page emptied,
+ *   reds the claim case.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and FALSIFIERS pins `${id}:${pin}`, each as a literal; a last
  *   case reads that every pin ran to its witness.
  *
@@ -95,10 +105,17 @@
  *   GM-W13 O:1569 U1 U1-CLASSES capital-run: capital-run not breaking before the follower z
  *   GM-W17 O:1569 U1 U1-ORDERINGS orderings,lower-case-first: the steps applied in the argument's order
  *   GM-F01 O:1569 U2 U2-FILE link-device,/dev/null: every kind but a directory accepted
+ *   L2-D01 O:1624 U1 U1-FIELDS an object value,a number value,a null value: only a key whose value is a string read as a name
+ *   L2-C02 O:1624 U2 U2-PROBES absolute-importer: a candidate opening with "/" never probed
+ *   L2-F01 O:1624 U2 U2-FILE file.ts/,<base>/file.ts: the path read through posix.resolve(base, path), not join
+ *   L2-F01b O:1624 U2 U2-FILE file.ts/,<base>/file.ts: posix.resolve(base, path), with join dropped from the import
+ *   L2-F01c O:1624 U2 U2-FILE file.ts/: the joined path read through posix.resolve
+ *   L2-F02 O:1624 U2 U2-FILE empty.ts: an empty regular file refused
+ *   L2-F03 O:1624 U2 U2-FILE Mixed.ts: the path case-folded before the join
  *
  * Display paths added: none. Test-only: the trees live in makeScratch scratch with the leak guard installed; the helper, this file
- * and the bead export are only read; U2-FILE stats /dev/null and plants a symlink to it in its scratch tree, writing nothing
- * outside the scratch; nothing is spawned.
+ * and the bead export are only read; U2-FILE stats /dev/null and plants a symlink to it, and a symlink to a file its scratch holds
+ * beside the repository directory, in its scratch tree, writing nothing outside the scratch; nothing is spawned.
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, statSync, symlinkSync, writeFileSync } from "node:fs";
@@ -146,7 +163,7 @@ interface ClaimLine {
 }
 interface Falsifier {
   readonly id: string;
-  readonly outbox: "O:1415" | "O:1499" | "O:1569";
+  readonly outbox: "O:1415" | "O:1499" | "O:1569" | "O:1624";
   readonly row: RowId;
   readonly pin: string;
   readonly keys: readonly string[];
@@ -188,7 +205,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "U1.4",
     pins: ["U1-FIELDS"],
-    text: "A name is a key of the table of exactly four fields of the manifest, dependencies, devDependencies, optionalDependencies and peerDependencies (a field whose value is an array, a string or null holds no name); the never-read fields U1-FIELDS holds are not read, and no other field is claimed (R-DEPENDENCY-FIELD).",
+    text: "A name is a key of the table of exactly four fields of the manifest, dependencies, devDependencies, optionalDependencies and peerDependencies (a field whose value is an array, a string or null holds no name); a key is a name under each entry value U1-FIELDS plants for it (a version string, the empty string, an object, a number, a boolean, null and an array), and a key nested inside an object value is not one; claimed for exactly these values; it answers the O:1624 member L2-D01; the never-read fields U1-FIELDS holds are not read, and no other field or value is claimed (R-DEPENDENCY-FIELD, R-DEPENDENCY-VALUE).",
   },
   { id: "U1.5", pins: ["U1-TWICE"], text: "A name a manifest holds in two read fields is recorded once per field, and the recorded names are sorted by UTF-16 code unit." },
   {
@@ -209,7 +226,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "U2.2",
     pins: ["U2-PROBES"],
-    text: "No other candidate is tried: resolveLocal asks its probe about exactly those candidates, in that order, and stops at the first one the probe accepts; held over every importer and specifier of the U2-PROBES corpus and over ./zz.<e> for every suffix e of the U3 sweep, against the census's own statement of the five; a specifier outside them is not claimed (R-UNTRIED-CANDIDATE).",
+    text: "No other candidate is tried: resolveLocal asks its probe about exactly those candidates, in that order, and stops at the first one the probe accepts; held over every importer and specifier of the U2-PROBES corpus (an absolute importer among them) and over ./zz.<e> for every suffix e of the U3 sweep, against the census's own statement of the five; it answers the O:1624 member L2-C02; an importer or a specifier outside them is not claimed (R-UNTRIED-CANDIDATE).",
   },
   { id: "U2.3", pins: ["U2-NON"], text: "A module that only a candidate outside the five reaches reads unresolved: claimed for exactly the forms U2-NON holds; no other form is claimed (R-UNTRIED-CANDIDATE)." },
   {
@@ -220,7 +237,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "U2.5",
     pins: ["U2-FILE"],
-    text: "The default probe, isFileIn(base), accepts a path when join(base, path) names a regular file after symlinks are followed and refuses each other kind planted here: a file and a symlink to a file read accepted; a directory, a symlink to a directory, a dangling symlink, a missing path and a character device (/dev/null by its own path, and a symlink to it) read refused, each beside the kind the census reads its path as; it answers the O:1569 member GM-F01; a FIFO, a socket and a block device are NOT CLAIMED by this census.",
+    text: "The default probe, isFileIn(base), reads each path U2-FILE plants by join(base, path), symlinks followed, and accepts it exactly when the census reads that joined path as a regular file: a file, an empty file, a mixed-case name and a symlink to a file read accepted; a directory, a symlink to a directory, a dangling symlink, a missing path, a character device (/dev/null by its own path, and a symlink to it), a trailing-slash path naming the file and an absolute path naming the file (joined below the base, where no file is) read refused; each beside the kind the census reads its joined path as, the two naming the file beside that file's kind and the empty file beside its size; claimed for exactly these paths; it answers the O:1569 member GM-F01 and the O:1624 members L2-F01, L2-F01b, L2-F01c, L2-F02 and L2-F03; a FIFO, a socket and a block device are NOT CLAIMED by this census, and no other path is claimed (R-FILE-PATH).",
   },
   {
     id: "U3.1",
@@ -245,22 +262,32 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "R-STEP-TEXT",
     pins: ["U1-CLASSES"],
-    text: "A text outside U1.6's sweep, doubled members and whole classes is not claimed: a<U+FF22> (a, then the fullwidth capital B, a character outside the sweep) reads no lower-capital break beside its ASCII twin aB, and ABc1 (a capital-run member, then a fourth character) reads capital-run's break beside its three-character twin ABc.",
+    text: "A text outside U1.6's sweep, doubled members and whole classes is not claimed: a<U+FF22> (a, then the fullwidth capital B, a character outside the sweep) reads no lower-capital break beside its ASCII twin aB, ABc1 (a capital-run member, then a fourth character) reads capital-run's break beside its three-character twin ABc, and one longer text per break step reads its break beside its member: aB12 (lower-capital, then two digits) beside aB, A12B (digit-capital after a capital and a digit) beside 2B, and ABcde1 (capital-run, then two lower-case letters and a digit) beside ABc (quiet rows: a character outside the sweep; a fourth character; a two-digit tail; a capital-digit lead; a lower-lower-digit tail).",
   },
   {
     id: "R-DEPENDENCY-NAME",
     pins: ["U1-NAMES"],
-    text: "A name outside the names U1-NAMES holds is not claimed: a folded name (reactivefiber-zz) reads unrecorded beside its kebab twin, and an alias key whose spec names the package reads unrecorded beside the package's own key.",
+    text: "A name outside the names U1-NAMES holds is not claimed: a folded name (reactivefiber-zz) reads unrecorded beside its kebab twin, and an alias key whose spec names the package reads unrecorded beside the package's own key (quiet rows: a folded name; an alias).",
   },
-  { id: "R-DEPENDENCY-FIELD", pins: ["U1-FIELDS"], text: "A name in a field outside the four is not read: a nested pnpm.overrides table reads unrecorded beside its dependencies twin." },
+  { id: "R-DEPENDENCY-FIELD", pins: ["U1-FIELDS"], text: "A name in a field outside the four is not read: a nested pnpm.overrides table reads unrecorded beside its dependencies twin (one quiet pair)." },
+  {
+    id: "R-DEPENDENCY-VALUE",
+    pins: ["U1-FIELDS"],
+    text: "An entry value outside the values U1-FIELDS plants is not claimed: a workspace: protocol value (workspace:*), a file: value (file:../zz) and the number 0 each read recorded beside their version-string twin (quiet rows: a workspace: value; a file: value; a zero value).",
+  },
   {
     id: "R-UNTRIED-CANDIDATE",
     pins: ["U2-NON"],
-    text: "A module only another candidate reaches is never read, and a specifier outside U2.2's corpus and sweep is not claimed: a directory whose package.json main names its module reads unresolved beside its index.ts twin, and ./zz.coffee is asked its three candidates beside the four of ./zz.js.",
+    text: "A module only another candidate reaches is never read, and an importer or a specifier outside U2.2's corpus and sweep is not claimed: a directory whose package.json main names its module reads unresolved beside its index.ts twin, ./zz.coffee is asked its three candidates beside the four of ./zz.js, and ./zz from qa/zz-tool.mjs (an importer outside the corpus) is asked its three candidates beside the three it is asked from src/ui/zz-inspector.ts (quiet rows: a package.json main; a specifier outside the corpus and sweep; an importer outside the corpus).",
   },
-  { id: "R-PAGE-NAME", pins: ["U3-PAGE"], text: "A path outside the sweep and the named paths is not claimed: docs/zz.mdtxt reads no page beside docs/zz.md." },
-  { id: "R-MODULE-NAME", pins: ["U3-MODULE"], text: "A path outside the sweep and the named paths is not claimed: src/zz.typescript reads no module beside src/zz.ts." },
-  { id: "R-SPECIFIER-FORM", pins: ["SPEC-LOCAL"], text: "A specifier form outside the sweep and the named forms is not claimed: file:./zz.js reads not local beside ./zz.js." },
+  {
+    id: "R-FILE-PATH",
+    pins: ["U2-FILE"],
+    text: "A path or a file outside the ones U2-FILE plants is not claimed (another path shape, or another file's mode, content or link): file.ts after a leading space reads refused beside file.ts, sub/inner.ts with its slash written as a backslash reads refused beside sub/inner.ts, a dotfile at the base (.dot.ts) reads accepted beside file.ts, a symlink to a file beside the repository directory reads accepted beside the symlink to file.ts, and caf<U+00E9>.ts (the composed spelling of a planted decomposed name, cafe<U+0301>.ts) reads refused beside that name (quiet rows: a leading space; a backslash separator; a dotfile at the base; a symlink to a file beside the repository; a decomposed name).",
+  },
+  { id: "R-PAGE-NAME", pins: ["U3-PAGE"], text: "A path outside the sweep and the named paths is not claimed: docs/zz.mdtxt reads no page beside docs/zz.md (one quiet pair)." },
+  { id: "R-MODULE-NAME", pins: ["U3-MODULE"], text: "A path outside the sweep and the named paths is not claimed: src/zz.typescript reads no module beside src/zz.ts (one quiet pair)." },
+  { id: "R-SPECIFIER-FORM", pins: ["SPEC-LOCAL"], text: "A specifier form outside the sweep and the named forms is not claimed: file:./zz.js reads not local beside ./zz.js (one quiet pair)." },
 ];
 
 /** Every gate member this cut answers (header, FALSIFIER ROSTER): the pin and witness keys that hold its input. */
@@ -303,6 +330,13 @@ const FALSIFIERS: readonly Falsifier[] = [
   { id: "GM-W13", outbox: "O:1569", row: "U1", pin: "U1-CLASSES", keys: ["capital-run"], reading: "capital-run not breaking before the follower z" },
   { id: "GM-W17", outbox: "O:1569", row: "U1", pin: "U1-ORDERINGS", keys: ["orderings", "lower-case-first"], reading: "the steps applied in the argument's order" },
   { id: "GM-F01", outbox: "O:1569", row: "U2", pin: "U2-FILE", keys: ["link-device", "/dev/null"], reading: "every kind but a directory accepted" },
+  { id: "L2-D01", outbox: "O:1624", row: "U1", pin: "U1-FIELDS", keys: ["an object value", "a number value", "a null value"], reading: "only a key whose value is a string read as a name" },
+  { id: "L2-C02", outbox: "O:1624", row: "U2", pin: "U2-PROBES", keys: ["absolute-importer"], reading: 'a candidate opening with "/" never probed' },
+  { id: "L2-F01", outbox: "O:1624", row: "U2", pin: "U2-FILE", keys: ["file.ts/", "<base>/file.ts"], reading: "the path read through posix.resolve(base, path), not join" },
+  { id: "L2-F01b", outbox: "O:1624", row: "U2", pin: "U2-FILE", keys: ["file.ts/", "<base>/file.ts"], reading: "posix.resolve(base, path), with join dropped from the import" },
+  { id: "L2-F01c", outbox: "O:1624", row: "U2", pin: "U2-FILE", keys: ["file.ts/"], reading: "the joined path read through posix.resolve" },
+  { id: "L2-F02", outbox: "O:1624", row: "U2", pin: "U2-FILE", keys: ["empty.ts"], reading: "an empty regular file refused" },
+  { id: "L2-F03", outbox: "O:1624", row: "U2", pin: "U2-FILE", keys: ["Mixed.ts"], reading: "the path case-folded before the join" },
 ];
 
 // ---------------------------------------------------------------------------------------------------------------- the readings
@@ -376,6 +410,9 @@ const classMembers = (step: BreakStep): string[] => BREAK_CLASSES[step].reduce<s
 /** A text as its code points in upper-case hex (a mismatch's sample). */
 const hexOf = (text: string): string => [...text].map(char => (char.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")).join(" ");
 const FULLWIDTH_CAPITAL_B = String.fromCodePoint(0xff22);
+/** U2-FILE's R-FILE-PATH quiet row: a name planted decomposed (e, then the combining acute accent) and asked composed. */
+const COMBINING_ACUTE = String.fromCodePoint(0x0301);
+const SMALL_E_ACUTE = String.fromCodePoint(0x00e9);
 /** U1-ORDERINGS: every ordering of every subset of the WORDS steps, each step named once (the empty argument first). */
 function orderingsOf(steps: readonly WordStep[]): WordStep[][] {
   const out: WordStep[][] = [[]];
@@ -392,6 +429,8 @@ function orderingsOf(steps: readonly WordStep[]): WordStep[][] {
 }
 /** U2-FILE: a character device every Linux host has, and the kind the census reads a path as, symlinks followed. */
 const DEVICE = "/dev/null";
+/** U2-FILE: the absolute path naming the planted file, as this file's literals show it (the scratch base differs per run). */
+const ABSOLUTE_FILE = "<base>/file.ts";
 function kindOf(path: string): string {
   try {
     const info = statSync(path);
@@ -439,7 +478,9 @@ function claimedCandidates(from: string, specifier: string): string[] {
   const read = [...(path.endsWith(".js") ? [`${path.slice(0, -3)}.ts`] : []), ...(path.endsWith(".mjs") ? [`${path.slice(0, -4)}.mts`] : []), path, `${path}.ts`, `${path}/index.ts`];
   return read.filter(candidate => !candidate.startsWith(".."));
 }
-const PROBE_IMPORTERS: readonly string[] = ["src/ui/zz-inspector.ts", "zz-main.ts", "src/zz.mts", "src/ui/deep/zz.cjs"];
+/** U2-PROBES: an absolute importer (refusal #2 F6, the LOW member L2-C02): every candidate it forms opens with "/". */
+const ABSOLUTE_IMPORTER = "/zz-abs/src/ui/zz-inspector.ts";
+const PROBE_IMPORTERS: readonly string[] = ["src/ui/zz-inspector.ts", "zz-main.ts", "src/zz.mts", "src/ui/deep/zz.cjs", ABSOLUTE_IMPORTER];
 const PROBE_STEMS: readonly string[] = [
   "zz",
   "zz.js",
@@ -684,6 +725,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         "R-STEP-TEXT": {
           "a character outside the sweep": [words(`a${FULLWIDTH_CAPITAL_B}`, ["lower-capital", "lower-case"]), words("aB", ["lower-capital", "lower-case"])],
           "a fourth character": [words("ABc1", ["capital-run", "lower-case"]), words("ABc", ["capital-run", "lower-case"])],
+          // Refusal #2 F7: one longer text per break step, each beside its member.
+          "a two-digit tail": [words("aB12", ["lower-capital", "lower-case"]), words("aB", ["lower-capital", "lower-case"])],
+          "a capital-digit lead": [words("A12B", ["digit-capital", "lower-case"]), words("2B", ["digit-capital", "lower-case"])],
+          "a lower-lower-digit tail": [words("ABcde1", ["capital-run", "lower-case"]), words("ABc", ["capital-run", "lower-case"])],
         },
       },
     };
@@ -728,8 +773,23 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "dependencies as an array": dependencyNames(JSON.stringify({ dependencies: [PACKAGE] })),
       "dependencies as a string": dependencyNames(JSON.stringify({ dependencies: PACKAGE })),
       "dependencies as null": dependencyNames(JSON.stringify({ dependencies: null })),
+      // Refusal #2 (O:1624, L2-D01): a key under each entry value planted here - one of each JSON kind, and the empty string.
+      "an empty string value": dependencyNames(JSON.stringify({ dependencies: { [PACKAGE]: "" } })),
+      "an object value": dependencyNames(JSON.stringify({ dependencies: { [PACKAGE]: { version: "0.0.0" } } })),
+      "a number value": dependencyNames(JSON.stringify({ devDependencies: { [PACKAGE]: 1 } })),
+      "a boolean value": dependencyNames(JSON.stringify({ optionalDependencies: { [PACKAGE]: false } })),
+      "a null value": dependencyNames(JSON.stringify({ peerDependencies: { "reactive-fiber-zz": null } })),
+      "an array value": dependencyNames(JSON.stringify({ dependencies: { [PACKAGE]: ["0.0.0"] } })),
+      "a key nested in an object value": dependencyNames(JSON.stringify({ dependencies: { "zz-alias": { [PACKAGE]: "0.0.0" } } })),
     },
-    quiet: { "R-DEPENDENCY-FIELD": [dependencyNames(JSON.stringify({ pnpm: { overrides: tableOf([PACKAGE]) } })), dependencyNames(manifestOf([PACKAGE]))] },
+    quiet: {
+      "R-DEPENDENCY-FIELD": [dependencyNames(JSON.stringify({ pnpm: { overrides: tableOf([PACKAGE]) } })), dependencyNames(manifestOf([PACKAGE]))],
+      "R-DEPENDENCY-VALUE": {
+        "a workspace: value": [dependencyNames(JSON.stringify({ dependencies: { [PACKAGE]: "workspace:*" } })), dependencyNames(manifestOf([PACKAGE]))],
+        "a file: value": [dependencyNames(JSON.stringify({ dependencies: { [PACKAGE]: "file:../zz" } })), dependencyNames(manifestOf([PACKAGE]))],
+        "a zero value": [dependencyNames(JSON.stringify({ dependencies: { [PACKAGE]: 0 } })), dependencyNames(manifestOf([PACKAGE]))],
+      },
+    },
   }),
   "U1-TWICE": () => ({
     forms: {
@@ -794,6 +854,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       mismatches,
       stops,
       sweep: { specifiers: swept.length, mismatches: sweepMismatches },
+      forms: { "absolute-importer": sample(ABSOLUTE_IMPORTER, "./zz") },
       samples: {
         extensionless: sample(IMPORTER, "./zz"),
         js: sample(IMPORTER, "./zz.js"),
@@ -817,6 +878,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         "R-UNTRIED-CANDIDATE": {
           "a package.json main": [resolveLocal(base, IMPORTER, "./non-pkg") ?? null, resolveLocal(base, IMPORTER, "./non-idx") ?? null],
           "a specifier outside the corpus and sweep": [readOver(base, IMPORTER, "./zz.coffee"), readOver(base, IMPORTER, "./zz.js")],
+          "an importer outside the corpus": [readOver(base, "qa/zz-tool.mjs", "./zz"), readOver(base, IMPORTER, "./zz")],
         },
       },
     };
@@ -834,16 +896,32 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     };
   },
   "U2-FILE": () => {
-    const base = tree(["file.ts", "dir/"]);
+    const base = tree(["file.ts", "dir/", "Mixed.ts", "sub/inner.ts", ".dot.ts", `cafe${COMBINING_ACUTE}.ts`], ["zz-out.ts"]);
+    writeFileSync(join(base, "empty.ts"), "");
     symlinkSync(join(base, "file.ts"), join(base, "link-file"));
     symlinkSync(join(base, "dir"), join(base, "link-dir"));
     symlinkSync(join(base, "zz-missing-target"), join(base, "dangling"));
     symlinkSync(DEVICE, join(base, "link-device"));
+    symlinkSync(join(base, "..", "zz-out.ts"), join(base, "link-out"));
     const accept = isFileIn(base);
-    const paths = ["file.ts", "link-file", "dir", "link-dir", "dangling", "missing", "link-device"];
+    // Refusal #2 (O:1624): an empty file, a mixed-case name and a trailing-slash path, after the cut #2 paths.
+    const paths = ["file.ts", "link-file", "dir", "link-dir", "dangling", "missing", "link-device", "empty.ts", "Mixed.ts", "file.ts/"];
+    // The absolute path naming the planted file (ABSOLUTE_FILE): the probe joins it below the base.
+    const absolute = join(base, "file.ts");
     return {
-      forms: { ...Object.fromEntries(paths.map(path => [path, accept(path)])), [DEVICE]: isFileIn(dirname(DEVICE))(basename(DEVICE)) },
-      kinds: { ...Object.fromEntries(paths.map(path => [path, kindOf(join(base, path))])), [DEVICE]: kindOf(DEVICE) },
+      forms: { ...Object.fromEntries(paths.map(path => [path, accept(path)])), [ABSOLUTE_FILE]: accept(absolute), [DEVICE]: isFileIn(dirname(DEVICE))(basename(DEVICE)) },
+      kinds: { ...Object.fromEntries(paths.map(path => [path, kindOf(join(base, path))])), [ABSOLUTE_FILE]: kindOf(join(base, absolute)), [DEVICE]: kindOf(DEVICE) },
+      named: { "file.ts/": kindOf(join(base, "file.ts")), [ABSOLUTE_FILE]: kindOf(absolute) },
+      sizes: Object.fromEntries(["file.ts", "empty.ts", "Mixed.ts"].map(path => [path, statSync(join(base, path)).size])),
+      quiet: {
+        "R-FILE-PATH": {
+          "a leading space": [accept(" file.ts"), accept("file.ts")],
+          "a backslash separator": [accept("sub\\inner.ts"), accept("sub/inner.ts")],
+          "a dotfile at the base": [accept(".dot.ts"), accept("file.ts")],
+          "a symlink to a file beside the repository": [accept("link-out"), accept("link-file")],
+          "a decomposed name": [accept(`caf${SMALL_E_ACUTE}.ts`), accept(`cafe${COMBINING_ACUTE}.ts`)],
+        },
+      },
     };
   },
   "U3-PAGE": () => ({
@@ -954,6 +1032,18 @@ const WITNESS: Readonly<Record<string, Json>> = {
           ["a", "bc1"],
           ["a", "bc"],
         ],
+        "a two-digit tail": [
+          ["a", "b12"],
+          ["a", "b"],
+        ],
+        "a capital-digit lead": [
+          ["a12", "b"],
+          ["2", "b"],
+        ],
+        "a lower-lower-digit tail": [
+          ["a", "bcde1"],
+          ["a", "bc"],
+        ],
       },
     },
   },
@@ -1039,12 +1129,24 @@ const WITNESS: Readonly<Record<string, Json>> = {
       "dependencies as an array": [],
       "dependencies as a string": [],
       "dependencies as null": [],
+      "an empty string value": ["@reactive-fiber/tsx"],
+      "an object value": ["@reactive-fiber/tsx"],
+      "a number value": ["@reactive-fiber/tsx"],
+      "a boolean value": ["@reactive-fiber/tsx"],
+      "a null value": ["reactive-fiber-zz"],
+      "an array value": ["@reactive-fiber/tsx"],
+      "a key nested in an object value": [],
     },
     "quiet": {
       "R-DEPENDENCY-FIELD": [
         [],
         ["@reactive-fiber/tsx"],
       ],
+      "R-DEPENDENCY-VALUE": {
+        "a workspace: value": [["@reactive-fiber/tsx"], ["@reactive-fiber/tsx"]],
+        "a file: value": [["@reactive-fiber/tsx"], ["@reactive-fiber/tsx"]],
+        "a zero value": [["@reactive-fiber/tsx"], ["@reactive-fiber/tsx"]],
+      },
     },
   },
   "U1-TWICE": {
@@ -1147,13 +1249,16 @@ const WITNESS: Readonly<Record<string, Json>> = {
     },
   },
   "U2-PROBES": {
-    "entries": 400,
-    "digest": "eeb95702a502ecd6",
+    "entries": 500,
+    "digest": "1e9892e4d4fce016",
     "mismatches": [],
     "stops": [],
     "sweep": {
       "specifiers": 699210,
       "mismatches": [],
+    },
+    "forms": {
+      "absolute-importer": ["/zz-abs/src/ui/zz", "/zz-abs/src/ui/zz.ts", "/zz-abs/src/ui/zz/index.ts"],
     },
     "samples": {
       "extensionless": ["src/ui/zz", "src/ui/zz.ts", "src/ui/zz/index.ts"],
@@ -1370,6 +1475,18 @@ const WITNESS: Readonly<Record<string, Json>> = {
             "probes": ["src/ui/zz.ts", "src/ui/zz.js", "src/ui/zz.js.ts", "src/ui/zz.js/index.ts"],
           },
         ],
+        "an importer outside the corpus": [
+          {
+            "resolved": null,
+            "recorded": null,
+            "probes": ["qa/zz", "qa/zz.ts", "qa/zz/index.ts"],
+          },
+          {
+            "resolved": null,
+            "recorded": null,
+            "probes": ["src/ui/zz", "src/ui/zz.ts", "src/ui/zz/index.ts"],
+          },
+        ],
       },
     },
   },
@@ -1413,8 +1530,19 @@ const WITNESS: Readonly<Record<string, Json>> = {
     },
   },
   "U2-FILE": {
-    "forms": { "file.ts": true, "link-file": true, "dir": false, "link-dir": false, "dangling": false, "missing": false, "link-device": false, "/dev/null": false },
-    "kinds": { "file.ts": "file", "link-file": "file", "dir": "directory", "link-dir": "directory", "dangling": "missing", "missing": "missing", "link-device": "character device", "/dev/null": "character device" },
+    "forms": { "file.ts": true, "link-file": true, "dir": false, "link-dir": false, "dangling": false, "missing": false, "link-device": false, "empty.ts": true, "Mixed.ts": true, "file.ts/": false, "<base>/file.ts": false, "/dev/null": false },
+    "kinds": { "file.ts": "file", "link-file": "file", "dir": "directory", "link-dir": "directory", "dangling": "missing", "missing": "missing", "link-device": "character device", "empty.ts": "file", "Mixed.ts": "file", "file.ts/": "missing", "<base>/file.ts": "missing", "/dev/null": "character device" },
+    "named": { "file.ts/": "file", "<base>/file.ts": "file" },
+    "sizes": { "file.ts": 21, "empty.ts": 0, "Mixed.ts": 21 },
+    "quiet": {
+      "R-FILE-PATH": {
+        "a leading space": [false, true],
+        "a backslash separator": [false, true],
+        "a dotfile at the base": [true, true],
+        "a symlink to a file beside the repository": [true, true],
+        "a decomposed name": [false, true],
+      },
+    },
   },
   "U3-PAGE": {
     "sweep": {
@@ -1691,6 +1819,13 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
       "GM-W13:U1-CLASSES",
       "GM-W17:U1-ORDERINGS",
       "GM-F01:U2-FILE",
+      "L2-D01:U1-FIELDS",
+      "L2-C02:U2-PROBES",
+      "L2-F01:U2-FILE",
+      "L2-F01b:U2-FILE",
+      "L2-F01c:U2-FILE",
+      "L2-F02:U2-FILE",
+      "L2-F03:U2-FILE",
     ]);
     expect(Object.keys(IMPL).sort(byName)).toEqual([...pins].sort(byName));
     expect(Object.keys(WITNESS).sort(byName)).toEqual([...pins].sort(byName));
@@ -1722,6 +1857,16 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
       const held = quiet !== null && typeof quiet === "object" && !Array.isArray(quiet) ? Object.keys(quiet) : [];
       expect([pin, ...held]).toEqual([pin, ...residuals.filter(line => line.pins[0] === pin).map(line => line.id)]);
     }
+    // Each residual's quiet rows are the ones its claim line names (the helper's claim block holds that line, outside the IMPL and
+    // WITNESS literals; refusal #2 F8): a quiet row removed from both literals, or a quiet page emptied, reds here.
+    for (const line of residuals) {
+      const witness = WITNESS[line.pins[0] ?? ""];
+      const quiet = witness !== null && typeof witness === "object" && !Array.isArray(witness) ? witness.quiet : undefined;
+      const page = quiet !== null && typeof quiet === "object" && !Array.isArray(quiet) ? quiet[line.id] : undefined;
+      const held = Array.isArray(page) ? page.length : page !== null && typeof page === "object" ? Object.keys(page) : "no quiet page";
+      const named = /\(quiet rows: ([^)]+)\)\.$/.exec(line.text)?.[1]?.split("; ") ?? (line.text.endsWith(" (one quiet pair).") ? 2 : "no quiet rows named");
+      expect([line.id, held]).toEqual([line.id, named]);
+    }
     // The helper's tables: every step, field, rule and suffix has its calibration, form or sweep entry here.
     expect(Object.keys(STEP_CALIBRATION)).toEqual([...WORD_STEPS]);
     expect(WORD_STEPS.filter(step => step !== "nfkc" && step !== "lower-case")).toEqual([...BREAK_STEPS]);
@@ -1744,11 +1889,18 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
       expect([falsifier.id, ROWS.find(row => row.id === falsifier.row)?.pins.some(pin => pin.id === falsifier.pin)]).toEqual([falsifier.id, true]);
       expect([falsifier.id, falsifier.keys.filter(key => !(key in witnessForms(falsifier.pin)))]).toEqual([falsifier.id, []]);
     }
-    // The O:1569 members are named, in roster order, by the claim lines whose pins hold them (the helper's claim block names them too).
-    const answered = CLAIM_LINES.flatMap(line => [...line.text.matchAll(/GM-[A-Z]\d\d/g)].map(match => ({ id: match[0], pins: line.pins })));
-    const members = FALSIFIERS.filter(falsifier => falsifier.outbox === "O:1569");
-    expect(answered.map(entry => entry.id)).toEqual(members.map(falsifier => falsifier.id));
-    for (const falsifier of members) expect([falsifier.id, answered.find(entry => entry.id === falsifier.id)?.pins.includes(falsifier.pin)]).toEqual([falsifier.id, true]);
+    // The O:1569 and O:1624 members are named, in roster order, by the claim lines whose pins hold them (the helper's claim block
+    // names them too): each outbox's member ids as the claim lines spell them, in claim-line order.
+    const spellings: readonly (readonly [Falsifier["outbox"], RegExp])[] = [
+      ["O:1569", /GM-[A-Z]\d\d/g],
+      ["O:1624", /L2-[A-Z]\d\d[a-z]?/g],
+    ];
+    for (const [outbox, spelling] of spellings) {
+      const answered = CLAIM_LINES.flatMap(line => [...line.text.matchAll(spelling)].map(match => ({ id: match[0], pins: line.pins })));
+      const members = FALSIFIERS.filter(falsifier => falsifier.outbox === outbox);
+      expect([outbox, answered.map(entry => entry.id)]).toEqual([outbox, members.map(falsifier => falsifier.id)]);
+      for (const falsifier of members) expect([falsifier.id, answered.find(entry => entry.id === falsifier.id)?.pins.includes(falsifier.pin)]).toEqual([falsifier.id, true]);
+    }
   });
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {
