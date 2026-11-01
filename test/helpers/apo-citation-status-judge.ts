@@ -7,7 +7,8 @@
  * each top-level declaration gaining `export `. Of the 23 one-edit mutants the wb-021.6 gates authored over that cut's
  * readers (gate-prep-16's 12, gate-prep-18's 11), 22 find their text here exactly once; the 23rd, GP18-RG-beadrow-uncounted,
  * edits the export reader beadRow, which was not moved. Cut #2 of this bead narrowed four comments to what this code reads
- * (LOCKS, the carriers, THE EFFECT CLASS, the run guard's counter) and changed no code line.
+ * (LOCKS, the carriers, THE EFFECT CLASS, the run guard's counter) and changed no code line; cut #3 narrowed two more to the forms
+ * the census holds (shownText's links, unwrapped's assertions) and changed no code line.
  * Display paths added: none (test-only; nothing here renders, it reads texts handed to it).
  */
 import { Lexer, type Links, marked, type Token, type Tokens } from "marked";
@@ -122,7 +123,7 @@ export function documentView(text: string): { readonly places: readonly LineShow
   }
   return { places, links: tokens.links };
 }
-/** What a reader sees of marked tokens as a carrier: unshown types and a link's destination and title show nothing. */
+/** What a reader sees of marked tokens as a carrier: unshown types and an inline link's destination and title show nothing (an autolink shows its address, its text). */
 export function shownText(tokens: readonly Token[], separator: string, view: { opaque: boolean }): string {
   return tokens
     .map(token => {
@@ -239,7 +240,7 @@ export function unitsOf(path: string, text: string): Unit[] {
   return text.split("\n").flatMap((line, index) => (line.trim() === "" ? [] : [{ line: index + 1, kind: "text" as const, text: line }]));
 }
 
-/** An expression with its parentheses, assertions and satisfies clauses removed. */
+/** An expression with its parentheses, non-null assertions, as and angle-bracket assertions and satisfies clauses removed (of an as, angle-bracket or satisfies wrapper the census holds the string keyword, const and a literal type). */
 export function unwrapped(node: ts.Expression): ts.Expression {
   let at = node;
   while (ts.isParenthesizedExpression(at) || ts.isAsExpression(at) || ts.isSatisfiesExpression(at) || ts.isNonNullExpression(at) || ts.isTypeAssertionExpression(at)) at = at.expression;
