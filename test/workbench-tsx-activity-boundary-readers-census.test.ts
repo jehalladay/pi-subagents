@@ -12,7 +12,9 @@
  * member GM-W17, and every member its refusal #2 (outbox row O:1624) names unmet (L2-D01, L2-F01, L2-F01b, L2-F01c, L2-F02 and
  * L2-F03) with its LOW member L2-C02, is a FALSIFIERS row naming the pin and the witness keys that hold its input; every line of
  * the helper header's claim block equals its CLAIM_LINES row byte for byte and names the pins that hold it; and the FALSIFIER ROSTER
- * block below equals FALSIFIERS byte for byte.
+ * block below equals FALSIFIERS byte for byte. The members refusal #3 (outbox row O:1696) names unmet, GP5-W07 and GP5-S02 with
+ * its rider GP5-S01, are not FALSIFIERS rows: under R-B269's fail-closed core the claim words they break (U1.1's split, U1.5's
+ * order) are narrowed to the pinned subset, and wb-km7q.15 carries their coverage.
  * NOT CARRIED (each changes a reading wb-km7q.6's census keeps for itself, not a reader moved here): G1-M06 (a nested qa/src/ path
  * read as a surface: the surface set) and G1-P03 (the status phrase read short: the producer reading).
  * CUT #2 (refusal #1, O:1569: claims wider than their pins, R514/R515/R668): U1.1's three break-step classes are held whole by
@@ -23,6 +25,11 @@
  *   names the rest the residual R-FILE-PATH; U1.4 claims exactly the entry values U1-FIELDS plants (one of each JSON kind, and the
  *   empty string) and names the rest the residual R-DEPENDENCY-VALUE; U2-PROBES reads an absolute importer (the LOW member L2-C02)
  *   and U2.2 names no importer outside its corpus; R-STEP-TEXT holds one longer text per break step (refusal #2 F7).
+ * CUT #4 (refusal #3, O:1696; R-B269's structural exit, the FINAL fail-closed core): no claim word, pin, reader or channel is new.
+ *   U1.1's split sentence is narrowed to the five-step default and U1.5's order to the name lists U1-TWICE holds, each with a NOT
+ *   CLAIMED sentence whose coverage wb-km7q.15 carries, and the helper's words() and byName docs with them; R-DEPENDENCY-FIELD
+ *   reads 'is not claimed' and R-FILE-PATH leaves another file's mode and content NOT CLAIMED (refusal #3 F5's two carry notes);
+ *   PIN ANCHORS names a coordinated deletion (refusal #3 F7).
  *
  * ROWS (one test per pin, titled by the pin id under its row; every pin's output is held to its WITNESS entry):
  *  U1 ADOPTION 'read by WORDS': U1-STEPS each WORDS step's calibration names, recorded with every step and unrecorded with that
@@ -33,7 +40,7 @@
  *   between the two words (and, over the Basic Multilingual Plane, the manifest reading agreeing with it); U1-FIELDS the four read
  *   fields (each a table's keys; an array, a string or null holds none), a key under each entry value it plants (one of each JSON
  *   kind, and the empty string) and a key nested in an object value, and the never-read ones; U1-TWICE a name in two read
- *   fields, and the sort order.
+ *   fields, and the sort order of its ASCII name lists.
  *  U2 C2 'No other candidate is tried': U2-ALONE each candidate alone; U2-ORDER each adjacent pair together (the earlier wins), a
  *   directory candidate passed over, a dot form and the dot specifier; U2-PROBES the probe log of every importer (an absolute one
  *   among them) and specifier of the corpus and of ./zz.<e> for every U3 sweep suffix, against claimedCandidates (this census's
@@ -60,9 +67,10 @@
  * PIN ANCHORS (refusal #1 F5): each pin is held by its IMPL entry against its own WITNESS literal; the anchors outside those two
  *   literals read keys (the helper's tables, the roster's keys, the residuals' quiet keys and, since cut #3 (refusal #2 F8), each
  *   residual's quiet rows, which its claim line names), the export's counts and labels and the U3 sweeps' dotted suffixes, never a
- *   pin's whole output, so a tautological IMPL entry (one returning its own WITNESS) and a coordinated swap of two pins' IMPL and
- *   WITNESS entries are NOT CLAIMED by this census for any pin; a quiet row removed from both literals, or a quiet page emptied,
- *   reds the claim case.
+ *   pin's whole output, so a tautological IMPL entry (one returning its own WITNESS), a coordinated swap of two pins' IMPL and
+ *   WITNESS entries and, since cut #4 (refusal #3 F7), a form deleted from a pin's IMPL and WITNESS entries together (GP5-K03,
+ *   U2.5's dangling symlink; GP5-K04, U1.4's boolean value) are NOT CLAIMED by this census for any pin; a quiet row removed from
+ *   both literals, or a quiet page emptied, reds the claim case.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and FALSIFIERS pins `${id}:${pin}`, each as a literal; a last
  *   case reads that every pin ran to its witness.
  *
@@ -190,7 +198,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "U1.1",
     pins: ["U1-STEPS", "U1-CLASSES"],
-    text: "WORDS reads a text in five steps, in this order: nfkc (the text's NFKC form), lower-capital (a break between an ASCII lower-case letter and the ASCII capital after it), digit-capital (a break between an ASCII digit and the ASCII capital after it), capital-run (a break before the last capital of a run of two or more ASCII capitals that an ASCII lower-case letter follows), lower-case (String.prototype.toLowerCase); the words are then the runs of a-z and 0-9, and every other character separates them; each step is held by calibration names that read recorded with every step and unrecorded with that step alone left out, and each break step's class by U1.6 over the texts U1.6 holds, no other text claimed for the break steps (R-STEP-TEXT).",
+    text: "WORDS reads a text in five steps, in this order: nfkc (the text's NFKC form), lower-capital (a break between an ASCII lower-case letter and the ASCII capital after it), digit-capital (a break between an ASCII digit and the ASCII capital after it), capital-run (a break before the last capital of a run of two or more ASCII capitals that an ASCII lower-case letter follows), lower-case (String.prototype.toLowerCase); with the five steps applied (the default steps argument) the words are then the runs of a-z and 0-9, and every other character separates them; each step is held by calibration names that read recorded with every step and unrecorded with that step alone left out, and each break step's class by U1.6 over the texts U1.6 holds, no other text claimed for the break steps (R-STEP-TEXT); the split under a steps argument without lower-case, where an ASCII capital reaches it (the O:1696 member GP5-W07), is NOT CLAIMED by this census, and wb-km7q.15 carries that coverage.",
   },
   {
     id: "U1.2",
@@ -207,7 +215,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
     pins: ["U1-FIELDS"],
     text: "A name is a key of the table of exactly four fields of the manifest, dependencies, devDependencies, optionalDependencies and peerDependencies (a field whose value is an array, a string or null holds no name); a key is a name under each entry value U1-FIELDS plants for it (a version string, the empty string, an object, a number, a boolean, null and an array), and a key nested inside an object value is not one; claimed for exactly these values; it answers the O:1624 member L2-D01; the never-read fields U1-FIELDS holds are not read, and no other field or value is claimed (R-DEPENDENCY-FIELD, R-DEPENDENCY-VALUE).",
   },
-  { id: "U1.5", pins: ["U1-TWICE"], text: "A name a manifest holds in two read fields is recorded once per field, and the recorded names are sorted by UTF-16 code unit." },
+  { id: "U1.5", pins: ["U1-TWICE"], text: "A name a manifest holds in two read fields is recorded once per field, and the recorded names are sorted by UTF-16 code unit, both claimed for exactly the name lists U1-TWICE holds, each of ASCII names; the order of any other name list is NOT CLAIMED by this census (a list a code-point compare or an NFD-normalized compare orders differently, the O:1696 members GP5-S01 and GP5-S02, among them), and wb-km7q.15 carries that coverage." },
   {
     id: "U1.6",
     pins: ["U1-CLASSES"],
@@ -269,7 +277,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
     pins: ["U1-NAMES"],
     text: "A name outside the names U1-NAMES holds is not claimed: a folded name (reactivefiber-zz) reads unrecorded beside its kebab twin, and an alias key whose spec names the package reads unrecorded beside the package's own key (quiet rows: a folded name; an alias).",
   },
-  { id: "R-DEPENDENCY-FIELD", pins: ["U1-FIELDS"], text: "A name in a field outside the four is not read: a nested pnpm.overrides table reads unrecorded beside its dependencies twin (one quiet pair)." },
+  { id: "R-DEPENDENCY-FIELD", pins: ["U1-FIELDS"], text: "A name in a field outside the four is not claimed: a nested pnpm.overrides table reads unrecorded beside its dependencies twin (one quiet pair)." },
   {
     id: "R-DEPENDENCY-VALUE",
     pins: ["U1-FIELDS"],
@@ -283,7 +291,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "R-FILE-PATH",
     pins: ["U2-FILE"],
-    text: "A path or a file outside the ones U2-FILE plants is not claimed (another path shape, or another file's mode, content or link): file.ts after a leading space reads refused beside file.ts, sub/inner.ts with its slash written as a backslash reads refused beside sub/inner.ts, a dotfile at the base (.dot.ts) reads accepted beside file.ts, a symlink to a file beside the repository directory reads accepted beside the symlink to file.ts, and caf<U+00E9>.ts (the composed spelling of a planted decomposed name, cafe<U+0301>.ts) reads refused beside that name (quiet rows: a leading space; a backslash separator; a dotfile at the base; a symlink to a file beside the repository; a decomposed name).",
+    text: "A path or a file outside the ones U2-FILE plants is not claimed (another path shape, or another file's link; another file's mode or content is NOT CLAIMED by this census): file.ts after a leading space reads refused beside file.ts, sub/inner.ts with its slash written as a backslash reads refused beside sub/inner.ts, a dotfile at the base (.dot.ts) reads accepted beside file.ts, a symlink to a file beside the repository directory reads accepted beside the symlink to file.ts, and caf<U+00E9>.ts (the composed spelling of a planted decomposed name, cafe<U+0301>.ts) reads refused beside that name (quiet rows: a leading space; a backslash separator; a dotfile at the base; a symlink to a file beside the repository; a decomposed name).",
   },
   { id: "R-PAGE-NAME", pins: ["U3-PAGE"], text: "A path outside the sweep and the named paths is not claimed: docs/zz.mdtxt reads no page beside docs/zz.md (one quiet pair)." },
   { id: "R-MODULE-NAME", pins: ["U3-MODULE"], text: "A path outside the sweep and the named paths is not claimed: src/zz.typescript reads no module beside src/zz.ts (one quiet pair)." },
