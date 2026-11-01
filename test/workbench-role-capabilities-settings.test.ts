@@ -77,6 +77,13 @@ it("rejects wildcard role capabilities",()=>{
 // digit, the gate's U+2019 right after a letter and three seat-added non-members, and F6's two members that no quiet row can
 // hold as fail-closed rows, each refused by one leg, anchored in the roster's iuhzResidualRows, iuhzNonMemberRows and
 // iuhzFailClosedRows; it claims only the rows it pins.
+// The wb-w1yh cut (the R694 follow-up of landing 733: F1 leads) keeps all of that and leaves both legs as they are: it
+// reads R-ENCLOSED-STOP's emoticon clause per mark, as the rule's own words state it (an emoticon's close mark ends its
+// enclosure only where, read as closing nothing, it leaves one that was open at it still open through the page's last
+// reading), so an enclosure that opens after the emoticon, still open at the page's last reading, no longer decides it,
+// and a fifth enumeration case pins F1's two members and its contrast page as quiet rows of that cure, with the readings
+// it judges, beside five seat-added non-members it leaves unflagged, anchored in the roster's w1yhResidualRows and
+// w1yhNonMemberRows; it claims only the rows it pins.
 // ---------------------------------------------------------------------------------------------
 installScratchLeakGuard();
 
@@ -427,17 +434,18 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
 // tag in it, while markdown emphasis in it still reads as the leg reads emphasis). wb-3jun widens four named cures of
 // cut #4's and cut #5's families to flag the members pinned as quiet rows of that case, wb-gb3c widens three of them
 // again (R-ENCLOSED-STOP's, R-HIDDEN-CONTENT's and R-RAW-ALT-TEXT's; R-CONFUSABLE's stays as wb-3jun left it) besides
-// R-SPLIT-HTML-ROW's, R-BLANK-GLYPH's and R-CONTROL-VALUE's above, wb-iuhz widens R-ENCLOSED-STOP's once more, and each
-// reads only what follows (cut #2 states each cure's own rule and claims no more than the rows it pins, refusal #1 U2,
-// and wb-gb3c and wb-iuhz restate each rule they widen):
+// R-SPLIT-HTML-ROW's, R-BLANK-GLYPH's and R-CONTROL-VALUE's above, wb-iuhz widens R-ENCLOSED-STOP's once more and
+// wb-w1yh reads its emoticon clause per mark, and each reads only what follows (cut #2 states each cure's own rule and
+// claims no more than the rows it pins, refusal #1 U2, and wb-gb3c, wb-iuhz and wb-w1yh restate each rule they change):
 // R-ENCLOSED-STOP's (an open punctuation mark, Ps, other than a low-9 quotation mark, or the left bracket of one of the
 // six Pi and Pf bracket pairs, U+2E02 and U+2E03, U+2E04 and U+2E05, U+2E09 and U+2E0A, U+2E0C and U+2E0D, U+2E1C and
 // U+2E1D, U+2E20 and U+2E21, is open until a close one, Pe or the right bracket of such a pair, follows it, read in
 // order, each close one closing the latest one still open, so a close one with no open one before it closes nothing
 // (wb-gb3c, landing 650's F1(c)), and an emoticon's close mark, a ")" right after ":", closes nothing, except that where
-// it so leaves an enclosure open through the page's last reading, those last readings are read with it closing
-// (wb-iuhz, landing 700's F6: a later close mark shows the emoticon sits inside the enclosure, and with none it ends
-// it), and each kind of quotation mark, straight double, straight single, curly or low-9
+// it so leaves one that was open at it still open through the page's last reading, each later emoticon's close mark read
+// as closing nothing, it closes the latest one still open (wb-iuhz, landing 700's F6, as wb-w1yh, landing 733's F1,
+// reads it: a later close mark shows the emoticon sits inside the enclosure, and with none it ends it, whatever opens
+// after it), and each kind of quotation mark, straight double, straight single, curly or low-9
 // double, curly or low-9 single, double guillemets, single guillemets and (wb-gb3c, landing 650's F2) the heavy double
 // comma quotation mark ornaments U+275D, U+275E and U+2760 with their sans-serif forms U+1F676 to U+1F678 and the heavy
 // single comma ones U+275B, U+275C and U+275F, is open while its count is odd, so a quotation reads in either
@@ -482,6 +490,17 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
 // (R-CONTROL-VALUE's cure decodes no such name and leaves it unflagged), and lone CR line endings between a row's HTML
 // blocks, which the source leg reads as one line, so it flags the page's one source sentence (R-SPLIT-HTML-ROW's cure
 // flags it too). It claims no more than those rows.
+// wb-w1yh's residuals (the R694 follow-up of landing 733: F1; its enumeration case) add no family either: R-ENCLOSED-STOP's
+// cure reads its emoticon clause as restated above, so a parenthetical or a quotation that opens after the emoticon's
+// close mark and is still open at the page's last reading no longer decides it, and a fifth case pins as quiet rows F1's two
+// members, an emoticon's close mark inside an open parenthetical that a later close mark closes, before a parenthetical
+// or a quotation left open in the closing sentence (the gate's gp8e05 and gp8e06), and the finding's contrast page, that
+// parenthetical left open in a third sentence (gp8e09), each flagged by that cure, with the readings it judges for each
+// page pinned, and five seat-added non-members it leaves unflagged (an emoticon's close mark that ends its
+// parenthetical, no later close mark closing that one, before a parenthetical or a quotation left open in the closing
+// sentence, before a parenthetical that opens and closes in that sentence, or before a second emoticon's close mark in
+// that sentence, which the look-ahead reads as closing nothing, and one that ends the inner of two nested
+// parentheticals, a later close mark closing the outer one). It claims no more than those rows.
 const at = (code: number): string => String.fromCodePoint(code);
 /** The names the rendered leg decodes in a reference closed by ";"; any other closed named reference is recorded as unreadable. */
 const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
@@ -813,48 +832,72 @@ function quotationOpen(text: string, kind: RegExp): boolean {
   return open;
 }
 /**
- * Whether a parenthesis, bracket or quotation opened in `text` is still open (an apostrophe inside a word is no quotation
- * mark); unless `emoticonCloses`, a ")" right after ":", an emoticon's close mark, closes nothing (wb-iuhz, landing 700's
- * F6, the gate's g9e03).
+ * Whether an emoticon's close mark, read as closing nothing, leaves one of the `depth` enclosures still open at it open
+ * through the page's last reading (wb-w1yh, landing 733's F1): `rest`, the page's text after it, read in order as
+ * enclosureOpen reads it, each later emoticon's close mark read as closing nothing, never closes the outermost of them.
  */
-function enclosureOpen(text: string, emoticonCloses: boolean): boolean {
+function leavesOpen(rest: string, depth: number): boolean {
+  let open = depth;
+  let previous = "";
+  for (const character of rest) {
+    const emoticon = character === ")" && previous === ":";
+    if (OPEN_PUNCTUATION.test(character) || LEFT_BRACKET.test(character)) open += 1;
+    else if ((/\p{Pe}/u.test(character) || RIGHT_BRACKET.test(character)) && !emoticon) {
+      open -= 1;
+      if (open === 0) return false;
+    }
+    previous = character;
+  }
+  return depth > 0;
+}
+/**
+ * Whether a parenthesis, bracket or quotation opened in `text` is still open (an apostrophe inside a word is no quotation
+ * mark), `after` the page's text after it; a ")" right after ":", an emoticon's close mark, closes nothing, except that
+ * where it so leaves one that was open at it still open through the page's last reading it closes the latest one still
+ * open (leavesOpen; wb-iuhz, landing 700's F6, the gate's g9e03, as wb-w1yh, landing 733's F1, the gate's gp8e05 and
+ * gp8e06, reads it: a later close mark shows the emoticon sits inside the enclosure, and with none it ends it).
+ */
+function enclosureOpen(text: string, after: string): boolean {
   const bare = text.replace(/(?<=\p{L})['\u{2019}](?=\p{L})/gu, "");
   // An open punctuation mark (OPEN_PUNCTUATION) or a left bracket of those pairs is open until a close one (Pe, or a right
   // bracket of those pairs) follows it, read in order, each close one closing the latest one still open, so a close one
   // with no open one before it closes nothing (wb-gb3c, landing 650's F1(c), the gate's ge01 and ge09), and an emoticon's
-  // close mark closes nothing unless `emoticonCloses` (wb-iuhz); and each kind of quotation mark (quotationOpen).
+  // close mark closes it only where, read as closing nothing, it leaves one open at it open through the page's last
+  // reading (wb-w1yh); and each kind of quotation mark (quotationOpen).
+  const page = `${bare} ${after}`;
   let depth = 0;
   let previous = "";
+  let index = 0;
   for (const character of bare) {
+    index += character.length;
     const emoticon = character === ")" && previous === ":";
     if (OPEN_PUNCTUATION.test(character) || LEFT_BRACKET.test(character)) depth += 1;
-    else if ((/\p{Pe}/u.test(character) || RIGHT_BRACKET.test(character)) && (emoticonCloses || !emoticon)) depth = Math.max(0, depth - 1);
+    else if ((/\p{Pe}/u.test(character) || RIGHT_BRACKET.test(character)) && (!emoticon || leavesOpen(page.slice(index), depth))) depth = Math.max(0, depth - 1);
     previous = character;
   }
   return depth > 0 || QUOTATION_KINDS.some(kind => quotationOpen(bare, kind));
 }
 /**
  * The readings R-ENCLOSED-STOP's cure judges: `sentences` re-joined while an enclosure opened before a split is still open
- * (enclosureOpen, an emoticon's close mark closing only when `emoticonCloses`); where an emoticon's close mark that closes
- * nothing leaves an enclosure open through the last of them, those last readings are read again with it closing, as the
- * landed rule reads them (wb-iuhz: a later close mark shows that the emoticon sits inside the enclosure, and with none the
- * emoticon ends it).
+ * (enclosureOpen, each reading read with the page's later sentences after it, so an emoticon's close mark ends its
+ * enclosure only where, read as closing nothing, it leaves one that was open at it open through the last of them, whatever
+ * opens after it; wb-w1yh, landing 733's F1: the landed rule read the open tail again with every emoticon's close mark
+ * closing, whatever had left it open).
  */
-function enclosedReadings(sentences: readonly string[], emoticonCloses: boolean): string[] {
+function enclosedReadings(sentences: readonly string[]): string[] {
   const joined: string[] = [];
   let open: string[] = [];
-  for (const sentence of sentences) {
+  for (const [index, sentence] of sentences.entries()) {
     open = [...open, sentence];
-    if (!enclosureOpen(open.join(" "), emoticonCloses)) {
+    if (!enclosureOpen(open.join(" "), sentences.slice(index + 1).join(" "))) {
       joined.push(open.join(" "));
       open = [];
     }
   }
-  if (open.length === 0) return joined;
-  return [...joined, ...(emoticonCloses ? [open.join(" ")] : enclosedReadings(open, true))];
+  return open.length === 0 ? joined : [...joined, open.join(" ")];
 }
-/** R-ENCLOSED-STOP: the sentences re-joined while an enclosure opened before a split is still open (enclosedReadings, an emoticon's close mark first read as closing nothing). */
-const enclosedCure: ResidualCure = sentences => enclosedReadings(sentences, false).some(servedLeaf);
+/** R-ENCLOSED-STOP: the sentences re-joined while an enclosure opened before a split is still open (enclosedReadings). */
+const enclosedCure: ResidualCure = sentences => enclosedReadings(sentences).some(servedLeaf);
 /** R-UNLISTED-ABBREVIATION: the page's rendered text re-split with `abbreviation` added to ABBREVIATIONS. */
 const abbreviationCure =
   (abbreviation: string): ResidualCure =>
@@ -2318,5 +2361,130 @@ describe(NEGATIVES_SUITE, () => {
     expect(ROWS.length, "the quiet row count this title states").toBe(Number(/\bthe (\d+) pinned quiet rows\b/.exec(task.name)?.[1]));
     expect(NON_MEMBERS.length, "the non-member count this title states").toBe(Number(/\bits (\d+) pinned non-members\b/.exec(task.name)?.[1]));
     expect(FAIL_CLOSED.length, "the fail-closed row count this title states").toBe(Number(/\bthe (\d+) pinned fail-closed rows\b/.exec(task.name)?.[1]));
+  });
+
+  it("SCG-R15 negative, wb-w1yh residuals (landing 733's R694 F1): the 3 pinned quiet rows of R-ENCLOSED-STOP and its 5 pinned non-members are read and stay quiet, its named cure, as this bead reads an emoticon's close mark, judges each page as the readings pinned for it and flags every quiet row and none of the non-members, and the out-of-file roster and this title anchor the two row lists", ({ task }) => {
+    const base = plantRoot("scg-r15-w1yh-residual-");
+    // [family, page path, page text, the page's rendered sentences, the readings R-ENCLOSED-STOP's cure judges, the family's
+    // named cure]: an emoticon's close mark inside an open parenthetical that a later close mark closes, while an enclosure
+    // that opens after it is still open at the page's last reading. The first two pages are the gate's probes of those ids at
+    // landing 733's PREP, as its finding writes them; the third is its gp8e09, the head the finding elides read as g9e03's.
+    const ROWS: ReadonlyArray<readonly [string, string, string, readonly string[], readonly string[], ResidualCure]> = [
+      // F1 (gp8e05): g9e03 with a parenthetical left open in its closing sentence, which the landed cure read as two readings.
+      [
+        "R-ENCLOSED-STOP",
+        "docs/r-enclosed-emoticon-trailing-parenthesis.md",
+        "The rf graph impact leaf (ready :) and the plan. Yes) is served (see.",
+        ["The rf graph impact leaf (ready :) and the plan.", "Yes) is served (see."],
+        ["The rf graph impact leaf (ready :) and the plan. Yes) is served (see."],
+        enclosedCure,
+      ],
+      // F1 (gp8e06): g9e03 with a quotation left open in its closing sentence, which the landed cure read as two readings.
+      [
+        "R-ENCLOSED-STOP",
+        "docs/r-enclosed-emoticon-trailing-quote.md",
+        "The rf graph impact leaf (ready :) and the plan. Yes) is served by the build's 'Phase 2.",
+        ["The rf graph impact leaf (ready :) and the plan.", "Yes) is served by the build's 'Phase 2."],
+        ["The rf graph impact leaf (ready :) and the plan. Yes) is served by the build's 'Phase 2."],
+        enclosedCure,
+      ],
+      // F1's contrast (gp8e09): the parenthetical left open in a third sentence, which the landed cure flagged already.
+      [
+        "R-ENCLOSED-STOP",
+        "docs/r-enclosed-emoticon-later-parenthesis.md",
+        "The rf graph impact leaf (ready :) and the plan. Yes) is served. See (notes.",
+        ["The rf graph impact leaf (ready :) and the plan.", "Yes) is served.", "See (notes."],
+        ["The rf graph impact leaf (ready :) and the plan. Yes) is served.", "See (notes."],
+        enclosedCure,
+      ],
+    ];
+    // The pinned non-members, all seat-added: pages the cure leaves unflagged, as a reader reads no served leaf there either -
+    // an emoticon's close mark that ends its parenthetical, no later close mark closing that one, while an enclosure that
+    // opens after it is still open at the page's last reading (a parenthetical, a quotation) or opens and closes in a later
+    // sentence, or while a later sentence holds a second emoticon's close mark, which the look-ahead reads as closing
+    // nothing; and one that ends the inner of two nested parentheticals, where a later close mark closes the outer one.
+    const NON_MEMBERS: ReadonlyArray<readonly [string, string, string, readonly string[], readonly string[], ResidualCure]> = [
+      [
+        "R-ENCLOSED-STOP",
+        "docs/n-enclosed-emoticon-closing-trailing-parenthesis.md",
+        "The rf graph impact leaf (ready :) and the plan. The notes are served by this build (see.",
+        ["The rf graph impact leaf (ready :) and the plan.", "The notes are served by this build (see."],
+        ["The rf graph impact leaf (ready :) and the plan.", "The notes are served by this build (see."],
+        enclosedCure,
+      ],
+      [
+        "R-ENCLOSED-STOP",
+        "docs/n-enclosed-emoticon-closing-trailing-quote.md",
+        "The rf graph impact leaf (ready :) and the plan. The notes are served by the build's 'Phase 2.",
+        ["The rf graph impact leaf (ready :) and the plan.", "The notes are served by the build's 'Phase 2."],
+        ["The rf graph impact leaf (ready :) and the plan.", "The notes are served by the build's 'Phase 2."],
+        enclosedCure,
+      ],
+      [
+        "R-ENCLOSED-STOP",
+        "docs/n-enclosed-emoticon-closing-later-parenthetical.md",
+        "The rf graph impact leaf (ready :) and the plan. The notes (see below) are served by this build.",
+        ["The rf graph impact leaf (ready :) and the plan.", "The notes (see below) are served by this build."],
+        ["The rf graph impact leaf (ready :) and the plan.", "The notes (see below) are served by this build."],
+        enclosedCure,
+      ],
+      [
+        "R-ENCLOSED-STOP",
+        "docs/n-enclosed-emoticon-closing-later-emoticon.md",
+        "The rf graph impact leaf (ready :) and the plan. The notes are served :) by this build.",
+        ["The rf graph impact leaf (ready :) and the plan.", "The notes are served :) by this build."],
+        ["The rf graph impact leaf (ready :) and the plan.", "The notes are served :) by this build."],
+        enclosedCure,
+      ],
+      [
+        "R-ENCLOSED-STOP",
+        "docs/n-enclosed-emoticon-closing-nested.md",
+        "The rf graph impact leaf (ready (see :) and the plan) is planned. The notes are served by this build.",
+        ["The rf graph impact leaf (ready (see :) and the plan) is planned.", "The notes are served by this build."],
+        ["The rf graph impact leaf (ready (see :) and the plan) is planned.", "The notes are served by this build."],
+        enclosedCure,
+      ],
+    ];
+    const judged = [...ROWS, ...NON_MEMBERS];
+    for (const [, path, page] of judged) plantFile(base, path, `${page}\n`);
+    plantFile(base, "docs/control.md", "The rf graph impact leaf is served.\n");
+    // The enumeration, row by row: the quiet rows and the non-members, frozen at the cut.
+    expect(ROWS.map(([family, path]) => `${family} ${path}`)).toEqual([
+      "R-ENCLOSED-STOP docs/r-enclosed-emoticon-trailing-parenthesis.md",
+      "R-ENCLOSED-STOP docs/r-enclosed-emoticon-trailing-quote.md",
+      "R-ENCLOSED-STOP docs/r-enclosed-emoticon-later-parenthesis.md",
+    ]);
+    expect(NON_MEMBERS.map(([family, path]) => `${family} ${path}`)).toEqual([
+      "R-ENCLOSED-STOP docs/n-enclosed-emoticon-closing-trailing-parenthesis.md",
+      "R-ENCLOSED-STOP docs/n-enclosed-emoticon-closing-trailing-quote.md",
+      "R-ENCLOSED-STOP docs/n-enclosed-emoticon-closing-later-parenthetical.md",
+      "R-ENCLOSED-STOP docs/n-enclosed-emoticon-closing-later-emoticon.md",
+      "R-ENCLOSED-STOP docs/n-enclosed-emoticon-closing-nested.md",
+    ]);
+    // Each page is read (it renders exactly its pinned sentences), and only the control reds, on both legs.
+    const read = renderedSentencesBelow(base, "docs", []);
+    const sentencesOfPage = (path: string): string[] => read.filter(([page]) => page === path).map(([, sentence]) => sentence);
+    expect(judged.map(([, path]) => sentencesOfPage(path))).toEqual(judged.map(([, , , sentences]) => [...sentences]));
+    expect(renderedServedLeafSentences(base, "docs")).toEqual(["docs/control.md: The rf graph impact leaf is served."]);
+    expect(servedLeafSentences(base, "docs")).toEqual(["docs/control.md: The rf graph impact leaf is served."]);
+    expect(judged.map(([family, path]) => `${family} ${path}:${sentencesOfPage(path).some(servedLeaf)}`)).toEqual(judged.map(([family, path]) => `${family} ${path}:false`));
+    // R-ENCLOSED-STOP's named cure is every row's cure. It judges each page as the readings pinned for it: an emoticon's close
+    // mark that a later close mark shows inside its enclosure closes nothing, whatever else is still open at the page's last
+    // reading, and one that no later close mark so shows ends it. So it flags every quiet row and none of the non-members.
+    expect(judged.map(([family, path, , , , cure]) => `${family} ${path}:${cure === enclosedCure}`)).toEqual(judged.map(([family, path]) => `${family} ${path}:true`));
+    expect(judged.map(([, path]) => enclosedReadings(sentencesOfPage(path)))).toEqual(judged.map(([, , , , readings]) => [...readings]));
+    expect(ROWS.map(([family, path, page, , , cure]) => `${family} ${path}:${cure(sentencesOfPage(path), page)}`)).toEqual(ROWS.map(([family, path]) => `${family} ${path}:true`));
+    expect(NON_MEMBERS.map(([family, path, page, , , cure]) => `${family} ${path}:${cure(sentencesOfPage(path), page)}`)).toEqual(NON_MEMBERS.map(([family, path]) => `${family} ${path}:false`));
+    // The row lists' anchors outside this case's literals (the rule 16 CT5/CT6 kill shape, as in the residual cases above):
+    // the out-of-file roster's w1yhResidualRows and w1yhNonMemberRows equal them row for row, the families this title names
+    // are exactly the rows' families, and each count it states is its list's length.
+    const roster: unknown = JSON.parse(readFileSync(join(ROOT, RESIDUAL_ROSTER), "utf8"));
+    const rosterRows: unknown = roster !== null && typeof roster === "object" && "w1yhResidualRows" in roster ? roster.w1yhResidualRows : undefined;
+    const rosterNonMembers: unknown = roster !== null && typeof roster === "object" && "w1yhNonMemberRows" in roster ? roster.w1yhNonMemberRows : undefined;
+    expect(ROWS.map(([family, path]) => `${family} ${path}`), `${RESIDUAL_ROSTER} w1yhResidualRows, the anchor outside this file`).toEqual(rosterRows);
+    expect(NON_MEMBERS.map(([family, path]) => `${family} ${path}`), `${RESIDUAL_ROSTER} w1yhNonMemberRows, the anchor outside this file`).toEqual(rosterNonMembers);
+    expect(familiesNamed(judged.map(([family]) => family).join(" "))).toEqual(familiesNamed(task.name));
+    expect(ROWS.length, "the quiet row count this title states").toBe(Number(/\bthe (\d+) pinned quiet rows\b/.exec(task.name)?.[1]));
+    expect(NON_MEMBERS.length, "the non-member count this title states").toBe(Number(/\bits (\d+) pinned non-members\b/.exec(task.name)?.[1]));
   });
 });
