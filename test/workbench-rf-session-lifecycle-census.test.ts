@@ -9,15 +9,19 @@
  * sessions expire automatically; (c) recovery paths key on session_id, never a free-text name; (d) recovery against a closed
  * session surfaces closed status, never resumes it."
  *
- * Pi commits no rf render today: its one rf launch (providers/reactivefiber.ts nativeReactiveFiberRender) spawns only the
- * `context render ... --no-commit` preview, which passes no --session, and Pi drives no rf session verb. So the committed loop of
- * (a) and the recovery paths of (c) and (d) do not exist yet (the future committing path is wb-jwc.5's), and the census pins that
- * state, the measured producer behaviour each clause depends on, and every surface the obligation already reaches:
- *  A, acceptance (a). A1 the src launch inventory: every child_process launcher call in a src module, through a named, aliased,
- *    namespace or default import, an import-equals, a require or dynamic import binding (destructured or whole, the import
- *    awaited) or a launcher called on a require or a dynamic import of child_process (load wrappers pinned below), with its
- *    command folded from literals; exactly
- *    one launch names rf (the provider) and the one launch whose command is not a literal is the detached host's process.execPath.
+ * Pi commits no rf render today: its one rf launch as A1 reads it (providers/reactivefiber.ts nativeReactiveFiberRender) spawns
+ * only the `context render ... --no-commit` preview, which passes no --session, and Pi drives no rf session verb. So the
+ * committed loop of (a) and the recovery paths of (c) and (d) do not exist yet (the future committing path is wb-jwc.5's), and the
+ * census pins that state, the measured producer behaviour each clause depends on, and every surface the obligation already
+ * reaches:
+ *  A, acceptance (a). A1 the src launch inventory as launchInventory reads it (every .ts file below src/, read from disk and
+ *    scanned by launchesOf): the scan binds child_process launchers through the forms the A1 controls pin - named, aliased,
+ *    string-named, namespace, default and default-plus-named imports, import-equals, require and dynamic-import bindings (whole,
+ *    destructured, shorthand and string-keyed, the import awaited), launchers called on a require or a dynamic import,
+ *    template-literal specifiers, the load wrappers pinned below and every launcher name, each control as its source is written -
+ *    and folds each command from literals (a string, a template, parentheses, a `+`); over the listed src modules it reads
+ *    exactly one launch naming rf (the provider) and one launch whose command is not a literal, the detached host's
+ *    process.execPath.
  *    A2 N ticks of the registered native preview (three legacy, three view) against a stand-in rf: N spawns, each argv carrying
  *    --no-commit and no --session or --commit word, N readings admitted, each stating result.session_id null; the measured legacy
  *    argv of A4 is that argv. A3 the rf roster, selected by a reactivefiber: permission or an rf@ contractSource (never by id
@@ -27,20 +31,24 @@
  *    committed tick minted its own session (the 95-open mechanism of the quote), the ticks under one pinned --session kept the
  *    count constant and reported that id; the zero-mint journey of rfc-s24ro.7 is absent at the pin and at origin/main, as the
  *    bead row's "Shipped: no." states, so a re-measure that finds it flips A4 red until the committed loop lands with (a).
- *  B, acceptance (b). B1 the whole walked tree read as UTF-8 text, each text judged as written and as rendered (compatibility
- *    forms folded by NFKC, default-ignorable code points such as a zero-width space or a soft hyphen removed, intraword emphasis
- *    asterisks dropped): no judged file holds a sentence in which a session word sits
- *    within WINDOWS.rf words of an rf word and within WINDOWS.expiry words of an expiry term, unless a negator appears in that
- *    sentence before the later of the session word and the expiry term; the walk meets no symlink (refused, never followed) and
- *    no unreadable entry. B2 the rf reader closure (the src import closure of the provider and its adapter) holds no session state: no
- *    identifier or property name carries a session word and no literal (a cooked string or template part, or a folded `+`
- *    concatenation) names a session flag, a session_id field, a dotted session leaf or an rfs_ id. B3 each exemption is load-bearing: this file and its roster
- *    are walked, not judged, and both read as expiry findings, so lifting either reds B1.
- *  C, acceptance (c). C1 no src module and no native descriptor text spells an rf session verb (an argv "session" followed by a
- *    verb, a dotted session.<verb> leaf, an `rf ... session <verb>` command text) or a --session flag, while the render argv is
- *    read (non-vacuity). C2 the measured producer serves session open/show/list/close only (no recover, handoff, resume or attach
- *    leaf: README C6 is proposed), addresses show and close by the session id, keeps --name a field separate from --id and states
- *    an unnamed session's name null; rca-C055 leaves duplicate-name acceptance undetermined, so Pi pins id-only.
+ *  B, acceptance (b). B1 the walked tree as readTree reads it (every regular file below the root, the skipped root entries aside,
+ *    read as UTF-8 and judged as written and as rendered: compatibility forms folded by NFKC, default-ignorable code points such
+ *    as a zero-width space or a soft hyphen removed, intraword emphasis asterisks dropped): the judge flags a sentence in which a
+ *    session word sits within WINDOWS.rf words of an rf word and within WINDOWS.expiry words of an expiry term, unless a negator
+ *    appears in that sentence before the later of the session word and the expiry term - the B1 controls and the vocabulary page
+ *    pin that reading - and it flags no judged file; the walk meets no symlink (refused, never followed) and no unreadable entry.
+ *    B2 the rf reader closure (the src import closure of the provider and its adapter) as stateInventory reads it holds no session
+ *    state: through the forms the B2 controls pin, sessionStateOf reads no identifier or property name carrying a session word and
+ *    no literal (a cooked string, a template literal or a template part, or a folded `+` concatenation) naming a session flag, a
+ *    session_id field, a dotted session leaf or an rfs_ id. B3 each exemption is load-bearing: this file and its roster are
+ *    walked, not judged, and both read as expiry findings, so lifting either reds B1.
+ *  C, acceptance (c). C1, as verbInventory and the descriptor judge read them, no src module and no native descriptor's JSON text
+ *    spells an rf session verb through a form a C1 control pins (an argv "session" followed by a verb, a dotted session.<verb>
+ *    leaf, an `rf ... session <verb>` command text, in a string, a template literal or a template's parts) or a --session flag,
+ *    while the render argv is read (non-vacuity). C2 the measured producer serves session open/show/list/close only (no
+ *    recover, handoff, resume or attach leaf: README C6 is proposed), addresses show and close by the session id, keeps --name a
+ *    field separate from --id and states an unnamed session's name null; rca-C055 leaves duplicate-name acceptance
+ *    undetermined, so Pi pins id-only.
  *  D, acceptance (d). D1 a stand-in rf answering the measured RF_SESSION_CLOSED refusal (and a full-shape live render to any later
  *    spawn) yields the typed refusal naming the code and no field value, no reading, one spawn. D2 the injected registration's
  *    reading carries that refusal byte for byte (a deep copy handed to the reader, compared with the pre-invocation serialization).
@@ -58,23 +66,38 @@
  * TypeScript resolves (each module's ts.preProcessFile imports resolved by ts.resolveModuleName under tsconfig.json's options);
  * C1 reads exactly the descriptors a second native registration lists. The listing is itself checked sound (it meets the files
  * floor and names every walk anchor and reader module), so no anchor passes on an empty listing; the FLOORS stay beside them.
- * EXACT-PATH CANARIES (wb-khhg U1): B1 mirrors every listedJudgeable path (same basename and extension) into a scratch tree
- * carrying one expiry sentence, read through readTree. A1 and C1 scan an in-memory rf launch or dotted session leaf at every
- * listedSrc path. B2 scans a session-state identifier at every TypeScript-resolved closure path. C1 also gives every native
- * descriptor id, separately, a verb and a flag description through the same descriptorJudge that reads the real catalog.
- * These pins bind the name/directory/prefix/extension/id-keyed judgement drops exercised by these payloads, not arbitrary
- * content-dependent suppression. Suppression after a judge returns is NOT CLAIMED by this census. Coordinated edits that
- * narrow both a walk and its independent listing (K03), or both the canary and the asserted finding, are NOT CLAIMED.
+ * PATH CONTROLS (wb-khhg cut #3, the enumerate-the-resolvable form R-B247 binds; they replace cut #2's one-payload exact-path
+ * canaries): every control of A1, B1, B2 and C1 is read again at every listed path, through the reading the live tree gets. Each
+ * control's source is planted byte for byte at every listed src path (A1, C1), every TypeScript-resolved closure path (B2) or
+ * every listedJudgeable path (B1) of a scratch mirror; the mirror is read by the live reading's own function (launchInventory and
+ * verbInventory: the src walk, the file reads, the scans and the gathered lists; stateInventory: the reads, the scans and the
+ * gathered lists over the closure modules, the closure walk itself running on the checkout only, held to TypeScript's
+ * resolution by the listing anchor; readTree: the walk, the reads and the judge), and every path must read exactly as its
+ * control reads at control.ts (each pin's pathControlsMissed []). B1 plants, the same way, a vocabulary page built from the scan
+ * constants: one sentence for each expiry word, each expiry pair, each auto and end word pairing in both
+ * orders, each rf and session word, each window's outer bound on either side and a late negator, every sentence a finding and
+ * no two alike (vocabulary). C1 places each session form (each dotted leaf, each rf session command, the flag) in each field of
+ * DESCRIPTOR_CANARY_FIELDS of every native descriptor, read through the same descriptorJudge (descriptorCanariesMissed []). So
+ * one edit to a judge that keys on a directory, a file name, a prefix or an extension and drops a pinned form's judgement at a
+ * listed path reds that pin, as does one keyed on a descriptor id that drops a form in a field: the gate's GA1-GA4, GB1, GB3,
+ * GB4, GC1 and GC2 die this way, each with its paired plant. GB2 is the residual R-LIVE-ROOT. NOT CLAIMED by this census: a drop
+ * keyed on content no control, page sentence or descriptor canary carries (an argv identifier, a sentence's other words, a
+ * marker the planted text lacks); a drop keyed on a path git's listing does not name (an ignored file a walk reads); a form no
+ * control writes, beside the named residuals below; edits that narrow a walk and its independent listing together (K03), a
+ * path control and the asserted reading together, or that remove a pin from every literal together (H05/H06).
  * U2 LOAD WRAPPERS: A1 controls wrap require and awaited dynamic import in parentheses, await, as, satisfies, non-null and
  * angle-bracket assertions, singly and in the pinned nested composition, for whole/destructured bindings and direct calls.
- * Wrappers on launcher callees, commands or declaration names are NOT CLAIMED by this census.
+ * A wrapper on a launcher callee is the residual R-CALLEE-WRAPPER; wrappers on a command other than parentheses, or on a
+ * declaration name, are NOT CLAIMED by this census.
  * PINNED READER SET: test/workbench-rf-session-lifecycle-census.test.ts judged-set, A1-A4, B1-B3, C1-C2, D1-D3 and records:
  * each asserts its named witness against test/fixtures/rf-session-lifecycle-roster.json. Judged-set checks ROWS/roster/bead
- * agreement; A1 checks launches and load wrappers; A2 checks preview ticks; A3 checks rf descriptors; A4 checks captured ticks;
- * B1 checks text and exact-path plants; B2 checks closure state; B3 checks exemptions; C1 checks verbs/descriptors and their
- * canaries; C2 checks captured session leaves; D1-D3 check the captured refusal's native/injected/projected handling; records
- * checks execution and end reach. Each positive is falsifiable by its paired real-tree plant, roster-witness flip, or the
- * CT frozen-shape battery; U1 falsifiers K01/K02/K04/K05/K06/K11 and U2 K08/K08b are independently gate-authored.
+ * agreement; A1 checks launches, load wrappers and its path controls; A2 checks preview ticks; A3 checks rf descriptors; A4
+ * checks captured ticks; B1 checks text, its path controls, the vocabulary page and the R-LIVE-ROOT quiet row; B2 checks closure
+ * state and its path controls; B3 checks exemptions; C1 checks verbs/descriptors, its path controls and the descriptor canaries;
+ * C2 checks captured session leaves; D1-D3 check the captured refusal's native/injected/projected handling; records checks
+ * execution and end reach. Each positive is falsifiable by its paired real-tree plant, roster-witness flip, or the CT
+ * frozen-shape battery; the U1 falsifiers K01/K02/K04/K05/K06/K11, U2 K08/K08b and refusal #2's GA1-GA4, GB1-GB4, GC1-GC2 and X1
+ * are independently gate-authored.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness, the scan constants, the residual families and the registered test titles are held to the out-of-file roster
  * (test/fixtures/rf-session-lifecycle-roster.json). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export
@@ -95,9 +118,14 @@
  * R-OUTSIDE a file below a skipped root entry (B1 planted node_modules/, .beads/,
  * dist/); R-COMPOSED a session argv or field built from non-literal parts (C1 composedArgv, B2 composedField); R-INDIRECT-LAUNCH a
  * launcher reached through a variable, an element access or the callback of a dynamic import's then (A1 indirect, elementAccess,
- * dynamicThen); R-SESSION-ECHO the preview reader admits a --no-commit envelope stating a session id, taking the producer's
- * "--no-commit persists none" on its word (A2 sessionEcho); R-UNLABELED an rf capability registered under neither a
- * reactivefiber: permission nor an rf@ contractSource is not selected (A3 unlabeled).
+ * dynamicThen); R-CALLEE-WRAPPER a launcher callee wrapped in parentheses, a comma expression or a non-null assertion is no launch
+ * (A1 calleeParen, calleeComma, calleeNonNull, memberParen; the gate's X1); R-SESSION-ECHO the preview reader admits a --no-commit
+ * envelope stating a session id, taking the producer's "--no-commit persists none" on its word (A2 sessionEcho); R-UNLABELED an
+ * rf capability registered under neither a reactivefiber: permission nor an rf@ contractSource is not selected (A3 unlabeled);
+ * R-LIVE-ROOT a judgement drop keyed on the root a reading walks being the checkout, or placed at the live reading's own call or
+ * result, which no path control traverses, since each reads a scratch mirror through the same function (the gate's GB2, which
+ * drops .json findings when the root is REPO; B1 liveRoot, the quiet row: that member keys on the live reading's .json files and
+ * changes no path control's reading).
  * Display paths added: none. Test-only: the stand-in rf and the planted trees live in makeScratch scratch; src is only read.
  */
 import { spawnSync } from "node:child_process";
@@ -210,7 +238,11 @@ const WALK_ANCHORS: readonly (readonly [string, string])[] = [
 ];
 /** The reader modules: the provider and its adapter; B2 walks their src import closure. */
 const READER_MODULES = ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"];
-const RESIDUAL_FAMILIES = ["R-SPLIT", "R-PARAPHRASE", "R-NEGATED", "R-ENCODED", "R-RENDERED", "R-CONFUSABLE", "R-OUTSIDE", "R-COMPOSED", "R-INDIRECT-LAUNCH", "R-SESSION-ECHO", "R-UNLABELED"];
+const RESIDUAL_FAMILIES = ["R-SPLIT", "R-PARAPHRASE", "R-NEGATED", "R-ENCODED", "R-RENDERED", "R-CONFUSABLE", "R-OUTSIDE", "R-COMPOSED", "R-INDIRECT-LAUNCH", "R-CALLEE-WRAPPER", "R-SESSION-ECHO", "R-UNLABELED", "R-LIVE-ROOT"];
+/** The file name a control is read under; each path control's reading is relabelled to it (wb-khhg cut #3). */
+const CONTROL_FILE = "control.ts";
+/** The descriptor fields C1's canaries place each session form in (wb-khhg cut #3): one descriptor per id, field and form. */
+const DESCRIPTOR_CANARY_FIELDS = ["description", "version", "contractSource", "effectClass", "permissions", "supportedModes", "inputSchema", "outputSchema"] as const;
 
 interface Row {
   readonly id: string;
@@ -519,6 +551,25 @@ function expiryFindings(value: string): string[] {
   return shown === value ? found : [...new Set([...found, ...sentenceFindings(shown)])];
 }
 const asserts = (value: string): boolean => expiryFindings(value).length > 0;
+/** B1's vocabulary page (wb-khhg cut #3): one sentence for every entry of the scan constants - each expiry word and pair, each auto
+ * and end word pairing in both orders, each rf word and the reactive fiber pair, each session word - and one for each window's
+ * outer bound on either side and for a late negator; each sentence is numbered, so no two findings are alike. */
+function vocabularyPage(): { readonly text: string; readonly sentences: number } {
+  const filler = (count: number): string => Array.from({ length: count }, (_, at) => `filler${at}`).join(" ");
+  const sentences = [
+    ...[...EXPIRY_WORDS, ...EXPIRY_PAIRS].map(term => `the rf session ${term} now`),
+    ...AUTO_WORDS.flatMap(auto => END_WORDS.flatMap(end => [`the rf session ${auto} ${end} now`, `the rf session ${end} ${auto} now`])),
+    ...RF_WORDS.map(word => `the ${word} session expires now`),
+    "the reactive fiber session expires now",
+    ...SESSION_WORDS.map(word => `the rf ${word} expires now`),
+    `rf ${filler(WINDOWS.rf - 1)} session expires now`,
+    `session ${filler(WINDOWS.rf - 1)} rf now expires`,
+    `the rf session ${filler(WINDOWS.expiry - 1)} expires`,
+    `expires ${filler(WINDOWS.expiry - 1)} session rf`,
+    "the rf session expires now and not later",
+  ];
+  return { text: sentences.map((sentence, at) => `Entry ${at}: ${sentence}.`).join("\n\n"), sentences: sentences.length };
+}
 
 const posix = (path: string): string => path.split(sep).join("/");
 interface Walk {
@@ -552,6 +603,8 @@ function walkTree(root: string): Walk {
   return { files, symlinks, unreadable };
 }
 interface TreeReading {
+  /** The root the reading walked: the checkout for the live reading, a scratch mirror for a path control or a plant. */
+  readonly root: string;
   readonly walk: Walk;
   readonly judged: string[];
   /** The files B1's judge ran on, each recorded after its judgement: the record the listing anchor reads. */
@@ -580,7 +633,7 @@ function readTree(root: string): TreeReading {
     const anchor = WALK_ANCHORS.find(([path]) => path === file);
     if (anchor !== undefined) anchors.set(file, buffer.includes(anchor[1]));
   }
-  return { walk, judged, read, findings, anchorsWalked: WALK_ANCHORS.every(([path]) => anchors.get(path) === true) };
+  return { root, walk, judged, read, findings, anchorsWalked: WALK_ANCHORS.every(([path]) => anchors.get(path) === true) };
 }
 let live: TreeReading | undefined;
 /** The repository's own reading, taken once, after git's listing (so a file the listing names and a concurrent run removes before
@@ -621,8 +674,9 @@ const listedSrc = (): string[] => gitListing().filter(file => file.startsWith("s
  * anchor that reads it passes vacuously. */
 const listingSound = (): boolean =>
   gitListing().length >= FLOORS.files && [...WALK_ANCHORS.map(([path]) => path), ...READER_MODULES].every(path => gitListing().includes(path));
-/** Plants `files` in a fresh scratch root (a null content is a symlink to the root's first file) and reads that tree. */
-function plantedTree(files: Readonly<Record<string, string | Buffer | null>>): TreeReading {
+/** Plants `files` in a fresh scratch root (a null content is a symlink to the root's first file), reads that tree with `read` and
+ * removes it. */
+function withPlanted<T>(files: Readonly<Record<string, string | Buffer | null>>, read: (root: string) => T): T {
   const root = makeScratch("rf-session-lifecycle-tree-");
   try {
     for (const [path, content] of Object.entries(files)) {
@@ -631,11 +685,17 @@ function plantedTree(files: Readonly<Record<string, string | Buffer | null>>): T
       if (content === null) symlinkSync(join(root, Object.keys(files)[0] ?? ""), target);
       else writeFileSync(target, content);
     }
-    return readTree(root);
+    return read(root);
   } finally {
     removeScratch(root);
   }
 }
+/** Plants `files` in a fresh scratch root and reads that tree with B1's judge. */
+const plantedTree = (files: Readonly<Record<string, string | Buffer | null>>): TreeReading => withPlanted(files, readTree);
+/** A scratch mirror's files: `content` at every one of `paths`. */
+const mirrorOf = (paths: readonly string[], content: string): Record<string, string> => Object.fromEntries(paths.map(path => [path, content]));
+/** The file a B1 finding names: the text before its first ": ". */
+const fileOf = (finding: string): string => finding.slice(0, finding.indexOf(": "));
 
 function textOf(path: string): string {
   try {
@@ -660,7 +720,8 @@ function filesBelow(directory: string): string[] {
   }
   return files;
 }
-const srcModules = (): string[] => filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts")).sort();
+/** Every .ts file below `root`'s src/, sorted: the modules A1 and C1 read. */
+const srcModulesOf = (root: string): string[] => filesBelow(join(root, "src")).filter(file => file.endsWith(".ts")).sort();
 
 /** A string literal, a parenthesized one, a `+` concatenation of foldable parts or a template whose every span folds. */
 function fold(node: ts.Node | undefined): string | undefined {
@@ -886,6 +947,112 @@ function resolvedClosure(): { modules: string[]; unresolved: string[] } {
   return { modules: [...seen].map(path => posix(relative(REPO, path))).sort(), unresolved };
 }
 
+/** A1's reading of a tree (wb-khhg cut #3): every .ts file below its src/ read from disk and scanned by launchesOf, the launches
+ * gathered and sorted. The live checkout and every A1 path control are read through this one function; only the root differs. */
+interface LaunchInventory {
+  readonly root: string;
+  readonly scans: readonly LaunchScan[];
+  readonly rf: string[];
+  readonly composed: string[];
+  readonly unbound: string[];
+}
+function launchInventory(root: string): LaunchInventory {
+  const scans = srcModulesOf(root).map(path => launchesOf(posix(relative(root, path)), textOf(path)));
+  return {
+    root,
+    scans,
+    rf: scans.flatMap(scan => scan.rf).sort(),
+    composed: scans.flatMap(scan => scan.composed).sort(),
+    unbound: scans.flatMap(scan => scan.unbound).sort(),
+  };
+}
+/** The lists C1 asserts, gathered from its scans: each render argv and each composed session argv a module holds is one mark, so a
+ * path control compares them path by path. */
+interface VerbLists {
+  readonly argv: string[];
+  readonly flags: string[];
+  readonly literals: string[];
+  readonly renderArgv: string[];
+  readonly composedArgv: string[];
+}
+function verbLists(scans: readonly VerbScan[]): VerbLists {
+  const marks = (count: (scan: VerbScan) => number, mark: string): string[] => scans.flatMap(scan => Array.from({ length: count(scan) }, () => `${scan.file}: ${mark}`));
+  return {
+    argv: scans.flatMap(scan => scan.argv),
+    flags: scans.flatMap(scan => scan.flags),
+    literals: scans.flatMap(scan => scan.literals),
+    renderArgv: marks(scan => scan.renderArgv, "context render"),
+    composedArgv: marks(scan => scan.composedArgv, "session <expr>"),
+  };
+}
+/** C1's reading of a tree: every .ts file below its src/ read from disk and scanned by sessionVerbsOf, the lists gathered. */
+interface VerbInventory extends VerbLists {
+  readonly root: string;
+  readonly scans: readonly VerbScan[];
+}
+function verbInventory(root: string): VerbInventory {
+  const scans = srcModulesOf(root).map(path => sessionVerbsOf(posix(relative(root, path)), textOf(path)));
+  return { root, scans, ...verbLists(scans) };
+}
+/** B2's reading of `modules` below a root: each read from disk and scanned by sessionStateOf, the state gathered. */
+interface StateInventory {
+  readonly root: string;
+  readonly scans: readonly StateScan[];
+  readonly identifiers: string[];
+  readonly literals: string[];
+}
+function stateInventory(root: string, modules: readonly string[]): StateInventory {
+  const scans = modules.map(module => sessionStateOf(module, textOf(join(root, module))));
+  return { root, scans, identifiers: scans.flatMap(scan => scan.identifiers), literals: scans.flatMap(scan => scan.literals) };
+}
+
+/** `list`'s entries grouped by the file each names (the text before its first ":"), each relabelled to CONTROL_FILE and each group
+ * sorted: a mirror's reading path by path, in the form its control's reading takes. */
+function byPath(list: readonly string[]): Map<string, string[]> {
+  const grouped = new Map<string, string[]>();
+  for (const entry of list) {
+    const at = entry.indexOf(":");
+    const relabelled = `${CONTROL_FILE}${entry.slice(at)}`;
+    const group = grouped.get(entry.slice(0, at));
+    if (group === undefined) grouped.set(entry.slice(0, at), [relabelled]);
+    else group.push(relabelled);
+  }
+  for (const group of grouped.values()) group.sort();
+  return grouped;
+}
+interface PathControls<R> {
+  /** Each control and path whose reading differs from the control's own at CONTROL_FILE, as `<control> <path>`. */
+  readonly missed: string[];
+  readonly readings: R[];
+}
+/** PATH CONTROLS (wb-khhg cut #3): each control's source planted at every one of `paths` in a scratch mirror and read by `read`, the
+ * live reading's own function; every path's entries (`listsOf`) must equal the control's own read at CONTROL_FILE (`controlLists`). */
+function pathControls<R>(
+  paths: readonly string[],
+  sources: Readonly<Record<string, string>>,
+  read: (root: string) => R,
+  listsOf: (reading: R) => readonly (readonly string[])[],
+  controlLists: (source: string) => readonly (readonly string[])[],
+): PathControls<R> {
+  const missed: string[] = [];
+  const readings: R[] = [];
+  for (const [name, source] of Object.entries(sources)) {
+    const want = JSON.stringify(controlLists(source).map(list => [...list].sort()));
+    const reading = withPlanted(mirrorOf(paths, source), read);
+    readings.push(reading);
+    const groups = listsOf(reading).map(byPath);
+    for (const path of paths) if (JSON.stringify(groups.map(group => group.get(path) ?? [])) !== want) missed.push(`${name} ${path}`);
+  }
+  return { missed, readings };
+}
+/** A descriptor's fields with `text` placed in `field`: a string field holds it, a list field holds it alone and a schema field holds
+ * it as its description. */
+function placedIn(descriptor: CapabilityDescriptor, field: (typeof DESCRIPTOR_CANARY_FIELDS)[number], text: string): { readonly id: string } {
+  if (field === "permissions" || field === "supportedModes") return { ...descriptor, [field]: [text] };
+  if (field === "inputSchema" || field === "outputSchema") return { ...descriptor, [field]: { description: text } };
+  return { ...descriptor, [field]: text };
+}
+
 const oldPath = process.env.PATH;
 const scratches: string[] = [];
 afterEach(() => {
@@ -1028,16 +1195,13 @@ function done(pin: string, witness: JsonObject): JsonValue {
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
-    const modules = srcModules();
-    const scans = modules.map(path => launchesOf(posix(relative(REPO, path)), textOf(path)));
-    const rf = scans.flatMap(scan => scan.rf).sort();
-    const composed = scans.flatMap(scan => scan.composed).sort();
-    const unbound = scans.flatMap(scan => scan.unbound).sort();
-    const srcFloorMet = modules.length >= FLOORS.srcModules;
+    const live = launchInventory(REPO);
+    const { rf, composed, unbound } = live;
+    const srcFloorMet = live.scans.length >= FLOORS.srcModules;
     // The listing anchor (wb-khhg F1): every file git lists below src/ is one these scans judged, read from the scans' own record.
-    const scanned = new Set(scans.map(scan => scan.file));
+    const scanned = new Set(live.scans.map(scan => scan.file));
     const unscanned = listedSrc().filter(file => !scanned.has(file));
-    expect(srcFloorMet, `src modules walked: ${modules.length}`).toBe(true);
+    expect(srcFloorMet, `src modules walked: ${live.scans.length}`).toBe(true);
     expect(listingSound(), "git's listing meets the files floor and names every walk anchor and reader module").toBe(true);
     expect(unscanned, `src files git lists that A1 did not scan (${scanned.size} scanned)`).toEqual([]);
     expect({ rf, composed, unbound }, "Pi's rf launches: the provider alone, the detached host's process.execPath the one composed command").toStrictEqual({
@@ -1045,30 +1209,27 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       composed: ["src/workbench/hosts/local-detached.ts:spawn(process.execPath)"],
       unbound: [],
     });
-    const control = (source: string): JsonValue => {
-      const scan = launchesOf("control.ts", source);
-      return { rf: scan.rf.length, composed: scan.composed.length, unbound: scan.unbound.length };
-    };
-    const controls = {
-      named: control('import { spawn } from "node:child_process";\nspawn("rf", argv);'),
-      aliased: control('import { spawn as run } from "node:child_process";\nrun("rf", argv);'),
-      namespace: control('import * as cp from "node:child_process";\ncp.execFile("rf", argv);'),
-      defaultImport: control('import cp from "child_process";\ncp.spawnSync("rf", argv);'),
-      requireDestructured: control('const { execFileSync: run } = require("node:child_process");\nrun("rf", argv);'),
-      requireWhole: control('const cp = require("child_process");\ncp.fork("rf", argv);'),
-      requireCall: control('require("node:child_process").spawn("rf", argv);'),
-      folded: control('import { spawn } from "node:child_process";\nspawn("r" + "f", argv);'),
-      absolutePath: control('import { spawn } from "node:child_process";\nspawn("/usr/local/bin/rf", argv);'),
-      otherBinary: control('import { spawn } from "node:child_process";\nspawn("git", argv);'),
-      composedCommand: control('import { spawn } from "node:child_process";\nspawn(binary, argv);'),
-      unboundName: control('function spawn(command: string): string { return command; }\nspawn("rf");'),
-      indirect: control('import * as cp from "node:child_process";\nconst run = cp.spawn;\nrun("rf", argv);'),
-      elementAccess: control('import * as cp from "node:child_process";\ncp["spawn"]("rf", argv);'),
+    // Each control's source: read at control.ts here and again at every listed src path below (PATH CONTROLS).
+    const sources: Record<string, string> = {
+      named: 'import { spawn } from "node:child_process";\nspawn("rf", argv);',
+      aliased: 'import { spawn as run } from "node:child_process";\nrun("rf", argv);',
+      namespace: 'import * as cp from "node:child_process";\ncp.execFile("rf", argv);',
+      defaultImport: 'import cp from "child_process";\ncp.spawnSync("rf", argv);',
+      requireDestructured: 'const { execFileSync: run } = require("node:child_process");\nrun("rf", argv);',
+      requireWhole: 'const cp = require("child_process");\ncp.fork("rf", argv);',
+      requireCall: 'require("node:child_process").spawn("rf", argv);',
+      folded: 'import { spawn } from "node:child_process";\nspawn("r" + "f", argv);',
+      absolutePath: 'import { spawn } from "node:child_process";\nspawn("/usr/local/bin/rf", argv);',
+      otherBinary: 'import { spawn } from "node:child_process";\nspawn("git", argv);',
+      composedCommand: 'import { spawn } from "node:child_process";\nspawn(binary, argv);',
+      unboundName: 'function spawn(command: string): string { return command; }\nspawn("rf");',
+      indirect: 'import * as cp from "node:child_process";\nconst run = cp.spawn;\nrun("rf", argv);',
+      elementAccess: 'import * as cp from "node:child_process";\ncp["spawn"]("rf", argv);',
       // wb-khhg F3: the dynamic import (the gate's G20) and the import-equals (G21) forms.
-      dynamicImport: control('const cp = await import("node:child_process");\ncp.spawn("rf", argv);'),
-      dynamicDestructured: control('const { execFile: run } = await import("child_process");\nrun("rf", argv);'),
-      dynamicDirect: control('(await import("node:child_process")).spawnSync("rf", argv);'),
-      importEquals: control('import cp = require("node:child_process");\ncp.spawn("rf", argv);'),
+      dynamicImport: 'const cp = await import("node:child_process");\ncp.spawn("rf", argv);',
+      dynamicDestructured: 'const { execFile: run } = await import("child_process");\nrun("rf", argv);',
+      dynamicDirect: '(await import("node:child_process")).spawnSync("rf", argv);',
+      importEquals: 'import cp = require("node:child_process");\ncp.spawn("rf", argv);',
       // U2 (M:17008): TypeScript's transparent load-expression wrappings, pinned independently in the roster.
       ...Object.fromEntries(
         ([
@@ -1083,23 +1244,54 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
           return ["require(\"node:child_process\")", "await import(\"node:child_process\")"].flatMap((load, index) => {
             const expression = wrapping(load);
             return [
-              [`wrap${index}-${name}-whole`, control(`async function probe() { const cp = ${expression}; cp.spawn("rf", argv); }`)],
-              [`wrap${index}-${name}-destructured`, control(`async function probe() { const { spawn: run } = ${expression}; run("rf", argv); }`)],
-              [`wrap${index}-${name}-direct`, control(`async function probe() { (${expression}).spawn("rf", argv); }`)],
+              [`wrap${index}-${name}-whole`, `async function probe() { const cp = ${expression}; cp.spawn("rf", argv); }`],
+              [`wrap${index}-${name}-destructured`, `async function probe() { const { spawn: run } = ${expression}; run("rf", argv); }`],
+              [`wrap${index}-${name}-direct`, `async function probe() { (${expression}).spawn("rf", argv); }`],
             ];
           });
         }),
       ),
       // R-INDIRECT-LAUNCH: the launcher reached through the callback of the dynamic import's then (the quiet row).
-      dynamicThen: control('import("node:child_process").then(cp => cp.spawn("rf", argv));'),
+      dynamicThen: 'import("node:child_process").then(cp => cp.spawn("rf", argv));',
+      // wb-khhg cut #3: every launcher name through each binding branch, the remaining import, binding and specifier forms the
+      // header names, and the command folds; every control is also read at every listed src path (PATH CONTROLS).
+      everyLauncherNamed: `import { ${LAUNCHERS.join(", ")} } from "node:child_process";\n${LAUNCHERS.map(launcher => `${launcher}("rf", argv);`).join("\n")}`,
+      everyLauncherNamespace: `import * as cp from "node:child_process";\n${LAUNCHERS.map(launcher => `cp.${launcher}("rf", argv);`).join("\n")}`,
+      everyLauncherDestructured: `const { ${LAUNCHERS.map((launcher, at) => `${launcher}: run${at}`).join(", ")} } = require("node:child_process");\n${LAUNCHERS.map((_, at) => `run${at}("rf", argv);`).join("\n")}`,
+      everyLauncherDirect: LAUNCHERS.map(launcher => `require("node:child_process").${launcher}("rf", argv);`).join("\n"),
+      everyLauncherUnbound: LAUNCHERS.map(launcher => `${launcher}("rf", argv);`).join("\n"),
+      stringAlias: 'import { "spawn" as run } from "node:child_process";\nrun("rf", argv);',
+      defaultAndNamed: 'import cp, { execFile as run } from "child_process";\ncp.fork("rf", argv);\nrun("rf", argv);',
+      importEqualsPlain: 'import cp = require("child_process");\ncp.spawnSync("rf", argv);',
+      requireShorthand: 'const { spawn } = require("node:child_process");\nspawn("rf", argv);',
+      requireStringKey: 'const { "spawnSync": run } = require("child_process");\nrun("rf", argv);',
+      dynamicShorthand: 'async function probe() { const { fork } = await import("node:child_process"); fork("rf", argv); }',
+      dynamicStringKey: 'async function probe() { const { "execFile": run } = await import("node:child_process"); run("rf", argv); }',
+      requireTemplate: "const cp = require(`node:child_process`);\ncp.exec(\"rf\", argv);",
+      dynamicTemplate: "async function probe() { const cp = await import(`child_process`); cp.execSync(\"rf\", argv); }",
+      templateCommand: 'import { spawn } from "node:child_process";\nspawn(`rf`, argv);',
+      parenCommand: 'import { spawn } from "node:child_process";\nspawn(("rf"), argv);',
+      templateFold: ['import { spawn } from "node:child_process";\nspawn(`$', '{"r"}f`, argv);'].join(""),
+      // R-CALLEE-WRAPPER (the gate's X1): a launcher callee wrapped in parentheses, a comma expression or a non-null assertion is no
+      // launch (the quiet rows).
+      calleeParen: 'import { spawn } from "node:child_process";\n(spawn)("rf", argv);',
+      calleeComma: 'import { spawn } from "node:child_process";\n(0, spawn)("rf", argv);',
+      calleeNonNull: 'import { spawn } from "node:child_process";\nspawn!("rf", argv);',
+      memberParen: 'import * as cp from "node:child_process";\n(cp.spawn)("rf", argv);',
     };
+    const control = (source: string): JsonValue => {
+      const scan = launchesOf(CONTROL_FILE, source);
+      return { rf: scan.rf.length, composed: scan.composed.length, unbound: scan.unbound.length };
+    };
+    const controls = Object.fromEntries(Object.entries(sources).map(([name, source]) => [name, control(source)]));
     for (const [name, outcome] of Object.entries(controls)) {
       if (name.startsWith("wrap")) expect(outcome, `U2 load wrapper ${name}`).toStrictEqual({ rf: 1, composed: 0, unbound: 0 });
     }
-    // U1 (M:17008): judgement must survive at each exact listed path, not just one name per directory.
-    const canariesMissed = listedSrc().filter(path => launchesOf(path, 'import { spawn } from "node:child_process";\nspawn("rf", argv);').rf.length !== 1);
-    expect(canariesMissed, "listed src paths whose canary launch A1's scan missed (U1)").toEqual([]);
-    return done("A1", { srcFloorMet, listingSound: listingSound(), unscanned, rf, composed, unbound, controls, canariesMissed });
+    // PATH CONTROLS (wb-khhg cut #3): every control at every listed src path, read through launchInventory as the live tree is.
+    const lists = (reading: { readonly rf: readonly string[]; readonly composed: readonly string[]; readonly unbound: readonly string[] }): (readonly string[])[] => [reading.rf, reading.composed, reading.unbound];
+    const { missed: pathControlsMissed } = pathControls(listedSrc(), sources, launchInventory, lists, source => lists(launchesOf(CONTROL_FILE, source)));
+    expect(pathControlsMissed, "A1 controls whose reading at a listed src path differs from their reading at control.ts").toEqual([]);
+    return done("A1", { srcFloorMet, listingSound: listingSound(), unscanned, rf, composed, unbound, controls, pathControlsMissed });
   },
   A2: async () => {
     const outcome = await nativeTicks(TICK_INPUTS, [{ stdout: json(fullShapeRf(ROOT)), exit: 0 }]);
@@ -1217,41 +1409,49 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const zeroWidth = String.fromCodePoint(0x200b);
     const softHyphen = String.fromCodePoint(0xad);
     const fullwidth = (word: string): string => String.fromCodePoint(...[...word].map(letter => (letter.codePointAt(0) ?? 0) + 0xfee0));
-    const controls = {
-      plain: asserts(expiring),
-      timesOut: asserts("The rf session times out, so the dashboard re-renders without one."),
-      camelIdentifier: asserts("const rfSessionTtlMs = 3_600_000;"),
-      acronymIdentifier: asserts("const RFSessionTTL = 60;"),
-      autoCloses: asserts("A ReactiveFiber session auto-closes when the tick ends."),
-      lapse: asserts("Pi drops the rf session id because sessions lapse overnight."),
-      reaped: asserts("reactive-fiber sessions are reaped by the server"),
-      closedAutomatically: asserts("An rf session is closed automatically when idle."),
-      fieldTtl: asserts("the session_id from rf goes stale after its TTL"),
-      never: asserts("rf sessions never expire; Pi closes the session it opened."),
-      noExpiry: asserts("No automatic expiry exists for an rf session."),
-      claudeSession: asserts("A Claude SDK session times out after the deadline."),
-      renderDeadline: asserts("The rf preview exceeded the execution deadline after a timeout."),
-      closeVerb: asserts("rf session close rfs_x"),
-      separate: asserts("Pi's rf render passes no session; a Claude session may time out."),
-      split: asserts("Pi keeps one rf session. It expires after an hour."),
-      paraphrase: asserts("The rf session goes away on its own after the dashboard stops."),
-      negatedEarlier: asserts("An rf session is not closed by hand, it expires at midnight."),
-      utf16: asserts(Buffer.from(expiring, "utf16le").toString("utf8")),
-      escaped: asserts("rf sessions \\u0065xpire after an hour"),
+    // Each control's text: judged here and again at every listed judgeable path below (PATH CONTROLS).
+    const texts: Record<string, string> = {
+      plain: expiring,
+      timesOut: "The rf session times out, so the dashboard re-renders without one.",
+      camelIdentifier: "const rfSessionTtlMs = 3_600_000;",
+      acronymIdentifier: "const RFSessionTTL = 60;",
+      autoCloses: "A ReactiveFiber session auto-closes when the tick ends.",
+      lapse: "Pi drops the rf session id because sessions lapse overnight.",
+      reaped: "reactive-fiber sessions are reaped by the server",
+      closedAutomatically: "An rf session is closed automatically when idle.",
+      fieldTtl: "the session_id from rf goes stale after its TTL",
+      never: "rf sessions never expire; Pi closes the session it opened.",
+      noExpiry: "No automatic expiry exists for an rf session.",
+      claudeSession: "A Claude SDK session times out after the deadline.",
+      renderDeadline: "The rf preview exceeded the execution deadline after a timeout.",
+      closeVerb: "rf session close rfs_x",
+      separate: "Pi's rf render passes no session; a Claude session may time out.",
+      split: "Pi keeps one rf session. It expires after an hour.",
+      paraphrase: "The rf session goes away on its own after the dashboard stops.",
+      negatedEarlier: "An rf session is not closed by hand, it expires at midnight.",
+      utf16: Buffer.from(expiring, "utf16le").toString("utf8"),
+      escaped: "rf sessions \\u0065xpire after an hour",
       // wb-khhg F2: the rendered reading - intraword emphasis (the gate's G17), a zero-width split (G18), a soft-hyphen split (G18b)
       // and a compatibility form - and the written reading kept beside it (rawJoin: the rendered reading joins rf and sessions).
-      emphasis: asserts("Pi relies on rf sessions that ex**pire** after an hour of inactivity."),
-      zeroWidth: asserts(`Pi relies on rf sessions that ex${zeroWidth}pire after an hour of inactivity.`),
-      softHyphen: asserts(`Pi relies on rf sessions that ex${softHyphen}pire after an hour of inactivity.`),
-      compatibility: asserts(`Pi relies on rf sessions that ${fullwidth("expire")} after an hour of inactivity.`),
-      rawJoin: asserts(`Pi relies on rf${zeroWidth}sessions that expire after an hour of inactivity.`),
+      emphasis: "Pi relies on rf sessions that ex**pire** after an hour of inactivity.",
+      zeroWidth: `Pi relies on rf sessions that ex${zeroWidth}pire after an hour of inactivity.`,
+      softHyphen: `Pi relies on rf sessions that ex${softHyphen}pire after an hour of inactivity.`,
+      compatibility: `Pi relies on rf sessions that ${fullwidth("expire")} after an hour of inactivity.`,
+      rawJoin: `Pi relies on rf${zeroWidth}sessions that expire after an hour of inactivity.`,
+      // wb-khhg cut #3: two more default-ignorable splits (a word joiner, a byte order mark), a single intraword asterisk and a
+      // compatibility ligature (U+FB01 in fiber): each read only as rendered.
+      wordJoiner: `Pi relies on rf sessions that ex${String.fromCodePoint(0x2060)}pire after an hour of inactivity.`,
+      byteOrderMark: `Pi relies on rf sessions that ex${String.fromCodePoint(0xfeff)}pire after an hour of inactivity.`,
+      singleEmphasis: "Pi relies on rf sessions that ex*pire* after an hour of inactivity.",
+      ligature: `The reactive ${String.fromCodePoint(0xfb01)}ber session expires after an hour of inactivity.`,
       // R-RENDERED: a split the rendered reading keeps (the quiet rows).
-      htmlTag: asserts("Pi relies on rf sessions that ex<b>pire</b> after an hour of inactivity."),
-      htmlEntity: asserts("Pi relies on rf sessions that ex&shy;pire after an hour of inactivity."),
-      codeSpan: asserts("Pi relies on rf sessions that ex`pire` after an hour of inactivity."),
+      htmlTag: "Pi relies on rf sessions that ex<b>pire</b> after an hour of inactivity.",
+      htmlEntity: "Pi relies on rf sessions that ex&shy;pire after an hour of inactivity.",
+      codeSpan: "Pi relies on rf sessions that ex`pire` after an hour of inactivity.",
       // R-CONFUSABLE (K07): NFKC is not a confusables skeleton; this quiet row pins that boundary.
-      confusable: asserts(`Pi relies on rf sessions that ${String.fromCodePoint(0x0435)}xpire after an hour of inactivity.`),
+      confusable: `Pi relies on rf sessions that ${String.fromCodePoint(0x0435)}xpire after an hour of inactivity.`,
     };
+    const controls = Object.fromEntries(Object.entries(texts).map(([name, value]) => [name, asserts(value)]));
     const planted = plantedTree({
       "docs/expiry.md": `${expiring}\n`,
       "src/ttl.ts": "export const rfSessionTtlMs = 3_600_000;\n",
@@ -1264,22 +1464,34 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ".beads/issues.jsonl": `{"title":"${expiring}"}\n`,
       "dist/notes.md": `${expiring}\n`,
     });
-    // U1: mirror every exact listed path, including its basename and extension, through readTree in scratch.
-    const plantPaths = listedJudgeable();
-    const directoryTree = plantedTree(Object.fromEntries(plantPaths.map(path => [path, `${expiring}\n`])));
-    const directoryPlantsMissed = plantPaths.filter(path => !directoryTree.findings.some(finding => finding.startsWith(`${path}: `)));
-    expect(directoryPlantsMissed, `exact listed path plants B1's judge did not flag (${plantPaths.length} planted; U1)`).toEqual([]);
+    // PATH CONTROLS (wb-khhg cut #3): every control text, and the vocabulary page, at every listed judgeable path, read through
+    // readTree as the live tree is; each path's findings must be the control's own (wb-khhg F2: the misses are path controls').
+    const page = vocabularyPage();
+    const vocabulary = { sentences: page.sentences, flagged: expiryFindings(page.text).length };
+    const paths = listedJudgeable();
+    const findingLists = (reading: TreeReading): (readonly string[])[] => [reading.findings];
+    const { missed: pathControlsMissed, readings } = pathControls(paths, { ...texts, vocabularyPage: page.text }, readTree, findingLists, text => [expiryFindings(text).map(sentence => `${CONTROL_FILE}: ${sentence}`)]);
+    expect(vocabulary.flagged, "every sentence of the vocabulary page is a distinct finding").toBe(vocabulary.sentences);
+    expect(pathControlsMissed, `B1 controls and the vocabulary page whose findings at a listed path differ from control.ts's (${paths.length} paths)`).toEqual([]);
+    // R-LIVE-ROOT (the gate's GB2; the quiet row): GB2's member - a reading rooted at the checkout drops its .json files' findings -
+    // keys on the live reading, which judges the checkout's .json files, and on no path control's reading, each rooted in a scratch
+    // mirror: applied to every path control's reading, it changes none.
+    const liveRootDrops = (reading: TreeReading): string[] => (reading.root === REPO ? reading.findings.filter(finding => fileOf(finding).endsWith(".json")) : []);
+    const liveRoot = {
+      liveKeyed: tree.root === REPO && tree.read.some(file => file.endsWith(".json")),
+      pathControlsChanged: readings.filter(reading => liveRootDrops(reading).length > 0).length,
+    };
+    expect(liveRoot, "R-LIVE-ROOT: the member keys on the live reading and on no path control").toStrictEqual({ liveKeyed: true, pathControlsChanged: 0 });
     const flagged = (path: string): boolean => planted.findings.some(finding => finding.startsWith(`${path}: `)) || planted.walk.symlinks.includes(path);
     const plants = Object.fromEntries(
       ["docs/expiry.md", "src/ttl.ts", "test/fixtures/expiry-note.md", "docs/rendered.md", "notes/never.md", "notes/le.txt", "notes/link.md", "node_modules/pkg/notes.md", ".beads/issues.jsonl", "dist/notes.md"].map(path => [path, flagged(path)]),
     );
-    return done("B1", { filesFloorMet, listingSound: listingSound(), unread, listedSkipped, directoryPlantsMissed, anchorsWalked: tree.anchorsWalked, findings: tree.findings, symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable, controls, plants });
+    return done("B1", { filesFloorMet, listingSound: listingSound(), unread, listedSkipped, pathControlsMissed, vocabulary, liveRoot, anchorsWalked: tree.anchorsWalked, findings: tree.findings, symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable, controls, plants });
   },
   B2: async () => {
     const { modules, unresolved } = readerClosure();
-    const scans = modules.map(module => sessionStateOf(module, textOf(join(REPO, module))));
-    const identifiers = scans.flatMap(scan => scan.identifiers);
-    const literals = scans.flatMap(scan => scan.literals);
+    const live = stateInventory(REPO, modules);
+    const { identifiers, literals } = live;
     const closureFloorMet = modules.length >= FLOORS.closure;
     const anchorsRead = [...READER_MODULES, "src/workbench/capability-registry.ts", "src/workbench/redaction.ts"].every(module => modules.includes(module));
     expect(closureFloorMet, `closure modules: ${modules.join(", ")}`).toBe(true);
@@ -1287,33 +1499,53 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(unresolved).toEqual([]);
     // The listing anchor (wb-khhg F1): the modules these scans judged are exactly the closure TypeScript resolves.
     const resolved = resolvedClosure();
-    const judged = scans.map(scan => scan.file).sort();
+    const judged = live.scans.map(scan => scan.file).sort();
     const unscanned = resolved.modules.filter(module => !judged.includes(module));
     expect(resolved.unresolved, "relative imports TypeScript cannot resolve in the closure").toEqual([]);
     expect(judged, "B2 scans exactly the closure TypeScript resolves").toStrictEqual(resolved.modules);
     expect({ identifiers, literals }, "rf session state in the reader closure").toStrictEqual({ identifiers: [], literals: [] });
-    const control = (source: string): JsonValue => {
-      const scan = sessionStateOf("control.ts", source);
-      return scan.identifiers.length + scan.literals.length;
+    // Each control's source: read at control.ts here and again at every resolved closure path below (PATH CONTROLS).
+    const sources: Record<string, string> = {
+      ttlIdentifier: "const rfSessionTtlMs = 60_000;",
+      sessionVariable: "let session: string | undefined;",
+      resultField: "const id = result.session_id;",
+      flagLiteral: 'const argv = ["--session", id];',
+      templateFlag: ["const flag = `--session=$", "{id}`;"].join(""),
+      fieldLiteral: 'const key = "session_id";',
+      foldedField: 'const key = "sess" + "ion_id";',
+      mintedId: 'const id = "rfs_57bmozjjw5glqyhc4xupfdjpe4";',
+      secretKeyLiteral: 'const keys = "api[_-]?key|aws_session_token";',
+      regexLiteral: "const field = /aws_session_token|session_id/;",
+      deadline: "const deadlineMs = 60_000;",
+      composedField: 'const head = "session";\nconst key = head + suffix;',
+      // wb-khhg cut #3: the remaining identifier and literal forms the header names, each also read at every resolved closure path.
+      privateIdentifier: "class Holder { #session = 1; }",
+      propertyName: "const holder = { sessionId: 1 };",
+      snakeIdentifier: "const rf_session_ttl = 1;",
+      templateMiddle: ["const key = `$", "{head}session_id$", "{tail}`;"].join(""),
+      templateTail: ["const flag = `$", "{head}--session`;"].join(""),
+      templateLiteral: "const key = `session_id`;",
+      everyLeafLiteral: `const leaves = [${SESSION_VERBS.map(verb => `"session.${verb}"`).join(", ")}];`,
+      nestedFold: 'const key = ("sess" + "ion") + "_id";',
+      // Every literal kind crossed with every alternative it can name: the flag, the field, a dotted leaf and an rfs_ id.
+      crossString: 'const a = "--session";\nconst b = "session_id";\nconst c = "session.close";\nconst d = "rfs_57bmozjjw5glqyhc4xupfdjpe4";',
+      crossTemplateLiteral: "const a = `--session`;\nconst b = `session_id`;\nconst c = `session.close`;\nconst d = `rfs_57bmozjjw5glqyhc4xupfdjpe4`;",
+      crossHead: ["const a = `--session$", "{x}`;\nconst b = `session_id$", "{x}`;\nconst c = `session.close$", "{x}`;\nconst d = `rfs_57bm$", "{x}`;"].join(""),
+      crossMiddle: ["const a = `$", "{x}--session$", "{y}`;\nconst b = `$", "{x}session_id$", "{y}`;\nconst c = `$", "{x}session.close$", "{y}`;\nconst d = `$", "{x}rfs_57bm$", "{y}`;"].join(""),
+      crossTail: ["const a = `$", "{x}--session`;\nconst b = `$", "{x}session_id`;\nconst c = `$", "{x}session.close`;\nconst d = `$", "{x}rfs_57bm`;"].join(""),
+      crossFold: 'const a = "--sess" + "ion";\nconst b = "sess" + "ion_id";\nconst c = "session." + "close";\nconst d = "rfs_" + "57bm";',
     };
-    const controls = {
-      ttlIdentifier: control("const rfSessionTtlMs = 60_000;"),
-      sessionVariable: control("let session: string | undefined;"),
-      resultField: control("const id = result.session_id;"),
-      flagLiteral: control('const argv = ["--session", id];'),
-      templateFlag: control(["const flag = `--session=$", "{id}`;"].join("")),
-      fieldLiteral: control('const key = "session_id";'),
-      foldedField: control('const key = "sess" + "ion_id";'),
-      mintedId: control('const id = "rfs_57bmozjjw5glqyhc4xupfdjpe4";'),
-      secretKeyLiteral: control('const keys = "api[_-]?key|aws_session_token";'),
-      regexLiteral: control("const field = /aws_session_token|session_id/;"),
-      deadline: control("const deadlineMs = 60_000;"),
-      composedField: control('const head = "session";\nconst key = head + suffix;'),
-    };
-    // U1: session state must be judged at every exact TypeScript-resolved closure path.
-    const canariesMissed = resolved.modules.filter(path => sessionStateOf(path, "let session: string | undefined;").identifiers.length !== 1);
-    expect(canariesMissed, "resolved closure paths whose canary B2's scan missed (U1)").toEqual([]);
-    return done("B2", { closureFloorMet, anchorsRead, unresolved, unscanned, identifiers, literals, controls, canariesMissed });
+    const controls = Object.fromEntries(
+      Object.entries(sources).map(([name, source]) => {
+        const scan = sessionStateOf(CONTROL_FILE, source);
+        return [name, scan.identifiers.length + scan.literals.length];
+      }),
+    );
+    // PATH CONTROLS (wb-khhg cut #3): every control at every TypeScript-resolved closure path, read through stateInventory.
+    const lists = (reading: { readonly identifiers: readonly string[]; readonly literals: readonly string[] }): (readonly string[])[] => [reading.identifiers, reading.literals];
+    const { missed: pathControlsMissed } = pathControls(resolved.modules, sources, root => stateInventory(root, resolved.modules), lists, source => lists(sessionStateOf(CONTROL_FILE, source)));
+    expect(pathControlsMissed, "B2 controls whose reading at a resolved closure path differs from their reading at control.ts").toEqual([]);
+    return done("B2", { closureFloorMet, anchorsRead, unresolved, unscanned, identifiers, literals, controls, pathControlsMissed });
   },
   B3: async () => {
     const tree = liveTree();
@@ -1324,31 +1556,28 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return done("B3", { exempt: [...EXEMPT], exemptWalked, selfFindings, rosterFindings });
   },
   C1: async () => {
-    const modules = srcModules();
-    const scans = modules.map(path => sessionVerbsOf(posix(relative(REPO, path)), textOf(path)));
-    const argv = scans.flatMap(scan => scan.argv);
-    const flags = scans.flatMap(scan => scan.flags);
-    const literals = scans.flatMap(scan => scan.literals);
-    const renderArgvSeen = scans.reduce((sum, scan) => sum + scan.renderArgv, 0) >= 1;
-    const composedArgv = scans.reduce((sum, scan) => sum + scan.composedArgv, 0);
+    const live = verbInventory(REPO);
+    const { argv, flags, literals } = live;
+    const renderArgvSeen = live.renderArgv.length >= 1;
+    const composedArgv = live.composedArgv.length;
     const descriptors = await nativeCatalog();
     const descriptorFloorMet = descriptors.length >= 4;
     const descriptorsRead: string[] = [];
-    const descriptorJudge = (entries: readonly CapabilityDescriptor[]): string[] => entries
+    const descriptorJudge = (entries: readonly { readonly id: string }[]): string[] => entries
       .filter(descriptor => {
         descriptorsRead.push(descriptor.id);
         return SESSION_VERB_TEXT.test(JSON.stringify(descriptor)) || SESSION_FLAG_TEXT.test(JSON.stringify(descriptor));
       })
       .map(descriptor => descriptor.id);
     const descriptorHits = descriptorJudge(descriptors);
-    const srcFloorMet = modules.length >= FLOORS.srcModules;
+    const srcFloorMet = live.scans.length >= FLOORS.srcModules;
     // The listing anchors (wb-khhg F1): every file git lists below src/ is one these scans judged, and every descriptor a second
     // native registration lists is one the descriptor judge read.
-    const scanned = new Set(scans.map(scan => scan.file));
+    const scanned = new Set(live.scans.map(scan => scan.file));
     const unscanned = listedSrc().filter(file => !scanned.has(file));
     const freshIds = await nativeIdsAfresh();
     const descriptorsUnread = freshIds.filter(id => !descriptorsRead.includes(id));
-    expect(srcFloorMet, `src modules walked: ${modules.length}`).toBe(true);
+    expect(srcFloorMet, `src modules walked: ${live.scans.length}`).toBe(true);
     expect(unscanned, `src files git lists that C1 did not scan (${scanned.size} scanned)`).toEqual([]);
     expect(descriptorFloorMet, `native descriptors read: ${descriptors.length}`).toBe(true);
     expect(descriptorsUnread, `native descriptors C1 did not read (${descriptorsRead.length} read)`).toEqual([]);
@@ -1356,32 +1585,51 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(listingSound(), "git's listing meets the files floor and names every walk anchor and reader module").toBe(true);
     expect(renderArgvSeen, "the reader reads the provider's context render argv").toBe(true);
     expect({ argv, flags, literals, descriptorHits }, "an rf session recovery path needs (c) and (d) with it (wb-hs2j.3)").toStrictEqual({ argv: [], flags: [], literals: [], descriptorHits: [] });
+    // Each control's source: read at control.ts here and again at every listed src path below (PATH CONTROLS).
+    const sources: Record<string, string> = {
+      argvVerb: 'spawn("rf", ["--workspace", w, "session", "show", id, "--json"]);',
+      renderFlag: 'spawn("rf", ["--workspace", w, "context", "render", "--session", id, "--json"]);',
+      flagEquals: ["const argv = [`--session=$", "{id}`];"].join(""),
+      commandText: 'const cmd = "rf session recover --name dashboard";',
+      dottedLeaf: 'const leaf = "session.close";',
+      nameKeyed: 'spawn("rf", ["session", "open", "--name", name]);',
+      bdProse: 'const help = "run bd prime for the session close protocol";',
+      claudeField: "const id = message.session_id;",
+      previewArgv: 'spawn("rf", ["--workspace", w, "context", "render", "--model", m, "--task", t, "--no-commit", "--no-input", "--json"]);',
+      composedArgv: 'const verb = "show";\nspawn("rf", ["session", verb]);',
+      // wb-khhg cut #3: every session verb through each verb branch, a template's parts and a template literal spelling a command,
+      // and a --session= argv word; each is also read at every listed src path.
+      everyVerbArgv: `const argvs = [${SESSION_VERBS.map(verb => `["session", "${verb}"]`).join(", ")}];`,
+      everyVerbLeaf: `const leaves = [${SESSION_VERBS.map(verb => `"session.${verb}"`).join(", ")}];`,
+      everyVerbCommand: `const commands = [${SESSION_VERBS.map(verb => `"rf session ${verb}"`).join(", ")}];`,
+      templateVerb: ["const hint = `rf session $", "{name} recover`;"].join(""),
+      templateLiteralVerb: "const cmd = `rf session close`;",
+      flagEqualsWord: 'spawn("rf", ["--session=abc"]);',
+      // A dotted leaf and the flag in a template literal, a dotted leaf in a template's parts and an argv of template-literal words.
+      crossTemplateLiteral: "const a = `session.close`;\nconst b = `--session`;",
+      crossTemplateParts: ["const a = `session.close $", "{x}`;"].join(""),
+      argvTemplateWords: "const argv = [`session`, `close`];",
+    };
     const control = (source: string): JsonValue => {
-      const scan = sessionVerbsOf("control.ts", source);
+      const scan = sessionVerbsOf(CONTROL_FILE, source);
       return { hits: scan.argv.length + scan.flags.length + scan.literals.length, composed: scan.composedArgv };
     };
-    const controls = {
-      argvVerb: control('spawn("rf", ["--workspace", w, "session", "show", id, "--json"]);'),
-      renderFlag: control('spawn("rf", ["--workspace", w, "context", "render", "--session", id, "--json"]);'),
-      flagEquals: control(["const argv = [`--session=$", "{id}`];"].join("")),
-      commandText: control('const cmd = "rf session recover --name dashboard";'),
-      dottedLeaf: control('const leaf = "session.close";'),
-      nameKeyed: control('spawn("rf", ["session", "open", "--name", name]);'),
-      bdProse: control('const help = "run bd prime for the session close protocol";'),
-      claudeField: control("const id = message.session_id;"),
-      previewArgv: control('spawn("rf", ["--workspace", w, "context", "render", "--model", m, "--task", t, "--no-commit", "--no-input", "--json"]);'),
-      composedArgv: control('const verb = "show";\nspawn("rf", ["session", verb]);'),
-    };
-    // U1: a dotted session leaf must be judged at every exact listed src path.
-    const canariesMissed = listedSrc().filter(path => sessionVerbsOf(path, 'const leaf = "session.recover";').literals.length !== 1);
-    expect(canariesMissed, "listed src paths whose canary C1's scan missed (U1)").toEqual([]);
-    // U1 K11: every listed id carries a verb and a flag in separate probes through the SAME live-catalog judge.
-    const descriptorCanariesMissed = ["rf session show", "--session"].flatMap(sentence => {
-      const hits = descriptorJudge(descriptors.map(descriptor => ({ ...descriptor, description: sentence })));
-      return freshIds.filter(id => !hits.includes(id)).map(id => `${id}:${sentence}`);
-    });
-    expect(descriptorCanariesMissed, "listed descriptor ids whose verb/flag judgement C1 missed (U1)").toEqual([]);
-    return done("C1", { srcFloorMet, listingSound: listingSound(), unscanned, descriptorFloorMet, descriptorsUnread, renderArgvSeen, argv, flags, literals, descriptorHits, composedArgv, controls, canariesMissed, descriptorCanariesMissed });
+    const controls = Object.fromEntries(Object.entries(sources).map(([name, source]) => [name, control(source)]));
+    // PATH CONTROLS (wb-khhg cut #3): every control at every listed src path, read through verbInventory as the live tree is.
+    const lists = (reading: VerbLists): (readonly string[])[] => [reading.argv, reading.flags, reading.literals, reading.renderArgv, reading.composedArgv];
+    const { missed: pathControlsMissed } = pathControls(listedSrc(), sources, verbInventory, lists, source => lists(verbLists([sessionVerbsOf(CONTROL_FILE, source)])));
+    expect(pathControlsMissed, "C1 controls whose reading at a listed src path differs from their reading at control.ts").toEqual([]);
+    // Descriptor canaries (wb-khhg U1 K11; cut #3): every session form in every DESCRIPTOR_CANARY_FIELDS field of every listed id,
+    // read through the SAME descriptorJudge as the live catalog.
+    const sessionForms = [...SESSION_VERBS.map(verb => `session.${verb}`), ...SESSION_VERBS.map(verb => `rf session ${verb}`), "--session"];
+    const descriptorCanariesMissed = sessionForms.flatMap(form =>
+      DESCRIPTOR_CANARY_FIELDS.flatMap(field => {
+        const hits = descriptorJudge(descriptors.map(descriptor => placedIn(descriptor, field, form)));
+        return freshIds.filter(id => !hits.includes(id)).map(id => `${id}:${field}:${form}`);
+      }),
+    );
+    expect(descriptorCanariesMissed, "listed descriptor ids whose session form, placed in a field, C1's descriptor judge missed").toEqual([]);
+    return done("C1", { srcFloorMet, listingSound: listingSound(), unscanned, descriptorFloorMet, descriptorsUnread, renderArgvSeen, argv, flags, literals, descriptorHits, composedArgv, controls, pathControlsMissed, descriptorCanariesMissed });
   },
   C2: async () => {
     const { leafPaths, sessionLeaves, help, record, duplicateNames } = ROSTER.producer;
@@ -1507,6 +1755,7 @@ describe("workbench-rf-session-lifecycle-census.test.ts judged-set A1-A4 B1-B3 C
         intrawordEmphasis: `${INTRAWORD_EMPHASIS.source}/${INTRAWORD_EMPHASIS.flags}`,
         walkAnchors: WALK_ANCHORS.map(([path, token]) => `${path}:${token}`),
         readerModules: READER_MODULES,
+        descriptorCanaryFields: DESCRIPTOR_CANARY_FIELDS,
         fixtureRoot: FIXTURE_ROOT,
         closedCode: CLOSED_CODE,
       },
