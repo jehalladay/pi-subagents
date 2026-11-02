@@ -1,10 +1,10 @@
 /**
  * wb-pyel.7 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1; the rule-19 structural exit of wb-pyel.1, orchestrator rulings R-B105 and
- * R-B135): the Fiber host-publication census's A1 and A3 readers, for wb-pyel.1's census to compose. WHAT IS CLAIMED about them is
- * stated in one place only: the CLAIMS constant of test/workbench-fiber-host-publication-readers-census.test.ts, each clause bounded
- * to the planted inputs of the pins it names, every reading held to its roster
- * (test/fixtures/fiber-host-publication-readers-roster.json). The comments in this file describe what the code does, rule by rule;
- * they claim no coverage of their own, and an input no census plant holds is not claimed by them.
+ * R-B135): the Fiber host-publication census's A1 and A3 readers, for wb-pyel.1's census to compose. The code below is wb-pyel.7's
+ * cut #4 unchanged; its carrier child wb-pyel.10 (orchestrator rulings R-B265 and R-B308) lands it first. WHAT IS CLAIMED about these
+ * readers is stated by the censuses that read them and never here: test/workbench-fiber-host-publication-positions-census.test.ts
+ * claims, reader by reader, exactly the readings its plants hold. The comments in this file describe what the code does, rule by
+ * rule; they claim no coverage of their own, and an input no census plant holds is not claimed by them.
  *
  * A1, THE MANIFEST READERS. manifestForm names the one form that selects a path, trying in order: manifest-name (the base name,
  * lower-cased, equals a lower-cased MANIFEST_NAMES entry), pip-name (the lower-cased base name, extension included, contains a
