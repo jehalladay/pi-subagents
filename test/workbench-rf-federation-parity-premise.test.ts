@@ -15,34 +15,49 @@
  * verbatim and the 740c1a817 pin, never a Pi-minted status."
  *
  * READINGS
- * - MENTION: a match of one of the claim's FAMILIES in the folded text of a block (a maximal run of non-blank lines) of
- *   a scanned file, or in one exported bead row. The families: the claim id; "disabled-mode parity"; "using RF-CLI
+ * - MENTION: a match of one of the claim's FAMILIES in the folded text of a block (a maximal run of non-blank lines; a
+ *   line of white space only is blank, row R8) of a scanned file, or in one exported bead row, never joined to a letter
+ *   or a digit before or after it (rows N07, N18). The families: the claim id; "disabled-mode parity"; "using RF-CLI
  *   normally" (README:7 and BEADS:57; use, uses, using or used, an optional "the", and the rf spellings rf, RF-CLI,
- *   RFCLI, ReactiveFiber CLI); and NEG-05's own sentence "leaves existing RF-CLI graph and agent usage unchanged"
- *   (README:47, DEVELOPER:50). Those are the program's three wordings of the claim at the rf pin, plus its id.
- * - FOLDED TEXT: numeric and NAMED_REFERENCES character references and JS escapes (\uXXXX, \u{X}, \xHH) decoded, then
- *   NFKC, lower case, every run of ASCII punctuation or white space one space, every other code point (a non-ASCII one
- *   or an ASCII control) one wildcard; a block's lines are folded one by one and joined by a space. A word of a family
- *   reads as itself, with one letter read as a wildcard, or with one to three spaces or wildcards between two of its
- *   letters, and the words of a phrase stand one to four spaces or wildcards apart (SEPARATOR; a line join can leave
- *   two or three spaces between them): a hyphen, a line break inside a block, emphasis inside a word, a look-alike
- *   letter, an inserted invisible or a hyphen encoded in the decoded set (a numeric or NAMED_REFERENCES character
- *   reference, or one of the JS escapes listed above) hides no mention, while a run of wildcards never reads as a word.
- *   A hyphen encoded outside that set can hide one (residuals R10 and R13). Required text is never folded: the verdict
- *   word and the pin are matched exactly, as whole words.
+ *   RFCLI, ReactiveFiber CLI, ReactiveFiberCLI and Reactive Fiber CLI: rows F01, F04, F64, F65); and NEG-05's own
+ *   sentence "leaves existing RF-CLI graph and agent usage unchanged" with the same optional "the" and rf spellings
+ *   (README:47, DEVELOPER:50; rows F03, F64). Those are the program's three wordings of the claim at the rf pin, plus
+ *   its id.
+ * - FOLDED TEXT: the decoded set first, each form read as its code point (up to U+10FFFF): a decimal character
+ *   reference of one to seven digits (&#45;), a hex one of one to six digits in either case after x or X (&#x2d;,
+ *   &#X2D;), one of the fourteen NAMED_REFERENCES names (&shy;), and the JS escapes \u{X} of one to six hex digits,
+ *   \uXXXX and \xHH, hex digits in either case (rows F45, F46, F52-F55: every name, both cases, each width bound, a
+ *   code point past U+FFFF and a form standing for a letter); then NFKC (rows F09, F66), lower case, every run of
+ *   ASCII punctuation, space, tab, line feed or carriage return one space (rows F57, F58), every other code point (a
+ *   non-ASCII one or another ASCII control) one wildcard (rows F07, F08, N21); a block's lines are folded one by one
+ *   and joined by a space. A word of a family reads as itself, with one letter read as a wildcard (any letter, the
+ *   first and the last included: rows F07, F34, F56), or with one to three spaces or wildcards between two of its
+ *   letters (any two, after the first letter and before the last included: rows F08, F51, F56; four is past the
+ *   bound, N14), and the words of a phrase, those of a two- or three-word rf spelling included, stand one to four
+ *   spaces or wildcards apart (SEPARATOR: rows F48-F50, F65; five is past the bound, N13 and N21; a line join can
+ *   leave two or three spaces between them, F49): a hyphen, a line break inside a block, emphasis inside a word, a
+ *   look-alike letter, an inserted invisible or a hyphen encoded in the decoded set hides no mention, while a run of
+ *   wildcards never reads as a word. A hyphen encoded outside that set can hide one (residuals R10 and R13). Required
+ *   text is never folded: the verdict word and the pin are matched exactly, as whole words (rows F22, F39-F41,
+ *   F59-F62).
  * - WINDOW: a mention is judged on the raw lines its phrase spans, never on the rest of its block, so an echo on
- *   another line or in another table row does not cover it (rows F36-F38, F43).
- * - ECHO: a window that carries the verdict word as a whole upper-case word, the audit pin as a whole hex token (or a
- *   longer extension of it) and no other grade (MINTED_GRADES, whole upper-case words).
+ *   another line or in another table row does not cover it (rows F36-F38, F43), while an echo on any line it spans,
+ *   the first or the last, does (rows N02, N19).
+ * - ECHO: a window that carries the verdict word as a whole upper-case word, the audit pin as a whole lower-case hex
+ *   token (or a longer one that extends it, up to a full 40-hex sha: rows N03, N20, F60) and no other grade (each of
+ *   MINTED_GRADES as a whole upper-case word: rows F15, F21, F23, F63; a grade inside a longer word is none, N15-N17).
  * - (a) While the fixture is absent at the pin (FIXTURE_AT_PIN, measured), a scanned mention whose window is not an echo
  *   is refused: unechoed-claim. The guard does not tell an assertion from a negation or a quotation, so every mention
  *   in the four trees is an echo or it is refused (row F12).
  * - (b) Once a later cut re-measures the rf tree and records the fixture present, a scanned mention whose window is not
- *   an echo is admitted only when the first receipt the window names (docs/workbench/receipts/<file>.md) exists, names
- *   "rf sha <12-40 hex>" and carries FIXTURE_COMMAND exactly (no further flag) with "exit 0" after it on its line;
- *   otherwise receipt-not-cited, receipt-absent, receipt-no-rf-sha, receipt-no-command, receipt-no-exit-0. While the
- *   fixture is absent no receipt admits a mention (row F16). Until FIXTURE_AT_PIN flips, (b) is exercised by rows
- *   F24-F31 and N08; the live scan already reads the receipts directory (RECEIPTS_FLOOR) for that flip.
+ *   an echo is admitted only when the first receipt the window names (docs/workbench/receipts/<file>.md, the name in
+ *   letters of either case, digits, dots, hyphens or underscores) exists, names "rf sha <12-40 hex>" (lower-case hex,
+ *   rf as a whole word) and carries FIXTURE_COMMAND exactly (no further flag: the command then the end of its line, a
+ *   closing mark ` ' " ) ] . , or ;, or white space then the end of the line, an arrow or a word) with "exit 0", as
+ *   written and whole, after it on its line; otherwise receipt-not-cited, receipt-absent, receipt-no-rf-sha,
+ *   receipt-no-command, receipt-no-exit-0. While the fixture is absent no receipt admits a mention (row F16). Until
+ *   FIXTURE_AT_PIN flips, (b) is exercised by rows F24-F31, F67, F68, N08 and N22; the live scan already reads the
+ *   receipts directory (RECEIPTS_FLOOR) for that flip.
  * - (c) A scanned claim-id mention also draws echo-no-undetermined, echo-no-pin and echo-minted-status for what its
  *   window lacks, receipt or not (row F31). An exported bead row (.beads/issues.jsonl: every string value of the row,
  *   nested ones included) with a claim-id mention draws echo-no-undetermined and echo-no-pin: bead rows are judged at row
@@ -77,7 +92,8 @@
  * parts, written with no separator between them (camelCase, PascalCase or upper-case identifiers, or one hyphen dropped
  * between two words); R12 inflection and deletion: another form of a family word (leave, leaving or left for NEG-05's
  * leaves; the plural parities) or a dropped letter; R13 a hyphen encoded outside the decoded set (percent-encoded, a
- * numeric reference without its semicolon, an octal escape).
+ * numeric or named reference without its semicolon, an octal escape, a reference or braced escape with more digits
+ * than the decoded set reads, or an ampersand that is itself encoded).
  * FOLLOW-UP wb-wfpj (landing 255 PREP F1 MEDIUM + F2 LOW; riders F5 and F9; F4 rides). The pinned set it adds, by row
  * id, with the falsifier that turns each red (measured at this cut on in-place throwaway edits):
  * - R11-R13, quiet rows for the three unnamed families of PREP F1. Each carries every gate probe of its family, one
@@ -90,10 +106,51 @@
  *   and F51 (two- and three-character gaps inside a word) are refused. The PREP survivors red them: M05 (SEPARATOR one
  *   space) F48-F50, M29 (one or two) F49-F50, M29b (spaces only) F48 and F50, M28 (an in-word gap of one) F51.
  * - N13 (a five-character separator) and N14 (a four-character gap inside a word) stay quiet, the far side of each
- *   bound: a separator of up to five reds N13, a gap of up to four reds N14. N15: a grade inside a longer word
- *   (PROVENANCE) is no grade; OB2 (grades matched inside longer words) reds it.
+ *   bound: a separator of up to five reds N13, a gap of up to four reds N14. N15: a grade at the start of a longer
+ *   word (PROVENANCE) is no grade; OB2 (grades matched inside longer words) reds it.
  * - The frozen shape pins SEPARATOR and the in-word gap; deleting that pin together with M29 or M28 still reds F49-F50
  *   or F51.
+ * CUT 2 (refusal #1 of wb-wfpj: U1, U2, U3 and the class-level guard over READINGS). The pinned set it adds, by row id,
+ * with the one-edit reader hollowing that turns each red (measured at this cut on in-place throwaway edits; each also
+ * reds the roster):
+ * - U1, the decoded set: F52 (hex references: x and X, digits in either case, one, two, four, five and six digits, a
+ *   letter and a code point past U+FFFF), F53 (decimal: one, four and seven digits, a letter), F54 (each of the
+ *   fourteen NAMED_REFERENCES names) and F55 (JS escapes: braced of one to six digits in either case, a letter and a
+ *   code point past U+FFFF; \uXXXX and \xHH in either case, a letter) are refused. G-DEC-HEX, G-DEC-HEXUP, x-only
+ *   and X-only prefixes, hex digits narrowed to one case or to decimal, each narrowed width, a base-10 hex parse, code
+ *   points capped at U+FFFF, G-JS-BRACED, its digit cases and widths, the \uXXXX and \xHH digit cases, a base-10
+ *   escape parse and each name decoded to nothing (G-NAMED-*, all fourteen) red them.
+ * - U2: N15-N17, a grade inside a longer word is no grade: at its start before an upper-case letter (N15) or a
+ *   lower-case letter or a digit (N17: CONFIRMEDly, VERIFIED2), and at its end after an upper-case letter, a
+ *   lower-case letter or a digit (N16: UNVERIFIED, UNCONFIRMED, UNSETTLED, preVERIFIED, 2VERIFIED). G-MW-LB (the
+ *   leading boundary dropped) and each whole range dropped from either boundary red N15, N16 or N17.
+ * - U3: F56, the in-word gap after a word's first letter and before its last, and the one-letter wildcard at its first
+ *   and last letters; G-GAP-POS-START, G-GAP-POS-END, G-WILD-POS-START and G-WILD-POS-END red it, so the coordinated
+ *   hollows CO-GAP-START, CO-GAP-END and CO-WILD-START (each also editing the bound literal) red too.
+ * - The class-level guard: F57 (runs of five tabs, carriage returns or marks of each ASCII punctuation range), F58 (a
+ *   bead row's claim id split by a run of blank lines), F59 (the verdict joined to a letter or a digit), F60 (the pin
+ *   after a letter or a digit or before a letter, extended in upper case, or extended past a full sha), F61 and F62 (a
+ *   fullwidth verdict or pin digit, in a file and in a bead row), F63 (each minted grade), F64 (use, uses, used and
+ *   both families' optional "the"), F65 (the rf spellings RFCLI, ReactiveFiber CLI, ReactiveFiberCLI and Reactive
+ *   Fiber CLI, and a two- or three-word spelling's words four wildcards apart) and F66 (a precomposed letter between
+ *   two words) are refused; N18 (a phrase joined to a letter or a digit), N19 (an echo on a mention's first line), N20
+ *   (the pin extended to a full sha) and N21 (five ASCII controls between two words) stay quiet; R8 gains a line of
+ *   white space only and R13 gains a hex and a named reference without the semicolon, a seven-digit hex, an
+ *   eight-digit decimal and a seven-digit braced form, and an ampersand encoded as &amp;. The hollowings measured at this cut each red one of them: each alternative dropped
+ *   from a family slot that has several (the verbs, the optional "the", the rf spellings), each whole range
+ *   (upper-case letters, lower-case letters or digits) dropped from a word boundary, each width bound moved by one
+ *   (save a lower bound of one moved to zero: the decoders and the in-word gap then read the same text, an
+ *   equivalent edit), each case of hex letters dropped, each ASCII range, tab, line feed or carriage return dropped
+ *   from the punctuation class, each window edge moved by a line, NFC, NFD or NFKD for NFKC, NFKC applied to the
+ *   verdict or the pin, and each grade dropped with its frozen literal.
+ * - (b): F67 (an rf sha of eleven or forty-one hex digits, in upper case, or after a letter) and F68 (an exit other than
+ *   exit 0 as written, the command ending its line, with or without trailing white space) draw their diagnosis, and
+ *   N22 (receipt names with capitals, digits, dots and an underscore, a twelve-hex rf sha, each closing mark, and an
+ *   arrow or a word after the command) is admitted; each width bound moved by one, each boundary dropped, hex in
+ *   either case, exit 0 in any case, each closing mark, the arrow, the word, the end of the line and each name
+ *   character kind dropped red one of them.
+ * A narrower edit than those (one letter or digit dropped from inside a boundary's range, one mark from inside a
+ * punctuation range, one hex letter from a case) is NOT CLAIMED by this census.
  * Other spellings of the R11-R13 families are NOT CLAIMED by a quiet row of their own; the F4 boundary above (an edit
  * of this file and the roster together) is unchanged.
  * Display paths added: none. This file is test-only: it spawns nothing and writes nothing; it reads the four trees, the
@@ -449,6 +506,7 @@ const exportLines = (): string[] => readFileSync(join(ROOT, BEAD_EXPORT), "utf8"
 const CYRILLIC_A = String.fromCodePoint(0x0430);
 const CYRILLIC_ER = String.fromCodePoint(0x0440);
 const CYRILLIC_I = String.fromCodePoint(0x0406);
+const CYRILLIC_U = String.fromCodePoint(0x0443);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
 const SOFT_HYPHEN = String.fromCodePoint(0xad);
 const NO_BREAK_SPACE = String.fromCodePoint(0xa0);
@@ -456,6 +514,11 @@ const UNICODE_HYPHEN = String.fromCodePoint(0x2010);
 const NON_BREAKING_HYPHEN = String.fromCodePoint(0x2011);
 const EN_DASH = String.fromCodePoint(0x2013);
 const FULLWIDTH_RF_CLI = String.fromCodePoint(0xff32, 0xff26, 0xff0d, 0xff23, 0xff2c, 0xff29);
+const FULLWIDTH_UNDETERMINED = String.fromCodePoint(0xff35, 0xff2e, 0xff24, 0xff25, 0xff34, 0xff25, 0xff32, 0xff2d, 0xff29, 0xff2e, 0xff25, 0xff24);
+const FULLWIDTH_ZERO = String.fromCodePoint(0xff10);
+const E_ACUTE = String.fromCodePoint(0xe9);
+/** The audit pin extended to a full 40-hex sha. */
+const FULL_PIN_SHA = "740c1a8170123456789abcdef0123456789abcde";
 const COMPLETE_RECEIPT = ["# wb-x: installed journey", "", "## 2026-10-22 run", "rf sha 0123456789abcdef0123456789abcdef01234567", `\`${FIXTURE_COMMAND}\` -> exit 0`, ""].join("\n");
 const CITING = "Disabled-mode parity holds (docs/workbench/receipts/wb-x.md).";
 const FILLER = "filler line\n".repeat(60_000);
@@ -569,6 +632,275 @@ const ROWS: readonly Row[] = [
     ],
     expect: ["docs/f51a.md:1 mode-parity: unechoed-claim", "docs/f51b.md:1 mode-parity: unechoed-claim"],
   },
+  // the decoded set, form by form (wb-wfpj cut 2, refusal #1 U1): each decoded form stands between two words of a phrase
+  {
+    table: "FALSIFIERS",
+    id: "F52",
+    label: "hex character references after x or X, one to six digits in either case, between two words or for a letter",
+    files: [
+      { path: "docs/f52a.md", text: "disabled&#x2d;mode parity\n" },
+      { path: "docs/f52b.md", text: "disabled&#X2D;mode parity\n" },
+      { path: "docs/f52c.md", text: "disabled&#x9;mode parity\n" },
+      { path: "docs/f52d.md", text: "disabled&#x2010;mode parity\n" },
+      { path: "docs/f52e.md", text: "disabled&#x00002D;mode parity\n" },
+      { path: "docs/f52f.md", text: "dis&#x61;bled-mode parity\n" },
+      { path: "docs/f52g.md", text: "dis&#x1D41A;bled-mode parity\n" },
+    ],
+    expect: ["docs/f52a.md:1 mode-parity: unechoed-claim", "docs/f52b.md:1 mode-parity: unechoed-claim", "docs/f52c.md:1 mode-parity: unechoed-claim", "docs/f52d.md:1 mode-parity: unechoed-claim", "docs/f52e.md:1 mode-parity: unechoed-claim", "docs/f52f.md:1 mode-parity: unechoed-claim", "docs/f52g.md:1 mode-parity: unechoed-claim"],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F53",
+    label: "decimal character references of one to seven digits, between two words or for a letter",
+    files: [
+      { path: "docs/f53a.md", text: "disabled&#9;mode parity\n" },
+      { path: "docs/f53b.md", text: "disabled&#8208;mode parity\n" },
+      { path: "docs/f53c.md", text: "disabled&#0000045;mode parity\n" },
+      { path: "docs/f53d.md", text: "dis&#97;bled-mode parity\n" },
+    ],
+    expect: ["docs/f53a.md:1 mode-parity: unechoed-claim", "docs/f53b.md:1 mode-parity: unechoed-claim", "docs/f53c.md:1 mode-parity: unechoed-claim", "docs/f53d.md:1 mode-parity: unechoed-claim"],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F54",
+    label: "every NAMED_REFERENCES name between two words",
+    files: [
+      { path: "docs/f54-amp.md", text: "disabled&amp;mode parity\n" },
+      { path: "docs/f54-lt.md", text: "disabled&lt;mode parity\n" },
+      { path: "docs/f54-gt.md", text: "disabled&gt;mode parity\n" },
+      { path: "docs/f54-quot.md", text: "disabled&quot;mode parity\n" },
+      { path: "docs/f54-apos.md", text: "disabled&apos;mode parity\n" },
+      { path: "docs/f54-nbsp.md", text: "disabled&nbsp;mode parity\n" },
+      { path: "docs/f54-shy.md", text: "disabled&shy;mode parity\n" },
+      { path: "docs/f54-hyphen.md", text: "disabled&hyphen;mode parity\n" },
+      { path: "docs/f54-dash.md", text: "disabled&dash;mode parity\n" },
+      { path: "docs/f54-ndash.md", text: "disabled&ndash;mode parity\n" },
+      { path: "docs/f54-mdash.md", text: "disabled&mdash;mode parity\n" },
+      { path: "docs/f54-minus.md", text: "disabled&minus;mode parity\n" },
+      { path: "docs/f54-zwj.md", text: "disabled&zwj;mode parity\n" },
+      { path: "docs/f54-zwnj.md", text: "disabled&zwnj;mode parity\n" },
+    ],
+    expect: [
+      "docs/f54-amp.md:1 mode-parity: unechoed-claim",
+      "docs/f54-lt.md:1 mode-parity: unechoed-claim",
+      "docs/f54-gt.md:1 mode-parity: unechoed-claim",
+      "docs/f54-quot.md:1 mode-parity: unechoed-claim",
+      "docs/f54-apos.md:1 mode-parity: unechoed-claim",
+      "docs/f54-nbsp.md:1 mode-parity: unechoed-claim",
+      "docs/f54-shy.md:1 mode-parity: unechoed-claim",
+      "docs/f54-hyphen.md:1 mode-parity: unechoed-claim",
+      "docs/f54-dash.md:1 mode-parity: unechoed-claim",
+      "docs/f54-ndash.md:1 mode-parity: unechoed-claim",
+      "docs/f54-mdash.md:1 mode-parity: unechoed-claim",
+      "docs/f54-minus.md:1 mode-parity: unechoed-claim",
+      "docs/f54-zwj.md:1 mode-parity: unechoed-claim",
+      "docs/f54-zwnj.md:1 mode-parity: unechoed-claim",
+    ],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F55",
+    label: "JS escapes, a braced one of one to six digits and the four- and two-digit ones, hex digits in either case, between two words or for a letter",
+    files: [
+      { path: "src/f55a.ts", text: 'const a = "disabled\\u{2d}mode parity";\n' },
+      { path: "src/f55b.ts", text: 'const b = "disabled\\u{2D}mode parity";\n' },
+      { path: "src/f55c.ts", text: 'const c = "disabled\\u{9}mode parity";\n' },
+      { path: "src/f55d.ts", text: 'const d = "disabled\\u{2010}mode parity";\n' },
+      { path: "src/f55e.ts", text: 'const e = "disabled\\u{00002d}mode parity";\n' },
+      { path: "src/f55f.ts", text: 'const f = "dis\\u{1D41A}bled-mode parity";\n' },
+      { path: "src/f55g.ts", text: 'const g = "dis\\u{61}bled-mode parity";\n' },
+      { path: "src/f55h.ts", text: 'const h = "disabled\\u002Dmode parity";\n' },
+      { path: "src/f55i.ts", text: 'const i = "dis\\u0061bled-mode parity";\n' },
+      { path: "src/f55j.ts", text: 'const j = "disabled\\x2dmode parity";\n' },
+      { path: "src/f55k.ts", text: 'const k = "disabled\\x2Dmode parity";\n' },
+      { path: "src/f55l.ts", text: 'const l = "dis\\x61bled-mode parity";\n' },
+    ],
+    expect: [
+      "src/f55a.ts:1 mode-parity: unechoed-claim",
+      "src/f55b.ts:1 mode-parity: unechoed-claim",
+      "src/f55c.ts:1 mode-parity: unechoed-claim",
+      "src/f55d.ts:1 mode-parity: unechoed-claim",
+      "src/f55e.ts:1 mode-parity: unechoed-claim",
+      "src/f55f.ts:1 mode-parity: unechoed-claim",
+      "src/f55g.ts:1 mode-parity: unechoed-claim",
+      "src/f55h.ts:1 mode-parity: unechoed-claim",
+      "src/f55i.ts:1 mode-parity: unechoed-claim",
+      "src/f55j.ts:1 mode-parity: unechoed-claim",
+      "src/f55k.ts:1 mode-parity: unechoed-claim",
+      "src/f55l.ts:1 mode-parity: unechoed-claim",
+    ],
+  },
+  // the tolerance at a word's edges (refusal #1 U3)
+  {
+    table: "FALSIFIERS",
+    id: "F56",
+    label: "the in-word gap after a word's first letter and before its last, and the one-letter wildcard at its first and last letters",
+    files: [
+      { path: "docs/f56a.md", text: `d${ZERO_WIDTH_SPACE}isabled-mode parity\n` },
+      { path: "docs/f56b.md", text: "agents keep using RF-CLI n ormally\n" },
+      { path: "docs/f56c.md", text: `disable${ZERO_WIDTH_SPACE}d-mode parity\n` },
+      { path: "docs/f56d.md", text: `disabled-mode ${CYRILLIC_ER}arity\n` },
+      { path: "docs/f56e.md", text: `disabled-mode parit${CYRILLIC_U}\n` },
+    ],
+    expect: ["docs/f56a.md:1 mode-parity: unechoed-claim", "docs/f56b.md:1 rf-normally: unechoed-claim", "docs/f56c.md:1 mode-parity: unechoed-claim", "docs/f56d.md:1 mode-parity: unechoed-claim", "docs/f56e.md:1 mode-parity: unechoed-claim"],
+  },
+  // every run of ASCII punctuation, space, tab, line feed or carriage return folds to one space
+  {
+    table: "FALSIFIERS",
+    id: "F57",
+    label: "a run of five tabs, carriage returns or ASCII punctuation marks of each range between two words",
+    files: [
+      { path: "docs/f57a.md", text: "disabled\t\t\t\t\tmode parity\n" },
+      { path: "docs/f57b.md", text: "disabled\r\r\r\r\rmode parity\n" },
+      { path: "docs/f57c.md", text: "disabled-----mode parity\n" },
+      { path: "docs/f57d.md", text: "disabled:::::mode parity\n" },
+      { path: "docs/f57e.md", text: "disabled_____mode parity\n" },
+      { path: "docs/f57f.md", text: "disabled~~~~~mode parity\n" },
+    ],
+    expect: ["docs/f57a.md:1 mode-parity: unechoed-claim", "docs/f57b.md:1 mode-parity: unechoed-claim", "docs/f57c.md:1 mode-parity: unechoed-claim", "docs/f57d.md:1 mode-parity: unechoed-claim", "docs/f57e.md:1 mode-parity: unechoed-claim", "docs/f57f.md:1 mode-parity: unechoed-claim"],
+  },
+  { table: "FALSIFIERS", id: "F58", label: "bead row, a run of blank lines inside the claim id", bead: [beadLine({ id: "wb-zz.10", notes: "h2fp\n\n\n\n\nC004 holds" })], expect: ["wb-zz.10 claim-id: echo-no-undetermined+echo-no-pin"] },
+  // required text is exact (ECHO): whole words, the pin's extension bound, no compatibility folding
+  {
+    table: "FALSIFIERS",
+    id: "F59",
+    label: "the verdict joined to a letter or a digit before or after it",
+    files: [
+      { path: "docs/f59a.md", text: "disabled-mode parity: PREUNDETERMINED at 740c1a817\n" },
+      { path: "docs/f59b.md", text: "disabled-mode parity: xUNDETERMINED at 740c1a817\n" },
+      { path: "docs/f59c.md", text: "disabled-mode parity: 2UNDETERMINED at 740c1a817\n" },
+      { path: "docs/f59d.md", text: "disabled-mode parity: UNDETERMINEDly at 740c1a817\n" },
+      { path: "docs/f59e.md", text: "disabled-mode parity: UNDETERMINED2 at 740c1a817\n" },
+    ],
+    expect: ["docs/f59a.md:1 mode-parity: unechoed-claim", "docs/f59b.md:1 mode-parity: unechoed-claim", "docs/f59c.md:1 mode-parity: unechoed-claim", "docs/f59d.md:1 mode-parity: unechoed-claim", "docs/f59e.md:1 mode-parity: unechoed-claim"],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F60",
+    label: "the pin after a letter or a digit or before a letter, extended in upper case, or extended past a full sha",
+    files: [
+      { path: "docs/f60a.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817g\n" },
+      { path: "docs/f60b.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817G\n" },
+      { path: "docs/f60c.md", text: "disabled-mode parity: UNDETERMINED at G740c1a817\n" },
+      { path: "docs/f60d.md", text: "disabled-mode parity: UNDETERMINED at 1740c1a817\n" },
+      { path: "docs/f60e.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817AB\n" },
+      { path: "docs/f60f.md", text: `disabled-mode parity: UNDETERMINED at ${FULL_PIN_SHA}9\n` },
+    ],
+    expect: ["docs/f60a.md:1 mode-parity: unechoed-claim", "docs/f60b.md:1 mode-parity: unechoed-claim", "docs/f60c.md:1 mode-parity: unechoed-claim", "docs/f60d.md:1 mode-parity: unechoed-claim", "docs/f60e.md:1 mode-parity: unechoed-claim", "docs/f60f.md:1 mode-parity: unechoed-claim"],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F61",
+    label: "a fullwidth verdict or a fullwidth digit in the pin is never folded",
+    files: [
+      { path: "docs/f61a.md", text: `h2fp-C004 is ${FULLWIDTH_UNDETERMINED} at 740c1a817\n` },
+      { path: "docs/f61b.md", text: `h2fp-C004 is UNDETERMINED at 74${FULLWIDTH_ZERO}c1a817\n` },
+    ],
+    expect: ["docs/f61a.md:1 claim-id: echo-no-undetermined+unechoed-claim", "docs/f61b.md:1 claim-id: echo-no-pin+unechoed-claim"],
+  },
+  { table: "FALSIFIERS", id: "F62", label: "bead row, a fullwidth verdict and a fullwidth digit in the pin", bead: [beadLine({ id: "wb-zz.11", notes: `h2fp-C004 is ${FULLWIDTH_UNDETERMINED} at 74${FULLWIDTH_ZERO}c1a817` })], expect: ["wb-zz.11 claim-id: echo-no-undetermined+echo-no-pin"] },
+  {
+    table: "FALSIFIERS",
+    id: "F63",
+    label: "each minted grade beside an echo",
+    files: [
+      { path: "docs/f63-confirmed.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817, CONFIRMED\n" },
+      { path: "docs/f63-plausible.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817, PLAUSIBLE\n" },
+      { path: "docs/f63-refuted.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817, REFUTED\n" },
+      { path: "docs/f63-verified.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817, VERIFIED\n" },
+      { path: "docs/f63-established.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817, ESTABLISHED\n" },
+      { path: "docs/f63-settled.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817, SETTLED\n" },
+      { path: "docs/f63-proven.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817, PROVEN\n" },
+    ],
+    expect: [
+      "docs/f63-confirmed.md:1 mode-parity: unechoed-claim",
+      "docs/f63-plausible.md:1 mode-parity: unechoed-claim",
+      "docs/f63-refuted.md:1 mode-parity: unechoed-claim",
+      "docs/f63-verified.md:1 mode-parity: unechoed-claim",
+      "docs/f63-established.md:1 mode-parity: unechoed-claim",
+      "docs/f63-settled.md:1 mode-parity: unechoed-claim",
+      "docs/f63-proven.md:1 mode-parity: unechoed-claim",
+    ],
+  },
+  // the families' word lists (MENTION)
+  {
+    table: "FALSIFIERS",
+    id: "F64",
+    label: "the verbs use, uses and used, and the optional the of both families",
+    files: [
+      { path: "docs/f64a.md", text: "agents use RF-CLI normally\n" },
+      { path: "docs/f64b.md", text: "an agent uses RF-CLI normally\n" },
+      { path: "docs/f64c.md", text: "agents used RF-CLI normally\n" },
+      { path: "docs/f64d.md", text: "agents keep using the RF-CLI normally\n" },
+      { path: "docs/f64e.md", text: "Turning it off leaves the existing RF-CLI graph and agent usage unchanged.\n" },
+    ],
+    expect: ["docs/f64a.md:1 rf-normally: unechoed-claim", "docs/f64b.md:1 rf-normally: unechoed-claim", "docs/f64c.md:1 rf-normally: unechoed-claim", "docs/f64d.md:1 rf-normally: unechoed-claim", "docs/f64e.md:1 neg-05: unechoed-claim"],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F65",
+    label: "the rf spellings RFCLI, ReactiveFiber CLI, ReactiveFiberCLI and Reactive Fiber CLI, and a two- or three-word spelling's words four wildcards apart",
+    files: [
+      { path: "docs/f65a.md", text: "agents keep using RFCLI normally\n" },
+      { path: "docs/f65b.md", text: "agents keep using ReactiveFiber CLI normally\n" },
+      { path: "docs/f65c.md", text: "agents keep using ReactiveFiberCLI normally\n" },
+      { path: "docs/f65d.md", text: "agents keep using Reactive Fiber CLI normally\n" },
+      { path: "docs/f65e.md", text: `agents keep using RF${ZERO_WIDTH_SPACE.repeat(4)}CLI normally\n` },
+      { path: "docs/f65f.md", text: `agents keep using ReactiveFiber${ZERO_WIDTH_SPACE.repeat(4)}CLI normally\n` },
+      { path: "docs/f65g.md", text: `agents keep using Reactive${ZERO_WIDTH_SPACE.repeat(4)}Fiber CLI normally\n` },
+    ],
+    expect: [
+      "docs/f65a.md:1 rf-normally: unechoed-claim",
+      "docs/f65b.md:1 rf-normally: unechoed-claim",
+      "docs/f65c.md:1 rf-normally: unechoed-claim",
+      "docs/f65d.md:1 rf-normally: unechoed-claim",
+      "docs/f65e.md:1 rf-normally: unechoed-claim",
+      "docs/f65f.md:1 rf-normally: unechoed-claim",
+      "docs/f65g.md:1 rf-normally: unechoed-claim",
+    ],
+  },
+  { table: "FALSIFIERS", id: "F66", label: "a precomposed letter between two words stays one wildcard under NFKC", files: doc(`disabled${E_ACUTE}mode parity\n`), expect: ["docs/x.md:1 mode-parity: unechoed-claim"] },
+  // (b), the receipt's forms, form by form
+  {
+    table: "FALSIFIERS",
+    id: "F67",
+    label: "present, a receipt whose rf sha has eleven or forty-one hex digits, upper-case hex, or a letter before rf",
+    files: [
+      { path: "docs/f67a.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-s11.md).\n" },
+      { path: "docs/f67b.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-s41.md).\n" },
+      { path: "docs/f67c.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-sup.md).\n" },
+      { path: "docs/f67d.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-sxrf.md).\n" },
+    ],
+    fixture: FIXTURE_LANDED,
+    receipts: {
+      "wb-s11.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rf sha 0123456789a"),
+      "wb-s41.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rf sha 0123456789abcdef0123456789abcdef012345678"),
+      "wb-sup.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rf sha 0123456789ABCDEF0123456789ABCDEF01234567"),
+      "wb-sxrf.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "xrf sha 0123456789abcdef0123456789abcdef01234567"),
+    },
+    expect: ["docs/f67a.md:1 mode-parity: receipt-no-rf-sha", "docs/f67b.md:1 mode-parity: receipt-no-rf-sha", "docs/f67c.md:1 mode-parity: receipt-no-rf-sha", "docs/f67d.md:1 mode-parity: receipt-no-rf-sha"],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F68",
+    label: "present, a receipt whose exit after the command is not exit 0 as written, or whose command ends its line",
+    files: [
+      { path: "docs/f68a.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-e02.md).\n" },
+      { path: "docs/f68b.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-eup.md).\n" },
+      { path: "docs/f68c.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-epre.md).\n" },
+      { path: "docs/f68d.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-eol.md).\n" },
+      { path: "docs/f68e.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-ews.md).\n" },
+    ],
+    fixture: FIXTURE_LANDED,
+    receipts: {
+      "wb-e02.md": COMPLETE_RECEIPT.replace("-> exit 0", "-> exit 02"),
+      "wb-eup.md": COMPLETE_RECEIPT.replace("-> exit 0", "-> EXIT 0"),
+      "wb-epre.md": COMPLETE_RECEIPT.replace("-> exit 0", "-> preexit 0"),
+      "wb-eol.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}\nexit 0`),
+      "wb-ews.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}  \nexit 0`),
+    },
+    expect: ["docs/f68a.md:1 mode-parity: receipt-no-exit-0", "docs/f68b.md:1 mode-parity: receipt-no-exit-0", "docs/f68c.md:1 mode-parity: receipt-no-exit-0", "docs/f68d.md:1 mode-parity: receipt-no-exit-0", "docs/f68e.md:1 mode-parity: receipt-no-exit-0"],
+  },
   // accepted
   { table: "CONTROLS", id: "N01", label: "the echo form", files: doc("h2fp-C004 (agents keep using RF-CLI normally; disabled-mode parity) is UNDETERMINED at rf main 740c1a817.\n"), expect: [] },
   { table: "CONTROLS", id: "N02", label: "an echo on the lines a mention spans", files: doc("agents keep using\nRF-CLI normally: UNDETERMINED at 740c1a817\n"), expect: [] },
@@ -584,7 +916,80 @@ const ROWS: readonly Row[] = [
   { table: "CONTROLS", id: "N12", label: "a decoded reference outside a phrase", files: doc("parity &amp; disabled mode\n"), expect: [] },
   { table: "CONTROLS", id: "N13", label: "a five-character separator, past the bound", files: doc(`disabled ${ZERO_WIDTH_SPACE.repeat(3)} mode parity\n`), expect: [] },
   { table: "CONTROLS", id: "N14", label: "a four-character gap inside a word, past the bound", files: doc(`disa ${ZERO_WIDTH_SPACE.repeat(2)} bled-mode parity\n`), expect: [] },
-  { table: "CONTROLS", id: "N15", label: "a grade inside a longer word is no grade", files: doc("disabled-mode parity: UNDETERMINED at 740c1a817 (PROVENANCE: the rf audit)\n"), expect: [] },
+  { table: "CONTROLS", id: "N15", label: "a grade at the start of a longer word is no grade", files: doc("disabled-mode parity: UNDETERMINED at 740c1a817 (PROVENANCE: the rf audit)\n"), expect: [] },
+  {
+    table: "CONTROLS",
+    id: "N16",
+    label: "a grade at the end of a longer word is no grade",
+    files: [
+      { path: "docs/n16a.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817 (UNVERIFIED upstream)\n" },
+      { path: "docs/n16b.md", text: "h2fp-C004 is UNDETERMINED at 740c1a817 (UNCONFIRMED by Pi)\n" },
+      { path: "docs/n16c.md", text: "agents keep using RF-CLI normally: UNDETERMINED at 740c1a817, UNSETTLED\n" },
+      { path: "docs/n16d.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817 (preVERIFIED)\n" },
+      { path: "docs/n16e.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817 (build 2VERIFIED)\n" },
+    ],
+    expect: [],
+  },
+  {
+    table: "CONTROLS",
+    id: "N17",
+    label: "a grade followed by a lower-case letter or a digit is no grade",
+    files: [
+      { path: "docs/n17a.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817 (CONFIRMEDly)\n" },
+      { path: "docs/n17b.md", text: "disabled-mode parity: UNDETERMINED at 740c1a817 (VERIFIED2)\n" },
+    ],
+    expect: [],
+  },
+  {
+    table: "CONTROLS",
+    id: "N18",
+    label: "a family phrase joined to a letter or a digit before or after it is no mention",
+    files: [
+      { path: "docs/n18a.md", text: "undisabled-mode parity\n" },
+      { path: "docs/n18b.md", text: "4disabled-mode parity\n" },
+      { path: "docs/n18c.md", text: "disabled-mode parityx\n" },
+      { path: "docs/n18d.md", text: "disabled-mode parity2\n" },
+    ],
+    expect: [],
+  },
+  { table: "CONTROLS", id: "N19", label: "an echo on the first of the lines a mention spans", files: doc("UNDETERMINED at 740c1a817: agents keep using\nRF-CLI normally\n"), expect: [] },
+  { table: "CONTROLS", id: "N20", label: "an echo with the pin extended to a full sha", files: doc(`disabled-mode parity: UNDETERMINED at ${FULL_PIN_SHA}\n`), expect: [] },
+  { table: "CONTROLS", id: "N21", label: "five ASCII controls between two words are five wildcards, past the bound", files: doc("disabled\v\f\v\f\vmode parity\n"), expect: [] },
+  {
+    table: "CONTROLS",
+    id: "N22",
+    label: "present, receipts named with capitals, digits, dots and an underscore, a twelve-hex rf sha, and the command closed by each closing mark or followed by an arrow or a word",
+    files: [
+      { path: "docs/n22a.md", text: "Disabled-mode parity holds (docs/workbench/receipts/WB-a9l2.1.md).\n" },
+      { path: "docs/n22b.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-s12.md).\n" },
+      { path: "docs/n22c.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-cq.md).\n" },
+      { path: "docs/n22d.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-cdq.md).\n" },
+      { path: "docs/n22e.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-cp.md).\n" },
+      { path: "docs/n22f.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-cb.md).\n" },
+      { path: "docs/n22g.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-cdot.md).\n" },
+      { path: "docs/n22h.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-cc.md).\n" },
+      { path: "docs/n22i.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-csc.md).\n" },
+      { path: "docs/n22j.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-ca.md).\n" },
+      { path: "docs/n22k.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb-cw.md).\n" },
+      { path: "docs/n22l.md", text: "Disabled-mode parity holds (docs/workbench/receipts/wb_u.md).\n" },
+    ],
+    fixture: FIXTURE_LANDED,
+    receipts: {
+      "WB-a9l2.1.md": COMPLETE_RECEIPT,
+      "wb-s12.md": COMPLETE_RECEIPT.replace(/^rf sha .*$/m, "rf sha 0123456789ab"),
+      "wb-cq.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `'${FIXTURE_COMMAND}' -> exit 0`),
+      "wb-cdq.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `"${FIXTURE_COMMAND}" -> exit 0`),
+      "wb-cp.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `(${FIXTURE_COMMAND}) exit 0`),
+      "wb-cb.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `[${FIXTURE_COMMAND}] exit 0`),
+      "wb-cdot.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `ran ${FIXTURE_COMMAND}. exit 0`),
+      "wb-cc.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}, exit 0`),
+      "wb-csc.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND}; exit 0`),
+      "wb-ca.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND} -> exit 0`),
+      "wb-cw.md": COMPLETE_RECEIPT.replace(`\`${FIXTURE_COMMAND}\` -> exit 0`, `${FIXTURE_COMMAND} then exit 0`),
+      "wb_u.md": COMPLETE_RECEIPT,
+    },
+    expect: [],
+  },
   // named residuals: quiet rows
   { table: "RESIDUALS", id: "R1", label: "a paraphrase", files: doc("With the integration switched off, agents see no change in rf.\n"), expect: [] },
   { table: "RESIDUALS", id: "R2", label: "assembled at runtime", files: [{ path: "src/z.ts", text: 'const s = "disabled-" + kind + " parity";\n' }], expect: [] },
@@ -593,7 +998,16 @@ const ROWS: readonly Row[] = [
   { table: "RESIDUALS", id: "R5", label: "bead-row granularity", bead: [beadLine({ id: "wb-zz.7", notes: "h2fp-C004 is UNDETERMINED at 740c1a817\n\nlater note: h2fp-C004 holds, CONFIRMED" })], expect: [] },
   { table: "RESIDUALS", id: "R6", label: "outside the four trees", files: [{ path: "README.md", text: "agents continue using RF-CLI normally\n" }], expect: [] },
   { table: "RESIDUALS", id: "R7", label: "status prose beside an echo", files: doc("h2fp-C004 is UNDETERMINED at 740c1a817, but Pi has verified it\n"), expect: [] },
-  { table: "RESIDUALS", id: "R8", label: "split across a blank line", files: doc("agents continue using\n\nRF-CLI normally\n"), expect: [] },
+  {
+    table: "RESIDUALS",
+    id: "R8",
+    label: "split across a blank line",
+    files: [
+      { path: "docs/x.md", text: "agents continue using\n\nRF-CLI normally\n" },
+      { path: "docs/r8b.md", text: "agents continue using\n \t \nRF-CLI normally\n" },
+    ],
+    expect: [],
+  },
   { table: "RESIDUALS", id: "R9", label: "echo tokens on the same line", files: doc("Disabled-mode parity holds; h2fp-C004 is UNDETERMINED at 740c1a817.\n"), expect: [] },
   { table: "RESIDUALS", id: "R10", label: "a named reference outside the decoded set", files: doc("disabled&hybull;mode parity\n"), expect: [] },
   {
@@ -629,11 +1043,17 @@ const ROWS: readonly Row[] = [
   {
     table: "RESIDUALS",
     id: "R13",
-    label: "a percent, semicolon-less or octal encoding",
+    label: "a percent, semicolon-less, octal, over-long or doubly encoded hyphen",
     files: [
       { path: "docs/u04.md", text: "disabled%2Dmode parity\n" },
       { path: "docs/u17.md", text: "disabled&#45mode parity\n" },
       { path: "src/u19.ts", text: "disabled\\055mode parity\n" },
+      { path: "docs/r13d.md", text: "disabled&#x2Dmode parity\n" },
+      { path: "docs/r13e.md", text: "disabled&hyphen mode parity\n" },
+      { path: "docs/r13f.md", text: "disabled&#x000002D;mode parity\n" },
+      { path: "docs/r13g.md", text: "disabled&#00000045;mode parity\n" },
+      { path: "src/r13h.ts", text: 'const h = "disabled\\u{000002d}mode parity";\n' },
+      { path: "docs/r13i.md", text: "disabled&amp;#45;mode parity\n" },
     ],
     expect: [],
   },
@@ -779,6 +1199,23 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "FALSIFIERS:F49:test/f49a.test.ts:2 mode-parity: unechoed-claim|docs/f49b.md:1 rf-normally: unechoed-claim|src/f49c.ts:2 mode-parity: unechoed-claim:0650a552",
       "FALSIFIERS:F50:docs/x.md:1 mode-parity: unechoed-claim:acf24249",
       "FALSIFIERS:F51:docs/f51a.md:1 mode-parity: unechoed-claim|docs/f51b.md:1 mode-parity: unechoed-claim:aa10649d",
+      "FALSIFIERS:F52:docs/f52a.md:1 mode-parity: unechoed-claim|docs/f52b.md:1 mode-parity: unechoed-claim|docs/f52c.md:1 mode-parity: unechoed-claim|docs/f52d.md:1 mode-parity: unechoed-claim|docs/f52e.md:1 mode-parity: unechoed-claim|docs/f52f.md:1 mode-parity: unechoed-claim|docs/f52g.md:1 mode-parity: unechoed-claim:aa681d90",
+      "FALSIFIERS:F53:docs/f53a.md:1 mode-parity: unechoed-claim|docs/f53b.md:1 mode-parity: unechoed-claim|docs/f53c.md:1 mode-parity: unechoed-claim|docs/f53d.md:1 mode-parity: unechoed-claim:9f9f9ad7",
+      "FALSIFIERS:F54:docs/f54-amp.md:1 mode-parity: unechoed-claim|docs/f54-lt.md:1 mode-parity: unechoed-claim|docs/f54-gt.md:1 mode-parity: unechoed-claim|docs/f54-quot.md:1 mode-parity: unechoed-claim|docs/f54-apos.md:1 mode-parity: unechoed-claim|docs/f54-nbsp.md:1 mode-parity: unechoed-claim|docs/f54-shy.md:1 mode-parity: unechoed-claim|docs/f54-hyphen.md:1 mode-parity: unechoed-claim|docs/f54-dash.md:1 mode-parity: unechoed-claim|docs/f54-ndash.md:1 mode-parity: unechoed-claim|docs/f54-mdash.md:1 mode-parity: unechoed-claim|docs/f54-minus.md:1 mode-parity: unechoed-claim|docs/f54-zwj.md:1 mode-parity: unechoed-claim|docs/f54-zwnj.md:1 mode-parity: unechoed-claim:abca1fd8",
+      "FALSIFIERS:F55:src/f55a.ts:1 mode-parity: unechoed-claim|src/f55b.ts:1 mode-parity: unechoed-claim|src/f55c.ts:1 mode-parity: unechoed-claim|src/f55d.ts:1 mode-parity: unechoed-claim|src/f55e.ts:1 mode-parity: unechoed-claim|src/f55f.ts:1 mode-parity: unechoed-claim|src/f55g.ts:1 mode-parity: unechoed-claim|src/f55h.ts:1 mode-parity: unechoed-claim|src/f55i.ts:1 mode-parity: unechoed-claim|src/f55j.ts:1 mode-parity: unechoed-claim|src/f55k.ts:1 mode-parity: unechoed-claim|src/f55l.ts:1 mode-parity: unechoed-claim:969b9479",
+      "FALSIFIERS:F56:docs/f56a.md:1 mode-parity: unechoed-claim|docs/f56b.md:1 rf-normally: unechoed-claim|docs/f56c.md:1 mode-parity: unechoed-claim|docs/f56d.md:1 mode-parity: unechoed-claim|docs/f56e.md:1 mode-parity: unechoed-claim:208ce016",
+      "FALSIFIERS:F57:docs/f57a.md:1 mode-parity: unechoed-claim|docs/f57b.md:1 mode-parity: unechoed-claim|docs/f57c.md:1 mode-parity: unechoed-claim|docs/f57d.md:1 mode-parity: unechoed-claim|docs/f57e.md:1 mode-parity: unechoed-claim|docs/f57f.md:1 mode-parity: unechoed-claim:9fc1dee2",
+      "FALSIFIERS:F58:wb-zz.10 claim-id: echo-no-undetermined+echo-no-pin:c2fc677e",
+      "FALSIFIERS:F59:docs/f59a.md:1 mode-parity: unechoed-claim|docs/f59b.md:1 mode-parity: unechoed-claim|docs/f59c.md:1 mode-parity: unechoed-claim|docs/f59d.md:1 mode-parity: unechoed-claim|docs/f59e.md:1 mode-parity: unechoed-claim:3a873721",
+      "FALSIFIERS:F60:docs/f60a.md:1 mode-parity: unechoed-claim|docs/f60b.md:1 mode-parity: unechoed-claim|docs/f60c.md:1 mode-parity: unechoed-claim|docs/f60d.md:1 mode-parity: unechoed-claim|docs/f60e.md:1 mode-parity: unechoed-claim|docs/f60f.md:1 mode-parity: unechoed-claim:2f94ad95",
+      "FALSIFIERS:F61:docs/f61a.md:1 claim-id: echo-no-undetermined+unechoed-claim|docs/f61b.md:1 claim-id: echo-no-pin+unechoed-claim:4abf8c44",
+      "FALSIFIERS:F62:wb-zz.11 claim-id: echo-no-undetermined+echo-no-pin:cf975960",
+      "FALSIFIERS:F63:docs/f63-confirmed.md:1 mode-parity: unechoed-claim|docs/f63-plausible.md:1 mode-parity: unechoed-claim|docs/f63-refuted.md:1 mode-parity: unechoed-claim|docs/f63-verified.md:1 mode-parity: unechoed-claim|docs/f63-established.md:1 mode-parity: unechoed-claim|docs/f63-settled.md:1 mode-parity: unechoed-claim|docs/f63-proven.md:1 mode-parity: unechoed-claim:14ec40de",
+      "FALSIFIERS:F64:docs/f64a.md:1 rf-normally: unechoed-claim|docs/f64b.md:1 rf-normally: unechoed-claim|docs/f64c.md:1 rf-normally: unechoed-claim|docs/f64d.md:1 rf-normally: unechoed-claim|docs/f64e.md:1 neg-05: unechoed-claim:d4a5264e",
+      "FALSIFIERS:F65:docs/f65a.md:1 rf-normally: unechoed-claim|docs/f65b.md:1 rf-normally: unechoed-claim|docs/f65c.md:1 rf-normally: unechoed-claim|docs/f65d.md:1 rf-normally: unechoed-claim|docs/f65e.md:1 rf-normally: unechoed-claim|docs/f65f.md:1 rf-normally: unechoed-claim|docs/f65g.md:1 rf-normally: unechoed-claim:01b7f003",
+      "FALSIFIERS:F66:docs/x.md:1 mode-parity: unechoed-claim:62544368",
+      "FALSIFIERS:F67:docs/f67a.md:1 mode-parity: receipt-no-rf-sha|docs/f67b.md:1 mode-parity: receipt-no-rf-sha|docs/f67c.md:1 mode-parity: receipt-no-rf-sha|docs/f67d.md:1 mode-parity: receipt-no-rf-sha:62836f28",
+      "FALSIFIERS:F68:docs/f68a.md:1 mode-parity: receipt-no-exit-0|docs/f68b.md:1 mode-parity: receipt-no-exit-0|docs/f68c.md:1 mode-parity: receipt-no-exit-0|docs/f68d.md:1 mode-parity: receipt-no-exit-0|docs/f68e.md:1 mode-parity: receipt-no-exit-0:99a5851b",
       "CONTROLS:N01::6c96b072",
       "CONTROLS:N02::1e8fd29a",
       "CONTROLS:N03::3a545c1b",
@@ -794,6 +1231,13 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "CONTROLS:N13::3a40bc92",
       "CONTROLS:N14::8947550e",
       "CONTROLS:N15::7acb67a3",
+      "CONTROLS:N16::9f48a178",
+      "CONTROLS:N17::36234763",
+      "CONTROLS:N18::f70b610c",
+      "CONTROLS:N19::e223d59c",
+      "CONTROLS:N20::bedd485d",
+      "CONTROLS:N21::c6ad383d",
+      "CONTROLS:N22::60083418",
       "RESIDUALS:R1::1e0d90ec",
       "RESIDUALS:R2::e7707859",
       "RESIDUALS:R3::cf696a35",
@@ -801,12 +1245,12 @@ describe("rf federation parity premise guard (wb-a9l2.1, RF-HARNESS2-FEDERATED-P
       "RESIDUALS:R5::e0cfe2ab",
       "RESIDUALS:R6::c1b665aa",
       "RESIDUALS:R7::788a8bd7",
-      "RESIDUALS:R8::920a96a7",
+      "RESIDUALS:R8::e081e111",
       "RESIDUALS:R9::486147cd",
       "RESIDUALS:R10::3ff23a66",
       "RESIDUALS:R11::153a8eec",
       "RESIDUALS:R12::a2db2a6f",
-      "RESIDUALS:R13::9bb299b8",
+      "RESIDUALS:R13::eade1053",
     ]);
     expect(FAMILIES.map(family => `${family.id}:${family.slots.map(slot => slot.join("/")).join(" ")}`)).toEqual([
       "claim-id:h2fp c004",
