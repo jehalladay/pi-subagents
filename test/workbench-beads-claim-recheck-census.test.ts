@@ -245,9 +245,28 @@
  * F2). The reconstruction claims are narrowed to the pages Q5 plants: visibleTextOf's doc (its listing, end-tag and re-opening
  * sentences and cut #3's pinned-subset sentence), FORMATTING_ELEMENTS' and renderedOf's docs, SCOPE's over-hide and
  * startTagReconstruction sentences, R-INSTRUCTION's, the wb-38nd paragraphs above, the Q5 comments and the reconstruction
- * message. The forms the wb-38nd gate found unpinned are NOT CLAIMED and DEFERRED TO wb-pvab (U1's GP29, GP31, GP32 and GP35;
- * F2's GP01 and GP09), beside the forms this cut's seat found (visibleTextOf's doc names each). No reading, row, control, pin,
+ * message. The forms the wb-38nd gate found unpinned were NOT CLAIMED and DEFERRED TO wb-pvab (U1's GP29, GP31, GP32 and GP35;
+ * F2's GP01 and GP09; wb-pvab pins them, below), beside the forms this cut's seat found (visibleTextOf's doc names each). No reading, row, control, pin,
  * witness, roster byte or test title changes: only comments and the reconstruction message do.
+ *
+ * wb-pvab (the rule-19 structural exit R-B285 filed at the wb-38nd gate's refusal #3 of cut #3: its U1, rider F2). U1 Q5's
+ * reconstruction rows kill the gate's four same-name survivors of reconstruct()'s loop guard, each beside a shown control the
+ * tree builder agrees with (an offline parse5 7.3.0 tree reads every new row as the reading does): GP29, which skips an entry
+ * at least two later ones of its name follow, and GP35, which skips every entry of a name the list holds three or more of,
+ * through three waiting entries of one name (b's, the hiding one first, between or last - GP35 alone at between and last - and
+ * i's, the hiding one first) and a run of four holding three b's, the hiding one first; GP31, which skips an entry at least two
+ * more waiting entries match in name and hiding, and GP35, through three alike hiding b's waiting; and GP32, which skips an
+ * entry a later one alike to it follows, through two waiting hiding b's, the inner one ended before a textarea (beside the same
+ * page with the inner b shown, which reads quiet under GP32 too). F2 the rows also kill the walk back's two over-hide
+ * survivors: GP01, which steps the walk back by two, through one or three entries waiting directly above a still-open hiding b
+ * whose own end tag closes them later (beside two, which it reads alike); and GP09, which reads a listed element at the bottom
+ * of the stack of open elements as waiting, through a hiding b re-opened or opened at the bottom and ended there by its own end
+ * tag (beside the first inside a division, which it reads alike). The rows also kill two FAIL-OPEN survivors the wb-38nd cut #4
+ * gate's BIND routed to wb-pvab (its F3): GN04, which re-opens an entry under an open hiding element as hiding nothing, through a
+ * hiding b re-opened inside a hidden division; and GN07, which re-opens nothing before a formatting element's start tag of the
+ * last listed entry's name, through a hiding b waiting alone before a b's start tag (each beside the page with the b shown). Its
+ * GN02 dies at the two waiting hiding b's before a textarea. visibleTextOf's doc names the pinned forms; any other is NOT
+ * CLAIMED. The roster's Q5 witness carries the new rows; no other witness, constant, pin or test title changes.
  *
  * Display paths added: none. Test-only: src, qa, examples, the root manifests, the instruction files, .beads, tsconfig.json with
  * the files its program reads, and the node_modules/.bin link the walk's control reads are only read; nothing is written (the
@@ -1057,19 +1076,25 @@ interface OpenElement {
  * after the last one still open, each with its hiding, in list order) before the next text (whitespace-only text among it; a
  * textarea's body excepted, which the tree builder inserts without re-opening) and before a formatting element's start tag, and
  * before no other start tag, where the tree builder re-opens them too (SCOPE; R-INSTRUCTION's startTagReconstruction).
- * CLAIMED ONLY on the pages Q5 reads (wb-38nd cut #4, the fail-closed core the rule-19 structural exit R-B285 binds): the
- * listing, a formatting element's end tag and the re-opening read as the tree builder does on each reconstruction row Q5's
- * comment names with its form (every hiding row quiet, every control shown), and as Q5 pins each other row and the instruction
- * files (the over-hides SCOPE discloses, R-INSTRUCTION's quiet rows and their controls). NOT CLAIMED by this census: the
- * listing, the end tags and the re-opening on any other page. Among those, DEFERRED TO wb-pvab (filed by R-B285 to pin each
- * form or name it a residual; the wb-38nd gate's refusal #3 of cut #3): the same-name waiting-entry reconstruction (its U1:
- * GP29, GP31, GP32 and GP35) - three or more entries of one name on the list (three waiting entries of one name, the hiding one
- * first; a run of four holding three of one name), two waiting entries of one name that both hide (before a textarea) and
- * three alike hiding entries - and the walk back's shapes no row plants (its F2: GP01 and GP09, which only hide more): a
- * waiting run of odd length directly above a still-open listed element that its own end tag closes later, and a listed element
- * still open at the bottom of the stack of open elements. NOT CLAIMED either, named as scope only (the cut #4 seat's one-edit
- * probes, each 0 failed | 21 passed (21) on this census; the planted sameNameShown and waitingNameOpenShown controls aside):
- * two waiting entries of one name that are both shown, and a waiting entry while an element alike to it (its name and its
+ * CLAIMED ONLY on the pages Q5 reads (wb-38nd cut #4, the fail-closed core the rule-19 structural exit R-B285 binds, and the
+ * rows wb-pvab adds): the listing, a formatting element's end tag and the re-opening read as the tree builder does on each
+ * reconstruction row Q5's comment names with its form (every hiding row quiet, every control and walk-back row shown), and as
+ * Q5 pins each other row and the instruction files (the over-hides SCOPE discloses, R-INSTRUCTION's quiet rows and their
+ * controls). NOT CLAIMED by this census: the listing, the end tags and the re-opening on any other page. Among Q5's rows,
+ * wb-pvab's (filed by R-B285 at the wb-38nd gate's refusal #3 of cut #3 to pin each form it found unpinned or name it a
+ * residual) plant those forms, each claimed as planted only: the same-name waiting-entry reconstruction (its U1: GP29, GP31,
+ * GP32 and GP35) - three waiting b's, the hiding one first, between or last, and three waiting i's, the hiding one first; a run
+ * of four holding three b's, the hiding one first; three alike hiding b's; and two waiting b's of which the outer one hides,
+ * the inner one hiding or shown and ended by its end tag before a textarea - and the walk back's shapes (its F2: GP01 and GP09,
+ * which only hide more): one or three entries waiting directly above a still-open hiding b that its own end tag closes later,
+ * and a hiding b at the bottom of the stack of open elements, re-opened or opened there and ended there by its own end tag;
+ * and two forms of the wb-38nd cut #4 gate's FAIL-OPEN survivors its BIND routed to wb-pvab (its F3: GN04 and GN07): a hiding
+ * b re-opened inside a hidden division, which keeps its own hiding past the division's end tag, and a hiding b waiting alone
+ * before a b's start tag. Any other count or placement of entries of one name, any other run waiting above an open listed
+ * element, any other page with a listed element at the bottom of the stack of open elements, any other re-opening while another
+ * open element hides and any other start tag of a waiting entry's name is NOT CLAIMED by this census. NOT CLAIMED either, named
+ * as scope only (the wb-38nd cut #4 seat's one-edit probes, each 0 failed | 21 passed (21) on the cut #4 census; the planted
+ * sameNameShown and waitingNameOpenShown controls and wb-pvab's rows aside, each claimed as planted): two waiting entries of one name that are both shown, and a waiting entry while an element alike to it (its name and its
  * hiding) is open; a listed element already open as the current node when the text inside it is read, then ended by its own
  * end tag with text after it in its parent (a hiding b ended inside its paragraph, the claim after it in that paragraph); a
  * formatting element's end tag for a listed element at the bottom of the stack of open elements; the hiding of a shown entry
@@ -2449,8 +2474,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       impliedEnd: 0,
       closedSummary: 0,
     });
-    // wb-38nd F1: the tree builder's reconstruction, claimed ONLY on these pages, each as planted (wb-38nd cut #4; visibleTextOf's
-    // doc names what is NOT CLAIMED, DEFERRED TO wb-pvab among it). Each shows nothing: a formatting element carrying hidden,
+    // wb-38nd F1: the tree builder's reconstruction, claimed ONLY on these pages, each as planted (wb-38nd cut #4 and wb-pvab's
+    // rows below; visibleTextOf's doc names what is NOT CLAIMED). Each shows nothing: a formatting element carrying hidden,
     // waiting alone after its paragraph's end tag, the claim in the next paragraph (the gate's L3 plant, for each of
     // FORMATTING_ELEMENTS), a b carrying popover so (popover), and an i carrying hidden after a division's end tag
     // (acrossDivision); a hiding i inside a shown b whose end tag closes both, the claim after it in the paragraph
@@ -2476,6 +2501,31 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     // then a b, a hiding i around a b then an i, a b then a hiding b - show nothing (its G10 skips an entry a later one of its name
     // follows). Shown, their controls: the same pages hiding nothing (waitingNameOpenShown, everyFormattingShown, sameNameShown),
     // and three alike hiding b's, each ended by its own end tag (threeAlikeEnded; the fourth alike is an over-hide, below).
+    // wb-pvab (the rule-19 structural exit R-B285 filed at the wb-38nd gate's refusal #3 of cut #3; parse5 7.3.0 reads each row
+    // as the reading does), its U1, the same-name waiting-entry reconstruction: three waiting b's, the hiding one first, between
+    // or last, and three waiting i's, the hiding one first, show nothing (sameNameThreeHidingFirst, sameNameThreeHidingBetween,
+    // sameNameThreeHidingLast, sameNameThreeItalicHidingFirst; its GP29 skips an entry at least two later ones of its name follow,
+    // its GP35 every entry of a name the list holds three or more of), as do a run of four, a hiding b, an i and two b's
+    // (sameNameThreeOfFourHidingFirst), three alike hiding b's waiting (threeAlikeWaiting; its GP31 skips an entry that at least
+    // two more waiting entries match in name and hiding) and two waiting hiding b's, the inner one ended by its end tag before a
+    // textarea (sameNameBothHidingTextarea; its GP32 skips an entry a later one alike to it follows), and the same page with the
+    // inner b shown (sameNameHidingFirstTextarea). Shown, their controls: the same pages hiding nothing (sameNameThreeShown,
+    // sameNameThreeOfFourShown, sameNameBothShownTextarea) and three alike b's carrying a title (threeAlikeWaitingShown). Its F2,
+    // the walk back's shapes, each shown as the tree builder shows it: one i waiting directly above a still-open hiding b, closed
+    // by a paragraph's end tag (oneWaitingAboveOpen) or a span's (oneWaitingAboveOpenSpan), and three waiting there
+    // (threeWaitingAboveOpen) - re-opened inside the b, whose own end tag closes them with it, then re-opened shown before the
+    // claim (its GP01 steps the walk back by two, so an odd run re-opens the open b again and the b's end tag leaves the first
+    // open) - beside two waiting there (twoWaitingAboveOpen, read alike by GP01); and a hiding b at the bottom of the stack of
+    // open elements, re-opened there after its paragraph's end tag and read again after a br (reopenedAtBottom) or opened there
+    // by an HTML block (openedAtBottom), ended by its own end tag before the claim (its GP09 reads an element at the bottom of
+    // the stack as waiting and re-opens it again, so the end tag leaves the first open), beside the first inside a division
+    // (reopenedAboveBottom, read alike by GP09). And the FAIL-OPEN survivors the wb-38nd cut #4 gate's BIND routed to wb-pvab (its
+    // F3): a hiding b re-opened inside a hidden division after its paragraph's end tag, the division's end tag closing both, keeps
+    // its own hiding when re-opened before the claim after the division (reopenedInsideHiding; its GN04 re-opens an entry under an
+    // open hiding element as hiding nothing), and a hiding b waiting alone before a b's start tag shows nothing
+    // (sameNameBeforeFormatting; its GN07 re-opens nothing before a formatting element's start tag of the last listed entry's
+    // name); shown, their controls: the same pages with the b hiding nothing (reopenedInsideHidingShown,
+    // sameNameBeforeFormattingShown). Its GN02, which stops the walk back past a hiding entry, dies at sameNameBothHidingTextarea.
     const leftOpen = (element: string, attribute = "hidden"): string => `<p><${element} ${attribute}>Note.</p>\n\nbd update fx-1 --claim\n`;
     const waitingRun = (elements: readonly string[], hiding: number): string =>
       `<p>${elements.map((element, index) => (index === hiding ? `<${element} hidden>` : `<${element}>`)).join("")}Note.</p>\n\nbd update fx-1 --claim\n`;
@@ -2508,6 +2558,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       sameNameHidingFirst: "<p><b hidden><b>Note.</p>\n\nbd update fx-1 --claim\n",
       sameNameHidingFirstAround: "<p><i hidden><b><i>Note.</p>\n\nbd update fx-1 --claim\n",
       sameNameHidingLast: "<p><b><b hidden>Note.</p>\n\nbd update fx-1 --claim\n",
+      sameNameThreeHidingFirst: "<p><b hidden><b><b>Note.</p>\n\nbd update fx-1 --claim\n",
+      sameNameThreeItalicHidingFirst: "<p><i hidden><i><i>Note.</p>\n\nbd update fx-1 --claim\n",
+      sameNameThreeHidingBetween: "<p><b><b hidden><b>Note.</p>\n\nbd update fx-1 --claim\n",
+      sameNameThreeHidingLast: "<p><b><b><b hidden>Note.</p>\n\nbd update fx-1 --claim\n",
+      sameNameThreeOfFourHidingFirst: "<p><b hidden><i><b><b>Note.</p>\n\nbd update fx-1 --claim\n",
+      threeAlikeWaiting: "<p><b hidden><b hidden><b hidden>Note.</p>\n\nbd update fx-1 --claim\n",
+      sameNameBothHidingTextarea: "<p><b hidden><b hidden>Note.</p>x</b><textarea>bd update fx-1 --claim</textarea>\n",
+      sameNameHidingFirstTextarea: "<p><b hidden><b>Note.</p>x</b><textarea>bd update fx-1 --claim</textarea>\n",
+      reopenedInsideHiding: "<div hidden><p><b hidden>Note.</p>x</div>bd update fx-1 --claim\n",
+      sameNameBeforeFormatting: "<p><b hidden>Note.</p><b>bd update fx-1 --claim</b>\n",
       spanControl: leftOpen("span"),
       endedInside: "<p><b hidden>Note.</b></p>\n\nbd update fx-1 --claim\n",
       endedAfter: "<p><b hidden>Note.</p>\n\n</b>\n\nbd update fx-1 --claim\n",
@@ -2519,9 +2579,22 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       everyFormattingShown: waitingRun(FORMATTING_ELEMENTS, -1),
       sameNameShown: "<p><b><b>Note.</p>\n\nbd update fx-1 --claim\n",
       threeAlikeEnded: "<p><b hidden>1<b hidden>2<b hidden>3</b></b></b></p>\n\nbd update fx-1 --claim\n",
+      sameNameThreeShown: "<p><b><b><b>Note.</p>\n\nbd update fx-1 --claim\n",
+      sameNameThreeOfFourShown: "<p><b><i><b><b>Note.</p>\n\nbd update fx-1 --claim\n",
+      threeAlikeWaitingShown: '<p><b title="n"><b title="n"><b title="n">Note.</p>\n\nbd update fx-1 --claim\n',
+      sameNameBothShownTextarea: "<p><b><b>Note.</p>x</b><textarea>bd update fx-1 --claim</textarea>\n",
+      oneWaitingAboveOpen: "<div><b hidden><p><i>Note.</p>x</b> bd update fx-1 --claim</div>\n",
+      oneWaitingAboveOpenSpan: "<div><b hidden><span><i>Note.</span>x</b> bd update fx-1 --claim</div>\n",
+      threeWaitingAboveOpen: "<div><b hidden><p><i><u><s>Note.</p>x</b> bd update fx-1 --claim</div>\n",
+      twoWaitingAboveOpen: "<div><b hidden><p><i><u>Note.</p>x</b> bd update fx-1 --claim</div>\n",
+      reopenedAtBottom: "<p><b hidden>Note.</p>x<br>y</b> bd update fx-1 --claim\n",
+      openedAtBottom: "<b hidden>\nx</b> bd update fx-1 --claim\n",
+      reopenedAboveBottom: "<div><p><b hidden>Note.</p>x<br>y</b> bd update fx-1 --claim</div>\n",
+      reopenedInsideHidingShown: "<div hidden><p><b>Note.</p>x</div>bd update fx-1 --claim\n",
+      sameNameBeforeFormattingShown: "<p><b>Note.</p><b>bd update fx-1 --claim</b>\n",
     };
     const reconstructionClaims = Object.fromEntries(Object.entries(reconstruction).map(([name, source]) => [name, claimLaunchesIn(renderedOf(source)).length]));
-    expect(reconstructionClaims, "the reconstruction rows, each as planted: every hiding page reads quiet as the tree builder does; every control shows").toStrictEqual({
+    expect(reconstructionClaims, "the reconstruction rows, each as planted: every hiding page reads quiet as the tree builder does; every control and walk-back page shows").toStrictEqual({
       "leftOpen:a": 0,
       "leftOpen:b": 0,
       "leftOpen:big": 0,
@@ -2563,6 +2636,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       sameNameHidingFirst: 0,
       sameNameHidingFirstAround: 0,
       sameNameHidingLast: 0,
+      sameNameThreeHidingFirst: 0,
+      sameNameThreeItalicHidingFirst: 0,
+      sameNameThreeHidingBetween: 0,
+      sameNameThreeHidingLast: 0,
+      sameNameThreeOfFourHidingFirst: 0,
+      threeAlikeWaiting: 0,
+      sameNameBothHidingTextarea: 0,
+      sameNameHidingFirstTextarea: 0,
+      reopenedInsideHiding: 0,
+      sameNameBeforeFormatting: 0,
       spanControl: 1,
       endedInside: 1,
       endedAfter: 1,
@@ -2574,6 +2657,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       everyFormattingShown: 1,
       sameNameShown: 1,
       threeAlikeEnded: 1,
+      sameNameThreeShown: 1,
+      sameNameThreeOfFourShown: 1,
+      threeAlikeWaitingShown: 1,
+      sameNameBothShownTextarea: 1,
+      oneWaitingAboveOpen: 1,
+      oneWaitingAboveOpenSpan: 1,
+      threeWaitingAboveOpen: 1,
+      twoWaitingAboveOpen: 1,
+      reopenedAtBottom: 1,
+      openedAtBottom: 1,
+      reopenedAboveBottom: 1,
+      reopenedInsideHidingShown: 1,
+      sameNameBeforeFormattingShown: 1,
     });
     // wb-38nd: what the reading leaves of the tree builder's recovery, by direction (SCOPE), each row claimed as planted only. In
     // Q5's direction, over-hides (a browser shows each claim): the list keeps no marker, so a hiding b is re-opened inside a table
