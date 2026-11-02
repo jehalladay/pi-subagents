@@ -1,0 +1,257 @@
+{
+  "bead": "wb-mcoj",
+  "census": "test/workbench-docs06-leg-readers-census.test.ts",
+  "helper": "test/helpers/docs06-leg-readers.ts",
+  "quietPage": "test/workbench-docs06-conformance.census.ts",
+  "rows": [
+    {
+      "table": "MODULES",
+      "id": "MI-DEFAULT-NAMED",
+      "members": [
+        "G-MI-DEFAULT-NAMED"
+      ],
+      "form": "one import declaration binding a default together with named bindings (wb-ouo3 refusal #4 U1 (a))",
+      "plants": [
+        {
+          "id": "G-TWIN-TS-NAMED",
+          "sha256": "75cc2abd4d366da27a757860e1fda6012a9e7d9d5ff30bda2cba9d46b0243393"
+        },
+        {
+          "id": "S-DN-NODE",
+          "sha256": "66c45c4e88c14ede39bb35d506d6ef8e62d9e43cf3020876d49a3be07e4b56a7"
+        },
+        {
+          "id": "S-DN-PKG",
+          "sha256": "4492291f043c879c16e056bc18018b837b554c90b3491ec23a7e9cb90be75188"
+        },
+        {
+          "id": "S-DN-REL",
+          "sha256": "5cb4ba1f52a9215acd2f20aaa0c594dc04c422d405680cce41c595a113cf9bb1"
+        }
+      ]
+    },
+    {
+      "table": "MODULES",
+      "id": "MI-DEFAULT-NS",
+      "members": [
+        "G-MI-DEFAULT-NS"
+      ],
+      "form": "one import declaration binding a default together with a namespace (wb-ouo3 refusal #4 U1 (b))",
+      "plants": [
+        {
+          "id": "G-TWIN2-NS",
+          "sha256": "645664e7bd46439a94927b337c986640ab5fcfda1798e8713af13bc7e74e5fd8"
+        },
+        {
+          "id": "S-DNS-NODE",
+          "sha256": "7a6de111331b8a80a7ba8f3dafff7f63f50ac5ed7921a432c261151c732b43fe"
+        },
+        {
+          "id": "S-DNS-REL",
+          "sha256": "66599816fc1f86416aeb443de1af50354cfcee02f52728f8a4d550a49779b80e"
+        }
+      ]
+    },
+    {
+      "table": "MODULES",
+      "id": "MI-NSEXPORT",
+      "members": [
+        "G-MI-NSEXPORT"
+      ],
+      "form": "an export * as <name> from a module (wb-ouo3 refusal #4 F3)",
+      "plants": [
+        {
+          "id": "S-NSX-PKG",
+          "sha256": "699d51c8e2a9d93189d9aae531c51ac566f223c96c7438a655ef64253c3bb492"
+        },
+        {
+          "id": "S-NSX-NODE",
+          "sha256": "279612b5effd05bc16efc842b502fda933a37a65058fa4793f587571839162f9"
+        },
+        {
+          "id": "S-NSX-REL",
+          "sha256": "fd18e150365ccbf15f0b3f5bc53f355ba2fa6907f14dcb209c3b737bd4e66542"
+        }
+      ]
+    },
+    {
+      "table": "MODULES",
+      "id": "MI-NODE-ALIAS",
+      "members": [
+        "GP9-MI-NODE-ALIAS"
+      ],
+      "form": "an aliased named specifier, of a node: builtin and of each other module kind the record holds (wb-ouo3 refusal #5 U1)",
+      "plants": [
+        {
+          "id": "GP9-TWIN-NODE-ALIAS2",
+          "sha256": "a35213b7377f326d556ea75db4f5eecc8ace3cb78748ea5b53fac5a412b46aa1"
+        },
+        {
+          "id": "GP9-TWIN-NODE-ALIAS",
+          "sha256": "3c7f270310a90c4a0ff733e201d6165901d06bedb0e5f55c34ae9a1e6aefca17"
+        },
+        {
+          "id": "S-ALIAS-PKG",
+          "sha256": "922e62eaab155614629484355c3db2fcc1900ee9961276e35c33d5022818cb06"
+        },
+        {
+          "id": "S-ALIAS-REL",
+          "sha256": "5b5c486c11e40536e8a7deb38dafee61e38acc5f696e61aba75df3a241959164"
+        }
+      ]
+    },
+    {
+      "table": "MODULES",
+      "id": "MI-NODE-TYPEONLY",
+      "members": [
+        "GP9-MI-NODE-TYPEONLY"
+      ],
+      "form": "an inline type-only named specifier, of a node: builtin and of each other module kind the record holds (wb-ouo3 refusal #5 U2)",
+      "plants": [
+        {
+          "id": "GP9-TWIN-NODE-TYPEONLY",
+          "sha256": "3a6f885fed97a1370d75b68d5801b56113f58d705109fd17f586f9aa4a6533fe"
+        },
+        {
+          "id": "S-TYPE-NODE-ALIAS",
+          "sha256": "eea772d53ae40065a783e682676e251c9a8ab5733a7a4f6a763329b7ad47857a"
+        },
+        {
+          "id": "S-TYPE-CLAUSE-NODE",
+          "sha256": "299589cbdcd9b5f9a89142bfe6b4f3562f9c2767e2c08de6cc82cb09728f48fc"
+        },
+        {
+          "id": "S-TYPE-PKG",
+          "sha256": "8ba374493ef3151012dcc49baefb5ac43990c3ebe57f89c24681a2537b141d4a"
+        },
+        {
+          "id": "S-TYPE-REL",
+          "sha256": "ec92d464c0b69c4a009387c07ab9e8b1123ed2504cdd17021aa9b96bf064c32a"
+        }
+      ]
+    },
+    {
+      "table": "MODULES",
+      "id": "MI-PLANTED",
+      "members": [],
+      "form": "the docs06 census's own page and planted loads (wb-ouo3 cut #5: its import block :50-56 and the 'the modules loaded' row's loads.ts, :2435)",
+      "plants": [
+        {
+          "id": "P-RECORD",
+          "sha256": "dd18ebd34e66bf5002a393b6f80fa6f79ad22d16e69d37e2014eaaa9c9506bc2"
+        },
+        {
+          "id": "P-LOADS",
+          "sha256": "61d3f08feea5257b1bb962b7386393706161e2b5fb4c4829a08a22e58d210f39"
+        }
+      ]
+    },
+    {
+      "table": "WRITES",
+      "id": "PW-COMPUTED-KEY",
+      "members": [
+        "G-PW-COMPUTED-KEY"
+      ],
+      "form": "an object pattern property with a computed key (wb-ouo3 refusal #4 U1 (c))",
+      "plants": [
+        {
+          "id": "G-TWIN2-PW",
+          "sha256": "342f92694319ca338d6e045f837a52f2bfdfca9c3891925987ed7e1287e1dc3a"
+        },
+        {
+          "id": "S-PW-IDENT-KEY",
+          "sha256": "53c11ab5a0c9997c1ff1079982db86778e185d560619bca597d2b152e166efbe"
+        },
+        {
+          "id": "S-PW-NUMERIC-KEY",
+          "sha256": "f7e6624df331c4b6ac45986067576d7f4948faef82d8dbe13a6923aff8fa8a16"
+        },
+        {
+          "id": "S-PW-TEMPLATE-KEY",
+          "sha256": "a769eec0aac9c0a02eb247c82f39506551adc7ff378e45cc7c197115bbda53b8"
+        },
+        {
+          "id": "S-PW-ELEMENT",
+          "sha256": "920cc8a4635f99712e822a308a5daafb4c4acf23a9f00f400a746d79773b0e01"
+        },
+        {
+          "id": "S-PW-NESTED",
+          "sha256": "3e246f620ab427273a379009cea9b969837d2c4735e9b29f6c3629efe245df3e"
+        },
+        {
+          "id": "S-PW-DEFAULT",
+          "sha256": "38424e5a18cd237af6d72d9f31828e6d5604c986fc6507631e083bf6fb563d3f"
+        },
+        {
+          "id": "S-PW-LOOP",
+          "sha256": "5306655892d2f614b3c12c49c45f2dee210b624c57013bec5c982b37ecb32c93"
+        }
+      ]
+    },
+    {
+      "table": "WRITES",
+      "id": "PW-PLANTED",
+      "members": [],
+      "form": "the docs06 census's planted writes (wb-ouo3 cut #5: the 'the property writes' row's writes.ts, :2475-2504)",
+      "plants": [
+        {
+          "id": "P-WRITES",
+          "sha256": "90ba72460521e54b653c996878be98c25da8e352e2df8d0458c2a56687c877de"
+        }
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-CTX-EXPECT",
+      "members": [
+        "G-CTX-TESTERS",
+        "G-CTX-MARK"
+      ],
+      "form": "the test context's own expect: a member named expect, reached through a case's context parameter (wb-ouo3 refusal #4 U2)",
+      "plants": [
+        {
+          "id": "G-CTX-TESTERS",
+          "sha256": "782bd99a5898920b04043cda3482e1a3e8805facce496a9b73eaf92c84715fd6"
+        },
+        {
+          "id": "G-CTX-MARK",
+          "sha256": "d8703c6681203be2f2892535a8b5634c0a75d21bae5c8afd1ab81ddd5e3effe8"
+        },
+        {
+          "id": "S-CTX-OPTIONAL",
+          "sha256": "b438a38c152e3941f15f11b26439e1f99d40d058ae571d43863146a11d1f8a88"
+        },
+        {
+          "id": "S-CTX-ELEMENT",
+          "sha256": "0d22c7bb93442607a6cc425f5cab2ac46fb946fa46e29c1315196df7d6675f7b"
+        },
+        {
+          "id": "S-CTX-TEMPLATE",
+          "sha256": "511edb8b44253dfaa7153477cbca34bebe9455bf4da08921ecfe8b478898d9d6"
+        },
+        {
+          "id": "S-CTX-QUIET",
+          "sha256": "5acde347f62dbcc7d32c149a479dd3411eab76f3782a7fe4f5963e203ae69902"
+        }
+      ]
+    }
+  ],
+  "code": [
+    {
+      "name": "spelledAnywhere",
+      "sha256": "44127d218ef0b7bb18aa8d555c155619e63326ee27fd6acf365fa5514a8de1dc"
+    },
+    {
+      "name": "WRITER_ROUTE",
+      "sha256": "1499820093e9d54e157837e89cd9ae28dcfbdcb409382b03c3e4000001dc10a0"
+    },
+    {
+      "name": "moduleImports",
+      "sha256": "b29c2cc7075b7e71a15665238dcbde7dde5fa3bf6151293b30052109083695a3"
+    },
+    {
+      "name": "propertyWrites",
+      "sha256": "ef19d3b858ea4b4652f0d0086ec485291368a41ccfc93f8baadbdffadfee8187"
+    }
+  ]
+}
