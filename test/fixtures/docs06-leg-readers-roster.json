@@ -1,0 +1,400 @@
+{
+  "bead": "wb-mcoj",
+  "census": "test/workbench-docs06-leg-readers-census.test.ts",
+  "helper": "test/helpers/docs06-leg-readers.ts",
+  "quietPage": "test/workbench-docs06-conformance.census.ts",
+  "rows": [
+    {
+      "table": "MODULES",
+      "id": "MI-DEFAULT-NAMED",
+      "members": [
+        "G-MI-DEFAULT-NAMED"
+      ],
+      "form": "one import declaration binding a default together with named bindings (wb-ouo3 refusal #4 U1 (a))",
+      "plants": [
+        {
+          "id": "G-TWIN-TS-NAMED",
+          "sha256": "75cc2abd4d366da27a757860e1fda6012a9e7d9d5ff30bda2cba9d46b0243393"
+        },
+        {
+          "id": "S-DN-NODE",
+          "sha256": "66c45c4e88c14ede39bb35d506d6ef8e62d9e43cf3020876d49a3be07e4b56a7"
+        },
+        {
+          "id": "S-DN-PKG",
+          "sha256": "4492291f043c879c16e056bc18018b837b554c90b3491ec23a7e9cb90be75188"
+        },
+        {
+          "id": "S-DN-REL",
+          "sha256": "5cb4ba1f52a9215acd2f20aaa0c594dc04c422d405680cce41c595a113cf9bb1"
+        }
+      ]
+    },
+    {
+      "table": "MODULES",
+      "id": "MI-DEFAULT-NS",
+      "members": [
+        "G-MI-DEFAULT-NS"
+      ],
+      "form": "one import declaration binding a default together with a namespace (wb-ouo3 refusal #4 U1 (b))",
+      "plants": [
+        {
+          "id": "G-TWIN2-NS",
+          "sha256": "645664e7bd46439a94927b337c986640ab5fcfda1798e8713af13bc7e74e5fd8"
+        },
+        {
+          "id": "S-DNS-NODE",
+          "sha256": "7a6de111331b8a80a7ba8f3dafff7f63f50ac5ed7921a432c261151c732b43fe"
+        },
+        {
+          "id": "S-DNS-REL",
+          "sha256": "66599816fc1f86416aeb443de1af50354cfcee02f52728f8a4d550a49779b80e"
+        }
+      ]
+    },
+    {
+      "table": "MODULES",
+      "id": "MI-NSEXPORT",
+      "members": [
+        "G-MI-NSEXPORT"
+      ],
+      "form": "an export * as <name> from a module (wb-ouo3 refusal #4 F3)",
+      "plants": [
+        {
+          "id": "S-NSX-PKG",
+          "sha256": "699d51c8e2a9d93189d9aae531c51ac566f223c96c7438a655ef64253c3bb492"
+        },
+        {
+          "id": "S-NSX-NODE",
+          "sha256": "279612b5effd05bc16efc842b502fda933a37a65058fa4793f587571839162f9"
+        },
+        {
+          "id": "S-NSX-REL",
+          "sha256": "fd18e150365ccbf15f0b3f5bc53f355ba2fa6907f14dcb209c3b737bd4e66542"
+        }
+      ]
+    },
+    {
+      "table": "MODULES",
+      "id": "MI-NODE-ALIAS",
+      "members": [
+        "GP9-MI-NODE-ALIAS"
+      ],
+      "form": "an aliased named specifier, of a node: builtin and of each other module kind the record holds (wb-ouo3 refusal #5 U1)",
+      "plants": [
+        {
+          "id": "GP9-TWIN-NODE-ALIAS2",
+          "sha256": "a35213b7377f326d556ea75db4f5eecc8ace3cb78748ea5b53fac5a412b46aa1"
+        },
+        {
+          "id": "GP9-TWIN-NODE-ALIAS",
+          "sha256": "3c7f270310a90c4a0ff733e201d6165901d06bedb0e5f55c34ae9a1e6aefca17"
+        },
+        {
+          "id": "S-ALIAS-PKG",
+          "sha256": "922e62eaab155614629484355c3db2fcc1900ee9961276e35c33d5022818cb06"
+        },
+        {
+          "id": "S-ALIAS-REL",
+          "sha256": "5b5c486c11e40536e8a7deb38dafee61e38acc5f696e61aba75df3a241959164"
+        }
+      ]
+    },
+    {
+      "table": "MODULES",
+      "id": "MI-NODE-TYPEONLY",
+      "members": [
+        "GP9-MI-NODE-TYPEONLY"
+      ],
+      "form": "an inline type-only named specifier, of a node: builtin and of each other module kind the record holds (wb-ouo3 refusal #5 U2)",
+      "plants": [
+        {
+          "id": "GP9-TWIN-NODE-TYPEONLY",
+          "sha256": "3a6f885fed97a1370d75b68d5801b56113f58d705109fd17f586f9aa4a6533fe"
+        },
+        {
+          "id": "S-TYPE-NODE-ALIAS",
+          "sha256": "eea772d53ae40065a783e682676e251c9a8ab5733a7a4f6a763329b7ad47857a"
+        },
+        {
+          "id": "S-TYPE-CLAUSE-NODE",
+          "sha256": "299589cbdcd9b5f9a89142bfe6b4f3562f9c2767e2c08de6cc82cb09728f48fc"
+        },
+        {
+          "id": "S-TYPE-PKG",
+          "sha256": "8ba374493ef3151012dcc49baefb5ac43990c3ebe57f89c24681a2537b141d4a"
+        },
+        {
+          "id": "S-TYPE-REL",
+          "sha256": "ec92d464c0b69c4a009387c07ab9e8b1123ed2504cdd17021aa9b96bf064c32a"
+        }
+      ]
+    },
+    {
+      "table": "MODULES",
+      "id": "MI-PLANTED",
+      "members": [],
+      "form": "the docs06 census's own page and planted loads (wb-ouo3 cut #5: its import block :50-56 and the 'the modules loaded' row's loads.ts, :2435)",
+      "plants": [
+        {
+          "id": "P-RECORD",
+          "sha256": "dd18ebd34e66bf5002a393b6f80fa6f79ad22d16e69d37e2014eaaa9c9506bc2"
+        },
+        {
+          "id": "P-LOADS",
+          "sha256": "61d3f08feea5257b1bb962b7386393706161e2b5fb4c4829a08a22e58d210f39"
+        }
+      ]
+    },
+    {
+      "table": "WRITES",
+      "id": "PW-COMPUTED-KEY",
+      "members": [
+        "G-PW-COMPUTED-KEY"
+      ],
+      "form": "an object pattern property with a computed key (wb-ouo3 refusal #4 U1 (c))",
+      "plants": [
+        {
+          "id": "G-TWIN2-PW",
+          "sha256": "342f92694319ca338d6e045f837a52f2bfdfca9c3891925987ed7e1287e1dc3a"
+        },
+        {
+          "id": "S-PW-IDENT-KEY",
+          "sha256": "53c11ab5a0c9997c1ff1079982db86778e185d560619bca597d2b152e166efbe"
+        },
+        {
+          "id": "S-PW-NUMERIC-KEY",
+          "sha256": "f7e6624df331c4b6ac45986067576d7f4948faef82d8dbe13a6923aff8fa8a16"
+        },
+        {
+          "id": "S-PW-TEMPLATE-KEY",
+          "sha256": "a769eec0aac9c0a02eb247c82f39506551adc7ff378e45cc7c197115bbda53b8"
+        },
+        {
+          "id": "S-PW-ELEMENT",
+          "sha256": "920cc8a4635f99712e822a308a5daafb4c4acf23a9f00f400a746d79773b0e01"
+        },
+        {
+          "id": "S-PW-NESTED",
+          "sha256": "3e246f620ab427273a379009cea9b969837d2c4735e9b29f6c3629efe245df3e"
+        },
+        {
+          "id": "S-PW-DEFAULT",
+          "sha256": "38424e5a18cd237af6d72d9f31828e6d5604c986fc6507631e083bf6fb563d3f"
+        },
+        {
+          "id": "S-PW-LOOP",
+          "sha256": "5306655892d2f614b3c12c49c45f2dee210b624c57013bec5c982b37ecb32c93"
+        }
+      ]
+    },
+    {
+      "table": "WRITES",
+      "id": "PW-PLANTED",
+      "members": [],
+      "form": "the docs06 census's planted writes (wb-ouo3 cut #5: the 'the property writes' row's writes.ts, :2475-2504)",
+      "plants": [
+        {
+          "id": "P-WRITES",
+          "sha256": "90ba72460521e54b653c996878be98c25da8e352e2df8d0458c2a56687c877de"
+        }
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-CTX-EXPECT",
+      "members": [
+        "G-CTX-TESTERS",
+        "G-CTX-MARK"
+      ],
+      "form": "the test context's own expect: a member named expect, reached through a case's context parameter (wb-ouo3 refusal #4 U2)",
+      "plants": [
+        {
+          "id": "G-CTX-TESTERS",
+          "sha256": "782bd99a5898920b04043cda3482e1a3e8805facce496a9b73eaf92c84715fd6"
+        },
+        {
+          "id": "G-CTX-MARK",
+          "sha256": "d8703c6681203be2f2892535a8b5634c0a75d21bae5c8afd1ab81ddd5e3effe8"
+        },
+        {
+          "id": "S-CTX-OPTIONAL",
+          "sha256": "b438a38c152e3941f15f11b26439e1f99d40d058ae571d43863146a11d1f8a88"
+        },
+        {
+          "id": "S-CTX-ELEMENT",
+          "sha256": "0d22c7bb93442607a6cc425f5cab2ac46fb946fa46e29c1315196df7d6675f7b"
+        },
+        {
+          "id": "S-CTX-TEMPLATE",
+          "sha256": "511edb8b44253dfaa7153477cbca34bebe9455bf4da08921ecfe8b478898d9d6"
+        },
+        {
+          "id": "S-CTX-QUIET",
+          "sha256": "5acde347f62dbcc7d32c149a479dd3411eab76f3782a7fe4f5963e203ae69902"
+        }
+      ]
+    },
+    {
+      "table": "SCAN",
+      "id": "SC-OBJECT",
+      "members": [
+        "GA1-OBJ-CONTEXT",
+        "GA2-OBJ-IDENT"
+      ],
+      "form": "a member named expect whose object is not the identifier context: the test context under another parameter name, reached through a member chain, and a this, parenthesized, non-null, element and call object (wb-mcoj refusal #1 U2)",
+      "plants": [
+        {
+          "id": "WA1",
+          "sha256": "29721f13d696d01dbfc49468dd74a0c7bbee8b5da9093a7834035a7651e45cdf"
+        },
+        {
+          "id": "WA2",
+          "sha256": "52049fd27cd5fe8335c9471a974849c4ef75fcbdc165c228e6318066b177df5b"
+        },
+        {
+          "id": "S-OBJ-THIS",
+          "sha256": "0630859e91af7228dbfae926384dcabe287da1b013dc47f84607fd153a980e7e"
+        },
+        {
+          "id": "S-OBJ-PAREN",
+          "sha256": "d482bd1bf455020540fdb7d7698a9643ae88c37da545e409fd0c7fc470327b89"
+        },
+        {
+          "id": "S-OBJ-NONNULL",
+          "sha256": "d62659243f303b44f8774e052a4b86a5e6b9153a58c3a6994d99ef9822d7f5b7"
+        },
+        {
+          "id": "S-OBJ-ELEMENT",
+          "sha256": "be926c31b9cd355f4fcba7d405c7b4de181db0d991130340ea6288cc9d61f2d2"
+        },
+        {
+          "id": "S-OBJ-CALL",
+          "sha256": "728f600e30e95af9b36870543afe5d8519e5b906f2161039770da6528c45b5d5"
+        }
+      ]
+    },
+    {
+      "table": "SCAN",
+      "id": "SC-POSITION",
+      "members": [
+        "GA3-PARENT-MEMBER",
+        "GA4-NO-VARDECL",
+        "GA9-NO-AWAIT",
+        "GA10-NO-FUNCTION-DECL"
+      ],
+      "form": "a member named expect anywhere but at the head of a member call in a top-level or it() body statement: called directly, bound to a local, awaited, returned from a function declaration, in a describe callback, in a class, at twelve expression and statement positions and as the object of another (wb-mcoj refusal #1 U1)",
+      "plants": [
+        {
+          "id": "WA3",
+          "sha256": "6f10ff17cad63427fc2a9dd99f8f14dbbc7ad3e4f95e3636da0fb47ceffa4e33"
+        },
+        {
+          "id": "WA4",
+          "sha256": "1b044da82a78cdc649816345973977beb38caed9cefdfdbad61df7a2d5893192"
+        },
+        {
+          "id": "WA9",
+          "sha256": "7100e9bdf9a4483febad94a0d603783c542971747063724f95d2ed2e94676f1e"
+        },
+        {
+          "id": "WA10",
+          "sha256": "9895056aaec483a2335d7bf80802c4e99a2d185fdd4a1865c4d80766faf068b5"
+        },
+        {
+          "id": "S-POS-DESCRIBE",
+          "sha256": "ec8cc0ad1a36b88a84cbf264e12728d46ea8497aa8032ff75b2406672fe20a77"
+        },
+        {
+          "id": "S-POS-CLASS",
+          "sha256": "a0f2f007e18b2d3757cccea40a06d4a38fcb4eeded21187d055cd0bf01a1dff3"
+        },
+        {
+          "id": "S-POS-EXPRESSIONS",
+          "sha256": "ce5748a903ba913f23b930b0d36e7926d2866be20be970347a6ac19f715913fd"
+        },
+        {
+          "id": "S-POS-NESTED",
+          "sha256": "fdff9996bae9220d9708a872eca1f329946a7139be337c6f0d1279e7b9b5016c"
+        }
+      ]
+    },
+    {
+      "table": "SCAN",
+      "id": "SC-ELEMENT",
+      "members": [
+        "GA5-ELEM-NOOPT",
+        "GA6-ELEM-NO-SINGLE-QUOTE"
+      ],
+      "form": "an element access keyed by expect: optional with a double-quoted, a template and a single-quoted key, single-quoted, and read bare (wb-mcoj refusal #1 U3)",
+      "plants": [
+        {
+          "id": "WA5",
+          "sha256": "fc5457006caa10ecbd3d357db8014a64d0bf3f068fd932351493f4233203b7d8"
+        },
+        {
+          "id": "WA6",
+          "sha256": "a33244c9a6c8b7633c331448387ce305e115a40f747c7f5fcc53400c7fdbc70b"
+        },
+        {
+          "id": "S-ELEM-OPT-TEMPLATE",
+          "sha256": "3ab0cc6c35cc0ac418c04190daa628035c7af21f83496bbf56d3c7fb6857ac6e"
+        },
+        {
+          "id": "S-ELEM-OPT-SINGLE",
+          "sha256": "63a0c89faff1eea7399df6af8337e4ccabf6144fe3def97c1b59ae55a74bd6c8"
+        },
+        {
+          "id": "S-ELEM-BARE",
+          "sha256": "f2272c13d95f4665dc7c87760fcbaaa3fda081667951667e7b81bbb699919cdd"
+        }
+      ]
+    },
+    {
+      "table": "SCAN",
+      "id": "SC-ESCAPED",
+      "members": [],
+      "form": "the name or the key expect spelled through an escape sequence (this cut's plants)",
+      "plants": [
+        {
+          "id": "S-ESC-NAME",
+          "sha256": "c568b073106f24915f5e14239ddef6b2b32265a5b612f7dfde97272e7c8e7215"
+        },
+        {
+          "id": "S-ESC-KEY",
+          "sha256": "f4aa4e8a0e528271363f9009ceb53b25cacd1a6a3b1c134d26eebff1e9b4bba4"
+        }
+      ]
+    }
+  ],
+  "code": [
+    {
+      "kind": "function",
+      "name": "spelledAnywhere",
+      "sha256": "44127d218ef0b7bb18aa8d555c155619e63326ee27fd6acf365fa5514a8de1dc"
+    },
+    {
+      "kind": "variable",
+      "name": "WRITER_ROUTE",
+      "sha256": "1499820093e9d54e157837e89cd9ae28dcfbdcb409382b03c3e4000001dc10a0"
+    },
+    {
+      "kind": "function",
+      "name": "moduleImports",
+      "sha256": "b29c2cc7075b7e71a15665238dcbde7dde5fa3bf6151293b30052109083695a3"
+    },
+    {
+      "kind": "function",
+      "name": "propertyWrites",
+      "sha256": "ef19d3b858ea4b4652f0d0086ec485291368a41ccfc93f8baadbdffadfee8187"
+    }
+  ],
+  "helperImport": "local import \"typescript\" c110ad21c643bc950c6353bd6ea31de589d5aa3ec2c4ecc0ab36e21322fbf9a9",
+  "statements": [
+    "0aa8640547476a2244ecaaa3b96a7e38218318e4d8e59c6b5569c74301a378e455c94fa9963d18aa7a63e8a489b8b53d38e910481ebfbc41730e5e763363dc89",
+    "c32285d746a0d843098a8aedc14440909feb87f87f20c3df440741b9d643ea233ef3a7a03263c175e564e9b500302adb417cf2c1ec6b49f3de1881bab3325fa6",
+    "a0ee8e35889e543e9dd99e4b2adfa2ee95cb7b89b2f5b55b1dd97da0ac9de4019a4d57341a605b378f60ef0020dfc2c527aafd360555f7f167e720ea6607ddca",
+    "825faea52ab08553196ec9f65ce17a47843a7d148fc6d90fbb9fa25c3430cbd5de7e15a9b83cf62d7c5d86d14edd010e9a9fbb30bc4beb7bb83365694bd70190",
+    "7d54157aa15d86bae86dcc6cb71ba64140c0f4694b2eb36dc1fbf45cd9392fa1461c72ac48da242f2f185ac9245c19d9f0bf1324eb727673a4ba70797ad7bf67"
+  ]
+}
