@@ -29,8 +29,9 @@
  *    the tracked export, and the table's frozen shape is pinned.
  *  CLAIM WORDS -> FALSIFIERS (restated by cut #3 to exactly its pins, orchestrator ruling R-B191): the falsifiers of THE PAGE
  *    TWIN, THE PAGE READ and THE INPUT READ (below) are exactly the items pinned in the roster as D1 controls - PAGE_TWIN_FORMS (5
- *    Markdown texts, read by D1 and by their reader view), PAGE_READ_FORMS (154 raw-state texts, each read by THE PAGE READ
- *    alone) and INPUT_READ_FORMS (48 input start tags, each read in an HTML block by its reader view) - so a reader that reads one
+ *    Markdown texts, 9 since wb-2wiv.5, read by D1 and by their reader view), PAGE_READ_FORMS (154 raw-state texts, each read by
+ *    THE PAGE READ alone; wb-2wiv.5: and each in PAGE_REACH's page by pageReach, D1's pageReach reading) and INPUT_READ_FORMS (48
+ *    input start tags, each read in an HTML block by its reader view) - so a reader that reads one
  *    of these texts otherwise than its pinned reading reds that item (case D1, against the roster's D1 witness). A reader that
  *    departs from a stated rule only at a text no item holds is NOT CLAIMED by this census (CUT #3 and NOT CLAIMED, below).
  *  Found by the seat (no refusal item; FAIL-CLOSED): THE RENDERED LEG's reference reading looked a name up in NAMED_REFERENCES
@@ -63,7 +64,8 @@
  *    claim is restated only to narrow it (CLAIM WORDS -> FALSIFIERS, the CUT #2 paragraph, THE PAGE TWIN, THE PAGE READ, THE
  *    INPUT READ, the two form tables' docstrings and NOT CLAIMED). Its criterion is refusal #2's twenty named members, each red
  *    at an item that holds one of its gate witnesses, the gate's own text, which reaches THE PAGE READ through a Markdown page as
- *    one raw-state text token (an input, THE INPUT READ in an HTML block): U1, white space after a quoted value before a letter
+ *    one raw-state text token (wb-2wiv.5: each such page item reaches it in PAGE_REACH's page, pinned by D1's pageReach reading;
+ *    an input, THE INPUT READ in an HTML block): U1, white space after a quoted value before a letter
  *    and before a quote (spaceAfterQuotedName, spaceAfterQuotedQuote); a "/" after a quoted value, after an attribute's name and
  *    before one, each before a letter and before a quote (solidusAfterValueName, solidusAfterValueQuote, solidusAfterNameName,
  *    solidusAfterNameQuote, solidusBeforeNameName, solidusBeforeNameQuote); a quote after a tag name's "/" (nameSolidusQuote); a
@@ -89,19 +91,45 @@
  *    space (spacePlaceholder, spaceButtonValue). Each item's reading was decided before the census ran - by the parse5 7.1.2
  *    data-state tokenizer, or for an input by the HTML Standard's rendering over parse5's attributes - and D1 holds THE PAGE
  *    READ's or THE INPUT READ's reading to it; the five carriage-return items and closedEmptyComment are decided by the tokenizer
- *    alone (a page never hands THE PAGE READ such a text: marked 18.0.11 reads a carriage return as a line feed and lexes "<!---->"
- *    as an html token of its own). Restated by cut #4 (refusal #3's U2): overlappingBangClose and dashBangNoGreaterThan, comments
- *    marked's inline html rule does not close (it closes one only at a "-->"), each reach THE PAGE READ through a page as one
- *    raw-state text token, so 59 of the 65 new page items do - measured at cut #4 with the repo's marked 18.0.11 in "Pi embeds the
- *    <code>ITEM</code>.", a measurement no case pins. PAGE_READ_FORMS grows from 89 to 154 items and INPUT_READ_FORMS from 40 to
- *    48.
+ *    alone (restated by wb-2wiv.5 to the page it pins, cut #3's "a page never hands THE PAGE READ such a text" dropped: PAGE_REACH's
+ *    page hands THE PAGE READ none of the six whole - marked 18.0.11 reads a carriage return as a line feed and lexes "<!---->" as
+ *    an html token of its own -, and another page around them is NOT CLAIMED). Restated by cut #4 (refusal #3's U2):
+ *    overlappingBangClose and dashBangNoGreaterThan, comments marked's inline html rule does not close (it closes one only at a
+ *    "-->"), each reach THE PAGE READ through a page as one raw-state text token, so 59 of the 65 new page items do - measured at
+ *    cut #4 with the repo's marked 18.0.11 in "Pi embeds the <code>ITEM</code>." (PAGE_REACH's page), a measurement pinned since
+ *    wb-2wiv.5 (D1's pageReach reading of each item, and the judged set's count held to wb-2wiv.5's description in the tracked
+ *    export). PAGE_READ_FORMS grows from 89 to 154 items and INPUT_READ_FORMS from 40 to 48.
  *  CUT #4 (the FINAL cut: orchestrator ruling R-B228's FAIL-CLOSED CORE at rule 19's structural exit after refusal #3, gate run
  *    g10-gate-s166 on cut #3 8ae1332c, child bead wb-2wiv.5 carrying the coverage; seat ws-04, run g10-work-s172, trunk 644e70d
  *    merged in): text only - no title, row, pin, control, residual row, refusal, reading, item or reader is added, removed or
  *    changed. It narrows the PAGE_TWIN_FORMS docstring to its five items and states THE PAGE TWIN's "adding only the findings its
- *    unit lacks" NOT CLAIMED (refusal #3's U1, gate member G8-PT-UNIT; THE PAGE TWIN and NOT CLAIMED say so too), restates the CUT
- *    #3 paragraph's page reach to the measured 59 of the 65 new page items (U2) and its tag states to five beside the tag-name state
- *    (F4).
+ *    unit lacks" NOT CLAIMED (refusal #3's U1, gate member G8-PT-UNIT; THE PAGE TWIN and NOT CLAIMED said so too, until
+ *    wb-2wiv.5 pinned it), restates the CUT #3 paragraph's page reach to the measured 59 of the 65 new page items (U2) and its tag
+ *    states to five beside the tag-name state (F4).
+ *  WB-2WIV.5 - THE PINNED READER SET: case D1 of this file (row D, pin D1; assertion target: the D1 witness's pageTwinForms
+ *    readings of unitLacks, imageTwinBetween, imageTwinFirst and otherUnitHolds and its pageReach reading of each of the 154
+ *    PAGE_READ_FORMS items, toStrictEqual the roster's; observed at the cut: every reading equal, D1 passing) and the judged set
+ *    (assertion targets: the cut #3 items PAGE_REACH's page does not hand THE PAGE READ whole, toEqual the five carriage-return
+ *    items' names and closedEmptyComment;
+ *    overlappingBangClose and dashBangNoGreaterThan handed whole, toBe true; wb-2wiv.5's description in the tracked export,
+ *    toContain the count measured here; observed at the cut: passing). The child bead ruling R-B228 filed at rule 19's structural
+ *    exit after refusal #3 (gate run g10-gate-s166 on cut #3 8ae1332c), carrying refusal #3's U1 and U2 out of wb-2wiv.4 (seat
+ *    ws-04, run g10-work-s183, cut on trunk f5cb912). Cut #4's frozen shape is kept and only added to - no title, row, pin,
+ *    control, residual row, refusal, reading or item is removed or weakened, and no reader of the rendered leg changes. U1: THE
+ *    PAGE TWIN's "adding only the findings its unit lacks" holds four PAGE_TWIN_FORMS items - unitLacks, a unit whose run already
+ *    holds the claim its page twin reads again, beside an invisible split only the twin reads (the twin adds the split and not the
+ *    claim); imageTwinBetween, the same with an image twin read between the run and the page twin that lacks the claim (the page
+ *    twin still adds the split alone); imageTwinFirst, a unit whose image twin adds a claim its page twin then reads again (the
+ *    page twin adds nothing); and otherUnitHolds, a table row whose first cell holds the claim its second cell's page twin reads
+ *    (that twin's own unit lacks it, so the twin adds it) - so gate member G8-PT-UNIT, the page twin read as a unit of its own,
+ *    reds D1 at each of the first three. U2: the page reach the CUT #3 paragraph states is pinned - pageReach reads each
+ *    PAGE_READ_FORMS item in PAGE_REACH's page, "Pi embeds the <code>ITEM</code>.", and holds whether marked 18.0.11 hands THE
+ *    PAGE READ the item whole (exactly one raw-state text token, whose text is the item); 59 of cut #3's 65 items are handed whole,
+ *    overlappingBangClose and dashBangNoGreaterThan among them, the five carriage-return items and closedEmptyComment are not, and
+ *    the count is held from outside the census to wb-2wiv.5's own description ("59 of the 65 new page items reach it"). NOT
+ *    CLAIMED by this census: another page around an item (another raw-state opener, another block, other text beside it), a
+ *    reading of THE PAGE TWIN or of the reach beyond these items, and PAGE_REACH, pageReach's reading or which other cut #3 items
+ *    reach, changed in this file and the roster together where the count holds (NOT CLAIMED, below). This cut claims no residual.
  *
  * CUT #6 (the FINAL cut: the respin of refusal #5, gate run g10-gate-s142 on cut #5 b70da137; seat ws-03, run g10-work-s141), bound
  * by orchestrator ruling R-B93 (rule 19's structural exit) to the FAIL-CLOSED CORE: the rendered-reading claim restated to exactly
@@ -353,8 +381,11 @@
  * token in a Markdown image's alt text is no page piece: it is read in the image's reading as written, and refused (marked escapes
  * the alt text into the attribute, so a reader shows it as written). Cut #3: these rules state the delivered reader, pinned at
  * exactly PAGE_TWIN_FORMS' items (CLAIM WORDS -> FALSIFIERS); a reading that departs from them at a text no item holds is NOT
- * CLAIMED. Cut #4 (R-B228): no item holds "adding only the findings its unit lacks", so a page twin that re-adds findings its unit
- * has is NOT CLAIMED (PAGE_TWIN_FORMS).
+ * CLAIMED. Cut #4 (R-B228) held no item for "adding only the findings its unit lacks" and left a page twin that re-adds findings its
+ * unit has NOT CLAIMED; wb-2wiv.5 pins that rule at four items (PAGE_TWIN_FORMS): a page twin adds the findings its own unit lacks
+ * (unitLacks' invisible split; otherUnitHolds' claim, though another unit at its line holds it) and none its unit has (unitLacks'
+ * claim; imageTwinBetween's, an image twin between them lacking it), a finding an image twin of the unit added counting as one the
+ * unit has (imageTwinFirst).
  * THE PAGE READ (wb-2wiv.4, the RB family): a raw-state text token's text as the page holds it - marked writes it there unescaped,
  * as raw HTML - read within the token as the HTML Standard's tokenizer reads text in its data state. MARKUP is removed, as the page
  * shows none of it: from a "<" before an ASCII letter of either case, "/", "!" or "?", a comment ("<!--") to its first "-->" or
@@ -490,7 +521,7 @@
  *    INVISIBLE_FORMS form (refused) and a claim joined through a link's, an em's, a strong's and a del's children; and -
  *    wb-2wiv.4 - THE SURVIVORS read on D1 (GP1-D1a to GP1-D1h, GP1-B2a and GP1-D1i2 to GP1-D1k2), each refused and read with its
  *    claim, each RAW_STATE_FORMS and INPUT_FORMS form's claim in its page twin, and the claim-word falsifiers PAGE_TWIN_FORMS,
- *    PAGE_READ_FORMS and INPUT_READ_FORMS)
+ *    PAGE_READ_FORMS and INPUT_READ_FORMS; and - wb-2wiv.5 - each PAGE_READ_FORMS item's page reach in PAGE_REACH's page)
  *    and near
  *    misses stay quiet (a receipt's rf_identity sdk_versions key, the workflow VM's wasm option, split sentences, a table's rows,
  *    list items, a code span, a lock whose embed and wasm words sit in different values, YAML lines that pair them only as prose
@@ -551,7 +582,10 @@
  * census (wb-2wiv.1's notes, the first match of refusal #5's two PLANTS sections and their READER VIEW paragraphs, and the record's
  * own "LEG 2 survivors" counts; wb-2wiv.4's own row): every plant id in order, each survivor's legs (its plant line's, else its
  * id's), each quote of its plant line within its text, its reader text as each READER VIEW states it, and the RB and IV counts;
- * so a survivor removed, re-legged, re-texted or re-read in every literal and the roster reds through the export.
+ * so a survivor removed, re-legged, re-texted or re-read in every literal and the roster reds through the export. (wb-2wiv.5) The
+ * page reach of cut #3's items is held to wb-2wiv.5's own description in the export (refusal #3's U2 there: "false for
+ * overlappingBangClose and dashBangNoGreaterThan (59 of the 65 new page items reach it"), so the reach count, a named comment
+ * item, a cut #3 item removed or the cut #3 boundary changed in every literal and the roster reds through the export.
  * FAIL-CLOSED (by design, not a residual; the census reds and its reader judges): a negated sentence ("no decision to embed the
  * Fiber core yet") on the decision bead, on the decisions page or in a product text reads as a decision or a claim; an unknown
  * named reference in a Markdown text (its run, an attribute value, a destination or a title) and any HTML in a stated section's
@@ -584,10 +618,13 @@
  * a reader that departs from a rule of THE PAGE TWIN, THE PAGE READ or THE INPUT READ only at a text no PAGE_TWIN_FORMS,
  * PAGE_READ_FORMS or INPUT_READ_FORMS item holds - the rules state the delivered readers, their falsifiers are those items alone
  * - and such an item removed or re-read in this file, in the roster's constants and in D1's reading together (no text in the
- * repository holds the items' readings); and (wb-2wiv.4 cut #4, R-B228) THE PAGE TWIN's "adding only the findings its unit lacks",
- * which no item holds (a page twin read as a unit of its own, re-adding the findings its unit has: gate member G8-PT-UNIT; wb-2wiv.5
- * carries the item), and the page reach wb-2wiv.4's CUT #3 paragraph states (measured at cut #4; no case reads an item through a
- * page).
+ * repository holds the items' readings); and (wb-2wiv.5, restating cut #4's R-B228 clause, whose two members - THE PAGE TWIN's
+ * "adding only the findings its unit lacks" and the page reach the CUT #3 paragraph states - it pins at unitLacks,
+ * imageTwinBetween, imageTwinFirst and otherUnitHolds and at D1's pageReach reading) the reach of a PAGE_READ_FORMS item in a
+ * page other than PAGE_REACH's (another raw-state opener - pre, kbd or script -, another block, other text beside it), which no
+ * case reads; a reach reader that departs from pageReach's rule only where no PAGE_READ_FORMS item reads otherwise; and
+ * PAGE_REACH's page, D1's pageReach reading or which of cut #3's other items reach, changed in this file and the roster together
+ * where the judged set's count and its two comment items still hold (a <kbd> or a <pre> page reads every item's reach alike).
  * RESIDUALS (named, each with its pinned quiet row): R-COMPOSED a name composed at run time from parts no one of which holds it
  * ("Host" + "CapabilitySet", a join, a split template, "r" + "f", String.fromCharCode) is read by no scan and by neither census
  * (Q1); R-GENERIC-ABI the ABI spelled only through its generic entries (initialize, inspect, subscribe, snapshot, close) is not
@@ -2283,7 +2320,8 @@ const INVISIBLE_FORMS: Readonly<Record<string, string>> = {
 const INVISIBLE_FORM_PATH = "docs/invisible.md";
 /**
  * THE PAGE READ's forms (wb-2wiv.4; each read by pageRead alone and pinned as a D1 control, so a reader that reads a form otherwise
- * reds it - restated by cut #3: these forms, not every sub-form of THE PAGE READ's rules, are what is pinned): markup outside CommonMark's grammar (a namespaced or dotted tag, an end
+ * reds it - restated by cut #3: these forms, not every sub-form of THE PAGE READ's rules, are what is pinned; wb-2wiv.5: each also
+ * read in PAGE_REACH's page by pageReach, its reach pinned on D1 too): markup outside CommonMark's grammar (a namespaced or dotted tag, an end
  * tag a space opens, an empty end tag, a lower-case declaration), markup the grammar holds that marked lexes as an html token of its
  * own (a processing instruction, a CDATA section, the comment forms, one holding ">"), the tag states (a ">" in a double- or single-quoted value of a
  * start or an end tag, white space around "=", a quote that opens no value - after an "=" in a tag's name or an "=" that opens an
@@ -2479,6 +2517,34 @@ const PAGE_READ_FORMS: Readonly<Record<string, string>> = {
   noncharacterReference: "x&#xFDD0;y",
 };
 /**
+ * THE PAGE REACH (wb-2wiv.5, refusal #3's U2 that ruling R-B228 carried out of wb-2wiv.4): the page each PAGE_READ_FORMS item is read
+ * in for its reach (ITEM stands for the item), and where cut #3's items start in PAGE_READ_FORMS (cuts #1 and #2 hold the 89 before
+ * them; cut #3 added the 65 from there on).
+ */
+const PAGE_REACH = { page: "Pi embeds the <code>ITEM</code>.", cutThreeFrom: 89 } as const;
+/** PAGE_REACH's page around a PAGE_READ_FORMS item. */
+function reachPage(raw: string): string {
+  return PAGE_REACH.page.replace("ITEM", () => raw);
+}
+/**
+ * Whether PAGE_REACH's page hands THE PAGE READ a PAGE_READ_FORMS item whole (wb-2wiv.5, D1's pageReach reading): marked 18.0.11
+ * lexes the page, its tokens are walked as inlineRendered reads them - a token with children through its children, else an inline
+ * text token in its raw state (inRawState) is a text THE PAGE READ reads -, and the walk finds exactly one such token, whose text is
+ * the item as written.
+ */
+function pageReach(raw: string): boolean {
+  const read: string[] = [];
+  const walk = (tokens: readonly Token[]): void => {
+    for (const token of tokens) {
+      const children = tokenChildren(token);
+      if (children.length > 0) walk(children);
+      else if (inRawState(token)) read.push(tokenText(token));
+    }
+  };
+  walk(marked.lexer(reachPage(raw)));
+  return read.length === 1 && read[0] === raw;
+}
+/**
  * THE INPUT READ's forms (wb-2wiv.4; items for the state rules its claim states - restated by cut #3: these tags, not every
  * sub-form of THE INPUT READ's rules, are what is pinned -, each an input start tag read by D1 in an HTML block, "Pi embeds the <tag> core.", and pinned by its reader view): the Text state without a type, by each entry keyword, in
  * upper case, by an unknown or empty type; a type matched in any case (HIDDEN) and behind a reference (hidd&#101;n), and the first
@@ -2551,12 +2617,17 @@ function inputReadPage(tag: string): string {
 }
 /**
  * THE PAGE TWIN's forms (wb-2wiv.4; each a Markdown text read on D1 and by its reader view - restated by cut #4, refusal #3's U1 under
- * ruling R-B228: these five items, not an item for each rule THE PAGE TWIN's claim states, are what is pinned): a bidirectional control
- * and an invisible split that only the page reading decodes (refused in the twin), an image beside a raw-state token (shown as the run
- * first shows it), a raw-state token in an image's alt text (no page piece) and a raw-state token in a link's children (its page
- * reading in the run's). THE PAGE TWIN's "adding only the findings its unit lacks" holds no item: a page twin read as a unit of its
- * own, re-adding the findings its unit has (gate member G8-PT-UNIT), reds none of them, so that rule is NOT CLAIMED by this census
- * (its item is wb-2wiv.5's).
+ * ruling R-B228: these items, not an item for each rule THE PAGE TWIN's claim states, are what is pinned; wb-2wiv.5: at least one
+ * checkable item for each rule this docstring names): a bidirectional control and an invisible split that only the page reading
+ * decodes (refused in the twin: bidiReference, invisibleReference), an image beside a raw-state token (shown as the run first shows
+ * it: imageBeside), a raw-state token in an image's alt text (no page piece: imageAlt), a raw-state token in a link's children (its
+ * page reading in the run's: linkChildren) and (wb-2wiv.5, refusal #3's U1 that ruling R-B228 carried here) "adding only the
+ * findings its unit lacks" - a unit whose run holds the claim its page twin reads again, beside an invisible split only the twin
+ * reads, the twin adding the split and not the claim (unitLacks), the same with an image twin read between them that lacks the claim
+ * (imageTwinBetween), a unit whose image twin adds the claim its page twin reads again, the page twin adding nothing
+ * (imageTwinFirst), and a table row whose first cell holds the claim its second cell's page twin reads, that twin adding it as its
+ * own unit lacks it (otherUnitHolds) - so a page twin read as a unit of its own, re-adding the findings its unit has (gate member
+ * G8-PT-UNIT), reds each of the first three, and a twin read against every finding before it, not its unit's, reds the last.
  */
 const PAGE_TWIN_FORMS: Readonly<Record<string, string>> = {
   bidiReference: "Pi embeds the <code>a&#x202Ez</code>.\n",
@@ -2564,6 +2635,10 @@ const PAGE_TWIN_FORMS: Readonly<Record<string, string>> = {
   imageBeside: "Pi embeds the <code>Fib<o:p>er</code> ![core](a.png).\n",
   imageAlt: "Pi embeds the ![<code>Fib<o:p>er core</code>](x.png).\n",
   linkChildren: "Pi embeds the [<code>Fib<o:p>er core</code>](x).\n",
+  unitLacks: "Pi embeds the Fiber core; a <code>WA&#x200BSM</code> runtime.\n",
+  imageTwinBetween: "Pi embeds the Fiber ![core](a.png); a <code>WA&#x200BSM</code> runtime.\n",
+  imageTwinFirst: "Pi embeds the Fib![x](a.png)er core; Pi embeds the <code>Fib<o:p>er core</code> too.\n",
+  otherUnitHolds: "| a | b |\n| --- | --- |\n| Pi embeds the Fiber core | Pi embeds the <code>Fib<o:p>er core</code> |\n",
 };
 /** The path D1 reads each PAGE_TWIN_FORMS text under. */
 const PAGE_TWIN_PATH = "docs/page-twin.md";
@@ -2678,6 +2753,8 @@ const SURVIVORS: Readonly<Record<string, Survivor>> = {
 const SURVIVOR_SECTIONS = ["PLANTS (gate-authored, probe tree 998ef8c9 in worktree -mut).", "PLANTS (probe tree, -mut)."] as const;
 /** The child bead the survivors are the falsifier roster of: R-B93 moved the full-surface rendered reading to it (read from the tracked export). */
 const CHILD = "wb-2wiv.4";
+/** The child bead ruling R-B228 carried refusal #3's U1 and U2 to at rule 19's structural exit; its description (read from the tracked export) states the measured page reach. */
+const EXIT_CHILD = "wb-2wiv.5";
 /** GP1-B1a's row edit as the gate wrote it: the decision bead's comments set to its one comment and comment_count 1, in a row of its own (B1 reads every member). */
 function survivorMember(text: string, bead: string): string {
   return JSON.stringify({ id: bead, comments: [{ id: "c-gp1", issue_id: bead, author: "owner", text, created_at: "2026-10-29T20:00:00Z" }], comment_count: 1 });
@@ -4274,6 +4351,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       invisibleForms: formReadings(forms.invisible, text => claimsOf(text, INVISIBLE_FORM_PATH)),
       survivors: survivorReadings("D1", ""),
       pageReadForms: Object.fromEntries(Object.entries(PAGE_READ_FORMS).map(([name, raw]) => [name, pageRead(raw)])),
+      pageReach: Object.fromEntries(Object.entries(PAGE_READ_FORMS).map(([name, raw]) => [name, pageReach(raw)])),
       inputReadForms: Object.fromEntries(Object.entries(INPUT_READ_FORMS).map(([name, tag]) => [name, readerView(inputReadPage(tag))])),
       pageTwinForms: Object.fromEntries(
         Object.entries(PAGE_TWIN_FORMS).map(([name, markdown]) => [name, { findings: claimsOf(markdown, PAGE_TWIN_PATH), page: readerView(markdown) }]),
@@ -4547,6 +4625,7 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
         survivors: SURVIVORS,
         survivorSections: SURVIVOR_SECTIONS,
         pageReadForms: PAGE_READ_FORMS,
+        pageReach: PAGE_REACH,
         inputReadForms: INPUT_READ_FORMS,
         pageTwinForms: PAGE_TWIN_FORMS,
         pageTwinPath: PAGE_TWIN_PATH,
@@ -4670,6 +4749,28 @@ describe("wb-2wiv.1 portable Fiber core gate census (SDK-UNIVERSAL-REACTIVE-REND
         ).toBe(true);
       }
     }
+
+    // wb-2wiv.5 (refusal #3's U2 under ruling R-B228): the page reach of cut #3's 65 page items - PAGE_READ_FORMS from
+    // PAGE_REACH.cutThreeFrom on, each read in PAGE_REACH's page by pageReach (D1's pageReach reading) - and its count, held from
+    // outside the census to the measured count wb-2wiv.5's own description in the tracked export states.
+    const cutThree = Object.entries(PAGE_READ_FORMS).slice(PAGE_REACH.cutThreeFrom);
+    const unreached = cutThree.filter(([, raw]) => !pageReach(raw)).map(([name]) => name);
+    expect(unreached, "the cut #3 page items PAGE_REACH's page does not hand THE PAGE READ whole: the carriage-return items and closedEmptyComment").toEqual([
+      "beforeAttributeCarriageReturn",
+      "selfClosingCarriageReturn",
+      "beforeValueCarriageReturn",
+      "afterUnquotedCarriageReturn",
+      "afterQuotedCarriageReturn",
+      "closedEmptyComment",
+    ]);
+    const reachedComments = ["overlappingBangClose", "dashBangNoGreaterThan"];
+    for (const name of reachedComments) {
+      expect(cutThree.some(([item]) => item === name) && !unreached.includes(name), `${name} is a cut #3 page item PAGE_REACH's page hands THE PAGE READ whole`).toBe(true);
+    }
+    const exitRow = exportRows().get(EXIT_CHILD);
+    expect(typeof exitRow?.description === "string" ? exitRow.description : "", `${EXIT_CHILD}'s description states the page reach measured here`).toContain(
+      `false for ${reachedComments.join(" and ")} (${cutThree.length - unreached.length} of the ${cutThree.length} new page items reach it`,
+    );
 
     // The vendored producer lines: the notes' program citation, its quotes and the census's vocabulary.
     const program = notesProgram(notes);
