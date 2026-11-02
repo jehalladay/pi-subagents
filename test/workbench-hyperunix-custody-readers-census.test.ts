@@ -50,6 +50,20 @@
  * literal and any other root, one quiet row per expression kind), the rebind sentence's bare local (by declaration kind) and its
  * form list (one quiet bare-local row per form), and assignment-target shapes (an array, object, nested, spread and rest pattern
  * as a for-of and as a for-in target, and a pattern element's default).
+ * wb-tz2.20 cut #3 answers this child's own refusal #2 (gate-prep-5 / g10-gate-s190, O:1821) under orchestrator ruling R-B356:
+ * the class guard refusal #1 bound re-failed through new members, so the class is frozen and this cut is the
+ * enumerate-the-resolvable form. Each of the 44 members its U1 (10 fail-open), U2 (33 read-more) and U3 (1) items list is a
+ * CHILD_SURVIVORS_2 row on the lines its item names; each member's archived witness, replayed verbatim, is a G5W SUB-READINGS
+ * row pinned on its line, and each quiet one has a G5C control beside it (the same page with a loud line after it). The helper
+ * header's words in the four guarded classes are narrowed in place to enumerations these rows plant whole, and every other
+ * member of a class is NOT CLAIMED: the override as a string, a no-substitution template or a const name holding one, at each
+ * place k from 1 to 10 of a call of k and of k + 1 arguments, on every ENV_CALLS and ENV_METHODS member (POSITIONS); the custody stub with one or two later arguments; the ROOT KINDS the ROOTS line
+ * lists, each an RK row whose page holds a global identifier or a global member chain in each operand place the kind has,
+ * beside a loud control (every unary and binary operator among them); the rebind sentence's declaration kinds, with every write
+ * form alone and in parentheses and each pattern form at each pattern element it spells (REBIND GRID); and the assignment
+ * line's pattern in parentheses and nested pattern with a default, each element read once (X3 rows). A for-in variable is named
+ * NOT CLAIMED on the for-of element line, beside its pinned witness. No reader code changes: the helper differs from cut #2 in
+ * its header words only.
  *
  * ROWS:
  *  GATE: the gate's own members, replayed verbatim from the two PREP archives (anchor edits on the lifecycle file, or a planted
@@ -100,10 +114,21 @@
  *  CHILD REFUSAL #1 ANCHOR (wb-tz2.20 cut #2, outside this census): the members this child's own refusal #1 verdict lists under
  *   its U1 and U2 items, each with its lines and in order, are exactly the CHILD_SURVIVORS_1 rows, and every witness of a row is
  *   a SUB-READINGS row pinned on one of its lines.
- *  CLASS GUARD (wb-tz2.20 cut #2, outside this census: the helper header's own words): every claim line whose words name a first
- *   argument or an argument value pins an "a later argument:" row; each root kind the ROOTS exclusion names pins a quiet
- *   "<kind> root:" row on L015; each form of the rebind sentence's list pins a quiet "<form>:" row on L042 or L043; and each
- *   for-of and for-in assignment-target line pins one row per pattern shape the assignment line names.
+ *  CLASS GUARD (wb-tz2.20 cuts #2 and #3, outside this census: the helper header's own words): every claim line whose words name
+ *   a first argument or an argument value pins an "a later argument:" row; each form of the rebind sentence's list pins a quiet
+ *   "<form>:" row on L042 or L043; each for-of and for-in assignment-target line pins one row per pattern shape the assignment
+ *   line names; (cut #3) the kinds the ROOTS line enumerates are the RK rows' kinds in order, each pinning a "<kind> root:" row
+ *   on L015; the override lines' place ranges and rosters are their POSITIONS rows; the rebind sentence's declaration kinds,
+ *   pattern forms and pattern elements and its list's forms are the REBIND GRID's, every pair planted; and the assignment line's
+ *   further shapes and the spy line's counts of later arguments each pin a row on their line. Each derived sub-form needs one
+ *   pinned row; a hollowing of the readers is measured by the seat on scratch copies, never by this guard.
+ *  CHILD REFUSAL #2 ANCHOR (wb-tz2.20 cut #3, outside this census): the members this child's own refusal #2 verdict lists under
+ *   its U1, U2 and U3 items, in order, are exactly the CHILD_SURVIVORS_2 rows; each row's lines are named in its item; and every
+ *   witness of a row is a SUB-READINGS row pinned on one of its lines.
+ *  POSITIONS (wb-tz2.20 cut #3): each cell, the override in one value form at one place of a call on one roster member, reads the
+ *   override driver.
+ *  REBIND GRID (wb-tz2.20 cut #3): each declaration kind's bare local, written by each REBIND_WRITES write, reads only the loud
+ *   control beside it.
  *  LOCATIONS (wb-tz2.20): each LOCATED statement, read by its kind inside each LOCATIONS wrapper, reads as its row states; the
  *   located words are the C2, driver and shape roster words in order.
  *  FROZEN SHAPE (standing rule 16): one literal pins every table row as table:id:digest, the digest over the row's own JSON.
@@ -119,7 +144,15 @@
  * members, and the verdict names no witness ids); that a TWINS_1 row, a Z plant or a LOCATIONS wrapper stays is NOT CLAIMED by
  * an anchor outside this census (they are its own literals); and a Y plant is held outside this census only as far as the CLASS
  * GUARD derives its sub-form from the helper header's words (a second row for a derived sub-form, and a Y row on a line the
- * guard derives nothing for, are NOT CLAIMED by that anchor).
+ * guard derives nothing for, are NOT CLAIMED by that anchor). Cut #3: which operand lines an RK, G5W or G5C page holds is NOT
+ * CLAIMED by an anchor outside this census (the pages are its own literals; the CLASS GUARD holds each kind, place, declaration,
+ * form, element and shape the words name, and the CHILD REFUSAL #2 ANCHOR each member); a place of an override call the
+ * POSITIONS words do not name, a value form of the override they do not name, a custody stub with three or more later arguments, a root of a kind the ROOTS line does not list,
+ * a rebind declaration of a kind the rebind sentence does not list, and a for-in variable on the for-of element line are NOT
+ * CLAIMED by this census (each named so on its line); an X3 row is held outside this census only as far as the CLASS GUARD
+ * derives its sub-form from the helper header's words (a second row for a derived sub-form is NOT CLAIMED by that anchor); and
+ * G5-O-CI-ONE, the one refusal #2 survivor no witness divided from the
+ * delivered readers, is no member here.
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the lifecycle test, the helper's text and the
  * tracker export, and parses planted text in memory.
@@ -441,6 +474,74 @@ function childMembers(block: string, item: "U1" | "U2"): string[] {
   const span = block.slice(start, Math.min(block.length, ...ends));
   return [...span.matchAll(/^\s+- (GP6-[A-Z]-[A-Z0-9-]+), (L\d{3})(?:-(L\d{3}))?/gm)].map(match => [match[1], match[2], match[3]].filter(part => part !== undefined).join(" "));
 }
+/** wb-tz2.20's own refusal #2 verdict (gate-prep-5 / g10-gate-s190) in its notes: from its heading to the next delivery, verdict or ruling. */
+function childVerdictBlock2(): string {
+  const notes = exportRecord(CHILD).notes;
+  const heading = `GATE VERDICT ${CHILD}: REFUSED (RESPIN) - substance refusal at PREP F`;
+  let start = notes.indexOf(heading);
+  while (start >= 0 && !notes.slice(start, start + 1200).includes("refusal #2 on cut #2")) start = notes.indexOf(heading, start + 1);
+  if (start < 0) return "";
+  const ends = ["DELIVERED by the orchestrator collect step", `GATE VERDICT ${CHILD}`, "ORCHESTRATOR RULING"].map(marker => notes.indexOf(marker, start + 1)).filter(at => at > start);
+  return notes.slice(start, Math.min(notes.length, ...ends));
+}
+/** One UNMET item of that verdict, from its slug line to the next item or the CURE line (its members and the lines it names). */
+function childItemSpan(block: string, item: CarriedSurvivor["item"]): string {
+  const heads = ["\n- U1-MEDIUM-CONFIRMED", "\n- U2-LOW-CONFIRMED", "\n- U3-LOW-CONFIRMED"];
+  const start = block.indexOf(heads[Number(item.slice(1)) - 1] ?? "\n- <no item>");
+  if (start < 0) return "";
+  const ends = [...heads, "\nCURE ("].map(marker => block.indexOf(marker, start + 1)).filter(at => at > start);
+  return block.slice(start, Math.min(block.length, ...ends));
+}
+/** The members an item lists, in order of first naming: every G5 member id in a member bullet, and a bare suffix after one in the same bullet (SKIP6 after G5-A-OV-SKIP5) as that id's family; a line id (L034) names no member. */
+function childMembers2(block: string, item: CarriedSurvivor["item"]): string[] {
+  const ids: string[] = [];
+  for (const bullet of childItemSpan(block, item).split("\n  - ").slice(1)) {
+    const first = /G5-[A-Z]-[A-Z0-9-]*[A-Z0-9]/.exec(bullet);
+    if (first === null) continue;
+    const family = first[0].slice(0, first[0].lastIndexOf("-") + 1);
+    for (const match of bullet.slice(first.index).matchAll(/(?<![A-Za-z0-9_-])(G5-[A-Z]-[A-Z0-9-]*[A-Z0-9]|[A-Z]+\d+)(?![A-Za-z0-9_-])/g)) {
+      const token = match[1] ?? "";
+      const id = token.startsWith("G5-") ? token : /^L\d{3}$/.test(token) ? "" : `${family}${token}`;
+      if (id !== "" && !ids.includes(id)) ids.push(id);
+    }
+  }
+  return ids;
+}
+/** The ROOT KINDS the ROOTS line enumerates: each "; " item, an operator item read as one kind per operator. */
+function rootKinds(line: string): string[] {
+  const marker = "ROOT KINDS is not: ";
+  const at = line.indexOf(marker);
+  if (at < 0) return [];
+  return line
+    .slice(at + marker.length)
+    .split("; ")
+    .flatMap(item => {
+      const group = /^the (prefix|postfix|binary) operators (.+)$/.exec(item);
+      return group === null ? [item] : (group[2] ?? "").split(" ").map(operator => `a ${group[1]} ${operator}`);
+    });
+}
+/** A POSITIONS row's cells: each member of its roster (ROSTERS), each place from its first to its last in a call of that many arguments and of one more, each value form (VALUE_FORMS) spelling the override at the place, a decoy string elsewhere. */
+function positionCells(row: PositionRow): { readonly title: string; readonly text: string }[] {
+  const members = ROSTERS.find(roster => roster.id === row.roster)?.members ?? [];
+  const places = Array.from({ length: row.last - row.first + 1 }, (_place, at) => row.first + at);
+  return members.flatMap(member =>
+    places.flatMap(place =>
+      [place, place + 1].flatMap(count =>
+        row.values.map(value => {
+          const form = VALUE_FORMS[value] ?? { head: "", argument: "" };
+          const spelled = Array.from({ length: count }, (_argument, at) => (at + 1 === place ? form.argument : `"a${at + 1}"`));
+          return { title: `${row.id} ${member} argument ${place} of ${count} ${value}`, text: `${form.head}export const v = ${row.receiver}${member}(${spelled.join(", ")});\n` };
+        }),
+      ),
+    ),
+  );
+}
+/** A REBIND GRID page: the declaration of the bare local, the write inside its body, then the loud control line. */
+const rebindPage = (declaration: RebindDeclaration, write: RebindWrite): string =>
+  `${declaration.head}${write.write
+    .split("\n")
+    .map(line => `${declaration.indent}${line}\n`)
+    .join("")}${declaration.tail}${ROOT_CONTROL}`;
 /** The helper header's claim block (BINDINGS to R-FLOW), each line with its CLAIM_LINES id by place (L001 first). */
 function helperClaimLines(): { readonly id: string; readonly line: string }[] {
   const header = read(HELPER)
@@ -599,7 +700,7 @@ interface ClaimLine {
 }
 interface CarriedSurvivor {
   readonly id: string;
-  readonly item: "U1" | "U2" | "F7";
+  readonly item: "U1" | "U2" | "U3" | "F7";
   readonly lines: readonly string[];
   readonly witnesses: readonly string[];
 }
@@ -615,6 +716,27 @@ interface LocatedRow {
   readonly head: string;
   readonly body: string;
   readonly expected: readonly string[];
+}
+interface PositionRow {
+  readonly id: string;
+  readonly roster: "ENV_CALLS" | "ENV_METHODS";
+  readonly receiver: string;
+  readonly first: number;
+  readonly last: number;
+  readonly values: readonly string[];
+}
+interface RebindDeclaration {
+  readonly id: string;
+  readonly head: string;
+  readonly indent: string;
+  readonly tail: string;
+}
+interface RebindWrite {
+  readonly id: string;
+  readonly form: string;
+  readonly shape: string;
+  readonly target: string;
+  readonly write: string;
 }
 /** The lifecycle file's K2 client line: every calibration and residual line is planted right after it. */
 const K2_CLIENT = "const client = { find: vi.fn().mockResolvedValue(native), runtime: vi.fn().mockResolvedValue({ version: \"0.1.0\", binarySha256: \"abc\" }), dispose: vi.fn(), close: vi.fn().mockResolvedValue(undefined) };";
@@ -1829,6 +1951,183 @@ const SUB_READINGS: readonly SubReading[] = [
   { id: "Y0205", claim: "a catch variable: wb-tz2.20 cut #2 class sweep (L042), a bare catch clause variable target rebinds the local and reads nothing", kind: "tampers", text: "try {\n  JSON.parse(\"\");\n} catch (error) {\n  error = JSON;\n}\n", expected: [] },
   { id: "Y0206", claim: "a for-of variable: wb-tz2.20 cut #2 class sweep (L042), a bare for-of loop variable target rebinds the local and reads nothing", kind: "tampers", text: "for (let entry of [JSON]) {\n  entry = forged;\n}\n", expected: [] },
   { id: "Y0207", claim: "a var: wb-tz2.20 cut #2 class sweep (L042), a bare var target rebinds the local and reads nothing", kind: "tampers", text: "var v = JSON;\nv = forged;\nexport { v };\n", expected: [] },
+  { id: "G5W-A-OV-S8", claim: "argument 9 of 9: wb-tz2.20 own refusal #2 G5-A-OV-S8 witness (L061, gate-prep-5 archive), the override as Reflect.get's ninth and last argument", kind: "drivers", text: "export const v = Reflect.get(process.env, \"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"HYPERUNIX_HX\");\n", expected: ["override"] },
+  { id: "G5W-A-OV-S9", claim: "argument 10 of 10: wb-tz2.20 own refusal #2 G5-A-OV-S9 witness (L061, gate-prep-5 archive), the override as Reflect.get's tenth and last argument", kind: "drivers", text: "export const v = Reflect.get(process.env, \"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"HYPERUNIX_HX\");\n", expected: ["override"] },
+  { id: "G5W-A-OV-SKIP5", claim: "argument 5 of 5: wb-tz2.20 own refusal #2 G5-A-OV-SKIP5 witness (L061, gate-prep-5 archive), the override as Reflect.get's fifth and last argument", kind: "drivers", text: "export const v = Reflect.get(process.env, \"a\", \"b\", \"c\", \"HYPERUNIX_HX\");\n", expected: ["override"] },
+  { id: "G5W-A-OV-SKIP6", claim: "argument 6 of 6: wb-tz2.20 own refusal #2 G5-A-OV-SKIP6 witness (L061, gate-prep-5 archive), the override as Reflect.get's sixth and last argument", kind: "drivers", text: "export const v = Reflect.get(process.env, \"a\", \"b\", \"c\", \"d\", \"HYPERUNIX_HX\");\n", expected: ["override"] },
+  { id: "G5W-A-OV-SKIP7", claim: "argument 7 of 7: wb-tz2.20 own refusal #2 G5-A-OV-SKIP7 witness (L061, gate-prep-5 archive), the override as Reflect.get's seventh and last argument", kind: "drivers", text: "export const v = Reflect.get(process.env, \"a\", \"b\", \"c\", \"d\", \"e\", \"HYPERUNIX_HX\");\n", expected: ["override"] },
+  { id: "G5W-A-EC-S8", claim: "argument 9 of 9: wb-tz2.20 own refusal #2 G5-A-EC-S8 witness (L061, gate-prep-5 archive), the override as Reflect.get's ninth and last argument (the env-call site)", kind: "drivers", text: "export const v = Reflect.get(process.env, \"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"HYPERUNIX_HX\");\n", expected: ["override"] },
+  { id: "G5W-A-EC-SKIP5", claim: "argument 5 of 5: wb-tz2.20 own refusal #2 G5-A-EC-SKIP5 witness (L061, gate-prep-5 archive), the override as Reflect.get's fifth and last argument (the env-call site)", kind: "drivers", text: "export const v = Reflect.get(process.env, \"a\", \"b\", \"c\", \"HYPERUNIX_HX\");\n", expected: ["override"] },
+  { id: "G5W-A-EM-S8", claim: "argument 9 of 9: wb-tz2.20 own refusal #2 G5-A-EM-S8 witness (L062, gate-prep-5 archive), the override as process.env.hasOwnProperty's ninth and last argument", kind: "drivers", text: "export const v = process.env.hasOwnProperty(\"a\", \"b\", \"c\", \"d\", \"e\", \"f\", \"g\", \"h\", \"HYPERUNIX_HX\");\n", expected: ["override"] },
+  { id: "G5W-A-EM-SKIP5", claim: "argument 5 of 5: wb-tz2.20 own refusal #2 G5-A-EM-SKIP5 witness (L062, gate-prep-5 archive), the override as process.env.hasOwnProperty's fifth and last argument", kind: "drivers", text: "export const v = process.env.hasOwnProperty(\"a\", \"b\", \"c\", \"d\", \"HYPERUNIX_HX\");\n", expected: ["override"] },
+  { id: "G5W-A-OV-SKIP5-EM", claim: "argument 5 of 5: wb-tz2.20 own refusal #2 G5-A-OV-SKIP5 witness (L062, gate-prep-5 archive), the override as process.env.propertyIsEnumerable's fifth and last argument", kind: "drivers", text: "export const v = process.env.propertyIsEnumerable(\"a\", \"b\", \"c\", \"d\", \"HYPERUNIX_HX\");\n", expected: ["override"] },
+  { id: "G5W-A-SPY-ARITY", claim: "a custody stub with one later argument: wb-tz2.20 own refusal #2 G5-A-SPY-ARITY witness (L029, gate-prep-5 archive), the custody stub with an access type after \"open\" reads no spy", kind: "tampers", text: "import { HyperUnix } from \"@hyperunix/sdk\";\nvi.spyOn(HyperUnix, \"open\", \"get\");\n", expected: [] },
+  { id: "G5C-A-SPY-ARITY", claim: "a custody stub with one later argument: control for wb-tz2.20 own refusal #2 G5-A-SPY-ARITY (L029), the same page with a loud line after it reads that line", kind: "tampers", text: "import { HyperUnix } from \"@hyperunix/sdk\";\nvi.spyOn(HyperUnix, \"open\", \"get\");\nvi.spyOn(JSON, \"parse\");\n", expected: ["vi.spyOn(JSON)"] },
+  { id: "G5W-A-SPY-SECONDRECV", claim: "a custody stub with one later argument: wb-tz2.20 own refusal #2 G5-A-SPY-SECONDRECV witness (L029, gate-prep-5 archive), the custody stub with an access type after \"open\" reads no spy", kind: "tampers", text: "import { HyperUnix } from \"@hyperunix/sdk\";\nvi.spyOn(HyperUnix, \"open\", \"get\");\n", expected: [] },
+  { id: "G5C-A-SPY-SECONDRECV", claim: "a custody stub with one later argument: control for wb-tz2.20 own refusal #2 G5-A-SPY-SECONDRECV (L029), the same page with a loud line after it reads that line", kind: "tampers", text: "import { HyperUnix } from \"@hyperunix/sdk\";\nvi.spyOn(HyperUnix, \"open\", \"get\");\nvi.spyOn(JSON, \"parse\");\n", expected: ["vi.spyOn(JSON)"] },
+  { id: "G5W-B-UPLUS", claim: "a prefix +: wb-tz2.20 own refusal #2 G5-B-UPLUS witness (L015, gate-prep-5 archive), a prefix + of a global as the root reads nothing", kind: "tamperlines", text: "(+JSON).tag = 1;\n", expected: [] },
+  { id: "G5C-B-UPLUS", claim: "a prefix +: control for wb-tz2.20 own refusal #2 G5-B-UPLUS (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(+JSON).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-TILDE", claim: "a prefix ~: wb-tz2.20 own refusal #2 G5-B-TILDE witness (L015, gate-prep-5 archive), a prefix ~ of a global as the root reads nothing", kind: "tamperlines", text: "(~JSON).tag = 1;\n", expected: [] },
+  { id: "G5C-B-TILDE", claim: "a prefix ~: control for wb-tz2.20 own refusal #2 G5-B-TILDE (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(~JSON).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-PREINC", claim: "a prefix ++: wb-tz2.20 own refusal #2 G5-B-PREINC witness (L015, gate-prep-5 archive), a prefix ++ of a global as the root reads only its update", kind: "tamperlines", text: "(++JSON).tag = 1;\n", expected: ["JSON updated :1"] },
+  { id: "G5C-B-PREINC", claim: "a prefix ++: control for wb-tz2.20 own refusal #2 G5-B-PREINC (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(++JSON).tag = 1;\nAtomics.control = forged;\n", expected: ["JSON updated :1", "Atomics.control assigned :2"] },
+  { id: "G5W-B-PREDEC", claim: "a prefix --: wb-tz2.20 own refusal #2 G5-B-PREDEC witness (L015, gate-prep-5 archive), a prefix -- of a global as the root reads only its update", kind: "tamperlines", text: "(--JSON).tag = 1;\n", expected: ["JSON updated :1"] },
+  { id: "G5C-B-PREDEC", claim: "a prefix --: control for wb-tz2.20 own refusal #2 G5-B-PREDEC (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(--JSON).tag = 1;\nAtomics.control = forged;\n", expected: ["JSON updated :1", "Atomics.control assigned :2"] },
+  { id: "G5W-B-POSTDEC", claim: "a postfix --: wb-tz2.20 own refusal #2 G5-B-POSTDEC witness (L015, gate-prep-5 archive), a postfix -- of a global as the root reads only its update", kind: "tamperlines", text: "(JSON--).tag = 1;\n", expected: ["JSON updated :1"] },
+  { id: "G5C-B-POSTDEC", claim: "a postfix --: control for wb-tz2.20 own refusal #2 G5-B-POSTDEC (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON--).tag = 1;\nAtomics.control = forged;\n", expected: ["JSON updated :1", "Atomics.control assigned :2"] },
+  { id: "G5W-B-PLUS", claim: "a binary +: wb-tz2.20 own refusal #2 G5-B-PLUS witness (L015, gate-prep-5 archive), a binary + with a global left operand as the root reads nothing", kind: "tamperlines", text: "(JSON + \"\").tag = 1;\n", expected: [] },
+  { id: "G5C-B-PLUS", claim: "a binary +: control for wb-tz2.20 own refusal #2 G5-B-PLUS (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON + \"\").tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-ASSIGN", claim: "a binary =: wb-tz2.20 own refusal #2 G5-B-ASSIGN witness (L015, gate-prep-5 archive), an = with a global right operand as the root reads nothing", kind: "tamperlines", text: "let local: unknown;\n(local = JSON).tag = 1;\n", expected: [] },
+  { id: "G5C-B-ASSIGN", claim: "a binary =: control for wb-tz2.20 own refusal #2 G5-B-ASSIGN (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "let local: unknown;\n(local = JSON).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :3"] },
+  { id: "G5W-B-ASSIGNL", claim: "a binary =: wb-tz2.20 own refusal #2 G5-B-ASSIGNL witness (L015, gate-prep-5 archive), an = with a global left operand as the root reads only that assignment", kind: "tamperlines", text: "let local: unknown;\n(JSON = local).tag = 1;\n", expected: ["JSON assigned :2"] },
+  { id: "G5C-B-ASSIGNL", claim: "a binary =: control for wb-tz2.20 own refusal #2 G5-B-ASSIGNL (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "let local: unknown;\n(JSON = local).tag = 1;\nAtomics.control = forged;\n", expected: ["JSON assigned :2", "Atomics.control assigned :3"] },
+  { id: "G5W-B-INSTOF", claim: "a binary instanceof: wb-tz2.20 own refusal #2 G5-B-INSTOF witness (L015, gate-prep-5 archive), an instanceof with a global left operand as the root reads nothing", kind: "tamperlines", text: "(JSON instanceof Object).tag = 1;\n", expected: [] },
+  { id: "G5C-B-INSTOF", claim: "a binary instanceof: control for wb-tz2.20 own refusal #2 G5-B-INSTOF (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON instanceof Object).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-IN", claim: "a binary in: wb-tz2.20 own refusal #2 G5-B-IN witness (L015, gate-prep-5 archive), an in with a global right operand as the root reads nothing", kind: "tamperlines", text: "(\"k\" in JSON).tag = 1;\n", expected: [] },
+  { id: "G5C-B-IN", claim: "a binary in: control for wb-tz2.20 own refusal #2 G5-B-IN (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(\"k\" in JSON).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-LT", claim: "a binary <: wb-tz2.20 own refusal #2 G5-B-LT witness (L015, gate-prep-5 archive), a < with a global left operand as the root reads nothing", kind: "tamperlines", text: "(JSON < 1).tag = 1;\n", expected: [] },
+  { id: "G5C-B-LT", claim: "a binary <: control for wb-tz2.20 own refusal #2 G5-B-LT (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON < 1).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-BAR", claim: "a binary |: wb-tz2.20 own refusal #2 G5-B-BAR witness (L015, gate-prep-5 archive), a | with a global left operand as the root reads nothing", kind: "tamperlines", text: "(JSON | 0).tag = 1;\n", expected: [] },
+  { id: "G5C-B-BAR", claim: "a binary |: control for wb-tz2.20 own refusal #2 G5-B-BAR (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON | 0).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-POW", claim: "a binary **: wb-tz2.20 own refusal #2 G5-B-POW witness (L015, gate-prep-5 archive), a ** with a global left operand as the root reads nothing", kind: "tamperlines", text: "(JSON ** 2).tag = 1;\n", expected: [] },
+  { id: "G5C-B-POW", claim: "a binary **: control for wb-tz2.20 own refusal #2 G5-B-POW (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON ** 2).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-PLUSEQ", claim: "a binary +=: wb-tz2.20 own refusal #2 G5-B-PLUSEQ witness (L015, gate-prep-5 archive), a += with a global left operand as the root reads only that compound assignment", kind: "tamperlines", text: "(JSON += \"\").tag = 1;\n", expected: ["JSON assigned :1"] },
+  { id: "G5C-B-PLUSEQ", claim: "a binary +=: control for wb-tz2.20 own refusal #2 G5-B-PLUSEQ (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON += \"\").tag = 1;\nAtomics.control = forged;\n", expected: ["JSON assigned :1", "Atomics.control assigned :2"] },
+  { id: "G5W-B-QQEQ", claim: "a binary ??=: wb-tz2.20 own refusal #2 G5-B-QQEQ witness (L015, gate-prep-5 archive), a ??= with a global right operand as the root reads nothing", kind: "tamperlines", text: "let local: unknown;\n(local ??= JSON).tag = 1;\n", expected: [] },
+  { id: "G5C-B-QQEQ", claim: "a binary ??=: control for wb-tz2.20 own refusal #2 G5-B-QQEQ (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "let local: unknown;\n(local ??= JSON).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :3"] },
+  { id: "G5W-B-MINUS", claim: "a binary -: wb-tz2.20 own refusal #2 G5-B-MINUS witness (L015, gate-prep-5 archive), a binary - with a global left operand as the root reads nothing", kind: "tamperlines", text: "(JSON - 1).tag = 1;\n", expected: [] },
+  { id: "G5C-B-MINUS", claim: "a binary -: control for wb-tz2.20 own refusal #2 G5-B-MINUS (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON - 1).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-EQEQEQ", claim: "a binary ===: wb-tz2.20 own refusal #2 G5-B-EQEQEQ witness (L015, gate-prep-5 archive), an === with a global left operand as the root reads nothing", kind: "tamperlines", text: "(JSON === null).tag = 1;\n", expected: [] },
+  { id: "G5C-B-EQEQEQ", claim: "a binary ===: control for wb-tz2.20 own refusal #2 G5-B-EQEQEQ (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON === null).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-INSTEXPR", claim: "an instantiation expression: wb-tz2.20 own refusal #2 G5-B-INSTEXPR witness (L015, gate-prep-5 archive), an instantiation expression of a global member as the root reads nothing", kind: "tamperlines", text: "(JSON.parse<string>).tag = 1;\n", expected: [] },
+  { id: "G5C-B-INSTEXPR", claim: "an instantiation expression: control for wb-tz2.20 own refusal #2 G5-B-INSTEXPR (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON.parse<string>).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-OPTCALL", claim: "an optional call: wb-tz2.20 own refusal #2 G5-B-OPTCALL witness (L015, gate-prep-5 archive), an optional call of a global member as the root reads nothing", kind: "tamperlines", text: "(JSON.parse?.(\"{}\")).tag = 1;\n", expected: [] },
+  { id: "G5C-B-OPTCALL", claim: "an optional call: control for wb-tz2.20 own refusal #2 G5-B-OPTCALL (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(JSON.parse?.(\"{}\")).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-BINDCALL", claim: "a bind call: wb-tz2.20 own refusal #2 G5-B-BINDCALL witness (L015, gate-prep-5 archive), a bind call of a global member as the root reads nothing", kind: "tamperlines", text: "JSON.parse.bind(null).tag = 1;\n", expected: [] },
+  { id: "G5C-B-BINDCALL", claim: "a bind call: control for wb-tz2.20 own refusal #2 G5-B-BINDCALL (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "JSON.parse.bind(null).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-NEWNOARGS", claim: "a new without arguments: wb-tz2.20 own refusal #2 G5-B-NEWNOARGS witness (L015, gate-prep-5 archive), a new without arguments as the root reads nothing", kind: "tamperlines", text: "(new Host).tag = 1;\n", expected: [] },
+  { id: "G5C-B-NEWNOARGS", claim: "a new without arguments: control for wb-tz2.20 own refusal #2 G5-B-NEWNOARGS (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "(new Host).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-SQLIT", claim: "a single-quoted string: wb-tz2.20 own refusal #2 G5-B-SQLIT witness (L015, gate-prep-5 archive), a single-quoted string literal as the root reads nothing", kind: "tamperlines", text: "'abc'.tag = 1;\n", expected: [] },
+  { id: "G5C-B-SQLIT", claim: "a single-quoted string: control for wb-tz2.20 own refusal #2 G5-B-SQLIT (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "'abc'.tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-IMPORTCALL", claim: "an import() call: wb-tz2.20 own refusal #2 G5-B-IMPORTCALL witness (L015, gate-prep-5 archive), an import() call as the root reads nothing", kind: "tamperlines", text: "import(\"node:path\").tag = 1;\n", expected: [] },
+  { id: "G5C-B-IMPORTCALL", claim: "an import() call: control for wb-tz2.20 own refusal #2 G5-B-IMPORTCALL (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "import(\"node:path\").tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-NEWCALLEE-MEMBER", claim: "a new of a member: wb-tz2.20 own refusal #2 G5-B-NEWCALLEE-MEMBER witness (L015, gate-prep-5 archive), a new of a global member as the root reads nothing", kind: "tamperlines", text: "new JSON.Host().tag = 1;\n", expected: [] },
+  { id: "G5C-B-NEWCALLEE-MEMBER", claim: "a new of a member: control for wb-tz2.20 own refusal #2 G5-B-NEWCALLEE-MEMBER (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "new JSON.Host().tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-CALLMEMBER", claim: "a call() call: wb-tz2.20 own refusal #2 G5-B-CALLMEMBER witness (L015, gate-prep-5 archive), a call() call of a global member as the root reads nothing", kind: "tamperlines", text: "JSON.parse.call(null, \"{}\").tag = 1;\n", expected: [] },
+  { id: "G5C-B-CALLMEMBER", claim: "a call() call: control for wb-tz2.20 own refusal #2 G5-B-CALLMEMBER (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "JSON.parse.call(null, \"{}\").tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-JSXSELF", claim: "a self-closing JSX element: wb-tz2.20 own refusal #2 G5-B-JSXSELF witness (L015, gate-prep-5 archive), a self-closing JSX element as the root reads nothing (a JSX-enabled path)", kind: "tamperlines", path: "test/zz-plant.tsx", text: "(<Host />).tag = 1;\n", expected: [] },
+  { id: "G5C-B-JSXSELF", claim: "a self-closing JSX element: control for wb-tz2.20 own refusal #2 G5-B-JSXSELF (L015), the same page with a loud line after it reads that line", kind: "tamperlines", path: "test/zz-plant.tsx", text: "(<Host />).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-JSXEL", claim: "a JSX element: wb-tz2.20 own refusal #2 G5-B-JSXEL witness (L015, gate-prep-5 archive), a JSX element as the root reads nothing (a JSX-enabled path)", kind: "tamperlines", path: "test/zz-plant.tsx", text: "(<Host></Host>).tag = 1;\n", expected: [] },
+  { id: "G5C-B-JSXEL", claim: "a JSX element: control for wb-tz2.20 own refusal #2 G5-B-JSXEL (L015), the same page with a loud line after it reads that line", kind: "tamperlines", path: "test/zz-plant.tsx", text: "(<Host></Host>).tag = 1;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :2"] },
+  { id: "G5W-B-UPLUS-HX", claim: "a prefix +: wb-tz2.20 own refusal #2 G5-B-UPLUS witness (L015, gate-prep-5 archive), a prefix + of the custody import as the root reads nothing", kind: "tamperlines", text: "import { HyperUnix } from \"@hyperunix/sdk\";\n(+HyperUnix).open = forged;\n", expected: [] },
+  { id: "G5C-B-UPLUS-HX", claim: "a prefix +: control for wb-tz2.20 own refusal #2 G5-B-UPLUS (L015), the same page with a loud line after it reads that line", kind: "tamperlines", text: "import { HyperUnix } from \"@hyperunix/sdk\";\n(+HyperUnix).open = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :3"] },
+  { id: "G5W-C-PATELEM-FOROF", claim: "for-of target: wb-tz2.20 own refusal #2 G5-C-PATELEM-FOROF witness (L043, gate-prep-5 archive), a bare let as an array pattern element of a for-of target rebinds the local and reads nothing", kind: "tamperlines", text: "let local = JSON;\nfor ([local] of [[1]]) {}\n", expected: [] },
+  { id: "G5C-C-PATELEM-FOROF", claim: "for-of target: control for wb-tz2.20 own refusal #2 G5-C-PATELEM-FOROF (L043), the same page with a loud line after it reads that line", kind: "tamperlines", text: "let local = JSON;\nfor ([local] of [[1]]) {}\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :3"] },
+  { id: "G5W-C-PATELEM-FORIN", claim: "for-in target: wb-tz2.20 own refusal #2 G5-C-PATELEM-FORIN witness (L043, gate-prep-5 archive), a bare let as an array pattern element of a for-in target rebinds the local and reads nothing", kind: "tamperlines", text: "let local = JSON;\nfor ([local] in {}) {}\n", expected: [] },
+  { id: "G5C-C-PATELEM-FORIN", claim: "for-in target: control for wb-tz2.20 own refusal #2 G5-C-PATELEM-FORIN (L043), the same page with a loud line after it reads that line", kind: "tamperlines", text: "let local = JSON;\nfor ([local] in {}) {}\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :3"] },
+  { id: "G5W-C-PATELEM-COMPOUND", claim: "compound operator: wb-tz2.20 own refusal #2 G5-C-PATELEM-COMPOUND witness (L043, gate-prep-5 archive), a bare let in parentheses as a compound target rebinds the local and reads nothing", kind: "tamperlines", text: "let local = JSON;\n(local) += \"\";\n", expected: [] },
+  { id: "G5C-C-PATELEM-COMPOUND", claim: "compound operator: control for wb-tz2.20 own refusal #2 G5-C-PATELEM-COMPOUND (L043), the same page with a loud line after it reads that line", kind: "tamperlines", text: "let local = JSON;\n(local) += \"\";\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :3"] },
+  { id: "G5W-D-DEFAULT-NESTED", claim: "a nested pattern with a default: wb-tz2.20 own refusal #2 G5-D-DEFAULT-NESTED witness (L034, gate-prep-5 archive), a nested pattern with a default reads its element once", kind: "tamperlines", text: "[[JSON.a] = []] = [];\n", expected: ["JSON.a assigned :1"] },
+  { id: "G5W-D-NOBARE", claim: "a pattern in parentheses: wb-tz2.20 own refusal #2 G5-D-NOBARE witness (L034, gate-prep-5 archive), a pattern in parentheses reads its element", kind: "tamperlines", text: "([JSON.a]) = [1];\n", expected: ["JSON.a assigned :1"] },
+  { id: "G5W-O-RF-FORIN", claim: "a for-in variable: wb-tz2.20 own refusal #2 G5-O-RF-FORIN witness (L020, gate-prep-5 archive), a for-in variable of an array literal reads no element (NOT CLAIMED on its line, pinned)", kind: "tamperlines", text: "for (const k in [JSON]) {\n  k.tag = 1;\n}\n", expected: [] },
+  { id: "G5C-O-RF-FORIN", claim: "a for-in variable: control for wb-tz2.20 own refusal #2 G5-O-RF-FORIN (L020), the same page with a loud line after it reads that line", kind: "tamperlines", text: "for (const k in [JSON]) {\n  k.tag = 1;\n}\nAtomics.control = forged;\n", expected: ["Atomics.control assigned :4"] },
+  { id: "X3-SPY-TWO", claim: "a custody stub with two later arguments: wb-tz2.20 cut #3 (L029), the custody stub with two later arguments reads no spy, beside a loud spy", kind: "tampers", text: "import { HyperUnix } from \"@hyperunix/sdk\";\nvi.spyOn(HyperUnix, \"open\", \"get\", \"set\");\nvi.spyOn(JSON, \"parse\");\n", expected: ["vi.spyOn(JSON)"] },
+  { id: "X3-ASG-PAREN-OBJECT", claim: "a pattern in parentheses: wb-tz2.20 cut #3 (L034), an object pattern in parentheses reads its element", kind: "tampers", text: "({ key: JSON.a }) = { key: 1 };\n", expected: ["JSON.a assigned"] },
+  { id: "X3-ASG-PAREN-NESTED", claim: "a pattern in parentheses: wb-tz2.20 cut #3 (L034), a nested pattern in parentheses reads its element", kind: "tampers", text: "[([JSON.a])] = [[1]];\n", expected: ["JSON.a assigned"] },
+  { id: "X3-ASG-PAREN-TWICE", claim: "a pattern in parentheses: wb-tz2.20 cut #3 (L034), a pattern in two pairs of parentheses reads its element", kind: "tampers", text: "(([JSON.a])) = [1];\n", expected: ["JSON.a assigned"] },
+  { id: "X3-ASG-DEFAULT-OBJECT", claim: "a nested pattern with a default: wb-tz2.20 cut #3 (L034), an object pattern's nested pattern with a default reads its element once", kind: "tampers", text: "({ key: [JSON.a] = [] } = {});\n", expected: ["JSON.a assigned"] },
+  { id: "X3-ASG-DEFAULT-DEEP", claim: "a nested pattern with a default: wb-tz2.20 cut #3 (L034), a nested pattern with a default inside another reads its element once", kind: "tampers", text: "[[[JSON.a] = []] = []] = [];\n", expected: ["JSON.a assigned"] },
+  { id: "X3-FORIN-CONST", claim: "a for-in variable: wb-tz2.20 cut #3 (L020), a for-in variable of a const name reads no element, beside a for-of variable of the same name that reads it", kind: "tamperlines", text: "const list = [JSON];\nfor (const key in list) {\n  key.tag = 1;\n}\nfor (const item of list) {\n  item.tag = 1;\n}\n", expected: ["JSON.tag assigned :6"] },
+  { id: "RK001", claim: "this root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "export class Probe extends Object {\n  reset(): void {\n    this.tag = forged;\n    this[JSON.key] = forged;\n  }\n}\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK002", claim: "super root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "export class Probe extends Object {\n  reset(): void {\n    super.tag = forged;\n    super[JSON.key] = forged;\n  }\n}\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK003", claim: "a double-quoted string root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "\"abc\".tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK004", claim: "a single-quoted string root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "'abc'.tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK005", claim: "a no-substitution template root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "`abc`.tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK006", claim: "a template root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "`$" + "{JSON}$" + "{Math.max}`.tag = forged;\n`$" + "{Math.max}$" + "{JSON}`.tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK007", claim: "a number root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(1).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK008", claim: "a bigint root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(1n).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK009", claim: "a regular expression root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "/hx/.tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK010", claim: "true root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "true.tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK011", claim: "false root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "false.tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK012", claim: "null root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(null as unknown as { tag: unknown }).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK013", claim: "an array literal root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "[JSON, Math.max, ...Reflect, ...Math.min].tag = forged;\n[Math.max, JSON].tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK014", claim: "an object literal root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "({ JSON, json: JSON, max: Math.max, ...Reflect, ...Math.min }).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK015", claim: "a function root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(function probe() {\n  return JSON;\n}).tag = forged;\n(function probe() {\n  return Math.max;\n}).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK016", claim: "an arrow function root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(() => JSON).tag = forged;\n(() => Math.max).tag = forged;\n((): unknown => {\n  return Math.max;\n}).tag = forged;\n((): unknown => {\n  return JSON;\n}).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK017", claim: "a class root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(class extends JSON {\n  static max = Math.max;\n}).tag = forged;\n(class extends Math.Base {\n  static json = JSON;\n}).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK018", claim: "a call root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "declare function make(value: unknown): { tag: unknown };\nmake(JSON).tag = forged;\nJSON.parse(Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK019", claim: "an optional call root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "declare function make(value: unknown): { tag: unknown };\n(JSON.parse?.(Math.max)).tag = forged;\n(make?.(JSON)).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK020", claim: "a bind call root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "declare function make(value: unknown): { tag: unknown };\nJSON.parse.bind(Math.max).tag = forged;\nmake.bind(JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK021", claim: "a call() call root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "declare function make(value: unknown): { tag: unknown };\nJSON.parse.call(Math.max, JSON).tag = forged;\nmake.call(JSON, Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK022", claim: "an apply() call root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "declare function make(value: unknown): { tag: unknown };\nJSON.parse.apply(Math.max, [JSON]).tag = forged;\nmake.apply(JSON, [Math.max]).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK023", claim: "an import() call root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "import(\"node:path\").tag = forged;\nimport(JSON.path).tag = forged;\nimport(JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK024", claim: "a super() call root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "export class Probe extends Object {\n  constructor() {\n    super(JSON).tag = forged;\n    super(Math.max).tag = forged;\n  }\n}\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK025", claim: "a new root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "declare class Host {\n  constructor(value?: unknown);\n  tag: unknown;\n}\nnew Host(JSON).tag = forged;\nnew Host(Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK026", claim: "a new without arguments root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "declare class Host {\n  tag: unknown;\n}\n(new Host).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK027", claim: "a new of a member root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "new JSON.Host(Math.max).tag = forged;\n(new JSON.Host).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK028", claim: "a tagged template root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "declare function make(parts: TemplateStringsArray, ...values: unknown[]): { tag: unknown };\nString.raw`$" + "{JSON}`.tag = forged;\nmake`$" + "{Math.max}`.tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK029", claim: "a conditional root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON ? Math.max : JSON).tag = forged;\n(Math.min ? JSON : Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK030", claim: "typeof root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(typeof JSON).tag = forged;\n(typeof Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK031", claim: "void root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(void JSON).tag = forged;\n(void Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK032", claim: "delete root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(delete JSON.key).tag = forged;\n(delete Math.max).tag = forged;\n(delete JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON.key deleted", "Math.max deleted", "JSON deleted", "Atomics.control assigned"] },
+  { id: "RK033", claim: "await root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "export async function probe(): Promise<void> {\n  (await JSON).tag = forged;\n  (await Math.max).tag = forged;\n}\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK034", claim: "yield root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "export function* probe(): Generator<unknown, void, unknown> {\n  (yield JSON).tag = forged;\n  (yield Math.max).tag = forged;\n}\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK035", claim: "import.meta root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(import.meta as unknown as { tag: unknown }).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK036", claim: "new.target root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "export function Probe(): void {\n  (new.target as unknown as { tag: unknown }).tag = forged;\n}\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK037", claim: "an instantiation expression root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "declare function make<T>(value: T): T;\n(JSON.parse<string>).tag = forged;\n(make<string>).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK038", claim: "a JSX element root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", path: "test/zz-plant.tsx", text: "(<Host></Host>).tag = forged;\n(<JSON.Host>{Math.max}</JSON.Host>).tag = forged;\n(<Host>{JSON}</Host>).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK039", claim: "a self-closing JSX element root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", path: "test/zz-plant.tsx", text: "(<Host />).tag = forged;\n(<JSON.Host value={Math.max} />).tag = forged;\n(<Host value={JSON} />).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK040", claim: "a JSX fragment root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", path: "test/zz-plant.tsx", text: "(<>{JSON}</>).tag = forged;\n(<>{Math.max}</>).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK041", claim: "a prefix + root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(+JSON).tag = forged;\n(+Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK042", claim: "a prefix - root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(-JSON).tag = forged;\n(-Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK043", claim: "a prefix ~ root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(~JSON).tag = forged;\n(~Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK044", claim: "a prefix ! root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(!JSON).tag = forged;\n(!Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK045", claim: "a prefix ++ root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(++JSON).tag = forged;\n(++Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON updated", "Math.max updated", "Atomics.control assigned"] },
+  { id: "RK046", claim: "a prefix -- root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(--JSON).tag = forged;\n(--Math.max).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON updated", "Math.max updated", "Atomics.control assigned"] },
+  { id: "RK047", claim: "a postfix ++ root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON++).tag = forged;\n(Math.max++).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON updated", "Math.max updated", "Atomics.control assigned"] },
+  { id: "RK048", claim: "a postfix -- root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON--).tag = forged;\n(Math.max--).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON updated", "Math.max updated", "Atomics.control assigned"] },
+  { id: "RK049", claim: "a binary , root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON, Math.max).tag = forged;\n(Math.min, JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK050", claim: "a binary = root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON = Math.max).tag = forged;\n(Math.min = JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK051", claim: "a binary += root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON += Math.max).tag = forged;\n(Math.min += JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK052", claim: "a binary -= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON -= Math.max).tag = forged;\n(Math.min -= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK053", claim: "a binary *= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON *= Math.max).tag = forged;\n(Math.min *= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK054", claim: "a binary /= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON /= Math.max).tag = forged;\n(Math.min /= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK055", claim: "a binary %= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON %= Math.max).tag = forged;\n(Math.min %= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK056", claim: "a binary **= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON **= Math.max).tag = forged;\n(Math.min **= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK057", claim: "a binary <<= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON <<= Math.max).tag = forged;\n(Math.min <<= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK058", claim: "a binary >>= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON >>= Math.max).tag = forged;\n(Math.min >>= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK059", claim: "a binary >>>= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON >>>= Math.max).tag = forged;\n(Math.min >>>= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK060", claim: "a binary &= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON &= Math.max).tag = forged;\n(Math.min &= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK061", claim: "a binary |= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON |= Math.max).tag = forged;\n(Math.min |= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK062", claim: "a binary ^= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON ^= Math.max).tag = forged;\n(Math.min ^= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK063", claim: "a binary &&= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON &&= Math.max).tag = forged;\n(Math.min &&= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK064", claim: "a binary ||= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON ||= Math.max).tag = forged;\n(Math.min ||= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK065", claim: "a binary ??= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON ??= Math.max).tag = forged;\n(Math.min ??= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["JSON assigned", "Math.min assigned", "Atomics.control assigned"] },
+  { id: "RK066", claim: "a binary + root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON + Math.max).tag = forged;\n(Math.min + JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK067", claim: "a binary - root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON - Math.max).tag = forged;\n(Math.min - JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK068", claim: "a binary * root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON * Math.max).tag = forged;\n(Math.min * JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK069", claim: "a binary / root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON / Math.max).tag = forged;\n(Math.min / JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK070", claim: "a binary % root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON % Math.max).tag = forged;\n(Math.min % JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK071", claim: "a binary ** root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON ** Math.max).tag = forged;\n(Math.min ** JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK072", claim: "a binary << root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON << Math.max).tag = forged;\n(Math.min << JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK073", claim: "a binary >> root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON >> Math.max).tag = forged;\n(Math.min >> JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK074", claim: "a binary >>> root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON >>> Math.max).tag = forged;\n(Math.min >>> JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK075", claim: "a binary & root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON & Math.max).tag = forged;\n(Math.min & JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK076", claim: "a binary | root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON | Math.max).tag = forged;\n(Math.min | JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK077", claim: "a binary ^ root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON ^ Math.max).tag = forged;\n(Math.min ^ JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK078", claim: "a binary && root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON && Math.max).tag = forged;\n(Math.min && JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK079", claim: "a binary || root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON || Math.max).tag = forged;\n(Math.min || JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK080", claim: "a binary ?? root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON ?? Math.max).tag = forged;\n(Math.min ?? JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK081", claim: "a binary == root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON == Math.max).tag = forged;\n(Math.min == JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK082", claim: "a binary != root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON != Math.max).tag = forged;\n(Math.min != JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK083", claim: "a binary === root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON === Math.max).tag = forged;\n(Math.min === JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK084", claim: "a binary !== root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON !== Math.max).tag = forged;\n(Math.min !== JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK085", claim: "a binary < root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON < Math.max).tag = forged;\n(Math.min < JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK086", claim: "a binary <= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON <= Math.max).tag = forged;\n(Math.min <= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK087", claim: "a binary > root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON > Math.max).tag = forged;\n(Math.min > JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK088", claim: "a binary >= root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON >= Math.max).tag = forged;\n(Math.min >= JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK089", claim: "a binary instanceof root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON instanceof Math.max).tag = forged;\n(Math.min instanceof JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
+  { id: "RK090", claim: "a binary in root: wb-tz2.20 cut #3 ROOT KINDS (L015), a global identifier or a global member chain in each operand place the kind has, beside a loud control: the root reads nothing", kind: "tampers", text: "(JSON in Math.max).tag = forged;\n(Math.min in JSON).tag = forged;\nAtomics.control = forged;\n", expected: ["Atomics.control assigned"] },
 ];
 const ROSTERS: readonly RosterRow[] = [
   { id: "GLOBAL_STUBS", members: ["vi.stubGlobal", "vi.useFakeTimers", "vi.setSystemTime"] },
@@ -2038,6 +2337,116 @@ const CHILD_SURVIVORS_1: readonly CarriedSurvivor[] = [
   { id: "GP6-T-MUT-SECOND", item: "U2", lines: ["L040"], witnesses: ["W6-T-MUT-SECOND", "C6-T-MUT-SECOND"] },
   { id: "GP6-D-INVOKE-ANYARG", item: "U2", lines: ["L055"], witnesses: ["W6-D-INVOKE-ANYARG", "C6-D-INVOKE-ANYARG"] },
 ];
+/** wb-tz2.20 cut #3: this child's own refusal #2 members (gate-prep-5 / g10-gate-s190; U1 10 fail-open, U2 33 read-more, U3 1), each on the lines its item names, with its archived witnesses and the control beside each quiet one. */
+const CHILD_SURVIVORS_2: readonly CarriedSurvivor[] = [
+  { id: "G5-A-OV-S8", item: "U1", lines: ["L061", "L062"], witnesses: ["G5W-A-OV-S8"] },
+  { id: "G5-A-OV-S9", item: "U1", lines: ["L061", "L062"], witnesses: ["G5W-A-OV-S9"] },
+  { id: "G5-A-OV-SKIP5", item: "U1", lines: ["L061", "L062"], witnesses: ["G5W-A-OV-SKIP5", "G5W-A-OV-SKIP5-EM"] },
+  { id: "G5-A-OV-SKIP6", item: "U1", lines: ["L061", "L062"], witnesses: ["G5W-A-OV-SKIP6"] },
+  { id: "G5-A-OV-SKIP7", item: "U1", lines: ["L061", "L062"], witnesses: ["G5W-A-OV-SKIP7"] },
+  { id: "G5-A-EC-S8", item: "U1", lines: ["L061"], witnesses: ["G5W-A-EC-S8"] },
+  { id: "G5-A-EC-SKIP5", item: "U1", lines: ["L061"], witnesses: ["G5W-A-EC-SKIP5"] },
+  { id: "G5-A-EM-S8", item: "U1", lines: ["L062"], witnesses: ["G5W-A-EM-S8"] },
+  { id: "G5-A-EM-SKIP5", item: "U1", lines: ["L062"], witnesses: ["G5W-A-EM-SKIP5"] },
+  { id: "G5-D-NOBARE", item: "U1", lines: ["L034"], witnesses: ["G5W-D-NOBARE"] },
+  { id: "G5-B-UPLUS", item: "U2", lines: ["L015"], witnesses: ["G5W-B-UPLUS", "G5C-B-UPLUS", "G5W-B-UPLUS-HX", "G5C-B-UPLUS-HX"] },
+  { id: "G5-B-TILDE", item: "U2", lines: ["L015"], witnesses: ["G5W-B-TILDE", "G5C-B-TILDE"] },
+  { id: "G5-B-PREINC", item: "U2", lines: ["L015"], witnesses: ["G5W-B-PREINC", "G5C-B-PREINC"] },
+  { id: "G5-B-PREDEC", item: "U2", lines: ["L015"], witnesses: ["G5W-B-PREDEC", "G5C-B-PREDEC"] },
+  { id: "G5-B-POSTDEC", item: "U2", lines: ["L015"], witnesses: ["G5W-B-POSTDEC", "G5C-B-POSTDEC"] },
+  { id: "G5-B-PLUS", item: "U2", lines: ["L015"], witnesses: ["G5W-B-PLUS", "G5C-B-PLUS"] },
+  { id: "G5-B-ASSIGN", item: "U2", lines: ["L015"], witnesses: ["G5W-B-ASSIGN", "G5C-B-ASSIGN"] },
+  { id: "G5-B-ASSIGNL", item: "U2", lines: ["L015"], witnesses: ["G5W-B-ASSIGNL", "G5C-B-ASSIGNL"] },
+  { id: "G5-B-INSTOF", item: "U2", lines: ["L015"], witnesses: ["G5W-B-INSTOF", "G5C-B-INSTOF"] },
+  { id: "G5-B-IN", item: "U2", lines: ["L015"], witnesses: ["G5W-B-IN", "G5C-B-IN"] },
+  { id: "G5-B-LT", item: "U2", lines: ["L015"], witnesses: ["G5W-B-LT", "G5C-B-LT"] },
+  { id: "G5-B-BAR", item: "U2", lines: ["L015"], witnesses: ["G5W-B-BAR", "G5C-B-BAR"] },
+  { id: "G5-B-POW", item: "U2", lines: ["L015"], witnesses: ["G5W-B-POW", "G5C-B-POW"] },
+  { id: "G5-B-PLUSEQ", item: "U2", lines: ["L015"], witnesses: ["G5W-B-PLUSEQ", "G5C-B-PLUSEQ"] },
+  { id: "G5-B-QQEQ", item: "U2", lines: ["L015"], witnesses: ["G5W-B-QQEQ", "G5C-B-QQEQ"] },
+  { id: "G5-B-MINUS", item: "U2", lines: ["L015"], witnesses: ["G5W-B-MINUS", "G5C-B-MINUS"] },
+  { id: "G5-B-EQEQEQ", item: "U2", lines: ["L015"], witnesses: ["G5W-B-EQEQEQ", "G5C-B-EQEQEQ"] },
+  { id: "G5-B-INSTEXPR", item: "U2", lines: ["L015"], witnesses: ["G5W-B-INSTEXPR", "G5C-B-INSTEXPR"] },
+  { id: "G5-B-JSXSELF", item: "U2", lines: ["L015"], witnesses: ["G5W-B-JSXSELF", "G5C-B-JSXSELF"] },
+  { id: "G5-B-JSXEL", item: "U2", lines: ["L015"], witnesses: ["G5W-B-JSXEL", "G5C-B-JSXEL"] },
+  { id: "G5-B-OPTCALL", item: "U2", lines: ["L015"], witnesses: ["G5W-B-OPTCALL", "G5C-B-OPTCALL"] },
+  { id: "G5-B-BINDCALL", item: "U2", lines: ["L015"], witnesses: ["G5W-B-BINDCALL", "G5C-B-BINDCALL"] },
+  { id: "G5-B-CALLMEMBER", item: "U2", lines: ["L015"], witnesses: ["G5W-B-CALLMEMBER", "G5C-B-CALLMEMBER"] },
+  { id: "G5-B-IMPORTCALL", item: "U2", lines: ["L015"], witnesses: ["G5W-B-IMPORTCALL", "G5C-B-IMPORTCALL"] },
+  { id: "G5-B-NEWNOARGS", item: "U2", lines: ["L015"], witnesses: ["G5W-B-NEWNOARGS", "G5C-B-NEWNOARGS"] },
+  { id: "G5-B-NEWCALLEE-MEMBER", item: "U2", lines: ["L015"], witnesses: ["G5W-B-NEWCALLEE-MEMBER", "G5C-B-NEWCALLEE-MEMBER"] },
+  { id: "G5-B-SQLIT", item: "U2", lines: ["L015"], witnesses: ["G5W-B-SQLIT", "G5C-B-SQLIT"] },
+  { id: "G5-C-PATELEM-FOROF", item: "U2", lines: ["L042", "L043"], witnesses: ["G5W-C-PATELEM-FOROF", "G5C-C-PATELEM-FOROF"] },
+  { id: "G5-C-PATELEM-FORIN", item: "U2", lines: ["L042", "L043"], witnesses: ["G5W-C-PATELEM-FORIN", "G5C-C-PATELEM-FORIN"] },
+  { id: "G5-C-PATELEM-COMPOUND", item: "U2", lines: ["L042", "L043"], witnesses: ["G5W-C-PATELEM-COMPOUND", "G5C-C-PATELEM-COMPOUND"] },
+  { id: "G5-D-DEFAULT-NESTED", item: "U2", lines: ["L034"], witnesses: ["G5W-D-DEFAULT-NESTED"] },
+  { id: "G5-A-SPY-ARITY", item: "U2", lines: ["L029"], witnesses: ["G5W-A-SPY-ARITY", "G5C-A-SPY-ARITY"] },
+  { id: "G5-A-SPY-SECONDRECV", item: "U2", lines: ["L029"], witnesses: ["G5W-A-SPY-SECONDRECV", "G5C-A-SPY-SECONDRECV"] },
+  { id: "G5-O-RF-FORIN", item: "U3", lines: ["L020"], witnesses: ["G5W-O-RF-FORIN", "G5C-O-RF-FORIN"] },
+];
+/** wb-tz2.20 cut #3 POSITIONS: the override lines' places, each row's cells on every member of its roster (ROSTERS). */
+const POSITIONS: readonly PositionRow[] = [
+  { id: "L061", roster: "ENV_CALLS", receiver: "", first: 1, last: 10, values: ["a string", "a no-substitution template", "a const name holding one"] },
+  { id: "L062", roster: "ENV_METHODS", receiver: "process.env.", first: 1, last: 10, values: ["a string", "a no-substitution template", "a const name holding one"] },
+];
+/** wb-tz2.20 cut #3 REBIND GRID: the rebind sentence's declaration kinds, each binding a bare local that holds a global. */
+const REBIND_DECLARATIONS: readonly RebindDeclaration[] = [
+  { id: "let", head: "let local: unknown = JSON;\n", indent: "", tail: "" },
+  { id: "var", head: "var local: unknown = JSON;\n", indent: "", tail: "" },
+  { id: "const", head: "const local: unknown = JSON;\n", indent: "", tail: "" },
+  { id: "parameter", head: "export function probe(local: unknown = JSON): void {\n", indent: "  ", tail: "}\n" },
+  { id: "destructured", head: "let { parse: local } = JSON;\n", indent: "", tail: "" },
+  { id: "catch clause", head: "try {\n  JSON.parse(\"\");\n} catch (local) {\n  local = JSON;\n", indent: "  ", tail: "}\n" },
+  { id: "for-of variable", head: "for (let local of [JSON]) {\n", indent: "  ", tail: "}\n" },
+];
+/** wb-tz2.20 cut #3 REBIND GRID: every write form of the rebind sentence's list, alone and in parentheses, and each pattern form at each pattern element. */
+const REBIND_WRITES: readonly RebindWrite[] = [
+  { id: "assignment | alone", form: "assignment", shape: "alone", target: "local", write: "local = forged;" },
+  { id: "assignment | in parentheses", form: "assignment", shape: "in parentheses", target: "(local)", write: "(local) = forged;" },
+  { id: "assignment | an array pattern", form: "assignment", shape: "an array pattern", target: "[local]", write: "[local] = [forged];" },
+  { id: "assignment | an object pattern", form: "assignment", shape: "an object pattern", target: "{ key: local }", write: "({ key: local } = { key: forged });" },
+  { id: "assignment | a shorthand", form: "assignment", shape: "a shorthand", target: "{ local }", write: "({ local } = { local: forged });" },
+  { id: "assignment | a nested pattern", form: "assignment", shape: "a nested pattern", target: "[[local]]", write: "[[local]] = [[forged]];" },
+  { id: "assignment | a spread", form: "assignment", shape: "a spread", target: "[...local]", write: "[...local] = [forged];" },
+  { id: "assignment | a rest", form: "assignment", shape: "a rest", target: "{ ...local }", write: "({ ...local } = { forged });" },
+  { id: "compound operator | alone", form: "compound operator", shape: "alone", target: "local", write: "local += forged;" },
+  { id: "compound operator | in parentheses", form: "compound operator", shape: "in parentheses", target: "(local)", write: "(local) += forged;" },
+  { id: "compound operator | an array pattern", form: "compound operator", shape: "an array pattern", target: "[local]", write: "[local] += [forged];" },
+  { id: "compound operator | an object pattern", form: "compound operator", shape: "an object pattern", target: "{ key: local }", write: "({ key: local } += { key: forged });" },
+  { id: "compound operator | a shorthand", form: "compound operator", shape: "a shorthand", target: "{ local }", write: "({ local } += { local: forged });" },
+  { id: "compound operator | a nested pattern", form: "compound operator", shape: "a nested pattern", target: "[[local]]", write: "[[local]] += [[forged]];" },
+  { id: "compound operator | a spread", form: "compound operator", shape: "a spread", target: "[...local]", write: "[...local] += [forged];" },
+  { id: "compound operator | a rest", form: "compound operator", shape: "a rest", target: "{ ...local }", write: "({ ...local } += { forged });" },
+  { id: "for-of target | alone", form: "for-of target", shape: "alone", target: "local", write: "for (local of [forged]) break;" },
+  { id: "for-of target | in parentheses", form: "for-of target", shape: "in parentheses", target: "(local)", write: "for ((local) of [forged]) break;" },
+  { id: "for-of target | an array pattern", form: "for-of target", shape: "an array pattern", target: "[local]", write: "for ([local] of [[forged]]) break;" },
+  { id: "for-of target | an object pattern", form: "for-of target", shape: "an object pattern", target: "{ key: local }", write: "for ({ key: local } of [{ key: forged }]) break;" },
+  { id: "for-of target | a shorthand", form: "for-of target", shape: "a shorthand", target: "{ local }", write: "for ({ local } of [{ local: forged }]) break;" },
+  { id: "for-of target | a nested pattern", form: "for-of target", shape: "a nested pattern", target: "[[local]]", write: "for ([[local]] of [[[forged]]]) break;" },
+  { id: "for-of target | a spread", form: "for-of target", shape: "a spread", target: "[...local]", write: "for ([...local] of [[forged]]) break;" },
+  { id: "for-of target | a rest", form: "for-of target", shape: "a rest", target: "{ ...local }", write: "for ({ ...local } of [{ forged }]) break;" },
+  { id: "for-in target | alone", form: "for-in target", shape: "alone", target: "local", write: "for (local in { forged: 1 }) break;" },
+  { id: "for-in target | in parentheses", form: "for-in target", shape: "in parentheses", target: "(local)", write: "for ((local) in { forged: 1 }) break;" },
+  { id: "for-in target | an array pattern", form: "for-in target", shape: "an array pattern", target: "[local]", write: "for ([local] in { forged: 1 }) break;" },
+  { id: "for-in target | an object pattern", form: "for-in target", shape: "an object pattern", target: "{ key: local }", write: "for ({ key: local } in { forged: 1 }) break;" },
+  { id: "for-in target | a shorthand", form: "for-in target", shape: "a shorthand", target: "{ local }", write: "for ({ local } in { forged: 1 }) break;" },
+  { id: "for-in target | a nested pattern", form: "for-in target", shape: "a nested pattern", target: "[[local]]", write: "for ([[local]] in { forged: 1 }) break;" },
+  { id: "for-in target | a spread", form: "for-in target", shape: "a spread", target: "[...local]", write: "for ([...local] in { forged: 1 }) break;" },
+  { id: "for-in target | a rest", form: "for-in target", shape: "a rest", target: "{ ...local }", write: "for ({ ...local } in { forged: 1 }) break;" },
+  { id: "delete | alone", form: "delete", shape: "alone", target: "local", write: "delete local;" },
+  { id: "delete | in parentheses", form: "delete", shape: "in parentheses", target: "(local)", write: "delete (local);" },
+  { id: "update | alone", form: "update", shape: "alone", target: "local", write: "local++;\n++local;\nlocal--;\n--local;" },
+  { id: "update | in parentheses", form: "update", shape: "in parentheses", target: "(local)", write: "(local)++;\n++(local);\n(local)--;\n--(local);" },
+];
+/** wb-tz2.20 cut #3 POSITIONS: how each value form a POSITIONS row names spells the override (a declaration before the call, and the argument). */
+const VALUE_FORMS: Readonly<Record<string, { readonly head: string; readonly argument: string }>> = {
+  "a string": { head: "", argument: "\"HYPERUNIX_HX\"" },
+  "a no-substitution template": { head: "", argument: "`HYPERUNIX_HX`" },
+  "a const name holding one": { head: "const KEY = \"HYPERUNIX_HX\";\n", argument: "KEY" },
+};
+/** The loud line beside every ROOT KINDS and REBIND GRID page, and what it reads. */
+const ROOT_CONTROL = "Atomics.control = forged;\n";
+const ROOT_CONTROL_READING = "Atomics.control assigned";
 /** wb-tz2.20 cut #2: the lifecycle page's top-level function the real-page twins are planted right before. */
 const TWIN_ANCHOR = "function deferred<T>() {";
 /** wb-tz2.20 cut #2: the gate's seven distinct real-page twins of those members (gate-prep-6 archive l2/twins.json; GP6-T-FORIN-PATTERN and GP6-T-FORIN-ARRONLY share one), each at the page's top level. */
@@ -2127,12 +2536,12 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L012", line: "CHAINS (calleeChains): a member, or an element whose key has a value (any other key reads <computed>), as dotted text (an optional member or element, and an element key written as a template, are NOT CLAIMED), with", pins: ["CHAINS", "SUB:A25", "SUB:S0580", "SUB:T0031", "SUB:T0157"] },
   { id: "L013", line: "a leading globalThis. or global. dropped; a root identifier reads as its own spelling and, when its own binding is a const", pins: ["SUB:A20", "SUB:A21", "SUB:W17a", "SUB:W17b", "SUB:T0158"] },
   { id: "L014", line: "initialized by a member chain or a name, as that chain's spellings too.", pins: ["SUB:A22", "SUB:A23", "SUB:S0562", "SUB:T0030", "SUB:T0032"] },
-  { id: "L015", line: "ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global (a call, a this, a literal or any", pins: ["SUB:U1-F1", "SUB:A05", "SUB:T0045", "SUB:T0160", "SUB:T0161", "SUB:W6-R-THIS", "SUB:C6-R-THIS", "SUB:W6-R-LITROOT", "SUB:C6-R-LITROOT", "SUB:W6-R-NEWROOT", "SUB:C6-R-NEWROOT", "SUB:Y0101", "SUB:Y0102", "SUB:Y0103", "SUB:Y0104", "SUB:Y0105", "SUB:Y0106", "SUB:Y0107", "SUB:Y0108", "SUB:Y0109", "SUB:Y0110", "SUB:Y0111", "SUB:Y0112", "SUB:Y0113", "SUB:Y0114", "SUB:Y0115", "SUB:Y0116", "SUB:Y0117", "SUB:Y0118", "SUB:Y0119", "SUB:Y0120", "SUB:Y0121", "SUB:Y0122", "SUB:Y0123", "SUB:Y0124", "SUB:Y0125", "SUB:Y0126", "SUB:Y0127", "SUB:Y0128", "SUB:Y0129", "SUB:Y0130", "SUB:Y0131"] },
-  { id: "L016", line: "other root is not); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:", pins: ["ROOT:initializer", "ROOT:reassignment", "SUB:T0042", "SUB:T0046"] },
+  { id: "L015", line: "ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global; a root of one of these ROOT KINDS is not: this; super; a double-quoted string; a single-quoted string; a no-substitution template; a template; a number; a bigint; a regular expression; true; false; null; an array literal; an object literal; a function; an arrow function; a class; a call; an optional call; a bind call; a call() call; an apply() call; an import() call; a super() call; a new; a new without arguments; a new of a member; a tagged template; a conditional; typeof; void; delete; await; yield; import.meta; new.target; an instantiation expression; a JSX element; a self-closing JSX element; a JSX fragment; the prefix operators + - ~ ! ++ --; the postfix operators ++ --; the binary operators , = += -= *= /= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= + - * / % ** << >> >>> & | ^ && || ?? == != === !== < <= > >= instanceof in", pins: ["SUB:U1-F1", "SUB:A05", "SUB:T0045", "SUB:T0160", "SUB:T0161", "SUB:W6-R-THIS", "SUB:C6-R-THIS", "SUB:W6-R-LITROOT", "SUB:C6-R-LITROOT", "SUB:W6-R-NEWROOT", "SUB:C6-R-NEWROOT", "SUB:Y0101", "SUB:Y0102", "SUB:Y0103", "SUB:Y0104", "SUB:Y0105", "SUB:Y0106", "SUB:Y0107", "SUB:Y0108", "SUB:Y0109", "SUB:Y0110", "SUB:Y0111", "SUB:Y0112", "SUB:Y0113", "SUB:Y0114", "SUB:Y0115", "SUB:Y0116", "SUB:Y0117", "SUB:Y0118", "SUB:Y0119", "SUB:Y0120", "SUB:Y0121", "SUB:Y0122", "SUB:Y0123", "SUB:Y0124", "SUB:Y0125", "SUB:Y0126", "SUB:Y0127", "SUB:Y0128", "SUB:Y0129", "SUB:Y0130", "SUB:Y0131", "SUB:RK001", "SUB:RK002", "SUB:RK003", "SUB:RK004", "SUB:RK005", "SUB:RK006", "SUB:RK007", "SUB:RK008", "SUB:RK009", "SUB:RK010", "SUB:RK011", "SUB:RK012", "SUB:RK013", "SUB:RK014", "SUB:RK015", "SUB:RK016", "SUB:RK017", "SUB:RK018", "SUB:RK019", "SUB:RK020", "SUB:RK021", "SUB:RK022", "SUB:RK023", "SUB:RK024", "SUB:RK025", "SUB:RK026", "SUB:RK027", "SUB:RK028", "SUB:RK029", "SUB:RK030", "SUB:RK031", "SUB:RK032", "SUB:RK033", "SUB:RK034", "SUB:RK035", "SUB:RK036", "SUB:RK037", "SUB:RK038", "SUB:RK039", "SUB:RK040", "SUB:RK041", "SUB:RK042", "SUB:RK043", "SUB:RK044", "SUB:RK045", "SUB:RK046", "SUB:RK047", "SUB:RK048", "SUB:RK049", "SUB:RK050", "SUB:RK051", "SUB:RK052", "SUB:RK053", "SUB:RK054", "SUB:RK055", "SUB:RK056", "SUB:RK057", "SUB:RK058", "SUB:RK059", "SUB:RK060", "SUB:RK061", "SUB:RK062", "SUB:RK063", "SUB:RK064", "SUB:RK065", "SUB:RK066", "SUB:RK067", "SUB:RK068", "SUB:RK069", "SUB:RK070", "SUB:RK071", "SUB:RK072", "SUB:RK073", "SUB:RK074", "SUB:RK075", "SUB:RK076", "SUB:RK077", "SUB:RK078", "SUB:RK079", "SUB:RK080", "SUB:RK081", "SUB:RK082", "SUB:RK083", "SUB:RK084", "SUB:RK085", "SUB:RK086", "SUB:RK087", "SUB:RK088", "SUB:RK089", "SUB:RK090", "SUB:G5W-B-UPLUS", "SUB:G5C-B-UPLUS", "SUB:G5W-B-UPLUS-HX", "SUB:G5C-B-UPLUS-HX", "SUB:G5W-B-TILDE", "SUB:G5C-B-TILDE", "SUB:G5W-B-PREINC", "SUB:G5C-B-PREINC", "SUB:G5W-B-PREDEC", "SUB:G5C-B-PREDEC", "SUB:G5W-B-POSTDEC", "SUB:G5C-B-POSTDEC", "SUB:G5W-B-PLUS", "SUB:G5C-B-PLUS", "SUB:G5W-B-ASSIGN", "SUB:G5C-B-ASSIGN", "SUB:G5W-B-ASSIGNL", "SUB:G5C-B-ASSIGNL", "SUB:G5W-B-INSTOF", "SUB:G5C-B-INSTOF", "SUB:G5W-B-IN", "SUB:G5C-B-IN", "SUB:G5W-B-LT", "SUB:G5C-B-LT", "SUB:G5W-B-BAR", "SUB:G5C-B-BAR", "SUB:G5W-B-POW", "SUB:G5C-B-POW", "SUB:G5W-B-PLUSEQ", "SUB:G5C-B-PLUSEQ", "SUB:G5W-B-QQEQ", "SUB:G5C-B-QQEQ", "SUB:G5W-B-MINUS", "SUB:G5C-B-MINUS", "SUB:G5W-B-EQEQEQ", "SUB:G5C-B-EQEQEQ", "SUB:G5W-B-INSTEXPR", "SUB:G5C-B-INSTEXPR", "SUB:G5W-B-JSXSELF", "SUB:G5C-B-JSXSELF", "SUB:G5W-B-JSXEL", "SUB:G5C-B-JSXEL", "SUB:G5W-B-OPTCALL", "SUB:G5C-B-OPTCALL", "SUB:G5W-B-BINDCALL", "SUB:G5C-B-BINDCALL", "SUB:G5W-B-CALLMEMBER", "SUB:G5C-B-CALLMEMBER", "SUB:G5W-B-IMPORTCALL", "SUB:G5C-B-IMPORTCALL", "SUB:G5W-B-NEWNOARGS", "SUB:G5C-B-NEWNOARGS", "SUB:G5W-B-NEWCALLEE-MEMBER", "SUB:G5C-B-NEWCALLEE-MEMBER", "SUB:G5W-B-SQLIT", "SUB:G5C-B-SQLIT"] },
+  { id: "L016", line: "(a root of any other kind is NOT CLAIMED); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:", pins: ["ROOT:initializer", "ROOT:reassignment", "SUB:T0042", "SUB:T0046"] },
   { id: "L017", line: "- initializer: a variable's initializer", pins: ["ROOT:initializer"] },
   { id: "L018", line: "- reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)", pins: ["ROOT:reassignment", "SUB:A30", "SUB:A31", "SUB:A32", "SUB:A33", "SUB:S1292", "SUB:S1100", "SUB:S0611", "SUB:W23", "SUB:T0041", "SUB:WR3", "SUB:WR3c", "SUB:WR4", "SUB:WR4c", "SUB:WR5", "SUB:WR5b"] },
   { id: "L019", line: "- destructured: a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index; a rest element holds a copy and reads nothing), and its own default (the own default of an element with a property name or of an array element is NOT CLAIMED)", pins: ["ROOT:destructured", "SUB:A34", "SUB:A35", "SUB:A36", "SUB:A37", "SUB:S0620", "SUB:S1297", "SUB:W21", "SUB:T0037", "SUB:T0038", "SUB:T0039", "SUB:T0040", "SUB:WR7", "SUB:WR7c"] },
-  { id: "L020", line: "- for-of element: a for-of variable's elements when the iterable is an array literal, directly or through a const name (a let or var variable and a for await...of loop are NOT CLAIMED)", pins: ["ROOT:for-of element", "SUB:A38", "SUB:S0631", "SUB:S1085", "SUB:W131", "SUB:T0034"] },
+  { id: "L020", line: "- for-of element: a for-of variable's elements when the iterable is an array literal, directly or through a const name (a let or var variable, a for await...of loop, and a for-in variable, are NOT CLAIMED)", pins: ["ROOT:for-of element", "SUB:A38", "SUB:S0631", "SUB:S1085", "SUB:W131", "SUB:T0034", "SUB:G5W-O-RF-FORIN", "SUB:G5C-O-RF-FORIN", "SUB:X3-FORIN-CONST"] },
   { id: "L021", line: "- parameter default: a parameter's default value (a default of an arrow function's, a function expression's, a method's, a constructor's or an accessor's parameter is NOT CLAIMED)", pins: ["ROOT:parameter default"] },
   { id: "L022", line: "- call argument: the argument at a parameter's position in every call of its function through a name whose own binding is the function's declaration or a variable initialized by the function (read through parentheses and assertions; an optional call, and a let or var variable, are NOT CLAIMED); a rest parameter reads nothing", pins: ["ROOT:call argument", "SUB:A39", "SUB:A40", "SUB:S0645", "SUB:S1092", "SUB:S1093", "SUB:S1094", "SUB:S0647", "SUB:S1091", "SUB:S1295", "SUB:W44", "SUB:T0033", "SUB:T0035", "SUB:WR8", "SUB:WR8c"] },
   { id: "L023", line: "- immediately invoked: the argument at a parameter's position when its function is itself the callee", pins: ["ROOT:immediately invoked", "SUB:S0651"] },
@@ -2141,12 +2550,12 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L026", line: "leaves the environment object through constructor, __proto__ or prototype (refusal #4 F3).", pins: ["SUB:A46", "SUB:A48", "SUB:R:PROTOTYPE_LINKS:constructor", "SUB:R:PROTOTYPE_LINKS:__proto__", "SUB:R:PROTOTYPE_LINKS:prototype", "SUB:W25"] },
   { id: "L027", line: "", pins: [] },
   { id: "L028", line: "C2 TAMPER FORMS (tampersIn, C2_FORMS; each finding is \"<what> :<line>\"):", pins: ["C2:assignment", "SUB:W01", "SUB:W02", "SUB:T0141"] },
-  { id: "L029", line: "- spy: a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, \"open\"), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose \"open\" is a value (an optional call, and a callee spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:spy", "SUB:SP1", "SUB:SP1c", "SUB:SP2", "SUB:A50", "SUB:A51", "SUB:S0838", "SUB:S0841", "SUB:S0844", "SUB:S1107", "SUB:W108", "SUB:T0055", "SUB:T0129", "SUB:T0130", "SUB:T0139", "SUB:W-SPY-CHAIN", "SUB:C-SPY-CHAIN", "LOCATED:spy", "SUB:Y0013", "SUB:Y0014"] },
+  { id: "L029", line: "- spy: a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, \"open\") (with one or two later arguments too; three or more later arguments are NOT CLAIMED), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose \"open\" is a value (an optional call, and a callee spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:spy", "SUB:SP1", "SUB:SP1c", "SUB:SP2", "SUB:A50", "SUB:A51", "SUB:S0838", "SUB:S0841", "SUB:S0844", "SUB:S1107", "SUB:W108", "SUB:T0055", "SUB:T0129", "SUB:T0130", "SUB:T0139", "SUB:W-SPY-CHAIN", "SUB:C-SPY-CHAIN", "LOCATED:spy", "SUB:Y0013", "SUB:Y0014", "SUB:G5W-A-SPY-ARITY", "SUB:G5C-A-SPY-ARITY", "SUB:G5W-A-SPY-SECONDRECV", "SUB:G5C-A-SPY-SECONDRECV", "SUB:X3-SPY-TWO"] },
   { id: "L030", line: "- global stub: a GLOBAL_STUBS call (an optional call or member, and a callee in parentheses, spelled as an element access or reached through an alias, are NOT CLAIMED)", pins: ["C2:global stub", "SUB:A52", "SUB:WC16", "SUB:WC16c", "SUB:W-GS-CHAIN", "SUB:C-GS-CHAIN", "LOCATED:global stub"] },
   { id: "L031", line: "- watched reference: a WATCHED callee chain read other than as a call's callee (an argument, an alias, call / apply / bind of it; a chain returned, exported as a default, in an array, an object, a template, a spread, a conditional, a typeof, a new, an assertion, an element access or a concise arrow body, as a statement of its own or read through an optional member, and a callee in a non-null or as assertion, are NOT CLAIMED)", pins: ["C2:watched reference", "SUB:A53", "SUB:S0862", "SUB:S0866", "SUB:W26", "SUB:WC3", "SUB:WC3b", "SUB:WC3c", "LOCATED:watched reference"] },
   { id: "L032", line: "- destructured watched: a WATCHED member destructured from its owner (the declaration's initializer) in a declaration (a rest element holds every member)", pins: ["C2:destructured watched", "SUB:A54", "SUB:A55", "SUB:W28", "SUB:T0050", "SUB:T0051", "SUB:T0053", "SUB:T0138", "SUB:Z0006", "LOCATED:destructured watched"] },
   { id: "L033", line: "- destructuring-assigned watched: a WATCHED member destructured from its owner by a destructuring assignment (a rest element holds every member)", pins: ["C2:destructuring-assigned watched", "SUB:S0880", "SUB:S0881", "SUB:S1102", "SUB:T0052", "SUB:T0137", "SUB:W-DAW-NESTED", "SUB:C-DAW-NESTED", "SUB:Z0001", "SUB:Z0002", "SUB:Z0003", "SUB:Z0004", "SUB:Z0005", "LOCATED:destructuring-assigned watched"] },
-  { id: "L034", line: "- assignment: = on an outside target, every element of an array or object destructuring-assignment pattern included (nested, spread and rest)", pins: ["C2:assignment", "SUB:A56", "SUB:A57", "SUB:A58", "SUB:A59", "SUB:A60", "SUB:W132", "SUB:T0049", "SUB:T0056", "LOCATED:assignment", "SUB:Y0309"] },
+  { id: "L034", line: "- assignment: = on an outside target, every element of an array or object destructuring-assignment pattern included (nested, spread and rest), a pattern in parentheses and a nested pattern with a default too, each element read once (an as, satisfies, non-null or <T> assertion around a pattern is NOT CLAIMED)", pins: ["C2:assignment", "SUB:A56", "SUB:A57", "SUB:A58", "SUB:A59", "SUB:A60", "SUB:W132", "SUB:T0049", "SUB:T0056", "LOCATED:assignment", "SUB:Y0309", "SUB:G5W-D-NOBARE", "SUB:G5W-D-DEFAULT-NESTED", "SUB:X3-ASG-PAREN-OBJECT", "SUB:X3-ASG-PAREN-NESTED", "SUB:X3-ASG-PAREN-TWICE", "SUB:X3-ASG-DEFAULT-OBJECT", "SUB:X3-ASG-DEFAULT-DEEP"] },
   { id: "L035", line: "- compound operator: an assignment by any other assignment operator (+=, &&=, ??= and the rest) on an outside target", pins: ["C2:compound operator", "SUB:A61", "SUB:A62", "SUB:A63", "SUB:A63b", "SUB:T0054", "SUB:T0057", "LOCATED:compound operator"] },
   { id: "L036", line: "- for-of target: an outside for-of assignment target (a for await...of loop, and a target in parentheses or written as an element access, are NOT CLAIMED)", pins: ["C2:for-of target", "SUB:A71", "SUB:T0058", "SUB:WC17", "SUB:WC17c", "LOCATED:for-of target", "SUB:Y0301", "SUB:Y0302", "SUB:Y0303", "SUB:Y0304", "SUB:Y0305"] },
   { id: "L037", line: "- for-in target: an outside for-in assignment target (a target in parentheses or written as an element access is NOT CLAIMED)", pins: ["C2:for-in target", "SUB:U1-W6", "SUB:T0059", "LOCATED:for-in target", "SUB:W6-T-FORIN-PATTERN", "SUB:W6-T-FORIN-OBJPATTERN", "SUB:W6-T-FORIN-ARRONLY", "SUB:Y0306", "SUB:Y0307", "SUB:Y0308"] },
@@ -2154,8 +2563,8 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L039", line: "- update: ++ or -- (prefix or postfix) of an outside chain", pins: ["C2:update", "SUB:A64", "SUB:A64b", "SUB:A65", "SUB:T0061", "LOCATED:update"] },
   { id: "L040", line: "- mutator call: a MUTATORS call (read through calleeChains) whose first argument is outside (an optional call or member, a callee in parentheses or reached through an alias, and a first argument other than a name or a dotted member - in parentheses, an assertion or an element access - are NOT CLAIMED)", pins: ["C2:mutator call", "SUB:A66", "SUB:A67", "SUB:A68", "SUB:T0062", "SUB:T0064", "SUB:WC15", "SUB:WC15c", "LOCATED:mutator call", "SUB:W6-T-MUT-SECOND", "SUB:C6-T-MUT-SECOND", "SUB:Y0008"] },
   { id: "L041", line: "- legacy accessor definer: __defineGetter__ or __defineSetter__ called as a member of an outside chain (refusal #4 F4; an optional call or member is NOT CLAIMED)", pins: ["C2:legacy accessor definer", "SUB:A69", "SUB:A70", "SUB:W133", "SUB:T0063", "SUB:T0065", "SUB:T0140", "SUB:WC14", "SUB:WC14c", "LOCATED:legacy accessor definer"] },
-  { id: "L042", line: "A write whose target is a bare name bound to a local declaration rebinds that local and reaches no value it held or receives", pins: ["SUB:P-REBIND-1", "SUB:P-REBIND-2", "SUB:W29b", "SUB:W29c", "SUB:Y0201", "SUB:Y0202", "SUB:Y0203", "SUB:Y0204", "SUB:Y0205", "SUB:Y0206", "SUB:Y0207"] },
-  { id: "L043", line: "(writtenChains), so the assignment, compound operator, for-of target, for-in target, delete and update forms read nothing for it.", pins: ["SUB:P-REBIND-3", "SUB:P-REBIND-4", "SUB:P-REBIND-5", "SUB:P-REBIND-6", "SUB:W6-T-RB-FORIN", "SUB:C6-T-RB-FORIN", "SUB:W6-T-RB-DELETE", "SUB:C6-T-RB-DELETE"] },
+  { id: "L042", line: "A write whose target is a bare name bound to a local let, var, const, parameter, destructured, catch clause or for-of variable declaration (another kind is NOT CLAIMED), written alone or in parentheses, or, in the assignment, compound operator, for-of target and for-in target forms, as a pattern element ([local], { key: local }, { local }, [[local]], [...local] or { ...local }), rebinds that local and reaches no value it held or receives", pins: ["SUB:P-REBIND-1", "SUB:P-REBIND-2", "SUB:W29b", "SUB:W29c", "SUB:Y0201", "SUB:Y0202", "SUB:Y0203", "SUB:Y0204", "SUB:Y0205", "SUB:Y0206", "SUB:Y0207", "REBIND:let", "REBIND:var", "REBIND:const", "REBIND:parameter", "REBIND:destructured", "REBIND:catch clause", "REBIND:for-of variable"] },
+  { id: "L043", line: "(writtenChains), so the assignment, compound operator, for-of target, for-in target, delete and update forms read nothing for it.", pins: ["SUB:P-REBIND-3", "SUB:P-REBIND-4", "SUB:P-REBIND-5", "SUB:P-REBIND-6", "SUB:W6-T-RB-FORIN", "SUB:C6-T-RB-FORIN", "SUB:W6-T-RB-DELETE", "SUB:C6-T-RB-DELETE", "WRITE:assignment | alone", "WRITE:assignment | in parentheses", "WRITE:assignment | an array pattern", "WRITE:assignment | an object pattern", "WRITE:assignment | a shorthand", "WRITE:assignment | a nested pattern", "WRITE:assignment | a spread", "WRITE:assignment | a rest", "WRITE:compound operator | alone", "WRITE:compound operator | in parentheses", "WRITE:compound operator | an array pattern", "WRITE:compound operator | an object pattern", "WRITE:compound operator | a shorthand", "WRITE:compound operator | a nested pattern", "WRITE:compound operator | a spread", "WRITE:compound operator | a rest", "WRITE:for-of target | alone", "WRITE:for-of target | in parentheses", "WRITE:for-of target | an array pattern", "WRITE:for-of target | an object pattern", "WRITE:for-of target | a shorthand", "WRITE:for-of target | a nested pattern", "WRITE:for-of target | a spread", "WRITE:for-of target | a rest", "WRITE:for-in target | alone", "WRITE:for-in target | in parentheses", "WRITE:for-in target | an array pattern", "WRITE:for-in target | an object pattern", "WRITE:for-in target | a shorthand", "WRITE:for-in target | a nested pattern", "WRITE:for-in target | a spread", "WRITE:for-in target | a rest", "WRITE:delete | alone", "WRITE:delete | in parentheses", "WRITE:update | alone", "WRITE:update | in parentheses", "SUB:G5W-C-PATELEM-FOROF", "SUB:G5C-C-PATELEM-FOROF", "SUB:G5W-C-PATELEM-FORIN", "SUB:G5C-C-PATELEM-FORIN", "SUB:G5W-C-PATELEM-COMPOUND", "SUB:G5C-C-PATELEM-COMPOUND"] },
   { id: "L044", line: "MOCKS (moduleMockSpecifiers): every call whose callee chains hold a MODULE_MOCKS name (an optional call or member, and a callee spelled as an element access or reached through an alias of the mock, are NOT CLAIMED), with each value of its first argument (a template is NOT CLAIMED),", pins: ["SUB:A76", "SUB:R:MODULE_MOCKS:vi.doMock", "SUB:T0067", "SUB:T0142", "SUB:WC13", "SUB:WC13c", "SUB:Y0011"] },
   { id: "L045", line: "or of the import() its first argument is (a template argument is NOT CLAIMED).", pins: ["SUB:A75", "SUB:S0898", "SUB:W134", "SUB:T0066", "SUB:Y0012"] },
   { id: "L046", line: "", pins: [] },
@@ -2173,8 +2582,8 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   { id: "L058", line: "- override destructuring assignment [override]: HYPERUNIX_HX as a destructuring-assignment key", pins: ["DRIVER:override destructuring assignment", "SUB:S0977", "LOCATED:override destructuring assignment"] },
   { id: "L059", line: "- override object key [override]: HYPERUNIX_HX as a key of an object literal that is no destructuring-assignment target (a shorthand, method or accessor key is NOT CLAIMED)", pins: ["DRIVER:override object key", "SUB:A97", "SUB:A98", "SUB:T0127", "SUB:WD6", "SUB:WD6b", "SUB:WD6c", "LOCATED:override object key"] },
   { id: "L060", line: "- override in [override]: HYPERUNIX_HX as the value of the left operand of in (a template operand is NOT CLAIMED)", pins: ["DRIVER:override in", "SUB:A99", "SUB:S0993", "LOCATED:override in"] },
-  { id: "L061", line: "- override env call [override]: HYPERUNIX_HX as an argument value of an ENV_CALLS call (an optional call, and a callee spelled as an element access, are NOT CLAIMED)", pins: ["DRIVER:override env call", "SUB:A100", "SUB:A101", "SUB:A102", "SUB:A104", "SUB:A105", "SUB:S1000", "SUB:S1002", "SUB:T0121", "LOCATED:override env call", "SUB:W6-D-ENVCALL-THIRD", "SUB:Y0001", "SUB:Y0002", "SUB:Y0003"] },
-  { id: "L062", line: "- override env method [override]: HYPERUNIX_HX as an argument value of an ENV_METHODS method call (an optional call is NOT CLAIMED)", pins: ["DRIVER:override env method", "SUB:A103", "SUB:S1008", "SUB:T0128", "LOCATED:override env method", "SUB:W6-D-ENVMETHOD-SECOND", "SUB:Y0004", "SUB:Y0005", "SUB:Y0006", "SUB:Y0016"] },
+  { id: "L061", line: "- override env call [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_CALLS call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; any other place or value form, an optional call, and a callee spelled as an element access, are NOT CLAIMED)", pins: ["DRIVER:override env call", "SUB:A100", "SUB:A101", "SUB:A102", "SUB:A104", "SUB:A105", "SUB:S1000", "SUB:S1002", "SUB:T0121", "LOCATED:override env call", "SUB:W6-D-ENVCALL-THIRD", "SUB:Y0001", "SUB:Y0002", "SUB:Y0003", "POSITION:L061", "SUB:G5W-A-OV-S8", "SUB:G5W-A-OV-S9", "SUB:G5W-A-OV-SKIP5", "SUB:G5W-A-OV-SKIP6", "SUB:G5W-A-OV-SKIP7", "SUB:G5W-A-EC-S8", "SUB:G5W-A-EC-SKIP5"] },
+  { id: "L062", line: "- override env method [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_METHODS method call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; any other place or value form, and an optional call, are NOT CLAIMED)", pins: ["DRIVER:override env method", "SUB:A103", "SUB:S1008", "SUB:T0128", "LOCATED:override env method", "SUB:W6-D-ENVMETHOD-SECOND", "SUB:Y0004", "SUB:Y0005", "SUB:Y0006", "SUB:Y0016", "POSITION:L062", "SUB:G5W-A-EM-S8", "SUB:G5W-A-EM-SKIP5", "SUB:G5W-A-OV-SKIP5-EM"] },
   { id: "L063", line: "C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):", pins: ["SUB:R:MEMBER_SHAPES:kill:F1", "SUB:A211", "SUB:S1145", "SUB:S1147", "SUB:S1150", "SUB:S1045", "SUB:T0088", "SUB:T0135", "SUB:T0148", "SUB:T0149"] },
   { id: "L064", line: "- member: a member name read as .name, called or not (one read through an optional chain, or one that is itself the receiver of another member, is NOT CLAIMED)", pins: ["SHAPE:member", "SUB:A211", "SUB:T0143", "SUB:WS1", "SUB:WS1b", "SUB:WS1c", "LOCATED:member"] },
   { id: "L065", line: "- element key: an element key value read as [\"name\"] (one read through an optional chain is NOT CLAIMED)", pins: ["SHAPE:element key", "SUB:S1230", "LOCATED:element key"] },
@@ -2229,6 +2638,11 @@ const SCOPE_LINES: readonly string[] = [
   "on its own line. wb-tz2.20 (orchestrator ruling R-B264: the carrier after refusal #4's dependency inversion) adds plants and",
   "no claim word: the witnesses of refusal #3's and refusal #4's members and the plants of its own sweep are census rows, and a",
   "form named NOT CLAIMED on its line stays NOT CLAIMED (a pinned witness kills one hollowing, not its form).",
+  "wb-tz2.20 cut #3 (orchestrator ruling R-B356: the class guard re-failed through new members at this child's refusal #2, so the",
+  "class froze and this cut is the enumerate-the-resolvable form) plants refusal #2's members' witnesses and narrows, in place,",
+  "the claim words of the four guarded classes to enumerations its rows plant whole: the override's argument places (POSITIONS),",
+  "the custody stub's later arguments, the ROOT KINDS, the rebind sentence's declarations and target shapes (REBIND GRID) and the",
+  "assignment pattern shapes; every other member of each class is NOT CLAIMED, as is a for-in variable on the for-of element line.",
 ];
 /** Every table row as table:id:digest (digest: sha-256 of the row's JSON, 12 hex). */
 const FROZEN: readonly string[] = [
@@ -3403,6 +3817,183 @@ const FROZEN: readonly string[] = [
   "SUB_READINGS:Y0205:25a7b44d7af6",
   "SUB_READINGS:Y0206:67b73de594d7",
   "SUB_READINGS:Y0207:6cc28282fcca",
+  "SUB_READINGS:G5W-A-OV-S8:8990061420f6",
+  "SUB_READINGS:G5W-A-OV-S9:59215e68935b",
+  "SUB_READINGS:G5W-A-OV-SKIP5:7d501e631cd6",
+  "SUB_READINGS:G5W-A-OV-SKIP6:37b32fc8bc02",
+  "SUB_READINGS:G5W-A-OV-SKIP7:a21f58b1efdd",
+  "SUB_READINGS:G5W-A-EC-S8:a2b3a626e482",
+  "SUB_READINGS:G5W-A-EC-SKIP5:311b24d14e22",
+  "SUB_READINGS:G5W-A-EM-S8:eae089ed36ec",
+  "SUB_READINGS:G5W-A-EM-SKIP5:b8b1e6b8fea8",
+  "SUB_READINGS:G5W-A-OV-SKIP5-EM:7c9c510eea9b",
+  "SUB_READINGS:G5W-A-SPY-ARITY:d481441a4656",
+  "SUB_READINGS:G5C-A-SPY-ARITY:eb17d160945b",
+  "SUB_READINGS:G5W-A-SPY-SECONDRECV:0b2862bc3139",
+  "SUB_READINGS:G5C-A-SPY-SECONDRECV:b9dea2600150",
+  "SUB_READINGS:G5W-B-UPLUS:ed397e0a3e5b",
+  "SUB_READINGS:G5C-B-UPLUS:1bbdda61d1f3",
+  "SUB_READINGS:G5W-B-TILDE:e2f1a7224426",
+  "SUB_READINGS:G5C-B-TILDE:d6a629f103bb",
+  "SUB_READINGS:G5W-B-PREINC:038718df65a9",
+  "SUB_READINGS:G5C-B-PREINC:c6056ad1ab5d",
+  "SUB_READINGS:G5W-B-PREDEC:ca72202e490c",
+  "SUB_READINGS:G5C-B-PREDEC:c197fb6798ba",
+  "SUB_READINGS:G5W-B-POSTDEC:6816060ed415",
+  "SUB_READINGS:G5C-B-POSTDEC:f3696593907e",
+  "SUB_READINGS:G5W-B-PLUS:642f021234f7",
+  "SUB_READINGS:G5C-B-PLUS:f148d29d9d41",
+  "SUB_READINGS:G5W-B-ASSIGN:2cc16dd47215",
+  "SUB_READINGS:G5C-B-ASSIGN:2948e00ea9ba",
+  "SUB_READINGS:G5W-B-ASSIGNL:d70fb40e81e8",
+  "SUB_READINGS:G5C-B-ASSIGNL:c7509d51386d",
+  "SUB_READINGS:G5W-B-INSTOF:0e853989c5a6",
+  "SUB_READINGS:G5C-B-INSTOF:4e63698a355f",
+  "SUB_READINGS:G5W-B-IN:f1ff314d48a9",
+  "SUB_READINGS:G5C-B-IN:530fd6474bc4",
+  "SUB_READINGS:G5W-B-LT:2ab74aced460",
+  "SUB_READINGS:G5C-B-LT:a5b70d3f907e",
+  "SUB_READINGS:G5W-B-BAR:f5aa3734b87f",
+  "SUB_READINGS:G5C-B-BAR:7f3bb3416c94",
+  "SUB_READINGS:G5W-B-POW:0a96030255cd",
+  "SUB_READINGS:G5C-B-POW:2e352c4e8cfc",
+  "SUB_READINGS:G5W-B-PLUSEQ:48b2b27a1cdd",
+  "SUB_READINGS:G5C-B-PLUSEQ:00128b3a8b70",
+  "SUB_READINGS:G5W-B-QQEQ:b25934614b72",
+  "SUB_READINGS:G5C-B-QQEQ:ad600c596996",
+  "SUB_READINGS:G5W-B-MINUS:2644760979f2",
+  "SUB_READINGS:G5C-B-MINUS:e28431bac480",
+  "SUB_READINGS:G5W-B-EQEQEQ:2a33bc5ce369",
+  "SUB_READINGS:G5C-B-EQEQEQ:ac42273463e8",
+  "SUB_READINGS:G5W-B-INSTEXPR:c64979f33a9d",
+  "SUB_READINGS:G5C-B-INSTEXPR:e5f32f4c5539",
+  "SUB_READINGS:G5W-B-OPTCALL:8108c6db7f77",
+  "SUB_READINGS:G5C-B-OPTCALL:68e88dd6b7eb",
+  "SUB_READINGS:G5W-B-BINDCALL:d7c1c74f0bf3",
+  "SUB_READINGS:G5C-B-BINDCALL:47dff514d8a0",
+  "SUB_READINGS:G5W-B-NEWNOARGS:c99412b505bd",
+  "SUB_READINGS:G5C-B-NEWNOARGS:0dcbd33a9f02",
+  "SUB_READINGS:G5W-B-SQLIT:ff85028cb0fa",
+  "SUB_READINGS:G5C-B-SQLIT:6d0e868fd7f7",
+  "SUB_READINGS:G5W-B-IMPORTCALL:857e4c6a4a4e",
+  "SUB_READINGS:G5C-B-IMPORTCALL:e72d41d7055d",
+  "SUB_READINGS:G5W-B-NEWCALLEE-MEMBER:ec8cd341fcf7",
+  "SUB_READINGS:G5C-B-NEWCALLEE-MEMBER:7a2b4181a24e",
+  "SUB_READINGS:G5W-B-CALLMEMBER:b8c35d270792",
+  "SUB_READINGS:G5C-B-CALLMEMBER:983c91e2f67d",
+  "SUB_READINGS:G5W-B-JSXSELF:9f4b2289e609",
+  "SUB_READINGS:G5C-B-JSXSELF:a06f200a7aff",
+  "SUB_READINGS:G5W-B-JSXEL:f4d4692ef381",
+  "SUB_READINGS:G5C-B-JSXEL:5d0f25499947",
+  "SUB_READINGS:G5W-B-UPLUS-HX:e222c7e43f36",
+  "SUB_READINGS:G5C-B-UPLUS-HX:beb67305452e",
+  "SUB_READINGS:G5W-C-PATELEM-FOROF:8b2addac1772",
+  "SUB_READINGS:G5C-C-PATELEM-FOROF:d54d118ad296",
+  "SUB_READINGS:G5W-C-PATELEM-FORIN:93add1c5564e",
+  "SUB_READINGS:G5C-C-PATELEM-FORIN:ccbf609cc7c7",
+  "SUB_READINGS:G5W-C-PATELEM-COMPOUND:57441874f3a0",
+  "SUB_READINGS:G5C-C-PATELEM-COMPOUND:1f224f21c883",
+  "SUB_READINGS:G5W-D-DEFAULT-NESTED:9a2e5d0494a4",
+  "SUB_READINGS:G5W-D-NOBARE:126f327759be",
+  "SUB_READINGS:G5W-O-RF-FORIN:8334c74b4e11",
+  "SUB_READINGS:G5C-O-RF-FORIN:5ac0f8577e39",
+  "SUB_READINGS:X3-SPY-TWO:9a31cff92d82",
+  "SUB_READINGS:X3-ASG-PAREN-OBJECT:6b8d030bece7",
+  "SUB_READINGS:X3-ASG-PAREN-NESTED:f927de98a207",
+  "SUB_READINGS:X3-ASG-PAREN-TWICE:951b81d45d3d",
+  "SUB_READINGS:X3-ASG-DEFAULT-OBJECT:5aef64cd3184",
+  "SUB_READINGS:X3-ASG-DEFAULT-DEEP:f8315b4afd9c",
+  "SUB_READINGS:X3-FORIN-CONST:5131ace2b4f7",
+  "SUB_READINGS:RK001:cd22797b4ea6",
+  "SUB_READINGS:RK002:1f01d5f68082",
+  "SUB_READINGS:RK003:47d509d4d653",
+  "SUB_READINGS:RK004:3e6b511f5779",
+  "SUB_READINGS:RK005:1e34b84683d5",
+  "SUB_READINGS:RK006:f130e9a71a72",
+  "SUB_READINGS:RK007:37382c397a53",
+  "SUB_READINGS:RK008:c8960ac14728",
+  "SUB_READINGS:RK009:24f40d6523e5",
+  "SUB_READINGS:RK010:0722b5771e82",
+  "SUB_READINGS:RK011:7e45de5518ab",
+  "SUB_READINGS:RK012:407faf963539",
+  "SUB_READINGS:RK013:aae07b9ebe9e",
+  "SUB_READINGS:RK014:ddfe97cc058f",
+  "SUB_READINGS:RK015:760efe58db6d",
+  "SUB_READINGS:RK016:d6c621a739b6",
+  "SUB_READINGS:RK017:ddb022de41d5",
+  "SUB_READINGS:RK018:3b963deead26",
+  "SUB_READINGS:RK019:bef915a03b27",
+  "SUB_READINGS:RK020:1e340d60f66b",
+  "SUB_READINGS:RK021:ebc087f52c96",
+  "SUB_READINGS:RK022:61082bd8bb51",
+  "SUB_READINGS:RK023:160d28a0289b",
+  "SUB_READINGS:RK024:8364dd641865",
+  "SUB_READINGS:RK025:48dac5a03e51",
+  "SUB_READINGS:RK026:366578fa7c5f",
+  "SUB_READINGS:RK027:bbaa5ea8c2ea",
+  "SUB_READINGS:RK028:3c72e1ea3de9",
+  "SUB_READINGS:RK029:d1e0e117bcf8",
+  "SUB_READINGS:RK030:eb14e4e874ef",
+  "SUB_READINGS:RK031:00e03cea4b9d",
+  "SUB_READINGS:RK032:2fcb2fb72eef",
+  "SUB_READINGS:RK033:2c20ef246424",
+  "SUB_READINGS:RK034:23e3795c34c5",
+  "SUB_READINGS:RK035:41eebd44bc03",
+  "SUB_READINGS:RK036:dd52e4ecbfa4",
+  "SUB_READINGS:RK037:b3d8cba8825f",
+  "SUB_READINGS:RK038:c2a0637330f8",
+  "SUB_READINGS:RK039:a4d5cb7a55f7",
+  "SUB_READINGS:RK040:8b346bbe8536",
+  "SUB_READINGS:RK041:797b294e95be",
+  "SUB_READINGS:RK042:7baea6546123",
+  "SUB_READINGS:RK043:e91f4dc56f13",
+  "SUB_READINGS:RK044:ae57296f8a95",
+  "SUB_READINGS:RK045:01c77155c571",
+  "SUB_READINGS:RK046:9b31bc09e08a",
+  "SUB_READINGS:RK047:3252bafb3339",
+  "SUB_READINGS:RK048:d70845275d92",
+  "SUB_READINGS:RK049:35ae2cb29231",
+  "SUB_READINGS:RK050:b95f205d0cfa",
+  "SUB_READINGS:RK051:d3fa8cb648eb",
+  "SUB_READINGS:RK052:d7774440c099",
+  "SUB_READINGS:RK053:d8bf4e21fb37",
+  "SUB_READINGS:RK054:a6b62afc093a",
+  "SUB_READINGS:RK055:40abeaeae8f8",
+  "SUB_READINGS:RK056:f361080ead83",
+  "SUB_READINGS:RK057:5679b3176ba5",
+  "SUB_READINGS:RK058:317644875f05",
+  "SUB_READINGS:RK059:e31ec8b39f29",
+  "SUB_READINGS:RK060:07702577d1a4",
+  "SUB_READINGS:RK061:f861f238f3e8",
+  "SUB_READINGS:RK062:07fa3b08d0df",
+  "SUB_READINGS:RK063:99b3654cbfed",
+  "SUB_READINGS:RK064:9cbb0b111e41",
+  "SUB_READINGS:RK065:72d4e76dd3df",
+  "SUB_READINGS:RK066:94a219b45742",
+  "SUB_READINGS:RK067:064bdf81db55",
+  "SUB_READINGS:RK068:d3a314e74c5e",
+  "SUB_READINGS:RK069:ddd3ca7c4498",
+  "SUB_READINGS:RK070:04eb068ee5aa",
+  "SUB_READINGS:RK071:e378761fbfe7",
+  "SUB_READINGS:RK072:98938d1beb36",
+  "SUB_READINGS:RK073:1387d55cca3f",
+  "SUB_READINGS:RK074:2c12a3ee595b",
+  "SUB_READINGS:RK075:c530bf036134",
+  "SUB_READINGS:RK076:ecb6d1b7f290",
+  "SUB_READINGS:RK077:8866def2eff9",
+  "SUB_READINGS:RK078:d19b2624afcd",
+  "SUB_READINGS:RK079:bac61e1da044",
+  "SUB_READINGS:RK080:43909699014a",
+  "SUB_READINGS:RK081:c8c18da80713",
+  "SUB_READINGS:RK082:6e9857a41e9d",
+  "SUB_READINGS:RK083:22c77700a773",
+  "SUB_READINGS:RK084:dcfce259b282",
+  "SUB_READINGS:RK085:cde93eddd08e",
+  "SUB_READINGS:RK086:7f7ae06c9808",
+  "SUB_READINGS:RK087:765c546b6ba8",
+  "SUB_READINGS:RK088:87f00b41df53",
+  "SUB_READINGS:RK089:721370dc1c24",
+  "SUB_READINGS:RK090:b6548cce7e82",
   "ROSTERS:GLOBAL_STUBS:ad7d3273c4eb",
   "ROSTERS:MUTATORS:b596abbd9294",
   "ROSTERS:MODULE_MOCKS:186d0ea447b8",
@@ -3526,12 +4117,12 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L012:8e1bea49b41c",
   "CLAIM_LINES:L013:9438e106cc75",
   "CLAIM_LINES:L014:981b4577cfc0",
-  "CLAIM_LINES:L015:56a4a5c86b35",
-  "CLAIM_LINES:L016:8cf2689e6c22",
+  "CLAIM_LINES:L015:6c8bb05d7500",
+  "CLAIM_LINES:L016:9e65049274e3",
   "CLAIM_LINES:L017:66455025707b",
   "CLAIM_LINES:L018:1b1b1c9895e7",
   "CLAIM_LINES:L019:6d54cecced03",
-  "CLAIM_LINES:L020:aa97eb126f8b",
+  "CLAIM_LINES:L020:d276b2751b9e",
   "CLAIM_LINES:L021:0e53e1e5f958",
   "CLAIM_LINES:L022:83f3ffdf2b94",
   "CLAIM_LINES:L023:230ef19effc2",
@@ -3540,12 +4131,12 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L026:3a968b4bf1a6",
   "CLAIM_LINES:L027:40d747567628",
   "CLAIM_LINES:L028:9267de5ddc50",
-  "CLAIM_LINES:L029:8a3fc3fbac73",
+  "CLAIM_LINES:L029:176b39cc5a24",
   "CLAIM_LINES:L030:e031a71a5e8f",
   "CLAIM_LINES:L031:319885e89bc2",
   "CLAIM_LINES:L032:4618911f276a",
   "CLAIM_LINES:L033:4f47ad2aa528",
-  "CLAIM_LINES:L034:1d368a5974b9",
+  "CLAIM_LINES:L034:02800b4401cc",
   "CLAIM_LINES:L035:6c7464e9a66f",
   "CLAIM_LINES:L036:bc78e651918d",
   "CLAIM_LINES:L037:db9c8d68a38a",
@@ -3553,8 +4144,8 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L039:e5a644938955",
   "CLAIM_LINES:L040:4609df791720",
   "CLAIM_LINES:L041:6831125633e9",
-  "CLAIM_LINES:L042:6e42c1cbe1bb",
-  "CLAIM_LINES:L043:ebbefbe1c6bb",
+  "CLAIM_LINES:L042:151f7f148931",
+  "CLAIM_LINES:L043:b1fc5451e26a",
   "CLAIM_LINES:L044:61f1b564ecae",
   "CLAIM_LINES:L045:cc7716b3da67",
   "CLAIM_LINES:L046:ed80aed8078d",
@@ -3572,8 +4163,8 @@ const FROZEN: readonly string[] = [
   "CLAIM_LINES:L058:2005cf1da543",
   "CLAIM_LINES:L059:0001efdb6287",
   "CLAIM_LINES:L060:5094e778a4ee",
-  "CLAIM_LINES:L061:556e5bc5c89e",
-  "CLAIM_LINES:L062:908fe5c04680",
+  "CLAIM_LINES:L061:72e1198d36e9",
+  "CLAIM_LINES:L062:08008b72695b",
   "CLAIM_LINES:L063:70676d295d9c",
   "CLAIM_LINES:L064:59fd1eb2ae18",
   "CLAIM_LINES:L065:532ec55845fc",
@@ -3747,6 +4338,95 @@ const FROZEN: readonly string[] = [
   "TWINS_1:TW6-T-RB-FORIN:c6dd4cb308de",
   "TWINS_1:TW6-T-RB-DELETE:81ccdf7f5305",
   "TWINS_1:TW6-T-MUT-SECOND:db9df4bf867c",
+  "CHILD_SURVIVORS_2:G5-A-OV-S8:b30b9b4dd91c",
+  "CHILD_SURVIVORS_2:G5-A-OV-S9:3874abb49c1c",
+  "CHILD_SURVIVORS_2:G5-A-OV-SKIP5:fdb68adb8873",
+  "CHILD_SURVIVORS_2:G5-A-OV-SKIP6:6051d411ceff",
+  "CHILD_SURVIVORS_2:G5-A-OV-SKIP7:5c007eaded99",
+  "CHILD_SURVIVORS_2:G5-A-EC-S8:1d5758924ce2",
+  "CHILD_SURVIVORS_2:G5-A-EC-SKIP5:3b0959401975",
+  "CHILD_SURVIVORS_2:G5-A-EM-S8:47567d90e2f0",
+  "CHILD_SURVIVORS_2:G5-A-EM-SKIP5:dc1d39c86992",
+  "CHILD_SURVIVORS_2:G5-D-NOBARE:edbeb81f9fc5",
+  "CHILD_SURVIVORS_2:G5-B-UPLUS:2bd421b65ca3",
+  "CHILD_SURVIVORS_2:G5-B-TILDE:564162cec655",
+  "CHILD_SURVIVORS_2:G5-B-PREINC:32ab28647587",
+  "CHILD_SURVIVORS_2:G5-B-PREDEC:0f328a56923a",
+  "CHILD_SURVIVORS_2:G5-B-POSTDEC:3a0c9b429d40",
+  "CHILD_SURVIVORS_2:G5-B-PLUS:a0bb66c962fc",
+  "CHILD_SURVIVORS_2:G5-B-ASSIGN:be7f1b70399a",
+  "CHILD_SURVIVORS_2:G5-B-ASSIGNL:348d9e940339",
+  "CHILD_SURVIVORS_2:G5-B-INSTOF:6e8b5c6ba352",
+  "CHILD_SURVIVORS_2:G5-B-IN:e3cf0b9ce2c6",
+  "CHILD_SURVIVORS_2:G5-B-LT:f01c11c3166d",
+  "CHILD_SURVIVORS_2:G5-B-BAR:1054736be3f7",
+  "CHILD_SURVIVORS_2:G5-B-POW:66e33d9e47cf",
+  "CHILD_SURVIVORS_2:G5-B-PLUSEQ:81f3a2fbb838",
+  "CHILD_SURVIVORS_2:G5-B-QQEQ:a0e9ed0a3562",
+  "CHILD_SURVIVORS_2:G5-B-MINUS:5b31bfa1c66e",
+  "CHILD_SURVIVORS_2:G5-B-EQEQEQ:0bd084c77181",
+  "CHILD_SURVIVORS_2:G5-B-INSTEXPR:bed3b9eb7e85",
+  "CHILD_SURVIVORS_2:G5-B-JSXSELF:9e0128e65ad1",
+  "CHILD_SURVIVORS_2:G5-B-JSXEL:3449fe904690",
+  "CHILD_SURVIVORS_2:G5-B-OPTCALL:d6bb41b1c294",
+  "CHILD_SURVIVORS_2:G5-B-BINDCALL:3d43bbd56b2d",
+  "CHILD_SURVIVORS_2:G5-B-CALLMEMBER:4d24a5557778",
+  "CHILD_SURVIVORS_2:G5-B-IMPORTCALL:f1a313b8c3e9",
+  "CHILD_SURVIVORS_2:G5-B-NEWNOARGS:c1f032568ccb",
+  "CHILD_SURVIVORS_2:G5-B-NEWCALLEE-MEMBER:d886b15be7d1",
+  "CHILD_SURVIVORS_2:G5-B-SQLIT:692fac602695",
+  "CHILD_SURVIVORS_2:G5-C-PATELEM-FOROF:c84d8da64731",
+  "CHILD_SURVIVORS_2:G5-C-PATELEM-FORIN:223e6d9a75f3",
+  "CHILD_SURVIVORS_2:G5-C-PATELEM-COMPOUND:b9b9bb8351a1",
+  "CHILD_SURVIVORS_2:G5-D-DEFAULT-NESTED:6825d43a8849",
+  "CHILD_SURVIVORS_2:G5-A-SPY-ARITY:776f623df796",
+  "CHILD_SURVIVORS_2:G5-A-SPY-SECONDRECV:43466c8da876",
+  "CHILD_SURVIVORS_2:G5-O-RF-FORIN:589b08976036",
+  "POSITIONS:L061:f92cbe6a3076",
+  "POSITIONS:L062:acb301cc9c76",
+  "REBIND_DECLARATIONS:let:a55104250ff9",
+  "REBIND_DECLARATIONS:var:62781dca2241",
+  "REBIND_DECLARATIONS:const:dc4677f15404",
+  "REBIND_DECLARATIONS:parameter:265aeaccfb0f",
+  "REBIND_DECLARATIONS:destructured:b19e2fad8fda",
+  "REBIND_DECLARATIONS:catch clause:f18135afefad",
+  "REBIND_DECLARATIONS:for-of variable:07cbce1b1e53",
+  "REBIND_WRITES:assignment | alone:6ae73f0701fa",
+  "REBIND_WRITES:assignment | in parentheses:fa03a5beca67",
+  "REBIND_WRITES:assignment | an array pattern:5c0667a4549e",
+  "REBIND_WRITES:assignment | an object pattern:3b6fa5a849f9",
+  "REBIND_WRITES:assignment | a shorthand:ad06dd63bfb5",
+  "REBIND_WRITES:assignment | a nested pattern:43a56dfb41f0",
+  "REBIND_WRITES:assignment | a spread:40d12a45f4ff",
+  "REBIND_WRITES:assignment | a rest:0d4f394c7b12",
+  "REBIND_WRITES:compound operator | alone:c0c8d9e17971",
+  "REBIND_WRITES:compound operator | in parentheses:51daec488691",
+  "REBIND_WRITES:compound operator | an array pattern:3810972c19a5",
+  "REBIND_WRITES:compound operator | an object pattern:2307d75af2ca",
+  "REBIND_WRITES:compound operator | a shorthand:d3db3a859dcd",
+  "REBIND_WRITES:compound operator | a nested pattern:785d3cbbaad0",
+  "REBIND_WRITES:compound operator | a spread:fd2f3d95acdf",
+  "REBIND_WRITES:compound operator | a rest:d0abc60ef803",
+  "REBIND_WRITES:for-of target | alone:af5da6413c21",
+  "REBIND_WRITES:for-of target | in parentheses:ae30be601384",
+  "REBIND_WRITES:for-of target | an array pattern:ef2bb29ea28a",
+  "REBIND_WRITES:for-of target | an object pattern:17bd53e924a1",
+  "REBIND_WRITES:for-of target | a shorthand:83601ebaf909",
+  "REBIND_WRITES:for-of target | a nested pattern:c7a2e1d87f89",
+  "REBIND_WRITES:for-of target | a spread:095568846382",
+  "REBIND_WRITES:for-of target | a rest:17d560ceba10",
+  "REBIND_WRITES:for-in target | alone:7bdd1d137391",
+  "REBIND_WRITES:for-in target | in parentheses:e1a1a351429f",
+  "REBIND_WRITES:for-in target | an array pattern:6ae74461add2",
+  "REBIND_WRITES:for-in target | an object pattern:7cbf71f60bee",
+  "REBIND_WRITES:for-in target | a shorthand:7a7a120c089f",
+  "REBIND_WRITES:for-in target | a nested pattern:7d67589de1c6",
+  "REBIND_WRITES:for-in target | a spread:fc6611578205",
+  "REBIND_WRITES:for-in target | a rest:e6e8fe7b6c5e",
+  "REBIND_WRITES:delete | alone:950418e10221",
+  "REBIND_WRITES:delete | in parentheses:adc7c6ce41c3",
+  "REBIND_WRITES:update | alone:950230e42e4d",
+  "REBIND_WRITES:update | in parentheses:cbd1cd462d7f",
 ];
 
 // ---- rows -------------------------------------------------------------------------------------------------------------
@@ -3953,6 +4633,9 @@ describe(SUITE, () => {
         RESIDUAL: RESIDUAL_ROWS.map(row => row.id),
         BINDING: Object.keys(BINDING_EXPECTED),
         LOCATED: LOCATED.map(row => row.word),
+        POSITION: POSITIONS.map(row => row.id),
+        REBIND: REBIND_DECLARATIONS.map(row => row.id),
+        WRITE: REBIND_WRITES.map(row => row.id),
       };
       const resolves = (pin: string): boolean => {
         if (pin === "VALUES") return Object.keys(VALUE_EXPECTED).length > 0;
@@ -4183,22 +4866,94 @@ describe(SUITE, () => {
     });
   });
 
-  describe("CLASS GUARD (wb-tz2.20 cut #2, refusal #1's class-level guard): each sub-form the helper header's own words name in the four bound classes has a pinned row (the words, outside this census)", () => {
+  describe("CHILD REFUSAL #2 ANCHOR (wb-tz2.20 cut #3, outside this census): this child's own refusal #2 verdict in the tracker export", () => {
+    it("the members its U1, U2 and U3 items name, in order, are the CHILD_SURVIVORS_2 rows, each row's lines are named in its item, and every witness is a SUB-READINGS row pinned on one of its row's lines", () => {
+      const block = childVerdictBlock2();
+      const pins = new Map(CLAIM_LINES.map(row => [row.id, row.pins] as const));
+      const planted = new Set(SUB_READINGS.map(row => row.id));
+      expect({
+        u1: childMembers2(block, "U1"),
+        u2: childMembers2(block, "U2"),
+        u3: childMembers2(block, "U3"),
+        unnamedLines: CHILD_SURVIVORS_2.flatMap(row => row.lines.filter(line => !childItemSpan(block, row.item).includes(line)).map(line => `${row.id} ${line}`)),
+        unplanted: CHILD_SURVIVORS_2.flatMap(row => row.witnesses).filter(id => !planted.has(id)),
+        unpinned: CHILD_SURVIVORS_2.flatMap(row => row.witnesses.filter(id => !row.lines.some(line => (pins.get(line) ?? []).includes(`SUB:${id}`))).map(id => `${row.id} ${id}`)),
+      }).toStrictEqual({
+        u1: CHILD_SURVIVORS_2.filter(row => row.item === "U1").map(row => row.id),
+        u2: CHILD_SURVIVORS_2.filter(row => row.item === "U2").map(row => row.id),
+        u3: CHILD_SURVIVORS_2.filter(row => row.item === "U3").map(row => row.id),
+        unnamedLines: [],
+        unplanted: [],
+        unpinned: [],
+      });
+    });
+  });
+
+  describe("CLASS GUARD (wb-tz2.20 cuts #2 and #3): each sub-form the helper header's own words name or enumerate in the four bound classes has at least one pinned row (the words, outside this census; one row per derived sub-form, never one per hollowing)", () => {
     it("ARGUMENT POSITIONS: every claim line naming a first argument or an argument value pins an 'a later argument:' row", () => {
       const named = helperClaimLines()
         .filter(entry => /first argument|an argument value/.test(entry.line))
         .map(entry => entry.id);
       expect({ named, missing: named.filter(id => pinnedWith([id], "a later argument:", false).length === 0) }).toStrictEqual({
-        named: ["L040", "L044", "L045", "L052", "L053", "L054", "L055", "L061", "L062"],
+        named: ["L040", "L044", "L045", "L052", "L053", "L054", "L055"],
         missing: [],
       });
     });
-    it("ROOT KINDS: each root kind the ROOTS exclusion names pins a quiet '<kind> root:' row on L015", () => {
+    it("ROOT KINDS (cut #3): the kinds the ROOTS line enumerates are the RK rows' kinds, in order, and each pins a '<kind> root:' row on L015", () => {
+      const kinds = rootKinds(helperClaimLines().find(entry => entry.id === "L015")?.line ?? "");
+      expect({ kinds, missing: kinds.filter(kind => pinnedWith(["L015"], `${kind} root:`, false).length === 0) }).toStrictEqual({
+        kinds: SUB_READINGS.filter(row => /^RK\d{3}$/.test(row.id)).map(row => row.claim.slice(0, row.claim.indexOf(" root: "))),
+        missing: [],
+      });
+    });
+    it("POSITIONS (cut #3): every claim line naming the value forms and the k-th argument of a roster's call of k or k + 1 arguments for each k in a range is its POSITIONS row (those value forms, that roster and range), every roster member planted", () => {
+      const named = helperClaimLines().flatMap(entry => {
+        const match = /HYPERUNIX_HX, as (.+?), as the k-th argument of an (ENV_CALLS|ENV_METHODS) (?:method )?call of k or k \+ 1 arguments, for each k from (\d+) to (\d+) \(POSITIONS;/.exec(entry.line);
+        return match === null ? [] : [{ id: entry.id, roster: match[2] ?? "", first: Number(match[3]), last: Number(match[4]), values: (match[1] ?? "").split(/, | or /) }];
+      });
+      expect({ named, spelled: POSITIONS.flatMap(row => row.values.filter(value => VALUE_FORMS[value] === undefined)), cells: POSITIONS.map(row => positionCells(row).length) }).toStrictEqual({
+        named: POSITIONS.map(row => ({ id: row.id, roster: row.roster, first: row.first, last: row.last, values: [...row.values] })),
+        spelled: [],
+        cells: [600, 120],
+      });
+    });
+    it("REBIND GRID (cut #3): the declaration kinds and pattern elements the rebind sentence enumerates and the forms its list names are the REBIND GRID's, every form planted alone and in parentheses and every pattern form at each element", () => {
       const text = helperClaimLines()
         .map(entry => entry.line)
         .join(" ");
-      const kinds = (/when its root is an import binding or a global \((.+?) is not\)/.exec(text)?.[1] ?? "").split(/, | or /).map(kind => kind.replace(/ root$/, ""));
-      expect({ kinds, missing: kinds.filter(kind => pinnedWith(["L015"], `${kind} root:`, true).length === 0) }).toStrictEqual({ kinds: ["a call", "a this", "a literal", "any other"], missing: [] });
+      const declarations = (/bound to a local (.+?) declaration \(another kind is NOT CLAIMED\)/.exec(text)?.[1] ?? "").split(/, | or /);
+      const patterned = /written alone or in parentheses, or, in the (.+?) forms, as a pattern element \((.+?)\), rebinds/.exec(text);
+      const patternForms = (patterned?.[1] ?? "").split(/, | and /);
+      const elements = (patterned?.[2] ?? "").split(/, | or /);
+      const forms = (/\(writtenChains\), so the (.+?) forms read nothing for it\./.exec(text)?.[1] ?? "").split(/, | and /);
+      const planted = (form: string, target: string): boolean => REBIND_WRITES.some(row => row.form === form && row.target === target);
+      expect({
+        declarations,
+        patternForms,
+        elements,
+        unplanted: [
+          ...forms.flatMap(form => ["local", "(local)"].filter(target => !planted(form, target)).map(target => `${form} ${target}`)),
+          ...patternForms.flatMap(form => elements.filter(target => !planted(form, target)).map(target => `${form} ${target}`)),
+        ],
+        unnamed: REBIND_WRITES.filter(row => !forms.includes(row.form) || !["local", "(local)", ...(patternForms.includes(row.form) ? elements : [])].includes(row.target)).map(row => row.id),
+      }).toStrictEqual({
+        declarations: REBIND_DECLARATIONS.map(row => row.id),
+        patternForms: ["assignment", "compound operator", "for-of target", "for-in target"],
+        elements: ["[local]", "{ key: local }", "{ local }", "[[local]]", "[...local]", "{ ...local }"],
+        unplanted: [],
+        unnamed: [],
+      });
+    });
+    it("ASSIGNMENT SHAPES (cut #3): each further shape the assignment line names after its pattern shapes pins a '<shape>:' row on L034", () => {
+      const line = helperClaimLines().find(entry => entry.id === "L034")?.line ?? "";
+      const shapes = (/destructuring-assignment pattern included \(nested, spread and rest\), (.+?) too, each element read once/.exec(line)?.[1] ?? "").split(" and ");
+      expect({ shapes, missing: shapes.filter(shape => pinnedWith(["L034"], `${shape}:`, false).length === 0) }).toStrictEqual({ shapes: ["a pattern in parentheses", "a nested pattern with a default"], missing: [] });
+    });
+    it("CUSTODY STUB (cut #3): each count of later arguments the spy line names pins an 'a custody stub with <count> later argument:' row on L029", () => {
+      const line = helperClaimLines().find(entry => entry.id === "L029")?.line ?? "";
+      const counts = (/the custody stub vi\.spyOn\(HyperUnix, "open"\) \(with (.+?) later arguments too;/.exec(line)?.[1] ?? "").split(" or ");
+      const head = (count: string): string => `a custody stub with ${count} later argument${count === "one" ? "" : "s"}:`;
+      expect({ counts, missing: counts.filter(count => pinnedWith(["L029"], head(count), false).length === 0) }).toStrictEqual({ counts: ["one", "two"], missing: [] });
     });
     it("REBIND FORMS: each form of the rebind sentence's list pins a quiet '<form>:' row on L042 or L043", () => {
       const text = helperClaimLines()
@@ -4247,6 +5002,18 @@ describe(SUITE, () => {
     });
   });
 
+  describe("POSITIONS (wb-tz2.20 cut #3, L061 and L062): the override in each value form at each place of a call of that many arguments and of one more reads the override driver, on every member of the line's roster", () => {
+    it.each(POSITIONS.flatMap(row => positionCells(row).map(cell => [cell.title, cell.text] as const)))("%s", (_title, text) => {
+      expect(hxDrivers(parseText(PLANT, text))).toStrictEqual(["override"]);
+    });
+  });
+
+  describe("REBIND GRID (wb-tz2.20 cut #3, L042 and L043): a bare local of each declaration kind, written by each write, reads only the loud control beside it", () => {
+    it.each(REBIND_DECLARATIONS.flatMap(declaration => REBIND_WRITES.map(write => [`${declaration.id} | ${write.id}`, rebindPage(declaration, write)] as const)))("%s", (_title, text) => {
+      expect(withoutLines(tampersIn(parseText(PLANT, text)))).toStrictEqual([ROOT_CONTROL_READING]);
+    });
+  });
+
   describe("FROZEN SHAPE (standing rule 16)", () => {
     it("every table row is pinned as table:id:digest of its own JSON", () => {
       const rows = (table: string, entries: readonly { readonly id?: string; readonly word?: string; readonly key?: string }[]): string[] =>
@@ -4283,6 +5050,10 @@ describe(SUITE, () => {
         ...rows("LOCATED", LOCATED),
         ...rows("CHILD_SURVIVORS_1", CHILD_SURVIVORS_1),
         ...rows("TWINS_1", TWINS_1),
+        ...rows("CHILD_SURVIVORS_2", CHILD_SURVIVORS_2),
+        ...rows("POSITIONS", POSITIONS),
+        ...rows("REBIND_DECLARATIONS", REBIND_DECLARATIONS),
+        ...rows("REBIND_WRITES", REBIND_WRITES),
       ]).toStrictEqual(FROZEN);
     });
   });

@@ -15,6 +15,11 @@
  * on its own line. wb-tz2.20 (orchestrator ruling R-B264: the carrier after refusal #4's dependency inversion) adds plants and
  * no claim word: the witnesses of refusal #3's and refusal #4's members and the plants of its own sweep are census rows, and a
  * form named NOT CLAIMED on its line stays NOT CLAIMED (a pinned witness kills one hollowing, not its form).
+ * wb-tz2.20 cut #3 (orchestrator ruling R-B356: the class guard re-failed through new members at this child's refusal #2, so the
+ * class froze and this cut is the enumerate-the-resolvable form) plants refusal #2's members' witnesses and narrows, in place,
+ * the claim words of the four guarded classes to enumerations its rows plant whole: the override's argument places (POSITIONS),
+ * the custody stub's later arguments, the ROOT KINDS, the rebind sentence's declarations and target shapes (REBIND GRID) and the
+ * assignment pattern shapes; every other member of each class is NOT CLAIMED, as is a for-in variable on the for-of element line.
  *
  * BINDINGS (bindingOf): an identifier resolves through the TypeScript binder's own symbol at its use site, in a one-file
  * program over the very source (no lib, no module resolution, nothing emitted), so a same-named declaration in another scope
@@ -30,12 +35,12 @@
  * CHAINS (calleeChains): a member, or an element whose key has a value (any other key reads <computed>), as dotted text (an optional member or element, and an element key written as a template, are NOT CLAIMED), with
  * a leading globalThis. or global. dropped; a root identifier reads as its own spelling and, when its own binding is a const
  * initialized by a member chain or a name, as that chain's spellings too.
- * ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global (a call, a this, a literal or any
- * other root is not); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:
+ * ROOTS (outsideChains): a chain is OUTSIDE when its root is an import binding or a global; a root of one of these ROOT KINDS is not: this; super; a double-quoted string; a single-quoted string; a no-substitution template; a template; a number; a bigint; a regular expression; true; false; null; an array literal; an object literal; a function; an arrow function; a class; a call; an optional call; a bind call; a call() call; an apply() call; an import() call; a super() call; a new; a new without arguments; a new of a member; a tagged template; a conditional; typeof; void; delete; await; yield; import.meta; new.target; an instantiation expression; a JSX element; a self-closing JSX element; a JSX fragment; the prefix operators + - ~ ! ++ --; the postfix operators ++ --; the binary operators , = += -= *= /= %= **= <<= >>= >>>= &= |= ^= &&= ||= ??= + - * / % ** << >> >>> & | ^ && || ?? == != === !== < <= > >= instanceof in
+ * (a root of any other kind is NOT CLAIMED); a local root reads, as candidates, the chains of every value its own binding may hold. ROOT_FORMS:
  * - initializer: a variable's initializer
  * - reassignment: for a let or var, every value assigned to it in the file through its own name by =, ||=, &&= or ??= (an assignment before its declaration, and one that is not an expression statement of the file's top level - in a block, a function, a class or a namespace, in another statement, or inside parentheses or another expression - are NOT CLAIMED)
  * - destructured: a destructured binding's source chain (its declaration's initializer) with its keys (an array element by its index; a rest element holds a copy and reads nothing), and its own default (the own default of an element with a property name or of an array element is NOT CLAIMED)
- * - for-of element: a for-of variable's elements when the iterable is an array literal, directly or through a const name (a let or var variable and a for await...of loop are NOT CLAIMED)
+ * - for-of element: a for-of variable's elements when the iterable is an array literal, directly or through a const name (a let or var variable, a for await...of loop, and a for-in variable, are NOT CLAIMED)
  * - parameter default: a parameter's default value (a default of an arrow function's, a function expression's, a method's, a constructor's or an accessor's parameter is NOT CLAIMED)
  * - call argument: the argument at a parameter's position in every call of its function through a name whose own binding is the function's declaration or a variable initialized by the function (read through parentheses and assertions; an optional call, and a let or var variable, are NOT CLAIMED); a rest parameter reads nothing
  * - immediately invoked: the argument at a parameter's position when its function is itself the callee
@@ -44,12 +49,12 @@
  * leaves the environment object through constructor, __proto__ or prototype (refusal #4 F3).
  *
  * C2 TAMPER FORMS (tampersIn, C2_FORMS; each finding is "<what> :<line>"):
- * - spy: a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, "open"), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose "open" is a value (an optional call, and a callee spelled as an element access or reached through an alias, are NOT CLAIMED)
+ * - spy: a vi.spyOn call other than the custody stub vi.spyOn(HyperUnix, "open") (with one or two later arguments too; three or more later arguments are NOT CLAIMED), whose receiver is a name bound to a named import (aliased or not) of CUSTODY_EXPORT from an HX module (importsCustodyExport) and whose "open" is a value (an optional call, and a callee spelled as an element access or reached through an alias, are NOT CLAIMED)
  * - global stub: a GLOBAL_STUBS call (an optional call or member, and a callee in parentheses, spelled as an element access or reached through an alias, are NOT CLAIMED)
  * - watched reference: a WATCHED callee chain read other than as a call's callee (an argument, an alias, call / apply / bind of it; a chain returned, exported as a default, in an array, an object, a template, a spread, a conditional, a typeof, a new, an assertion, an element access or a concise arrow body, as a statement of its own or read through an optional member, and a callee in a non-null or as assertion, are NOT CLAIMED)
  * - destructured watched: a WATCHED member destructured from its owner (the declaration's initializer) in a declaration (a rest element holds every member)
  * - destructuring-assigned watched: a WATCHED member destructured from its owner by a destructuring assignment (a rest element holds every member)
- * - assignment: = on an outside target, every element of an array or object destructuring-assignment pattern included (nested, spread and rest)
+ * - assignment: = on an outside target, every element of an array or object destructuring-assignment pattern included (nested, spread and rest), a pattern in parentheses and a nested pattern with a default too, each element read once (an as, satisfies, non-null or <T> assertion around a pattern is NOT CLAIMED)
  * - compound operator: an assignment by any other assignment operator (+=, &&=, ??= and the rest) on an outside target
  * - for-of target: an outside for-of assignment target (a for await...of loop, and a target in parentheses or written as an element access, are NOT CLAIMED)
  * - for-in target: an outside for-in assignment target (a target in parentheses or written as an element access is NOT CLAIMED)
@@ -57,7 +62,7 @@
  * - update: ++ or -- (prefix or postfix) of an outside chain
  * - mutator call: a MUTATORS call (read through calleeChains) whose first argument is outside (an optional call or member, a callee in parentheses or reached through an alias, and a first argument other than a name or a dotted member - in parentheses, an assertion or an element access - are NOT CLAIMED)
  * - legacy accessor definer: __defineGetter__ or __defineSetter__ called as a member of an outside chain (refusal #4 F4; an optional call or member is NOT CLAIMED)
- * A write whose target is a bare name bound to a local declaration rebinds that local and reaches no value it held or receives
+ * A write whose target is a bare name bound to a local let, var, const, parameter, destructured, catch clause or for-of variable declaration (another kind is NOT CLAIMED), written alone or in parentheses, or, in the assignment, compound operator, for-of target and for-in target forms, as a pattern element ([local], { key: local }, { local }, [[local]], [...local] or { ...local }), rebinds that local and reaches no value it held or receives
  * (writtenChains), so the assignment, compound operator, for-of target, for-in target, delete and update forms read nothing for it.
  * MOCKS (moduleMockSpecifiers): every call whose callee chains hold a MODULE_MOCKS name (an optional call or member, and a callee spelled as an element access or reached through an alias of the mock, are NOT CLAIMED), with each value of its first argument (a template is NOT CLAIMED),
  * or of the import() its first argument is (a template argument is NOT CLAIMED).
@@ -76,8 +81,8 @@
  * - override destructuring assignment [override]: HYPERUNIX_HX as a destructuring-assignment key
  * - override object key [override]: HYPERUNIX_HX as a key of an object literal that is no destructuring-assignment target (a shorthand, method or accessor key is NOT CLAIMED)
  * - override in [override]: HYPERUNIX_HX as the value of the left operand of in (a template operand is NOT CLAIMED)
- * - override env call [override]: HYPERUNIX_HX as an argument value of an ENV_CALLS call (an optional call, and a callee spelled as an element access, are NOT CLAIMED)
- * - override env method [override]: HYPERUNIX_HX as an argument value of an ENV_METHODS method call (an optional call is NOT CLAIMED)
+ * - override env call [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_CALLS call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; any other place or value form, an optional call, and a callee spelled as an element access, are NOT CLAIMED)
+ * - override env method [override]: HYPERUNIX_HX, as a string, a no-substitution template or a const name holding one, as the k-th argument of an ENV_METHODS method call of k or k + 1 arguments, for each k from 1 to 10 (POSITIONS; any other place or value form, and an optional call, are NOT CLAIMED)
  * C7 SHAPE FORMS (falsifierShapes, SHAPE_FORMS; a member form's shape is its name's MEMBER_SHAPES entry, or F4 for a name holding the ESRCH word; a member key is the key a member form reads, never a binding element's or an import's local name or an export's exported name; a plain text is a string or template part that is no key and holds neither the ESRCH word nor a /proc path):
  * - member: a member name read as .name, called or not (one read through an optional chain, or one that is itself the receiver of another member, is NOT CLAIMED)
  * - element key: an element key value read as ["name"] (one read through an optional chain is NOT CLAIMED)
