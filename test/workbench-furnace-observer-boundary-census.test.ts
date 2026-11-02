@@ -32,16 +32,31 @@
  * identifier spelled with an escape by its cooked name and each template part by its cooked text, a substitution ending
  * the part ("cooked"), and each chain of "+" whose operands are all string literals by its folded value ("folded"); a .json
  * file also by its parsed keys and string values ("cooked"); a markup file (.md .html .htm .xml .svg) also with its
- * numeric character references, each spelled with its semicolon, decoded two ways - as the HTML standard decodes them
+ * numeric character references, each spelled with its semicolon and of up to eight decimal or seven hex digits (a
+ * longer one is NOT CLAIMED either way; OVER-READS), decoded two ways - as the HTML standard decodes them
  * (numericReference: a code point of the standard's 0x80-0x9F table, NUMERIC_REFERENCES, to its Windows-1252 character, so
  * &#146; reads as U+2019; 0, a surrogate and a code point above 0x10FFFF to U+FFFD; any other to itself) and each to its
  * own code point (decodedCodePoints, the landed reading; one above 0x10FFFF left as written), a mention in either reading
  * read, so neither narrows the other (wb-s876 cut #3) - and the six named entities amp, lt, gt, quot, apos and nbsp, each
  * with its semicolon, decoded ("decoded"); a YAML or TOML file (.yml .yaml .toml)
- * also with its backslash escapes (U, u and x forms) decoded ("decoded"). A file's forms are the readings that found a
- * mention. judgeScope reads an entry list in one call, so every leg judges its planted
+ * also with its backslash escapes (U, u and x forms) decoded ("decoded"). These decoder claims - the markup and
+ * YAML/TOML file kinds, the six names, the reference lengths, the hex digit range at its ends, the edges of both
+ * readings and the three escape forms - are each pinned through THE JUDGE's own decoders (THE JUDGE'S PINS, cut #6). A
+ * file's forms are the readings that found a mention. judgeScope reads an entry list in one call, so every leg judges its planted
  * entries after the real ones: the findings must be exactly the plants', so a real mention, a hollowed judge or a result
  * forced empty reds.
+ * THE JUDGE'S PINS (cut #6; ruling R-B316, claims equal to pins). Z2 plants, each a planted file that spells the
+ * record through one reading (its one form in Z2's witness): one per markup kind beside the .md plants (.html, .htm, .xml and .svg, each across &#32;); one
+ * per named entity of the six (&amp;, &lt;, &gt;, &quot; and &nbsp; between the words, &apos; in the possessive); four
+ * of the eight-decimal-digit and seven-hex-digit references, one per length and reading (&#00000146; and &#x0000092;
+ * in the possessive, which only the HTML standard's reading reads as U+2019, and &#00000136; and &#x0000088; between
+ * the words, which only the code-point reading reads as the separator U+0088); a .yaml page spelled with the x form
+ * (the .yml and .toml plants spell the u and U forms); and, for the script and JSON readings, a template's head and its
+ * tail and a backtick literal, each spelled with an escape, a private name spelled with an escape, a "+" chain folded
+ * across a parenthesized operand and one of backtick operands, and a JSON array's string value spelled with an escape.
+ * W1 asserts, on THE JUDGE's decodedMarkup and decodedCodePoints: each of the six names in upper case and in a mixed
+ * case; the low surrogates U+DC00 and U+DFFF (U+FFFD in the standard's reading, themselves in the code-point reading)
+ * and U+10FFFF (itself in both); and a one-digit hex reference and the hex digits a and f in either case.
  *
  * ROWS. T, the trigger clause, one pin per quoted part: T1 the release package.json resolves @furnace/sdk to is read entry
  * by entry (an entry floor, no skipped entry kind and no binary entry, every type the observer imports or re-exports from
@@ -144,7 +159,7 @@
  *   (OWNER_LEADS) exactly once in it, the L2-F7a duplicate asserted against both in the outside-anchor case; nothing
  *   inside the filing's two blocks is outside the read set, so F3 names no residual (a note appended after a blank line
  *   leaves the filing as it was, G22a). Measured at cut #2's base ee48709, at cut #3's base 42ab54d, at cut #4's base
- *   89109cd and at cut #5's base 04c8bbb: docs/09's section renders three paragraphs and no other block, holds no character reference, no non-ASCII character and no
+ *   89109cd, at cut #5's base 04c8bbb and at cut #6's base f5cb912: docs/09's section renders three paragraphs and no other block, holds no character reference, no non-ASCII character and no
  *   control character, and each subject word occurs once, in the third; the observer declares FurnaceObserverClient once,
  *   as its interface, and no listed script augments the observer, declares the name under another specifier or declares
  *   a global interface Object; the filing reads fb66562ab5acae93, each lead once.
@@ -237,6 +252,18 @@
  *   the list's subject words now counted. Refusal #4's riding findings: F3 (Q10 pinned its rows by name and two
  *   booleans, so a hollowed plant kept them) - Q10's witness now holds each plant's text; F4 (the block pin's
  *   whitespace sentence was wider than its pin) - narrowed to the in-sentence change W1 asserts.
+ * CUT #6 (the R-B316 restatement of cut #5: refusal #5, gate s179, outbox O:1744, found the claim words cut #5 kept for
+ *   THE JUDGE's unshared decoders without a falsifier - seven one-edit members, GJ-NE-NBSP, GJ-NE-LT, GJ-NE-GT,
+ *   GJ-NE-QUOT and GJ-NE-APOS on NAMED_ENTITIES (U1) and GJ-LEN-DEC and GJ-LEN-HEX on the reference length (U2), each
+ *   realized by a paired real-tree page; R-B316 bound this cut to claims equal to pins, pin preferred). Each decoder
+ *   claim of THE JUDGE gains a falsifier (THE JUDGE'S PINS), so each of the seven members reds Z2, the five names W1
+ *   as well; the one claim no plant can match, 'whatever its length', is narrowed to the pinned lengths (OVER-READS),
+ *   a longer reference NOT CLAIMED either way. A one-edit sweep of THE JUDGE's readings on cut #5's bytes found more
+ *   members of the same shape green - the nbsp value, the low surrogates, U+10FFFF in either reading, a one-digit hex
+ *   reference, the hex digits a and f, the .html, .htm, .xml, .svg and .yaml kinds, the x form, a template's head and
+ *   tail, a backtick literal and fold, a parenthesized fold, a private name and a JSON array value - and each is pinned
+ *   there too. No reader is added; the docs/09 reading, its plants and the shared reader
+ *   (test/helpers/furnace-docs-reading.ts, test/helpers/census.ts) are unchanged.
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi scope: the bead's
  * own row spells the record (Q1); R-HOLDER this file and its roster spell it and are excluded by name (Q2); R-BINARY a file
  * holding a NUL byte is not read (Q3); R-PARAPHRASE "observed boundary" and "observation boundary" are not the record's
@@ -302,8 +329,9 @@
  * escapes a longer one, which the page shows as written); and a reference into 0x80-0x9F that the HTML table maps to
  * a character a page shows (&#146; to U+2019 in windows1252QuoteCopy and its placements, &#136; and &#153; in
  * tableLetterCopy and tableTrademarkCopy), refused as its code-point reading is a C1 control. THE JUDGE decodes a
- * markup file's numeric reference whatever its length and in both decodings, so a mention either spells counts
- * although a markdown page shows a longer reference as written. The augmentation read parses only
+ * markup file's numeric reference of eight decimal or seven hex digits, one past the longest marked keeps, in both
+ * readings, so a mention either spells counts although a markdown page shows such a reference as written (THE JUDGE'S
+ * PINS: four Z2 plants, one per length and reading); a longer reference is NOT CLAIMED either way. The augmentation read parses only
  * a script whose text spells "module" (a module declaration's keyword cannot be escape-spelled). SCOPE: files git ignores (node_modules/, .forge/ and the rest of .gitignore) and files deleted from
  * the worktree are not listed; Furnace's own repository is never read (the gate is a release Pi vendors).
  * READS (contacts): every listed file (Z2), git objects at the filing pin (Z1), the tracker export rows of wb-dqf.1 and
@@ -704,7 +732,7 @@ function numericReference(code: number): number {
   if (code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff)) return 0xfffd;
   return NUMERIC_REFERENCES.get(code) ?? code;
 }
-/** A markup text with each numeric character reference (spelled with its semicolon) replaced by what decode makes of its code point, and the six named entities (amp, lt, gt, quot, apos, nbsp) decoded. */
+/** A markup text with each numeric character reference (spelled with its semicolon, of up to eight decimal or seven hex digits; a longer one is NOT CLAIMED) replaced by what decode makes of its code point, and the six named entities (amp, lt, gt, quot, apos, nbsp) decoded: each claim pinned by THE JUDGE'S PINS (cut #6). */
 function decodedReferences(text: string, decode: (code: number, whole: string) => string): string {
   return text.replace(/&(?:#(\d+)|#x([0-9a-f]+)|(\w+));/gi, (whole, decimal: string | undefined, hex: string | undefined, name: string | undefined) => {
     const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
@@ -712,7 +740,7 @@ function decodedReferences(text: string, decode: (code: number, whole: string) =
     return namedEntity(name ?? "") ?? whole;
   });
 }
-/** A markup file's text with its numeric character references decoded as the HTML standard decodes them (numericReference) and the six named entities decoded: THE JUDGE's first markup reading (the docs/09 reading runs the helper's copy since cut #5). */
+/** A markup file's text with its numeric character references decoded as the HTML standard decodes them (numericReference) and the six named entities decoded: THE JUDGE's first markup reading (the docs/09 reading runs the helper's copy since cut #5; pinned by THE JUDGE'S PINS, cut #6). */
 function decodedMarkup(text: string): string {
   return decodedReferences(text, code => String.fromCodePoint(numericReference(code)));
 }
@@ -720,7 +748,8 @@ function decodedMarkup(text: string): string {
  * A markup file's text with each numeric character reference decoded to its own code point - the landed census's reading,
  * and how XML and CommonMark read a reference into 0x80-0x9F (its C1 control) - one above 0x10FFFF left as written, and
  * the six named entities decoded (wb-s876 cut #3): THE JUDGE reads a mention in this reading as well as in decodedMarkup's,
- * so neither reading narrows the other (the docs/09 reading's controlCharacters reads the helper's copies of both since cut #5).
+ * so neither reading narrows the other (the docs/09 reading's controlCharacters reads the helper's copies of both since cut #5;
+ * pinned by THE JUDGE'S PINS, cut #6).
  */
 function decodedCodePoints(text: string): string {
   return decodedReferences(text, (code, whole) => (code <= 0x10ffff ? String.fromCodePoint(code) : whole));
@@ -830,7 +859,7 @@ const piListing = lazy((): PiListing => {
   const excluded = listed.filter(path => path.startsWith(TRACKER) || holders.has(path));
   return { paths: listed.filter(path => !excluded.includes(path) && existsSync(join(REPO, path))), excluded };
 });
-/** One planted entry per reading: cooked (escape-spelled), folded (split literal), raw in markdown, JSON and a comment. */
+/** One planted entry per reading: cooked (escape-spelled), folded (split literal), raw in markdown, JSON and a comment; since cut #6 also THE JUDGE'S PINS (a page per markup kind beside .md and per named entity of the six, four long references, a .yaml page in the x form, and the script and JSON reading plants). */
 const PI_PLANTS: Readonly<Record<string, string>> = {
   "src/workbench/zz-boundary-escaped.ts": 'export const RECORD_NAME = "\\u0046urnaceObserver\\u0042oundaryV0";\n',
   "src/workbench/zz-boundary-split.ts": 'export const SPELLED = "Furnace" + "Obs" + "erverBoundaryV0";\n',
@@ -845,6 +874,28 @@ const PI_PLANTS: Readonly<Record<string, string>> = {
   "src/workbench/zz-boundary-identifier.ts": "export const Furnace\\u004fbserverBoundaryV0 = 0;\n",
   "docs/workbench/zz-boundary-windows1252.md": "The Furnace observer&#146;s boundary record.\n",
   "docs/workbench/zz-boundary-c1.md": "The Furnace observer&#136;boundary record.\n",
+  "docs/workbench/zz-boundary-kind.html": "<p>The Furnace observer&#32;boundary record.</p>\n",
+  "docs/workbench/zz-boundary-kind.htm": "<p>The Furnace observer&#32;boundary record.</p>\n",
+  "docs/workbench/zz-boundary-kind.xml": "<record>The Furnace observer&#32;boundary record.</record>\n",
+  "docs/workbench/zz-boundary-kind.svg": "<svg><text>The Furnace observer&#32;boundary record.</text></svg>\n",
+  "docs/workbench/zz-boundary-amp.md": "The Furnace observer&amp;boundary record.\n",
+  "docs/workbench/zz-boundary-lt.md": "The Furnace observer&lt;boundary record.\n",
+  "docs/workbench/zz-boundary-gt.md": "The Furnace observer&gt;boundary record.\n",
+  "docs/workbench/zz-boundary-quot.md": "The Furnace observer&quot;boundary record.\n",
+  "docs/workbench/zz-boundary-apos.md": "The Furnace observer&apos;s boundary record.\n",
+  "docs/workbench/zz-boundary-nbsp.md": "The Furnace observer&nbsp;boundary record.\n",
+  "docs/workbench/zz-boundary-long-decimal.md": "The Furnace observer&#00000146;s boundary record.\n",
+  "docs/workbench/zz-boundary-long-hex.md": "The Furnace observer&#x0000092;s boundary record.\n",
+  "docs/workbench/zz-boundary-long-decimal-c1.md": "The Furnace observer&#00000136;boundary record.\n",
+  "docs/workbench/zz-boundary-long-hex-c1.md": "The Furnace observer&#x0000088;boundary record.\n",
+  "config/zz-boundary.yaml": 'record: "Furnace\\x4fbserverBoundaryV0"\n',
+  "src/workbench/zz-boundary-template.ts": "export const HEAD = `\\u004fbserverBoundaryV0 $" + "{0}`;\n",
+  "src/workbench/zz-boundary-template-tail.ts": "export const TAIL = `$" + "{0} \\u004fbserverBoundaryV0`;\n",
+  "src/workbench/zz-boundary-backtick.ts": "export const TICK = `\\u004fbserverBoundaryV0`;\n",
+  "src/workbench/zz-boundary-private.ts": "export class ZzPlant {\n  #\\u004fbserverBoundaryV0 = 0;\n}\n",
+  "src/workbench/zz-boundary-paren.ts": 'export const PAREN = "Furnace" + "Obs" + ("erver" + "BoundaryV0");\n',
+  "src/workbench/zz-boundary-backtick-split.ts": "export const TICKS = `Obs` + `erverBoundaryV0`;\n",
+  "test/fixtures/zz-boundary-array.json": '{ "records": ["Furnace\\u004fbserverBoundaryV0"] }\n',
 };
 /** The listed Pi files' bytes, read once: the entries the judge consumes (Z2) and the augmentation reader scans (W1). */
 const piEntries = lazy((): Entry[] => piListing().paths.map(path => ({ path, bytes: readFileSync(join(REPO, path)) })));
@@ -1747,6 +1798,19 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       [decodedMarkup, decodedCodePoints].map(decoded => decoded("&constructor;&toString;&hasOwnProperty;&AMP;")),
       "a name that is not one of the six is left as written, an inherited property's name included, and a name of the six is read in any case: THE JUDGE's namedEntity reads its own keys only (cut #5)",
     ).toEqual(["&constructor;&toString;&hasOwnProperty;&", "&constructor;&toString;&hasOwnProperty;&"]);
+    const six = `&<>"'${String.fromCodePoint(0xa0)}`;
+    expect(
+      [decodedMarkup, decodedCodePoints].map(decoded => decoded("&AMP;&LT;&GT;&QUOT;&APOS;&NBSP;|&Amp;&lT;&gT;&QuOt;&aPoS;&nBsP;")),
+      "each name of the six is read in upper case and in a mixed case, in both readings: THE JUDGE's namedEntity folds the name's case (THE JUDGE'S PINS, cut #6)",
+    ).toEqual([`${six}|${six}`, `${six}|${six}`]);
+    expect(
+      [decodedMarkup, decodedCodePoints].map(decoded => decoded("&#xDC00;&#xDFFF;&#x10FFFF;")),
+      "the low surrogates U+DC00 and U+DFFF decode to U+FFFD in the standard's reading and to themselves in the code-point reading, and U+10FFFF to itself in both (THE JUDGE'S PINS, cut #6)",
+    ).toEqual([String.fromCodePoint(0xfffd, 0xfffd, 0x10ffff), String.fromCodePoint(0xdc00, 0xdfff, 0x10ffff)]);
+    expect(
+      [decodedMarkup, decodedCodePoints].map(decoded => decoded("&#xa;&#xaf;&#XAF;")),
+      "a one-digit hex reference and the hex digits a and f, in either case, are read in both readings (THE JUDGE'S PINS, cut #6)",
+    ).toEqual([String.fromCodePoint(0xa, 0xaf, 0xaf), String.fromCodePoint(0xa, 0xaf, 0xaf)]);
     return json({
       interfaceName: "FurnaceObserverClient",
       interfaceDeclarations: interfaceDeclarations(observer(), "FurnaceObserverClient").length,

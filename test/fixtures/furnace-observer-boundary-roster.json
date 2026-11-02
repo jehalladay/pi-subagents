@@ -246,7 +246,29 @@
       "config/zz-boundary.toml": "record = \"Furnace\\U0000004fbserverBoundaryV0\"\n",
       "src/workbench/zz-boundary-identifier.ts": "export const Furnace\\u004fbserverBoundaryV0 = 0;\n",
       "docs/workbench/zz-boundary-windows1252.md": "The Furnace observer&#146;s boundary record.\n",
-      "docs/workbench/zz-boundary-c1.md": "The Furnace observer&#136;boundary record.\n"
+      "docs/workbench/zz-boundary-c1.md": "The Furnace observer&#136;boundary record.\n",
+      "docs/workbench/zz-boundary-kind.html": "<p>The Furnace observer&#32;boundary record.</p>\n",
+      "docs/workbench/zz-boundary-kind.htm": "<p>The Furnace observer&#32;boundary record.</p>\n",
+      "docs/workbench/zz-boundary-kind.xml": "<record>The Furnace observer&#32;boundary record.</record>\n",
+      "docs/workbench/zz-boundary-kind.svg": "<svg><text>The Furnace observer&#32;boundary record.</text></svg>\n",
+      "docs/workbench/zz-boundary-amp.md": "The Furnace observer&amp;boundary record.\n",
+      "docs/workbench/zz-boundary-lt.md": "The Furnace observer&lt;boundary record.\n",
+      "docs/workbench/zz-boundary-gt.md": "The Furnace observer&gt;boundary record.\n",
+      "docs/workbench/zz-boundary-quot.md": "The Furnace observer&quot;boundary record.\n",
+      "docs/workbench/zz-boundary-apos.md": "The Furnace observer&apos;s boundary record.\n",
+      "docs/workbench/zz-boundary-nbsp.md": "The Furnace observer&nbsp;boundary record.\n",
+      "docs/workbench/zz-boundary-long-decimal.md": "The Furnace observer&#00000146;s boundary record.\n",
+      "docs/workbench/zz-boundary-long-hex.md": "The Furnace observer&#x0000092;s boundary record.\n",
+      "docs/workbench/zz-boundary-long-decimal-c1.md": "The Furnace observer&#00000136;boundary record.\n",
+      "docs/workbench/zz-boundary-long-hex-c1.md": "The Furnace observer&#x0000088;boundary record.\n",
+      "config/zz-boundary.yaml": "record: \"Furnace\\x4fbserverBoundaryV0\"\n",
+      "src/workbench/zz-boundary-template.ts": "export const HEAD = `\\u004fbserverBoundaryV0 ${0}`;\n",
+      "src/workbench/zz-boundary-template-tail.ts": "export const TAIL = `${0} \\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-backtick.ts": "export const TICK = `\\u004fbserverBoundaryV0`;\n",
+      "src/workbench/zz-boundary-private.ts": "export class ZzPlant {\n  #\\u004fbserverBoundaryV0 = 0;\n}\n",
+      "src/workbench/zz-boundary-paren.ts": "export const PAREN = \"Furnace\" + \"Obs\" + (\"erver\" + \"BoundaryV0\");\n",
+      "src/workbench/zz-boundary-backtick-split.ts": "export const TICKS = `Obs` + `erverBoundaryV0`;\n",
+      "test/fixtures/zz-boundary-array.json": "{ \"records\": [\"Furnace\\u004fbserverBoundaryV0\"] }\n"
     },
     "pinPlant": "docs/workbench/zz-pin-plant.md",
     "augmentationPlant": {
@@ -4591,6 +4613,72 @@
               ],
               "docs/workbench/zz-boundary-c1.md": [
                 "decoded"
+              ],
+              "docs/workbench/zz-boundary-kind.html": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-kind.htm": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-kind.xml": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-kind.svg": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-amp.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-lt.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-gt.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-quot.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-apos.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-nbsp.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-long-decimal.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-long-hex.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-long-decimal-c1.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-boundary-long-hex-c1.md": [
+                "decoded"
+              ],
+              "config/zz-boundary.yaml": [
+                "decoded"
+              ],
+              "src/workbench/zz-boundary-template.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-template-tail.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-backtick.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-private.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-paren.ts": [
+                "folded"
+              ],
+              "src/workbench/zz-boundary-backtick-split.ts": [
+                "folded"
+              ],
+              "test/fixtures/zz-boundary-array.json": [
+                "cooked"
               ]
             }
           }
