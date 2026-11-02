@@ -107,10 +107,11 @@
  *      without a planted status (the registration leg, at the exemplar's own reading) and each of the exemplar's places alone
  *      beside a planted status (the variant leg, on every variant); and that probe's positive control, built outside the legs on
  *      the same cell: each variant (a planted status) with the exemplar's values set on it fires the probe and its registration
- *      twin, and the field-less reading with them set fires the twin alone, so a reading at the exemplar's values beside a planted
- *      status fires the probe the legs read quiet; for each of R2's, the channel reads or detects the planted
- *      member of a traced reading while the tracer records nothing (util.inspect shows it, util.types.isProxy tells the proxy, a
- *      structured clone refuses it while the plain reading clones with the member).
+ *      twin (read off the probe's own record of the readings it judged: one judgement per variant, each the reading of the variant
+ *      at its turn, pairwise distinct), and the field-less reading with them set fires the twin alone, so a reading at the
+ *      exemplar's values beside a planted status fires the probe the legs read quiet; for each of R2's, the channel reads or detects
+ *      the planted member of a traced reading while the tracer records nothing (util.inspect shows it, util.types.isProxy tells the
+ *      proxy, a structured clone refuses it while the plain reading clones with the member).
  * RESIDUALS (standing rule 19(c), the enumerate-the-resolvable form: each a named family one instrument here does not read, each
  * pinned by its quiet row in Q): for K1's judge, R-INFLECTED an inflection of "prove" that drops its final e (proving, provable,
  * unprovable); R-SYNONYM a word of the same reading built on no named stem (unconfirmed, falsified, certified, attested, untrusted,
@@ -153,6 +154,13 @@
  * wb-hoda (the R694 follow-up of landing 716, its gate's F2): nothing showed Q's R-JOINT-BESIDE probe could fire, so a probe no
  * reading moves (the gate's Z6 emptied its values) read quiet through the legs and Q stayed green. Q now holds each exemplar's probe
  * to its positive control above, on every variant of Q's cell.
+ * wb-i3iu (the R694 follow-up of landing 763, its gate's F1): the control pinned the distinctness of the readings it built, not of
+ * the readings its probe judged, so a control that judged the first reading on every pass (the gate's H01) or in place of the last
+ * one (H02), or that keyed that distinctness by object identity (H03), read green on its own and beside a second edit that the
+ * control otherwise reds: H01 beside L05 (a probe blind to the proof_confidence variants), H02 beside L06 (blind to the last
+ * variant), H03 beside Z9 (a control that reads the first variant on every pass). The probe now records each reading it is given,
+ * and the control reads off that record one judgement per variant, each given the reading of the variant at its turn (rebuilt
+ * from that variant, compared by serialization), and the judged readings pairwise distinct.
  * Display paths added: none (test-only). Pure: no HX binary, scratch directory, clock, network or file write; the only files read
  * are two installed SDK files, dist/result.d.ts (T1, K1) and dist/protocol/decoder.js (T2). */
 import {readFileSync} from 'node:fs';
@@ -1251,15 +1259,21 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
     }
     expect(probes.map(probe => probe.expected.length > 0)).toStrictEqual(JOINT_RESIDUALS.flatMap(([, joints]) =>
       joints.flatMap(joint => [false, true, ...joint.map(() => true)])));
+    // fired records each reading it is given, in call order, so the positive control below reads the readings it judged off the
+    // probe's own record, not off the readings it built (wb-i3iu).
+    const given: JsonValue[] = [];
     const fired = (reading: JsonValue): readonly string[] => {
+      given.push(reading);
       const values = valuesOf(reading);
       return probes.filter(probe => probe.values === values && (!probe.beside || planted(reading))).map(probe => probe.id);
     };
     // The exemplar's probe has a positive control, built outside k3Legs (wb-hoda): on every variant (each a planted status), the
     // variant with the exemplar's values set on it fires that probe and its registration twin, and the field-less reading with them
-    // set fires the twin alone. The control's readings are one per variant and pairwise distinct, so none stands in for another. So
-    // the probe the legs read quiet is one such a reading fires: a probe whose values no reading holds, or that fired never reports,
-    // reds here, where the legs alone read it quiet.
+    // set fires the twin alone. The control's readings are one per variant and pairwise distinct, so none stands in for another, and
+    // the readings fired judged are read off its own record (wb-i3iu): one judgement per variant, each given the reading of the variant
+    // at its turn (rebuilt from that variant, compared by serialization), and pairwise distinct. So the probe the legs read quiet is
+    // one such a reading fires: a probe whose values no reading holds, or that fired never reports, reds here, where the legs alone
+    // read it quiet.
     let controlled = 0;
     for (const [id, joints] of JOINT_RESIDUALS) {
       for (const joint of joints) {
@@ -1268,10 +1282,16 @@ describe('wb-3ht.2 standing leg: a claim or proof-confidence status is held off 
         expect(fired(k3Reading(cell.reading, joint)), `${label} (field-less control)`).toStrictEqual([twin]);
         const readings = variants.map(variant => k3Reading(variant.reading, joint));
         expect(new Set(readings.map(reading => JSON.stringify(reading))).size, `${label} (positive control)`).toBe(variants.length);
+        const first = given.length;
         for (const [index, reading] of readings.entries()) {
           expect(fired(reading), `${label} (positive control, ${variants[index].label})`).toStrictEqual([label, twin]);
           controlled++;
         }
+        const judged = given.slice(first).map(reading => JSON.stringify(reading));
+        const unjudged = variants.filter((variant, index) => judged[index] !== JSON.stringify(k3Reading(variant.reading, joint)));
+        expect(unjudged.map(variant => variant.label), `${label} (positive control, a variant not judged at its turn)`).toStrictEqual([]);
+        expect(judged, `${label} (positive control, one judgement per variant)`).toHaveLength(variants.length);
+        expect(new Set(judged).size, `${label} (positive control, the judged readings pairwise distinct)`).toBe(variants.length);
       }
     }
     expect(controlled).toBe(JOINT_RESIDUALS.reduce((sum, [, joints]) => sum + joints.length, 0) * variants.length);
