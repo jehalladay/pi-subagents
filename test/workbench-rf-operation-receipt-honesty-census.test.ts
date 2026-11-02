@@ -4,9 +4,11 @@
  * core re-cut is a mechanical restatement over this bead's landed readers). CUT #4 IS THE FAIL-CLOSED CORE the rule-19 structural
  * exit R-B213 binds at refusal #3: cut #3's enumerate-the-resolvable form (the second-stage cap R-B177, rule 19(c), the rule 14
  * shape) with every claim narrowed to its pins, so THIS CENSUS CLAIMS EXACTLY ITS PINS. A reader's sub-forms are claimed only over
- * the planted forms rows P and Q feed it (each plant's label names them), every known-unpinned form is a NAMED RESIDUAL with a
- * pinned quiet row in row R, and what refusal #3 found unpinned (U1a-U1e, U2) is NOT CLAIMED here: its coverage is deferred to
- * wb-jwc.12. The readers, the probe vocabulary and the planted inputs live in
+ * the planted forms rows P, Q and S feed it (each plant's label names them), and every known-unpinned form is a NAMED RESIDUAL with
+ * a pinned quiet row in row R. wb-jwc.12 (the R-B213 structural exit's child, which files refusal #3's unmet items) adds row S:
+ * what refusal #3 found unpinned (U1a-U1e, U2) gets one planted pin per member, each the form that member's gate mutant departs
+ * on, so a reader reading one of those planted forms otherwise moves its pin. The readers, the probe vocabulary and the planted
+ * inputs live in
  * test/helpers/rf-operation-receipt-honesty.ts; every claim below is restated, byte for byte, in the falsifier roster
  * test/fixtures/rf-operation-receipt-honesty-roster.json, which also names each falsifier (a src plant) and each mutant (a one-edit
  * change of a helper reader) with the pins it falsifies.
@@ -14,9 +16,11 @@
  * OWNER FILING (the outside anchor): the tracked bead export .beads/issues.jsonl. Row wb-jwc.9's description gives its two items
  * (U2 the G registrars across run forms, U1 the failed read per category), the R-B109 block of its notes the two folded members
  * (U1 the fresh-read shape, U2 the unprojected read), the UNMET block of its refusal #1 note the fourteen unmet items (U1 and its
- * eleven members U1a-U1k, U2, U3), and the UNMET block of its refusal #2 note the fifteen unmet items (U1 and its thirteen members
- * U1a-U1m, U2); row wb-jwc.6's description gives the N and H words the honesty rows hold every fed read to (statement.3 "the
- * preview read shall never serve as commit evidence"; acceptance.3's first claim "a reconcile fed only a preview envelope for a
+ * eleven members U1a-U1k, U2, U3), the UNMET block of its refusal #2 note the fifteen unmet items (U1 and its thirteen members
+ * U1a-U1m, U2), and the UNMET block of its refusal #3 note the seven unmet items (U1 and its five members U1a-U1e, U2), which row
+ * wb-jwc.12's description files as its unmet items verbatim; row wb-jwc.6's description gives the N and H words the honesty rows
+ * hold every fed read to (statement.3 "the preview read shall never serve as commit evidence"; acceptance.3's first claim "a
+ * reconcile fed only a preview envelope for a
  * committed-effect journal row is asserted NOT producer-confirmed"). Rows, each pin generated from an anchor outside this file:
  *   G (wb-jwc.9 U2), the registrations, read across run forms, as the readers read src. Each .ts module srcTree lists under src/ is
  *     parsed (ScriptKind.TS); a spelling of register (an identifier or a whole string token register) is JUDGED only as the
@@ -27,15 +31,15 @@
  *     descriptor literal must spell effectClass as the whole token read and permissions as an array literal of the one whole token
  *     reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render,
  *     whatever the registrar's arguments, workspace root or environment; a reading other than those words fails the pin. How the
- *     reader reads an effectClass or permissions literal written in another form is claimed only where a P or Q pin plants that
- *     form, for exactly the planted forms its label names; a form no plant feeds is NOT CLAIMED (R-READER-FORM), refusal #3's
- *     U1a-U1e forms among them (a conditional with a branch that is not a whole token, a call with an argument, an assertion to a
- *     string literal type as an effectClass or as a permissions element, a binary whose left operand is a whole token).
+ *     reader reads an effectClass or permissions literal written in another form is claimed only where a P, Q or S pin plants that
+ *     form, for exactly the planted forms its label names (row S's labels name the forms refusal #3's U1a-U1e gate mutants depart
+ *     on, as planted there); a form no plant feeds is NOT CLAIMED (R-READER-FORM).
  *     G:unjudged - each other spelling of register the reader reads in src is listed by file, owner and syntax (a judged call that
  *     is not read: why), a read call whose id is not an rf capability id is not listed, and each src file srcTree lists that is not
  *     a .ts module is listed unparsed; the witness is that listing of src as measured. A read call is never part of it: a read rf
- *     call is read into row G (one G:literal pin per owner, and row G's generated ids), and a registration made through a read call
- *     whose id is not an rf capability id is listed nowhere and NOT CLAIMED (refusal #3's U2 forge registrations among them).
+ *     call is read into row G (one G:literal pin per owner, and row G's generated ids), and a read call whose id is not an rf
+ *     capability id is listed nowhere (row S pins refusal #3's U2 planted forms of one listed nowhere), so a registration made
+ *     through one is NOT CLAIMED (refusal #3's U2 forge registrations among them).
  *     G:runs - each src rf registrar is also RUN in each stated
  *     run form (the census workspace root; process.cwd() as the workspace root; the census root with each environment name
  *     srcEnvironmentReads lists for src set to each effect class word src's CapabilityDescriptor declares but read) and what a
@@ -70,6 +74,16 @@
  *     register callee in an optional chain; an element access of process.env in an optional chain; a name set before the run
  *     forms). Refusal #2's U2 (the P-row claim that every named sub-form is pinned) is cured by the P claim above, narrowed to the
  *     planted forms, and by the R-READER-FORM row that states the narrowing.
+ *   S (refusal #3, as wb-jwc.12 files it), the planted readings of refusal #3's members, read the same way: one pin per planted
+ *     input of the helper's REFUSAL_THREE_PLANTS, one per member U1a-U1e, each planting the form that member's gate mutant departs
+ *     on (planted: two conditionals of an effectClass whose one branch that is not a whole token is a reference, in either branch;
+ *     two calls of an effectClass holding 'read' as their first and as their last argument; two as assertions of an effectClass
+ *     to 'read', of a parenthesized conditional and of a reference; the same two of a permissions element to
+ *     'reactivefiber:render'; three binaries of an effectClass whose left operand is 'read', joined by &&, || and ??), and one for
+ *     U2 (planted: a forge registration and an rf registration through registry?.register in one module, and a forge registration
+ *     in a dotfile module), each pin's label naming its planted forms and the reading it pins. Refusal #3's U2 (the G:unjudged
+ *     clause cut #3 re-scoped) is cured by that pin and by the G:unjudged clause above, narrowed to the listing it measures;
+ *     wb-jwc.12's filed unmet items equal refusal #3's.
  *   R the NAMED RESIDUALS, NOT CLAIMED, each a pinned quiet row that exists while an outside anchor calls for it:
  *     R-FRESH-SHAPE (while F feeds a read): a fresh read in any other shape - another subset of the optional keys the native
  *       preview admits, observation rows, another release, digest, workspace or id value - is not probed; the fed reads' result
@@ -89,22 +103,23 @@
  *     R-PROBE-CONTEXT (while the vocabulary feeds a read): every read of rows F, C and U is fed in one request context (one task,
  *       position, principal, session, workspace, grant set and clock) against one journaled row, so a binding conditioned on any
  *       other is not probed; the context and the row are listed.
- *     R-READER-FORM (while rows P and Q feed a planted form): each reader is pinned on src as measured and on exactly the planted
- *       forms rows P and Q feed it, so a reader that reads a form no plant feeds otherwise (another file name, extension or
- *       directory order; another register spelling, callee, argument count, provider, descriptor, id, effectClass or permissions
- *       syntax (refusal #3's U1a-U1e forms among them), owner or parsed file; another holder, access or spelling of process.env or
- *       env, or parsed file; another run form, registrar or environment state) is not detected; each plant's reader and planted
+ *     R-READER-FORM (while rows P, Q and S feed a planted form): each reader is pinned on src as measured and on exactly the
+ *       planted forms rows P, Q and S feed it, so a reader that reads a form no plant feeds otherwise (another file name,
+ *       extension or directory order; another register spelling, callee, argument count, provider, descriptor, id, effectClass or
+ *       permissions syntax, owner or parsed file; another holder, access or spelling of process.env or env, or parsed file;
+ *       another run form, registrar or environment state) is not detected; each plant's reader and planted
  *       forms are listed.
  * FROZEN SHAPE (standing rule 16): the row shape `${row}:${clause}:${pins}` (SHAPE), every pin's line
- *   `${id} | ${requirement} | ${witness}` (PIN_LINES, the witness measured from the subject) and the two refusals' cure maps
- *   (REFUSAL_CURES, REFUSAL_TWO_CURES) are literals, and the roster restates every row, clause and requirement; one case per pin runs
+ *   `${id} | ${requirement} | ${witness}` (PIN_LINES, the witness measured from the subject) and the three refusals' cure maps
+ *   (REFUSAL_CURES, REFUSAL_TWO_CURES, REFUSAL_THREE_CURES) are literals, and the roster restates every row, clause and requirement;
+ *   one case per pin runs
  *   against its line. EACH-LIVENESS: every row case and every pin case records its id as its last statement, and the case declared
  *   last walks the collected tasks, so an it.each argument emptied, filtered or sliced at its call site reds.
  * Not claimed: wb-jwc.6's other rows (its G:id/G:bin tripwire, S, H acceptance.3.2) and its PARKED duty; any read outside the fed
  *   set; an acknowledgement citing any receipt beside its own; a fresh read carrying any id but the fresh rfo_ (R-ECHO is the
- *   journaled one); how rf itself mints ids; any planted input outside READER_PLANTS and REFUSAL_TWO_PLANTS, and any reader form no
- *   plant feeds (R-READER-FORM); refusal #3's U1a-U1e forms and U2's registrations through a read call whose id is not an rf
- *   capability id (deferred to wb-jwc.12); the named residuals.
+ *   journaled one); how rf itself mints ids; any planted input outside READER_PLANTS, REFUSAL_TWO_PLANTS and REFUSAL_THREE_PLANTS,
+ *   and any reader form no plant feeds (R-READER-FORM); a registration made through a read call whose id is not an rf capability
+ *   id (refusal #3's U2 forge registrations among them); the named residuals.
  *
  * Display paths added: none. Test-only: writes nothing but tracked scratch directories (test/helpers/scratch.ts, each removed after
  * its read): one per native read, holding the stand-in rf and its one output line, and one per planted src tree; starts no process
@@ -120,7 +135,7 @@ import { nativeEvidence } from "../src/workbench/native-evidence.js";
 import { REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, registerNativeReactiveFiberRender, registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import {
   COMMIT_ROW, ECHO_READ, FRESH, fullResult, HONESTY_WS, type HonestyRead, honestyOf, honestyReads, PREVIEW_ID, PREVIEW_PERMISSION, PROBE_CONTEXT, previewReceipt,
-  readerPlants, refusalTwoPlants, registeredUnder, rfRegistrationLiterals, runForms, srcEnvironmentReads, srcTree, srcUnion,
+  readerPlants, refusalThreePlants, refusalTwoPlants, registeredUnder, rfRegistrationLiterals, runForms, srcEnvironmentReads, srcTree, srcUnion,
 } from "./helpers/rf-operation-receipt-honesty.js";
 import { diffAgainstRoster, readRfResultRoster } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard } from "./helpers/scratch.js";
@@ -139,7 +154,7 @@ const EM_DASH = String.fromCodePoint(0x2014);
 /** The R-B109 block of this bead's notes: from its ruling line to its acceptance line. */
 const RULING = "ORCHESTRATOR RULING R-B109";
 
-type RowId = "G" | "F" | "C" | "U" | "P" | "Q" | "R";
+type RowId = "G" | "F" | "C" | "U" | "P" | "Q" | "S" | "R";
 interface PinBody {
   readonly requirement: string;
   readonly witness: () => Promise<string>;
@@ -196,6 +211,25 @@ const REFUSAL_TWO_ITEMS = ((): string[] => {
   const end = start < 0 ? -1 : notes.indexOf("\n\n", start);
   return start < 0 || end < 0 ? [] : [...notes.slice(start, end).matchAll(/^(U\d+[a-z]?)-[A-Za-z0-9-]+$/gm)].map(match => match[1] ?? "");
 })();
+/** The verdict header of this bead's refusal #3 note: its UNMET block is the first one after it. */
+const REFUSAL_THREE = /^GATE VERDICT wb-jwc\.9: REFUSED \(RESPIN\) - substance refusal at PREP F, refusal #3 on cut #3[ ,]/m;
+/** Refusal #3's unmet item ids, in the block's order, read the way refusal #1's are. */
+const REFUSAL_THREE_ITEMS = ((): string[] => {
+  const notes = textOf(OWN, "notes");
+  const verdict = REFUSAL_THREE.exec(notes)?.index ?? -1;
+  const start = verdict < 0 ? -1 : notes.indexOf(REFUSAL, verdict);
+  const end = start < 0 ? -1 : notes.indexOf("\n\n", start);
+  return start < 0 || end < 0 ? [] : [...notes.slice(start, end).matchAll(/^(U\d+[a-z]?)-[A-Za-z0-9-]+$/gm)].map(match => match[1] ?? "");
+})();
+/** The child the R-B213 structural exit filed refusal #3's unmet items on: its description lists them as one JSON array. */
+const FOLLOW_UP = "wb-jwc.12";
+/** wb-jwc.12's filed unmet item ids, in its list's order: each item `<id>-<NAME>`, read the way refusal #1's lines are. */
+const FOLLOW_UP_ITEMS = ((): string[] => {
+  const listed = /^Unmet items verbatim: (\[.*\])$/m.exec(textOf(exportRow(FOLLOW_UP), "description"))?.[1];
+  const parsed: unknown = listed === undefined ? [] : JSON.parse(listed);
+  const items = Array.isArray(parsed) ? parsed.filter((item): item is string => typeof item === "string") : [];
+  return items.map(item => /^(U\d+[a-z]?)-[A-Za-z0-9-]+$/.exec(item)?.[1] ?? `<unread ${item}>`);
+})();
 /** The parent's N and H words: its statement's never clause and its honesty-core acceptance item's first claim. */
 const PARENT_WORDS = ((): { readonly n: string; readonly h: string } => {
   const description = textOf(exportRow(PARENT), "description");
@@ -211,6 +245,7 @@ const EFFECT_CLASSES = srcUnion(ROOT, CAPABILITY_REGISTRY_TS, "CapabilityDescrip
 const READS = honestyReads(CATEGORIES);
 const PLANTS = readerPlants(EFFECT_CLASSES);
 const Q_PLANTS = refusalTwoPlants(EFFECT_CLASSES);
+const S_PLANTS = refusalThreePlants();
 const REGISTRATIONS = rfRegistrationLiterals(ROOT);
 const ENVIRONMENT = srcEnvironmentReads(ROOT);
 const RUN_FORMS = runForms(ENVIRONMENT.names, EFFECT_CLASSES);
@@ -274,14 +309,14 @@ function honestyPins(kind: HonestyRead["kind"]): Record<string, PinBody> {
 /** G: one pin per judged src rf register call's descriptor literal, the unjudged spellings, and the run-form measurement. */
 const G_PINS: Readonly<Record<string, PinBody>> = {
   ...Object.fromEntries(REGISTRATIONS.rf.map((literal): [string, PinBody] => [`literal:${literal.owner}`, {
-    requirement: `the read register call in ${literal.owner} names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and how the reader reads an effectClass or permissions literal written in another form is claimed only where a P or Q pin plants that form, for exactly the planted forms its label names; a form no plant feeds is NOT CLAIMED by this census (R-READER-FORM; its coverage is deferred to wb-jwc.12), refusal #3's U1a-U1e forms among them: a conditional with a branch that is not a whole token, a call with an argument, an assertion to a string literal type as an effectClass or as a permissions element, and a binary whose left operand is a whole token`,
+    requirement: `the read register call in ${literal.owner} names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and how the reader reads an effectClass or permissions literal written in another form is claimed only where a P, Q or S pin plants that form, for exactly the planted forms its label names (row S's labels name the forms refusal #3's U1a-U1e gate mutants depart on, as planted there); a form no plant feeds is NOT CLAIMED by this census (R-READER-FORM)`,
     witness: async () => {
       expect({ effectClass: literal.effectClass, permissions: literal.permissions }, `${literal.owner}'s descriptor literal`).toStrictEqual(PREVIEW_WORDS);
       return `${literal.file}#${literal.owner}: id=${literal.id} effectClass=${literal.effectClass} permissions=${literal.permissions}`;
     },
   }])),
   unjudged: {
-    requirement: "each other spelling of register the reader reads in src (an identifier register or a whole string token register in a .ts module srcTree lists under src/) is listed by file, owner and syntax (a judged call that is not read: why), a read call whose id is not an rf capability id is not listed, and each src file srcTree lists that is not a .ts module is listed unparsed; the witness is that listing of src as measured, and a read call is never part of it: a read rf call is read into row G (one G:literal pin per owner, and row G's generated ids), and a read call whose id is not an rf capability id is listed nowhere, so a registration made through one is NOT CLAIMED by this census (refusal #3's U2 forge registrations among them; deferred to wb-jwc.12); how the reader lists a spelling or a file in a form no plant feeds is NOT CLAIMED (R-READER-FORM)",
+    requirement: "each other spelling of register the reader reads in src (an identifier register or a whole string token register in a .ts module srcTree lists under src/) is listed by file, owner and syntax (a judged call that is not read: why), a read call whose id is not an rf capability id is not listed, and each src file srcTree lists that is not a .ts module is listed unparsed; the witness is that listing of src as measured, and a read call is never part of it: a read rf call is read into row G (one G:literal pin per owner, and row G's generated ids), and a read call whose id is not an rf capability id is listed nowhere (row S plants refusal #3's U2 forms: a forge registration through registry?.register and one in a dotfile module are listed nowhere, while an rf registration respelled through registry?.register is read as an rf literal), so a registration made through a read call whose id is not an rf capability id is NOT CLAIMED by this census (refusal #3's U2 forge registrations among them); how the reader lists a spelling or a file in a form no plant feeds is NOT CLAIMED (R-READER-FORM)",
     witness: async () => `unparsed src files=${UNPARSED.join(",") || "none"}; unjudged register spellings=${REGISTRATIONS.unjudged.join("; ")}`,
   },
   ...(REGISTRATIONS.rf.length > 0 ? {
@@ -318,6 +353,12 @@ const P_PINS: Readonly<Record<string, PinBody>> = Object.fromEntries(PLANTS.map(
 }]));
 /** Q: one pin per planted input of refusal #2, its requirement the plant's claim and its witness the reading the reader measures of it. */
 const Q_PINS: Readonly<Record<string, PinBody>> = Object.fromEntries(Q_PLANTS.map((plant): [string, PinBody] => [plant.key, {
+  requirement: plant.label,
+  witness: async () => plant.read(),
+}]));
+
+/** S: one pin per planted input of refusal #3, its requirement the plant's claim and its witness the reading the reader measures of it. */
+const S_PINS: Readonly<Record<string, PinBody>> = Object.fromEntries(S_PLANTS.map((plant): [string, PinBody] => [plant.key, {
   requirement: plant.label,
   witness: async () => plant.read(),
 }]));
@@ -370,12 +411,13 @@ const R_PINS: Readonly<Record<string, PinBody>> = {
       },
     },
   } : {}),
-  ...(PLANTS.length + Q_PLANTS.length > 0 ? {
+  ...(PLANTS.length + Q_PLANTS.length + S_PLANTS.length > 0 ? {
     "reader-form": {
-      requirement: "NAMED RESIDUAL R-READER-FORM, not claimed: each reader is pinned on src as measured and on exactly the planted forms rows P and Q feed it, so a reader that reads a form no plant feeds otherwise (another file name, extension or directory order for srcTree; another register spelling, callee, argument count, provider, descriptor, id, effectClass or permissions syntax (refusal #3's U1a-U1e forms among them), owner or parsed file for rfRegistrationLiterals; another holder, access or spelling of process.env or env, or parsed file, for srcEnvironmentReads; another run form, registrar or environment state for runForms and registeredUnder) is not detected; each plant's reader and planted forms are listed",
+      requirement: "NAMED RESIDUAL R-READER-FORM, not claimed: each reader is pinned on src as measured and on exactly the planted forms rows P, Q and S feed it, so a reader that reads a form no plant feeds otherwise (another file name, extension or directory order for srcTree; another register spelling, callee, argument count, provider, descriptor, id, effectClass or permissions syntax, owner or parsed file for rfRegistrationLiterals; another holder, access or spelling of process.env or env, or parsed file, for srcEnvironmentReads; another run form, registrar or environment state for runForms and registeredUnder) is not detected; each plant's reader and planted forms are listed",
       witness: async () => [
         ...PLANTS.map(plant => `P:${plant.key} ${plant.reader} [${plant.forms.join(",")}]`),
         ...Q_PLANTS.map(plant => `Q:${plant.key} ${plant.reader} [${plant.forms.join(",")}]`),
+        ...S_PLANTS.map(plant => `S:${plant.key} ${plant.reader} [${plant.forms.join(",")}]`),
       ].join("; "),
     },
   } : {}),
@@ -391,9 +433,10 @@ const ROWS: readonly Row[] = [
   row("U", "R-B109 U2", honestyPins("unprojected")),
   row("P", "refusal #1", P_PINS),
   row("Q", "refusal #2", Q_PINS),
+  row("S", "refusal #3", S_PINS),
   row("R", "residual", R_PINS),
 ];
-/** The row each filing item takes: wb-jwc.9's U2 is G and U1 is C; R-B109's folded U1 is F and U2 is U; refusal #1's unmet block is P and refusal #2's is Q. */
+/** The row each filing item takes: wb-jwc.9's U2 is G and U1 is C; R-B109's folded U1 is F and U2 is U; refusal #1's unmet block is P, refusal #2's is Q and refusal #3's (as wb-jwc.12 files it) is S. */
 const CLAUSE_ROWS: Readonly<Record<string, RowId>> = {
   [`${BEAD} U2`]: "G",
   [`${BEAD} U1`]: "C",
@@ -401,6 +444,7 @@ const CLAUSE_ROWS: Readonly<Record<string, RowId>> = {
   "R-B109 U2": "U",
   "refusal #1": "P",
   "refusal #2": "Q",
+  "refusal #3": "S",
 };
 /** Each row's pin ids as its outside anchor generates them: src for G and C's categories, the measured reads for F, C and U. */
 const GENERATED: Readonly<Record<RowId, () => Promise<string[]>>> = {
@@ -416,13 +460,14 @@ const GENERATED: Readonly<Record<RowId, () => Promise<string[]>>> = {
   U: async () => (await measuredReads("unprojected")).map(read => `U:${read.key}`),
   P: async () => readerPlants(srcUnion(ROOT, CAPABILITY_REGISTRY_TS, "CapabilityDescriptor", "effectClass")).map(plant => `P:${plant.key}`),
   Q: async () => refusalTwoPlants(srcUnion(ROOT, CAPABILITY_REGISTRY_TS, "CapabilityDescriptor", "effectClass")).map(plant => `Q:${plant.key}`),
+  S: async () => refusalThreePlants().map(plant => `S:${plant.key}`),
   R: async () => [
     ...((await measuredReads("fresh")).length > 0 ? ["R:fresh-shape"] : []),
     ...((await measuredReads("unprojected")).length > 0 ? ["R:unprojected-form"] : []),
     ...(echoBinds() ? ["R:echo"] : []),
     ...(rfRegistrationLiterals(ROOT).rf.length > 0 ? ["R:run-form"] : []),
     ...(honestyReads(srcUnion(ROOT, CAPABILITY_REGISTRY_TS, "CapabilityErrorCategory") as CapabilityErrorCategory[]).length > 0 ? ["R:probe-context"] : []),
-    ...(readerPlants(EFFECT_CLASSES).length + refusalTwoPlants(EFFECT_CLASSES).length > 0 ? ["R:reader-form"] : []),
+    ...(readerPlants(EFFECT_CLASSES).length + refusalTwoPlants(EFFECT_CLASSES).length + refusalThreePlants().length > 0 ? ["R:reader-form"] : []),
   ],
 };
 /** The vocabulary's reads of a kind that measure as that kind through src. */
@@ -494,14 +539,14 @@ function readRoster(): Roster {
   return { bead: parsed.bead, rows, falsifiers, mutants, residuals };
 }
 
-const SHAPE: readonly string[] = ["G:wb-jwc.9 U2:4", "F:R-B109 U1:5", "C:wb-jwc.9 U1:7", "U:R-B109 U2:6", "P:refusal #1:17", "Q:refusal #2:13", "R:residual:6"];
+const SHAPE: readonly string[] = ["G:wb-jwc.9 U2:4", "F:R-B109 U1:5", "C:wb-jwc.9 U1:7", "U:R-B109 U2:6", "P:refusal #1:17", "Q:refusal #2:13", "S:refusal #3:6", "R:residual:6"];
 const PIN_LINES: Readonly<Record<string, string>> = {
   "G:literal:registerReactiveFiberRender":
-    "G:literal:registerReactiveFiberRender | the read register call in registerReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and how the reader reads an effectClass or permissions literal written in another form is claimed only where a P or Q pin plants that form, for exactly the planted forms its label names; a form no plant feeds is NOT CLAIMED by this census (R-READER-FORM; its coverage is deferred to wb-jwc.12), refusal #3's U1a-U1e forms among them: a conditional with a branch that is not a whole token, a call with an argument, an assertion to a string literal type as an effectClass or as a permissions element, and a binary whose left operand is a whole token | src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender: id=reactivefiber.render.preview effectClass=read permissions=[reactivefiber:render]",
+    "G:literal:registerReactiveFiberRender | the read register call in registerReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and how the reader reads an effectClass or permissions literal written in another form is claimed only where a P, Q or S pin plants that form, for exactly the planted forms its label names (row S's labels name the forms refusal #3's U1a-U1e gate mutants depart on, as planted there); a form no plant feeds is NOT CLAIMED by this census (R-READER-FORM) | src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender: id=reactivefiber.render.preview effectClass=read permissions=[reactivefiber:render]",
   "G:literal:registerNativeReactiveFiberRender":
-    "G:literal:registerNativeReactiveFiberRender | the read register call in registerNativeReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and how the reader reads an effectClass or permissions literal written in another form is claimed only where a P or Q pin plants that form, for exactly the planted forms its label names; a form no plant feeds is NOT CLAIMED by this census (R-READER-FORM; its coverage is deferred to wb-jwc.12), refusal #3's U1a-U1e forms among them: a conditional with a branch that is not a whole token, a call with an argument, an assertion to a string literal type as an effectClass or as a permissions element, and a binary whose left operand is a whole token | src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender: id=reactivefiber.render.preview effectClass=read permissions=[reactivefiber:render]",
+    "G:literal:registerNativeReactiveFiberRender | the read register call in registerNativeReactiveFiberRender names an rf capability id, and its descriptor literal spells effectClass as the whole token read and permissions as an array literal of the one whole token reactivefiber:render, so in every run that reaches it the call hands the registry that id read under reactivefiber:render whatever the registrar's arguments, workspace root or environment; a reading other than those words fails this pin, and how the reader reads an effectClass or permissions literal written in another form is claimed only where a P, Q or S pin plants that form, for exactly the planted forms its label names (row S's labels name the forms refusal #3's U1a-U1e gate mutants depart on, as planted there); a form no plant feeds is NOT CLAIMED by this census (R-READER-FORM) | src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender: id=reactivefiber.render.preview effectClass=read permissions=[reactivefiber:render]",
   "G:unjudged":
-    "G:unjudged | each other spelling of register the reader reads in src (an identifier register or a whole string token register in a .ts module srcTree lists under src/) is listed by file, owner and syntax (a judged call that is not read: why), a read call whose id is not an rf capability id is not listed, and each src file srcTree lists that is not a .ts module is listed unparsed; the witness is that listing of src as measured, and a read call is never part of it: a read rf call is read into row G (one G:literal pin per owner, and row G's generated ids), and a read call whose id is not an rf capability id is listed nowhere, so a registration made through one is NOT CLAIMED by this census (refusal #3's U2 forge registrations among them; deferred to wb-jwc.12); how the reader lists a spelling or a file in a form no plant feeds is NOT CLAIMED (R-READER-FORM) | unparsed src files=none; unjudged register spellings=src/workbench/capability-registry.ts#CapabilityRegistry: MethodDeclaration; src/workbench/hosts/local-detached.ts#registryFor: PropertySignature; src/workbench/hosts/local-detached.ts#registryFor: TypeOfExpression; src/workbench/hosts/local-detached.ts#registryFor: VariableDeclaration; src/workbench/hosts/local-detached.ts#registryFor: PropertyAccessExpression; src/workbench/hosts/local-detached.ts#registryFor: BinaryExpression; src/workbench/hosts/local-detached.ts#registryFor: CallExpression; src/workbench/hosts/local-detached.ts#registryFor: register call, provider Identifier",
+    "G:unjudged | each other spelling of register the reader reads in src (an identifier register or a whole string token register in a .ts module srcTree lists under src/) is listed by file, owner and syntax (a judged call that is not read: why), a read call whose id is not an rf capability id is not listed, and each src file srcTree lists that is not a .ts module is listed unparsed; the witness is that listing of src as measured, and a read call is never part of it: a read rf call is read into row G (one G:literal pin per owner, and row G's generated ids), and a read call whose id is not an rf capability id is listed nowhere (row S plants refusal #3's U2 forms: a forge registration through registry?.register and one in a dotfile module are listed nowhere, while an rf registration respelled through registry?.register is read as an rf literal), so a registration made through a read call whose id is not an rf capability id is NOT CLAIMED by this census (refusal #3's U2 forge registrations among them); how the reader lists a spelling or a file in a form no plant feeds is NOT CLAIMED (R-READER-FORM) | unparsed src files=none; unjudged register spellings=src/workbench/capability-registry.ts#CapabilityRegistry: MethodDeclaration; src/workbench/hosts/local-detached.ts#registryFor: PropertySignature; src/workbench/hosts/local-detached.ts#registryFor: TypeOfExpression; src/workbench/hosts/local-detached.ts#registryFor: VariableDeclaration; src/workbench/hosts/local-detached.ts#registryFor: PropertyAccessExpression; src/workbench/hosts/local-detached.ts#registryFor: BinaryExpression; src/workbench/hosts/local-detached.ts#registryFor: CallExpression; src/workbench/hosts/local-detached.ts#registryFor: register call, provider Identifier",
   "G:runs":
     "G:runs | each src rf registrar, run with a fresh registry in each stated run form (the census workspace root; process.cwd() as the workspace root; the census root with each environment name srcEnvironmentReads lists for src set to each effect class word src's CapabilityDescriptor declares but read), leaves the registry holding its rf id read under reactivefiber:render: what the registry holds for rf ids when it returns is listed per run form | census-root registerReactiveFiberRender: reactivefiber.render.preview=read/[reactivefiber:render]; census-root registerNativeReactiveFiberRender: reactivefiber.render.preview=read/[reactivefiber:render]; cwd-root registerReactiveFiberRender: reactivefiber.render.preview=read/[reactivefiber:render]; cwd-root registerNativeReactiveFiberRender: reactivefiber.render.preview=read/[reactivefiber:render]; env-write registerReactiveFiberRender: reactivefiber.render.preview=read/[reactivefiber:render]; env-write registerNativeReactiveFiberRender: reactivefiber.render.preview=read/[reactivefiber:render]; env-external registerReactiveFiberRender: reactivefiber.render.preview=read/[reactivefiber:render]; env-external registerNativeReactiveFiberRender: reactivefiber.render.preview=read/[reactivefiber:render]; env-unknown registerReactiveFiberRender: reactivefiber.render.preview=read/[reactivefiber:render]; env-unknown registerNativeReactiveFiberRender: reactivefiber.render.preview=read/[reactivefiber:render]",
   "F:injectable:bare":
@@ -600,6 +645,18 @@ const PIN_LINES: Readonly<Record<string, string>> = {
     "Q:environment:names-optional-element | srcEnvironmentReads over a planted src module (refusal #2 U1l): each planted element access of process.env in an optional chain by a whole string token (process.env?.['NAME'] and process.env?.[`NAME`]) gives the token as its NAME; the reading is listed | names=PI_JWC9_OPTIONAL_ELEMENT,PI_JWC9_OPTIONAL_TEMPLATE; computed=none; whole=none; other=none",
   "Q:runs:restore-preset":
     "Q:runs:restore-preset | registeredUnder in the run forms over two planted environment names (refusal #2 U1m): the first is set to preset before the runs and the second is unset; each env form sets both to its effect class word for the run and gives each back its value from before the run after it, so after each run the first reads preset and the second unset, and a planted registrar reading the first for a permission registers preset in the forms that set no environment; what each run leaves the registry holding for rf ids, and both names after the run, are listed | census-root: reactivefiber.render.preview=read/[reactivefiber:render,plant-env:preset] (after the run: PI_JWC9_PLANT_FIRST=preset,PI_JWC9_PLANT_SECOND=unset); cwd-root: reactivefiber.render.preview=read/[reactivefiber:render,plant-env:preset] (after the run: PI_JWC9_PLANT_FIRST=preset,PI_JWC9_PLANT_SECOND=unset); env-write: reactivefiber.render.preview=write/[reactivefiber:render,plant-env:write] (after the run: PI_JWC9_PLANT_FIRST=preset,PI_JWC9_PLANT_SECOND=unset); env-external: reactivefiber.render.preview=external/[reactivefiber:render,plant-env:external] (after the run: PI_JWC9_PLANT_FIRST=preset,PI_JWC9_PLANT_SECOND=unset); env-unknown: reactivefiber.render.preview=unknown/[reactivefiber:render,plant-env:unknown] (after the run: PI_JWC9_PLANT_FIRST=preset,PI_JWC9_PLANT_SECOND=unset)",
+  "S:registrations:conditional-branch":
+    "S:registrations:conditional-branch | rfRegistrationLiterals over a planted src module (refusal #3 U1a): each planted rf literal whose effectClass is written as a conditional with one branch that is not a whole token (mode !== undefined ? mode : 'read', and mode === undefined ? 'read' : mode) has it read as the syntax standing there in angle brackets, not as its token branch's word; the reading is listed | rf=src/plant.ts#plantReferenceTrueClass: id=reactivefiber.plant-reference-true effectClass=<ConditionalExpression> permissions=[reactivefiber:render] | src/plant.ts#plantReferenceFalseClass: id=reactivefiber.plant-reference-false effectClass=<ConditionalExpression> permissions=[reactivefiber:render]; unjudged=none",
+  "S:registrations:call-argument":
+    "S:registrations:call-argument | rfRegistrationLiterals over a planted src module (refusal #3 U1b): each planted rf literal whose effectClass is written as a call holding a whole-token argument (a parenthesized arrow function called with 'read' as its first argument, and chooseClass(mode, 'read') with it as its last) has it read as the syntax standing there in angle brackets, not as that argument's word; the reading is listed | rf=src/plant.ts#plantFirstArgumentClass: id=reactivefiber.plant-first-argument effectClass=<CallExpression> permissions=[reactivefiber:render] | src/plant.ts#plantLastArgumentClass: id=reactivefiber.plant-last-argument effectClass=<CallExpression> permissions=[reactivefiber:render]; unjudged=none",
+  "S:registrations:asserted-class":
+    "S:registrations:asserted-class | rfRegistrationLiterals over a planted src module (refusal #3 U1c): each planted rf literal whose effectClass is written as an as assertion to a string literal type ((mode === 'commit' ? 'write' : 'read') as 'read', and mode as 'read') has it read as the syntax standing there in angle brackets, not as the asserted type's word; the reading is listed | rf=src/plant.ts#plantAssertedConditionalClass: id=reactivefiber.plant-asserted-conditional effectClass=<AsExpression> permissions=[reactivefiber:render] | src/plant.ts#plantAssertedReferenceClass: id=reactivefiber.plant-asserted-reference effectClass=<AsExpression> permissions=[reactivefiber:render]; unjudged=none",
+  "S:registrations:asserted-element":
+    "S:registrations:asserted-element | rfRegistrationLiterals over a planted src module (refusal #3 U1d): each planted rf literal whose permissions element is written as an as assertion to a string literal type ([(mode === 'commit' ? 'reactivefiber:commit' : 'reactivefiber:render') as 'reactivefiber:render'], and [permission as 'reactivefiber:render']) has it read as its syntax in angle brackets, not as the asserted type's word; the reading is listed | rf=src/plant.ts#plantAssertedConditionalElement: id=reactivefiber.plant-asserted-conditional-element effectClass=read permissions=[<AsExpression>] | src/plant.ts#plantAssertedReferenceElement: id=reactivefiber.plant-asserted-reference-element effectClass=read permissions=[<AsExpression>]; unjudged=none",
+  "S:registrations:token-left":
+    "S:registrations:token-left | rfRegistrationLiterals over a planted src module (refusal #3 U1e): each planted rf literal whose effectClass is written as a binary whose left operand is a whole token ('read' && (mode ?? 'read'), 'read' || mode and 'read' ?? mode) has it read as the syntax standing there in angle brackets, not as its left operand's word; the reading is listed | rf=src/plant.ts#plantAndLeftClass: id=reactivefiber.plant-and-left effectClass=<BinaryExpression> permissions=[reactivefiber:render] | src/plant.ts#plantOrLeftClass: id=reactivefiber.plant-or-left effectClass=<BinaryExpression> permissions=[reactivefiber:render] | src/plant.ts#plantNullishLeftClass: id=reactivefiber.plant-nullish-left effectClass=<BinaryExpression> permissions=[reactivefiber:render]; unjudged=none",
+  "S:tree:other-id":
+    "S:tree:other-id | srcTree and rfRegistrationLiterals over a planted src tree (refusal #3 U2): the planted register calls whose id is not an rf capability id (forge.plant-optional through registry?.register in src/plant.ts, and forge.plant-dot in the dotfile module src/.plant-dot-forge.ts, which is listed as a module) are listed nowhere, neither as rf literals nor unjudged, while the planted rf registration respelled through registry?.register beside the first (reactivefiber.plant-optional) is read as an rf literal; the split and the reading are listed | modules=src/.plant-dot-forge.ts,src/plant.ts; unparsed=none; rf=src/plant.ts#plantOptionalRegistrations: id=reactivefiber.plant-optional effectClass=read permissions=[reactivefiber:render]; unjudged=none",
   "R:fresh-shape":
     "R:fresh-shape | NAMED RESIDUAL R-FRESH-SHAPE, not claimed: row F probes exactly the fresh reads it lists, each carrying the fresh rfo_, so a fresh read in any other shape (another subset of the optional result keys the native preview admits, observation rows, another release, digest, workspace or id value) is not probed; each fed read's result keys and projection are listed, and the full result is held to the rf result-key roster | injectable:bare keys=[output] provider=reactivefiber nativeId=rfo_freshpreview0000000000 sourceBasis=none producerRelease=none; injectable:minimal keys=[output,provenance,budget,diagnostics_summary,work,ephemeral,render_id] provider=reactivefiber nativeId=rfo_freshpreview0000000000 sourceBasis=set producerRelease=none; injectable:full keys=every roster result key (27) provider=reactivefiber nativeId=rfo_freshpreview0000000000 sourceBasis=set producerRelease=0.1.845; native:minimal keys=[output,provenance,budget,diagnostics_summary,work,ephemeral,render_id] provider=reactivefiber nativeId=rfo_freshpreview0000000000 sourceBasis=set producerRelease=none; native:full keys=every roster result key (27) provider=reactivefiber nativeId=rfo_freshpreview0000000000 sourceBasis=set producerRelease=0.1.845; full result against rf 0.1.845 roster: diff failures none",
   "R:unprojected-form":
@@ -611,7 +668,7 @@ const PIN_LINES: Readonly<Record<string, string>> = {
   "R:probe-context":
     "R:probe-context | NAMED RESIDUAL R-PROBE-CONTEXT, not claimed: every read of rows F, C and U is fed in one request context against one journaled row, so a binding conditioned on any other task, position, principal, session, workspace, grant set, clock or journaled row is not probed; the context and the row are listed | task=wf_rfhonesty-census position=0 principal=local-operator:1:s1 session=s1 workspace=/workspace/rf-operation-receipt-honesty observedAt=2026-10-30T06:00:00Z grants=workbench:observe,reactivefiber:render,reconcile:reactivefiber.acknowledge,reconcile:reactivefiber.override; journaled row index=0 kind=node capability=reactivefiber.render.commit effectClass=write nativeRefs=reactivefiber/operation/rfo_journaledcommit000000000",
   "R:reader-form":
-    "R:reader-form | NAMED RESIDUAL R-READER-FORM, not claimed: each reader is pinned on src as measured and on exactly the planted forms rows P and Q feed it, so a reader that reads a form no plant feeds otherwise (another file name, extension or directory order for srcTree; another register spelling, callee, argument count, provider, descriptor, id, effectClass or permissions syntax (refusal #3's U1a-U1e forms among them), owner or parsed file for rfRegistrationLiterals; another holder, access or spelling of process.env or env, or parsed file, for srcEnvironmentReads; another run form, registrar or environment state for runForms and registeredUnder) is not detected; each plant's reader and planted forms are listed | P:tree:split srcTree [src/c.tsx,src/\uff5e.txt,src/README,src/h.json,src/a.ts,src/nested/i.txt,src/\ud800\udc00.txt,src/types.d.ts,src/e.cts,src/nested/deep/b.ts,src/g.mjs,src/d.mts,src/f.js]; P:registrations:spellings rfRegistrationLiterals [VERB,TEMPLATE_VERB,NOT_SPELLED,plantElementAccess,plantTemplateAccess,plantConstAccess,plantDestructured,plantCallMember,plantParenthesized,plantPassedMember,plantMemberOfSpelling,register,plantKeyed,plantQuotedKey]; P:registrations:arguments rfRegistrationLiterals [plantNoArguments,plantTwoArguments,plantProviderBesideExtra,plantSpreadArgument,plantProviderReference,plantProviderCall]; P:registrations:provider rfRegistrationLiterals [DESCRIPTOR,plantProviderSpread,plantProviderComputed,plantProviderNoDescriptor,plantProviderTwoDescriptors,plantProviderShorthand,plantProviderMethod,plantDescriptorReference,plantDescriptorCall,plantQuotedKeys]; P:registrations:descriptor rfRegistrationLiterals [PLANT_ID,plantDescriptorSpread,plantDescriptorComputed,plantDescriptorNoId,plantDescriptorTwoIds,plantDescriptorShorthandId,plantDescriptorIdReference,plantDescriptorIdTemplate,plantDescriptorIdToken]; P:registrations:ids rfRegistrationLiterals [plantCommitId,plantDashedId,plantNeighbourProducer,plantRefusedId,plantBareProducer,plantOtherProducer]; P:registrations:effect-class rfRegistrationLiterals [PLANT_CLASS,plantConditionalClass,plantReferenceClass,plantCallClass,plantAssertedClass,plantShorthandClass,plantMissingClass,plantTwoClasses,plantTemplateClass]; P:registrations:permissions rfRegistrationLiterals [PLANT_PERMISSION,PLANT_PERMISSIONS,plantSpreadPermission,plantReferenceElement,plantTemplateElements,plantEmptyPermissions,plantPermissionsReference,plantShorthandPermissions,plantMissingPermissions,plantTwoPermissions]; P:registrations:owners rfRegistrationLiterals [plantDeclaredOwner,plantOuterDeclared,PlantHolder,plantOuterVariable,plantExpressionOwner,plantMethodObject,default,ExpressionStatement]; P:registrations:script-kind rfRegistrationLiterals [plantAssertedHolder]; P:environment:names srcEnvironmentReads [plantNames]; P:environment:computed srcEnvironmentReads [PLANT_NAMES,plantComputed]; P:environment:whole srcEnvironmentReads [plantAliased,plantDestructuredNames,plantPassed,plantSpread,plantCompared,plantReturned,plantNonNull]; P:environment:other srcEnvironmentReads [ImportDeclaration,plantGlobal,plantRenamed,plantShorthand,plantElement,plantHost,plantParenthesized,plantImported]; P:runs:environment registeredUnder [environmentRegistrar,PI_JWC9_PLANT_FIRST=unset,PI_JWC9_PLANT_SECOND=unset]; P:runs:workspace-root registeredUnder [workspaceRootRegistrar]; P:runs:registry registeredUnder [heldRegistrar]; Q:tree:dotfile srcTree+rfRegistrationLiterals [src/plain.ts,src/.plant-dot.ts,src/.plant-dir/inner.ts]; Q:registrations:effect-class-default rfRegistrationLiterals [plantNullishClass,plantOrClass]; Q:registrations:permissions-conditional rfRegistrationLiterals [plantConditionalElement]; Q:registrations:permissions-default rfRegistrationLiterals [plantNullishElement,plantOrElement]; Q:environment:whole-assertion srcEnvironmentReads [plantAsEnv,plantAngleEnv,plantSatisfiesEnv]; Q:environment:whole-parenthesized srcEnvironmentReads [plantParenthesizedEnv]; Q:environment:whole-property srcEnvironmentReads [plantPropertyEnv,plantArrayEnv]; Q:environment:other-template srcEnvironmentReads [plantTemplateEnv,plantStringEnv]; Q:tree:sort srcTree [src/x.ts,src/x-y.ts,src/x/y.ts]; Q:tree:extension-case srcTree [src/upper.TS,src/lower.ts,src/mixed.Ts]; Q:registrations:optional-chain rfRegistrationLiterals [plantOptionalHolder,plantOptionalCall]; Q:environment:names-optional-element srcEnvironmentReads [plantOptionalElement]; Q:runs:restore-preset registeredUnder [environmentRegistrar,PI_JWC9_PLANT_FIRST=preset,PI_JWC9_PLANT_SECOND=unset]",
+    "R:reader-form | NAMED RESIDUAL R-READER-FORM, not claimed: each reader is pinned on src as measured and on exactly the planted forms rows P, Q and S feed it, so a reader that reads a form no plant feeds otherwise (another file name, extension or directory order for srcTree; another register spelling, callee, argument count, provider, descriptor, id, effectClass or permissions syntax, owner or parsed file for rfRegistrationLiterals; another holder, access or spelling of process.env or env, or parsed file, for srcEnvironmentReads; another run form, registrar or environment state for runForms and registeredUnder) is not detected; each plant's reader and planted forms are listed | P:tree:split srcTree [src/c.tsx,src/\uff5e.txt,src/README,src/h.json,src/a.ts,src/nested/i.txt,src/\ud800\udc00.txt,src/types.d.ts,src/e.cts,src/nested/deep/b.ts,src/g.mjs,src/d.mts,src/f.js]; P:registrations:spellings rfRegistrationLiterals [VERB,TEMPLATE_VERB,NOT_SPELLED,plantElementAccess,plantTemplateAccess,plantConstAccess,plantDestructured,plantCallMember,plantParenthesized,plantPassedMember,plantMemberOfSpelling,register,plantKeyed,plantQuotedKey]; P:registrations:arguments rfRegistrationLiterals [plantNoArguments,plantTwoArguments,plantProviderBesideExtra,plantSpreadArgument,plantProviderReference,plantProviderCall]; P:registrations:provider rfRegistrationLiterals [DESCRIPTOR,plantProviderSpread,plantProviderComputed,plantProviderNoDescriptor,plantProviderTwoDescriptors,plantProviderShorthand,plantProviderMethod,plantDescriptorReference,plantDescriptorCall,plantQuotedKeys]; P:registrations:descriptor rfRegistrationLiterals [PLANT_ID,plantDescriptorSpread,plantDescriptorComputed,plantDescriptorNoId,plantDescriptorTwoIds,plantDescriptorShorthandId,plantDescriptorIdReference,plantDescriptorIdTemplate,plantDescriptorIdToken]; P:registrations:ids rfRegistrationLiterals [plantCommitId,plantDashedId,plantNeighbourProducer,plantRefusedId,plantBareProducer,plantOtherProducer]; P:registrations:effect-class rfRegistrationLiterals [PLANT_CLASS,plantConditionalClass,plantReferenceClass,plantCallClass,plantAssertedClass,plantShorthandClass,plantMissingClass,plantTwoClasses,plantTemplateClass]; P:registrations:permissions rfRegistrationLiterals [PLANT_PERMISSION,PLANT_PERMISSIONS,plantSpreadPermission,plantReferenceElement,plantTemplateElements,plantEmptyPermissions,plantPermissionsReference,plantShorthandPermissions,plantMissingPermissions,plantTwoPermissions]; P:registrations:owners rfRegistrationLiterals [plantDeclaredOwner,plantOuterDeclared,PlantHolder,plantOuterVariable,plantExpressionOwner,plantMethodObject,default,ExpressionStatement]; P:registrations:script-kind rfRegistrationLiterals [plantAssertedHolder]; P:environment:names srcEnvironmentReads [plantNames]; P:environment:computed srcEnvironmentReads [PLANT_NAMES,plantComputed]; P:environment:whole srcEnvironmentReads [plantAliased,plantDestructuredNames,plantPassed,plantSpread,plantCompared,plantReturned,plantNonNull]; P:environment:other srcEnvironmentReads [ImportDeclaration,plantGlobal,plantRenamed,plantShorthand,plantElement,plantHost,plantParenthesized,plantImported]; P:runs:environment registeredUnder [environmentRegistrar,PI_JWC9_PLANT_FIRST=unset,PI_JWC9_PLANT_SECOND=unset]; P:runs:workspace-root registeredUnder [workspaceRootRegistrar]; P:runs:registry registeredUnder [heldRegistrar]; Q:tree:dotfile srcTree+rfRegistrationLiterals [src/plain.ts,src/.plant-dot.ts,src/.plant-dir/inner.ts]; Q:registrations:effect-class-default rfRegistrationLiterals [plantNullishClass,plantOrClass]; Q:registrations:permissions-conditional rfRegistrationLiterals [plantConditionalElement]; Q:registrations:permissions-default rfRegistrationLiterals [plantNullishElement,plantOrElement]; Q:environment:whole-assertion srcEnvironmentReads [plantAsEnv,plantAngleEnv,plantSatisfiesEnv]; Q:environment:whole-parenthesized srcEnvironmentReads [plantParenthesizedEnv]; Q:environment:whole-property srcEnvironmentReads [plantPropertyEnv,plantArrayEnv]; Q:environment:other-template srcEnvironmentReads [plantTemplateEnv,plantStringEnv]; Q:tree:sort srcTree [src/x.ts,src/x-y.ts,src/x/y.ts]; Q:tree:extension-case srcTree [src/upper.TS,src/lower.ts,src/mixed.Ts]; Q:registrations:optional-chain rfRegistrationLiterals [plantOptionalHolder,plantOptionalCall]; Q:environment:names-optional-element srcEnvironmentReads [plantOptionalElement]; Q:runs:restore-preset registeredUnder [environmentRegistrar,PI_JWC9_PLANT_FIRST=preset,PI_JWC9_PLANT_SECOND=unset]; S:registrations:conditional-branch rfRegistrationLiterals [plantReferenceTrueClass,plantReferenceFalseClass]; S:registrations:call-argument rfRegistrationLiterals [plantFirstArgumentClass,plantLastArgumentClass]; S:registrations:asserted-class rfRegistrationLiterals [plantAssertedConditionalClass,plantAssertedReferenceClass]; S:registrations:asserted-element rfRegistrationLiterals [plantAssertedConditionalElement,plantAssertedReferenceElement]; S:registrations:token-left rfRegistrationLiterals [plantAndLeftClass,plantOrLeftClass,plantNullishLeftClass]; S:tree:other-id srcTree+rfRegistrationLiterals [src/plant.ts,src/.plant-dot-forge.ts]",
 };
 const PINS = ROWS.flatMap(entry => entry.pins);
 const isMember = (item: string): boolean => /^U1[a-z]$/.test(item);
@@ -669,17 +726,38 @@ const REFUSAL_TWO_CURES: Readonly<Record<string, readonly string[]>> = {
   U1m: ["Q:runs:restore-preset"],
   U2: ["R:reader-form"],
 };
+/** The pins of this census a refusal #3 item is cured by: a U1 member by the S pin whose plant names it, U1 by every member's, U2 by the S pin naming it and the G pin whose clause states the narrowing. */
+function curedByThree(item: string): string[] {
+  const carried = new Set(PINS.map(pin => pin.id));
+  const planted = (member: string): string[] => S_PLANTS.filter(plant => plant.cures.includes(member)).map(plant => `S:${plant.key}`).filter(id => carried.has(id));
+  if (isMember(item)) return planted(item);
+  if (item === "U1") return [...new Set(REFUSAL_THREE_ITEMS.filter(isMember).flatMap(planted))];
+  if (item === "U2") return [...planted(item), ...PINS.filter(pin => pin.id.startsWith("G:") && pin.requirement.includes("refusal #3's U2 forge registrations among them")).map(pin => pin.id)];
+  return [];
+}
+/** Refusal #3's cures, frozen: the pins each unmet item is cured by. */
+const REFUSAL_THREE_CURES: Readonly<Record<string, readonly string[]>> = {
+  U1: ["S:registrations:conditional-branch", "S:registrations:call-argument", "S:registrations:asserted-class", "S:registrations:asserted-element", "S:registrations:token-left"],
+  U1a: ["S:registrations:conditional-branch"],
+  U1b: ["S:registrations:call-argument"],
+  U1c: ["S:registrations:asserted-class"],
+  U1d: ["S:registrations:asserted-element"],
+  U1e: ["S:registrations:token-left"],
+  U2: ["S:tree:other-id", "G:unjudged"],
+};
 /** EACH-LIVENESS: the ids the row cases and the pin cases recorded as their last statement this run, in run order. */
 const REACHED: { readonly rows: string[]; readonly pins: string[] } = { rows: [], pins: [] };
 const ROW_CASE = "row %s carries exactly the pins its outside anchor generates";
 const PIN_CASE = "pin %s";
 
 describe("wb-jwc.9 the rf operation-receipt reconcile honesty core: full-surface readers for the G registrations and the N/H reads", () => {
-  it("reads the owner filings: wb-jwc.9's two items, R-B109's two folded members, refusal #1's and refusal #2's unmet items and wb-jwc.6's N and H words", () => {
+  it("reads the owner filings: wb-jwc.9's two items, R-B109's two folded members, refusal #1's, refusal #2's and refusal #3's unmet items, wb-jwc.12's filing of refusal #3's and wb-jwc.6's N and H words", () => {
     expect([...OWN_ITEMS]).toStrictEqual([["U2", "G registrars measured across RUNS"], ["U1", "N/H failed-read variants per CATEGORY"]]);
     expect([...FOLDED_ITEMS]).toStrictEqual([["U1", "census over-claim, N/H honesty probes"], ["U2", "unprojected read"]]);
     expect(REFUSAL_ITEMS).toStrictEqual(["U1", "U1a", "U1b", "U1c", "U1d", "U1e", "U1f", "U1g", "U1h", "U1i", "U1j", "U1k", "U2", "U3"]);
     expect(REFUSAL_TWO_ITEMS).toStrictEqual(["U1", "U1a", "U1b", "U1c", "U1d", "U1e", "U1f", "U1g", "U1h", "U1i", "U1j", "U1k", "U1l", "U1m", "U2"]);
+    expect(REFUSAL_THREE_ITEMS).toStrictEqual(["U1", "U1a", "U1b", "U1c", "U1d", "U1e", "U2"]);
+    expect(FOLLOW_UP_ITEMS, `${FOLLOW_UP} files refusal #3's unmet items verbatim`).toStrictEqual(REFUSAL_THREE_ITEMS);
     expect(PARENT_WORDS).toStrictEqual({
       n: "the preview read shall never serve as commit evidence",
       h: "a reconcile fed only a preview envelope for a committed-effect journal row is asserted NOT producer-confirmed",
@@ -687,7 +765,7 @@ describe("wb-jwc.9 the rf operation-receipt reconcile honesty core: full-surface
   });
 
   it("maps every filing item to its row, and the rows no item maps to are the residual rows an anchor calls for", async () => {
-    expect(Object.keys(CLAUSE_ROWS)).toStrictEqual([...[...OWN_ITEMS.keys()].map(key => `${BEAD} ${key}`), ...[...FOLDED_ITEMS.keys()].map(key => `R-B109 ${key}`), ...(REFUSAL_ITEMS.length > 0 ? ["refusal #1"] : []), ...(REFUSAL_TWO_ITEMS.length > 0 ? ["refusal #2"] : [])]);
+    expect(Object.keys(CLAUSE_ROWS)).toStrictEqual([...[...OWN_ITEMS.keys()].map(key => `${BEAD} ${key}`), ...[...FOLDED_ITEMS.keys()].map(key => `R-B109 ${key}`), ...(REFUSAL_ITEMS.length > 0 ? ["refusal #1"] : []), ...(REFUSAL_TWO_ITEMS.length > 0 ? ["refusal #2"] : []), ...(REFUSAL_THREE_ITEMS.length > 0 ? ["refusal #3"] : [])]);
     for (const [clause, target] of Object.entries(CLAUSE_ROWS)) expect(ROWS.find(entry => entry.id === target)?.clause, `row ${target} judges ${clause}`).toBe(clause);
     expect(Object.keys(GENERATED), "every generated row is a judged row").toStrictEqual(ROWS.map(entry => entry.id));
     const mapped: readonly string[] = Object.values(CLAUSE_ROWS);
@@ -710,6 +788,13 @@ describe("wb-jwc.9 the rf operation-receipt reconcile honesty core: full-surface
     for (const item of REFUSAL_TWO_ITEMS.filter(entry => entry !== "U2")) expect(curedByTwo(item).some(id => id.startsWith("Q:")), `refusal #2 ${item} is cured by a planted pin`).toBe(true);
     expect(curedByTwo("U2").length, "refusal #2 U2 is cured by the one R-READER-FORM row").toBe(1);
     expect(Object.fromEntries(REFUSAL_TWO_ITEMS.map(item => [item, curedByTwo(item)]))).toStrictEqual(REFUSAL_TWO_CURES);
+  });
+
+  it("cures every unmet item of refusal #3 as wb-jwc.12 files them: each U1 member by the planted pin naming it, U2 by its planted pin and the narrowed G:unjudged clause", () => {
+    for (const plant of S_PLANTS) for (const cure of plant.cures) expect(REFUSAL_THREE_ITEMS, `plant ${plant.key} names a refusal #3 item`).toContain(cure);
+    for (const item of REFUSAL_THREE_ITEMS) expect(curedByThree(item).some(id => id.startsWith("S:")), `refusal #3 ${item} is cured by a planted pin`).toBe(true);
+    expect(curedByThree("U2").filter(id => id.startsWith("G:")), "refusal #3 U2 is also cured by the narrowed G:unjudged clause").toStrictEqual(["G:unjudged"]);
+    expect(Object.fromEntries(REFUSAL_THREE_ITEMS.map(item => [item, curedByThree(item)]))).toStrictEqual(REFUSAL_THREE_CURES);
   });
 
   it("agrees byte for byte with the falsifier roster: every row, clause and requirement, every falsified pin and every residual's quiet row", () => {
