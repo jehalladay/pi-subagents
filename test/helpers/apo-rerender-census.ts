@@ -1666,20 +1666,58 @@ export function readForms(
       else if (!quiet) ok(form);
     };
     /**
-     * The type an argument flows into (undefined: no parameter takes it, or the callee is unresolved). Its position is its
-     * written index among a call's or a new expression's arguments, and a tagged template's substitution's index among the
-     * template's substitutions plus one, the template strings array taking the first (wb-021.10). A src declaration's own
-     * declared this parameter receives no argument and is skipped, as ownAt skips it (wb-021.10), so an argument that is no
-     * spread and has none written before it is read against the declared parameter the checker binds it to (a spread written
-     * before it shifts the position the checker binds, which the written index does not follow: bead wb-97ah); a library
-     * declaration's parameters are read as declared.
+     * The position the checker reads a written argument at (wb-97ah, refusal #3's CURE route (b)): a spread of a value the
+     * checker types as a tuple stands for that tuple's elements - the empty tuple's for none - and any other written argument,
+     * a spread of any other type included, for one, as the checker's own effective arguments count them. The census pins it
+     * for the this argument R-THIS-BINDING reads; at any other argument it is NOT CLAIMED (the census header's NOT CLAIMED).
+     */
+    const effectivePosition = (passed: readonly ts.Expression[], node: ts.Expression): number => {
+      let position = 0;
+      for (const item of passed) {
+        if (item === node) return position;
+        const spread = ts.isSpreadElement(item) ? checker.getTypeAtLocation(item.expression) : undefined;
+        position += spread !== undefined && checker.isTupleType(spread) ? (spread as ts.TupleTypeReference).target.elementFlags.length : 1;
+      }
+      return -1;
+    };
+    /**
+     * The type a resolved signature hands the argument at an effective position (wb-97ah): its own parameter's there, or, at
+     * or past its rest parameter - the instantiated parameter itself read, never the declaration's at the written index - that
+     * rest's element: a tuple's own element at an offset inside its leading fixed elements, its element type past them where it
+     * has a variable element, an array's element type; undefined where no parameter takes the position. The census pins the
+     * rest's leading element for the this argument R-THIS-BINDING reads (a tuple's, also before a variable tail, and an
+     * array's element type); a later offset and a tuple's variable part are NOT CLAIMED.
+     */
+    const instantiatedAt = (signature: ts.Signature, position: number): ts.Type | undefined => {
+      const parameters = signature.getParameters();
+      const last = parameters.length - 1;
+      const restDeclaration = parameters[last]?.valueDeclaration;
+      const restAt = restDeclaration && ts.isParameter(restDeclaration) && restDeclaration.dotDotDotToken ? last : undefined;
+      if (restAt === undefined || position < restAt) {
+        const own = parameters[position];
+        return own ? checker.getTypeOfSymbol(own) : undefined;
+      }
+      const rest = checker.getTypeOfSymbol(parameters[restAt]);
+      if (!checker.isTupleType(rest)) return checker.getIndexTypeOfType(rest, ts.IndexKind.Number) ?? rest;
+      const tuple = (rest as ts.TupleTypeReference).target;
+      const offset = position - restAt;
+      if (offset < tuple.fixedLength) return checker.getTypeArguments(rest as ts.TypeReference)[offset];
+      return (tuple.combinedFlags & ts.ElementFlags.Variable) !== 0 ? (checker.getIndexTypeOfType(rest, ts.IndexKind.Number) ?? rest) : undefined;
+    };
+    /**
+     * The type an argument flows into (undefined: no parameter takes it, or the callee is unresolved). A call's or a new
+     * expression's argument is read at its effective position (wb-97ah; pinned for R-THIS-BINDING's this argument), and a
+     * tagged template's substitution at its index among the template's substitutions plus one, the template strings array
+     * taking the first (wb-021.10). A src declaration's own declared this parameter receives no argument and is skipped, as
+     * ownAt skips it (wb-021.10), so an argument that is no spread and has none written before it is read against the
+     * declared parameter the checker binds it to; a library declaration's parameters are read as declared.
      */
     const argumentTarget = (call: ts.CallExpression | ts.NewExpression | ts.TaggedTemplateExpression, node: ts.Expression, exposing: boolean): ts.Type | undefined => {
       const tagged = ts.isTaggedTemplateExpression(call);
       const passed: readonly ts.Expression[] = tagged ? (ts.isTemplateExpression(call.template) ? call.template.templateSpans.map(span => span.expression) : []) : (call.arguments ?? []);
       const written = passed.indexOf(node);
       if (written < 0) return undefined;
-      const index = tagged ? written + 1 : written;
+      const index = tagged ? written + 1 : effectivePosition(passed, node);
       const signature = checker.getResolvedSignature(call);
       let declaration = signature?.getDeclaration();
       if (!signature || !declaration) return undefined;
@@ -1701,8 +1739,7 @@ export function readForms(
         const owner = (declared.flags & ts.TypeFlags.TypeParameter) !== 0 ? declared.symbol?.declarations?.[0]?.parent : undefined;
         if (!isDefaultLibrary(declaration) || !owner || !(ts.isInterfaceDeclaration(owner) || ts.isClassDeclaration(owner))) return undefined;
       }
-      const instantiated = signature.getParameters()[Math.min(index, signature.getParameters().length - 1)];
-      return instantiated ? element(checker.getTypeOfSymbol(instantiated)) : undefined;
+      return instantiatedAt(signature, index);
     };
     /** The flow a node in a flow position takes: its form, the type it flows into and the site the row names. */
     const flowOf = (node: ts.Expression, exposing: boolean): { readonly form: ResolvableForm; readonly target: ts.Type | undefined; readonly site: ts.Node } | undefined => {
@@ -3074,7 +3111,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "DISPATCH",
       label:
-        "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), and an object literal's own method or setter under the contextual type of the flow it is written at - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal method that keep the projection read quiet; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a constructor parameter property (parameter-property), a field, a getter or a callback typed by an overload set's visible signatures (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), an async function's or a generator's written-type return (async-return, generator-yield) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; an object literal or a callback held as an array's or a tuple's element or as a library generic's type argument, R-HELD-VALUE; a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload or by Reflect.apply resolved to its first - or into any by Reflect.apply's second overload or by the untyped Function interface's bind, call and apply read off Function.prototype with no type argument written, a member call's receiver, and the values R-THIS-BINDING's hole pins, which the checker types by the function's this parameter's type (a value written after spreads, and one handed to those members with type arguments written: final cut #4), R-THIS-BINDING; a branch a conditional, a ?? or a || narrows, R-NARROWED-BRANCH; wb-vgri, landing 672 F5-F7, respin 1, respin 2 and final cut #4), and any other stand-in shape is outside this claim",
+        "a call through a src signature with no body of its own - an interface method or a function type (a value and a holder) - is refused, and a member declared to stand in for a base or interface member is read in exactly the roster the stand-in readings implement (cut #8, ruling R-B67): a class element the class declares itself, by its kind's STAND_IN reading against its own class's heritage clauses (an override, an implementation), and an object literal's own method or setter under the contextual type of the flow it is written at - one whose own parameter hides a path that member hands it is refused at its declaration, while an override and a literal method that keep the projection read quiet; a call through a class's own method is judged by that method's declaration alone; a stand-in outside that roster which the readings meet at a flow, a class or a literal is no dispatch reading and fails closed with the typed row the FAIL_CLOSED roster names - a constructor parameter property (parameter-property), a field, a getter or a callback typed by an overload set's visible signatures (overload), a class instance or a class's static side flowing into a type its own class does not declare (structural-stand-in), a member the implementing class inherits (inherited-implementation), an object literal not written where it flows (context-less-literal), a spread (spread), what a callback or a stand-in hands back (callback-return, stand-in-return), an async function's or a generator's written-type return (async-return, generator-yield) and a value of any other type (unlisted-stand-in) - except the named residuals' quiet pages (a class instance held inside another value, R-STRUCTURAL-STAND-IN; an object literal or a callback held as an array's or a tuple's element or as a library generic's type argument, R-HELD-VALUE; a value bound as a function's this into a type it is - by a function's own call or apply, by bind resolved to its second overload or by Reflect.apply resolved to its first - or into any by Reflect.apply's second overload or by the untyped Function interface's bind, call and apply read off Function.prototype with no type argument written, and a member call's receiver, R-THIS-BINDING (final cut #4 also excepted the values its hole pinned, which the checker types by the function's this parameter's type - a value written after spreads, and one handed to those members with type arguments written - and wb-97ah reads each at its effective position and refuses it); a branch a conditional, a ?? or a || narrows, R-NARROWED-BRANCH; wb-vgri, landing 672 F5-F7, respin 1, respin 2 and final cut #4; wb-97ah), and any other stand-in shape is outside this claim",
       cases: [
         reachForms("src/ui/census-forms-dispatch-interface.ts", `${OBS_UI}interface Api {\n  forget(projection: ObservationProjection): void;\n}\nexport const run = (api: Api, projection: ObservationProjection): void => api.forget(projection);\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: api.forget(projection)"])),
         reachForms("src/ui/census-forms-dispatch-function-type.ts", `${OBS_UI}export const run = (sink: (projection: ObservationProjection) => void, projection: ObservationProjection): void => sink(projection);\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: sink(projection)"])),
@@ -3929,7 +3966,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "R-THIS-BINDING",
       label:
-        "residual: a stand-in bound as a function's this (wb-vgri, landing 672 F7; respin 1: refusal #1 U1 and F1; respin 2: refusal #2 U1 and F3, the enumerate-the-resolvable cut ruling R-B165 binds; final cut #4: refusal #3 U1, the fail-closed core ruling R-B207 binds - each claim of this row is narrowed to the pages it pins, and bead wb-97ah is the home of the reading of every other value) - a value that neither exposes the projection nor holds a path to it (a class instance or a class's static side whose class does not declare the type, an object literal, a callback), bound where a function's or a method's this parameter is typed by a type a member of which hands the projection - is judged, as the this argument of a function's own call, apply or bind or of Reflect.apply with no spread written before it among the call's arguments, against the type the checker resolves for that library parameter; the this parameter is read only where that type is it. A function's own call and apply (as in use.call), bind resolved to its second overload and Reflect.apply resolved to its first type that parameter by a type parameter inferred from the value (the checker took the value's own type at every value measured), so with no type argument written the value flows into a type it is and reads quiet whatever its member does - pinned: a hiding instance bound by call, by apply, by a method's call, by bind given an argument (a function's and a method's, called, and a function's held at an annotated initializer) and by Reflect.apply, a keeping instance bound by call and by bind given an argument, a class's static side, an object literal not written where it flows and a hiding callback each bound by call, and a call given the instance's own class as its type argument; Reflect.apply resolved to its second overload (an argument list the first refuses) types it any, which hands nothing, and reads quiet too. A member call binds its receiver as this, which no flow reads: a function held as a class instance's field or as an object literal's property and called through it, and a method whose this parameter its own class does not declare, read quiet. Where that parameter's type is the this parameter's - bind resolved to its first overload, whose this argument the checker types as the function's this parameter, or a type argument written as the this parameter's type - the value, with no spread written before it, is read there as at any flow into that type - pinned: bind given its this argument alone (a function's, a method's and a class's static side; a keeping instance, final cut #4) and a call (a function's and, final cut #4, a method's), an apply (final cut #4), a bind given an argument and a Reflect.apply given the this parameter's type as their type argument refuse the instance, the keeping instance or the static side (structural-stand-in), and bind given its this argument alone refuses an object literal not written where it flows (context-less-literal) and a hiding callback (argument). Which of bind's overloads resolves is the checker's (respin 2; TypeScript's lib.es5.d.ts declares bind<T>(this: T, thisArg: ThisParameterType<T>) first and bind<T, A extends any[], B extends any[], R>(this: (this: T, ...args: [...A, ...B]) => R, thisArg: T, ...args: A) second), measured page by page with its this argument written first: the first where it stands alone or is followed only by spreads of a value the checker types as the empty tuple itself, and the second where an argument or a spread of any other type measured follows it - pinned refused (the first overload): a spread of the literal [] (refusal #2's twin), of a value typed [] (bound to a function, through an optional call, followed by a spread of the literal [], held at an annotated initializer and bound to a method; a keeping instance; a class's static side) and of a value typed readonly [], of [] as [], [] as readonly [] and [] as const, and of a rest parameter typed [] refuse the instance, the keeping instance or the static side (structural-stand-in), and a spread of a value typed [] refuses an object literal not written where it flows (context-less-literal) and a hiding callback (argument); pinned quiet (the second overload with no type argument written, a hole: the function's this parameter is never read there, so each value pinned here, which the first overload refuses at the twins above, reads quiet): an argument (above), a spread of a value typed [number], and a spread of a never[] value (a hiding instance bound to a function, through an element access, through an optional call, through a variable typed by the function's type, to a generic function whose this parameter is constrained to the type, held at an annotated initializer and bound to a method; a keeping instance; a class's static side, bound to a function and to a method; an object literal not written where it flows; a hiding callback), of two never[] values, of a never[] value followed by [] as [], of a readonly never[] value, of a never[] rest parameter, of [] as never[], of Array<never>(), of an empty number[] value, of an unknown[] value, of a value typed any, of a value typed never, of the arguments object, and of a rest parameter whose type is a type parameter constrained to [] (a hiding instance and a class's static side). Into any (respin 2, refusal #2 F3; narrowed at final cut #4): the untyped Function interface's bind, call and apply, read off Function.prototype itself and handed the function and the value with no type argument written, type their this argument and their arguments any, which hands nothing, so each value pinned here reads quiet - pinned: Function.prototype.bind handed the function and the value by call (a hiding instance, called and not, followed by an argument, and bound to a method; a keeping instance; a class's static side; an object literal not written where it flows; a hiding callback) and by apply (the instance in its argument array), Function.prototype.call and Function.prototype.apply each handed them by call, Function.prototype.call bound to the function by bind and called with the instance, and Reflect.apply given Function.prototype.bind, the function and the instance in its argument array. A hole (final cut #4: refusal #3 U1, ruling R-B207; bead wb-97ah is the home of its reading): with spreads written before the value, or with type arguments written where the untyped Function interface's members are handed it, the checker types each value pinned here by the function's this parameter's type, yet each reads quiet - pinned quiet: bind resolved to its first overload given two spreads of the literal [] before its this argument (a hiding instance bound to a function and to a method, a keeping instance, a class's static side, an object literal not written where it flows and a hiding callback) and two spreads of a value typed [] (a hiding instance); a hiding instance after one spread of the literal [] at a call (a function's and a method's), an apply and a bind given an argument, and after one spread of [] as [] before the function at a Reflect.apply, each given the this parameter's type as its type argument; and Function.prototype.bind, Function.prototype.call and Function.prototype.apply each handed the function and a hiding instance by call with the function's type, a tuple of the this parameter's type (for apply, followed by the empty tuple) and unknown written as type arguments - beside twins that refuse: the twins above, with no spread written before the value, and bind resolved to its first overload given one spread of the literal [] before a hiding instance (bound to a function and to a method) or one spread of [] as [] (bound to a function), refused structural-stand-in. Any other way of binding a value as this is outside this claim",
+        "residual: a stand-in bound as a function's this (wb-vgri, landing 672 F7; respin 1: refusal #1 U1 and F1; respin 2: refusal #2 U1 and F3, the enumerate-the-resolvable cut ruling R-B165 binds; final cut #4: refusal #3 U1, the fail-closed core ruling R-B207 binds; wb-97ah: refusal #3's CURE route (b), the reader coverage R-B207 deferred to that bead - each claim of this row is narrowed to the pages it pins) - a value that neither exposes the projection nor holds a path to it (a class instance or a class's static side whose class does not declare the type, an object literal, a callback), bound where a function's or a method's this parameter is typed by a type a member of which hands the projection - is judged, as the this argument of a function's own call, apply or bind or of Reflect.apply, at its effective position among the call's arguments (wb-97ah: each spread written before it of a value the checker types as a tuple counts that tuple's elements, and each argument written before it that is no spread counts one), against the type the checker resolves for that library parameter; the this parameter is read only where that type is it. A function's own call and apply (as in use.call), bind resolved to its second overload and Reflect.apply resolved to its first type that parameter by a type parameter inferred from the value (the checker took the value's own type at every value measured), so with no type argument written the value flows into a type it is and reads quiet whatever its member does - pinned: a hiding instance bound by call, by apply, by a method's call, by bind given an argument (a function's and a method's, called, and a function's held at an annotated initializer) and by Reflect.apply, a keeping instance bound by call and by bind given an argument, a class's static side, an object literal not written where it flows and a hiding callback each bound by call, and a call given the instance's own class as its type argument; Reflect.apply resolved to its second overload (an argument list the first refuses) types it any, which hands nothing, and reads quiet too. A member call binds its receiver as this, which no flow reads: a function held as a class instance's field or as an object literal's property and called through it, and a method whose this parameter its own class does not declare, read quiet. Where that parameter's type is the this parameter's - bind resolved to its first overload, whose this argument the checker types as the function's this parameter, or a type argument written as the this parameter's type - the value is read there as at any flow into that type (final cut #4 read it there only with no spread written before it; wb-97ah: at its effective position, below) - pinned with no spread written before it: bind given its this argument alone (a function's, a method's and a class's static side; a keeping instance, final cut #4) and a call (a function's and, final cut #4, a method's), an apply (final cut #4), a bind given an argument and a Reflect.apply given the this parameter's type as their type argument refuse the instance, the keeping instance or the static side (structural-stand-in), and bind given its this argument alone refuses an object literal not written where it flows (context-less-literal) and a hiding callback (argument). Which of bind's overloads resolves is the checker's (respin 2; TypeScript's lib.es5.d.ts declares bind<T>(this: T, thisArg: ThisParameterType<T>) first and bind<T, A extends any[], B extends any[], R>(this: (this: T, ...args: [...A, ...B]) => R, thisArg: T, ...args: A) second), measured page by page with its this argument written first: the first where it stands alone or is followed only by spreads of a value the checker types as the empty tuple itself, and the second where an argument or a spread of any other type measured follows it - pinned refused (the first overload): a spread of the literal [] (refusal #2's twin), of a value typed [] (bound to a function, through an optional call, followed by a spread of the literal [], held at an annotated initializer and bound to a method; a keeping instance; a class's static side) and of a value typed readonly [], of [] as [], [] as readonly [] and [] as const, and of a rest parameter typed [] refuse the instance, the keeping instance or the static side (structural-stand-in), and a spread of a value typed [] refuses an object literal not written where it flows (context-less-literal) and a hiding callback (argument); pinned quiet (the second overload with no type argument written, a hole: the function's this parameter is never read there, so each value pinned here, which the first overload refuses at the twins above, reads quiet): an argument (above), a spread of a value typed [number], and a spread of a never[] value (a hiding instance bound to a function, through an element access, through an optional call, through a variable typed by the function's type, to a generic function whose this parameter is constrained to the type, held at an annotated initializer and bound to a method; a keeping instance; a class's static side, bound to a function and to a method; an object literal not written where it flows; a hiding callback), of two never[] values, of a never[] value followed by [] as [], of a readonly never[] value, of a never[] rest parameter, of [] as never[], of Array<never>(), of an empty number[] value, of an unknown[] value, of a value typed any, of a value typed never, of the arguments object, and of a rest parameter whose type is a type parameter constrained to [] (a hiding instance and a class's static side). Into any (respin 2, refusal #2 F3; narrowed at final cut #4): the untyped Function interface's bind, call and apply, read off Function.prototype itself and handed the function and the value with no type argument written, type their this argument and their arguments any, which hands nothing, so each value pinned here reads quiet - pinned: Function.prototype.bind handed the function and the value by call (a hiding instance, called and not, followed by an argument, and bound to a method; a keeping instance; a class's static side; an object literal not written where it flows; a hiding callback) and by apply (the instance in its argument array), Function.prototype.call and Function.prototype.apply each handed them by call, Function.prototype.call bound to the function by bind and called with the instance, and Reflect.apply given Function.prototype.bind, the function and the instance in its argument array. Final cut #4's hole is closed (wb-97ah: refusal #3 U1's members and the further members the final cut #4 seat and the landing-770 gate measured quiet): where spreads are written before the value, or type arguments are written where Function.prototype's bind, call and apply are handed it by call, the checker types the value by the function's this parameter's type, and the value, read at its effective position and - where those members are handed it by call - against the leading element of the rest parameter that call is instantiated with (a tuple's own leading element, also before a variable tail; an array's element type), is read there as at any flow into that type - pinned refused: bind resolved to its first overload given two spreads of the literal [] before its this argument (a hiding instance bound to a function and to a method, a keeping instance and a class's static side, structural-stand-in; an object literal not written where it flows, context-less-literal; a hiding callback, argument), given three (a hiding instance), given two spreads of a value typed [] (a hiding and a keeping instance) and given two of a value typed readonly [], of [] as [] and of [] as const (a hiding instance); a call given the this parameter's type as its type argument after one spread of the literal [] (a hiding instance bound to a function and to a method, a keeping instance and a class's static side, structural-stand-in; an object literal not written where it flows, context-less-literal; a hiding callback, argument), after two (a function's and a method's) and after three (a function's), an apply and a bind given an argument so typed after one spread of the literal [] and after two, and a Reflect.apply so typed after one spread of [] as [] before the function and after two (a hiding instance, structural-stand-in); Function.prototype.bind, Function.prototype.call and Function.prototype.apply each handed the function and a hiding instance by call with the function's type, a tuple of the this parameter's type (for apply, followed by the empty tuple) and unknown written as type arguments (structural-stand-in), Function.prototype.bind so handed an object literal not written where it flows (context-less-literal) and a hiding callback (argument), Function.prototype.call so handed a class's static side and Function.prototype.apply so handed a keeping instance (structural-stand-in), Function.prototype.call so handed a hiding instance after one spread of a one-element tuple holding the function, Function.prototype.bind so handed one after a spread of the literal [] written between the function and the value (refused before wb-97ah too), and Function.prototype.call handed the function and a hiding instance by call with an array of the this parameter's type, or a tuple of it followed by a variable tail of the instance's class, written as its rest type argument (structural-stand-in); pinned quiet beside them: Function.prototype.call handed the function and a hiding instance by call with a tuple of the instance's own class followed by a variable tail of the this parameter's type written as its rest type argument (the leading element is read there, not the tail), and a call given no type argument after one spread of the literal [] (its type parameter inferred from the value, the value's own type) - and the twins that refused before wb-97ah still refuse: the no-spread twins above, and bind resolved to its first overload given one spread of the literal [] before a hiding instance (bound to a function and to a method) or one spread of [] as [] (bound to a function), structural-stand-in. Any other way of binding a value as this is outside this claim",
       cases: [
         reachForms(
           "src/ui/census-forms-this-call.ts",
@@ -4409,91 +4446,91 @@ export const REACH: Table<ReachItem> = {
           "src/ui/census-forms-this-bind-two-spreads-before.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.bind(...[], ...[], new Holder())();\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: use.bind(...[], ...[], new Holder())"]),
         ),
         reachForms(
           "src/ui/census-forms-this-method-bind-two-spreads-before.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}export class Tool {\n  count(this: Sink): number {\n    void this;\n    return 0;\n  }\n}\nexport const used = new Tool().count.bind(...[], ...[], new Holder())();\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: new Tool().count.bind(...[], ...[], new Holder())"]),
         ),
         reachForms(
           "src/ui/census-forms-this-bind-two-spreads-before-keeps.ts",
           `${OBS_UI}${SINK_UI}${KEEPER_UI}${USE_THIS_UI}export const used = use.bind(...[], ...[], new Keeper())();\n`,
           reached(true, ["stats"], [], ["projection"]),
-          formsRead(["annotation", "member"], []),
+          formsRead(["annotation", "member"], ["structural-stand-in: use.bind(...[], ...[], new Keeper())"]),
         ),
         reachForms(
           "src/ui/census-forms-this-bind-two-spreads-before-static.ts",
           `${OBS_UI}${SINK_UI}${STATIC_HOLDER_UI}${USE_THIS_UI}export const used = use.bind(...[], ...[], StaticHolder)();\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: use.bind(...[], ...[], StaticHolder)"]),
         ),
         reachForms(
           "src/ui/census-forms-this-bind-two-spreads-before-literal.ts",
           `${OBS_UI}${SINK_UI}${IMPL_UI}${USE_THIS_UI}export const used = use.bind(...[], ...[], impl)();\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["context-less-literal: use.bind(...[], ...[], impl)"]),
         ),
         reachForms(
           "src/ui/census-forms-this-bind-two-spreads-before-callback.ts",
           `${OBS_UI}${HIDE_UI}${USE_TAKER_UI}export const used = useTaker.bind(...[], ...[], hide)();\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["argument: useTaker.bind(...[], ...[], hide)"]),
         ),
         reachForms(
           "src/ui/census-forms-this-bind-two-tuple-spreads-before.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}const none: [] = [];\nexport const used = use.bind(...none, ...none, new Holder())();\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: use.bind(...none, ...none, new Holder())"]),
         ),
         reachForms(
           "src/ui/census-forms-this-call-explicit-spread-before.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.call<Sink, [], number>(...[], new Holder());\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: use.call<Sink, [], number>(...[], new Holder())"]),
         ),
         reachForms(
           "src/ui/census-forms-this-method-call-explicit-spread-before.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}export class Tool {\n  count(this: Sink): number {\n    void this;\n    return 0;\n  }\n}\nexport const used = new Tool().count.call<Sink, [], number>(...[], new Holder());\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: new Tool().count.call<Sink, [], number>(...[], new Holder())"]),
         ),
         reachForms(
           "src/ui/census-forms-this-apply-explicit-spread-before.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.apply<Sink, [], number>(...[], new Holder(), []);\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: use.apply<Sink, [], number>(...[], new Holder(), [])"]),
         ),
         reachForms(
           "src/ui/census-forms-this-reflect-explicit-spread-before.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = Reflect.apply<Sink, [], number>(...([] as []), use, new Holder(), []);\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: Reflect.apply<Sink, [], number>(...([] as []), use, new Holder(), [])"]),
         ),
         reachForms(
           "src/ui/census-forms-this-bind-argument-explicit-spread-before.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE2_UI}export const used = use2.bind<Sink, [number], [], number>(...[], new Holder(), 1)();\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: use2.bind<Sink, [number], [], number>(...[], new Holder(), 1)"]),
         ),
         reachForms(
           "src/ui/census-forms-this-function-bind-call-explicit.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = Function.prototype.bind.call<typeof use, [Sink], unknown>(use, new Holder());\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: Function.prototype.bind.call<typeof use, [Sink], unknown>(use, new Holder())"]),
         ),
         reachForms(
           "src/ui/census-forms-this-function-call-call-explicit.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = Function.prototype.call.call<typeof use, [Sink], unknown>(use, new Holder());\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: Function.prototype.call.call<typeof use, [Sink], unknown>(use, new Holder())"]),
         ),
         reachForms(
           "src/ui/census-forms-this-function-apply-call-explicit.ts",
           `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = Function.prototype.apply.call<typeof use, [Sink, []], unknown>(use, new Holder(), []);\n`,
           reached(true, [], [], ["projection"]),
-          formsRead(["annotation"], []),
+          formsRead(["annotation"], ["structural-stand-in: Function.prototype.apply.call<typeof use, [Sink, []], unknown>(use, new Holder(), [])"]),
         ),
         reachForms(
           "src/ui/census-forms-this-bind-spread-before-twin.ts",
@@ -4530,6 +4567,156 @@ export const REACH: Table<ReachItem> = {
           `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.apply<Sink, [], number>(new Holder(), []);\n`,
           reached(true, [], [], ["projection"]),
           formsRead(["annotation"], ["structural-stand-in: use.apply<Sink, [], number>(new Holder(), [])"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-bind-three-spreads-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.bind(...[], ...[], ...[], new Holder())();\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: use.bind(...[], ...[], ...[], new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-bind-two-cast-spreads-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.bind(...([] as []), ...([] as []), new Holder())();\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: use.bind(...([] as []), ...([] as []), new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-bind-two-readonly-tuple-spreads-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}const none: readonly [] = [];\nexport const used = use.bind(...none, ...none, new Holder())();\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: use.bind(...none, ...none, new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-bind-two-const-spreads-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.bind(...([] as const), ...([] as const), new Holder())();\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: use.bind(...([] as const), ...([] as const), new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-bind-two-tuple-spreads-before-keeps.ts",
+          `${OBS_UI}${SINK_UI}${KEEPER_UI}${USE_THIS_UI}const none: [] = [];\nexport const used = use.bind(...none, ...none, new Keeper())();\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["structural-stand-in: use.bind(...none, ...none, new Keeper())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-call-explicit-two-spreads-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.call<Sink, [], number>(...[], ...[], new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: use.call<Sink, [], number>(...[], ...[], new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-call-explicit-three-spreads-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.call<Sink, [], number>(...[], ...[], ...[], new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: use.call<Sink, [], number>(...[], ...[], ...[], new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-method-call-explicit-two-spreads-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}export class Tool {\n  count(this: Sink): number {\n    void this;\n    return 0;\n  }\n}\nexport const used = new Tool().count.call<Sink, [], number>(...[], ...[], new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: new Tool().count.call<Sink, [], number>(...[], ...[], new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-call-explicit-spread-before-keeps.ts",
+          `${OBS_UI}${SINK_UI}${KEEPER_UI}${USE_THIS_UI}export const used = use.call<Sink, [], number>(...[], new Keeper());\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["structural-stand-in: use.call<Sink, [], number>(...[], new Keeper())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-call-explicit-spread-before-static.ts",
+          `${OBS_UI}${SINK_UI}${STATIC_HOLDER_UI}${USE_THIS_UI}export const used = use.call<Sink, [], number>(...[], StaticHolder);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: use.call<Sink, [], number>(...[], StaticHolder)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-call-explicit-spread-before-literal.ts",
+          `${OBS_UI}${SINK_UI}${IMPL_UI}${USE_THIS_UI}export const used = use.call<Sink, [], number>(...[], impl);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["context-less-literal: use.call<Sink, [], number>(...[], impl)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-call-explicit-spread-before-callback.ts",
+          `${OBS_UI}${HIDE_UI}${USE_TAKER_UI}export const used = useTaker.call<${TAKER}, [], number>(...[], hide);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["argument: useTaker.call<(projection: ObservationProjection) => void, [], number>(...[], hide)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-apply-explicit-two-spreads-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.apply<Sink, [], number>(...[], ...[], new Holder(), []);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: use.apply<Sink, [], number>(...[], ...[], new Holder(), [])"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-bind-argument-explicit-two-spreads-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE2_UI}export const used = use2.bind<Sink, [number], [], number>(...[], ...[], new Holder(), 1)();\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: use2.bind<Sink, [number], [], number>(...[], ...[], new Holder(), 1)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-reflect-explicit-two-spreads-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = Reflect.apply<Sink, [], number>(...([] as []), ...([] as []), use, new Holder(), []);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: Reflect.apply<Sink, [], number>(...([] as []), ...([] as []), use, new Holder(), [])"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-bind-call-explicit-literal.ts",
+          `${OBS_UI}${SINK_UI}${IMPL_UI}${USE_THIS_UI}export const used = Function.prototype.bind.call<typeof use, [Sink], unknown>(use, impl);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["context-less-literal: Function.prototype.bind.call<typeof use, [Sink], unknown>(use, impl)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-bind-call-explicit-callback.ts",
+          `${OBS_UI}${HIDE_UI}${USE_TAKER_UI}export const used = Function.prototype.bind.call<typeof useTaker, [${TAKER}], unknown>(useTaker, hide);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["argument: Function.prototype.bind.call<typeof useTaker, [(projection: ObservationProjection) => void], unknown>(useTaker, hide)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-call-call-explicit-static.ts",
+          `${OBS_UI}${SINK_UI}${STATIC_HOLDER_UI}${USE_THIS_UI}export const used = Function.prototype.call.call<typeof use, [Sink], unknown>(use, StaticHolder);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: Function.prototype.call.call<typeof use, [Sink], unknown>(use, StaticHolder)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-apply-call-explicit-keeps.ts",
+          `${OBS_UI}${SINK_UI}${KEEPER_UI}${USE_THIS_UI}export const used = Function.prototype.apply.call<typeof use, [Sink, []], unknown>(use, new Keeper(), []);\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], ["structural-stand-in: Function.prototype.apply.call<typeof use, [Sink, []], unknown>(use, new Keeper(), [])"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-call-call-explicit-tuple-spread-before.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = Function.prototype.call.call<typeof use, [Sink], unknown>(...([use] as [typeof use]), new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: Function.prototype.call.call<typeof use, [Sink], unknown>(...([use] as [typeof use]), new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-bind-call-explicit-spread-between.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = Function.prototype.bind.call<typeof use, [Sink], unknown>(use, ...[], new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: Function.prototype.bind.call<typeof use, [Sink], unknown>(use, ...[], new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-call-call-explicit-array-rest.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = Function.prototype.call.call<typeof use, Sink[], unknown>(use, new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: Function.prototype.call.call<typeof use, Sink[], unknown>(use, new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-call-call-explicit-variable-tail.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = Function.prototype.call.call<typeof use, [Sink, ...Holder[]], unknown>(use, new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: Function.prototype.call.call<typeof use, [Sink, ...Holder[]], unknown>(use, new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-function-call-call-own-class-variable-tail.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = Function.prototype.call.call<typeof use, [Holder, ...Sink[]], unknown>(use, new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-this-call-spread-before-inferred.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${USE_THIS_UI}export const used = use.call(...[], new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], []),
         ),
       ],
     },

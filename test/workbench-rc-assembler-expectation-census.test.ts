@@ -172,9 +172,21 @@
  *   its claim is on another line, so the row reads the same whether that cell is walked or not, and holds only the two
  *   cells' order. comments.cursor[0] and the last comments.unplaced row: two identical comments in a paragraph, side by
  *   side (its second and third of four own tokens) and apart (second and fourth of five). Every other comments row holds
- *   its comment where its own page puts it. The order of a list's items, a table's header cells, its body rows and a block
- *   quote's own tokens past these positions is deferred to wb-hhu9, the structural-exit child R-B197 files, with refusal
- *   #3's members GP15-Q01 to GP15-Q05 among the HOLES below; every other position is NOT CLAIMED by this census.
+ *   its comment where its own page puts it.
+ *   ORDER - comments.walk (wb-hhu9, the structural-exit child R-B197 files for the order of a list's items, a table's
+ *   header cells and body rows and a block quote's own tokens): for each count n from one to eight, one page of each shape
+ *   below, its container holding n children, the i-th child holding the comment `<!-- never i -->` before the claim
+ *   `The assembler acquires resources`, so no two comments on a page are spelled alike; the roster reads every such page
+ *   with a finding on each line that holds a claim, nothing quieted and nothing unplaced. list: n lines
+ *   `- <!-- never i --> <claim>`, a tight list whose every item's only own token is a comment block; nestedList: the line
+ *   `- a`, then those n lines each indented two spaces, a list nested in the one item of a list after the item's text;
+ *   header: one header row of n cells `<!-- never i --> <claim>` and its delimiter row, with no body row; rows: a
+ *   one-column table, header cell `a`, its n body rows each one cell `<!-- never i --> <claim>`; cells: n header cells `x`,
+ *   the delimiter row and one body row of n cells `<!-- never i --> <claim>`; tokens: a one-column table, header cell `a`,
+ *   its one body cell `x <!-- never i --> ` for each i in turn and then the claim (2n + 1 own tokens); quote: n lines
+ *   `> <!-- never i --> <claim>.`, a block quote of n own tokens, each a comment block; nestedQuote: the same n lines each
+ *   opened with `> > `, that block quote the only own token of a block quote. A count past eight, any other child, comment,
+ *   claim, container or spelling, and every other position is NOT CLAIMED by this census.
  *   CURSOR - comments.cursor[1]-[2]: two identical comments in one comment block's line, spaced and side by side, each
  *   placed.
  *   LINE BREAKS - source over several lines is found with each line break followed by the leads the comments.runs and
@@ -218,16 +230,20 @@
  *   and text after a span removed with its line breaks stays on the line the span opens on (comments.lines).
  *   PINNED (wb-ro24 cut #4's battery: each one-edit reader change below reds A3 and records, 2 failed | 9 passed (11), or
  *   with A1, 3 failed | 8 passed (11), on the rows named above; the member ids are the battery's, in the cut's evidence
- *   archive). WALK: a list's items reversed, its first two swapped, its first not walked, or none walked (WL-REV, WL-SWAP2,
- *   WL-DROPFIRST, WL-SKIP); a table's header cells reversed or its first two swapped (WH-REV, WH-SWAP2); its body rows
- *   reversed, the first two swapped, the first not walked, none walked, or walked before the header cells (WR-REV,
- *   WR-SWAP2, WR-DROPFIRST, WR-SKIP, WR-BEFOREHEADER); a body row's cells, and a cell's own tokens, reversed, the first two
- *   swapped, only the first walked, the last not walked, the first not walked, or none walked (WC- and WT-REV, -SWAP2,
- *   -FIRST, -DROPLAST, -DROPFIRST, -SKIP); a block quote's own tokens reversed, the first not walked, or none walked
- *   (WO-blockquote-REV, -DROPFIRST, -SKIP); a list item's own tokens reversed, reversed after the first
- *   (WO-list_item-TAIL1, as refusal #3's GP15-Q06), only the first walked, the last not walked, the first not walked, or
- *   none walked (WO-list_item-REV, -FIRST, -DROPLAST, -DROPFIRST, -SKIP); a list item's text's own tokens reversed,
- *   reversed after the first, the first two swapped, only the first walked, the first not walked, or none walked
+ *   archive; wb-hhu9 replayed the battery on its own bytes, and its ORDER rows red each walk member below that cut #4's
+ *   rows left green). WALK: in each of the eight ways the battery walks a container's children otherwise - all reversed
+ *   (REV), reversed after the first when there are three or more (TAIL1) or after the second when there are four or more
+ *   (TAIL2), the two swapped when there are exactly two (SWAP2), only the first walked (FIRST), the last or the first not
+ *   walked when there are two or more (DROPLAST, DROPFIRST), or none walked (SKIP) - a list's items (WL-REV, WL-TAIL1 =
+ *   refusal #3's GP15-Q01, WL-TAIL2, WL-SWAP2, WL-FIRST, WL-DROPLAST, WL-DROPFIRST, WL-SKIP), a table's header cells
+ *   (WH-REV, WH-TAIL1 = GP15-Q02, WH-TAIL2, WH-SWAP2, WH-FIRST, WH-DROPLAST, WH-DROPFIRST, WH-SKIP), its body rows, and
+ *   also walked before the header cells (WR-REV, WR-TAIL1 = GP15-Q03, WR-TAIL2, WR-SWAP2, WR-FIRST, WR-DROPLAST,
+ *   WR-DROPFIRST, WR-SKIP, WR-BEFOREHEADER), a body row's cells and a cell's own tokens (WC- and WT-REV, -TAIL1, -TAIL2,
+ *   -SWAP2, -FIRST, -DROPLAST, -DROPFIRST, -SKIP; WC-TAIL1 = GP15-Q04), and a block quote's own tokens (WO-blockquote-REV,
+ *   -TAIL1 = GP15-Q05, -TAIL2, -SWAP2, -FIRST, -DROPLAST, -DROPFIRST, -SKIP); a list item's own tokens reversed, reversed
+ *   after the first (WO-list_item-TAIL1, as refusal #3's GP15-Q06), only the first walked, the last not walked, the first
+ *   not walked, or none walked (WO-list_item-REV, -FIRST, -DROPLAST, -DROPFIRST, -SKIP); a list item's text's own tokens
+ *   reversed, reversed after the first, the first two swapped, only the first walked, the first not walked, or none walked
  *   (WO-text-REV, -TAIL1, -SWAP2, -FIRST, -DROPFIRST, -SKIP; with the six kinds below, as refusal #3's GP15-Q07); a
  *   paragraph's own tokens each of the eight ways (WO-paragraph-*: reversed, reversed after the first, reversed after the
  *   second as refusal #3's GP15-Q08, the first two swapped, only the first walked, the last not walked, the first not
@@ -253,27 +269,19 @@
  *   DR-ALWAYS-EMPTIED). (6): a removed span's line breaks not counted (LN-NO-COUNT). CRLF: only the first CRLF read as a
  *   line feed, or none (CR-FIRST-ONLY, CR-NONE).
  *   HOLES (NOT CLAIMED: each one-edit reader change below leaves the census at 0 failed | 11 passed (11), measured on cut
- *   #3's bytes and on cut #4's; no residual and no follow-up bead is made of a hole, but the walk order wb-hhu9 carries).
- *   WALK: a list's items reversed after the first or after the second, only the first walked, or the last not walked
- *   (WL-TAIL1 = refusal #3's GP15-Q01, WL-TAIL2, WL-FIRST, WL-DROPLAST); a table's header cells reversed after the first or
- *   after the second, only the first walked, the last not walked, the first not walked, or none walked (WH-TAIL1 =
- *   GP15-Q02, WH-TAIL2, WH-FIRST, WH-DROPLAST, WH-DROPFIRST, WH-SKIP); its body rows reversed after the first or after the
- *   second, only the first walked, or the last not walked (WR-TAIL1 = GP15-Q03, WR-TAIL2, WR-FIRST, WR-DROPLAST); a body
- *   row's cells reversed after the first or after the second (WC-TAIL1 = GP15-Q04, WC-TAIL2); a cell's own tokens the same
- *   two ways (WT-TAIL1, WT-TAIL2); a block quote's own tokens reversed after the first or after the second, two swapped,
- *   only the first walked, or the last not walked (WO-blockquote-TAIL1 = GP15-Q05, -TAIL2, -SWAP2, -FIRST, -DROPLAST); a
- *   list item's own tokens reversed after the second, or two swapped (WO-list_item-TAIL2, -SWAP2); a list item's text's own
- *   tokens reversed after the second, or the last not walked (WO-text-TAIL2, -DROPLAST); and a heading's, a strong's, an
- *   em's, a del's, a link's and an image's own tokens reversed after the first or after the second, only the first walked,
- *   or the last not walked (WO-<kind>-TAIL1, -TAIL2, -FIRST, -DROPLAST). CURSOR: an HTML token's span searched to the
- *   block's end, not the token's (CU-TOKEN-END). LINE BREAKS: a tab after a quote mark only after the last (GP15-Q10), up
- *   to two spaces or tabs after a quote mark (GP15-Q11), any white space after a quote mark or before the marks
- *   (SP-MARK-WS, SP-LEAD-WS), one more space or tab after the last mark (SP-SPACE-THEN-TAB-LAST), and no end bound
- *   (SP-NO-END). SENTINEL: grown by QQ (KI-QQ-STEP). (2): an opening comment in a block quote joined instead
- *   (KI-QUOTE-JOINED); one found at or before its lead (KI-LEAD-LE); the lead's bound four spaces, any run, or any white
- *   space up to three (LS-4, LS-ANY = refusal #1's GE3, LS-WS); the opening comment removed rather than read as spaces
- *   (BL-REMOVE). (3): a line left holding two or more tabs (GP15-Q14), two or more U+00A0 (GP15-Q16), two or more of one
- *   code point but the space (DR-TWO-SAME), or a space and a tab together (DR-MIXED) kept.
+ *   #3's bytes, on cut #4's and on wb-hhu9's; no residual and no follow-up bead is made of a hole). WALK: a list item's own
+ *   tokens reversed after the second, or two swapped (WO-list_item-TAIL2, -SWAP2); a list item's text's own tokens reversed
+ *   after the second, or the last not walked (WO-text-TAIL2, -DROPLAST); and a heading's, a strong's, an em's, a del's, a
+ *   link's and an image's own tokens reversed after the first or after the second, only the first walked, or the last not
+ *   walked (WO-<kind>-TAIL1, -TAIL2, -FIRST, -DROPLAST). CURSOR: an HTML token's span searched to the block's end, not the
+ *   token's (CU-TOKEN-END). LINE BREAKS: a tab after a quote mark only after the last (GP15-Q10), up to two spaces or tabs
+ *   after a quote mark (GP15-Q11), any white space after a quote mark or before the marks (SP-MARK-WS, SP-LEAD-WS), one
+ *   more space or tab after the last mark (SP-SPACE-THEN-TAB-LAST), and no end bound (SP-NO-END). SENTINEL: grown by QQ
+ *   (KI-QQ-STEP). (2): an opening comment in a block quote joined instead (KI-QUOTE-JOINED); one found at or before its
+ *   lead (KI-LEAD-LE); the lead's bound four spaces, any run, or any white space up to three (LS-4, LS-ANY = refusal #1's
+ *   GE3, LS-WS); the opening comment removed rather than read as spaces (BL-REMOVE). (3): a line left holding two or more
+ *   tabs (GP15-Q14), two or more U+00A0 (GP15-Q16), two or more of one code point but the space (DR-TWO-SAME), or a space
+ *   and a tab together (DR-MIXED) kept.
  * - SEAM (row C, "an actual Pi seam"): the one path by which assembled context reaches Pi is the registered
  *   reactivefiber.render.preview capability (read), spawned at the one rf launch site in src (a child-process launcher whose
  *   first argument's constant names rf: exactly the provider's spawn). Its spawned argv for both input arms and the
@@ -655,7 +663,7 @@ const isHtmlToken = (token: Token): token is Tokens.HTML | Tokens.Tag => token.t
 const isListToken = (token: Token): token is Tokens.List => token.type === "list";
 const isTableToken = (token: Token): token is Tokens.Table => token.type === "table";
 /** A token's nested tokens: a list's items, a table's header cells and then its body rows' cells, or its own tokens. The walk
- * is claimed only as COMMENTS OUT (5)'s WALK and PINNED name it; its HOLES are not claimed (wb-hhu9 carries the order). */
+ * is claimed only as COMMENTS OUT (5)'s WALK and ORDER rows and PINNED name it; its HOLES are not claimed. */
 function nestedTokens(token: Token): readonly Token[] {
   if (isListToken(token)) return token.items;
   if (isTableToken(token)) return [...token.header, ...token.rows.flat()].flatMap(cell => cell.tokens);
@@ -1842,6 +1850,20 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       const one = docSurvey("docs/plant.md", page);
       return { findings: one.findings, quieted: one.quieted, unplaced: one.unplaced };
     };
+    // COMMENTS OUT (5)'s ORDER (wb-hhu9): for each count, every child of one container holds its own comment, spelled
+    // `<!-- never 1 -->` to `<!-- never <count> -->` in page order, before the claim, so no two comments are spelled alike.
+    const orderClaim = "The assembler acquires resources";
+    const ownComments = (count: number, child: (comment: string) => string): string => upTo(count, 1).map(index => child(`<!-- never ${index} -->`)).join("");
+    const orderPages: Readonly<Record<string, (count: number) => string>> = {
+      list: count => ownComments(count, comment => `- ${comment} ${orderClaim}\n`),
+      nestedList: count => `- a\n${ownComments(count, comment => `  - ${comment} ${orderClaim}\n`)}`,
+      header: count => `|${ownComments(count, comment => ` ${comment} ${orderClaim} |`)}\n|${" --- |".repeat(count)}\n`,
+      rows: count => `| a |\n| --- |\n${ownComments(count, comment => `| ${comment} ${orderClaim} |\n`)}`,
+      cells: count => `|${" x |".repeat(count)}\n|${" --- |".repeat(count)}\n|${ownComments(count, comment => ` ${comment} ${orderClaim} |`)}\n`,
+      tokens: count => `| a |\n| --- |\n| ${ownComments(count, comment => `x ${comment} `)}${orderClaim} |\n`,
+      quote: count => ownComments(count, comment => `> ${comment} ${orderClaim}.\n`),
+      nestedQuote: count => ownComments(count, comment => `> > ${comment} ${orderClaim}.\n`),
+    };
     const comments = {
       hiddenMarker: [
         docOf("The assembler acquires resources<!-- , not the host -->.\n"),
@@ -1958,6 +1980,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         "[<!-- never --> The assembler acquires](x) resources.\n",
         "![<!-- never --> The assembler acquires](x) resources.\n",
       ].map(surveyed),
+      // COMMENTS OUT (5)'s ORDER (wb-hhu9): one to eight children of each container, every comment placed.
+      walk: Object.fromEntries(Object.entries(orderPages).map(([shape, page]) => [shape, upTo(8, 1).map(count => surveyed(page(count)))])),
       // COMMENTS OUT (5)'s cursor (wb-ro24 respin 1): two identical comments side by side, each placed past the one before.
       cursor: [
         "The assembler <!-- never --><!-- never --> acquires resources.\n",

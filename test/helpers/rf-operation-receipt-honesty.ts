@@ -1,14 +1,16 @@
 /**
  * wb-jwc.9 (RFCLI-FEEDBACK-OPERATIONAL-CONVERGENCE-R6; the rule-19 structural-exit child of wb-jwc.6, orchestrator rulings R-B88
- * and R-B109; cut #4, the fail-closed core the structural exit R-B213 binds, child wb-jwc.12): the readers and the probe vocabulary
- * of the rf operation-receipt reconcile honesty core, landed so wb-jwc.6's final core re-cut can restate its G registrar and N/H
- * honesty claims over them (R-B109: a mechanical restatement over this bead's landed work). Census of record:
- * test/workbench-rf-operation-receipt-honesty-census.test.ts; falsifier roster: test/fixtures/rf-operation-receipt-honesty-roster.json.
+ * and R-B109; cut #4, the fail-closed core the structural exit R-B213 binds, child wb-jwc.12, whose cut adds
+ * REFUSAL_THREE_PLANTS): the readers and the probe vocabulary of the rf operation-receipt reconcile honesty core, landed so
+ * wb-jwc.6's final core re-cut can restate its G registrar and N/H honesty claims over them (R-B109: a mechanical restatement over
+ * this bead's landed work). Census of record: test/workbench-rf-operation-receipt-honesty-census.test.ts; falsifier roster:
+ * test/fixtures/rf-operation-receipt-honesty-roster.json.
  *
  * CLAIMS ARE THE PINS. What a reader is claimed to read is what the census pins of it: its reading of src (rows G and R) and its
- * reading of each planted input that READER_PLANTS (row P, refusal #1) and REFUSAL_TWO_PLANTS (row Q, refusal #2) feed it, whose
- * label names the planted forms. The reader descriptions below say how each reader reads; they are claimed only over those planted
- * forms, and a form no plant feeds is not claimed (the census's named residual R-READER-FORM lists every plant's planted forms).
+ * reading of each planted input that READER_PLANTS (row P, refusal #1), REFUSAL_TWO_PLANTS (row Q, refusal #2) and
+ * REFUSAL_THREE_PLANTS (row S, refusal #3 as wb-jwc.12 files it) feed it, whose label names the planted forms. The reader
+ * descriptions below say how each reader reads; they are claimed only over those planted forms, and a form no plant feeds is not
+ * claimed (the census's named residual R-READER-FORM lists every plant's planted forms).
  *  - srcTree walks src/ with readdirSync: each directory's names sorted by UTF-16 code unit, a directory followed where its name
  *    sorts. A file whose extension is exactly .ts (a .d.ts file included) is a module, parsed with TypeScript's ScriptKind.TS; a
  *    file with another extension is listed unparsed (no plant feeds one to a parsing reader, so which files the parsing readers
@@ -22,12 +24,11 @@
  *    real CapabilityRegistry accepts the id) is listed in `rf` with its descriptor's `effectClass` (the whole string token written
  *    there, else the syntax standing there in angle brackets, else why there is no one plain effectClass assignment) and
  *    `permissions` (an array literal's elements, each its whole string token else its syntax in angle brackets; else the syntax
- *    standing there; else why), so an effect class or a permission written in one of the syntax forms READER_PLANTS and
- *    REFUSAL_TWO_PLANTS plant (their labels name them) is written into the reading as its syntax instead of a word; another form
- *    is not claimed (refusal #3's U1a-U1e forms among them: a conditional with a branch that is not a whole token, a call with an
- *    argument, an assertion to a string literal type, a binary whose left operand is a whole token; deferred to wb-jwc.12). A read
- *    call whose id is not an rf capability id is not listed. A spelling that is not a read call is listed in `unjudged` by file,
- *    owner and syntax (a judged call not read: why).
+ *    standing there; else why), so an effect class or a permission written in one of the syntax forms READER_PLANTS,
+ *    REFUSAL_TWO_PLANTS and REFUSAL_THREE_PLANTS plant (their labels name them; REFUSAL_THREE_PLANTS plants the forms refusal #3's
+ *    U1a-U1e gate mutants depart on) is written into the reading as its syntax instead of a word; another form is not claimed. A
+ *    read call whose id is not an rf capability id is not listed (REFUSAL_THREE_PLANTS plants refusal #3's U2 forms of one). A
+ *    spelling that is not a read call is listed in `unjudged` by file, owner and syntax (a judged call not read: why).
  *  - srcEnvironmentReads reads process.env, the property access env of the identifier process: a property access of it
  *    (process.env.NAME) or an element access of it by a whole string token (process.env["NAME"]), in an optional chain too, gives
  *    a NAME; an element access of it by another expression is listed as computed; otherwise the syntax holding it is listed as a
@@ -39,10 +40,10 @@
  *    (injectable: src's registerReactiveFiberRender over a seam that returns the envelope or throws the category; native: src's
  *    registerNativeReactiveFiberRender over a stand-in rf, the only PATH entry, a POSIX shell script of shell builtins only that
  *    prints one fixed line and exits with one fixed code, inside one tracked scratch directory removed after the read).
- *  - READER_PLANTS and REFUSAL_TWO_PLANTS are the vocabulary of planted inputs: each a planted src tree written into one tracked
- *    scratch directory (removed after the read) and read by srcTree, rfRegistrationLiterals or srcEnvironmentReads, or a planted
- *    registrar run through runForms and registeredUnder; each names the unmet members of its refusal it pins and the planted forms
- *    it feeds.
+ *  - READER_PLANTS, REFUSAL_TWO_PLANTS and REFUSAL_THREE_PLANTS are the vocabulary of planted inputs: each a planted src tree
+ *    written into one tracked scratch directory (removed after the read) and read by srcTree, rfRegistrationLiterals or
+ *    srcEnvironmentReads, or a planted registrar run through runForms and registeredUnder; each names the unmet members of its
+ *    refusal it pins and the planted forms it feeds.
  *
  * Display paths added: none. Test-only; reads src and the planted trees, and spawns nothing but the stand-in rf.
  */
@@ -544,7 +545,7 @@ export interface ReaderPlant {
   readonly key: string;
   /** The claim the pin states: the reader, the planted input and what the reader reads of it, naming the planted forms. */
   readonly label: string;
-  /** The unmet members of its refusal this plant pins: refusal #1's for READER_PLANTS (row P), refusal #2's for REFUSAL_TWO_PLANTS (row Q), each from that refusal note's UNMET block in the bead export. */
+  /** The unmet members of its refusal this plant pins: refusal #1's for READER_PLANTS (row P), refusal #2's for REFUSAL_TWO_PLANTS (row Q), refusal #3's for REFUSAL_THREE_PLANTS (row S), each from that refusal note's UNMET block in the bead export. */
   readonly cures: readonly string[];
   /** The reader or readers the plant feeds, by name. */
   readonly reader: string;
@@ -1100,5 +1101,73 @@ export function refusalTwoPlants(effectClasses: readonly string[]): ReaderPlant[
       read: () => withPreset(first, PRESET, () => runsReading(PLANTED_NAMES, effectClasses, environmentRegistrar)),
       label: "registeredUnder in the run forms over two planted environment names (refusal #2 U1m): the first is set to preset before the runs and the second is unset; each env form sets both to its effect class word for the run and gives each back its value from before the run after it, so after each run the first reads preset and the second unset, and a planted registrar reading the first for a permission registers preset in the forms that set no environment; what each run leaves the registry holding for rf ids, and both names after the run, are listed",
     },
+  ];
+}
+
+/** Refusal #3 U1a: an effectClass written as a conditional with one branch that is not a whole token, the reference in either branch. */
+const CONDITIONAL_BRANCH_MODULE = `export function plantReferenceTrueClass(registry: Registry, mode?: EffectClass): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-reference-true", effectClass: mode !== undefined ? mode : "read", permissions: ["reactivefiber:render"] } });
+}
+export function plantReferenceFalseClass(registry: Registry, mode?: EffectClass): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-reference-false", effectClass: mode === undefined ? "read" : mode, permissions: ["reactivefiber:render"] } });
+}
+`;
+/** Refusal #3 U1b: an effectClass written as a call holding a whole-token argument, as its first and as its last argument. */
+const CALL_ARGUMENT_MODULE = `export function plantFirstArgumentClass(registry: Registry, mode?: EffectClass): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-first-argument", effectClass: ((fallback: EffectClass, chosen?: EffectClass) => chosen ?? fallback)("read", mode), permissions: ["reactivefiber:render"] } });
+}
+export function plantLastArgumentClass(registry: Registry, mode?: EffectClass): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-last-argument", effectClass: chooseClass(mode, "read"), permissions: ["reactivefiber:render"] } });
+}
+`;
+/** Refusal #3 U1c: an effectClass written as an as assertion to a string literal type, of a parenthesized conditional and of a reference. */
+const ASSERTED_CLASS_MODULE = `export function plantAssertedConditionalClass(registry: Registry, mode?: string): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-asserted-conditional", effectClass: (mode === "commit" ? "write" : "read") as "read", permissions: ["reactivefiber:render"] } });
+}
+export function plantAssertedReferenceClass(registry: Registry, mode: string): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-asserted-reference", effectClass: mode as "read", permissions: ["reactivefiber:render"] } });
+}
+`;
+/** Refusal #3 U1d: a permissions element written as an as assertion to a string literal type, of a parenthesized conditional and of a reference. */
+const ASSERTED_ELEMENT_MODULE = `export function plantAssertedConditionalElement(registry: Registry, mode?: string): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-asserted-conditional-element", effectClass: "read", permissions: [(mode === "commit" ? "reactivefiber:commit" : "reactivefiber:render") as "reactivefiber:render"] } });
+}
+export function plantAssertedReferenceElement(registry: Registry, permission: string): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-asserted-reference-element", effectClass: "read", permissions: [permission as "reactivefiber:render"] } });
+}
+`;
+/** Refusal #3 U1e: an effectClass written as a binary whose left operand is a whole token, joined by &&, || and ??. */
+const TOKEN_LEFT_MODULE = `export function plantAndLeftClass(registry: Registry, mode?: EffectClass): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-and-left", effectClass: "read" && (mode ?? "read"), permissions: ["reactivefiber:render"] } });
+}
+export function plantOrLeftClass(registry: Registry, mode?: EffectClass): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-or-left", effectClass: "read" || mode, permissions: ["reactivefiber:render"] } });
+}
+export function plantNullishLeftClass(registry: Registry, mode?: EffectClass): void {
+  registry.register({ descriptor: { id: "reactivefiber.plant-nullish-left", effectClass: "read" ?? mode, permissions: ["reactivefiber:render"] } });
+}
+`;
+/** Refusal #3 U2: register calls whose id is not an rf capability id, one through an optional chain beside an rf registration respelled the same way, one in a dotfile module. */
+const OTHER_ID_TREE: Readonly<Record<string, string>> = {
+  "src/plant.ts": `export function plantOptionalRegistrations(registry: Registry | undefined): void {
+  registry?.register({ descriptor: { id: "forge.plant-optional", effectClass: "write", permissions: ["forge:plant"] } });
+  registry?.register({ descriptor: { id: "reactivefiber.plant-optional", effectClass: "read", permissions: ["reactivefiber:render"] } });
+}
+`,
+  "src/.plant-dot-forge.ts": `export function plantDotForge(registry: Registry): void {
+  registry.register({ descriptor: { id: "forge.plant-dot", effectClass: "write", permissions: ["forge:plant"] } });
+}
+`,
+};
+
+/** The planted inputs of refusal #3 as wb-jwc.12 files them, in pin order: one per member U1a-U1e of refusal #3's UNMET block, each the form that member's gate mutant departs on, then one for U2's registrations. */
+export function refusalThreePlants(): ReaderPlant[] {
+  return [
+    sourcePlant("registrations:conditional-branch", ["U1a"], "rfRegistrationLiterals over a planted src module (refusal #3 U1a): each planted rf literal whose effectClass is written as a conditional with one branch that is not a whole token (mode !== undefined ? mode : 'read', and mode === undefined ? 'read' : mode) has it read as the syntax standing there in angle brackets, not as its token branch's word; the reading is listed", CONDITIONAL_BRANCH_MODULE, registrationReading),
+    sourcePlant("registrations:call-argument", ["U1b"], "rfRegistrationLiterals over a planted src module (refusal #3 U1b): each planted rf literal whose effectClass is written as a call holding a whole-token argument (a parenthesized arrow function called with 'read' as its first argument, and chooseClass(mode, 'read') with it as its last) has it read as the syntax standing there in angle brackets, not as that argument's word; the reading is listed", CALL_ARGUMENT_MODULE, registrationReading),
+    sourcePlant("registrations:asserted-class", ["U1c"], "rfRegistrationLiterals over a planted src module (refusal #3 U1c): each planted rf literal whose effectClass is written as an as assertion to a string literal type ((mode === 'commit' ? 'write' : 'read') as 'read', and mode as 'read') has it read as the syntax standing there in angle brackets, not as the asserted type's word; the reading is listed", ASSERTED_CLASS_MODULE, registrationReading),
+    sourcePlant("registrations:asserted-element", ["U1d"], "rfRegistrationLiterals over a planted src module (refusal #3 U1d): each planted rf literal whose permissions element is written as an as assertion to a string literal type ([(mode === 'commit' ? 'reactivefiber:commit' : 'reactivefiber:render') as 'reactivefiber:render'], and [permission as 'reactivefiber:render']) has it read as its syntax in angle brackets, not as the asserted type's word; the reading is listed", ASSERTED_ELEMENT_MODULE, registrationReading),
+    sourcePlant("registrations:token-left", ["U1e"], "rfRegistrationLiterals over a planted src module (refusal #3 U1e): each planted rf literal whose effectClass is written as a binary whose left operand is a whole token ('read' && (mode ?? 'read'), 'read' || mode and 'read' ?? mode) has it read as the syntax standing there in angle brackets, not as its left operand's word; the reading is listed", TOKEN_LEFT_MODULE, registrationReading),
+    treePlant("tree:other-id", ["U2"], "srcTree and rfRegistrationLiterals over a planted src tree (refusal #3 U2): the planted register calls whose id is not an rf capability id (forge.plant-optional through registry?.register in src/plant.ts, and forge.plant-dot in the dotfile module src/.plant-dot-forge.ts, which is listed as a module) are listed nowhere, neither as rf literals nor unjudged, while the planted rf registration respelled through registry?.register beside the first (reactivefiber.plant-optional) is read as an rf literal; the split and the reading are listed", OTHER_ID_TREE, [treeReading, registrationReading]),
   ];
 }
