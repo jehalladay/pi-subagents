@@ -27,12 +27,18 @@
  *    private names, every string, template part or number, every static name chain - a property access, an element access by a
  *    literal key, a qualified name or an indexed access type by a literal key, read from its first named link through every
  *    transparent wrapper (parentheses, a non-null assertion, an as or satisfies expression, a type assertion, a parenthesized
- *    type) and rooted at a name, this, a type name or a type query (claimed only as deep as its reading controls spell each link
- *    kind, each control's chain read whole - a run of two links of a property access, an element access or an indexed access
- *    type and of three of a qualified name, three property accesses, two element accesses, three qualified names and two
- *    indexed access types in one chain, four links in all, and a mixed-kind four-link chain read by its own two controls, one
- *    alternating its kinds and one with a same-kind run of two (wb-0g9n F1): a chain of a shape no reading control spells is
- *    NOT CLAIMED, and a reading limited at those depths or past them, by any bound on a chain's link kinds, is R-CHAIN-DEPTH);
+ *    type) and rooted at a name, this, a type name or a type query (claimed only as its chain reading controls read it, each
+ *    control's chain read whole at its own depth - a run of two links of a property access, an element access or an indexed
+ *    access type and of three of a qualified name, three property accesses, two element accesses, three qualified names and
+ *    two indexed access types in one chain, four links in all, and a mixed-kind four-link chain read by its own controls, one
+ *    alternating its kinds and five with a same-kind run of two (wb-0g9n F1) - and in its own context - its root, each link's
+ *    form, key and wrappers, the nodes it stands in and its place, alone on line 1 of its own module: the same-kind-run shape
+ *    at a wrapped and at a plain name root, with and without an optional link, with a hyphenated and an identifier-like key,
+ *    and two and three qualified names in a type reference and in a type query (wb-0g9n cut #2, refusal #1's U1): a chain of a
+ *    shape no reading control spells, or of a spelled shape anywhere but in a control's own source - in another root, link
+ *    form, key, wrapper, container or place, every src module's chains among them but the known spelling below - is NOT
+ *    CLAIMED, and a reading limited by any bound every chain control meets, on a chain's link kinds at those depths or past
+ *    them or on its context, is R-CHAIN-DEPTH);
  *    any other
  *    root (a call, an element access by a computed key, a comma or any other expression) is computed and not part of it - every nested key path of object keys, type members and
  *    binding patterns, and every regex literal's pattern, each character escape (\x2E, \u002E, \u{2E}) read as the character it
@@ -57,7 +63,9 @@
  *    qualified name three links deep (A.Rec.Owner.Epoch): wb-jdz6 cut #3, refusal #2's F4; the chain reading bounded to the depths
  *    those controls spell, including a mixed-kind chain of four total links (wb-2hdl F3) and one with a same-kind run of two,
  *    three property accesses in one chain (wb-0g9n F1), a reading limited at these depths or past them named R-CHAIN-DEPTH:
- *    wb-jdz6 cut #4, refusal #3's F4) and
+ *    wb-jdz6 cut #4, refusal #3's F4; the same-kind-run shape at a plain name root, without an optional link, with an
+ *    identifier-like key and with all three, and two and three qualified names in a type query, each chain claimed only in its
+ *    control's own context, a reading limited by a chain's context named R-CHAIN-DEPTH too: wb-0g9n cut #2, refusal #1's U1) and
  *    the TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
  *    the token readings - every node of a src module's syntax tree that carries its own text (an identifier, a private name, a
  *    string, a template part, a regex, a number) must be one a token reading read, so a token reading removed together with its
@@ -165,8 +173,12 @@
  * filing anchors rows and clauses, not words, and no source outside this cut lists the vocabulary); an assertion removed from this
  * file together with its pinned count in the roster's record; a case that keeps its own assertions but returns its witness as a
  * literal, or reads the roster through an alias; a src chain of a shape no reading control spells (a property access over two
- * element accesses among them: A2 claims the chain reading only as deep as its controls spell, and R-CHAIN-DEPTH's quiet row
- * holds their shapes); the file-end judge or the selection it reads removed (no claim rides them alone:
+ * element accesses among them), or of a spelled shape anywhere but in a chain control's own source (another root, a link's
+ * other form, key or wrapper, another container or another place: the alternating four-link shape at a plain name root, the
+ * same-kind-run shape at a plain name root with a hyphenated key and no optional link, either four-link shape in a return
+ * statement or past line 1, and every src module's chains but the known spelling, among them): A2 claims the chain reading
+ * only as its controls read it, and R-CHAIN-DEPTH's quiet row holds their shapes and contexts; the file-end judge or the
+ * selection it reads removed (no claim rides them alone:
  * the records case still holds the record); every case of the file skipped at once (no case runs to read the tree, and vitest runs
  * no hook for a file with nothing to run); a composite reading (the chain or the key-path reading), or one link or root kind of the
  * chain reading, removed from scanModule together with its reading controls, the roster's scan and A2's witness - and, for the
@@ -202,17 +214,25 @@
  *   contract's observed state: unknown, observed-started or observed-terminal) as the words "snapshot observation": it is no H2
  *   record, so A2 holds it as its one known spelling, read (A2); R-SPLIT-NAMES a term split across two names that form no chain and
  *   no key path - a key and the value it holds, a name and its type, a key and a call's argument, a declaration and its member - is
- *   two names read one at a time, quiet (A2); R-CHAIN-DEPTH a chain read only to a finite depth - a link read only while its
- *   chain stays within a bound on its link kinds (its run of links of one kind, the links of its own kind or of another kind its
- *   chain holds, its total links, or the order its kinds mix in) - reads every reading control whole at or past the depths they
- *   spell: runs of two links of a property access, an element access or an indexed access type and of three of a qualified
- *   name; three property accesses, two element accesses, three qualified names and two indexed access types in one chain
- *   (wb-0g9n F1); four links in all, a mixed-kind chain (wb-2hdl F3); and each control's chain shape (quiet row: each kind's
- *   longest run, each kind's most links in one chain, the longest total chain and each chain control's shape - the link kinds
- *   of its outermost chains, outermost first - every one read from the controls' sources by syntax kind through the
- *   transparent wrappers, apart from linkOf: wb-0g9n F1 and F3). A2 claims these depths only: a three-total-link reader loses
- *   both mixed-kind controls, and a reader that stops a link once its chain holds more than two property accesses loses the
- *   one with the same-kind run.
+ *   two names read one at a time, quiet (A2); R-CHAIN-DEPTH a chain read only to a finite depth or only in some contexts - a
+ *   link read only while its chain stays within a bound on its link kinds (its run of links of one kind, the links of its own
+ *   kind or of another kind its chain holds, its total links, or the order its kinds mix in) or on its context (its root, a
+ *   link's form, key or wrappers, the nodes it stands in, or its place in its module), any bound every chain reading control
+ *   meets - reads every reading control whole at or past the depths they spell, in the contexts they spell: runs of two links
+ *   of a property access, an element access or an indexed access type and of three of a qualified name; three property
+ *   accesses, two element accesses, three qualified names and two indexed access types in one chain (wb-0g9n F1); four links
+ *   in all, a mixed-kind chain (wb-2hdl F3); each control's chain shape; and each control's context (wb-0g9n cut #2, refusal
+ *   #1's U1: a reading limited past three links unless the root is read through a wrapper, unless a link is optional or
+ *   unless an element key holds a non-identifier character, and one limited past one qualified name in a type query, kept
+ *   every control of cut #1) (quiet row: each kind's longest run, each kind's most links in one chain, the longest total
+ *   chain, each chain control's shape - the link kinds of its outermost chains, outermost first - and each chain control's
+ *   contexts - for each outermost chain, its root, its links root first with their names or keys, optional links and the
+ *   wrappers each inner is read through, the nodes it stands in up to its module and its place - every one read from the
+ *   controls' sources by syntax kind through the transparent wrappers, apart from linkOf: wb-0g9n F1 and F3, cut #2). A2
+ *   claims these depths and contexts only: a three-total-link reader loses the six four-link controls, a reader that stops a
+ *   link once its chain holds more than two property accesses loses the five with the same-kind run, and of the four cut #1
+ *   readings above, the wrapped-root one loses the two plain-root controls, the optional-link one the two without an optional
+ *   link, the key-text one the two with an identifier-like key, and the type-query one the two type-query controls.
  * SELF-READ RESIDUALS (wb-jdz6 cut #4: the reader narrowings outside THE PINNED SET, by named family; each family's members are
  *   rows of SELF_READ_RESIDUALS - two spellings that differ in the member alone and the member's model, a text substitution (a
  *   token reading for wb-2hdl F1's literal letters and F2's punctuation tokens) - and each member's pinned quiet row is measured
@@ -345,7 +365,13 @@ const COMPOSED_CONTROL = 'const word = ["owner", "epoch"].join(" ");';
  * a reading limited at three links or past them kept every prior control; wb-2hdl F3 adds a mixed-kind four-total-link
  * control, and wb-0g9n F1 a second one with a same-kind run of two (the landing-771 gate's PLANT-PEPP shape: a reading that
  * stops a link once its chain holds more links of its own kind than the runs spell - two property accesses - kept every other
- * control, the alternating one among them, and missed three property accesses in one chain). */
+ * control, the alternating one among them, and missed three property accesses in one chain). wb-0g9n cut #2 (refusal #1's
+ * U1: each multi-link shape was spelled in one context only, so a reading limited past three links unless the root is read
+ * through a wrapper (G-ROOTWRAP), unless a link is optional (G-OPTIONAL) or unless an element key holds a non-identifier
+ * character (G-KEYTEXT), and one limited past one qualified name in a type query (G-QNTQ), kept every control) spells the
+ * same-kind-run shape again at a plain name root, without an optional link, with an identifier-like key and with all three,
+ * and two and three qualified names in a type query, so each of those four readings loses a control; a shape is claimed only
+ * in the contexts its controls spell it in, each chain control's context held in R-CHAIN-DEPTH's quiet row. */
 const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["identifier", "identifier", "let ownerEpoch = 0;"],
   ["private name", "identifier", "class Holder { #ownerEpoch = 0; }"],
@@ -354,11 +380,17 @@ const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["property access", "chain", "const e = record.owner.epoch;"],
   ["mixed-kind four-link chain", "chain", 'const e = (globalThis as unknown as X).a["b-c"]?.owner["epoch-at"];'],
   ["mixed-kind four-link chain with a same-kind run of two", "chain", 'const e = (globalThis as unknown as X).a["b-c"]?.owner.epoch;'],
+  ["four-link chain at a plain name root", "chain", 'const e = rec.a["b-c"]?.owner.epoch;'],
+  ["four-link chain without an optional link", "chain", 'const e = (globalThis as unknown as X).a["b-c"].owner.epoch;'],
+  ["four-link chain with an identifier-like key", "chain", 'const e = (globalThis as unknown as X).a["bc"]?.owner.epoch;'],
+  ["four-link chain at a plain name root without an optional link and with an identifier-like key", "chain", 'const e = rec.a["bc"].owner.epoch;'],
   ["computed root", "chain", "const e = load().owner.epoch;"],
   ["element access", "chain", 'const e = record["owner"]?.["epoch"];'],
   ["qualified name", "chain", "type E = Owner.Epoch;"],
   ["nested qualified name", "chain", "type E = Rec.Owner.Epoch;"],
   ["twice-nested qualified name", "chain", "type E = A.Rec.Owner.Epoch;"],
+  ["nested qualified name in a type query", "chain", "type E = typeof rec.owner.epoch;"],
+  ["twice-nested qualified name in a type query", "chain", "type E = typeof a.rec.owner.epoch;"],
   ["object keys", "key path", "const o = { owner: { epoch: 1 } };"],
   ["type members", "key path", "type T = { owner: { epoch: number } };"],
   ["binding pattern", "key path", "const { owner: { epoch } } = record;"],
@@ -875,6 +907,11 @@ function unwrapped(node: ts.Node): ts.Node {
   while (isWrapper(at)) at = ts.isParenthesizedTypeNode(at) ? at.type : at.expression;
   return at;
 }
+/** A syntax kind's own name (R-CHAIN-DEPTH's chain contexts, wb-0g9n cut #2): the first name ts.SyntaxKind gives its value - a
+ * marker such as FirstStatement aliases a kind and is declared after it, so the compiler's own reverse mapping names the marker. */
+const KIND_NAMES = new Map<number, string>();
+for (const [name, value] of Object.entries(ts.SyntaxKind)) if (typeof value === "number" && !KIND_NAMES.has(value)) KIND_NAMES.set(value, name);
+const kindName = (node: ts.Node): string => KIND_NAMES.get(node.kind) ?? String(node.kind);
 /** The nearest ancestor that is not a transparent wrapper: where a link that is wrapped would be read as an inner link. */
 function enclosing(node: ts.Node): ts.Node {
   let at = node.parent;
@@ -917,7 +954,15 @@ function chainOf(node: ts.Node): string | undefined {
  * holds (wb-0g9n F1: a chain reading that stopped a link once its chain held more links of its kind than the runs spell read
  * every control whole and missed three property accesses in one chain); the longest total chain (wb-2hdl F3, read through linkOf until wb-0g9n F3); and each chain control's shape, the link
  * kinds of its outermost chains, outermost first, from which any other bound on a chain's link kinds follows - so a chain
- * reading limited at those depths, or past them, reads every reading control whole. */
+ * reading limited at those depths, or past them, reads every reading control whole. And each chain control's context (wb-0g9n
+ * cut #2, refusal #1's U1: readings limited by a chain's root form, an optional link, a key's text or a type query kept every
+ * control while each multi-link shape stood in one context), read the same way: for each of its outermost chains, its root -
+ * the node its innermost link reads through its wrappers: a name or private name with its text, a type name or type query
+ * with its text, or the kind of any other root (this, the this type, a call) -, its links root first - each one's own
+ * spelling (a property access's or qualified name's name, an element access's or indexed access type's key, an optional
+ * link's ?.), after the wrappers its inner is read through -, the nodes it stands in up to its module, by syntax kind, and
+ * its place, its module and line, from which any bound on a chain's context follows - so a chain reading limited by any
+ * bound the controls' shapes and contexts all meet reads every reading control whole. */
 function chainControlDepths(): JsonObject {
   const kinds: readonly (readonly [string, (node: ts.Node) => ts.Node | undefined])[] = [
     ["property access", node => (ts.isPropertyAccessExpression(node) ? node.expression : undefined)],
@@ -933,18 +978,78 @@ function chainControlDepths(): JsonObject {
     }
     return undefined;
   };
+  /** The node a link reads before its transparent wrappers are read through, by its syntax kind alone. */
+  const rawInner = (node: ts.Node): ts.Node | undefined => {
+    for (const [, innerOf] of kinds) {
+      const inner = innerOf(node);
+      if (inner !== undefined) return inner;
+    }
+    return undefined;
+  };
+  /** The transparent wrappers a node is read through, outermost first, by syntax kind. */
+  const wrappersOf = (node: ts.Node): string[] => {
+    const found: string[] = [];
+    let at = node;
+    while (isWrapper(at)) {
+      found.push(kindName(at));
+      at = ts.isParenthesizedTypeNode(at) ? at.type : at.expression;
+    }
+    return found;
+  };
+  /** A key as it is spelled: the wrappers it is read through, then its literal text, or the kind of a computed key. */
+  const keyText = (key: ts.Node): string => {
+    const at = unwrapped(key);
+    const literal = ts.isLiteralTypeNode(at) ? at.literal : at;
+    return [...wrappersOf(key), ts.isStringLiteralLike(literal) ? JSON.stringify(literal.text) : kindName(literal)].join(" ");
+  };
+  /** A link's own spelling: a property access's or qualified name's name, an element access's or indexed access type's key, and
+   * an optional link's ?. */
+  const linkSpelling = (node: ts.Node): string => {
+    if (ts.isPropertyAccessExpression(node)) return `${node.questionDotToken === undefined ? "." : "?."}${node.name.text}`;
+    if (ts.isElementAccessExpression(node)) return `${node.questionDotToken === undefined ? "" : "?."}[${keyText(node.argumentExpression)}]`;
+    if (ts.isQualifiedName(node)) return `.${node.right.text}`;
+    return ts.isIndexedAccessTypeNode(node) ? `[${keyText(node.indexType)}]` : kindName(node);
+  };
+  /** A chain's root: a name or private name with its text, a type name or a type query with its text, or any other root's kind. */
+  const rootForm = (file: ts.SourceFile, root: ts.Node): string => {
+    if (ts.isIdentifier(root) || ts.isPrivateIdentifier(root)) return `${kindName(root)} ${root.text}`;
+    if (ts.isTypeReferenceNode(root)) return `${kindName(root)} ${root.typeName.getText(file)}`;
+    return ts.isTypeQueryNode(root) ? `${kindName(root)} ${root.exprName.getText(file)}` : kindName(root);
+  };
+  /** An outermost chain's context: its root, its links root first, the nodes it stands in up to its module, and its place - its
+   * module and its line. */
+  const contextOf = (file: ts.SourceFile, outer: ts.Node): string => {
+    const links: string[] = [];
+    let at: ts.Node = outer;
+    for (let raw = rawInner(at); raw !== undefined; raw = rawInner(at)) {
+      links.unshift([...wrappersOf(raw), linkSpelling(at)].join(" "));
+      at = unwrapped(raw);
+    }
+    const standsIn: string[] = [];
+    let up: ts.Node = outer;
+    while (!ts.isSourceFile(up)) {
+      up = up.parent;
+      standsIn.push(kindName(up));
+    }
+    return `${rootForm(file, at)}; ${links.join(" ")}; in ${standsIn.join(" < ")}; at ${file.fileName}:${file.getLineAndCharacterOfPosition(outer.getStart(file)).line + 1}`;
+  };
   const longest: Record<string, number> = Object.fromEntries(kinds.map(([kind]) => [kind, 0]));
   const most: Record<string, number> = Object.fromEntries(kinds.map(([kind]) => [kind, 0]));
   const shapes: string[] = [];
+  const contexts: string[] = [];
   let total = 0;
   for (const [label, reading, source] of READING_CONTROLS) {
     if (reading !== "chain") continue;
     const file = ts.createSourceFile("control.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
     const outermost: string[] = [];
+    const placed: string[] = [];
     const visit = (node: ts.Node): void => {
       const chain: string[] = [];
       for (let link = linkAt(node); link !== undefined; link = linkAt(link.inner)) chain.push(link.kind);
-      if (chain.length > 0 && linkAt(enclosing(node))?.inner !== node) outermost.push(chain.join(", "));
+      if (chain.length > 0 && linkAt(enclosing(node))?.inner !== node) {
+        outermost.push(chain.join(", "));
+        placed.push(contextOf(file, node));
+      }
       total = Math.max(total, chain.length);
       for (const [kind, innerOf] of kinds) {
         let run = 0;
@@ -956,8 +1061,9 @@ function chainControlDepths(): JsonObject {
     };
     visit(file);
     shapes.push(`${label}: ${outermost.join(" | ")}`);
+    contexts.push(`${label}: ${placed.join(" | ")}`);
   }
-  return json({ ...longest, "total links": total, "most links of one kind in one chain": most, "chain shapes": shapes }) as JsonObject;
+  return json({ ...longest, "total links": total, "most links of one kind in one chain": most, "chain shapes": shapes, "chain contexts": contexts }) as JsonObject;
 }
 /** A member that states a key: an object key, a class or type member, or an element of a binding pattern. */
 type Keyed =
