@@ -3,8 +3,9 @@
   "claims": {
     "wrappers": [
       {
-        "words": "WRAPPERS are parentheses, as, satisfies, <T>, ! and an instantiation expression's type arguments; every reader reads an expression through every one of them at every use site (unwrap and isWrapper), and the tracer also through await",
+        "words": "WRAPPERS are parentheses, as, satisfies, <T>, ! and an instantiation expression's type arguments; every reader reads an expression through every one of them at every use site (unwrap and isWrapper; each site's module spells every kind), the outermost layer included for every kind TypeScript's parser admits there (the outermost-wrapper class: skipping such a kind at one site reds that site's pin; a kind the parser never puts outermost there is an equivalent member, named with the parse that says so), and the tracer also through await",
         "falsifiers": [
+          "F-OUTERMOST-WRAPPERS",
           "unwrap@resolveTexts#1",
           "unwrap@resolveTexts#2",
           "isWrapper@elementRead#1",
@@ -30,7 +31,8 @@
           "F-ENTRY-EDGES",
           "F-PLANTED",
           "F-ENTRY-CANDIDATES",
-          "F-SPECIFIER-SLOTS"
+          "F-SPECIFIER-SLOTS",
+          "F-OUTERMOST-WRAPPERS"
         ]
       }
     ],
@@ -120,7 +122,7 @@
         ]
       },
       {
-        "words": "declarations and BINDING_ASSIGNMENTS assignments to a name or a destructuring pattern at any depth (rest elements, defaults and holes included, a pattern or default nested in one, a key of any spelling), the target through WRAPPERS (a default's target too), and the assignment's value (after a property store too, and along a chain of assignments)",
+        "words": "declarations and BINDING_ASSIGNMENTS assignments to a name or a destructuring pattern at any depth (rest elements, defaults and holes included, a pattern or default nested in one, a key of any spelling), the target through WRAPPERS (a default's target too, and an element target under an outermost as, satisfies or <T>), and the assignment's value (after a property store too, and along a chain of assignments)",
         "falsifiers": [
           "BINDING_ASSIGNMENTS@consume#1",
           "unwrap@bindTarget#1",
@@ -128,7 +130,8 @@
           "F-ENTRIES",
           "F-BINDINGS",
           "F-FLOWS",
-          "F-LITERAL-KEYS"
+          "F-LITERAL-KEYS",
+          "F-OUTERMOST-WRAPPERS"
         ]
       },
       {
@@ -227,7 +230,8 @@
           "BF1c",
           "NS2c",
           "F-LITERAL-KEYS",
-          "F-OPTIONAL-CHAINS"
+          "F-OPTIONAL-CHAINS",
+          "F-OUTERMOST-WRAPPERS"
         ]
       },
       {
@@ -253,7 +257,7 @@
     ],
     "resolution": [
       {
-        "words": "commands, specifiers and member keys resolve through string literals and no-substitution templates, a conditional's arms (a nested conditional's too), the const binding a name resolves to in its scope, and a literal numeric index into a const array literal (no spread anywhere in it) whose name is only read; otherwise they do not resolve; the candidates are deduplicated and sorted",
+        "words": "commands, specifiers and member keys resolve through string literals and no-substitution templates, a conditional's arms (a nested conditional's too), the const binding a name resolves to in its scope, and a literal numeric index into a const array literal (no spread anywhere in it; through WRAPPERS, an outermost as, as const, satisfies or <T> on the initializer included) whose name is only read; otherwise they do not resolve; the candidates are deduplicated and sorted",
         "falsifiers": [
           "F-SCOPE",
           "F-ARRAYS",
@@ -261,7 +265,8 @@
           "F-FOLLOW",
           "F-LITERAL-KEYS",
           "F-ARRAY-REACH",
-          "F-ENTRY-CANDIDATES"
+          "F-ENTRY-CANDIDATES",
+          "F-OUTERMOST-WRAPPERS"
         ]
       },
       {
@@ -846,6 +851,161 @@
         "F-SCOPE",
         "F-SCOPE-MATRIX"
       ]
+    },
+    "GP14-01-RT-SAT": {
+      "hollows": "unwrap@resolveTexts#1 reads an outermost satisfies as written (resolveTexts does not unwrap it)",
+      "edits": [
+        {
+          "from": "  const step = depth + 1;\n  const node = unwrap(expression);\n  if (ts.isStringLiteralLike(node)) return [node.text];",
+          "to": "  const step = depth + 1;\n  const node = (ts.isSatisfiesExpression(expression) ? expression : unwrap(expression));\n  if (ts.isStringLiteralLike(node)) return [node.text];"
+        }
+      ],
+      "reds": [
+        "unwrap@resolveTexts#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w01-rt-sat-exec",
+        "w01b-rt-sat-import"
+      ],
+      "twins": [
+        "t01-rt-sat-paren"
+      ]
+    },
+    "GP14-02-RT-TA": {
+      "hollows": "unwrap@resolveTexts#1 reads an outermost <T> assertion as written",
+      "edits": [
+        {
+          "from": "  const step = depth + 1;\n  const node = unwrap(expression);\n  if (ts.isStringLiteralLike(node)) return [node.text];",
+          "to": "  const step = depth + 1;\n  const node = (ts.isTypeAssertionExpression(expression) ? expression : unwrap(expression));\n  if (ts.isStringLiteralLike(node)) return [node.text];"
+        }
+      ],
+      "reds": [
+        "unwrap@resolveTexts#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w02-rt-ta-exec",
+        "w02b-rt-ta-import"
+      ],
+      "twins": [
+        "t02-rt-ta-paren"
+      ]
+    },
+    "GP14-03-RA-AS": {
+      "hollows": "unwrap@resolveArrays#1 reads an outermost as (as const) as written: a const array literal under as does not resolve",
+      "edits": [
+        {
+          "from": "  const step = depth + 1;\n  const node = unwrap(expression);\n  let arms: ((string[] | undefined)[][] | undefined)[];",
+          "to": "  const step = depth + 1;\n  const node = (ts.isAsExpression(expression) ? expression : unwrap(expression));\n  let arms: ((string[] | undefined)[][] | undefined)[];"
+        }
+      ],
+      "reds": [
+        "unwrap@resolveArrays#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w03-ra-as-const",
+        "w03b-ra-as-const-spawn"
+      ],
+      "twins": [
+        "t03-ra-as-paren"
+      ]
+    },
+    "GP14-04-RA-SAT": {
+      "hollows": "unwrap@resolveArrays#1 reads an outermost satisfies as written",
+      "edits": [
+        {
+          "from": "  const step = depth + 1;\n  const node = unwrap(expression);\n  let arms: ((string[] | undefined)[][] | undefined)[];",
+          "to": "  const step = depth + 1;\n  const node = (ts.isSatisfiesExpression(expression) ? expression : unwrap(expression));\n  let arms: ((string[] | undefined)[][] | undefined)[];"
+        }
+      ],
+      "reds": [
+        "unwrap@resolveArrays#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w04-ra-sat"
+      ],
+      "twins": [
+        "t04-ra-sat-paren"
+      ]
+    },
+    "GP14-05-RA-TA": {
+      "hollows": "unwrap@resolveArrays#1 reads an outermost <T> assertion as written",
+      "edits": [
+        {
+          "from": "  const step = depth + 1;\n  const node = unwrap(expression);\n  let arms: ((string[] | undefined)[][] | undefined)[];",
+          "to": "  const step = depth + 1;\n  const node = (ts.isTypeAssertionExpression(expression) ? expression : unwrap(expression));\n  let arms: ((string[] | undefined)[][] | undefined)[];"
+        }
+      ],
+      "reds": [
+        "unwrap@resolveArrays#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w05-ra-ta"
+      ],
+      "twins": [
+        "t05-ra-ta-paren"
+      ]
+    },
+    "GP14-06-BT-AS": {
+      "hollows": "unwrap@bindTarget#1 reads an outermost as on a destructuring element target as written (a property store)",
+      "edits": [
+        {
+          "from": "    const node = unwrap(target);",
+          "to": "    const node = (ts.isAsExpression(target) ? target : unwrap(target));"
+        }
+      ],
+      "reds": [
+        "unwrap@bindTarget#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w06-bt-as"
+      ],
+      "twins": [
+        "t06-bt-as-paren"
+      ]
+    },
+    "GP14-07-BT-SAT": {
+      "hollows": "unwrap@bindTarget#1 reads an outermost satisfies on a destructuring element target as written",
+      "edits": [
+        {
+          "from": "    const node = unwrap(target);",
+          "to": "    const node = (ts.isSatisfiesExpression(target) ? target : unwrap(target));"
+        }
+      ],
+      "reds": [
+        "unwrap@bindTarget#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w07-bt-sat"
+      ],
+      "twins": [
+        "t07-bt-sat-paren"
+      ]
+    },
+    "GP14-08-BT-TA": {
+      "hollows": "unwrap@bindTarget#1 reads an outermost <T> on a destructuring element target as written",
+      "edits": [
+        {
+          "from": "    const node = unwrap(target);",
+          "to": "    const node = (ts.isTypeAssertionExpression(target) ? target : unwrap(target));"
+        }
+      ],
+      "reds": [
+        "unwrap@bindTarget#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w08-bt-ta"
+      ],
+      "twins": [
+        "t08-bt-ta-paren"
+      ]
     }
   },
   "constants": {
@@ -1014,15 +1174,15 @@
       "NS2c": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst COMMAND = \"git\";\nnamespace Worktree {\n  export const COMMAND = \"rf\";\n}\nnamespace Worktree {\n  export async function git(pi: ExtensionAPI, cwd: string, args: string[], timeout: number): Promise<string> {\n    const result = await pi.exec(\"rf\", args, { cwd, timeout });\n    return result.stdout;\n  }\n}\n"
     },
     "siteForms": {
-      "unwrap@resolveTexts#1": "api.exec((\"rf\"), []);\napi.exec((\"rf\" as string), []);\napi.exec((\"rf\" satisfies string), []);\napi.exec((<string>\"rf\"), []);\napi.exec(\"rf\"!, []);\nconst TOOL = \"rf\";\napi.exec(TOOL<string>, []);\n",
+      "unwrap@resolveTexts#1": "import * as cp from \"node:child_process\";\napi.exec((\"rf\"), []);\napi.exec((\"rf\" as string), []);\napi.exec((\"rf\" satisfies string), []);\napi.exec((<string>\"rf\"), []);\napi.exec(\"rf\"!, []);\nconst TOOL = \"rf\";\napi.exec(TOOL<string>, []);\napi.exec(\"rf\" as string, []);\napi.exec(\"rf\" satisfies string, []);\napi.exec(<string>\"rf\", []);\nconst T1 = \"rf\" as string;\napi.exec(T1, []);\nconst T2 = \"rf\" satisfies string;\napi.exec(T2, []);\nconst T3 = <string>\"rf\";\napi.exec(T3, []);\napi.exec(flag ? \"rf\" as string : \"rf\", []);\napi.exec(flag ? \"rf\" satisfies string : \"rf\", []);\napi.exec(flag ? <string>\"rf\" : \"rf\", []);\nconst T4 = [\"rf\" as string];\napi.exec(T4[0], []);\nconst T5 = [\"rf\" satisfies string];\napi.exec(T5[0], []);\nconst T6 = [<string>\"rf\"];\napi.exec(T6[0], []);\ncp[\"spawn\" as string](\"rf\", []);\ncp[\"spawn\" satisfies string](\"rf\", []);\ncp[<string>\"spawn\"](\"rf\", []);\nconst { [\"spawn\" as string]: s1 } = cp;\ns1(\"rf\", []);\nconst { [\"spawn\" satisfies string]: s2 } = cp;\ns2(\"rf\", []);\nconst { [<string>\"spawn\"]: s3 } = cp;\ns3(\"rf\", []);\n",
       "unwrap@resolveTexts#2": "const TOOLS = [\"rf\"];\napi.exec(TOOLS[(0)], []);\napi.exec(TOOLS[0 as 0], []);\napi.exec(TOOLS[0 satisfies 0], []);\napi.exec(TOOLS[<0>0], []);\napi.exec(TOOLS[0!], []);\napi.exec(TOOLS[0<T>], []);\n",
       "isWrapper@elementRead#1": "const T1 = [\"git\"];\n(T1[0])();\napi.exec(T1[0], []);\nconst T2 = [\"git\"];\n(T2[0] as F)();\napi.exec(T2[0], []);\nconst T3 = [\"git\"];\n(T3[0] satisfies F)();\napi.exec(T3[0], []);\nconst T4 = [\"git\"];\n(<F>T4[0])();\napi.exec(T4[0], []);\nconst T5 = [\"git\"];\nT5[0]!();\napi.exec(T5[0], []);\nconst T6 = [\"git\"];\n(T6[0]<F>)();\napi.exec(T6[0], []);\n",
-      "unwrap@resolveArrays#1": "api.exec(([\"rf\"])[0], []);\napi.exec(([\"rf\"] as string[])[0], []);\napi.exec(([\"rf\"] satisfies string[])[0], []);\napi.exec((<string[]>[\"rf\"])[0], []);\napi.exec([\"rf\"]![0], []);\napi.exec(([\"rf\"]<T>)[0], []);\n",
+      "unwrap@resolveArrays#1": "api.exec(([\"rf\"])[0], []);\napi.exec(([\"rf\"] as string[])[0], []);\napi.exec(([\"rf\"] satisfies string[])[0], []);\napi.exec((<string[]>[\"rf\"])[0], []);\napi.exec([\"rf\"]![0], []);\napi.exec(([\"rf\"]<T>)[0], []);\nconst A1 = [\"rf\"] as string[];\napi.exec(A1[0], []);\nconst A2 = [\"rf\"] as const;\napi.exec(A2[0], []);\nconst A3 = [\"rf\"] satisfies string[];\napi.exec(A3[0], []);\nconst A4 = <string[]>[\"rf\"];\napi.exec(A4[0], []);\nconst A5 = [\"rf\"]<T>;\napi.exec(A5[0], []);\napi.exec((flag ? [\"rf\"] as string[] : [\"rf\"])[0], []);\napi.exec((flag ? [\"rf\"] satisfies string[] : [\"rf\"])[0], []);\napi.exec((flag ? <string[]>[\"rf\"] : [\"rf\"])[0], []);\n",
       "unwrap@calleeName#1": "(api.exec)(\"rf\", []);\n(api.exec as F)(\"rf\", []);\n(api.exec satisfies F)(\"rf\", []);\n(<F>api.exec)(\"rf\", []);\napi.exec!(\"rf\", []);\n(api.exec<F>)(\"rf\", []);\n",
       "unwrap@factory#1": "import { createRequire } from \"node:module\";\nconst l1 = (createRequire(import.meta.url));\nl1(name);\nconst l2 = createRequire(import.meta.url) as NodeRequire;\nl2(name);\nconst l3 = createRequire(import.meta.url) satisfies NodeRequire;\nl3(name);\nconst l4 = <NodeRequire>createRequire(import.meta.url);\nl4(name);\nconst l5 = createRequire(import.meta.url)!;\nl5(name);\nconst l6 = createRequire(import.meta.url)<F>;\nl6(name);\n",
-      "unwrap@loaderNames#1": "import { createRequire } from \"node:module\";\nlet l1;\n(l1) = createRequire(import.meta.url);\nl1(name);\nlet l2;\n(l2 as unknown) = createRequire(import.meta.url);\nl2(name);\nlet l3;\n(l3 satisfies unknown) = createRequire(import.meta.url);\nl3(name);\nlet l4;\n(<unknown>l4) = createRequire(import.meta.url);\nl4(name);\nlet l5;\nl5! = createRequire(import.meta.url);\nl5(name);\nlet l6;\n(l6<T>) = createRequire(import.meta.url);\nl6(name);\n",
+      "unwrap@loaderNames#1": "import { createRequire } from \"node:module\";\nlet l1;\n(l1) = createRequire(import.meta.url);\nl1(name);\nlet l2;\n(l2 as unknown) = createRequire(import.meta.url);\nl2(name);\nlet l3;\n(l3 satisfies unknown) = createRequire(import.meta.url);\nl3(name);\nlet l4;\n(<unknown>l4) = createRequire(import.meta.url);\nl4(name);\nlet l5;\nl5! = createRequire(import.meta.url);\nl5(name);\nlet l6;\n(l6<T>) = createRequire(import.meta.url);\nl6(name);\nlet l7;\nl7<T> = createRequire(import.meta.url);\nl7(name);\n",
       "unwrap@isLoaderCall#1": "import { createRequire } from \"node:module\";\n(createRequire(import.meta.url))(name);\n(createRequire(import.meta.url) as NodeRequire)(name);\n(createRequire(import.meta.url) satisfies NodeRequire)(name);\n(<NodeRequire>createRequire(import.meta.url))(name);\ncreateRequire(import.meta.url)!(name);\n(createRequire(import.meta.url)<F>)(name);\n",
-      "unwrap@bindTarget#1": "import * as cp from \"node:child_process\";\nlet g1;\n(g1) = cp.spawn;\ng1(\"rf\", []);\nlet g2;\n(g2 as unknown) = cp.spawn;\ng2(\"rf\", []);\nlet g3;\n(g3 satisfies unknown) = cp.spawn;\ng3(\"rf\", []);\nlet g4;\n(<unknown>g4) = cp.spawn;\ng4(\"rf\", []);\nlet g5;\ng5! = cp.spawn;\ng5(\"rf\", []);\nlet g6;\n(g6<T>) = cp.spawn;\ng6(\"rf\", []);\n",
+      "unwrap@bindTarget#1": "import * as cp from \"node:child_process\";\nlet g1;\n(g1) = cp.spawn;\ng1(\"rf\", []);\nlet g2;\n(g2 as unknown) = cp.spawn;\ng2(\"rf\", []);\nlet g3;\n(g3 satisfies unknown) = cp.spawn;\ng3(\"rf\", []);\nlet g4;\n(<unknown>g4) = cp.spawn;\ng4(\"rf\", []);\nlet g5;\ng5! = cp.spawn;\ng5(\"rf\", []);\nlet g6;\n(g6<T>) = cp.spawn;\ng6(\"rf\", []);\nlet g7;\n({ spawn: g7 as unknown } = cp);\ng7(\"rf\", []);\nlet g8;\n({ spawn: g8 satisfies unknown } = cp);\ng8(\"rf\", []);\nlet g9;\n({ spawn: <unknown>g9 } = cp);\ng9(\"rf\", []);\nlet g10;\ng10<T> = cp.spawn;\ng10(\"rf\", []);\nlet g11;\n[g11 as unknown] = cp;\ng11.spawn(\"rf\", []);\nlet g12;\n[g12 satisfies unknown] = cp;\ng12.spawn(\"rf\", []);\nlet g13;\n[<unknown>g13] = cp;\ng13.spawn(\"rf\", []);\nlet g14;\n({ ...g14 as unknown } = cp);\ng14.spawn(\"rf\", []);\nlet g15;\n({ ...g15 satisfies unknown } = cp);\ng15.spawn(\"rf\", []);\nlet g16;\n({ ...<unknown>g16 } = cp);\ng16.spawn(\"rf\", []);\nlet g17;\n[...g17 as unknown] = cp;\ng17.spawn(\"rf\", []);\nlet g18;\n[...g18 satisfies unknown] = cp;\ng18.spawn(\"rf\", []);\nlet g19;\n[...<unknown>g19] = cp;\ng19.spawn(\"rf\", []);\n",
       "isWrapper@consume#1": "import * as cp from \"node:child_process\";\nconst g1 = (cp).spawn;\ng1(\"rf\", []);\nconst g2 = (cp as typeof cp).spawn;\ng2(\"rf\", []);\nconst g3 = (cp satisfies typeof cp).spawn;\ng3(\"rf\", []);\nconst g4 = (<typeof cp>cp).spawn;\ng4(\"rf\", []);\nconst g5 = cp!.spawn;\ng5(\"rf\", []);\nconst g6 = (cp<F>).spawn;\ng6(\"rf\", []);\nconst g7 = (await cp).spawn;\ng7(\"rf\", []);\n",
       "unwrap@consume#1": "import * as cp from \"node:child_process\";\nlet h1 = cp;\nconst g1 = ((h1) ||= fallback).spawn;\ng1(\"rf\", []);\nlet h2 = cp;\nconst g2 = ((h2 as typeof cp) ||= fallback).spawn;\ng2(\"rf\", []);\nlet h3 = cp;\nconst g3 = ((h3 satisfies typeof cp) ||= fallback).spawn;\ng3(\"rf\", []);\nlet h4 = cp;\nconst g4 = ((<typeof cp>h4) ||= fallback).spawn;\ng4(\"rf\", []);\nlet h5 = cp;\nconst g5 = (h5! ||= fallback).spawn;\ng5(\"rf\", []);\nlet h6 = cp;\nconst g6 = (h6<T> ||= fallback).spawn;\ng6(\"rf\", []);\n",
       "unwrap@loaderLabel#1": "import { createRequire } from \"node:module\";\n(createRequire(import.meta.url))(name);\n(createRequire(import.meta.url) as NodeRequire)(name);\n(createRequire(import.meta.url) satisfies NodeRequire)(name);\n(<NodeRequire>createRequire(import.meta.url))(name);\ncreateRequire(import.meta.url)!(name);\n(createRequire(import.meta.url)<F>)(name);\n(require)(name);\n",
@@ -1325,6 +1485,27 @@
       "parenthesized-loader-specifier": "const c = (require)(\"node:child_process\");\nc.spawn(command, []);\n",
       "two-argument-loader-specifier": "const c = require(\"node:child_process\", other);\nc.spawn(command, []);\n",
       "instantiated-loader-specifier": "const c = require<T>(\"node:child_process\");\nc.spawn(command, []);\n"
+    },
+    "outermostForms": {
+      "w01-rt-sat-exec": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(\"rf\" satisfies string, []);\n}\n",
+      "w01b-rt-sat-import": "const cp = await import(\"node:child_process\" satisfies string);\ncp.spawn(\"rf\", []);\n",
+      "t01-rt-sat-paren": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec((\"rf\" satisfies string), []);\n}\n",
+      "w02-rt-ta-exec": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(<string>\"rf\", []);\n}\n",
+      "w02b-rt-ta-import": "const cp = await import(<string>\"node:child_process\");\ncp.spawn(\"rf\", []);\n",
+      "t02-rt-ta-paren": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec((<string>\"rf\"), []);\n}\n",
+      "w03-ra-as-const": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = [\"rf\"] as const;\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+      "w03b-ra-as-const-spawn": "import { spawn } from \"node:child_process\";\nconst TOOLS = [\"rf\"] as const;\nspawn(TOOLS[0], []);\n",
+      "t03-ra-as-paren": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = ([\"rf\"] as const);\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+      "w04-ra-sat": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = [\"rf\"] satisfies string[];\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+      "t04-ra-sat-paren": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = ([\"rf\"] satisfies string[]);\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+      "w05-ra-ta": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = <string[]>[\"rf\"];\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+      "t05-ra-ta-paren": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = (<string[]>[\"rf\"]);\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+      "w06-bt-as": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: go as typeof cp.spawn } = cp);\ngo?.(\"rf\", []);\n",
+      "t06-bt-as-paren": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: (go as typeof cp.spawn) } = cp);\ngo?.(\"rf\", []);\n",
+      "w07-bt-sat": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: go satisfies typeof cp.spawn | undefined } = cp);\ngo?.(\"rf\", []);\n",
+      "t07-bt-sat-paren": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: (go satisfies typeof cp.spawn | undefined) } = cp);\ngo?.(\"rf\", []);\n",
+      "w08-bt-ta": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: <typeof cp.spawn>go } = cp);\ngo?.(\"rf\", []);\n",
+      "t08-bt-ta-paren": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: (<typeof cp.spawn>go) } = cp);\ngo?.(\"rf\", []);\n"
     },
     "scriptForms": {
       "view.tsx": "import * as cp from \"node:child_process\";\nexport const view = <b>{cp.spawn(\"rf\", [])}</b>;\n",
@@ -2868,6 +3049,27 @@
         "instantiated-launch-call",
         "nested-conditional-command"
       ],
+      "F-OUTERMOST-WRAPPERS": [
+        "w01-rt-sat-exec",
+        "w01b-rt-sat-import",
+        "t01-rt-sat-paren",
+        "w02-rt-ta-exec",
+        "w02b-rt-ta-import",
+        "t02-rt-ta-paren",
+        "w03-ra-as-const",
+        "w03b-ra-as-const-spawn",
+        "t03-ra-as-paren",
+        "w04-ra-sat",
+        "t04-ra-sat-paren",
+        "w05-ra-ta",
+        "t05-ra-ta-paren",
+        "w06-bt-as",
+        "t06-bt-as-paren",
+        "w07-bt-sat",
+        "t07-bt-sat-paren",
+        "w08-bt-ta",
+        "t08-bt-ta-paren"
+      ],
       "F-SPECIFIER-SLOTS": [
         "parenthesized-specifier",
         "asserted-specifier",
@@ -3346,6 +3548,178 @@
         ]
       }
     },
+    "kindPredicates": {
+      "(...)": {
+        "spelled": "ts.isParenthesizedExpression"
+      },
+      "as": {
+        "spelled": "ts.isAsExpression"
+      },
+      "satisfies": {
+        "spelled": "ts.isSatisfiesExpression"
+      },
+      "<T>": {
+        "spelled": "ts.isTypeAssertionExpression"
+      },
+      "!": {
+        "spelled": "ts.isNonNullExpression"
+      },
+      "f<T>": {
+        "spelled": "ts.isExpressionWithTypeArguments"
+      }
+    },
+    "outermostSkips": {
+      "unwrap@resolveTexts#1 (...)": "killed",
+      "unwrap@resolveTexts#1 as": "killed",
+      "unwrap@resolveTexts#1 satisfies": "killed",
+      "unwrap@resolveTexts#1 <T>": "killed",
+      "unwrap@resolveTexts#1 !": "killed",
+      "unwrap@resolveTexts#1 f<T>": "killed",
+      "unwrap@resolveTexts#2 (...)": "killed",
+      "unwrap@resolveTexts#2 as": "killed",
+      "unwrap@resolveTexts#2 satisfies": "killed",
+      "unwrap@resolveTexts#2 <T>": "killed",
+      "unwrap@resolveTexts#2 !": "killed",
+      "unwrap@resolveTexts#2 f<T>": "killed",
+      "isWrapper@elementRead#1 (...)": "killed",
+      "isWrapper@elementRead#1 as": "killed",
+      "isWrapper@elementRead#1 satisfies": "killed",
+      "isWrapper@elementRead#1 <T>": "killed",
+      "isWrapper@elementRead#1 !": "killed",
+      "isWrapper@elementRead#1 f<T>": "killed",
+      "unwrap@resolveArrays#1 (...)": "killed",
+      "unwrap@resolveArrays#1 as": "killed",
+      "unwrap@resolveArrays#1 satisfies": "killed",
+      "unwrap@resolveArrays#1 <T>": "killed",
+      "unwrap@resolveArrays#1 !": "killed",
+      "unwrap@resolveArrays#1 f<T>": "killed",
+      "unwrap@calleeName#1 (...)": "killed",
+      "unwrap@calleeName#1 as": {
+        "reason": "a call's callee is never a bare as expression: f as T(x) is a parse error",
+        "premise": "api.exec as F(\"rf\", []);\n",
+        "parsed": "TS1005"
+      },
+      "unwrap@calleeName#1 satisfies": {
+        "reason": "a call's callee is never a bare satisfies expression: f satisfies T(x) is a parse error",
+        "premise": "api.exec satisfies F(\"rf\", []);\n",
+        "parsed": "TS1005"
+      },
+      "unwrap@calleeName#1 <T>": {
+        "reason": "<T>f(x) asserts the call, whose callee is f: a call's callee is never a bare <T> assertion",
+        "premise": "<F>api.exec(\"rf\", []);\n",
+        "parsed": "callee PropertyAccessExpression"
+      },
+      "unwrap@calleeName#1 !": "killed",
+      "unwrap@calleeName#1 f<T>": {
+        "reason": "f<T>(x) is a call with type arguments, whose callee is f: a call's callee is never a bare instantiation expression",
+        "premise": "api.exec<F>(\"rf\", []);\n",
+        "parsed": "callee PropertyAccessExpression"
+      },
+      "unwrap@factory#1 (...)": "killed",
+      "unwrap@factory#1 as": "killed",
+      "unwrap@factory#1 satisfies": "killed",
+      "unwrap@factory#1 <T>": "killed",
+      "unwrap@factory#1 !": "killed",
+      "unwrap@factory#1 f<T>": "killed",
+      "unwrap@loaderNames#1 (...)": "killed",
+      "unwrap@loaderNames#1 as": {
+        "reason": "a bare as expression is no assignment target (x as T = y is a parse error), so a binding assignment's left side is never one",
+        "premise": "let l;\nl as unknown = createRequire(import.meta.url);\n",
+        "parsed": "TS1005"
+      },
+      "unwrap@loaderNames#1 satisfies": {
+        "reason": "a bare satisfies expression is no assignment target (x satisfies T = y is a parse error), so a binding assignment's left side is never one",
+        "premise": "let l;\nl satisfies unknown = createRequire(import.meta.url);\n",
+        "parsed": "TS1005"
+      },
+      "unwrap@loaderNames#1 <T>": {
+        "reason": "a bare <T> assertion is no assignment target (<T>x = y is a parse error), so a binding assignment's left side is never one",
+        "premise": "let l;\n<unknown>l = createRequire(import.meta.url);\n",
+        "parsed": "TS1005"
+      },
+      "unwrap@loaderNames#1 !": "killed",
+      "unwrap@loaderNames#1 f<T>": "killed",
+      "unwrap@isLoaderCall#1 (...)": "killed",
+      "unwrap@isLoaderCall#1 as": {
+        "reason": "a call's callee is never a bare as expression: f as T(x) is a parse error",
+        "premise": "createRequire(import.meta.url) as F(name);\n",
+        "parsed": "TS1005"
+      },
+      "unwrap@isLoaderCall#1 satisfies": {
+        "reason": "a call's callee is never a bare satisfies expression: f satisfies T(x) is a parse error",
+        "premise": "createRequire(import.meta.url) satisfies F(name);\n",
+        "parsed": "TS1005"
+      },
+      "unwrap@isLoaderCall#1 <T>": {
+        "reason": "<T>f(x) asserts the call, whose callee is f: a call's callee is never a bare <T> assertion",
+        "premise": "<F>createRequire(import.meta.url)(name);\n",
+        "parsed": "callee CallExpression callee Identifier"
+      },
+      "unwrap@isLoaderCall#1 !": "killed",
+      "unwrap@isLoaderCall#1 f<T>": {
+        "reason": "f<T>(x) is a call with type arguments, whose callee is f: a call's callee is never a bare instantiation expression",
+        "premise": "createRequire(import.meta.url)<F>(name);\n",
+        "parsed": "callee CallExpression callee Identifier"
+      },
+      "isWrapper@isWriteTarget#1 (...)": "killed",
+      "isWrapper@isWriteTarget#1 as": "killed",
+      "isWrapper@isWriteTarget#1 satisfies": "killed",
+      "isWrapper@isWriteTarget#1 <T>": "killed",
+      "isWrapper@isWriteTarget#1 !": "killed",
+      "isWrapper@isWriteTarget#1 f<T>": "killed",
+      "unwrap@bindTarget#1 (...)": "killed",
+      "unwrap@bindTarget#1 as": "killed",
+      "unwrap@bindTarget#1 satisfies": "killed",
+      "unwrap@bindTarget#1 <T>": "killed",
+      "unwrap@bindTarget#1 !": "killed",
+      "unwrap@bindTarget#1 f<T>": "killed",
+      "isWrapper@consume#1 (...)": "killed",
+      "isWrapper@consume#1 as": "killed",
+      "isWrapper@consume#1 satisfies": "killed",
+      "isWrapper@consume#1 <T>": "killed",
+      "isWrapper@consume#1 !": "killed",
+      "isWrapper@consume#1 f<T>": "killed",
+      "unwrap@consume#1 (...)": "killed",
+      "unwrap@consume#1 as": {
+        "reason": "the climbed value is a logical assignment's left side, where a bare as expression is a parse error (x as T ||= y)",
+        "premise": "let h = cp;\nconst g = (h as typeof cp ||= fallback).spawn;\n",
+        "parsed": "TS1005 TS1005 TS1134"
+      },
+      "unwrap@consume#1 satisfies": {
+        "reason": "the climbed value is a logical assignment's left side, where a bare satisfies expression is a parse error (x satisfies T ||= y)",
+        "premise": "let h = cp;\nconst g = (h satisfies typeof cp ||= fallback).spawn;\n",
+        "parsed": "TS1005 TS1005 TS1134"
+      },
+      "unwrap@consume#1 <T>": {
+        "reason": "the climbed value is a logical assignment's left side, where a bare <T> assertion is a parse error (<T>x ||= y)",
+        "premise": "let h = cp;\nconst g = (<typeof cp>h ||= fallback).spawn;\n",
+        "parsed": "TS1005 TS1005 TS1134"
+      },
+      "unwrap@consume#1 !": "killed",
+      "unwrap@consume#1 f<T>": "killed",
+      "unwrap@loaderLabel#1 (...)": "killed",
+      "unwrap@loaderLabel#1 as": {
+        "reason": "a call's callee is never a bare as expression: f as T(x) is a parse error",
+        "premise": "require as F(name);\n",
+        "parsed": "TS1005"
+      },
+      "unwrap@loaderLabel#1 satisfies": {
+        "reason": "a call's callee is never a bare satisfies expression: f satisfies T(x) is a parse error",
+        "premise": "require satisfies F(name);\n",
+        "parsed": "TS1005"
+      },
+      "unwrap@loaderLabel#1 <T>": {
+        "reason": "<T>f(x) asserts the call, whose callee is f: a call's callee is never a bare <T> assertion",
+        "premise": "<F>require(name);\n",
+        "parsed": "callee Identifier"
+      },
+      "unwrap@loaderLabel#1 !": "killed",
+      "unwrap@loaderLabel#1 f<T>": {
+        "reason": "f<T>(x) is a call with type arguments, whose callee is f: a call's callee is never a bare instantiation expression",
+        "premise": "require<F>(name);\n",
+        "parsed": "callee Identifier"
+      }
+    },
     "siteVocabularies": [
       "unwrap",
       "isWrapper",
@@ -3369,7 +3743,10 @@
       "residual": "New residual R-STATIC-FORMS (Q6)",
       "u1": "U1-HIGH-CONFIRMED-R-B123-R515: ",
       "u2": "U2-HIGH-CONFIRMED-R515-R668-R514: ",
-      "refusal1": "U1-HIGH-CONFIRMED-R-B123-R-B161-R514-R515-R668-CLAIM-WORDS-WIDER-THAN-PINS-11-GATE-READER-MUTANTS-"
+      "refusal1": "U1-HIGH-CONFIRMED-R-B123-R-B161-R514-R515-R668-CLAIM-WORDS-WIDER-THAN-PINS-11-GATE-READER-MUTANTS-",
+      "refusal2u1": "U1-HIGH-CONFIRMED-R514-R515-R668-WRAPPERS-AT-EVERY-USE-SITE-WIDER-THAN-ROW-S-PINS-",
+      "refusal2u2": "U2-MEDIUM-CONFIRMED-R514-R515-R668-TARGET-THROUGH-WRAPPERS-WIDER-THAN-PINS-",
+      "ruling254": "ORCHESTRATOR RULING R-B254 ("
     },
     "carriedCounts": {
       "reachForms": 139,
@@ -3531,6 +3908,7 @@
     "F-FLOWS",
     "F-LITERAL-KEYS",
     "F-OPTIONAL-CHAINS",
+    "F-OUTERMOST-WRAPPERS",
     "F-SPECIFIER-SLOTS",
     "F-PLANTED",
     "F-SCRIPTS",
@@ -3542,6 +3920,7 @@
     "P-TYPE",
     "Q-STATIC-FORMS",
     "each named hollowing, applied to the helper's own bytes, reds exactly the pins it names (the unmodified readers read the cure)",
+    "the outermost-wrapper class: each WRAPPERS kind skipped at each unwrap and isWrapper use site of the helper's own bytes reds that site's pin, or reads every pin the same as an equivalent member",
     "the registered tests and the reached pins equal the roster, in order and both ways"
   ],
   "rows": [
@@ -3728,12 +4107,49 @@
         {
           "id": "unwrap@resolveTexts#1",
           "witness": [
+            "specifier node:child_process",
+            "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer spawn rf",
             "named exec rf",
             "named exec rf",
             "named exec rf",
             "named exec rf",
             "named exec rf",
             "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
             "union exec rf",
             "union exec rf",
             "union exec rf",
@@ -3785,6 +4201,22 @@
             "named exec rf",
             "named exec rf",
             "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "named exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
+            "union exec rf",
             "union exec rf",
             "union exec rf",
             "union exec rf",
@@ -3838,12 +4270,14 @@
             "specifier <expression>",
             "specifier <expression>",
             "specifier <expression>",
+            "specifier <expression>",
             "load l1()",
             "load l2()",
             "load l3()",
             "load l4()",
             "load l5()",
-            "load l6()"
+            "load l6()",
+            "load l7()"
           ]
         },
         {
@@ -3874,6 +4308,47 @@
             "tracer spawn rf",
             "tracer spawn rf",
             "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer [0].spawn <reference>",
+            "tracer [0].spawn <reference>",
+            "tracer [0].spawn <reference>",
+            "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer [...].spawn <reference>",
+            "tracer [...].spawn <reference>",
+            "tracer [...].spawn <reference>",
+            "named spawn rf",
+            "named spawn rf",
+            "named spawn rf",
+            "named spawn rf",
+            "named spawn rf",
+            "named spawn rf",
+            "named spawn rf",
+            "named spawn rf",
+            "named spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union [0].spawn <reference>",
+            "union [0].spawn <reference>",
+            "union [0].spawn <reference>",
+            "union spawn rf",
+            "union spawn rf",
+            "union spawn rf",
+            "union [...].spawn <reference>",
+            "union [...].spawn <reference>",
+            "union [...].spawn <reference>",
             "union spawn rf",
             "union spawn rf",
             "union spawn rf",
@@ -6176,6 +6651,113 @@
             "nested-conditional-command": [
               "named exec forge|git|rf",
               "union exec forge|git|rf"
+            ]
+          }
+        },
+        {
+          "id": "F-OUTERMOST-WRAPPERS",
+          "witness": {
+            "w01-rt-sat-exec": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w01b-rt-sat-import": [
+              "specifier node:child_process",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union <string> <untraced>",
+              "union spawn rf"
+            ],
+            "t01-rt-sat-paren": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w02-rt-ta-exec": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w02b-rt-ta-import": [
+              "specifier node:child_process",
+              "tracer <string> <untraced>",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union <string> <untraced>",
+              "union spawn rf"
+            ],
+            "t02-rt-ta-paren": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w03-ra-as-const": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w03b-ra-as-const-spawn": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "t03-ra-as-paren": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w04-ra-sat": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t04-ra-sat-paren": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w05-ra-ta": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t05-ra-ta-paren": [
+              "specifier @earendil-works/pi-coding-agent",
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w06-bt-as": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "union spawn rf"
+            ],
+            "t06-bt-as-paren": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "union spawn rf"
+            ],
+            "w07-bt-sat": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "union spawn rf"
+            ],
+            "t07-bt-sat-paren": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "union spawn rf"
+            ],
+            "w08-bt-ta": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "union spawn rf"
+            ],
+            "t08-bt-ta-paren": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "union spawn rf"
             ]
           }
         },

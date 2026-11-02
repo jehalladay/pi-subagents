@@ -22,7 +22,9 @@
  * literals, a conditional's arms, the const a name binds in its scope and an index into a const array only read, within
  * RESOLVE_DEPTH steps, reading every module as strict code (a function binds only in its block) and resolving no name in a
  * namespace body or an enum declaration. The WRAPPERS (parentheses, as, satisfies, <T>, !, an instantiation expression) hold at
- * every use site.
+ * every use site, each site's module spelling every kind, the outermost layer included for every kind TypeScript's parser admits
+ * there (the outermost-wrapper class, OUTERMOST_SKIPS: one kind skipped at one unwrap or isWrapper use site reds that site's pin, or
+ * the parser never puts that kind outermost there and the member names the parse that says so).
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns the readers' measured witness, held to
  * the roster):
@@ -35,12 +37,14 @@
  *     function shadowing a module const it does not reach) with its control BF1c.
  *  S  every use site of a reader vocabulary in the helper (WRAPPERS through unwrap and isWrapper, LAUNCH_CALLS, LOADER_CALLS,
  *     LOADER_FACTORIES, BINDING_ASSIGNMENTS, LOGICAL_ASSIGNMENTS, EITHER_OPERAND, CHILD_PROCESS, IO_GLOBALS, GLOBAL_OBJECTS,
- *     PROCESS_READS), one module per site spelling every entry there, so dropping one entry at one site reds that site's pin.
+ *     PROCESS_READS), one module per site spelling every entry there (at an unwrap or isWrapper site every WRAPPERS kind, and as the
+ *     outermost layer each kind the parser admits there), so dropping one entry at one site, or skipping one outermost kind there,
+ *     reds that site's pin.
  *  F  the form roster: cut #5's 139 REACH_FORMS in its families (entries, follow, escapes, exports, strings, loads, heritage,
  *     instantiation, scope, logical, merged, ambient, arrays), the forms cut #1 added (bindings, bounds, entry edges, array
  *     reads, var scopes), the forms this respin adds (RESPIN_FORMS: write targets, array reaches, the scope matrix, entry
- *     candidates, loader spellings, flows, literal keys, optional chains, specifier slots), cut #5's planted module and the
- *     script kinds.
+ *     candidates, loader spellings, flows, literal keys, optional chains, specifier slots), the forms cut #3 adds (OUTERMOST_FORMS:
+ *     wb-pyel.9 refusal #2's witness and twin modules, verbatim), cut #5's planted module and the script kinds.
  *  P  the position roster: cut #5's 106 REFERENCE_POSITIONS, then ADDED_POSITIONS (cut #1's 26 and this respin's 129), one pin
  *     per kind (value, discarded, written, export, name, type), each position probed with HELD as WebSocket, globalThis,
  *     process and a held child_process namespace (heldReading) and held to its kind.
@@ -64,7 +68,9 @@
  * RESPIN (wb-pyel.9 refusal #1, cut #1 bee8c260; the helper's bytes unchanged - every cure is a pin or a narrowed claim):
  *  - U1 (claim words wider than pins): KILLS executes the gate's seventeen one-edit mutants G01..G17 on the helper's own bytes,
  *    each held to its exact red set, and for every U1 member (G01, G03-G07, G09-G13) and G02, G14, G15, G16 also to its
- *    witness forms (each reads differently) and its twin forms (each reads the same), the gate's archived modules verbatim; the claim
+ *    witness forms (each reads differently) and its twin forms (each reads the same) - 32 of these 40 forms are refusal #1's archived
+ *    witness and twin modules verbatim (the eleven U1 members' and G14's and G15's witnesses) and 8 are the respin's own (G02's two
+ *    witnesses and its twin compound-array-command, a carried form; G14's twin; G15's two twins; G16's witness and twin); the claim
  *    words now say exactly what the forms pin (every compound operator, a prefix decrement, a pattern at any depth, an optional
  *    call, an export under any name, a var in a function of any kind, a parameter's and a catch variable's and an expression
  *    name's own scope, a class or enum in its block, any resolved candidate, a no-substitution template wherever a string is).
@@ -73,6 +79,24 @@
  *  - U3 (the carried positions' anchor was a lower bound): the positions after the carried 106 are exactly ADDED_POSITIONS.
  *  - U4 (the residual's prose was not anchored to its quiet row): RESIDUE_MEMBERS holds every probe to one named member, the
  *    residual claim names every member, and the first five are the forms wb-pyel.5's Q6 sentence names.
+ * CUT #3 (wb-pyel.9 refusal #2, cut #2 8d1b2759; ruling R-B254: ENUMERATE-THE-RESOLVABLE in the R739 terminal form; the helper's
+ * bytes unchanged - every cure is a pin or a re-pinned claim):
+ *  - U1 (GP14-01..05: unwrap@resolveTexts#1 and unwrap@resolveArrays#1 read an outermost satisfies, <T> or as as written) and U2
+ *    (GP14-06..08: unwrap@bindTarget#1 reads an outermost as, satisfies or <T> on a destructuring element target as written): KILLS
+ *    executes the gate's eight one-edit mutants verbatim, each held to its exact red set, to its witnesses (each reads differently)
+ *    and to its twins (each reads the same) - refusal #2's 19 archived witness and twin modules verbatim, the F-OUTERMOST-WRAPPERS
+ *    family; the site modules now also spell each admitted kind as the outermost layer - as, satisfies and <T> on each route that
+ *    hands the site an expression: unwrap@resolveTexts#1 a call's argument, a const initializer, a conditional's arm, an array
+ *    element, an element key and a computed binding key; unwrap@resolveArrays#1 a const initializer (as const too) and a
+ *    conditional's arm, and f<T> on a const initializer; unwrap@bindTarget#1 an object pattern's element and spread and an array
+ *    pattern's element and spread, and f<T> on a whole target; unwrap@loaderNames#1 f<T> on a whole target.
+ *  - the class, named as the criterion (R739): OUTERMOST_SKIPS enumerates the outermost-wrapper class from the helper's own source -
+ *    each WRAPPERS kind at each unwrap use site read as written when outermost, and at each isWrapper climb site not climbed: 13
+ *    sites, 78 members - and the class case executes every member on the helper's own bytes: a killed member reds its own site's
+ *    pin; an equivalent member reads every pin the same and carries its reason and a premise module, whose parse (its syntactic
+ *    diagnostics, or the kind of each call's callee) the judged set holds.
+ *  - U3 (the header said every G witness and twin form was the gate's archived module verbatim): the RESPIN entry above states the
+ *    32-of-40 split.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set (every row's id, label and pins,
  * every pin's witness, the claims, the kills, the constants and every registered test title) is held to the out-of-file roster
@@ -82,17 +106,23 @@
  * positions (106); wb-pyel.5's notes name the residual family R-STATIC-FORMS; and once the export carries wb-pyel.5's refusal #5
  * unmet items (each a paragraph), KILLS holds exactly the hollowings its U1 item names, U holds every witness it spells and the
  * plant and control its U2 item names (the tracker holds those items at cut time; the export carries them from its next hop);
- * wb-pyel.5's Q6 sentence names the residual's first five members; and once the export carries wb-pyel.9's refusal #1 U1 item,
- * KILLS holds every gate mutant it names.
+ * wb-pyel.5's Q6 sentence names the residual's first five members; once the export carries wb-pyel.9's refusal #1 U1 item, KILLS
+ * holds every gate mutant it names; refusal #2's U1 and U2 items name GP14-01..08 by range and KILLS holds each of them; and ruling
+ * R-B254 names its use sites and the outermost-wrapper class holds each of them.
  * The helper itself:
- * row S holds exactly the vocabulary use sites its source holds, each site module spelling every entry; every predicate
+ * row S holds exactly the vocabulary use sites its source holds, each site module spelling every entry; OUTERMOST_SKIPS holds
+ * exactly the members its unwrap and isWrapper calls make, the class's sites being row S's unwrap and isWrapper sites; every predicate
  * isNameSlot and isWriteTarget test has a pinned position; each scriptKind pattern has a script form in either letter case; and
  * each KILLS edit's text occurs once in it. tsconfig.json's strict flag and ES module are the strict-code premise of the
  * block-function scope. The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran
  * before it) and the pins that reached their witness.
  * NOT CLAIMED (edits of this file and the roster together): a pin removed with its claims, constants and roster entry where no
  * outside anchor names it; a form's probe edited in both; a reading of a module the readers are never given (the readers read
- * one module; the module closure is the composing census's).
+ * one module; the module closure is the composing census's). Two kinds skipped at once, or one kind skipped at two use sites at
+ * once, is NOT CLAIMED by this census (each class member is one kind at one site); a kind skipped at a use site only on some of
+ * the routes that hand it an expression (conditioned on the expression's parent or on the resolution depth) is NOT CLAIMED beyond
+ * the routes its site module spells outermost; an equivalent member is NOT CLAIMED beyond reading every pin the same and its
+ * premise parsing as held.
  * RESIDUALS (named, each with its pinned quiet row): R-STATIC-FORMS the forms the readers do not parse (Q-STATIC-FORMS: one probe
  * per form, its reading by every reader pinned), member by member as RESIDUE_MEMBERS names them and the residual claim spells
  * them - a launch through an API that is no child_process binding with an unresolved command; a launch through a value the
@@ -104,8 +134,8 @@
  * command does not resolve (outside a namespace body and an enum declaration: a conditional with an arm that does not resolve,
  * either arm, a spread or unbound array, a string index, a computed callee key).
  *
- * Display paths added: none. Test-only: the KILLS case writes each hollowed copy of the helper into makeScratch scratch with
- * the leak guard installed; src, the helper, the fixture, tsconfig.json and the bead export are only read.
+ * Display paths added: none. Test-only: the KILLS case and the outermost-wrapper class case write each hollowed copy of the helper
+ * into makeScratch scratch with the leak guard installed; src, the helper, the fixture, tsconfig.json and the bead export are only read.
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -318,15 +348,15 @@ const MEMBER_FORMS: Readonly<Record<string, string>> = {
 };
 /** Row S: one module per use site of a reader vocabulary in the helper (vocabulary@function#n), spelling every entry there. */
 const SITE_FORMS: Readonly<Record<string, string>> = {
-  "unwrap@resolveTexts#1": "api.exec((\"rf\"), []);\napi.exec((\"rf\" as string), []);\napi.exec((\"rf\" satisfies string), []);\napi.exec((<string>\"rf\"), []);\napi.exec(\"rf\"!, []);\nconst TOOL = \"rf\";\napi.exec(TOOL<string>, []);\n",
+  "unwrap@resolveTexts#1": "import * as cp from \"node:child_process\";\napi.exec((\"rf\"), []);\napi.exec((\"rf\" as string), []);\napi.exec((\"rf\" satisfies string), []);\napi.exec((<string>\"rf\"), []);\napi.exec(\"rf\"!, []);\nconst TOOL = \"rf\";\napi.exec(TOOL<string>, []);\napi.exec(\"rf\" as string, []);\napi.exec(\"rf\" satisfies string, []);\napi.exec(<string>\"rf\", []);\nconst T1 = \"rf\" as string;\napi.exec(T1, []);\nconst T2 = \"rf\" satisfies string;\napi.exec(T2, []);\nconst T3 = <string>\"rf\";\napi.exec(T3, []);\napi.exec(flag ? \"rf\" as string : \"rf\", []);\napi.exec(flag ? \"rf\" satisfies string : \"rf\", []);\napi.exec(flag ? <string>\"rf\" : \"rf\", []);\nconst T4 = [\"rf\" as string];\napi.exec(T4[0], []);\nconst T5 = [\"rf\" satisfies string];\napi.exec(T5[0], []);\nconst T6 = [<string>\"rf\"];\napi.exec(T6[0], []);\ncp[\"spawn\" as string](\"rf\", []);\ncp[\"spawn\" satisfies string](\"rf\", []);\ncp[<string>\"spawn\"](\"rf\", []);\nconst { [\"spawn\" as string]: s1 } = cp;\ns1(\"rf\", []);\nconst { [\"spawn\" satisfies string]: s2 } = cp;\ns2(\"rf\", []);\nconst { [<string>\"spawn\"]: s3 } = cp;\ns3(\"rf\", []);\n",
   "unwrap@resolveTexts#2": "const TOOLS = [\"rf\"];\napi.exec(TOOLS[(0)], []);\napi.exec(TOOLS[0 as 0], []);\napi.exec(TOOLS[0 satisfies 0], []);\napi.exec(TOOLS[<0>0], []);\napi.exec(TOOLS[0!], []);\napi.exec(TOOLS[0<T>], []);\n",
   "isWrapper@elementRead#1": "const T1 = [\"git\"];\n(T1[0])();\napi.exec(T1[0], []);\nconst T2 = [\"git\"];\n(T2[0] as F)();\napi.exec(T2[0], []);\nconst T3 = [\"git\"];\n(T3[0] satisfies F)();\napi.exec(T3[0], []);\nconst T4 = [\"git\"];\n(<F>T4[0])();\napi.exec(T4[0], []);\nconst T5 = [\"git\"];\nT5[0]!();\napi.exec(T5[0], []);\nconst T6 = [\"git\"];\n(T6[0]<F>)();\napi.exec(T6[0], []);\n",
-  "unwrap@resolveArrays#1": "api.exec(([\"rf\"])[0], []);\napi.exec(([\"rf\"] as string[])[0], []);\napi.exec(([\"rf\"] satisfies string[])[0], []);\napi.exec((<string[]>[\"rf\"])[0], []);\napi.exec([\"rf\"]![0], []);\napi.exec(([\"rf\"]<T>)[0], []);\n",
+  "unwrap@resolveArrays#1": "api.exec(([\"rf\"])[0], []);\napi.exec(([\"rf\"] as string[])[0], []);\napi.exec(([\"rf\"] satisfies string[])[0], []);\napi.exec((<string[]>[\"rf\"])[0], []);\napi.exec([\"rf\"]![0], []);\napi.exec(([\"rf\"]<T>)[0], []);\nconst A1 = [\"rf\"] as string[];\napi.exec(A1[0], []);\nconst A2 = [\"rf\"] as const;\napi.exec(A2[0], []);\nconst A3 = [\"rf\"] satisfies string[];\napi.exec(A3[0], []);\nconst A4 = <string[]>[\"rf\"];\napi.exec(A4[0], []);\nconst A5 = [\"rf\"]<T>;\napi.exec(A5[0], []);\napi.exec((flag ? [\"rf\"] as string[] : [\"rf\"])[0], []);\napi.exec((flag ? [\"rf\"] satisfies string[] : [\"rf\"])[0], []);\napi.exec((flag ? <string[]>[\"rf\"] : [\"rf\"])[0], []);\n",
   "unwrap@calleeName#1": "(api.exec)(\"rf\", []);\n(api.exec as F)(\"rf\", []);\n(api.exec satisfies F)(\"rf\", []);\n(<F>api.exec)(\"rf\", []);\napi.exec!(\"rf\", []);\n(api.exec<F>)(\"rf\", []);\n",
   "unwrap@factory#1": "import { createRequire } from \"node:module\";\nconst l1 = (createRequire(import.meta.url));\nl1(name);\nconst l2 = createRequire(import.meta.url) as NodeRequire;\nl2(name);\nconst l3 = createRequire(import.meta.url) satisfies NodeRequire;\nl3(name);\nconst l4 = <NodeRequire>createRequire(import.meta.url);\nl4(name);\nconst l5 = createRequire(import.meta.url)!;\nl5(name);\nconst l6 = createRequire(import.meta.url)<F>;\nl6(name);\n",
-  "unwrap@loaderNames#1": "import { createRequire } from \"node:module\";\nlet l1;\n(l1) = createRequire(import.meta.url);\nl1(name);\nlet l2;\n(l2 as unknown) = createRequire(import.meta.url);\nl2(name);\nlet l3;\n(l3 satisfies unknown) = createRequire(import.meta.url);\nl3(name);\nlet l4;\n(<unknown>l4) = createRequire(import.meta.url);\nl4(name);\nlet l5;\nl5! = createRequire(import.meta.url);\nl5(name);\nlet l6;\n(l6<T>) = createRequire(import.meta.url);\nl6(name);\n",
+  "unwrap@loaderNames#1": "import { createRequire } from \"node:module\";\nlet l1;\n(l1) = createRequire(import.meta.url);\nl1(name);\nlet l2;\n(l2 as unknown) = createRequire(import.meta.url);\nl2(name);\nlet l3;\n(l3 satisfies unknown) = createRequire(import.meta.url);\nl3(name);\nlet l4;\n(<unknown>l4) = createRequire(import.meta.url);\nl4(name);\nlet l5;\nl5! = createRequire(import.meta.url);\nl5(name);\nlet l6;\n(l6<T>) = createRequire(import.meta.url);\nl6(name);\nlet l7;\nl7<T> = createRequire(import.meta.url);\nl7(name);\n",
   "unwrap@isLoaderCall#1": "import { createRequire } from \"node:module\";\n(createRequire(import.meta.url))(name);\n(createRequire(import.meta.url) as NodeRequire)(name);\n(createRequire(import.meta.url) satisfies NodeRequire)(name);\n(<NodeRequire>createRequire(import.meta.url))(name);\ncreateRequire(import.meta.url)!(name);\n(createRequire(import.meta.url)<F>)(name);\n",
-  "unwrap@bindTarget#1": "import * as cp from \"node:child_process\";\nlet g1;\n(g1) = cp.spawn;\ng1(\"rf\", []);\nlet g2;\n(g2 as unknown) = cp.spawn;\ng2(\"rf\", []);\nlet g3;\n(g3 satisfies unknown) = cp.spawn;\ng3(\"rf\", []);\nlet g4;\n(<unknown>g4) = cp.spawn;\ng4(\"rf\", []);\nlet g5;\ng5! = cp.spawn;\ng5(\"rf\", []);\nlet g6;\n(g6<T>) = cp.spawn;\ng6(\"rf\", []);\n",
+  "unwrap@bindTarget#1": "import * as cp from \"node:child_process\";\nlet g1;\n(g1) = cp.spawn;\ng1(\"rf\", []);\nlet g2;\n(g2 as unknown) = cp.spawn;\ng2(\"rf\", []);\nlet g3;\n(g3 satisfies unknown) = cp.spawn;\ng3(\"rf\", []);\nlet g4;\n(<unknown>g4) = cp.spawn;\ng4(\"rf\", []);\nlet g5;\ng5! = cp.spawn;\ng5(\"rf\", []);\nlet g6;\n(g6<T>) = cp.spawn;\ng6(\"rf\", []);\nlet g7;\n({ spawn: g7 as unknown } = cp);\ng7(\"rf\", []);\nlet g8;\n({ spawn: g8 satisfies unknown } = cp);\ng8(\"rf\", []);\nlet g9;\n({ spawn: <unknown>g9 } = cp);\ng9(\"rf\", []);\nlet g10;\ng10<T> = cp.spawn;\ng10(\"rf\", []);\nlet g11;\n[g11 as unknown] = cp;\ng11.spawn(\"rf\", []);\nlet g12;\n[g12 satisfies unknown] = cp;\ng12.spawn(\"rf\", []);\nlet g13;\n[<unknown>g13] = cp;\ng13.spawn(\"rf\", []);\nlet g14;\n({ ...g14 as unknown } = cp);\ng14.spawn(\"rf\", []);\nlet g15;\n({ ...g15 satisfies unknown } = cp);\ng15.spawn(\"rf\", []);\nlet g16;\n({ ...<unknown>g16 } = cp);\ng16.spawn(\"rf\", []);\nlet g17;\n[...g17 as unknown] = cp;\ng17.spawn(\"rf\", []);\nlet g18;\n[...g18 satisfies unknown] = cp;\ng18.spawn(\"rf\", []);\nlet g19;\n[...<unknown>g19] = cp;\ng19.spawn(\"rf\", []);\n",
   "isWrapper@consume#1": "import * as cp from \"node:child_process\";\nconst g1 = (cp).spawn;\ng1(\"rf\", []);\nconst g2 = (cp as typeof cp).spawn;\ng2(\"rf\", []);\nconst g3 = (cp satisfies typeof cp).spawn;\ng3(\"rf\", []);\nconst g4 = (<typeof cp>cp).spawn;\ng4(\"rf\", []);\nconst g5 = cp!.spawn;\ng5(\"rf\", []);\nconst g6 = (cp<F>).spawn;\ng6(\"rf\", []);\nconst g7 = (await cp).spawn;\ng7(\"rf\", []);\n",
   "unwrap@consume#1": "import * as cp from \"node:child_process\";\nlet h1 = cp;\nconst g1 = ((h1) ||= fallback).spawn;\ng1(\"rf\", []);\nlet h2 = cp;\nconst g2 = ((h2 as typeof cp) ||= fallback).spawn;\ng2(\"rf\", []);\nlet h3 = cp;\nconst g3 = ((h3 satisfies typeof cp) ||= fallback).spawn;\ng3(\"rf\", []);\nlet h4 = cp;\nconst g4 = ((<typeof cp>h4) ||= fallback).spawn;\ng4(\"rf\", []);\nlet h5 = cp;\nconst g5 = (h5! ||= fallback).spawn;\ng5(\"rf\", []);\nlet h6 = cp;\nconst g6 = (h6<T> ||= fallback).spawn;\ng6(\"rf\", []);\n",
   "unwrap@loaderLabel#1": "import { createRequire } from \"node:module\";\n(createRequire(import.meta.url))(name);\n(createRequire(import.meta.url) as NodeRequire)(name);\n(createRequire(import.meta.url) satisfies NodeRequire)(name);\n(<NodeRequire>createRequire(import.meta.url))(name);\ncreateRequire(import.meta.url)!(name);\n(createRequire(import.meta.url)<F>)(name);\n(require)(name);\n",
@@ -633,6 +663,29 @@ const RESPIN_FORMS: Readonly<Record<string, string>> = {
   "parenthesized-loader-specifier": "const c = (require)(\"node:child_process\");\nc.spawn(command, []);\n",
   "two-argument-loader-specifier": "const c = require(\"node:child_process\", other);\nc.spawn(command, []);\n",
   "instantiated-loader-specifier": "const c = require<T>(\"node:child_process\");\nc.spawn(command, []);\n",
+};
+/** The forms cut #3 adds (wb-pyel.9 refusal #2, U1 and U2): the gate's witness and twin modules for GP14-01..08, verbatim from its
+ * archive (data/leg2-mutants.json): each witness reads differently under its member, each twin (the wrapper in parentheses) the same. */
+const OUTERMOST_FORMS: Readonly<Record<string, string>> = {
+  "w01-rt-sat-exec": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(\"rf\" satisfies string, []);\n}\n",
+  "w01b-rt-sat-import": "const cp = await import(\"node:child_process\" satisfies string);\ncp.spawn(\"rf\", []);\n",
+  "t01-rt-sat-paren": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec((\"rf\" satisfies string), []);\n}\n",
+  "w02-rt-ta-exec": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(<string>\"rf\", []);\n}\n",
+  "w02b-rt-ta-import": "const cp = await import(<string>\"node:child_process\");\ncp.spawn(\"rf\", []);\n",
+  "t02-rt-ta-paren": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec((<string>\"rf\"), []);\n}\n",
+  "w03-ra-as-const": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = [\"rf\"] as const;\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+  "w03b-ra-as-const-spawn": "import { spawn } from \"node:child_process\";\nconst TOOLS = [\"rf\"] as const;\nspawn(TOOLS[0], []);\n",
+  "t03-ra-as-paren": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = ([\"rf\"] as const);\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+  "w04-ra-sat": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = [\"rf\"] satisfies string[];\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+  "t04-ra-sat-paren": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = ([\"rf\"] satisfies string[]);\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+  "w05-ra-ta": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = <string[]>[\"rf\"];\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+  "t05-ra-ta-paren": "import type { ExtensionAPI } from \"@earendil-works/pi-coding-agent\";\nconst TOOLS = (<string[]>[\"rf\"]);\nexport function run(pi: ExtensionAPI): void {\n  void pi.exec(TOOLS[0], []);\n}\n",
+  "w06-bt-as": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: go as typeof cp.spawn } = cp);\ngo?.(\"rf\", []);\n",
+  "t06-bt-as-paren": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: (go as typeof cp.spawn) } = cp);\ngo?.(\"rf\", []);\n",
+  "w07-bt-sat": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: go satisfies typeof cp.spawn | undefined } = cp);\ngo?.(\"rf\", []);\n",
+  "t07-bt-sat-paren": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: (go satisfies typeof cp.spawn | undefined) } = cp);\ngo?.(\"rf\", []);\n",
+  "w08-bt-ta": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: <typeof cp.spawn>go } = cp);\ngo?.(\"rf\", []);\n",
+  "t08-bt-ta-paren": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: (<typeof cp.spawn>go) } = cp);\ngo?.(\"rf\", []);\n",
 };
 /** The script kinds: one JSX module under every extension parseSource reads with JSX, in either letter case. */
 const SCRIPT_FORMS: Readonly<Record<string, string>> = {
@@ -966,6 +1019,7 @@ const FAMILIES: Readonly<Record<string, readonly string[]>> = {
   "F-FLOWS": ["assigned-nested-array-in-object", "assigned-nested-object", "assigned-nested-array", "assigned-object-in-array", "assigned-nested-rest", "assigned-rest-object", "assigned-numeric-key", "assigned-string-key", "assigned-shorthand-default", "assigned-default-object", "assigned-default-array", "declared-default", "declared-array-default", "held-as-target-default", "for-init-binding", "chained-assignment", "chained-logical-assignment", "stored-value", "stored-element-value", "nested-conditional-arm", "parenthesized-conditional", "nested-either-operand", "typed-launch-call", "numeric-member", "void-discard", "comma-statement-discard", "type-only-local-export", "default-alias-export", "parenthesized-default-target", "non-null-default-target", "either-element-left", "either-asserted-left", "either-non-null-left", "discarded-either", "either-chain-left", "nested-conditional-true-arm"],
   "F-LITERAL-KEYS": ["g14-template-command", "g14-template-specifier", "g14-string-twin", "g15-process-template-key", "g15-global-template-key", "g15-process-string-twin", "g15-global-string-twin", "g16-template-callee", "g16-string-twin", "template-member-key", "template-global-key", "template-binding-key", "numeric-global-key", "parenthesized-global-key", "parenthesized-member-key", "numeric-binding-key-one"],
   "F-OPTIONAL-CHAINS": ["optional-element-member", "optional-default-member", "optional-global-member", "optional-global-element", "optional-launch-call", "instantiated-launch-call", "nested-conditional-command"],
+  "F-OUTERMOST-WRAPPERS": ["w01-rt-sat-exec", "w01b-rt-sat-import", "t01-rt-sat-paren", "w02-rt-ta-exec", "w02b-rt-ta-import", "t02-rt-ta-paren", "w03-ra-as-const", "w03b-ra-as-const-spawn", "t03-ra-as-paren", "w04-ra-sat", "t04-ra-sat-paren", "w05-ra-ta", "t05-ra-ta-paren", "w06-bt-as", "t06-bt-as-paren", "w07-bt-sat", "t07-bt-sat-paren", "w08-bt-ta", "t08-bt-ta-paren"],
   "F-SPECIFIER-SLOTS": ["parenthesized-specifier", "asserted-specifier", "conditional-specifier", "parenthesized-import-specifier", "second-argument-specifier", "optional-call-specifier", "element-loader-specifier", "parenthesized-loader-specifier", "two-argument-loader-specifier", "instantiated-loader-specifier"],
 };
 /** The row F pins that read one module (cut #5's planted module) and the script kinds, beside the families. */
@@ -1059,6 +1113,9 @@ const ANCHORS = {
   u1: "U1-HIGH-CONFIRMED-R-B123-R515: ",
   u2: "U2-HIGH-CONFIRMED-R515-R668-R514: ",
   refusal1: "U1-HIGH-CONFIRMED-R-B123-R-B161-R514-R515-R668-CLAIM-WORDS-WIDER-THAN-PINS-11-GATE-READER-MUTANTS-",
+  refusal2u1: "U1-HIGH-CONFIRMED-R514-R515-R668-WRAPPERS-AT-EVERY-USE-SITE-WIDER-THAN-ROW-S-PINS-",
+  refusal2u2: "U2-MEDIUM-CONFIRMED-R514-R515-R668-TARGET-THROUGH-WRAPPERS-WIDER-THAN-PINS-",
+  ruling254: "ORCHESTRATOR RULING R-B254 (",
 } as const;
 /** The counts wb-pyel.5's FORM line states for cut #5's rosters (carried here byte for byte). */
 const CARRIED_COUNTS = { reachForms: 139, referencePositions: 106 } as const;
@@ -1075,14 +1132,15 @@ interface Kill {
   readonly edits: readonly Edit[];
   /** Every pin whose witness the hollowing changes, in row order (measured: exactly these, both ways). */
   readonly reds: readonly string[];
-  /** Refusal #1's members: the forms whose reading the hollowing changes (its witnesses) and the paired forms it leaves (its twins). */
+  /** Refusal #1's and #2's members: the forms whose reading the hollowing changes (its witnesses) and the paired forms it leaves (its twins). */
   readonly witnesses?: readonly string[];
   readonly twins?: readonly string[];
 }
 const WRAPPER_LOOP = "(isWrapper(wrapper) || ts.isAwaitExpression(wrapper))";
 const loopWithout = (test: string): Edit => ({ from: WRAPPER_LOOP, to: `((isWrapper(wrapper) && !ts.${test}(wrapper)) || ts.isAwaitExpression(wrapper))` });
-/** Refusal #5's U1 hollowings H1-AS..H11-UTYPE, its U2 hoisting, cut #4's readings of the description's LA and NS, and wb-pyel.9 refusal #1's
- * LEG 2: the gate's seventeen one-edit mutants G01..G17, verbatim (the eleven U1 survivors G01, G03-G07, G09-G13 and the rest). */
+/** Refusal #5's U1 hollowings H1-AS..H11-UTYPE, its U2 hoisting, cut #4's readings of the description's LA and NS, wb-pyel.9 refusal #1's
+ * LEG 2: the gate's seventeen one-edit mutants G01..G17, verbatim (the eleven U1 survivors G01, G03-G07, G09-G13 and the rest), and
+ * refusal #2's LEG 2: the gate's eight one-edit mutants GP14-01..08, verbatim (U1 GP14-01..05, U2 GP14-06..08). */
 const KILLS: Readonly<Record<string, Kill>> = {
   "H1-AS": { hollows: "consume's wrapper loop without ts.isAsExpression", edits: [loopWithout("isAsExpression")], reds: ["W-AS", "W-BAND", "isWrapper@consume#1", "unwrap@consume#1", "P-DISCARDED"] },
   "H2-SAT": { hollows: "consume's wrapper loop without ts.isSatisfiesExpression", edits: [loopWithout("isSatisfiesExpression")], reds: ["W-SAT", "isWrapper@consume#1", "unwrap@consume#1"] },
@@ -1145,7 +1203,158 @@ const KILLS: Readonly<Record<string, Kill>> = {
   "G15-GLOBAL-TEMPLATE-KEY": { hollows: "memberRead: a no-substitution template key reads [<computed>]", edits: [{ from: `    return ts.isStringLiteralLike(parent.argumentExpression) ? \`[\${parent.argumentExpression.text}]\` : "[<computed>]";`, to: `    return ts.isStringLiteral(parent.argumentExpression) ? \`[\${parent.argumentExpression.text}]\` : "[<computed>]";` }], reds: ["F-LITERAL-KEYS"], witnesses: ["g15-process-template-key", "g15-global-template-key"], twins: ["g15-process-string-twin", "g15-global-string-twin"] },
   "G16-CALLEE-TEMPLATE-KEY": { hollows: "calleeName: a no-substitution template element name is no callee name", edits: [{ from: "  if (ts.isElementAccessExpression(callee) && ts.isStringLiteralLike(callee.argumentExpression)) return callee.argumentExpression.text;", to: "  if (ts.isElementAccessExpression(callee) && ts.isStringLiteral(callee.argumentExpression)) return callee.argumentExpression.text;" }], reds: ["F-LITERAL-KEYS"], witnesses: ["g16-template-callee"], twins: ["g16-string-twin"] },
   "G17-BLOCKSCOPE-FOR": { hollows: "blockScope: a for statement's head is no scope (its const binds in the enclosing block)", edits: [{ from: "|| ts.isCaseBlock(at) || ts.isForStatement(at) || ts.isForInStatement(at) || ts.isForOfStatement(at) ||", to: "|| ts.isCaseBlock(at) || ts.isForInStatement(at) || ts.isForOfStatement(at) ||" }], reds: ["F-SCOPE", "F-SCOPE-MATRIX"] },
+  "GP14-01-RT-SAT": { hollows: "unwrap@resolveTexts#1 reads an outermost satisfies as written (resolveTexts does not unwrap it)", edits: [{ from: "  const step = depth + 1;\n  const node = unwrap(expression);\n  if (ts.isStringLiteralLike(node)) return [node.text];", to: "  const step = depth + 1;\n  const node = (ts.isSatisfiesExpression(expression) ? expression : unwrap(expression));\n  if (ts.isStringLiteralLike(node)) return [node.text];" }], reds: ["unwrap@resolveTexts#1", "F-OUTERMOST-WRAPPERS"], witnesses: ["w01-rt-sat-exec", "w01b-rt-sat-import"], twins: ["t01-rt-sat-paren"] },
+  "GP14-02-RT-TA": { hollows: "unwrap@resolveTexts#1 reads an outermost <T> assertion as written", edits: [{ from: "  const step = depth + 1;\n  const node = unwrap(expression);\n  if (ts.isStringLiteralLike(node)) return [node.text];", to: "  const step = depth + 1;\n  const node = (ts.isTypeAssertionExpression(expression) ? expression : unwrap(expression));\n  if (ts.isStringLiteralLike(node)) return [node.text];" }], reds: ["unwrap@resolveTexts#1", "F-OUTERMOST-WRAPPERS"], witnesses: ["w02-rt-ta-exec", "w02b-rt-ta-import"], twins: ["t02-rt-ta-paren"] },
+  "GP14-03-RA-AS": { hollows: "unwrap@resolveArrays#1 reads an outermost as (as const) as written: a const array literal under as does not resolve", edits: [{ from: "  const step = depth + 1;\n  const node = unwrap(expression);\n  let arms: ((string[] | undefined)[][] | undefined)[];", to: "  const step = depth + 1;\n  const node = (ts.isAsExpression(expression) ? expression : unwrap(expression));\n  let arms: ((string[] | undefined)[][] | undefined)[];" }], reds: ["unwrap@resolveArrays#1", "F-OUTERMOST-WRAPPERS"], witnesses: ["w03-ra-as-const", "w03b-ra-as-const-spawn"], twins: ["t03-ra-as-paren"] },
+  "GP14-04-RA-SAT": { hollows: "unwrap@resolveArrays#1 reads an outermost satisfies as written", edits: [{ from: "  const step = depth + 1;\n  const node = unwrap(expression);\n  let arms: ((string[] | undefined)[][] | undefined)[];", to: "  const step = depth + 1;\n  const node = (ts.isSatisfiesExpression(expression) ? expression : unwrap(expression));\n  let arms: ((string[] | undefined)[][] | undefined)[];" }], reds: ["unwrap@resolveArrays#1", "F-OUTERMOST-WRAPPERS"], witnesses: ["w04-ra-sat"], twins: ["t04-ra-sat-paren"] },
+  "GP14-05-RA-TA": { hollows: "unwrap@resolveArrays#1 reads an outermost <T> assertion as written", edits: [{ from: "  const step = depth + 1;\n  const node = unwrap(expression);\n  let arms: ((string[] | undefined)[][] | undefined)[];", to: "  const step = depth + 1;\n  const node = (ts.isTypeAssertionExpression(expression) ? expression : unwrap(expression));\n  let arms: ((string[] | undefined)[][] | undefined)[];" }], reds: ["unwrap@resolveArrays#1", "F-OUTERMOST-WRAPPERS"], witnesses: ["w05-ra-ta"], twins: ["t05-ra-ta-paren"] },
+  "GP14-06-BT-AS": { hollows: "unwrap@bindTarget#1 reads an outermost as on a destructuring element target as written (a property store)", edits: [{ from: "    const node = unwrap(target);", to: "    const node = (ts.isAsExpression(target) ? target : unwrap(target));" }], reds: ["unwrap@bindTarget#1", "F-OUTERMOST-WRAPPERS"], witnesses: ["w06-bt-as"], twins: ["t06-bt-as-paren"] },
+  "GP14-07-BT-SAT": { hollows: "unwrap@bindTarget#1 reads an outermost satisfies on a destructuring element target as written", edits: [{ from: "    const node = unwrap(target);", to: "    const node = (ts.isSatisfiesExpression(target) ? target : unwrap(target));" }], reds: ["unwrap@bindTarget#1", "F-OUTERMOST-WRAPPERS"], witnesses: ["w07-bt-sat"], twins: ["t07-bt-sat-paren"] },
+  "GP14-08-BT-TA": { hollows: "unwrap@bindTarget#1 reads an outermost <T> on a destructuring element target as written", edits: [{ from: "    const node = unwrap(target);", to: "    const node = (ts.isTypeAssertionExpression(target) ? target : unwrap(target));" }], reds: ["unwrap@bindTarget#1", "F-OUTERMOST-WRAPPERS"], witnesses: ["w08-bt-ta"], twins: ["t08-bt-ta-paren"] },
 };
+
+// ---- the outermost-wrapper class (R-B254's enumerate-the-resolvable form, the R739 terminal criterion) ----
+
+/** Each WRAPPERS kind and the ts predicate a class member tests it with, as spelled into the hollowed helper: WRAPPERS' own test,
+ * and for an instantiation expression every ExpressionWithTypeArguments (a heritage one is never a wrapper, so it reads the same). */
+const KIND_PREDICATES: Readonly<Record<string, { readonly spelled: string; readonly test: (node: ts.Node) => boolean }>> = {
+  "(...)": { spelled: "ts.isParenthesizedExpression", test: ts.isParenthesizedExpression },
+  as: { spelled: "ts.isAsExpression", test: ts.isAsExpression },
+  satisfies: { spelled: "ts.isSatisfiesExpression", test: ts.isSatisfiesExpression },
+  "<T>": { spelled: "ts.isTypeAssertionExpression", test: ts.isTypeAssertionExpression },
+  "!": { spelled: "ts.isNonNullExpression", test: ts.isNonNullExpression },
+  "f<T>": { spelled: "ts.isExpressionWithTypeArguments", test: ts.isExpressionWithTypeArguments },
+};
+/** An equivalent member: why no module reaches the skipped kind outermost at its site, the spelling that reason names (a module)
+ * and what TypeScript's parser makes of it (premiseReading: its syntactic diagnostics, or the kind of each call's callee). */
+interface Equivalent {
+  readonly reason: string;
+  readonly premise: string;
+  readonly parsed: string;
+}
+const CALLEE_AS = "a call's callee is never a bare as expression: f as T(x) is a parse error";
+const CALLEE_SATISFIES = "a call's callee is never a bare satisfies expression: f satisfies T(x) is a parse error";
+const CALLEE_ASSERTION = "<T>f(x) asserts the call, whose callee is f: a call's callee is never a bare <T> assertion";
+const CALLEE_INSTANTIATION = "f<T>(x) is a call with type arguments, whose callee is f: a call's callee is never a bare instantiation expression";
+/** The outermost-wrapper class, every member in the helper's source order (outermostMembers): killed (it reds its own site's pin) or
+ * equivalent (it reads every pin the same; its premise is held). */
+const OUTERMOST_SKIPS: Readonly<Record<string, "killed" | Equivalent>> = {
+  "unwrap@resolveTexts#1 (...)": "killed",
+  "unwrap@resolveTexts#1 as": "killed",
+  "unwrap@resolveTexts#1 satisfies": "killed",
+  "unwrap@resolveTexts#1 <T>": "killed",
+  "unwrap@resolveTexts#1 !": "killed",
+  "unwrap@resolveTexts#1 f<T>": "killed",
+  "unwrap@resolveTexts#2 (...)": "killed",
+  "unwrap@resolveTexts#2 as": "killed",
+  "unwrap@resolveTexts#2 satisfies": "killed",
+  "unwrap@resolveTexts#2 <T>": "killed",
+  "unwrap@resolveTexts#2 !": "killed",
+  "unwrap@resolveTexts#2 f<T>": "killed",
+  "isWrapper@elementRead#1 (...)": "killed",
+  "isWrapper@elementRead#1 as": "killed",
+  "isWrapper@elementRead#1 satisfies": "killed",
+  "isWrapper@elementRead#1 <T>": "killed",
+  "isWrapper@elementRead#1 !": "killed",
+  "isWrapper@elementRead#1 f<T>": "killed",
+  "unwrap@resolveArrays#1 (...)": "killed",
+  "unwrap@resolveArrays#1 as": "killed",
+  "unwrap@resolveArrays#1 satisfies": "killed",
+  "unwrap@resolveArrays#1 <T>": "killed",
+  "unwrap@resolveArrays#1 !": "killed",
+  "unwrap@resolveArrays#1 f<T>": "killed",
+  "unwrap@calleeName#1 (...)": "killed",
+  "unwrap@calleeName#1 as": { reason: CALLEE_AS, premise: "api.exec as F(\"rf\", []);\n", parsed: "TS1005" },
+  "unwrap@calleeName#1 satisfies": { reason: CALLEE_SATISFIES, premise: "api.exec satisfies F(\"rf\", []);\n", parsed: "TS1005" },
+  "unwrap@calleeName#1 <T>": { reason: CALLEE_ASSERTION, premise: "<F>api.exec(\"rf\", []);\n", parsed: "callee PropertyAccessExpression" },
+  "unwrap@calleeName#1 !": "killed",
+  "unwrap@calleeName#1 f<T>": { reason: CALLEE_INSTANTIATION, premise: "api.exec<F>(\"rf\", []);\n", parsed: "callee PropertyAccessExpression" },
+  "unwrap@factory#1 (...)": "killed",
+  "unwrap@factory#1 as": "killed",
+  "unwrap@factory#1 satisfies": "killed",
+  "unwrap@factory#1 <T>": "killed",
+  "unwrap@factory#1 !": "killed",
+  "unwrap@factory#1 f<T>": "killed",
+  "unwrap@loaderNames#1 (...)": "killed",
+  "unwrap@loaderNames#1 as": { reason: "a bare as expression is no assignment target (x as T = y is a parse error), so a binding assignment's left side is never one", premise: "let l;\nl as unknown = createRequire(import.meta.url);\n", parsed: "TS1005" },
+  "unwrap@loaderNames#1 satisfies": { reason: "a bare satisfies expression is no assignment target (x satisfies T = y is a parse error), so a binding assignment's left side is never one", premise: "let l;\nl satisfies unknown = createRequire(import.meta.url);\n", parsed: "TS1005" },
+  "unwrap@loaderNames#1 <T>": { reason: "a bare <T> assertion is no assignment target (<T>x = y is a parse error), so a binding assignment's left side is never one", premise: "let l;\n<unknown>l = createRequire(import.meta.url);\n", parsed: "TS1005" },
+  "unwrap@loaderNames#1 !": "killed",
+  "unwrap@loaderNames#1 f<T>": "killed",
+  "unwrap@isLoaderCall#1 (...)": "killed",
+  "unwrap@isLoaderCall#1 as": { reason: CALLEE_AS, premise: "createRequire(import.meta.url) as F(name);\n", parsed: "TS1005" },
+  "unwrap@isLoaderCall#1 satisfies": { reason: CALLEE_SATISFIES, premise: "createRequire(import.meta.url) satisfies F(name);\n", parsed: "TS1005" },
+  "unwrap@isLoaderCall#1 <T>": { reason: CALLEE_ASSERTION, premise: "<F>createRequire(import.meta.url)(name);\n", parsed: "callee CallExpression callee Identifier" },
+  "unwrap@isLoaderCall#1 !": "killed",
+  "unwrap@isLoaderCall#1 f<T>": { reason: CALLEE_INSTANTIATION, premise: "createRequire(import.meta.url)<F>(name);\n", parsed: "callee CallExpression callee Identifier" },
+  "isWrapper@isWriteTarget#1 (...)": "killed",
+  "isWrapper@isWriteTarget#1 as": "killed",
+  "isWrapper@isWriteTarget#1 satisfies": "killed",
+  "isWrapper@isWriteTarget#1 <T>": "killed",
+  "isWrapper@isWriteTarget#1 !": "killed",
+  "isWrapper@isWriteTarget#1 f<T>": "killed",
+  "unwrap@bindTarget#1 (...)": "killed",
+  "unwrap@bindTarget#1 as": "killed",
+  "unwrap@bindTarget#1 satisfies": "killed",
+  "unwrap@bindTarget#1 <T>": "killed",
+  "unwrap@bindTarget#1 !": "killed",
+  "unwrap@bindTarget#1 f<T>": "killed",
+  "isWrapper@consume#1 (...)": "killed",
+  "isWrapper@consume#1 as": "killed",
+  "isWrapper@consume#1 satisfies": "killed",
+  "isWrapper@consume#1 <T>": "killed",
+  "isWrapper@consume#1 !": "killed",
+  "isWrapper@consume#1 f<T>": "killed",
+  "unwrap@consume#1 (...)": "killed",
+  "unwrap@consume#1 as": { reason: "the climbed value is a logical assignment's left side, where a bare as expression is a parse error (x as T ||= y)", premise: "let h = cp;\nconst g = (h as typeof cp ||= fallback).spawn;\n", parsed: "TS1005 TS1005 TS1134" },
+  "unwrap@consume#1 satisfies": { reason: "the climbed value is a logical assignment's left side, where a bare satisfies expression is a parse error (x satisfies T ||= y)", premise: "let h = cp;\nconst g = (h satisfies typeof cp ||= fallback).spawn;\n", parsed: "TS1005 TS1005 TS1134" },
+  "unwrap@consume#1 <T>": { reason: "the climbed value is a logical assignment's left side, where a bare <T> assertion is a parse error (<T>x ||= y)", premise: "let h = cp;\nconst g = (<typeof cp>h ||= fallback).spawn;\n", parsed: "TS1005 TS1005 TS1134" },
+  "unwrap@consume#1 !": "killed",
+  "unwrap@consume#1 f<T>": "killed",
+  "unwrap@loaderLabel#1 (...)": "killed",
+  "unwrap@loaderLabel#1 as": { reason: CALLEE_AS, premise: "require as F(name);\n", parsed: "TS1005" },
+  "unwrap@loaderLabel#1 satisfies": { reason: CALLEE_SATISFIES, premise: "require satisfies F(name);\n", parsed: "TS1005" },
+  "unwrap@loaderLabel#1 <T>": { reason: CALLEE_ASSERTION, premise: "<F>require(name);\n", parsed: "callee Identifier" },
+  "unwrap@loaderLabel#1 !": "killed",
+  "unwrap@loaderLabel#1 f<T>": { reason: CALLEE_INSTANTIATION, premise: "require<F>(name);\n", parsed: "callee Identifier" },
+};
+/** The class from the helper's own source: at every unwrap and isWrapper call of a use site (vocabulary@function#n, counted as
+ * helperSites counts them), one member per WRAPPERS kind - an unwrap site reading that kind, when outermost, as written
+ * (`(P(x) ? x : unwrap(x))`), and an isWrapper climb site not climbing it (`(isWrapper(x) && !P(x))`) - with the helper's text so hollowed. */
+function outermostMembers(): { readonly member: string; readonly site: string; readonly text: string }[] {
+  const members: { member: string; site: string; text: string }[] = [];
+  const seen = new Map<string, number>();
+  walk(HELPER_SOURCE, node => {
+    if (!ts.isIdentifier(node) || !WRAPPER_PLUMBING.includes(node.text)) return;
+    const parent = node.parent;
+    if ((ts.isVariableDeclaration(parent) || ts.isFunctionDeclaration(parent)) && parent.name === node) return;
+    const owner = enclosingName(node);
+    if (WRAPPER_PLUMBING.includes(owner)) return;
+    const key = `${node.text}@${owner}`;
+    const count = (seen.get(key) ?? 0) + 1;
+    seen.set(key, count);
+    const site = `${key}#${count}`;
+    const argument = ts.isCallExpression(parent) && parent.expression === node && parent.arguments.length === 1 ? parent.arguments[0] : undefined;
+    if (argument === undefined) throw new Error(`${site}: a WRAPPERS use site is a call with one argument`);
+    const spelled = argument.getText(HELPER_SOURCE);
+    for (const [kind, predicate] of Object.entries(KIND_PREDICATES)) {
+      const hollow = node.text === "unwrap" ? `(${predicate.spelled}(${spelled}) ? ${spelled} : unwrap(${spelled}))` : `(isWrapper(${spelled}) && !${predicate.spelled}(${spelled}))`;
+      members.push({ member: `${site} ${kind}`, site, text: `${HELPER_TEXT.slice(0, parent.getStart(HELPER_SOURCE))}${hollow}${HELPER_TEXT.slice(parent.getEnd())}` });
+    }
+  });
+  return members;
+}
+/** What TypeScript's parser makes of a premise module: its syntactic diagnostics (TS codes), or, when it parses clean, the kind of
+ * each call's callee in source order. */
+function premiseReading(text: string): string {
+  const diagnostics = ts.transpileModule(text, { reportDiagnostics: true, compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).diagnostics ?? [];
+  if (diagnostics.length > 0) return diagnostics.map(diagnostic => `TS${diagnostic.code}`).join(" ");
+  const callees: string[] = [];
+  walk(ts.createSourceFile("premise.ts", text, ts.ScriptTarget.Latest, true), node => {
+    if (ts.isCallExpression(node)) callees.push(`callee ${ts.SyntaxKind[node.expression.kind]}`);
+  });
+  return callees.join(" ");
+}
 
 // ---- the claims ----
 
@@ -1158,14 +1367,14 @@ interface Clause {
 const CLAIMS: Readonly<Record<string, readonly Clause[]>> = {
   wrappers: [
     {
-      words: "WRAPPERS are parentheses, as, satisfies, <T>, ! and an instantiation expression's type arguments; every reader reads an expression through every one of them at every use site (unwrap and isWrapper), and the tracer also through await",
-      falsifiers: ["unwrap@resolveTexts#1", "unwrap@resolveTexts#2", "isWrapper@elementRead#1", "unwrap@resolveArrays#1", "unwrap@calleeName#1", "unwrap@factory#1", "unwrap@loaderNames#1", "unwrap@isLoaderCall#1", "unwrap@bindTarget#1", "isWrapper@consume#1", "unwrap@consume#1", "unwrap@loaderLabel#1", "isWrapper@isWriteTarget#1"],
+      words: "WRAPPERS are parentheses, as, satisfies, <T>, ! and an instantiation expression's type arguments; every reader reads an expression through every one of them at every use site (unwrap and isWrapper; each site's module spells every kind), the outermost layer included for every kind TypeScript's parser admits there (the outermost-wrapper class: skipping such a kind at one site reds that site's pin; a kind the parser never puts outermost there is an equivalent member, named with the parse that says so), and the tracer also through await",
+      falsifiers: ["F-OUTERMOST-WRAPPERS", "unwrap@resolveTexts#1", "unwrap@resolveTexts#2", "isWrapper@elementRead#1", "unwrap@resolveArrays#1", "unwrap@calleeName#1", "unwrap@factory#1", "unwrap@loaderNames#1", "unwrap@isLoaderCall#1", "unwrap@bindTarget#1", "isWrapper@consume#1", "unwrap@consume#1", "unwrap@loaderLabel#1", "isWrapper@isWriteTarget#1"],
     },
   ],
   specifiers: [
     {
       words: "the specifier reader names every import declaration's specifier (a type-only one and an empty one included), every export-from's, every import-equals of an external module's, and every loader call's first argument through resolution (every candidate, sorted), <expression> when it does not resolve or is absent",
-      falsifiers: ["F-ENTRIES", "F-LOADS", "F-ENTRY-EDGES", "F-PLANTED", "F-ENTRY-CANDIDATES", "F-SPECIFIER-SLOTS"],
+      falsifiers: ["F-ENTRIES", "F-LOADS", "F-ENTRY-EDGES", "F-PLANTED", "F-ENTRY-CANDIDATES", "F-SPECIFIER-SLOTS", "F-OUTERMOST-WRAPPERS"],
     },
   ],
   loader: [
@@ -1200,8 +1409,8 @@ const CLAIMS: Readonly<Record<string, readonly Clause[]>> = {
       falsifiers: ["F-FOLLOW", "F-BINDINGS", "F-LITERAL-KEYS", "F-OPTIONAL-CHAINS"],
     },
     {
-      words: "declarations and BINDING_ASSIGNMENTS assignments to a name or a destructuring pattern at any depth (rest elements, defaults and holes included, a pattern or default nested in one, a key of any spelling), the target through WRAPPERS (a default's target too), and the assignment's value (after a property store too, and along a chain of assignments)",
-      falsifiers: ["BINDING_ASSIGNMENTS@consume#1", "unwrap@bindTarget#1", "W-BAND", "F-ENTRIES", "F-BINDINGS", "F-FLOWS", "F-LITERAL-KEYS"],
+      words: "declarations and BINDING_ASSIGNMENTS assignments to a name or a destructuring pattern at any depth (rest elements, defaults and holes included, a pattern or default nested in one, a key of any spelling), the target through WRAPPERS (a default's target too, and an element target under an outermost as, satisfies or <T>), and the assignment's value (after a property store too, and along a chain of assignments)",
+      falsifiers: ["BINDING_ASSIGNMENTS@consume#1", "unwrap@bindTarget#1", "W-BAND", "F-ENTRIES", "F-BINDINGS", "F-FLOWS", "F-LITERAL-KEYS", "F-OUTERMOST-WRAPPERS"],
     },
     {
       words: "a LOGICAL_ASSIGNMENTS assignment whose target is a held name, through WRAPPERS, is followed through the assignment's value (the target's old value when kept), in a chain too; a member target is a property store",
@@ -1233,7 +1442,7 @@ const CLAIMS: Readonly<Record<string, readonly Clause[]>> = {
   launches: [
     {
       words: "the launch-call reader reads every call whose callee is spelled with a LAUNCH_CALLS name (a name, a property name or a literal element name: a string or a no-substitution template; through WRAPPERS, with type arguments or an optional call) and whose command resolves",
-      falsifiers: ["LAUNCH_CALLS@launchSitesAt#1", "unwrap@calleeName#1", "W-ELEM", "W-CWRAP", "BF1", "BF1c", "NS2c", "F-LITERAL-KEYS", "F-OPTIONAL-CHAINS"],
+      falsifiers: ["LAUNCH_CALLS@launchSitesAt#1", "unwrap@calleeName#1", "W-ELEM", "W-CWRAP", "BF1", "BF1c", "NS2c", "F-LITERAL-KEYS", "F-OPTIONAL-CHAINS", "F-OUTERMOST-WRAPPERS"],
     },
     {
       words: "and, its command <expression>, every such call in a namespace body or an enum declaration whose command does not resolve, and every such call whose command resolves only by trusting what resolution refuses (an ambient const's initializer, an index into a const array that is not only read)",
@@ -1243,8 +1452,8 @@ const CLAIMS: Readonly<Record<string, readonly Clause[]>> = {
   ],
   resolution: [
     {
-      words: "commands, specifiers and member keys resolve through string literals and no-substitution templates, a conditional's arms (a nested conditional's too), the const binding a name resolves to in its scope, and a literal numeric index into a const array literal (no spread anywhere in it) whose name is only read; otherwise they do not resolve; the candidates are deduplicated and sorted",
-      falsifiers: ["F-SCOPE", "F-ARRAYS", "F-ARRAY-READS", "F-FOLLOW", "F-LITERAL-KEYS", "F-ARRAY-REACH", "F-ENTRY-CANDIDATES"],
+      words: "commands, specifiers and member keys resolve through string literals and no-substitution templates, a conditional's arms (a nested conditional's too), the const binding a name resolves to in its scope, and a literal numeric index into a const array literal (no spread anywhere in it; through WRAPPERS, an outermost as, as const, satisfies or <T> on the initializer included) whose name is only read; otherwise they do not resolve; the candidates are deduplicated and sorted",
+      falsifiers: ["F-SCOPE", "F-ARRAYS", "F-ARRAY-READS", "F-FOLLOW", "F-LITERAL-KEYS", "F-ARRAY-REACH", "F-ENTRY-CANDIDATES", "F-OUTERMOST-WRAPPERS"],
     },
     { words: "resolution follows at most RESOLVE_DEPTH steps (a conditional's arm, a name's initializer, an indexed array and an element are each one step); past them nothing resolves", falsifiers: ["F-BOUNDS"] },
     {
@@ -1360,6 +1569,13 @@ function firstBlock(text: string, prefix: string): string {
   const end = lines.findIndex((line, index) => index > start && line.trim() === "");
   return lines.slice(start, end < 0 ? undefined : end).join("\n");
 }
+/** The GP14 member ids a refusal #2 unmet label names by range (GP14-01-TO-05: GP14-01 .. GP14-05); none without a range. */
+function gp14Range(line: string): string[] {
+  const range = /\bGP14-(\d\d)-TO-(\d\d)\b/.exec(line);
+  const ids: string[] = [];
+  if (range !== null) for (let id = Number(range[1]); id <= Number(range[2]); id += 1) ids.push(`GP14-${String(id).padStart(2, "0")}`);
+  return ids;
+}
 /** The distinct matches of a pattern in a line, in first-match order. */
 function idsIn(line: string, pattern: RegExp): string[] {
   return [...new Set(line.match(pattern) ?? [])];
@@ -1470,7 +1686,7 @@ const READERS: Readers = { moduleReading, heldReading, parseSource };
 function isReaders(value: unknown): value is Readers {
   return isObject(value) && typeof value.moduleReading === "function" && typeof value.heldReading === "function" && typeof value.parseSource === "function";
 }
-const FORMS: Readonly<Record<string, string>> = { ...CARRIED_FORMS, ...EXTRA_FORMS, ...RESPIN_FORMS };
+const FORMS: Readonly<Record<string, string>> = { ...CARRIED_FORMS, ...EXTRA_FORMS, ...RESPIN_FORMS, ...OUTERMOST_FORMS };
 function readModule(readers: Readers, path: string, text: string): string[] {
   return readers.moduleReading(path, readers.parseSource(path, text));
 }
@@ -1511,6 +1727,10 @@ function occurrences(text: string, part: string): number {
 async function hollowed(dir: string, name: string, kill: Kill): Promise<Readers> {
   let text = HELPER_TEXT;
   for (const edit of kill.edits) text = text.replace(edit.from, () => edit.to);
+  return loadReaders(dir, name, text);
+}
+/** A helper text (hollowed) transpiled into a scratch directory and loaded as readers. */
+async function loadReaders(dir: string, name: string, text: string): Promise<Readers> {
   const js = ts.transpileModule(text, { compilerOptions: { module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 } }).outputText.replaceAll('from "typescript"', `from ${JSON.stringify(TYPESCRIPT_URL)}`);
   const file = join(dir, `${name}.mjs`);
   writeFileSync(file, js);
@@ -1527,6 +1747,7 @@ function judgedConstants(): Json {
     siteForms: SITE_FORMS,
     extraForms: EXTRA_FORMS,
     respinForms: RESPIN_FORMS,
+    outermostForms: OUTERMOST_FORMS,
     scriptForms: SCRIPT_FORMS,
     plantedReach: PLANTED_REACH,
     positions: POSITIONS,
@@ -1537,6 +1758,8 @@ function judgedConstants(): Json {
     residueMembers: RESIDUE_MEMBERS,
     kindPins: KIND_PINS,
     predicatePositions: PREDICATE_POSITIONS,
+    kindPredicates: KIND_PREDICATES,
+    outermostSkips: OUTERMOST_SKIPS,
     siteVocabularies: SITE_VOCABULARIES,
     anchors: ANCHORS,
     carriedCounts: CARRIED_COUNTS,
@@ -1564,6 +1787,7 @@ function judgedConstants(): Json {
 const TITLES = {
   judged: "the judged set: the frozen shape, the claims, the kills, the out-of-file roster, the tracker export and the helper's own source agree",
   kills: "each named hollowing, applied to the helper's own bytes, reds exactly the pins it names (the unmodified readers read the cure)",
+  outermost: "the outermost-wrapper class: each WRAPPERS kind skipped at each unwrap and isWrapper use site of the helper's own bytes reds that site's pin, or reads every pin the same as an equivalent member",
   registration: "the registered tests and the reached pins equal the roster, in order and both ways",
 } as const;
 
@@ -1571,7 +1795,7 @@ const REACHED: string[] = [];
 
 describe("wb-pyel.9 EDC static-reach readers census (SDK-EVIDENCE-DIRECTED-COMPUTATION-R3, the full-surface readers of wb-pyel.5's A5)", () => {
   it(TITLES.judged, { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["D:5", "U:16", "S:29", "F:29", "P:6", "Q:1"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["D:5", "U:16", "S:29", "F:30", "P:6", "Q:1"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     const pins = ROWS.flatMap(row => row.pins);
     expect(pins.filter((pin, index) => pins.indexOf(pin) !== index), "no pin is held twice").toEqual([]);
@@ -1595,7 +1819,7 @@ describe("wb-pyel.9 EDC static-reach readers census (SDK-EVIDENCE-DIRECTED-COMPU
     expect(Object.entries(RESIDUE_MEMBERS).filter(([, probes]) => probes.length === 0).map(([member]) => member), "every member has a probe").toEqual([]);
     const residualWords = CLAIMS.residuals?.map(clause => clause.words).join(" ") ?? "";
     expect(Object.keys(RESIDUE_MEMBERS).filter(member => !residualWords.includes(member)), "the residual claim names every member").toEqual([]);
-    const forms = [...Object.keys(CARRIED_FORMS), ...Object.keys(EXTRA_FORMS), ...Object.keys(RESPIN_FORMS)];
+    const forms = [...Object.keys(CARRIED_FORMS), ...Object.keys(EXTRA_FORMS), ...Object.keys(RESPIN_FORMS), ...Object.keys(OUTERMOST_FORMS)];
     const placed = Object.values(FAMILIES).flat();
     expect([...placed].sort(), "every form is in exactly one family").toEqual([...forms].sort());
 
@@ -1629,12 +1853,31 @@ describe("wb-pyel.9 EDC static-reach readers census (SDK-EVIDENCE-DIRECTED-COMPU
     // wb-pyel.9 refusal #1's U1 item, from the export hop that carries it (the tracker holds it at cut time): KILLS holds every member it names
     const refusal1 = firstLine(own.notes, ANCHORS.refusal1);
     if (refusal1 !== "") expect(idsIn(refusal1, /\bG\d\d\b/g).filter(id => !Object.keys(KILLS).some(name => name.startsWith(`${id}-`))), "KILLS holds every gate mutant refusal #1's U1 item names").toEqual([]);
+    // wb-pyel.9 refusal #2's U1 and U2 items and ruling R-B254 (the export carries them from base 1e985b6 on): KILLS holds every GP14
+    // member their ranges name, and the outermost-wrapper class holds every use site the ruling names
+    const gp14 = [ANCHORS.refusal2u1, ANCHORS.refusal2u2].flatMap(prefix => gp14Range(firstLine(own.notes, prefix)));
+    expect(gp14, "refusal #2's U1 and U2 items name GP14-01..05 and GP14-06..08").toEqual(["GP14-01", "GP14-02", "GP14-03", "GP14-04", "GP14-05", "GP14-06", "GP14-07", "GP14-08"]);
+    expect(gp14.filter(id => !Object.keys(KILLS).some(name => name.startsWith(`${id}-`))), "KILLS holds every GP14 member refusal #2's U1 and U2 items name").toEqual([]);
+    const ruled = idsIn(firstLine(own.notes, ANCHORS.ruling254), /\bunwrap@[A-Za-z]+#\d+/g);
+    expect(ruled.length, "ruling R-B254 names the use sites of GP14-01..08").toBeGreaterThan(0);
+    expect(ruled.filter(site => !Object.keys(OUTERMOST_SKIPS).some(member => member.startsWith(`${site} `))), "the outermost-wrapper class holds every use site ruling R-B254 names").toEqual([]);
 
     // the outside anchors: the helper's own source
     expect(Object.keys(SITE_FORMS).sort(), "row S holds exactly the helper's vocabulary use sites").toEqual(helperSites().sort());
     for (const site of Object.keys(SITE_FORMS)) {
       const { entries, spelled } = siteEntries(site);
       expect(spelled, `${site}'s module spells every entry of its vocabulary`).toEqual(entries);
+    }
+    // the outermost-wrapper class: exactly the members the helper's unwrap and isWrapper calls make, at row S's unwrap and isWrapper sites
+    expect(Object.keys(KIND_PREDICATES), "the class skips every WRAPPERS kind").toEqual(Object.keys(WRAPPERS));
+    expect(Object.entries(KIND_PREDICATES).filter(([kind, predicate]) => predicate.spelled !== `ts.${predicate.test.name}` || (kind !== "f<T>" && predicate.test !== WRAPPERS[kind])).map(([kind]) => kind), "each kind's predicate is the one WRAPPERS tests it with, spelled as it is (f<T>: every ExpressionWithTypeArguments)").toEqual([]);
+    const members = outermostMembers();
+    expect([...new Set(members.map(entry => entry.site))], "the class's sites are row S's unwrap and isWrapper sites").toEqual(helperSites().filter(site => WRAPPER_PLUMBING.some(name => site.startsWith(`${name}@`))));
+    expect(members.map(entry => entry.member), "OUTERMOST_SKIPS holds exactly the class's members, in the helper's source order").toEqual(Object.keys(OUTERMOST_SKIPS));
+    for (const [member, reading] of Object.entries(OUTERMOST_SKIPS)) if (reading !== "killed") expect(premiseReading(reading.premise), `${member}: its premise parses as its reason says`).toBe(reading.parsed);
+    for (const name of Object.keys(KILLS).filter(kill => kill.startsWith("GP14-"))) {
+      const named = /^(\S+) reads an outermost (as|satisfies|<T>)(?=\s)/.exec(KILLS[name]?.hollows ?? "");
+      expect(named !== null && OUTERMOST_SKIPS[`${named[1]} ${named[2]}`] === "killed", `${name} is a killed member of the class`).toBe(true);
     }
     for (const [name, mapped] of Object.entries(PREDICATE_POSITIONS)) {
       expect(Object.keys(mapped), `every predicate ${name} tests answers for pinned positions`).toEqual(predicatesOf(name));
@@ -1682,6 +1925,23 @@ describe("wb-pyel.9 EDC static-reach readers census (SDK-EVIDENCE-DIRECTED-COMPU
         expect((kill.witnesses ?? []).filter(form => !differs(form)), `${name}: each of its witnesses reads differently`).toEqual([]);
         expect((kill.twins ?? []).filter(form => differs(form)), `${name}: each of its twins reads the same`).toEqual([]);
       }
+    } finally {
+      removeScratch(dir);
+    }
+  });
+
+  it(TITLES.outermost, { timeout: 300_000 }, async () => {
+    const dir = makeScratch("edc-static-reach-outermost-");
+    try {
+      const pins = ROWS.flatMap(row => row.pins);
+      const found: Record<string, string> = {};
+      for (const [index, entry] of outermostMembers().entries()) {
+        const readers = await loadReaders(dir, `outermost-${index}`, entry.text);
+        const reds = (pin: string): boolean => JSON.stringify(witnessOf(pin, readers)) !== JSON.stringify(rosterWitness(pin));
+        found[entry.member] = reds(entry.site) ? "killed" : pins.some(reds) ? "red at another pin only" : "equivalent";
+      }
+      const expected = Object.fromEntries(Object.entries(OUTERMOST_SKIPS).map(([member, reading]) => [member, reading === "killed" ? "killed" : "equivalent"]));
+      expect(found, "a killed member reds its own site's pin; an equivalent member reads every pin the same").toStrictEqual(expected);
     } finally {
       removeScratch(dir);
     }
