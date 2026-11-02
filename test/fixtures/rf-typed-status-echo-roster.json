@@ -465,9 +465,13 @@
               "doubleParenthesizedHead": 1,
               "throwInLoop": 1,
               "asCallee": 1,
+              "asConstructionCallee": 1,
               "classWithHeritage": 1,
+              "heritageWithImplements": 1,
               "returnedHeritageClass": 1,
-              "signatureInIntersection": 1
+              "sessionClassTwin": 1,
+              "signatureInIntersection": 1,
+              "constructSignatureInIntersection": 1
             }
           }
         },
