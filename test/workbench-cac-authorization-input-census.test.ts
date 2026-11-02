@@ -24,20 +24,26 @@
  *
  * MEASURED AT 04123dc0d0f2 (trunk tip at the first cut's claim, landing 671), re-measured at 57cb1c0ca9a4 (landing 677) and
  * aa95f436d802 (landing 678) for the second cut, at c2695d76773c (landing 686), a9bfea3f49c4 (landing 688) and cdf5484d8d1b (landing
- * 689) for the third, at 3c9db90d55f3 (landing 717) for the fourth and at 1e985b6f7d7d (landing 805) and 04c8bbb06ccc (landing 807) for
- * this one, each merged into the branch. Among the first seven, no src path and no other path this census reads changed but the bead
- * export, of which it reads the wb-rdlh.1 row's first seven paragraphs, unchanged (the row gained notes after them), and, at landing
+ * 689) for the third, at 3c9db90d55f3 (landing 717) for the fourth, at 1e985b6f7d7d (landing 805), 04c8bbb06ccc (landing 807) and
+ * f5cb912999ba (landing 808) for the fifth and at e23b18e15bd7 (landing 810), 5779ecaf1161 (landing 814) and 28eea0277c20 (landing
+ * 816) for this one, each merged into the branch. Among the first seven, no src path and no other path this census reads changed but
+ * the bead export, of which it reads the wb-rdlh.1 row's first seven paragraphs, unchanged (the row gained notes after them), and, at
+ * landing
  * 691 (wb-ycue), the absence roster (a followUp block and two residual families; its 50 vendored lines, all this census reads of it,
  * unchanged) and the absence census (which still names that roster, all this census reads of it);
- * docs/workbench/18-decisions-and-risks.md, which it does not read, gained two lines at landing 673. From the fourth to this one's
+ * docs/workbench/18-decisions-and-risks.md, which it does not read, gained two lines at landing 673. From the fourth to the fifth's
  * first: the bead export (the row gained notes after the seven paragraphs, which are unchanged; refusal #4's UNMET members, which this
  * cut reads, are among them), the absence roster (a depth block; its 50 vendored lines unchanged), the absence census (it still names
  * that roster), one src doc comment (src/workbench/hyperunix-observer.ts, two lines; no count below moved) and wb-rdlh.3's
  * section-source reader, added at landing 798 (test/helpers/docs-section-source.ts), which D1 now reads through;
- * docs/workbench/12-security.md is unchanged (blob ff7a76a7). From this one's first to its second, of the paths this census reads only
+ * docs/workbench/12-security.md is unchanged (blob ff7a76a7). From the fifth's first to its second, of the paths this census reads only
  * the bead export (this row's status) and test/helpers/census.ts changed: wb-aalz's one blockText hunk renders a block quote's block
  * children, which turns one check of D1 at one plant, G-T-ITEM-QUOTE-LIST's rendered check (NOT CLAIMED below), and no other check of
- * any plant; every count below re-measured equal at both. Not pinned:
+ * any plant; every count below re-measured equal at both. From the fifth's second to this one, of the paths this census reads only the
+ * bead export changed: this row's notes are byte-equal at f5cb912999ba and at e23b18e15bd7 gain refusal #5's record and its disposition
+ * after every line this census reads (the seven paragraphs, refusal #3's GATE PLANTS block and refusal #4's member lines unchanged),
+ * and at 5779ecaf1161 and 28eea0277c20 only the bead export again (this row's status at the first; its notes byte-equal at both);
+ * every count below re-measured equal at e23b18e15bd7, 5779ecaf1161 and 28eea0277c20. Not pinned:
  * src/workbench/control.ts:255 declares the filing's cited predicate (export function isCoreMintedDecision); src holds 117 files,
  * every one a .ts module, no symlink; the core and the
  * six modules with a value import of it (claude-control, control-reply, control-tool, detached-control, forge-control and
@@ -85,10 +91,13 @@
  *   raw text does not spell.
  * - DOCS (row D): the page's 'Authorization design' section, read through two views of the one page, each claimed at the forms D1's
  *   pins hold and no wider. THE SECTION-SOURCE READER: wb-rdlh.3's, landed at landing 798 (test/helpers/docs-section-source.ts) and
- *   imported unedited (sectionSource, termsStated), which docsBinding calls; this file binds neither name itself and imports nothing
- *   from marked (the provenance case), and that reader's own census (test/workbench-docs12-section-source-census.test.ts) pins what it
- *   reads. SOURCE: sectionSource's source, the page's own text from the first character marked 18.0.11's top-level lexer step for the
- *   heading token consumed up to the first character the step for the next top-level level-1 or level-2 heading token consumed (or the
+ *   imported unedited (sectionSource, termsStated) by one import declaration, whose two names docsBinding calls; no function, variable
+ *   or class declaration, parameter or binding element of this file takes either name, and no import declaration of it names marked
+ *   (the provenance case, at the forms PROVENANCE names; a copy of termsStated feeding the terms beside docsBinding's own call, a named
+ *   function expression and a dynamic import are not read: R-UNREAD-PROVENANCE), and that reader's own census
+ *   (test/workbench-docs12-section-source-census.test.ts) pins what it reads. SOURCE: sectionSource's source, the page's own text from
+ *   the first character marked 18.0.11's top-level lexer step for the heading token consumed up to the first character the step for the
+ *   next top-level level-1 or level-2 heading token consumed (or the
  *   page's end), its CR and CRLF line endings and every link reference definition in that span as the page spells them, held to the
  *   sha-256 of its UTF-8 encoding, whose byte count it is (TITLE-NBSP's no-break space counts two); a refused reading's source is
  *   empty. TILING: sectionSource's tiled, whether the page's top-level token raws, re-joined, are the page itself. The lexer departs
@@ -100,10 +109,11 @@
  *   character reference as spelled and never decoded; white space collapsed), the section running to the next top-level level-1 or
  *   level-2 heading, and refuses when no such heading exists or more than one; the shared rendered view (test/helpers/census.ts
  *   docsSection) binds the section under the page's title by its own rules and gives its blocks. TERMS: termsStated over the source,
- *   either of the parked sentence's two terms ('authorization input', 'never softens') spelled out in it, in any letter case, every run
- *   of white space (what JavaScript's \s matches) read as one space, wherever in the span it sits (a refused reading's empty source
- *   states none). SHAPE: the section against its shape frozen at this cut's base (FROZEN_SECTION): the shared view's blocks are one
- *   list and no other block, holding eight items in all, the shared view finds no HTML in the section's blocks (docsSection's hasHtml,
+ *   either of the parked sentence's two terms ('authorization input', 'never softens') spelled out in it, in any letter case, a run of
+ *   white space between its words read as one space (D1's plants pin a line break, two spaces, a tab and a no-break space; other white
+ *   space is NOT CLAIMED below), wherever in the span it sits (a refused reading's empty source states none). SHAPE: the section
+ *   against its shape frozen at this cut's base (FROZEN_SECTION): the shared view's blocks are one list and no other block, holding
+ *   eight items in all, the shared view finds no HTML in the section's blocks (docsSection's hasHtml,
  *   which reads the blocks under the heading and not the heading line: HEADING-COMMENT), the items' text as the shared view renders it
  *   is held to a sha-256, and the section's source to a second sha-256 (1121 bytes, which marked's top-level tokens carry on this page
  *   as four raws re-joined: the heading 23, a space 2, the list 1094 and a space 2, refusal #4's member (c)). CHECKS: D1 names every
@@ -129,7 +139,8 @@
  *  C. C1 the derived admission/decision set holds the core and its six readers, every member yields reads (the core's include
  *    principal), none reads a record-shaped field, and neither does any src module; the reader's 53 controls (one synthetic module
  *    each) flag every form, position, wrapper and escape FIELDS names, each at its form; and the reader flags each of refusal #1's
- *    plants at its form (P1-P11 and O1-O4, the gate's modules verbatim) and both of its core plants inside the core's own text.
+ *    plants at its form (P1-P11 and O1-O4, each bound by its id and that form: R-PLANT-EDIT) and both of its core plants inside the
+ *    core's own text.
  *    C2 the tie to R2: the fixture record is the absence roster's own vendored line (held to the sha-256 this roster measured)
  *    and a schema name that census judges, as is each record line the members come from; its census names that roster; the
  *    three-valued status is the line's; the one-word members are exactly the shared names, each one src reads as a property (in a
@@ -170,9 +181,10 @@
  *    heading repeated inside a block quote after the page's last line, which the shared view counts and sectionSource, reading
  *    top-level headings only, does not; an HTML comment inside the heading line, which neither view reads as heading text
  *    (HEADING-COMMENT), and the heading's two words two spaces apart, which both views read with white space collapsed
- *    (HEADING-SPACES), each bound and by source alone; and refusal #4's members of record, each the gate's PREP edit verbatim after the
- *    eighth bullet: member (a)'s sixteen placements of the sentence or a term (a table in the eighth bullet, in a block quote or in a
- *    block quote in the eighth bullet; a list in a block quote in the eighth bullet or in a block quote; and the shallower and
+ *    (HEADING-SPACES), each bound and by source alone; and refusal #4's members of record, each an edit after the eighth bullet bound by
+ *    id and order to the members' lines and by every check it fails (R-PLANT-EDIT): member (a)'s sixteen placements of the sentence or
+ *    a term (a table in the eighth bullet, in a block quote or in a block quote in the eighth bullet; a list in a block quote in the
+ *    eighth bullet or in a block quote; and the shallower and
  *    already-read placements the member names), each by source and by terms, and member (b)'s three (the repeated definition nested in
  *    the eighth bullet with its title, G-S-ITEM-DUPDEF, by source and terms, and without it, G-S-ITEM-DUPDEF-NOTITLE, by source, each
  *    page tiled; the same definition at top level, C-TOP-DUPDEF, untiled, by source and terms).
@@ -182,27 +194,40 @@
  * roster's sha-256): its acceptance clause is tiled by the labels, its clause (a) yields the fixture conditions, the cited predicate
  * and file, its quote paragraph yields the first vendored line's text and site, and it cites the Library pin, so a pin or a row removed
  * from every census literal and from the roster still reds against the owner's text; refusal #3's GATE PLANTS lines in the same row's
- * notes (the first such block) yield GATE_SLICES, the bytes and sha-256/16 that gate measured; refusal #4's UNMET members (a), (b) and
- * (c) in the same row's notes (the first line of each, read at run time; notes only append) yield D1's member plants by id and in
- * order, the nine placements member (a) measured without terms with the checks it measured each by, and member (c)'s four raws; the
- * absence roster's vendored lines yield the records, their members and the statuses; the src tree yields the admission/decision set;
+ * notes (the first such block: refusal #5's appended block WX2 is not read) yield GATE_SLICES, the bytes and sha-256/16 that gate
+ * measured; refusal #4's UNMET members (a), (b) and (c) in the same row's notes (the first line of each, read at run time; notes only
+ * append: refusal #5's appended member lines WX1 are not read) yield D1's member plants by id and in order, the nine placements member
+ * (a) measured without terms with the checks it measured each by, and member (c)'s four raws; refusal #5's UNMET record in the same
+ * row's notes (its '| U1-' line up to its '| CURE' line, the first such block: a later quotation appended is not read) names the
+ * thirteen witnesses and escapes this census holds, each by its id (W- a provenance form, E- an R-UNREAD-PROVENANCE escape,
+ * W-MEMBER-SWAP- an R-PLANT-EDIT swap, WX an appended-note witness); the absence roster's vendored lines yield the records, their
+ * members and the statuses; the src tree yields the admission/decision set;
  * and the docs page's section yields D1's frozen shape.
  * SELF-READ: the judged set parses this file's IMPL and requires every pin to name one of READERS and not ROSTER (direct
  * identifiers only, R-HOLLOW-IMPL); each pin's witness carries the digest of its own quote; the records case requires every pin and
  * every quiet row to have run to its end; and the residual ids this header's RESIDUALS paragraph names, in order, must equal QUIET's
- * keys and the roster's. PROVENANCE: this file's source, parsed as TypeScript: its one import of the section-source reader binds
- * exactly sectionSource and termsStated as values, docsBinding calls both, no other binding of this file takes either name, and the
- * file imports nothing from marked.
+ * keys and the roster's. PROVENANCE: this file's source, parsed as TypeScript and judged four ways, each at the forms the case's
+ * controls hold: its one import declaration of the section-source reader binds exactly sectionSource and termsStated as values (a
+ * type-only specifier or a type-only import declaration of the reader binds none); docsBinding calls both by name (a call outside
+ * docsBinding is not read as one); no function, variable or class declaration, parameter or binding element of this file, at any
+ * depth, takes either name; and no import declaration of this file names marked (a named value, type-only, type-only specifier,
+ * namespace, default or side-effect import of it each reds). The controls are the synthetic module and one edit of this file's own
+ * source per form, made in memory (refusal #5's gate witnesses W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2, W-TYPEIMPORT3 and
+ * W-VALUES-TYPE among them), each held to the judgements it reds; the forms' shape is a frozen literal and refusal #5's record holds its
+ * witnesses (OUTSIDE ANCHORS); the forms the case does not read are R-UNREAD-PROVENANCE.
  * CASES (the pinned reader set, in registration order): 'judged set, frozen shape', 'judged set, roster', 'judged set, outside
- * anchors: the owner filing ...', 'judged set, outside anchors: refusal #4's UNMET members ...', 'judged set, self-read', 'judged set,
- * provenance', the nine pins (A1-A3, B1-B3, C1-C2 and D1, each titled by its id under its row's label), the eight quiet rows under
- * 'residuals: each named family's quiet row', and 'records'.
+ * anchors: the owner filing ...', 'judged set, outside anchors: refusal #4's UNMET members ...', 'judged set, outside anchors: every
+ * witness and escape refusal #5's UNMET record names ...', 'judged set, self-read', 'judged set, provenance', the nine pins (A1-A3,
+ * B1-B3, C1-C2 and D1, each titled by its id under its row's label), the ten quiet rows under 'residuals: each named family's quiet
+ * row', and 'records'.
  * NOT CLAIMED (scope sentences of the DOCS reading; each bounds what D1 reads and names no residual):
  * - The shared view's text at the nine placements refusal #4's member (a) measured without terms (a table nested in a list item or a
  *   block quote, a list inside a block quote nested in a list item or a block quote: the wb-aalz family) is NOT CLAIMED by the rendered
  *   check: D1 holds every other check of those nine plants exactly, and each reds by source and by terms.
  * - A term spelled otherwise in the source (a character reference, a backslash or percent escape, inline markup, a comment or an
  *   invisible character between its words, a paraphrase) is NOT CLAIMED by the terms check; such an edit of the span reds by source.
+ * - A term split by white space other than the runs D1's plants pin (a line break, two spaces, a tab and a no-break space; an em space,
+ *   for one) is NOT CLAIMED by the terms check; such an edit of the span reds by source.
  * - A term outside the span (the title of a definition placed after the section, one a link of the section resolves to included:
  *   L2-D1b) is NOT CLAIMED by the terms check; the link's own edit of the span reds by source.
  * - A heading's text with its character references decoded is NOT CLAIMED by sectionSource's binding, which reads token text (the
@@ -222,7 +247,14 @@
  * of the section resolves to included, and the tiling page-wide), so, on a page its tokens tile, the sentence placed outside the
  * section's source, on another section of the page (a level-1 or level-2 heading placed after the section's last block starts one, and
  * the section's heading text set as a level-3 heading starts none; HTML wrapped around the section sits in its neighbours) or on
- * another page, is not read. The list's anchors are this paragraph, QUIET and the roster, which one coordinated edit changes together:
+ * another page, is not read; R-UNREAD-PROVENANCE the provenance case reads import declarations, the five declaration kinds and
+ * docsBinding's calls by name, so marked loaded by a dynamic import() (refusal #5's E-DYNIMPORT2), either name bound by a named function
+ * expression (E-FUNCEXPR2) and a copy of termsStated under another name feeding D1's terms beside docsBinding's own call of it (an
+ * object's method, E-METHOD) are not read; R-PLANT-EDIT a gate's plant is bound by its id and by every check it fails or the form it is
+ * read at (refusal #4's members also by order, from their lines in the export; refusal #3's four also by the slices that gate
+ * measured), so a plant's edit or module swapped for another that reds or reads alike is not read (refusal #5's W-MEMBER-SWAP-A and
+ * W-MEMBER-SWAP-B, a refusal #1 and a refusal #2 docs plant, a refusal #1 module). The list's anchors are this paragraph, QUIET and
+ * the roster, which one coordinated edit changes together:
  * the program states no residual list to anchor it outside the cut.
  * Display paths added: none. Test-only: no scratch (every synthetic module is parsed in memory); src, the docs, both rosters, the
  * two test sources it binds, the section-source reader it imports and the bead export are only read.
@@ -621,8 +653,8 @@ const PLANTED_READS: readonly (readonly [ReadForm, string, string])[] = [
   ["literal", "ReplacementAssessmentV2", "export const read = (value: Record<string, unknown>) => value[String.raw`ReplacementAssessmentV2`];\n"],
   ["literal", "ChoiceTransportCertificateV1", 'export const read = () => new Map([["ChoiceTransportCertificateV1", true]]);\n'],
 ];
-/** The refusal-#1 plants (gate s137 LEG 2: U1's P1-P11 and F3's O1-O4), each the gate's synthetic module verbatim, with the read the
- * field reading must flag in it. */
+/** The refusal-#1 plants (gate s137 LEG 2: U1's P1-P11 and F3's O1-O4), each a synthetic module bound by its id and by the read the
+ * field reading must flag in it (which module a plant carries is R-PLANT-EDIT). */
 const GATE_HEAD = "export const read = (value: Record<string, unknown>): unknown => ";
 const REFUSAL_PLANTS: readonly (readonly [string, string, string])[] = [
   ["P1", "element:guardOrRelyReceipt", `${GATE_HEAD}value[("guardOrRelyReceipt")];\n`],
@@ -1050,16 +1082,16 @@ const TITLED_DEFINITION = `[gate-dup]: #authorization-design "${PARKED_SENTENCE}
 const UNTITLED_DEFINITION = "[gate-dup]: #authorization-design";
 const withOutside: PageEdit = page => page.replace(PAGE_TITLE, () => `${PAGE_TITLE}${OUTSIDE_DEFINITION}\n`);
 /** The docs plants, each with every check it fails, in DOCS_CHECKS order (docsCauses; at the nine placements refusal #4's member (a)
- * measured without terms, every check but rendered, which is NOT CLAIMED there): refusal #1's (gate s137 LEG 2: D-CTRL, D-NESTED,
- * D-PARA, D-BLOCKQUOTE, D-HTML and the rider D-PARAPHRASE, each the gate's edit verbatim); refusal #2's (gate s144 LEG 2: L2-D1, L2-D1b
- * and L2-D3, the three placements of the parked sentence the cut #2 reader missed, and that gate's controls L2-D2 and L2-D4, each the
- * gate's described edit); refusal #3's (gate s154 LEG 2: L2G-DUPDEF, L2G-CR-BULLET2, L2G-CR-BLANK and L2G-CRLF-BODY, each the gate's
- * edit, its section slice re-measured to the gate's length and sha-256, and that gate's controls L2G-DUPDEF-NOOUT, L2G-SPACE-BULLET2,
- * L2G-SPACE-BLANK and its CRLF on the anchor lines, CRLF-ANCHOR-LINES) with the same two departures outside the section (CR-OUTSIDE,
- * DUPDEF-OUTSIDE); the reader's further controls, one for each channel of the source a term can be spelled in, each spelling of a term
- * it reads or does not read, each part of the source that no rendered text shows, each removal and each binding edit; and refusal #4's
- * members of record (gate s157 PREP: member (a)'s sixteen and member (b)'s three, each the gate's edit verbatim, last, in the order the
- * members name them). */
+ * measured without terms, every check but rendered, which is NOT CLAIMED there), each bound by its id and those checks (which edit a
+ * plant carries is R-PLANT-EDIT): refusal #1's (gate s137 LEG 2: D-CTRL, D-NESTED, D-PARA, D-BLOCKQUOTE, D-HTML and the rider
+ * D-PARAPHRASE); refusal #2's (gate s144 LEG 2: L2-D1, L2-D1b and L2-D3, the three placements of the parked sentence the cut #2 reader
+ * missed, and that gate's controls L2-D2 and L2-D4); refusal #3's (gate s154 LEG 2: L2G-DUPDEF, L2G-CR-BULLET2, L2G-CR-BLANK and
+ * L2G-CRLF-BODY, each also held to the length and sha-256/16 of the section slice that gate measured, and that gate's controls
+ * L2G-DUPDEF-NOOUT, L2G-SPACE-BULLET2, L2G-SPACE-BLANK and its CRLF on the anchor lines, CRLF-ANCHOR-LINES) with the same two departures
+ * outside the section (CR-OUTSIDE, DUPDEF-OUTSIDE); the reader's further controls, one for each channel of the source a term can be
+ * spelled in, each spelling of a term it reads or does not read, each part of the source that no rendered text shows, each removal and
+ * each binding edit; and refusal #4's members of record (gate s157 PREP: member (a)'s sixteen and member (b)'s three, last, in the order
+ * the members name them, also bound by id and order to their lines in the export). */
 /** Refusal #3's four plants as that gate measured them: each planted page's section slice, its length and sha-256/16. */
 const GATE_SLICES: Readonly<Record<string, readonly [number, string]>> = {
   "L2G-DUPDEF": [1252, "dfb9c6d47070c7b6"],
@@ -1200,6 +1232,24 @@ function refusal3Slices(notes: string = beadNotes(BEAD)): Record<string, readonl
   }
   return slices;
 }
+/** Refusal #5's appended-note witnesses (gate s184 LEG 2, verbatim), each appended to this row's notes in memory: a later note quoting
+ * member lines (WX1) and one quoting a GATE PLANTS block (WX2). The export readers read the first line of each member and the first
+ * block, so neither moves a reading (the refusal #4 case and D1 hold it). */
+const APPENDED_WITNESSES = {
+  WX1: "\n\nGATE WITNESS NOTE (gate-prep-1 LEG 2, an appended later note quoting member lines):\n> (a) WITNESS MEMBER. G-T-WITNESS-ONLY [source]\n> (b) WITNESS MEMBER. G-S-WITNESS-ONLY\n> (c) WITNESS MEMBER. four tokens: heading 23, space 2, list 1094, space 2 = 1121",
+  WX2: "\n\nGATE WITNESS NOTE (gate-prep-1 LEG 2, an appended later note quoting a plant block):\n> GATE PLANTS.\n> - L2G-CR-BLANK: a later quotation of the plant (1122 bytes, sha256/16 94e33e1a7651bd6c).",
+} as const;
+/** Refusal #5's UNMET record in this bead's notes (gate s184; its '| U1-' line up to its '| CURE' line, the first such block): the
+ * witness and escape ids it names, in order, each once (W-, E- and WX ids). */
+function refusal5Witnesses(notes: string = beadNotes(BEAD)): string[] {
+  const lines = notes.split("\n");
+  const at = lines.findIndex(line => line.startsWith("| U1-MEDIUM-CONFIRMED-R514-R515-R668-PROVENANCE-BINDING-KINDS-UNPINNED."));
+  const end = lines.findIndex((line, index) => at !== -1 && index > at && line.startsWith("| CURE "));
+  if (at === -1 || end === -1) throw new Error(`${EXPORT_FILE}'s ${BEAD} notes carry no refusal #5 UNMET record`);
+  return [...new Set(lines.slice(at, end).join("\n").match(/\b(?:[WE]-[A-Z0-9]+(?:-[A-Z0-9]+)*|WX\d)\b/g) ?? [])];
+}
+/** A later quotation of refusal #5's record, appended in memory (this census's control of refusal5Witnesses' first block). */
+const APPENDED_RECORD = "\n\n| U1-MEDIUM-CONFIRMED-R514-R515-R668-PROVENANCE-BINDING-KINDS-UNPINNED. A later quotation of the record.\n| - W-QUOTED-ONLY: a quoted witness.\n| CURE (quoted).";
 /** The nine placements refusal #4's member (a) measured without terms: the shared view's text there is NOT CLAIMED (the wb-aalz
  * family), so D1 pins every check of those plants but rendered. */
 const AT_DEPTH: ReadonlySet<string> = new Set(MEMBERS.measured.map(([id]) => id));
@@ -1209,15 +1259,16 @@ const SECTION_READER = "./helpers/docs-section-source.js";
 interface Provenance {
   /** The values each import of the section-source reader binds. */
   readonly reader: readonly (readonly string[])[];
-  /** The imports from marked. */
+  /** The import declarations naming marked, of any form (a dynamic import() is not one: R-UNREAD-PROVENANCE). */
   readonly marked: number;
-  /** The names this file's declarations, parameters and binding elements bind (its imports excluded). */
+  /** The names this file's function, variable and class declarations, parameters and binding elements bind, at any depth (its
+   * imports excluded; no other form is read: R-UNREAD-PROVENANCE). */
   readonly declared: readonly string[];
   /** The functions docsBinding calls by name. */
   readonly calls: readonly string[];
 }
-/** This file's own source, parsed as TypeScript: its imports of the section-source reader and of marked, the names it binds itself and
- * the calls docsBinding makes. */
+/** This file's own source, parsed as TypeScript: its import declarations of the section-source reader (their value specifiers) and of
+ * marked (counted), the names its five declaration kinds bind and the calls docsBinding makes by name. */
 function provenance(text: string = readFileSync(HERE, "utf8")): Provenance {
   const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const imports = source.statements.filter(ts.isImportDeclaration);
@@ -1243,6 +1294,116 @@ function provenance(text: string = readFileSync(HERE, "utf8")): Provenance {
   return { reader: imports.filter(statement => moduleOf(statement) === SECTION_READER).map(values), marked: imports.filter(statement => moduleOf(statement) === "marked").length, declared, calls };
 }
 
+/** The four judgements the provenance case makes of a reading, each named by what it holds: the reader's one import declaration binds
+ * exactly sectionSource and termsStated as values (reader), no import declaration names marked (marked), docsBinding calls both by name
+ * (calls), and no declaration of the five kinds takes either name (binding). */
+const PROVENANCE_JUDGEMENTS: Readonly<Record<string, (read: Provenance) => boolean>> = {
+  reader: read => JSON.stringify(read.reader) === JSON.stringify([["sectionSource", "termsStated"]]),
+  marked: read => read.marked === 0,
+  calls: read => ["sectionSource", "termsStated"].every(name => read.calls.includes(name)),
+  binding: read => !read.declared.some(name => name === "sectionSource" || name === "termsStated"),
+};
+/** The judgements a reading fails, in PROVENANCE_JUDGEMENTS order. */
+const provenanceDefects = (read: Provenance): string[] =>
+  Object.entries(PROVENANCE_JUDGEMENTS)
+    .filter(([, holds]) => !holds(read))
+    .map(([judgement]) => judgement);
+/** One edit of this file's own source: an anchor the source spells once (lines of this file), and what replaces it. */
+type SourceEdit = readonly [string, string];
+/** This file's own source with each edit made in turn, in memory, never on disk. */
+function edited(edits: readonly SourceEdit[], text: string = readFileSync(HERE, "utf8")): string {
+  return edits.reduce((source, [anchor, replacement]) => {
+    if (source.split(anchor).length !== 2) throw new Error(`${SELF} does not spell a source edit's anchor once: ${anchor.slice(0, 60)}`);
+    return source.replace(anchor, () => replacement);
+  }, text);
+}
+// The lines refusal #5's gate edited (gate s184 LEG 2), each spelled once in this file.
+const AT_URL_IMPORT = 'import { fileURLToPath } from "node:url";\n';
+const AT_READER_IMPORT = 'import { sectionSource, termsStated } from "./helpers/docs-section-source.js";\n';
+const AT_DOCS_BINDING = "function docsBinding(markdown: string = readRepo(DOCS_FILE)): DocsReading {\n";
+const AT_SOURCE_READ = "  const read = sectionSource(markdown, DOCS_HEADING);\n";
+const AT_TILED = "    tiled: read.tiled,\n";
+const AT_TERMS = "    terms: termsStated(read.source, PARKED_TERMS),\n";
+const AT_TOKENS = "  readonly tokens: readonly string[];\n  /** The parked sentence's terms the source spells out, in PARKED_TERMS order (termsStated). */\n";
+const AT_PLANT_EDIT = "function plantEdit(id: string): PageEdit {\n  const found = DOCS_PLANTS.find(([plant]) => plant === id);\n";
+/** The body refusal #5's witnesses give a local copy of termsStated (the gate's text). */
+const LOCAL_TERMS = 'const flat = text.replace(/\\s+/g, " ").toLowerCase(); return terms.filter(term => flat.includes(term.toLowerCase()));';
+/** The forms the four judgements read, each one edit (or two) of this file's own source with the judgements it reds: refusal #5's gate
+ * witnesses verbatim where that gate measured the form (W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2, W-TYPEIMPORT3, W-VALUES-TYPE), and
+ * one more for each further form the judgements read. */
+const PROVENANCE_FORMS: readonly (readonly [string, readonly SourceEdit[], readonly string[]])[] = [
+  ["W-FUNCDECL", [[AT_SOURCE_READ, `${AT_SOURCE_READ}  function termsStated(text: string, terms: readonly string[]): string[] {\n    ${LOCAL_TERMS}\n  }\n`]], ["binding"]],
+  [
+    "W-PARAM",
+    [[AT_DOCS_BINDING, `function docsBinding(markdown: string = readRepo(DOCS_FILE), termsStated: (text: string, terms: readonly string[]) => string[] = (text, terms) => { ${LOCAL_TERMS} }): DocsReading {\n`]],
+    ["binding"],
+  ],
+  ["W-BINDING", [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const { termsStated } = { termsStated: (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} } };\n`]], ["binding"]],
+  ["W-CLASS2", [[AT_PLANT_EDIT, "function plantEdit(id: string): PageEdit {\n  class termsStated {\n    static readonly of = id;\n  }\n  const found = DOCS_PLANTS.find(([plant]) => plant === termsStated.of);\n"]], ["binding"]],
+  ["W-VARDECL", [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const termsStated = (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} };\n`]], ["binding"]],
+  [
+    "W-TYPEIMPORT3",
+    [
+      [AT_URL_IMPORT, `${AT_URL_IMPORT}import type { Token } from "marked";\n`],
+      [AT_TOKENS, AT_TOKENS.replace("\n", "\n  readonly probe?: Token;\n")],
+    ],
+    ["marked"],
+  ],
+  ["W-MARKED-VALUE", [[AT_URL_IMPORT, `${AT_URL_IMPORT}import { lexer } from "marked";\n`]], ["marked"]],
+  ["W-MARKED-TYPE-SPECIFIER", [[AT_URL_IMPORT, `${AT_URL_IMPORT}import { type Token } from "marked";\n`]], ["marked"]],
+  ["W-MARKED-NAMESPACE", [[AT_URL_IMPORT, `${AT_URL_IMPORT}import * as markedModule from "marked";\n`]], ["marked"]],
+  ["W-MARKED-DEFAULT", [[AT_URL_IMPORT, `${AT_URL_IMPORT}import markedDefault from "marked";\n`]], ["marked"]],
+  ["W-MARKED-SIDE-EFFECT", [[AT_URL_IMPORT, `${AT_URL_IMPORT}import "marked";\n`]], ["marked"]],
+  [
+    "W-VALUES-TYPE",
+    [
+      [AT_READER_IMPORT, 'import { type SectionSource, sectionSource, termsStated } from "./helpers/docs-section-source.js";\n'],
+      [AT_SOURCE_READ, "  const read: SectionSource = sectionSource(markdown, DOCS_HEADING);\n"],
+    ],
+    [],
+  ],
+  ["W-READER-TYPE-ONLY", [[AT_READER_IMPORT, `${AT_READER_IMPORT}import type { SectionSource } from "./helpers/docs-section-source.js";\n`]], ["reader"]],
+  [
+    "W-READER-RENAMED",
+    [
+      [AT_READER_IMPORT, 'import { sectionSource, termsStated as statedTerms } from "./helpers/docs-section-source.js";\n'],
+      [AT_TERMS, "    terms: statedTerms(read.source, PARKED_TERMS),\n"],
+    ],
+    ["reader", "calls"],
+  ],
+  ["W-NO-TERMS-CALL", [[AT_TERMS, "    terms: [],\n"]], ["calls"]],
+];
+/** A provenance form's edits, by its id. */
+function formEdits(form: string): readonly SourceEdit[] {
+  const found = PROVENANCE_FORMS.find(([id]) => id === form);
+  if (found === undefined) throw new Error(`no provenance form ${form}`);
+  return found[1];
+}
+/** Refusal #5's direct escapes (gate s184 LEG 2, verbatim), each one edit (two) of this file's own source and the text that spells its
+ * form: a dynamic import of marked feeding the tiling, a named function expression binding termsStated, and an object's method copying
+ * termsStated beside docsBinding's own call of it. None is read (R-UNREAD-PROVENANCE). */
+const UNREAD_ESCAPES: readonly (readonly [string, readonly SourceEdit[], string])[] = [
+  ["E-DYNIMPORT2", [[AT_DOCS_BINDING, `const markedModule = await import("marked");\n${AT_DOCS_BINDING}`], [AT_TILED, "    tiled: read.tiled && markedModule.lexer(markdown).length >= 0,\n"]], 'await import("marked")'],
+  ["E-FUNCEXPR2", [[AT_DOCS_BINDING, `const termsProbe = function termsStated(): string[] {\n  return [];\n};\n${AT_DOCS_BINDING}`], [AT_TERMS, "    terms: [...termsStated(read.source, PARKED_TERMS), ...termsProbe()],\n"]], "function termsStated()"],
+  [
+    "E-METHOD",
+    [
+      [AT_DOCS_BINDING, `const LOCAL = {\n  termsStated(text: string, terms: readonly string[]): string[] {\n    ${LOCAL_TERMS}\n  },\n};\n${AT_DOCS_BINDING}`],
+      [AT_TERMS, '    terms: [...termsStated("", PARKED_TERMS), ...LOCAL.termsStated(read.source, PARKED_TERMS)],\n'],
+    ],
+    "LOCAL.termsStated(read.source",
+  ],
+];
+/** Docs plants' edits swapped for another D1 reads alike (R-PLANT-EDIT): refusal #5's W-MEMBER-SWAP-A and W-MEMBER-SWAP-B (gate s184
+ * LEG 2, refusal #4's members), a refusal #1 docs plant's and a refusal #2 one's; each the swap's id, the plant's, what changes, the edit. */
+const PLANT_SWAPS: readonly (readonly [string, string, string, PageEdit])[] = [
+  ["W-MEMBER-SWAP-A", "G-T-QUOTE-TABLE", "the table header 'Record rule' as 'Record'", afterAnchor(`\n> | Record |\n> | --- |\n> | ${PARKED_SENTENCE} |\n`)],
+  ["W-MEMBER-SWAP-B", "G-S-ITEM-DUPDEF-NOTITLE", "the definition's destination as #auditability", planted => afterAnchor("\n  [gate-dup]: #auditability\n")(withOutside(planted))],
+  ["D-BLOCKQUOTE-SWAP", "D-BLOCKQUOTE", "the block quote with no space after its marker", atAnchor(`${DOCS_ANCHOR}\n>${PARKED_SENTENCE}\n`)],
+  ["L2-D1-SWAP", "L2-D1", "the link title in single quotes", atEntry(`[${ENTRY}](#authorization-design '${PARKED_SENTENCE}')`)],
+];
+/** A refusal #1 module swapped for another the field reading flags at its form (R-PLANT-EDIT): P1 with its key parenthesized twice. */
+const MODULE_SWAP: readonly [string, string] = ["P1", `${GATE_HEAD}value[(("guardOrRelyReceipt"))];\n`];
 
 // --- the cases ------------------------------------------------------------------------------------------------------------------------------
 const IMPL: Readonly<Record<string, () => JsonValue>> = {
@@ -1438,6 +1599,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       return reading;
     };
     expect(GATE_SLICES, "GATE_SLICES is what refusal #3's GATE PLANTS lines record, plant for plant").toEqual(refusal3Slices());
+    expect(refusal3Slices(`${beadNotes(BEAD)}${APPENDED_WITNESSES.WX2}`), "a later GATE PLANTS block appended (refusal #5's WX2) is not read: the first such block").toEqual(refusal3Slices());
     const slices = Object.keys(GATE_SLICES).map(id => {
       const slice = sectionSlice(plantEdit(id)(page));
       return [id, slice.length, sha256(slice).slice(0, 16), readingOf(id).bytes, readingOf(id).source.slice(0, 16)];
@@ -1585,6 +1747,34 @@ const QUIET: Readonly<Record<string, () => void>> = {
       expect(docsBinding(planted), `${form}: D1's reading of its section is the reading without it`).toEqual(docsBinding(page));
     }
   },
+  "R-UNREAD-PROVENANCE": () => {
+    // Refusal #5's direct escapes, each made in memory on this file's own source: the four judgements read each as they read this file.
+    const self = readFileSync(HERE, "utf8");
+    for (const [form, edits, spelled] of UNREAD_ESCAPES) {
+      const text = edited(edits, self);
+      expect(text.split(spelled).length - self.split(spelled).length, `${form}: the edited source spells the form once more than this file`).toBe(1);
+      expect(provenanceDefects(provenance(text)), `${form}: the four judgements read it as they read this file`).toEqual([]);
+    }
+  },
+  "R-PLANT-EDIT": () => {
+    // A plant's edit swapped for another D1 reads alike, and a refusal #1 module swapped for another the field reading flags alike.
+    expect(PLANT_SWAPS.map(([swap, id]) => `${swap}:${id}`), "the swaps' frozen shape").toEqual([
+      "W-MEMBER-SWAP-A:G-T-QUOTE-TABLE",
+      "W-MEMBER-SWAP-B:G-S-ITEM-DUPDEF-NOTITLE",
+      "D-BLOCKQUOTE-SWAP:D-BLOCKQUOTE",
+      "L2-D1-SWAP:L2-D1",
+    ]);
+    const page = readRepo(DOCS_FILE);
+    for (const [swapId, id, change, swapped] of PLANT_SWAPS) {
+      const [plant, swap] = [plantEdit(id)(page), swapped(page)];
+      expect([swap === plant, swap === page], `${swapId} (${id}, ${change}): the swap edits the page, otherwise than the plant`).toEqual([false, false]);
+      const [ofPlant, ofSwap] = [docsBinding(plant), docsBinding(swap)];
+      expect([ofSwap.tiled, pinnedCauses(id, docsCauses(ofSwap))], `${swapId} (${id}, ${change}): D1 reads the swap as it reads the plant`).toEqual([ofPlant.tiled, pinnedCauses(id, docsCauses(ofPlant))]);
+    }
+    const [id, swapped] = MODULE_SWAP;
+    const module = REFUSAL_PLANTS.find(([plant]) => plant === id);
+    expect([swapped === module?.[2], flagged("plant.ts", swapped)], `${id} with its key parenthesized twice: the field reading flags it at ${id}'s form`).toEqual([false, [module?.[1]]]);
+  },
 };
 
 // --- the self-read ------------------------------------------------------------------------------------------------------------------------
@@ -1675,6 +1865,7 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
     expect([MEMBERS.a.length, MEMBERS.b.length, MEMBERS.measured.length], "member (a) names sixteen plants and measures nine without terms; member (b) names three").toEqual([16, 3, 9]);
     expect(DOCS_PLANTS.slice(-ids.length).map(([id]) => id), "the plants members (a) and (b) name are the last docs plants, in the members' order").toEqual(ids);
     expect(DOCS_PLANTS.filter(([id]) => ids.includes(id)).length, "and no other docs plant takes one of their ids").toBe(ids.length);
+    expect(refusal4Members(`${beadNotes(BEAD)}${APPENDED_WITNESSES.WX1}`), "a later note's member lines appended (refusal #5's WX1) are not read: the first line of each").toEqual(MEMBERS);
     const page = readRepo(DOCS_FILE);
     const causes = (id: string): string[] => docsCauses(docsBinding(plantEdit(id)(page)));
     expect(MEMBERS.a.filter(id => !causes(id).includes("source") || !causes(id).includes("terms")), "each of member (a)'s placements reds D1 by source and by terms").toEqual([]);
@@ -1697,18 +1888,32 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
     ]);
   });
 
+  it("judged set, outside anchors: every witness and escape refusal #5's UNMET record names is a provenance form, an escape, a swap or an appended-note witness this census holds", () => {
+    const named = refusal5Witnesses();
+    expect(named.length, "refusal #5's UNMET record names thirteen witnesses and escapes").toBe(13);
+    const holder = (id: string): readonly string[] => {
+      if (id.startsWith("E-")) return UNREAD_ESCAPES.map(([form]) => form);
+      if (id.startsWith("WX")) return Object.keys(APPENDED_WITNESSES);
+      if (id.startsWith("W-MEMBER-SWAP-")) return PLANT_SWAPS.map(([swap]) => swap);
+      return PROVENANCE_FORMS.map(([form]) => form);
+    };
+    expect(named.filter(id => !holder(id).includes(id)), "each an R-UNREAD-PROVENANCE escape (E-), an appended-note witness (WX), an R-PLANT-EDIT swap (W-MEMBER-SWAP-) or a provenance form (W-)").toEqual([]);
+    expect(refusal5Witnesses(`${beadNotes(BEAD)}${APPENDED_RECORD}`), "a later quotation of the record appended is not read: the first such block").toEqual(named);
+  });
+
   it("judged set, self-read: every IMPL entry names a reader and not the roster", () => {
     const reads = implReads();
     expect(Object.keys(reads).sort()).toEqual(pinIds());
     expect(selfReadDefects(reads)).toEqual([]);
   });
 
-  it("judged set, provenance: D1's docs reading is wb-rdlh.3's landed section-source reader, imported unedited", () => {
+  it("judged set, provenance: one import declaration binds the landed section-source reader's sectionSource and termsStated as values, docsBinding calls both by name, no declaration of the five kinds takes either name and no import declaration names marked", { timeout: 180_000 }, () => {
     const read = provenance();
-    expect(read.reader, "one import of the reader, binding exactly sectionSource and termsStated").toEqual([["sectionSource", "termsStated"]]);
-    expect(read.marked, "nothing is imported from marked: this file runs no lexer of its own").toBe(0);
-    expect(["sectionSource", "termsStated"].filter(name => !read.calls.includes(name)), "docsBinding calls both").toEqual([]);
-    expect(read.declared.filter(name => name === "sectionSource" || name === "termsStated"), "no other binding of this file takes either name").toEqual([]);
+    expect(read.reader, "one import declaration of the reader, binding exactly sectionSource and termsStated as values").toEqual([["sectionSource", "termsStated"]]);
+    expect(read.marked, "no import declaration of this file names marked").toBe(0);
+    expect(["sectionSource", "termsStated"].filter(name => !read.calls.includes(name)), "docsBinding calls both by name").toEqual([]);
+    expect(read.declared.filter(name => name === "sectionSource" || name === "termsStated"), "no function, variable or class declaration, parameter or binding element of this file takes either name").toEqual([]);
+    expect(provenanceDefects(read), "so this file fails none of the four judgements the controls replay").toEqual([]);
     const control = provenance(
       [
         'import { lexer } from "marked";',
@@ -1725,6 +1930,31 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
       ["sectionSource", "lexer"],
       ["termsStated"],
     ]);
+    expect(PROVENANCE_FORMS.map(([form, edits, judgements]) => `${form}:${edits.length}:${judgements.join("+") || "none"}`), "the forms' frozen shape").toEqual([
+      "W-FUNCDECL:1:binding",
+      "W-PARAM:1:binding",
+      "W-BINDING:1:binding",
+      "W-CLASS2:1:binding",
+      "W-VARDECL:1:binding",
+      "W-TYPEIMPORT3:2:marked",
+      "W-MARKED-VALUE:1:marked",
+      "W-MARKED-TYPE-SPECIFIER:1:marked",
+      "W-MARKED-NAMESPACE:1:marked",
+      "W-MARKED-DEFAULT:1:marked",
+      "W-MARKED-SIDE-EFFECT:1:marked",
+      "W-VALUES-TYPE:2:none",
+      "W-READER-TYPE-ONLY:1:reader",
+      "W-READER-RENAMED:2:reader+calls",
+      "W-NO-TERMS-CALL:1:calls",
+    ]);
+    expect(
+      PROVENANCE_FORMS.map(([form, edits]) => [form, provenanceDefects(provenance(edited(edits)))]),
+      "each form, one edit of this file's own source made in memory, reds exactly the judgements it names (refusal #5's witnesses among them)",
+    ).toEqual(PROVENANCE_FORMS.map(([form, , judgements]) => [form, [...judgements]]));
+    expect(
+      ["W-VALUES-TYPE", "W-READER-TYPE-ONLY"].map(form => provenance(edited(formEdits(form))).reader),
+      "a type-only specifier of the reader, and a type-only import declaration of it, bind no value",
+    ).toEqual([[["sectionSource", "termsStated"]], [["sectionSource", "termsStated"], []]]);
   });
 
   for (const row of ROWS) {

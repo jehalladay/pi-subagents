@@ -537,6 +537,14 @@
   {
    "id": "R-OTHER-SECTION",
    "family": "D1 reads the one section clause (d) names, docs/workbench/12-security.md 'Authorization design' (its source over the span sectionSource binds, no definition elsewhere, one a link of the section resolves to included, and the tiling page-wide): on a page its tokens tile, the sentence placed outside the section's source, on another section of the page (a level-1 or level-2 heading placed after the section's last block starts one, and the section's heading text set as a level-3 heading starts none; HTML wrapped around the section sits in its neighbours) or on another page, is not read"
+  },
+  {
+   "id": "R-UNREAD-PROVENANCE",
+   "family": "the provenance case reads this file's import declarations, its function, variable and class declarations, parameters and binding elements, and docsBinding's calls by name: marked loaded by a dynamic import() (refusal #5's E-DYNIMPORT2), either name bound by a named function expression (E-FUNCEXPR2) and a copy of termsStated under another name feeding D1's terms beside docsBinding's own call of it (an object's method, E-METHOD) are not read"
+  },
+  {
+   "id": "R-PLANT-EDIT",
+   "family": "a gate's plant is bound by its id and by every check it fails or the form it is read at (refusal #4's members also by order, from their lines in the export; refusal #3's four also by the slices that gate measured): a plant's edit or module swapped for another that reds or reads alike is not read (refusal #5's W-MEMBER-SWAP-A and W-MEMBER-SWAP-B, a refusal #1 and a refusal #2 docs plant, a refusal #1 module)"
   }
  ]
 }
