@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census roster; exact pinned witnesses. Re-measured on trunk f63d38962c19f3d80330ac83a72af25dc306abfd (117 src modules, 60 plane knowers; 12 reaching, six sites in four modules) by resume seat ws-05. The previous ws-04 measured the same witnesses at 5ff6aef; no witness changed on the trunk merge. Acceptance clauses are independently anchored in the tracked bead export. Regenerate only by re-measuring.",
+  "provenance": "wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census roster; exact pinned witnesses. Cut #2 (the respin of refusal #1, seat ws-05, g10-work-s180) re-measured every witness on trunk 19024ab897c355768fa5505f334db5a9644c3f7e (117 src modules, 60 plane knowers; 12 reaching, six sites in four modules): B2, B3 and D1 carry the cut #2 readings and controls, the B and D labels the cut #2 claim words; A1-A3, B1, C1 and C2 read as cut #1 measured them at f63d38962c. Acceptance clauses are independently anchored in the tracked bead export. Regenerate only by re-measuring.",
   "launchExports": {
     "@anthropic-ai/claude-agent-sdk": [
       "prewarm",
@@ -68,6 +68,26 @@
     "budget"
   ],
   "licenseClause": "query evidence is never a license",
+  "listenerNames": [
+    "addEventListener",
+    "addListener",
+    "listen",
+    "removeEventListener",
+    "removeListener",
+    "subscribe",
+    "unsubscribe",
+    "unwatch",
+    "watch"
+  ],
+  "functionTypes": [
+    "CallableFunction",
+    "Function",
+    "NewableFunction"
+  ],
+  "warmStarts": [
+    "prewarm",
+    "startup"
+  ],
   "rows": [
     {
       "id": "A",
@@ -208,7 +228,7 @@
     },
     {
       "id": "B",
-      "label": "the evidence/query/projection plane is three cores and every src module that knows one through any import edge, type imports included, and no core exposes a change subscription",
+      "label": "the evidence/query/projection plane is three cores and every src module that knows one through any import edge, type imports included; no identifier, private identifier, string or template text of a core is a listener-vocabulary name, and the cores' callable type nodes and heritage clauses are exactly the loader seam's two members and EvidenceRefusal extends Error",
       "pins": [
         {
           "id": "B1",
@@ -235,13 +255,23 @@
           "witness": {
             "knowersAboveFloor": true,
             "coresKnown": true,
-            "anchorsAboveFloor": true,
+            "anchorFloors": {
+              "evidence": true,
+              "evidencePrefix": true,
+              "observer": true,
+              "planeUi": true
+            },
             "missingAnchors": [],
             "controls": {
               "byTypeImport": true,
               "atDistance": true,
               "byImportType": true,
-              "unrelated": false
+              "unrelated": false,
+              "unknowingAnchors": [
+                "src/workbench/Gp-14_plant-evidence.ts",
+                "src/workbench/Gp-14_plant-observer.ts",
+                "src/workbench/evidence-Gp-14_plant.ts"
+              ]
             }
           }
         },
@@ -249,32 +279,248 @@
           "id": "B3",
           "witness": {
             "listeners": [],
-            "callbacks": [
+            "callables": [
               "src/workbench/evidence-loader.ts: EvidenceLoader.canLoad",
               "src/workbench/evidence-loader.ts: EvidenceLoader.load"
             ],
-            "prototypeMembersAboveFloor": true,
+            "heritage": [
+              "src/workbench/evidence-loader.ts: EvidenceRefusal extends Error"
+            ],
+            "prototypeFloors": {
+              "EvidenceStore": true,
+              "ObservationProjection": true
+            },
             "prototypeListeners": [],
+            "prototypeControl": [
+              "PrototypeProbe.onChange"
+            ],
+            "vocabulary": [
+              "addEventListener",
+              "addListener",
+              "listen",
+              "onChange",
+              "removeEventListener",
+              "removeListener",
+              "subscribe",
+              "unsubscribe",
+              "unwatch",
+              "watch"
+            ],
             "controls": {
               "onChange": {
                 "listeners": 1,
-                "callbacks": 0
+                "callables": 1,
+                "heritage": 0
               },
               "subscribe": {
                 "listeners": 1,
-                "callbacks": 0
+                "callables": 1,
+                "heritage": 0
               },
               "callbackOption": {
                 "listeners": 1,
-                "callbacks": 1
+                "callables": 1,
+                "heritage": 0
               },
               "listenerOption": {
                 "listeners": 1,
-                "callbacks": 1
+                "callables": 1,
+                "heritage": 0
               },
               "quietMethod": {
                 "listeners": 0,
-                "callbacks": 0
+                "callables": 0,
+                "heritage": 0
+              },
+              "privateMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "nearMisses": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "identifierName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "privateName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "stringName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "templateName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "templateSpans": {
+                "listeners": 3,
+                "callables": 0,
+                "heritage": 0
+              },
+              "bindingName": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "typePosition": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "argumentPosition": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "moduleFunction": {
+                "listeners": 1,
+                "callables": 2,
+                "heritage": 0
+              },
+              "moduleOnChange": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "objectLiteral": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "emitterSubclass": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 1
+              },
+              "typeAliasOption": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "anonymousDefaultClass": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "classExpression": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "protectedMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "staticMember": {
+                "listeners": 1,
+                "callables": 0,
+                "heritage": 0
+              },
+              "interfaceStringName": {
+                "listeners": 1,
+                "callables": 1,
+                "heritage": 0
+              },
+              "functionType": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "constructorType": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "methodSignature": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "callSignature": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "constructSignature": {
+                "listeners": 0,
+                "callables": 1,
+                "heritage": 0
+              },
+              "functionNames": {
+                "listeners": 0,
+                "callables": 3,
+                "heritage": 0
+              },
+              "classExtends": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 1
+              },
+              "classImplements": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 1
+              },
+              "interfaceExtends": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 1
+              },
+              "commentOnly": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "importedCallable": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "typeofCallable": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "qualifiedCallable": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "globalEmitter": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "promiseFeed": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "iteratorFeed": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "composedName": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "lateDefinition": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
               }
             }
           }
@@ -448,7 +694,7 @@
     },
     {
       "id": "D",
-      "label": "the opt-in checklist (output contract, generation, exact model/version/settings, measured success/ROI, budget) waits for the seam: src spells no speculative-inference vocabulary and holds no warm-start site, so the seam's first site reds this census until the checklist is bound",
+      "label": "the opt-in checklist (output contract, generation, exact model/version/settings, measured success/ROI, budget) waits for the seam: no src identifier, private identifier or string or template text spells /specul/i and src holds no site of a warm-start export, so the seam's first site reds this census until the checklist is bound",
       "pins": [
         {
           "id": "D1",
@@ -467,7 +713,15 @@
               "identifier": 1,
               "string": 1,
               "comment": 0,
-              "outsideVocabulary": 0
+              "outsideVocabulary": 0,
+              "privateName": 2,
+              "noSubstitutionTemplate": 1,
+              "templateSpans": 3
+            },
+            "warmStartControls": {
+              "prewarm": 1,
+              "startup": 1,
+              "query": 0
             },
             "missedPlants": []
           }

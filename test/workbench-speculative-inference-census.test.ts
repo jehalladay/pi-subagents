@@ -9,21 +9,28 @@
  * here): docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:19 and :37@52c9271ed485, the charter's
  * 'design only' at :3 and INF-RQ2 'query-view changes alone produce no network calls' at :39.
  *
- * MEASURED AT BASE (f63d38962c, landing-753 ledger hop; 117 src modules). Pi starts a model operation in exactly two package forms and one host
- * form: createAgentSession from @earendil-works/pi-coding-agent (src/agent-runner.ts, src/mention-clone.ts), query from the
- * Claude Agent SDK (src/workbench/claude-host.ts), and three pi.sendMessage completion nudges carrying triggerTurn: true
- * (src/index.ts). 60 src modules know the evidence/query/projection plane; 12 reach a model-call site; the two sets meet in
- * exactly the four model-side modules. The plane's three cores expose no change subscription, and no src module spells the
- * speculative-inference vocabulary.
+ * MEASURED AT BASE (19024ab897c3, landing-803 ledger hop; 117 src modules; cut #1 measured the same at f63d38962c). Pi starts a
+ * model operation in exactly two package forms and one host form: createAgentSession from @earendil-works/pi-coding-agent
+ * (src/agent-runner.ts, src/mention-clone.ts), query from the Claude Agent SDK (src/workbench/claude-host.ts), and three
+ * pi.sendMessage completion nudges carrying triggerTurn: true (src/index.ts). 60 src modules know the evidence/query/projection
+ * plane; 12 reach a model-call site; the two sets meet in exactly the four model-side modules. In B3's SUBSCRIPTION READING
+ * (below) the plane's three cores hold no listener spelling, their callable type nodes are exactly the loader seam's two
+ * method signatures (EvidenceLoader.canLoad and .load) and their one heritage clause is EvidenceRefusal extends Error; no src
+ * module spells /specul/i in a D1 token.
  *
  * PINNED READER SET: test/workbench-speculative-inference-census.test.ts cases A1, A2, A3, B1, B2, B3, C1, C2, D1.
  * Each case's exact assertion target and observed result is its witness in test/fixtures/speculative-inference-roster.json;
- * at f63d38962c every case matched that witness (11/11 including shape and registration). A3 and C2 claim precisely their
- * named constructed controls, not all syntax members of a category. Reader variants outside those controls are NOT CLAIMED
- * by this census. The definitions below specify the reader's algorithm, not an exhaustive syntax-coverage claim.
+ * at 19024ab897c3 every case matched that witness (11/11 including shape and registration). A3 and C2 claim precisely their
+ * named constructed controls, not all syntax members of a category. B2, B3 and D1 claim their readings exactly as the
+ * definitions below state them, each token kind, node kind and form of those readings carrying a named control. Reader variants
+ * outside those controls and definitions are NOT CLAIMED by this census. The definitions below specify the reader's algorithm,
+ * not an exhaustive syntax-coverage claim.
  * FALSIFIERS: a launch binding added to a core or a plane knower reds A2/C1; a knower's import dependency on a launcher or a named
- * launch member of the native seam reds C1; a core's named listener reds B3; a new /specul/i lexeme or warm-start binding
- * reds D1. The per-path plant controls below independently apply these findings to the real source reading.
+ * launch member of the native seam reds C1; a module directly in src/workbench named in an anchor form that knows no core reds
+ * B2; a listener-vocabulary spelling, a callable type node or a heritage clause added to a core reds B3, and so does a listener
+ * name defined on a real core class's prototype while its module evaluates; a /specul/i spelling in an identifier, private
+ * identifier, string or template literal text, or a site of a warm-start export (prewarm, startup), reds D1. The per-path plant
+ * controls below independently apply these findings to the real source reading.
  *
  * DEFINITIONS (each read from src or from the installed packages, never typed in as a module list):
  *  MODEL-CALL SITE (row A), read on the AST of every src module: (i) a value binding of a launch export of a model package
@@ -41,10 +48,23 @@
  *  THE PLANE (row B): three cores - src/workbench/observation.ts (ObservationProjection, the projection), src/workbench/
  *    observe-query.ts (observeInvocation, the query) and src/workbench/evidence-loader.ts (EvidenceStore, the evidence store) - and
  *    every src module that KNOWS one: its closure over every relative import edge, type-only imports and import types included,
- *    reaches a core. The knowers include every observer and evidence module of src/workbench (*-observer.ts, *-evidence.ts,
- *    evidence-*.ts), the inspector, the dialog (whose load-evidence continuation re-renders on a settled request) and the menu -
- *    the B2 anchors - beside the derived views and control readers (measured, not anchored). The cores expose no change
- *    subscription (B3), so a plane change is met only by code that holds a plane value or a core's own callers.
+ *    reaches a core. The knowers include every module directly in src/workbench named in an ANCHOR FORM (ANCHOR_FORMS, by file
+ *    name: *-observer.ts, *-evidence.ts, evidence-*.ts), the inspector, the dialog (whose load-evidence continuation re-renders on
+ *    a settled request) and the menu - the B2 anchors - beside the derived views and control readers (measured, not anchored). B3
+ *    reads no change subscription on the cores in the SUBSCRIPTION READING below (R-UNNAMED-SUBSCRIPTION names the feeds that
+ *    reading cannot see); that is the premise under which a plane change is met only by code that holds a plane value or a
+ *    core's own callers.
+ *  SUBSCRIPTION READING (row B3), on the AST of each core, comments unread: (i) LISTENER SPELLINGS: every identifier, private
+ *    identifier (read without its #) and string or template literal text (a string, a no-substitution template, a template head,
+ *    middle or tail) that is a listener-vocabulary name - on<Name> (LISTENER_PREFIX: on and an upper-case letter, any tail) or one
+ *    of LISTENER_NAMES (subscribe, unsubscribe, addListener, removeListener, addEventListener, removeEventListener, listen, watch,
+ *    unwatch) - in any position: a class or class-expression member of any modifier, an interface or type-literal member, an
+ *    object-literal member, a module-level function or binding, a string or literal computed key, a type or an argument; (ii)
+ *    CALLABLE TYPES: every function type, constructor type, method signature, call signature and construct signature node and
+ *    every type reference to a FUNCTION_TYPES name (Function, CallableFunction, NewableFunction), labeled by the declaration names
+ *    that hold it; (iii) HERITAGE: every extends or implements clause of a class, class expression or interface; (iv) PROTOTYPES:
+ *    the own property names of the real ObservationProjection and EvidenceStore prototypes, read after their modules evaluate (this
+ *    census imports them), each class above its own floor (PROTOTYPE_FLOORS).
  *  REACH (row C): a module reaches a model-call site when its src value closure holds a launch-site module. The value closure
  *    follows every load edge - a static import or re-export, a side-effect import, an import-equals, a literal dynamic import()
  *    and a literal require / createRequire - with two readings, both read from src: (1) THE SEAM: src/workbench/native-modules.ts
@@ -69,11 +89,15 @@
  *    sites, and the quiet rows (type-only forms, launch names imported as types included, non-launch exports, data fields, the
  *    literal false) read none.
  *  B1 the three cores are exactly the projection class, the query function and the store class, each a runtime export of its
- *    module. B2 the knowers: a floor, every observer and evidence module of src/workbench and the three plane UI modules among
- *    them, and the cores. B3 no core exposes a change subscription: no class or interface member of a core matches the listener
- *    vocabulary (on<Name>, subscribe, addListener, addEventListener, listen, watch and their removers), the only callback members
- *    are the evidence loader seam (EvidenceLoader.canLoad and .load), the real classes' prototypes carry no listener matching LISTENER, and the
- *    controls read a planted listener, subscription and callback option.
+ *    module. B2 the knowers: a floor, the cores, and every B2 anchor a knower - each anchor form above its own floor
+ *    (ANCHOR_FLOORS) and the three plane UI modules; the controls read knowing by a type import, at a distance and by an import
+ *    type, an unrelated module as unknowing, and on a constructed graph exactly the unknowing module of each anchor form, a
+ *    knowing one and the near-miss names (a plural, a missing dash, two in another directory, a subdirectory) staying unlisted.
+ *    B3 the cores' SUBSCRIPTION READING is exactly: no listener spelling, the callable type nodes EvidenceLoader.canLoad and
+ *    .load, the heritage clause EvidenceRefusal extends Error, each prototype above its floor and no prototype listener name; the
+ *    controls read every vocabulary name, each spelling kind, a binding, a type and an argument, each member form cut #1's
+ *    refusal named (FO1-FO6; RB06-RB08, RB11, RB13), each callable kind, each heritage form and a run-time prototype listener,
+ *    and the near-miss names, a comment and the R-UNNAMED-SUBSCRIPTION feeds read quiet.
  *  C1 (acceptance) no knower outside the model side reaches a model-call site: violations empty, the knower-reach intersection
  *    exactly the model side, each model-side module justified, the reaching set exact, the seam's member map and every seam
  *    importer's named members exact, and the typed handles exact - every type-only binding a knower outside the model side
@@ -84,25 +108,30 @@
  *    a reaching import and a host turn called during evaluation read, the same calls inside function bodies stay quiet), a knower
  *    at distance, typed handles by import and by import type, and each residual's quiet row.
  *  D1 the opt-in checklist waits for the seam: the checklist and the license clause are held to the roster, no src module spells
- *    the speculation vocabulary (/specul/i in an identifier or string literal) and src holds no warm-start site (prewarm,
- *    startup), so the seam's first site reds this census (A2 and D1) until the checklist is bound; the controls read a planted
- *    identifier and string, and a comment and a seam worded outside the vocabulary read quiet.
+ *    /specul/i in a D1 token - an identifier, a private identifier (read without its #), a string or a template literal text (a
+ *    no-substitution template, a head, a middle or a tail), read by the spelling reader B3 shares - and src holds no site of a
+ *    warm-start export (WARM_STARTS: prewarm, startup; an opaque reading of a whole SDK binding is A2's), so the seam's first site
+ *    reds this census (A2 and D1) until the checklist is bound; the controls read each token kind and each warm-start export, and a
+ *    comment, a seam worded outside the vocabulary and a launch export that is no warm start read quiet.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label and
  * pins and every pin's witness - is held to the out-of-file roster test/fixtures/speculative-inference-roster.json, with the
- * vocabularies, the cores, the seam, the model side, the checklist and the test titles; the vocabularies are also held to the
+ * vocabularies (the launch, provider, subpath, turn and runtime lists, LISTENER_NAMES, FUNCTION_TYPES and WARM_STARTS), the cores,
+ * the seam, the model side, the checklist and the test titles; the package vocabularies are also held to the
  * installed packages (A1) and the cores, the seam map and the reach sets to src (B1, C1). The last case walks this file's vitest
  * task tree against the roster's test list. The two acceptance requirements of C/D also equal the filing's Acceptance
  * clauses in the tracked .beads/issues.jsonl export: deleting D everywhere, including its roster, still reds that anchor.
  * NOT CLAIMED: a causal/dynamic proof that model-side or injected calls are never driven by plane changes is NOT CLAIMED
  * by this census. C1 proves the module-closure reading below, not dynamic effect reachability. An arbitrary future seam
  * appearing without either a new model binding or /specul/i vocabulary is NOT CLAIMED. D1 is an until-then tripwire, not
- * an implemented opt-in policy. No opt-in is currently offered by this cut.
+ * an implemented opt-in policy. No opt-in is currently offered by this cut. A module that observes the plane or loads evidence
+ * under a file name outside the three anchor forms, or below a subdirectory of src/workbench, is NOT CLAIMED as a B2 anchor by
+ * this census (its closure still makes it a knower).
  * RESIDUALS (named, each with a pinned quiet row):
  *  R-MODEL-SIDE a change-triggered launch written inside a model-side module is unread: their own launches are explicit demand (a
  *    tool or command handler, a workflow agent() call, a detached launch, a completion nudge), and a module closure cannot tell a
  *    demand-driven launch from a change-driven one (src/index.ts runWorkflowTask both ingests Claude stream observations and runs
- *    the workflow). Backstops: A2's exact multiset reds on any new site in them; B3 leaves them no change subscription to hang a
- *    launch on. Quiet row: C2 modelSide.
+ *    the workflow). Backstops: A2's exact multiset reds on any new site in them; B3 reads no change subscription on the cores
+ *    for them to hang a launch on (within the SUBSCRIPTION READING; R-UNNAMED-SUBSCRIPTION). Quiet row: C2 modelSide.
  *  R-INJECTED a launch reached through a value the closure does not follow - a parameter, an option or callback field (the
  *    evidence loaders and deps the composer injects), a host object, a returned value, a global - is unread when its module names
  *    no site;
@@ -121,8 +150,15 @@
  *    to a core, is no knower and is unjudged. Quiet row: C2 unnamedPlane.
  *  R-NON-SDK-LAUNCH a model operation started outside the vocabulary - a spawned model CLI, a raw HTTP request to a model
  *    endpoint, an IPC request to a host process - is no site. Quiet rows: C2 cliLaunch, httpLaunch and ipcLaunch.
- *  R-VOCABULARY a speculative seam worded outside /specul/i is not read by D1's vocabulary; its model call is still a site (A2).
- *    Quiet row: D1 outsideVocabulary.
+ *  R-UNNAMED-SUBSCRIPTION a change feed a core exposes with no listener spelling, no callable type node and no heritage clause
+ *    in the core's own text - a callable typed through a type the core imports, through typeof or through a qualified name, an
+ *    emitter or other subscribable instance built from a global (new EventTarget()), a promise or async iterator the caller
+ *    awaits, or a listener name assembled at run time outside the two real prototypes or set on them only later (in a
+ *    constructor or a method) - is unread by B3 (C1 still judges every knower's reach, whatever feed it follows). Quiet rows: B3
+ *    importedCallable, typeofCallable, qualifiedCallable, globalEmitter, promiseFeed, iteratorFeed, composedName and
+ *    lateDefinition.
+ *  R-VOCABULARY a speculative seam worded outside /specul/i, or spelled only in a comment, is not read by D1's vocabulary; its
+ *    model call is still a site (A2). Quiet rows: D1 outsideVocabulary and comment.
  * SCOPE: hermetic - this census reads src text, the tracked bead export and the installed packages' exports, manifests and declarations; it runs no
  * binary, opens no network and launches no model. Pi vendors no ReactiveFiberCLI or ReactiveInference source, so the seam's
  * arrival is seen only as src gaining a site (A2) or the vocabulary (D1).
@@ -166,7 +202,13 @@ const RUNTIME_ANY: readonly string[] = ["completeSimple", "fetchDeferred", "stre
 const RUNTIME_CALLED: readonly string[] = ["complete", "stream"];
 const WARM_STARTS: readonly string[] = ["prewarm", "startup"];
 const SPECULATION = /specul/i;
-const LISTENER = /^(?:on[A-Z]\w*|subscribe|unsubscribe|addListener|removeListener|addEventListener|removeEventListener|listen|watch|unwatch)$/;
+/** B3's listener vocabulary: on<Name> (LISTENER_PREFIX: on and an upper-case letter, any tail) and these exact names. */
+const LISTENER_PREFIX = /^on[A-Z]/;
+const LISTENER_NAMES: readonly string[] = [
+  "addEventListener", "addListener", "listen", "removeEventListener", "removeListener", "subscribe", "unsubscribe", "unwatch", "watch",
+];
+/** Type names that are callable by declaration: a type reference to one is a callable type node (B3 (ii)). */
+const FUNCTION_TYPES: readonly string[] = ["CallableFunction", "Function", "NewableFunction"];
 
 const CORES: readonly string[] = ["src/workbench/evidence-loader.ts", "src/workbench/observation.ts", "src/workbench/observe-query.ts"];
 const SEAM = "src/workbench/native-modules.ts";
@@ -181,6 +223,15 @@ const LICENSE_CLAUSE = "query evidence is never a license";
  * and an additive change does not. */
 const SRC_FLOOR = 100;
 const KNOWER_FLOOR = 50;
+/** B2's anchor forms, by file name; each form's floor is its count measured at base 19024ab897c3, so an additive change keeps it. */
+const ANCHOR_FORMS: Readonly<Record<string, RegExp>> = {
+  evidence: /^src\/workbench\/[^/]*-evidence\.ts$/,
+  evidencePrefix: /^src\/workbench\/evidence-[^/]*\.ts$/,
+  observer: /^src\/workbench\/[^/]*-observer\.ts$/,
+};
+const ANCHOR_FLOORS: Readonly<Record<string, number>> = { evidence: 4, evidencePrefix: 3, observer: 8, planeUi: 3 };
+/** Each real prototype's floor: about half its own property count at base 19024ab897c3 (9 and 40 names). */
+const PROTOTYPE_FLOORS: Readonly<Record<string, number>> = { EvidenceStore: 5, ObservationProjection: 20 };
 
 interface Row {
   readonly id: string;
@@ -198,7 +249,7 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "B",
-    label: "the evidence/query/projection plane is three cores and every src module that knows one through any import edge, type imports included, and no core exposes a change subscription",
+    label: "the evidence/query/projection plane is three cores and every src module that knows one through any import edge, type imports included; no identifier, private identifier, string or template text of a core is a listener-vocabulary name, and the cores' callable type nodes and heritage clauses are exactly the loader seam's two members and EvidenceRefusal extends Error",
     pins: ["B1", "B2", "B3"],
   },
   {
@@ -210,7 +261,7 @@ const ROWS: readonly Row[] = [
   {
     id: "D",
     requirement: "the opt-in checklist (output contract, generation, exact model/version/settings, measured ROI, budget) bound when the seam ships",
-    label: "the opt-in checklist (output contract, generation, exact model/version/settings, measured success/ROI, budget) waits for the seam: src spells no speculative-inference vocabulary and holds no warm-start site, so the seam's first site reds this census until the checklist is bound",
+    label: "the opt-in checklist (output contract, generation, exact model/version/settings, measured success/ROI, budget) waits for the seam: no src identifier, private identifier or string or template text spells /specul/i and src holds no site of a warm-start export, so the seam's first site reds this census until the checklist is bound",
     pins: ["D1"],
   },
 ];
@@ -235,6 +286,9 @@ interface Roster {
   readonly modelSide: readonly string[];
   readonly optInChecklist: readonly string[];
   readonly licenseClause: string;
+  readonly listenerNames: readonly string[];
+  readonly functionTypes: readonly string[];
+  readonly warmStarts: readonly string[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
 }
@@ -279,6 +333,9 @@ function readRoster(): Roster {
     modelSide: strings(raw.modelSide, "modelSide"),
     optInChecklist: strings(raw.optInChecklist, "optInChecklist"),
     licenseClause: raw.licenseClause,
+    listenerNames: strings(raw.listenerNames, "listenerNames"),
+    functionTypes: strings(raw.functionTypes, "functionTypes"),
+    warmStarts: strings(raw.warmStarts, "warmStarts"),
     rows,
     tests: strings(raw.tests, "tests"),
   };
@@ -870,6 +927,90 @@ function siteCount(text: string): number {
   return sitesOf("src/control.ts", text).length;
 }
 
+/** Every spelled text of one module: each identifier, each private identifier without its #, and each string or template literal
+ * text (a string, a no-substitution template, a template head, middle or tail); comments are not read. B3 and D1 share it. */
+function spellingsOf(path: string, text: string): string[] {
+  const out: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isPrivateIdentifier(node)) out.push(node.text.slice(1));
+    else if (ts.isIdentifier(node) || ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) out.push(node.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(sourceOf(path, text));
+  return out;
+}
+function isListenerName(name: string): boolean {
+  return LISTENER_PREFIX.test(name) || LISTENER_NAMES.includes(name);
+}
+/** B3 (ii): a function, constructor, method, call or construct signature type node, or a type reference to a FUNCTION_TYPES name. */
+function isCallableType(node: ts.Node): boolean {
+  if (ts.isTypeReferenceNode(node)) return ts.isIdentifier(node.typeName) && FUNCTION_TYPES.includes(node.typeName.text);
+  return ts.isFunctionTypeNode(node) || ts.isConstructorTypeNode(node) || ts.isMethodSignature(node) || ts.isCallSignatureDeclaration(node) || ts.isConstructSignatureDeclaration(node);
+}
+/** The declaration names that hold a node, outermost first, joined by dots (an unnamed holder adds nothing). */
+function ownerOf(node: ts.Node): string {
+  const names: string[] = [];
+  for (let at: ts.Node | undefined = node; at !== undefined && !ts.isSourceFile(at); at = at.parent) {
+    const name = ts.getNameOfDeclaration(at as ts.Declaration);
+    if (name !== undefined && (ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteralLike(name))) names.unshift(name.text);
+  }
+  return names.join(".");
+}
+
+interface SubscriptionReading {
+  readonly listeners: readonly string[];
+  readonly callables: readonly string[];
+  readonly heritage: readonly string[];
+}
+/** B3's SUBSCRIPTION READING (i)-(iii) of module texts, each entry labeled by its module. */
+function subscriptionsOf(texts: Readonly<Record<string, string>>): SubscriptionReading {
+  const listeners: string[] = [];
+  const callables: string[] = [];
+  const heritage: string[] = [];
+  for (const [path, text] of Object.entries(texts)) {
+    for (const spelled of spellingsOf(path, text)) if (isListenerName(spelled)) listeners.push(`${path}: ${spelled}`);
+    const visit = (node: ts.Node): void => {
+      if (isCallableType(node)) callables.push(`${path}: ${ownerOf(node)}`);
+      if (ts.isHeritageClause(node)) heritage.push(`${path}: ${ownerOf(node)} ${node.getText()}`);
+      ts.forEachChild(node, visit);
+    };
+    visit(sourceOf(path, text));
+  }
+  return { listeners: listeners.sort(), callables: callables.sort(), heritage: heritage.sort() };
+}
+/** B3 (iv): every own property name of each prototype that is a listener-vocabulary name, as `<class>.<name>`. */
+function prototypeListenersOf(prototypes: Readonly<Record<string, object>>): string[] {
+  return Object.entries(prototypes)
+    .flatMap(([name, prototype]) => Object.getOwnPropertyNames(prototype).filter(isListenerName).map(member => `${name}.${member}`))
+    .sort();
+}
+/** The real core classes' prototypes B3 (iv) reads. */
+const PROTOTYPES: Readonly<Record<string, object>> = { EvidenceStore: EvidenceStore.prototype, ObservationProjection: ObservationProjection.prototype };
+/** B3 (iv)'s run-time control: a class whose prototype gains a listener name when this module evaluates. */
+class PrototypeProbe {
+  refresh(): number {
+    return 1;
+  }
+}
+Object.defineProperty(PrototypeProbe.prototype, "onChange", { value: (): number => 0 });
+
+/** B2's anchors of a module graph, by form: the graph's modules each anchor form names, and the plane UI modules. */
+function anchorsOf(paths: Iterable<string>): Record<string, string[]> {
+  const sorted = [...paths].sort();
+  const anchors: Record<string, string[]> = { planeUi: [...PLANE_UI] };
+  for (const [form, pattern] of Object.entries(ANCHOR_FORMS)) anchors[form] = sorted.filter(path => pattern.test(path));
+  return anchors;
+}
+/** The anchors of a graph that are no knower of it. */
+function unknowingAnchorsOf(census: Census): string[] {
+  const knowers = new Set(census.knowers);
+  return Object.values(anchorsOf(census.facts.keys())).flat().filter(path => !knowers.has(path)).sort();
+}
+/** D1's warm-start reading: the sites of a WARM_STARTS export. */
+function warmStartsOf(sites: readonly string[]): string[] {
+  return sites.filter(site => WARM_STARTS.some(name => site.endsWith(` ${name}`)));
+}
+
 const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
   A1: () => {
     const installed: Record<string, Record<string, unknown>> = {
@@ -994,64 +1135,109 @@ const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
   B2: () => {
     const census = srcCensusOf();
     const knowers = new Set(census.knowers);
-    const anchors = [...census.facts.keys()].filter(path => /^src\/workbench\/[^/]*(?:-observer|-evidence)\.ts$|^src\/workbench\/evidence-[^/]*\.ts$/.test(path)).concat(PLANE_UI);
+    const anchors = anchorsOf(census.facts.keys());
+    // A constructed graph: the plane UI modules know a core; one unknowing module of each anchor form, a knowing one, and four
+    // near-miss names (a plural, a missing dash, two in another directory, a subdirectory) that no anchor form names.
+    const anchorGraph = censusOf(new Map(Object.entries({
+      ...STUBS,
+      ...Object.fromEntries(PLANE_UI.map(path => [path, 'import type { ObservationProjection } from "../workbench/observation.js";\n'])),
+      "src/workbench/Gp-14_plant-observer.ts": "export const plant = 1;",
+      "src/workbench/Gp-14_plant-evidence.ts": "export const plant = 2;",
+      "src/workbench/evidence-Gp-14_plant.ts": "export const plant = 3;",
+      "src/workbench/knowing-observer.ts": KNOWS,
+      "src/workbench/plant-observers.ts": "export const plant = 4;",
+      "src/workbench/plantevidence.ts": "export const plant = 5;",
+      "src/ui/plant-observer.ts": "export const plant = 6;",
+      "src/ui/evidence-plant.ts": "export const plant = 8;",
+      "src/workbench/sub/plant-evidence.ts": "export const plant = 7;",
+    })), CORES, SEAM, []);
     return {
       knowersAboveFloor: census.knowers.length >= KNOWER_FLOOR,
       coresKnown: CORES.every(core => knowers.has(core)),
-      anchorsAboveFloor: anchors.length >= 15,
-      missingAnchors: anchors.filter(path => !knowers.has(path)).sort(),
+      anchorFloors: Object.fromEntries(Object.entries(anchors).map(([form, paths]) => [form, paths.length >= (ANCHOR_FLOORS[form] ?? Number.POSITIVE_INFINITY)])),
+      missingAnchors: unknowingAnchorsOf(census),
       controls: {
         byTypeImport: censusOf(new Map(Object.entries({ ...STUBS, "src/workbench/a.ts": KNOWS })), CORES, SEAM, []).knowers.includes("src/workbench/a.ts"),
         atDistance: censusOf(new Map(Object.entries({ ...STUBS, "src/workbench/a.ts": KNOWS, "src/b.ts": 'import type { X } from "./workbench/a.js";' })), CORES, SEAM, []).knowers.includes("src/b.ts"),
         byImportType: censusOf(new Map(Object.entries({ ...STUBS, "src/a.ts": 'type P = import("./workbench/observation.js").ObservationProjection;' })), CORES, SEAM, []).knowers.includes("src/a.ts"),
         unrelated: censusOf(new Map(Object.entries({ ...STUBS, "src/a.ts": 'import { quietly } from "./quiet.js";' })), CORES, SEAM, []).knowers.includes("src/a.ts"),
+        unknowingAnchors: unknowingAnchorsOf(anchorGraph),
       },
     };
   },
   B3: () => {
     const sources = srcSources();
-    const read = (texts: Readonly<Record<string, string>>): { listeners: string[]; callbacks: string[] } => {
-      const listeners: string[] = [];
-      const callbacks: string[] = [];
-      for (const [path, text] of Object.entries(texts)) {
-        const visit = (node: ts.Node): void => {
-          if ((ts.isClassDeclaration(node) || ts.isClassExpression(node)) && node.name !== undefined) {
-            for (const member of node.members) {
-              const isPrivate = ts.canHaveModifiers(member) && ts.getModifiers(member)?.some(modifier => modifier.kind === ts.SyntaxKind.PrivateKeyword) === true;
-              if (member.name !== undefined && (ts.isIdentifier(member.name) || ts.isStringLiteral(member.name)) && !isPrivate && LISTENER.test(member.name.text)) listeners.push(`${path}: ${node.name.text}.${member.name.text}`);
-            }
-          }
-          if (ts.isInterfaceDeclaration(node)) {
-            for (const member of node.members) {
-              if (member.name === undefined || !(ts.isIdentifier(member.name) || ts.isStringLiteral(member.name))) continue;
-              const label = `${path}: ${node.name.text}.${member.name.text}`;
-              if (LISTENER.test(member.name.text)) listeners.push(label);
-              if (ts.isMethodSignature(member) || (ts.isPropertySignature(member) && member.type !== undefined && ts.isFunctionTypeNode(member.type))) callbacks.push(label);
-            }
-          }
-          ts.forEachChild(node, visit);
-        };
-        visit(sourceOf(path, text));
-      }
-      return { listeners: listeners.sort(), callbacks: callbacks.sort() };
+    const cores = subscriptionsOf(Object.fromEntries(CORES.map(core => [core, sources.get(core) ?? ""])));
+    const control = (text: string): { listeners: number; callables: number; heritage: number } => {
+      const reading = subscriptionsOf({ "src/workbench/observation.ts": text });
+      return { listeners: reading.listeners.length, callables: reading.callables.length, heritage: reading.heritage.length };
     };
-    const cores = read(Object.fromEntries(CORES.map(core => [core, sources.get(core) ?? ""])));
-    const prototypeNames = [ObservationProjection.prototype, EvidenceStore.prototype].flatMap(proto => Object.getOwnPropertyNames(proto));
-    const control = (text: string): { listeners: number; callbacks: number } => {
-      const result = read({ "src/workbench/observation.ts": text });
-      return { listeners: result.listeners.length, callbacks: result.callbacks.length };
-    };
+    const vocabulary = subscriptionsOf({
+      "src/workbench/observation.ts":
+        "export class Feed { onChange(): void {} subscribe(): void {} unsubscribe(): void {} addListener(): void {} removeListener(): void {} addEventListener(): void {} removeEventListener(): void {} listen(): void {} watch(): void {} unwatch(): void {} }",
+    });
     return {
-      listeners: cores.listeners,
-      callbacks: cores.callbacks,
-      prototypeMembersAboveFloor: prototypeNames.length >= 20,
-      prototypeListeners: prototypeNames.filter(name => LISTENER.test(name)),
+      listeners: [...cores.listeners],
+      callables: [...cores.callables],
+      heritage: [...cores.heritage],
+      prototypeFloors: Object.fromEntries(Object.entries(PROTOTYPES).map(([name, prototype]) => [name, Object.getOwnPropertyNames(prototype).length >= (PROTOTYPE_FLOORS[name] ?? Number.POSITIVE_INFINITY)])),
+      prototypeListeners: prototypeListenersOf(PROTOTYPES),
+      prototypeControl: prototypeListenersOf({ PrototypeProbe: PrototypeProbe.prototype }),
+      // Every vocabulary name, each read once (a name dropped from the vocabulary drops out of this list).
+      vocabulary: vocabulary.listeners.map(label => label.slice(label.indexOf(": ") + 2)),
       controls: {
+        // Cut #1's controls (a callback type reads as a callable type).
         onChange: control("export class ObservationProjection { onChange(listener: () => void): void { void listener; } }"),
         subscribe: control("export class EvidenceStore { subscribe(listener: () => void): void { void listener; } }"),
         callbackOption: control("export interface EvidenceStoreOptions { readonly maxEntries: number; readonly onSettled?: () => void }"),
         listenerOption: control("export interface ObservationLimits { readonly addListener?: (event: string) => void }"),
-        quietMethod: control("export class ObservationProjection { refresh(snapshot: unknown): unknown { return snapshot; } private onInternal(): void {} }"),
+        quietMethod: control("export class ObservationProjection { refresh(snapshot: unknown): unknown { return snapshot; } }"),
+        // A private member is read (no modifier exempts a spelling); near-miss names read quiet.
+        privateMember: control("export class ObservationProjection { private onInternal(): void {} }"),
+        nearMisses: control("export class Feed { on(): void {} once(): void {} online(): void {} onset(): void {} listener(): void {} listening(): void {} subscriber(): void {} watcher(): void {} reasonText(): void {} emit(): void {} }"),
+        // Each spelling kind.
+        identifierName: control("export function subscribe(target: unknown): void { void target; }"),
+        privateName: control("export class Feed { #onChange(): void {} }"),
+        stringName: control('export class Feed { "subscribe"(): void {} }'),
+        templateName: control("export const feed = { [`watch`]: 1 };"),
+        templateSpans: control(`export const names = (a: string, b: string): string[] => [\`listen\${a}\`, \`\${a}listen\${b}\`, \`\${b}listen\`];`),
+        // Positions: a module-level binding, a string literal type and a call argument.
+        bindingName: control("export const onRefresh = 1;"),
+        typePosition: control('export type Mode = "subscribe" | "quiet";'),
+        argumentPosition: control('register("watch");'),
+        // The member forms refusal #1 named: FO1-FO6, then RB06, RB11, RB13 and RB08 (RB07 is stringName).
+        moduleFunction: control("export function subscribe(listener: (projection: ObservationProjection) => void): () => void { void listener; return () => undefined; }"),
+        moduleOnChange: control("export function onProjectionChange(listener: (projection: ObservationProjection) => void): void { void listener; }"),
+        objectLiteral: control("export const projectionChanges = { subscribe(listener: () => void): void { void listener; } };"),
+        emitterSubclass: control('import { EventEmitter } from "node:events";\nexport class ProjectionFeed extends EventEmitter {}'),
+        typeAliasOption: control("export type EvidenceStoreHooks = { readonly onSettled?: () => void };"),
+        anonymousDefaultClass: control("export default class { onSettled(listener: () => void): void { void listener; } }"),
+        classExpression: control("export const Feed = class FeedImpl { onChange(): void {} };"),
+        protectedMember: control("export class Feed { protected onChange(): void {} }"),
+        staticMember: control("export class Feed { static onChange(): void {} }"),
+        interfaceStringName: control('export interface Hooks { readonly "onSettled"?: () => void }'),
+        // Each callable kind.
+        functionType: control("export function follow(handler: () => void): void { void handler; }"),
+        constructorType: control("export type Make = new () => object;"),
+        methodSignature: control("export interface Hooks { settled(): void }"),
+        callSignature: control("export interface Hook { (): void }"),
+        constructSignature: control("export interface Make { new (): object }"),
+        functionNames: control("export function follow(a: Function, b: CallableFunction, c: NewableFunction): void { void [a, b, c]; }"),
+        // Each heritage form.
+        classExtends: control("export class Feed extends EventTarget {}"),
+        classImplements: control("export class Feed implements Hooks {}"),
+        interfaceExtends: control("export interface Hooks extends EventTarget {}"),
+        // Quiet: comments are not read.
+        commentOnly: control("// subscribe(listener) would hang a change feed here; this module holds none.\nexport const quiet = 1;"),
+        // R-UNNAMED-SUBSCRIPTION quiet rows: feeds with no listener spelling, callable type node or heritage clause.
+        importedCallable: control('import type { Handler } from "./handler.js";\nexport function follow(handler: Handler): void { void handler; }'),
+        typeofCallable: control("function noop(): void {}\nexport function follow(handler: typeof noop): void { void handler; }"),
+        qualifiedCallable: control("export function follow(handler: globalThis.Function): void { void handler; }"),
+        globalEmitter: control("export const changes = new EventTarget();"),
+        promiseFeed: control("export class Feed { settled(): Promise<void> { return Promise.resolve(); } }"),
+        iteratorFeed: control("export async function* changes(): AsyncGenerator<number> { yield 1; }"),
+        composedName: control(`export function wire(target: Record<string, unknown>, name: string): void { target[\`on\${name}\`] = true; }`),
+        lateDefinition: control('export class Feed { constructor() { Object.defineProperty(Feed.prototype, ["on", "Change"].join(""), { value: (): number => 0 }); } }'),
       },
     };
   },
@@ -1160,23 +1346,15 @@ const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
   }),
   D1: () => {
     const census = srcCensusOf();
-    const vocabulary = (path: string, text: string): string[] => {
-      const found: string[] = [];
-      const visit = (node: ts.Node): void => {
-        const spelled = ts.isIdentifier(node) || ts.isPrivateIdentifier(node) || ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node);
-        if (spelled && SPECULATION.test(node.text)) found.push(`${path}: ${node.text}`);
-        ts.forEachChild(node, visit);
-      };
-      visit(sourceOf(path, text));
-      return found;
-    };
+    const vocabulary = (path: string, text: string): string[] => spellingsOf(path, text).filter(spelled => SPECULATION.test(spelled)).map(spelled => `${path}: ${spelled}`);
     const sources = srcSources();
     const control = (text: string): number => vocabulary("src/control.ts", text).length;
+    const warmControl = (text: string): number => warmStartsOf(sitesOf("src/control.ts", text)).length;
     return {
       checklist: [...OPT_IN_CHECKLIST],
       licenseClause: LICENSE_CLAUSE,
       vocabulary: [...sources].flatMap(([path, text]) => vocabulary(path, text)).sort(),
-      warmStarts: sitesList(census).filter(site => WARM_STARTS.some(name => site.endsWith(` ${name}`))),
+      warmStarts: warmStartsOf(sitesList(census)),
       missedPlants: [...sources].filter(([path, text]) => vocabulary(path, `${text}\nexport const ws05SpeculativeInference = true;\n`).length !== vocabulary(path, text).length + 1).map(([path]) => path),
       controls: {
         identifier: control("export const speculativeInference = { enabled: true };"),
@@ -1184,6 +1362,16 @@ const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
         comment: control("// Speculative inference stays off: this module never warms a model.\nexport const MODE = 1;"),
         // R-VOCABULARY quiet row: a seam worded outside the vocabulary.
         outsideVocabulary: control("export const prewarmedInference = { enabled: true };"),
+        // Cut #2: each remaining token kind (a private identifier, read twice here; a no-substitution template; a head, middle and tail).
+        privateName: control("export class Holder { #speculativeDepth = 0; depth(): number { return this.#speculativeDepth; } }"),
+        noSubstitutionTemplate: control("export const MODE = `speculation`;"),
+        templateSpans: control(`export const label = (a: string, b: string): string => \`speculative-\${a}-speculative-\${b}-speculative\`;`),
+      },
+      warmStartControls: {
+        prewarm: warmControl('import { prewarm } from "@anthropic-ai/claude-agent-sdk";'),
+        startup: warmControl('import { startup as warm } from "@anthropic-ai/claude-agent-sdk";'),
+        // Quiet: a launch export that is no warm start.
+        query: warmControl('import { query } from "@anthropic-ai/claude-agent-sdk";'),
       },
     };
   },
@@ -1215,10 +1403,12 @@ describe("wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist cens
       launchExports: LAUNCH_EXPORTS, providerPackages: PROVIDER_PACKAGES, wholeSubpaths: WHOLE_SUBPATHS, turnMembers: TURN_MEMBERS,
       runtimeMembers: [...RUNTIME_ANY, ...RUNTIME_CALLED], cores: CORES, seam: SEAM, modelSide: MODEL_SIDE,
       optInChecklist: OPT_IN_CHECKLIST, licenseClause: LICENSE_CLAUSE,
+      listenerNames: LISTENER_NAMES, functionTypes: FUNCTION_TYPES, warmStarts: WARM_STARTS,
     }).toStrictEqual({
       launchExports: ROSTER.launchExports, providerPackages: ROSTER.providerPackages, wholeSubpaths: ROSTER.wholeSubpaths,
       turnMembers: ROSTER.turnMembers, runtimeMembers: ROSTER.runtimeMembers, cores: ROSTER.cores, seam: ROSTER.seam,
       modelSide: ROSTER.modelSide, optInChecklist: ROSTER.optInChecklist, licenseClause: ROSTER.licenseClause,
+      listenerNames: ROSTER.listenerNames, functionTypes: ROSTER.functionTypes, warmStarts: ROSTER.warmStarts,
     });
   });
 
