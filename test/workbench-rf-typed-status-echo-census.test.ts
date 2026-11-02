@@ -54,7 +54,25 @@
  *    that holds the declaration: the strict direction, whether that value is then returned is not read), an assignment's right
  *    side (a member target - a property or element access through the wrappers, written by =, ??=, ||= or &&= - names the keys
  *    itself, by its chain past the head), a template literal's or a tagged template's substitution and both branches of a
- *    conditional type, each with its control;
+ *    conditional type, each with its control; wb-1709 widened (iii) to the wb-50dt gate's F1 survivors: the key path also runs
+ *    through a call or construct signature's return type and a type literal's call and construct signatures (a function or
+ *    construct type spelled by signature), a function declaration's own return type (it continues as the declaration's returned
+ *    value does, from the function that holds a nested one, while a module-level one's own name ends the path), a thrown value
+ *    (it continues as a returned value does), a call's or a construction's callee (it passes as the arguments do, so an
+ *    immediately invoked function's result and a called call's result run on; a function invoked through a member, .call, .apply
+ *    or .bind, is that member access's object, which nothing passes: R-SPLIT-PATH) and a tagged template's tag; a class
+ *    expression's members, its constructors' parameter properties included, name their keys as an object literal's do, and a
+ *    constructor's parameter property (a parameter with an accessibility, readonly or override modifier) names its own key; and
+ *    a type-level indexed access chain is a unit as a value-level chain is (Rec["publication"]["state"]: its head a type name or
+ *    a typeof query's name, through parenthesized types, then its string-literal index types), each with its control. CLAIM
+ *    SCOPE (wb-1709's third cut, the enumerate-the-resolvable cut the orchestrator's ruling R-B138 binds after the gate's
+ *    refusals #1 and #2, whose U1-U4 and U1-U6 found these readings stated in general words but held only in the contexts their
+ *    controls spelled): each reading wb-1709 adds is claimed in exactly the contexts its controls spell - the 65
+ *    KEY_PATH_ADDITIONS_CUT_5 controls, each enumerated by name, reading and text digest in the receipt's cut-5 table, among them
+ *    at least one falsifier per reader mutant either refusal wrote (BM14, BM20, BM21, BM22, BM31, BM34, BM35, BM36, BM37, BM38;
+ *    GM01-GM15) - and in no other: a context no control spells is outside the claim, and one found unread there is a
+ *    residual-list addition (named in R-SPLIT-PATH with a quiet twin), never a claimed reading; likewise each quiet form
+ *    R-SPLIT-PATH names for wb-1709 is pinned in exactly the contexts its SPLIT_PATH_ADDITIONS_CUT_5 twins spell;
  *    A2 the rf roster, selected by id prefix, reactivefiber:
  *    permission or rf@ contractSource, stays the preview alone (native and injected registrations, RECONCILE_EVIDENCE_READS);
  *    A3 the native provider refuses a federation record printed by rf as an unrecognized envelope, in one spawn of the render argv;
@@ -138,7 +156,8 @@
  * the walk's planted tree included) and the hook every registration-mode control (name, modes and text sha256/16); both
  * records are held to the receipt's cut-3 tables, so a control removed together with its reading, or rewritten, reds. wb-50dt:
  * the cut-4 controls join both records after the cut-3 ones, each record held to its cut-3 table followed by its cut-4
- * additions table.
+ * additions table. wb-1709: the cut-5 A1 controls join A1's record after the cut-4 ones, held to the cut-5 additions table
+ * after the cut-4 one.
  * RESIDUALS (named, each with a pinned quiet row): R-UNLISTED the note names at most four distinct not-observed words, so a fifth
  * one and beyond is the marker … and two renders differing only there share a note, while the count and every reading still
  * carry each row (Q1); R-TONE-CLASS the snapshot node's coverage, tone and statusText are Pi presentation classes, so PENDING and
@@ -157,10 +176,19 @@
  * links are joined only through a local binding, a key bound elsewhere or a variable's own name
  * (const { publication: p } = record; p.state, record[KEY].state, const publication = { state }), or (wb-rgov, the wb-yg70
  * gate's F6) through an interface's or a type alias's own name or a mapped-type key, or (wb-50dt) through a module-level
- * function declaration's own name, a plain name written or a member written through a key bound elsewhere, reads quiet to A1,
- * which joins a path's links only within one access chain, one member write or one nested pattern, literal or type (A1's
- * aliased, keyed, bound, interface-name, type-name and mapped-key controls and its declared-function, name-assignment and
- * keyed-assignment controls stay 0). OVER-READ (named and pinned, the false-red direction; wb-rgov, the wb-yg70 gate's
+ * function declaration's own name, a plain name written or a member written through a key bound elsewhere, or (wb-1709, the
+ * wb-50dt gate's F1) through a function expression or an arrow held in a local (GA26), a parameter's own name (GA21's binding
+ * form: a defaulted parameter, a constructor's plain parameter), a member target inside a destructuring assignment's pattern,
+ * joined to its value only by position or key across the assignment (GA27), the own name of a module-level function
+ * declaration carrying a return type, of an interface or a type alias carrying a call signature, of a class declaration or of a
+ * variable holding a class expression, or a type-level index bound elsewhere, or (wb-1709's second cut, the gate's B01, B02, B13
+ * and B03) through a member access's object (a function invoked through .call, .apply or .bind, a call whose result is read
+ * through a member), or (wb-1709's third cut) through a tagged template's type arguments or a qualified name outside an indexed
+ * access (let value: publication.state; typeof record.publication.state: the gate's refusal-#1 B26 and B25, whose parts A1 joins
+ * only as a type-level chain's head), reads quiet to A1, which joins a path's links
+ * only within one access chain (of values or of types), one member write or one nested pattern, literal, class expression or
+ * type (A1's aliased, keyed, bound, interface-name, type-name and mapped-key controls, its declared-function, name-assignment
+ * and keyed-assignment controls and its nineteen cut-5 twins stay 0). OVER-READ (named and pinned, the false-red direction; wb-rgov, the wb-yg70 gate's
  * F3): the fused reading takes a single word that holds a matcher's fused words anywhere inside it, so an English compound
  * written as one word (publicstatement, MATCHEDCOUNTER, a confederation, where the fused federat loses its word start) reads as
  * a federation field: A1's over-read controls read 1, a src word spelling one reds A1 by design, and narrowing the reading would
@@ -218,6 +246,10 @@ const RECEIPT_CUT_3 =
  * registration-mode controls after the cut-3 tables' rows. */
 const RECEIPT_CUT_4 =
   "2026-10-27 the typed-status echo census judged set, cut 4: every write of a task's run flags, the context's other ways in, the registration read through literal keys, destructures, spreads and fixtures, and A1's key paths through nine more nodes (wb-50dt, the wb-rgov gate's F1 and F2)";
+/** wb-1709 (the wb-50dt gate's F1): the entry its cut appended, whose one table adds the cut-5 A1 controls after the cut-4
+ * additions table's rows. */
+const RECEIPT_CUT_5 =
+  "2026-10-29 the typed-status echo census judged set, cut 5: A1's key paths through call and construct signatures, a declaration's own return type, a thrown value, a callee, a tag, a class expression's members and a parameter property, type-level indexed access chains, and R-SPLIT-PATH's cut-5 twins (wb-1709, the wb-50dt gate's F1)";
 /** The table sections, the entry each sits under and the header row each must keep. */
 const RECEIPT_TABLES = {
   pins: { entry: RECEIPT_ENTRY, heading: "Judged pins, wb-d8io cut 1", header: ["Row", "Pin"] },
@@ -229,6 +261,7 @@ const RECEIPT_TABLES = {
   registrationControls: { entry: RECEIPT_CUT_3, heading: "Registration-mode controls, wb-d8io cut 3", header: ["Control", "Modes", "Text sha256/16"] },
   readingControlAdditions: { entry: RECEIPT_CUT_4, heading: "A1 control additions, wb-d8io cut 4", header: ["Group", "Control", "Reads", "Text sha256/16"] },
   registrationControlAdditions: { entry: RECEIPT_CUT_4, heading: "Registration-mode control additions, wb-d8io cut 4", header: ["Control", "Modes", "Text sha256/16"] },
+  readingControlCut5: { entry: RECEIPT_CUT_5, heading: "A1 control additions, wb-d8io cut 5", header: ["Group", "Control", "Reads", "Text sha256/16"] },
 } as const;
 const ROOT = process.cwd();
 const PREVIEW_ID = "reactivefiber.render.preview";
@@ -955,13 +988,16 @@ function writtenMembers(target: ts.Expression, patterns: boolean): string[] {
   }
   return [];
 }
-/** The key of a member of an object pattern, object literal, type literal, interface or class; a rest element has none. */
+/** The key of a member of an object pattern, object literal, type literal, interface or class; a rest element has none. wb-1709
+ * (the wb-50dt gate's F1, GA21): a constructor's parameter property (a parameter with an accessibility, readonly or override
+ * modifier) is a member of its class and names its own key; any other parameter's name is a local binding (R-SPLIT-PATH). */
 function memberKey(node: ts.Node): string | undefined {
   if (ts.isBindingElement(node)) return ts.isObjectBindingPattern(node.parent) && node.dotDotDotToken === undefined ? keyText(node.propertyName ?? node.name) : undefined;
   if (ts.isPropertyAssignment(node) || ts.isShorthandPropertyAssignment(node) || ts.isPropertySignature(node) || ts.isPropertyDeclaration(node)) return keyText(node.name);
   if (ts.isMethodDeclaration(node) || ts.isMethodSignature(node) || ts.isGetAccessorDeclaration(node) || ts.isSetAccessorDeclaration(node)) return keyText(node.name);
   // wb-rgov (the wb-yg70 gate's F2): a JSX attribute names the key of the value it carries.
   if (ts.isJsxAttribute(node)) return ts.isIdentifier(node.name) ? node.name.text : undefined;
+  if (ts.isParameter(node)) return ts.isParameterPropertyDeclaration(node, node.parent) ? keyText(node.name) : undefined;
   return undefined;
 }
 /** The logical operators whose either operand can be the expression's value: a key path runs through both (A1) and the
@@ -986,7 +1022,12 @@ function memberTarget(node: ts.BinaryExpression): ts.PropertyAccessExpression | 
  * wb-50dt (the wb-rgov gate's F2) adds a comma's last operand (o02), an assignment's right side when its target is no member
  * (a member target names the keys itself, in enclosingKeys), an arrow's or a function expression's return type (o08), a
  * function or construct type's return type (o01), both branches of a conditional type (the o05 boundary), and a template
- * literal's or a tagged template's substitutions (o09, o10). */
+ * literal's or a tagged template's substitutions (o09, o10). wb-1709 (the wb-50dt gate's F1) adds a call's or a construction's
+ * callee, which now passes as its arguments do (an immediately invoked function's result and a called call's result, GA24; a
+ * member access's object passes nothing, so a function invoked through .call reads quiet, R-SPLIT-PATH), a
+ * tagged template's tag (GA23), a call or construct signature's return type, and a type literal's call and construct
+ * signatures (GA17-GA19: a function or construct type spelled by signature); each wb-1709 reading is claimed in the contexts its
+ * cut-5 controls spell (the header's CLAIM SCOPE). */
 function passesThrough(node: ts.Node, child: ts.Node): boolean {
   if (ts.isConditionalExpression(node)) return child !== node.condition;
   if (ts.isBinaryExpression(node)) {
@@ -994,12 +1035,14 @@ function passesThrough(node: ts.Node, child: ts.Node): boolean {
     if (child !== node.right) return false;
     return node.operatorToken.kind === ts.SyntaxKind.CommaToken || (VALUE_ASSIGNMENTS.includes(node.operatorToken.kind) && memberTarget(node) === undefined);
   }
-  if (ts.isCallExpression(node) || ts.isNewExpression(node)) return child !== node.expression;
+  if (ts.isCallExpression(node) || ts.isNewExpression(node)) return true;
   if (ts.isArrowFunction(node)) return child === node.body || child === node.type;
   if (ts.isFunctionExpression(node) || ts.isFunctionTypeNode(node) || ts.isConstructorTypeNode(node)) return child === node.type;
+  if (ts.isCallSignatureDeclaration(node) || ts.isConstructSignatureDeclaration(node)) return child === node.type;
+  if (ts.isTypeLiteralNode(node)) return ts.isCallSignatureDeclaration(child) || ts.isConstructSignatureDeclaration(child);
   if (ts.isConditionalTypeNode(node)) return child === node.trueType || child === node.falseType;
   if (ts.isTemplateSpan(node)) return child === node.expression;
-  if (ts.isTaggedTemplateExpression(node)) return child === node.template;
+  if (ts.isTaggedTemplateExpression(node)) return child === node.template || child === node.tag;
   return (
     ts.isTemplateExpression(node) ||
     ts.isTypeOperatorNode(node) ||
@@ -1034,13 +1077,17 @@ function passesThrough(node: ts.Node, child: ts.Node): boolean {
  * declaration nested in a function hands its returned or yielded value on to the function that holds it (o04, the strict
  * direction: whether the declaration's value is then returned is not read), while one at module level, whose own name is no
  * key, ends the path (R-SPLIT-PATH); and a member written by an assignment or a logical assignment (o06, o07) is named by its
- * target's chain past the head (chainNames), the head being a variable's own name. */
+ * target's chain past the head (chainNames), the head being a variable's own name. wb-1709 (the wb-50dt gate's F1): a thrown value
+ * continues as a returned one does (GA25), and so does a function declaration's own return type (GA20): from the declaration
+ * itself, so one nested in a function continues from the function that holds it, while one at module level ends the path
+ * (R-SPLIT-PATH); each in the contexts its cut-5 controls spell (the header's CLAIM SCOPE). */
 function enclosingKeys(container: ts.Node): string[] {
   let child: ts.Node = container;
   let at: ts.Node | undefined = container.parent;
   while (at !== undefined) {
-    if (ts.isReturnStatement(at) || ts.isYieldExpression(at)) {
-      let returnedFrom: ts.Node | undefined = ts.findAncestor(at.parent, ts.isFunctionLike);
+    const leaves: boolean = ts.isReturnStatement(at) || ts.isYieldExpression(at) || ts.isThrowStatement(at);
+    if (leaves || (ts.isFunctionDeclaration(at) && child === at.type)) {
+      let returnedFrom: ts.Node | undefined = leaves ? ts.findAncestor(at.parent, ts.isFunctionLike) : at;
       while (returnedFrom !== undefined && ts.isFunctionDeclaration(returnedFrom)) {
         const holder: ts.Node | undefined = ts.findAncestor(returnedFrom.parent, ts.isFunctionLike);
         if (holder === undefined) break;
@@ -1065,11 +1112,45 @@ function enclosingKeys(container: ts.Node): string[] {
   const key = at === undefined ? undefined : memberKey(at);
   return at === undefined || key === undefined ? [] : [...enclosingKeys(at.parent), key];
 }
+/** An entity name's parts, in order: an identifier, or a qualified name's parts (api.Rec names api and Rec; the cut-5 controls
+ * spell qualified names of two and three parts, the header's CLAIM SCOPE). */
+function entityNames(name: ts.EntityName): string[] {
+  return ts.isIdentifier(name) ? [name.text] : [...entityNames(name.left), name.right.text];
+}
+/** The names of a type-level access chain (wb-1709, the wb-50dt gate's F1, GA28): its head when a type name or a typeof query's
+ * name (a qualified one by its parts), through parenthesized types, then each string-literal index type along it, so
+ * Rec["publication"]["state"] names Rec, publication and state in order. wb-1709's second cut (the gate's B04): an index is read
+ * through parenthesized types too, so Rec[("publication")]["state"] names the same three. Any other head names nothing, and an
+ * index that is no string literal adds no name (R-SPLIT-PATH). Each reading is claimed in the contexts its cut-5 controls spell
+ * (the header's CLAIM SCOPE). */
+function typeChainNames(node: ts.TypeNode): string[] {
+  if (ts.isParenthesizedTypeNode(node)) return typeChainNames(node.type);
+  if (ts.isTypeReferenceNode(node)) return entityNames(node.typeName);
+  if (ts.isTypeQueryNode(node)) return entityNames(node.exprName);
+  if (ts.isIndexedAccessTypeNode(node)) {
+    let index: ts.TypeNode = node.indexType;
+    while (ts.isParenthesizedTypeNode(index)) index = index.type;
+    return [...typeChainNames(node.objectType), ...(ts.isLiteralTypeNode(index) && ts.isStringLiteralLike(index.literal) ? [index.literal.text] : [])];
+  }
+  return [];
+}
+/** A container's members: an object pattern's elements, an object literal's properties, a type literal's members, and (wb-1709,
+ * the wb-50dt gate's F1, GA22) a class expression's members with its constructors' parameters, of which memberKey keys the
+ * parameter properties. */
+function containerMembers(node: ts.ObjectBindingPattern | ts.ObjectLiteralExpression | ts.TypeLiteralNode | ts.ClassExpression): readonly ts.Node[] {
+  if (ts.isObjectBindingPattern(node)) return node.elements;
+  if (ts.isObjectLiteralExpression(node)) return node.properties;
+  if (ts.isTypeLiteralNode(node)) return node.members;
+  return [...node.members, ...node.members.filter(ts.isConstructorDeclaration).flatMap(member => member.parameters)];
+}
 /** The code units of one module by its TypeScript AST (A1): every identifier and private name, every string, template,
  * regular-expression and JSX text literal (escapes decoded by the parser), every access chain of two names or more joined by
  * dots (chainNames), and the key path of every member of an object pattern, object literal or type literal nested under a member
  * (wb-yg70: const { publication: { state } } = record reads publication.state). Comments are trivia, never units (wb-d8io, the
- * gate's F3: a comment reads no field). */
+ * gate's F3: a comment reads no field). wb-1709 (the wb-50dt gate's F1): every type-level indexed access chain of two names or
+ * more (typeChainNames, GA28) is a unit too, and a class expression is a container as an object literal is: the key path of each
+ * of its members, its constructors' parameter properties included, is a unit when it is nested under a member (GA22); each in the
+ * contexts its cut-5 controls spell (the header's CLAIM SCOPE). */
 function codeUnits(fileName: string, text: string): string[] {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, scriptKindOf(fileName));
   const units: string[] = [];
@@ -1080,10 +1161,13 @@ function codeUnits(fileName: string, text: string): string[] {
       const chain = chainNames(node);
       if (chain.length > 1) units.push(chain.join("."));
     }
-    if (ts.isObjectBindingPattern(node) || ts.isObjectLiteralExpression(node) || ts.isTypeLiteralNode(node)) {
+    if (ts.isIndexedAccessTypeNode(node)) {
+      const chain = typeChainNames(node);
+      if (chain.length > 1) units.push(chain.join("."));
+    }
+    if (ts.isObjectBindingPattern(node) || ts.isObjectLiteralExpression(node) || ts.isTypeLiteralNode(node) || ts.isClassExpression(node)) {
       const outer = enclosingKeys(node);
-      const members: readonly ts.Node[] = ts.isObjectBindingPattern(node) ? node.elements : ts.isObjectLiteralExpression(node) ? node.properties : node.members;
-      const keys = outer.length === 0 ? [] : members.map(memberKey).filter((key): key is string => key !== undefined);
+      const keys = outer.length === 0 ? [] : containerMembers(node).map(memberKey).filter((key): key is string => key !== undefined);
       for (const key of keys) units.push([...outer, key].join("."));
     }
     ts.forEachChild(node, visit);
@@ -1213,6 +1297,126 @@ const SPLIT_PATH_ADDITIONS: Readonly<Record<string, string>> = {
   declaredFunction: 'function publication() {\n  return { state: "FAILED" };\n}',
   nameAssignment: 'publication = { state: "FAILED" };',
   keyedAssignment: 'const KEY = "publication";\nrecord[KEY] = { state: "FAILED" };',
+};
+/** wb-1709 (the wb-50dt gate's F1): A1's cut-5 key-path controls, each caught by exactly one matcher once the key path runs
+ * through its node: a call or construct signature in a type literal held by a type alias or an interface member (the gate's
+ * GA17-GA19: the claim's function or construct type spelled by signature), a function declaration's own return type (GA20), a
+ * thrown value (GA25), an invoked function's or a called call's result (GA24), a tagged template's tag (GA23), a class
+ * expression's members (GA22), a constructor's parameter property (GA21's member form) and a type-level indexed access chain
+ * (GA28), with same-class siblings. wb-1709's second cut (the gate's refusal #1, U1-U4) adds, after typeofHead, one control per
+ * reader mutant the gate wrote and one per further context of the same reading: a call signature beside another member (BM31)
+ * and a construct one, a signature-holding type literal in a union, a function declaration's return type held by a function
+ * expression (BM38), two deep and by an accessor, a throw caught (BM36), guarded by an if (BM36), from a function expression and
+ * from a nested declaration, a non-null callee (BM35), a parenthesized conditional tag (BM34) and a non-null one, a class
+ * expression as an argument (BM37) and as an arrow's body, private and protected parameter properties (BM21) and an override
+ * one (BM22), a qualified head of two parts (BM14) and of three, a typeof query of a qualified name (BM20), a parenthesized
+ * chain part and a parenthesized string-literal index (the gate's B04, read now). wb-1709's third cut (the gate's refusal #2,
+ * U1-U6, under R-B138: the header's CLAIM SCOPE) adds, after parenthesizedIndex, one control per reader mutant GM01-GM15 in its
+ * witness's form: a call signature after another member (GM01), a signature-holding type literal as an array type's element
+ * (GM02), a signature returning a union (GM03), a declaration's own return type as a union (GM04) and the declaration in an if
+ * block (GM05) beside the landed o04 reading in the same block (the gate's F7), an object literal argument of a thrown call
+ * (GM06), a construction called (GM07), a class expression constructed bare (GM08), a tagged template as a tag (GM09), a class
+ * expression as a conditional's branch and as an array element (GM10), a class expression's get accessor (GM15) and its set
+ * accessor, a qualified head of three parts led by another name (GM11), a type-name head with type arguments (GM12), a bare
+ * typeof head (GM13) and an index parenthesized twice (GM14). */
+const KEY_PATH_ADDITIONS_CUT_5: Readonly<Record<string, string>> = {
+  callSignature: "type Rec = { publication: { (): { state: string } } };",
+  constructSignature: "type Rec = { publication: { new (): { state: string } } };",
+  interfaceCallSignature: "interface Rec { publication: { (): { state: string } } }",
+  interfaceConstructSignature: "interface Rec { publication: { new (): { state: string } } }",
+  genericCallSignature: "type Rec = { publication: { <T>(value: T): { state: T } } };",
+  declarationReturnType: "const record = { publication: () => {\n  function inner(): { state: string } {\n    return load();\n  }\n  return inner();\n} };",
+  methodDeclarationReturnType: "const record = { publication() {\n  function inner(): { state: string } {\n    return load();\n  }\n  return inner();\n} };",
+  thrown: 'const record = { publication: () => {\n  throw { state: "FAILED" };\n} };',
+  thrownFromMethod: 'const record = { publication() {\n  throw { state: "FAILED" };\n} };',
+  invokedArrow: 'const record = { publication: (() => ({ state: "FAILED" }))() };',
+  invokedFunction: 'const record = { publication: (function () {\n  return { state: "FAILED" };\n})() };',
+  calledCall: 'const record = { publication: make({ state: "FAILED" })() };',
+  tagCall: 'const record = { publication: tag({ state: "FAILED" })`text` };',
+  classExpression: 'const record = { publication: class {\n  state = "FAILED";\n} };',
+  classExpressionMethod: 'const record = { publication: class {\n  state() {\n    return "FAILED";\n  }\n} };',
+  constructedClass: 'const record = { publication: new (class {\n  state = "FAILED";\n})() };',
+  classExpressionParameterProperty: 'const record = { publication: class {\n  constructor(public state = "FAILED") {}\n} };',
+  parameterProperty: 'class Rec {\n  constructor(public publication = { state: "FAILED" }) {}\n}',
+  parameterPropertyType: "class Rec {\n  constructor(readonly publication: { state: string }) {}\n}",
+  indexedAccessType: 'type State = Rec["publication"]["state"];',
+  templateIndex: 'type State = Rec[`publication`]["state"];',
+  typeHead: 'type State = publication["state"];',
+  qualifiedTypeHead: 'type State = api.publication["state"];',
+  typeofHead: 'type State = (typeof publication)["state"];',
+  signatureBesideMember: "type Rec = { publication: { (): { state: string }; extra: number } };",
+  constructSignatureBesideMember: "type Rec = { publication: { new (): { state: string }; extra: number } };",
+  signatureInUnion: "type Rec = { publication: { (): { state: string } } | undefined };",
+  functionDeclarationReturnType: "const record = { publication: function () {\n  function inner(): { state: string } {\n    return load();\n  }\n  return inner();\n} };",
+  nestedDeclarationReturnType: "const record = { publication: () => {\n  function outer() {\n    function inner(): { state: string } {\n      return load();\n    }\n    return inner();\n  }\n  return outer();\n} };",
+  accessorDeclarationReturnType: "const record = { get publication() {\n  function inner(): { state: string } {\n    return load();\n  }\n  return inner();\n} };",
+  caughtThrow: 'const record = { publication() {\n  try {\n    throw { state: "FAILED" };\n  } catch {\n    return null;\n  }\n} };',
+  guardedThrow: 'const record = { publication: (flag: boolean) => {\n  if (flag) throw { state: "FAILED" };\n  return null;\n} };',
+  thrownFromFunction: 'const record = { publication: function () {\n  throw { state: "FAILED" };\n} };',
+  thrownFromDeclaration: 'const record = { publication: () => {\n  function inner() {\n    throw { state: "FAILED" };\n  }\n  return inner();\n} };',
+  nonNullCallee: 'const record = { publication: make({ state: "FAILED" })!() };',
+  conditionalTag: 'const record = { publication: (flag ? tag({ state: "FAILED" }) : other)`text` };',
+  nonNullTag: 'const record = { publication: tag({ state: "FAILED" })!`text` };',
+  classArgument: 'const record = { publication: mixin(class {\n  state = "FAILED";\n}) };',
+  classReturned: 'const record = { publication: () => class {\n  state = "FAILED";\n} };',
+  privateParameterProperty: 'class Rec {\n  constructor(private publication = { state: "FAILED" }) {}\n}',
+  protectedParameterProperty: 'class Rec {\n  constructor(protected publication = { state: "FAILED" }) {}\n}',
+  overrideParameterProperty: 'class Rec extends Base {\n  constructor(override publication = { state: "FAILED" }) {\n    super();\n  }\n}',
+  qualifiedHeadEachPart: 'type Code = publication.state["code"];',
+  deepQualifiedHead: 'type Value = publication.state.code["value"];',
+  typeofQualifiedHead: 'type State = (typeof api.publication)["state"];',
+  parenthesizedChain: 'type State = (Rec["publication"])["state"];',
+  parenthesizedIndex: 'type State = Rec[("publication")]["state"];',
+  signatureAfterMember: "type Rec = { publication: { extra: number; (): { state: string } } };",
+  signatureInArray: "type Rec = { publication: { (): { state: string } }[] };",
+  signatureUnionReturn: "type Rec = { publication: { (): { state: string } | undefined } };",
+  declarationUnionReturnType: "const record = { publication: () => {\n  function inner(): { state: string } | null {\n    return load();\n  }\n  return inner();\n} };",
+  blockDeclarationReturnType:
+    "const record = { publication: (flag: boolean) => {\n  if (flag) {\n    function inner(): { state: string } {\n      return load();\n    }\n    return inner();\n  }\n  return null;\n} };",
+  blockInnerDeclaration:
+    'const record = { publication: (flag: boolean) => {\n  if (flag) {\n    function inner() {\n      return { state: "FAILED" };\n    }\n    return inner();\n  }\n  return null;\n} };',
+  thrownCallArgument: 'const record = { publication: () => {\n  throw Object.assign(new Error("refused"), { state: "FAILED" });\n} };',
+  constructedCallee: 'const record = { publication: new Factory({ state: "FAILED" })() };',
+  constructedClassCallee: 'const record = { publication: new class {\n  state = "FAILED";\n}() };',
+  taggedTag: 'const record = { publication: tag({ state: "FAILED" })`a``b` };',
+  classConditional: 'const record = { publication: (flag: boolean) => flag ? class {\n  state = "FAILED";\n} : null };',
+  classInArray: 'const record = { publication: [class {\n  state = "FAILED";\n}] };',
+  classExpressionAccessor: 'const record = { publication: class {\n  get state() {\n    return "FAILED";\n  }\n} };',
+  classExpressionSetter: "const record = { publication: class {\n  set state(value: string) {}\n} };",
+  qualifiedHeadThirdPart: 'type Code = api.publication.state["code"];',
+  genericTypeHead: 'type State = publication<string>["state"];',
+  bareTypeofHead: 'type State = typeof publication["state"];',
+  doubleParenthesizedIndex: 'type State = Rec[(("publication"))]["state"];',
+};
+/** wb-1709: R-SPLIT-PATH's twins at the cut-5 readings' borders and the gate's local-binding members, each quiet: a function
+ * expression or an arrow held in a local (GA26), a parameter's own name (GA21's binding form, defaulted, and a constructor's plain
+ * parameter), a member target inside a destructuring assignment's pattern (GA27), a module-level function declaration's, an
+ * interface's or a type alias's own name carrying a return type or a call signature, a class declaration's or a bound class
+ * expression's own name, and a type-level index bound elsewhere. wb-1709's second cut adds R-SPLIT-PATH's member-access twins
+ * (the gate's B01, B02, B13 and B03): a function expression invoked through .call and through .apply, an arrow invoked through
+ * .bind, and a call read through a member, each quiet. wb-1709's third cut adds, after memberCallArgument, three more, each quiet: a
+ * tagged template's type arguments (the first cut's non-claim, until now prose only) and a qualified name outside an indexed
+ * access, a type reference's and a typeof query's (the gate's refusal-#1 B26 and B25). */
+const SPLIT_PATH_ADDITIONS_CUT_5: Readonly<Record<string, string>> = {
+  localFunction: 'const record = { publication: () => {\n  const inner = function () {\n    return { state: "FAILED" };\n  };\n  return inner();\n} };',
+  localArrow: 'const record = { publication: () => {\n  const inner = () => ({ state: "FAILED" });\n  return inner();\n} };',
+  parameterDefault: 'const record = { publication: (value = { state: "FAILED" }) => value };',
+  constructorParameter: 'class Rec {\n  constructor(publication = { state: "FAILED" }) {}\n}',
+  patternTarget: '[record.publication] = [{ state: "FAILED" }];',
+  patternKeyTarget: '({ value: record.publication } = { value: { state: "FAILED" } });',
+  declaredReturnType: "function publication(): { state: string } {\n  return load();\n}",
+  interfaceSignature: "interface Publication {\n  (): { state: string };\n}",
+  typeSignature: "type Publication = { (): { state: string } };",
+  className: 'class Publication {\n  state = "FAILED";\n}',
+  boundClass: 'const Publication = class {\n  state = "FAILED";\n};',
+  keyedIndexType: 'type Key = "publication";\ntype State = Rec[Key]["state"];',
+  memberInvokedFunction: 'const record = { publication: function () {\n  return { state: "FAILED" };\n}.call(this) };',
+  memberAppliedFunction: 'const record = { publication: function () {\n  return { state: "FAILED" };\n}.apply(null) };',
+  memberBoundArrow: 'const record = { publication: (() => ({ state: "FAILED" })).bind(this)() };',
+  memberCallArgument: 'const record = { publication: make({ state: "FAILED" }).run() };',
+  tagTypeArgument: "const record = { publication: tag<{ state: string }>`text` };",
+  qualifiedTypeName: "let value: publication.state;",
+  typeofChain: "type State = typeof record.publication.state;",
 };
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
@@ -1431,9 +1635,24 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     ).toEqual([]);
     const splitPath = group("quiet.splitPath", SPLIT_PATH_ADDITIONS);
     expect(Object.values(splitPath).every(count => count === 0), "an R-SPLIT-PATH twin reads as a key path").toBe(true);
-    expect(ledger, "A1's controls (group, name, reading, text) stand in the receipt's A1 control table, then in its cut-4 additions").toStrictEqual([
+    // wb-1709 (the wb-50dt gate's F1): the key path also runs through call and construct signatures, a function declaration's own
+    // return type, a thrown value, a callee, a tag, a class expression's members and a parameter property, and a type-level indexed
+    // access chain is a unit; each control is caught by exactly one matcher and R-SPLIT-PATH's cut-5 twins stay quiet. Both groups
+    // join the record after the cut-4 ones, held to the cut-5 additions table; the second and third cuts' controls join the same
+    // two groups.
+    const keyPathsCut5 = group("widened.keyPaths.cut5", KEY_PATH_ADDITIONS_CUT_5);
+    expect(
+      Object.entries(keyPathsCut5)
+        .filter(([, count]) => count !== 1)
+        .map(([key]) => key),
+      "a cut-5 key-path control is not caught by exactly one matcher",
+    ).toEqual([]);
+    const splitPathCut5 = group("quiet.splitPath.cut5", SPLIT_PATH_ADDITIONS_CUT_5);
+    expect(Object.values(splitPathCut5).every(count => count === 0), "a cut-5 R-SPLIT-PATH twin reads as a key path").toBe(true);
+    expect(ledger, "A1's controls (group, name, reading, text) stand in the receipt's A1 control table, then in its cut-4 and cut-5 additions").toStrictEqual([
       ...receiptTable(RECEIPT_TABLES.readingControls),
       ...receiptTable(RECEIPT_TABLES.readingControlAdditions),
+      ...receiptTable(RECEIPT_TABLES.readingControlCut5),
     ]);
     return {
       floorMet,
@@ -1450,6 +1669,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       walk,
       keyPaths,
       splitPath,
+      keyPathsCut5,
+      splitPathCut5,
     };
   },
   A2: async () => {

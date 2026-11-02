@@ -322,6 +322,14 @@
    "sha256": "38ee2bc1958d710efaf8b1bcbfbbb13ec5b3f3bb90bd638f80b0fcdce33b0f74"
   }
  },
+ "depth": {
+  "bead": "wb-jml6",
+  "filing": {
+   "export": ".beads/issues.jsonl",
+   "paragraphs": 1,
+   "sha256": "194dcf935ce6d697bdf7b430d4792a61334663c9212e6219fe8c703cc5ba888d"
+  }
+ },
  "rows": [
   {
    "id": "A",
