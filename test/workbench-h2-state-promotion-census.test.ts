@@ -102,15 +102,28 @@
  * join's identity, not its behaviour, since join reads normalize off node's own path module object at every call, so one statement
  * replacing normalize after the bindings, in D2, with both walks narrowed by src/workflow, kept the census green). E1 replaces
  * each of those four in turn, reads the replacement live at this module's own import (normalize through its join) and reads git's
- * listing unchanged. Each replacement narrows in one argument form only (wb-yvw7, the landing-731 gate's F1: a live lstatSync or
- * join called on the repo-relative path git lists, with a run-time replacement keyed to that path and both walks narrowed by
- * src/workflow, kept the census green with E1's control untouched): execFileSync's replacement appends an exclude pathspec to every
- * argv it is handed, which narrows git's listing when git runs on GIT_LISTING, and lstatSync's, join's and normalize's narrow only
- * the narrowed file's absolute path as join(REPO, path) spells it, read as lstatSync's argument (as a string) or as join's or
- * normalize's result. So a listing that runs git on GIT_LISTING through a live import of execFileSync, tests that absolute path
- * through a live import of lstatSync, or builds it through a live import of join or normalize or through a bound join reds there; a
- * live import called in another argument form, and a node function the control does not replace, leave git's listing un-narrowed
- * while the control stands (Not claimed).
+ * listing unchanged. Each replacement narrows by one file, the first git lists, through exactly what its own code reads, and E1's
+ * probe calls it in one form, the narrowed form (wb-yvw7, the landing-731 gate's F1: a live lstatSync or join called on the
+ * repo-relative path git lists, with a run-time replacement keyed to that path and both walks narrowed by src/workflow, kept the
+ * census green with E1's control untouched; wb-yvw7's refusal #1: so did git run on GIT_LISTING through a live execFileSync whose
+ * options carry env GIT_LITERAL_PATHSPECS=1, with a replacement keyed to that env and both walks narrowed). execFileSync's
+ * replacement hands the function it replaced the file and the options it is handed unchanged and the argv with ':(exclude)' and that
+ * file's path appended, which git run on GIT_LISTING reads as an exclude pathspec unless its pathspec magic is off (with
+ * GIT_LITERAL_PATHSPECS=1 in the env it runs in, git reads a literal path that names no file); lstatSync's throws when its first
+ * argument, as a string, is targetPath, the file's absolute path as join(REPO, path) spells it, and hands every other call to the
+ * function it replaced; join's and normalize's move a result equal to targetPath off it (join reads normalize at every call). The
+ * probe runs git on GIT_LISTING through the live execFileSync with the options gitListedSrc passes (cwd REPO, encoding utf8,
+ * maxBuffer 1 << 26 and no env of its own, so git runs in the process environment), calls the live lstatSync on targetPath and calls
+ * the live join on REPO and the file. So a listing, gitListedSrc with regularFile, that moves a call of theirs to the live function
+ * of one or more of the four (an import of it, or the function read off node's own module object at the call), every call made there
+ * in the narrowed form (git on GIT_LISTING's argv, the frozen constant or a copy of it, with those options; for each path git lists,
+ * the absolute path join(REPO, path) spells, a string or a Buffer holding it, as lstatSync's argument, or that path as join's or
+ * normalize's result), or that builds its path through a bound join, the rest of gitListedSrc and regularFile as they stand, reds
+ * there, alone or beside a run-time replacement that wraps that node function (normalize, for a bound join) and does nothing but
+ * narrow by a src subtree, with both walks narrowed by the same subtree in their own code, E1's control untouched and no other
+ * run-time replacement standing; a call in another form, a narrowed-form call made for some of the paths git lists only, a second
+ * call beside one in the narrowed form, another edit of how the two read a call's result and a node function the control does not
+ * replace are NOT CLAIMED by this census (Not claimed).
  * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows, clauses and words, not
  * pins); an assertion removed from this file together with its pinned count in the roster; the file-end judge or the selection it
  * reads removed (no claim rides them alone: the registration case still holds the record); every case of the file skipped at once
@@ -127,22 +140,33 @@
  * false) or in this file (the reading replaced by a literal true), and a run-time edit of it with filesBelow and the in-file listing
  * narrowed by the same path (an edit of five sites, in this file alone or in this file and the roster, visible in any diff);
  * gitListedSrc or regularFile made to run on node's live import of one of the four functions E1's control replaces (in place of a
- * binding or of the template literal) in the argument form that control narrows (git run on GIT_LISTING; the absolute path
- * join(REPO, path) gives, as lstatSync's argument or as join's or normalize's result), or regularFile's path built through a bound
- * join to that absolute path again, together with E1's control hollowed, a run-time replacement of that function and filesBelow and
- * the in-file listing narrowed by the same path (in this file's code alone an edit of five sites or more visible in any diff; fewer
- * when a run-time replacement of what the control or the walks run on does the hollowing or the narrowing); gitListedSrc or
- * regularFile made to run on node's live import of one of the four in an argument form E1's control does not narrow (wb-yvw7:
- * lstatSync on another spelling of a path git lists, its repo-relative spelling resolved against the process cwd, a non-normalized
- * absolute spelling or a file URL; join or normalize returning the repo-relative spelling, the absolute path then composed outside
- * them; execFileSync running another file, a shell that runs git), together with a run-time replacement of that function, or of the
+ * binding or of the template literal) in the narrowed form E1's probe reads (git on GIT_LISTING's argv with the options gitListedSrc
+ * passes and no env of its own; the absolute path join(REPO, path) spells, a string or a Buffer holding it, as lstatSync's argument;
+ * that path as join's or normalize's result), or regularFile's path built through a bound join to that absolute path again, together
+ * with E1's control hollowed, a run-time replacement of that function and filesBelow and the in-file listing narrowed by the same
+ * path (in this file's code alone an edit of five sites or more visible in any diff; fewer when a run-time replacement of what the
+ * control or the walks run on does the hollowing or the narrowing); gitListedSrc or regularFile made to call node's live import of
+ * one of the four in a form E1's probe does not read (wb-yvw7), together with a run-time replacement of that function, or of the
  * normalize a live join reads, keyed to that form and filesBelow and the in-file listing narrowed by the same path (an edit of four
- * sites or more visible in any diff, E1's control untouched: its replacements narrow one argument form only, so a call in another
- * leaves git's listing un-narrowed while they stand; fewer when a run-time replacement of what the walks run on, fs's readdirSync
- * among them, does the narrowing); gitListedSrc or regularFile made to call a live import of a node function E1's control does not
- * replace (child_process's spawnSync read at the call, say), together with a run-time replacement of it and filesBelow and the
- * in-file listing narrowed by the same path (an edit of four sites visible in any diff, E1's control untouched: it reads only the
- * four functions it replaces, so a listing re-routed to another node function passes it unread); and a run-time
+ * sites or more visible in any diff, E1's control untouched; fewer when a run-time replacement of what the walks run on, fs's
+ * readdirSync among them, does the narrowing): whether E1's control narrows such a call is NOT CLAIMED either way, since each
+ * replacement narrows exactly what its own code reads (THE WALK ANCHOR), so some forms pass it unread - lstatSync on another
+ * spelling of a path git lists (repo-relative, resolved against the process cwd; with './' before it; a non-normalized absolute
+ * spelling; a file URL), join or normalize returning the repo-relative spelling (the absolute path composed outside them),
+ * execFileSync running a shell whose command string runs git (the appended exclude lands in the shell's $0), git with its
+ * --literal-pathspecs option ahead of GIT_LISTING, and git on GIT_LISTING with options whose env sets GIT_LITERAL_PATHSPECS=1
+ * (wb-yvw7's refusal #1: git reads the appended exclude as a literal path) - while others are narrowed and red at the control (git
+ * on an argv without GIT_LISTING's '--', and a shell that hands its arguments on to git); gitListedSrc or regularFile making a call
+ * in the narrowed form together with a second call in another form for the same path (wb-yvw7's refusal #1: the absolute path tested
+ * through the live lstatSync and, when that throws, the repo-relative one), or together with another edit of how it reads the call's
+ * result (a thrown test read as a regular file, say), or making it for some of the paths git lists only (the subtree it narrows),
+ * with a run-time replacement keyed to what the listing then reads and filesBelow and the in-file listing narrowed by the same path
+ * (an edit of four sites visible in any diff, E1's control untouched: the control narrows the first path git lists only, at its
+ * narrowed-form call, and in each of these the listing's answer for that path does not come from that call's narrowed result);
+ * gitListedSrc or regularFile made to call a live import of a node function E1's control does not replace (child_process's spawnSync
+ * read at the call, say), together with a run-time replacement of it and filesBelow and the in-file listing narrowed by the same
+ * path (an edit of four sites visible in any diff, E1's control untouched: it reads only the four functions it replaces, so a
+ * listing re-routed to another node function passes it unread); and a run-time
  * replacement the two bindings do not keep out, with both walks narrowed by the same path (in their code, or by a replacement of
  * what they run on, fs's readdirSync among them): one of the two replaced before this module's first statements bind it, so the
  * binding holds the replacement (in a setup file, in a module this file imports or on a line above the bindings), any other node
@@ -738,15 +762,19 @@ interface BoundReading {
 }
 /** E1's control (wb-ccea, wb-tsi6, wb-yvw7): each of the two node functions git's listing runs on, and path's join and normalize
  * (the path functions a regular-file path could be built with: join reads normalize off node's own path module object at every
- * call), is replaced in turn, in node's own module object, by one that narrows that listing by one file in one argument form: an
- * exclude pathspec appended to every argv execFileSync is handed (git's listing narrowed when git runs on GIT_LISTING), and the
- * file's regular-file test failing, or its joined or normalized path moved off it, only at targetPath, the file's absolute path as
- * join(REPO, path) spells it, read as lstatSync's argument (as a string) or as join's or normalize's result. While it stands this
- * module's own import reads it, narrowed (normalize through this module's join), and gitListedSrc must still list what E1 read
- * before it, so a listing that runs git on GIT_LISTING through a live import of execFileSync, tests targetPath through a live
- * import of lstatSync, or builds targetPath through a live import of join or normalize or through a bound join reds here; a live
- * import called in another argument form (the repo-relative path git lists, say) leaves git's listing un-narrowed while the
- * replacement stands, and a listing re-routed to a node function the control does not replace is not read here (Not claimed). */
+ * call), is replaced in turn, in node's own module object, by one that narrows by one file, the first git lists, through exactly
+ * what its own code reads: execFileSync's hands the function it replaced the file and the options it is handed unchanged and the
+ * argv with ':(exclude)' and the file's path appended (git run on GIT_LISTING reads that as an exclude pathspec unless its pathspec
+ * magic is off, as with GIT_LITERAL_PATHSPECS=1 in the env it runs in); lstatSync's throws when its first argument, as a string, is
+ * targetPath, the file's absolute path as join(REPO, path) spells it; join's and normalize's move a result equal to targetPath off
+ * it. While it stands the probe reads it at this module's own import in the narrowed form (git on GIT_LISTING with the options
+ * gitListedSrc passes and no env of its own; lstatSync on targetPath; join on REPO and the file, normalize through it), narrowed,
+ * and gitListedSrc must still list what E1 read before it, so a listing whose every call moved to the live function of one of the
+ * four is in the narrowed form (for lstatSync, join and normalize, a call for each path git lists on the absolute path
+ * join(REPO, path) spells, a string or a Buffer holding it, as lstatSync's argument, or with that path as join's or normalize's
+ * result), or that builds its path through a bound join, the rest of gitListedSrc and regularFile as they stand, reds here; whether
+ * a call in another form is narrowed while the replacement stands is NOT CLAIMED either way, and a listing re-routed to a node
+ * function the control does not replace is not read here (Not claimed). */
 function boundControl(gitListed: readonly string[]): BoundReading[] {
   const target = gitListed[0];
   if (target === undefined) throw new Error("git lists no src file for E1's control to narrow by");
