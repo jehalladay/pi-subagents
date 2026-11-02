@@ -7,6 +7,13 @@
  * edited here; trunk's test/workbench-rf-session-lifecycle-census.test.ts keeps its own readers and is not read by this census.
  * The parent stays parked until this lands, and its later re-cut can import the helper.
  *
+ * CUT #2 (wb-4zgj refusal #1, its BIND verdict of 2026-11-02 in the bead's notes; carrier identity R-B368): the nine carried
+ * members stay killed. Refusal #1's U1 (one edit skipping every case at collection left this file at 0 passed, 12 skipped, rc 0,
+ * with no hook run) is cured by the REGISTRATION GUARD below, and its U2 (ANCHOR held PO1's launch only as text) by holding
+ * PO1's literal reading under ANCHOR as A1's one bound rf launch. Claim (5) is restated to what the guard and RECORDS hold, and
+ * claims (2) and (4) are narrowed to what their pins hold (the refusal's F1 and F2 readings); its F4 reading, an early return in
+ * SHAPE or ANCHOR, is NOT CLAIMED below.
+ *
  * PINNED READER SET (this file, test/workbench-rf-session-lifecycle-reach-census.test.ts; observed at the cut: every case passes
  * on the moved readers, and each named member, applied to a copy of the helper with its refusal gate's own edit, reds the pin
  * case named after it). Each pin case is named "member <id> (<site>) - <quote>: probes <probe ids> read as written here", the
@@ -42,8 +49,10 @@
  *   R3's pins in order, each with the pin's site and quote; each line's plant is its pin's one probe, and that probe holds what the
  *   line states: PD1 one descriptor whose id is the stated template called with the stated verb, PD2 one descriptor whose nested
  *   property descriptions are the stated template's text with the stated verb, PS1 and PO1 one file at the stated path whose bytes
- *   before the planted form are the stated count, PO1's form calling the stated launcher on rf, PO2 one file at the stated path
- *   whose form is the stated line, and every form of GS1, GO1 and GO2 starting at or past the byte offset its quote states;
+ *   before the planted form are the stated count, PO1's form calling the stated launcher on rf and its literal reading holding
+ *   that call as A1's one bound rf launch (cut #2: the stated path and launcher listed in rf, nothing unbound or composed, the
+ *   one command rf), PO2 one file at the stated path whose form is the stated line, and every form of GS1, GO1 and GO2 starting
+ *   at or past the byte offset its quote states;
  *   (2) wb-4zgj's notes open with R-B301's fold line and then row R4's unmet slug; (3) in wb-khhg's notes, the refusal #4 verdict
  *   (from its opening up to its RED) names row R4's label ("through <label>, GM1-GM4,"), the unmet item "- U1: <row R4's slug> (",
  *   each plant's "byte-identical 0644 twin", and member lines naming exactly row R4's pins in order, each with the pin's site and
@@ -51,22 +60,36 @@
  *   the natural witness PM1s and the first-set plant PM2; each plant holds the stated path, the stated text (its byte count the
  *   stated one) and the stated mode, its twin the same path and text at 0644, PM1s a file at the stated tracked executable's path
  *   and mode ending with the stated comment line, and PM2 the stated text, its launch at the stated byte, at its plant's mode.
- * - Case RECORDS (last): every case of this file ran once in run mode in the order SHAPE lists, and every pin case reached its end
- *   (an afterAll sentinel refuses a RECORDS case that returns before its last statement).
+ * - Case RECORDS (last): every case of this file ran once in run mode in the order SHAPE lists, every pin case reached its end
+ *   (an afterAll sentinel refuses a RECORDS case that returns before its last statement), and the registration guard keeps its
+ *   six controls: a case skipped or made todo, the describe skipped or made todo, and an enclosing suite skipped are each refused
+ *   by name and mode, and a set wholly in run mode is not.
+ * - The REGISTRATION GUARD (cut #2, refusal #1's U1): the describe's factory ends by reading vitest's own registration record -
+ *   its collector (TestRunner.getCurrentSuite()), every case that collector holds and every suite around it - and throws on any
+ *   registration outside run mode. vitest runs a skipped or todo describe's factory and fixes each registration's mode when it is
+ *   made, so the file then fails at collection, before any case or hook runs. A suite nested inside the describe would be read as
+ *   one registration, its own cases registering only after the factory ends; this census registers none.
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) On each probe the reader named beside it returns exactly the literal reading written here: a
  * reader edit that changes one reading reds that pin case. (2) Each plant probe holds its form where its member's key drops it and
  * each 0644 twin where it does not: read with the key applied to the probe's input (PD1's id blanked; PD2's nested schema
  * properties removed by the member's own replacer; PS1, PO1 and PO2 cut to their first 65536 bytes; each executable planted file
- * read as empty), the same reader reads every plant differently and every twin the same - a probe edited so that its form also
- * sits where the key does not reach, or a twin made executable, reds its pin case. (3) Each named member, applied verbatim to a
- * copy of the helper (the find and replace text of its refusal gate's archived driver: gp12probes.py and gp12probes2.py for
- * refusal #3, gp5probes.py and gp5probes2.py for refusal #4; each find text occurs exactly once in the helper), reds the pin case
- * named after it: measured by the cutting seat and recorded in its delivery note, replayable by the gate. (4) The rows, pins,
- * sites, quotes, labels, unmet slugs and the plant facts named under ANCHOR are the ones the tracker export records: a row, pin,
- * probe, quote or label removed, swapped, shortened or re-planted - in one literal or in every literal together - reds SHAPE or
- * ANCHOR (standing rule 16's CT1-CT6). (5) A case skipped, made todo or inverted reds SHAPE or RECORDS; a pin case returning
- * early reds RECORDS; RECORDS returning early reds the afterAll sentinel.
+ * read as empty), the same reader reads every plant differently and every twin the same - a plant probe edited so that the key
+ * leaves its reading unchanged (its form moved wholly to where the key does not reach, for one), or a twin made executable, reds
+ * its pin case. (3) Each named member, applied verbatim to a copy of the helper (the find and replace text of its refusal gate's
+ * archived driver: gp12probes.py and gp12probes2.py for refusal #3, gp5probes.py and gp5probes2.py for refusal #4; each find text
+ * occurs exactly once in the helper), reds the pin case named after it: measured by the cutting seat and recorded in its delivery
+ * note, replayable by the gate. (4) The rows, pins, sites, quotes, labels and unmet slugs, and each plant fact ANCHOR names, are
+ * the ones the tracker export records: a row, pin, probe, quote or label removed, swapped or shortened - in one literal or in every
+ * literal together - or a plant re-planted so that a fact ANCHOR names no longer holds (PO1's launch unbound, for one), reds SHAPE
+ * or ANCHOR (standing rule 16's CT1-CT6). (5) A registration outside run mode among the describe, the cases it registers and the
+ * suites around it fails the file at collection, through the registration guard: the describe skipped or made todo - by its skip
+ * or todo modifier, plain or conditional (skipIf, runIf), or by a skip or todo option - or one of its cases skipped or made todo
+ * the same ways, it rebound to a skipping form among them, or a suite wrapping the describe in those forms. A case inverted reds
+ * SHAPE or RECORDS (every case inverted at once, it rebound to its inverting form, reds ANCHOR, each pin case and the afterAll
+ * sentinel instead); a case skipped at run time through its test context reds RECORDS; a pin case returning early reds RECORDS;
+ * RECORDS returning early or skipped at run time, or every case skipped at run time by a hook, reds the afterAll sentinel. A
+ * guard edited so that one of RECORDS's six controls changes reds RECORDS.
  *
  * NOT CLAIMED. A reading on any input that is not one of these fifteen probes is NOT CLAIMED by this census - among them a form
  * at any other byte offset or in a file of any other length, a session form in any descriptor field or position but PD1's id and
@@ -77,6 +100,16 @@
  * NOT CLAIMED by this census. The parent census's own header, cases and roster, and trunk's census, are NOT CLAIMED by this
  * census. The helper's provenance (its code byte for byte the parent tip's census blob, as the helper's header states and lists)
  * is checkable against that blob and is NOT CLAIMED by this census, which reads no parent commit. No residual is claimed.
+ * Cut #2's boundaries: a probe's bytes that no fact ANCHOR names (PM1s's shebang and blank-line head, PO2's head length, an early
+ * copy of PS1's sentence before byte 65536, for three) are the delivered probes' own and are NOT CLAIMED by claim (4); a plant
+ * whose form sits both where its key drops it and where it does not (so the key still changes its reading) is NOT CLAIMED by
+ * claim (2)'s falsifier. SHAPE or ANCHOR returning early is NOT CLAIMED by this census, and neither is any other edit of this
+ * file's own checking code - a comparison inside a case, ANCHOR's parse of the export, readDisk, readDescriptors or keyChanges -
+ * beyond the registrations, inversions, run-time skips, early returns and guard edits claim (5) names. Two edits made together -
+ * a skip and an edit that disables the registration guard (its call removed, moved ahead of the cases or handed another
+ * collector, or its function narrowed past its six controls) - are NOT CLAIMED, nor is the describe's body deleted or rewritten.
+ * Whether a run judges this file at all is NOT CLAIMED by this census: the file excluded from or renamed out of the default
+ * tier, a name filter, passWithNoTests, or any other choice made outside this file's text.
  *
  * Display paths added: none (test-only). Each disk probe lives in makeScratch scratch, removed after its reading; the tracker
  * export is only read; no src, docs or receipt is edited.
@@ -85,7 +118,7 @@ import { chmodSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from "no
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it, TestRunner } from "vitest";
 import { descriptorJudgeOf, launchInventory, readTree, stateInventory, verbInventory } from "./helpers/rf-session-lifecycle-readers.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -519,7 +552,7 @@ function pinOf(id: string): Pin {
 const titleOf = (pin: Pin): string => `member ${pin.id} (${pin.site}) - ${pin.quote}: probes ${pin.probes.map(probe => probe.id).join(", ")} read as written here`;
 const SHAPE_TITLE = "SHAPE: the rows, their pins and each pin's probe ids stay frozen, and every case is registered in order in run mode";
 const ANCHOR_TITLE = "ANCHOR: rows R3 and R4, their labels, unmet slugs, pins, sites, quotes and plant facts are the ones wb-4zgj's and wb-khhg's tracker-export rows record";
-const RECORDS_TITLE = "RECORDS: every case ran once in run mode in the order SHAPE lists, and every pin case reached its end";
+const RECORDS_TITLE = "RECORDS: every case ran once in run mode in the order SHAPE lists, every pin case reached its end, and the registration guard keeps its six controls";
 const TITLES = [SHAPE_TITLE, ANCHOR_TITLE, ...PINS.map(titleOf), RECORDS_TITLE];
 
 /** Plants `files` in a fresh scratch root, reads it with the probe's reader and removes it. */
@@ -631,6 +664,29 @@ function nestedDescriptions(descriptor: Descriptor): unknown[] {
   return Object.values(properties).map(property => (typeof property === "object" && property !== null && "description" in property ? property.description : undefined));
 }
 
+/** One registration as vitest records it at collection: a describe, a suite or a case, its name and its run mode. */
+interface Registration {
+  readonly name: string;
+  readonly mode: string;
+}
+/** A suite task as vitest links it: its registration and the suite around it (none for a describe at file scope). */
+interface Enclosing extends Registration {
+  readonly suite?: Enclosing | undefined;
+}
+/** The collector a describe's factory runs in: its registration, every registration it holds and its own suite task. */
+interface Collector extends Registration {
+  readonly tasks: readonly Registration[];
+  readonly suite?: Enclosing | undefined;
+}
+/** The registration guard (cut #2, refusal #1's U1): throws, naming each one, on a registration outside run mode - the collector
+ * itself, a registration it holds, or a suite around it. Called last in the describe's factory, at collection. */
+function refuseUnrunRegistrations(collector: Collector): void {
+  const around: Registration[] = [];
+  for (let suite = collector.suite?.suite; suite !== undefined; suite = suite.suite) around.push(suite);
+  const unrun = [collector, ...collector.tasks, ...around].filter(entry => entry.mode !== "run").map(entry => `${entry.name} (${entry.mode})`);
+  if (unrun.length > 0) throw new Error(`registered outside run mode, so this census would not judge it: ${unrun.join(", ")}`);
+}
+
 const REACHED: string[] = [];
 let recordsReachedEnd = false;
 afterAll(() => {
@@ -700,8 +756,20 @@ describe("wb-4zgj reach census (test/helpers/rf-session-lifecycle-readers.ts): n
         expect(file.path, `${line.plant}: the stated path`).toBe(path);
         if (bytes !== undefined) expect(Buffer.byteLength(file.head), `${line.plant}: the stated byte count before the planted form`).toBe(Number(bytes));
         const launcher = /^an rf (\w+) launch$/.exec(what);
-        if (launcher !== null) expect(file.form, `${line.plant}: its form calls the stated launcher on rf`).toContain(`${launcher[1]}("rf"`);
-        else if (bytes === undefined) expect(file.form.trim(), `${line.plant}: its form is the stated line`).toBe(what);
+        if (launcher !== null) {
+          const [, name = ""] = launcher;
+          expect(file.form, `${line.plant}: its form calls the stated launcher on rf`).toContain(`${name}("rf"`);
+          // Cut #2 (refusal #1's U2): the call is held as the launch A1 reads bound, not only as text - the probe's literal reading,
+          // which its pin case holds to launchInventory's output, lists it as the one bound rf launch and nothing unbound or composed.
+          const bound = [`${path}:${name}`];
+          expect(diskProbe(pin, line.plant).reading.output, `${line.plant}: its literal reading holds that call as A1's one bound rf launch`).toEqual({
+            root: "<root>",
+            scans: [{ file: path, rf: bound, composed: [], unbound: [], commands: ["rf"] }],
+            rf: bound,
+            composed: [],
+            unbound: [],
+          });
+        } else if (bytes === undefined) expect(file.form.trim(), `${line.plant}: its form is the stated line`).toBe(what);
         const offset = /\b(\d{5,})\)?$/.exec(line.quote);
         expect(offset, `${line.id}: its quote states the byte offset its key keeps`).not.toBeNull();
         expect(Buffer.byteLength(file.head) >= Number(offset?.[1]), `${line.plant}: the planted form starts at or past byte ${offset?.[1]}`).toBe(true);
@@ -784,7 +852,20 @@ describe("wb-4zgj reach census (test/helpers/rf-session-lifecycle-readers.ts): n
       walked.filter(entry => !entry.self && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(entry => `${entry.name} | ${entry.mode} | ${entry.state ?? "no result"}`),
       "every other case is in run mode, not inverted, and ran before this case",
     ).toEqual([]);
+    // Cut #2 (U1): the registration guard's six controls - a case, the describe or an enclosing suite outside run mode is refused by
+    // name and mode, and a set wholly in run mode is not - so a guard emptied or narrowed against one of them reds here.
+    const wrapper = (mode: string): Enclosing => ({ name: "control describe", mode: "run", suite: { name: "control wrapper", mode } });
+    expect(() => refuseUnrunRegistrations({ name: "control describe", mode: "run", tasks: [{ name: "control case", mode: "skip" }] })).toThrow("control case (skip)");
+    expect(() => refuseUnrunRegistrations({ name: "control describe", mode: "run", tasks: [{ name: "control case", mode: "todo" }] })).toThrow("control case (todo)");
+    expect(() => refuseUnrunRegistrations({ name: "control describe", mode: "skip", tasks: [] })).toThrow("control describe (skip)");
+    expect(() => refuseUnrunRegistrations({ name: "control describe", mode: "todo", tasks: [] })).toThrow("control describe (todo)");
+    expect(() => refuseUnrunRegistrations({ name: "control describe", mode: "run", tasks: [], suite: wrapper("skip") })).toThrow("control wrapper (skip)");
+    expect(() => refuseUnrunRegistrations({ name: "control describe", mode: "run", tasks: [{ name: "control case", mode: "run" }], suite: wrapper("run") })).not.toThrow();
     expect(REACHED, "every pin case reached its end, in pin order").toEqual(PINS.map(pin => pin.id));
     recordsReachedEnd = true;
   });
+
+  // Cut #2 (U1): the registration guard, read last in this factory (see the header): a registration outside run mode among this
+  // describe, the cases it registers and the suites around it fails the file at collection.
+  refuseUnrunRegistrations(TestRunner.getCurrentSuite());
 });
