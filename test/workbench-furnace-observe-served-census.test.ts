@@ -7,22 +7,40 @@
  * verbatim): "R694 follow-up from wb-40zp (rule-19 structural exit): the R-B163-frozen reader class gets member witnesses or
  * named-residual status". Acceptance (the export description, verbatim): "per surviving member, a witness that reds the
  * delivered census under the member while reading clean under trunk, or the member documented as a NAMED residual with the
- * claims narrowed to the proven subset; claims no wider than pins (rule 16 LEG 2, R514/R515/R668)."
+ * claims narrowed to the proven subset; claims no wider than pins (rule 16 LEG 2, R514/R515/R668)." Cut #2 answers this bead's
+ * own refusal #1 (O:1772): each claim word that refusal names is held by a case that reds under its gate probe (MEMBERS).
  *
  * THE READER is test/helpers/furnace-observe-served-reader.ts, whose header is the reading of record. In one line: pi's
  * extension loader keys an extension's tools by tool.name and the last registration wins, so the census reads the served tool
  * where the boot harness keys it the same way (K1), and reads its replies by calling it.
  *
  * THE PINNED READER SET (this file, test/workbench-furnace-observe-served-census.test.ts; each case title opens with its id and
- * the ROWS it holds; 15 cases, registered in this order):
+ * the ROWS it holds; 17 cases, registered in this order):
  * - J0 [registered]: target recordRegistrations on a stub registerTool; observed: every value reaches the stub unchanged and in
  *   order, each return value comes back, and the names read are exactly J0_NAMES, a property read of each value (a nameless
  *   object, a primitive and null read undefined, an anonymous function reads "", and a named function, an array's own name
- *   and an inherited name read theirs); a wrapper installed over the recorder that calls it reaches the stub through it,
- *   and the recorder reads the name the wrapper hands on.
+ *   and an inherited name read theirs); a name behind a getter is read once per registration; a wrapper installed over the
+ *   recorder that calls it reaches the stub through it, and the recorder reads the name the wrapper hands on.
  * - J1 [registered]: target judgeRegistrations over the nine J1 fixtures; observed: each fixture's findings, exactly.
- * - J2 [grant, identity, data, error]: target judgeReply over the seventeen J2 fixtures; observed: each fixture's findings,
- *   exactly.
+ * - J2 [grant, identity, data, error]: target judgeReply over the J2 fixtures; observed: each fixture's findings, exactly. The
+ *   fixtures hold each word of the reader header's judgeReply reading: the result as an object (undefined, null, an array, an
+ *   array or a function holding content and details are not), its keys (absent, extra, inherited, defined in another order,
+ *   and non-enumerable or symbol-keyed properties that are not keys), details (an object and null are defined, and so is an
+ *   inherited object: details is a property read), content (a string and an array-like object are not arrays; no element,
+ *   two elements), the element as an object (a string, null, an array or a function holding type and text are not), its
+ *   keys, its type (another word, another case, padded, a String wrapper, an array) and its text (longer, another case,
+ *   padded, a prefix, a String wrapper, an array, absent), and the order of the findings with the points where a reading
+ *   ends.
+ * - S0 [registered, grant, identity, data, error]: target isServedTool over the S0 fixtures; observed: true for an object whose
+ *   execute is a function (own, async, inherited, a class method, on a null-prototype object), false for an object without
+ *   one or whose execute is a string or an object, and false for an array or a function holding a function execute, null,
+ *   undefined and a string.
+ * - B0 [registered, grant, identity, data, error]: target bootServed over two planted factories in place of the real one;
+ *   observed: the recorder reads the factory's own registration and then those of the session_start handler, which runs once,
+ *   awaited, with {} and a context whose cwd (as realpath reads it) is the boot's sandbox, whose .pi/subagents.json holds the
+ *   header's settings with the boot's grants; serves is true for the object tools registered and false for an array tool and
+ *   an absent name; call resolves to what the served execute returns and calls it as execute("census", params, undefined,
+ *   undefined, that context); and an array tool under furnace_observe is registered and not served, so call throws.
  * - K1 [registered, grant, identity, data, error]: target a fresh harness pi and pi's loader source; observed: of two tools
  *   registered under one name the harness serves the second, a tool of another name is kept apart, and loader.js holds one
  *   extension.tools.set site, `extension.tools.set(tool.name, {` with `definition: tool,`, inside its registerTool method.
@@ -32,8 +50,9 @@
  *   completeness "complete" and the partial Run with "partial", each stamped FIXED_NOW, each with source.producerVersion
  *   holding INVISIBLE, which JSON.stringify of the reading keeps and sanitizeWorkbenchJsonText of it does not; and it rejects
  *   the failing Run with an Error whose message is FAILING_MESSAGE, a text sanitizeWorkbenchText leaves unchanged.
- * - C0 [registered]: target bootServed([]) and bootServed(["furnace:inspect"]); observed: judgeRegistrations(received,
- *   "furnace_observe") is [] for each, and each serves an execute under that name.
+ * - C0 [registered]: target bootServed([]) and bootServed(["furnace:inspect"]); observed: C0 boots once without the grant and
+ *   then once with it; each boot's <sandbox>/.pi/subagents.json reads the reader header's settings with that boot's grants;
+ *   judgeRegistrations(received, "furnace_observe") is [] for each, and each serves an execute under that name.
  * - C1 [grant]: target the served execute of bootServed([]) called with { runId: "frn-run-census-grant" }; observed:
  *   judgeReply(result, REFUSALS.grant) is [].
  * - C2 [identity]: target the served execute of bootServed(["furnace:inspect"]) called with { runId: "census-not-a-run" };
@@ -45,37 +64,45 @@
  * - C5 [error]: the same boot's served execute called with { runId: "frn-run-census-failing" } while the fake plays the failing
  *   Run; observed: judgeReply(result, sanitizeWorkbenchText(M)) is [], where M is the message of the Error the census
  *   observer rejects the same Run with.
- * - A0 []: target sourceAnchors over the fourteen A0 fixtures (planted texts); observed: each fixture's literal count and reply
- *   sites, exactly (an identifier, a string-literal and an escaped key read, and so does an escaped value; a computed key, a
- *   template-literal, a wrapped and another name's value do not; the first literal's first execute is read, nested calls
- *   included, in source order).
+ * - A0 []: target sourceAnchors over the A0 fixtures (planted texts); observed: each fixture's literal count and reply sites,
+ *   exactly. The fixtures hold each word of the reader header's sourceAnchors reading: the keys (an identifier and a string
+ *   literal read, each also with an escape; a computed key, a shorthand, a method and a computed execute do not), the value
+ *   (an escaped value reads cooked; a template literal, the value under parentheses, satisfies, as, a type assertion or a
+ *   non-null assertion, an identifier, a concatenation, a call, and another case, a longer, shorter, padded or prefixed name
+ *   do not; a literal holding another name key before it still counts), which literal (the first of two, the outer of two
+ *   nested), which execute (the first; no site without one), the callee (the identifier, escaped or called optionally,
+ *   reads; under parentheses, a member, .call, new and a tagged template do not), the order (nested functions included; a
+ *   call in another's arguments after it), and the argument (only the first; a string literal's cooked text; an identifier
+ *   callee's cooked name; any other form's source text, "" when absent).
  * - A1 []: target src/index.ts read by sourceAnchors; observed: one literal names furnace_observe, one registration row stands
  *   per such literal, and its execute's textResult sites are exactly the reply rows' sites in ROWS order.
  * - F1 []: target the tables; observed: the frozen shape (standing rule 16) below.
  * - J3 []: target ROWS and CASES; observed: each row's pins are exactly the cases naming it, and every case is registered once.
  *
  * CLAIMS (each claims exactly the pinned set it names and no wider; its falsifiers are the cases named). "A result judgeReply
- * reads as textResult(X)" is a result judgeReply finds nothing in for the text X: own enumerable keys content and details,
- * details undefined, content one item whose own enumerable keys are type and text, type "text" and text === X.
- * - registered: the pinned boot, with the grant and without it, hands the harness's registerTool exactly one tool named
- *   furnace_observe (the name the recorder reads once, when the tool is handed, === "furnace_observe"), so the harness serves
- *   that tool under the name (C0; J0, J1, K1).
+ * reads as textResult(X)" is a result judgeReply finds nothing in for the text X, exactly as the reader header words it (J2
+ * holds each word): an object whose keys are content and details, details undefined, content an array of one object whose
+ * keys are type and text, type === "text" and text === X. "Served" is the reader's isServedTool (S0): a tool that is not an
+ * object there is refused, so the census reds on it.
+ * - registered: the pinned boot, booted once without the furnace:inspect grant and once with it, its settings read back, hands
+ *   the harness's registerTool exactly one tool named furnace_observe (the name the recorder reads once, when the tool is
+ *   handed, === "furnace_observe"), so the harness serves that tool under the name (C0; J0, J1, S0, B0, K1).
  * - grant: without the furnace:inspect grant the served furnace_observe replies to C1's call with a result judgeReply reads
- *   as textResult(REFUSALS.grant) (C1; J2, K1).
+ *   as textResult(REFUSALS.grant) (C1; J2, S0, B0, K1).
  * - identity: with the grant it replies to C2's call with a result judgeReply reads as textResult(REFUSALS.identity) (C2; J2,
- *   K1).
+ *   S0, B0, K1).
  * - data: for the complete and the partial pinned Run it replies with a result judgeReply reads as
  *   textResult(sanitizeWorkbenchJsonText(R)), R being the census observer's reading of that Run; R carries INVISIBLE, which
  *   JSON.stringify(R) keeps and that sanitizer removes (I1), so a reply of the reading's plain JSON text differs (C3, C4; J2,
- *   K1, I1).
+ *   S0, B0, K1, I1).
  * - error: for the failing pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchText(M)), M
- *   being the message of the census observer's rejection, FAILING_MESSAGE (C5; J2, K1, I1).
+ *   being the message of the census observer's rejection, FAILING_MESSAGE (C5; J2, S0, B0, K1, I1).
  *
  * NOT CLAIMED (scope sentences; no residual semantics; no follow-up bead):
- * - What judgeReply does not read is NOT CLAIMED by this census: a reply's non-enumerable or symbol-keyed properties and the
- *   members its prototypes carry.
+ * - A served reply's properties that judgeReply does not read are NOT CLAIMED by this census: its non-enumerable,
+ *   symbol-keyed and inherited properties other than the four the reading reads (details, content, type and text).
  * - A tool whose name reads differently on different reads (a name getter) is NOT CLAIMED by this census: the recorder reads
- *   each name once.
+ *   each name once (J0), and what pi serves for such a tool is not read.
  * - A call other than C1-C5's (other params, another tool-call id, a signal or an update callback, another grant set,
  *   another Run, an Attempt page that holds Attempts and their log reads) is NOT CLAIMED by this census.
  * - A boot other than the pinned boot (other settings, pi's own loader and runtime, a registration made after session_start)
@@ -110,13 +137,19 @@
  *   and an anchor that reads a key by its source text, folds the name's case or reads a template-literal value by A0. Their
  *   paired plants: GP8-REG-SATISFIES-NAME reds C0 and C1-C5, and GP8-REG-CASE-NAME, a second tool named Furnace_Observe, reads
  *   clean, as it should: pi serves that tool under another name.
+ * - this bead's refusal #1 (O:1772; each gate probe read as data from the gate-prep-24 PREP archive and applied verbatim to
+ *   these bytes, the census run on trunk's src/index.ts): U1's GP24-H01-TEXT-COERCE, GP24-H02-TYPE-COERCE and
+ *   GP24-H08-ITEM-ARRAY-SPREAD (and its first form GP24-H08-ITEM-ARRAY) red J2; U2's GP24-C01-C0-GRANT-ARM reds C0; U3's
+ *   GP24-H07-SERVES-ARRAY reds S0; U4's GP24-H03-ANC-AS-VALUE, GP24-H04-ANC-STRKEY-RAW, GP24-H05-ANC-PAREN-CALLEE and
+ *   GP24-H13-ANC-ARG-RAW red A0; and the riding finding F3's GP24-H06-ANC-POSTORDER reds A0.
  *
  * FROZEN SHAPE (standing rule 16): F1 pins ROWS as `${id}:${pins.length}` and its clauses, the case ids, SCENARIO_IDS,
- * J0_NAMES and the ids of the J1, J2 and A0 fixtures as literals. A1 holds the rows to src/index.ts outside this file: the one
- * furnace_observe literal stands for the registration row and its four textResult sites for the four reply rows, in order.
+ * J0_NAMES, the ids of the J1, J2 and A0 fixtures, and the S0 fixtures as `${id}:${served}`, as literals. A1 holds the rows to
+ * src/index.ts outside this file: the one furnace_observe literal stands for the registration row and its four textResult
+ * sites for the four reply rows, in order.
  */
 import { spawnSync } from "node:child_process";
-import { readFileSync } from "node:fs";
+import { readFileSync, realpathSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
@@ -130,9 +163,11 @@ import {
   firstOnPath,
   INVISIBLE,
   installFakeFurnace,
+  isServedTool,
   judgeRegistrations,
   judgeReply,
   ownObserver,
+  type PlantedFactory,
   REFUSALS,
   type ReplySite,
   recordRegistrations,
@@ -147,8 +182,9 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const LOADER = "node_modules/@earendil-works/pi-coding-agent/dist/core/extensions/loader.js";
 /** The message the census observer rejects the failing Run with. */
 const FAILING_MESSAGE = "Furnace status unavailable (run_not_found)";
-/** The per-case bound of a case that boots the extension. */
-const BOOT_TIMEOUT_MS = 60_000;
+/** Every case's bound (a case that boots the extension needs it under load), handed in an options literal in the second place
+ * (vitest 4's test(name, options, fn)), the one form test/workbench-retry-census.test.ts reads beside a forwarded body. */
+const CASE_TIMEOUT_MS = 60_000;
 
 interface Row {
   readonly id: string;
@@ -161,37 +197,37 @@ interface Row {
 const ROWS: readonly Row[] = [
   {
     id: "registered",
-    clause: "the pinned boot, with the grant and without it, hands the harness's registerTool exactly one tool named furnace_observe",
+    clause: "the pinned boot, booted once without the furnace:inspect grant and once with it, hands the harness's registerTool exactly one tool named furnace_observe",
     anchor: "registration",
-    pins: ["J0", "J1", "K1", "C0"],
+    pins: ["J0", "J1", "S0", "B0", "K1", "C0"],
   },
   {
     id: "grant",
     clause: "without the furnace:inspect grant the served furnace_observe replies to C1's call with a result judgeReply reads as textResult(REFUSALS.grant)",
     anchor: "reply",
     site: { kind: "literal", text: REFUSALS.grant },
-    pins: ["J2", "K1", "C1"],
+    pins: ["J2", "S0", "B0", "K1", "C1"],
   },
   {
     id: "identity",
     clause: "with the grant it replies to C2's call with a result judgeReply reads as textResult(REFUSALS.identity)",
     anchor: "reply",
     site: { kind: "literal", text: REFUSALS.identity },
-    pins: ["J2", "K1", "C2"],
+    pins: ["J2", "S0", "B0", "K1", "C2"],
   },
   {
     id: "data",
     clause: "for the complete and the partial pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchJsonText(R))",
     anchor: "reply",
     site: { kind: "call", text: "sanitizeWorkbenchJsonText" },
-    pins: ["J2", "K1", "I1", "C3", "C4"],
+    pins: ["J2", "S0", "B0", "K1", "I1", "C3", "C4"],
   },
   {
     id: "error",
     clause: "for the failing pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchText(M))",
     anchor: "reply",
     site: { kind: "call", text: "sanitizeWorkbenchText" },
-    pins: ["J2", "K1", "I1", "C5"],
+    pins: ["J2", "S0", "B0", "K1", "I1", "C5"],
   },
 ];
 
@@ -203,28 +239,39 @@ interface Case {
 const CASES = {
   J0: { rows: ["registered"], title: "the recorder hands every value on unchanged and in order, returns what registerTool returns, and reads each name once, as a property read does" },
   J1: { rows: ["registered"], title: "the registration judge counts only names === furnace_observe: case variants, longer, shorter, padded and non-string names are other names" },
-  J2: { rows: ["grant", "identity", "data", "error"], title: "the reply judge finds nothing only in a result shaped as textResult(text) is, and names each difference" },
+  J2: {
+    rows: ["grant", "identity", "data", "error"],
+    title: "the reply judge finds nothing only in an object whose own enumerable keys, details, content, element, type and text are textResult(text)'s, compared ===, and names each difference in its order",
+  },
+  S0: { rows: ["registered", "grant", "identity", "data", "error"], title: "the served-tool predicate holds exactly for an object whose execute, own or inherited, is a function: an array, a function or a primitive is not served" },
+  B0: {
+    rows: ["registered", "grant", "identity", "data", "error"],
+    title: "the boot's own order, over two planted factories: settings written, the recorder in front of registerTool from the factory through the awaited session_start, serves and call as the header reads them",
+  },
   K1: { rows: ["registered", "grant", "identity", "data", "error"], title: "the tool served under a name is the last one registered under it, in the harness as in pi's loader" },
   I1: { rows: ["data", "error"], title: "the instrument: the fake furnace is first on PATH, Date is fixed, and the census observer reads the three pinned Runs" },
-  C0: { rows: ["registered"], title: "the pinned boot, with and without the grant, hands registerTool exactly one furnace_observe, and the harness serves it" },
+  C0: {
+    rows: ["registered"],
+    title: "the pinned boot, booted without the grant and then with it, its settings read back, hands registerTool exactly one furnace_observe, and the harness serves it",
+  },
   C1: { rows: ["grant"], title: "without the grant the served furnace_observe's reply reads as textResult of the grant refusal" },
   C2: { rows: ["identity"], title: "with the grant and the Run id census-not-a-run its reply reads as textResult of the identity refusal" },
   C3: { rows: ["data"], title: "for the complete Run its reply reads as textResult of the sanitized text of the census observer's reading" },
   C4: { rows: ["data"], title: "for the partial Run its reply reads as textResult of the sanitized text of the census observer's partial reading" },
   C5: { rows: ["error"], title: "for the failing Run its reply reads as textResult of the sanitized text of the census observer's error message" },
-  A0: { rows: [], title: "the anchor reader reads each key, value and reply-site form its header names, and no other" },
+  A0: { rows: [], title: "the anchor reader reads each key, value, literal, execute, callee, order and argument form its header names, and no other" },
   A1: { rows: [], title: "outside anchors: src/index.ts's furnace_observe literal and its execute's four textResult sites, one per reply row" },
-  F1: { rows: [], title: "FROZEN SHAPE (standing rule 16): the rows, the cases, the scenarios and the judges' fixtures" },
+  F1: { rows: [], title: "FROZEN SHAPE (standing rule 16): the rows, the cases, the scenarios and the judges' and readers' fixtures" },
   J3: { rows: [], title: "the judged set: each row's pins are exactly the cases naming it, and every case is registered once" },
 } as const satisfies Readonly<Record<string, Case>>;
 type CaseId = keyof typeof CASES;
 const CASE_IDS = Object.keys(CASES) as CaseId[];
 const registered: CaseId[] = [];
 /** Registers one case under its id and the rows it holds. */
-function pinned(id: CaseId, body: () => void | Promise<void>, timeout?: number): void {
+function pinned(id: CaseId, body: () => void | Promise<void>): void {
   registered.push(id);
   const rows: readonly string[] = CASES[id].rows;
-  it(`${id} [${rows.join(", ")}]: ${CASES[id].title}`, body, timeout);
+  it(`${id} [${rows.join(", ")}]: ${CASES[id].title}`, { timeout: CASE_TIMEOUT_MS }, body);
 }
 
 /** The values J0 hands the recorder, and the names it reads from them. */
@@ -271,7 +318,10 @@ const J1_FIXTURES: readonly { readonly id: string; readonly received: readonly u
 
 const T = "the expected text";
 const item = (fields: Readonly<Record<string, unknown>>): Readonly<Record<string, unknown>> => ({ type: "text", text: T, ...fields });
-/** J2: results and the reply judge's findings for the text T. */
+/** value with two properties judgeReply does not read as keys: a non-enumerable own isError and a symbol-keyed one. */
+const withUnread = <V extends object>(value: V): V =>
+  Object.defineProperties(value, { isError: { value: true, enumerable: false }, [Symbol.for("zz-unread")]: { value: true, enumerable: true } });
+/** J2: results and the reply judge's findings for the text T (refusal #1 U1's words and their class from text-wrapped on). */
 const J2_FIXTURES: readonly { readonly id: string; readonly result: unknown; readonly findings: readonly string[] }[] = [
   { id: "exact", result: { content: [item({})], details: undefined }, findings: [] },
   { id: "text-differs", result: { content: [item({ text: `${T}!` })], details: undefined }, findings: [`item text: ${JSON.stringify(`${T}!`)}`] },
@@ -290,12 +340,72 @@ const J2_FIXTURES: readonly { readonly id: string; readonly result: unknown; rea
   { id: "item-type", result: { content: [item({ type: "image" })], details: undefined }, findings: ['item type: "image"'] },
   { id: "not-an-object", result: undefined, findings: ["result: not an object"] },
   { id: "an-array", result: [item({})], findings: ["result: not an object"] },
+  // A String wrapper or an array of the expected text or type differs under === (GP24-H01, GP24-H02).
+  { id: "text-wrapped", result: { content: [item({ text: new String(T) })], details: undefined }, findings: [`item text: ${JSON.stringify(new String(T))}`] },
+  { id: "text-array", result: { content: [item({ text: [T] })], details: undefined }, findings: [`item text: ${JSON.stringify([T])}`] },
+  { id: "text-absent", result: { content: [{ type: "text" }], details: undefined }, findings: ["item keys: type", "item text: undefined"] },
+  { id: "type-wrapped", result: { content: [item({ type: new String("text") })], details: undefined }, findings: [`item type: ${JSON.stringify(new String("text"))}`] },
+  { id: "type-array", result: { content: [item({ type: ["text"] })], details: undefined }, findings: ['item type: ["text"]'] },
+  { id: "type-case", result: { content: [item({ type: "Text" })], details: undefined }, findings: ['item type: "Text"'] },
+  { id: "type-padded", result: { content: [item({ type: "text " })], details: undefined }, findings: ['item type: "text "'] },
+  // The element and the result as objects: an array, a function and null holding the right properties are not (GP24-H08).
+  { id: "item-array", result: { content: [Object.assign([], { type: "text", text: T })], details: undefined }, findings: ["item: not an object"] },
+  { id: "item-function", result: { content: [Object.assign(() => undefined, { type: "text", text: T })], details: undefined }, findings: ["item: not an object"] },
+  { id: "item-null", result: { content: [null], details: undefined }, findings: ["item: not an object"] },
+  { id: "result-array-shaped", result: Object.assign([], { content: [item({})], details: undefined }), findings: ["result: not an object"] },
+  { id: "result-function", result: Object.assign(() => undefined, { content: [item({})], details: undefined }), findings: ["result: not an object"] },
+  { id: "result-null", result: null, findings: ["result: not an object"] },
+  { id: "content-array-like", result: { content: { 0: item({}), length: 1 }, details: undefined }, findings: ["content: not an array"] },
+  // Keys are own enumerable string keys, sorted: order does not matter, inherited ones are not keys, unread ones are not read.
+  { id: "result-key-order", result: { details: undefined, content: [item({})] }, findings: [] },
+  { id: "item-key-order", result: { content: [{ text: T, type: "text" }], details: undefined }, findings: [] },
+  { id: "result-inherited-keys", result: Object.create({ content: [item({})], details: undefined }), findings: ["result keys: "] },
+  { id: "item-inherited-keys", result: { content: [Object.create(item({}))], details: undefined }, findings: ["item keys: "] },
+  { id: "inherited-details", result: Object.assign(Object.create({ details: {} }), { content: [item({})] }), findings: ["result keys: content", "details: defined"] },
+  { id: "unread-keys", result: withUnread({ content: [withUnread({ ...item({}) })], details: undefined }), findings: [] },
+  // The order of the findings, and where a reading ends.
+  {
+    id: "all-findings",
+    result: { content: [{ type: "image", text: "x", extra: 1 }], details: {}, isError: true },
+    findings: ["result keys: content,details,isError", "details: defined", "item keys: extra,text,type", 'item type: "image"', 'item text: "x"'],
+  },
+  { id: "ends-at-content", result: { content: T, details: {}, extra: 1 }, findings: ["result keys: content,details,extra", "details: defined", "content: not an array"] },
+  {
+    id: "ends-at-count",
+    result: { content: [item({ type: "image" }), item({})], details: null, isError: true },
+    findings: ["result keys: content,details,isError", "details: defined", "content: 2 items"],
+  },
+  { id: "ends-at-item", result: { content: [null], details: {} }, findings: ["details: defined", "item: not an object"] },
+];
+
+const run = (): undefined => undefined;
+/** A tool written as a class: its execute is a prototype method. */
+class ZzClassTool {
+  execute(): undefined {
+    return undefined;
+  }
+}
+/** S0: values in the harness tools Map and whether isServedTool reads them as served (refusal #1 U3, GP24-H07). */
+const S0_FIXTURES: readonly { readonly id: string; readonly value: unknown; readonly served: boolean }[] = [
+  { id: "own-execute", value: { name: SERVED_NAME, execute: run }, served: true },
+  { id: "async-execute", value: { execute: async () => undefined }, served: true },
+  { id: "inherited-execute", value: Object.create({ execute: run }), served: true },
+  { id: "class-method", value: new ZzClassTool(), served: true },
+  { id: "null-prototype", value: Object.assign(Object.create(null), { execute: run }), served: true },
+  { id: "no-execute", value: { name: SERVED_NAME }, served: false },
+  { id: "execute-string", value: { execute: "run" }, served: false },
+  { id: "execute-object", value: { execute: { call: run } }, served: false },
+  { id: "array-tool", value: Object.assign([], { execute: run }), served: false },
+  { id: "function-tool", value: Object.assign(() => undefined, { execute: run }), served: false },
+  { id: "null", value: null, served: false },
+  { id: "undefined", value: undefined, served: false },
+  { id: "string", value: SERVED_NAME, served: false },
 ];
 
 const lit = (text: string): ReplySite => ({ kind: "literal", text });
 const call = (text: string): ReplySite => ({ kind: "call", text });
 const other = (text: string): ReplySite => ({ kind: "other", text });
-/** A0: planted src texts and the anchor reader's readings of them. */
+/** A0: planted src texts and the anchor reader's readings of them (refusal #1 U4 and F3, and their class, from quoted-escaped-keys on). */
 const A0_FIXTURES: readonly { readonly id: string; readonly text: string; readonly literals: number; readonly sites: readonly ReplySite[] }[] = [
   {
     id: "plain",
@@ -341,6 +451,60 @@ const A0_FIXTURES: readonly { readonly id: string; readonly text: string; readon
     sites: [other("msg"), other("`t`"), other(""), other("a.b()")],
   },
   { id: "not-textresult", text: 'x({ name: "furnace_observe", execute: async () => { reply("x"); a.textResult("y"); } });', literals: 1, sites: [] },
+  // The keys: a quoted key cooks its escapes as an identifier key does (GP24-H04); a shorthand, a method and a computed execute are not read.
+  { id: "quoted-escaped-keys", text: 'x({ "n\\u0061me": "furnace_observe", "ex\\u0065cute": async () => textResult("qe") });', literals: 1, sites: [lit("qe")] },
+  { id: "shorthand-name", text: 'x({ name, execute: async () => textResult("s") });', literals: 0, sites: [] },
+  { id: "method-execute", text: 'x({ name: "furnace_observe", execute() { return textResult("m"); } });', literals: 1, sites: [] },
+  { id: "computed-execute", text: 'x({ name: "furnace_observe", ["execute"]: async () => textResult("c") });', literals: 1, sites: [] },
+  { id: "second-name-key", text: 'x({ name: "workflow_observe", name: "furnace_observe", execute: async () => textResult("n") });', literals: 1, sites: [lit("n")] },
+  // The value: no wrapper (as: GP24-H03), no assertion and no computed value is read, and only === "furnace_observe" counts.
+  {
+    id: "as-value",
+    text: 'x({ name: "furnace_observe" as const, execute: async () => textResult("a") }); x({ name: "furnace_observe" as string, execute: async () => textResult("s") });',
+    literals: 0,
+    sites: [],
+  },
+  {
+    id: "assertion-values",
+    text: 'x({ name: <string>"furnace_observe", execute: async () => textResult("t") }); x({ name: "furnace_observe"!, execute: async () => textResult("n") });',
+    literals: 0,
+    sites: [],
+  },
+  {
+    id: "computed-values",
+    text: 'x({ name: NAME, execute: async () => textResult("i") }); x({ name: "furnace_" + "observe", execute: async () => textResult("c") }); x({ name: String("furnace_observe"), execute: async () => textResult("f") });',
+    literals: 0,
+    sites: [],
+  },
+  {
+    id: "other-values",
+    text: 'x({ name: " furnace_observe", execute: async () => textResult("1") }); x({ name: "furnace_observe ", execute: async () => textResult("2") }); x({ name: "furnace_observ", execute: async () => textResult("3") }); x({ name: "xfurnace_observe", execute: async () => textResult("4") });',
+    literals: 0,
+    sites: [],
+  },
+  // Which literal: the outer of two nested ones; its execute's calls include the inner literal's.
+  {
+    id: "nested-literals",
+    text: 'x({ name: "furnace_observe", execute: async () => { y({ name: "furnace_observe", execute: async () => textResult("inner") }); return textResult("outer"); } });',
+    literals: 2,
+    sites: [lit("inner"), lit("outer")],
+  },
+  // The callee: the identifier textResult itself, escaped or called optionally; not under parentheses (GP24-H05), a member, .call, new or a tag.
+  {
+    id: "callee-forms",
+    text: 'x({ name: "furnace_observe", execute: async () => { t\\u0065xtResult("escaped"); textResult?.("optional"); (textResult)("p"); textResult.call(null, "c"); new textResult("n"); textResult`t`; return textResult("last"); } });',
+    literals: 1,
+    sites: [lit("escaped"), lit("optional"), lit("last")],
+  },
+  // The order: a call in another's arguments comes after it, in the source order of the calls' starts (F3, GP24-H06).
+  { id: "nested-in-argument", text: 'x({ name: "furnace_observe", execute: async () => textResult(f(textResult("a"))) });', literals: 1, sites: [call("f"), lit("a")] },
+  // The argument: only the first; a string literal by its cooked text (GP24-H13), an identifier callee by its cooked name, any other form by its source text.
+  {
+    id: "argument-forms",
+    text: 'x({ name: "furnace_observe", execute: async () => { textResult("c\\u006fok\\u0065d"); textResult(s\\u0061nitize(r)); textResult("first", "second"); textResult(("p")); textResult("a" as string); textResult((g)(r)); } });',
+    literals: 1,
+    sites: [lit("cooked"), call("sanitize"), lit("first"), other('("p")'), other('"a" as string'), other("(g)(r)")],
+  },
 ];
 
 /** Boots the extension with the fake furnace first on PATH, runs read, and restores both. */
@@ -376,11 +540,21 @@ describe("wb-g20x: the furnace_observe served census", () => {
     expect(handed.every((value, index) => value === J0_VALUES[index]), "as the same values").toBe(true);
     expect(returned, "and what registerTool returns comes back").toStrictEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
     expect(received, "the names read, as a property read reads them").toStrictEqual([...J0_NAMES]);
+    // A name behind a getter: the recorder reads it once per registration (the getter NOT CLAIMED sentence rests on this).
+    let reads = 0;
+    const counted = {
+      get name(): string {
+        reads += 1;
+        return "zz-counted-tool";
+      },
+    };
+    expect(stub.registerTool(counted), "the counted tool reaches registerTool").toBe(12);
+    expect([received.at(-1), reads], "and its name is read once").toStrictEqual(["zz-counted-tool", 1]);
     // A registerTool installed over the recorder that calls it (a wrapper bound to the pi, GP23-REGISTER-PATCH's shape).
     const bound = stub.registerTool.bind(stub);
     stub.registerTool = (tool: unknown): unknown => bound({ name: "zz-wrapped", wrapped: tool });
-    expect(stub.registerTool({ name: SERVED_NAME }), "the wrapper reaches registerTool through the recorder").toBe(12);
-    expect([received.at(-1), handed.length], "which reads the name the wrapper hands on").toStrictEqual(["zz-wrapped", 12]);
+    expect(stub.registerTool({ name: SERVED_NAME }), "the wrapper reaches registerTool through the recorder").toBe(13);
+    expect([received.at(-1), handed.length], "which reads the name the wrapper hands on").toStrictEqual(["zz-wrapped", 13]);
   });
 
   pinned("J1", () => {
@@ -390,6 +564,61 @@ describe("wb-g20x: the furnace_observe served census", () => {
   pinned("J2", () => {
     for (const fixture of J2_FIXTURES) expect(judgeReply(fixture.result, T), fixture.id).toStrictEqual([...fixture.findings]);
   });
+
+  pinned("S0", () => {
+    for (const fixture of S0_FIXTURES) expect(isServedTool(fixture.value), fixture.id).toBe(fixture.served);
+  });
+
+  pinned(
+    "B0",
+    async () => {
+      const seen: unknown[][] = [];
+      let session: unknown;
+      // A planted factory registers one tool while it runs and three from a session_start handler that awaits a turn first,
+      // so a recorder installed after the factory, or a session_start that is not awaited, reads a different list.
+      const planted: PlantedFactory = pi => {
+        pi.registerTool({ name: "zz-factory-tool", execute: run });
+        pi.on("session_start", async (event, context) => {
+          await new Promise<void>(resolve => setImmediate(resolve));
+          session = context;
+          seen.push(["session_start", event, realpathSync(context.cwd), JSON.parse(readFileSync(join(context.cwd, ".pi", "subagents.json"), "utf8"))]);
+          pi.registerTool({
+            name: SERVED_NAME,
+            execute: async (...args: unknown[]) => {
+              seen.push(["execute", ...args]);
+              return "zz-planted-reply";
+            },
+          });
+          pi.registerTool(Object.assign([], { name: "zz-array-tool", execute: run }));
+        });
+      };
+      const boot = await bootServed(["furnace:inspect"], planted);
+      try {
+        expect(boot.received, "the recorder reads the factory's registration and then session_start's, in order").toStrictEqual(["zz-factory-tool", SERVED_NAME, "zz-array-tool"]);
+        expect(seen, "session_start ran once, awaited, with {} and a context whose cwd is the sandbox holding the settings").toStrictEqual([
+          ["session_start", {}, boot.workspace, { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", capabilityGrants: ["furnace:inspect"] } }],
+        ]);
+        expect([boot.serves("zz-factory-tool"), boot.serves(SERVED_NAME), boot.serves("zz-array-tool"), boot.serves("zz-absent")], "serves is isServedTool of the entry under the name").toStrictEqual([true, true, false, false]);
+        expect(await boot.call({ runId: "zz-run" }), "call resolves to what the served execute returns").toBe("zz-planted-reply");
+        const executed = seen.at(-1) ?? [];
+        expect(executed.slice(0, 5), 'which it calls as execute("census", params, undefined, undefined, ...)').toStrictEqual(["execute", "census", { runId: "zz-run" }, undefined, undefined]);
+        expect([executed.length, executed[5] === session], "with the session_start context last").toStrictEqual([6, true]);
+      } finally {
+        boot.restore();
+      }
+      const refused = await bootServed([], pi => {
+        pi.on("session_start", async () => {
+          pi.registerTool(Object.assign([], { name: SERVED_NAME, execute: run }));
+        });
+      });
+      try {
+        expect([refused.received, refused.serves(SERVED_NAME)], "an array tool under furnace_observe is registered and not served").toStrictEqual([[SERVED_NAME], false]);
+        await expect(refused.call({ runId: "zz-run" }), "so call throws").rejects.toThrow(`the harness serves no ${SERVED_NAME} execute`);
+      } finally {
+        refused.restore();
+      }
+    },
+  );
 
   pinned("K1", () => {
     const harness = makePi();
@@ -439,14 +668,18 @@ describe("wb-g20x: the furnace_observe served census", () => {
   pinned(
     "C0",
     async () => {
+      const arms: boolean[] = [];
       for (const grants of [[], ["furnace:inspect"]]) {
+        arms.push((grants as readonly string[]).includes("furnace:inspect"));
         await withServed(grants, async boot => {
+          const settings: unknown = JSON.parse(readFileSync(join(boot.workspace, ".pi", "subagents.json"), "utf8"));
+          expect(settings, `grants ${JSON.stringify(grants)}: the boot's settings`).toStrictEqual({ workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", capabilityGrants: [...grants] } });
           expect(judgeRegistrations(boot.received, SERVED_NAME), `grants ${JSON.stringify(grants)}: one furnace_observe registration`).toStrictEqual([]);
           expect(boot.serves(SERVED_NAME), `grants ${JSON.stringify(grants)}: the harness serves its execute`).toBe(true);
         });
       }
+      expect(arms, "C0 booted once without the furnace:inspect grant and then once with it").toStrictEqual([false, true]);
     },
-    BOOT_TIMEOUT_MS,
   );
 
   pinned(
@@ -456,7 +689,6 @@ describe("wb-g20x: the furnace_observe served census", () => {
         expect(judgeReply(await boot.call({ runId: "frn-run-census-grant" }), REFUSALS.grant)).toStrictEqual([]);
       });
     },
-    BOOT_TIMEOUT_MS,
   );
 
   pinned(
@@ -466,7 +698,6 @@ describe("wb-g20x: the furnace_observe served census", () => {
         expect(judgeReply(await boot.call({ runId: "census-not-a-run" }), REFUSALS.identity)).toStrictEqual([]);
       });
     },
-    BOOT_TIMEOUT_MS,
   );
 
   for (const [id, run] of [
@@ -484,7 +715,6 @@ describe("wb-g20x: the furnace_observe served census", () => {
           expect(judgeReply(result, sanitizeWorkbenchJsonText(reading))).toStrictEqual([]);
         });
       },
-      BOOT_TIMEOUT_MS,
     );
   }
 
@@ -499,7 +729,6 @@ describe("wb-g20x: the furnace_observe served census", () => {
         expect(judgeReply(result, sanitizeWorkbenchText(failure instanceof Error ? failure.message : String(failure)))).toStrictEqual([]);
       });
     },
-    BOOT_TIMEOUT_MS,
   );
 
   pinned("A0", () => {
@@ -516,15 +745,15 @@ describe("wb-g20x: the furnace_observe served census", () => {
   });
 
   pinned("F1", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toStrictEqual(["registered:4", "grant:3", "identity:3", "data:5", "error:4"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toStrictEqual(["registered:6", "grant:5", "identity:5", "data:7", "error:6"]);
     expect(ROWS.map(row => row.clause)).toStrictEqual([
-      "the pinned boot, with the grant and without it, hands the harness's registerTool exactly one tool named furnace_observe",
+      "the pinned boot, booted once without the furnace:inspect grant and once with it, hands the harness's registerTool exactly one tool named furnace_observe",
       "without the furnace:inspect grant the served furnace_observe replies to C1's call with a result judgeReply reads as textResult(REFUSALS.grant)",
       "with the grant it replies to C2's call with a result judgeReply reads as textResult(REFUSALS.identity)",
       "for the complete and the partial pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchJsonText(R))",
       "for the failing pinned Run it replies with a result judgeReply reads as textResult(sanitizeWorkbenchText(M))",
     ]);
-    expect(CASE_IDS).toStrictEqual(["J0", "J1", "J2", "K1", "I1", "C0", "C1", "C2", "C3", "C4", "C5", "A0", "A1", "F1", "J3"]);
+    expect(CASE_IDS).toStrictEqual(["J0", "J1", "J2", "S0", "B0", "K1", "I1", "C0", "C1", "C2", "C3", "C4", "C5", "A0", "A1", "F1", "J3"]);
     expect([...SCENARIO_IDS]).toStrictEqual(["complete", "partial", "failing"]);
     expect([...J0_NAMES]).toStrictEqual(["Agent", "Furnace_Observe", "furnace_observe", "furnace_observe", undefined, undefined, "", "zzNamedTool", "zz-array-tool", "zz-inherited-tool", undefined]);
     expect(J1_FIXTURES.map(fixture => fixture.id)).toStrictEqual(["none", "one", "among-others", "twice", "thrice", "case-variants", "longer-shorter", "padded", "not-strings"]);
@@ -546,6 +775,45 @@ describe("wb-g20x: the furnace_observe served census", () => {
       "item-type",
       "not-an-object",
       "an-array",
+      "text-wrapped",
+      "text-array",
+      "text-absent",
+      "type-wrapped",
+      "type-array",
+      "type-case",
+      "type-padded",
+      "item-array",
+      "item-function",
+      "item-null",
+      "result-array-shaped",
+      "result-function",
+      "result-null",
+      "content-array-like",
+      "result-key-order",
+      "item-key-order",
+      "result-inherited-keys",
+      "item-inherited-keys",
+      "inherited-details",
+      "unread-keys",
+      "all-findings",
+      "ends-at-content",
+      "ends-at-count",
+      "ends-at-item",
+    ]);
+    expect(S0_FIXTURES.map(fixture => `${fixture.id}:${fixture.served}`)).toStrictEqual([
+      "own-execute:true",
+      "async-execute:true",
+      "inherited-execute:true",
+      "class-method:true",
+      "null-prototype:true",
+      "no-execute:false",
+      "execute-string:false",
+      "execute-object:false",
+      "array-tool:false",
+      "function-tool:false",
+      "null:false",
+      "undefined:false",
+      "string:false",
     ]);
     expect(A0_FIXTURES.map(fixture => fixture.id)).toStrictEqual([
       "plain",
@@ -562,6 +830,19 @@ describe("wb-g20x: the furnace_observe served census", () => {
       "nested-order",
       "other-sites",
       "not-textresult",
+      "quoted-escaped-keys",
+      "shorthand-name",
+      "method-execute",
+      "computed-execute",
+      "second-name-key",
+      "as-value",
+      "assertion-values",
+      "computed-values",
+      "other-values",
+      "nested-literals",
+      "callee-forms",
+      "nested-in-argument",
+      "argument-forms",
     ]);
   });
 

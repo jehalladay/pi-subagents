@@ -10,6 +10,9 @@
  * reader reads the served tool there, at run time. It reads no source text of a registration: sourceAnchors (below) is the
  * census's outside anchor, never a reading of what is served.
  *
+ * AN OBJECT, in every reading below, is a value whose typeof is "object" and which is neither null nor an array (isFields): an
+ * array, a function, null and every primitive are not objects here, whatever properties they hold.
+ *
  * THE READINGS, exactly:
  * - recordRegistrations(pi): installed on a harness pi before the extension factory runs, it puts a recorder in front of
  *   pi.registerTool. For each value it is handed, in the order handed, the recorder reads the value's `name` once, as a
@@ -20,19 +23,25 @@
  *   hands on.
  * - judgeRegistrations(received, name): no finding when exactly one received entry is === name, else the one finding
  *   `<name> received <n> times`.
- * - judgeReply(result, text): no finding when result is a non-null, non-array object whose own enumerable keys are exactly
- *   content and details, whose details is undefined, and whose content is an array of exactly one non-null, non-array object
- *   whose own enumerable keys are exactly text and type, whose type is "text" and whose text is === text: what textResult(text)
- *   in src/index.ts returns. Otherwise its findings, in this order: `result: not an object` (alone), `result keys: <keys>`,
- *   `details: defined`, then `content: not an array`, `content: <n> items` or `item: not an object` (each ending the reading),
- *   `item keys: <keys>`, `item type: <JSON>` and `item text: <JSON>`; keys are sorted and comma-joined.
- * - bootServed(grants): the pinned boot. hermeticDir with the settings { workflowsEnabled: true, workbench:
- *   { workflowAgentBackend: "claude", capabilityGrants: grants } }, makePi, recordRegistrations, the extension factory called
- *   with the harness pi alone, ctx({ cwd: <the sandbox> }) and the session_start handler awaited with
- *   ({}, that context). serves(name) is whether the harness's tools Map holds, under the name, a non-null, non-array object
- *   whose execute is a function. call(params) runs the served furnace_observe execute as execute("census", params, undefined,
- *   undefined, context) and returns what it resolves to; it throws, so the calling case reds, when the harness serves no such
- *   object under that name.
+ * - judgeReply(result, text): no finding when result is an object whose keys are exactly content and details, whose details is
+ *   undefined, and whose content is an array (Array.isArray) of exactly one element, that element an object whose keys are
+ *   exactly text and type, whose type is === "text" and whose text is === text: what textResult(text) in src/index.ts returns.
+ *   The keys of a value are its own enumerable string keys, sorted and comma-joined, so their order of definition does not
+ *   matter and an inherited, a non-enumerable or a symbol-keyed property is not a key; details, content, type and text are
+ *   property reads. === is strict, so a String wrapper or an array of the expected text or type differs. Otherwise its
+ *   findings, in this order: `result: not an object` (alone), `result keys: <keys>`, `details: defined`, then one of
+ *   `content: not an array`, `content: <n> items` and `item: not an object` (each ending the reading), then `item keys:
+ *   <keys>`, `item type: <JSON>` and `item text: <JSON>`, <JSON> being JSON.stringify of the value read.
+ * - isServedTool(value): whether value is an object whose execute, a property read (own or inherited), is a function.
+ * - bootServed(grants, factory): the pinned boot, in this order: hermeticDir writes the settings { workflowsEnabled: true,
+ *   workbench: { workflowAgentBackend: "claude", capabilityGrants: grants } } to <the sandbox>/.pi/subagents.json; makePi;
+ *   recordRegistrations on the harness pi; the extension factory called with the harness pi (src/index.ts's default export,
+ *   or the planted factory B0 hands in its place); and the session_start handler it registered awaited with ({}, the context
+ *   ctx({ cwd: <the sandbox> })). So the recorder reads every registration the factory and session_start make, in order.
+ *   serves(name) is isServedTool of the harness tools Map's entry under the name. call(params) runs the served furnace_observe
+ *   execute as execute("census", params, undefined, undefined, that context) and returns what it resolves to; it throws, so
+ *   the calling case reds, when the entry under furnace_observe is not isServedTool (a tool that is not an object here is
+ *   refused, never served).
  * - installFakeFurnace(): a scratch directory (test/helpers/scratch.ts) holding an executable `furnace` script, put first on
  *   PATH until restore(). For each invocation the script takes the first pair of adjacent arguments that names an answer of
  *   the answers file play() wrote ("run status", "attempt list"), writes that answer's stdout and stderr and exits with its
@@ -48,15 +57,19 @@
  *   "census" }.
  * - atFixedDate(read): runs read with Date faked at FIXED_NOW (vitest fake timers for Date only) and restores the real timers
  *   after, so two readings of one Run carry the same capturedAt, observedAt and lastConfirmedAt.
- * - sourceAnchors(text): A1's anchor reading of src/index.ts. It counts the object literals holding a property assignment
- *   whose key, an identifier or a string literal, reads `name` as TypeScript cooks it (an escape in the key decoded) and whose
- *   initializer is a string literal whose cooked text is === "furnace_observe" (a template literal, a wrapped or computed value
- *   and a computed key are not read). For the first of them in source order it lists the calls of the identifier textResult anywhere
- *   in the initializer of its first property assignment keyed `execute` the same way (nested functions included), in source
- *   order, each by its first argument: a string literal as { kind: "literal", text: <its cooked text> }, a call whose callee is
- *   an identifier as { kind: "call", text: <that identifier> }, and anything else as { kind: "other", text: <its source text,
- *   "" when absent> }. A0 pins each of these readings; it is an anchor of the census's rows on trunk, not a reading of what pi
- *   serves.
+ * - sourceAnchors(text): A1's anchor reading of src/index.ts. A key reads K when it is an identifier or a string literal (not
+ *   computed and not shorthand) whose text, as TypeScript cooks it (an escape decoded, in an identifier as in a quoted key), is
+ *   K. It counts the object literals holding a property assignment whose key reads `name` and whose initializer is itself a
+ *   string literal whose cooked text is === "furnace_observe": a template literal, an initializer under parentheses, as,
+ *   satisfies, a type assertion or a non-null assertion, and a computed value (an identifier, a concatenation, a call) are
+ *   not read. Of those literals it takes the first in source order (where they nest, the outer), and in the initializer of
+ *   that literal's first property assignment whose key reads `execute` (a method or a computed execute is not read) it lists,
+ *   nested functions included, the calls whose callee is the identifier textResult itself (cooked; an optional call is one,
+ *   while a callee under parentheses, a member, `new` and a tagged template are not), in the source order of their starts (a
+ *   call in another's arguments comes after it), each by its first argument: a string literal as { kind: "literal", text: <its
+ *   cooked text> }, a call whose callee is an identifier as { kind: "call", text: <that identifier, cooked> }, and anything
+ *   else as { kind: "other", text: <its source text, "" when absent> }. A0 pins each of these readings; it is an anchor of the
+ *   census's rows on trunk, not a reading of what pi serves.
  */
 import { accessSync, chmodSync, constants, realpathSync, writeFileSync } from "node:fs";
 import { delimiter, join } from "node:path";
@@ -122,31 +135,41 @@ export function judgeReply(result: unknown, text: string): string[] {
 }
 
 /** A served tool as the reader calls it. */
-interface ServedTool {
+export interface ServedTool {
   execute: (id: string, params: Readonly<Fields>, signal: undefined, onUpdate: undefined, context: unknown) => Promise<unknown>;
 }
-const isServedTool = (value: unknown): value is ServedTool => isFields(value) && typeof value.execute === "function";
+/** Whether value is an object (isFields) whose execute, a property read, is a function (see the header). */
+export const isServedTool = (value: unknown): value is ServedTool => isFields(value) && typeof value.execute === "function";
 const isHandler = (value: unknown): value is (event: unknown, context: unknown) => unknown => typeof value === "function";
 
-/** One pinned boot of the real extension through the harness. */
+/** The two harness slots a planted extension factory uses (B0). */
+export interface PlantedPi {
+  registerTool(tool: unknown): unknown;
+  on(event: string, handler: (event: unknown, context: { readonly cwd: string }) => unknown): unknown;
+}
+/** An extension factory B0 plants in place of src/index.ts's default export, to read bootServed's own order. */
+export type PlantedFactory = (pi: PlantedPi) => void;
+
+/** One pinned boot of the real extension (or of B0's planted factory) through the harness. */
 export interface ServedBoot {
   /** The names recordRegistrations read, in the order handed. */
   readonly received: readonly unknown[];
   /** The sandbox the boot runs in, as realpath reads it. */
   readonly workspace: string;
-  /** Whether the harness's tools Map holds, under the name, a non-null, non-array object whose execute is a function. */
+  /** isServedTool of the harness's tools Map entry under the name. */
   serves(name: string): boolean;
   /** The served furnace_observe execute's resolution for these params. */
   call(params: Readonly<Fields>): Promise<unknown>;
   restore(): void;
 }
 /** The pinned boot (see the header). */
-export async function bootServed(grants: readonly string[]): Promise<ServedBoot> {
+export async function bootServed(grants: readonly string[], factory?: PlantedFactory): Promise<ServedBoot> {
   const sandbox = hermeticDir({ settings: { workflowsEnabled: true, workbench: { workflowAgentBackend: "claude", capabilityGrants: [...grants] } } });
   try {
     const booted = makePi();
     const received = recordRegistrations(booted.pi);
-    subagentsExtension(booted.pi);
+    const extension: PlantedFactory | typeof subagentsExtension = factory ?? subagentsExtension;
+    extension(booted.pi);
     const context: unknown = ctx({ cwd: sandbox.dir });
     const start: unknown = booted.lifecycle.get("session_start");
     if (!isHandler(start)) throw new Error("the extension registered no session_start handler");
