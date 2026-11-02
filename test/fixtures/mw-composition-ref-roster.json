@@ -627,7 +627,11 @@
       },
       "closed": {
        "src": [],
-       "manifests": [],
+       "manifests": {
+        "package.json": [],
+        "package-lock.json": [],
+        "vendor/dependency-lock.json": []
+       },
        "controls": {
         "manifest-dependency": [
          "scope"
@@ -4001,9 +4005,27 @@
     ],
     "misplaced": []
    },
+   "lead-after-space": {
+    "runs": [
+     "(x)"
+    ],
+    "misplaced": []
+   },
    "lead-twice": {
     "runs": [
      "(y)"
+    ],
+    "misplaced": []
+   },
+   "lead-empty": {
+    "runs": [
+     "()"
+    ],
+    "misplaced": []
+   },
+   "lead-multi-letter": {
+    "runs": [
+     "(ab)"
     ],
     "misplaced": []
    },
@@ -4149,7 +4171,9 @@
    ],
    "leadGap": [
     "0020"
-   ]
+   ],
+   "leadSecond": [],
+   "leadBefore": []
   }
  }
 }
