@@ -50,8 +50,12 @@
  * one of them', restated to the judged hosts, with the judged population's maxima pinned, a boundary row reading two hosts
  * past them, and the certification of a host beyond them NOT CLAIMED. That bead's cut #4 (the fail-closed core of ruling
  * R-B224, the rule-19 structural exit at its refusal #3) answers refusal #3's U1 (the seam half's own-message member
- * reach claimed past its pins) by narrowing that reach to the one call kind its fixtures pin, a snapshot call; the same
- * reach at a delta and at a resync call is NOT CLAIMED (below), its coverage carried by the child bead wb-doja.
+ * reach claimed past its pins) by narrowing that reach to the one call kind its fixtures pin, a snapshot call, and carries
+ * the same reach at a delta and at a resync call to the child bead wb-doja, whose first cut (route (a) of that U1) pins it
+ * there: the member-depth twins of M-SEAM-OWN-DELTA-ALIAS and M-SEAM-OWN-RESYNC-ALIAS, M-SEAM-SUB-DELTA-ALIAS and
+ * M-SEAM-SUB-RESYNC-ALIAS (M-SEAM-SUB-ALIAS's copy handed at that call kind alone), each killed by the aliased check alone,
+ * so a seam half that reads the own message at its own object alone at a delta or a resync call (the gate's GP7:S1, S1d
+ * and S1r) leaves one of them failing no check, and the child's filing binds both (OUTSIDE ANCHORS).
  * Statement (the bead's tracker-export title, verbatim): "Gating artifact: released FiberOpticsSDK PublicPortBridge
  * (unshipped) + a wb-x32 committing decision connecting a Pi runtime over it; then Pi supplies the full bridge contract
  * (visibility/schema/direction through resync on gaps), keeps one authority per runtime domain, admits no private endpoint
@@ -171,7 +175,7 @@
  *    other source, depth or form, the endpoint a source sits on and the seam call or read slot another message's object
  *    reaches among them, is outside the pinned set (NOT CLAIMED)), merged (the read is not each runtime's own values) and
  *    the three claim checks over the label. Forty-five fixtures; the honest host meets every check on every fixture, each of
- *    142 mutants fails at least one, every
+ *    144 mutants fails at least one, every
  *    check fires, every check is the only check some mutant fails, and C1's witness holds each check's isolating mutants
  *    and, per mutant, the messages whose receipt it departs on.
  *    CLASS TABLE (a class with the oracle's reading of it, then its members: fixture messages that each break one part, with
@@ -235,7 +239,9 @@
  *    alone where that value holds no object member, at a delta and at a snapshot call (M-SEAM-OWN-ALIAS: the wire's own
  *    value where it holds no object member, else a copy, killed at F-DIGEST's d3 and F-READ-OWN's ow1), and an object one of
  *    its value's own members holds, at a snapshot call (M-SEAM-SUB-ALIAS: a copy whose own members are the wire's own, only
- *    the value's own object new); and another message, each source as twins, the whole wire object and a copy whose own
+ *    the value's own object new, handed at every value call), at a delta call (M-SEAM-SUB-DELTA-ALIAS) and at a resync call
+ *    (M-SEAM-SUB-RESYNC-ALIAS: the same copy handed at that call kind alone, wb-doja); and another message, each source as
+ *    twins, the whole wire object and a copy whose own
  *    members are that object's own (only the value's own object new; the member-depth twins are wb-vf3r cut #3's): an
  *    earlier rejected snapshot, delta or resync whose value the call's admitted message repeats, as a resend's rejected
  *    first attempt (M-SEAM-CROSS-ALIAS and M-SEAM-CROSS-SUB-ALIAS: nine fixtures from F-EPOCH to F-PRIVATE, plus
@@ -282,7 +288,7 @@
  *    checks on two fixtures (M-DUPLICATE-AT-CHECK) and of one failing two checks on each of three fixtures, in an order
  *    lexical neither by fixture nor by check (M-CALLABLES-TOP-ONLY), each ends in the typed refusal OUTSIDE_PINNED_SET after
  *    every one of its failed checks in fixture and check order, and every mutant's certification is every one of its failed
- *    checks, fixtures in FIXTURES order and a fixture's checks in CHECKS order, then the refusal (each of the 142 against
+ *    checks, fixtures in FIXTURES order and a fixture's checks in CHECKS order, then the refusal (each of the 144 against
  *    its own violations), with the judged population's maxima pinned (C, O, P above). C2 the gap: a detected and an
  *    announced gap are rejected until a resync,
  *    a snapshot after a gap re-bases the stream, each gap asks to resync once, no gapless stream is asked to resync, the
@@ -296,8 +302,9 @@
  *  N, the falsifier, one pin per claim family: no file of any root spells the family (each root at its floor, every planted
  *    control read and every quiet control quiet), the honest host's label of a two-runtime read spells no claim and names
  *    each runtime's own epoch and sequence, and the family's mutants fail: N1 order (M-ORDER-LABEL), N2 shared memory
- *    (the thirty-five aliased mutants: M-SHARED-REF; the seam half's M-SEAM-ALIAS, M-SEAM-OWN-DELTA-ALIAS,
- *    M-SEAM-OWN-RESYNC-ALIAS, M-SEAM-OWN-ALIAS and M-SEAM-SUB-ALIAS and its cross twins M-SEAM-CROSS-ALIAS,
+ *    (the thirty-seven aliased mutants: M-SHARED-REF; the seam half's M-SEAM-ALIAS, M-SEAM-OWN-DELTA-ALIAS,
+ *    M-SEAM-OWN-RESYNC-ALIAS, M-SEAM-OWN-ALIAS, M-SEAM-SUB-ALIAS, M-SEAM-SUB-DELTA-ALIAS and M-SEAM-SUB-RESYNC-ALIAS and
+ *    its cross twins M-SEAM-CROSS-ALIAS,
  *    M-SEAM-CROSS-SUB-ALIAS, M-SEAM-KIND-ALIAS, M-SEAM-KIND-SUB-ALIAS, M-SEAM-ADMITTED-ALIAS, M-SEAM-ADMITTED-SUB-ALIAS,
  *    M-SEAM-LATER-ALIAS and M-SEAM-LATER-SUB-ALIAS; the read half's M-READ-ALIAS, M-READ-OWN-ALIAS and M-READ-SUB-ALIAS and
  *    its cross twins M-READ-CROSS-ALIAS, M-READ-CROSS-SUB-ALIAS, M-READ-KIND-ALIAS, M-READ-KIND-SUB-ALIAS and the seven
@@ -348,7 +355,12 @@
  * kinds; each such kind has its single-kind member-depth mutant; every cross mutant handing or keeping another message's
  * whole wire object has its member-depth twin, and every member-depth cross mutant is one; and U3 naming the
  * certification capped at the judged maxima, C1 pins those maxima, the largest certification any judged host holds,
- * and its boundary row reads hosts past them. So each of these, removed from every
+ * and its boundary row reads hosts past them; and the child bead wb-doja's own filing - in its export row's description,
+ * the first line opening "Acceptance: a pin per call kind (", so a later note changes no reading - names the call kinds
+ * it owes, each a value kind other than the snapshot, and binds the members its first cut adds for them: for each named
+ * kind the census holds a mutant the aliased check alone kills whose every hold is an object one of its own message's
+ * value's own members holds, at seam calls of that kind alone (never a value's own object, another message's object or a
+ * read hold). So each of these, removed from every
  * literal of this file and the roster together, still reds through the anchor named: a title row
  * or pin (the tiling), row Q or one of Q1-Q5's families (the record's first declaration), a rejection class (the shape list, :41 or the break of
  * the part it guards), a contract part (the requires quote), a claim family (the falsifier list), a judge word (the title),
@@ -357,7 +369,7 @@
  * certification pin (the follow-up's filing, :23 for the wire's kinds), and an own-object mutant and the out-of-order,
  * three-fixture certification pin (the follow-up's refusal lines, F5's hosts for the halves), and a member-depth mutant
  * and the maxima pin and boundary row (the follow-up's second refusal lines, :23 for the kinds, the whole-object twin for
- * the source). The
+ * the source), and a per-call-kind member-depth mutant of the seam half's own message (the child's filing). The
  * last case reads the vitest task tree (every
  * registered test, in roster order, in run mode, ran before it) and REACHED.
  * NOT CLAIMED: test/, docs/workbench/receipts/ and .beads/ (they name the vocabulary as text they judge or record, this
@@ -366,8 +378,8 @@
  * re-measures); which judges a root's files get (a coordinated move of a code root's pages under a page root narrows them
  * to the BRIDGE judge); a mutant, a fixture, a check with its judge, a planted control, a residual member, a markup
  * extension, a named entity or an exclusion removed from every literal of this file and the roster together (beyond the
- * follow-up's members the OUTSIDE ANCHORS name); a part's break rewritten to break another part; a pin's case replaced by
- * one that echoes its roster witness and runs the same readers; a
+ * follow-up's and the child's members the OUTSIDE ANCHORS name); a part's break rewritten to break another part; a pin's
+ * case replaced by one that echoes its roster witness and runs the same readers; a
  * row-Q family the record's first declaration does not list (the anchor binds the declared families into row Q, not the
  * reverse; it lists Q1-Q5, so a family of Q6-Q12 removed from every literal of this file and the roster together is held by
  * no outside anchor; Q13 is held by the follow-up's filing). The armed contract claims nothing off its CLASS TABLE members
@@ -392,9 +404,12 @@
  * mutant shares the objects a value's own members hold, one level below it, so a walk stopped at that level is outside the
  * pinned set; a wire object held through a non-enumerable symbol-keyed or accessor property, since R-ALIAS-HOLDER's members
  * hold it through a string-keyed data property; a source's own object alone anywhere but the own message at a delta or a
- * snapshot call and the applied snapshot (no other source the fixtures carry has a member-less value: every rejected and
- * every other-message source is a record with an array member, so a reach that drops such a source's own object while it
- * reads its members, the gate's G28:R3, changes no verdict); a rejected message of a kind off the wire's list other than
+ * snapshot call and the applied snapshot (no other source of a listed member that the fixtures carry has a member-less
+ * value: every rejected and every other-message source of a listed member is a record with an array member, so a reach
+ * that drops such a source's own object while it reads its members, the gate's G28:R3, changes no verdict; the fixtures
+ * also carry four rejected wire messages with member-less values, F-AUTHORITY o1 and o4 and F-EFFECT f2 and f3, and no
+ * admitted message repeats their values, so no member's mutant hands or keeps them); a rejected message of a kind off
+ * the wire's list other than
  * effect and invoke; an admitted ack's or gap's object kept in the read, and a seam call the admit or reject check already
  * fails (a rejected message's, a signal's or a phantom one) holding a wire object; a member's kind, endpoint and runtime
  * instances past those its fixtures carry, which the C1 and N2 roster witnesses hold per fixture, so a reader narrowed
@@ -404,13 +419,13 @@
  * host, and its boundary row reads two (183 failed checks; 6 on one fixture) only so far as a certification capped at the
  * judged maxima changes theirs, so the gate's G28:C7 and G28:C8 red that row, as does a judged host that passes the maxima,
  * while a cap at or above those two hosts' own sizes is outside the pinned set (refusal #2's U3).
- * And wb-vf3r's cut #4 limit (ruling R-B224's fail-closed core of its refusal #3's U1): the seam half's reach to an object
- * one of its own message's value's own members holds, at a delta and at a resync call, is NOT CLAIMED by this census.
- * M-SEAM-SUB-ALIAS hands its copy at those calls as at a snapshot one, and every fixture on which it fails aliased holds a
- * snapshot call whose reading reads it, so a seam half that reads the own message at its own object alone at a delta or
- * a resync call (the gate's GP7:S1, S1d and S1r) changes no judged host's verdict, and a host that departs there alone
- * (the gate's plants seam-sub-at-delta and seam-sub-at-resync) is outside the pinned set, where the census fails closed;
- * that coverage is the child bead wb-doja's.
+ * wb-vf3r's cut #4 limit (ruling R-B224's fail-closed core of its refusal #3's U1: the seam half's reach to an object one
+ * of its own message's value's own members holds, NOT CLAIMED there at a delta and at a resync call, since every fixture
+ * on which M-SEAM-SUB-ALIAS fails aliased holds a snapshot call whose reading reads it) is lifted by the child bead
+ * wb-doja's first cut: M-SEAM-SUB-DELTA-ALIAS and M-SEAM-SUB-RESYNC-ALIAS hand that copy at a delta and at a resync call
+ * alone (as the gate's plants seam-sub-at-delta and seam-sub-at-resync do), so that reach is claimed at
+ * both call kinds at the instances their fixtures carry, and its endpoint and runtime instances past those stay outside
+ * the pinned set as every member's do (above).
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a spelling the mention judges do not read: an abbreviation, words split across statements, base64, a YAML
  * or TOML escape, a markdown link splitting the words, a homoglyph letter, a digit for a letter), R-INDIRECT-LOAD (Q2, a
@@ -496,6 +511,12 @@ const SECOND_REFUSAL_LINES = {
   U2: "- U2: U2-RESPIN-RULE16-LEG2-R514-R515-R668-R739-CLASS-I-REFAIL-",
   U3: "- U3: U3-RESPIN-RULE16-LEG2-R514-R515-CLASS-II-REFAIL-",
 } as const;
+/**
+ * The child bead ruling R-B224 filed at wb-vf3r's refusal #3 (the rule-19 structural exit), and the opening of its filing's
+ * acceptance line: the first description line opening so binds, as the follow-up's tags do, and names the call kinds owed.
+ */
+const CHILD = "wb-doja";
+const CHILD_ACCEPTANCE = "Acceptance: a pin per call kind (";
 /** The owner filing's own paragraph opens with this; the tracker appends every later note on a line of its own. */
 const PROGRAM_OPENING = "PROGRAM: sdk-universal-reactive-rendering ";
 /** The live cases parse every walked script; they carry this explicit budget. */
@@ -1082,8 +1103,9 @@ function copyOf(value: unknown): unknown {
  * enumerable string-keyed properties (Object.values, which reads an array's elements) - the properties copyOf copies and
  * isDeepStrictEqual compares. Each aliased member reads one depth of its source's value (the header's aliased members): the
  * whole object; the value's own object alone (M-SEAM-OWN-ALIAS, M-READ-OWN-ALIAS: the own and the applied message, the
- * sources with a member-less value); and an object one of its own members holds (M-SEAM-SUB-ALIAS, M-READ-SUB-ALIAS and the
- * thirteen member-depth cross twins); it also walks deeper, where no member holds an object alone (NOT CLAIMED). A
+ * sources with a member-less value); and an object one of its own members holds (M-SEAM-SUB-ALIAS and its per-call-kind
+ * twins M-SEAM-SUB-DELTA-ALIAS and M-SEAM-SUB-RESYNC-ALIAS, M-READ-SUB-ALIAS and the thirteen member-depth cross twins); it
+ * also walks deeper, where no member holds an object alone (NOT CLAIMED). A
  * non-enumerable property is not walked (R-ALIAS-HOLDER, Q13).
  */
 function objectsIn(value: unknown, into: Set<object> = new Set()): Set<object> {
@@ -1658,6 +1680,12 @@ interface Shape {
   readonly seamCrossSub?: boolean;
   /** Hand the seam a copy whose own members are the wire's own (only the value's own object is new): only the seam half's reach below the value reads it. */
   readonly seamSubAlias?: boolean;
+  /**
+   * Hand the seam that copy for an admitted message of these kinds only, while the read keeps a copy: the seam half's reach below
+   * its own message's value at a delta call (M-SEAM-SUB-DELTA-ALIAS) and at a resync call (M-SEAM-SUB-RESYNC-ALIAS), each call
+   * kind with a mutant only that kind's reading kills (wb-doja, the member-depth twins of seamAliasKinds' two mutants).
+   */
+  readonly seamSubAliasKinds?: readonly string[];
   /** Keep in the read a copy whose own members are the wire's own (the seam takes a copy): only the read half's reach below the value reads it. */
   readonly readSubAlias?: boolean;
   /** Hand the seam the wire's own value where it holds no object member, else a copy: only the seam half's reading of the value's own object reads it. */
@@ -1921,7 +1949,7 @@ function hostOf(shape: Shape): BridgeHost {
             ? shape.seamCrossSub === true
               ? shallowOf(crossed.value)
               : crossed.value
-            : shape.seamSubAlias === true
+            : shape.seamSubAlias === true || shape.seamSubAliasKinds?.includes(kind) === true
               ? shallowOf(entry.value)
               : shape.seamOwnAlias === true
                 ? ownOf(entry.value)
@@ -2052,6 +2080,8 @@ const MUTANTS: Readonly<Record<string, Shape>> = {
   "M-READ-EFFECT-ALIAS": { readCrossKind: "effect" },
   "M-READ-INVOKE-ALIAS": { readCrossKind: "invoke" },
   "M-SEAM-SUB-ALIAS": { seamSubAlias: true },
+  "M-SEAM-SUB-DELTA-ALIAS": { seamSubAliasKinds: ["delta"] },
+  "M-SEAM-SUB-RESYNC-ALIAS": { seamSubAliasKinds: ["resync"] },
   "M-READ-SUB-ALIAS": { readSubAlias: true },
   "M-SEAM-OWN-ALIAS": { seamOwnAlias: true },
   "M-READ-OWN-ALIAS": { readOwnAlias: true },
@@ -2119,7 +2149,8 @@ type Check = (typeof CHECKS)[number];
  * each claimed at its listed members only (the header's aliased members): a member is a source, a wire message of a status,
  * a place and a kind, read at one depth of its value, with a mutant only its reading kills. The SEAM half: its own message,
  * whole at a snapshot, a delta and a resync call (M-SEAM-ALIAS, M-SEAM-OWN-DELTA-ALIAS, M-SEAM-OWN-RESYNC-ALIAS), its own
- * object alone at a delta and a snapshot call (M-SEAM-OWN-ALIAS) and a member's object at a snapshot call (M-SEAM-SUB-ALIAS);
+ * object alone at a delta and a snapshot call (M-SEAM-OWN-ALIAS) and a member's object at a snapshot, a delta and a resync
+ * call (M-SEAM-SUB-ALIAS, M-SEAM-SUB-DELTA-ALIAS, M-SEAM-SUB-RESYNC-ALIAS);
  * another message, whole and a member's object, an
  * earlier rejected snapshot, delta or resync (M-SEAM-CROSS-ALIAS, M-SEAM-CROSS-SUB-ALIAS: the status reading), an earlier
  * rejected effect, invoke, ack or gap (M-SEAM-KIND-ALIAS, M-SEAM-KIND-SUB-ALIAS: the kind reading), an earlier admitted
@@ -2920,6 +2951,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "M-READ-EFFECT-ALIAS",
       "M-READ-INVOKE-ALIAS",
       "M-SEAM-SUB-ALIAS",
+      "M-SEAM-SUB-DELTA-ALIAS",
+      "M-SEAM-SUB-RESYNC-ALIAS",
       "M-READ-SUB-ALIAS",
       "M-SEAM-OWN-ALIAS",
       "M-READ-OWN-ALIAS",
@@ -3193,6 +3226,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "M-READ-EFFECT-ALIAS": mutant("M-READ-EFFECT-ALIAS"),
       "M-READ-INVOKE-ALIAS": mutant("M-READ-INVOKE-ALIAS"),
       "M-SEAM-SUB-ALIAS": mutant("M-SEAM-SUB-ALIAS"),
+      "M-SEAM-SUB-DELTA-ALIAS": mutant("M-SEAM-SUB-DELTA-ALIAS"),
+      "M-SEAM-SUB-RESYNC-ALIAS": mutant("M-SEAM-SUB-RESYNC-ALIAS"),
       "M-READ-SUB-ALIAS": mutant("M-READ-SUB-ALIAS"),
       "M-SEAM-OWN-ALIAS": mutant("M-SEAM-OWN-ALIAS"),
       "M-READ-OWN-ALIAS": mutant("M-READ-OWN-ALIAS"),
@@ -3531,6 +3566,8 @@ describe(SUITE, () => {
       "M-READ-EFFECT-ALIAS",
       "M-READ-INVOKE-ALIAS",
       "M-SEAM-SUB-ALIAS",
+      "M-SEAM-SUB-DELTA-ALIAS",
+      "M-SEAM-SUB-RESYNC-ALIAS",
       "M-READ-SUB-ALIAS",
       "M-SEAM-OWN-ALIAS",
       "M-READ-OWN-ALIAS",
@@ -3686,7 +3723,7 @@ describe(SUITE, () => {
     expect(BRIDGE_HOSTS).toEqual([]);
   });
 
-  it("the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe, its first refusal's U1-U3 lines the members they owe, and its second refusal's U1-U3 lines the member-depth mutants and the maxima they owe", { timeout: 60_000 }, () => {
+  it("the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe, its first refusal's U1-U3 lines the members they owe, and its second refusal's U1-U3 lines the member-depth mutants and the maxima they owe; and the child wb-doja's own filing binds the seam half's own-message member-depth mutant at each call kind its acceptance line names", { timeout: 60_000 }, () => {
     const rows = parseExport(textOf(EXPORT));
     const own = rows.find(entry => entry.id === BEAD);
     expect(own, `${BEAD}'s row was read from the tracker export`).toBeDefined();
@@ -3903,6 +3940,37 @@ describe(SUITE, () => {
       ],
       "the follow-up's second refusal's U3 names the certification capped at the judged maxima, and C1 pins those maxima (the largest certification any judged host holds) and its boundary row reads hosts past them, whose certification a cap at the maxima changes",
     ).toEqual([true, true, Math.max(...Object.values(recomputed)), true]);
+    const childRow = rows.find(entry => entry.id === CHILD);
+    expect(childRow, `the child ${CHILD}'s row was read from the tracker export`).toBeDefined();
+    const accepted = stringField(childRow, "description").split("\n").find(line => line.startsWith(CHILD_ACCEPTANCE)) ?? "";
+    const callKinds = /^Acceptance: a pin per call kind \(([a-z]+(?:, [a-z]+)*)\)/.exec(accepted)?.[1]?.split(", ") ?? [];
+    expect(
+      [callKinds.length > 0, callKinds.every(kind => VALUE_KINDS.includes(kind) && kind !== "snapshot")],
+      "the child's acceptance line names the call kinds it owes, each a value kind other than the snapshot its parent's cut #4 pinned",
+    ).toEqual([true, true]);
+    /** Each object a host's seam call holds of a wire message of the call: whether that message is the call's own, the call's kind, and whether the object is one of that message value's own members (one level below the value's own object). */
+    const seamHolds = (host: BridgeHost): { readonly self: boolean; readonly kind: string; readonly member: boolean }[] =>
+      FIXTURES.flatMap(entry =>
+        drive(host, entry).calls.flatMap(call => {
+          const kind = entry.messages[call.index]?.kind ?? "-";
+          return [...objectsIn(call.value)].flatMap(item =>
+            entry.messages.flatMap((sent, at) => {
+              const value = sent.value;
+              const member = typeof value === "object" && value !== null && Object.values(value).includes(item);
+              return objectsIn(value).has(item) ? [{ self: at === call.index, kind, member }] : [];
+            }),
+          );
+        }),
+      );
+    const ownMemberAt = (name: string, kind: string): boolean => {
+      const host = hostOf(MUTANTS[name] ?? {});
+      const held = seamHolds(host);
+      return held.length > 0 && held.every(hold => hold.self && hold.member && hold.kind === kind) && holdsAt(host, "read").length === 0;
+    };
+    expect(
+      Object.fromEntries(callKinds.map(kind => [kind, aliasedOnly.some(name => ownMemberAt(name, kind))])),
+      "each call kind the child's filing names has a mutant, killed by the aliased check alone, whose every hold is an object one of its own message's value's own members holds, at seam calls of that kind alone: never a value's own object, another message's object or a read hold",
+    ).toEqual(Object.fromEntries(callKinds.map(kind => [kind, true])));
   });
 
   it("roster: the judged rows, the quotes, the residual members, the readers and the registered tests equal test/fixtures/foa-public-port-bridge-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {
