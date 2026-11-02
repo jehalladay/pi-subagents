@@ -510,7 +510,10 @@
  * of a row from QUIET_BEADS together with every plant answering its survivors, from every literal of these files and the
  * roster (the export binds the survivors each row it reads names, not which rows QUIET_BEADS lists); a coordinated edit of
  * quietSurvivorsOf or QUIET_CONTROL together with the control's frozen literal, its reading and the roster in these files (the
- * control is this census's own choice: the rows anchor the survivors they name, not the reader's rules).
+ * control is this census's own choice: the rows anchor the survivors they name, not the reader's rules); and a coordinated
+ * edit of the listing re-read's control (its swap of the two listing forms' anchors together with the form it expects named)
+ * in this file (the control is this census's own choice: wb-0x41's row anchors the hollowing U1 names and each form's git
+ * listings its links, not the swap).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, every residual family's member
  * count, the mutant and case ids per pin, the rule list, the registry, the docs plants with their rules, the docs rules,
  * READ_METHODS, the walk's probes with their facets, its facets and walked kinds, the equivalence controls, the read proof's
@@ -546,7 +549,11 @@
  * written with its pattern) - every form answers exactly one of those twenty-two names and every name is answered, a form
  * answering a refusal #5 item holds its line's claim, a form answering a refusal #1 hollowing refuses with the typed refusal
  * its line names, each S2 form answering a U2 hollowing is that hollowing's falsifier (its pattern, read from the export,
- * counts none of the openers the form's text holds), the listing form answering U1's holds links only git's index lists, and
+ * counts none of the openers the form's text holds), the listing form answering U1's holds links only git's index lists and
+ * is that hollowing's falsifier (of the links each listing form's refusal names, its scratch listing re-read without --cached,
+ * its untracked premise, leaves out exactly its tracked links, FC-LISTING-TRACKED's four and FC-LISTING-SYMLINK's none, and
+ * the form answering U1 leaves out at least one, so the two listing forms' anchors swapped is refused, that swap held as the
+ * check's control; wb-m2gs, the R694 follow-up from wb-0x41's landing 802, F1), and
  * an S2 form edits a member of the family its anchor names or, answering a refusal #1 hollowing, a residual source member;
  * marked's gfm block grammar (Lexer.rules.block.gfm) holds the rules every full-surface lead and ownership block
  * is pinned by; TypeScript's SyntaxKind enum (FirstLiteralToken to LastTemplateToken) holds the literal token kinds
@@ -1836,6 +1843,26 @@ describe(SUITE, () => {
       }),
     );
     expect(indexOnly, "the listing form answering U1's hollowing holds links only git's index lists (the listing's tracked half): each of its tracked links, which ls-files --cached reads and no untracked listing does").toEqual(Object.fromEntries(answering.flatMap(form => (form.kind === "listing" ? [[form.id, Object.keys(form.links).filter(path => form.tracked.includes(path)).sort()] as const] : []))));
+    // wb-m2gs (the R694 follow-up from wb-0x41's landing 802, F1): the listing form answering U1's hollowing is that hollowing's
+    // falsifier. Each listing form's refused links that its scratch listing re-read without --cached leaves out (its untracked
+    // premise, ls-files --others --exclude-standard: the reader's own listing with L2-NR-NO-CACHED's edit) are exactly its
+    // tracked links, and the form answering U1 must leave out at least one; FC-LISTING-SYMLINK, whose links git's index does not
+    // hold, leaves out none, so the two listing forms' anchors swapped (the gate's GP15-FC-ANCHOR-SWAP-LISTING) is refused, and
+    // that swap is this block's control.
+    const uncached = Object.fromEntries(
+      FAIL_CLOSED.flatMap(form => {
+        if (form.kind !== "listing") return [];
+        const premise = premises.get(form.id) ?? { index: [], untracked: [] };
+        const refusal = (refused[form.id] as { readonly refusal?: readonly string[] } | undefined)?.refusal ?? [];
+        return [[form.id, findingPaths(refusal).filter(path => !premise.untracked.includes(path)).sort()] as const];
+      }),
+    );
+    expect(uncached, "each listing form's refused links that its scratch listing re-read without --cached leaves out (L2-NR-NO-CACHED: the reader's listing less --cached, the form's untracked premise) are exactly its tracked links: FC-LISTING-TRACKED's four, FC-LISTING-SYMLINK's none").toEqual(Object.fromEntries(FAIL_CLOSED.flatMap(form => (form.kind === "listing" ? [[form.id, Object.keys(form.links).filter(path => form.tracked.includes(path)).sort()] as const] : []))));
+    const unfalsifying = (forms: typeof FAIL_CLOSED): string[] => forms.filter(form => form.kind === "listing" && form.anchor.bead === CARRIED_BEAD && lineOf.has(form.anchor.name) && (uncached[form.id] ?? []).length === 0).map(form => form.id);
+    expect(unfalsifying(FAIL_CLOSED), "so the listing form answering U1's hollowing is that hollowing's falsifier: its scratch listing re-read without --cached leaves out at least one link its refusal names").toEqual([]);
+    const listings = FAIL_CLOSED.filter((form): form is FailClosedListing => form.kind === "listing");
+    const swapped = FAIL_CLOSED.map(form => (form.kind === "listing" ? { ...form, anchor: listings[listings.length - 1 - listings.indexOf(form)]?.anchor ?? form.anchor } : form));
+    expect(unfalsifying(swapped), "and the control: with the two listing forms' anchors swapped (the gate's GP15-FC-ANCHOR-SWAP-LISTING), the form then answering U1, FC-LISTING-SYMLINK, leaves out none and is named").toEqual(["FC-LISTING-SYMLINK"]);
     ENDS.push("fail closed: hollowings");
     const familyOf = (name: string): string => /(?:^|-)(Q\d+)(?:-|$)/.exec(name)?.[1] ?? "";
     const strays = FAIL_CLOSED.flatMap(form => {
