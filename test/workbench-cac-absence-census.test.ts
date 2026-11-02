@@ -103,14 +103,14 @@
  * F5 (the residual anchor): a family removed from QUIET and the roster together read green (R-SCOPE: 24 of 24 on the untouched census
  * at e8e13f8), the enumeration's only anchors being its own literals. Each family now owes SUBJECTS derived outside this file's
  * literals (residualSubjects): R-SIBLING each member the roster excludes from the filing's set, in product scope; R-HOLDER a census
- * module and a fixture it names, while the holder reading holds (wb-jml6 F4); R-SPELLING each needle's other case and the two-word member
- * under each separator of the engine's \s class; R-ENCODED each free needle's base64; R-SCOPE each live root entry outside the five
- * trees and docs/ past docs/workbench (38 in this worktree unbuilt; the git-ignored dist/ and .forge/ a build and a default-tier run
- * leave make 40 - these subjects follow the checkout); R-ALIAS each program file the vendored lines come from, by stem (13); R-VERSION
- * each schema member's other version; R-TITLE a live export title that spells a needle, on a receipt's line 1; R-REQUIREMENT-ID a live
- * requirement id that spells one, in a test/ source outside the holders. Every write a quiet row makes is recorded (PLANTED; since
- * wb-iug2 cut #4 as the text the write left on disk, read back from its path) and the residual-anchor case requires each subject
- * planted (320 unbuilt, 322 built), so a family's row deleted with its roster entry reds.
+ * module and a fixture it names, while the holder reading holds (wb-jml6 F4); R-SPELLING each needle's other case, each needle's base
+ * separator swaps (since wb-zulk, below) and the two-word member under each separator of the engine's \s class; R-ENCODED each free
+ * needle's base64; R-SCOPE each live root entry outside the five trees and docs/ past docs/workbench (38 in this worktree unbuilt; the
+ * git-ignored dist/ and .forge/ a build and a default-tier run leave make 40 - these subjects follow the checkout); R-ALIAS each program
+ * file the vendored lines come from, by stem (13); R-VERSION each schema member's other version; R-TITLE a live export title that spells
+ * a needle, on a receipt's line 1; R-REQUIREMENT-ID a live requirement id that spells one, in a test/ source outside the holders. Every
+ * write a quiet row makes is recorded (PLANTED; since wb-iug2 cut #4 as the text the write left on disk, read back from its path) and
+ * the residual-anchor case requires each subject planted (320 unbuilt, 322 built), so a family's row deleted with its roster entry reds.
  * MEASURED FOR wb-iug2 AT 9ad61f3 (trunk tip at claim time, landing 680) and again at 242b275 (landing 691, wb-ycue, merged into the
  * branch for the respin): the two-word member written with U+200B (zero-width space), with U+3164 (Hangul filler) and with nothing in
  * place of its space, planted in one src file of the live tree, reads quiet (25 of 25 at 9ad61f3, 28 of 28 at 242b275: the gate's
@@ -159,6 +159,22 @@
  * to exactly the identity as handed to the writer and states the produced artifact NOT CLAIMED (PLANT IDENTITY below); that coverage
  * is deferred to wb-xu2e. Its code tokens are cut #4's but for three assertion messages narrowed to the same reading (measured), so
  * every pin cut #4 delivered stays: those that kill refusals #2 and #3's named members, and the five of its pin-flip floor.
+ * FOLLOW-UP (wb-zulk, the R694 follow-up of the landing-792 gate's F5 lead): R-SPELLING's separator plant writes, through swaps(),
+ * the base separator swaps of 16 needles - each of the 12 that carry an underscore (11 status words and the checker output key; the
+ * gate's F5 counted 12 status words) with a hyphen for every underscore, and each of the 4 that carry a hyphen (3 status words and
+ * the program slug) with an underscore and with a space for every hyphen: 20 spellings. Only that row's src/plant.ts writes spell
+ * them (measured over PLANTED) and no residual subject owed them, so swaps() alone held them: on the untouched census at f5cb912
+ * (trunk tip at claim time, landing 808) the gate's one-edit hollow N6 (swaps() without its replaceAll("_", "-")) and its two
+ * siblings N6B (without replaceAll("-", "_")) and N6C (without replaceAll("-", " ")) each read 28 of 28, and each hid a cure the
+ * census kills alone: a rewrite before the line reading that reads the swapped spellings as the needle (CURE-U2H red=3 with 12
+ * findings, CURE-H2U and CURE-H2S red=3 with 4 each), each hollow with its cure reading 28 of 28 (measured). The residual anchor
+ * now owes each base separator swap as a subject (residualSubjects, derived from the needle set apart from swaps()): N6 reds 2 (12
+ * subjects unplanted, and the records case), N6B and N6C 2 each (4 unplanted), each hollow with its cure reds 2, and the anchor owes
+ * 390 subjects in this worktree unbuilt, 20 base separator swaps among them (measured). NOT CLAIMED by this census: an edit to the
+ * anchor's own reading of these subjects - one swap dropped from its derivation, or its subjects read as planted - alone or with
+ * the same swap dropped from swaps() (each form read 28 of 28, measured: the swaps are this census's reading of the family over the
+ * needle set, and no outside source names them), and a spelling swaps() does not write - a needle that carries an underscore
+ * written with a space, or a needle with some of its separators swapped and the others kept.
  *
  * READINGS. A tree is walked from the repository root by directory entries: a regular file is read, a directory recursed (hidden
  * entries included), anything else (a symlink, a socket) is UNREAD and recorded. Every file is read as latin1 bytes, so the ASCII
@@ -248,9 +264,12 @@
  * separators (underscore, hyphen, two spaces and, since wb-8ccl, each other white-space character: the engine's \s class over the BMP,
  * 24 characters with a line break, the tab and the no-break space U+00A0 among them, pinned by code point in SPACE_SEPARATOR_POINTS
  * and derived at run time in WHITE_SPACE), and R-ENCODED reads the one extension member whose text spells a base member through that
- * member: encoded, it is still read (as the member it spells), so it is no escape. With wb-ycue, R-TITLE a needle on a receipt's R539
- * title line, the bead's own export title, is title data, and R-REQUIREMENT-ID a needle inside an export requirement id in a test's
- * comment or suite title is title data (THE TITLE READINGS); every family is held to its outside subjects (F5 above).
+ * member: encoded, it is still read (as the member it spells), so it is no escape. R-SPELLING's quiet row also plants each needle's
+ * base separator swaps (named since wb-zulk): a needle that carries an underscore with a hyphen for every underscore, and one that
+ * carries a hyphen with an underscore and with a space for every hyphen (swaps()), each owed by the residual anchor (wb-zulk above).
+ * With wb-ycue, R-TITLE a needle on a receipt's R539 title line, the bead's own export title, is title data, and R-REQUIREMENT-ID a
+ * needle inside an export requirement id in a test's comment or suite title is title data (THE TITLE READINGS); every family is held
+ * to its outside subjects (F5 above).
  * Since wb-iug2, R-SPELLING bounds the two-word member's joiner at the class. THE MATCHER is pinned whole (cut #3, U2; cut #4, refusal
  * #3 U1): its source is the needles' own texts (none holds a pattern character), one alternative each in the needle set's order, the
  * acronym bounded by no letter, digit or underscore on either side, joined by "|"; its flags g alone; RegExp.prototype its prototype;
@@ -264,8 +283,9 @@
  * PLANT IDENTITY (cut #5, the fail-closed core R-B226 binds): every plant identity this census claims for R-SPELLING is the identity
  * as handed to the writer - what the text a plant's builder hands to write() holds, held apart from that builder: the class plant's
  * joiners by classFaults against CLASS_FORMS, SCALAR_VALUES and the engine; the landed separator plant's separators, in the spellings
- * it hands its writer, by SPACE_SEPARATOR_POINTS against the engine's \s class (WHITE_SPACE), and its other cases by the residual
- * anchor's subjects, derived from the needle set; and of the context plant only the five measured open members (OPEN_MEMBERS).
+ * it hands its writer, by SPACE_SEPARATOR_POINTS against the engine's \s class (WHITE_SPACE), and its other cases and its base
+ * separator swaps (wb-zulk) by the residual anchor's subjects, derived from the needle set apart from swaps(); and of the context
+ * plant only the five measured open members (OPEN_MEMBERS).
  * Wherever this header says R-SPELLING or its quiet row plants, writes or holds a spelling, it claims that identity and no other.
  * The produced artifact's identity is NOT CLAIMED by this census: what the landed separator plant's own written file
  * (src/plant.ts) holds, which no pin compares with its handed text on disk or as read - the residual anchor reads every quiet row's
@@ -1902,6 +1922,14 @@ function residualSubjects(): { readonly subject: string; readonly planted: boole
       ? [{ subject: "a census module and a fixture it names, each spelling a needle", planted: has(plant => HOLDER_MODULE.test(plant.file) && ANY.test(plant.text)) && has(plant => plant.file.startsWith("test/fixtures/") && ANY.test(plant.text)) }]
       : []),
     ...other(NEEDLES.flatMap(needle => [needle.text.toLowerCase(), needle.text.toUpperCase()])).map(text => ({ subject: `other case ${text}`, planted: spelt(text) })),
+    // wb-zulk (the R694 follow-up of the landing-792 gate's F5 lead): each needle's base separator swaps - an underscore needle with a
+    // hyphen for each underscore, a hyphenated needle with an underscore and with a space for each hyphen - derived here from the needle
+    // set apart from swaps(), so swaps() losing one of the three (the gate's N6: replaceAll("_", "-") dropped) leaves its spellings
+    // unplanted and this anchor reds
+    ...other(NEEDLES.flatMap(needle => [needle.text.replaceAll("_", "-"), needle.text.replaceAll("-", "_"), needle.text.replaceAll("-", " ")])).map(text => ({
+      subject: `base separator swap ${text}`,
+      planted: spelt(text),
+    })),
     ...NEEDLES.filter(needle => needle.text.includes(" "))
       .flatMap(needle => ["_", "-", "  ", ...WHITE_SPACE].map(separator => needle.text.replaceAll(" ", separator)))
       .map(text => ({ subject: `other separator ${points(text)}`, planted: spelt(text) })),
