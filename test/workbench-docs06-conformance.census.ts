@@ -821,7 +821,7 @@ interface HookRoster {
   readonly callSites: readonly CallSite[];
   /** R692 second respin (wb-ouo3 refusal #2 U1/U3): every statement naming a watched binding (a reference or a declaration), as "<name> | <the statement as written, whitespace collapsed> | <where it runs, a case by its title>", in source order. */
   readonly statements: readonly string[];
-  /** R692 second respin (wb-ouo3 refusal #2 U1): every use of a must-be-called name but a direct call that resolves to its named import from "vitest" and that import itself, as "<use> | <where it runs>". */
+  /** R692 second respin (wb-ouo3 refusal #2 U1; narrowed to its pins by the final cut, wb-ouo3 refusal #4 U2, R-B258): on the uses of a must-be-called name its rows plant (the "expect is only called" row, C-EXPECT-EXTEND and C-CALLBACK-SHADOW), each use but a direct call that resolves to its named import from "vitest", and that import itself, as "<use> | <where it runs>"; what it reads of any other use - a member named so, the test context's own expect, included - is NOT CLAIMED by this census (wb-mcoj carries the coverage). */
   readonly uncalled: readonly string[];
   /** R692 second respin (wb-ouo3 refusal #2 U1): every each-table case (it.each / test.each through vitest's own import), as 'the case "<title>" | each over <its table as written> -> <what the checker binds a lone identifier table to>'. */
   readonly tables: readonly string[];
@@ -1277,8 +1277,15 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  *   alias, an edited or a second push in the AC2 case) and a mutation of the frozen shape where it runs each read red;
  *   and the AC2 cases' each-table is JUDGED, the file-scope const the AC1 rows bind to the frozen judged subset, so a
  *   narrowed table, or a forged entry that pushes a key for a half whose pins it does not judge, reads red here too;
- * - expect is only called: every use of vitest's expect in this file is a direct call that resolves to its named import,
- *   so expect.extend, expect.addEqualityTesters, an alias, an aliased import or a shadowing declaration reads red;
+ * - expect is only called, as its reader reads the identifier expect (narrowed to the pins by the final cut, wb-ouo3
+ *   refusal #4 U2, R-B258): the reader reads no use of that identifier in this file but a direct call that resolves to
+ *   its named import, and reads red each use its rows plant - the "expect is only called" row's aliased import
+ *   (import { expect as check }), expect.extend, expect.addEqualityTesters, an alias (const alias = expect), an argument
+ *   (register(expect)) and a function named expect declared in a case with the call it captures, and the planted
+ *   members C-EXPECT-EXTEND (expect.extend at module scope) and C-CALLBACK-SHADOW (a const named expect in the
+ *   call-site callback). The test context's own expect, reached as a member of a case's context parameter, is a member
+ *   named expect, not that identifier: it is NOT CLAIMED by this census (the gate's G-CTX-TESTERS changes no reading,
+ *   so -t 'AC2 bullet 1' exits 0 under it), and its coverage is wb-mcoj's;
  * - named residual, with its pinned quiet row: this file spells no prototype route (prototype, __proto__, getPrototypeOf,
  *   setPrototypeOf, defineProperty, defineProperties) as an identifier, a member name or any string, and the quiet row
  *   reds the moment one is written. Cut #3 said here that the code the guarded body calls without naming a binding - the
@@ -1328,6 +1335,13 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * rows and the rule 16 battery judge it in a full run); and an edit that also changes what the leg computes - one of its
  * readers, records or digests, its refusal, or a builtin its readers run on - which the full run's rows judge (the
  * fail-closed leg row, the R717 rows and the hollowing batteries), never collection.
+ * The final cut (wb-ouo3 refusal #4, M:44680; the rule 19 structural exit R-B258, whose child wb-mcoj carries the member
+ * coverage) narrows the reader claims to their pins, so these are NOT CLAIMED by this census either: what the readers of
+ * the modules loaded, the property writes and the uses of expect output on a form their rows do not plant - one import
+ * declaration binding a default together with named bindings or a namespace (G-MI-DEFAULT-NAMED, G-MI-DEFAULT-NS), an
+ * export * as <name> from a module (G-MI-NSEXPORT), an object pattern property with a computed key (G-PW-COMPUTED-KEY)
+ * and any other form or combination their rows do not plant - and the test context's own expect, a member named
+ * expect (G-CTX-TESTERS, under which -t 'AC2 bullet 1' exits 0). Each of those readers' docs names its planted forms.
  */
 /** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */
 const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };
@@ -1484,11 +1498,19 @@ function spelledAnywhere(file: string, text: string, pattern: RegExp): readonly 
   return out;
 }
 /**
- * R717 (wb-ouo3 cut #4, the modules-loaded class): every module a source loads - each import or export-from declaration
- * of any module as "<module> | <what it binds>", and each import(), require() call and import x = require() as "<the
- * code as written> | loaded at run time". vitestImports reads the vitest family alone, so chai's Assertion imported beside
- * it (refusal #3 T-CHAI, with Assertion.overwriteMethod("toEqual", ...) at module scope: no expect member, no global and
- * no prototype route written) read as nothing at cut #3; this reading names each of those loads, of any module.
+ * R717 (wb-ouo3 cut #4, the modules-loaded class; narrowed to its pins by the final cut, wb-ouo3 refusal #4 U1 (a)-(b)
+ * and F3, R-B258): a source's module loads in the forms its rows plant - the "the modules loaded" row's loads.ts lines
+ * (import a from "a", import * as b from "b", import { c, d as e } from "c", import type { F } from "f" and import "g",
+ * each as "<module> | <what it binds>"; export * from "h" and export { i } from "i", as "<module> | re-exports <its
+ * clause as written>"; import("j"), require("k") and import l = require("l"), as "<the code as written> | loaded at run
+ * time"; a local export and another call read as nothing), this file's own imports (MODULE_IMPORTS_OF_RECORD: a default
+ * alone, and named bindings alone, inline type-only ones included) and the planted members' named imports of chai
+ * (T-CHAI) and vitest/suite (C-VITEST-SUITE). vitestImports reads the vitest family alone, so chai's Assertion imported
+ * beside it (refusal #3 T-CHAI, with Assertion.overwriteMethod("toEqual", ...) at module scope: no expect member, no
+ * global and no prototype route written) read as nothing at cut #3; this reading names that load. What it outputs on
+ * any other form - one declaration binding a default together with named bindings (G-MI-DEFAULT-NAMED) or a namespace
+ * (G-MI-DEFAULT-NS), an export * as <name> (G-MI-NSEXPORT), or another form or combination - is NOT CLAIMED by this
+ * census (no row plants it; wb-mcoj carries the coverage).
  */
 function moduleImports(file: string, text: string): readonly string[] {
   const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -1531,13 +1553,21 @@ const REFLECTIVE_ROUTE = /^(getOwnPropertyDescriptor|getOwnPropertyDescriptors|g
  */
 const WRITER_ROUTE = /^(assign|set|deleteProperty|__defineGetter__|__defineSetter__)$/;
 /**
- * R717 (wb-ouo3 cut #4, the property-writes class): every write a source makes to a member - an assignment of any
- * assignment operator, an increment or a decrement whose target is a member access (through parentheses, a type
- * assertion, a non-null or satisfies expression, a spread, or an array or object pattern), a member written by a for-in
- * or for-of head, and every delete - as "<the write> <the target as written> at <line:column>", then every writer API
- * WRITER_ROUTE names, as spelledAnywhere reads it. This file makes no such write and names no such API, so a member
- * write in its text reads here whatever route reached the object (refusal #3 T-DESC-SORT's arrayMethods.sort; cut #3's
- * T-SORT and T-PROTO wrote their tamper the same way).
+ * R717 (wb-ouo3 cut #4, the property-writes class; narrowed to its pins by the final cut, wb-ouo3 refusal #4 U1 (c),
+ * R-B258): a source's member writes in the forms its rows plant, each as "<the write> <the target as written> at
+ * <line:column>" - the "the property writes" row's writes.ts lines (a.b = 1, a[k] += 1, a.c ??= 2 and a.x ^= 1: the
+ * first and last assignment operators and two between; delete a.d; a.e++, --a[f] and (a.y)++; [a.g] = list,
+ * ({ h: a.i } = source), (a.p) = 1, [...a.q] = list, ({ ...a.r } = source), (a.s as number) = 1, (<number>a.t) = 1,
+ * a.u! = 1, (a.v satisfies number) = 1 and [a.w = 1] = list, the last read twice - the pattern's write and its default's
+ * own; for (a.j of list) {} and for (a.z in source) {}) and the planted members' assignments to a property access
+ * (T-DESC-SORT's arrayMethods.sort = ..., C-MEMBER-WRITE's box.value = 1) - then each writer API WRITER_ROUTE names,
+ * spelled as the row spells it (Object.assign, Reflect.set, Reflect.deleteProperty, a.__defineGetter__ and
+ * a.__defineSetter__); a name write, a name update and a longer name read as nothing. This file makes none of those
+ * writes and names no such API, so a write of those forms in its text reads here whatever route reached the object
+ * (refusal #3 T-DESC-SORT's arrayMethods.sort; cut #3's T-SORT and T-PROTO wrote their tamper the same way). What it
+ * outputs on any other form - an object pattern property with a computed key (G-PW-COMPUTED-KEY), another operator,
+ * target, wrapper, pattern or nesting, or a combination the rows do not plant - is NOT CLAIMED by this census (no row
+ * plants it; wb-mcoj carries the coverage).
  */
 function propertyWrites(file: string, text: string): readonly string[] {
   const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -2002,8 +2032,8 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
     ]);
   });
 
-  it("expect is only called (refusal #2 U1): every use of vitest's expect in this file is a direct call that resolves to its named import, and the reader sees each other use as written", () => {
-    expect(hookRoster(SELF, readRepo(SELF), [], ["expect"]).uncalled, "every use of expect but a direct call of its named import from vitest").toEqual([]);
+  it("expect is only called (refusal #2 U1): the reader reads no use of the identifier expect in this file but a direct call that resolves to its named import, and reads each other use its row plants as written", () => {
+    expect(hookRoster(SELF, readRepo(SELF), [], ["expect"]).uncalled, "each use of the identifier expect the reader reads, but a direct call of its named import from vitest").toEqual([]);
     const tampered = hookRoster(
       "tampered.ts",
       [
@@ -2400,8 +2430,8 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
     expect(timeouts.filter(timeout => timeout === LEG_BUDGET_MS), "the fail-closed leg row and every planted-member row").toHaveLength(1 + PLANTED_MEMBERS.length);
   });
 
-  it("the modules loaded (R717): this file loads exactly the modules of record, and the reader names each load form as written", () => {
-    expect(moduleImports(SELF, readRepo(SELF)), "every module this file loads, with what it binds").toEqual([...MODULE_IMPORTS_OF_RECORD]);
+  it("the modules loaded (R717): the reader reads this file's loads as exactly the record, and names each load form its row plants as written", () => {
+    expect(moduleImports(SELF, readRepo(SELF)), "this file's loads as the reader reads them, with what each binds").toEqual([...MODULE_IMPORTS_OF_RECORD]);
     const loads = ['import a from "a";', 'import * as b from "b";', 'import { c, d as e } from "c";', 'import type { F } from "f";', 'import "g";', 'export * from "h";', 'export { i } from "i";', 'const j = await import("j");', 'const k = require("k");', 'import l = require("l");', "export { z };", 'const m = load("m");'].join("\n");
     expect(moduleImports("loads.ts", loads), "a default, namespace, named, type-only and bare import, two re-exports, import(), require() and import = require(); a local export and another call read as nothing").toEqual([
       "a | default as a",
@@ -2440,8 +2470,8 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
     ]);
   });
 
-  it("the property writes (R717): this file writes no member and names no writer API, and the reader sees each write form as written", () => {
-    expect(propertyWrites(SELF, readRepo(SELF)), "every member write and writer API in this file").toEqual([]);
+  it("the property writes (R717): the reader reads no member write and no writer API in this file, and reads each write form its row plants as written", () => {
+    expect(propertyWrites(SELF, readRepo(SELF)), "the member writes and writer APIs the reader reads in this file").toEqual([]);
     const writes = [
       "a.b = 1;",
       "a[k] += 1;",
@@ -2472,7 +2502,7 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
       "x = 1;",
       "x++;",
     ].join("\n");
-    expect(propertyWrites("writes.ts", writes), "the first and last assignment operators and two between, a delete, updates, every unwrapped and destructuring target, both loop heads and each writer API; a name write and a longer name read as nothing").toEqual([
+    expect(propertyWrites("writes.ts", writes), "the first and last assignment operators and two between, a delete, updates, each unwrapped and destructuring target it plants, both loop heads and each writer API; a name write and a longer name read as nothing").toEqual([
       "an assignment to a.b at 1:1",
       "an assignment to a[k] at 2:1",
       "an assignment to a.c at 3:1",
@@ -2556,7 +2586,8 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
  * exits 1, the error naming each reading that differs. Read here: the roster's findings and registrations, the call-site
  * registration's shape, declarations and names, every statement naming the call-site state but the frozen shape's own
  * declaration (that literal is the AC1 rows' and the rule 16 battery's, which a full run judges), every each-table case
- * (the AC2 cases' and the R717 planted members'), every use of expect, the vitest import, the runner reads, the
+ * (the AC2 cases' and the R717 planted members'), the uses of the identifier expect its reader reads (a member named
+ * expect: NOT CLAIMED, the final cut's narrowing, R-B258), the vitest import, the runner reads, the
  * spellings of the two named residuals and, from cut #4 (R717), the modules loaded, the reflective routes spelled, the
  * property writes, the call-site text, the guard's declaration and the guard's names - the closed list
  * TAMPER_CLASSES_OF_RECORD. Cut #3 said here that every run exits 1 on any difference; refusal #3's W-SWALLOW-T, T-CHAI,
