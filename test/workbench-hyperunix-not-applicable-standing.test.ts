@@ -53,7 +53,21 @@
  *      the ExecutionStatus kinds read from the installed declaration and never through the binding, and frozen, cells
  *      included. R0's declared join requires kindVisits over R0's own reading of the declaration to equal DECLARED_VISITS,
  *      so an edit that moves the cells built on one side of that join (kindVisits or R0's reading of the declaration on one
- *      side, DECLARED_VISITS's loops or its reading on the other) reds R0 unless the other side moves with it. So a
+ *      side, DECLARED_VISITS's loops or its reading on the other) reds R0 unless the other side moves with it. A handed
+ *      value can also decide its own equality (wb-ey9p cut #4, the refusal-#3 U1-U3 cure): vitest's toStrictEqual asks a
+ *      value that carries an asymmetricMatch function whether it equals the other side before any type or value check (eq
+ *      in @vitest/expect), so a handed kind or cell, a roster member or the binding itself could meet a join or a guard on
+ *      its own verdict. So the frozen shapes, the Completeness join, the kind join, the visit join, the declared join and
+ *      the READ_KINDS join in R0, and every record guard (the EXPECTED_VISITS guards of T2, K1, K2, C1, C2 and C3 and the
+ *      declared-visit guards of C1, C2 and C3), compare their two sides a second time through primitiveView (the primitive
+ *      pass, after the first): a projection that reads an array's members by index, in order and recursively, keeps a
+ *      primitive as it is and replaces any other value by a fresh marker object naming its typeof, so the two sides agree
+ *      only where both hold equal primitives or both hold non-primitives of one typeof, member by member and in order, and
+ *      no object (a matcher, a boxed string, any other object or function) is read as the kind or cell it stands for; each
+ *      primitive pass carries its first pass's message. R0's
+ *      other joins (the adapter joins of COMPLETE_KINDS and MUTATION_KINDS, LICENCES at run time and the NOT_APPLICABLE
+ *      derivation) compare a literal roster, whose members the frozen-shape primitive pass holds, with values R0 builds
+ *      itself from the declaration, the adapter or that roster. So a
  *      module-scope shadow or rebinding of the import, or an edit of the adapter tuple itself
  *      (src/workbench/hyperunix-observer.ts), that substitutes, drops, duplicates, adds or reorders a kind in what R0 reads
  *      of it (its members, and what its filter or flatMap hands READ_KINDS and EXPECTED_VISITS) reds R0, and one that does
@@ -78,17 +92,22 @@
  *      roster's first member and the frozen literal together: the bead text lives in the tracker, which this file does not
  *      read); which HXS frame kinds carry a completeness verdict (T2 refuses the word on both listed frames; the SDK's frame
  *      set is not read); an edit of a guard or of a record (a case-local EXPECTED_CELLS or EXPECTED_VISITS, a declared-visit
- *      guard, or a recorded value other than the driven one); an edit that hands the SDK or the adapter a value other than
- *      the recorded loop value (inside a loop body, or a case-local rebinding of a helper such as reading or sdkDocument); a
- *      case-local rebinding that changes no driven cell (K1's kind-set assertion reads HYPERUNIX_EXECUTION_KINDS but drives
+ *      guard, a primitive pass or primitiveView itself, or a recorded value other than the driven one); an edit that hands
+ *      the SDK or the adapter a value other than the recorded loop value (inside a loop body, or a case-local rebinding of
+ *      a helper such as reading or sdkDocument);
+ *      a case-local rebinding that changes no driven cell (K1's kind-set assertion reads HYPERUNIX_EXECUTION_KINDS but drives
  *      no cell from it), and what any binding hands that assertion when K1 reads it (R0 holds the members as R0 reads them);
  *      an edit of the installed SDK declaration, or edits that move both sides of R0's declared join together (kindVisits or
  *      R0's reading of the declaration, with DECLARED_VISITS's loops or its reading), together with the binding, or a
  *      rebinding of the imported ExecutionStatusKind type (the kind join's anchors moved with it; the observer suite reads
  *      the src export against that declaration); an override of a literal roster's own methods (its iteration, filter,
  *      flatMap or map, or a set's has) that keeps its members (R0's frozen shapes compare members, and every visit build,
- *      the cases' records included, is driven through the same literal rosters); and a patch of a shared prototype (an Array
- *      or Set method of the realm, which can move the declared side of a join with the binding). RESIDUALS: none.
+ *      the cases' records included, is driven through the same literal rosters); an edit of the adapter beyond its tuple, or
+ *      of the SDK, whose outputs or errors decide a comparison on their own verdict (the primitive pass holds the rosters,
+ *      the binding and what it hands on, the joins and the records; the cases read the adapter's and the SDK's outputs and
+ *      errors by toStrictEqual, toMatchObject, toBeInstanceOf and toBe as before); and a patch of a shared prototype (an Array
+ *      or Set method of the realm, Array.isArray and Array.from included, which can move the declared side of a join with
+ *      the binding or steer primitiveView). RESIDUALS: none.
  * T1, T2, C1 and R0's Completeness join state the vendored SDK 0.1.0 and move with an amended SDK (each names this bead's
  * on-landing leg); R0's kind join states the SDK's ExecutionStatus kinds and moves with an amended SDK only when they move, as
  * the observer suite's tuple pins do; K1, K2, C2, C3 and R0's other joins hold before and after it. Pure: no HX binary, scratch
@@ -287,6 +306,21 @@ function thrown(fn: () => unknown): unknown {
   try { fn(); } catch (error) { return error; }
   throw new Error('expected a refusal');
 }
+/** The primitive pass (wb-ey9p cut #4, the refusal-#3 U1-U3 cure): vitest's toStrictEqual asks a value that carries an
+ * asymmetricMatch function whether it equals the other side before any type or value check, so a handed kind or cell, a
+ * roster member or the binding itself could meet a join or a guard on its own verdict. primitiveView reads an array's members
+ * by index, in order and recursively, keeps a primitive as it is and replaces any other value by a fresh marker object naming
+ * its typeof, so two views agree only where both hold equal primitives or both hold non-primitives of one typeof, member by
+ * member and in order: no object (a matcher, a boxed string, any other object or function) reads as the primitive it stands
+ * for, and a view carries no protocol of its own. The joins and record guards the header names compare their two sides a
+ * second time through it, after the first comparison and with its message. */
+function primitiveView(value: unknown): unknown {
+  if (Array.isArray(value)) {
+    const members: readonly unknown[] = value;
+    return Array.from({length: members.length}, (_, index) => primitiveView(members[index]));
+  }
+  return (typeof value === 'object' && value !== null) || typeof value === 'function' ? {nonPrimitive: typeof value} : value;
+}
 
 describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as a known verdict', () => {
   it('R0: every roster joins an anchor outside its own literal and the literal rosters hold a frozen shape, so no cell guard can move with an edited roster', () => {
@@ -295,6 +329,11 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
       .toStrictEqual({NOT_APPLICABLE: ['not-applicable', 'not_applicable', 'notApplicable', 'inapplicable'],
         PRE_EXISTING: ['complete', 'incomplete', 'unknown', null], VERDICT_FRAMES: ['result-coverage', 'answer-coverage'],
         MUTATION_KINDS: ['mutation-rejected', 'mutation-partial'], COMPLETE_KINDS: ['complete', 'complete-empty'], LICENCES: [true, false]});
+    // The primitive pass of the frozen shapes (wb-ey9p cut #4): a roster that carries the asymmetricMatch protocol, on itself or
+    // on a member, decides the comparison above on its own verdict; through primitiveView each roster holds its literal members.
+    expect([NOT_APPLICABLE, PRE_EXISTING, VERDICT_FRAMES, [...MUTATION_KINDS], [...COMPLETE_KINDS], LICENCES].map(primitiveView))
+      .toStrictEqual([['not-applicable', 'not_applicable', 'notApplicable', 'inapplicable'], ['complete', 'incomplete', 'unknown', null],
+        ['result-coverage', 'answer-coverage'], ['mutation-rejected', 'mutation-partial'], ['complete', 'complete-empty'], [true, false]]);
     // Type level (typecheck:test): each closed roster is exactly its type, so a dropped member fails typing.
     expectTypeOf<(typeof PRE_EXISTING)[number]>().toEqualTypeOf<Completeness | null>();
     expectTypeOf<(typeof LICENCES)[number]>().toEqualTypeOf<CoverageSummary['licensesAbsence']>();
@@ -310,6 +349,8 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     const completeness = declared('Completeness');
     expect(PRE_EXISTING, COMPLETENESS_JOIN).toStrictEqual([...completeness, null]);
     expect(FRAME_VALUES, COMPLETENESS_JOIN).toStrictEqual(completeness);
+    expect(primitiveView(PRE_EXISTING), COMPLETENESS_JOIN).toStrictEqual(primitiveView([...completeness, null]));
+    expect(primitiveView(FRAME_VALUES), COMPLETENESS_JOIN).toStrictEqual(primitiveView(completeness));
     // HYPERUNIX_EXECUTION_KINDS as this file binds it (wb-ey9p): exactly the SDK ExecutionStatusKind at type level, and at run
     // time its members are the ExecutionStatus kinds of the installed declaration, member for member and in declaration order,
     // so an edit of its members or their order reds here before the joins below, EXPECTED_CELLS or EXPECTED_VISITS can move
@@ -321,21 +362,29 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     expect(statusEnd, KIND_JOIN).toBeGreaterThan(statusStart);
     const declaredKinds = [...declaration.slice(statusStart, statusEnd).matchAll(/readonly kind: "([^"]+)";/g)].map(match => match[1]);
     expect(HYPERUNIX_EXECUTION_KINDS, KIND_JOIN).toStrictEqual(declaredKinds);
+    // Its primitive pass (wb-ey9p cut #4, refusal #3 U3): the binding's members read by index, so a binding that carries the
+    // asymmetricMatch protocol cannot meet the join above on its own verdict.
+    expect(primitiveView(HYPERUNIX_EXECUTION_KINDS), KIND_JOIN).toStrictEqual(primitiveView(declaredKinds));
     // The visit join (wb-ey9p cut #2, the refusal-#1 U1 and U2 cure): a binding, or the adapter tuple itself, can hold the
     // declared members while its filter or flatMap hands on other kinds. EXPECTED_VISITS's c1, c2 and c3 were built at module
     // scope through READ_KINDS (the binding's filter) and the binding's flatMap; built again here over the declared kinds they
     // must agree, member for member and in order, and C1, C2 and C3 compare what their own loops drive with the same entries.
     const {c1, c2, c3} = EXPECTED_VISITS;
     expect({c1, c2, c3}, VISIT_JOIN).toStrictEqual(kindVisits(declaredKinds, declaredKinds.filter(kind => !MUTATION_KINDS.has(kind))));
+    const declaredCells = kindVisits(declaredKinds, declaredKinds.filter(kind => !MUTATION_KINDS.has(kind)));
+    expect(primitiveView([c1, c2, c3]), VISIT_JOIN).toStrictEqual(primitiveView([declaredCells.c1, declaredCells.c2, declaredCells.c3]));
     // The declared join (wb-ey9p cut #3): DECLARED_VISITS, which C1, C2 and C3 compare what their loops drove with after their
     // EXPECTED_VISITS guards, built by its own loops over its own reading, equals kindVisits over this reading of the declaration.
     expect(DECLARED_VISITS, DECLARED_JOIN).toStrictEqual(kindVisits(declaredKinds, declaredKinds.filter(kind => !MUTATION_KINDS.has(kind))));
+    expect(primitiveView([DECLARED_VISITS.c1, DECLARED_VISITS.c2, DECLARED_VISITS.c3]), DECLARED_JOIN)
+      .toStrictEqual(primitiveView([declaredCells.c1, declaredCells.c2, declaredCells.c3]));
     // COMPLETE_KINDS is the adapter's own licensed reading; MUTATION_KINDS is its read-outcome clause and READ_KINDS the rest,
     // each read over the declared kinds (wb-ey9p cut #2), never through the binding's own filter.
     const readOutcome = declaredKinds.filter(kind => hxLiveInvariant(reading(kind, false)).violations.includes('read-outcome'));
     expect([...COMPLETE_KINDS]).toStrictEqual(declaredKinds.filter(kind => hxLiveInvariant(reading(kind, true)).absenceLicensed));
     expect([...MUTATION_KINDS]).toStrictEqual(readOutcome);
     expect(READ_KINDS).toStrictEqual(declaredKinds.filter(kind => !readOutcome.includes(kind)));
+    expect(primitiveView(READ_KINDS)).toStrictEqual(primitiveView(declaredKinds.filter(kind => !readOutcome.includes(kind))));
     // LICENCES at run time too (wb-aced F2), so no annotation can hollow it beside its frozen literal: every licence's negation
     // is a licence (both boolean values are held), and hxLiveInvariant licenses absence on exactly COMPLETE_KINDS under the
     // first licence and on no kind under the second.
@@ -395,6 +444,8 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     expect(validity).toBe(EXPECTED_CELLS.t2Validity);
     expect(refusalVisits).toStrictEqual(EXPECTED_VISITS.t2Refusals);
     expect(validityVisits).toStrictEqual(EXPECTED_VISITS.t2Validity);
+    expect(primitiveView(refusalVisits)).toStrictEqual(primitiveView(EXPECTED_VISITS.t2Refusals));
+    expect(primitiveView(validityVisits)).toStrictEqual(primitiveView(EXPECTED_VISITS.t2Validity));
   });
 
   it('K1: every spelling is outside the closed kind set, refused before projecting under either licence, and breaks the execution-kind clause', () => {
@@ -415,6 +466,7 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     }
     expect(cells).toBe(EXPECTED_CELLS.k1);
     expect(visits).toStrictEqual(EXPECTED_VISITS.k1);
+    expect(primitiveView(visits)).toStrictEqual(primitiveView(EXPECTED_VISITS.k1));
   });
 
   it('K2: through the representation decoder the word as a kind rebuilds as protocol-failed, which stays a failure that never licenses absence', () => {
@@ -433,6 +485,7 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     }
     expect(cells).toBe(EXPECTED_CELLS.k2);
     expect(visits).toStrictEqual(EXPECTED_VISITS.k2);
+    expect(primitiveView(visits)).toStrictEqual(primitiveView(EXPECTED_VISITS.k2));
   });
 
   it('C1: the representation decoder keeps no spelling as a completeness value: each rebuilds as null, byte-identical to its null twin', () => {
@@ -450,7 +503,9 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     }
     expect(cells).toBe(EXPECTED_CELLS.c1);
     expect(visits).toStrictEqual(EXPECTED_VISITS.c1);
+    expect(primitiveView(visits)).toStrictEqual(primitiveView(EXPECTED_VISITS.c1));
     expect(visits, DECLARED_VISIT).toStrictEqual(DECLARED_VISITS.c1);
+    expect(primitiveView(visits), DECLARED_VISIT).toStrictEqual(primitiveView(DECLARED_VISITS.c1));
   });
 
   it('C2: a reading carrying the word past the decoder never reads complete, success or known-empty and never licenses absence without the runtime licence', () => {
@@ -485,7 +540,9 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     expect(projected).toBe(EXPECTED_CELLS.c2Projected);
     expect(refused).toBe(EXPECTED_CELLS.c2Refused);
     expect(visits).toStrictEqual(EXPECTED_VISITS.c2);
+    expect(primitiveView(visits)).toStrictEqual(primitiveView(EXPECTED_VISITS.c2));
     expect(visits, DECLARED_VISIT).toStrictEqual(DECLARED_VISITS.c2);
+    expect(primitiveView(visits), DECLARED_VISIT).toStrictEqual(primitiveView(DECLARED_VISITS.c2));
   });
 
   it('C3: every pre-existing completeness value projects byte-identically to the completeness-free reading, for every kind and licence', () => {
@@ -511,6 +568,8 @@ describe('wb-tz2.4 standing leg: a not-applicable value cannot silently read as 
     }
     expect(cells).toBe(EXPECTED_CELLS.c3);
     expect(visits).toStrictEqual(EXPECTED_VISITS.c3);
+    expect(primitiveView(visits)).toStrictEqual(primitiveView(EXPECTED_VISITS.c3));
     expect(visits, DECLARED_VISIT).toStrictEqual(DECLARED_VISITS.c3);
+    expect(primitiveView(visits), DECLARED_VISIT).toStrictEqual(primitiveView(DECLARED_VISITS.c3));
   });
 });
