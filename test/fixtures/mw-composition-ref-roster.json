@@ -4005,6 +4005,12 @@
     ],
     "misplaced": []
    },
+   "lead-after-space": {
+    "runs": [
+     "(x)"
+    ],
+    "misplaced": []
+   },
    "lead-twice": {
     "runs": [
      "(y)"
@@ -4166,7 +4172,8 @@
    "leadGap": [
     "0020"
    ],
-   "leadSecond": []
+   "leadSecond": [],
+   "leadBefore": []
   }
  }
 }
