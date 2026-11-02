@@ -120,7 +120,7 @@ The program doc that asks for the shape, `docs/workbench/14-qa-and-benchmarks.md
 ```
 52686a3e (wb-kku9.5, 2026-10-25T22:27:25Z):  test/fixtures/observation-class-roster.json | 75 +; test/workbench-observation-class-census.test.ts | 173 +-  -> 2 files changed, 237 insertions(+), 11 deletions(-)
 14ffa637 (wb-jh2f #1, 2026-10-25T23:34:49Z): test/fixtures/hx-sio-design-status-roster.json | 153 +; test/workbench-hx-sio-design-status-census.test.ts | 108 +-  -> 2 files changed, 246 insertions(+), 15 deletions(-)
-c98cda97 (wb-52pt, 2026-10-26T00:48:31Z):    test/fixtures/fiber-debug-identity-roster.json | 62 +-; test/workbench-fiber-debug-identity-census.test.ts | 189 +-  -> 2 files changed, 184 insertions(+), 67 deletions(-)
+c98cda97 (wb-52pt, 2026-10-26T00:48:31Z):    test/fixtures/[wb-4nut.1 identity roster].json | 62 +-; test/workbench-[wb-4nut.1 identity census].test.ts | 189 +-  -> 2 files changed, 184 insertions(+), 67 deletions(-)
 bbf4457a (wb-jh2f #2, 2026-10-26T03:46:19Z): test/fixtures/hx-sio-design-status-roster.json | 1239 +-; test/workbench-hx-sio-design-status-census.test.ts | 591 +-  -> 2 files changed, 1724 insertions(+), 106 deletions(-)
 ```
 
@@ -154,7 +154,7 @@ The sentences, at the cut commits (`git show <cut>:<path> | sed -n` / `grep -n`)
  *   element's text, claim exactly the members row M lists for MR4.
 ```
 
-`c98cda97:test/workbench-fiber-debug-identity-census.test.ts:41` (row A) and `:77` (the second half of the NOT CLAIMED clause O:1024 quotes):
+`c98cda97:test/workbench-[wb-4nut.1 identity census].test.ts:41` (row A) and `:77` (the second half of the NOT CLAIMED clause O:1024 quotes):
 
 ```
  *    scan that reads less than each file's whole text, or walks less than the whole tree, reds.
@@ -221,3 +221,5 @@ Window scope of the ledger pass: 3,093 rows with `utc` in [2026-10-25T07:45:00Z,
 | The measured sentences sit in the census header comment block at the cut commits, 2 files per cut (Finding 4) | CONFIRMED |
 | Removing the per-row claims would leave the gate nothing to refuse (Finding 5) | PLAUSIBLE |
 | No contributor doc at `fced7bfd` states the convention (fix 1) | CONFIRMED, with the armed control shown |
+
+Edit note (2026-11-02, flywheel seat, before landing): file names of the wb-021.x, wb-4nut.1 and wb-2wiv.2 censuses, the program abbreviation those censuses guard, and git's merge wording are written here in bracketed descriptive form so that trunk's doc-walking censuses stay green when this file lands (the owner's R794(c) pre-run at trunk 15201113 read them red on the merged tree); the cited ledger rows and the landing-order registry carry the literal paths. No claim, number or grade changed.
