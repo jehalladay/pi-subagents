@@ -91,11 +91,14 @@
  *    such a request fails it, and all three minted for recorded requests pass; each decision control reads, per handed
  *    decision, whether a recorded request answers its receipt, beside the checks the call fails); the decisions over a
  *    record (in one F3 call handing two or three decisions over a record of F1's requests for the snapshot's first one,
- *    two, three or four can_execute candidates, in the snapshot's order, the decision at the first or second of two and
- *    at the first, middle or last of three, its fellows the permit for the record's first request, passes minted for
- *    the request at each position of that record and fails minted for a request the record does not hold; each reads
- *    the record's size and, per handed decision, the index of the recorded request its receipt answers (-1: none),
- *    beside the checks the call fails); the echo (the permit's
+ *    two, three or four can_execute candidates, in the snapshot's order, each under serial 0, the decision at the first
+ *    or second of two and at the first, middle or last of three, its fellows the permit for the record's first request,
+ *    passes minted for the request at each position of that record and fails minted for each request of those four
+ *    candidates under serial 0 or 1 that the record does not hold, one at a time: the record's first candidate's under
+ *    serial 1 (the none entries), and in the unrecorded table each candidate's outside the record under serial 0 and
+ *    each of the four candidates' under serial 1, every reading there naming the invocationId its decision's receipt
+ *    carries; each reads the record's size and, per handed decision, the index of the recorded request its receipt
+ *    answers (-1: none), beside the checks the call fails); the echo (the permit's
  *    receipt answers the request it was minted for, with that request's grants in either order, and answers it no longer
  *    with one echoed field or its grant altered alone as planted: a string or the grant gaining a final ~, an object
  *    gaining a member). A4 a hand-built look-alike permit and a spread copy of a minted one fail
@@ -147,7 +150,11 @@
  * decideControl besides the request (the projection and the clock), and the request's params, which no receipt echoes; a
  * record, a check or a serial that misses a request only past the fourth one a call issues (the reader controls issue up to
  * four);
- * a check that skips a handed decision only past the third one a call hands (the check controls hand three); a serial that
+ * a check that skips a handed decision only past the third one a call hands (the check controls hand three); a check
+ * that skips a later decision whenever an earlier one in its call does not answer the record's first request (the
+ * decisions over a record hand the permit for the record's first request as every fellow); a decision over a record
+ * minted for a request under a serial other than 0 or 1, or for another fixture's request (the decisions over a record
+ * mint over F1's requests under serials 0 and 1); a serial that
  * two calls over one fixture share only when they are not in a row (the serial control drives each fixture twice in a row);
  * which object holding the returned grants array M-FORGED-GRANT hands decideControl (the object requestOf returned or a copy
  * sharing that array: no echoed field tells them apart); a check that skips a request or a decision only on a fixture
@@ -218,10 +225,29 @@
  * request, at each position of one to four" named a record of three or more with a second or later decision, which no
  * A3 control planted, and the gate's one-edit members of the check line Z05 (a call's second and later decisions judged
  * only while the record holds fewer than three requests) and Z06 (those decisions read against the record's first two
- * requests only) survived there. A3's decisions over a record plant that product for two and three handed decisions,
- * and the position controls of the check over a record plant it for one, so the CHECKS words stand as they were.
- * Beside that control, its sentence above and its assertion, no claim, reading, mutant, control, pin or test title
- * changes; the A3 witness gains the control's table (decisionsOverRecords). Display paths added: none.
+ * requests only) survived there. Cut #1: A3's decisions over a record planted that product for two and three handed
+ * decisions with one unanswering form, the record's first candidate's request under serial 1, and the position controls
+ * of the check over a record plant it for one. Beside that control, its sentence above and its assertion, no claim,
+ * reading, mutant, control, pin or test title changed; the A3 witness gained the control's table (decisionsOverRecords).
+ * Cut #2 (refusal #1 of cut #1, gate-prep-8 / g10-gate-s191: unmet U1 MEDIUM and U2 LOW, claims wider than pins): that
+ * one form shares the fellows' target and the record's first request's target, and the gate's one-edit members of the
+ * check line HP01 (a call's second and later decisions over a record of three or more judged only when their receipt's
+ * target is the first decision's), HP02 (only when it is some recorded request's target) and HP05 (a call handing two or
+ * more decisions over a record of three or more reading only the decisions that target the record's first request's
+ * target) survived there, while the sentence said the decision fails minted for a request the record does not hold and
+ * this history said the product planted. U1: the decisions over a record now also plant, at each placement and over
+ * each record of one to four, a decision minted for each request of the four candidates under serial 0 or 1 that the
+ * record does not hold (unrecordedOverRecords: each candidate's outside the record under serial 0, then each of the
+ * four candidates' under serial 1, in the snapshot's order; 22 readings per placement, 110 in all, each naming the
+ * invocationId its decision's receipt carries), so HP01, HP02 and HP05 red A3; the none entries' assertion names
+ * their one form, and an assertion on its receipt's invocationId pins it (the gate's HQ01, an alternative planting of
+ * that form at refusal #1, reds A3). U2: the sentence above now names that cut #1 planted one form, and the CHECKS
+ * product is planted in the forms A3's sentence names. Two clauses join NOT CLAIMED: a check that skips a later
+ * decision whenever an earlier one in its call does not answer the record's first request (the gate's HP06, recorded
+ * at refusal #1 as outside the control's form), and a decision minted under a serial other than 0 or 1 or for another
+ * fixture's request. Beside that table, its assertion, the none entries' assertion message and form pin, A3's
+ * sentence on the decisions over a record, those two clauses and this history, no claim, reading, mutant, control,
+ * pin or test title changes; the A3 witness gains unrecordedOverRecords. Display paths added: none.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -1201,7 +1227,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         },
       ]),
     );
-    expect(decisionsOverRecords, "in one F3 call handing two or three decisions over a record of F1's requests for the snapshot's first one, two, three or four can_execute candidates, in the snapshot's order, the decision at the first or second of two and at the first, middle or last of three, its fellows the permit for the record's first request, passes minted for the request at each position of that record and fails minted for a request the record does not hold; each reads the record's size and, per handed decision, the index of the recorded request its receipt answers (-1: none), beside the checks the call fails").toEqual({
+    expect(decisionsOverRecords, "in one F3 call handing two or three decisions over a record of F1's requests for the snapshot's first one, two, three or four can_execute candidates, in the snapshot's order, the decision at the first or second of two and at the first, middle or last of three, its fellows the permit for the record's first request, passes minted for the request at each position of that record and fails minted for the record's first candidate's request under serial 1, which the record does not hold; each reads the record's size and, per handed decision, the index of the recorded request its receipt answers (-1: none), beside the checks the call fails").toEqual({
       "first of two": {
         "1 of 1": { requests: 1, answered: [0, 0], found: [] },
         "1 of 2": { requests: 2, answered: [0, 0], found: [] },
@@ -1283,6 +1309,188 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         "none of 4": { requests: 4, answered: [0, 0, -1], found: ["effect-unrequested"] },
       },
     });
+    const noneMinted = String(own(own(outside, "receipt"), "invocationId"));
+    expect(noneMinted, "the none entries' decision is minted for the record's first candidate's request under serial 1").toBe(`inv-F1-1-${chosen}`);
+    const unrecordedFor = (size: number): NativeControlRequest[] => [
+      ...candidates.slice(size).map(candidate => requestFor(F1, candidate)),
+      ...candidates.map(candidate => requestFor(F1, candidate, 1)),
+    ];
+    const unrecordedOverRecords = Object.fromEntries(
+      Object.entries(placements).map(([label, [at, count]]) => [
+        label,
+        Object.fromEntries(
+          sizes.map(size => [
+            `over ${size}`,
+            unrecordedFor(size).map(request => {
+              const decision = decideControl(request, { projection: projectionOf(F1), now: () => DECIDED_AT });
+              return { minted: String(own(own(decision, "receipt"), "invocationId")), ...overRecord(at, count, decision, recordOf(size)) };
+            }),
+          ]),
+        ),
+      ]),
+    );
+    expect(unrecordedOverRecords, "in the same F3 calls over a record of F1's requests for the snapshot's first one, two, three or four can_execute candidates under serial 0, the decision at the first or second of two and at the first, middle or last of three, its fellows the permit for the record's first request, fails minted for each request of those four candidates under serial 0 or 1 that the record does not hold, one at a time (each candidate's outside the record under serial 0, then each of the four candidates' under serial 1, in the snapshot's order), each reading naming the invocationId its decision's receipt carries beside the record's size, the index each handed decision's receipt answers (-1: none) and the checks the call fails").toEqual({
+      "first of two": {
+        "over 1": [
+          { minted: "inv-F1-0-exec-a1-t2", requests: 1, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t2", requests: 1, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t3", requests: 1, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 1, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 1, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 1, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 1, answered: [-1, 0], found: ["effect-unrequested"] },
+        ],
+        "over 2": [
+          { minted: "inv-F1-0-exec-a2-t2", requests: 2, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t3", requests: 2, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 2, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 2, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 2, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 2, answered: [-1, 0], found: ["effect-unrequested"] },
+        ],
+        "over 3": [
+          { minted: "inv-F1-0-exec-a2-t3", requests: 3, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 3, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 3, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 3, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 3, answered: [-1, 0], found: ["effect-unrequested"] },
+        ],
+        "over 4": [
+          { minted: "inv-F1-1-exec-a1-t1", requests: 4, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 4, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 4, answered: [-1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 4, answered: [-1, 0], found: ["effect-unrequested"] },
+        ],
+      },
+      "second of two": {
+        "over 1": [
+          { minted: "inv-F1-0-exec-a1-t2", requests: 1, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t2", requests: 1, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t3", requests: 1, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 1, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 1, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 1, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 1, answered: [0, -1], found: ["effect-unrequested"] },
+        ],
+        "over 2": [
+          { minted: "inv-F1-0-exec-a2-t2", requests: 2, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t3", requests: 2, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 2, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 2, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 2, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 2, answered: [0, -1], found: ["effect-unrequested"] },
+        ],
+        "over 3": [
+          { minted: "inv-F1-0-exec-a2-t3", requests: 3, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 3, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 3, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 3, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 3, answered: [0, -1], found: ["effect-unrequested"] },
+        ],
+        "over 4": [
+          { minted: "inv-F1-1-exec-a1-t1", requests: 4, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 4, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 4, answered: [0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 4, answered: [0, -1], found: ["effect-unrequested"] },
+        ],
+      },
+      "first of three": {
+        "over 1": [
+          { minted: "inv-F1-0-exec-a1-t2", requests: 1, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t2", requests: 1, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t3", requests: 1, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 1, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 1, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 1, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 1, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+        ],
+        "over 2": [
+          { minted: "inv-F1-0-exec-a2-t2", requests: 2, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t3", requests: 2, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 2, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 2, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 2, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 2, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+        ],
+        "over 3": [
+          { minted: "inv-F1-0-exec-a2-t3", requests: 3, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 3, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 3, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 3, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 3, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+        ],
+        "over 4": [
+          { minted: "inv-F1-1-exec-a1-t1", requests: 4, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 4, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 4, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 4, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+        ],
+      },
+      "middle of three": {
+        "over 1": [
+          { minted: "inv-F1-0-exec-a1-t2", requests: 1, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t2", requests: 1, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t3", requests: 1, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 1, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 1, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 1, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 1, answered: [0, -1, 0], found: ["effect-unrequested"] },
+        ],
+        "over 2": [
+          { minted: "inv-F1-0-exec-a2-t2", requests: 2, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t3", requests: 2, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 2, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 2, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 2, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 2, answered: [0, -1, 0], found: ["effect-unrequested"] },
+        ],
+        "over 3": [
+          { minted: "inv-F1-0-exec-a2-t3", requests: 3, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 3, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 3, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 3, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 3, answered: [0, -1, 0], found: ["effect-unrequested"] },
+        ],
+        "over 4": [
+          { minted: "inv-F1-1-exec-a1-t1", requests: 4, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 4, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 4, answered: [0, -1, 0], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 4, answered: [0, -1, 0], found: ["effect-unrequested"] },
+        ],
+      },
+      "last of three": {
+        "over 1": [
+          { minted: "inv-F1-0-exec-a1-t2", requests: 1, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t2", requests: 1, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t3", requests: 1, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 1, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 1, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 1, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 1, answered: [0, 0, -1], found: ["effect-unrequested"] },
+        ],
+        "over 2": [
+          { minted: "inv-F1-0-exec-a2-t2", requests: 2, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-0-exec-a2-t3", requests: 2, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 2, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 2, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 2, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 2, answered: [0, 0, -1], found: ["effect-unrequested"] },
+        ],
+        "over 3": [
+          { minted: "inv-F1-0-exec-a2-t3", requests: 3, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t1", requests: 3, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 3, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 3, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 3, answered: [0, 0, -1], found: ["effect-unrequested"] },
+        ],
+        "over 4": [
+          { minted: "inv-F1-1-exec-a1-t1", requests: 4, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a1-t2", requests: 4, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t2", requests: 4, answered: [0, 0, -1], found: ["effect-unrequested"] },
+          { minted: "inv-F1-1-exec-a2-t3", requests: 4, answered: [0, 0, -1], found: ["effect-unrequested"] },
+        ],
+      },
+    });
     const receipt = own(permit, "receipt");
     const echoedByCore = record(receipt) ? Object.keys(receipt).filter(key => Object.hasOwn(mintedFor, key) && isDeepStrictEqual(own(receipt, key), own(mintedFor, key))) : [];
     expect(echoedByCore, "the request fields the core's own receipt echoes are the ones answers() reads (ECHOED)").toEqual([...ECHOED]);
@@ -1320,6 +1528,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       answered,
       decisions,
       decisionsOverRecords,
+      unrecordedOverRecords,
       echoedByCore,
       echo,
     };
