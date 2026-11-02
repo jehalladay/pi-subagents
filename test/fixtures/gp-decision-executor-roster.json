@@ -353,6 +353,9 @@
             ],
             "named": [
               "F1"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1"
             ]
           },
           {
@@ -379,6 +382,10 @@
             ],
             "named": [
               "F1"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2"
             ]
           },
           {
@@ -405,6 +412,11 @@
             ],
             "named": [
               "F1"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t2"
             ]
           },
           {
@@ -431,6 +443,12 @@
             ],
             "named": [
               "F1"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t2",
+              "frn-run-exec-a2-t3"
             ]
           }
         ],
@@ -459,6 +477,9 @@
             ],
             "named": [
               "F2"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1"
             ]
           },
           {
@@ -485,6 +506,10 @@
             ],
             "named": [
               "F2"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2"
             ]
           },
           {
@@ -511,6 +536,11 @@
             ],
             "named": [
               "F2"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t2"
             ]
           },
           {
@@ -537,6 +567,12 @@
             ],
             "named": [
               "F2"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t2",
+              "frn-run-exec-a2-t3"
             ]
           }
         ],
@@ -565,6 +601,9 @@
             ],
             "named": [
               "F3"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1"
             ]
           },
           {
@@ -591,6 +630,10 @@
             ],
             "named": [
               "F3"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2"
             ]
           },
           {
@@ -617,6 +660,11 @@
             ],
             "named": [
               "F3"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t2"
             ]
           },
           {
@@ -643,6 +691,12 @@
             ],
             "named": [
               "F3"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t2",
+              "frn-run-exec-a2-t3"
             ]
           }
         ],
@@ -671,6 +725,9 @@
             ],
             "named": [
               "F4"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1"
             ]
           },
           {
@@ -697,6 +754,10 @@
             ],
             "named": [
               "F4"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2"
             ]
           },
           {
@@ -723,6 +784,11 @@
             ],
             "named": [
               "F4"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t2"
             ]
           },
           {
@@ -749,6 +815,12 @@
             ],
             "named": [
               "F4"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t2",
+              "frn-run-exec-a2-t3"
             ]
           }
         ],
@@ -777,6 +849,9 @@
             ],
             "named": [
               "F5"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1"
             ]
           },
           {
@@ -803,6 +878,10 @@
             ],
             "named": [
               "F5"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2"
             ]
           },
           {
@@ -829,6 +908,11 @@
             ],
             "named": [
               "F5"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t2"
             ]
           },
           {
@@ -855,6 +939,12 @@
             ],
             "named": [
               "F5"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t2",
+              "frn-run-exec-a2-t3"
             ]
           }
         ]
@@ -1181,6 +1271,975 @@
           "requestedAt": false,
           "grant": false
         }
+      },
+      "forms": {
+        "receipt": {
+          "formed": {
+            "unaltered": "stop",
+            "scope gaining a member": {
+              "workspace": "/work/gp-decision-executor",
+              "principal": "operator",
+              "altered": true
+            },
+            "scope lacking workspace": {
+              "principal": "operator"
+            },
+            "scope holding another workspace": {
+              "workspace": "/work/gp-decision-executor~",
+              "principal": "operator"
+            },
+            "scope lacking principal": {
+              "workspace": "/work/gp-decision-executor"
+            },
+            "scope holding another principal": {
+              "workspace": "/work/gp-decision-executor",
+              "principal": "operator~"
+            },
+            "principal gaining a member": {
+              "id": "operator",
+              "role": "local-operator",
+              "altered": true
+            },
+            "principal lacking id": {
+              "role": "local-operator"
+            },
+            "principal holding another id": {
+              "id": "operator~",
+              "role": "local-operator"
+            },
+            "principal lacking role": {
+              "id": "operator"
+            },
+            "principal holding another role": {
+              "id": "operator",
+              "role": "local-operator~"
+            },
+            "target gaining a member": {
+              "provider": "furnace",
+              "type": "run",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor",
+              "altered": true
+            },
+            "target lacking provider": {
+              "type": "run",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target holding another provider": {
+              "provider": "furnace~",
+              "type": "run",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target lacking type": {
+              "provider": "furnace",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target holding another type": {
+              "provider": "furnace",
+              "type": "run~",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target lacking id": {
+              "provider": "furnace",
+              "type": "run",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target holding another id": {
+              "provider": "furnace",
+              "type": "run",
+              "id": "frn-run-exec-a1-t1~",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target lacking scope": {
+              "provider": "furnace",
+              "type": "run",
+              "id": "frn-run-exec-a1-t1"
+            },
+            "target holding another scope": {
+              "provider": "furnace",
+              "type": "run",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor~"
+            },
+            "action gaining a final ~": "stop~",
+            "action gaining a leading ~": "~stop",
+            "action in another case": "STOP",
+            "action without its last character": "sto",
+            "action without its first character": "top",
+            "invocationId gaining a final ~": "inv-F1-0-exec-a1-t1~",
+            "invocationId gaining a leading ~": "~inv-F1-0-exec-a1-t1",
+            "invocationId in another case": "INV-F1-0-EXEC-A1-T1",
+            "invocationId without its last character": "inv-F1-0-exec-a1-t",
+            "invocationId without its first character": "nv-F1-0-exec-a1-t1",
+            "requestedAt gaining a final ~": "2026-10-28T05:00:01Z~",
+            "requestedAt gaining a leading ~": "~2026-10-28T05:00:01Z",
+            "requestedAt in another case": "2026-10-28t05:00:01z",
+            "requestedAt without its last character": "2026-10-28T05:00:01",
+            "requestedAt without its first character": "026-10-28T05:00:01Z",
+            "grant gaining a final ~": "control:furnace.stop~",
+            "grant gaining a leading ~": "~control:furnace.stop",
+            "grant in another case": "CONTROL:FURNACE.STOP",
+            "grant without its last character": "control:furnace.sto",
+            "grant without its first character": "ontrol:furnace.stop",
+            "grant absent": null
+          },
+          "answering": [
+            "unaltered"
+          ]
+        },
+        "request": {
+          "formed": {
+            "unaltered": "stop",
+            "scope gaining a member": {
+              "workspace": "/work/gp-decision-executor",
+              "principal": "operator",
+              "altered": true
+            },
+            "scope lacking workspace": {
+              "principal": "operator"
+            },
+            "scope holding another workspace": {
+              "workspace": "/work/gp-decision-executor~",
+              "principal": "operator"
+            },
+            "scope lacking principal": {
+              "workspace": "/work/gp-decision-executor"
+            },
+            "scope holding another principal": {
+              "workspace": "/work/gp-decision-executor",
+              "principal": "operator~"
+            },
+            "principal gaining a member": {
+              "id": "operator",
+              "role": "local-operator",
+              "altered": true
+            },
+            "principal lacking id": {
+              "role": "local-operator"
+            },
+            "principal holding another id": {
+              "id": "operator~",
+              "role": "local-operator"
+            },
+            "principal lacking role": {
+              "id": "operator"
+            },
+            "principal holding another role": {
+              "id": "operator",
+              "role": "local-operator~"
+            },
+            "target gaining a member": {
+              "provider": "furnace",
+              "type": "run",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor",
+              "altered": true
+            },
+            "target lacking provider": {
+              "type": "run",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target holding another provider": {
+              "provider": "furnace~",
+              "type": "run",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target lacking type": {
+              "provider": "furnace",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target holding another type": {
+              "provider": "furnace",
+              "type": "run~",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target lacking id": {
+              "provider": "furnace",
+              "type": "run",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target holding another id": {
+              "provider": "furnace",
+              "type": "run",
+              "id": "frn-run-exec-a1-t1~",
+              "scope": "/work/gp-decision-executor"
+            },
+            "target lacking scope": {
+              "provider": "furnace",
+              "type": "run",
+              "id": "frn-run-exec-a1-t1"
+            },
+            "target holding another scope": {
+              "provider": "furnace",
+              "type": "run",
+              "id": "frn-run-exec-a1-t1",
+              "scope": "/work/gp-decision-executor~"
+            },
+            "action gaining a final ~": "stop~",
+            "action gaining a leading ~": "~stop",
+            "action in another case": "STOP",
+            "action without its last character": "sto",
+            "action without its first character": "top",
+            "invocationId gaining a final ~": "inv-F1-0-exec-a1-t1~",
+            "invocationId gaining a leading ~": "~inv-F1-0-exec-a1-t1",
+            "invocationId in another case": "INV-F1-0-EXEC-A1-T1",
+            "invocationId without its last character": "inv-F1-0-exec-a1-t",
+            "invocationId without its first character": "nv-F1-0-exec-a1-t1",
+            "requestedAt gaining a final ~": "2026-10-28T05:00:01Z~",
+            "requestedAt gaining a leading ~": "~2026-10-28T05:00:01Z",
+            "requestedAt in another case": "2026-10-28t05:00:01z",
+            "requestedAt without its last character": "2026-10-28T05:00:01",
+            "requestedAt without its first character": "026-10-28T05:00:01Z",
+            "grant gaining a final ~": [
+              "observe:furnace.run.inspect",
+              "control:furnace.stop~"
+            ],
+            "grant gaining a leading ~": [
+              "observe:furnace.run.inspect",
+              "~control:furnace.stop"
+            ],
+            "grant in another case": [
+              "observe:furnace.run.inspect",
+              "CONTROL:FURNACE.STOP"
+            ],
+            "grant without its last character": [
+              "observe:furnace.run.inspect",
+              "control:furnace.sto"
+            ],
+            "grant without its first character": [
+              "observe:furnace.run.inspect",
+              "ontrol:furnace.stop"
+            ],
+            "grant absent": [
+              "observe:furnace.run.inspect"
+            ]
+          },
+          "answering": [
+            "unaltered"
+          ]
+        }
+      },
+      "splits": {
+        "scope": {
+          "heldBy": {
+            "scope": [
+              1
+            ],
+            "principal": [
+              0,
+              1
+            ],
+            "target": [
+              0,
+              1
+            ],
+            "action": [
+              0,
+              1
+            ],
+            "invocationId": [
+              0
+            ],
+            "requestedAt": [
+              0,
+              1
+            ],
+            "grant": [
+              0,
+              1
+            ]
+          },
+          "answering": [
+            false,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "principal": {
+          "heldBy": {
+            "scope": [
+              0,
+              1
+            ],
+            "principal": [
+              1
+            ],
+            "target": [
+              0,
+              1
+            ],
+            "action": [
+              0,
+              1
+            ],
+            "invocationId": [
+              0
+            ],
+            "requestedAt": [
+              0,
+              1
+            ],
+            "grant": [
+              0,
+              1
+            ]
+          },
+          "answering": [
+            false,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "target": {
+          "heldBy": {
+            "scope": [
+              0,
+              1
+            ],
+            "principal": [
+              0,
+              1
+            ],
+            "target": [
+              1
+            ],
+            "action": [
+              0,
+              1
+            ],
+            "invocationId": [
+              0
+            ],
+            "requestedAt": [
+              0,
+              1
+            ],
+            "grant": [
+              0,
+              1
+            ]
+          },
+          "answering": [
+            false,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "action": {
+          "heldBy": {
+            "scope": [
+              0,
+              1
+            ],
+            "principal": [
+              0,
+              1
+            ],
+            "target": [
+              0,
+              1
+            ],
+            "action": [
+              1
+            ],
+            "invocationId": [
+              0
+            ],
+            "requestedAt": [
+              0,
+              1
+            ],
+            "grant": [
+              0,
+              1
+            ]
+          },
+          "answering": [
+            false,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "invocationId": {
+          "heldBy": {
+            "scope": [
+              0,
+              1
+            ],
+            "principal": [
+              0,
+              1
+            ],
+            "target": [
+              0
+            ],
+            "action": [
+              0,
+              1
+            ],
+            "invocationId": [
+              1
+            ],
+            "requestedAt": [
+              0,
+              1
+            ],
+            "grant": [
+              0,
+              1
+            ]
+          },
+          "answering": [
+            false,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "requestedAt": {
+          "heldBy": {
+            "scope": [
+              0,
+              1
+            ],
+            "principal": [
+              0,
+              1
+            ],
+            "target": [
+              0,
+              1
+            ],
+            "action": [
+              0,
+              1
+            ],
+            "invocationId": [
+              0
+            ],
+            "requestedAt": [
+              1
+            ],
+            "grant": [
+              0,
+              1
+            ]
+          },
+          "answering": [
+            false,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "grant": {
+          "heldBy": {
+            "scope": [
+              0,
+              1
+            ],
+            "principal": [
+              0,
+              1
+            ],
+            "target": [
+              0,
+              1
+            ],
+            "action": [
+              0,
+              1
+            ],
+            "invocationId": [
+              0
+            ],
+            "requestedAt": [
+              0,
+              1
+            ],
+            "grant": [
+              1
+            ]
+          },
+          "answering": [
+            false,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        }
+      },
+      "mixed": {
+        "the other request's invocationId": {
+          "decision": "permitted",
+          "minted": true,
+          "heldBy": {
+            "scope": [
+              0,
+              1
+            ],
+            "principal": [
+              0,
+              1
+            ],
+            "target": [
+              0
+            ],
+            "action": [
+              0,
+              1
+            ],
+            "invocationId": [
+              1
+            ],
+            "requestedAt": [
+              0,
+              1
+            ],
+            "grant": [
+              0,
+              1
+            ]
+          },
+          "answering": [
+            false,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "the other request's target": {
+          "decision": "permitted",
+          "minted": true,
+          "heldBy": {
+            "scope": [
+              0,
+              1
+            ],
+            "principal": [
+              0,
+              1
+            ],
+            "target": [
+              1
+            ],
+            "action": [
+              0,
+              1
+            ],
+            "invocationId": [
+              0
+            ],
+            "requestedAt": [
+              0,
+              1
+            ],
+            "grant": [
+              0,
+              1
+            ]
+          },
+          "answering": [
+            false,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        },
+        "the principal's role dropped": {
+          "decision": "permitted",
+          "minted": true,
+          "heldBy": {
+            "scope": [
+              0,
+              1
+            ],
+            "principal": [],
+            "target": [
+              0
+            ],
+            "action": [
+              0,
+              1
+            ],
+            "invocationId": [
+              0
+            ],
+            "requestedAt": [
+              0,
+              1
+            ],
+            "grant": [
+              0,
+              1
+            ]
+          },
+          "answering": [
+            false,
+            false
+          ],
+          "found": [
+            "effect-unrequested"
+          ]
+        }
+      },
+      "ordered": {
+        "F1": {
+          "reversed": {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F1"
+            ],
+            "targets": [
+              "frn-run-exec-a2-t3",
+              "frn-run-exec-a2-t2",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a1-t1"
+            ]
+          },
+          "interleaved": {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F1"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t3",
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a2-t2"
+            ]
+          }
+        },
+        "F2": {
+          "reversed": {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F2"
+            ],
+            "targets": [
+              "frn-run-exec-a2-t3",
+              "frn-run-exec-a2-t2",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a1-t1"
+            ]
+          },
+          "interleaved": {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F2"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t3",
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a2-t2"
+            ]
+          }
+        },
+        "F3": {
+          "reversed": {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F3"
+            ],
+            "targets": [
+              "frn-run-exec-a2-t3",
+              "frn-run-exec-a2-t2",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a1-t1"
+            ]
+          },
+          "interleaved": {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F3"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t3",
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a2-t2"
+            ]
+          }
+        },
+        "F4": {
+          "reversed": {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F4"
+            ],
+            "targets": [
+              "frn-run-exec-a2-t3",
+              "frn-run-exec-a2-t2",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a1-t1"
+            ]
+          },
+          "interleaved": {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F4"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t3",
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a2-t2"
+            ]
+          }
+        },
+        "F5": {
+          "reversed": {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F5"
+            ],
+            "targets": [
+              "frn-run-exec-a2-t3",
+              "frn-run-exec-a2-t2",
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a1-t1"
+            ]
+          },
+          "interleaved": {
+            "requests": 4,
+            "copies": 4,
+            "inOrder": true,
+            "changed": [],
+            "edited": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "action",
+              "params",
+              "invocationId",
+              "requestedAt"
+            ],
+            "inPlace": [
+              "scope",
+              "principal",
+              "grants",
+              "target",
+              "params"
+            ],
+            "named": [
+              "F5"
+            ],
+            "targets": [
+              "frn-run-exec-a1-t2",
+              "frn-run-exec-a2-t3",
+              "frn-run-exec-a1-t1",
+              "frn-run-exec-a2-t2"
+            ]
+          }
+        }
+      },
+      "orderSorts": {
+        "snapshot": true,
+        "reversed": false,
+        "interleaved": false
       }
     },
     "A4": {

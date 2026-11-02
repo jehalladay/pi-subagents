@@ -47,15 +47,21 @@
  *    effect-unrequested (handed a decision whose receipt answers() no request the drive recorded for this call, a call that
  *    recorded none included; claimed only in the forms A3 plants below (its mutants and its reader controls), each at each
  *    of its positions: for the drive, a call asking requestOf once each for the snapshot's first one to four can_execute
- *    candidates, in the snapshot's order; for the check, a record of one to four requests and one to three handed
+ *    candidates, in the snapshot's order, and once each for all four in its reverse and in one interleaving; for the
+ *    check, a record of one to four requests and one to three handed
  *    decisions. In those forms the drive records a copy of each returned request, taken at the return, so an in-place edit
- *    of every member of a returned object afterwards edits no record; every request of such a call, the first, second,
+ *    of every member of a returned object afterwards edits no record, and keeps the copies in the order the call asked for
+ *    them, in each of the three orders; every request of such a call, the first, second,
  *    third and last of four, carries that call's own serial in its invocationId, and of two calls in a row over one fixture
  *    neither issues an invocationId the other issued; the check reads every handed decision, the first, middle and last of
- *    three, against every recorded request, at each position of one to four; answers() reads a receipt's scope,
+ *    three, against every recorded request, at each position of one to four, and holds a receipt to ONE recorded request
+ *    in the forms the split and mix controls plant (a receipt whose six echoed fields and grant two recorded requests
+ *    split between them, each read field in turn, answers neither; a core-minted permit decided on the chosen request
+ *    carrying another issued request's invocationId or target, or with the principal's role dropped, answers no request
+ *    of its call); answers() reads a receipt's scope,
  *    principal, target, action, invocationId and requestedAt against a request's and its grant against the request's
- *    grants, in the forms the echo control plants. Every other form is NOT CLAIMED, the unplanted forms named below
- *    deferred to wb-kbh1), mismatch-receipt (a snapshot-mismatch reply lacks exactly one receipt of status conflict or
+ *    grants, in the forms the echo and form controls plant. Every other form is NOT CLAIMED, the unplanted forms named
+ *    below among them), mismatch-receipt (a snapshot-mismatch reply lacks exactly one receipt of status conflict or
  *    refused naming snapshot-mismatch) and current-unexecuted (F1, the one reply every clause admits, did not reach the seam
  *    exactly once with a core-minted permit: the drive's positive control, without which a decision point that never issues
  *    anything would meet the clause's "unless" vacuously). A1 the bound decision points (none) and the synthetic bindings:
@@ -92,7 +98,30 @@
  *    decision, whether a recorded request answers its receipt, beside the checks the call fails); the echo (the permit's
  *    receipt answers the request it was minted for, with that request's grants in either order, and answers it no longer
  *    with one echoed field or its grant altered alone as planted: a string or the grant gaining a final ~, an object
- *    gaining a member). A4 a hand-built look-alike permit and a spread copy of a minted one fail
+ *    gaining a member); and wb-kbh1's four: the forms (on F1, the permit's receipt answers its own request no longer with
+ *    one read field altered alone, on the receipt's side and, in turn, on the request's side, in each planted form: an
+ *    echoed string, or the grant, gaining a final or a leading ~, in another case, without its last character or without
+ *    its first; an echoed object gaining a member, lacking one of its members or holding another value under one of
+ *    them (that member's string gaining a final ~), member by member; the grant absent, from the receipt or from the
+ *    request's grants; on the request's side a grant form is the request's grants holding the receipt's grant only in
+ *    that form; each formed member is read back as the altered side carries it, and, the reader's positive control, the
+ *    receipt still answers with the action set to its own value, on either side); the split (on F1, the permit handed
+ *    over a record of two requests, one differing from its
+ *    receipt in one read field alone and the other in the invocationId alone (in the target alone, where the first
+ *    differs in the invocationId), each of the six echoed fields and the grant in turn, fails the check, its receipt
+ *    answering neither request: that field is held by the second request alone, the other differing field by the first
+ *    alone, every other read field by both); the mix (a planted point driven over F1
+ *    asks requestOf for the reply's chosen candidate, then for the snapshot's first other can_execute candidate, and
+ *    asks the core on the chosen request carrying the other request's invocationId, carrying its target, or with the
+ *    principal's role dropped; the core permits and mints each, its receipt answers neither request (the mixed field held
+ *    by the other request alone, the other field the two requests differ in by the chosen request alone; the thinned
+ *    principal by neither), and the call fails effect-unrequested alone); the order (the record control's planted point
+ *    asking for all four candidates in the
+ *    snapshot's reverse order, and in the interleaving second, last, first, third, reads on every fixture the record
+ *    equal to its own copies element by element, as in the snapshot's order, its targets read back in the order asked
+ *    (every record reading carries its targets, in the record's order); the snapshot's order lists its
+ *    invocationIds sorted and neither other order does, so a record kept sorted reads otherwise there). A4 a hand-built
+ *    look-alike permit and a spread copy of a minted one fail
  *    effect-unminted; isCoreMintedDecision is false for the reply, its typed conversion, a copy, a JSON round trip and a
  *    denial. B1 the mismatch condition: F2's presented bytes hash to a digest the reply does not carry, while F1's bytes hash
  *    to the reply's own. B2 the honest point records one conflict receipt naming snapshot-mismatch; a point dropping the
@@ -106,7 +135,8 @@
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's
  * member count as literals, beside the vocabulary, the checks, the echoed request fields, the positions, the mutants, the
- * lead plants, the fixtures, the bound points, the floor, the pin and the derived path; the judged set (every row's id, label
+ * lead plants, the string forms, the mixes, the orders, the fixtures, the bound points, the floor, the pin and the derived
+ * path; the judged set (every row's id, label
  * and pins, every pin's quote and witness, the residual members, every registered test title) is held to the out-of-file
  * roster test/fixtures/gp-decision-executor-roster.json. OUTSIDE ANCHORS (their own registered case): the bead's own row in the
  * tracker export (.beads/issues.jsonl): the title opens with the requirement id and carries row T's label before its artifact
@@ -116,7 +146,8 @@
  * resolves at the pin to the adapter's "no scheduler" sentence, so the adapter path is the filing's; the vendored reply
  * carries the vocabulary's schema, kind and members, its digest is the generator's recorded input digest and the snapshot
  * fixture's own, the snapshot's revision is F1's observed basis, and the snapshot holds one can_execute relation per
- * position; and the vocabulary is derived outside every literal: the
+ * position, each order the record control asks holding each of those positions once; and the vocabulary is derived
+ * outside every literal: the
  * title's Graph names, the vendored reply's schema and kind values, the reply member whose value is the snapshot fixture's
  * digest and the sample member whose value is a candidate; and the follow-up bead wb-5omz's own row: the lead reader takes
  * the first line of its notes that opens with "[leads] - F1 " (not a line holding that text further in, not a line opening
@@ -151,19 +182,20 @@
  * fixture, a planted control or a reader control removed from its table or case, the frozen literal and the roster together
  * while every check still fires; row Q or a residual member removed from every literal and the roster together (no source
  * outside this cut names the residual families before its delivery note lands); a pin's case replaced by one that echoes its
- * roster witness. DEFERRED TO wb-kbh1 (filed by the rule-19 structural exit R-B249 to pin these forms or name them residuals)
- * and NOT CLAIMED here: every effect-unrequested form A3 does not plant, among them whether the check holds a receipt's
- * echoed fields and its grant to ONE recorded request when a record holds two or more (a receipt whose fields are split
- * across recorded requests, each held by some and all by none: Y01, Y01b, Y01c), and whether it reads a receipt's scope,
- * principal, target, action and requestedAt over a record at all (every control's unanswering request differs from the
- * receipt in its invocationId, M-FORGED-GRANT's and M-LOOKALIKE's on F3 in the grant alone); how answers() reads a
- * difference the echo control does not plant (an echoed object lacking a member the request's holds, or holding another
- * value under the same members; a string or a grant differing other than by a final ~, a case variant included; a grant
- * that is a prefix or a part of one of the request's grants; a receipt holding no grant: Y09, Y07, Y07b, Y16); the
- * record's order where a call asks in another order than the snapshot's can_execute order (that order sorts as the
- * invocationIds do, so a record kept in the order returned and one sorted by invocationId read alike: Y02); and a call
- * asking requestOf for one candidate twice, or for a candidate outside the snapshot's can_execute relations (no control
- * asks either).
+ * roster witness. wb-kbh1 (filed by the rule-19 structural exit R-B249 to pin the forms cut #4 left unplanted) pins them in
+ * A3's forms, split, mix and order controls; every effect-unrequested form A3 does not plant stays NOT CLAIMED, among
+ * them: a receipt whose read fields a record splits across three or more requests, a split beside a second handed
+ * decision, a split on a fixture other than F1, and a split whose two requests each differ from the receipt in two read
+ * fields (the split control records two requests, each differing in one read field alone); a mix other than the three
+ * the mix control plants (another member taken from the other request, two members together, a member taken from a
+ * request the call did not issue); how answers() reads a difference neither the echo nor the form control plants (a
+ * string changed other than by a final or a leading ~, by case or by losing its first or its last character, a character
+ * changed inside it or whitespace gained at an end among them; an object with two members changed together, a member
+ * changed other than by a final ~ on its string value, or a member of another type; a grant split across two of the request's
+ * grants; a form planted on any receipt but the permit minted for F1's chosen request); the record's order where a call
+ * asks for fewer than all four candidates outside the snapshot's order, or for
+ * all four in an order other than the three the record control plants; and a call asking requestOf for one candidate
+ * twice, or for a candidate outside the snapshot's can_execute relations (no control asks either).
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a vocabulary spelling the token reader does not read: camel case, a member composed at run time, a name
  * lower-cased), R-SIDE-PATH (Q2, a decision point that reaches an effect outside the injected seam: the checks observe the seam
@@ -204,6 +236,15 @@
  * A3's record, check, decision and echo messages), and U1 (Y01, Y01b, Y01c), U2 (Y09), U3 (Y07, Y07b, Y16) and U4 (Y02)
  * are NOT CLAIMED above, their pins wb-kbh1's; no reading, control, pin, witness or test title changes, only comments and
  * assertion messages do.
+ * wb-kbh1 (R694 follow-up from wb-5omz, filed by the rule-19 structural exit R-B249 at wb-5omz's refusal #3, gate-prep-10 /
+ * g10-gate-s174: U1-U4, claims wider than pins, deferred here by cut #4): U1 the split control (each read field in turn)
+ * and the mix control's invocationId and target mixes pin the check's same-request binding (Y01, Y01b, Y01c, and the
+ * grant read against another recorded request, X18); U2 the form control's lacking and differing members and the mix
+ * control's dropped role pin member equality (Y09); U3 the form control's grant forms pin the grant membership form
+ * (Y07, Y07b, Y16); U4 the order control pins the record's order (Y02). The form, split and mix controls also kill the
+ * probes cut #4's seat recorded inside NOT CLAIMED forms (N01, N02, N03, N05, N16 the forms; N06, N15 the split and the
+ * mix). The CHECKS parenthetical, A3's sentences, the record's and answers()'s docs and the NOT CLAIMED list name each
+ * planted form.
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI dependency, adapter, seam or fake binary.
  */
 import { execFileSync } from "node:child_process";
@@ -443,7 +484,7 @@ const targetIdOf = (decision: unknown): unknown => own(own(own(decision, "receip
 interface Drive {
   readonly receipts: readonly DecisionReceipt[];
   readonly calls: readonly { readonly decision: unknown; readonly answer: string }[];
-  /** A copy of each request this call's requestOf returned, taken at the return: a later edit of the object edits no record (A3's record control asks one to four distinct can_execute candidates, once each; the header's NOT CLAIMED names the rest). */
+  /** A copy of each request this call's requestOf returned, taken at the return and kept in the order returned: a later edit of the object edits no record (A3's record control asks one to four distinct can_execute candidates, once each, in the snapshot's order, and all four in its reverse and in one interleaving; the header's NOT CLAIMED names the rest). */
   readonly issued: readonly NativeControlRequest[];
 }
 /** The drives so far; a drive's serial is this count after its own increment (A3's serial control reads it). */
@@ -468,7 +509,7 @@ function drive(point: DecisionPoint, fixture: Fixture): Drive {
 }
 /** The request fields a minted receipt echoes (control.ts core(), held to the core's own receipt in A3). */
 const ECHOED = ["scope", "principal", "target", "action", "invocationId", "requestedAt"] as const;
-/** Whether a receipt answers a request, each echoed field read against the request's and its grant against the request's grants: claimed only in the forms A3's echo and check controls plant (the header's NOT CLAIMED names the rest). */
+/** Whether a receipt answers a request, each echoed field read against the request's and its grant against the request's grants: claimed only in the forms A3's echo, form, split, mix and check controls plant (the header's NOT CLAIMED names the rest). */
 function answers(receipt: unknown, request: NativeControlRequest): boolean {
   const grant = own(receipt, "grant");
   return ECHOED.every(field => isDeepStrictEqual(own(receipt, field), request[field])) && typeof grant === "string" && strings(request.grants) && request.grants.includes(grant);
@@ -482,6 +523,31 @@ function editEveryMember(request: NativeControlRequest): void {
     else Object.defineProperty(request, key, { value: `${String(value)}~`, enumerable: true, writable: true, configurable: true });
   }
 }
+/** A request with one member replaced: the hand-built requests of A3's split and form controls (wb-kbh1). */
+const withMember = (request: NativeControlRequest, key: string, value: unknown): NativeControlRequest => ({ ...request, [key]: value }) as NativeControlRequest;
+/** A value differing from the given one in its first string: a string gaining a final ~, an object whose first member differs so (A3's split and form controls, wb-kbh1). */
+function differing(value: unknown): unknown {
+  if (typeof value === "string") return `${value}~`;
+  if (!record(value)) return value;
+  const [first] = Object.keys(value);
+  return first === undefined ? value : { ...value, [first]: differing(own(value, first)) };
+}
+/** The string forms A3's form control plants on a read field, each altering one string alone (wb-kbh1). */
+const STRING_FORMS: Readonly<Record<string, (text: string) => string>> = {
+  "gaining a final ~": text => `${text}~`,
+  "gaining a leading ~": text => `~${text}`,
+  "in another case": text => (text.toUpperCase() !== text ? text.toUpperCase() : text.toLowerCase()),
+  "without its last character": text => text.slice(0, -1),
+  "without its first character": text => text.slice(1),
+};
+/** The mixes A3's mix control plants on the chosen request before the core decides it: a member another issued request carries, or the principal thinned (wb-kbh1). */
+const MIXES: Readonly<Record<string, (request: NativeControlRequest, other: NativeControlRequest) => NativeControlRequest>> = {
+  "the other request's invocationId": (request, other) => ({ ...request, invocationId: other.invocationId }),
+  "the other request's target": (request, other) => ({ ...request, target: other.target }),
+  "the principal's role dropped": request => ({ ...request, principal: { id: request.principal.id } }),
+};
+/** The orders A3's record control asks the snapshot's can_execute candidates in, by position: the snapshot's own, its reverse and one interleaving (wb-kbh1). */
+const ORDERS = { snapshot: [0, 1, 2, 3], reversed: [3, 2, 1, 0], interleaved: [1, 3, 0, 2] } as const;
 /** A type alias, not an interface, so the reading is a Json witness as it stands. */
 type RecordReading = {
   readonly requests: number;
@@ -495,21 +561,26 @@ type RecordReading = {
   readonly inPlace: readonly string[];
   /** The fixture ids the recorded requests' invocationIds name (their second dash-separated segment), once each. */
   readonly named: readonly string[];
+  /** The target ids of the recorded requests, in the record's order (wb-kbh1: the order the call asked in, read back). */
+  readonly targets: readonly string[];
 };
 /**
- * The record control, over one fixture: a planted point asks requestOf once for each of the snapshot's first `size`
- * can_execute candidates, in the snapshot's order, keeps its own copy of each at the return, then edits every member of
- * each returned object in place and executes nothing; the drive's record must equal those copies element by element (that
- * order sorts as the invocationIds do, so the record's own order is NOT CLAIMED). It also reads its own edits back
- * (edited, inPlace).
+ * The record control, over one fixture: a planted point asks requestOf once for each of the snapshot's can_execute
+ * candidates at the first `size` positions of `order` (by default the snapshot's own order; wb-kbh1 adds its reverse and
+ * one interleaving), keeps its own copy of each at the return, then edits every member of each returned object in place
+ * and executes nothing; the drive's record must equal those copies element by element, so it holds them in the order
+ * asked (the snapshot's order sorts as the invocationIds do; the other two do not, which A3 reads). It also reads its own
+ * edits back (edited, inPlace).
  */
-function recordReading(entry: Fixture, size: number): RecordReading {
+function recordReading(entry: Fixture, size: number, order: readonly number[] = ORDERS.snapshot): RecordReading {
   const copies: NativeControlRequest[] = [];
   let edited: string[] = [];
   let inPlace: string[] = [];
   const probe: DecisionPoint = call => {
-    const returned = executable(call.presented)
+    const listed = executable(call.presented);
+    const returned = order
       .slice(0, size)
+      .flatMap(index => listed.slice(index, index + 1))
       .map(candidate => call.requestOf(candidate));
     copies.push(...returned.map(request => structuredClone(request)));
     const before = returned.map(request => new Map(Object.keys(request).map(key => [key, own(request, key)] as const)));
@@ -528,7 +599,7 @@ function recordReading(entry: Fixture, size: number): RecordReading {
   const fields = Object.keys(copies[0] ?? {});
   const changed = fields.filter(field => issued.some((request, index) => !isDeepStrictEqual(own(request, field), own(copies[index], field))));
   const named = [...new Set(issued.map(request => request.invocationId.split("-")[1] ?? ""))];
-  return { requests: issued.length, copies: copies.length, inOrder: isDeepStrictEqual(issued, copies), changed, edited, inPlace, named };
+  return { requests: issued.length, copies: copies.length, inOrder: isDeepStrictEqual(issued, copies), changed, edited, inPlace, named, targets: issued.map(request => request.target.id) };
 }
 /** The positions of a call's four requests, one per can_execute relation of the snapshot (the outside anchors hold the count). */
 const POSITIONS = ["first", "second", "third", "last"] as const;
@@ -1056,7 +1127,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const F1 = fixture("F1");
     const mintedFor = requestFor(F1, chosen);
     const members = Object.keys(mintedFor);
-    const copiedAtReturn = (size: number, id: string): RecordReading => ({
+    const copiedAtReturn = (size: number, id: string, order: readonly number[] = ORDERS.snapshot): RecordReading => ({
       requests: size,
       copies: size,
       inOrder: true,
@@ -1064,6 +1135,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       edited: members,
       inPlace: members.filter(key => typeof own(mintedFor, key) === "object"),
       named: [id],
+      targets: order
+        .slice(0, size)
+        .flatMap(index => candidates.slice(index, index + 1))
+        .map(candidate => runRef(candidate).id),
     });
     expect(recorded, "on every fixture, for a call asking requestOf once for each of the snapshot's first one, two, three or four can_execute candidates, the drive records a copy of each returned request, taken at the return and equal element by element to the planted point's own copies: an in-place edit of every member afterwards edits no record").toEqual(
       Object.fromEntries(FIXTURES.map(entry => [entry.id, [1, 2, 3, 4].map(size => copiedAtReturn(size, entry.id))])),
@@ -1181,6 +1256,111 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       grantsReversed: true,
       altered: Object.fromEntries(read.map(field => [field, false])),
     });
+    const grant = String(own(receipt, "grant"));
+    /** One side's planted forms: each formed member as the altered side carries it (null: absent), and the forms under which the receipt still answers its own request. */
+    const formsOf = (side: "receipt" | "request"): { readonly formed: Record<string, Json>; readonly answering: string[] } => {
+      const source = side === "receipt" ? receipt : mintedFor;
+      const formed: Record<string, Json> = {};
+      const answering: string[] = [];
+      /** One form: this side's member `key` set to `value` (the receipt's removed when it is undefined), every other member and the other side intact. */
+      const plant = (label: string, key: string, value: unknown): void => {
+        const kept = Object.keys(record(receipt) ? receipt : {}).filter(member => member !== key);
+        const altered: unknown =
+          side === "receipt" ? Object.fromEntries([...kept.map(member => [member, own(receipt, member)] as const), ...(value === undefined ? [] : [[key, value] as const])]) : withMember(mintedFor, key, value);
+        const carried = own(altered, key);
+        formed[label] = carried === undefined ? null : (structuredClone(carried) as Json);
+        if (side === "receipt" ? answers(altered, mintedFor) : answers(receipt, withMember(mintedFor, key, value))) answering.push(label);
+      };
+      plant("unaltered", "action", own(source, "action"));
+      for (const field of ECHOED) {
+        const value = own(source, field);
+        if (typeof value === "string") {
+          for (const [label, form] of Object.entries(STRING_FORMS)) plant(`${field} ${label}`, field, form(value));
+        } else if (record(value)) {
+          plant(`${field} gaining a member`, field, { ...value, altered: true });
+          for (const key of Object.keys(value)) {
+            plant(`${field} lacking ${key}`, field, Object.fromEntries(Object.keys(value).filter(member => member !== key).map(member => [member, own(value, member)] as const)));
+            plant(`${field} holding another ${key}`, field, { ...value, [key]: differing(own(value, key)) });
+          }
+        }
+      }
+      const grants = mintedFor.grants ?? [];
+      for (const [label, form] of Object.entries(STRING_FORMS)) {
+        if (side === "receipt") plant(`grant ${label}`, "grant", form(grant));
+        else plant(`grant ${label}`, "grants", grants.map(held => (held === grant ? form(held) : held)));
+      }
+      if (side === "receipt") plant("grant absent", "grant", undefined);
+      else plant("grant absent", "grants", grants.filter(held => held !== grant));
+      return { formed, answering };
+    };
+    const forms = { receipt: formsOf("receipt"), request: formsOf("request") };
+    expect({ receipt: forms.receipt.answering, request: forms.request.answering }, "wb-kbh1 forms: on F1 the permit's receipt answers its own request no longer with one read field altered alone, on the receipt's side or on the request's, in any planted form (an echoed string or the grant gaining a final or a leading ~, in another case, without its last or its first character; an echoed object gaining a member, lacking one or holding another value under one, member by member; the grant absent), while it still answers with its action set to its own value (the reader's positive control)").toEqual({ receipt: ["unaltered"], request: ["unaltered"] });
+    /** The indices of the recorded requests holding each read field of a receipt: an echoed field equal to the request's, the grant among the request's grants. */
+    const heldBy = (of: unknown, issued: readonly NativeControlRequest[]): Record<string, number[]> =>
+      Object.fromEntries(
+        read.map(item => [
+          item,
+          issued.flatMap((request, index) => ((item === "grant" ? (request.grants ?? []).includes(String(own(of, "grant"))) : isDeepStrictEqual(own(of, item), own(request, item))) ? [index] : [])),
+        ]),
+      );
+    /** Every read field held by both recorded requests, but the ones named. */
+    const heldAs = (named: Readonly<Record<string, readonly number[]>>): Record<string, readonly number[]> => Object.fromEntries(read.map(item => [item, named[item] ?? [0, 1]]));
+    const differingIn = (field: string): NativeControlRequest =>
+      field === "grant" ? withMember(mintedFor, "grants", (mintedFor.grants ?? []).filter(held => held !== grant)) : withMember(mintedFor, field, differing(own(mintedFor, field)));
+    const partnerOf = (field: string): string => (field === "invocationId" ? "target" : "invocationId");
+    const splits = Object.fromEntries(
+      read.map(field => {
+        const issued = [differingIn(field), differingIn(partnerOf(field))];
+        return [field, { heldBy: heldBy(receipt, issued), answering: issued.map(request => answers(receipt, request)), found: judged(issued) }];
+      }),
+    );
+    expect(splits, "wb-kbh1 split: on F1 the permit handed over a record of two requests, one differing from its receipt in one read field alone and the other in the invocationId alone (in the target alone, where the first differs in the invocationId), each read field in turn, fails the check: that field is held by the second request alone, the other request's field by the first alone, every other read field by both, and its receipt answers neither").toEqual(
+      Object.fromEntries(read.map(field => [field, { heldBy: heldAs({ [field]: [1], [partnerOf(field)]: [0] }), answering: [false, false], found: ["effect-unrequested"] }])),
+    );
+    const mixing =
+      (mix: (request: NativeControlRequest, other: NativeControlRequest) => NativeControlRequest): DecisionPoint =>
+      call => {
+        const [request, other] = [chosen, ...executable(call.presented).filter(candidate => candidate !== chosen)].slice(0, 2).map(candidate => call.requestOf(candidate));
+        if (request === undefined || other === undefined) return [];
+        return [{ status: "executed", candidate: chosen, answer: call.effect(decideControl(mix(request, other), { projection: call.projection, now: call.now })) }];
+      };
+    const mixed = Object.fromEntries(
+      Object.entries(MIXES).map(([label, mix]) => {
+        const run = drive(mixing(mix), F1);
+        const handedDecision = run.calls[0]?.decision;
+        return [
+          label,
+          {
+            decision: String(own(handedDecision, "decision")),
+            minted: isCoreMintedDecision(handedDecision),
+            heldBy: heldBy(own(handedDecision, "receipt"), run.issued),
+            answering: run.issued.map(request => answers(own(handedDecision, "receipt"), request)),
+            found: violations(F1, run),
+          },
+        ];
+      }),
+    );
+    const mixHolders: Readonly<Record<string, Readonly<Record<string, readonly number[]>>>> = {
+      "the other request's invocationId": { target: [0], invocationId: [1] },
+      "the other request's target": { target: [1], invocationId: [0] },
+      "the principal's role dropped": { principal: [], target: [0], invocationId: [0] },
+    };
+    expect(mixed, "wb-kbh1 mix: a planted point over F1 that issues the chosen request and another candidate's, then asks the core on the chosen request carrying the other's invocationId, carrying the other's target, or with the principal's role dropped, is handed a core-minted permit whose receipt answers neither request (the mixed field held by the other request alone, the other field the two requests differ in by the chosen request alone; the thinned principal by neither), and fails effect-unrequested alone").toEqual(
+      Object.fromEntries(Object.keys(MIXES).map(label => [label, { decision: "permitted", minted: true, heldBy: heldAs(mixHolders[label] ?? {}), answering: [false, false], found: ["effect-unrequested"] }])),
+    );
+    const ordered = Object.fromEntries(
+      FIXTURES.map(entry => [entry.id, { reversed: recordReading(entry, candidates.length, ORDERS.reversed), interleaved: recordReading(entry, candidates.length, ORDERS.interleaved) }]),
+    );
+    expect(ordered, "wb-kbh1 order: on every fixture, a call asking requestOf once for each of the four candidates in the snapshot's reverse order, and in the interleaving second, last, first, third, is recorded as the planted point's own copies, element by element: in the order asked").toEqual(
+      Object.fromEntries(FIXTURES.map(entry => [entry.id, { reversed: copiedAtReturn(candidates.length, entry.id, ORDERS.reversed), interleaved: copiedAtReturn(candidates.length, entry.id, ORDERS.interleaved) }])),
+    );
+    const orderSorts = Object.fromEntries(
+      Object.entries(ORDERS).map(([label, order]) => {
+        const invocationIds = order.flatMap(index => candidates.slice(index, index + 1)).map(candidate => requestFor(F1, candidate, 1).invocationId);
+        return [label, isDeepStrictEqual(invocationIds, [...invocationIds].sort())];
+      }),
+    );
+    expect(orderSorts, "the snapshot's order asks for the candidates with their invocationIds sorted, and neither other order does, so a record kept sorted reads otherwise there").toEqual({ snapshot: true, reversed: false, interleaved: false });
     return {
       providers,
       denial,
@@ -1204,6 +1384,11 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       decisions,
       echoedByCore,
       echo,
+      forms,
+      splits,
+      mixed,
+      ordered,
+      orderSorts,
     };
   },
   A4: () => {
@@ -1424,6 +1609,9 @@ describe(SUITE, () => {
     expect(CHECKS).toEqual(["effect-unvalidated", "effect-unpermitted", "effect-unminted", "effect-unrequested", "mismatch-receipt", "current-unexecuted"]);
     expect(ECHOED).toEqual(["scope", "principal", "target", "action", "invocationId", "requestedAt"]);
     expect(POSITIONS).toEqual(["first", "second", "third", "last"]);
+    expect(Object.keys(STRING_FORMS)).toEqual(["gaining a final ~", "gaining a leading ~", "in another case", "without its last character", "without its first character"]);
+    expect(Object.keys(MIXES)).toEqual(["the other request's invocationId", "the other request's target", "the principal's role dropped"]);
+    expect(ORDERS).toEqual({ snapshot: [0, 1, 2, 3], reversed: [3, 2, 1, 0], interleaved: [1, 3, 0, 2] });
     expect(Object.keys(MUTANTS)).toEqual([
       "M-NO-BASIS",
       "M-DIGEST-ONLY",
@@ -1502,6 +1690,9 @@ describe(SUITE, () => {
     expect(digestOf(SNAPSHOT_BYTES), "and the snapshot fixture's own").toBe(own(REPLY, REPLY_DIGEST));
     expect(revisionOf(SNAPSHOT_BYTES), "the snapshot's revision is F1's observed basis").toBe(fixture("F1").observed);
     expect(executable(SNAPSHOT_BYTES).length, "the snapshot holds one can_execute relation per position").toBe(POSITIONS.length);
+    expect(Object.values(ORDERS).map(order => [...order].sort((left, right) => left - right)), "each order the record control asks holds each of the snapshot's can_execute positions once").toEqual(
+      Object.values(ORDERS).map(() => executable(SNAPSHOT_BYTES).map((_, index) => index)),
+    );
     const candidates = own(REPLY, "candidates");
     expect(strings(candidates) && candidates.every(candidate => executable(SNAPSHOT_BYTES).includes(candidate)), "every candidate is a can_execute relation of the snapshot").toBe(true);
     expect(strings(candidates) && !candidates.includes(UNCHOSEN) && executable(SNAPSHOT_BYTES).includes(UNCHOSEN), "F5's choice is observed but no candidate").toBe(true);
