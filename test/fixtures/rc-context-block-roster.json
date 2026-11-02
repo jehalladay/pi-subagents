@@ -413,6 +413,24 @@
    "numeric-named-class-expression-method",
    "bigint-named-method",
    "escaped-string-named-method",
+   "inline-object-numeric-method",
+   "spelled-numeric-named-methods",
+   "static-numeric-named-class-expression-method",
+   "bigint-named-class-method",
+   "generator-numeric-named-method",
+   "async-numeric-named-method",
+   "async-generator-numeric-named-method",
+   "bodiless-numeric-named-method",
+   "overload-numeric-named-method",
+   "two-unpinned-names",
+   "code-point-escaped-string-named-method",
+   "hex-escaped-string-named-method",
+   "identity-escaped-string-named-method",
+   "continued-string-named-method",
+   "async-string-named-method",
+   "generator-string-named-method",
+   "async-generator-string-named-method",
+   "infinity-computed-named-method",
    "reflective-Object.values",
    "reflective-Object.entries",
    "reflective-Object.assign",
@@ -478,6 +496,21 @@
    "unresolved-named-method",
    "nested-array-after-spread"
   ],
+  "gqPins": {
+   "failClosed": {
+    "GQ02": "bodiless-numeric-named-method",
+    "GQ03": "inline-object-numeric-method",
+    "GQ06": "static-numeric-named-class-expression-method",
+    "GQ07": "bigint-named-class-method",
+    "GQ08": "generator-numeric-named-method",
+    "GQ12": "async-numeric-named-method"
+   },
+   "pinned": {
+    "GQ09": "hex-escaped-string-named-method",
+    "GQ16": "async-string-named-method",
+    "GQ17": "generator-string-named-method"
+   }
+  },
   "surfacePins": {
    "Pi type": "C2",
    "UI handler": "C3",
@@ -1628,6 +1661,65 @@
         "escaped-string-named-method": [
          "3 member blocks"
         ],
+        "inline-object-numeric-method": [
+         "2 declaration unpinned"
+        ],
+        "spelled-numeric-named-methods": [
+         "2 declaration unpinned",
+         "5 declaration unpinned",
+         "8 declaration unpinned",
+         "11 declaration unpinned"
+        ],
+        "static-numeric-named-class-expression-method": [
+         "2 declaration unpinned"
+        ],
+        "bigint-named-class-method": [
+         "2 declaration unpinned"
+        ],
+        "generator-numeric-named-method": [
+         "2 declaration unpinned"
+        ],
+        "async-numeric-named-method": [
+         "2 declaration unpinned"
+        ],
+        "async-generator-numeric-named-method": [
+         "2 declaration unpinned"
+        ],
+        "bodiless-numeric-named-method": [
+         "2 declaration unpinned"
+        ],
+        "overload-numeric-named-method": [
+         "2 declaration unpinned",
+         "3 declaration unpinned"
+        ],
+        "two-unpinned-names": [
+         "2 declaration unpinned",
+         "5 declaration unpinned"
+        ],
+        "code-point-escaped-string-named-method": [
+         "3 member blocks"
+        ],
+        "hex-escaped-string-named-method": [
+         "3 member blocks"
+        ],
+        "identity-escaped-string-named-method": [
+         "3 member blocks"
+        ],
+        "continued-string-named-method": [
+         "4 member blocks"
+        ],
+        "async-string-named-method": [
+         "3 member blocks"
+        ],
+        "generator-string-named-method": [
+         "3 member blocks"
+        ],
+        "async-generator-string-named-method": [
+         "3 member blocks"
+        ],
+        "infinity-computed-named-method": [
+         "3 member blocks"
+        ],
         "reflective-Object.values": [
          "1 reflective Object.values"
         ],
@@ -2298,7 +2390,7 @@
   "B4:9",
   "C1:10",
   "C2:7",
-  "C3:13",
+  "C3:15",
   "C4:6",
   "C5:5",
   "M1:9",

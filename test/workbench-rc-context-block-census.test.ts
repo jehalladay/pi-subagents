@@ -128,26 +128,31 @@
  * cut #4, ruling R-B151: a method's name exactly the pinned kinds, failing closed outside them; wb-zmez: a number literal's
  * name held as TypeScript normalizes it)
  * holds a function declaration [function-helper] or a method - of an object literal, a class declaration or a class
- * expression [method-helper, class-method-helper, class-expression-method-helper], static or not [static-method-helper] -
- * under its name's constant string (propertyKeyOf), the name of one of the PINNED KINDS: an identifier, a #private name
- * [private-method-helper], a string literal, held under its value with any escape decoded [string-named-method,
- * string-named-class-method, string-named-static-method, escaped-string-named-method], or a computed name whose key resolves to
- * a constant string by the KEY rule above [const-named-method, const-named-class-method, literal-named-method,
- * template-named-method, sum-named-method, template-expression-named-method], a computed name that resolves to none holding
- * nothing [unresolved-named-method]. FAIL CLOSED (cut #4): a method named by any other kind - a number literal, in an object
- * literal [numeric-named-method, infinity-named-method, overflow-named-method], a class declaration, static or not
- * [numeric-named-class-method, numeric-named-static-method], or a class expression [numeric-named-class-expression-method],
- * or a bigint literal [bigint-named-method] - has its name noted ("declaration unpinned"), which refuses its module whether
- * or not anything calls it. A bigint literal's method is held under no name (its text, digits and "n", is a name no callee
- * spells). A number literal's is held as well (wb-zmez), under its name's value string as TypeScript normalizes it
- * (propertyKeyOf: the literal's text, the key the method has at run time), so a call whose callee's name or property name
- * spells that string hands it its arguments, as it does any method the table holds: where the literal's value overflows a
- * double the string is "Infinity", which a member callee spells - 1e999, the gate's q18 [infinity-named-method,
- * numeric-named-class-method, numeric-named-static-method, numeric-named-class-expression-method], and 1e309
- * [overflow-named-method], each reading its member blocks beside its note -; otherwise the string is a numeral (0 under
- * "0", 0x10 under "16", 1e3 and 1_000 under "1000", 1.7976931348623158e308 under "1.7976931348623157e+308"), which no
- * callee name spells, so no call hands such a method an argument and the note alone refuses its module
- * [numeric-named-method]: the hold is read only as "Infinity". And it holds a
+ * expression [method-helper, class-method-helper, class-expression-method-helper], static or not [static-method-helper], a
+ * generator, an async or an async generator method among them (wb-wgk3) [generator-string-named-method,
+ * async-string-named-method, async-generator-string-named-method] - under its name's constant string (propertyKeyOf), the
+ * name of one of the PINNED KINDS: an identifier, a #private name [private-method-helper], a string literal, held under its
+ * value with any escape decoded - a unicode, a code-point, a hex or an identity escape, or a line continuation (wb-wgk3) -
+ * [string-named-method, string-named-class-method, string-named-static-method, escaped-string-named-method,
+ * code-point-escaped-string-named-method, hex-escaped-string-named-method, identity-escaped-string-named-method,
+ * continued-string-named-method], or a computed name whose key resolves to a constant string by the KEY rule above, a number
+ * literal key under its value's string as TypeScript reads it, 1e999 under "Infinity" (wb-wgk3) [const-named-method,
+ * const-named-class-method, literal-named-method, template-named-method, sum-named-method, template-expression-named-method,
+ * infinity-computed-named-method], a computed name that resolves to none holding nothing [unresolved-named-method].
+ * FAIL CLOSED (cut #4; wb-wgk3 pins each composition the gate's GQ survivors of cut #4 narrowed it at, GQ_PINS answering the
+ * nine its title names): a method named by any other kind - a number literal, in an object literal a declaration holds
+ * [numeric-named-method, infinity-named-method] or one read in place [inline-object-numeric-method], its digits decimal, with
+ * an exponent, hex, binary, octal, with separators or a leading-dot fraction [spelled-numeric-named-methods], a class
+ * declaration, static or not [numeric-named-class-method, numeric-named-static-method], or a class expression, static or not
+ * [numeric-named-class-expression-method, static-numeric-named-class-expression-method], or a bigint literal, of an object
+ * literal or a class declaration [bigint-named-method, bigint-named-class-method]; a generator, an async or an async
+ * generator method so named [generator-numeric-named-method, async-numeric-named-method,
+ * async-generator-numeric-named-method]; a signature with no body, an abstract method's or an overload's
+ * [bodiless-numeric-named-method, overload-numeric-named-method] - is held under no name, so no call hands it an argument
+ * (refusal #3 measured TypeScript holding a number literal's name under its value's string, 1e999 under "Infinity", which a
+ * member callee spells: the gate's q18), and the reading notes its name instead ("declaration unpinned"), every such name at
+ * its own line [two-unpinned-names], which refuses its module whether or not anything calls it; what the table would hold
+ * such a name under is child wb-zmez's. And it holds a
  * variable declared by a name, in any declaration list - const [local-helper], let [let-helper] or var [var-helper] -, under
  * that name when its initializer, read through its wrappers [wrapped-helper-initializer], is an arrow or a function
  * expression [function-expression-helper]. An expression's value is read
@@ -164,6 +169,9 @@
  * is exactly one row label; its notes carry the quote and its pin, the quoted carrier, the "eight-key reader" and the fixture
  * names "(validRf/result)"; clause (a)'s control words must each be carried by a CONTROL_FIELDS key; clause (c)'s four surfaces
  * are each bound to a pin (SURFACE_PINS) and its three census names are the needles; the epic's title states its child count.
+ * The follow-up wb-wgk3's row in the same export anchors C3's GQ_PINS: its title states how many gate mutants of cut #4 it
+ * carries and names them by side, FAIL CLOSED and pinned, and each is answered by a read probe of its own, a FAIL CLOSED one
+ * noting only unpinned declarations and a pinned one only member reads.
  * Every pin of rows A-C covers words of the filing (COVERS, verbatim spans of its row's text: rows A and C their clause, row B
  * clause (b) read with the gating sentence's contract parenthetical, whose carrier and eight-key reader B3 and B4 pin): a row's
  * pins cover every word of that text and each pin covers a word no other pin of its row covers, so a pin removed from every
@@ -178,7 +186,9 @@
  * reads, the TUI load probes, the read and quiet probes, the decode's NUL floor and parity and the sentence vocabularies are
  * this census's reading of the filing (the producer defines no Pi slot for any of them), so a
  * member of those literals removed from every literal of this file and the roster together is anchored by the filing only where
- * the filing names it (clause (a)'s three control words, clause (c)'s surfaces and names, the two fixture names); the rows, the
+ * the filing names it (clause (a)'s three control words, clause (c)'s surfaces and names, the two fixture names), and a read
+ * probe by the wb-wgk3 title only as the one answer GQ_PINS gives a GQ mutant it names, which probe answers it being this
+ * census's reading; the rows, the
  * pins and the residual list are anchored as above, but which pin covers which words is this census's reading (COVERS); an
  * edit of the tracked bead export itself is outside every anchor (it is machine-written at each ledger hop). The parse-aware
  * reading reads one module at a time and binds a name to a result by the forms PARSE-AWARE READING lists only; it follows no
@@ -287,12 +297,16 @@
  * class declaration's, static or not, a class expression's, and an uncalled bigint-named method); F2 the gate's q64, an
  * array pattern nested past a spread, is named in NOT CLAIMED beside its quiet row; F3 the gate's MF01 shape, an escaped
  * string-literal method name, is pinned by a read probe.
- * FOLLOW-UP wb-zmez (ruling R-B151's child at wb-qnls refusal #3, rule 19's structural exit: the number-literal reader
- * coverage cut #4 moved off the parent): U1 the FUNCTION TABLE holds a number-literal method name as well, under its value's
- * string as TypeScript normalizes it, and still notes it (the fail-closed core is kept, so no refusal of the landed census
- * is lost): a member callee spelling "Infinity" hands a method 1e999 or 1e309 names its arguments and the reading reads its
- * body beside the note - the four 1e999 rows and the 1e309 row [overflow-named-method] read their member blocks too -, so
- * the gate's mutant GP09, a number-literal name never held, reds them where cut #4 left it equivalent by construction.
+ * FOLLOW-UP wb-wgk3 (landing 749's F1, the R694 carry of the gate's cut #4 survivors; cut #4's census read 0 failed under each):
+ * a read probe per composition a GQ mutant narrowed a claimed form at, each red against its mutant - FAIL CLOSED: an object
+ * literal read in place (GQ03, the gate's PL1), a class expression's static method (GQ06), a class declaration's bigint-named
+ * method (GQ07, PL5), a generator and an async method (GQ08 and GQ12, PL2 and PL3), an abstract method's signature (GQ02,
+ * PL6) and two unpinned names in one module (GQ05, which cut #4's verdict could not tell, PL9); the FUNCTION TABLE: a
+ * hex-escaped string-literal name (GQ09, PL7), an async and a generator method under a string-literal name (GQ16 and GQ17,
+ * PL10 and PL11) and a computed name a number literal keys, reached as TypeScript reads it (GQ11, which no committable module
+ * spells: a probe is never linted) -, the nine the filing's title names held to it by GQ_PINS; and one per sibling shape on
+ * the same axes the seat's battery found unspelled (an async generator method on either side, an overload signature, the
+ * binary, octal, separated and leading-dot spellings, a code-point and an identity escape and a line continuation).
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -473,9 +487,9 @@ const UI_LOAD_PROBES: Readonly<Record<string, boolean>> = { [UI_PACKAGE]: true, 
 const PROBE_RESULT = "(reading as { source: { result: Record<string, unknown> } }).source.result";
 /** C3's read forms (wb-ycir F1; wb-qnl8 F2 and F3 add one per claimed result-expression and read form; wb-qnls F1 and F2 one per
  * binding form the gate's F1 mutants and P31-P33 named, cut #2 one per shape a refusal #1 U1 or F4 mutant or a seat mutant
- * narrowed a form to and per form U2 widens, cut #3 one per FUNCTION TABLE form and per refusal #2 GN survivor's shape, and
- * cut #4 one per shape of a method the table fails closed on and the gate's MF01 shape, wb-zmez a second spelling, 1e309, of a
- * number-literal name the table holds under "Infinity"): each probe module reaches an rf
+ * narrowed a form to and per form U2 widens, cut #3 one per FUNCTION TABLE form and per refusal #2 GN survivor's shape,
+ * cut #4 one per shape of a method the table fails closed on and the gate's MF01 shape, and wb-wgk3 one per composition a
+ * gate GQ survivor of cut #4 narrowed a form at and per sibling shape on its axes): each probe module reaches an rf
  * result member without spelling "result.<member>" or declares a method the table fails closed on, and the parse-aware
  * reading must name it. Each key is named in brackets beside its form in the header's
  * PARSE-AWARE READING, and C3 holds the two to each other (headerProbeIds); a probe holds its form live at the shapes it
@@ -675,7 +689,54 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   "numeric-named-class-expression-method": `const Helpers = class {\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\nexport const rows = new Helpers().Infinity(${PROBE_RESULT});\n`,
   "bigint-named-method": "export const helpers = {\n  1n(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\n",
   "escaped-string-named-method": `const helpers = {\n  "blocks\\u004ff"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  // wb-wgk3 (landing 749's F1): a probe per composition a gate GQ survivor of cut #4 narrowed a claimed form at, each red
+  // against its mutant (GQ_PINS answers the nine the filing's title names), and one per sibling shape on the same axes.
+  // FAIL CLOSED: an object literal read in place (GQ03), the binary, octal, separated and leading-dot spellings, a class
+  // expression's static method (GQ06), a class declaration's bigint-named method (GQ07), a generator, an async and an async
+  // generator method (GQ08, GQ12), an abstract method's and an overload's signature (GQ02) and two unpinned names (GQ05).
+  "inline-object-numeric-method": `export const rows = ({\n  0x10(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n})[16](${PROBE_RESULT});\n`,
+  "spelled-numeric-named-methods": "export const helpers = {\n  0b101(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n  0o7(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n  1_000(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n  .5(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\n",
+  "static-numeric-named-class-expression-method": `const Helpers = class {\n  static 1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\nexport const rows = Helpers.Infinity(${PROBE_RESULT});\n`,
+  "bigint-named-class-method": "export class Helpers {\n  1n(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\n",
+  "generator-numeric-named-method": `const helpers = {\n  *0x10(envelope: Record<string, unknown>) {\n    yield envelope.blocks;\n  },\n};\nexport const rows = [...helpers[16](${PROBE_RESULT})];\n`,
+  "async-numeric-named-method": `const helpers = {\n  async 0x10(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers[16](${PROBE_RESULT});\n`,
+  "async-generator-numeric-named-method": `const helpers = {\n  async *0x10(envelope: Record<string, unknown>) {\n    yield envelope.blocks;\n  },\n};\nexport const rows = helpers[16](${PROBE_RESULT});\n`,
+  "bodiless-numeric-named-method": "export abstract class Helpers {\n  abstract 1e999(envelope: Record<string, unknown>): unknown;\n}\n",
+  "overload-numeric-named-method": `class Helpers {\n  1e999(envelope: Record<string, unknown>): unknown;\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().Infinity(${PROBE_RESULT});\n`,
+  "two-unpinned-names": `const helpers = {\n  1(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n  2(envelope: Record<string, unknown>) {\n    return envelope.output;\n  },\n};\nexport const rows = [helpers[1](${PROBE_RESULT}), helpers[2](${PROBE_RESULT})];\n`,
+  // The FUNCTION TABLE: a code-point, a hex (GQ09) and an identity escape and a line continuation in a string-literal name,
+  // an async (GQ16), a generator (GQ17) and an async generator method under one, and a computed name a number literal keys,
+  // held under its value's string as TypeScript reads it, 1e999's "Infinity" (GQ11).
+  "code-point-escaped-string-named-method": `const helpers = {\n  "blocks\\u{4f}f"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "hex-escaped-string-named-method": `const helpers = {\n  "blocks\\x4ff"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "identity-escaped-string-named-method": `const helpers = {\n  "blocks\\Of"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "continued-string-named-method": `const helpers = {\n  "blocks\\\nOf"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "async-string-named-method": `const helpers = {\n  async "blocksOf"(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "generator-string-named-method": `const helpers = {\n  *"blocksOf"(envelope: Record<string, unknown>) {\n    yield envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "async-generator-string-named-method": `const helpers = {\n  async *"blocksOf"(envelope: Record<string, unknown>) {\n    yield envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "infinity-computed-named-method": `const helpers = {\n  [1e999](envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
   ...Object.fromEntries(REFLECTIVE_READS.map(call => [`reflective-${call}`, `export const rows = ${call}(${PROBE_RESULT});\n`])),
+};
+/** The follow-up whose title names the gate mutants of cut #4 this census answers by read probe (the R694 carry of landing 749). */
+const GQ_BEAD = "wb-wgk3";
+/** Each GQ mutant the wb-wgk3 title names, by its side, with the read probe that reds the census under it (C3 holds the keys
+ * to the title, the export row outside this file): a FAIL CLOSED probe's module declares a method the table fails closed on,
+ * so its reading notes only unpinned declarations; a pinned one's reaches a result member through a method the table holds,
+ * so its reading notes only member reads. */
+const GQ_PINS: Readonly<Record<"failClosed" | "pinned", Readonly<Record<string, string>>>> = {
+  failClosed: {
+    GQ02: "bodiless-numeric-named-method",
+    GQ03: "inline-object-numeric-method",
+    GQ06: "static-numeric-named-class-expression-method",
+    GQ07: "bigint-named-class-method",
+    GQ08: "generator-numeric-named-method",
+    GQ12: "async-numeric-named-method",
+  },
+  pinned: {
+    GQ09: "hex-escaped-string-named-method",
+    GQ16: "async-string-named-method",
+    GQ17: "generator-string-named-method",
+  },
 };
 /** The forms C3's parse-aware reading leaves quiet: a constant key naming another member, a bare name result spread, read for
  * another member or used as a string (today's Pi UI code reads agent and tool results so), a keyed read keyed by another member
@@ -1000,6 +1061,14 @@ function headerProbeIds(): string[] {
   const named = [...header.matchAll(/\[([a-z<>.-]+(?:, [a-z<>.-]+)*)\]/g)].flatMap(match => (match[1] ?? "").split(", "));
   const keys = named.flatMap(name => (name === "reflective-<call>" ? REFLECTIVE_READS.map(call => `reflective-${call}`) : [name]));
   return [...new Set(keys)].sort();
+}
+
+/** The wb-wgk3 title's reading (C3, GQ_PINS): the count of gate mutants it states and the GQ ids it names on each side. */
+function gqFiled(): { count: number; failClosed: string[]; pinned: string[] } {
+  const { title } = exportRow(GQ_BEAD);
+  const count = Number(/ leaves (\d+) non-equivalent one-edit reader mutants /.exec(title)?.[1] ?? "-1");
+  const sides = /\(FAIL CLOSED side ((?:GQ\d+, )*GQ\d+); pinned side ((?:GQ\d+, )*GQ\d+)\)/.exec(title);
+  return { count, failClosed: sides?.[1]?.split(", ") ?? [], pinned: sides?.[2]?.split(", ") ?? [] };
 }
 
 /** A text as the census reads it: NFKC-folded, every default-ignorable code point (an invisible joiner or space) removed. */
@@ -2371,6 +2440,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(Object.entries(probes.quiet).filter(([, found]) => found.length > 0).map(([id]) => id), "the quiet forms read nothing").toStrictEqual([]);
     // wb-qnls: the header claims exactly the pinned forms - every probe is named in its brackets, and every bracketed name is a probe.
     expect(headerProbeIds(), "the header's bracketed forms: exactly the read and quiet probes").toStrictEqual([...Object.keys(READ_PROBES), ...Object.keys(QUIET_PROBES)].sort());
+    // wb-wgk3: the gate mutants the follow-up's title names, by side, each answered by a read probe of its own (GQ_PINS).
+    const filed = gqFiled();
+    const answers = [...Object.values(GQ_PINS.failClosed), ...Object.values(GQ_PINS.pinned)];
+    expect(filed, "the wb-wgk3 title's GQ mutants, by side and counted: exactly GQ_PINS").toStrictEqual({
+      count: answers.length,
+      failClosed: Object.keys(GQ_PINS.failClosed),
+      pinned: Object.keys(GQ_PINS.pinned),
+    });
+    const sideOf = (pins: Readonly<Record<string, string>>, form: RegExp): string[] =>
+      Object.entries(pins)
+        .filter(([, id]) => {
+          const found = probes.reads[id] ?? [];
+          return found.length === 0 || !found.every(read => form.test(read));
+        })
+        .map(([gq]) => gq);
+    const misfits = [...sideOf(GQ_PINS.failClosed, /^\d+ declaration unpinned$/), ...sideOf(GQ_PINS.pinned, /^\d+ member [a-z]+$/)];
+    expect({ distinct: new Set(answers).size, misfits }, "each GQ mutant's probe: its own, a FAIL CLOSED one noting only unpinned declarations, a pinned one only member reads").toStrictEqual({ distinct: answers.length, misfits: [] });
     expect(loaders.length > 0 && !loaders.includes("reactivefiber"), "the evidence loader roster holds no reactivefiber row").toBe(true);
     // wb-qnl8 F1: a UI module read two ways is parsed, loaded from and spelled in both.
     const twoReadings: Walked = {
@@ -2722,6 +2808,7 @@ function constants(): JsonValue {
     keyedReads: KEYED_READS,
     readProbes: Object.keys(READ_PROBES),
     quietProbes: Object.keys(QUIET_PROBES),
+    gqPins: GQ_PINS,
     surfacePins: SURFACE_PINS,
     covers: Object.fromEntries(Object.entries(COVERS).map(([pin, phrases]) => [pin, phrases.map(held)])),
     coverStop: COVER_STOP,

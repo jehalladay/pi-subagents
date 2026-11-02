@@ -1597,7 +1597,404 @@
    "R-READER-RENDERING": [
     "Q18"
    ]
-  }
+  },
+  "numericReplacements": {
+   "128": 8364,
+   "130": 8218,
+   "131": 402,
+   "132": 8222,
+   "133": 8230,
+   "134": 8224,
+   "135": 8225,
+   "136": 710,
+   "137": 8240,
+   "138": 352,
+   "139": 8249,
+   "140": 338,
+   "142": 381,
+   "145": 8216,
+   "146": 8217,
+   "147": 8220,
+   "148": 8221,
+   "149": 8226,
+   "150": 8211,
+   "151": 8212,
+   "152": 732,
+   "153": 8482,
+   "154": 353,
+   "155": 8250,
+   "156": 339,
+   "158": 382,
+   "159": 376
+  },
+  "inputTypes": [
+   "hidden",
+   "text",
+   "search",
+   "tel",
+   "url",
+   "email",
+   "password",
+   "date",
+   "month",
+   "week",
+   "time",
+   "datetime-local",
+   "number",
+   "range",
+   "color",
+   "checkbox",
+   "radio",
+   "file",
+   "submit",
+   "image",
+   "reset",
+   "button"
+  ],
+  "inputShown": {
+   "entry": [
+    "text",
+    "search",
+    "tel",
+    "url",
+    "email"
+   ],
+   "button": [
+    "submit",
+    "reset",
+    "button"
+   ]
+  },
+  "survivors": {
+   "GP1-D1a": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-code-colon.md",
+    "text": "Pi embeds the <code>Fib<o:p>er core</code>.\n",
+    "reader": "Pi embeds the Fiber core."
+   },
+   "GP1-D1b": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-kbd-bogus.md",
+    "text": "Pi embeds the <kbd>Fib<!x>er core</kbd>.\n",
+    "reader": "Pi embeds the Fiber core."
+   },
+   "GP1-D1c": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-pre-endspace.md",
+    "text": "Pi embeds the <pre>Fib</ x>er core</pre>.\n",
+    "reader": "Pi embeds the Fiber core."
+   },
+   "GP1-D1d": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-heading-dot.md",
+    "text": "## Pi embeds the <code>Fib<x.y>er core</code>\n",
+    "reader": "Pi embeds the Fiber core"
+   },
+   "GP1-D1e": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-carry.md",
+    "text": "Intro <code>x\n\nPi embeds the Fib<o:p>er core.\n",
+    "reader": "Intro x Pi embeds the Fiber core."
+   },
+   "GP1-D1f": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-cell.md",
+    "text": "| a | b |\n| --- | --- |\n| <kbd>Fib<!x>er core</kbd> | y |\n",
+    "reader": "a b Fiber core y"
+   },
+   "GP1-D1g": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-item.md",
+    "text": "- Pi embeds the <code>Fib</ x>er core</code>\n",
+    "reader": "Pi embeds the Fiber core"
+   },
+   "GP1-D1h": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-ref.md",
+    "text": "Pi embeds the <code>Fi&#98er core</code>.\n",
+    "reader": "Pi embeds the Fiber core."
+   },
+   "GP1-B2a": {
+    "legs": [
+     "B2",
+     "D1"
+    ],
+    "path": "docs/workbench/18-decisions-and-risks.md",
+    "text": "\nOWNER DECISION (2026-10-29): Pi will embed the portable <code>Fib<o:p>er core</code> behind the W10 provider.\n",
+    "reader": "OWNER DECISION (2026-10-29): Pi will embed the portable Fiber core behind the W10 provider."
+   },
+   "GP1-B1a": {
+    "legs": [
+     "B1"
+    ],
+    "path": ".beads/issues.jsonl",
+    "text": "OWNER DECISION (2026-10-29): Pi will embed the portable <code>Fib<o:p>er core</code> behind the W10 provider.",
+    "reader": "OWNER DECISION (2026-10-29): Pi will embed the portable Fiber core behind the W10 provider."
+   },
+   "GP1-D1i2": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-input-block2.md",
+    "text": "<div>Pi embeds the <input type=\"button\" value=\"Fiber\" title=\"x\"> core.</div>\n",
+    "reader": "Pi embeds the [input:Fiber] core."
+   },
+   "GP1-D1j2": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-input-inline2.md",
+    "text": "Pi embeds the <input value=\"Fiber\" size=\"6\"> core.\n",
+    "reader": "Pi embeds the [input:Fiber] core."
+   },
+   "GP1-D1k2": {
+    "legs": [
+     "D1"
+    ],
+    "path": "docs/zz-gp1-input-placeholder2.md",
+    "text": "<div>Pi embeds the <input placeholder=\"Fiber\" size=\"6\"> core.</div>\n",
+    "reader": "Pi embeds the [input:Fiber] core."
+   }
+  },
+  "survivorSections": [
+   "PLANTS (gate-authored, probe tree 998ef8c9 in worktree -mut).",
+   "PLANTS (probe tree, -mut)."
+  ],
+  "pageReadForms": {
+   "namespacedTag": "Fib<o:p>er core",
+   "dottedTag": "Fib<x.y>er core",
+   "spacedEndTag": "Fib</ x>er core",
+   "emptyEndTag": "Fib</>er core",
+   "declaration": "Fib<!x>er core",
+   "instruction": "Fib<?x?>er core",
+   "cdata": "Fib<![CDATA[x]]>er core",
+   "comment": "Fib<!-- c -->er core",
+   "commentHoldsGreaterThan": "Fib<!-- a>b -->er core",
+   "emptyComment": "Fib<!-->er core",
+   "dashComment": "Fib<!--->er core",
+   "bangComment": "Fib<!-- c --!>er core",
+   "quotedValue": "Fib<x title=\"a>b\"c>er core",
+   "singleQuotedValue": "Fib<x title='a>b'c>er core",
+   "spacedValue": "Fib<x title = \"a>b\"c>er core",
+   "nameQuote": "Fib<x \"a>b\">er core",
+   "unquotedValue": "Fib<x a=b>c>er core",
+   "unquotedThenQuoted": "Fib<x a=b c=\"d>e\">er core",
+   "endTagValue": "Fib</x title=\"a>b\">er core",
+   "nameEquals": "Fib<x=\"a>b\">er core",
+   "spaceEquals": "Fib<x =\"a>b\">er core",
+   "unclosedTag": "Fib<o:p er core",
+   "unclosedComment": "Fib<!-- er core",
+   "otherLessThan": "Fib< er<1 core",
+   "decimalReference": "Fi&#98er core",
+   "closedDecimal": "Fi&#98;er core",
+   "hexReference": "Fib&#x65r core",
+   "greedyHexDigits": "Fi&#x62er core",
+   "upperHexReference": "Fi&#X62;er core",
+   "longDecimal": "Fi&#00000098;er core",
+   "nullReference": "x&#0;y",
+   "surrogateReference": "x&#xD800;y",
+   "overReference": "x&#x110000;y",
+   "windowsReference": "x&#128;y",
+   "unmappedReference": "x&#129;y",
+   "emptyNumeric": "x&#;y&#x;z",
+   "namedReference": "Fi&amp;er",
+   "legacyName": "Fi&ampber",
+   "unknownName": "Fi&foo;er",
+   "inheritedName": "Fi&toString;er",
+   "rawTextElement": "Fib<style>x</style>er core",
+   "tabTagSpace": "Fib<o:p\ttitle=\"a>b\">er core",
+   "lineFeedTagSpace": "Fib<o:p\ntitle=\"a>b\">er core",
+   "formFeedTagSpace": "Fib<o:p\ftitle=\"a>b\">er core",
+   "carriageReturnTagSpace": "Fib<o:p\rtitle=\"a>b\">er core",
+   "verticalTabNoSpace": "Fib<o:p\u000btitle=\"a>b\">er core",
+   "nameSolidus": "Fib<o:p/a=\"b>c\">er core",
+   "solidusBeforeName": "Fib<x /=\"a>b\">er core",
+   "solidusAfterName": "Fib<x a/=\"b>c\">er core",
+   "solidusAfterValue": "Fib<x a=\"b\"/=\"c>d\">er core",
+   "spaceAfterUnquoted": "Fib<x a=b =\"c>d\">er core",
+   "spaceAfterQuoted": "Fib<x a=\"b\" =\"c>d\">er core",
+   "nameAfterQuoted": "Fib<x a=\"b\"c\"d>e\">er core",
+   "nameAfterQuotedValue": "Fib<x a=\"b\"c=\"d>e\">er core",
+   "equalsAfterQuotedValue": "Fib<x a=\"b\"=\"c>d\">er core",
+   "singleQuoteAfterName": "Fib<x'a>b'>er core",
+   "singleNameQuote": "Fib<x 'a>b'>er core",
+   "singleQuoteInName": "Fib<x a'b>c'>er core",
+   "doubleQuoteInUnquoted": "Fib<x a=b\"c>d\">er core",
+   "singleQuoteInUnquoted": "Fib<x a=b'c>d'>er core",
+   "quoteAfterQuotedValue": "Fib<x a=\"b\"\"c>d\">er core",
+   "singleQuoteAfterQuotedValue": "Fib<x a='b''c>d'>er core",
+   "upperStartTag": "Fib<O:P title=\"a>b\">er core",
+   "upperEndTag": "Fib</X title=\"a>b\">er core",
+   "upperOpening": "Fib<O:P>er core",
+   "endTagNameEquals": "Fib</x=\"a>b\">er core",
+   "spacedEndTagValue": "Fib</ a=\"b>c\">er core",
+   "unclosedInstruction": "Fib<?x er core",
+   "unclosedDeclaration": "Fib<!x er core",
+   "unclosedSpacedEndTag": "Fib</ x er core",
+   "otherMarkupFirstClose": "Fib<?x>er core>",
+   "commentFirstClose": "Fib<!-- a -->er core -->",
+   "bangCommentFirstClose": "Fib<!-- a --!>er core --!>",
+   "commentEitherClose": "Fib<!-- a --!>er core -->",
+   "commentDashThenBang": "Fib<!-- a -->er core --!>",
+   "lowSurrogate": "x&#xDC00;y",
+   "lastSurrogate": "x&#xDFFF;y",
+   "belowSurrogate": "x&#xD7FF;y",
+   "aboveSurrogate": "x&#xE000;y",
+   "maxReference": "x&#x10FFFF;y",
+   "longHex": "Fi&#x0000062;er",
+   "manyHexDigits": "Fi&#x00000000000000000000000000000062;er",
+   "longerDecimal": "Fi&#000000098;er",
+   "manyDecimalDigits": "Fi&#00000000000000000000000000000098;er",
+   "windowsTable": "&#128;&#129;&#130;&#131;&#132;&#133;&#134;&#135;&#136;&#137;&#138;&#139;&#140;&#141;&#142;&#143;&#144;&#145;&#146;&#147;&#148;&#149;&#150;&#151;&#152;&#153;&#154;&#155;&#156;&#157;&#158;&#159;",
+   "twoLetterName": "Fi&lt;er",
+   "upperInitialName": "Fi&NoBreak;er",
+   "namedTable": "&amp;&lt;&gt;&quot;&apos;&nbsp;&ensp;&emsp;&thinsp;&hairsp;&shy;&ZeroWidthSpace;&zwnj;&zwj;&NoBreak;&hyphen;&dash;&ndash;&mdash;&minus;&period;&excl;&quest;&comma;&colon;&semi;",
+   "legacyNameUnclosed": "Fi&amp er",
+   "spaceAfterQuotedName": "Fib<o:p a=\"b\" c=\"d>e\">er core",
+   "spaceAfterQuotedQuote": "Fib<o:p a=\"b\" \"c>d\">er core",
+   "solidusAfterValueName": "Fib<o:p a=\"b\"/c=\"d>e\">er core",
+   "solidusAfterValueQuote": "Fib<o:p a=\"b\"/\"c>d\">er core",
+   "solidusAfterNameName": "Fib<o:p a/b=\"c>d\">er core",
+   "solidusAfterNameQuote": "Fib<o:p a/\"b>c\">er core",
+   "solidusBeforeNameName": "Fib<o:p /a=\"b>c\">er core",
+   "solidusBeforeNameQuote": "Fib<o:p /\"a>b\">er core",
+   "nameSolidusQuote": "Fib<o:p/\"a>b\">er core",
+   "spaceRunAfterQuoted": "Fib<o:p a=\"b\"  =\"c>d\">er core",
+   "digitEndTag": "Fib</1 a=\"b>c\">er core",
+   "digitNameEndTag": "Fib</1a b=\"c>d\">er core",
+   "oneDashDeclaration": "Fib<!-x>er core",
+   "oneDashEmpty": "Fib<!->er core",
+   "dashBangComment": "Fib<!----!>er core",
+   "cdataGreaterThan": "Fib<![CDATA[a>b er core",
+   "lessThanGreaterThan": "Fib<>er core",
+   "lessThanGreaterThanTwice": "Fib<>er <>core",
+   "oneReference": "x&#1;y",
+   "oneHexReference": "Fi&#x1;ber",
+   "tabReference": "x&#9;y",
+   "lastC0Reference": "x&#31;y",
+   "lastC0HexReference": "Fi&#x1F;ber",
+   "beforeAttributeSpace": "Fib<o:p  =\"a>b\">er core",
+   "selfClosingSpace": "Fib<o:p/ =\"a>b\">er core",
+   "beforeValueSpace": "Fib<o:p a= \"b>c\">er core",
+   "afterUnquotedSpace": "Fib<o:p a=b c=\"d>e\">er core",
+   "afterQuotedSpace": "Fib<o:p a=\"b\" =\"c>d\">er core",
+   "beforeAttributeTab": "Fib<o:p \t=\"a>b\">er core",
+   "selfClosingTab": "Fib<o:p/\t=\"a>b\">er core",
+   "beforeValueTab": "Fib<o:p a=\t\"b>c\">er core",
+   "afterUnquotedTab": "Fib<o:p a=b\tc=\"d>e\">er core",
+   "afterQuotedTab": "Fib<o:p a=\"b\"\t=\"c>d\">er core",
+   "beforeAttributeLineFeed": "Fib<o:p \n=\"a>b\">er core",
+   "selfClosingLineFeed": "Fib<o:p/\n=\"a>b\">er core",
+   "beforeValueLineFeed": "Fib<o:p a=\n\"b>c\">er core",
+   "afterUnquotedLineFeed": "Fib<o:p a=b\nc=\"d>e\">er core",
+   "afterQuotedLineFeed": "Fib<o:p a=\"b\"\n=\"c>d\">er core",
+   "beforeAttributeFormFeed": "Fib<o:p \f=\"a>b\">er core",
+   "selfClosingFormFeed": "Fib<o:p/\f=\"a>b\">er core",
+   "beforeValueFormFeed": "Fib<o:p a=\f\"b>c\">er core",
+   "afterUnquotedFormFeed": "Fib<o:p a=b\fc=\"d>e\">er core",
+   "afterQuotedFormFeed": "Fib<o:p a=\"b\"\f=\"c>d\">er core",
+   "beforeAttributeCarriageReturn": "Fib<o:p \r=\"a>b\">er core",
+   "selfClosingCarriageReturn": "Fib<o:p/\r=\"a>b\">er core",
+   "beforeValueCarriageReturn": "Fib<o:p a=\r\"b>c\">er core",
+   "afterUnquotedCarriageReturn": "Fib<o:p a=b\rc=\"d>e\">er core",
+   "afterQuotedCarriageReturn": "Fib<o:p a=\"b\"\r=\"c>d\">er core",
+   "beforeAttributeVerticalTab": "Fib<o:p \u000b=\"a>b\">er core",
+   "selfClosingVerticalTab": "Fib<o:p/\u000b=\"a>b\">er core",
+   "beforeValueVerticalTab": "Fib<o:p a=\u000b\"b>c\">er core",
+   "afterUnquotedVerticalTab": "Fib<o:p a=b\u000bc=\"d>e\">er core",
+   "afterQuotedVerticalTab": "Fib<o:p a=\"b\"\u000b=\"c>d\">er core",
+   "spaceRunEqualsName": "Fib<x  =x=\"y>z\">er core",
+   "unquotedSolidusEquals": "Fib<x a=ba/x=\"y>z\">er core",
+   "singleQuoteInDoubleQuoted": "Fib<x a=\"'x=\"y>z\">er core",
+   "lessThanDash": "Fib<-er core",
+   "instructionQuote": "Fib<? a=\">er core",
+   "declarationQuote": "Fib<! a=\">er core",
+   "overlappingBangClose": "Fib<!---!>er core",
+   "dashBangNoGreaterThan": "Fib<!----!er core",
+   "closedEmptyComment": "Fib<!---->er core",
+   "carriageReturnReference": "x&#13;y",
+   "deleteReference": "x&#127;y",
+   "noncharacterReference": "x&#xFDD0;y"
+  },
+  "inputReadForms": {
+   "noType": "<input value=\"Fiber\" size=\"6\">",
+   "textType": "<input type=\"text\" value=\"Fiber\" size=\"6\">",
+   "searchType": "<input type=\"search\" value=\"Fiber\" size=\"6\">",
+   "telType": "<input type=\"tel\" value=\"Fiber\" size=\"6\">",
+   "urlType": "<input type=\"url\" value=\"Fiber\" size=\"6\">",
+   "emailType": "<input type=\"email\" value=\"Fiber\" size=\"6\">",
+   "upperType": "<input type=\"TEXT\" value=\"Fiber\" size=\"6\">",
+   "upperHiddenType": "<input type=\"HIDDEN\" value=\"Fiber\" size=\"6\">",
+   "unknownType": "<input type=\"fancy\" value=\"Fiber\" size=\"6\">",
+   "emptyType": "<input type=\"\" value=\"Fiber\" size=\"6\">",
+   "referenceType": "<input type=\"hidd&#101;n\" value=\"Fiber\" size=\"6\">",
+   "firstType": "<input type=\"hidden\" type=\"text\" value=\"Fiber\" size=\"6\">",
+   "placeholderOnly": "<input placeholder=\"Fiber\" size=\"6\">",
+   "emptyValue": "<input value=\"\" placeholder=\"Fiber\" size=\"6\">",
+   "valueOverPlaceholder": "<input value=\"Fiber\" placeholder=\"x\" size=\"6\">",
+   "firstValue": "<input value=\"Fiber\" value=\"x\" size=\"6\">",
+   "referenceValue": "<input value=\"Fib&#101;r\" size=\"6\">",
+   "buttonType": "<input type=\"button\" value=\"Fiber\" size=\"6\">",
+   "submitType": "<input type=\"submit\" value=\"Fiber\" size=\"6\">",
+   "resetType": "<input type=\"reset\" value=\"Fiber\" size=\"6\">",
+   "buttonPlaceholder": "<input type=\"button\" placeholder=\"Fiber\" size=\"6\">",
+   "submitDefault": "<input type=\"submit\" size=\"6\">",
+   "hiddenType": "<input type=\"hidden\" value=\"Fiber\" size=\"6\">",
+   "passwordType": "<input type=\"password\" value=\"Fiber\" size=\"6\">",
+   "checkboxType": "<input type=\"checkbox\" value=\"Fiber\" size=\"6\">",
+   "numberType": "<input type=\"number\" value=\"Fiber\" size=\"6\">",
+   "kelvinType": "<input type=\"chec\u212abox\" value=\"Fiber\" size=\"6\">",
+   "mixedCaseType": "<input type=\"pAsSwOrD\" value=\"Fiber\" size=\"6\">",
+   "firstPlaceholder": "<input placeholder=\"Fiber\" placeholder=\"x\" size=\"6\">",
+   "entryNothing": "<input type=\"text\" size=\"6\">",
+   "dateType": "<input type=\"date\" value=\"Fiber\" size=\"6\">",
+   "monthType": "<input type=\"month\" value=\"Fiber\" size=\"6\">",
+   "weekType": "<input type=\"week\" value=\"Fiber\" size=\"6\">",
+   "timeType": "<input type=\"time\" value=\"Fiber\" size=\"6\">",
+   "datetimeLocalType": "<input type=\"datetime-local\" value=\"Fiber\" size=\"6\">",
+   "rangeType": "<input type=\"range\" value=\"Fiber\" size=\"6\">",
+   "colorType": "<input type=\"color\" value=\"Fiber\" size=\"6\">",
+   "radioType": "<input type=\"radio\" value=\"Fiber\" size=\"6\">",
+   "fileType": "<input type=\"file\" value=\"Fiber\" size=\"6\">",
+   "imageType": "<input type=\"image\" value=\"Fiber\" size=\"6\">",
+   "spacedType": "<input type=\" hidden\" value=\"Fiber\" size=\"6\">",
+   "typeTrailingSpace": "<input type=\"hidden \" value=\"Fiber\" size=\"6\">",
+   "keywordPrefixType": "<input type=\"hiddenx\" value=\"Fiber\" size=\"6\">",
+   "keywordPluralType": "<input type=\"checkboxes\" value=\"Fiber\" size=\"6\">",
+   "valueWithSpaces": "<input value=\" Fiber \" size=\"6\">",
+   "spaceValue": "<input value=\" \" placeholder=\"Fiber\" size=\"6\">",
+   "spacePlaceholder": "<input placeholder=\" \" size=\"6\">",
+   "spaceButtonValue": "<input type=\"reset\" value=\" \" size=\"6\">"
+  },
+  "pageTwinForms": {
+   "bidiReference": "Pi embeds the <code>a&#x202Ez</code>.\n",
+   "invisibleReference": "Pi embeds a <code>WA&#x200BSM</code> runtime.\n",
+   "imageBeside": "Pi embeds the <code>Fib<o:p>er</code> ![core](a.png).\n",
+   "imageAlt": "Pi embeds the ![<code>Fib<o:p>er core</code>](x.png).\n",
+   "linkChildren": "Pi embeds the [<code>Fib<o:p>er core</code>](x).\n"
+  },
+  "pageTwinPath": "docs/page-twin.md",
+  "inheritedReferenceForms": {
+   "constructorName": "Pi embeds the &constructor; core.\n",
+   "toStringName": "Pi embeds the &toString; core.\n"
+  },
+  "inheritedReferencePath": "docs/inherited-reference.md"
  },
  "producer": {
   "repository": "FiberOpticsSDK",
@@ -2097,36 +2494,46 @@
       },
       "rawStateForms": {
        "codeNamespaced": [
-        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "kbdDeclaration": [
-        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<!x>er core\""
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<!x>er core\"",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "preEndSpace": [
-        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib</ x>er core\""
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib</ x>er core\"",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "headingDotName": [
-        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<x.y>er core\""
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<x.y>er core\"",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "carriedState": [
         "wb-x32.comments[0].text:1: rendered unknown raw-state text \"x\"",
-        "wb-x32.comments[0].text:3: rendered unknown raw-state text \"OWNER DECISION (2026-10-29): Pi will emb...\""
+        "wb-x32.comments[0].text:3: rendered unknown raw-state text \"OWNER DECISION (2026-10-29): Pi will emb...\"",
+        "wb-x32.comments[0].text:3: rendered embed+fibercore"
        ],
        "cellDeclaration": [
-        "wb-x32.comments[0].text:3: rendered unknown raw-state text \"Fib<!x>er core\""
+        "wb-x32.comments[0].text:3: rendered unknown raw-state text \"Fib<!x>er core\"",
+        "wb-x32.comments[0].text:3: rendered embed+fibercore"
        ],
        "itemEndSpace": [
-        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib</ x>er core\""
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib</ x>er core\"",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "codeReference": [
-        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fi&#98er core\""
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fi&#98er core\"",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "scriptState": [
         "wb-x32.comments[0].text:1: rendered unknown <script>",
-        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "upperAttributes": [
-        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+        "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "markupFree": [
         "wb-x32.comments[0].text:1: embed+fibercore",
@@ -2139,16 +2546,20 @@
       },
       "inputForms": {
        "buttonValue": [
-        "wb-x32.comments[0].text:1: rendered unknown <input type=\"button\" value=\"Fiber\" title..."
+        "wb-x32.comments[0].text:1: rendered unknown <input type=\"button\" value=\"Fiber\" title...",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "textValue": [
-        "wb-x32.comments[0].text:1: rendered unknown <input value=\"Fiber\" size=\"6\">"
+        "wb-x32.comments[0].text:1: rendered unknown <input value=\"Fiber\" size=\"6\">",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "placeholder": [
-        "wb-x32.comments[0].text:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">"
+        "wb-x32.comments[0].text:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "upperInput": [
-        "wb-x32.comments[0].text:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">"
+        "wb-x32.comments[0].text:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">",
+        "wb-x32.comments[0].text:1: rendered embed+fibercore"
        ],
        "optionLabel": [
         "wb-x32.comments[0].text:1: rendered unknown <option label=\"Fiber\" title=\"x\">"
@@ -2188,6 +2599,15 @@
         "wb-x32.comments[0].text:1: rendered unknown invisible U+200B",
         "wb-x32.comments[0].text:1: rendered unknown invisible U+200B"
        ]
+      },
+      "survivors": {
+       "GP1-B1a": {
+        "findings": [
+         "wb-x32.comments[0].text:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+         "wb-x32.comments[0].text:1: rendered embed+fibercore"
+        ],
+        "page": "OWNER DECISION (2026-10-29): Pi will embed the portable Fiber core behind the W10 provider."
+       }
       }
      }
     },
@@ -2341,36 +2761,46 @@
       },
       "rawStateForms": {
        "codeNamespaced": [
-        "codeNamespaced:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+        "codeNamespaced:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+        "codeNamespaced:1: rendered embed+fibercore"
        ],
        "kbdDeclaration": [
-        "kbdDeclaration:1: rendered unknown raw-state text \"Fib<!x>er core\""
+        "kbdDeclaration:1: rendered unknown raw-state text \"Fib<!x>er core\"",
+        "kbdDeclaration:1: rendered embed+fibercore"
        ],
        "preEndSpace": [
-        "preEndSpace:1: rendered unknown raw-state text \"Fib</ x>er core\""
+        "preEndSpace:1: rendered unknown raw-state text \"Fib</ x>er core\"",
+        "preEndSpace:1: rendered embed+fibercore"
        ],
        "headingDotName": [
-        "headingDotName:1: rendered unknown raw-state text \"Fib<x.y>er core\""
+        "headingDotName:1: rendered unknown raw-state text \"Fib<x.y>er core\"",
+        "headingDotName:1: rendered embed+fibercore"
        ],
        "carriedState": [
         "carriedState:1: rendered unknown raw-state text \"x\"",
-        "carriedState:3: rendered unknown raw-state text \"OWNER DECISION (2026-10-29): Pi will emb...\""
+        "carriedState:3: rendered unknown raw-state text \"OWNER DECISION (2026-10-29): Pi will emb...\"",
+        "carriedState:3: rendered embed+fibercore"
        ],
        "cellDeclaration": [
-        "cellDeclaration:3: rendered unknown raw-state text \"Fib<!x>er core\""
+        "cellDeclaration:3: rendered unknown raw-state text \"Fib<!x>er core\"",
+        "cellDeclaration:3: rendered embed+fibercore"
        ],
        "itemEndSpace": [
-        "itemEndSpace:1: rendered unknown raw-state text \"Fib</ x>er core\""
+        "itemEndSpace:1: rendered unknown raw-state text \"Fib</ x>er core\"",
+        "itemEndSpace:1: rendered embed+fibercore"
        ],
        "codeReference": [
-        "codeReference:1: rendered unknown raw-state text \"Fi&#98er core\""
+        "codeReference:1: rendered unknown raw-state text \"Fi&#98er core\"",
+        "codeReference:1: rendered embed+fibercore"
        ],
        "scriptState": [
         "scriptState:1: rendered unknown <script>",
-        "scriptState:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+        "scriptState:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+        "scriptState:1: rendered embed+fibercore"
        ],
        "upperAttributes": [
-        "upperAttributes:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+        "upperAttributes:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+        "upperAttributes:1: rendered embed+fibercore"
        ],
        "markupFree": [
         "markupFree:1: embed+fibercore",
@@ -2383,16 +2813,20 @@
       },
       "inputForms": {
        "buttonValue": [
-        "buttonValue:1: rendered unknown <input type=\"button\" value=\"Fiber\" title..."
+        "buttonValue:1: rendered unknown <input type=\"button\" value=\"Fiber\" title...",
+        "buttonValue:1: rendered embed+fibercore"
        ],
        "textValue": [
-        "textValue:1: rendered unknown <input value=\"Fiber\" size=\"6\">"
+        "textValue:1: rendered unknown <input value=\"Fiber\" size=\"6\">",
+        "textValue:1: rendered embed+fibercore"
        ],
        "placeholder": [
-        "placeholder:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">"
+        "placeholder:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">",
+        "placeholder:1: rendered embed+fibercore"
        ],
        "upperInput": [
-        "upperInput:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">"
+        "upperInput:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">",
+        "upperInput:1: rendered embed+fibercore"
        ],
        "optionLabel": [
         "optionLabel:1: rendered unknown <option label=\"Fiber\" title=\"x\">"
@@ -2432,6 +2866,15 @@
         "imageAltSplit:1: rendered unknown invisible U+200B",
         "imageAltSplit:1: rendered unknown invisible U+200B"
        ]
+      },
+      "survivors": {
+       "GP1-B2a": {
+        "findings": [
+         "docs/workbench/18-decisions-and-risks.md:2: rendered unknown raw-state text \"Fib<o:p>er core\"",
+         "docs/workbench/18-decisions-and-risks.md:2: rendered embed+fibercore"
+        ],
+        "page": "OWNER DECISION (2026-10-29): Pi will embed the portable Fiber core behind the W10 provider."
+       }
       }
      }
     }
@@ -3957,36 +4400,46 @@
       },
       "rawStateForms": {
        "codeNamespaced": [
-        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+        "docs/raw-state.md:1: rendered fibercore,embed+core"
        ],
        "kbdDeclaration": [
-        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<!x>er core\""
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<!x>er core\"",
+        "docs/raw-state.md:1: rendered fibercore,embed+core"
        ],
        "preEndSpace": [
-        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib</ x>er core\""
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib</ x>er core\"",
+        "docs/raw-state.md:1: rendered fibercore,embed+core"
        ],
        "headingDotName": [
-        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<x.y>er core\""
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<x.y>er core\"",
+        "docs/raw-state.md:1: rendered fibercore,embed+core"
        ],
        "carriedState": [
         "docs/raw-state.md:1: rendered unknown raw-state text \"x\"",
-        "docs/raw-state.md:3: rendered unknown raw-state text \"Pi embeds the Fib<o:p>er core.\""
+        "docs/raw-state.md:3: rendered unknown raw-state text \"Pi embeds the Fib<o:p>er core.\"",
+        "docs/raw-state.md:3: rendered fibercore,embed+core"
        ],
        "cellDeclaration": [
-        "docs/raw-state.md:3: rendered unknown raw-state text \"Fib<!x>er core\""
+        "docs/raw-state.md:3: rendered unknown raw-state text \"Fib<!x>er core\"",
+        "docs/raw-state.md:3: rendered fibercore,embed+core"
        ],
        "itemEndSpace": [
-        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib</ x>er core\""
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib</ x>er core\"",
+        "docs/raw-state.md:1: rendered fibercore,embed+core"
        ],
        "codeReference": [
-        "docs/raw-state.md:1: rendered unknown raw-state text \"Fi&#98er core\""
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fi&#98er core\"",
+        "docs/raw-state.md:1: rendered fibercore,embed+core"
        ],
        "scriptState": [
         "docs/raw-state.md:1: rendered unknown <script>",
-        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+        "docs/raw-state.md:1: rendered fibercore,embed+core"
        ],
        "upperAttributes": [
-        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+        "docs/raw-state.md:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+        "docs/raw-state.md:1: rendered fibercore,embed+core"
        ],
        "markupFree": [
         "docs/raw-state.md:1: fibercore,embed+core",
@@ -3999,16 +4452,20 @@
       },
       "inputForms": {
        "buttonValue": [
-        "docs/input-form.md:1: rendered unknown <input type=\"button\" value=\"Fiber\" title..."
+        "docs/input-form.md:1: rendered unknown <input type=\"button\" value=\"Fiber\" title...",
+        "docs/input-form.md:1: rendered fibercore,embed+core"
        ],
        "textValue": [
-        "docs/input-form.md:1: rendered unknown <input value=\"Fiber\" size=\"6\">"
+        "docs/input-form.md:1: rendered unknown <input value=\"Fiber\" size=\"6\">",
+        "docs/input-form.md:1: rendered fibercore,embed+core"
        ],
        "placeholder": [
-        "docs/input-form.md:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">"
+        "docs/input-form.md:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">",
+        "docs/input-form.md:1: rendered fibercore,embed+core"
        ],
        "upperInput": [
-        "docs/input-form.md:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">"
+        "docs/input-form.md:1: rendered unknown <INPUT VALUE=\"Fiber\" SIZE=\"6\">",
+        "docs/input-form.md:1: rendered fibercore,embed+core"
        ],
        "optionLabel": [
         "docs/input-form.md:1: rendered unknown <option label=\"Fiber\" title=\"x\">"
@@ -4047,6 +4504,344 @@
        "imageAltSplit": [
         "docs/invisible.md:1: rendered unknown invisible U+200B",
         "docs/invisible.md:1: rendered unknown invisible U+200B"
+       ]
+      },
+      "survivors": {
+       "GP1-D1a": {
+        "findings": [
+         "docs/zz-gp1-code-colon.md:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+         "docs/zz-gp1-code-colon.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the Fiber core."
+       },
+       "GP1-D1b": {
+        "findings": [
+         "docs/zz-gp1-kbd-bogus.md:1: rendered unknown raw-state text \"Fib<!x>er core\"",
+         "docs/zz-gp1-kbd-bogus.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the Fiber core."
+       },
+       "GP1-D1c": {
+        "findings": [
+         "docs/zz-gp1-pre-endspace.md:1: rendered unknown raw-state text \"Fib</ x>er core\"",
+         "docs/zz-gp1-pre-endspace.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the Fiber core."
+       },
+       "GP1-D1d": {
+        "findings": [
+         "docs/zz-gp1-heading-dot.md:1: rendered unknown raw-state text \"Fib<x.y>er core\"",
+         "docs/zz-gp1-heading-dot.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the Fiber core"
+       },
+       "GP1-D1e": {
+        "findings": [
+         "docs/zz-gp1-carry.md:1: rendered unknown raw-state text \"x\"",
+         "docs/zz-gp1-carry.md:3: rendered unknown raw-state text \"Pi embeds the Fib<o:p>er core.\"",
+         "docs/zz-gp1-carry.md:3: rendered fibercore,embed+core"
+        ],
+        "page": "Intro x Pi embeds the Fiber core."
+       },
+       "GP1-D1f": {
+        "findings": [
+         "docs/zz-gp1-cell.md:3: rendered unknown raw-state text \"Fib<!x>er core\"",
+         "docs/zz-gp1-cell.md:3: rendered fibercore"
+        ],
+        "page": "a b Fiber core y"
+       },
+       "GP1-D1g": {
+        "findings": [
+         "docs/zz-gp1-item.md:1: rendered unknown raw-state text \"Fib</ x>er core\"",
+         "docs/zz-gp1-item.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the Fiber core"
+       },
+       "GP1-D1h": {
+        "findings": [
+         "docs/zz-gp1-ref.md:1: rendered unknown raw-state text \"Fi&#98er core\"",
+         "docs/zz-gp1-ref.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the Fiber core."
+       },
+       "GP1-B2a": {
+        "findings": [
+         "docs/workbench/18-decisions-and-risks.md:2: rendered unknown raw-state text \"Fib<o:p>er core\"",
+         "docs/workbench/18-decisions-and-risks.md:2: rendered fibercore,embed+core"
+        ],
+        "page": "OWNER DECISION (2026-10-29): Pi will embed the portable Fiber core behind the W10 provider."
+       },
+       "GP1-D1i2": {
+        "findings": [
+         "docs/zz-gp1-input-block2.md:1: rendered unknown <input type=\"button\" value=\"Fiber\" title...",
+         "docs/zz-gp1-input-block2.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the [input:Fiber] core."
+       },
+       "GP1-D1j2": {
+        "findings": [
+         "docs/zz-gp1-input-inline2.md:1: rendered unknown <input value=\"Fiber\" size=\"6\">",
+         "docs/zz-gp1-input-inline2.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the [input:Fiber] core."
+       },
+       "GP1-D1k2": {
+        "findings": [
+         "docs/zz-gp1-input-placeholder2.md:1: rendered unknown <input placeholder=\"Fiber\" size=\"6\">",
+         "docs/zz-gp1-input-placeholder2.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the [input:Fiber] core."
+       }
+      },
+      "pageReadForms": {
+       "namespacedTag": "Fiber core",
+       "dottedTag": "Fiber core",
+       "spacedEndTag": "Fiber core",
+       "emptyEndTag": "Fiber core",
+       "declaration": "Fiber core",
+       "instruction": "Fiber core",
+       "cdata": "Fiber core",
+       "comment": "Fiber core",
+       "commentHoldsGreaterThan": "Fiber core",
+       "emptyComment": "Fiber core",
+       "dashComment": "Fiber core",
+       "bangComment": "Fiber core",
+       "quotedValue": "Fiber core",
+       "singleQuotedValue": "Fiber core",
+       "spacedValue": "Fiber core",
+       "nameQuote": "Fibb\">er core",
+       "unquotedValue": "Fibc>er core",
+       "unquotedThenQuoted": "Fiber core",
+       "endTagValue": "Fiber core",
+       "nameEquals": "Fibb\">er core",
+       "spaceEquals": "Fibb\">er core",
+       "unclosedTag": "Fib",
+       "unclosedComment": "Fib",
+       "otherLessThan": "Fib< er<1 core",
+       "decimalReference": "Fiber core",
+       "closedDecimal": "Fiber core",
+       "hexReference": "Fiber core",
+       "greedyHexDigits": "Fi\u062er core",
+       "upperHexReference": "Fiber core",
+       "longDecimal": "Fiber core",
+       "nullReference": "x\ufffdy",
+       "surrogateReference": "x\ufffdy",
+       "overReference": "x\ufffdy",
+       "windowsReference": "x\u20acy",
+       "unmappedReference": "x\u0081y",
+       "emptyNumeric": "x&#;y&#x;z",
+       "namedReference": "Fi&er",
+       "legacyName": "Fi&ampber",
+       "unknownName": "Fi&foo;er",
+       "inheritedName": "Fi&toString;er",
+       "rawTextElement": "Fibxer core",
+       "tabTagSpace": "Fiber core",
+       "lineFeedTagSpace": "Fiber core",
+       "formFeedTagSpace": "Fiber core",
+       "carriageReturnTagSpace": "Fiber core",
+       "verticalTabNoSpace": "Fibb\">er core",
+       "nameSolidus": "Fiber core",
+       "solidusBeforeName": "Fibb\">er core",
+       "solidusAfterName": "Fibc\">er core",
+       "solidusAfterValue": "Fibd\">er core",
+       "spaceAfterUnquoted": "Fibd\">er core",
+       "spaceAfterQuoted": "Fibd\">er core",
+       "nameAfterQuoted": "Fibe\">er core",
+       "nameAfterQuotedValue": "Fiber core",
+       "equalsAfterQuotedValue": "Fibd\">er core",
+       "singleQuoteAfterName": "Fibb'>er core",
+       "singleNameQuote": "Fibb'>er core",
+       "singleQuoteInName": "Fibc'>er core",
+       "doubleQuoteInUnquoted": "Fibd\">er core",
+       "singleQuoteInUnquoted": "Fibd'>er core",
+       "quoteAfterQuotedValue": "Fibd\">er core",
+       "singleQuoteAfterQuotedValue": "Fibd'>er core",
+       "upperStartTag": "Fiber core",
+       "upperEndTag": "Fiber core",
+       "upperOpening": "Fiber core",
+       "endTagNameEquals": "Fibb\">er core",
+       "spacedEndTagValue": "Fibc\">er core",
+       "unclosedInstruction": "Fib",
+       "unclosedDeclaration": "Fib",
+       "unclosedSpacedEndTag": "Fib",
+       "otherMarkupFirstClose": "Fiber core>",
+       "commentFirstClose": "Fiber core -->",
+       "bangCommentFirstClose": "Fiber core --!>",
+       "commentEitherClose": "Fiber core -->",
+       "commentDashThenBang": "Fiber core --!>",
+       "lowSurrogate": "x\ufffdy",
+       "lastSurrogate": "x\ufffdy",
+       "belowSurrogate": "x\ud7ffy",
+       "aboveSurrogate": "x\ue000y",
+       "maxReference": "x\udbff\udfffy",
+       "longHex": "Fiber",
+       "manyHexDigits": "Fiber",
+       "longerDecimal": "Fiber",
+       "manyDecimalDigits": "Fiber",
+       "windowsTable": "\u20ac\u0081\u201a\u0192\u201e\u2026\u2020\u2021\u02c6\u2030\u0160\u2039\u0152\u008d\u017d\u008f\u0090\u2018\u2019\u201c\u201d\u2022\u2013\u2014\u02dc\u2122\u0161\u203a\u0153\u009d\u017e\u0178",
+       "twoLetterName": "Fi<er",
+       "upperInitialName": "Fi\u2060er",
+       "namedTable": "&<>\"'\u00a0\u2002\u2003\u2009\u200a\u00ad\u200b\u200c\u200d\u2060\u2010\u2010\u2013\u2014\u2212.!?,:;",
+       "legacyNameUnclosed": "Fi&amp er",
+       "spaceAfterQuotedName": "Fiber core",
+       "spaceAfterQuotedQuote": "Fibd\">er core",
+       "solidusAfterValueName": "Fiber core",
+       "solidusAfterValueQuote": "Fibd\">er core",
+       "solidusAfterNameName": "Fiber core",
+       "solidusAfterNameQuote": "Fibc\">er core",
+       "solidusBeforeNameName": "Fiber core",
+       "solidusBeforeNameQuote": "Fibb\">er core",
+       "nameSolidusQuote": "Fibb\">er core",
+       "spaceRunAfterQuoted": "Fibd\">er core",
+       "digitEndTag": "Fibc\">er core",
+       "digitNameEndTag": "Fibd\">er core",
+       "oneDashDeclaration": "Fiber core",
+       "oneDashEmpty": "Fiber core",
+       "dashBangComment": "Fiber core",
+       "cdataGreaterThan": "Fibb er core",
+       "lessThanGreaterThan": "Fib<>er core",
+       "lessThanGreaterThanTwice": "Fib<>er <>core",
+       "oneReference": "x\u0001y",
+       "oneHexReference": "Fi\u0001ber",
+       "tabReference": "x\ty",
+       "lastC0Reference": "x\u001fy",
+       "lastC0HexReference": "Fi\u001fber",
+       "beforeAttributeSpace": "Fibb\">er core",
+       "selfClosingSpace": "Fibb\">er core",
+       "beforeValueSpace": "Fiber core",
+       "afterUnquotedSpace": "Fiber core",
+       "afterQuotedSpace": "Fibd\">er core",
+       "beforeAttributeTab": "Fibb\">er core",
+       "selfClosingTab": "Fibb\">er core",
+       "beforeValueTab": "Fiber core",
+       "afterUnquotedTab": "Fiber core",
+       "afterQuotedTab": "Fibd\">er core",
+       "beforeAttributeLineFeed": "Fibb\">er core",
+       "selfClosingLineFeed": "Fibb\">er core",
+       "beforeValueLineFeed": "Fiber core",
+       "afterUnquotedLineFeed": "Fiber core",
+       "afterQuotedLineFeed": "Fibd\">er core",
+       "beforeAttributeFormFeed": "Fibb\">er core",
+       "selfClosingFormFeed": "Fibb\">er core",
+       "beforeValueFormFeed": "Fiber core",
+       "afterUnquotedFormFeed": "Fiber core",
+       "afterQuotedFormFeed": "Fibd\">er core",
+       "beforeAttributeCarriageReturn": "Fibb\">er core",
+       "selfClosingCarriageReturn": "Fibb\">er core",
+       "beforeValueCarriageReturn": "Fiber core",
+       "afterUnquotedCarriageReturn": "Fiber core",
+       "afterQuotedCarriageReturn": "Fibd\">er core",
+       "beforeAttributeVerticalTab": "Fiber core",
+       "selfClosingVerticalTab": "Fiber core",
+       "beforeValueVerticalTab": "Fibc\">er core",
+       "afterUnquotedVerticalTab": "Fibe\">er core",
+       "afterQuotedVerticalTab": "Fiber core",
+       "spaceRunEqualsName": "Fiber core",
+       "unquotedSolidusEquals": "Fibz\">er core",
+       "singleQuoteInDoubleQuoted": "Fibz\">er core",
+       "lessThanDash": "Fib<-er core",
+       "instructionQuote": "Fiber core",
+       "declarationQuote": "Fiber core",
+       "overlappingBangClose": "Fib",
+       "dashBangNoGreaterThan": "Fib",
+       "closedEmptyComment": "Fiber core",
+       "carriageReturnReference": "x\ry",
+       "deleteReference": "x\u007fy",
+       "noncharacterReference": "x\ufdd0y"
+      },
+      "inputReadForms": {
+       "noType": "Pi embeds the [input:Fiber] core.",
+       "textType": "Pi embeds the [input:Fiber] core.",
+       "searchType": "Pi embeds the [input:Fiber] core.",
+       "telType": "Pi embeds the [input:Fiber] core.",
+       "urlType": "Pi embeds the [input:Fiber] core.",
+       "emailType": "Pi embeds the [input:Fiber] core.",
+       "upperType": "Pi embeds the [input:Fiber] core.",
+       "upperHiddenType": "Pi embeds the core.",
+       "unknownType": "Pi embeds the [input:Fiber] core.",
+       "emptyType": "Pi embeds the [input:Fiber] core.",
+       "referenceType": "Pi embeds the core.",
+       "firstType": "Pi embeds the core.",
+       "placeholderOnly": "Pi embeds the [input:Fiber] core.",
+       "emptyValue": "Pi embeds the [input:Fiber] core.",
+       "valueOverPlaceholder": "Pi embeds the [input:Fiber] core.",
+       "firstValue": "Pi embeds the [input:Fiber] core.",
+       "referenceValue": "Pi embeds the [input:Fiber] core.",
+       "buttonType": "Pi embeds the [input:Fiber] core.",
+       "submitType": "Pi embeds the [input:Fiber] core.",
+       "resetType": "Pi embeds the [input:Fiber] core.",
+       "buttonPlaceholder": "Pi embeds the core.",
+       "submitDefault": "Pi embeds the core.",
+       "hiddenType": "Pi embeds the core.",
+       "passwordType": "Pi embeds the core.",
+       "checkboxType": "Pi embeds the core.",
+       "numberType": "Pi embeds the core.",
+       "kelvinType": "Pi embeds the [input:Fiber] core.",
+       "mixedCaseType": "Pi embeds the core.",
+       "firstPlaceholder": "Pi embeds the [input:Fiber] core.",
+       "entryNothing": "Pi embeds the core.",
+       "dateType": "Pi embeds the core.",
+       "monthType": "Pi embeds the core.",
+       "weekType": "Pi embeds the core.",
+       "timeType": "Pi embeds the core.",
+       "datetimeLocalType": "Pi embeds the core.",
+       "rangeType": "Pi embeds the core.",
+       "colorType": "Pi embeds the core.",
+       "radioType": "Pi embeds the core.",
+       "fileType": "Pi embeds the core.",
+       "imageType": "Pi embeds the core.",
+       "spacedType": "Pi embeds the [input:Fiber] core.",
+       "typeTrailingSpace": "Pi embeds the [input:Fiber] core.",
+       "keywordPrefixType": "Pi embeds the [input:Fiber] core.",
+       "keywordPluralType": "Pi embeds the [input:Fiber] core.",
+       "valueWithSpaces": "Pi embeds the [input: Fiber ] core.",
+       "spaceValue": "Pi embeds the [input: ] core.",
+       "spacePlaceholder": "Pi embeds the [input: ] core.",
+       "spaceButtonValue": "Pi embeds the [input: ] core."
+      },
+      "pageTwinForms": {
+       "bidiReference": {
+        "findings": [
+         "docs/page-twin.md:1: rendered unknown raw-state text \"a&#x202Ez\"",
+         "docs/page-twin.md:1: rendered unknown U+202E",
+         "docs/page-twin.md:1: rendered unknown invisible U+202E"
+        ],
+        "page": "Pi embeds the a\u202ez."
+       },
+       "invisibleReference": {
+        "findings": [
+         "docs/page-twin.md:1: rendered unknown raw-state text \"WA&#x200BSM\"",
+         "docs/page-twin.md:1: rendered unknown invisible U+200B"
+        ],
+        "page": "Pi embeds a WA\u200bSM runtime."
+       },
+       "imageBeside": {
+        "findings": [
+         "docs/page-twin.md:1: rendered unknown raw-state text \"Fib<o:p>er\"",
+         "docs/page-twin.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the Fiber core."
+       },
+       "imageAlt": {
+        "findings": [
+         "docs/page-twin.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+        ],
+        "page": "Pi embeds the Fib<o:p>er core."
+       },
+       "linkChildren": {
+        "findings": [
+         "docs/page-twin.md:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+         "docs/page-twin.md:1: rendered fibercore,embed+core"
+        ],
+        "page": "Pi embeds the Fiber core."
+       }
+      },
+      "inheritedReferenceForms": {
+       "constructorName": [
+        "docs/inherited-reference.md:1: rendered unknown &constructor;"
+       ],
+       "toStringName": [
+        "docs/inherited-reference.md:1: rendered unknown &toString;"
        ]
       },
       "plantedTree": {
