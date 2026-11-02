@@ -48,15 +48,22 @@
  *    recorded none included; claimed only in the forms A3 plants below (its mutants and its reader controls), each at each
  *    of its positions: for the drive, a call asking requestOf once each for the snapshot's first one to four can_execute
  *    candidates, in the snapshot's order, and once each for all four in its reverse and in one interleaving; for the
- *    check, a record of one to four requests and one to three handed
- *    decisions. In those forms the drive records a copy of each returned request, taken at the return, so an in-place edit
- *    of every member of a returned object afterwards edits no record, and keeps the copies in the order the call asked for
+ *    check, a record of one to four requests and one to three handed decisions, each drive form's record handed one,
+ *    two or three decisions, by hand and driven, among them (A3's decision records). In those forms the drive records
+ *    a copy of each returned request, taken at the return, so an in-place edit of every member of a returned object
+ *    afterwards edits no record, and keeps the copies in the order the call asked for
  *    them, in each of the three orders; every request of such a call asking for all four, in each of the three orders,
  *    the first, second, third and last asked, carries that call's own serial in its invocationId, and of two such calls
  *    in a row over one fixture, in each ordered pair of the three orders, neither issues an invocationId the other
- *    issued; the check reads every handed decision, the first, middle and last of
- *    three, against every recorded request, at each position of one to four, and holds a receipt to ONE recorded request
- *    in the forms the split and mix controls plant (a receipt whose six echoed fields and grant two recorded requests
+ *    issued, as the serial reading reads them (A3's serial plants hold it at each position of either call); the check
+ *    reads every handed decision, the first, middle and last of three, against every recorded request, at each
+ *    position of one to four (in the decision records: each handed
+ *    decision in turn minted for each candidate's request the record does not hold, or for its fellows' request with
+ *    the principal's role dropped or requested later, its fellows minted for the recorded request at one position,
+ *    each in turn, and every decision minted for the recorded request at each position or each for the next
+ *    recorded request from each position on, every handed decision a permit of its own), and holds a receipt to ONE
+ *    recorded request in the forms the split and mix controls plant (a receipt whose six echoed fields and grant two
+ *    recorded requests
  *    split between them, each read field in turn, answers neither; a core-minted permit decided on the chosen request
  *    carrying another issued request's invocationId or target, or with the principal's role dropped, answers no request
  *    of its call); answers() reads a receipt's scope,
@@ -84,7 +91,9 @@
  *    object or array member still holds the object it held, and its records name the fixture driven);
  *    the serial (the same four requests asked by a planted point driven over each fixture twice in a row: every request of
  *    each call carries that call's serial, driveSerial as its drive left it, and not the other call's, as one whole
- *    dash-separated segment of its invocationId, which planted invocationIds pin; the two calls issue no invocationId in
+ *    dash-separated segment of its invocationId (the first, a middle or the last, beside another serial or alone; a
+ *    longer or a shorter number, a part of another segment or a leading zero carries none), which planted
+ *    invocationIds pin; the two calls issue no invocationId in
  *    common, and their requests name the fixture driven); the replay (for each position of the four, a planted point
  *    driven over F1 twice in a row issues the four requests, one per can_execute candidate in the snapshot's order; the
  *    first call executes the core's permit for the request at that position, which answers that request, and meets every
@@ -132,7 +141,31 @@
  *    over F1 twice in a row, each call asking for all four in its own order of a pair, in each ordered pair: the permit
  *    its first call executes for the request at each position of that call's order answers that request and meets
  *    every check, and its second call, handed that same permit, answers none of its requests and fails
- *    effect-unrequested alone; the targets each call recorded read back in the order it asked). A4 a hand-built
+ *    effect-unrequested alone; the targets each call recorded read back in the order it asked); and, cut #3's, the
+ *    decision records (over each drive form's record, the snapshot's first one, two, three and four candidates'
+ *    requests and all four in its reverse and in the interleaving, by hand, one F3 call per case over F1's requests
+ *    under serial 0, and driven, one drive over F1 per case whose planted point asks requestOf for that record's
+ *    candidates in its order, for one, two and three handed decisions, every handed decision a permit of its own:
+ *    every decision minted for the recorded request at one position, each position in turn, or (two or three) each
+ *    for the next recorded request from one position on, wrapping, passes, each answering its request; each handed
+ *    decision in turn, minted for each candidate's request the record does not hold (by hand, that candidate's under
+ *    serial 7 when the record holds it and under the record's serial 0 otherwise; driven, under serial 0, which no
+ *    drive issues), or for its fellows' recorded request with the principal's role dropped or requested later
+ *    (requests the record does not hold that the core still permits and mints), its fellows minted for the recorded
+ *    request at one position, each in turn, fails effect-unrequested, it alone answering none; each case reads, per
+ *    handed decision, the index of the recorded request its receipt answers (-1: none), how many distinct decisions it
+ *    handed, and the checks the call fails, current-unexecuted beside them when a driven call hands two or three; the
+ *    records by hand and every stranger read back from its receipt, by its invocationId or by the member its form
+ *    alters) and the serial plants (the serial reading shown planted calls, serials 7 then 8, each returned four
+ *    requests over the snapshot's candidates in its order: in four
+ *    rotations each position of each call holds each kind of request in turn, its invocationId carrying that call's
+ *    serial alone, which reads carried, or the other call's alone, both (D01's page form) or neither (D02's page
+ *    form, the serial plus 1000), each of which reads not carried, and the id the first call carries as its own,
+ *    which the second carries as the other's, reads shared; D01's and D02's pages themselves, every request of both
+ *    calls respelled as each respells it (the first call's carried at no position, the second call's at every one or
+ *    at none); four ids both calls were returned, in reverse order in the second, read shared in the first call's
+ *    order; an id one call was returned twice and the other never reads not shared; and a name at each position of
+ *    each call reads named once, in the order first named; each plant's invocationIds read back). A4 a hand-built
  *    look-alike permit and a spread copy of a minted one fail
  *    effect-unminted; isCoreMintedDecision is false for the reply, its typed conversion, a copy, a JSON round trip and a
  *    denial. B1 the mismatch condition: F2's presented bytes hash to a digest the reply does not carry, while F1's bytes hash
@@ -147,8 +180,9 @@
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's
  * member count as literals, beside the vocabulary, the checks, the echoed request fields, the positions, the mutants, the
- * lead plants, the string forms, the mixes, the orders, the order pairs, the fixtures, the bound points, the floor, the pin and the derived
- * path; the judged set (every row's id, label
+ * lead plants, the string forms, the mixes, the orders, the order pairs, the record forms, the handed counts, the serial
+ * kinds, the planted serials, the serial plants, the segment plants, the derived strangers, the fixtures, the bound
+ * points, the floor, the pin and the derived path; the judged set (every row's id, label
  * and pins, every pin's quote and witness, the residual members, every registered test title) is held to the out-of-file
  * roster test/fixtures/gp-decision-executor-roster.json. OUTSIDE ANCHORS (their own registered case): the bead's own row in the
  * tracker export (.beads/issues.jsonl): the title opens with the requirement id and carries row T's label before its artifact
@@ -188,7 +222,8 @@
  * two calls over one fixture share only when they are not in a row (the serial control drives each fixture twice in a row);
  * which object holding the returned grants array M-FORGED-GRANT hands decideControl (the object requestOf returned or a copy
  * sharing that array: no echoed field tells them apart); a check that skips a request or a decision only on a fixture
- * other than the one its control drives (the position controls drive F1, the decision controls F3); the lead reader's
+ * other than the one its control drives (the position controls drive F1, the decision controls F3, the decision records
+ * F3 by hand and F1 driven); the lead reader's
  * grammar outside the live lead line and LEAD_PLANTS (a check spelled outside [a-z-], a point outside P-[A-Z-],
  * another line separator); the leading comment of a path member and anything C1 does not derive (row Q4); a mutant, a
  * fixture, a planted control or a reader control removed from its table or case, the frozen literal and the roster together
@@ -210,8 +245,13 @@
  * all four in an order other than the three the record control plants; the serial of a request of a call asking for
  * fewer than all four candidates, or for all four in an order other than the three, and an invocationId two calls in a
  * row share where either call asks so (the serial controls ask for all four, in each ordered pair of the three
- * orders); and a call asking requestOf for one candidate twice, or for a candidate outside the snapshot's can_execute
- * relations (no control asks either).
+ * orders); a call asking requestOf for one candidate twice, or for a candidate outside the snapshot's can_execute
+ * relations (no control asks either); in the decision records, a stranger beside fellows minted for two different
+ * recorded requests, a stranger that is no core-minted permit, a stranger matching its fellows' recorded request in
+ * its target, invocationId, principal and requestedAt (each planted stranger differs from it in one of those), and a
+ * record other than the six the decision records plant beside the position, check and decision controls' own; and
+ * the serial reading over planted calls other than plantedSerial and the serial plants (two calls of two or of four
+ * requests, serials 7 then 8) and the drives' own.
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a vocabulary spelling the token reader does not read: camel case, a member composed at run time, a name
  * lower-cased), R-SIDE-PATH (Q2, a decision point that reaches an effect outside the injected seam: the checks observe the seam
@@ -264,7 +304,17 @@
  * orders widened the CHECKS parenthetical's serial and no-shared-invocationId clauses past their pins): the serial and
  * replay controls ask in each ordered pair of the three orders (A3's serial orders and replay orders readings, every
  * fixture and F1), so the gate's GP12-S01 and GP12-S02 red; those clauses now name a call asking for all four, and the
- * NOT CLAIMED list names the rest.
+ * NOT CLAIMED list names the rest. Cut #3 (refusal #2 of cut #2, gate-prep-10 / g10-gate-s190: unmet U1 and U2, claims
+ * wider than pins; ruling R-B361 freezes the serial claim-set class, binds this cut to the enumerate-the-resolvable
+ * form and reads U1, the check's decision positions, as rung 1 of its own claim set): U1 the decision records (each
+ * drive form's record, by hand on F3 and driven on F1, one to three handed decisions, each position in turn minted for
+ * each candidate's request the record does not hold or for its fellows' request with the principal's role dropped or
+ * requested later, the fellows minted for each recorded position in turn) pin the check's decision positions in
+ * every record order and size, so the gate's GP10-C01, C02, C03 and C04 red; U2 the
+ * serial plants (each kind of request at each position of either call, D01's and D02's pages, ids shared at each
+ * position, a name at each position) pin both conjuncts of serialOf's carried, its shared and its named, so GP10-P01,
+ * P02 and P03 red; the segment plants add the first and the last segment, a serial beside another and a leading zero.
+ * No reader changes: violations(), answers(), serialOf() and carriesSerial() are byte-unchanged.
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI dependency, adapter, seam or fake binary.
  */
 import { execFileSync } from "node:child_process";
@@ -444,6 +494,8 @@ const SCOPE: ObservationScope = { workspace: WS, principal: "operator" };
 const AT = "2026-10-28T05:00:00Z";
 const REQUESTED_AT = "2026-10-28T05:00:01Z";
 const DECIDED_AT = "2026-10-28T05:00:02Z";
+/** A later instant than REQUESTED_AT: the requestedAt of the "requested later" stranger of A3's decision records (wb-kbh1 cut #3). */
+const REQUESTED_LATER = "2026-10-28T05:00:09Z";
 const CONTROL_GRANTS: readonly string[] = ["observe:furnace.run.inspect", "control:furnace.stop"];
 const OBSERVE_GRANTS: readonly string[] = ["observe:furnace.run.inspect"];
 
@@ -529,7 +581,7 @@ function drive(point: DecisionPoint, fixture: Fixture): Drive {
 }
 /** The request fields a minted receipt echoes (control.ts core(), held to the core's own receipt in A3). */
 const ECHOED = ["scope", "principal", "target", "action", "invocationId", "requestedAt"] as const;
-/** Whether a receipt answers a request, each echoed field read against the request's and its grant against the request's grants: claimed only in the forms A3's echo, form, split, mix and check controls plant (the header's NOT CLAIMED names the rest). */
+/** Whether a receipt answers a request, each echoed field read against the request's and its grant against the request's grants: claimed only in the forms A3's echo, form, split, mix and check controls and its decision records plant (the header's NOT CLAIMED names the rest). */
 function answers(receipt: unknown, request: NativeControlRequest): boolean {
   const grant = own(receipt, "grant");
   return ECHOED.every(field => isDeepStrictEqual(own(receipt, field), request[field])) && typeof grant === "string" && strings(request.grants) && request.grants.includes(grant);
@@ -574,6 +626,24 @@ type OrderPair = readonly [readonly number[], readonly number[]];
 const ORDER_PAIRS: readonly { readonly label: string; readonly orders: OrderPair }[] = Object.entries(ORDERS).flatMap(([first, firstOrder]) =>
   Object.entries(ORDERS).map(([second, secondOrder]) => ({ label: `${first} then ${second}`, orders: [firstOrder, secondOrder] as const })),
 );
+/** The records A3's decision records hand decisions over, by their requests' positions in the snapshot's can_execute order: each drive form's record, the snapshot's first one, two, three and four, and all four in its reverse and in the interleaving (wb-kbh1 cut #3). */
+const RECORD_FORMS: readonly { readonly label: string; readonly order: readonly number[] }[] = [
+  ...[1, 2, 3, 4].map(size => ({ label: `snapshot, first ${size}`, order: ORDERS.snapshot.slice(0, size) })),
+  { label: "reversed, all 4", order: [...ORDERS.reversed] },
+  { label: "interleaved, all 4", order: [...ORDERS.interleaved] },
+];
+/** How many decisions one call of A3's decision records hands (wb-kbh1 cut #3). */
+const HANDED = [1, 2, 3] as const;
+/** The kinds of request A3's serial plants place, by the serials its invocationId carries as whole dash-separated segments: that call's own alone, the other call's alone, both (D01's page form) or neither (D02's page form: its own plus 1000) (wb-kbh1 cut #3). */
+const SERIAL_KINDS = ["own", "other", "both", "neither"] as const;
+type SerialKind = (typeof SERIAL_KINDS)[number];
+/** The serials A3's serial plants give their two calls, the first's then the second's (wb-kbh1 cut #3). */
+const PLANTED_SERIALS = [7, 8] as const;
+/** The strangers A3's decision records derive from the fellows' own recorded request, each a request the record does not hold that the core still permits and mints, by the member its form alters (wb-kbh1 cut #3). */
+const DERIVED_STRANGERS: Readonly<Record<string, { readonly member: string; readonly derive: (request: NativeControlRequest) => NativeControlRequest }>> = {
+  "the principal's role dropped": { member: "principal", derive: request => ({ ...request, principal: { id: request.principal.id } }) },
+  "requested later": { member: "requestedAt", derive: request => ({ ...request, requestedAt: REQUESTED_LATER }) },
+};
 /** A type alias, not an interface, so the reading is a Json witness as it stands. */
 type RecordReading = {
   readonly requests: number;
@@ -629,15 +699,26 @@ function recordReading(entry: Fixture, size: number, order: readonly number[] = 
 }
 /** The positions of a call's four requests, one per can_execute relation of the snapshot (the outside anchors hold the count). */
 const POSITIONS = ["first", "second", "third", "last"] as const;
+/** The invocationIds A3 reads carriesSerial on, with serial 87, by what each holds (wb-5omz cut #3's four, then wb-kbh1 cut #3's four). */
+const SEGMENT_PLANTS: Readonly<Record<string, string>> = {
+  "its own segment": "inv-F1-87-exec-a1-t1",
+  "a longer number": "inv-F1-870-exec-a1-t1",
+  "a shorter number": "inv-F1-8-exec-a1-t1",
+  "inside another segment": "inv-F1-x87-exec-a1-t1",
+  "the first segment": "87-inv-F1-exec-a1-t1",
+  "the last segment": "inv-F1-exec-a1-t1-87",
+  "beside another serial": "inv-F1-86-87-exec-a1-t1",
+  "with a leading zero": "inv-F1-087-exec-a1-t1",
+};
 /** Whether an invocationId carries a serial as one whole dash-separated segment (A3's planted invocationIds pin this reading). */
 const carriesSerial = (invocationId: string, serial: number): boolean => invocationId.split("-").includes(String(serial));
 /** A type alias, not an interface, so the reading is a Json witness as it stands. */
 type SerialReading = {
-  /** Per call, per request in the order returned: whether its invocationId carries that call's serial, and not the other call's. */
+  /** Per call, per request in the order returned: whether its invocationId carries that call's serial, and not the other call's (A3's serial plants hold each kind of request at each position of either call, wb-kbh1 cut #3). */
   readonly carried: readonly (readonly boolean[])[];
-  /** The invocationIds both calls issued. */
+  /** The invocationIds both calls issued, in the first call's order (A3's serial plants hold one at each position, wb-kbh1 cut #3). */
   readonly shared: readonly string[];
-  /** The fixture ids the two calls' invocationIds name (their second dash-separated segment), once each. */
+  /** The names the two calls' invocationIds carry as their second dash-separated segment (a drive's fixture id), once each, in the order first named (A3's serial plants hold one at each position of either call, wb-kbh1 cut #3). */
   readonly named: readonly string[];
 };
 /** The serial reading of two calls in a row, from the invocationIds each was returned and each call's serial (A3 holds it on planted calls, wb-kbh1 cut #2). */
@@ -714,6 +795,160 @@ function orderedReplayReading([firstOrder, secondOrder]: OrderPair): Record<stri
 function replayReading(): Record<string, ReplayReading> {
   return Object.fromEntries(
     Object.entries(orderedReplayReading([ORDERS.snapshot, ORDERS.snapshot])).map(([label, { minting, replaying, answered }]) => [label, { minting, replaying, answered }]),
+  );
+}
+/** A planted invocationId in the drive's own form, inv-<name>-<serial segments>-<candidate> (A3's serial plants, wb-kbh1 cut #3). */
+const plantedId = (name: string, serials: readonly number[], candidate: string): string => `inv-${name}-${serials.join("-")}-${candidate}`;
+/** The serial segments a planted request of one kind carries, given its call's serial and the other call's (wb-kbh1 cut #3). */
+function kindSerials(kind: SerialKind, serial: number, otherSerial: number): number[] {
+  if (kind === "own") return [serial];
+  if (kind === "other") return [otherSerial];
+  if (kind === "both") return [serial, otherSerial];
+  return [serial + 1000];
+}
+/** A3's planted call pairs beside plantedSerial (wb-kbh1 cut #3): two calls of four requests each over the snapshot's candidates in its order, serials PLANTED_SERIALS, each with the reading the serial reading must give it. */
+function serialPlants(candidates: readonly string[]): Record<string, { readonly returned: string[][]; readonly reading: SerialReading }> {
+  const [first, second] = PLANTED_SERIALS;
+  const serialsOf = (call: number): readonly [number, number] => (call === 0 ? [first, second] : [second, first]);
+  const kindsFrom = (shift: number): SerialKind[] => SERIAL_KINDS.map((_, at) => SERIAL_KINDS[(at + shift) % SERIAL_KINDS.length] ?? "own");
+  const everyPosition = (value: boolean): boolean[] => candidates.map(() => value);
+  const callOf = (call: number, kinds: readonly SerialKind[], names: readonly string[] = []): string[] =>
+    candidates.map((candidate, at) => plantedId(names[at] ?? "F1", kindSerials(kinds[at] ?? "own", ...serialsOf(call)), candidate));
+  const owned = SERIAL_KINDS.map(() => "own" as const);
+  const rotations = SERIAL_KINDS.map((kind, shift) => {
+    const kinds = [kindsFrom(shift), kindsFrom(shift + 1)];
+    const returned = kinds.map((row, call) => callOf(call, row));
+    const ownAt = (kinds[0] ?? []).map(entry => entry === "own");
+    const reading: SerialReading = { carried: kinds.map(row => row.map(entry => entry === "own")), shared: (returned[0] ?? []).filter((_, at) => ownAt[at] === true), named: ["F1"] };
+    return [`the kinds from ${kind}`, { returned, reading }] as const;
+  });
+  const page = (respell: (serial: number, candidate: string) => string): string[][] => PLANTED_SERIALS.map(serial => candidates.map(candidate => respell(serial, candidate)));
+  const both = candidates.map(candidate => plantedId("F1", [first, second], candidate));
+  const [twice = "", ...rest] = callOf(0, owned);
+  const names = [
+    ["N4", "N3", "N2", "N1"],
+    ["N8", "N7", "N6", "N5"],
+  ];
+  return {
+    ...Object.fromEntries(rotations),
+    "D01's page": { returned: page((serial, candidate) => plantedId("F1", [serial, serial + 1], candidate)), reading: { carried: [everyPosition(false), everyPosition(true)], shared: [], named: ["F1"] } },
+    "D02's page": { returned: page((serial, candidate) => plantedId("F1", [serial + 1000], candidate)), reading: { carried: [everyPosition(false), everyPosition(false)], shared: [], named: ["F1"] } },
+    "four ids both calls were returned": { returned: [both, [...both].reverse()], reading: { carried: [everyPosition(false), everyPosition(false)], shared: both, named: ["F1"] } },
+    "an id one call was returned twice": { returned: [[twice, twice, ...rest.slice(0, 2)], callOf(1, owned)], reading: { carried: [everyPosition(true), everyPosition(true)], shared: [], named: ["F1"] } },
+    "a name at each position": { returned: names.map((row, call) => callOf(call, owned, row)), reading: { carried: [everyPosition(true), everyPosition(true)], shared: [], named: names.flat() } },
+  };
+}
+/** One case of A3's decision records over a record (wb-kbh1 cut #3): one handed decision per entry of `fellows`, each a permit of its own minted for the recorded request at that position, but the one at `foreignAt`, when set, minted for `stranger`'s request the record does not hold (a candidate's, or the request at `base` in a derived form). */
+type DecisionCase = { readonly key: string; readonly fellows: readonly number[]; readonly base: number; readonly foreignAt?: number; readonly stranger?: string };
+/**
+ * The cases of A3's decision records over a record of `size` requests (wb-kbh1 cut #3): for each count of handed decisions,
+ * every decision minted for the recorded request at each position in turn; for two or three, each minted for the next
+ * recorded request from each position on, wrapping; and each handed decision in turn minted for each stranger (each
+ * candidate's request the record does not hold, then each derived stranger of the fellows' request), its fellows minted for
+ * the recorded request at each position in turn (one handed decision has no fellows: its derived strangers derive from the
+ * recorded request at the first position).
+ */
+function decisionCases(size: number, candidates: readonly string[]): DecisionCase[] {
+  const positions = Array.from({ length: size }, (_, at) => at);
+  const strangers = [...candidates, ...Object.keys(DERIVED_STRANGERS)];
+  const strangerText = (stranger: string, base: number): string => (Object.hasOwn(DERIVED_STRANGERS, stranger) ? `request ${base + 1}, ${stranger}` : `${stranger}'s unrecorded request`);
+  return HANDED.flatMap(count => [
+    ...positions.map(at => ({ key: `${count} handed: all for request ${at + 1}`, fellows: Array.from({ length: count }, () => at), base: at })),
+    ...(count === 1 ? [] : positions).map(at => ({
+      key: `${count} handed: each for the next request from request ${at + 1} on, wrapping`,
+      fellows: Array.from({ length: count }, (_, slot) => (at + slot) % size),
+      base: at,
+    })),
+    ...Array.from({ length: count }, (_, foreignAt) => foreignAt).flatMap(foreignAt =>
+      strangers.flatMap(stranger =>
+        (count === 1 ? [0] : positions).map(base => ({
+          key: `${count} handed: decision ${foreignAt + 1} for ${strangerText(stranger, base)}${count === 1 ? "" : `, the others for request ${base + 1}`}`,
+          fellows: Array.from({ length: count }, () => base),
+          base,
+          foreignAt,
+          stranger,
+        })),
+      ),
+    ),
+  ]);
+}
+/** One case of A3's decision records read in one line: per handed decision, the index of the recorded request its receipt answers (-1: none), how many distinct decision objects the call handed, then the checks the call fails (wb-kbh1 cut #3). */
+const decisionLine = (answered: readonly number[], distinct: number, found: readonly Check[]): string =>
+  `answered ${answered.join(" ")}; ${distinct} distinct; found ${found.length === 0 ? "none" : found.join(" ")}`;
+/** A stranger read back from the receipt it was minted with: a candidate's by its invocationId, a derived one by the member its form alters (wb-kbh1 cut #3). */
+function strangerReadBack(stranger: string, decision: unknown): string {
+  const member = Object.hasOwn(DERIVED_STRANGERS, stranger) ? (DERIVED_STRANGERS[stranger]?.member ?? "invocationId") : "invocationId";
+  return `${member} ${JSON.stringify(own(own(decision, "receipt"), member))}`;
+}
+/**
+ * A3's decision records by hand (wb-kbh1 cut #3): over each record form, a record of F1's requests under serial 0 and, per
+ * case, one F3 call handing the case's decisions over it (F3: its basis is valid and it is no current fixture, so no other
+ * check speaks). Every handed decision is a permit of its own, core-minted on F1: a fellow for its recorded request, a
+ * candidate's stranger for that candidate's request under serial 7 when the record holds the candidate and under serial 0
+ * otherwise, a derived stranger for the recorded request at `base` in that form. Each stranger is read back from the first
+ * case that hands it with fellow 1.
+ */
+function decisionRecordsByHand(): Record<string, { readonly record: string[]; readonly strangers: Record<string, string>; readonly cases: Record<string, string> }> {
+  const F1 = fixture("F1");
+  const F3 = fixture("F3");
+  const candidates = executable(SNAPSHOT_BYTES);
+  const projection = projectionOf(F1);
+  const decide = (request: NativeControlRequest | undefined): ControlDecision | undefined => (request === undefined ? undefined : decideControl(request, { projection, now: () => DECIDED_AT }));
+  return Object.fromEntries(
+    RECORD_FORMS.map(({ label, order }) => {
+      const issued = order.flatMap(index => candidates.slice(index, index + 1)).map(candidate => requestFor(F1, candidate));
+      const strangerRequest = (stranger: string, base: number): NativeControlRequest | undefined => {
+        if (!Object.hasOwn(DERIVED_STRANGERS, stranger)) return requestFor(F1, stranger, issued.some(request => request.target.id === runRef(stranger).id) ? 7 : 0);
+        const from = issued[base];
+        const derive = DERIVED_STRANGERS[stranger]?.derive;
+        return from === undefined || derive === undefined ? undefined : derive(from);
+      };
+      const readBack = new Map<string, string>();
+      const cases = decisionCases(issued.length, candidates).map(({ key, fellows, base, foreignAt, stranger }) => {
+        const foreign = stranger === undefined ? undefined : decide(strangerRequest(stranger, base));
+        if (stranger !== undefined && base === 0 && !readBack.has(stranger)) readBack.set(stranger, strangerReadBack(stranger, foreign));
+        const decisions = fellows.map((at, slot) => (slot === foreignAt ? foreign : decide(issued[at]))).filter((decision): decision is ControlDecision => decision !== undefined);
+        const answered = decisions.map(decision => issued.findIndex(request => answers(own(decision, "receipt"), request)));
+        return [key, decisionLine(answered, new Set(decisions).size, violations(F3, { receipts: [], calls: decisions.map(decision => ({ decision, answer: "frn-ack-control" })), issued }))] as const;
+      });
+      return [label, { record: issued.map(request => request.invocationId), strangers: Object.fromEntries(readBack), cases: Object.fromEntries(cases) }] as const;
+    }),
+  );
+}
+/**
+ * A3's decision records driven (wb-kbh1 cut #3): over each record form, per case, one drive over F1 whose planted point asks
+ * requestOf for the form's candidates in its order and hands the seam the case's decisions, each a permit of its own minted
+ * on the call's projection: a fellow for the request it was returned at that position, a candidate's stranger for that
+ * candidate's request under serial 0, which no drive issues, a derived stranger for the returned request at `base` in that
+ * form. Each stranger is read back from the decision the seam was handed, in the first case that hands it with fellow 1.
+ */
+function decisionRecordsDriven(): Record<string, { readonly strangers: Record<string, string>; readonly cases: Record<string, string> }> {
+  const F1 = fixture("F1");
+  const candidates = executable(SNAPSHOT_BYTES);
+  return Object.fromEntries(
+    RECORD_FORMS.map(({ label, order }) => {
+      const readBack = new Map<string, string>();
+      const cases = decisionCases(order.length, candidates).map(({ key, fellows, base, foreignAt, stranger }) => {
+        const point: DecisionPoint = call => {
+          const listed = executable(call.presented);
+          const returned = order.flatMap(index => listed.slice(index, index + 1)).map(candidate => call.requestOf(candidate));
+          const decide = (request: NativeControlRequest | undefined): ControlDecision | undefined =>
+            request === undefined ? undefined : decideControl(request, { projection: call.projection, now: call.now });
+          const from = returned[base];
+          const derive = stranger === undefined ? undefined : DERIVED_STRANGERS[stranger]?.derive;
+          const strangerRequest = stranger === undefined ? undefined : !Object.hasOwn(DERIVED_STRANGERS, stranger) ? requestFor(F1, stranger, 0) : from === undefined || derive === undefined ? undefined : derive(from);
+          const foreign = decide(strangerRequest);
+          return fellows
+            .map((at, slot) => (slot === foreignAt ? foreign : decide(returned[at])))
+            .flatMap(decision => (decision === undefined ? [] : [{ status: "executed" as const, candidate: String(targetIdOf(decision)), answer: call.effect(decision) }]));
+        };
+        const run = drive(point, F1);
+        if (stranger !== undefined && foreignAt !== undefined && base === 0 && !readBack.has(stranger)) readBack.set(stranger, strangerReadBack(stranger, run.calls[foreignAt]?.decision));
+        const answered = run.calls.map(({ decision }) => run.issued.findIndex(request => answers(own(decision, "receipt"), request)));
+        return [key, decisionLine(answered, new Set(run.calls.map(({ decision }) => decision)).size, violations(F1, run))] as const;
+      });
+      return [label, { strangers: Object.fromEntries(readBack), cases: Object.fromEntries(cases) }] as const;
+    }),
   );
 }
 
@@ -1203,17 +1438,16 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(serial, "on every fixture, each request of each of two calls in a row, first, second, third and last, carries that call's serial and not the other call's; the two calls share no invocationId").toEqual(
       Object.fromEntries(FIXTURES.map(entry => [entry.id, { carried: [everyPosition, everyPosition], shared: [], named: [entry.id] }])),
     );
-    const segments = {
-      "its own segment": carriesSerial("inv-F1-87-exec-a1-t1", 87),
-      "a longer number": carriesSerial("inv-F1-870-exec-a1-t1", 87),
-      "a shorter number": carriesSerial("inv-F1-8-exec-a1-t1", 87),
-      "inside another segment": carriesSerial("inv-F1-x87-exec-a1-t1", 87),
-    };
-    expect(segments, "a serial is carried as one whole dash-separated segment only").toEqual({
+    const segments = Object.fromEntries(Object.entries(SEGMENT_PLANTS).map(([label, invocationId]) => [label, carriesSerial(invocationId, 87)]));
+    expect(segments, "a serial is carried as one whole dash-separated segment only, the first, a middle or the last, beside another serial or alone; a longer or a shorter number, a part of another segment and a leading zero carry none").toEqual({
       "its own segment": true,
       "a longer number": false,
       "a shorter number": false,
       "inside another segment": false,
+      "the first segment": true,
+      "the last segment": true,
+      "beside another serial": true,
+      "with a leading zero": false,
     });
     const replays = replayReading();
     expect(replays, "a permit minted for the request at any of the four positions of one call answers that request and meets every check there, and handed to the seam on the next call answers none and fails effect-unrequested alone").toEqual({
@@ -1450,6 +1684,51 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         ]),
       ),
     );
+    const plants = serialPlants(candidates);
+    const serialPlanted = Object.fromEntries(
+      Object.entries(plants).map(([label, { returned }]) => [label, { returned, ...serialOf(returned.map(ids => ids.map(invocationId => ({ invocationId }))), PLANTED_SERIALS) }]),
+    );
+    expect(serialPlanted, "wb-kbh1 cut #3 serial plants: of two planted calls of four requests (serials 7 then 8), a request at any position of either call reads carried only when its invocationId carries that call's serial and not the other's (the other's alone, both as on D01's page, or neither as on D02's page, reads not carried); every invocationId both calls were returned, at any positions, reads shared, in the first call's order, and one only one call was returned, twice, does not; each name the invocationIds carry, at any position of either call, reads named once, in the order first named").toEqual(
+      Object.fromEntries(Object.entries(plants).map(([label, { returned, reading }]) => [label, { returned, ...reading }])),
+    );
+    const formCandidates = (order: readonly number[]): string[] => order.flatMap(index => candidates.slice(index, index + 1));
+    const expectedLine = ({ fellows, foreignAt }: DecisionCase, driven: boolean): string =>
+      decisionLine(
+        fellows.map((at, slot) => (slot === foreignAt ? -1 : at)),
+        fellows.length,
+        CHECKS.filter(check => (check === "effect-unrequested" && foreignAt !== undefined) || (check === "current-unexecuted" && driven && fellows.length > 1)),
+      );
+    const casesOf = (order: readonly number[], driven: boolean): Record<string, string> =>
+      Object.fromEntries(decisionCases(order.length, candidates).map(entry => [entry.key, expectedLine(entry, driven)]));
+    const derivedReadBack = { "the principal's role dropped": `principal ${JSON.stringify({ id: SCOPE.principal })}`, "requested later": `requestedAt ${JSON.stringify(REQUESTED_LATER)}` };
+    const decisionRecords = decisionRecordsByHand();
+    expect(decisionRecords, "wb-kbh1 cut #3 decision records by hand: over each drive form's record of F1's requests (the snapshot's first one to four candidates', all four reversed or interleaved), one F3 call per case handing one, two or three decisions: every decision a permit of its own minted for the recorded request at one position, or each for the next recorded request from one position on, passes, each answering its request; each handed decision in turn minted for each candidate's request the record does not hold (under serial 7 when the record holds that candidate) or for its fellows' request with the principal's role dropped or requested later, its fellows for the recorded request at one position, fails effect-unrequested, it alone answering none").toEqual(
+      Object.fromEntries(
+        RECORD_FORMS.map(({ label, order }) => [
+          label,
+          {
+            record: formCandidates(order).map(candidate => requestFor(F1, candidate).invocationId),
+            strangers: {
+              ...Object.fromEntries(candidates.map(candidate => [candidate, `invocationId ${JSON.stringify(requestFor(F1, candidate, formCandidates(order).includes(candidate) ? 7 : 0).invocationId)}`])),
+              ...derivedReadBack,
+            },
+            cases: casesOf(order, false),
+          },
+        ]),
+      ),
+    );
+    const decisionRecordsOnF1 = decisionRecordsDriven();
+    expect(decisionRecordsOnF1, "wb-kbh1 cut #3 decision records driven: on F1, a planted point asking requestOf for each drive form's candidates in its order and handing one, two or three decisions minted on its own call: every decision a permit of its own minted for the request it was returned at one position, or each for the next returned request from one position on, passes (current-unexecuted beside two or three); each handed decision in turn minted for each candidate's request under serial 0, which no drive issues, or for its fellows' request with the principal's role dropped or requested later, its fellows for the request at one position, fails effect-unrequested, it alone answering none").toEqual(
+      Object.fromEntries(
+        RECORD_FORMS.map(({ label, order }) => [
+          label,
+          {
+            strangers: { ...Object.fromEntries(candidates.map(candidate => [candidate, `invocationId ${JSON.stringify(requestFor(F1, candidate, 0).invocationId)}`])), ...derivedReadBack },
+            cases: casesOf(order, true),
+          },
+        ]),
+      ),
+    );
     return {
       providers,
       denial,
@@ -1481,6 +1760,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       serialOrders,
       replayOrders,
       plantedSerial,
+      segmentPlants: SEGMENT_PLANTS,
+      serialPlants: serialPlanted,
+      decisionRecords,
+      decisionRecordsOnF1,
     };
   },
   A4: () => {
@@ -1715,6 +1998,39 @@ describe(SUITE, () => {
       "interleaved then reversed:1302:3210",
       "interleaved then interleaved:1302:1302",
     ]);
+    expect(RECORD_FORMS.map(({ label, order }) => `${label}:${order.join("")}`)).toEqual([
+      "snapshot, first 1:0",
+      "snapshot, first 2:01",
+      "snapshot, first 3:012",
+      "snapshot, first 4:0123",
+      "reversed, all 4:3210",
+      "interleaved, all 4:1302",
+    ]);
+    expect(HANDED).toEqual([1, 2, 3]);
+    expect(SERIAL_KINDS).toEqual(["own", "other", "both", "neither"]);
+    expect(PLANTED_SERIALS).toEqual([7, 8]);
+    expect(Object.keys(serialPlants(executable(SNAPSHOT_BYTES)))).toEqual([
+      "the kinds from own",
+      "the kinds from other",
+      "the kinds from both",
+      "the kinds from neither",
+      "D01's page",
+      "D02's page",
+      "four ids both calls were returned",
+      "an id one call was returned twice",
+      "a name at each position",
+    ]);
+    expect(Object.entries(SEGMENT_PLANTS).map(([label, invocationId]) => `${label}:${invocationId}`)).toEqual([
+      "its own segment:inv-F1-87-exec-a1-t1",
+      "a longer number:inv-F1-870-exec-a1-t1",
+      "a shorter number:inv-F1-8-exec-a1-t1",
+      "inside another segment:inv-F1-x87-exec-a1-t1",
+      "the first segment:87-inv-F1-exec-a1-t1",
+      "the last segment:inv-F1-exec-a1-t1-87",
+      "beside another serial:inv-F1-86-87-exec-a1-t1",
+      "with a leading zero:inv-F1-087-exec-a1-t1",
+    ]);
+    expect(Object.entries(DERIVED_STRANGERS).map(([label, { member }]) => `${label}:${member}`)).toEqual(["the principal's role dropped:principal", "requested later:requestedAt"]);
     expect(Object.keys(MUTANTS)).toEqual([
       "M-NO-BASIS",
       "M-DIGEST-ONLY",
