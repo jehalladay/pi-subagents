@@ -313,9 +313,10 @@
  * itself (the pinned pages, at trunk f5cb912: a class instance, a callback and an object literal not written where it
  * flows read quiet, a value hidden at its own parameter after one that keeps the projection read argument, and a value
  * kept at its own first parameter was refused against the this parameter; refusal #3's mechanism, and the value member
- * wb-021.7's cut #4 delivery found); (2) under the tag forms TAGGED-TEMPLATE-ARGUMENTS names (narrowed at respin 1,
- * below), a tagged template's substitution is read as the argument at its position, its index among the substitutions
- * plus one, the tagged template the site - before this cut no substitution was read as a
+ * wb-021.7's cut #4 delivery found); (2) in the cells TAGGED-TEMPLATE-ARGUMENTS names, each a tag form, a substitution
+ * position and a value (narrowed at respins 1 and 2, below), a tagged template's substitution is read as the argument
+ * at its index among the substitutions plus one, the tagged template the site, and no other tag form, position or value
+ * is claimed - before this cut no substitution was read as a
  * flow (refusal #4's LTT2 holder, and a callback and a context-less literal, read quiet) and one that exposes the
  * projection was refused as an unlisted TemplateSpan. Each paired page reads as its twin reads: the same callee declared
  * with no this parameter, the same tag called with its strings argument and the same values (the unpaired pages - an
@@ -354,6 +355,35 @@
  * overloaded tag, a library tag other than those three, a strings parameter of any other written type - is NOT CLAIMED
  * by this census. src at trunk e54d76b equals f5cb912's (no src path changed between them), so the measurement above
  * stands.
+ *
+ * WB-021.10 RESPIN 2 (refusal #2, U1 and U2, F2 riding; ruling R-B350 binds the class-level guard: the R514/R515/R668
+ * class, claim words wider than pins, at TAGGED-TEMPLATE-ARGUMENTS). U1: the label, reading (2) above, the readForms
+ * doc and argumentTarget's doc claimed the plus-one position for every substitution, while the multi-substitution pages
+ * carried a number literal as the first substitution or read every substitution into one rest parameter, so a reading
+ * of every substitution at the last substitution's position (gate mutant MA) kept the census green. U2: the label named
+ * 'a src function' as a tag form while every such page declared a function declaration, so a tagged call to a src arrow
+ * function or function expression that trusts no parameter (MC) kept it green. F2: the library owner check skipped for
+ * a tagged call (MB), or the tagged reading handed exposing false (MT), kept it green. Trunk a9a10bb is merged INTO the
+ * branch (it changes no src path and none of this cut's paths); no reading of the helper is edited.
+ * TAGGED-TEMPLATE-ARGUMENTS gains twenty-four pages, each beside its call twin: under a function declaration whose
+ * strings parameter is written TemplateStringsArray, a class instance, a kept value and a hiding callback as the first
+ * of two substitutions and a class instance as the second and as the third of three; a class instance as the first of
+ * two under a strings parameter written readonly string[] or { readonly raw: readonly string[] }, under an object
+ * literal's method and under an explicit-this tag; a const arrow function and a function expression as the tag, each
+ * given a class instance (refused, structural-stand-in); and Object.assign given the type arguments
+ * TemplateStringsArray and ObservationProjection, with a value that exposes the projection into Object.assign's own type
+ * parameter (refused, argument). Under MA eight of the new tagged pages read otherwise (each whose judged substitution
+ * comes before the last), under MC two (the arrow function and the function expression), under MB and under MT one
+ * (Object.assign's exposing value), and under a reading that adds the one at the first substitution only (MX) two (the
+ * second and the third of three); every twin reads alike under each. The label is restated as cells, each a tag form, a
+ * substitution position and a value with its reading, every cell pinned by a page beside its twin: 'a src function' is
+ * narrowed to a src function declaration, and the arrow function and the function expression are named in a cell of
+ * their own. Reading (2), the readForms doc, argumentTarget's doc, flowOf's comment, the REACH paragraph's plant
+ * sentence below, THIS-PARAMETER-ARGUMENTS' tagged-template sentence and UNLISTED-FORMS' pointer are narrowed to those
+ * cells, and any pairing of a tag form, a substitution position and a value that no cell names is NOT CLAIMED by this
+ * census (NOT CLAIMED below). argumentTarget's doc no longer says a library declaration's parameters are read as
+ * declared (refusal #2 F4: no pin observes it); a library declaration's own this parameter is NOT CLAIMED. src at trunk
+ * a9a10bb equals f5cb912's (no src path changed between them), so the measurement above stands.
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
@@ -441,7 +471,8 @@
  * (wb-vgri) plant the held and the bound stand-ins the flow reading never judges as the type they stand in for, their quiet
  * pages beside read twins (respin 2: R-THIS-BINDING's label names each of its pages). THIS-PARAMETER-ARGUMENTS and
  * TAGGED-TEMPLATE-ARGUMENTS (wb-021.10) plant the arguments of src callees that declare an explicit this parameter and
- * the substitutions of tagged templates under the tag forms its label names, each paired page read as the argument it is
+ * the substitutions of tagged templates in the cells its label names (each a tag form, a substitution position and a
+ * value), each paired page read as the argument it is
  * beside its twin (the callee
  * declared with no this parameter; the tag called with its strings argument and the same values), and
  * R-INFERRED-LITERAL plants the hiding literal a generic callee's inferred instantiation reads quiet, with and without
@@ -578,7 +609,15 @@
  * by this census: a spread argument itself, and an argument written after a spread to a src callee that declares an
  * explicit this parameter; a tagged template's substitution under any tag form TAGGED-TEMPLATE-ARGUMENTS does not name (a
  * tag typed by a src signature with no body of its own, a src generic tag, an overloaded tag, any other library tag, a
- * strings parameter of any other written type: respin 1); a library declaration's this parameter (Function.prototype's call, apply and bind keep
+ * strings parameter of any other written type: respin 1; a class's method or static method, an async or a generator
+ * function, and any other src function form but a function declaration, an object literal's method, a const arrow
+ * function and a function expression: respin 2), and any pairing of a named tag form with a substitution position or a
+ * value that no cell of its label names (respin 2; among them a fourth or later substitution, a substitution after the
+ * first under an object literal's method, an explicit-this tag or a strings parameter written { readonly raw: readonly
+ * string[] } and any value there but a class instance, under the arrow function and the function expression any
+ * substitution but a class instance as the only one, and under String.raw any substitution of a template that holds
+ * two or more); a library declaration's this parameter
+ * (Function.prototype's call, apply and bind keep
  * R-THIS-BINDING's pinned readings); a decorator's implicit argument, an instanceof's Symbol.hasInstance argument and a
  * JSX element's attributes (src holds no decorator and no .tsx module); and, beside R-INFERRED-LITERAL, an object literal
  * written inside a generic argument and one passed to a src generic signature with no body (bead wb-021.7). The two rows
@@ -588,7 +627,7 @@
  * frozen-literal element and roster entry (no outside anchor names those plants, R-HELD-VALUE's and R-THIS-BINDING's
  * included, and wb-021.10's THIS-PARAMETER-ARGUMENTS, TAGGED-TEMPLATE-ARGUMENTS and R-INFERRED-LITERAL); pages of such a
  * row removed with the row's frozen-literal count and roster pins together (wb-021.10 respin 1's eighteen tag-form pages
- * included: no outside anchor names them either); argumentTarget's
+ * and respin 2's twenty-four cell pages included: no outside anchor names them either); argumentTarget's
  * this-parameter skip or the tagged-template substitution reading removed from the helper together with the pages of
  * THIS-PARAMETER-ARGUMENTS or TAGGED-TEMPLATE-ARGUMENTS, the frozen literal and the roster (the src plants recorded with
  * wb-021.10 are their falsifiers; src holds no such call); a case and its expected reading
@@ -1163,7 +1202,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/STAND-IN-RETURNS:9",
       "REACH/UNLISTED-STAND-INS:10",
       "REACH/THIS-PARAMETER-ARGUMENTS:37",
-      "REACH/TAGGED-TEMPLATE-ARGUMENTS:48",
+      "REACH/TAGGED-TEMPLATE-ARGUMENTS:72",
       "REACH/R-INFERRED-LITERAL:20",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
