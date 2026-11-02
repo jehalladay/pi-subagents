@@ -17,7 +17,15 @@
  * no-substitution template and as a concatenation, and the second element of each array form (M-AFTER, M-BEFORE); T-ELSEWHERE
  * gains a plant per ASCII identifier-part character as an identifier's and a private name's last character and a plant per keyword
  * the compiler parses right before an operand (T); C-LINE-OF names the line of a sentence's first non-blank piece, pinned where that
- * line holds a punctuator alone (C). Each claim is narrowed to exactly what its pins hold.
+ * line holds a punctuator alone (C). Cut #4 (wb-yopv: the R694 carry of landing 797's F1, a PASS-WITH-FINDING) answers the 20
+ * non-equivalent gate mutants F1 names with pins, the helper's code still unchanged: row W reads each one's paired witness from the
+ * gate's PREP archive verbatim (W); T-RUNS plants each comment kind and run shape right after each terminator token and T-KINDS a
+ * line and a JSDoc-style comment for each T-ELSEWHERE plant's block one (T); AS-WRITTEN's forms gain let and var patterns, a
+ * renamed element and target and an array element nested one deep, for-await-of patterns and targets, an assignment as an arrow
+ * function's body and as a call's argument, a type query and an indexed access type annotation, and the keys and indexes that are
+ * no string (M-AFTER, M-BEFORE); C-LINES gains the '|' followers, each bullet and a number with a tab, numbers of three to five
+ * digits, each heading level and indent and the tab terminators, and C-LINE-OF each ASCII punctuator alone, a table row and a
+ * terminator before a space (C). Each claim is narrowed to exactly what its pins hold.
  *
  * THE CLAIMS are the CLAIMS constant (COMMENTS, AS-WRITTEN, CUT and LIVE QUIET, each clause naming the pins whose plants falsify its
  * words), held byte for byte to the roster's claims; every pin is named by a clause and every pin a clause names exists.
@@ -35,7 +43,12 @@
  *     name in one plant per ASCII character the compiler reads as an identifier part, as the name's last character (the 26
  *     lowercase and 26 uppercase letters, the ten digits, "_" and "$"), and the keyword "this", "async" before an arrow function's
  *     parameter and one plant per keyword the compiler parses right before an operand as a prefix, an infix or a type operator -
- *     each finding once and reading as its twin with the run as one space.
+ *     each finding once and reading as its twin with the run as one space; T-RUNS one plant per token T-TOKENS names and per comment
+ *     kind alone or run shape (two block comments, a block and a line comment, two line comments, a comment with a blank or a
+ *     white-space-only line after it, a blank line before it, tabs around it), its run right after that token, each finding once
+ *     and reading as the plant with its run removed; T-KINDS each T-ELSEWHERE plant again with a line and with a JSDoc-style comment
+ *     for its block one, each finding once and reading as its block plant's twin, but a cell the compiler parses otherwise (a syntax
+ *     diagnostic, or its run no longer right after its token), which it holds as "unparsed".
  *  M  the description's second item: M-AFTER the commentMatrix's after-the-dot rows - every as-written site (the 13 the item
  *     counts), each in every form AS-WRITTEN names, with a block, a line and a JSDoc-style comment holding a marker right after a
  *     "." inside the reading; M-BEFORE the same sites and forms with the comment before that "." or inside the brackets (wb-pyel.2
@@ -47,18 +60,26 @@
  *     the "."; U-BLANK b01-b03 and b05-b11, a blank, white-space-only or line-start line beside a comment; U-MARKER b04, a marker
  *     across such a run. Each beside its comment-free twin (the comment removed), which is cut there.
  *  C  refusal #5's F3 rider (its quote is the label): C-SPACE white space alone - a space, a tab and a line end - right after each
- *     token T-TOKENS names; C-LINES a blank and a white-space-only line, a table-row line (indented by spaces or a tab, or at the
- *     line's start), a heading line (indented up to three spaces, of level one to six, empty, or with a tab after it), a list-item
- *     line (each bullet, a number with ")" of one and of two digits: refusal #5's F4 rider, and a tab after the marker), a whole
- *     table-row or heading line ending its sentence, a blank line and a line end after a "." in a node a comment walks, and a
- *     terminator before white space (a space, and in a string a tab) in a string, a template, a regular expression and JSX text,
+ *     token T-TOKENS names; C-LINES a blank and a white-space-only line (of spaces, and of a tab), a table-row line (indented by
+ *     spaces or a tab, or at the line's start; its "|" followed by a space, a second "|", a "=" or the line's end), a heading line
+ *     (indented by none to three spaces, of each level one to six, empty, or with a tab after it), a list-item line (each bullet
+ *     with a space and with a tab after it, a number with ")" of one to five digits - refusal #5's F4 rider its one - and of one
+ *     digit with a tab), a whole table-row or heading line ending its sentence, a blank line and a line end after a "." in a node a
+ *     comment walks, and a terminator before a space and before a tab in a string, a template, a regular expression and JSX text,
  *     the F3 members h01, h02, h03, h05 and h06 among them - each beside its uncut twin, the nearest line no rule cuts where the
- *     rule has a bound; C-OVER-READ a cut parting a marker away; C-LINE-OF a finding after a terminator, a blank line, a heading
- *     line and a list item, and two whose sentence's first line holds a punctuator alone (its first word on the next line), each
- *     naming the line of the reading its sentence's first non-blank piece stands on, read from the reading's own text.
+ *     rule has a bound; C-OVER-READ a cut parting a marker away; C-LINE-OF a finding after a terminator before a line end and
+ *     before a space, a blank line, a heading line, a table-row line and a list item, and those whose sentence's first line holds a
+ *     punctuator alone (its first word on the next line): "(" in code and in a template's text, and in a template's text one per
+ *     ASCII punctuator SENTENCES reads alone as no line rule and no terminator, each naming the line of the reading its sentence's
+ *     first non-blank piece stands on, read from the reading's own text.
  *  P  R-B156's second folded member (refusal #5's U2): P-ONE one parted pair; P-C04 the same pair parted twice in one text; P-C05
  *     two pairs; P-C06 a page with two; P-CODE two pairs in one as-written reading; P-WITHIN a pair one sentence spells beside a
  *     parted occurrence of it.
+ *  W  wb-yopv's F1 line (the R694 carry of landing 797's PASS-WITH-FINDING; its claim clause is the label): one pin per clause it
+ *     letters - W-COMMENTS its (a)-(c), W-CUT its (d), W-LINE-OF its (e), W-AS-WRITTEN its (f) - each holding the paired witnesses
+ *     of the surviving gate mutants its clause names, verbatim from the gate's PREP archive, each read as the delivered reader reads
+ *     it: one finding, or cut (no finding, LIVE QUIET holding its parts); each witness's as-written texts and lines are held byte
+ *     for byte with the rest of it.
  *
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set (every row's id, label and pins,
  * every pin's witness, the claims, the kills and every registered test title) is held to the out-of-file roster
@@ -66,9 +87,12 @@
  * at its first occurrence (notes are append-only): rows T and M are the description's two items (T's label its first sentence, its
  * members the ids the item names, each plant holding the code the item spells; M's label its first clause and its site count the
  * number the item spells); rows U and P are the two members R-B156's note folds into this bead, and KILLS holds exactly the gate
- * mutants that note names and refusal #5's F4 mutant GM7, each mapped to the pins measured red under it; U holds exactly the member
- * ids refusal #5's U1 line names, P the ids its U2 line names and C the ids its F3 line names. The TypeScript compiler anchors
- * T-TOKENS and C-SPACE (one member per punctuator whose text ENDS_IN_TERMINATOR matches, plus the number; each T-TOKENS plant's
+ * mutants that note names, refusal #5's F4 mutant GM7 and the 20 survivors row W holds, each mapped to the pins measured red under
+ * it; U holds exactly the member ids refusal #5's U1 line names, P the ids its U2 line names and C the ids its F3 line names. Row W
+ * is wb-yopv's F1 line (its first '[leads] - F1 LOW LEADS: ' notes line): its label the line's claim clause, its pins one per
+ * clause the line letters, each holding exactly the survivors its clause names among the 20 the line counts after 'The other 20
+ * are non-equivalent', in the line's order, each killed at its own witnesses' pin. The TypeScript compiler anchors T-TOKENS,
+ * C-SPACE and T-RUNS (one member per punctuator whose text ENDS_IN_TERMINATOR matches, plus the number; each T-TOKENS plant's
  * comment scanned right after its own token), T-ELSEWHERE (one member per other punctuator, per literal and template token kind
  * and for the identifier, private name and keyword classes, each comment run right after its own token in the compiler's token
  * list; the members it cannot hold, each checked against the compiler: '`', '#' and '</' are never a token of their own in that
@@ -76,8 +100,11 @@
  * character ts.isIdentifierPart reads, in code order, each the last character of the token right before its plant's run), the
  * keyword plants and COMMENTS' keyword list (every keyword of the compiler's keyword range that its operator template parses with
  * no syntax diagnostic right before the run) and the comment kinds (every *CommentTrivia kind of ts.SyntaxKind and the JSDoc
- * form); every code plant parses without a syntax diagnostic; the helper's SENTENCES rules anchor C-LINES (a member per line
- * rule, per bullet and for the ")" number). The last case reads the vitest task tree (every registered test, in roster order, in
+ * form), T-KINDS (every T-ELSEWHERE plant read in each comment kind beside the block, and the tokens whose line comment's run the
+ * compiler parses otherwise - a syntax diagnostic, or the run no longer right after its token - exactly the ones COMMENTS names);
+ * every code plant parses without a syntax diagnostic; the helper's SENTENCES rules anchor C-LINES (a member per line rule, per
+ * bullet and for the ")" number) and C-LINE-OF's punctuators alone (every ASCII character but a letter or a digit whose line
+ * alone SENTENCES reads as no table row, no heading and no terminator). The last case reads the vitest task tree (every registered test, in roster order, in
  * run mode, ran before it) and the pins that reached their witness.
  * NOT CLAIMED: the helper's other readings - WORDS, the demand reading of one sentence, CONSTANT, LEXEME, MEMBER and IMPORT but the
  * import-equals entity - SENTENCES' cuts of a lexeme or a member path, and LIVE QUIET's holding of each quiet reading's
@@ -86,12 +113,22 @@
  * declaration's read no receiver: the helper's R-UNREAD-FORM), among them a pattern or a target nested three or more levels deep,
  * an array element at a third or later index or after a hole, a variable pattern's computed key in another form than the three
  * AS-WRITTEN names (a constant in a value-keeping wrapper, a template with a substitution, a longer concatenation, any other
- * expression), an assignment target's computed key other than a string and a pattern's or a target's numeric property name; a
- * comment run right after a regular expression with another flag than "g", after an identifier or a private name ending in a
- * non-ASCII character, and after any other keyword (one no operator template parses right before an operand, but "this" and
- * "async"); a terminator, a list marker or a heading's "#" before any other
+ * expression), an assignment target's computed key other than a string, a pattern's or a target's numeric property name, a
+ * renamed element or target nested two or more deep or renamed nested by another key form than an identifier, an array element
+ * nested one pattern deep at another index than the second, a let's or a var's pattern in another form than plain, a parameter's
+ * type annotation of another kind than a type reference, a type query and an indexed access type, a destructuring assignment in
+ * another place than its own statement, an arrow function's body and a call's argument (and in those two another target than an
+ * object), and an element access's or an indexed access type's receiver forms beside its plain one with another key than a
+ * string; a comment run right after a regular expression with another flag than "g", after an identifier or a private name
+ * ending in a non-ASCII character, and after any other keyword (one no operator template parses right before an operand, but
+ * "this" and "async"); a run of another shape than those COMMENTS names - after a terminator token three or more comments, or
+ * white space other than spaces, tabs and line feeds; after any other token two or more comments, or another shape than its
+ * T-ELSEWHERE plant's and row U's - and a line comment right after "async", "yield" and "asserts" (T-KINDS holds those cells as
+ * "unparsed"); a terminator, a list marker or a heading's "#" before any other
  * white space character (a vertical tab, a form feed, a no-break or another Unicode space); a heading indented by other white
- * space than spaces; a line end other than a line feed (a carriage return and line feed, or a carriage return alone); the line a
+ * space than spaces; a table row's "|" followed by another character than a space, a "|", a "=" or the line's end; a list
+ * item's number of six or more digits, and of two or more digits before a tab; a punctuator alone that is no ASCII character,
+ * and in code any other than "("; a line end other than a line feed (a carriage return and line feed, or a carriage return alone); the line a
  * page's finding names; a comment right after a JSX closing tag's "</" (the compiler's token list then holds no "/", so bare()'s
  * text lacks it; no word changes); and (edits of this file and the roster together) a plant removed from its table and the roster
  * where no outside anchor names it: the authored forms b03, b05 and b09 (refusal #5 names them without their bytes), every twin,
@@ -99,7 +136,8 @@
  * P-ONE, P-CODE and P-WITHIN, each site's forms beside its first, the T-ELSEWHERE plants beside a member's first that no compiler
  * list names (a string's second quote, the regular expression's "g" and the Keyword member's "async"), the identifier, private
  * name and keyword classes, the C-LINES members the F3 line does not name where another member reads the same line rule, the
- * C-LINE-OF members and the M-ARRAY-PATTERN and M-TYPED-DEFAULT plants.
+ * C-LINE-OF members but its punctuators alone, the T-RUNS run shapes beside the comment kinds, each row W witness beside its
+ * mutant's first, and the M-ARRAY-PATTERN and M-TYPED-DEFAULT plants.
  * RESIDUALS (named; each member with its pinned quiet reading in its row): R-CUT (row C) a subject and a family on two sides of a
  * cut read no finding, each member held by LIVE QUIET (fail closed); R-TYPED-DEFAULT (row M, M-TYPED-DEFAULT) a subject and a
  * family that only a typed parameter's default value joined with its key would bring together read no finding, each member's
@@ -139,6 +177,10 @@ const ROSTER_PATH = join(REPO, "test", "fixtures", "edc-demand-channel-reader-ro
 const EXPORT_PATH = join(REPO, ".beads", "issues.jsonl");
 const BEAD = "wb-pyel.8";
 const PARENT = "wb-pyel.2";
+/** The R694 carry of landing 797's F1 (row W): its F1 line names the 20 gate mutants row W reads the witnesses of. */
+const CARRY = "wb-yopv";
+/** A gate mutant id as the F1 line spells it. */
+const L2_ID = /\bL2-[A-Z]\d\d\b/g;
 const TITLE_PREFIX = "[SDK-EVIDENCE-DIRECTED-COMPUTATION-R2] ";
 const PLANT = "src/plant.ts";
 const PLANT_TSX = "src/plant.tsx";
@@ -147,17 +189,17 @@ const PAGE = ".pi/agents/plant.md";
 // ---------------------------------------------------------------------------------------------------------------- the claims
 const CLAIMS: { readonly [clause: string]: string } = {
   COMMENTS:
-    "bare() reads a node as written: its tokens' own text in order, the trivia between two tokens kept as written when it is white space alone, in a node a comment walks too (C-LINES). A trivia run that holds a comment - a block, a line or a JSDoc-style comment, a JSDoc comment the parser attaches as a node too (its node is no token: M-JSDOC) - is read whole, its white space, line ends, blank and white-space-only lines with it: as nothing right after a token whose text ends in a terminator (the '.', '...', ';', '?.', '!', '?' and '??' punctuators and a number written with a trailing '.'), so the reading reads on uncut there (T-R1, T-R3, T-TOKENS, M-AFTER); and as one space after any other token (T-R1C, M-BEFORE, T-ELSEWHERE: every other punctuator the compiler lists; every literal and template token kind - a string in either quote, a regular expression without a flag and with the flag 'g' -; an identifier and a private name ending in each ASCII character the compiler reads as an identifier part - each of the 26 lowercase and 26 uppercase letters, the ten digits, '_' and '$' -; and the keyword 'this', 'async' before an arrow function's parameter and each keyword the compiler parses right before an operand (as a prefix operator: delete, new, typeof, void, yield, await; as an infix operator: in, instanceof, as, satisfies; as a type operator: typeof, asserts, infer, keyof, readonly, unique) - but '`', '#' and '</', which the compiler's token list never holds as a token of their own, and JSX text, which reads a comment's bytes as its text), where a line boundary the run holds cuts nothing either - a subject and a family across it find (U-OWN-LINE, U-BLANK) and a marker across it quiets the reading, which LIVE QUIET holds (U-MARKER). So no comment cuts an as-written reading, a marker in a comment quiets nothing (M-AFTER, M-BEFORE) and a family word in a comment finds nothing (M-WORDS).",
+    "bare() reads a node as written: its tokens' own text in order, the trivia between two tokens kept as written when it is white space alone, in a node a comment walks too (C-LINES). A trivia run that holds a comment - a block, a line or a JSDoc-style comment, a JSDoc comment the parser attaches as a node too (its node is no token: M-JSDOC) - is read whole: as nothing right after a token whose text ends in a terminator (the '.', '...', ';', '?.', '!', '?' and '??' punctuators and a number written with a trailing '.'), so the reading reads on uncut there (T-R1, T-R3, T-TOKENS, M-AFTER) - after each of those tokens a run of each comment kind alone, of a comment with white space and a line end around it, and of each shape T-RUNS names: two block comments, a block and a line comment, two line comments, a comment with a blank or a white-space-only line after it, a blank line before it and tabs around it (T-RUNS, W-COMMENTS) -; and as one space after any other token (T-R1C, M-BEFORE, T-ELSEWHERE: every other punctuator the compiler lists; every literal and template token kind - a string in either quote, a regular expression without a flag and with the flag 'g' -; an identifier and a private name ending in each ASCII character the compiler reads as an identifier part - each of the 26 lowercase and 26 uppercase letters, the ten digits, '_' and '$' -; and the keyword 'this', 'async' before an arrow function's parameter and each keyword the compiler parses right before an operand (as a prefix operator: delete, new, typeof, void, yield, await; as an infix operator: in, instanceof, as, satisfies; as a type operator: typeof, asserts, infer, keyof, readonly, unique) - but '`', '#' and '</', which the compiler's token list never holds as a token of their own, and JSX text, which reads a comment's bytes as its text), each T-ELSEWHERE plant's run in each comment kind (T-KINDS, W-COMMENTS: a line and a JSDoc-style comment beside its block one, but a line comment right after 'async', 'yield' and 'asserts', whose line end the compiler parses otherwise), where a line boundary the run holds cuts nothing either - a subject and a family across it find (U-OWN-LINE, U-BLANK) and a marker across it quiets the reading, which LIVE QUIET holds (U-MARKER). So no comment of these runs cuts an as-written reading, a marker in a comment quiets nothing (M-AFTER, M-BEFORE) and a family word in a comment finds nothing (M-WORDS).",
   "AS-WRITTEN":
-    "The as-written readings are the 13 sites bare() reads, each in the forms named here: a property access (plain, a call's callee and a chain), a qualified name (in a type reference, in a type query and a chain), an element access's receiver (plain, an optional access's and one that is itself an element access), an indexed access type's object type (plain and one that is itself an indexed access type), an object binding pattern's receiver (a variable's initializer - its pattern plain, nested one and two patterns deep, renamed (its property name an identifier, a string, or a computed key that is a string, a no-substitution template or a '+' concatenation of two strings) and inside an array pattern as its first and as its second element -, a for-of's and a for-in's iterated expression, a parameter's type annotation - with and without a default value -, else its default value), a destructuring assignment's receiver (the assigned expression - an object target, an array target holding it as its first and as its second element, a target nested one and two levels deep and a renamed target (its property name an identifier, a string or a computed string) -, a for-of's and a for-in's iterated expression - an object target and an array target holding it as its first and as its second element) and an import-equals entity name (at the top level, exported and in a namespace) - each read with every comment kind right after a '.' inside it (M-AFTER) and before that '.' or inside its brackets (M-BEFORE), one finding each. A pattern's or a target's key joins the reading as written: a nested element's or target's key after its enclosing one's at each depth named here, an array element's index (0 for a first element, 1 for a second) before the object pattern it holds, and a renamed element's or target's property name in each key form named here, never its local name (M-AFTER, M-BEFORE). An array binding pattern's element is no site of its own: a subject and a family only in its receiver read no finding (M-ARRAY-PATTERN). A typed parameter's default value is never its receiver: a subject and a family that only the default value joined with a key would bring together read no finding, and LIVE QUIET holds the family word's subjectless access reading (fail closed: the residual R-TYPED-DEFAULT, M-TYPED-DEFAULT).",
-  CUT: "SENTENCES cuts an as-written reading where its text holds a boundary as written: white space alone - a space, a tab or a line end - right after a token that ends in a terminator (C-SPACE); a blank or white-space-only line; a line read whole as a table row (a '|' first, at the line's start or after spaces or a tab) or as a heading (at most three spaces, one to six '#', then white space or the line's end - four spaces, seven '#' or a word right after the '#' make none), each such line its own sentence, so the next line starts another; a line read as a list item (a '-', '+' or '*' bullet or a number of one or more digits with ')', then a space or a tab - a bullet with a word right after it makes none; a number with '.' is a terminator cut, C-SPACE); or a terminator before a space or a tab inside a string, a template, a regular expression or JSX text the reading holds (C-LINES). A terminator stays with the sentence it ends, and each finding names the line of the reading its sentence's first non-blank piece stands on: the first line after the cut that holds anything but white space, a punctuator alone too, which can precede the line of the sentence's first word (C-LINE-OF). A subject and a family on two sides of a cut read no finding while the uncut twin finds once, every cut member is held by LIVE QUIET (fail closed: the residual R-CUT), and a cut can part a marker away, which then finds (C-OVER-READ).",
+    "The as-written readings are the 13 sites bare() reads, each in the forms named here: a property access (plain, a call's callee and a chain), a qualified name (in a type reference, in a type query and a chain), an element access's receiver (plain, an optional access's and one that is itself an element access, each with a string key, and plain with a no-substitution template, a '+' concatenation of two strings, a number or another expression as its key, each joining as '?'), an indexed access type's object type (plain and one that is itself an indexed access type, each with a string literal type as its index, and plain with a parenthesized string literal type, a number literal type or another type as its index, each joining as '?'), an object binding pattern's receiver (a const's initializer - its pattern plain, nested one and two patterns deep, renamed (its property name an identifier, a string, or a computed key that is a string, a no-substitution template or a '+' concatenation of two strings), nested one pattern deep and renamed by an identifier, and inside an array pattern as its first and as its second element, the second also in an array pattern nested one pattern deep -, a let's and a var's initializer (its pattern plain), a for-of's, a for-await-of's and a for-in's iterated expression, a parameter's type annotation - a type reference, with and without a default value, a type query and an indexed access type -, else its default value), a destructuring assignment's receiver (the assigned expression - as its own statement an object target, an array target holding it as its first and as its second element, a target nested one and two levels deep, a renamed target (its property name an identifier, a string or a computed string), a target nested one level deep and renamed by an identifier, and an array target nested one level deep holding it as its second element; as an arrow function's body and as a call's argument an object target -, a for-of's, a for-await-of's and a for-in's iterated expression - an object target and an array target holding it as its first and as its second element) and an import-equals entity name (at the top level, exported and in a namespace) - each read with every comment kind right after a '.' inside it (M-AFTER) and before that '.' or inside its brackets (M-BEFORE), one finding each, and the gate's paired witnesses of these forms each read as the delivered reader reads them (W-AS-WRITTEN). A pattern's or a target's key joins the reading as written: a nested element's or target's key after its enclosing one's at each depth named here, an array element's index (0 for a first element, 1 for a second) before the object pattern it holds, and a renamed element's or target's property name in each key form named here, never its local name (M-AFTER, M-BEFORE). An array binding pattern's element is no site of its own: a subject and a family only in its receiver read no finding (M-ARRAY-PATTERN). A typed parameter's default value is never its receiver: a subject and a family that only the default value joined with a key would bring together read no finding, and LIVE QUIET holds the family word's subjectless access reading (fail closed: the residual R-TYPED-DEFAULT, M-TYPED-DEFAULT).",
+  CUT: "SENTENCES cuts an as-written reading where its text holds a boundary as written: white space alone - a space, a tab or a line end - right after a token that ends in a terminator (C-SPACE); a blank or white-space-only line (of spaces, or of a tab); a line read whole as a table row (a '|' first - followed by a space, a second '|', a '=' or the line's end - at the line's start or after spaces or a tab) or as a heading (none to three spaces, one to six '#', then white space or the line's end - four spaces, seven '#' or a word right after the '#' make none), each such line its own sentence, so the next line starts another; a line read as a list item (a '-', '+' or '*' bullet or a number of one to five digits with ')', then a space or a tab - a bullet with a word right after it makes none; a number with '.' is a terminator cut, C-SPACE); or a terminator before a space or a tab inside a string, a template, a regular expression or JSX text the reading holds (C-LINES, W-CUT). A terminator stays with the sentence it ends, and each finding names the line of the reading its sentence's first non-blank piece stands on: the first line after the cut - a terminator before a line end or a space, a blank line, a heading, a table row or a list item - that holds anything but white space, a punctuator alone too, which can precede the line of the sentence's first word: '(' alone, in code and in a template's text, and in a template's text each ASCII punctuator SENTENCES reads alone as no line rule and no terminator, the template's closing '`' among them (C-LINE-OF, W-LINE-OF). A subject and a family on two sides of a cut read no finding while the uncut twin finds once, every cut member is held by LIVE QUIET (fail closed: the residual R-CUT), and a cut can part a marker away, which then finds (C-OVER-READ).",
   "LIVE QUIET":
     "quietOf holds, beside the quiet readings of one text, every carrier pair whose two words a sentence cut parts - each occurrence of each pair, in a code reading and across a page's sentences - as '<where> parted:carrier <pair>' (P-ONE, P-C04, P-C05, P-C06, P-CODE); a pair one sentence spells is a finding and is held as parted nowhere, while a parted occurrence of the same pair beside it is held (P-WITHIN).",
 };
 
 // ------------------------------------------------------------------------------------------------------------------ the rows
 const ROWS: readonly Row[] = [
-  { id: "T", label: 'After-terminator comment positions: a comment following "." / "?." / "!" in a property access or qualified name must keep the reading\'s finding.', pins: ["T-R1", "T-R3", "T-R1C", "T-TOKENS", "T-ELSEWHERE"] },
+  { id: "T", label: 'After-terminator comment positions: a comment following "." / "?." / "!" in a property access or qualified name must keep the reading\'s finding.', pins: ["T-R1", "T-R3", "T-R1C", "T-TOKENS", "T-ELSEWHERE", "T-RUNS", "T-KINDS"] },
   { id: "M", label: "The commentMatrix gains after-the-dot rows for every as-written site (13 sites)", pins: ["M-AFTER", "M-BEFORE", "M-WORDS", "M-JSDOC", "M-ARRAY-PATTERN", "M-TYPED-DEFAULT"] },
   {
     id: "U",
@@ -167,6 +209,7 @@ const ROWS: readonly Row[] = [
   },
   { id: "C", label: "the boundary kinds an as-written reading can hold are listed, each pinned", pins: ["C-SPACE", "C-LINES", "C-OVER-READ", "C-LINE-OF"] },
   { id: "P", label: "LIVE QUIET's new parted-carrier holding is unpinned past the first parted pair of a text - GM1 and GM2 survive at 10 passed (10)", pins: ["P-ONE", "P-C04", "P-C05", "P-C06", "P-CODE", "P-WITHIN"] },
+  { id: "W", label: "the COMMENTS, CUT, C-LINE-OF and AS-WRITTEN claim words of the census and of the helper's bare() doc are wider than the pins", pins: ["W-COMMENTS", "W-CUT", "W-LINE-OF", "W-AS-WRITTEN"] },
 ];
 
 // ---------------------------------------------------------------------------------------------------------------- the plants
@@ -297,9 +340,37 @@ const ELSEWHERE_SKIPPED: Readonly<Record<string, readonly [path: string, sample:
 };
 /** The comment kinds (B1's commentMatrix): a block, a line and a JSDoc-style comment, each holding a marker. */
 const COMMENT_KINDS: Readonly<Record<string, string>> = { block: "/* not */", line: "// not\n", jsdocStyle: "/** never */" };
+/** T-KINDS: the comment kinds each T-ELSEWHERE plant is read in beside its block comment. */
+const KINDS_BESIDE_BLOCK: readonly string[] = ["line", "jsdocStyle"];
+/** T-RUNS: per token T-TOKENS names (each punctuator whose text ENDS_IN_TERMINATOR matches, and the number), a plant whose
+ * comment run stands right after that token, the run its argument. */
+const RUN_TOKENS: Readonly<Record<string, (run: string) => string>> = {
+  ".": run => `export const value = context.${run}demand;\n`,
+  "...": run => `export const value = [context, ...${run}rest]["demand"];\n`,
+  ";": run => `export type Value = { context: 1;${run}other: 2 }["demand"];\n`,
+  "?.": run => `export const value = context?.${run}demand;\n`,
+  "!": run => `export const value = context!${run}.demand;\n`,
+  "?": run => `export const value = (context ?${run}a : b)["demand"];\n`,
+  "??": run => `export const value = (context ??${run}other)["demand"];\n`,
+  "1.": run => `export const value = (context, 1.${run})["demand"];\n`,
+};
+/** T-RUNS' run shapes beside each comment kind alone (COMMENT_KINDS): two comments in one run (two block comments, a block and a
+ * line comment, two line comments), a comment with a blank and with a white-space-only line after it, a blank line before it,
+ * and tabs around it. */
+const RUN_SHAPES: Readonly<Record<string, string>> = {
+  twoBlocks: "/* a */ /* b */",
+  blockAndLine: "/* a */ // b\n",
+  twoLines: "// a\n  // b\n  ",
+  blankLineAfter: "/* not */\n\n  ",
+  whiteSpaceLineAfter: "/* not */\n   \n  ",
+  blankLineBefore: "\n\n  /* not */",
+  tabs: "\t/* not */\t",
+};
 type Forms = Readonly<Record<string, Readonly<Record<string, (comment: string) => string>>>>;
 /** A function body holding a statement (the binding sites' plants). */
 const inFunction = (body: string): string => `export function read(opts: Options): unknown {\n${body}}\n`;
+/** An async function body holding a statement (the for-await-of binding plants). */
+const inAsyncFunction = (body: string): string => `export async function read(opts: Options): Promise<unknown> {\n${body}}\n`;
 /** M-AFTER: every as-written site, in every form AS-WRITTEN names, with the comment right after a "." inside the reading. */
 const AFTER_SITES: Forms = {
   propertyAccess: {
@@ -316,10 +387,17 @@ const AFTER_SITES: Forms = {
     plain: comment => `export const value = (context.${comment}inner)["demand"];\n`,
     optional: comment => `export const value = (context.${comment}inner)?.["demand"];\n`,
     chained: comment => `export const value = (context.${comment}inner)["x"]["demand"];\n`,
+    templateKey: comment => `export const value = (context.${comment}inner)[\`demand\`];\n`,
+    concatenatedKey: comment => `export const value = (context.${comment}inner)["de" + "mand"];\n`,
+    numericKey: comment => `export const value = (context + x.${comment}demand)[0];\n`,
+    otherKey: comment => `export const value = (context + x.${comment}demand)[key];\n`,
   },
   indexedObject: {
     plain: comment => `export type Value = Opts<Context.${comment}Inner>["demand"];\n`,
     chained: comment => `export type Value = Opts<Context.${comment}Inner>["x"]["demand"];\n`,
+    parenthesizedIndex: comment => `export type Value = Opts<Context.${comment}Inner>[("demand")];\n`,
+    numericIndex: comment => `export type Value = Opts<Context, X.${comment}Demand>[0];\n`,
+    otherIndex: comment => `export type Value = Opts<Context, X.${comment}Demand>[Key];\n`,
   },
   bindingInitializer: {
     plain: comment => inFunction(`  const { demand } = context.${comment}inner;\n  return demand;\n`),
@@ -332,12 +410,21 @@ const AFTER_SITES: Forms = {
     computedConcatenation: comment => inFunction(`  const { ["de" + "mand"]: value } = context.${comment}inner;\n  return value;\n`),
     inArray: comment => inFunction(`  const [{ demand }] = context.${comment}inner;\n  return demand;\n`),
     inArraySecond: comment => inFunction(`  const [first, { demand }] = context.${comment}inner;\n  return [first, demand];\n`),
+    nestedRenamed: comment => inFunction(`  const { inner: { demand: value } } = context.${comment}x;\n  return value;\n`),
+    nestedArraySecond: comment => inFunction(`  const { inner: [first, { demand }] } = context.${comment}x;\n  return [first, demand];\n`),
+    let: comment => inFunction(`  let { demand } = context.${comment}inner;\n  return demand;\n`),
+    var: comment => inFunction(`  var { demand } = context.${comment}inner;\n  return demand;\n`),
   },
-  bindingForOf: { plain: comment => inFunction(`  for (const { demand } of contexts.${comment}items) return demand;\n  return undefined;\n`) },
+  bindingForOf: {
+    plain: comment => inFunction(`  for (const { demand } of contexts.${comment}items) return demand;\n  return undefined;\n`),
+    await: comment => inAsyncFunction(`  for await (const { demand } of contexts.${comment}items) return demand;\n  return undefined;\n`),
+  },
   bindingForIn: { plain: comment => inFunction(`  for (const { demand } in contexts.${comment}items) return demand;\n  return undefined;\n`) },
   parameterType: {
     plain: comment => `export function read({ demand }: Context.${comment}Inner): unknown {\n  return demand;\n}\n`,
     withDefault: comment => `export function read({ demand }: Context.${comment}Inner = other): unknown {\n  return demand;\n}\n`,
+    typeQuery: comment => `export function read({ demand }: typeof context.${comment}inner): unknown {\n  return demand;\n}\n`,
+    indexedAccess: comment => `export function read({ demand }: Context.${comment}Inner["x"]): unknown {\n  return demand;\n}\n`,
   },
   parameterDefault: { plain: comment => `export function read({ demand } = context.${comment}inner): unknown {\n  return demand;\n}\n` },
   assignment: {
@@ -349,11 +436,18 @@ const AFTER_SITES: Forms = {
     renamed: comment => `export let value: unknown;\n({ demand: value } = context.${comment}inner);\n`,
     stringKey: comment => `export let value: unknown;\n({ "demand": value } = context.${comment}inner);\n`,
     computedKey: comment => `export let value: unknown;\n({ ["demand"]: value } = context.${comment}inner);\n`,
+    nestedRenamed: comment => `export let value: unknown;\n({ inner: { demand: value } } = context.${comment}x);\n`,
+    nestedArraySecond: comment => `export let first: unknown, demand: unknown;\n({ inner: [first, { demand }] } = context.${comment}x);\n`,
+    arrowBody: comment => `export let demand: unknown;\nexport const read = (): unknown => ({ demand } = context.${comment}inner);\n`,
+    callArgument: comment => `export let demand: unknown;\nconsole.log({ demand } = context.${comment}inner);\n`,
   },
   assignmentForOf: {
     object: comment => `export let demand: unknown;\nfor ({ demand } of contexts.${comment}items) break;\n`,
     array: comment => `export let demand: unknown;\nfor ([{ demand }] of contexts.${comment}items) break;\n`,
     arraySecond: comment => `export let first: unknown, demand: unknown;\nfor ([first, { demand }] of contexts.${comment}items) break;\n`,
+    awaitObject: comment => `export let demand: unknown;\nexport async function read(): Promise<void> {\n  for await ({ demand } of contexts.${comment}items) break;\n}\n`,
+    awaitArray: comment => `export let demand: unknown;\nexport async function read(): Promise<void> {\n  for await ([{ demand }] of contexts.${comment}items) break;\n}\n`,
+    awaitArraySecond: comment => `export let first: unknown, demand: unknown;\nexport async function read(): Promise<void> {\n  for await ([first, { demand }] of contexts.${comment}items) break;\n}\n`,
   },
   assignmentForIn: {
     object: comment => `export let demand: unknown;\nfor ({ demand } in contexts.${comment}items) break;\n`,
@@ -383,10 +477,17 @@ const BEFORE_SITES: Forms = {
     plain: comment => `export const value = (context ${comment})["demand"];\n`,
     optional: comment => `export const value = (context ${comment})?.["demand"];\n`,
     chained: comment => `export const value = (context ${comment})["x"]["demand"];\n`,
+    templateKey: comment => `export const value = (context ${comment})[\`demand\`];\n`,
+    concatenatedKey: comment => `export const value = (context ${comment})["de" + "mand"];\n`,
+    numericKey: comment => `export const value = (context + demand ${comment})[0];\n`,
+    otherKey: comment => `export const value = (context + demand ${comment})[key];\n`,
   },
   indexedObject: {
     plain: comment => `export type Value = Opts<${comment} Context>["demand"];\n`,
     chained: comment => `export type Value = Opts<${comment} Context>["x"]["demand"];\n`,
+    parenthesizedIndex: comment => `export type Value = Opts<${comment} Context>[("demand")];\n`,
+    numericIndex: comment => `export type Value = Opts<${comment} Context, Demand>[0];\n`,
+    otherIndex: comment => `export type Value = Opts<${comment} Context, Demand>[Key];\n`,
   },
   bindingInitializer: {
     plain: comment => inFunction(`  const { demand } = (context ${comment});\n  return demand;\n`),
@@ -399,12 +500,21 @@ const BEFORE_SITES: Forms = {
     computedConcatenation: comment => inFunction(`  const { ["de" + "mand"]: value } = (context ${comment});\n  return value;\n`),
     inArray: comment => inFunction(`  const [{ demand }] = (context ${comment});\n  return demand;\n`),
     inArraySecond: comment => inFunction(`  const [first, { demand }] = (context ${comment});\n  return [first, demand];\n`),
+    nestedRenamed: comment => inFunction(`  const { inner: { demand: value } } = (context ${comment});\n  return value;\n`),
+    nestedArraySecond: comment => inFunction(`  const { inner: [first, { demand }] } = (context ${comment});\n  return [first, demand];\n`),
+    let: comment => inFunction(`  let { demand } = (context ${comment});\n  return demand;\n`),
+    var: comment => inFunction(`  var { demand } = (context ${comment});\n  return demand;\n`),
   },
-  bindingForOf: { plain: comment => inFunction(`  for (const { demand } of (contexts ${comment})) return demand;\n  return undefined;\n`) },
+  bindingForOf: {
+    plain: comment => inFunction(`  for (const { demand } of (contexts ${comment})) return demand;\n  return undefined;\n`),
+    await: comment => inAsyncFunction(`  for await (const { demand } of (contexts ${comment})) return demand;\n  return undefined;\n`),
+  },
   bindingForIn: { plain: comment => inFunction(`  for (const { demand } in (contexts ${comment})) return demand;\n  return undefined;\n`) },
   parameterType: {
     plain: comment => `export function read({ demand }: Opts<${comment} Context>): unknown {\n  return demand;\n}\n`,
     withDefault: comment => `export function read({ demand }: Opts<${comment} Context> = other): unknown {\n  return demand;\n}\n`,
+    typeQuery: comment => `export function read({ demand }: typeof context${comment}.inner): unknown {\n  return demand;\n}\n`,
+    indexedAccess: comment => `export function read({ demand }: Opts<${comment} Context>["x"]): unknown {\n  return demand;\n}\n`,
   },
   parameterDefault: { plain: comment => `export function read({ demand } = (context ${comment})): unknown {\n  return demand;\n}\n` },
   assignment: {
@@ -416,11 +526,18 @@ const BEFORE_SITES: Forms = {
     renamed: comment => `export let value: unknown;\n({ demand: value } = (context ${comment}));\n`,
     stringKey: comment => `export let value: unknown;\n({ "demand": value } = (context ${comment}));\n`,
     computedKey: comment => `export let value: unknown;\n({ ["demand"]: value } = (context ${comment}));\n`,
+    nestedRenamed: comment => `export let value: unknown;\n({ inner: { demand: value } } = (context ${comment}));\n`,
+    nestedArraySecond: comment => `export let first: unknown, demand: unknown;\n({ inner: [first, { demand }] } = (context ${comment}));\n`,
+    arrowBody: comment => `export let demand: unknown;\nexport const read = (): unknown => ({ demand } = (context ${comment}));\n`,
+    callArgument: comment => `export let demand: unknown;\nconsole.log({ demand } = (context ${comment}));\n`,
   },
   assignmentForOf: {
     object: comment => `export let demand: unknown;\nfor ({ demand } of (contexts ${comment})) break;\n`,
     array: comment => `export let demand: unknown;\nfor ([{ demand }] of (contexts ${comment})) break;\n`,
     arraySecond: comment => `export let first: unknown, demand: unknown;\nfor ([first, { demand }] of (contexts ${comment})) break;\n`,
+    awaitObject: comment => `export let demand: unknown;\nexport async function read(): Promise<void> {\n  for await ({ demand } of (contexts ${comment})) break;\n}\n`,
+    awaitArray: comment => `export let demand: unknown;\nexport async function read(): Promise<void> {\n  for await ([{ demand }] of (contexts ${comment})) break;\n}\n`,
+    awaitArraySecond: comment => `export let first: unknown, demand: unknown;\nexport async function read(): Promise<void> {\n  for await ([first, { demand }] of (contexts ${comment})) break;\n}\n`,
   },
   assignmentForIn: {
     object: comment => `export let demand: unknown;\nfor ({ demand } in (contexts ${comment})) break;\n`,
@@ -506,20 +623,36 @@ const SPACE_PLANTS: Readonly<Record<string, readonly [space: string, tab: string
 const LINE_CUTS: Readonly<Record<string, readonly [path: string, plant: string, twin: string]>> = {
   "blank-line": [PLANT, 'export const value = (context\n\n  && other)["demand"];\n', 'export const value = (context\n  && other)["demand"];\n'],
   "white-space-line": [PLANT, 'export const value = (context\n   \n  && other)["demand"];\n', 'export const value = (context\n  && other)["demand"];\n'],
+  "white-space-line-tab": [PLANT, 'export const value = (context\n\t\n  && other)["demand"];\n', 'export const value = (context\n  && other)["demand"];\n'],
   "blank-line-walked": [PLANT, 'export const value = (context /* x */ &&\n\n  other)["demand"];\n', 'export const value = (context /* x */ &&\n  other)["demand"];\n'],
   "line-end-walked": [PLANT, "export const value = context/* x */.inner.\n  demand;\n", "export const value = context/* x */.inner\n  .demand;\n"],
   "table-row-line": [PLANT, 'export type Value = (\n  | Context\n  | Other\n)["demand"];\n', 'export type Value = (Context | Other)["demand"];\n'],
   "table-row-column-0": [PLANT, 'export type Value = (\n| Context\n| Other\n)["demand"];\n', 'export type Value = (Context | Other)["demand"];\n'],
   "table-row-tab-indented": [PLANT, 'export type Value = (\n\t| Context\n\t| Other\n)["demand"];\n', 'export type Value = (Context | Other)["demand"];\n'],
   "table-row-whole-line": [PLANT, 'export type Value = (Other\n  | Context\n)["demand"];\n', 'export type Value = (Other | Context)["demand"];\n'],
+  "table-row-double-bar": [PLANT, 'export const value = (context\n  || other)["demand"];\n', 'export const value = (context ||\n  other)["demand"];\n'],
+  "table-row-bar-assign": [PLANT, 'export const value = (context\n  |= other)["demand"];\n', 'export const value = (context |=\n  other)["demand"];\n'],
+  "table-row-bar-alone": [PLANT, `export const value = (context + \`\n|\n\`)["demand"];\n`, `export const value = (context + \`|\`)["demand"];\n`],
   "list-item-dash": [PLANT, 'export const value = (context\n  - other)["demand"];\n', 'export const value = (context -\n  other)["demand"];\n'],
   "list-item-plus": [PLANT, 'export const value = (context\n  + other)["demand"];\n', 'export const value = (context +\n  other)["demand"];\n'],
   "list-item-star": [PLANT, 'export const value = (context\n  * other)["demand"];\n', 'export const value = (context *\n  other)["demand"];\n'],
   "list-item-tab": [PLANT, 'export const value = (context\n  -\tother)["demand"];\n', 'export const value = (context\n  -other)["demand"];\n'],
+  "list-item-plus-tab": [PLANT, 'export const value = (context\n  +\tother)["demand"];\n', 'export const value = (context\n  +other)["demand"];\n'],
+  "list-item-star-tab": [PLANT, 'export const value = (context\n  *\tother)["demand"];\n', 'export const value = (context\n  *other)["demand"];\n'],
   "list-item-two-digits": [PLANT, `export const value = (context + \`\n10) x\`)["demand"];\n`, `export const value = (context + \`10) x\`)["demand"];\n`],
+  "list-item-three-digits": [PLANT, `export const value = (context + \`\n100) x\`)["demand"];\n`, `export const value = (context + \`100) x\`)["demand"];\n`],
+  "list-item-four-digits": [PLANT, `export const value = (context + \`\n1000) x\`)["demand"];\n`, `export const value = (context + \`1000) x\`)["demand"];\n`],
+  "list-item-five-digits": [PLANT, `export const value = (context + \`\n10000) x\`)["demand"];\n`, `export const value = (context + \`10000) x\`)["demand"];\n`],
+  "list-item-number-tab": [PLANT, `export const value = (context + \`\n1)\tx\`)["demand"];\n`, `export const value = (context + \`1)\tx\`)["demand"];\n`],
   h06: [PLANT, `export const value = (context + \`\n1) x\`)["demand"];\n`, `export const value = (context + \`1) x\`)["demand"];\n`],
   h01: [PLANT, `export const value = (context + \`\n# x\`)["demand"];\n`, `export const value = (context + \`# x\`)["demand"];\n`],
   "heading-indented": [PLANT, `export const value = (context + \`\n   # x\`)["demand"];\n`, `export const value = (context + \`\n    # x\`)["demand"];\n`],
+  "heading-indented-1": [PLANT, `export const value = (context + \`\n # x\`)["demand"];\n`, `export const value = (context + \`\n    # x\`)["demand"];\n`],
+  "heading-indented-2": [PLANT, `export const value = (context + \`\n  # x\`)["demand"];\n`, `export const value = (context + \`\n    # x\`)["demand"];\n`],
+  "heading-level-2": [PLANT, `export const value = (context + \`\n## x\`)["demand"];\n`, `export const value = (context + \`\n####### x\`)["demand"];\n`],
+  "heading-level-3": [PLANT, `export const value = (context + \`\n### x\`)["demand"];\n`, `export const value = (context + \`\n####### x\`)["demand"];\n`],
+  "heading-level-4": [PLANT, `export const value = (context + \`\n#### x\`)["demand"];\n`, `export const value = (context + \`\n####### x\`)["demand"];\n`],
+  "heading-level-5": [PLANT, `export const value = (context + \`\n##### x\`)["demand"];\n`, `export const value = (context + \`\n####### x\`)["demand"];\n`],
   "heading-level-6": [PLANT, `export const value = (context + \`\n###### x\`)["demand"];\n`, `export const value = (context + \`\n####### x\`)["demand"];\n`],
   "heading-empty": [PLANT, `export const value = (context + \`\n#\n\`)["demand"];\n`, `export const value = (context + \`\n#x\n\`)["demand"];\n`],
   "heading-tab": [PLANT, `export const value = (context + \`\n#\tx\`)["demand"];\n`, `export const value = (context + \`\n#x\`)["demand"];\n`],
@@ -528,11 +661,19 @@ const LINE_CUTS: Readonly<Record<string, readonly [path: string, plant: string, 
   "terminator-in-string": [PLANT, 'export const value = (context + ". ")["demand"];\n', 'export const value = (context + ".")["demand"];\n'],
   "terminator-in-string-tab": [PLANT, 'export const value = (context + ".\t")["demand"];\n', 'export const value = (context + ".")["demand"];\n'],
   "terminator-in-template": [PLANT, `export const value = (context + \`a. b\`)["demand"];\n`, `export const value = (context + \`a.b\`)["demand"];\n`],
+  "terminator-in-template-tab": [PLANT, `export const value = (context + \`a.\tb\`)["demand"];\n`, `export const value = (context + \`a.b\`)["demand"];\n`],
   h02: [PLANT, 'export const value = (context, /a. b/)["demand"];\n', 'export const value = (context, /a.b/)["demand"];\n'],
+  "terminator-in-regex-tab": [PLANT, 'export const value = (context, /a.\tb/)["demand"];\n', 'export const value = (context, /a.b/)["demand"];\n'],
   h03: [PLANT_TSX, 'export const value = (<b>context. x</b>)["demand"];\n', 'export const value = (<b>context x</b>)["demand"];\n'],
+  "terminator-in-jsx-tab": [PLANT_TSX, 'export const value = (<b>context.\tx</b>)["demand"];\n', 'export const value = (<b>context x</b>)["demand"];\n'],
 };
 /** C-OVER-READ: a cut (white space right after the ".") parts the marker away, so the cut reading finds; its uncut twin is quiet. */
 const OVER_READ: readonly [cut: string, twin: string] = ['export const value = (never. context)["demand"];\n', 'export const value = (never.context)["demand"];\n'];
+/** C-LINE-OF's punctuators alone: every ASCII character but a letter, a digit and the space whose line alone SENTENCES reads as no
+ * line rule and no terminator (the judged set reads them from the helper's rules), each alone on the line after a terminator cut in
+ * a template's text, the subject on the next line: the template's closing "`" alone ends the template there instead. */
+const ALONE = "\"$%&'()*+,-/:<=>@[\\]^_`{}~";
+const aloneLine = (char: string): string => (char === "`" ? 'export const value = (x + `a.\n`\n  && context)["demand"];\n' : `export const value = (x + \`a.\n${char}\ncontext\`)["demand"];\n`);
 /** C-LINE-OF: a finding in the sentence after a terminator, a blank line, a heading line and a list item, the subject first in it,
  * and in two sentences whose first line holds a punctuator alone (a "?" cut and a terminator cut in a template, the subject on the
  * next line): each with the text its cut follows in the reading and whether its sentence's first word stands on a later line than
@@ -544,6 +685,9 @@ const LINE_OF: Readonly<Record<string, readonly [plant: string, cutAfter: string
   "list-item": ['export const value = (x\n  - context)["demand"];\n', "(x", false],
   "punctuation-line": ['export const value = (x ?\n  (\n    context) : y)["demand"];\n', "x ?", true],
   "punctuation-line-template": ['export const value = (x + `a.\n(\ncontext`)["demand"];\n', "a.", true],
+  "terminator-space": ['export const value = (x + `a. context`)["demand"];\n', "a.", false],
+  "table-row": ['export const value = (x + `\n| a\ncontext`)["demand"];\n', "| a", false],
+  ...Object.fromEntries([...ALONE].map((char): [string, readonly [string, string, boolean]] => [`alone ${char}`, [aloneLine(char), "a.", true]])),
 };
 /** Row P's plants (LIVE QUIET's parted holding); c04-c06 are refusal #5's U2 witnesses (c04 in the record's words). */
 const PARTED_PLANTS: Readonly<Record<string, readonly [path: string, text: string]>> = {
@@ -569,15 +713,72 @@ const PARTED_COUNTS: Readonly<Record<string, readonly (readonly [entry: string, 
   ],
   "P-WITHIN": [["src/plant.ts lexeme parted:carrier projection requirement", 1]],
 };
+/** Row W (wb-yopv, the R694 carry of landing 797's F1): the paired witnesses of the 20 non-equivalent gate mutants the F1 line names
+ * after "The other 20 are non-equivalent", verbatim from the gate's PREP archive (its leg2-summary.json), by the F1 clause that
+ * names each (W-COMMENTS its (a)-(c), W-CUT its (d), W-LINE-OF its (e), W-AS-WRITTEN its (f)) in the line's order, each with the
+ * reading the delivered reader gives it: "finds" (one finding) or "cut" (no finding, and LIVE QUIET holds its parts). */
+const W_PLANTS: Readonly<Record<string, Readonly<Record<string, readonly (readonly [reading: "finds" | "cut", plant: string])[]>>>> = {
+  "W-COMMENTS": {
+    "L2-C07": [["finds", "export const value = context./* not */\n\n  demand;\n"], ["finds", "export const value = context./* not */\n   \n  demand;\n"]],
+    "L2-C01": [["finds", "export const value = context./* a */ /* b */demand;\n"]],
+    "L2-C02": [["finds", "export const value = context./* a */ // b\ndemand;\n"]],
+    "L2-C08": [["finds", "export const value = context.// a\n  // b\n  demand;\n"]],
+    "L2-C03": [["finds", "export const value = context!// not\n.demand;\n"], ["finds", "export type Value = { context: 1;// no\nother: 2 }[\"demand\"];\n"], ["finds", "export const value = (context ?// no\na : b)[\"demand\"];\n"], ["finds", "export const value = (context ??// no\nother)[\"demand\"];\n"]],
+    "L2-C04": [["finds", "export const value = context!/** never */.demand;\n"], ["finds", "export const value = (context ?/** no */a : b)[\"demand\"];\n"]],
+    "L2-C05": [["finds", "export const value = (context)// not\n.demand;\n"], ["finds", "export const value = ([context]// not\n)[\"demand\"];\n"]],
+  },
+  "W-CUT": {
+    "L2-S07": [["cut", "export const value = (context\n  || other)[\"demand\"];\n"]],
+    "L2-S16": [["cut", "export const value = (context + `\n100) x`)[\"demand\"];\n"]],
+  },
+  "W-LINE-OF": {
+    "L2-S14": [["finds", "export const value = (x + `a.\n)\ncontext`)[\"demand\"];\n"]],
+    "L2-S15": [["finds", "export const value = (x + `a.\n`\n  && context)[\"demand\"];\n"]],
+  },
+  "W-AS-WRITTEN": {
+    "L2-A05": [["finds", "export async function read(): Promise<unknown> {\n  for await (const { demand } of contexts.items) return demand;\n  return undefined;\n}\n"]],
+    "L2-A13": [["finds", "export let demand: unknown;\nexport async function read(): Promise<void> {\n  for await ({ demand } of contexts.items) break;\n}\n"]],
+    "L2-A19": [["finds", "export function read(opts: Options): unknown {\n  let { demand } = context.inner;\n  return demand;\n}\n"], ["finds", "export function read(opts: Options): unknown {\n  var { demand } = context.inner;\n  return demand;\n}\n"]],
+    "L2-A20": [["finds", "export let demand: unknown;\nexport const read = (): unknown => ({ demand } = context.inner);\n"]],
+    "L2-A17": [["finds", "export function read({ demand }: typeof context.inner): unknown {\n  return demand;\n}\n"], ["finds", "export function read({ demand }: { context: 1 }[\"inner\"]): unknown {\n  return demand;\n}\n"]],
+    "L2-A14": [["finds", "export function read(opts: Options): unknown {\n  const { inner: { demand: value } } = context.x;\n  return value;\n}\n"]],
+    "L2-A21": [["finds", "export const value = (context.inner)[`demand`];\n"]],
+    "L2-A22": [["finds", "export type Value = Opts<Context, Demand>[Key];\n"]],
+    "L2-A16": [["finds", "export function read(opts: Options): unknown {\n  const { inner: [first, { demand }] } = context.x;\n  return [first, demand];\n}\n"]],
+  },
+};
+/** The F1 line's clause markers, one per row W pin: each opens the text that names its pin's mutants, up to the next marker. */
+const W_CLAUSES: Readonly<Record<string, string>> = { "W-COMMENTS": "(a) COMMENTS", "W-CUT": "(d) CUT", "W-LINE-OF": "(e) C-LINE-OF", "W-AS-WRITTEN": "(f) AS-WRITTEN" };
 /** The gate mutants R-B156's note names and refusal #5's F4 mutant, each with the pins measured red under it at cut time, each as
  * the record words it (GM3: each comment read as one space, the rest of its run kept; GM1: the parted output deduplicated per text,
  * so P-WITHIN stays green under it - it reds only under a dedup of the text's pairs before the within-sentence match, the reading
- * cut #1 recorded, refusal #1's F7). */
+ * cut #1 recorded, refusal #1's F7); then the 20 survivors wb-yopv's F1 line names (row W), each with the pins measured red under
+ * it at cut #4 (the gate's one-edit helper mutants from its PREP archive's leg2 journals, applied to throwaway copies). */
 const KILLS: Readonly<Record<string, readonly string[]>> = {
   GM3: ["T-R1", "T-R3", "T-TOKENS", "T-ELSEWHERE", "M-AFTER", "M-BEFORE", "M-WORDS", "M-JSDOC", "U-OWN-LINE", "U-BLANK", "U-MARKER", "C-LINES"],
   GM1: ["P-C04", "P-C06"],
   GM2: ["P-C04", "P-C05", "P-C06", "P-CODE"],
   GM7: ["C-LINES"],
+  "L2-C07": ["T-RUNS", "W-COMMENTS"],
+  "L2-C01": ["T-RUNS", "W-COMMENTS"],
+  "L2-C02": ["T-RUNS", "W-COMMENTS"],
+  "L2-C08": ["T-RUNS", "W-COMMENTS"],
+  "L2-C03": ["T-RUNS", "W-COMMENTS"],
+  "L2-C04": ["T-RUNS", "W-COMMENTS"],
+  "L2-C05": ["T-KINDS", "W-COMMENTS"],
+  "L2-S07": ["C-LINES", "W-CUT"],
+  "L2-S16": ["C-LINES", "W-CUT"],
+  "L2-S14": ["C-LINE-OF", "W-LINE-OF"],
+  "L2-S15": ["C-LINE-OF", "W-LINE-OF"],
+  "L2-A05": ["M-AFTER", "M-BEFORE", "W-AS-WRITTEN"],
+  "L2-A13": ["M-AFTER", "M-BEFORE", "W-AS-WRITTEN"],
+  "L2-A19": ["M-AFTER", "M-BEFORE", "W-AS-WRITTEN"],
+  "L2-A20": ["M-AFTER", "M-BEFORE", "W-AS-WRITTEN"],
+  "L2-A17": ["M-AFTER", "M-BEFORE", "W-AS-WRITTEN"],
+  "L2-A14": ["M-AFTER", "M-BEFORE", "W-AS-WRITTEN"],
+  "L2-A21": ["M-AFTER", "M-BEFORE", "W-AS-WRITTEN"],
+  "L2-A22": ["M-AFTER", "M-BEFORE", "W-AS-WRITTEN"],
+  "L2-A16": ["M-AFTER", "M-BEFORE", "W-AS-WRITTEN"],
 };
 
 // ------------------------------------------------------------------------------------------------------------- the readings
@@ -698,6 +899,7 @@ function codePlants(): Plant[] {
     ...Object.entries(T_MEMBERS).map(([member, [, plant]]): Plant => [`T_MEMBERS ${member}`, PLANT, plant]),
     ...Object.entries(TOKEN_PLANTS).flatMap(([token, texts]) => texts.map((text, index): Plant => [`TOKEN_PLANTS ${token} ${index}`, PLANT, text])),
     ...Object.entries(ELSEWHERE_PLANTS).flatMap(([token, forms]) => forms.map(([path, plant], index): Plant => [`ELSEWHERE_PLANTS ${token} ${index}`, path, plant])),
+    ...Object.entries(RUN_TOKENS).flatMap(([token, template]) => Object.entries({ ...COMMENT_KINDS, ...RUN_SHAPES }).map(([shape, run]): Plant => [`RUN_TOKENS ${token} ${shape}`, PLANT, template(run)])),
     ...matrix("AFTER_SITES", AFTER_SITES),
     ...matrix("BEFORE_SITES", BEFORE_SITES),
     ...Object.entries(WORD_PLANTS).flatMap(([site, texts]) => texts.map((text, index): Plant => [`WORD_PLANTS ${site} ${index}`, PLANT, text])),
@@ -710,6 +912,7 @@ function codePlants(): Plant[] {
     ...OVER_READ.map((text, index): Plant => [`OVER_READ ${index}`, PLANT, text]),
     ...Object.entries(LINE_OF).map(([member, [plant]]): Plant => [`LINE_OF ${member}`, PLANT, plant]),
     ...Object.entries(PARTED_PLANTS).map(([pin, [path, text]]): Plant => [`PARTED_PLANTS ${pin}`, path, text]),
+    ...Object.entries(W_PLANTS).flatMap(([pin, members]) => Object.entries(members).flatMap(([mutant, plants]) => plants.map(([, plant], index): Plant => [`W_PLANTS ${pin} ${mutant} ${index}`, PLANT, plant]))),
   ];
   return plants.filter(([, path]) => isModule(path));
 }
@@ -861,6 +1064,41 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         }),
       ]),
     ),
+  "T-RUNS": () =>
+    Object.fromEntries(
+      Object.entries(RUN_TOKENS).map(([token, template]) => [
+        token,
+        Object.fromEntries(
+          Object.entries({ ...COMMENT_KINDS, ...RUN_SHAPES }).map(([shape, run]) => {
+            const plant = template(run);
+            expect(tokenBeforeComment(plant).text, `the ${token} ${shape} run stands right after its token`).toBe(token);
+            const reading = read(plant);
+            expect(reading.findings, `${token} ${shape}: the run right after it finds once`).toHaveLength(1);
+            expect(reading.asWritten, `${token} ${shape}: bare() reads the run as nothing`).toEqual(read(template("")).asWritten);
+            return [shape, json(reading)];
+          }),
+        ),
+      ]),
+    ),
+  "T-KINDS": () =>
+    Object.fromEntries(
+      Object.entries(ELSEWHERE_PLANTS).map(([token, forms]) => [
+        token,
+        forms.map(([path, plant]) => {
+          const twin = read(spacedTwin(plant), path).asWritten;
+          return Object.fromEntries(
+            KINDS_BESIDE_BLOCK.map(kind => {
+              const variant = plant.replace(COMMENT_KINDS.block ?? "", COMMENT_KINDS[kind] ?? "");
+              if (syntaxErrors(variant, path) > 0 || !isElsewhereToken(token, tokenBeforeRun(variant, path))) return [kind, "unparsed"];
+              const reading = read(variant, path);
+              expect(reading.findings, `${token} ${kind}: a comment run after it finds once`).toHaveLength(1);
+              expect(reading.asWritten, `${token} ${kind}: bare() reads the run as one space, as its block plant's twin`).toEqual(twin);
+              return [kind, json(reading)];
+            }),
+          );
+        }),
+      ]),
+    ),
   "M-AFTER": () => matrixCells(AFTER_SITES, true),
   "M-BEFORE": () => matrixCells(BEFORE_SITES, false),
   "M-WORDS": () =>
@@ -949,17 +1187,23 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       },
     ]),
   ),
+  ...Object.fromEntries(
+    Object.entries(W_PLANTS).map(([pin, members]) => [
+      pin,
+      () => Object.fromEntries(Object.entries(members).map(([mutant, plants]) => [mutant, plants.map(([reading, plant]) => (reading === "finds" ? findsOnce(mutant, plant) : cut(mutant, plant)))])),
+    ]),
+  ),
 };
 
 describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-COMPUTATION-R2, after-terminator comments and LIVE QUIET's parted pairs)", () => {
   it("the judged set: the frozen shape, the claims, the out-of-file roster, the tracker export and the compiler anchors agree", { timeout: 120_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:5", "M:6", "U:3", "C:4", "P:6"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:7", "M:6", "U:3", "C:4", "P:6", "W:4"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     const pins = ROWS.flatMap(row => row.pins);
     expect(Object.keys(IMPL).sort(), "one case per pin").toEqual([...pins].sort());
     expect(CLAIMS, "the claims, byte for byte, are the roster's").toStrictEqual(ROSTER.claims);
     expect(KILLS, "the kills are the roster's").toStrictEqual(ROSTER.kills);
-    const named = idsIn(Object.values(CLAIMS).join(" "), /\b[TMUCP]-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g);
+    const named = idsIn(Object.values(CLAIMS).join(" "), /\b[TMUCPW]-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g);
     expect([...named].sort(), "every pin is named by a claim, and every pin a claim names exists").toEqual([...pins].sort());
     for (const [mutant, killers] of Object.entries(KILLS)) expect(killers.filter(pin => !pins.includes(pin)), `${mutant} is killed at pins`).toEqual([]);
 
@@ -994,13 +1238,53 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       idsIn(f3, /\bh\d\d\b/g).filter(member => !Object.hasOwn(LINE_CUTS, member)),
       "C-LINES holds every member the F3 line names",
     ).toEqual([]);
-    expect([...idsIn(fold, /\bGM\d+\b/g), ...idsIn(f4, /\bGM\d+\b/g)], "KILLS holds exactly the mutants R-B156 and the F4 line name").toEqual(Object.keys(KILLS));
+    // wb-yopv's F1 line: row W's label is its claim clause, and row W's pins hold, clause by clause, exactly the 20 survivors the
+    // line names after "The other 20 are non-equivalent"; KILLS holds them after R-B156's mutants and the F4 line's.
+    const carry = firstLine(exportRow(CARRY).notes, "[leads] - F1 LOW LEADS: ");
+    expect(ROWS[5]?.label, "row W is the F1 line's claim clause").toBe(between(carry, "F1 LOW LEADS: ", ": "));
+    const survivors = idsIn(carry.slice(carry.indexOf(" are non-equivalent")), L2_ID);
+    expect(survivors.length, "the F1 line names as many survivors as it counts").toBe(Number(between(carry, "The other ", " are non-equivalent")));
+    const clauses = Object.entries(W_CLAUSES);
+    expect(clauses.map(([pin]) => pin), "row W: one pin per F1 clause, in the line's order").toEqual(ROWS[5]?.pins);
+    for (const [index, [pin, marker]] of clauses.entries()) {
+      const from = carry.indexOf(marker);
+      const next = clauses[index + 1]?.[1];
+      expect(from, `the F1 line holds its ${marker} clause`).toBeGreaterThan(-1);
+      const clause = next === undefined ? carry.slice(from) : carry.slice(from, carry.indexOf(next));
+      expect(Object.keys(W_PLANTS[pin] ?? {}), `${pin} holds exactly the survivors the F1 line's ${marker} clause names`).toEqual(idsIn(clause, L2_ID).filter(id => survivors.includes(id)));
+      for (const mutant of Object.keys(W_PLANTS[pin] ?? {})) expect(KILLS[mutant] ?? [], `${mutant} is killed at its own witnesses' pin`).toContain(pin);
+    }
+    expect(Object.values(W_PLANTS).flatMap(members => Object.keys(members)), "row W holds every survivor the F1 line names, in its order").toEqual(survivors);
+    expect([...idsIn(fold, /\bGM\d+\b/g), ...idsIn(f4, /\bGM\d+\b/g), ...survivors], "KILLS holds exactly the mutants R-B156, the F4 line and the F1 line name").toEqual(Object.keys(KILLS));
+    expect(
+      Object.entries(KILLS).flatMap(([mutant, killers]) => (killers.length === 0 ? [mutant] : [])),
+      "every mutant KILLS holds is killed at a pin",
+    ).toEqual([]);
     expect(idsIn(f4, /\bh\d\d\b/g).filter(member => !Object.hasOwn(LINE_CUTS, member)), "the F4 line's numbered member is a C-LINES plant").toEqual([]);
 
     // The compiler and the helper's own rules: a token member per terminator token, a member per other token (less the ones the
     // compiler rules out, each checked), the comment forms, the SENTENCES line rules, and every code plant parsing clean.
     expect(Object.keys(TOKEN_PLANTS), "T-TOKENS: one member per token whose text ends in a terminator").toEqual(terminatorTokens());
     expect(Object.keys(SPACE_PLANTS), "C-SPACE: the same tokens").toEqual(terminatorTokens());
+    expect(Object.keys(RUN_TOKENS), "T-RUNS: the same tokens").toEqual(terminatorTokens());
+    expect([...KINDS_BESIDE_BLOCK], "T-KINDS: every comment kind beside the block").toEqual(Object.keys(COMMENT_KINDS).filter(kind => kind !== "block"));
+    expect(
+      Object.entries(ELSEWHERE_PLANTS).flatMap(([token, forms]) => forms.flatMap(([, plant], index) => (plant.split(COMMENT_KINDS.block ?? "").length === 2 ? [] : [`${token} ${index}`]))),
+      "T-KINDS: every T-ELSEWHERE plant holds the block comment once",
+    ).toEqual([]);
+    const unparsedAfter = (kind: string): string[] =>
+      Object.entries(ELSEWHERE_PLANTS).flatMap(([token, forms]) =>
+        forms.flatMap(([path, plant]) => {
+          const variant = plant.replace(COMMENT_KINDS.block ?? "", COMMENT_KINDS[kind] ?? "");
+          return syntaxErrors(variant, path) > 0 || !isElsewhereToken(token, tokenBeforeRun(variant, path)) ? [tokenBeforeRun(plant, path)?.text ?? ""] : [];
+        }),
+      );
+    expect(unparsedAfter("jsdocStyle"), "T-KINDS: a JSDoc-style comment's run follows every T-ELSEWHERE token").toEqual([]);
+    expect(unparsedAfter("line"), "T-KINDS: COMMENTS names exactly the tokens whose line comment's run the compiler parses otherwise").toEqual(
+      between(CLAIMS.COMMENTS ?? "", "but a line comment right after ", ", whose line end")
+        .split(/, | and /)
+        .map(word => word.slice(1, -1)),
+    );
     for (const [token, [plant]] of Object.entries(TOKEN_PLANTS)) {
       const before = tokenBeforeComment(plant);
       expect(token === NUMBER_TOKEN ? before.kind === ts.SyntaxKind.NumericLiteral : ts.tokenToString(before.kind) === token, `the ${token} member's comment follows that token`).toBe(true);
@@ -1042,6 +1326,10 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
       else expect([sample.includes(token), leaves.some(leaf => ts.tokenToString(leaf.kind) === token)], `${token}: the sample spells it and its token list holds no such token`).toEqual([true, false]);
     }
     expect([...new Set(Object.values(COMMENT_KINDS).map(commentFormOf))].sort(), "every comment form the compiler tells apart").toEqual(commentForms());
+    const alone = Array.from({ length: 0x7f - 0x21 }, (_, index) => String.fromCharCode(0x21 + index)).filter(
+      char => !/[A-Za-z0-9]/.test(char) && !TABLE_ROW.test(char) && !HEADING.test(char) && !new RegExp(TERMINATOR.source).test(char),
+    );
+    expect([...ALONE], "C-LINE-OF: every ASCII punctuator SENTENCES reads alone on a line as no line rule and no terminator, in code order").toEqual(alone);
     const rules = [...new Set(Object.values(LINE_CUTS).flatMap(([path, plant]) => lineRulesOf(plant, path)))].sort();
     expect(rules, "C-LINES: a member per SENTENCES line rule, per bullet and for the numbered item").toEqual(sentenceRules());
     expect(
