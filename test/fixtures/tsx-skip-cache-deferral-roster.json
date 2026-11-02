@@ -125,10 +125,12 @@
  },
  "known": {
   "C1": [
+   "wb-km7q.11 no-deferral-wording",
    "wb-km7q.6 no-deferral-wording"
   ],
   "C2": [
    "wb-csbt.2 no-related-edge",
+   "wb-km7q.11 no-related-edge",
    "wb-km7q.6 no-related-edge"
   ]
  },
@@ -577,6 +579,7 @@
       ],
       "gateWording": true,
       "findings": [
+       "wb-km7q.11 no-deferral-wording",
        "wb-km7q.6 no-deferral-wording"
       ],
       "controls": {
@@ -605,6 +608,7 @@
       "anchor": "a related (never blocks) edge to the gate",
       "findings": [
        "wb-csbt.2 no-related-edge",
+       "wb-km7q.11 no-related-edge",
        "wb-km7q.6 no-related-edge"
       ],
       "blocking": [],

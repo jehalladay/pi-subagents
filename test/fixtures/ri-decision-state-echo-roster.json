@@ -512,7 +512,9 @@
   "R-OUTSIDE",
   "R-SIDE-PATH",
   "R-SUCCESS-SYNONYM",
-  "R-COUNT-COINCIDENCE"
+  "R-COUNT-COINCIDENCE",
+  "R-PADDED-WITNESS-ECHO",
+  "R-COORDINATED-CASE-WITNESS"
  ],
  "rows": [
   {
@@ -1319,7 +1321,7 @@
         "results": [
          {
           "question": "q.route",
-          "state": "…",
+          "state": "\u2026",
           "choice": null
          }
         ],
@@ -1352,7 +1354,7 @@
          },
          {
           "question": "q.t5",
-          "state": "…",
+          "state": "\u2026",
           "choice": null
          },
          {
@@ -1764,10 +1766,12 @@
   "D2",
   "D3",
   "D4",
+  "RESIDUAL R-PADDED-WITNESS-ECHO: B2 and all A1-D4 padded echo pages read quiet under the live witness/count reading",
+  "RESIDUAL R-COORDINATED-CASE-WITNESS: D3 and its witness replaced together read quiet under the live witness/count reading",
   "records: every registered test ran once in run mode in roster order, every pin reached its end, every case made its pinned assertion count, and no title spells the engine family"
  ],
  "asserted": [
-  "judged:28",
+  "judged:32",
   "A1:26",
   "A2:3",
   "A3:3",
