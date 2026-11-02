@@ -32,9 +32,24 @@
  * the WORDS sweep's run members), GP8-SEAM-DEPTH2, GP8-SEAM-LINE1 and GP8-SEAM-CAP64 (THE READ SET's coverage tree),
  * GP8-VIS-NO-G (zeroWidthSecond, softHyphenSecond, joinerSecond), GP8-PCT-NO-G (percentSecond), GP8-CASE-NO-K (the WORDS
  * sweep, one plant per class member) and the record-only GP8-JSESC-NO-G (escapeSecond) and GP8-HTML-NO-G (entitySecond);
- * each of them reds this census under its reader edit. READINGS SPELLING, WORDS, SEGMENTS and THE READ SET claim exactly
- * what those rows pin. The reader's own code (wordsOf through seamReading) is unchanged; the plants table is split into its
- * code plants (texts) and its manifest plants, every carried reading unchanged.
+ * each of them reds this census under its reader edit. The reader's own code (wordsOf through seamReading) is unchanged; the
+ * plants table is split into its code plants (texts) and its manifest plants, every carried reading unchanged.
+ *
+ * CARRIER CUT #2 (wb-km7q.13 refusal #1, O:1787, and the class guard its BIND bound: claims no wider than pins, R514/R515/R668
+ * under rule 16 LEG 2). Refusal #1's realized members are pinned, each red-first against its gate mutant on the cut #1 bytes:
+ * GP11-CTRL-EMPTY (controlSpace) and GP11-PCT-TRIM (percentSpace), an escape read as a space between a word and the pair;
+ * GP11-DECODE-LOWER (braceCase, entityCase, hexEntityCase), a decoded capital that breaks the word before it; and the
+ * record-only GP11-IDENTITY-LOWER (the identityCase quiet row) and GP11-MANIFEST-SPECS-DEPS (specDev, specOptional,
+ * specPeer). Its six occurrence members (GP11-JSESC-THIRD, GP11-HTML-THIRD, GP11-PCT-THIRD, GP11-VIS-THIRD,
+ * GP11-CASE-THIRD, GP11-RUN-THIRD) are answered by narrowing the claim, not by a third plant (which would only move the
+ * boundary): the SPELLING and WORDS words that claimed every occurrence in a text now claim the occurrences a plant holds,
+ * the first of each form and the second where a Second plant spells it, and a third or later occurrence in one text is
+ * NOT CLAIMED by this census. A one-edit battery over the reader at this cut added the line-pair join's space (capsContinued),
+ * a decoded lower-case q's case (the lowerUnicode and lowerHex quiet rows) and a wide probe of one line with no line break
+ * after it (THE READ SET); every other edit it read green is an equivalent edit, an edit THE READ SET's sized probes leave
+ * unrealizable (a cap above the live tree's widest line or largest module), or hollows a form NOT CLAIMED below. READINGS
+ * SPELLING, WORDS, SUBJECTS, SEGMENTS and THE READ SET claim exactly what their named rows pin. The reader's own code
+ * (wordsOf through seamReading) is unchanged at this cut.
  *
  * PINNED READER SET (this file, describe "wb-km7q.8 query evidence and model calls: the adoption-time falsifier
  * (INF-RQ1..INF-RQ5)"; each pin case's output is held to its witness in test/fixtures/ri-query-evidence-model-call-roster.json;
@@ -107,29 +122,43 @@
  * READINGS
  * - SPELLING (claimed at the C1 plants named here, each read as the plant spells it): a text with no escape is read as
  *   written (importSpecifier, identifier, comment and the other plants that carry no escape); an escaped plant is read with
- *   its escapes decoded: the JS escapes \u0071 (escapedUnicode), \x71 (escapedHex) and \u{51} (escapedBrace), \n read as a
- *   space (controlEscape) and \Q read as Q (escapedIdentity), the HTML numeric character references &#81; (htmlEntity) and
- *   &#x51; (htmlHexEntity), and the URL percent escape %20 (percentEncoded); every escape of these forms in a text is decoded,
- *   not its first alone (escapeSecond: \n then \u0071; entitySecond: &#32; then &#81;; percentSecond: %20 twice, the
- *   subject pair straddling the second). A text is read in its visible spelling: a zero-width space inside or between the
- *   words of a name (innerInvisible, zeroWidthSplit) and a soft hyphen or a combining grapheme joiner between them
- *   (softHyphenSplit, ignorableSplit) are removed, every one of them in a text (zeroWidthSecond, softHyphenSecond,
- *   joinerSecond: two in one name, the subject pair straddling the second), so none of them splits that name; and a text is
- *   read in its compatibility fold before its segments are cut: a fullwidth spelling reads its subject (fullwidth) and a
- *   fullwidth hyphen-minus joins two words as "-" does (fullwidthJoin). NOT CLAIMED by this census: any other escape,
- *   reference or percent sequence (another control escape, a hex digit written as a letter, an upper-case X reference and
- *   another digit count among them), the written reading of a text that also carries an escape, any other invisible (a
- *   format character that is not default-ignorable among them), any other compatibility form, whether the fold composes
- *   (NFKC) or decomposes, and wordsOf's own NFKC fold (it re-folds a segment visibleOf has already folded).
- * - WORDS: a break at each change from a lower-case letter or a digit to a capital and before the last capital of a capital
- *   run, at every such change and run of a text, then lower case and the runs of a-z (ReactiveQuerySDK reads reactive query
- *   sdk: the vocabulary the C1 witness holds; reactive_inference reads reactive inference: snake; InferenceSDKQuery reads
- *   inference sdk query: capitalRun; "IOStream XQuery view" breaks its second run too: capitalRunSecond). Each member of each
- *   class has a plant of its own (the WORDS sweep, held to the roster as the members whose plant reads its subject): each of
- *   a-z and 0-9 before a capital (afterLowerOrDigit), each of A-Z after one (beforeCapital), each of A-Z as the last capital
- *   of a run before a capitalized word (runLast), each of A-Z as the capital that opens the word after a run (runNext) and
- *   each of a-z as that word's second letter (runNextSecond). NOT CLAIMED by this census: whether a digit, or a letter that
- *   no vocabulary word holds, is read inside a word's run.
+ *   its escape decoded: the JS escapes \u0071 (escapedUnicode), \x71 (escapedHex), \u{51} (escapedBrace), \n
+ *   (controlEscape) and \Q (escapedIdentity), the HTML numeric character references &#81; (htmlEntity) and &#x51;
+ *   (htmlHexEntity), and the URL percent escape %20 (percentEncoded). \n and %20 are read as a space: the words on either
+ *   side are two words of one segment (controlEscape and percentEncoded hold the one segment; controlSpace, xyz\nreactive
+ *   query, and percentSpace, xyz%20reactive query, hold the two words). Each escape is read as the code point it names, in
+ *   that code point's case: the capital Q that \u{51}, &#81; and &#x51; decode breaks the word before it (braceCase,
+ *   entityCase and hexEntityCase: xyz, the escape, then uery view reads query view), the lower-case q that \u0071 and \x71
+ *   decode breaks none (the lowerUnicode and lowerHex quiet rows: xyz, the escape, then uery view reads nothing), and \Q
+ *   reads a capital Q (the identityCase quiet row: Reactive\Queryxyz reads nothing, its capital keeping Queryxyz apart from
+ *   Reactive). A second escape in one text is decoded where a Second plant spells it, the subject straddling the second:
+ *   escapeSecond (\u0071 after \n), entitySecond (&#81; after &#32;) and percentSecond (%20 after %20). A text is read in
+ *   its visible spelling: a zero-width space inside a word is removed (innerInvisible), and a zero-width space, a soft
+ *   hyphen or a combining grapheme joiner between two words of a name keeps them adjacent words of that name (zeroWidthSplit,
+ *   softHyphenSplit, ignorableSplit), a second one in that name too where a Second plant spells it, the subject straddling
+ *   the second (zeroWidthSecond, softHyphenSecond, joinerSecond: two of one kind in one name); and a text is read in its
+ *   compatibility fold before its segments are cut: a fullwidth spelling reads its subject (fullwidth) and a fullwidth
+ *   hyphen-minus joins two words as "-" does (fullwidthJoin). NOT CLAIMED by this census: a third or later escape,
+ *   reference, percent escape or invisible in one text, and any second one but those the Second plants spell (a second
+ *   \x71, \u{51} or &#x51;, and a second invisible of another kind, among them); any other escape, reference or percent
+ *   sequence (another control escape, &#32; and every other code point, a hex digit written as a letter, an upper-case X
+ *   reference and another digit count among them); the written reading of a text that also carries an escape; any other
+ *   invisible (a format character that is not default-ignorable among them); any other compatibility form, whether the fold
+ *   composes (NFKC) or decomposes, and wordsOf's own NFKC fold (it re-folds a segment visibleOf has already folded); and a
+ *   form of one reading inside another reading's text but where a plant named here holds it (an escape, an invisible or a
+ *   compatibility form inside a continued pair or inside a dependency name or spec, among them).
+ * - WORDS: a break at a change from a lower-case letter or a digit to a capital, and before the last capital of a capital run
+ *   that a capitalized word follows, then lower case and the runs of a-z (ReactiveQuerySDK reads reactive query sdk: the
+ *   vocabulary the C1 witness holds; reactive_inference reads reactive inference: snake; InferenceSDKQuery reads inference
+ *   sdk query: capitalRun). The first change and the first run of a segment are claimed for each member of each class, each
+ *   with a plant of its own (the WORDS sweep, held to the roster as the members whose plant reads its subject): each of a-z
+ *   and 0-9 before a capital (afterLowerOrDigit), each of A-Z after one (beforeCapital), each of A-Z as the last capital of a
+ *   run before a capitalized word (runLast), each of A-Z as the capital that opens the word after a run (runNext) and each of
+ *   a-z as that word's second letter (runNextSecond). A second change and a second run in one segment break too where a
+ *   plant spells them: identifier (reactiveInferenceClient, its second change, before Client) and capitalRunSecond
+ *   ("IOStream XQuery view", its second run, before Query). NOT CLAIMED by this census: a third or later change or run in
+ *   one segment, any second one but those two plants spell, and whether a digit, or a letter that no vocabulary word holds,
+ *   is read inside a word's run.
  * - SUBJECTS (never a literal here: vocabularyOf derives them from the bead title): the title's CamelCase names
  *   (ReactiveQuerySDK, ReactiveInferenceSDK, QueryView) cut into words; the subject words are what one SDK-suffixed name spells
  *   and the other does not (query, inference); the vocabulary is every adjacent word pair of a name holding a subject word
@@ -147,8 +176,10 @@
  *   first red of cut #1) and ":" (R-SEPARATOR's `reactive:query`). "the reactive query engine" (splitLine) and
  *   "@acme/reactive-query" (manifest) read their subject. NOT CLAIMED by this census: whether a digit, a non-ASCII letter or
  *   white space other than a space joins one, and whether any character other than "?" and ":" ends one. A pair split
- *   across one line break is read at its first line when the next line opens with the comment marker // (splitLine), /*
- *   (blockContinued), * (splitBlock) or # (hashContinued); a pair split by more than one line break is NOT CLAIMED by this
+ *   across one line break is read at its first line, the two lines joined by a space, when the next line opens with the
+ *   comment marker // (splitLine), /* (blockContinued), * (splitBlock) or # (hashContinued); the space keeps a capital-run
+ *   word at a line's end apart from the next line's first word (capsContinued: REACTIVE, then query on the next line). A pair
+ *   split by more than one line break, and a continued pair in any spelling but those plants hold, are NOT CLAIMED by this
  *   census.
  * - THE READ SET (C1): the reader's listing of the live tree (listedCode) equals the read set listed apart
  *   (readSetListedApart: git's own listing of every tracked, or untracked and not ignored, file, filtered by its own spelling
@@ -159,9 +190,10 @@
  *   seamReading where the live tree spells no subject: it holds a module at every listed path (the mirror), one module per
  *   extension (.d.ts among them) below each code root and at the root (the matrix), each C1 code plant and the WORDS sweep as
  *   modules of their own, a module one line longer than the longest listed module with its subject on its last line, a
- *   module larger than the largest with its subject after that many bytes, and a module whose one line is wider than the
- *   widest listed line with its subject at its end; each probe reads its subject and each plant module reads as findingsOf
- *   reads its text.
+ *   module larger than the largest with its subject after that many bytes, and a module of one line, wider than the widest
+ *   listed line, with its subject at its end and no line break after it (wb-km7q.13 cut #2: so the line-pair reading never
+ *   holds it and a cap on a line's own reading reds it); each probe reads its subject and each plant module reads as
+ *   findingsOf reads its text.
  * - THE FLIP (the house analog: Pi holds no QueryView): Pi's real ObservationProjection defaults an observed node it has no
  *   presentation for to statusText "UNKNOWN" and statusTone "unknown" (observation.ts ingest); the flip is the same source read
  *   back as statusText "TRUE", statusTone "success", on two arms per node (a refresh snapshot with coverage complete; an ingest
@@ -256,11 +288,13 @@
  *    dependency name, each finding held to the roster) and THE READ SET's rows (the reader's listing of the live tree held to
  *    the read set listed apart and the live seam to its reading recomputed apart from seamReading; the coverage tree's
  *    mirror, matrix, plant modules and long, large and wide probes, each held to the roster); the reader's plants read
- *    PRESENT (among them a dependency name in each of the four fields, a dependency spec as an npm alias, a file tarball
- *    and a git spec, the escaped, invisible-split, comment-continued, entity, percent, dot- and slash-joined, fullwidth and
- *    capital-run spellings, and a second escape, reference, percent escape, invisible and capital run in one text) and so
- *    does each member of the WORDS sweep, its quiet rows (R-OUTSIDE-ROOTS, R-COMPOSED, R-LOOKALIKE, R-RF-INTERNAL,
- *    R-SEPARATOR, R-ENCODED) stay quiet and the role places read in their role (each title name, producer lines :35 and
+ *    PRESENT (among them a dependency name and a dependency spec in each of the four fields, a dependency spec as an npm
+ *    alias, a file tarball and a git spec, the escaped, invisible-split, comment-continued, entity, percent, dot- and
+ *    slash-joined, fullwidth and capital-run spellings, an escape read as a space and a decoded capital, each between a word
+ *    and the pair, a capital-run word continued across a line break, and the second escape, reference, percent escape,
+ *    invisible and capital run the Second plants spell) and so does each member of the WORDS sweep, its quiet rows
+ *    (R-OUTSIDE-ROOTS, R-COMPOSED, R-LOOKALIKE, R-RF-INTERNAL, R-SEPARATOR, R-ENCODED, and the case rows lowerUnicode,
+ *    lowerHex and identityCase) stay quiet and the role places read in their role (each title name, producer lines :35 and
  *    :37); C2 the producer facts (every vendored line's text against its recorded sha256, the title's
  *    range expanded to the five ids the acceptance line names, the status line's "design only"), producerGateOf NOT-PASSED,
  *    gateOf CLOSED and the gate's near misses.
@@ -493,7 +527,10 @@ function gateIdsOf(title: string): string[] {
  * Words and subjects (C1)
  * ----------------------------------------------------------------------------------------------------------------------- */
 
-/** A text's words (READINGS WORDS names the breaks this census claims; its own NFKC fold is NOT CLAIMED: see SPELLING). */
+/**
+ * A text's words (READINGS WORDS names the breaks this census claims: the first change and run of a segment, and a second
+ * where a plant spells it; a third or later one and its own NFKC fold are NOT CLAIMED: see SPELLING).
+ */
 function wordsOf(text: string): string[] {
   const split = text
     .normalize("NFKC")
@@ -549,10 +586,11 @@ function readSubjects(text: string, vocabulary: readonly SubjectPair[]): string[
   return [...new Set(segments.flatMap(segment => subjectsIn(wordsOf(segment), vocabulary)))].sort();
 }
 /**
- * The visible spelling (READINGS SPELLING names what this census claims of it: every zero-width space, soft hyphen and
- * combining grapheme joiner C1's plants spell is removed, so none of them splits a name, and the text is read in its
- * compatibility fold before its segments are cut, so a fullwidth spelling reads its subject and a fullwidth hyphen-minus
- * joins as "-" does); what else this removes or folds is NOT CLAIMED.
+ * The visible spelling (READINGS SPELLING names what this census claims of it: a zero-width space inside a word is removed,
+ * and a zero-width space, soft hyphen or combining grapheme joiner between two words of a name keeps them adjacent, a second
+ * one of the same kind in that name too as C1's Second plants spell it, and the text is read in its compatibility fold
+ * before its segments are cut, so a fullwidth spelling reads its subject and a fullwidth hyphen-minus joins as "-" does);
+ * what else this removes or folds, and a third or later invisible in one text, is NOT CLAIMED.
  */
 function visibleOf(text: string): string {
   return text.replace(/[\p{Cf}\p{Default_Ignorable_Code_Point}]/gu, "").normalize("NFKC");
@@ -561,9 +599,10 @@ function codePointOf(value: number): string {
   return value <= 0x10ffff ? String.fromCodePoint(value) : "";
 }
 /**
- * A text with its escapes decoded (READINGS SPELLING names the forms this census claims, as C1's plants spell them: \u0071,
- * \x71, \u{51}, \n read as a space, \Q read as Q, &#81;, &#x51; and %20, every one of them in a text); every other form
- * this decodes is NOT CLAIMED.
+ * A text with its escapes decoded (READINGS SPELLING names the forms this census claims, as C1's plants spell them: \u0071
+ * and \x71 read as a lower-case q, \u{51}, &#81; and &#x51; read as a capital Q, \Q read as a capital Q, \n and %20 read as
+ * a space, and a second escape in one text where a Second plant spells it); every other form this decodes, and a third or
+ * later escape in one text, is NOT CLAIMED.
  * R-ENCODED names the encodings that are not a JS escape, an HTML numeric character reference or a URL percent escape.
  */
 function decodedOf(text: string): string {
@@ -587,7 +626,10 @@ function textSubjects(text: string, vocabulary: readonly SubjectPair[]): string[
  * claims the continuations READINGS SEGMENTS names, one plant each, and not the drop of any one marker.
  */
 const COMMENT_LEAD = /^\s*(?:\/\/+|\/\*+|\*+|#+)\s?/;
-/** `<path>:<line> <subject>` for each line naming a subject, and for a pair split across a line break (read at its first line). */
+/**
+ * `<path>:<line> <subject>` for each line naming a subject, and for a pair split across a line break (read at its first line,
+ * the two lines joined by a space).
+ */
 function findingsOf(path: string, text: string, vocabulary: readonly SubjectPair[]): string[] {
   const lines = text.split(/\r?\n/);
   const subjects = lines.map(line => textSubjects(line, vocabulary));
@@ -1505,8 +1547,9 @@ const PROBE_SUBJECT = 'export const engine = "reactive-query-sdk";\n';
  * THE READ SET's coverage tree for a live listing and its texts (READINGS THE READ SET): a module at every listed path (the
  * mirror), one module per extension (.d.ts among them) below each code root and at the root (the matrix), one module per
  * plant text (each verbatim), a module one line longer than the longest listed module with its subject on its last line, a
- * module larger than the largest with its subject after that many bytes, and a module whose one line is wider than the
- * widest listed line with its subject at the line's end. Each module spells a subject; the package.json spells none.
+ * module larger than the largest with its subject after that many bytes, and a module of one line, wider than the widest
+ * listed line, with its subject at the line's end and no line break after it. Each module spells a subject; the
+ * package.json spells none.
  */
 function coverageProbesOf(listed: readonly string[], texts: readonly string[], plantTexts: Readonly<Record<string, string>>): CoverageProbes {
   const tree: Record<string, string> = { "package.json": '{ "name": "km7q13-coverage" }\n' };
@@ -1525,7 +1568,8 @@ function coverageProbesOf(listed: readonly string[], texts: readonly string[], p
   for (const [plant, path] of Object.entries(plants)) tree[path] = plantTexts[plant];
   tree[long] = `${"\n".repeat(longLines - 1)}${PROBE_SUBJECT}`;
   tree[large] = `${`${"x".repeat(99)}\n`.repeat(Math.ceil(largeBytes / 100))}${PROBE_SUBJECT}`;
-  tree[wide] = `${"x".repeat(wideWidth)} ${PROBE_SUBJECT}`;
+  // No line break after the wide line: the line-pair reading never reaches it, so only the line's own reading holds it.
+  tree[wide] = `${"x".repeat(wideWidth)} ${PROBE_SUBJECT.trimEnd()}`;
   return { tree, mirror: [...listed], matrix, plants, long, longLines, large, wide };
 }
 const BEAD_ROW = beadRow();
@@ -1958,6 +2002,15 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       escapeSecond: `const s = "a${BACKSLASH}nb", t = "reactive-${BACKSLASH}u0071uery-sdk";`,
       entitySecond: 'const s = "a&#32;b", t = "Reactive&#81;uery";',
       percentSecond: 'const u = "https://example.invalid/Engine%20Query%20View";',
+      // wb-km7q.13 cut #2: refusal #1's realized members (O:1787 U1, U2), each in the form its gate twin spelled, and the
+      // line-pair join's space (capsContinued); each reads its subject only while the escape reads as a space, the decoded
+      // capital keeps its case or the two lines are joined by a space.
+      controlSpace: `const s = "xyz${BACKSLASH}nreactive query";`,
+      percentSpace: 'const u = "xyz%20reactive query";',
+      braceCase: `const s = "xyz${BACKSLASH}u{51}uery view";`,
+      entityCase: 'const s = "xyz&#81;uery view";',
+      hexEntityCase: 'const s = "xyz&#x51;uery view";',
+      capsContinued: "// handed to the REACTIVE\n// query engine",
     };
     const plants: { [key: string]: Json } = {
       ...Object.fromEntries(Object.entries(codePlants).map(([plant, text]) => [plant, read(text)])),
@@ -1967,6 +2020,10 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       specGit: manifestFindings({ dependencies: { "evidence-engine": "github:example/ReactiveQuerySDK" } }, VOCABULARY),
       optionalField: manifestFindings({ optionalDependencies: { "@acme/reactive-query": "1.0.0" } }, VOCABULARY),
       peerField: manifestFindings({ peerDependencies: { "reactive-inference-sdk": "*" } }, VOCABULARY),
+      // wb-km7q.13 cut #2 (O:1787 F4, record): a string spec read in each of the three fields beside dependencies.
+      specDev: manifestFindings({ devDependencies: { "@acme/evidence": "npm:reactive-query-sdk@1.0.0" } }, VOCABULARY),
+      specOptional: manifestFindings({ optionalDependencies: { "@acme/evidence": "npm:reactive-query-sdk@1.0.0" } }, VOCABULARY),
+      specPeer: manifestFindings({ peerDependencies: { "@acme/evidence": "npm:reactive-query-sdk@1.0.0" } }, VOCABULARY),
     };
     for (const [plant, findings] of Object.entries(plants)) expect(findings, plant).not.toEqual([]);
     // READINGS WORDS, member by member: one plant per member of each class of the case breaks (the WORDS sweep).
@@ -2059,6 +2116,11 @@ const PINS: Readonly<Record<string, () => Promise<Json>>> = {
       sdkQuery: read('import { query as sdkQuery } from "@anthropic-ai/claude-agent-sdk";'),
       operatorJoin: read("const query = config.query ?? sdkQuery;"),
       observeQuery: read('import { observeInvocation } from "./observe-query.js";'),
+      // wb-km7q.13 cut #2 (O:1787 U2 and F3, record): a decoded lower-case q breaks no word, and \Q decodes a capital Q
+      // that breaks the fused word before it; each reads quiet only while the decode keeps the code point's case.
+      lowerUnicode: read(`const s = "xyz${BACKSLASH}u0071uery view";`),
+      lowerHex: read(`const s = "xyz${BACKSLASH}x71uery view";`),
+      identityCase: read(`const s = "Reactive${BACKSLASH}Queryxyz";`),
       "R-COMPOSED": read('const name = "Reactive" + "Que" + "rySDK";'),
       "R-LOOKALIKE": read(lookalike),
       "R-RF-INTERNAL": read("const engines = Object.keys(provenance.sdk_versions ?? {});"),

@@ -1314,6 +1314,24 @@
      ],
      "percentSecond": [
       "1 query"
+     ],
+     "controlSpace": [
+      "1 query"
+     ],
+     "percentSpace": [
+      "1 query"
+     ],
+     "braceCase": [
+      "1 query"
+     ],
+     "entityCase": [
+      "1 query"
+     ],
+     "hexEntityCase": [
+      "1 query"
+     ],
+     "capsContinued": [
+      "1 query"
      ]
     },
     "wordsSweep": 140,
@@ -1430,6 +1448,24 @@
     "percentSecond": [
      "src/plant.ts:1 query"
     ],
+    "controlSpace": [
+     "src/plant.ts:1 query"
+    ],
+    "percentSpace": [
+     "src/plant.ts:1 query"
+    ],
+    "braceCase": [
+     "src/plant.ts:1 query"
+    ],
+    "entityCase": [
+     "src/plant.ts:1 query"
+    ],
+    "hexEntityCase": [
+     "src/plant.ts:1 query"
+    ],
+    "capsContinued": [
+     "src/plant.ts:1 query"
+    ],
     "manifest": [
      "package.json:dependencies:@acme/reactive-query query",
      "package.json:devDependencies:reactive-inference-sdk inference"
@@ -1448,6 +1484,15 @@
     ],
     "peerField": [
      "package.json:peerDependencies:reactive-inference-sdk inference"
+    ],
+    "specDev": [
+     "package.json:devDependencies:@acme/evidence:spec query"
+    ],
+    "specOptional": [
+     "package.json:optionalDependencies:@acme/evidence:spec query"
+    ],
+    "specPeer": [
+     "package.json:peerDependencies:@acme/evidence:spec query"
     ]
    },
    "words": {
@@ -1463,6 +1508,9 @@
     "sdkQuery": [],
     "operatorJoin": [],
     "observeQuery": [],
+    "lowerUnicode": [],
+    "lowerHex": [],
+    "identityCase": [],
     "R-COMPOSED": [],
     "R-LOOKALIKE": [],
     "R-RF-INTERNAL": [],
