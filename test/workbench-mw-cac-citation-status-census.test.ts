@@ -71,9 +71,22 @@
  * both, so any flag added to or dropped from either regex reds A5 and the closing case, and the judged-set case too unless the
  * roster is edited with it. The reference's g is pinned by behaviour as well: footnote-label-second (the record's PF2 witness
  * W-REF verbatim) holds, as unqualified, a status carried only by the label of the second of two adjacent footnote references
- * on the citing line; its falsifier is the gate's G-REF-NOG (FOOTNOTE.reference without g removes a line's first reference
- * only), and the reference with gy reds it and footnote-label. Every other position of a definition line or a reference, and
- * every FOOTNOTE flag edit that changes no control's reading, is stated NOT CLAIMED below.
+ * on the citing line, that label spelled "design-only"; its falsifier is the gate's G-REF-NOG (FOOTNOTE.reference without g
+ * removes a line's first reference only), and the reference with gy reds it and footnote-label. Every other position of a
+ * definition line or a reference, and every FOOTNOTE flag edit that changes no control's reading, is stated NOT CLAIMED below.
+ *
+ * wb-9lz6 cut #3 (its refusal #2: U1, the record's PF1 on the second reference's label spelling, and PF2, cured beside it).
+ * A5 holds a footnote reference's label, read unqualified, in two spellings at each of the two positions it claims: at a
+ * line's only reference "design-only" (footnote-label) and "Status:DESIGN-ONLY." (footnote-label-punct, the record's PF2
+ * position, with its definition after a blank line), and at the second of two adjacent references "design-only"
+ * (footnote-label-second) and "Status:DESIGN-ONLY." (footnote-label-second-punct, the record's gate-only feasibility control
+ * gate-label-second-punct, its text verbatim). The second spelling holds capital letters, a colon and a final period (19
+ * characters), so a one-edit narrowing of FOOTNOTE.reference's label class that leaves it unmatched keeps the label on the
+ * view, where its status qualifies the unit: each of the gate's G2-R-LBL-WORDHY ([\w-]+), G2-R-LBL-MAX12 ({1,12}),
+ * G2-R-LBL-LOWER ([a-z0-9-]+) and G2-R-LBL-ALNUMHY ([A-Za-z0-9-]+), and the class with the colon, the period or the capital
+ * letters excluded or capped at 18 characters, edited with its roster constant, reds both punct controls (A5 and the
+ * closing case). G-REF-NOG reds footnote-label-second-punct beside footnote-label-second, and the reference with gy reds all
+ * four label controls. A label in any other spelling, at either position, is stated NOT CLAIMED below.
  *
  * MEASURED (read-only, by the cutting seat, 2026-10-23, at this census's base caad951). Producer (the local MechanicalWorkflows
  * checkout at 5ce2a07f891f, git show / ls-tree; the roster's producer block holds the lines and blobs, the hermetic census
@@ -180,7 +193,13 @@
  * CLAIMED by this census: for example the first of two or more definition lines, a later definition line in the other six
  * forms or in another pairing of labels or forms, a third or later definition line, a definition line above the citing line
  * or after a line of the unit that is no definition line, and a definition line that itself cites. A footnote reference in any
- * other position on a line (after its second, or a second reference apart from the first) is NOT CLAIMED. A FOOTNOTE flag
+ * other position on a line (after its second, or a second reference apart from the first) is NOT CLAIMED. A footnote
+ * reference's label at either claimed position (a line's only reference, the second of two adjacent references) in any
+ * spelling other than cut #3's two ("design-only" and "Status:DESIGN-ONLY.") is NOT CLAIMED by this census - for example a
+ * label holding a digit, an underscore, whitespace or another punctuation mark, or one longer than 19 characters - and a
+ * one-edit narrowing of FOOTNOTE.reference's label class that both spellings still match reads every control alike and is
+ * NOT CLAIMED either (measured: the class with digits, the underscore, whitespace or "!" excluded, or capped at 19
+ * characters, keeps the census green). A FOOTNOTE flag
  * edited in the regex, A5's flags literal and the roster together that changes no control's reading is NOT CLAIMED (measured):
  * the definition with i, s, u, v or d and the reference with i, m, s, u, v or d beside its g read every control alike, and the
  * definition with m hides more (a line holding a carriage return, U+2028 or U+2029 matches after it), an over-read rather than
@@ -1000,8 +1019,12 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "element", text: `Pi reads the ${cite} program. <span hidden>design-only</span>`, causes: ["unqualified"] },
       { id: "struck", text: `${cite} is ~~design-only~~.`, causes: ["unqualified"] },
       { id: "footnote-label", text: `Pi reads the ${cite} program[^design-only].\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      // wb-9lz6 cut #3 (refusal #2's PF2, the only-reference position): the label in capitals with a colon and a final period shows no carrier either.
+      { id: "footnote-label-punct", text: `Pi reads the ${cite} program[^Status:DESIGN-ONLY.].\n\n[^Status:DESIGN-ONLY.]: A note.`, causes: ["unqualified"] },
       // wb-9lz6 cut #2 (refusal #1's PF2 witness W-REF verbatim): the label of a line's second footnote reference shows no carrier either.
       { id: "footnote-label-second", text: `Pi reads the ${cite} program[^s][^design-only].`, causes: ["unqualified"] },
+      // wb-9lz6 cut #3 (refusal #2's U1; the record's gate-only feasibility control gate-label-second-punct, its text verbatim): the same spelling as the second label.
+      { id: "footnote-label-second-punct", text: `Pi reads the ${cite} program[^s][^Status:DESIGN-ONLY.].`, causes: ["unqualified"] },
       // wb-ubhh F6: a footnote definition line inside the citing unit shows no carrier (FOOTNOTE.definition).
       { id: "footnote-definition", text: `Pi reads the ${cite} program[^s].\n[^s]: design-only`, causes: ["unqualified"] },
       // wb-9lz6 (landing 781's F1): the same definition line behind blockquote markers, indented, or under a longer label.

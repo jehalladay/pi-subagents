@@ -521,7 +521,19 @@
         ]
        },
        {
+        "id": "footnote-label-punct",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
         "id": "footnote-label-second",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label-second-punct",
         "causes": [
          "unqualified"
         ]
