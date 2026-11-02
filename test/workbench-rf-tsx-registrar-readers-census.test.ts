@@ -2,9 +2,10 @@
  * wb-6fr4 registrar readers census (the rule-19 dependency-inversion child of wb-8avz: ruling R-B179 filed it, ruling R-B218
  * folded wb-8avz's refusal #4 member into it). SUBJECT: two readers of test/helpers/rf-tsx-registrar-readers.ts -
  * registrarBindings() and tierReadingOf() (which reports what refusedVitestImports() names) - moved byte for byte from
- * wb-8avz's FINAL cut #4 (tip b8cfd428). The parent's census and roster at that tip are not on trunk and are neither added nor
- * edited here; trunk's test/workbench-rf-tsx-remote-hook-census.test.ts keeps its own readers and is not read by this census.
- * The parent stays parked until this lands, and its later re-cut can import the helper.
+ * wb-8avz's FINAL cut #4 (tip b8cfd428). The parent's census and roster (test/workbench-rf-tsx-remote-hook-census.test.ts and
+ * test/fixtures/rf-tsx-remote-hook-roster.json) are neither added nor edited here and are not read by this census. The parent
+ * waited on this census, which landed first (landing 780). Since its re-cut landed (landing 800, wb-8avz tip 9497cb2d), the
+ * parent's census imports tierReadingOf() from the helper and reads its C2 tier with it; it keeps no copy of these readers.
  *
  * PINNED READER SET (this file, test/workbench-rf-tsx-registrar-readers-census.test.ts; observed at the cut: every case passes
  * on the moved readers, and each named member, applied to a copy of the helper with its refusal gate's own edit, reds the pin
