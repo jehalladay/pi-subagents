@@ -213,8 +213,8 @@
  * a spread of any other type measured the second), which types its this argument by a type parameter inferred from the
  * value, as call's does, so the value flows into a type it is; bind given its this argument alone resolves to its first
  * overload, which types it as the function's this parameter, and refuses it (final cut #4: written with no spread before it;
- * after two spreads of the empty tuple it reads quiet, R-THIS-BINDING's hole, and after one spread of the literal [] or of
- * [] as [] it still refuses). So R-THIS-BINDING pins bind given an argument
+ * after two spreads of the empty tuple it read quiet, R-THIS-BINDING's hole, until wb-97ah's effective-position reading
+ * refused it too, and after one spread of the literal [] or of [] as [] it still refuses). So R-THIS-BINDING pins bind given an argument
  * (a function's and a method's, called, a function's held at an annotated initializer, and a keeping instance) beside the
  * this-only twins (a function's, a method's, with a spread of the literal [] - respin 2: an empty spread of an array type
  * resolves the second overload and reads quiet -, and a class's static side). The measured set also corrects the
@@ -274,33 +274,33 @@
  * spread; Function.prototype.bind, call and apply handed the value by call with type arguments written) beside twins that
  * refuse (one spread of the literal [] before the instance at bind's first overload, a function's and a method's, or of []
  * as [], a function's; and the no-spread twins, to which a keeping instance bound alone, a method's call and an apply given
- * the this parameter's type are added). F3 (the same written-index reading at an ordinary call's argument and at an
+ * the this parameter's type are added); wb-97ah closes that hole, and each of those quiet pages refuses now (WB-97AH below). F3 (the same written-index reading at an ordinary call's argument and at an
  * argument after the this argument with a written rest type argument, against R-STRUCTURAL-STAND-IN's and DISPATCH's landed
  * fail-closed claims) is not cured here: the claims it names are trunk-landed, this cut restates neither
  * R-STRUCTURAL-STAND-IN's label nor DISPATCH's fail-closed clause, and refusal #3 proposes its route (bead wb-021.10, the
  * home of argumentTarget's indexing, or wb-021.7's fail-closed home). F4 (CT6-v, the 6ze.39 class) stays disclosed in NOT
  * CLAIMED. No reading of the helper is edited, so src's live reach map, forms and refused uses read as at cut #8.
  *
- * WB-PY8N (the R694 follow-up of landing 770, gate cmd_b58e78b66cdd: F6 leads, F7 and F8 ride; record precision, in the
- * R-B60 posture: no reading of the helper is edited). Final cut #4's shape stands: 0 rows added or removed, 0 pins removed
- * or changed; one anchor row is added (INTO ANY, below), and the R-THIS-BINDING label's into-any clause, its RESIDUALS
- * sentence, DISPATCH's exception item and the WB-VGRI RESPIN 2 paragraph's F3 clause are restated to what the checker
- * instantiates. F6 (the into-any clause said the untyped Function interface's bind, call and apply type the value any at
- * every page it pins, true of those members' declarations - thisArg: any, argArray: any[] - while the call the checker
- * instantiates types the value any at 3 of the 13 pages): the clause states the declarations, then the two typings page by
- * page - any where that member is itself applied or called (Function.prototype.bind by apply, Function.prototype.call bound
- * by bind and then called, Reflect.apply given Function.prototype.bind), and the value's own type where it is handed the
- * function and the value by call (Function.prototype.bind, call and apply each so handed: that call's rest parameter is
- * inferred from the value, as at a function's own call) - and every page still reads quiet as pinned. INTO ANY holds the
- * into-any pages (R-THIS-BINDING's cases written in that form) to its table, each page's typing to the pinned typescript's
- * checker (an anchor outside this file and its roster) and the two labels to that split, with the three written-type-argument
- * pages, which the checker types by the this parameter's type, as its control. F7 (CT6-v, the coordinated hollow of
- * R-THIS-BINDING from every literal, survives: the 6ze.39 class) stays disclosed in NOT CLAIMED. F8 (the written-index
- * reading at an ordinary call's argument and at an argument after the this argument with a written rest type argument,
- * against R-STRUCTURAL-STAND-IN's and DISPATCH's landed fail-closed claims) is not cured here: the claims it names are
- * trunk-landed, this cut restates neither R-STRUCTURAL-STAND-IN's label nor DISPATCH's fail-closed clause, and bead
- * wb-021.10 is its home. No reading of the helper is edited, so src's live reach map, forms and refused uses read as at
- * cut #8.
+ * WB-97AH (bead wb-97ah, the R-THIS-BINDING reader coverage carried out of wb-vgri by orchestrator ruling R-B207 at its
+ * refusal #3: that refusal's CURE route (b); a reading of the helper is edited, the first since cut #8). argumentTarget reads
+ * the this argument R-THIS-BINDING reads at its effective position - each spread written before it of a value the checker
+ * types as a tuple counts that tuple's elements and each argument written before it that is no spread counts one, as the
+ * checker's own effective arguments count them (at any other argument that reading is NOT CLAIMED below) - and reads the
+ * type a library callee's resolved signature hands it there from the instantiated parameter itself: at a rest parameter,
+ * that rest's leading element (a tuple's own leading element, also before a variable tail; an array's element type), where
+ * final cut #4's reader took the written index, clamped it to the last instantiated parameter and decided a rest by the
+ * declaration's parameter at that index, a declared this parameter included. So final cut #4's hole closes: its fifteen
+ * quiet pages refuse now (their texts unchanged, their pinned readings flipped), and R-THIS-BINDING gains twenty-five pages -
+ * twenty-three that refuse (the further members the final cut #4 seat and the landing-770 gate measured quiet, and the
+ * spread, tuple and rest kinds the reading counts) and two quiet ones (a rest tuple led by the instance's own class, and a
+ * call given no type argument after a spread). Final cut #4's shape stands otherwise: 0 rows added or removed and 0 pins
+ * removed; the DISPATCH and R-THIS-BINDING labels, the R-THIS-BINDING RESIDUALS sentence, the WB-VGRI RESPIN 1 and FINAL
+ * CUT #4 paragraphs' hole clauses and NOT CLAIMED are restated to what is read, and the rule-16 literal reads
+ * REACH/R-THIS-BINDING:125. The declaration's this parameter stays in the parameter list argumentTarget reads a src callee's
+ * parameter from (bead wb-021.10's root): R-THIS-BINDING's pages bind through the library's bind, call and apply and
+ * Reflect.apply, whose instantiated parameters carry no this parameter. Measured on src at trunk f5cb912: src's live reach
+ * map, forms and refused uses read the same under this reader as under final cut #4's (COVERAGE, NON-RENDER, RENDER
+ * TOUCHES and FORMS).
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
@@ -476,10 +476,10 @@
  * a Map's entries, a Set's elements), read quiet, while an object literal's property is a flow the reading reads and a
  * library generic given its type argument explicitly judges the argument against it (REACH);
  * R-THIS-BINDING (wb-vgri, landing 672 F7; respin 1, refusal #1 U1 and F1; respin 2, refusal #2 U1 and F3, ruling R-B165;
- * final cut #4, refusal #3 U1, ruling R-B207: each claim holds for the pages it pins, and bead wb-97ah is the home of the
- * reading of every other value) a value bound as a function's this - a class instance or a class's static side, an object
- * literal, a callback - is judged, as the this argument of a function's own call, apply or bind or of Reflect.apply with no
- * spread written before it among the call's arguments, against the type the checker resolves for that library parameter: a
+ * final cut #4, refusal #3 U1, ruling R-B207: each claim holds for the pages it pins; wb-97ah, refusal #3's CURE route (b))
+ * a value bound as a function's this - a class instance or a class's static side, an object literal, a callback - is judged,
+ * as the this argument of a function's own call, apply or bind or of Reflect.apply, at its effective position among the
+ * call's arguments (wb-97ah), against the type the checker resolves for that library parameter: a
  * function's own call and apply, bind resolved to its second overload and Reflect.apply resolved to its first type it by a
  * type parameter inferred from the value, so with no type argument written the value flows into a type it is and reads
  * quiet whatever its member does (a type argument written as the instance's own class reads the same), Reflect.apply's
@@ -491,7 +491,7 @@
  * and each pinned value so handed reads quiet, and a member call's receiver is bound by no flow the reading reads and reads
  * quiet, while bind resolved to
  * its first overload, whose this argument the checker types as the function's this parameter, and a type argument written
- * as the this parameter's type read the value written with no spread before it there as at any flow into that type (an
+ * as the this parameter's type read the value there as at any flow into that type (an
  * instance, a keeping instance or a static side refused, structural-stand-in; an object literal not written where it flows,
  * context-less-literal; a hiding callback, argument). Which overload bind resolves is the checker's, measured page by page
  * as the label lists the pages, its this argument written first: the first where it stands alone or is followed only by
@@ -500,19 +500,23 @@
  * other type measured follows it (a [number] value, a never[], readonly never[], number[] or unknown[] value, [] as
  * never[], Array<never>(), a value typed any or never, the arguments object, a never[] rest parameter, a rest parameter
  * typed by a type parameter constrained to []) - a hole: with no type argument written, the this parameter is never read
- * there, so each pinned value the first overload refuses at its twins reads quiet; and a second hole (final cut #4): with
- * spreads written before the value - two of the literal [] at bind's first overload (a hiding instance bound to a function
- * and to a method, a keeping instance, a static side, an object literal and a callback) or two of a value typed [] (a
- * hiding instance), and one at a function's own call and a method's call, an apply, a bind given an argument and a
- * Reflect.apply given the this parameter's type as their type argument - and with type arguments written where
- * Function.prototype.bind, call and apply are handed the value by call, the checker types each pinned value by the
- * function's this parameter's type, yet each reads quiet, beside twins that refuse: the no-spread twins, and one spread of
- * the literal [] or of [] as [] before the instance at bind's first overload (REACH).
+ * there, so each pinned value the first overload refuses at its twins reads quiet; final cut #4's second hole - spreads
+ * written before the value, and type arguments written where Function.prototype.bind, call and apply are handed the value
+ * by call - is closed by wb-97ah: the value is read at its effective position and, where those members are handed it by
+ * call, against the leading element of the rest parameter that call is instantiated with, so each pinned value the checker
+ * types there by the function's this parameter's type refuses as at any flow into that type, beside two quiet pages (a
+ * rest tuple led by the instance's own class, and a call given no type argument after a spread) and the twins that
+ * refused before (REACH).
  * NOT CLAIMED. In src: an instance member's own code - its body, initializer, parameters and types - is not read statically
  * (REPROJECTION's runtime reading and MEMBERS judge it), nor is a parameter decorator (the compiler refuses one under the
  * repo's standard decorators, TS1206). In the residual rows: R-THIS-BINDING's reading of a value bound as this other than
- * the pages it pins - a value written after spreads, or handed through written type arguments, outside the hole's pinned
- * forms included - is NOT CLAIMED by this census (final cut #4; bead wb-97ah is the home of that reading). As edits of this
+ * the pages it pins - a value written after spreads, or handed through written type arguments, outside the pinned forms
+ * included - is NOT CLAIMED by this census (final cut #4); and, of wb-97ah's effective-position reading, a value written
+ * after a spread of a value the checker does not type as a tuple, a value read at a later offset of an instantiated rest
+ * parameter (an argument written after the this argument: refusal #3 F3's second member) or past a rest tuple's leading
+ * fixed elements, an argument of an ordinary call written after spreads (refusal #3 F3's first member; F3's members are
+ * bead wb-021.10's routing) and the parameter a src callee that declares an explicit this parameter is read at (bead
+ * wb-021.10's root) are NOT CLAIMED by this census. As edits of this
  * file, its helper and the roster together: a plant row of IDENTITY, QUIET,
  * WRITE-ANY-ROUTE, OTHER-ROUTES, EVIDENCE-ABORTS, a READERS, REACH or NAMES row or a residual row removed with its
  * frozen-literal element and roster entry (no outside anchor names those plants, R-HELD-VALUE's and R-THIS-BINDING's
@@ -1198,7 +1202,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/R-PARAMETER-PROPERTIES:8",
       "REACH/R-STRUCTURAL-STAND-IN:22",
       "REACH/R-HELD-VALUE:21",
-      "REACH/R-THIS-BINDING:100",
+      "REACH/R-THIS-BINDING:125",
       "REACH/ASYNC-RETURNS:14",
       "REACH/GENERATOR-YIELDS:6",
       "REACH/INHERITED-IMPLEMENTATIONS:14",
