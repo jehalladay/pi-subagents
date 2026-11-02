@@ -28,7 +28,10 @@
  * modules, each read once through THE PLANTED READING, whose module plant now also carries the import, export-from and
  * dynamic-import specifier, string property key, string literal type, single-quoted string, property-access name and import
  * and export specifier name escape controls and whose page plant now also carries the hex character reference control, with no
- * mention.
+ * mention; and at the wb-6jao cut (seat ws-01, run g10-work-s182, 2026-11-02, on trunk f5cb912): the same 81 pages and 117
+ * modules (git ls-files: 79 markdown pages below docs/ plus README.md and CHANGELOG.md; 117 .ts modules below src), each read
+ * once through THE PLANTED READING, whose page plant now also carries the named character reference and the backslash escape
+ * controls, with no mention.
  *
  * THE VOCABULARY: both stems are derived from the title's charter path (docs/programs/<slug>-<date>.md, slug
  * evidence-directed-computation): its INITIALS, the acronym the title spells (edc, read as a whole word or its plural "edcs"), and
@@ -59,7 +62,14 @@
  *    every raw HTML block (its complete comments and tags removed). Inline text composes emphasis, strikethrough, code
  *    spans, escapes, numeric and common named character references and link TEXT, an inline tag or comment reading as a word
  *    break; link destinations and titles, images, link reference definitions, HTML attributes and complete comments are not
- *    claim text (the wb-64x reading).
+ *    claim text (the wb-64x reading). The escapes and the references are claimed exactly as far as a PAGE_CONTROLS page pins
+ *    each (B5 reads the pages alone, and the page plant carries them into B2 and B3; wb-6jao, the R694 follow-up of landing
+ *    776, added the last two pages for its F6 N2 and N1): the decimal reference &#68; and the hex reference &#x44; compose as
+ *    the letter they decode to (numeric-reference E&#68;C and hex-reference E&#x44;C each read the acronym); the backslash
+ *    escape \_ is never dropped (markdown-escape EDC\_integration reads the acronym, which EDCintegration would split); and the
+ *    named reference &nbsp; of REFERENCES is never read as written (named-reference Evidence&nbsp;directed reads the modifier,
+ *    which the name nbsp would split). How another escaped character, another numeric reference or another name of REFERENCES
+ *    composes, and which characters \_ and &nbsp; compose as beyond keeping those stems, is NOT CLAIMED by this census.
  *  - DESCRIPTORS: every capability descriptor the native registration and the four injected-client registrations register,
  *    read whole - every key and every string at any depth (id, version, description, effectClass, permissions,
  *    supportedModes, contractSource, both schemas).
@@ -82,10 +92,21 @@
  *    of a named export-from (import-escape, export-from-escape), in a dynamic import's double-quoted specifier
  *    (dynamic-import-escape), in a double-quoted string key of an object literal (property-key-escape) and in a double-quoted
  *    string literal type (literal-type-escape). R-ESCAPED's seven src members (below: three escapes in a regular-expression
- *    literal, two character references in JSX text and two in a JSX attribute's string) are read as written, never decoded, each
- *    pinned by its Q7 probe. How a text is read at any other site, in any other quoting, through any other escape or reference
- *    spelling, beside a second escape in the same text, in a module holding more than the row's one line, or under another
- *    module name or script kind, is NOT CLAIMED by this census.
+ *    literal, two character references in JSX text and two in a JSX attribute's string) are read as written, never decoded,
+ *    exactly as far as Q7's ten src probes write them (ESCAPED_SOURCES; wb-6jao, the R694 follow-up of landing 776, narrowed
+ *    this sentence to the probes and added the three second spellings its F5 named, SF1-SF3): the hex escape in an unflagged
+ *    and in an i-flagged regular expression (regex-hex, regex-hex-flagged), the unicode escape in an unflagged one
+ *    (regex-unicode) and the code-point escape under the u flag (regex-code-point); the decimal reference as a span element's
+ *    text and as a fragment's text (jsx-decimal, jsx-fragment) and the hex reference as a span's text (jsx-hex); the decimal
+ *    reference in a span's title and aria-label attributes (jsx-attribute, jsx-attribute-aria) and the hex reference in its
+ *    title attribute (jsx-attribute-hex); each probe read on its own as a module of one line under its probe's name, and each
+ *    of the six plain twins (ESCAPED_SOURCE_TWINS: an unflagged and an i-flagged regular expression, a span's and a fragment's
+ *    text, and a span's title and aria-label attributes) reading the stem. Whether an escape or a reference is read as written
+ *    anywhere but in one of those ten probe texts - under another flag set, in another JSX parent or attribute name, in another
+ *    surrounding text, in a module of more than one line or under another module name or script kind - is NOT CLAIMED by this
+ *    census. How a text is read at any other site, in any other quoting, through any other escape or reference spelling,
+ *    beside a second escape in the same text, in a module holding more than the row's one line, or under another module name
+ *    or script kind, is NOT CLAIMED by this census.
  *  - THE TRACKED LISTING (wb-0st4, restated by wb-kv0y): git's index (git ls-files -z) is the walks' independent anchor. The
  *    claim-page walk equals git's tracked claim pages, both ways (B1). The pages B2 judges and the src modules A2 judges each equal
  *    git's tracked paths of the same scope, both ways, and a reading records a file only through its judgment's own output
@@ -153,10 +174,11 @@
  *     #3; since cut #4, refusal #3's U1 and U2, the hex escape of a single-quoted string, of an import's and an export-from's
  *     module specifier, of a dynamic import's specifier, of a string property key and of a string literal type, and the unicode
  *     escape of a property-access name and of an import's and an export's specifier name), and the page plant through a decimal
- *     character reference (numeric-reference) and, since cut #4 (refusal #3's F7), a hex one (hex-reference). A skip of the texts
+ *     character reference (numeric-reference) and, since cut #4 (refusal #3's F7), a hex one (hex-reference), and since wb-6jao
+ *     (the landing-776 gate's F6) a named one (named-reference) and a backslash escape (markdown-escape). A skip of the texts
  *     or blocks holding one of these in some files of the scope reds A2 or B2 through unjudged (the same skip in every file reds
- *     them through the plant's own count and the control's own reading, own); for each spelling a wb-a6m9 cut added, the census
- *     before that cut stayed green under the same skip;
+ *     them through the plant's own count and the control's own reading, own); for each spelling a wb-a6m9 cut or wb-6jao added,
+ *     the census before that cut stayed green under the same skip;
  *  K4 it skips the judgment of the whole handed text of a file selected by that text's size, content or list place (refusal #1's G1,
  *     G2 and G3 family), or judges a handed text, or one form in it that a control carries a stem in, only up to before its end or
  *     only from after its start (refusal #1's U2 members G10 and G11 truncate one form's tail).
@@ -185,9 +207,9 @@
  * extent-keyed skip the control run shares reds through own); a judgment that skips some or all of a file's own texts or blocks,
  * selected by their content or by their place strictly between the plant's two ends (the plant stands in for each control form at a
  * file's two ends, not for every text the file holds); a judged form no control carries a stem in (a mark, a format control or a
- * compatibility spelling other than the code points K3 names, an escape other than the sixteen K3 names, a character reference
- * other than the page plant's decimal and hex ones, and a named character reference), skipped for part or all of the scope, and
- * JSX text, which no tracked src module holds at the cut;
+ * compatibility spelling other than the code points K3 names, an escape other than the sixteen K3 names and the page plant's
+ * backslash escape, and a character reference other than the page plant's decimal, hex and named ones), skipped for part or all
+ * of the scope, and JSX text, which no tracked src module holds at the cut;
  * a case that drops part of the file's own findings after splitByPlant returns them,
  * or a verdict helper (unjudgedOf, unwrappedOf) that returns an empty list without reading (the partial forms of a case that echoes
  * its witness; a dropped record reds through git's listing); the text reader DISK_TEXT handing the planted reading and the
@@ -210,7 +232,11 @@
  * through an escape the readers read as written - a hex, a unicode or a code-point escape in a src regular-expression literal
  * (/\x45DC/, /\u0045DC/, /\u{45}DC/u), a decimal or hex character reference in JSX text or in a JSX attribute's string
  * (&#69;DC, &#x45;DC), and a named character reference outside REFERENCES in a claim page (&Eacute;DC, whose decoded letter the
- * fold would read as E) - names no stem, while the plain twin at each site does (Q7).
+ * fold would read as E) - its src members each with their own ESCAPED_SOURCES probe (the attribute's hex probe since cut #3), and
+ * since wb-6jao three second spellings, one per sub-form the landing-776 gate named (/\x45DC/i, a fragment's &#69;DC and an
+ * aria-label attribute's &#69;DC) - names no stem, while the plain twin at each site does (Q7: ten src probes and six src twins -
+ * an unflagged and an i-flagged regular expression, a span's and a fragment's text, a span's title and aria-label attributes -
+ * and the page probe and its twin); the src claim is exactly those ten probe texts, as THE DECODED TEXTS states.
  * SCOPE: a mention is judged, not the sentence's truth; the charter's own status is read by the cutting seat, never by this file
  * (it lives in another repository).
  *
@@ -299,7 +325,9 @@ const ENCLOSING_CIRCLE = String.fromCodePoint(0x20dd);
 const CAPITAL_E_ACUTE = String.fromCodePoint(0x00c9);
 
 /** Synthetic pages the page reader must read exactly as pinned: every claim block kind, each carrying a stem once (the
- * hex-reference page since wb-a6m9 cut #4, refusal #3's F7). */
+ * hex-reference page since wb-a6m9 cut #4, refusal #3's F7; the named-reference and markdown-escape pages since wb-6jao, the
+ * landing-776 gate's F6 N1 and N2: a decoded named reference joins the modifier, and an escaped underscore keeps the acronym a
+ * word of its own, so a reader that leaves the reference as written or drops the escape reads no stem in them). */
 const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   heading: "# EDC adoption\n",
   paragraph: "Evidence-directed context assembly ships today.\n",
@@ -330,6 +358,8 @@ const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   "cross-word": "The named capability is used carefully.\n",
   "inside-word": "Reedcraft and credcheck ship.\n",
   "inline-tag": "| Feature | Status |\n| --- | --- |\n| EDC<br>shipped | yes |\n",
+  "named-reference": "Evidence&nbsp;directed integration ships.\n",
+  "markdown-escape": "EDC\\_integration ships.\n",
 };
 /** The page walk's own control: a synthetic tree, one entry per name of a directory (a trailing "/" a directory, a trailing "@"
  * a symlink): a root holding one top-level claim page as a file, the other as a directory, a markdown file that is no claim page and
@@ -468,8 +498,11 @@ const UNNAMED_ADOPTION = `import { renderBlock } from "@example/context-blocks";
 export const block = renderBlock({ queryView: { failures: 0, seal: null }, coverageProofRef: "ref" });`;
 /** R-ESCAPED's probes (wb-a6m9): a stem spelled through an escape the readers read as written - a hex, a unicode and a
  * code-point escape in a src module's regular-expression literal, a decimal and a hex character reference in JSX text and in a
- * JSX attribute's string (the attribute's hex probe since cut #3, refusal #2's U3), one probe per src member, and a named
- * character reference outside REFERENCES in a claim page; and the plain twin at each site. */
+ * JSX attribute's string (the attribute's hex probe since cut #3, refusal #2's U3), one probe per src member, and since wb-6jao
+ * (the R694 follow-up of landing 776, F5) one second spelling per sub-form its gate named: the hex escape under a flag (SF1), the
+ * decimal reference as a fragment's text (SF2) and in an attribute other than title (SF3); and a named character reference
+ * outside REFERENCES in a claim page; and a plain twin at each site: an unflagged and an i-flagged regular expression, a span's
+ * and a fragment's text, a span's title and aria-label attributes, and the page. */
 const ESCAPED_SOURCES: Readonly<Record<string, string>> = {
   "regex-hex": "export const pattern = /\\x45DC/;",
   "regex-unicode": "export const pattern = /\\u0045DC/;",
@@ -478,11 +511,17 @@ const ESCAPED_SOURCES: Readonly<Record<string, string>> = {
   "jsx-hex.tsx": "export const view = <span>&#x45;DC integration</span>;",
   "jsx-attribute.tsx": 'export const view = <span title="&#69;DC integration">view</span>;',
   "jsx-attribute-hex.tsx": 'export const view = <span title="&#x45;DC integration">view</span>;',
+  "regex-hex-flagged": "export const pattern = /\\x45DC/i;",
+  "jsx-fragment.tsx": "export const view = <>&#69;DC integration</>;",
+  "jsx-attribute-aria.tsx": 'export const view = <span aria-label="&#69;DC integration">view</span>;',
 };
 const ESCAPED_SOURCE_TWINS: Readonly<Record<string, string>> = {
   regex: "export const pattern = /EDC/;",
   "jsx.tsx": "export const view = <span>EDC integration</span>;",
   "jsx-attribute.tsx": 'export const view = <span title="EDC integration">view</span>;',
+  "regex-flagged": "export const pattern = /EDC/i;",
+  "jsx-fragment.tsx": "export const view = <>EDC integration</>;",
+  "jsx-attribute-aria.tsx": 'export const view = <span aria-label="EDC integration">view</span>;',
 };
 const ESCAPED_PAGE = "&Eacute;DC integration ships.\n";
 const ESCAPED_PAGE_TWIN = `${CAPITAL_E_ACUTE}DC integration ships.\n`;
