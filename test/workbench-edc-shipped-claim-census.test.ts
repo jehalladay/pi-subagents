@@ -18,17 +18,36 @@
  * claim pages, 0 of the 116 src modules, 0 of the 8 registered descriptors, 0 of package.json and the 372 package-lock.json
  * packages. RE-MEASURED at the wb-kv0y cut (seat ws-04, run g10-work-s141, 2026-10-29, on trunk 57cb1c0): 81 tracked claim pages and
  * 117 tracked src modules (all .ts, so none of a JSX script kind), with no mention; and at its cut #2 (seat ws-01, run g10-work-s145,
- * 2026-10-30, on trunk c2695d7): the same 81 pages and 117 modules, each read once through THE PLANTED READING, with no mention.
+ * 2026-10-30, on trunk c2695d7): the same 81 pages and 117 modules, each read once through THE PLANTED READING, with no mention; and
+ * at the wb-a6m9 respin (seat ws-04, run g10-work-s153, 2026-10-30, on trunk bffdf2d): the same 81 pages and 117 modules, each read
+ * once through THE PLANTED READING, whose plants now carry wb-a6m9's combining-mark and escape controls, with no mention; and at its
+ * cut #3 (seat ws-03, run g10-work-s160, 2026-10-31, on trunk 379a945): the same 81 pages and 117 modules, each read once through
+ * THE PLANTED READING, whose module plant now also carries the zero-width, full-width, precomposed, noncomposing, spacing,
+ * enclosing and joined-mark controls and the private-name, no-substitution, template-middle and template-tail escape controls,
+ * with no mention; and at its cut #4 (seat ws-06, run g10-work-s171, 2026-10-31, on trunk f63d389): the same 81 pages and 117
+ * modules, each read once through THE PLANTED READING, whose module plant now also carries the import, export-from and
+ * dynamic-import specifier, string property key, string literal type, single-quoted string, property-access name and import
+ * and export specifier name escape controls and whose page plant now also carries the hex character reference control, with no
+ * mention.
  *
  * THE VOCABULARY: both stems are derived from the title's charter path (docs/programs/<slug>-<date>.md, slug
- * evidence-directed-computation): its INITIALS, the acronym the title spells (edc, read as a whole word or its plural "edcs"),
- * and its MODIFIER, the slug's words before the head noun joined (evidencedirected, read anywhere in the joined fold). Both folds
- * start from NFKC with format controls and combining marks removed (a zero-width space never splits a stem; full-width letters
- * fold). The WORD fold splits camel boundaries (EdcAssembler, parseEDC, EDCs) and every run outside a-z and 0-9; the JOINED fold
- * removes every character outside a-z and 0-9 (evidence-directed, evidence_directed, "evidence directed", EvidenceDirected,
- * a soft break between the words). OVER-READ (disclosed, the strict direction): every mention is read as a claim - a page that
- * says EDC is NOT shipped reds this census too, by design (the freeze-and-flip tripwire: re-measure, then judge the sentence);
- * the joined fold can join the modifier across punctuation; a camel-split identifier can produce the acronym by accident.
+ * evidence-directed-computation): its INITIALS, the acronym the title spells (edc, read as a whole word or its plural "edcs"), and
+ * its MODIFIER, the slug's words before the head noun joined (evidencedirected, read anywhere in the joined fold). Both folds
+ * start from NFKD (the compatibility mapping of NFKC, left decomposed; the normal form cured in both EDC censuses by wb-a6m9) with
+ * format controls (Cf) and every combining mark (\p{M}: nonspacing, spacing and enclosing) removed (a zero-width space never
+ * splits a stem; a combining mark never splits a stem whether it is written after its letter or precomposed with it, so E + U+0301
+ * + DC and U+00C9 + DC both read EDC; full-width letters fold). THE FOLD SWEEP (wb-a6m9 cut #3, A3) pins each removed class whole:
+ * every code point of \p{Mn}, \p{Mc}, \p{Me} and \p{Cf} (FOLD_CLASSES, enumerated from U+0000 to U+10FFFF, held to an independent
+ * count of the same range - FOLD_UNION for the marks and controls, the decomposition's parts for the precomposed letters: unswept
+ * reads 0 - and each class at or above its floor) written twice into every carrier (FOLD_CARRIERS: each stem, in both cases, the
+ * carriers of each case reading every stem; after the carrier's first letter and before its last, the first spelling of each kind
+ * pinned by code point: written), and every precomposed letter (a code point whose NFKD is one ASCII letter and one or more marks)
+ * written for the first occurrence of its letter in every carrier that holds it, must read what its carrier reads through stemsIn.
+ * The WORD fold splits camel boundaries (EdcAssembler, parseEDC, EDCs) and every run outside a-z and 0-9; the JOINED fold removes
+ * every character outside a-z and 0-9 (evidence-directed, evidence_directed, "evidence directed", EvidenceDirected, a soft break
+ * between the words). OVER-READ (disclosed, the strict direction): every mention is read as a claim - a page that says EDC is NOT
+ * shipped reds this census too, by design (the freeze-and-flip tripwire: re-measure, then judge the sentence); the joined fold can
+ * join the modifier across punctuation; a camel-split identifier can produce the acronym by accident.
  *
  * THE READINGS (the wb-64x shape: the rendered model, never a raw-line scan):
  *  - CLAIM PAGES: every markdown page below docs/ (MARKDOWN_PAGE: a file name ending .md or .markdown, in any case - the landed
@@ -45,10 +64,28 @@
  *    read whole - every key and every string at any depth (id, version, description, effectClass, permissions,
  *    supportedModes, contractSource, both schemas).
  *  - ADOPTION: package.json read whole (every key and string, parsed, and its raw text, so a shadowed duplicate key is read too)
- *    and package-lock.json's installed package paths and names (never its integrity hashes); every script module below src
- *    (.ts .mts .cts .tsx .js .mjs .cjs .jsx; 116 .ts modules at the cut) through its TypeScript AST: identifiers, private
- *    names, string, template and regular-expression literal texts (so every import, export and dynamic-import specifier) and
- *    JSX text, never a comment.
+ *    and package-lock.json's installed package paths and names (never its integrity hashes); every script module below src (.ts
+ *    .mts .cts .tsx .js .mjs .cjs .jsx; 116 .ts modules at the cut) through its TypeScript AST: identifiers, private names,
+ *    string, template and regular-expression literal texts (among them the module specifiers the import-specifier, import-escape
+ *    and export-from-escape rows write and the specifiers the dynamic-import and dynamic-import-escape rows write, each pinned by
+ *    its A3 row; cut #4 narrows ADOPTION's specifier phrase to these rows, refusal #3's U1) and JSX text, never a comment. THE
+ *    DECODED TEXTS (wb-a6m9 cut #4, the enumerate-the-resolvable cut R-B212 binds; refusal #3's U1 and U2): the census claims
+ *    that a text is read decoded, as the compiler reads it (\x45DC reads EDC), only for the escaped text of each of the sixteen
+ *    escape rows of SOURCE_CONTROLS, as the row writes it - at its one site, in its one quoting and through its one escape, the
+ *    row read on its own as a module of one line (A3's sources; a row name carries no extension, so the TS script kind). The
+ *    rows, by site: a unicode escape (\u0045, and \u0065 in the private name) in a const declaration's name (identifier-escape),
+ *    in a class field's private name (private-name-escape), in a property-access name (property-access-escape) and in a named
+ *    import's and a named export-from's specifier name (import-name-escape, export-name-escape); a hex escape (\x45) in a
+ *    double-quoted and a single-quoted string (string-escape, single-quoted-escape), in an untagged template with no
+ *    substitution (no-substitution-escape) and in a template's head, middle and tail (template-escape, template-middle-escape,
+ *    template-tail-escape), each initializing a const declaration, in the double-quoted module specifier of a named import and
+ *    of a named export-from (import-escape, export-from-escape), in a dynamic import's double-quoted specifier
+ *    (dynamic-import-escape), in a double-quoted string key of an object literal (property-key-escape) and in a double-quoted
+ *    string literal type (literal-type-escape). R-ESCAPED's seven src members (below: three escapes in a regular-expression
+ *    literal, two character references in JSX text and two in a JSX attribute's string) are read as written, never decoded, each
+ *    pinned by its Q7 probe. How a text is read at any other site, in any other quoting, through any other escape or reference
+ *    spelling, beside a second escape in the same text, in a module holding more than the row's one line, or under another
+ *    module name or script kind, is NOT CLAIMED by this census.
  *  - THE TRACKED LISTING (wb-0st4, restated by wb-kv0y): git's index (git ls-files -z) is the walks' independent anchor. The
  *    claim-page walk equals git's tracked claim pages, both ways (B1). The pages B2 judges and the src modules A2 judges each equal
  *    git's tracked paths of the same scope, both ways, and a reading records a file only through its judgment's own output
@@ -102,8 +139,24 @@
  *     still recording and counting every file (the named L2-SCAN-A2 and L2-SCAN-B2): no file is recorded apart from its judgment
  *     (THE TRACKED LISTING), and each file it skips loses the plant's findings at both of its ends (unjudged);
  *  K2 it judges every file but drops all the findings of some files of its scope;
- *  K3 it skips, in the whole handed text of some files of its scope, a form one of its controls carries a stem in (a SOURCE_CONTROLS
- *     module but the JSX one, a PAGE_CONTROLS page; refusal #1's G3k selects its files by content);
+ *  K3 it skips, in the whole handed text of some files of its scope, a form one of its controls carries a stem in (a
+ *     SOURCE_CONTROLS module but the JSX one for a src module, a PAGE_CONTROLS page for a claim page; refusal #1's G3k selects its
+ *     files by content). Both plants carry a stem through the same vocabulary spellings, each by its code point: the zero-width
+ *     space U+200B, full-width letters (U+FF25 U+FF24 U+FF23), the nonspacing marks U+0301 (combining-mark, joined-mark) and
+ *     U+0332 (noncomposing-mark), the spacing mark U+0903 (spacing-mark) and the enclosing mark U+20DD (enclosing-mark), each
+ *     written after its letter, and the precomposed U+00C9 (precomposed). The marks and the precomposed letter came with wb-a6m9:
+ *     every one of them to the page plant at cut #2; to the module plant U+0301 at cut #2 and the rest, with the zero-width space
+ *     and the full-width letters, at cut #3 (refusal #2's F4: at cut #2 the module plant's one mark was U+0301, so a skip of the
+ *     src texts holding a spacing or an enclosing mark stayed green). The module plant also carries a stem through the sixteen
+ *     escapes ADOPTION names as decoded (a string's and a template head's hex escape and an identifier's unicode escape since cut
+ *     #2; a no-substitution template's and a template middle's and tail's hex escape and a private name's unicode escape since cut
+ *     #3; since cut #4, refusal #3's U1 and U2, the hex escape of a single-quoted string, of an import's and an export-from's
+ *     module specifier, of a dynamic import's specifier, of a string property key and of a string literal type, and the unicode
+ *     escape of a property-access name and of an import's and an export's specifier name), and the page plant through a decimal
+ *     character reference (numeric-reference) and, since cut #4 (refusal #3's F7), a hex one (hex-reference). A skip of the texts
+ *     or blocks holding one of these in some files of the scope reds A2 or B2 through unjudged (the same skip in every file reds
+ *     them through the plant's own count and the control's own reading, own); for each spelling a wb-a6m9 cut added, the census
+ *     before that cut stayed green under the same skip;
  *  K4 it skips the judgment of the whole handed text of a file selected by that text's size, content or list place (refusal #1's G1,
  *     G2 and G3 family), or judges a handed text, or one form in it that a control carries a stem in, only up to before its end or
  *     only from after its start (refusal #1's U2 members G10 and G11 truncate one form's tail).
@@ -123,7 +176,7 @@
  * bead do not move it). The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran
  * before it) and the pins that reached their witness.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
- * roster where no surface of the acceptance anchors it (A1-A3, B1, B5, Q1-Q6, the last with its RESIDUALS entry); a control
+ * roster where no surface of the acceptance anchors it (A1-A3, B1, B5, Q1-Q7, the last with its RESIDUALS entry); a control
  * removed from its list and the roster; a pin's case replaced by one that echoes its roster witness; git's listing replaced by the
  * walk it anchors, in this file, together with a narrowing of that walk (trackedPaths is the only reader of git's index). And, each
  * measured at the wb-kv0y cuts: a reading function, docsWalk or claimPages that branches on its injected reader, or a reading or a
@@ -131,9 +184,11 @@
  * part, a length less the plant's), so the planted, the control or the synthetic-tree run takes another path than the real one (an
  * extent-keyed skip the control run shares reds through own); a judgment that skips some or all of a file's own texts or blocks,
  * selected by their content or by their place strictly between the plant's two ends (the plant stands in for each control form at a
- * file's two ends, not for every text the file holds); a judged form no control carries a stem in (a template middle or tail, a
- * no-substitution template literal, an escape, a named character reference), skipped for part or all of the scope, and JSX text,
- * which no tracked src module holds at the cut; a case that drops part of the file's own findings after splitByPlant returns them,
+ * file's two ends, not for every text the file holds); a judged form no control carries a stem in (a mark, a format control or a
+ * compatibility spelling other than the code points K3 names, an escape other than the sixteen K3 names, a character reference
+ * other than the page plant's decimal and hex ones, and a named character reference), skipped for part or all of the scope, and
+ * JSX text, which no tracked src module holds at the cut;
+ * a case that drops part of the file's own findings after splitByPlant returns them,
  * or a verdict helper (unjudgedOf, unwrappedOf) that returns an empty list without reading (the partial forms of a case that echoes
  * its witness; a dropped record reds through git's listing); the text reader DISK_TEXT handing the planted reading and the
  * unwrapped count the same part of a file's text (each judges what it is handed: a part that ends inside an unclosed construct reds
@@ -151,7 +206,11 @@
  * .agents/, vendor/), files under docs/ whose name is no MARKDOWN_PAGE (OUT_OF_SCOPE_DOCS), and modules outside src (an
  * operator's local provider module, the vendored SDK dists) are not read (Q5); R-UNNAMED-ADOPTION an adoption spelled without
  * either stem (a context-block import, a QueryView input) is not read here (Q6) - whether Pi loads the ReactiveComponents
- * distribution at all is pinned by test/workbench-rc-remote-component-stream-census.test.ts.
+ * distribution at all is pinned by test/workbench-rc-remote-component-stream-census.test.ts; R-ESCAPED (wb-a6m9) a stem spelled
+ * through an escape the readers read as written - a hex, a unicode or a code-point escape in a src regular-expression literal
+ * (/\x45DC/, /\u0045DC/, /\u{45}DC/u), a decimal or hex character reference in JSX text or in a JSX attribute's string
+ * (&#69;DC, &#x45;DC), and a named character reference outside REFERENCES in a claim page (&Eacute;DC, whose decoded letter the
+ * fold would read as E) - names no stem, while the plain twin at each site does (Q7).
  * SCOPE: a mention is judged, not the sentence's truth; the charter's own status is read by the cutting seat, never by this file
  * (it lives in another repository).
  *
@@ -228,8 +287,19 @@ const ZWSP = String.fromCodePoint(0x200b);
 const FULL_WIDTH_EDC = String.fromCodePoint(0xff25, 0xff24, 0xff23);
 const CYRILLIC_IE = String.fromCodePoint(0x0435);
 const CYRILLIC_ES = String.fromCodePoint(0x0421);
+/** The combining-mark controls' marks and letter (wb-a6m9; PAGE_CONTROLS and, since cut #3, SOURCE_CONTROLS): a nonspacing
+ * mark NFKC composes with the letter before it (the acute
+ * U+0301), a nonspacing mark it composes with none (the combining low line U+0332), a spacing mark (the Devanagari sign visarga
+ * U+0903), an enclosing mark (the combining enclosing circle U+20DD), and a precomposed letter NFKD decomposes into a Latin
+ * letter and a mark (U+00C9). */
+const ACUTE = String.fromCodePoint(0x0301);
+const LOW_LINE = String.fromCodePoint(0x0332);
+const VISARGA = String.fromCodePoint(0x0903);
+const ENCLOSING_CIRCLE = String.fromCodePoint(0x20dd);
+const CAPITAL_E_ACUTE = String.fromCodePoint(0x00c9);
 
-/** Synthetic pages the page reader must read exactly as pinned: every claim block kind, each carrying a stem once. */
+/** Synthetic pages the page reader must read exactly as pinned: every claim block kind, each carrying a stem once (the
+ * hex-reference page since wb-a6m9 cut #4, refusal #3's F7). */
 const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   heading: "# EDC adoption\n",
   paragraph: "Evidence-directed context assembly ships today.\n",
@@ -245,9 +315,16 @@ const PAGE_CONTROLS: Readonly<Record<string, string>> = {
   "emphasis-split": "**Evidence**-*directed* assembly ships.\n",
   strikethrough: "~~EDC~~ shipped.\n",
   "numeric-reference": "E&#68;C integration ships.\n",
+  "hex-reference": "E&#x44;C integration ships.\n",
   "soft-break": "The evidence-\ndirected assembly ships.\n",
   "zero-width": `E${ZWSP}DC integration ships.\n`,
   "full-width": `${FULL_WIDTH_EDC} integration ships.\n`,
+  "combining-mark": `E${ACUTE}DC integration ships.\n`,
+  precomposed: `${CAPITAL_E_ACUTE}DC integration ships.\n`,
+  "noncomposing-mark": `E${LOW_LINE}DC integration ships.\n`,
+  "spacing-mark": `E${VISARGA}DC integration ships.\n`,
+  "enclosing-mark": `E${ENCLOSING_CIRCLE}DC integration ships.\n`,
+  "joined-mark": `Evide${ACUTE}nce-directed assembly ships.\n`,
   camel: "The EdcAssembler ships.\n",
   "html-block": "<details>\n<summary>EDC integration</summary>\n</details>\n",
   "cross-word": "The named capability is used carefully.\n",
@@ -290,7 +367,12 @@ const LOCK_CONTROLS: Readonly<Record<string, JsonObject>> = {
   "package-name": { packages: { "": { name: "x" }, "node_modules/alias": { name: "evidence_directed" } } },
   clean: { packages: { "": { name: "x" }, "node_modules/blocks": { version: "1.0.0" } } },
 };
-/** Synthetic modules the source reader must read exactly as pinned (each a module body; none is compiled or run). */
+/** Synthetic modules the source reader must read exactly as pinned (each a module body; none is compiled or run). Since cut #3
+ * they carry the page plant's vocabulary spellings (zero-width through joined-mark; refusal #2's F4) and one row per escape form
+ * ADOPTION names as decoded (the private-name, no-substitution, template-middle and template-tail rows; refusal #2's U2), and since
+ * cut #4 one row per site refusal #3's U1 and U2 name (the import, export-from and dynamic-import specifier, string property key,
+ * string literal type and single-quoted string rows, and the property-access name and import and export specifier name rows),
+ * which the module plant carries too. */
 const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   identifier: "const EdcAssembler = 1;",
   string: `const label = "evidence-directed context";`,
@@ -301,6 +383,30 @@ const SOURCE_CONTROLS: Readonly<Record<string, string>> = {
   "private-name": "class Host { #edcBlock = 1; }",
   "cross-word": "const namedCount = 1; usedCarefully(namedCount);",
   "jsx.tsx": "export const view = <span>EDC integration</span>;",
+  "zero-width": `const label = "E${ZWSP}DC ships";`,
+  "full-width": `const label = "${FULL_WIDTH_EDC} ships";`,
+  "combining-mark": `const label = "E${ACUTE}DC ships";`,
+  precomposed: `const label = "${CAPITAL_E_ACUTE}DC ships";`,
+  "noncomposing-mark": `const label = "E${LOW_LINE}DC ships";`,
+  "spacing-mark": `const label = "E${VISARGA}DC ships";`,
+  "enclosing-mark": `const label = "E${ENCLOSING_CIRCLE}DC ships";`,
+  "joined-mark": `const label = "evide${ACUTE}nce-directed context";`,
+  "string-escape": 'const label = "\\x45DC ships";',
+  "template-escape": `const label = \`\\x45DC \${name} ships\`;`,
+  "identifier-escape": "const \\u0045dcAssembler = 1;",
+  "private-name-escape": "class Host { #\\u0065dcBlock = 1; }",
+  "no-substitution-escape": "const label = `\\x45DC ships`;",
+  "template-middle-escape": `const label = \`\${first} \\x45DC \${second} ships\`;`,
+  "template-tail-escape": `const label = \`\${name} \\x45DC ships\`;`,
+  "import-escape": 'import { assemble } from "\\x45DC-ships";',
+  "export-from-escape": 'export { assemble } from "\\x45DC-ships";',
+  "dynamic-import-escape": 'const load = () => import("\\x45DC-ships");',
+  "property-key-escape": 'const table = { "\\x45DC ships": 1 };',
+  "literal-type-escape": 'type Label = "\\x45DC ships";',
+  "single-quoted-escape": "const label = '\\x45DC ships';",
+  "property-access-escape": "const value = host.\\u0045dcAssembler;",
+  "import-name-escape": 'import { \\u0045dcAssembler } from "./ships";',
+  "export-name-escape": 'export { \\u0045dcAssembler } from "./ships";',
 };
 /** THE PLANTED READING's plants (wb-kv0y): each wraps a file's own text as `${first}${gap}${text}${gap}${last}`. The first part is
  * the reader's own controls; the last part is the same controls again and one mention of the modifier (cut #2), so each form a
@@ -360,6 +466,26 @@ const OUT_OF_SCOPE_DOCS: readonly string[] = ["docs/workbench/plant.txt", "docs/
 /** R-UNNAMED-ADOPTION's probe: a context-assembly adoption that names neither stem. */
 const UNNAMED_ADOPTION = `import { renderBlock } from "@example/context-blocks";
 export const block = renderBlock({ queryView: { failures: 0, seal: null }, coverageProofRef: "ref" });`;
+/** R-ESCAPED's probes (wb-a6m9): a stem spelled through an escape the readers read as written - a hex, a unicode and a
+ * code-point escape in a src module's regular-expression literal, a decimal and a hex character reference in JSX text and in a
+ * JSX attribute's string (the attribute's hex probe since cut #3, refusal #2's U3), one probe per src member, and a named
+ * character reference outside REFERENCES in a claim page; and the plain twin at each site. */
+const ESCAPED_SOURCES: Readonly<Record<string, string>> = {
+  "regex-hex": "export const pattern = /\\x45DC/;",
+  "regex-unicode": "export const pattern = /\\u0045DC/;",
+  "regex-code-point": "export const pattern = /\\u{45}DC/u;",
+  "jsx-decimal.tsx": "export const view = <span>&#69;DC integration</span>;",
+  "jsx-hex.tsx": "export const view = <span>&#x45;DC integration</span>;",
+  "jsx-attribute.tsx": 'export const view = <span title="&#69;DC integration">view</span>;',
+  "jsx-attribute-hex.tsx": 'export const view = <span title="&#x45;DC integration">view</span>;',
+};
+const ESCAPED_SOURCE_TWINS: Readonly<Record<string, string>> = {
+  regex: "export const pattern = /EDC/;",
+  "jsx.tsx": "export const view = <span>EDC integration</span>;",
+  "jsx-attribute.tsx": 'export const view = <span title="EDC integration">view</span>;',
+};
+const ESCAPED_PAGE = "&Eacute;DC integration ships.\n";
+const ESCAPED_PAGE_TWIN = `${CAPITAL_E_ACUTE}DC integration ships.\n`;
 /** Each residual family and the quiet row that pins it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-VOCABULARY": ["Q1"],
@@ -368,6 +494,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-COMPOSED": ["Q4"],
   "R-SCOPE": ["Q5"],
   "R-UNNAMED-ADOPTION": ["Q6"],
+  "R-ESCAPED": ["Q7"],
 };
 
 interface Row {
@@ -383,7 +510,7 @@ const ROWS: readonly Row[] = [
     pins: ["A1", "A2", "A3"],
   },
   { id: "B", label: "no Pi claim surface shall describe EDC integration as shipped meanwhile", pins: ["B1", "B2", "B3", "B4", "B5"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
 ];
 
 interface RosterPin {
@@ -442,9 +569,11 @@ function rosterWitness(pin: string): JsonValue {
 
 // ---- the vocabulary ----
 
-/** NFKC with format controls and combining marks removed. */
+/** NFKD (the compatibility mapping of NFKC, left decomposed, so a combining mark on a letter drops instead of composing into
+ * another letter) with format controls and every combining mark removed (wb-a6m9); THE FOLD SWEEP below pins every code point of
+ * each removed class and every precomposed letter (A3). */
 function normal(text: string): string {
-  return text.normalize("NFKC").replace(/[\p{Cf}\p{Mn}\p{Me}]/gu, "");
+  return text.normalize("NFKD").replace(/[\p{Cf}\p{M}]/gu, "");
 }
 /** The word fold: an acronym's plural s and camel boundaries split, lower-cased, split at every run outside a-z and 0-9. */
 function wordsOf(text: string): string[] {
@@ -472,6 +601,112 @@ function stemsIn(text: string): string[] {
 }
 function wordCount(text: string): number {
   return wordsOf(text).length;
+}
+
+/** THE FOLD SWEEP's classes (wb-a6m9 cut #3, refusal #2's U1): the four general categories normal() removes, each enumerated whole
+ * over every code point from U+0000 to U+10FFFF but the surrogates (a lone surrogate is no character). Measured at the cut on
+ * Node 24.20.0 (Unicode 17.0): Mn 2059, Mc 471, Me 13, Cf 170, and 490 precomposed letters; each floor sits well below its measure
+ * (FOLD_FLOORS), so a sweep that reads one plane only or drops a class reds while a later Unicode version's additions do not. */
+const FOLD_CLASSES: Readonly<Record<string, RegExp>> = { Mn: /^\p{Mn}$/u, Mc: /^\p{Mc}$/u, Me: /^\p{Me}$/u, Cf: /^\p{Cf}$/u };
+/** A precomposed letter: a code point whose NFKD is one ASCII letter followed by one or more combining marks. */
+const PRECOMPOSED_LETTER = /^[A-Za-z]\p{M}+$/u;
+const FOLD_FLOORS = { Mn: 1800, Mc: 400, Me: 12, Cf: 150, precomposed: 450 } as const;
+/** The words each swept code point is written into: every stem as the readers read it, each in both cases. */
+const FOLD_CARRIERS = { stems: ["EDC", "edc", "evidence-directed", "EVIDENCE-DIRECTED"] } as const;
+interface FoldSweep {
+  readonly counts: Readonly<Record<string, number>>;
+  readonly marks: readonly (readonly [string, string])[];
+  readonly precomposed: readonly string[];
+}
+/** Every code point of each class in FOLD_CLASSES, with its class, and every precomposed letter, in code point order. */
+function sweepCodePoints(): FoldSweep {
+  const counts: Record<string, number> = Object.fromEntries([...Object.keys(FOLD_CLASSES), "precomposed"].map(name => [name, 0]));
+  const marks: (readonly [string, string])[] = [];
+  const precomposed: string[] = [];
+  for (let point = 0; point <= 0x10ffff; point += 1) {
+    if (point >= 0xd800 && point <= 0xdfff) continue;
+    const character = String.fromCodePoint(point);
+    for (const [name, pattern] of Object.entries(FOLD_CLASSES)) {
+      if (!pattern.test(character)) continue;
+      counts[name] = (counts[name] ?? 0) + 1;
+      marks.push([name, character]);
+    }
+    const decomposed = character.normalize("NFKD");
+    if (decomposed !== character && PRECOMPOSED_LETTER.test(decomposed)) {
+      counts.precomposed = (counts.precomposed ?? 0) + 1;
+      precomposed.push(character);
+    }
+  }
+  return { counts, marks, precomposed };
+}
+const FOLD_SWEEP = sweepCodePoints();
+/** THE FOLD SWEEP's independent count over the same range, read another way: the marks and controls by one union class
+ * (FOLD_UNION), the precomposed letters by their decomposition's parts (an ASCII letter, then marks only). A sweep that skips any
+ * code point it claims leaves a difference here (unswept), whatever the Unicode version. */
+const FOLD_UNION = /^[\p{M}\p{Cf}]$/u;
+const ASCII_LETTER = /^[A-Za-z]$/;
+const ONE_MARK = /^\p{M}$/u;
+function unsweptCount(): { readonly marks: number; readonly precomposed: number } {
+  let marks = 0;
+  let precomposed = 0;
+  for (let point = 0; point <= 0x10ffff; point += 1) {
+    if (point >= 0xd800 && point <= 0xdfff) continue;
+    const character = String.fromCodePoint(point);
+    if (FOLD_UNION.test(character)) marks += 1;
+    const decomposed = character.normalize("NFKD");
+    if (decomposed === character) continue;
+    const [first = "", ...rest] = [...decomposed];
+    if (ASCII_LETTER.test(first) && rest.length > 0 && rest.every(part => ONE_MARK.test(part))) precomposed += 1;
+  }
+  return { marks: marks - FOLD_SWEEP.marks.length, precomposed: precomposed - FOLD_SWEEP.precomposed.length };
+}
+const FOLD_UNSWEPT = unsweptCount();
+/** A swept code point's record: its U+XXXX number, never the character itself. */
+function codePointLabel(character: string): string {
+  return `U+${(character.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`;
+}
+/** The spellings THE FOLD SWEEP writes into one carrier, each with its record: every mark or control written after the carrier's
+ * first letter and again before its last, then every precomposed letter written for the first occurrence of its letter. */
+function sweptSpellings(carrier: string): (readonly [string, string])[] {
+  const spellings: (readonly [string, string])[] = FOLD_SWEEP.marks.map(([name, mark]) => [
+    `${codePointLabel(mark)}|${name}`,
+    `${carrier.slice(0, 1)}${mark}${carrier.slice(1, -1)}${mark}${carrier.slice(-1)}`,
+  ]);
+  for (const letter of FOLD_SWEEP.precomposed) {
+    const at = carrier.indexOf(letter.normalize("NFKD").slice(0, 1));
+    if (at >= 0) spellings.push([`${codePointLabel(letter)}|precomposed`, `${carrier.slice(0, at)}${letter}${carrier.slice(at + 1)}`]);
+  }
+  return spellings;
+}
+/** The carriers of one case read every name of a reading's vocabulary (the stems, anchored to the bead's charter path, or the
+ * axes, anchored to its title), so no stem or axis word goes unswept in either case. */
+function carriersCover(carriers: readonly string[], read: (text: string) => readonly string[], names: readonly string[]): void {
+  for (const [label, inCase] of [["lower", (text: string) => text === text.toLowerCase()], ["upper", (text: string) => text === text.toUpperCase()]] as const) {
+    expect([...new Set(carriers.filter(inCase).flatMap(carrier => read(carrier)))].sort(), `the ${label}-case carriers read every name`).toEqual([...names].sort());
+  }
+}
+/** THE FOLD SWEEP's verdict for one reading over its carriers: the classes below their floors, the code points an independent
+ * count of the same range holds beyond the sweep's (unswept), the first mark spelling and the first precomposed spelling written
+ * into the first carrier, by code point (written), each carrier's own reading, and every swept spelling whose reading differs
+ * from its carrier's (the count and the first twelve, each `${U+XXXX}|${class}|${carrier}`). */
+function sweepVerdict(carriers: readonly string[], read: (text: string) => readonly string[]): JsonValue {
+  const splits: string[] = [];
+  for (const carrier of carriers) {
+    const own = JSON.stringify(read(carrier));
+    for (const [record, spelling] of sweptSpellings(carrier)) if (JSON.stringify(read(spelling)) !== own) splits.push(`${record}|${carrier}`);
+  }
+  const sample = sweptSpellings(carriers[0] ?? "");
+  const labels = (spelling: readonly [string, string] | undefined): string[] => [...(spelling?.[1] ?? "")].map(codePointLabel);
+  return json({
+    belowFloor: Object.entries(FOLD_FLOORS)
+      .filter(([name, floor]) => (FOLD_SWEEP.counts[name] ?? 0) < floor)
+      .map(([name]) => name),
+    unswept: FOLD_UNSWEPT,
+    written: { mark: labels(sample[0]), precomposed: labels(sample.find(([record]) => record.endsWith("|precomposed"))) },
+    carriers: Object.fromEntries(carriers.map(carrier => [carrier, [...read(carrier)]])),
+    splitCount: splits.length,
+    splits: splits.slice(0, 12),
+  });
 }
 
 // ---- the claim pages ----
@@ -1000,12 +1235,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       }),
     });
   },
-  A3: async () =>
-    json({
+  A3: async () => {
+    carriersCover(FOLD_CARRIERS.stems, stemsIn, Object.keys(STEMS));
+    return json({
       manifests: Object.fromEntries(Object.entries(MANIFEST_CONTROLS).map(([name, manifest]) => [name, textMentions(manifest, name)])),
       locks: Object.fromEntries(Object.entries(LOCK_CONTROLS).map(([name, lock]) => [name, lockMentions(lock).mentions])),
       sources: Object.fromEntries(Object.entries(SOURCE_CONTROLS).map(([name, text]) => [name, sourceMentions(text, name)])),
-    }),
+      sweep: sweepVerdict(FOLD_CARRIERS.stems, stemsIn),
+    });
+  },
   B1: async () => {
     const pages = claimPages();
     const tracked = trackedClaimPages();
@@ -1114,11 +1352,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
   },
   Q6: async () => json({ source: sourceMentions(UNNAMED_ADOPTION, "unnamed"), page: pageMentions(`\`\`\`ts\n${UNNAMED_ADOPTION}\n\`\`\`\n`, "unnamed") }),
+  Q7: async () =>
+    json({
+      sources: Object.fromEntries(Object.entries(ESCAPED_SOURCES).map(([name, text]) => [name, sourceMentions(text, name)])),
+      twins: Object.fromEntries(Object.entries(ESCAPED_SOURCE_TWINS).map(([name, text]) => [name, sourceMentions(text, name)])),
+      page: pageMentions(ESCAPED_PAGE, "escaped-page"),
+      pageTwin: pageMentions(ESCAPED_PAGE_TWIN, "escaped-page-twin"),
+    }),
 };
 
 describe("wb-pyel.4 EDC shipped-claim census (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead's title and acceptance and the cases agree", { timeout: 60_000 }, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:5", "Q:6"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:5", "Q:7"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1140,6 +1385,11 @@ describe("wb-pyel.4 EDC shipped-claim census (SDK-EVIDENCE-DIRECTED-COMPUTATION-
         manifestControls: MANIFEST_CONTROLS,
         lockControls: LOCK_CONTROLS,
         sourceControls: SOURCE_CONTROLS,
+        foldClasses: Object.fromEntries(Object.entries(FOLD_CLASSES).map(([name, pattern]) => [name, `/${pattern.source}/${pattern.flags}`])),
+        precomposedLetter: `/${PRECOMPOSED_LETTER.source}/${PRECOMPOSED_LETTER.flags}`,
+        foldUnion: [FOLD_UNION, ASCII_LETTER, ONE_MARK].map(pattern => `/${pattern.source}/${pattern.flags}`),
+        foldFloors: FOLD_FLOORS,
+        foldCarriers: FOLD_CARRIERS,
         plantedModule: PLANTED_MODULE,
         plantedPage: PLANTED_PAGE,
         vocabulary: VOCABULARY_CONTROLS,
@@ -1150,6 +1400,9 @@ describe("wb-pyel.4 EDC shipped-claim census (SDK-EVIDENCE-DIRECTED-COMPUTATION-
         outOfScope: OUT_OF_SCOPE_PAGES,
         outOfScopeDocs: OUT_OF_SCOPE_DOCS,
         unnamedAdoption: UNNAMED_ADOPTION,
+        escapedSources: ESCAPED_SOURCES,
+        escapedSourceTwins: ESCAPED_SOURCE_TWINS,
+        escapedPage: [ESCAPED_PAGE, ESCAPED_PAGE_TWIN],
         residuals: RESIDUALS,
       }),
     ).toStrictEqual(ROSTER.constants);
