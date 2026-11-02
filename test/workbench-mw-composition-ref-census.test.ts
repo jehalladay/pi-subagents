@@ -318,8 +318,14 @@
  * (wb-h6th: lead-empty "() " and lead-multi-letter "(ab) " each keep their parentheses as a run, and a COMPUTED SCAN, leadSecond,
  * plants every BMP code point as x's second after a and holds none read as a lead), nor is a lead after one code point (wb-kym4:
  * lead-after-space " (x) alpha gamma" keeps the run "(x)", and a COMPUTED SCAN, leadBefore, plants every BMP code point before
- * the "(" of "(x) alpha" and holds none read as a lead); each rule planted both ways in MEMBERSHIP_PLANTS and each boundary a
- * COMPUTED SCAN, the readings held to the roster's membership block), and every pin is load-bearing, so a pin or
+ * the "(" of "(x) alpha" and holds none read as a lead), nor is a lead whose "(", ")" or space is of no code point (wb-0mc8:
+ * lead-no-open "x) alpha gamma", lead-no-close "(x alpha gamma" and lead-no-space "(x)", a label that ends at its ")", keep
+ * the runs "x)", "(x" and "(x)"); and a lead drops its four code points alone, the code point after its space staying in the
+ * body (wb-0mc8: lead-two-spaces "(x)  alpha gamma" drops the lead and reads no run, lead-space-kept "(x)  alpha" places its
+ * quote " alpha", and a COMPUTED SCAN, leadAfter, plants every BMP code point after the space of "(x) alpha" as its quote's
+ * first code point and holds none whose label reads a run or a misplaced quote); each rule planted both ways in
+ * MEMBERSHIP_PLANTS and each boundary a COMPUTED SCAN, the readings held to the roster's membership block), and every pin is
+ * load-bearing, so a pin or
  * a row removed from ROWS, IMPL, the frozen literal and the roster together still reds; the constants the readers use are derived
  * at run time from the same texts (the type and the field words from the title, the program slug from the citation, the prefixes
  * and the field word "composition" from clause (b), the package scope from docs/07's MechanicalWorkflows section, the holder from
@@ -402,7 +408,10 @@
  * NOT CLAIMED: that an edit narrowing or emptying a live reading is caught (PLANTS: T1's names, a LIVE CALL, and the routed
  * calls' live projections are held on today's tree only); a membership lead whose x is two code points not opening with the
  * letter a, or three or more; a lead after two or more leading code points other than lead-not-first's word and space
- * (leadBefore scans one); the armed contract is this census's reading of an unpublished type (a consumer whose own cut takes
+ * (leadBefore scans one); a lead two or more of whose four code points are of no code point (each one alone is planted); a
+ * lead dropped with two or more of the code points after its space, or with the one after it only where other text than
+ * leadAfter's "alpha" follows that one (leadAfter scans one, before "alpha"); the armed contract is this census's reading
+ * of an unpublished type (a consumer whose own cut takes
  * another shape re-measures row A with it); whether W11 (wb-04s) or VC-3 (wb-w12) decided a consumer is read only through src
  * and the manifests; Git revisions and
  * HyperUnix answers (the remote tip's widened list) are not clause (b)'s families; that a producer reference resolves in its
@@ -410,6 +419,12 @@
  * BMP are not scanned (each is two surrogate code units, and every lone surrogate is scanned); and the producer facts beyond the
  * anchored ones (the remote tip, its commit time, the blob ids, the package spelling, the measuring stamps) are the measuring
  * seats' record, held to the literal only.
+ * CURED (wb-0mc8, the R694 follow-up filed from landing 796's F1 and F2, proven red-first): the lead's single-letter form had
+ * no case for a "(" or a space of no code point, nor for the code point after its space, so F1's two gate-authored lead-regex
+ * mutants (G01, an optional "(", and G21, a lead at the label's end with no space) failed open and F2's two (G07, no lead
+ * before a second white space, and G08, every space after the lead dropped) failed closed while this census stayed green;
+ * lead-no-open, lead-no-space, lead-two-spaces, lead-space-kept and leadAfter now hold those sides, each of the four reds,
+ * and lead-no-close plants the ")" of no code point beside them (leadClose's space reading held it before).
  * CURED (wb-kym4, the R694 follow-up filed from landing 723's F1, proven red-first): the lead's start-only side had no case for a
  * lead after one code point (" (x) ", the side wb-h6th's cut left NOT CLAIMED as this follow-up), so F1's four gate-authored
  * lead-regex mutants (n01-n04, each admitting a code point before the opening parenthesis) left this census green; leadBefore
@@ -661,7 +676,10 @@ function unquoted(label: string, quotes: readonly string[]): { runs: string[]; m
  * quote covers form the runs; a label's single-letter "(x) " lead is dropped at its start only and once (each of its four code
  * points a COMPUTED SCAN in membershipReading; an x of no code point, or of two opening with a, is no lead: lead-empty,
  * lead-multi-letter and the leadSecond scan, wb-h6th; nor is a lead after one code point: lead-after-space plants a space
- * before its "(" and the leadBefore scan every BMP code point there, wb-kym4).
+ * before its "(" and the leadBefore scan every BMP code point there, wb-kym4; nor is a lead whose "(", ")" or space is of no
+ * code point: lead-no-open, lead-no-close and lead-no-space, wb-0mc8), and it drops its four code points alone, the code point
+ * after its space staying in the body (lead-two-spaces and lead-space-kept plant a second space there, and the leadAfter scan
+ * every BMP code point there as its quote's first, wb-0mc8).
  */
 const MEMBERSHIP_PLANTS: Readonly<Record<string, { readonly label: string; readonly quotes: readonly string[] }>> = {
   tiled: { label: "(x) alpha beta gamma", quotes: ["alpha beta", "gamma"] },
@@ -680,6 +698,11 @@ const MEMBERSHIP_PLANTS: Readonly<Record<string, { readonly label: string; reado
   "lead-twice": { label: "(x) (y) alpha gamma", quotes: ["alpha", "gamma"] },
   "lead-empty": { label: "() alpha gamma", quotes: ["alpha", "gamma"] },
   "lead-multi-letter": { label: "(ab) alpha gamma", quotes: ["alpha", "gamma"] },
+  "lead-no-open": { label: "x) alpha gamma", quotes: ["alpha", "gamma"] },
+  "lead-no-close": { label: "(x alpha gamma", quotes: ["alpha", "gamma"] },
+  "lead-no-space": { label: "(x)", quotes: [] },
+  "lead-two-spaces": { label: "(x)  alpha gamma", quotes: ["alpha", "gamma"] },
+  "lead-space-kept": { label: "(x)  alpha", quotes: [" alpha"] },
   "no-lead": { label: "alpha gamma", quotes: ["alpha", "gamma"] },
   "one-char-quotes": { label: "(x) a b", quotes: ["a", "b"] },
   "empty-quote": { label: "(x) alpha  beta", quotes: ["", "alpha", "beta"] },
@@ -701,6 +724,10 @@ function membershipReading(): JsonValue {
       leadGap: BMP.filter(code => unquoted(`(x)${pointOf(code)}alpha`, ["alpha"]).runs.length === 0).map(hex4),
       leadSecond: BMP.filter(code => unquoted(`(a${pointOf(code)}) alpha`, ["alpha"]).runs.length === 0).map(hex4),
       leadBefore: BMP.filter(code => unquoted(`${pointOf(code)}(x) alpha`, ["alpha"]).runs.length === 0).map(hex4),
+      leadAfter: BMP.filter(code => {
+        const { runs, misplaced } = unquoted(`(x) ${pointOf(code)}alpha`, [`${pointOf(code)}alpha`]);
+        return runs.length > 0 || misplaced.length > 0;
+      }).map(hex4),
     },
   };
 }
