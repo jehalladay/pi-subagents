@@ -656,6 +656,48 @@
         "composed": 0,
         "launches": 1
        },
+       "methodSiblingScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "arrowElementSiblingScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "arrowDeclaratorSiblingScoped": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "arrowPushInside": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "methodPushInside": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "exportedPushInside": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
        "commaAlias": {
         "render": 0,
         "uncommitted": 0,
