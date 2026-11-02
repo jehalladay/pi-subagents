@@ -172,7 +172,8 @@
   ],
   "Q7": [
    "walk-four-steps",
-   "actor-first-five"
+   "actor-first-five",
+   "decision-within-four-steps"
   ]
  },
  "cases": {
@@ -272,7 +273,20 @@
    "t-correction-decision-copy=team-outcome-copied:reward",
    "t-correction-decision-copy-causal=team-outcome-copied:causalBenefit",
    "t-correction-decision-chain-copy=team-outcome-copied:reward",
-   "t-correction-decision-chain-copy-causal=team-outcome-copied:causalBenefit"
+   "t-correction-decision-chain-copy-causal=team-outcome-copied:causalBenefit",
+   "t-correction-decision-depth3-copy=team-outcome-copied:reward",
+   "t-correction-decision-depth3-copy-causal=team-outcome-copied:causalBenefit",
+   "t-correction-decision-depth4-copy=team-outcome-copied:reward",
+   "t-correction-decision-depth4-copy-causal=team-outcome-copied:causalBenefit",
+   "t-actor-team-correction-fixed-copy=team-outcome-copied:reward",
+   "t-actor-team-correction-fixed-copy-causal=team-outcome-copied:causalBenefit",
+   "t-actor-team-correction-fixed-share=team-outcome-copied:reward",
+   "t-actor-team-correction-fixed-own-copy=team-outcome-copied:reward",
+   "t-actor-team-correction-depth3-copy=team-outcome-copied:reward",
+   "t-actor-team-correction-depth4-copy=team-outcome-copied:reward",
+   "t-correction-copy-corrected=team-outcome-copied:reward",
+   "t-correction-copy-named=team-outcome-copied:reward",
+   "t-correction-copy-through-named=team-outcome-copied:reward"
   ],
   "K-APPEND": [
    "a-correct-feedback=ok",
@@ -353,7 +367,12 @@
   "M54:chain-walk-three-steps:K-TEAM",
   "M55:actor-read-first-three:K-TEAM",
   "M56:actor-naming-correction-underived:K-TEAM",
-  "M57:decision-actor-unread:K-TEAM"
+  "M57:decision-actor-unread:K-TEAM",
+  "M58:decision-actor-within-two-steps:K-TEAM",
+  "M59:decision-actor-within-three-steps:K-TEAM",
+  "M60:decision-actor-through-unknown-only:K-TEAM",
+  "M61:chain-through-actor-naming-underived:K-TEAM",
+  "M62:correction-of-actor-naming-underived:K-TEAM"
  ],
  "witnesses": {
   "A1a": {
@@ -500,6 +519,86 @@
      ]
     }
    },
+   "namedFixed": {
+    "direct, a team actor, on a receipt": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      9,
+      3,
+      30,
+      10
+     ]
+    },
+    "direct, an actor outside the team, on a verifier": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      42,
+      14,
+      45,
+      15
+     ]
+    },
+    "through k15, a team actor, on a verifier": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      15,
+      5,
+      30,
+      10,
+      54,
+      18
+     ]
+    },
+    "through k15, an actor outside the team, on a receipt": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      15,
+      5,
+      33,
+      11,
+      57,
+      19
+     ]
+    }
+   },
+   "namedChained": {
+    "three steps": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      9,
+      3,
+      30,
+      10,
+      39,
+      13
+     ]
+    },
+    "four steps": {
+     "admitted": "ok",
+     "derived": [
+      12,
+      4,
+      9,
+      3,
+      30,
+      10,
+      39,
+      13,
+      66,
+      22
+     ]
+    }
+   },
    "read": {
     "t-copy-reward": "team-outcome-copied:reward",
     "t-copy-share": "team-outcome-copied:reward",
@@ -510,7 +609,12 @@
     "t-other-episode-correction": "ok",
     "t-actor-team-correction": "ok",
     "t-actor-team-correction-copy": "team-outcome-copied:reward",
-    "t-actor-team-correction-own-copy": "team-outcome-copied:reward"
+    "t-actor-team-correction-own-copy": "team-outcome-copied:reward",
+    "t-actor-team-correction-fixed-copy": "team-outcome-copied:reward",
+    "t-actor-team-correction-fixed-share": "team-outcome-copied:reward",
+    "t-actor-team-correction-fixed-own-copy": "team-outcome-copied:reward",
+    "t-actor-team-correction-depth3-copy": "team-outcome-copied:reward",
+    "t-actor-team-correction-depth4-copy": "team-outcome-copied:reward"
    }
   },
   "A2b": {
@@ -527,6 +631,9 @@
     "t-actor-verifier": "ok",
     "t-correction-copy": "team-outcome-copied:reward",
     "t-correction-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-correction-copy-corrected": "team-outcome-copied:reward",
+    "t-correction-copy-named": "team-outcome-copied:reward",
+    "t-correction-copy-through-named": "team-outcome-copied:reward",
     "t-correction-chain-copy": "team-outcome-copied:reward",
     "t-correction-chain-copy-causal": "team-outcome-copied:causalBenefit",
     "t-correction-own-actor": "team-outcome-copied:reward",
@@ -536,7 +643,11 @@
     "t-correction-decision-copy": "team-outcome-copied:reward",
     "t-correction-decision-copy-causal": "team-outcome-copied:causalBenefit",
     "t-correction-decision-chain-copy": "team-outcome-copied:reward",
-    "t-correction-decision-chain-copy-causal": "team-outcome-copied:causalBenefit"
+    "t-correction-decision-chain-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-correction-decision-depth3-copy": "team-outcome-copied:reward",
+    "t-correction-decision-depth3-copy-causal": "team-outcome-copied:causalBenefit",
+    "t-correction-decision-depth4-copy": "team-outcome-copied:reward",
+    "t-correction-decision-depth4-copy-causal": "team-outcome-copied:causalBenefit"
    }
   },
   "A3a": {
@@ -737,7 +848,13 @@
    "t-corrected-original": "team-outcome-copied:reward",
    "t-corrected-depth3": "team-outcome-copied:reward",
    "t-corrected-depth4-share": "team-outcome-copied:reward",
-   "t-actor-team-correction-copy": "team-outcome-copied:reward"
+   "t-actor-team-correction-copy": "team-outcome-copied:reward",
+   "t-actor-team-correction-fixed-copy": "team-outcome-copied:reward",
+   "t-actor-team-correction-fixed-copy-causal": "team-outcome-copied:causalBenefit",
+   "t-actor-team-correction-fixed-share": "team-outcome-copied:reward",
+   "t-actor-team-correction-fixed-own-copy": "team-outcome-copied:reward",
+   "t-actor-team-correction-depth3-copy": "team-outcome-copied:reward",
+   "t-actor-team-correction-depth4-copy": "team-outcome-copied:reward"
   },
   "S4a": {
    "correction": {
@@ -1256,11 +1373,13 @@
    "name": "R-DEEP-CHAIN",
    "members": [
     "walk-four-steps",
-    "actor-first-five"
+    "actor-first-five",
+    "decision-within-four-steps"
    ],
    "verdicts": {
     "walk-four-steps": [],
-    "actor-first-five": []
+    "actor-first-five": [],
+    "decision-within-four-steps": []
    },
    "deepest": 4
   }

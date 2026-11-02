@@ -471,12 +471,19 @@
     "provider": true,
     "self": true
    },
+   "premise": {
+    "planted": [],
+    "readableTwin": [
+     "the runner read a mode-0o000 module (a runner that ignores file modes: root, or a filesystem that ignores modes), so the P-NO-TEXT plant has text on this runner and its control cannot be judged here"
+    ]
+   },
    "controls": {
     "P-MODULE-KINDS": true,
     "P-NESTED-SKIPPED-NAME": true,
     "P-ROOT-MODULE": true,
     "P-NAME-NOT-UTF8": true,
     "P-NO-TEXT": true,
+    "N-NO-TEXT-PREMISE-ON-A-READABLE-TWIN": false,
     "Q-OUTSIDE": false,
     "Q-NONMODULE": false
    }
