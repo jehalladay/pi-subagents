@@ -24,7 +24,11 @@
  * ./ and a / prefix, no extension over the first three, and the provider path alone with .js; it spells CASE FORMS' chained-flags
  * entry through <flag> (every FLAG word before concurrent, the skip cell of cut #1 among them); it claims BINDING namespace and type-only
  * exactly at the IMPORT SITES cells, whose IMPORTS gain type-only namespace and default imports and a default beside a namespace
- * import, and the census's plants - still no reader line. NOT CLAIMED
+ * import, and the census's plants - still no reader line. Its cut #3 (respin 2, after its refusal #2 O:1844, ruling R-B372) writes
+ * M5 SITES - every M5 KEYWORDS keyword, M5 PATTERNS pattern and M5 VALUES value (awaited and unawaited; bare, wrapped and deep) over
+ * every SPELLINGS text, as a string literal and as a no-substitution template, in every HOLDER the value names - and claims the
+ * string specifier, template specifier, import await, dynamic and three destructured words exactly at the IMPORT SITES and M5 SITES
+ * cells and the census's FORMS and SUBFORMS plants - still no reader line. NOT CLAIMED
  * names what stays out.
  *
  * READING (liveReading). Active code only: comments are trivia. An HX LOCAL is a name a BINDING form binds; its entry reads
@@ -62,13 +66,13 @@
  * - type-only: a type-only import declaration or import specifier binds as the same import would without the marker, claimed exactly at the IMPORT SITES cells below and the census's FORMS and SUBFORMS plants
  * - namespace: a static namespace import of an HX module, the file's first statement (namespace), claimed exactly at the IMPORT SITES cells below and the census's FORMS and SUBFORMS plants
  * - default: a static default import of an HX module, a provider path, the file's first statement (default), the path a SPELLINGS text as the IMPORT SITES cells below read it
- * - string specifier: an import() call whose first argument is a string literal naming a provider path is an M5 import, the path a SPELLINGS text as the IMPORT SITES cells below read it
- * - template specifier: an import() call whose first argument is a no-substitution template naming a provider path is an M5 import, the path a SPELLINGS text as the IMPORT SITES cells below read it
- * - import await: an M5 import is read through await, as well as through UNWRAP, up to four steps, to the variable declaration that binds it, its M5 declaration
- * - dynamic: an M5 import bound whole to the name its declaration introduces (dynamic)
- * - destructured renamed: an M5 import destructured into the entry nativeHyperUnixFind under another name, its key written, the pattern's only element (destructured)
- * - destructured shorthand: an M5 import destructured into the entry nativeHyperUnixFind under its own name, a shorthand element, the pattern's only element (destructured)
- * - destructured rest: an M5 import destructured into a rest element, which takes the module, the pattern's only element (rest)
+ * - string specifier: an import() call whose first argument is a string literal naming a provider path is an M5 import, the path a SPELLINGS text, claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants
+ * - template specifier: an import() call whose first argument is a no-substitution template naming a provider path is an M5 import, the path a SPELLINGS text, claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants
+ * - import await: an M5 import is read through await, as well as through UNWRAP, up to four steps, to the variable declaration that binds it, its M5 declaration, claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants
+ * - dynamic: an M5 import bound whole to the name its declaration introduces (dynamic), claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants
+ * - destructured renamed: an M5 import destructured into the entry nativeHyperUnixFind under another name, its key written, the pattern's only element (destructured), claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants
+ * - destructured shorthand: an M5 import destructured into the entry nativeHyperUnixFind under its own name, a shorthand element, the pattern's only element (destructured), claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants
+ * - destructured rest: an M5 import destructured into a rest element, which takes the module, the pattern's only element (rest), claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants
  * - alias: a variable declared from a named, namespace, rest or alias local, its M6 declaration (alias)
  * - alias member: a declaration or assignment source may be an entry member .name of a module local, the entry nativeHyperUnixFind
  * - alias element: a declaration or assignment source may be an entry member ['name'] of a namespace local, the name a string value, the entry nativeHyperUnixFind
@@ -322,6 +326,28 @@
  * + type-namespace | namespace hxModule | import type * as hxModule from $;
  * + type-default | default hxModule | import type hxModule from $;
  * + default-namespace | default hxDefault; namespace hxModule | import hxDefault, * as hxModule from $;
+ * M5 SITES (BINDING's string specifier, template specifier, import await, dynamic and destructured words over each SPELLINGS path in
+ * each M5 binding form, claimed exactly at these cells and the IMPORT SITES cells; wb-tz2.22 cut #3): a cell is a HOLDER with its #
+ * put as an M5 statement (an M5 KEYWORDS keyword, a space, an M5 PATTERNS pattern, ` = `, an M5 VALUES value and `;`), the value's $
+ * put as a SPELLINGS text written as a string literal or as a no-substitution template, for each M5 VALUES value, each HOLDER it
+ * names, each M5 KEYWORDS keyword, each M5 PATTERNS pattern, each SPELLINGS text and both its spellings. Read with every word, it
+ * reads live and the pattern's entries, then, in the case HOLDER, the case `it :: HX probe`, and nothing more.
+ * M5 KEYWORDS [the declaration keywords an M5 statement takes - its id, then its keyword]:
+ * + const: const
+ * + let: let
+ * + var: var
+ * M5 PATTERNS [the binding forms an M5 statement's declaration takes - its id, the BINDING word it pins, the entries it reads (joined by '; '), then its pattern]:
+ * + dynamic | dynamic | dynamic hxModule | hxModule
+ * + destructured-renamed | destructured renamed | destructured hxModule | {nativeHyperUnixFind: hxModule}
+ * + destructured-shorthand | destructured shorthand | destructured nativeHyperUnixFind | {nativeHyperUnixFind}
+ * + destructured-rest | destructured rest | rest hxModule | {...hxModule}
+ * M5 VALUES [the M5 imports an M5 statement's declaration is initialized with - its id (its await class, then its wrap class: bare, wrapped in parentheses, or deep, read through four steps), the holders it stands in, then its text, $ the specifier]:
+ * + awaited-bare {top hook helper named fixture unread case}: await import($)
+ * + awaited-wrapped {top hook helper named fixture unread case}: (await import($))
+ * + awaited-deep {top hook helper named fixture unread case}: (await import($)) as unknown as object
+ * + unawaited-bare {all}: import($)
+ * + unawaited-wrapped {all}: (import($))
+ * + unawaited-deep {all}: ((import($))) as unknown as object
  * USED SITES (REFERENCE's used assignment, claimed exactly at these cells): a cell is a SOURCES LOCAL's page, a space, then a HOLDER
  * with its # put as a USES statement, its OP put as an OPERATORS operator and its @ as the LOCAL's name, for each HOLDER the USES entry
  * names, each operator and each SOURCES LOCAL. Read with every word, it reads live, the LOCAL's entries and `alias hxAssigned`, then -
@@ -568,7 +594,10 @@
  * destructuring, an alias member or element and an aliased or aliased-string import, HyperUnix in an assigned property; an alias or
  * assignment source that is a store, default, dynamic, destructured or aliased local; a destructuring or an assigned object literal over
  * a default or dynamic local; an alias element of a module local other than a namespace one; a pattern of three or more elements (two or
- * more for an M5 import), a nested pattern beside another element and a rest beside other elements; an assigned object literal's later property; a file's second M5 import; a namespace or default import
+ * more for an M5 import), a nested pattern beside another element and a rest beside other elements; an assigned object literal's later property; a file's second M5 import; an M5 import in a form, a holder or a
+ * wrapping no IMPORT SITES or M5 SITES cell writes, beyond the census's FORMS and SUBFORMS plants of one (wb-tz2.22 cut #3: an M5
+ * import of a SPELLINGS text read through satisfies, a non-null or a <T> assertion, a second await or another order of steps, and an
+ * M5 declaration in a try block, a loop, a nested function or another hook, among them); a namespace or default import
  * that is not the file's first statement; a static import after a statement of another kind; a static import clause of two or more
  * specifiers; a vitest import that is not the file's first statement or whose specifier stands beside another;
  * a fifth wrapper on a source, a fourth on an assignment target, a target name, a member's base or a callee and a third on a
@@ -647,13 +676,13 @@ export const BINDING_FORMS = claims([
   ["type-only", "a type-only import declaration or import specifier binds as the same import would without the marker, claimed exactly at the IMPORT SITES cells below and the census's FORMS and SUBFORMS plants"],
   ["namespace", "a static namespace import of an HX module, the file's first statement (namespace), claimed exactly at the IMPORT SITES cells below and the census's FORMS and SUBFORMS plants"],
   ["default", "a static default import of an HX module, a provider path, the file's first statement (default), the path a SPELLINGS text as the IMPORT SITES cells below read it"],
-  ["string specifier", "an import() call whose first argument is a string literal naming a provider path is an M5 import, the path a SPELLINGS text as the IMPORT SITES cells below read it"],
-  ["template specifier", "an import() call whose first argument is a no-substitution template naming a provider path is an M5 import, the path a SPELLINGS text as the IMPORT SITES cells below read it"],
-  ["import await", "an M5 import is read through await, as well as through UNWRAP, up to four steps, to the variable declaration that binds it, its M5 declaration"],
-  ["dynamic", "an M5 import bound whole to the name its declaration introduces (dynamic)"],
-  ["destructured renamed", "an M5 import destructured into the entry nativeHyperUnixFind under another name, its key written, the pattern's only element (destructured)"],
-  ["destructured shorthand", "an M5 import destructured into the entry nativeHyperUnixFind under its own name, a shorthand element, the pattern's only element (destructured)"],
-  ["destructured rest", "an M5 import destructured into a rest element, which takes the module, the pattern's only element (rest)"],
+  ["string specifier", "an import() call whose first argument is a string literal naming a provider path is an M5 import, the path a SPELLINGS text, claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants"],
+  ["template specifier", "an import() call whose first argument is a no-substitution template naming a provider path is an M5 import, the path a SPELLINGS text, claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants"],
+  ["import await", "an M5 import is read through await, as well as through UNWRAP, up to four steps, to the variable declaration that binds it, its M5 declaration, claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants"],
+  ["dynamic", "an M5 import bound whole to the name its declaration introduces (dynamic), claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants"],
+  ["destructured renamed", "an M5 import destructured into the entry nativeHyperUnixFind under another name, its key written, the pattern's only element (destructured), claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants"],
+  ["destructured shorthand", "an M5 import destructured into the entry nativeHyperUnixFind under its own name, a shorthand element, the pattern's only element (destructured), claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants"],
+  ["destructured rest", "an M5 import destructured into a rest element, which takes the module, the pattern's only element (rest), claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants"],
   ["alias", "a variable declared from a named, namespace, rest or alias local, its M6 declaration (alias)"],
   ["alias member", "a declaration or assignment source may be an entry member .name of a module local, the entry nativeHyperUnixFind"],
   ["alias element", "a declaration or assignment source may be an entry member ['name'] of a namespace local, the name a string value, the entry nativeHyperUnixFind"],

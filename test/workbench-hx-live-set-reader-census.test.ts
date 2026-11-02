@@ -28,7 +28,10 @@
  * members) and #4 (O:1745, U1-U6, 48 members) reds a CARRIED row - its gate witness page, pinned as the cured reader reads it -,
  * measured on helper copies (the delivery's battery; never run here). Its cut #2 (respin 1, after refusal #1 O:1796 on cut #1 283258b4)
  * restates the helper's MODULE words to the SDK root, the SPELLINGS texts and this census's FORMS and SUBFORMS plants - every SPELLINGS
- * text read by the GRID's STRAY and IMPORT rows - and holds refusal #4's labels and members to the tracker export.
+ * text read by the GRID's STRAY and IMPORT rows - and holds refusal #4's labels and members to the tracker export. Its cut #3 (respin
+ * 2, after refusal #2 O:1844 on cut #2 2d80462b) restates the helper's string specifier, template specifier, import await, dynamic
+ * and destructured words to the IMPORT SITES and M5 SITES cells and this census's FORMS and SUBFORMS plants - every M5 SITES cell
+ * read by a GRID M5 row - and holds the M5 SITES lists to refusal #2's class guard line.
  *
  * ROWS:
  *  ITEM: the description's enumerated items U1 and U2 and the R-B128 note's folded U2 recurrence (U2r), each label verbatim, each with
@@ -57,8 +60,9 @@
  *   members), each pinned with what the cured reader reads in it; the helper's CARRIED lists name each row's item, member, witness and
  *   page, and its CARRIED ITEMS each item's label verbatim.
  *  GRID (wb-tz2.22): one row per entry of the helper's POSITIONS, STRAYS, IMPORTS, USES, CASES, PLACES (MODULE PLACES, M5 PLACES),
- *   BINDINGS and INLINES lists; each reads every cell the helper's SITES paragraphs build from its entry against the reading those
- *   paragraphs state (a CASES cell plain and with WITNESS) - no pin literal: the helper's lists are the anchor.
+ *   BINDINGS and INLINES lists, and (cut #3) one per pair of an M5 VALUES and an M5 PATTERNS entry; each reads every cell the
+ *   helper's SITES paragraphs build from its entry against the reading those paragraphs state (a CASES cell plain and with WITNESS) -
+ *   no pin literal: the helper's lists are the anchor.
  *  MUTANT: the gate's named reader mutants. A word mutant is a ReadOptions word removal that reds every row it names. A code mutant
  *   (options null) is an edit no word removal spells, measured on a helper copy and never run here: GM58 (every local form a module
  *   local) widens B-NONMODULE's reading, and its row names that kill row and the line the kill row reads that the widening drops.
@@ -82,16 +86,34 @@
  * refusal #4 note. The helper's CASE FORMS chained-flags entry is spelled through <flag> (F3: its literal skip flag was the delivered
  * files' one marker hit, comment-only data), so its cells are every FLAG word before concurrent, cut #1's skip cell among them. No
  * reader line, row, pin or plant of cut #1 changes otherwise; the FROZEN SHAPE literal takes the new GRID entries and counts.
+ * WB-TZ2.22 CUT #3 (respin 2, after refusal #2 O:1844 on cut #2 2d80462b, ruling R-B372 - a normal respin, the class guard bound on
+ * the new claim set: U1 MEDIUM, four gate hollowings of the helper's BINDING dynamic words over the non-relative SPELLINGS paths -
+ * GP14C-D03-DYNAMIC-UNAWAITED-RELATIVE-ONLY, GP14C-D04-DYNAMIC-UNAWAITED-NO-SLASH-STRING, GP14C-D08-DYNAMIC-LET-VAR-RELATIVE-ONLY and
+ * GP14C-D09-DYNAMIC-NESTED-RELATIVE-ONLY - kept the census green; U2 their LEG 2 count with GP14C-D06-WRAPPED-AWAIT-NONRELATIVE-UNBOUND):
+ * the helper's M5 SITES write every M5 KEYWORDS keyword (const, let and var), M5 PATTERNS pattern (dynamic and the three destructured
+ * forms) and M5 VALUES value (awaited and unawaited, each bare, wrapped in parentheses and deep - read through four steps) over every
+ * SPELLINGS text, as a string literal and as a no-substitution template, in every HOLDER the value names (an awaited value in every
+ * HOLDER whose # an await may stand at, all but describe) - 36720 cells, each read by a GRID M5 row; its string specifier, template
+ * specifier, import await, dynamic and three destructured words are claimed exactly at the IMPORT SITES and M5 SITES cells and this
+ * census's FORMS and SUBFORMS plants (seven roster claim literals, all in BINDING_FORMS); M5 ANCHOR holds the M5 lists to the class
+ * guard line refusal #2 states, the HOLDERS texts, the import await claim, the BINDING roster and the IMPORTS list. No reader line,
+ * row, pin or plant of cuts #1 and #2 changes; the FROZEN SHAPE literal takes the M5 entries and their counts.
  * PINNED READER SET (wb-tz2.22; test/workbench-hx-live-set-reader-census.test.ts): GRID POSITION <id> (one case per POSITIONS entry),
  * GRID STRAY <id>, GRID IMPORT <id>, GRID USED <id>, GRID CASE <id>, GRID PLACE <list> <id>, GRID BINDING <id> and GRID INLINE <id> -
  * each asserts that every cell the helper's SITES paragraphs build from its entry reads the reading they state, observed equal; SITES -
  * the lists parse and their marks stand once; CARRIED <witness> (one case per CARRIED row) - its gate witness page reads its pins,
  * observed equal; ANCHOR (wb-tz2.22) and ANCHOR (CARRIED); and (cut #2) SPELLINGS ANCHOR - the SPELLINGS texts are SPELLING_PREFIXES
  * with the MODULE extension words, observed equal - and ANCHOR (wb-tz2.22's notes) - the r4 CARRIED ITEMS labels are the carrier's
- * R-B317 fold lines and each r4 item's members the names its refusal #4 Members line writes, observed equal. Each positive claim's
- * independent falsifier: a one-edit reader mutant that drops a cell's reading reds that GRID case (a MODULE spelling's drop reds the
- * STRAY and IMPORT cases of its text), and a carried member reds its CARRIED case (measured on helper copies); the helper's lists,
- * wb-tz2.22's description and notes, wb-tz2.19's refusal #4 note and ts.Extension anchor the rows.
+ * R-B317 fold lines and each r4 item's members the names its refusal #4 Members line writes, observed equal; and (cut #3) GRID M5
+ * <value> <pattern> (one case per pair of an M5 VALUES and an M5 PATTERNS entry) - every M5 SITES cell built from the pair reads the
+ * reading the M5 SITES paragraph states, observed equal - and M5 ANCHOR - the M5 lists are the forms refusal #2's class guard line
+ * names (its keywords, its await and wrap classes, the top level and each HOLDER an await may stand at), each await class's deepest
+ * value reads through the step count the import await claim names, the M5 PATTERNS words are the BINDING words that bind an M5 import,
+ * each with its IMPORTS form, and each guarded or pattern word's claim ends with the M5 SITES narrowing, observed equal. Each positive
+ * claim's independent falsifier: a one-edit reader mutant that drops a cell's reading reds that GRID case (a MODULE spelling's drop
+ * reds the STRAY and IMPORT cases of its text; an M5 binding form's drop for a spelling reds the GRID M5 cases of that form), and a
+ * carried member reds its CARRIED case (measured on helper copies); the helper's lists, wb-tz2.22's description and notes, wb-tz2.19's
+ * refusal #4 note and ts.Extension anchor the rows.
  *
  * CUT #4 (orchestrator ruling R-B252, the FAIL-CLOSED CORE, after refusal #3 O:1658 on cut #3 3c7091ba; exit child wb-tz2.22): the
  * helper's claim words and its registered sub-forms were narrowed, meant to the sub-forms these rows pin (refusal #4 O:1745 measured 48
@@ -135,7 +157,12 @@
  * (O:1745; the first Members line after each r4 label's line names exactly that item's members); and the MODULE extension words
  * (ts.Extension, through the ANCHOR above) that every SPELLING_PREFIXES prefix takes in the helper's SPELLINGS list, and the class guard
  * line wb-tz2.22's refusal #1 note binds (the FIRST notes line holding GUARD), whose relative, repository and absolute prefix classes are
- * SPELLING_PREFIXES entries of four or more characters, so each takes no extension too.
+ * SPELLING_PREFIXES entries of four or more characters, so each takes no extension too. And (cut #3) the class guard line wb-tz2.22's
+ * refusal #2 note states (O:1844; the FIRST notes line holding M5_GUARD), whose M5 binding-form words are the M5 KEYWORDS ids, the
+ * M5 VALUES await and wrap classes and the HOLDERS a value stands in, and whose four guarded words are BINDING words narrowed to the
+ * M5 SITES; the HOLDERS texts (an awaited value stands in exactly those whose # an await may stand at); the import await claim's step
+ * count (each await class's deepest value); the BINDING roster (the M5 PATTERNS words are its words that bind an M5 import) and the
+ * IMPORTS list (each M5 PATTERNS pattern's IMPORT SITES form).
  * SELF-ANCHORED (held only by this file's literals; a coordinated removal from all of them reads green, and that is NOT claimed): the
  * CONTROLS rows, the RESIDUALS rows, BOUNDARY, the q9 member texts beyond their count, the q7 row, a FORMS plant of a word that keeps
  * another plant, a SUBFORMS row of a sub-form that keeps another row, which SUBFORMS row carries a member (the anchor holds the
@@ -145,12 +172,13 @@
  * texts from the helper's SPELLINGS list and the FROZEN SHAPE literal, together reads green).
  * FROZEN SHAPE (standing rule 16): one literal pins every row as <table>:<id>:<pin count> (FORMS: <pins>/<without>; SUBFORMS: <pins>,
  * or <pins>/<without> for a row read without a word; ITEM: its member count; MUTANT: its kill count; CARRIED: its pin count; CARRIED-ITEM:
- * its member count; GRID: each SITES list entry, with its cell count for a POSITIONS, STRAYS, USES, CASES, BINDINGS, INLINES, IMPORTS or
- * PLACES entry and 1 otherwise, the LOCALS entry with its entry count).
+ * its member count; GRID: each SITES list entry, with its cell count for a POSITIONS, STRAYS, USES, CASES, BINDINGS, INLINES, IMPORTS,
+ * M5 VALUES (over every M5 PATTERNS pattern) or PLACES entry and 1 otherwise, the LOCALS and M5 PATTERNS entries with their entry count).
  *
  * NOT CLAIMED: that this census runs a code mutant (GM58, the gate's refusal #1, #2, #3 and #4 members and the seat's battery members are
  * measured on helper copies, the delivery's battery); a refusal #3 or #4 member's form beyond its CARRIED page and the SITES cells; a form the helper's REFERENCE POSITIONS and NOT CLAIMED paragraphs leave out
- * (CUT #4); a provider path whose prefix no SPELLINGS text writes, beyond the FORMS and SUBFORMS plants of one (cut #2); any hx
+ * (CUT #4); a provider path whose prefix no SPELLINGS text writes, beyond the FORMS and SUBFORMS plants of one (cut #2); an M5 import
+ * in a form, a holder or a wrapping no IMPORT SITES or M5 SITES cell writes, beyond the FORMS and SUBFORMS plants of one (cut #3); any hx
  * behaviour, or that the native tier ran; scope (the reader reads a reference by spelling); a drive that reaches hx
  * through no HX local and no M5 import (R-LIVE-INDIRECT); wb-tz2.9's census itself - its W, S, T and N rows, its claim scanner and
  * its ROUTE reader stay with that bead, whose re-cut restates its LIVE SET reader over this helper (R-B128).
@@ -212,6 +240,20 @@ const SPELLING_PREFIXES: readonly { readonly id: string; readonly prefix: string
   { id: "absolute", prefix: "/repo/src/workbench/" },
   { id: "dot", prefix: "./" },
   { id: "rooted", prefix: "/" },
+];
+/** The class guard wb-tz2.22's refusal #2 (O:1844) states for the respin (cut #3): its first notes line holding this names the M5 binding forms. */
+const M5_GUARD = "Class guard stated for the respin under either reading (rule 19(d))";
+/** The guard line's four guarded BINDING words, then the M5 binding forms they name: two await classes, three keywords, two wrap classes. */
+const M5_GUARD_FORMS =
+  /on the BINDING ([a-z ]+), ([a-z ]+), ([a-z ]+) and ([a-z ]+) words, over every SPELLINGS text and in every M5 binding form those words name \(([a-z]+) and ([a-z]+), ([a-z]+), ([a-z]+) and ([a-z]+), at the top level and in each holder, ([a-z]+) and ([a-z]+)\)/;
+/** The narrowing each M5 claim of the helper's BINDING roster ends with (wb-tz2.22 cut #3). */
+const M5_CLAIMED = "claimed exactly at the IMPORT SITES and M5 SITES cells below and the census's FORMS and SUBFORMS plants";
+/** The M5 VALUES wrap class beside the guard's two: a value read through as many steps as the import await claim names. */
+const M5_DEEP = "deep";
+/** The two spellings an M5 SITES cell writes its SPELLINGS text in: a string literal and a no-substitution template. */
+const M5_SPECIFIERS: readonly (readonly [string, (path: string) => string])[] = [
+  ["string", path => `"${path}"`],
+  ["template", path => `\`${path}\``],
 ];
 const SUITE = `hx live-set reader census (${BEAD}, HX-ORIGINAL-GOALS-CLOSURE-R9)`;
 const HELPER = "test/helpers/hx-live-set-reader.ts";
@@ -1016,7 +1058,7 @@ const SHAPE: readonly string[] = [
 ];
 /** The shape of the helper's SITES and CARRIED ITEMS lists (wb-tz2.22): each entry, with its cell or member count. */
 function sitesShape(): string[] {
-  const { locals, holders, positions, spellings, strays, operators, sources, uses, caseForms, cases, bindings, inlines, inline, places, importLocals, imports } = sites();
+  const { locals, holders, positions, spellings, strays, operators, sources, uses, caseForms, cases, bindings, inlines, inline, places, importLocals, imports, m5Keywords, m5Patterns, m5Values } = sites();
   const items = carriedLists().items;
   const members = (item: string): number => new Set(carriedLists().entries.filter(entry => entry.item === item).map(entry => entry.member)).size;
   return [
@@ -1035,6 +1077,9 @@ function sitesShape(): string[] {
     ...inline.map(([id]) => `GRID:INLINE:${id}:1`),
     ...importLocals.map(id => `GRID:IMPORT LOCALS:${id}:1`),
     ...imports.map(entry => `GRID:IMPORTS:${entry.id}:${importCells(entry).length}`),
+    ...m5Keywords.map(([id]) => `GRID:M5 KEYWORDS:${id}:1`),
+    ...m5Patterns.map(pattern => `GRID:M5 PATTERNS:${pattern.id}:${pattern.entries.length}`),
+    ...m5Values.map(value => `GRID:M5 VALUES:${value.id}:${m5Patterns.reduce((count, pattern) => count + m5Cells(value, pattern).length, 0)}`),
     ...places.flatMap(([list, entries]) => entries.map(entry => `GRID:${list}:${entry.id}:${placeCells(list, entry).length}`)),
     ...items.map(([item]) => `CARRIED-ITEM:${item}:${members(item)}`),
   ];
@@ -1783,6 +1828,19 @@ const FROZEN_SHAPE: readonly string[] = [
   "GRID:IMPORTS:type-namespace:34",
   "GRID:IMPORTS:type-default:34",
   "GRID:IMPORTS:default-namespace:34",
+  "GRID:M5 KEYWORDS:const:1",
+  "GRID:M5 KEYWORDS:let:1",
+  "GRID:M5 KEYWORDS:var:1",
+  "GRID:M5 PATTERNS:dynamic:1",
+  "GRID:M5 PATTERNS:destructured-renamed:1",
+  "GRID:M5 PATTERNS:destructured-shorthand:1",
+  "GRID:M5 PATTERNS:destructured-rest:1",
+  "GRID:M5 VALUES:awaited-bare:5712",
+  "GRID:M5 VALUES:awaited-wrapped:5712",
+  "GRID:M5 VALUES:awaited-deep:5712",
+  "GRID:M5 VALUES:unawaited-bare:6528",
+  "GRID:M5 VALUES:unawaited-wrapped:6528",
+  "GRID:M5 VALUES:unawaited-deep:6528",
   "GRID:PLACES:declaration:32",
   "GRID:PLACES:declaration-typed:32",
   "GRID:PLACES:declaration-wrapped:32",
@@ -1896,6 +1954,13 @@ interface Sited {
 interface Placed extends Sited {
   readonly form: string;
 }
+/** An M5 PATTERNS entry (wb-tz2.22 cut #3): the BINDING word it pins, the entries it reads and the pattern an M5 declaration binds. */
+interface M5Pattern {
+  readonly id: string;
+  readonly word: string;
+  readonly entries: readonly string[];
+  readonly pattern: string;
+}
 interface Sites {
   readonly locals: readonly Local[];
   readonly holders: readonly (readonly [string, string])[];
@@ -1913,6 +1978,9 @@ interface Sites {
   readonly places: readonly (readonly [string, readonly Placed[]])[];
   readonly importLocals: readonly string[];
   readonly imports: readonly { readonly id: string; readonly entry: string; readonly statement: string }[];
+  readonly m5Keywords: readonly (readonly [string, string])[];
+  readonly m5Patterns: readonly M5Pattern[];
+  readonly m5Values: readonly Sited[];
   /** List lines that parse as no entry of their list. */
   readonly unread: readonly string[];
 }
@@ -1970,6 +2038,13 @@ function sites(): Sites {
       if (parts.length !== 3) unread.push(`IMPORTS: ${line}`);
       return parts.length !== 3 ? [] : [{ id: parts[0] ?? "", entry: parts[1] ?? "", statement: parts[2] ?? "" }];
     }),
+    m5Keywords: pairs("M5 KEYWORDS"),
+    m5Patterns: headerList("M5 PATTERNS").flatMap(line => {
+      const parts = line.split(" | ");
+      if (parts.length !== 4) unread.push(`M5 PATTERNS: ${line}`);
+      return parts.length !== 4 ? [] : [{ id: parts[0] ?? "", word: parts[1] ?? "", entries: (parts[2] ?? "").split("; "), pattern: parts[3] ?? "" }];
+    }),
+    m5Values: sited("M5 VALUES"),
     unread,
   };
   return sitesRead;
@@ -2085,6 +2160,56 @@ function importCells(entry: { readonly entry: string; readonly statement: string
     page: `${entry.statement.replace(/[$^]/g, mark => (mark === "$" ? `"${path}"` : `\`${path}\``))} it("HX probe", () => { expect(1).toBe(1); });`,
     reading: ["live", ...entry.entry.split("; ").map(read => `local ${read}`)],
   }));
+}
+/** The cells of an M5 VALUES value and an M5 PATTERNS pattern (wb-tz2.22 cut #3): each holder the value names, each M5 KEYWORDS keyword,
+ * each SPELLINGS text and both its specifier spellings; the declaration binds the pattern's entries. */
+function m5Cells(value: Sited, pattern: M5Pattern): Cell[] {
+  const { holders, m5Keywords, spellings } = sites();
+  return value.holders.flatMap(holder => {
+    const text = holders.find(([id]) => id === holder)?.[1] ?? "";
+    return m5Keywords.flatMap(([keywordId, keyword]) =>
+      spellings.flatMap(([spelling, path]) =>
+        M5_SPECIFIERS.map(([specifier, write]) => {
+          const initializer = putOnce(value.statement, "$", write(path));
+          const page = initializer === undefined ? undefined : putOnce(text, "#", `${keyword} ${pattern.pattern} = ${initializer};`);
+          const reading = ["live", ...pattern.entries.map(entry => `local ${entry}`), ...(holder === "case" ? [CASE_LINE] : [])];
+          return { id: `${holder}/${keywordId}/${spelling}/${specifier}`, page: page === undefined ? `<no single $ in value ${value.id} or # in holder ${holder}>` : page, reading };
+        }),
+      ),
+    );
+  });
+}
+/** The first node of a tree that a test holds, the root first (undefined when none does). */
+function firstNode(root: ts.Node, test: (node: ts.Node) => boolean): ts.Node | undefined {
+  if (test(root)) return root;
+  let found: ts.Node | undefined;
+  ts.forEachChild(root, child => {
+    found ??= firstNode(child, test);
+  });
+  return found;
+}
+/** Whether a HOLDERS text's # stands where an await may stand: at the top level or in an async function's body (wb-tz2.22 cut #3). */
+function awaitable(text: string): boolean {
+  const sf = parse("holder.ts", text.split("#").join("hxMark;"));
+  const mark = firstNode(sf, node => ts.isExpressionStatement(node) && ts.isIdentifier(node.expression) && node.expression.text === "hxMark");
+  if (mark === undefined) return false;
+  for (let node = mark.parent; !ts.isSourceFile(node); node = node.parent) {
+    if (ts.isFunctionLike(node)) return (ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Async) !== 0;
+  }
+  return true;
+}
+/** How many awaits and wrappers an M5 VALUES text reads its import() call through to its declaration (undefined when it reaches none). */
+function stepsOf(value: string): number | undefined {
+  const sf = parse("value.ts", `const hxModule = ${value.split("$").join('"hx"')};`);
+  let node = firstNode(sf, entry => ts.isCallExpression(entry) && entry.expression.kind === ts.SyntaxKind.ImportKeyword);
+  let steps = 0;
+  while (node !== undefined && !ts.isVariableDeclaration(node.parent)) {
+    const { parent } = node;
+    const step = ts.isAwaitExpression(parent) || ts.isParenthesizedExpression(parent) || ts.isAsExpression(parent) || ts.isSatisfiesExpression(parent) || ts.isNonNullExpression(parent) || ts.isTypeAssertionExpression(parent);
+    node = step ? parent : undefined;
+    steps += 1;
+  }
+  return node === undefined ? undefined : steps;
 }
 /** The cells of a GRID entry that read otherwise than stated (none when the reader keeps every cell). */
 const misread = (cells: readonly Cell[]): { readonly id: string; readonly reading: readonly string[]; readonly stated: readonly string[] }[] =>
@@ -2401,6 +2526,11 @@ describe(SUITE, () => {
     expect(all.imports.length).toBeGreaterThan(0);
     expect(new Set(all.imports.map(entry => entry.id)).size).toBe(all.imports.length);
     expect(all.imports.filter(entry => entry.statement.split(/[$^]/).length !== 2).map(entry => entry.id)).toEqual([]);
+    expect([all.m5Keywords.length, all.m5Patterns.length, all.m5Values.length].filter(count => count === 0)).toEqual([]);
+    for (const ids of [all.m5Keywords.map(([id]) => id), all.m5Patterns.map(pattern => pattern.id), all.m5Values.map(value => value.id)]) expect(new Set(ids).size).toBe(ids.length);
+    expect(all.m5Patterns.filter(pattern => pattern.pattern === "" || pattern.entries.includes("")).map(pattern => pattern.id)).toEqual([]);
+    expect(all.m5Values.flatMap(value => value.holders).filter(holder => !holderIds.includes(holder))).toEqual([]);
+    expect(all.m5Values.filter(value => value.statement.split("$").length !== 2 || value.statement.includes("^")).map(value => value.id)).toEqual([]);
     for (const [list, entries] of all.places) {
       expect({ list, count: entries.length > 0, distinct: new Set(entries.map(entry => entry.id)).size === entries.length }).toEqual({ list, count: true, distinct: true });
       expect(entries.flatMap(entry => entry.holders).filter(holder => !holderIds.includes(holder))).toEqual([]);
@@ -2422,6 +2552,43 @@ describe(SUITE, () => {
     const named = /\(([a-z]+), ([a-z]+) and ([a-z]+) prefixes; no extension and each extension\)/.exec(guard)?.slice(1) ?? [];
     expect(named.length).toBe(3);
     expect(named.filter(id => !SPELLING_PREFIXES.some(entry => entry.id === id && entry.prefix.length >= 4))).toEqual([]);
+  });
+
+  it("M5 ANCHOR (wb-tz2.22 cut #3; refusal #2's class guard line, the HOLDERS texts, the import await claim, the BINDING roster and the IMPORTS list): the M5 KEYWORDS are the guard's keywords; the M5 VALUES are each await class with each wrap class the guard names and the deep class, each standing at the top level and in every HOLDER an await may stand at, the deepest reading through the import await claim's steps; the M5 PATTERNS are the BINDING words that bind an M5 import, each with its IMPORTS form; and every guarded and pattern word's claim ends with the M5 SITES narrowing", { timeout: BUDGET_MS }, () => {
+    const guard = (beadRow(CARRIER)?.notes ?? "").split("\n").find(line => line.includes(M5_GUARD)) ?? "";
+    const named = M5_GUARD_FORMS.exec(guard)?.slice(1) ?? [];
+    expect(named.length).toBe(11);
+    const [awaited, unawaited, ...rest] = named.slice(4);
+    const keywords = rest.slice(0, 3);
+    const wraps = [...rest.slice(3), M5_DEEP];
+    const claimOf = (word: string): string => BINDING_FORMS.find(entry => entry.word === word)?.claim ?? `<no BINDING word ${word}>`;
+    const { holders, m5Keywords, m5Patterns, m5Values, imports } = sites();
+    expect(m5Keywords.map(([id, keyword]) => `${id}: ${keyword}`)).toEqual(keywords.map(keyword => `${keyword}: ${keyword}`));
+    expect(M5_SPECIFIERS.map(([id]) => `${id} specifier`)).toEqual(named.slice(0, 2));
+    const literalKind = (write: (path: string) => string): string => {
+      const node = firstNode(parse("specifier.ts", write(PROVIDER_STEM)), entry => ts.isStringLiteral(entry) || ts.isNoSubstitutionTemplateLiteral(entry));
+      return node === undefined ? "none" : ts.isStringLiteral(node) ? "string" : "template";
+    };
+    expect(M5_SPECIFIERS.map(([id, write]) => `${id}: ${literalKind(write)}`)).toEqual(M5_SPECIFIERS.map(([id]) => `${id}: ${id}`));
+    const classes = [awaited, unawaited].flatMap(form => wraps.map(wrap => `${form}-${wrap}`));
+    expect(m5Values.map(value => value.id)).toEqual(classes);
+    const where = (form: string | undefined): string[] => holders.filter(([, text]) => form !== awaited || awaitable(text)).map(([id]) => id);
+    expect(m5Values.map(value => `${value.id} {${value.holders.join(" ")}}`)).toEqual(m5Values.map(value => `${value.id} {${where(value.id.split("-")[0]).join(" ")}}`));
+    const base = (form: string | undefined): string => (form === awaited ? "await import($)" : "import($)");
+    const written = m5Values.filter(value => !value.id.endsWith(`-${M5_DEEP}`));
+    expect(written.map(value => `${value.id}: ${value.statement}`)).toEqual(written.map(value => `${value.id}: ${value.id.endsWith("-bare") ? base(value.id.split("-")[0]) : `(${base(value.id.split("-")[0])})`}`));
+    const counted = /up to (\w+) steps/.exec(claimOf("import await"))?.[1] ?? "";
+    const depth = ["one", "two", "three", "four", "five", "six"].indexOf(counted) + 1;
+    expect(depth).toBeGreaterThan(2);
+    const deepest = (form: string | undefined): number => Math.max(...m5Values.filter(value => value.id.split("-")[0] === form).map(value => stepsOf(value.statement) ?? -1));
+    expect([awaited, unawaited].map(form => `${form}: ${deepest(form)}`)).toEqual([awaited, unawaited].map(form => `${form}: ${depth}`));
+    expect(m5Values.filter(value => !value.statement.includes(base(value.id.split("-")[0])) || stepsOf(value.statement) === undefined).map(value => value.id)).toEqual([]);
+    expect(m5Values.filter(value => value.statement.includes("await ") !== (value.id.split("-")[0] === awaited)).map(value => value.id)).toEqual([]);
+    const binding = BINDING_FORMS.filter(entry => /^an M5 import (?:bound|destructured) /.test(entry.claim)).map(entry => entry.word);
+    expect(m5Patterns.map(pattern => `${pattern.id}: ${pattern.word}`)).toEqual(binding.map(word => `${word.split(" ").join("-")}: ${word}`));
+    expect(m5Patterns.filter(pattern => !imports.some(entry => entry.statement === `const ${pattern.pattern} = await import($);` && entry.entry === pattern.entries.join("; "))).map(pattern => pattern.id)).toEqual([]);
+    const narrowed = [...named.slice(0, 4), ...binding];
+    expect(narrowed.filter(word => !claimOf(word).endsWith(`, ${M5_CLAIMED}`))).toEqual([]);
   });
 
   it.each(sites().positions.map(entry => [entry.id, entry] as const))("GRID POSITION %s: in each holder it names and for each LOCAL, the cell reads its SITES reading", (_id, entry) => {
@@ -2471,6 +2638,17 @@ describe(SUITE, () => {
     expect(cells.length).toBeGreaterThan(0);
     expect(misread(cells)).toEqual([]);
   });
+
+  it.each(sites().m5Values.flatMap(value => sites().m5Patterns.map(pattern => [`${value.id} ${pattern.id}`, value, pattern] as const)))(
+    "GRID M5 %s: in each holder the value names, for each M5 KEYWORDS keyword and each SPELLINGS text as a string literal and as a no-substitution template, the M5 statement binds the pattern's entries and the cell reads its M5 SITES reading",
+    { timeout: BUDGET_MS },
+    (_id, value, pattern) => {
+      const cells = m5Cells(value, pattern);
+      expect(cells.length).toBeGreaterThan(0);
+      expect(cells.length).toBe(value.holders.length * sites().m5Keywords.length * sites().spellings.length * M5_SPECIFIERS.length);
+      expect(misread(cells)).toEqual([]);
+    },
+  );
 
   it("ANCHOR (wb-tz2.22): the carrier's description lists refusal #3's unmet labels, which are the helper's r3 CARRIED ITEMS verbatim, and its acceptance line counts the r3 CARRIED members", { timeout: BUDGET_MS }, () => {
     const description = (beadRow(CARRIER)?.description ?? "").split("\n");
