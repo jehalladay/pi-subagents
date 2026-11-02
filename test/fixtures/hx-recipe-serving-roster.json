@@ -1226,6 +1226,58 @@
          ]
         }
        ],
+       "tagNameEndQuotedCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
+       "unquotedEndQuotedCopies": [
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        },
+        {
+         "labels": 1,
+         "roots": [
+          "~/.skills",
+          "<cwd>/.pi/skills",
+          "~/.pi/agent/skills"
+         ]
+        }
+       ],
        "nameOpenCopies": [
         {
          "labels": 1,
@@ -2558,6 +2610,20 @@
         "<cwd>/.pi/skills",
         "~/.pi/agent/skills"
        ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ],
+       [
+        "<cwd>/.pi/skills",
+        "~/.pi/agent/skills"
+       ]
+      ],
+      "openSpaces": [
        [
         "<cwd>/.pi/skills",
         "~/.pi/agent/skills"
