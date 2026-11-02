@@ -53,12 +53,13 @@
  *   correction's whose chain of corrected records ends at that team outcome, one naming an actor and one whose chain
  *   passes through such a correction included, the original kept beside its corrections; another episode's team outcome
  *   derives nothing. The cases hold chains one to four corrections deep from a team outcome, a feedback and a decision,
- *   and two to four deep through an actor-naming correction (R-DEEP-CHAIN names the bound this leaves). An admitted
- *   record is appended: the log returned is the input plus the record, every prior record byte-identical, and the
- *   caller's log untouched.
- * - THE CHECKS (judged by value, each over its own hand-authored cases): K-STATUS (24 cases), K-REWARD (30), K-TEAM (51),
+ *   and two to four deep through an actor-naming correction (R-DEEP-CHAIN names the bound this leaves); a per-actor
+ *   reward equal to the reward, and one equal to the share, of the correction past each of the four actor-naming forms
+ *   (k48 past k9, k45 past k31, k54 past k32, k57 past k33) is a case. An admitted record is appended: the log returned
+ *   is the input plus the record, every prior record byte-identical, and the caller's log untouched.
+ * - THE CHECKS (judged by value, each over its own hand-authored cases): K-STATUS (24 cases), K-REWARD (30), K-TEAM (57),
  *   K-APPEND (8), K-OPERATOR (9). A case reads "ok", the typed refusal as code or code:field, or what went wrong (a caller
- *   log mutated, an admitted log that is not the input plus the record, a refusal naming another record). MUTANTS: 62
+ *   log mutated, an admitted log that is not the input plus the record, a refusal naming another record). MUTANTS: 65
  *   validators, one fault each, each refused by exactly its declared checks; every check refuses one alone, and every
  *   typed refusal is some case's.
  * - THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its validator
@@ -284,6 +285,10 @@ function derivedValues(log: Log, episode: string, faults: ReadonlySet<Fault> = N
     if (entry.kind !== "correction" || has("team-correction-unread")) return false;
     if (entry.actor !== undefined && has("actor-naming-correction-underived")) return false;
     if (has("chain-through-actor-naming-underived") && chainOf(log, entry, faults).slice(1, -1).some(link => link.actor !== undefined)) return false;
+    const throughNaming = (form: (link: FeedbackRecord) => boolean): boolean => chainOf(log, entry, faults).slice(1, -1).some(link => link.actor !== undefined && form(link));
+    if (has("chain-through-outsider-naming-underived") && throughNaming(link => !(team.actors ?? []).includes(link.actor ?? ""))) return false;
+    if (has("chain-through-verifier-naming-underived") && throughNaming(link => link.outcome?.kind === "verifier")) return false;
+    if (has("chain-through-indirect-naming-underived") && throughNaming(link => link.corrects !== team.id)) return false;
     if (has("correction-of-actor-naming-underived") && log.find(other => other.id === entry.corrects)?.actor !== undefined) return false;
     if (has("chained-team-correction-unread")) return entry.corrects === team.id;
     const root = chainOf(log, entry, faults).slice(-1)[0];
@@ -367,7 +372,10 @@ type Fault =
   | "decision-actor-through-unknown-only"
   | "chain-through-actor-naming-underived"
   | "correction-of-actor-naming-underived"
-  | "decision-actor-within-four-steps";
+  | "decision-actor-within-four-steps"
+  | "chain-through-outsider-naming-underived"
+  | "chain-through-verifier-naming-underived"
+  | "chain-through-indirect-naming-underived";
 
 function validatorWith(faults: ReadonlySet<Fault>): Validator {
   const has = (fault: Fault): boolean => faults.has(fault);
@@ -540,6 +548,16 @@ const NAMING_FIX_FIXES: Readonly<Record<string, FeedbackRecord>> = {
   "through k15, a team actor, on a verifier": correction("k54", { corrects: "k32", status: "observed", reward: 54, outcome: teamVerifier(EPISODE) }),
   "through k15, an actor outside the team, on a receipt": correction("k57", { corrects: "k33", status: "observed", reward: 57, outcome: teamVerifier(EPISODE) }),
 };
+/** An actor-naming form's log with the form and its correction (NAMING_FIX_FIXES) appended, by the form's label: A2a's namedFixed log. */
+const namedFixedLog = (label: string): Log => {
+  const form = ACTOR_NAMING_FIXES.find(([name]) => name === label);
+  const fixOfFix = NAMING_FIX_FIXES[label];
+  return form === undefined || fixOfFix === undefined ? [] : [...form[1], form[2], fixOfFix];
+};
+/** The three forms besides k9's, each corrected again: k31 to 45 (k45, share 15), k32 to 54 (k54, 18) and k33 to 57 (k57, 19). */
+const K31_FIXED: Log = namedFixedLog("direct, an actor outside the team, on a verifier");
+const K32_FIXED: Log = namedFixedLog("through k15, a team actor, on a verifier");
+const K33_FIXED: Log = namedFixedLog("through k15, an actor outside the team, on a receipt");
 /** The operator's correction of a1's feedback, on a1's own verifier: the chained per-actor case corrects it. */
 const F1_FIX = correction("k6", { corrects: "f1", status: "observed", reward: 6, outcome: actorVerifier("a1") });
 /** k6 corrected (k25), and that correction corrected again (k26), each unknown and carrying no value. */
@@ -737,6 +755,12 @@ const TEAM_CASES: readonly Case[] = [
   at("t-correction-copy-corrected", CORRECTED, correction("c60", { corrects: "f1", status: "observed", reward: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
   at("t-correction-copy-named", [...BASE, ACTOR_TEAM_FIX], correction("c62", { corrects: "f1", status: "observed", reward: 9, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
   at("t-correction-copy-through-named", NAMED_CHAINED2, correction("c61", { corrects: "f1", status: "observed", reward: 30, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-copy", K31_FIXED, feedback("c63", { actor: "a1", status: "observed", reward: 45, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-outsider-team-correction-fixed-share", K31_FIXED, feedback("c64", { actor: "a1", status: "observed", reward: 15, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-copy", K32_FIXED, feedback("c65", { actor: "a1", status: "observed", reward: 54, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-actor-correction-fixed-share", K32_FIXED, feedback("c66", { actor: "a1", status: "observed", reward: 18, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-copy", K33_FIXED, feedback("c67", { actor: "a1", status: "observed", reward: 57, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
+  at("t-chained-outsider-correction-fixed-share", K33_FIXED, feedback("c68", { actor: "a1", status: "observed", reward: 19, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
 ];
 const APPEND_CASES: readonly Case[] = [
   at("a-correct-feedback", BASE, correction("k1", { corrects: "f1", status: "observed", reward: 6, outcome: actorVerifier("a1") }), "ok"),
@@ -881,6 +905,9 @@ const MUTANTS: readonly Mutant[] = [
   mutant("M60", "decision-actor-through-unknown-only", ["K-TEAM"]),
   mutant("M61", "chain-through-actor-naming-underived", ["K-TEAM"]),
   mutant("M62", "correction-of-actor-naming-underived", ["K-TEAM"]),
+  mutant("M63", "chain-through-outsider-naming-underived", ["K-TEAM"]),
+  mutant("M64", "chain-through-verifier-naming-underived", ["K-TEAM"]),
+  mutant("M65", "chain-through-indirect-naming-underived", ["K-TEAM"]),
 ];
 const mutantLine = (entry: Mutant): string => `${entry.id}:${entry.fault}:${entry.refusedBy.join("+")}`;
 
@@ -1552,10 +1579,16 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-actor-team-correction-fixed-own-copy",
       "t-actor-team-correction-depth3-copy",
       "t-actor-team-correction-depth4-copy",
+      "t-outsider-team-correction-fixed-copy",
+      "t-outsider-team-correction-fixed-share",
+      "t-chained-actor-correction-fixed-copy",
+      "t-chained-actor-correction-fixed-share",
+      "t-chained-outsider-correction-fixed-copy",
+      "t-chained-outsider-correction-fixed-share",
     ]);
     expect(
       read,
-      "a per-actor value equal to a derived value is refused; another value, an episode with no team outcome (another episode's team reward included), the team outcome's own correction and its actor-naming correction to a value nothing derives are not, and that correction's reward then derives for another actor and for the actor it names, as does a correction of it (its reward for each, and its share), and so do the corrections two and three past it (their rewards for another actor)",
+      "a per-actor value equal to a derived value is refused; another value, an episode with no team outcome (another episode's team reward included), the team outcome's own correction and its actor-naming correction to a value nothing derives are not, and that correction's reward then derives for another actor and for the actor it names, as does a correction of it (its reward for each, and its share), and so do the corrections two and three past it (their rewards for another actor), as does the correction past each of the other three actor-naming forms (k45, k54, k57: its reward and its share for a1)",
     ).toEqual({
       "t-copy-reward": "team-outcome-copied:reward",
       "t-copy-share": "team-outcome-copied:reward",
@@ -1572,6 +1605,12 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-actor-team-correction-fixed-own-copy": "team-outcome-copied:reward",
       "t-actor-team-correction-depth3-copy": "team-outcome-copied:reward",
       "t-actor-team-correction-depth4-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-share": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-share": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-share": "team-outcome-copied:reward",
     });
     return { derived, fixes, corrected, actorNamed, namedFixed, namedChained, read };
   },
@@ -1890,6 +1929,12 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-actor-team-correction-fixed-own-copy",
       "t-actor-team-correction-depth3-copy",
       "t-actor-team-correction-depth4-copy",
+      "t-outsider-team-correction-fixed-copy",
+      "t-outsider-team-correction-fixed-share",
+      "t-chained-actor-correction-fixed-copy",
+      "t-chained-actor-correction-fixed-share",
+      "t-chained-outsider-correction-fixed-copy",
+      "t-chained-outsider-correction-fixed-share",
     ]);
     expect(
       read,
@@ -1915,6 +1960,12 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-actor-team-correction-fixed-own-copy": "team-outcome-copied:reward",
       "t-actor-team-correction-depth3-copy": "team-outcome-copied:reward",
       "t-actor-team-correction-depth4-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-outsider-team-correction-fixed-share": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-chained-actor-correction-fixed-share": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-copy": "team-outcome-copied:reward",
+      "t-chained-outsider-correction-fixed-share": "team-outcome-copied:reward",
     });
     return read;
   },
@@ -2200,7 +2251,7 @@ describe(SUITE, () => {
       "team-outcome-copied",
     ]);
     expect(BASE.map(record => `${record.id}:${record.kind}:${record.writer}`)).toEqual(["t1:team-outcome:host", "d1:decision:policy", "d2:decision:policy", "f1:feedback:host"]);
-    expect(CHECKS.map(check => `${check}:${CASES[check].length}`)).toEqual(["K-STATUS:24", "K-REWARD:30", "K-TEAM:51", "K-APPEND:8", "K-OPERATOR:9"]);
+    expect(CHECKS.map(check => `${check}:${CASES[check].length}`)).toEqual(["K-STATUS:24", "K-REWARD:30", "K-TEAM:57", "K-APPEND:8", "K-OPERATOR:9"]);
     expect(MUTANTS.map(mutantLine)).toEqual([
       "M01:open-status:K-STATUS",
       "M02:missing-status-observed:K-STATUS",
@@ -2264,6 +2315,9 @@ describe(SUITE, () => {
       "M60:decision-actor-through-unknown-only:K-TEAM",
       "M61:chain-through-actor-naming-underived:K-TEAM",
       "M62:correction-of-actor-naming-underived:K-TEAM",
+      "M63:chain-through-outsider-naming-underived:K-TEAM",
+      "M64:chain-through-verifier-naming-underived:K-TEAM",
+      "M65:chain-through-indirect-naming-underived:K-TEAM",
     ]);
     expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:9", "Q2:3", "Q3:2", "Q4:3", "Q5:3", "Q6:5", "Q7:3"]);
     expect(DEEP_CHAIN.map(member => `${member.id}:${member.fault}`)).toEqual([
