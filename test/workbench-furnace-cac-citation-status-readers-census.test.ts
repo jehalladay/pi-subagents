@@ -1,9 +1,10 @@
 /**
  * wb-t8my readers census (the rule-19 dependency-inversion child of wb-pnn8: ruling R-B159 filed it, ruling R-B202 folded wb-pnn8's
  * refusal #4 members into it). SUBJECT: the four receipt-anchor readers anchorTables, anchorProse, anchorRules and headerOf, moved
- * byte for byte from wb-pnn8's FINAL cut #4 (tip ad5195cd) into test/helpers/furnace-cac-citation-status-readers.ts. The parent's
- * census and roster are not on trunk and are neither added nor edited here; the parent stays parked until this lands, and its later
- * re-cut can import the helper.
+ * from wb-pnn8's FINAL cut #4 (tip ad5195cd) into test/helpers/furnace-cac-citation-status-readers.ts with their code byte for byte
+ * (the helper's header names the items it adds and the doc-comment words it narrows). wb-pnn8's cut #4 versions of the census,
+ * roster and receipt are not on trunk, and no census, roster or receipt file is added or edited here; the parent stays parked until
+ * this lands, and its later re-cut can import the helper.
  *
  * PINNED READER SET (this file, test/workbench-furnace-cac-citation-status-readers-census.test.ts; observed at the cut: every case
  * passes on the moved readers, and each named mutant, applied to a copy of the helper, reds the pin case named after it). Each pin
@@ -34,33 +35,49 @@
  *   shown) and H-INDENT-ONE-CHAR (HEADER-TWO-SPACES and HEADER-TWO-TABS by headerOf: a comment prefix indented by two spaces or by two
  *   tabs is removed).
  * - Case SHAPE (the frozen shape, standing rule 16): the rows as `${id}:${pins.length}`, every pin with its probe ids, and the rows'
- *   pins in pin order, each held to a literal.
+ *   pins in pin order, each held to a literal, so that a one-literal edit of any of them reds SHAPE.
  * - Case ANCHOR (the outside anchors, read at run time from the tracked tracker export .beads/issues.jsonl and never retyped as the
- *   expectation): (1) wb-t8my's description enumerates exactly rows U1-U3, in order, each clause opening '- <id> (<severity>)
- *   <label>: <count> mutant(s) <claim>' with the count word equal to the row's pin count; (2) the member lines of the R-B202 fold in
- *   wb-t8my's notes (between 'members folded into wb-t8my' and its 'rule19-invert idem' line) are exactly rows V1 and V2, in order, by
- *   their leads 'U1-MEDIUM-CONFIRMED-' and 'U2-LOW-CONFIRMED-', and each carries '-<label>-<mutant ids>-0-47-WITNESSES-<witness ids>',
- *   the mutant ids built from the row's pins and the witness ids from its GW19 probes; (3) in wb-pnn8's notes, each
- *   UNMET line of refusal #3 (the verdict naming tip f53aa719) for rows U1-U3 names exactly that row's G12 ids, in order, each as
- *   '<id> (<quote>)'; refusal #4's verdict (naming tip ad5195cd, up to its WHAT STANDS) cites each V pin as '<id> (<quote>)' or
- *   '<id>, <quote>:'; and refusal #4's F5 finding names exactly row S's ids, in order, with its witness clause naming row S's WS-W
- *   probes in order.
+ *   expectation; each field below is read at fixed delimiters and compared whole, by equality, never as a prefix, a suffix or a
+ *   substring): (1) wb-t8my's description enumerates exactly rows U1-U3, in order, and each clause, read as '- <id> (<severity>)
+ *   <label>: <count> mutant(s) <claim>' with the claim its first word and the quoted or parenthesized span after it (through the
+ *   closing quote or parenthesis), gives exactly the row's id, severity, label and claim and the count word of its pin count; (2)
+ *   the member lines of the R-B202 fold in wb-t8my's notes (between 'members folded into wb-t8my' and its 'rule19-invert idem' line)
+ *   are exactly rows V1 and V2, in order, each line read as '<lead><rulings>-<label>-<mutant ids>-0-47-WITNESSES-GW19-<witness
+ *   numbers>' (the lead '<U id>-<severity>-<grade>-', the rulings a run of ruling ids R<n> or R-B<n> joined by '-', the label the
+ *   hyphenated upper-case words before '-GP19-') and giving exactly the row's lead, rulings and label, the mutant ids built from its
+ *   pins and the numbers of its pins' GW19 probes, in probe order; (3) in wb-pnn8's notes, each UNMET line of refusal #3 (the
+ *   verdict naming tip f53aa719) for rows U1-U3 names exactly that row's G12 ids and exactly its pins' GW12 probe ids, each in
+ *   order, and cites each of the row's pins first as '<id> (<quote>)' (to the balancing parenthesis) or '<id>, <quote>:' (to the
+ *   next colon) with exactly the pin's quote; refusal #4's verdict (naming tip ad5195cd, up to its WHAT STANDS) cites each V pin
+ *   first, read the same way, with exactly its quote; and refusal #4's F5 finding, found by its head '- F5 INFO: (<row S's label>,
+ *   CONFIRMED)', names exactly row S's ids, in order, with its witness clause naming row S's WS-W probes in order.
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) On each probe the reader named beside it returns exactly the literal reading written here: a
  * reader edit that changes one reading reds that pin case. (2) Each named mutant changes a reading of its own pin's probes: the
  * cutting seat applies each mutant's own edit (the gate's and the cut #4 seat's edits, executed over a copy of the helper) and reads
- * the pin case named after it red; a pin whose probes stopped holding its form would read green there. (3) The rows, their pins and
- * the U and V pins' quotes are the ones the tracker export records: a pin or a row removed, swapped or relabelled - in one literal or
- * in every literal together - reds SHAPE or ANCHOR (standing rule 16's CT1-CT6).
+ * the pin case named after it red; a pin whose probes stopped holding its form would read green there. (3) Each field ANCHOR reads
+ * is held whole: the U rows' ids, severities, labels, claims and count words; the V rows' leads, rulings, labels, pins and GW19
+ * probe ids; the U rows' pins and their GW12 probe ids; the U and V pins' quotes; row S's label, pins and WS-W probe ids. So such a
+ * field removed, swapped, relabelled or shortened at either end - in one literal or in every literal together - reds ANCHOR, and a
+ * pin or a row removed or swapped in one literal reds SHAPE as well (standing rule 16's CT1-CT6).
  *
  * NOT CLAIMED. A reading on any input that is not one of these probes is NOT CLAIMED by this census - among them the other cell
  * markup (an image, an autolink, a character reference, an escaped pipe), an element in a block of more than one line or with an
  * upper-case tag name, a near lead or an NFKC-folding character other than the ones probed, and every reading the parent census's
  * header lists beyond these probes. The parent census's own in-case controls and header are NOT CLAIMED by this census. A probe's
- * text edited together with its literal reading is NOT CLAIMED by this census (the mutant replay is what shows that each probe still
- * holds its form). Row S's pin quotes are this file's descriptions of the seat's mutants and no outside anchor holds them: an edit of
- * one is NOT CLAIMED by this census. The citation judges' use of shownText (their carrier view) is NOT CLAIMED by this census. No
- * residual is claimed.
+ * text edited - alone or together with its literal reading - in a way that keeps this census passing is NOT CLAIMED by this census
+ * (the mutant replay is what shows that each probe still holds its form). Row S's pin quotes are this file's descriptions of the
+ * seat's mutants and no outside anchor holds them: an edit of one is NOT CLAIMED by this census. The row ids V1, V2 and S are this
+ * file's own names and no field ANCHOR reads holds them: one relabelled in every literal together is NOT CLAIMED by this census
+ * (SHAPE reds a one-literal relabel). The control probes (every probe whose id opens neither GW12-, GW19- nor WS-W-) are this file's
+ * own names and no field ANCHOR reads holds them: one removed or relabelled in every literal together is NOT CLAIMED by this census
+ * (SHAPE reds a one-literal edit). The text of a description clause after its claim, and the text of an UNMET line, of refusal #4's
+ * verdict and of its F5 finding beyond the ids, quotes and witness clause read above, are NOT CLAIMED by this census. Each block is
+ * found by a fixed locator (the description clauses' opening '- U<digit> (', the fold's opening and idem lines, the two verdict
+ * openings with their full tips, each UNMET line's opening '<id> <severity> CONFIRMED', refusal #4's WHAT STANDS end, the F5 head
+ * and the next bullet head): a locator edited so that it still finds the same block reads the same fields and is NOT CLAIMED by
+ * this census. The citation judges' use of shownText
+ * (their carrier view) is NOT CLAIMED by this census. No residual is claimed.
  *
  * Display paths added: none (test-only). No scratch is allocated; the tracker export is only read; no src, docs or receipt is edited.
  */
@@ -75,7 +92,8 @@ const EXPORT = ".beads/issues.jsonl";
 /** The opening of wb-pnn8's refusal #3 verdict line and of its refusal #4 verdict line (bead notes, append-only). */
 const REFUSAL_3 = "refusal #3 on cut #3 (tip f53aa719b97e00479f4b19327aa787a9be3d56a9";
 const REFUSAL_4 = "refusal #4 on the FINAL cut #4 (tip ad5195cdd19c0069dccec6d02dc09f1716613490";
-const COUNT = ["no", "one", "two", "three", "four", "five"];
+/** The count words wb-t8my's description writes for the U rows' pin counts (one, three and four), each read by one U row. */
+const COUNT: Readonly<Record<number, string>> = { 1: "one", 3: "three", 4: "four" };
 
 type ReaderId = "anchorTables" | "anchorProse" | "anchorRules" | "headerOf";
 const READERS: Readonly<Record<ReaderId, (text: string) => unknown>> = { anchorTables, anchorProse, anchorRules, headerOf };
@@ -99,10 +117,11 @@ interface DescribedRow {
   readonly claim: string;
   readonly pins: readonly string[];
 }
-/** A row the R-B202 fold appended to wb-t8my's notes: the first line opening <lead>. */
+/** A row the R-B202 fold appended to wb-t8my's notes: the line '<lead><rulings>-<label>-<mutant ids>-0-47-WITNESSES-GW19-<witness numbers>'. */
 interface FoldedRow {
   readonly id: string;
   readonly lead: string;
+  readonly rulings: string;
   readonly label: string;
   readonly pins: readonly string[];
 }
@@ -246,8 +265,8 @@ const DESCRIBED: readonly DescribedRow[] = [
   { id: "U3", severity: "LOW", label: "NFKC lead", claim: "against 'opens with ANCHOR.rule exactly'", pins: ["G12-R-NFKC-LEAD"] },
 ];
 const FOLDED: readonly FoldedRow[] = [
-  { id: "V1", lead: "U1-MEDIUM-CONFIRMED-", label: "PROSE-OPACITY-OPENING-TAG-READING-NO-FALSIFIER", pins: ["GP19-O-OPENING-TAG-IGNORED", "GP19-O-OPENING-TAG-IGNORED-ANCHOR"] },
-  { id: "V2", lead: "U2-LOW-CONFIRMED-", label: "WITNESS-RULE-EQUAL-SECOND-RULE-BLOCK-NO-FALSIFIER", pins: ["GP19-R-RULES-DEDUPED"] },
+  { id: "V1", lead: "U1-MEDIUM-CONFIRMED-", rulings: "R514-R515-R668-R-B159", label: "PROSE-OPACITY-OPENING-TAG-READING-NO-FALSIFIER", pins: ["GP19-O-OPENING-TAG-IGNORED", "GP19-O-OPENING-TAG-IGNORED-ANCHOR"] },
+  { id: "V2", lead: "U2-LOW-CONFIRMED-", rulings: "R515", label: "WITNESS-RULE-EQUAL-SECOND-RULE-BLOCK-NO-FALSIFIER", pins: ["GP19-R-RULES-DEDUPED"] },
 ];
 const FINDING: FindingRow = { id: "S", label: "THE HOLES, seat-measured part", pins: ["T-STRONG-STRIPPED", "T-UNDERSCORE-EM-STRIPPED", "P-COLLAPSED-REFLINK-HIDDEN", "H-INDENT-ONE-CHAR"] };
 const ROWS: readonly { readonly id: string; readonly pins: readonly string[] }[] = [...DESCRIBED, ...FOLDED, FINDING];
@@ -283,9 +302,54 @@ function between(text: string, from: number, open: string, close: string): strin
   return end < 0 ? "" : text.slice(start, end);
 }
 const unique = (values: readonly string[]): string[] => values.filter((value, at) => values.indexOf(value) === at);
+/** The ids of the probes of these pins, in pin and probe order, each once, that match pattern. */
+function probeIds(pins: readonly string[], pattern: RegExp): string[] {
+  return unique(pins.flatMap(id => pinOf(id).probes.map(probe => probe.id)).filter(id => pattern.test(id)));
+}
+/** A description clause at its fixed delimiters: '- <id> (<severity>) <label>: <count> <noun> <claim>', then a space or the line's end, the claim being one word and the quoted or parenthesized span after it, through its closing quote or parenthesis. */
+const CLAUSE = /^- (U\d) \(([A-Z]+)\) ([^:]+): ([a-z]+) (mutants?) ([a-z]+ (?:'[^']*'|\([^()]*\)))(?: |$)/;
+/** The fields of a description clause (the whole line when it does not read as CLAUSE). */
+function clauseFields(line: string): readonly string[] {
+  const match = CLAUSE.exec(line);
+  return match === null ? [line] : match.slice(1);
+}
+/** An R-B202 fold line at its fixed delimiters: the lead '<U id>-<severity>-<grade>-', the rulings (ruling ids R<n> or R-B<n> joined by '-'), the label (hyphenated upper-case words before '-GP19-'), the mutant ids, then '-0-47-WITNESSES-GW19-' and the witness numbers. */
+const FOLD = /^(U\d-[A-Z]+-[A-Z]+-)(R(?:-B)?\d+(?:-R(?:-B)?\d+)*)-([A-Z]+(?:-[A-Z]+)*?)-(GP19-[A-Z0-9]+(?:-[A-Z0-9]+)*?)-0-47-WITNESSES-GW19-(\d\d(?:-\d\d)*)$/;
+/** The fields of a fold line (the whole line when it does not read as FOLD). */
+function foldFields(line: string): readonly string[] {
+  const match = FOLD.exec(line);
+  return match === null ? [line] : match.slice(1);
+}
+/** The fields a folded row's line must give: its lead, rulings and label, its mutant ids (the first pin, then 'AND-' and each later pin's suffix) and its pins' GW19 probe numbers. */
+function foldedFields(row: FoldedRow): readonly string[] {
+  const first = row.pins[0] ?? "";
+  const mutants = [first, ...row.pins.slice(1).map(id => `AND-${id.slice(first.length + 1)}`)].join("-");
+  const witnesses = probeIds(row.pins, /^GW19-\d\d$/).map(id => id.slice("GW19-".length));
+  return [row.lead, row.rulings, row.label, mutants, witnesses.join("-")];
+}
+/** The quote text gives at its first citation of id: '<id> (<quote>)' up to the balancing parenthesis, or '<id>, <quote>:' up to the next colon; an occurrence inside a longer id, or followed by neither form, is passed over (empty when none cites id). */
+function citation(text: string, id: string): string {
+  for (let at = text.indexOf(id); at >= 0; at = text.indexOf(id, at + 1)) {
+    if (/[A-Za-z0-9-]/.test(text.charAt(at - 1))) continue;
+    const after = text.slice(at + id.length);
+    if (after.startsWith(", ")) {
+      const end = after.indexOf(":");
+      if (end >= 0) return after.slice(2, end);
+    }
+    if (after.startsWith(" (")) {
+      let depth = 0;
+      for (let index = 1; index < after.length; index += 1) {
+        if (after[index] === "(") depth += 1;
+        if (after[index] === ")") depth -= 1;
+        if (depth === 0) return after.slice(2, index);
+      }
+    }
+  }
+  return "";
+}
 
 describe("wb-t8my readers census (test/helpers/furnace-cac-citation-status-readers.ts): fifteen pin cases, each holding literal probe readings its named wb-pnn8 reader mutant changes, with SHAPE and ANCHOR", () => {
-  it("SHAPE: the rows, their pins and each pin's probe ids stay frozen", () => {
+  it("SHAPE: the rows, their pins and each pin's probe ids are each held to a literal (a one-literal edit reds here)", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["U1:4", "U2:3", "U3:1", "V1:2", "V2:1", "S:4"]);
     expect(PINS.map(pin => `${pin.id}:${pin.probes.map(probe => probe.id).join(",")}`)).toEqual([
       "G12-T-CELL-HTML-STRIPPED:CELL-ELEMENT,GW12-01",
@@ -307,53 +371,46 @@ describe("wb-t8my readers census (test/helpers/furnace-cac-citation-status-reade
     expect(ROWS.flatMap(row => row.pins), "the rows hold every pin once, in pin order").toEqual(PINS.map(pin => pin.id));
   });
 
-  it("ANCHOR: the rows, their pins and the U and V pins' quotes are the ones wb-t8my's and wb-pnn8's tracker-export rows record", () => {
+  it("ANCHOR: each field read at its delimiters from wb-t8my's and wb-pnn8's tracker-export rows equals its literal whole - the U clauses' ids, severities, labels, claims and count words; the V fold lines' leads, rulings, labels, pins and GW19 witnesses; the U pins and their GW12 witnesses; the U and V pins' quotes; row S's label, pins and WS-W witnesses", () => {
     const child = exportRow("wb-t8my");
     const parent = exportRow("wb-pnn8");
     const clauses = child.description.split("\n").filter(line => /^- U\d \(/.test(line));
     expect(
-      clauses.map(line => line.split(" ")[1]),
-      "wb-t8my's description enumerates exactly rows U1-U3, in order",
-    ).toEqual(DESCRIBED.map(row => row.id));
-    for (const row of DESCRIBED) {
-      const head = `- ${row.id} (${row.severity}) ${row.label}: ${COUNT[row.pins.length]} mutant${row.pins.length === 1 ? "" : "s"} ${row.claim} `;
-      expect(clauses.find(line => line.startsWith(`- ${row.id} `))?.startsWith(head), `wb-t8my's ${row.id} clause opens '${head}'`).toBe(true);
-    }
-    const members = between(child.notes, 0, "members folded into wb-t8my\n", "\nrule19-invert idem").split("\n").slice(1);
-    expect(
-      members.map(line => FOLDED.find(row => line.startsWith(row.lead))?.id ?? line.slice(0, 24)),
-      "the R-B202 fold's member lines in wb-t8my's notes are exactly rows V1 and V2, in order",
-    ).toEqual(FOLDED.map(row => row.id));
+      clauses.map(clauseFields),
+      "wb-t8my's description enumerates exactly rows U1-U3, in order, each clause giving the row's id, severity, label, count word, noun and claim whole",
+    ).toEqual(DESCRIBED.map(row => [row.id, row.severity, row.label, COUNT[row.pins.length], row.pins.length === 1 ? "mutant" : "mutants", row.claim]));
     for (const row of FOLDED) {
-      const fold = members.find(line => line.startsWith(row.lead)) ?? "";
       const first = row.pins[0] ?? "";
       expect(
         row.pins.slice(1).every(id => id.startsWith(`${first}-`)),
         `${row.id}: every later pin extends its first pin's id`,
       ).toBe(true);
-      const mutants = [first, ...row.pins.slice(1).map(id => `AND-${id.slice(first.length + 1)}`)].join("-");
-      const witnesses = unique(row.pins.flatMap(id => pinOf(id).probes.map(probe => probe.id)).filter(id => /^GW19-\d\d$/.test(id))).sort();
-      const clause = `-${row.label}-${mutants}-0-47-WITNESSES-GW19-${witnesses.map(id => id.slice("GW19-".length)).join("-")}`;
-      expect(fold, `${row.id}: the R-B202 fold line opening '${row.lead}' carries '${clause}'`).toContain(clause);
     }
+    const members = between(child.notes, 0, "members folded into wb-t8my\n", "\nrule19-invert idem").split("\n").slice(1);
+    expect(
+      members.map(foldFields),
+      "the R-B202 fold's member lines in wb-t8my's notes are exactly rows V1 and V2, in order, each giving the row's lead, rulings, label, mutant ids and GW19 witness numbers whole",
+    ).toEqual(FOLDED.map(foldedFields));
     const r3 = parent.notes.indexOf(REFUSAL_3);
     const r4 = parent.notes.indexOf(REFUSAL_4);
     expect([r3 >= 0, r4 > r3], "wb-pnn8's notes hold refusal #3's verdict and, after it, refusal #4's").toEqual([true, true]);
     for (const row of DESCRIBED) {
       const unmet = lineAfter(parent.notes, r3, `${row.id} ${row.severity} CONFIRMED`);
       expect(unique(unmet.match(/\bG12-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g) ?? []), `refusal #3's ${row.id} UNMET line names exactly the row's ids, in order`).toEqual([...row.pins]);
-      for (const id of row.pins) expect(unmet, `refusal #3's ${row.id} UNMET line cites ${id} with its quote`).toContain(`${id} (${pinOf(id).quote})`);
+      expect(unique(unmet.match(/\bGW12-\d\d\b/g) ?? []), `refusal #3's ${row.id} UNMET line names exactly the row's GW12 witnesses, in order`).toEqual(probeIds(row.pins, /^GW12-\d\d$/));
+      for (const id of row.pins) expect(citation(unmet, id), `refusal #3's ${row.id} UNMET line cites ${id} first with exactly its quote`).toBe(pinOf(id).quote);
     }
     const verdict4 = between(parent.notes, r4, REFUSAL_4, "\nWHAT STANDS");
     for (const id of FOLDED.flatMap(row => row.pins)) {
-      const quote = pinOf(id).quote;
-      expect(verdict4.includes(`${id} (${quote})`) || verdict4.includes(`${id}, ${quote}:`), `refusal #4's verdict cites ${id} with the quote '${quote}'`).toBe(true);
+      expect(citation(verdict4, id), `refusal #4's verdict cites ${id} first with exactly its quote`).toBe(pinOf(id).quote);
     }
     const f5 = between(parent.notes, r4, `\n- F5 INFO: (${FINDING.label}, CONFIRMED)`, "\n- F6 ");
     expect(unique(f5.match(/(?<![A-Za-z0-9-])[A-Z]-[A-Z]+(?:-[A-Z]+)+(?![A-Za-z0-9-])/g) ?? []), "refusal #4's F5 finding names exactly row S's ids, in order").toEqual([...FINDING.pins]);
-    const seatWitnesses = FINDING.pins.flatMap(id => pinOf(id).probes.map(probe => probe.id)).filter(id => id.startsWith("WS-W-"));
-    const witnessClause = `Their witnesses ${seatWitnesses.map((id, at) => (at === 0 ? id : `-${id.slice("WS-W-".length)}`)).join(" / ")} red`;
-    expect(f5, `refusal #4's F5 finding names row S's witnesses: '${witnessClause}'`).toContain(witnessClause);
+    const witnessList = /Their witnesses (\S+(?: \/ \S+)*) red/.exec(f5)?.[1] ?? "";
+    expect(
+      witnessList.split(" / "),
+      "refusal #4's F5 witness clause 'Their witnesses <first> / -<suffix> ... red' names exactly row S's WS-W probes, in order",
+    ).toEqual(probeIds(FINDING.pins, /^WS-W-/).map((id, at) => (at === 0 ? id : `-${id.slice("WS-W-".length)}`)));
   });
 
   for (const pin of PINS) {

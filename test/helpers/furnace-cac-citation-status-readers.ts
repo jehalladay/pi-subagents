@@ -3,10 +3,14 @@
  * (machine/flywheel/wb-pnn8 tip ad5195cdd19c0069dccec6d02dc09f1716613490, test/workbench-furnace-cac-citation-status-census.test.ts),
  * moved here so that a census can hold their readings (test/workbench-furnace-cac-citation-status-readers-census.test.ts). Under the
  * rule-19 dependency inversion R-B202 the parent wb-pnn8 is parked and waits on wb-t8my; its later re-cut can import these readers.
- * Every declaration below is copied byte for byte from that tip - lines 421-424, 655-665, 693-706 and 1106-1141 - and only the one
- * export statement at the end and the reduced ANCHOR (the parent's ANCHOR.rule, the only member a reader reads) are added. The doc
- * comments are the parent's and name its census header ("THE READERS"); the readings this module is held to are the readers census's
- * pinned probes, not those comments. Test-only: no src, docs or receipt is read or written here.
+ * The declarations below are that tip's lines 421-424, 655-665, 693-706 and 1106-1141, their code byte for byte, plus three added
+ * items: the reduced marked import (the tip's line 261 also imports Lexer and Links), the reduced ANCHOR (the parent's ANCHOR.rule,
+ * the only member a reader reads) and the one export statement at the end. Changed: the closing words of the doc comments of
+ * anchorTables, anchorProse and anchorRules - the tip's 'each pinned by its in-case control; no other reading is claimed' names the
+ * in-case controls of wb-pnn8's cut #4 census, a version of that file trunk does not carry, so each now says that only the readers
+ * census's probes hold a reading here. The doc comments are otherwise the parent's and name its census header ("THE READERS"); they
+ * describe, and the readings this module is held to are the readers census's pinned probes. Test-only: no src, docs or receipt is
+ * read or written here.
  */
 import { marked, type Token, type Tokens } from "marked";
 
@@ -42,7 +46,7 @@ function shownText(tokens: readonly Token[], separator: string, view: { opaque: 
     .join(separator);
 }
 const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
-/** The tables of a receipt's last entry, read through marked's tokens: THE READERS' Entries and Tables readings (header), each pinned by its in-case control; no other reading is claimed. */
+/** The tables of a receipt's last entry, read through marked's tokens: THE READERS' Entries and Tables readings (header); here only the readers census's probes hold a reading. */
 function anchorTables(text: string): string[][][] {
   const tokens = marked.lexer(text);
   const entries = tokens.flatMap((token, index) => (isHeading(token) && token.depth === 2 ? [index] : []));
@@ -53,7 +57,7 @@ function anchorTables(text: string): string[][][] {
     .filter(isTable)
     .map(table => [table.header.map(cell => cell.text), ...table.rows.map(row => row.map(cell => cell.text))]);
 }
-/** The prose blocks of a receipt's last entry, read through marked's tokens by shownText, whitespace-squeezed and trimmed: THE READERS' Entries and Prose readings (header), each pinned by its in-case control; no other reading is claimed. */
+/** The prose blocks of a receipt's last entry, read through marked's tokens by shownText, whitespace-squeezed and trimmed: THE READERS' Entries and Prose readings (header); here only the readers census's probes hold a reading. */
 function anchorProse(text: string): string[] {
   const tokens = marked.lexer(text);
   const entries = tokens.flatMap((token, index) => (isHeading(token) && token.depth === 2 ? [index] : []));
@@ -68,7 +72,7 @@ function anchorProse(text: string): string[] {
       return view.opaque ? [] : [shown];
     });
 }
-/** The witness rules a receipt's last entry states: THE READERS' Rules readings (header), each pinned by its in-case control; no other reading is claimed. */
+/** The witness rules a receipt's last entry states: THE READERS' Rules readings (header); here only the readers census's probes hold a reading. */
 function anchorRules(text: string): string[] {
   return anchorProse(text).flatMap(block => (block.startsWith(ANCHOR.rule) ? [block.slice(ANCHOR.rule.length).replace(/\.$/, "")] : []));
 }
