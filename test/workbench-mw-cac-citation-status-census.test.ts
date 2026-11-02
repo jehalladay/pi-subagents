@@ -39,8 +39,23 @@
  * witness to another family's probe (X22-QUIET-SWAP-COORD) reds; R-SCOPE's probe is Q1's outside list, one path a line, read
  * as the clause (a) scopes whose roots would list each path. The section's units cite nothing (judged in the same case), and
  * its rows as read at this cut are a frozen literal there, so a docs-side edit the judge still accepts reds too. F6: A5's
- * footnote-definition control holds a status that only a footnote definition line inside the citing unit carries as
- * unqualified, pinning FOOTNOTE.definition (the gate's M22-FOOTNOTE-DEF-NEVER).
+ * footnote-definition control holds a status that only a plain footnote definition line inside the citing unit carries as
+ * unqualified, killing FOOTNOTE.definition's never-match member (the gate's M22-FOOTNOTE-DEF-NEVER); wb-9lz6 below pins the
+ * line's other forms.
+ *
+ * wb-9lz6 (the R694 follow-up of landing 781, gate cmd_453531a97151: its F1 leads and is cured here). A5's footnote-definition
+ * controls hold that status, read unqualified, in eight forms of the definition line inside the citing unit, one control each:
+ * the plain line "[^s]: design-only" (footnote-definition); the line behind one blockquote marker and a space
+ * (footnote-definition-quoted, the gate's witness gate-fndef-quote verbatim), behind one marker with no space
+ * (footnote-definition-unspaced-quote) or behind two markers (footnote-definition-nested-quote); the line indented two spaces
+ * (footnote-definition-indented, the gate's witness gate-fndef-indent verbatim), four spaces (footnote-definition-deep-indent)
+ * or one tab (footnote-definition-tab-indent); and the plain line under the label [^note-1] (footnote-definition-long-label).
+ * Each falsifier is a one-edit member of FOOTNOTE.definition, edited with its roster constant, and reds A5 and the closing
+ * case: the never-match member reds all eight forms; the blockquote prefix (?:>\s*)* dropped (the gate's G2-FNDEF-NO-QUOTE)
+ * the three quoted forms, made optional the nested one, its \s* made \s+ the unspaced one and its \s* dropped the quoted and
+ * nested ones; the leading \s* dropped (the gate's G2-FNDEF-NO-INDENT) the three indented forms, narrowed to spaces the tab
+ * one, to \s? the two- and four-space ones and to \s{0,3} the four-space one; the label's + dropped, or the label narrowed to
+ * \w+, the [^note-1] form; a prefix made required (\s+, or (?:>\s*)+) the forms without it.
  *
  * MEASURED (read-only, by the cutting seat, 2026-10-23, at this census's base caad951). Producer (the local MechanicalWorkflows
  * checkout at 5ce2a07f891f, git show / ls-tree; the roster's producer block holds the lines and blobs, the hermetic census
@@ -128,14 +143,19 @@
  * NOT CLAIMED (edits of this file and the roster together, unless named otherwise): a re-tiling that folds A7 ("in the same
  * paragraph") or C2 ("it carries the status verbatim"), the two quotes naming no anchored element, into a neighbour in every
  * literal and the roster (landing 442's F4: measured 30/30 at wb-3cql's cut; not re-measured by wb-ubhh); a control removed from
- * IMPL and the roster together while every remaining control holds; a plant edited in IMPL and the roster together; a floor
+ * IMPL and the roster together while every remaining control holds; a control's text rewritten in IMPL to another text that
+ * reads the same causes (the roster holds a control's id and causes, never its text), alone or with a FOOTNOTE.definition
+ * member only that control kills, edited with its roster constant; a plant edited in IMPL and the roster together; a floor
  * lowered in FLOORS and the roster together (git's list equal to the filesystem walk stays the narrowing guard); a seat-added
  * vocabulary
  * member (of EXISTS, GUARD or the negation lists) removed with every control naming it, in IMPL and the roster together (only
  * the bead text's words are anchored outside); a residual probe rewritten in IMPL and the roster to another text that still
  * carries its row's exemplar once, reads quiet and reads the table's causes under its clear form; a residual family or its row
  * edited in this file, the roster and docs/14 together; the outside-anchor case, the residual-anchor case or the closing case
- * removed with its roster title.
+ * removed with its roster title. A footnote definition line in a form outside wb-9lz6's eight above (a third quote marker, an
+ * indent of another width, a label other than s and note-1) is NOT CLAIMED by this census; FOOTNOTE.definition's stricter
+ * members (the regex unanchored, as landing 781's F6 read, or its colon dropped) hide more lines and stay green - they read
+ * toward unqualified, an over-read rather than a hollowing - and are NOT CLAIMED either.
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE clause (a)'s union only - qa/, test/, the root pages and docs/
  * outside docs/workbench are not judged (Q1); R-REQUIREMENT-ID a unit whose only matches sit in a requirement-id spelling
  * (MW-CAC-WORKFLOW-COMPOSITION-R2) does not cite (Q2); R-PARAPHRASE-CITE a citation spelling none of the program's words in
@@ -953,6 +973,14 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "footnote-label", text: `Pi reads the ${cite} program[^design-only].\n\n[^design-only]: A note.`, causes: ["unqualified"] },
       // wb-ubhh F6: a footnote definition line inside the citing unit shows no carrier (FOOTNOTE.definition).
       { id: "footnote-definition", text: `Pi reads the ${cite} program[^s].\n[^s]: design-only`, causes: ["unqualified"] },
+      // wb-9lz6 (landing 781's F1): the same definition line behind blockquote markers, indented, or under a longer label.
+      { id: "footnote-definition-quoted", text: `> Pi reads the ${cite} program[^s].\n> [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-unspaced-quote", text: `>Pi reads the ${cite} program[^s].\n>[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-nested-quote", text: `> > Pi reads the ${cite} program[^s].\n> > [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-indented", text: `Pi reads the ${cite} program[^s].\n  [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-deep-indent", text: `Pi reads the ${cite} program[^s].\n    [^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-tab-indent", text: `Pi reads the ${cite} program[^s].\n\t[^s]: design-only`, causes: ["unqualified"] },
+      { id: "footnote-definition-long-label", text: `Pi reads the ${cite} program[^note-1].\n[^note-1]: design-only`, causes: ["unqualified"] },
       { id: "hidden-citation", text: `<!-- ${cite} is design-only. -->`, causes: ["unqualified"] },
       { id: "shown-link-text", text: `${cite} is [design-only](https://example.invalid).`, causes: [] },
       { id: "shown-code-span", text: `${cite} is \`design-only\`.`, causes: [] },

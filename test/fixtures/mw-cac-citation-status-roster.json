@@ -523,6 +523,48 @@
         ]
        },
        {
+        "id": "footnote-definition-quoted",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-unspaced-quote",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-nested-quote",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-indented",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-deep-indent",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-tab-indent",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-long-label",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
         "id": "hidden-citation",
         "causes": [
          "unqualified"
