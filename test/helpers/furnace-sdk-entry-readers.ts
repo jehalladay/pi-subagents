@@ -3,8 +3,8 @@
  * orchestrator rulings R-B104 and R-B127): the full-surface readers of wb-lrz.4's Furnace SDK re-vendor readiness census,
  * shared so that census (blocked by this bead, not on trunk) can take them in place of its own readers:
  *  - entryExposures: D3's WALK, which reads a named re-export AT an entry as well as past it (the chain-length hole closed),
- *    every exported and imported name cooked, a DEEP module identified by its stem (its TypeScript twin included), and a
- *    specifier read through RESOLUTION's steps of a URL parser's and a file path's reading;
+ *    exported and imported names cooked where WALK_FORMS says, a DEEP module identified by its stem (its TypeScript twin
+ *    included), and an export *'s specifier read through RESOLUTION's steps where RESOLUTION_CLAIM says;
  *  - entryTextNames: D3's ENTRY TEXT READ;
  *  - pathReading, spellsDeep and holdsDeep: D1's PATH reading (ASCII tab, LF and CR dropped);
  *  - renderedBlocks: U1's reading of vendor/README.md, a hard line break read as the line break marked renders;
@@ -12,8 +12,9 @@
  * Each reader's claim is a ClaimPart below, composed from its words and the sub-forms it lists; the census
  * test/workbench-furnace-sdk-entry-readers-census.test.ts holds each claim byte-for-byte in its header and names, for every
  * listed sub-form, planted falsifiers that carry its mark in what they add or read. Which sub-readings those plants pin is
- * stated by the census header (its CUT #2 and CUT #3 paragraphs, its RESIDUALS and its NOT CLAIMED paragraph), not by this
- * comment. Nothing here reads the file system: callers pass the tarball's entries, the README's text and the scripts' text.
+ * stated by the census header (its CUT #2, CUT #3 and CUT #4 paragraphs, its RESIDUALS, its NOT CLAIMED paragraph and its
+ * DEFERRED TO wb-lrz.9 paragraph), not by this comment; since CUT #4 (ruling R-B266) each claim states the naming modules
+ * and positions its plants take. Nothing here reads the file system: callers pass the tarball's entries, the README's text and the scripts' text.
  */
 import { posix } from "node:path";
 import { marked, type Token, type Tokens } from "marked";
@@ -45,24 +46,24 @@ function claimPart<T extends string>(id: T): (words: TemplateStringsArray, ...su
 /** D3's WALK: where it starts, what it follows and what it never reads. */
 export const WALK_CLAIM: ClaimPart<"walk"> = claimPart(
   "walk",
-)`from each entry its caller names (${"the types entry"} and ${"the main entry"} in both censuses), ${"following an export *"} and ${"following an export * as"} whose specifier resolves (RESOLUTION) to ${"a module that is not DEEP"}, and reading each module's ${"top-level statements"} through the TypeScript AST (${"comments never read"}), the WALK reads these forms in ${"the entry itself"} and in ${"every module it reaches"}`;
+)`from each entry its caller names (${"the types entry"} and ${"the main entry"} in both censuses), ${"following an export *"} from any module but a .d.cts one or an extensionless one, whose specifier is a ./ path holding nothing a step of RESOLUTION's changes, and ${"following an export * as"} from a .d.ts or a .js module whose specifier is such a ./ path ending .js (neither written export type), each resolved to ${"a module that is not DEEP"} (an export *'s through RESOLUTION's candidates, an export * as's to its exact path from a .js module and to its .d.ts twin from a .d.ts module), and reading each module's ${"top-level statements"} through the TypeScript AST (${"comments never read"}), the WALK reads these forms, each spelling only where its form's claim places it, in ${"the entry itself"} and in ${"every module it reaches"}`;
 
 /** The forms the WALK reads, each an Exposure's form. */
 export const WALK_FORMS: readonly ClaimPart<ExposureForm>[] = [
-  claimPart("star")`an ${"export * of a DEEP module"} or an ${"export * as of a DEEP module"} (its target resolved through RESOLUTION)`,
+  claimPart("star")`an ${"export * of a DEEP module"} (its target resolved through RESOLUTION) or an ${"export * as of a DEEP module"} under an identifier whose specifier, a ./ path from a .d.ts or a .js module and a ../ path from a module of another kind, ends .js and holds nothing a step of RESOLUTION's changes, its target its exact path or, from a declaration file, its .d.ts twin (in the types entry its .ts first), neither written export type`,
   claimPart(
     "named",
-  )`a named re-export of a DEEP class (${"export { X } from"}, ${"aliased as another name"}, ${"type-only by its declaration"} or ${"type-only by its specifier"}), X ${"an identifier"} or ${"a string export name"}, read cooked (${"an identifier escape"} or ${"a string escape"} reads as the name it spells), ${"whatever its specifier resolves to"}`,
+  )`a named re-export of a DEEP class (${"export { X } from"}, unaliased only in either entry, a module an entry star-exports and a module three deep from the types entry, or ${"aliased as another name"}, an identifier; in the types entry also ${"type-only by its declaration"} or ${"type-only by its specifier"}, and a clause's member after its first), X ${"an identifier"} or ${"a string export name"} (a string name aliased as an identifier, in either entry or a module the main entry star-exports), read cooked (${"an identifier escape"}, in either entry or a module the types entry star-exports, or ${"a string escape"}, in either entry, reads as the name it spells), and in either entry ${"whatever its specifier resolves to"}`,
   claimPart(
     "local-import",
-  )`a local export (${"export { x }"}, or ${"aliased on export"}) of a name an import specifier binds by a DEEP class's own name, that name ${"read cooked"} (${"the import aliased"}, ${"a type-only import declaration"}, ${"a type-only import specifier"}, ${"a string import name"}, ${"from a module that is not DEEP"})`,
-  claimPart("local-module")`a local export of a name a ${"default import of a DEEP module"} or a ${"namespace import of a DEEP module"} binds`,
+  )`a local export (${"export { x }"}, or ${"aliased on export"} as an identifier) of a name an import specifier binds by a DEEP class's own name in an import clause with no default binding, that name ${"read cooked"} (${"the import aliased"}, ${"a type-only import declaration"}, ${"a type-only import specifier"}, ${"a string import name"}, ${"from a module that is not DEEP"}), each spelling after export { x }, and an import clause's or a local export clause's member after its first, only in a module an entry star-exports (a string import name in one the main entry star-exports, the import aliased in one either entry star-exports, every other in one the types entry star-exports)`,
+  claimPart("local-module")`a local export (export { x }, not aliased on export) of a name a ${"default import of a DEEP module"} (alone, or beside a namespace import in a module the types entry star-exports) or a ${"namespace import of a DEEP module"} binds, neither import type-only, its specifier a ./ path from a .d.ts or a .js module and a ../ path from a module of another kind, ending .js and holding nothing a step of RESOLUTION's changes, its target its exact path or, from a declaration file, its .d.ts twin (in the types entry a namespace import's .ts first), or, in the types entry, the package's own name for a namespace import and a ./ path holding a tab for a default import`,
 ];
 
 /** RESOLUTION: how the WALK reads a specifier and which tarball entry it names. */
 export const RESOLUTION_CLAIM: ClaimPart<"resolution"> = claimPart(
   "resolution",
-)`a specifier is read through these steps of a URL parser's and a file path's reading - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, ${"a query cut off"} (from its first ?) and ${"a fragment cut off"} (from its first #), then ${"every %XX escape decoded"} and then ${"every backslash read as /"} - and resolves when it is ${"relative"} (./ or ../, ${"joined to the naming module's directory"}) or ${"the package's own name"} (@furnace/sdk/<path>, read under package/), its ${". segments dropped"} and ${".. segments resolved"} (posix.normalize), and the tarball carries the first of its candidates ${"in order"}: from a declaration file (.d.ts, .d.mts or .d.cts), ${"an exact TypeScript path"} as written (${"an exact .ts"}, ${"an exact .tsx"}, ${"an exact .mts"} or ${"an exact .cts"}, ${"a declaration file's own path"} included); for ${"a .js path"}, its .ts, ${"then its .tsx"} and ${"then its .d.ts twin"}; for ${"a .jsx path"}, ${"the same three"}; for ${"a .mjs path"}, its .mts and ${"then its .d.mts twin"}; for ${"a .cjs path"}, its .cts and ${"then its .d.cts twin"}; for ${"an extensionless path"}, its .ts, ${"its .tsx"}, ${"its .d.ts"}, ${"its /index.ts"}, ${"its /index.tsx"} and ${"its /index.d.ts"}; and from any other module, ${"the exact path"}, ${"then its .js"} and ${"then its /index.js"}`;
+)`the specifier of an export * of a DEEP module is read through these steps of a URL parser's and a file path's reading - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, ${"a query cut off"} (from its first ?) and ${"a fragment cut off"} (from its first #), then ${"every %XX escape decoded"} (each %XX of an ASCII code) and then ${"every backslash read as /"} - in the main entry, and in the types entry each step on one character (there a tab in a default import's specifier too), and a specifier resolves when it is ${"relative"} (./, or ../ from a module past the entry, ${"joined to the naming module's directory"}) or, from either entry or a .ts module, ${"the package's own name"} (@furnace/sdk/<path>, read under package/), under it from either entry its ${". segments dropped"} and ${".. segments resolved"} (posix.normalize), and the tarball carries the first of an export *'s specifier's candidates ${"in order"}: from the types entry, ${"an exact TypeScript path"} as written (${"an exact .ts"}, ${"an exact .tsx"}, ${"an exact .mts"} or ${"an exact .cts"}, ${"a declaration file's own path"} included, and from a .d.mts module a .d.cts's); for ${"a .js path"}, its .ts, ${"then its .tsx"} and ${"then its .d.ts twin"} (from a .d.ts module past the entry its .ts and then its .d.ts twin, from a .d.mts or a .d.cts module its .d.ts twin); for ${"a .jsx path"}, ${"the same three"}; for ${"a .mjs path"}, its .mts and ${"then its .d.mts twin"}; for ${"a .cjs path"}, its .cts and ${"then its .d.cts twin"}; for ${"an extensionless path"}, its .ts, ${"its .tsx"}, ${"its .d.ts"}, ${"its /index.ts"}, ${"its /index.tsx"} and ${"its /index.d.ts"}; and from the main entry, ${"the exact path"}, ${"then its .js"} and ${"then its /index.js"} (from a .ts module each of the three alone, and from a module of another kind its exact path)`;
 
 /** DEEP: which tarball modules are the DEEP rows' modules. */
 export const DEEP_CLAIM: ClaimPart<"deep"> = claimPart(
@@ -72,22 +73,22 @@ export const DEEP_CLAIM: ClaimPart<"deep"> = claimPart(
 /** D3's ENTRY TEXT READ. */
 export const TEXT_CLAIM: ClaimPart<"text"> = claimPart(
   "text",
-)`each entry's raw text (${"the types entry's"} and ${"the main entry's"}) is read for a DEEP class's name as a whole word (the regex \\b<name>\\b): ${"a name in its code"} and ${"a name in a comment"} alike, ${"escape sequences never decoded"}, a name with a word character (${"an ASCII letter"}, ${"a digit"} or ${"an underscore"}) ${"just before it"} or ${"just after it"} not read, and a name beside ${"a $"} or ${"a non-ASCII letter"} read (each a word boundary)`;
+)`each entry's raw text (${"the types entry's"} and ${"the main entry's"}) is read for a DEEP class's name, in its row's letter case, as a whole word (the regex \\b<name>\\b): ${"a name in its code"} (the types entry's) and ${"a name in a comment"} (either entry's) alike, ${"escape sequences never decoded"}, a name with a word character (${"an ASCII letter"}, ${"a digit"} or ${"an underscore"}) ${"just before it"} or ${"just after it"} not read, and a name beside ${"a $"} or ${"a non-ASCII letter"} read (each a word boundary)`;
 
 /** D1's PATH reading of a literal's cooked text, and what it spells or holds. */
 export const PATH_CLAIM: ClaimPart<"path"> = claimPart(
   "path",
-)`a literal's cooked text is read through these steps - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, then ${"every %XX escape decoded"} and then ${"every backslash read as /"}, then posix.normalize (${"empty segments dropped"}, ${". segments dropped"} and ${".. segments resolved"}) - and the text spells a deep @furnace/sdk/<path> when ${"the cooked text itself"} or ${"its PATH reading"} ${"begins with @furnace/sdk/"} or holds ${"node_modules/@furnace/sdk/ at its start"} or ${"node_modules/@furnace/sdk/ after a /"}, and holds one when either ${"holds @furnace/sdk/ anywhere"}`;
+)`a literal's cooked text is read through these steps - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, then ${"every %XX escape decoded"} (each %XX of an ASCII code) and then ${"every backslash read as /"}, then posix.normalize (${"empty segments dropped"}, ${". segments dropped"} and ${".. segments resolved"}) - and the text spells a deep @furnace/sdk/<path> when ${"the cooked text itself"} or ${"its PATH reading"} ${"begins with @furnace/sdk/"} or holds ${"node_modules/@furnace/sdk/ at its start"} or ${"node_modules/@furnace/sdk/ after a /"}, and holds one when either ${"holds @furnace/sdk/ anywhere"}`;
 
 /** U1's rendered reading of vendor/README.md. */
 export const RENDER_CLAIM: ClaimPart<"render"> = claimPart(
   "render",
-)`vendor/README.md is read through marked's lexer, each top-level block to its text, ${"whitespace collapsed"} (${"every run one space"}): a hard line break (a br token, ${"a backslash before a line ending"} or ${"two or more spaces before a line ending"}) reads as the line break marked renders, a space; ${"a list"} reads by ${"its items' tokens"}, ${"a table"} by its ${"header cells' tokens"} and ${"row cells' tokens"}, and a token holding tokens (${"a paragraph"}, ${"a heading"}, ${"a blockquote"}, ${"emphasis"}, ${"strong text"} or ${"a link"}) ${"by those tokens"}; ${"raw HTML"} (${"an HTML block"} or ${"inline HTML"}), ${"a link-reference definition"} and ${"an image"} read as nothing`;
+)`vendor/README.md is read through marked's lexer, each top-level block to its text, ${"whitespace collapsed"} (${"every run one space"}, each run of spaces, tabs and line feeds): a hard line break (a br token, ${"a backslash before a line ending"} or ${"two or more spaces before a line ending"}) reads as the line break marked renders, a space; ${"a list"} reads by ${"its items' tokens"}, ${"a table"} by its ${"header cells' tokens"} and ${"row cells' tokens"}, and a token holding tokens (${"a paragraph"}, ${"a heading"} (a ## heading), ${"a blockquote"}, ${"emphasis"}, ${"strong text"} or ${"a link"}) ${"by those tokens"}; ${"raw HTML"} (${"an HTML block"} holding a comment or ${"inline HTML"} tags), ${"a link-reference definition"} and ${"an image"} read as nothing`;
 
 /** D4's register-method count. */
 export const REGISTER_CLAIM: ClaimPart<"register"> = claimPart(
   "register",
-)`executor.js's register methods are its method declarations, ${"in a class"} or ${"in an object literal"}, whose name reads register: ${"an identifier name"} or ${"a string-literal name"}, read cooked (${"an identifier escape"} or ${"a string escape"} reads as the name it spells), or ${"a computed name"} whose expression, ${"through parentheses"}, is ${"a computed string literal"} or ${"a computed no-substitution template literal"}`;
+)`executor.js's register methods are its method declarations written with no modifier and no asterisk, ${"in a class"} or ${"in an object literal"} (each name form below in a class declaration, an identifier name in a class expression or an object literal), whose name reads register: ${"an identifier name"} or ${"a string-literal name"}, read cooked (${"an identifier escape"} or ${"a string escape"} reads as the name it spells), or ${"a computed name"} whose expression, ${"through parentheses"}, is ${"a computed string literal"} or ${"a computed no-substitution template literal"}`;
 
 /** Every claim part, in the order the census header states them. */
 export const CLAIM_PARTS: readonly ClaimPart[] = [WALK_CLAIM, ...WALK_FORMS, RESOLUTION_CLAIM, DEEP_CLAIM, TEXT_CLAIM, PATH_CLAIM, RENDER_CLAIM, REGISTER_CLAIM];
@@ -132,7 +133,7 @@ export function deepModuleNames(path: string, deep: readonly DeepRow[]): readonl
   return deep.find((row) => rowStem(row) === stem)?.names;
 }
 
-/** RESOLUTION's specifier reading: ASCII tab, LF and CR dropped, a query and a fragment cut off, %XX escapes decoded, backslashes read as /. */
+/** RESOLUTION's specifier reading (claimed where RESOLUTION_CLAIM says): ASCII tab, LF and CR dropped, a query and a fragment cut off, %XX escapes decoded, backslashes read as /. */
 export function specifierPath(specifier: string): string {
   const kept = specifier.replace(/\t/g, "").replace(/\n/g, "").replace(/\r/g, "");
   const query = kept.indexOf("?");
@@ -242,7 +243,7 @@ export function entryTextNames(text: string, deep: readonly DeepRow[]): string[]
 
 // ---- D1: the PATH reading -------------------------------------------------------------------------------------------
 
-/** D1's PATH reading (PATH_CLAIM): ASCII tab, LF and CR dropped, %XX escapes decoded, backslashes read as /, then posix.normalize. */
+/** D1's PATH reading (claimed as PATH_CLAIM says): ASCII tab, LF and CR dropped, %XX escapes decoded, backslashes read as /, then posix.normalize. */
 export function pathReading(text: string): string {
   return posix.normalize(
     text
@@ -293,7 +294,7 @@ function registerName(name: ts.PropertyName): RegisterName | undefined {
   if (ts.isNoSubstitutionTemplateLiteral(key)) return key.text === "register" ? "computed-template" : undefined;
   return undefined;
 }
-/** D4's register methods (REGISTER_CLAIM): every method declaration of the module whose name reads register, with its name form. */
+/** D4's register methods (claimed as REGISTER_CLAIM says): each method declaration of the module whose name reads register, with its name form. */
 export function registerMethods(source: ts.SourceFile): { readonly method: ts.MethodDeclaration; readonly name: RegisterName }[] {
   const methods: { readonly method: ts.MethodDeclaration; readonly name: RegisterName }[] = [];
   walk(source, (node) => {

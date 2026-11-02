@@ -3,17 +3,17 @@
  * orchestrator rulings R-B104 and R-B127): the full-surface readers of wb-lrz.4's Furnace SDK re-vendor readiness census, and
  * their falsifier census.
  *
- * WHAT IS DELIVERED. The readers are test/helpers/furnace-sdk-entry-readers.ts, shared so wb-lrz.4's census (blocked by this
- * bead under R-B127, not on trunk) can take them in place of its own readers as a mechanical restatement: entryExposures (D3's
- * WALK, with RESOLUTION and DEEP), entryTextNames (D3's ENTRY TEXT READ), pathReading, spellsDeep and holdsDeep (D1's PATH
- * reading), renderedBlocks (U1's reading of vendor/README.md) and registerMethods (D4's register-method count). This census
- * proves each reader with planted trees and reads the real tree through each; src/, vendor/ and the tracker export are only
- * read. Against wb-lrz.4's readers at the cuts the bead's items name, the cure is: the WALK reads a named re-export AT an entry
- * as well as past it, whatever its specifier resolves to (the chain-length hole closed, refusal #4 U1); a DEEP module is
- * identified by its stem, so its TypeScript twin is DEEP (refusal #5 U1); RESOLUTION reads a specifier through steps of a URL
- * parser's and a file path's reading (refusal #5 U3); a hard line break renders as a break (refusal #4 U2); a computed
- * literal register name is counted (refusal #5 U2); and D1's PATH reading drops ASCII tab, LF and CR (refusal #4 U3, as
- * wb-lrz.4's cut #5 read it).
+ * WHAT IS DELIVERED. The readers are test/helpers/furnace-sdk-entry-readers.ts, shared so wb-lrz.4's census (blocked by
+ * this bead under R-B127, not on trunk) can take them in place of its own readers as a mechanical restatement:
+ * entryExposures (D3's WALK, with RESOLUTION and DEEP), entryTextNames (D3's ENTRY TEXT READ), pathReading, spellsDeep and
+ * holdsDeep (D1's PATH reading), renderedBlocks (U1's reading of vendor/README.md) and registerMethods (D4's
+ * register-method count). This census proves each reader with planted trees and reads the real tree through each; src/,
+ * vendor/ and the tracker export are only read. Against wb-lrz.4's readers at the cuts the bead's items name, the cure is:
+ * the WALK reads a named re-export AT an entry, whatever its specifier resolves to, as well as past it (the chain-length
+ * hole closed, refusal #4 U1); a DEEP module is identified by its stem, so its TypeScript twin is DEEP (refusal #5 U1);
+ * RESOLUTION reads an export *'s specifier in either entry through steps of a URL parser's and a file path's reading
+ * (refusal #5 U3); a hard line break renders as a break (refusal #4 U2); a computed literal register name is counted
+ * (refusal #5 U2); and D1's PATH reading drops ASCII tab, LF and CR (refusal #4 U3, as wb-lrz.4's cut #5 read it).
  *
  * CUT #2 (refusal #1's U1-U6; the class guard of rule 19(b)/(d)): refusal #1's 31 named sub-readings are pinned - an
  * "every" by two occurrences, a "first" by a later second one, an order ("then", "in order") by both candidates of each
@@ -24,23 +24,49 @@
  * carries in what it adds or reads.
  *
  * CUT #3 (refusal #2's U1-U7; ruling R-B235, the enumerate-the-resolvable form of rule 19(c)): each of refusal #2's 17
- * surviving mutants is killed by its paired real-tree witness, checked in as a plant whose name cites it - forms (3)
- * and (4) in the entry itself, form (1)'s export * as and a followed export * as past the entry, and forms (2) and (3)
- * three modules down (U1); a clause's member after a non-member in a named re-export, an import and a local export
- * clause (U2); the package's own name from a declaration file and a declaration file's own .d.mts and .d.cts path
- * (U3); the after side of the $ and the non-ASCII boundary (U4); a list item's second token, nested and loose (U5);
- * and a form feed and a vertical tab, which neither reading drops (U6, residual members below). The WALK is then
- * pinned per form at each of these modules, every form in each: the types entry and the main entry; each entry's
- * protocol module; one module of each other module kind (.ts, .tsx, .mts, .cts, .jsx, .mjs, .cjs, .d.mts and .d.cts)
- * in a subdirectory; and the sixteenth followed module of a declaration-file chain and of a JavaScript chain whose
- * hops alternate an export * and an export * as; a named re-export is read cooked past the entry as well as at it.
- * RESOLUTION's steps, the package's own name and its . and .. segments are pinned from a declaration file as well as
- * from the main entry, the package's own name and a step on an import's specifier too, and an extensionless path's .js
- * and /index.js and the package's own name from a .ts module as well. RENDERED's block containers hold the record in
- * their first member before a later one as well as in a later member: a list's first item, a list item's first token,
- * a table's first header cell, first body row and a row's first cell, and a blockquote's first paragraph, and an
- * ordered list's second item. RESOLUTION's and the PATH reading's "exactly" is dropped: the characters each keeps are
- * named residual members with pinned quiet rows (Q-SPECIFIER-CONTROL, Q-PATH-CONTROL).
+ * surviving mutants is killed by its paired real-tree witness, checked in as a plant whose name cites it - forms (3) and
+ * (4) in the entry itself, form (1)'s export * as and a followed export * as past the entry, and forms (2) and (3) three
+ * modules down (U1); a clause's member after a non-member in a named re-export clause in the types entry, and after another
+ * named specifier in an import clause and after a non-member in a local export clause in a module the types entry
+ * star-exports (U2); the package's own name from the types entry and its own .d.mts and .d.cts path (U3); the after side of
+ * the $ and the non-ASCII boundary (U4); a list item's second token, nested and loose (U5); and a form feed and a vertical
+ * tab, which neither reading drops (U6, residual members below). The WALK is then pinned per form at each of these modules,
+ * every form in each in its plain spelling (an export * and an export * as of a DEEP module, an aliased named re-export,
+ * and a class-named, a default and a namespace import each exported locally): the types entry and the main entry; each
+ * entry's protocol module; one module of each other module kind (.ts, .tsx, .mts, .cts, .jsx, .mjs, .cjs, .d.mts and
+ * .d.cts) in a subdirectory; and the sixteenth followed module of a declaration-file chain and of a JavaScript chain whose
+ * hops alternate an export * and an export * as; a named re-export is read cooked in a module an entry star-exports as well
+ * as at the entry. RESOLUTION's steps (each on one character), the package's own name and its . and .. segments are pinned
+ * from the types entry as well as from the main entry, the package's own name on a namespace import's specifier and a tab
+ * on a default import's in the types entry too, and an extensionless path's .js and /index.js and the package's own name
+ * from a .ts module as well. RENDERED's block containers hold the record in their first member before a later one as well
+ * as in a later member: a list's first item, a list item's first token, a table's first header cell, first body row and a
+ * row's first cell, and a blockquote's first paragraph, and an ordered list's second item. RESOLUTION's and the PATH
+ * reading's "exactly" is dropped: the characters each keeps are named residual members with pinned quiet rows
+ * (Q-SPECIFIER-CONTROL, Q-PATH-CONTROL).
+ *
+ * CUT #4 (refusal #3's U1-U8; ruling R-B266, the FAIL-CLOSED CORE of the rule-19 structural exit, child wb-lrz.9): no
+ * reader, plant, row, page, pin, SUBFORMS entry or test title changes; each claim paragraph is narrowed to the naming
+ * modules and positions its plants take, with no new claim word and no new channel, and refusal #3's twelve members, with
+ * the forms beside them, are NOT CLAIMED (DEFERRED TO wb-lrz.9 below). The WALK follows an export * from any module but a
+ * .d.cts or an extensionless one through a ./ path holding nothing a step of RESOLUTION's changes and an export * as only
+ * from a .d.ts or a .js module through such a path ending .js (to its exact path from a .js module and its .d.ts twin from
+ * a .d.ts module), neither written export type (U2, U3); WALK FORM (1) reads an export * as of a DEEP module under an
+ * identifier through a ./ path from a .d.ts or a .js module and a ../ path from a module of another kind, ending .js, that
+ * no step changes, to its exact path or a declaration file's .d.ts twin (the types entry's .ts first) (U2, U3); WALK FORM
+ * (3) reads an import clause with no default binding, and WALK FORM (4) a default import alone or beside a namespace
+ * import, neither import type-only, through the same paths to the same targets, its local export unaliased (U1); an
+ * unaliased named re-export is claimed only near the entries it is planted in; each spelling of WALK FORM (2), (3) and (4)
+ * past its plain one, an alias that is not an identifier excluded, and a clause's member after its first are claimed only
+ * in the modules their plants hold them in; RESOLUTION's steps are claimed on an export *'s specifier of a DEEP module,
+ * every one in the main entry and each once in the types entry, each %XX of an ASCII code, the package's own name from
+ * either entry or a .ts module and its candidates from the naming modules its plants name, past the exact path only from
+ * the main entry and a .ts module (U4); the ENTRY TEXT READ reads a name in its row's letter case (U6), in the types
+ * entry's code and either entry's comments; RENDERED collapses runs of spaces, tabs and line feeds (U7) and reads an HTML
+ * block holding a comment, inline HTML tags and a ## heading as its plants do; the register count reads method declarations
+ * written with no modifier and no asterisk, every name form in a class declaration and an identifier name in a class
+ * expression or an object literal (U5). The CUT #3 and WHAT IS DELIVERED sentences and the helper's comments are narrowed
+ * alike (U8, record honesty: no claim word without its plants).
  *
  * THE ROWS (ROWS; a row's label is the line it answers, verbatim from the bead's row of the tracker export):
  *  E-U1, E-U2, E-U3: the description's enumerated items U1-U3. E-U4 (the note contact count) is DROPPED (below).
@@ -60,66 +86,89 @@
  *
  * THE CLAIMS (each test/helpers/furnace-sdk-entry-readers.ts ClaimPart, held here byte-for-byte as its own paragraph; each
  * claim lists its sub-forms, and SUBFORMS names, for every listed sub-form in claim order, the plants that prove it and the
- * mark each of them carries):
+ * mark each of them carries; since CUT #4 each claim states the naming modules and the positions its plants take, and
+ * DEFERRED TO wb-lrz.9 names the rest):
  *
- * WALK: from each entry its caller names (the types entry and the main entry in both censuses), following an export *
- * and following an export * as whose specifier resolves (RESOLUTION) to a module that is not DEEP, and reading each
- * module's top-level statements through the TypeScript AST (comments never read), the WALK reads these forms in the
- * entry itself and in every module it reaches
+ * WALK: from each entry its caller names (the types entry and the main entry in both censuses), following an export * from
+ * any module but a .d.cts one or an extensionless one, whose specifier is a ./ path holding nothing a step of RESOLUTION's
+ * changes, and following an export * as from a .d.ts or a .js module whose specifier is such a ./ path ending .js (neither
+ * written export type), each resolved to a module that is not DEEP (an export *'s through RESOLUTION's candidates, an
+ * export * as's to its exact path from a .js module and to its .d.ts twin from a .d.ts module), and reading each module's
+ * top-level statements through the TypeScript AST (comments never read), the WALK reads these forms, each spelling only
+ * where its form's claim places it, in the entry itself and in every module it reaches
  *
- * WALK FORM (1) star: an export * of a DEEP module or an export * as of a DEEP module (its target resolved through
- * RESOLUTION)
+ * WALK FORM (1) star: an export * of a DEEP module (its target resolved through RESOLUTION) or an export * as of a DEEP
+ * module under an identifier whose specifier, a ./ path from a .d.ts or a .js module and a ../ path from a module of
+ * another kind, ends .js and holds nothing a step of RESOLUTION's changes, its target its exact path or, from a declaration
+ * file, its .d.ts twin (in the types entry its .ts first), neither written export type
  *
- * WALK FORM (2) named: a named re-export of a DEEP class (export { X } from, aliased as another name, type-only by its
- * declaration or type-only by its specifier), X an identifier or a string export name, read cooked (an identifier
- * escape or a string escape reads as the name it spells), whatever its specifier resolves to
+ * WALK FORM (2) named: a named re-export of a DEEP class (export { X } from, unaliased only in either entry, a module an
+ * entry star-exports and a module three deep from the types entry, or aliased as another name, an identifier; in the types
+ * entry also type-only by its declaration or type-only by its specifier, and a clause's member after its first), X an
+ * identifier or a string export name (a string name aliased as an identifier, in either entry or a module the main entry
+ * star-exports), read cooked (an identifier escape, in either entry or a module the types entry star-exports, or a string
+ * escape, in either entry, reads as the name it spells), and in either entry whatever its specifier resolves to
  *
- * WALK FORM (3) local-import: a local export (export { x }, or aliased on export) of a name an import specifier binds
- * by a DEEP class's own name, that name read cooked (the import aliased, a type-only import declaration, a type-only
- * import specifier, a string import name, from a module that is not DEEP)
+ * WALK FORM (3) local-import: a local export (export { x }, or aliased on export as an identifier) of a name an import
+ * specifier binds by a DEEP class's own name in an import clause with no default binding, that name read cooked (the import
+ * aliased, a type-only import declaration, a type-only import specifier, a string import name, from a module that is not
+ * DEEP), each spelling after export { x }, and an import clause's or a local export clause's member after its first, only
+ * in a module an entry star-exports (a string import name in one the main entry star-exports, the import aliased in one
+ * either entry star-exports, every other in one the types entry star-exports)
  *
- * WALK FORM (4) local-module: a local export of a name a default import of a DEEP module or a namespace import of a
- * DEEP module binds
+ * WALK FORM (4) local-module: a local export (export { x }, not aliased on export) of a name a default import of a DEEP
+ * module (alone, or beside a namespace import in a module the types entry star-exports) or a namespace import of a DEEP
+ * module binds, neither import type-only, its specifier a ./ path from a .d.ts or a .js module and a ../ path from a module
+ * of another kind, ending .js and holding nothing a step of RESOLUTION's changes, its target its exact path or, from a
+ * declaration file, its .d.ts twin (in the types entry a namespace import's .ts first), or, in the types entry, the
+ * package's own name for a namespace import and a ./ path holding a tab for a default import
  *
- * RESOLUTION: a specifier is read through these steps of a URL parser's and a file path's reading - every ASCII tab
- * dropped, every LF dropped and every CR dropped, a query cut off (from its first ?) and a fragment cut off (from its
- * first #), then every %XX escape decoded and then every backslash read as / - and resolves when it is relative (./ or
- * ../, joined to the naming module's directory) or the package's own name (@furnace/sdk/<path>, read under package/),
- * its . segments dropped and .. segments resolved (posix.normalize), and the tarball carries the first of its
- * candidates in order: from a declaration file (.d.ts, .d.mts or .d.cts), an exact TypeScript path as written (an
- * exact .ts, an exact .tsx, an exact .mts or an exact .cts, a declaration file's own path included); for a .js path,
- * its .ts, then its .tsx and then its .d.ts twin; for a .jsx path, the same three; for a .mjs path, its .mts and then
- * its .d.mts twin; for a .cjs path, its .cts and then its .d.cts twin; for an extensionless path, its .ts, its .tsx,
- * its .d.ts, its /index.ts, its /index.tsx and its /index.d.ts; and from any other module, the exact path, then its
- * .js and then its /index.js
+ * RESOLUTION: the specifier of an export * of a DEEP module is read through these steps of a URL parser's and a file path's
+ * reading - every ASCII tab dropped, every LF dropped and every CR dropped, a query cut off (from its first ?) and a
+ * fragment cut off (from its first #), then every %XX escape decoded (each %XX of an ASCII code) and then every backslash
+ * read as / - in the main entry, and in the types entry each step on one character (there a tab in a default import's
+ * specifier too), and a specifier resolves when it is relative (./, or ../ from a module past the entry, joined to the
+ * naming module's directory) or, from either entry or a .ts module, the package's own name (@furnace/sdk/<path>, read under
+ * package/), under it from either entry its . segments dropped and .. segments resolved (posix.normalize), and the tarball
+ * carries the first of an export *'s specifier's candidates in order: from the types entry, an exact TypeScript path as
+ * written (an exact .ts, an exact .tsx, an exact .mts or an exact .cts, a declaration file's own path included, and from a
+ * .d.mts module a .d.cts's); for a .js path, its .ts, then its .tsx and then its .d.ts twin (from a .d.ts module past the
+ * entry its .ts and then its .d.ts twin, from a .d.mts or a .d.cts module its .d.ts twin); for a .jsx path, the same three;
+ * for a .mjs path, its .mts and then its .d.mts twin; for a .cjs path, its .cts and then its .d.cts twin; for an
+ * extensionless path, its .ts, its .tsx, its .d.ts, its /index.ts, its /index.tsx and its /index.d.ts; and from the main
+ * entry, the exact path, then its .js and then its /index.js (from a .ts module each of the three alone, and from a module
+ * of another kind its exact path)
  *
  * DEEP: a tarball module is DEEP when its path, with its one module extension taken off (a .d.ts, a .d.mts, a .d.cts,
  * a .ts, a .tsx, a .mts, a .cts, a .js, a .jsx, a .mjs or a .cjs), is a DEEP row's path with its .js taken off, so a
  * DEEP module's JavaScript file, its declaration file and its TypeScript twin are each that DEEP module, whose classes
  * are the row's names
  *
- * ENTRY TEXT READ: each entry's raw text (the types entry's and the main entry's) is read for a DEEP class's name as a
- * whole word (the regex \b<name>\b): a name in its code and a name in a comment alike, escape sequences never decoded,
- * a name with a word character (an ASCII letter, a digit or an underscore) just before it or just after it not read,
- * and a name beside a $ or a non-ASCII letter read (each a word boundary)
+ * ENTRY TEXT READ: each entry's raw text (the types entry's and the main entry's) is read for a DEEP class's name, in its
+ * row's letter case, as a whole word (the regex \b<name>\b): a name in its code (the types entry's) and a name in a comment
+ * (either entry's) alike, escape sequences never decoded, a name with a word character (an ASCII letter, a digit or an
+ * underscore) just before it or just after it not read, and a name beside a $ or a non-ASCII letter read (each a word
+ * boundary)
  *
- * PATH READING: a literal's cooked text is read through these steps - every ASCII tab dropped, every LF dropped and
- * every CR dropped, then every %XX escape decoded and then every backslash read as /, then posix.normalize (empty
- * segments dropped, . segments dropped and .. segments resolved) - and the text spells a deep @furnace/sdk/<path> when
- * the cooked text itself or its PATH reading begins with @furnace/sdk/ or holds node_modules/@furnace/sdk/ at its
- * start or node_modules/@furnace/sdk/ after a /, and holds one when either holds @furnace/sdk/ anywhere
+ * PATH READING: a literal's cooked text is read through these steps - every ASCII tab dropped, every LF dropped and every
+ * CR dropped, then every %XX escape decoded (each %XX of an ASCII code) and then every backslash read as /, then
+ * posix.normalize (empty segments dropped, . segments dropped and .. segments resolved) - and the text spells a deep
+ * @furnace/sdk/<path> when the cooked text itself or its PATH reading begins with @furnace/sdk/ or holds
+ * node_modules/@furnace/sdk/ at its start or node_modules/@furnace/sdk/ after a /, and holds one when either holds
+ * @furnace/sdk/ anywhere
  *
- * RENDERED: vendor/README.md is read through marked's lexer, each top-level block to its text, whitespace collapsed
- * (every run one space): a hard line break (a br token, a backslash before a line ending or two or more spaces before
- * a line ending) reads as the line break marked renders, a space; a list reads by its items' tokens, a table by its
- * header cells' tokens and row cells' tokens, and a token holding tokens (a paragraph, a heading, a blockquote,
- * emphasis, strong text or a link) by those tokens; raw HTML (an HTML block or inline HTML), a link-reference
- * definition and an image read as nothing
+ * RENDERED: vendor/README.md is read through marked's lexer, each top-level block to its text, whitespace collapsed (every
+ * run one space, each run of spaces, tabs and line feeds): a hard line break (a br token, a backslash before a line ending
+ * or two or more spaces before a line ending) reads as the line break marked renders, a space; a list reads by its items'
+ * tokens, a table by its header cells' tokens and row cells' tokens, and a token holding tokens (a paragraph, a heading (a
+ * ## heading), a blockquote, emphasis, strong text or a link) by those tokens; raw HTML (an HTML block holding a comment or
+ * inline HTML tags), a link-reference definition and an image read as nothing
  *
- * REGISTER METHODS: executor.js's register methods are its method declarations, in a class or in an object literal,
- * whose name reads register: an identifier name or a string-literal name, read cooked (an identifier escape or a
- * string escape reads as the name it spells), or a computed name whose expression, through parentheses, is a computed
- * string literal or a computed no-substitution template literal
+ * REGISTER METHODS: executor.js's register methods are its method declarations written with no modifier and no asterisk, in
+ * a class or in an object literal (each name form below in a class declaration, an identifier name in a class expression or
+ * an object literal), whose name reads register: an identifier name or a string-literal name, read cooked (an identifier
+ * escape or a string escape reads as the name it spells), or a computed name whose expression, through parentheses, is a
+ * computed string literal or a computed no-substitution template literal
  *
  * RESIDUALS (named; what the readers leave unread; each family has a quiet plant of row Q - R-WALK-SPECIFIER and R-PATH-UNREAD
  * two - reading as nothing, with a twin in a read form that reads its line):
@@ -153,6 +202,38 @@
  * block's edges. The WALK past the sixteenth followed module is NOT CLAIMED by this census. A character inside a specifier
  * or a literal that neither reading drops, other than the members R-WALK-SPECIFIER and R-PATH-UNREAD name, is NOT CLAIMED
  * by this census. A record in a code block or a code span is NOT CLAIMED by this census.
+ *
+ * DEFERRED TO wb-lrz.9 (CUT #4, ruling R-B266; each is NOT CLAIMED by this census, and the exit child carries it as a
+ * pin-exactly-or-named-residual item): U1, an import clause holding a default binding beside named specifiers (import Host,
+ * { EmbeddedHost } from ...), for WALK FORM (3) and WALK FORM (4) (G4-LI-AFTER-DEFAULT, G4-LM-DEFAULT-BESIDE-NAMED); U2, a
+ * type-only export * or export * as (export type * from, export type * as ns from), read as WALK FORM (1) or followed
+ * (G4-STAR-TYPEONLY); U3, an export * as through the package's own name or any specifier but those WALK FORM (1) names,
+ * read as WALK FORM (1) or followed, and an export * as followed from a module that is not a .d.ts or a .js module
+ * (G4-FOLLOW-STARAS-RELATIVE-ONLY, G4-STARAS-DEEP-RELATIVE-ONLY); U4, a candidate past the exact path (its .js and its
+ * /index.js) from any naming module but the main entry and a .ts module (G4-R-OTHER-MJS-CJS-EXACT-ONLY,
+ * G4-R-OTHER-JS-TS-ONLY); U5, a register method written with a modifier or an asterisk, a static, an async and a generator
+ * method among them (G4-G-NO-STATIC, G4-G-NO-ASYNC, G4-G-NO-GENERATOR); U6, a DEEP class's name written in another letter
+ * case, read or not (G4-T-CASE-FOLDED); U7, a whitespace run holding any character but a space, a tab and a line feed, a
+ * no-break space, a form feed and a vertical tab among them, collapsed or not (G4-U-COLLAPSE-ASCII-ONLY). Beside them, NOT
+ * CLAIMED by this census: a followed export * from a .d.cts module or an extensionless one, or through the package's own
+ * name, a ../ path or a character a step of RESOLUTION's changes; an export * as under a string name, and an export * as or
+ * a default or namespace import through a ./ path from a module of a kind other than a .d.ts and a .js, or through a ../
+ * path from a .d.ts or a .js module; a step of RESOLUTION's on any specifier but an export *'s of a DEEP module in either
+ * entry and the types entry's default-import tab, a step's second character and the steps' order in the types entry, and a
+ * %XX of a code above 7F in RESOLUTION's steps or the PATH reading; the package's own name from any naming module but the
+ * two entries and a .ts module, and its . and .. segments from any but the two entries; a candidate from a declaration file
+ * past the entry beyond those RESOLUTION names, and an export * as's or a default or namespace import's target but its
+ * exact path, a declaration file's .d.ts twin and the types entry's .ts first (an export * as's or a namespace import's);
+ * an unaliased named re-export outside either entry, a module an entry star-exports and a module three deep from the types
+ * entry; an alias written as a string (export { X as "Y" } from, export { x as "y" }) and a string export name re-exported
+ * unaliased (export { "X" } from); a local export of a name a default or namespace import binds that is aliased on export,
+ * a type-only local export (export type { x }, export { type x }) for WALK FORM (4), and for WALK FORM (3) one written
+ * export { type x } or outside a module the types entry star-exports, and a type-only default or namespace import (import
+ * type Host from, import type * as hosting from); a default import through the package's own name or a step but the types
+ * entry's tab, and a namespace import through a step; each spelling of a WALK FORM, and a clause's member after its first,
+ * outside the modules its claim names; a register method of a name form other than an identifier in a class expression or
+ * an object literal; a DEEP class's name in the main entry's code; and an HTML block holding anything but a comment, inline
+ * HTML that is not a tag, and a heading other than a ## heading, read as RENDERED states or not.
  *
  * FROZEN SHAPE (standing rule 16): FROZEN_SHAPE pins each row's `${id}:${pins.length}`, PAGES' key order (every plant, in
  * ROWS order) every row's pin ids, PAGES each plant's page digest, REAL_READINGS each judge's reading of the real tree (a
