@@ -68,8 +68,10 @@
  *    every leg its context judges, in exactly these contexts and in no other. (1) HELD, in every context the judge decides (each
  *    reading's plain output, each plant at each node, each plant at every kept node at once): the context's output with one
  *    member added beside source (at the output's root) and one added inside source at each node the context planted (at source
- *    itself for a plain output), each kind's count of controls judged moved held to the count of those contexts and their planted
- *    nodes read outside the sweep (OUTSIDE ANCHORS). (2) EDITS, on the delivered output for R05 with P9 at rows.0 only: the
+ *    itself for a plain output); each context held once, under its own name (its reading, its plant and its node, every kept
+ *    node at once, or the plain output; a second hold of a name refused); and each kind's count of controls judged moved held,
+ *    over READINGS, per reading and per context, to the count of those contexts and their planted nodes read outside the sweep
+ *    (OUTSIDE ANCHORS). (2) EDITS, on the delivered output for R05 with P9 at rows.0 only: the
  *    census's own single edits
  *    of seven kinds - a member added at each object node, each member and each array element removed, each scalar changed (a
  *    string suffixed, a number incremented, a boolean negated, null replaced by 0), each non-string scalar retyped to its own
@@ -97,12 +99,18 @@
  * READINGS.length + PLANTS.length x (N + READINGS.length) and inside source READINGS.length + PLANTS.length x (N + K) - today
  * 14 + 9 x 315 = 2849 and 14 + 9 x 462 = 4172 -, N the READINGS documents' object nodes counted from their JSON text (braces) and
  * K the READINGS documents' nodes at which the SDK codec keeps the full record verbatim, planted one node at a time and read
- * through the codec itself (codecKept), never through legsOf, judgeWhole or the sweep's own node and kept counts.
+ * through the codec itself (codecKept), never through legsOf, judgeWhole or the sweep's own node and kept counts. Per reading
+ * (wb-bv75, the landing-773 F1 cure) the same counts are held to the reading's own document: beside source
+ * 1 + PLANTS.length x (N_r + 1) and inside source 1 + PLANTS.length x (N_r + K_r), N_r its braces and K_r its codecKept count -
+ * today R01 199 and 289, R02 208 and 307 -; and per context, each context's counts are held to its name's (one beside source;
+ * inside source one, or K_r at every kept node at once), the names built after the sweep from READINGS, PLANTS and objectPaths
+ * of each reading's document (their count per reading held to its braces by the sweep and by the per-reading anchor).
  * FROZEN SHAPE (standing rule 16): S pins the rows and their pins, KINDS, READINGS (id, kind, licence, expected coverage), PLANTS
  * (id and record members), the representation members, the judge controls - the kind judge's (FLAGGED, NAMESAKES) and B2's
  * held and whole-output control kinds (HELD, EDITS) -, the residuals and the on-landing labels as literals; every pin compares a
- * measured witness to WITNESSES (payload identity: B2's carries the plants as they arrived, its held-control counts, its control
- * output and each control kind's count); Z requires every pin to run once, in row order.
+ * measured witness to WITNESSES (payload identity: B2's carries the plants as they arrived, its held-control counts in sum and
+ * per reading and its count of contexts held as their names read, its control output and each control kind's count); Z requires
+ * every pin to run once, in row order.
  * CASE NAMES: no case name here evidences docs/workbench/09's "optional graph traversal of linked native refs" (the RA5/b half of
  * test/workbench-docs09-readers-relationships.census.ts, routed to this bead's on-landing leg), so every case name stays outside
  * that half's title probe; the kind spellings live in data, never in a case name.
@@ -118,7 +126,8 @@
  * outside that context's held controls (RS4), or blind only to an edit other than the census's own single edits or to a
  * combination of edits (RS5), is not excluded: each is a named residual with its pinned quiet row (Q4, Q5). B2's held counts
  * number the held controls its hold judged moved, each count growing only on that comparison, so a hold that counts a context's
- * controls without judging them is NOT CLAIMED (wb-zf7v).
+ * controls without judging them is NOT CLAIMED (wb-zf7v); and a hold knows its context by the name it is given alone, so a hold
+ * that judges, under a context's name, the controls of another output or against another context's legs is NOT CLAIMED (wb-bv75).
  * Every lineage record, kind spelling and carrier key below is CONSTRUCTED by this census; the producer mints none of them.
  */
 import {readdirSync, readFileSync} from 'node:fs';
@@ -198,7 +207,7 @@ const COERCING_POSITION = 'evidence.provider_versions';
 const DROPPED_POSITIONS: readonly string[] = Object.freeze([
   '(root)', 'coverage.0', 'coverage.1', 'status', 'status.streams.0', 'execution_status', 'transport', 'coverage_summary', 'evidence',
 ]);
-/** The measured witness each pin must reproduce (payload identity), measured on trunk f5589e0 with @hyperunix/sdk 0.1.0 (A2's re-measured on trunk c85be84 by the wb-57n1 respin, B2's, Q4's and Q5's on trunk 0b53dcd by its second). */
+/** The measured witness each pin must reproduce (payload identity), measured on trunk f5589e0 with @hyperunix/sdk 0.1.0 (A2's re-measured on trunk c85be84 by the wb-57n1 respin, B2's, Q4's and Q5's on trunk 0b53dcd by its second; B2's held counts per reading and its contexts held once on trunk f5cb912 by wb-bv75). */
 const WITNESSES: Readonly<Record<string, JsonValue>> = Object.freeze({
   A1: {declarationFiles: 27, kindLiteralFiles: 0, version: '0.1.0', sidecarDeclared: true},
   A1c: {flagged: 9, kinds: 6, namesakes: 4, flaggedHits: 9, namesakeHits: 0},
@@ -214,6 +223,9 @@ const WITNESSES: Readonly<Record<string, JsonValue>> = Object.freeze({
     kept: {R01: 11, R02: 12, R03: 9, R04: 10, R05: 12, R06: 11, R07: 12, R08: 12, R09: 12, R10: 12, R11: 12, R12: 12, R13: 12, R14: 12},
     unmoved: {model: 2723, plain: 1449}, compared: 1449, together: 126,
     held: {'beside source': 2849, 'inside source': 4172},
+    heldBy: {'beside source': {R01: 199, R02: 208, R03: 181, R04: 190, R05: 208, R06: 199, R07: 208, R08: 208, R09: 208, R10: 208, R11: 208, R12: 208, R13: 208, R14: 208},
+      'inside source': {R01: 289, R02: 307, R03: 253, R04: 271, R05: 307, R06: 289, R07: 307, R08: 307, R09: 307, R10: 307, R11: 307, R12: 307, R13: 307, R14: 307}},
+    heldOnce: 2849,
     controls: {at: 'R05/P9 at rows.0', added: 63, removed: 257, changed: 181, retyped: 30, recased: 150, spaced: 151, rotated: 60}},
   B3: {readings: ['R01', 'R05'], positions: [23, 24]},
   N1: {topologies: 280, relations: 140, kinds: ['grouping']},
@@ -701,15 +713,25 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
     };
     // HELD (wb-57n1 respin 2, ruling R-B146): in every context the judge decides, each held control is judged moved on every leg
     // that context's own judgment judged, so a judge blind in any one context (a node, a reading, a plant, the joint) reds there.
+    // Each context is held once, under its own name (wb-bv75): a second hold of a name is refused here, and the counts its hold
+    // judged moved are kept per context (heldAt) beside the totals, so the anchors below read each context and each reading.
     const held: Record<Held, number> = {'beside source': 0, 'inside source': 0};
+    const heldAt = new Map<string, Record<Held, number>>();
     const hold = (output: JsonValue, judgment: Judgment, base: Json, plain: JsonValue, paths: readonly Path[], record: Json, at: string): void => {
+      expect(heldAt.has(at), `${at}: the context is held once`).toBe(false);
+      // A second hold, were that refusal deleted, adds to the first, so its context still reads off its anchor below.
+      const here = heldAt.get(at) ?? {'beside source': 0, 'inside source': 0};
+      heldAt.set(at, here);
       const controls = heldOf(output, paths);
       const everyLeg: Judgment = {judged: judgment.judged, moved: judgment.judged};
       for (const kind of HELD) {
         for (const control of controls[kind]) {
           const seen = judgeWhole(control, base, plain, paths, record);
           expect(seen, `${at}: the judge sees its held control ${kind} on every leg`).toStrictEqual(everyLeg);
-          if (same(seen, everyLeg)) held[kind]++;
+          if (same(seen, everyLeg)) {
+            held[kind]++;
+            here[kind]++;
+          }
         }
       }
     };
@@ -785,19 +807,48 @@ describe('wb-4ap.13 HyperUnix lineage gate census (standing leg)', () => {
       expect(seen, `the judge sees every ${edit} move on both legs`).toBe(edits[edit].length);
       controls[edit] = seen;
     }
-    // HELD's per-context coverage against counts read outside the sweep (wb-zf7v, the landing-744 F1 cure): every context the judge
-    // decides - each reading's plain output, each plant at each object node, each plant at every kept node at once - holds one
-    // control beside source and one inside source per node it planted (at source itself for a plain output). Each count grows only
-    // on hold's own comparison, so a hold skipped or a control left unjudged in any context moves a count off its anchor, even when
-    // the witness literal moves with it; a hold that counts a context's controls without judging them is NOT CLAIMED.
+    // HELD against counts read outside the sweep (wb-zf7v, the landing-744 F1 cure; per reading and per context, wb-bv75, the
+    // landing-773 F1 cure): every context the judge decides - each reading's plain output, each plant at each object node, each
+    // plant at every kept node at once - is held once and holds one control beside source and one inside source per node it
+    // planted (at source itself for a plain output). Each count grows only on hold's own comparison, and three anchors read the
+    // counts: over READINGS; per reading (beside source 1 + PLANTS.length x (N_r + 1) and inside source 1 + PLANTS.length x
+    // (N_r + K_r), N_r the reading document's braces and K_r its codecKept count); and per context, by name (one beside source;
+    // inside source one, or K_r at every kept node at once), the names built here from READINGS, PLANTS and each document's object
+    // paths. So a hold skipped, a control left unjudged, or a context or a control held twice moves that context's counts off
+    // their anchor, even when the witness literal moves with it and when another context's count is moved to offset it in its
+    // reading's sum or in the total; a hold that counts a context's controls without judging them, or judges under its name
+    // another output's controls or against another context's legs, is NOT CLAIMED.
     const documents = READINGS.map(row => documentOf(row.kind, row.licensed));
     const objects = documents.reduce((sum, document) => sum + braces(document), 0);
     const keptByCodec = documents.reduce((sum, document) => sum + codecKept(document, full.record), 0);
-    expect(held, 'one held control beside source per context and one inside source per planted node, counted outside the sweep').toStrictEqual({
+    expect(held, 'over READINGS, one held control beside source per context and one inside source per planted node, counted outside the sweep').toStrictEqual({
       'beside source': READINGS.length + PLANTS.length * (objects + READINGS.length),
       'inside source': READINGS.length + PLANTS.length * (objects + keptByCodec),
     });
-    settle('B2', {plants: [...plants], positions, nodes, kept, unmoved, compared, together, held, controls});
+    const named: Record<string, Record<Held, number>> = {};
+    const heldBy: Record<Held, Record<string, number>> = {'beside source': {}, 'inside source': {}};
+    const anchors: Record<Held, Record<string, number>> = {'beside source': {}, 'inside source': {}};
+    let heldOnce = 0;
+    for (const row of READINGS) {
+      const document = documentOf(row.kind, row.licensed);
+      const objectCount = braces(document);
+      const keptCount = codecKept(document, full.record);
+      const names = [`${row.id}: the plain output`, ...PLANTS.flatMap(item => [
+        ...objectPaths(document).map(path => `${row.id}/${item.id} at ${dotted(path) || '(root)'}`), `${row.id}/${item.id} at every kept node at once`,
+      ])];
+      for (const name of names) {
+        named[name] = {'beside source': 1, 'inside source': name.endsWith(' at every kept node at once') ? keptCount : 1};
+        if (same(heldAt.get(name), named[name])) heldOnce++;
+      }
+      const anchor: Record<Held, number> = {'beside source': 1 + PLANTS.length * (objectCount + 1), 'inside source': 1 + PLANTS.length * (objectCount + keptCount)};
+      for (const kind of HELD) {
+        heldBy[kind][row.id] = names.reduce((sum, name) => sum + (heldAt.get(name)?.[kind] ?? 0), 0);
+        anchors[kind][row.id] = anchor[kind];
+      }
+    }
+    expect(heldBy, 'per reading, one held control beside source per context and one inside source per planted node, counted outside the sweep').toStrictEqual(anchors);
+    expect(Object.fromEntries(heldAt), 'per context, by name: held once, one control beside source and one inside source per node it planted').toStrictEqual(named);
+    settle('B2', {plants: [...plants], positions, nodes, kept, unmoved, compared, together, held, heldBy, heldOnce, controls});
   }, 120_000);
 
   it('B3: the full record planted at every object node of a provider reading moves no output byte', () => {
