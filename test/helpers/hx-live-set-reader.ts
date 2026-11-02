@@ -9,23 +9,25 @@
  * (R-B128: "wb-tz2.9's eventual re-cut is a MECHANICAL RESTATEMENT over this bead's landed fix"). The falsifier census is
  * test/workbench-hx-live-set-reader-census.test.ts. It holds every "- <word>: <claim>" line of this header equal, in order and byte
  * for byte, to the roster exported for its section, gives every word a calibration plant, and reds when the reader for a word is
- * removed (ReadOptions lists the words a reading uses; every word by default). CLAIMED_SUBFORMS registers the sub-forms the claims
- * name that no calibration plant of a word pins - each a phrase standing verbatim in the READING paragraph, in a section's heading or
- * in a word's claim - and the census gives each one or more falsifier rows of its own (wb-tz2.19 refusal #1: U1-U4;
- * refusal #2: U1-U4, cut #3 under ruling R-B217).
+ * removed (ReadOptions lists the words a reading uses; every word by default). CLAIMED_SUBFORMS registers the sub-forms refusals #1 and #2
+ * and cut #3 found the claims name that no calibration plant of a word pins - each a phrase standing verbatim in the READING paragraph, in a
+ * section's heading or in a word's claim - and the census gives each one or more falsifier rows of its own (wb-tz2.19 refusal #1: U1-U4;
+ * refusal #2: U1-U4, cut #3 under ruling R-B217). Cut #4 (ruling R-B252, the FAIL-CLOSED CORE) narrows the claim words to the sub-forms
+ * those rows pin - no reader line changes and no row is added - and REFERENCE POSITIONS and NOT CLAIMED below name what it narrowed out;
+ * refusal #3's eighteen members (U1-U5) are deferred to wb-tz2.22.
  *
  * READING (liveReading). Active code only: comments are trivia. An HX LOCAL is a name a BINDING form binds; its entry reads
  * `<form> <name>`, in binding order. A file is LIVE when it binds an HX local or holds an M5 import. An HX CASE is a case
- * (REGISTRATION) whose body holds a reference (REFERENCE) or an M5 import. UNRESOLVED lists what the reader cannot read; OUTSIDE
- * lists every reference no PLACEMENT form places, each as `<line>: <its text, whitespace removed>`. WITNESSING lists the titles of the
+ * (REGISTRATION) whose body holds a reference (REFERENCE) or an M5 import. UNRESOLVED lists what the reader cannot read, in the forms UNRESOLVED names; OUTSIDE
+ * lists every reference at a position REFERENCE POSITIONS names that no PLACEMENT form places, each as `<line>: <its text, whitespace removed>`. WITNESSING lists the titles of the
  * HX cases whose body ReadOptions.witness reads a claim in, none without it.
- * SPOTS (where a reference stands that no PLACEMENT form reaches, so it reads OUTSIDE): a hook; a describe body; a helper; a named function; a fixture; a table; a value; an unread registration form; the top level.
+ * SPOTS (where a reference at a position REFERENCE POSITIONS names stands that no PLACEMENT form reaches, so it reads OUTSIDE; a hook is a beforeAll hook, a describe body the body of a describe call at the top level, a helper a function declaration, the top level the file's own statements): a hook; a describe body; a helper; a named function; a fixture; a table; a value; an unread registration form; the top level.
  * NOT READ (the census's named residual R-LIVE-INDIRECT, each member a pinned quiet row): an hx drive that reaches hx through no HX local and no M5 import.
  *
  * MODULE (isHxModule; the specifiers that name an HX MODULE):
  * - sdk root: the SDK package root, @hyperunix/sdk exactly (a subpath such as @hyperunix/sdk/raw names none)
  * - provider path: a path ending in providers/hyperunix after a slash, as a test file spells the provider module (../src/workbench/providers/hyperunix)
- * - provider path alone: the path providers/hyperunix itself, with nothing before it
+ * - provider path alone: the path providers/hyperunix itself, with nothing before it, written with the .js extension
  * - no extension: a provider path written with no extension
  * - .js: a provider path written with the .js extension
  * - .ts: a provider path written with the .ts extension
@@ -36,60 +38,60 @@
  * ENTRY (HX_ENTRIES; the names an HX ENTRY has):
  * - provider function: a function export of src/workbench/providers/hyperunix.ts, read from the module itself at run time
  * - sdk client: the SDK's client class HyperUnix, by its run-time name
- * UNWRAP (unwrap; what a source, an assignment target, a target name, a member's base, a callee, a specifier, a member key or a title is read through, any number in any order):
+ * UNWRAP (unwrap; what a source, an assignment target, a target name, a member's base, a callee, a specifier, a member key or a title is read through, parentheses and as in any order - up to four wrappers deep on a source, three on an assignment target, a target name, a member's base or a callee, two on a specifier, a member key or a title - and, on a source only, satisfies and a <T> assertion as a lone wrapper and one non-null assertion in a chain, as well as one non-null assertion on a store chain's member base):
  * - parentheses: a parenthesized expression
  * - as: an as expression
  * - satisfies: a satisfies expression
  * - non-null: a non-null assertion
  * - type assertion: a <T> assertion
- * BINDING (the forms that bind an HX LOCAL, form in parentheses; M1-M4 static imports, M5 import() calls, M6 aliases and stores):
- * - named: a static import of an entry under its exported name, from any module (named)
- * - aliased: a static import of an entry under another local name, the exported name an identifier (aliased)
- * - aliased string: a static import of an entry under a local name, the exported name a string literal (aliased)
+ * BINDING (the forms that bind an HX LOCAL, form in parentheses; M1-M4 static imports standing before the file's first other statement, M5 import() calls, one per file, M6 aliases and stores):
+ * - named: a static import of an entry under its exported name, its clause's only specifier, from any module, the entry nativeHyperUnixFind, registerHyperUnixFind or HyperUnix (named)
+ * - aliased: a static import of an entry under another local name, its clause's only specifier, the exported name an identifier, the entry nativeHyperUnixFind (aliased)
+ * - aliased string: a static import of an entry under another local name, its clause's only specifier, the exported name a string literal, the entry nativeHyperUnixFind (aliased)
  * - type-only: a type-only import declaration or import specifier binds as the same import would without the marker
- * - namespace: a static namespace import of an HX module (namespace)
- * - default: a static default import of an HX module (default)
- * - string specifier: an import() call whose first argument is a string literal naming an HX module is an M5 import
- * - template specifier: an import() call whose first argument is a no-substitution template naming an HX module is an M5 import
- * - import await: an M5 import is read through await, as well as through UNWRAP, to the variable declaration that binds it, its M5 declaration
+ * - namespace: a static namespace import of an HX module, the file's first statement (namespace)
+ * - default: a static default import of an HX module, a provider path, the file's first statement (default)
+ * - string specifier: an import() call whose first argument is a string literal naming a provider path is an M5 import
+ * - template specifier: an import() call whose first argument is a no-substitution template naming a provider path is an M5 import
+ * - import await: an M5 import is read through await, as well as through UNWRAP, up to four steps, to the variable declaration that binds it, its M5 declaration
  * - dynamic: an M5 import bound whole to the name its declaration introduces (dynamic)
- * - destructured renamed: an M5 import destructured into an entry under another name, its key written (destructured)
- * - destructured shorthand: an M5 import destructured into an entry under its own name, a shorthand element (destructured)
- * - destructured rest: an M5 import destructured into a rest element, which takes the module (rest)
- * - alias: a variable declared from an HX local, its M6 declaration (alias)
- * - alias member: a declaration or assignment source may be an entry member .name of a module local
- * - alias element: a declaration or assignment source may be an entry member ['name'] of a module local, the name a string value
- * - alias renamed: a variable destructured from a module local into an entry under another name, its key written (alias)
- * - alias shorthand: a variable destructured from a module local into an entry under its own name, a shorthand element (alias)
- * - alias rest: a variable destructured from a module local into a rest element, which takes the module (rest)
+ * - destructured renamed: an M5 import destructured into the entry nativeHyperUnixFind under another name, its key written, the pattern's only element (destructured)
+ * - destructured shorthand: an M5 import destructured into the entry nativeHyperUnixFind under its own name, a shorthand element, the pattern's only element (destructured)
+ * - destructured rest: an M5 import destructured into a rest element, which takes the module, the pattern's only element (rest)
+ * - alias: a variable declared from a named, namespace, rest or alias local, its M6 declaration (alias)
+ * - alias member: a declaration or assignment source may be an entry member .name of a module local, the entry nativeHyperUnixFind
+ * - alias element: a declaration or assignment source may be an entry member ['name'] of a namespace local, the name a string value, the entry nativeHyperUnixFind
+ * - alias renamed: a variable destructured from a namespace or rest local into the entry nativeHyperUnixFind under another name, its key written, in a pattern of one or two elements (alias)
+ * - alias shorthand: a variable destructured from a namespace or rest local into the entry nativeHyperUnixFind under its own name, a shorthand element in a pattern of one or two elements (alias)
+ * - alias rest: a variable destructured from a namespace or rest local into a rest element, which takes the module, the pattern's only element (rest)
  * - namespace module: a namespace local is a module local
  * - default module: a default local is a module local
  * - dynamic module: a dynamic local is a module local
  * - rest module: a rest local is a module local
- * - assigned =: an assignment written with = is an M6 assignment when its right side reads as an HX local or an entry member of a module local
+ * - assigned =: an assignment written with = is an M6 assignment when its right side reads as a named, namespace, rest or alias local or an entry member of a module local
  * - assigned ||=: an assignment written with ||= is an M6 assignment when its right side reads so
  * - assigned &&=: an assignment written with &&= is an M6 assignment when its right side reads so
  * - assigned ??=: an assignment written with ??= is an M6 assignment when its right side reads so
  * - assigned name: an M6 assignment to a name binds that name (alias)
- * - assigned renamed: an M6 assignment to an object literal over a module local binds the name an entry's written key takes (alias)
- * - assigned shorthand: an M6 assignment to an object literal over a module local binds an entry's shorthand property (alias)
+ * - assigned renamed: an M6 assignment to an object literal over a namespace or rest local binds the name an entry's written key takes, in its first property, the entry nativeHyperUnixFind or registerHyperUnixFind, the key an identifier or a computed string (alias)
+ * - assigned shorthand: an M6 assignment to an object literal over a namespace or rest local binds an entry's shorthand property, its first property, the entry nativeHyperUnixFind or registerHyperUnixFind (alias)
  * - store: an M6 assignment to a member .name of a value binds the name the member chain is rooted at (store)
  * - store element: the stored member may be written ['name'], a string value (store)
- * - store deep: the stored member may stand at any depth below the root, root.a.b (store)
- * - assigned value: a declaration or assignment whose source is an M6 assignment reads that assignment's right side as its own source, so the value an assignment carries binds the name it lands on
- * - fixpoint: each round reads every unread declaration, then every unread assignment, in source order, until a round binds nothing, so a form may stand before the form that binds its source
- * REGISTRATION (casesOf; a CASE, its title, body and registration chain):
+ * - store deep: the stored member may stand at up to three members below the root, root.a.b.c (store)
+ * - assigned value: a declaration or assignment whose source is an M6 assignment reads that assignment's right side as its own source, one assignment deep, so the value an assignment carries binds the name it lands on
+ * - fixpoint: each round reads every unread declaration, then every unread assignment, in source order, until a round binds nothing, claimed through the third round, so a form may stand before the form that binds its source
+ * REGISTRATION (casesOf; a CASE, its title, body and registration chain, claimed for a case standing at the top level or in the callback of a call whose callee is a bare name such as describe):
  * - it: it is a test API
  * - test: test is a test API
- * - vitest import: it or test imported from vitest under any local name is a test API
- * - declared api: a variable declared from a test API is a test API
- * - element member: a case flag or a case method may be written ['name'], a string value, as well as .name
- * - chained: a test API may carry any number of case flags and case-method calls, in any order, before the call
+ * - vitest import: it or test imported from vitest under any local name, the only specifier of a vitest import declaration that is the file's first statement, is a test API
+ * - declared api: a variable declared from a test API is a test API, also when it stands before that declaration, one link back
+ * - element member: the case flag concurrent or the case method each may be written ['name'] directly on its root, a string value, as well as .name
+ * - chained: a test API may carry up to three case flags and case-method calls, in any order, before the call, a link past the first being concurrent, sequential or each
  * - literal title: a call of a test API whose first argument is a string value registers a case of that title
- * - computed title: a call of a test API whose first argument is any other expression registers a case titled <computed: its text>, whitespace removed
+ * - computed title: a call of a test API whose first argument is an integer literal, a template with one substitution or a binary + expression registers a case titled <computed: its text>, whitespace removed
  * - arrow body: a case's body may be an arrow function, the first argument after the title that is a body form
  * - function body: a case's body may be a function expression, the first argument after the title that is a body form
- * - beside: a case's registration chain is its callee's text, then every argument beside the title and the body (an options object, a timeout), whitespace removed
+ * - beside: a case's registration chain is its callee's text, then every argument beside the title and the body that is an options object before the body or a timeout (an object literal with a property, a numeric literal), whitespace removed
  * FLAG (CASE_FLAGS; a member of a test API that is a test API again):
  * - concurrent: the concurrent flag
  * - fails: the fails flag
@@ -106,16 +108,16 @@
  * - scoped: the scoped method
  * - skipIf: the skipIf method
  * UNRESOLVED (fail closed: what the reader cannot read):
- * - stray specifier: a string literal or no-substitution template naming an HX module that is neither a static import's specifier nor an M5 import's first argument (a require, a vi.importActual, a held specifier, an export-from, an import.meta.resolve)
- * - unread binding: an M5 or M6 declaration whose name is a binding pattern the reader cannot read (an array pattern, a pattern whose source is no module local, an element with a computed key that is no string value, or a nested pattern)
- * - unread assignment: an M6 assignment whose target the reader cannot read: no name, no member chain rooted at a name and no object literal of named entries over a module local (an array target, a member chain rooted at a call, an object literal with a spread, a computed key that is no string value or a value that is no name, or an object literal over a source that is no module local)
+ * - stray specifier: a string literal or no-substitution template naming a provider path, the template a call's argument, that is neither a static import's specifier nor an M5 import's first argument (a require, a vi.importActual, a held specifier, an export-from, an import.meta.resolve)
+ * - unread binding: an M5 or M6 declaration at the top level whose name is a binding pattern the reader cannot read (an array pattern, a pattern whose source is no module local, an element with a computed key that is no string value in a pattern of one or two elements, or a nested pattern as the pattern's only element)
+ * - unread assignment: an M6 assignment whose target the reader cannot read: no name, no member chain rooted at a name and no object literal of named entries over a module local, read to its first property (an array target, a member chain rooted at a call, an object literal with a spread as its first property, a computed key that is no string value or a value that is no name in its first property, or an object literal over a source that is no module local)
  * REFERENCE (what OUTSIDE judges; a binding site is never a reference):
- * - local reference: an identifier spelled as an HX local, by spelling and never by scope (type positions, member names, object-literal keys, method names and type members included), unless it is a binding site
- * - inline import: an M5 import no declaration binds, the call itself
- * - used assignment: an M6 assignment whose value is used, one that does not stand, through parentheses only, as a whole expression statement, the assignment itself
+ * - local reference: an identifier spelled as an HX local, by spelling and never by scope, at a position REFERENCE POSITIONS names (the type positions, member names, object-literal keys, method names and type members it names included), unless it is a binding site
+ * - inline import: an M5 import no declaration binds, the call itself, outside every function
+ * - used assignment: an M6 assignment whose value is used, one that does not stand, through one pair of parentheses only, as a whole expression statement, the assignment itself, a for statement's incrementor excepted
  * - declaration name: a binding site, a variable declaration's own name
- * - parameter name: a binding site, a parameter's own name
- * - binding element: a binding site, a binding element's name or its property key
+ * - parameter name: a binding site, a parameter's own name, the parameter a function declaration's
+ * - binding element: a binding site, a binding element's name or its property key, the element in an object binding pattern
  * - function name: a binding site, a function declaration's or function expression's own name
  * - class name: a binding site, a class declaration's or class expression's own name
  * PLACEMENT (the references that are placed; every other reference reads OUTSIDE):
@@ -125,7 +127,81 @@
  * - declaration type: a reference inside the type annotation of an M5 or M6 declaration
  * - assignment binding: a reference inside the target or the right side of an M6 assignment that binds a new local
  * - bound store: an M6 assignment that binds no new local (its target name, its entries or the root of its store already an HX local, or its target unread) places nothing
- * - binding default: a binding pattern's defaults and computed keys, and a shorthand property's default in an assignment target, are placed by no declaration or assignment
+ * - binding default: a binding pattern's defaults and computed keys, and a shorthand property's default in an assignment target (the file's first), are placed by no declaration or assignment
+ *
+ * REFERENCE POSITIONS (cut #4, ruling R-B252: REFERENCE's local reference is claimed only at these positions of an identifier - each the
+ * identifier's parent and slot - standing in a case body, in a form PLACEMENT places or in a SPOTS spot): a call's callee, the call no
+ * optional call and no whole expression statement, with three arguments; a call's only argument inside a function, its callee a bare
+ * name; a property
+ * access's base when the access is no assignment's target, and its name when the access is no call's callee or argument; an element
+ * access's base when the access is no call's callee or argument; an assignment's right side, and its left side when the assignment is a
+ * whole expression statement; the left side of ||; the right side of a comma; the operand of parentheses that are a variable's
+ * initializer, of as when the as is no parenthesized expression's operand, of satisfies, of a non-null assertion or of a <T> assertion; an await operand; a typeof or a void operand outside
+ * every function, the typeof or void no whole expression statement; the true branch of a conditional; the only element of an
+ * array literal; a parameterless arrow function's expression body; a return statement's expression in a function declaration that is
+ * not async; a top-level const's initializer; a function declaration's parameter default; a top-level object binding element's default;
+ * an instantiation expression's expression; an object literal's first property - its value when the object is a const's initializer,
+ * its key when the object is a variable's initializer or an assignment's target, its shorthand name when the object is an assignment's
+ * target, its method name when the object is a variable's initializer; a class's method name, get accessor name or non-static property
+ * name; an interface's or a type literal's required property signature name; a type reference's name in a parameter's annotation; a
+ * type query's name, as a const's annotation or a function's return type, in a type alias or in a union; a qualified name's left side
+ * in a type query; a function declaration's type parameter name; an interface's, a type alias's, an enum's or a namespace's name; an
+ * enum member's name, the enum no const enum; a labeled statement's or a break statement's label; a plain export specifier; an import
+ * specifier's name.
+ *
+ * NOT CLAIMED (cut #4, ruling R-B252; each family measured by one-edit reader mutants that keep the census green, so these forms are
+ * NOT CLAIMED by this census): refusal #3's members (O:1658), deferred to wb-tz2.22 by name - U1 a static import's later specifier
+ * (L2-NAMED-FIRST-SPECIFIER) and an assigned object literal's later property (L2-ASSIGNED-FIRST-PROPERTY); U2 an identifier as a new
+ * expression's callee, an export default's expression, a template span, a spread element, a decorator, a prefix unary operand and a
+ * delete operand (L2-REF-NO-NEW, L2-REF-NO-EXPORT-DEFAULT, L2-REF-NO-TEMPLATE-SPAN, L2-REF-NO-SPREAD, L2-REF-NO-DECORATOR,
+ * L2-REF-NO-PREFIX-UNARY, L2-REF-NO-DELETE-OPERAND); U3 an alias source that is a store, default, dynamic, destructured or aliased local
+ * (L2-SOURCE-NOT-STORE, L2-SOURCE-NOT-DEFAULT, L2-SOURCE-NOT-DYNAMIC, L2-SOURCE-NOT-DESTRUCTURED, L2-SOURCE-NOT-ALIASED); U4 a fifth
+ * wrapper and a fourth or later fixpoint round (L2-UNWRAP-MAX4, L2-FIX-ROUND-LIMIT3, L2-FIX-ROUND-LIMIT4); U5 a vitest import
+ * declaration past the first (L2-VITEST-FIRST-DECL). The same class measured by this cut's battery: every reference position
+ * REFERENCE POSITIONS leaves out (among them a new expression's argument, a call's argument past the first or the first of several, an
+ * element access's argument, a postfix operand, a tagged template's tag, an object spread, an expression statement, a throw, if, for-of,
+ * for-in, while, switch or case expression, a yield operand, a computed property name, a conditional's test or false branch, an array
+ * literal's later element, the operands of &&, ??, arithmetic, comparison, equality, instanceof and in, the right side of || and the
+ * left side of a comma, an optional call, a typeof or void operand inside a function, a return in an arrow function, a function
+ * expression or a method, a let or nested initializer, a method's, function expression's, arrow function's or constructor's parameter
+ * default, an array binding element's default, a method signature, a static class property, a class property's initializer, a set
+ * accessor's name, an object literal's get accessor name or later property, a nested or variable-annotation type reference, a type
+ * argument, a heritage clause, a qualified name's right side or one in a type reference, a type parameter's constraint or one off a
+ * function declaration, a const enum's member, a renamed export specifier, an import-equals declaration and a continue label); a
+ * reference standing in a try block, a constructor, a class static block, a block at the top level, a nested describe or an afterAll,
+ * beforeEach or afterEach hook; the entry registerNativeHyperUnixFind in every form, registerHyperUnixFind and HyperUnix in a
+ * destructuring, an alias member or element and an aliased or aliased-string import, HyperUnix in an assigned property; an alias or
+ * assignment source that is a store, default, dynamic, destructured or aliased local; a destructuring or an assigned object literal over
+ * a default or dynamic local; an alias element of a module local other than a namespace one; a pattern of three or more elements (two or
+ * more for an M5 import), a nested pattern beside another element and a rest beside other elements; an assigned object literal's later property; a file's second M5 import; a namespace or default import
+ * that is not the file's first statement; a static import after a statement of another kind; a static import clause of two or more
+ * specifiers; a vitest import that is not the file's first statement or whose specifier stands beside another;
+ * a fifth wrapper on a source, a fourth on an assignment target, a target name, a member's base or a callee and a third on a
+ * specifier, a member key or a title; satisfies and a <T> assertion other than as a lone wrapper on a source, a non-null assertion
+ * other than once on a source or a store chain's member base, and any wrapper but parentheses and as at any other site; a fifth
+ * import-await step; a fourth store member; an assignment value two assignments deep; a fourth fixpoint round; a declared test API two
+ * links back; a fourth chain link; the default, M5 or stray SDK root; the provider path alone written with no extension or another than .js; a case
+ * flag other than concurrent or a case method other than each written ['name']; a flag other than concurrent or sequential or a method
+ * other than each past a chain's first link; a ['name'] member written on a chain link; a title that is an identifier, a call, a member, an element access, a tagged template, a decimal numeric literal, a template
+ * with two or more substitutions or a binary expression other than +;
+ * an aliased-string import under its own name; a string-literal key in an assigned renamed property; a beside argument that is a
+ * string, an identifier, an empty object literal or an options object after the body; a case standing inside another case or in the callback of a call whose callee is no bare name; an
+ * assignment value used through two pairs of parentheses or as a for statement's incrementor; an assignment target's shorthand default
+ * past the file's first; an M6 unread binding inside a function; a no-substitution template stray that is no call's argument. Among the
+ * reference positions REFERENCE POSITIONS now narrows also: a call's callee with other than three arguments or standing as a whole
+ * expression statement; a call's only argument when its callee is no bare name; a property access's base when the access is an
+ * assignment's target; an assignment's left side inside another expression; parentheses as a call's callee or argument; a void operand
+ * standing as a whole expression statement; the expression body of an arrow function with parameters; a return in an async function
+ * declaration; an object literal's first value, key, shorthand name or method name in another object context; an optional property
+ * signature; a type query in a parameter's or a let's annotation; a call's only argument outside every function; parentheses other than a
+ * variable's initializer; a typeof standing as a whole expression statement; an arrow function's or another function's parameter name
+ * as a binding site other than a function declaration's; an array binding pattern's element as a binding site; an inline import inside
+ * a function; an as expression's operand when the as stands in parentheses. Cross-product carve-outs the battery found, likewise NOT
+ * CLAIMED: a provider path written with no extension after a prefix of under four characters; a provider function imported by name
+ * from the SDK root; a store rooted at globalThis; an assignment target's shorthand default that is a call; a destructuring's computed
+ * key written as a template. The helper's conveniences the census never calls (isHxModule,
+ * hxEntries with options, unwrap, stringOf, keyOf, memberOf, testApis, isTestApi, casesOf and isHxImport) are NOT CLAIMED beyond what
+ * liveReading, HX_ENTRIES, CASE_FLAGS, CASE_METHODS and NON_CASE_MEMBERS read through them.
  *
  * Display paths added: none. Test-only: it parses sources handed to it and reads the provider module's and the SDK's exports.
  */
@@ -145,7 +221,7 @@ export const words = <W extends string>(roster: readonly Claim<W>[]): W[] => ros
 export const MODULE_FORMS = claims([
   ["sdk root", "the SDK package root, @hyperunix/sdk exactly (a subpath such as @hyperunix/sdk/raw names none)"],
   ["provider path", "a path ending in providers/hyperunix after a slash, as a test file spells the provider module (../src/workbench/providers/hyperunix)"],
-  ["provider path alone", "the path providers/hyperunix itself, with nothing before it"],
+  ["provider path alone", "the path providers/hyperunix itself, with nothing before it, written with the .js extension"],
   ["no extension", "a provider path written with no extension"],
   [".js", "a provider path written with the .js extension"],
   [".ts", "a provider path written with the .ts extension"],
@@ -166,57 +242,57 @@ export const UNWRAP_FORMS = claims([
   ["type assertion", "a <T> assertion"],
 ]);
 export const BINDING_FORMS = claims([
-  ["named", "a static import of an entry under its exported name, from any module (named)"],
-  ["aliased", "a static import of an entry under another local name, the exported name an identifier (aliased)"],
-  ["aliased string", "a static import of an entry under a local name, the exported name a string literal (aliased)"],
+  ["named", "a static import of an entry under its exported name, its clause's only specifier, from any module, the entry nativeHyperUnixFind, registerHyperUnixFind or HyperUnix (named)"],
+  ["aliased", "a static import of an entry under another local name, its clause's only specifier, the exported name an identifier, the entry nativeHyperUnixFind (aliased)"],
+  ["aliased string", "a static import of an entry under another local name, its clause's only specifier, the exported name a string literal, the entry nativeHyperUnixFind (aliased)"],
   ["type-only", "a type-only import declaration or import specifier binds as the same import would without the marker"],
-  ["namespace", "a static namespace import of an HX module (namespace)"],
-  ["default", "a static default import of an HX module (default)"],
-  ["string specifier", "an import() call whose first argument is a string literal naming an HX module is an M5 import"],
-  ["template specifier", "an import() call whose first argument is a no-substitution template naming an HX module is an M5 import"],
-  ["import await", "an M5 import is read through await, as well as through UNWRAP, to the variable declaration that binds it, its M5 declaration"],
+  ["namespace", "a static namespace import of an HX module, the file's first statement (namespace)"],
+  ["default", "a static default import of an HX module, a provider path, the file's first statement (default)"],
+  ["string specifier", "an import() call whose first argument is a string literal naming a provider path is an M5 import"],
+  ["template specifier", "an import() call whose first argument is a no-substitution template naming a provider path is an M5 import"],
+  ["import await", "an M5 import is read through await, as well as through UNWRAP, up to four steps, to the variable declaration that binds it, its M5 declaration"],
   ["dynamic", "an M5 import bound whole to the name its declaration introduces (dynamic)"],
-  ["destructured renamed", "an M5 import destructured into an entry under another name, its key written (destructured)"],
-  ["destructured shorthand", "an M5 import destructured into an entry under its own name, a shorthand element (destructured)"],
-  ["destructured rest", "an M5 import destructured into a rest element, which takes the module (rest)"],
-  ["alias", "a variable declared from an HX local, its M6 declaration (alias)"],
-  ["alias member", "a declaration or assignment source may be an entry member .name of a module local"],
-  ["alias element", "a declaration or assignment source may be an entry member ['name'] of a module local, the name a string value"],
-  ["alias renamed", "a variable destructured from a module local into an entry under another name, its key written (alias)"],
-  ["alias shorthand", "a variable destructured from a module local into an entry under its own name, a shorthand element (alias)"],
-  ["alias rest", "a variable destructured from a module local into a rest element, which takes the module (rest)"],
+  ["destructured renamed", "an M5 import destructured into the entry nativeHyperUnixFind under another name, its key written, the pattern's only element (destructured)"],
+  ["destructured shorthand", "an M5 import destructured into the entry nativeHyperUnixFind under its own name, a shorthand element, the pattern's only element (destructured)"],
+  ["destructured rest", "an M5 import destructured into a rest element, which takes the module, the pattern's only element (rest)"],
+  ["alias", "a variable declared from a named, namespace, rest or alias local, its M6 declaration (alias)"],
+  ["alias member", "a declaration or assignment source may be an entry member .name of a module local, the entry nativeHyperUnixFind"],
+  ["alias element", "a declaration or assignment source may be an entry member ['name'] of a namespace local, the name a string value, the entry nativeHyperUnixFind"],
+  ["alias renamed", "a variable destructured from a namespace or rest local into the entry nativeHyperUnixFind under another name, its key written, in a pattern of one or two elements (alias)"],
+  ["alias shorthand", "a variable destructured from a namespace or rest local into the entry nativeHyperUnixFind under its own name, a shorthand element in a pattern of one or two elements (alias)"],
+  ["alias rest", "a variable destructured from a namespace or rest local into a rest element, which takes the module, the pattern's only element (rest)"],
   ["namespace module", "a namespace local is a module local"],
   ["default module", "a default local is a module local"],
   ["dynamic module", "a dynamic local is a module local"],
   ["rest module", "a rest local is a module local"],
-  ["assigned =", "an assignment written with = is an M6 assignment when its right side reads as an HX local or an entry member of a module local"],
+  ["assigned =", "an assignment written with = is an M6 assignment when its right side reads as a named, namespace, rest or alias local or an entry member of a module local"],
   ["assigned ||=", "an assignment written with ||= is an M6 assignment when its right side reads so"],
   ["assigned &&=", "an assignment written with &&= is an M6 assignment when its right side reads so"],
   ["assigned ??=", "an assignment written with ??= is an M6 assignment when its right side reads so"],
   ["assigned name", "an M6 assignment to a name binds that name (alias)"],
-  ["assigned renamed", "an M6 assignment to an object literal over a module local binds the name an entry's written key takes (alias)"],
-  ["assigned shorthand", "an M6 assignment to an object literal over a module local binds an entry's shorthand property (alias)"],
+  ["assigned renamed", "an M6 assignment to an object literal over a namespace or rest local binds the name an entry's written key takes, in its first property, the entry nativeHyperUnixFind or registerHyperUnixFind, the key an identifier or a computed string (alias)"],
+  ["assigned shorthand", "an M6 assignment to an object literal over a namespace or rest local binds an entry's shorthand property, its first property, the entry nativeHyperUnixFind or registerHyperUnixFind (alias)"],
   ["store", "an M6 assignment to a member .name of a value binds the name the member chain is rooted at (store)"],
   ["store element", "the stored member may be written ['name'], a string value (store)"],
-  ["store deep", "the stored member may stand at any depth below the root, root.a.b (store)"],
+  ["store deep", "the stored member may stand at up to three members below the root, root.a.b.c (store)"],
   [
     "assigned value",
-    "a declaration or assignment whose source is an M6 assignment reads that assignment's right side as its own source, so the value an assignment carries binds the name it lands on",
+    "a declaration or assignment whose source is an M6 assignment reads that assignment's right side as its own source, one assignment deep, so the value an assignment carries binds the name it lands on",
   ],
-  ["fixpoint", "each round reads every unread declaration, then every unread assignment, in source order, until a round binds nothing, so a form may stand before the form that binds its source"],
+  ["fixpoint", "each round reads every unread declaration, then every unread assignment, in source order, until a round binds nothing, claimed through the third round, so a form may stand before the form that binds its source"],
 ]);
 export const REGISTRATION_FORMS = claims([
   ["it", "it is a test API"],
   ["test", "test is a test API"],
-  ["vitest import", "it or test imported from vitest under any local name is a test API"],
-  ["declared api", "a variable declared from a test API is a test API"],
-  ["element member", "a case flag or a case method may be written ['name'], a string value, as well as .name"],
-  ["chained", "a test API may carry any number of case flags and case-method calls, in any order, before the call"],
+  ["vitest import", "it or test imported from vitest under any local name, the only specifier of a vitest import declaration that is the file's first statement, is a test API"],
+  ["declared api", "a variable declared from a test API is a test API, also when it stands before that declaration, one link back"],
+  ["element member", "the case flag concurrent or the case method each may be written ['name'] directly on its root, a string value, as well as .name"],
+  ["chained", "a test API may carry up to three case flags and case-method calls, in any order, before the call, a link past the first being concurrent, sequential or each"],
   ["literal title", "a call of a test API whose first argument is a string value registers a case of that title"],
-  ["computed title", "a call of a test API whose first argument is any other expression registers a case titled <computed: its text>, whitespace removed"],
+  ["computed title", "a call of a test API whose first argument is an integer literal, a template with one substitution or a binary + expression registers a case titled <computed: its text>, whitespace removed"],
   ["arrow body", "a case's body may be an arrow function, the first argument after the title that is a body form"],
   ["function body", "a case's body may be a function expression, the first argument after the title that is a body form"],
-  ["beside", "a case's registration chain is its callee's text, then every argument beside the title and the body (an options object, a timeout), whitespace removed"],
+  ["beside", "a case's registration chain is its callee's text, then every argument beside the title and the body that is an options object before the body or a timeout (an object literal with a property, a numeric literal), whitespace removed"],
 ]);
 export const FLAG_FORMS = claims([
   ["concurrent", "the concurrent flag"],
@@ -238,24 +314,24 @@ export const METHOD_FORMS = claims([
 export const UNRESOLVED_FORMS = claims([
   [
     "stray specifier",
-    "a string literal or no-substitution template naming an HX module that is neither a static import's specifier nor an M5 import's first argument (a require, a vi.importActual, a held specifier, an export-from, an import.meta.resolve)",
+    "a string literal or no-substitution template naming a provider path, the template a call's argument, that is neither a static import's specifier nor an M5 import's first argument (a require, a vi.importActual, a held specifier, an export-from, an import.meta.resolve)",
   ],
   [
     "unread binding",
-    "an M5 or M6 declaration whose name is a binding pattern the reader cannot read (an array pattern, a pattern whose source is no module local, an element with a computed key that is no string value, or a nested pattern)",
+    "an M5 or M6 declaration at the top level whose name is a binding pattern the reader cannot read (an array pattern, a pattern whose source is no module local, an element with a computed key that is no string value in a pattern of one or two elements, or a nested pattern as the pattern's only element)",
   ],
-  ["unread assignment", "an M6 assignment whose target the reader cannot read: no name, no member chain rooted at a name and no object literal of named entries over a module local (an array target, a member chain rooted at a call, an object literal with a spread, a computed key that is no string value or a value that is no name, or an object literal over a source that is no module local)"],
+  ["unread assignment", "an M6 assignment whose target the reader cannot read: no name, no member chain rooted at a name and no object literal of named entries over a module local, read to its first property (an array target, a member chain rooted at a call, an object literal with a spread as its first property, a computed key that is no string value or a value that is no name in its first property, or an object literal over a source that is no module local)"],
 ]);
 export const REFERENCE_FORMS = claims([
   [
     "local reference",
-    "an identifier spelled as an HX local, by spelling and never by scope (type positions, member names, object-literal keys, method names and type members included), unless it is a binding site",
+    "an identifier spelled as an HX local, by spelling and never by scope, at a position REFERENCE POSITIONS names (the type positions, member names, object-literal keys, method names and type members it names included), unless it is a binding site",
   ],
-  ["inline import", "an M5 import no declaration binds, the call itself"],
-  ["used assignment", "an M6 assignment whose value is used, one that does not stand, through parentheses only, as a whole expression statement, the assignment itself"],
+  ["inline import", "an M5 import no declaration binds, the call itself, outside every function"],
+  ["used assignment", "an M6 assignment whose value is used, one that does not stand, through one pair of parentheses only, as a whole expression statement, the assignment itself, a for statement's incrementor excepted"],
   ["declaration name", "a binding site, a variable declaration's own name"],
-  ["parameter name", "a binding site, a parameter's own name"],
-  ["binding element", "a binding site, a binding element's name or its property key"],
+  ["parameter name", "a binding site, a parameter's own name, the parameter a function declaration's"],
+  ["binding element", "a binding site, a binding element's name or its property key, the element in an object binding pattern"],
   ["function name", "a binding site, a function declaration's or function expression's own name"],
   ["class name", "a binding site, a class declaration's or class expression's own name"],
 ]);
@@ -266,7 +342,7 @@ export const PLACEMENT_FORMS = claims([
   ["declaration type", "a reference inside the type annotation of an M5 or M6 declaration"],
   ["assignment binding", "a reference inside the target or the right side of an M6 assignment that binds a new local"],
   ["bound store", "an M6 assignment that binds no new local (its target name, its entries or the root of its store already an HX local, or its target unread) places nothing"],
-  ["binding default", "a binding pattern's defaults and computed keys, and a shorthand property's default in an assignment target, are placed by no declaration or assignment"],
+  ["binding default", "a binding pattern's defaults and computed keys, and a shorthand property's default in an assignment target (the file's first), are placed by no declaration or assignment"],
 ]);
 export type ModuleForm = (typeof MODULE_FORMS)[number]["word"];
 export type EntryForm = (typeof ENTRY_FORMS)[number]["word"];
@@ -296,7 +372,7 @@ export interface Subform {
   readonly place: string;
   readonly phrase: string;
 }
-/** The sub-forms the header's claims name that no calibration plant of a word pins, each with falsifier rows of its own in the census. */
+/** The sub-forms refusals #1 and #2 and cut #3 found the header's claims name that no calibration plant of a word pins, each with falsifier rows of its own in the census. */
 export const CLAIMED_SUBFORMS: readonly Subform[] = (
   [
     ["READING", "or holds an M5 import"],
@@ -317,8 +393,8 @@ export const CLAIMED_SUBFORMS: readonly Subform[] = (
     ["UNWRAP", "a specifier"],
     ["UNWRAP", "a member key"],
     ["UNWRAP", "a title"],
-    ["UNWRAP", "any number in any order"],
-    ["BINDING/named", "a static import of an entry under its exported name"],
+    ["UNWRAP", "parentheses and as in any order"],
+    ["BINDING/named", "a static import of an entry under its exported name, its clause's only specifier"],
     ["BINDING/named", "from any module"],
     ["BINDING/default", "a static default import of an HX module"],
     ["BINDING/destructured renamed", "its key written"],
@@ -327,14 +403,14 @@ export const CLAIMED_SUBFORMS: readonly Subform[] = (
     ["BINDING/alias element", "the name a string value"],
     ["BINDING/alias renamed", "its key written"],
     ["BINDING/alias rest", "a rest element, which takes the module"],
-    ["BINDING/assigned renamed", "the name an entry's written key takes"],
-    ["BINDING/assigned shorthand", "an entry's shorthand property"],
+    ["BINDING/assigned renamed", "the name an entry's written key takes, in its first property"],
+    ["BINDING/assigned shorthand", "an entry's shorthand property, its first property"],
     ["BINDING/store element", "a string value"],
-    ["BINDING/fixpoint", "until a round binds nothing"],
+    ["BINDING/fixpoint", "until a round binds nothing, claimed through the third round"],
     ["REGISTRATION/vitest import", "it or test"],
     ["REGISTRATION/vitest import", "imported from vitest"],
     ["REGISTRATION/declared api", "a variable declared from a test API"],
-    ["REGISTRATION/element member", "or a case method"],
+    ["REGISTRATION/element member", "or the case method each"],
     ["REGISTRATION/element member", "a string value"],
     ["REGISTRATION/chained", "case flags"],
     ["REGISTRATION/chained", "case-method calls"],
@@ -355,7 +431,7 @@ export const CLAIMED_SUBFORMS: readonly Subform[] = (
     ["REFERENCE/local reference", "object-literal keys"],
     ["REFERENCE/local reference", "method names"],
     ["REFERENCE/local reference", "type members"],
-    ["REFERENCE/used assignment", "through parentheses only"],
+    ["REFERENCE/used assignment", "through one pair of parentheses only"],
     ["PLACEMENT/declaration source", "whatever its pattern binds"],
     ["PLACEMENT/assignment binding", "that binds a new local"],
     ["PLACEMENT/bound store", "its entries"],
@@ -366,26 +442,26 @@ export const CLAIMED_SUBFORMS: readonly Subform[] = (
     ["PLACEMENT/declaration type", "the type annotation of an M5 or M6 declaration"],
     ["REGISTRATION/function body", "a case's body may be a function expression"],
     ["REGISTRATION/arrow body", "a case's body may be an arrow function"],
-    ["REGISTRATION/beside", "every argument beside the title and the body"],
+    ["REGISTRATION/beside", "every argument beside the title and the body that is an options object before the body or a timeout"],
     ["BINDING/fixpoint", "in source order"],
     ["BINDING/fixpoint", "every unread declaration, then every unread assignment"],
     ["MODULE/sdk root", "@hyperunix/sdk exactly"],
-    ["REGISTRATION/chained", "any number"],
+    ["REGISTRATION/chained", "up to three"],
     ["BINDING/string specifier", "whose first argument is a string literal"],
     ["BINDING/import await", "read through await, as well as through UNWRAP"],
     ["BINDING/dynamic", "an M5 import bound whole to the name its declaration introduces"],
     ["BINDING/namespace", "a static namespace import of an HX module"],
-    ["BINDING/aliased", "a static import of an entry under another local name"],
+    ["BINDING/aliased", "a static import of an entry under another local name, its clause's only specifier"],
     ["BINDING/destructured shorthand", "a shorthand element"],
-    ["BINDING/alias", "a variable declared from an HX local"],
+    ["BINDING/alias", "a variable declared from a named, namespace, rest or alias local"],
     ["BINDING/alias member", "of a module local"],
     ["BINDING/assigned value", "reads that assignment's right side as its own source"],
     ["BINDING/assigned name", "an M6 assignment to a name binds that name"],
     ["BINDING/store", "a member .name of a value"],
-    ["BINDING/store deep", "at any depth below the root"],
+    ["BINDING/store deep", "at up to three members below the root"],
     ["UNRESOLVED/unread binding", "an element with a computed key that is no string value"],
     ["UNRESOLVED/unread binding", "a binding pattern the reader cannot read"],
-    ["UNRESOLVED/unread assignment", "no object literal of named entries over a module local"],
+    ["UNRESOLVED/unread assignment", "no object literal of named entries over a module local, read to its first property"],
     ["UNRESOLVED/unread assignment", "no member chain rooted at a name"],
     ["READING", "UNRESOLVED lists what the reader cannot read"],
     ["REFERENCE/local reference", "by spelling and never by scope"],
@@ -616,7 +692,7 @@ function isHxImportWith(node: ts.Node, on: Words): node is ts.CallExpression {
   const literal = (ts.isStringLiteral(value) && on.has("string specifier")) || (ts.isNoSubstitutionTemplateLiteral(value) && on.has("template specifier"));
   return literal && hxModule(value.text, on);
 }
-/** Whether a node is an M5 import: an import() of an HX module by a literal specifier (BINDING string and template specifier). */
+/** Whether a node is an M5 import: an import() of an HX module by a literal specifier (BINDING string and template specifier; claimed for a provider path). */
 export const isHxImport = (node: ts.Node, options: ReadOptions = {}): node is ts.CallExpression => isHxImportWith(node, wordsOf(options));
 /** The variable declaration an M5 import initializes, through await and UNWRAP. */
 function declarationOf(node: ts.Node, on: Words): ts.VariableDeclaration | undefined {
@@ -634,7 +710,7 @@ function isBindingSite(node: ts.Identifier, on: Words): boolean {
   if (ts.isClassDeclaration(parent) || ts.isClassExpression(parent)) return on.has("class name") && parent.name === node;
   return false;
 }
-/** Whether an assignment's value is used: it does not stand, through parentheses only, as a whole expression statement. */
+/** Whether an assignment's value is used: it does not stand, through parentheses only, as a whole expression statement (claimed through one pair). */
 function valueUsed(node: ts.Node): boolean {
   let current = node;
   while (ts.isParenthesizedExpression(current.parent)) current = current.parent;
@@ -688,7 +764,7 @@ export function liveReading(sf: ts.SourceFile, options: ReadOptions = {}): LiveR
     }
   }
   const moduleForms = MODULE_LOCALS.filter(([, word]) => on.has(word)).map(([form]) => form);
-  /** The locals a binding pattern takes from a module local, or undefined when one of its elements cannot be named. */
+  /** The locals a binding pattern takes from a module local, or undefined when one of its elements cannot be named (claimed for its first two elements). */
   const destructured = (pattern: ts.BindingName, path: "destructured" | "alias"): (readonly [string, string])[] | undefined => {
     if (!ts.isObjectBindingPattern(pattern)) return undefined;
     const out: (readonly [string, string])[] = [];
@@ -737,7 +813,7 @@ export function liveReading(sf: ts.SourceFile, options: ReadOptions = {}): LiveR
     } else for (const [name, form] of names) bind(name, form);
   }
   const assignmentWord = (node: ts.Node): node is ts.BinaryExpression => ts.isBinaryExpression(node) && ASSIGNMENT_WORDS.some(([kind, word]) => node.operatorToken.kind === kind && on.has(word));
-  /** What a source reads as: a whole HX local's form, "entry" for an entry member of a module local, through an M6 assignment's value. */
+  /** What a source reads as: a whole HX local's form, "entry" for an entry member of a module local, through an M6 assignment's value (claimed for the forms BINDING alias names, one assignment deep). */
   const sourceOf = (expression: ts.Expression): string | undefined => {
     const value = unwrapWith(expression, on);
     if (ts.isIdentifier(value)) return locals.get(value.text);
@@ -748,7 +824,7 @@ export function liveReading(sf: ts.SourceFile, options: ReadOptions = {}): LiveR
     const from = ts.isIdentifier(base) ? locals.get(base.text) : undefined;
     return from !== undefined && moduleForms.includes(from) && entries.includes(member.name) ? "entry" : undefined;
   };
-  /** The root a stored member chain is rooted at, through every member the store words read. */
+  /** The root a stored member chain is rooted at, through every member the store words read (claimed to three members). */
   const rootOf = (target: ts.Expression): ts.Identifier | undefined => {
     let current = unwrapWith(target, on);
     let depth = 0;
@@ -759,7 +835,7 @@ export function liveReading(sf: ts.SourceFile, options: ReadOptions = {}): LiveR
     }
     return depth > 0 && ts.isIdentifier(current) ? current : undefined;
   };
-  /** The locals an object-literal assignment target takes from a module local, or undefined when one cannot be named. */
+  /** The locals an object-literal assignment target takes from a module local, or undefined when one cannot be named (claimed for its first property). */
   const assignedFrom = (target: ts.ObjectLiteralExpression): string[] | undefined => {
     const out: string[] = [];
     for (const property of target.properties) {
