@@ -31,20 +31,6 @@
     "docs09": "docs/workbench/09-observation-and-provenance.md",
     "docs09Section": "## Experimental projection implementation",
     "docs09Title": "09 \u2014 Observation, telemetry, provenance and derived graph",
-    "docs09Subjects": {
-      "Furnace read": {
-        "source": "furnace(?:['\\u2019]s)?[^\\p{L}\\p{N}]*read",
-        "flags": "giu"
-      },
-      "poll": {
-        "source": "poll",
-        "flags": "giu"
-      },
-      "attach": {
-        "source": "attach",
-        "flags": "giu"
-      }
-    },
     "restated": [
       "blockquoteCopy",
       "listItemCopy",
@@ -161,7 +147,19 @@
       "numericLongCopy",
       "numericLongHexCopy",
       "secondSentenceCopy",
-      "verbsFrameReferenceCopy"
+      "verbsFrameReferenceCopy",
+      "quoteQuoteListCopy",
+      "quoteQuoteOrderedListCopy",
+      "quoteQuoteTaskListCopy",
+      "quoteQuoteListPossessiveCopy",
+      "quoteQuoteListVerbsCopy",
+      "quoteQuoteQuoteListCopy",
+      "itemQuoteListCopy",
+      "quoteItemQuoteListCopy",
+      "quoteQuoteListQuoteCopy",
+      "quoteQuoteListListCopy",
+      "quoteQuoteListReferenceCopy",
+      "quoteQuoteListControlCopy"
     ],
     "numericReferences": {
       "0x80": "0x20ac",
@@ -3055,17 +3053,20 @@
                 "controls": [],
                 "subjects": {
                   "Furnace read": [
-                    "paragraph"
+                    "paragraph",
+                    "blockquote"
                   ],
                   "poll": [
-                    "paragraph"
+                    "paragraph",
+                    "blockquote"
                   ],
                   "attach": [
                     "paragraph"
                   ]
                 },
                 "readsClauses": [
-                  "status/attempt/log-reference"
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
                 ],
                 "verbsClauses": [
                   "create, resume or stop"
@@ -4028,6 +4029,349 @@
                 "verbsClauses": [],
                 "reads": [],
                 "verbs": []
+              },
+              "quoteQuoteListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteOrderedListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteTaskListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListPossessiveCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListVerbsCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph",
+                    "blockquote"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop",
+                  "create or resume"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteQuoteListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "itemQuoteListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "list item"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteItemQuoteListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListQuoteCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListListCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "poll": [
+                    "paragraph",
+                    "blockquote"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference",
+                  "status/attempt/log-reference/event-stream"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListReferenceCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [
+                  "&shy;"
+                ],
+                "controls": [],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
+              },
+              "quoteQuoteListControlCopy": {
+                "binds": true,
+                "why": "",
+                "html": false,
+                "undecoded": [],
+                "controls": [
+                  "U+0001"
+                ],
+                "subjects": {
+                  "Furnace read": [
+                    "paragraph"
+                  ],
+                  "poll": [
+                    "paragraph"
+                  ],
+                  "attach": [
+                    "paragraph"
+                  ]
+                },
+                "readsClauses": [
+                  "status/attempt/log-reference"
+                ],
+                "verbsClauses": [
+                  "create, resume or stop"
+                ],
+                "reads": [],
+                "verbs": []
               }
             }
           }
@@ -4427,6 +4771,29 @@
           "claims": null,
           "witness": {
             "residual": "R-DOCS-UNCOUNTED",
+            "plants": {
+              "paraphrase": "> Pi's Furnace observer also follows each Run's event stream.",
+              "confusable": "> The external Furn\u0430ce reader uses explicit bounded status/attempt/log-reference/event-stream p\u043elling.",
+              "quoteNestedTable": "> | Reader |\n> | --- |\n> | The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling. |",
+              "itemNestedTable": "- note\n\n  | Reader |\n  | --- |\n  | The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling. |",
+              "linkTitle": "[see](https://example.invalid \"The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling.\")",
+              "apostropheLetter": "> The Furnace\u02bcs reader also follows each Run's event stream.",
+              "apostropheQuote": "> The Furnace\u2018s reader also follows each Run's event stream.",
+              "privateUse": "> The external Furn\ue000ace reader uses explicit bounded status/attempt/log-reference/event-stream po\ue000lling.",
+              "unassigned": "> The external Furn\u0378ace reader uses explicit bounded status/attempt/log-reference/event-stream po\u0378lling.",
+              "apostropheGrave": "> The Furnace`s reader also follows each Run's event stream.",
+              "apostropheAcute": "> The Furnace\u00b4s reader also follows each Run's event stream.",
+              "apostrophePrime": "> The Furnace\u2032s reader also follows each Run's event stream.",
+              "apostropheTurnedComma": "> The Furnace\u02bbs reader also follows each Run's event stream.",
+              "apostropheFullWidthGrave": "> The Furnace\uff40s reader also follows each Run's event stream.",
+              "apostropheArmenian": "> The Furnace\u055as reader also follows each Run's event stream.",
+              "quoteQuoteTable": "> > | Reader |\n> > | --- |\n> > | The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling. |",
+              "itemItemTable": "- a\n  - b\n\n    | Reader |\n    | --- |\n    | The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling. |",
+              "tableReference": "> | Reader |\n> | --- |\n> | Pi&shy;docs. |",
+              "tableControl": "> | Reader |\n> | --- |\n> | Pi&#1;docs. |",
+              "imageTitle": "![x](https://example.invalid/x.png \"The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling.\")",
+              "definitionTitle": "[ref]: https://example.invalid \"The external Furnace reader uses explicit bounded status/attempt/log-reference/event-stream polling.\""
+            },
             "quiet": {
               "paraphrase": true,
               "confusable": true,
@@ -4443,18 +4810,6 @@
               "apostropheTurnedComma": true,
               "apostropheFullWidthGrave": true,
               "apostropheArmenian": true,
-              "quoteQuoteList": true,
-              "quoteQuoteOrderedList": true,
-              "quoteQuoteTaskList": true,
-              "quoteQuoteListPossessive": true,
-              "quoteQuoteListVerbs": true,
-              "quoteQuoteQuoteList": true,
-              "itemQuoteList": true,
-              "quoteItemQuoteList": true,
-              "quoteQuoteListQuote": true,
-              "quoteQuoteListList": true,
-              "quoteQuoteListReference": true,
-              "quoteQuoteListControl": true,
               "quoteQuoteTable": true,
               "itemItemTable": true,
               "tableReference": true,
@@ -4478,18 +4833,6 @@
               "apostropheTurnedComma": true,
               "apostropheFullWidthGrave": true,
               "apostropheArmenian": true,
-              "quoteQuoteList": true,
-              "quoteQuoteOrderedList": true,
-              "quoteQuoteTaskList": true,
-              "quoteQuoteListPossessive": true,
-              "quoteQuoteListVerbs": true,
-              "quoteQuoteQuoteList": true,
-              "itemQuoteList": true,
-              "quoteItemQuoteList": true,
-              "quoteQuoteListQuote": true,
-              "quoteQuoteListList": true,
-              "quoteQuoteListReference": true,
-              "quoteQuoteListControl": true,
               "quoteQuoteTable": true,
               "itemItemTable": true,
               "tableReference": true,
