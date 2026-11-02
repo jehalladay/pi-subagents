@@ -14,9 +14,10 @@
  * first one.
  *
  * MEASURED (read-only, by the cutting seats: cut #1 at trunk df37dac and cut #2 = respin 1 at e81d2b0 on 2026-10-28, cut #3 =
- * respin 2 at b3d410f and cut #4 = respin 3 at 1ad30c3 on 2026-10-29, and the follow-up cut of wb-27pe at cdf5484 on
- * 2026-10-30). Pi: git's src listing holds 116 files at df37dac and 117 at e81d2b0, at b3d410f, at 1ad30c3 and at cdf5484, and
- * none names a word of the vocabulary below, in its path or its text; git grep -i over docs/ finds none of them either, so the
+ * respin 2 at b3d410f and cut #4 = respin 3 at 1ad30c3 on 2026-10-29, the follow-up cut of wb-27pe at cdf5484 on 2026-10-30
+ * and the follow-up cut of wb-4nh8 at 74f8aa7 on 2026-10-31). Pi: git's src listing holds 116 files at df37dac and 117 at
+ * e81d2b0, at b3d410f, at 1ad30c3, at cdf5484 and at 74f8aa7, and none names a word of the vocabulary below, in its path or
+ * its text; git grep -i over docs/ finds none of them either, so the
  * filing's "absence of any ... doc" still holds. "sidecar" is read as one word: its separator-tolerant spelling side car
  * reads src/workbench/designer.ts:308 ("one side carries"), a Pi word with another meaning. Producer (the local
  * MechanicalWorkflows checkout, git show, read by cut #1's seat; the roster's producer block holds the cited lines and their
@@ -164,17 +165,26 @@
  * a field name takes - G-REN-FP, featureProjection named projection, and S-FIELD-HASH, snapshotHash named hash, each a
  * one-part name that leaves the vocabulary; behaviorLogProbability named logProbability; support named legalSupport, a
  * two-part name that joins it - and its contrast, a name whose parts are no run, reds runs), R-PIN-PARTITION (Q10: where a
- * label is cut into pins - tiling reads that a row's quotes, in order, tile its label, never where its cuts fall - in four
- * kinds, each over every tiled row (A-D and S): a pin merged into its sibling, its quote re-homed there - C6A2, C6B2, C6C3,
- * C6D2 and C6S1 - and its contrast, the same merge with the sibling's quote left in place; the cut between two sibling pins
- * moved over one word, the second quote's first word re-homed at the end of the first - G6-PIN-BOUNDARY-A (A1/A2),
- * S-PIN-BOUNDARY-B (B1/B2), S-PIN-BOUNDARY-C (C1/C2), S-PIN-BOUNDARY-D (D1/D2) and S-PIN-BOUNDARY-S (S2/S3) - and its
- * contrast, the same move with the word kept in its old quote as well; a pin cut in two at its quote's last space, a new pin
- * after it taking the last word - S-PIN-SPLIT-A (A3 and A4), S-PIN-SPLIT-B (B2 and B3), S-PIN-SPLIT-C (C3 and C4),
+ * label is cut into pins - tiling reads that a row's quotes, in order, tile its label, never where its cuts fall; its members
+ * are edits of six kinds, each over every tiled row (A-D and S): a pin merged into its sibling, its quote re-homed there -
+ * C6A2, C6B2, C6C3, C6D2 and C6S1 - and its contrast, the same merge with the sibling's quote left in place; the cut between
+ * two sibling pins moved over one word, the second quote's first word re-homed at the end of the first - G6-PIN-BOUNDARY-A
+ * (A1/A2), S-PIN-BOUNDARY-B (B1/B2), S-PIN-BOUNDARY-C (C1/C2), S-PIN-BOUNDARY-D (D1/D2) and S-PIN-BOUNDARY-S (S2/S3) - and
+ * its contrast, the same move with the word kept in its old quote as well; a pin cut in two at its quote's last space, a new
+ * pin after it taking the last word - S-PIN-SPLIT-A (A3 and A4), S-PIN-SPLIT-B (B2 and B3), S-PIN-SPLIT-C (C3 and C4),
  * S-PIN-SPLIT-D (D2 and D3) and S-PIN-SPLIT-S (S3 and S4) - and its contrast, the same cut with the pin's quote kept whole;
- * and the label's separator after a row's first pin taken into that pin's quote - S-PIN-SEPARATOR-A, S-PIN-SEPARATOR-B,
- * S-PIN-SEPARATOR-C, S-PIN-SEPARATOR-D and S-PIN-SEPARATOR-S - and its contrast, the separator taken in twice; each contrast
- * reds that row's tiling) and R-UNREAD (Q11: an edit of a model part no reading
+ * the label's separator after a row's first pin taken into that pin's quote - S-PIN-SEPARATOR-A, S-PIN-SEPARATOR-B,
+ * S-PIN-SEPARATOR-C, S-PIN-SEPARATOR-D and S-PIN-SEPARATOR-S - and its contrast, the separator taken in twice; a zero-width
+ * pin, a new pin whose quote is empty, appended after a row's last pin - K5-EMPTY-PIN-END-A (A4 after A3),
+ * K5-EMPTY-PIN-END-B (B3 after B2), K5-EMPTY-PIN-END-C (C4 after C3), K5-EMPTY-PIN-END-D (D3 after D2) and
+ * K5-EMPTY-PIN-END-S (S4 after S3) - or inserted after its first pin - K5-EMPTY-PIN-MID-A, K5-EMPTY-PIN-MID-B,
+ * K5-EMPTY-PIN-MID-C, K5-EMPTY-PIN-MID-D and K5-EMPTY-PIN-MID-S (the same new pins after A1, B1, C1, D1 and S1) - and its
+ * contrast, the same pin given the last word of the pin it follows, which the label does not hold again there; and a
+ * separator pin, a new pin after a row's first pin whose quote is the label's separator there - S-SEPARATOR-PIN-A,
+ * S-SEPARATOR-PIN-B, S-SEPARATOR-PIN-C, S-SEPARATOR-PIN-D and S-SEPARATOR-PIN-S - and its contrast, the separator held
+ * twice; each contrast reds that row's tiling. A placement or a composition of these kinds that no member holds (a
+ * zero-width pin before a row's first pin, two merges in one row) is NOT CLAIMED by this census: no member's quiet row
+ * holds it) and R-UNREAD (Q11: an edit of a model part no reading
  * takes - S-DECISION-FIELD-RENAME, the decision's second field named choice; C6Q, row Q removed whole with every residual
  * member; C6Q4, pin Q4 with its quote and members; C6-labelQ, row Q's label reworded; C6-quoteQ, Q3's quote reworded;
  * C6-member, Q1's first member removed; S-PRODUCER-PHRASE, a phrase cut from P3's text; PL-blob, P5's blob id). Each
@@ -244,20 +254,24 @@
  * with its quote, or rewording a pin quote - a word of it changed, added or dropped while its sibling quotes stay (that
  * row's tiling). How an item is cut into fields is not among them: a field merged into a sibling with its phrase re-homed
  * there, or an item cut at a connector its phrase holds, keeps every reading (R-FIELD-PARTITION, Q8); nor is where a label
- * is cut into pins: a merge, a moved cut, a split or a separator taken into a quote keeps every reading (R-PIN-PARTITION,
- * Q10); and so do the other model edits Q9 and Q11 name.
- * NOT CLAIMED (limits of this file's own literals, not reading modes: no source outside the census and its roster names
- * them; each measured surviving): a pin's case replaced by another passing case with the roster re-measured to it; a
- * mutant, a value-list entry with its controls, or a base removed from its table, the frozen literals and the roster; a
- * residual member removed from its table, the frozen literal and the roster; a BOUND member removed from the BOUND table,
- * its frozen literal and the roster's count of the outside-anchor case, where another member still reds the same reading
- * (S-ACTION-REWORD beside S-ACTION-DROP: every reading stays red under one); and a row or pin id renamed everywhere it
- * appears.
+ * is cut into pins: a merge, a moved cut, a split, a separator taken into a quote, a zero-width pin added or a separator pin
+ * added keeps every reading (R-PIN-PARTITION, Q10); and so do the other model edits Q9 and Q11 name.
+ * NOT CLAIMED (limits of this file's own literals and of its last case, not reading modes: no source outside the census and
+ * its roster names them; each measured surviving): a pin's case replaced by another passing case with the roster re-measured
+ * to it; a mutant, a value-list entry with its controls, or a base removed from its table, the frozen literals and the
+ * roster; a residual member removed from its table, the frozen literal and the roster; a BOUND member removed from the BOUND
+ * table, its frozen literal and the roster's count of the outside-anchor case, where another member still reds the same
+ * reading (S-ACTION-REWORD beside S-ACTION-DROP: every reading stays red under one); a row or pin id renamed everywhere it
+ * appears; and a read of the last case's own removed, or a return before one - its REACHED, ASSERTED and ENDED reads and its
+ * roster equalities among them (G7-REACHED-ASSERT-DROP, S-REACHED-SAME-DROP, G7-ASSERTED-ASSERT-DROP, G7-ENDED-ASSERT-DROP,
+ * S-ROSTER-ROWS-DROP, S-ROSTER-EARLY-RETURN): no case runs after the last one, so nothing reach-pins its own reads, and each
+ * clause of its title rests on a read that no later case checks.
  * The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it), REACHED
  * (every pin reached its witness compare, and each compare's own result), ASSERTED (each pin's case made the assertion
  * count the roster pins, its witness compare included) and ENDED (each of the three other judged cases - rule 16, the
  * mutant battery and the outside anchors - reached its last statement having made the assertion count the roster pins,
- * so a return before a later read, or a read removed, inside one of them reds).
+ * so a return before a later read, or a read removed, inside one of them reds). Nothing reach-pins the last case's own
+ * reads (NOT CLAIMED, above).
  *
  * Display paths added: none. Test-only: no src change, no sidecar module, schema, validator or seam in src.
  */
@@ -1410,6 +1424,13 @@ function pinCut(model: AnchorModel, id: string, pin: string, added: string, kept
 }
 /** The label's separator after pin `pin` taken into the end of that pin's quote (twice: the separator taken in twice, the contrast). */
 const separatorTaken = (model: AnchorModel, pin: string, separator: string, twice = false): AnchorModel => quoted(model, pin, `${model.quotes[pin] ?? ""}${separator}${twice ? separator : ""}`);
+/** A new pin `added` holding `quote` (empty: a zero-width pin), placed in row `id` right after its pin `after`. */
+function pinAdded(model: AnchorModel, id: string, after: string, added: string, quote: string): AnchorModel {
+  const rows = model.rows.map(row => (row.id === id ? { ...row, pins: row.pins.flatMap(entry => (entry === after ? [entry, added] : [entry])) } : row));
+  return { ...model, rows, quotes: { ...model.quotes, [added]: quote } };
+}
+/** The last word of a pin's quote: what a zero-width pin's contrast holds after that pin, where the label does not hold it again. */
+const lastWord = (model: AnchorModel, pin: string): string => (model.quotes[pin] ?? "").split(" ").at(-1) ?? "";
 /** The vocabulary composed from a record noun and the items' fields. */
 const composedVocabulary = (noun: string, items: readonly Item[]): string[] => [
   noun,
@@ -1600,6 +1621,81 @@ const MODEL_RESIDUALS: Readonly<Record<string, readonly ModelMember[]>> = {
       id: "S-PIN-SEPARATOR-S: the separator after S1 taken into S1's quote",
       edit: model => separatorTaken(model, "S1", "; "),
       contrast: { edit: model => separatorTaken(model, "S1", "; ", true), reds: "tiling S" },
+    },
+    {
+      id: "K5-EMPTY-PIN-END-A: a new pin A4 with an empty quote appended after A3",
+      edit: model => pinAdded(model, "A", "A3", "A4", ""),
+      contrast: { edit: model => pinAdded(model, "A", "A3", "A4", lastWord(model, "A3")), reds: "tiling A" },
+    },
+    {
+      id: "K5-EMPTY-PIN-END-B: a new pin B3 with an empty quote appended after B2",
+      edit: model => pinAdded(model, "B", "B2", "B3", ""),
+      contrast: { edit: model => pinAdded(model, "B", "B2", "B3", lastWord(model, "B2")), reds: "tiling B" },
+    },
+    {
+      id: "K5-EMPTY-PIN-END-C: a new pin C4 with an empty quote appended after C3",
+      edit: model => pinAdded(model, "C", "C3", "C4", ""),
+      contrast: { edit: model => pinAdded(model, "C", "C3", "C4", lastWord(model, "C3")), reds: "tiling C" },
+    },
+    {
+      id: "K5-EMPTY-PIN-END-D: a new pin D3 with an empty quote appended after D2",
+      edit: model => pinAdded(model, "D", "D2", "D3", ""),
+      contrast: { edit: model => pinAdded(model, "D", "D2", "D3", lastWord(model, "D2")), reds: "tiling D" },
+    },
+    {
+      id: "K5-EMPTY-PIN-END-S: a new pin S4 with an empty quote appended after S3",
+      edit: model => pinAdded(model, "S", "S3", "S4", ""),
+      contrast: { edit: model => pinAdded(model, "S", "S3", "S4", lastWord(model, "S3")), reds: "tiling S" },
+    },
+    {
+      id: "K5-EMPTY-PIN-MID-A: a new pin A4 with an empty quote inserted after A1",
+      edit: model => pinAdded(model, "A", "A1", "A4", ""),
+      contrast: { edit: model => pinAdded(model, "A", "A1", "A4", lastWord(model, "A1")), reds: "tiling A" },
+    },
+    {
+      id: "K5-EMPTY-PIN-MID-B: a new pin B3 with an empty quote inserted after B1",
+      edit: model => pinAdded(model, "B", "B1", "B3", ""),
+      contrast: { edit: model => pinAdded(model, "B", "B1", "B3", lastWord(model, "B1")), reds: "tiling B" },
+    },
+    {
+      id: "K5-EMPTY-PIN-MID-C: a new pin C4 with an empty quote inserted after C1",
+      edit: model => pinAdded(model, "C", "C1", "C4", ""),
+      contrast: { edit: model => pinAdded(model, "C", "C1", "C4", lastWord(model, "C1")), reds: "tiling C" },
+    },
+    {
+      id: "K5-EMPTY-PIN-MID-D: a new pin D3 with an empty quote inserted after D1",
+      edit: model => pinAdded(model, "D", "D1", "D3", ""),
+      contrast: { edit: model => pinAdded(model, "D", "D1", "D3", lastWord(model, "D1")), reds: "tiling D" },
+    },
+    {
+      id: "K5-EMPTY-PIN-MID-S: a new pin S4 with an empty quote inserted after S1",
+      edit: model => pinAdded(model, "S", "S1", "S4", ""),
+      contrast: { edit: model => pinAdded(model, "S", "S1", "S4", lastWord(model, "S1")), reds: "tiling S" },
+    },
+    {
+      id: "S-SEPARATOR-PIN-A: a new pin A4 inserted after A1, its quote the label's separator there",
+      edit: model => pinAdded(model, "A", "A1", "A4", " "),
+      contrast: { edit: model => pinAdded(model, "A", "A1", "A4", " ".repeat(2)), reds: "tiling A" },
+    },
+    {
+      id: "S-SEPARATOR-PIN-B: a new pin B3 inserted after B1, its quote the label's separator there",
+      edit: model => pinAdded(model, "B", "B1", "B3", " ("),
+      contrast: { edit: model => pinAdded(model, "B", "B1", "B3", " (".repeat(2)), reds: "tiling B" },
+    },
+    {
+      id: "S-SEPARATOR-PIN-C: a new pin C4 inserted after C1, its quote the label's separator there",
+      edit: model => pinAdded(model, "C", "C1", "C4", " "),
+      contrast: { edit: model => pinAdded(model, "C", "C1", "C4", " ".repeat(2)), reds: "tiling C" },
+    },
+    {
+      id: "S-SEPARATOR-PIN-D: a new pin D3 inserted after D1, its quote the label's separator there",
+      edit: model => pinAdded(model, "D", "D1", "D3", ", "),
+      contrast: { edit: model => pinAdded(model, "D", "D1", "D3", ", ".repeat(2)), reds: "tiling D" },
+    },
+    {
+      id: "S-SEPARATOR-PIN-S: a new pin S4 inserted after S1, its quote the label's separator there",
+      edit: model => pinAdded(model, "S", "S1", "S4", "; "),
+      contrast: { edit: model => pinAdded(model, "S", "S1", "S4", "; ".repeat(2)), reds: "tiling S" },
     },
   ],
   Q11: [
@@ -2125,7 +2221,7 @@ describe(SUITE, () => {
       "M-NULLISH-AFTER-ABSENT",
       "M-OBJECT-CHOICE",
     ]);
-    expect(Object.entries(residualMembers()).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:5", "Q2:2", "Q3:5", "Q4:3", "Q5:9", "Q6:1", "Q7:12", "Q8:4", "Q9:4", "Q10:20", "Q11:8"]);
+    expect(Object.entries(residualMembers()).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:5", "Q2:2", "Q3:5", "Q4:3", "Q5:9", "Q6:1", "Q7:12", "Q8:4", "Q9:4", "Q10:35", "Q11:8"]);
     expect([...READINGS]).toEqual([
       "title",
       "statement",
@@ -2188,7 +2284,7 @@ describe(SUITE, () => {
     expect(Object.entries(MODEL_RESIDUALS).map(([id, members]) => `${id}:${members.map(member => member.contrast?.reds ?? "-").join(", ")}`)).toEqual([
       "Q8:join, join, join, join",
       "Q9:runs, runs, runs, runs",
-      "Q10:tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S",
+      "Q10:tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S, tiling A, tiling B, tiling C, tiling D, tiling S",
       "Q11:-, -, -, -, -, -, -, -",
     ]);
     expect(SITES).toEqual([]);

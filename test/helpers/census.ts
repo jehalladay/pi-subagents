@@ -5314,6 +5314,9 @@ function blockText(tokens: readonly Token[]): string {
       if (token.type === "html") return "";
       if (token.type === "code") return textOf(token);
       if (isList(token)) return token.items.map(item => blockText(childrenOf(item))).join(" ");
+      // A nested quote owns block children, not just inline tokens: its list's items also render. A table among the
+      // children renders no text, here and at any depth below the top level (wb-aalz RESIDUAL R1 TABLE-CHILD).
+      if (token.type === "blockquote") return blockText(childrenOf(token));
       return childrenOf(token).length > 0 ? inlineText(childrenOf(token)) : decode(textOf(token));
     })
     .join(" ");
