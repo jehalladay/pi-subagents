@@ -1,0 +1,509 @@
+{
+ "bead": "wb-jwc.13",
+ "census": "test/workbench-rf-binding-text-reader-subforms-census.test.ts",
+ "helper": "test/helpers/rf-binding-text-reader.ts",
+ "note": "The sub-form census's roster: every row, in order, with its label (an unmet item's label or a finding's PREP head, verbatim from its record), and every pin, in order, with its page's digest (sha256/16), its forms (what its probe reads: each probed argument's source text with its whitespace runs read as one space; for the programs probe the callee's name, a colon and its first argument's; for the registration probes each registering object literal's) and its reading. It states no other words. The census holds its rows, pins, pages and readings to this file.",
+ "rows": [
+  {
+   "row": "R3-U1a",
+   "label": "U1a-EVAL-CALL-WITH-TWO-OR-MORE-ARGUMENTS-UNCOUNTED-FAIL-OPEN",
+   "pins": [
+    {
+     "pin": "n03-ts",
+     "page": "4683c4774af2e164",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "n03-js",
+     "page": "7fb4fbf7301c8f0c",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "EV-ZERO",
+     "page": "d734eea7ebe43878",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "EV-ONE",
+     "page": "992e22a72a4cd031",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "EV-TWO",
+     "page": "66f7c0072575eb2c",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "EV-THREE",
+     "page": "777091c3ff66895b",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "EV-NONE",
+     "page": "025735660d19d685",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "\"a\""
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R3-U1b",
+   "label": "U1b-WORDS-DROP-SET-TRAILING-BAT-COM-DROPPED-UNPINNED",
+   "pins": [
+    {
+     "pin": "n23",
+     "page": "384c4b2382f1e1e7",
+     "forms": [
+      "\"rf.bat x.COM y\""
+     ],
+     "reading": [
+      "rf.bat x.COM y"
+     ]
+    },
+    {
+     "pin": "WD-FORMS",
+     "page": "c57c9646e2824886",
+     "forms": [
+      "\"rf.bat a.BAT b.Bat c.com d.COM e.Com\"",
+      "\"rf.exe a.EXE b.Exe c.cmd d.CMD e.Cmd\"",
+      "\"z.exe.bak y.cmd.txt\""
+     ],
+     "reading": [
+      "rf.bat a.BAT b.Bat c.com d.COM e.Com",
+      "rf a b c d e",
+      "z.exe.bak y.cmd.txt"
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R3-U1c",
+   "label": "U1c-KINDS-CATCH-TYPED-ANY-READS-OTHER-UNPINNED",
+   "pins": [
+    {
+     "pin": "n31",
+     "page": "6b94788b573bb579",
+     "forms": [
+      "e"
+     ],
+     "reading": [
+      "<opaque e:catch>"
+     ]
+    },
+    {
+     "pin": "CA-TS",
+     "page": "c30202f13258761b",
+     "forms": [
+      "e",
+      "u"
+     ],
+     "reading": [
+      "<opaque e:catch>",
+      "<opaque u:catch>"
+     ]
+    },
+    {
+     "pin": "CA-JS",
+     "page": "9c004432c62ba782",
+     "forms": [
+      "e"
+     ],
+     "reading": [
+      "<opaque e:catch>"
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R3-U1d",
+   "label": "U1d-REGISTRATION-EFFECT-EACH-ONCE-RENDERED-DEDUPE-UNEXERCISED",
+   "pins": [
+    {
+     "pin": "n18",
+     "page": "c6f98fd2b748ae2a",
+     "forms": [
+      "{ id: \"reactivefiber.f\", effectClass: c ? \"<opaque p:parameter>\" : p }"
+     ],
+     "reading": [
+      "reactivefiber.f:<opaque p:parameter>"
+     ]
+    },
+    {
+     "pin": "EF-FORMS",
+     "page": "b3139d27a5e9e0b3",
+     "forms": [
+      "{ id: \"reactivefiber.g\", effectClass: c ? p : \"<opaque p:parameter>\" }",
+      "{ id: \"reactivefiber.h\", effectClass: c ? \"<opaque p:parameter>\" : d ? p : \"read\" }"
+     ],
+     "reading": [
+      "reactivefiber.g:<opaque p:parameter>",
+      "reactivefiber.h:<opaque p:parameter>|read"
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R3-U2",
+   "label": "U2-R668-TEXT12-BOUND-LABEL-SOURCE-TEXT-WORDS-VS-WHITESPACE-COLLAPSE-UNPINNED",
+   "pins": [
+    {
+     "pin": "n30",
+     "page": "b0da7c958facc465",
+     "forms": [
+      "I16"
+     ],
+     "reading": [
+      "<opaque c ? \"a\" : \"b\":bound>"
+     ]
+    },
+    {
+     "pin": "n35",
+     "page": "fdbb34a81c29040e",
+     "forms": [
+      "(c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\")"
+     ],
+     "reading": [
+      "<opaque (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\"):bound>"
+     ]
+    },
+    {
+     "pin": "BD-WHITESPACE",
+     "page": "a069176905f1a486",
+     "forms": [
+      "J16",
+      "(c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\")"
+     ],
+     "reading": [
+      "<opaque c ? \"a\" : \"b\":bound>",
+      "<opaque (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\"):bound>"
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R4-U1a",
+   "label": "U1a-READINGS1-EXACT-FIRST-ALTERNATIVE-ONLY-FAIL-OPEN",
+   "pins": [
+    {
+     "pin": "q06",
+     "page": "972a9524951df019",
+     "forms": [
+      "c ? \"a\" : p"
+     ],
+     "reading": [
+      "\"unresolved\""
+     ]
+    },
+    {
+     "pin": "EX-POSITIONS",
+     "page": "4ecc66ca83b63213",
+     "forms": [
+      "p ?? \"b\"",
+      "c ? \"a\" : d ? p : \"b\"",
+      "c ? \"a\" : d ? \"b\" : p",
+      "p",
+      "c ? \"a\" : \"b\""
+     ],
+     "reading": [
+      "\"unresolved\"",
+      "\"unresolved\"",
+      "\"unresolved\"",
+      "\"unresolved\"",
+      "[\"a\",\"b\"]"
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R4-U1b",
+   "label": "U1b-READINGS2-WORDS-FIRST-ALTERNATIVE-ONLY-FAIL-OPEN",
+   "pins": [
+    {
+     "pin": "q07",
+     "page": "bc827e02b8e7f253",
+     "forms": [
+      "c ? \"rf x\" : p"
+     ],
+     "reading": [
+      "unresolved"
+     ]
+    },
+    {
+     "pin": "WO-POSITIONS",
+     "page": "580bd6457704631d",
+     "forms": [
+      "p ?? \"rf\"",
+      "c ? \"rf x\" : d ? p : \"rf y\"",
+      "c ? \"rf x\" : d ? \"rf y\" : p",
+      "p",
+      "c ? \"rf x\" : \"rf y\""
+     ],
+     "reading": [
+      "unresolved",
+      "unresolved",
+      "unresolved",
+      "unresolved",
+      "rf x y"
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R4-U1c",
+   "label": "U1c-READINGS3-PROGRAM-FIRST-ALTERNATIVE-ONLY-FAIL-OPEN-R-B115-E1E2-CLASS",
+   "pins": [
+    {
+     "pin": "q08",
+     "page": "951150a7a262615c",
+     "forms": [
+      "execFileSync:c ? \"git\" : p",
+      "execFileSync:process.env.PI_VCS === undefined ? \"git\" : process.env.PI_VCS"
+     ],
+     "reading": [
+      "execFileSync:<opaque c ? \"git\" : p>",
+      "execFileSync:<opaque process.env.PI_VCS === undefined ? \"git\" : process.env.PI_VCS>"
+     ]
+    },
+    {
+     "pin": "PG-POSITIONS",
+     "page": "7dc99a9a184a1c67",
+     "forms": [
+      "spawn:p ?? \"git\"",
+      "spawn:c ? \"git\" : d ? p : \"rf\"",
+      "spawn:c ? \"git\" : d ? \"rf\" : p",
+      "spawn:p",
+      "spawn:c ? \"rf\" : \"git\""
+     ],
+     "reading": [
+      "spawn:<opaque p ?? \"git\">",
+      "spawn:<opaque c ? \"git\" : d ? p : \"rf\">",
+      "spawn:<opaque c ? \"git\" : d ? \"rf\" : p>",
+      "spawn:<opaque p>",
+      "spawn:git|rf"
+     ]
+    },
+    {
+     "pin": "PG-WORDLESS",
+     "page": "19fd7eaead2637e6",
+     "forms": [
+      "spawn:c ? \"git\" : \"\"",
+      "spawn:c ? \"\" : \"git\"",
+      "spawn:c ? \"git\" : \" \"",
+      "spawn:\"\""
+     ],
+     "reading": [
+      "spawn:<opaque c ? \"git\" : \"\">",
+      "spawn:<opaque c ? \"\" : \"git\">",
+      "spawn:<opaque c ? \"git\" : \" \">",
+      "spawn:<opaque \"\">"
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R4-U1d",
+   "label": "U1d-READINGS1-EXACT-IN-ORDER-SORTED-UNPINNED",
+   "pins": [
+    {
+     "pin": "p08",
+     "page": "3cf6fa3a45eda664",
+     "forms": [
+      "c ? \"b\" : \"a\""
+     ],
+     "reading": [
+      "[\"b\",\"a\"]"
+     ]
+    },
+    {
+     "pin": "OR-ORDERS",
+     "page": "d46fd2f48289fb93",
+     "forms": [
+      "c ? \"b\" : d ? \"c\" : \"a\"",
+      "c ? \"a\" : \"B\""
+     ],
+     "reading": [
+      "[\"b\",\"c\",\"a\"]",
+      "[\"a\",\"B\"]"
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R4-R668",
+   "label": "U1-R668 rider",
+   "pins": [
+    {
+     "pin": "XT-TEXTS",
+     "page": "17ff55942c562568",
+     "forms": [
+      "c ? \"a\" : \"b\"",
+      "p ?? \"b\"",
+      "\"only\""
+     ],
+     "reading": [
+      "[\"a\",\"b\"]",
+      "\"unresolved\"",
+      "[\"only\"]"
+     ]
+    },
+    {
+     "pin": "XW-WORDS",
+     "page": "8dd3d5171b8ea99e",
+     "forms": [
+      "\"/usr/bin/rf.EXE context;render|tee(log) > out < in & bg 'q' \\\"d\\\" `b`\"",
+      "\"C:\\\\tools\\\\rf.cmd x\"",
+      "c ? \"rf x\" : \"rf y\"",
+      "p ?? \"rf\""
+     ],
+     "reading": [
+      "rf context render tee log out in bg q d b",
+      "rf x",
+      "rf x y",
+      "unresolved"
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R4-F2",
+   "label": "F2 INFO (LEG 2 survivors below the claim's vocabulary; not counted)",
+   "pins": [
+    {
+     "pin": "coll-programs",
+     "page": "ddd76c8340a74979",
+     "forms": [
+      "spawn:c ? \"apt\" : \"Zed\""
+     ],
+     "reading": [
+      "spawn:Zed|apt"
+     ]
+    },
+    {
+     "pin": "coll-registrations",
+     "page": "ddd76c8340a74979",
+     "forms": [
+      "{ id: \"reactivefiber.e\", effectClass: c ? \"read\" : \"Write\" }",
+      "{ id: c ? \"reactivefiber.a\" : \"reactivefiber.B\" }"
+     ],
+     "reading": [
+      "reactivefiber.B:<none>",
+      "reactivefiber.a:<none>",
+      "reactivefiber.e:Write|read"
+     ]
+    },
+    {
+     "pin": "coll-registration",
+     "page": "ddd76c8340a74979",
+     "forms": [
+      "{ id: \"reactivefiber.e\", effectClass: c ? \"read\" : \"Write\" }",
+      "{ id: c ? \"reactivefiber.a\" : \"reactivefiber.B\" }"
+     ],
+     "reading": [
+      "reactivefiber.e:Write|read",
+      "reactivefiber.B:<none>, reactivefiber.a:<none>"
+     ]
+    }
+   ]
+  },
+  {
+   "row": "R4-F3",
+   "label": "F3 INFO (LEG 2 survivor on a NOT CLAIMED form; the narrowing holds)",
+   "pins": [
+    {
+     "pin": "p30",
+     "page": "94111a5056405f34",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "EV-IDENTIFIER",
+     "page": "60a669211edd1f70",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "EV-NUMBER",
+     "page": "4feb86207931158c",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "EV-TEMPLATE",
+     "page": "f30e8c25e20de9b8",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "EV-SPREAD",
+     "page": "e74d5036c2c5185d",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    },
+    {
+     "pin": "EV-CALL",
+     "page": "e2d17ff3aafa3719",
+     "forms": [
+      "X"
+     ],
+     "reading": [
+      "<opaque X:eval>"
+     ]
+    }
+   ]
+  }
+ ]
+}
