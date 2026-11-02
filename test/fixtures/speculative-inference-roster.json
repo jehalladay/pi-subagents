@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census roster; exact pinned witnesses. Cut #3 (enumerate-the-resolvable, the respin of refusal #2 under R-B304; seat ws-01, g10-work-s182) re-measured every witness on trunk f5cb912999baeccb2705922ff80fd9066d5e70c4 (src unchanged since 19024ab897c3: 117 src modules, 60 plane knowers; 12 reaching, six sites in four modules): B2 gains the every-module knowing plant and the knowing edge-form, resolution and unread controls, B3 the per-core (head and tail) and per-class (first and last name) plants, the every-name prototype probe and the prefix, name and heritage controls, D1 the bare-stem control, the B label the cut #3 claim words, and the readings' regular expressions and floors are held here; A1-A3, B1, C1, C2 and D1's other readings read as cut #2 measured them. Acceptance clauses are independently anchored in the tracked bead export. Regenerate only by re-measuring.",
+  "provenance": "wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census roster; exact pinned witnesses. Cut #4 (the FINAL fail-closed core that the rule-19 STRUCTURAL EXIT R-B334 binds at refusal #3; seat ws-04, g10-work-s185) narrows the four row labels to the census's witnesses and changes no pin witness: every witness reads unchanged on trunk 152011133c296b89ee5e50f112f2e0295d5da32c (src unchanged since 19024ab897c3: 117 src modules, 60 plane knowers; 12 reaching, six sites in four modules), and refusal #3's families U1-U5 are NOT CLAIMED and deferred to wb-km7q.17. Cut #3 (enumerate-the-resolvable, the respin of refusal #2 under R-B304; seat ws-01, g10-work-s182) measured every witness on trunk f5cb912999baeccb2705922ff80fd9066d5e70c4 (src unchanged since 19024ab897c3: 117 src modules, 60 plane knowers; 12 reaching, six sites in four modules): B2 gains the every-module knowing plant and the knowing edge-form, resolution and unread controls, B3 the per-core (head and tail) and per-class (first and last name) plants, the every-name prototype probe and the prefix, name and heritage controls, D1 the bare-stem control, the B label the cut #3 claim words, and the readings' regular expressions and floors are held here; A1-A3, B1, C1, C2 and D1's other readings read as cut #2 measured them. Acceptance clauses are independently anchored in the tracked bead export. Regenerate only by re-measuring.",
   "launchExports": {
     "@anthropic-ai/claude-agent-sdk": [
       "prewarm",
@@ -112,7 +112,7 @@
   "rows": [
     {
       "id": "A",
-      "label": "a model-call site is a launch export of a model package, a provider SDK binding, a host turn or a model-runtime call: the vocabulary resolves against the installed packages and src holds an exact multiset of sites, with the named A3 static, re-exported, namespace and literal dynamic controls",
+      "label": "a model-call site is a launch export of a model package, a provider SDK binding, a host turn or a model-runtime call: the vocabulary resolves against the installed packages, the walk's sites are the held multiset with A2's planted binding read once in each module, and each named A3 control reads its held site count",
       "pins": [
         {
           "id": "A1",
@@ -249,7 +249,7 @@
     },
     {
       "id": "B",
-      "label": "the evidence/query/projection plane is three cores and every src module that knows one through a relative knowing edge (each import, re-export, import-equals, import-type and literal load form, type-only forms included); no identifier, private identifier, string or template text of any core is a listener-vocabulary name, and the cores' callable type nodes and heritage clauses are exactly the loader seam's two members and EvidenceRefusal extends Error",
+      "label": "the evidence/query/projection plane is three cores and the walk's modules whose knowing edges reach one (B2's floors and anchors, its planted type import known in every module, and its named edge-form, resolution and unread controls); B3's subscription reading of the cores is exactly no listener spelling, the callable type nodes EvidenceLoader.canLoad and .load and the heritage clause EvidenceRefusal extends Error, read at each core's head and tail (corePlants) and on each class's stand-in prototype (prototypePlants), with its named controls",
       "pins": [
         {
           "id": "B1",
@@ -696,7 +696,7 @@
     },
     {
       "id": "C",
-      "label": "(acceptance) no model-call site is reachable from evidence/query/projection-change paths: outside the four model-side modules no knower's src value closure holds a launch-site module",
+      "label": "(acceptance) no model-call site is reachable from evidence/query/projection-change paths: in C1's reach reading of the walk no knower outside the four model-side modules has a value closure holding a launch-site module, C1's planted launch binding makes every such knower a violation, and each named C2 control reads its held count",
       "pins": [
         {
           "id": "C1",
@@ -861,7 +861,7 @@
     },
     {
       "id": "D",
-      "label": "the opt-in checklist (output contract, generation, exact model/version/settings, measured success/ROI, budget) waits for the seam: no src identifier, private identifier or string or template text spells /specul/i and src holds no site of a warm-start export, so the seam's first site reds this census until the checklist is bound",
+      "label": "the opt-in checklist (output contract, generation, exact model/version/settings, measured success/ROI, budget) waits for the seam: D1's spelling reading of the walk holds no /specul/i spelling with its planted binding read once in each module, the walk's sites hold no warm-start export site, and each named D1 control reads its held count, so a site or spelling in A2's or D1's planted form, appended to a module of the walk, reds this census until the checklist is bound",
       "pins": [
         {
           "id": "D1",
