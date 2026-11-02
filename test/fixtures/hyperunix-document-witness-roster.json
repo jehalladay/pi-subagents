@@ -1,0 +1,561 @@
+{
+  "comment": "wb-byfw cut #2 (refusal #1 U3; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path and calls, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy and path, and every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, in census order, as read at the cut. The census's ROSTER case requires its in-file rows to equal these lists exactly, both ways and in order, and its RECORDS case expects the case of every row and site listed here.",
+  "controls": [
+    {
+      "id": "TV1 symbol-keyed data",
+      "readBy": [
+        "TV1"
+      ],
+      "path": ".:Symbol(cases).0.document.representation",
+      "calls": []
+    },
+    {
+      "id": "TV1 the second of two symbol-keyed data bindings",
+      "readBy": [
+        "TV1"
+      ],
+      "path": ".:Symbol(cases).0.document.representation",
+      "calls": []
+    },
+    {
+      "id": "TV1 non-enumerable symbol-keyed data",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV1 symbol-keyed accessor",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV1 symbol-keyed below the top level",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV1 symbol-keyed after a call",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "load"
+      ]
+    },
+    {
+      "id": "TV2 non-enumerable data",
+      "readBy": [
+        "TV2"
+      ],
+      "path": ".:HIDDEN_CASES.0.document.representation",
+      "calls": []
+    },
+    {
+      "id": "TV2 non-enumerable accessor",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV2 non-enumerable below the top level",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV2 non-enumerable after a call",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "load"
+      ]
+    },
+    {
+      "id": "TV3 record prototype",
+      "readBy": [
+        "TV3"
+      ],
+      "path": ".:INHERITED_CASES.documents.0.document.representation",
+      "calls": []
+    },
+    {
+      "id": "TV3 record prototype below the top level",
+      "readBy": [
+        "TV3"
+      ],
+      "path": ".:HOLDER.inner.documents.0.document.representation",
+      "calls": []
+    },
+    {
+      "id": "TV3 array prototype",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV3 grandparent prototype",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV3 non-enumerable prototype data",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV3 a prototype's enumerable accessor",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV4 function's own data",
+      "readBy": [
+        "TV4"
+      ],
+      "path": ".:loadCases.cases.0.document.representation",
+      "calls": [
+        "loadCases"
+      ]
+    },
+    {
+      "id": "TV4 function's own data below the top level, the function throwing when called",
+      "readBy": [
+        "TV4"
+      ],
+      "path": ".:HOLDER.load.cases.0.document.representation",
+      "calls": [
+        "HOLDER.load, throwing"
+      ]
+    },
+    {
+      "id": "TV4 function's own data, the function throwing when called",
+      "readBy": [
+        "TV4"
+      ],
+      "path": ".:loadCases.cases.0.document.representation",
+      "calls": [
+        "loadCases, throwing"
+      ]
+    },
+    {
+      "id": "TV4 function's non-enumerable own data",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "loadCases"
+      ]
+    },
+    {
+      "id": "TV4 function's own enumerable accessor",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "loadCases"
+      ]
+    },
+    {
+      "id": "TV4 function's return value",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "resultCases"
+      ]
+    },
+    {
+      "id": "TV4 function's own data after a call",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "loadCases"
+      ]
+    },
+    {
+      "id": "TV4 below the top level, a sibling filled when a function is called",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "HOLDER.load"
+      ]
+    },
+    {
+      "id": "TV5 UTF-8 JSON",
+      "readBy": [
+        "TV5"
+      ],
+      "path": ".:CASE_BYTES",
+      "calls": []
+    },
+    {
+      "id": "TV5 UTF-8 JSON in a Buffer",
+      "readBy": [
+        "TV5"
+      ],
+      "path": ".:CASE_BYTES",
+      "calls": []
+    },
+    {
+      "id": "TV5 UTF-8 JSON below the top level",
+      "readBy": [
+        "TV5"
+      ],
+      "path": ".:HOLDER.bytes",
+      "calls": []
+    },
+    {
+      "id": "TV5 JSON with the dot escape-spelled",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV5 JSON with the solidus escape-spelled",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV5 UTF-16 code units",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV5 UTF-8 JSON in a Uint8ClampedArray",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV6 enumerable accessor",
+      "readBy": [
+        "TV6"
+      ],
+      "path": ".:CASES.0.document.representation",
+      "calls": []
+    },
+    {
+      "id": "TV6 accessor below the top level",
+      "readBy": [],
+      "path": "",
+      "calls": []
+    },
+    {
+      "id": "TV6 accessor after a call",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "load"
+      ]
+    }
+  ],
+  "sites": [
+    {
+      "site": "resultCases<call>",
+      "twin": null
+    },
+    {
+      "site": "loadCases<call>",
+      "twin": null
+    },
+    {
+      "site": "CASES<getter>",
+      "twin": "TV6"
+    },
+    {
+      "site": "HIDDEN_CASES<non-enumerable>",
+      "twin": "TV2"
+    },
+    {
+      "site": "Symbol(cases)<symbol>",
+      "twin": "TV1"
+    },
+    {
+      "site": "INHERITED_CASES<prototype>",
+      "twin": "TV3"
+    },
+    {
+      "site": "loadCases<own>",
+      "twin": "TV4"
+    },
+    {
+      "site": "WEAK_CASES<get>",
+      "twin": null
+    },
+    {
+      "site": "WEAK_SET<has>",
+      "twin": null
+    },
+    {
+      "site": "VAULT<private>",
+      "twin": null
+    },
+    {
+      "site": "PENDING_CASES<resolution>",
+      "twin": null
+    },
+    {
+      "site": "CASE_BYTES<bytes>",
+      "twin": "TV5"
+    }
+  ],
+  "proxies": [
+    {
+      "id": "an object Proxy in an enumerable string-keyed data binding",
+      "throwBy": [
+        "plain",
+        "TV1",
+        "TV2",
+        "TV3",
+        "TV4",
+        "TV5",
+        "TV6"
+      ],
+      "readBy": [],
+      "path": ""
+    },
+    {
+      "id": "an object Proxy below the top level",
+      "throwBy": [
+        "plain",
+        "TV1",
+        "TV2",
+        "TV3",
+        "TV4",
+        "TV5",
+        "TV6"
+      ],
+      "readBy": [],
+      "path": ""
+    },
+    {
+      "id": "a function-target Proxy in an enumerable string-keyed data binding",
+      "throwBy": [
+        "TV4"
+      ],
+      "readBy": [],
+      "path": ""
+    },
+    {
+      "id": "an object Proxy in an enumerable symbol-keyed data binding",
+      "throwBy": [
+        "TV1"
+      ],
+      "readBy": [],
+      "path": ""
+    },
+    {
+      "id": "an object Proxy in a non-enumerable data binding",
+      "throwBy": [
+        "TV2"
+      ],
+      "readBy": [],
+      "path": ""
+    },
+    {
+      "id": "an object Proxy behind an enumerable accessor binding",
+      "throwBy": [
+        "TV6"
+      ],
+      "readBy": [],
+      "path": ""
+    },
+    {
+      "id": "a record's prototype that is a Proxy, its target holding the planted document",
+      "throwBy": [],
+      "readBy": [
+        "TV3"
+      ],
+      "path": ".:INHERITED_CASES.documents.0.document.representation"
+    }
+  ],
+  "pages": [
+    {
+      "id": "P0 as the anchor words it",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "5c79ba98d4c74014c15093009360b68b4d60839ed206ce7a11bca6494c8851aa"
+    },
+    {
+      "id": "P1 its first two forms swapped",
+      "leads": 1,
+      "forms": [
+        "an accessor",
+        "a function call",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "8e7c15ed44cbef165bfaa714c0a228d27f65f2cc1a2dddbabece31b814660df9"
+    },
+    {
+      "id": "P2 a form named anew inside the second clause",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Proxy's target",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "274cd0c73fa5fc35621de5a922c6bdaf0f5e963a52b5d1147054aee5e3d2481c"
+    },
+    {
+      "id": "P3 a form named twice inside the second clause",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "83fc2916982167089681f47770ded1df1369386d0f220e68146041d041a0ddc0"
+    },
+    {
+      "id": "P4 a form named anew after the bytes form",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)",
+        "a Proxy's target"
+      ],
+      "digest": "eefb64310e8342f579b85ff97b47c22a23c3c7b598b519bb3814a0342c7492e7"
+    },
+    {
+      "id": "P5 a form named again after the bytes form",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)",
+        "a WeakSet"
+      ],
+      "digest": "0204c07dd88dbbb8b11a67ef79189270efd94108499fc585ee2b5e568e4da5dc"
+    },
+    {
+      "id": "P6 a second, earlier lead",
+      "leads": 2,
+      "forms": [],
+      "digest": "bcc029b9f08bd56c29f15be88ac18bd2f46ba4d582574bcf01e6a410615a64db"
+    },
+    {
+      "id": "P7 a line break moved",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "91abca2dc3cc676fb5454dbdc57d88edfb8f436b7838ccf034d7692b8537ebba"
+    },
+    {
+      "id": "P8 a continuation line with one space after its gutter",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "88fd4871d968e84146cf110545e604b21cfff335413c856655d41c100dc98d8a"
+    },
+    {
+      "id": "P9 a form named in the third clause",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "b2c7e8d7865aef6c843b60988f4d114b28a457e788285fae214fde125a149587"
+    },
+    {
+      "id": "P10 no lead",
+      "leads": 0,
+      "forms": [],
+      "digest": "e4821c400b229b6e85153aee995cbc3f6aeb041efa67107bf2c30374aa0d91d9"
+    },
+    {
+      "id": "P11 a second clause with no closing semicolon",
+      "leads": 1,
+      "forms": [],
+      "digest": "3a62d2b82416a9faf92deaa4ee4258d0bede3716c607e27d15c9aa9467c10461"
+    }
+  ]
+}

@@ -11,35 +11,39 @@
  * bindingValues; with no twin every twin test below is false. With a twin it carries exactly one of the gate's refusal #2 walk
  * changes (wb-ulnv refusal #2, gate-prep-15 leg2-table.json rows TV1-TOP-SYMBOL-KEYS-READ, TV2-TOP-NONENUM-READ,
  * TV3-WALK-READS-INHERITED, TV4-WALK-ENTERS-FUNCTIONS, TV5-WALK-DECODES-BYTES and TV6-TOP-ACCESSORS-READ), that change's text placed
- * behind its twin's test at the site the change edits. What a census holds this module to is its pinned readings
- * (test/workbench-hyperunix-document-witness-census.test.ts). Test-only: no src, docs or receipt is read or written here.
+ * behind its twin's test at the site the change edits. What a census holds this module to is the readings
+ * test/workbench-hyperunix-document-witness-census.test.ts pins; each comment below names the census cases that pin its words,
+ * and a reading no case pins is NOT CLAIMED there. Test-only: no src, docs or receipt is read or written here.
  */
 import { types } from "node:util";
 
 /** The representation the walk looks for, as the census spells it. */
 const REPRESENTATION = "hyperunix.result/1";
 
-/** The gate's refusal #2 walk changes, each one site of the census's walk: TV1 also reads a namespace's own enumerable
- * symbol-keyed data bindings, TV2 reads its data bindings through Object.getOwnPropertyNames (non-enumerable ones too), TV3 walks a
- * record prototype's own enumerable data properties, TV4 admits functions and walks their own enumerable data, TV5 reads a
- * Uint8Array as UTF-8 text, and TV6 reads a namespace's bindings through Reflect.get, which invokes an accessor binding. */
+/** The gate's refusal #2 walk changes, each at one site of the census's walk (the census's W3 rows pin each one at the edges its
+ * header names): TV1 also reads the data values of a namespace's own enumerable symbol-keyed bindings; TV2 reads the data values of
+ * its own string-keyed bindings (Object.getOwnPropertyNames, non-enumerable ones too); TV3 also walks the own enumerable data
+ * properties of a walked value's prototype when that prototype is a record other than Object.prototype; TV4 enters a function as
+ * an object and walks its own enumerable data properties; TV5 carries the path of a Uint8Array (a Buffer is one) whose UTF-8 text
+ * includes the representation; TV6 reads a namespace's enumerable string-keyed bindings through Reflect.get, which runs an
+ * accessor binding's getter. */
 export type Twin = "TV1" | "TV2" | "TV3" | "TV4" | "TV5" | "TV6";
 export const TWINS: readonly Twin[] = ["TV1", "TV2", "TV3", "TV4", "TV5", "TV6"];
 
 const isRecord = (value: unknown): value is Readonly<Record<string, unknown>> => typeof value === "object" && value !== null && !Array.isArray(value);
-/** A data property's value, or nothing for an accessor (never invoked) or an absent key. */
+/** A data property's value, or nothing for an accessor property or an absent key. */
 function dataValue(holder: object, key: string): readonly unknown[] {
   const property = Object.getOwnPropertyDescriptor(holder, key);
   return property !== undefined && "value" in property ? [property.value] : [];
 }
 /** A value that is neither an object nor a function (String() of it runs no code a release defines). */
 const isPrimitive = (value: unknown): boolean => value === null || (typeof value !== "object" && typeof value !== "function");
-/** The census's carriers: every path from a value to a string that spells the representation. A string carries it when it
- * includes it; an object's or an array's own enumerable string-keyed data properties are walked; a Map's keys and values are read
- * through Map.prototype.entries and a Set's members through Set.prototype.values, and the Map's or Set's own enumerable data
- * properties are walked too. An accessor is never invoked, no function is called, and a Proxy is thrown before any trap could
- * run. TV5 reads a Uint8Array's UTF-8 text, TV4 enters a function as an object, and TV3 adds a record prototype's own enumerable
- * data properties to the members walked; each at every depth. */
+/** The census's carriers: the paths from a value to a string that includes the representation. A string carries it when it
+ * includes it; an object's or an array's own enumerable string-keyed data properties are walked, and an accessor property below
+ * the top level is read by no walk (W3); a function is entered by TV4 only (W3, W7); an object value the walk enters that is a
+ * Proxy, or a function TV4 enters that is one, throws an error saying it is a Proxy (W7), while a record prototype that is a Proxy
+ * is not entered and TV3 reads its own enumerable data (W7). TV5's and TV3's additions apply at the top level and below it (W3).
+ * How carriers reads any other value form is NOT CLAIMED by the census. */
 function carriers(value: unknown, path: string, seen: Set<object>, twin: Twin | undefined): string[] {
   if (typeof value === "string") return value.includes(REPRESENTATION) ? [path] : [];
   if (twin === "TV5" && types.isUint8Array(value)) return Buffer.from(value).toString("utf8").includes(REPRESENTATION) ? [path] : [];
@@ -61,21 +65,22 @@ function carriers(value: unknown, path: string, seen: Set<object>, twin: Twin | 
   }
   return members.flatMap(([key, member]) => carriers(member, `${path}.${key}`, seen, twin));
 }
-/** The binding names the walk reads in a namespace: Object.keys, with TV1 its own enumerable symbol keys after them, with TV2
- * Object.getOwnPropertyNames. */
+/** The binding names a walk lists in a namespace: Object.keys (its own enumerable string keys); TV1 adds its own enumerable symbol
+ * keys (W3 pins one, and the second of two), and TV2 lists Object.getOwnPropertyNames instead (W3). */
 function bindingNames(namespace: object, twin: Twin | undefined): (string | symbol)[] {
   if (twin === "TV1") return [...Object.keys(namespace), ...Object.getOwnPropertySymbols(namespace).filter((symbol) => Object.getOwnPropertyDescriptor(namespace, symbol)?.enumerable === true)];
   if (twin === "TV2") return Object.getOwnPropertyNames(namespace);
   return Object.keys(namespace);
 }
-/** A binding's value as the walk reads it: a data property's value (an accessor never invoked), or with TV6 Reflect.get's. */
+/** A listed binding's value as a walk reads it: a data binding's value, nothing for an accessor binding, or with TV6 Reflect.get's,
+ * which runs an accessor binding's getter (W3). */
 function bindingValues(namespace: object, name: string | symbol, twin: Twin | undefined): readonly unknown[] {
   if (twin === "TV6") return [Reflect.get(namespace, name)];
   const property = Object.getOwnPropertyDescriptor(namespace, name);
   return property !== undefined && "value" in property ? [property.value] : [];
 }
-/** The census's exportedCarriers with one walk change at most: every exported binding path (subpath:name, then .key per step)
- * that reaches a string spelling the representation, each binding walked from a fresh seen set, in sorted order. */
+/** The census's exportedCarriers with one walk change at most: the exported binding paths (subpath:name, then .key per step)
+ * that reach a string including the representation, in sorted order (the census's W0-W4, W6 and W7 pin these readings). */
 export function twinWalk(modules: Readonly<Record<string, object>>, twin?: Twin): string[] {
   return Object.entries(modules)
     .flatMap(([subpath, namespace]) =>
