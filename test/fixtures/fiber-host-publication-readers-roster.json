@@ -28,7 +28,7 @@
         ]
       },
       {
-        "words": "holding is the word's letters in one run: each word cut at every inner position by every SPLIT_SEPARATORS character, and with its first or last letter dropped, is not held and its name is left unselected, the word itself beside them selected",
+        "words": "holding is the word's letters in one run: each word cut at every inner position by every SPLIT_SEPARATORS character, and with its first or last letter dropped, is not held in a base name and its name is left unselected, the word itself beside them selected",
         "falsifiers": [
           "G36"
         ]
@@ -84,7 +84,7 @@
         ]
       },
       {
-        "words": "the root readers read their file whole: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field",
+        "words": "the root readers read their file whole: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
         "falsifiers": [
           "N-ROOT-READERS",
           "G32"
@@ -145,7 +145,7 @@
         ]
       },
       {
-        "words": "Fiber family: a descriptor whose id folds to hold fiber, or a permission does (each permission folded alone, at every LIST_POSITIONS position of its permissions, a word split across two permissions held by neither), or its contract does, each FOLD_FORMS spelling read alone in each of the three and each FOLD_QUIET spelling in none; or whose contract starts with rf@ byte for byte, each RF_FORMS contract read alone; each criterion read alone",
+        "words": "Fiber family: a descriptor whose id folds to hold fiber at its head, ahead of its last dot (<spelling>.value.host), or a permission does at its head, ahead of its last colon (<spelling>:publish; each permission folded alone, at every LIST_POSITIONS position of its permissions, a word split across two permissions held by neither), or its contract does in the word after a planted export (value-host@1.0.0:Host.read <spelling>-publish, forge@0.1.0:GateFacade.status fiber-publish), each FOLD_FORMS spelling read alone at that place in each of the three and each FOLD_QUIET spelling there in none; or whose contract starts with rf@ byte for byte, each RF_FORMS contract read alone; each criterion read alone",
         "falsifiers": [
           "P-A3-FAM-ID",
           "P-A3-PERM",
@@ -160,7 +160,7 @@
         ]
       },
       {
-        "words": "a registry's reading states every Fiber-family member in registration order: a planted registry of four whose family members stand first, third and fourth states all three",
+        "words": "a registry's reading states every Fiber-family member: a planted registry of four whose family members stand first, third and fourth states all three, in that registry's registration order",
         "falsifiers": [
           "G31"
         ]

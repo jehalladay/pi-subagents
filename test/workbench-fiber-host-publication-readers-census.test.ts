@@ -1,6 +1,7 @@
 /**
  * wb-pyel.7 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1, program-triage-2026-10-18; the rule-19 structural exit of wb-pyel.1 under
- * orchestrator rulings R-B105 and R-B135), cut #3 (the enumerate-the-resolvable cut orchestrator ruling R-B234 bound at refusal #2):
+ * orchestrator rulings R-B105 and R-B135), cut #4 (the FAIL-CLOSED CORE orchestrator ruling R-B265 bound at refusal #3's rule-19
+ * structural exit; the deferred coverage is the child wb-pyel.10's):
  * the census of the Fiber host-publication census's A1 and A3 readers,
  * test/helpers/fiber-host-publication-readers.ts, which wb-pyel.1's census composes when it re-cuts. Statement (bead title,
  * verbatim): "A1 pip-manifest readers cover .pip, extensionless and requirements-directory name forms and A3 registration coverage
@@ -15,6 +16,17 @@
  * FOLD_FORMS, FOLD_QUIET, RF_FORMS, CARRIER_FORMS, PLANTED_EFFECTS, MODE_SETS, FLAG_FORMS, NEEDLE_FORMS, SCRIPT_PLANTS,
  * REGISTER_NAME_PLANTS, LIST_POSITIONS, NEAR_BEFORE, NEAR_AFTER, SPLIT_SEPARATORS, the planted modules and fields, the readers'
  * vocabulary): the claims are claimed over those plants and no wider.
+ *
+ * CUT #4, THE FAIL-CLOSED CORE (R-B265): the claims narrow to the pinned subset and nothing else changes: no new claim word, no
+ * new channel, no pin, plant, row or test, and the helper is byte-identical (narrow the claim, never widen the reader). Four
+ * clauses narrow. The Fiber family is read at the places its plants give the word: an id's head ahead of its last dot
+ * (<spelling>.value.host), a permission's head ahead of its last colon (<spelling>:publish) and the word after a planted
+ * contract's export (value-host@1.0.0:Host.read <spelling>-publish, forge@0.1.0:GateFacade.status fiber-publish), so refusal
+ * #3's U1 members L6-13 (a permission folded only up to its last colon) and L6-15 (a contract folded only after its first colon)
+ * and its rider L6-14 (an id folded only up to its last dot) differ from the reader only at NOT CLAIMED places. The registry
+ * order is claimed for the planted registry of four alone (riders L6-16, L6-16b). Holding is claimed in a base name (riders
+ * L6-05, L6-06: a directory's cut or trimmed word). The lock is claimed for its planted path and name field, each alone
+ * (rider L6-10). The coverage of every place so disclaimed is wb-pyel.10's (filed by R-B265, blocked by this bead).
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  M  the description's A1 item, its label read from the tracker export: refusal #3's A1 members (wb-pyel.1's notes, its U1 line)
@@ -59,9 +71,10 @@
  *     not an unmet member: its flag reading is pinned by G22's FLAG_FORMS). Each pin plants its line's inputs and its axis, read
  *     directly through familyCriteria, inFiberFamily, isCarrier, publishingReasons and descriptorReading (a descriptor's id need not
  *     be registrable there) or through registrationTexts, each reading's claimed field declared beside its plant and held to it:
- *     G12 every FOLD_FORMS and FOLD_QUIET spelling in an id, G13 in a permission, G14 in a contract, G15 the hyphenated id; G16 every
- *     RF_FORMS contract; G17 every CARRIER_FORMS contract, G18 the upper-cased and G19 the padded source; G20 every effect class; G21
- *     every planted mode set; G22 every FLAG_FORMS contract and two members stating three and four reasons; G24 every hosting needle,
+ *     G12 every FOLD_FORMS and FOLD_QUIET spelling at an id's head, G13 at a permission's head, G14 after a contract's export,
+ *     G15 the hyphenated id; G16 every RF_FORMS contract; G17 every CARRIER_FORMS contract, G18 the upper-cased and G19 the
+ *     padded source; G20 every effect class; G21 every planted mode set; G22 every FLAG_FORMS contract and two members stating
+ *     three and four reasons; G24 every hosting needle,
  *     a needle in the id, a permission and the contract, at every nesting depth to NEST_BOUND as a string and as a key, and every
  *     NEEDLE_FORMS spelling; G25 every publication entry,
  *     snake, camel and spaced; G26 every SCRIPT_PLANTS module; G27 a word on line 3, on every line 1 to LINE_BOUND and on line
@@ -70,7 +83,7 @@
  *     the gate's fail-open reader hollowings of A3's list positions. Each pin plants the inputs its member line spells and the
  *     axis its claim word ranges over, read directly through the A3 descriptor readers, through registryReading (a registry
  *     plant) and through manifestHits (a package.json plant), each reading's claimed field declared beside its plant and held to
- *     it: G31 every FOLD_FORMS spelling in a permission at every LIST_POSITIONS position, every FOLD_QUIET one and the word split
+ *     it: G31 every FOLD_FORMS spelling at a permission's head at every LIST_POSITIONS position, every FOLD_QUIET one and the word split
  *     across two permissions quiet, and a registry of four whose three family members stand first, third and fourth; G32 a
  *     hosting needle as an item at every LIST_POSITIONS position of the permissions, an input-schema enum and an input-schema
  *     list of objects (in a string and as a key), the stem at every position of package.json's string and object lists (in a
@@ -115,14 +128,24 @@
  * LIST_POSITIONS (a list longer than three, a list inside a list), a lock package or a registry's family member at a position no
  * plant holds, a near miss of a listed name other than the NEAR_BEFORE, NEAR_AFTER, same-index and one-letter-dropped forms, a
  * family word cut by a character outside SPLIT_SEPARATORS, by two characters or missing more than its first or last letter, and
- * a needle in a descriptor field no plant holds it in are NOT CLAIMED by this census. Edits of this file and the roster
+ * a needle in a descriptor field no plant holds it in are NOT CLAIMED by this census. Nor, at cut #4 (R-B265; their coverage
+ * is wb-pyel.10's), are a family word inside an id, a permission or a contract at a place no plant puts it - among them after
+ * an id's last dot (value.host.fiber), in an id without a dot or in its third or later dot segment, after a permission's last
+ * colon (value:fiber, gate:fiber), in a permission without a colon (fiber) or wholly in its second or later colon part, in a
+ * contract's package and version before its first colon (fiber-host@1.0.0:Host.read, @fiber-forge/sdk@0.1.0:GateFacade.status),
+ * in a contract without a colon, after a contract's ` --` flag or after an export no plant holds, and farther into its field
+ * than any plant puts it; the order a registry's reading states its family members in, for any registry but the planted one
+ * of four; a cut, trimmed or singular family word in a directory name, selected or not; and a lock package at another path or
+ * with another name field than the planted node_modules/fiber-optics and FiberOpticsSDK (the stem in another segment of a path
+ * or in a path of more than two segments, a path outside node_modules/, a scoped, prefixed or longer name field, a package
+ * whose path and name field both hold the stem). Edits of this file and the roster
  * together: a plant removed from its table and the roster together where no outside anchor names it, and a pin a later cut adds
  * beyond the export's member lists and the claims, removed whole, are NOT CLAIMED.
  * RESIDUALS (named, each member with its pinned quiet reading in its row): R-UNREAD-MANIFEST a dependency stated in a file no form
- * selects (a Dockerfile, a setup script, a tox.ini, a pip -r file of another name, a family word cut by a hyphen or missing its
- * first letter among them, the singular requirement.txt, a lock of an unlisted format, a manifest of an unlisted name, a
- * prefixed, a suffixed and a wrapped near miss of a listed one among them, a family word or a manifest name spelled with a
- * non-ASCII case-equivalent letter, U+017F long s or U+0131 dotless i) or below test/ is not read (Q1); R-UNREAD-REGISTRATION a
+ * selects (a Dockerfile, a setup script, a tox.ini, a pip -r file of another name, a base name holding a family word cut by a
+ * hyphen or missing its first letter among them, the singular requirement.txt, a lock of an unlisted format, a manifest of an
+ * unlisted name, a prefixed, a suffixed and a wrapped near miss of a listed one among them, a family word or a manifest name
+ * spelled with a non-ASCII case-equivalent letter, U+017F long s or U+0131 dotless i) or below test/ is not read (Q1); R-UNREAD-REGISTRATION a
  * registry member name composed at run time, a write to the registry's private provider map, and a call of a register* function by
  * reference (a further call of a name the module declares or imports, a namespace member) are not read, only the declaration and
  * the import (Q2).
@@ -288,7 +311,7 @@ const TEST_ROOT_PLANTS = {
     "contest/requirements.txt",
   ],
 } as const;
-/** The spellings of the family word whose fold holds it, each planted alone in an id, a permission and a contract. */
+/** The spellings of the family word whose fold holds it, each planted alone at one place in each field: an id's head (<spelling>.value.host), a permission's head (<spelling>:publish) and the word after a contract's export (value-host@1.0.0:Host.read <spelling>-publish); a FOLD_FORMS spelling is planted and claimed at no other place inside a field (wb-pyel.10's coverage). */
 const FOLD_FORMS: Readonly<Record<string, string>> = {
   lower: "fiber",
   upper: "FIBER",
@@ -400,7 +423,7 @@ const REGISTER_NAME_PLANTS = {
   read: ["register", "register$", "register$x", "register$$", "register_", "register_x", "register2", "registerX", "registerValue", "register$value", "registerNativeProviders"],
   quiet: ["registered", "registering", "registers", "registerx", "Register", "REGISTER", "xregister", "_register", "$register"],
 } as const;
-/** The positions a planted item takes in a planted list, W standing for the item and F for the next filler: alone, first and last of two, first, middle and last of three. */
+/** The positions a planted item takes in a planted list, W standing for the item and F for the next filler: alone, first and last of two, first, middle and last of three; a position in the list, never a place inside the item (a permission plant's spelling stands at its head at every position). */
 const LIST_POSITIONS: Readonly<Record<string, readonly string[]>> = {
   only: ["W"],
   "first of two": ["W", "F"],
@@ -454,7 +477,7 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["N-WORDS", "L3-M5", "G01"],
     },
     {
-      words: "holding is the word's letters in one run: each word cut at every inner position by every SPLIT_SEPARATORS character, and with its first or last letter dropped, is not held and its name is left unselected, the word itself beside them selected",
+      words: "holding is the word's letters in one run: each word cut at every inner position by every SPLIT_SEPARATORS character, and with its first or last letter dropped, is not held in a base name and its name is left unselected, the word itself beside them selected",
       falsifiers: ["G36"],
     },
     {
@@ -472,7 +495,7 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["N-OTHER", "N-ROOT-READERS", "LIVE-A1", "G09", "G10", "G11"],
     },
     {
-      words: "the root readers read their file whole: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field",
+      words: "the root readers read their file whole: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
       falsifiers: ["N-ROOT-READERS", "G32"],
     },
   ],
@@ -500,11 +523,11 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
     { words: "in any other file every raw line's REGISTRATION_WORDS segments, every line from 1 to LINE_BOUND", falsifiers: ["S-RAW", "G27"] },
     { words: "near misses are not read: registered, RegisterHost, unregister, a registerTool call, and registering, $register and register_x in a string", falsifiers: ["S-QUIET"] },
     {
-      words: "Fiber family: a descriptor whose id folds to hold fiber, or a permission does (each permission folded alone, at every LIST_POSITIONS position of its permissions, a word split across two permissions held by neither), or its contract does, each FOLD_FORMS spelling read alone in each of the three and each FOLD_QUIET spelling in none; or whose contract starts with rf@ byte for byte, each RF_FORMS contract read alone; each criterion read alone",
+      words: "Fiber family: a descriptor whose id folds to hold fiber at its head, ahead of its last dot (<spelling>.value.host), or a permission does at its head, ahead of its last colon (<spelling>:publish; each permission folded alone, at every LIST_POSITIONS position of its permissions, a word split across two permissions held by neither), or its contract does in the word after a planted export (value-host@1.0.0:Host.read <spelling>-publish, forge@0.1.0:GateFacade.status fiber-publish), each FOLD_FORMS spelling read alone at that place in each of the three and each FOLD_QUIET spelling there in none; or whose contract starts with rf@ byte for byte, each RF_FORMS contract read alone; each criterion read alone",
       falsifiers: ["P-A3-FAM-ID", "P-A3-PERM", "P-A3-CONTRACT", "P-A3-FAM-RF", "G12", "G13", "G14", "G15", "G16", "G31"],
     },
     {
-      words: "a registry's reading states every Fiber-family member in registration order: a planted registry of four whose family members stand first, third and fourth states all three",
+      words: "a registry's reading states every Fiber-family member: a planted registry of four whose family members stand first, third and fourth states all three, in that registry's registration order",
       falsifiers: ["G31"],
     },
     {
