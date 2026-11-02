@@ -25,10 +25,23 @@
  * function's body and as a call's argument, a type query and an indexed access type annotation, and the keys and indexes that are
  * no string (M-AFTER, M-BEFORE); C-LINES gains the '|' followers, each bullet and a number with a tab, numbers of three to five
  * digits, each heading level and indent and the tab terminators, and C-LINE-OF each ASCII punctuator alone, a table row and a
- * terminator before a space (C). Each claim is narrowed to exactly what its pins hold.
+ * terminator before a space (C). Cut #5 (wb-yopv respin 1: refusal #1's U1, orchestrator ruling R-B354) restates AS-WRITTEN's key
+ * and index words to its own held witnesses, the helper still unchanged: a no-substitution template and a '+' concatenation of two
+ * strings as an element access's key, and a parenthesized string literal type as an indexed access type's index, join as their
+ * constant text; a number and an identifier as the key, and a number literal type and a type reference as the index, join as '?' -
+ * narrowed from cut #4's 'another expression' and 'another type', which the helper does not read as '?' in every form (a
+ * parenthesized string, a longer concatenation, a constant template expression or an 'as'-wrapped string as the key, and a
+ * no-substitution template literal type as the index, read their constant text); and the judged set now holds those words to every
+ * M-AFTER and M-BEFORE plant and witness of each form (KEY_JOINS). Each claim names the pins whose plants falsify its words;
+ * refusal #1's F1 (record-only under R-B262 and R-B354) names 24 gate one-edit mutants that survive on sub-forms of the COMMENTS,
+ * CUT, C-LINE-OF and AS-WRITTEN words that no plant holds, which this cut neither pins nor narrows, so those words stay wider than
+ * the pins at those sub-forms.
  *
  * THE CLAIMS are the CLAIMS constant (COMMENTS, AS-WRITTEN, CUT and LIVE QUIET, each clause naming the pins whose plants falsify its
  * words), held byte for byte to the roster's claims; every pin is named by a clause and every pin a clause names exists.
+ * AS-WRITTEN's key and index words are held to the M matrices too: its parts name each KEY_JOINS form once, every M-AFTER and
+ * M-BEFORE plant of a form holds the form its words name (the compiler's reading of the plant's key or index), and every held
+ * witness of it reads that key or index as its part says - '?', or the constant text the compiler reads from it.
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness - every plant's findings,
  * its LIVE QUIET entries and the texts of its access and import readings, so bare()'s text is held byte for byte - held to the
@@ -119,7 +132,10 @@
  * type annotation of another kind than a type reference, a type query and an indexed access type, a destructuring assignment in
  * another place than its own statement, an arrow function's body and a call's argument (and in those two another target than an
  * object), and an element access's or an indexed access type's receiver forms beside its plain one with another key than a
- * string; a comment run right after a regular expression with another flag than "g", after an identifier or a private name
+ * string; a plain element access's key in another form than those AS-WRITTEN names (a string, a no-substitution template, a
+ * '+' concatenation of two strings, a number and an identifier) and a plain indexed access type's index in another form than
+ * those it names (a string literal type, parenthesized or not, a number literal type and a type reference); a comment run right
+ * after a regular expression with another flag than "g", after an identifier or a private name
  * ending in a non-ASCII character, and after any other keyword (one no operator template parses right before an operand, but
  * "this" and "async"); a run of another shape than those COMMENTS names - after a terminator token three or more comments, or
  * white space other than spaces, tabs and line feeds; after any other token two or more comments, or another shape than its
@@ -191,7 +207,7 @@ const CLAIMS: { readonly [clause: string]: string } = {
   COMMENTS:
     "bare() reads a node as written: its tokens' own text in order, the trivia between two tokens kept as written when it is white space alone, in a node a comment walks too (C-LINES). A trivia run that holds a comment - a block, a line or a JSDoc-style comment, a JSDoc comment the parser attaches as a node too (its node is no token: M-JSDOC) - is read whole: as nothing right after a token whose text ends in a terminator (the '.', '...', ';', '?.', '!', '?' and '??' punctuators and a number written with a trailing '.'), so the reading reads on uncut there (T-R1, T-R3, T-TOKENS, M-AFTER) - after each of those tokens a run of each comment kind alone, of a comment with white space and a line end around it, and of each shape T-RUNS names: two block comments, a block and a line comment, two line comments, a comment with a blank or a white-space-only line after it, a blank line before it and tabs around it (T-RUNS, W-COMMENTS) -; and as one space after any other token (T-R1C, M-BEFORE, T-ELSEWHERE: every other punctuator the compiler lists; every literal and template token kind - a string in either quote, a regular expression without a flag and with the flag 'g' -; an identifier and a private name ending in each ASCII character the compiler reads as an identifier part - each of the 26 lowercase and 26 uppercase letters, the ten digits, '_' and '$' -; and the keyword 'this', 'async' before an arrow function's parameter and each keyword the compiler parses right before an operand (as a prefix operator: delete, new, typeof, void, yield, await; as an infix operator: in, instanceof, as, satisfies; as a type operator: typeof, asserts, infer, keyof, readonly, unique) - but '`', '#' and '</', which the compiler's token list never holds as a token of their own, and JSX text, which reads a comment's bytes as its text), each T-ELSEWHERE plant's run in each comment kind (T-KINDS, W-COMMENTS: a line and a JSDoc-style comment beside its block one, but a line comment right after 'async', 'yield' and 'asserts', whose line end the compiler parses otherwise), where a line boundary the run holds cuts nothing either - a subject and a family across it find (U-OWN-LINE, U-BLANK) and a marker across it quiets the reading, which LIVE QUIET holds (U-MARKER). So no comment of these runs cuts an as-written reading, a marker in a comment quiets nothing (M-AFTER, M-BEFORE) and a family word in a comment finds nothing (M-WORDS).",
   "AS-WRITTEN":
-    "The as-written readings are the 13 sites bare() reads, each in the forms named here: a property access (plain, a call's callee and a chain), a qualified name (in a type reference, in a type query and a chain), an element access's receiver (plain, an optional access's and one that is itself an element access, each with a string key, and plain with a no-substitution template, a '+' concatenation of two strings, a number or another expression as its key, each joining as '?'), an indexed access type's object type (plain and one that is itself an indexed access type, each with a string literal type as its index, and plain with a parenthesized string literal type, a number literal type or another type as its index, each joining as '?'), an object binding pattern's receiver (a const's initializer - its pattern plain, nested one and two patterns deep, renamed (its property name an identifier, a string, or a computed key that is a string, a no-substitution template or a '+' concatenation of two strings), nested one pattern deep and renamed by an identifier, and inside an array pattern as its first and as its second element, the second also in an array pattern nested one pattern deep -, a let's and a var's initializer (its pattern plain), a for-of's, a for-await-of's and a for-in's iterated expression, a parameter's type annotation - a type reference, with and without a default value, a type query and an indexed access type -, else its default value), a destructuring assignment's receiver (the assigned expression - as its own statement an object target, an array target holding it as its first and as its second element, a target nested one and two levels deep, a renamed target (its property name an identifier, a string or a computed string), a target nested one level deep and renamed by an identifier, and an array target nested one level deep holding it as its second element; as an arrow function's body and as a call's argument an object target -, a for-of's, a for-await-of's and a for-in's iterated expression - an object target and an array target holding it as its first and as its second element) and an import-equals entity name (at the top level, exported and in a namespace) - each read with every comment kind right after a '.' inside it (M-AFTER) and before that '.' or inside its brackets (M-BEFORE), one finding each, and the gate's paired witnesses of these forms each read as the delivered reader reads them (W-AS-WRITTEN). A pattern's or a target's key joins the reading as written: a nested element's or target's key after its enclosing one's at each depth named here, an array element's index (0 for a first element, 1 for a second) before the object pattern it holds, and a renamed element's or target's property name in each key form named here, never its local name (M-AFTER, M-BEFORE). An array binding pattern's element is no site of its own: a subject and a family only in its receiver read no finding (M-ARRAY-PATTERN). A typed parameter's default value is never its receiver: a subject and a family that only the default value joined with a key would bring together read no finding, and LIVE QUIET holds the family word's subjectless access reading (fail closed: the residual R-TYPED-DEFAULT, M-TYPED-DEFAULT).",
+    "The as-written readings are the 13 sites bare() reads, each in the forms named here: a property access (plain, a call's callee and a chain), a qualified name (in a type reference, in a type query and a chain), an element access's receiver (plain, an optional access's and one that is itself an element access, each with a string key; plain with a no-substitution template or a '+' concatenation of two strings as its key, each joining as its constant text; and plain with a number or an identifier as its key, each joining as '?'), an indexed access type's object type (plain and one that is itself an indexed access type, each with a string literal type as its index; plain with a parenthesized string literal type as its index, joining as its constant text; and plain with a number literal type or a type reference as its index, each joining as '?'), an object binding pattern's receiver (a const's initializer - its pattern plain, nested one and two patterns deep, renamed (its property name an identifier, a string, or a computed key that is a string, a no-substitution template or a '+' concatenation of two strings), nested one pattern deep and renamed by an identifier, and inside an array pattern as its first and as its second element, the second also in an array pattern nested one pattern deep -, a let's and a var's initializer (its pattern plain), a for-of's, a for-await-of's and a for-in's iterated expression, a parameter's type annotation - a type reference, with and without a default value, a type query and an indexed access type -, else its default value), a destructuring assignment's receiver (the assigned expression - as its own statement an object target, an array target holding it as its first and as its second element, a target nested one and two levels deep, a renamed target (its property name an identifier, a string or a computed string), a target nested one level deep and renamed by an identifier, and an array target nested one level deep holding it as its second element; as an arrow function's body and as a call's argument an object target -, a for-of's, a for-await-of's and a for-in's iterated expression - an object target and an array target holding it as its first and as its second element) and an import-equals entity name (at the top level, exported and in a namespace) - each read with every comment kind right after a '.' inside it (M-AFTER) and before that '.' or inside its brackets (M-BEFORE), one finding each, and the gate's paired witnesses of these forms each read as the delivered reader reads them (W-AS-WRITTEN). A pattern's or a target's key joins the reading as written: a nested element's or target's key after its enclosing one's at each depth named here, an array element's index (0 for a first element, 1 for a second) before the object pattern it holds, and a renamed element's or target's property name in each key form named here, never its local name (M-AFTER, M-BEFORE). An array binding pattern's element is no site of its own: a subject and a family only in its receiver read no finding (M-ARRAY-PATTERN). A typed parameter's default value is never its receiver: a subject and a family that only the default value joined with a key would bring together read no finding, and LIVE QUIET holds the family word's subjectless access reading (fail closed: the residual R-TYPED-DEFAULT, M-TYPED-DEFAULT).",
   CUT: "SENTENCES cuts an as-written reading where its text holds a boundary as written: white space alone - a space, a tab or a line end - right after a token that ends in a terminator (C-SPACE); a blank or white-space-only line (of spaces, or of a tab); a line read whole as a table row (a '|' first - followed by a space, a second '|', a '=' or the line's end - at the line's start or after spaces or a tab) or as a heading (none to three spaces, one to six '#', then white space or the line's end - four spaces, seven '#' or a word right after the '#' make none), each such line its own sentence, so the next line starts another; a line read as a list item (a '-', '+' or '*' bullet or a number of one to five digits with ')', then a space or a tab - a bullet with a word right after it makes none; a number with '.' is a terminator cut, C-SPACE); or a terminator before a space or a tab inside a string, a template, a regular expression or JSX text the reading holds (C-LINES, W-CUT). A terminator stays with the sentence it ends, and each finding names the line of the reading its sentence's first non-blank piece stands on: the first line after the cut - a terminator before a line end or a space, a blank line, a heading, a table row or a list item - that holds anything but white space, a punctuator alone too, which can precede the line of the sentence's first word: '(' alone, in code and in a template's text, and in a template's text each ASCII punctuator SENTENCES reads alone as no line rule and no terminator, the template's closing '`' among them (C-LINE-OF, W-LINE-OF). A subject and a family on two sides of a cut read no finding while the uncut twin finds once, every cut member is held by LIVE QUIET (fail closed: the residual R-CUT), and a cut can part a marker away, which then finds (C-OVER-READ).",
   "LIVE QUIET":
     "quietOf holds, beside the quiet readings of one text, every carrier pair whose two words a sentence cut parts - each occurrence of each pair, in a code reading and across a page's sentences - as '<where> parted:carrier <pair>' (P-ONE, P-C04, P-C05, P-C06, P-CODE); a pair one sentence spells is a finding and is held as parted nowhere, while a parted occurrence of the same pair beside it is held (P-WITHIN).",
@@ -550,6 +566,49 @@ const BEFORE_SITES: Forms = {
     namespaced: comment => `export namespace Shell {\n  import demand = Context${comment}.Inner;\n  export const value = demand;\n}\n`,
   },
 };
+/** AS-WRITTEN's key and index forms beside a string one, by the words its clause names each with: the site and the form of the M
+ * matrices that plant it, and the compiler's reading of that form's key or index. The judged set reads, from each "plain with
+ * <forms> as its key|index, (each) joining as <join>" part of the clause, how its words say each form joins - "'?'" or "its
+ * constant text" - and holds every M-AFTER and M-BEFORE plant of a form to the form its words name and every held witness of it to
+ * the join (wb-yopv refusal #1's U1: the words said '?' where the witnesses read the constant text). */
+const KEY_JOINS: Readonly<Record<string, readonly [site: string, form: string, holds: (key: ts.Node) => boolean]>> = {
+  "a no-substitution template": ["elementReceiver", "templateKey", key => ts.isNoSubstitutionTemplateLiteral(key)],
+  "a '+' concatenation of two strings": [
+    "elementReceiver",
+    "concatenatedKey",
+    key => ts.isBinaryExpression(key) && key.operatorToken.kind === ts.SyntaxKind.PlusToken && ts.isStringLiteral(key.left) && ts.isStringLiteral(key.right),
+  ],
+  "a number": ["elementReceiver", "numericKey", key => ts.isNumericLiteral(key)],
+  "an identifier": ["elementReceiver", "otherKey", key => ts.isIdentifier(key)],
+  "a parenthesized string literal type": ["indexedObject", "parenthesizedIndex", key => ts.isParenthesizedTypeNode(key) && ts.isLiteralTypeNode(key.type) && ts.isStringLiteral(key.type.literal)],
+  "a number literal type": ["indexedObject", "numericIndex", key => ts.isLiteralTypeNode(key) && ts.isNumericLiteral(key.literal)],
+  "a type reference": ["indexedObject", "otherIndex", key => ts.isTypeReferenceNode(key)],
+};
+/** A plant's first element access's key or indexed access type's index, in the compiler's tree order (the outermost one). */
+function firstKey(plant: string): ts.Node | undefined {
+  const source = ts.createSourceFile(PLANT, plant, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const keys: ts.Node[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isElementAccessExpression(node)) keys.push(node.argumentExpression);
+    else if (ts.isIndexedAccessTypeNode(node)) keys.push(node.indexType);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return keys[0];
+}
+/** Whether a key or index is a string: a string literal key, or a literal type of a string literal as an index. */
+const isStringKey = (key: ts.Node): boolean => ts.isStringLiteral(key) || (ts.isLiteralTypeNode(key) && ts.isStringLiteral(key.literal));
+/** The constant text the compiler reads from a plant's first key or index (firstKey), from that node alone (never through the
+ * helper): a no-substitution template's text, the texts of a '+' concatenation of two string literals joined, a parenthesized
+ * string literal type's text; undefined for any other key or index (KEY_JOINS). */
+function keyConstant(plant: string): string | undefined {
+  const key = firstKey(plant);
+  if (key === undefined) return undefined;
+  if (ts.isNoSubstitutionTemplateLiteral(key)) return key.text;
+  if (ts.isBinaryExpression(key) && key.operatorToken.kind === ts.SyntaxKind.PlusToken && ts.isStringLiteral(key.left) && ts.isStringLiteral(key.right)) return key.left.text + key.right.text;
+  if (ts.isParenthesizedTypeNode(key) && ts.isLiteralTypeNode(key.type) && ts.isStringLiteral(key.type.literal)) return key.type.literal.text;
+  return undefined;
+}
 /** M-WORDS: every as-written site with a family word only in a comment inside the node, beside its twin with the word as code
  * (wb-pyel.2 cut #5's comments witness). */
 const WORD_PLANTS: Readonly<Record<string, readonly [plant: string, twin: string]>> = {
@@ -1206,6 +1265,53 @@ describe("wb-pyel.8 EDC demand-channel B1 reader census (SDK-EVIDENCE-DIRECTED-C
     const named = idsIn(Object.values(CLAIMS).join(" "), /\b[TMUCPW]-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g);
     expect([...named].sort(), "every pin is named by a claim, and every pin a claim names exists").toEqual([...pins].sort());
     for (const [mutant, killers] of Object.entries(KILLS)) expect(killers.filter(pin => !pins.includes(pin)), `${mutant} is killed at pins`).toEqual([]);
+    // AS-WRITTEN's key and index words (wb-yopv refusal #1's U1): its "plain with <forms> as its key|index, (each) joining as <join>"
+    // parts name each KEY_JOINS form once; every M-AFTER and M-BEFORE plant of a form holds, as the compiler reads its key or index,
+    // the form its words name; and every held witness of it - its first as-written reading, the element access's or indexed access
+    // type's own - ends in "." and the join its part says: "?", or the key's or index's constant text as the compiler reads it from
+    // the plant's own node (keyConstant).
+    const joinParts = [...(CLAIMS["AS-WRITTEN"] ?? "").matchAll(/plain with ((?:(?!plain with ).)+?) as its (key|index), (?:each )?joining as ('\?'|its constant text)/g)];
+    const joins = joinParts.flatMap(([, forms = "", place = "", join = ""]) => forms.split(/, | or /).map(form => ({ form, place, join })));
+    expect(
+      joins.map(({ form }) => form).sort(),
+      "AS-WRITTEN says how each key and index form beside a string one joins, once each",
+    ).toEqual(Object.keys(KEY_JOINS).sort());
+    expect(
+      Object.values(KEY_JOINS).map(([site, form]) => `${site}.${form}`),
+      "KEY_JOINS lists exactly the element access and indexed access forms whose key or index the compiler reads as no string",
+    ).toEqual(
+      ["elementReceiver", "indexedObject"].flatMap(site =>
+        Object.entries(AFTER_SITES[site] ?? {}).flatMap(([form, plant]) => {
+          const key = firstKey(plant(""));
+          return key === undefined || isStringKey(key) ? [] : [`${site}.${form}`];
+        }),
+      ),
+    );
+    const tables = [
+      ["M-AFTER", AFTER_SITES],
+      ["M-BEFORE", BEFORE_SITES],
+    ] as const;
+    const contradicted = joins.flatMap(({ form, place, join }) => {
+      const [site = "", name = "", holds] = KEY_JOINS[form] ?? [];
+      const placed = site === (place === "key" ? "elementReceiver" : "indexedObject") ? [] : [`'${form}' is no ${place} form of ${site}`];
+      return [
+        ...placed,
+        ...tables.flatMap(([pin, table]) => {
+          const cells = rosterWitness(pin);
+          return Object.entries(COMMENT_KINDS).flatMap(([kind, comment]) => {
+            const plant = table[site]?.[name];
+            const key = plant === undefined ? undefined : firstKey(plant(comment));
+            const formed = key !== undefined && holds?.(key) === true ? [] : [`${pin} ${site}.${name}.${kind}: its plant's ${place} is not ${form}`];
+            const expected = join === "'?'" ? "?" : plant === undefined ? undefined : keyConstant(plant(comment));
+            const held = isObject(cells) ? cells[`${site}.${name}.${kind}`] : undefined;
+            const first: unknown = isObject(held) && Array.isArray(held.asWritten) ? held.asWritten[0] : undefined;
+            const agrees = typeof first === "string" && expected !== undefined && first.endsWith(`.${expected}`);
+            return agrees ? formed : [...formed, `${pin} ${site}.${name}.${kind}: '${form}' joins as ${join}, held ${String(first)}`];
+          });
+        }),
+      ];
+    });
+    expect(contradicted, "every held M-AFTER and M-BEFORE witness of each form reads its key or index as AS-WRITTEN's words say").toEqual([]);
 
     // The tracker export: this bead's title and description items, R-B156's note and refusal #5's lines in the parent's notes.
     const bead = exportRow(BEAD);
