@@ -2,7 +2,7 @@
  "bead": "wb-jwc.13",
  "census": "test/workbench-rf-binding-text-reader-subforms-census.test.ts",
  "helper": "test/helpers/rf-binding-text-reader.ts",
- "note": "The sub-form census's roster: every row, in order, with its label (an unmet item's label or a finding's PREP head, verbatim from its record), and every pin, in order, with its page's digest (sha256/16), its forms (what its probe reads: each probed argument's source text with its whitespace runs read as one space; for the programs probe the callee's name, a colon and its first argument's; for the registration probes each registering object literal's) and its reading. It states no other words. The census holds its rows, pins, pages and readings to this file.",
+ "note": "The sub-form census's roster: every row, in order, with its label (an unmet item's label or a finding's PREP head, verbatim from its record), and every pin, in order, with its path (where the census's judge reads its page), its probe (which of the census's six probes reads it), its page's digest (sha256/16), its forms (what its probe reads: each probed argument's source text with its whitespace runs read as one space; for the programs probe the callee's name, a colon and its first argument's; for the registration probes each registering object literal's) and its reading. It states no other words. The census holds its rows, pins, paths, probes, pages and readings to this file, and reads every pin a second time against this file's reading.",
  "rows": [
   {
    "row": "R3-U1a",
@@ -10,6 +10,8 @@
    "pins": [
     {
      "pin": "n03-ts",
+     "path": "src/workbench/providers/zz-tw-n03.ts",
+     "probe": "texts",
      "page": "4683c4774af2e164",
      "forms": [
       "X"
@@ -20,6 +22,8 @@
     },
     {
      "pin": "n03-js",
+     "path": "src/workbench/providers/zz-tw-n03.js",
+     "probe": "texts",
      "page": "7fb4fbf7301c8f0c",
      "forms": [
       "X"
@@ -30,6 +34,8 @@
     },
     {
      "pin": "EV-ZERO",
+     "path": "src/workbench/providers/zz-ev-zero.ts",
+     "probe": "texts",
      "page": "d734eea7ebe43878",
      "forms": [
       "X"
@@ -40,6 +46,8 @@
     },
     {
      "pin": "EV-ONE",
+     "path": "src/workbench/providers/zz-ev-one.ts",
+     "probe": "texts",
      "page": "992e22a72a4cd031",
      "forms": [
       "X"
@@ -50,6 +58,8 @@
     },
     {
      "pin": "EV-TWO",
+     "path": "src/workbench/providers/zz-ev-two.ts",
+     "probe": "texts",
      "page": "66f7c0072575eb2c",
      "forms": [
       "X"
@@ -60,6 +70,8 @@
     },
     {
      "pin": "EV-THREE",
+     "path": "src/workbench/providers/zz-ev-three.ts",
+     "probe": "texts",
      "page": "777091c3ff66895b",
      "forms": [
       "X"
@@ -70,6 +82,8 @@
     },
     {
      "pin": "EV-NONE",
+     "path": "src/workbench/providers/zz-ev-none.ts",
+     "probe": "texts",
      "page": "025735660d19d685",
      "forms": [
       "X"
@@ -86,6 +100,8 @@
    "pins": [
     {
      "pin": "n23",
+     "path": "src/workbench/providers/zz-tw-n23.ts",
+     "probe": "words",
      "page": "384c4b2382f1e1e7",
      "forms": [
       "\"rf.bat x.COM y\""
@@ -96,6 +112,8 @@
     },
     {
      "pin": "WD-FORMS",
+     "path": "src/workbench/providers/zz-wd-forms.ts",
+     "probe": "words",
      "page": "c57c9646e2824886",
      "forms": [
       "\"rf.bat a.BAT b.Bat c.com d.COM e.Com\"",
@@ -116,6 +134,8 @@
    "pins": [
     {
      "pin": "n31",
+     "path": "src/workbench/providers/zz-tw-n31.ts",
+     "probe": "texts",
      "page": "6b94788b573bb579",
      "forms": [
       "e"
@@ -126,6 +146,8 @@
     },
     {
      "pin": "CA-TS",
+     "path": "src/workbench/providers/zz-ca-ts.ts",
+     "probe": "texts",
      "page": "c30202f13258761b",
      "forms": [
       "e",
@@ -138,6 +160,8 @@
     },
     {
      "pin": "CA-JS",
+     "path": "src/workbench/providers/zz-ca-js.js",
+     "probe": "texts",
      "page": "9c004432c62ba782",
      "forms": [
       "e"
@@ -154,6 +178,8 @@
    "pins": [
     {
      "pin": "n18",
+     "path": "src/workbench/providers/zz-tw-n18.ts",
+     "probe": "registrations",
      "page": "c6f98fd2b748ae2a",
      "forms": [
       "{ id: \"reactivefiber.f\", effectClass: c ? \"<opaque p:parameter>\" : p }"
@@ -164,6 +190,8 @@
     },
     {
      "pin": "EF-FORMS",
+     "path": "src/workbench/providers/zz-ef-forms.ts",
+     "probe": "registrations",
      "page": "b3139d27a5e9e0b3",
      "forms": [
       "{ id: \"reactivefiber.g\", effectClass: c ? p : \"<opaque p:parameter>\" }",
@@ -182,6 +210,8 @@
    "pins": [
     {
      "pin": "n30",
+     "path": "src/workbench/providers/zz-tw-n30.ts",
+     "probe": "texts",
      "page": "b0da7c958facc465",
      "forms": [
       "I16"
@@ -192,6 +222,8 @@
     },
     {
      "pin": "n35",
+     "path": "src/workbench/providers/zz-tw-n35.ts",
+     "probe": "texts",
      "page": "fdbb34a81c29040e",
      "forms": [
       "(c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\") + (c ? \"0\" : \"1\")"
@@ -202,6 +234,8 @@
     },
     {
      "pin": "BD-WHITESPACE",
+     "path": "src/workbench/providers/zz-bd-whitespace.ts",
+     "probe": "texts",
      "page": "a069176905f1a486",
      "forms": [
       "J16",
@@ -220,6 +254,8 @@
    "pins": [
     {
      "pin": "q06",
+     "path": "src/workbench/providers/zz-tw-q06.ts",
+     "probe": "exact",
      "page": "972a9524951df019",
      "forms": [
       "c ? \"a\" : p"
@@ -230,6 +266,8 @@
     },
     {
      "pin": "EX-POSITIONS",
+     "path": "src/workbench/providers/zz-ex-positions.ts",
+     "probe": "exact",
      "page": "4ecc66ca83b63213",
      "forms": [
       "p ?? \"b\"",
@@ -254,6 +292,8 @@
    "pins": [
     {
      "pin": "q07",
+     "path": "src/workbench/providers/zz-tw-q07.ts",
+     "probe": "words",
      "page": "bc827e02b8e7f253",
      "forms": [
       "c ? \"rf x\" : p"
@@ -264,6 +304,8 @@
     },
     {
      "pin": "WO-POSITIONS",
+     "path": "src/workbench/providers/zz-wo-positions.ts",
+     "probe": "words",
      "page": "580bd6457704631d",
      "forms": [
       "p ?? \"rf\"",
@@ -288,6 +330,8 @@
    "pins": [
     {
      "pin": "q08",
+     "path": "src/workbench/providers/zz-tw-q08.ts",
+     "probe": "programs",
      "page": "951150a7a262615c",
      "forms": [
       "execFileSync:c ? \"git\" : p",
@@ -300,6 +344,8 @@
     },
     {
      "pin": "PG-POSITIONS",
+     "path": "src/workbench/providers/zz-pg-positions.ts",
+     "probe": "programs",
      "page": "7dc99a9a184a1c67",
      "forms": [
       "spawn:p ?? \"git\"",
@@ -318,6 +364,8 @@
     },
     {
      "pin": "PG-WORDLESS",
+     "path": "src/workbench/providers/zz-pg-wordless.ts",
+     "probe": "programs",
      "page": "19fd7eaead2637e6",
      "forms": [
       "spawn:c ? \"git\" : \"\"",
@@ -334,6 +382,8 @@
     },
     {
      "pin": "PG-WORDS",
+     "path": "src/workbench/providers/zz-pg-words.ts",
+     "probe": "programs",
      "page": "86191cbe76d28b2b",
      "forms": [
       "spawn:c ? \"git log\" : \"git status\"",
@@ -352,6 +402,8 @@
     },
     {
      "pin": "PG-WHITESPACE",
+     "path": "src/workbench/providers/zz-pg-whitespace.ts",
+     "probe": "programs",
      "page": "ba323ea4d1822eb3",
      "forms": [
       "spawn:c ? \"git\" : p",
@@ -376,6 +428,8 @@
    "pins": [
     {
      "pin": "p08",
+     "path": "src/workbench/providers/zz-tw-p08.ts",
+     "probe": "exact",
      "page": "3cf6fa3a45eda664",
      "forms": [
       "c ? \"b\" : \"a\""
@@ -386,6 +440,8 @@
     },
     {
      "pin": "OR-ORDERS",
+     "path": "src/workbench/providers/zz-or-orders.ts",
+     "probe": "exact",
      "page": "d46fd2f48289fb93",
      "forms": [
       "c ? \"b\" : d ? \"c\" : \"a\"",
@@ -404,6 +460,8 @@
    "pins": [
     {
      "pin": "XT-TEXTS",
+     "path": "src/workbench/providers/zz-xt-texts.ts",
+     "probe": "exact",
      "page": "17ff55942c562568",
      "forms": [
       "c ? \"a\" : \"b\"",
@@ -418,6 +476,8 @@
     },
     {
      "pin": "XW-WORDS",
+     "path": "src/workbench/providers/zz-xw-words.ts",
+     "probe": "words",
      "page": "8dd3d5171b8ea99e",
      "forms": [
       "\"/usr/bin/rf.EXE context;render|tee(log) > out < in & bg 'q' \\\"d\\\" `b`\"",
@@ -440,6 +500,8 @@
    "pins": [
     {
      "pin": "coll-programs",
+     "path": "src/workbench/providers/zz-tw-coll.ts",
+     "probe": "programs",
      "page": "ddd76c8340a74979",
      "forms": [
       "spawn:c ? \"apt\" : \"Zed\""
@@ -450,6 +512,8 @@
     },
     {
      "pin": "coll-registrations",
+     "path": "src/workbench/providers/zz-tw-coll.ts",
+     "probe": "registrations",
      "page": "ddd76c8340a74979",
      "forms": [
       "{ id: \"reactivefiber.e\", effectClass: c ? \"read\" : \"Write\" }",
@@ -463,6 +527,8 @@
     },
     {
      "pin": "coll-registration",
+     "path": "src/workbench/providers/zz-tw-coll.ts",
+     "probe": "registration",
      "page": "ddd76c8340a74979",
      "forms": [
       "{ id: \"reactivefiber.e\", effectClass: c ? \"read\" : \"Write\" }",
@@ -481,6 +547,8 @@
    "pins": [
     {
      "pin": "p30",
+     "path": "src/workbench/providers/zz-tw-p30.ts",
+     "probe": "texts",
      "page": "94111a5056405f34",
      "forms": [
       "X"
@@ -491,6 +559,8 @@
     },
     {
      "pin": "EV-IDENTIFIER",
+     "path": "src/workbench/providers/zz-ev-identifier.ts",
+     "probe": "texts",
      "page": "60a669211edd1f70",
      "forms": [
       "X"
@@ -501,6 +571,8 @@
     },
     {
      "pin": "EV-NUMBER",
+     "path": "src/workbench/providers/zz-ev-number.ts",
+     "probe": "texts",
      "page": "4feb86207931158c",
      "forms": [
       "X"
@@ -511,6 +583,8 @@
     },
     {
      "pin": "EV-TEMPLATE",
+     "path": "src/workbench/providers/zz-ev-template.ts",
+     "probe": "texts",
      "page": "f30e8c25e20de9b8",
      "forms": [
       "X"
@@ -521,6 +595,8 @@
     },
     {
      "pin": "EV-SPREAD",
+     "path": "src/workbench/providers/zz-ev-spread.ts",
+     "probe": "texts",
      "page": "e74d5036c2c5185d",
      "forms": [
       "X"
@@ -531,6 +607,8 @@
     },
     {
      "pin": "EV-CALL",
+     "path": "src/workbench/providers/zz-ev-call.ts",
+     "probe": "texts",
      "page": "e2d17ff3aafa3719",
      "forms": [
       "X"

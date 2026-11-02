@@ -1,10 +1,11 @@
 /**
  * wb-jwc.13 binding text reader sub-form census: what test/helpers/rf-binding-text-reader.ts reads on the 39 pins below (37
- * pages; the twin tw-coll.ts is read by three pins), the sub-forms that wb-jwc.10's refusals #3 and #4 name. wb-jwc.13 is the
- * rule-19 dependency-inversion child of wb-jwc.10: ruling R-B233 filed it at refusal #3 (O:1611) with that refusal's members,
- * and ruling R-B263 folded refusal #4's members (O:1685) into its notes. The reader is wb-jwc.10's FINAL cut #4 reader, its
- * code moved byte for byte (the helper's header names the lines). wb-jwc.10's census, roster and claim parts are not on trunk
- * and are neither added nor edited here; wb-jwc.10 stays parked until this lands, and its later re-cut can import the reader.
+ * pages; the twin tw-coll.ts is read by three pins), the sub-forms that wb-jwc.10's refusals #3 and #4 name, and what this
+ * file's six probes read on its one PROBES page. wb-jwc.13 is the rule-19 dependency-inversion child of wb-jwc.10: ruling
+ * R-B233 filed it at refusal #3 (O:1611) with that refusal's members, and ruling R-B263 folded refusal #4's members
+ * (O:1685) into its notes. The reader is wb-jwc.10's FINAL cut #4 reader, its code moved byte for byte (the helper's header
+ * names the lines). wb-jwc.10's census, roster and claim parts are not on trunk and are neither added nor edited here;
+ * wb-jwc.10 stays parked until this lands, and its later re-cut can import the reader.
  *
  * CUT #2 (wb-jwc.13's refusal #1, O:1768; the helper is unchanged). U1: a words pin now reads words(x) as JSON, its words in
  * order, and an undefined words(x) as the bare word undefined, which no JSON text is; so one joined element in place of six
@@ -14,17 +15,29 @@
  * one-word texts and single spaces (PG-WORDS, PG-WHITESPACE), and names NOT CLAIMED each further sub-form this cut's one-edit
  * reader mutants leave unpinned.
  *
- * THE PINNED READER SET (this file; 42 cases). One case per pin, registered in ROWS order as `<pin id> reads as pinned`
- * inside `<row id>: <row label>`, then SHAPE, ANCHOR and ROSTER. For each pin the assertion target is the pin's probe over
- * the pin's page, read by bindingTextReader at the pin's path, and the observed result is the pin's reading, exactly and in
- * order (toEqual). Each probe reads the calls it locates, in source order: texts - for each probe(x), rendered() of x's
- * alternatives (a text as its JSON string, an opaque part as <opaque LABEL>; every texts pin here reads one alternative);
- * exact - for each probe(x), exact(x) as JSON, or the bare word undefined when exact(x) is undefined; words - for each
- * probe(x), words(x) as JSON, or the bare word undefined when words(x) is undefined; programs - for each call of spawn,
- * spawnSync, execFile, execFileSync, exec, execSync or fork, `<callee>:` and program() of its first argument; registrations
- * - registrations(); registration - for each object literal whose registration() is not undefined, its registration()
- * entries joined by ", ". Every pin case passes on the moved reader. A page named tw-* is the gate's twin file of that name
- * byte for byte (ANCHOR holds each twin's digest to its record).
+ * CUT #3 (wb-jwc.13's refusal #2, O:1810, and ruling R-B348, a normal respin; the helper and every row, label, pin, page
+ * and reading are unchanged). U1: a pin's probe and its path are now held beside its page's digest, in the frozen-shape
+ * literal (`${id}:${probe}:${path}:${digest}`) and in the roster, so a pin re-pointed in ROWS alone at another probe or at
+ * another path reds SHAPE and ROSTER: each of refusal #2's 195 one-edit probe swaps and its two path probes does, 8 and 2
+ * of which read 0 failed on cut #2. U1a: q06 and EX-POSITIONS re-pointed at words with refusal #4's member q06 on the
+ * helper (refusal #2's G-C06) reds SHAPE and ROSTER. U1b: p08 and OR-ORDERS re-pointed at words with its member p08 or q05
+ * on the helper (G-C18, G-C19) reds SHAPE and ROSTER. The cut also closes three one-edit hollows of this file's own judge
+ * that its seat measured on cut #2, each at 0 failed there while named members escaped: the exact probe read through
+ * words() (refusal #4's q06, q06b, p08 and q05 escaped; PROBES reds it now), the pin case compared with its own reading
+ * (every named member escaped) and the pin loop skipping each row's first pin (refusal #3's n31 escaped); ROSTER now reads
+ * every pin a second time against the roster's reading, so a named member reds it under either of the last two.
+ *
+ * THE PINNED READER SET (this file; 43 cases). One case per pin, registered in ROWS order as `<pin id> reads as pinned`
+ * inside `<row id>: <row label>`, then SHAPE, PROBES, ANCHOR and ROSTER. For each pin the assertion target is the pin's
+ * probe over the pin's page, read by bindingTextReader at the pin's path, and the observed result is the pin's reading,
+ * exactly and in order (toEqual). Each probe reads the calls it locates, in source order: texts - for each probe(x),
+ * rendered() of x's alternatives (a text as its JSON string, an opaque part as <opaque LABEL>; every texts pin here reads
+ * one alternative); exact - for each probe(x), exact(x) as JSON, or the bare word undefined when exact(x) is undefined;
+ * words - for each probe(x), words(x) as JSON, or the bare word undefined when words(x) is undefined; programs - for each
+ * call of spawn, spawnSync, execFile, execFileSync, exec, execSync or fork, `<callee>:` and program() of its first
+ * argument; registrations - registrations(); registration - for each object literal whose registration() is not undefined,
+ * its registration() entries joined by ", ". Every pin case passes on the moved reader. A page named tw-* is the gate's
+ * twin file of that name byte for byte (ANCHOR holds each twin's digest to its record).
  *
  * CLAIMS (each names its pages and the readings its pins hold; the falsifiers are its row's pin cases).
  * - R3-U1a (refusal #3 member n03): the module's const X, X = "a" probed at the top level, reads <opaque X:eval> when the
@@ -92,8 +105,16 @@
  *   eval(`1`) as a const's initializer (p30, twin tw-p30.ts) or, as an expression statement, eval(CODE) with CODE a const
  *   (EV-IDENTIFIER), eval(1) (EV-NUMBER), eval of a template whose one substitution is X (EV-TEMPLATE), eval(...codes)
  *   (EV-SPREAD) or eval(String(1)) (EV-CALL). Falsifier: p30 (a call counted only with no argument or one string literal).
- * - SHAPE (the frozen shape, standing rule 16): the rows as `${id}:${pins.length}` and the pins as `${id}:${sha256/16 of the
- *   page}`, each held to a literal.
+ * - SHAPE (the frozen shape, standing rule 16): the rows as `${id}:${pins.length}` and the pins as
+ *   `${id}:${probe}:${path}:${sha256/16 of the page}`, each held to a literal.
+ * - PROBES (the judge's identity: which reader function each probe calls): the PROBES page, read at
+ *   src/workbench/providers/zz-probes.ts, writes probe("rf x"), spawn("git log", []) and the object literals
+ *   { id: "reactivefiber.b" } and { id: "reactivefiber.a" }, in that order, and the six probes read it six ways: texts as
+ *   "rf x" (the text as its JSON string), exact as ["rf x"], words as ["rf","x"], programs as spawn:git, registrations as
+ *   reactivefiber.a:<none> then reactivefiber.b:<none> (sorted) and registration as reactivefiber.b:<none> then
+ *   reactivefiber.a:<none> (one entry per registering literal, in source order). Falsifiers: the judge's 30 one-edit
+ *   dispatch swaps (a probe's branch returning another probe's reading), each of which reds PROBES; the exact probe read
+ *   through words() reds PROBES alone.
  * - ANCHOR (outside this file; the tracked tracker export .beads/issues.jsonl, read at run time, never retyped as the
  *   expectation; bead notes only append, so each text is read from its first occurrence): (1) wb-jwc.13's description lists
  *   its unmet items as refusal #3's class item and then the R3 rows' labels, in order; (2) wb-jwc.13's notes open the R-B263
@@ -105,21 +126,24 @@
  *   "belongs to wb-jwc.13"): their PREP heads are R4-F2's and R4-F3's labels, in order, each naming exactly its row's twin
  *   with its page's digest.
  * - ROSTER (outside this file): test/fixtures/rf-binding-text-reader-subforms-roster.json holds every row, in order, with its
- *   label, and every pin, in order, with its page's digest, its forms (each probed argument's source text, whitespace runs
- *   read as one space; for the programs probe `<callee>:` and the first argument's; for the registration probes each
- *   registering object literal's) and its reading.
- * A row or a pin removed, a pin's page or reading changed, or a label shortened, in ROWS alone or in ROWS and the
- * frozen-shape literals together (standing rule 16's CT1-CT5), reds ROSTER, and SHAPE too unless the frozen-shape literals
- * follow; a reading changed in ROWS also reds its own pin case. In every literal together, the roster included (CT6): a row
- * removed or its label changed, a twin's page changed, a twin's only pin removed, or a rider pin (XT-TEXTS, XW-WORDS)
- * removed reds ANCHOR, whose anchor is the tracker export; a reading changed reds its own pin case. In every literal
- * together, the roster included, these read green (the 6ze.39-class posture, disclosed in NOT CLAIMED): a seat plant (a pin
- * with neither a twin nor a rider id) removed, or its page and reading replaced; a rider pin's page and reading replaced;
- * and one of R4-F2's three tw-coll.ts pins removed while another keeps the twin. Their only anchors are this file's
- * literals and the roster that this census's own cuts write.
+ *   label, and every pin, in order, with its path, its probe, its page's digest, its forms (each probed argument's source
+ *   text, whitespace runs read as one space; for the programs probe `<callee>:` and the first argument's; for the
+ *   registration probes each registering object literal's) and its reading; and every pin, read a second time by the moved
+ *   reader, reads the roster's reading.
+ * In ROWS alone: a row or a pin removed, or a pin's page, probe or path changed, reds SHAPE and ROSTER; a label shortened
+ * reds ANCHOR and ROSTER; a reading changed reds its own pin case and ROSTER. In ROWS and the frozen-shape literals together
+ * (standing rule 16's CT1-CT5), each of those changes reds ROSTER. In every literal together, the roster included (CT6): a
+ * row removed or its label changed, a twin's page changed, a twin's only pin removed, or a rider pin (XT-TEXTS, XW-WORDS)
+ * removed reds ANCHOR, whose anchor is the tracker export; a reading changed reds its own pin case and ROSTER. In every
+ * literal together, the roster included, these read green (the 6ze.39-class posture, disclosed in NOT CLAIMED): a seat plant
+ * (a pin with neither a twin nor a rider id) removed, or its page and reading replaced; a rider pin's page and reading
+ * replaced; one of R4-F2's three tw-coll.ts pins removed while another keeps the twin; and a pin's probe or path changed, a
+ * twin's included, with its reading re-pinned to what it then reads (refusal #2's G-C15 posture). Their only anchors are
+ * this file's literals and the roster that this census's own cuts write.
  *
- * NOT CLAIMED (scope sentences; no residual is claimed and none is owed by them). A reading of any page that is not one of
- * these 37 is NOT CLAIMED by this census. On such a page: an eval call at a position no page here writes (inside parentheses
+ * NOT CLAIMED (scope sentences; no residual is claimed and none is owed by them). A reading of any page that is neither one
+ * of these 37 nor the PROBES page is NOT CLAIMED by this census, and on the PROBES page every reading but its six probes' is
+ * NOT CLAIMED by this census. On another page: an eval call at a position no page here writes (inside parentheses
  * as a whole, a conditional, a property access or a binary expression, among others) is NOT CLAIMED by this census; a word
  * with an extension no page here writes, a quote inside a word and the empty word are NOT CLAIMED by this census; a catch
  * variable with another annotation, or destructured, is NOT CLAIMED by this census; EFFECT for any other effectClass, a field
@@ -136,10 +160,12 @@
  * included), an object literal's fields, a const cycle, a with body, an unbound identifier's kind, a path's parse and the
  * rendering of a text that JSON escapes are NOT CLAIMED by this census. Every reading of the moved reader on another page is
  * NOT CLAIMED by this census; wb-jwc.10's census pins many of them on its branch, not on trunk. Beyond this file's literals
- * and its roster, the presence of a seat plant, the pages of the rider pins and the count of R4-F2's tw-coll.ts pins are NOT
- * CLAIMED by this census (no outside text this census reads names them; the 6ze.39-class posture above). Which calls the
- * probes locate (probe, the seven launcher names and the registering object literals) is this census's own locator, not a
- * claim about a module.
+ * and its roster, the presence of a seat plant, the pages of the rider pins, the count of R4-F2's tw-coll.ts pins and each
+ * pin's probe and path are NOT CLAIMED by this census (no outside text this census reads names them; the 6ze.39-class
+ * posture above). Whether the judge reads a page at its pin's path is NOT CLAIMED by this census: no page here reads apart
+ * at another path, so a judge that reads every page at one .ts path keeps every case, and SHAPE and ROSTER hold each path
+ * only as ROWS states it. Which calls the probes locate (probe, the seven launcher names and the registering object
+ * literals) is this census's own locator, not a claim about a module.
  *
  * Display paths added: none (test-only). No scratch is allocated (every page is a string parsed in memory); the tracker export
  * and the roster are only read; no src, docs or receipt is edited.
@@ -211,6 +237,10 @@ const DECLARE_PROBE = "declare function probe(value: unknown): void;";
 const DECLARE_C = "declare const c: boolean;";
 const DECLARE_D = "declare const d: boolean;";
 const SEVEN = '(c ? "0" : "1")';
+/** The six probes, in the order PROBES reads them. */
+const PROBES: readonly Probe[] = ["texts", "exact", "words", "programs", "registrations", "registration"];
+/** The PROBES page: one page that the six probes read six ways (PROBES, the judge's identity). */
+const PROBES_PAGE = page('import { spawn } from "node:child_process";', DECLARE_PROBE, 'probe("rf x");', 'spawn("git log", []);', 'export const b = { id: "reactivefiber.b" };', 'export const a = { id: "reactivefiber.a" };');
 
 const ROWS: readonly Row[] = [
   {
@@ -569,23 +599,62 @@ describe("wb-jwc.13 binding text reader sub-form census (test/helpers/rf-binding
         });
     });
 
-  it("SHAPE: the rows and their pins, and each pin's page, are the frozen set (standing rule 16)", () => {
+  it("SHAPE: the rows and their pins, and each pin's probe, path and page, are the frozen set (standing rule 16)", () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual([
       "R3-U1a:7", "R3-U1b:2", "R3-U1c:3", "R3-U1d:2", "R3-U2:3", "R4-U1a:2", "R4-U1b:2", "R4-U1c:5", "R4-U1d:2", "R4-R668:2", "R4-F2:3", "R4-F3:6",
     ]);
-    expect(ROWS.flatMap((row) => row.pins.map((at) => `${at.id}:${digest(at.page)}`))).toEqual([
-      "n03-ts:4683c4774af2e164", "n03-js:7fb4fbf7301c8f0c", "EV-ZERO:d734eea7ebe43878", "EV-ONE:992e22a72a4cd031",
-      "EV-TWO:66f7c0072575eb2c", "EV-THREE:777091c3ff66895b", "EV-NONE:025735660d19d685", "n23:384c4b2382f1e1e7",
-      "WD-FORMS:c57c9646e2824886", "n31:6b94788b573bb579", "CA-TS:c30202f13258761b", "CA-JS:9c004432c62ba782",
-      "n18:c6f98fd2b748ae2a", "EF-FORMS:b3139d27a5e9e0b3", "n30:b0da7c958facc465", "n35:fdbb34a81c29040e",
-      "BD-WHITESPACE:a069176905f1a486", "q06:972a9524951df019", "EX-POSITIONS:4ecc66ca83b63213", "q07:bc827e02b8e7f253",
-      "WO-POSITIONS:580bd6457704631d", "q08:951150a7a262615c", "PG-POSITIONS:7dc99a9a184a1c67", "PG-WORDLESS:19fd7eaead2637e6",
-      "PG-WORDS:86191cbe76d28b2b", "PG-WHITESPACE:ba323ea4d1822eb3",
-      "p08:3cf6fa3a45eda664", "OR-ORDERS:d46fd2f48289fb93", "XT-TEXTS:17ff55942c562568", "XW-WORDS:8dd3d5171b8ea99e",
-      "coll-programs:ddd76c8340a74979", "coll-registrations:ddd76c8340a74979", "coll-registration:ddd76c8340a74979", "p30:94111a5056405f34",
-      "EV-IDENTIFIER:60a669211edd1f70", "EV-NUMBER:4feb86207931158c", "EV-TEMPLATE:f30e8c25e20de9b8", "EV-SPREAD:e74d5036c2c5185d",
-      "EV-CALL:e2d17ff3aafa3719",
+    expect(ROWS.flatMap((row) => row.pins.map((at) => `${at.id}:${at.probe}:${at.path}:${digest(at.page)}`))).toEqual([
+      "n03-ts:texts:src/workbench/providers/zz-tw-n03.ts:4683c4774af2e164",
+      "n03-js:texts:src/workbench/providers/zz-tw-n03.js:7fb4fbf7301c8f0c",
+      "EV-ZERO:texts:src/workbench/providers/zz-ev-zero.ts:d734eea7ebe43878",
+      "EV-ONE:texts:src/workbench/providers/zz-ev-one.ts:992e22a72a4cd031",
+      "EV-TWO:texts:src/workbench/providers/zz-ev-two.ts:66f7c0072575eb2c",
+      "EV-THREE:texts:src/workbench/providers/zz-ev-three.ts:777091c3ff66895b",
+      "EV-NONE:texts:src/workbench/providers/zz-ev-none.ts:025735660d19d685",
+      "n23:words:src/workbench/providers/zz-tw-n23.ts:384c4b2382f1e1e7",
+      "WD-FORMS:words:src/workbench/providers/zz-wd-forms.ts:c57c9646e2824886",
+      "n31:texts:src/workbench/providers/zz-tw-n31.ts:6b94788b573bb579",
+      "CA-TS:texts:src/workbench/providers/zz-ca-ts.ts:c30202f13258761b",
+      "CA-JS:texts:src/workbench/providers/zz-ca-js.js:9c004432c62ba782",
+      "n18:registrations:src/workbench/providers/zz-tw-n18.ts:c6f98fd2b748ae2a",
+      "EF-FORMS:registrations:src/workbench/providers/zz-ef-forms.ts:b3139d27a5e9e0b3",
+      "n30:texts:src/workbench/providers/zz-tw-n30.ts:b0da7c958facc465",
+      "n35:texts:src/workbench/providers/zz-tw-n35.ts:fdbb34a81c29040e",
+      "BD-WHITESPACE:texts:src/workbench/providers/zz-bd-whitespace.ts:a069176905f1a486",
+      "q06:exact:src/workbench/providers/zz-tw-q06.ts:972a9524951df019",
+      "EX-POSITIONS:exact:src/workbench/providers/zz-ex-positions.ts:4ecc66ca83b63213",
+      "q07:words:src/workbench/providers/zz-tw-q07.ts:bc827e02b8e7f253",
+      "WO-POSITIONS:words:src/workbench/providers/zz-wo-positions.ts:580bd6457704631d",
+      "q08:programs:src/workbench/providers/zz-tw-q08.ts:951150a7a262615c",
+      "PG-POSITIONS:programs:src/workbench/providers/zz-pg-positions.ts:7dc99a9a184a1c67",
+      "PG-WORDLESS:programs:src/workbench/providers/zz-pg-wordless.ts:19fd7eaead2637e6",
+      "PG-WORDS:programs:src/workbench/providers/zz-pg-words.ts:86191cbe76d28b2b",
+      "PG-WHITESPACE:programs:src/workbench/providers/zz-pg-whitespace.ts:ba323ea4d1822eb3",
+      "p08:exact:src/workbench/providers/zz-tw-p08.ts:3cf6fa3a45eda664",
+      "OR-ORDERS:exact:src/workbench/providers/zz-or-orders.ts:d46fd2f48289fb93",
+      "XT-TEXTS:exact:src/workbench/providers/zz-xt-texts.ts:17ff55942c562568",
+      "XW-WORDS:words:src/workbench/providers/zz-xw-words.ts:8dd3d5171b8ea99e",
+      "coll-programs:programs:src/workbench/providers/zz-tw-coll.ts:ddd76c8340a74979",
+      "coll-registrations:registrations:src/workbench/providers/zz-tw-coll.ts:ddd76c8340a74979",
+      "coll-registration:registration:src/workbench/providers/zz-tw-coll.ts:ddd76c8340a74979",
+      "p30:texts:src/workbench/providers/zz-tw-p30.ts:94111a5056405f34",
+      "EV-IDENTIFIER:texts:src/workbench/providers/zz-ev-identifier.ts:60a669211edd1f70",
+      "EV-NUMBER:texts:src/workbench/providers/zz-ev-number.ts:4feb86207931158c",
+      "EV-TEMPLATE:texts:src/workbench/providers/zz-ev-template.ts:f30e8c25e20de9b8",
+      "EV-SPREAD:texts:src/workbench/providers/zz-ev-spread.ts:e74d5036c2c5185d",
+      "EV-CALL:texts:src/workbench/providers/zz-ev-call.ts:e2d17ff3aafa3719",
     ]);
+  });
+
+  it("PROBES: the six probes read the PROBES page six ways, each through its own reader function", () => {
+    expect(Object.fromEntries(PROBES.map((probe) => [probe, reading(pin("PROBES", probe, PROBES_PAGE, []))]))).toEqual({
+      texts: ['"rf x"'],
+      exact: ['["rf x"]'],
+      words: ['["rf","x"]'],
+      programs: ["spawn:git"],
+      registrations: ["reactivefiber.a:<none>", "reactivefiber.b:<none>"],
+      registration: ["reactivefiber.b:<none>", "reactivefiber.a:<none>"],
+    });
   });
 
   it("ANCHOR: the tracker export's records name these rows, their labels and their twins (outside this file)", () => {
@@ -627,11 +696,21 @@ describe("wb-jwc.13 binding text reader sub-form census (test/helpers/rf-binding
     for (const row of findingRows) expect(twinsNamed(routed.find((finding) => finding.head === row.label)?.line ?? ""), `${row.id}: the twin its finding names`).toEqual(twinsPinned(row));
   });
 
-  it("ROSTER: test/fixtures/rf-binding-text-reader-subforms-roster.json holds every row and pin, its page's digest, its forms and its reading (outside this file)", () => {
+  it("ROSTER: test/fixtures/rf-binding-text-reader-subforms-roster.json holds every row and pin, its path, probe, page digest, forms and reading, and every pin read again reads the roster's reading (outside this file)", () => {
     const roster = JSON.parse(readFileSync(join(REPO, ROSTER), "utf8")) as { bead?: unknown; rows?: unknown };
     expect(roster.bead, `${ROSTER} is ${CHILD}'s roster`).toBe(CHILD);
     expect(roster.rows).toEqual(
-      ROWS.map((row) => ({ row: row.id, label: row.label, pins: row.pins.map((at) => ({ pin: at.id, page: digest(at.page), forms: forms(at), reading: at.reading })) })),
+      ROWS.map((row) => ({
+        row: row.id,
+        label: row.label,
+        pins: row.pins.map((at) => ({ pin: at.id, path: at.path, probe: at.probe, page: digest(at.page), forms: forms(at), reading: at.reading })),
+      })),
     );
+    // The second reading: each pin read again by the moved reader, against the roster's reading (not ROWS's).
+    const rostered = (roster.rows as ReadonlyArray<{ readonly pins: ReadonlyArray<{ readonly reading: unknown }> }>).flatMap((row) => row.pins.map((at) => at.reading));
+    expect(
+      ROWS.flatMap((row) => row.pins.map((at) => reading(at))),
+      "every pin, read a second time, reads the roster's reading",
+    ).toEqual(rostered);
   });
 });
