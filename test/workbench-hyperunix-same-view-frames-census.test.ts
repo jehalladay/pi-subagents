@@ -1,4 +1,4 @@
-/** wb-rv3o THE SAME VIEW frame-reader census, cut #1. wb-rv3o is the rule-19 carrier child of wb-b9ot: ruling R-B270 filed it at
+/** wb-rv3o THE SAME VIEW frame-reader census, cut #2. wb-rv3o is the rule-19 carrier child of wb-b9ot: ruling R-B270 filed it at
  * wb-b9ot's refusal #3 (M:45305 / O:1697) carrying that refusal's two unmet items, the GP9 members, and ruling R-B286, the dependency
  * inversion at refusal #4 (O:1715, ruling M:45721), folded refusal #4's two unmet items, the GP18-PAREN members, into it. wb-b9ot
  * stays parked until this lands; its re-cut can import the helper. SUBJECT: the frame reader of
@@ -6,7 +6,13 @@
  * and places a frame by its code, where wb-b9ot's cut #4 (tip 808d5245, not on trunk) read the text of its Error.stack line. The
  * parent's census, test/workbench-hyperunix-evidence-tier-standing.test.ts, is neither read nor edited here.
  *
- * PINNED READER SET (this file, test/workbench-hyperunix-same-view-frames-census.test.ts; observed at the cut: 18 passed (18)):
+ * CUT #2 (the respin of wb-rv3o's refusal #1, O:1816, ruling R-B352; cut #1 was 4b8b87ad) keeps cut #1's reader and readings and
+ * cures that refusal's two unmet items: U1-READER-TITLE-KNOWN-SCRIPT-FILE-CONDITION-UNPINNED - READER now holds knownScriptOf()'s
+ * file condition on stand-in call sites (this file's sha256 at another file reads as other code) and KNOWN holds it on V8's own call
+ * sites; U2-ANCHOR-REFUSAL-CITE-ASSOCIATION-UNPINNED - ANCHOR now holds each row's whole refusal cite, by exact match, to the cite
+ * at a fixed opening of the text its unmet item is read from.
+ *
+ * PINNED READER SET (this file, test/workbench-hyperunix-same-view-frames-census.test.ts; observed at the cut: 19 passed (19)):
  * - OWN-3: the five functions this file imports from '@hyperunix/sdk' (decodeResultStream, assembleQueryResult, evidenceOf,
  *   resultFromJson, resultToJson), each called on null here, and decodeResultStream refusing a header frame that holds an unknown
  *   envelope key. framesOf() over this file's script reads, in one toStrictEqual, the package's frame then 'this file' for each
@@ -32,16 +38,26 @@
  *   by a stand-in registration in this file (route (4)): exactly PINS's reading, the package's frame and then the substitute's own
  *   frame written as other code ('eval ...' or 'script ...' with its label rooted), or, for GP9-SURL-THROW, the substitute's frame
  *   alone. Observed: each passes.
- * - READER (stand-in call sites and raised()): frameText() writes a site at SDK_DIST's result.js URL with result.js's pin and no eval
- *   as the package's frame; the same site with index.js's pin, as eval code, at another copy's URL or at a file under SDK_DIST outside
- *   the 27 as other code; a site with no file, no line, no script sha256 and no eval as a built-in, and one with a line, a script
- *   sha256, a file or the eval flag as other code; a site with this file's file and sha256 as 'this file', and one with another sha256
- *   or the eval flag as other code. packageModuleOf(), isBuiltIn() and knownScriptOf() read the first of those as result.js, true and
- *   this file. framesOf() writes built-in frames between the package's frames, stops at the first frame that is neither and writes
- *   'no caller frame' when none is, 'no call sites' for a raise without call sites and 'no throw' for a call that returned. raised()
+ * - READER (stand-in call sites and raised(); a stand-in's label, the location its code names for itself, getScriptNameOrSourceURL(),
+ *   is its file unless the case gives one): frameText() writes a site at SDK_DIST's result.js URL with result.js's pin and no eval as
+ *   the package's frame, also under another copy's URL as its label; the same site with index.js's pin, as eval code, at another
+ *   copy's URL (also under result.js's URL as its label, then written by that label) or at a file under SDK_DIST outside the 27 as
+ *   other code; a site with no file, no line, no script sha256 and no eval as a built-in, also under a label, and one with a line, a
+ *   script sha256, a file or the eval flag as other code; a site with this file's file and sha256 as 'this file', also under another
+ *   file's path as its label, and one with another sha256, the eval flag, or this file's sha256 at another file (this file's name in
+ *   another checkout, /srv/hx-same-view-copy/test/...; also under this file's path as its label, then written by that label) as other
+ *   code. packageModuleOf(), isBuiltIn() and knownScriptOf() read the first of those as result.js, true and this file. framesOf()
+ *   writes built-in frames between the package's frames, stops at the first frame that is neither and writes 'no caller frame' when
+ *   none is, 'no call sites' for a raise without call sites and 'no throw' for a call that returned. raised()
  *   records the call sites of an error whose stack the call itself read first (its first site at this file's path), records none for a
  *   thrown non-Error, reads a call that returns as no throw, and leaves Error.prepareStackTrace as it found it. rooted() writes the
  *   root's path as <root>/ wherever it occurs. Observed: passes.
+ * - KNOWN (V8's own call sites): two vm.Scripts compiled here from one source text, KNOWN_SOURCE (a function that throws on null,
+ *   labelled by its //# sourceURL /srv/hx-same-view-known/label.js), under the files /srv/hx-same-view-known/first.js and
+ *   /srv/hx-same-view-known/second.js. Each one's script, read from one of its own frames (scriptCalling()), names its own file, and
+ *   both carry the source text's sha256. A raise from the first, with the first's script known, reads as that script; a raise from the
+ *   second reads, with the first's script known, as other code written by its label ('script known
+ *   /srv/hx-same-view-known/label.js:1:50') and, with both scripts known, as the second's script. Observed: passes.
  * - SHAPE (the frozen shape, standing rule 16): the rows as `${id}:${route}:${pins}` and every pin as
  *   `${id}:${compile}:${body}:${label}`, each held to a literal, PINS's ids against the rows' pins in order; RESULT_LABEL, written from
  *   the root, is SDK_DIST's result.js URL (so SDK_DIST, the dist/ directory Node resolves for the helper, is the repository root's
@@ -54,29 +70,35 @@
  *   R-B286 fold in wb-rv3o's notes (after 'members folded into wb-rv3o' up to 'rule19-invert idem'); the rows' pins, in order, are the
  *   member ids of wb-rv3o's description's sentence 'U1 route (3): ...; U2 route (4): ... - each leaving' (U1's, then U2's), then those
  *   of wb-b9ot's refusal #4 sentence "U1 (route (3), this file's bindings: ...) and U2 (route (4), the provider: ...) each read NEW";
- *   and each row's refusal cite is in its source text (wb-rv3o's description for the refusal #3 rows, its notes for the refusal #4
- *   rows). Each read takes the first occurrence of its opening. Observed: passes.
+ *   and each row's refusal cite is, by exact match, the whole cite at a fixed opening of the text its unmet item is read from: for the
+ *   rows whose unmet items are the description's list, the text between the description's 'executed at ' and ' on the frozen'; for
+ *   the rows whose unmet items are the fold's lines, the text between 'RULE19 DEPENDENCY INVERSION R-B286 (ruling M:45721, ' and
+ *   '): members folded into wb-rv3o' in the notes. Each read takes the first occurrence of its opening. Observed: passes.
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) The reader reads each raise exactly as OWN-3, OWN-4 and MEMBERS hold it, and each of its rules as
- * READER holds it: a reader edit that changes one of those readings reds that case. The cutting seat applied 18 one-edit mutants of
- * the helper (each of packageModuleOf()'s eval, sha256 and file conditions, knownScriptOf()'s sha256 and eval conditions and
- * isBuiltIn()'s four conditions dropped; framesOf() not stopping at the caller or leaving built-ins out; raised() not restoring the
- * formatter; rooted() unchanged text; scriptCalling() reading the second frame; registrationRead() reading the stand-in's own frame;
- * the receiver type dropped from a function; other code written without its kind; sitesOf() not formatting the stack itself) and read
- * each red, at 1 to 16 cases. (2) The prior readers pass over the members' substitute frames: with the helper's frame rules replaced
- * by wb-b9ot cut #4's callerOf regex (the text after a frame line's last '(') the seat read every MEMBERS case red (14 failed, READER
- * the fourteenth), and with them replaced by cut #3/#4's rule read on the same call sites (the location the code names, no eval or
- * sha256 condition) the six GP9 cases red (7 failed, READER the seventh). (3) Each member's own plant, as its gate's archived battery
- * writes it (the shim texts, the alias of the bare specifier and of the installed index.js URL, or the src-importer redirect;
- * GP18-PAREN-SELF labelled with this census's path), reds this census: in the seat's replay every route (3) plant reds OWN-3 (and the
- * ten route (3) MEMBERS cases, whose own decodeResultStream the plant substitutes too) and every route (4) plant reds OWN-4, a paired
- * witness reading each plant's substitute realized ('decoded', or the provider's output carrying KEY). (4) The rows, their unmet items,
- * refusal cites and member ids are the tracker export's. The seat measured each of these edits red: a member removed from its row and
- * its pin (CT1, CT1b) or from every literal (CT6); a member added to a row, or moved to another row, in every literal; a row removed
- * (CT4), removed from every literal (CT5) or added in every literal; a row's unmet item shortened (CT2): each reds ANCHOR, through
- * the export (CT1, CT1b and CT4 SHAPE too); and a pin's witness swapped for another pin's (CT3) reds SHAPE.
+ * READER and KNOWN hold it: a reader edit that changes one of those readings reds that case. The cutting seats applied 24 one-edit
+ * mutants of the helper (each of packageModuleOf()'s eval, sha256 and file conditions, knownScriptOf()'s file, sha256 and eval
+ * conditions and isBuiltIn()'s four conditions dropped; packageModuleOf(), knownScriptOf(), isBuiltIn() and scriptCalling() reading a
+ * site's label for its file; frameText() writing other code's file for its label; framesOf() not stopping at the caller or leaving
+ * built-ins out; raised() not restoring the formatter; rooted() unchanged text; scriptCalling() reading the second frame;
+ * registrationRead() reading the stand-in's own frame; the receiver type dropped from a function; other code written without its
+ * kind; sitesOf() not formatting the stack itself) and read each red, at 1 to 17 cases. (2) The prior readers pass over the
+ * members' substitute frames: with the helper's frame rules replaced by wb-b9ot cut #4's callerOf regex (the text after a frame line's
+ * last '(') the seats read every MEMBERS case red (15 failed: the 13, READER and KNOWN), and with them replaced by cut #3/#4's rule
+ * read on the same call sites (the location the code names, no eval or sha256 condition) the six GP9 cases red (8 failed: the six,
+ * READER and KNOWN). (3) Each member's own plant, as its gate's archived battery writes it (the shim texts, the alias of the bare
+ * specifier and of the installed index.js URL, or the src-importer redirect; GP18-PAREN-SELF labelled with this census's path), reds
+ * this census: in the seats' replays every route (3) plant reds OWN-3 (and the ten route (3) MEMBERS cases, whose own
+ * decodeResultStream the plant substitutes too) and every route (4) plant reds OWN-4, a paired witness reading each plant's
+ * substitute realized ('decoded', or the provider's output carrying KEY). (4) The rows' unmet items,
+ * refusal cites and member ids are the tracker export's, each at its row. The seats measured each of these edits red: a member removed
+ * from its row and its pin (CT1, CT1b) or from every literal (CT6); a member added to a row, or moved to another row, in every
+ * literal; a row removed (CT4), removed from every literal (CT5) or added in every literal; a row's unmet item shortened (CT2); a
+ * row's refusal cite swapped with the other refusal's, cut to its refusal's number or to the bare word (refusal #1's L2-CITE-SWAP,
+ * L2-CITE-SHORT and L2-CITE-BARE): each reds ANCHOR, through the export (CT1, CT1b and CT4 SHAPE too); and a pin's witness swapped
+ * for another pin's (CT3) reds SHAPE.
  *
- * NOT CLAIMED. A substitute form other than the 13 members' witnesses and plants is NOT CLAIMED by this census; the seat measured more
+ * NOT CLAIMED. A substitute form other than the 13 members' witnesses and plants is NOT CLAIMED by this census; the seats measured more
  * gate plants red (GP9-SURLc, W6-SURL-SELFPATH, W6-PROV-PROVIDER, G21-S5, G21-S6, M-PROXY, N-FORGE, S2, S3, S4, G13), and none is a
  * pin. Whether the two EVAL members' indirect eval reads as their witnesses do is NOT CLAIMED by this census beyond claim (3)'s
  * replay (their frame there is the same 'eval' kind and label at its own position, 1:88). Code compiled as a module from a text
@@ -87,7 +109,10 @@
  * whose own code runs in no JavaScript frame, and Pi's own modules substituted by a test configuration are NOT CLAIMED by this census.
  * The text raised() leaves in an error's stack (the formatter it hands the error on to writes it) is NOT CLAIMED by this census. Which
  * compile, body and label a member's witness carries, changed together with its SHAPE entry and its reading in every literal, is NOT
- * CLAIMED by this census (claim (3)'s replay holds the forms to the gates' archived plant texts, not an anchor this file reads).
+ * CLAIMED by this census (claim (3)'s replay holds the forms to the gates' archived plant texts, not an anchor this file reads). A
+ * row's id or route read as the export's is NOT CLAIMED by this census: both are this census's names for the row, held by SHAPE (a
+ * route by MEMBERS' witnesses too). KNOWN's readings are claimed of its two scripts; a script compiled another way (another source,
+ * label, file or compile) is NOT CLAIMED by this census beyond READER's rules.
  * ANCHOR's reads are claimed on the tracked export as it stands; on any other export (another position, spelling, order or occurrence
  * of the list, the fold's lines, the route sentences or the cites, or two rows for one bead) they are NOT CLAIMED by this census. The
  * parent census's header, cases and claims, THE SAME VIEW's readings (1) and (2) there (Node's resolution of the package for this
@@ -120,6 +145,12 @@ const ROOT_PATH = fileURLToPath(ROOT);
 /** The provider whose registration (registerHyperUnixFind) OWN-4 reads. */
 const PROVIDER = 'src/workbench/providers/hyperunix.ts';
 const PROVIDER_PATH = fileURLToPath(new URL(PROVIDER, ROOT));
+/** This file's name in another checkout: a file READER's stand-ins give this file's sha256 (or this file's path as their label). */
+const COPY_PATH = '/srv/hx-same-view-copy/test/workbench-hyperunix-same-view-frames-census.test.ts';
+/** The source text KNOWN compiles twice by vm.Script, under KNOWN_FILES: a function that throws on null and otherwise returns what the
+ * function it is handed returns, labelled by a //# sourceURL that names neither file. */
+const KNOWN_SOURCE = '(function known(call) { if (call === null) throw new TypeError("no call"); return call(); })\n//# sourceURL=/srv/hx-same-view-known/label.js';
+const KNOWN_FILES = {first: '/srv/hx-same-view-known/first.js', second: '/srv/hx-same-view-known/second.js'} as const;
 /** The tracked tracker export, read at run time for the outside anchors (ANCHOR). */
 const EXPORT = new URL('.beads/issues.jsonl', ROOT);
 /** The member each substitute strips (route (3)) or carries (route (4)), built at run time as the gates' plants build it. */
@@ -282,10 +313,12 @@ function between(text: string, open: string, close: string): string | undefined 
   return end < 0 ? undefined : text.slice(start + open.length, end);
 }
 /** What the export says of the rows, read where the refusal records and the R-B286 fold write it: wb-rv3o's description's unmet list
- * (each item's slug, the text before its first ':') and its two route sentences' member ids; the fold's lines in wb-rv3o's notes; and
- * wb-b9ot's refusal #4 route sentence's member ids. */
-function anchors(rows: Record<string, Record<string, unknown>>): {readonly refusal3: string[]; readonly fold: string[]; readonly route3OfRefusal3: string[];
-  readonly route4OfRefusal3: string[]; readonly route3OfRefusal4: string[]; readonly route4OfRefusal4: string[]; readonly uncited: string[]} {
+ * (each item's slug, the text before its first ':'), its refusal #3 cite (after 'executed at ') and its two route sentences' member
+ * ids; the fold's lines in wb-rv3o's notes and the fold's refusal cite (in its heading line); and wb-b9ot's refusal #4 route
+ * sentence's member ids. */
+function anchors(rows: Record<string, Record<string, unknown>>): {readonly refusal3: string[]; readonly fold: string[]; readonly cite3: string | undefined;
+  readonly cite4: string | undefined; readonly route3OfRefusal3: string[]; readonly route4OfRefusal3: string[]; readonly route3OfRefusal4: string[];
+  readonly route4OfRefusal4: string[]} {
   const description = String(rows['wb-rv3o']?.description ?? '');
   const notes = String(rows['wb-rv3o']?.notes ?? '');
   const parentNotes = String(rows['wb-b9ot']?.notes ?? '');
@@ -296,30 +329,32 @@ function anchors(rows: Record<string, Record<string, unknown>>): {readonly refus
   return {
     refusal3: slugs,
     fold: between(notes, 'members folded into wb-rv3o\n', '\nrule19-invert idem')?.split('\n') ?? [],
+    cite3: between(description, 'executed at ', ' on the frozen'),
+    cite4: between(notes, 'RULE19 DEPENDENCY INVERSION R-B286 (ruling M:45721, ', '): members folded into wb-rv3o'),
     route3OfRefusal3: ids(between(description, 'U1 route (3): ', '; U2 route (4): ')),
     route4OfRefusal3: ids(between(description, '; U2 route (4): ', ' - each leaving')),
     route3OfRefusal4: ids(between(parentNotes, "U1 (route (3), this file's bindings: ", ') and U2 (route (4), the provider: ')),
     route4OfRefusal4: ids(between(parentNotes, ') and U2 (route (4), the provider: ', ') each read NEW')),
-    uncited: ROWS.filter(row => !(row.refusal.startsWith('refusal #3') ? description : notes).includes(row.refusal)).map(row => row.id),
   };
 }
 
 /** A stand-in call site: every method NodeJS.CallSite declares, its file, line, column, function, receiver type, eval flag and source
- * sha256 as given (its location its file). */
-function site(fields: {file?: string | null; line?: number | null; column?: number | null; fn?: string | null; type?: string | null;
-  eval?: boolean; hash?: string}): NodeJS.CallSite {
+ * sha256 as given, and its label (the location its code names for itself, getScriptNameOrSourceURL()) as given, else its file. */
+function site(fields: {file?: string | null; label?: string | null; line?: number | null; column?: number | null; fn?: string | null;
+  type?: string | null; eval?: boolean; hash?: string}): NodeJS.CallSite {
   const file = fields.file === undefined ? null : fields.file;
+  const label = fields.label === undefined ? file : fields.label;
   return {
     getColumnNumber: () => fields.column ?? null, getEnclosingColumnNumber: () => null, getEnclosingLineNumber: () => null,
     getEvalOrigin: () => undefined, getFileName: () => file, getFunction: () => undefined, getFunctionName: () => fields.fn ?? null,
     getLineNumber: () => fields.line ?? null, getMethodName: () => (fields.type === undefined || fields.type === null ? null : (fields.fn ?? null)),
-    getPosition: () => 0, getPromiseIndex: () => null, getScriptHash: () => fields.hash ?? '', getScriptNameOrSourceURL: () => file,
+    getPosition: () => 0, getPromiseIndex: () => null, getScriptHash: () => fields.hash ?? '', getScriptNameOrSourceURL: () => label,
     getThis: () => undefined, getTypeName: () => fields.type ?? null, isAsync: () => false, isConstructor: () => false,
     isEval: () => fields.eval ?? false, isNative: () => false, isPromiseAll: () => false, isToplevel: () => true,
   };
 }
 
-describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s raises, the 13 gate members\' substitutes, the reader\'s rules, the frozen shape and the export anchors', () => {
+describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s raises, the 13 gate members\' substitutes, the reader\'s rules, the known script\'s file on V8\'s call sites, the frozen shape and the export anchors', () => {
   it('OWN-3: each of the five functions this file imports from @hyperunix/sdk, called on null, and decodeResultStream refusing an unknown envelope key raise with the package\'s frames at their pinned module:line:column, then this file', () => {
     expect([SELF.name, SELF.file]).toStrictEqual(['this file', SELF_PATH]);
     const raises: Record<string, string[]> = {
@@ -359,7 +394,7 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
     });
   });
 
-  it('READER: the reader\'s rules fire on stand-in call sites (the package\'s frame needs its module\'s URL, its pinned sha256 and no eval; a known script needs its file, its sha256 and no eval; a built-in names no file, line or script sha256 and is not eval), framesOf stops at the caller, raised() records the sites and restores the formatter, and rooted() writes the root', () => {
+  it('READER: the reader\'s rules fire on stand-in call sites (the package\'s frame needs its module\'s URL as its file, its pinned sha256 and no eval; a known script needs its file, its sha256 and no eval; a built-in names no file, line or script sha256 and is not eval; each rule reads a site\'s file, never its label), framesOf stops at the caller, raised() records the sites and restores the formatter, and rooted() writes the root', () => {
     const resultHash = PACKAGE_MODULES['result.js'] ?? '';
     const pinned = {file: new URL('result.js', SDK_DIST).href, line: 526, column: 15, fn: 'resultFromJson', hash: resultHash};
     expect([
@@ -367,8 +402,11 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
       frameText(site({...pinned, hash: PACKAGE_MODULES['index.js']}), []),
       frameText(site({...pinned, eval: true}), []),
       frameText(site({...pinned, file: 'file:///elsewhere/@hyperunix/sdk/dist/result.js'}), []),
+      frameText(site({...pinned, file: 'file:///elsewhere/@hyperunix/sdk/dist/result.js', label: pinned.file}), []),
+      frameText(site({...pinned, label: 'file:///elsewhere/@hyperunix/sdk/dist/result.js'}), []),
       frameText(site({...pinned, file: new URL('zz-shim.mjs', SDK_DIST).href}), []),
       frameText(site({fn: 'map', type: 'Array'}), []),
+      frameText(site({fn: 'map', type: 'Array', label: 'file:///labelled.js'}), []),
       frameText(site({fn: 'map', type: 'Array', line: 1}), []),
       frameText(site({fn: 'map', type: 'Array', hash: resultHash}), []),
       frameText(site({fn: 'f', file: 'wasm://wasm/0145fffe'}), []),
@@ -376,12 +414,18 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
       frameText(site({file: SELF.file, line: 7, column: 8, hash: SELF.hash}), [SELF]),
       frameText(site({file: SELF.file, line: 7, column: 8, hash: resultHash}), [SELF]),
       frameText(site({file: SELF.file, line: 7, column: 8, hash: SELF.hash, eval: true}), [SELF]),
+      frameText(site({file: COPY_PATH, line: 7, column: 8, hash: SELF.hash}), [SELF]),
+      frameText(site({file: COPY_PATH, label: SELF.file, line: 7, column: 8, hash: SELF.hash}), [SELF]),
+      frameText(site({file: SELF.file, label: COPY_PATH, line: 7, column: 8, hash: SELF.hash}), [SELF]),
     ]).toStrictEqual([
       'resultFromJson result.js:526:15',
       `script resultFromJson ${RESULT_LABEL}:526:15`,
       `eval resultFromJson ${RESULT_LABEL}:526:15`,
       'script resultFromJson file:///elsewhere/@hyperunix/sdk/dist/result.js:526:15',
+      `script resultFromJson ${RESULT_LABEL}:526:15`,
+      'resultFromJson result.js:526:15',
       'script resultFromJson file://<root>/node_modules/@hyperunix/sdk/dist/zz-shim.mjs:526:15',
+      'Array.map built-in',
       'Array.map built-in',
       'script Array.map no location:1:null',
       'script Array.map no location:null:null',
@@ -390,6 +434,9 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
       'this file',
       'script <anonymous> <root>/test/workbench-hyperunix-same-view-frames-census.test.ts:7:8',
       'eval <anonymous> <root>/test/workbench-hyperunix-same-view-frames-census.test.ts:7:8',
+      `script <anonymous> ${COPY_PATH}:7:8`,
+      'script <anonymous> <root>/test/workbench-hyperunix-same-view-frames-census.test.ts:7:8',
+      'this file',
     ]);
     expect([packageModuleOf(site(pinned)), isBuiltIn(site({fn: 'map'})), knownScriptOf(site({file: SELF.file, hash: SELF.hash}), [SELF])?.name])
       .toStrictEqual(['result.js', true, 'this file']);
@@ -414,6 +461,22 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
       notAnError.threw && notAnError.sites, raised(() => 1).threw, Error.prepareStackTrace === before])
       .toStrictEqual([true, SELF_PATH, undefined, false, true]);
     expect(rooted(`x(${ROOT_PATH}a and file://${ROOT_PATH}b`)).toBe('x(<root>/a and file://<root>/b');
+  });
+
+  it('KNOWN: on V8\'s own call sites, the two vm.Scripts compiled here from one source text under two files each name their own file and carry that text\'s sha256; with the first\'s script known a raise from the first reads as that script and a raise from the second (that sha256 at another file) as other code written by its label, and with both known a raise from the second reads as the second\'s script', () => {
+    type Known = (call: (() => Script) | null) => Script;
+    const first = new vm.Script(KNOWN_SOURCE, {filename: KNOWN_FILES.first}).runInThisContext() as Known;
+    const second = new vm.Script(KNOWN_SOURCE, {filename: KNOWN_FILES.second}).runInThisContext() as Known;
+    const readFirst = (): Script => scriptCalling(readFirst, 'the first script');
+    const readSecond = (): Script => scriptCalling(readSecond, 'the second script');
+    const firstScript = first(readFirst);
+    const secondScript = second(readSecond);
+    const sourceHash = createHash('sha256').update(KNOWN_SOURCE).digest('hex');
+    expect([firstScript, secondScript]).toStrictEqual([{name: 'the first script', file: KNOWN_FILES.first, hash: sourceHash},
+      {name: 'the second script', file: KNOWN_FILES.second, hash: sourceHash}]);
+    expect([framesOf(raised(() => first(null)), [firstScript]), framesOf(raised(() => second(null)), [firstScript]),
+      framesOf(raised(() => second(null)), [firstScript, secondScript])])
+      .toStrictEqual([['the first script'], ['script known /srv/hx-same-view-known/label.js:1:50'], ['the second script']]);
   });
 
   it('SHAPE: the frozen shape - the four rows with their routes and pins, every pin with its compile, body and label, the labels\' unrooted forms (SDK_DIST the root\'s node_modules copy), and the 27 module pins, each named by the installed package\'s listing and equal to its installed bytes\' sha256', () => {
@@ -449,14 +512,14 @@ describe('wb-rv3o THE SAME VIEW frame reader: this file\'s and the provider\'s r
       .toStrictEqual(PACKAGE_MODULES);
   });
 
-  it('ANCHOR: the rows\' unmet items, refusals and member ids are the tracker export\'s - wb-rv3o\'s unmet list and route sentences (refusal #3), the R-B286 fold in its notes and wb-b9ot\'s refusal #4 route sentence', () => {
+  it('ANCHOR: the rows\' unmet items, refusal cites (each, exactly, the cite of the text its unmet item is read from) and member ids are the tracker export\'s - wb-rv3o\'s unmet list, refusal #3 cite and route sentences, the R-B286 fold and its cite in its notes and wb-b9ot\'s refusal #4 route sentence', () => {
     const rows = exportRows(['wb-rv3o', 'wb-b9ot']);
     expect(Object.keys(rows).sort()).toStrictEqual(['wb-b9ot', 'wb-rv3o']);
     const read = anchors(rows);
-    expect({unmet: ROWS.map(row => row.unmet), pins: ROWS.map(row => row.pins), uncited: read.uncited}).toStrictEqual({
+    expect({unmet: ROWS.map(row => row.unmet), refusals: ROWS.map(row => row.refusal), pins: ROWS.map(row => row.pins)}).toStrictEqual({
       unmet: [...read.refusal3, ...read.fold],
+      refusals: [...read.refusal3.map(() => read.cite3), ...read.fold.map(() => read.cite4)],
       pins: [read.route3OfRefusal3, read.route4OfRefusal3, read.route3OfRefusal4, read.route4OfRefusal4],
-      uncited: [],
     });
   });
 });
