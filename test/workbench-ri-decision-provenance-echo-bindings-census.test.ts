@@ -18,13 +18,17 @@
  *   identifier: X1 (INVOCATION through a dynamic import of node:module and createRequire), X2 (ROWS through a dynamic import of a helper
  *   module), X3k (QUOTE from the bead export through a dynamic import of node:fs), X4k (a string-keyed accessor on INVOCATION), X4 (that
  *   accessor reading a __proto__ property set from the roster read afresh) and X5b (QUOTE_PIN composing TRIGGER through a member call).
- *   Each pin holds the member's declaration as the refusal's gate wrote it - as its record quotes it, but X4's, which the record
- *   describes in prose - its paths left as the record's placeholders (a probe is parsed, never run), and, but X4, its named twin as the
- *   gate wrote it, which names its source (X1n, X2n, X3n, X4n, X5n); each is read refused.
+ *   Each pin but X4 holds the member's declaration as refusal #3's record quotes it, its paths left as the record's placeholders (a
+ *   probe is parsed, never run): X1's, X2's and X3k's whole, X5b's as a head and a tail around the record's elision, and X4k's
+ *   string-keyed accessor, which the record quotes inside a sentence, held in INVOCATION's declaration. X4's declaration is this
+ *   file's (the record describes it in prose). Each pin but X4 also holds a named twin (X1n, X2n, X3n, X4n, X5n), which the tip's
+ *   names test refuses too (claim (2)). Each probe is read refused.
  * - Row E, the members of wb-5333's refusal #4 that R-B256 folded into wb-26dh, sides naming a value inside an instantiation expression
  *   or a class expression's heritage clause: E1 (INVOCATION through an in-file helper called as an instantiation expression), E2 (ROWS
  *   likewise), E3 (INVOCATION spread from a new class expression extending an in-file class) and E4 (FIELD_SPELLINGS through another
- *   side's member called as an instantiation expression), each with its named twin (E1n-E4n), each read refused.
+ *   side's member called as an instantiation expression). Each pin holds the member's declaration as refusal #4's record quotes it -
+ *   E1's, E2's and E3's whole and E4's as a head and a tail around the record's elision - and a named twin (E1n-E4n), which the tip's
+ *   names test refuses too (claim (2)); each probe is read refused.
  * - Row K, THE FORM - the cure (a) wb-5333's refusal #3 names - clause by clause. K1 a string, a regular expression and a
  *   substitution-free template literal are read clean, and a number, a member of a string, two strings joined by +, a string in
  *   parentheses and another side's name are refused. K2 an array of strings, an array of regular expressions, an object keyed by an
@@ -34,30 +38,42 @@
  *   expression and an array read through `as const` is read clean, and deepFrozen with two arguments, over deepFrozen and over a spread
  *   argument, another function over a string and a member function over a string are refused. K5 row A's label composing TRIGGER is read
  *   clean, and TRIGGER composed into another side, into row B's label, into a pin quote of row A or into another member of row A,
- *   TRIGGER read through a member in row A's label and another side composed into it are refused. K6 a call of a string's member, a call
- *   through an element access, an immediately invoked arrow function, a new expression, a tagged template, an await, an import() call
- *   and import.meta are refused, and so is every side declared by such a call, each in IN_FILE_SIDES's order as the tip lists them
- *   (:1334-1355), so the helper's side list and order are held to one literal reading here.
+ *   TRIGGER's member called or read in row A's label, and another side composed into it alone or beside TRIGGER are refused. K6 a
+ *   call of a string's member, a call through an element access, an immediately invoked arrow function, a new expression, a tagged
+ *   template, an await, an import() call, import.meta and a member of import.meta are refused, and so is every side declared by such a
+ *   call, each in IN_FILE_SIDES's order as the tip lists them (:1334-1355), so the helper's side list and order are held to one literal
+ *   reading here.
  * - Case SHAPE (the frozen shape, standing rule 16): the rows as `${id}:${pins.length}`, every pin with its probe ids, and the rows'
  *   pins in pin order, each held to a literal.
- * - Case ANCHOR (the outside anchors, read at run time from the tracked tracker export .beads/issues.jsonl and never retyped as the
- *   expectation): (1) wb-26dh's title holds row X's label as its claim clause, and its description's member paragraph names exactly
- *   row X's pins, in order, each with its pin's quote and side, the side each member probe's reading refuses; (2) in wb-5333's notes,
- *   refusal #3 (from its CLAIMS at tip 6dacecc up to its RED) quotes each row X member's declaration that its pin holds, and its CURE
+ * - Case ANCHOR (the outside anchors, read at run time from the tracked tracker export .beads/issues.jsonl): (1) wb-26dh's title holds
+ *   row X's label as its claim clause, and its description's member paragraph names exactly row X's pins, in order, each with its pin's
+ *   quote and side, the side each member probe's reading refuses; (2) in wb-5333's notes, refusal #3 (from its CLAIMS at tip 6dacecc up
+ *   to its RED) quotes between apostrophes the declarations row X's pins hold and no other, in pin order - each quotation read whole,
+ *   from an apostrophe followed by 'const ' up to the first ';' followed by an apostrophe, and exactly these: X1's, X2's and X3k's,
+ *   then X5b's head, the record's elision '...' and X5b's tail - and writes X4k's accessor exactly between 'INVOCATION gets a
+ *   string-keyed accessor, ' and the next '. Result'; each of those member probes declares its side by one const line, which is exactly
+ *   its pin's declaration (X5b's starting with the head and ending with the tail, X4k's holding the accessor); and refusal #3's CURE
  *   names its red-first members among row X's pins and holds row K's label as cure (a), whose text row K's pin quotes tile, in pin
  *   order, with separator-only gaps; (3) in wb-5333's notes, refusal #4 (from 'refusal #4, on cut #4 bce0de7f' up to LOOP CAP AND NEXT
- *   RUNG) holds row E's label as its reason's cause, names exactly row E's pins with their sides, in order, and quotes each row E
- *   member's declaration that its pin holds; (4) wb-26dh's notes open with the R-B256 fold, whose unmet slug names the readNames family
- *   and each of row E's sides.
+ *   RUNG) holds row E's label as its reason's cause, names exactly row E's pins with their sides, in order, and quotes between
+ *   apostrophes, read as in (2), the declarations row E's pins hold and no other, in pin order, exactly these: E1's, E2's and E3's,
+ *   then E4's head, the record's elision '...the three patterns...' and E4's tail - each member probe declaring its side by one const
+ *   line, which is exactly its pin's declaration (E4's starting with the head and ending with the tail); (4) wb-26dh's notes open with
+ *   the R-B256 fold: their first line is exactly the fold's head and their third its idem line, and their second, the fold's unmet
+ *   slug, is exactly the readNames family's - U1-R514-R515-R668-R739, then READNAMES-NEVER-READS-EXPRESSION-WITH-TYPE-ARGUMENTS, then
+ *   INSTANTIATION-AND-HERITAGE-IDENTIFIERS, then row E's sides in pin order without repeats, each underscore a hyphen, then 0-OF-18,
+ *   joined by hyphens.
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) On each probe bindingsRead() returns exactly the literal reading written here: a reader edit that
  * changes one reading reds that pin case. (2) Each X and E member is refused by THE FORM where the tip's names test read it clean: the
  * cutting seat runs this census over the tip's reader (RED-0) and reads every X and E pin case red at its member probe, while each
  * named twin reads refused on both readers; a reader mutant that admits one form the K probes spell reds the pin case holding it.
- * (3) The rows with their labels, row X's pins with their quotes, sides and declarations, row E's pins with their sides and
- * declarations, and row K's pin quotes are the ones the tracker export records: a row or a pin removed, or one of those labels, quotes,
- * sides or declarations changed - in one literal or in every literal together - reds SHAPE or ANCHOR, and a pin's probes exchanged for
- * another pin's in one literal reds SHAPE (standing rule 16's CT1-CT6).
+ * (3) The rows with their labels, row X's pins with their quotes and sides, row E's pins with their sides, the declarations of row X's
+ * pins but X4 and of row E's pins as their records quote them (X5b's and E4's as the head and the tail around the record's elision,
+ * X4k's as its accessor), row K's pin quotes and the R-B256 fold's lines are the ones the tracker export records: a row or a pin
+ * removed, or one of those labels, quotes, sides, declarations or fold lines changed - in one literal or in every literal together,
+ * among them a declaration cut at its end or at its front, emptied, or every declaration emptied together - reds SHAPE or ANCHOR,
+ * and a pin's probes exchanged for another pin's in one literal reds SHAPE (standing rule 16's CT1-CT6).
  *
  * NOT CLAIMED. A reading on any input that is not one of these probes is NOT CLAIMED by this census - among them a form the K probes do
  * not spell (a satisfies or angle-bracket assertion, a non-null assertion, a numeric key, a boolean or null, an operator other than +, a
@@ -66,12 +82,17 @@
  * parent's: bindingsRead reads the callee's name at a deepFrozen call and never deepFrozen's own declaration, so what deepFrozen returns
  * is NOT CLAIMED by this census (TRIGGER, an in-file side, is read at its own declaration like every side). Whether a side the reader
  * reads clean computes nothing when the source runs is NOT CLAIMED beyond these readings. Row E's pin quotes are this file's
- * descriptions of refusal #4's members (the export anchors their ids, sides and declarations, not the quotes), so a row E quote reworded
- * in every literal together is NOT CLAIMED by this census; the row ids and row K's pin ids are this file's names, and the export anchors
- * row K's quotes, by tiling, but not which probes each row K pin holds, so row K pin ids renamed, or two row K pins' probes exchanged,
- * in every literal together is NOT CLAIMED by this census. The parent census's own header, cases, roster and SELF-READ are NOT CLAIMED by this census. No
- * residual is claimed. The harness itself - the pin cases' loop and their assertion count edited together - is NOT CLAIMED by this
- * census, and the helper's side list edited together with K6's every-side reading is NOT CLAIMED by this census.
+ * descriptions of refusal #4's members (the export anchors their ids, sides and declarations, not the quotes), so a reworded row E
+ * quote is NOT CLAIMED by this census; the row ids and row K's pin ids are this file's names, and the export anchors row K's quotes,
+ * by tiling, but not which probes each row K pin holds, so row K pin ids renamed, or two row K pins' probes exchanged, in every
+ * literal together is NOT CLAIMED by this census. The part of X5b's and E4's member declarations that their records elide, X4k's
+ * member declaration but its accessor, and X4's member declaration (its record describes it in prose) are NOT CLAIMED by this census,
+ * and neither are the helper and class declarations a probe holds before its sides (row E's in-file helpers, X2n's import). A probe
+ * removed together with its SHAPE entry is NOT CLAIMED by this census, and a probe's source replaced with its id and reading kept is
+ * NOT CLAIMED by this census but for the member declarations ANCHOR items (2) and (3) hold. The parent census's own header, cases,
+ * roster and SELF-READ are NOT CLAIMED by this census. No residual is claimed. The harness itself - the pin cases' loop and their
+ * assertion count edited together - is NOT CLAIMED by this census, and the helper's side list edited together with K6's every-side
+ * reading is NOT CLAIMED by this census.
  *
  * Display paths added: none (test-only). No scratch is allocated; the tracker export is only read; no src, docs or receipt is edited.
  */
@@ -98,7 +119,15 @@ const CURE_MEMBERS = { open: ", red-first against ", close: " with planted pins"
 const REFUSAL_4 = { open: "refusal #4, on cut #4 bce0de7f", close: "\nLOOP CAP AND NEXT RUNG" } as const;
 const CAUSE = { open: "ExpressionWithTypeArguments node, so ", close: ". Gate-authored " } as const;
 const NAMED_E = { open: ". Gate-authored ", close: " each keep" } as const;
-const FOLD = { open: "RULE19 DEPENDENCY INVERSION R-B256", close: "\nrule19-invert idem" } as const;
+/** X4k's accessor, which refusal #3 writes inside a sentence: the words before it and the first words after it. */
+const ACCESSOR = { open: "INVOCATION gets a string-keyed accessor, ", close: ". Result" } as const;
+/** A declaration a refusal record quotes between apostrophes: from an apostrophe and 'const ' up to the first ';' and apostrophe after it. */
+const QUOTATION = /'(const [\s\S]*?;)'/g;
+/** wb-26dh's notes open with the R-B256 fold's three lines: its head, its unmet slug and its idem line. */
+const FOLD_HEAD = "RULE19 DEPENDENCY INVERSION R-B256 (ruling M:44599, refusal O:1666): members folded into wb-26dh";
+const FOLD_IDEM = "rule19-invert idem rule19-inversion-M44599-wb-5333-wb-26dh";
+/** The fold's unmet slug: its rule ids, the readNames family, its class words, row E's sides and its count, joined by hyphens. */
+const SLUG = { rules: "U1-R514-R515-R668-R739", family: "READNAMES-NEVER-READS-EXPRESSION-WITH-TYPE-ARGUMENTS", words: "INSTANTIATION-AND-HERITAGE-IDENTIFIERS", count: "0-OF-18" } as const;
 /** A gap between two tiled quotes: separators only (the parent census's SEPARATOR, with parentheses). */
 const GAP = /^[\s,;:()]*(?:and[\s,;:()]+)?$/;
 
@@ -112,10 +141,16 @@ interface Pin {
   readonly quote: string;
   /** X and E: the side the member declares. */
   readonly side?: string;
-  /** X and E: the member's declaration (or its quoted part) as its refusal record quotes it. */
-  readonly quoted?: string;
+  /** X and E but X4: the member's declaration as its refusal record quotes it. */
+  readonly quoted?: Quoted;
   readonly probes: readonly Probe[];
 }
+/** How a refusal record quotes a member's declaration: whole between apostrophes; between apostrophes as its head, the record's
+ * elision and its tail; or, X4k's accessor, inside a sentence (ACCESSOR). */
+type Quoted =
+  | { readonly form: "whole"; readonly text: string }
+  | { readonly form: "elided"; readonly head: string; readonly elision: string; readonly tail: string }
+  | { readonly form: "sentence"; readonly text: string };
 interface Row {
   readonly id: string;
   readonly label: string;
@@ -139,7 +174,8 @@ const STRING_KEYED_TASK = 'get "task"(): string { return "summarise the notes"; 
 const X4K = `const INVOCATION = deepFrozen({ model: "pi-invocation-model-9d2", ${STRING_KEYED_TASK} });`;
 const X4 = `const INVOCATION = deepFrozen({ __proto__: { "roster-task": ${FRESH_ROSTER}.invocation.task }, model: "pi-invocation-model-9d2", get "task"(): string { return (this as unknown as Readonly<Record<string, string>>)["roster-task"] ?? ""; } });`;
 const X5B_HEAD = `const QUOTE_PIN = \`\${TRIGGER.slice(0, 0)}docs/programs/`;
-const X5B = `${X5B_HEAD}unified-decision-inference-2026-10-21/01-contracts.md:14@485f3615db1e\`;`;
+const X5B_TAIL = "@485f3615db1e`;";
+const X5B = `${X5B_HEAD}unified-decision-inference-2026-10-21/01-contracts.md:14${X5B_TAIL}`;
 /** The in-file sources of wb-5333's refusal #4 members, as its gate wrote them (the private roster's name a placeholder here). */
 const INVOCATION_OF = ["function invocationOf<T>(): T {", '  return JSON.parse(readFileSync(join(HERE, "fixtures", "<private roster>"), "utf8")).invocation;', "}"];
 const ROWS_OF = [
@@ -162,7 +198,8 @@ const E1 = `const INVOCATION = deepFrozen((invocationOf<${INVOCATION_TYPE}>)());
 const E2 = "const ROWS: readonly Row[] = deepFrozen((rowsOf<readonly Row[]>)());";
 const E3 = "const INVOCATION = deepFrozen({ ...new (class extends FreshInvocation {})() });";
 const E4_HEAD = "const FIELD_SPELLINGS: readonly RegExp[] = deepFrozen((GATING_ARTIFACTS.flatMap<RegExp>)(() => []).concat([";
-const E4 = `${E4_HEAD}/model[_.-]?revision/i, /sampling[_.-]?policy/i, /native_evidence/i]));`;
+const E4_TAIL = "]));";
+const E4 = `${E4_HEAD}/model[_.-]?revision/i, /sampling[_.-]?policy/i, /native_evidence/i${E4_TAIL}`;
 /** Row A and row B of a ROWS literal, row A's label `label`, its pin's quote `quote` and row B's label `other`. */
 const rowsWith = (label: string, quote = '"no package.json dependency"', other = '"(a) adoption fixture"'): string =>
   `const ROWS = deepFrozen([{ id: "A", label: ${label}, pins: [{ id: "A1", quote: ${quote} }] }, { id: "B", label: ${other}, pins: [] }]);`;
@@ -196,7 +233,7 @@ const PINS: readonly Pin[] = [
     id: "X1",
     quote: "INVOCATION computed from the roster file read afresh (dynamic import of node:module, createRequire) beside the roster's task edited",
     side: "INVOCATION",
-    quoted: X1,
+    quoted: { form: "whole", text: X1 },
     probes: [
       probe("X1", { INVOCATION: X1 }, [refused("INVOCATION")]),
       probe("X1n", { INVOCATION: 'const INVOCATION = deepFrozen(JSON.parse(readFileSync(join(HERE, "fixtures", "<private roster>"), "utf8")).invocation);' }, [refused("INVOCATION")]),
@@ -206,7 +243,7 @@ const PINS: readonly Pin[] = [
     id: "X2",
     quote: "ROWS computed by a helper module loaded through a dynamic import specifier beside the roster's row A label edited",
     side: "ROWS",
-    quoted: X2,
+    quoted: { form: "whole", text: X2 },
     probes: [
       probe("X2", { ROWS: X2 }, [refused("ROWS")]),
       probe("X2n", { ROWS: "const ROWS: readonly Row[] = deepFrozen(HELPER_ROWS);" }, [refused("ROWS")], ['import { rows as HELPER_ROWS } from "./zz-gp6-x2n-helper.js";']),
@@ -216,7 +253,7 @@ const PINS: readonly Pin[] = [
     id: "X3k",
     quote: "QUOTE read from the bead export",
     side: "QUOTE",
-    quoted: X3K,
+    quoted: { form: "whole", text: X3K },
     probes: [
       probe("X3k", { QUOTE: X3K }, [refused("QUOTE")]),
       probe("X3n", { QUOTE: String.raw`const QUOTE: string = readFileSync(EXPORT_PATH, "utf8").match(/'(Preserve [^']*)' docs\//)?.[1] ?? "";` }, [refused("QUOTE")]),
@@ -226,7 +263,7 @@ const PINS: readonly Pin[] = [
     id: "X4k",
     quote: "a string-keyed accessor on INVOCATION",
     side: "INVOCATION",
-    quoted: STRING_KEYED_TASK,
+    quoted: { form: "sentence", text: STRING_KEYED_TASK },
     probes: [
       probe("X4k", { INVOCATION: X4K }, [refused("INVOCATION")]),
       probe("X4n", { INVOCATION: 'const INVOCATION = deepFrozen({ model: "pi-invocation-model-9d2", get task(): string { return "summarise the notes"; } });' }, [refused("INVOCATION")]),
@@ -242,7 +279,7 @@ const PINS: readonly Pin[] = [
     id: "X5b",
     quote: "QUOTE_PIN composed from TRIGGER",
     side: "QUOTE_PIN",
-    quoted: X5B_HEAD,
+    quoted: { form: "elided", head: X5B_HEAD, elision: "...", tail: X5B_TAIL },
     probes: [
       probe("X5b", { QUOTE_PIN: X5B }, [refused("QUOTE_PIN")]),
       probe("X5n", { QUOTE: `const QUOTE = \`\${BEAD.slice(0, 0)}Preserve endpoint/model revision, sampling policy and complete native evidence where available.\`;` }, [refused("QUOTE")]),
@@ -252,7 +289,7 @@ const PINS: readonly Pin[] = [
     id: "E1",
     quote: "INVOCATION through an in-file helper called as an instantiation expression",
     side: "INVOCATION",
-    quoted: E1,
+    quoted: { form: "whole", text: E1 },
     probes: [
       probe("E1", { INVOCATION: E1 }, [refused("INVOCATION")], INVOCATION_OF),
       probe("E1n", { INVOCATION: `const INVOCATION = deepFrozen(invocationOf<${INVOCATION_TYPE}>());` }, [refused("INVOCATION")], INVOCATION_OF),
@@ -262,7 +299,7 @@ const PINS: readonly Pin[] = [
     id: "E2",
     quote: "ROWS through an in-file helper called as an instantiation expression",
     side: "ROWS",
-    quoted: E2,
+    quoted: { form: "whole", text: E2 },
     probes: [
       probe("E2", { ROWS: E2 }, [refused("ROWS")], ROWS_OF),
       probe("E2n", { ROWS: "const ROWS: readonly Row[] = deepFrozen(rowsOf<readonly Row[]>());" }, [refused("ROWS")], ROWS_OF),
@@ -272,7 +309,7 @@ const PINS: readonly Pin[] = [
     id: "E3",
     quote: "INVOCATION spread from a new class expression whose heritage clause names an in-file class",
     side: "INVOCATION",
-    quoted: E3,
+    quoted: { form: "whole", text: E3 },
     probes: [
       probe("E3", { INVOCATION: E3 }, [refused("INVOCATION")], FRESH_INVOCATION),
       probe("E3n", { INVOCATION: "const INVOCATION = deepFrozen({ ...new FreshInvocation() });" }, [refused("INVOCATION")], FRESH_INVOCATION),
@@ -282,7 +319,7 @@ const PINS: readonly Pin[] = [
     id: "E4",
     quote: "FIELD_SPELLINGS through another side's member called as an instantiation expression",
     side: "FIELD_SPELLINGS",
-    quoted: E4_HEAD,
+    quoted: { form: "elided", head: E4_HEAD, elision: "...the three patterns...", tail: E4_TAIL },
     probes: [
       probe("E4", { FIELD_SPELLINGS: E4 }, [refused("FIELD_SPELLINGS")]),
       probe(
@@ -362,8 +399,10 @@ const PINS: readonly Pin[] = [
         { ROWS: `const ROWS = deepFrozen([{ id: "A", label: ${ROW_A_LABEL}, note: \`\${TRIGGER}\`, pins: [] }]);` },
         [refused("ROWS")],
       ),
-      probe("TRIGGER read through a member in row A's label", { ROWS: rowsWith(`\`(trigger, absent today) \${TRIGGER.slice(0, 0)}\``) }, [refused("ROWS")]),
-      probe("another side composed into row A's label", { ROWS: rowsWith(`\`(trigger, absent today) \${QUOTE}\``) }, [refused("ROWS")]),
+      probe("TRIGGER's member called in row A's label", { ROWS: rowsWith(`\`(trigger, absent today) \${TRIGGER.slice(0, 0)}\``) }, [refused("ROWS")]),
+      probe("TRIGGER's member read in row A's label", { ROWS: rowsWith(`\`(trigger, absent today) \${TRIGGER.length}\``) }, [refused("ROWS")]),
+      probe("another side composed alone into row A's label", { ROWS: rowsWith(`\`(trigger, absent today) \${QUOTE}\``) }, [refused("ROWS")]),
+      probe("another side composed beside TRIGGER into row A's label", { ROWS: rowsWith(`\`(trigger, absent today) \${TRIGGER}\${QUOTE}\``) }, [refused("ROWS")]),
     ],
   },
   {
@@ -377,7 +416,8 @@ const PINS: readonly Pin[] = [
       probe("a tagged template", { QUOTE: "const QUOTE = String.raw`Preserve endpoint`;" }, [refused("QUOTE")]),
       probe("an await", { QUOTE: 'const QUOTE = await "Preserve endpoint";' }, [refused("QUOTE")]),
       probe("an import() call", { QUOTE: 'const QUOTE = import("node:fs");' }, [refused("QUOTE")]),
-      probe("import.meta", { QUOTE_PIN: "const QUOTE_PIN = import.meta.url;" }, [refused("QUOTE_PIN")]),
+      probe("import.meta", { QUOTE_PIN: "const QUOTE_PIN = import.meta;" }, [refused("QUOTE_PIN")]),
+      probe("a member of import.meta", { QUOTE_PIN: "const QUOTE_PIN = import.meta.url;" }, [refused("QUOTE_PIN")]),
       probe("every side a call of a string's member", Object.fromEntries(IN_FILE_SIDES.map(side => [side, `const ${side} = "${side}".trim();`])), EVERY_SIDE.map(refused)),
     ],
   },
@@ -394,10 +434,9 @@ function pinOf(id: string): Pin {
   if (pin === undefined) throw new Error(`${id}: no such pin`);
   return pin;
 }
+/** A row of ROWS by id; a row this file lacks reads as an empty row, so ANCHOR's export reads, not this lookup, decide the case. */
 function rowOf(id: string): Row {
-  const row = ROWS.find(candidate => candidate.id === id);
-  if (row === undefined) throw new Error(`${id}: no such row`);
-  return row;
+  return ROWS.find(candidate => candidate.id === id) ?? { id, label: "", pins: [] };
 }
 /** bindingsRead() over a probe's source, read as PROBE_PATH. */
 function readingOf(source: string): string[] {
@@ -438,6 +477,34 @@ function membersOf(paragraph: string): { readonly id: string; readonly phrase: s
   }
   return members;
 }
+/** The declarations a refusal record quotes between apostrophes (QUOTATION), in the record's order. */
+function quotations(record: string): string[] {
+  return [...record.matchAll(QUOTATION)].map(match => match[1] ?? "");
+}
+/** The quotations a record writes between apostrophes for these pins' declarations, in pin order (a sentence quote writes none). */
+function recordedOf(pins: readonly string[]): string[] {
+  return pins.flatMap(id => {
+    const quoted = pinOf(id).quoted;
+    if (quoted === undefined || quoted.form === "sentence") return [];
+    return [quoted.form === "whole" ? quoted.text : `${quoted.head}${quoted.elision}${quoted.tail}`];
+  });
+}
+/** The one line of a probe's source that declares `side` by a const statement, or undefined when none or more than one does. */
+function declarationOf(source: string, side: string): string | undefined {
+  const lines = source.split("\n").filter(line => /^const ([A-Z_]+)\b/.exec(line)?.[1] === side);
+  return lines.length === 1 ? lines[0] : undefined;
+}
+/** A pin's member probe declares its side by the declaration the pin's quote holds: that line exactly, a line starting with the head
+ * and ending with the tail, or a line holding the accessor. */
+function expectDeclared(pin: Pin): void {
+  const quoted = pin.quoted;
+  if (quoted === undefined) return;
+  const declaration = declarationOf(pin.probes[0]?.source ?? "", pin.side ?? "");
+  const message = `${pin.id}: the member probe declares ${pin.side ?? "<none>"} by the declaration its pin holds`;
+  if (quoted.form === "whole") expect(declaration, message).toBe(quoted.text);
+  else if (quoted.form === "elided") expect([declaration?.startsWith(quoted.head), declaration?.endsWith(quoted.tail)], message).toEqual([true, true]);
+  else expect(declaration, message).toContain(quoted.text);
+}
 /** Where `quotes`, in order, fail to tile `body` with separator-only gaps: each missing quote and each gap that is not one. */
 function untiled(body: string, quotes: readonly string[]): string[] {
   const misses: string[] = [];
@@ -455,7 +522,7 @@ function untiled(body: string, quotes: readonly string[]): string[] {
   return misses;
 }
 
-describe("wb-26dh bindings census (test/helpers/ri-decision-provenance-echo-bindings.ts): sixteen pin cases, each holding literal bindingsRead() readings of planted sources - wb-5333's run-time-computed (X) and instantiation and heritage (E) members refused beside their named twins, and THE FORM's admitted and refused forms (K) - with SHAPE and ANCHOR", () => {
+describe("wb-26dh bindings census (test/helpers/ri-decision-provenance-echo-bindings.ts): sixteen pin cases, each holding literal bindingsRead() readings of planted sources - wb-5333's run-time-computed (X) and instantiation and heritage (E) members and the named twins of all but X4 refused, and THE FORM's admitted and refused forms (K) - with SHAPE and ANCHOR", () => {
   it("SHAPE: the rows, their pins and each pin's probe ids stay frozen", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["X:6", "E:4", "K:6"]);
     expect(PINS.map(pin => `${pin.id}:${pin.probes.map(entry => entry.id).join(",")}`)).toEqual([
@@ -473,13 +540,13 @@ describe("wb-26dh bindings census (test/helpers/ri-decision-provenance-echo-bind
       "K2:an array of strings,an array of regular expressions,an object keyed by an identifier and a string,objects and arrays nested,an array read through as const",
       "K3:a getter keyed by an identifier,a getter keyed by a string,a setter,a string-keyed method,a computed key,__proto__ as an identifier key,__proto__ as a string key,a shorthand property,a spread element,a spread property",
       "K4:deepFrozen over a string,deepFrozen over an array,deepFrozen over an object,deepFrozen over a regular expression,deepFrozen over an array read through as const,deepFrozen with two arguments,deepFrozen over deepFrozen,deepFrozen over a spread argument,another function over a string,a member function over a string",
-      "K5:row A's label composing TRIGGER,TRIGGER composed into another side,TRIGGER composed into row B's label,TRIGGER composed into a pin quote of row A,TRIGGER composed into another member of row A,TRIGGER read through a member in row A's label,another side composed into row A's label",
-      "K6:a call of a string's member,a call through an element access,an immediately invoked arrow function,a new expression,a tagged template,an await,an import() call,import.meta,every side a call of a string's member",
+      "K5:row A's label composing TRIGGER,TRIGGER composed into another side,TRIGGER composed into row B's label,TRIGGER composed into a pin quote of row A,TRIGGER composed into another member of row A,TRIGGER's member called in row A's label,TRIGGER's member read in row A's label,another side composed alone into row A's label,another side composed beside TRIGGER into row A's label",
+      "K6:a call of a string's member,a call through an element access,an immediately invoked arrow function,a new expression,a tagged template,an await,an import() call,import.meta,a member of import.meta,every side a call of a string's member",
     ]);
     expect(ROWS.flatMap(row => row.pins), "the rows hold every pin once, in pin order").toEqual(PINS.map(pin => pin.id));
   });
 
-  it("ANCHOR: the rows' labels, row X's and row E's pins with their quotes, sides and declarations, and row K's quotes are the ones wb-26dh's and wb-5333's tracker-export rows record", () => {
+  it("ANCHOR: the rows' labels, row X's pins with their quotes, sides and recorded declarations, row E's pins with their sides and recorded declarations, row K's quotes and the R-B256 fold are the ones wb-26dh's and wb-5333's tracker-export rows record", () => {
     const child = exportRow(CHILD);
     const parent = exportRow(PARENT);
     const rowX = rowOf("X");
@@ -496,11 +563,11 @@ describe("wb-26dh bindings census (test/helpers/ri-decision-provenance-echo-bind
     }
     const refusal3 = between(parent.notes, REFUSAL_3);
     expect(refusal3.length > 0, "wb-5333's notes hold refusal #3's record").toBe(true);
+    expect(quotations(refusal3), "refusal #3 quotes between apostrophes exactly the declarations row X's pins hold, in pin order").toEqual(recordedOf(rowX.pins));
     for (const id of rowX.pins) {
       const pin = pinOf(id);
-      if (pin.quoted === undefined) continue;
-      expect(refusal3, `${id}: refusal #3 quotes the member's declaration its pin holds`).toContain(pin.quoted);
-      expect(pin.probes[0]?.source, `${id}: the member probe holds that declaration`).toContain(pin.quoted);
+      if (pin.quoted?.form === "sentence") expect(between(refusal3, ACCESSOR), `${id}: refusal #3 writes the accessor its pin holds, between its sentence's words`).toBe(pin.quoted.text);
+      expectDeclared(pin);
     }
     const rowK = rowOf("K");
     expect(between(refusal3, CURE_LABEL), "refusal #3's CURE holds row K's label as cure (a)").toBe(rowK.label);
@@ -525,16 +592,17 @@ describe("wb-26dh bindings census (test/helpers/ri-decision-provenance-echo-bind
       named.map(member => member.id),
       "refusal #4's reason names exactly row E's pins, in order",
     ).toEqual(rowE.pins);
+    expect(quotations(refusal4), "refusal #4 quotes between apostrophes exactly the declarations row E's pins hold, in pin order").toEqual(recordedOf(rowE.pins));
     for (const member of named) {
       const pin = pinOf(member.id);
       expect(pin.side, `${pin.id}: the side refusal #4 names for it`).toBe(member.side);
       expect([pin.probes[0]?.id, pin.probes[0]?.reading], `${pin.id}: its member probe reads its side refused`).toEqual([pin.id, [refused(member.side)]]);
-      expect(refusal4, `${pin.id}: refusal #4 quotes the member's declaration its pin holds`).toContain(`'${pin.quoted ?? "<none>"}`);
-      expect(pin.probes[0]?.source, `${pin.id}: the member probe holds that declaration`).toContain(pin.quoted ?? "<none>");
+      expectDeclared(pin);
     }
-    const fold = between(child.notes, FOLD);
-    expect(fold, "wb-26dh's notes open with the R-B256 fold of the readNames family").toContain("READNAMES-NEVER-READS-EXPRESSION-WITH-TYPE-ARGUMENTS");
-    for (const side of new Set(named.map(member => member.side))) expect(fold, `the R-B256 fold's unmet slug names ${side}`).toContain(`-${side.replaceAll("_", "-")}-`);
+    const [head, slug, idem] = child.notes.split("\n");
+    expect([head, idem], "wb-26dh's notes open with the R-B256 fold: its head line first, its idem line third").toEqual([FOLD_HEAD, FOLD_IDEM]);
+    const sides = [...new Set(rowE.pins.map(id => pinOf(id).side ?? ""))].map(side => side.replaceAll("_", "-"));
+    expect(slug, "the fold's unmet slug, the notes' second line, is the readNames family's, naming row E's sides in pin order").toBe([SLUG.rules, SLUG.family, SLUG.words, ...sides, SLUG.count].join("-"));
   });
 
   for (const pin of PINS) {
