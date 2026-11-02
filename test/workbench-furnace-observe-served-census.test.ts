@@ -9,6 +9,11 @@
  * delivered census under the member while reading clean under trunk, or the member documented as a NAMED residual with the
  * claims narrowed to the proven subset; claims no wider than pins (rule 16 LEG 2, R514/R515/R668)." Cut #2 answers this bead's
  * own refusal #1 (O:1772): each claim word that refusal names is held by a case that reds under its gate probe (MEMBERS).
+ * Cut #3 answers refusal #2 (O:1825), whose record reads the class refusal #1 guarded (the served reader's own claim words)
+ * re-failing through new members, so rule 19(c) freezes it, in the ENUMERATE-THE-RESOLVABLE form: this header claims exactly
+ * the pinned set (THE PINNED READER SET, J2 PINNED FORMS and CLAIMS), every known member of the frozen class is pinned so the
+ * census reds under it (MEMBERS), a form no case writes is NOT CLAIMED, and RESIDUALS names each known escape within the
+ * claims with its pinned quiet row.
  *
  * THE READER is test/helpers/furnace-observe-served-reader.ts, whose header is the reading of record. In one line: pi's
  * extension loader keys an extension's tools by tool.name and the last registration wins, so the census reads the served tool
@@ -20,17 +25,12 @@
  *   order, each return value comes back, and the names read are exactly J0_NAMES, a property read of each value (a nameless
  *   object, a primitive and null read undefined, an anonymous function reads "", and a named function, an array's own name
  *   and an inherited name read theirs); a name behind a getter is read once per registration; a wrapper installed over the
- *   recorder that calls it reaches the stub through it, and the recorder reads the name the wrapper hands on.
+ *   recorder that calls it reaches the stub through it, and the recorder reads the name the wrapper hands on; and each name
+ *   is appended before its value reaches the stub (a stub that reads the recorder's list as it is called).
  * - J1 [registered]: target judgeRegistrations over the nine J1 fixtures; observed: each fixture's findings, exactly.
- * - J2 [grant, identity, data, error]: target judgeReply over the J2 fixtures; observed: each fixture's findings, exactly. The
- *   fixtures hold each word of the reader header's judgeReply reading: the result as an object (undefined, null, an array, an
- *   array or a function holding content and details are not), its keys (absent, extra, inherited, defined in another order,
- *   and non-enumerable or symbol-keyed properties that are not keys), details (an object and null are defined, and so is an
- *   inherited object: details is a property read), content (a string and an array-like object are not arrays; no element,
- *   two elements), the element as an object (a string, null, an array or a function holding type and text are not), its
- *   keys, its type (another word, another case, padded, a String wrapper, an array) and its text (longer, another case,
- *   padded, a prefix, a String wrapper, an array, absent), and the order of the findings with the points where a reading
- *   ends.
+ * - J2 [grant, identity, data, error]: target judgeReply over the 72 J2 fixtures; observed: each fixture's findings, exactly.
+ *   The forms the fixtures write are J2 PINNED FORMS below; the census claims the judge's reading at those forms and at no
+ *   other.
  * - S0 [registered, grant, identity, data, error]: target isServedTool over the S0 fixtures; observed: true for an object whose
  *   execute is a function (own, async, inherited, a class method, on a null-prototype object), false for an object without
  *   one or whose execute is a string or an object, and false for an array or a function holding a function execute, null,
@@ -64,8 +64,9 @@
  * - C5 [error]: the same boot's served execute called with { runId: "frn-run-census-failing" } while the fake plays the failing
  *   Run; observed: judgeReply(result, sanitizeWorkbenchText(M)) is [], where M is the message of the Error the census
  *   observer rejects the same Run with.
- * - A0 []: target sourceAnchors over the A0 fixtures (planted texts); observed: each fixture's literal count and reply sites,
- *   exactly. The fixtures hold each word of the reader header's sourceAnchors reading: the keys (an identifier and a string
+ * - A0 []: target sourceAnchors over the 28 A0 fixtures (planted texts); observed: each fixture's literal count and reply
+ *   sites, exactly. The fixtures write these forms of the reader header's sourceAnchors reading, and the census claims the
+ *   reading at them and at no other: the keys (an identifier and a string
  *   literal read, each also with an escape; a computed key, a shorthand, a method and a computed execute do not), the value
  *   (an escaped value reads cooked; a template literal, the value under parentheses, satisfies, as, a type assertion or a
  *   non-null assertion, an identifier, a concatenation, a call, and another case, a longer, shorter, padded or prefixed name
@@ -73,17 +74,54 @@
  *   nested), which execute (the first; no site without one), the callee (the identifier, escaped or called optionally,
  *   reads; under parentheses, a member, .call, new and a tagged template do not), the order (nested functions included; a
  *   call in another's arguments after it), and the argument (only the first; a string literal's cooked text; an identifier
- *   callee's cooked name; any other form's source text, "" when absent).
+ *   callee's cooked name; any other form's source text, without the space and comment before it, "" when absent).
  * - A1 []: target src/index.ts read by sourceAnchors; observed: one literal names furnace_observe, one registration row stands
  *   per such literal, and its execute's textResult sites are exactly the reply rows' sites in ROWS order.
  * - F1 []: target the tables; observed: the frozen shape (standing rule 16) below.
  * - J3 []: target ROWS and CASES; observed: each row's pins are exactly the cases naming it, and every case is registered once.
  *
+ * J2 PINNED FORMS (the judge's reading of each word, held by the J2 fixtures named; findings exactly as each fixture states):
+ * - the result as an object: undefined (not-an-object), null (result-null), a string (result-string), a number
+ *   (result-number), a boolean (result-boolean), a symbol (result-symbol), a bigint (result-bigint), an array of the element
+ *   (an-array), and an array (result-array-shaped) or a function (result-function) holding content and details each read
+ *   "result: not an object", alone.
+ * - its keys, the own enumerable string keys sorted and comma-joined, against content,details: details absent
+ *   (details-absent) and content absent (content-absent); an extra key sorting before content (result-key-before-content's
+ *   annotations, result-underscore-key's _zz, result-dollar-key's $zz, result-digit-key's 0, result-empty-key's empty
+ *   string), between content and details (result-key-between's data) and after details (extra-result-key's isError, and
+ *   result-key-defined-first's isError defined first, whose finding lists the keys sorted); an expected key in another case
+ *   (result-key-case's Content) and a padded copy beside it (result-key-padded); the expected keys defined in another order
+ *   (result-key-order), inherited (result-inherited-keys) and beside a non-enumerable and a symbol-keyed property
+ *   (unread-keys), which read no key finding, no keys and no key finding.
+ * - details, a property read: undefined alone reads no finding; an object (details-defined), null (details-null), an
+ *   inherited object (inherited-details), 0 (details-zero), the empty string (details-empty-string), false (details-false),
+ *   a function (details-function), a symbol (details-symbol), a bigint (details-bigint) and an inherited 0
+ *   (inherited-primitive-details) each read "details: defined".
+ * - content: a string (content-not-array), an array-like object (content-array-like), null (content-null) and an absent
+ *   content (content-absent) read "content: not an array"; no element (no-items) and two (two-items) read the count.
+ * - the element as an object: a string (item-not-object), null (item-null), an array (item-array) and a function
+ *   (item-function) holding type and text read "item: not an object".
+ * - its keys against text,type: an extra key sorting before text (item-extra-key's extra), between text and type
+ *   (item-key-between's title) and after type (item-key-after-type's zz, defined after type and text), an underscore-led key
+ *   (item-underscore-key's _zz) and an expected key in another case (item-key-case's Text); the expected keys defined in
+ *   another order (item-key-order), inherited (item-inherited-keys) and beside unread properties (unread-keys).
+ * - its type against "text", ===: another word (item-type), another case (type-case), padded after (type-padded) and
+ *   before (type-leading-padded), a longer word ending in text (type-ends-with), a String wrapper (type-wrapped) and an
+ *   array (type-array).
+ * - its text against the text, ===: longer (text-differs), another case (text-case), padded after (text-padded) and before
+ *   (text-leading-padded), a longer text ending in the text (text-ends-with), a prefix (text-prefix), a String wrapper
+ *   (text-wrapped), an array (text-array) and absent (text-absent).
+ * - the exact text (exact) reads no finding; the order of the findings and the points where a reading ends: all-findings,
+ *   ends-at-content, ends-at-count and ends-at-item, and every fixture above that reads two findings.
+ *
  * CLAIMS (each claims exactly the pinned set it names and no wider; its falsifiers are the cases named). "A result judgeReply
- * reads as textResult(X)" is a result judgeReply finds nothing in for the text X, exactly as the reader header words it (J2
- * holds each word): an object whose keys are content and details, details undefined, content an array of one object whose
- * keys are type and text, type === "text" and text === X. "Served" is the reader's isServedTool (S0): a tool that is not an
- * object there is refused, so the census reds on it.
+ * reads as textResult(X)" is a result judgeReply finds nothing in for the text X. The reader header words that reading (an
+ * object whose keys are content and details, details undefined, content an array of one object whose keys are type and text,
+ * type === "text" and text === X), and the census claims it at the J2 PINNED FORMS and no other: a reply that differs from
+ * textResult(X) in a listed form that reads a finding makes the calling case red, and the listed forms that read none (the
+ * expected keys defined in another order, unread properties) read clean, as the reading says. "Served" is the reader's
+ * isServedTool (S0): a tool S0 reads as not served (an array or a function holding a function execute, null, undefined and a
+ * string, and an object whose execute is absent, a string or an object) is refused, so the census reds on it.
  * - registered: the pinned boot, booted once without the furnace:inspect grant and once with it, its settings read back, hands
  *   the harness's registerTool exactly one tool named furnace_observe (the name the recorder reads once, when the tool is
  *   handed, === "furnace_observe"), so the harness serves that tool under the name (C0; J0, J1, S0, B0, K1).
@@ -99,6 +137,12 @@
  *   being the message of the census observer's rejection, FAILING_MESSAGE (C5; J2, S0, B0, K1, I1).
  *
  * NOT CLAIMED (scope sentences; no residual semantics; no follow-up bead):
+ * - A reply that differs from textResult(X) only in a form J2 PINNED FORMS does not list (another extra-key spelling or
+ *   position, another details value, another spelling of the type or the text) is NOT CLAIMED by this census: the reader
+ *   header describes how the judge reads it, and no case holds that reading.
+ * - Each other reader at a form its case does not write (a registered value J0 does not hand, a received list J1 does not
+ *   judge, a tools-Map value S0 does not test, a factory B0 does not plant, a src text A0 does not read) is NOT CLAIMED by
+ *   this census: the reader header describes those readings, and the census claims them at the fixtures and plants named.
  * - A served reply's properties that judgeReply does not read are NOT CLAIMED by this census: its non-enumerable,
  *   symbol-keyed and inherited properties other than the four the reading reads (details, content, type and text).
  * - A tool whose name reads differently on different reads (a name getter) is NOT CLAIMED by this census: the recorder reads
@@ -117,8 +161,11 @@
  * - A served execute that tells this census's calls from others is NOT CLAIMED by this census.
  * - Tools other than furnace_observe are NOT CLAIMED by this census: their names are read only to count furnace_observe.
  *
- * RESIDUALS: none named at this cut. The claims are bounded by the pinned boots and calls above, and no escape family within
- * them is known.
+ * RESIDUALS: none named at this cut, and none is known within the claims. Every known member of the frozen class (MEMBERS:
+ * refusal #2's four with their witnesses, and its riding F3's two) reds the census, and so does every member of the cutting
+ * seat's own one-edit battery over the judge, the recorder and the served predicate (the delivery note's SM3 line) but the
+ * two EQUIVALENT ones MEMBERS names. A newly found escape within the claims is a residual-list addition here, with its
+ * pinned quiet row.
  *
  * MEMBERS (the bead's members of record; each src plant is applied to src/index.ts in the cutting seat's worktree and the
  * census run on it, src restored by sha256 after; the counts are the seat's receipts in the delivery note):
@@ -142,6 +189,15 @@
  *   GP24-H08-ITEM-ARRAY-SPREAD (and its first form GP24-H08-ITEM-ARRAY) red J2; U2's GP24-C01-C0-GRANT-ARM reds C0; U3's
  *   GP24-H07-SERVES-ARRAY reds S0; U4's GP24-H03-ANC-AS-VALUE, GP24-H04-ANC-STRKEY-RAW, GP24-H05-ANC-PAREN-CALLEE and
  *   GP24-H13-ANC-ARG-RAW red A0; and the riding finding F3's GP24-H06-ANC-POSTORDER reds A0.
+ * - this bead's refusal #2 (O:1825; each gate member, witness and record-only probe read as data from the gate-prep-3 PREP
+ *   archive and applied verbatim to these bytes, the witnesses to src/index.ts's textResult): U1's GP3-M01-RESULT-KEYS-SUFFIX,
+ *   GP3-M02-ITEM-KEYS-PREFIX and GP3-M04-KEYS-SKIP-UNDERSCORE and U2's GP3-M03-DETAILS-OBJECT-ONLY red J2
+ *   (result-key-before-content, item-key-after-type, result-underscore-key and details-zero hold their witnesses' forms:
+ *   GW01's annotations key, GW02's zz element key, GW04's _zz key and GW03's details 0); each witness reds C1-C5 under the
+ *   delivered census and J2 under its paired mutant. The riding F3's GP3-X05-ANCHOR-OTHER-FULLTEXT reds A0 (other-trivia) and
+ *   GP3-X08-FINDING-KEYS-UNSORTED reds J2 (result-key-defined-first). GP3-X02-BOOT-CTX-DEFAULT-CWD reads clean and is
+ *   EQUIVALENT by construction: hermeticDir chdirs into the sandbox, so ctx()'s default cwd is the sandbox. The seat's SM3
+ *   member that dedupes the keys reads clean and is EQUIVALENT by construction: Object.keys returns each own key once.
  *
  * FROZEN SHAPE (standing rule 16): F1 pins ROWS as `${id}:${pins.length}` and its clauses, the case ids, SCENARIO_IDS,
  * J0_NAMES, the ids of the J1, J2 and A0 fixtures, and the S0 fixtures as `${id}:${served}`, as literals. A1 holds the rows to
@@ -237,13 +293,13 @@ interface Case {
   readonly title: string;
 }
 const CASES = {
-  J0: { rows: ["registered"], title: "the recorder hands every value on unchanged and in order, returns what registerTool returns, and reads each name once, as a property read does" },
-  J1: { rows: ["registered"], title: "the registration judge counts only names === furnace_observe: case variants, longer, shorter, padded and non-string names are other names" },
+  J0: { rows: ["registered"], title: "over J0's values the recorder reads each name once, as a property read does, before it hands the value on unchanged and in order, and returns what registerTool returns" },
+  J1: { rows: ["registered"], title: "over J1's received lists the registration judge counts only names === furnace_observe: case variants, longer, shorter, padded and non-string names are other names" },
   J2: {
     rows: ["grant", "identity", "data", "error"],
-    title: "the reply judge finds nothing only in an object whose own enumerable keys, details, content, element, type and text are textResult(text)'s, compared ===, and names each difference in its order",
+    title: "at each J2 PINNED FORM the reply judge reads textResult(text)'s own enumerable keys, details, content, element, type and text, compared ===, and names each difference in its order",
   },
-  S0: { rows: ["registered", "grant", "identity", "data", "error"], title: "the served-tool predicate holds exactly for an object whose execute, own or inherited, is a function: an array, a function or a primitive is not served" },
+  S0: { rows: ["registered", "grant", "identity", "data", "error"], title: "over S0's values the served-tool predicate holds for an object whose execute, own or inherited, is a function, and not for an array, a function or a primitive" },
   B0: {
     rows: ["registered", "grant", "identity", "data", "error"],
     title: "the boot's own order, over two planted factories: settings written, the recorder in front of registerTool from the factory through the awaited session_start, serves and call as the header reads them",
@@ -259,7 +315,7 @@ const CASES = {
   C3: { rows: ["data"], title: "for the complete Run its reply reads as textResult of the sanitized text of the census observer's reading" },
   C4: { rows: ["data"], title: "for the partial Run its reply reads as textResult of the sanitized text of the census observer's partial reading" },
   C5: { rows: ["error"], title: "for the failing Run its reply reads as textResult of the sanitized text of the census observer's error message" },
-  A0: { rows: [], title: "the anchor reader reads each key, value, literal, execute, callee, order and argument form its header names, and no other" },
+  A0: { rows: [], title: "the anchor reader reads each key, value, literal, execute, callee, order and argument form A0 writes as the census header lists it" },
   A1: { rows: [], title: "outside anchors: src/index.ts's furnace_observe literal and its execute's four textResult sites, one per reply row" },
   F1: { rows: [], title: "FROZEN SHAPE (standing rule 16): the rows, the cases, the scenarios and the judges' and readers' fixtures" },
   J3: { rows: [], title: "the judged set: each row's pins are exactly the cases naming it, and every case is registered once" },
@@ -376,6 +432,46 @@ const J2_FIXTURES: readonly { readonly id: string; readonly result: unknown; rea
     findings: ["result keys: content,details,isError", "details: defined", "content: 2 items"],
   },
   { id: "ends-at-item", result: { content: [null], details: {} }, findings: ["details: defined", "item: not an object"] },
+  // Refusal #2 (O:1825), U1: an extra result key at each sorted position, before content (GP3-M01 with GW01's annotations, and
+  // GP3-M04 with GW04's _zz), between content and details, and after details defined first (GP3-X08: the finding lists the
+  // sorted keys); a result key in each spelling below (an underscore, a dollar sign, a digit, the empty string, another case
+  // and a padded copy of an expected key); and content absent.
+  { id: "result-key-before-content", result: { annotations: [], content: [item({})], details: undefined }, findings: ["result keys: annotations,content,details"] },
+  { id: "result-underscore-key", result: { _zz: true, content: [item({})], details: undefined }, findings: ["result keys: _zz,content,details"] },
+  { id: "result-key-between", result: { content: [item({})], data: 1, details: undefined }, findings: ["result keys: content,data,details"] },
+  { id: "result-key-defined-first", result: { isError: true, content: [item({})], details: undefined }, findings: ["result keys: content,details,isError"] },
+  { id: "result-dollar-key", result: { $zz: 1, content: [item({})], details: undefined }, findings: ["result keys: $zz,content,details"] },
+  { id: "result-digit-key", result: { 0: 1, content: [item({})], details: undefined }, findings: ["result keys: 0,content,details"] },
+  { id: "result-empty-key", result: { "": 1, content: [item({})], details: undefined }, findings: ["result keys: ,content,details"] },
+  { id: "result-key-case", result: { Content: [item({})], details: undefined }, findings: ["result keys: Content,details", "content: not an array"] },
+  { id: "result-key-padded", result: { "content ": 1, content: [item({})], details: undefined }, findings: ["result keys: content,content ,details"] },
+  { id: "content-absent", result: { details: undefined }, findings: ["result keys: details", "content: not an array"] },
+  { id: "content-null", result: { content: null, details: undefined }, findings: ["content: not an array"] },
+  // U1: an extra element key after type (GP3-M02 with GW02's zz, defined after type and text) and between text and type, an
+  // underscore-led element key (GP3-M04), and an element key in another case.
+  { id: "item-key-after-type", result: { content: [item({ zz: true })], details: undefined }, findings: ["item keys: text,type,zz"] },
+  { id: "item-key-between", result: { content: [item({ title: "x" })], details: undefined }, findings: ["item keys: text,title,type"] },
+  { id: "item-underscore-key", result: { content: [item({ _zz: true })], details: undefined }, findings: ["item keys: _zz,text,type"] },
+  { id: "item-key-case", result: { content: [{ Text: T, type: "text" }], details: undefined }, findings: ["item keys: Text,type", "item text: undefined"] },
+  // U2: details defined as each primitive kind, as a function and as an inherited primitive (GP3-M03 with GW03's 0): only
+  // undefined is not a finding.
+  { id: "details-zero", result: { content: [item({})], details: 0 }, findings: ["details: defined"] },
+  { id: "details-empty-string", result: { content: [item({})], details: "" }, findings: ["details: defined"] },
+  { id: "details-false", result: { content: [item({})], details: false }, findings: ["details: defined"] },
+  { id: "details-function", result: { content: [item({})], details: () => undefined }, findings: ["details: defined"] },
+  { id: "details-symbol", result: { content: [item({})], details: Symbol("zz-details") }, findings: ["details: defined"] },
+  { id: "details-bigint", result: { content: [item({})], details: 0n }, findings: ["details: defined"] },
+  { id: "inherited-primitive-details", result: Object.assign(Object.create({ details: 0 }), { content: [item({})] }), findings: ["result keys: content", "details: defined"] },
+  // The text and the type with something before them, and a result of each primitive kind.
+  { id: "text-leading-padded", result: { content: [item({ text: ` ${T}` })], details: undefined }, findings: [`item text: ${JSON.stringify(` ${T}`)}`] },
+  { id: "text-ends-with", result: { content: [item({ text: `x${T}` })], details: undefined }, findings: [`item text: ${JSON.stringify(`x${T}`)}`] },
+  { id: "type-leading-padded", result: { content: [item({ type: " text" })], details: undefined }, findings: ['item type: " text"'] },
+  { id: "type-ends-with", result: { content: [item({ type: "plaintext" })], details: undefined }, findings: ['item type: "plaintext"'] },
+  { id: "result-string", result: T, findings: ["result: not an object"] },
+  { id: "result-number", result: 0, findings: ["result: not an object"] },
+  { id: "result-boolean", result: false, findings: ["result: not an object"] },
+  { id: "result-symbol", result: Symbol("zz-result"), findings: ["result: not an object"] },
+  { id: "result-bigint", result: 0n, findings: ["result: not an object"] },
 ];
 
 const run = (): undefined => undefined;
@@ -505,6 +601,8 @@ const A0_FIXTURES: readonly { readonly id: string; readonly text: string; readon
     literals: 1,
     sites: [lit("cooked"), call("sanitize"), lit("first"), other('("p")'), other('"a" as string'), other("(g)(r)")],
   },
+  // Any other form's source text has no leading trivia: a space and a comment before the argument are not read (GP3-X05).
+  { id: "other-trivia", text: 'x({ name: "furnace_observe", execute: async () => textResult( /* note */ msg) });', literals: 1, sites: [other("msg")] },
 ];
 
 /** Boots the extension with the fake furnace first on PATH, runs read, and restores both. */
@@ -555,6 +653,17 @@ describe("wb-g20x: the furnace_observe served census", () => {
     stub.registerTool = (tool: unknown): unknown => bound({ name: "zz-wrapped", wrapped: tool });
     expect(stub.registerTool({ name: SERVED_NAME }), "the wrapper reaches registerTool through the recorder").toBe(13);
     expect([received.at(-1), handed.length], "which reads the name the wrapper hands on").toStrictEqual(["zz-wrapped", 13]);
+    // The recorder appends a name before it hands the value on: a stub that reads the recorder's list as it is called.
+    const lengths: number[] = [];
+    let listed: readonly unknown[] = [];
+    const ordered = { registerTool: (_tool: unknown): unknown => lengths.push(listed.length) };
+    listed = recordRegistrations(ordered);
+    ordered.registerTool({ name: "zz-first" });
+    ordered.registerTool({ name: "zz-second" });
+    expect([lengths, [...listed]], "each name is appended before its value reaches registerTool").toStrictEqual([
+      [1, 2],
+      ["zz-first", "zz-second"],
+    ]);
   });
 
   pinned("J1", () => {
@@ -799,6 +908,37 @@ describe("wb-g20x: the furnace_observe served census", () => {
       "ends-at-content",
       "ends-at-count",
       "ends-at-item",
+      "result-key-before-content",
+      "result-underscore-key",
+      "result-key-between",
+      "result-key-defined-first",
+      "result-dollar-key",
+      "result-digit-key",
+      "result-empty-key",
+      "result-key-case",
+      "result-key-padded",
+      "content-absent",
+      "content-null",
+      "item-key-after-type",
+      "item-key-between",
+      "item-underscore-key",
+      "item-key-case",
+      "details-zero",
+      "details-empty-string",
+      "details-false",
+      "details-function",
+      "details-symbol",
+      "details-bigint",
+      "inherited-primitive-details",
+      "text-leading-padded",
+      "text-ends-with",
+      "type-leading-padded",
+      "type-ends-with",
+      "result-string",
+      "result-number",
+      "result-boolean",
+      "result-symbol",
+      "result-bigint",
     ]);
     expect(S0_FIXTURES.map(fixture => `${fixture.id}:${fixture.served}`)).toStrictEqual([
       "own-execute:true",
@@ -843,6 +983,7 @@ describe("wb-g20x: the furnace_observe served census", () => {
       "callee-forms",
       "nested-in-argument",
       "argument-forms",
+      "other-trivia",
     ]);
   });
 

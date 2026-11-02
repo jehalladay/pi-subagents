@@ -11,13 +11,15 @@
  * census's outside anchor, never a reading of what is served.
  *
  * AN OBJECT, in every reading below, is a value whose typeof is "object" and which is neither null nor an array (isFields): an
- * array, a function, null and every primitive are not objects here, whatever properties they hold.
+ * array, a function, null and every primitive are not objects here, whatever properties they hold. The census holds this at
+ * the values its J2 and S0 fixtures write (a primitive of each kind among them).
  *
- * THE READINGS, exactly:
+ * THE READINGS, each as the code reads it. The census claims each reading only at the forms its cases write (its header's
+ * PINNED READER SET and J2 PINNED FORMS list them); a form no case writes is NOT CLAIMED there, whatever is described here.
  * - recordRegistrations(pi): installed on a harness pi before the extension factory runs, it puts a recorder in front of
  *   pi.registerTool. For each value it is handed, in the order handed, the recorder reads the value's `name` once, as a
  *   property read of that value does (pi's loader reads `tool.name`): an object's, an array's or a function's name property,
- *   own or inherited, a primitive's through its wrapper, and undefined for null and undefined. It appends that name and hands
+ *   own or inherited, a primitive's through its wrapper, and undefined for null and undefined. It appends that name, then hands
  *   the value on to the registerTool it replaced, returning what that returns. A registerTool installed later over it that
  *   calls it (a wrapper of it bound to the pi, J0) reaches the harness through it, so the recorder reads what that wrapper
  *   hands on.
@@ -31,7 +33,8 @@
  *   property reads. === is strict, so a String wrapper or an array of the expected text or type differs. Otherwise its
  *   findings, in this order: `result: not an object` (alone), `result keys: <keys>`, `details: defined`, then one of
  *   `content: not an array`, `content: <n> items` and `item: not an object` (each ending the reading), then `item keys:
- *   <keys>`, `item type: <JSON>` and `item text: <JSON>`, <JSON> being JSON.stringify of the value read.
+ *   <keys>`, `item type: <JSON>` and `item text: <JSON>`, <JSON> being JSON.stringify of the value read. The census holds
+ *   this reading at its J2 PINNED FORMS.
  * - isServedTool(value): whether value is an object whose execute, a property read (own or inherited), is a function.
  * - bootServed(grants, factory): the pinned boot, in this order: hermeticDir writes the settings { workflowsEnabled: true,
  *   workbench: { workflowAgentBackend: "claude", capabilityGrants: grants } } to <the sandbox>/.pi/subagents.json; makePi;
