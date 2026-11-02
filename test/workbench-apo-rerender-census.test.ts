@@ -302,6 +302,32 @@
  * map, forms and refused uses read the same under this reader as under final cut #4's (COVERAGE, NON-RENDER, RENDER
  * TOUCHES and FORMS).
  *
+ * WB-PY8N (the R694 follow-up of landing 770, gate cmd_b58e78b66cdd: F6 leads, F7 and F8 ride; record precision, in the
+ * R-B60 posture: no reading of the helper is edited). WB-97AH's shape stands: 0 rows added or removed, 0 pins removed or
+ * changed; one anchor row is added (INTO ANY, below), and the R-THIS-BINDING label's into-any clause, its RESIDUALS
+ * sentence, DISPATCH's exception item and the WB-VGRI RESPIN 2 paragraph's F3 clause are restated to what the checker
+ * instantiates. F6 (the into-any clause said the untyped Function interface's bind, call and apply type the value any at
+ * every page it pins, true of those members' declarations - thisArg: any, argArray: any[] - while the call the checker
+ * instantiates types the value any at 3 of the 13 pages): the clause states the declarations, then the two typings page by
+ * page - any where that member is itself applied or called (Function.prototype.bind by apply, Function.prototype.call bound
+ * by bind and then called, Reflect.apply given Function.prototype.bind), and the value's own type where it is handed the
+ * function and the value by call (Function.prototype.bind, call and apply each so handed: that call's rest parameter is
+ * inferred from the value, as at a function's own call) - and every page still reads quiet as pinned. INTO ANY holds the
+ * into-any pages (R-THIS-BINDING's cases written in that form) to its table, each page's typing to the pinned typescript's
+ * checker (an anchor outside this file and its roster) and the two labels to that split, with the three written-type-argument
+ * pages, which the checker types by the this parameter's type (R-THIS-BINDING pins them refused since WB-97AH), as its
+ * control. F7 (CT6-v, the coordinated hollow of R-THIS-BINDING from every literal, survives: the 6ze.39 class) stays
+ * disclosed in NOT CLAIMED. F8 (the written-index reading at an ordinary call's argument and at an argument after the this
+ * argument with a written rest type argument, against R-STRUCTURAL-STAND-IN's and DISPATCH's landed fail-closed claims) is
+ * not cured here: the claims it names are trunk-landed, this cut restates neither R-STRUCTURAL-STAND-IN's label nor
+ * DISPATCH's fail-closed clause, and bead wb-021.10 is its home. Re-cut after refusal #1 (gate run g10-gate-s187: U1, the
+ * cut known-dirty against landing 817, wb-97ah; ruling R-B333): trunk 2e5a6d8 is merged into the branch, the conflicting
+ * hunks of the three files are resolved to WB-97AH's landed text, and the two label restatements are re-applied on top of
+ * it - DISPATCH's exception item before WB-97AH's member-call receiver and hole clause, R-THIS-BINDING's into-any clause
+ * before WB-97AH's closed-hole sentence; on the merged tree INTO ANY reads the same thirteen pages and typings (WB-97AH's
+ * twenty-five pages add no page written in the into-any form). No reading of the helper is edited by this cut, so src's
+ * live reach map, forms and refused uses read as at WB-97AH.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
  * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
