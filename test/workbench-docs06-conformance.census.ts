@@ -54,6 +54,7 @@ import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner } from "vitest";
 import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure } from "./helpers/census.js";
+import { moduleImports, propertyWrites, spelledAnywhere } from "./helpers/docs06-leg-readers.js";
 
 type Tier = "default-gate" | "live-tier";
 interface Pin {
@@ -1287,8 +1288,9 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  *   named expect, not that identifier: it is NOT CLAIMED by this census (the gate's G-CTX-TESTERS changes no reading,
  *   so -t 'AC2 bullet 1' exits 0 under it), and its coverage is wb-mcoj's;
  * - named residual, with its pinned quiet row: this file spells no prototype route (prototype, __proto__, getPrototypeOf,
- *   setPrototypeOf, defineProperty, defineProperties) as an identifier, a member name or any string, and the quiet row
- *   reds the moment one is written. Cut #3 said here that the code the guarded body calls without naming a binding - the
+ *   setPrototypeOf, defineProperty, defineProperties) as an identifier, a member name included, or as a string or
+ *   no-substitution template literal, and the quiet row reds the moment one is written so (a template with a
+ *   substitution is NOT CLAIMED). Cut #3 said here that the code the guarded body calls without naming a binding - the
  *   matcher behind toEqual, the array's sort and spread, localeCompare - can be tampered with, beyond expect's own members
  *   and the global object, "only through a prototype". Refusal #3 falsified it (U2 (a), R717 (3)): T-CHAI overwrote the
  *   matcher through chai's public plugin API from a static import (import { Assertion } from "chai", then
@@ -1333,15 +1335,38 @@ describe("R687 (wb-9rto): the AC2 call-site hook is registered with its backstop
  * a key, an object's own keys or descriptors enumerated through such a name included; a builtin replaced by an
  * assignment to its global name; an edit of FROZEN_JUDGED_SHAPE's own declaration, which the leg does not read (the AC1
  * rows and the rule 16 battery judge it in a full run); and an edit that also changes what the leg computes - one of its
- * readers, records or digests, its refusal, or a builtin its readers run on - which the full run's rows judge (the
+ * readers (from the restatement, the shared module's moduleImports, propertyWrites and spelledAnywhere among them),
+ * records or digests, its refusal, or a builtin its readers run on - which the full run's rows judge (the
  * fail-closed leg row, the R717 rows and the hollowing batteries), never collection.
- * The final cut (wb-ouo3 refusal #4, M:44680; the rule 19 structural exit R-B258, whose child wb-mcoj carries the member
- * coverage) narrows the reader claims to their pins, so these are NOT CLAIMED by this census either: what the readers of
- * the modules loaded, the property writes and the uses of expect output on a form their rows do not plant - one import
- * declaration binding a default together with named bindings or a namespace (G-MI-DEFAULT-NAMED, G-MI-DEFAULT-NS), an
- * export * as <name> from a module (G-MI-NSEXPORT), an object pattern property with a computed key (G-PW-COMPUTED-KEY)
- * and any other form or combination their rows do not plant - and the test context's own expect, a member named
- * expect (G-CTX-TESTERS, under which -t 'AC2 bullet 1' exits 0). Each of those readers' docs names its planted forms.
+ * The final cut (wb-ouo3 refusal #4, M:44680; the rule 19 structural exit R-B258) narrowed the reader claims to their
+ * pins and deferred the member coverage to the child wb-mcoj. Refusal #5 (O:1738) took the dependency inversion R-B309,
+ * and wb-mcoj landed (landing 840) the readers of the modules loaded and the property writes as the shared module
+ * test/helpers/docs06-leg-readers.ts - moduleImports, and propertyWrites composing spelledAnywhere over WRITER_ROUTE,
+ * cut #5's code byte for byte - with its own census, test/workbench-docs06-leg-readers-census.test.ts, which pins that
+ * code and those readers' readings of its plants. The restatement (this cut, the parent's re-cut over its landed
+ * carrier) rides that module: this file imports moduleImports, propertyWrites and spelledAnywhere from it, and its
+ * modules-loaded record holds that load. Through those readers this census claims exactly the readings its own rows
+ * take: of this file's text (its loads as the record; no member write and no writer API; no prototype or reflective
+ * route spelled), of the "the modules loaded" row's loads.ts, the "the property writes" row's writes.ts and the two
+ * route rows' texts, and of each planted member's text through the leg (the members those readers refuse: T-CHAI,
+ * T-CHAI-NARROW and C-VITEST-SUITE by the modules loaded; T-DESC-SORT and C-MEMBER-WRITE by the property writes;
+ * C-PROTOTYPE by the prototype routes spelled; T-DESC-SORT and C-OWN-NAMES by the reflective routes spelled). CLAIMED
+ * here as well, by the R717 planted-member rows: the leg refuses each gate twin of refusals #4 and #5 that wb-mcoj's
+ * roster (test/fixtures/docs06-leg-readers-roster.json) plants, each planted on this file's text in memory and refused
+ * naming exactly the reading it changes - G-TWIN-TS-NAMED, G-TWIN2-NS, GP9-TWIN-NODE-ALIAS2, GP9-TWIN-NODE-ALIAS and
+ * GP9-TWIN-NODE-TYPEONLY (one line of this file's import block edited: the modules loaded) and G-TWIN2-PW (a member
+ * written through a computed-key object pattern in the AC2 case: the property writes); and the restatement row holds
+ * that member set to the roster's twins, in the roster's order, and reads each twin's text through the shared readers
+ * as exactly its twin entry in place of this file's line (TWIN_READINGS: for each twin, the entry wb-mcoj's census pins
+ * in its reading of that twin). Falsifiers: the gate narrowing each twin witnessed (G-MI-DEFAULT-NAMED,
+ * G-MI-DEFAULT-NS, GP9-MI-NODE-ALIAS, GP9-MI-NODE-TYPEONLY, G-PW-COMPUTED-KEY), applied to the shared module, hides its
+ * twin from the leg and reds that twin's row and the restatement row; a twin plant swapped for another edit, or a twin
+ * member removed from every literal of this file, reds the restatement row. NOT CLAIMED by this census, as at the final
+ * cut: what the readers of the modules loaded, the property writes and the uses of expect output on any other text - a
+ * form or combination neither their rows nor the planted members plant, G-MI-NSEXPORT's export * as <name> included
+ * (the shared module's readings of wb-mcoj's plants are that census's claims, not this one's) - and the test context's
+ * own expect, a member named expect (G-CTX-TESTERS, under which -t 'AC2 bullet 1' exits 0; wb-mcoj's named residual
+ * R-CTX-EXPECT, whose two quiet rows read this file).
  */
 /** The file-scope consts a hook registration of this file may pass as its timeout, by name, with the value vitest would stamp. */
 const HOOK_TIMEOUT_CONSTS: Readonly<Record<string, number>> = { CALL_SITE_HOOK_BACKSTOP_MS };
@@ -1480,127 +1505,20 @@ function namedAnywhere(file: string, text: string, names: readonly string[]): re
  * object, "only through a prototype"; refusal #3's T-CHAI (chai's Assertion.overwriteMethod from a static import) and
  * T-DESC-SORT (Array's prototype reached through Object.getOwnPropertyDescriptors) falsified it (U2 (a), R717 (3)), and
  * cut #4 reads the modules loaded, the reflective routes spelled and the property writes beside it. PROTOTYPE_ROUTE names
- * the routes as a pattern, never as strings, so the list spells none of them; spelledAnywhere lists every identifier,
- * member name and string of any kind that spells one.
+ * the routes as a pattern, never as strings, so the list spells none of them; spelledAnywhere (the shared module's,
+ * test/helpers/docs06-leg-readers.ts, from the restatement) lists every identifier, a member name included, and every
+ * string or no-substitution template literal that spells one (a template with a substitution is NOT CLAIMED).
  */
 const PROTOTYPE_ROUTE = /^(prototype|__proto__|getPrototypeOf|setPrototypeOf|defineProperty|defineProperties)$/;
-function spelledAnywhere(file: string, text: string, pattern: RegExp): readonly string[] {
-  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const out: string[] = [];
-  const visit = (node: ts.Node): void => {
-    if ((ts.isIdentifier(node) || ts.isStringLiteralLike(node)) && pattern.test(node.text)) {
-      const { line, character } = sf.getLineAndCharacterOfPosition(node.getStart(sf));
-      out.push(`${node.text} at ${line + 1}:${character + 1}${ts.isIdentifier(node) ? "" : " (a string)"}`);
-    }
-    ts.forEachChild(node, visit);
-  };
-  visit(sf);
-  return out;
-}
-/**
- * R717 (wb-ouo3 cut #4, the modules-loaded class; narrowed to its pins by the final cut, wb-ouo3 refusal #4 U1 (a)-(b)
- * and F3, R-B258): a source's module loads in the forms its rows plant - the "the modules loaded" row's loads.ts lines
- * (import a from "a", import * as b from "b", import { c, d as e } from "c", import type { F } from "f" and import "g",
- * each as "<module> | <what it binds>"; export * from "h" and export { i } from "i", as "<module> | re-exports <its
- * clause as written>"; import("j"), require("k") and import l = require("l"), as "<the code as written> | loaded at run
- * time"; a local export and another call read as nothing), this file's own imports (MODULE_IMPORTS_OF_RECORD: a default
- * alone, and named bindings alone, inline type-only ones included) and the planted members' named imports of chai
- * (T-CHAI) and vitest/suite (C-VITEST-SUITE). vitestImports reads the vitest family alone, so chai's Assertion imported
- * beside it (refusal #3 T-CHAI, with Assertion.overwriteMethod("toEqual", ...) at module scope: no expect member, no
- * global and no prototype route written) read as nothing at cut #3; this reading names that load. What it outputs on
- * any other form - one declaration binding a default together with named bindings (G-MI-DEFAULT-NAMED) or a namespace
- * (G-MI-DEFAULT-NS), an export * as <name> (G-MI-NSEXPORT), or another form or combination - is NOT CLAIMED by this
- * census (no row plants it; wb-mcoj carries the coverage).
- */
-function moduleImports(file: string, text: string): readonly string[] {
-  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const out: string[] = [];
-  const binds = (node: ts.ImportDeclaration): string => {
-    const clause = node.importClause;
-    const bound: string[] = [];
-    if (clause?.name !== undefined) bound.push(`default as ${clause.name.text}`);
-    const bindings = clause?.namedBindings;
-    if (bindings !== undefined && ts.isNamespaceImport(bindings)) bound.push(`* as ${bindings.name.text}`);
-    if (bindings !== undefined && ts.isNamedImports(bindings)) {
-      for (const element of bindings.elements) bound.push(`${element.isTypeOnly ? "type " : ""}${element.propertyName === undefined ? element.name.text : `${element.propertyName.getText(sf)} as ${element.name.text}`}`);
-    }
-    return `${clause?.isTypeOnly === true ? "type " : ""}${bound.join(", ") || "(nothing bound)"}`;
-  };
-  const visit = (node: ts.Node): void => {
-    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined) {
-      const from = ts.isStringLiteral(node.moduleSpecifier) ? node.moduleSpecifier.text : node.moduleSpecifier.getText(sf);
-      out.push(`${from} | ${ts.isImportDeclaration(node) ? binds(node) : `re-exports ${node.exportClause?.getText(sf) ?? "*"}`}`);
-    } else if (ts.isImportEqualsDeclaration(node) || (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require")))) {
-      out.push(`${node.getText(sf)} | loaded at run time`);
-    }
-    ts.forEachChild(node, visit);
-  };
-  visit(sf);
-  return out;
-}
 /**
  * R717 (wb-ouo3 cut #4, the reflective-routes class; refusal #3 U3): the reflective routes this census reads - the APIs
  * that reach a property through its descriptor, through the list of an object's own keys or through its accessor, so a
  * prototype is reached with its key never written (refusal #3 T-DESC-SORT: Array's prototype found among the values of
  * Object.getOwnPropertyDescriptors(Array)). A pattern, never strings, so the list spells none of them; spelledAnywhere
- * reads each as an identifier, a member name or a string of any kind.
+ * (the shared module's) reads each as an identifier, a member name included, or as a string or no-substitution template
+ * literal (a template with a substitution is NOT CLAIMED).
  */
 const REFLECTIVE_ROUTE = /^(getOwnPropertyDescriptor|getOwnPropertyDescriptors|getOwnPropertyNames|getOwnPropertySymbols|ownKeys|__lookupGetter__|__lookupSetter__)$/;
-/**
- * R717 (wb-ouo3 cut #4, the property-writes class): the writer APIs this census reads - builtins that write a property
- * with no member write in the source (Object.assign, Reflect.set, Reflect.deleteProperty and the legacy accessor
- * definers; defineProperty, defineProperties and setPrototypeOf are PROTOTYPE_ROUTE's). A pattern, never strings.
- */
-const WRITER_ROUTE = /^(assign|set|deleteProperty|__defineGetter__|__defineSetter__)$/;
-/**
- * R717 (wb-ouo3 cut #4, the property-writes class; narrowed to its pins by the final cut, wb-ouo3 refusal #4 U1 (c),
- * R-B258): a source's member writes in the forms its rows plant, each as "<the write> <the target as written> at
- * <line:column>" - the "the property writes" row's writes.ts lines (a.b = 1, a[k] += 1, a.c ??= 2 and a.x ^= 1: the
- * first and last assignment operators and two between; delete a.d; a.e++, --a[f] and (a.y)++; [a.g] = list,
- * ({ h: a.i } = source), (a.p) = 1, [...a.q] = list, ({ ...a.r } = source), (a.s as number) = 1, (<number>a.t) = 1,
- * a.u! = 1, (a.v satisfies number) = 1 and [a.w = 1] = list, the last read twice - the pattern's write and its default's
- * own; for (a.j of list) {} and for (a.z in source) {}) and the planted members' assignments to a property access
- * (T-DESC-SORT's arrayMethods.sort = ..., C-MEMBER-WRITE's box.value = 1) - then each writer API WRITER_ROUTE names,
- * spelled as the row spells it (Object.assign, Reflect.set, Reflect.deleteProperty, a.__defineGetter__ and
- * a.__defineSetter__); a name write, a name update and a longer name read as nothing. This file makes none of those
- * writes and names no such API, so a write of those forms in its text reads here whatever route reached the object
- * (refusal #3 T-DESC-SORT's arrayMethods.sort; cut #3's T-SORT and T-PROTO wrote their tamper the same way). What it
- * outputs on any other form - an object pattern property with a computed key (G-PW-COMPUTED-KEY), another operator,
- * target, wrapper, pattern or nesting, or a combination the rows do not plant - is NOT CLAIMED by this census (no row
- * plants it; wb-mcoj carries the coverage).
- */
-function propertyWrites(file: string, text: string): readonly string[] {
-  const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const out: string[] = [];
-  const place = (node: ts.Node): string => {
-    const { line, character } = sf.getLineAndCharacterOfPosition(node.getStart(sf));
-    return `${line + 1}:${character + 1}`;
-  };
-  const isMember = (node: ts.Node): boolean => ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node);
-  const targets = (node: ts.Node): readonly ts.Node[] => {
-    if (isMember(node)) return [node];
-    if (ts.isParenthesizedExpression(node) || ts.isSpreadElement(node) || ts.isSpreadAssignment(node) || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node) || ts.isSatisfiesExpression(node)) return targets(node.expression);
-    if (ts.isArrayLiteralExpression(node)) return node.elements.flatMap(targets);
-    if (ts.isObjectLiteralExpression(node)) return node.properties.flatMap(targets);
-    if (ts.isPropertyAssignment(node)) return targets(node.initializer);
-    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) return targets(node.left);
-    return [];
-  };
-  const visit = (node: ts.Node): void => {
-    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
-      for (const target of targets(node.left)) out.push(`an assignment to ${target.getText(sf)} at ${place(node)}`);
-    } else if (ts.isDeleteExpression(node)) {
-      out.push(`a delete of ${node.expression.getText(sf)} at ${place(node)}`);
-    } else if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) {
-      for (const target of targets(node.operand)) out.push(`an update of ${target.getText(sf)} at ${place(node)}`);
-    } else if ((ts.isForInStatement(node) || ts.isForOfStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) {
-      for (const target of targets(node.initializer)) out.push(`a loop head writing ${target.getText(sf)} at ${place(node)}`);
-    }
-    ts.forEachChild(node, visit);
-  };
-  visit(sf);
-  return [...out, ...spelledAnywhere(file, text, WRITER_ROUTE).map(entry => `a writer named ${entry}`)];
-}
 const R687_SUITE = "R687 (wb-9rto): the AC2 call-site hook is registered with its backstop, read from this file's AST and the runner's record";
 const R692_SUITE = "R692 (wb-ouo3): the held-hook census - every suite walked through vitest's record, bound to the roster, and every guard call placed";
 /**
@@ -1647,7 +1565,11 @@ const RUNNER_READS_OF_RECORD: readonly string[] = [`TestRunner.getSuiteHooks | a
 const sha256 = (text: string): string => createHash("sha256").update(text).digest("hex");
 /** "<what> | <text>" as "<what> | sha256 <the text's digest>". */
 const digestLine = (line: string): string => `${line.slice(0, line.indexOf(" | "))} | sha256 ${sha256(line.slice(line.indexOf(" | ") + 3))}`;
-/** R717 (wb-ouo3 cut #4): every module this file loads, with what it binds (vitestImports reads the vitest family alone). */
+/**
+ * R717 (wb-ouo3 cut #4; narrowed by the restatement, refusal #5 F1): this file's loads as moduleImports reads them, with
+ * what each binds - from the restatement (R-B309), the shared readers' module among them (vitestImports reads the vitest
+ * family alone).
+ */
 const MODULE_IMPORTS_OF_RECORD: readonly string[] = [
   "node:crypto | createHash",
   "node:fs | readFileSync",
@@ -1656,6 +1578,7 @@ const MODULE_IMPORTS_OF_RECORD: readonly string[] = [
   "typescript | default as ts",
   "vitest | afterAll, describe, expect, it, type RunnerTask, type RunnerTestFile, type RunnerTestSuite, TestRunner",
   "./helpers/census.js | type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, docsSection, judge, type PinVerdict, type RenderedBlock, sectionMatches, sourceStructure",
+  "./helpers/docs06-leg-readers.js | moduleImports, propertyWrites, spelledAnywhere",
 ];
 /** R717 (wb-ouo3 cut #4): the call-site registration's own text, byte for byte, as the guard it calls and the text's sha256. */
 const CALL_SITE_TEXT_OF_RECORD: readonly string[] = ["CALL_SITE_HOOK | sha256 910f7973da000f5515b4d701b33180cbbd2999fabcb2586df70c58bfb3c45c5d"];
@@ -2063,7 +1986,7 @@ describe("R692 (wb-ouo3): the held-hook census - every suite walked through vite
     ]);
   });
 
-  it("named residual, pinned quiet (refusal #2): this file spells no prototype route, so the matcher, the sort and spread and localeCompare the call-site check calls are the runtime's own, and the reader sees each spelling as written", () => {
+  it("named residual, pinned quiet (refusal #2): this file spells no prototype route, so the matcher, the sort and spread and localeCompare the call-site check calls are the runtime's own, and the reader reads each spelling its row plants as written", () => {
     expect(spelledAnywhere(SELF, readRepo(SELF), PROTOTYPE_ROUTE), "prototype, __proto__, getPrototypeOf, setPrototypeOf, defineProperty or defineProperties, spelled anywhere in this file").toEqual([]);
     const routes = [
       "Object.getPrototypeOf(expect(0)).toEqual = () => undefined;",
@@ -2196,7 +2119,34 @@ const JUDGING_COUNT = "JUDGING_CASES = 11;";
 const CHAI_IMPORT = 'import { Assertion } from "chai";';
 const CHAI_OVERWRITE = 'Assertion.overwriteMethod("toEqual", () => function (this: unknown) { return this; });';
 const NARROWED = both(replacingFirst(AC2_EACH, "it.each(JUDGED.slice(0, 4))("), replacingFirst(JUDGING_COUNT, "JUDGING_CASES = 10;"));
-/** R717 (wb-ouo3 cut #4): the planted members - refusal #3's members (M:13504), the died respin seat's W-BODY-RETURN-BARE, and one or more members of every other class. */
+/**
+ * The restatement (R-B309): the code the gate twins of refusals #4 and #5 edit, each a fragment whose first occurrence is
+ * the code it names (this file's typescript import, its node:fs import and the AC2 case's push).
+ */
+const TS_IMPORT = 'import ts from "typescript";';
+const FS_IMPORT = 'import { readFileSync } from "node:fs";';
+const AC2_PUSH = "    AC2_RAN.push(judgedKey({ row, half }));";
+/** The restatement (R-B309): wb-mcoj's roster, the out-of-file anchor of the twin planted members, and the id prefix it gives a gate twin. */
+const MCOJ_ROSTER = "test/fixtures/docs06-leg-readers-roster.json";
+const TWIN_ID = /^(G|GP9)-TWIN/;
+/**
+ * The restatement (R-B309): each twin planted member's text read through the shared readers against this file's own,
+ * as "<id>: <the entries it adds> <- <the entries it drops>" (a write without its position) - for each twin, the entry
+ * wb-mcoj's census pins in its reading of that twin, in place of this file's line.
+ */
+const TWIN_READINGS: readonly string[] = [
+  "G-TWIN-TS-NAMED: typescript | default as ts, type Node <- typescript | default as ts",
+  "G-TWIN2-NS: typescript | default as ts, * as tstx <- typescript | default as ts",
+  "GP9-TWIN-NODE-ALIAS2: node:fs | existsSync as exists, readFileSync <- node:fs | readFileSync",
+  "GP9-TWIN-NODE-ALIAS: node:fs | readFileSync, readFileSync as readText <- node:fs | readFileSync",
+  "GP9-TWIN-NODE-TYPEONLY: node:fs | type Dirent, readFileSync <- node:fs | readFileSync",
+  "G-TWIN2-PW: an assignment to sink.length <- (nothing)",
+];
+/**
+ * R717 (wb-ouo3 cut #4): the planted members - refusal #3's members (M:13504), the died respin seat's W-BODY-RETURN-BARE,
+ * and one or more members of every other class; from the restatement (R-B309), the six gate twins of refusals #4 and #5
+ * that wb-mcoj's roster plants, last.
+ */
 const PLANTED_MEMBERS: readonly PlantedMember[] = [
   {
     id: "W-SWALLOW-T",
@@ -2333,6 +2283,42 @@ const PLANTED_MEMBERS: readonly PlantedMember[] = [
     plant: appending("const performance = { now: (): number => 0 };"),
     refusedBy: ["the guard's names"],
   },
+  {
+    id: "G-TWIN-TS-NAMED",
+    what: "the restatement (refusal #4 U1 (a)'s twin, wb-mcoj's MI-DEFAULT-NAMED plant): a type-only named binding added to this file's default import of typescript (1 edit in the import block)",
+    plant: replacingFirst(TS_IMPORT, 'import ts, { type Node } from "typescript";'),
+    refusedBy: ["the modules loaded"],
+  },
+  {
+    id: "G-TWIN2-NS",
+    what: "the restatement (refusal #4 U1 (b)'s twin, wb-mcoj's MI-DEFAULT-NS plant): a namespace binding added to this file's default import of typescript (1 edit in the import block)",
+    plant: replacingFirst(TS_IMPORT, 'import ts, * as tstx from "typescript";'),
+    refusedBy: ["the modules loaded"],
+  },
+  {
+    id: "GP9-TWIN-NODE-ALIAS2",
+    what: "the restatement (refusal #5 U1's twin, wb-mcoj's MI-NODE-ALIAS plant): an aliased specifier of a second export added to this file's node:fs import (1 edit in the import block)",
+    plant: replacingFirst(FS_IMPORT, 'import { existsSync as exists, readFileSync } from "node:fs";'),
+    refusedBy: ["the modules loaded"],
+  },
+  {
+    id: "GP9-TWIN-NODE-ALIAS",
+    what: "the restatement (refusal #5 U1's second twin, wb-mcoj's MI-NODE-ALIAS plant): readFileSync bound again under an alias in this file's node:fs import (1 edit in the import block)",
+    plant: replacingFirst(FS_IMPORT, 'import { readFileSync, readFileSync as readText } from "node:fs";'),
+    refusedBy: ["the modules loaded"],
+  },
+  {
+    id: "GP9-TWIN-NODE-TYPEONLY",
+    what: "the restatement (refusal #5 U2's twin, wb-mcoj's MI-NODE-TYPEONLY plant): an inline type-only specifier added to this file's node:fs import (1 edit in the import block)",
+    plant: replacingFirst(FS_IMPORT, 'import { type Dirent, readFileSync } from "node:fs";'),
+    refusedBy: ["the modules loaded"],
+  },
+  {
+    id: "G-TWIN2-PW",
+    what: "the restatement (refusal #4 U1 (c)'s twin as the gate wrote it; wb-mcoj's PW-COMPUTED-KEY row plants the same write as G-TWIN2-PW): a member written through an object pattern property with a computed key, in the AC2 case after its push (2 statements added)",
+    plant: replacingFirst(AC2_PUSH, `${AC2_PUSH}\n    const sink: unknown[] = [];\n    ({ ["length"]: sink.length } = { length: 0 });`),
+    refusedBy: ["the property writes"],
+  },
 ];
 /** R717 frozen shape (rule 16): every class with the number of planted members proving it, in the leg's order. */
 const TAMPER_CLASSES_SHAPE: readonly string[] = [
@@ -2348,9 +2334,9 @@ const TAMPER_CLASSES_SHAPE: readonly string[] = [
   "the runner reads:1",
   "the run-time escapes spelled:1",
   "the prototype routes spelled:1",
-  "the modules loaded:3",
+  "the modules loaded:8",
   "the reflective routes spelled:2",
-  "the property writes:2",
+  "the property writes:3",
   "the call-site text:2",
   "the guard's declaration:4",
   "the guard's names:3",
@@ -2378,6 +2364,12 @@ const PLANTED_MEMBERS_SHAPE: readonly string[] = [
   "C-MEMBER-WRITE:1",
   "C-SECOND-GUARD:1",
   "C-SHADOW-BUILTIN:1",
+  "G-TWIN-TS-NAMED:1",
+  "G-TWIN2-NS:1",
+  "GP9-TWIN-NODE-ALIAS2:1",
+  "GP9-TWIN-NODE-ALIAS:1",
+  "GP9-TWIN-NODE-TYPEONLY:1",
+  "G-TWIN2-PW:1",
 ];
 
 describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed leg's readings, each proven by members planted on this file's text", () => {
@@ -2404,6 +2396,23 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
       PLANTED_MEMBERS.map(member => `${member.id}:${member.refusedBy.length}`),
       "member:readings",
     ).toEqual([...PLANTED_MEMBERS_SHAPE]);
+  });
+
+  it("the restatement (R-B309): the gate twins wb-mcoj's roster plants are exactly this file's twin planted members, in the roster's order, each refused by the reading of its roster table, and each twin's text reads through the shared readers as exactly its twin entry in place of this file's line", () => {
+    const roster = JSON.parse(readRepo(MCOJ_ROSTER)) as { readonly rows: readonly { readonly table: string; readonly plants: readonly { readonly id: string }[] }[] };
+    const reading = (table: string): string => (table === "MODULES" ? "the modules loaded" : table === "WRITES" ? "the property writes" : `(a twin of the ${table} table)`);
+    const twins = roster.rows.flatMap(row => row.plants.filter(plant => TWIN_ID.test(plant.id)).map(plant => `${plant.id}:${reading(row.table)}`));
+    expect(twins.length, "the gate twins the roster plants").toBeGreaterThan(0);
+    const members = PLANTED_MEMBERS.filter(member => TWIN_ID.test(member.id));
+    expect(members.map(member => `${member.id}:${member.refusedBy.join(", ")}`), "this file's twin planted members, each with the readings that refuse it").toEqual(twins);
+    const text = readRepo(SELF);
+    const own = [...moduleImports(SELF, text), ...propertyWrites(SELF, text).map(entry => entry.replace(/ at \d+:\d+$/, ""))];
+    const changes = members.map(member => {
+      const planted = member.plant(text);
+      const read = [...moduleImports(SELF, planted), ...propertyWrites(SELF, planted).map(entry => entry.replace(/ at \d+:\d+$/, ""))];
+      return `${member.id}: ${read.filter(entry => !own.includes(entry)).join(" ;; ")} <- ${own.filter(entry => !read.includes(entry)).join(" ;; ") || "(nothing)"}`;
+    });
+    expect(changes, "each twin's text through the shared readers: the entries it adds <- the entries it drops").toEqual([...TWIN_READINGS]);
   });
 
   it.each(PLANTED_MEMBERS)("R717 planted member $id: the leg refuses this file's text with the member planted in memory, naming exactly the readings it changes", LEG, member => {
@@ -2447,7 +2456,7 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
     ]);
   });
 
-  it("the reflective routes (R717, refusal #3 U3): this file spells no reflective route, and the reader sees each spelling as written", () => {
+  it("the reflective routes (R717, refusal #3 U3): this file spells no reflective route, and the reader reads each spelling its row plants as written", () => {
     expect(spelledAnywhere(SELF, readRepo(SELF), REFLECTIVE_ROUTE), "getOwnPropertyDescriptor(s), getOwnPropertyNames, getOwnPropertySymbols, ownKeys, __lookupGetter__ or __lookupSetter__, spelled anywhere in this file").toEqual([]);
     const routes = [
       "const a = Object.values(Object.getOwnPropertyDescriptors(Array));",
@@ -2593,9 +2602,10 @@ describe("R717 (wb-ouo3 cut #4): the enumerated tamper classes - the fail-closed
  * TAMPER_CLASSES_OF_RECORD. Cut #3 said here that every run exits 1 on any difference; refusal #3's W-SWALLOW-T, T-CHAI,
  * T-DESC-SORT and W-BODY-SKIP-T changed no reading read here at cut #3 and exited 0 under the filter (U2 (b)), so the
  * exit 1 is claimed for the enumerated classes only. The comparisons index the arrays directly; the readers run on the
- * runtime's own builtins and on this file's own readers and records, so an edit that also changes what the leg computes
- * (a builtin its readers run on, a reader, a record or the refusal) is NOT CLAIMED at collection: the full run's rows
- * judge it.
+ * runtime's own builtins, on this file's own readers and records and, from the restatement (R-B309), on the shared
+ * module's moduleImports, propertyWrites and spelledAnywhere (test/helpers/docs06-leg-readers.ts), so an edit that also
+ * changes what the leg computes (a builtin its readers run on, a reader - the shared module's included - a record or the
+ * refusal) is NOT CLAIMED at collection: the full run's rows judge it.
  */
 function callSiteBindingBroken(text: string = readRepo(SELF)): readonly string[] {
   const broken: string[] = [];
