@@ -1,6 +1,9 @@
 /**
- * wb-ts6.2 (HXFS-PI-R6, program-triage-2026-10-18), the until-then leg: the HX mutation 'Verified' census, cut #5 - the mechanical
- * restatement over wb-ts6.3's landed readers (test/helpers/hx-mutation-verified-readers.ts) that orchestrator ruling R-B145 binds.
+ * wb-ts6.2 (HXFS-PI-R6, program-triage-2026-10-18), the until-then leg: the HX mutation 'Verified' census, cut #6 - cut #5, the
+ * mechanical restatement over wb-ts6.3's landed readers (test/helpers/hx-mutation-verified-readers.ts) that orchestrator ruling
+ * R-B145 binds, restated under orchestrator ruling R-B346 after refusal #5: C3 draws the verified glyphs in both glyph tiers the
+ * two layouts select between, at two render input sets (one of them each layout's default width), and its glyph clause names
+ * the render input sets it draws (CUT HISTORY).
  * Statement (bead title, as the tracker export holds it, rendered in 7-bit ASCII: its two em dashes as ' - '): "Before any Pi
  * hyperunix capability with a non-read effect class registers (gating artifact: the same Pi HX WRITE surface wb-tz2.8 gates), its
  * reconcile/receipt path shall read an HX mutation 'Verified' postcondition as filesystem-only - never as import/build/semantic
@@ -29,7 +32,8 @@
  * census reds by design: re-measure, and the armed acceptance applies.
  *
  * CLAIM SCOPE (cut #5, the mechanical restatement over wb-ts6.3's landed readers that orchestrator ruling R-B145 binds after
- * refusal #4 on the FINAL fail-closed-core cut #4 of ruling R-B112; wb-ts6.3 landed at landing 810): wherever the landed helper
+ * refusal #4 on the FINAL fail-closed-core cut #4 of ruling R-B112, as cut #6 restates it under R-B346; wb-ts6.3 landed at landing
+ * 810): wherever the landed helper
  * test/helpers/hx-mutation-verified-readers.ts carries a reader, this census reads through it, imported unedited - the src walk
  * (entriesBelow, entryKind), C1's resolution (resolvesIntoSdk, packageNameOf), C2's member readers (sdkDeclarations, bindingKey,
  * assignmentPatternMembers), B2's and Q3's registration reader (registrationReferences), C4's string reader (entryStrings) and
@@ -50,13 +54,15 @@
  * the landed helper's provenance); A1-A3 (the adapter's readings over SHAPES and the products, the invariant, the Verified
  * vocabulary) and A4 (the adapter's src import closure and its environment reads); B1 (the guard's bytes and titles), B2 (the
  * registrations' descriptors, the provider's exports and every src reference to its registration exports) and B3 (the default
- * tier's file list); C1 (SDK sites), C2 (SDK member references and the destructure exclusion), C3 (the evidence projection and its
- * glyphs), C4 (hx words) and C5 (the src walk); Q1-Q16 (the residuals' quiet rows); and the task-tree case (every registered test,
+ * tier's file list); C1 (SDK sites), C2 (SDK member references and the destructure exclusion), C3 (the evidence projection, each
+ * layout's glyph-tier selection and its glyphs, drawn in both glyph tiers at two render input sets), C4 (hx words) and C5 (the src
+ * walk); Q1-Q16 (the residuals' quiet rows); and the task-tree case (every registered test,
  * in roster order, in run mode, ran, and every pin reached its witness).
  *
  * MEASURED (cut 1 by seat ws-04, run g10-work-s125, on trunk 061c2ac; respin 1 by seat ws-05, run g10-work-s138, on trunk 04123dc;
  * respin 2 by seat ws-03, run g10-work-s141, on trunk aa95f43; cut #4 by seat ws-02, run g10-work-s146, on trunk cdf5484; cut #5
- * by seat ws-01, run g10-work-s185, on trunk e23b18e; every fact here is a pinned witness): the vendored @hyperunix/sdk 0.1.0
+ * by seat ws-01, run g10-work-s185, on trunk e23b18e; cut #6 by seat ws-04, run g10-work-s189, on trunk a9a10bb; every fact here
+ * is a pinned witness): the vendored @hyperunix/sdk 0.1.0
  * declares 13 ExecutionStatusKind members, two of them mutation outcomes (mutation-rejected, mutation-partial), and no Verified
  * kind; its client's PATH lookup spawns hx.exe on win32 and hx elsewhere; its receipt wire form carries a coherent Verified
  * receipt in six fields (state, terminal_event, journal, verification, verified, recovery), and its index exports four wire-form
@@ -74,8 +80,11 @@
  * src/index.ts, one import.meta.resolve in src/workbench/hosts/local-detached.ts) and at no other C1 site, bound site or consumer,
  * reference 23 SDK members and bindings, all in that provider module, none of the mutation or argv class, and write no destructure
  * member C2's exclusion refuses. nativeEvidence projects HX metadata for hyperunix.find only (domainStatus is the result's kind,
- * verbatim); drawn for every declared kind, the workflow card's and the dialog's verified glyph light on none ("verified", which
- * no declared kind spells, lights both), and src names domainStatus at 25 places. No word of a string in a src module is an hx
+ * verbatim); in each of the two layouts the glyphs binding of the function's own statements selects the glyph tier by the ascii
+ * option (input.ascii ? ASCII_* : UNICODE_*), and,
+ * drawn for every declared kind in both tiers at C3's two render input sets, the workflow card's and the dialog's verified glyph light
+ * on none - each draws "?" - ("verified", which no declared kind spells, lights both, each tier's own tick), and src names
+ * domainStatus at 25 places. No word of a string in a src module is an hx
  * spelling; src launches forge, git and rf by literal command.
  *
  * REPRESENT, as the owner filing grounds it: a Pi path represents Verified when an HX mutation outcome - a receipt, its
@@ -219,8 +228,20 @@
  *    of the wire form's six Verified-carrying fields (the key or its JSON value spells verified: state, terminal_event, journal,
  *    verification, verified, recovery) beside its other fields (respin 2, refusal #2 U3); the receipt is the SDK's own:
  *    receiptToJson of the receipt receiptFromJson recomputes from RECEIPT_SEED, coherent and verified. The verified glyphs judged
- *    by drawing them (respin 1, refusal #1 U3): the workflow card (layoutWorkflowCard) and the dialog (layoutWorkflowDialog) over
- *    a done, current, evidenced node for every declared kind light no tick, and the control "verified" lights both; every src
+ *    by drawing them (respin 1, refusal #1 U3; cut #6, refusal #5 U1: both tiers): the workflow card (layoutWorkflowCard) and the
+ *    dialog (layoutWorkflowDialog), each drawn in both glyph tiers RENDER_TIERS names - unicode (the ascii option unset, the tier
+ *    refusal #5 U1 reads src's card and dialog calls drawing) and ascii (ascii: true), the two each layout's glyphs binding selects
+ *    between (its initializer in the layout function's own statements, read by AST: input.ascii ? ASCII_GLYPHS : UNICODE_GLYPHS in
+ *    layoutWorkflowCard, input.ascii ? ASCII_DIALOG_GLYPHS : UNICODE_DIALOG_GLYPHS in layoutWorkflowDialog; a glyph set chosen
+ *    anywhere else in a layout is read only through the drawn glyphs) - at each of C3's two render input sets
+ *    (RENDER_INPUTS, both at the clock 1000: wide, the card at width 240 and the dialog at width 200, and default-width, the width
+ *    option unset, each layout's own default; the dialog from its initial state; the task RENDER_TASK; the progress that one node
+ *    alone), over a done, current, evidenced hyperunix.find node (RENDER_LABEL) for every declared kind show the node's glyph,
+ *    light no tick of either tier (each layout module's own unicode and ASCII tick glyph) and draw the glyph C3's witness pins,
+ *    and the control "verified" lights both, each with its tier's own tick; a glyph conditioned on another render input - another
+ *    clock, another width, the task, progress (another entry beside the node), a node field other than its domainStatus, the
+ *    dialog's state or another dialog option (spinnerFrame, terminalRows, bodyRows, available) - is NOT CLAIMED by this census;
+ *    every src
  *    place naming domainStatus (an identifier, a member, a binding, an element key, a property key) with its consuming context,
  *    pinned exactly (a new place naming domainStatus - a helper call's argument, a membership test, a destructure - reds C3 for
  *    re-measure; a read that never names it is R-STATUS-UNNAMED's); every src comparison of a domainStatus read with a literal (an
@@ -334,7 +355,11 @@
  * assignment destructures are read (bindingKey, assignmentPatternMembers) and C2's exclusion narrowed to the members those readers
  * name none for; refusal #3 U4's environment axis is read by A4 (importClosure, environmentReads) and R-AMBIENT-CONDITION narrowed
  * to the rest; refusal #3 U1 and U2 stay refused by C5, now through the landed walk; refusal #4 F1 is stated as B3's environment
- * scope, F2's root-gated registration joins R-ENV-REGISTRATION (Q14) and F3 is narrowed (array elements NOT CLAIMED).
+ * scope, F2's root-gated registration joins R-ENV-REGISTRATION (Q14) and F3 is narrowed (array elements NOT CLAIMED). Cut #6
+ * (R-B346's restatement, after refusal #5 on cut #5) cures refusal #5 U1 (C3's glyph reader drew the ASCII tier only, which, by the
+ * refusal #5 record, no src caller selects): C3 draws both glyph tiers (RENDER_TIERS) and reads each layout's tier selection, and
+ * its glyph clause names
+ * the two render input sets it draws (RENDER_INPUTS, one of them each layout's default width; another render input NOT CLAIMED).
  *
  * Display paths added: none. Test-only: no scratch is allocated and nothing is written (the virtual modules live in memory); src,
  * the SDK's shipped declarations and client, @types/node's module declarations (through the program), one landed test file, the
@@ -350,8 +375,14 @@ import { receiptFromJson, receiptToJson } from "@hyperunix/sdk";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { createVitest, parseCLI, resolveConfig } from "vitest/node";
-import { ASCII_GLYPHS, layoutWorkflowCard, plainWorkflowCardLines } from "../src/ui/workflow-card.js";
-import { ASCII_DIALOG_GLYPHS, initialWorkflowDialogState, layoutWorkflowDialog, plainWorkflowDialogLines } from "../src/ui/workflow-dialog.js";
+import { ASCII_GLYPHS, layoutWorkflowCard, plainWorkflowCardLines, UNICODE_GLYPHS } from "../src/ui/workflow-card.js";
+import {
+  ASCII_DIALOG_GLYPHS,
+  initialWorkflowDialogState,
+  layoutWorkflowDialog,
+  plainWorkflowDialogLines,
+  UNICODE_DIALOG_GLYPHS,
+} from "../src/ui/workflow-dialog.js";
 import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import {
   HYPERUNIX_CONSUMED_FIELDS,
@@ -1797,6 +1828,36 @@ const RENDER_CONTROLS: readonly string[] = ["verified"];
 /** The node C3 draws: a done, current, evidenced hyperunix.find node, so the domainStatus is the verified glyph's one open gate. */
 const RENDER_LABEL = "census-node";
 const RENDER_TASK = { status: "completed" as const, startTime: 0, endTime: 1_000 };
+/** A glyph tier C3 draws (cut #6, refusal #5 U1): the layout option that selects it and its verified ticks, each layout module's own. */
+interface RenderTier {
+  readonly tier: string;
+  readonly options: { readonly ascii?: true };
+  readonly ticks: { readonly card: string; readonly dialog: string };
+}
+/** The glyph tiers C3 draws (cut #6, refusal #5 U1): unicode, the ascii option unset (the tier refusal #5 U1 reads src's card and
+ * dialog calls drawing), and ascii (ascii: true) - the two each layout selects between (C3 reads the selections, RENDER_LAYOUTS). */
+const RENDER_TIERS: readonly RenderTier[] = [
+  { tier: "unicode", options: {}, ticks: { card: UNICODE_GLYPHS.tick, dialog: UNICODE_DIALOG_GLYPHS.tick } },
+  { tier: "ascii", options: { ascii: true }, ticks: { card: ASCII_GLYPHS.tick, dialog: ASCII_DIALOG_GLYPHS.tick } },
+];
+/** A render input set C3 draws beside the node and the tier (cut #6): each layout's clock and width (none: the layout's default). */
+interface RenderInputs {
+  readonly inputs: string;
+  readonly card: { readonly now: number; readonly width?: number };
+  readonly dialog: { readonly now: number; readonly width?: number };
+}
+/** C3's render input sets (cut #6: the sets its glyph clause names): wide (the card at width 240, the dialog at 200) and
+ * default-width (the width option unset: each layout's own default), both at the clock 1000; the dialog draws from its initial
+ * state (initialWorkflowDialogState) and both layouts draw the task RENDER_TASK. */
+const RENDER_INPUTS: readonly RenderInputs[] = [
+  { inputs: "wide", card: { now: 1_000, width: 240 }, dialog: { now: 1_000, width: 200 } },
+  { inputs: "default-width", card: { now: 1_000 }, dialog: { now: 1_000 } },
+];
+/** The layouts C3 draws, by module and function: C3 reads the initializer of each one's glyphs binding, its glyph-tier selection (cut #6). */
+const RENDER_LAYOUTS: readonly (readonly [string, string])[] = [
+  ["src/ui/workflow-card.ts", "layoutWorkflowCard"],
+  ["src/ui/workflow-dialog.ts", "layoutWorkflowDialog"],
+];
 /** Whether an expression reads domainStatus: a member, an element key or a name (a destructured binding, a parameter), through
  * parentheses, ??, a non-null assertion or a cast. */
 function readsStatus(expression: ts.Expression): boolean {
@@ -1896,18 +1957,44 @@ function glyphOf(lines: readonly string[]): string {
   const line = lines.find(text => text.includes(` ${RENDER_LABEL} `));
   return line === undefined ? "none" : (new RegExp(`(\\S+) ${RENDER_LABEL} `).exec(line)?.[1] ?? "none");
 }
-/** The workflow card's and the dialog's glyph for a node of one domainStatus, drawn by the real layouts (ASCII tier). */
-function drawnGlyphs(domainStatus: string): { readonly card: string; readonly dialog: string } {
+/** The workflow card's and the dialog's glyph for a node of one domainStatus, drawn by the real layouts in one glyph tier at one of
+ * C3's render input sets (cut #6, refusal #5 U1: C3 draws every tier RENDER_TIERS names, not the ASCII tier alone). */
+function drawnGlyphs(domainStatus: string, tier: RenderTier, inputs: RenderInputs): { readonly card: string; readonly dialog: string } {
   const progress = [renderedNode(domainStatus)];
-  const card = plainWorkflowCardLines(layoutWorkflowCard({ progress, task: RENDER_TASK, now: 1_000, width: 240, ascii: true }));
+  const card = plainWorkflowCardLines(layoutWorkflowCard({ progress, task: RENDER_TASK, ...inputs.card, ...tier.options }));
   const dialog = plainWorkflowDialogLines(
-    layoutWorkflowDialog({ progress, task: RENDER_TASK, state: initialWorkflowDialogState(), ascii: true, width: 200, now: 1_000 }),
+    layoutWorkflowDialog({ progress, task: RENDER_TASK, state: initialWorkflowDialogState(), ...inputs.dialog, ...tier.options }),
   );
   return { card: glyphOf(card), dialog: glyphOf(dialog) };
 }
-/** Whether a drawn pair lights the verified tick (each module's own ASCII tick glyph). */
+/** Every verified tick glyph C3 reads: the card module's and the dialog module's tick of each tier RENDER_TIERS names. */
+const TICKS: ReadonlySet<string> = new Set(RENDER_TIERS.flatMap(tier => [tier.ticks.card, tier.ticks.dialog]));
+/** Whether a drawn pair lights a verified tick (cut #6: a tick of any tier, so a layout drawing another tier's tick lights too). */
 function lights(drawn: { readonly card: string; readonly dialog: string }): boolean {
-  return drawn.card === ASCII_GLYPHS.tick || drawn.dialog === ASCII_DIALOG_GLYPHS.tick;
+  return TICKS.has(drawn.card) || TICKS.has(drawn.dialog);
+}
+/** Each layout's glyph-tier selection (cut #6), read as module|function|the initializer text of each glyphs binding in the function's
+ * own statements ("none" when it has none). */
+function tierSelectionsIn(layouts: readonly (readonly [string, string])[]): string[] {
+  return layouts.map(([module, layout]) => {
+    const source = srcSource(module);
+    const found: string[] = [];
+    const visit = (node: ts.Node): void => {
+      if (ts.isFunctionDeclaration(node) && node.name?.text === layout && node.body !== undefined) {
+        for (const statement of node.body.statements) {
+          if (!ts.isVariableStatement(statement)) continue;
+          for (const declaration of statement.declarationList.declarations) {
+            if (ts.isIdentifier(declaration.name) && declaration.name.text === "glyphs" && declaration.initializer !== undefined) {
+              found.push(declaration.initializer.getText(source));
+            }
+          }
+        }
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(source);
+    return `${module}|${layout}|${found.length > 0 ? found.join(" ; ") : "none"}`;
+  });
 }
 
 interface Launch {
@@ -2283,12 +2370,26 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const declared = declaredKinds();
     const triggers = srcModules().flatMap(module => glyphTriggersIn(module, srcSource(module)));
     const lit = new Set(triggers.map(trigger => trigger.split("|")[1] ?? ""));
-    const drawn = [...declared, ...RENDER_CONTROLS].map(status => ({ status, ...drawnGlyphs(status) }));
-    const lighting = drawn.filter(lights).map(entry => entry.status);
+    const drawn = RENDER_TIERS.flatMap(tier =>
+      RENDER_INPUTS.flatMap(inputs => [...declared, ...RENDER_CONTROLS].map(status => ({ status, tier, inputs, ...drawnGlyphs(status, tier, inputs) }))),
+    );
+    const lighting = [...new Set(drawn.filter(lights).map(entry => entry.status))];
+    const selections = tierSelectionsIn(RENDER_LAYOUTS);
     const cases = evidenceCasesIn(srcSource(EVIDENCE_MODULE));
     const verbs = mutationVerbsIn(textOf(MUTATION_DECLARATION));
     expect(lighting.filter(status => RENDER_CONTROLS.includes(status)), "the drawn control lights the verified glyph").toStrictEqual([...RENDER_CONTROLS]);
-    expect(declared.filter(kind => lit.has(kind) || lighting.includes(kind)), "no declared kind lights a verified glyph").toStrictEqual([]);
+    expect(
+      drawn.filter(entry => entry.card === "none" || entry.dialog === "none").map(entry => `${entry.status}|${entry.tier.tier}|${entry.inputs.inputs}`),
+      "every drawn layout shows the node's glyph before its label",
+    ).toStrictEqual([]);
+    expect(
+      drawn
+        .filter(entry => RENDER_CONTROLS.includes(entry.status) && (entry.card !== entry.tier.ticks.card || entry.dialog !== entry.tier.ticks.dialog))
+        .map(entry => `${entry.status}|${entry.tier.tier}|${entry.inputs.inputs}`),
+      "the drawn control lights the card's and the dialog's tick in every tier at every input set, each the tier's own",
+    ).toStrictEqual([]);
+    expect(selections.filter(selection => selection.endsWith("|none")), "every drawn layout selects its glyph tier in a glyphs binding").toStrictEqual([]);
+    expect(declared.filter(kind => lit.has(kind) || lighting.includes(kind)), "no declared kind lights a verified glyph in any tier").toStrictEqual([]);
     const receiptFind = declared.map(kind => `${kind}|${nativeEvidence("hyperunix.find", findReading(kind, false, RECEIPT_FIELDS_SHAPE)).domainStatus ?? "none"}`);
     expect(receiptFind, "a find reading carrying the receipt fields projects its kind as domainStatus, verbatim").toStrictEqual(declared.map(kind => `${kind}|${kind}`));
     expect([RECEIPT_WIRE.verified, RECEIPT_WIRE.state], "the SDK recomputes the census receipt as coherent and verified").toStrictEqual([true, "Verified"]);
@@ -2320,7 +2421,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         const id = `hyperunix.${verb}`;
         return `${id}|${JSON.stringify(nativeEvidence(id, json({ contract: `${id}/v1`, source: RECEIPT_SOURCE })))}`;
       }),
-      drawn: drawn.map(entry => `${entry.status}|card:${entry.card}|dialog:${entry.dialog}`),
+      tierSelections: selections,
+      drawn: drawn.map(entry => `${entry.status}|${entry.tier.tier}|${entry.inputs.inputs}|card:${entry.card}|dialog:${entry.dialog}`),
       glyphTriggers: triggers,
       glyphControl: glyphTriggersIn("control", parse("glyph", READER_CONTROLS.glyph ?? "")),
       statusPlaces: srcModules().flatMap(module => statusPlacesIn(module, srcSource(module))),
@@ -2617,6 +2719,9 @@ describe("wb-ts6.2 HX mutation Verified census (HXFS-PI-R6, until-then leg) over
         renderControls: RENDER_CONTROLS,
         renderLabel: RENDER_LABEL,
         renderTask: RENDER_TASK,
+        renderTiers: RENDER_TIERS,
+        renderInputs: RENDER_INPUTS,
+        renderLayouts: RENDER_LAYOUTS,
         residuals: RESIDUALS,
         helper: HELPER,
         helperSha256: createHash("sha256").update(textOf(HELPER)).digest("hex"),
