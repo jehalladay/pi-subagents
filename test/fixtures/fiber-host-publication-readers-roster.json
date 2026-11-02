@@ -20,7 +20,7 @@
         ]
       },
       {
-        "words": "pip-name: a base name holding requirements, constraints or pylock, read for each word in every CASE_FORMS spelling and at every depth from 1 to DEPTH_BOUND",
+        "words": "pip-name: a base name holding requirements, constraints or pylock at the offset its plant puts the word at, read for each word in every CASE_FORMS spelling and at every depth from 1 to DEPTH_BOUND",
         "falsifiers": [
           "N-WORDS",
           "L3-M5",
@@ -34,7 +34,7 @@
         ]
       },
       {
-        "words": "the word at every POSITION_FORMS position in the name: alone, beside a letter, a digit, -, _, . or a space on either side, inside letters, and as the extension",
+        "words": "the word at every POSITION_FORMS position in the name, at the offset the form puts it at: alone, beside a letter, a digit, -, _, . or a space on either side, inside letters, and as the extension",
         "falsifiers": [
           "N-OTHER",
           "L3-Mc1",
@@ -60,7 +60,7 @@
         ]
       },
       {
-        "words": "pip-directory: every file below a directory whose name holds one of those words, read for each word in every CASE_FORMS spelling and at every DIRECTORY_FORMS position with every PIP_EXTENSIONS extension or none on the file, and for a requirements directory at every index with a file at every distance below it within DEPTH_BOUND path segments",
+        "words": "pip-directory: every file below a directory whose name holds one of those words at the offset its plant puts the word at, read for each word in every CASE_FORMS spelling and at every DIRECTORY_FORMS position with every PIP_EXTENSIONS extension or none on the file, and for a requirements directory at every index with a file at every distance below it within DEPTH_BOUND path segments",
         "falsifiers": [
           "N-DIRECTORY",
           "L3-M2",
@@ -73,7 +73,7 @@
         ]
       },
       {
-        "words": "only outside test/: every TEST_ROOT_PLANTS path below test/ is left unread and every one beside it is read; each selected path is read as raw lines but the root package.json and package-lock.json, read by their own readers; every raw line from 1 to LINE_BOUND is read, a hit named by its line",
+        "words": "only outside test/: every TEST_ROOT_PLANTS path below test/ is left unread and every one beside it is read; each selected path is read as raw lines but the root package.json and package-lock.json, read by their own readers; every raw line from 1 to LINE_BOUND is read at the column and segment its plant puts the stem at, a hit named by its line",
         "falsifiers": [
           "N-OTHER",
           "N-ROOT-READERS",
@@ -84,7 +84,7 @@
         ]
       },
       {
-        "words": "the root readers read their file whole: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
+        "words": "the root readers read their file whole, the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
         "falsifiers": [
           "N-ROOT-READERS",
           "G32"
@@ -93,7 +93,7 @@
     ],
     "A3": [
       {
-        "words": "static reading: in a script module each judged text holding a REGISTRATION_WORDS segment (register, registerNativeProviders) gives one entry per segment, at every position the planted modules of rows R, S and U2 hold",
+        "words": "static reading: in a script module each judged text holding a REGISTRATION_WORDS segment (register, registerNativeProviders) at the offset and segment its plant puts it at gives one entry per segment, at every position the planted modules of rows R, S and U2 hold",
         "falsifiers": [
           "S-WORDS"
         ]
@@ -132,7 +132,7 @@
         ]
       },
       {
-        "words": "in any other file every raw line's REGISTRATION_WORDS segments, every line from 1 to LINE_BOUND",
+        "words": "in any other file every raw line's REGISTRATION_WORDS segments at the column and segment its plant puts them at, every line from 1 to LINE_BOUND",
         "falsifiers": [
           "S-RAW",
           "G27"
@@ -187,7 +187,7 @@
         ]
       },
       {
-        "words": "needles: a descriptor's keys and strings are read in every planted field (its id, description, permissions, contract and input schema, the schema down to NEST_BOUND nested objects as a string and as a key), and every item of a planted list at every LIST_POSITIONS position (its permissions, an input-schema enum of strings and an input-schema list of objects, an object item read in a string and as a key), for the stem, each hosted class and each publication entry, each NEEDLE_FORMS spelling read",
+        "words": "needles: a descriptor's keys and strings are read in every planted field (its id, description, permissions, contract and input schema, the schema down to NEST_BOUND nested objects as a string and as a key), and every item of a planted list at every LIST_POSITIONS position (its permissions, an input-schema enum of strings and an input-schema list of objects, an object item read in a string and as a key), for the stem, each hosted class and each publication entry at the offset and segment its plant puts it at in its key or string, each NEEDLE_FORMS spelling read",
         "falsifiers": [
           "P-A3-NEEDLES",
           "G24",

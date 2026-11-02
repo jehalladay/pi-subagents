@@ -1,7 +1,8 @@
 /**
  * wb-pyel.7 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R1, program-triage-2026-10-18; the rule-19 structural exit of wb-pyel.1 under
  * orchestrator rulings R-B105 and R-B135), cut #4 (the FAIL-CLOSED CORE orchestrator ruling R-B265 bound at refusal #3's rule-19
- * structural exit; the deferred coverage is the child wb-pyel.10's):
+ * structural exit; the deferred coverage is the child wb-pyel.10's), re-cut under orchestrator ruling R-B308 after that child
+ * landed (landing 829):
  * the census of the Fiber host-publication census's A1 and A3 readers,
  * test/helpers/fiber-host-publication-readers.ts, which wb-pyel.1's census composes when it re-cuts. Statement (bead title,
  * verbatim): "A1 pip-manifest readers cover .pip, extensionless and requirements-directory name forms and A3 registration coverage
@@ -26,7 +27,19 @@
  * and its rider L6-14 (an id folded only up to its last dot) differ from the reader only at NOT CLAIMED places. The registry
  * order is claimed for the planted registry of four alone (riders L6-16, L6-16b). Holding is claimed in a base name (riders
  * L6-05, L6-06: a directory's cut or trimmed word). The lock is claimed for its planted path and name field, each alone
- * (rider L6-10). The coverage of every place so disclaimed is wb-pyel.10's (filed by R-B265, blocked by this bead).
+ * (rider L6-10). The coverage of every place so disclaimed is wb-pyel.10's (filed by R-B265; it landed at landing 829, under the
+ * dependency inversion R-B308, before this bead's re-cut).
+ *
+ * THE R-B308 RE-CUT (refusal #4 on cut #4, O:1737; orchestrator ruling R-B308, M:46562): refusal #4 found nine gate hollowings of
+ * the helper (GP18-01 and GP18-03 to GP18-10) and three riders (GP18-11, GP18-12, GP18-16) that read a raw line, a raw text, a
+ * string, a key, a folded segment, a judged text, a base name or a directory name only in part, each farther in than any plant
+ * here puts its word, against clause words that stated no such bound. R-B308 parked this bead behind wb-pyel.10, which landed
+ * the helper first (its code byte-identical to cut #4's; this re-cut takes the landed file at the merge) beside the positions
+ * census test/workbench-fiber-host-publication-positions-census.test.ts, whose pins plant those readers at every column, segment
+ * and offset to its own bounds and red under each of the twelve. This re-cut is the mechanical restatement over that landed pin:
+ * eight clauses narrow to the column, segment or offset their plants put the word at, NOT CLAIMED names the rest, and nothing
+ * else changes (no claim word, channel, pin, plant, row, test, constant or reader is added; narrow the claim, never widen the
+ * reader).
  *
  * ROWS (one test per pin, titled by the pin id under its row's label; each pin returns a measured witness held to the roster):
  *  M  the description's A1 item, its label read from the tracker export: refusal #3's A1 members (wb-pyel.1's notes, its U1 line)
@@ -138,9 +151,15 @@
  * of four; a cut, trimmed or singular family word in a directory name, selected or not; and a lock package at another path or
  * with another name field than the planted node_modules/fiber-optics and FiberOpticsSDK (the stem in another segment of a path
  * or in a path of more than two segments, a path outside node_modules/, a scoped, prefixed or longer name field, a package
- * whose path and name field both hold the stem). Edits of this file and the roster
- * together: a plant removed from its table and the roster together where no outside anchor names it, and a pin a later cut adds
- * beyond the export's member lists and the claims, removed whole, are NOT CLAIMED.
+ * whose path and name field both hold the stem). Nor, at the R-B308 re-cut (the positions census claims the helper's readers
+ * there, reader by reader and to its own bounds, never this census), is a word farther into a raw line, a raw text, a string, a
+ * key, a folded segment, a judged text, a base name or a directory name, or at a later segment of a line or a text, than any
+ * plant here puts it - among them a needle (the stem among them) after a text's sixth segment or past a folded segment's 24th
+ * character, a stem past a raw line's 80th column or past package.json's 2000th raw character, a needle past a string's 64th
+ * or a key's 32nd character, register past a raw line's 80th column, after a text's eighth segment or past a judged text's
+ * 64th character, and a family word past a base name's 32nd or a directory name's 24th character. Edits of this file and the
+ * roster together: a plant removed from its table and the roster together where no outside anchor names it, and a pin a later
+ * cut adds beyond the export's member lists and the claims, removed whole, are NOT CLAIMED.
  * RESIDUALS (named, each member with its pinned quiet reading in its row): R-UNREAD-MANIFEST a dependency stated in a file no form
  * selects (a Dockerfile, a setup script, a tox.ini, a pip -r file of another name, a base name holding a family word cut by a
  * hyphen or missing its first letter among them, the singular requirement.txt, a lock of an unlisted format, a manifest of an
@@ -473,7 +492,7 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["G33", "G34", "G35"],
     },
     {
-      words: "pip-name: a base name holding requirements, constraints or pylock, read for each word in every CASE_FORMS spelling and at every depth from 1 to DEPTH_BOUND",
+      words: "pip-name: a base name holding requirements, constraints or pylock at the offset its plant puts the word at, read for each word in every CASE_FORMS spelling and at every depth from 1 to DEPTH_BOUND",
       falsifiers: ["N-WORDS", "L3-M5", "G01"],
     },
     {
@@ -481,27 +500,27 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["G36"],
     },
     {
-      words: "the word at every POSITION_FORMS position in the name: alone, beside a letter, a digit, -, _, . or a space on either side, inside letters, and as the extension",
+      words: "the word at every POSITION_FORMS position in the name, at the offset the form puts it at: alone, beside a letter, a digit, -, _, . or a space on either side, inside letters, and as the extension",
       falsifiers: ["N-OTHER", "L3-Mc1", "P-A1-DIGIT-STEM", "G07", "G08"],
     },
     { words: "with every PIP_EXTENSIONS extension, .pip among them", falsifiers: ["N-PIP", "L3-M1", "G08"] },
     { words: "or none", falsifiers: ["N-EXTENSIONLESS", "L3-M4", "G08"] },
     {
-      words: "pip-directory: every file below a directory whose name holds one of those words, read for each word in every CASE_FORMS spelling and at every DIRECTORY_FORMS position with every PIP_EXTENSIONS extension or none on the file, and for a requirements directory at every index with a file at every distance below it within DEPTH_BOUND path segments",
+      words: "pip-directory: every file below a directory whose name holds one of those words at the offset its plant puts the word at, read for each word in every CASE_FORMS spelling and at every DIRECTORY_FORMS position with every PIP_EXTENSIONS extension or none on the file, and for a requirements directory at every index with a file at every distance below it within DEPTH_BOUND path segments",
       falsifiers: ["N-DIRECTORY", "L3-M2", "L3-Mc2", "L3-M3", "G01", "G04", "G05", "G06"],
     },
     {
-      words: "only outside test/: every TEST_ROOT_PLANTS path below test/ is left unread and every one beside it is read; each selected path is read as raw lines but the root package.json and package-lock.json, read by their own readers; every raw line from 1 to LINE_BOUND is read, a hit named by its line",
+      words: "only outside test/: every TEST_ROOT_PLANTS path below test/ is left unread and every one beside it is read; each selected path is read as raw lines but the root package.json and package-lock.json, read by their own readers; every raw line from 1 to LINE_BOUND is read at the column and segment its plant puts the stem at, a hit named by its line",
       falsifiers: ["N-OTHER", "N-ROOT-READERS", "LIVE-A1", "G09", "G10", "G11"],
     },
     {
-      words: "the root readers read their file whole: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
+      words: "the root readers read their file whole, the stem at the offset and segment its plant puts it at: package.json's keys and strings, every item of a planted string or object list at every LIST_POSITIONS position (an object item read in a string and as a key), and package-lock.json's installed packages at every LIST_POSITIONS position, by path and by name field, each planted alone: the path node_modules/fiber-optics and the name field FiberOpticsSDK of node_modules/alias",
       falsifiers: ["N-ROOT-READERS", "G32"],
     },
   ],
   A3: [
     {
-      words: "static reading: in a script module each judged text holding a REGISTRATION_WORDS segment (register, registerNativeProviders) gives one entry per segment, at every position the planted modules of rows R, S and U2 hold",
+      words: "static reading: in a script module each judged text holding a REGISTRATION_WORDS segment (register, registerNativeProviders) at the offset and segment its plant puts it at gives one entry per segment, at every position the planted modules of rows R, S and U2 hold",
       falsifiers: ["S-WORDS"],
     },
     {
@@ -520,7 +539,7 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       words: "a script module is a file whose lower-cased extension is a SCRIPT_KINDS key, each SCRIPT_PLANTS script module parsed and each SCRIPT_PLANTS raw one, the extensionless among them, read as raw lines",
       falsifiers: ["G26"],
     },
-    { words: "in any other file every raw line's REGISTRATION_WORDS segments, every line from 1 to LINE_BOUND", falsifiers: ["S-RAW", "G27"] },
+    { words: "in any other file every raw line's REGISTRATION_WORDS segments at the column and segment its plant puts them at, every line from 1 to LINE_BOUND", falsifiers: ["S-RAW", "G27"] },
     { words: "near misses are not read: registered, RegisterHost, unregister, a registerTool call, and registering, $register and register_x in a string", falsifiers: ["S-QUIET"] },
     {
       words: "Fiber family: a descriptor whose id folds to hold fiber at its head, ahead of its last dot (<spelling>.value.host), or a permission does at its head, ahead of its last colon (<spelling>:publish; each permission folded alone, at every LIST_POSITIONS position of its permissions, a word split across two permissions held by neither), or its contract does in the word after a planted export (value-host@1.0.0:Host.read <spelling>-publish, forge@0.1.0:GateFacade.status fiber-publish), each FOLD_FORMS spelling read alone at that place in each of the three and each FOLD_QUIET spelling there in none; or whose contract starts with rf@ byte for byte, each RF_FORMS contract read alone; each criterion read alone",
@@ -539,7 +558,7 @@ const CLAIMS: Readonly<Record<"A1" | "A3", readonly Clause[]>> = {
       falsifiers: ["P-A3-PUB-WRITE", "P-A3-PUB-OBSERVE", "P-A3-FAM-ID", "G20", "G21", "G22"],
     },
     {
-      words: "needles: a descriptor's keys and strings are read in every planted field (its id, description, permissions, contract and input schema, the schema down to NEST_BOUND nested objects as a string and as a key), and every item of a planted list at every LIST_POSITIONS position (its permissions, an input-schema enum of strings and an input-schema list of objects, an object item read in a string and as a key), for the stem, each hosted class and each publication entry, each NEEDLE_FORMS spelling read",
+      words: "needles: a descriptor's keys and strings are read in every planted field (its id, description, permissions, contract and input schema, the schema down to NEST_BOUND nested objects as a string and as a key), and every item of a planted list at every LIST_POSITIONS position (its permissions, an input-schema enum of strings and an input-schema list of objects, an object item read in a string and as a key), for the stem, each hosted class and each publication entry at the offset and segment its plant puts it at in its key or string, each NEEDLE_FORMS spelling read",
       falsifiers: ["P-A3-NEEDLES", "G24", "G25", "G32"],
     },
     { words: "the live src's static reading and the live registrations' readings are pinned whole", falsifiers: ["LIVE-A3-STATIC", "LIVE-A3-REGISTRIES"] },
