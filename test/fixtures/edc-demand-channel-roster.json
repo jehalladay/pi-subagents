@@ -141,6 +141,9 @@
                 "src/plant.ts:1 lexeme edc",
                 "src/plant.ts:2 lexeme edc"
               ],
+              "acronymRun": [
+                "src/plant.ts:1 lexeme edc"
+              ],
               "string": [
                 "src/plant.ts:1 lexeme evidencedirected"
               ],
@@ -176,6 +179,37 @@
                 "dependencies.edc-sdk",
                 "devDependencies.x",
                 "optionalDependencies.EvidenceDirected"
+              ]
+            },
+            "words": {
+              "parseEDC": [
+                "parse",
+                "edc"
+              ],
+              "EDCs": [
+                "edc",
+                "s"
+              ],
+              "EdcAssembler": [
+                "edc",
+                "assembler"
+              ],
+              "EDCAssembler": [
+                "edc",
+                "assembler"
+              ],
+              "EDCv2Assembler": [
+                "ed",
+                "cv2",
+                "assembler"
+              ],
+              "EDC2Assembler": [
+                "edc2",
+                "assembler"
+              ],
+              "edc2_assembler": [
+                "edc2",
+                "assembler"
               ]
             },
             "nearMisses": {

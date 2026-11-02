@@ -17,6 +17,10 @@
  * pin, no wider. The landed reader's code is cut #5's copy but for bare(): a comment run right after a token whose text ends in a
  * terminator reads as nothing, so it cuts nothing - cut #5's thirteen comment members of R-CUT and the comment form of its
  * over-read now read as their twins (B1's afterTerminator witness, AFTER_TERMINATOR_PLANTS).
+ * CUT #7 (orchestrator ruling R-B310, 2026-11-02, on refusal #6's U1: WORDS' acronym-run break was claimed at pins that did not
+ * hold it): the restatement with claims equal to pins, in its pin form - A2 reads the acronymRun route, a module exporting
+ * EDCAssembler, and A2's words witness holds the spellings READINGS names for A2 and R-GLUED-STEM's unread members to their exact
+ * words.
  *
  * THE PINNED SET (the claim form): this file's 11 cases in registration order - the judged set (the frozen shape, the roster, the
  * export's title and owner filing, the role places, the producer line and the residual names, each observed equal); A1, A2, B1,
@@ -47,7 +51,8 @@
  *   subjects: contextDemand reads context demand, context_precision and CONTEXT-PRECISION split at their separators, a zero-width
  *   space before the subject and inside a family word, the subject in fullwidth letters, a combining low line and an enclosing
  *   circle inside a family word, each read as the plain words; A2's routes: parseEDC reads parse edc, EDCs reads edc s,
- *   EdcAssembler reads edc assembler; R-GLUED-STEM's members).
+ *   EdcAssembler reads edc assembler, and the acronymRun route's EDCAssembler reads edc assembler; R-GLUED-STEM's members; A2's
+ *   words witness holds these four spellings and R-GLUED-STEM's three unread members to their exact words).
  * - SENTENCES: every text is cut into sentences after ".", "!", "?" or ";" before white space or the line end, at a blank line,
  *   around a table row and a heading line and before a list item - a bullet, or a number with "." or ")" (a sentence wrapped over
  *   lines stays one); each is judged alone (B4's cuts witness: a ".", a "?", a "!" and a ";" before a space, a wrapped line kept
@@ -186,7 +191,8 @@
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
  *  A "If Pi-subagents adopts EDC context assembly": A1 the consumer reading over the live tree (the src walk equal to git's
- *    listing, its floors, the frozen pass at the cut's base); A2 the stems and the consumer reader's routes and near misses.
+ *    listing, its floors, the frozen pass at the cut's base); A2 the stems, the consumer reader's routes and near misses, and
+ *    the words witness (WORDS at the spellings READINGS names for A2 and R-GLUED-STEM's unread members).
  *  B "so no Pi prompt, tool description or capability input becomes the demand channel": B1 the prompt surfaces (live findings
  *    and live quiet readings, floors, the frozen pass) and the code reader's forms (a plant per form, one finding each, its reading
  *    held; the comments witness, the matrices and the after-terminator members; the residual rows); B2 the tool descriptions; B3 the
@@ -224,9 +230,10 @@
  * RESIDUALS (named; each has a pinned quiet row): R-UNNAMED-ADOPTION (A2) an EDC consumer spelled without either stem (a
  *   ReactiveComponents import, a QueryView input) reads ABSENT - Pi's ReactiveComponents surface is pinned by
  *   test/workbench-rc-assembler-expectation-census.test.ts; R-GLUED-STEM (A2) a stem glued to a suffix the WORDS rule keeps in one
- *   word or splits after the acronym's last capital names no stem and reads ABSENT (EDCv2Assembler reads ed, cv2, assembler;
- *   EDC2Assembler and edc2_assembler read edc2), while each twin with the stem split off (EdcV2Assembler, EDC_2Assembler,
- *   edc_2_assembler) names it; R-SCOPE (B1) texts outside the surfaces: docs/ pages (claim pages, which
+ *   word or splits before the last capital of an acronym run names no stem and reads ABSENT (EDCv2Assembler reads ed, cv2,
+ *   assembler; EDC2Assembler and edc2_assembler read edc2, assembler; A2's words witness holds the three), while each twin with
+ *   the stem split off (EdcV2Assembler, EDC_2Assembler, edc_2_assembler) names it; R-SCOPE (B1) texts outside the surfaces:
+ *   docs/ pages (claim pages, which
  *   test/workbench-edc-shipped-claim-census.test.ts reads for EDC claims), qa/ and test/ modules, root files, comments (a module's
  *   shebang line too), YAML (.agents/skills/beads/agents/openai.yaml's default_prompt), an operator's own agent files and settings
  *   (workbench roles), model replies; R-COMPOSED (B1) a prompt composed at run time from a part that is no constant (a variable
@@ -1256,6 +1263,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       identifier: consumerOfCode("export const edcAssembler = 1;\n"),
       acronymPlural: consumerOfCode("export const EDCs: string[] = [];\n"),
       camel: consumerOfCode("parseEDC();\nnew EdcAssembler();\n"),
+      // The cut #6 refusal, U1: EDCAssembler names its stem through WORDS' break before the last capital of an acronym run.
+      acronymRun: consumerOfCode("export const EDCAssembler = 1;\n"),
       string: consumerOfCode('export const key = "evidence-directed";\n'),
       joinedForms: consumerOfCode("export const EvidenceDirectedView = 1;\nexport const snake = 'evidence_directed';\n"),
       specifier: consumerOfCode('import { assemble } from "@plant/edc";\n'),
@@ -1277,15 +1286,18 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
     const quiet = {
       "R-UNNAMED-ADOPTION": [consumerOfCode(`import { renderBlock } from "${RC_SPECIFIER}";\n`), consumerOfCode("export const verdicts = queryView.judgments;\n")],
-      // The cut #2 refusal, F4: a stem glued to a suffix the WORDS rule keeps in one word or splits after the acronym's last
-      // capital reads no stem; each twin, the same stem split off, does.
+      // The cut #2 refusal, F4: a stem glued to a suffix the WORDS rule keeps in one word or splits before the last capital of an
+      // acronym run reads no stem; each twin, the same stem split off, does.
       "R-GLUED-STEM": {
         unread: [consumerOfCode("export const EDCv2Assembler = 1;\n"), consumerOfCode("export const EDC2Assembler = 1;\n"), consumerOfCode("export const edc2_assembler = 1;\n")],
         readTwins: [consumerOfCode("export const EdcV2Assembler = 1;\n"), consumerOfCode("export const EDC_2Assembler = 1;\n"), consumerOfCode("export const edc_2_assembler = 1;\n")],
       },
     };
+    // The cut #6 refusal, U1: WORDS at the spellings READINGS names for A2 and R-GLUED-STEM's unread members, each read to its
+    // exact words.
+    const spelled = Object.fromEntries(["parseEDC", "EDCs", "EdcAssembler", "EDCAssembler", "EDCv2Assembler", "EDC2Assembler", "edc2_assembler"].map(text => [text, words(text)]));
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "A2").map(residual => residual.id));
-    return { stems: { word: [...VOCABULARY.stems.word], joined: [...VOCABULARY.stems.joined] }, routes, nearMisses, quiet };
+    return { stems: { word: [...VOCABULARY.stems.word], joined: [...VOCABULARY.stems.joined] }, routes, words: spelled, nearMisses, quiet };
   },
   B1: async () => {
     const real = live();
