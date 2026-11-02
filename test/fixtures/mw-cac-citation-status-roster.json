@@ -71,6 +71,10 @@
    "footnote": [
     "\\[\\^[^\\]\\n]+\\]",
     "^\\s*(?:>\\s*)*\\[\\^[^\\]\\n]+\\]:"
+   ],
+   "footnoteFlags": [
+    "g",
+    ""
    ]
   },
   "units": [
@@ -517,6 +521,12 @@
         ]
        },
        {
+        "id": "footnote-label-second",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
         "id": "footnote-definition",
         "causes": [
          "unqualified"
@@ -560,6 +570,18 @@
        },
        {
         "id": "footnote-definition-long-label",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-second",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition-quoted-second",
         "causes": [
          "unqualified"
         ]
