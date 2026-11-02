@@ -28,6 +28,14 @@
  * spellings parseXmlEdcAssembler, XMLParserEDCAssembler, XMLsEDCs and "Use the parseXml contextDemand."), at acronym runs of one
  * and five capitals before the last (IEdcAssembler, IContextDemand, HTTPSEdcAssembler), at every format control of one text, at
  * NFKC's precomposed letter and at the plural and separator edges WORDS names; WORDS now names the digit break (refusal #7's F2).
+ * CUT #9 (orchestrator ruling R-B357, 2026-11-02, on refusal #8's U1-U4 and riders F2 and F3: the restated WORDS claimed an
+ * acronym's s split before every follower, NFKC before the removal, every member of the removal's three categories and every
+ * member of each ASCII class at pins that held three follower places, the precomposed spelling, one member of each category and
+ * the classes' pinned members only): the restatement with every header claim no wider than its pinned reader, in lineage of cut
+ * #8 - WORDS restated rule by rule, each rule naming the pins that hold it: A2's sweep (eight contexts of one varied code point,
+ * read at every ASCII character and at every BMP code point NFKC leaves in place), the removal and kept witnesses of A2 and B4
+ * (every member of Cf, Mn, Me and Mc, in every plane), refusal #8's paired-witness pages as A2 routes, an A2 near miss and B4
+ * subjects, and its spellings in A2's words witness; what no pin holds is named NOT CLAIMED.
  *
  * THE PINNED SET (the claim form): this file's 11 cases in registration order - the judged set (the frozen shape, the roster, the
  * export's title and owner filing, the role places, the producer line and the residual names, each observed equal); A1, A2, B1,
@@ -53,13 +61,46 @@
  * reads MARKER by its "not" and, with the marker removed, a finding of all three families: it is the vocabulary's producer anchor.
  *
  * READINGS
- * - WORDS (each rule at every place it matches in a text, never at its first match only): NFKC, so a fullwidth letter folds and a
- *   precomposed letter stays one letter outside a-z (an e with an acute accent parts the words around it); every format control,
- *   combining mark and enclosing mark removed; an acronym's plural s split off - an acronym is a run of two or more capitals, and
- *   its s splits off where no lower-case letter follows it (at the text's end, before a capital, before a digit), so a single
- *   capital's s stays; a break at each change from a lower-case letter or a digit to a capital; a break before the last capital
- *   of an acronym run - one or more capitals, then a capital and a lower-case letter, whatever the number of capitals before the
- *   last - so a capital that a digit follows ends no run; lower case; the runs of a-z and 0-9, with no empty word at a separator.
+ * - WORDS, rule by rule (each rule at every place it matches in a text, never at its first match only), each claimed at the pins
+ *   named with it and no wider. A2's sweep reads one varied code point x in eight contexts - stem (ed x c), camelLeft (x Edc),
+ *   acronymLast (ED x x), acronymLower (EDA x x), pluralRun (E x s), pluralFollower (EDCs x), pluralLeft (x IDs) and pluralSingle
+ *   (x Cs), each spelled without its spaces - at every ASCII character, each held to its exact words (the roster's ascii
+ *   readings), with no x at all (its nothing reading), and at every other code point of the Basic Multilingual Plane (surrogates
+ *   aside) that NFKC leaves as it is in its place: each reads as the underscore reads there, or as nothing when the removal (2)
+ *   takes it, every departure held (the dotted capital I alone, (6)) and the swept count held to its floor (60000 per context).
+ *   An astral code point beside the rules (3)-(6) is NOT CLAIMED by this census.
+ *   (1) NFKC first. Each fullwidth letter and digit folds to its ASCII twin and reads as it, all 62 in every context (the sweep's
+ *   fullwidth rows; the fullwidth route and subject). A combining mark that NFKC composes with the letter before it makes one
+ *   precomposed letter outside a-z, which parts the words - held at the six marks that compose with the d of edc and the
+ *   nineteen that compose with the a of demand (the removal witness's departures), and at an e with a combining acute and an a
+ *   with a combining diaeresis after it (the decomposed route and subject: composed before the removal could take the mark). A
+ *   precomposed letter NFKC leaves as it is stays one letter outside a-z and parts the words around it (every swept one reads as
+ *   the underscore; an e with an acute accent: the precomposed route and subject). Every other change NFKC makes is NOT CLAIMED
+ *   by this census.
+ *   (2) Then the removal: every code point of the general categories Cf, Mn and Me left in the text is removed - every member of
+ *   each category in this runtime's Unicode tables, in every plane, read between the d and the c of edc (A2) and between the a and
+ *   the n of demand (B4), each reading as if it were absent there but the composed marks of (1) (the removal witness; member
+ *   floors 170, 2059 and 13, Unicode 17.0's counts), and every swept one reads as nothing in each context; refusal #8's pages hold
+ *   a soft hyphen and a word joiner inside the stem and inside demand, and a double low line and an enclosing square there too
+ *   (routes and subjects). A spacing mark stays and parts the words (Mc, every member in every plane read at both places: the
+ *   kept witness, member floor 471; refusal #8's F2: the spacingMark near miss and the visarga subject), as every other swept code
+ *   point outside a-z, A-Z and 0-9 does. Whether the removal takes an astral code point outside these four categories is NOT
+ *   CLAIMED by this census.
+ *   (3) An acronym's plural s split off: an acronym is a run of two or more capitals A-Z, and its s splits off unless a lower-case
+ *   letter a-z follows it - at the text's end and before every other character the sweep reads (pluralFollower; EDCs_list and
+ *   "EDCs ready", an s before a separator: words and routes), after every capital that ends the run (pluralRun) and whatever
+ *   stands before the run (pluralLeft; parseIDs) - so a single capital's s stays, whatever stands before it (pluralSingle;
+ *   castAs).
+ *   (4) A break at each change from a lower-case letter a-z or a digit 0-9 to a capital A-Z: every capital after d (stem) and
+ *   every lower-case letter and digit before E (camelLeft; metaEdcAssembler, bizEdcAssembler, v0EdcAssembler, v9EdcAssembler and
+ *   edcZone, the classes' bounds: words and the rangeBounds route).
+ *   (5) A break before the last capital of an acronym run: one or more capitals A-Z, then a capital A-Z and a lower-case letter
+ *   a-z, whatever the number of capitals before the last - every capital as a run of one before Ed (camelLeft), every last capital
+ *   between ED and x (acronymLast) and every lower-case letter after EDA (acronymLower; AEdcAssembler, ZEdcAssembler, EDCZone and
+ *   EDCAzure, the bounds: words and the rangeBounds route) - so a capital that a digit follows ends no run.
+ *   (6) Lower case: the dotted capital I (U+0130) becomes i and a combining dot that no rule above read, so it reads as an i no
+ *   case rule saw and then a separator (the sweep's one departure, in every context). Then the runs of a-z and 0-9, with no empty
+ *   word at a separator: every other character the sweep reads parts the words (stem; EdcAssembler()).
  *   A2's words witness holds each spelling to its exact words: parseEDC (parse edc), EDCs (edc s), EdcAssembler (edc assembler),
  *   EDCAssembler (edc assembler: three capitals before the last, and an s that a lower-case letter follows stays),
  *   parseXmlEdcAssembler (parse xml edc assembler: every case change), XMLParserEDCAssembler (xml parser edc assembler: every
@@ -67,17 +108,24 @@
  *   the last), HTTPSEdcAssembler (https edc assembler: five), IDs (id s: an acronym of two capitals), EDCs2 (edc s2: an s before a
  *   digit), castAs (cast as: a single capital's s stays), EdcAssembler() (edc assembler: no empty word), and R-GLUED-STEM's three
  *   unread members, EDCv2Assembler (ed cv2 assembler: two capitals before the last, and the digit break) and EDC2Assembler and
- *   edc2_assembler (edc2 assembler: the digit break, and no run ends at a capital that a digit follows). A2's routes, each a
- *   module whose names or strings name the edc stem through these words: parseEDC and EdcAssembler (camel), EDCs
+ *   edc2_assembler (edc2 assembler: the digit break, and no run ends at a capital that a digit follows), and refusal #8's
+ *   spellings: EDCs_list (edc s list), "EDCs ready" (edc s ready), metaEdcAssembler (meta edc assembler), bizEdcAssembler (biz
+ *   edc assembler), v0EdcAssembler (v0 edc assembler), v9EdcAssembler (v9 edc assembler), edcZone (edc zone), AEdcAssembler (a
+ *   edc assembler), ZEdcAssembler (z edc assembler), EDCZone (edc zone), EDCAzure (edc azure) and parseIDs (parse id s). A2's
+ *   routes, each a module whose names or strings name the edc stem through these words: parseEDC and EdcAssembler (camel), EDCs
  *   (acronymPlural), the acronymRun route's EDCAssembler, the cut #7 refusal's routes caseChanges (parseXmlEdcAssembler),
  *   acronymRuns (XMLParserEDCAssembler), acronymPlurals (XMLsEDCs), oneCapitalRun (IEdcAssembler) and longRun
  *   (HTTPSEdcAssembler), invisible and invisibles (e, d and c with one and with two zero-width spaces), fullwidth (a fullwidth E
- *   before DC) and precomposed (edc, then an e with an acute accent). B4's subjects, each a demand or precision finding read as
+ *   before DC) and precomposed (edc, then an e with an acute accent), and refusal #8's pages pluralUnderscore (EDCs_list),
+ *   pluralSpace ("EDCs ready"), rangeBounds (its nine spellings, one per line), decomposed (edce, then a combining acute),
+ *   softHyphen and wordJoiner (e, the control, dc), doubleLowLine and enclosingSquare (ed, the mark, c); A2's near miss
+ *   spacingMark (ed, a Devanagari visarga, c) names no stem. B4's subjects, each a demand or precision finding read as
  *   the plain words: contextDemand, context_precision and CONTEXT-PRECISION split at their separators, a zero-width space before
  *   the subject and inside a family word, two in one sentence (inside both), the subject in fullwidth letters, a combining low
  *   line and an enclosing circle inside a family word, the subject and a family word parted by an e with an acute accent, and the
  *   gate's two prompt spellings, "Use the parseXml contextDemand." (its second case change) and IContextDemand (its run of one
- *   capital).
+ *   capital), and refusal #8's prompt pages: demand with an a and a combining diaeresis after it; demand with a word joiner, a
+ *   soft hyphen, a double low line and an enclosing square inside it; the subject and demand parted by a Devanagari visarga.
  * - SENTENCES: every text is cut into sentences after ".", "!", "?" or ";" before white space or the line end, at a blank line,
  *   around a table row and a heading line and before a list item - a bullet, or a number with "." or ")" (a sentence wrapped over
  *   lines stays one); each is judged alone (B4's cuts witness: a ".", a "?", a "!" and a ";" before a space, a wrapped line kept
@@ -216,14 +264,15 @@
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
  *  A "If Pi-subagents adopts EDC context assembly": A1 the consumer reading over the live tree (the src walk equal to git's
- *    listing, its floors, the frozen pass at the cut's base); A2 the stems, the consumer reader's routes and near misses, and
- *    the words witness (WORDS at the spellings READINGS names for A2 and R-GLUED-STEM's unread members).
+ *    listing, its floors, the frozen pass at the cut's base); A2 the stems, the consumer reader's routes and near misses, the
+ *    words witness (WORDS at the spellings READINGS names for A2 and R-GLUED-STEM's unread members), WORDS' sweep and the removal
+ *    and kept witnesses between the d and the c of edc (READINGS' WORDS, rule by rule).
  *  B "so no Pi prompt, tool description or capability input becomes the demand channel": B1 the prompt surfaces (live findings
  *    and live quiet readings, floors, the frozen pass) and the code reader's forms (a plant per form, one finding each, its reading
  *    held; the comments witness, the matrices and the after-terminator members; the residual rows); B2 the tool descriptions; B3 the
- *    capability inputs and the boundary; B4 the demand reading itself and its append quiet row (a note appended after the owner
- *    filing block, spelling every vocabulary word, leaves the whole B4 witness unchanged; read past the block it would empty
- *    R-SYNONYM; a block edited in place is refused).
+ *    capability inputs and the boundary; B4 the demand reading itself, the removal and kept witnesses between the a and the n of
+ *    demand, and its append quiet row (a note appended after the owner filing block, spelling every vocabulary word, leaves the
+ *    whole B4 witness unchanged; read past the block it would empty R-SYNONYM; a block edited in place is refused).
  *  C "Artifact: a Pi EDC context-assembly consumer (none exists)": C1 the gate and guard semantics, and a replica consumer read
  *    PRESENT and owed; C2 the live verdict - ONE pass over every surface and in-memory positives (it reads the live tree's
  *    modules, pages and readings plus exactly the positives' own) holds every finding of the positives read alone and, beyond
@@ -467,7 +516,7 @@ const REQUIRED_PI_TOOLS = ["Agent", "SubagentWorkflow", "get_subagent_result", "
 /** Floors below the live counts measured at cut #4 (117 src modules, 6 example modules, 3 pages, 137910 code and page readings,
  * 137186 consumer readings, 16 Pi tools, 3 default agents, 2 tools with guidelines, 65 prompt, 190 description and 805 input
  * texts); the frozen pass at CONSTANTS.frozenAt holds its own counts exactly (B1.frozen, A1.frozen). */
-const FLOORS = { srcModules: 110, exampleModules: 5, pages: 3, codeReadings: 120_000, consumerReadings: 120_000, piTools: 16, defaultAgents: 3, guidelines: 2, promptTexts: 50, descriptionTexts: 150, inputTexts: 600 } as const;
+const FLOORS = { srcModules: 110, exampleModules: 5, pages: 3, codeReadings: 120_000, consumerReadings: 120_000, piTools: 16, defaultAgents: 3, guidelines: 2, promptTexts: 50, descriptionTexts: 150, inputTexts: 600, sweptPerContext: 60_000, categoryMembers: { Cf: 170, Mn: 2059, Me: 13, Mc: 471 } } as const;
 
 // ---------------------------------------------------------------------------------------------------------------- the reader
 /** The joined fold: lower case with every character outside a-z and 0-9 removed. */
@@ -956,6 +1005,92 @@ const ENCLOSING_CIRCLE = String.fromCodePoint(0x20dd);
 const PRECOMPOSED_E = String.fromCodePoint(0x00e9);
 /** A word in fullwidth letters (each ASCII letter moved to its fullwidth form), which NFKC folds back. */
 const fullwidth = (word: string): string => [...word].map(letter => String.fromCodePoint((letter.codePointAt(0) ?? 0) + 0xfee0)).join("");
+/** The marks and controls of refusal #8's paired-witness pages (cut #9, R-B357), each spelled by its code point. */
+const COMBINING_ACUTE = String.fromCodePoint(0x0301);
+const COMBINING_DIAERESIS = String.fromCodePoint(0x0308);
+const SOFT_HYPHEN = String.fromCodePoint(0x00ad);
+const WORD_JOINER = String.fromCodePoint(0x2060);
+const DOUBLE_LOW_LINE = String.fromCodePoint(0x0333);
+const ENCLOSING_SQUARE = String.fromCodePoint(0x20de);
+/** A spacing mark (general category Mc, a Devanagari visarga): the removal keeps it, so it parts the words (refusal #8's F2). */
+const VISARGA = String.fromCodePoint(0x0903);
+/** WORDS' sweep (cut #9): eight contexts of one varied code point, each its text before and after that code point. */
+const SWEEP_CONTEXTS: Readonly<Record<string, readonly [string, string]>> = {
+  stem: ["ed", "c"],
+  camelLeft: ["", "Edc"],
+  acronymLast: ["ED", "x"],
+  acronymLower: ["EDA", "x"],
+  pluralRun: ["E", "s"],
+  pluralFollower: ["EDCs", ""],
+  pluralLeft: ["", "IDs"],
+  pluralSingle: ["", "Cs"],
+};
+/** The general categories WORDS' removal takes (READINGS' WORDS (2)), as this census states them. */
+const REMOVED_CATEGORIES = /[\p{Cf}\p{Mn}\p{Me}]/u;
+/** The categories the removal and kept witnesses read in full: the three the removal takes and the spacing marks it keeps. */
+const CATEGORIES = { Cf: /\p{Cf}/u, Mn: /\p{Mn}/u, Me: /\p{Me}/u, Mc: /\p{Mc}/u } as const;
+type CategoryName = keyof typeof CATEGORIES;
+const CATEGORY_NAMES: readonly CategoryName[] = ["Cf", "Mn", "Me", "Mc"];
+const codePointLabel = (codePoint: number): string => `U+${codePoint.toString(16).toUpperCase().padStart(4, "0")}`;
+const ALNUM = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+let membersCache: Readonly<Record<CategoryName, readonly number[]>> | undefined;
+/** Every member of each of CATEGORIES in this runtime's Unicode tables, in every plane (surrogate code points aside). */
+function categoryMembers(): Readonly<Record<CategoryName, readonly number[]>> {
+  if (membersCache !== undefined) return membersCache;
+  const members: Record<CategoryName, number[]> = { Cf: [], Mn: [], Me: [], Mc: [] };
+  for (let codePoint = 0; codePoint <= 0x10ffff; codePoint++) {
+    if (codePoint >= 0xd800 && codePoint <= 0xdfff) continue;
+    const text = String.fromCodePoint(codePoint);
+    for (const name of CATEGORY_NAMES) if (CATEGORIES[name].test(text)) members[name].push(codePoint);
+  }
+  membersCache = members;
+  return members;
+}
+/** WORDS' sweep (cut #9; READINGS' WORDS, rule by rule): in each context, the words of every ASCII character (the readings
+ * joined by "|"), the context's words with no code point in it, and the departures among every other BMP code point NFKC leaves
+ * as it is there - each reads as the underscore reads there, or as nothing when REMOVED_CATEGORIES takes it; the swept count
+ * against its floor; and each fullwidth letter and digit whose words differ from its ASCII twin's. */
+function sweepWitness(): { [key: string]: Json } {
+  const read = (text: string): string => words(text).join(" ");
+  const out: { [key: string]: Json } = {};
+  for (const [name, [before, after]] of Object.entries(SWEEP_CONTEXTS)) {
+    const at = (x: string): string => `${before}${x}${after}`;
+    const ascii = Array.from({ length: 0x80 }, (_, codePoint) => read(at(String.fromCodePoint(codePoint)))).join("|");
+    const nothing = read(at(""));
+    const separator = read(at("_"));
+    let swept = 0;
+    const departures: { [label: string]: Json } = {};
+    for (let codePoint = 0x80; codePoint <= 0xffff; codePoint++) {
+      if (codePoint >= 0xd800 && codePoint <= 0xdfff) continue;
+      const x = String.fromCodePoint(codePoint);
+      const text = at(x);
+      if (text.normalize("NFKC") !== text) continue;
+      swept++;
+      const reading = read(text);
+      if (reading !== (REMOVED_CATEGORIES.test(x) ? nothing : separator)) departures[codePointLabel(codePoint)] = reading;
+    }
+    const fullwidthDepartures = [...ALNUM].filter(letter => read(at(fullwidth(letter))) !== read(at(letter)));
+    out[name] = { ascii, nothing, swept: swept >= FLOORS.sweptPerContext, departures, fullwidth: fullwidthDepartures };
+  }
+  return out;
+}
+/** The removal and kept witnesses (cut #9; READINGS' WORDS (2)): every member of Cf, Mn and Me read at one place, each a
+ * departure unless it reads `removed`, and every spacing mark (Mc), each a departure unless it reads `kept`; each category's
+ * member count against its floor. */
+function categoryWitness(readAt: (x: string) => string, removed: string, kept: string): { [key: string]: Json } {
+  const members = categoryMembers();
+  const out: { [key: string]: Json } = {};
+  for (const name of CATEGORY_NAMES) {
+    const expected = name === "Mc" ? kept : removed;
+    const departures: { [label: string]: Json } = {};
+    for (const codePoint of members[name]) {
+      const reading = readAt(String.fromCodePoint(codePoint));
+      if (reading !== expected) departures[codePointLabel(codePoint)] = reading;
+    }
+    out[name] = { members: members[name].length >= FLOORS.categoryMembers[name], departures };
+  }
+  return out;
+}
 /** A template placeholder opener for planted code, spelled in two parts so no literal of this file holds one. */
 const HOLE = "$" + "{";
 /** A ReactiveComponents package specifier, assembled from parts at run time: no literal of this file spells the distribution, so
@@ -1232,7 +1367,7 @@ const DECODED_PLANTS: Readonly<Record<string, string>> = {
 /** B4's witness over a bead row: the demand reading itself and its quiet rows; only R-SYNONYM reads the row, through its owner
  * filing block. */
 function demandWitness(row: BeadRow): { [key: string]: Json } {
-  const subjects = ["The context demand rides in the prompt.", "Contexts demand a tool call.", "contextDemand", "context_precision", "CONTEXT-PRECISION", `The ${INVISIBLE}context demand rides in the prompt.`, `The context dem${INVISIBLE}and rides in the prompt.`, `The ${fullwidth("CONTEXT")} demand rides in the prompt.`, `The context dema${COMBINING_LOW_LINE}nd rides in the prompt.`, `The context dema${ENCLOSING_CIRCLE}nd rides in the prompt.`, `The con${INVISIBLE}text dem${INVISIBLE}and rides in the prompt.`, "Use the parseXml contextDemand.", "IContextDemand", `The context${PRECOMPOSED_E}demand rides in the prompt.`].map(verdict);
+  const subjects = ["The context demand rides in the prompt.", "Contexts demand a tool call.", "contextDemand", "context_precision", "CONTEXT-PRECISION", `The ${INVISIBLE}context demand rides in the prompt.`, `The context dem${INVISIBLE}and rides in the prompt.`, `The ${fullwidth("CONTEXT")} demand rides in the prompt.`, `The context dema${COMBINING_LOW_LINE}nd rides in the prompt.`, `The context dema${ENCLOSING_CIRCLE}nd rides in the prompt.`, `The con${INVISIBLE}text dem${INVISIBLE}and rides in the prompt.`, "Use the parseXml contextDemand.", "IContextDemand", `The context${PRECOMPOSED_E}demand rides in the prompt.`, `The context demanda${COMBINING_DIAERESIS} rides in the prompt.`, `The context dem${WORD_JOINER}and rides in the prompt.`, `The context dem${SOFT_HYPHEN}and rides in the prompt.`, `The context dema${DOUBLE_LOW_LINE}nd rides in the prompt.`, `The context dema${ENCLOSING_SQUARE}nd rides in the prompt.`, `The context${VISARGA}demand rides in the prompt.`].map(verdict);
   const families = [...VOCABULARY.families.demand, ...VOCABULARY.families.precision].map(word => verdict(`The context ${word} rides in the prompt.`));
   const carrier = ["Send a projection requirement.", "projectionRequirements", "Projection-Requirement", "a projection requirement for the render"].map(verdict);
   const markers = [...VOCABULARY.markers.map(word => verdict(`The context demand is ${word} a tool call.`)), verdict("The context demand isn't a tool call."), verdict(`The context demand isn${String.fromCodePoint(0x2019)}t a tool call.`)];
@@ -1260,7 +1395,9 @@ function demandWitness(row: BeadRow): { [key: string]: Json } {
     "R-SYNONYM": synonymsOf(row),
   };
   expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B4").map(residual => residual.id));
-  return { subjects, families, carrier, markers, nearMisses, cuts, quiet };
+  // Cut #9 (R-B357; refusal #8's U2, U3 and F2): the removal and kept witnesses between the a and the n of demand.
+  const categories = categoryWitness(x => verdict(`The context dema${x}nd rides in the prompt.`) ?? "none", "demand", "none");
+  return { subjects, families, carrier, markers, nearMisses, cuts, quiet, categories };
 }
 /** A compared value as plain JSON data: its own methods - vitest's equality consults a value's asymmetricMatch before any value
  * check - and every other part that is no data dropped, so no value the reader hands in decides its own equality. */
@@ -1299,6 +1436,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       acronymPlurals: consumerOfCode("export const XMLsEDCs = 1;\n"),
       oneCapitalRun: consumerOfCode("export const IEdcAssembler = 1;\n"),
       longRun: consumerOfCode("export const HTTPSEdcAssembler = 1;\n"),
+      // The cut #8 refusal, U1 and U4 (R-B357): an s before a separator, and the bounds of each ASCII class, each the gate's
+      // paired-witness spelling in its module shape (rangeBounds: the nine, one per line).
+      pluralUnderscore: consumerOfCode("export const EDCs_list = 1;\n"),
+      pluralSpace: consumerOfCode('export const key = "EDCs ready";\n'),
+      rangeBounds: consumerOfCode(["metaEdcAssembler", "bizEdcAssembler", "v0EdcAssembler", "v9EdcAssembler", "edcZone", "AEdcAssembler", "ZEdcAssembler", "EDCZone", "EDCAzure"].map(name => `export const ${name} = 1;\n`).join("")),
       string: consumerOfCode('export const key = "evidence-directed";\n'),
       joinedForms: consumerOfCode("export const EvidenceDirectedView = 1;\nexport const snake = 'evidence_directed';\n"),
       specifier: consumerOfCode('import { assemble } from "@plant/edc";\n'),
@@ -1311,6 +1453,13 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       // NFKC keeps a precomposed letter whole: the e with an acute accent after the stem parts it off.
       precomposed: consumerOfCode(`export const key = "edc${PRECOMPOSED_E}";\n`),
       fullwidth: consumerOfCode(`export const key = "${FULLWIDTH_E}DC";\n`),
+      // The cut #8 refusal, U2 and U3 (R-B357): NFKC composes an e and a combining acute before the removal; a soft hyphen, a word
+      // joiner, a double low line and an enclosing square are each removed - the gate's paired-witness pages.
+      decomposed: consumerOfCode(`export const key = "edce${COMBINING_ACUTE}";\n`),
+      softHyphen: consumerOfCode(`export const key = "e${SOFT_HYPHEN}dc";\n`),
+      wordJoiner: consumerOfCode(`export const key = "e${WORD_JOINER}dc";\n`),
+      doubleLowLine: consumerOfCode(`export const key = "ed${DOUBLE_LOW_LINE}c";\n`),
+      enclosingSquare: consumerOfCode(`export const key = "ed${ENCLOSING_SQUARE}c";\n`),
       javascript: consumerOfCode("module.exports = { edc: 1 };\n", "src/plant.cjs"),
       manifest: consumerDependencies('{"dependencies":{"edc-sdk":"1.0.0"},"devDependencies":{"x":"file:vendor/evidence-directed-0.1.0.tgz"},"optionalDependencies":{"EvidenceDirected":"*"},"peerDependencies":{"y":"^1"}}'),
     };
@@ -1320,6 +1469,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       innerComment: consumerOfCode("export const value = host/* edc */.render;\n"),
       inner: consumerOfCode("export const redcap = 1;\nexport const medcost = 2;\n"),
       evidenceAlone: consumerOfCode('export const evidence = "directed by the host";\n'),
+      // The cut #8 refusal, F2 (R-B357): the removal keeps a spacing mark, so it parts the stem.
+      spacingMark: consumerOfCode(`export const key = "ed${VISARGA}c";\n`),
       testModule: liveConsumerOfReplica({ "test/plant.test.ts": "export const edc = 1;\n", "qa/plant.mjs": "export const edc = 1;\n", "docs/plant.md": "EDC is adopted.\n", "examples/plant.js": "export const edc = 1;\n" }),
     };
     const quiet = {
@@ -1334,9 +1485,13 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     // The cut #6 refusal, U1: WORDS at the spellings READINGS names for A2 and R-GLUED-STEM's unread members, each read to its
     // exact words; the cut #7 refusal, U1-U4 (R-B335): every case change, acronym run and plural of one text, acronym runs of one
     // and five capitals, and the plural and separator edges the WORDS clause names.
-    const spelled = Object.fromEntries(["parseEDC", "EDCs", "EdcAssembler", "EDCAssembler", "EDCv2Assembler", "EDC2Assembler", "edc2_assembler", "parseXmlEdcAssembler", "XMLParserEDCAssembler", "XMLsEDCs", "IEdcAssembler", "HTTPSEdcAssembler", "IDs", "EDCs2", "castAs", "EdcAssembler()"].map(text => [text, words(text)]));
+    const spelled = Object.fromEntries(["parseEDC", "EDCs", "EdcAssembler", "EDCAssembler", "EDCv2Assembler", "EDC2Assembler", "edc2_assembler", "parseXmlEdcAssembler", "XMLParserEDCAssembler", "XMLsEDCs", "IEdcAssembler", "HTTPSEdcAssembler", "IDs", "EDCs2", "castAs", "EdcAssembler()", "EDCs_list", "EDCs ready", "metaEdcAssembler", "bizEdcAssembler", "v0EdcAssembler", "v9EdcAssembler", "edcZone", "AEdcAssembler", "ZEdcAssembler", "EDCZone", "EDCAzure", "parseIDs"].map(text => [text, words(text)]));
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "A2").map(residual => residual.id));
-    return { stems: { word: [...VOCABULARY.stems.word], joined: [...VOCABULARY.stems.joined] }, routes, words: spelled, nearMisses, quiet };
+    // Cut #9 (R-B357; refusal #8's U1-U4, F2 and F3): WORDS rule by rule - the sweep, and the removal and kept witnesses between
+    // the d and the c of edc.
+    const sweep = sweepWitness();
+    const categories = categoryWitness(x => words(`ed${x}c`).join(" "), "edc", "ed c");
+    return { stems: { word: [...VOCABULARY.stems.word], joined: [...VOCABULARY.stems.joined] }, routes, words: spelled, nearMisses, quiet, sweep, categories };
   },
   B1: async () => {
     const real = live();

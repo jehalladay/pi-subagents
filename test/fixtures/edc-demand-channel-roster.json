@@ -159,6 +159,23 @@
               "longRun": [
                 "src/plant.ts:1 lexeme edc"
               ],
+              "pluralUnderscore": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "pluralSpace": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "rangeBounds": [
+                "src/plant.ts:1 lexeme edc",
+                "src/plant.ts:2 lexeme edc",
+                "src/plant.ts:3 lexeme edc",
+                "src/plant.ts:4 lexeme edc",
+                "src/plant.ts:5 lexeme edc",
+                "src/plant.ts:6 lexeme edc",
+                "src/plant.ts:7 lexeme edc",
+                "src/plant.ts:8 lexeme edc",
+                "src/plant.ts:9 lexeme edc"
+              ],
               "string": [
                 "src/plant.ts:1 lexeme evidencedirected"
               ],
@@ -191,6 +208,21 @@
                 "src/plant.ts:1 lexeme edc"
               ],
               "fullwidth": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "decomposed": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "softHyphen": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "wordJoiner": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "doubleLowLine": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "enclosingSquare": [
                 "src/plant.ts:1 lexeme edc"
               ],
               "javascript": [
@@ -275,6 +307,63 @@
               "EdcAssembler()": [
                 "edc",
                 "assembler"
+              ],
+              "EDCs_list": [
+                "edc",
+                "s",
+                "list"
+              ],
+              "EDCs ready": [
+                "edc",
+                "s",
+                "ready"
+              ],
+              "metaEdcAssembler": [
+                "meta",
+                "edc",
+                "assembler"
+              ],
+              "bizEdcAssembler": [
+                "biz",
+                "edc",
+                "assembler"
+              ],
+              "v0EdcAssembler": [
+                "v0",
+                "edc",
+                "assembler"
+              ],
+              "v9EdcAssembler": [
+                "v9",
+                "edc",
+                "assembler"
+              ],
+              "edcZone": [
+                "edc",
+                "zone"
+              ],
+              "AEdcAssembler": [
+                "a",
+                "edc",
+                "assembler"
+              ],
+              "ZEdcAssembler": [
+                "z",
+                "edc",
+                "assembler"
+              ],
+              "EDCZone": [
+                "edc",
+                "zone"
+              ],
+              "EDCAzure": [
+                "edc",
+                "azure"
+              ],
+              "parseIDs": [
+                "parse",
+                "id",
+                "s"
               ]
             },
             "nearMisses": {
@@ -282,6 +371,7 @@
               "innerComment": [],
               "inner": [],
               "evidenceAlone": [],
+              "spacingMark": [],
               "testModule": []
             },
             "quiet": {
@@ -306,6 +396,105 @@
                     "src/plant.ts:1 lexeme edc"
                   ]
                 ]
+              }
+            },
+            "sweep": {
+              "stem": {
+                "ascii": "ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed0c|ed1c|ed2c|ed3c|ed4c|ed5c|ed6c|ed7c|ed8c|ed9c|ed c|ed c|ed c|ed c|ed c|ed c|ed c|ed ac|ed bc|ed cc|ed dc|ed ec|ed fc|ed gc|ed hc|ed ic|ed jc|ed kc|ed lc|ed mc|ed nc|ed oc|ed pc|ed qc|ed rc|ed sc|ed tc|ed uc|ed vc|ed wc|ed xc|ed yc|ed zc|ed c|ed c|ed c|ed c|ed c|ed c|edac|edbc|edcc|eddc|edec|edfc|edgc|edhc|edic|edjc|edkc|edlc|edmc|ednc|edoc|edpc|edqc|edrc|edsc|edtc|educ|edvc|edwc|edxc|edyc|edzc|ed c|ed c|ed c|ed c|ed c",
+                "nothing": "edc",
+                "swept": true,
+                "departures": {
+                  "U+0130": "edi c"
+                },
+                "fullwidth": []
+              },
+              "camelLeft": {
+                "ascii": "edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|edc|0 edc|1 edc|2 edc|3 edc|4 edc|5 edc|6 edc|7 edc|8 edc|9 edc|edc|edc|edc|edc|edc|edc|edc|a edc|b edc|c edc|d edc|e edc|f edc|g edc|h edc|i edc|j edc|k edc|l edc|m edc|n edc|o edc|p edc|q edc|r edc|s edc|t edc|u edc|v edc|w edc|x edc|y edc|z edc|edc|edc|edc|edc|edc|edc|a edc|b edc|c edc|d edc|e edc|f edc|g edc|h edc|i edc|j edc|k edc|l edc|m edc|n edc|o edc|p edc|q edc|r edc|s edc|t edc|u edc|v edc|w edc|x edc|y edc|z edc|edc|edc|edc|edc|edc",
+                "nothing": "edc",
+                "swept": true,
+                "departures": {
+                  "U+0130": "i edc"
+                },
+                "fullwidth": []
+              },
+              "acronymLast": {
+                "ascii": "ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed0x|ed1x|ed2x|ed3x|ed4x|ed5x|ed6x|ed7x|ed8x|ed9x|ed x|ed x|ed x|ed x|ed x|ed x|ed x|ed ax|ed bx|ed cx|ed dx|ed ex|ed fx|ed gx|ed hx|ed ix|ed jx|ed kx|ed lx|ed mx|ed nx|ed ox|ed px|ed qx|ed rx|ed sx|ed tx|ed ux|ed vx|ed wx|ed xx|ed yx|ed zx|ed x|ed x|ed x|ed x|ed x|ed x|e dax|e dbx|e dcx|e ddx|e dex|e dfx|e dgx|e dhx|e dix|e djx|e dkx|e dlx|e dmx|e dnx|e dox|e dpx|e dqx|e drx|e dsx|e dtx|e dux|e dvx|e dwx|e dxx|e dyx|e dzx|ed x|ed x|ed x|ed x|ed x",
+                "nothing": "e dx",
+                "swept": true,
+                "departures": {
+                  "U+0130": "edi x"
+                },
+                "fullwidth": []
+              },
+              "acronymLower": {
+                "ascii": "eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda0x|eda1x|eda2x|eda3x|eda4x|eda5x|eda6x|eda7x|eda8x|eda9x|eda x|eda x|eda x|eda x|eda x|eda x|eda x|eda ax|eda bx|eda cx|eda dx|eda ex|eda fx|eda gx|eda hx|eda ix|eda jx|eda kx|eda lx|eda mx|eda nx|eda ox|eda px|eda qx|eda rx|eda sx|eda tx|eda ux|eda vx|eda wx|eda xx|eda yx|eda zx|eda x|eda x|eda x|eda x|eda x|eda x|ed aax|ed abx|ed acx|ed adx|ed aex|ed afx|ed agx|ed ahx|ed aix|ed ajx|ed akx|ed alx|ed amx|ed anx|ed aox|ed apx|ed aqx|ed arx|ed asx|ed atx|ed aux|ed avx|ed awx|ed axx|ed ayx|ed azx|eda x|eda x|eda x|eda x|eda x",
+                "nothing": "ed ax",
+                "swept": true,
+                "departures": {
+                  "U+0130": "edai x"
+                },
+                "fullwidth": []
+              },
+              "pluralRun": {
+                "ascii": "e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e s|e0s|e1s|e2s|e3s|e4s|e5s|e6s|e7s|e8s|e9s|e s|e s|e s|e s|e s|e s|e s|ea s|eb s|ec s|ed s|ee s|ef s|eg s|eh s|ei s|ej s|ek s|el s|em s|en s|eo s|ep s|eq s|er s|es s|et s|eu s|ev s|ew s|ex s|ey s|ez s|e s|e s|e s|e s|e s|e s|eas|ebs|ecs|eds|ees|efs|egs|ehs|eis|ejs|eks|els|ems|ens|eos|eps|eqs|ers|ess|ets|eus|evs|ews|exs|eys|ezs|e s|e s|e s|e s|e s",
+                "nothing": "es",
+                "swept": true,
+                "departures": {
+                  "U+0130": "ei s"
+                },
+                "fullwidth": []
+              },
+              "pluralFollower": {
+                "ascii": "edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s0|edc s1|edc s2|edc s3|edc s4|edc s5|edc s6|edc s7|edc s8|edc s9|edc s|edc s|edc s|edc s|edc s|edc s|edc s|edc s a|edc s b|edc s c|edc s d|edc s e|edc s f|edc s g|edc s h|edc s i|edc s j|edc s k|edc s l|edc s m|edc s n|edc s o|edc s p|edc s q|edc s r|edc s s|edc s t|edc s u|edc s v|edc s w|edc s x|edc s y|edc s z|edc s|edc s|edc s|edc s|edc s|edc s|ed csa|ed csb|ed csc|ed csd|ed cse|ed csf|ed csg|ed csh|ed csi|ed csj|ed csk|ed csl|ed csm|ed csn|ed cso|ed csp|ed csq|ed csr|ed css|ed cst|ed csu|ed csv|ed csw|ed csx|ed csy|ed csz|edc s|edc s|edc s|edc s|edc s",
+                "nothing": "edc s",
+                "swept": true,
+                "departures": {
+                  "U+0130": "edc si"
+                },
+                "fullwidth": []
+              },
+              "pluralLeft": {
+                "ascii": "id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|id s|0 id s|1 id s|2 id s|3 id s|4 id s|5 id s|6 id s|7 id s|8 id s|9 id s|id s|id s|id s|id s|id s|id s|id s|aid s|bid s|cid s|did s|eid s|fid s|gid s|hid s|iid s|jid s|kid s|lid s|mid s|nid s|oid s|pid s|qid s|rid s|sid s|tid s|uid s|vid s|wid s|xid s|yid s|zid s|id s|id s|id s|id s|id s|id s|a id s|b id s|c id s|d id s|e id s|f id s|g id s|h id s|i id s|j id s|k id s|l id s|m id s|n id s|o id s|p id s|q id s|r id s|s id s|t id s|u id s|v id s|w id s|x id s|y id s|z id s|id s|id s|id s|id s|id s",
+                "nothing": "id s",
+                "swept": true,
+                "departures": {
+                  "U+0130": "i id s"
+                },
+                "fullwidth": []
+              },
+              "pluralSingle": {
+                "ascii": "cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|cs|0 cs|1 cs|2 cs|3 cs|4 cs|5 cs|6 cs|7 cs|8 cs|9 cs|cs|cs|cs|cs|cs|cs|cs|ac s|bc s|cc s|dc s|ec s|fc s|gc s|hc s|ic s|jc s|kc s|lc s|mc s|nc s|oc s|pc s|qc s|rc s|sc s|tc s|uc s|vc s|wc s|xc s|yc s|zc s|cs|cs|cs|cs|cs|cs|a cs|b cs|c cs|d cs|e cs|f cs|g cs|h cs|i cs|j cs|k cs|l cs|m cs|n cs|o cs|p cs|q cs|r cs|s cs|t cs|u cs|v cs|w cs|x cs|y cs|z cs|cs|cs|cs|cs|cs",
+                "nothing": "cs",
+                "swept": true,
+                "departures": {
+                  "U+0130": "i cs"
+                },
+                "fullwidth": []
+              }
+            },
+            "categories": {
+              "Cf": {
+                "members": true,
+                "departures": {}
+              },
+              "Mn": {
+                "members": true,
+                "departures": {
+                  "U+0307": "e c",
+                  "U+030C": "e c",
+                  "U+0323": "e c",
+                  "U+0327": "e c",
+                  "U+032D": "e c",
+                  "U+0331": "e c"
+                }
+              },
+              "Me": {
+                "members": true,
+                "departures": {}
+              },
+              "Mc": {
+                "members": true,
+                "departures": {}
               }
             }
           }
@@ -1797,6 +1986,12 @@
               "demand",
               "demand",
               "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
               "demand"
             ],
             "families": [
@@ -1904,6 +2099,44 @@
             "appended": {
               "pastBlock": [],
               "edited": "refused"
+            },
+            "categories": {
+              "Cf": {
+                "members": true,
+                "departures": {}
+              },
+              "Mn": {
+                "members": true,
+                "departures": {
+                  "U+0300": "none",
+                  "U+0301": "none",
+                  "U+0302": "none",
+                  "U+0303": "none",
+                  "U+0304": "none",
+                  "U+0306": "none",
+                  "U+0307": "none",
+                  "U+0308": "none",
+                  "U+0309": "none",
+                  "U+030A": "none",
+                  "U+030C": "none",
+                  "U+030F": "none",
+                  "U+0311": "none",
+                  "U+0323": "none",
+                  "U+0325": "none",
+                  "U+0328": "none",
+                  "U+0340": "none",
+                  "U+0341": "none",
+                  "U+0344": "none"
+                }
+              },
+              "Me": {
+                "members": true,
+                "departures": {}
+              },
+              "Mc": {
+                "members": true,
+                "departures": {}
+              }
             }
           }
         }
