@@ -20,6 +20,12 @@
  * range names), the ITEM rows that hold wb-km7q.16's lines and the wb-km7q.11 lines naming those members, and CLAIM's hold of the
  * helper's headings and its READING, CLAIMED FORMS and THE SYNTAX TREE paragraphs; the helper's lines claim the forms those rows lay,
  * the rest NOT CLAIMED (CARRIED below).
+ * Its cut #2, after refusal #1 of wb-km7q.16 (U1-U4: the gate members G16-R01, G16-R19, G16-R23 and G16-R25 inside forms the
+ * helper's lines named; U5: the STRINGS propertyName and importSpecifier rows held by FROZEN SHAPE alone), changes no reading, row,
+ * pin or plant either: the helper's lines name the quote style, arm order, optionality and parameter list their pages write, each
+ * page of the narrowed items by its quote (NARROWED, a new case), the helper's CLAIMED FORMS has `as the rows lay it` claim the
+ * rows' texts only, and STRINGS holds every position to a row and every row outside the kind range's positions to THE SYNTAX TREE's
+ * naming of it.
  *
  * ACCEPTANCE (the description's acceptance line, verbatim in ACCEPTANCE below and held to the tracker export): "each plant reds the
  * unmodified census and greens under the cure; claim text (header, LIMITS, comment, delivery note) and reader coverage agree
@@ -43,7 +49,11 @@
  * row on the gate's own witness page, pinned with the reader's reading there (G7-L02, killed at refusal #3, maps to the TYPES row
  * its item names), every claim word those pages bear names them after `as the rows lay it`, and THE SYNTAX TREE's string and
  * template clause is claimed only as STRINGS and CARRIED lay it; that each row reds under its member is the seat's battery's
- * measurement (the gate's archived mutant texts, applied verbatim), not this census's.
+ * measurement (the gate's archived mutant texts, applied verbatim), not this census's. (cut #2) wb-km7q.16's refusal #1 is read as
+ * R-B359 rules it: each of its four forms narrowed to the pages the rows write (the helper's lines name each page of the narrowed
+ * items by its quote, NARROWED, and `as the rows lay it` claims the rows' texts only), so G16-R01, G16-R19, G16-R23 and G16-R25 read
+ * outside every claim, NOT CLAIMED, and the two STRINGS rows FROZEN SHAPE alone held are held to THE SYNTAX TREE's naming of them
+ * (STRINGS); that every earlier member stays killed is the seat's battery's measurement.
  *
  * MEMBER CHECK MODEL: wb-km7q.4's B1 feeds exactly the entries of the real module's reading (its comparisons are equal on the real
  * module, which that census asserts), so a plant reds THE MEMBER CHECK exactly when its reading differs from BASE as a multiset
@@ -104,8 +114,8 @@
  *   (NESTED_ATOMS: one type of each kind ts.isTypeNode accepts but the string and number keywords and TYPES' UNREACHABLE kinds),
  *   NativeSnapshot.subjectBasis typed by the position's composite of the atom (LEAF_POSITIONS) reads `subjectBasis.?`; a pair whose
  *   composite's parse places no node of the kind at the position is UNREACHABLE (NESTED_UNREACHABLE, shown by that parse). A union
- *   arm at another position or union length is NOT CLAIMED (cut #4), but for the three unions CARRIED lays (G7-L01, G7-L04,
- *   G7-L03).
+ *   arm at another position, union length or arm order is NOT CLAIMED (cut #4; arm order, cut #2), but for the three unions CARRIED
+ *   lays, each in its page's arm order (G7-L01, G7-L04, G7-L03).
  *  UNIVERSE: the anchor of CONTEXTS and EDGES, read from TypeScript itself. Every slot ts.forEachChild visits whose type in
  *   TypeScript's own lib/typescript.d.ts admits an Identifier (the checker's isTypeAssignableTo; a slot that file leaves undeclared
  *   takes the type its name has on the node interfaces that declare it) is a CONTEXTS row's slot or an UNREACHABLE entry; every node
@@ -135,7 +145,15 @@
  *   tail), each a text appended to the module that holds the name as that kind's text: whole and as a word among others in a
  *   variable's initializer, whole in a type alias, and (a string literal) whole as an object literal's property name and as an
  *   import's specifier. Each is read with Interval, Readonly and Record, adds no identifier of the name and reads BASE. STRINGS
- *   rows are no AGREEMENT rows (each reads BASE, whose checker reading BASE holds).
+ *   rows are no AGREEMENT rows (each reads BASE, whose checker reading BASE holds). (cut #2, refusal #1's U1 and U5) Each string
+ *   literal a row writes stands in double quotes and no text holds an escape sequence (the spelling THE SYNTAX TREE's string clause
+ *   names, which STRINGS holds the clause to name, STRING_SPELLINGS); every position holds a row; and each row at a position outside
+ *   RANGE_POSITIONS (an initializer, a type alias) is one the helper's THE SYNTAX TREE paragraph names by its id (`STRINGS
+ *   propertyName`, `STRINGS importSpecifier`), as every row it names is one.
+ *  NARROWED (cut #2, refusal #1's U1-U4): every helper roster line, heading and paragraph that names a CARRIED member of the items
+ *   NARROWED_ITEMS lists (K16-U1 to K16-U4 and K11-RF4-U1: the forms refusal #1 found wider, with K16-U2's method signature, the
+ *   sibling of the gate's G16-R24) names each of that member's pages by its CARRIED quote, in backquotes, so each such line names
+ *   the arm order, optionality, parameter list and quote style its pages write.
  *
  * ANCHORS OUTSIDE THIS FILE (standing rule 16, CT5 and CT6): the tracker export .beads/issues.jsonl (wb-km7q.11's description
  * lines, its R-B140 note and its refusal #2 lines; wb-km7q.4's notes, each the FIRST line opening with its prefix, so a later note
@@ -150,7 +168,10 @@
  * ts.isClassElement, ts.isPropertyName and ts.isModifier over every SyntaxKind (the TYPES and MEMBERS kinds; with TYPES' readings,
  * the NESTED kinds); TypeScript's ts.forEachChild and its lib/typescript.d.ts read through its checker (UNIVERSE: the CONTEXTS
  * slots and kinds, the EDGES edges); the TypeScript checker (BASE, the AGREEMENT of every row of the tables AGREEMENT reads, and
- * CARRIED's checker pins); src/workbench/observation.ts read from disk (BASE).
+ * CARRIED's checker pins); the helper's THE SYNTAX TREE paragraph (cut #2: every STRINGS row it names by id, `STRINGS propertyName`
+ * and `STRINGS importSpecifier`, is a row, and every row outside RANGE_POSITIONS is one it names) and its roster lines, headings and
+ * paragraphs read with the CARRIED quotes (NARROWED: each line naming a narrowed member holds that member's page quotes, which
+ * CARRIED holds to the tracker export's lines and to the pages); src/workbench/observation.ts read from disk (BASE).
  * SELF-ANCHORED (held only by this file's literals; a coordinated removal from all of them reads green, and that is NOT claimed): a
  * FORMS row of a word that keeps another FORMS row; a TYPES or MEMBERS row of a kind that keeps another row; a RESIDUALS row of a
  * word that keeps another row; a GATE row's plant beyond the quotes its line gives; a CONTEXTS row of a slot that keeps another row
@@ -159,7 +180,10 @@
  * and reading; a NESTED atom beyond its kind; a cut #3 FORMS or CONTEXTS row that no cures pin names
  * (elsewhere/nestedAugmentationBlock, inner interface/classModifierInnerName and /augmentedInnerName, the heritage rows but
  * nestedHeritage); which row a cures pin names, beyond its existence; a CARRIED page beyond its quote or retype; a STRINGS row's
- * text beyond its kind, form, position and name, and a STRINGS row of a kind that keeps another row of its form and position; and
+ * text beyond its kind, form, position and name, and a STRINGS row of a kind that keeps another row of its form and position;
+ * (cut #2) NARROWED_ITEMS, the items NARROWED reads (an item dropped from it leaves its members CARRIED rows, unheld by NARROWED),
+ * RANGE_POSITIONS, the positions STRINGS exempts from THE SYNTAX TREE's naming, and STRING_SPELLINGS, the spelling phrases STRINGS
+ * holds THE SYNTAX TREE to name; and
  * (cut #4, wb-km7q.16) the text of each claim word's narrowing in the helper (its `as the rows lay it` forms, its NOT CLAIMED
  * clauses, its headings, CLAIMED FORMS and THE SYNTAX TREE), which CLAIM holds only between the helper's header and its exported
  * rosters, headings and paragraphs, so an edit of both copies together reads green.
@@ -178,19 +202,25 @@
  * position (two or more positions under the top of a type, where NESTED pins one) is NOT CLAIMED by this census.
  * CARRIED (wb-km7q.16; R-B272 filed it to pin these forms or name them residuals, R-B306 made it this census's carrier): every
  * member refusal #3's six items and its F1 line name and every member refusal #4's U1 and F1-F4 lines name is a CARRIED row on the
- * gate's own witness page (G7-L02, killed at refusal #3, the TYPES row its item names), so the helper's lines claim the forms those
- * pages lay: U1, Date as a union's third of four arms, first of three and last of two after Readonly<string> (G7-L01, G7-L04,
- * G7-L03); U2, a method signature as the node literal's third member (G7-E01); U3, the node literal's second property written with
- * no type (G7-I01); U4, a call signature under ObservationTrace (G7-M01); U5, ObservationTrace's interface before NativeSnapshot's
- * in one augmentation block, a type alias before NativeSnapshot's, and the specifier ../../src/workbench/observation.js (G7-D01,
- * G7-D02, G7-P01); U6, ObservationTrace's presentation property (G7-Q01); refusal #3's F1, a declare class of NativeSnapshot
- * without export (G7-D04, a page the checker refuses with TS2395); refusal #4's U1, its four string and template pages (GP16-S01,
- * GP16-S02, GP16-S03); its F1, Array<string> (GP16-L04); F2, a second ObservationEvent interface of two members (GP16-D02); F3, a
- * class property with an initializer (GP16-M01); F4, an empty type parameter list (GP16-R04). NOT CLAIMED by this census: any other
- * form of those families, among them a union arm that reads as no leaf at a position, union length or kind sharing no row lays,
- * another member kind or untyped property in an expansion (a construct signature among them), another augmentation block of two or
- * more statements or another ../ spelling, an inner interface property under Interval's expansion, another class declaration
- * without export, a type reference to a name no row writes, and another string or template text or position.
+ * gate's own witness page (G7-L02, killed at refusal #3, the TYPES row its item names), so the helper's lines claim those pages'
+ * texts, each as its page writes it (cut #2: each page of the narrowed items named by its quote, NARROWED): U1, Date as a union's
+ * third of four arms in string | number | Date | "region", first of three in Date | string | number and last of two in
+ * Readonly<string> | Date (G7-L01, G7-L04, G7-L03); U2, the optional method signature refresh?(): void, with no parameter, as the
+ * node literal's third member (G7-E01); U3, the node literal's second property written optional with no type, definitionDigest?
+ * (G7-I01); U4, the call signature (): void, with no parameter, as ObservationTrace's last member (G7-M01); U5, ObservationTrace's
+ * interface before NativeSnapshot's in one augmentation block, a type alias before NativeSnapshot's, and the specifier
+ * ../../src/workbench/observation.js (G7-D01, G7-D02, G7-P01); U6, ObservationTrace's presentation property (G7-Q01); refusal #3's
+ * F1, a declare class of NativeSnapshot without export (G7-D04, a page the checker refuses with TS2395); refusal #4's U1, its four
+ * string and template pages, each string in double quotes (GP16-S01, GP16-S02, GP16-S03); its F1, Array<string> (GP16-L04); F2, a
+ * second ObservationEvent interface of two members (GP16-D02); F3, a class property with an initializer (GP16-M01); F4, an empty
+ * type parameter list (GP16-R04). NOT CLAIMED by this census: any other form of those families, among them a union arm that reads as
+ * no leaf at a position, union length, arm order or kind sharing no row lays (refusal #1 of wb-km7q.16's G16-R19 page, number |
+ * string | Date | "region", among them), another member kind or untyped property in an expansion (a construct signature among them),
+ * an untyped property or a method written required in an expansion (G16-R23, G16-R24), a call signature or a method with a parameter
+ * (G16-R25), another augmentation block of two or more statements or another ../ spelling, an inner interface property under
+ * Interval's expansion, another class declaration without export, a type reference to a name no row writes, and another string or
+ * template text, spelling or position (a string literal in single quotes, G16-R01, and a text written with an escape sequence among
+ * them).
  *
  * Display paths added: none. Test-only: it spawns nothing and writes nothing; it reads the helper, the tracker export,
  * src/workbench/observation.ts and TypeScript's lib/typescript.d.ts, lays every plant over that text in memory, and runs the
@@ -1877,6 +1907,10 @@ const CARRIED_ROWS: readonly CarriedRow[] = [
   ]),
 ];
 const memberOf = (row: CarriedRow): string => row.id.slice(0, row.id.indexOf("/"));
+/** The carried items whose forms refusal #1 of wb-km7q.16 found wider than their pages (U1, THE SYNTAX TREE's string clause, folded from
+ * K11-RF4-U1; U2, LEAF union, K16-U1; U3, the untyped property, K16-U3; U4, the call signature, K16-U4) and K16-U2's method signature (its
+ * G16-R24 sibling): NARROWED holds every helper line naming one of their members to that member's page quotes (cut #2). */
+const NARROWED_ITEMS: readonly string[] = ["K16-U1", "K16-U2", "K16-U3", "K16-U4", "K11-RF4-U1"];
 const witnessOf = (row: CarriedRow): string => row.id.slice(row.id.indexOf("/") + 1);
 /** Whether a page holds a quote: its parts between `...` elisions stand in the page in order. */
 function holdsQuote(page: string, quote: string): boolean {
@@ -1937,6 +1971,18 @@ const POSITION_STATEMENTS: Readonly<Record<string, string>> = {
   "property name": "VariableStatement",
   "import specifier": "ImportDeclaration",
 };
+/** The positions STRINGS requires of every kind of TypeScript's range (an initializer's whole and word rows, a type alias's row); a row at
+ * any other position is one THE SYNTAX TREE names by its id (wb-km7q.16 cut #2, refusal #1's U5). */
+const RANGE_POSITIONS: readonly string[] = ["initializer", "type alias"];
+/** The spelling THE SYNTAX TREE's string clause names for the rows' texts (refusal #1's U1: G16-R01 read a single-quoted literal). */
+const STRING_SPELLINGS: readonly string[] = [
+  "a string literal in double quotes, a no-substitution template literal and a template's head, middle and tail, none with an escape sequence,",
+  "a string literal in double quotes also whole as a property name",
+];
+/** The helper's THE SYNTAX TREE paragraph, as the helper exports it. */
+const syntaxTreeParagraph = (): string => HEADER_PARAGRAPHS.find(([name]) => name === "THE SYNTAX TREE")?.[1] ?? "";
+/** The STRINGS rows THE SYNTAX TREE names by id (`STRINGS <id>`). */
+const namedStringRows = (): string[] => unique([...syntaxTreeParagraph().matchAll(/\bSTRINGS ([a-z]+[A-Z][A-Za-z]*)\b/gu)].map(match => match[1] ?? ""));
 /** The text of a string literal, a no-substitution template literal or a template's head, middle or tail (undefined for any other node). */
 const literalText = (node: ts.Node): string | undefined =>
   ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)
@@ -3089,7 +3135,7 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
   );
 
   it(
-    "STRINGS: a string's or a template's text that is Interval, Readonly or Record, whole or as a word, at the string literal and every kind TypeScript's template token range names, adds no identifier and reads BASE",
+    "STRINGS: a string's or a template's text that is Interval, Readonly or Record, whole or as a word, at the string literal and every kind TypeScript's template token range names, adds no identifier and reads BASE; each is spelled as THE SYNTAX TREE's string clause names it, every position holds a row, and a row outside the initializer and type alias positions is one THE SYNTAX TREE names by id",
     () => {
       const failures: string[] = [];
       const kinds = [
@@ -3103,6 +3149,20 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
           if (!STRING_ROWS.some(row => row.pins.includes(`at ${kind}`) && row.pins.includes(`form ${form}`) && row.pins.includes("in initializer"))) failures.push(`${kind}: no ${form} row in an initializer`);
         }
         if (!STRING_ROWS.some(row => row.pins.includes(`at ${kind}`) && row.pins.includes("in type alias"))) failures.push(`${kind}: no row in a type alias`);
+      }
+      // wb-km7q.16 cut #2 (refusal #1's U5: the propertyName and importSpecifier rows were held by FROZEN SHAPE alone): every position holds
+      // a row, every row THE SYNTAX TREE names by id is a row, and every row at a position outside RANGE_POSITIONS is one it names.
+      const named = namedStringRows();
+      // refusal #1's U1: the clause names the spelling the rows write (each row's spelling checked below), so dropping it from both helper
+      // copies reds here.
+      for (const spelling of STRING_SPELLINGS) if (!syntaxTreeParagraph().includes(spelling)) failures.push(`THE SYNTAX TREE names no '${spelling}'`);
+      for (const id of named) if (!STRING_ROWS.some(row => row.id === id)) failures.push(`THE SYNTAX TREE names STRINGS ${id}, no row of it`);
+      for (const position of Object.keys(POSITION_STATEMENTS)) {
+        if (!STRING_ROWS.some(row => row.pins.includes(`in ${position}`))) failures.push(`${position}: no row at the position`);
+      }
+      for (const row of STRING_ROWS) {
+        const position = pinsWith(row.pins, "in ")[0]?.slice("in ".length) ?? "";
+        if (!RANGE_POSITIONS.includes(position) && !named.includes(row.id)) failures.push(`${row.id}: THE SYNTAX TREE names no STRINGS ${row.id} (in ${position})`);
       }
       for (const row of STRING_ROWS) {
         const at = pinsWith(row.pins, "at ")[0]?.slice("at ".length) ?? "";
@@ -3119,6 +3179,12 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
             return form === "whole" ? value === name : value !== name && value.split(/[^A-Za-z0-9_$]+/u).includes(name);
           });
           if (!holds) failures.push(`${row.id}/${name}: no ${at} whose text holds ${name} ${form}`);
+          // wb-km7q.16 cut #2 (refusal #1's U1): THE SYNTAX TREE's string clause names the spelling the rows write, a string literal in
+          // double quotes and every text with no escape sequence.
+          for (const node of literals) {
+            const written = node.getText(source);
+            if ((ts.isStringLiteral(node) && !written.startsWith('"')) || written.includes("\\")) failures.push(`${row.id}/${name}: writes ${written}`);
+          }
           if (addedIdentifiers(text, name).length > 0) failures.push(`${row.id}/${name}: adds an identifier ${name}`);
           const reading = readingPins(observationMembers(text));
           if (!sameList(reading, UNCHANGED)) failures.push(`${row.id}/${name}: reads ${JSON.stringify(reading)}`);
@@ -3128,6 +3194,32 @@ describe(`observation members census (${BEAD}, SDK-REACTIVE-FIBER-R2)`, () => {
     },
     BUDGET_MS,
   );
+
+  it("NARROWED: every helper line that names a member of the narrowed items names each of that member's pages by its CARRIED quote, in backquotes", () => {
+    const failures: string[] = [];
+    const members = unique(
+      ITEM_ROWS.filter(row => NARROWED_ITEMS.includes(row.id)).flatMap(row =>
+        pinsWith(row.pins, "cures ").flatMap(pin => {
+          const [member = "", target = ""] = pin.slice("cures ".length).split(" ");
+          return target.startsWith("CARRIED:") ? [member] : [];
+        }),
+      ),
+    );
+    if (!sameList(NARROWED_ITEMS, ITEM_ROWS.filter(row => NARROWED_ITEMS.includes(row.id)).map(row => row.id))) failures.push("NARROWED_ITEMS names no ITEM row in order");
+    const lines: readonly (readonly [string, string])[] = [
+      ...HEADER_SECTIONS.flatMap(([section, roster]) => roster.map(entry => [`${section} ${entry.word}`, `- ${entry.word}: ${entry.claim}`] as const)),
+      ...HEADER_HEADINGS,
+      ...HEADER_PARAGRAPHS,
+    ];
+    for (const member of members) {
+      const quotes = CARRIED_ROWS.filter(row => memberOf(row) === member).flatMap(row => pinsWith(row.pins, "quote ").map(pin => pin.slice("quote ".length)));
+      if (quotes.length === 0) failures.push(`${member}: no CARRIED quote`);
+      const naming = lines.filter(([, text]) => carriedMembers(text).includes(member));
+      if (naming.length === 0) failures.push(`${member}: no helper line names it`);
+      for (const [name, text] of naming) for (const quote of quotes) if (!text.includes(`\`${quote}\``)) failures.push(`${name}: names ${member} without its page \`${quote}\``);
+    }
+    expect(failures).toEqual([]);
+  });
 
   it("FROZEN SHAPE: every row of every table, as <table>:<id>:<pin count>", () => {
     expect(shapeOf()).toEqual(FROZEN_SHAPE);
