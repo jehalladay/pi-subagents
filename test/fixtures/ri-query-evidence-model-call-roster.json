@@ -1332,9 +1332,16 @@
      ],
      "capsContinued": [
       "1 query"
+     ],
+     "casePair": [
+      "1 query"
+     ],
+     "runPair": [
+      "1 inference"
      ]
     },
     "wordsSweep": 140,
+    "segmentsSweep": 25,
     "long": [
      "query"
     ],
@@ -1466,6 +1473,12 @@
     "capsContinued": [
      "src/plant.ts:1 query"
     ],
+    "casePair": [
+     "src/plant.ts:1 query"
+    ],
+    "runPair": [
+     "src/plant.ts:1 inference"
+    ],
     "manifest": [
      "package.json:dependencies:@acme/reactive-query query",
      "package.json:devDependencies:reactive-inference-sdk inference"
@@ -1501,6 +1514,43 @@
     "runLast": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     "runNext": "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
     "runNextSecond": "abcdefghijklmnopqrstuvwxyz"
+   },
+   "segments": {
+    "space": [
+     "inference sdk",
+     "query sdk",
+     "query view",
+     "reactive inference",
+     "reactive query"
+    ],
+    "underscore": [
+     "inference sdk",
+     "query sdk",
+     "query view",
+     "reactive inference",
+     "reactive query"
+    ],
+    "hyphen": [
+     "inference sdk",
+     "query sdk",
+     "query view",
+     "reactive inference",
+     "reactive query"
+    ],
+    "dot": [
+     "inference sdk",
+     "query sdk",
+     "query view",
+     "reactive inference",
+     "reactive query"
+    ],
+    "slash": [
+     "inference sdk",
+     "query sdk",
+     "query view",
+     "reactive inference",
+     "reactive query"
+    ]
    },
    "quiet": {
     "projectionQuery": [],
