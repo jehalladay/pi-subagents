@@ -5,21 +5,23 @@
  * Requirements (the bead's own text in the tracker export, quoted exactly by REQUIREMENTS and held both ways): the
  * description's U1-U4 (refusal #3's C4 entry-point spellings, C1 link loads, C2 computed-key destructures and the row-A member)
  * and R-B145's U1-U2 (refusal #4's C2 declarations[0] reading and B2/Q3 callee-name call reading).
- * Cut #2 answers refusal #1 (gate-prep-16, O:1567): U1 (each surviving reader mutant's form is now a row - the gate's twelve
- * paired twins among them, nine verbatim and three restated as wider rows - and a claim's wording names no form that is not
- * a row's case), U2 (DIGESTS pins each row's reader calls beside its reading, so same-reading rows no longer share a digest)
- * and U3 (the helper header says what its rows pin, no longer that each reader reads exactly what its lines say), with F1
- * (the whole header is held, each heading once).
+ * Cut #3 is the enumerate-the-resolvable cut ruling R-B239 binds after refusal #2 (gate-prep-21, O:1627). U1: each of the 68
+ * reader mutants refusal #2 names keeps this census red - the 67 with a gate paired twin through that twin as a row (P21-*,
+ * verbatim from the gate's twin file but for module names and the registration rows' labels), F-EV-TypeReferenceNode through
+ * EV-WITHIN-TYPE-REF; each of the five walks has a *-WITHIN line naming the node kinds its rows plant a read form within (one
+ * row per kind; six rows are the seat's own: EV-WITHIN-TYPE-REF, RG-WITHIN-NEW and four RG-ALIAS-WITHIN rows); and each claim
+ * line's wording is narrowed to the inputs its rows plant. U2: the two header sentences that
+ * stated the wording-roster agreement as a fact are retired; the helper header scopes each line's reading to its rows' inputs.
  * Acceptance, as this census reads it: "each plant reds the unmodified census and greens under the cure" - every falsifier
  * below is a plant its claim's reader reads as the claim says (green here); the gate's own plants (refusal #3's L3-* and
- * refusal #4's G16-*, verbatim from the archived plant tools; their contexts are minimal virtual modules, never src edits)
- * are among them, and against the unmodified cut #4 readers each surviving plant read nothing (the seat's red record, not
- * re-run here). "every claim sentence's wording and its reader's coverage agree byte-for-byte with the falsifier roster" -
- * the helper's whole header comment equals HEADER_PROSE, the two headings, CLAIM_LINES and RESIDUAL_LINES line for line
- * (each heading once in the helper, and no claim or residual line outside the header), every bracketed falsifier is one
- * registered row of its claim (in order), and every row is named by exactly one line. That each form a line's wording names
- * is a row's case is what the seat's mutation sweep measured (one textual mutant of the helper at a time; each survivor's
- * form was made a row, or the mutant is recorded as equivalent in the delivery note): a measurement, not a proof.
+ * refusal #4's G16-*, verbatim from the archived plant tools; their contexts are minimal virtual modules, never src edits) and
+ * refusal #2's paired twins are among them, and under each named mutant of refusals #1 and #2 this census reds (the seat's red
+ * record, not re-run here). "every claim sentence's wording and its reader's coverage agree byte-for-byte with the falsifier
+ * roster" - the helper's whole header comment equals HEADER_PROSE, the two headings, CLAIM_LINES and RESIDUAL_LINES line for
+ * line (each heading once in the helper, and no claim or residual line outside the header), every bracketed falsifier is one
+ * registered row of its claim (in order), every row is named by exactly one line, and each *-WITHIN line's node kinds are its
+ * rows' kinds in row order, each row planting its read forms within a node of its kind (parsed here, not by the helper). A
+ * line's reading is claimed for the inputs its rows plant; a form no row of a line plants is NOT CLAIMED by that line.
  * FROZEN SHAPE (standing rule 16): FROZEN pins every requirement, claim and residual as `<id>:<pin count>`. DIGESTS pins every
  * row's reader calls and reading: the sha256 of the JSON of each call the row's read makes to a reader under judgment (the
  * reader's name, its arguments and its result; a node by its file - a census module with the sha256 of its text - and its
@@ -29,7 +31,8 @@
  * (checked by the frozen-shape row), so a row whose read is replaced by a constant reds (it calls no reader), and a row whose
  * case is swapped for another row's reds its digest (the calls and reading it then makes are that row's). A census module's
  * text enters a digest only where a traced argument or result names one of its nodes. The outside anchors are the helper
- * header (claims, residuals, their pins) and the tracker export (the requirements' quotes and count).
+ * header (claims, residuals, their pins, the *-WITHIN kinds), the tracker export (the requirements' quotes and count) and the
+ * TypeScript parser (each *-WITHIN row's read forms and their enclosing node kinds).
  * The last case reads the vitest task tree: every registered test, in order, in run mode, not inverted, ran before it, and
  * every row reached the end of its body having made its three assertions (counted from vitest's expect state, so a row whose
  * assertions are removed reds this case whatever flags the run is given).
@@ -96,7 +99,7 @@ const REQUIREMENTS: readonly Requirement[] = [
     id: "U1",
     quote:
       "- U1 (C4 launch family, MEDIUM): entry-point spellings unseen by the C4 reader - cover every launch/entry-point spelling the claim words, or state the seen set.",
-    claims: ["EN-DIRECTORY", "EN-MODULE", "EN-JSON", "EN-FILE", "EN-OTHER", "ST-LITERAL", "ST-TEMPLATE", "ST-KIND-TS", "ST-KIND-JSX", "ST-JSON", "ST-JSON-UNPARSED", "ST-UNREAD", "ST-AT"],
+    claims: ["EN-DIRECTORY", "EN-MODULE", "EN-JSON", "EN-FILE", "EN-OTHER", "ST-LITERAL", "ST-TEMPLATE", "ST-WITHIN", "ST-KIND-TS", "ST-KIND-JSX", "ST-JSON", "ST-JSON-UNPARSED", "ST-UNREAD", "ST-AT"],
   },
   {
     id: "U2",
@@ -107,9 +110,9 @@ const REQUIREMENTS: readonly Requirement[] = [
     id: "U3",
     quote:
       "- U3 (C2 member-reader subform, MEDIUM): computed-key destructure unseen - cover computed-key destructuring in the member reader, or state the syntactic forms pinned.",
-    claims: ["MB-KEY-NAME", "MB-KEY-NONE", "MB-KEY-COMPUTED", "MB-PATTERN", "MB-PATTERN-PLACE"],
+    claims: ["MB-KEY-NAME", "MB-KEY-NONE", "MB-KEY-COMPUTED", "MB-PATTERN", "MB-PATTERN-PLACE", "MB-PATTERN-WITHIN"],
   },
-  { id: "U4", quote: "- U4 (row A, MEDIUM): the row-A member named in the refusal - cure or state.", claims: ["EV-CLOSURE", "EV-READS"] },
+  { id: "U4", quote: "- U4 (row A, MEDIUM): the row-A member named in the refusal - cure or state.", claims: ["EV-CLOSURE", "EV-READS", "EV-WITHIN"] },
   {
     id: "B145-U1",
     quote:
@@ -120,7 +123,7 @@ const REQUIREMENTS: readonly Requirement[] = [
     id: "B145-U2",
     quote:
       "U2 - B2's and Q3's call reader matches callee names only, so a src call of the injected-reader registration through Function.prototype.call or a local alias is missing from registrationCalls/injectedCalls (the direct-call twin reds B2/Q3) - the reader must resolve .call/.apply and local aliases, or the claim excludes them.",
-    claims: ["RG-BINDING", "RG-ELEMENT-KEY", "RG-CALL", "RG-CALL-METHOD", "RG-ALIAS", "RG-SPECIFIER", "RG-OTHER"],
+    claims: ["RG-BINDING", "RG-ELEMENT-KEY", "RG-CALL", "RG-CALL-METHOD", "RG-ALIAS", "RG-ALIAS-WITHIN", "RG-SPECIFIER", "RG-OTHER", "RG-WITHIN"],
   },
 ];
 
@@ -131,55 +134,63 @@ const HEADER_PROSE: readonly string[] = [
   " * R-B145): the full-surface readers for wb-ts6.2's HX mutation 'Verified' census (test/workbench-hx-mutation-verified-census.test.ts,",
   " * cut #4 618f99fe, not on trunk; wb-ts6.2 is blocked by this bead under R-B145). That cut restated each census claim to the",
   " * fail-closed core its own readers proved; these readers carry the coverage it narrowed out (the C4 entry-point spellings, the C1",
-  " * link loads, the C2 computed-key and assignment destructures and every declaration of a symbol, the B2/Q3 registration call",
-  " * forms, and an environment axis for row A), so its re-cut is a mechanical restatement over them. Every claim line below names",
-  " * its requirement (the bead's U1-U4 and R-B145's U1-U2), the reading it claims and the falsifier rows that pin that reading:",
-  " * each form its wording names is the case of one of its rows, and a form its wording does not name is not claimed. Every",
-  " * residual line names the quiet rows that pin it. The falsifier census (test/workbench-hx-mutation-verified-readers-census.test.ts)",
-  " * holds this whole header line for line (each heading once in the file), runs each falsifier (the gate's own plants verbatim",
-  " * among them: each reads as its claim says, and the unmodified wb-ts6.2 cut #4 reader did not) and each quiet row (the",
-  " * residual's probe reads nothing while its loud twin reads), and pins each row's reader calls and reading by digest.",
+  " * link loads, the C2 computed-key and assignment destructures and the declarations of a merged symbol, the B2/Q3 registration",
+  " * call forms, and an environment axis for row A), so its re-cut is a mechanical restatement over them. Each claim line below",
+  " * names its requirement (the bead's U1-U4 and R-B145's U1-U2), the falsifier rows that pin it and the reading they pin, scoped",
+  " * to the inputs those rows plant: its reading is claimed for those inputs only (the enumerate-the-resolvable form ruling R-B239",
+  " * binds), so a form, position, depth, name, key, statement or file shape that no row of a line plants is NOT CLAIMED by that",
+  " * line. Each *-WITHIN line names the node kinds (ts.SyntaxKind) its rows plant a read form within, one row per kind and in row",
+  " * order. Each residual line names the quiet rows that pin it. The falsifier census",
+  " * (test/workbench-hx-mutation-verified-readers-census.test.ts) holds this whole header line for line (each heading once in the",
+  " * file), runs each falsifier (the gate's own plants and paired twins among them) and each quiet row (the residual's probe reads",
+  " * nothing while its loud twin reads), checks that each *-WITHIN row plants its read forms within a node of its kind, and pins",
+  " * each row's reader calls and reading by digest.",
   " *",
 ];
 const CLAIMS_HEADING = ' * CLAIMS ("- <claim> (<requirement>) [<falsifiers>]: <the reading>"):';
 const RESIDUALS_HEADING = ' * RESIDUALS ("- <residual> [<quiet rows>]: <the family no claim reads>"):';
 /** The helper header's claim lines, byte for byte and in order (each "<claim> (<requirement>) [<falsifiers>]: <reading>"). */
 const CLAIM_LINES: readonly string[] = [
-  "EN-DIRECTORY (U1) [EN-WALK-TREE]: entriesBelow lists every entry below a directory, at any depth, as its path relative to that directory (/-separated) with the kind entryKind reads from the entry readdir reports, and descends into every directory entry.",
-  "EN-MODULE (U1) [EN-WALK-MODULES]: a regular file whose name ends with a MODULE_EXTENSIONS member (.ts, .tsx, .mts, .cts, .js, .jsx, .mjs, .cjs) reads module.",
-  "EN-JSON (U1) [L3-C4-JSON-CMD-ENTRY, G16-C5-DOTFILE-JSON-ENTRY]: a regular file whose name ends with .json in that letter case, a dot-named one included, reads json.",
-  "EN-FILE (U1) [EN-WALK-FILES]: a regular file of any other name reads file.",
-  "EN-LINK (U2) [L3-C1-SYMLINK-ENTRY, L3-C1-DIRLINK-CTRL-ENTRY, EN-WALK-DANGLING, EN-KIND-LINK-FIRST]: a symbolic link reads link whatever it points to (a file, a directory, nothing), and the walk never descends through one.",
-  "EN-TARGET (U2) [EN-TARGET-REAL, EN-TARGET-DANGLING, EN-TARGET-CHAIN]: a link entry carries its target as realpathSync reads it (every link on the path followed, a link to a link included), or <dangling> when that resolves to nothing.",
-  "EN-OTHER (U1) [EN-KIND-OTHER]: any other entry (a FIFO, a socket, a device: no link, no directory, no regular file) reads other.",
-  "ST-LITERAL (U1) [ST-LITERAL-STRING, ST-LITERAL-NOSUB, G16-C4-ESCAPED-STRINGS, ST-LITERAL-NOSUB-ESCAPED, ST-LITERAL-TYPE-AND-ATTRIBUTE]: entryStrings reads a module entry's strings as the cooked text (escapes decoded) of each string literal (one in a type and a JSX attribute's included) and no-substitution template it holds.",
-  "ST-TEMPLATE (U1) [ST-TEMPLATE-HEAD, L3-C4-TMPL-MIDDLE-STRINGS, ST-TEMPLATE-TAIL, ST-TEMPLATE-ESCAPED]: and as the cooked text of each template's head, middle and tail.",
-  "ST-KIND-TS (U1) [ST-KIND-ASSERTION]: a module entry whose name ends with .ts, .mts or .cts parses as TypeScript, so an angle-bracket assertion's operand is read.",
-  "ST-KIND-JSX (U1) [ST-KIND-JSX-TEXT]: any other module entry (.tsx, .jsx, .js, .mjs, .cjs) parses with JSX, so JSX text is no string.",
-  "ST-JSON (U1) [L3-C4-JSON-CMD-STRINGS, ST-JSON-NESTED, ST-JSON-KEY, ST-JSON-ESCAPE, ST-JSON-TOP]: a json entry's strings are, from JSON.parse of its text (escapes decoded), every string value and every object key at any depth, the top level included.",
-  "ST-JSON-UNPARSED (U1) [ST-JSON-INVALID]: a json entry whose text JSON.parse refuses reads undefined.",
-  "ST-UNREAD (U1) [ST-OTHER-NAMES]: an entry of any other name reads undefined.",
-  "ST-AT (U1) [ST-AT-FILE, ST-AT-LINKED-JSON, ST-AT-UNREAD]: stringsAt reads an entry by lstat: a regular file, and a link whose target is a regular file, by the entry's own name and the target's text; a directory, a link to a directory and a link to nothing read undefined.",
-  "ID-REAL (U2) [L3-C1-SYMLINK-IDENTITY, L3-C1-DIRLINK-CTRL-IDENTITY, ID-REAL-BELOW, ID-REAL-LINKED, ID-REAL-SIBLING, ID-REAL-OUTSIDE-DIST, ID-REAL-PACKAGE-ITSELF]: isSdkFile reads a path through every link on it (realpathSync): its real path anywhere below the package's real directory (that directory and a /, so neither a sibling sharing its prefix nor the directory itself is) is the SDK's.",
-  "ID-MANIFEST (U2) [ID-MANIFEST-COPY, ID-MANIFEST-LINKED, ID-MANIFEST-NAMELESS, ID-MANIFEST-NONE, ID-MANIFEST-OTHER-NAME]: so is a real path whose nearest package.json, read upward from that real path, names @hyperunix/sdk exactly (a nearest manifest naming none - no name, or a name that is no string - or no manifest, reads null; one naming another package, @hyperunix/sdk-tools included, reads that name and is no SDK file).",
-  "ID-DANGLING (U2) [ID-DANGLING-INSIDE]: a path that resolves to nothing is no SDK file.",
-  "ID-RESOLVE (U2) [L3-C1-SYMLINK-RESOLVE, ID-RESOLVE-BARE, ID-RESOLVE-PLAIN, ID-RESOLVE-OPTIONS]: resolvesIntoSdk resolves a specifier by ts.resolveModuleName from the importing file under the given options (a paths alias they carry included), and the resolved file is the SDK's as isSdkFile reads it.",
-  "MB-DECLARATIONS (B145-U1) [G16-C2-INTERSECTION-LOCAL-FIRST, G16-C2-INTERSECTION-SDK-FIRST, G16-C2-INTERSECTION-DESTRUCTURE, MB-DECLARATIONS-LOCAL, MB-DECLARATIONS-TWO-SDK, MB-DECLARATIONS-TWO-SDK-REVERSED, MB-DECLARATIONS-NESTED-PATH]: sdkDeclarations reads every declaration of a symbol that lies below the SDK's dist directory, in the checker's order (the symbol's declarations), as its path there (a nested one included) - a property of an intersection whose local constituent comes first included.",
-  "MB-ALIAS (B145-U1) [MB-ALIAS-IMPORT]: an alias symbol (an import binding) is read through checker.getAliasedSymbol.",
-  "MB-KEY-NAME (U3) [MB-KEY-IDENTIFIER, MB-KEY-STRING, MB-KEY-SHORTHAND]: bindingKey reads an object binding element's key as its property name when that is an identifier or a string literal, and as its own name when it has none (shorthand).",
-  "MB-KEY-NONE (U3) [MB-KEY-REST, MB-KEY-ARRAY]: a rest element and an array binding element read undefined.",
-  "MB-KEY-COMPUTED (U3) [L3-C2-COMPUTED-DESTRUCTURE, L3-C2-CONSTKEY-DESTRUCTURE, MB-KEY-TEMPLATE]: a computed key whose expression the checker types as one string literal (a quoted literal in brackets, a const bound to one, a no-substitution template) reads that literal.",
-  "MB-PATTERN (U3) [L3-C2-ASSIGN-DESTRUCTURE, MB-PATTERN-RENAMED, MB-PATTERN-STRING, MB-PATTERN-COMPUTED, MB-PATTERN-DEFAULTED, MB-PATTERN-TWO, MB-PATTERN-REST]: assignmentPatternMembers reads every property of an object destructuring-assignment pattern, in order - a shorthand (defaulted or not), an identifier, string-literal or computed key (one string literal) - with its name and the property symbol of the pattern's type (checker.getTypeOfAssignmentPattern); a rest element reads nothing.",
-  "MB-PATTERN-PLACE (U3) [MB-PLACE-FOR-OF, MB-PLACE-NESTED, MB-PLACE-ARRAY, MB-PLACE-DEFAULT-TARGET, MB-PLACE-NOT-PATTERN, MB-PLACE-FOR-OF-ARRAY, MB-PLACE-NESTED-ARRAY, MB-PLACE-RHS-ARRAY]: a pattern is an object literal on the left of = (a default's target inside a pattern included), the initializer of a for-of, a property's value in a pattern, or an element of an array literal that is itself on the left of =, a for-of initializer or nested in a pattern; the reader reads no other object literal as one.",
-  "RG-BINDING (B145-U2) [G16-B2-DIRECT-CALL-CTRL, RG-RENAMED-IMPORT, RG-NAMESPACE-MEMBER]: registrationReferences reads a reference as an identifier whose symbol is a target, an import binding read through checker.getAliasedSymbol (renamed, or a namespace's member) included.",
-  "RG-ELEMENT-KEY (B145-U2) [RG-ELEMENT-CALL, RG-ELEMENT-TEMPLATE, RG-ELEMENT-CONST]: and as an element access whose key the checker types as one string literal (a string literal, a no-substitution template, a const bound to one), by the property of that name on its object's type.",
-  "RG-CALL (B145-U2) [G16-B2-DIRECT-CALL-INPLACE-CTRL, RG-PARENTHESIZED-CALL, RG-ASSERTED-CALL, RG-WRAPPED-MEMBER-CALL]: a reference that is a call's callee (itself, or the member access or element access it names), read through parentheses and as, satisfies, non-null and angle-bracket assertions, reads call.",
-  "RG-CALL-METHOD (B145-U2) [G16-B2-CALL-METHOD, G16-B2-CALL-METHOD-INPLACE, RG-APPLY, RG-METHOD-WRAPPED, RG-METHOD-RECEIVER]: a reference that is the receiver of .call or .apply (itself, or the member access or element access it names, read through the same wrappers), that member (read through the same wrappers) being a call's callee, reads call-method.",
-  "RG-ALIAS (B145-U2) [G16-B2-ALIAS-CALL, G16-B2-ALIAS-CALL-BLANK, RG-ALIAS-CHAIN, RG-ALIAS-EXPORTED, RG-ALIAS-WRAPPED, RG-OWN-DECLARATION, RG-ALIAS-LOCAL, RG-ALIAS-MEMBER, RG-ALIAS-ELEMENT, RG-ALIAS-FORMS]: a reference (an identifier, a member access or an element access) that initializes a const declaration of a name, at the top level or in a function body, read through the same wrappers, reads alias, and that name's own references read as the same target's, each in its own form, through any chain of such names across the given files in any order; a variable's or a function's own declared name is no reference.",
-  "RG-SPECIFIER (B145-U2) [RG-IMPORT-SPECIFIER, RG-EXPORT-SPECIFIER]: a name of an import or export specifier reads specifier.",
-  "RG-OTHER (B145-U2) [RG-LET-ALIAS, RG-ARGUMENT, RG-BIND, RG-METHOD-UNCALLED, RG-DESTRUCTURED, RG-PROPERTY-VALUE, RG-SHORTHAND-VALUE, RG-TYPE-QUERY, RG-VAR-ALIAS]: any other reference reads reference (a let or var initializer, an argument, a .bind receiver, a .call or .apply member that is no call's callee, a destructured key, a property value, a shorthand property's value by its value symbol, a type query).",
-  "EV-CLOSURE (U4) [EV-CLOSURE-CHAIN, EV-CLOSURE-TYPE-ONLY, EV-CLOSURE-FILTER, EV-CLOSURE-EXPORT-FROM, EV-CLOSURE-ORDER]: importClosure reads the entry module and, transitively, every module a top-level import declaration (type-only included), export-from declaration (export *, a named one and a type-only one) or import-equals of an external module names, as the checker's module symbol resolves it, that the filter accepts, each once (an import cycle included), in breadth-first order (a module's names in statement order).",
-  "EV-READS (U4) [L3-A-ENV-READS, EV-GLOBAL-THIS, EV-ELEMENT, EV-IMPORTED-ENV, EV-REFLECT, EV-DESTRUCTURE-SOURCE, EV-LOCAL-PROCESSENV, EV-LINE-START, EV-NESTED, EV-OTHER-PACKAGE-PROCESSENV, EV-SHORTHAND]: environmentReads reads every identifier other than a member access's name (an import specifier's and a shorthand property's included), and every member access, element access and call, that the checker types as the ProcessEnv interface @types/node declares (an interface of that name declared elsewhere, another package's included, is none), a read inside a read included, as <line>|<text> (<line> the 1-based line its first character is on).",
+  "EN-DIRECTORY (U1) [EN-WALK-TREE, P21-EN-DEPTH4]: entriesBelow lists the entries its rows plant below a directory (a tree three levels deep with two subdirectories at its top, and a chain four levels deep), each as its path relative to that directory (/-separated) with the kind entryKind reads from the entry readdir reports, and descends into each directory entry they plant; an entry more than four levels below the directory is NOT CLAIMED.",
+  "EN-MODULE (U1) [EN-WALK-MODULES]: the regular files its row plants, one named by each MODULE_EXTENSIONS member (a.ts, b.tsx, c.mts, d.cts, e.js, f.jsx, g.mjs, h.cjs), read module.",
+  "EN-JSON (U1) [L3-C4-JSON-CMD-ENTRY, G16-C5-DOTFILE-JSON-ENTRY]: the regular files its rows plant named hx-launch.json and .hx-launch.json (.json in that letter case, the second dot-named) read json.",
+  "EN-FILE (U1) [EN-WALK-FILES]: the regular files its row plants under seven other names (README, hxjson, launch.json.bak, map.ts.map, notes.md, upper.JSON, upper.TS) read file.",
+  "EN-LINK (U2) [L3-C1-SYMLINK-ENTRY, L3-C1-DIRLINK-CTRL-ENTRY, EN-WALK-DANGLING, EN-KIND-LINK-FIRST]: the symbolic links its rows plant read link - a link to a file, one to a directory and one to nothing, which the walk lists without descending through any of them, and a synthetic entry that reports both a directory and a link.",
+  "EN-TARGET (U2) [EN-TARGET-REAL, EN-TARGET-DANGLING, EN-TARGET-CHAIN]: the link entries its rows plant carry their targets as realpathSync reads them (each link on the path followed: a link to the SDK's mutation module, a link to that link, and one below a subdirectory), and its link to a missing file carries <dangling>.",
+  "EN-OTHER (U1) [EN-KIND-OTHER]: the synthetic entries its row plants that report no link, no directory and no regular file (named fifo, hx.sock and hx.json) read other.",
+  "ST-LITERAL (U1) [ST-LITERAL-STRING, ST-LITERAL-NOSUB, G16-C4-ESCAPED-STRINGS, ST-LITERAL-NOSUB-ESCAPED, ST-LITERAL-TYPE-AND-ATTRIBUTE]: entryStrings reads the strings of the module entries its rows plant as the cooked text (a hex escape decoded) of the string literals and no-substitution templates they hold: in a top-level const, an import's module name, a call's argument and array elements in an arrow function's body, a type alias and a JSX attribute.",
+  "ST-TEMPLATE (U1) [ST-TEMPLATE-HEAD, L3-C4-TMPL-MIDDLE-STRINGS, ST-TEMPLATE-TAIL, ST-TEMPLATE-ESCAPED]: and, for the templates its rows plant (with one or two substitutions, in an arrow function's body or a function's return statement, one with hex escapes), the cooked text of their heads, middles and tails.",
+  "ST-WITHIN (U1) [P21-ST-ARROW, P21-ST-FUNCTION-EXPRESSION, P21-ST-CLASS, P21-ST-IF, P21-ST-FOR-OF, P21-ST-RETURN, P21-ST-TRY, P21-ST-CASE, P21-ST-CONDITIONAL, P21-ST-AWAIT, P21-ST-NEW, P21-ST-TAGGED, P21-ST-OBJECT, P21-ST-EXPORT-FROM, P21-ST-TYPE-LITERAL, P21-ST-TYPE-REF]: entryStrings reads the string literals and no-substitution templates its rows plant, one row within a node of each of these kinds (ts.SyntaxKind), in row order: ArrowFunction, FunctionExpression, ClassDeclaration, IfStatement, ForOfStatement, ReturnStatement, TryStatement, CaseClause, ConditionalExpression, AwaitExpression, NewExpression, TaggedTemplateExpression, ObjectLiteralExpression, ExportDeclaration, TypeLiteral, TypeReference; a literal within any other node kind is NOT CLAIMED by this line.",
+  "ST-KIND-TS (U1) [ST-KIND-ASSERTION]: its row's module entries named a.ts, a.mts and a.cts parse as TypeScript, so an angle-bracket assertion's operand is read.",
+  "ST-KIND-JSX (U1) [ST-KIND-JSX-TEXT]: its row's module entries named a.tsx, a.jsx, a.js, a.mjs and a.cjs parse with JSX, so JSX text is no string.",
+  "ST-JSON (U1) [L3-C4-JSON-CMD-STRINGS, ST-JSON-NESTED, ST-JSON-KEY, ST-JSON-ESCAPE, ST-JSON-TOP, P21-JSON-EMPTY-VALUE, P21-JSON-EMPTY-KEY]: the json entries its rows plant read, from JSON.parse of their text (escapes decoded), the string values and object keys they hold: nested in objects and arrays to five levels, at the top level (a string, an array), beside values that are no string, an empty value and an empty key.",
+  "ST-JSON-UNPARSED (U1) [ST-JSON-INVALID]: its row's json entry whose text JSON.parse refuses (an unquoted value) reads undefined.",
+  "ST-UNREAD (U1) [ST-OTHER-NAMES]: its row's entries of seven other names (README, notes.md, map.ts.map, upper.TS, upper.JSON, launch.json.bak, hxjson) read undefined.",
+  "ST-AT (U1) [ST-AT-FILE, ST-AT-LINKED-JSON, ST-AT-UNREAD]: stringsAt reads the entries its rows plant by lstat: a regular file, and a link whose target is a regular file, by the entry's own name and the target's text; a directory, a link to a directory and a link to nothing read undefined.",
+  "ID-REAL (U2) [L3-C1-SYMLINK-IDENTITY, L3-C1-DIRLINK-CTRL-IDENTITY, ID-REAL-BELOW, ID-REAL-LINKED, ID-REAL-SIBLING, ID-REAL-OUTSIDE-DIST, ID-REAL-PACKAGE-ITSELF]: isSdkFile reads the paths its rows plant through the links on them (realpathSync: a file link and a directory link below a src tree, a linked package directory): a real path below the package's real directory (that directory and a /: the SDK's dist/protocol/mutation.js, and a package's dist/x.js and root.js) is the SDK's, and neither a sibling sharing its prefix nor the directory itself is.",
+  "ID-MANIFEST (U2) [ID-MANIFEST-COPY, ID-MANIFEST-LINKED, ID-MANIFEST-NAMELESS, ID-MANIFEST-NONE, ID-MANIFEST-OTHER-NAME]: so is a real path its rows plant whose nearest package.json, read upward from that real path, names @hyperunix/sdk exactly (a copy's dist/x.js, and a link to it); of the paths its rows plant, one whose nearest manifest has no name, one whose manifest's name is a number and one with no manifest above it read null, and one whose manifest names @hyperunix/sdk-tools reads that name and is no SDK file.",
+  "ID-DANGLING (U2) [ID-DANGLING-INSIDE]: its row's link inside a package's dist directory that resolves to nothing is no SDK file.",
+  "ID-RESOLVE (U2) [L3-C1-SYMLINK-RESOLVE, ID-RESOLVE-BARE, ID-RESOLVE-PLAIN, ID-RESOLVE-OPTIONS]: resolvesIntoSdk resolves the specifiers its rows plant (a relative one to a link into the SDK, the bare package name, a plain relative module, a missing one, and a paths alias under options that carry it and options that do not) by ts.resolveModuleName from the importing file under the given options, and the resolved file is the SDK's as isSdkFile reads it.",
+  "MB-DECLARATIONS (B145-U1) [G16-C2-INTERSECTION-LOCAL-FIRST, G16-C2-INTERSECTION-SDK-FIRST, G16-C2-INTERSECTION-DESTRUCTURE, MB-DECLARATIONS-LOCAL, MB-DECLARATIONS-TWO-SDK, MB-DECLARATIONS-TWO-SDK-REVERSED, MB-DECLARATIONS-NESTED-PATH]: sdkDeclarations reads, for the symbols its rows plant, the declarations that lie below the SDK's dist directory, in the checker's order (the symbol's declarations), as their paths there: an intersection's mutations property with its local constituent first or last and destructured, the mutations of HyperUnix & Workspace in both orders, a Frame's seq (protocol/query.d.ts), and none for a local object's property and for no symbol.",
+  "MB-ALIAS (B145-U1) [MB-ALIAS-IMPORT]: its row's alias symbol (an import binding of HyperUnix) is read through checker.getAliasedSymbol.",
+  "MB-KEY-NAME (U3) [MB-KEY-IDENTIFIER, MB-KEY-STRING, MB-KEY-SHORTHAND]: bindingKey reads the keys of its rows' object binding elements as the property name when that is an identifier or a string literal, and as the element's own name when it has none (shorthand).",
+  "MB-KEY-NONE (U3) [MB-KEY-REST, MB-KEY-ARRAY]: its rows' rest element and array binding element read undefined.",
+  "MB-KEY-COMPUTED (U3) [L3-C2-COMPUTED-DESTRUCTURE, L3-C2-CONSTKEY-DESTRUCTURE, MB-KEY-TEMPLATE]: its rows' computed keys whose expression the checker types as one string literal (a quoted literal in brackets, a const bound to one, a no-substitution template) read that literal.",
+  "MB-PATTERN (U3) [L3-C2-ASSIGN-DESTRUCTURE, MB-PATTERN-RENAMED, MB-PATTERN-STRING, MB-PATTERN-COMPUTED, MB-PATTERN-DEFAULTED, MB-PATTERN-TWO, MB-PATTERN-REST]: assignmentPatternMembers reads the properties of the object destructuring-assignment patterns its rows plant, in order - a shorthand (defaulted or not), an identifier, string-literal or computed key (one string literal), and two shorthands in one pattern - with their names and the property symbols of the pattern's type (checker.getTypeOfAssignmentPattern); their rest element reads nothing.",
+  "MB-PATTERN-PLACE (U3) [MB-PLACE-FOR-OF, MB-PLACE-NESTED, MB-PLACE-ARRAY, MB-PLACE-DEFAULT-TARGET, MB-PLACE-NOT-PATTERN, MB-PLACE-FOR-OF-ARRAY, MB-PLACE-NESTED-ARRAY, MB-PLACE-RHS-ARRAY]: in its rows a pattern is an object literal on the left of = (a default's target inside a pattern included), the initializer of a for-of, a property's value in a pattern, or an element of an array literal that is itself on the left of =, a for-of initializer or nested in a pattern; the other object literals its rows plant (a const's initializer and a value nested in one, an array element, an operand of ||, the right of =, an element of a for-of's iterable and of an array on the right of =) read as none.",
+  "MB-PATTERN-WITHIN (U3) [P21-AP-ARROW, P21-AP-FUNCTION-EXPRESSION, P21-AP-CLASS, P21-AP-IF, P21-AP-RETURN, P21-AP-TRY, P21-AP-CASE, P21-AP-CONDITIONAL, P21-AP-AWAIT, P21-AP-NEW, P21-AP-TAGGED]: assignmentPatternMembers reads the patterns its rows plant, one row within a node of each of these kinds (ts.SyntaxKind), in row order: ArrowFunction, FunctionExpression, ClassDeclaration, IfStatement, ReturnStatement, TryStatement, CaseClause, ConditionalExpression, AwaitExpression, NewExpression, TaggedTemplateExpression; a pattern within any other node kind is NOT CLAIMED by this line.",
+  "RG-BINDING (B145-U2) [G16-B2-DIRECT-CALL-CTRL, RG-RENAMED-IMPORT, RG-NAMESPACE-MEMBER]: registrationReferences reads, in the modules its rows plant, a reference as an identifier whose symbol is a target, an import binding read through checker.getAliasedSymbol (renamed, or a namespace's member) included.",
+  "RG-ELEMENT-KEY (B145-U2) [RG-ELEMENT-CALL, RG-ELEMENT-TEMPLATE, RG-ELEMENT-CONST]: and, in its rows, as an element access whose key the checker types as one string literal (a string literal, a no-substitution template, a const bound to one), by the property of that name on its object's type.",
+  "RG-CALL (B145-U2) [G16-B2-DIRECT-CALL-INPLACE-CTRL, RG-PARENTHESIZED-CALL, RG-ASSERTED-CALL, RG-WRAPPED-MEMBER-CALL]: a reference its rows plant as a call's callee (itself, or the member access or element access it names), bare or read through the wrappers they plant (parentheses; an as, satisfies or angle-bracket assertion in parentheses; a non-null assertion), reads call.",
+  "RG-CALL-METHOD (B145-U2) [G16-B2-CALL-METHOD, G16-B2-CALL-METHOD-INPLACE, RG-APPLY, RG-METHOD-WRAPPED, RG-METHOD-RECEIVER]: a reference its rows plant as the receiver of .call or .apply (itself, or the member access or element access it names, bare or in an as assertion in parentheses), that member (bare, in parentheses or non-null asserted) being a call's callee, reads call-method.",
+  "RG-ALIAS (B145-U2) [G16-B2-ALIAS-CALL, G16-B2-ALIAS-CALL-BLANK, RG-ALIAS-CHAIN, RG-ALIAS-EXPORTED, RG-ALIAS-WRAPPED, RG-OWN-DECLARATION, RG-ALIAS-LOCAL, RG-ALIAS-MEMBER, RG-ALIAS-ELEMENT, RG-ALIAS-FORMS]: a reference its rows plant (an identifier, a member access or an element access) that initializes a const declaration of a name, at the top level or in a function declaration's body, bare or read through the wrappers they plant (parentheses, an as, satisfies, non-null or angle-bracket assertion, and four nested in one), reads alias, and that name's own references read as the same target's, each in its own form (a call, a .call receiver, an argument), through the chains they plant (two names in one file; an exported alias imported and re-aliased in a second file, the importing file given first); a variable's or a function's own declared name is no reference.",
+  "RG-ALIAS-WITHIN (B145-U2) [P21-CA-ARROW, P21-CA-FUNCTION-EXPRESSION, P21-CA-CLASS, P21-CA-IF, P21-CA-FOR-OF, P21-CA-RETURN-IIFE, P21-CA-TRY, P21-CA-CASE, RG-ALIAS-WITHIN-CONDITIONAL, RG-ALIAS-WITHIN-AWAIT, RG-ALIAS-WITHIN-NEW, RG-ALIAS-WITHIN-TAGGED, P21-CA-OBJECT-METHOD]: a const alias of a target that its rows plant is collected (its initializer reads alias, and its call reads as the target's), one row within a node of each of these kinds (ts.SyntaxKind), in row order: ArrowFunction, FunctionExpression, ClassDeclaration, IfStatement, ForOfStatement, ReturnStatement, TryStatement, CaseClause, ConditionalExpression, AwaitExpression, NewExpression, TaggedTemplateExpression, ObjectLiteralExpression; a const alias within any other node kind is NOT CLAIMED by this line.",
+  "RG-SPECIFIER (B145-U2) [RG-IMPORT-SPECIFIER, RG-EXPORT-SPECIFIER]: the names of the import and export specifiers its rows plant (an import's, and a renamed export-from's two names) read specifier.",
+  "RG-OTHER (B145-U2) [RG-LET-ALIAS, RG-ARGUMENT, RG-BIND, RG-METHOD-UNCALLED, RG-DESTRUCTURED, RG-PROPERTY-VALUE, RG-SHORTHAND-VALUE, RG-TYPE-QUERY, RG-VAR-ALIAS, P21-RG-NEW]: the other references its rows plant read reference: a let or var initializer and the right side of a let's reassignment, an argument, a .bind receiver, a .call or .apply member that is no call's callee, a destructured key, a property value, a shorthand property's value by its value symbol (a default's included), a type query and a new expression's callee.",
+  "RG-WITHIN (B145-U2) [P21-RG-ARROW, P21-RG-FUNCTION-EXPRESSION, P21-RG-CLASS, P21-RG-IF, P21-RG-FOR-OF, P21-RG-RETURN, P21-RG-TRY, P21-RG-CASE, P21-RG-CONDITIONAL, P21-RG-AWAIT, RG-WITHIN-NEW, P21-RG-TAGGED, P21-RG-TYPE-LITERAL, P21-RG-TYPE-REF]: registrationReferences reads the target references its rows plant, each in its own form (a call; a reference in the tagged template, the type literal and the type reference), one row within a node of each of these kinds (ts.SyntaxKind), in row order: ArrowFunction, FunctionExpression, ClassDeclaration, IfStatement, ForOfStatement, ReturnStatement, TryStatement, CaseClause, ConditionalExpression, AwaitExpression, NewExpression, TaggedTemplateExpression, TypeLiteral, TypeReference; a reference within any other node kind is NOT CLAIMED by this line.",
+  "EV-CLOSURE (U4) [EV-CLOSURE-CHAIN, EV-CLOSURE-TYPE-ONLY, EV-CLOSURE-FILTER, EV-CLOSURE-EXPORT-FROM, EV-CLOSURE-ORDER, P21-EV-SIDE-EFFECT, P21-EV-CYCLE-NOT-ENTRY]: importClosure reads, from the entry modules its rows plant, the entry and, transitively, the modules named by the top-level statements they plant (an import declaration with named bindings, a type-only one and one with no clause; export *, a named and a type-only export-from; an import-equals of an external module) as the checker's module symbol resolves them, that the filter accepts, each once (a cycle back to the entry, and one between two modules below it, included), in breadth-first order (a module's names in statement order).",
+  "EV-READS (U4) [L3-A-ENV-READS, EV-GLOBAL-THIS, EV-ELEMENT, EV-IMPORTED-ENV, EV-REFLECT, EV-DESTRUCTURE-SOURCE, EV-LOCAL-PROCESSENV, EV-LINE-START, EV-NESTED, EV-OTHER-PACKAGE-PROCESSENV, EV-SHORTHAND]: environmentReads reads, in the modules its rows plant, the identifiers other than a member access's name (an import specifier's and a shorthand property's included), and the member accesses, element accesses and calls, that the checker types as the ProcessEnv interface @types/node declares (an interface of that name declared locally or by another package is none), a read inside a read included, as <line>|<text> (<line> the 1-based line its first character is on).",
+  "EV-WITHIN (U4) [P21-EV-ARROW, P21-EV-FUNCTION-EXPRESSION, P21-EV-CLASS, P21-EV-IF, P21-EV-FOR-OF, P21-EV-RETURN, P21-EV-TRY, P21-EV-CASE, P21-EV-CONDITIONAL, P21-EV-AWAIT, P21-EV-NEW, P21-EV-TAGGED, P21-EV-EXPORT-FROM, P21-EV-TYPE-LITERAL, EV-WITHIN-TYPE-REF]: environmentReads reads the environment reads its rows plant, one row within a node of each of these kinds (ts.SyntaxKind), in row order: ArrowFunction, FunctionExpression, ClassDeclaration, IfStatement, ForOfStatement, ReturnStatement, TryStatement, CaseClause, ConditionalExpression, AwaitExpression, NewExpression, TaggedTemplateExpression, ExportDeclaration, TypeLiteral, TypeReference; a read within any other node kind is NOT CLAIMED by this line.",
 ];
 /** The helper header's residual lines, byte for byte and in order (each "<residual> [<quiet rows>]: <the family>"). */
 const RESIDUAL_LINES: readonly string[] = [
@@ -213,13 +224,13 @@ const RESIDUALS: readonly Line[] = RESIDUAL_LINES.map(residualOf);
 
 /** FROZEN SHAPE (standing rule 16): every requirement, claim and residual, as <id>:<pin count>. */
 const FROZEN: readonly string[] = [
-  "U1:13",
+  "U1:14",
   "U2:6",
-  "U3:5",
-  "U4:2",
+  "U3:6",
+  "U4:3",
   "B145-U1:2",
-  "B145-U2:7",
-  "EN-DIRECTORY:1",
+  "B145-U2:9",
+  "EN-DIRECTORY:2",
   "EN-MODULE:1",
   "EN-JSON:2",
   "EN-FILE:1",
@@ -228,9 +239,10 @@ const FROZEN: readonly string[] = [
   "EN-OTHER:1",
   "ST-LITERAL:5",
   "ST-TEMPLATE:4",
+  "ST-WITHIN:16",
   "ST-KIND-TS:1",
   "ST-KIND-JSX:1",
-  "ST-JSON:5",
+  "ST-JSON:7",
   "ST-JSON-UNPARSED:1",
   "ST-UNREAD:1",
   "ST-AT:3",
@@ -245,15 +257,19 @@ const FROZEN: readonly string[] = [
   "MB-KEY-COMPUTED:3",
   "MB-PATTERN:7",
   "MB-PATTERN-PLACE:8",
+  "MB-PATTERN-WITHIN:11",
   "RG-BINDING:3",
   "RG-ELEMENT-KEY:3",
   "RG-CALL:4",
   "RG-CALL-METHOD:5",
   "RG-ALIAS:10",
+  "RG-ALIAS-WITHIN:13",
   "RG-SPECIFIER:2",
-  "RG-OTHER:9",
-  "EV-CLOSURE:5",
+  "RG-OTHER:10",
+  "RG-WITHIN:14",
+  "EV-CLOSURE:7",
   "EV-READS:11",
+  "EV-WITHIN:15",
   "R-UNNARROWED-KEY:2",
   "R-REST-PATTERN:1",
   "R-COPIED-SDK:1",
@@ -267,6 +283,7 @@ const FROZEN: readonly string[] = [
 /** FROZEN SHAPE, row level: every falsifier's and quiet row's reading digest (digestOf), in roster order. */
 const DIGESTS: Readonly<Record<string, string>> = {
   "EN-WALK-TREE": "c23a62a9009a5278",
+  "P21-EN-DEPTH4": "5a8614369eaaff0d",
   "EN-WALK-MODULES": "aebb9fce1641a990",
   "L3-C4-JSON-CMD-ENTRY": "c67aae7db85879c9",
   "G16-C5-DOTFILE-JSON-ENTRY": "84cd60eb6e216ff1",
@@ -288,6 +305,22 @@ const DIGESTS: Readonly<Record<string, string>> = {
   "L3-C4-TMPL-MIDDLE-STRINGS": "152ea093764e456f",
   "ST-TEMPLATE-TAIL": "e76980a13f4c0bc2",
   "ST-TEMPLATE-ESCAPED": "58e50cbf6423b3c7",
+  "P21-ST-ARROW": "160048d81d717a52",
+  "P21-ST-FUNCTION-EXPRESSION": "72fa6a6fdb146293",
+  "P21-ST-CLASS": "7631f6a7b5426b1a",
+  "P21-ST-IF": "9db4dafdcce06296",
+  "P21-ST-FOR-OF": "39c67c322e26cc3e",
+  "P21-ST-RETURN": "ea206dc12e4db26e",
+  "P21-ST-TRY": "5424c53cef5caa55",
+  "P21-ST-CASE": "e0d6a77f1bcfa538",
+  "P21-ST-CONDITIONAL": "3087e535549647e9",
+  "P21-ST-AWAIT": "64bcd98219d67857",
+  "P21-ST-NEW": "f86ddd7c8b1c744e",
+  "P21-ST-TAGGED": "4e60e5c807952a31",
+  "P21-ST-OBJECT": "e958d6f9bb3f3b94",
+  "P21-ST-EXPORT-FROM": "2d36f3728fc2cffd",
+  "P21-ST-TYPE-LITERAL": "b11bfa79b0347ee1",
+  "P21-ST-TYPE-REF": "ef7bede15e7d3d05",
   "ST-KIND-ASSERTION": "3111399106666d58",
   "ST-KIND-JSX-TEXT": "a6d497a15ca5ee3b",
   "L3-C4-JSON-CMD-STRINGS": "8f8475ed1826b478",
@@ -295,6 +328,8 @@ const DIGESTS: Readonly<Record<string, string>> = {
   "ST-JSON-KEY": "19fd407564f31b34",
   "ST-JSON-ESCAPE": "7074d9f1ee1fe635",
   "ST-JSON-TOP": "e6ff75c8df740f3c",
+  "P21-JSON-EMPTY-VALUE": "84fce2fca4772ab1",
+  "P21-JSON-EMPTY-KEY": "32fd59461ef9ebb8",
   "ST-JSON-INVALID": "2d0ec2cf777b5749",
   "ST-OTHER-NAMES": "8a1656cf10e7f421",
   "ST-AT-FILE": "c8700ab19213f9ae",
@@ -348,6 +383,17 @@ const DIGESTS: Readonly<Record<string, string>> = {
   "MB-PLACE-FOR-OF-ARRAY": "ffcdb865831f922b",
   "MB-PLACE-NESTED-ARRAY": "cdb9beedb8f540c7",
   "MB-PLACE-RHS-ARRAY": "b5d72dc8e900abad",
+  "P21-AP-ARROW": "baa9cc2dd6fe5b2c",
+  "P21-AP-FUNCTION-EXPRESSION": "02d6df632b0c4d18",
+  "P21-AP-CLASS": "a2b02a679dc22616",
+  "P21-AP-IF": "0b90619d1827c66b",
+  "P21-AP-RETURN": "244312d43b08d99b",
+  "P21-AP-TRY": "5157439c2ab7df9f",
+  "P21-AP-CASE": "de94d374955390b0",
+  "P21-AP-CONDITIONAL": "f12faf14416506de",
+  "P21-AP-AWAIT": "6eff763cc8a53626",
+  "P21-AP-NEW": "13745b6f614403dc",
+  "P21-AP-TAGGED": "98ae8347c2ed5348",
   "G16-B2-DIRECT-CALL-CTRL": "72a7d7f6bbe7085e",
   "RG-RENAMED-IMPORT": "b24324560d3f8387",
   "RG-NAMESPACE-MEMBER": "bdd0555d8433ddf2",
@@ -373,6 +419,19 @@ const DIGESTS: Readonly<Record<string, string>> = {
   "RG-ALIAS-MEMBER": "f35121b5a464d10b",
   "RG-ALIAS-ELEMENT": "b67d2f6c87a00781",
   "RG-ALIAS-FORMS": "dc99f3aa570e3e77",
+  "P21-CA-ARROW": "d99137bb3fb0eaa6",
+  "P21-CA-FUNCTION-EXPRESSION": "93066d354ac6a7a1",
+  "P21-CA-CLASS": "d9295cb2a8a8fca2",
+  "P21-CA-IF": "ef7415b0c82c8508",
+  "P21-CA-FOR-OF": "0adab283ec266ae4",
+  "P21-CA-RETURN-IIFE": "c02548d142affbb9",
+  "P21-CA-TRY": "c58224a5ba304ce7",
+  "P21-CA-CASE": "091080d1612b4fd6",
+  "RG-ALIAS-WITHIN-CONDITIONAL": "dd65f3b4afc1ec7c",
+  "RG-ALIAS-WITHIN-AWAIT": "5ff8c127e743cad2",
+  "RG-ALIAS-WITHIN-NEW": "9c4cac3edecfb698",
+  "RG-ALIAS-WITHIN-TAGGED": "828415cac5e8c5b6",
+  "P21-CA-OBJECT-METHOD": "e5b46b2ab23934e9",
   "RG-IMPORT-SPECIFIER": "4bede0049ef63848",
   "RG-EXPORT-SPECIFIER": "728c9e4b0e586380",
   "RG-LET-ALIAS": "0bd315c09f7fe8ac",
@@ -384,11 +443,28 @@ const DIGESTS: Readonly<Record<string, string>> = {
   "RG-SHORTHAND-VALUE": "59e863cd9dec855e",
   "RG-TYPE-QUERY": "f468cc54db820923",
   "RG-VAR-ALIAS": "46fe3a2b01773c07",
+  "P21-RG-NEW": "9ca20cb18b94abac",
+  "P21-RG-ARROW": "cb56854fcba6a8f5",
+  "P21-RG-FUNCTION-EXPRESSION": "9d1474b50c27a1a8",
+  "P21-RG-CLASS": "33c8dac63a63c5d1",
+  "P21-RG-IF": "7deac6975bd0ead5",
+  "P21-RG-FOR-OF": "e28eb5db562f00be",
+  "P21-RG-RETURN": "747cb2c8d31b579c",
+  "P21-RG-TRY": "570f334ce35a82f9",
+  "P21-RG-CASE": "acb559f3c9c89732",
+  "P21-RG-CONDITIONAL": "6f85b85c2c9bd4ed",
+  "P21-RG-AWAIT": "96730e51786535b4",
+  "RG-WITHIN-NEW": "08176c706c91ad66",
+  "P21-RG-TAGGED": "9032b73a50b93c0f",
+  "P21-RG-TYPE-LITERAL": "9bfeb276e5caf202",
+  "P21-RG-TYPE-REF": "bab9e6adb72d9d12",
   "EV-CLOSURE-CHAIN": "679630f3646b613f",
   "EV-CLOSURE-TYPE-ONLY": "18e6d755f799138a",
   "EV-CLOSURE-FILTER": "cfb515d696195206",
   "EV-CLOSURE-EXPORT-FROM": "e1aabbaac43a2e6e",
   "EV-CLOSURE-ORDER": "45c3f0283bff1f8f",
+  "P21-EV-SIDE-EFFECT": "095e28ac22fdd972",
+  "P21-EV-CYCLE-NOT-ENTRY": "de46ef1cf8005fbc",
   "L3-A-ENV-READS": "e04f08b03fe4adb2",
   "EV-GLOBAL-THIS": "5b3f38f540a45b7f",
   "EV-ELEMENT": "90611319e25fae3a",
@@ -400,6 +476,21 @@ const DIGESTS: Readonly<Record<string, string>> = {
   "EV-NESTED": "2f0f19b5e9c0ce2a",
   "EV-OTHER-PACKAGE-PROCESSENV": "e9e823ff7fddda0a",
   "EV-SHORTHAND": "5d6c733840915898",
+  "P21-EV-ARROW": "1d1720f425ba7669",
+  "P21-EV-FUNCTION-EXPRESSION": "07eb6db80c530fce",
+  "P21-EV-CLASS": "3f7e505ce2476e44",
+  "P21-EV-IF": "f51e30bdd164f3dd",
+  "P21-EV-FOR-OF": "34d78facf16a6a0b",
+  "P21-EV-RETURN": "ec7a82e3c4b4fa92",
+  "P21-EV-TRY": "96275a1951c8ec08",
+  "P21-EV-CASE": "aecc7541ef770ab9",
+  "P21-EV-CONDITIONAL": "2b12763d14b4d0ae",
+  "P21-EV-AWAIT": "8e1c63e7e8529be7",
+  "P21-EV-NEW": "dfd040a982df6832",
+  "P21-EV-TAGGED": "982609e2b9252761",
+  "P21-EV-EXPORT-FROM": "b1363fdd05d9cf68",
+  "P21-EV-TYPE-LITERAL": "52cc23a6279b6b2c",
+  "EV-WITHIN-TYPE-REF": "a690365b39fc26d6",
   "Q-KEY-UNION": "998d32e3ed142d13",
   "Q-PATTERN-STRING-KEY": "116e26f85963f0d4",
   "Q-MB-REST-PATTERN": "f5963ad4a94a9e11",
@@ -451,6 +542,8 @@ beforeAll(() => {
   put(at("en-tree", "top.ts"), "export {};\n");
   put(at("en-tree", "sub", "deeper", "z.ts"), "export {};\n");
   put(at("en-tree", "other", "y.ts"), "export {};\n");
+  // P21-EN-DEPTH4: a chain four levels deep (refusal #2's twin W-EN-DEPTH4).
+  put(at("en-deep", "a", "b", "c", "d.ts"), "export {};\n");
   for (const name of ["a.ts", "b.tsx", "c.mts", "d.cts", "e.js", "f.jsx", "g.mjs", "h.cjs"]) put(at("en-modules", name), "export {};\n");
   put(at("en-json-cmd", "hx-launch.json"), JSON_LAUNCH);
   put(at("en-json-dot", ".hx-launch.json"), JSON_LAUNCH);
@@ -547,6 +640,12 @@ const ENV_REFUSAL =
   "function refused(message: string): Error {\n  return new Error(message);\n}\n" +
   "export function refuse(kind: string): void {\n  const reads = READING[kind];\n" +
   `  if (reads === 'mutation' && !(process.env.PI_HX_ALLOW_MUTATION_OUTCOMES === '1')) throw refused(\`\${kind} is a mutation outcome and this read adapter refuses mutation outcomes\`);\n}\n`;
+
+/** The paired twins' module heads and signature (gate-prep-21, g10-gate-s167, refusal #2's twin file, verbatim). */
+const P21_HEAD = 'import type { CapabilityRegistry } from "./capability-registry.js";\nimport { type HyperUnixReader, registerHyperUnixFind } from "./providers/hyperunix.js";\n';
+const P21_SIG = "registry: CapabilityRegistry, reader: HyperUnixReader, root: string";
+const P21_WS = 'import { HyperUnix } from "@hyperunix/sdk";\nconst workspace = HyperUnix.open("/twin");\n';
+const P21_TAG = "declare const tag: (parts: TemplateStringsArray, ...values: unknown[]) => string;\n";
 
 const VIRTUAL: Readonly<Record<string, string>> = {
   // MB-DECLARATIONS (G16-C2-*, gate-prep-16, verbatim plant lines) and MB-ALIAS.
@@ -701,6 +800,71 @@ const VIRTUAL: Readonly<Record<string, string>> = {
   "census/cl-o2.ts": 'import { o21 } from "./cl-o21.js";\nexport const o2 = o21;\n',
   "census/cl-o11.ts": "export const o11 = 1;\n",
   "census/cl-o21.ts": "export const o21 = 1;\n",
+  // RG-WITHIN: refusal #2's paired twins (gate-prep-21, verbatim), a registration reference within each node kind, and a call within a new expression's argument.
+  "workbench/p21-rg-arrow.ts": `${P21_HEAD}export const attach = (${P21_SIG}): void => registerHyperUnixFind(registry, reader, root);\n`,
+  "workbench/p21-rg-function-expression.ts": `${P21_HEAD}export const attach = function (${P21_SIG}): void {\n  registerHyperUnixFind(registry, reader, root);\n};\n`,
+  "workbench/p21-rg-class.ts": `${P21_HEAD}export class Attach {\n  run(${P21_SIG}): void {\n    registerHyperUnixFind(registry, reader, root);\n  }\n}\n`,
+  "workbench/p21-rg-if.ts": `${P21_HEAD}export function attach(${P21_SIG}): void {\n  if (root !== "") registerHyperUnixFind(registry, reader, root);\n}\n`,
+  "workbench/p21-rg-for-of.ts": `${P21_HEAD}export function attach(${P21_SIG}): void {\n  for (const each of [registry]) registerHyperUnixFind(each, reader, root);\n}\n`,
+  "workbench/p21-rg-return.ts": `${P21_HEAD}export function attach(${P21_SIG}): void {\n  return registerHyperUnixFind(registry, reader, root);\n}\n`,
+  "workbench/p21-rg-try.ts": `${P21_HEAD}export function attach(${P21_SIG}): void {\n  try {\n    registerHyperUnixFind(registry, reader, root);\n  } catch {}\n}\n`,
+  "workbench/p21-rg-case.ts": `${P21_HEAD}export function attach(${P21_SIG}): void {\n  switch (root) {\n    case "":\n      registerHyperUnixFind(registry, reader, root);\n  }\n}\n`,
+  "workbench/p21-rg-conditional.ts": `${P21_HEAD}export function attach(${P21_SIG}): void {\n  root === "" ? undefined : registerHyperUnixFind(registry, reader, root);\n}\n`,
+  "workbench/p21-rg-await.ts": `${P21_HEAD}export async function attach(${P21_SIG}): Promise<void> {\n  await registerHyperUnixFind(registry, reader, root);\n}\n`,
+  "workbench/rg-within-new.ts": `${P21_HEAD}export function attach(${P21_SIG}): void {\n  void new Set([registerHyperUnixFind(registry, reader, root)]);\n}\n`,
+  "workbench/p21-rg-tagged.ts": `${P21_HEAD}${P21_TAG}export const shown = tag\`\${registerHyperUnixFind}\`;\n`,
+  "workbench/p21-rg-type-literal.ts": `${P21_HEAD}export type Box = { register: typeof registerHyperUnixFind };\n`,
+  "workbench/p21-rg-type-ref.ts": `${P21_HEAD}export type List = Array<typeof registerHyperUnixFind>;\n`,
+  // RG-OTHER: a new expression's callee (refusal #2's twin W-RG-NEW, verbatim).
+  "workbench/p21-rg-new.ts": `${P21_HEAD}type Make = new (${P21_SIG}) => object;\nexport function attach(${P21_SIG}): object {\n  return new (registerHyperUnixFind as unknown as Make)(registry, reader, root);\n}\n`,
+  // RG-ALIAS-WITHIN: refusal #2's paired twins (verbatim), a const alias declared and called within each node kind, and four of the seat's own.
+  "workbench/p21-ca-arrow.ts": `${P21_HEAD}export const attachAll = (${P21_SIG}): void => {\n  const attach = registerHyperUnixFind;\n  attach(registry, reader, root);\n};\n`,
+  "workbench/p21-ca-function-expression.ts": `${P21_HEAD}export const attachAll = function (${P21_SIG}): void {\n  const attach = registerHyperUnixFind;\n  attach(registry, reader, root);\n};\n`,
+  "workbench/p21-ca-class.ts": `${P21_HEAD}export class Attach {\n  run(${P21_SIG}): void {\n    const attach = registerHyperUnixFind;\n    attach(registry, reader, root);\n  }\n}\n`,
+  "workbench/p21-ca-if.ts": `${P21_HEAD}export function attachAll(${P21_SIG}): void {\n  if (root !== "") {\n    const attach = registerHyperUnixFind;\n    attach(registry, reader, root);\n  }\n}\n`,
+  "workbench/p21-ca-for-of.ts": `${P21_HEAD}export function attachAll(${P21_SIG}): void {\n  for (const each of [registry]) {\n    const attach = registerHyperUnixFind;\n    attach(each, reader, root);\n  }\n}\n`,
+  "workbench/p21-ca-return-iife.ts": `${P21_HEAD}export function attachAll(${P21_SIG}): void {\n  return ((): void => {\n    const attach = registerHyperUnixFind;\n    attach(registry, reader, root);\n  })();\n}\n`,
+  "workbench/p21-ca-try.ts": `${P21_HEAD}export function attachAll(${P21_SIG}): void {\n  try {\n    const attach = registerHyperUnixFind;\n    attach(registry, reader, root);\n  } catch {}\n}\n`,
+  "workbench/p21-ca-case.ts": `${P21_HEAD}export function attachAll(${P21_SIG}): void {\n  switch (root) {\n    case "": {\n      const attach = registerHyperUnixFind;\n      attach(registry, reader, root);\n    }\n  }\n}\n`,
+  "workbench/rg-alias-within-conditional.ts": `${P21_HEAD}export function attachAll(${P21_SIG}): void {\n  root === "" ? undefined : ((): void => {\n    const attach = registerHyperUnixFind;\n    attach(registry, reader, root);\n  })();\n}\n`,
+  "workbench/rg-alias-within-await.ts": `${P21_HEAD}export async function attachAll(${P21_SIG}): Promise<void> {\n  await (async (): Promise<void> => {\n    const attach = registerHyperUnixFind;\n    attach(registry, reader, root);\n  })();\n}\n`,
+  "workbench/rg-alias-within-new.ts": `${P21_HEAD}export function attachAll(${P21_SIG}): void {\n  void new Promise<void>(done => {\n    const attach = registerHyperUnixFind;\n    attach(registry, reader, root);\n    done();\n  });\n}\n`,
+  "workbench/rg-alias-within-tagged.ts": `${P21_HEAD}${P21_TAG}export function attachAll(${P21_SIG}): string {\n  return tag\`\${((): number => {\n    const attach = registerHyperUnixFind;\n    attach(registry, reader, root);\n    return 0;\n  })()}\`;\n}\n`,
+  "workbench/p21-ca-object-method.ts": `${P21_HEAD}export const table = {\n  run(${P21_SIG}): void {\n    const attach = registerHyperUnixFind;\n    attach(registry, reader, root);\n  },\n};\n`,
+  // MB-PATTERN-WITHIN: refusal #2's paired twins (verbatim), a destructuring-assignment pattern within each node kind.
+  "census/p21-ap-arrow.ts": `${P21_WS}export const read = (): unknown => {\n  let m: unknown;\n  ({ mutations: m } = workspace);\n  return m;\n};\n`,
+  "census/p21-ap-function-expression.ts": `${P21_WS}export const read = function (): unknown {\n  let m: unknown;\n  ({ mutations: m } = workspace);\n  return m;\n};\n`,
+  "census/p21-ap-class.ts": `${P21_WS}export class Read {\n  run(): unknown {\n    let m: unknown;\n    ({ mutations: m } = workspace);\n    return m;\n  }\n}\n`,
+  "census/p21-ap-if.ts": `${P21_WS}declare const on: boolean;\nlet m: unknown;\nif (on) ({ mutations: m } = workspace);\nvoid m;\n`,
+  "census/p21-ap-return.ts": `${P21_WS}let m: unknown;\nexport function read(): unknown {\n  return ({ mutations: m } = workspace);\n}\nvoid m;\n`,
+  "census/p21-ap-try.ts": `${P21_WS}let m: unknown;\ntry {\n  ({ mutations: m } = workspace);\n} catch {}\nvoid m;\n`,
+  "census/p21-ap-case.ts": `${P21_WS}declare const name: string;\nlet m: unknown;\nswitch (name) {\n  case "x":\n    ({ mutations: m } = workspace);\n}\nvoid m;\n`,
+  "census/p21-ap-conditional.ts": `${P21_WS}declare const on: boolean;\nlet m: unknown;\nexport const read = on ? ({ mutations: m } = workspace) : undefined;\nvoid m;\n`,
+  "census/p21-ap-await.ts": `${P21_WS}let m: unknown;\nexport const read = await Promise.resolve(({ mutations: m } = workspace));\nvoid m;\n`,
+  "census/p21-ap-new.ts": `${P21_WS}let m: unknown;\nexport const read = new String(({ mutations: m } = workspace));\nvoid m;\n`,
+  "census/p21-ap-tagged.ts": `${P21_WS}${P21_TAG}let m: unknown;\nexport const read = tag\`\${({ mutations: m } = workspace)}\`;\nvoid m;\n`,
+  // EV-WITHIN: refusal #2's paired twins (verbatim), an environment read within each node kind, and a ProcessEnv type reference of the seat's own.
+  "census/p21-ev-arrow.ts": "export const flag = () => process.env.PI_GP21_FLAG;\n",
+  "census/p21-ev-function-expression.ts": "export const flag = function () {\n  return process.env.PI_GP21_FLAG;\n};\n",
+  "census/p21-ev-class.ts": "export class Flags {\n  flag = process.env.PI_GP21_FLAG;\n}\n",
+  "census/p21-ev-if.ts": "declare const on: boolean;\nif (on) void process.env.PI_GP21_FLAG;\n",
+  "census/p21-ev-for-of.ts": 'for (const name of ["PI_GP21_FLAG"]) void process.env[name];\n',
+  "census/p21-ev-return.ts": "export function flag(): string | undefined {\n  return process.env.PI_GP21_FLAG;\n}\n",
+  "census/p21-ev-try.ts": "try {\n  void process.env.PI_GP21_FLAG;\n} catch {}\n",
+  "census/p21-ev-case.ts": 'declare const name: string;\nswitch (name) {\n  case "x":\n    void process.env.PI_GP21_FLAG;\n}\n',
+  "census/p21-ev-conditional.ts": "declare const on: boolean;\nexport const flag = on ? process.env.PI_GP21_FLAG : undefined;\n",
+  "census/p21-ev-await.ts": "export const flag = await Promise.resolve(process.env.PI_GP21_FLAG);\n",
+  "census/p21-ev-new.ts": "export const flag = new String(process.env.PI_GP21_FLAG);\n",
+  "census/p21-ev-tagged.ts": `${P21_TAG}export const flag = tag\`\${process.env.PI_GP21_FLAG}\`;\n`,
+  "census/p21-ev-export-from.ts": 'export { env } from "node:process";\n',
+  "census/p21-ev-type-literal.ts": "export type Box = { env: typeof process.env };\n",
+  "census/ev-within-type-ref.ts": "export type Envs = Array<NodeJS.ProcessEnv>;\n",
+  // EV-CLOSURE: refusal #2's paired twins (verbatim but for the module names), a side-effect import and a cycle that does not pass through the entry.
+  "census/p21-cl-side-entry.ts": 'import "./p21-cl-side-target.js";\nexport {};\n',
+  "census/p21-cl-side-target.ts": "export const flag = process.env.PI_GP21_FLAG;\n",
+  "census/p21-cl-cycle-entry.ts": 'import { x } from "./p21-cl-cycle-x.js";\nexport const entry = x;\n',
+  "census/p21-cl-cycle-x.ts": 'import { y } from "./p21-cl-cycle-y.js";\nexport const x = 1;\nexport const viaY = () => y;\n',
+  "census/p21-cl-cycle-y.ts": 'import { x } from "./p21-cl-cycle-x.js";\nexport const y = 2;\nexport const viaX = () => x;\n',
 };
 /** A virtual module's file name: census/ below CENSUS_DIR (nested paths kept), workbench/ below src/workbench, hosts/ below src/workbench/hosts. */
 function virtualPath(name: string): string {
@@ -935,6 +1099,8 @@ interface Row {
   readonly id: string;
   readonly read: () => unknown;
   readonly expected: () => unknown;
+  /** A *-WITHIN row's node kind (a ts.SyntaxKind member name) and the read forms it plants, each within a node of that kind. */
+  readonly within?: { readonly kind: string; readonly forms: () => readonly ts.Node[] };
 }
 const L = (name: string): string => label(name);
 /** A row's digest: sha256/16 of the JSON of its reader calls and its reading, the SDK, scratch and repo roots (spelled and real) normalized. */
@@ -952,8 +1118,91 @@ function digestOf(calls: readonly string[], reading: unknown): string {
   }
   return sha16(text);
 }
+// ---- the *-WITHIN rows: a read form planted within a node of one kind, the kind checked against the claim line here ----
+
+/** ts.SyntaxKind by member name (an alias name included), read here, never from the helper under judgment. */
+const SYNTAX_KINDS: ReadonlyMap<string, number> = new Map(Object.entries(ts.SyntaxKind).filter((entry): entry is [string, number] => typeof entry[1] === "number"));
+/** The nodes below a node that pass a test, in walk order. */
+function nodesOf(root: ts.Node, test: (node: ts.Node) => boolean): ts.Node[] {
+  const found: ts.Node[] = [];
+  const visit = (node: ts.Node): void => {
+    if (test(node)) found.push(node);
+    ts.forEachChild(node, visit);
+  };
+  visit(root);
+  return found;
+}
+/** Whether a node lies within a node of the given kind (an ancestor of it, the source file excluded). */
+function liesWithin(node: ts.Node, kind: number): boolean {
+  for (let cursor: ts.Node = node; !ts.isSourceFile(cursor.parent); cursor = cursor.parent) {
+    if (cursor.parent.kind === kind) return true;
+  }
+  return false;
+}
+/** The node kinds a *-WITHIN claim line names, between "in row order: " and the next "; ". */
+function kindsNamed(line: string): string[] {
+  const from = line.indexOf("in row order: ");
+  const to = from === -1 ? -1 : line.indexOf("; ", from);
+  return to === -1 ? [] : line.slice(from + "in row order: ".length, to).split(", ");
+}
+/** A module text's string literals and template parts, parsed here (ST-WITHIN's read forms). */
+function literalNodes(name: string, text: string): ts.Node[] {
+  const source = ts.createSourceFile(name, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  return nodesOf(source, node => ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node));
+}
+/** A virtual module's references of registerHyperUnixFind outside its import declarations (RG-WITHIN's read forms). */
+function targetNodes(name: string): ts.Node[] {
+  return nodesOf(file(name), node => ts.isIdentifier(node) && node.text === "registerHyperUnixFind" && ts.findAncestor(node, ts.isImportDeclaration) === undefined);
+}
+/** A virtual module's const declarations of attach (RG-ALIAS-WITHIN's read forms). */
+function aliasNodes(name: string): ts.Node[] {
+  return nodesOf(file(name), node => ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "attach");
+}
+/** A virtual module's identifiers named env or ProcessEnv (EV-WITHIN's read forms). */
+function envNodes(name: string): ts.Node[] {
+  return nodesOf(file(name), node => ts.isIdentifier(node) && (node.text === "env" || node.text === "ProcessEnv"));
+}
+/** A virtual module's object literals on the left of = (MB-PATTERN-WITHIN's read forms). */
+function patternNodes(name: string): ts.Node[] {
+  return nodesOf(file(name), node => ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isObjectLiteralExpression(node.left)).flatMap(node =>
+    ts.isBinaryExpression(node) ? [node.left] : [],
+  );
+}
+function stWithin(id: string, kind: string, name: string, text: string, expected: readonly string[]): Row {
+  return { id, read: () => entryStrings(name, text), expected: () => [...expected], within: { kind, forms: () => literalNodes(name, text) } };
+}
+function rgWithin(id: string, kind: string, name: string, forms: readonly string[]): Row {
+  return { id, read: () => references(name), expected: () => forms.map(form => `${L(name)}|${form}`), within: { kind, forms: () => targetNodes(name) } };
+}
+function caWithin(id: string, kind: string, name: string): Row {
+  return { id, read: () => references(name), expected: () => ALIASED.map(form => `${L(name)}|${form}`), within: { kind, forms: () => aliasNodes(name) } };
+}
+function evWithin(id: string, kind: string, name: string, expected: readonly string[]): Row {
+  return { id, read: () => envReads(name), expected: () => [...expected], within: { kind, forms: () => envNodes(name) } };
+}
+function apWithin(id: string, kind: string, name: string): Row {
+  return { id, read: () => patternReading(name), expected: () => ["mutations|client.d.ts:GetAccessor"], within: { kind, forms: () => patternNodes(name) } };
+}
+/** The registration reader's reading of a direct call, and of a const alias declared and called (the twins' DIRECT and ALIASED). */
+const DIRECT = ["specifier|registerHyperUnixFind|registerHyperUnixFind", "call|registerHyperUnixFind|registerHyperUnixFind"] as const;
+const ALIASED = ["specifier|registerHyperUnixFind|registerHyperUnixFind", "alias|registerHyperUnixFind|registerHyperUnixFind", "call|registerHyperUnixFind|attach"] as const;
+const REFERENCED = ["specifier|registerHyperUnixFind|registerHyperUnixFind", "reference|registerHyperUnixFind|registerHyperUnixFind"] as const;
+/** closureOf with a filter that throws once asked over 1000 times, so a closure walk that does not end reds by an error, not a timeout. */
+function boundedClosureOf(name: string): string[] {
+  let asked = 0;
+  const inCensusBounded = (fileName: string): boolean => {
+    asked += 1;
+    if (asked > 1000) throw new Error(`importClosure asked its filter over 1000 times from ${name}`);
+    return inCensus(fileName);
+  };
+  return importClosure(file(name), compiled().checker, inCensusBounded).map(source => repoPath(source.fileName));
+}
+
 const FALSIFIERS: Readonly<Record<string, readonly Row[]>> = {
-  "EN-DIRECTORY": [{ id: "EN-WALK-TREE", read: () => walk("en-tree"), expected: () => ["other/y.ts|module", "other|directory", "sub/deeper/z.ts|module", "sub/deeper|directory", "sub|directory", "top.ts|module"] }],
+  "EN-DIRECTORY": [
+    { id: "EN-WALK-TREE", read: () => walk("en-tree"), expected: () => ["other/y.ts|module", "other|directory", "sub/deeper/z.ts|module", "sub/deeper|directory", "sub|directory", "top.ts|module"] },
+    { id: "P21-EN-DEPTH4", read: () => walk("en-deep"), expected: () => ["a/b/c/d.ts|module", "a/b/c|directory", "a/b|directory", "a|directory"] },
+  ],
   "EN-MODULE": [
     {
       id: "EN-WALK-MODULES",
@@ -1027,6 +1276,24 @@ const FALSIFIERS: Readonly<Record<string, readonly Row[]>> = {
       expected: () => ["hx ", " hx ", " hx"],
     },
   ],
+  "ST-WITHIN": [
+    stWithin("P21-ST-ARROW", "ArrowFunction", "x.ts", 'export const c = () => "hx";\n', ["hx"]),
+    stWithin("P21-ST-FUNCTION-EXPRESSION", "FunctionExpression", "x.ts", 'export const c = function () {\n  return "hx";\n};\n', ["hx"]),
+    stWithin("P21-ST-CLASS", "ClassDeclaration", "x.ts", 'export class Launch {\n  command = "hx";\n}\n', ["hx"]),
+    stWithin("P21-ST-IF", "IfStatement", "x.ts", 'declare const on: boolean;\nif (on) void "hx";\n', ["hx"]),
+    stWithin("P21-ST-FOR-OF", "ForOfStatement", "x.ts", 'for (const part of ["hx"]) void part;\n', ["hx"]),
+    stWithin("P21-ST-RETURN", "ReturnStatement", "x.ts", 'export function command(): string {\n  return "hx";\n}\n', ["hx"]),
+    stWithin("P21-ST-TRY", "TryStatement", "x.ts", 'try {\n  void "hx";\n} catch {}\n', ["hx"]),
+    stWithin("P21-ST-CASE", "CaseClause", "x.ts", 'declare const name: string;\nswitch (name) {\n  case "hx":\n}\n', ["hx"]),
+    stWithin("P21-ST-CONDITIONAL", "ConditionalExpression", "x.ts", 'declare const on: boolean;\nexport const c = on ? "hx" : "";\n', ["hx", ""]),
+    stWithin("P21-ST-AWAIT", "AwaitExpression", "x.ts", 'export const c = await Promise.resolve("hx");\n', ["hx"]),
+    stWithin("P21-ST-NEW", "NewExpression", "x.ts", 'export const command = new String("hx");\n', ["hx"]),
+    stWithin("P21-ST-TAGGED", "TaggedTemplateExpression", "run.ts", "declare const $: (parts: TemplateStringsArray) => void;\n$`hx mutation apply`;\n", ["hx mutation apply"]),
+    stWithin("P21-ST-OBJECT", "ObjectLiteralExpression", "launch.ts", 'export default { command: "hx", args: ["mutation", "apply"] };\n', ["hx", "mutation", "apply"]),
+    stWithin("P21-ST-EXPORT-FROM", "ExportDeclaration", "x.ts", 'export * from "hx";\n', ["hx"]),
+    stWithin("P21-ST-TYPE-LITERAL", "TypeLiteral", "x.ts", 'export type Launch = { command: "hx" };\n', ["hx"]),
+    stWithin("P21-ST-TYPE-REF", "TypeReference", "x.ts", 'export const commands: Array<"hx"> = [];\n', ["hx"]),
+  ],
   "ST-KIND-TS": [
     { id: "ST-KIND-ASSERTION", read: () => ["a.ts", "a.mts", "a.cts"].map(name => entryStrings(name, 'export const a = <string>"hx";\n')), expected: () => [["hx"], ["hx"], ["hx"]] },
   ],
@@ -1043,6 +1310,8 @@ const FALSIFIERS: Readonly<Record<string, readonly Row[]>> = {
     { id: "ST-JSON-KEY", read: () => entryStrings("x.json", '{ "hx": true, "n": 1, "z": null }'), expected: () => ["hx", "n", "z"] },
     { id: "ST-JSON-ESCAPE", read: () => entryStrings("x.json", '{ "command": "h\\u0078" }'), expected: () => ["command", "hx"] },
     { id: "ST-JSON-TOP", read: () => [entryStrings("x.json", '"hx"'), entryStrings("x.json", '["hx", ["mutation"]]')], expected: () => [["hx"], ["hx", "mutation"]] },
+    { id: "P21-JSON-EMPTY-VALUE", read: () => entryStrings("x.json", '{ "command": "" }'), expected: () => ["command", ""] },
+    { id: "P21-JSON-EMPTY-KEY", read: () => entryStrings("x.json", '{ "": "hx" }'), expected: () => ["", "hx"] },
   ],
   "ST-JSON-UNPARSED": [{ id: "ST-JSON-INVALID", read: () => nullable(entryStrings("x.json", '{ "command": hx }')), expected: () => null }],
   "ST-UNREAD": [
@@ -1177,6 +1446,19 @@ const FALSIFIERS: Readonly<Record<string, readonly Row[]>> = {
     { id: "MB-PLACE-FOR-OF-ARRAY", read: () => patternReading("census/mb-place-for-of-array.ts"), expected: () => ["mutations|client.d.ts:GetAccessor"] },
     { id: "MB-PLACE-NESTED-ARRAY", read: () => patternReading("census/mb-place-nested-array.ts"), expected: () => ["ws|", "mutations|client.d.ts:GetAccessor"] },
     { id: "MB-PLACE-RHS-ARRAY", read: () => patternReading("census/mb-place-rhs-array.ts"), expected: () => [] },
+  ],
+  "MB-PATTERN-WITHIN": [
+    apWithin("P21-AP-ARROW", "ArrowFunction", "census/p21-ap-arrow.ts"),
+    apWithin("P21-AP-FUNCTION-EXPRESSION", "FunctionExpression", "census/p21-ap-function-expression.ts"),
+    apWithin("P21-AP-CLASS", "ClassDeclaration", "census/p21-ap-class.ts"),
+    apWithin("P21-AP-IF", "IfStatement", "census/p21-ap-if.ts"),
+    apWithin("P21-AP-RETURN", "ReturnStatement", "census/p21-ap-return.ts"),
+    apWithin("P21-AP-TRY", "TryStatement", "census/p21-ap-try.ts"),
+    apWithin("P21-AP-CASE", "CaseClause", "census/p21-ap-case.ts"),
+    apWithin("P21-AP-CONDITIONAL", "ConditionalExpression", "census/p21-ap-conditional.ts"),
+    apWithin("P21-AP-AWAIT", "AwaitExpression", "census/p21-ap-await.ts"),
+    apWithin("P21-AP-NEW", "NewExpression", "census/p21-ap-new.ts"),
+    apWithin("P21-AP-TAGGED", "TaggedTemplateExpression", "census/p21-ap-tagged.ts"),
   ],
   "RG-BINDING": [
     {
@@ -1378,6 +1660,21 @@ const FALSIFIERS: Readonly<Record<string, readonly Row[]>> = {
       ],
     },
   ],
+  "RG-ALIAS-WITHIN": [
+    caWithin("P21-CA-ARROW", "ArrowFunction", "workbench/p21-ca-arrow.ts"),
+    caWithin("P21-CA-FUNCTION-EXPRESSION", "FunctionExpression", "workbench/p21-ca-function-expression.ts"),
+    caWithin("P21-CA-CLASS", "ClassDeclaration", "workbench/p21-ca-class.ts"),
+    caWithin("P21-CA-IF", "IfStatement", "workbench/p21-ca-if.ts"),
+    caWithin("P21-CA-FOR-OF", "ForOfStatement", "workbench/p21-ca-for-of.ts"),
+    caWithin("P21-CA-RETURN-IIFE", "ReturnStatement", "workbench/p21-ca-return-iife.ts"),
+    caWithin("P21-CA-TRY", "TryStatement", "workbench/p21-ca-try.ts"),
+    caWithin("P21-CA-CASE", "CaseClause", "workbench/p21-ca-case.ts"),
+    caWithin("RG-ALIAS-WITHIN-CONDITIONAL", "ConditionalExpression", "workbench/rg-alias-within-conditional.ts"),
+    caWithin("RG-ALIAS-WITHIN-AWAIT", "AwaitExpression", "workbench/rg-alias-within-await.ts"),
+    caWithin("RG-ALIAS-WITHIN-NEW", "NewExpression", "workbench/rg-alias-within-new.ts"),
+    caWithin("RG-ALIAS-WITHIN-TAGGED", "TaggedTemplateExpression", "workbench/rg-alias-within-tagged.ts"),
+    caWithin("P21-CA-OBJECT-METHOD", "ObjectLiteralExpression", "workbench/p21-ca-object-method.ts"),
+  ],
   "RG-SPECIFIER": [
     { id: "RG-IMPORT-SPECIFIER", read: () => references("workbench/rg-import-specifier.ts"), expected: () => [`${L("workbench/rg-import-specifier.ts")}|specifier|registerHyperUnixFind|registerHyperUnixFind`] },
     {
@@ -1440,6 +1737,23 @@ const FALSIFIERS: Readonly<Record<string, readonly Row[]>> = {
       read: () => references("workbench/rg-var-alias.ts"),
       expected: () => [`${L("workbench/rg-var-alias.ts")}|specifier|registerHyperUnixFind|registerHyperUnixFind`, `${L("workbench/rg-var-alias.ts")}|reference|registerHyperUnixFind|registerHyperUnixFind`],
     },
+    { id: "P21-RG-NEW", read: () => references("workbench/p21-rg-new.ts"), expected: () => REFERENCED.map(form => `${L("workbench/p21-rg-new.ts")}|${form}`) },
+  ],
+  "RG-WITHIN": [
+    rgWithin("P21-RG-ARROW", "ArrowFunction", "workbench/p21-rg-arrow.ts", DIRECT),
+    rgWithin("P21-RG-FUNCTION-EXPRESSION", "FunctionExpression", "workbench/p21-rg-function-expression.ts", DIRECT),
+    rgWithin("P21-RG-CLASS", "ClassDeclaration", "workbench/p21-rg-class.ts", DIRECT),
+    rgWithin("P21-RG-IF", "IfStatement", "workbench/p21-rg-if.ts", DIRECT),
+    rgWithin("P21-RG-FOR-OF", "ForOfStatement", "workbench/p21-rg-for-of.ts", DIRECT),
+    rgWithin("P21-RG-RETURN", "ReturnStatement", "workbench/p21-rg-return.ts", DIRECT),
+    rgWithin("P21-RG-TRY", "TryStatement", "workbench/p21-rg-try.ts", DIRECT),
+    rgWithin("P21-RG-CASE", "CaseClause", "workbench/p21-rg-case.ts", DIRECT),
+    rgWithin("P21-RG-CONDITIONAL", "ConditionalExpression", "workbench/p21-rg-conditional.ts", DIRECT),
+    rgWithin("P21-RG-AWAIT", "AwaitExpression", "workbench/p21-rg-await.ts", DIRECT),
+    rgWithin("RG-WITHIN-NEW", "NewExpression", "workbench/rg-within-new.ts", DIRECT),
+    rgWithin("P21-RG-TAGGED", "TaggedTemplateExpression", "workbench/p21-rg-tagged.ts", REFERENCED),
+    rgWithin("P21-RG-TYPE-LITERAL", "TypeLiteral", "workbench/p21-rg-type-literal.ts", REFERENCED),
+    rgWithin("P21-RG-TYPE-REF", "TypeReference", "workbench/p21-rg-type-ref.ts", REFERENCED),
   ],
   "EV-CLOSURE": [
     { id: "EV-CLOSURE-CHAIN", read: () => closureOf("census/cl-a.ts"), expected: () => ["census/cl-a.ts", "census/cl-b.ts", "census/cl-c.ts", "census/cl-d.ts"].map(L) },
@@ -1447,6 +1761,12 @@ const FALSIFIERS: Readonly<Record<string, readonly Row[]>> = {
     { id: "EV-CLOSURE-FILTER", read: () => closureOf("census/cl-f.ts"), expected: () => ["census/cl-f.ts", "census/cl-g.ts"].map(L) },
     { id: "EV-CLOSURE-EXPORT-FROM", read: () => closureOf("census/cl-export-from.ts"), expected: () => ["census/cl-export-from.ts", "census/cl-type-target.ts", "census/cl-named-target.ts"].map(L) },
     { id: "EV-CLOSURE-ORDER", read: () => closureOf("census/cl-o.ts"), expected: () => ["census/cl-o.ts", "census/cl-o1.ts", "census/cl-o2.ts", "census/cl-o11.ts", "census/cl-o21.ts"].map(L) },
+    { id: "P21-EV-SIDE-EFFECT", read: () => closureOf("census/p21-cl-side-entry.ts"), expected: () => ["census/p21-cl-side-entry.ts", "census/p21-cl-side-target.ts"].map(L) },
+    {
+      id: "P21-EV-CYCLE-NOT-ENTRY",
+      read: () => boundedClosureOf("census/p21-cl-cycle-entry.ts"),
+      expected: () => ["census/p21-cl-cycle-entry.ts", "census/p21-cl-cycle-x.ts", "census/p21-cl-cycle-y.ts"].map(L),
+    },
   ],
   "EV-READS": [
     { id: "L3-A-ENV-READS", read: () => envReads("census/ev-refusal.ts"), expected: () => ["7|process.env"] },
@@ -1460,6 +1780,23 @@ const FALSIFIERS: Readonly<Record<string, readonly Row[]>> = {
     { id: "EV-NESTED", read: () => envReads("census/ev-nested.ts"), expected: () => ["2|same(process.env)", "2|process.env"] },
     { id: "EV-OTHER-PACKAGE-PROCESSENV", read: () => envReads("census/ev-other-package-processenv.ts"), expected: () => [] },
     { id: "EV-SHORTHAND", read: () => envReads("census/ev-shorthand.ts"), expected: () => ["1|env", "2|env"] },
+  ],
+  "EV-WITHIN": [
+    evWithin("P21-EV-ARROW", "ArrowFunction", "census/p21-ev-arrow.ts", ["1|process.env"]),
+    evWithin("P21-EV-FUNCTION-EXPRESSION", "FunctionExpression", "census/p21-ev-function-expression.ts", ["2|process.env"]),
+    evWithin("P21-EV-CLASS", "ClassDeclaration", "census/p21-ev-class.ts", ["2|process.env"]),
+    evWithin("P21-EV-IF", "IfStatement", "census/p21-ev-if.ts", ["2|process.env"]),
+    evWithin("P21-EV-FOR-OF", "ForOfStatement", "census/p21-ev-for-of.ts", ["1|process.env"]),
+    evWithin("P21-EV-RETURN", "ReturnStatement", "census/p21-ev-return.ts", ["2|process.env"]),
+    evWithin("P21-EV-TRY", "TryStatement", "census/p21-ev-try.ts", ["2|process.env"]),
+    evWithin("P21-EV-CASE", "CaseClause", "census/p21-ev-case.ts", ["4|process.env"]),
+    evWithin("P21-EV-CONDITIONAL", "ConditionalExpression", "census/p21-ev-conditional.ts", ["2|process.env"]),
+    evWithin("P21-EV-AWAIT", "AwaitExpression", "census/p21-ev-await.ts", ["1|process.env"]),
+    evWithin("P21-EV-NEW", "NewExpression", "census/p21-ev-new.ts", ["1|process.env"]),
+    evWithin("P21-EV-TAGGED", "TaggedTemplateExpression", "census/p21-ev-tagged.ts", ["2|process.env"]),
+    evWithin("P21-EV-EXPORT-FROM", "ExportDeclaration", "census/p21-ev-export-from.ts", ["1|env"]),
+    evWithin("P21-EV-TYPE-LITERAL", "TypeLiteral", "census/p21-ev-type-literal.ts", ["1|env", "1|env"]),
+    evWithin("EV-WITHIN-TYPE-REF", "TypeReference", "census/ev-within-type-ref.ts", ["1|ProcessEnv"]),
   ],
 };
 
@@ -1630,6 +1967,37 @@ describe("wb-ts6.3 HX mutation Verified readers census (TS6-R2, rule-19 structur
   });
   ORDER.push("each requirement quotes the bead's own text exactly, and its claims are exactly the claim lines naming it");
 
+  it("each *-WITHIN line's node kinds are its rows' kinds, in order, and each row plants its read forms within a node of its kind", { timeout: 120_000 }, () => {
+    const lines = CLAIMS.filter(row => row.id.endsWith("-WITHIN"));
+    expect(lines.map(row => row.id), "the *-WITHIN lines, in line order").toStrictEqual(["ST-WITHIN", "MB-PATTERN-WITHIN", "RG-ALIAS-WITHIN", "RG-WITHIN", "EV-WITHIN"]);
+    const rows = Object.values(FALSIFIERS).flat();
+    expect(
+      rows.filter(row => row.within !== undefined && !lines.some(line => line.pins.includes(row.id))).map(row => row.id),
+      "every row that carries a node kind is a *-WITHIN line's",
+    ).toStrictEqual([]);
+    for (const line of lines) {
+      const text = CLAIM_LINES.find(entry => entry.startsWith(`${line.id} (`)) ?? "";
+      const table = FALSIFIERS[line.id] ?? [];
+      expect(kindsNamed(text), `${line.id}'s node kinds are its rows' kinds, in row order`).toStrictEqual(table.map(row => row.within?.kind ?? "<no kind>"));
+      expect(
+        table
+          .filter(row => {
+            const kind = SYNTAX_KINDS.get(row.within?.kind ?? "");
+            const forms = row.within?.forms() ?? [];
+            return kind === undefined || forms.length === 0 || !forms.every(form => liesWithin(form, kind));
+          })
+          .map(row => row.id),
+        `${line.id}'s rows each plant their read forms within a node of their kind`,
+      ).toStrictEqual([]);
+      expect(
+        table.filter(row => (row.within?.forms() ?? []).some(form => liesWithin(form, SYNTAX_KINDS.get("WhileStatement") ?? -1))).map(row => row.id),
+        `${line.id}'s rows plant no read form within a WhileStatement (the kind check's negative control: no row plants one)`,
+      ).toStrictEqual([]);
+    }
+    REACHED.push("within");
+  });
+  ORDER.push("each *-WITHIN line's node kinds are its rows' kinds, in order, and each row plants its read forms within a node of its kind");
+
   for (const claim of CLAIMS) {
     describe(claim.id, () => {
       for (const row of FALSIFIERS[claim.id] ?? []) {
@@ -1686,6 +2054,7 @@ describe("wb-ts6.3 HX mutation Verified readers census (TS6-R2, rule-19 structur
       "header",
       "pins",
       "requirements",
+      "within",
       ...[...CLAIMS, ...RESIDUALS].flatMap(row => row.pins).map(pin => `${pin}:3`),
     ]);
   });
