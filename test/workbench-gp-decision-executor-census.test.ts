@@ -89,7 +89,13 @@
  *    fails; of two decisions handed in one F3 call, either one minted for another candidate's request the call did not
  *    record fails it, and both minted for recorded requests pass; of three, the first, the middle or the last minted for
  *    such a request fails it, and all three minted for recorded requests pass; each decision control reads, per handed
- *    decision, whether a recorded request answers its receipt, beside the checks the call fails); the echo (the permit's
+ *    decision, whether a recorded request answers its receipt, beside the checks the call fails); the decisions over a
+ *    record (in one F3 call handing two or three decisions over a record of F1's requests for the snapshot's first one,
+ *    two, three or four can_execute candidates, in the snapshot's order, the decision at the first or second of two and
+ *    at the first, middle or last of three, its fellows the permit for the record's first request, passes minted for
+ *    the request at each position of that record and fails minted for a request the record does not hold; each reads
+ *    the record's size and, per handed decision, the index of the recorded request its receipt answers (-1: none),
+ *    beside the checks the call fails); the echo (the permit's
  *    receipt answers the request it was minted for, with that request's grants in either order, and answers it no longer
  *    with one echoed field or its grant altered alone as planted: a string or the grant gaining a final ~, an object
  *    gaining a member). A4 a hand-built look-alike permit and a spread copy of a minted one fail
@@ -205,6 +211,17 @@
  * are NOT CLAIMED above, their pins wb-kbh1's; no reading, control, pin, witness or test title changes, only comments and
  * assertion messages do.
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI dependency, adapter, seam or fake binary.
+ *
+ * wb-hops (R694 follow-up of wb-5omz landing 799, gate cmd_92bb8e785d4c: F1 LOW, claim-scope wording): read as a
+ * product, the CHECKS parenthetical's "for the check, a record of one to four requests and one to three handed
+ * decisions" and "the check reads every handed decision, the first, middle and last of three, against every recorded
+ * request, at each position of one to four" named a record of three or more with a second or later decision, which no
+ * A3 control planted, and the gate's one-edit members of the check line Z05 (a call's second and later decisions judged
+ * only while the record holds fewer than three requests) and Z06 (those decisions read against the record's first two
+ * requests only) survived there. A3's decisions over a record plant that product for two and three handed decisions,
+ * and the position controls of the check over a record plant it for one, so the CHECKS words stand as they were.
+ * Beside that control, its sentence above and its assertion, no claim, reading, mutant, control, pin or test title
+ * changes; the A3 witness gains the control's table (decisionsOverRecords). Display paths added: none.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -1166,6 +1183,106 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "the last of three answering none": { answering: [true, true, false], found: ["effect-unrequested"] },
       "all three answering": { answering: [true, true, true], found: [] },
     });
+    const permits = candidates.map(candidate => decideControl(requestFor(F1, candidate), { projection: projectionOf(F1), now: () => DECIDED_AT }));
+    const [firstPermit = permit] = permits;
+    const outside = decideControl(requestFor(F1, chosen, 1), { projection: projectionOf(F1), now: () => DECIDED_AT });
+    const recordOf = (size: number): NativeControlRequest[] => candidates.slice(0, size).map(candidate => requestFor(F1, candidate));
+    const placements = { "first of two": [0, 2], "second of two": [1, 2], "first of three": [0, 3], "middle of three": [1, 3], "last of three": [2, 3] } as const;
+    const overRecord = (at: number, count: number, decision: ControlDecision, issued: readonly NativeControlRequest[]): { readonly requests: number; readonly answered: number[]; readonly found: Check[] } => {
+      const handedDecisions = Array.from({ length: count }, (_, index) => (index === at ? decision : firstPermit));
+      return { requests: issued.length, answered: handedDecisions.map(entry => issued.findIndex(request => answers(own(entry, "receipt"), request))), found: handed("F3", handedDecisions, issued) };
+    };
+    const decisionsOverRecords = Object.fromEntries(
+      Object.entries(placements).map(([label, [at, count]]) => [
+        label,
+        {
+          ...Object.fromEntries(sizes.flatMap(size => sizes.slice(0, size).map(position => [`${position} of ${size}`, overRecord(at, count, permits[position - 1] ?? outside, recordOf(size))]))),
+          ...Object.fromEntries(sizes.map(size => [`none of ${size}`, overRecord(at, count, outside, recordOf(size))])),
+        },
+      ]),
+    );
+    expect(decisionsOverRecords, "in one F3 call handing two or three decisions over a record of F1's requests for the snapshot's first one, two, three or four can_execute candidates, in the snapshot's order, the decision at the first or second of two and at the first, middle or last of three, its fellows the permit for the record's first request, passes minted for the request at each position of that record and fails minted for a request the record does not hold; each reads the record's size and, per handed decision, the index of the recorded request its receipt answers (-1: none), beside the checks the call fails").toEqual({
+      "first of two": {
+        "1 of 1": { requests: 1, answered: [0, 0], found: [] },
+        "1 of 2": { requests: 2, answered: [0, 0], found: [] },
+        "2 of 2": { requests: 2, answered: [1, 0], found: [] },
+        "1 of 3": { requests: 3, answered: [0, 0], found: [] },
+        "2 of 3": { requests: 3, answered: [1, 0], found: [] },
+        "3 of 3": { requests: 3, answered: [2, 0], found: [] },
+        "1 of 4": { requests: 4, answered: [0, 0], found: [] },
+        "2 of 4": { requests: 4, answered: [1, 0], found: [] },
+        "3 of 4": { requests: 4, answered: [2, 0], found: [] },
+        "4 of 4": { requests: 4, answered: [3, 0], found: [] },
+        "none of 1": { requests: 1, answered: [-1, 0], found: ["effect-unrequested"] },
+        "none of 2": { requests: 2, answered: [-1, 0], found: ["effect-unrequested"] },
+        "none of 3": { requests: 3, answered: [-1, 0], found: ["effect-unrequested"] },
+        "none of 4": { requests: 4, answered: [-1, 0], found: ["effect-unrequested"] },
+      },
+      "second of two": {
+        "1 of 1": { requests: 1, answered: [0, 0], found: [] },
+        "1 of 2": { requests: 2, answered: [0, 0], found: [] },
+        "2 of 2": { requests: 2, answered: [0, 1], found: [] },
+        "1 of 3": { requests: 3, answered: [0, 0], found: [] },
+        "2 of 3": { requests: 3, answered: [0, 1], found: [] },
+        "3 of 3": { requests: 3, answered: [0, 2], found: [] },
+        "1 of 4": { requests: 4, answered: [0, 0], found: [] },
+        "2 of 4": { requests: 4, answered: [0, 1], found: [] },
+        "3 of 4": { requests: 4, answered: [0, 2], found: [] },
+        "4 of 4": { requests: 4, answered: [0, 3], found: [] },
+        "none of 1": { requests: 1, answered: [0, -1], found: ["effect-unrequested"] },
+        "none of 2": { requests: 2, answered: [0, -1], found: ["effect-unrequested"] },
+        "none of 3": { requests: 3, answered: [0, -1], found: ["effect-unrequested"] },
+        "none of 4": { requests: 4, answered: [0, -1], found: ["effect-unrequested"] },
+      },
+      "first of three": {
+        "1 of 1": { requests: 1, answered: [0, 0, 0], found: [] },
+        "1 of 2": { requests: 2, answered: [0, 0, 0], found: [] },
+        "2 of 2": { requests: 2, answered: [1, 0, 0], found: [] },
+        "1 of 3": { requests: 3, answered: [0, 0, 0], found: [] },
+        "2 of 3": { requests: 3, answered: [1, 0, 0], found: [] },
+        "3 of 3": { requests: 3, answered: [2, 0, 0], found: [] },
+        "1 of 4": { requests: 4, answered: [0, 0, 0], found: [] },
+        "2 of 4": { requests: 4, answered: [1, 0, 0], found: [] },
+        "3 of 4": { requests: 4, answered: [2, 0, 0], found: [] },
+        "4 of 4": { requests: 4, answered: [3, 0, 0], found: [] },
+        "none of 1": { requests: 1, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+        "none of 2": { requests: 2, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+        "none of 3": { requests: 3, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+        "none of 4": { requests: 4, answered: [-1, 0, 0], found: ["effect-unrequested"] },
+      },
+      "middle of three": {
+        "1 of 1": { requests: 1, answered: [0, 0, 0], found: [] },
+        "1 of 2": { requests: 2, answered: [0, 0, 0], found: [] },
+        "2 of 2": { requests: 2, answered: [0, 1, 0], found: [] },
+        "1 of 3": { requests: 3, answered: [0, 0, 0], found: [] },
+        "2 of 3": { requests: 3, answered: [0, 1, 0], found: [] },
+        "3 of 3": { requests: 3, answered: [0, 2, 0], found: [] },
+        "1 of 4": { requests: 4, answered: [0, 0, 0], found: [] },
+        "2 of 4": { requests: 4, answered: [0, 1, 0], found: [] },
+        "3 of 4": { requests: 4, answered: [0, 2, 0], found: [] },
+        "4 of 4": { requests: 4, answered: [0, 3, 0], found: [] },
+        "none of 1": { requests: 1, answered: [0, -1, 0], found: ["effect-unrequested"] },
+        "none of 2": { requests: 2, answered: [0, -1, 0], found: ["effect-unrequested"] },
+        "none of 3": { requests: 3, answered: [0, -1, 0], found: ["effect-unrequested"] },
+        "none of 4": { requests: 4, answered: [0, -1, 0], found: ["effect-unrequested"] },
+      },
+      "last of three": {
+        "1 of 1": { requests: 1, answered: [0, 0, 0], found: [] },
+        "1 of 2": { requests: 2, answered: [0, 0, 0], found: [] },
+        "2 of 2": { requests: 2, answered: [0, 0, 1], found: [] },
+        "1 of 3": { requests: 3, answered: [0, 0, 0], found: [] },
+        "2 of 3": { requests: 3, answered: [0, 0, 1], found: [] },
+        "3 of 3": { requests: 3, answered: [0, 0, 2], found: [] },
+        "1 of 4": { requests: 4, answered: [0, 0, 0], found: [] },
+        "2 of 4": { requests: 4, answered: [0, 0, 1], found: [] },
+        "3 of 4": { requests: 4, answered: [0, 0, 2], found: [] },
+        "4 of 4": { requests: 4, answered: [0, 0, 3], found: [] },
+        "none of 1": { requests: 1, answered: [0, 0, -1], found: ["effect-unrequested"] },
+        "none of 2": { requests: 2, answered: [0, 0, -1], found: ["effect-unrequested"] },
+        "none of 3": { requests: 3, answered: [0, 0, -1], found: ["effect-unrequested"] },
+        "none of 4": { requests: 4, answered: [0, 0, -1], found: ["effect-unrequested"] },
+      },
+    });
     const receipt = own(permit, "receipt");
     const echoedByCore = record(receipt) ? Object.keys(receipt).filter(key => Object.hasOwn(mintedFor, key) && isDeepStrictEqual(own(receipt, key), own(mintedFor, key))) : [];
     expect(echoedByCore, "the request fields the core's own receipt echoes are the ones answers() reads (ECHOED)").toEqual([...ECHOED]);
@@ -1202,6 +1319,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       positions,
       answered,
       decisions,
+      decisionsOverRecords,
       echoedByCore,
       echo,
     };
