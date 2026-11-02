@@ -280,6 +280,37 @@
  * home of argumentTarget's indexing, or wb-021.7's fail-closed home). F4 (CT6-v, the 6ze.39 class) stays disclosed in NOT
  * CLAIMED. No reading of the helper is edited, so src's live reach map, forms and refused uses read as at cut #8.
  *
+ * WB-021.10 (the rule-19 structural-exit child of wb-021.7, rulings R-B199 and R-B241: the explicit-this reader coverage
+ * wb-021.7's refusal #3 found missing and refusal #4's tagged-template member, folded here by the dependency inversion and
+ * landed ahead of the parked parent; first cut). Cut #8's and wb-vgri's shape stands: 0 pins removed or changed; the rows
+ * THIS-PARAMETER-ARGUMENTS and TAGGED-TEMPLATE-ARGUMENTS and the NAMED RESIDUAL row and family R-INFERRED-LITERAL are
+ * added, and the UNLISTED-FORMS label and the readForms doc are restated to what is read. Two readings of the helper are
+ * edited (ownAt reads its this parameter through the same predicate, unchanged): (1) argumentTarget skips a src
+ * declaration's own declared this parameter, as ownAt skips it for a stand-in, so an argument is read against the declared
+ * parameter the checker binds it to - parametersOf's list holds the this parameter, so before this cut a src callee that
+ * declares one read each argument against the parameter declared before its own, the first against the this parameter
+ * itself (the pinned pages, at trunk f5cb912: a class instance, a callback and an object literal not written where it
+ * flows read quiet, a value hidden at its own parameter after one that keeps the projection read argument, and a value
+ * kept at its own first parameter was refused against the this parameter; refusal #3's mechanism, and the value member
+ * wb-021.7's cut #4 delivery found); (2) a tagged template's substitution is read as the argument at its position, its
+ * index among the substitutions plus one, the tagged template the site - before this cut no substitution was read as a
+ * flow (refusal #4's LTT2 holder, and a callback and a context-less literal, read quiet) and one that exposes the
+ * projection was refused as an unlisted TemplateSpan. Each paired page reads as its twin reads: the same callee declared
+ * with no this parameter, the same tag called with its strings argument and the same values (the unpaired pages - an
+ * overload set's visible this parameter, a tag that exposes the projection, a template with no tag - are each named in
+ * their row's label). Refusal #3's this1-this5 and refusal #4's LTT1 are a
+ * hiding object literal written at a src generic callee's parameter whose type parameter the call infers from that
+ * literal: the literal reading reads it under its contextual type, at each pinned page that inferred instantiation, with
+ * or without a this parameter, and each pinned page reads quiet - the named residual R-INFERRED-LITERAL, each shape pinned
+ * quiet with a this parameter and without beside twins that refuse (the constraint's type itself; a type argument written
+ * as it). The rows claim neither a spread argument nor an argument written after one (NOT CLAIMED below). CUT #4's 'a type
+ * parameter through its constraint' is the flow's own reading (its held paths, a callback's receivers, a class instance, a
+ * literal not written there), never the members of a literal written at it, and bead wb-021.7 is the home of a reading
+ * through the constraint. Measured on src (trunk f5cb912, 117 files): src holds no explicit this parameter and no
+ * decorator, and its six tagged templates (String.raw in src/workbench/redaction.ts) take strings in a module that reaches
+ * no projection, so src's live reach map (25 modules) and forms (25 modules, detached-control's four refused uses) read
+ * byte for byte the same under trunk's helper and this cut's.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
  * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
@@ -364,7 +395,12 @@
  * that a stand-in whose type the readings do not list refuses (cut #8, the fail-closed core). What neither scan reads is named:
  * R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH, and the three fail-closed families; R-HELD-VALUE and R-THIS-BINDING
  * (wb-vgri) plant the held and the bound stand-ins the flow reading never judges as the type they stand in for, their quiet
- * pages beside read twins (respin 2: R-THIS-BINDING's label names each of its pages).
+ * pages beside read twins (respin 2: R-THIS-BINDING's label names each of its pages). THIS-PARAMETER-ARGUMENTS and
+ * TAGGED-TEMPLATE-ARGUMENTS (wb-021.10) plant the arguments of src callees that declare an explicit this parameter and
+ * the substitutions of tagged templates, each paired page read as the argument it is beside its twin (the callee
+ * declared with no this parameter; the tag called with its strings argument and the same values), and
+ * R-INFERRED-LITERAL plants the hiding literal a generic callee's inferred instantiation reads quiet, with and without
+ * a this parameter, beside twins that refuse.
  * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
  * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
  * plants, the interface forms INTERFACE-FORMS plants and the heritage and signature shapes INTERFACE-HERITAGE plants, and
@@ -480,16 +516,31 @@
  * Reflect.apply given the this parameter's type as their type argument - and with type arguments written where
  * Function.prototype.bind, call and apply are handed the value by call, the checker types each pinned value by the
  * function's this parameter's type, yet each reads quiet, beside twins that refuse: the no-spread twins, and one spread of
- * the literal [] or of [] as [] before the instance at bind's first overload (REACH).
+ * the literal [] or of [] as [] before the instance at bind's first overload (REACH); R-INFERRED-LITERAL (wb-021.10;
+ * wb-021.7 refusal #3's this1-this5 and refusal #4's LTT1) an object literal written as the argument itself of a call to a
+ * src generic declaration with a body, or as a substitution under such a tag, at a parameter typed by a type parameter the
+ * call infers from that literal, is read under its contextual type, at each pinned page that inferred instantiation and
+ * not the constraint, so each pinned page's hiding member reads quiet, with or without an explicit this parameter, beside
+ * twins that refuse at the constraint's type itself and under a type argument written as it (REACH).
  * NOT CLAIMED. In src: an instance member's own code - its body, initializer, parameters and types - is not read statically
  * (REPROJECTION's runtime reading and MEMBERS judge it), nor is a parameter decorator (the compiler refuses one under the
  * repo's standard decorators, TS1206). In the residual rows: R-THIS-BINDING's reading of a value bound as this other than
  * the pages it pins - a value written after spreads, or handed through written type arguments, outside the hole's pinned
- * forms included - is NOT CLAIMED by this census (final cut #4; bead wb-97ah is the home of that reading). As edits of this
+ * forms included - is NOT CLAIMED by this census (final cut #4; bead wb-97ah is the home of that reading). Beside
+ * THIS-PARAMETER-ARGUMENTS and TAGGED-TEMPLATE-ARGUMENTS (wb-021.10), each of these is NOT CLAIMED by this census: an
+ * argument written after a spread, and a spread argument itself (the written-index mapping: bead wb-97ah); a library
+ * declaration's this parameter (Function.prototype's call, apply and bind keep R-THIS-BINDING's pinned readings: bead
+ * wb-97ah); a decorator's implicit argument, an instanceof's Symbol.hasInstance argument and a JSX element's attributes
+ * (src holds no decorator and no .tsx module); and, beside R-INFERRED-LITERAL, an object literal written inside a generic
+ * argument and one passed to a src generic signature with no body (bead wb-021.7). The two rows plant no call through a
+ * src signature with no body of its own (DISPATCH reads those). As edits of this
  * file, its helper and the roster together: a plant row of IDENTITY, QUIET,
  * WRITE-ANY-ROUTE, OTHER-ROUTES, EVIDENCE-ABORTS, a READERS, REACH or NAMES row or a residual row removed with its
  * frozen-literal element and roster entry (no outside anchor names those plants, R-HELD-VALUE's and R-THIS-BINDING's
- * included); a case and its expected reading
+ * included, and wb-021.10's THIS-PARAMETER-ARGUMENTS, TAGGED-TEMPLATE-ARGUMENTS and R-INFERRED-LITERAL); argumentTarget's
+ * this-parameter skip or the tagged-template substitution reading removed from the helper together with the pages of
+ * THIS-PARAMETER-ARGUMENTS or TAGGED-TEMPLATE-ARGUMENTS, the frozen literal and the roster (the src plants recorded with
+ * wb-021.10 are their falsifiers; src holds no such call); a case and its expected reading
  * re-authored together; the reach scan's key reading or its marker removed from the helper together with the REACH rows
  * that plant them, and a resolvable form or a refusal of the forms judge removed from the helper together with its REACH
  * cases, RESOLVABLE_FORMS's element and the frozen literal (the src plants recorded with the cut are their falsifiers;
@@ -1060,6 +1111,9 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/CALLBACK-RETURNS:8",
       "REACH/STAND-IN-RETURNS:9",
       "REACH/UNLISTED-STAND-INS:10",
+      "REACH/THIS-PARAMETER-ARGUMENTS:37",
+      "REACH/TAGGED-TEMPLATE-ARGUMENTS:30",
+      "REACH/R-INFERRED-LITERAL:20",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
       "NAMES/CLASS-MEMBER-SHAPES:10",
@@ -1103,6 +1157,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "R-STRUCTURAL-STAND-IN:REACH R-STRUCTURAL-STAND-IN",
       "R-HELD-VALUE:REACH R-HELD-VALUE",
       "R-THIS-BINDING:REACH R-THIS-BINDING",
+      "R-INFERRED-LITERAL:REACH R-INFERRED-LITERAL",
     ]);
     // The fail-closed shapes (cut #7, ruling R-B60; cut #8, ruling R-B67), each with the REACH row that plants it: the row reads it refused under its typed row and holds a quiet page beside it.
     expect(Object.entries(FAIL_CLOSED).map(([kind, id]) => `${kind}:${id}`)).toEqual([

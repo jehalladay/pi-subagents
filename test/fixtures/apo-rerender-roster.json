@@ -1,5 +1,5 @@
 {
-  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #8; wb-vgri, final cut #4). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site, and where a typed reader in it keeps an admission member, those writers. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses, typed writers and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose; and, in its notes, the cut #8 delivery record's one enumeration of FAIL_CLOSED, each kind with the row that plants it: wb-vgri), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant, a class-element kind or a fail-closed kind removed from the census and this file together still reds.",
+  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #8; wb-vgri, final cut #4; wb-021.10). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site, and where a typed reader in it keeps an admission member, those writers. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses, typed writers and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose; and, in its notes, the cut #8 delivery record's one enumeration of FAIL_CLOSED, each kind with the row that plants it: wb-vgri), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant, a class-element kind or a fail-closed kind removed from the census and this file together still reds.",
   "rows": [
     {
       "table": "SURFACES",
@@ -645,7 +645,7 @@
     {
       "table": "REACH",
       "id": "UNLISTED-FORMS",
-      "label": "a node that exposes the projection in a parent no resolvable form names - an apparent member (constructor, a callable carrier's call), an undeclared element key, the arguments object, an object spread, a template, a yield, a throw, an export default, an in test - is refused",
+      "label": "a node that exposes the projection in a parent no resolvable form names - an apparent member (constructor, a callable carrier's call), an undeclared element key, the arguments object, an object spread, a template with no tag (a tagged template's substitution is an argument, TAGGED-TEMPLATE-ARGUMENTS: wb-021.10), a yield, a throw, an export default, an in test - is refused",
       "pins": [
         "c04599c3e167353029d9fda159f3198551c7c9495d8798486b6a9e2125e0564e",
         "e03455b038cda46c1aa99b7f8d2361b6541983ef2fb4b635668b3cd7a6f447a9",
@@ -1111,6 +1111,117 @@
       "test": "REACH UNLISTED-STAND-INS"
     },
     {
+      "table": "REACH",
+      "id": "THIS-PARAMETER-ARGUMENTS",
+      "label": "an argument of a call - not itself a spread, and with no spread written before it among the call's arguments - whose callee resolves to a src declaration that declares an explicit this parameter (a declaration with a body, or the implementation that runs behind an overload set's visible signatures) is read against the declared parameter the checker binds it to: the this parameter receives no argument, and argumentTarget skips it as ownAt skips it for a stand-in (wb-021.10), so each paired page reads as its twin, the same callee declared with no this parameter, reads - a value that exposes the projection into a parameter that keeps it (argument) and, refused (argument), into one that hides it; a class instance flowing into a type its class does not declare, refused (structural-stand-in), and one whose class declares that type, quiet; a callback whose own parameter hides what the parameter's type hands it, refused (argument); an object literal not written where it flows, refused (context-less-literal); and an object literal written at the argument, read under its contextual type (property) - through a function declaration, a function expression, a class's method and static method, an object literal's method, an overload set's implementation, a generic function's parameter (a class instance, through its constraint), a rest parameter (each argument at and past its position), a parameter after another, an optional parameter, an async function and a this parameter typed unknown; and an overload set whose visible signature declares a this parameter while its implementation declares none is read through the implementation (structural-stand-in). A tagged template's substitution under a tag that declares one is read the same way (TAGGED-TEMPLATE-ARGUMENTS); a call through a src signature with no body of its own is outside this row (DISPATCH reads it), and so are a spread argument and an argument written after one (the written-index mapping, NOT CLAIMED: bead wb-97ah)",
+      "pins": [
+        "61ff9a53f2b7450bb944b364a041c5e9d34c8f0215397518c19fca09a2f1cb40",
+        "2d729913d9cfa2dc78bd3b4a7353e030d279361e16ca80b706df760b8dedb6eb",
+        "e659094c96a088c67c3cd3951381517103ef3a6ea3e843cba805a00997684339",
+        "af418ffe4649c4238c3a46be374bcb7a7393380e8aa84507dedc5c4dd1f67c7e",
+        "2646eae6b4acedf6b95afd304a1202d5f4b489b1c7224013e4685d94084850dc",
+        "ef9e0abae94eca4429f73194ca323cb373c2fecd8b7f9dd20840e0300ef02ce8",
+        "b175f862294bfbfcd3af941d0c711d3f96ce7a8aaa609d99da7c4685bdada295",
+        "fe35da16c60c9817960770d3606417a53faa532d28dc0b07aee942713a6943eb",
+        "9f13bcbae6d5b38044c09dbdd16e2d11d3bfcd459388c426567bde7c62d4cba4",
+        "08a6971af09612d3f3c8641bcc527d1a06ff8db931df3f2d691c84888b4a4fef",
+        "cc969f44966606f9c2d546a445d377e1bf84964486f697a3769931e28e811d99",
+        "91bd35e6ba32b50c6505c40cedf05a639da6b205fdef24ca0ed63b3181bad85f",
+        "9109746867bf7f0127c7c16c411486d86542097665dbae7d50cbf63898ce2c50",
+        "9b18b1c097622bbd0bee5060d77c80dc73205a1a763bfaeeeed50968e3bdaa8f",
+        "47d77916e7267ac91a54354139a8d43b4b13b532333f0ad69399d2f09110f3c9",
+        "a4059525076a80ecbbc0d0ac1d4ab2e2a23a4f0133faf3b72b2622420b2b34c1",
+        "4c7d16810e2dcef3bb52f00c76902273096577a57118d4c8003441f1537d9ed0",
+        "04a64dfff83bdd038980dc702b458d6b7c626b5c1ce9c7223be982c954c8e3a6",
+        "cd19159e5570e1b6092b2032bdd3f061293872ff66f06513a1422926a5ece545",
+        "9d0abfef4acb84f1dcfd7e438450c8e8fba709dd061bfcea4190d9de595c745c",
+        "7207fdefd304a11b2fa4de29c991497f367f3093943a99f7b953a90c4c1fdc99",
+        "49181d07d8701ec0958531a823efde33723aba842e5dcccb4e4b977eae362752",
+        "bcdfaf9d9fc70e6a760807a8ff44c1a963487e40b1d6751fe0ed1aa8b5eb6280",
+        "08bd5da5707102cb50d41e9c6f0a56cd7cced8f6dd2b94a1e55dd1975608e8d7",
+        "9b51f3991b5e6fbb8b165dbf1e9e2c8ba537534485c0f37baf49143bfbfa4c9a",
+        "62843c8b1c770c260e9c6332717853250fe711a5d3d484170b67fada4ca549a7",
+        "ded39f07c4f62ba4644429b2a25fd3710325bb6a9014c8a4c8051d6c6060fa13",
+        "f636c42bed23268c158cdf75858f2a439a988423833feb1fd22f17e0b945fd72",
+        "5d6b25b0451ab8571dc39bf22a1bce9f0edfe593b5dfb9049fbd1086d6e3d2b3",
+        "284fc4c79495bf99d96de03eddef60619068ab81c95596fa196384f807566fd4",
+        "aea5fe8cb729e952dffe97ee86ed30fa73589210ec17c4878d6c3e81cfc393e2",
+        "94a15f8f092d2d14d58ca4bfa8d926e527c67cd9309613831403848fa5e09367",
+        "5a26945cc6421ff34801abf63df0416876170cb2a874cd79210935bc3f2b0cc5",
+        "bcb5da6f65fc2025ad8fa31e48a95953d0a02701832c52b976b34c816bd9249e",
+        "3e18f5e42b743d3189dfa4c4d989d68384cdecf7a64793196be059e9af382f37",
+        "25b8f8934718c287dce62caa94f81ffe5f8871af9694be28b3818f1dca6f7e50",
+        "b27fcd2dda946addcbd8ca5b14631e6f4e036ab997f3f38ae2b1f8b1979169b0"
+      ],
+      "test": "REACH THIS-PARAMETER-ARGUMENTS"
+    },
+    {
+      "table": "REACH",
+      "id": "TAGGED-TEMPLATE-ARGUMENTS",
+      "label": "a tagged template's substitution is an argument of the call its tag makes, and the flow reading reads it as a written argument (wb-021.10): its position is its index among the template's substitutions plus one, the template strings array taking the first, and the tagged template is the site the row names, so each paired page reads as its twin, the same tag called with its strings argument (a template strings array; for String.raw, { raw: [] }) and the same values written as arguments, reads - a value that exposes the projection into a parameter that keeps it (argument) and, refused (argument), into one that hides it; a class instance flowing into a type its class does not declare, refused (structural-stand-in) - as the only substitution, as the second, at and past a rest parameter's position, parenthesized, under an object literal's method as the tag and under a tag that declares an explicit this parameter (skipped, as THIS-PARAMETER-ARGUMENTS reads it) - and one whose class declares that type, quiet; a callback whose own parameter hides what the parameter's type hands it, refused (argument); an object literal not written where it flows, refused (context-less-literal); an object literal written at the substitution, read under its contextual type (property); and String.raw's substitutions, which its rest parameter types any: a value that exposes the projection, refused (argument), and a class instance, quiet. The tag is no argument: a tag that exposes the projection still fails closed (unlisted TaggedTemplateExpression), and a template with no tag makes no call, so a class instance in its substitution is read by no flow (a substitution there that exposes the projection is refused, UNLISTED-FORMS)",
+      "pins": [
+        "10637e8637633a7741e2ee97389efbcbc5fe8c3a7bfe0ed955e567cea46debd8",
+        "ce3e5153188da8a81bcd32b7ab3b002a5496362dd4a21915713585a04bf37e4f",
+        "d360de49be7e1838b8b8d562e3c3f40f49550821945d39a2ee2020a483265091",
+        "34f135b762be9b51c5aa08dd7f6a90f6cb5e8411e2c25da6d00e9c9720bcec6f",
+        "5408b29fe674737a40c67ae84a06c362ca7ba7020d3858b8d962ef52f29e8d81",
+        "6db9944bfc849b9d4a428ad638404309969a6b8e68db54e58664f88d4f26201c",
+        "e63b1dc3caca69c7abec254a81661d63f463b261f119644cd7b3ae9d54596a87",
+        "a681001200b04f0670deba1265693806327decc46a09304602982f4a86410894",
+        "76783cca3acb831dd3e901a1e0367ce3e61d6e97311ad29460dbf78ec4834417",
+        "60fa79ccab9e9f310e0cf1fb43047f842a466fd42d0ab597aac1b0157cdb424e",
+        "18d2cc9f40dcd962bda6b2ca106672fb189a367f6d866f493ab78f54dc3bd0fe",
+        "d47c8c23ac181a6c4dbc4028d11541773caba8b451da70ea27eb01f9c248fadb",
+        "3d24368b355b8e8aa42a43ff517100719cd52216458385b4f22028f738fd81c5",
+        "8b4d13668c8361805d89f4daf8ddf75a0ffd503e9cb8b276beac0783782e3beb",
+        "298a06128e386194411098e5dfa91b0f93537e0c2ff796c3ba3314b1cf0ebc56",
+        "6030c2a083474f87455f7cd9c4c9d7da0744ce442c969ac1db1c3aa39afd38a5",
+        "faae369cd881bd84d6c06c2e91bc7a3004c1392c3b0ac24d6723686a3adde713",
+        "c51e68e7eba608466c218810083a3395f24ef19e8b52de6aa86b881a6673bcbf",
+        "5d7f5c2c3215dd4577867f03d116a597fb8e0daba8ee0a1f564f2c3f4cb1650e",
+        "062b4cfbe82cb11c9b76381ab5643d03a9df41e9eab3ac9f2d8b85ff4d7ab23a",
+        "fc891be410ef4b1f4d0891a7994e5d07f447c13243509f91d484f8b5cce665e7",
+        "71cacdadfed55024b20918a1202c70f9de5ab49e588df1db1f76981f86d29b03",
+        "9249c28f1e9e4c78d8718529e7d04ef91e36a26dde93afe3f2790d09076ccd1d",
+        "1ee5bb52843665ca492da897fc1cbd53df43020bcba464ddb3e079222c2f7246",
+        "a9bfc3c827a892fb84b162f60754d48ceba55a3409d8f78073911e3106f3ac83",
+        "1dcdbb4be2433a2939f4b722edaf14253b30b1abf8fcde2a3b2a7c5185de55a1",
+        "05b517eb39a5488cb7d99814b665c01153381cb5b9aa01ce99ddcf06fc110c75",
+        "4e6ba69dd676f3d25d39d267437fa905430a4d391c55315ddc6bb5142cb439cd",
+        "ac97def85316ccabf074be842e44dc2a6a04501053ea8c3fcf3b1047888a78ce",
+        "192f18e04501fd99ee9f57c71c3814c5f4c76eb45f532d297ad8e56ad9d6166d"
+      ],
+      "test": "REACH TAGGED-TEMPLATE-ARGUMENTS"
+    },
+    {
+      "table": "REACH",
+      "id": "R-INFERRED-LITERAL",
+      "label": "residual: an object literal written as the argument itself of a call to a src generic declaration with a body, or as the substitution of a tagged template under such a tag, at a parameter typed by a type parameter the call infers from that literal, is read under its contextual type (the literal reading, CONTEXT-LESS-LITERALS), at each pinned page the instantiation the call infers from the literal itself and not the type parameter's constraint, so each pinned page's hiding member (a method that takes the projection as unknown) reads quiet with no row, whether or not the callee declares an explicit this parameter (wb-021.10: wb-021.7 refusal #3's this1-this5 shapes - a function, a function whose type parameter a union constrains, a class's method, a parameter after another, a function expression and a static method - and refusal #4's LTT1 shape, a tag, each pinned with a this parameter and without), while the same literal at a parameter typed by the constraint's type itself, and under a type argument written as that type, is read under that type and refused (property), and a keeping literal reads quiet; bead wb-021.7 is the home of a reading through the constraint",
+      "pins": [
+        "e7e5287381c127842b5e7e82e3606786c257b668574e15c8a67cefe752aba1dd",
+        "d7a5b17be6e16fb6b316c0f45c9bd38a5a32be919dce17f202f2eebb8fb7b2d3",
+        "0ee0f04c360d5892bfa7b2434aef1692633839dcf85f118c13c4b037d80c9289",
+        "558c413c2a95b213feb11093b5e8d94dc0910d760dd216198a4688e01052e7ad",
+        "3f2a9a17b090dbe00ce0c3fd1b98029b11f029044d8f85f54afa2d597eab7b82",
+        "7a976494d438ef5f41b8703901d1247c510e2c20553029571fb472cb37d46509",
+        "26630de964f506723065607237956a4617fa128362070853b5da9853d49f067c",
+        "0145ea7a8f4512cd5081ffc5f204bd9212fc0ae1a80586d31c87bd24d74c650e",
+        "f0832a4848a062ce5018a4b43f782dd822733c7788bbde54e72517cfbc8748f5",
+        "d4be6ae7c8a35d4fa4717265f028ba98f7c03e50423f9ab41c69a520969153df",
+        "74bd2fcb0a46d0073f6626f90722833241c34b0db3d1b504a02366f544213ec1",
+        "bd3b847c8fa7d57e978a1443dbb06a2ce283106047e38e335eeee8c1cf4e218e",
+        "9a67507f9949033c038f147ab8a51b25b62ac99ce8e80037fee066b3ba1d9fa8",
+        "2c0b237ffb92965a417920736426a0e32af96c31502794d50e22ab7dfa0a43a8",
+        "93f6f8f0ca39a5871aad34328eef3378513e66c32b906d8b8e38d6372d7a60f4",
+        "787ef7dac39fb281e648fd95b16e98f0b0709e086ab4c2c626b04c70941077d0",
+        "44a735be905020f9c55f162ef44d5289e7573fff6c7f04e0154b4cf928ed9986",
+        "bdcfbbe73885b9b7d7cd6955a5ed0e32fedd9667e923f0522189a500c939e2ce",
+        "829f566445ef4b0e22dfae04e0830efd510eb21647125c2b2c7cefe05683deb8",
+        "2c6d32e0569381d97932a9dccbe7777840abec2a0406843d0900d1b963d6be03"
+      ],
+      "test": "REACH R-INFERRED-LITERAL"
+    },
+    {
       "table": "NAMES",
       "id": "CLASS-NAME-FORMS",
       "label": "a public member of the class is read under any name form - a string or numeric literal, a computed literal, template or constant, a symbol",
@@ -1399,6 +1510,9 @@
     "REACH CALLBACK-RETURNS",
     "REACH STAND-IN-RETURNS",
     "REACH UNLISTED-STAND-INS",
+    "REACH THIS-PARAMETER-ARGUMENTS",
+    "REACH TAGGED-TEMPLATE-ARGUMENTS",
+    "REACH R-INFERRED-LITERAL",
     "NAMES CLASS-NAME-FORMS",
     "NAMES CLASS-MEMBER-KINDS",
     "NAMES CLASS-MEMBER-SHAPES",
@@ -1468,6 +1582,9 @@
     ],
     "R-THIS-BINDING": [
       "REACH R-THIS-BINDING"
+    ],
+    "R-INFERRED-LITERAL": [
+      "REACH R-INFERRED-LITERAL"
     ]
   }
 }
