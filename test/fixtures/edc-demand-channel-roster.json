@@ -227,6 +227,8 @@
               "src/workbench/claude-capability-tools.ts lexeme subjectless:demand demand"
             ],
             "quietRule": [
+              ".pi/agents/plant-cut-twice.md parted:carrier projection requirement",
+              ".pi/agents/plant-cut-twice.md parted:carrier projection requirement",
               ".pi/agents/plant-cut.md parted:carrier projection requirement",
               ".pi/agents/plant.md subjectless:precision precise",
               "src/plant-cut.ts access parted:carrier projection requirement",
@@ -915,6 +917,258 @@
                 "src/plant.ts:1 import:1 demand"
               ]
             },
+            "afterTerminator": {
+              "comment-after-dot": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-optional-dot": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-non-null": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-not": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-question": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-nullish": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-semicolon": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-spread": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-qualified-name": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-import-entity": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 import:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-after-number": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "comment-binding-receiver": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:2 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:2 access:1 demand"
+                  ],
+                  "quiet": [
+                    "src/plant.ts lexeme subjectless:demand demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              },
+              "parted-carrier": {
+                "plant": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 carrier"
+                  ],
+                  "quiet": []
+                },
+                "twin": {
+                  "findings": [
+                    "src/plant.ts:1 access:1 carrier"
+                  ],
+                  "quiet": []
+                }
+              },
+              "over-read": {
+                "plant": {
+                  "findings": [],
+                  "quiet": [
+                    "src/plant.ts access marker:never demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                },
+                "twin": {
+                  "findings": [],
+                  "quiet": [
+                    "src/plant.ts access marker:never demand",
+                    "src/plant.ts lexeme subjectless:demand demand"
+                  ]
+                }
+              }
+            },
             "quiet": {
               "R-SCOPE": {
                 "listed": [
@@ -1056,18 +1310,6 @@
               },
               "R-CUT": {
                 "cut": {
-                  "comment-after-dot": [],
-                  "comment-after-optional-dot": [],
-                  "comment-after-non-null": [],
-                  "comment-after-not": [],
-                  "comment-after-question": [],
-                  "comment-after-nullish": [],
-                  "comment-after-semicolon": [],
-                  "comment-after-spread": [],
-                  "comment-qualified-name": [],
-                  "comment-import-entity": [],
-                  "comment-after-number": [],
-                  "comment-binding-receiver": [],
                   "space-after-dot": [],
                   "line-after-dot": [],
                   "space-after-optional-dot": [],
@@ -1082,45 +1324,9 @@
                   "lexeme-sentence": [],
                   "lexeme-heading": [],
                   "member-key": [],
-                  "parted-carrier": []
+                  "parted-carrier-space": []
                 },
                 "twins": {
-                  "comment-after-dot": [
-                    "src/plant.ts:1 access:1 demand"
-                  ],
-                  "comment-after-optional-dot": [
-                    "src/plant.ts:1 access:1 demand"
-                  ],
-                  "comment-after-non-null": [
-                    "src/plant.ts:1 access:1 demand"
-                  ],
-                  "comment-after-not": [
-                    "src/plant.ts:1 access:1 demand"
-                  ],
-                  "comment-after-question": [
-                    "src/plant.ts:1 access:1 demand"
-                  ],
-                  "comment-after-nullish": [
-                    "src/plant.ts:1 access:1 demand"
-                  ],
-                  "comment-after-semicolon": [
-                    "src/plant.ts:1 access:1 demand"
-                  ],
-                  "comment-after-spread": [
-                    "src/plant.ts:1 access:1 demand"
-                  ],
-                  "comment-qualified-name": [
-                    "src/plant.ts:1 access:1 demand"
-                  ],
-                  "comment-import-entity": [
-                    "src/plant.ts:1 import:1 demand"
-                  ],
-                  "comment-after-number": [
-                    "src/plant.ts:1 access:1 demand"
-                  ],
-                  "comment-binding-receiver": [
-                    "src/plant.ts:2 access:1 demand"
-                  ],
                   "space-after-dot": [
                     "src/plant.ts:1 access:1 demand"
                   ],
@@ -1163,61 +1369,11 @@
                   "member-key": [
                     "src/plant.ts:1 member:1 demand"
                   ],
-                  "parted-carrier": [
+                  "parted-carrier-space": [
                     "src/plant.ts:1 access:1 carrier"
                   ]
                 },
                 "held": {
-                  "comment-after-dot": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-after-optional-dot": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-after-non-null": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-after-not": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-after-question": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-after-nullish": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-after-semicolon": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-after-spread": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-qualified-name": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-import-entity": [
-                    "src/plant.ts import subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-after-number": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
-                  "comment-binding-receiver": [
-                    "src/plant.ts access subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand",
-                    "src/plant.ts lexeme subjectless:demand demand"
-                  ],
                   "space-after-dot": [
                     "src/plant.ts access subjectless:demand demand",
                     "src/plant.ts lexeme subjectless:demand demand"
@@ -1273,7 +1429,7 @@
                     "src/plant.ts lexeme subjectless:demand demand",
                     "src/plant.ts member subjectless:demand demand"
                   ],
-                  "parted-carrier": [
+                  "parted-carrier-space": [
                     "src/plant.ts access parted:carrier projection requirement"
                   ]
                 },
@@ -1536,6 +1692,8 @@
               "precision",
               "demand",
               "demand",
+              "demand",
+              "demand",
               "demand"
             ],
             "families": [
@@ -1588,9 +1746,15 @@
               ],
               [],
               [],
+              [],
+              [],
               [
                 "t:1 demand"
-              ]
+              ],
+              [],
+              [],
+              [],
+              []
             ],
             "quiet": {
               "R-PARAPHRASE": [

@@ -10,6 +10,21 @@
  * projection-requirement value, plus a red case where an imperative prompt phrase or tool call attempts to carry demand and is
  * refused."
  *
+ * RESTATEMENT (orchestrator ruling R-B156, 2026-10-31: refusal #5 refused the FINAL cut #5, the bead was blocked by child
+ * wb-pyel.8 and "its eventual re-cut is a mechanical restatement over the child's landed reader coverage"; wb-pyel.8 landed at
+ * landing 797): B1's code reader is the landed reader, test/helpers/edc-demand-channel-reader.ts, imported unedited (the
+ * provenance case); cut #5's local copy of it is removed, and each claim below claims what that reader's census and this census
+ * pin, no wider. The landed reader's code is cut #5's copy but for bare(): a comment run right after a token whose text ends in a
+ * terminator reads as nothing, so it cuts nothing - cut #5's thirteen comment members of R-CUT and the comment form of its
+ * over-read now read as their twins (B1's afterTerminator witness, AFTER_TERMINATOR_PLANTS).
+ *
+ * THE PINNED SET (the claim form): this file's 11 cases in registration order - the judged set (the frozen shape, the roster, the
+ * export's title and owner filing, the role places, the producer line and the residual names, each observed equal); A1, A2, B1,
+ * B2, B3, B4, C1 and C2, each running IMPL[<pin>] and observing its roster witness exactly
+ * (test/fixtures/edc-demand-channel-roster.json); provenance (this file's source and the landed reader's, parsed: the import, the
+ * declarations and the parse sites; the landed reader's roster: its bead, its clauses, the pins this header cites and their
+ * kills); records (every pin reached its witness). Each claim below names the pins that can turn it red.
+ *
  * CLAIMED (rows A-C; each label is one of the title's clauses that bind today, word for word): A the antecedent, read as the
  * consumer gate; B the until-then posture, judged with zero findings while the gate reads ABSENT; C the artifact clause, the
  * gate's semantics and its live verdict.
@@ -27,11 +42,18 @@
  * reads MARKER by its "not" and, with the marker removed, a finding of all three families: it is the vocabulary's producer anchor.
  *
  * READINGS
- * - WORDS: NFKC with format controls and combining marks removed, an acronym's plural s split off, a break at each lower-to-upper
- *   case change and before the last capital of an acronym run, lower case, the runs of a-z and 0-9 (contextDemand reads context
- *   demand; parseEDC reads parse edc; EDCs reads edc s; snake_case and kebab-case split at their separators).
+ * - WORDS: NFKC with format controls, combining marks and enclosing marks removed, an acronym's plural s split off, a break at
+ *   each lower-to-upper case change and before the last capital of an acronym run, lower case, the runs of a-z and 0-9 (B4's
+ *   subjects: contextDemand reads context demand, context_precision and CONTEXT-PRECISION split at their separators, a zero-width
+ *   space before the subject and inside a family word, the subject in fullwidth letters, a combining low line and an enclosing
+ *   circle inside a family word, each read as the plain words; A2's routes: parseEDC reads parse edc, EDCs reads edc s,
+ *   EdcAssembler reads edc assembler; R-GLUED-STEM's members).
  * - SENTENCES: every text is cut into sentences after ".", "!", "?" or ";" before white space or the line end, at a blank line,
- *   around a table row and a heading line and before a list item (a sentence wrapped over lines stays one); each is judged alone.
+ *   around a table row and a heading line and before a list item - a bullet, or a number with "." or ")" (a sentence wrapped over
+ *   lines stays one); each is judged alone (B4's cuts witness: a ".", a "?", a "!" and a ";" before a space, a wrapped line kept
+ *   whole, a blank line, a table row read whole (one finding inside it) and a cut before one, a bullet and a number with "." and
+ *   with ")", a heading line; for an as-written reading, each terminator token and each line rule: the reader census's C-SPACE and
+ *   C-LINES, the numbered item among them, which kills refusal #5's GM7).
  * - THE DEMAND READING of one sentence: none when it carries no family word and no carrier; SUBJECTLESS when a family word stands
  *   with no subject word and no carrier (Pi's own senses: "on demand", "be precise"); MARKER when it names the subject (or the
  *   carrier) and a family beside a marker; otherwise a FINDING naming its families. SUBJECT: context, contexts. FAMILIES: demand
@@ -39,81 +61,112 @@
  *   CARRIER (the charter's name for the typed demand value, read as subject and family at once): the adjacent pairs projection
  *   requirement and projection requirements. MARKERS: not, no, never, nor, neither, without, cannot, none and nothing as words,
  *   and the n't contraction. OVER-READ (disclosed, the strict direction): any mood counts - a description that merely says
- *   "context precision" is read as the channel; a page restating the posture keeps its marker.
+ *   "context precision" is read as the channel; a page restating the posture keeps its marker. (B4's subjects, families, carrier,
+ *   markers and near misses: every family word, both carrier pairs, every marker word and both n't spellings, each read once.)
  * - THE SURFACES (row B, the clause's three nouns):
  *   PROMPTS (B1): every git-listed JS or TS module below src/ and examples/ (tracked or untracked, never ignored), parsed with the
  *   TypeScript compiler (.tsx as TSX, .jsx as JSX, the other TS extensions as TS, the other JS extensions as JS, which parses
- *   JSX). THE CODE READER, in the enumerate-the-resolvable form (ruling R-B97) restated to its fail-closed core (ruling R-B122): it
- *   claims exactly the forms and the comment positions below and no other. Each claimed form is pinned by its row in B1's forms
- *   witness (FORMS: one plant per row, read to exactly one finding through the row's own reading, both asserted); each form known to
- *   be left unread is a member of R-UNREAD-FORM, a quiet row beside a read twin (R-COMPOSED holds the parts no constant reads, R-CUT
- *   the readings a sentence cut parts); a form found later that the reader leaves unread is an addition to that list unless it
- *   contradicts a claim below; and on the live tree B1 fails closed (LIVE QUIET).
- *   COMMENTS: no comment is read. A reading that takes a node as written - a property access, a qualified name, an element access's
- *   receiver, an indexed access type's object type, a binding pattern's or an assignment target's receiver, an import-equals entity
- *   name - reads it with every comment inside it (a JSDoc comment too) read as one space, a white space like any other, and
- *   SENTENCES then cuts that text as it cuts every text (CUT). So a comment's position decides what it does. Where the comment
- *   follows no token that ends in ".", "!", "?" or ";", the reading reads as its comment-free twin reads (a marker in an inner
- *   comment keeps the reading's finding) - the claimed positions, each pinned: before the reading's "." (FORMS access.comment-* and
- *   import.comment-equals-entity; B1's commentMatrix: every such reading with a block, a line and a JSDoc-style comment before its
- *   "." or inside its brackets, one finding each), between two words (FORMS access.comment-between-words) and before a "?.", "!",
- *   "?", "??", ";" or "..." token or a number written with a trailing "." (R-CUT's uncut twins). Right after such a token (a ".",
- *   "?.", "!", "?", "??", ";" or "..." punctuator, or a number written with a trailing ".") the comment's space follows a sentence
- *   terminator, so SENTENCES cuts the reading there and a subject and a family on two sides of the cut read no finding (R-CUT, a
- *   member per token; that position is claimed nowhere - its coverage is child wb-pyel.8's). And a family word in a comment finds
- *   nothing (B1's comments witness: a plant per such reading, each beside its twin with the word as code, which finds).
+ *   JSX). THE CODE READER is the landed reader (child wb-pyel.8, landing 797), imported unedited: this census's code readings -
+ *   codeOf, the live and frozen passes and C2's one pass - are its survey over its codeSites and textReadings, and the consumer
+ *   (rows A and C) reads its codeSites through this census's stem readers (the provenance case: the import, no reader declaration
+ *   copied here, no TypeScript parse outside that case). Its census, test/workbench-edc-demand-channel-reader-census.test.ts
+ *   (roster test/fixtures/edc-demand-channel-reader-roster.json), claims four clauses - COMMENTS, AS-WRITTEN, CUT and LIVE QUIET's
+ *   parted-carrier holding - each at its pinned set (rows T, M, U, C and P), its NOT CLAIMED list standing; this census claims
+ *   those four at that set and no wider, and names its own pins of them below. This census claims the reader's other readings -
+ *   WORDS, the demand reading, CONSTANT, LEXEME, MEMBER and IMPORT (but the import-equals entity, AS-WRITTEN's), SENTENCES' cuts
+ *   of a lexeme and of a member path, and LIVE QUIET's holding of each quiet reading's occurrences, which that census's NOT
+ *   CLAIMED names as this census's, and SENTENCES' cuts of a page - each at the forms its own pins plant. A form or a position no
+ *   pin of either census holds is NOT CLAIMED by this census. Refusal #5's open items are that census's pins (the provenance case
+ *   holds each id and each kill): U1, a comment run holding a blank, white-space-only or line-start line (U-OWN-LINE, U-BLANK,
+ *   U-MARKER; they kill GM3); U2, each parted-carrier occurrence (P-ONE, P-C04, P-C05, P-C06, P-CODE, P-WITHIN; GM1, GM2); the F3
+ *   rider, the boundary kinds inside receivers (C-LINES); the F4 rider, the numbered list item (C-LINES, GM7; B4's cuts witness
+ *   here too). Each form this census claims is pinned by its row in B1's forms witness (FORMS: one plant per row, read to exactly
+ *   one finding through the row's own reading, both asserted) or by a matrix cell; each form known to be left unread is a member
+ *   of R-UNREAD-FORM, a quiet row beside a read twin (R-COMPOSED holds the parts no constant reads, R-CUT the readings a sentence
+ *   cut parts); a form found later that the reader leaves unread is an addition to that list unless it contradicts a claim below;
+ *   and on the live tree B1 fails closed (LIVE QUIET).
+ *   COMMENTS (the reader's clause, at its census's rows T, M and U; this census's own pins): no comment is read. A family word in
+ *   a comment finds nothing (B1's comments witness: a plant per as-written reading of COMMENT_PLANTS, each beside its twin with
+ *   the word as code, which finds). A comment inside an as-written reading cuts nothing at the positions this census plants:
+ *   before the reading's "." or inside its brackets (FORMS access.comment-* and import.comment-equals-entity; B1's commentMatrix:
+ *   every reading of COMMENT_SITES with a block, a line and a JSDoc-style comment, each holding a marker, one finding each),
+ *   between two words (FORMS access.comment-between-words) and right after a token that ends in a terminator (B1's afterTerminator
+ *   witness: AFTER_TERMINATOR_PLANTS, the thirteen members cut #5's R-CUT cut there and its over-read's comment form, each read
+ *   exactly as its twin reads - findings and LIVE QUIET entries - one finding each but the over-read member, which its marker
+ *   keeps quiet).
  *   CONSTANT: a string literal or no-substitution template, or a + concatenation or template expression whose every part is a
- *   constant, each read through parentheses, as, satisfies, a non-null "!" and a "<T>" assertion at any depth (FORMS
- *   lexeme.concatenation-*, lexeme.template-span-as, access.*-as, member.computed-name-as; B1's constants matrix: every
- *   constant-reading site with every wrapper, one finding each); nothing else is a constant (R-COMPOSED).
- *   LEXEME each identifier, private name, string literal (a no-substitution template too), template head, middle and tail,
- *   regular expression literal and non-blank JSX text; each template literal type, its literal parts joined by spaces; and each
- *   template expression and + concatenation as spelled (a constant part as its constant, any other part read as one space, both
- *   through the CONSTANT wrappers).
- *   ACCESS as receiver.key (a computed key: its constant, else "?"; every receiver as written, COMMENTS applied, then CUT): each
- *   property access (a.b, a?.b, a!.b) and qualified name (A.B) read whole as written: its own ".", "?." or "!" token cuts nothing
- *   while nothing stands right after it, and white space or a comment there cuts the reading (CUT; FORMS access.property-access,
- *   access.optional-chain, access.non-null, access.qualified-name); each element access (a[k]) after its receiver; each indexed
- *   access type (A["k"]) after its object type, its key a literal type, parenthesized or not (any other key type: "?"); each key of
- *   an object binding pattern (a rest element's name too), the receiver being the declaration's initializer, else the iterated
- *   expression of the for-of or for-in declaring it, or the parameter's type annotation, else its default value, and in a nested
- *   pattern the enclosing element's path (receiver.key; an array pattern's element or rest element, receiver.index); and each key of
- *   a destructuring assignment target (an object or array literal left of "=", or the target of a for-of or for-in) after the
- *   assigned or iterated expression, likewise at depth, a rest element's target too (an array literal's at its index, an object
- *   literal's at the receiver, a rest name as the key).
- *   MEMBER each member name (a computed name: its constant) joined after the names of its enclosing declarations of exactly these
- *   kinds: a variable an identifier names, a property, method or accessor, a function or class (declared or an expression), an
- *   interface, a type alias, an enum and its members, a namespace or module, a parameter property (a destructured binding
- *   element and a plain parameter join no name: R-UNREAD-FORM); a member with none reads as its lexeme alone. The members: an object
- *   literal's properties, shorthands, methods and accessors; a class's, an interface's and a type literal's properties, methods
- *   and accessors, declared or as signatures; a constructor's parameter properties; an enum's members; and each declaration
- *   directly in a namespace or module body (a variable an identifier names, a function, class, interface, type alias, enum or
- *   nested namespace, a dotted namespace's inner name too).
+ *   constant, each read through parentheses, as, satisfies, a non-null "!" and a "<T>" assertion, and through those wrappers
+ *   nested in one another (FORMS lexeme.concatenation-*, lexeme.template-span-as, access.*-as, member.computed-name-as; B1's
+ *   constants matrix: every constant-reading site of CONSTANT_SITES with every wrapper, one finding each); a part of another form
+ *   is no constant - R-COMPOSED's members (a variable, a += onto a variable, an array of parts joined by a call, a .concat call, a
+ *   comma and a conditional expression) each read no finding.
+ *   LEXEME each identifier, private name, string literal (a no-substitution template too), template head, middle and tail, regular
+ *   expression literal and non-blank JSX text (in a .tsx and in a .jsx module); each template literal type, its literal parts
+ *   joined by spaces; and each template expression and + concatenation as spelled (a constant part as its constant, any other part
+ *   read as one space, both through the CONSTANT wrappers) - FORMS lexeme.*, a row per kind named here, one finding each.
+ *   ACCESS as receiver.key (a computed key: its constant, else "?"; every receiver as written - the reader's AS-WRITTEN clause,
+ *   its 13 sites and forms at its census's rows M and T - COMMENTS applied, then CUT), at the forms this census's FORMS access.*
+ *   rows plant, one finding each: a property access (a.b, a?.b, a!.b) and a qualified name (A.B) read whole as written
+ *   (access.property-access, access.optional-chain, access.non-null, access.qualified-name: its own ".", "?." or "!" token cuts
+ *   nothing while nothing stands right after it, and white space right after it cuts the reading: R-CUT's space-after-dot,
+ *   line-after-dot, space-after-optional-dot, space-after-non-null and space-import-entity); an element access (a[k]) after its
+ *   receiver (access.element-access, access.element-access-as); an indexed access type (A["k"]) after its object type, its key a
+ *   literal type, parenthesized or not (access.indexed-access-type, access.indexed-access-parenthesized; a union key, which no
+ *   literal reads: R-UNREAD-FORM's unionIndex); a key of an object binding pattern after its receiver - the declaration's
+ *   initializer, a for-of's or a for-in's iterated expression, the parameter's type annotation, else its default value
+ *   (access.binding-initializer, access.binding-for-of, access.binding-for-in, access.binding-parameter-type,
+ *   access.binding-parameter-default) - one pattern deep in another (access.binding-nested), under a computed key
+ *   (access.binding-computed-key, access.binding-computed-as), in an array pattern's first element and its rest element as
+ *   receiver.index (access.binding-array-element, access.binding-array-rest) and as a rest element's name
+ *   (access.binding-object-rest); and a key of a destructuring assignment target after the assigned or iterated expression
+ *   (access.assignment, access.assignment-nested, access.assignment-computed-key, access.assignment-computed-as,
+ *   access.assignment-array-element, access.assignment-array-rest, access.assignment-object-rest,
+ *   access.assignment-object-rest-target, access.assignment-for-of, access.assignment-for-of-rest, access.assignment-for-in).
+ *   MEMBER each member name (a computed name: its constant) joined after the names of its enclosing declarations, at the forms
+ *   this census's FORMS member.* rows plant, one finding each. The members: an object literal's property, shorthand, method and
+ *   accessor (member.property-assignment, member.shorthand, member.object-method, member.object-accessor; a computed name:
+ *   member.computed-name, member.computed-name-as); a class's property, method, getter and setter (member.class-property,
+ *   member.class-method, member.class-accessor, member.class-setter; a class expression's: member.class-expression); a
+ *   constructor's parameter property (member.parameter-property); an interface's property and method signatures
+ *   (member.interface-property, member.interface-method); a type literal's property (member.type-literal); an enum's member
+ *   (member.enum-member); and a declaration directly in a namespace or module body - a variable, a function, a class, an
+ *   interface, a type alias, an enum, a nested namespace, a dotted namespace's inner name and a module body's variable
+ *   (member.namespace-variable, member.namespace-function, member.namespace-class, member.namespace-interface,
+ *   member.namespace-type-alias, member.namespace-enum, member.namespace-namespace, member.namespace-dotted, member.module-body).
+ *   The enclosing declarations: a variable an identifier names, a property assignment, a shorthand, a class property declaration,
+ *   an interface property signature, a class method, an interface method signature, a getter, a setter, a function declaration, a
+ *   function expression, an enum member and a parameter property (member.enclosing-*, member.function-expression), and a class, an
+ *   interface, a type alias, an enum, a namespace and a module (the member rows above); a destructured binding element and a plain
+ *   parameter join no name (R-UNREAD-FORM's bindingDefaultMember and parameterDefaultMember); a member with none reads as its
+ *   lexeme alone (FORMS lexeme.private-name, in an anonymous class).
  *   IMPORT each name joined after its module specifier or module reference: an import declaration's default, namespace and named
  *   bindings; an export declaration's named and namespace re-exports from a module specifier (an import or export specifier's
  *   module name and its alias, both); and an import-equals declaration's name, after a require's specifier or the entity name as
- *   written (COMMENTS applied, then CUT).
- *   CUT (the demand reading; the consumer reads each reading whole): SENTENCES cuts every code reading's text as it cuts every text
- *   (B4's cuts witness pins the rule; R-CUT pins it at every via - access, import, lexeme and member), so a code reading is judged
- *   as its sentences, each alone, and a subject and a family on two sides of a cut read no finding (R-CUT, each member beside its
- *   uncut twin, which finds once). In an as-written reading a cut falls wherever its text holds a boundary - white space or a
- *   comment's space right after a token that ends in ".", "!", "?" or ";" ("context. demand", "context." at a line end,
- *   "Context. Inner", "context?. demand", "context! .demand", "(context ? a : b)", "{ context: 1; other: 2 }"), a terminator before
- *   white space inside a string the reading holds, a blank line, a line read as a table row or a list item; in a lexeme, wherever
- *   its own text does (a sentence break, a heading line); in a member path, at a key's sentence break. A cut can part a marker from
- *   the words it quiets too, which then find (the strict direction: R-CUT's overRead). B1 fails closed on every cut: each part is
- *   judged by LIVE QUIET like every text (a quiet part is held), and a carrier pair whose two words a cut parts is held as parted
- *   (R-CUT's held rows).
+ *   written (COMMENTS applied, then CUT) - FORMS import.*, a row per form named here, one finding each.
+ *   CUT (the reader's clause for an as-written reading, at its census's row C - C-SPACE, C-LINES, C-OVER-READ and C-LINE-OF; the
+ *   demand reading; the consumer reads each reading whole): SENTENCES cuts every code reading's text as it cuts every text, so a
+ *   code reading is judged as its sentences, each alone, and a subject and a family on two sides of a cut read no finding (R-CUT,
+ *   each member beside its uncut twin, which finds once). This census's own pins: in an as-written reading, white space right
+ *   after a ".", "?.", "!", "?" or ";" token ("context. demand", "context." at a line end, "Context. Inner", "context?. demand",
+ *   "context! .demand", "(context ? a : b)", "{ context: 1; other: 2 }"), a terminator before white space inside a string the
+ *   reading holds, a blank line, a table-row and a list-item line (R-CUT's members); in a lexeme, wherever its own text does
+ *   (R-CUT's lexeme-sentence and lexeme-heading); in a member path, at a key's sentence break (R-CUT's member-key). A cut can part
+ *   a marker from the words it quiets too, which then find (the strict direction: R-CUT's overRead, a space after the dot). A
+ *   comment right after a terminator token is no cut (COMMENTS: B1's afterTerminator witness). B1 fails closed on every cut: each
+ *   part is judged by LIVE QUIET like every text (a quiet part is held), and a carrier pair whose two words a cut parts is held as
+ *   parted (R-CUT's held rows; each occurrence and each pair: the reader census's row P).
  *   Every git-listed .md page below .pi/, .agents/ and examples/. And at run time: every default agent's configuration
  *   (DEFAULT_AGENTS), the curated Claude MCP server's instructions, every registered Pi tool's promptSnippet and promptGuidelines.
- *   LIVE QUIET (fail closed): every quiet reading of the live code and page pass (a family word or the carrier with no subject word,
- *   or beside a marker), each occurrence, and every carrier pair whose two words a cut parts (CUT: held as parted, in a code reading
- *   and across a page's sentences), is held with its lines dropped as path, via, kind, reason and the family words and carrier pairs
- *   it spells (B1's liveQuiet; the live findings are held too). So a family word or carrier pair added to or dropped from any text
- *   the reader reads - a lexeme of a listed module in any form, every R-UNREAD-FORM member's included, either part of a cut reading,
- *   or a listed page - changes a held finding or quiet entry and reds B1, until the change that adds it re-measures this file; a
- *   word the reader reads in no text (a comment, a part composed at run time, a letter spelled through syntax the parser leaves as
- *   written: an escape, a regular expression class) is outside it (R-SCOPE, R-COMPOSED, R-ESCAPE).
+ *   LIVE QUIET (fail closed): every quiet reading of the live code and page pass (a family word or the carrier with no subject
+ *   word, or beside a marker), each occurrence (QUIET_PLANTS: two on one line, a subjectless and a marker reading, a page's and a
+ *   module's, an R-UNREAD-FORM member's lexemes), and every carrier pair whose two words a cut parts (the reader's LIVE QUIET
+ *   clause, its census's row P; here QUIET_PLANTS' code, lexeme and page members - a page holding one pair parted twice, held
+ *   twice - and R-CUT's held rows), is held with its lines dropped as path, via, kind, reason and the family words and carrier
+ *   pairs it spells (B1's liveQuiet and quietRule; the live findings are held too). So a family word or carrier pair added to or
+ *   dropped from any text the reader reads - a lexeme of a listed module in any form, every R-UNREAD-FORM member's included,
+ *   either part of a cut reading, or a listed page - changes a held finding or quiet entry and reds B1, until the change that adds
+ *   it re-measures this file; a word the reader reads in no text (a comment, a part composed at run time, a letter spelled through
+ *   syntax the parser leaves as written: an escape, a regular expression class) is outside it (R-SCOPE, R-COMPOSED, R-ESCAPE).
  *   TOOL DESCRIPTIONS (B2), at run time: every Pi tool the real extension registers when booted hermetically with the workbench's
  *   Claude backend (its name, label and description), every curated Claude tool listed by an in-memory MCP client (every field but
  *   its input schema), and every capability descriptor of the native registration and of the four injected-client registrations
@@ -136,7 +189,7 @@
  *    listing, its floors, the frozen pass at the cut's base); A2 the stems and the consumer reader's routes and near misses.
  *  B "so no Pi prompt, tool description or capability input becomes the demand channel": B1 the prompt surfaces (live findings
  *    and live quiet readings, floors, the frozen pass) and the code reader's forms (a plant per form, one finding each, its reading
- *    held; the comments witness; the residual rows); B2 the tool descriptions; B3 the
+ *    held; the comments witness, the matrices and the after-terminator members; the residual rows); B2 the tool descriptions; B3 the
  *    capability inputs and the boundary; B4 the demand reading itself and its append quiet row (a note appended after the owner
  *    filing block, spelling every vocabulary word, leaves the whole B4 witness unchanged; read past the block it would empty
  *    R-SYNONYM; a block edited in place is refused).
@@ -160,10 +213,14 @@
  *   word after "adopts" in A and the word before "context" in C are word stems; the cited slug's words before its head noun, joined,
  *   are the joined stem; B's second-to-last word reads demand. The producer line reads MARKER and, without its marker, a finding of
  *   all three families. So a row, a pin, a label or an anchored word removed from every literal of this file and of the roster
- *   together still reds.
+ *   together still reds. The landed reader's roster (test/fixtures/edc-demand-channel-reader-roster.json) anchors this header's
+ *   deferrals: the provenance case reads its bead, its four clauses, every pin cited for refusal #5 and the kills of refusal #5's
+ *   surviving mutants.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, vocabulary, constants, the producer line,
  *   the unclaimed duties, the residuals and every pin's witness are held to the out-of-file roster
- *   (test/fixtures/edc-demand-channel-roster.json); a last case reads that every pin ran to its witness.
+ *   (test/fixtures/edc-demand-channel-roster.json); a last case reads that every pin ran to its witness. Each pin's witness, each
+ *   after-terminator reading and the producer line's reading are compared as plain JSON data (plain(): vitest's equality consults
+ *   a value's own asymmetricMatch first, so a value the reader hands in never decides its own equality).
  * RESIDUALS (named; each has a pinned quiet row): R-UNNAMED-ADOPTION (A2) an EDC consumer spelled without either stem (a
  *   ReactiveComponents import, a QueryView input) reads ABSENT - Pi's ReactiveComponents surface is pinned by
  *   test/workbench-rc-assembler-expectation-census.test.ts; R-GLUED-STEM (A2) a stem glued to a suffix the WORDS rule keeps in one
@@ -188,14 +245,16 @@
  *   a namespace's export import alias (it joins no member path), an import type's qualifier (it joins no module specifier), a
  *   template literal type's literal-type span (its own lexeme, never joined into the template) and JSX text split by an inline
  *   element (each piece read alone); R-CUT (B1) a code reading SENTENCES cuts (CUT) reads no finding where its subject and family
- *   fall on two sides of the cut - a member per kind of cut: a comment, then white space, right after a ".", "?.", "!", "?", "??",
- *   ";" or "..." token or a number with a trailing "." in an as-written reading (a property access, a qualified name, an
- *   import-equals entity and a binding receiver among them), a terminator inside a string the reading holds, a blank line, a
- *   table-row and a list-item line, a lexeme's sentence break and heading line, a member key's sentence break and a carrier pair
- *   parted by a comment after the dot - each beside its uncut twin, which finds once, and each held by LIVE QUIET (fail closed); a
- *   cut can part a marker away too, which then finds (overRead); the after-terminator comment positions' coverage is child
- *   wb-pyel.8's (refusal #4's U1, F2 and F3); R-ESCAPE (B1) a letter spelled through syntax the parser leaves as written - a
- *   character reference in JSX text (&#100;, &#x64; or a named one) or in a JSX attribute string, an escape or a class in a regular
+ *   fall on two sides of the cut - the members this census plants, each a kind of cut: white space right after a ".", "?.", "!",
+ *   "?" or ";" token in an as-written reading (a property access's ".", "?." and "!", a "." at a line end, a conditional's "?", a
+ *   type literal's ";" and an import-equals entity's "."), a terminator before white space inside a string the reading holds, a
+ *   blank line, a table-row and a list-item line, a lexeme's sentence break and heading line, a member key's sentence break and a
+ *   carrier pair parted by a space after the dot - each beside its uncut twin, which finds once, and each held by LIVE QUIET (fail
+ *   closed); a cut can part a marker away too, which then finds (overRead); the other boundary kinds the reader's CUT clause lists
+ *   for an as-written reading are its census's (row C); a comment right after a terminator token cuts nothing (cut #5's comment
+ *   members: B1's afterTerminator witness); R-ESCAPE (B1) a letter spelled through syntax the parser leaves as written - a
+ *   character reference in JSX text (&#100;, &#x64; or a named one) or in a JSX attribute string, an escape or a class in a
+ *   regular
  *   expression literal (\x64, \u0064, \u{64}, [d]) - spells no family word, so it reads nothing and no text the reader reads holds
  *   it (outside LIVE QUIET: its held rows are empty), each a quiet row beside its twin spelled plainly, which finds; a string
  *   literal's and an identifier's escapes are decoded by the parser and read (its decoded rows; refusal #4's F4);
@@ -239,6 +298,7 @@ import { type HyperUnixReader, registerHyperUnixFind } from "../src/workbench/pr
 import { registerNativeReactiveFiberRender, registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { runWorkflow } from "../src/workflow/runtime.js";
 import { ctx, hermeticDir, makePi } from "./helpers/boot-extension.js";
+import { byName, carrierPairs, codeSites, isModule, normal, readSentence, type Survey, survey, textReadings, VOCABULARY, VOCABULARY_WORDS, type Vocabulary, verdict, words } from "./helpers/edc-demand-channel-reader.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -247,8 +307,6 @@ installScratchLeakGuard(afterAll);
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 type Gate = "PRESENT" | "ABSENT";
 type Verdict = "pass" | "fail" | "owed";
-type Via = "lexeme" | "access" | "member" | "import";
-type FamilyId = "demand" | "precision" | "carrier";
 interface Pin {
   readonly id: string;
   readonly quote: string;
@@ -257,13 +315,6 @@ interface Row {
   readonly id: string;
   readonly label: string;
   readonly pins: readonly Pin[];
-}
-interface Vocabulary {
-  readonly subject: readonly string[];
-  readonly families: { readonly demand: readonly string[]; readonly precision: readonly string[] };
-  readonly carrier: readonly (readonly [string, string])[];
-  readonly markers: readonly string[];
-  readonly stems: { readonly word: readonly string[]; readonly joined: readonly string[] };
 }
 interface Constants {
   readonly codeRoots: readonly string[];
@@ -325,19 +376,6 @@ const CONSTANTS: Constants = {
   seam: "reactivefiber.render.preview",
   backend: "claude",
 };
-const VOCABULARY: Vocabulary = {
-  subject: ["context", "contexts"],
-  families: {
-    demand: ["demand", "demands", "demanded", "demanding"],
-    precision: ["precision", "precise", "precisely", "imprecise", "imprecisely", "imprecision"],
-  },
-  carrier: [
-    ["projection", "requirement"],
-    ["projection", "requirements"],
-  ],
-  markers: ["not", "no", "never", "nor", "neither", "without", "cannot", "none", "nothing"],
-  stems: { word: ["edc", "edcs"], joined: ["evidencedirected"] },
-};
 const ROWS: readonly Row[] = [
   {
     id: "A",
@@ -366,6 +404,30 @@ const ROWS: readonly Row[] = [
     ],
   },
 ];
+/** The landed reader this census composes (child wb-pyel.8, landing 797): its module, the specifier this file imports it by and the
+ * exports read through it; its census's roster, the four clauses that census claims, and the pins of that census this header cites
+ * for refusal #5's open items, each with the gate mutants refusal #5 found surviving (the provenance case holds every one). */
+const READER = {
+  file: "test/helpers/edc-demand-channel-reader.ts",
+  specifier: "./helpers/edc-demand-channel-reader.js",
+  imports: ["byName", "carrierPairs", "codeSites", "isModule", "normal", "readSentence", "Survey", "survey", "textReadings", "VOCABULARY", "VOCABULARY_WORDS", "Vocabulary", "verdict", "words"],
+  roster: "test/fixtures/edc-demand-channel-reader-roster.json",
+  bead: "wb-pyel.8",
+  clauses: ["COMMENTS", "AS-WRITTEN", "CUT", "LIVE QUIET"],
+  refusal5: {
+    U1: { pins: ["U-OWN-LINE", "U-BLANK", "U-MARKER"], mutants: ["GM3"] },
+    U2: { pins: ["P-ONE", "P-C04", "P-C05", "P-C06", "P-CODE", "P-WITHIN"], mutants: ["GM1", "GM2"] },
+    F3: { pins: ["C-LINES"], mutants: [] },
+    F4: { pins: ["C-LINES"], mutants: ["GM7"] },
+  },
+} as const;
+/** The landed reader's roster as this census reads it: its bead, its claims' clause names, its rows' pin ids and its kills. */
+interface ReaderRoster {
+  readonly bead: string;
+  readonly claims: Readonly<Record<string, string>>;
+  readonly kills: Readonly<Record<string, readonly string[]>>;
+  readonly rows: readonly { readonly id: string; readonly pins: readonly { readonly id: string }[] }[];
+}
 /** The registered capabilities every leg must hold (a floor, never the exact set). */
 const REQUIRED_DESCRIPTORS = ["forge.gate.status", "furnace.run.inspect", "hyperunix.find", "reactivefiber.render.preview"] as const;
 /** The Pi tools the hermetic boot with the Claude backend must register (a floor, never the exact set). */
@@ -376,57 +438,11 @@ const REQUIRED_PI_TOOLS = ["Agent", "SubagentWorkflow", "get_subagent_result", "
 const FLOORS = { srcModules: 110, exampleModules: 5, pages: 3, codeReadings: 120_000, consumerReadings: 120_000, piTools: 16, defaultAgents: 3, guidelines: 2, promptTexts: 50, descriptionTexts: 150, inputTexts: 600 } as const;
 
 // ---------------------------------------------------------------------------------------------------------------- the reader
-const SUBJECT = new Set(VOCABULARY.subject);
-const DEMAND = new Set(VOCABULARY.families.demand);
-const PRECISION = new Set(VOCABULARY.families.precision);
-const MARKERS = new Set(VOCABULARY.markers);
-/** Every vocabulary word: the subject, both families, the carrier pairs' words and the markers, in vocabulary order. */
-const VOCABULARY_WORDS: readonly string[] = [...VOCABULARY.subject, ...VOCABULARY.families.demand, ...VOCABULARY.families.precision, ...VOCABULARY.carrier.flat(), ...VOCABULARY.markers];
-const CONTRACTION = /n['\u2019]t(?![a-z0-9])/;
-/** NFKC with format controls and combining marks removed (a zero-width space never splits a word; fullwidth letters fold). */
-function normal(text: string): string {
-  return text.normalize("NFKC").replace(/[\p{Cf}\p{Mn}\p{Me}]/gu, "");
-}
-/** The words of a text: an acronym's plural s split, a break at each case change and before an acronym's last capital. */
-function words(text: string): string[] {
-  return normal(text)
-    .replace(/([A-Z]{2,})s(?![a-z])/g, "$1 s")
-    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
-    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
-    .toLowerCase()
-    .split(/[^a-z0-9]+/)
-    .filter(word => word !== "");
-}
 /** The joined fold: lower case with every character outside a-z and 0-9 removed. */
 function joined(text: string): string {
   return normal(text)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "");
-}
-const hasPair = (tokens: readonly string[], pairs: readonly (readonly [string, string])[]): boolean => tokens.some((word, index) => pairs.some(([first, second]) => word === first && tokens[index + 1] === second));
-interface Reading {
-  readonly kind: "finding" | "marker" | "subjectless" | "none";
-  readonly families: readonly FamilyId[];
-  readonly reason: string;
-}
-/** One sentence: none, subjectless (a family word with no subject), quiet by a marker, or a finding naming its families. */
-function readSentence(text: string): Reading {
-  const tokens = words(text);
-  const families: FamilyId[] = [];
-  if (tokens.some(word => DEMAND.has(word))) families.push("demand");
-  if (tokens.some(word => PRECISION.has(word))) families.push("precision");
-  if (hasPair(tokens, VOCABULARY.carrier)) families.push("carrier");
-  if (families.length === 0) return { kind: "none", families: [], reason: "" };
-  const named = families.includes("carrier") || tokens.some(word => SUBJECT.has(word));
-  if (!named) return { kind: "subjectless", families, reason: families.join("+") };
-  const marker = tokens.find(word => MARKERS.has(word)) ?? (CONTRACTION.test(normal(text).toLowerCase()) ? "n't" : undefined);
-  if (marker !== undefined) return { kind: "marker", families, reason: marker };
-  return { kind: "finding", families, reason: families.join("+") };
-}
-/** The verdict on one sentence: null (quiet) or its families joined by "+". */
-function verdict(text: string): string | null {
-  const reading = readSentence(text);
-  return reading.kind === "finding" ? reading.reason : null;
 }
 /** The stems one reading names: a word stem among its words, a joined stem inside its joined fold. */
 function stemsOf(text: string): string[] {
@@ -434,383 +450,11 @@ function stemsOf(text: string): string[] {
   const fold = joined(text);
   return [...VOCABULARY.stems.word.filter(stem => tokens.has(stem)), ...VOCABULARY.stems.joined.filter(stem => fold.includes(stem))];
 }
-
-// ------------------------------------------------------------------------------------------------------------- the sentences
-const TABLE_ROW = /^\s*\|/;
-const LIST_ITEM = /^\s*(?:[-+*]|\d+[.)])\s/;
-const HEADING = /^\s{0,3}#{1,6}(?:\s|$)/;
-const TERMINATOR = /[.!?;](?=\s|$)/g;
-function sentences(text: string): { readonly line: number; readonly text: string }[] {
-  const out: { line: number; text: string }[] = [];
-  let buffer = "";
-  let start = 0;
-  const flush = (): void => {
-    if (buffer !== "") out.push({ line: start, text: buffer });
-    buffer = "";
-  };
-  const append = (piece: string, line: number): void => {
-    const trimmed = piece.trim();
-    if (trimmed === "") return;
-    if (buffer === "") start = line;
-    buffer = buffer === "" ? trimmed : `${buffer} ${trimmed}`;
-  };
-  for (const [index, raw] of text.split(/\r?\n/).entries()) {
-    const line = index + 1;
-    if (raw.trim() === "") {
-      flush();
-      continue;
-    }
-    const whole = TABLE_ROW.test(raw) || HEADING.test(raw);
-    if (whole || LIST_ITEM.test(raw)) flush();
-    let from = 0;
-    for (const match of raw.matchAll(TERMINATOR)) {
-      const at = (match.index ?? 0) + 1;
-      append(raw.slice(from, at), line);
-      flush();
-      from = at;
-    }
-    append(raw.slice(from), line);
-    if (whole) flush();
-  }
-  flush();
-  return out;
-}
-/** The vocabulary words that make a reading, in order: each family word and each carrier pair a text spells. */
-function familyWords(text: string): string[] {
-  const tokens = words(text);
-  return tokens.flatMap((word, index) => {
-    if (DEMAND.has(word) || PRECISION.has(word)) return [word];
-    const pair = VOCABULARY.carrier.find(([first, second]) => word === first && tokens[index + 1] === second);
-    return pair === undefined ? [] : [pair.join(" ")];
-  });
-}
-/** The carrier pairs a text's words spell, in order, each as its two words. */
-function carrierPairs(text: string): string[] {
-  const tokens = words(text);
-  return tokens.flatMap((word, index) => VOCABULARY.carrier.filter(([first, second]) => word === first && tokens[index + 1] === second).map(pair => pair.join(" ")));
-}
-/** CUT: the carrier pairs whose two words a sentence cut parts - each pair of the text that no one sentence of it spells. */
-function partedPairs(text: string): string[] {
-  const pairs = carrierPairs(text);
-  if (pairs.length === 0) return [];
-  const within = sentences(text).flatMap(sentence => carrierPairs(sentence.text));
-  return pairs.filter(pair => {
-    const at = within.indexOf(pair);
-    if (at === -1) return true;
-    within.splice(at, 1);
-    return false;
-  });
-}
-/** LIVE QUIET: every quiet reading of one text, each occurrence, lines dropped: `<where> <kind>:<reason> <its family words>`; and
- * every carrier pair a cut parts: `<where> parted:carrier <pair>` (CUT). */
-function quietOf(where: string, text: string): string[] {
-  const quiet = sentences(text).flatMap(sentence => {
-    const reading = readSentence(sentence.text);
-    return reading.kind === "subjectless" || reading.kind === "marker" ? [`${where} ${reading.kind}:${reading.reason} ${familyWords(sentence.text).join(" ")}`] : [];
-  });
-  return [...quiet, ...partedPairs(text).map(pair => `${where} parted:carrier ${pair}`)];
-}
-/** Every finding and every quieted reading of one text, each as `<where>:<sentence line> <reason>`. */
-function textReadings(where: string, text: string): { readonly findings: string[]; readonly quieted: string[] } {
-  const findings: string[] = [];
-  const quieted: string[] = [];
-  for (const sentence of sentences(text)) {
-    const reading = readSentence(sentence.text);
-    if (reading.kind === "finding") findings.push(`${where}:${sentence.line} ${reading.reason}`);
-    else if (reading.kind !== "none") quieted.push(`${where}:${sentence.line} ${reading.kind}:${reading.reason}`);
-  }
-  return { findings, quieted };
-}
-
-// -------------------------------------------------------------------------------------------------------------- the code reader
-interface Site {
-  readonly line: number;
-  readonly via: Via;
-  readonly text: string;
-}
-/** An expression without the wrappers that keep its value, at any depth: parentheses, as, satisfies, a non-null "!" and a "<T>"
- * assertion (CONSTANT). */
-function unwrapped(node: ts.Node): ts.Node {
-  return ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node) ? unwrapped(node.expression) : node;
-}
-/** CONSTANT: a string literal or no-substitution template, a + concatenation or template expression whose every part is a
- * constant, each read through its value-keeping wrappers; undefined for anything else. */
-function constant(node: ts.Node): string | undefined {
-  const value = unwrapped(node);
-  if (ts.isStringLiteralLike(value)) return value.text;
-  if (ts.isBinaryExpression(value) && value.operatorToken.kind === ts.SyntaxKind.PlusToken) {
-    const left = constant(value.left);
-    const right = constant(value.right);
-    return left === undefined || right === undefined ? undefined : left + right;
-  }
-  if (ts.isTemplateExpression(value)) {
-    let text = value.head.text;
-    for (const span of value.templateSpans) {
-      const part = constant(span.expression);
-      if (part === undefined) return undefined;
-      text += part + span.literal.text;
-    }
-    return text;
-  }
-  return undefined;
-}
-/** A template or concatenation as it is spelled: its literal parts in order, each non-constant part read as one space (each part
- * read through its value-keeping wrappers). */
-function spelled(node: ts.Node): string {
-  const value = constant(node);
-  if (value !== undefined) return value;
-  const inner = unwrapped(node);
-  if (ts.isBinaryExpression(inner) && inner.operatorToken.kind === ts.SyntaxKind.PlusToken) return spelled(inner.left) + spelled(inner.right);
-  if (ts.isTemplateExpression(inner)) return inner.head.text + inner.templateSpans.map(span => spelled(span.expression) + span.literal.text).join("");
-  return " ";
-}
-/** A node's tokens in order (a JSDoc comment is trivia, never a token). */
-function tokensOf(node: ts.Node, source: ts.SourceFile): ts.Node[] {
-  const children = node.getChildren(source).filter(child => !ts.isJSDoc(child));
-  return children.length === 0 ? [node] : children.flatMap(child => tokensOf(child, source));
-}
-/** A node as written with every comment inside it read as one space (COMMENTS: a comment is no prompt): its tokens' own text in
- * order, the trivia between two tokens kept when it is white space alone and read as one space when it holds a comment. */
-function bare(node: ts.Node, source: ts.SourceFile): string {
-  const written = node.getText(source);
-  if (!written.includes("//") && !written.includes("/*")) return written;
-  let text = "";
-  let end: number | undefined;
-  for (const token of tokensOf(node, source)) {
-    const start = token.getStart(source);
-    if (end !== undefined) {
-      const trivia = source.text.slice(end, start);
-      text += /^\s*$/.test(trivia) ? trivia : " ";
-    }
-    text += source.text.slice(start, token.getEnd());
-    end = token.getEnd();
-  }
-  return text;
-}
-/** An indexed access type's index as its constant: a literal type, parenthesized or not; undefined for any other index type. */
-function literalIndex(type: ts.TypeNode): string | undefined {
-  if (ts.isParenthesizedTypeNode(type)) return literalIndex(type.type);
-  return ts.isLiteralTypeNode(type) ? constant(type.literal) : undefined;
-}
-/** The declarations whose own name a member path joins (with a constructor parameter property, see nameOf). */
-const NAMED_KINDS: ReadonlySet<ts.SyntaxKind> = new Set([
-  ts.SyntaxKind.VariableDeclaration,
-  ts.SyntaxKind.PropertyAssignment,
-  ts.SyntaxKind.ShorthandPropertyAssignment,
-  ts.SyntaxKind.PropertyDeclaration,
-  ts.SyntaxKind.PropertySignature,
-  ts.SyntaxKind.MethodDeclaration,
-  ts.SyntaxKind.MethodSignature,
-  ts.SyntaxKind.GetAccessor,
-  ts.SyntaxKind.SetAccessor,
-  ts.SyntaxKind.FunctionDeclaration,
-  ts.SyntaxKind.FunctionExpression,
-  ts.SyntaxKind.ClassDeclaration,
-  ts.SyntaxKind.ClassExpression,
-  ts.SyntaxKind.InterfaceDeclaration,
-  ts.SyntaxKind.TypeAliasDeclaration,
-  ts.SyntaxKind.EnumDeclaration,
-  ts.SyntaxKind.EnumMember,
-  ts.SyntaxKind.ModuleDeclaration,
-]);
-/** The member kinds of an object literal, a class, an interface or type literal and an enum. */
-const MEMBER_KINDS: ReadonlySet<ts.SyntaxKind> = new Set([
-  ts.SyntaxKind.PropertyAssignment,
-  ts.SyntaxKind.ShorthandPropertyAssignment,
-  ts.SyntaxKind.PropertyDeclaration,
-  ts.SyntaxKind.PropertySignature,
-  ts.SyntaxKind.MethodDeclaration,
-  ts.SyntaxKind.MethodSignature,
-  ts.SyntaxKind.GetAccessor,
-  ts.SyntaxKind.SetAccessor,
-  ts.SyntaxKind.EnumMember,
-]);
-/** The declaration kinds a namespace or module body holds as members. */
-const NAMESPACE_MEMBER_KINDS: ReadonlySet<ts.SyntaxKind> = new Set([
-  ts.SyntaxKind.VariableDeclaration,
-  ts.SyntaxKind.FunctionDeclaration,
-  ts.SyntaxKind.ClassDeclaration,
-  ts.SyntaxKind.InterfaceDeclaration,
-  ts.SyntaxKind.TypeAliasDeclaration,
-  ts.SyntaxKind.EnumDeclaration,
-  ts.SyntaxKind.ModuleDeclaration,
-]);
-/** A constructor parameter property (readonly, public, private, protected or override): a class member declared as a parameter. */
-const isParameterProperty = (node: ts.Node): node is ts.ParameterDeclaration => ts.isParameter(node) && ts.isParameterPropertyDeclaration(node, node.parent);
-/** A declaration directly in a namespace or module body: a variable named by an identifier whose statement sits in the body, or
- * a function, class, interface, type alias, enum or namespace in the body (a dotted namespace's inner name in its outer one). */
-function inNamespaceBody(node: ts.Node): boolean {
-  if (!NAMESPACE_MEMBER_KINDS.has(node.kind)) return false;
-  if (ts.isVariableDeclaration(node)) {
-    const statement = node.parent.parent;
-    return ts.isIdentifier(node.name) && ts.isVariableStatement(statement) && ts.isModuleBlock(statement.parent);
-  }
-  return ts.isModuleBlock(node.parent) || ts.isModuleDeclaration(node.parent);
-}
-const isMember = (node: ts.Node): boolean => MEMBER_KINDS.has(node.kind) || isParameterProperty(node) || inNamespaceBody(node);
-/** A name or key as text: an identifier, private name, string or number; a computed name's constant; undefined otherwise. */
-function keyText(key: ts.Node): string | undefined {
-  if (ts.isIdentifier(key) || ts.isPrivateIdentifier(key) || ts.isStringLiteralLike(key) || ts.isNumericLiteral(key)) return key.text;
-  if (ts.isComputedPropertyName(key)) return constant(key.expression);
-  return undefined;
-}
-function nameOf(node: ts.Node): string | undefined {
-  if (!NAMED_KINDS.has(node.kind) && !isParameterProperty(node)) return undefined;
-  const name = (node as ts.NamedDeclaration).name;
-  return name === undefined ? undefined : keyText(name);
-}
-/** The receiver a binding pattern destructures: its declaration's initializer, else the iterated expression of the for-of or
- * for-in that declares it; its parameter's type annotation, else its default value; in a nested pattern, the enclosing element's
- * path, each as written (COMMENTS). undefined when there is none (an untyped parameter without a default value, a catch binding, an
- * ambient declaration's binding): R-UNREAD-FORM. */
-function receiverOf(pattern: ts.BindingPattern, source: ts.SourceFile): string | undefined {
-  const holder = pattern.parent;
-  if (ts.isBindingElement(holder)) return elementPath(holder, source);
-  if (ts.isParameter(holder)) {
-    const receiver = holder.type ?? holder.initializer;
-    return receiver === undefined ? undefined : bare(receiver, source);
-  }
-  if (!ts.isVariableDeclaration(holder)) return undefined;
-  if (holder.initializer !== undefined) return bare(holder.initializer, source);
-  const statement = holder.parent.parent;
-  return ts.isForOfStatement(statement) || ts.isForInStatement(statement) ? bare(statement.expression, source) : undefined;
-}
-/** A binding element's path: its pattern's receiver joined with its key (an object pattern) or its index (an array pattern). */
-function elementPath(element: ts.BindingElement, source: ts.SourceFile): string | undefined {
-  const pattern = element.parent;
-  const receiver = receiverOf(pattern, source);
-  if (receiver === undefined) return undefined;
-  const key = ts.isObjectBindingPattern(pattern) ? keyText(element.propertyName ?? element.name) : String(pattern.elements.indexOf(element));
-  return `${receiver}.${key ?? "?"}`;
-}
-/** The keys of a destructuring assignment target after its receiver: each object literal property or shorthand as receiver.key
- * (a nested target deeper, an array literal's elements by index, a rest element's target at its place - an array literal's at its
- * index, an object literal's at the receiver, its name as the key when it is a name - and a target's default value skipped). */
-function assignmentPaths(target: ts.Expression, receiver: string): { readonly node: ts.Node; readonly path: string }[] {
-  if (ts.isParenthesizedExpression(target)) return assignmentPaths(target.expression, receiver);
-  if (ts.isBinaryExpression(target) && target.operatorToken.kind === ts.SyntaxKind.EqualsToken) return assignmentPaths(target.left, receiver);
-  if (ts.isSpreadElement(target)) return assignmentPaths(target.expression, receiver);
-  if (ts.isArrayLiteralExpression(target)) return target.elements.flatMap((element, index) => assignmentPaths(element, `${receiver}.${index}`));
-  if (!ts.isObjectLiteralExpression(target)) return [];
-  return target.properties.flatMap(property => {
-    if (ts.isSpreadAssignment(property)) return ts.isIdentifier(property.expression) ? [{ node: property, path: `${receiver}.${property.expression.text}` }] : assignmentPaths(property.expression, receiver);
-    if (!ts.isPropertyAssignment(property) && !ts.isShorthandPropertyAssignment(property)) return [];
-    const path = `${receiver}.${keyText(property.name) ?? "?"}`;
-    return [{ node: property, path }, ...(ts.isPropertyAssignment(property) ? assignmentPaths(property.initializer, path) : [])];
-  });
-}
-const isLiteralTarget = (node: ts.Node | undefined): node is ts.ObjectLiteralExpression | ts.ArrayLiteralExpression => node !== undefined && (ts.isObjectLiteralExpression(node) || ts.isArrayLiteralExpression(node));
-/** The parse kind of a module: TSX for .tsx, JSX for .jsx, TS for the other TS extensions, JS (which parses JSX) otherwise. */
-function scriptKindOf(path: string): ts.ScriptKind {
-  if (path.endsWith(".tsx")) return ts.ScriptKind.TSX;
-  if (path.endsWith(".jsx")) return ts.ScriptKind.JSX;
-  return /\.(?:ts|mts|cts)$/.test(path) ? ts.ScriptKind.TS : ts.ScriptKind.JS;
-}
-/** Every code reading of one module (never a comment: every as-written text through bare): lexemes, accesses, member paths and
- * imports, each with its line - exactly the forms the header's B1 paragraph claims, each pinned by its FORMS row. */
-function codeSites(path: string, text: string): Site[] {
-  const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKindOf(path));
-  const sites: Site[] = [];
-  const lineOf = (position: number): number => source.getLineAndCharacterOfPosition(position).line + 1;
-  const visit = (node: ts.Node): void => {
-    const at = (): number => lineOf(node.getStart(source));
-    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) sites.push({ line: at(), via: "lexeme", text: node.text });
-    else if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) || ts.isRegularExpressionLiteral(node)) sites.push({ line: at(), via: "lexeme", text: node.text });
-    else if (ts.isJsxText(node)) {
-      if (!node.containsOnlyTriviaWhiteSpaces) sites.push({ line: at(), via: "lexeme", text: node.text });
-    } else if (ts.isTemplateLiteralTypeNode(node)) sites.push({ line: at(), via: "lexeme", text: node.head.text + node.templateSpans.map(span => ` ${span.literal.text}`).join("") });
-    else if (ts.isTemplateExpression(node) || (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken)) {
-      const value = spelled(node);
-      if (value.trim() !== "") sites.push({ line: at(), via: "lexeme", text: value });
-    } else if (ts.isPropertyAccessExpression(node) || ts.isQualifiedName(node)) sites.push({ line: at(), via: "access", text: bare(node, source) });
-    else if (ts.isElementAccessExpression(node)) sites.push({ line: at(), via: "access", text: `${bare(node.expression, source)}.${constant(node.argumentExpression) ?? "?"}` });
-    else if (ts.isIndexedAccessTypeNode(node)) sites.push({ line: at(), via: "access", text: `${bare(node.objectType, source)}.${literalIndex(node.indexType) ?? "?"}` });
-    else if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
-      const elementAt = elementPath(node, source);
-      if (elementAt !== undefined) sites.push({ line: at(), via: "access", text: elementAt });
-    } else if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier)) {
-      const from = node.moduleSpecifier.text;
-      const names: string[] = [];
-      const specifier = (element: ts.ImportSpecifier | ts.ExportSpecifier): void => {
-        if (element.propertyName !== undefined) names.push(element.propertyName.text);
-        names.push(element.name.text);
-      };
-      if (ts.isImportDeclaration(node)) {
-        const clause = node.importClause;
-        if (clause?.name !== undefined) names.push(clause.name.text);
-        const bindings = clause?.namedBindings;
-        if (bindings !== undefined && ts.isNamespaceImport(bindings)) names.push(bindings.name.text);
-        if (bindings !== undefined && ts.isNamedImports(bindings)) for (const element of bindings.elements) specifier(element);
-      } else if (node.exportClause !== undefined && ts.isNamedExports(node.exportClause)) {
-        for (const element of node.exportClause.elements) specifier(element);
-      } else if (node.exportClause !== undefined && ts.isNamespaceExport(node.exportClause)) names.push(node.exportClause.name.text);
-      for (const name of names) sites.push({ line: at(), via: "import", text: `${from}.${name}` });
-    } else if (ts.isImportEqualsDeclaration(node)) {
-      const reference = node.moduleReference;
-      const from = ts.isExternalModuleReference(reference) && ts.isStringLiteralLike(reference.expression) ? reference.expression.text : bare(reference, source);
-      sites.push({ line: at(), via: "import", text: `${from}.${node.name.text}` });
-    }
-    const assigned = ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && isLiteralTarget(node.left) ? { target: node.left, receiver: node.right } : (ts.isForOfStatement(node) || ts.isForInStatement(node)) && isLiteralTarget(node.initializer) ? { target: node.initializer, receiver: node.expression } : undefined;
-    if (assigned !== undefined) for (const key of assignmentPaths(assigned.target, bare(assigned.receiver, source))) sites.push({ line: lineOf(key.node.getStart(source)), via: "access", text: key.path });
-    if (isMember(node)) {
-      const own = nameOf(node);
-      const path: string[] = [];
-      for (let parent: ts.Node | undefined = node.parent; parent !== undefined; parent = parent.parent) {
-        const name = nameOf(parent);
-        if (name !== undefined) path.unshift(name);
-      }
-      if (own !== undefined && path.length > 0) sites.push({ line: at(), via: "member", text: [...path, own].join(".") });
-    }
-    ts.forEachChild(node, visit);
-  };
-  visit(source);
-  return sites;
-}
-interface Survey {
-  readonly code: string[];
-  readonly pages: string[];
-  readonly findings: string[];
-  readonly quieted: string[];
-  /** Every quiet reading, each occurrence, lines dropped (quietOf), in name order. */
-  readonly quiet: string[];
-  readonly readings: number;
-}
-const isModule = (path: string): boolean => /\.(?:ts|tsx|mts|cts|js|mjs|cjs|jsx)$/.test(path);
 const isMarkdown = (path: string): boolean => /\.md$/.test(path);
 const underAny = (path: string, roots: readonly string[]): boolean => roots.some(root => path.startsWith(`${root}/`));
 const isCode = (path: string): boolean => isModule(path) && underAny(path, CONSTANTS.codeRoots);
 const isPage = (path: string): boolean => isMarkdown(path) && underAny(path, CONSTANTS.pageRoots);
 const isConsumerModule = (path: string): boolean => isModule(path) && path.startsWith(`${CONSTANTS.consumerRoot}/`);
-/** One pass over (path, text) pairs: code modules by the code reader, pages by the sentence reader. */
-function survey(texts: readonly (readonly [string, string])[]): Survey {
-  const code: string[] = [];
-  const pages: string[] = [];
-  const findings: string[] = [];
-  const quieted: string[] = [];
-  const quiet: string[] = [];
-  let readings = 0;
-  for (const [path, text] of texts) {
-    if (isModule(path)) {
-      code.push(path);
-      for (const site of codeSites(path, text)) {
-        readings += 1;
-        const one = textReadings(`${path}:${site.line} ${site.via}`, site.text);
-        findings.push(...one.findings);
-        quieted.push(...one.quieted);
-        quiet.push(...quietOf(`${path} ${site.via}`, site.text));
-      }
-    } else {
-      pages.push(path);
-      const one = textReadings(path, text);
-      readings += sentences(text).length;
-      findings.push(...one.findings);
-      quieted.push(...one.quieted);
-      quiet.push(...quietOf(path, text));
-    }
-  }
-  return { code, pages, findings: [...new Set(findings)], quieted: [...new Set(quieted)], quiet: quiet.sort(byName), readings };
-}
-const byName = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 /** What git would commit below the code and page roots: tracked or untracked, never ignored. */
 function gitList(base: string): string[] {
   const roots = [...new Set([...CONSTANTS.codeRoots, ...CONSTANTS.pageRoots])].sort(byName);
@@ -1273,6 +917,9 @@ const consumerOfCode = (text: string, path = "src/plant.ts"): string[] => consum
 const LOOKALIKE_A = String.fromCodePoint(0x0430);
 const FULLWIDTH_E = String.fromCodePoint(0xff25);
 const INVISIBLE = String.fromCodePoint(0x200b);
+/** A combining mark NFKC composes with no letter (a combining low line) and an enclosing mark (a combining enclosing circle). */
+const COMBINING_LOW_LINE = String.fromCodePoint(0x0332);
+const ENCLOSING_CIRCLE = String.fromCodePoint(0x20dd);
 /** A word in fullwidth letters (each ASCII letter moved to its fullwidth form), which NFKC folds back. */
 const fullwidth = (word: string): string => [...word].map(letter => String.fromCodePoint((letter.codePointAt(0) ?? 0) + 0xfee0)).join("");
 /** A template placeholder opener for planted code, spelled in two parts so no literal of this file holds one. */
@@ -1412,14 +1059,16 @@ const FORMS: Readonly<Record<string, readonly [path: string, code: string]>> = {
 /** LIVE QUIET's rule on plants, pinned apart from the live tree: every quiet occurrence is held - two on one line too, a
  * subjectless and a marker reading, each with its family words and carrier pairs, a page's as well as a module's - an
  * R-UNREAD-FORM member's lexemes, which find nothing, are held quiet (the fail-closed premise), and a carrier pair whose two words
- * a cut parts is held as parted - after a comment after the dot, inside a lexeme and across a page's sentences (CUT). */
+ * a cut parts is held as parted - after a space after the dot, inside a lexeme and across a page's sentences, a page holding one
+ * pair parted twice held twice (CUT; each occurrence and each pair: the reader census's row P). */
 const QUIET_PLANTS: readonly (readonly [string, string])[] = [
   ["src/plant.ts", 'export const a = "Be precise.";\nexport const b = ["Be precise.", "Be precise, precisely."];\n'],
   ["src/plant-marker.ts", 'export const c = "The context demand is not set.";\nexport const d = "Never send a projection requirement.";\n'],
   ["src/plant-unread.ts", "export const read = (contexts: Options[]) => contexts.map(({ demand }) => demand);\n"],
-  ["src/plant-cut.ts", 'export const value = projection./* cut */requirement;\nexport const prompt = "Send the projection. Requirements follow.";\n'],
+  ["src/plant-cut.ts", 'export const value = projection. requirement;\nexport const prompt = "Send the projection. Requirements follow.";\n'],
   [".pi/agents/plant.md", "Be precise.\n"],
   [".pi/agents/plant-cut.md", "Send the projection.\nRequirement first.\n"],
+  [".pi/agents/plant-cut-twice.md", "Send the projection.\nRequirement one, then the projection.\nRequirement two.\n"],
 ];
 /** CONSTANT's matrix: every constant-reading site of the code reader (a concatenation part and a template span, each read as
  * spelled and as a key's constant; an element access's key; a binding pattern's, an assignment target's and a member's computed
@@ -1439,7 +1088,8 @@ const CONSTANT_WRAPPERS: Readonly<Record<string, string>> = { parentheses: '("de
 /** COMMENTS' matrix: every as-written reading of the code reader with a block, a line and a JSDoc-style comment inside it, each
  * holding a marker and standing at a claimed position - before the reading's "." or inside its brackets - each plant reading
  * exactly one finding (B1 asserts it): no comment kind is read at one site and removed at another. A comment right after a "."
- * cuts the reading (CUT): R-CUT, never this matrix. */
+ * reads as nothing under the landed reader (its COMMENTS clause): B1's afterTerminator members and the reader census's M-AFTER,
+ * never this matrix. */
 const COMMENT_SITES: Readonly<Record<string, (comment: string) => string>> = {
   propertyAccess: comment => `export const value = context${comment}.demand;\n`,
   qualifiedName: comment => `export type Value = Context${comment}.Demand;\n`,
@@ -1478,24 +1128,13 @@ const COMMENT_PLANTS: Readonly<Record<string, readonly [plant: string, twin: str
   "assignment-for-in": ["export let size: unknown;\nfor ({ size } in (contexts /* demand */)) break;\n", "export let size: unknown;\nfor ({ size } in (contexts.demand)) break;\n"],
   "import-equals-entity": ["import size = Context/* demand */.Inner;\nexport { size };\n", "import size = Context.Demand.Inner;\nexport { size };\n"],
 };
-/** R-CUT's members (CUT; refusal #4's U1, F2 and F3; ruling R-B122): one plant per kind of cut - a comment, then white space, right
- * after a token that ends in ".", "!", "?" or ";" in an as-written reading, a blank line, a table-row and a list-item line, a
- * lexeme's sentence break and heading line, a member key's sentence break and a carrier pair parted after the dot - each reading no
- * finding (B1 asserts it) beside its uncut twin (the comment before the token, or no white space after it), which finds once
- * (asserted); LIVE QUIET holds every member (asserted: fail closed). */
+/** R-CUT's members (CUT): one plant per kind of cut this census plants - white space right after a token that ends in ".", "!",
+ * "?" or ";" in an as-written reading, a terminator before white space in a string the reading holds, a blank line, a table-row
+ * and a list-item line, a lexeme's sentence break and heading line, a member key's sentence break and a carrier pair parted by a
+ * space after the dot - each reading no finding (B1 asserts it) beside its uncut twin (the same words with no cut between them),
+ * which finds once (asserted); LIVE QUIET holds every member (asserted: fail closed). Cut #5's comment members (a comment right
+ * after such a token) are AFTER_TERMINATOR_PLANTS: the landed reader reads them uncut. */
 const CUT_PLANTS: Readonly<Record<string, readonly [plant: string, twin: string]>> = {
-  "comment-after-dot": ["export const value = context./* not */demand;\n", "export const value = context/* not */.demand;\n"],
-  "comment-after-optional-dot": ["export const value = context?./* not */demand;\n", "export const value = context/* not */?.demand;\n"],
-  "comment-after-non-null": ["export const value = context!/* not */.demand;\n", "export const value = context/* not */!.demand;\n"],
-  "comment-after-not": ['export const value = (context && !/* no */on)["demand"];\n', 'export const value = (context && /* no */!on)["demand"];\n'],
-  "comment-after-question": ['export const value = (context ?/* no */a : b)["demand"];\n', 'export const value = (context /* no */?a : b)["demand"];\n'],
-  "comment-after-nullish": ['export const value = (context ??/* no */other)["demand"];\n', 'export const value = (context /* no */??other)["demand"];\n'],
-  "comment-after-semicolon": ['export type Value = { context: 1;/* no */other: 2 }["demand"];\n', 'export type Value = { context: 1/* no */;other: 2 }["demand"];\n'],
-  "comment-after-spread": ['export const value = [context, .../* no */rest]["demand"];\n', 'export const value = [context, /* no */...rest]["demand"];\n'],
-  "comment-qualified-name": ["export type Value = Context./* no */Demand;\n", "export type Value = Context/* no */.Demand;\n"],
-  "comment-import-entity": ["import demand = Context./* not */Inner;\nexport { demand };\n", "import demand = Context/* not */.Inner;\nexport { demand };\n"],
-  "comment-after-number": ['export const value = (context, 1./* no */)["demand"];\n', 'export const value = (context, /* no */1.)["demand"];\n'],
-  "comment-binding-receiver": ["export function read(opts: Options): unknown {\n  const { demand } = context./* not */inner;\n  return demand;\n}\n", "export function read(opts: Options): unknown {\n  const { demand } = context/* not */.inner;\n  return demand;\n}\n"],
   "space-after-dot": ["export const value = context. demand;\n", "export const value = context.demand;\n"],
   "line-after-dot": ["export const value = context.\n  demand;\n", "export const value = context\n  .demand;\n"],
   "space-after-optional-dot": ["export const value = context?. demand;\n", "export const value = context ?.demand;\n"],
@@ -1510,11 +1149,33 @@ const CUT_PLANTS: Readonly<Record<string, readonly [plant: string, twin: string]
   "lexeme-sentence": ['export const prompt = "Render the context. Demand is set by the model.";\n', 'export const prompt = "Render the context demand set by the model.";\n'],
   "lexeme-heading": ['export const prompt = "The context\\n# demand rides along";\n', 'export const prompt = "The context\\ndemand rides along";\n'],
   "member-key": ['export const context = { "size. x": { demand: 1 } };\n', 'export const context = { "size x": { demand: 1 } };\n'],
+  "parted-carrier-space": ["export const value = projection. requirement;\n", "export const value = projection.requirement;\n"],
+};
+/** The after-terminator members (the landed reader's cure, child wb-pyel.8: a comment run right after a token whose text ends in a
+ * terminator reads as nothing, so it cuts nothing): the members cut #5's R-CUT held as cuts - a comment right after a ".", "?.",
+ * "!", "?", "??", ";" or "..." token, a number written with a trailing ".", a qualified name's and an import-equals entity's "."
+ * and a binding receiver's ".", the carrier pair parted there - and the marker cut #5's over-read parted away there, each beside its
+ * twin (the comment before that token, or no comment). Each member reads exactly as its twin reads - the same findings and the same
+ * LIVE QUIET entries - and finds once, but the over-read member, which the marker quiets (B1 asserts both). */
+const AFTER_TERMINATOR_PLANTS: Readonly<Record<string, readonly [plant: string, twin: string]>> = {
+  "comment-after-dot": ["export const value = context./* not */demand;\n", "export const value = context/* not */.demand;\n"],
+  "comment-after-optional-dot": ["export const value = context?./* not */demand;\n", "export const value = context/* not */?.demand;\n"],
+  "comment-after-non-null": ["export const value = context!/* not */.demand;\n", "export const value = context/* not */!.demand;\n"],
+  "comment-after-not": ['export const value = (context && !/* no */on)["demand"];\n', 'export const value = (context && /* no */!on)["demand"];\n'],
+  "comment-after-question": ['export const value = (context ?/* no */a : b)["demand"];\n', 'export const value = (context /* no */?a : b)["demand"];\n'],
+  "comment-after-nullish": ['export const value = (context ??/* no */other)["demand"];\n', 'export const value = (context /* no */??other)["demand"];\n'],
+  "comment-after-semicolon": ['export type Value = { context: 1;/* no */other: 2 }["demand"];\n', 'export type Value = { context: 1/* no */;other: 2 }["demand"];\n'],
+  "comment-after-spread": ['export const value = [context, .../* no */rest]["demand"];\n', 'export const value = [context, /* no */...rest]["demand"];\n'],
+  "comment-qualified-name": ["export type Value = Context./* no */Demand;\n", "export type Value = Context/* no */.Demand;\n"],
+  "comment-import-entity": ["import demand = Context./* not */Inner;\nexport { demand };\n", "import demand = Context/* not */.Inner;\nexport { demand };\n"],
+  "comment-after-number": ['export const value = (context, 1./* no */)["demand"];\n', 'export const value = (context, /* no */1.)["demand"];\n'],
+  "comment-binding-receiver": ["export function read(opts: Options): unknown {\n  const { demand } = context./* not */inner;\n  return demand;\n}\n", "export function read(opts: Options): unknown {\n  const { demand } = context/* not */.inner;\n  return demand;\n}\n"],
   "parted-carrier": ["export const value = projection./* cut */requirement;\n", "export const value = projection.requirement;\n"],
+  "over-read": ['export const value = (never./* cut */context)["demand"];\n', 'export const value = (never.context)["demand"];\n'],
 };
 /** CUT's strict direction (refusal #4, F3): a cut parts a marker from the words it quiets, so the cut reading finds where its
- * uncut twin is marker-quiet. */
-const CUT_OVER_READ: readonly [cut: string, twin: string] = ['export const value = (never./* cut */context)["demand"];\n', 'export const value = (never.context)["demand"];\n'];
+ * uncut twin is marker-quiet (a space after the dot; cut #5's comment form is AFTER_TERMINATOR_PLANTS' over-read member). */
+const CUT_OVER_READ: readonly [cut: string, twin: string] = ['export const value = (never. context)["demand"];\n', 'export const value = (never.context)["demand"];\n'];
 /** R-ESCAPE's members (refusal #4, F4): a letter spelled through syntax the parser leaves as written - each reads nothing and
  * nothing holds it (both asserted) - beside its twin spelled plainly, which finds once (asserted). */
 const ESCAPE_PLANTS: Readonly<Record<string, readonly [path: string, plant: string, twin: string]>> = {
@@ -1537,7 +1198,7 @@ const DECODED_PLANTS: Readonly<Record<string, string>> = {
 /** B4's witness over a bead row: the demand reading itself and its quiet rows; only R-SYNONYM reads the row, through its owner
  * filing block. */
 function demandWitness(row: BeadRow): { [key: string]: Json } {
-  const subjects = ["The context demand rides in the prompt.", "Contexts demand a tool call.", "contextDemand", "context_precision", "CONTEXT-PRECISION", `The ${INVISIBLE}context demand rides in the prompt.`, `The context dem${INVISIBLE}and rides in the prompt.`, `The ${fullwidth("CONTEXT")} demand rides in the prompt.`].map(verdict);
+  const subjects = ["The context demand rides in the prompt.", "Contexts demand a tool call.", "contextDemand", "context_precision", "CONTEXT-PRECISION", `The ${INVISIBLE}context demand rides in the prompt.`, `The context dem${INVISIBLE}and rides in the prompt.`, `The ${fullwidth("CONTEXT")} demand rides in the prompt.`, `The context dema${COMBINING_LOW_LINE}nd rides in the prompt.`, `The context dema${ENCLOSING_CIRCLE}nd rides in the prompt.`].map(verdict);
   const families = [...VOCABULARY.families.demand, ...VOCABULARY.families.precision].map(word => verdict(`The context ${word} rides in the prompt.`));
   const carrier = ["Send a projection requirement.", "projectionRequirements", "Projection-Requirement", "a projection requirement for the render"].map(verdict);
   const markers = [...VOCABULARY.markers.map(word => verdict(`The context demand is ${word} a tool call.`)), verdict("The context demand isn't a tool call."), verdict(`The context demand isn${String.fromCodePoint(0x2019)}t a tool call.`)];
@@ -1547,8 +1208,14 @@ function demandWitness(row: BeadRow): { [key: string]: Json } {
     textReadings("t", "The context\ndemand rides in the prompt.").findings,
     textReadings("t", "| context | demand |\n| --- | --- |").findings,
     textReadings("t", "The context\n- demand").findings,
+    textReadings("t", "The context\n1) demand").findings,
+    textReadings("t", "The context\n1. demand").findings,
     textReadings("t", "# The context\ndemand").findings,
     textReadings("t", "The context demand rides; the host owns none of it.").findings,
+    textReadings("t", "Is it the context? Demand rides in the prompt.").findings,
+    textReadings("t", "Render the context! Demand rides in the prompt.").findings,
+    textReadings("t", "The context\n\ndemand rides in the prompt.").findings,
+    textReadings("t", "The context\n| demand |").findings,
   ];
   const quiet = {
     "R-PARAPHRASE": ["Ask for more context when you need it.", "Request a narrower context.", "Tighten the context to the failing file.", "Pass a larger context budget."].map(verdict),
@@ -1561,6 +1228,9 @@ function demandWitness(row: BeadRow): { [key: string]: Json } {
   expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B4").map(residual => residual.id));
   return { subjects, families, carrier, markers, nearMisses, cuts, quiet };
 }
+/** A compared value as plain JSON data: its own methods - vitest's equality consults a value's asymmetricMatch before any value
+ * check - and every other part that is no data dropped, so no value the reader hands in decides its own equality. */
+const plain = <T>(value: T): T => JSON.parse(JSON.stringify(value ?? null)) as T;
 const REACHED = new Set<string>();
 const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   A1: async () => {
@@ -1735,6 +1405,15 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(Object.entries(cut.twins).filter(([, found]) => found.length !== 1).map(([id]) => id), "every uncut twin finds once").toEqual([]);
     expect(Object.entries(cut.held).filter(([, held]) => held.length === 0).map(([id]) => id), "LIVE QUIET holds every cut member").toEqual([]);
     expect([cut.overRead.cut.length, cut.overRead.twin.length], "a cut parts a marker away").toEqual([1, 0]);
+    // The after-terminator members (the landed reader's cure): each reads exactly as its twin reads, findings and LIVE QUIET
+    // entries both, and finds once but the over-read member, which the marker quiets.
+    const readsAs = (code: string): { findings: string[]; quiet: string[] } => {
+      const one = survey([["src/plant.ts", code]]);
+      return plain({ findings: one.findings, quiet: one.quiet });
+    };
+    const afterTerminator = Object.fromEntries(Object.entries(AFTER_TERMINATOR_PLANTS).map(([id, [plant, twin]]) => [id, { plant: readsAs(plant), twin: readsAs(twin) }]));
+    expect(Object.fromEntries(Object.entries(afterTerminator).map(([id, read]) => [id, read.plant])), "every after-terminator member reads as its twin").toEqual(Object.fromEntries(Object.entries(afterTerminator).map(([id, read]) => [id, read.twin])));
+    expect(Object.entries(afterTerminator).filter(([id, read]) => read.plant.findings.length !== (id === "over-read" ? 0 : 1)).map(([id]) => id), "each finds once but the over-read member").toEqual([]);
     const escaped = quiet["R-ESCAPE"];
     expect(Object.values(escaped.unread).flat(), "an escape the parser leaves as written spells nothing").toEqual([]);
     expect(Object.values(escaped.held).flat(), "and nothing holds it").toEqual([]);
@@ -1782,6 +1461,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       comments,
       constants,
       commentMatrix,
+      afterTerminator,
       quiet,
     };
   },
@@ -1823,7 +1503,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const agentInputs = surfaces.inputs.filter(site => site.where.startsWith("pi:Agent.parameters"));
     const quiet = {
       "R-UNNAMED-INPUT": {
-        declared: surfaces.agentParameters.filter(name => words(name).some(word => SUBJECT.has(word))),
+        declared: surfaces.agentParameters.filter(name => words(name).some(word => VOCABULARY.subject.includes(word))),
         findings: siteFindings(agentInputs),
         shapes: [siteFindings(textsOf({ scope: "narrow", detail: "high" }, "plant")), siteFindings(textsOf({ inherit_context: true }, "plant"))],
       },
@@ -2012,9 +1692,9 @@ function tiles(text: string, parts: readonly string[], joint: RegExp): boolean {
 const TITLE_JOINT = /^(?:[\s,.]|\\u2014)*$/;
 const LABEL_JOINT = /^[\s,]*$/;
 const CITATION = /Citation: (\S+?):(\d+)@([0-9a-f]{12})/;
-const roleOf = (word: string): string => (SUBJECT.has(word) ? "subject" : DEMAND.has(word) ? "demand" : PRECISION.has(word) ? "precision" : "none");
+const roleOf = (word: string): string => (VOCABULARY.subject.includes(word) ? "subject" : VOCABULARY.families.demand.includes(word) ? "demand" : VOCABULARY.families.precision.includes(word) ? "precision" : "none");
 
-describe("wb-pyel.2 EDC demand-channel census (SDK-EVIDENCE-DIRECTED-COMPUTATION-R4, until Pi adopts EDC context assembly)", () => {
+describe("wb-pyel.2 EDC demand-channel census over the landed B1 reader: the judged set, A1-C2 at their roster witnesses, provenance and records (SDK-EVIDENCE-DIRECTED-COMPUTATION-R4, until Pi adopts EDC context assembly)", () => {
   it("the judged set: the frozen shape and roster, the bead export's title and filing, the role places and the producer line", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:4", "C:2"]);
     expect(ROWS).toEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(({ id: pinId, quote }) => ({ id: pinId, quote })) })));
@@ -2059,13 +1739,13 @@ describe("wb-pyel.2 EDC demand-channel census (SDK-EVIDENCE-DIRECTED-COMPUTATION
     expect(new Set(phrase.map(roleOf)).size).toBe(phrase.length);
     expect(phrase.map(roleOf)).toEqual(["subject", "demand", "precision"]);
     const validated = u1.indexOf("validated");
-    expect(hasPair([u1[validated - 2] ?? "", u1[validated - 1] ?? ""], VOCABULARY.carrier)).toBe(true);
+    expect(carrierPairs(`${u1[validated - 2] ?? ""} ${u1[validated - 1] ?? ""}`)).toHaveLength(1);
     const b = words(label("B"));
-    expect(MARKERS.has(b[b.indexOf("so") + 1] ?? "")).toBe(true);
-    expect(DEMAND.has(b[b.length - 2] ?? "")).toBe(true);
-    expect(MARKERS.has(words(duty("U2"))[0] ?? "")).toBe(true);
+    expect(VOCABULARY.markers.includes(b[b.indexOf("so") + 1] ?? "")).toBe(true);
+    expect(VOCABULARY.families.demand.includes(b[b.length - 2] ?? "")).toBe(true);
+    expect(VOCABULARY.markers.includes(words(duty("U2"))[0] ?? "")).toBe(true);
     const c = label("C");
-    expect(MARKERS.has(words(c.slice(c.indexOf("(")))[0] ?? "")).toBe(true);
+    expect(VOCABULARY.markers.includes(words(c.slice(c.indexOf("(")))[0] ?? "")).toBe(true);
     const cWords = words(c);
     expect(VOCABULARY.stems.word.includes(cWords[cWords.indexOf("context") - 1] ?? "")).toBe(true);
     const a = words(label("A"));
@@ -2076,7 +1756,7 @@ describe("wb-pyel.2 EDC demand-channel census (SDK-EVIDENCE-DIRECTED-COMPUTATION
     // The producer line: its bytes match its sha256, it reads MARKER by its "not", and without it a finding of all three families.
     for (const line of ROSTER.producer.lines) expect(createHash("sha256").update(line.text, "utf8").digest("hex")).toBe(line.sha256);
     const producerLine = ROSTER.producer.lines[0]?.text ?? "";
-    expect(readSentence(producerLine)).toEqual({ kind: "marker", families: ["demand", "precision", "carrier"], reason: "not" });
+    expect(plain(readSentence(producerLine))).toEqual({ kind: "marker", families: ["demand", "precision", "carrier"], reason: "not" });
     expect(verdict(producerLine.replace(/,? not\b/, ""))).toBe("demand+precision+carrier");
     // The residuals: each named once, each quiet row on a judged pin.
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
@@ -2091,12 +1771,54 @@ describe("wb-pyel.2 EDC demand-channel census (SDK-EVIDENCE-DIRECTED-COMPUTATION
           expect(impl).toBeDefined();
           const witness = impl === undefined ? null : await impl();
           const held = ROSTER.rows.flatMap(entry => entry.pins).find(entry => entry.id === pin.id);
-          expect(witness).toEqual(held?.witness);
+          expect(plain(witness), "the witness, compared as plain data").toEqual(held?.witness);
           REACHED.add(pin.id);
         }, 120_000);
       }
     });
   }
+  it("provenance: the B1 code reader is the landed reader (wb-pyel.8), imported unedited, and the reader pins this header cites are its census's", () => {
+    const parse = (path: string): ts.SourceFile => ts.createSourceFile(path, readFileSync(path, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    // This file as it runs (a copy of it reads itself) and the landed reader.
+    const census = parse(fileURLToPath(import.meta.url));
+    const reader = parse(join(REPO, READER.file));
+    const declared = (source: ts.SourceFile, exported: boolean): string[] =>
+      source.statements.flatMap(statement => {
+        if (exported && !(ts.canHaveModifiers(statement) && (ts.getModifiers(statement) ?? []).some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword))) return [];
+        if (ts.isVariableStatement(statement)) return statement.declarationList.declarations.flatMap(declaration => (ts.isIdentifier(declaration.name) ? [declaration.name.text] : []));
+        if (ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement) || ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isEnumDeclaration(statement)) return statement.name === undefined ? [] : [statement.name.text];
+        return [];
+      });
+    // (1) The import: exactly READER.imports, from the reader's module, each one of its exports.
+    const imports = census.statements.filter((statement): statement is ts.ImportDeclaration => ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && statement.moduleSpecifier.text === READER.specifier);
+    const named = imports.flatMap(statement => {
+      const bindings = statement.importClause?.namedBindings;
+      return bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.map(element => (element.propertyName ?? element.name).text) : [];
+    });
+    expect(named, "the census imports exactly these reader exports").toEqual([...READER.imports]);
+    expect(named.filter(name => !declared(reader, true).includes(name)), "each one an export of the reader").toEqual([]);
+    // (2) No reader declaration is copied: no top-level name of this census is a name the reader declares.
+    expect(declared(census, false).filter(name => declared(reader, false).includes(name)), "no reader name is declared here").toEqual([]);
+    // (3) No code reader of its own: this census parses TypeScript only in this case.
+    const parsesOutsideThisCase: number[] = [];
+    const visit = (node: ts.Node, inThisCase: boolean): void => {
+      const here = inThisCase || (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it" && ts.isStringLiteral(node.arguments[0] ?? node) && (node.arguments[0] as ts.StringLiteral).text.startsWith("provenance:"));
+      if (ts.isPropertyAccessExpression(node) && node.name.text === "createSourceFile" && !here) parsesOutsideThisCase.push(census.getLineAndCharacterOfPosition(node.getStart(census)).line + 1);
+      ts.forEachChild(node, child => visit(child, here));
+    };
+    visit(census, false);
+    expect(parsesOutsideThisCase, "no TypeScript parse outside this case").toEqual([]);
+    // (4) The reader census's roster holds the four clauses this header defers to it and every pin it cites for refusal #5, each
+    // killed there by the gate mutant refusal #5 found surviving.
+    const readerRoster = JSON.parse(readFileSync(join(REPO, READER.roster), "utf8")) as ReaderRoster;
+    expect(readerRoster.bead).toBe(READER.bead);
+    expect(Object.keys(readerRoster.claims)).toEqual([...READER.clauses]);
+    const readerPins = readerRoster.rows.flatMap(row => row.pins.map(pin => pin.id));
+    const cited = Object.values(READER.refusal5).flatMap(item => [...item.pins]);
+    expect(cited.filter(id => !readerPins.includes(id)), "every cited pin is a pin of the reader census").toEqual([]);
+    const unkilled = Object.entries(READER.refusal5).flatMap(([item, { pins, mutants }]) => mutants.filter(mutant => !pins.some(pin => (readerRoster.kills[mutant] ?? []).includes(pin))).map(mutant => `${item}:${mutant}`));
+    expect(unkilled, "each surviving mutant of refusal #5 is killed by a cited pin").toEqual([]);
+  });
   it("records: every registered pin ran and reached its witness", () => {
     expect([...REACHED].sort(byName)).toEqual(ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)).sort(byName));
   });
