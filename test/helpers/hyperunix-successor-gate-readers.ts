@@ -23,9 +23,28 @@
  * one rotating base, numeric keys read on unwrapped bases only, two of five relative spellings read deep in the closure. Cut #2
  * reads every one of those cells, lists under NOT CLAIMED below each crossing of names, catalogs, places, holders and depths the
  * census reads, and names every other crossing NOT CLAIMED; no reader code changed.
+ * Refusal #2 on wb-tz2.21 (gate-prep-12, O:1832) found four claim sets whose words named forms no row pinned: another
+ * vitest/config name imported beside defineConfig (RUN statements), require as a call argument (ROUTES loader name), Proxy as a
+ * member name (WRITES reflection), and spyOn taken by an assignment pattern, which writesOf did not read (WRITES spy or mock
+ * member). Cut #3 makes three reader changes - runReading refuses an import declaration of vitest/config that names no element
+ * (one added condition); writesOf reads the keys of an object assignment pattern as destructured keys, a computed one as a
+ * computed member (an added branch over the new isPattern and patternKeys); writesOf reads a WRITES name standing as the base of
+ * an element access as a whole string literal (an added branch); no other reader line changed - narrows the loader name
+ * require words to a value read and the spyOn words to the ways a mutator member is read, and pins every cell of the four claim
+ * sets over the catalogs NOT CLAIMED below names.
  * Vocabulary (refusal #2 F2): where a claim names a
  * string literal in a place a no-substitution template can also stand, the readers read the template the same way, and the
  * census pins both forms.
+ * Vocabulary (refusal #2 on wb-tz2.21): an identifier is read as a value unless it is a member name (the name of a property
+ * access, the right of a qualified name), a declared key (the name of a property, a method, an accessor or an enum member in a
+ * class, an object literal or a type; the key of a binding element), a type (a type reference, a type query), a label (of a
+ * labeled statement, a break, a continue), a JSX attribute, an import name (an import clause, an import specifier, a namespace
+ * import) or a re-exported name (an export specifier of an export declaration with a from clause). The callee of a call is the
+ * call's own expression: require behind parentheses, an assertion or a non-null assertion, a new expression's require and a
+ * tag's require are no callee of a call. A free Reflect or Proxy is one read as a value that no declaration of the suite binds
+ * where it is read. A destructured key is a key of an object binding pattern or of an object assignment pattern (the left of a
+ * destructuring = and a for-in or for-of head that declares nothing), nested object, array and spread patterns and a default's
+ * own pattern included.
  *
  * RESOLUTION (resolveSpecifier; paths are root-relative with / separators; a path through a link reads as written rather than as its target):
  * - builtin: node: then any name, or a bare name node's module.isBuiltin accepts: a builtin module; a builtin is never read from a file
@@ -70,7 +89,7 @@
  * - require call: the first argument of a call of an identifier require when it is a string literal; when it is a no-substitution template
  * ROUTES (routesOf; a local module holding one is a carrier; a package module holding one is a carrier; each route of the cited suite is a CHANNEL finding):
  * - dynamic load: in every scope; an import() call whose first argument is no string literal (a no-substitution template counts as one); a call of an identifier require whose first argument is no string literal (a no-substitution template counts as one); either call with no argument
- * - loader name: in every scope; the loader names createRequire, getBuiltinModule; each read as an identifier, as a member name, as a whole string literal; the loader member names binding, dlopen, _linkedBinding; each read as a member name, as a string element key; an identifier require anywhere but as the callee of a call
+ * - loader name: in every scope; the loader names createRequire, getBuiltinModule; each read as an identifier, as a member name, as a whole string literal; the loader member names binding, dlopen, _linkedBinding; each read as a member name, as a string element key; an identifier require read as a value anywhere but as the callee of a call
  * - loader member: in every scope; the loader members importActual, importMock; each read as an identifier, as a member name, as a whole string literal; on any base
  * - vite name: in every scope; a name beginning __vite read as an identifier, as a member name, as a string literal, as a no-substitution template, as a template part; vite's injected loaders are such names; vitest's __vitest_index__ handle is one
  * - import meta: in every scope, import.meta read other than as the base of import.meta.url
@@ -81,8 +100,8 @@
  * - member write: an assignment of any operator to a property access; to an element access; ++ on such a target; -- on such a target; delete of such a target; such a target of a for-in; such a target of a for-of; such a target inside a destructuring assignment; such a target read through parentheses, as, satisfies, non-null or <T> assertions
  * - mutator member: __defineGetter__, __defineSetter__, __proto__, assign, defineProperties, defineProperty, deleteProperty, set, setPrototypeOf; each read as a member name, as a string element key, as a destructured key, as a whole string literal
  * - reflection: a free Reflect; a free Proxy; getOwnPropertyDescriptor, getOwnPropertyDescriptors, getOwnPropertyNames, getOwnPropertySymbols, getPrototypeOf; each read as a mutator member is
- * - spy or mock member: spyOn read any way but as the callee of an admitted spy; an admitted spy is a call of a property access .spyOn with two arguments: a free identifier then a string literal not beginning __vite; a no-substitution template key is admitted as a string literal is; doMock, doUnmock, hoisted, mock, mockImplementation, mockImplementationOnce, mockRejectedValue, mockRejectedValueOnce, mockResolvedValue, mockResolvedValueOnce, mockReturnValue, mockReturnValueOnce, stubEnv, stubGlobal, unmock, withImplementation; each read as a mutator member is
- * - computed member: an element access with a computed key; a string literal key is no computed key; a no-substitution template key is none; a numeric literal key is none; a computed key of an object binding pattern
+ * - spy or mock member: spyOn read as a mutator member is but as the callee of an admitted spy; an admitted spy is a call of a property access .spyOn with two arguments: a free identifier then a string literal not beginning __vite; a no-substitution template key is admitted as a string literal is; doMock, doUnmock, hoisted, mock, mockImplementation, mockImplementationOnce, mockRejectedValue, mockRejectedValueOnce, mockResolvedValue, mockResolvedValueOnce, mockReturnValue, mockReturnValueOnce, stubEnv, stubGlobal, unmock, withImplementation; each read as a mutator member is
+ * - computed member: an element access with a computed key; a string literal key is no computed key; a no-substitution template key is none; a numeric literal key is none; a computed key of an object binding pattern or of an object assignment pattern
  * CHANNEL (channelReading):
  * - tier config: the default test tier's one vitest config passes the landed census guard (censusGuard on the test tier) whose closed key lists refuse every key outside them; a resolver alias is refused (its landed row g-u62r5-alias); plugins are refused (its landed row g-u62r5-plugins); a refusal is a finding even when the guard names the config
  * - setup file: every setup file that config's test.setupFiles names is a closure root; it names one file as a string literal; it names one file per string literal of an array; a setup file that is a carrier is a finding; a setup file reaching a carrier is a finding; a setup file that is a vitest module is a finding; a setup file that names no file is a finding; a setup file holding an import declaration of a relative path that names no file is a finding; a setup file reaching one at most three loads below it is a finding too
@@ -110,9 +129,11 @@
  *
  * NOT CLAIMED by this census (wb-tz2.21; a boundary of the pinned set, not a residual): the census reads the ROUTES global object
  * and dynamic code words over catalogs it enumerates, crossed only as the list below names; the IMPORT and CHANNEL setup-file
- * words over the planted loads, holders and depths the list below names; and the gates' paired real-tree twins it checks in as
- * TWIN rows (DW-L08, DW-L12, DW-L15 and DW-L17; TW-S1 to TW-S13; TW14-S1 to TW14-S7 and TW14-S9). Every mode the list does not
- * name is NOT CLAIMED by this census. The ROUTES global object and dynamic code crossings the census reads:
+ * words over the planted loads, holders and depths the list below names; the RUN statements, ROUTES loader name, WRITES
+ * reflection and WRITES name words over the catalogs and plants the list below names; and the gates' paired real-tree twins it
+ * checks in as TWIN rows (DW-L08, DW-L12, DW-L15 and DW-L17; TW-S1 to TW-S13; TW14-S1 to TW14-S7 and TW14-S9; TW12-T1, TW12-T2,
+ * TW12-T3, TW12-T4, TW12-T5, TW12-T5b and TW12-T6). Every mode the list does not name is NOT CLAIMED by this census. The
+ * ROUTES global object and dynamic code crossings the census reads:
  *   a free name: each of the five names, eval and Function in each of the census's FREE_PLACES (48 places), undeclared;
  *   a declared name: each of the five names under each of the census's DECLARATIONS (19 kinds) and under a shadowing parameter,
  *     read as an initializer, in a package module, a local module and the suite;
@@ -150,6 +171,37 @@
  *   relative load outside the three catalogs; a load of another form than an import declaration; a load that does not resolve
  *   for a reason other than a relative path that names no file (the . of a package names a directory package); a module that
  *   holds one read a second time, or reached through a cycle of loads.
+ *   RUN statements, the configs the census reads: the defineConfig import with each of the census's CONFIG_NAMES (22 names), every
+ *   other name the installed vitest/config declares, imported by a second declaration right after it and as a second element
+ *   before and after defineConfig; an import declaration of vitest/config naming no element before and after it; the specifiers
+ *   vitest/config.js, lg-vitest/config, vitest/config/ and vitest; an empty export, an empty statement, an import-equals, a
+ *   re-export, an export * and an ambient declaration after it; a declaration of mergeConfig after the default export; a
+ *   repeated declaration, a repeated element, a single-quoted specifier and import attributes, each sound; a default import alone
+ *   and beside a namespace import; defineConfig aliased, aliased to itself and imported by a string name. NOT CLAIMED: a name
+ *   outside CONFIG_NAMES; a statement of those forms at another place.
+ *   ROUTES loader name, the reads the census holds: createRequire and getBuiltinModule as an identifier in each FREE_PLACES place,
+ *   in each of the census's NONVALUE_PLACES (23 places) and under each DECLARATIONS kind with a top-level read; as a member name of
+ *   a parameter in each MEMBER_SPELLINGS spelling that holds no element key and in each MEMBER_PLACES place; as a whole string
+ *   literal and template in each MEMBER_PLACES place and as the key of each MEMBER_SPELLINGS element-key spelling; binding, dlopen
+ *   and _linkedBinding as a member name of a parameter in each spelling that holds no element key and in each MEMBER_PLACES place,
+ *   as a string element key in each element-key spelling and each MEMBER_PLACES place, and read in no FREE_PLACES place, in no
+ *   NONVALUE_PLACES place but a member name, and as no whole string literal or template in a MEMBER_PLACES place; require as a
+ *   value in each FREE_PLACES place (as a callee and an optional callee its call is a dynamic load), in no NONVALUE_PLACES place,
+ *   under each DECLARATIONS kind with a top-level read, and as the callee of a call plain and optional (read nowhere), behind
+ *   parentheses, an assertion and a non-null assertion, of a new expression and as a tag (each read). NOT CLAIMED: a loader name,
+ *   a loader member name or require read in a place, a spelling or a declaration outside those catalogs, or in a crossing of two
+ *   of them the list does not name.
+ *   WRITES reflection, a free Reflect and a free Proxy: each in each FREE_PLACES place and as the operand of typeof, under each
+ *   DECLARATIONS kind and a shadowing parameter with a top-level read, and read in no NONVALUE_PLACES place.
+ *   WRITES names, the reads the census holds (each name of the mutator member, reflection and spy or mock member lists, and
+ *   spyOn): as a member name of its form's base in each MEMBER_SPELLINGS spelling that holds no element key and in each
+ *   MEMBER_PLACES place; as a string element key in each element-key spelling and each MEMBER_PLACES place; as a destructured key in
+ *   each of the census's DESTRUCTURINGS (19 forms); as a whole string literal and template in each MEMBER_PLACES place; the
+ *   admitted spy, by a string and a template key, in each spelling that holds no element key, in each MEMBER_PLACES place (a new
+ *   expression's .spyOn is no call and reads) and with its target under each DECLARATIONS kind with a top-level spy. NOT
+ *   CLAIMED: a name read in a spelling, a place or a destructuring outside those catalogs, or in a crossing of two of them the
+ *   list does not name; a JSX attribute (no plant is a JSX module); spyOn as an identifier (a function named spyOn the suite
+ *   imports or declares is no vitest member; IMPORT reads the module it comes from).
  * Not claimed: what a module does at run time beyond the forms above (a value assembled at run time and handed to a form these
  * readers do not name); a resolution vite performs that the default tier's vouched config cannot express (the census guard
  * refuses every key that may redirect a module); a package installed outside the lock; a crossing of a piece with a form, a scope
@@ -230,7 +282,7 @@ export type LoadForm = (typeof LOAD_FORMS)[number]["word"];
 
 export const ROUTE_FORMS = roster([
   ["dynamic load", "in every scope; an import() call whose first argument is no string literal (a no-substitution template counts as one); a call of an identifier require whose first argument is no string literal (a no-substitution template counts as one); either call with no argument"],
-  ["loader name", "in every scope; the loader names createRequire, getBuiltinModule; each read as an identifier, as a member name, as a whole string literal; the loader member names binding, dlopen, _linkedBinding; each read as a member name, as a string element key; an identifier require anywhere but as the callee of a call"],
+  ["loader name", "in every scope; the loader names createRequire, getBuiltinModule; each read as an identifier, as a member name, as a whole string literal; the loader member names binding, dlopen, _linkedBinding; each read as a member name, as a string element key; an identifier require read as a value anywhere but as the callee of a call"],
   ["loader member", "in every scope; the loader members importActual, importMock; each read as an identifier, as a member name, as a whole string literal; on any base"],
   ["vite name", "in every scope; a name beginning __vite read as an identifier, as a member name, as a string literal, as a no-substitution template, as a template part; vite's injected loaders are such names; vitest's __vitest_index__ handle is one"],
   ["import meta", "in every scope, import.meta read other than as the base of import.meta.url"],
@@ -244,8 +296,8 @@ export const WRITE_FORMS = roster([
   ["member write", "an assignment of any operator to a property access; to an element access; ++ on such a target; -- on such a target; delete of such a target; such a target of a for-in; such a target of a for-of; such a target inside a destructuring assignment; such a target read through parentheses, as, satisfies, non-null or <T> assertions"],
   ["mutator member", "__defineGetter__, __defineSetter__, __proto__, assign, defineProperties, defineProperty, deleteProperty, set, setPrototypeOf; each read as a member name, as a string element key, as a destructured key, as a whole string literal"],
   ["reflection", "a free Reflect; a free Proxy; getOwnPropertyDescriptor, getOwnPropertyDescriptors, getOwnPropertyNames, getOwnPropertySymbols, getPrototypeOf; each read as a mutator member is"],
-  ["spy or mock member", "spyOn read any way but as the callee of an admitted spy; an admitted spy is a call of a property access .spyOn with two arguments: a free identifier then a string literal not beginning __vite; a no-substitution template key is admitted as a string literal is; doMock, doUnmock, hoisted, mock, mockImplementation, mockImplementationOnce, mockRejectedValue, mockRejectedValueOnce, mockResolvedValue, mockResolvedValueOnce, mockReturnValue, mockReturnValueOnce, stubEnv, stubGlobal, unmock, withImplementation; each read as a mutator member is"],
-  ["computed member", "an element access with a computed key; a string literal key is no computed key; a no-substitution template key is none; a numeric literal key is none; a computed key of an object binding pattern"],
+  ["spy or mock member", "spyOn read as a mutator member is but as the callee of an admitted spy; an admitted spy is a call of a property access .spyOn with two arguments: a free identifier then a string literal not beginning __vite; a no-substitution template key is admitted as a string literal is; doMock, doUnmock, hoisted, mock, mockImplementation, mockImplementationOnce, mockRejectedValue, mockRejectedValueOnce, mockResolvedValue, mockResolvedValueOnce, mockReturnValue, mockReturnValueOnce, stubEnv, stubGlobal, unmock, withImplementation; each read as a mutator member is"],
+  ["computed member", "an element access with a computed key; a string literal key is no computed key; a no-substitution template key is none; a numeric literal key is none; a computed key of an object binding pattern or of an object assignment pattern"],
 ] as const);
 export type WriteForm = (typeof WRITE_FORMS)[number]["word"];
 
@@ -905,6 +957,23 @@ function patternTargets(node: ts.Expression): ts.Expression[] {
   return isMemberTarget(target) ? [target] : [];
 }
 const isAssignment = (kind: ts.SyntaxKind): boolean => kind >= ts.SyntaxKind.FirstAssignment && kind <= ts.SyntaxKind.LastAssignment;
+/** Whether an expression is a destructuring-assignment pattern (an object or array literal, through parentheses and assertions). */
+const isPattern = (node: ts.Expression): boolean => ts.isObjectLiteralExpression(unwrap(node)) || ts.isArrayLiteralExpression(unwrap(node));
+/** The properties of the object assignment patterns inside a destructuring-assignment pattern: nested object and array patterns
+ * and spreads are read through; a default (a nested = assignment) is its own destructuring assignment and is read once there. */
+function patternKeys(node: ts.Expression): ts.ObjectLiteralElementLike[] {
+  const target = unwrap(node);
+  if (ts.isArrayLiteralExpression(target)) return target.elements.flatMap(element => patternKeys(ts.isSpreadElement(element) ? element.expression : element));
+  if (ts.isObjectLiteralExpression(target)) {
+    return target.properties.flatMap(property => {
+      if (ts.isPropertyAssignment(property)) return [property, ...patternKeys(property.initializer)];
+      if (ts.isShorthandPropertyAssignment(property)) return [property];
+      if (ts.isSpreadAssignment(property)) return patternKeys(property.expression);
+      return [];
+    });
+  }
+  return [];
+}
 
 /** Every write the cited suite's text holds, in source order. */
 export function writesOf(path: string, text: string, forms: readonly WriteForm[] = words(WRITE_FORMS)): Finding[] {
@@ -921,6 +990,12 @@ export function writesOf(path: string, text: string, forms: readonly WriteForm[]
     if (REFLECTION_MEMBERS.has(name)) add("reflection", what, node);
     if (SPY_MEMBERS.has(name) || (name === "spyOn" && !spy)) add("spy or mock member", what, node);
   };
+  /** A key of an object assignment pattern, read as a binding element's key is. */
+  const assignedKey = (property: ts.ObjectLiteralElementLike): void => {
+    const key = property.name;
+    if (key !== undefined && (ts.isIdentifier(key) || isStringKey(key))) named(key.text, `{${key.text}} destructured`, property, false);
+    else if (key !== undefined && ts.isComputedPropertyName(key)) add("computed member", `[${key.expression.getText(source).slice(0, 60)}] destructured`, property);
+  };
   const visit = (node: ts.Node): void => {
     if (ts.isBinaryExpression(node) && isAssignment(node.operatorToken.kind)) {
       const targets = node.operatorToken.kind === ts.SyntaxKind.EqualsToken && (ts.isObjectLiteralExpression(unwrap(node.left)) || ts.isArrayLiteralExpression(unwrap(node.left))) ? patternTargets(node.left) : isMemberTarget(node.left) ? [node.left] : [];
@@ -933,6 +1008,8 @@ export function writesOf(path: string, text: string, forms: readonly WriteForm[]
     if ((ts.isForInStatement(node) || ts.isForOfStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) {
       for (const target of patternTargets(node.initializer)) add("member write", `${memberLabel(target)} by ${ts.isForInStatement(node) ? "for-in" : "for-of"}`, target);
     }
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && isPattern(node.left)) for (const property of patternKeys(node.left)) assignedKey(property);
+    if ((ts.isForInStatement(node) || ts.isForOfStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) for (const property of patternKeys(node.initializer)) assignedKey(property);
     if (ts.isPropertyAccessExpression(node)) named(node.name.text, `.${node.name.text}`, node, admittedSpy(node.parent, parsed) && ts.isCallExpression(node.parent) && node.parent.expression === node);
     if (ts.isElementAccessExpression(node)) {
       const key = unwrap(node.argumentExpression);
@@ -945,6 +1022,10 @@ export function writesOf(path: string, text: string, forms: readonly WriteForm[]
       else if (ts.isComputedPropertyName(key)) add("computed member", `[${key.expression.getText(source).slice(0, 60)}] destructured`, node);
     }
     if (isStringKey(node) && !ts.isElementAccessExpression(node.parent) && (MUTATORS.has(node.text) || REFLECTION_MEMBERS.has(node.text) || SPY_MEMBERS.has(node.text) || node.text === "spyOn")) {
+      named(node.text, `'${node.text}'`, node, false);
+    }
+    // A WRITES name standing as the base of an element access is a whole string literal too (only the access's key is an element key).
+    if (isStringKey(node) && ts.isElementAccessExpression(node.parent) && node.parent.expression === node && (MUTATORS.has(node.text) || REFLECTION_MEMBERS.has(node.text) || SPY_MEMBERS.has(node.text) || node.text === "spyOn")) {
       named(node.text, `'${node.text}'`, node, false);
     }
     if (ts.isIdentifier(node) && REFLECTION_GLOBALS.has(node.text) && isValueReference(node) && parsed.free(node)) add("reflection", node.text, node);
@@ -1189,7 +1270,7 @@ export function runReading(runPin: string, argv: readonly string[] | string, rea
     const clause = ts.isImportDeclaration(statement) ? statement.importClause : undefined;
     const named = clause?.namedBindings;
     const plain = ts.isImportDeclaration(statement) && isStringKey(statement.moduleSpecifier) && statement.moduleSpecifier.text === "vitest/config" && clause !== undefined &&
-      clause.phaseModifier !== ts.SyntaxKind.TypeKeyword && clause.name === undefined && named !== undefined && ts.isNamedImports(named) &&
+      clause.phaseModifier !== ts.SyntaxKind.TypeKeyword && clause.name === undefined && named !== undefined && ts.isNamedImports(named) && named.elements.length > 0 &&
       named.elements.every(element => !element.isTypeOnly && element.propertyName === undefined && element.name.text === "defineConfig");
     if (plain && named !== undefined && ts.isNamedImports(named)) {
       for (const element of named.elements) imported.add(element.name.text);

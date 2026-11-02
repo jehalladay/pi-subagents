@@ -20,6 +20,16 @@
  * each place under each base, each wrapper over each key, each relative spelling at each holder and depth is a pin, each realized
  * member's paired twin is a TWIN row, and the helper header's NOT CLAIMED block lists by name every crossing this census reads and
  * names every other crossing NOT CLAIMED.
+ * Refusal #2 on wb-tz2.21 (gate-prep-12, O:1832; cut #2 fdd3697e; R-B364 M:49243: rung 1 of four new claim sets, a normal
+ * respin) found four claim sets whose words named forms no pin read: U1 RUN:statements, another vitest/config name imported
+ * beside defineConfig by a second declaration or a second element (GP12C2-RUN-NAMED-OTHER, GP12C2-RUN-NAMED-SOME); U2 ROUTES:
+ * loader name, require as a call argument (GP12C2-REQUIRE-CALLEE); U3 WRITES:reflection, Proxy as a member name
+ * (GP12C2-REFLECT-MEMBER-NAME); U4 WRITES:spy or mock member, spyOn taken by an assignment pattern, which the delivered readers
+ * read as nothing (realized by the paired pages the gate named TW12-T5 and TW12-T5b). Read here, in cut #3, as: the reader
+ * reads what the words say (runReading refuses an import declaration of vitest/config naming no element, writesOf reads an
+ * object assignment pattern's keys and a WRITES name as the base of an element access), the loader name require and spyOn words
+ * say exactly the forms read, every cell of the four claim sets over the catalogs the helper header's NOT CLAIMED block names
+ * is a pin, and each paired twin of the refusal is a TWIN row; the seven unrealized survivors the refusal records are pinned too.
  *
  * ACCEPTANCE (the bead's description): "each plant reds the unmodified census and greens under the cure; the IMPORT claim text
  * and the resolver's identity behavior agree byte-for-byte with the falsifier roster." Read here as: every gate-authored member
@@ -68,8 +78,9 @@
  *   on a rotating entry.
  *  TWIN: the gates' paired real-tree twins, checked in: refusal #3's on-disk twins on wb-tz2.17 DW-L08, DW-L12, DW-L15 and DW-L17
  *   (gate-prep-1's twins-a spec), refusal #4's TW-S1 to TW-S13 (gate-prep-12's make_twins spec) and refusal #1's on wb-tz2.21
- *   TW14-S1 to TW14-S7 and TW14-S9 (gate-prep-14's make_twins_gp14 spec), each planting its page edit over the subject (lg- file
- *   names) and pinning what these readers read in it; a fail-closed twin pins the quiet reading.
+ *   TW14-S1 to TW14-S7 and TW14-S9 (gate-prep-14's make_twins_gp14 spec), and refusal #2's on wb-tz2.21 TW12-T1 to TW12-T6 and
+ *   TW12-T5b (gate-prep-12's twins/ pages), each planting its page edit over the subject (lg- file names) and pinning what these
+ *   readers read in it; a fail-closed twin pins the quiet reading.
  *  RESIDUALS: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row beside its loud control (FORMS and MEMBERS).
  *  CLAIM: the helper header's "- <word>: <claim>" lines equal the rosters byte for byte, section by section, in order; every
  *   roster word has exactly one FORMS row.
@@ -87,7 +98,9 @@
  *   the helper header's NOT CLAIMED block bounds a claim by holds the size the header states; the tracker export's wb-tz2.21
  *   description names exactly the unmet items CARRIER_ITEMS maps and exactly the on-disk twins the refusal #3 TWIN rows check in.
  *   Cut #2 adds one: the helper header names exactly the twins the TWIN rows check in (so a TWIN row deleted with its FROZEN SHAPE
- *   element reds outside this census's own literals).
+ *   element reds outside this census's own literals). Cut #3 adds CONFIG_NAMES, NONVALUE_PLACES and DESTRUCTURINGS to the
+ *   catalogs whose sizes the helper header states; CONFIG_NAMES is read from the installed vitest/config's own export specifiers
+ *   (node_modules/vitest/dist/config.d.ts and config.js), never from a literal of this census.
  *  FROZEN SHAPE (standing rule 16): one literal pins every row as table:id - a GATE or TWIN row with its pin keys, a MEMBERS row
  *   with its claim, its place among that claim's pieces and its pin count.
  *
@@ -139,11 +152,45 @@
  *    below a local setup file and by a package's own module one, two and three loads below a package setup file; target: the
  *    IMPORT section and the setup-file findings. Falsifiers: GP12-IMP-PARENT-REL, GP12-IMP-PARENT-REL-SUITE, GP12-IMP-PKG-OWN,
  *    L17, GP14-IMP-DOT-DEPTH2, GP14-SETUP-DOTDOT-DEPTH2.
- *  - "TWIN DW-L08 ... TW14-S9": the gates' 25 paired real-tree twins; target: gateReading. Falsifier: each twin's own member.
+ *  - "MEMBERS RUN:statements, pieces 1-3": each of the 22 CONFIG_NAMES imported by a second declaration right after the
+ *    defineConfig import and as a second element before and after defineConfig; an import declaration naming no element before
+ *    and after it; four other specifiers; six other statements; a declaration after the default export; four sound repeats and
+ *    spellings; a default import alone and beside a namespace import; three aliases; target: runReading's text. Falsifiers:
+ *    GP12C2-RUN-NAMED-OTHER, GP12C2-RUN-NAMED-SOME (gate); seat probes SP12-RUN-*.
+ *  - "MEMBERS ROUTES:loader name, pieces 1, 4-6 and 10-12": createRequire and getBuiltinModule in each of the 48 FREE_PLACES, the
+ *    23 NONVALUE_PLACES and the 19 DECLARATIONS, as a member name in the 5 spellings that hold no element key and the 18
+ *    MEMBER_PLACES, as a string and a template in the 18 places and in the 5 element-key spellings; binding, dlopen and
+ *    _linkedBinding by member name and by string key in the spellings and the places, quiet in the 48 places, the other 21
+ *    NONVALUE_PLACES and as a whole string or template in the places; require in each FREE_PLACES place, quiet in each
+ *    NONVALUE_PLACES place, under each DECLARATIONS kind, and as the callee of a call plain, optional, parenthesized, asserted and
+ *    non-null, of a new expression and as a tag; every plant read again in the suite, a local module and a package module
+ *    (piece 1); target: routesOf's finding list. Falsifiers: GP12C2-REQUIRE-CALLEE, GP12C2-LN-MEMBER-BASE (gate); SP12-LN-*.
+ *  - "MEMBERS WRITES:reflection, pieces 1, 2 and 8" and "MEMBERS WRITES:mutator member, pieces 10-13" and "MEMBERS WRITES:spy or
+ *    mock member, pieces 1 and 20": a free Reflect and Proxy in each FREE_PLACES place and as the operand of typeof, under each
+ *    DECLARATIONS kind and a shadowing parameter, quiet in each NONVALUE_PLACES place; each of the 31 WRITES names (9 mutator, 5
+ *    reflection, 16 spy or mock, spyOn) as a member name of its base in the 5 spellings and the 18 places, as a string element key
+ *    in the 5 element-key spellings and the 18 places, as a destructured key in the 19 DESTRUCTURINGS (10 binding, 9 assignment),
+ *    as a string and a template in the 18 places; target: writesOf's finding list. Falsifiers: GP12C2-REFLECT-MEMBER-NAME,
+ *    GP14-REFLECT-DECLARED (gate); SP12-WR-*. "MEMBERS WRITES:computed member, piece 6": a computed key of an assignment pattern,
+ *    a for-of head and an array pattern, a string computed key, and an object literal's computed key quiet. "MEMBERS WRITES:spy
+ *    or mock member, pieces 2-3": the admitted spy by a string and a template key in the 5 spellings that hold no element key,
+ *    in the 18 places (quiet; a new expression's .spyOn reads) and with its target under the 19 DECLARATIONS (read when one binds
+ *    it). Falsifiers: GP12C2-SPY-VITE-KEY, GP14-SPY-FREE-TARGET (gate); SP12-WR-SPY-ADMIT-*.
+ *  - The seven survivors refusal #2 records unrealized, each now a pin of its own row: "MEMBERS UNRESOLVED:url scheme, piece 1"
+ *    (an upper-case scheme and schemes holding +, . and -), "MEMBERS IDENTITY:vitest, piece 2" (a node_modules/vitestx module
+ *    reads module), "MEMBERS RUN:allowOnly, piece 1" (a parenthesized false), "MEMBERS IMPORT, piece 3" (an export declaration as
+ *    the one load reaching vitest), "MEMBERS CHANNEL:setup file, piece 7" (a setup path naming a directory), "MEMBERS
+ *    EXPORT_TARGETS:sugar, piece 3" (an exports object holding a . key and a condition key). Falsifiers: GP12C2-URL-SCHEME-CASE,
+ *    GP12C2-URL-SCHEME-CHARS, GP12C2-VITEST-BYPATH-TERM, GP12C2-RUN-ALLOWONLY-UNWRAP, GP12C2-IMPORT-ONE-FORM,
+ *    GP12C2-SETUP-NOFILE-STAT, GP12C2-EXPORTS-SUGAR-MIXED (gate).
+ *  - "TWIN DW-L08 ... TW12-T6": the gates' 32 paired real-tree twins; target: gateReading. Falsifier: each twin's own member
+ *    (TW12-T5, TW12-T5b and TW12-T6 realize the U4 contradiction: under the cut #2 readers TW12-T5 and TW12-T6 read quiet).
  *  - "ANCHOR" names, catalogs, carrier-items and twins (above). Falsifiers: CT5 and CT6 of the seat's CT-BATTERY v2 line.
  * NOT CLAIMED: each mode the helper header's NOT CLAIMED block names NOT CLAIMED is NOT CLAIMED by this census, and so is every
  * crossing of names, catalogs, places, holders and depths that block does not list (a scope sentence, no residual); in particular
- * a wrapper, an optional chain, a spelling or a key in a place other than an initializer, and a parenthesized .spyOn callee.
+ * a wrapper, an optional chain, a spelling or a key in a place other than an initializer, and a parenthesized .spyOn callee; a
+ * vitest/config name outside CONFIG_NAMES; a loader name, require or a WRITES name read outside the cut #3 catalogs; a JSX
+ * attribute; spyOn as an identifier.
  * RESIDUAL: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row (RESIDUALS above); this cut names no other family.
  *
  * Display paths added: none. Test-only: spawns nothing and writes nothing; it reads the helper's text, the tracker export, the
@@ -1078,6 +1125,149 @@ const packageLinks = (name: string, length: number, specifier: string): [string,
   return [[`node_modules/${name}/index.js`, 1, `./${names[0] ?? "lg-deep-a"}.js`], ...names.map((module, index): [string, number, string] => [`node_modules/${name}/${module}.js`, 1, names[index + 1] === undefined ? specifier : `./${names[index + 1]}.js`])];
 };
 
+// ---- wb-tz2.21 cut #3: refusal #2 on this bead (gate-prep-12, O:1832; R-B364: rung 1 of four claim sets) ---------------------
+// Refusal #2 found four claim sets whose words named forms no pin read: RUN statements (another vitest/config name beside
+// defineConfig), ROUTES loader name (require as a call argument), WRITES reflection (Proxy as a member name) and WRITES spy or
+// mock member (spyOn taken by an assignment pattern, which the readers did not read). Each set's words now range over the
+// catalogs below, every cell a pin; the helper header's NOT CLAIMED block names each catalog with its size and names every other
+// crossing NOT CLAIMED.
+
+/** Every name the installed vitest/config declares but defineConfig: the export specifiers of its type declarations and of its
+ * module, read from node_modules (outside this census's literals; the helper header states the count, ANCHOR: catalogs). */
+const CONFIG_NAMES: readonly string[] = (() => {
+  const names = new Set<string>();
+  for (const file of ["node_modules/vitest/dist/config.d.ts", "node_modules/vitest/dist/config.js"]) {
+    for (const statement of ts.createSourceFile(file, read(file), ts.ScriptTarget.Latest, true).statements) {
+      if (ts.isExportDeclaration(statement) && statement.exportClause !== undefined && ts.isNamedExports(statement.exportClause)) {
+        for (const element of statement.exportClause.elements) names.add(element.name.text);
+      }
+    }
+  }
+  names.delete("defineConfig");
+  return [...names].sort();
+})();
+const DEFINE_IMPORT = 'import { defineConfig } from "vitest/config";';
+/** The census config with `lines` (one line each) before its default export. */
+const configWith = (...lines: string[]): string => `${lines.join("\n")}\nexport default defineConfig({ test: { ${CENSUS_TEST} } });\n`;
+const statementBreak = (line: number): string => brokenRun(`: a statement other than the defineConfig import and the default export at line ${line}`);
+const SOUND_CONFIG = SOUND_RUN(["test/**/*.census.ts"]);
+/** A place an identifier stands that is not read as a value (the helper header's vocabulary): [label, a module holding it there].
+ * Each excluded parent kind is one place, so an exclusion dropped from the value-reference test reds its row. */
+type NonValuePlace = readonly [label: string, text: (name: string) => string];
+const NONVALUE_PLACES: readonly NonValuePlace[] = [
+  ["a member name", name => `export const lgW = (m: Record<string, unknown>): unknown => m.${name};\n`],
+  ["an optional member name", name => `export const lgW = (m?: Record<string, unknown>): unknown => m?.${name};\n`],
+  ["the right of a qualified name", name => `export type LgT = typeof lgO.${name};\n`],
+  ["a property key", name => `export const lgW = { ${name}: 1 };\n`],
+  ["an object method key", name => `export const lgW = { ${name}(): number { return 1; } };\n`],
+  ["a get accessor key", name => `export const lgW = { get ${name}(): number { return 1; } };\n`],
+  ["a set accessor key", name => `export const lgW = { set ${name}(lgV: number) { void lgV; } };\n`],
+  ["a class field key", name => `export class LgC {\n  ${name} = 1;\n}\n`],
+  ["a class method key", name => `export class LgC {\n  ${name}(): void {}\n}\n`],
+  ["a property signature key", name => `export interface LgI {\n  ${name}: number;\n}\n`],
+  ["a method signature key", name => `export interface LgI {\n  ${name}(): void;\n}\n`],
+  ["an enum member", name => `export enum LgE {\n  ${name} = 1,\n}\n`],
+  ["a binding key", name => `export const lgW = ({ ${name}: lgV }: Record<string, unknown>): unknown => lgV;\n`],
+  ["a type reference", name => `export type LgT = ${name};\n`],
+  ["a type query", name => `export type LgT = typeof ${name};\n`],
+  ["a break label", name => `${name}: for (;;) break ${name};\n`],
+  ["a continue label", name => `${name}: for (;;) continue ${name};\n`],
+  ["an import specifier", name => `import { ${name} } from "./lg-x.js";\nexport const lgW = 1;\n`],
+  ["an aliased import specifier", name => `import { ${name} as lgV } from "./lg-x.js";\nexport const lgW = lgV;\n`],
+  ["a default import", name => `import ${name} from "./lg-x.js";\nexport const lgW = 1;\n`],
+  ["a namespace import", name => `import * as ${name} from "./lg-x.js";\nexport const lgW = 1;\n`],
+  ["a re-exported name", name => `export { ${name} } from "./lg-x.js";\n`],
+  ["an aliased re-exported name", name => `export { ${name} as lgV } from "./lg-x.js";\n`],
+];
+/** The NONVALUE_PLACES places that are a property access's own name (the loader member names are read there). */
+const ACCESS_NAME_PLACES: readonly string[] = ["a member name", "an optional member name"];
+/** The lines of `text` an identifier `name` stands on, one entry per occurrence (no plant holds the name in a string). */
+const occurrences = (text: string, name: string): number[] =>
+  text.split("\n").flatMap((line, index) => Array.from(line.matchAll(new RegExp(`(?<![\\w$#])${name}(?![\\w$])`, "g")), () => index + 1));
+const LOADER_IDENTIFIERS: readonly string[] = ["createRequire", "getBuiltinModule"];
+const LOADER_MEMBER_LIST: readonly string[] = ["binding", "dlopen", "_linkedBinding"];
+/** A FREE_PLACES place where the name is the callee of a call (require there is a call: no require route, a dynamic load). */
+const CALLEE_PLACES: readonly string[] = ["a callee", "an optional callee"];
+/** The require reads a DECLARATIONS statement and a top-level read at line 2 hold: every identifier require but an import name
+ * (an import clause, specifier or namespace import), a declared key (an object literal's key, "{ require: ") and the require
+ * keyword of import <name> = require(...) (all on the statement's one line). */
+function requireDeclared(statement: string): string[] {
+  const lines = occurrences(`${statement}\nexport const lgW = require;\n`, "require");
+  const imported = statement.startsWith("import ") ? (statement.includes(" = require(") ? 1 : occurrences(statement, "require").length) : 0;
+  return lines.slice(imported + statement.split("{ require: ").length - 1).map(line => `loader name require, not called :${line}`);
+}
+/** A free Reflect or Proxy read in every FREE_PLACES place and as the operand of typeof; under each DECLARATIONS kind and a
+ * shadowing parameter, read at line 2; quiet in every NONVALUE_PLACES place (refusal #2 on wb-tz2.21, U3). */
+const freeReflection = (name: string): Pin[] => [
+  ...FREE_PLACES.map(([label, text, , line]) => pin(() => writes(text(name)), [
+    ...(label === "an element key" ? [`computed member ({} as Record<string, unknown>)[${name}] :${line}`] : []), `reflection ${name} :${line}`])),
+  pin(() => writes(`export const lgW = typeof ${name};\n`), [`reflection ${name} :1`]),
+  ...DECLARATIONS.map(([declare, binds]) => pin(() => writes(`${declare(name)}\nexport const lgW = ${name};\n`), binds ? [] : [`reflection ${name} :2`])),
+  pin(() => writes(shadowed(name)), [`reflection ${name} :2`]),
+  ...NONVALUE_PLACES.map(([, text]) => pin(() => writes(text(name)), [])),
+];
+/** A destructuring a WRITES name is read in: [label, a module taking `name` from `base`, the key's line, whether the key is a string
+ * literal (then also read as a whole string literal)]. Binding patterns first, then assignment patterns (refusal #2 on wb-tz2.21,
+ * U4): the left of a destructuring =, nested object, array and spread patterns, a default's own pattern, a for-of and a for-in head. */
+type Destructuring = readonly [label: string, text: (name: string, base: string) => string, line: number, keyed: boolean];
+const DESTRUCTURINGS: readonly Destructuring[] = [
+  ["a const declaration", (name, base) => `const { ${name}: lgW } = ${base};\nvoid lgW;\n`, 1, false],
+  ["a shorthand declaration", (name, base) => `const { ${name} } = ${base};\nvoid ${name};\n`, 1, false],
+  ["a string-key declaration", (name, base) => `const { "${name}": lgW } = ${base};\nvoid lgW;\n`, 1, true],
+  ["a let declaration", (name, base) => `let { ${name}: lgW } = ${base};\nvoid lgW;\n`, 1, false],
+  ["an arrow parameter", (name, base) => `export const lgF = ({ ${name}: lgW }: Record<string, unknown>): unknown => lgW;\nvoid ${base};\n`, 1, false],
+  ["a function parameter", (name, base) => `export function lgF({ ${name}: lgW }: Record<string, unknown>): unknown {\n  return lgW;\n}\nvoid ${base};\n`, 1, false],
+  ["a method parameter", (name, base) => `export class LgC {\n  lgM({ ${name}: lgW }: Record<string, unknown>): unknown {\n    return lgW;\n  }\n}\nvoid ${base};\n`, 2, false],
+  ["a catch clause", (name, base) => `try {\n  void ${base};\n} catch ({ ${name}: lgW }) {\n  void lgW;\n}\n`, 3, false],
+  ["a nested binding", (name, base) => `const { lgO: { ${name}: lgW } } = { lgO: ${base} };\nvoid lgW;\n`, 1, false],
+  ["a for-of binding", (name, base) => `for (const { ${name}: lgW } of [${base}]) void lgW;\n`, 1, false],
+  ["an assignment", (name, base) => `let lgW: unknown;\n({ ${name}: lgW } = ${base});\nvoid lgW;\n`, 2, false],
+  ["a shorthand assignment", (name, base) => `let ${name}: unknown;\n({ ${name} } = ${base});\nvoid ${name};\n`, 2, false],
+  ["a string-key assignment", (name, base) => `let lgW: unknown;\n({ "${name}": lgW } = ${base});\nvoid lgW;\n`, 2, true],
+  ["a nested assignment", (name, base) => `let lgW: unknown;\n({ lgO: { ${name}: lgW } } = { lgO: ${base} });\nvoid lgW;\n`, 2, false],
+  ["an array assignment", (name, base) => `let lgW: unknown;\n[{ ${name}: lgW }] = [${base}];\nvoid lgW;\n`, 2, false],
+  ["a spread assignment", (name, base) => `let lgW: unknown;\n[...[{ ${name}: lgW }]] = [${base}];\nvoid lgW;\n`, 2, false],
+  ["a default assignment", (name, base) => `let lgW: unknown;\n({ lgO: { ${name}: lgW } = ${base} } = {});\nvoid lgW;\n`, 2, false],
+  ["a for-of assignment head", (name, base) => `let lgW: unknown;\nfor ({ ${name}: lgW } of [${base}]) void lgW;\n`, 2, false],
+  ["a for-in assignment head", (name, base) => `let lgW: unknown;\nfor ({ ${name}: lgW } in ${base}) void lgW;\n`, 2, false],
+];
+/** The MEMBER_SPELLINGS spellings whose string key also stands as a whole string literal (its parent is no element access). */
+const WRAPPED_KEYS: readonly string[] = ["a parenthesized string element key", "an asserted string element key"];
+/** `body` after `form`'s prelude, pinned to the findings at the body's `line` (counted from the body's first line). */
+const writeAt = (form: NamedWrite, body: string, line: number, found: (at: number) => readonly string[]): Pin =>
+  pin(() => writes(`${WRITE_BASE[form].prelude}${body}`), found(WRITE_BASE[form].line - 1 + line));
+/** Every read of a WRITES name the catalogs name: as a member name in each non-keyed MEMBER_SPELLINGS spelling and each MEMBER_PLACES
+ * place; as a string element key in each keyed spelling and each place; as a destructured key in each DESTRUCTURINGS form; as a
+ * whole string literal and template in each place (refusal #2 on wb-tz2.21: every cell of "each read as a mutator member is"). */
+function nameReads(form: NamedWrite, name: string): Record<"member" | "key" | "destructured" | "whole", Pin[]> {
+  const base = onBase(form);
+  const written = (label: string, target: string, at: number): string[] => (label === "an assignment target" ? [`member write ${target} by = :${at}`] : []);
+  return {
+    member: [
+      ...MEMBER_SPELLINGS.filter(([, , keyed]) => !keyed).map(([, spell]) => writeAt(form, `export const lgW = ${spell(base, name)};\n`, 1, at => [`${form} .${name} :${at}`])),
+      ...MEMBER_PLACES.map(([label, text, line]) => writeAt(form, text(`${base}.${name}`), line, at => [...written(label, `.${name}`, at), `${form} .${name} :${at}`])),
+    ],
+    key: [
+      ...MEMBER_SPELLINGS.filter(([, , keyed]) => keyed).map(([label, spell]) =>
+        writeAt(form, `export const lgW = ${spell(base, name)};\n`, 1, at => [`${form} ['${name}'] :${at}`, ...(WRAPPED_KEYS.includes(label) ? [`${form} '${name}' :${at}`] : [])])),
+      ...MEMBER_PLACES.map(([label, text, line]) => writeAt(form, text(`${base}["${name}"]`), line, at => [...written(label, `['${name}']`, at), `${form} ['${name}'] :${at}`])),
+    ],
+    destructured: DESTRUCTURINGS.map(([, text, line, keyed]) => writeAt(form, text(name, base), line, at => [`${form} {${name}} destructured :${at}`, ...(keyed ? [`${form} '${name}' :${at}`] : [])])),
+    whole: MEMBER_PLACES.flatMap(([, text, line]) => [`"${name}"`, `\`${name}\``].map(literal => pin(() => writes(text(literal)), [`${form} '${name}' :${line}`]))),
+  };
+}
+const allReads = (form: NamedWrite, name: string): Pin[] => Object.values(nameReads(form, name)).flat();
+/** An admitted spy by `key` in each spelling that holds no element key, in each MEMBER_PLACES place (a new expression's .spyOn is
+ * no call, so it reads) and with its target console under each DECLARATIONS kind (read when the declaration binds it): refusal #2
+ * on wb-tz2.21, every cell of the admitted-spy words. */
+const admittedSpies = (key: string): Pin[] => [
+  ...MEMBER_SPELLINGS.filter(([, , keyed]) => !keyed).map(([, spell]) => pin(() => writes(`${SPY_PRELUDE}${spell("vi", "spyOn")}(console, ${key});\n`), [])),
+  ...MEMBER_PLACES.map(([label, text, line]) => pin(() => writes(`${SPY_PRELUDE}${text(`vi.spyOn(console, ${key})`)}`), label === "a new callee" ? [`spy or mock member .spyOn :${line + 1}`] : [])),
+  ...DECLARATIONS.map(([declare, binds]) => pin(() => writes(`${SPY_PRELUDE}${declare("console")}\nvi.spyOn(console, ${key});\n`), binds ? ["spy or mock member .spyOn :3"] : [])),
+];
+/** A local module reading a loader name or a loader member name as a member of a parameter m, in each spelling and place. */
+const onM = (spell: (base: string, member: string) => string, name: string): string => `export const lgW = (m: Record<string, unknown>): unknown => ${spell("m", name)};\n`;
+
 const MEMBER_ROWS: readonly MemberRow[] = [
   member("RESOLUTION", "paths are root-relative with / separators",
     pin(() => res("./helpers/hx-live-receipt.ts"), "relative test/helpers/hx-live-receipt.ts"),
@@ -1168,6 +1358,7 @@ const MEMBER_ROWS: readonly MemberRow[] = [
   member("UNRESOLVED:absolute path", "a specifier opening with /",
     pin(() => res("/etc/hosts"), "unresolved (absolute path: /etc/hosts is an absolute path)")),
   member("UNRESOLVED:url scheme", "a specifier opening with a scheme such as file:",
+    ...["HTTP://localhost/lg.js", "git+ssh://localhost/lg.js", "lg.x://localhost/lg.js", "lg-x://localhost/lg.js"].map(specifier => pin(() => res(specifier), `unresolved (url scheme: ${specifier} opens with a URL scheme)`)),
     pin(() => res("file:///etc/hosts"), "unresolved (url scheme: file:///etc/hosts opens with a URL scheme)")),
   member("UNRESOLVED:url scheme", "data:",
     pin(() => res("data:text/javascript,export default 1"), "unresolved (url scheme: data:text/javascript,export default 1 opens with a URL scheme)")),
@@ -1215,6 +1406,7 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => res("lg-sarr", files(...pkg("lg-sarr", '{"name": "lg-sarr", "exports": ["./main.js"]}', ["main.js", EMPTY]))), "package node_modules/lg-sarr/main.js"),
     pin(() => res("lg-sarr/main.js", files(...pkg("lg-sarr", '{"name": "lg-sarr", "exports": ["./main.js"]}', ["main.js", EMPTY]))), "unresolved (no export: the exports of node_modules/lg-sarr hold no target for ./main.js)")),
   member("EXPORT_TARGETS:sugar", "an exports object with no key opening with . maps the subpath . alone",
+    pin(() => res("lg-mixed", files(...pkg("lg-mixed", '{"name": "lg-mixed", "exports": {".": "./a.js", "import": "./b.js"}}', ["a.js", EMPTY], ["b.js", EMPTY]))), "package node_modules/lg-mixed/a.js"),
     pin(() => res("lg-sobj", files(...pkg("lg-sobj", '{"name": "lg-sobj", "exports": {"import": "./main.js"}}', ["main.js", EMPTY]))), "package node_modules/lg-sobj/main.js"),
     pin(() => res("lg-sobj/main.js", files(...pkg("lg-sobj", '{"name": "lg-sobj", "exports": {"import": "./main.js"}}', ["main.js", EMPTY]))), "unresolved (no export: the exports of node_modules/lg-sobj hold no target for ./main.js)")),
   member("EXPORT_TARGETS:exact key", "a key equal to the subpath",
@@ -1282,6 +1474,7 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => loadIdentity("../node_modules/@vitest/runner/dist/index.js"), "vitest (@vitest/runner)"),
     pin(() => loadIdentity("../node_modules/vitest/dist/index.js"), "vitest (vitest)")),
   member("IDENTITY:vitest", "a vitest home is a node_modules/vitest directory by its real path",
+    pin(() => moduleIdentity(files(["node_modules/vitestx/index.js", EMPTY]), "node_modules/vitestx/index.js"), "module"),
     pin(() => loadIdentity("vitest"), "vitest (vitest)"),
     pin(() => loadIdentity("./helpers/lg-vt-link/dist/index.js", undefined, files(["test/helpers/lg-vt-link", "node_modules/vitest"])), "vitest (vitest)")),
   member("IDENTITY:vitest", "a node_modules/@vitest/<name> directory by its real path",
@@ -1387,12 +1580,22 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     member("ROUTES:loader name", "the loader names createRequire", asIdentifierRoute("createRequire", "loader name createRequire :1")),
     member("ROUTES:loader name", "getBuiltinModule", asIdentifierRoute("getBuiltinModule", "loader name getBuiltinModule :1")),
     member("ROUTES:loader name", "each read as an identifier",
+      ...LOADER_IDENTIFIERS.flatMap(name => [...FREE_PLACES.map(([, text]) => text(name)), ...NONVALUE_PLACES.map(([, text]) => text(name)), ...DECLARATIONS.map(([declare]) => `${declare(name)}\nexport const lgW = ${name};\n`)]
+        .map(text => localRoute(text, occurrences(text, name).map(line => `loader name ${name} :${line}`)))),
       asIdentifierRoute("createRequire", "loader name createRequire :1"),
       asIdentifierRoute("getBuiltinModule", "loader name getBuiltinModule :1")),
     member("ROUTES:loader name", "as a member name",
+      ...LOADER_IDENTIFIERS.flatMap(name => [
+        ...MEMBER_SPELLINGS.filter(([, , keyed]) => !keyed).map(([, spell]) => localRoute(onM(spell, name), [`loader name ${name} :1`])),
+        ...MEMBER_PLACES.map(([, text, line]) => localRoute(text(`m.${name}`), [`loader name ${name} :${line}`])),
+      ]),
       asMemberRoute("createRequire", "loader name createRequire :1"),
       asMemberRoute("getBuiltinModule", "loader name getBuiltinModule :1")),
     member("ROUTES:loader name", "as a whole string literal",
+      ...LOADER_IDENTIFIERS.flatMap(name => [
+        ...MEMBER_SPELLINGS.filter(([, , keyed]) => keyed).map(([, spell]) => localRoute(onM(spell, name), [`loader name '${name}' :1`])),
+        ...MEMBER_PLACES.flatMap(([, text, line]) => [`"${name}"`, `\`${name}\``].map(literal => localRoute(text(literal), [`loader name '${name}' :${line}`]))),
+      ]),
       asStringRoute("createRequire", "loader name 'createRequire' :1"),
       asStringRoute("getBuiltinModule", "loader name 'getBuiltinModule' :1"),
       asTemplateRoute("createRequire", "loader name 'createRequire' :1"),
@@ -1401,11 +1604,22 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     member("ROUTES:loader name", "dlopen", asMemberRoute("dlopen", "loader name .dlopen :1")),
     member("ROUTES:loader name", "_linkedBinding", asMemberRoute("_linkedBinding", "loader name ._linkedBinding :1")),
     member("ROUTES:loader name", "each read as a member name",
+      ...LOADER_MEMBER_LIST.flatMap(name => [
+        ...MEMBER_SPELLINGS.filter(([, , keyed]) => !keyed).map(([, spell]) => localRoute(onM(spell, name), [`loader name .${name} :1`])),
+        ...MEMBER_PLACES.map(([, text, line]) => localRoute(text(`m.${name}`), [`loader name .${name} :${line}`])),
+        ...FREE_PLACES.map(([, text]) => localRoute(text(name), [])),
+        ...NONVALUE_PLACES.map(([label, text]) => localRoute(text(name), ACCESS_NAME_PLACES.includes(label) ? [`loader name .${name} :1`] : [])),
+      ]),
       asMemberRoute("binding", "loader name .binding :1"),
       asMemberRoute("dlopen", "loader name .dlopen :1"),
       asMemberRoute("_linkedBinding", "loader name ._linkedBinding :1"),
       localRoute('export const lgW = "dlopen";\nexport const lgV = (binding: number): number => binding;\n', [])),
     member("ROUTES:loader name", "as a string element key",
+      ...LOADER_MEMBER_LIST.flatMap(name => [
+        ...MEMBER_SPELLINGS.filter(([, , keyed]) => keyed).map(([, spell]) => localRoute(onM(spell, name), [`loader name '${name}' :1`])),
+        ...MEMBER_PLACES.map(([, text, line]) => localRoute(text(`m["${name}"]`), [`loader name '${name}' :${line}`])),
+        ...MEMBER_PLACES.flatMap(([, text]) => [`"${name}"`, `\`${name}\``].map(literal => localRoute(text(literal), []))),
+      ]),
       asKeyRoute("binding", "loader name 'binding' :1"),
       asKeyRoute("dlopen", "loader name 'dlopen' :1"),
       asKeyRoute("_linkedBinding", "loader name '_linkedBinding' :1"),
@@ -1414,7 +1628,16 @@ const MEMBER_ROWS: readonly MemberRow[] = [
       asTemplateKeyRoute("_linkedBinding", "loader name '_linkedBinding' :1"),
       localRoute('export const lgW = (m: Record<string, unknown>): unknown => m[("dlopen")];\n', ["loader name 'dlopen' :1"]),
       localRoute('export const lgW = (m: Record<string, unknown>): unknown => m["binding" as string];\n', ["loader name 'binding' :1"])),
-    member("ROUTES:loader name", "an identifier require anywhere but as the callee of a call",
+    member("ROUTES:loader name", "an identifier require read as a value anywhere but as the callee of a call",
+      ...FREE_PLACES.map(([label, text, , line]) => localRoute(text("require"), CALLEE_PLACES.includes(label) ? [`dynamic load require() of nothing :${line}`] : [`loader name require, not called :${line}`])),
+      ...NONVALUE_PLACES.map(([, text]) => localRoute(text("require"), [])),
+      ...DECLARATIONS.map(([declare]) => localRoute(`${declare("require")}\nexport const lgW = require;\n`, requireDeclared(declare("require")))),
+      localRoute('export const lgW = require?.("./lg-x.js");\n', []),
+      localRoute('export const lgW = (require)("./lg-x.js");\n', ["loader name require, not called :1"]),
+      localRoute('export const lgW = (require as (lgS: string) => unknown)("./lg-x.js");\n', ["loader name require, not called :1"]),
+      localRoute('export const lgW = require!("./lg-x.js");\n', ["loader name require, not called :1"]),
+      localRoute('export const lgW = new require("./lg-x.js");\n', ["loader name require, not called :1"]),
+      localRoute("export const lgW = require`./lg-x.js`;\n", ["loader name require, not called :1"]),
       localRoute("export const lgW = require;\n", ["loader name require, not called :1"]),
       localRoute("export const lgW = [require];\n", ["loader name require, not called :1"]),
       localRoute('export const lgW = require("./lg-x.js");\nexport const lgV = (m: { require: unknown }): unknown => m.require;\n', [])),
@@ -1633,30 +1856,39 @@ const MEMBER_ROWS: readonly MemberRow[] = [
       pin(() => writes(`${TARGET_PRELUDE}((lgT.each as number)) = 2;\n((lgT["each"]))!++;\n`), ["member write .each by = :2", "member write ['each'] by ++ :3"]),
     ] : []))),
   ...MUTATOR_NAMES.map(name => member("WRITES:mutator member", name, asMember("mutator member", name))),
-  member("WRITES:mutator member", "each read as a member name", ...MUTATOR_NAMES.map(name => asMember("mutator member", name))),
-  member("WRITES:mutator member", "as a string element key", ...MUTATOR_NAMES.flatMap(name => [asKey("mutator member", name), asTemplateKey("mutator member", name)])),
+  member("WRITES:mutator member", "each read as a member name", ...MUTATOR_NAMES.map(name => asMember("mutator member", name)),
+    ...MUTATOR_NAMES.flatMap(name => nameReads("mutator member", name).member)),
+  member("WRITES:mutator member", "as a string element key", ...MUTATOR_NAMES.flatMap(name => [asKey("mutator member", name), asTemplateKey("mutator member", name)]),
+    ...MUTATOR_NAMES.flatMap(name => nameReads("mutator member", name).key)),
   member("WRITES:mutator member", "as a destructured key",
+    ...MUTATOR_NAMES.flatMap(name => nameReads("mutator member", name).destructured),
     ...MUTATOR_NAMES.flatMap(name => [asDestructured("mutator member", name), asShorthand("mutator member", name), asStringKey("mutator member", name)]),
     ...DESTRUCTURED_CONTEXTS.map(([text, expected]) => pin(() => writes(text), expected)),
     pin(() => writes("const { defineProperty } = Object;\nvoid defineProperty;\nconst { getPrototypeOf } = Object;\nvoid getPrototypeOf;\n"), ["mutator member {defineProperty} destructured :1", "reflection {getPrototypeOf} destructured :3"]),
     pin(() => writes('const { "defineProperty": lgW } = Object;\nvoid lgW;\n'), ["mutator member {defineProperty} destructured :1", "mutator member 'defineProperty' :1"]),
     pin(() => suiteChannel("const { defineProperty } = Object;\nvoid defineProperty;"), [`cited suite: mutator member {defineProperty} destructured at line ${PLANT_LINE}`])),
-  member("WRITES:mutator member", "as a whole string literal", ...MUTATOR_NAMES.flatMap(name => [asString("mutator member", name), asTemplate("mutator member", name)])),
+  member("WRITES:mutator member", "as a whole string literal", ...MUTATOR_NAMES.flatMap(name => [asString("mutator member", name), asTemplate("mutator member", name)]),
+    ...MUTATOR_NAMES.flatMap(name => nameReads("mutator member", name).whole)),
   member("WRITES:reflection", "a free Reflect",
+    ...freeReflection("Reflect"),
     pin(() => writes('const lgT = {};\nexport const lgEach = Reflect.get(lgT, "each");\n'), ["reflection Reflect :2"]),
     pin(() => writes("const Reflect = { get: (): number => 1 };\nexport const lgW = Reflect.get();\n"), [])),
   member("WRITES:reflection", "a free Proxy",
+    ...freeReflection("Proxy"),
     pin(() => writes("const lgT = new Proxy({}, {});\nvoid lgT;\n"), ["reflection Proxy :1"]),
     pin(() => writes("const Proxy = class {};\nexport const lgW = new Proxy();\n"), [])),
   ...REFLECTION_NAMES.map(name => member("WRITES:reflection", name, asMember("reflection", name))),
-  member("WRITES:reflection", "each read as a mutator member is", ...REFLECTION_NAMES.flatMap(name => everyPlace("reflection", name))),
-  member("WRITES:spy or mock member", "spyOn read any way but as the callee of an admitted spy",
+  member("WRITES:reflection", "each read as a mutator member is", ...REFLECTION_NAMES.flatMap(name => everyPlace("reflection", name)),
+    ...REFLECTION_NAMES.flatMap(name => allReads("reflection", name))),
+  member("WRITES:spy or mock member", "spyOn read as a mutator member is but as the callee of an admitted spy",
+    ...allReads("spy or mock member", "spyOn"),
     pin(() => writes('import { vi } from "vitest";\nvi.spyOn(console, "log");\n'), []),
     pin(() => writes('import { vi } from "vitest";\nexport const lgSpy = vi.spyOn;\n'), ["spy or mock member .spyOn :2"]),
     pin(() => writes('import { vi } from "vitest";\nvi["spyOn"](console, "log");\n'), ["spy or mock member ['spyOn'] :2"]),
     pin(() => writes('import { vi } from "vitest";\nconst { spyOn: lgSpy } = vi;\nvoid lgSpy;\n'), ["spy or mock member {spyOn} destructured :2"]),
     pin(() => writes("const lgKey = 'spyOn';\nvoid lgKey;\n"), ["spy or mock member 'spyOn' :1"])),
   member("WRITES:spy or mock member", "an admitted spy is a call of a property access .spyOn with two arguments: a free identifier then a string literal not beginning __vite",
+    ...admittedSpies('"log"'),
     pin(() => writes('import { vi } from "vitest";\nvi.spyOn(console, "log");\n'), []),
     pin(() => writes('import { vi } from "vitest";\nvi.spyOn(console, "log", "get");\n'), ["spy or mock member .spyOn :2"]),
     pin(() => writes('import { vi } from "vitest";\nconst lgT = { inner: { each: (): number => 1 } };\nvi.spyOn(lgT.inner, "each");\n'), ["spy or mock member .spyOn :3"]),
@@ -1666,12 +1898,14 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => writes('import { vi } from "vitest";\nvi.spyOn((console), ("log"));\n'), []),
     pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn((globalThis), ("fetch"));\n'), [])),
   member("WRITES:spy or mock member", "a no-substitution template key is admitted as a string literal is",
+    ...admittedSpies("`log`"),
     pin(() => writes('import { vi } from "vitest";\nvi.spyOn(console, `log`);\n'), []),
     pin(() => writes('import { vi } from "vitest";\nvi.spyOn(console, `__vite_lg`);\n'), ["spy or mock member .spyOn :2"]),
     pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, `fetch`);\n'), []),
     pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, `__vite_lg`);\n'), ["global object globalThis as a CallExpression :2", "vite name '__vite_lg' :2"])),
   ...SPY_NAMES.map(name => member("WRITES:spy or mock member", name, asMember("spy or mock member", name))),
-  member("WRITES:spy or mock member", "each read as a mutator member is", ...SPY_NAMES.flatMap(name => everyPlace("spy or mock member", name))),
+  member("WRITES:spy or mock member", "each read as a mutator member is", ...SPY_NAMES.flatMap(name => everyPlace("spy or mock member", name)),
+    ...SPY_NAMES.flatMap(name => allReads("spy or mock member", name))),
   member("WRITES:computed member", "an element access with a computed key",
     pin(() => writes('const lgKey = "each";\nconst lgT: Record<string, number> = { each: 1 };\nexport const lgEach = lgT[lgKey];\n'), ["computed member lgT[lgKey] :3"])),
   member("WRITES:computed member", "a string literal key is no computed key",
@@ -1684,6 +1918,12 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => writes("const lgT: number[] = [1];\nexport const lgC = lgT[(0)];\n"), [])),
   member("WRITES:computed member", "a computed key of an object binding pattern",
     pin(() => writes('const lgKey = "each";\nconst { [lgKey]: lgEach } = { each: 1 };\nvoid lgEach;\n'), ["computed member [lgKey] destructured :2"])),
+  member("WRITES:computed member", "of an object assignment pattern",
+    pin(() => writes('const lgKey = "each";\nlet lgEach: unknown;\n({ [lgKey]: lgEach } = { each: 1 });\nvoid lgEach;\n'), ["computed member [lgKey] destructured :3"]),
+    pin(() => writes('const lgKey = "each";\nlet lgEach: unknown;\nfor ({ [lgKey]: lgEach } of [{ each: 1 }]) void lgEach;\n'), ["computed member [lgKey] destructured :3"]),
+    pin(() => writes('const lgKey = "each";\nlet lgEach: unknown;\n[{ [lgKey]: lgEach }] = [{ each: 1 }];\nvoid lgEach;\n'), ["computed member [lgKey] destructured :3"]),
+    pin(() => writes('let lgEach: unknown;\n({ ["each"]: lgEach } = { each: 1 });\nvoid lgEach;\n'), ['computed member ["each"] destructured :2']),
+    pin(() => writes('const lgKey = "each";\nexport const lgW = { [lgKey]: 1 };\n'), [])),
   member("CHANNEL:tier config", "the default test tier's one vitest config passes the landed census guard (censusGuard on the test tier) whose closed key lists refuse every key outside them",
     pin(() => channelReading(BASE, SUITE, { roots: ["tier config"] }), []),
     pin(() => {
@@ -1728,6 +1968,7 @@ const MEMBER_ROWS: readonly MemberRow[] = [
   member("CHANNEL:setup file", "a setup file that is a vitest module is a finding",
     pin(() => setupChannel(["node_modules/vitest/dist/index.js"]), ["setup file node_modules/vitest/dist/index.js: vitest (vitest)"])),
   member("CHANNEL:setup file", "a setup file that names no file is a finding",
+    pin(() => setupChannel(["test/helpers"]), ["setup file test/helpers: a load does not resolve: test/helpers names no file"]),
     pin(() => setupChannel(["test/helpers/lg-no-setup.ts"]), ["setup file test/helpers/lg-no-setup.ts: a load does not resolve: test/helpers/lg-no-setup.ts names no file"])),
   member("CHANNEL:setup file", "a setup file holding an import declaration of a relative path that names no file is a finding",
     ...HELPER_MISSING.map(([specifier, why]) => pin(() => setupChannel(["test/helpers/lg-setup3.ts"], files(["test/helpers/lg-setup3.ts", `import "${specifier}";\n`])),
@@ -1767,6 +2008,8 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => suiteImport(files([SUITE, edit(read(SUITE), VITEST_IMPORT, "")], [HX, `${read(HX)}\nimport { it as lgIt } from "vitest";\nexport const lgRegistrar = lgIt;\n`]))
       .startsWith(`IMPORT by resolution: the one load reaching vitest is the import declaration './helpers/hx-live-receipt.js' at line ${PLANT_LINE - 1} (carrier (${HX}:`), true)),
   member("IMPORT", "it is an import declaration",
+    pin(() => suiteImport(files([SUITE, edit(read(SUITE), VITEST_IMPORT, VITEST_IMPORT.replace("import ", "export "))])),
+      `IMPORT <the one load reaching vitest is a export declaration, not an import declaration: 'vitest' at line ${VITEST_LINE}>`),
     pin(() => suiteImport(files([SUITE, edit(read(SUITE), VITEST_IMPORT, "import vitestApi = require('vitest');")])),
       `IMPORT <the one load reaching vitest is a import-equals, not an import declaration: 'vitest' at line ${VITEST_LINE}>`)),
   member("IMPORT", "every other load resolves to no vitest module",
@@ -1801,15 +2044,35 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => run(read(CENSUS_CONFIG), ["list", "--config", CENSUS_CONFIG]), `<the census tier runs vitest list --config ${CENSUS_CONFIG}>`),
     pin(() => run(read(CENSUS_CONFIG), "a planted tier refusal"), "<the census tier does not resolve: a planted tier refusal>")),
   member("RUN:statements", "the config module holds only value import declarations of defineConfig from vitest/config",
+    ...CONFIG_NAMES.flatMap(name => [
+      pin(() => run(configWith(DEFINE_IMPORT, `import { ${name} } from "vitest/config";`)), statementBreak(2)),
+      pin(() => run(configWith(`import { defineConfig, ${name} } from "vitest/config";`)), statementBreak(1)),
+      pin(() => run(configWith(`import { ${name}, defineConfig } from "vitest/config";`)), statementBreak(1)),
+    ]),
+    pin(() => run(configWith('import {} from "vitest/config";', DEFINE_IMPORT)), statementBreak(1)),
+    pin(() => run(configWith(DEFINE_IMPORT, 'import {} from "vitest/config";')), statementBreak(2)),
+    ...['"vitest/config.js"', '"lg-vitest/config"', '"vitest/config/"', '"vitest"'].map(specifier => pin(() => run(configWith(`import { defineConfig } from ${specifier};`)), statementBreak(1))),
+    ...["export {};", ";", 'import lgV = require("vitest/config");', 'export { defineConfig } from "vitest/config";', 'export * from "vitest/config";', "declare const lgX: number;"].map(statement =>
+      pin(() => run(configWith(DEFINE_IMPORT, statement)), statementBreak(2))),
+    pin(() => run(`${configWith(DEFINE_IMPORT)}import { mergeConfig } from "vitest/config";\n`), statementBreak(3)),
+    pin(() => run(configWith(DEFINE_IMPORT, DEFINE_IMPORT)), SOUND_CONFIG),
+    pin(() => run(configWith('import { defineConfig, defineConfig } from "vitest/config";')), SOUND_CONFIG),
+    pin(() => run(configWith("import { defineConfig } from 'vitest/config';")), SOUND_CONFIG),
+    pin(() => run(configWith('import { defineConfig } from "vitest/config" with { type: "lg" };')), SOUND_CONFIG),
     pin(() => run(`${config(CENSUS_TEST)}const lgExtra = 1;\n`), brokenRun(": a statement other than the defineConfig import and the default export at line 3")),
     pin(() => run(config(CENSUS_TEST).replace("import { defineConfig }", "import { type defineConfig }")), brokenRun(": a statement other than the defineConfig import and the default export at line 1")),
     pin(() => run(config(CENSUS_TEST).replace("import { defineConfig }", "import type { defineConfig }")), brokenRun(": a statement other than the defineConfig import and the default export at line 1")),
     pin(() => run(config(CENSUS_TEST).replace('"vitest/config"', '"vitest/node"')), brokenRun(": a statement other than the defineConfig import and the default export at line 1")),
     pin(() => run(`import "vitest/config";\n${config(CENSUS_TEST)}`), brokenRun(": a statement other than the defineConfig import and the default export at line 1"))),
   member("RUN:statements", "named",
+    pin(() => run(configWith('import defineConfig from "vitest/config";')), statementBreak(1)),
+    pin(() => run(configWith('import defineConfig, * as lgV from "vitest/config";')), statementBreak(1)),
     pin(() => run(config(CENSUS_TEST).replace("import { defineConfig }", "import lgConfig, { defineConfig }")), brokenRun(": a statement other than the defineConfig import and the default export at line 1")),
     pin(() => run(`import * as lgV from "vitest/config";\nexport default lgV.defineConfig({ test: { ${CENSUS_TEST} } });\n`), brokenRun(": a statement other than the defineConfig import and the default export at line 1"))),
   member("RUN:statements", "unaliased",
+    pin(() => run(configWith('import { defineConfig as lgDefine } from "vitest/config";')), statementBreak(1)),
+    pin(() => run(configWith('import { defineConfig as defineConfig } from "vitest/config";')), statementBreak(1)),
+    pin(() => run(configWith('import { "defineConfig" as defineConfig } from "vitest/config";')), statementBreak(1)),
     pin(() => run(config(CENSUS_TEST).replace("import { defineConfig }", "import { mergeConfig as defineConfig }")), brokenRun(": a statement other than the defineConfig import and the default export at line 1"))),
   member("RUN:statements", "one default export",
     pin(() => run(`${config(CENSUS_TEST)}export default 1;\n`), brokenRun(": 2 default exports")),
@@ -1869,6 +2132,7 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => run(config(`${CENSUS_TEST}, bail: 1`)), brokenRun(": the test object sets bail")),
     pin(() => run(config(`${CENSUS_TEST}, dir: "qa", passWithNoTests: true`)), brokenRun(": the test object sets dir, passWithNoTests"))),
   member("RUN:allowOnly", "allowOnly is the literal false",
+    pin(() => run(config('include: ["test/**/*.census.ts"], allowOnly: (false)')), SOUND_CONFIG),
     pin(() => run(config('include: ["test/**/*.census.ts"], allowOnly: true')), brokenRun(": allowOnly is not the literal false")),
     pin(() => run(config('include: ["test/**/*.census.ts"], allowOnly: !1')), brokenRun(": allowOnly is not the literal false"))),
   member("RUN:include", "include is an array literal of string literals",
@@ -1968,8 +2232,9 @@ interface TwinRow {
   readonly id: string;
   /** The bead whose refusal's PREP authored the twin. */
   readonly bead: typeof BEAD | typeof CARRIER;
-  /** That refusal (wb-tz2.17 #3: gate-prep-1, O:1634; wb-tz2.17 #4: gate-prep-12, O:1743; wb-tz2.21 #1: gate-prep-14, O:1789). */
-  readonly refusal: 1 | 3 | 4;
+  /** That refusal (wb-tz2.17 #3: gate-prep-1, O:1634; wb-tz2.17 #4: gate-prep-12, O:1743; wb-tz2.21 #1: gate-prep-14, O:1789;
+   * wb-tz2.21 #2: gate-prep-12, O:1832). */
+  readonly refusal: 1 | 2 | 3 | 4;
   /** The gate member the twin realizes. */
   readonly member: string;
   readonly edits: readonly Edit[];
@@ -1985,6 +2250,10 @@ const carrierTwin = (id: string, refusal: 3 | 4, member: string, line: string, r
 const quietTwin = (id: string, member: string, edit: Edit): TwinRow => ({ id, bead: BEAD, refusal: 4, member, edits: [edit], pins: {} });
 /** A twin of refusal #1 on wb-tz2.21 (gate-prep-14, O:1789; its make_twins_gp14 spec, verbatim but for lg- file names). */
 const carrierRefusal1 = (id: string, member: string, edits: readonly Edit[], pins: GatePins): TwinRow => ({ id, bead: CARRIER, refusal: 1, member, edits, pins });
+/** A twin of refusal #2 on wb-tz2.21 (gate-prep-12, O:1832; its twins/ pages, verbatim): the census config or the cited suite edited. */
+const carrierRefusal2 = (id: string, member: string, edits: readonly Edit[], pins: GatePins): TwinRow => ({ id, bead: CARRIER, refusal: 2, member, edits, pins });
+const suiteTwin = (line: string): Edit => ({ file: SUITE, old: RECEIPT_IMPORT, text: `${RECEIPT_IMPORT}\n${line}` });
+const configTwin = (line: string): Edit => ({ file: CENSUS_CONFIG, old: DEFINE_IMPORT, text: line });
 const TWIN_ROWS: readonly TwinRow[] = [
   carrierTwin("DW-L08", 3, "L08-GO-MEMBER5-WINDOW", "export const lgTwinWindow = (window as unknown as Record<string, unknown>).process;", "global object route (window.process)"),
   carrierTwin("DW-L12", 3, "L12-DC-MEMBER-GLOBAL", "export const lgTwinEval = (code: string): unknown => global.eval(code);", "dynamic code route (global.eval)"),
@@ -2026,6 +2295,19 @@ const TWIN_ROWS: readonly TwinRow[] = [
   ], { import: `IMPORT <a load does not resolve: ${HX}:{{L:${HX}|import "./lg-tw14-a.js";}} loads './lg-tw14-a.js': test/helpers/lg-tw14-a.ts:1 loads './lg-tw14-b.js': test/helpers/lg-tw14-b.ts:1 loads '..': test names no file>` }),
   carrierRefusal1("TW14-S9", "GP14-RUN-EXPORT-EQUALS", [{ file: CENSUS_CONFIG, old: "export default defineConfig(", text: "export = defineConfig(" }],
     { run: `<${CENSUS_CONFIG}: a statement other than the defineConfig import and the default export at line {{L:${CENSUS_CONFIG}|export = defineConfig(}}>` }),
+  carrierRefusal2("TW12-T1", "GP12C2-RUN-NAMED-OTHER", [configTwin('import { defineConfig } from "vitest/config"; import { mergeConfig } from "vitest/config";')],
+    { run: `<${CENSUS_CONFIG}: a statement other than the defineConfig import and the default export at line {{L:${CENSUS_CONFIG}|import { mergeConfig } from}}>` }),
+  carrierRefusal2("TW12-T2", "GP12C2-RUN-NAMED-SOME", [configTwin('import { defineConfig, mergeConfig } from "vitest/config";')],
+    { run: `<${CENSUS_CONFIG}: a statement other than the defineConfig import and the default export at line {{L:${CENSUS_CONFIG}|defineConfig, mergeConfig}}>` }),
+  carrierRefusal2("TW12-T3", "GP12C2-REFLECT-MEMBER-NAME", [suiteTwin("void (globalThis as unknown as Record<string, unknown>).Proxy;")], {}),
+  carrierRefusal2("TW12-T4", "GP12C2-REQUIRE-CALLEE", [suiteTwin("export const lgRequireName = (): string => String(require);")],
+    { channel: [`cited suite: loader name require, not called at line {{L:${SUITE}|String(require)}}`] }),
+  carrierRefusal2("TW12-T5", "U4-SPYON-ASSIGNMENT-PATTERN", [suiteTwin("let lgSpyHandle: unknown;\n({ spyOn: lgSpyHandle } = vi);\nvoid lgSpyHandle;")],
+    { channel: [`cited suite: spy or mock member {spyOn} destructured at line {{L:${SUITE}|({ spyOn: lgSpyHandle } = vi);}}`] }),
+  carrierRefusal2("TW12-T5b", "U4-SPYON-BINDING-PATTERN", [suiteTwin("const { spyOn: lgSpyHandle } = vi;\nvoid lgSpyHandle;")],
+    { channel: [`cited suite: spy or mock member {spyOn} destructured at line {{L:${SUITE}|const { spyOn: lgSpyHandle } = vi;}}`] }),
+  carrierRefusal2("TW12-T6", "U4-DEFINEPROPERTY-ASSIGNMENT-PATTERN", [suiteTwin("let lgDefine: unknown;\n({ defineProperty: lgDefine } = Object);\nvoid lgDefine;")],
+    { channel: [`cited suite: mutator member {defineProperty} destructured at line {{L:${SUITE}|({ defineProperty: lgDefine } = Object);}}`] }),
 ];
 
 /** MEMBERS rows with their place among their claim's pieces. */
@@ -2042,7 +2324,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:RESOLUTION:package imports:1:3", "MEMBERS:RESOLUTION:package imports:2:2", "MEMBERS:RESOLUTION:package imports:3:2",
   "MEMBERS:UNRESOLVED:1:2",
   "MEMBERS:UNRESOLVED:absolute path:1:1",
-  "MEMBERS:UNRESOLVED:url scheme:1:1", "MEMBERS:UNRESOLVED:url scheme:2:1", "MEMBERS:UNRESOLVED:url scheme:3:1",
+  "MEMBERS:UNRESOLVED:url scheme:1:5", "MEMBERS:UNRESOLVED:url scheme:2:1", "MEMBERS:UNRESOLVED:url scheme:3:1",
   "MEMBERS:UNRESOLVED:query:1:2", "MEMBERS:UNRESOLVED:query:2:3",
   "MEMBERS:UNRESOLVED:empty:1:1",
   "MEMBERS:UNRESOLVED:outside the root:1:2",
@@ -2053,14 +2335,14 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:UNRESOLVED:no export:1:1", "MEMBERS:UNRESOLVED:no export:2:1", "MEMBERS:UNRESOLVED:no export:3:2",
   "MEMBERS:UNRESOLVED:no imports map:1:1",
   "MEMBERS:EXPORT_TARGETS:1:2",
-  "MEMBERS:EXPORT_TARGETS:sugar:1:2", "MEMBERS:EXPORT_TARGETS:sugar:2:2", "MEMBERS:EXPORT_TARGETS:sugar:3:2",
+  "MEMBERS:EXPORT_TARGETS:sugar:1:2", "MEMBERS:EXPORT_TARGETS:sugar:2:2", "MEMBERS:EXPORT_TARGETS:sugar:3:3",
   "MEMBERS:EXPORT_TARGETS:exact key:1:2", "MEMBERS:EXPORT_TARGETS:exact key:2:2",
   "MEMBERS:EXPORT_TARGETS:pattern key:1:3", "MEMBERS:EXPORT_TARGETS:pattern key:2:1", "MEMBERS:EXPORT_TARGETS:pattern key:3:1",
   "MEMBERS:EXPORT_TARGETS:conditions:1:2", "MEMBERS:EXPORT_TARGETS:conditions:2:2", "MEMBERS:EXPORT_TARGETS:conditions:3:1", "MEMBERS:EXPORT_TARGETS:conditions:4:1", "MEMBERS:EXPORT_TARGETS:conditions:5:1", "MEMBERS:EXPORT_TARGETS:conditions:6:1",
   "MEMBERS:EXPORT_TARGETS:array:1:2",
   "MEMBERS:EXPORT_TARGETS:string:1:2", "MEMBERS:EXPORT_TARGETS:string:2:1", "MEMBERS:EXPORT_TARGETS:string:3:2",
   "MEMBERS:IDENTITY:1:1", "MEMBERS:IDENTITY:2:1",
-  "MEMBERS:IDENTITY:vitest:1:2", "MEMBERS:IDENTITY:vitest:2:2", "MEMBERS:IDENTITY:vitest:3:2", "MEMBERS:IDENTITY:vitest:4:1", "MEMBERS:IDENTITY:vitest:5:2",
+  "MEMBERS:IDENTITY:vitest:1:2", "MEMBERS:IDENTITY:vitest:2:3", "MEMBERS:IDENTITY:vitest:3:2", "MEMBERS:IDENTITY:vitest:4:1", "MEMBERS:IDENTITY:vitest:5:2",
   "MEMBERS:IDENTITY:carrier:1:9", "MEMBERS:IDENTITY:carrier:2:9", "MEMBERS:IDENTITY:carrier:3:19",
   "MEMBERS:IDENTITY:builtin:1:1",
   "MEMBERS:IDENTITY:module:1:2",
@@ -2076,7 +2358,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:LOADS:require call:1:1", "MEMBERS:LOADS:require call:2:1",
   "MEMBERS:ROUTES:1:9", "MEMBERS:ROUTES:2:18", "MEMBERS:ROUTES:3:19",
   "MEMBERS:ROUTES:dynamic load:1:24", "MEMBERS:ROUTES:dynamic load:2:3", "MEMBERS:ROUTES:dynamic load:3:2", "MEMBERS:ROUTES:dynamic load:4:2",
-  "MEMBERS:ROUTES:loader name:1:87", "MEMBERS:ROUTES:loader name:2:1", "MEMBERS:ROUTES:loader name:3:1", "MEMBERS:ROUTES:loader name:4:2", "MEMBERS:ROUTES:loader name:5:2", "MEMBERS:ROUTES:loader name:6:4", "MEMBERS:ROUTES:loader name:7:1", "MEMBERS:ROUTES:loader name:8:1", "MEMBERS:ROUTES:loader name:9:1", "MEMBERS:ROUTES:loader name:10:4", "MEMBERS:ROUTES:loader name:11:8", "MEMBERS:ROUTES:loader name:12:3",
+  "MEMBERS:ROUTES:loader name:1:2676", "MEMBERS:ROUTES:loader name:2:1", "MEMBERS:ROUTES:loader name:3:1", "MEMBERS:ROUTES:loader name:4:182", "MEMBERS:ROUTES:loader name:5:48", "MEMBERS:ROUTES:loader name:6:86", "MEMBERS:ROUTES:loader name:7:1", "MEMBERS:ROUTES:loader name:8:1", "MEMBERS:ROUTES:loader name:9:1", "MEMBERS:ROUTES:loader name:10:286", "MEMBERS:ROUTES:loader name:11:185", "MEMBERS:ROUTES:loader name:12:99",
   "MEMBERS:ROUTES:loader member:1:48", "MEMBERS:ROUTES:loader member:2:1", "MEMBERS:ROUTES:loader member:3:1", "MEMBERS:ROUTES:loader member:4:2", "MEMBERS:ROUTES:loader member:5:2", "MEMBERS:ROUTES:loader member:6:7", "MEMBERS:ROUTES:loader member:7:2",
   "MEMBERS:ROUTES:vite name:1:30", "MEMBERS:ROUTES:vite name:2:1", "MEMBERS:ROUTES:vite name:3:1", "MEMBERS:ROUTES:vite name:4:1", "MEMBERS:ROUTES:vite name:5:1", "MEMBERS:ROUTES:vite name:6:3", "MEMBERS:ROUTES:vite name:7:1", "MEMBERS:ROUTES:vite name:8:1",
   "MEMBERS:ROUTES:import meta:1:12", "MEMBERS:ROUTES:import meta:2:3",
@@ -2085,21 +2367,21 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:ROUTES:dynamic code:1:790", "MEMBERS:ROUTES:dynamic code:2:790", "MEMBERS:ROUTES:dynamic code:3:793", "MEMBERS:ROUTES:dynamic code:4:49", "MEMBERS:ROUTES:dynamic code:5:50", "MEMBERS:ROUTES:dynamic code:6:140", "MEMBERS:ROUTES:dynamic code:7:160", "MEMBERS:ROUTES:dynamic code:8:232", "MEMBERS:ROUTES:dynamic code:9:158",
   "MEMBERS:WRITES:1:1", "MEMBERS:WRITES:2:5",
   "MEMBERS:WRITES:member write:1:23", "MEMBERS:WRITES:member write:2:18", "MEMBERS:WRITES:member write:3:4", "MEMBERS:WRITES:member write:4:4", "MEMBERS:WRITES:member write:5:3", "MEMBERS:WRITES:member write:6:5", "MEMBERS:WRITES:member write:7:5", "MEMBERS:WRITES:member write:8:12", "MEMBERS:WRITES:member write:9:21", "MEMBERS:WRITES:member write:10:18", "MEMBERS:WRITES:member write:11:18", "MEMBERS:WRITES:member write:12:18", "MEMBERS:WRITES:member write:13:18",
-  "MEMBERS:WRITES:mutator member:1:1", "MEMBERS:WRITES:mutator member:2:1", "MEMBERS:WRITES:mutator member:3:1", "MEMBERS:WRITES:mutator member:4:1", "MEMBERS:WRITES:mutator member:5:1", "MEMBERS:WRITES:mutator member:6:1", "MEMBERS:WRITES:mutator member:7:1", "MEMBERS:WRITES:mutator member:8:1", "MEMBERS:WRITES:mutator member:9:1", "MEMBERS:WRITES:mutator member:10:9", "MEMBERS:WRITES:mutator member:11:18", "MEMBERS:WRITES:mutator member:12:35", "MEMBERS:WRITES:mutator member:13:18",
-  "MEMBERS:WRITES:reflection:1:2", "MEMBERS:WRITES:reflection:2:2", "MEMBERS:WRITES:reflection:3:1", "MEMBERS:WRITES:reflection:4:1", "MEMBERS:WRITES:reflection:5:1", "MEMBERS:WRITES:reflection:6:1", "MEMBERS:WRITES:reflection:7:1", "MEMBERS:WRITES:reflection:8:40",
-  "MEMBERS:WRITES:spy or mock member:1:5", "MEMBERS:WRITES:spy or mock member:2:8", "MEMBERS:WRITES:spy or mock member:3:4", "MEMBERS:WRITES:spy or mock member:4:1", "MEMBERS:WRITES:spy or mock member:5:1", "MEMBERS:WRITES:spy or mock member:6:1", "MEMBERS:WRITES:spy or mock member:7:1", "MEMBERS:WRITES:spy or mock member:8:1", "MEMBERS:WRITES:spy or mock member:9:1", "MEMBERS:WRITES:spy or mock member:10:1", "MEMBERS:WRITES:spy or mock member:11:1", "MEMBERS:WRITES:spy or mock member:12:1", "MEMBERS:WRITES:spy or mock member:13:1", "MEMBERS:WRITES:spy or mock member:14:1", "MEMBERS:WRITES:spy or mock member:15:1", "MEMBERS:WRITES:spy or mock member:16:1", "MEMBERS:WRITES:spy or mock member:17:1", "MEMBERS:WRITES:spy or mock member:18:1", "MEMBERS:WRITES:spy or mock member:19:1", "MEMBERS:WRITES:spy or mock member:20:128",
-  "MEMBERS:WRITES:computed member:1:1", "MEMBERS:WRITES:computed member:2:2", "MEMBERS:WRITES:computed member:3:1", "MEMBERS:WRITES:computed member:4:2", "MEMBERS:WRITES:computed member:5:1",
+  "MEMBERS:WRITES:mutator member:1:1", "MEMBERS:WRITES:mutator member:2:1", "MEMBERS:WRITES:mutator member:3:1", "MEMBERS:WRITES:mutator member:4:1", "MEMBERS:WRITES:mutator member:5:1", "MEMBERS:WRITES:mutator member:6:1", "MEMBERS:WRITES:mutator member:7:1", "MEMBERS:WRITES:mutator member:8:1", "MEMBERS:WRITES:mutator member:9:1", "MEMBERS:WRITES:mutator member:10:216", "MEMBERS:WRITES:mutator member:11:225", "MEMBERS:WRITES:mutator member:12:206", "MEMBERS:WRITES:mutator member:13:342",
+  "MEMBERS:WRITES:reflection:1:94", "MEMBERS:WRITES:reflection:2:94", "MEMBERS:WRITES:reflection:3:1", "MEMBERS:WRITES:reflection:4:1", "MEMBERS:WRITES:reflection:5:1", "MEMBERS:WRITES:reflection:6:1", "MEMBERS:WRITES:reflection:7:1", "MEMBERS:WRITES:reflection:8:545",
+  "MEMBERS:WRITES:spy or mock member:1:106", "MEMBERS:WRITES:spy or mock member:2:50", "MEMBERS:WRITES:spy or mock member:3:46", "MEMBERS:WRITES:spy or mock member:4:1", "MEMBERS:WRITES:spy or mock member:5:1", "MEMBERS:WRITES:spy or mock member:6:1", "MEMBERS:WRITES:spy or mock member:7:1", "MEMBERS:WRITES:spy or mock member:8:1", "MEMBERS:WRITES:spy or mock member:9:1", "MEMBERS:WRITES:spy or mock member:10:1", "MEMBERS:WRITES:spy or mock member:11:1", "MEMBERS:WRITES:spy or mock member:12:1", "MEMBERS:WRITES:spy or mock member:13:1", "MEMBERS:WRITES:spy or mock member:14:1", "MEMBERS:WRITES:spy or mock member:15:1", "MEMBERS:WRITES:spy or mock member:16:1", "MEMBERS:WRITES:spy or mock member:17:1", "MEMBERS:WRITES:spy or mock member:18:1", "MEMBERS:WRITES:spy or mock member:19:1", "MEMBERS:WRITES:spy or mock member:20:1744",
+  "MEMBERS:WRITES:computed member:1:1", "MEMBERS:WRITES:computed member:2:2", "MEMBERS:WRITES:computed member:3:1", "MEMBERS:WRITES:computed member:4:2", "MEMBERS:WRITES:computed member:5:1", "MEMBERS:WRITES:computed member:6:5",
   "MEMBERS:CHANNEL:tier config:1:3", "MEMBERS:CHANNEL:tier config:2:1", "MEMBERS:CHANNEL:tier config:3:1", "MEMBERS:CHANNEL:tier config:4:3",
-  "MEMBERS:CHANNEL:setup file:1:4", "MEMBERS:CHANNEL:setup file:2:2", "MEMBERS:CHANNEL:setup file:3:1", "MEMBERS:CHANNEL:setup file:4:3", "MEMBERS:CHANNEL:setup file:5:2", "MEMBERS:CHANNEL:setup file:6:1", "MEMBERS:CHANNEL:setup file:7:1", "MEMBERS:CHANNEL:setup file:8:9", "MEMBERS:CHANNEL:setup file:9:39",
+  "MEMBERS:CHANNEL:setup file:1:4", "MEMBERS:CHANNEL:setup file:2:2", "MEMBERS:CHANNEL:setup file:3:1", "MEMBERS:CHANNEL:setup file:4:3", "MEMBERS:CHANNEL:setup file:5:2", "MEMBERS:CHANNEL:setup file:6:1", "MEMBERS:CHANNEL:setup file:7:2", "MEMBERS:CHANNEL:setup file:8:9", "MEMBERS:CHANNEL:setup file:9:39",
   "MEMBERS:CHANNEL:cited suite:1:9", "MEMBERS:CHANNEL:cited suite:2:5", "MEMBERS:CHANNEL:cited suite:3:18", "MEMBERS:CHANNEL:cited suite:4:1",
-  "MEMBERS:IMPORT:1:3", "MEMBERS:IMPORT:2:1", "MEMBERS:IMPORT:3:1", "MEMBERS:IMPORT:4:1", "MEMBERS:IMPORT:5:1", "MEMBERS:IMPORT:6:32", "MEMBERS:IMPORT:7:1", "MEMBERS:IMPORT:8:1", "MEMBERS:IMPORT:9:1", "MEMBERS:IMPORT:10:2",
+  "MEMBERS:IMPORT:1:3", "MEMBERS:IMPORT:2:1", "MEMBERS:IMPORT:3:2", "MEMBERS:IMPORT:4:1", "MEMBERS:IMPORT:5:1", "MEMBERS:IMPORT:6:32", "MEMBERS:IMPORT:7:1", "MEMBERS:IMPORT:8:1", "MEMBERS:IMPORT:9:1", "MEMBERS:IMPORT:10:2",
   "MEMBERS:RUN:argv:1:4",
-  "MEMBERS:RUN:statements:1:5", "MEMBERS:RUN:statements:2:2", "MEMBERS:RUN:statements:3:1", "MEMBERS:RUN:statements:4:3",
+  "MEMBERS:RUN:statements:1:88", "MEMBERS:RUN:statements:2:4", "MEMBERS:RUN:statements:3:4", "MEMBERS:RUN:statements:4:3",
   "MEMBERS:RUN:default export:1:4",
   "MEMBERS:RUN:plain keys:1:3", "MEMBERS:RUN:plain keys:2:3", "MEMBERS:RUN:plain keys:3:1", "MEMBERS:RUN:plain keys:4:1", "MEMBERS:RUN:plain keys:5:2", "MEMBERS:RUN:plain keys:6:2", "MEMBERS:RUN:plain keys:7:2", "MEMBERS:RUN:plain keys:8:2", "MEMBERS:RUN:plain keys:9:2", "MEMBERS:RUN:plain keys:10:2", "MEMBERS:RUN:plain keys:11:2",
   "MEMBERS:RUN:top-level keys:1:1", "MEMBERS:RUN:top-level keys:2:2",
   "MEMBERS:RUN:test keys:1:1", "MEMBERS:RUN:test keys:2:1", "MEMBERS:RUN:test keys:3:1", "MEMBERS:RUN:test keys:4:1", "MEMBERS:RUN:test keys:5:1", "MEMBERS:RUN:test keys:6:1", "MEMBERS:RUN:test keys:7:1", "MEMBERS:RUN:test keys:8:2",
-  "MEMBERS:RUN:allowOnly:1:2",
+  "MEMBERS:RUN:allowOnly:1:3",
   "MEMBERS:RUN:include:1:3", "MEMBERS:RUN:include:2:6", "MEMBERS:RUN:include:3:2", "MEMBERS:RUN:include:4:8", "MEMBERS:RUN:include:5:6",
   "MEMBERS:C:1:1",
   "MEMBERS:C:walk:1:1", "MEMBERS:C:walk:2:1", "MEMBERS:C:walk:3:1", "MEMBERS:C:walk:4:1",
@@ -2107,7 +2389,7 @@ const FROZEN_SHAPE: readonly string[] = [
   "MEMBERS:C:text:1:3",
   "MEMBERS:RESIDUALS:R-PACKAGE-CODE:1:2", "MEMBERS:RESIDUALS:R-PACKAGE-CODE:2:2",
   "MEMBERS:RESIDUALS:R-HELPER-PATCH:1:2", "MEMBERS:RESIDUALS:R-HELPER-PATCH:2:2", "MEMBERS:RESIDUALS:R-HELPER-PATCH:3:1", "MEMBERS:RESIDUALS:R-HELPER-PATCH:4:1",
-  "TWIN:DW-L08:import", "TWIN:DW-L12:import", "TWIN:DW-L15:run", "TWIN:DW-L17:import", "TWIN:TW-S1:", "TWIN:TW-S2:", "TWIN:TW-S3:", "TWIN:TW-S4:import", "TWIN:TW-S5:import", "TWIN:TW-S6:import", "TWIN:TW-S7:import", "TWIN:TW-S8:import", "TWIN:TW-S9:", "TWIN:TW-S10:import", "TWIN:TW-S11:import", "TWIN:TW-S12:import", "TWIN:TW-S13:import", "TWIN:TW14-S1:", "TWIN:TW14-S2:", "TWIN:TW14-S3:import", "TWIN:TW14-S4:import", "TWIN:TW14-S5:", "TWIN:TW14-S6:import", "TWIN:TW14-S7:import", "TWIN:TW14-S9:run",
+  "TWIN:DW-L08:import", "TWIN:DW-L12:import", "TWIN:DW-L15:run", "TWIN:DW-L17:import", "TWIN:TW-S1:", "TWIN:TW-S2:", "TWIN:TW-S3:", "TWIN:TW-S4:import", "TWIN:TW-S5:import", "TWIN:TW-S6:import", "TWIN:TW-S7:import", "TWIN:TW-S8:import", "TWIN:TW-S9:", "TWIN:TW-S10:import", "TWIN:TW-S11:import", "TWIN:TW-S12:import", "TWIN:TW-S13:import", "TWIN:TW14-S1:", "TWIN:TW14-S2:", "TWIN:TW14-S3:import", "TWIN:TW14-S4:import", "TWIN:TW14-S5:", "TWIN:TW14-S6:import", "TWIN:TW14-S7:import", "TWIN:TW14-S9:run", "TWIN:TW12-T1:run", "TWIN:TW12-T2:run", "TWIN:TW12-T3:", "TWIN:TW12-T4:channel", "TWIN:TW12-T5:channel", "TWIN:TW12-T5b:channel", "TWIN:TW12-T6:channel",
   "CLAIM:header", "CLAIM:forms",
   "TILE:pieces", "TILE:keys",
   "ANCHOR:items", "ANCHOR:refusal-3", "ANCHOR:refusal-4", "ANCHOR:guard-rows", "ANCHOR:names", "ANCHOR:catalogs", "ANCHOR:carrier-items", "ANCHOR:twins",
@@ -2143,6 +2425,9 @@ const CATALOG_SIZES: Readonly<Record<string, number>> = {
   HELPER_MISSING: HELPER_MISSING.length,
   STRING_KEYS: STRING_KEYS.length,
   PACKAGE_MISSING: PACKAGE_MISSING.length,
+  CONFIG_NAMES: CONFIG_NAMES.length,
+  NONVALUE_PLACES: NONVALUE_PLACES.length,
+  DESTRUCTURINGS: DESTRUCTURINGS.length,
 };
 /** The R-B124 ruling in the export's wb-tz2.17 notes, from its heading to the next note: its folded members are items too. */
 function foldedItems(): string[] {
@@ -2259,7 +2544,7 @@ describe("wb-tz2.17 HyperUnix successor-gate readers census (HX-ORIGINAL-GOALS-C
   });
   it("ANCHOR: the helper header names exactly the twins the TWIN rows check in, each once per id", () => {
     const prose = HEADER.join("\n");
-    const named = [...prose.matchAll(/(?<![A-Za-z0-9-])(DW-L\d+|TW-S\d+|TW14-S\d+)(?![A-Za-z0-9-])/g)].map(match => match[1] ?? "");
+    const named = [...prose.matchAll(/(?<![A-Za-z0-9-])(DW-L\d+|TW-S\d+|TW14-S\d+|TW12-T\d+b?)(?![A-Za-z0-9-])/g)].map(match => match[1] ?? "");
     const ranges = [...prose.matchAll(/(?<![A-Za-z0-9-])(TW-S|TW14-S)(\d+) to (?:TW-S|TW14-S)(\d+)(?![A-Za-z0-9-])/g)].flatMap(match =>
       Array.from({ length: Number(match[3]) - Number(match[2]) + 1 }, (_unused, offset) => `${match[1] ?? ""}${Number(match[2]) + offset}`));
     expect([...new Set([...named, ...ranges])].sort()).toEqual(TWIN_ROWS.map(row => row.id).sort());
