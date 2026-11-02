@@ -18,10 +18,10 @@
  * (a text file with no #! line) and has the stand-in rf report its sha256 as the host's pin, so the success row's Deno
  * identity reading (test/helpers/rf-tsx-deno.ts) holds; the DENO_IDENTITY_SUITE cases show that it bites. Before rf is
  * launched they refuse an unresolved engine and each of the three shim forms, over these pinned members: a symlink to a
- * binary of another name (named mise, deno-shim, Deno and mise-deno: a prefix, a suffix and a case variant of the engine's
- * name are other names), a file under a shims directory (shims as its parent and as an ancestor two levels up) and a #!
- * script. Once the render reports the pin they refuse an unpinned engine and a mismatched one, over pins that differ from
- * the measured digest in every position, or only in its first, its 33rd or its last hex (a greater and a lesser pin). Each
+ * binary of another name (named mise, deno-shim, Deno and mise-deno), a file under a shims directory (shims as its parent
+ * and as an ancestor two levels up) and a #!/bin/sh script. Once the render reports the pin they refuse an unpinned engine
+ * and a mismatched one, over the pin f*64 and pins that differ from the measured digest only in its first, its 33rd or its
+ * last hex (a greater and a lesser pin). Each
  * refused row's first failure opens with its literal typed code. A passing row prints the resolved path, realpath and
  * sha256 on its RF-TSX-ENGINE line while its RF-TSX-RECEIPT line keeps the four R9 fields. The engine line is held field by
  * field over a regular file (its resolved path is its realpath), the operator's versioned layout (a bin/deno symlink through
@@ -32,7 +32,10 @@
  * the echo rule's whole class range and its length bound, which these cases pin at the five paths above. NOT CLAIMED by
  * these cases: a version reading of the PATH deno (the binary is held to the lock's sha256 and never asked its version; the
  * render's distribution_version stays an R9 receipt field), a live receipt of record carrying the RF-TSX-ENGINE line (no
- * live run is part of this cut), and any manager name, shims position or digest position other than the pinned members.
+ * live run is part of this cut), and any manager name, shims position, script form or digest position other than the
+ * pinned members (among them, deferred to wb-j4sm, the rule-19 structural exit child of this bead, ruling R-B292: a #!
+ * script whose third byte is not /, a shims directory more than two levels above the file, and a manager name that
+ * differs from deno only by an extension such as deno.exe or by surrounding whitespace).
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -639,7 +642,7 @@ describe(DENO_IDENTITY_SUITE, () => {
   );
 
   it(
-    "a deno that is a #! script fails the success row typed rf_tsx_deno_shim before rf is launched",
+    "a deno that is a #!/bin/sh script fails the success row typed rf_tsx_deno_shim before rf is launched",
     () => {
       const run = provisionedRun("rf-tsx-deno-script-", tsxPreview(), ABSENT_REFUSAL, (dir, launched) => {
         const tsx = standInEngine(stubRf(join(dir, "tsx"), tsxPreview(), 0, launched), "#!/bin/sh\nexit 0\n");
@@ -665,7 +668,7 @@ describe(DENO_IDENTITY_SUITE, () => {
   );
 
   it.each<[string, string]>([
-    ["in every position (the pin f*64)", "f".repeat(64)],
+    ["(the pin f*64)", "f".repeat(64)],
     ["only in its first hex (a greater pin)", digestOneOff(0, 1)],
     ["only in its 33rd hex", digestOneOff(32, 1)],
     ["only in its last hex (a lesser pin)", digestOneOff(63, -1)],

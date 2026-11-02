@@ -10,11 +10,11 @@
  * its docstring states that "A version manager's shim on PATH is answered as the shim"; the same module's docstring records
  * that a mise shim run for a pinned but uninstalled engine downloads one over the network (rfc-3fhh4.28).
  *
- * So this reading never executes the resolved file, and it reads no rf install layout: it reads the file's first two bytes
- * and its sha256. RFCLI's own doctor check RFDOCTOR-TSX-RUNTIME hashes the binary it resolves the same way (rf 0.1.875,
- * application/doctor.py _sha256_of, in 1 MiB reads, whose docstring says "Never executes the file."), but unlike this
- * reading the doctor's preflight (runtime.tsx_engine.preflight_engine, rfc-2s2o2.27) also asks a manager shim for its
- * concrete binary and runs one bounded version probe on that binary; this reading runs neither. The pin is the one the
+ * So this reading never executes the resolved file, and it reads no rf install layout: it reads the head of the file (for
+ * the #! mark) and its sha256. RFCLI's own doctor check RFDOCTOR-TSX-RUNTIME hashes the binary it resolves the same way
+ * (rf 0.1.875, application/doctor.py _sha256_of, in 1 MiB reads, whose docstring says "Never executes the file."), but
+ * unlike this reading the doctor's preflight (runtime.tsx_engine.preflight_engine, rfc-2s2o2.27) also asks a manager shim
+ * for its concrete binary and runs one bounded version probe on that binary; this reading runs neither. The pin is the one the
  * render itself reports: provenance.sdk_versions.tsx_runtime is rf's reading of its packaged runtime lock
  * (definitions.tsx_pins.engine_version_entries, rf 0.1.875: distribution_version is the lock's exact engine version,
  * contract_fingerprint is "sha256:" and the binary digest the lock pins for the host's target triple, or "unknown" when it
@@ -24,15 +24,24 @@
  * Two halves, so the shim check runs before rf ever starts (a shim it would execute is the network install path) and the
  * digest check runs once the render has reported the pin:
  *  - provisionedDeno(PATH): the engine rf will resolve; refuses rf_tsx_deno_unresolved when none resolves and
- *    rf_tsx_deno_shim when the resolved file carries any of three version-manager shim marks: its realpath's file name is
- *    not exactly deno (a name compared whole and case-sensitively, so a deno-prefixed, deno-suffixed or case-variant name
- *    is another name), a directory named exactly shims sits on its resolved path or on its realpath at any depth, or its
- *    first two bytes are #! (a script rather than the engine binary);
+ *    rf_tsx_deno_shim when the resolved file carries one of three version-manager shim marks, each claimed over the members
+ *    its tests pin (test/workbench-rf-tsx-deno-provisioning.test.ts and the tier's DENO_IDENTITY_SUITE cases): its
+ *    realpath's file name is another name than deno (pinned: mise, deno-shim, Deno, DENO, mise-deno, xdeno and dino), a
+ *    directory named shims is the file's parent or the directory two levels above it, on its resolved path or on its
+ *    realpath (pinned: manager/shims/deno and manager/shims/bin/deno; a directory named Shims, shim, myshims or shims2 is
+ *    not the mark), or the file is a #!/bin/sh script (pinned; a first byte # without a ! after it is not the mark);
  *  - pinnedDenoDigest(engine, fingerprint): refuses rf_tsx_deno_unpinned when the render reports no sha256 pin for the host
- *    and rf_tsx_deno_mismatch when the resolved file's sha256 differs from it in any of its 64 hex positions (the whole
- *    digest is compared); returns the measured "sha256:<hex>".
+ *    and rf_tsx_deno_mismatch when the resolved file's sha256 differs from it (pinned: the pin f*64, and pins one hex off
+ *    the measured digest only in its first, its 33rd or its last hex); returns the measured "sha256:<hex>".
  * A resolved file either half cannot read is refused rf_tsx_deno_unreadable. Every refusal is a DenoIdentityRefusal whose
  * message starts with its reason: a typed failure, never a skip.
+ *
+ * NOT CLAIMED (scope; the forms named here are deferred to wb-j4sm, the rule-19 structural exit child of this bead, ruling
+ * R-B292): a #! script whose third byte is not / (one that opens with #! and a space, or with #! and a relative
+ * interpreter), a shims directory more than two levels above the file, a manager name that differs from deno only by an
+ * extension (such as deno.exe) or by surrounding whitespace, the shim reason's echo of a realpath name that is not
+ * printable ASCII (no pinned manager name holds one), the order and the joining of two or more shim reasons (no pinned case
+ * carries two), and any other shim mark form, manager name, shims position or digest position outside the pinned members.
  *
  * NAMED RESIDUAL R-COPIED-MANAGER: the pre-render half recognizes a shim by those three marks only, so a version manager's
  * binary copied or hard-linked under the engine's own name outside a shims directory passes it; the digest half then refuses
@@ -117,9 +126,10 @@ function echoToken(value: unknown): string {
 /**
  * shutil.which(name) over `path`: the first entry, in order, where `name` is an existing non-directory file (symlinks
  * followed) the current user may execute. An empty entry inside `path` joins to a relative path, read from the working
- * directory, as it is for rf. An empty `path` resolves nothing, as shutil.which answers None for PATH "" (rf's Python 3.15,
- * measured); an unset one resolves nothing too, since shutil.which would read the interpreter's CS_PATH there, which this
- * reading does not guess - so the engine is refused unresolved, never passed.
+ * directory, as it is for rf (NOT CLAIMED by a falsifier: the repository root, the tests' working directory, holds no deno,
+ * so that read and a skipped entry read alike there). An empty `path` resolves nothing, as shutil.which answers None for
+ * PATH "" (rf's Python 3.15, measured); an unset one resolves nothing too, since shutil.which would read the interpreter's
+ * CS_PATH there, which this reading does not guess - so the engine is refused unresolved, never passed.
  */
 export function resolveOnPath(name: string, path: string | undefined): string | undefined {
   if (path === undefined || path === "") return undefined;
@@ -148,7 +158,10 @@ function startsWithScriptMagic(file: string): boolean {
   }
 }
 
-/** Why the resolved engine is a version-manager shim, in a fixed order; empty when it is not one. */
+/**
+ * Why the resolved engine is a version-manager shim; empty when it is not one. How two or more reasons are ordered and joined
+ * is NOT CLAIMED: no pinned case carries two.
+ */
 export function shimReasons(engine: ResolvedDeno): string[] {
   const reasons: string[] = [];
   const name = basename(engine.realpath);
@@ -234,7 +247,7 @@ export interface DenoInstallShape {
 }
 /**
  * The install shapes, in order. Each source is spelled so that this file's own text matches none of them (the census walks
- * this file and pins it quiet), and each has one planted positive control in the census.
+ * this file and pins it quiet), and each has its planted positive controls in the census (its frozen per-shape count).
  */
 export const DENO_INSTALL_SHAPES: readonly DenoInstallShape[] = [
   { id: "I1", label: "the Deno installer script", source: String.raw`deno\.land/(?:x/)?install` },
@@ -270,8 +283,10 @@ export interface DenoInstallScan {
 }
 
 /**
- * Every line of `text`, each offered whole to every shape: `lines` counts the lines this read offered (so a read that stops
- * early counts fewer than the text holds), and `hits` is "<line>:<shape id>" in line order (shape order within a line).
+ * The lines of `text`, each tested against the shapes: `lines` counts the lines this read iterated (so a read that stops
+ * early counts fewer than the text holds), and `hits` is "<line>:<shape id>" in line order. Which lines reach the shapes is
+ * claimed at the census's planted lines only (a line led by # is NOT CLAIMED, deferred to wb-j4sm), and so is a second hit
+ * on a line that already holds one, which no planted line carries.
  */
 export function denoInstallScan(text: string): DenoInstallScan {
   const patterns = DENO_INSTALL_SHAPES.map(shape => ({ id: shape.id, pattern: new RegExp(shape.source, "i") }));
@@ -284,7 +299,7 @@ export function denoInstallScan(text: string): DenoInstallScan {
   return { lines, hits };
 }
 
-/** The install shapes `text` holds, as "<line>:<shape id>" in line order (shape order within a line). */
+/** The install hits denoInstallScan reports for `text`, as "<line>:<shape id>" in line order. */
 export function denoInstallHits(text: string): string[] {
   return [...denoInstallScan(text).hits];
 }

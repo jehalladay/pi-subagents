@@ -7,56 +7,73 @@
  * falsifiers: a Pi lane installing deno, or a receipt whose resolved deno differs from the lock pin, is red.
  *
  * This file holds two parts. The first pins the identity reading's refusals and passes (test/helpers/rf-tsx-deno.ts) on
- * scratch files, none of them ever executed: each planted engine is a text file without a #! line whose body, if any shell
- * ever ran it, would write a marker, and every case that plants one asserts the marker is absent. Every refusal case reads
- * its typed code as a literal, both as the refusal's reason and as the head of its message. Beside the tier's members it
- * pins: the echo rule over its whole class range and its length bound (verbatim: a printable path holding a space and a
- * tilde, U+0020, U+007E and 4096 characters; <unrecognized>: 4097 characters, an empty string, NUL, TAB, LF, ESC, US, DEL,
- * U+0080, a Latin-1 letter and a character past U+FFFF), the filesystem's path classes among them through real scratch
- * paths in a refusal message; the realpath's name compared whole and case-sensitively (deno-shim, Deno, DENO, mise-deno,
- * xdeno and dino are other names); a shims directory read at any depth of the resolved path and of the realpath, while a
- * directory named Shims, shim or myshims is not the mark; a first byte # without a ! after it is not the script mark; and
- * pins one hex off the measured digest at its first, 33rd and last position. The empty-PATH branch of resolveOnPath is NOT
- * CLAIMED by a falsifier: the repository root holds no deno, so its working-directory lookup and shutil.which's None read
- * alike there. The tier wiring of the same reading (refused before rf runs, refused after the render reports the pin, the
- * engine line's fields) is pinned by the wb-70xe cases of test/workbench-rf-tsx-tier.test.ts.
+ * scratch files, none of them ever executed: each planted engine is a text file whose body, if any shell ever ran it,
+ * would write a marker (a text file without a #! line, except the #!/bin/sh script case's), and every case that plants
+ * one asserts the marker is absent. Every refusal case reads its typed code as a literal, both as the refusal's reason
+ * and as the head of its message. Beside the tier's members it pins: the echo rule over its whole class range and its
+ * length bound (verbatim: a printable path holding a space and a tilde, U+0020, U+007E and 4096 characters;
+ * <unrecognized>: 4097 characters, an empty string, NUL, TAB, LF, ESC, US, DEL, U+0080, a Latin-1 letter and a character
+ * past U+FFFF), the filesystem's path classes among them through real scratch paths in a refusal message; manager
+ * binaries named mise, deno-shim, Deno, DENO, mise-deno, xdeno and dino refused as other names than deno; a shims
+ * directory as the file's parent and two levels above it, on the resolved path and on the realpath, while a directory
+ * named Shims, shim, myshims or shims2 is not the mark; a #!/bin/sh script refused as the script mark, while a first byte
+ * # without a ! after it is not the mark; and the pin f*64 and pins one hex off the measured digest at its first, 33rd
+ * and last position. The empty-PATH branch of resolveOnPath and its relative read of an empty PATH entry are NOT CLAIMED
+ * by a falsifier: the repository root holds no deno, so its working-directory lookup, a skipped entry and shutil.which's
+ * None read alike there. The tier wiring of the same reading (refused before rf runs, refused after the render reports
+ * the pin, the engine line's fields) is pinned by the wb-70xe cases of test/workbench-rf-tsx-tier.test.ts. NOT CLAIMED by
+ * the identity cases (the forms named here are deferred to wb-j4sm, the rule-19 structural exit child of this bead,
+ * ruling R-B292): a #! script whose third byte is not / (one that opens with #! and a space, or with #! and a relative
+ * interpreter), a shims directory more than two levels above the file, a manager name that differs from deno only by an
+ * extension (such as deno.exe) or by surrounding whitespace, the shim reason's echo of a realpath name that is not
+ * printable ASCII (no pinned manager name holds one), the order and the joining of two or more shim reasons (no pinned
+ * case carries two), and any other manager name, shims position, script form or digest position outside the pinned
+ * members.
  *
  * The second part is the lane census for (c)'s first clause. Its walk lists every regular file at the repository root
  * (AGENTS.md, forge.toml, package.json and the root vitest configs among them) and in the .github, .agents, .pi, .codex,
- * examples, src, test and qa trees; its hit read takes in each listed file whole; and no walked line matches any of the six
- * closed shapes in DENO_INSTALL_SHAPES: 0 hits over the walked set. This file and the helper are walked and judged, never
- * exempt, so every planted control below is composed at run time and no line of this file spells a shape. Three anchors sit
- * outside this census's own literals: the repository's git index (the walked trees and UNWALKED_ROOTS, each named with why,
- * must partition its tracked top-level directories, and the walk must list every tracked root file and every tracked file
- * under the walked trees); the filesystem (the hit read's record for each walked file must equal the file's size on disk
- * and its line count, read apart from the census, so a read that skips a file or stops early reds on the real tree); and
- * the docs/workbench/07 Deno sentence, which names the six command families the shapes must equal label for label. A
- * scratch tree pins the hit read's reach: a planted line is reported, by file, line and shape, from the root files, every
- * walked tree, a file of every kind (extension) the real walk reads, a first line, a last line with no newline, a line past
- * the first 64 KiB of a file and the end of a line longer than 64 KiB. Each shape is held to its planted controls (PLANTS,
- * EXTRA_PLANTS, TOKEN_PLANTS and SUBFORM_PLANTS, counted per shape in FROZEN_SHAPE_PLANTS): one per alternative, and one per
- * flexible part of a shape's source that a real-form line traverses, so a one-edit narrowing of a planted form reds its
- * control. Outside the walk, the seat's scan of every tracked file at trunk 134479ca (1123 files) reads 7 matcher hits,
- * none in a lane: this bead's exported row in .beads/issues.jsonl (all six shapes: its notes quote the gate's witness lines)
- * and docs/workbench/receipts/wb-693.7.md:11 (I3, prose naming the mise install of the engine); a record, not a claim of
- * this census.
+ * examples, src, test and qa trees; its hit read takes in each listed file whole; and that hit read reports no hit of the
+ * six closed shapes in DENO_INSTALL_SHAPES over the walked set. This file and the helper are walked and judged, never
+ * exempt, so every planted control below is composed at run time and no line of this file spells a shape. Three anchors
+ * sit outside this census's own literals: the repository's git index (the walked trees and UNWALKED_ROOTS, each named
+ * with why, must partition its tracked top-level directories, and the walk must list every tracked root file and every
+ * tracked file under the walked trees); the filesystem (the hit read's record for each walked file must equal the file's
+ * size on disk and its line count, read apart from the census, so a read that skips a file or stops early reds on the
+ * real tree); and the docs/workbench/07 Deno sentence, which names the six command families the shapes must equal label
+ * for label. A scratch tree pins the hit read's reach at the lines it plants: each is reported, by file, line and shape,
+ * from the root files, every walked tree, a file of every kind (extension) the real walk reads, a first line, a last line
+ * with no newline, a line past the first 64 KiB of the largest planted file and the end of a line longer than 64 KiB. Each
+ * shape is held to its planted controls (PLANTS, EXTRA_PLANTS, TOKEN_PLANTS and SUBFORM_PLANTS, counted per shape in
+ * FROZEN_SHAPE_PLANTS): one per alternative, and one per flexible part of a shape's source that a real-form line
+ * traverses, so a one-edit narrowing of a planted form reds its control. Outside the walk, the seat's scan of every
+ * tracked file at trunk 134479ca (1123 files) reads 7 matcher hits, none in a lane: this bead's exported row in
+ * .beads/issues.jsonl (all six shapes: its notes quote the gate's witness lines) and
+ * docs/workbench/receipts/wb-693.7.md:11 (I3, prose naming the mise install of the engine); a record, not a claim of this
+ * census.
  *
- * NOT CLAIMED by this census: untracked top-level directories (node_modules, .forge, a .git directory), the trees
- * UNWALKED_ROOTS names and any symlink at the repository root (a worktree may link its node_modules; root links are never
- * followed); a Deno package declared as an npm dependency (package.json and package-lock.json are read for the six command
- * shapes only); Pi lane session transcripts (the census reads the tracked lane definitions and trees); a form of a shape
- * that no planted control spells (the census claims the planted forms, not every spelling a shape's source admits); a
- * one-edit widening of a shape that reads no quiet row, no near-miss row and no walked line (a widened shape reads more
- * lines, never fewer); a filter of the reported hits by a property no scratch plant varies; and, inside one shape, a
- * coordinated removal of one alternative (a manager, a verb, a host) from the matcher, its planted controls and the frozen
- * count together, since the docs anchor names the families, not their tokens. NAMED RESIDUALS, the install forms no shape
- * reads, each a named family with its pinned quiet rows in RESIDUAL_QUIET (a matcher that starts reading one reds it) and
- * each named in the helper's header: R-MIRROR, an engine archive or installer script from a host no shape names;
- * R-COMPOSED, an install command assembled at run time, which no source line spells; R-UNNAMED-MANAGER, an install through
- * a version or package manager no shape names; R-UNNAMED-VERB, a named manager's verb, subcommand or runner its shape does
- * not spell; R-DECLARED-TOOL, the engine declared in a version manager's tool file; R-IMAGE-FORM, the engine image used by
- * a form the image shape does not spell; R-THIRD-PARTY-ACTION, a CI setup action from another owner; R-RELEASE-API, the
- * release metadata read through the forge's REST API; R-SPLIT-LINE, an install command continued over several lines.
+ * NOT CLAIMED by this census: any reach of the hit read past the cases pinned under DENO_LANE_SUITE (the describe's
+ * words, no Pi lane carries a Deno install command, name the census's subject, not a reach past those cases); untracked
+ * top-level directories (node_modules, .forge, a .git directory), the trees UNWALKED_ROOTS names and any symlink at the
+ * repository root (a worktree may link its node_modules; root links are never followed); a Deno package declared as an
+ * npm dependency (package.json and package-lock.json are read for the six command shapes only); Pi lane session
+ * transcripts (the census reads the tracked lane definitions and trees); a form of a shape that no planted control spells
+ * (the census claims the planted forms, not every spelling a shape's source admits); a one-edit widening of a shape that
+ * reads no quiet row, no near-miss row and no walked line (a widened shape reads more lines, never fewer); a filter of
+ * the reported hits, or of the lines offered to the shapes, by a property no scratch plant varies (the forms named here
+ * are deferred to wb-j4sm, ruling R-B292: a hit in a file larger than the largest planted file, the gate's file over 128
+ * KiB among them; a hit past line 2049, the planted line farthest down, the gate's line past 4096 among them; a hit in a
+ * dot-named file; and a line led by #); a second hit on a line that already holds one, which no planted line carries;
+ * inside one shape, a coordinated removal of one alternative (a manager, a verb, a host) from the matcher, its planted
+ * controls and the frozen count together, since the docs anchor names the families, not their tokens; and, inside one
+ * residual family, a coordinated removal of one quiet row and the family's frozen row count together, since the helper's
+ * header names the families, not their rows. NAMED RESIDUALS, the install forms no shape reads, each a named family with
+ * its pinned quiet rows in RESIDUAL_QUIET (a matcher that starts reading one reds it) and each named in the helper's
+ * header: R-MIRROR, an engine archive or installer script from a host no shape names; R-COMPOSED, an install command
+ * assembled at run time, which no source line spells; R-UNNAMED-MANAGER, an install through a version or package manager
+ * no shape names; R-UNNAMED-VERB, a named manager's verb, subcommand or runner its shape does not spell; R-DECLARED-TOOL,
+ * the engine declared in a version manager's tool file; R-IMAGE-FORM, the engine image used by a form the image shape
+ * does not spell; R-THIRD-PARTY-ACTION, a CI setup action from another owner; R-RELEASE-API, the release metadata read
+ * through the forge's REST API; R-SPLIT-LINE, an install command continued over several lines.
  */
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -124,7 +141,7 @@ function cp(code: number): string {
 }
 
 describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test/helpers/rf-tsx-deno.ts)", () => {
-  it("resolveOnPath reads PATH in order as shutil.which does: a directory, a non-executable file and a broken symlink are passed over, the first executable file wins", () => {
+  it("resolveOnPath reads PATH in order: a directory, a non-executable file and a broken symlink are passed over, the first executable file wins", () => {
     const dir = scratch("deno-which-");
     const marker = join(dir, "executed");
     mkdirSync(join(dir, "a", DENO_ENGINE), { recursive: true });
@@ -166,7 +183,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     expect(refusal.message).toMatch(/^rf_tsx_deno_unresolved: no executable deno on PATH/);
   });
 
-  it("a deno that is a symlink to a version manager's binary is refused typed rf_tsx_deno_shim, naming the realpath's name", () => {
+  it("a deno that is a symlink to a version manager's binary named mise is refused typed rf_tsx_deno_shim, naming the realpath's name", () => {
     const dir = scratch("deno-manager-");
     const marker = join(dir, "executed");
     const manager = plantEngine(join(dir, "manager", "bin"), marker, "mise");
@@ -180,7 +197,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     expect(existsSync(marker)).toBe(false);
   });
 
-  it("a deno inside a shims directory is refused typed rf_tsx_deno_shim, even when its name and bytes look like the engine", () => {
+  it("a deno whose parent directory is shims is refused typed rf_tsx_deno_shim, even when its name and bytes look like the engine", () => {
     const dir = scratch("deno-shims-");
     const marker = join(dir, "executed");
     plantEngine(join(dir, "shims"), marker);
@@ -191,7 +208,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     expect(existsSync(marker)).toBe(false);
   });
 
-  it("a PATH entry inside a shims directory is refused typed rf_tsx_deno_shim on the resolved path alone, though its symlink's target is an engine-named binary outside one", () => {
+  it("a PATH entry that is a shims directory is refused typed rf_tsx_deno_shim on the resolved path alone, though its symlink's target is an engine-named binary outside one", () => {
     const dir = scratch("deno-shims-resolved-");
     const marker = join(dir, "executed");
     const engine = plantEngine(join(dir, "tools", "bin"), marker);
@@ -203,7 +220,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     expect(existsSync(marker)).toBe(false);
   });
 
-  it("a symlink outside any shims directory whose realpath sits in one is refused typed rf_tsx_deno_shim on the realpath alone", () => {
+  it("a symlink outside any shims directory whose realpath's parent directory is shims is refused typed rf_tsx_deno_shim on the realpath alone", () => {
     const dir = scratch("deno-shims-realpath-");
     const marker = join(dir, "executed");
     const engine = plantEngine(join(dir, "manager", "shims"), marker);
@@ -215,7 +232,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     expect(existsSync(marker)).toBe(false);
   });
 
-  it("a deno that is a #! script is refused typed rf_tsx_deno_shim, never executed", () => {
+  it("a deno that is a #!/bin/sh script is refused typed rf_tsx_deno_shim, never executed", () => {
     const dir = scratch("deno-script-");
     const marker = join(dir, "executed");
     mkdirSync(join(dir, "bin"));
@@ -236,7 +253,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     expect(whole).not.toBe(createHash("sha256").update(readFileSync(file).subarray(0, 1 << 20)).digest("hex"));
   });
 
-  it("a resolved engine whose sha256 differs from the reported pin is refused typed rf_tsx_deno_mismatch, naming both digests", () => {
+  it("a resolved engine whose sha256 differs from the reported pin f*64 is refused typed rf_tsx_deno_mismatch, naming both digests", () => {
     const dir = scratch("deno-mismatch-");
     const marker = join(dir, "executed");
     const engine = plantEngine(join(dir, "bin"), marker);
@@ -362,7 +379,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     ["mise-deno (a prefix)", "mise-deno"],
     ["xdeno (a prefix with no separator)", "xdeno"],
     ["dino (the engine's length, another name)", "dino"],
-  ])("a deno that is a symlink to a manager binary named %s is refused typed rf_tsx_deno_shim: the realpath's name is compared whole and case-sensitively", (_label, name) => {
+  ])("a deno that is a symlink to a manager binary named %s is refused typed rf_tsx_deno_shim: that realpath name is another name than deno", (_label, name) => {
     const dir = scratch("deno-manager-name-");
     const marker = join(dir, "executed");
     const manager = plantEngine(join(dir, "manager", "bin"), marker, name);
@@ -374,7 +391,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     expect(existsSync(marker)).toBe(false);
   });
 
-  it("a deno under a shims directory two levels up (manager/shims/bin/deno) is refused typed rf_tsx_deno_shim, on its resolved path and on a symlink's realpath: shims is read at any depth", () => {
+  it("a deno under a shims directory two levels up (manager/shims/bin/deno) is refused typed rf_tsx_deno_shim, on its resolved path and on a symlink's realpath", () => {
     const dir = scratch("deno-shims-nested-");
     const marker = join(dir, "executed");
     const engine = plantEngine(join(dir, "manager", "shims", "bin"), marker);
@@ -389,7 +406,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     expect(existsSync(marker)).toBe(false);
   });
 
-  it.each<[string]>([["Shims"], ["shim"], ["myshims"]])("a deno under a directory named %s passes the pre-render half: only a directory named exactly shims is the mark", dirName => {
+  it.each<[string]>([["Shims"], ["shim"], ["myshims"], ["shims2"]])("a deno under a directory named %s passes the pre-render half: a directory of that name is not the shims mark", dirName => {
     const dir = scratch("deno-shims-near-");
     const marker = join(dir, "executed");
     const engine = plantEngine(join(dir, dirName), marker);
@@ -397,7 +414,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     expect(existsSync(marker)).toBe(false);
   });
 
-  it("an engine whose first byte is # but whose second is not ! passes the pre-render half: only #! is the script mark", () => {
+  it("an engine whose first byte is # but whose second is not ! passes the pre-render half: a # alone is not the script mark", () => {
     const dir = scratch("deno-hash-");
     const marker = join(dir, "executed");
     mkdirSync(join(dir, "bin"));
@@ -411,7 +428,7 @@ describe("wb-70xe identity reading: the PATH-resolved deno, never executed (test
     ["its first hex", 0],
     ["its 33rd hex", 32],
     ["its last hex", 63],
-  ])("a pin that differs from the measured sha256 only in %s is refused typed rf_tsx_deno_mismatch: the whole digest is compared", (_label, index) => {
+  ])("a pin that differs from the measured sha256 only in %s is refused typed rf_tsx_deno_mismatch", (_label, index) => {
     const dir = scratch("deno-mismatch-one-");
     const marker = join(dir, "executed");
     const engine = plantEngine(join(dir, "bin"), marker);
@@ -655,6 +672,8 @@ const RESIDUAL_QUIET: readonly { readonly id: string; readonly line: string }[] 
 ];
 /** The residual families, in RESIDUAL_QUIET's order: each named in the helper's header, each with at least one quiet row. */
 const RESIDUAL_FAMILIES: readonly string[] = ["R-MIRROR", "R-COMPOSED", "R-UNNAMED-MANAGER", "R-UNNAMED-VERB", "R-DECLARED-TOOL", "R-IMAGE-FORM", "R-THIRD-PARTY-ACTION", "R-RELEASE-API", "R-SPLIT-LINE"];
+/** The frozen count of quiet rows per residual family (rule 16; wb-70xe cut #4, U5 of refusal 3), in RESIDUAL_FAMILIES' order. */
+const FROZEN_RESIDUAL_ROWS: readonly string[] = ["R-MIRROR:2", "R-COMPOSED:1", "R-UNNAMED-MANAGER:3", "R-UNNAMED-VERB:10", "R-DECLARED-TOOL:2", "R-IMAGE-FORM:6", "R-THIRD-PARTY-ACTION:1", "R-RELEASE-API:1", "R-SPLIT-LINE:2"];
 /** Lines that name the engine or a manager without installing anything: each reads quiet (the docs/07 paragraph is read by the anchor case). */
 const QUIET: readonly string[] = [["mise", "exec", "--", "pnpm", "exec", "vitest", "run"].join(" "), [DENO_ENGINE, "--version"].join(" "), ["npm", "install", "--no-audit"].join(" ")];
 /** Lines one edit from a shape: a package whose name starts with the engine's letters, so a shape widened past its trailing word boundary reads it. */
@@ -696,7 +715,7 @@ describe(DENO_LANE_SUITE, () => {
     expect(underTrees.filter(path => !listed.has(path))).toEqual([]);
   });
 
-  it("the hit read takes in every walked file whole: one record per walked file in walk order, each with the file's size on disk in bytes and every one of its lines offered to the shapes, files past 64 KiB among them (the filesystem, an anchor outside this census)", () => {
+  it("the hit read takes in every walked file whole: one record per walked file in walk order, each with the file's size on disk in bytes and the count of lines the scan iterated, files past 64 KiB among them (the filesystem, an anchor outside this census)", () => {
     const census = rootCensus();
     expect(census.read).toHaveLength(census.files.length);
     expect(census.read).toEqual(census.whole);
@@ -705,12 +724,12 @@ describe(DENO_LANE_SUITE, () => {
     expect(large).toContain("test/workbench-docs07-provider-rules.census.ts");
   });
 
-  it("no walked line matches any of the six shapes: 0 hits over the walked set, this file and the helper judged with the rest", () => {
+  it("the hit read reports no hit of the six shapes over the walked set, this file and the helper judged with the rest", () => {
     expect(DENO_INSTALL_SHAPES.map(shape => shape.id)).toEqual(["I1", "I2", "I3", "I4", "I5", "I6"]);
     expect(rootCensus().hits).toEqual([]);
   });
 
-  it("each shape reads each of its planted controls, its sub-forms included, as that shape only; the quiet lines, the near-miss lines and every residual family's quiet rows read nothing, and the residual families are exactly those the helper's header names, in its order (an anchor outside this census)", () => {
+  it("each shape reads each of its planted controls, its sub-forms included, as that shape only; the quiet lines, the near-miss lines and every residual family's quiet rows read nothing, and the residual families are exactly those the helper's header names, in its order (an anchor outside this census), each with its frozen count of quiet rows", () => {
     expect(PLANTS.map(plant => plant.shape)).toEqual(DENO_INSTALL_SHAPES.map(shape => shape.id));
     for (const plant of PLANTS) expect(denoInstallHits(plant.line), plant.line).toEqual([`1:${plant.shape}`]);
     for (const plant of EXTRA_PLANTS) expect(denoInstallHits(plant.line), plant.line).toEqual([`1:${plant.shape}`]);
@@ -719,6 +738,7 @@ describe(DENO_LANE_SUITE, () => {
     for (const plant of SUBFORM_PLANTS) expect(denoInstallHits(plant.line), plant.line).toEqual([`1:${plant.shape}`]);
     for (const line of [...QUIET, ...NEAR_MISS_QUIET]) expect(denoInstallHits(line), line).toEqual([]);
     expect([...new Set(RESIDUAL_QUIET.map(residual => residual.id))]).toEqual(RESIDUAL_FAMILIES);
+    expect(RESIDUAL_FAMILIES.map(family => `${family}:${RESIDUAL_QUIET.filter(residual => residual.id === family).length}`)).toEqual(FROZEN_RESIDUAL_ROWS);
     for (const residual of RESIDUAL_QUIET) expect(denoInstallHits(residual.line), `${residual.id}: ${residual.line}`).toEqual([]);
     const header = readFileSync(join(ROOT, HELPER), "utf8").split("*/")[0] ?? "";
     const residualPage = header.slice(header.indexOf("NAMED RESIDUALS, the install forms"));
@@ -727,7 +747,7 @@ describe(DENO_LANE_SUITE, () => {
     expect(denoInstallHits(["quiet", PLANTS[2]?.line ?? "", "quiet", PLANTS[4]?.line ?? ""].join("\n"))).toEqual(["2:I3", "4:I5"]);
   });
 
-  it("a planted install line in a lane file reds the census, naming the file, the line and the shape: in the root files, in every walked tree, in a file of every kind the real walk reads, on a first line, on a last line with no newline, past the first 64 KiB of a file and at the end of a line longer than 64 KiB", () => {
+  it("each install line this case plants reds the census, naming the file, the line and the shape: in the root files, in every walked tree, in a file of every kind the real walk reads, on a first line, on a last line with no newline, past the first 64 KiB of the largest planted file and at the end of a line longer than 64 KiB", () => {
     const dir = scratch("deno-lane-");
     const plant = (path: string, text: string): void => {
       mkdirSync(join(dir, path, ".."), { recursive: true });
