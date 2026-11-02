@@ -24,7 +24,11 @@
  *  Liveness controls, each planted over the file's own bytes at the offsets the reading gives: W4 wb-gwr.2's landed doc comment
  *  (byte for byte) reads red on both checks and leaves the pattern's reading unchanged; W5 wb-noq8's landed shape list (byte for
  *  byte) reads red on both checks; W6 READING followed by ", as a whole segment", planted in either text, reads red on "segment"
- *  alone; W7 the pattern planted with the class [^A-Za-z0-9] composes no reading (no noun for a-z), and with the class [^A-Z]
+ *  alone, and so does the word in other letter cases, so the check reads "segment" in any letter case: ", as a Whole Segment"
+ *  planted in the doc comment, ", as a whole SEGMENT" planted in the shape list, and ", as a whole " then each of the word's 128
+ *  letter-case spellings (each of its seven letters lower or capital; 128 distinct spellings, each "segment" once lowercased)
+ *  planted in the doc comment;
+ *  W7 the pattern planted with the class [^A-Za-z0-9] composes no reading (no noun for a-z), and with the class [^A-Z]
  *  composes "a capital A-Z glues; every other character and a code end bound", which the sweep reads true of that pattern and which
  *  neither text holds, so both texts are held to the pattern's ranges; W8 the sweep judged against the range A-Z alone misreads
  *  exactly the ten units 0-9, a pattern that reads only the unit before CONFLICT and one that reads only the unit after it each
@@ -37,7 +41,9 @@
  *
  * NOT CLAIMED: the texts' other sentences and their grammar (a negated, conditional or contradicting sentence beside READING that
  * never spells "segment" reads green); READING in any other spelling (it is matched byte for byte once white space collapses, so a
- * re-capitalized or re-punctuated reading reads red, fail-closed); G8's title and the observer test's header, which already read
+ * re-capitalized or re-punctuated reading reads red, fail-closed); "segment" spelled with any character other than its seven ASCII
+ * letters in lower or capital case (a full-width, a zero-width-split or a hyphen-split spelling, or one through U+017F, the long s);
+ * G8's title and the observer test's header, which already read
  * wider and which this file does not read; every other text that describes the reading; and the pattern's case reading and its
  * one-bounded-CONFLICT-anywhere reading, which G8 pins through the adapter (W1 pins no flags and READING names no case).
  *
@@ -76,6 +82,12 @@ const LANDED_SHAPES = "(a string view, a diagnostic code naming CONFLICT as a wh
 /** W6: READING, then the wording F1 names. */
 const SEGMENT_DOC = `/** A producer diagnostic is a conflict status when ${READING}, as a whole segment. */`;
 const SEGMENT_SHAPES = `(a diagnostic code naming CONFLICT bounded on both sides (${READING}), as a whole segment)`;
+/** W6: the same wording in two other letter cases, one planted in each text. */
+const CASED_SEGMENT_DOC = `/** A producer diagnostic is a conflict status when ${READING}, as a Whole Segment. */`;
+const CASED_SEGMENT_SHAPES = `(a diagnostic code naming CONFLICT bounded on both sides (${READING}), as a whole SEGMENT)`;
+/** W6: "segment" in each of its 128 letter cases (bit n of the index capitalizes letter n), and the doc comment each is planted in. */
+const SEGMENT_CASES = Array.from({ length: 128 }, (_, index) => [..."segment"].map((letter, bit) => (index & (1 << bit) ? letter.toUpperCase() : letter)).join(""));
+const casedSegmentDoc = (spelling: string): string => `/** A producer diagnostic is a conflict status when ${READING}, as a whole ${spelling}. */`;
 /** W7: the pattern with a-z added to its class on both sides, and with 0-9 taken out of it on both sides. */
 const LOWER_GLUE_PATTERN = "/(?:^|[^A-Za-z0-9])CONFLICT(?:[^A-Za-z0-9]|$)/";
 const CAPITAL_GLUE_PATTERN = "/(?:^|[^A-Z])CONFLICT(?:[^A-Z]|$)/";
@@ -285,13 +297,28 @@ describe("wb-4f0q: the two texts that describe the HX adapter's conflict-code re
     expect(judge(planted.shapes, readObserver(observerText()).pattern.reading)).toStrictEqual({ reading: false, segment: true });
   });
 
-  it("W6 liveness: READING followed by 'as a whole segment', planted in either text, reads red on segment alone", () => {
+  it("W6 liveness: READING followed by 'as a whole segment', planted in either text, reads red on segment alone, and so does the word in other letter cases - 'Whole Segment' planted in the doc comment, 'whole SEGMENT' planted in the shape list, and each of its 128 letter-case spellings planted in the doc comment", () => {
     const adapter = observerText();
     const census = censusText();
     const doc = readObserver(splice(adapter, readObserver(adapter).docSpan, SEGMENT_DOC));
     const shapes = readShapeList(splice(census, readShapeList(census).span, SEGMENT_SHAPES));
     expect(judge(doc.doc, doc.pattern.reading)).toStrictEqual({ reading: true, segment: true });
     expect(judge(shapes.shapes, doc.pattern.reading)).toStrictEqual({ reading: true, segment: true });
+    const { docSpan } = readObserver(adapter);
+    const casedDoc = readObserver(splice(adapter, docSpan, CASED_SEGMENT_DOC));
+    const casedShapes = readShapeList(splice(census, readShapeList(census).span, CASED_SEGMENT_SHAPES));
+    expect(judge(casedDoc.doc, casedDoc.pattern.reading)).toStrictEqual({ reading: true, segment: true });
+    expect(judge(casedShapes.shapes, casedDoc.pattern.reading)).toStrictEqual({ reading: true, segment: true });
+    expect({ spellings: new Set(SEGMENT_CASES).size, lowercased: [...new Set(SEGMENT_CASES.map(spelling => spelling.toLowerCase()))] }).toStrictEqual({
+      spellings: 128,
+      lowercased: ["segment"],
+    });
+    const misjudged = SEGMENT_CASES.filter(spelling => {
+      const planted = readObserver(splice(adapter, docSpan, casedSegmentDoc(spelling)));
+      const verdict = judge(planted.doc, planted.pattern.reading);
+      return !(verdict.reading && verdict.segment);
+    });
+    expect(misjudged).toEqual([]);
   });
 
   it("W7 liveness: the pattern planted with the class [^A-Za-z0-9] composes no reading, and with the class [^A-Z] composes a reading the sweep reads true of it and neither text holds", () => {
