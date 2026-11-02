@@ -14,7 +14,9 @@
  * the helper header's claim block equals its CLAIM_LINES row byte for byte and names the pins that hold it; and the FALSIFIER ROSTER
  * block below equals FALSIFIERS byte for byte. The members refusal #3 (outbox row O:1696) names unmet, GP5-W07 and GP5-S02 with
  * its rider GP5-S01, and the members refusal #4 (outbox row O:1731) hands the carrier wb-km7q.15 (R-B302's inversion: GP15-A1,
- * GP15-A2 and GP15-A3 with the rider GP15-A4, and F5's GP15-B1 and GP15-F1) are FALSIFIERS rows since wb-km7q.15 cut #1.
+ * GP15-A2 and GP15-A3 with the rider GP15-A4, and F5's GP15-B1 and GP15-F1) are FALSIFIERS rows since wb-km7q.15 cut #1. The
+ * members the carrier's refusal #1 (outbox row O:1820) names unmet, GP24-F14, GP24-T14, GP24-F06 and GP24-FXW, with its F1
+ * member GP24-W1, are FALSIFIERS rows since wb-km7q.15 cut #2.
  * NOT CARRIED (each changes a reading wb-km7q.6's census keeps for itself, not a reader moved here): G1-M06 (a nested qa/src/ path
  * read as a surface: the surface set) and G1-P03 (the status phrase read short: the producer reading).
  * CUT #2 (refusal #1, O:1569: claims wider than their pins, R514/R515/R668): U1.1's three break-step classes are held whole by
@@ -36,7 +38,16 @@
  *   GP15-A1 to GP15-A4, long-run for GP15-B1); U1-TWICE holds a code-point pair, an NFD pair (GP5-S01, GP5-S02) and the order of
  *   the BMP manifest's recorded list, which U1-SEPARATORS reads as a set; SPEC-ROOT holds
  *   a .json root form (GP15-F1). U1.1's split is claimed under every steps argument for the texts U1.7 reads, U1.5's order for
- *   U1-TWICE's five lists and U1.7's step application for its 5542 readings; the helper's words() doc states U1.7's scope (F6).
+ *   U1-TWICE's six forms and U1.7's step application for its 5542 readings; the helper's words() doc states U1.7's scope (F6).
+ * wb-km7q.15 CUT #2 (its refusal #1, O:1820: U1.1's split for the U1.3 texts wider than its pins, and Acceptance clause 2 at
+ *   the U1 row): no reader changes. U1-SEPARATORS holds the words of every name reactive<c>fiber it reads (1112064 readings)
+ *   against statedWords under the default steps argument, their digest, and one twin per member class (digit-zero for GP24-F14
+ *   and GP24-T14, capital-a for GP24-F06 and the F1 member GP24-W1, small-x for GP24-FXW), so U1.1 names U1-SEPARATORS among its
+ *   pins and claims the U1.3 split as written; the split of any other text (a name U1-NAMES, U1-FIELDS or U1-TWICE holds that is
+ *   not one of U1.3's among them) and U1.7's step application to a text it does not read are NOT CLAIMED. The carrier's refusal
+ *   #1 lines (its U1 item and its F1 finding) anchor the O:1820 rows outside this file; the claim and roster cases read each
+ *   block's opener once (F2); PIN ANCHORS names a form's content replaced in both literals (F3); the cut #1 paragraph counts
+ *   U1-TWICE's six forms (F6).
  *
  * ROWS (one test per pin, titled by the pin id under its row; every pin's output is held to its WITNESS entry):
  *  U1 ADOPTION 'read by WORDS': U1-STEPS each WORDS step's calibration names, recorded with every step and unrecorded with that
@@ -45,7 +56,8 @@
  *   (claimedWords), and each class as the step reads it; U1-ORDERINGS every ordering of every subset of the steps as the steps
  *   argument, each reading against the same subset in WORD_STEPS order and against statedWords, and one twin per partial-argument
  *   class; U1-NAMES the recorded and unrecorded names of one manifest; U1-SEPARATORS every Unicode scalar value
- *   between the two words (and, over the Basic Multilingual Plane, the manifest reading agreeing with it); U1-FIELDS the four read
+ *   between the two words (and, over the Basic Multilingual Plane, the manifest reading agreeing with it) and the words of each
+ *   name, against statedWords, with their digest and one twin per member class; U1-FIELDS the four read
  *   fields (each a table's keys; an array, a string or null holds none), a key under each entry value it plants (one of each JSON
  *   kind, and the empty string) and a key nested in an object value, and the never-read ones; U1-TWICE a name in two read
  *   fields, and the sort order of its name lists (three ASCII lists, a code-point pair, an NFD pair and the BMP manifest's list).
@@ -71,15 +83,18 @@
  *   label (the item ids are the U rows), and the R-B150 paragraph's member ids are the O:1499 SPEC members and its quoted reading
  *   is the SPEC label; and the helper - its claim block (the lines and the pins they name), WORD_STEPS, DEPENDENCY_FIELDS,
  *   CANDIDATE_RULES, PAGE_SUFFIX and MODULE_SUFFIXES, each member of which has its own calibration, form or sweep entry here; the
- *   claim block also names each O:1569, O:1624, O:1696 and O:1731 member on the line whose pins hold it, and WORD_STEPS names the
+ *   claim block also names each O:1569, O:1624, O:1696, O:1731 and O:1820 member on the line whose pins hold it, and WORD_STEPS names the
  *   break steps that BREAK_STEPS lists and BREAK_CLASSES states; and, since wb-km7q.15 cut #1, the carrier's row - its description
- *   names the O:1696 members - and wb-km7q.12's refusal #4 lines (its U1 item and its F5 finding), which name the O:1731 members.
+ *   names the O:1696 members - and wb-km7q.12's refusal #4 lines (its U1 item and its F5 finding), which name the O:1731 members;
+ *   and, since wb-km7q.15 cut #2, the carrier's refusal #1 lines (its U1 item and its F1 finding), which name the O:1820 members.
  * PIN ANCHORS (refusal #1 F5): each pin is held by its IMPL entry against its own WITNESS literal; the anchors outside those two
  *   literals read keys (the helper's tables, the roster's keys, the residuals' quiet keys and, since cut #3 (refusal #2 F8), each
  *   residual's quiet rows, which its claim line names), the export's counts and labels and the U3 sweeps' dotted suffixes, never a
  *   pin's whole output, so a tautological IMPL entry (one returning its own WITNESS), a coordinated swap of two pins' IMPL and
  *   WITNESS entries and, since cut #4 (refusal #3 F7), a form deleted from a pin's IMPL and WITNESS entries together (GP5-K03,
- *   U2.5's dangling symlink; GP5-K04, U1.4's boolean value) are NOT CLAIMED by this census for any pin; a quiet row removed from
+ *   U2.5's dangling symlink; GP5-K04, U1.4's boolean value) and, since wb-km7q.15 cut #2 (its refusal #1 F3), a form's content
+ *   replaced in a pin's IMPL and WITNESS entries together (CT3b: U1-TWICE's code-point-order pair replaced in both by an ASCII
+ *   pair) are NOT CLAIMED by this census for any pin; a quiet row removed from
  *   both literals, or a quiet page emptied, reds the claim case.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and FALSIFIERS pins `${id}:${pin}`, each as a literal; a last
  *   case reads that every pin ran to its witness.
@@ -139,6 +154,11 @@
  *   GP15-A3 O:1731 U1 U1-ORDERINGS stated,nfkc-lower-case: nfkc applied only when all five steps are named
  *   GP15-A4 O:1731 U1 U1-ORDERINGS stated,nfkc-alone: nfkc applied only beside lower-case
  *   GP15-F1 O:1731 SPEC SPEC-ROOT root-json: a "/" specifier ending .json read as the candidate after its slash
+ *   GP24-F14 O:1820 U1 U1-SEPARATORS stated,digit-zero: a run of 14 characters dropped by the split
+ *   GP24-T14 O:1820 U1 U1-SEPARATORS stated,digit-zero: a run of 14 characters cut to its first 13
+ *   GP24-F06 O:1820 U1 U1-SEPARATORS stated,capital-a: a word of 6 characters dropped by the split
+ *   GP24-FXW O:1820 U1 U1-SEPARATORS stated,small-x: the word reactivexfiber dropped by the split
+ *   GP24-W1 O:1820 U1 U1-SEPARATORS stated,capital-a: lower-capital skipped for a text of 14 code units
  *
  * Display paths added: none. Test-only: the trees live in makeScratch scratch with the leak guard installed; the helper, this file
  * and the bead export are only read; U2-FILE stats /dev/null and plants a symlink to it, and a symlink to a file its scratch holds
@@ -190,7 +210,7 @@ interface ClaimLine {
 }
 interface Falsifier {
   readonly id: string;
-  readonly outbox: "O:1415" | "O:1499" | "O:1569" | "O:1624" | "O:1696" | "O:1731";
+  readonly outbox: "O:1415" | "O:1499" | "O:1569" | "O:1624" | "O:1696" | "O:1731" | "O:1820";
   readonly row: RowId;
   readonly pin: string;
   readonly keys: readonly string[];
@@ -208,6 +228,9 @@ const CARRIER = "wb-km7q.15";
 /** The first line of refusal #4's U1 item and of its F5 finding in wb-km7q.12's notes (O:1731). */
 const REFUSAL_4_U1 = "U1-LOW-CONFIRMED-RECORD-HONESTY-R514-R515-R668-STEP-APPLICATION-WIDER-THAN-PINS. ";
 const REFUSAL_4_F5 = "- F5 LOW RIDES: [PREP qualifier: CONFIRMED; hypothetical survivors";
+/** The first line of the carrier's refusal #1 U1 item and of its F1 finding in wb-km7q.15's notes (O:1820). */
+const CARRIER_REFUSAL_1_U1 = "U1-LOW-CONFIRMED-RECORD-HONESTY-R514-R515-R668-WORDS-SPLIT-RUNS-WIDER-THAN-PINS-AT-U1.3-TEXTS. ";
+const CARRIER_REFUSAL_1_F1 = "- F1 LOW RIDES: [PREP qualifier: PLAUSIBLE] ";
 
 // ------------------------------------------------------------------------------------------------------------------ the rows
 const ROWS: readonly Row[] = [
@@ -221,8 +244,8 @@ const ROWS: readonly Row[] = [
 const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "U1.1",
-    pins: ["U1-STEPS", "U1-CLASSES", "U1-ORDERINGS"],
-    text: "WORDS reads a text in five steps, in this order: nfkc (the text's NFKC form), lower-capital (a break between an ASCII lower-case letter and the ASCII capital after it), digit-capital (a break between an ASCII digit and the ASCII capital after it), capital-run (a break before the last capital of a run of two or more ASCII capitals that an ASCII lower-case letter follows), lower-case (String.prototype.toLowerCase); the words are then the runs of a-z and 0-9, and every other character separates them: held under every steps argument for the texts U1.7 reads (an ASCII capital that reaches the split under an argument without lower-case separating, the twin no-steps, and a run of 199 characters kept whole, the twin long-run; a longer run is NOT CLAIMED by this census) and under the default steps argument for every scalar value between two words (U1.3); the split of a text no claim line names is NOT CLAIMED by this census; each step is held by calibration names that read recorded with every step and unrecorded with that step alone left out, and each break step's class by U1.6 over the texts U1.6 holds, no other text claimed for the break steps (R-STEP-TEXT); it answers the O:1696 member GP5-W07 and the O:1731 member GP15-B1.",
+    pins: ["U1-STEPS", "U1-CLASSES", "U1-ORDERINGS", "U1-SEPARATORS"],
+    text: "WORDS reads a text in five steps, in this order: nfkc (the text's NFKC form), lower-capital (a break between an ASCII lower-case letter and the ASCII capital after it), digit-capital (a break between an ASCII digit and the ASCII capital after it), capital-run (a break before the last capital of a run of two or more ASCII capitals that an ASCII lower-case letter follows), lower-case (String.prototype.toLowerCase); the words are then the runs of a-z and 0-9, and every other character separates them: held under every steps argument for the texts U1.7 reads (an ASCII capital that reaches the split under an argument without lower-case separating, the twin no-steps, and a run of 199 characters kept whole, the twin long-run; a longer run is NOT CLAIMED by this census) and under the default steps argument for every scalar value c between two words (U1.3: the name reactive<c>fiber for each of its 1112064 values of c, every reading held against the census's own statement of WORDS and their digest held, with one absolute reading pinned for a digit, an ASCII capital and the small letter x as c, the twins digit-zero, capital-a and small-x); the split of any other text is NOT CLAIMED by this census (a name U1-NAMES, U1-FIELDS or U1-TWICE holds, if it is not one of U1.3's, is claimed only as U1.2, U1.4 and U1.5 read it, and U1.6 states its own texts' breaks); each step is held by calibration names that read recorded with every step and unrecorded with that step alone left out, and each break step's class by U1.6 over the texts U1.6 holds, no other text claimed for the break steps (R-STEP-TEXT); it answers the O:1696 member GP5-W07, the O:1731 member GP15-B1 and the O:1820 members GP24-F14, GP24-T14, GP24-F06, GP24-FXW and GP24-W1.",
   },
   {
     id: "U1.2",
@@ -252,7 +275,7 @@ const CLAIM_LINES: readonly ClaimLine[] = [
   {
     id: "U1.7",
     pins: ["U1-ORDERINGS"],
-    text: "WORDS applies exactly the steps a steps argument names, in WORD_STEPS order whatever the argument's own order: held over every ordering of every subset of the five, each step named once (326 arguments), each reading every U1-STEPS calibration name as that subset in WORD_STEPS order reads it, each reading those names and the long-run text exactly as the census's own statement of WORDS reads them (the named steps in the census's order, then the runs of a-z and 0-9; 5542 readings, their digest held), with one absolute reading pinned for each partial-argument class the O:1731 members break (lower-case alone, nfkc alone, nfkc with lower-case, three steps), and over reactiveFiber read with lower-case named before lower-capital (reactive fiber); it answers the O:1569 member GM-W17 and the O:1731 members GP15-A1, GP15-A2, GP15-A3 and GP15-A4; an argument naming a step twice is NOT CLAIMED by this census.",
+    text: "WORDS applies exactly the steps a steps argument names, in WORD_STEPS order whatever the argument's own order: held over every ordering of every subset of the five, each step named once (326 arguments), each reading every U1-STEPS calibration name as that subset in WORD_STEPS order reads it, each reading those names and the long-run text exactly as the census's own statement of WORDS reads them (the named steps in the census's order, then the runs of a-z and 0-9; 5542 readings, their digest held), with one absolute reading pinned for each partial-argument class the O:1731 members break (lower-case alone, nfkc alone, nfkc with lower-case, three steps), and over reactiveFiber read with lower-case named before lower-capital (reactive fiber); it answers the O:1569 member GM-W17 and the O:1731 members GP15-A1, GP15-A2, GP15-A3 and GP15-A4; an argument naming a step twice is NOT CLAIMED by this census; the steps an argument applies to any other text are claimed only where U1.1 (the default argument over U1.3's texts) and U1.6 (each break step alone, then lower-case, over its own texts) hold them.",
   },
   {
     id: "U2.1",
@@ -382,6 +405,11 @@ const FALSIFIERS: readonly Falsifier[] = [
   { id: "GP15-A3", outbox: "O:1731", row: "U1", pin: "U1-ORDERINGS", keys: ["stated", "nfkc-lower-case"], reading: "nfkc applied only when all five steps are named" },
   { id: "GP15-A4", outbox: "O:1731", row: "U1", pin: "U1-ORDERINGS", keys: ["stated", "nfkc-alone"], reading: "nfkc applied only beside lower-case" },
   { id: "GP15-F1", outbox: "O:1731", row: "SPEC", pin: "SPEC-ROOT", keys: ["root-json"], reading: 'a "/" specifier ending .json read as the candidate after its slash' },
+  { id: "GP24-F14", outbox: "O:1820", row: "U1", pin: "U1-SEPARATORS", keys: ["stated", "digit-zero"], reading: "a run of 14 characters dropped by the split" },
+  { id: "GP24-T14", outbox: "O:1820", row: "U1", pin: "U1-SEPARATORS", keys: ["stated", "digit-zero"], reading: "a run of 14 characters cut to its first 13" },
+  { id: "GP24-F06", outbox: "O:1820", row: "U1", pin: "U1-SEPARATORS", keys: ["stated", "capital-a"], reading: "a word of 6 characters dropped by the split" },
+  { id: "GP24-FXW", outbox: "O:1820", row: "U1", pin: "U1-SEPARATORS", keys: ["stated", "small-x"], reading: "the word reactivexfiber dropped by the split" },
+  { id: "GP24-W1", outbox: "O:1820", row: "U1", pin: "U1-SEPARATORS", keys: ["stated", "capital-a"], reading: "lower-capital skipped for a text of 14 code units" },
 ];
 
 // ---------------------------------------------------------------------------------------------------------------- the readings
@@ -863,7 +891,32 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     for (let point = 0; point <= BMP_TOP; point += 1) if (!isSurrogate(point)) keys.push(`reactive${String.fromCodePoint(point)}fiber`);
     const recorded = new Set(dependencyNames(manifestOf(keys)));
     const manifestReading = codePoints(char => !recorded.has(`reactive${char}fiber`), BMP_TOP);
-    return { ranges, bmpAgrees: isDeepEqual(manifestReading, codePoints(char => !recordsPair(`reactive${char}fiber`), BMP_TOP)), bmpKeys: keys.length };
+    // wb-km7q.15 cut #2 (its refusal #1 U1, O:1820): the words of every name read, each against statedWords under the default
+    // steps argument, their digest held, and one absolute twin per member class (a digit, an ASCII capital, the small letter x).
+    const read: string[] = [];
+    const stated: string[] = [];
+    for (let point = 0; point <= UNICODE_TOP; point += 1) {
+      if (isSurrogate(point)) continue;
+      const text = `reactive${String.fromCodePoint(point)}fiber`;
+      const reading = words(text).join(" ");
+      read.push(reading);
+      if (reading !== statedWords(text, WORD_STEPS).join(" ")) stated.push(hexOf(text));
+    }
+    const twin = (point: number): Json => {
+      const text = `reactive${String.fromCodePoint(point)}fiber`;
+      return { text: shown(text), words: words(text) };
+    };
+    return {
+      ranges,
+      bmpAgrees: isDeepEqual(manifestReading, codePoints(char => !recordsPair(`reactive${char}fiber`), BMP_TOP)),
+      bmpKeys: keys.length,
+      forms: {
+        stated: { texts: read.length, mismatches: stated.length, samples: stated.slice(0, 3), digest: sha16(read) },
+        "digit-zero": twin(0x30),
+        "capital-a": twin(0x41),
+        "small-x": twin(0x78),
+      },
+    };
   },
   "U1-FIELDS": () => ({
     forms: {
@@ -1223,6 +1276,12 @@ const WITNESS: Readonly<Record<string, Json>> = {
     "ranges": ["0030-0039", "0041-005A", "0061-007A", "00AA", "00B2-00B3", "00B9-00BA", "00BC-00BE", "0130", "0132-0133", "013F-0140", "0149", "017F", "01C4-01CC", "01F1-01F3", "02B0", "02B2-02B3", "02B7-02B8", "02E1-02E3", "0300-0304", "0306-0309", "030C", "030F", "0311", "0323", "0327-0328", "032D", "0330", "0340-0341", "0344", "1D2C", "1D2E", "1D30-1D31", "1D33-1D3A", "1D3C", "1D3E-1D43", "1D47-1D49", "1D4D", "1D4F-1D50", "1D52", "1D56-1D58", "1D5B", "1D62-1D65", "1D9C", "1DA0", "1DBB", "1E9A", "2070-2071", "2074-2079", "207F-2089", "2090-2093", "2095-209C", "20A8", "2100-2103", "2105-2106", "2109-210E", "2110-2113", "2115-2116", "2119-211D", "2120-2122", "2124", "2128", "212A", "212C-212D", "212F-2131", "2133-2134", "2139", "213B", "2145-2149", "2150-217F", "2189", "2460-24EA", "2C7C-2C7D", "3250-325F", "32B1-32CF", "3358-337A", "3380-33FF", "A7F1-A7F4", "FB00-FB06", "FF10-FF19", "FF21-FF3A", "FF41-FF5A", "107A5", "1CCD6-1CCF9", "1D400-1D454", "1D456-1D49C", "1D49E-1D49F", "1D4A2", "1D4A5-1D4A6", "1D4A9-1D4AC", "1D4AE-1D4B9", "1D4BB", "1D4BD-1D4C3", "1D4C5-1D505", "1D507-1D50A", "1D50D-1D514", "1D516-1D51C", "1D51E-1D539", "1D53B-1D53E", "1D540-1D544", "1D546", "1D54A-1D550", "1D552-1D6A3", "1D7CE-1D7FF", "1F100-1F10A", "1F110-1F12E", "1F130-1F14F", "1F16A-1F16C", "1F190", "1FBF0-1FBF9"],
     "bmpAgrees": true,
     "bmpKeys": 63488,
+    "forms": {
+      "stated": { "texts": 1112064, "mismatches": 0, "samples": [], "digest": "b976e5488f02792d" },
+      "digit-zero": { "text": "reactive0fiber", "words": ["reactive0fiber"] },
+      "capital-a": { "text": "reactiveAfiber", "words": ["reactive", "afiber"] },
+      "small-x": { "text": "reactivexfiber", "words": ["reactivexfiber"] },
+    },
   },
   "U1-FIELDS": {
     "forms": {
@@ -1965,6 +2024,11 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
       "GP15-A3:U1-ORDERINGS",
       "GP15-A4:U1-ORDERINGS",
       "GP15-F1:SPEC-ROOT",
+      "GP24-F14:U1-SEPARATORS",
+      "GP24-T14:U1-SEPARATORS",
+      "GP24-F06:U1-SEPARATORS",
+      "GP24-FXW:U1-SEPARATORS",
+      "GP24-W1:U1-SEPARATORS",
     ]);
     expect(Object.keys(IMPL).sort(byName)).toEqual([...pins].sort(byName));
     expect(Object.keys(WITNESS).sort(byName)).toEqual([...pins].sort(byName));
@@ -1996,8 +2060,24 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
     expect([item.length > 0, carried.length > 0, item.filter(id => carried.includes(id))]).toEqual([true, true, []]);
     expect([...item, ...carried].sort(byName)).toEqual(members("O:1731"));
   });
+  it("outside anchors: the carrier's refusal #1 U1 item and F1 finding name the O:1820 members", () => {
+    // wb-km7q.15 cut #2: the first line of the carrier's notes opening with refusal #1's U1 item names the members it leaves unmet,
+    // and the first opening with its F1 finding the member that rides with them; together, once each, they are the O:1820 rows.
+    const named = (text: string): string[] => [...new Set([...text.matchAll(/GP24-[A-Z][A-Z0-9]*/g)].map(match => match[0]))].sort(byName);
+    const notes = exportRowOf(CARRIER).notes.split("\n");
+    const item = named(notes.find(line => line.startsWith(CARRIER_REFUSAL_1_U1)) ?? "");
+    const rider = named(notes.find(line => line.startsWith(CARRIER_REFUSAL_1_F1)) ?? "");
+    expect([item.length > 0, rider.length > 0, item.filter(id => rider.includes(id))]).toEqual([true, true, []]);
+    expect([...item, ...rider].sort(byName)).toEqual(
+      FALSIFIERS.filter(falsifier => falsifier.outbox === "O:1820")
+        .map(falsifier => falsifier.id)
+        .sort(byName),
+    );
+  });
   it("claim: the helper's claim block is CLAIM_LINES byte for byte, its pins are the rows' pins, its tables have entries here", () => {
     const helper = readFileSync(join(REPO, HELPER), "utf8");
+    // wb-km7q.15 cut #2 (its refusal #1 F2): the claim block's opener stands once in the helper, so no second block stands unread.
+    expect(helper.split("\n").filter(line => line.startsWith(" * CLAIMS (")).length).toBe(1);
     expect(blockOf(helper, " * CLAIMS (")).toEqual(CLAIM_LINES.map(claimLine));
     expect([...new Set(CLAIM_LINES.flatMap(line => line.pins))].sort(byName)).toEqual([...pins].sort(byName));
     // Each residual line names one pin, whose witness holds exactly the residuals that name it under `quiet`.
@@ -2036,18 +2116,22 @@ describe("wb-km7q.12 activity-boundary readers census", () => {
     expect([...((sweepOf("U3-MODULE") as string[] | undefined) ?? [])].sort(byName)).toEqual(MODULE_SUFFIXES.map(suffix => suffix.slice(1)).sort(byName));
   });
   it("falsifier roster: the header block is FALSIFIERS byte for byte, and each member's keys are forms of its pin's witness", () => {
-    expect(blockOf(readFileSync(SELF, "utf8"), " * FALSIFIER ROSTER (")).toEqual(FALSIFIERS.map(rosterLine));
+    const self = readFileSync(SELF, "utf8");
+    // wb-km7q.15 cut #2 (its refusal #1 F2): the roster block's opener stands once in this file, so no second block stands unread.
+    expect(self.split("\n").filter(line => line.startsWith(" * FALSIFIER ROSTER (")).length).toBe(1);
+    expect(blockOf(self, " * FALSIFIER ROSTER (")).toEqual(FALSIFIERS.map(rosterLine));
     for (const falsifier of FALSIFIERS) {
       expect([falsifier.id, ROWS.find(row => row.id === falsifier.row)?.pins.some(pin => pin.id === falsifier.pin)]).toEqual([falsifier.id, true]);
       expect([falsifier.id, falsifier.keys.filter(key => !(key in witnessForms(falsifier.pin)))]).toEqual([falsifier.id, []]);
     }
-    // The O:1569, O:1624, O:1696 and O:1731 members are named, in roster order, by the claim lines whose pins hold them (the
+    // The O:1569, O:1624, O:1696, O:1731 and O:1820 members are named, in roster order, by the claim lines whose pins hold them (the
     // helper's claim block names them too): each outbox's member ids as the claim lines spell them, in claim-line order.
     const spellings: readonly (readonly [Falsifier["outbox"], RegExp])[] = [
       ["O:1569", /GM-[A-Z]\d\d/g],
       ["O:1624", /L2-[A-Z]\d\d[a-z]?/g],
       ["O:1696", /GP5-[A-Z]\d\d/g],
       ["O:1731", /GP15-[A-Z]\d/g],
+      ["O:1820", /GP24-[A-Z][A-Z0-9]*/g],
     ];
     for (const [outbox, spelling] of spellings) {
       const answered = CLAIM_LINES.flatMap(line => [...line.text.matchAll(spelling)].map(match => ({ id: match[0], pins: line.pins })));
