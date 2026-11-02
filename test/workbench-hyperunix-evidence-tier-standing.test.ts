@@ -1,8 +1,10 @@
 /** wb-tz2.12 (HX-ORIGINAL-GOALS-CLOSURE-R12), STANDING leg only. Cut #4, the final cut, in the fail-closed core orchestrator ruling
  * R-B100 binds on refusal #3, keeping the enumerate-the-resolvable form ruling R-B78 bound on refusal #2, with T2's acceptance reading
  * added by wb-tz2.18 (the rule-19 structural-exit child R-B100 moved that reading to; its cut #3 is the enumerate-the-resolvable cut
- * ruling R-B231 binds on its refusal #2, pinning each unread-name form and each module-level list's top-level declaration and
- * naming every other such form NOT CLAIMED): each case claims exactly the cells and pins it
+ * ruling R-B231 binds on its refusal #2, pinning each unread-name form and each module-level list's top-level declaration; its
+ * cut #4, the final cut, is the fail-closed core ruling R-B261 binds on its refusal #3, narrowing T2's HOLDER-identity claims to
+ * exactly the plants that pin them and naming every other kind, modifier, name form and nesting NOT CLAIMED, deferred to child
+ * wb-tz2.23): each case claims exactly the cells and pins it
  * runs, each pin is a falsifier this file executes, T2 claims what the decoder accepts read where it decides it, declared text, the
  * package's bytes and probes, and each mode outside them that this cut knows of is a named residual whose quiet row case Q pins. The
  * statement (STATEMENT below,
@@ -41,13 +43,22 @@
  *      protocol/decoder.js, read with the TypeScript parser: the 8 HOLDERS, decodeResultStream and the seven functions on its path
  *      that parse, copy, filter, feed, dispatch or refuse a frame's keys (parseFrameLine, parseFrameJson, snapshotJson, checkStream,
  *      StreamChecker.feed, StreamChecker.payload and StreamChecker.fail), each declared once (its module declares exactly one
- *      function of its name, or its class exactly one member of it, of any kind - a method, a field or an accessor, static or
- *      not - with its name written in any form the parser reads without running anything: an identifier, a string literal or a
- *      computed string literal; and every member of that class has a name read so or departs naming its form, which this census
- *      pins for exactly the 7 UNREAD_FORMS, one FALSIFIER each: a computed name holding a call, a binary expression, an identifier
- *      or a no-substitution template literal, a numeric name, a private name and a static block (two such members departing
- *      once, naming both forms: a control); a member of that class in any
- *      other name form, and so a HOLDER declared again under one, is NOT CLAIMED by this census) with its whole text equal to its
+ *      function of its name, or its class exactly one member under it, a member's name read when written as an identifier, a
+ *      string literal or a computed string literal), as this census pins it in exactly these plants, one FALSIFIER each and each
+ *      the one member of its form it pins: a second declaration departs in the 8 TWICE_CELLS (on payload a later plain instance
+ *      method under an identifier, a string literal and a computed string literal, an instance field under an identifier holding
+ *      an arrow function, a get accessor and a static method, each under an identifier; on fail an instance field under an
+ *      identifier holding an arrow function; on checkStream a second, unexported function declaration at its module's top
+ *      level), and a member of that class whose name is not read so departs naming its form in the 7 UNREAD_FORMS (the plain
+ *      instance methods [["pay", "load"].join("")], ["pay" + "load"], [PAYLOAD_KEY], [`audit`] and 0: a call, a binary
+ *      expression, an identifier, a no-substitution template literal and a numeric name; the instance field #audit = 0: a
+ *      private name; a static block), the number and private members planted together departing once, naming both forms (a
+ *      control). NOT CLAIMED by this census, each deferred to wb-tz2.23: a second declaration of another HOLDER, or of these in
+ *      another kind, modifier or name form (a set accessor, a static field or accessor, an async or generator method or
+ *      function, a field or accessor under a string-literal or computed name, a field holding a function expression); an unread
+ *      member of another kind (a static member other than a static block, an accessor, a field under a name that is not private
+ *      or without an initializer, a private, async or generator method); any other unread member of these forms or of another
+ *      form, its label included; and so a HOLDER declared again under such a member) with its whole text equal to its
  *      pinned sha256, so an edit anywhere in one (an early return, a rewritten input)
  *      departs; and written by no name the reading looks for: outside the HOLDERS' text its own module spells its name (as an
  *      identifier, a string literal or a no-substitution template literal) only at its declaration and as the callee of a call
@@ -70,9 +81,13 @@
  *      literal; the table an Object.freeze of an object literal), every member a string literal and every member of the table a
  *      property under an identifier or a string-literal name holding such a list (a member under a computed name, a spread, an
  *      accessor, a method or a shorthand departs; a kind the table lists twice is NOT CLAIMED by this census); and the 2
- *      module-level ones each read as the one top-level declaration of its name in the decoder module (a statement of the module
- *      itself, so a declaration of it nested in a block, which the site no longer consults, departs: one FALSIFIER each; one
- *      declared twice at the top level is not read either: a control) and
+ *      module-level ones each read at the one declaration of its name among the decoder module's top-level statements (a const
+ *      declaration in the installed module), as this census pins it in exactly these plants: its const declaration moved into a
+ *      block statement at the module's top level, which the site no longer consults, departs (one FALSIFIER each), and
+ *      OBSERVATION_FIELDS declared twice at the top level, both times as a var, is not read either (a control); a declaration
+ *      of either nested in any other statement or deeper (a switch case, a labelled statement, a block inside another
+ *      statement, a function's body, a loop, an if or a try), a single let or var declaration of either, and
+ *      OBSERVATION_PAYLOAD declared twice, are NOT CLAIMED by this census (deferred to wb-tz2.23); and
  *      spelled in the three modules, as identifiers, string literals or no-substitution template literals, only at that
  *      declaration and their site. Of the 27 shipped modules, OBSERVATION_FIELDS is spelled only in
  *      protocol/decoder.js, twice, and OBSERVATION_PAYLOAD, which that module exports, twice there, once in index.js (its
@@ -87,11 +102,12 @@
  *      OBSERVATION_FIELDS bodies accepts exactly its table list (every key of it passing the check), those seven are the kinds
  *      feed() dispatches, no accepted key holds a tier, and every unknown-key refusal of the decoder module is read (four at their
  *      named check sites, two at the consulted sites). Each of the 56 FALSIFIERS, one per claim cell (each HOLDER, site and list;
- *      each module-level list's container and its declaration nested in a block; each module-level list's references and two more
- *      reference forms, a string-literal reference and one from another consulted module; each decided part; an undispatched
- *      kind; a synonym at the check; a HOLDER declared twice in each member form - an identifier-named, a string-named, a
- *      computed-name and a static method, a field and an accessor - once on the envelope's path, a field of fail, and once as a
- *      module function, checkStream; a class member in each of the 7 UNREAD_FORMS; a table member in
+ *      each module-level list's container and its declaration moved into a top-level block; each module-level list's references
+ *      and two more reference forms, a string-literal reference and one from another consulted module; each decided part; an
+ *      undispatched kind; a synonym at the check; a HOLDER declared twice in each of the 8 TWICE_CELLS - payload as an
+ *      identifier-named, a string-named, a computed-name and a static method, an instance field and a get accessor, once on the
+ *      envelope's path, fail as an instance field, and once as a module function, checkStream; a class member in each of the 7
+ *      UNREAD_FORMS; a table member in
  *      each form that is not a key list - a computed name, a spread, an accessor, a method and a shorthand; a HOLDER written by a
  *      spelled name in each form - a prototype member, an instance member, Object.defineProperty under a template key, a rebinding
  *      and a write from another consulted module (the WRITE_FORMS prototype, instance, string, binding and elsewhere); and an eval
@@ -227,7 +243,7 @@
  * function a control shows can fire: moved() (a changed runtime digest moves every base reading's outputs and axis, and the twin's),
  * departure() (an open body departs from a refusal, a closed one from a decode), the placement control (every cell carries what it
  * names), promotion() (the licensed complete readings, and an unlicensed reading judged as licensed, flag each of its seven clauses),
- * the instrument's four stand-ins, acceptanceOf() (each of the 47 FALSIFIERS moves it), calleesOf() (a HOLDER planted to call
+ * the instrument's four stand-ins, acceptanceOf() (each of the 56 FALSIFIERS moves it), calleesOf() (a HOLDER planted to call
  * validateWireBody adds exactly it), the site readers' three premises (each planted away, its site is not read), acceptedTierNames()
  * (a copy holding a tier name at the envelope and in a body), the placement judge (in each of its arms, a row relabelled to a cell
  * it does not lie in), the cell-mark judge (in each of its arms, a row departing in another mark) and the witness judge (a row
@@ -785,9 +801,9 @@ interface Holder {
 }
 /** The 8 HOLDERS in path order: the line loop, the frame parse with its JSON parse and its copy, the stream check, then feed (the
  * envelope refusal and the dispatch), payload (the closed-body check) and fail (the refusal itself). The acceptance reading requires
- * each declared once (the one function of its name in its module, or the one member of its class under it, in any member kind and
- * name form) with its pinned text, so an edit anywhere in one (an early return, a rewritten input) departs, and written by no name
- * the three modules spell. */
+ * each declared once (the one function of its name in its module, or the one member of its class under it: a second declaration
+ * departs as T2's 8 TWICE_CELLS plants pin it, and any other kind, modifier or name form is NOT CLAIMED) with its pinned text, so an
+ * edit anywhere in one (an early return, a rewritten input) departs, and written by no name the three modules spell. */
 const HOLDERS: readonly Holder[] = [
   {module: 'result.js', name: 'decodeResultStream', sha256: '10e4c6aa57673c77a8f11d5eb3d30e6a05ec500d4dd6f93a50f382f95c8555fa'},
   {module: 'protocol/query.js', name: 'parseFrameLine', sha256: '0727532286f1a215cbec240e517036de85f51d074767353e092438af4f27b153'},
@@ -839,16 +855,18 @@ function parsedModule(name: string, text: string): ts.SourceFile {
   return file;
 }
 /** A class member's name as the parser reads it without running anything: an identifier, a string literal, or a computed name
- * holding a string literal; a constructor reads 'constructor'. Any other member reads no name, and unreadForm() names its form. */
+ * holding a string literal; a constructor reads 'constructor'. It reads no name for each of the 7 UNREAD_FORMS members T2 plants,
+ * whose form unreadForm() names; what it reads for any other member outside those name forms is NOT CLAIMED by this census. */
 function memberName(member: ts.ClassElement): string | undefined {
   if (ts.isConstructorDeclaration(member)) return 'constructor';
   const name = member.name;
   if (name !== undefined && (ts.isIdentifier(name) || ts.isStringLiteral(name))) return name.text;
   return name !== undefined && ts.isComputedPropertyName(name) && ts.isStringLiteral(name.expression) ? name.expression.text : undefined;
 }
-/** The form of a class member whose name memberName() does not read, as the reading names it: a static block, a private name, a
+/** The form of a class member whose name memberName() does not read, as the reading labels it: a static block, a private name, a
  * numeric name, or a computed name holding a call, a binary expression, an identifier or a no-substitution template literal (the
- * UNREAD_FORMS, one FALSIFIER each); the label of any other form is NOT CLAIMED. */
+ * UNREAD_FORMS), each label pinned by the one member T2's FALSIFIER of that form plants; the label of any other member, of these
+ * forms or another, is NOT CLAIMED. */
 function unreadForm(member: ts.ClassElement): string {
   if (ts.isClassStaticBlockDeclaration(member)) return 'block';
   const name = member.name;
@@ -864,9 +882,9 @@ function unreadForm(member: ts.ClassElement): string {
 /** The node a declaration's name is spelled at: a computed name's literal, else the name itself. */
 const nameNode = (declaration: ts.FunctionDeclaration | ts.ClassElement): ts.Node | undefined =>
   declaration.name !== undefined && ts.isComputedPropertyName(declaration.name) ? declaration.name.expression : declaration.name;
-/** The declarations of a module function (its module's top-level function declarations of that name), or of a Class.member (every
- * member of the class whose name memberName() reads as it, of any kind: a method, a field or an accessor, static or not), in a
- * parsed module. */
+/** The declarations of a module function (its module's top-level function declarations of that name), or of a Class.member (the
+ * members of the class whose name memberName() reads as it), in a parsed module; T2 pins a second declaration counted in exactly
+ * the 8 TWICE_CELLS forms, and whether one of any other kind, modifier or name form is counted is NOT CLAIMED. */
 function declarationsOf(file: ts.SourceFile, name: string): (ts.FunctionDeclaration | ts.ClassElement)[] {
   const dot = name.indexOf('.');
   const owner = dot < 0 ? undefined : name.slice(0, dot);
@@ -944,8 +962,9 @@ function constIn(root: ts.Node, name: string): ts.Expression | undefined {
   const declarations = nodesUnder(root, ts.isVariableDeclaration).filter(declaration => declaration.name.getText() === name);
   return declarations.length === 1 ? declarations[0]?.initializer : undefined;
 }
-/** The initializer of the one top-level declaration a module makes under a name: a statement of the module itself, never one nested
- * in a block (a function's body included). */
+/** The initializer of the one declaration a module's top-level variable statements make under a name; T2 pins that a const
+ * declaration moved into a block statement at the module's top level is not one and that two top-level var declarations give
+ * none, and any other nesting, or a single let or var declaration, is NOT CLAIMED. */
 function moduleConstIn(file: ts.SourceFile, name: string): ts.Expression | undefined {
   const declarations = file.statements.flatMap(statement => ts.isVariableStatement(statement)
     ? statement.declarationList.declarations.filter(declaration => declaration.name.getText() === name) : []);
@@ -1049,12 +1068,15 @@ function checkSite(holder: ts.FunctionLikeDeclaration): {readonly table: string;
   return found.length === 1 && constIn(holder, 'body')?.getText() === 'frame.body' ? found[0] : undefined;
 }
 /** The acceptance reading over three module texts (the installed ones, or a planted copy). Each HOLDER is declared once (one
- * declaration declarationsOf() counts, and every member of its class named so memberName() reads it) with its pinned text and
+ * declaration declarationsOf() counts, and no member of its class whose name memberName() does not read, each as T2 pins it in
+ * its TWICE_CELLS and UNREAD_FORMS plants only) with its pinned text and
  * written by no name the modules spell (outside the HOLDERS' text its own module spells its name only at a declaration counted for
  * it or where calledOrImported() holds, its class is spelled in no other consulted module, and no module spells eval); each
  * consulted site is read by its shape, its sets' names read from it; the set the filter tests, the dispatched set and the table the
- * check consults are read as string literals in their declared containers; and the two module-level ones are each read as the one
- * top-level declaration of its name in the decoder module and spelled in the three modules only at that declaration and their site. Each failure is a departure, and a part of acceptance whose sites are not all read reads empty: the
+ * check consults are read as string literals in their declared containers; and the two module-level ones are each read at the one
+ * declaration of its name among the decoder module's top-level statements (moduleConstIn(), pinned for a top-level block and a
+ * top-level var redeclaration only) and spelled in the three modules only at that declaration and their site. Each failure is a
+ * departure, and a part of acceptance whose sites are not all read reads empty: the
  * envelope (the set's members and UNRECORDED) needs the filter and the refusal, the bodies the dispatch and the check, a table kind
  * its dispatch. */
 function acceptanceOf(texts: ModuleTexts): AcceptanceReading {
@@ -1077,8 +1099,8 @@ function acceptanceOf(texts: ModuleTexts): AcceptanceReading {
     spans[holder.name] = [holder.module, only.getStart(), only.getEnd()];
     if (sha256(Buffer.from(only.getText(), 'utf8')) !== holder.sha256) departures.push(`${holder.name}: text`);
   }
-  // Every member of a class holding a HOLDER has a name memberName() reads (one built at run time could be a HOLDER's); the
-  // departure names the form of each one that has not (unreadForm()).
+  // A member of a class holding a HOLDER whose name memberName() does not read (one built at run time could be a HOLDER's) departs,
+  // naming the form of each such member (unreadForm()): pinned for the 7 UNREAD_FORMS members only, any other kind NOT CLAIMED.
   const classes = new Map<string, ts.ClassDeclaration>();
   for (const {module, name} of HOLDERS) {
     const owner = name.includes('.') ? name.slice(0, name.indexOf('.')) : undefined;
@@ -1268,13 +1290,16 @@ function identNamedPayload(): {readonly old: string; readonly planted: string} {
  * the global. */
 const blockTable = (): string => `globalThis[["OBSERVATION", "FIELDS"].join("_")] = Object.freeze({\n${inlinedTable()
   .replace('"observed_at", "confidence"],', () => `"observed_at", "confidence", ${AUDIT_BUILT}],`)}});\n{\n${tableDeclaration()}\n}`;
-/** The cells of a HOLDER declared twice: on payload, a later member of its name as a method under an identifier, a string literal
- * and a computed string literal, a field, an accessor and a static method; then on the envelope's path, a field of fail; then a
- * module function, checkStream, declared again in its module. */
+/** The cells of a HOLDER declared twice, the 8 forms T2 pins: on payload, a later member of its name as a plain instance method
+ * under an identifier, a string literal and a computed string literal, an instance field holding an arrow function, a get accessor
+ * and a static method (each under an identifier where not named otherwise); then on the envelope's path, an instance field of fail
+ * holding an arrow function; then a module function, checkStream, declared again in its module. Any other kind, modifier, name
+ * form or field initializer is NOT CLAIMED. */
 const TWICE_CELLS: readonly string[] = ['method', 'string', 'computed', 'field', 'accessor', 'static', 'envelope', 'function'];
-/** The forms of a member of the HOLDERS' class whose name memberName() reads none of, as the reading names them: a computed name
- * holding a call, a binary expression, an identifier or a no-substitution template literal, a numeric name, a private name, and a
- * static block. A member in any other name form is NOT CLAIMED. */
+/** The labels of the 7 pinned members of the HOLDERS' class whose name memberName() reads none of, one FALSIFIER each: a plain
+ * instance method under a computed name holding a call, a binary expression, an identifier or a no-substitution template literal,
+ * or under a numeric name, an instance field under a private name, and a static block. A member of another kind, or any other
+ * member in these name forms or another, is NOT CLAIMED. */
 const UNREAD_FORMS: readonly string[] = ['call', 'binary', 'identifier', 'template', 'number', 'private', 'block'];
 /** The forms of a table member that is not a key list. */
 const MEMBER_FORMS: readonly string[] = ['computed', 'spread', 'accessor', 'method', 'shorthand'];
@@ -1299,7 +1324,8 @@ interface Falsifier {
 }
 /** The 56 FALSIFIERS, one per claim cell in T2's cell order: each HOLDER (an edit outside every site: only its text departs), each
  * consulted site (an edit of its shape), each consulted list (a member that is not a string literal), each module-level list's
- * container (a wrapper the reader does not read) and its declaration nested in a block (no top-level declaration of it is left),
+ * container (a wrapper the reader does not read) and its declaration moved into a top-level block (no top-level declaration of it
+ * is left),
  * each module-level list's references (a write elsewhere) and each of the REFERENCE_FORMS, each decided part (a literal moves it),
  * a table kind left undispatched, the check admitting a key that holds no tier word, a HOLDER declared twice in each of the
  * TWICE_CELLS (a later StreamChecker member of its name, which overrides it or, static, does not; a module function declared
@@ -1984,7 +2010,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       .toStrictEqual(['supportIds', 'evidenceClasses', 'derivationHandles', 'providers', 'providerVersions']);
   });
 
-  it('T2: read where the decoder decides it, the frame envelope accepts exactly the seven keys of parseFrameLine\'s known set and __proto__, the one key the filter\'s assignment never records (GP-ENV0: request_id and reply_id, which ENVELOPE_KEYS declares, are refused, and of the names Object.prototype holds only __proto__ decodes, every one refused in each body) and each of the seven OBSERVATION_FIELDS bodies exactly the list payload()\'s check consults, every key of which passes that check, no accepted key holding a tier, over the 8 HOLDERS\' pinned text (each the one function or class member of its name in any member kind and read name form, every member of its class named so (one in each of the 7 UNREAD_FORMS departs), spelled outside the HOLDERS only as a callee or a named import in its own module, its class spelled in no other consulted module and none of the three spelling eval; their other callees exactly the 14 HELPERS), 4 consulted sites, 3 literal lists (each read in its container, every table member a key list) and 2 references (each list the one top-level declaration of its name in the decoder module, spelled in the three modules only at that declaration and their site), every unknown-key refusal read and each of the 56 FALSIFIERS (the gate\'s GP-ENVt, GP-OBSt, GP-OBSy, GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE, GP29-EVAL-FIELDS, GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER, GP30-STATIC-BLOCK-PAYLOAD and GP30-BLOCK-TABLE among them, one in each of the 56 claim cells) departing exactly as pinned from inside its cell; read as declarations, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export), the spellings of OBSERVATION_FIELDS and OBSERVATION_PAYLOAD in the 27 shipped modules (the latter also at its re-export and at execution.js\'s import and one read) and its 3 empty-body kinds are exactly these and hold no tier, and the package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
+  it('T2: read where the decoder decides it, the frame envelope accepts exactly the seven keys of parseFrameLine\'s known set and __proto__, the one key the filter\'s assignment never records (GP-ENV0: request_id and reply_id, which ENVELOPE_KEYS declares, are refused, and of the names Object.prototype holds only __proto__ decodes, every one refused in each body) and each of the seven OBSERVATION_FIELDS bodies exactly the list payload()\'s check consults, every key of which passes that check, no accepted key holding a tier, over the 8 HOLDERS\' pinned text (each the one function or class member of its name, a second one departing in each of the 8 TWICE_CELLS forms and an unread member of its class in each of the 7 UNREAD_FORMS members (five plain instance methods, a private field and a static block), every other kind, modifier and name form NOT CLAIMED, spelled outside the HOLDERS only as a callee or a named import in its own module, its class spelled in no other consulted module and none of the three spelling eval; their other callees exactly the 14 HELPERS), 4 consulted sites, 3 literal lists (each read in its container, every table member a key list) and 2 references (each list the one declaration of its name among the decoder module\'s top-level statements (a const), one moved into a top-level block departing and any other nesting or declaration kind NOT CLAIMED, spelled in the three modules only at that declaration and their site), every unknown-key refusal read and each of the 56 FALSIFIERS (the gate\'s GP-ENVt, GP-OBSt, GP-OBSy, GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE, GP29-EVAL-FIELDS, GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER, GP30-STATIC-BLOCK-PAYLOAD and GP30-BLOCK-TABLE among them, one in each of the 56 claim cells) departing exactly as pinned from inside its cell; read as declarations, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export), the spellings of OBSERVATION_FIELDS and OBSERVATION_PAYLOAD in the 27 shipped modules (the latter also at its re-export and at execution.js\'s import and one read) and its 3 empty-body kinds are exactly these and hold no tier, and the package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
     // THE BYTES: the package.json and each of the 27 shipped modules equal SDK_BYTES, so a change to any of them reds here.
     expect(sdkBytes(), BYTES_MOVED).toStrictEqual(SDK_BYTES);
     const tables = decoderTables();
@@ -2110,9 +2136,9 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     expect(Object.fromEntries(FALSIFIERS.map(falsifier =>
       [falsifier.id, departing(acceptanceOf({...texts, [falsifier.module]: planted(falsifier)}), acceptance)] as const)))
       .toStrictEqual(Object.fromEntries(FALSIFIERS.map(({id, departs}) => [id, departs] as const)));
-    // Two readings the rows rest on beyond one plant each: the unread-member departure names the form of every unread member (the
-    // GP30-NUMBER-MEMBER and GP30-PRIVATE-MEMBER members planted together depart once, naming both), and a module-level list the
-    // module declares twice at the top level is read as neither (OBSERVATION_FIELDS declared again as a var is not read).
+    // Two readings the rows rest on beyond one plant each: the unread-member departure names the form of each unread member planted
+    // together (the GP30-NUMBER-MEMBER and GP30-PRIVATE-MEMBER members depart once, naming both), and OBSERVATION_FIELDS declared
+    // twice at the top level, both times as a var, is not read.
     const decoderText = texts['protocol/decoder.js'];
     expect(acceptanceOf({...texts, 'protocol/decoder.js': decoderText.replace(ANSWER_HEAD,
       () => `    0() {\n        return undefined;\n    }\n    #audit = 0;\n${ANSWER_HEAD}`)}).departures)
@@ -2122,7 +2148,8 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       .replace('const EVIDENCE_STATUSES = new Set(', () => 'var OBSERVATION_FIELDS = Object.freeze({});\nconst EVIDENCE_STATUSES = new Set(')}), acceptance))
       .toContain('OBSERVATION_FIELDS: not read');
     // The rows' cells are T2's claim cells, in order, read from the reading and the SDK: each HOLDER, each site and list the
-    // installed reading reads, the container of each list it reads outside every HOLDER and then its declaration nested in a block,
+    // installed reading reads, the container of each list it reads outside every HOLDER and then its declaration moved into a
+    // top-level block,
     // each reference it counts and each of the REFERENCE_FORMS, each decided part, an undispatched kind, a synonym at the check, each
     // of the TWICE_CELLS, UNREAD_FORMS, MEMBER_FORMS and WRITE_FORMS, and each module holding a HOLDER (an eval).
     const outsideHolders = (list: string): boolean => !HOLDERS.some(({name}) => within(acceptance.spans[name],
