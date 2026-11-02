@@ -8,16 +8,16 @@
  * R-B127, not on trunk) can take them in place of its own readers as a mechanical restatement: entryExposures (D3's
  * WALK, with RESOLUTION and DEEP), entryTextNames (D3's ENTRY TEXT READ), pathReading, spellsDeep and holdsDeep (D1's
  * PATH reading), renderedBlocks (U1's reading of vendor/README.md) and registerMethods (D4's register-method count).
- * This census imports them and carries their claim parts itself (CLAIM_PARTS, below the imports), since the landed
- * helper holds the readers only. It proves each reader on its planted trees and reads the real tree through each; src/,
- * vendor/ and the tracker export are only read. Every sentence of this header that says what a reader reads is claimed
- * on the census's plants only (THE CLAIMS). Against wb-lrz.4's readers at the cuts the bead's items name, the cure is:
- * the WALK reads a named re-export AT an entry, whatever its specifier resolves to, as well as past it (the
- * chain-length hole closed, refusal #4 U1); a DEEP module is identified by its stem, so its TypeScript twin is DEEP
- * (refusal #5 U1); RESOLUTION reads an export *'s specifier in either entry through steps of a URL parser's and a file
- * path's reading (refusal #5 U3); a hard line break renders as a break (refusal #4 U2); a computed literal register
- * name is counted (refusal #5 U2); and D1's PATH reading drops ASCII tab, LF and CR (refusal #4 U3, as wb-lrz.4's cut
- * #5 read it).
+ * Their claim parts (CLAIM_PARTS) are test/helpers/furnace-sdk-entry-claims.ts, which this bead adds beside the landed
+ * helper (that helper holds the readers only); this census imports both. It proves each reader on its planted trees and
+ * reads the real tree through each; src/, vendor/ and the tracker export are only read. The claim paragraphs (THE
+ * CLAIMS) state what each reader reads; this summary claims nothing wider. Against wb-lrz.4's readers at the cuts the
+ * bead's items name, the cure is: the WALK reads a named re-export AT an entry, from the specifiers WALK FORM (2)
+ * names, as well as past it (the chain-length hole closed, refusal #4 U1); a DEEP module is identified by its stem, so
+ * its TypeScript twin is DEEP (refusal #5 U1); RESOLUTION reads an export *'s specifier in either entry through steps
+ * of a URL parser's and a file path's reading (refusal #5 U3); a hard line break renders as a break (refusal #4 U2); a
+ * computed literal register name is counted (refusal #5 U2); and D1's PATH reading drops ASCII tab, LF and CR (refusal
+ * #4 U3, as wb-lrz.4's cut #5 read it).
  *
  * CUT #2 (refusal #1's U1-U6; the class guard of rule 19(b)/(d)): refusal #1's 31 named sub-readings are pinned - an
  * "every" by two occurrences, a "first" by a later second one, an order ("then", "in order") by both candidates of each
@@ -77,24 +77,42 @@
  *
  * REFUSAL #4 AND THE R-B305 RE-CUT (this bead's refusal #4, its U1-U7; ruling R-B305, the rule-19 dependency inversion:
  * this bead waited on wb-lrz.9, which landed at landing 826). Refusal #4 found thirteen one-edit helper mutants that
- * leave this census green, each changing a reading only in a naming module, letter, %XX code or position no plant held,
+ * left this census green, each changing a reading only in a naming module, letter, %XX code or position no plant held,
  * inside the paragraphs of WALK FORM (2), (3) and (4), the ENTRY TEXT READ, the PATH READING and REGISTER METHODS
  * (U1-U6), and found CUT #4's narrowing sentences false along naming-module kind (U7). wb-lrz.9 moved this bead's cut
  * #4 readers byte for byte into the landed test/helpers/furnace-sdk-entry-readers.ts and pins refusal #3's twelve and
- * refusal #4's thirteen members on its probes in test/workbench-furnace-sdk-entry-reader-members-census.test.ts. This
- * re-cut is mechanical: the census imports the landed readers and carries the claim parts the landed helper does not
- * hold (CLAIM_PARTS: cut #4's texts, narrowed here); no reader line, plant, row, page, pin, SUBFORMS entry, residual or
- * frozen literal changes, and no case but the CLAIM TEXT case's title, which no longer names the helper as the claim
- * parts' home. THE CLAIMS now claim each paragraph on the census's plants only, and the paragraphs refusal #4 named now
- * name the plants' own modules, letters, codes and positions: WALK FORM (2)'s unaliased re-export past the entry
- * protocol.d.ts, protocol.js and zzhop.d.ts, its string export name past the entry protocol.js and its identifier
- * escape past the entry protocol.d.ts (U1); WALK FORM (3)'s spellings past export { x }, and a clause's member after
- * its first, protocol.d.ts, its string import name protocol.js (U2); WALK FORM (4)'s default import beside a namespace
- * import protocol.d.ts (U3); the ENTRY TEXT READ's non-ASCII letter U+00E9 (U4); the PATH READING's %XX codes %40, %2F,
- * %2f, %2E and %5C (U5; RESOLUTION's same phrase alike, to the %64, %65, %2e and %5C and the encoded tab, ? and # its
- * plants hold); and REGISTER METHODS' class declaration at the module's top level, class expression a function returns
- * and object literal a const declaration's initializer holds (U6). Refusal #4's thirteen members therefore sit on forms
+ * refusal #4's thirteen members on its probes in test/workbench-furnace-sdk-entry-reader-members-census.test.ts. That
+ * re-cut was mechanical: the census imported the landed readers and carried the claim parts the landed helper does not
+ * hold (CLAIM_PARTS: cut #4's texts, narrowed there); no reader line, plant, row, page, pin, SUBFORMS entry, residual
+ * or frozen literal changed, and no case but the CLAIM TEXT case's title. Its THE CLAIMS claimed each paragraph on the
+ * census's plants only by a blanket sentence, and the paragraphs refusal #4 named were made to name the plants' own
+ * modules, letters, codes and positions: WALK FORM (2)'s unaliased re-export past the entry protocol.d.ts, protocol.js
+ * and zzhop.d.ts, its string export name past the entry protocol.js and its identifier escape past the entry
+ * protocol.d.ts (U1); WALK FORM (3)'s spellings past export { x }, and a clause's member after its first,
+ * protocol.d.ts, its string import name protocol.js (U2); WALK FORM (4)'s default import beside a namespace import
+ * protocol.d.ts (U3); the ENTRY TEXT READ's non-ASCII letter U+00E9 (U4); the PATH READING's %XX codes %40, %2F, %2f,
+ * %2E and %5C (U5; RESOLUTION's same phrase alike, to the %64, %65, %2e and %5C and the encoded tab, ? and # its plants
+ * hold); and REGISTER METHODS' class declaration at the module's top level, class expression a function returns and
+ * object literal a const declaration's initializer holds (U6). Refusal #4's thirteen members therefore sit on forms
  * this census names NOT CLAIMED, each pinned by the members census (PINNED BY wb-lrz.9 below).
+ *
+ * REFUSAL #5 AND THE R-B369 RE-CUT (this bead's refusal #5, on the R-B305 re-cut, its U1-U7; ruling R-B369, a
+ * post-ladder disposition under standing rule 22(d)). Refusal #5 found fourteen one-edit mutants of the landed helper
+ * that left this census and the members census green, each on a form a paragraph's words named and no plant held: an
+ * upper-case ASCII letter just before a name, a lower-case one just after it and a legacy octal escape in the ENTRY
+ * TEXT READ (U1); a braced identifier escape, a \u string escape, a single-quoted string-literal name and a
+ * default-exported class declaration, named or anonymous, for REGISTER METHODS (U2); in WALK FORM (2), a main-entry
+ * re-export from a ./ path that resolves to nothing, a braced identifier escape past the entry, a main-entry \x string
+ * escape and a types-entry \u string escape (U3); in WALK FORM (3), an import declaration written after the local
+ * export it binds (U4); and in RENDERED, a reference link (U5). This re-cut pins each on a plant built from the
+ * refusal's paired real-tree witness - E1-TEXT-UPPER-BEFORE, E1-TEXT-LOWER-AFTER, E1-TEXT-OCTAL, R-ID-ESC-BRACE,
+ * R-STR-ESC-U, R-STRING-SINGLE, R-DEFAULT-CLASS, R-ANON-CLASS, E1-MAIN-UNRESOLVED, W-NAMED-PAST-BRACE, E1-MAIN-STR-HEX,
+ * E1-TYPES-STR-U, W-LOCAL-IMPORT-LATE and U2-LINK-REF - and each of the five paragraphs now names its plants' own forms
+ * (the escapes, letters, digit, comment kinds, string quotes, class declarations, specifiers and link kinds they
+ * write), the rest NOT CLAIMED by a specific sentence below (U7). The claim parts moved out of this file into
+ * test/helpers/furnace-sdk-entry-claims.ts (U6): a sub-form hollowed from this file's literals - its SUBFORMS entry,
+ * its plants, their pins and pages and its row's count - leaves the claims module's listed sub-form unanswered, which
+ * reds CLAIM ROSTER. No reader line changed: the landed helper is imported as it landed.
  *
  * THE ROWS (ROWS; a row's label is the line it answers, verbatim from the bead's row of the tracker export):
  *  E-U1, E-U2, E-U3: the description's enumerated items U1-U3. E-U4 (the note contact count) is DROPPED (below).
@@ -112,14 +130,15 @@
  * wb-lrz.4's (its cut #4 note stands append-only; an R649 additive correction is that bead's landing duty), and this cut's own
  * delivery note states its selection and run counts as one measured pair.
  *
- * THE CLAIMS (each a ClaimPart of this file's CLAIM_PARTS, held here byte-for-byte as its own paragraph; each claim
- * lists its sub-forms, and SUBFORMS names, for every listed sub-form in claim order, the plants that prove it and the
- * mark each of them carries). Each claim is claimed on the census's plants only: what its words describe - its
- * sub-forms and the entries, naming modules, positions, spellings, letters and codes it names, each "every", "each",
- * "any" and "only" among them - is claimed only where a plant or its twin plants it, as that plant's case states its
- * reading (the real tree's reading plus exactly the plant's lines), and on any input no plant plants the reading is NOT
- * CLAIMED by this census (NOT CLAIMED below). Since the R-B305 re-cut the paragraphs this bead's refusal #4 named name
- * their plants' own modules, letters, codes and positions:
+ * THE CLAIMS (each a ClaimPart of CLAIM_PARTS in test/helpers/furnace-sdk-entry-claims.ts, held here byte-for-byte as
+ * its own paragraph; each claim lists its sub-forms, and SUBFORMS names, for every listed sub-form in claim order, the
+ * plants that prove it and the mark each of them carries). A claim is what its words state, as its plants' cases read
+ * it (the real tree's reading plus exactly each plant's lines). Where refusal #4 or refusal #5 found a claim's words
+ * covering a form no plant planted, the paragraph now names its plants' own forms - the modules, positions, spellings,
+ * letters, codes and kinds they write - and NOT CLAIMED below names the rest by a specific sentence; NOT CLAIMED's
+ * closing scope sentence narrows no specific word (R-B233). The paragraphs refusal #4 named do so since the R-B305
+ * re-cut, and those refusal #5 named (WALK FORM (2), WALK FORM (3), the ENTRY TEXT READ, RENDERED and REGISTER METHODS)
+ * since this re-cut:
  *
  * WALK: from each entry its caller names (the types entry and the main entry in both censuses), following an export * from
  * any module but a .d.cts one or an extensionless one, whose specifier is a ./ path holding nothing a step of RESOLUTION's
@@ -138,16 +157,21 @@
  * protocol.d.ts and protocol.js (the module each entry star-exports) and zzhop.d.ts (a .d.ts module three deep from the
  * types entry), or aliased as another name, an identifier; in the types entry also type-only by its declaration or
  * type-only by its specifier, and a clause's member after its first), X an identifier or a string export name (a string
- * name aliased as an identifier, in either entry or protocol.js), read cooked (an identifier escape, in either entry or
- * protocol.d.ts, or a string escape, in either entry, reads as the name it spells), and in either entry whatever its
- * specifier resolves to
+ * name aliased as an identifier, in either entry or protocol.js), read cooked (an identifier escape - its plants'
+ * \u0045 as the name's first character in either entry and in protocol.d.ts, a braced \u{52} first in the types entry
+ * and \u{45} first in protocol.d.ts, and an inner \u0053 in the main entry - or a string escape - its plants' \x48,
+ * \u{45} and \u0045 in the types entry and \x48, \u0045, a line continuation and a single-character escape in the main
+ * entry - reads as the name it spells), and in either entry whatever its specifier resolves to (its plants'
+ * ./embedded.js and ./resident_session.js, DEEP modules, and ./missing.js, which resolves to nothing, in either entry,
+ * the package's own bare name in the types entry and the bare zzgate in the main entry)
  *
  * WALK FORM (3) local-import: a local export (export { x }, or aliased on export as an identifier) of a name an import
- * specifier binds by a DEEP class's own name in an import clause with no default binding, that name read cooked (the
- * import aliased, a type-only import declaration, a type-only import specifier, a string import name, from a module
- * that is not DEEP), each spelling after export { x }, and an import clause's or a local export clause's member after
- * its first, only in protocol.d.ts and protocol.js, the module each entry star-exports (a string import name, which is
- * aliased, in protocol.js, and every other in protocol.d.ts)
+ * specifier binds by a DEEP class's own name in an import clause with no default binding, its import declaration
+ * written before the local export or, in protocol.d.ts, written after it, that name read cooked (the import aliased, a
+ * type-only import declaration, a type-only import specifier, a string import name, from a module that is not DEEP),
+ * each spelling after export { x }, and an import clause's or a local export clause's member after its first, only in
+ * protocol.d.ts and protocol.js, the module each entry star-exports (a string import name, which is aliased, in
+ * protocol.js, and every other in protocol.d.ts)
  *
  * WALK FORM (4) local-module: a local export (export { x }, not aliased on export) of a name a default import of a DEEP
  * module (alone, or beside a namespace import in protocol.d.ts, the module the types entry star-exports) or a namespace
@@ -179,10 +203,14 @@
  * are the row's names
  *
  * ENTRY TEXT READ: each entry's raw text (the types entry's and the main entry's) is read for a DEEP class's name, in
- * its row's letter case, as a whole word (the regex \b<name>\b): a name in its code (the types entry's) and a name in a
- * comment (either entry's) alike, escape sequences never decoded, a name with a word character (an ASCII letter, a
- * digit or an underscore) just before it or just after it not read, and a name beside a $ or a non-ASCII letter (its
- * plants' U+00E9, on either side) read (each a word boundary)
+ * its row's letter case, as a whole word (the regex \b<name>\b): a name in its code (the types entry's identifiers and
+ * double-quoted string literals, as its plants write them) and a name in a comment (a line comment in either entry and
+ * a block comment in the types entry) alike, escape sequences never decoded (those its plants write in either entry:
+ * the identifier escapes \u0045, \u{52} and an inner \u0053, the string escapes \x48, \u{45} and \u0045, a legacy octal
+ * escape (\105), a single-character escape (\H), a line continuation, and a \u0045 in a comment), a name with a word
+ * character (an ASCII letter - its plants' lower-case y and upper-case X just before a name and upper-case X and O and
+ * lower-case s just after one - a digit (its plants' 2) or an underscore) just before it or just after it not read, and
+ * a name beside a $ or a non-ASCII letter (its plants' U+00E9, on either side) read (each a word boundary)
  *
  * PATH READING: a literal's cooked text is read through these steps - every ASCII tab dropped, every LF dropped and
  * every CR dropped, then every %XX escape decoded (each %XX of an ASCII code its plants hold: %40, %2F, %2f, %2E and
@@ -191,19 +219,23 @@
  * begins with @furnace/sdk/ or holds node_modules/@furnace/sdk/ at its start or node_modules/@furnace/sdk/ after a /,
  * and holds one when either holds @furnace/sdk/ anywhere
  *
- * RENDERED: vendor/README.md is read through marked's lexer, each top-level block to its text, whitespace collapsed (every
- * run one space, each run of spaces, tabs and line feeds): a hard line break (a br token, a backslash before a line ending
- * or two or more spaces before a line ending) reads as the line break marked renders, a space; a list reads by its items'
- * tokens, a table by its header cells' tokens and row cells' tokens, and a token holding tokens (a paragraph, a heading (a
- * ## heading), a blockquote, emphasis, strong text or a link) by those tokens; raw HTML (an HTML block holding a comment or
+ * RENDERED: vendor/README.md is read through marked's lexer, each top-level block to its text, whitespace collapsed
+ * (every run one space, each run of spaces, tabs and line feeds): a hard line break (a br token, a backslash before a
+ * line ending or two or more spaces before a line ending) reads as the line break marked renders, a space; a list reads
+ * by its items' tokens, a table by its header cells' tokens and row cells' tokens, and a token holding tokens (a
+ * paragraph, a heading (a ## heading), a blockquote, emphasis, strong text or a link (an inline link, or a reference
+ * link written [text][label] beside its definition)) by those tokens; raw HTML (an HTML block holding a comment or
  * inline HTML tags), a link-reference definition and an image read as nothing
  *
  * REGISTER METHODS: executor.js's register methods are its method declarations written with no modifier and no
- * asterisk, in a class or in an object literal (each name form below in a class declaration at the module's top level,
- * an identifier name in a class expression a function returns or in an object literal a const declaration's initializer
- * holds), whose name reads register: an identifier name or a string-literal name, read cooked (an identifier escape or
- * a string escape reads as the name it spells), or a computed name whose expression, through parentheses, is a computed
- * string literal or a computed no-substitution template literal
+ * asterisk, in a class or in an object literal (each name form below in its plants' unexported class declaration
+ * ShimApp at the module's top level; an identifier name in the real tree's exported class declaration ExecutorApp, in a
+ * default-exported class declaration at the module's top level, named or anonymous, in a class expression a function
+ * returns or in an object literal a const declaration's initializer holds), whose name reads register: an identifier
+ * name or a string-literal name (double-quoted, or single-quoted), read cooked (an identifier escape - its plants'
+ * \u0072 and braced \u{72}, each the name's first character - or a string escape - its plants' \x65 and \u0065 - reads
+ * as the name it spells), or a computed name whose expression, through parentheses, is a computed string literal or a
+ * computed no-substitution template literal
  *
  * RESIDUALS (named; what the readers leave unread; each family has a quiet plant of row Q - R-WALK-SPECIFIER and R-PATH-UNREAD
  * two - reading as nothing, with a twin in a read form that reads its line):
@@ -237,10 +269,23 @@
  * block, so no judge observes a block's edges. The WALK past the sixteenth followed module is NOT CLAIMED by this
  * census. A character inside a specifier or a literal that neither reading drops, other than the members
  * R-WALK-SPECIFIER and R-PATH-UNREAD name, is NOT CLAIMED by this census. A record in a code block or a code span is
- * NOT CLAIMED by this census. A reading on any input that is not one of this census's plants or their twins is NOT
- * CLAIMED by this census - among them every spelling, module kind, naming module, entry, position, depth, nesting,
- * escape form, letter, character, %XX code or README block that no plant plants, whatever a claim's words would cover
- * there (THE CLAIMS).
+ * NOT CLAIMED by this census. Beside the plants' own forms the paragraphs name since the R-B369 re-cut, NOT CLAIMED by
+ * this census, read or not: in the ENTRY TEXT READ, a name in a single-quoted string, a template literal or a regular
+ * expression literal, in a JSDoc comment, or in a block comment of the main entry; an escape sequence of a kind,
+ * spelling or position no plant writes - a legacy octal escape but \105, a 4-hex or braced escape of another code point
+ * or at another position, a percent-encoded or character-reference spelling; an ASCII letter beside a name but a
+ * lower-case y or an upper-case X just before it and an upper-case X or O or a lower-case s just after it, and a digit
+ * beside it but 2; in REGISTER METHODS, a name form but an identifier name in any top-level class declaration but
+ * ShimApp, an identifier escape but a \u0072 or \u{72} as the name's first character, and a string escape but \x65 and
+ * \u0065; in WALK FORM (2), an identifier escape or a string escape in a module, position or spelling no plant holds -
+ * a braced identifier escape in the main entry, an inner one in the types entry or past the entry, a line continuation,
+ * a single-character escape or a legacy octal escape in the types entry's string export names, a braced or legacy octal
+ * one in the main entry's - and a specifier that resolves to a module that is not DEEP or names a bare package but the
+ * two the paragraph names; in WALK FORM (3), an import declaration written after its local export in any module but
+ * protocol.d.ts; and in RENDERED, a collapsed or shortcut reference link and an autolink. A reading on any input that
+ * is not one of this census's plants or their twins is NOT CLAIMED by this census - among them every spelling, module
+ * kind, naming module, entry, position, depth, nesting, escape form, letter, character, %XX code or README block that
+ * no plant plants, whatever a claim's words would cover there (THE CLAIMS).
  *
  * PINNED BY wb-lrz.9 (CUT #4 deferred refusal #3's members to wb-lrz.9 under R-B266, R-B305 folded this bead's refusal
  * #4's members into it, and it landed at landing 826: test/workbench-furnace-sdk-entry-reader-members-census.test.ts
@@ -294,17 +339,20 @@
  * (the lines opening "- U" after its one "Enumerated items" line, up to its one "Acceptance:" line) and its notes'
  * FOLDED MEMBERS items (the lines opening "- U" after the notes' one line opening "FOLDED MEMBERS from the refused
  * cut", up to the next line opening "Acceptance:"): every item is exactly one row whose label is its line, or the
- * DROPPED item; a second marker line is refused, never read first-match. Since the R-B305 re-cut the claim parts are
- * this file's own (CLAIM_PARTS): a row of E or F deleted with its literals leaves an item of the export unanswered, and
- * a sub-form removed from its claim part and from SUBFORMS together leaves this header's paragraph unmatched (CLAIM
- * TEXT). EACH-LIVENESS: every case records its key at its last line, and the closing tally - the file's last case -
- * reads vitest's own task tree: every case is set to run, the case count is the fixed cases, one case per plant and the
- * tally, and the records equal the frozen literals, in order. READS (contacts): package.json, the tarball its
- * @furnace/sdk spec names (vendor/furnace-sdk-0.1.0.tgz: its regular entries as text), vendor/README.md, every script
- * under src/, this file's own header, and the wb-lrz.8 row of .beads/issues.jsonl (its description, and the FOLDED
- * MEMBERS block of its notes: an appended note is safe; a note that adds a second line opening "FOLDED MEMBERS from the
- * refused cut" reds the anchor case). The landed helper test/helpers/furnace-sdk-entry-readers.ts is an import, which
- * reads no file.
+ * DROPPED item; a second marker line is refused, never read first-match. Since the R-B369 re-cut the claim parts live
+ * outside this file, in test/helpers/furnace-sdk-entry-claims.ts (CLAIM_PARTS): a row of E or F deleted with its
+ * literals leaves an item of the export unanswered (OUTSIDE ANCHOR), and a sub-form deleted from this file's literals -
+ * its SUBFORMS entry, its plants, their pins and pages and its row's count - leaves the claims module's listed sub-form
+ * unanswered (CLAIM ROSTER); a sub-form de-listed in the claims module too, its words kept there and here, is a hollow
+ * of both files that no anchor outside them holds, and is NOT CLAIMED to red by this census. EACH-LIVENESS: every case
+ * records its key at its last line, and the closing tally - the file's last case - reads vitest's own task tree: every
+ * case is set to run, the case count is the fixed cases, one case per plant and the tally, and the records equal the
+ * frozen literals, in order. READS (contacts): package.json, the tarball its @furnace/sdk spec names
+ * (vendor/furnace-sdk-0.1.0.tgz: its regular entries as text), vendor/README.md, every script under src/, this file's
+ * own header, and the wb-lrz.8 row of .beads/issues.jsonl (its description, and the FOLDED MEMBERS block of its notes:
+ * an appended note is safe; a note that adds a second line opening "FOLDED MEMBERS from the refused cut" reds the
+ * anchor case). The landed helper test/helpers/furnace-sdk-entry-readers.ts and the claims module
+ * test/helpers/furnace-sdk-entry-claims.ts are imports, which read no file.
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: none - every plant is an in-memory tree.
  */
@@ -315,9 +363,9 @@ import { fileURLToPath } from "node:url";
 import { gunzipSync } from "node:zlib";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import { CLAIM_PARTS, type ClaimPart, WALK_FORMS } from "./helpers/furnace-sdk-entry-claims.js";
 import {
   type DeepRow,
-  type ExposureForm,
   entryExposures,
   entryTextNames,
   holdsDeep,
@@ -327,68 +375,6 @@ import {
   SDK,
   spellsDeep,
 } from "./helpers/furnace-sdk-entry-readers.js";
-
-// ---- the claim parts (cut #4's ClaimPart texts, carried here at the R-B305 re-cut: the landed helper holds the readers only) ----
-
-/** One claim of a reader: its text, composed from its words, and the sub-forms it lists (each a phrase of the text). */
-interface ClaimPart<T extends string = string> {
-  readonly id: T;
-  readonly text: string;
-  readonly subforms: readonly string[];
-}
-function claimPart<T extends string>(id: T): (words: TemplateStringsArray, ...subforms: string[]) => ClaimPart<T> {
-  return (words, ...subforms) => ({ id, text: words.reduce((text, word, index) => text + word + (subforms[index] ?? ""), ""), subforms });
-}
-
-/** D3's WALK: where it starts, what it follows and what it never reads. */
-const WALK_CLAIM: ClaimPart<"walk"> = claimPart(
-  "walk",
-)`from each entry its caller names (${"the types entry"} and ${"the main entry"} in both censuses), ${"following an export *"} from any module but a .d.cts one or an extensionless one, whose specifier is a ./ path holding nothing a step of RESOLUTION's changes, and ${"following an export * as"} from a .d.ts or a .js module whose specifier is such a ./ path ending .js (neither written export type), each resolved to ${"a module that is not DEEP"} (an export *'s through RESOLUTION's candidates, an export * as's to its exact path from a .js module and to its .d.ts twin from a .d.ts module), and reading each module's ${"top-level statements"} through the TypeScript AST (${"comments never read"}), the WALK reads these forms, each spelling only where its form's claim places it, in ${"the entry itself"} and in ${"every module it reaches"}`;
-
-/** The forms the WALK reads, each an Exposure's form. */
-const WALK_FORMS: readonly ClaimPart<ExposureForm>[] = [
-  claimPart("star")`an ${"export * of a DEEP module"} (its target resolved through RESOLUTION) or an ${"export * as of a DEEP module"} under an identifier whose specifier, a ./ path from a .d.ts or a .js module and a ../ path from a module of another kind, ends .js and holds nothing a step of RESOLUTION's changes, its target its exact path or, from a declaration file, its .d.ts twin (in the types entry its .ts first), neither written export type`,
-  claimPart(
-    "named",
-  )`a named re-export of a DEEP class (${"export { X } from"}, unaliased only in either entry, protocol.d.ts and protocol.js (the module each entry star-exports) and zzhop.d.ts (a .d.ts module three deep from the types entry), or ${"aliased as another name"}, an identifier; in the types entry also ${"type-only by its declaration"} or ${"type-only by its specifier"}, and a clause's member after its first), X ${"an identifier"} or ${"a string export name"} (a string name aliased as an identifier, in either entry or protocol.js), read cooked (${"an identifier escape"}, in either entry or protocol.d.ts, or ${"a string escape"}, in either entry, reads as the name it spells), and in either entry ${"whatever its specifier resolves to"}`,
-  claimPart(
-    "local-import",
-  )`a local export (${"export { x }"}, or ${"aliased on export"} as an identifier) of a name an import specifier binds by a DEEP class's own name in an import clause with no default binding, that name ${"read cooked"} (${"the import aliased"}, ${"a type-only import declaration"}, ${"a type-only import specifier"}, ${"a string import name"}, ${"from a module that is not DEEP"}), each spelling after export { x }, and an import clause's or a local export clause's member after its first, only in protocol.d.ts and protocol.js, the module each entry star-exports (a string import name, which is aliased, in protocol.js, and every other in protocol.d.ts)`,
-  claimPart("local-module")`a local export (export { x }, not aliased on export) of a name a ${"default import of a DEEP module"} (alone, or beside a namespace import in protocol.d.ts, the module the types entry star-exports) or a ${"namespace import of a DEEP module"} binds, neither import type-only, its specifier a ./ path from a .d.ts or a .js module and a ../ path from a module of another kind, ending .js and holding nothing a step of RESOLUTION's changes, its target its exact path or, from a declaration file, its .d.ts twin (in the types entry a namespace import's .ts first), or, in the types entry, the package's own name for a namespace import and a ./ path holding a tab for a default import`,
-];
-
-/** RESOLUTION: how the WALK reads a specifier and which tarball entry it names. */
-const RESOLUTION_CLAIM: ClaimPart<"resolution"> = claimPart(
-  "resolution",
-)`the specifier of an export * of a DEEP module is read through these steps of a URL parser's and a file path's reading - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, ${"a query cut off"} (from its first ?) and ${"a fragment cut off"} (from its first #), then ${"every %XX escape decoded"} (each %XX of an ASCII code its plants hold: %64, %65, %2e and %5C, and %09, %3F and %23, after which nothing resolves) and then ${"every backslash read as /"} - in the main entry, and in the types entry each step on one character (there a tab in a default import's specifier too), and a specifier resolves when it is ${"relative"} (./, or ../ from a module past the entry, ${"joined to the naming module's directory"}) or, from either entry or a .ts module, ${"the package's own name"} (@furnace/sdk/<path>, read under package/), under it from either entry its ${". segments dropped"} and ${".. segments resolved"} (posix.normalize), and the tarball carries the first of an export *'s specifier's candidates ${"in order"}: from the types entry, ${"an exact TypeScript path"} as written (${"an exact .ts"}, ${"an exact .tsx"}, ${"an exact .mts"} or ${"an exact .cts"}, ${"a declaration file's own path"} included, and from a .d.mts module a .d.cts's); for ${"a .js path"}, its .ts, ${"then its .tsx"} and ${"then its .d.ts twin"} (from a .d.ts module past the entry its .ts and then its .d.ts twin, from a .d.mts or a .d.cts module its .d.ts twin); for ${"a .jsx path"}, ${"the same three"}; for ${"a .mjs path"}, its .mts and ${"then its .d.mts twin"}; for ${"a .cjs path"}, its .cts and ${"then its .d.cts twin"}; for ${"an extensionless path"}, its .ts, ${"its .tsx"}, ${"its .d.ts"}, ${"its /index.ts"}, ${"its /index.tsx"} and ${"its /index.d.ts"}; and from the main entry, ${"the exact path"}, ${"then its .js"} and ${"then its /index.js"} (from a .ts module each of the three alone, and from a module of another kind its exact path)`;
-
-/** DEEP: which tarball modules are the DEEP rows' modules. */
-const DEEP_CLAIM: ClaimPart<"deep"> = claimPart(
-  "deep",
-)`a tarball module is DEEP when its path, with ${"its one module extension"} taken off (${"a .d.ts"}, ${"a .d.mts"}, ${"a .d.cts"}, ${"a .ts"}, ${"a .tsx"}, ${"a .mts"}, ${"a .cts"}, ${"a .js"}, ${"a .jsx"}, ${"a .mjs"} or ${"a .cjs"}), is ${"a DEEP row's path"} with its .js taken off, so a DEEP module's JavaScript file, its declaration file and ${"its TypeScript twin"} are each that DEEP module, whose classes are ${"the row's names"}`;
-
-/** D3's ENTRY TEXT READ. */
-const TEXT_CLAIM: ClaimPart<"text"> = claimPart(
-  "text",
-)`each entry's raw text (${"the types entry's"} and ${"the main entry's"}) is read for a DEEP class's name, in its row's letter case, as a whole word (the regex \\b<name>\\b): ${"a name in its code"} (the types entry's) and ${"a name in a comment"} (either entry's) alike, ${"escape sequences never decoded"}, a name with a word character (${"an ASCII letter"}, ${"a digit"} or ${"an underscore"}) ${"just before it"} or ${"just after it"} not read, and a name beside ${"a $"} or ${"a non-ASCII letter"} (its plants' U+00E9, on either side) read (each a word boundary)`;
-
-/** D1's PATH reading of a literal's cooked text, and what it spells or holds. */
-const PATH_CLAIM: ClaimPart<"path"> = claimPart(
-  "path",
-)`a literal's cooked text is read through these steps - ${"every ASCII tab dropped"}, ${"every LF dropped"} and ${"every CR dropped"}, then ${"every %XX escape decoded"} (each %XX of an ASCII code its plants hold: %40, %2F, %2f, %2E and %5C) and then ${"every backslash read as /"}, then posix.normalize (${"empty segments dropped"}, ${". segments dropped"} and ${".. segments resolved"}) - and the text spells a deep @furnace/sdk/<path> when ${"the cooked text itself"} or ${"its PATH reading"} ${"begins with @furnace/sdk/"} or holds ${"node_modules/@furnace/sdk/ at its start"} or ${"node_modules/@furnace/sdk/ after a /"}, and holds one when either ${"holds @furnace/sdk/ anywhere"}`;
-
-/** U1's rendered reading of vendor/README.md. */
-const RENDER_CLAIM: ClaimPart<"render"> = claimPart(
-  "render",
-)`vendor/README.md is read through marked's lexer, each top-level block to its text, ${"whitespace collapsed"} (${"every run one space"}, each run of spaces, tabs and line feeds): a hard line break (a br token, ${"a backslash before a line ending"} or ${"two or more spaces before a line ending"}) reads as the line break marked renders, a space; ${"a list"} reads by ${"its items' tokens"}, ${"a table"} by its ${"header cells' tokens"} and ${"row cells' tokens"}, and a token holding tokens (${"a paragraph"}, ${"a heading"} (a ## heading), ${"a blockquote"}, ${"emphasis"}, ${"strong text"} or ${"a link"}) ${"by those tokens"}; ${"raw HTML"} (${"an HTML block"} holding a comment or ${"inline HTML"} tags), ${"a link-reference definition"} and ${"an image"} read as nothing`;
-
-/** D4's register-method count. */
-const REGISTER_CLAIM: ClaimPart<"register"> = claimPart(
-  "register",
-)`executor.js's register methods are its method declarations written with no modifier and no asterisk, ${"in a class"} or ${"in an object literal"} (each name form below in a class declaration at the module's top level, an identifier name in a class expression a function returns or in an object literal a const declaration's initializer holds), whose name reads register: ${"an identifier name"} or ${"a string-literal name"}, read cooked (${"an identifier escape"} or ${"a string escape"} reads as the name it spells), or ${"a computed name"} whose expression, ${"through parentheses"}, is ${"a computed string literal"} or ${"a computed no-substitution template literal"}`;
-
-/** Every claim part, in the order the census header states them. */
-const CLAIM_PARTS: readonly ClaimPart[] = [WALK_CLAIM, ...WALK_FORMS, RESOLUTION_CLAIM, DEEP_CLAIM, TEXT_CLAIM, PATH_CLAIM, RENDER_CLAIM, REGISTER_CLAIM];
 
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const SELF = "test/workbench-furnace-sdk-entry-readers-census.test.ts";
@@ -1902,6 +1888,91 @@ const PLANTS: Readonly<Record<string, Plant>> = {
     added: [walkLine("types", "named", EH, IDX_D, PROTO_D), walkLine("main", "named", RS, IDX_J, PROTO_J)],
   },
 
+  // ---- the R-B369 re-cut (refusal #5's U1-U5): each of refusal #5's fourteen surviving helper mutants is killed by a plant
+  // built from its paired real-tree witness (gate-prep-9's zz-gate9-witness.test.ts); a plant names the G9 mutant it kills.
+
+  // E-U1: the ENTRY TEXT READ's other letter case on each side and a legacy octal escape, and WALK FORM (2)'s main-entry
+  // ./ path that resolves to nothing and a string escape of each entry that the other entry's plants hold.
+  "E1-TEXT-UPPER-BEFORE": {
+    name: "the types entry holds the class name just after an upper-case ASCII letter (a word character: not read; refusal #5 G9-T-UPPER-BEFORE-READ)",
+    tree: (real) => appended(real, TYPES, "export declare const XEmbeddedHost: unique symbol;"),
+    added: [],
+    twin: { tree: (real) => appended(real, TYPES, "export declare const EmbeddedHost: unique symbol;"), added: [`text types ${EH}`] },
+  },
+  "E1-TEXT-LOWER-AFTER": {
+    name: "the types entry holds the class name just before a lower-case ASCII letter (a word character: not read; refusal #5 G9-T-LOWER-AFTER-READ)",
+    tree: (real) => appended(real, TYPES, "export declare const EmbeddedHosts: unique symbol;"),
+    added: [],
+    twin: { tree: (real) => appended(real, TYPES, "export declare const EmbeddedHost: unique symbol;"), added: [`text types ${EH}`] },
+  },
+  "E1-TEXT-OCTAL": {
+    name: "the types entry spells the class name only through a legacy octal escape in a string literal (never decoded: not read; refusal #5 G9-T-OCTAL-DECODED)",
+    tree: (real) => appended(real, TYPES, 'export declare const zzOctal: "\\105mbeddedHost";'),
+    added: [],
+    twin: { tree: (real) => appended(real, TYPES, 'export declare const zzOctal: "EmbeddedHost";'), added: [`text types ${EH}`] },
+  },
+  "E1-MAIN-UNRESOLVED": {
+    name: "the main entry re-exports EmbeddedHost from a ./ path the tarball does not carry (read whatever it resolves to; refusal #5 G9-N-JS-UNRESOLVED-RELATIVE-SKIP)",
+    tree: (real) => appended(real, MAIN, 'export { EmbeddedHost } from "./missing.js";'),
+    added: [`text main ${EH}`, walkLine("main", "named", EH, IDX_J)],
+  },
+  "E1-MAIN-STR-HEX": {
+    name: "the main entry re-exports EmbeddedHost by a string export name with a hex escape (refusal #5 G9-N-STRESC-HEX-MAIN-RAW)",
+    tree: (real) => appended(real, MAIN, 'export { "Embedded\\x48ost" as GateHost } from "./embedded.js";'),
+    added: [walkLine("main", "named", EH, IDX_J)],
+  },
+  "E1-TYPES-STR-U": {
+    name: "the types entry re-exports EmbeddedHost by a string export name with a unicode escape (refusal #5 G9-N-STRESC-U4-TYPES-RAW)",
+    tree: (real) => appended(real, TYPES, 'export { "\\u0045mbeddedHost" as GateHost } from "./embedded.js";'),
+    added: [walkLine("types", "named", EH, IDX_D)],
+  },
+
+  // E-U2: a link written as a reference beside its definition.
+  "U2-LINK-REF": {
+    name: "a second record whose re-packaged is a reference link beside its definition (a link reads by its tokens; refusal #5 G9-U-REFLINK-RAW)",
+    tree: (real) => withReadme(real, "furnace-sdk-0.2.0.tgz was [re-packaged][gate] on 2026-11-01 (wb-zby) from Furnace revision abcdef0123.\n\n[gate]: https://example.invalid/r"),
+    added: [SECOND],
+  },
+
+  // F-U2: a braced identifier escape, a unicode string escape, a single-quoted name and default-exported class declarations.
+  "R-ID-ESC-BRACE": {
+    name: "a second register method by an identifier name spelled with a braced code-point escape (refusal #5 G9-G-IDESC-BRACE-RAW)",
+    tree: (real) => appended(real, EXECUTOR, shim("\\u{72}egister()")),
+    added: ["register identifier"],
+  },
+  "R-STR-ESC-U": {
+    name: "a second register method by a string-literal name with a unicode escape (refusal #5 G9-G-STRESC-UNICODE-RAW)",
+    tree: (real) => appended(real, EXECUTOR, shim('"regist\\u0065r"()')),
+    added: ["register string"],
+  },
+  "R-STRING-SINGLE": {
+    name: "a second register method by a single-quoted string-literal name (refusal #5 G9-G-STRING-SINGLE-QUOTE-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, shim("'register'()")),
+    added: ["register string"],
+  },
+  "R-DEFAULT-CLASS": {
+    name: "a register method in a named default-exported class declaration at the module's top level (refusal #5 G9-G-DEFAULT-CLASS-DECL-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, "export default class ShimDefault {\n  register() {\n    return this;\n  }\n}"),
+    added: ["register identifier"],
+  },
+  "R-ANON-CLASS": {
+    name: "a register method in an anonymous default-exported class declaration at the module's top level (refusal #5 G9-G-ANON-CLASS-DECL-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, "export default class {\n  register() {\n    return this;\n  }\n}"),
+    added: ["register identifier"],
+  },
+
+  // W: a braced identifier escape past the entry, and an import declaration written after the local export it binds.
+  "W-NAMED-PAST-BRACE": {
+    name: "protocol.d.ts re-exports EmbeddedHost past the entry by a braced code-point identifier escape (refusal #5 G9-N-IDESC-BRACE-PAST-RAW)",
+    tree: (real) => appended(real, PROTOCOL_D, 'export { \\u{45}mbeddedHost as Host } from "./embedded.js";'),
+    added: [walkLine("types", "named", EH, IDX_D, PROTO_D)],
+  },
+  "W-LOCAL-IMPORT-LATE": {
+    name: "protocol.d.ts exports EmbeddedHost locally before the import declaration that binds it (refusal #5 G9-LI-IMPORT-AFTER-LOCAL-EXPORT-UNREAD)",
+    tree: (real) => appended(real, PROTOCOL_D, "export { EmbeddedHost };", 'import { EmbeddedHost } from "./embedded.js";'),
+    added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D)],
+  },
+
   // Q: the residuals' quiet rows.
   "Q-INDIRECT": {
     name: "R-INDEX-INDIRECT: a value and a type declared from the class, a default export of it, a module augmentation, a named re-export chain, a namespace import of a starring module and an import-equals, each exported",
@@ -2047,6 +2118,12 @@ const ROWS: readonly Row[] = [
       "E1-TEXT-DOLLAR-AFTER",
       "E1-TEXT-NONASCII-AFTER",
       "E1-TEXT-BLOCK",
+      "E1-TEXT-UPPER-BEFORE",
+      "E1-TEXT-LOWER-AFTER",
+      "E1-TEXT-OCTAL",
+      "E1-MAIN-UNRESOLVED",
+      "E1-MAIN-STR-HEX",
+      "E1-TYPES-STR-U",
     ],
   },
   {
@@ -2054,7 +2131,7 @@ const ROWS: readonly Row[] = [
     from: "description",
     label: "- U2 backslash hard-break rendered reading (the refusal's U2 member).",
     judge: "u1",
-    pins: ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS", "U2-BR-SPACES", "U2-LIST", "U2-TABLE", "U2-TABLE-HEAD", "U2-HEADING", "U2-QUOTE", "U2-EMPHASIS", "U2-STRONG", "U2-LINK", "U2-HTML", "U2-HTML-INLINE", "U2-DEF", "U2-IMAGE", "U2-LIST-SECOND", "U2-TABLE-HEAD-SECOND", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND", "U2-RUNS", "U2-BR-SPACES3", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-ITEM-NESTED", "U2-ITEM-LOOSE", "U2-ORDERED", "U2-LIST-FIRST", "U2-ITEM-FIRST", "U2-TABLE-HEAD-FIRST", "U2-TABLE-ROW-FIRST", "U2-TABLE-CELL-FIRST", "U2-QUOTE-FIRST"],
+    pins: ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS", "U2-BR-SPACES", "U2-LIST", "U2-TABLE", "U2-TABLE-HEAD", "U2-HEADING", "U2-QUOTE", "U2-EMPHASIS", "U2-STRONG", "U2-LINK", "U2-HTML", "U2-HTML-INLINE", "U2-DEF", "U2-IMAGE", "U2-LIST-SECOND", "U2-TABLE-HEAD-SECOND", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND", "U2-RUNS", "U2-BR-SPACES3", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-ITEM-NESTED", "U2-ITEM-LOOSE", "U2-ORDERED", "U2-LIST-FIRST", "U2-ITEM-FIRST", "U2-TABLE-HEAD-FIRST", "U2-TABLE-ROW-FIRST", "U2-TABLE-CELL-FIRST", "U2-QUOTE-FIRST", "U2-LINK-REF"],
   },
   {
     id: "E-U3",
@@ -2076,7 +2153,7 @@ const ROWS: readonly Row[] = [
     from: "notes",
     label: "- U2 (LOW, rides): D4's register-count read has no falsifier - add one or state it.",
     judge: "d4",
-    pins: ["R-PLAIN", "R-STRING", "R-ID-ESC", "R-STR-ESC", "R-COMPUTED", "R-TEMPLATE", "R-PARENS", "R-CLASS-EXPR", "R-OBJECT", "R-PARENS2", "R-PARENS-TEMPLATE"],
+    pins: ["R-PLAIN", "R-STRING", "R-ID-ESC", "R-STR-ESC", "R-COMPUTED", "R-TEMPLATE", "R-PARENS", "R-CLASS-EXPR", "R-OBJECT", "R-PARENS2", "R-PARENS-TEMPLATE", "R-ID-ESC-BRACE", "R-STR-ESC-U", "R-STRING-SINGLE", "R-DEFAULT-CLASS", "R-ANON-CLASS"],
   },
   {
     id: "F-U3",
@@ -2186,6 +2263,8 @@ const ROWS: readonly Row[] = [
       "W-LOCAL-OWN-STEPS",
       "R-OTHER-TS-OWN",
       "W-NAMED-PAST-ESC",
+      "W-NAMED-PAST-BRACE",
+      "W-LOCAL-IMPORT-LATE",
     ],
   },
   { id: "Q", from: "residuals", label: "the residuals' pinned quiet rows (RESIDUALS)", judge: "d3", pins: ["Q-INDIRECT", "Q-SPECIFIER", "Q-PATH", "Q-RENDER", "Q-REGISTER", "Q-SPECIFIER-CONTROL", "Q-PATH-CONTROL"] },
@@ -2224,11 +2303,12 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["named", "type-only by its specifier", ["E1-TYPE-SPEC"], /export \{ type \w+/],
   ["named", "an identifier", ["E1-PLAIN", "E1-TYPES-ESC"], /export \{ (?:\\u[0-9A-Fa-f]{4}|[A-Za-z])\w* as /],
   ["named", "a string export name", ["E1-TYPES-STR", "E1-MAIN-STR-U", "W-NAMED-PAST-ESC"], /export \{ "/],
-  ["named", "an identifier escape", ["E1-TYPES-ESC", "E1-MAIN-ESC", "E1-BOTH-ESC", "E1-RESIDENT-ESC", "E1-MAIN-RES-ESC", "W-NAMED-PAST-ESC"], /export \{ [A-Za-z]*\\u/],
-  ["named", "a string escape", ["E1-STR-HEX", "E1-STR-BRACE", "E1-MAIN-STR-U", "E1-MAIN-STR-LC", "E1-MAIN-STR-CHAR"], /export \{ "[^"]*\\/],
-  ["named", "whatever its specifier resolves to", ["E1-UNRESOLVED", "S-PCT-NAMED", "S-QUERY-NAMED", "E1-NAMED-OWN-BARE"], /\} from "(?:[^"]*(?:missing|%|\?)[^"]*|@furnace\/sdk|zzgate)";/],
+  ["named", "an identifier escape", ["E1-TYPES-ESC", "E1-MAIN-ESC", "E1-BOTH-ESC", "E1-RESIDENT-ESC", "E1-MAIN-RES-ESC", "W-NAMED-PAST-ESC", "W-NAMED-PAST-BRACE"], /export \{ [A-Za-z]*\\u/],
+  ["named", "a string escape", ["E1-STR-HEX", "E1-STR-BRACE", "E1-MAIN-STR-U", "E1-MAIN-STR-LC", "E1-MAIN-STR-CHAR", "E1-MAIN-STR-HEX", "E1-TYPES-STR-U"], /export \{ "[^"]*\\/],
+  ["named", "whatever its specifier resolves to", ["E1-UNRESOLVED", "S-PCT-NAMED", "S-QUERY-NAMED", "E1-NAMED-OWN-BARE", "E1-MAIN-UNRESOLVED"], /\} from "(?:[^"]*(?:missing|%|\?)[^"]*|@furnace\/sdk|zzgate)";/],
   ["local-import", "export { x }", ["W-LOCAL-IMPORT", "W-LOCAL-TWO", "W-LOCAL-SECOND", "W-LOCAL-ENTRY-TYPES", "W-LOCAL-ENTRY-MAIN", "W-LOCAL-DEPTH3", "W-LOCAL-IMPORT-AFTER", "W-LOCAL-EXPORT-AFTER", "W-LOCAL-UNRESOLVED", "W-LOCAL-THEN-STAR", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS"], /^export \{ \w+(?:, \w+)* \};$[\s\S]*^walk \S+ local-import /m],
   ["local-import", "aliased on export", ["W-LOCAL-ALIAS"], /^export \{ \w+ as \w+ \};$/m],
+  ["local-import", "written after it", ["W-LOCAL-IMPORT-LATE"], /^export \{ EmbeddedHost \};\nimport \{ EmbeddedHost \} from "\.\/embedded\.js";$/m],
   ["local-import", "read cooked", ["W-LOCAL-ESC", "W-LOCAL-EXPORT-ESC"], /(?:import|export) \{ [^}]*\\u/],
   ["local-import", "the import aliased", ["W-LOCAL-ALIAS", "W-LOCAL-STRING"], /import \{ (?:type )?(?:\w+|"\w+") as \w+ \}/],
   ["local-import", "a type-only import declaration", ["W-LOCAL-TYPE"], /import type \{/],
@@ -2314,11 +2394,12 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["text", "a name in its code", ["E1-PLAIN", "E1-TYPES-STR"], /^export [^\n]*EmbeddedHost[^\n]*$[\s\S]*^text types EmbeddedHost$/m],
   ["text", "a name in a comment", ["E1-TEXT-COMMENT", "E1-TEXT-MAIN", "E1-TEXT-BLOCK"], /^(?:\/\/ \w+ stays a deep import|\/\* \w+ stays a deep import \*\/)$[\s\S]*^text \w+ \w+$/m],
   ["text", "escape sequences never decoded", ["E1-TEXT-ESCAPE", "E1-TYPES-ESC"], /\\u0045mbeddedHost/],
-  ["text", "an ASCII letter", ["E1-TEXT-LONGER", "E1-TEXT-WORDCHARS"], /[A-Za-z]EmbeddedHost|EmbeddedHost[A-Za-z]/],
+  ["text", "a legacy octal escape", ["E1-TEXT-OCTAL"], /"\\105mbeddedHost"/],
+  ["text", "an ASCII letter", ["E1-TEXT-LONGER", "E1-TEXT-WORDCHARS", "E1-TEXT-UPPER-BEFORE", "E1-TEXT-LOWER-AFTER"], /[A-Za-z]EmbeddedHost|EmbeddedHost[A-Za-z]/],
   ["text", "a digit", ["E1-TEXT-WORDCHARS"], /\dEmbeddedHost|EmbeddedHost\d/],
   ["text", "an underscore", ["E1-TEXT-WORDCHARS"], /_EmbeddedHost|EmbeddedHost_/],
-  ["text", "just before it", ["E1-TEXT-WORDCHARS"], /\wEmbeddedHost/],
-  ["text", "just after it", ["E1-TEXT-LONGER", "E1-TEXT-WORDCHARS"], /EmbeddedHost\w/],
+  ["text", "just before it", ["E1-TEXT-WORDCHARS", "E1-TEXT-UPPER-BEFORE"], /\wEmbeddedHost/],
+  ["text", "just after it", ["E1-TEXT-LONGER", "E1-TEXT-WORDCHARS", "E1-TEXT-LOWER-AFTER"], /EmbeddedHost\w/],
   ["text", "a $", ["E1-TEXT-DOLLAR", "E1-TEXT-DOLLAR-AFTER"], /(?:\$EmbeddedHost|EmbeddedHost\$)[\s\S]*^text types EmbeddedHost$/m],
   ["text", "a non-ASCII letter", ["E1-TEXT-NONASCII", "E1-TEXT-NONASCII-AFTER"], /(?:\u00e9EmbeddedHost|EmbeddedHost\u00e9)[\s\S]*^text types EmbeddedHost$/m],
   ["path", "every ASCII tab dropped", ["P-RESOLVE-TAB", "P-URL-TAB", "P-HOLDS-PATH", "P-TAB2"], /"[^"\n]*\\t[^"\n]*"/],
@@ -2350,6 +2431,7 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["render", "emphasis", ["U2-EMPHASIS", "U2-BR-EMPHASIS", "U2-EMPHASIS-NESTED"], /(?<![*_])[*_]re-/],
   ["render", "strong text", ["U2-STRONG", "U2-STRONG-NESTED"], /(?:\*\*|__)re-/],
   ["render", "a link", ["U2-LINK", "U2-LINK-NESTED"], /\[re-[^\]]*\]\(https:\/\/example\.invalid\/r\)/],
+  ["render", "a reference link", ["U2-LINK-REF"], /\[re-packaged\]\[gate\] on [^\n]*\n\n\[gate\]: https:\/\/example\.invalid\/r$/m],
   ["render", "by those tokens", ["U2-EMPHASIS", "U2-HEADING", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-QUOTE-FIRST"], /[*_]re-|\[re-|^> other$/m],
   ["render", "raw HTML", ["U2-HTML", "U2-HTML-INLINE"], /<!-- |<b>/],
   ["render", "an HTML block", ["U2-HTML"], /^<!-- /m],
@@ -2358,10 +2440,12 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["render", "an image", ["U2-IMAGE"], /^!\[/m],
   ["register", "in a class", ["R-PLAIN", "R-CLASS-EXPR"], /\bclass(?: \w+)? \{\n {2,4}register\(\) \{/],
   ["register", "in an object literal", ["R-OBJECT"], /= \{\n {2}register\(\) \{/],
+  ["register", "a default-exported class declaration", ["R-DEFAULT-CLASS", "R-ANON-CLASS"], /^export default class (?:\w+ )?\{\n {2}register\(\) \{$/m],
   ["register", "an identifier name", ["R-PLAIN"], /^ {2}register\(\) \{$[\s\S]*^register identifier$/m],
   ["register", "a string-literal name", ["R-STRING"], /^ {2}"register"\(\) \{$[\s\S]*^register string$/m],
-  ["register", "an identifier escape", ["R-ID-ESC"], /^ {2}\\u0072egister\(\) \{$[\s\S]*^register identifier$/m],
-  ["register", "a string escape", ["R-STR-ESC"], /^ {2}"regist\\x65r"\(\) \{$[\s\S]*^register string$/m],
+  ["register", "single-quoted", ["R-STRING-SINGLE"], /^ {2}'register'\(\) \{$[\s\S]*^register string$/m],
+  ["register", "an identifier escape", ["R-ID-ESC", "R-ID-ESC-BRACE"], /^ {2}\\u(?:0072|\{72\})egister\(\) \{$[\s\S]*^register identifier$/m],
+  ["register", "a string escape", ["R-STR-ESC", "R-STR-ESC-U"], /^ {2}"regist\\(?:x65|u0065)r"\(\) \{$[\s\S]*^register string$/m],
   ["register", "a computed name", ["R-COMPUTED", "R-TEMPLATE", "R-PARENS"], /^ {2}\[[^\]\n]+\]\(\) \{$[\s\S]*^register computed-(?:string|template)$/m],
   ["register", "through parentheses", ["R-PARENS", "R-PARENS2", "R-PARENS-TEMPLATE"], /^ {2}\[\(+["`]register["`]\)+\]\(\) \{$/m],
   ["register", "a computed string literal", ["R-COMPUTED"], /^ {2}\["register"\]\(\) \{$[\s\S]*^register computed-string$/m],
@@ -2369,7 +2453,7 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
 ];
 
 /** Each row's id and pin count, frozen at this cut (PAGES' key order, every plant in ROWS order, freezes the pin ids). */
-const FROZEN_SHAPE = ["E-U1:28", "E-U2:35", "E-U3:31", "F-U1:20", "F-U2:11", "F-U3:21", "W:95", "Q:7"] as const;
+const FROZEN_SHAPE = ["E-U1:34", "E-U2:36", "E-U3:31", "F-U1:20", "F-U2:16", "F-U3:21", "W:97", "Q:7"] as const;
 /** The header labels of the claim parts' paragraphs, in CLAIM_PARTS order. */
 const CLAIM_LABELS: Readonly<Record<string, string>> = {
   walk: "WALK",
@@ -2421,6 +2505,12 @@ const PAGES: Readonly<Record<string, string>> = {
   "E1-TEXT-DOLLAR-AFTER": "42e37a4d25c10e8d",
   "E1-TEXT-NONASCII-AFTER": "a7673c3578ffc207",
   "E1-TEXT-BLOCK": "1a24a8c53b434102",
+  "E1-TEXT-UPPER-BEFORE": "47b17237e53f8177",
+  "E1-TEXT-LOWER-AFTER": "c8ade8b1780612bb",
+  "E1-TEXT-OCTAL": "cfa65072454ebe4c",
+  "E1-MAIN-UNRESOLVED": "5c7bb3ac18d967ef",
+  "E1-MAIN-STR-HEX": "1df9bb732e6d60f7",
+  "E1-TYPES-STR-U": "abb7910d54440bed",
   "U2-BR-WBZBY": "43d19beaa985f656",
   "U2-BR-REVISION": "f9c449db53aafc83",
   "U2-BR-EMPHASIS": "abe2a5dc34144781",
@@ -2456,6 +2546,7 @@ const PAGES: Readonly<Record<string, string>> = {
   "U2-TABLE-ROW-FIRST": "aaaa7e62315b602d",
   "U2-TABLE-CELL-FIRST": "8c2656f945627dc3",
   "U2-QUOTE-FIRST": "5db07fa25482b0b0",
+  "U2-LINK-REF": "c8385788650b0db5",
   "P-RESOLVE-TAB": "a8ca4f775c04c596",
   "P-RESOLVE-LF": "95699034de8657d8",
   "P-RESOLVE-CR": "7f8f5bc711533181",
@@ -2518,6 +2609,11 @@ const PAGES: Readonly<Record<string, string>> = {
   "R-OBJECT": "94eca06d562dc7d3",
   "R-PARENS2": "d5859ff046fc607c",
   "R-PARENS-TEMPLATE": "cb2f521d0387cc88",
+  "R-ID-ESC-BRACE": "fff93e9882290ae0",
+  "R-STR-ESC-U": "82005152c53ed957",
+  "R-STRING-SINGLE": "fa73a40007a9d615",
+  "R-DEFAULT-CLASS": "7f920c6fa23c48e8",
+  "R-ANON-CLASS": "6d4cff30655583fd",
   "S-TAB": "9e6153405c43eee8",
   "S-LF": "cfdb664a7af7d292",
   "S-CR": "4abb6c1fe3ec1ecc",
@@ -2634,6 +2730,8 @@ const PAGES: Readonly<Record<string, string>> = {
   "W-LOCAL-OWN-STEPS": "badd6c22e3e2e34a",
   "R-OTHER-TS-OWN": "aa8882c785612fb3",
   "W-NAMED-PAST-ESC": "60423e857291badb",
+  "W-NAMED-PAST-BRACE": "d6822cb4deede759",
+  "W-LOCAL-IMPORT-LATE": "f95788248f8dc3db",
   "Q-INDIRECT": "d9b14d62cbf925b1",
   "Q-SPECIFIER": "f4e476325adeb73f",
   "Q-PATH": "66eb94d9cf0dc889",
@@ -2769,7 +2867,7 @@ describe("wb-lrz.8: the full-surface readers of wb-lrz.4's Furnace SDK re-vendor
     reached("cases", "outside anchor");
   });
 
-  it("CLAIM TEXT: the header states each claim part of this census's CLAIM_PARTS byte-for-byte as its own paragraph, and names each residual with its quiet plant", () => {
+  it("CLAIM TEXT: the header states each claim part of the claims module's CLAIM_PARTS byte-for-byte as its own paragraph, and names each residual with its quiet plant", () => {
     expect(CLAIM_PARTS.map((part) => part.id)).toEqual(Object.keys(CLAIM_LABELS));
     expect(Object.fromEntries(CLAIM_PARTS.map((part) => [part.id, headerParagraph(`${CLAIM_LABELS[part.id]}: `)]))).toEqual(
       Object.fromEntries(CLAIM_PARTS.map((part) => [part.id, `${CLAIM_LABELS[part.id]}: ${part.text}`])),
