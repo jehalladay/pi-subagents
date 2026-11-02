@@ -17,6 +17,13 @@
  * declarationFile rows of the planted tsconfig.json program; planted on the real tree, each of the six reds this census
  * (measured at this cut).
  *
+ * CUT #4 FORM (R-B255: the FAIL-CLOSED CORE of the rule-19 structural exit at refusal #3). The C1 reader's claim words are
+ * narrowed to the forms C1's rows pin: READINGS SPELLING, WORDS, SUBJECTS and SEGMENTS and the readSubjects, visibleOf,
+ * decodedOf and COMMENT_LEAD docs claim only a form whose reading a named C1 plant or quiet row holds, and every other form
+ * of those readings is NOT CLAIMED by this census. Refusal #3's four members (RM-SEGMENT-NO-DOT, RM-SEGMENT-NO-SLASH,
+ * RM-NO-NFKC-BOTH, RM-WORDS-NO-CAPRUN) are among the forms NOT CLAIMED; their coverage is deferred to wb-km7q.13. Comments
+ * only: no code line, row, pin, witness, test title or roster byte changes at this cut.
+ *
  * PINNED READER SET (this file, describe "wb-km7q.8 query evidence and model calls: the adoption-time falsifier
  * (INF-RQ1..INF-RQ5)"; each pin case's output is held to its witness in test/fixtures/ri-query-evidence-model-call-roster.json;
  * observed at this cut: 9 passed (9)):
@@ -61,7 +68,8 @@
  * INF-RQ1..INF-RQ5 tests are NOT CLAIMED by this census (C2 reads their gate state, never re-runs them). wb-km7q.7's (R19)
  * standing posture (whether any Pi model-call site is reachable from an evidence path beyond the projection module, and the
  * opt-in checklist) is NOT CLAIMED by this census. A form, position, member, input or loading mechanism that no pinned row
- * exercises is NOT CLAIMED by this census (THE CLOSURE, THE ENTRIES and THE RECORDS each end with their own scope sentence).
+ * exercises is NOT CLAIMED by this census (SPELLING, WORDS, SUBJECTS, SEGMENTS, THE CLOSURE, THE ENTRIES and THE RECORDS each
+ * end with their own scope sentence).
  *
  * THE PRODUCER AT THE PINS (the roster's `producer` block; measured read-only with git show in the local ReactiveInferenceSDK
  * checkout by the cut #1 seat on 2026-10-28 and re-verified by the cut #2 seat on 2026-10-29, no fetch, every vendored line and
@@ -83,23 +91,43 @@
  * composition and its evidence source handed to falsify() and its receipt to witnessViolations().
  *
  * READINGS
- * - SPELLING: every text is read as written and with its escapes decoded (JS \u{X}, \uXXXX and \xXX; a control escape as a
- *   space and any other escaped character as itself; HTML numeric character references, decimal and hex; URL percent
- *   escapes), each in its visible spelling: format and default-ignorable characters removed, then NFKC, so an invisible never
- *   splits a name. Pinned by C1's plants (one per escape form, the invisible splits, the entity and percent spellings).
- * - WORDS: a break at each lower-to-upper case change and before the last capital of a capital run, lower case, the runs
- *   of a-z and 0-9 (ReactiveQuerySDK reads reactive query sdk; reactive_inference reads reactive inference).
+ * - SPELLING (claimed at the C1 plants named here, each read as the plant spells it): a text with no escape is read as
+ *   written (importSpecifier, identifier, comment and the other plants that carry no escape); an escaped plant is read with
+ *   its escapes decoded: the JS escapes \u0071 (escapedUnicode), \x71 (escapedHex) and \u{51} (escapedBrace), \n read as a
+ *   space (controlEscape) and \Q read as Q (escapedIdentity), the HTML numeric character references &#81; (htmlEntity) and
+ *   &#x51; (htmlHexEntity), and the URL percent escape %20 (percentEncoded). A text is read in its visible spelling: a
+ *   zero-width space inside or between the words of a name (innerInvisible, zeroWidthSplit) and a soft hyphen or a combining
+ *   grapheme joiner between them (softHyphenSplit, ignorableSplit) are removed, so none of them splits that name. NOT CLAIMED
+ *   by this census: any other escape, reference or percent sequence (another control escape, a hex digit written as a
+ *   letter, an upper-case X reference and another digit count among them), the written reading of a text that also carries
+ *   an escape, any other invisible (a format character that is not default-ignorable among them), and the NFKC fold
+ *   (visibleOf's and wordsOf's) of a compatibility form such as a fullwidth spelling (RM-NO-NFKC-BOTH; its coverage is
+ *   deferred to wb-km7q.13).
+ * - WORDS: a break at each lower-to-upper case change, lower case, the runs of a-z (ReactiveQuerySDK reads reactive query
+ *   sdk: the vocabulary the C1 witness holds; reactive_inference reads reactive inference: snake). NOT CLAIMED by this
+ *   census: a break before the last capital of a capital run (an InferenceSDKQuery-shaped name: RM-WORDS-NO-CAPRUN; its
+ *   coverage is deferred to wb-km7q.13), a break between a digit and a capital, and whether a digit is read inside a word's
+ *   run.
  * - SUBJECTS (never a literal here: vocabularyOf derives them from the bead title): the title's CamelCase names
  *   (ReactiveQuerySDK, ReactiveInferenceSDK, QueryView) cut into words; the subject words are what one SDK-suffixed name spells
- *   and the other does not (query, inference); every adjacent word pair of a name holding a subject word is read, adjacent or
- *   fused into one word (reactive query, query sdk, query view, reactive inference, inference sdk; reactivequery, querysdk,
- *   queryview, reactiveinference, inferencesdk). A word alone (query, inference, view) is never a subject: Pi's projection
- *   answers query(), and "type inference" is prose.
- * - SEGMENTS: two words are adjacent only inside one run of letters, digits, white space, "_", "-", "." and "/" (prose, a name,
- *   a path, a package name); any other character ends the run, so claude-host.ts's `config.query ?? sdkQuery` (measured at the
- *   first red of cut #1: it read "query sdk" across the operator) reads nothing, while "the reactive query engine" and
- *   "@acme/reactive-query" do. A pair split across one line break is read at its first line, the next line's leading comment
- *   marker (//, /*, *, #) dropped; a pair split by more than one line break is NOT CLAIMED by this census.
+ *   and the other does not (query, inference); the vocabulary is every adjacent word pair of a name holding a subject word
+ *   (reactive query, query sdk, query view, reactive inference, inference sdk), held by the C1 witness. Claimed readings: the
+ *   pairs reactive query (splitLine), query view (comment), reactive inference (identifier, snake) and inference sdk
+ *   (inferenceSdk, splitBlock) read as adjacent words, and the fused word reactivequerysdk reads query (fused). NOT CLAIMED by
+ *   this census: the pair query sdk read on its own (every plant that spells it spells reactive query too), and the fused
+ *   reading of any word but reactivequerysdk (among them a word holding reactivequery or querysdk elsewhere in it, and a
+ *   fused queryview, reactiveinference or inferencesdk). A word alone (query, inference, view) is never a subject: Pi's
+ *   projection answers query(), and "type inference" is prose (projectionQuery, typeInference).
+ * - SEGMENTS: two words are adjacent only inside one segment, a run of the text that no ending character breaks. The joining
+ *   members claimed, between two words of ASCII letters: a space (comment, splitLine and the other spaced plants), "_"
+ *   (snake) and "-" (importSpecifier). The ending characters claimed: "?" (operatorJoin, and the live seam over
+ *   claude-host.ts's `config.query ?? sdkQuery`, which read "query sdk" across the operator at the first red of cut #1) and
+ *   ":" (R-SEPARATOR's `reactive:query`). "the reactive query engine" (splitLine) and "@acme/reactive-query" (manifest) read
+ *   their subject. NOT CLAIMED by this census: whether "." or "/" joins a segment (RM-SEGMENT-NO-DOT, RM-SEGMENT-NO-SLASH;
+ *   their coverage is deferred to wb-km7q.13), whether a digit, a non-ASCII letter or white space other than a space joins
+ *   one, and whether any character other than "?" and ":" ends one. A pair split across one line break is read at its first
+ *   line when the next line opens with the comment marker // (splitLine), /* (blockContinued), * (splitBlock) or #
+ *   (hashContinued); a pair split by more than one line break is NOT CLAIMED by this census.
  * - THE FLIP (the house analog: Pi holds no QueryView): Pi's real ObservationProjection defaults an observed node it has no
  *   presentation for to statusText "UNKNOWN" and statusTone "unknown" (observation.ts ingest); the flip is the same source read
  *   back as statusText "TRUE", statusTone "success", on two arms per node (a refresh snapshot with coverage complete; an ingest
@@ -185,8 +213,9 @@
  *    an empty trace; with R-SAME-VALUE's quiet row (a hollowing outside that list is NOT CLAIMED by this census).
  *  C "If Pi ever composes ReactiveQuerySDK evidence with ReactiveInferenceSDK-mediated execution (gated INF-RQ1..INF-RQ5)": C1 the
  *    Pi seam reads ABSENT over the C1 read set: every git-listed file (tracked, or untracked and not ignored) ending .js, .cjs,
- *    .mjs, .ts, .cts, .mts, .jsx or .tsx below src/, qa/ and examples/ and at the root, read line by line and across each line
- *    break in the SPELLING; and the root package.json: the names and string specs of its four dependency fields and its whole
+ *    .mjs, .ts, .cts, .mts, .jsx or .tsx below src/, qa/ and examples/ and at the root, read line by line in the SPELLING and
+ *    across one line break as READINGS SEGMENTS names (a pair whose next line opens with a comment marker); and the root
+ *    package.json: the names and string specs of its four dependency fields and its whole
  *    text. Pinned: a read-set row (one path per extension below each code root, and one at the root) and a seam reading over a
  *    planted git tree (a tracked, an untracked and an ignored module below src/, a module below qa/, below examples/ and at
  *    the root, a module below docs/ and one below test/, and a package.json whose subject sits on a script line and in a
@@ -236,9 +265,9 @@
  *   R-OUTSIDE-ROOTS (C1) every directory but src/, qa/ and examples/ (docs/, test/, vendor/, .beads/ among them; this census
  *   and its roster spell every subject) and every non-JS/TS file but the root package.json are not read; R-COMPOSED (C1) a subject assembled from parts that split its words;
  *   R-LOOKALIKE (C1) a look-alike letter NFKC does not fold; R-RF-INTERNAL (C1) rf's own composition (its sdk_versions names
- *   reactive_inference) read by a module that never spells it; R-SEPARATOR (C1) a subject whose words a character outside the
- *   SEGMENTS set joins (`reactive:query`); R-ENCODED (C1) a subject spelled through an encoding the SPELLING does not decode
- *   (base64, a byte array, rot13).
+ *   reactive_inference) read by a module that never spells it; R-SEPARATOR (C1) a subject whose words a character that ends
+ *   a segment joins (`reactive:query`); R-ENCODED (C1) a subject spelled through an encoding that is not a JS escape, an HTML
+ *   numeric character reference or a URL percent escape (base64, a byte array, rot13).
  *
  * Display paths added: none. Test-only: no src file is edited. One scratch directory per run is allocated through
  * test/helpers/scratch.ts (makeScratch and removeScratch, the leak guard installed at module scope) for B1's planted
@@ -469,15 +498,21 @@ function subjectsIn(words: readonly string[], vocabulary: readonly SubjectPair[]
   return [...found].sort();
 }
 /**
- * The subjects one text names. Two words are adjacent only inside one SEGMENT: a run of letters, digits, white space, "_", "-",
- * "." and "/" (prose, a name, a path or a package name); any other character (an operator, a bracket, a quote, a comma) ends
- * it, so `config.query ?? sdkQuery` reads no "query sdk" while "the reactive query engine" and "@acme/reactive-query" do.
+ * The subjects one text names. Two words are adjacent only inside one segment (READINGS SEGMENTS names what this census
+ * claims of it): a space, "_" and "-" are the joining members claimed and "?" and ":" the ending characters claimed, so
+ * `config.query ?? sdkQuery` reads no "query sdk" while "the reactive query engine" and "@acme/reactive-query" do; whether
+ * "." or "/" joins a segment (deferred to wb-km7q.13), and what else of the class below joins one beyond the words' own
+ * ASCII letters, are NOT CLAIMED.
  */
 function readSubjects(text: string, vocabulary: readonly SubjectPair[]): string[] {
   const segments = visibleOf(text).split(/[^\p{L}\p{N}\s_./-]+/u);
   return [...new Set(segments.flatMap(segment => subjectsIn(wordsOf(segment), vocabulary)))].sort();
 }
-/** The visible spelling: format and default-ignorable characters removed, then NFKC (an invisible never splits a name). */
+/**
+ * The visible spelling (READINGS SPELLING names what this census claims of it: the zero-width space, the soft hyphen and the
+ * combining grapheme joiner C1's plants spell are removed, so they do not split a name); what else this removes, and its
+ * NFKC fold, are NOT CLAIMED.
+ */
 function visibleOf(text: string): string {
   return text.replace(/[\p{Cf}\p{Default_Ignorable_Code_Point}]/gu, "").normalize("NFKC");
 }
@@ -485,8 +520,9 @@ function codePointOf(value: number): string {
   return value <= 0x10ffff ? String.fromCodePoint(value) : "";
 }
 /**
- * A text with its escapes decoded: JS escapes (\u{X}, \uXXXX, \xXX, a control escape read as a space, any other escaped
- * character as itself), HTML numeric character references and URL percent escapes. R-ENCODED names the encodings left.
+ * A text with its escapes decoded (READINGS SPELLING names the forms this census claims, as C1's plants spell them: \u0071,
+ * \x71, \u{51}, \n read as a space, \Q read as Q, &#81;, &#x51; and %20); every other form this decodes is NOT CLAIMED.
+ * R-ENCODED names the encodings that are not a JS escape, an HTML numeric character reference or a URL percent escape.
  */
 function decodedOf(text: string): string {
   return text
@@ -504,7 +540,10 @@ function textSubjects(text: string, vocabulary: readonly SubjectPair[]): string[
   const decoded = decodedOf(text);
   return decoded === text ? raw : [...new Set([...raw, ...readSubjects(decoded, vocabulary)])].sort();
 }
-/** A line's leading comment marker (`//`, `*`, `#`), dropped where a pair is read across a line break. */
+/**
+ * A line's leading comment marker (`//`, `/*`, `*`, `#`), dropped where a pair is read across a line break. This census
+ * claims the continuations READINGS SEGMENTS names, one plant each, and not the drop of any one marker.
+ */
 const COMMENT_LEAD = /^\s*(?:\/\/+|\/\*+|\*+|#+)\s?/;
 /** `<path>:<line> <subject>` for each line naming a subject, and for a pair split across a line break (read at its first line). */
 function findingsOf(path: string, text: string, vocabulary: readonly SubjectPair[]): string[] {
