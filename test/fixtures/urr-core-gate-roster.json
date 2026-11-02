@@ -5222,7 +5222,8 @@
        },
        "imageAlt": {
         "findings": [
-         "docs/page-twin.md:1: rendered unknown raw-state text \"Fib<o:p>er core\""
+         "docs/page-twin.md:1: rendered unknown raw-state text \"Fib<o:p>er core\"",
+         "docs/page-twin.md:1: rendered unknown image alt \"<code>Fib<o:p>er core</code>\""
         ],
         "page": "Pi embeds the Fib<o:p>er core."
        },
