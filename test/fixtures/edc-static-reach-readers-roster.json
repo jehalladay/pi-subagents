@@ -44,11 +44,14 @@
           "LOADER_FACTORIES@factory#1",
           "LOADER_FACTORIES@isLoaderCall#1",
           "BINDING_ASSIGNMENTS@loaderNames#1",
+          "unwrap@calleeName#1",
+          "unwrap@isLoaderCall#1",
           "W-BAND-LOADER",
           "W-ELEM-LOADER",
           "W-CWRAP-LOADER",
           "F-LOADS",
-          "F-LOADER-SPELLINGS"
+          "F-LOADER-SPELLINGS",
+          "F-OUTERMOST-WRAPPERS"
         ]
       },
       {
@@ -57,7 +60,8 @@
           "F-LOADS",
           "F-ENTRY-EDGES",
           "unwrap@loaderLabel#1",
-          "F-LOADER-SPELLINGS"
+          "F-LOADER-SPELLINGS",
+          "F-OUTERMOST-WRAPPERS"
         ]
       }
     ],
@@ -161,6 +165,7 @@
         "words": "a call of a held LAUNCH_CALLS member, with type arguments or optional too, reads its command (resolution; <expression> when it does not resolve or is absent)",
         "falsifiers": [
           "LAUNCH_CALLS@consume#1",
+          "isWrapper@consume#1",
           "F-FOLLOW",
           "F-BINDINGS",
           "F-FLOWS",
@@ -613,6 +618,7 @@
         }
       ],
       "reds": [
+        "isWrapper@elementRead#1",
         "F-ARRAY-REACH"
       ],
       "witnesses": [
@@ -1006,6 +1012,73 @@
       "twins": [
         "t08-bt-ta-paren"
       ]
+    },
+    "GP11-01-CN-INST": {
+      "hollows": "unwrap@calleeName#1 reads an outermost f<T> as written (an instantiation called through an optional call names no callee)",
+      "edits": [
+        {
+          "from": "export function calleeName(call: ts.CallExpression): string | undefined {\n  const callee = unwrap(call.expression);\n",
+          "to": "export function calleeName(call: ts.CallExpression): string | undefined {\n  const callee = unwrap(call.expression);\n  if (ts.isExpressionWithTypeArguments(call.expression)) return undefined;\n"
+        }
+      ],
+      "reds": [
+        "unwrap@calleeName#1",
+        "unwrap@isLoaderCall#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w-gp11-01-callee-exec",
+        "w-gp11-02-callee-require"
+      ],
+      "twins": [
+        "t-gp11-01-callee-exec-paren",
+        "t-gp11-01b-callee-exec-plain",
+        "t-gp11-02-callee-require-paren"
+      ]
+    },
+    "GP11-02-ILC-INST": {
+      "hollows": "unwrap@isLoaderCall#1 reads an outermost f<T> as written (a factory result or a bound loader called through an instantiation and an optional call is no loader call)",
+      "edits": [
+        {
+          "from": "  const callee = unwrap(node.expression);\n  return (ts.isCallExpression(callee) && LOADER_FACTORIES.includes(calleeName(callee) ?? \"\")) || (ts.isIdentifier(callee) && loaderNames(source).has(callee.text));",
+          "to": "  const callee = (ts.isExpressionWithTypeArguments(node.expression) ? node.expression : unwrap(node.expression));\n  return (ts.isCallExpression(callee) && LOADER_FACTORIES.includes(calleeName(callee) ?? \"\")) || (ts.isIdentifier(callee) && loaderNames(source).has(callee.text));"
+        }
+      ],
+      "reds": [
+        "unwrap@isLoaderCall#1",
+        "unwrap@loaderLabel#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w-gp11-03-factory-call",
+        "w-gp11-04-bound-loader",
+        "w-gp11-05-factory-label"
+      ],
+      "twins": [
+        "t-gp11-03-factory-call-paren",
+        "t-gp11-04-bound-loader-paren",
+        "t-gp11-05-factory-label-paren"
+      ]
+    },
+    "GP11-03-LL-INST": {
+      "hollows": "unwrap@loaderLabel#1 reads an outermost f<T> as written (a factory result called through an instantiation and an optional call is labelled <call>())",
+      "edits": [
+        {
+          "from": "  if (call.expression.kind === ts.SyntaxKind.ImportKeyword) return \"import()\";\n  const callee = unwrap(call.expression);\n  return ts.isCallExpression(callee)",
+          "to": "  if (call.expression.kind === ts.SyntaxKind.ImportKeyword) return \"import()\";\n  const callee = (ts.isExpressionWithTypeArguments(call.expression) ? call.expression : unwrap(call.expression));\n  return ts.isCallExpression(callee)"
+        }
+      ],
+      "reds": [
+        "unwrap@isLoaderCall#1",
+        "unwrap@loaderLabel#1",
+        "F-OUTERMOST-WRAPPERS"
+      ],
+      "witnesses": [
+        "w-gp11-05-factory-label"
+      ],
+      "twins": [
+        "t-gp11-05-factory-label-paren"
+      ]
     }
   },
   "constants": {
@@ -1176,16 +1249,16 @@
     "siteForms": {
       "unwrap@resolveTexts#1": "import * as cp from \"node:child_process\";\napi.exec((\"rf\"), []);\napi.exec((\"rf\" as string), []);\napi.exec((\"rf\" satisfies string), []);\napi.exec((<string>\"rf\"), []);\napi.exec(\"rf\"!, []);\nconst TOOL = \"rf\";\napi.exec(TOOL<string>, []);\napi.exec(\"rf\" as string, []);\napi.exec(\"rf\" satisfies string, []);\napi.exec(<string>\"rf\", []);\nconst T1 = \"rf\" as string;\napi.exec(T1, []);\nconst T2 = \"rf\" satisfies string;\napi.exec(T2, []);\nconst T3 = <string>\"rf\";\napi.exec(T3, []);\napi.exec(flag ? \"rf\" as string : \"rf\", []);\napi.exec(flag ? \"rf\" satisfies string : \"rf\", []);\napi.exec(flag ? <string>\"rf\" : \"rf\", []);\nconst T4 = [\"rf\" as string];\napi.exec(T4[0], []);\nconst T5 = [\"rf\" satisfies string];\napi.exec(T5[0], []);\nconst T6 = [<string>\"rf\"];\napi.exec(T6[0], []);\ncp[\"spawn\" as string](\"rf\", []);\ncp[\"spawn\" satisfies string](\"rf\", []);\ncp[<string>\"spawn\"](\"rf\", []);\nconst { [\"spawn\" as string]: s1 } = cp;\ns1(\"rf\", []);\nconst { [\"spawn\" satisfies string]: s2 } = cp;\ns2(\"rf\", []);\nconst { [<string>\"spawn\"]: s3 } = cp;\ns3(\"rf\", []);\n",
       "unwrap@resolveTexts#2": "const TOOLS = [\"rf\"];\napi.exec(TOOLS[(0)], []);\napi.exec(TOOLS[0 as 0], []);\napi.exec(TOOLS[0 satisfies 0], []);\napi.exec(TOOLS[<0>0], []);\napi.exec(TOOLS[0!], []);\napi.exec(TOOLS[0<T>], []);\n",
-      "isWrapper@elementRead#1": "const T1 = [\"git\"];\n(T1[0])();\napi.exec(T1[0], []);\nconst T2 = [\"git\"];\n(T2[0] as F)();\napi.exec(T2[0], []);\nconst T3 = [\"git\"];\n(T3[0] satisfies F)();\napi.exec(T3[0], []);\nconst T4 = [\"git\"];\n(<F>T4[0])();\napi.exec(T4[0], []);\nconst T5 = [\"git\"];\nT5[0]!();\napi.exec(T5[0], []);\nconst T6 = [\"git\"];\n(T6[0]<F>)();\napi.exec(T6[0], []);\n",
+      "isWrapper@elementRead#1": "const T1 = [\"git\"];\n(T1[0])();\napi.exec(T1[0], []);\nconst T2 = [\"git\"];\n(T2[0] as F)();\napi.exec(T2[0], []);\nconst T3 = [\"git\"];\n(T3[0] satisfies F)();\napi.exec(T3[0], []);\nconst T4 = [\"git\"];\n(<F>T4[0])();\napi.exec(T4[0], []);\nconst T5 = [\"git\"];\nT5[0]!();\napi.exec(T5[0], []);\nconst T6 = [\"git\"];\n(T6[0]<F>)();\napi.exec(T6[0], []);\nconst T7 = [\"git\"];\nT7[0]<F>?.();\napi.exec(T7[0], []);\n",
       "unwrap@resolveArrays#1": "api.exec(([\"rf\"])[0], []);\napi.exec(([\"rf\"] as string[])[0], []);\napi.exec(([\"rf\"] satisfies string[])[0], []);\napi.exec((<string[]>[\"rf\"])[0], []);\napi.exec([\"rf\"]![0], []);\napi.exec(([\"rf\"]<T>)[0], []);\nconst A1 = [\"rf\"] as string[];\napi.exec(A1[0], []);\nconst A2 = [\"rf\"] as const;\napi.exec(A2[0], []);\nconst A3 = [\"rf\"] satisfies string[];\napi.exec(A3[0], []);\nconst A4 = <string[]>[\"rf\"];\napi.exec(A4[0], []);\nconst A5 = [\"rf\"]<T>;\napi.exec(A5[0], []);\napi.exec((flag ? [\"rf\"] as string[] : [\"rf\"])[0], []);\napi.exec((flag ? [\"rf\"] satisfies string[] : [\"rf\"])[0], []);\napi.exec((flag ? <string[]>[\"rf\"] : [\"rf\"])[0], []);\n",
-      "unwrap@calleeName#1": "(api.exec)(\"rf\", []);\n(api.exec as F)(\"rf\", []);\n(api.exec satisfies F)(\"rf\", []);\n(<F>api.exec)(\"rf\", []);\napi.exec!(\"rf\", []);\n(api.exec<F>)(\"rf\", []);\n",
+      "unwrap@calleeName#1": "(api.exec)(\"rf\", []);\n(api.exec as F)(\"rf\", []);\n(api.exec satisfies F)(\"rf\", []);\n(<F>api.exec)(\"rf\", []);\napi.exec!(\"rf\", []);\n(api.exec<F>)(\"rf\", []);\napi.exec<F>?.(\"rf\", []);\nrequire<F>?.(name);\n",
       "unwrap@factory#1": "import { createRequire } from \"node:module\";\nconst l1 = (createRequire(import.meta.url));\nl1(name);\nconst l2 = createRequire(import.meta.url) as NodeRequire;\nl2(name);\nconst l3 = createRequire(import.meta.url) satisfies NodeRequire;\nl3(name);\nconst l4 = <NodeRequire>createRequire(import.meta.url);\nl4(name);\nconst l5 = createRequire(import.meta.url)!;\nl5(name);\nconst l6 = createRequire(import.meta.url)<F>;\nl6(name);\n",
       "unwrap@loaderNames#1": "import { createRequire } from \"node:module\";\nlet l1;\n(l1) = createRequire(import.meta.url);\nl1(name);\nlet l2;\n(l2 as unknown) = createRequire(import.meta.url);\nl2(name);\nlet l3;\n(l3 satisfies unknown) = createRequire(import.meta.url);\nl3(name);\nlet l4;\n(<unknown>l4) = createRequire(import.meta.url);\nl4(name);\nlet l5;\nl5! = createRequire(import.meta.url);\nl5(name);\nlet l6;\n(l6<T>) = createRequire(import.meta.url);\nl6(name);\nlet l7;\nl7<T> = createRequire(import.meta.url);\nl7(name);\n",
-      "unwrap@isLoaderCall#1": "import { createRequire } from \"node:module\";\n(createRequire(import.meta.url))(name);\n(createRequire(import.meta.url) as NodeRequire)(name);\n(createRequire(import.meta.url) satisfies NodeRequire)(name);\n(<NodeRequire>createRequire(import.meta.url))(name);\ncreateRequire(import.meta.url)!(name);\n(createRequire(import.meta.url)<F>)(name);\n",
+      "unwrap@isLoaderCall#1": "import { createRequire } from \"node:module\";\n(createRequire(import.meta.url))(name);\n(createRequire(import.meta.url) as NodeRequire)(name);\n(createRequire(import.meta.url) satisfies NodeRequire)(name);\n(<NodeRequire>createRequire(import.meta.url))(name);\ncreateRequire(import.meta.url)!(name);\n(createRequire(import.meta.url)<F>)(name);\ncreateRequire(import.meta.url)<F>?.(name);\nconst load = createRequire(import.meta.url);\nload<F>?.(name);\n",
       "unwrap@bindTarget#1": "import * as cp from \"node:child_process\";\nlet g1;\n(g1) = cp.spawn;\ng1(\"rf\", []);\nlet g2;\n(g2 as unknown) = cp.spawn;\ng2(\"rf\", []);\nlet g3;\n(g3 satisfies unknown) = cp.spawn;\ng3(\"rf\", []);\nlet g4;\n(<unknown>g4) = cp.spawn;\ng4(\"rf\", []);\nlet g5;\ng5! = cp.spawn;\ng5(\"rf\", []);\nlet g6;\n(g6<T>) = cp.spawn;\ng6(\"rf\", []);\nlet g7;\n({ spawn: g7 as unknown } = cp);\ng7(\"rf\", []);\nlet g8;\n({ spawn: g8 satisfies unknown } = cp);\ng8(\"rf\", []);\nlet g9;\n({ spawn: <unknown>g9 } = cp);\ng9(\"rf\", []);\nlet g10;\ng10<T> = cp.spawn;\ng10(\"rf\", []);\nlet g11;\n[g11 as unknown] = cp;\ng11.spawn(\"rf\", []);\nlet g12;\n[g12 satisfies unknown] = cp;\ng12.spawn(\"rf\", []);\nlet g13;\n[<unknown>g13] = cp;\ng13.spawn(\"rf\", []);\nlet g14;\n({ ...g14 as unknown } = cp);\ng14.spawn(\"rf\", []);\nlet g15;\n({ ...g15 satisfies unknown } = cp);\ng15.spawn(\"rf\", []);\nlet g16;\n({ ...<unknown>g16 } = cp);\ng16.spawn(\"rf\", []);\nlet g17;\n[...g17 as unknown] = cp;\ng17.spawn(\"rf\", []);\nlet g18;\n[...g18 satisfies unknown] = cp;\ng18.spawn(\"rf\", []);\nlet g19;\n[...<unknown>g19] = cp;\ng19.spawn(\"rf\", []);\n",
-      "isWrapper@consume#1": "import * as cp from \"node:child_process\";\nconst g1 = (cp).spawn;\ng1(\"rf\", []);\nconst g2 = (cp as typeof cp).spawn;\ng2(\"rf\", []);\nconst g3 = (cp satisfies typeof cp).spawn;\ng3(\"rf\", []);\nconst g4 = (<typeof cp>cp).spawn;\ng4(\"rf\", []);\nconst g5 = cp!.spawn;\ng5(\"rf\", []);\nconst g6 = (cp<F>).spawn;\ng6(\"rf\", []);\nconst g7 = (await cp).spawn;\ng7(\"rf\", []);\n",
+      "isWrapper@consume#1": "import * as cp from \"node:child_process\";\nconst g1 = (cp).spawn;\ng1(\"rf\", []);\nconst g2 = (cp as typeof cp).spawn;\ng2(\"rf\", []);\nconst g3 = (cp satisfies typeof cp).spawn;\ng3(\"rf\", []);\nconst g4 = (<typeof cp>cp).spawn;\ng4(\"rf\", []);\nconst g5 = cp!.spawn;\ng5(\"rf\", []);\nconst g6 = (cp<F>).spawn;\ng6(\"rf\", []);\nconst g7 = (await cp).spawn;\ng7(\"rf\", []);\nconst g8 = cp.spawn;\ng8<F>?.(\"rf\", []);\nconst g9 = cp<F>?.[\"spawn\"];\ng9(\"rf\", []);\n",
       "unwrap@consume#1": "import * as cp from \"node:child_process\";\nlet h1 = cp;\nconst g1 = ((h1) ||= fallback).spawn;\ng1(\"rf\", []);\nlet h2 = cp;\nconst g2 = ((h2 as typeof cp) ||= fallback).spawn;\ng2(\"rf\", []);\nlet h3 = cp;\nconst g3 = ((h3 satisfies typeof cp) ||= fallback).spawn;\ng3(\"rf\", []);\nlet h4 = cp;\nconst g4 = ((<typeof cp>h4) ||= fallback).spawn;\ng4(\"rf\", []);\nlet h5 = cp;\nconst g5 = (h5! ||= fallback).spawn;\ng5(\"rf\", []);\nlet h6 = cp;\nconst g6 = (h6<T> ||= fallback).spawn;\ng6(\"rf\", []);\n",
-      "unwrap@loaderLabel#1": "import { createRequire } from \"node:module\";\n(createRequire(import.meta.url))(name);\n(createRequire(import.meta.url) as NodeRequire)(name);\n(createRequire(import.meta.url) satisfies NodeRequire)(name);\n(<NodeRequire>createRequire(import.meta.url))(name);\ncreateRequire(import.meta.url)!(name);\n(createRequire(import.meta.url)<F>)(name);\n(require)(name);\n",
+      "unwrap@loaderLabel#1": "import { createRequire } from \"node:module\";\n(createRequire(import.meta.url))(name);\n(createRequire(import.meta.url) as NodeRequire)(name);\n(createRequire(import.meta.url) satisfies NodeRequire)(name);\n(<NodeRequire>createRequire(import.meta.url))(name);\ncreateRequire(import.meta.url)!(name);\n(createRequire(import.meta.url)<F>)(name);\n(require)(name);\ncreateRequire(import.meta.url)<F>?.(name);\n",
       "isWrapper@isWriteTarget#1": "import * as cp from \"node:child_process\";\nlet h1 = cp;\n(h1) = other;\nlet h2 = cp;\n(h2 as unknown) = other;\nlet h3 = cp;\n(h3 satisfies unknown) = other;\nlet h4 = cp;\n(<unknown>h4) = other;\nlet h5 = cp;\nh5! = other;\nlet h6 = cp;\n(h6<T>) = other;\n",
       "LAUNCH_CALLS@launchSitesAt#1": "api.spawn(\"rf\");\napi.spawnSync(\"rf\");\napi.exec(\"rf\");\napi.execSync(\"rf\");\napi.execFile(\"rf\");\napi.execFileSync(\"rf\");\napi.fork(\"rf\");\napi.execve(\"rf\");\n",
       "LAUNCH_CALLS@consume#1": "import * as cp from \"node:child_process\";\nconst { spawn: a, spawnSync: b, exec: c, execSync: d, execFile: e, execFileSync: f, fork: g, execve: h } = cp;\na(\"rf\");\nb(\"rf\");\nc(\"rf\");\nd(\"rf\");\ne(\"rf\");\nf(\"rf\");\ng(\"rf\");\nh(\"rf\");\n",
@@ -1505,7 +1578,20 @@
       "w07-bt-sat": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: go satisfies typeof cp.spawn | undefined } = cp);\ngo?.(\"rf\", []);\n",
       "t07-bt-sat-paren": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: (go satisfies typeof cp.spawn | undefined) } = cp);\ngo?.(\"rf\", []);\n",
       "w08-bt-ta": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: <typeof cp.spawn>go } = cp);\ngo?.(\"rf\", []);\n",
-      "t08-bt-ta-paren": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: (<typeof cp.spawn>go) } = cp);\ngo?.(\"rf\", []);\n"
+      "t08-bt-ta-paren": "import * as cp from \"node:child_process\";\nlet go: typeof cp.spawn | undefined;\n({ spawn: (<typeof cp.spawn>go) } = cp);\ngo?.(\"rf\", []);\n",
+      "w-gp11-01-callee-exec": "declare const api: { exec<T>(command: string, args: string[]): T };\napi.exec<void>?.(\"rf\", []);\n",
+      "t-gp11-01-callee-exec-paren": "declare const api: { exec<T>(command: string, args: string[]): T };\n(api.exec<void>)?.(\"rf\", []);\n",
+      "t-gp11-01b-callee-exec-plain": "declare const api: { exec<T>(command: string, args: string[]): T };\napi.exec<void>(\"rf\", []);\n",
+      "w-gp11-02-callee-require": "declare const require: <T>(id: string) => T;\nconst cp = require<{ spawn(command: string, args: string[]): void }>?.(\"node:child_process\");\ncp.spawn(\"rf\", []);\n",
+      "t-gp11-02-callee-require-paren": "declare const require: <T>(id: string) => T;\nconst cp = (require<{ spawn(command: string, args: string[]): void }>)?.(\"node:child_process\");\ncp.spawn(\"rf\", []);\n",
+      "w-gp11-03-factory-call": "declare function createRequire(url: string | URL): <T>(id: string) => T;\nconst cp = createRequire(import.meta.url)<{ spawn(command: string, args: string[]): void }>?.(\"node:child_process\");\ncp.spawn(\"rf\", []);\n",
+      "t-gp11-03-factory-call-paren": "declare function createRequire(url: string | URL): <T>(id: string) => T;\nconst cp = (createRequire(import.meta.url)<{ spawn(command: string, args: string[]): void }>)?.(\"node:child_process\");\ncp.spawn(\"rf\", []);\n",
+      "w-gp11-04-bound-loader": "declare function createRequire(url: string | URL): <T>(id: string) => T;\nconst load = createRequire(import.meta.url);\nconst cp = load<{ spawn(command: string, args: string[]): void }>?.(\"node:child_process\");\ncp.spawn(\"rf\", []);\n",
+      "t-gp11-04-bound-loader-paren": "declare function createRequire(url: string | URL): <T>(id: string) => T;\nconst load = createRequire(import.meta.url);\nconst cp = (load<{ spawn(command: string, args: string[]): void }>)?.(\"node:child_process\");\ncp.spawn(\"rf\", []);\n",
+      "w-gp11-05-factory-label": "declare function createRequire(url: string | URL): <T>(id: string) => T;\ndeclare const spec: string;\ncreateRequire(import.meta.url)<unknown>?.(spec);\n",
+      "t-gp11-05-factory-label-paren": "declare function createRequire(url: string | URL): <T>(id: string) => T;\ndeclare const spec: string;\n(createRequire(import.meta.url)<unknown>)?.(spec);\n",
+      "instantiated-optional-factory-binding": "import { createRequire } from \"node:module\";\nconst load = createRequire<F>?.(import.meta.url);\nload(name);\n",
+      "instantiated-optional-factory-result": "import { createRequire } from \"node:module\";\ncreateRequire<F>?.(import.meta.url)(name);\n"
     },
     "scriptForms": {
       "view.tsx": "import * as cp from \"node:child_process\";\nexport const view = <b>{cp.spawn(\"rf\", [])}</b>;\n",
@@ -3068,7 +3154,20 @@
         "w07-bt-sat",
         "t07-bt-sat-paren",
         "w08-bt-ta",
-        "t08-bt-ta-paren"
+        "t08-bt-ta-paren",
+        "w-gp11-01-callee-exec",
+        "t-gp11-01-callee-exec-paren",
+        "t-gp11-01b-callee-exec-plain",
+        "w-gp11-02-callee-require",
+        "t-gp11-02-callee-require-paren",
+        "w-gp11-03-factory-call",
+        "t-gp11-03-factory-call-paren",
+        "w-gp11-04-bound-loader",
+        "t-gp11-04-bound-loader-paren",
+        "w-gp11-05-factory-label",
+        "t-gp11-05-factory-label-paren",
+        "instantiated-optional-factory-binding",
+        "instantiated-optional-factory-result"
       ],
       "F-SPECIFIER-SLOTS": [
         "parenthesized-specifier",
@@ -3595,26 +3694,22 @@
       "unwrap@resolveArrays#1 f<T>": "killed",
       "unwrap@calleeName#1 (...)": "killed",
       "unwrap@calleeName#1 as": {
-        "reason": "a call's callee is never a bare as expression: f as T(x) is a parse error",
-        "premise": "api.exec as F(\"rf\", []);\n",
-        "parsed": "TS1005"
+        "reason": "a call's callee is never a bare as expression: f as T(x) and f as T?.(x) are parse errors",
+        "premise": "api.exec as F(\"rf\", []);\napi.exec as F?.(\"rf\", []);\n",
+        "parsed": "TS1005 TS1005"
       },
       "unwrap@calleeName#1 satisfies": {
-        "reason": "a call's callee is never a bare satisfies expression: f satisfies T(x) is a parse error",
-        "premise": "api.exec satisfies F(\"rf\", []);\n",
-        "parsed": "TS1005"
+        "reason": "a call's callee is never a bare satisfies expression: f satisfies T(x) and f satisfies T?.(x) are parse errors",
+        "premise": "api.exec satisfies F(\"rf\", []);\napi.exec satisfies F?.(\"rf\", []);\n",
+        "parsed": "TS1005 TS1005"
       },
       "unwrap@calleeName#1 <T>": {
-        "reason": "<T>f(x) asserts the call, whose callee is f: a call's callee is never a bare <T> assertion",
-        "premise": "<F>api.exec(\"rf\", []);\n",
-        "parsed": "callee PropertyAccessExpression"
+        "reason": "<T>f(x) and <T>f?.(x) assert the call, whose callee is f: a call's callee is never a bare <T> assertion",
+        "premise": "<F>api.exec(\"rf\", []);\n<F>api.exec?.(\"rf\", []);\n",
+        "parsed": "callee PropertyAccessExpression callee PropertyAccessExpression"
       },
       "unwrap@calleeName#1 !": "killed",
-      "unwrap@calleeName#1 f<T>": {
-        "reason": "f<T>(x) is a call with type arguments, whose callee is f: a call's callee is never a bare instantiation expression",
-        "premise": "api.exec<F>(\"rf\", []);\n",
-        "parsed": "callee PropertyAccessExpression"
-      },
+      "unwrap@calleeName#1 f<T>": "killed",
       "unwrap@factory#1 (...)": "killed",
       "unwrap@factory#1 as": "killed",
       "unwrap@factory#1 satisfies": "killed",
@@ -3623,44 +3718,40 @@
       "unwrap@factory#1 f<T>": "killed",
       "unwrap@loaderNames#1 (...)": "killed",
       "unwrap@loaderNames#1 as": {
-        "reason": "a bare as expression is no assignment target (x as T = y is a parse error), so a binding assignment's left side is never one",
-        "premise": "let l;\nl as unknown = createRequire(import.meta.url);\n",
-        "parsed": "TS1005"
+        "reason": "a bare as expression is no assignment target (x as T = y, x as T ||= y, x as T &&= y and x as T ??= y are parse errors), so a binding assignment's left side is never one",
+        "premise": "let l;\nl as unknown = createRequire(import.meta.url);\nl as unknown ||= createRequire(import.meta.url);\nl as unknown &&= createRequire(import.meta.url);\nl as unknown ??= createRequire(import.meta.url);\n",
+        "parsed": "TS1005 TS1005 TS1005 TS1005"
       },
       "unwrap@loaderNames#1 satisfies": {
-        "reason": "a bare satisfies expression is no assignment target (x satisfies T = y is a parse error), so a binding assignment's left side is never one",
-        "premise": "let l;\nl satisfies unknown = createRequire(import.meta.url);\n",
-        "parsed": "TS1005"
+        "reason": "a bare satisfies expression is no assignment target (x satisfies T = y, x satisfies T ||= y, x satisfies T &&= y and x satisfies T ??= y are parse errors), so a binding assignment's left side is never one",
+        "premise": "let l;\nl satisfies unknown = createRequire(import.meta.url);\nl satisfies unknown ||= createRequire(import.meta.url);\nl satisfies unknown &&= createRequire(import.meta.url);\nl satisfies unknown ??= createRequire(import.meta.url);\n",
+        "parsed": "TS1005 TS1005 TS1005 TS1005"
       },
       "unwrap@loaderNames#1 <T>": {
-        "reason": "a bare <T> assertion is no assignment target (<T>x = y is a parse error), so a binding assignment's left side is never one",
-        "premise": "let l;\n<unknown>l = createRequire(import.meta.url);\n",
-        "parsed": "TS1005"
+        "reason": "a bare <T> assertion is no assignment target (<T>x = y, <T>x ||= y, <T>x &&= y and <T>x ??= y are parse errors), so a binding assignment's left side is never one",
+        "premise": "let l;\n<unknown>l = createRequire(import.meta.url);\n<unknown>l ||= createRequire(import.meta.url);\n<unknown>l &&= createRequire(import.meta.url);\n<unknown>l ??= createRequire(import.meta.url);\n",
+        "parsed": "TS1005 TS1005 TS1005 TS1005"
       },
       "unwrap@loaderNames#1 !": "killed",
       "unwrap@loaderNames#1 f<T>": "killed",
       "unwrap@isLoaderCall#1 (...)": "killed",
       "unwrap@isLoaderCall#1 as": {
-        "reason": "a call's callee is never a bare as expression: f as T(x) is a parse error",
-        "premise": "createRequire(import.meta.url) as F(name);\n",
-        "parsed": "TS1005"
+        "reason": "a call's callee is never a bare as expression: f as T(x) and f as T?.(x) are parse errors",
+        "premise": "createRequire(import.meta.url) as F(name);\ncreateRequire(import.meta.url) as F?.(name);\n",
+        "parsed": "TS1005 TS1005"
       },
       "unwrap@isLoaderCall#1 satisfies": {
-        "reason": "a call's callee is never a bare satisfies expression: f satisfies T(x) is a parse error",
-        "premise": "createRequire(import.meta.url) satisfies F(name);\n",
-        "parsed": "TS1005"
+        "reason": "a call's callee is never a bare satisfies expression: f satisfies T(x) and f satisfies T?.(x) are parse errors",
+        "premise": "createRequire(import.meta.url) satisfies F(name);\ncreateRequire(import.meta.url) satisfies F?.(name);\n",
+        "parsed": "TS1005 TS1005"
       },
       "unwrap@isLoaderCall#1 <T>": {
-        "reason": "<T>f(x) asserts the call, whose callee is f: a call's callee is never a bare <T> assertion",
-        "premise": "<F>createRequire(import.meta.url)(name);\n",
-        "parsed": "callee CallExpression callee Identifier"
+        "reason": "<T>f(x) and <T>f?.(x) assert the call, whose callee is f: a call's callee is never a bare <T> assertion",
+        "premise": "<F>createRequire(import.meta.url)(name);\n<F>createRequire(import.meta.url)?.(name);\n",
+        "parsed": "callee CallExpression callee Identifier callee CallExpression callee Identifier"
       },
       "unwrap@isLoaderCall#1 !": "killed",
-      "unwrap@isLoaderCall#1 f<T>": {
-        "reason": "f<T>(x) is a call with type arguments, whose callee is f: a call's callee is never a bare instantiation expression",
-        "premise": "createRequire(import.meta.url)<F>(name);\n",
-        "parsed": "callee CallExpression callee Identifier"
-      },
+      "unwrap@isLoaderCall#1 f<T>": "killed",
       "isWrapper@isWriteTarget#1 (...)": "killed",
       "isWrapper@isWriteTarget#1 as": "killed",
       "isWrapper@isWriteTarget#1 satisfies": "killed",
@@ -3681,44 +3772,40 @@
       "isWrapper@consume#1 f<T>": "killed",
       "unwrap@consume#1 (...)": "killed",
       "unwrap@consume#1 as": {
-        "reason": "the climbed value is a logical assignment's left side, where a bare as expression is a parse error (x as T ||= y)",
-        "premise": "let h = cp;\nconst g = (h as typeof cp ||= fallback).spawn;\n",
-        "parsed": "TS1005 TS1005 TS1134"
+        "reason": "the climbed value is a logical assignment's left side, where a bare as expression is a parse error (x as T ||= y, x as T &&= y and x as T ??= y)",
+        "premise": "let h = cp;\nconst g = (h as typeof cp ||= fallback).spawn;\nconst g2 = (h as typeof cp &&= fallback).spawn;\nconst g3 = (h as typeof cp ??= fallback).spawn;\n",
+        "parsed": "TS1005 TS1005 TS1134 TS1005 TS1005 TS1134 TS1005 TS1005 TS1134"
       },
       "unwrap@consume#1 satisfies": {
-        "reason": "the climbed value is a logical assignment's left side, where a bare satisfies expression is a parse error (x satisfies T ||= y)",
-        "premise": "let h = cp;\nconst g = (h satisfies typeof cp ||= fallback).spawn;\n",
-        "parsed": "TS1005 TS1005 TS1134"
+        "reason": "the climbed value is a logical assignment's left side, where a bare satisfies expression is a parse error (x satisfies T ||= y, x satisfies T &&= y and x satisfies T ??= y)",
+        "premise": "let h = cp;\nconst g = (h satisfies typeof cp ||= fallback).spawn;\nconst g2 = (h satisfies typeof cp &&= fallback).spawn;\nconst g3 = (h satisfies typeof cp ??= fallback).spawn;\n",
+        "parsed": "TS1005 TS1005 TS1134 TS1005 TS1005 TS1134 TS1005 TS1005 TS1134"
       },
       "unwrap@consume#1 <T>": {
-        "reason": "the climbed value is a logical assignment's left side, where a bare <T> assertion is a parse error (<T>x ||= y)",
-        "premise": "let h = cp;\nconst g = (<typeof cp>h ||= fallback).spawn;\n",
-        "parsed": "TS1005 TS1005 TS1134"
+        "reason": "the climbed value is a logical assignment's left side, where a bare <T> assertion is a parse error (<T>x ||= y, <T>x &&= y and <T>x ??= y)",
+        "premise": "let h = cp;\nconst g = (<typeof cp>h ||= fallback).spawn;\nconst g2 = (<typeof cp>h &&= fallback).spawn;\nconst g3 = (<typeof cp>h ??= fallback).spawn;\n",
+        "parsed": "TS1005 TS1005 TS1134 TS1005 TS1005 TS1134 TS1005 TS1005 TS1134"
       },
       "unwrap@consume#1 !": "killed",
       "unwrap@consume#1 f<T>": "killed",
       "unwrap@loaderLabel#1 (...)": "killed",
       "unwrap@loaderLabel#1 as": {
-        "reason": "a call's callee is never a bare as expression: f as T(x) is a parse error",
-        "premise": "require as F(name);\n",
-        "parsed": "TS1005"
+        "reason": "a call's callee is never a bare as expression: f as T(x) and f as T?.(x) are parse errors",
+        "premise": "require as F(name);\nrequire as F?.(name);\n",
+        "parsed": "TS1005 TS1005"
       },
       "unwrap@loaderLabel#1 satisfies": {
-        "reason": "a call's callee is never a bare satisfies expression: f satisfies T(x) is a parse error",
-        "premise": "require satisfies F(name);\n",
-        "parsed": "TS1005"
+        "reason": "a call's callee is never a bare satisfies expression: f satisfies T(x) and f satisfies T?.(x) are parse errors",
+        "premise": "require satisfies F(name);\nrequire satisfies F?.(name);\n",
+        "parsed": "TS1005 TS1005"
       },
       "unwrap@loaderLabel#1 <T>": {
-        "reason": "<T>f(x) asserts the call, whose callee is f: a call's callee is never a bare <T> assertion",
-        "premise": "<F>require(name);\n",
-        "parsed": "callee Identifier"
+        "reason": "<T>f(x) and <T>f?.(x) assert the call, whose callee is f: a call's callee is never a bare <T> assertion",
+        "premise": "<F>require(name);\n<F>require?.(name);\n",
+        "parsed": "callee Identifier callee Identifier"
       },
       "unwrap@loaderLabel#1 !": "killed",
-      "unwrap@loaderLabel#1 f<T>": {
-        "reason": "f<T>(x) is a call with type arguments, whose callee is f: a call's callee is never a bare instantiation expression",
-        "premise": "require<F>(name);\n",
-        "parsed": "callee Identifier"
-      }
+      "unwrap@loaderLabel#1 f<T>": "killed"
     },
     "siteVocabularies": [
       "unwrap",
@@ -3746,7 +3833,9 @@
       "refusal1": "U1-HIGH-CONFIRMED-R-B123-R-B161-R514-R515-R668-CLAIM-WORDS-WIDER-THAN-PINS-11-GATE-READER-MUTANTS-",
       "refusal2u1": "U1-HIGH-CONFIRMED-R514-R515-R668-WRAPPERS-AT-EVERY-USE-SITE-WIDER-THAN-ROW-S-PINS-",
       "refusal2u2": "U2-MEDIUM-CONFIRMED-R514-R515-R668-TARGET-THROUGH-WRAPPERS-WIDER-THAN-PINS-",
-      "ruling254": "ORCHESTRATOR RULING R-B254 ("
+      "ruling254": "ORCHESTRATOR RULING R-B254 (",
+      "refusal3u1": "- U1-HIGH-CONFIRMED-R514-R515-R668-OUTERMOST-CLASS-FALSE-EQUIVALENTS-INSTANTIATION-THEN-OPTIONAL-CALL-",
+      "refusal3u2": "- U2-MEDIUM-CONFIRMED-R514-R515-R668-OUTERMOST-CLASS-FALSE-EQUIVALENT-INSTANTIATION-THEN-OPTIONAL-CALL-"
     },
     "carriedCounts": {
       "reachForms": 139,
@@ -4184,6 +4273,8 @@
             "named exec <expression>",
             "named exec <expression>",
             "named exec <expression>",
+            "named exec <expression>",
+            "union exec <expression>",
             "union exec <expression>",
             "union exec <expression>",
             "union exec <expression>",
@@ -4228,6 +4319,9 @@
         {
           "id": "unwrap@calleeName#1",
           "witness": [
+            "specifier <expression>",
+            "load require()",
+            "named exec rf",
             "named exec rf",
             "named exec rf",
             "named exec rf",
@@ -4239,7 +4333,9 @@
             "union exec rf",
             "union exec rf",
             "union exec rf",
-            "union exec rf"
+            "union exec rf",
+            "union exec rf",
+            "io require"
           ]
         },
         {
@@ -4290,12 +4386,16 @@
             "specifier <expression>",
             "specifier <expression>",
             "specifier <expression>",
+            "specifier <expression>",
+            "specifier <expression>",
             "load createRequire()()",
             "load createRequire()()",
             "load createRequire()()",
             "load createRequire()()",
             "load createRequire()()",
-            "load createRequire()()"
+            "load createRequire()()",
+            "load createRequire()()",
+            "load load()"
           ]
         },
         {
@@ -4368,6 +4468,10 @@
             "tracer spawn rf",
             "tracer spawn rf",
             "tracer spawn rf",
+            "tracer spawn rf",
+            "tracer spawn rf",
+            "union spawn rf",
+            "union spawn rf",
             "union spawn rf",
             "union spawn rf",
             "union spawn rf",
@@ -4406,6 +4510,7 @@
             "specifier <expression>",
             "specifier <expression>",
             "specifier <expression>",
+            "specifier <expression>",
             "load createRequire()()",
             "load createRequire()()",
             "load createRequire()()",
@@ -4413,6 +4518,7 @@
             "load createRequire()()",
             "load createRequire()()",
             "load require()",
+            "load createRequire()()",
             "io require"
           ]
         },
@@ -6758,6 +6864,74 @@
               "specifier node:child_process",
               "tracer spawn rf",
               "union spawn rf"
+            ],
+            "w-gp11-01-callee-exec": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp11-01-callee-exec-paren": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "t-gp11-01b-callee-exec-plain": [
+              "named exec rf",
+              "union exec rf"
+            ],
+            "w-gp11-02-callee-require": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf",
+              "io require"
+            ],
+            "t-gp11-02-callee-require-paren": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf",
+              "io require"
+            ],
+            "w-gp11-03-factory-call": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "t-gp11-03-factory-call-paren": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "w-gp11-04-bound-loader": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "t-gp11-04-bound-loader-paren": [
+              "specifier node:child_process",
+              "tracer spawn rf",
+              "named spawn rf",
+              "union spawn rf"
+            ],
+            "w-gp11-05-factory-label": [
+              "specifier <expression>",
+              "load createRequire()()"
+            ],
+            "t-gp11-05-factory-label-paren": [
+              "specifier <expression>",
+              "load createRequire()()"
+            ],
+            "instantiated-optional-factory-binding": [
+              "specifier node:module",
+              "specifier <expression>",
+              "load load()"
+            ],
+            "instantiated-optional-factory-result": [
+              "specifier node:module",
+              "specifier <expression>",
+              "load createRequire()()"
             ]
           }
         },
