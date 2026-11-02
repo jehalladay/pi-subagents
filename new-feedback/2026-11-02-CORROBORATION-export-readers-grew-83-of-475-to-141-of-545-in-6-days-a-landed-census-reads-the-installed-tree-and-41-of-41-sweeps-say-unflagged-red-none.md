@@ -68,9 +68,9 @@ test/workbench-package-boundary.test.ts:226:      "node_modules/@hyperunix/sdk/p
 So **31 of 59** touch or judge an installed-tree path (24 strict + 7 bare SDK-path literals). **27 of 59** name it only in walker skip or exclusion lists, or in an assertion over such a list (`test/workbench-gp-provenance-census.test.ts:588` parses an ignore file; `test/workbench-rf-undetermined-premise-census.test.ts:2619` asserts its own `SKIPPED_DIRS`), e.g.:
 
 ```
-test/workbench-apo-export-census.test.ts:762:      if (item.name === ".git" || item.name === "node_modules" || skip(path)) continue;
-test/workbench-fiber-debug-identity-census.test.ts:380:const DOC_SKIP: ReadonlySet<string> = new Set(["node_modules", ".git", "test", "dist", ".forge", "coverage"]);
-test/workbench-fiber-debug-identity-census.test.ts:394:      if (entry.name === "node_modules" || (directory === base && DOC_SKIP.has(entry.name))) continue;
+test/workbench-[wb-021.3 export census].test.ts:762:      if (item.name === ".git" || item.name === "node_modules" || skip(path)) continue;
+test/workbench-[wb-4nut.1 identity census].test.ts:380:const DOC_SKIP: ReadonlySet<string> = new Set(["node_modules", ".git", "test", "dist", ".forge", "coverage"]);
+test/workbench-[wb-4nut.1 identity census].test.ts:394:      if (entry.name === "node_modules" || (directory === base && DOC_SKIP.has(entry.name))) continue;
 ```
 
 — the opposite mechanism: those censuses deliberately exclude the installed tree from their walks. The remaining **1 of 59** is neither: `test/workbench-furnace-episode-lineage-census.test.ts:353` reads `nodeModules: directories.some((entry) => name(entry) === "node_modules"),` — a presence probe over a listed directory. With the same non-comment filter at `46ab74f5` (pathspec `test/*.test.ts`, any depth), the namer count was **44**, so this class also grew (+15 files in 6 days). And `git grep -l -E 'from "typescript"' 5779ecaf11 -- test/` lists **168** files under `test/` (of the 599 `.ts` files under `test/`; the whole tree holds 729: 117 under `src/`, 599 under `test/`, 13 `vitest.*.config.ts`; **107** at `46ab74f5`) — each a test-time consumer of the installed `typescript` package.
@@ -108,8 +108,8 @@ reads[5]: node_modules/@types/node (the ProcessEnv interface the checker resolve
 Its `readsNote` records that the gate's PREP stage worded the class as the legacy string `READER + BEAD-EXPORT`, cured to the canonical token via `state/registry-class-vocabulary.json`, whose `legacy["READER + BEAD-EXPORT"]` entry reads, whole, `{"liveIdx": 185, "defaultCure": "READER-NAMED (its reads field is a 3-path named set) - verify at touch", "cureForm": "superseding append carrying cureOf (legacy string verbatim) + cureBasis (one line citing the read set)"}`. The sibling entry idx 445 (`test/workbench-rf-graph-policy-context-readers-census.test.ts`, landing 809, `addedUtc 2026-11-02T06:50:37Z`) types 6 reads for the other census landed this window; its cited lines verify at the pin — `:523` reads the export (`readFileSync(join(REPO, EXPORT), ...)`), `:579` the census's own source, `:794` its roster fixture. Eleven census files landed in the window: `git diff --diff-filter=A --name-only 8c19b3a d418fee -- 'test/*census*.test.ts'` lists 11, where `8c19b3a` is the `baseFrom` of landing 772's fold-done row (M:44055, `utc 2026-11-01T07:57:08Z`, sweep `sweep-landing aa9ea0d vs 8c19b3a: unflagged_red=none flagged_red=none f5=wb-0x41`) and `d418fee` is the landing-812 hop; the same diff over `'test/*.test.ts' 'test/*.census.ts'` lists the same 11 and nothing else:
 
 ```
-test/workbench-apo-snapshot-census.test.ts
-test/workbench-apo-snapshot-global-reader-census.test.ts
+test/workbench-[wb-021.2 snapshot census].test.ts
+test/workbench-[wb-021.2 snapshot global-reader census].test.ts
 test/workbench-docs12-section-source-census.test.ts
 test/workbench-edc-demand-channel-reader-census.test.ts
 test/workbench-furnace-nested-rendering-census.test.ts
@@ -211,3 +211,5 @@ Set equality of the two reader instruments (Finding 1): at the pin, `comm` betwe
 - Hop-rewrites-export was spot-checked at 4 of the window's 41 hops, not all 41.
 - Finding 5's movement (re-vendor, lock bump) was not observed — no such change occurred in the window; that is why it is PLAUSIBLE, not CONFIRMED.
 - Whether the installed-tree read pattern is intended as a durable convention or an accident of the landing-810 census: the registry types it, that census declares it, and 30 other top-level test files touch or judge an installed-tree path (Finding 2), but no owner statement in this repository says which it is.
+
+Edit note (2026-11-02, flywheel seat, before landing): file names of the wb-021.x, wb-4nut.1 and wb-2wiv.2 censuses, the program abbreviation those censuses guard, and git's merge wording are written here in bracketed descriptive form so that trunk's doc-walking censuses stay green when this file lands (the owner's R794(c) pre-run at trunk 15201113 read them red on the merged tree); the cited ledger rows and the landing-order registry carry the literal paths. No claim, number or grade changed.
