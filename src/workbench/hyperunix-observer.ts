@@ -302,8 +302,8 @@ export type HyperUnixResultFacet =
 /** The bound on each relayed facet string, and on the facets one projection carries (wb-gwr.2). */
 const FACET = 200;
 const MAX_FACETS = 16;
-/** A producer diagnostic is a conflict status when its code names CONFLICT as a whole segment, as HX's registry spells conflicts
- * (HX-SCHEMA-CONFLICT, HX-CONTENT-EDIT-ORIGIN-CONFLICT). */
+/** A producer diagnostic is a conflict status when its code names CONFLICT bounded on both sides (a capital A-Z or a digit 0-9 glues;
+ * every other character and a code end bound), as HX's registry spells conflicts (HX-SCHEMA-CONFLICT, HX-CONTENT-EDIT-ORIGIN-CONFLICT). */
 const CONFLICT_CODE = /(?:^|[^A-Z0-9])CONFLICT(?:[^A-Z0-9]|$)/;
 
 /** The result's facets in the statement's order (view, provider versions, conflicts, incomplete regions) and how many past
