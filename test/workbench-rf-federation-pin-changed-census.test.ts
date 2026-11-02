@@ -46,9 +46,43 @@
  *    literal .concat chains, type and non-null assertions, and every later push that completes a declared array literal in its
  *    scope (wb-s4j3 F3) - a literal a declaration binds to a name: a variable's initializer, a parameter's default or the
  *    default of a binding element in a declaration's or a parameter's destructuring pattern (function f(w, argv = [...]),
- *    const { argv = [...] } = opts, const [argv = [...]] = lists; a parameter's scope, its pattern's included, is its function;
- *    wb-shnw F1; an object and an array pattern each hold a quiet control of their own, patternScoped and arrayPatternScoped;
- *    wb-gdqz): a .push or ["push"] call, its callee and receiver read through the same wrappers, made on the literal's name
+ *    const { argv = [...] } = opts, const [argv = [...]] = lists; a parameter's scope, its pattern's included, is its function,
+ *    claimed only for the parameters A1's controls spell, each exactly as its control spells it (wb-shnw F1; wb-11rf F4): a
+ *    push inside the function is read in four non-exported function declarations (paramDefault, paramDefaultLaunch,
+ *    patternParamDefault and paramAlias) and in the body of an arrow function a variable declaration binds, a class's method
+ *    and an exported function declaration, each holding nestedPatternScoped's nest with a three-element default as
+ *    arrowNestScoped, methodNestScoped and exportedNestScoped spell it (arrowPushInside, methodPushInside and
+ *    exportedPushInside; wb-8cgw F2),
+ *    and a later function's push stays out for each parameter a quiet control spells, the later function exactly where that
+ *    control spells it (a later top-level function, or for three a later function inside the parameter's own class, array
+ *    literal or statement; wb-8cgw F1), so a declarationScope loop that climbs one of them to anything but its parameter reds
+ *    A1 - in a function declaration with a
+ *    one-element default, the parameter itself (paramScoped), one pattern level of each kind (patternScoped and
+ *    arrayPatternScoped; wb-gdqz) and seventeen nests (wb-ia9d): six with one binding element per pattern level, each object element
+ *    keyed by shorthand or an identifier, no outer default, no rest element and no hole - two levels deep, one per pairing, an
+ *    array in an array (nestedPatternScoped), an array in an object (arrayInObjectScoped), an object in an array
+ *    (objectInArrayScoped) and an object in an object (objectInObjectScoped), and three levels deep, one per kind, three array
+ *    patterns (threeArrayScoped) and three object patterns (threeObjectScoped) - and eleven two levels deep, each one element
+ *    shape off that form: the nest after a sibling, a shorthand one in an object pattern and an identifier in an array pattern
+ *    (afterSiblingInObjectScoped, afterSiblingInArrayScoped), and before one (beforeSiblingInObjectScoped,
+ *    beforeSiblingInArrayScoped); the outer element defaulted to an empty array or an empty object (outerArrayDefaultScoped,
+ *    outerObjectDefaultScoped); a rest element holding the nest (restNestScoped); the outer element keyed by a computed name, a
+ *    numeric literal or a string literal (computedKeyScoped, numericKeyScoped, stringKeyScoped); one hole before the nest
+ *    (holeBeforeNestScoped) - and seven more two levels deep, each one element shape off one of those eleven (wb-11rf F2): an
+ *    object pattern as the nest after a sibling, in an object pattern and in an array pattern (objectAfterSiblingInObjectScoped,
+ *    objectAfterSiblingInArrayScoped); the outer element defaulted to a name (outerIdentifierDefaultScoped); keyed by a
+ *    computed member access (memberKeyScoped) or the numeric literal 1 (numericKeyOneScoped); two holes before the nest
+ *    (twoHolesBeforeNestScoped); a rest element holding an object pattern (restObjectNestScoped); then, with a three-element
+ *    default, nestedPatternScoped's nest in an arrow function, a method and an exported function declaration (arrowNestScoped,
+ *    methodNestScoped, exportedNestScoped) and objectInObjectScoped's in an arrow function (arrowObjectNestScoped; wb-11rf F3);
+ *    and one pattern level, an array pattern in an arrow function with a one-element default (arrowPatternScoped) and an object
+ *    pattern in a function declaration with a three-element default (multiDefaultPatternScoped; wb-11rf F4); and three whose
+ *    later function sits inside the parameter's own host (wb-8cgw F1): methodNestScoped's parameter in a class whose later
+ *    sibling method pushes (methodSiblingScoped), and arrowNestScoped's in an arrow function that is an array literal's
+ *    element before a pushing arrow element (arrowElementSiblingScoped) or a statement's declarator before a pushing arrow
+ *    declarator (arrowDeclaratorSiblingScoped); no other parameter holds one (NOT CLAIMED)): a .push or ["push"] call, its
+ *    callee and
+ *    receiver read through the same wrappers, made on the literal's name
  *    ((argv as string[]).push, argv!.push) or on a name declared to that name in its scope after it (const same = argv, let and
  *    var too, a wrapped initializer, an alias of an alias; wb-29wk F1; a parameter's or a binding element's default too:
  *    function f(argv = [...], same = argv), const { same = argv } = opts; wb-shnw F1), never a push made or an alias declared
@@ -143,9 +177,24 @@
  *   roster's rows directly or written out as a literal, keeps its reached count and passes the witness guard (quiet row HQ1).
  * NOT CLAIMED: a coordinated edit of this file and the roster that drops a residual the landed note did not name or re-maps a
  * residual to other quiet pins, that drops a control together with its entry in the pin's roster witness (A1's wb-29wk,
- * wb-shnw and wb-gdqz controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals
+ * wb-shnw, wb-gdqz, wb-ia9d, wb-11rf and wb-8cgw controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals
  * the landed note named and the clause tags of rows B to D; nor an edit of the per-pin wrapper's own guard lines; nor an edit of
- * an A1 control's source text alone that keeps its counts (the roster holds each control's counts, never its source; wb-gdqz).
+ * an A1 control's source text alone that keeps its counts (the roster holds each control's counts, never its source; wb-gdqz);
+ * nor declarationScope's loop climbing a parameter no A1 control spells as it is written there (wb-ia9d; wb-11rf) - among them
+ * a pattern nested deeper than three levels, one three levels deep mixing the two kinds, one holding a sibling, a default, a
+ * key or a hole other than the one each of the eighteen two-level element-shape controls spells, or two of those shapes at
+ * once, and one in a host or with a default no control spells as written (a function expression, a constructor, an accessor
+ * and an object literal's method among the hosts; an arrow function's, a method's or an exported function declaration's
+ * parameter other than the five the wb-11rf F3 and F4 controls spell, each where its control or a wb-8cgw control writes
+ * it; a default of two or more elements in any other
+ * parameter): a loop that stops short of such a parameter is not pinned, and the two such loops measured, G2-THREELEVEL (a
+ * climb of at most three pattern levels) and G2-MIXTHIRD (a third level climbed only in the declaration's own pattern kind),
+ * stay green; nor the read of a push inside any parameter's function but those four non-exported function declarations and
+ * the three wb-8cgw F2 hosts, each only as its control spells it (a push statement in the body, after its F3 nest parameter,
+ * of an arrow function a variable declaration binds, a class's method or an exported function declaration; a push in another
+ * parameter's default, in a concise arrow body or in a nested function is not pinned); nor a later function's push kept out
+ * of a quiet control's parameter anywhere but where that control spells the later function (a later argument of the same
+ * call or a later property of the same object literal is not pinned).
  * SCOPE: the code, metadata shape and record fields are producer facts at the pin; Pi vendors no rf schema, so a producer-side
  * change is seen only when the roster is re-read. The armed half (a committing capability with --idempotency-key and rf operation
  * show reconciliation) is owner-reserved under wb-jwc.5: no committing capability, argv or reader is added here, and the committing
@@ -1344,6 +1393,94 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       // wb-gdqz: patternScoped's array-pattern twin, so each pattern arm of declarationScope's loop holds a quiet row of its own
       // (deleting the ObjectBindingPattern arm reds patternScoped, deleting the ArrayBindingPattern arm reds arrayPatternScoped).
       arrayPatternScoped: control('function f([argv = ["context"]]: string[][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // wb-ia9d: six nests of the two pattern kinds, one binding element per pattern level, each a quiet row of its own, so a
+      // declarationScope loop that climbs one of them, exactly as written here, to anything but its parameter reds A1 (the eleven
+      // element-shape nests, wb-11rf's thirteen parameters and wb-8cgw's three sibling hosts below hold one each too; no other:
+      // NOT CLAIMED). Two levels deep,
+      // one per pairing: an array in an
+      // array (GX-ONELEVEL, a climb of exactly one level, if (ts.isBindingElement(at)) at = at.parent.parent, reds it), an array
+      // in an object (G2-OBJONCE, an object arm climbing only the declaration's own pattern, reds it), an object in an array
+      // (G2-OBJTOP, an object arm climbing only a top-level pattern, reds it) and an object in an object (both of those red it);
+      // three levels deep, one per kind (G2-TWOLEVEL, a loop climbing at most two pattern levels, reds both).
+      nestedPatternScoped: control('function f([[argv = ["context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrayInObjectScoped: control('function f({ lists: [argv = ["context"]] }: { lists: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      objectInArrayScoped: control('function f([{ argv = ["context"] }]: Options[]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      objectInObjectScoped: control('function f({ opts: { argv = ["context"] } }: { opts: Options }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      threeArrayScoped: control('function f([[[argv = ["context"]]]]: string[][][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      threeObjectScoped: control('function f({ a: { b: { argv = ["context"] } } }: { a: { b: Options } }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // wb-ia9d cut #3 (enumerate-the-resolvable, R-B183): eleven two-level nests, each one element shape off the six above and
+      // each a quiet row of its own, so a declarationScope loop that climbs one of them, exactly as written here, to anything but
+      // its parameter reds A1 (wb-11rf's thirteen and wb-8cgw's three sibling hosts below hold one each too; no other: NOT
+      // CLAIMED). Each of refusal #2's seven loop
+      // mutants reds A1 here: G1-NESTFIRST (an
+      // outer element climbs only as its pattern's first element) reds afterSiblingInObjectScoped, afterSiblingInArrayScoped and
+      // holeBeforeNestScoped; G1-OBJSINGLE (an outer object pattern climbs only holding one element) reds the object sibling pair;
+      // G1-ARRSINGLE (the same on the array arm) reds the array sibling pair and holeBeforeNestScoped; G1-OUTERDEFAULT (an outer
+      // element with a default stops the climb) reds the two defaulted outers; G1-RESTSTOP (a rest element stops it) reds
+      // restNestScoped; G1-KEYKIND (an outer element keyed by a computed or literal name stops it) reds the three keyed controls;
+      // G1-HOLESTOP (an outer array pattern holding a hole stops it) reds holeBeforeNestScoped.
+      afterSiblingInObjectScoped: control('function f({ cwd, lists: [argv = ["context"]] }: { cwd: string; lists: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      afterSiblingInArrayScoped: control('function f([cwd, [argv = ["context"]]]: [string, string[][]]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      beforeSiblingInObjectScoped: control('function f({ lists: [argv = ["context"]], cwd }: { lists: string[][]; cwd: string }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      beforeSiblingInArrayScoped: control('function f([[argv = ["context"]], cwd]: [string[][], string]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      outerArrayDefaultScoped: control('function f({ lists: [argv = ["context"]] = [] }: { lists?: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      outerObjectDefaultScoped: control('function f({ opts: { argv = ["context"] } = {} }: { opts?: Options }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      restNestScoped: control('function f([...[argv = ["context"]]]: string[][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      computedKeyScoped: control('function f({ [key]: [argv = ["context"]] }: Record<string, string[][]>) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      numericKeyScoped: control('function f({ 0: [argv = ["context"]] }: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      stringKeyScoped: control('function f({ "lists": [argv = ["context"]] }: { lists: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      holeBeforeNestScoped: control('function f([, [argv = ["context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // wb-11rf (the R694 follow-up of wb-ia9d's landing 759): thirteen more parameters, each a quiet row of its own, so a
+      // declarationScope loop that climbs one of them, exactly as written here, to anything but its parameter reds A1 (wb-8cgw's
+      // three sibling hosts below hold one each too; no other parameter: NOT CLAIMED). F2, two-level nests in a function declaration with a one-element default, each one element shape
+      // off the eleven above: GP10-SIBOBJ (an outer element after a sibling climbs only when its name is an array pattern) reds
+      // objectAfterSiblingInObjectScoped and objectAfterSiblingInArrayScoped; GP10-DEFLITERAL (an outer element whose default is no
+      // array or object literal stops the climb) reds outerIdentifierDefaultScoped; GP10-KEYEXPR (a computed key whose expression
+      // is no identifier stops it) reds memberKeyScoped; GP10-NUMKEYZERO (a numeric key other than 0 stops it) reds
+      // numericKeyOneScoped; GP10-HOLETWO (an outer array pattern holding two or more holes stops it) reds
+      // twoHolesBeforeNestScoped; GP10-RESTOBJ (a rest element holding an object pattern stops it) reds restObjectNestScoped. F3,
+      // nestedPatternScoped's and objectInObjectScoped's nests in three other hosts, each with a three-element default:
+      // GP10-ARROWNEST (an outer array pattern in an arrow function's parameter stops it) reds arrowNestScoped; GP10-ARROWOBJ (the
+      // same on the object arm) reds arrowObjectNestScoped; GP10-METHODNEST (an outer array pattern in a method's parameter stops
+      // it) reds methodNestScoped; GP10-EXPORTNEST (an outer array pattern in an exported function declaration's parameter stops
+      // it) reds exportedNestScoped. F4, one pattern level: GP10-ARROWONE (an array pattern directly in an arrow function's
+      // parameter stops it) reds arrowPatternScoped and arrowNestScoped; GP10-OWNDEFLEN (the declaration's own binding element
+      // climbs only when its default has fewer than two elements) reds multiDefaultPatternScoped and the four F3 controls. Of
+      // refusal #2's seven members above, each reds these too: G1-NESTFIRST the two object-after-sibling nests and
+      // twoHolesBeforeNestScoped; G1-OBJSINGLE objectAfterSiblingInObjectScoped; G1-ARRSINGLE objectAfterSiblingInArrayScoped and
+      // twoHolesBeforeNestScoped; G1-OUTERDEFAULT outerIdentifierDefaultScoped; G1-RESTSTOP restObjectNestScoped; G1-KEYKIND
+      // memberKeyScoped and numericKeyOneScoped; G1-HOLESTOP twoHolesBeforeNestScoped.
+      objectAfterSiblingInObjectScoped: control('function f({ cwd, opts: { argv = ["context"] } }: { cwd: string; opts: Options }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      objectAfterSiblingInArrayScoped: control('function f([cwd, { argv = ["context"] }]: [string, Options]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      outerIdentifierDefaultScoped: control('function f({ lists: [argv = ["context"]] = NO_LISTS }: { lists?: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      memberKeyScoped: control('function f({ [KEYS.lists]: [argv = ["context"]] }: { lists: string[][] }) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      numericKeyOneScoped: control('function f({ 1: [argv = ["context"]] }: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      twoHolesBeforeNestScoped: control('function f([, , [argv = ["context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      restObjectNestScoped: control('function f([...{ 0: argv = ["context"] }]: string[][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrowNestScoped: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => { return spawn("rf", argv); };\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrowObjectNestScoped: control('const f = ({ opts: { argv = ["--workspace", "w", "context"] } }: { opts: Options }) => { return spawn("rf", argv); };\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      methodNestScoped: control('class Launcher { run([[argv = ["--workspace", "w", "context"]]]: string[][][]) { return spawn("rf", argv); } }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      exportedNestScoped: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      arrowPatternScoped: control('const f = ([argv = ["context"]]: string[][]) => { return spawn("rf", argv); };\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      multiDefaultPatternScoped: control('function f({ argv = ["--workspace", "w", "context"] }: Options) { return spawn("rf", argv); }\nfunction g(argv: string[]) { argv.push("render", "--json"); }'),
+      // wb-8cgw (the R694 follow-up of wb-11rf's landing 794): six more rows, each holding nestedPatternScoped's nest with the
+      // three-element default the F3 controls spell above. F1, three quiet rows whose later function sits inside the parameter's
+      // own host, so a return line that takes a method's parameter to its class, or an arrow function's to the array literal
+      // holding it or to its variable statement, reds A1: GP23-METHODCLASS (a method parameter's scope is its class)
+      // reds methodSiblingScoped (methodNestScoped's parameter, a later sibling method pushing); GP23-ARROWPARENT (an arrow
+      // function parameter's scope is the arrow's parent node) reds arrowElementSiblingScoped (arrowNestScoped's, a later arrow
+      // element of the same array literal pushing); GP23-ARROWSTMT (an arrow in a variable declaration takes its variable
+      // statement) reds arrowDeclaratorSiblingScoped (arrowNestScoped's, a later arrow declarator of the same statement pushing).
+      // F2, three rows whose push sits in the parameter's own function body (render 1, uncommitted 1), so a return line that keeps
+      // one of those parameters' scope to the parameter itself reds A1: GP23-PI-ARROW (an arrow function's) reds arrowPushInside,
+      // its method twin W8-PI-METHOD reds methodPushInside and its exported twin W8-PI-EXPORTED (an exported function
+      // declaration's) reds exportedPushInside.
+      methodSiblingScoped: control('class Launcher {\n  run([[argv = ["--workspace", "w", "context"]]]: string[][][]) { return spawn("rf", argv); }\n  other(argv: string[]) { argv.push("render", "--json"); }\n}'),
+      arrowElementSiblingScoped: control('const launchers = [([[argv = ["--workspace", "w", "context"]]]: string[][][]) => { return spawn("rf", argv); }, (argv: string[]) => { argv.push("render", "--json"); }];'),
+      arrowDeclaratorSiblingScoped: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => { return spawn("rf", argv); }, g = (argv: string[]) => { argv.push("render", "--json"); };'),
+      arrowPushInside: control('const f = ([[argv = ["--workspace", "w", "context"]]]: string[][][]) => {\n  argv.push("render", "--json");\n  return spawn("rf", argv);\n};'),
+      methodPushInside: control('class Launcher {\n  run([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n    argv.push("render", "--json");\n    return spawn("rf", argv);\n  }\n}'),
+      exportedPushInside: control('export function f([[argv = ["--workspace", "w", "context"]]]: string[][][]) {\n  argv.push("render", "--json");\n  return spawn("rf", argv);\n}'),
       // R-INDIRECT-PUSH members named, each a pinned quiet row: wb-shnw F2's aliases declared to a comma, conditional or nullish
       // expression or destructured from a literal holding the argv, F3's member receiver and bound push, and beside them the
       // literal itself destructured from a literal holding it and a literal bound by an assignment or an assignment pattern.
@@ -1390,6 +1527,27 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       arrayDefault: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, paramAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
       bindingAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, paramScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       patternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrayPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      nestedPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrayInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectInArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      objectInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, threeArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      threeObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      afterSiblingInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, afterSiblingInArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      beforeSiblingInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, beforeSiblingInArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      outerArrayDefaultScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, outerObjectDefaultScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      restNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, computedKeyScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      numericKeyScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, stringKeyScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      holeBeforeNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      objectAfterSiblingInObjectScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectAfterSiblingInArrayScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      outerIdentifierDefaultScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, memberKeyScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      numericKeyOneScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, twoHolesBeforeNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      restObjectNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrowNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrowObjectNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, methodNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      exportedNestScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrowPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      multiDefaultPatternScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      methodSiblingScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, arrowElementSiblingScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrowDeclaratorSiblingScoped: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      arrowPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, methodPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      exportedPushInside: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
       commaAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       conditionalAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, nullishAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       arrayPatternAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, objectPatternLiteral: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },

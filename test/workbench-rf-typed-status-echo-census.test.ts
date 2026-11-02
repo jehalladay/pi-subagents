@@ -73,6 +73,20 @@
  *    GM01-GM15) - and in no other: a context no control spells is outside the claim, and one found unread there is a
  *    residual-list addition (named in R-SPLIT-PATH with a quiet twin), never a claimed reading; likewise each quiet form
  *    R-SPLIT-PATH names for wb-1709 is pinned in exactly the contexts its SPLIT_PATH_ADDITIONS_CUT_5 twins spell;
+ *    wb-xbwy (the wb-1709 gate's F1: five gate-authored structural narrowings of the A1 reader, IB01-IB05, each of which kept this
+ *    census at 26 of 26 while its paired witness read 1 hit under the real reader and 0 under the narrowing; this bead's gate
+ *    refusals #1 and #2 wrote further one-edit narrowings that each kept it at 26 of 26: XS01-XS09, then YO01-YO03 and YC01,
+ *    YC03, YC04, YC05 and YC06) claims, from its third cut on, exactly what it pins and nothing wider. (1) Each of the seventeen
+ *    KEY_PATH_ADDITIONS_CUT_6 control texts, byte for byte and read alone as a module named control.ts, is caught by exactly one
+ *    matcher: a narrowing that drops one reds A1 at its cut-6 key-path assertion, which names it, and the receipt's cut-6 table
+ *    (each control's name, reading and text digest) and the roster's keyPathsCut6 (its reading) hold that reading outside this
+ *    file's literals. (2) A1's own src walk reads the src unit openHost.sessionClass exactly once among the code units of
+ *    src/workbench/hosts/furnace-hosted.ts (HELD_SRC_UNIT, the unit the cut-5 entry's first-cut Green bullet names read): a
+ *    narrowing that leaves that module without the unit, or with it more than once, reds A1 at its held-unit assertion (or
+ *    earlier, at the cut-6 key-path assertion, when it drops a control too), and the roster's heldSrcUnitCut6 holds the module,
+ *    the unit and its reading. NOT CLAIMED by this census: any other text, whatever syntax it shares with one of the seventeen
+ *    (among them each NOT CLAIMED witness the gate's PREPs measured, which the receipt's cut-6 Non-claims bullet lists), and the
+ *    reading of any other src unit by this pin;
  *    A2 the rf roster, selected by id prefix, reactivefiber:
  *    permission or rf@ contractSource, stays the preview alone (native and injected registrations, RECONCILE_EVIDENCE_READS);
  *    A3 the native provider refuses a federation record printed by rf as an unrecognized envelope, in one spawn of the render argv;
@@ -157,7 +171,8 @@
  * records are held to the receipt's cut-3 tables, so a control removed together with its reading, or rewritten, reds. wb-50dt:
  * the cut-4 controls join both records after the cut-3 ones, each record held to its cut-3 table followed by its cut-4
  * additions table. wb-1709: the cut-5 A1 controls join A1's record after the cut-4 ones, held to the cut-5 additions table
- * after the cut-4 one.
+ * after the cut-4 one. wb-xbwy: the cut-6 A1 controls join it after the cut-5 ones, held to the cut-6 additions table after
+ * the cut-5 one; the src unit it holds (HELD_SRC_UNIT) is held by A1's assertion and the roster, not by a receipt row.
  * RESIDUALS (named, each with a pinned quiet row): R-UNLISTED the note names at most four distinct not-observed words, so a fifth
  * one and beyond is the marker … and two renders differing only there share a note, while the count and every reading still
  * carry each row (Q1); R-TONE-CLASS the snapshot node's coverage, tone and statusText are Pi presentation classes, so PENDING and
@@ -250,6 +265,10 @@ const RECEIPT_CUT_4 =
  * additions table's rows. */
 const RECEIPT_CUT_5 =
   "2026-10-29 the typed-status echo census judged set, cut 5: A1's key paths through call and construct signatures, a declaration's own return type, a thrown value, a callee, a tag, a class expression's members and a parameter property, type-level indexed access chains, and R-SPLIT-PATH's cut-5 twins (wb-1709, the wb-50dt gate's F1)";
+/** wb-xbwy (the wb-1709 gate's F1): the entry its cut appended, whose one table adds the cut-6 A1 controls after the cut-5
+ * additions table's rows. */
+const RECEIPT_CUT_6 =
+  "2026-10-31 the typed-status echo census judged set, cut 6: seventeen falsifier controls for the wb-1709 gate's narrowings IB01-IB05 of A1's reader and this bead's refusals' narrowings of them, and the src unit openHost.sessionClass held by A1's src walk (wb-xbwy, the wb-1709 gate's F1)";
 /** The table sections, the entry each sits under and the header row each must keep. */
 const RECEIPT_TABLES = {
   pins: { entry: RECEIPT_ENTRY, heading: "Judged pins, wb-d8io cut 1", header: ["Row", "Pin"] },
@@ -262,6 +281,7 @@ const RECEIPT_TABLES = {
   readingControlAdditions: { entry: RECEIPT_CUT_4, heading: "A1 control additions, wb-d8io cut 4", header: ["Group", "Control", "Reads", "Text sha256/16"] },
   registrationControlAdditions: { entry: RECEIPT_CUT_4, heading: "Registration-mode control additions, wb-d8io cut 4", header: ["Control", "Modes", "Text sha256/16"] },
   readingControlCut5: { entry: RECEIPT_CUT_5, heading: "A1 control additions, wb-d8io cut 5", header: ["Group", "Control", "Reads", "Text sha256/16"] },
+  readingControlCut6: { entry: RECEIPT_CUT_6, heading: "A1 control additions, wb-d8io cut 6", header: ["Group", "Control", "Reads", "Text sha256/16"] },
 } as const;
 const ROOT = process.cwd();
 const PREVIEW_ID = "reactivefiber.render.preview";
@@ -1419,6 +1439,74 @@ const SPLIT_PATH_ADDITIONS_CUT_5: Readonly<Record<string, string>> = {
   typeofChain: "type State = typeof record.publication.state;",
 };
 
+/** wb-xbwy's second cut (this bead's gate refusal #1, U1): the src class FurnaceHostedExecutor's first line and its method
+ * openHost (src/workbench/hosts/furnace-hosted.ts:240 and :340-355, unchanged from trunk f5cb912 to e23b18e) and a closing
+ * brace, byte for byte but for two respelled names, the method's (openHost, spelled publication) and the member's (sessionClass,
+ * spelled state). Three cut-6 controls spell it: alone, after one variable statement and after one import declaration. */
+const SESSION_CLASS_TWIN = [
+  "export class FurnaceHostedExecutor {",
+  "  private publication(): EmbeddedHost {",
+  "    const frames = this.frames;",
+  "    const onOpen = (instanceId: string): void => void this.perSession.set(instanceId, []);",
+  "    const Recording = class extends this.sdk.ResidentSession {",
+  "      constructor(app: ExecutorApp, served: readonly string[], write?: (line: string) => void) {",
+  "        super(app, served, write);",
+  "        onOpen(this.instanceId);",
+  "      }",
+  "      override handle(raw: string): Promise<void> {",
+  "        return frames.run({ sessionInstanceId: this.instanceId, executionId: admittedExecutionId(raw), receiptOf: (id) => this.receiptOf(id) }, () => super.handle(raw));",
+  "      }",
+  "    };",
+  "    return new (class extends this.sdk.EmbeddedHost {",
+  "      override readonly state: typeof ResidentSession = Recording;",
+  "    })(this.app, [this.options.executor]);",
+  "  }",
+  "}",
+].join("\n");
+
+/** wb-xbwy's third cut (this bead's gate refusal #2, U1: YO01-YO03): the src unit the cut-5 entry's first-cut Green bullet names
+ * read, which A1's src walk must read exactly once among the code units of its module. A src change that moves, renames or
+ * removes the unit reds A1 at that assertion and owes this pin's update in the same cut. */
+const HELD_SRC_UNIT = { module: "src/workbench/hosts/furnace-hosted.ts", unit: "openHost.sessionClass" } as const;
+
+/** wb-xbwy (the wb-1709 gate's F1, IB01-IB05; its second and third cuts cure this bead's gate refusals #1 and #2): A1's cut-6
+ * key-path controls. What is claimed is each text below, byte for byte, read alone as a module named control.ts, caught by
+ * exactly one matcher, and no other text (the header's cut-6 bullet). Beside each name stands the gate narrowing whose paired
+ * witness it is and, for a witness that differs from a sibling control by one spelling, that spelling:
+ * - doubleParenthesizedHead: the wb-1709 gate's IB01 witness E01; qualifiedDoubleParenthesizedHead: refusal #2's YC01 witness
+ *   W-YC01 (`api.Rec` for `Rec`);
+ * - throwInLoop: IB02's E02; throwInLoopWithParameter: YC03's W-YC03 (`(flag: boolean) =>` for `() =>`);
+ * - asCallee: IB03's E03; memberCallAsCallee: YC04's W-YC04 (`api.make(` for `make(`); asConstructionCallee: refusal #1's
+ *   XS07 witness W-B02 (`new (` for `(`);
+ * - classWithHeritage: IB04's E04; heritageWithImplements: XS09's W-B04 (` implements Shape` after `extends Base`);
+ *   heritageWithTwoImplements: YC05's W-YC05 (`implements Shape, Other` for `implements Shape`); returnedHeritageClass: the
+ *   first cut's own control;
+ * - sessionClassTwin: SESSION_CLASS_TWIN, the second cut's twin (it kills refusal #1's XS01-XS05); sessionClassTwinAfterStatement:
+ *   YO02's W-YO02 (`const ready = true;` and a line break before the twin); sessionClassTwinAfterImport: YO03's W-YO03
+ *   (`import { Base } from "./base.js";` and a line break before it);
+ * - signatureInIntersection: IB05's E05; signatureBesideGenericReference: YC06's W-YC06 (`Extra<string>` for `Extra`);
+ *   constructSignatureInIntersection: XS06's W-B03 (`new ()` for `()`).
+ * None of these twins holds the src unit openHost.sessionClass itself: HELD_SRC_UNIT and A1's src walk do. */
+const KEY_PATH_ADDITIONS_CUT_6: Readonly<Record<string, string>> = {
+  doubleParenthesizedHead: 'type State = ((Rec["publication"]))["state"];',
+  qualifiedDoubleParenthesizedHead: 'type State = ((api.Rec["publication"]))["state"];',
+  throwInLoop: 'const record = { publication: () => {\n  for (;;) throw { state: "FAILED" };\n} };',
+  throwInLoopWithParameter: 'const record = { publication: (flag: boolean) => {\n  for (;;) throw { state: "FAILED" };\n} };',
+  asCallee: 'const record = { publication: (make({ state: "FAILED" }) as Factory)() };',
+  memberCallAsCallee: 'const record = { publication: (api.make({ state: "FAILED" }) as Factory)() };',
+  asConstructionCallee: 'const record = { publication: new (make({ state: "FAILED" }) as Factory)() };',
+  classWithHeritage: 'const record = { publication: class extends Base {\n  state = "FAILED";\n} };',
+  heritageWithImplements: 'const record = { publication: class extends Base implements Shape {\n  state = "FAILED";\n} };',
+  heritageWithTwoImplements: 'const record = { publication: class extends Base implements Shape, Other {\n  state = "FAILED";\n} };',
+  returnedHeritageClass: 'const record = { publication() {\n  return new (class extends api.Base {\n    override readonly state: string = "FAILED";\n  })();\n} };',
+  sessionClassTwin: SESSION_CLASS_TWIN,
+  sessionClassTwinAfterStatement: `const ready = true;\n${SESSION_CLASS_TWIN}`,
+  sessionClassTwinAfterImport: `import { Base } from "./base.js";\n${SESSION_CLASS_TWIN}`,
+  signatureInIntersection: "type Rec = { publication: { (): { state: string } } & Extra };",
+  signatureBesideGenericReference: "type Rec = { publication: { (): { state: string } } & Extra<string> };",
+  constructSignatureInIntersection: "type Rec = { publication: { new (): { state: string } } & Extra };",
+};
+
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
@@ -1432,9 +1520,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const floorMet = files.length >= 100;
     let units = 0;
     const hits: string[] = [];
+    // wb-xbwy's third cut (this bead's gate refusal #2, U1): the src unit the cut-5 entry's first-cut Green bullet names read is
+    // counted where the walk reads it, among its own module's code units (HELD_SRC_UNIT; asserted after the cut-6 controls).
+    const heldModule = join(REPO, ...HELD_SRC_UNIT.module.split("/"));
+    let heldUnitReads = 0;
     for (const file of files) {
       const read = fileUnits(file);
       units += read.length;
+      if (file === heldModule) heldUnitReads = read.filter(unit => unit === HELD_SRC_UNIT.unit).length;
       for (const source of matcherHits(read)) hits.push(`${relative(REPO, file)}: ${source}`);
     }
     const unitsFloorMet = units >= 50_000;
@@ -1649,10 +1742,28 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     ).toEqual([]);
     const splitPathCut5 = group("quiet.splitPath.cut5", SPLIT_PATH_ADDITIONS_CUT_5);
     expect(Object.values(splitPathCut5).every(count => count === 0), "a cut-5 R-SPLIT-PATH twin reads as a key path").toBe(true);
-    expect(ledger, "A1's controls (group, name, reading, text) stand in the receipt's A1 control table, then in its cut-4 and cut-5 additions").toStrictEqual([
+    // wb-xbwy (the wb-1709 gate's F1 and this bead's gate refusals #1 and #2): the falsifier texts for the reader narrowings
+    // IB01-IB05, XS01-XS07 and XS09, YC01 and YC03-YC06, and YO02 and YO03, each caught by exactly one matcher; the group joins
+    // the record after the cut-5 ones, held to the cut-6 additions table.
+    const keyPathsCut6 = group("widened.keyPaths.cut6", KEY_PATH_ADDITIONS_CUT_6);
+    expect(
+      Object.entries(keyPathsCut6)
+        .filter(([, count]) => count !== 1)
+        .map(([key]) => key),
+      "a cut-6 key-path control is not caught by exactly one matcher",
+    ).toEqual([]);
+    // wb-xbwy's third cut (this bead's gate refusal #2, U1: YO01-YO03): the src unit itself, read exactly once in its module, so a
+    // narrowing that leaves the module without it, or with it twice, reds A1 here when no cut-6 control reds it first (the twins
+    // above spell only their own texts).
+    expect(
+      heldUnitReads,
+      `the src unit ${HELD_SRC_UNIT.unit} of ${HELD_SRC_UNIT.module}, which the cut-5 entry's first-cut Green bullet names read, is not read exactly once by the src walk`,
+    ).toBe(1);
+    expect(ledger, "A1's controls (group, name, reading, text) stand in the receipt's A1 control table, then in its cut-4, cut-5 and cut-6 additions").toStrictEqual([
       ...receiptTable(RECEIPT_TABLES.readingControls),
       ...receiptTable(RECEIPT_TABLES.readingControlAdditions),
       ...receiptTable(RECEIPT_TABLES.readingControlCut5),
+      ...receiptTable(RECEIPT_TABLES.readingControlCut6),
     ]);
     return {
       floorMet,
@@ -1671,6 +1782,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       splitPath,
       keyPathsCut5,
       splitPathCut5,
+      keyPathsCut6,
+      heldSrcUnitCut6: { module: HELD_SRC_UNIT.module, unit: HELD_SRC_UNIT.unit, reads: heldUnitReads },
     };
   },
   A2: async () => {
