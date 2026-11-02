@@ -430,6 +430,35 @@
    "generator-string-named-method",
    "async-generator-string-named-method",
    "infinity-computed-named-method",
+   "async-method-helper",
+   "generator-method-helper",
+   "async-const-named-method",
+   "async-generator-method-helper",
+   "hex-escaped-string-named-class-method",
+   "unicode-escaped-string-named-static-method",
+   "twice-escaped-string-named-method",
+   "padded-code-point-escaped-string-named-method",
+   "spelled-infinity-computed-named-method",
+   "continued-string-named-class-method",
+   "binary-named-class-method",
+   "separated-named-class-expression-method",
+   "async-bigint-named-method",
+   "generator-decimal-named-method",
+   "static-bigint-named-class-method",
+   "abstract-decimal-named-method",
+   "overload-numeric-named-class-expression-method",
+   "two-container-unpinned-names",
+   "let-held-numeric-named-method",
+   "inline-object-async-numeric-method",
+   "uppercase-hex-named-method",
+   "class-async-generator-methods",
+   "modified-class-methods",
+   "escaped-identifier-named-method",
+   "class-async-generator-numeric-named-methods",
+   "bigint-named-class-expression-methods",
+   "uppercase-spelled-numeric-named-methods",
+   "trailing-dot-legacy-octal-named-methods",
+   "positioned-object-numeric-methods",
    "reflective-Object.values",
    "reflective-Object.entries",
    "reflective-Object.assign",
@@ -493,7 +522,8 @@
    "conditional-helper",
    "new-function-declaration",
    "unresolved-named-method",
-   "nested-array-after-spread"
+   "nested-array-after-spread",
+   "single-escaped-element-callee"
   ],
   "gqPins": {
    "failClosed": {
@@ -508,6 +538,33 @@
     "GQ09": "hex-escaped-string-named-method",
     "GQ16": "async-string-named-method",
     "GQ17": "generator-string-named-method"
+   }
+  },
+  "gPins": {
+   "failClosed": {
+    "G10": "binary-named-class-method",
+    "G11": "separated-named-class-expression-method",
+    "G12": "async-bigint-named-method",
+    "G13": "generator-decimal-named-method",
+    "G14": "static-bigint-named-class-method",
+    "G15": "abstract-decimal-named-method",
+    "G16": "overload-numeric-named-class-expression-method",
+    "G17": "two-container-unpinned-names",
+    "G18": "let-held-numeric-named-method",
+    "G19": "inline-object-async-numeric-method",
+    "G21": "uppercase-hex-named-method"
+   },
+   "pinned": {
+    "G01": "async-method-helper",
+    "G02": "generator-method-helper",
+    "G03": "async-const-named-method",
+    "G04": "async-generator-method-helper",
+    "G05": "hex-escaped-string-named-class-method",
+    "G06": "unicode-escaped-string-named-static-method",
+    "G07": "twice-escaped-string-named-method",
+    "G08": "padded-code-point-escaped-string-named-method",
+    "G09": "spelled-infinity-computed-named-method",
+    "G20": "continued-string-named-class-method"
    }
   },
   "surfacePins": {
@@ -1711,6 +1768,117 @@
         "infinity-computed-named-method": [
          "3 member blocks"
         ],
+        "async-method-helper": [
+         "3 member blocks"
+        ],
+        "generator-method-helper": [
+         "3 member blocks"
+        ],
+        "async-const-named-method": [
+         "4 member blocks"
+        ],
+        "async-generator-method-helper": [
+         "3 member blocks"
+        ],
+        "hex-escaped-string-named-class-method": [
+         "3 member blocks"
+        ],
+        "unicode-escaped-string-named-static-method": [
+         "3 member blocks"
+        ],
+        "twice-escaped-string-named-method": [
+         "3 member blocks"
+        ],
+        "padded-code-point-escaped-string-named-method": [
+         "3 member blocks"
+        ],
+        "spelled-infinity-computed-named-method": [
+         "3 member blocks"
+        ],
+        "continued-string-named-class-method": [
+         "4 member blocks"
+        ],
+        "binary-named-class-method": [
+         "2 declaration unpinned"
+        ],
+        "separated-named-class-expression-method": [
+         "2 declaration unpinned"
+        ],
+        "async-bigint-named-method": [
+         "2 declaration unpinned"
+        ],
+        "generator-decimal-named-method": [
+         "2 declaration unpinned"
+        ],
+        "static-bigint-named-class-method": [
+         "2 declaration unpinned"
+        ],
+        "abstract-decimal-named-method": [
+         "2 declaration unpinned"
+        ],
+        "overload-numeric-named-class-expression-method": [
+         "2 declaration unpinned",
+         "3 declaration unpinned"
+        ],
+        "two-container-unpinned-names": [
+         "2 declaration unpinned",
+         "7 declaration unpinned"
+        ],
+        "let-held-numeric-named-method": [
+         "2 declaration unpinned"
+        ],
+        "inline-object-async-numeric-method": [
+         "2 declaration unpinned"
+        ],
+        "uppercase-hex-named-method": [
+         "2 declaration unpinned"
+        ],
+        "class-async-generator-methods": [
+         "3 member blocks",
+         "6 member observations",
+         "9 member output",
+         "14 member components",
+         "17 member blocks",
+         "20 member observations"
+        ],
+        "modified-class-methods": [
+         "8 member blocks",
+         "11 member blocks",
+         "14 member blocks",
+         "17 member blocks",
+         "20 member blocks"
+        ],
+        "escaped-identifier-named-method": [
+         "3 member blocks"
+        ],
+        "class-async-generator-numeric-named-methods": [
+         "2 declaration unpinned",
+         "5 declaration unpinned",
+         "8 declaration unpinned",
+         "13 declaration unpinned",
+         "16 declaration unpinned",
+         "19 declaration unpinned"
+        ],
+        "bigint-named-class-expression-methods": [
+         "2 declaration unpinned",
+         "5 declaration unpinned"
+        ],
+        "uppercase-spelled-numeric-named-methods": [
+         "2 declaration unpinned",
+         "5 declaration unpinned",
+         "8 declaration unpinned",
+         "11 declaration unpinned"
+        ],
+        "trailing-dot-legacy-octal-named-methods": [
+         "2 declaration unpinned",
+         "5 declaration unpinned"
+        ],
+        "positioned-object-numeric-methods": [
+         "3 declaration unpinned",
+         "9 declaration unpinned",
+         "16 declaration unpinned",
+         "23 declaration unpinned"
+        ],
         "reflective-Object.values": [
          "1 reflective Object.values"
         ],
@@ -1788,7 +1956,8 @@
         "conditional-helper": [],
         "new-function-declaration": [],
         "unresolved-named-method": [],
-        "nested-array-after-spread": []
+        "nested-array-after-spread": [],
+        "single-escaped-element-callee": []
        }
       },
       "reactivefiberLoader": false,
@@ -2381,7 +2550,7 @@
   "B4:9",
   "C1:10",
   "C2:7",
-  "C3:15",
+  "C3:17",
   "C4:6",
   "C5:5",
   "M1:9",
