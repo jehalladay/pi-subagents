@@ -107,13 +107,43 @@
       "G11",
       "G12",
       "G13",
-      "G14"
+      "G14",
+      "G15",
+      "G17",
+      "G23",
+      "G24",
+      "G25",
+      "G26",
+      "G27"
     ],
     "Q6": [
       "C6-mA",
       "C6-mT",
       "C6-mB",
-      "C6-mC"
+      "C6-mC",
+      "mT32",
+      "mA21",
+      "mB32",
+      "mT12",
+      "mT23",
+      "mA12",
+      "mA45",
+      "mB12",
+      "mB23",
+      "mC12",
+      "C6-sT",
+      "C6-sB",
+      "sA12",
+      "sA45",
+      "sC12",
+      "sT23",
+      "sT12r",
+      "sB23",
+      "sB12r",
+      "sT23r",
+      "sA45r",
+      "sB23r",
+      "sC12r"
     ],
     "Q7": [
       "C6-labelQ",
@@ -123,7 +153,20 @@
       "C6-member",
       "PL1",
       "PL2",
-      "PL4"
+      "PL4",
+      "PL5",
+      "PL-sha-suffix",
+      "G-frame-nested",
+      "G-fieldpin-T2",
+      "uPath",
+      "uKeyOrder",
+      "uPretty",
+      "uDecisionKeyOrder",
+      "uNestedTwo",
+      "uSha13",
+      "uLine25Prefix",
+      "uLine13Prefix",
+      "uFieldPinsExtra"
     ]
   },
   "witnesses": {
@@ -993,6 +1036,62 @@
         "honest": "unavailable:timeout",
         "member": "unavailable:timeout",
         "departs": true
+      },
+      "G15": {
+        "input": "D15",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:checkpoint",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G17": {
+        "input": "D17",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:snapshotDigest",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G23": {
+        "input": "D23",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:schema",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G24": {
+        "input": "D24",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:checkpoint",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G25": {
+        "input": "D25",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:snapshotDigest",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G26": {
+        "input": "D26",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:snapshotDigest",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
+      },
+      "G27": {
+        "input": "D27",
+        "judged": [],
+        "sameOutcomes": true,
+        "honest": "refused:checkpoint",
+        "member": "admitted:exec-a1-t1",
+        "departs": true
       }
     },
     "Q6": {
@@ -1000,7 +1099,30 @@
         "C6-mA": [],
         "C6-mT": [],
         "C6-mB": [],
-        "C6-mC": []
+        "C6-mC": [],
+        "mT32": [],
+        "mA21": [],
+        "mB32": [],
+        "mT12": [],
+        "mT23": [],
+        "mA12": [],
+        "mA45": [],
+        "mB12": [],
+        "mB23": [],
+        "mC12": [],
+        "C6-sT": [],
+        "C6-sB": [],
+        "sA12": [],
+        "sA45": [],
+        "sC12": [],
+        "sT23": [],
+        "sT12r": [],
+        "sB23": [],
+        "sB12r": [],
+        "sT23r": [],
+        "sA45r": [],
+        "sB23r": [],
+        "sC12r": []
       },
       "kept": {
         "C6-mA": [
@@ -1015,6 +1137,77 @@
         ],
         "C6-mC": [
           "tiling C"
+        ],
+        "mT32": [
+          "tiling T"
+        ],
+        "mA21": [
+          "tiling A",
+          "field pins"
+        ],
+        "mB32": [
+          "tiling B"
+        ],
+        "mT12": [
+          "tiling T"
+        ],
+        "mT23": [
+          "tiling T"
+        ],
+        "mA12": [
+          "tiling A"
+        ],
+        "mA45": [
+          "tiling A",
+          "field pins"
+        ],
+        "mB12": [
+          "tiling B"
+        ],
+        "mB23": [
+          "tiling B"
+        ],
+        "mC12": [
+          "tiling C"
+        ],
+        "C6-sT": [
+          "tiling T"
+        ],
+        "C6-sB": [
+          "tiling B"
+        ],
+        "sA12": [
+          "tiling A"
+        ],
+        "sA45": [
+          "tiling A"
+        ],
+        "sC12": [
+          "tiling C"
+        ],
+        "sT23": [
+          "tiling T"
+        ],
+        "sT12r": [
+          "tiling T"
+        ],
+        "sB23": [
+          "tiling B"
+        ],
+        "sB12r": [
+          "tiling B"
+        ],
+        "sT23r": [
+          "tiling T"
+        ],
+        "sA45r": [
+          "tiling A"
+        ],
+        "sB23r": [
+          "tiling B"
+        ],
+        "sC12r": [
+          "tiling C"
         ]
       }
     },
@@ -1026,7 +1219,20 @@
       "C6-member": [],
       "PL1": [],
       "PL2": [],
-      "PL4": []
+      "PL4": [],
+      "PL5": [],
+      "PL-sha-suffix": [],
+      "G-frame-nested": [],
+      "G-fieldpin-T2": [],
+      "uPath": [],
+      "uKeyOrder": [],
+      "uPretty": [],
+      "uDecisionKeyOrder": [],
+      "uNestedTwo": [],
+      "uSha13": [],
+      "uLine25Prefix": [],
+      "uLine13Prefix": [],
+      "uFieldPinsExtra": []
     }
   },
   "tests": [
