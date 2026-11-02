@@ -28,8 +28,12 @@
  *    literal key, a qualified name or an indexed access type by a literal key, read from its first named link through every
  *    transparent wrapper (parentheses, a non-null assertion, an as or satisfies expression, a type assertion, a parenthesized
  *    type) and rooted at a name, this, a type name or a type query (claimed only as deep as its reading controls spell each link
- *    kind, two links of a property access, an element access or an indexed access type and three of a qualified name: a reading
- *    limited at those depths or past them is R-CHAIN-DEPTH; a mixed-kind four-link chain is read by its own control); any other
+ *    kind, each control's chain read whole - a run of two links of a property access, an element access or an indexed access
+ *    type and of three of a qualified name, three property accesses, two element accesses, three qualified names and two
+ *    indexed access types in one chain, four links in all, and a mixed-kind four-link chain read by its own two controls, one
+ *    alternating its kinds and one with a same-kind run of two (wb-0g9n F1): a chain of a shape no reading control spells is
+ *    NOT CLAIMED, and a reading limited at those depths or past them, by any bound on a chain's link kinds, is R-CHAIN-DEPTH);
+ *    any other
  *    root (a call, an element access by a computed key, a comma or any other expression) is computed and not part of it - every nested key path of object keys, type members and
  *    binding patterns, and every regex literal's pattern, each character escape (\x2E, \u002E, \u{2E}) read as the character it
  *    names and every other escape (a class, property, back-reference, assertion, control or digit escape, each read whole) and
@@ -51,8 +55,9 @@
  *    (f n r t v) spelled between the term's two words, one literal per member: wb-jdz6, the landing-594 gate's F1 and F2; a
  *    qualified name two links deep, its left side itself a qualified name (Rec.Owner.Epoch): wb-jdz6 cut #2, refusal #1's F2; a
  *    qualified name three links deep (A.Rec.Owner.Epoch): wb-jdz6 cut #3, refusal #2's F4; the chain reading bounded to the depths
- *    those controls spell, including a mixed-kind chain of four total links (wb-2hdl F3), a reading limited below these depths
- *    named R-CHAIN-DEPTH: wb-jdz6 cut #4, refusal #3's F4) and
+ *    those controls spell, including a mixed-kind chain of four total links (wb-2hdl F3) and one with a same-kind run of two,
+ *    three property accesses in one chain (wb-0g9n F1), a reading limited at these depths or past them named R-CHAIN-DEPTH:
+ *    wb-jdz6 cut #4, refusal #3's F4) and
  *    the TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
  *    the token readings - every node of a src module's syntax tree that carries its own text (an identifier, a private name, a
  *    string, a template part, a regex, a number) must be one a token reading read, so a token reading removed together with its
@@ -159,7 +164,9 @@
  * term removed from IDENTITY_TERMS or WORK_PACKAGE_TERMS together with its controls, the roster's scan and A2's witness (the
  * filing anchors rows and clauses, not words, and no source outside this cut lists the vocabulary); an assertion removed from this
  * file together with its pinned count in the roster's record; a case that keeps its own assertions but returns its witness as a
- * literal, or reads the roster through an alias; the file-end judge or the selection it reads removed (no claim rides them alone:
+ * literal, or reads the roster through an alias; a src chain of a shape no reading control spells (a property access over two
+ * element accesses among them: A2 claims the chain reading only as deep as its controls spell, and R-CHAIN-DEPTH's quiet row
+ * holds their shapes); the file-end judge or the selection it reads removed (no claim rides them alone:
  * the records case still holds the record); every case of the file skipped at once (no case runs to read the tree, and vitest runs
  * no hook for a file with nothing to run); a composite reading (the chain or the key-path reading), or one link or root kind of the
  * chain reading, removed from scanModule together with its reading controls, the roster's scan and A2's witness - and, for the
@@ -195,15 +202,23 @@
  *   contract's observed state: unknown, observed-started or observed-terminal) as the words "snapshot observation": it is no H2
  *   record, so A2 holds it as its one known spelling, read (A2); R-SPLIT-NAMES a term split across two names that form no chain and
  *   no key path - a key and the value it holds, a name and its type, a key and a call's argument, a declaration and its member - is
- *   two names read one at a time, quiet (A2); R-CHAIN-DEPTH a chain read only to a finite depth - a link read only while its run
- *   of links of one kind is that long or shorter - reads every reading control whole at or past the runs they spell, two links of
- *   a property access, an element access or an indexed access type and three of a qualified name; a mixed-kind
- *   chain of four total links (quiet row: each kind's longest run and the longest total chain from the controls'
- *   sources, read apart from linkOf). A2 claims these depths only: a three-total-link reader loses the mixed control.
+ *   two names read one at a time, quiet (A2); R-CHAIN-DEPTH a chain read only to a finite depth - a link read only while its
+ *   chain stays within a bound on its link kinds (its run of links of one kind, the links of its own kind or of another kind its
+ *   chain holds, its total links, or the order its kinds mix in) - reads every reading control whole at or past the depths they
+ *   spell: runs of two links of a property access, an element access or an indexed access type and of three of a qualified
+ *   name; three property accesses, two element accesses, three qualified names and two indexed access types in one chain
+ *   (wb-0g9n F1); four links in all, a mixed-kind chain (wb-2hdl F3); and each control's chain shape (quiet row: each kind's
+ *   longest run, each kind's most links in one chain, the longest total chain and each chain control's shape - the link kinds
+ *   of its outermost chains, outermost first - every one read from the controls' sources by syntax kind through the
+ *   transparent wrappers, apart from linkOf: wb-0g9n F1 and F3). A2 claims these depths only: a three-total-link reader loses
+ *   both mixed-kind controls, and a reader that stops a link once its chain holds more than two property accesses loses the
+ *   one with the same-kind run.
  * SELF-READ RESIDUALS (wb-jdz6 cut #4: the reader narrowings outside THE PINNED SET, by named family; each family's members are
- *   rows of SELF_READ_RESIDUALS - two spellings that differ in the member alone and the member's model, a text substitution - and
- *   each member's pinned quiet row is measured in the judged set right after the reader's controls and held to the roster: whether
- *   the model erases the member, the controls whose verdict it changes - none, but for the file-only member below, whose narrowing
+ *   rows of SELF_READ_RESIDUALS - two spellings that differ in the member alone and the member's model, a text substitution (a
+ *   token reading for wb-2hdl F1's literal letters and F2's punctuation tokens) - and each member's pinned quiet row is measured
+ *   in the judged set right after the reader's controls and held to the roster: whether the model erases the member (the two
+ *   spellings one text under a text substitution, one spelling under a token reading: wb-0g9n F2), the controls whose verdict
+ *   it changes - none, but for the file-only member below, whose narrowing
  *   never reaches a control - and how many pinned statements it reads otherwise; the count measures token changes
  *   under a coordinated reading of both sides, not failed cases): R-SELF-SELECTIVE a member read otherwise for some of its spellings and not others - by a spelling's place in its
  *   statement, its length, its line span, its count past the two block comments the count control holds, its neighbours or its
@@ -328,7 +343,9 @@ const COMPOSED_CONTROL = 'const word = ["owner", "epoch"].join(" ");';
  * three links deep (wb-jdz6 cut #3, refusal #2's F4: a qualified name read only when its left side is a name, or a qualified
  * name whose left side is a name, kept every control true), so a qualified name read only one or two links deep loses the term;
  * a reading limited at three links or past them kept every prior control; wb-2hdl F3 adds a mixed-kind four-total-link
- * control. */
+ * control, and wb-0g9n F1 a second one with a same-kind run of two (the landing-771 gate's PLANT-PEPP shape: a reading that
+ * stops a link once its chain holds more links of its own kind than the runs spell - two property accesses - kept every other
+ * control, the alternating one among them, and missed three property accesses in one chain). */
 const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["identifier", "identifier", "let ownerEpoch = 0;"],
   ["private name", "identifier", "class Holder { #ownerEpoch = 0; }"],
@@ -336,6 +353,7 @@ const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["template part", "literal", `const t = \`\${a} owner epoch \${b}\`;`],
   ["property access", "chain", "const e = record.owner.epoch;"],
   ["mixed-kind four-link chain", "chain", 'const e = (globalThis as unknown as X).a["b-c"]?.owner["epoch-at"];'],
+  ["mixed-kind four-link chain with a same-kind run of two", "chain", 'const e = (globalThis as unknown as X).a["b-c"]?.owner.epoch;'],
   ["computed root", "chain", "const e = load().owner.epoch;"],
   ["element access", "chain", 'const e = record["owner"]?.["epoch"];'],
   ["qualified name", "chain", "type E = Owner.Epoch;"],
@@ -473,7 +491,8 @@ const SPELLING_CONTROLS: readonly SpellingControl[] = [
   ["layout between two tokens", "REACHED.push(endOf(pin));", "REACHED.push(\r\n\tendOf( pin )\n);", true],
 ];
 /** A SELF-READ residual member (wb-jdz6 cut #4, the enumerate-the-resolvable form): [family, member, one spelling, another that
- * differs from it in that member alone, the member's model as a text substitution: every `from` in a spelling read as `to`]. */
+ * differs from it in that member alone, the member's model as a text substitution: every `from` in a spelling read as `to`;
+ * wb-2hdl F1's literal-letter members and F2's punctuation members model a token reading of from and to instead]. */
 type SelfReadResidual = readonly [family: string, member: string, one: string, other: string, from: string, to: string];
 /** SELF-READ RESIDUALS (wb-jdz6 cut #4): the known reader narrowings outside the pinned set, by family, each member with its
  * model; each member's quiet row (selfReadQuietRow) is measured in the judged set right after the reader's controls and held to
@@ -892,9 +911,13 @@ function chainOf(node: ts.Node): string | undefined {
   return inner === undefined ? link.name : `${inner}.${link.name}`;
 }
 /** R-CHAIN-DEPTH's quiet row (wb-jdz6 cut #4, refusal #3's F4: a qualified name read only three links deep kept every reading
- * control): the longest run of links of one kind a chain reading control spells, by link kind - a property access, an element
- * access, a qualified name and an indexed access type, each read by its syntax kind through the transparent wrappers, apart from
- * linkOf - so a chain reading limited to that run, or to a longer one, reads every reading control whole. */
+ * control; wb-2hdl F3; wb-0g9n F1 and F3): the depths the chain reading controls spell, every one read from their sources by
+ * syntax kind - a property access, an element access, a qualified name and an indexed access type - through the transparent
+ * wrappers, apart from linkOf: by link kind, the longest run of links of that kind and the most links of that kind one chain
+ * holds (wb-0g9n F1: a chain reading that stopped a link once its chain held more links of its kind than the runs spell read
+ * every control whole and missed three property accesses in one chain); the longest total chain (wb-2hdl F3, read through linkOf until wb-0g9n F3); and each chain control's shape, the link
+ * kinds of its outermost chains, outermost first, from which any other bound on a chain's link kinds follows - so a chain
+ * reading limited at those depths, or past them, reads every reading control whole. */
 function chainControlDepths(): JsonObject {
   const kinds: readonly (readonly [string, (node: ts.Node) => ts.Node | undefined])[] = [
     ["property access", node => (ts.isPropertyAccessExpression(node) ? node.expression : undefined)],
@@ -902,30 +925,39 @@ function chainControlDepths(): JsonObject {
     ["qualified name", node => (ts.isQualifiedName(node) ? node.left : undefined)],
     ["indexed access type", node => (ts.isIndexedAccessTypeNode(node) ? node.objectType : undefined)],
   ];
+  /** A node's link by its syntax kind alone: its kind and the node it reads through its transparent wrappers. */
+  const linkAt = (node: ts.Node): { readonly kind: string; readonly inner: ts.Node } | undefined => {
+    for (const [kind, innerOf] of kinds) {
+      const inner = innerOf(node);
+      if (inner !== undefined) return { kind, inner: unwrapped(inner) };
+    }
+    return undefined;
+  };
   const longest: Record<string, number> = Object.fromEntries(kinds.map(([kind]) => [kind, 0]));
+  const most: Record<string, number> = Object.fromEntries(kinds.map(([kind]) => [kind, 0]));
+  const shapes: string[] = [];
   let total = 0;
-  for (const [, reading, source] of READING_CONTROLS) {
+  for (const [label, reading, source] of READING_CONTROLS) {
     if (reading !== "chain") continue;
     const file = ts.createSourceFile("control.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const outermost: string[] = [];
     const visit = (node: ts.Node): void => {
-      let chainLength = 0;
-      for (let at: ts.Node | undefined = node; at !== undefined; ) {
-        const link = linkOf(at);
-        if (link === undefined) break;
-        chainLength += 1;
-        at = link.inner;
-      }
-      total = Math.max(total, chainLength);
+      const chain: string[] = [];
+      for (let link = linkAt(node); link !== undefined; link = linkAt(link.inner)) chain.push(link.kind);
+      if (chain.length > 0 && linkAt(enclosing(node))?.inner !== node) outermost.push(chain.join(", "));
+      total = Math.max(total, chain.length);
       for (const [kind, innerOf] of kinds) {
         let run = 0;
         for (let inner = innerOf(node); inner !== undefined; inner = innerOf(unwrapped(inner))) run += 1;
         longest[kind] = Math.max(longest[kind] ?? 0, run);
+        most[kind] = Math.max(most[kind] ?? 0, chain.filter(one => one === kind).length);
       }
       ts.forEachChild(node, visit);
     };
     visit(file);
+    shapes.push(`${label}: ${outermost.join(" | ")}`);
   }
-  return json({ ...longest, "total links": total }) as JsonObject;
+  return json({ ...longest, "total links": total, "most links of one kind in one chain": most, "chain shapes": shapes }) as JsonObject;
 }
 /** A member that states a key: an object key, a class or type member, or an element of a binding pattern. */
 type Keyed =
@@ -1801,17 +1833,23 @@ function spelledCount(statements: readonly (readonly string[])[], literal: strin
   return statements.filter(statement => sameSpelling(statement, spelling)).length;
 }
 /** A SELF-READ residual member's pinned quiet row (wb-jdz6 cut #4): whether its model erases the member (the two spellings differ
- * and are one text under it); the spelling controls whose verdict the model changes (none but R-SELF-FILE-ONLY's three
+ * and are one text under its text substitution, or one spelling under wb-2hdl F1's and F2's token models: wb-0g9n F2, since a
+ * text-substitution member read through the reader instead stays erased with its model silenced whenever the reader already
+ * reads its two spellings as one, as it reads the vertical tab); the spelling controls whose verdict the model changes (none but R-SELF-FILE-ONLY's three
  * block-comment controls, which a reading of this file's statements alone never reads: no control holds a member); and how many
  * of the pinned statements (COMPARISONS, OPERANDS and PIN_CASE, each read by heldSpelling) the model reads otherwise
  * (a coordinated change to both their live and held readings stays quiet even when this count is nonzero). */
 function selfReadQuietRow([family, member, one, other, from, to]: SelfReadResidual): JsonObject {
   const tokens = (spelling: string): string[] => heldSpelling(spelling);
+  // Every member but wb-2hdl F1's and F2's models a text substitution: every `from` in a spelling read as `to`.
+  const textModel = (spelling: string): string => spelling.split(from).join(to);
   // wb-2hdl F1/F2 model a TOKEN reading, not a blanket text replacement: punctuation inside
   // literals is not punctuation, and a literal's own letters do not change identifiers.
+  const punctuation = family === "R-SELF-PUNCTUATION";
+  const ownLetters = family === "R-SELF-TEXT" && member.includes("own letters");
   const tokenModel = (spelling: string): string[] => {
-    if (family === "R-SELF-PUNCTUATION") return tokens(spelling).filter(token => token !== from);
-    if (family === "R-SELF-TEXT" && member.includes("own letters")) {
+    if (punctuation) return tokens(spelling).filter(token => token !== from);
+    if (ownLetters) {
       const kind = member.includes("string literal") ? "string" : member.includes("template part") ? "template" : "regex";
       return tokens(spelling).map(token => {
         const target = kind === "string" ? token.startsWith('"') || token.startsWith("'")
@@ -1825,13 +1863,15 @@ function selfReadQuietRow([family, member, one, other, from, to]: SelfReadResidu
         return token.split(from).join(to);
       });
     }
-    const changed = spelling.split(from).join(to);
-    return tokens(changed);
+    return tokens(textModel(spelling));
   };
   const verdict = (a: string, b: string): boolean => sameSpelling(tokens(a), tokens(b));
   const controls = SPELLING_CONTROLS.filter(([, a, b]) => sameSpelling(tokenModel(a), tokenModel(b)) !== verdict(a, b)).map(([label]) => label);
   const pinned = [...COMPARISONS, ...OPERANDS, ...PIN_CASE].filter(statement => !sameSpelling(tokenModel(statement), tokens(statement))).length;
-  return { family, member, erased: one !== other && sameSpelling(tokenModel(one), tokenModel(other)), controls, pinned };
+  // wb-0g9n F2: a text substitution erases the member when the two spellings are one text under it, a token model when they are
+  // one spelling under it.
+  const erased = one !== other && (punctuation || ownLetters ? sameSpelling(tokenModel(one), tokenModel(other)) : textModel(one) === textModel(other));
+  return { family, member, erased, controls, pinned };
 }
 /** The residual families the header's RESIDUALS paragraphs name, in the order first named (wb-jdz6 cut #4, the wb-jwc.7 CT7
  * class: the anchor of RESIDUAL_FAMILIES and SELF_READ_RESIDUALS outside their own literals and the roster): every R- name between
@@ -1937,7 +1977,7 @@ describe("wb-4nut.9 H2 identity and reuse census (TSX-HARNESS2-REACTIVE-EVOLUTIO
       bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows, comparisons: [...ROSTER.comparisons], operands: [...ROSTER.operands],
       pinCase: [...ROSTER.pinCase], spellingControls: [...ROSTER.spellingControls], selfReadResiduals: [...ROSTER.selfReadResiduals],
     });
-    // wb-2hdl F1/F2/F3: the residual families and mixed-kind reading are held by the roster's
+    // wb-2hdl F1/F2/F3 and wb-0g9n F1: the residual families and the mixed-kind readings are held by the roster's
     // selfReadResiduals and scan.readingControls, not by a second self-authored list.
     // SELF-READ: the reader first - each spelling control reads as one spelling or two, as its row says (wb-jdz6 cut #2, U1).
     expect(SPELLING_CONTROLS.filter(([, one, other, same]) => sameSpelling(heldSpelling(one), heldSpelling(other)) !== same).map(([label]) => label), "the spelling controls tokensOf reads otherwise than their rows say").toEqual([]);
