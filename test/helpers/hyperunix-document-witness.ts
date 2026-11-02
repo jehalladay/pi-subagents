@@ -20,13 +20,14 @@ import { types } from "node:util";
 /** The representation the walk looks for, as the census spells it. */
 const REPRESENTATION = "hyperunix.result/1";
 
-/** The gate's refusal #2 walk changes, each at one site of the census's walk (the census's W3 rows pin each one at the edges its
- * header names): TV1 also reads the data values of a namespace's own enumerable symbol-keyed bindings; TV2 reads the data values of
- * its own string-keyed bindings (Object.getOwnPropertyNames, non-enumerable ones too); TV3 also walks the own enumerable data
- * properties of a walked value's prototype when that prototype is a record other than Object.prototype; TV4 enters a function as
- * an object and walks its own enumerable data properties; TV5 carries the path of a Uint8Array (a Buffer is one) whose UTF-8 text
- * includes the representation; TV6 reads a namespace's enumerable string-keyed bindings through Reflect.get, which runs an
- * accessor binding's getter. */
+/** The gate's refusal #2 walk changes, each at one site of the census's walk; the census's W3 rows pin each one at the forms
+ * their ids name, and a form no row plants is NOT CLAIMED here: TV1 also reads the data values of a namespace's own enumerable
+ * symbol-keyed bindings; TV2 reads the data values of its own string-keyed bindings (Object.getOwnPropertyNames, non-enumerable
+ * ones too); TV3 also walks the own enumerable string-keyed data properties (Object.keys) of a walked value's prototype when that
+ * prototype is a record other than Object.prototype; TV4 enters a function as an object and walks its own enumerable string-keyed
+ * data properties (Object.keys); TV5 carries the path of a Uint8Array (a Buffer is one) whose UTF-8 text includes the
+ * representation; TV6 reads a namespace's enumerable string-keyed bindings through Reflect.get, which runs an accessor binding's
+ * getter. */
 export type Twin = "TV1" | "TV2" | "TV3" | "TV4" | "TV5" | "TV6";
 export const TWINS: readonly Twin[] = ["TV1", "TV2", "TV3", "TV4", "TV5", "TV6"];
 
@@ -39,11 +40,12 @@ function dataValue(holder: object, key: string): readonly unknown[] {
 /** A value that is neither an object nor a function (String() of it runs no code a release defines). */
 const isPrimitive = (value: unknown): boolean => value === null || (typeof value !== "object" && typeof value !== "function");
 /** The census's carriers: the paths from a value to a string that includes the representation. A string carries it when it
- * includes it; an object's or an array's own enumerable string-keyed data properties are walked, and an accessor property below
- * the top level is read by no walk (W3); a function is entered by TV4 only (W3, W7); an object value the walk enters that is a
- * Proxy, or a function TV4 enters that is one, throws an error saying it is a Proxy (W7), while a record prototype that is a Proxy
- * is not entered and TV3 reads its own enumerable data (W7). TV5's and TV3's additions apply at the top level and below it (W3).
- * How carriers reads any other value form is NOT CLAIMED by the census. */
+ * includes it; an object's or an array's own enumerable string-keyed data properties are walked, and the enumerable string-keyed
+ * accessor property below the top level that W3 plants is read by no walk; a function a W3 or W7 row plants is entered by TV4
+ * only. Where a census W7 row plants a Proxy (the Proxy and the position its id names), the walks its throwBy names throw an
+ * error saying it is a Proxy and the walks its readBy names read the planted document through it; how carriers reads a Proxy no
+ * W7 row plants is NOT CLAIMED by the census. TV5's and TV3's additions apply at the top level and below it at the forms W3
+ * plants. How carriers reads any other value form is NOT CLAIMED by the census. */
 function carriers(value: unknown, path: string, seen: Set<object>, twin: Twin | undefined): string[] {
   if (typeof value === "string") return value.includes(REPRESENTATION) ? [path] : [];
   if (twin === "TV5" && types.isUint8Array(value)) return Buffer.from(value).toString("utf8").includes(REPRESENTATION) ? [path] : [];

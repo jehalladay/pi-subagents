@@ -1,255 +1,383 @@
 {
-  "comment": "wb-byfw cut #2 (refusal #1 U3; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path and calls, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy and path, and every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, in census order, as read at the cut. The census's ROSTER case requires its in-file rows to equal these lists exactly, both ways and in order, and its RECORDS case expects the case of every row and site listed here.",
+  "comment": "wb-byfw cut #3 (refusal #2 U3, the R-B362 enumerate-the-resolvable form; the R660 / wb-5jha roster shape): the out-of-file anchor for the judged rows of test/workbench-hyperunix-document-witness-census.test.ts - every W3 TWIN_CONTROLS row with its readBy, path, calls and the sha256 of its probe's and its present's source text, every W4 site with its form's twin, every W7 PROXY_FORMS row with its throwBy, readBy, path and the same two digests, every W8 READER_PAGES page with its lead count, its forms and the sha256 of its page text, every W9 CASE_PAGES page with its row and shared counts and the sha256 of its source, and the shared declarations the W3 and W7 cases name with the sha256 of each statement's text, in census order, as read at the cut. The census's ROSTER case requires its in-file rows and caseReading's reading of its own source to equal these lists exactly, both ways and in order, and its RECORDS case expects the case of every row, site and page listed here.",
   "controls": [
     {
-      "id": "TV1 symbol-keyed data",
+      "id": "TV1 an enumerable symbol-keyed data binding",
       "readBy": [
         "TV1"
       ],
       "path": ".:Symbol(cases).0.document.representation",
-      "calls": []
+      "calls": [],
+      "probe": "178ea5187b1bbe17e8f892a7a3419a61fb6b2f78d2f13a4d2b90a0da515ac9de",
+      "present": "5a11832bd5226fb8dd9ee01917c91f83fe6b2358d1e58ec66130234a77eea6f4"
     },
     {
-      "id": "TV1 the second of two symbol-keyed data bindings",
+      "id": "TV1 the second of two enumerable symbol-keyed data bindings",
       "readBy": [
         "TV1"
       ],
       "path": ".:Symbol(cases).0.document.representation",
-      "calls": []
+      "calls": [],
+      "probe": "1b82b82a3caf887a5512d7d40df24d9833745be0548cfc123450fbdea157b498",
+      "present": "b50de6b1350fd47e722513687bffee4cd67f4d3a03dc4a826a60ec3765764775"
     },
     {
-      "id": "TV1 non-enumerable symbol-keyed data",
+      "id": "TV1 a non-enumerable symbol-keyed data binding",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "39c7949af57252ad0d8c82c4c53ac0b082b5aeca7167fe5b17d6e3b83ff2c184",
+      "present": "e73fbb4ada9b61ece8c56583192d6c5fdf56a9851115f50d758b323887b6f05d"
     },
     {
-      "id": "TV1 symbol-keyed accessor",
+      "id": "TV1 an enumerable symbol-keyed accessor binding",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "d56946934e71a311916771d17225bde5d64cc3fa4f0e8920cfb7cc544bf3abf8",
+      "present": "95ab1bec0aa1c63a87b80fd4a5d996afa0f818769ce3b5387a2f1e448436d839"
     },
     {
-      "id": "TV1 symbol-keyed below the top level",
+      "id": "TV1 an enumerable symbol-keyed data property below the top level",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "56ec8e3f5c7294042eb1a05f4107a3b8e902d2840cc5ba54dc6ca5e43fd8db3c",
+      "present": "1824f1e3960d391a3fe4e1d8b57c80b202aec5ed8b2b2ddc9130da01d0c9a6ca"
     },
     {
-      "id": "TV1 symbol-keyed after a call",
+      "id": "TV1 an enumerable symbol-keyed data binding filled by a sibling binding's call",
       "readBy": [],
       "path": "",
       "calls": [
         "load"
-      ]
+      ],
+      "probe": "a1ae3b2c7a8d340b6a2d802c200a205dca97e974efd24121cde5120701657d47",
+      "present": "34cb859009c40527f3093efba0bcae7b55c7a60a0e38fa607dba2ba8ef27cfac"
     },
     {
-      "id": "TV2 non-enumerable data",
+      "id": "TV2 a non-enumerable string-keyed data binding",
       "readBy": [
         "TV2"
       ],
       "path": ".:HIDDEN_CASES.0.document.representation",
-      "calls": []
+      "calls": [],
+      "probe": "c2a42831464efe83ee01340be7f744abfc8d8d4f8aa03a2d4e5c3348f9e22315",
+      "present": "7ca646a182dc02a0d54b3d7b2f96b2d8f449409d4c4c4611811c91a75c01b5bb"
     },
     {
-      "id": "TV2 non-enumerable accessor",
+      "id": "TV2 a non-enumerable string-keyed accessor binding",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "640bebd743d4a7a9b5b79a97ce509680065a0f0112cdd11924b4a035c309bd26",
+      "present": "25028d5d49a3439a68face6f74b93d68d9b930067946469cb307301b0d52e8ba"
     },
     {
-      "id": "TV2 non-enumerable below the top level",
+      "id": "TV2 a non-enumerable string-keyed data property below the top level",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "288ce6ba4d419b2d4fe681a5a83d529943dddefa47c91f6f1bb7a16cce2bfc73",
+      "present": "567a0476210b45bbe00ba77a309e3dc712e9964686b1f1b088c26812dc73afa1"
     },
     {
-      "id": "TV2 non-enumerable after a call",
+      "id": "TV2 a non-enumerable string-keyed data binding filled by a sibling binding's call",
       "readBy": [],
       "path": "",
       "calls": [
         "load"
-      ]
+      ],
+      "probe": "ed80fabe28f0ecce64ad34d40f692d74b36c5a437ab2f34fea88e697c7f3b531",
+      "present": "69ef4688b3232928eec6898b89b14419b1d8af2fcde1ec57c3f9023cb81b5328"
     },
     {
-      "id": "TV3 record prototype",
+      "id": "TV3 a record prototype's enumerable string-keyed data",
       "readBy": [
         "TV3"
       ],
       "path": ".:INHERITED_CASES.documents.0.document.representation",
-      "calls": []
+      "calls": [],
+      "probe": "48f99b9df36a3bf38c258dd86d8a6eeb69c836921b5ffb3b0ce03943e32fc7bd",
+      "present": "71a6f95a0e82c972ceef51587a9dcd81d3d8a63d5edbe9adab76b72cc155c065"
     },
     {
-      "id": "TV3 record prototype below the top level",
+      "id": "TV3 a record prototype's enumerable string-keyed data below the top level",
       "readBy": [
         "TV3"
       ],
       "path": ".:HOLDER.inner.documents.0.document.representation",
-      "calls": []
+      "calls": [],
+      "probe": "e7bc90048f8aa9150136c49fb63ca68fb26df981f0ec47f440cfa5b478cc082f",
+      "present": "976d4ddd011886e08672b6790573fff2cc274c9677a65d92b51c07e5f67e76ae"
     },
     {
-      "id": "TV3 array prototype",
+      "id": "TV3 a record prototype's enumerable string-keyed data, its own prototype a record",
+      "readBy": [
+        "TV3"
+      ],
+      "path": ".:INHERITED_CASES.documents.0.document.representation",
+      "calls": [],
+      "probe": "68dde5667d7a68322ccf92a6b7c7206d61800aa551e312d55580c5c87e52a2dc",
+      "present": "75e60a4ef037069b3eb0854a332b8d020cb7acb6faa885e54ba7fb8deea8f0e7"
+    },
+    {
+      "id": "TV3 an array prototype's enumerable string-keyed data",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "67348b9870e74fc8b64a19140fa35f8250945373d83fd44277da8566296ac772",
+      "present": "c2b9c8094d8609d760d5145ebc6c1b8709243f8d5aae81a2b7b977d5dcdab6b9"
     },
     {
-      "id": "TV3 grandparent prototype",
+      "id": "TV3 a grandparent prototype's enumerable string-keyed data",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "8ef0b694bb07cb76ec87a039cdd3bd385f9f07a86a23229988e81f54c7321ebb",
+      "present": "bfeff68ac93d13ba048baab8848dfcb874e5963b7cca08412b932b5da17b8f55"
     },
     {
-      "id": "TV3 non-enumerable prototype data",
+      "id": "TV3 a record prototype's non-enumerable string-keyed data",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "637d9002c7f715e6744ce960201d9f966baa65209f846c8563e9b90b1003f280",
+      "present": "360de7cd1a34a123bb7af5435cfd27a8cbbd685119142071cf78d208acf3251f"
     },
     {
-      "id": "TV3 a prototype's enumerable accessor",
+      "id": "TV3 a record prototype's enumerable string-keyed accessor",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "f0a580e47b76216b37b410cbe18720cb2fc140b5f573438073e18847c86b27d5",
+      "present": "e13ba70444cd59e099635d08f699251b1b00d29032fa8aba30d3cb7657469967"
     },
     {
-      "id": "TV4 function's own data",
+      "id": "TV3 a record prototype's enumerable symbol-keyed data",
+      "readBy": [],
+      "path": "",
+      "calls": [],
+      "probe": "6c08b686db22a2fb9549ad8b33b25121bfafc3f4de0ff80e4546373acafe6684",
+      "present": "169fe6159d148cb588139525bd9d9b5268f301a6c5531b2ef967dd83ecba685c"
+    },
+    {
+      "id": "TV4 a function's own enumerable string-keyed data",
       "readBy": [
         "TV4"
       ],
       "path": ".:loadCases.cases.0.document.representation",
       "calls": [
         "loadCases"
-      ]
+      ],
+      "probe": "47cc4d3b0f6eae0f9279d169d403a00a697c3561ebc929759d02894905b7eca2",
+      "present": "800b332a2b01eaf779835e0fea3e55606f7f4df8fc9bc93c5c65bdcc6c6ca45e"
     },
     {
-      "id": "TV4 function's own data below the top level, the function throwing when called",
+      "id": "TV4 a function's own enumerable string-keyed data below the top level, the function throwing when called",
       "readBy": [
         "TV4"
       ],
       "path": ".:HOLDER.load.cases.0.document.representation",
       "calls": [
         "HOLDER.load, throwing"
-      ]
+      ],
+      "probe": "87b7075a6203b25c2a6e1cc8521b18f0613c88f42d0d1a219d194a5775123b45",
+      "present": "32a5072cb6032efab3a1860d945b2e6bbd274211a757de203894a4d5abf94872"
     },
     {
-      "id": "TV4 function's own data, the function throwing when called",
+      "id": "TV4 a function's own enumerable string-keyed data, the function throwing when called",
       "readBy": [
         "TV4"
       ],
       "path": ".:loadCases.cases.0.document.representation",
       "calls": [
         "loadCases, throwing"
-      ]
+      ],
+      "probe": "191880aefa26071d7d694797c05699c72b199dc5aab49f88bb1d71c6bc1a0fd5",
+      "present": "800b332a2b01eaf779835e0fea3e55606f7f4df8fc9bc93c5c65bdcc6c6ca45e"
     },
     {
-      "id": "TV4 function's non-enumerable own data",
+      "id": "TV4 a function's own enumerable string-keyed data, the function with an own prototype property",
+      "readBy": [
+        "TV4"
+      ],
+      "path": ".:loadCases.cases.0.document.representation",
+      "calls": [
+        "loadCases"
+      ],
+      "probe": "6317e706514760c3be0c82c8bccfa29091000ea7d33cbe785ea8ccb43e740912",
+      "present": "aa734dd00ff8dec443e6cc8b61279b7467abfc81dea5b27bac9c6f57ced198c7"
+    },
+    {
+      "id": "TV4 a function's own non-enumerable string-keyed data",
       "readBy": [],
       "path": "",
       "calls": [
         "loadCases"
-      ]
+      ],
+      "probe": "cd8bdca4dc7294ba1d3797717c2dc1ab24cfadc3a748c3f3b6ada276c2d11277",
+      "present": "246f783357b4d70a3cac28a2c03b84d5b9b486087bbc975f11133b6e09a3d41a"
     },
     {
-      "id": "TV4 function's own enumerable accessor",
+      "id": "TV4 a function's own enumerable string-keyed accessor",
       "readBy": [],
       "path": "",
       "calls": [
         "loadCases"
-      ]
+      ],
+      "probe": "3363081eaf449a3d72185fb8a6f7afab1aeb375328a89c29cf37b89ec27c1573",
+      "present": "e8b01bb4e755f3817594880df165d719647553945760f3df54da998c338b9f68"
     },
     {
-      "id": "TV4 function's return value",
+      "id": "TV4 a function's own enumerable symbol-keyed data",
+      "readBy": [],
+      "path": "",
+      "calls": [
+        "loadCases"
+      ],
+      "probe": "31ba569d63bc3865d724fbd36eea24d2af4a1d59987aa4b521b1325944d6ea1b",
+      "present": "6b28c5d7c376c21b9866fe765941a4a7d07600195e143e44f55da8fe179b5515"
+    },
+    {
+      "id": "TV4 a function's return value",
       "readBy": [],
       "path": "",
       "calls": [
         "resultCases"
-      ]
+      ],
+      "probe": "1526bb23a928257dc266bdae1b57d9d6cb4333c96859f182ab6a70ed208a71f0",
+      "present": "eb53a0ba28fbd79660f0cad1b5d224bbcd34a42422ef96b4ca751824edab32e8"
     },
     {
-      "id": "TV4 function's own data after a call",
+      "id": "TV4 a function's own enumerable string-keyed data filled by the function's call",
       "readBy": [],
       "path": "",
       "calls": [
         "loadCases"
-      ]
+      ],
+      "probe": "bf435211d0568c52eceaa35c5289c25513e1735d1cac0ca283faee243fa19e38",
+      "present": "3c0991f22eedfcbe01ffc9d2f6534212e49c14a91c48b865aabe391f8bf6617e"
     },
     {
-      "id": "TV4 below the top level, a sibling filled when a function is called",
+      "id": "TV4 an enumerable string-keyed data property below the top level filled by a sibling function's call",
       "readBy": [],
       "path": "",
       "calls": [
         "HOLDER.load"
-      ]
+      ],
+      "probe": "3ee75b8b1df3a298fc78d5163a7aae21cc36a47b766561e537b5687081173dbc",
+      "present": "d46edcab142abc2907a299783328c4e34d981d849baca60d27d5f85c07c898df"
     },
     {
-      "id": "TV5 UTF-8 JSON",
+      "id": "TV5 a Uint8Array holding UTF-8 JSON",
       "readBy": [
         "TV5"
       ],
       "path": ".:CASE_BYTES",
-      "calls": []
+      "calls": [],
+      "probe": "6aed98704a0344e7356dfbc406901aa4a3187f0a7c3cb2af1466d2edb4107833",
+      "present": "1ff5375f7ae18d91c242bebabf6027e77ed36cc7b755065e7b5aa0091387c2c1"
     },
     {
-      "id": "TV5 UTF-8 JSON in a Buffer",
+      "id": "TV5 a Buffer holding UTF-8 JSON",
       "readBy": [
         "TV5"
       ],
       "path": ".:CASE_BYTES",
-      "calls": []
+      "calls": [],
+      "probe": "2d92bbe8d76ed1ebcc9047c65795b94b6e29bdf02cadfc62bbb2cce295ce1871",
+      "present": "776d81046adae68eaff1efcf565fa68d2926c21f13ae0964a9d3282b2890499a"
     },
     {
-      "id": "TV5 UTF-8 JSON below the top level",
+      "id": "TV5 a Uint8Array holding UTF-8 JSON below the top level",
       "readBy": [
         "TV5"
       ],
       "path": ".:HOLDER.bytes",
-      "calls": []
+      "calls": [],
+      "probe": "7fbd2c75e99a9e72986ccb05bd6eb02f8a231bb6a674cb3ba67281be28d96d99",
+      "present": "fe82fc6be1b0915c5eac3d5668b294603cf4cb94b0bf3de74fbd5ccd3e9c4138"
     },
     {
-      "id": "TV5 JSON with the dot escape-spelled",
+      "id": "TV5 a Uint8Array holding UTF-8 JSON from byte offset 1 of its buffer",
+      "readBy": [
+        "TV5"
+      ],
+      "path": ".:CASE_BYTES",
+      "calls": [],
+      "probe": "00a043c397aaababada9b0db9d6c145e3b6a0969fa3ced962bf5a2e416637d36",
+      "present": "336431f67c5b90b3afb2270b17fb38c1af45ba952e4eab6feea2cbe4663e3805"
+    },
+    {
+      "id": "TV5 a Uint8Array holding UTF-8 text that is not JSON",
+      "readBy": [
+        "TV5"
+      ],
+      "path": ".:CASE_BYTES",
+      "calls": [],
+      "probe": "d7ce48825484c34db35172df9cf5d7c026d85e1a09f5f3a70446a714f01f14c9",
+      "present": "71d0ebe39db2e809dc02b2473ab2de855dd8382e957a2ebdd52e606adc2e3f17"
+    },
+    {
+      "id": "TV5 a Uint8Array holding JSON with the dot escape-spelled",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "6082d2d5e9ef503f89dbedc509d65a00f5c63b7cdc1287bccc76e738fcbc5821",
+      "present": "cba4c94ecd61c30ef608f05ec05990bbca768e1ae7f464871c2a207ae2835597"
     },
     {
-      "id": "TV5 JSON with the solidus escape-spelled",
+      "id": "TV5 a Uint8Array holding JSON with the solidus escape-spelled",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "0ce6cf273cfdc312d96f297c5a7f1d9a23649746a678fe38879081bc78d92666",
+      "present": "1373b9222a37d65fc645bec9b8be3e71f7cda7241ae38acd8a626e1d2f335f29"
     },
     {
-      "id": "TV5 UTF-16 code units",
+      "id": "TV5 a Uint16Array holding the JSON's UTF-16 code units",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "daf7712380c37f7078fb8a1d8ae593039a93474973d29b3a632b1b4a45049a0e",
+      "present": "830c63842f920df35cb94b2908ceee1a4a78566b78137515dd3e74ace5f64823"
     },
     {
-      "id": "TV5 UTF-8 JSON in a Uint8ClampedArray",
+      "id": "TV5 a Uint8ClampedArray holding UTF-8 JSON",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "c351039a404a6784e9e2d7501295a1438a719786743c0c5f56bcdb244d2b84d4",
+      "present": "e92e53a0730cd9ae81f80204de751c765fab64337d34b747bec4ccf873509a01"
     },
     {
-      "id": "TV6 enumerable accessor",
+      "id": "TV6 an enumerable string-keyed accessor binding",
       "readBy": [
         "TV6"
       ],
       "path": ".:CASES.0.document.representation",
-      "calls": []
+      "calls": [],
+      "probe": "274c3abae2e8bedc3696686ac42477915e79e111dda3a63ef5e37c7fefdfc3f9",
+      "present": "6f80d9e36cbc1c45c87447b137fbc97de9aab5e31c4cefa25f35d7552c8e6f70"
     },
     {
-      "id": "TV6 accessor below the top level",
+      "id": "TV6 an enumerable string-keyed accessor property below the top level",
       "readBy": [],
       "path": "",
-      "calls": []
+      "calls": [],
+      "probe": "a77bd811e04e7e987f6e852e5a71cda34d6b0368345d8de59715a9f7651e5f0b",
+      "present": "c3660a24c7400deb4edea02fc5a679efde929ba898d2a721b2ab21c5dff988fc"
     },
     {
-      "id": "TV6 accessor after a call",
+      "id": "TV6 an enumerable string-keyed accessor binding filled by a sibling binding's call",
       "readBy": [],
       "path": "",
       "calls": [
         "load"
-      ]
+      ],
+      "probe": "b093621a28b1c4e33a089246ea75497f852643820dadbe77b590206e3bc340b0",
+      "present": "e84e392ed9aab924be62ea901052af0a2233dcc36d11bcbd2b1bfc87a86762ef"
     }
   ],
   "sites": [
@@ -315,10 +443,12 @@
         "TV6"
       ],
       "readBy": [],
-      "path": ""
+      "path": "",
+      "probe": "7aadbe07d6c9148618fcc9b9b541b836f921e6fae3c1b30b41c58465a42e7a80",
+      "present": "f759129b76cf86eb03dc4ed558843e7f835c0e2477671b3a5743da916b703432"
     },
     {
-      "id": "an object Proxy below the top level",
+      "id": "an object Proxy in an enumerable string-keyed data property below the top level",
       "throwBy": [
         "plain",
         "TV1",
@@ -329,7 +459,9 @@
         "TV6"
       ],
       "readBy": [],
-      "path": ""
+      "path": "",
+      "probe": "e4b66971af5161dfec25fa3f5eb773417f8b8004cfea8e90912a54149f766b22",
+      "present": "bb8388fe1cb3e3c7b5da7be22996a4744863a76bbd89777c0c02ff172ea1c8e1"
     },
     {
       "id": "a function-target Proxy in an enumerable string-keyed data binding",
@@ -337,7 +469,9 @@
         "TV4"
       ],
       "readBy": [],
-      "path": ""
+      "path": "",
+      "probe": "01bc18f4844366c5e44553275c690ea6e5c7e44013b5a61d54b056c2277b4714",
+      "present": "b4f190f922d16498a8afb4b435cd9d1394c992416fac6987741babc26ec73a07"
     },
     {
       "id": "an object Proxy in an enumerable symbol-keyed data binding",
@@ -345,31 +479,79 @@
         "TV1"
       ],
       "readBy": [],
-      "path": ""
+      "path": "",
+      "probe": "795cb9846ffe37f6aab9a011d75a814f529ab3e31f0e20c642b9988c211c8b9b",
+      "present": "d3a3e204adef8e0af08dbb5421169c353af043a9809b0f987dc2c664552a8133"
     },
     {
-      "id": "an object Proxy in a non-enumerable data binding",
+      "id": "an object Proxy in a non-enumerable string-keyed data binding",
       "throwBy": [
         "TV2"
       ],
       "readBy": [],
-      "path": ""
+      "path": "",
+      "probe": "60f4a73d2de23feaac0a147838a8cd77d89a44ffbd2e04046d03e7cf4de5c9b1",
+      "present": "4179d60925fde176998f7b3259410514ce8366000d354a7253fe60e6727b047d"
     },
     {
-      "id": "an object Proxy behind an enumerable accessor binding",
+      "id": "an object Proxy behind an enumerable string-keyed accessor binding",
       "throwBy": [
         "TV6"
       ],
       "readBy": [],
-      "path": ""
+      "path": "",
+      "probe": "fa50ba6da342de422fd8b99ee126af5167c363460a2109954f0617d79279cb41",
+      "present": "f8aaece2579ede9dddb4656f464f08215752b05606de9894f432ab09ec411117"
     },
     {
-      "id": "a record's prototype that is a Proxy, its target holding the planted document",
+      "id": "a record in an enumerable string-keyed data binding whose prototype is an object Proxy, its target holding the planted document",
       "throwBy": [],
       "readBy": [
         "TV3"
       ],
-      "path": ".:INHERITED_CASES.documents.0.document.representation"
+      "path": ".:INHERITED_CASES.documents.0.document.representation",
+      "probe": "1c40e2c3abfce065e9ad1f98f171fc834ae4df6f28abc1a34a8acfad1c9d9e3d",
+      "present": "8c193c46be7dc094e60e334f8fae1a0ad20c4e8bb3fef8222f5ab9095f9ca281"
+    },
+    {
+      "id": "an object Proxy in a non-enumerable symbol-keyed data binding",
+      "throwBy": [],
+      "readBy": [],
+      "path": "",
+      "probe": "7e070c59445f8fa599da18e055e1f305e950adf27c656481572b2db84c5b7e21",
+      "present": "e73fbb4ada9b61ece8c56583192d6c5fdf56a9851115f50d758b323887b6f05d"
+    },
+    {
+      "id": "an object Proxy behind an enumerable symbol-keyed accessor binding",
+      "throwBy": [],
+      "readBy": [],
+      "path": "",
+      "probe": "3d9996c6acea0937306eb7f1a61da069f8f00b7fc9b555d58b46a80ea78bb1c1",
+      "present": "95ab1bec0aa1c63a87b80fd4a5d996afa0f818769ce3b5387a2f1e448436d839"
+    },
+    {
+      "id": "an object Proxy in a non-enumerable string-keyed data property below the top level",
+      "throwBy": [],
+      "readBy": [],
+      "path": "",
+      "probe": "e55f3dd93de187f84c2889a551082cbea665619487e0cb573df34ffa59368b92",
+      "present": "128c973547ac0f395d2c235f81556c477dcf3cf2438771a2bd7dbf1dcfad1361"
+    },
+    {
+      "id": "an object Proxy in an enumerable symbol-keyed data property below the top level",
+      "throwBy": [],
+      "readBy": [],
+      "path": "",
+      "probe": "f400372646ea25acf9f8d5b730ef3f7ff45d4f9d358cef95f8df201102d077a4",
+      "present": "1824f1e3960d391a3fe4e1d8b57c80b202aec5ed8b2b2ddc9130da01d0c9a6ca"
+    },
+    {
+      "id": "an object Proxy behind an enumerable string-keyed accessor property below the top level",
+      "throwBy": [],
+      "readBy": [],
+      "path": "",
+      "probe": "e5e158fb39416357888a11c0a8501669d359b8af0fc6593fc4fbc1912765b715",
+      "present": "5d4c4d96ad7bb9422a9f5ffe427b691ff36338144d58f7dadddd6ee974afdbba"
     }
   ],
   "pages": [
@@ -556,6 +738,152 @@
       "leads": 1,
       "forms": [],
       "digest": "3a62d2b82416a9faf92deaa4ee4258d0bede3716c607e27d15c9aa9467c10461"
+    },
+    {
+      "id": "P12 a form joined to the next by and inside the second clause",
+      "leads": 1,
+      "forms": [
+        "a function call",
+        "an accessor",
+        "a non-enumerable",
+        "symbol-keyed",
+        "inherited property",
+        "a function's own property",
+        "documents in a WeakMap",
+        "a WeakSet",
+        "a class instance's private field and a Proxy's target",
+        "a Promise's resolution",
+        "bytes (a typed array holding a document's JSON)"
+      ],
+      "digest": "1fb7fb3b309e51fe3202e107a24811a70c06d0c6c572ee6501262f4716a5dbc6"
+    }
+  ],
+  "casePages": [
+    {
+      "id": "Q1 the rows as written",
+      "rows": 2,
+      "shared": 2,
+      "digest": "3c0c111cc4b5da4fdbb6bce037c36e5bd262e30f6987ff17c849d98b1286183b"
+    },
+    {
+      "id": "Q2 row one given row two's case",
+      "rows": 2,
+      "shared": 0,
+      "digest": "a5a9c7603f7d585bd03969ee547ed7dc108c12a3fdac41298cb4e7dee6b46e18"
+    },
+    {
+      "id": "Q3 spacing and a comment inside an initializer",
+      "rows": 2,
+      "shared": 2,
+      "digest": "e8b956ed099a22dacad252ee775d76b101f9d1c156979df699e03b92e9c6d858"
+    },
+    {
+      "id": "Q4 a property assignment's name and a name after a dot",
+      "rows": 2,
+      "shared": 0,
+      "digest": "1febcfaf61433bda7b01001506641ca80b35534b9325f98ccda993f78277b9b9"
+    },
+    {
+      "id": "Q5 a shorthand property in a row",
+      "rows": 2,
+      "shared": 1,
+      "digest": "77953c06e273a2c5ae9447b9e203a61505a118ed4c3f11f0ea3015db94b4b30b"
+    },
+    {
+      "id": "Q6 a property a row lacks and an id that is not a string literal",
+      "rows": 3,
+      "shared": 2,
+      "digest": "88c00c6f5fe7bd6289cbd081c5d93be02a214b7a02e6031b1ea5497a4c1be707"
+    },
+    {
+      "id": "Q7 the list declared twice",
+      "rows": 0,
+      "shared": 0,
+      "digest": "425abdcb3d6f007b727c03dfce5501cfc6c6cb5de97bbe99f3e69ba0b987ff93"
+    },
+    {
+      "id": "Q8 the list declared only inside a function",
+      "rows": 0,
+      "shared": 0,
+      "digest": "96ae1a1140fdf797402bea1b922f13f223ca2d50a57e655e872166898eed4a26"
+    },
+    {
+      "id": "Q9 a multi-line initializer and shared declarations out of name order",
+      "rows": 2,
+      "shared": 3,
+      "digest": "fdf6946867c3f80b54af49ca4855ed0b42bdfe72fe3d092d43a89fbf0fe8e65e"
+    },
+    {
+      "id": "Q10 a class a row names, naming a const",
+      "rows": 2,
+      "shared": 2,
+      "digest": "2a44d48841b90a9d0dbb8dde55baf5b164f187702bcebd0650cbe2f547ab6ea9"
+    }
+  ],
+  "shared": [
+    {
+      "name": "REPRESENTATION",
+      "digest": "fe248dc3fda135d4a9f1fe164066e6e7c43304688814560913cc2a955e3af3fa"
+    },
+    {
+      "name": "PLANTED_DOCUMENT",
+      "digest": "d2a6d21c21b84462b23d8f1ba586095cb6430d16ec08696f5a94c7697bce75a2"
+    },
+    {
+      "name": "planted",
+      "digest": "1d5591e173983def5140d3501782f0240d71267c24da7fa04537cd1327c073b3"
+    },
+    {
+      "name": "ownData",
+      "digest": "8632639b66ed5861c89eb5a9796750230ef2b7ea7c669f5c87e67cd095f63a58"
+    },
+    {
+      "name": "ownGetter",
+      "digest": "92448418faca5b9386fd9d30c9100e2363680f4bc9ba8fafef579f08a45f65ec"
+    },
+    {
+      "name": "symbolsOf",
+      "digest": "6e8f48e2889b9c11d51388774a5dfdbad3f4be7b2254b8bf17301e8aa93a13b3"
+    },
+    {
+      "name": "prototypeOf",
+      "digest": "531baf946b5537a60bde8e8cdc046cd66a892772bcff083bbde8dbb46e253d7d"
+    },
+    {
+      "name": "isEmptyArray",
+      "digest": "a65c04f9625cd0a25fd846d41bf57d0ff625fbf1bb938d0aef65374e3631da0c"
+    },
+    {
+      "name": "callOwn",
+      "digest": "508356953334fc2f59730f64c13d9c846b072d16c7d4ffbf5aaf0e4d176edc8c"
+    },
+    {
+      "name": "plainBytesText",
+      "digest": "f26cc43fd5f617c19720ffe370dfd5ec5727b1e866edf913fb99131968678b46"
+    },
+    {
+      "name": "parsedIf",
+      "digest": "7dae8fdb4fdfd91c742086ecab5e8616f91edbc1e8cd234463dd021bf802aab3"
+    },
+    {
+      "name": "parsesAsJson",
+      "digest": "1d3ae062d6acd9b2dfbd8c6b43bb5712b67a9b9ba07d8e81aba8c77fb7fcdbeb"
+    },
+    {
+      "name": "bytesOf",
+      "digest": "e32fe14f74153d679a9287785aab7b3a7d2952c997523082cd43e25754cd0cb5"
+    },
+    {
+      "name": "recorded",
+      "digest": "667c12abadda25ecf3af3d3a8692b8595a9b38f343ee15d0aaaeaa448b50d7df"
+    },
+    {
+      "name": "afterLoad",
+      "digest": "c5a5ffb9e9e10031cebb9a3fb7c30acc2d9055633591ebc7917db7ba96d36d97"
+    },
+    {
+      "name": "presentAfterLoad",
+      "digest": "70232d6a522a650748c25beb40f7a9c122e8c4f479a412f4f8955a901c08d4ea"
     }
   ]
 }
