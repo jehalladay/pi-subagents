@@ -144,6 +144,21 @@
               "acronymRun": [
                 "src/plant.ts:1 lexeme edc"
               ],
+              "caseChanges": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "acronymRuns": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "acronymPlurals": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "oneCapitalRun": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "longRun": [
+                "src/plant.ts:1 lexeme edc"
+              ],
               "string": [
                 "src/plant.ts:1 lexeme evidencedirected"
               ],
@@ -167,6 +182,12 @@
                 "src/plant.ts:1 lexeme edc"
               ],
               "invisible": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "invisibles": [
+                "src/plant.ts:1 lexeme edc"
+              ],
+              "precomposed": [
                 "src/plant.ts:1 lexeme edc"
               ],
               "fullwidth": [
@@ -209,6 +230,50 @@
               ],
               "edc2_assembler": [
                 "edc2",
+                "assembler"
+              ],
+              "parseXmlEdcAssembler": [
+                "parse",
+                "xml",
+                "edc",
+                "assembler"
+              ],
+              "XMLParserEDCAssembler": [
+                "xml",
+                "parser",
+                "edc",
+                "assembler"
+              ],
+              "XMLsEDCs": [
+                "xml",
+                "s",
+                "edc",
+                "s"
+              ],
+              "IEdcAssembler": [
+                "i",
+                "edc",
+                "assembler"
+              ],
+              "HTTPSEdcAssembler": [
+                "https",
+                "edc",
+                "assembler"
+              ],
+              "IDs": [
+                "id",
+                "s"
+              ],
+              "EDCs2": [
+                "edc",
+                "s2"
+              ],
+              "castAs": [
+                "cast",
+                "as"
+              ],
+              "EdcAssembler()": [
+                "edc",
                 "assembler"
               ]
             },
@@ -1724,6 +1789,10 @@
               "demand",
               "precision",
               "precision",
+              "demand",
+              "demand",
+              "demand",
+              "demand",
               "demand",
               "demand",
               "demand",

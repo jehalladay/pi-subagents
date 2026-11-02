@@ -21,6 +21,13 @@
  * hold it): the restatement with claims equal to pins, in its pin form - A2 reads the acronymRun route, a module exporting
  * EDCAssembler, and A2's words witness holds the spellings READINGS names for A2 and R-GLUED-STEM's unread members to their exact
  * words.
+ * CUT #8 (orchestrator ruling R-B335, 2026-11-02, on refusal #7's U1-U4: the restated WORDS clause claimed each case change, each
+ * acronym run, each plural and acronym runs of any length at pins that held a text's first change, first run and first plural
+ * and runs of two and three capitals only): the restatement with claims equal to pins, in its pin form - A2's words witness, A2's
+ * routes and B4's subjects hold WORDS at every case change, acronym run and plural of one text (the gate's paired-witness
+ * spellings parseXmlEdcAssembler, XMLParserEDCAssembler, XMLsEDCs and "Use the parseXml contextDemand."), at acronym runs of one
+ * and five capitals before the last (IEdcAssembler, IContextDemand, HTTPSEdcAssembler), at every format control of one text, at
+ * NFKC's precomposed letter and at the plural and separator edges WORDS names; WORDS now names the digit break (refusal #7's F2).
  *
  * THE PINNED SET (the claim form): this file's 11 cases in registration order - the judged set (the frozen shape, the roster, the
  * export's title and owner filing, the role places, the producer line and the residual names, each observed equal); A1, A2, B1,
@@ -46,13 +53,31 @@
  * reads MARKER by its "not" and, with the marker removed, a finding of all three families: it is the vocabulary's producer anchor.
  *
  * READINGS
- * - WORDS: NFKC with format controls, combining marks and enclosing marks removed, an acronym's plural s split off, a break at
- *   each lower-to-upper case change and before the last capital of an acronym run, lower case, the runs of a-z and 0-9 (B4's
- *   subjects: contextDemand reads context demand, context_precision and CONTEXT-PRECISION split at their separators, a zero-width
- *   space before the subject and inside a family word, the subject in fullwidth letters, a combining low line and an enclosing
- *   circle inside a family word, each read as the plain words; A2's routes: parseEDC reads parse edc, EDCs reads edc s,
- *   EdcAssembler reads edc assembler, and the acronymRun route's EDCAssembler reads edc assembler; R-GLUED-STEM's members; A2's
- *   words witness holds these four spellings and R-GLUED-STEM's three unread members to their exact words).
+ * - WORDS (each rule at every place it matches in a text, never at its first match only): NFKC, so a fullwidth letter folds and a
+ *   precomposed letter stays one letter outside a-z (an e with an acute accent parts the words around it); every format control,
+ *   combining mark and enclosing mark removed; an acronym's plural s split off - an acronym is a run of two or more capitals, and
+ *   its s splits off where no lower-case letter follows it (at the text's end, before a capital, before a digit), so a single
+ *   capital's s stays; a break at each change from a lower-case letter or a digit to a capital; a break before the last capital
+ *   of an acronym run - one or more capitals, then a capital and a lower-case letter, whatever the number of capitals before the
+ *   last - so a capital that a digit follows ends no run; lower case; the runs of a-z and 0-9, with no empty word at a separator.
+ *   A2's words witness holds each spelling to its exact words: parseEDC (parse edc), EDCs (edc s), EdcAssembler (edc assembler),
+ *   EDCAssembler (edc assembler: three capitals before the last, and an s that a lower-case letter follows stays),
+ *   parseXmlEdcAssembler (parse xml edc assembler: every case change), XMLParserEDCAssembler (xml parser edc assembler: every
+ *   acronym run), XMLsEDCs (xml s edc s: every plural, an s before a capital), IEdcAssembler (i edc assembler: one capital before
+ *   the last), HTTPSEdcAssembler (https edc assembler: five), IDs (id s: an acronym of two capitals), EDCs2 (edc s2: an s before a
+ *   digit), castAs (cast as: a single capital's s stays), EdcAssembler() (edc assembler: no empty word), and R-GLUED-STEM's three
+ *   unread members, EDCv2Assembler (ed cv2 assembler: two capitals before the last, and the digit break) and EDC2Assembler and
+ *   edc2_assembler (edc2 assembler: the digit break, and no run ends at a capital that a digit follows). A2's routes, each a
+ *   module whose names or strings name the edc stem through these words: parseEDC and EdcAssembler (camel), EDCs
+ *   (acronymPlural), the acronymRun route's EDCAssembler, the cut #7 refusal's routes caseChanges (parseXmlEdcAssembler),
+ *   acronymRuns (XMLParserEDCAssembler), acronymPlurals (XMLsEDCs), oneCapitalRun (IEdcAssembler) and longRun
+ *   (HTTPSEdcAssembler), invisible and invisibles (e, d and c with one and with two zero-width spaces), fullwidth (a fullwidth E
+ *   before DC) and precomposed (edc, then an e with an acute accent). B4's subjects, each a demand or precision finding read as
+ *   the plain words: contextDemand, context_precision and CONTEXT-PRECISION split at their separators, a zero-width space before
+ *   the subject and inside a family word, two in one sentence (inside both), the subject in fullwidth letters, a combining low
+ *   line and an enclosing circle inside a family word, the subject and a family word parted by an e with an acute accent, and the
+ *   gate's two prompt spellings, "Use the parseXml contextDemand." (its second case change) and IContextDemand (its run of one
+ *   capital).
  * - SENTENCES: every text is cut into sentences after ".", "!", "?" or ";" before white space or the line end, at a blank line,
  *   around a table row and a heading line and before a list item - a bullet, or a number with "." or ")" (a sentence wrapped over
  *   lines stays one); each is judged alone (B4's cuts witness: a ".", a "?", a "!" and a ";" before a space, a wrapped line kept
@@ -927,6 +952,8 @@ const INVISIBLE = String.fromCodePoint(0x200b);
 /** A combining mark NFKC composes with no letter (a combining low line) and an enclosing mark (a combining enclosing circle). */
 const COMBINING_LOW_LINE = String.fromCodePoint(0x0332);
 const ENCLOSING_CIRCLE = String.fromCodePoint(0x20dd);
+/** A precomposed letter (e with an acute accent): NFKC keeps it one letter outside a-z, so it parts the words around it. */
+const PRECOMPOSED_E = String.fromCodePoint(0x00e9);
 /** A word in fullwidth letters (each ASCII letter moved to its fullwidth form), which NFKC folds back. */
 const fullwidth = (word: string): string => [...word].map(letter => String.fromCodePoint((letter.codePointAt(0) ?? 0) + 0xfee0)).join("");
 /** A template placeholder opener for planted code, spelled in two parts so no literal of this file holds one. */
@@ -1205,7 +1232,7 @@ const DECODED_PLANTS: Readonly<Record<string, string>> = {
 /** B4's witness over a bead row: the demand reading itself and its quiet rows; only R-SYNONYM reads the row, through its owner
  * filing block. */
 function demandWitness(row: BeadRow): { [key: string]: Json } {
-  const subjects = ["The context demand rides in the prompt.", "Contexts demand a tool call.", "contextDemand", "context_precision", "CONTEXT-PRECISION", `The ${INVISIBLE}context demand rides in the prompt.`, `The context dem${INVISIBLE}and rides in the prompt.`, `The ${fullwidth("CONTEXT")} demand rides in the prompt.`, `The context dema${COMBINING_LOW_LINE}nd rides in the prompt.`, `The context dema${ENCLOSING_CIRCLE}nd rides in the prompt.`].map(verdict);
+  const subjects = ["The context demand rides in the prompt.", "Contexts demand a tool call.", "contextDemand", "context_precision", "CONTEXT-PRECISION", `The ${INVISIBLE}context demand rides in the prompt.`, `The context dem${INVISIBLE}and rides in the prompt.`, `The ${fullwidth("CONTEXT")} demand rides in the prompt.`, `The context dema${COMBINING_LOW_LINE}nd rides in the prompt.`, `The context dema${ENCLOSING_CIRCLE}nd rides in the prompt.`, `The con${INVISIBLE}text dem${INVISIBLE}and rides in the prompt.`, "Use the parseXml contextDemand.", "IContextDemand", `The context${PRECOMPOSED_E}demand rides in the prompt.`].map(verdict);
   const families = [...VOCABULARY.families.demand, ...VOCABULARY.families.precision].map(word => verdict(`The context ${word} rides in the prompt.`));
   const carrier = ["Send a projection requirement.", "projectionRequirements", "Projection-Requirement", "a projection requirement for the render"].map(verdict);
   const markers = [...VOCABULARY.markers.map(word => verdict(`The context demand is ${word} a tool call.`)), verdict("The context demand isn't a tool call."), verdict(`The context demand isn${String.fromCodePoint(0x2019)}t a tool call.`)];
@@ -1265,6 +1292,13 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       camel: consumerOfCode("parseEDC();\nnew EdcAssembler();\n"),
       // The cut #6 refusal, U1: EDCAssembler names its stem through WORDS' break before the last capital of an acronym run.
       acronymRun: consumerOfCode("export const EDCAssembler = 1;\n"),
+      // The cut #7 refusal, U1-U4 (R-B335): WORDS at every case change, every acronym run and every plural of one text and at
+      // an acronym run of one capital - each the gate's paired-witness spelling, a module exporting it - and at a run of five.
+      caseChanges: consumerOfCode("export const parseXmlEdcAssembler = 1;\n"),
+      acronymRuns: consumerOfCode("export const XMLParserEDCAssembler = 1;\n"),
+      acronymPlurals: consumerOfCode("export const XMLsEDCs = 1;\n"),
+      oneCapitalRun: consumerOfCode("export const IEdcAssembler = 1;\n"),
+      longRun: consumerOfCode("export const HTTPSEdcAssembler = 1;\n"),
       string: consumerOfCode('export const key = "evidence-directed";\n'),
       joinedForms: consumerOfCode("export const EvidenceDirectedView = 1;\nexport const snake = 'evidence_directed';\n"),
       specifier: consumerOfCode('import { assemble } from "@plant/edc";\n'),
@@ -1272,6 +1306,10 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       template: consumerOfCode(`export const text = \`evidence directed ${HOLE}x}\`;\n`),
       member: consumerOfCode("export const options = { context: { edc: true } };\n"),
       invisible: consumerOfCode(`export const key = "e${INVISIBLE}dc";\n`),
+      // WORDS removes every format control of a text, not its first only (R-B335's every-reading form).
+      invisibles: consumerOfCode(`export const key = "e${INVISIBLE}d${INVISIBLE}c";\n`),
+      // NFKC keeps a precomposed letter whole: the e with an acute accent after the stem parts it off.
+      precomposed: consumerOfCode(`export const key = "edc${PRECOMPOSED_E}";\n`),
       fullwidth: consumerOfCode(`export const key = "${FULLWIDTH_E}DC";\n`),
       javascript: consumerOfCode("module.exports = { edc: 1 };\n", "src/plant.cjs"),
       manifest: consumerDependencies('{"dependencies":{"edc-sdk":"1.0.0"},"devDependencies":{"x":"file:vendor/evidence-directed-0.1.0.tgz"},"optionalDependencies":{"EvidenceDirected":"*"},"peerDependencies":{"y":"^1"}}'),
@@ -1294,8 +1332,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       },
     };
     // The cut #6 refusal, U1: WORDS at the spellings READINGS names for A2 and R-GLUED-STEM's unread members, each read to its
-    // exact words.
-    const spelled = Object.fromEntries(["parseEDC", "EDCs", "EdcAssembler", "EDCAssembler", "EDCv2Assembler", "EDC2Assembler", "edc2_assembler"].map(text => [text, words(text)]));
+    // exact words; the cut #7 refusal, U1-U4 (R-B335): every case change, acronym run and plural of one text, acronym runs of one
+    // and five capitals, and the plural and separator edges the WORDS clause names.
+    const spelled = Object.fromEntries(["parseEDC", "EDCs", "EdcAssembler", "EDCAssembler", "EDCv2Assembler", "EDC2Assembler", "edc2_assembler", "parseXmlEdcAssembler", "XMLParserEDCAssembler", "XMLsEDCs", "IEdcAssembler", "HTTPSEdcAssembler", "IDs", "EDCs2", "castAs", "EdcAssembler()"].map(text => [text, words(text)]));
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "A2").map(residual => residual.id));
     return { stems: { word: [...VOCABULARY.stems.word], joined: [...VOCABULARY.stems.joined] }, routes, words: spelled, nearMisses, quiet };
   },
