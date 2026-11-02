@@ -91,7 +91,7 @@
       "\"rf.bat x.COM y\""
      ],
      "reading": [
-      "rf.bat x.COM y"
+      "[\"rf.bat\",\"x.COM\",\"y\"]"
      ]
     },
     {
@@ -103,9 +103,9 @@
       "\"z.exe.bak y.cmd.txt\""
      ],
      "reading": [
-      "rf.bat a.BAT b.Bat c.com d.COM e.Com",
-      "rf a b c d e",
-      "z.exe.bak y.cmd.txt"
+      "[\"rf.bat\",\"a.BAT\",\"b.Bat\",\"c.com\",\"d.COM\",\"e.Com\"]",
+      "[\"rf\",\"a\",\"b\",\"c\",\"d\",\"e\"]",
+      "[\"z.exe.bak\",\"y.cmd.txt\"]"
      ]
     }
    ]
@@ -225,7 +225,7 @@
       "c ? \"a\" : p"
      ],
      "reading": [
-      "\"unresolved\""
+      "undefined"
      ]
     },
     {
@@ -239,10 +239,10 @@
       "c ? \"a\" : \"b\""
      ],
      "reading": [
-      "\"unresolved\"",
-      "\"unresolved\"",
-      "\"unresolved\"",
-      "\"unresolved\"",
+      "undefined",
+      "undefined",
+      "undefined",
+      "undefined",
       "[\"a\",\"b\"]"
      ]
     }
@@ -259,7 +259,7 @@
       "c ? \"rf x\" : p"
      ],
      "reading": [
-      "unresolved"
+      "undefined"
      ]
     },
     {
@@ -273,11 +273,11 @@
       "c ? \"rf x\" : \"rf y\""
      ],
      "reading": [
-      "unresolved",
-      "unresolved",
-      "unresolved",
-      "unresolved",
-      "rf x y"
+      "undefined",
+      "undefined",
+      "undefined",
+      "undefined",
+      "[\"rf\",\"x\",\"y\"]"
      ]
     }
    ]
@@ -331,6 +331,42 @@
       "spawn:<opaque c ? \"git\" : \" \">",
       "spawn:<opaque \"\">"
      ]
+    },
+    {
+     "pin": "PG-WORDS",
+     "page": "86191cbe76d28b2b",
+     "forms": [
+      "spawn:c ? \"git log\" : \"git status\"",
+      "spawn:c ? \"git x\" : \"rf y\"",
+      "spawn:c ? \"rf x\" : \"git y\"",
+      "spawn:c ? \"Zed x\" : \"apt y\"",
+      "spawn:c ? \"/usr/bin/git x\" : \"C:\\\\tools\\\\rf.cmd y\""
+     ],
+     "reading": [
+      "spawn:git",
+      "spawn:git|rf",
+      "spawn:git|rf",
+      "spawn:Zed|apt",
+      "spawn:git|rf"
+     ]
+    },
+    {
+     "pin": "PG-WHITESPACE",
+     "page": "ba323ea4d1822eb3",
+     "forms": [
+      "spawn:c ? \"git\" : p",
+      "spawn:c ? \"git\" : p",
+      "spawn:c ? \"git\" : p",
+      "spawn:c ? \"git\" : p",
+      "spawn:c ? \"git log\" : p"
+     ],
+     "reading": [
+      "spawn:<opaque c ? \"git\" : p>",
+      "spawn:<opaque c ? \"git\" : p>",
+      "spawn:<opaque c ? \"git\" : p>",
+      "spawn:<opaque c ? \"git\" : p>",
+      "spawn:<opaque c ? \"git log\" : p>"
+     ]
     }
    ]
   },
@@ -376,7 +412,7 @@
      ],
      "reading": [
       "[\"a\",\"b\"]",
-      "\"unresolved\"",
+      "undefined",
       "[\"only\"]"
      ]
     },
@@ -390,10 +426,10 @@
       "p ?? \"rf\""
      ],
      "reading": [
-      "rf context render tee log out in bg q d b",
-      "rf x",
-      "rf x y",
-      "unresolved"
+      "[\"rf\",\"context\",\"render\",\"tee\",\"log\",\"out\",\"in\",\"bg\",\"q\",\"d\",\"b\"]",
+      "[\"rf\",\"x\"]",
+      "[\"rf\",\"x\",\"y\"]",
+      "undefined"
      ]
     }
    ]

@@ -1,32 +1,43 @@
 /**
- * wb-jwc.13 binding text reader sub-form census: what test/helpers/rf-binding-text-reader.ts reads on the 37 planted pages
- * below, the sub-forms that wb-jwc.10's refusals #3 and #4 name. wb-jwc.13 is the rule-19 dependency-inversion child of
- * wb-jwc.10: ruling R-B233 filed it at refusal #3 (O:1611) with that refusal's members, and ruling R-B263 folded refusal #4's
- * members (O:1685) into its notes. The reader is wb-jwc.10's FINAL cut #4 reader, its code moved byte for byte (the helper's
- * header names the lines). wb-jwc.10's census, roster and claim parts are not on trunk and are neither added nor edited
- * here; wb-jwc.10 stays parked until this lands, and its later re-cut can import the reader.
+ * wb-jwc.13 binding text reader sub-form census: what test/helpers/rf-binding-text-reader.ts reads on the 39 pins below (37
+ * pages; the twin tw-coll.ts is read by three pins), the sub-forms that wb-jwc.10's refusals #3 and #4 name. wb-jwc.13 is the
+ * rule-19 dependency-inversion child of wb-jwc.10: ruling R-B233 filed it at refusal #3 (O:1611) with that refusal's members,
+ * and ruling R-B263 folded refusal #4's members (O:1685) into its notes. The reader is wb-jwc.10's FINAL cut #4 reader, its
+ * code moved byte for byte (the helper's header names the lines). wb-jwc.10's census, roster and claim parts are not on trunk
+ * and are neither added nor edited here; wb-jwc.10 stays parked until this lands, and its later re-cut can import the reader.
  *
- * THE PINNED READER SET (this file; 40 cases). One case per pin, registered in ROWS order as `<pin id> reads as pinned`
+ * CUT #2 (wb-jwc.13's refusal #1, O:1768; the helper is unchanged). U1: a words pin now reads words(x) as JSON, its words in
+ * order, and an undefined words(x) as the bare word undefined, which no JSON text is; so one joined element in place of six
+ * or two words (L2-W1) and the list ["unresolved"] in place of undefined (L2-W2) each read apart from the pins, and an exact
+ * pin reads exact(x) the same way. U2: the sentence that called c and d declared wherever a page uses them is gone; R4-R668
+ * states that its two pages use c with no declaration. The cut also pins the words of R4-U1c that cut #1 planted only with
+ * one-word texts and single spaces (PG-WORDS, PG-WHITESPACE), and names NOT CLAIMED each further sub-form this cut's one-edit
+ * reader mutants leave unpinned.
+ *
+ * THE PINNED READER SET (this file; 42 cases). One case per pin, registered in ROWS order as `<pin id> reads as pinned`
  * inside `<row id>: <row label>`, then SHAPE, ANCHOR and ROSTER. For each pin the assertion target is the pin's probe over
  * the pin's page, read by bindingTextReader at the pin's path, and the observed result is the pin's reading, exactly and in
- * order (toEqual): texts - for each probe(x) call in source order, x's alternatives rendered (a text as its JSON string, an
- * opaque part as <opaque LABEL>, joined by " | "); exact - exact(x) as JSON, or "unresolved"; words - words(x) joined by
- * single spaces, or unresolved; programs - for each call of spawn, spawnSync, execFile, execFileSync, exec, execSync or fork,
- * in source order, `<callee>:` and program() of its first argument; registrations - registrations(); registration - each
- * object literal's registration() entries, in source order, joined by ", ". Every pin case passes on the moved reader. A
- * page named tw-* is the gate's twin file of that name byte for byte; c and d are declared booleans and p a string
- * parameter wherever a page uses them.
+ * order (toEqual). Each probe reads the calls it locates, in source order: texts - for each probe(x), rendered() of x's
+ * alternatives (a text as its JSON string, an opaque part as <opaque LABEL>; every texts pin here reads one alternative);
+ * exact - for each probe(x), exact(x) as JSON, or the bare word undefined when exact(x) is undefined; words - for each
+ * probe(x), words(x) as JSON, or the bare word undefined when words(x) is undefined; programs - for each call of spawn,
+ * spawnSync, execFile, execFileSync, exec, execSync or fork, `<callee>:` and program() of its first argument; registrations
+ * - registrations(); registration - for each object literal whose registration() is not undefined, its registration()
+ * entries joined by ", ". Every pin case passes on the moved reader. A page named tw-* is the gate's twin file of that name
+ * byte for byte (ANCHOR holds each twin's digest to its record).
  *
- * CLAIMS (each claims exactly the pages it names and the readings its pins hold; the falsifiers are its row's pin cases).
+ * CLAIMS (each names its pages and the readings its pins hold; the falsifiers are its row's pin cases).
  * - R3-U1a (refusal #3 member n03): the module's const X, X = "a" probed at the top level, reads <opaque X:eval> when the
  *   module's one eval call is eval("1", "2") as a const's initializer with its callee through an as cast (n03-ts, twin
  *   tw-n03.ts) or as an expression statement in a .js module (n03-js, twin tw-n03.js), or eval(), eval("1"),
  *   eval("1", "2") or eval("1", "2", "3") as an expression statement in a .ts module (EV-ZERO, EV-ONE, EV-TWO, EV-THREE);
  *   with no eval call it reads "a" (EV-NONE). Falsifier named by the record: n03 (a call counted only with at most one
  *   argument).
- * - R3-U1b (member n23): words() reads tw-n23.ts's probe("rf.bat x.COM y") as rf.bat x.COM y (n23), and WD-FORMS's
- *   "rf.bat a.BAT b.Bat c.com d.COM e.Com" as those six words, "rf.exe a.EXE b.Exe c.cmd d.CMD e.Cmd" as rf a b c d e,
- *   and "z.exe.bak y.cmd.txt" as those two words. Falsifier: n23 (.bat and .com dropped).
+ * - R3-U1b (member n23): words() reads tw-n23.ts's probe("rf.bat x.COM y") as ["rf.bat","x.COM","y"] (n23); and on WD-FORMS
+ *   it reads "rf.bat a.BAT b.Bat c.com d.COM e.Com" as those six words, ["rf.bat","a.BAT","b.Bat","c.com","d.COM","e.Com"],
+ *   "rf.exe a.EXE b.Exe c.cmd d.CMD e.Cmd" as ["rf","a","b","c","d","e"], and "z.exe.bak y.cmd.txt" as those two words,
+ *   ["z.exe.bak","y.cmd.txt"]. Falsifiers: n23 (.bat and .com dropped) and refusal #1's L2-W1 (the words as one joined
+ *   element).
  * - R3-U1c (member n31): a catch clause variable probed in its block reads <opaque NAME:catch> for catch (e: any) in an
  *   exported function of a .ts module (n31, twin tw-n31.ts), for catch (e: unknown) and catch (u) there (CA-TS), and for
  *   catch (e) at the top level of a .js module (CA-JS). Falsifier: n31 (any read as other).
@@ -41,24 +52,37 @@
  *   read as one <opaque TEXT:bound>, TEXT the seven parts joined by " + ", written across line feeds with two-space
  *   indentation (n35, twin tw-n35.ts) and across carriage return line feeds with the same indentation (BD-WHITESPACE).
  *   Falsifiers: n30 and n35 (the raw source text as the label).
- * - R4-U1a (refusal #4 members q06 and q06b): exact() reads "unresolved" for c ? "a" : p (q06, twin tw-q06.ts) and for
- *   p ?? "b", c ? "a" : d ? p : "b", c ? "a" : d ? "b" : p and p (EX-POSITIONS: p's alternative first of two, second of
- *   three, last of three and alone), and ["a","b"] for c ? "a" : "b" (EX-POSITIONS). Falsifiers: q06 and q06b.
- * - R4-U1b (member q07): words() reads unresolved for c ? "rf x" : p (q07, twin tw-q07.ts) and for p ?? "rf",
- *   c ? "rf x" : d ? p : "rf y", c ? "rf x" : d ? "rf y" : p and p, and rf x y for c ? "rf x" : "rf y" (WO-POSITIONS).
- *   Falsifier: q07.
- * - R4-U1c (members q08 and q08b): program() reads <opaque TEXT>, TEXT the argument's source text, for execFileSync's
- *   c ? "git" : p and process.env.PI_VCS === undefined ? "git" : process.env.PI_VCS (q08, twin tw-q08.ts), for spawn's
- *   p ?? "git", c ? "git" : d ? p : "rf", c ? "git" : d ? "rf" : p and p (PG-POSITIONS), and for spawn's c ? "git" : "",
- *   c ? "" : "git", c ? "git" : " " and "" (PG-WORDLESS: an alternative with no first word); and git|rf for spawn's
- *   c ? "rf" : "git" (PG-POSITIONS). Falsifiers: q08 and q08b.
+ * - R4-U1a (refusal #4 members q06 and q06b): exact() reads undefined for c ? "a" : p (q06, twin tw-q06.ts) and for
+ *   p ?? "b", c ? "a" : d ? p : "b", c ? "a" : d ? "b" : p and p (EX-POSITIONS: p written as the left operand of ??, as the
+ *   middle and as the last of three conditional branches, and alone), and ["a","b"] for c ? "a" : "b" (EX-POSITIONS).
+ *   Falsifiers: q06 and q06b.
+ * - R4-U1b (member q07): words() reads undefined for c ? "rf x" : p (q07, twin tw-q07.ts) and for p ?? "rf",
+ *   c ? "rf x" : d ? p : "rf y", c ? "rf x" : d ? "rf y" : p and p (WO-POSITIONS: p written where EX-POSITIONS writes it),
+ *   and ["rf","x","y"] for c ? "rf x" : "rf y" (WO-POSITIONS). Falsifiers: q07 and refusal #1's L2-W2 (the list
+ *   ["unresolved"] in place of undefined).
+ * - R4-U1c (members q08 and q08b): program() reads <opaque TEXT>, TEXT the argument's source text with each whitespace run
+ *   read as one space, for execFileSync's c ? "git" : p and process.env.PI_VCS === undefined ? "git" : process.env.PI_VCS
+ *   (q08, twin tw-q08.ts), for spawn's p ?? "git", c ? "git" : d ? p : "rf", c ? "git" : d ? "rf" : p and p (PG-POSITIONS:
+ *   p written where EX-POSITIONS writes it), for spawn's c ? "git" : "", c ? "" : "git", c ? "git" : " " and ""
+ *   (PG-WORDLESS: an empty or a blank string as a branch or as the argument), and for spawn's c ? "git" : p written with
+ *   runs of two spaces, with tabs, across line feeds with indentation and across a carriage return line feed, each with TEXT
+ *   c ? "git" : p, and c ? "git  log" : p with TEXT c ? "git log" : p (PG-WHITESPACE: a run inside a string literal read as
+ *   one space too); and it reads git|rf for spawn's c ? "rf" : "git" (PG-POSITIONS), and on PG-WORDS git for
+ *   c ? "git log" : "git status" (one first word written twice, read once), git|rf for c ? "git x" : "rf y" and for
+ *   c ? "rf x" : "git y" (the first words, in code-unit order whichever branch holds which), Zed|apt for
+ *   c ? "Zed x" : "apt y" (Z before a), and git|rf for c ? "/usr/bin/git x" : "C:\\tools\\rf.cmd y" (each first word
+ *   cut to its last path segment, its .cmd dropped). Falsifiers: q08 and q08b, and refusal #1's uncounted L2-P1 (the raw
+ *   source text as the label), which PG-WHITESPACE reds.
  * - R4-U1d (members p08 and q05): exact() reads ["b","a"] for c ? "b" : "a" (p08, twin tw-p08.ts), ["b","c","a"] for
  *   c ? "b" : d ? "c" : "a" and ["a","B"] for c ? "a" : "B" (OR-ORDERS). Falsifiers: p08 (sorted) and q05 (sorted by
  *   localeCompare).
- * - R4-R668 (the U1-R668 rider): wb-jwc.10's XT-TEXTS and XW-WORDS pages, byte for byte, read as wb-jwc.10's census reads
- *   them (XT-TEXTS by exact, XW-WORDS by words); the roster states, for each, its forms and readings and no other words, so
- *   for an opaque alternative it states only the order those pages plant (p ?? "b" and p ?? "rf", opaque first); the other
- *   orders are R4-U1a's and R4-U1b's pins.
+ * - R4-R668 (the U1-R668 rider): the pages XT-TEXTS and XW-WORDS, copied from wb-jwc.10's branch (this census reads no file
+ *   of that branch, so where the pages came from is NOT CLAIMED by this census), both using c with no declaration and p as
+ *   a parameter: exact() reads XT-TEXTS's
+ *   c ? "a" : "b" as ["a","b"], p ?? "b" as undefined and "only" as ["only"]; words() reads XW-WORDS's first text as
+ *   ["rf","context","render","tee","log","out","in","bg","q","d","b"], its second as ["rf","x"], c ? "rf x" : "rf y" as
+ *   ["rf","x","y"] and p ?? "rf" as undefined. The roster states for each page its forms and readings and no other words;
+ *   those pages write p only as the left operand of ??, and the other positions of p are R4-U1a's and R4-U1b's pins.
  * - R4-F2 (refusal #4 finding F2, members p23 to p26): on twin tw-coll.ts, program() reads spawn's c ? "apt" : "Zed" as
  *   Zed|apt (coll-programs), registrations() reads reactivefiber.B:<none>, reactivefiber.a:<none> and
  *   reactivefiber.e:Write|read (coll-registrations), and the registration probe reads reactivefiber.e:Write|read and
@@ -84,24 +108,38 @@
  *   label, and every pin, in order, with its page's digest, its forms (each probed argument's source text, whitespace runs
  *   read as one space; for the programs probe `<callee>:` and the first argument's; for the registration probes each
  *   registering object literal's) and its reading.
- * A row or a pin removed, a pin's page or reading changed, or a label shortened - in one literal or in every literal together
- * - reds SHAPE, ANCHOR or ROSTER (standing rule 16's CT1-CT6).
+ * A row or a pin removed, a pin's page or reading changed, or a label shortened, in ROWS alone or in ROWS and the
+ * frozen-shape literals together (standing rule 16's CT1-CT5), reds ROSTER, and SHAPE too unless the frozen-shape literals
+ * follow; a reading changed in ROWS also reds its own pin case. In every literal together, the roster included (CT6): a row
+ * removed or its label changed, a twin's page changed, a twin's only pin removed, or a rider pin (XT-TEXTS, XW-WORDS)
+ * removed reds ANCHOR, whose anchor is the tracker export; a reading changed reds its own pin case. In every literal
+ * together, the roster included, these read green (the 6ze.39-class posture, disclosed in NOT CLAIMED): a seat plant (a pin
+ * with neither a twin nor a rider id) removed, or its page and reading replaced; a rider pin's page and reading replaced;
+ * and one of R4-F2's three tw-coll.ts pins removed while another keeps the twin. Their only anchors are this file's
+ * literals and the roster that this census's own cuts write.
  *
  * NOT CLAIMED (scope sentences; no residual is claimed and none is owed by them). A reading of any page that is not one of
  * these 37 is NOT CLAIMED by this census. On such a page: an eval call at a position no page here writes (inside parentheses
  * as a whole, a conditional, a property access or a binary expression, among others) is NOT CLAIMED by this census; a word
  * with an extension no page here writes, a quote inside a word and the empty word are NOT CLAIMED by this census; a catch
  * variable with another annotation, or destructured, is NOT CLAIMED by this census; EFFECT for any other effectClass, a field
- * an opaque member may set, a registration whose id has an opaque alternative, and a registration whose reactivefiber. id text
- * follows another alternative are NOT CLAIMED by this census; a bound past which a literal or an unresolved identifier sits, a
- * template's depth, and any other whitespace character in a label are NOT CLAIMED by this census; an empty first word among a
- * program's words is NOT CLAIMED by this census; the alternatives of a + join, a template or a ??, || or && expression (their
- * texts, their joining and their order), an assignment, a prefix or postfix operator, a tagged template, a type assertion and
- * every other expression form, an object literal's fields, a const cycle, a with body, an unbound identifier's kind, a path's
- * parse and the rendering of an escaped text are NOT CLAIMED by this census. Every reading of the moved reader on another page
- * is NOT CLAIMED by this census; wb-jwc.10's census pins many of them on its branch, not on trunk. Which calls the probes
- * locate (probe, the seven launcher names and the registering object literals) is this census's own locator, not a claim about
- * a module.
+ * an opaque member may set, a registration whose id has an opaque alternative, a registration whose reactivefiber. id text
+ * follows another alternative, and two registering object literals with the same entries (whether registrations() lists such
+ * an entry once or twice) are NOT CLAIMED by this census; a bound past which a literal or an unresolved identifier sits, how
+ * many depth levels any form other than a const link counts (a wrapper, a conditional, a ??, || or && expression, a + join or
+ * a template), and any other whitespace character in a label are NOT CLAIMED by this census; an empty first word among a
+ * program's words is NOT CLAIMED by this census; how rendered() renders two or more alternatives (their separator, their order
+ * and which of them it shows) is NOT CLAIMED by this census, every texts pin here reading one; a conditional whose two
+ * branches read the same alternative (whether that alternative reads once or twice) is NOT CLAIMED by this census; the
+ * alternatives of a + join, a template or a ??, || or && expression (their texts, their joining and their order), an
+ * assignment, a prefix or postfix operator, a tagged template, a type assertion and every other expression form (its label
+ * included), an object literal's fields, a const cycle, a with body, an unbound identifier's kind, a path's parse and the
+ * rendering of a text that JSON escapes are NOT CLAIMED by this census. Every reading of the moved reader on another page is
+ * NOT CLAIMED by this census; wb-jwc.10's census pins many of them on its branch, not on trunk. Beyond this file's literals
+ * and its roster, the presence of a seat plant, the pages of the rider pins and the count of R4-F2's tw-coll.ts pins are NOT
+ * CLAIMED by this census (no outside text this census reads names them; the 6ze.39-class posture above). Which calls the
+ * probes locate (probe, the seven launcher names and the registering object literals) is this census's own locator, not a
+ * claim about a module.
  *
  * Display paths added: none (test-only). No scratch is allocated (every page is a string parsed in memory); the tracker export
  * and the roster are only read; no src, docs or receipt is edited.
@@ -192,12 +230,12 @@ const ROWS: readonly Row[] = [
     id: "R3-U1b",
     label: "U1b-WORDS-DROP-SET-TRAILING-BAT-COM-DROPPED-UNPINNED",
     pins: [
-      twin("n23", "tw-n23.ts", "words", page(DECLARE_PROBE, DECLARE_C, 'probe("rf.bat x.COM y");', "export {};"), ["rf.bat x.COM y"]),
+      twin("n23", "tw-n23.ts", "words", page(DECLARE_PROBE, DECLARE_C, 'probe("rf.bat x.COM y");', "export {};"), ['["rf.bat","x.COM","y"]']),
       pin(
         "WD-FORMS",
         "words",
         page(DECLARE_PROBE, 'probe("rf.bat a.BAT b.Bat c.com d.COM e.Com");', 'probe("rf.exe a.EXE b.Exe c.cmd d.CMD e.Cmd");', 'probe("z.exe.bak y.cmd.txt");', "export {};"),
-        ["rf.bat a.BAT b.Bat c.com d.COM e.Com", "rf a b c d e", "z.exe.bak y.cmd.txt"],
+        ['["rf.bat","a.BAT","b.Bat","c.com","d.COM","e.Com"]', '["rf","a","b","c","d","e"]', '["z.exe.bak","y.cmd.txt"]'],
       ),
     ],
   },
@@ -273,12 +311,12 @@ const ROWS: readonly Row[] = [
     id: "R4-U1a",
     label: "U1a-READINGS1-EXACT-FIRST-ALTERNATIVE-ONLY-FAIL-OPEN",
     pins: [
-      twin("q06", "tw-q06.ts", "exact", page(DECLARE_PROBE, DECLARE_C, "export function g(p: string): void {", '  probe(c ? "a" : p);', "}"), ['"unresolved"']),
+      twin("q06", "tw-q06.ts", "exact", page(DECLARE_PROBE, DECLARE_C, "export function g(p: string): void {", '  probe(c ? "a" : p);', "}"), ["undefined"]),
       pin(
         "EX-POSITIONS",
         "exact",
         page(DECLARE_PROBE, DECLARE_C, DECLARE_D, "export function g(p: string): void {", '  probe(p ?? "b");', '  probe(c ? "a" : d ? p : "b");', '  probe(c ? "a" : d ? "b" : p);', "  probe(p);", '  probe(c ? "a" : "b");', "}"),
-        ['"unresolved"', '"unresolved"', '"unresolved"', '"unresolved"', '["a","b"]'],
+        ["undefined", "undefined", "undefined", "undefined", '["a","b"]'],
       ),
     ],
   },
@@ -286,12 +324,12 @@ const ROWS: readonly Row[] = [
     id: "R4-U1b",
     label: "U1b-READINGS2-WORDS-FIRST-ALTERNATIVE-ONLY-FAIL-OPEN",
     pins: [
-      twin("q07", "tw-q07.ts", "words", page(DECLARE_PROBE, DECLARE_C, "export function g(p: string): void {", '  probe(c ? "rf x" : p);', "}"), ["unresolved"]),
+      twin("q07", "tw-q07.ts", "words", page(DECLARE_PROBE, DECLARE_C, "export function g(p: string): void {", '  probe(c ? "rf x" : p);', "}"), ["undefined"]),
       pin(
         "WO-POSITIONS",
         "words",
         page(DECLARE_PROBE, DECLARE_C, DECLARE_D, "export function g(p: string): void {", '  probe(p ?? "rf");', '  probe(c ? "rf x" : d ? p : "rf y");', '  probe(c ? "rf x" : d ? "rf y" : p);', "  probe(p);", '  probe(c ? "rf x" : "rf y");', "}"),
-        ["unresolved", "unresolved", "unresolved", "unresolved", "rf x y"],
+        ["undefined", "undefined", "undefined", "undefined", '["rf","x","y"]'],
       ),
     ],
   },
@@ -338,6 +376,34 @@ const ROWS: readonly Row[] = [
         page('import { spawn } from "node:child_process";', DECLARE_C, 'spawn(c ? "git" : "", []);', 'spawn(c ? "" : "git", []);', 'spawn(c ? "git" : " ", []);', 'spawn("", []);'),
         ['spawn:<opaque c ? "git" : "">', 'spawn:<opaque c ? "" : "git">', 'spawn:<opaque c ? "git" : " ">', 'spawn:<opaque "">'],
       ),
+      pin(
+        "PG-WORDS",
+        "programs",
+        page('import { spawn } from "node:child_process";', DECLARE_C, 'spawn(c ? "git log" : "git status", []);', 'spawn(c ? "git x" : "rf y", []);', 'spawn(c ? "rf x" : "git y", []);', 'spawn(c ? "Zed x" : "apt y", []);', 'spawn(c ? "/usr/bin/git x" : "C:\\\\tools\\\\rf.cmd y", []);'),
+        ["spawn:git", "spawn:git|rf", "spawn:git|rf", "spawn:Zed|apt", "spawn:git|rf"],
+      ),
+      pin(
+        "PG-WHITESPACE",
+        "programs",
+        page(
+          'import { spawn } from "node:child_process";',
+          DECLARE_C,
+          "export function g(p: string): void {",
+          '  spawn(c  ?  "git"  :  p, []);',
+          '  spawn(c\t?\t"git"\t:\tp, []);',
+          "  spawn(",
+          "    c",
+          '      ? "git"',
+          "      : p,",
+          "    [],",
+          "  );",
+          "  spawn(c ?\r",
+          '    "git" : p, []);',
+          '  spawn(c ? "git  log" : p, []);',
+          "}",
+        ),
+        ['spawn:<opaque c ? "git" : p>', 'spawn:<opaque c ? "git" : p>', 'spawn:<opaque c ? "git" : p>', 'spawn:<opaque c ? "git" : p>', 'spawn:<opaque c ? "git log" : p>'],
+      ),
     ],
   },
   {
@@ -352,7 +418,7 @@ const ROWS: readonly Row[] = [
     id: "R4-R668",
     label: "U1-R668 rider",
     pins: [
-      pin("XT-TEXTS", "exact", page('probe(c ? "a" : "b");', 'function g(p: string) { probe(p ?? "b"); }', 'probe("only");'), ['["a","b"]', '"unresolved"', '["only"]']),
+      pin("XT-TEXTS", "exact", page('probe(c ? "a" : "b");', 'function g(p: string) { probe(p ?? "b"); }', 'probe("only");'), ['["a","b"]', "undefined", '["only"]']),
       pin(
         "XW-WORDS",
         "words",
@@ -362,7 +428,7 @@ const ROWS: readonly Row[] = [
           'probe(c ? "rf x" : "rf y");',
           'function g(p: string) { probe(p ?? "rf"); }',
         ),
-        ["rf context render tee log out in bg q d b", "rf x", "rf x y", "unresolved"],
+        ['["rf","context","render","tee","log","out","in","bg","q","d","b"]', '["rf","x"]', '["rf","x","y"]', "undefined"],
       ),
     ],
   },
@@ -427,14 +493,18 @@ function registering(reader: BindingTextReader): ts.ObjectLiteralExpression[] {
   });
   return found;
 }
+/** A probe's value as JSON, or the bare word undefined when the value is undefined (no JSON text is that bare word). */
+function json(value: readonly string[] | undefined): string {
+  return value === undefined ? "undefined" : JSON.stringify(value);
+}
 function reading(at: Pin): readonly string[] {
   const reader = bindingTextReader(at.path, at.page);
   if (at.probe === "registrations") return reader.registrations();
   if (at.probe === "registration") return registering(reader).map((object) => (reader.registration(object) ?? []).join(", "));
   const calls = located(reader, at.probe);
   if (at.probe === "programs") return calls.map(({ name, argument }) => `${name}:${reader.program(argument)}`);
-  if (at.probe === "exact") return calls.map(({ argument }) => JSON.stringify(reader.exact(argument) ?? "unresolved"));
-  if (at.probe === "words") return calls.map(({ argument }) => reader.words(argument)?.join(" ") ?? "unresolved");
+  if (at.probe === "exact") return calls.map(({ argument }) => json(reader.exact(argument)));
+  if (at.probe === "words") return calls.map(({ argument }) => json(reader.words(argument)));
   return calls.map(({ argument }) => rendered(reader.alternatives(argument)));
 }
 /** The forms a pin's probe reads, as the roster states them: each source text with its whitespace runs read as one space. */
@@ -501,7 +571,7 @@ describe("wb-jwc.13 binding text reader sub-form census (test/helpers/rf-binding
 
   it("SHAPE: the rows and their pins, and each pin's page, are the frozen set (standing rule 16)", () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual([
-      "R3-U1a:7", "R3-U1b:2", "R3-U1c:3", "R3-U1d:2", "R3-U2:3", "R4-U1a:2", "R4-U1b:2", "R4-U1c:3", "R4-U1d:2", "R4-R668:2", "R4-F2:3", "R4-F3:6",
+      "R3-U1a:7", "R3-U1b:2", "R3-U1c:3", "R3-U1d:2", "R3-U2:3", "R4-U1a:2", "R4-U1b:2", "R4-U1c:5", "R4-U1d:2", "R4-R668:2", "R4-F2:3", "R4-F3:6",
     ]);
     expect(ROWS.flatMap((row) => row.pins.map((at) => `${at.id}:${digest(at.page)}`))).toEqual([
       "n03-ts:4683c4774af2e164", "n03-js:7fb4fbf7301c8f0c", "EV-ZERO:d734eea7ebe43878", "EV-ONE:992e22a72a4cd031",
@@ -510,6 +580,7 @@ describe("wb-jwc.13 binding text reader sub-form census (test/helpers/rf-binding
       "n18:c6f98fd2b748ae2a", "EF-FORMS:b3139d27a5e9e0b3", "n30:b0da7c958facc465", "n35:fdbb34a81c29040e",
       "BD-WHITESPACE:a069176905f1a486", "q06:972a9524951df019", "EX-POSITIONS:4ecc66ca83b63213", "q07:bc827e02b8e7f253",
       "WO-POSITIONS:580bd6457704631d", "q08:951150a7a262615c", "PG-POSITIONS:7dc99a9a184a1c67", "PG-WORDLESS:19fd7eaead2637e6",
+      "PG-WORDS:86191cbe76d28b2b", "PG-WHITESPACE:ba323ea4d1822eb3",
       "p08:3cf6fa3a45eda664", "OR-ORDERS:d46fd2f48289fb93", "XT-TEXTS:17ff55942c562568", "XW-WORDS:8dd3d5171b8ea99e",
       "coll-programs:ddd76c8340a74979", "coll-registrations:ddd76c8340a74979", "coll-registration:ddd76c8340a74979", "p30:94111a5056405f34",
       "EV-IDENTIFIER:60a669211edd1f70", "EV-NUMBER:4feb86207931158c", "EV-TEMPLATE:f30e8c25e20de9b8", "EV-SPREAD:e74d5036c2c5185d",
