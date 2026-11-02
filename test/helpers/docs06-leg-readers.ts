@@ -10,8 +10,9 @@
  * its MODULES and WRITES tables (held to test/fixtures/docs06-leg-readers-roster.json), exactly as pinned - every entry,
  * its text and its order. What a reader returns for a text those tables do not plant is NOT CLAIMED by this module: the
  * same form from another module, at another place in a text, in another combination or beside other code included. The
- * uses of expect (the docs06 census's own hookRoster reading) are not read here; the test context's own expect is that
- * census's named residual R-CTX-EXPECT.
+ * uses of expect (the docs06 census's own hookRoster reading) are not read here; the test context's own expect is the
+ * named residual R-CTX-EXPECT of test/workbench-docs06-leg-readers-census.test.ts, whose quiet rows read the docs06
+ * census file with two expect-member readers of their own.
  *
  * Test-only: this module parses source text and never runs it.
  */

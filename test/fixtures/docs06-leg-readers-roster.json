@@ -234,24 +234,167 @@
           "sha256": "5acde347f62dbcc7d32c149a479dd3411eab76f3782a7fe4f5963e203ae69902"
         }
       ]
+    },
+    {
+      "table": "SCAN",
+      "id": "SC-OBJECT",
+      "members": [
+        "GA1-OBJ-CONTEXT",
+        "GA2-OBJ-IDENT"
+      ],
+      "form": "a member named expect whose object is not the identifier context: the test context under another parameter name, reached through a member chain, and a this, parenthesized, non-null, element and call object (wb-mcoj refusal #1 U2)",
+      "plants": [
+        {
+          "id": "WA1",
+          "sha256": "29721f13d696d01dbfc49468dd74a0c7bbee8b5da9093a7834035a7651e45cdf"
+        },
+        {
+          "id": "WA2",
+          "sha256": "52049fd27cd5fe8335c9471a974849c4ef75fcbdc165c228e6318066b177df5b"
+        },
+        {
+          "id": "S-OBJ-THIS",
+          "sha256": "0630859e91af7228dbfae926384dcabe287da1b013dc47f84607fd153a980e7e"
+        },
+        {
+          "id": "S-OBJ-PAREN",
+          "sha256": "d482bd1bf455020540fdb7d7698a9643ae88c37da545e409fd0c7fc470327b89"
+        },
+        {
+          "id": "S-OBJ-NONNULL",
+          "sha256": "d62659243f303b44f8774e052a4b86a5e6b9153a58c3a6994d99ef9822d7f5b7"
+        },
+        {
+          "id": "S-OBJ-ELEMENT",
+          "sha256": "be926c31b9cd355f4fcba7d405c7b4de181db0d991130340ea6288cc9d61f2d2"
+        },
+        {
+          "id": "S-OBJ-CALL",
+          "sha256": "728f600e30e95af9b36870543afe5d8519e5b906f2161039770da6528c45b5d5"
+        }
+      ]
+    },
+    {
+      "table": "SCAN",
+      "id": "SC-POSITION",
+      "members": [
+        "GA3-PARENT-MEMBER",
+        "GA4-NO-VARDECL",
+        "GA9-NO-AWAIT",
+        "GA10-NO-FUNCTION-DECL"
+      ],
+      "form": "a member named expect anywhere but at the head of a member call in a top-level or it() body statement: called directly, bound to a local, awaited, returned from a function declaration, in a describe callback, in a class, at twelve expression and statement positions and as the object of another (wb-mcoj refusal #1 U1)",
+      "plants": [
+        {
+          "id": "WA3",
+          "sha256": "6f10ff17cad63427fc2a9dd99f8f14dbbc7ad3e4f95e3636da0fb47ceffa4e33"
+        },
+        {
+          "id": "WA4",
+          "sha256": "1b044da82a78cdc649816345973977beb38caed9cefdfdbad61df7a2d5893192"
+        },
+        {
+          "id": "WA9",
+          "sha256": "7100e9bdf9a4483febad94a0d603783c542971747063724f95d2ed2e94676f1e"
+        },
+        {
+          "id": "WA10",
+          "sha256": "9895056aaec483a2335d7bf80802c4e99a2d185fdd4a1865c4d80766faf068b5"
+        },
+        {
+          "id": "S-POS-DESCRIBE",
+          "sha256": "ec8cc0ad1a36b88a84cbf264e12728d46ea8497aa8032ff75b2406672fe20a77"
+        },
+        {
+          "id": "S-POS-CLASS",
+          "sha256": "a0f2f007e18b2d3757cccea40a06d4a38fcb4eeded21187d055cd0bf01a1dff3"
+        },
+        {
+          "id": "S-POS-EXPRESSIONS",
+          "sha256": "ce5748a903ba913f23b930b0d36e7926d2866be20be970347a6ac19f715913fd"
+        },
+        {
+          "id": "S-POS-NESTED",
+          "sha256": "fdff9996bae9220d9708a872eca1f329946a7139be337c6f0d1279e7b9b5016c"
+        }
+      ]
+    },
+    {
+      "table": "SCAN",
+      "id": "SC-ELEMENT",
+      "members": [
+        "GA5-ELEM-NOOPT",
+        "GA6-ELEM-NO-SINGLE-QUOTE"
+      ],
+      "form": "an element access keyed by expect: optional with a double-quoted, a template and a single-quoted key, single-quoted, and read bare (wb-mcoj refusal #1 U3)",
+      "plants": [
+        {
+          "id": "WA5",
+          "sha256": "fc5457006caa10ecbd3d357db8014a64d0bf3f068fd932351493f4233203b7d8"
+        },
+        {
+          "id": "WA6",
+          "sha256": "a33244c9a6c8b7633c331448387ce305e115a40f747c7f5fcc53400c7fdbc70b"
+        },
+        {
+          "id": "S-ELEM-OPT-TEMPLATE",
+          "sha256": "3ab0cc6c35cc0ac418c04190daa628035c7af21f83496bbf56d3c7fb6857ac6e"
+        },
+        {
+          "id": "S-ELEM-OPT-SINGLE",
+          "sha256": "63a0c89faff1eea7399df6af8337e4ccabf6144fe3def97c1b59ae55a74bd6c8"
+        },
+        {
+          "id": "S-ELEM-BARE",
+          "sha256": "f2272c13d95f4665dc7c87760fcbaaa3fda081667951667e7b81bbb699919cdd"
+        }
+      ]
+    },
+    {
+      "table": "SCAN",
+      "id": "SC-ESCAPED",
+      "members": [],
+      "form": "the name or the key expect spelled through an escape sequence (this cut's plants)",
+      "plants": [
+        {
+          "id": "S-ESC-NAME",
+          "sha256": "c568b073106f24915f5e14239ddef6b2b32265a5b612f7dfde97272e7c8e7215"
+        },
+        {
+          "id": "S-ESC-KEY",
+          "sha256": "f4aa4e8a0e528271363f9009ceb53b25cacd1a6a3b1c134d26eebff1e9b4bba4"
+        }
+      ]
     }
   ],
   "code": [
     {
+      "kind": "function",
       "name": "spelledAnywhere",
       "sha256": "44127d218ef0b7bb18aa8d555c155619e63326ee27fd6acf365fa5514a8de1dc"
     },
     {
+      "kind": "variable",
       "name": "WRITER_ROUTE",
       "sha256": "1499820093e9d54e157837e89cd9ae28dcfbdcb409382b03c3e4000001dc10a0"
     },
     {
+      "kind": "function",
       "name": "moduleImports",
       "sha256": "b29c2cc7075b7e71a15665238dcbde7dde5fa3bf6151293b30052109083695a3"
     },
     {
+      "kind": "function",
       "name": "propertyWrites",
       "sha256": "ef19d3b858ea4b4652f0d0086ec485291368a41ccfc93f8baadbdffadfee8187"
     }
+  ],
+  "helperImport": "local import \"typescript\" c110ad21c643bc950c6353bd6ea31de589d5aa3ec2c4ecc0ab36e21322fbf9a9",
+  "statements": [
+    "0aa8640547476a2244ecaaa3b96a7e38218318e4d8e59c6b5569c74301a378e455c94fa9963d18aa7a63e8a489b8b53d38e910481ebfbc41730e5e763363dc89",
+    "c32285d746a0d843098a8aedc14440909feb87f87f20c3df440741b9d643ea233ef3a7a03263c175e564e9b500302adb417cf2c1ec6b49f3de1881bab3325fa6",
+    "a0ee8e35889e543e9dd99e4b2adfa2ee95cb7b89b2f5b55b1dd97da0ac9de4019a4d57341a605b378f60ef0020dfc2c527aafd360555f7f167e720ea6607ddca",
+    "825faea52ab08553196ec9f65ce17a47843a7d148fc6d90fbb9fa25c3430cbd5de7e15a9b83cf62d7c5d86d14edd010e9a9fbb30bc4beb7bb83365694bd70190",
+    "7d54157aa15d86bae86dcc6cb71ba64140c0f4694b2eb36dc1fbf45cd9392fa1461c72ac48da242f2f185ac9245c19d9f0bf1324eb727673a4ba70797ad7bf67"
   ]
 }
