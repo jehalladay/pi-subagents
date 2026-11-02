@@ -144,15 +144,32 @@
  * [numeric-named-method, infinity-named-method] or one read in place [inline-object-numeric-method], its digits decimal, with
  * an exponent, hex, binary, octal, with separators or a leading-dot fraction [spelled-numeric-named-methods], a class
  * declaration, static or not [numeric-named-class-method, numeric-named-static-method], or a class expression, static or not
- * [numeric-named-class-expression-method, static-numeric-named-class-expression-method], or a bigint literal, of an object
- * literal or a class declaration [bigint-named-method, bigint-named-class-method]; a generator, an async or an async
- * generator method so named [generator-numeric-named-method, async-numeric-named-method,
- * async-generator-numeric-named-method]; a signature with no body, an abstract method's or an overload's
- * [bodiless-numeric-named-method, overload-numeric-named-method] - is held under no name, so no call hands it an argument
- * (refusal #3 measured TypeScript holding a number literal's name under its value's string, 1e999 under "Infinity", which a
- * member callee spells: the gate's q18), and the reading notes its name instead ("declaration unpinned"), every such name at
- * its own line [two-unpinned-names], which refuses its module whether or not anything calls it; what the table would hold
- * such a name under is child wb-zmez's. And it holds a
+ * [numeric-named-class-expression-method, static-numeric-named-class-expression-method,
+ * static-numeral-named-class-expression-method], or a bigint literal, of an object literal or a class declaration
+ * [bigint-named-method, bigint-named-class-method]; a generator, an async or an async generator method so named
+ * [generator-numeric-named-method, async-numeric-named-method, async-generator-numeric-named-method]; a signature with no
+ * body, an abstract method's or an overload's [bodiless-numeric-named-method, overload-numeric-named-method] - has its name
+ * noted ("declaration unpinned"), every such name at its own line [two-unpinned-names], which refuses its module whether or
+ * not anything calls it. A bigint literal's method is held under no name (its text, digits and "n", is a name no callee
+ * spells), its body collected as any other's, so a function declaration in it is held and a call there hands it its
+ * arguments [nested-in-bigint-named-method]. A number literal's is held as well (wb-zmez, the child ruling R-B151 moved
+ * that reading to; wb-wgk3's "held under no name" for it is restated here), under its name's value string as TypeScript
+ * normalizes it (propertyKeyOf: the literal's text, the key the method has at run time; refusal #3 measured 1e999 under
+ * "Infinity", the gate's q18), so a member callee whose property name spells that string hands it its arguments, as it does
+ * any method the table holds. Where the literal's value overflows a double the string is "Infinity" - 1e999, the gate's
+ * q18, and 1e309 [overflow-named-method], or a value spelled hex, binary, octal, with separators or as a leading-dot
+ * fraction [spelled-overflow-named-methods] -, which a member callee spells, and each such method a member callee reaches
+ * as "Infinity" reads its member blocks beside its note: of an object literal a declaration holds [infinity-named-method]
+ * or one read in place [inline-object-infinity-method], of a class declaration, static or not [numeric-named-class-method,
+ * numeric-named-static-method], or of a class expression, static or not [numeric-named-class-expression-method,
+ * static-numeric-named-class-expression-method]; a generator, an async or an async generator method
+ * [generator-infinity-named-method, async-infinity-named-method, async-generator-infinity-named-method]; an overload's
+ * implementation beside its signature, their parameters named apart [overload-numeric-named-method]; and through a function
+ * declaration in its body, called there [nested-in-infinity-named-method]. Otherwise the string is a numeral (0 under "0",
+ * 0x10 under "16", 1e3 and 1_000 under "1000", 1.7976931348623158e308 under "1.7976931348623157e+308"), which no callee
+ * name spells, so no call hands such a method an argument, a member callee spelling "Infinity" included
+ * [numeral-infinity-callee-method], and the note alone refuses its module [numeric-named-method]: the hold is read only as
+ * "Infinity", and which numeral it holds a method under is never read. And it holds a
  * variable declared by a name, in any declaration list - const [local-helper], let [let-helper] or var [var-helper] -, under
  * that name when its initializer, read through its wrappers [wrapped-helper-initializer], is an arrow or a function
  * expression [function-expression-helper]. An expression's value is read
@@ -307,6 +324,25 @@
  * spells: a probe is never linted) -, the nine the filing's title names held to it by GQ_PINS; and one per sibling shape on
  * the same axes the seat's battery found unspelled (an async generator method on either side, an overload signature, the
  * binary, octal, separated and leading-dot spellings, a code-point and an identity escape and a line continuation).
+ * FOLLOW-UP wb-zmez (ruling R-B151's child at wb-qnls refusal #3, rule 19's structural exit: the number-literal reader
+ * coverage cut #4 moved off the parent): U1 the FUNCTION TABLE holds a number-literal method name as well, under its value's
+ * string as TypeScript normalizes it, and still notes it (the fail-closed core is kept, so no refusal of the landed census
+ * is lost): a member callee spelling "Infinity" hands a method 1e999 or 1e309 names its arguments and the reading reads its
+ * body beside the note - the four 1e999 rows and the 1e309 row [overflow-named-method] read their member blocks too -, so
+ * the gate's mutant GP09, a number-literal name never held, reds them where cut #4 left it equivalent by construction.
+ * Refusal #1's respin (cut #2, the known-dirty re-cut after wb-wgk3 landed on this file; trunk merged in, never rebased):
+ * wb-wgk3's FAIL CLOSED sentence is restated to the hold, so its two probes a member callee reaches as "Infinity" read
+ * their member blocks beside their notes (a class expression's static method and an overload's implementation, whose
+ * signature's parameter is renamed so the reading tells the implementation's hold apart: a name binds module-wide), and
+ * GQ06's FAIL CLOSED answer moves to a numeral-named static method of a class expression an element access calls, which
+ * notes only its declaration [static-numeral-named-class-expression-method]; refusal #1's F3-F5 survivors each red against
+ * a probe of its own - G08 a numeral-named method a member callee spelling "Infinity" calls
+ * [numeral-infinity-callee-method], G09 the other spellings of an overflowing value [spelled-overflow-named-methods], G12 a
+ * function declaration in a held method's body [nested-in-infinity-named-method] -, with its bigint twin, cut #1's FC13 (a
+ * bigint-named method's body left uncollected) [nested-in-bigint-named-method]; and cut #1's Z15-Z17, which wb-wgk3's FAIL
+ * CLOSED probes at those compositions do not kill (they reach no method as "Infinity"), each red against one too: an object
+ * literal read in place, a generator, an async and an async generator method [inline-object-infinity-method,
+ * generator-infinity-named-method, async-infinity-named-method, async-generator-infinity-named-method].
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -488,8 +524,10 @@ const PROBE_RESULT = "(reading as { source: { result: Record<string, unknown> } 
 /** C3's read forms (wb-ycir F1; wb-qnl8 F2 and F3 add one per claimed result-expression and read form; wb-qnls F1 and F2 one per
  * binding form the gate's F1 mutants and P31-P33 named, cut #2 one per shape a refusal #1 U1 or F4 mutant or a seat mutant
  * narrowed a form to and per form U2 widens, cut #3 one per FUNCTION TABLE form and per refusal #2 GN survivor's shape,
- * cut #4 one per shape of a method the table fails closed on and the gate's MF01 shape, and wb-wgk3 one per composition a
- * gate GQ survivor of cut #4 narrowed a form at and per sibling shape on its axes): each probe module reaches an rf
+ * cut #4 one per shape of a method the table fails closed on and the gate's MF01 shape, wb-wgk3 one per composition a
+ * gate GQ survivor of cut #4 narrowed a form at and per sibling shape on its axes, and wb-zmez a second spelling, 1e309, of
+ * a number-literal name the table holds under "Infinity", and at its cut #2 one per composition and spelling of that hold
+ * and the GQ06 answer): each probe module reaches an rf
  * result member without spelling "result.<member>" or declares a method the table fails closed on, and the parse-aware
  * reading must name it. Each key is named in brackets beside its form in the header's
  * PARSE-AWARE READING, and C3 holds the two to each other (headerProbeIds); a probe holds its form live at the shapes it
@@ -702,8 +740,26 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   "async-numeric-named-method": `const helpers = {\n  async 0x10(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers[16](${PROBE_RESULT});\n`,
   "async-generator-numeric-named-method": `const helpers = {\n  async *0x10(envelope: Record<string, unknown>) {\n    yield envelope.blocks;\n  },\n};\nexport const rows = helpers[16](${PROBE_RESULT});\n`,
   "bodiless-numeric-named-method": "export abstract class Helpers {\n  abstract 1e999(envelope: Record<string, unknown>): unknown;\n}\n",
-  "overload-numeric-named-method": `class Helpers {\n  1e999(envelope: Record<string, unknown>): unknown;\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().Infinity(${PROBE_RESULT});\n`,
+  "overload-numeric-named-method": `class Helpers {\n  1e999(signature: Record<string, unknown>): unknown;\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().Infinity(${PROBE_RESULT});\n`,
   "two-unpinned-names": `const helpers = {\n  1(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n  2(envelope: Record<string, unknown>) {\n    return envelope.output;\n  },\n};\nexport const rows = [helpers[1](${PROBE_RESULT}), helpers[2](${PROBE_RESULT})];\n`,
+  // wb-zmez cut #2 (refusal #1's re-cut over wb-wgk3): the hold reached as "Infinity" at each composition wb-wgk3's FAIL
+  // CLOSED probes spell - an object literal read in place, a generator, an async and an async generator method (cut #1's
+  // Z15-Z17) -, through a function declaration in a held method's body (refusal #1's F5, G12) and its bigint twin (cut #1's
+  // FC13: a bigint-named method's body is still collected), and in the other spellings of an overflowing value (F4, G09;
+  // each method has a parameter name of its own, since a name binds module-wide); a numeral-named method a member callee
+  // spelling "Infinity" calls, which notes only its declaration (F3, G08); and GQ06's FAIL CLOSED answer, a numeral-named
+  // static method of a class expression an element access calls, since the hold reads the 1e999 one's member blocks.
+  // (wb-wgk3's overload probe above names its signature's parameter apart from its implementation's, so the reading tells
+  // the implementation's hold from the signature's.)
+  "inline-object-infinity-method": `export const rows = ({\n  1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n}).Infinity(${PROBE_RESULT});\n`,
+  "generator-infinity-named-method": `const helpers = {\n  *1e999(envelope: Record<string, unknown>) {\n    yield envelope.blocks;\n  },\n};\nexport const rows = [...helpers.Infinity(${PROBE_RESULT})];\n`,
+  "async-infinity-named-method": `const helpers = {\n  async 1e999(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "async-generator-infinity-named-method": `const helpers = {\n  async *1e999(envelope: Record<string, unknown>) {\n    yield envelope.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "nested-in-infinity-named-method": `const helpers = {\n  1e999(envelope: Record<string, unknown>) {\n    function blocksOf(held: Record<string, unknown>) {\n      return held.blocks;\n    }\n    return blocksOf(envelope);\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "spelled-overflow-named-methods": `const helpers = {\n  0x1${"0".repeat(256)}(hex: Record<string, unknown>) {\n    return hex.blocks;\n  },\n  0b1${"0".repeat(1024)}(binary: Record<string, unknown>) {\n    return binary.blocks;\n  },\n  0o1${"0".repeat(342)}(octal: Record<string, unknown>) {\n    return octal.blocks;\n  },\n  1_0e308(separated: Record<string, unknown>) {\n    return separated.blocks;\n  },\n  .1e310(fraction: Record<string, unknown>) {\n    return fraction.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "nested-in-bigint-named-method": `export const helpers = {\n  1n() {\n    function blocksOf(held: Record<string, unknown>) {\n      return held.blocks;\n    }\n    return blocksOf(${PROBE_RESULT});\n  },\n};\n`,
+  "numeral-infinity-callee-method": `const helpers = {\n  0(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.Infinity(${PROBE_RESULT});\n`,
+  "static-numeral-named-class-expression-method": `const Helpers = class {\n  static 0x10(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\nexport const rows = Helpers[16](${PROBE_RESULT});\n`,
   // The FUNCTION TABLE: a code-point, a hex (GQ09) and an identity escape and a line continuation in a string-literal name,
   // an async (GQ16), a generator (GQ17) and an async generator method under one, and a computed name a number literal keys,
   // held under its value's string as TypeScript reads it, 1e999's "Infinity" (GQ11).
@@ -727,7 +783,7 @@ const GQ_PINS: Readonly<Record<"failClosed" | "pinned", Readonly<Record<string, 
   failClosed: {
     GQ02: "bodiless-numeric-named-method",
     GQ03: "inline-object-numeric-method",
-    GQ06: "static-numeric-named-class-expression-method",
+    GQ06: "static-numeral-named-class-expression-method",
     GQ07: "bigint-named-class-method",
     GQ08: "generator-numeric-named-method",
     GQ12: "async-numeric-named-method",

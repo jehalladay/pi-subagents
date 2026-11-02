@@ -423,6 +423,15 @@
    "bodiless-numeric-named-method",
    "overload-numeric-named-method",
    "two-unpinned-names",
+   "inline-object-infinity-method",
+   "generator-infinity-named-method",
+   "async-infinity-named-method",
+   "async-generator-infinity-named-method",
+   "nested-in-infinity-named-method",
+   "spelled-overflow-named-methods",
+   "nested-in-bigint-named-method",
+   "numeral-infinity-callee-method",
+   "static-numeral-named-class-expression-method",
    "code-point-escaped-string-named-method",
    "hex-escaped-string-named-method",
    "identity-escaped-string-named-method",
@@ -500,7 +509,7 @@
    "failClosed": {
     "GQ02": "bodiless-numeric-named-method",
     "GQ03": "inline-object-numeric-method",
-    "GQ06": "static-numeric-named-class-expression-method",
+    "GQ06": "static-numeral-named-class-expression-method",
     "GQ07": "bigint-named-class-method",
     "GQ08": "generator-numeric-named-method",
     "GQ12": "async-numeric-named-method"
@@ -1671,7 +1680,8 @@
          "11 declaration unpinned"
         ],
         "static-numeric-named-class-expression-method": [
-         "2 declaration unpinned"
+         "2 declaration unpinned",
+         "3 member blocks"
         ],
         "bigint-named-class-method": [
          "2 declaration unpinned"
@@ -1690,11 +1700,54 @@
         ],
         "overload-numeric-named-method": [
          "2 declaration unpinned",
-         "3 declaration unpinned"
+         "3 declaration unpinned",
+         "4 member blocks"
         ],
         "two-unpinned-names": [
          "2 declaration unpinned",
          "5 declaration unpinned"
+        ],
+        "inline-object-infinity-method": [
+         "2 declaration unpinned",
+         "3 member blocks"
+        ],
+        "generator-infinity-named-method": [
+         "2 declaration unpinned",
+         "3 member blocks"
+        ],
+        "async-infinity-named-method": [
+         "2 declaration unpinned",
+         "3 member blocks"
+        ],
+        "async-generator-infinity-named-method": [
+         "2 declaration unpinned",
+         "3 member blocks"
+        ],
+        "nested-in-infinity-named-method": [
+         "2 declaration unpinned",
+         "4 member blocks"
+        ],
+        "spelled-overflow-named-methods": [
+         "2 declaration unpinned",
+         "5 declaration unpinned",
+         "8 declaration unpinned",
+         "11 declaration unpinned",
+         "14 declaration unpinned",
+         "3 member blocks",
+         "6 member blocks",
+         "9 member blocks",
+         "12 member blocks",
+         "15 member blocks"
+        ],
+        "nested-in-bigint-named-method": [
+         "2 declaration unpinned",
+         "4 member blocks"
+        ],
+        "numeral-infinity-callee-method": [
+         "2 declaration unpinned"
+        ],
+        "static-numeral-named-class-expression-method": [
+         "2 declaration unpinned"
         ],
         "code-point-escaped-string-named-method": [
          "3 member blocks"
