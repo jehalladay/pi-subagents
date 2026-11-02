@@ -26,7 +26,9 @@
  * import() specifiers' paths, used assignment, five PLACEMENT words and REGISTRATION's cases off the top level exactly at its SITES
  * cells, every one of which a GRID row reads against the reading its SITES paragraph states, and every member of refusals #3 (O:1658, U1-U5, 18
  * members) and #4 (O:1745, U1-U6, 48 members) reds a CARRIED row - its gate witness page, pinned as the cured reader reads it -,
- * measured on helper copies (the delivery's battery; never run here).
+ * measured on helper copies (the delivery's battery; never run here). Its cut #2 (respin 1, after refusal #1 O:1796 on cut #1 283258b4)
+ * restates the helper's MODULE words to the SDK root, the SPELLINGS texts and this census's FORMS and SUBFORMS plants - every SPELLINGS
+ * text read by the GRID's STRAY and IMPORT rows - and holds refusal #4's labels and members to the tracker export.
  *
  * ROWS:
  *  ITEM: the description's enumerated items U1 and U2 and the R-B128 note's folded U2 recurrence (U2r), each label verbatim, each with
@@ -67,13 +69,29 @@
  * REFERENCE POSITIONS, SPOTS, binding-site, inline import, stray specifier, default and import() specifier path, used assignment, five
  * PLACEMENT words and REGISTRATION off the top level are claimed exactly at its SITES cells, all of which the GRID rows read; no reader
  * line changes, and no row, pin, plant or MUTANT row of cuts #1-#4 changes (the rule 16 case reads the helper's lists too).
+ * WB-TZ2.22 CUT #2 (respin 1, after refusal #1 O:1796 on cut #1 283258b4: U1 MEDIUM, three gate hollowings of the helper's MODULE words -
+ * GP14-B2-NO-EXTENSION-DOT-PREFIX-ONLY, GP14-B3-NO-EXTENSION-NOT-ABSOLUTE and GP14-B3-EXT-NONDOT-JS-TS-ONLY - kept the census green; U2
+ * their LEG 2 count; F2 the r4 CARRIED ITEMS anchored only inside this pair): the helper's SPELLINGS list now writes every MODULE
+ * extension word over the relative (../src/workbench/), repository (src/workbench/), absolute (/repo/src/workbench/), ./ and /
+ * prefixes, no extension over the first three (a provider path with no extension after a prefix of under four characters stays NOT
+ * CLAIMED), and the provider path alone with .js - 34 texts, each read by the cells of every STRAY and IMPORT entry - and its MODULE heading claims the
+ * MODULE words exactly at the SDK root, those texts and this census's FORMS and SUBFORMS plants, and BINDING namespace and type-only
+ * exactly at the IMPORT SITES cells and those plants (IMPORTS gain type-namespace, type-default and default-namespace, ten forms);
+ * SPELLINGS ANCHOR holds the texts to SPELLING_PREFIXES and the MODULE extension words (ts.Extension); ANCHOR (wb-tz2.22's notes)
+ * holds the r4 CARRIED ITEMS labels to the carrier's R-B317 fold lines and each r4 item's members to the Members line of wb-tz2.19's
+ * refusal #4 note. The helper's CASE FORMS chained-flags entry is spelled through <flag> (F3: its literal skip flag was the delivered
+ * files' one marker hit, comment-only data), so its cells are every FLAG word before concurrent, cut #1's skip cell among them. No
+ * reader line, row, pin or plant of cut #1 changes otherwise; the FROZEN SHAPE literal takes the new GRID entries and counts.
  * PINNED READER SET (wb-tz2.22; test/workbench-hx-live-set-reader-census.test.ts): GRID POSITION <id> (one case per POSITIONS entry),
  * GRID STRAY <id>, GRID IMPORT <id>, GRID USED <id>, GRID CASE <id>, GRID PLACE <list> <id>, GRID BINDING <id> and GRID INLINE <id> -
  * each asserts that every cell the helper's SITES paragraphs build from its entry reads the reading they state, observed equal; SITES -
  * the lists parse and their marks stand once; CARRIED <witness> (one case per CARRIED row) - its gate witness page reads its pins,
- * observed equal; ANCHOR (wb-tz2.22) and ANCHOR (CARRIED). Each positive claim's independent falsifier: a one-edit reader mutant that
- * drops a cell's reading reds that GRID case, and a carried member reds its CARRIED case (measured on helper copies); the helper's lists
- * and wb-tz2.22's description anchor the rows.
+ * observed equal; ANCHOR (wb-tz2.22) and ANCHOR (CARRIED); and (cut #2) SPELLINGS ANCHOR - the SPELLINGS texts are SPELLING_PREFIXES
+ * with the MODULE extension words, observed equal - and ANCHOR (wb-tz2.22's notes) - the r4 CARRIED ITEMS labels are the carrier's
+ * R-B317 fold lines and each r4 item's members the names its refusal #4 Members line writes, observed equal. Each positive claim's
+ * independent falsifier: a one-edit reader mutant that drops a cell's reading reds that GRID case (a MODULE spelling's drop reds the
+ * STRAY and IMPORT cases of its text), and a carried member reds its CARRIED case (measured on helper copies); the helper's lists,
+ * wb-tz2.22's description and notes, wb-tz2.19's refusal #4 note and ts.Extension anchor the rows.
  *
  * CUT #4 (orchestrator ruling R-B252, the FAIL-CLOSED CORE, after refusal #3 O:1658 on cut #3 3c7091ba; exit child wb-tz2.22): the
  * helper's claim words and its registered sub-forms were narrowed, meant to the sub-forms these rows pin (refusal #4 O:1745 measured 48
@@ -111,21 +129,29 @@
  * wb-tz2.19's notes, whose refusal #1 UNMET lines U1-U4 (O:1547; each the FIRST line opening with its prefix) together name exactly
  * the SUBFORMS rows' members (H<n>). wb-tz2.22's description (append-never: its 'Unmet items verbatim' labels U1-U5 are the helper's
  * r3 CARRIED ITEMS, and its 'Acceptance:' line counts the r3 members); the helper's SITES lists (every GRID cell) and its CARRIED and
- * CARRIED ITEMS lists (the CARRIED rows, each item's members counted or named by its label).
+ * CARRIED ITEMS lists (the CARRIED rows, each item's members counted or named by its label). wb-tz2.22's notes (cut #2; append-only: its
+ * R-B317 fold block - the U<n>- lines after the first line opening with R4_FOLD, each the FIRST notes line opening with its prefix - holds
+ * refusal #4's unmet labels, and those that count members are the helper's r4 CARRIED ITEMS verbatim); wb-tz2.19's refusal #4 note
+ * (O:1745; the first Members line after each r4 label's line names exactly that item's members); and the MODULE extension words
+ * (ts.Extension, through the ANCHOR above) that every SPELLING_PREFIXES prefix takes in the helper's SPELLINGS list, and the class guard
+ * line wb-tz2.22's refusal #1 note binds (the FIRST notes line holding GUARD), whose relative, repository and absolute prefix classes are
+ * SPELLING_PREFIXES entries of four or more characters, so each takes no extension too.
  * SELF-ANCHORED (held only by this file's literals; a coordinated removal from all of them reads green, and that is NOT claimed): the
  * CONTROLS rows, the RESIDUALS rows, BOUNDARY, the q9 member texts beyond their count, the q7 row, a FORMS plant of a word that keeps
  * another plant, a SUBFORMS row of a sub-form that keeps another row, which SUBFORMS row carries a member (the anchor holds the
  * members' union), the plant and pins of a SUBFORMS row (refusal #2 F3: a row's plant and pins swapped for another row's of the same
  * count read green), the kill lists of the MUTANT rows beyond the first, the line a code mutant's row names, and a CARRIED page swapped
- * for another in both the helper's CARRIED list and this census.
+ * for another in both the helper's CARRIED list and this census; SPELLING_PREFIXES's ./ and / entries (either removed from it, and its
+ * texts from the helper's SPELLINGS list and the FROZEN SHAPE literal, together reads green).
  * FROZEN SHAPE (standing rule 16): one literal pins every row as <table>:<id>:<pin count> (FORMS: <pins>/<without>; SUBFORMS: <pins>,
  * or <pins>/<without> for a row read without a word; ITEM: its member count; MUTANT: its kill count; CARRIED: its pin count; CARRIED-ITEM:
- * its member count; GRID: each SITES list entry, with its cell count for a POSITIONS, STRAYS, USES or CASES entry and 1 otherwise, the
- * LOCALS entry with its entry count).
+ * its member count; GRID: each SITES list entry, with its cell count for a POSITIONS, STRAYS, USES, CASES, BINDINGS, INLINES, IMPORTS or
+ * PLACES entry and 1 otherwise, the LOCALS entry with its entry count).
  *
  * NOT CLAIMED: that this census runs a code mutant (GM58, the gate's refusal #1, #2, #3 and #4 members and the seat's battery members are
  * measured on helper copies, the delivery's battery); a refusal #3 or #4 member's form beyond its CARRIED page and the SITES cells; a form the helper's REFERENCE POSITIONS and NOT CLAIMED paragraphs leave out
- * (CUT #4); any hx behaviour, or that the native tier ran; scope (the reader reads a reference by spelling); a drive that reaches hx
+ * (CUT #4); a provider path whose prefix no SPELLINGS text writes, beyond the FORMS and SUBFORMS plants of one (cut #2); any hx
+ * behaviour, or that the native tier ran; scope (the reader reads a reference by spelling); a drive that reaches hx
  * through no HX local and no M5 import (R-LIVE-INDIRECT); wb-tz2.9's census itself - its W, S, T and N rows, its claim scanner and
  * its ROUTE reader stay with that bead, whose re-cut restates its LIVE SET reader over this helper (R-B128).
  *
@@ -158,6 +184,7 @@ import {
   MODULE_FORMS,
   NON_CASE_MEMBERS,
   PLACEMENT_FORMS,
+  PROVIDER_STEM,
   REFERENCE_FORMS,
   REGISTRATION_FORMS,
   type ReadOptions,
@@ -169,8 +196,23 @@ import {
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const BEAD = "wb-tz2.19";
 const PARENT = "wb-tz2.9";
-/** The carrier child (ruling R-B317) whose description anchors the r3 CARRIED rows. */
+/** The carrier child (ruling R-B317) whose description anchors the r3 CARRIED rows and whose notes anchor the r4 labels. */
 const CARRIER = "wb-tz2.22";
+/** The carrier's R-B317 fold heading (its notes' first line): the U<n>- lines after it are refusal #4's (O:1745) unmet labels. */
+const R4_FOLD = "RULE19 DEPENDENCY INVERSION R-B317 (ruling M:46826, refusal O:1745): members folded into wb-tz2.22";
+/** A refusal #4 member name as wb-tz2.19's refusal #4 note writes it. */
+const R4_MEMBER = /\bG13-[A-Z0-9]+(?:-[A-Z0-9]+)*/g;
+/** The class guard wb-tz2.22's refusal #1 (O:1796) bound on the bead: its first notes line holding this names the MODULE spelling classes. */
+const GUARD = "Class guard bound on the bead (rule 19(d))";
+/** The prefixes the helper's SPELLINGS list writes (wb-tz2.22 cut #2): each takes every MODULE extension word, and one of four or more
+ * characters takes no extension as well (no extension after a shorter prefix is NOT CLAIMED). */
+const SPELLING_PREFIXES: readonly { readonly id: string; readonly prefix: string }[] = [
+  { id: "relative", prefix: "../src/workbench/" },
+  { id: "repository", prefix: "src/workbench/" },
+  { id: "absolute", prefix: "/repo/src/workbench/" },
+  { id: "dot", prefix: "./" },
+  { id: "rooted", prefix: "/" },
+];
 const SUITE = `hx live-set reader census (${BEAD}, HX-ORIGINAL-GOALS-CLOSURE-R9)`;
 const HELPER = "test/helpers/hx-live-set-reader.ts";
 const CENSUS = "test/workbench-hx-live-set-reader-census.test.ts";
@@ -1606,23 +1648,48 @@ const FROZEN_SHAPE: readonly string[] = [
   "GRID:SPELLINGS:relative-mts:1",
   "GRID:SPELLINGS:relative-cts:1",
   "GRID:SPELLINGS:repository-ts:1",
+  "GRID:SPELLINGS:repository-js:1",
+  "GRID:SPELLINGS:repository-bare:1",
+  "GRID:SPELLINGS:repository-mjs:1",
+  "GRID:SPELLINGS:repository-cjs:1",
+  "GRID:SPELLINGS:repository-mts:1",
+  "GRID:SPELLINGS:repository-cts:1",
+  "GRID:SPELLINGS:absolute-js:1",
+  "GRID:SPELLINGS:absolute-ts:1",
+  "GRID:SPELLINGS:absolute-bare:1",
+  "GRID:SPELLINGS:absolute-mjs:1",
+  "GRID:SPELLINGS:absolute-cjs:1",
+  "GRID:SPELLINGS:absolute-mts:1",
+  "GRID:SPELLINGS:absolute-cts:1",
+  "GRID:SPELLINGS:dot-js:1",
+  "GRID:SPELLINGS:dot-ts:1",
+  "GRID:SPELLINGS:dot-mjs:1",
+  "GRID:SPELLINGS:dot-cjs:1",
+  "GRID:SPELLINGS:dot-mts:1",
+  "GRID:SPELLINGS:dot-cts:1",
+  "GRID:SPELLINGS:rooted-js:1",
+  "GRID:SPELLINGS:rooted-ts:1",
+  "GRID:SPELLINGS:rooted-mjs:1",
+  "GRID:SPELLINGS:rooted-cjs:1",
+  "GRID:SPELLINGS:rooted-mts:1",
+  "GRID:SPELLINGS:rooted-cts:1",
   "GRID:SPELLINGS:alone-js:1",
-  "GRID:STRAYS:require:72",
-  "GRID:STRAYS:import-actual:72",
-  "GRID:STRAYS:held:72",
-  "GRID:STRAYS:export-from:9",
-  "GRID:STRAYS:meta-resolve:72",
-  "GRID:STRAYS:property-value:72",
-  "GRID:STRAYS:new-argument:72",
-  "GRID:STRAYS:array-element:72",
-  "GRID:STRAYS:binary-operand:72",
-  "GRID:STRAYS:return:72",
-  "GRID:STRAYS:arrow-body:72",
-  "GRID:STRAYS:only-argument:72",
-  "GRID:STRAYS:later-argument:72",
-  "GRID:STRAYS:conditional:72",
-  "GRID:STRAYS:template-argument:72",
-  "GRID:STRAYS:template-later-argument:72",
+  "GRID:STRAYS:require:272",
+  "GRID:STRAYS:import-actual:272",
+  "GRID:STRAYS:held:272",
+  "GRID:STRAYS:export-from:34",
+  "GRID:STRAYS:meta-resolve:272",
+  "GRID:STRAYS:property-value:272",
+  "GRID:STRAYS:new-argument:272",
+  "GRID:STRAYS:array-element:272",
+  "GRID:STRAYS:binary-operand:272",
+  "GRID:STRAYS:return:272",
+  "GRID:STRAYS:arrow-body:272",
+  "GRID:STRAYS:only-argument:272",
+  "GRID:STRAYS:later-argument:272",
+  "GRID:STRAYS:conditional:272",
+  "GRID:STRAYS:template-argument:272",
+  "GRID:STRAYS:template-later-argument:272",
   "GRID:OPERATORS:equals:1",
   "GRID:OPERATORS:or-equals:1",
   "GRID:OPERATORS:and-equals:1",
@@ -1668,13 +1735,13 @@ const FROZEN_SHAPE: readonly string[] = [
   "GRID:CASE FORMS:wrapped-callee:1",
   "GRID:CASE FORMS:wrapped-title:1",
   "GRID:CASE FORMS:wrapped-member-key:1",
-  "GRID:CASES:top:185",
-  "GRID:CASES:describe:185",
-  "GRID:CASES:describe-function:185",
-  "GRID:CASES:nested-describe:185",
-  "GRID:CASES:suite:185",
-  "GRID:CASES:suite-describe:185",
-  "GRID:CASES:bare-name:185",
+  "GRID:CASES:top:210",
+  "GRID:CASES:describe:210",
+  "GRID:CASES:describe-function:210",
+  "GRID:CASES:nested-describe:210",
+  "GRID:CASES:suite:210",
+  "GRID:CASES:suite-describe:210",
+  "GRID:CASES:bare-name:210",
   "GRID:BINDINGS:declaration:40",
   "GRID:BINDINGS:declaration-let:40",
   "GRID:BINDINGS:declaration-later:40",
@@ -1706,13 +1773,16 @@ const FROZEN_SHAPE: readonly string[] = [
   "GRID:IMPORT LOCALS:sdk:1",
   "GRID:IMPORT LOCALS:aliased:1",
   "GRID:IMPORT LOCALS:namespace:1",
-  "GRID:IMPORTS:namespace:9",
-  "GRID:IMPORTS:default:9",
-  "GRID:IMPORTS:string-specifier:9",
-  "GRID:IMPORTS:template-specifier:9",
-  "GRID:IMPORTS:destructured-rest:9",
-  "GRID:IMPORTS:destructured-renamed:9",
-  "GRID:IMPORTS:destructured-shorthand:9",
+  "GRID:IMPORTS:namespace:34",
+  "GRID:IMPORTS:default:34",
+  "GRID:IMPORTS:string-specifier:34",
+  "GRID:IMPORTS:template-specifier:34",
+  "GRID:IMPORTS:destructured-rest:34",
+  "GRID:IMPORTS:destructured-renamed:34",
+  "GRID:IMPORTS:destructured-shorthand:34",
+  "GRID:IMPORTS:type-namespace:34",
+  "GRID:IMPORTS:type-default:34",
+  "GRID:IMPORTS:default-namespace:34",
   "GRID:PLACES:declaration:32",
   "GRID:PLACES:declaration-typed:32",
   "GRID:PLACES:declaration-wrapped:32",
@@ -2008,12 +2078,12 @@ function inlineCells(statement: string): Cell[] {
   if (named === undefined || page === undefined) return [{ id: "top/named", page: "<no LOCAL named, single ! or HOLDER top>", reading: [] }];
   return [{ id: "top/named", page: `${named.page} ${page}`, reading: [...localLines(named), `outside 1: ${call.replace(/\s+/g, "")}`] }];
 }
-/** The cells of an IMPORTS form: each SPELLINGS text; the form binds its entry. */
+/** The cells of an IMPORTS form: each SPELLINGS text; the form binds its entries, in binding order. */
 function importCells(entry: { readonly entry: string; readonly statement: string }): Cell[] {
   return sites().spellings.map(([spelling, path]) => ({
     id: spelling,
     page: `${entry.statement.replace(/[$^]/g, mark => (mark === "$" ? `"${path}"` : `\`${path}\``))} it("HX probe", () => { expect(1).toBe(1); });`,
-    reading: ["live", `local ${entry.entry}`],
+    reading: ["live", ...entry.entry.split("; ").map(read => `local ${read}`)],
   }));
 }
 /** The cells of a GRID entry that read otherwise than stated (none when the reader keeps every cell). */
@@ -2338,6 +2408,22 @@ describe(SUITE, () => {
     }
   });
 
+  it("SPELLINGS ANCHOR (wb-tz2.22 cut #2; the MODULE extension words, which ts.Extension anchors, and the prefixes refusal #1's class guard names): the helper's SPELLINGS texts are exactly each SPELLING_PREFIXES prefix with every MODULE extension word, a prefix of four or more characters with no extension too, and the provider path alone with .js; every prefix the guard names is such a prefix", { timeout: BUDGET_MS }, () => {
+    const extensions = words(MODULE_FORMS).filter(word => word.startsWith("."));
+    const stated = [
+      ...SPELLING_PREFIXES.flatMap(({ id, prefix }) =>
+        [...(prefix.length >= 4 ? [["bare", ""] as const] : []), ...extensions.map(extension => [extension.slice(1), extension] as const)].map(([suffix, extension]) => `${id}-${suffix}: ${prefix}${PROVIDER_STEM}${extension}`),
+      ),
+      `alone-js: ${PROVIDER_STEM}.js`,
+    ];
+    expect(extensions.length).toBeGreaterThan(0);
+    expect(sites().spellings.map(([id, path]) => `${id}: ${path}`).sort()).toEqual(stated.sort());
+    const guard = (beadRow(CARRIER)?.notes ?? "").split("\n").find(line => line.includes(GUARD)) ?? "";
+    const named = /\(([a-z]+), ([a-z]+) and ([a-z]+) prefixes; no extension and each extension\)/.exec(guard)?.slice(1) ?? [];
+    expect(named.length).toBe(3);
+    expect(named.filter(id => !SPELLING_PREFIXES.some(entry => entry.id === id && entry.prefix.length >= 4))).toEqual([]);
+  });
+
   it.each(sites().positions.map(entry => [entry.id, entry] as const))("GRID POSITION %s: in each holder it names and for each LOCAL, the cell reads its SITES reading", (_id, entry) => {
     const cells = positionCells(entry);
     expect(cells.length).toBeGreaterThan(0);
@@ -2407,6 +2493,29 @@ describe(SUITE, () => {
       const members = [...new Set(entries.filter(entry => entry.item === item).map(entry => entry.member))];
       const counted = /-(\d+)-MEMBERS-/.exec(label);
       expect({ item, held: counted === null ? members.filter(member => !label.includes(member)) : members.length }).toEqual({ item, held: counted === null ? [] : Number(counted[1]) });
+    }
+  });
+
+  it("ANCHOR (wb-tz2.22's notes and wb-tz2.19's refusal #4 note, cut #2): the carrier's R-B317 fold lines that count members are the helper's r4 CARRIED ITEMS verbatim, in order, and each r4 item's members are exactly the names the first Members line after its label's line in wb-tz2.19's notes writes", { timeout: BUDGET_MS }, () => {
+    const notes = (beadRow(CARRIER)?.notes ?? "").split("\n");
+    const at = notes.findIndex(line => line.startsWith(R4_FOLD));
+    expect(at).toBeGreaterThanOrEqual(0);
+    const block: string[] = [];
+    for (const line of notes.slice(at + 1)) {
+      if (!/^U\d+-/.test(line)) break;
+      block.push(line);
+    }
+    // Notes are append-only: each fold line is the first notes line opening with its U<n>- prefix (a later note quoting one binds nothing).
+    expect(block.filter(line => notes.find(other => other.startsWith(/^U\d+-/.exec(line)?.[0] ?? line)) !== line)).toEqual([]);
+    const items = carriedLists().items.filter(([item]) => item.startsWith("r4-"));
+    expect(items.map(([item, label]) => `${item}: ${label}`)).toEqual(block.filter(line => /-\d+-MEMBERS-/.test(line)).map(line => `r4-${/^(U\d+)-/.exec(line)?.[1] ?? ""}: ${line}`));
+    const refusal = (beadRow(BEAD)?.notes ?? "").split("\n");
+    for (const [item, label] of items) {
+      const labelAt = refusal.findIndex(line => line.startsWith(`${label}.`));
+      const membersLine = labelAt < 0 ? undefined : refusal.slice(labelAt + 1).find(line => line.startsWith("Members"));
+      const named = [...new Set(membersLine?.match(R4_MEMBER) ?? [])].sort();
+      const carried = [...new Set(carriedLists().entries.filter(entry => entry.item === item).map(entry => entry.member))].sort();
+      expect({ item, named }).toEqual({ item, named: carried });
     }
   });
 

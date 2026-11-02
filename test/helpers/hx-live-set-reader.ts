@@ -19,7 +19,13 @@
  * stray specifier, the path of the default import and of the string and template specifiers, used assignment, the PLACEMENT words case
  * body, import declaration, declaration source, declaration type and assignment binding, and REGISTRATION's cases off the top level;
  * and CARRIED below names every member of refusals #3 (O:1658) and #4 with the gate's witness page of it, each page pinned by a CARRIED
- * row of the census. NOT CLAIMED names what stays out.
+ * row of the census. Its cut #2 (respin 1, after its refusal #1 O:1796) narrows the MODULE words to the SPELLINGS texts below and the
+ * census's FORMS and SUBFORMS plants, and writes SPELLINGS as every MODULE extension word over a relative, a repository, an absolute, a
+ * ./ and a / prefix, no extension over the first three, and the provider path alone with .js; it spells CASE FORMS' chained-flags
+ * entry through <flag> (every FLAG word before concurrent, the skip cell of cut #1 among them); it claims BINDING namespace and type-only
+ * exactly at the IMPORT SITES cells, whose IMPORTS gain type-only namespace and default imports and a default beside a namespace
+ * import, and the census's plants - still no reader line. NOT CLAIMED
+ * names what stays out.
  *
  * READING (liveReading). Active code only: comments are trivia. An HX LOCAL is a name a BINDING form binds; its entry reads
  * `<form> <name>`, in binding order. A file is LIVE when it binds an HX local or holds an M5 import. An HX CASE is a case
@@ -29,9 +35,9 @@
  * SPOTS (where a reference stands that no PLACEMENT form reaches, so it reads OUTSIDE - claimed at the SITES cells below: the HOLDERS top, hook, describe, helper, named, fixture and unread are the top level, a hook, a describe body, a helper, a named function, a fixture and an unread registration form, and the POSITIONS table and value-* stand in a table and a value; a hook is a beforeAll hook, a describe body the body of a describe call at the top level, a helper a function declaration, the top level the file's own statements): a hook; a describe body; a helper; a named function; a fixture; a table; a value; an unread registration form; the top level.
  * NOT READ (the census's named residual R-LIVE-INDIRECT, each member a pinned quiet row): an hx drive that reaches hx through no HX local and no M5 import.
  *
- * MODULE (isHxModule; the specifiers that name an HX MODULE):
+ * MODULE (isHxModule; the specifiers that name an HX MODULE, claimed exactly at the SDK root, the SPELLINGS texts below and the census's FORMS and SUBFORMS plants):
  * - sdk root: the SDK package root, @hyperunix/sdk exactly (a subpath such as @hyperunix/sdk/raw names none)
- * - provider path: a path ending in providers/hyperunix after a slash, as a test file spells the provider module (../src/workbench/providers/hyperunix)
+ * - provider path: a path ending in providers/hyperunix after a slash, as a test file spells the provider module (../src/workbench/providers/hyperunix), claimed exactly at the SPELLINGS texts below and the census's FORMS and SUBFORMS plants
  * - provider path alone: the path providers/hyperunix itself, with nothing before it, written with the .js extension
  * - no extension: a provider path written with no extension
  * - .js: a provider path written with the .js extension
@@ -53,8 +59,8 @@
  * - named: a static import of an entry under its exported name, its clause's only specifier, from any module, the entry nativeHyperUnixFind, registerHyperUnixFind or HyperUnix (named)
  * - aliased: a static import of an entry under another local name, its clause's only specifier, the exported name an identifier, the entry nativeHyperUnixFind (aliased)
  * - aliased string: a static import of an entry under another local name, its clause's only specifier, the exported name a string literal, the entry nativeHyperUnixFind (aliased)
- * - type-only: a type-only import declaration or import specifier binds as the same import would without the marker
- * - namespace: a static namespace import of an HX module, the file's first statement (namespace)
+ * - type-only: a type-only import declaration or import specifier binds as the same import would without the marker, claimed exactly at the IMPORT SITES cells below and the census's FORMS and SUBFORMS plants
+ * - namespace: a static namespace import of an HX module, the file's first statement (namespace), claimed exactly at the IMPORT SITES cells below and the census's FORMS and SUBFORMS plants
  * - default: a static default import of an HX module, a provider path, the file's first statement (default), the path a SPELLINGS text as the IMPORT SITES cells below read it
  * - string specifier: an import() call whose first argument is a string literal naming a provider path is an M5 import, the path a SPELLINGS text as the IMPORT SITES cells below read it
  * - template specifier: an import() call whose first argument is a no-substitution template naming a provider path is an M5 import, the path a SPELLINGS text as the IMPORT SITES cells below read it
@@ -249,7 +255,7 @@
  * no-substitution template, for each HOLDER the STRAYS entry names and each SPELLINGS text. Read with every word, it reads live, the
  * LOCAL named's entry, then one UNRESOLVED line `1: <the literal as written>` per $ or ^, in source order, and nothing more (no stray
  * makes a case an HX case).
- * SPELLINGS [the provider paths a STRAY site names - its id, then its text; $ the text as a string literal, ^ as a no-substitution template]:
+ * SPELLINGS [the provider paths a STRAY site names - its id, then its text; $ the text as a string literal, ^ as a no-substitution template; every MODULE extension word over the relative, repository, absolute, ./ and / prefixes, no extension over the first three, and the provider path alone with .js]:
  * + relative-js: ../src/workbench/providers/hyperunix.js
  * + relative-ts: ../src/workbench/providers/hyperunix.ts
  * + relative-bare: ../src/workbench/providers/hyperunix
@@ -258,6 +264,31 @@
  * + relative-mts: ../src/workbench/providers/hyperunix.mts
  * + relative-cts: ../src/workbench/providers/hyperunix.cts
  * + repository-ts: src/workbench/providers/hyperunix.ts
+ * + repository-js: src/workbench/providers/hyperunix.js
+ * + repository-bare: src/workbench/providers/hyperunix
+ * + repository-mjs: src/workbench/providers/hyperunix.mjs
+ * + repository-cjs: src/workbench/providers/hyperunix.cjs
+ * + repository-mts: src/workbench/providers/hyperunix.mts
+ * + repository-cts: src/workbench/providers/hyperunix.cts
+ * + absolute-js: /repo/src/workbench/providers/hyperunix.js
+ * + absolute-ts: /repo/src/workbench/providers/hyperunix.ts
+ * + absolute-bare: /repo/src/workbench/providers/hyperunix
+ * + absolute-mjs: /repo/src/workbench/providers/hyperunix.mjs
+ * + absolute-cjs: /repo/src/workbench/providers/hyperunix.cjs
+ * + absolute-mts: /repo/src/workbench/providers/hyperunix.mts
+ * + absolute-cts: /repo/src/workbench/providers/hyperunix.cts
+ * + dot-js: ./providers/hyperunix.js
+ * + dot-ts: ./providers/hyperunix.ts
+ * + dot-mjs: ./providers/hyperunix.mjs
+ * + dot-cjs: ./providers/hyperunix.cjs
+ * + dot-mts: ./providers/hyperunix.mts
+ * + dot-cts: ./providers/hyperunix.cts
+ * + rooted-js: /providers/hyperunix.js
+ * + rooted-ts: /providers/hyperunix.ts
+ * + rooted-mjs: /providers/hyperunix.mjs
+ * + rooted-cjs: /providers/hyperunix.cjs
+ * + rooted-mts: /providers/hyperunix.mts
+ * + rooted-cts: /providers/hyperunix.cts
  * + alone-js: providers/hyperunix.js
  * STRAYS [UNRESOLVED's stray specifier sites - its id, the holders it stands in, then its statement]:
  * + require {all}: const hxRequired = require($);
@@ -279,8 +310,8 @@
  * IMPORT SITES (the import forms over each SPELLINGS path, claimed exactly at these cells): a cell is an IMPORTS statement with its $
  * put as a SPELLINGS text written as a string literal and its ^ as a no-substitution template, a space, then
  * `it("HX probe", () => { expect(1).toBe(1); });`, for each IMPORTS form and each SPELLINGS text. Read with every word, it reads live and
- * the form's entry, and nothing more.
- * IMPORTS [the import forms that bind an HX local from a SPELLINGS path - its id, the entry it reads, then its statement, $ the path as a string literal, ^ as a no-substitution template]:
+ * the form's entries, in binding order, and nothing more.
+ * IMPORTS [the import forms that bind an HX local from a SPELLINGS path - its id, the entries it reads (joined by '; ', in binding order), then its statement, $ the path as a string literal, ^ as a no-substitution template]:
  * + namespace | namespace hxModule | import * as hxModule from $;
  * + default | default hxModule | import hxModule from $;
  * + string-specifier | dynamic hxModule | const hxModule = await import($);
@@ -288,6 +319,9 @@
  * + destructured-rest | rest hxModule | const {...hxModule} = await import($);
  * + destructured-renamed | destructured hxModule | const {nativeHyperUnixFind: hxModule} = await import($);
  * + destructured-shorthand | destructured nativeHyperUnixFind | const {nativeHyperUnixFind} = await import($);
+ * + type-namespace | namespace hxModule | import type * as hxModule from $;
+ * + type-default | default hxModule | import type hxModule from $;
+ * + default-namespace | default hxDefault; namespace hxModule | import hxDefault, * as hxModule from $;
  * USED SITES (REFERENCE's used assignment, claimed exactly at these cells): a cell is a SOURCES LOCAL's page, a space, then a HOLDER
  * with its # put as a USES statement, its OP put as an OPERATORS operator and its @ as the LOCAL's name, for each HOLDER the USES entry
  * names, each operator and each SOURCES LOCAL. Read with every word, it reads live, the LOCAL's entries and `alias hxAssigned`, then -
@@ -333,7 +367,7 @@
  * + skipIf | it.skipIf(false) | HX probe | it.skipIf(false)("HX probe", async () => { expect(await @(process.cwd(), "hx.fs/regular-file", "src")).toBeDefined(); });
  * + element-flag | it["concurrent"] | HX probe | it["concurrent"]("HX probe", async () => { expect(await @(process.cwd(), "hx.fs/regular-file", "src")).toBeDefined(); });
  * + element-method | it["each"]([[1]]) | HX probe | it["each"]([[1]])("HX probe", async () => { expect(await @(process.cwd(), "hx.fs/regular-file", "src")).toBeDefined(); });
- * + chained-flags | it.skip.concurrent | HX probe | it.skip.concurrent("HX probe", async () => { expect(await @(process.cwd(), "hx.fs/regular-file", "src")).toBeDefined(); });
+ * + chained-flags | it.<flag>.concurrent | HX probe | it.<flag>.concurrent("HX probe", async () => { expect(await @(process.cwd(), "hx.fs/regular-file", "src")).toBeDefined(); });
  * + chained-method | it.each([[1]]).concurrent | HX probe | it.each([[1]]).concurrent("HX probe", async () => { expect(await @(process.cwd(), "hx.fs/regular-file", "src")).toBeDefined(); });
  * + declared | hxTest | HX probe | const hxTest = it; hxTest("HX probe", async () => { expect(await @(process.cwd(), "hx.fs/regular-file", "src")).toBeDefined(); });
  * + function-body | it | HX probe | it("HX probe", async function () { expect(await @(process.cwd(), "hx.fs/regular-file", "src")).toBeDefined(); });
@@ -541,7 +575,10 @@
  * specifier, a member key or a title; satisfies and a <T> assertion other than as a lone wrapper on a source, a non-null assertion
  * other than once on a source or a store chain's member base, and any wrapper but parentheses and as at any other site; a fifth
  * import-await step; a fourth store member; an assignment value two assignments deep; a fourth fixpoint round; a declared test API two
- * links back; a fourth chain link; the default, M5 or stray SDK root; the provider path alone written with no extension or another than .js; a case
+ * links back; a fourth chain link; the default, M5 or stray SDK root; the provider path alone written with no extension or another than .js; a provider path whose
+ * prefix no SPELLINGS text writes (a deeper relative, a package or another absolute path among them) beyond the census's FORMS and
+ * SUBFORMS plants of one (wb-tz2.22 cut #2: the MODULE heading); a namespace or type-only import at no IMPORT SITES cell beyond those
+ * plants (a type-only import of the SDK root and an import with attributes among them); a case
  * flag other than concurrent or a case method other than each written ['name']; a flag other than concurrent or sequential or a method
  * other than each past a chain's first link; a ['name'] member written on a chain link; a title that is an identifier, a call, a member, an element access, a tagged template, a decimal numeric literal, a template
  * with two or more substitutions or a binary expression other than +;
@@ -582,7 +619,7 @@ export const words = <W extends string>(roster: readonly Claim<W>[]): W[] => ros
 
 export const MODULE_FORMS = claims([
   ["sdk root", "the SDK package root, @hyperunix/sdk exactly (a subpath such as @hyperunix/sdk/raw names none)"],
-  ["provider path", "a path ending in providers/hyperunix after a slash, as a test file spells the provider module (../src/workbench/providers/hyperunix)"],
+  ["provider path", "a path ending in providers/hyperunix after a slash, as a test file spells the provider module (../src/workbench/providers/hyperunix), claimed exactly at the SPELLINGS texts below and the census's FORMS and SUBFORMS plants"],
   ["provider path alone", "the path providers/hyperunix itself, with nothing before it, written with the .js extension"],
   ["no extension", "a provider path written with no extension"],
   [".js", "a provider path written with the .js extension"],
@@ -607,8 +644,8 @@ export const BINDING_FORMS = claims([
   ["named", "a static import of an entry under its exported name, its clause's only specifier, from any module, the entry nativeHyperUnixFind, registerHyperUnixFind or HyperUnix (named)"],
   ["aliased", "a static import of an entry under another local name, its clause's only specifier, the exported name an identifier, the entry nativeHyperUnixFind (aliased)"],
   ["aliased string", "a static import of an entry under another local name, its clause's only specifier, the exported name a string literal, the entry nativeHyperUnixFind (aliased)"],
-  ["type-only", "a type-only import declaration or import specifier binds as the same import would without the marker"],
-  ["namespace", "a static namespace import of an HX module, the file's first statement (namespace)"],
+  ["type-only", "a type-only import declaration or import specifier binds as the same import would without the marker, claimed exactly at the IMPORT SITES cells below and the census's FORMS and SUBFORMS plants"],
+  ["namespace", "a static namespace import of an HX module, the file's first statement (namespace), claimed exactly at the IMPORT SITES cells below and the census's FORMS and SUBFORMS plants"],
   ["default", "a static default import of an HX module, a provider path, the file's first statement (default), the path a SPELLINGS text as the IMPORT SITES cells below read it"],
   ["string specifier", "an import() call whose first argument is a string literal naming a provider path is an M5 import, the path a SPELLINGS text as the IMPORT SITES cells below read it"],
   ["template specifier", "an import() call whose first argument is a no-substitution template naming a provider path is an M5 import, the path a SPELLINGS text as the IMPORT SITES cells below read it"],
