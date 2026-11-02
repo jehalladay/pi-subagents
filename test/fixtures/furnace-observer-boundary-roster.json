@@ -268,7 +268,33 @@
       "src/workbench/zz-boundary-private.ts": "export class ZzPlant {\n  #\\u004fbserverBoundaryV0 = 0;\n}\n",
       "src/workbench/zz-boundary-paren.ts": "export const PAREN = \"Furnace\" + \"Obs\" + (\"erver\" + \"BoundaryV0\");\n",
       "src/workbench/zz-boundary-backtick-split.ts": "export const TICKS = `Obs` + `erverBoundaryV0`;\n",
-      "test/fixtures/zz-boundary-array.json": "{ \"records\": [\"Furnace\\u004fbserverBoundaryV0\"] }\n"
+      "test/fixtures/zz-boundary-array.json": "{ \"records\": [\"Furnace\\u004fbserverBoundaryV0\"] }\n",
+      "config/zz-boundary-two.yaml": "record: \"\\x46urnace\\x4fbserverBoundaryV0\"\n",
+      "config/zz-boundary-upper.yaml": "record: \"Furnace\\x4FbserverBoundaryV0\"\n",
+      "config/zz-boundary-upper.yml": "record: \"Furnace\\u004FbserverBoundaryV0\"\n",
+      "config/zz-boundary-upper.toml": "record = \"Furnace\\U0000004FbserverBoundaryV0\"\n",
+      "config/zz-boundary-x-space.yaml": "record: \"The Furnace observer\\x20boundary record.\"\n",
+      "config/zz-boundary-x-tab.yaml": "record: \"The Furnace observer\\x09boundary record.\"\n",
+      "config/zz-boundary-x-lf.yaml": "record: \"The Furnace observer\\x0aboundary record.\"\n",
+      "config/zz-boundary-x-lf-upper.yaml": "record: \"The Furnace observer\\x0Aboundary record.\"\n",
+      "config/zz-boundary-u-tab.yml": "record: \"The Furnace observer\\u0009boundary record.\"\n",
+      "config/zz-boundary-u-lf.yml": "record: \"The Furnace observer\\u000aboundary record.\"\n",
+      "config/zz-boundary-u-lf-upper.yml": "record: \"The Furnace observer\\u000Aboundary record.\"\n",
+      "config/zz-boundary-long-tab.toml": "record = \"The Furnace observer\\U00000009boundary record.\"\n",
+      "config/zz-boundary-long-lf.toml": "record = \"The Furnace observer\\U0000000aboundary record.\"\n",
+      "config/zz-boundary-long-lf-upper.toml": "record = \"The Furnace observer\\U0000000Aboundary record.\"\n",
+      "config/zz-boundary-long-max.toml": "record = \"The Furnace observer\\U0010FFFFboundary record.\"\n",
+      "config/zz-boundary-single.yaml": "record: 'Furnace\\x4fbserverBoundaryV0'\n",
+      "config/zz-boundary-literal.toml": "record = 'Furnace\\U0000004fbserverBoundaryV0'\n",
+      "src/workbench/zz-boundary-kind-assertion.ts": "export const C = <string>\"\\u004fbserverBoundaryV0\";\n",
+      "src/workbench/zz-boundary-kind-assertion.mts": "export const C = <string>\"\\u004fbserverBoundaryV0\";\n",
+      "src/workbench/zz-boundary-kind-assertion.cts": "export const C = <string>\"\\u004fbserverBoundaryV0\";\n",
+      "src/workbench/zz-boundary-kind-jsx.tsx": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
+      "src/workbench/zz-boundary-kind-jsx.jsx": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
+      "qa/zz-boundary-kind-jsx.js": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
+      "qa/zz-boundary-kind-jsx.mjs": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
+      "qa/zz-boundary-kind-jsx.cjs": "export const A = <a>http://example.invalid</a>; export const B = \"\\u004fbserverBoundaryV0\";\n",
+      "test/fixtures/zz-boundary-unparseable.json": "{ record: FurnaceObserverBoundaryV0 }\n"
     },
     "pinPlant": "docs/workbench/zz-pin-plant.md",
     "augmentationPlant": {
@@ -4679,6 +4705,84 @@
               ],
               "test/fixtures/zz-boundary-array.json": [
                 "cooked"
+              ],
+              "config/zz-boundary-two.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-upper.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-upper.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary-upper.toml": [
+                "decoded"
+              ],
+              "config/zz-boundary-x-space.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-x-tab.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-x-lf.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-x-lf-upper.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-u-tab.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary-u-lf.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary-u-lf-upper.yml": [
+                "decoded"
+              ],
+              "config/zz-boundary-long-tab.toml": [
+                "decoded"
+              ],
+              "config/zz-boundary-long-lf.toml": [
+                "decoded"
+              ],
+              "config/zz-boundary-long-lf-upper.toml": [
+                "decoded"
+              ],
+              "config/zz-boundary-long-max.toml": [
+                "decoded"
+              ],
+              "config/zz-boundary-single.yaml": [
+                "decoded"
+              ],
+              "config/zz-boundary-literal.toml": [
+                "decoded"
+              ],
+              "src/workbench/zz-boundary-kind-assertion.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-assertion.mts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-assertion.cts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-jsx.tsx": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-kind-jsx.jsx": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-jsx.js": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-jsx.mjs": [
+                "cooked"
+              ],
+              "qa/zz-boundary-kind-jsx.cjs": [
+                "cooked"
+              ],
+              "test/fixtures/zz-boundary-unparseable.json": [
+                "raw"
               ]
             }
           }
@@ -4821,7 +4925,9 @@
             "quiet": {
               "substitution": true,
               "runtimeJoin": true,
-              "charCode": true
+              "charCode": true,
+              "trailingComputed": true,
+              "leadingComputed": true
             }
           }
         },
