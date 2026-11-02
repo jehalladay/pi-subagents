@@ -157,6 +157,11 @@
     "const e = record.owner.epoch;"
    ],
    [
+    "mixed-kind four-link chain",
+    "chain",
+    "const e = (globalThis as unknown as X).a[\"b-c\"]?.owner[\"epoch-at\"];"
+   ],
+   [
     "computed root",
     "chain",
     "const e = load().owner.epoch;"
@@ -920,6 +925,102 @@
    "/* one */"
   ],
   [
+   "R-SELF-TEXT",
+   "a string literal's own letters read case-folded",
+   "const s = \"MIXEDCASE\";",
+   "const s = \"mixedcase\";",
+   "MIXEDCASE",
+   "mixedcase"
+  ],
+  [
+   "R-SELF-TEXT",
+   "a template part's own letters read case-folded",
+   "const s = `MIXEDCASE ${pin}`;",
+   "const s = `mixedcase ${pin}`;",
+   "MIXEDCASE",
+   "mixedcase"
+  ],
+  [
+   "R-SELF-TEXT",
+   "a regex pattern's own letters read case-folded",
+   "const r = /MIXEDCASE/;",
+   "const r = /mixedcase/;",
+   "MIXEDCASE",
+   "mixedcase"
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a semicolon token read as nothing",
+   "const n = 1;",
+   "const n = 1",
+   ";",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a comma token read as nothing",
+   "const n = [1,2];",
+   "const n = [1 2];",
+   ",",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a parenthesis token read as nothing",
+   "const n = (1);",
+   "const n = 1);",
+   "(",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a closing parenthesis token read as nothing",
+   "const n = (1);",
+   "const n = (1;",
+   ")",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "an opening bracket token read as nothing",
+   "const n = [1];",
+   "const n = 1];",
+   "[",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a closing bracket token read as nothing",
+   "const n = [1];",
+   "const n = [1;",
+   "]",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "an opening brace token read as nothing",
+   "const n = {a: 1};",
+   "const n = a: 1};",
+   "{",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a closing brace token read as nothing",
+   "const n = {a: 1};",
+   "const n = {a: 1;",
+   "}",
+   ""
+  ],
+  [
+   "R-SELF-PUNCTUATION",
+   "a dot token read as nothing",
+   "const n = a.b;",
+   "const n = a b;",
+   ".",
+   ""
+  ],
+  [
    "R-SELF-COMMENT-ORDER",
    "a second JSDoc block between the same two tokens dropped",
    "const f = /** a */ /** a */ (x: number) => x;",
@@ -1107,6 +1208,90 @@
    "pinned": 0
   },
   {
+   "family": "R-SELF-TEXT",
+   "member": "a string literal's own letters read case-folded",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a template part's own letters read case-folded",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-TEXT",
+   "member": "a regex pattern's own letters read case-folded",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a semicolon token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 13
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a comma token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 4
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a parenthesis token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 9
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a closing parenthesis token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 9
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "an opening bracket token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 5
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a closing bracket token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 5
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "an opening brace token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a closing brace token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 0
+  },
+  {
+   "family": "R-SELF-PUNCTUATION",
+   "member": "a dot token read as nothing",
+   "erased": true,
+   "controls": [],
+   "pinned": 7
+  },
+  {
    "family": "R-SELF-COMMENT-ORDER",
    "member": "a second JSDoc block between the same two tokens dropped",
    "erased": true,
@@ -1275,6 +1460,7 @@
        "string:true",
        "template part:true",
        "property access:true",
+       "mixed-kind four-link chain:true",
        "computed root:true",
        "element access:true",
        "qualified name:true",
@@ -1323,6 +1509,7 @@
        "string: owner epoch",
        "template part:  owner epoch ",
        "property access: record.owner.epoch",
+       "mixed-kind four-link chain: globalThis.a.b-c.owner.epoch-at",
        "computed root: owner.epoch",
        "element access: record.owner.epoch",
        "qualified name: Owner.Epoch",
@@ -1410,7 +1597,8 @@
         "property access": 2,
         "element access": 2,
         "qualified name": 3,
-        "indexed access type": 2
+        "indexed access type": 2,
+        "total links": 4
        }
       }
      }

@@ -185,11 +185,24 @@
    "R-DOCUMENT-SCOPE": [
     "Q11"
    ]
+  },
+  "residualAnchor": {
+   "doc": "docs/workbench/14-qa-and-benchmarks.md",
+   "title": "14 — Test strategy, conformance suite, benchmark and adversarial controls",
+   "heading": "MW workflow-composition citation-status census residuals",
+   "columns": [
+    "Quiet row",
+    "Residual family",
+    "Exemplar",
+    "Clear form",
+    "Clear form reads"
+   ]
   }
  },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
   "the outside anchors: the bead's own row binds the rows, the pin quotes, the scopes, the citation, the carriers, the subjects and the existence words; wb-klr7's row and the producer block carry clause (c) and the status",
+  "the residual anchor: docs/14's residual table names exactly the residual families and their quiet rows, each row's exemplar is its quiet row's probe's, and its clear form reads what the table says",
   "A1",
   "A2",
   "A3",
@@ -499,6 +512,12 @@
        },
        {
         "id": "footnote-label",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-definition",
         "causes": [
          "unqualified"
         ]
