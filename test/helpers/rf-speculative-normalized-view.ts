@@ -184,9 +184,10 @@ const INVISIBLE = /[\p{Cf}\p{Default_Ignorable_Code_Point}]/gu;
  * { c1, c2 } written there, which is the page's verdict (marked 18.0.11 and parse5 7.1.2 read the probe as a page; the census
  * header names the oracle). The pin cases' rows: D1, the INLINE_MARKS runs its probes put beside modifier letters (Lm), letter
  * numbers (Nl) and the other letter (Lo) U+00AA; D2, the "</" its probes put before a letter outside ASCII; D3, the "<" its probes
- * put before a letter outside ASCII, a fullwidth one included; D4, the backslash its probes put before a line-start marker;
- * U1, the INLINE_MARKS cells its probes hold (refusal #4's IM05, IM33, IM35, IM37, IM45, IM46 and IM47); and U2, the carriage
- * returns its probes put inside a bogus comment and inside a comment (refusal #4's BC19 and HC08). On the probe of each of the
+ * put before a letter outside ASCII, a fullwidth one included; D4, the backslash its probes put before "#", ">", "|", "+", "*" or
+ * "-" at a line start, or between a line start's digit and "." or ")"; U1, the INLINE_MARKS cells its probes hold (refusal #4's
+ * IM05, IM33, IM35, IM37, IM45, IM46 and IM47); and U2, the carriage returns its probes put inside a bogus comment and inside a
+ * comment (refusal #4's BC19 and HC08). On the probe of each of the
  * census's three residual cases (R-BLOCK-MARKS, R-TILDES-AROUND-EMPHASIS and R-CR-QUOTE-BREAK) the view returns the literal
  * readings written there, whose verdict is not the page's: named over-reads. Every other reading of the view - each of these steps
  * at any input that is not a probe, and every other step - is NOT CLAIMED by this module or by the readers census.

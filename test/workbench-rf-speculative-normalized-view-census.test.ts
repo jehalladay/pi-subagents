@@ -32,23 +32,37 @@
  *   ">" after a carriage return read through its "-->").
  * - The residual cases R-BLOCK-MARKS, R-TILDES-AROUND-EMPHASIS and R-CR-QUOTE-BREAK (RESIDUALS below), each over its one probe.
  * - Case SHAPE (the frozen shape, standing rule 16): the rows as `${id}:${pins.length}`, every pin with its probe ids, the rows' pins in
- *   pin order, and the residual rows with their probes, each held to a literal.
+ *   pin order, the pins that carry a witness literal, and the residual rows with their probes, each held to a literal; and every
+ *   residual's row is one of the rows.
  * - Case ANCHOR (the outside anchors, read at run time from the tracked tracker export .beads/issues.jsonl and never retyped as the
- *   expectation): (1) wb-w4si's description numbers exactly rows D1-D4, in order, each line "<n>. <label>"; (2) the member lines of the
- *   R-B223 fold in wb-w4si's notes are exactly rows U1 and U2, in order, each the line "<id>-MEDIUM-...-R668-<label>-<its pin ids joined
- *   by '-'><tail>"; (3) in wb-eu94's notes, refusal #3's record (from its verdict line naming tip f0fb7686 to its BIND STEPS line)
- *   states in each D row's family ground line exactly that row's mutant ids, in order, and every D pin's "<name> <quote>", and refusal
- *   #4's record (tip 785870aa) every U pin's; (4) where a record quotes a pin's witness ('...', in the record's notation: {U+XXXX},
- *   {LF}, {backslash} and \r), that witness, decoded, is the pin's first probe.
+ *   expectation): (1) wb-w4si's description numbers exactly rows D1-D4: its numbered lines are, in order, "<n>. <label>" for row D<n>;
+ *   (2) the member lines of the R-B223 fold in wb-w4si's notes are exactly rows U1 and U2, in order, each the line
+ *   "<id>-MEDIUM-...-R668-<label>-<its pin ids joined by '-'><tail>"; (3) in wb-eu94's notes, refusal #3's record (from its verdict
+ *   line naming tip f0fb7686 to its BIND STEPS line) states in each D row's family ground line exactly that row's mutant ids, in order,
+ *   and every D pin's "<name> <quote>", and refusal #4's record (tip 785870aa) every U pin's; (4) the witnesses the two records quote
+ *   (a span in single quotes, on one line and holding no single quote, that opens "Pi serves" or "<div>Pi serves" and closes "." or
+ *   ".</div>", written in the record's notation - {U+XXXX}, {LF}, {backslash} and \r - and read decoded): for each U pin, the line of
+ *   refusal #4's bullet that names it quotes one after its "<name> <quote>" (or says "Same witness." there, which repeats the first one
+ *   the line above quotes), and that witness is exactly the pin's witness literal and, decoded, its first probe; for each D row,
+ *   refusal #3's paragraph that names the row's pins (from the last line opening "  (" before its first "<name> <quote>" to the first
+ *   line opening "  (" or "  Plants" after its last) quotes at least one witness, each is the witness literal and, decoded, the first
+ *   probe of a pin of the row, and a pin of the row carries a witness literal exactly when one of its probes is, decoded, a witness
+ *   that paragraph quotes - the literal then being one of them and, decoded, its first probe.
  *
  * CLAIMS AND THEIR FALSIFIERS. (1) On each probe the view returns exactly the literal reading written here: a reader edit that changes
  * one reading reds that pin case or residual case. (2) Each pin probe's literal verdict is the page's verdict (ORACLE below): an
  * independent page oracle that reads one pin probe otherwise falsifies it. (3) Each named mutant changes a reading of its own pin's
  * probes: the cutting seat applied each mutant's edits, verbatim from the gates' archived definitions, to a copy of the helper and read
- * the pin case named after it red; a pin whose probes stopped holding its form would read green there. (4) The rows, their labels,
- * their pins and the pins' quotes are the ones the tracker export records, and each quoted witness is its pin's first probe: a row or
- * a pin removed or relabelled - in one literal or in every literal together - reds SHAPE or ANCHOR, and a pin's probe list changed reds
- * SHAPE and, changed in every literal together, reds ANCHOR (4) where the pin's record quotes its witness (standing rule 16's CT1-CT6).
+ * the pin case named after it red; a pin whose probes stopped holding its form would read green there. (4) The rows, their ids and
+ * labels, their pins, and the pins' ids, names and quotes are the ones the tracker export records: a row or a pin removed, or one of
+ * these changed - in one literal or in every literal together - reds SHAPE or ANCHOR. The pins' witnesses are the ones ANCHOR (4)
+ * reads: a witness literal deleted or added alone reds SHAPE and ANCHOR (4), and with its SHAPE entry changed to match it still reds
+ * ANCHOR (4); a witness literal's text changed alone reds ANCHOR (4); a witness a record quotes, removed from every literal that holds
+ * it (the witness literals, the pins' probe lists, their SHAPE entries and PROBES), reds ANCHOR (4); and a U pin's witness literal or
+ * first probe changed, alone or in every literal together, reds ANCHOR (4). A pin's probe list changed reds SHAPE; changed in every
+ * literal together it reds ANCHOR (4) where it moves a D pin's witness from first place, drops a D pin's witness probe while the pin
+ * keeps its witness literal, or gives a D pin with no witness literal a probe that is a witness its paragraph quotes (standing rule
+ * 16's CT1-CT6).
  *
  * RESIDUALS (named, each with a pinned row; seat-found among the gates' witness lists; each case holds the view's literal joined
  * reading of its probe and that this verdict is not the probe's page verdict, so a change of the view there reds it):
@@ -64,12 +78,18 @@
  * at a line start, a mark run of four or more or of all three kinds, the backtick half of IM47's cell (a backtick pair the page renders
  * is a code span, which CODE_SPAN reads first, and a lone backtick the page shows as written), and every other step of the view. The
  * page verdicts are measured, not re-read: no page renderer runs here. A probe's text edited together with its literal readings is NOT
- * CLAIMED by this census, except where ANCHOR (4) holds it. A pin's probe list changed together with its shape entry is NOT CLAIMED by
- * this census beyond the first probe of a pin whose record quotes its witness (no record quotes one for G23-ME5, G23-NO5, G23-NO6,
- * G23-NO7, G23-ES02x or G23-ES04x): the mutant replay is what shows each pin's probes still red its mutant. The residual rows and the
- * probes marked seat are this file's own and no outside anchor holds them: removing one together with its shape entry is NOT CLAIMED
- * by this census. Mutant BC29 (gate-prep-6's alternate spelling of BC19) is no pin; BC19's probes red it too. The parent census's own
- * claims, rows and residuals are NOT CLAIMED by this census.
+ * CLAIMED by this census, except the probes ANCHOR (4) holds to a witness (the first probe of each pin that carries a witness
+ * literal). Any other change of a pin's probe list made in every literal together is NOT CLAIMED by this census: the mutant replay is
+ * what shows each pin's probes still red its mutant. Refusal #3 quotes each family's witnesses for the whole family, not per member,
+ * so which of a D row's pins carry which of its paragraph's witnesses is this census's choice: an every-literal change that only
+ * moves those witnesses among the row's pins - a D pin's witness literal and first probe changed together to another witness its
+ * paragraph quotes, a witness taken from a D pin (its literal, its probe and both its SHAPE entries together) while another pin of
+ * the row keeps it as its literal and first probe, or a witness its paragraph quotes given to a D pin that carries none (literal,
+ * first probe and both SHAPE entries together) - is NOT CLAIMED by this census. The residual rows and the probes marked seat are this
+ * file's own and no outside anchor holds them:
+ * removing one together with its shape entry, or moving a residual to another of the rows together with its shape entry, is NOT
+ * CLAIMED by this census. Mutant BC29 (gate-prep-6's alternate spelling of BC19) is no pin; BC19's probes red it too. The parent
+ * census's own claims, rows and residuals are NOT CLAIMED by this census.
  *
  * ORACLE: marked 18.0.11 (this repository's) renders a probe, parse5 7.1.2 (installed outside the repository) parses the HTML, and the
  * text a reader sees - the text outside the elements a browser hides, a blank line at each block element's edges and in place of an img
@@ -96,6 +116,13 @@ const FOLD_CLOSE = "\nrule19-invert idem";
 const FOLD_LEAD = "-MEDIUM-RESPIN-R-B175-FAIL-CLOSED-CORE-NO-READER-BEHAVIOUR-CLAIM-BEYOND-PINS-UNMET-RULE16-LEG2-R514-R515-R668-";
 /** What follows "<name> <quote>" where a refusal record names a pin. */
 const CITE_ENDS = [",", " and ", "."];
+/** A witness as a refusal record quotes one: a probe sentence in single quotes, in the record's notation (decoded() reads it). */
+const QUOTED_WITNESS = /'((?:<div>)?Pi serves [^'\n]*\.(?:<\/div>)?)'/g;
+/** Refusal #3's family paragraphs each open on a line that opens PARAGRAPH_OPEN; the line after the last one opens PARAGRAPH_AFTER. */
+const PARAGRAPH_OPEN = "\n  (";
+const PARAGRAPH_AFTER = "\n  Plants";
+/** What a refusal #4 member bullet says after its cite where it repeats the witness the bullet line above it quotes. */
+const SAME_WITNESS = "Same witness.";
 
 /** A docs verdict: c1, a served speculative sentence (C1); c2, any speculative sentence (C2). */
 interface Verdict {
@@ -353,6 +380,47 @@ function probeOf(id: string): Probe {
   if (probe === undefined) throw new Error(`${id}: no such probe`);
   return probe;
 }
+function pinOf(id: string): Pin {
+  const pin = PINS.find(candidate => candidate.id === id);
+  if (pin === undefined) throw new Error(`${id}: no such pin`);
+  return pin;
+}
+/** Where a record names the pin: the index of its first "<name> <quote>" that one of CITE_ENDS follows (-1 when none does). */
+function citeAt(record: string, pin: Pin): number {
+  const cite = `${pin.name} ${pin.quote}`;
+  const starts = CITE_ENDS.map(end => record.indexOf(`${cite}${end}`)).filter(at => at >= 0);
+  return starts.length === 0 ? -1 : Math.min(...starts);
+}
+/** The witnesses a stretch of record text quotes, in order and in the record's notation. */
+function quotedWitnesses(text: string): string[] {
+  return [...text.matchAll(QUOTED_WITNESS)].map(match => match[1] ?? "");
+}
+/**
+ * Refusal #3's paragraph that names a D row's pins: from the last PARAGRAPH_OPEN before the first of their cites to the first
+ * PARAGRAPH_OPEN or PARAGRAPH_AFTER after the last of them (empty when a pin is not named there or either bound is missing).
+ */
+function familyParagraph(record: string, pins: readonly Pin[]): string {
+  const cites = pins.map(pin => citeAt(record, pin));
+  if (cites.length === 0 || cites.some(at => at < 0)) return "";
+  const start = record.lastIndexOf(PARAGRAPH_OPEN, Math.min(...cites));
+  const last = Math.max(...cites);
+  const ends = [record.indexOf(PARAGRAPH_OPEN, last), record.indexOf(PARAGRAPH_AFTER, last)].filter(at => at >= 0);
+  return start < 0 || ends.length === 0 ? "" : record.slice(start, Math.min(...ends));
+}
+/**
+ * The witness refusal #4 quotes for a U pin: the first one the line of the bullet that names it quotes after its cite or, where that
+ * line says SAME_WITNESS there instead, the first one the line above quotes (undefined when the pin is not named or neither quotes one).
+ */
+function bulletWitness(record: string, pin: Pin): string | undefined {
+  const at = citeAt(record, pin);
+  const lineStart = record.lastIndexOf("\n", at);
+  if (at < 0 || lineStart < 0) return undefined;
+  const lineEnd = record.indexOf("\n", at);
+  const rest = record.slice(at + `${pin.name} ${pin.quote}`.length, lineEnd < 0 ? record.length : lineEnd);
+  const own = quotedWitnesses(rest)[0];
+  if (own !== undefined || !rest.includes(SAME_WITNESS)) return own;
+  return quotedWitnesses(record.slice(record.lastIndexOf("\n", lineStart - 1) + 1, lineStart))[0];
+}
 /** The view's readings of a probe's text: normalized() and docsVerdict(). */
 function readingOf(text: string): { readonly view: string; readonly verdict: Verdict } {
   return { view: normalized(text), verdict: docsVerdict(text) };
@@ -397,7 +465,7 @@ function decoded(witness: string): string {
 }
 
 describe("wb-w4si normalized-view readers census (test/helpers/rf-speculative-normalized-view.ts): 23 pin cases holding literal probe readings, the docs verdict the page's, that their named wb-eu94 reader mutants change, 3 residual cases, SHAPE and ANCHOR", () => {
-  it("SHAPE: the rows, their pins, each pin's probe ids and the residual rows stay frozen", () => {
+  it("SHAPE: the rows, their pins, each pin's probe ids, the pins that carry a witness literal and the residual rows stay frozen", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["D1:4", "D2:1", "D3:2", "D4:7", "U1:7", "U2:2"]);
     expect(PINS.map(pin => `${pin.id}:${pin.probes.join(",")}`)).toEqual([
       "G23-IM1:D1-NL-STAR,D1-NL-TILDE,D1-NL-STAR-SHY,D1-NL-TILDE-SHY",
@@ -425,11 +493,34 @@ describe("wb-w4si normalized-view readers census (test/helpers/rf-speculative-no
       "HC08:U2-COMMENT,U2-COMMENT-EMPTY",
     ]);
     expect(ROWS.flatMap(row => row.pins), "the rows hold every pin once, in pin order").toEqual(PINS.map(pin => pin.id));
+    expect(PINS.filter(pin => pin.witness !== undefined).map(pin => pin.id), "the pins that carry a witness literal").toEqual([
+      "G23-IM1",
+      "G23-IM2",
+      "G23-IM7",
+      "G23-IM8",
+      "G23-BC9",
+      "G23-ME4",
+      "G23-NO2",
+      "G23-NO3",
+      "IM05",
+      "IM33",
+      "IM35",
+      "IM37",
+      "IM45",
+      "IM46",
+      "IM47",
+      "BC19",
+      "HC08",
+    ]);
     expect(RESIDUALS.map(residual => `${residual.id}:${residual.row}:${residual.probe}`)).toEqual([
       "R-BLOCK-MARKS:D1:R-BLOCK-MARKS",
       "R-TILDES-AROUND-EMPHASIS:U1:R-TILDES-AROUND-EMPHASIS",
       "R-CR-QUOTE-BREAK:U2:R-CR-QUOTE-BREAK",
     ]);
+    expect(
+      RESIDUALS.filter(residual => !ROWS.some(row => row.id === residual.row)).map(residual => residual.id),
+      "every residual's row is one of the rows",
+    ).toEqual([]);
     const used = new Set([...PINS.flatMap(pin => pin.probes), ...RESIDUALS.map(residual => residual.probe)]);
     expect(PROBES.map(probe => probe.id).filter(id => !used.has(id)), "every probe is read by a pin or a residual").toEqual([]);
     expect(
@@ -438,13 +529,13 @@ describe("wb-w4si normalized-view readers census (test/helpers/rf-speculative-no
     ).toEqual(["D1-LM-STAR-SHY", "D1-LM-TILDE-SHY", "D1-LO-STAR-SHY", "D1-NL-STAR-SHY", "D1-NL-TILDE-SHY", "D2-GREEK", "D2-FULLWIDTH", "D3-FULLWIDTH-CAPITAL"]);
   });
 
-  it("ANCHOR: the rows, their labels, their pins, the pins' quotes and the quoted witnesses are the ones wb-w4si's and wb-eu94's tracker-export rows record", () => {
+  it("ANCHOR: the rows' ids and labels, their pins, the pins' cites and the pins' witnesses are the ones wb-w4si's and wb-eu94's tracker-export rows record", () => {
     const child = exportRow("wb-w4si");
     const parent = exportRow("wb-eu94");
     expect(
       child.description.split("\n").filter(line => /^\d+\. /.test(line)),
-      "wb-w4si's description numbers exactly rows D1-D4, in order, each '<n>. <label>'",
-    ).toEqual(FAMILIES.map((row, at) => `${at + 1}. ${row.label}`));
+      "wb-w4si's description numbers exactly rows D1-D4: its numbered lines are, in order, '<n>. <label>' for row D<n>",
+    ).toEqual(FAMILIES.map(row => `${row.id.replace(/^D/, "")}. ${row.label}`));
     expect(
       between(child.notes, FOLD_OPEN, FOLD_CLOSE).split("\n").slice(1),
       "the R-B223 fold's member lines in wb-w4si's notes are exactly rows U1 and U2, in order",
@@ -463,9 +554,34 @@ describe("wb-w4si normalized-view readers census (test/helpers/rf-speculative-no
         if (pin === undefined) continue;
         const cite = `${pin.name} ${pin.quote}`;
         expect(CITE_ENDS.some(end => record.includes(`${cite}${end}`)), `${row.id}'s refusal record names ${id} as '${cite}'`).toBe(true);
+      }
+    }
+    for (const row of FAMILIES) {
+      const pins = row.pins.map(pinOf);
+      const witnesses = quotedWitnesses(familyParagraph(refusal3, pins));
+      expect(witnesses.length > 0, `refusal #3's paragraph naming ${row.id}'s pins quotes a witness`).toBe(true);
+      const texts = witnesses.map(decoded);
+      for (const witness of witnesses) {
+        expect(
+          pins.some(pin => pin.witness === witness && decoded(witness) === probeOf(pin.probes[0] ?? "").text),
+          `${row.id}: the witness '${witness}' its paragraph quotes is a pin's witness literal and, decoded, its first probe`,
+        ).toBe(true);
+      }
+      for (const pin of pins) {
+        expect(pin.witness !== undefined, `${pin.id} carries a witness literal exactly when one of its probes is a witness its paragraph quotes`).toBe(
+          pin.probes.some(id => texts.includes(probeOf(id).text)),
+        );
         if (pin.witness === undefined) continue;
-        expect(record.includes(`'${pin.witness}'`), `${row.id}'s refusal record quotes ${id}'s witness '${pin.witness}'`).toBe(true);
-        expect(decoded(pin.witness), `${id}'s quoted witness, decoded, is its first probe`).toBe(probeOf(pin.probes[0] ?? "").text);
+        expect(witnesses, `${pin.id}'s witness literal is one its paragraph quotes`).toContain(pin.witness);
+        expect(decoded(pin.witness), `${pin.id}'s witness, decoded, is its first probe`).toBe(probeOf(pin.probes[0] ?? "").text);
+      }
+    }
+    for (const row of FOLDED) {
+      for (const pin of row.pins.map(pinOf)) {
+        const witness = bulletWitness(refusal4, pin);
+        expect(witness, `refusal #4's bullet naming ${pin.id} quotes its witness`).toBeDefined();
+        expect(pin.witness, `${pin.id}'s witness literal is the one its bullet quotes`).toBe(witness);
+        expect(decoded(witness ?? ""), `${pin.id}'s witness, decoded, is its first probe`).toBe(probeOf(pin.probes[0] ?? "").text);
       }
     }
   });
