@@ -4,15 +4,17 @@
  * orchestrator ruling R-B96, in the enumerate-the-resolvable form (the standing rule 14 shape) that R-B79 bound for T1 identity
  * and R-B96 binds for the export-field class: the census claims exactly the items CLAIMS lists, each bound to an executable
  * falsifier this file runs, and every form outside them is a named residual with a pinned quiet row (RESIDUALS).
- * wb-ulnv (the R694 follow-up of wb-tz2.7's landing 708) adds R-DECODER and R-HIDDEN's wrapped members: its cut #1 (seat
- *   ws-05, run g10-work-s151, trunk 42ab54d2) named them; its cut #2 (seat ws-01, run g10-work-s158; authored at trunk e792b37,
- *   base of record 89109cd3) answers wb-ulnv refusal #1 (U1-U3 and F5-F7 in that bead's note) by pinning the plants those quiet
- *   rows and T2 claim; and its cut #3 (seat ws-04, run g10-work-s162, trunk ee72db2) answers wb-ulnv refusal #2 (its U1: the
- *   planted bindings were pinned by name and property kind only, so the gate's GV1-GV6 emptied six bindings' documents unread)
- *   under orchestrator ruling R-B201, in the enumerate-the-resolvable form: R-HIDDEN's DOCUMENT WITNESS reads the documents
- *   behind every planted binding but WRAPPED_CASES (whose wrapped members the wrapped-kind literal reads) through the channel
- *   its form names, the content digest pins the planted module entries' bytes, and R-SELF-HOLLOW pins both emptyings as
- *   unseen by every outside reading.
+ * wb-ulnv (the R694 follow-up of wb-tz2.7's landing 708) adds R-DECODER and R-HIDDEN's wrapped members: its cut #1 (seat ws-05,
+ *   run g10-work-s151, trunk 42ab54d2) named them; its cut #2 (seat ws-01, run g10-work-s158; authored at trunk e792b37, base
+ *   of record 89109cd3) answers wb-ulnv refusal #1 (U1-U3 and F5-F7 in that bead's note) by pinning the plants those quiet rows
+ *   and T2 claim; its cut #3 (seat ws-04, run g10-work-s162; authored at trunk ee72db2, base of record f63d3896) answers
+ *   wb-ulnv refusal #2 (its U1: the planted bindings were pinned by name and property kind only, so the gate's GV1-GV6 emptied
+ *   six bindings' documents unread) under orchestrator ruling R-B201, in the enumerate-the-resolvable form: R-HIDDEN's DOCUMENT
+ *   WITNESS reads the documents behind every planted binding but WRAPPED_CASES (whose wrapped members the wrapped-kind literal
+ *   reads) through the channel its form names, the content digest pins the planted module entries' bytes, and R-SELF-HOLLOW
+ *   pins both emptyings as unseen by every outside reading; and its cut #4 (seat ws-04, run g10-work-s182, authored at trunk
+ *   04c8bbb0) answers wb-ulnv refusal #3 (its U1: the prototype and bytes channels were named twins of the gate's TV3 and TV5)
+ *   under orchestrator ruling R-B243, in the fail-closed core form: that twin identity is NOT CLAIMED (R-HIDDEN below).
  * Statement: STATEMENT below, the bead's export title verbatim after its id prefix. Acceptance: ACCEPTANCE below, verbatim: the
  * export description's only ACCEPTANCE line, three clauses.
  *
@@ -179,14 +181,15 @@
  *   (resultCases, loadCases, INHERITED_CASES, WEAK_CASES, WEAK_SET, VAULT, PENDING_CASES, CASE_BYTES and WRAPPED_CASES as
  *   enumerable data, CASES as an enumerable accessor, HIDDEN_CASES as non-enumerable data and the symbol-keyed cases); the
  *   documents every binding but WRAPPED_CASES holds (DOCUMENT WITNESS: documentChannels, the census-side twins of the gate's
- *   TV1-TV6 walk changes and five more channels, none of which the walk itself reads), each read through the channel its form
- *   names and then walked as the walk walks a value: resultCases and loadCases called (call), loadCases's own enumerable data
- *   (own, TV4's), INHERITED_CASES's prototype's own enumerable data (prototype, TV3's), WEAK_CASES's entry and WEAK_SET's
- *   membership for the planted document (get, has), VAULT's private field through Vault's own static reader (private),
- *   PENDING_CASES's resolution as node:util's inspect renders it (resolution), CASE_BYTES decoded as UTF-8 JSON (bytes, TV5's),
- *   CASES's getter invoked (getter, TV6's), HIDDEN_CASES's value (non-enumerable, TV2's) and the symbol-keyed binding's value
- *   (symbol, TV1's): the walk reaches the representation in them at exactly the twelve paths the literal names, so any of those
- *   bindings emptied of its documents (the gate's GV1-GV6 among them) is read there; the wrapped members, WRAPPED_CASES'
+ *   TV1, TV2, TV4 and TV6 walk changes and seven more channels, none of which the walk itself reads), each read through the
+ *   channel its form names and then walked as the walk walks a value: resultCases and loadCases called (call), loadCases's own
+ *   enumerable data (own, TV4's), INHERITED_CASES's prototype's own enumerable data (prototype), WEAK_CASES's entry and
+ *   WEAK_SET's membership for the planted document (get, has), VAULT's private field through Vault's own static reader
+ *   (private), PENDING_CASES's resolution as node:util's inspect renders it (resolution), CASE_BYTES decoded as UTF-8 JSON
+ *   (bytes), CASES's getter invoked (getter, TV6's), HIDDEN_CASES's value (non-enumerable, TV2's) and the symbol-keyed
+ *   binding's value (symbol, TV1's): the walk reaches the representation in them at exactly the twelve paths the literal names,
+ *   so any of those bindings emptied of its documents (the gate's GV1-GV6 among them) is read there; the wrapped members,
+ *   WRAPPED_CASES'
  *   documents' representations, as the namespace carries them where the walk reads (reached through own enumerable data
  *   properties; beside the quiet, the same plant with each member replaced by the representation itself is read by the walk at
  *   exactly those five paths): one of each kind by the realm's own checks (a String wrapper by node:util's isStringObject, an
@@ -194,7 +197,9 @@
  *   (String.prototype.valueOf, the method's result, the description, Function.prototype.toString) including the representation;
  *   and the planted module entries (cases, samples, shapes and wrapped, with the declarations of cases and wrapped), each of
  *   which, shipped alone in today's release, makes T1 identity's tarballs facet read another release, and whose paths and bytes
- *   the content digest of the six pins, so no entry's documents change unread.
+ *   the content digest of the six pins, so no entry's documents change unread. The DOCUMENT WITNESS's prototype and bytes
+ *   channels are NOT CLAIMED as twins of the gate's TV3 and TV5 (wb-ulnv refusal #3's GV3X, GV5X and GV5Y): that exact-twin
+ *   coverage is deferred to wb-byfw.
  * R-OTHER-PACKAGE a corpus in a package T1 identity does not watch: one outside the @hyperunix/ scope (another scope, that scope
  *   in another letter case, or none), or an HX-scoped one that package.json's four dependency fields do not name (named only
  *   in bundledDependencies, overrides or workspaces, or installed only as another package's dependency). The quiet row plants
