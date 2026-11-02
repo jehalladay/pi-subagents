@@ -11,225 +11,313 @@
  * registers, a registry/census falsifier proves every APO-role capability is effectClass read and no APO view handler
  * reaches a non-read registry.invoke."
  *
- * CUT #3, ENUMERATE-THE-RESOLVABLE (the rule 19(c) terminal form ruled R-B294 after refusal #2, gate run g10-gate-s181:
- * claim words again wider than their pins). This header claims exactly the pinned set: each claim word names the plant
- * or the real-tree reading that pins it; a placement, context or text form that no plant below names is NOT CLAIMED by
- * this census; and each spelling family the judge leaves quiet is a NAMED RESIDUAL with its pinned quiet row. Refusal
- * #2's members and their pins: U1 a path spelled only in a directory segment (A1 pathDirectory); U2 a "+" chain under
- * another operator, in a return and as a call argument (A1 foldedOperand, foldedReturn, foldedArgument); U3 the raw
- * text and the AST read past 300 KB (A1 lateRaw and lateCooked spell the program only after 1100000 bytes); U4 a
- * string-like literal as a literal type, a property name and a call argument (A1 cookedType, cookedKey,
- * cookedArgument); U5 a registrar named register alone or with a lower-case letter after it (O2's bare and lower
- * registrar plants); U6 a role only in a later sentence of a description (O1 census.field.description.later); U7 the
- * four forms with a character outside ASCII (Q10 pluralAccent, acronymAccent and capitalAccent; Q3 interruptedDigit);
- * U8 a symbolic link whose target is missing is listed (lstat presence) and walked, and a listed entry is read as git
- * stores it, a link by its own link text (A2's listing plant: dangling.ts and link-spelled.ts). The reader-level rides
- * owed in this cut: F2 an APO module by its path, a cooked literal or a folded chain alone (V2's path, cooked and
- * folded handlers); F3 a descriptor property second (O2's second plant). Seat-found members of the class, each pinned
- * here: a path spelled only across segments (pathAcross) and only in its extension (pathExtension); the raw text of a
- * file that is not a script (text); a parenthesized inner chain read alone (foldedInner); a NUL-holding file read by
- * its path (Q11 named); a literal as an array element (cookedElement) and a template as a call argument
- * (templateArgument); an upper-case letter outside ASCII beside the abbreviation (Q10 capitalAfter, capitalAfterPlural,
- * capitalBefore); a letter with no case before the abbreviation joined to a letter outside ASCII (Q10 caselessLower,
- * caselessUpper) and a modifier letter between the slug's words (Q5 caselessModifier); a role in an id's last segment
- * (census.field.apo) and in the last of three permissions (census.field.permissions.last); the reach, registration and
- * registrar readers on every script kind (V2's and O2's kind plants); a descriptor object in the first argument only
- * (O2's first- and second-argument plants); a site under its nearest named function (O2's nested plant); and the
- * listing plant's ignored files spelling the program, so that judging an entry git does not list reds (A2).
+ * CUT #4, THE FAIL-CLOSED CORE (the final cut that the rule-19 structural exit R-B319 binds at refusal #3, gate run
+ * g10-gate-s181, of the R-B294-frozen cut #3: claim words inside pinned claims again wider than their pins, R514, R515 and
+ * R668). This cut narrows claim words and changes nothing else: no reading, plant, row, pin, quote, claim term, witness,
+ * constant, roster byte or test title changes; only comments do (the TypeScript printer's output of cut #3's census and of
+ * this one, comments removed, is identical). Each sentence of THE JUDGE below names the plants that pin its reading and
+ * claims the reading on those plants, in the paths and texts the roster's constants hold, and on today's src/ tree
+ * (MEASURED); beside its claim it names the forms it does not claim. The forms refusal #3 found unpinned are NOT CLAIMED
+ * by this census and DEFERRED TO wb-021.12, the exit child that carries refusal #3's U1-U9 verbatim: U1 a letter with no
+ * case directly beside the abbreviation, on either side (G15W3, G15W4, G15W5, G15W6); U2 the plural s before a digit or a
+ * letter with no case (G15W1, G15W2); U3 the program spelled only in a path segment above the parent directory, or by a
+ * file directly under src/ (G15P1, G15P2); U4 a "+" chain of three or more literals nested to the left, and a chain under
+ * an operator other than || (G15F2, G15F1); U5 a string-like literal or a template as a later argument or a later element
+ * (G15C1, G15C2, G15T1); U6 a spelling in the middle of a long text, raw or only cooked (G15R1, G15S1); U7 a NUL byte at a
+ * position no binary plant places it (G15B1); U8 a registrar in a subdirectory of src/workbench/providers/ (G15E1). This
+ * cut's seat battery (S4: 87 one-edit mutants of the judge and the readers, run on cut #3's bytes and again on this cut's,
+ * with the same result member by member) kills 25 and leaves 62 at 0 failed | 25 passed (25): five read as the delivered
+ * census does on every input their sentences claim (S4W-pl-3, S4P-nosrc, S4R-head1200k, S4B-head1200k, S4A-phrase-head),
+ * and each of the other 57 departs only on a form that THE JUDGE names NOT CLAIMED, by its S4 tag in brackets in the
+ * sentence that bounds it.
  *
- * MEASURED (read-only, by the cutting seat, 2026-11-02, at trunk f5cb912 merged into the branch, with the cut's two
- * files in the worktree): git lists 1135 files (tracked plus untracked-not-ignored), 117 of them under src/, all
- * TypeScript, and the src/ listing equals a walk of src/ minus what git ignores (git ignores no walked src/ entry
- * today, and src/ holds no symbolic link and no untracked file); none spells the program under the judge below; at the
- * filing pin 4ae0470 (the notes' own measure: "Pi has zero APO surfaces at 4ae0470") the 115 src/ blobs spell it
- * nowhere either. Outside src/ (1018 files, not read by this census; the same judge run read-only for this record) 20
- * files read as mentions: the tracker export .beads/issues.jsonl (the wb-021 rows); the two dependency locks
- * package-lock.json and vendor/dependency-lock.json (an integrity string splits into the word "Apo": an over-read);
- * fifteen landed census files of test/ (test/workbench-apo-export-census.test.ts,
+ * CUT #3 (ENUMERATE-THE-RESOLVABLE, the rule 19(c) terminal form ruled R-B294 after refusal #2; refused at refusal #3)
+ * pinned refusal #2's members and its own seat-found members of the class, each kept here and claimed on the plant it
+ * names: U1 a path spelled only in a directory segment (A1 pathDirectory); U2 a "+" chain under ||, in a return and as a
+ * call argument (A1 foldedOperand, foldedReturn, foldedArgument); U3 a raw text and an AST that spell the program only
+ * after 1100000 bytes (A1 lateRaw and lateCooked); U4 a string-like literal as a literal type, a property name and a call
+ * argument (A1 cookedType, cookedKey, cookedArgument); U5 a registrar named register alone or with a lower-case letter
+ * after it (O2's bare and lower registrar plants); U6 a role only in the second sentence of a description (O1
+ * census.field.description.later); U7 the four forms with a character outside ASCII (Q10 pluralAccent, acronymAccent and
+ * capitalAccent; Q3 interruptedDigit); U8 a symbolic link whose target is missing is listed (lstat presence) and walked,
+ * and a listed entry is read as git stores it, a link by its own link text (A2's listing plant: dangling.ts and
+ * link-spelled.ts). The reader-level rides: F2 an APO module by its path, a cooked literal or a folded chain alone (V2's
+ * path, cooked and folded handlers); F3 a descriptor property second (O2's second plant). Cut #3's seat-found members: a
+ * path spelled only across segments (pathAcross) and only in its extension (pathExtension); the raw text of a file that is
+ * not a script (text); a parenthesized inner chain read alone (foldedInner); a NUL-holding file read by its path (Q11
+ * named); a literal as an array element (cookedElement) and a template as a call argument (templateArgument); an
+ * upper-case letter outside ASCII beside the abbreviation (Q10 capitalAfter, capitalAfterPlural, capitalBefore); a letter
+ * with no case before the abbreviation joined to a letter outside ASCII (Q10 caselessLower, caselessUpper) and a modifier
+ * letter between the slug's words (Q5 caselessModifier); a role in an id's last segment (census.field.apo) and in the last
+ * of three permissions (census.field.permissions.last); the reach, registration and registrar readers on every script kind
+ * (V2's and O2's kind plants); a descriptor object in the first argument only (O2's first- and second-argument plants); a
+ * site under its nearest named function (O2's nested plant); and the listing plant's ignored files spelling the program,
+ * so that judging an entry git does not list reds (A2).
+ *
+ * MEASURED (read-only, re-taken by cut #4's seat through the census's own readers in a throwaway copy, 2026-11-02, at
+ * trunk e23b18e merged into the branch, with the cut's two files in the worktree): git lists 1140 files (tracked plus
+ * untracked-not-ignored), 117 of them under src/, all TypeScript, and the src/ listing equals a walk of src/ minus what
+ * git ignores (git ignores no walked src/ entry today, and src/ holds no symbolic link and no untracked file); none spells
+ * the program under the judge below; at the filing pin 4ae0470 (the notes' own measure: "Pi has zero APO surfaces at
+ * 4ae0470") the 115 src/ blobs spell it nowhere either. Outside src/ (1023 files, not read by this census; the same judge
+ * run read-only for this record) 20 files read as mentions: the tracker export .beads/issues.jsonl (the wb-021 rows); the
+ * two dependency locks package-lock.json and vendor/dependency-lock.json (an integrity string splits into the word "Apo":
+ * an over-read); fifteen landed census files of test/ (test/workbench-apo-export-census.test.ts,
  * test/workbench-apo-rerender-census.test.ts, test/workbench-apo-snapshot-census.test.ts,
  * test/workbench-apo-snapshot-global-reader-census.test.ts, test/workbench-apo-ui-publish-census.test.ts,
  * test/helpers/apo-rerender-census.ts, test/helpers/apo-snapshot-census.ts, test/helpers/apo-snapshot-global-reader.ts,
  * test/helpers/apo-ui-publish-census.ts and six rosters under test/fixtures/: those five APO censuses' and the mw-gp
- * citation-status census's - named here by owner, not by file name, since a data file whose name an rf reading test
- * spells joins wb-e9dy's Z3 surface); and this census and its roster. No file under docs/, qa/ or examples/ does. The
- * capability catalog holds four ids - forge.gate.status, furnace.run.inspect, hyperunix.find and
- * reactivefiber.render.preview - each registered by an injected-client and by a native registration function, every
- * descriptor effectClass read and carrying one permission; the eight registration sites in src/ sit one in each of the
- * eight exported registration functions of src/workbench/providers/, registerNativeProviders composes the four native
- * ones, and one more register call (the detached host's local provider, src/workbench/hosts/local-detached.ts) is
- * non-literal. The reach reader reads 11 reaches in src/: ten with a computed target and one literal read
- * (forge.gate.status, in src/workbench/evidence-wiring.ts). The largest src/ file is src/index.ts at 252342 bytes. No
- * src, docs or tracker text is edited by this cut.
+ * citation-status census's - named here by owner, not by file name, since a data file whose name an rf reading test spells
+ * joins wb-e9dy's Z3 surface); and this census and its roster. No file under docs/, qa/ or examples/ does. The capability
+ * catalog holds four ids - forge.gate.status, furnace.run.inspect, hyperunix.find and reactivefiber.render.preview - each
+ * registered by an injected-client and by a native registration function, every descriptor effectClass read and carrying
+ * one permission; the eight registration sites in src/ sit one in each of the eight exported registration functions of
+ * src/workbench/providers/, registerNativeProviders composes the four native ones, and one more register call (the
+ * detached host's local provider, src/workbench/hosts/local-detached.ts) is non-literal. The reach reader reads 11 reaches
+ * in src/: ten with a computed target and one literal read (forge.gate.status, in src/workbench/evidence-wiring.ts). The
+ * largest src/ file is src/index.ts at 252342 bytes. No src, docs or tracker text is edited by this cut.
  *
- * THE JUDGE (each claim with the plants that pin it; A1's plants are read, the Q rows' plants are not; a placement,
- * context or text form that no plant below names is NOT CLAIMED by this census). WORDS: a text's runs of letters and
- * digits, separated by spaces (words), hyphens (slug), underscores (constant), dots (dotted) and slashes (pathAcross);
- * each run split again at a lower-case letter before an upper-case one (identifier), at an upper-case run before a
- * capitalized word (acronym: APOView), at an upper-case run before an s that no lower-case letter follows (plural:
- * APOs; pluralCapital: APOsView; not before an s that a lower-case letter follows: Q10 suffixedWord APOstatus, and Q10
- * pluralAccent, APOs before a lower-case letter outside ASCII), between a letter and an ASCII digit either way (digits
- * APO020, digitLetter 020APO, lowerDigit apo2, digitLower 2apo), and around a digit run and a letter that has no case,
- * each a word of its own (Q3 interrupted, an ASCII digit, and Q3 interruptedDigit, ARABIC-INDIC DIGIT TWO, between the
- * slug's words; Q5 caseless, a CJK letter, and caselessModifier, a modifier letter, between them), then lower-cased
- * (constant, an upper-case slug; words, a capitalized one). A letter outside ASCII is a letter of its case: apo, Apo
- * and APO joined to one of the same case stay one word (Q10 joinedAccent and capitalAccent, a lower-case n with tilde
- * after apo and after Apo; capitalAfter and capitalAfterPlural, an upper-case N with tilde after APO, alone and before
- * an s; capitalBefore, one before apo; caselessLower and caselessUpper, n with tilde before apo and N with tilde before
- * APO, each after a letter with no case, which stays a word of its own), and APO before a lower-case one splits as
- * before any lower-case letter (Q10 acronymAccent). A MENTION is the abbreviation's word (apo) or the program slug's
- * three words in order (Q3 unordered and incomplete are no mention), each by its stem - adaptive; policy or policies;
- * organization or organisation, singular or plural - the three stems pinned as patterns in the roster
- * (constants.stems); the abbreviation and the slug are the title's own tokens.
- * A src/ file is read by its path, as one text ("path": the path plant spells the program only in its file name,
- * pathDirectory only in a directory segment, pathAcross only across a directory segment and the file name,
- * pathExtension only in its extension, and Q11's named plant, a NUL-holding file, only in its file name) and, unless it
- * holds a NUL byte (R-BINARY, Q11: the first byte, an early byte, the last byte of a 1100010-byte text, and the named
- * plant's last byte), by its raw text decoded as UTF-8 ("raw": every A1 plant whose readings hold raw, among them text,
- * a .md file read only raw; Q10 joinedAccent reads its letter outside ASCII as a letter), read whole to 1.1 MB (lateRaw
- * spells the program only after 1100000 bytes of comment lines, over four times the largest src/ file today; a spelling
- * only past that length is NOT CLAIMED).
+ * THE JUDGE, CLAIMED ON ITS PLANTS (cut #4). Each sentence below states a reader's rule, which is the code's and is
+ * disclosed so that the plants can be followed, and claims that reader only on the plant texts and paths it names (the
+ * roster's constants hold each one) and on today's src/ tree (MEASURED): a text or a path that none of its named plants
+ * holds is NOT CLAIMED by that sentence, whatever it spells, and each sentence names the departures that refusal #3 and
+ * this cut's battery found in its reader. A1's plants are read, the Q rows' plants are not.
+ * WORDS: the reader takes a text's runs of letters and digits, splits them again at case changes and at letter-digit
+ * boundaries and lower-cases them; claimed on the planted texts only: the slug's three words in a row separated by a space
+ * (words), a hyphen (slug), an underscore (constant), a dot (dotted) and a hyphen and a slash (pathAcross), and joined by
+ * a lower-case letter before an upper-case one (identifier), each read lower-cased; the abbreviation read as a word of its
+ * own among the words each A1 plant places around it, and split from a neighbour at the planted changes - a capitalized
+ * Apo before a capitalized word (pascal ApoGraphView), an upper-case run before a capitalized word (acronym APOView), an
+ * upper-case run before an s that ends the run (plural APOs) or that an upper-case letter follows (pluralCapital
+ * APOsView), and ASCII digits after and before the upper-case run and the lower-case word (digits APO020, digitLetter
+ * 020APO, lowerDigit apo2, digitLower 2apo); quiet as the Q plants show: an ASCII digit and ARABIC-INDIC DIGIT TWO
+ * standing between the slug's words (Q3 interrupted, interruptedDigit) and U+4E00 and U+02B0 joining them (Q5 caseless,
+ * caselessModifier), each a word of its own, and the R-JOINED forms of Q10 below, where U+00F1 and U+00D1 read as letters
+ * of their case (joinedAccent, capitalAccent, pluralAccent, capitalAfter, capitalAfterPlural, capitalBefore,
+ * caselessLower, caselessUpper) and APO before U+00F1 splits as before an ASCII lower-case letter (acronymAccent). NOT
+ * CLAIMED: any other text, among them a letter with no case directly beside the abbreviation, a CJK letter or a modifier
+ * letter (U1) [S4W-up-Lm, S4W-cap-Lm, S4W-low-Lm, S4W-low-Lo]; the plural s before a digit, a letter with no case (U2), a
+ * modifier letter or a titlecase letter [S4W-pl-Lm, S4W-pl-Lt], and after an upper-case run of two letters [S4W-pl-3 reads
+ * the same mentions on every text]; a titlecase letter after the abbreviation [S4W-up-Lt]; a digit beside a capitalized
+ * Apo, after it or before it [S4W-cap-N, S4W-cap-lbN]; a number that is no decimal digit, in a run or beside the program's
+ * words [S4W-Nd, S4W-N-Nd]; a combining mark beside the program's words [S4W-mark]; a separator between the slug's words
+ * other than those planted, an apostrophe, a comma, a colon or a tab among them [S4W-apos, S4W-comma, S4W-colon, S4W-tab];
+ * and a letter outside ASCII that no plant holds, beside the abbreviation or the slug's words.
+ * A MENTION is the abbreviation's word (apo) or the slug's three words in a row, each by its stem - adaptive; policy or
+ * policies; organization or organisation, singular or plural - the three stems pinned as patterns in the roster
+ * (constants.stems), the abbreviation and the slug being the title's own tokens; claimed on the plant texts and on today's
+ * src/ files only: read in each A1 plant's text, quiet in Q3's plants (unordered and incomplete are no mention), each
+ * plant text but the three late ones under 1 KB and read whole, read among the last words of lateRaw (after 100000 padding
+ * lines), and read in no real src/ file (MEASURED). NOT CLAIMED: a mention in any other text, among them one at the head
+ * or in the middle of a longer text [S4M-tail2000] and one after more words than lateRaw holds [S4M-head150k].
+ * A src/ file is read by its path, as one text ("path"); claimed on the path plants only, each under src/workbench/ and at
+ * most 51 characters long: the program spelled in the file name (path, src/workbench/apo-graph-view.ts; V2's path handler;
+ * Q11's named plant, a NUL-holding file), in the parent directory (pathDirectory, src/workbench/apo-graph/view.ts), across
+ * the parent directory and the file name (pathAcross) and in the extension (pathExtension), and every other plant's path
+ * and every real src/ path spelling nothing. NOT CLAIMED: any other path, among them one spelling the program only in a
+ * grandparent or a higher directory, or a file directly under src/ (U3) [S4P-last3], and a spelling past a path's 60th
+ * character or before its last 50 [S4P-head60, S4P-tail50]; src/ itself spells nothing [S4P-nosrc reads the same on every
+ * path].
+ * Unless it is binary (below), a src/ file is read by its raw text decoded as UTF-8 ("raw"); claimed on the plant texts
+ * and on today's src/ files only: each plant whose readings hold raw, read whole (each under 1 KB; text, a .md file, read
+ * only raw; Q10 joinedAccent reads U+00F1 as a letter), and the end of lateRaw, which spells the program once after
+ * 1100000 bytes of comment lines, over four times the largest src/ file today; on today's src/ files the delivered judge
+ * reads no raw spelling (MEASURED), and how much of a real file is read is not claimed beyond the plants' extents. NOT
+ * CLAIMED: a raw spelling in any other text, among them one in the head or the middle of a text over 1 KB (U6) [S4R-win4k,
+ * S4R-tail1k] and one only past 1.1 MB [S4R-head1200k reads the same on what is claimed].
+ * A src/ file holding a NUL byte is binary and read by its path only (R-BINARY); claimed at the positions the binary
+ * plants place the byte only: the first byte and the ninth of a ten-byte text (Q11 first, early), the last byte of a
+ * six-byte text (Q11's named plant), of a 1100010-byte text (Q11 late) and of V2's and O2's NUL-holding .ts plants (each
+ * under 1 KB); A2's no-binary reading of the real files is claimed at those positions. NOT CLAIMED: a NUL byte at any
+ * other position, among them one in the middle of a text over 16 KB (U7) or between a text's first and last 16 bytes
+ * [S4B-ht16], and one only past its 1100010th byte [S4B-head1200k reads the same on what is claimed].
  * A SCRIPT is a path ending .ts, .mts, .cts, .tsx, .jsx, .js, .mjs or .cjs (the SCRIPT pattern; A1 kindTs, kindMts,
- * kindCts, kindTsx, kindJsx, kindJs, kindMjs and kindCjs, each read only through the AST), parsed with JSX for .tsx,
- * .jsx, .js, .mjs and .cjs (Q12's JSX attribute plants, one per kind, keep their escape) and without it for .ts, .mts
- * and .cts (kindTs, kindMts and kindCts read a string after an angle-bracket assertion, which JSX parsing reads as
- * text), its text parsed whole to 1.1 MB (lateCooked spells the program only in a cooked string after 1100000 bytes of
- * comment lines). Through the AST a script is read ("cooked") by each string-like literal's cooked value in six planted
- * contexts - a const initializer (escaped, a string; escapedTemplate, a substitution-free template), an angle-bracket
- * assertion's operand (kindTs, kindMts, kindCts), a literal type (cookedType), a property name (cookedKey), a call
- * argument (cookedArgument) and an array element (cookedElement) - and by each template's head and each part after a
- * substitution, a substitution ending the part, in a const initializer (template, the head; templateSpan, the part
- * after one substitution; templateMiddle and templateLast, the middle and the last part of two) and as a call argument
- * (templateArgument, the last part); and ("folded") by the folded value of each chain of "+" whose operands are all
- * string-like literals (folded; foldedTemplate, a substitution-free template operand), read through parentheses
- * (foldedParenthesized), in a const initializer (folded, foldedParenthesized, foldedTemplate, foldedInner), as another
- * operator's operand (foldedOperand, under ||), in a return (foldedReturn) and as a call argument (foldedArgument). A
- * "+" directly under another "+" is read only within its chain (Q10 foldedSuffix: "A" + "PO" + "x" folds to APOx) and a
- * parenthesized one also on its own (foldedInner: "X" + ("A" + "PO graph")); a chain of another operator, or with an
- * operand that is not a string-like literal, is not folded (Q4 otherOperator, mixed). A literal, a template or a chain
- * in a context no plant above names is NOT CLAIMED.
- * A descriptor's ROLE is read by the same MENTION from four fields: its id (O1's apo.field.view, a first segment, and
- * census.field.apo, the last; C1's mw.apo.admit, a middle one), its description (O1's census.field.description, one
- * sentence, and census.field.description.later, the later of two; C1's workbench.decision.authorize, the slug's words),
- * its contractSource (O1's census.field.contract) and its permissions joined by spaces (O1's census.field.permissions,
- * a single permission; census.field.permissions.middle and census.field.permissions.last, the middle and the last of
- * three); a role-less descriptor reads none (census.field.none). A role placed otherwise (past the third permission,
- * say; every real descriptor carries one) is NOT CLAIMED. A descriptor with a role is APO-role.
- * A CALLEE is read through its parentheses, non-null assertions, as and satisfies clauses and angle-bracket assertions
- * (V2's wrapped plant, one call each); its member name is a property access's name, an optional access's included (V2's
- * wrapped plant: registry?.invoke and registry.invoke?.()), or an element access's string-like key (V2's element plant:
- * a string key and a substitution-free template key). A REACH is a call whose callee's member name is invoke or inspect
- * (V2's inspect plant); its target is its first argument's cooked value when that is a string-like literal (V2's read
- * plant: a string and a substitution-free template, each before a second argument), else computed (V2's computed plant:
- * a parenthesized literal, a named constant and a property access; V2's inspect plant: no argument, and a property
- * access); a reach reads "read" when every effect class the catalog holds for the target is read (an id two
- * registration surfaces register holds both classes), "non-read" when any class it holds is another (V2's write plant:
- * one target each of write, external and unknown; V2's dual plant: two ids each registered read and write, in either
- * order), "unknown" when it holds no class for it (V2's unknown plant) and "computed" when it has no literal target.
- * The reach reader and the registration reader judge every listed script that holds no NUL byte, each script kind on a
- * plant (V2's .ts plants, its .mjs plant and its kind plants for .tsx, .mts, .cts, .jsx, .js and .cjs; O2's likewise),
- * and not a NUL-holding .ts plant or a .md plant (V2's and O2's binary and text plants). A judged script with any
- * finding is an APO module: by its path alone (V2's path handler), its raw text (V2's other APO plants), a cooked
- * literal alone (V2's cooked handler) or a folded chain alone (V2's folded handler).
- * A REGISTRATION SITE is a call whose callee's member name is register and whose first argument (O2's first-argument
- * plant; a descriptor object only in the second argument is non-literal: O2's second-argument plant) is an object
- * literal with a property assignment whose name is the identifier descriptor, first or second among its properties
- * (O2's second plant, after an invoke property), written with an escape too (O2's escaped plant); a quoted "descriptor"
- * key is no identifier, so that call is non-literal (O2's shorthand plant, beside a shorthand descriptor and an object
- * with no descriptor); its enclosing function is the nearest function or method declaration, or arrow function or
- * function expression bound to a variable, by name (O2's function, element, wrapped, arrow, expression, method and
- * callback plants, and the nested plant, whose site sits under its inner function), and none at top level (O2's
- * top-level plant); every other register call is non-literal. A descriptor property past the second is NOT CLAIMED. The
- * REGISTRARS are the exported function declarations of the scripts under src/workbench/providers/ whose name begins
- * with register (O2's registrar plants listed: an exported one per script kind, one named register alone and one with a
- * lower-case letter after register; not listed: a non-exported one, one whose name only ends in Register, an exported
- * arrow function, a .md file and a file outside providers/). A1, A2 (its judged file count), A3, O2, C1 and V2 judge
- * their planted entries in the same call as the real ones; O1's plants, A2's listing plant and A2's anchor plants are
- * judged by the same functions, one call each.
- * THE LISTING: git's src/ listing of a repository (tracked plus untracked-not-ignored, kept when lstat finds it on
- * disk: an index entry deleted from disk dropped, a symbolic link whose target is missing kept) beside a walk of every
- * entry under src/ that lstat does not call a directory (a symbolic link is an entry and is never followed), the walked
- * entries git ignores subtracted; each listed entry is read as git stores it, a file by its bytes and a symbolic link
- * by its own link text, never by its target's content. A2's listing plant, a scratch repository built and removed by A2
- * (test/helpers/scratch.ts under the leak guard; its git runs without the repository locators a hook may export and
- * without global or system configuration), holds one src/ entry in each state - staged, untracked, ignored by a file
- * pattern and by a directory pattern (both spelling the program, so judging an entry that is not listed reds), staged
- * then deleted from disk, a symbolic link to a file, one to a directory outside src/, one to a missing file, and one
- * whose link text spells the program while its target's content does not - and its listing, walk, ignored set,
- * agreement and the findings of its listed entries are read through the same readers as the real ones. The
- * CONTENT-LIVENESS ANCHOR reads a capability id's words in order (A2's anchor plants: in order read; reordered, partial
- * or split not). O1 FIRES when any real APO module or APO-role catalog descriptor is named (O1's fired plants: a module
- * alone, a role alone, neither).
+ * kindCts, kindTsx, kindJsx, kindJs, kindMjs and kindCjs, each read only through the AST), parsed with JSX for .tsx, .jsx,
+ * .js, .mjs and .cjs (Q12's JSX attribute plants, one per kind, keep their escape) and without it for .ts, .mts and .cts
+ * (kindTs, kindMts and kindCts read a string after an angle-bracket assertion, which JSX parsing reads as text); its text
+ * is parsed, claimed on the plant texts (each under 1 KB, parsed whole), on the end of lateCooked, which spells the
+ * program only in a cooked string after 1100000 bytes of comment lines, and on the registration sites and reaches of
+ * today's src/ files, which O2, V1 and Q9 read (MEASURED). NOT CLAIMED: a spelling only cooked in any other script, among
+ * them one in the head or the middle of a script over 1 KB (U6), and how much of a longer real script is parsed.
+ * Through the AST a script is read ("cooked") by the cooked value of its string-like literals and the cooked text of its
+ * template parts; claimed on the planted texts only, whose contexts are these: a string or a substitution-free template
+ * initializing an exported const of one declarator (slug, requirement, capability, dotted, digitLetter, escaped,
+ * escapedTemplate, the JS and JSX kind plants, lateCooked; V2's cooked handler), a string after an angle-bracket assertion
+ * there (kindTs, kindMts, kindCts), a type alias's own literal type (cookedType), the quoted name of the only property of
+ * an object literal there (cookedKey), the only element of an array literal there (cookedElement), the only argument of a
+ * call to a plain name in a function body (cookedArgument), the string a function returns (O1's view plant) and the value
+ * of the first property of an object literal passed as the only argument of a call to a member (O1's tool plant); and a
+ * template's head when it holds one substitution (template), the part after its one substitution (templateSpan) and the
+ * middle and the last part of a template of two (templateMiddle, templateLast), each initializing an exported const, and
+ * the last part of a one-substitution template passed as the only argument of a call to a plain name (templateArgument).
+ * NOT CLAIMED: a literal or a template in any other text, among them one as a later argument or element (U5), a later
+ * property's name [S4C-prop2], a later declarator [S4C-decl2], a let or var initializer [S4C-let], a member of a union
+ * type [S4C-union], a class property [S4C-classprop], an argument of a call to a member [S4C-member, S4T-member], a
+ * template's head beside two or more substitutions [S4T-head1], a third or later template part [S4T-spans2] and a returned
+ * template [S4T-return].
+ * And ("folded") a script is read by the folded value of a "+" chain whose operands are all string-like literals; claimed
+ * on the planted texts only, whose forms are these: two operands (folded; foldedTemplate, a string and a substitution-free
+ * template) or a string and a parenthesized chain of two strings (foldedParenthesized), each initializing an exported
+ * const (and V2's folded handler); a chain of two strings as the left operand of || there (foldedOperand), returned
+ * (foldedReturn) and passed as the only argument of a call to a plain name (foldedArgument); and a string and a
+ * parenthesized chain of two, read whole and the inner chain also on its own (foldedInner: "X" + ("A" + "PO graph"));
+ * quiet: a chain nested to the left read only whole (Q10 foldedSuffix: "A" + "PO" + "x" folds to APOx, and its sub-chain
+ * is not read alone), a chain with an operand that is not a string-like literal and a chain of another operator (Q4 mixed,
+ * otherOperator). NOT CLAIMED: a chain in any other text, among them one of three or more literals nested to the left
+ * (U4), one under an operator other than ||, && (U4) and ?? among them [S4F-qq], an array element [S4F-elem], a later
+ * argument [S4F-arg2], a property's value [S4F-propvalue] and an argument of a call to a member [S4F-memberarg].
+ * A descriptor's ROLE is read by the same MENTION from four fields; claimed on the planted descriptors only, whose
+ * placements are these: the id (O1's apo.field.view, the first of three segments, and census.field.apo, the last of three;
+ * C1's mw.apo.admit, the middle of three), the description (O1's census.field.description, one sentence, and
+ * census.field.description.later, the second of two; C1's workbench.decision.authorize, the slug's words in one sentence;
+ * each role ends by its description's 56th character), the contractSource (O1's census.field.contract, mw@0.0.0:APO-020)
+ * and the permissions joined by spaces (O1's census.field.permissions, the one permission apo:read;
+ * census.field.permissions.middle and census.field.permissions.last, apo:admit as the middle and the last of three; each
+ * permission of the form scope:name); a role-less descriptor reads none (census.field.none), and the real catalog's
+ * descriptors read none (MEASURED). A descriptor with a role is APO-role. NOT CLAIMED: a role in any other descriptor,
+ * among them one in an id segment past the third [S4O-id3], in a description past its second sentence or its 56th
+ * character [S4O-desc120], in a permission past the third [S4O-perm4] or with no colon [S4O-perm-colon], in a
+ * contractSource without its @ [S4O-cs-at], or in a version, inputSchema, outputSchema or supportedModes; and the
+ * falsifier over more descriptors than C1's call holds, real and planted [S4O-viol20].
+ * A CALLEE is read through its wrappers and A REACH is a call whose callee's member name is invoke or inspect; claimed on
+ * V2's plants and on the real call sites only (MEASURED). The planted callees: the wrappers V2's wrapped plant puts around
+ * registry.invoke (parentheses alone, a non-null assertion, and parentheses around an as clause, a satisfies clause or an
+ * angle-bracket assertion) beside its optional forms registry?.invoke and registry.invoke?.(), and a member name by a
+ * property access or by an element access's string key or substitution-free template key (V2's element plant). The planted
+ * reaches: a target by its first argument's cooked value when that is a string-like literal (V2's read plant: a string and
+ * a substitution-free template, each before a second argument), else computed (V2's computed plant: a parenthesized
+ * literal, a named constant and a property access; V2's inspect plant: no argument, and a property access); a reach reads
+ * "read" when every effect class the catalog holds for the target is read (an id two registration surfaces register holds
+ * both classes), "non-read" when any class it holds is another (V2's write plant: one target each of write, external and
+ * unknown; V2's dual plant: two ids each registered read and write, in either order), "unknown" when it holds no class for
+ * it (V2's unknown plant) and "computed" when it has no literal target. NOT CLAIMED: any other callee or reach, among them
+ * a wrapper of another kind or nesting and an APO module with more reaches than a V2 plant holds (seven at most)
+ * [S4V-handler-head].
+ * The reach reader and the registration reader judge each listed script that holds no NUL byte; claimed on the plants of
+ * each script kind (V2's .ts plants, its .mjs plant and its kind plants for .tsx, .mts, .cts, .jsx, .js and .cjs; O2's
+ * likewise) and on the real src/ files, and not a NUL-holding .ts plant or a .md plant (V2's and O2's binary and text
+ * plants). A judged script with any finding is an APO module, claimed on V2's plants: by its path alone (V2's path
+ * handler), its raw text (V2's other APO plants), a cooked literal alone (V2's cooked handler) or a folded chain alone
+ * (V2's folded handler). NOT CLAIMED: any other script, judged or not, and any other module's APO-module reading.
+ * A REGISTRATION SITE is a call whose callee's member name is register and whose first argument is an object literal with
+ * a property assignment whose name is the identifier descriptor; claimed on O2's plants and on the real src/ files only
+ * (MEASURED), whose forms are these: a call of one or two arguments, the descriptor object in the first (O2's
+ * first-argument plant; one only in the second argument is non-literal: O2's second-argument plant), the descriptor
+ * property first or second among its properties (O2's second plant, after an invoke property), written with an escape too
+ * (O2's escaped plant), its value an object literal; a quoted "descriptor" key is no identifier, so that call is
+ * non-literal (O2's shorthand plant, beside a shorthand descriptor and an object with no descriptor). Its enclosing
+ * function is the nearest function declaration or class method, or arrow function or function expression bound to a
+ * variable, by name (O2's function, element, wrapped, arrow, expression, method and callback plants, and the nested plant,
+ * whose site sits under its inner function), and none at top level (O2's top-level plant); every other register call is
+ * non-literal. NOT CLAIMED: any other register call, among them one of three or more arguments [S4G-arity], a descriptor
+ * property whose value is no object literal [S4G-objval], a site under a method of an object literal [S4G-classmethod], a
+ * descriptor property past the second, and a function bound otherwise than by a declaration or a variable.
+ * The REGISTRARS are the exported function declarations of the scripts directly in src/workbench/providers/ whose name
+ * begins with register; claimed on the real providers (MEASURED: eight, each a top-level "export function register"
+ * declaration with a body, within its module's first 26 statements, the longest name 33 characters) and on O2's registrar
+ * plants only (listed: an exported one per script kind, one named register alone and one with a lower-case letter after
+ * register; not listed: a non-exported one, one whose name only ends in Register, an exported arrow function, a .md file
+ * and a file outside providers/). NOT CLAIMED: any other declaration, among them one in a script in a subdirectory of
+ * providers/ (U8), a default export [S4E-default], an export beside another modifier, async or declare [S4E-onlyexport], a
+ * declaration past its module's 26th statement [S4E-stmts40], a name longer than 33 characters [S4E-name40] and an
+ * overload signature with no body [S4E-body].
+ * THE LISTING: git's src/ listing of a repository (tracked plus untracked-not-ignored, kept when lstat finds it on disk:
+ * an index entry deleted from disk dropped, a symbolic link whose target is missing kept) beside a walk of the entries
+ * under src/ that lstat does not call a directory (a symbolic link is an entry and is never followed), the walked entries
+ * git ignores subtracted; each listed entry is read as git stores it, a file by its bytes and a symbolic link by its own
+ * link text, never by its target's content; claimed on today's src/ tree (MEASURED) and on A2's listing plant only. A2's
+ * listing plant, a scratch repository built and removed by A2 (test/helpers/scratch.ts under the leak guard; its git runs
+ * without the repository locators a hook may export and without global or system configuration), holds one src/ entry in
+ * each state - staged, untracked, ignored by a file pattern and by a directory pattern (both spelling the program, so
+ * judging an entry that is not listed reds), staged then deleted from disk, a symbolic link to a file, one to a directory
+ * outside src/, one to a missing file, and one whose link text spells the program while its target's content does not -
+ * and its listing, walk, ignored set, agreement and the findings of its listed entries are read through the same readers
+ * as the real ones. NOT CLAIMED: any other entry, among them a dot file [S4L-dot], an entry under more than four path
+ * segments [S4L-depth], a tracked file that an ignore pattern matches [S4L-noindex], a socket, a FIFO and a link to a
+ * link.
+ * The CONTENT-LIVENESS ANCHOR reads a capability id's words in order; claimed on A2's anchor plants (in order read;
+ * reordered, partial or split not) and on hyperunix.find in src/workbench/providers/hyperunix.ts as that file stands at
+ * the base and at the filing pin (three occurrences in 3947 bytes) only [S4A-phrase-head reads the same there]; NOT
+ * CLAIMED: any other file or text. O1 FIRES when any real APO module or APO-role catalog descriptor is named; claimed on
+ * today's tree and on O1's fired plants (a module alone, a role alone, neither); NOT CLAIMED: any other set of modules or
+ * descriptors.
  *
- * PINNED READER SET (this file, test/workbench-apo-surface-effect-census.test.ts; each case returns the witness the
- * roster holds for it, and several first assert their outcome with the reason; observed at the merged base f5cb912: 25
- * passed). Rows A, O, C and V tile ACCEPTANCE in order and each row's pin quotes tile its label. Each pin names its
- * target, its observed result and the falsifier that reds it.
+ * PINNED READER SET (this file, test/workbench-apo-surface-effect-census.test.ts; each case returns the witness the roster
+ * holds for it, and several first assert their outcome with the reason; observed at the merged base e23b18e: 25 passed).
+ * Rows A, O, C and V tile ACCEPTANCE in order and each row's pin quotes tile its label. Each pin names its target, its
+ * observed result and the falsifier that reds it.
  * A, "a guard pins today's absence". A1: forty-six planted spelling forms and two late plants judged with the real src/
  * files (THE JUDGE names each), and the list of src/ plants with any finding; observed: each read in exactly its pinned
- * readings, and the plants with a finding exactly the spelling plants, the late plants, the two surface plants and
- * Q11's named plant (no quiet, JSX attribute or other binary plant); falsifier: a judge rule or a reading hollowed so
- * that some plant's readings change, or a quiet plant read. A2: the scope - the files git lists under src/, held equal
- * to the walk of src/ minus what git ignores, the listing plant's listing, walk, ignored set, agreement and findings,
- * every listed file judged (the judge's file count is the listed files plus the plants), at a file and a script floor,
- * no binary - and the content-liveness anchor (the capability id hyperunix.find read in
- * src/workbench/providers/hyperunix.ts through the same judge) with its four anchor plants; observed: as pinned;
- * falsifier: a listing or a walk shrunk, widened or left unsubtracted, a link followed or a link with a missing target
- * dropped, a floor missed, a real binary, the anchor unread or read out of order. A3: the real src/ files' findings,
- * and the filing pin's src/ blobs' findings beside a pin plant, each in one judge call, with the pin's own
- * content-liveness anchor (hyperunix.find read in its src/workbench/providers/hyperunix.ts); observed: none, the pin
- * plant read, the anchor read; falsifier: a real mention (ARMED: A3 reds with the reason - the falsifier rows now bind
- * on the real surface).
- * O, "once any APO surface registers". O1: the title's surface kinds, each read on a plant (views: a module's text;
- * node() providers: a descriptor's id; UI handlers: a tool module's text), a descriptor's role from each of its four
- * fields on a plant (the id on two, its first and its last segment; the description on two, one sentence and the later
- * of two; the permissions on three, a single permission and the middle and the last of three), none on a role-less
- * plant, whether any real module or catalog descriptor carries a role, and the fired reading on its three plants;
- * observed: every kind and field read, fired false on the real surfaces, true on a module or a role alone, false on
- * neither; falsifier: a real APO module or APO-role descriptor (fired), a role field or a placement unread, the fired
- * reading hollowed. O2: the registration sites of the real src/ files and of planted modules (a function declaration,
- * an element-access callee, a non-null callee, an arrow, a function expression, a method, a callback inside a function,
+ * readings, and the plants with a finding exactly the spelling plants, the late plants, the two surface plants and Q11's
+ * named plant (no quiet, JSX attribute or other binary plant); falsifier: a judge rule or a reading hollowed so that some
+ * plant's readings change, or a quiet plant read. A2: the scope - the files git lists under src/, held equal to the walk
+ * of src/ minus what git ignores, the listing plant's listing, walk, ignored set, agreement and findings, every listed
+ * file judged (the judge's file count is the listed files plus the plants), at a file and a script floor, no binary (a NUL
+ * byte at a position THE JUDGE's binary sentence claims) - and the content-liveness anchor (the capability id
+ * hyperunix.find read in src/workbench/providers/hyperunix.ts through the same judge) with its four anchor plants;
+ * observed: as pinned; falsifier: a listing or a walk shrunk, widened or left unsubtracted on today's src/ tree or on the
+ * listing plant's entries, a link followed or a link with a missing target dropped, a floor missed, a real binary at a
+ * claimed position, the anchor unread or read out of order. A3: the real src/ files' findings, and the filing pin's src/
+ * blobs' findings beside a pin plant, each in one judge call, with the pin's own content-liveness anchor (hyperunix.find
+ * read in its src/workbench/providers/hyperunix.ts); observed: none, the pin plant read, the anchor read; falsifier: a
+ * real mention in a form THE JUDGE claims (REDUNDANCY's module page among them; ARMED: A3 reds with the reason - the
+ * falsifier rows now bind on the real surface).
+ * O, "once any APO surface registers". O1: the title's surface kinds, each read on a plant (views: a module's text; node()
+ * providers: a descriptor's id; UI handlers: a tool module's text), a descriptor's role from each of its four fields on a
+ * plant (the id on two, its first and its last segment; the description on two, one sentence and the second of two; the
+ * permissions on three, a single permission and the middle and the last of three), none on a role-less plant, whether any
+ * real module or catalog descriptor carries a role, and the fired reading on its three plants; observed: every kind and
+ * field read, fired false on the real surfaces, true on a module or a role alone, false on neither; falsifier: a real APO
+ * module or APO-role descriptor in a form THE JUDGE claims (fired), a planted role field or placement unread, the fired
+ * reading hollowed. O2: the registration sites of the real src/ files and of planted modules (a function declaration, an
+ * element-access callee, a non-null callee, an arrow, a function expression, a class method, a callback inside a function,
  * a function nested in another, top level, an escaped descriptor name, a descriptor second among the properties, a
- * descriptor in the first argument, one per script kind; and, judged in the same call, a shorthand descriptor, an
- * object literal with no descriptor, a quoted descriptor key and a descriptor only in the second argument, which are
- * non-literal, and a NUL-holding .ts file and a .md file, which are not read), the registrars of the real providers
- * beside the registrar plants, and the calls of registerNativeProviders's body; observed: eight real sites, each in one
- * of the eight registration functions the catalog runs, the real registrars equal to them, the four native calls among
- * them, each plant site under its enclosing name (top level under none, the nested site under its inner function), four
- * non-literal calls among the plants (three in the shorthand plant, one in the second-argument plant) and the ten
- * exported registrar plants listed; falsifier: a real register site, an exported registration function or a native
- * composition call outside the catalog's surfaces, a site form, an argument or property position, a registrar form or a
- * script kind unread.
- * C, "a registry/census falsifier proves every APO-role capability is effectClass read". C1: APO-role descriptor plants
- * of each non-read class, an APO-role read one and a role-less write one, registered through a real registry and judged
- * in one call with the real catalog; observed: the three non-read APO-role plants named, no real descriptor; falsifier:
- * a real APO-role non-read descriptor (named beside the plants), a class or role reading hollowed. C2: the real catalog
- * through every registration surface (registerNativeProviders and each of the eight functions), its APO-role set and
- * its violations; observed: four ids, all read, no APO role, no violation; falsifier: a real APO-role non-read
- * descriptor, a surface that registers nothing. C3: the registry's effect vocabulary (the EFFECT_CLASSES literal and
- * the CapabilityDescriptor effectClass union of src/workbench/capability-registry.ts) and the falsifier's verdict on an
- * APO-role plant of each class; observed: read, write, external and unknown in both, every class but read a violation;
- * falsifier: a class added to or removed from the registry, the falsifier passing a non-read class.
+ * descriptor in the first argument, one per script kind; and, judged in the same call, a shorthand descriptor, an object
+ * literal with no descriptor, a quoted descriptor key and a descriptor only in the second argument, which are non-literal,
+ * and a NUL-holding .ts file and a .md file, which are not read), the registrars of the real providers beside the
+ * registrar plants, and the calls of registerNativeProviders's body; observed: eight real sites, each in one of the eight
+ * registration functions the catalog runs, the real registrars equal to them, the four native calls among them, each plant
+ * site under its enclosing name (top level under none, the nested site under its inner function), four non-literal calls
+ * among the plants (three in the shorthand plant, one in the second-argument plant) and the ten exported registrar plants
+ * listed; falsifier: a real register site, an exported registration function or a native composition call outside the
+ * catalog's surfaces, each in a form THE JUDGE claims (REDUNDANCY's site page among them), or a planted site form,
+ * argument or property position, registrar form or script kind unread.
+ * C, "a registry/census falsifier proves every APO-role capability is effectClass read". C1: APO-role descriptor plants of
+ * each non-read class, an APO-role read one and a role-less write one, registered through a real registry and judged in
+ * one call with the real catalog; observed: the three non-read APO-role plants named, no real descriptor; falsifier: a
+ * real APO-role non-read descriptor in a form THE JUDGE's ROLE claims (named beside the plants), a class or a planted role
+ * reading hollowed. C2: the real catalog through every registration surface (registerNativeProviders and each of the eight
+ * functions), its APO-role set and its violations; observed: four ids, all read, no APO role, no violation; falsifier: a
+ * real APO-role non-read descriptor in a form THE JUDGE's ROLE claims, a surface that registers nothing. C3: the
+ * registry's effect vocabulary (the EFFECT_CLASSES literal and the CapabilityDescriptor effectClass union of
+ * src/workbench/capability-registry.ts) and the falsifier's verdict on an APO-role plant of each class; observed: read,
+ * write, external and unknown in both, every class but read a violation; falsifier: a class added to or removed from the
+ * registry, the falsifier passing a non-read class.
  * V, "and no APO view handler reaches a non-read registry.invoke". V1: the real APO modules, their non-read reaches and
- * the reach reader on the real call sites; observed: no APO module, no violation, 11 reaches (floor 8), a literal read
- * and a computed reach both seen; falsifier: a real APO module (listed) or its non-read reach (named), the reader dead
- * on real calls. V2: planted APO handlers - a read reach by a string and by a template, a non-read reach to a write, an
- * external and an unknown-class capability, two to ids registered read and write in either order, an unknown, three
- * computed (an expression, a parenthesized literal, a named constant), two computed inspects (an expression, no
- * argument), an element-access callee by a string key and by a template key, five wrapped callees (parentheses,
- * non-null, as, satisfies, angle-bracket) and two optional ones, an APO module by its path alone, by a cooked literal
- * alone and by a folded chain alone, and one handler per further script kind (.mjs, .tsx, .mts, .cts, .jsx, .js, .cjs)
- * - and a role-less computed one, a NUL-holding .ts handler and a .md handler, judged with the real modules; observed:
- * every non-read, unknown and computed reach of an APO plant named by module, the read plant, the role-less one, the
- * NUL-holding one and the .md one quiet, no real module named; falsifier: a real APO module's non-read reach (named
- * beside the plants), a callee, target, verdict, finding form or script-kind reading hollowed.
- * REDUNDANCY (measured on this cut's bytes: the seven real-tree falsifiers, each applied in place under src/ and
- * restored, each failing the closing case too): an untracked src/ module spelling the program reds A3, O1 and V1; an
- * APO module whose reach targets an id the catalog does not hold reds A3, O1, V1 and V2; the injected-client
- * hyperunix.find descriptor made APO-role write reds A3, O1, C1, C2, V1 and V2 (V2 through its read plant's
- * hyperunix.find target), and made APO-role read reds A3, O1, C2 and V1 (the armed re-pin); a src/ file holding a NUL
- * byte reds A2 alone, a registration site outside the catalog's functions O2 alone, and a non-literal register call Q9
- * alone. Every quiet, JSX attribute or binary plant that a reader mutant makes read reds its Q row and A1's
- * plant-findings list together. Q, the residuals' pinned quiet rows.
+ * the reach reader on the real call sites; observed: no APO module, no violation, 11 reaches (floor 8), a literal read and
+ * a computed reach both seen; falsifier: a real APO module (listed) or its non-read reach (named), each in a form THE
+ * JUDGE claims, the reader dead on real calls. V2: planted APO handlers - a read reach by a string and by a template, a
+ * non-read reach to a write, an external and an unknown-class capability, two to ids registered read and write in either
+ * order, an unknown, three computed (an expression, a parenthesized literal, a named constant), two computed inspects (an
+ * expression, no argument), an element-access callee by a string key and by a template key, five wrapped callees
+ * (parentheses, non-null, as, satisfies, angle-bracket) and two optional ones, an APO module by its path alone, by a
+ * cooked literal alone and by a folded chain alone, and one handler per further script kind (.mjs, .tsx, .mts, .cts, .jsx,
+ * .js, .cjs) - and a role-less computed one, a NUL-holding .ts handler and a .md handler, judged with the real modules;
+ * observed: every non-read, unknown and computed reach of an APO plant named by module, the read plant, the role-less one,
+ * the NUL-holding one and the .md one quiet, no real module named; falsifier: a real APO module's non-read reach in a form
+ * THE JUDGE claims (named beside the plants), a planted callee, target, verdict, finding form or script-kind reading
+ * hollowed.
+ * REDUNDANCY (measured on this cut's bytes by seven real-tree falsifiers, each applied in place under src/ and then
+ * removed or restored byte-identical, git status equal before and after, each failing the closing case too): an untracked
+ * src/workbench/zz-ws01-red-module.ts holding the comment "APO view" reds A3, O1 and V1; an untracked APO module
+ * (src/workbench/zz-ws01-red-reach.ts) whose reach targets an id the catalog does not hold reds A3, O1, V1 and V2; the
+ * injected-client hyperunix.find descriptor of src/workbench/providers/hyperunix.ts made APO-role (its description opened
+ * with "APO:") and write reds A3, O1, C1, C2, V1 and V2 (V2 through its read plant's hyperunix.find target), and made
+ * APO-role and read reds A3, O1, C2 and V1 (the armed re-pin); an untracked src/ file whose last byte is a NUL reds A2
+ * alone, an untracked registration site outside the catalog's functions O2 alone, and an untracked non-literal register
+ * call Q9 alone. By construction (both read the one judge call), a quiet, JSX attribute or binary plant that a reader
+ * mutant makes read reds its Q row and A1's plant-findings list together, as the battery's kill points on quiet plants
+ * show (G3W1-G3W4, S4W-low-lbLo, S4W-N-ascii, S4W-neg-Lo, S4W-neg-Lm). Q, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id,
  * label and pins, every pin's quote, claims and witness, the constants and every registered test title - is held to the
  * out-of-file roster (test/fixtures/apo-surface-effect-roster.json).
@@ -245,59 +333,65 @@
  * roster witness.
  * SELF-READ (a name check only): no case's source text (its Function.prototype.toString) names ROSTER, rosterWitness or
  * readRoster; Q2 reads the roster's text by its path only as a test-tree file that spells the program.
- * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) spells the program - the
- * bead's own row does - and is not a Pi surface (Q1); R-OUTSIDE-SRC files outside src/ are not read: a Pi surface
- * outside src/ (a doc, a test, a qa script, an example) is not judged, and this file and its roster spell the program
+ * RESIDUALS (named, each with its pinned quiet row; each family is claimed on its quiet row's plants, and a member of a
+ * family that none of them holds is NOT CLAIMED, read or quiet): R-TRACKER the tracker export (.beads/) spells the program
+ * - the bead's own row does - and is not a Pi surface (Q1); R-OUTSIDE-SRC files outside src/ are not read: a Pi surface
+ * outside src/ (Q2's doc, test, qa script and example paths) is not judged, and this file and its roster spell the program
  * in test/ (Q2; MEASURED names the other files outside src/ that do); R-PARAPHRASE the program's words out of order,
- * incomplete, interrupted by a digit (an ASCII one or an ARABIC-INDIC one) or shortened, and the abbreviation spelled
- * with separators, are not mentions (Q3); R-COMPUTED a template substitution between parts, a runtime join, computed
- * character codes, a "+" chain with a non-literal operand and a chain of another operator are not read (Q4); R-INTERIOR
- * a format character or a soft hyphen inside a word, a letter of another script or a fullwidth letter standing for one
- * of the abbreviation's, and a caseless letter (a CJK letter, a modifier letter) between the slug's words, hide it
- * (Q5); R-UNNAMED-ROLE a surface presenting the program's view classes without naming the program or its abbreviation
- * is not an APO surface to this census, so an effectful one stays quiet (Q6); R-ALIASED-CALL a registry invoke reached
- * through a destructured alias, Function.prototype.call, Reflect.apply, a comma expression, an instantiation
- * expression, or a helper in a module that is not an APO module, is not read as the APO module's reach (Q7);
- * R-DIRECT-EFFECT an APO module calling an effect owner directly, outside the registry, is not read by V (Q8);
- * R-LOCAL-PROVIDER the detached host's operator-declared local provider registers through a non-literal call at run
- * time, outside the composed catalog, and a registration through a bound register alias is no site (Q9); R-JOINED the
- * abbreviation joined to a word with no case change (apoview; apo and Apo before a lower-case n with tilde; APO before
- * an upper-case N with tilde, alone or before an s; such an N before apo; n with tilde before apo, or N with tilde
- * before APO, after a letter with no case), followed by a lower-case suffix (APOv1, APOstatus, APO and APOs before a
- * lower-case n with tilde, and a "+" chain folding to APOx, whose sub-chain "A" + "PO" is not read alone) or inflected
- * other than "APOs" (Apos, APOS), and the slug joined into one run, are not mentions (Q10); R-BINARY a src/ file
- * holding a NUL byte is read by its path only (Q11's named plant), so its text is not read (Q11: first, early and last
- * byte); R-ESCAPED-NAME a unicode escape outside a string-like literal - in an identifier, a regular expression or a
- * comment - is not decoded, and neither is one in a JSX attribute string, which JSX never decodes (Q12: .tsx, .jsx,
- * .js, .mjs and .cjs).
- * NOT CLAIMED. (a) Edits of this file and the roster together: a pin's case and its roster witness re-authored
- * together, its claims rewritten with them; a plant edited in this file and the roster together; a floor lowered with
- * the roster; a residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside anchor names
- * the residual families); a pin folded into its neighbour (removed, the neighbour re-quoted over both quotes and its
- * claim terms re-tiled), since the anchors bind the quotes' words and order, not where one quote ends; the
- * outside-anchor case or the closing case removed with its roster title. (b) A case returning its roster witness as a
- * constant, which its own row does not red: what holds is REDUNDANCY above - the mention and descriptor falsifiers red
- * three or more cases each and a quiet row read as a constant leaves A1's plant-findings list to red beside it, while
- * A2, O2 and Q9 each stand alone for their falsifier (a constant A2, O2 or Q9 hides it). A case reading the roster by a
- * route the SELF-READ names do not cover (a file read of the roster path), or naming a reader only in a comment. (c)
- * Readings no sentence above names: a role spelled only in a descriptor's version, inputSchema, outputSchema or
- * supportedModes; a reach, a registration or a spelling in a module the readers above do not judge (a NUL-holding
- * file's text, the AST of a file that is not a script). (d) EQUIVALENT FLOOR: A3's pin floor counts the 115 filing-pin
- * blobs without the pin plant; counting the plant too (116) reads the same against the floor of 100. (e) PLACEMENTS NO
- * PLANT NAMES: a string-like literal, a template or a "+" chain in a syntactic context the sentences above do not list;
- * a role past the third permission; a descriptor property past the second; a spelling only past 1.1 MB into a text, or
- * a NUL byte only past a text's 1100010th byte; a site whose function is bound otherwise than by a declaration or a
- * variable; a titlecase letter, which has a case of its own, beside the program's words.
+ * incomplete, interrupted by a digit (an ASCII one or an ARABIC-INDIC one) or shortened, and the abbreviation spelled with
+ * separators, are not mentions, in the forms Q3 plants (Q3); R-COMPUTED a template substitution between parts, a runtime
+ * join, computed character codes, a "+" chain with a non-literal operand and a chain of another operator are not read, in
+ * the forms Q4 plants (Q4); R-INTERIOR a format character or a soft hyphen inside a word, a letter of another script or a
+ * fullwidth letter standing for one of the abbreviation's, and a caseless letter (a CJK letter, a modifier letter) between
+ * the slug's words, hide it, in the forms Q5 plants (U+200B inside APO, U+00AD inside Policy, U+0410 for its A, U+FF21
+ * U+FF30 U+FF2F for it, U+4E00 and U+02B0 between the slug's words) (Q5); R-UNNAMED-ROLE a surface presenting the
+ * program's view classes without naming the program or its abbreviation is not an APO surface to this census, so an
+ * effectful one stays quiet, in the forms Q6's module and descriptor plants (Q6); R-ALIASED-CALL a registry invoke reached
+ * through a destructured alias, Function.prototype.call, Reflect.apply, a comma expression, an instantiation expression,
+ * or a helper in a module that is not an APO module, is not read as the APO module's reach, in the forms Q7's module and
+ * helper plant (Q7); R-DIRECT-EFFECT an APO module calling an effect owner directly, outside the registry, is not read by
+ * V (Q8's module, through executeDetachedControl); R-LOCAL-PROVIDER the detached host's operator-declared local provider
+ * registers through a non-literal call at run time, outside the composed catalog, and a registration through a bound
+ * register alias is no site (Q9); R-JOINED the abbreviation joined to a word with no case change (apoview; apo and Apo
+ * before a lower-case n with tilde; APO before an upper-case N with tilde, alone or before an s; such an N before apo; n
+ * with tilde before apo, or N with tilde before APO, after a letter with no case), followed by a lower-case suffix (APOv1,
+ * APOstatus, APO and APOs before a lower-case n with tilde, and a "+" chain folding to APOx, whose sub-chain "A" + "PO" is
+ * not read alone) or inflected other than "APOs" (Apos, APOS), and the slug joined into one run, are not mentions, in the
+ * forms Q10 plants (Q10); R-BINARY a src/ file holding a NUL byte is read by its path only (Q11's named plant), so its
+ * text is not read (Q11: first, early and last byte); R-ESCAPED-NAME a unicode escape outside a string-like literal - in
+ * an identifier, a regular expression or a comment - is not decoded, and neither is one in a JSX attribute string, which
+ * JSX never decodes, in the forms Q12 plants (Q12: .tsx, .jsx, .js, .mjs and .cjs).
+ * NOT CLAIMED. (a) Edits of this file and the roster together: a pin's case and its roster witness re-authored together,
+ * its claims rewritten with them; a plant edited in this file and the roster together; a floor lowered with the roster; a
+ * residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside anchor names the residual
+ * families); a pin folded into its neighbour (removed, the neighbour re-quoted over both quotes and its claim terms
+ * re-tiled), since the anchors bind the quotes' words and order, not where one quote ends; the outside-anchor case or the
+ * closing case removed with its roster title. (b) A case returning its roster witness as a constant, which its own row
+ * does not red: what holds is REDUNDANCY above - the mention and descriptor falsifiers red three or more cases each and a
+ * quiet row read as a constant leaves A1's plant-findings list to red beside it, while A2, O2 and Q9 each stand alone for
+ * their falsifier (a constant A2, O2 or Q9 hides it). A case reading the roster by a route the SELF-READ names do not
+ * cover (a file read of the roster path), or naming a reader only in a comment. (c) Readings no sentence above names: a
+ * role spelled only in a descriptor's version, inputSchema, outputSchema or supportedModes; a reach, a registration or a
+ * spelling in a module the readers above do not judge (a NUL-holding file's text, the AST of a file that is not a script).
+ * (d) EQUIVALENT FLOOR: A3's pin floor counts the 115 filing-pin blobs without the pin plant; counting the plant too (116)
+ * reads the same against the floor of 100. (e) PLACEMENTS NO PLANT NAMES: a string-like literal, a template or a "+" chain
+ * in a syntactic context the sentences above do not list; a role past the third permission; a descriptor property past the
+ * second; a spelling only past 1.1 MB into a text, or a NUL byte only past a text's 1100010th byte; a site whose function
+ * is bound otherwise than by a declaration or a variable; a titlecase letter, which has a case of its own, beside the
+ * program's words; and each form THE JUDGE's sentences name NOT CLAIMED, refusal #3's U1-U8 (DEFERRED TO wb-021.12) and
+ * the S4 departures among them.
  * ARMED HALF: rows C and V already read the real catalog and the real modules at every run; today they find no APO-role
- * descriptor and no APO module, so their real legs are empty and their plants carry the proof. The first surface reds
- * A3 with the reason, and C2 and V1 judge it: a non-read APO-role descriptor or a non-read reach reds there by name.
- * OVER-READS (disclosed): any word "apo" - in prose, an identifier, or a base64 run split at a case or digit change -
- * and the three program words in order anywhere in a file's text read as a mention; a member named invoke or inspect is
- * a reach whatever its receiver (the Furnace SDK run's two inspect calls in src/workbench/providers/furnace.ts and the
- * detached workflow connection's inspect in src/index.ts are three); no mention reads in src/ today. SCOPE: files git
- * ignores (node_modules/, .forge/ and the rest of .gitignore) and files deleted from the worktree are not listed; a
- * symbolic link under src/ is listed and walked as an entry, its target missing or not, and judged by its own link
- * text, never followed (A2's listing plant); src/ holds no link today.
+ * descriptor and no APO module, so their real legs are empty and their plants carry the proof. The first surface in a form
+ * THE JUDGE claims reds A3 with the reason, and C2 and V1 judge it: a non-read APO-role descriptor or a non-read reach
+ * reds there by name.
+ * OVER-READS (disclosed, and claimed only where THE JUDGE claims its readings): the word "apo" - in prose, an identifier,
+ * or a base64 run split at a case or digit change (MEASURED: the two dependency locks) - and the three program words in
+ * order read as a mention whatever they mean; a member named invoke or inspect is a reach whatever its receiver (the
+ * Furnace SDK run's two inspect calls in src/workbench/providers/furnace.ts and the detached workflow connection's inspect
+ * in src/index.ts are three, MEASURED); no mention reads in src/ today. SCOPE: files git ignores (node_modules/, .forge/
+ * and the rest of .gitignore) and files deleted from the worktree are not listed; a symbolic link under src/ is listed and
+ * walked as an entry, its target missing or not, and judged by its own link text, never followed (A2's listing plant, and
+ * claimed there); src/ holds no link today.
  * READS (contacts): every listed src/ file (A1-A3, O1, O2, V1, V2, Q9, Q11), the src/ blobs at the filing pin (A3), the
  * tracker export row of wb-021.1 (anchors, Q1), this file and its roster (Q2), src/workbench/capability-registry.ts
  * (C3) and the provider and native-module registration sources (O2); the catalog is composed in memory through the real
@@ -517,7 +611,7 @@ function tiles(text: string, quotes: readonly string[], separators: RegExp = /^[
   return separators.test(text.slice(at));
 }
 
-/** A text's words: its letter-or-digit runs, split again at a case change or a letter-digit boundary, lower-cased. */
+/** A text's words: its letter-or-digit runs, split again at a case change or a letter-digit boundary, lower-cased (THE JUDGE's WORDS: claimed on the planted texts only). */
 function wordsOf(text: string): string[] {
   const words: string[] = [];
   for (const run of text.match(/[\p{L}\p{N}]+/gu) ?? []) {
@@ -535,7 +629,7 @@ function stemPattern(word: string): string {
 const STEMS: readonly RegExp[] = PROGRAM_SLUG.split("-").map(word => new RegExp(`^${stemPattern(word)}$`));
 const ABBREVIATION_WORD = ABBREVIATION.toLowerCase();
 type Matcher = (text: string) => boolean;
-/** THE JUDGE: the abbreviation's word, or the slug's words in order by their stems. */
+/** THE JUDGE: the abbreviation's word, or the slug's words in order by their stems (THE JUDGE's MENTION: claimed on the planted texts and today's src/ files only). */
 const mentions: Matcher = text => {
   const words = wordsOf(text);
   return words.some((word, at) => word === ABBREVIATION_WORD || STEMS.every((stem, offset) => stem.test(words[at + offset] ?? "")));
@@ -582,7 +676,7 @@ function nodes(root: ts.Node): ts.Node[] {
   visit(root);
   return found;
 }
-/** A script's cooked and folded units: each string-like literal, each template part, each all-literal "+" chain. */
+/** A script's cooked and folded units: its string-like literals, its template parts and its all-literal "+" chains (THE JUDGE's cooked and folded sentences: claimed on the planted texts only). */
 function scriptUnits(source: ts.SourceFile): { readonly form: Form; readonly text: string }[] {
   const units: { form: Form; text: string }[] = [];
   const isPlus = (node: ts.Node): node is ts.BinaryExpression => ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken;
@@ -618,7 +712,7 @@ function sourceOf(item: Entry): ts.SourceFile {
   PARSED.set(key, source);
   return source;
 }
-/** One file's verdict under a matcher: binary (a NUL byte, not read) or the sorted forms in which the matcher read it. */
+/** One file's verdict under a matcher: binary (a NUL byte, not read; claimed at the positions THE JUDGE's binary sentence names) or the sorted forms in which the matcher read it (claimed on the planted texts and paths and on today's src/ files). */
 function verdictOf(item: Entry, matcher: Matcher): { readonly binary: boolean; readonly forms: readonly Form[] } {
   const forms = new Set<Form>();
   if (matcher(item.path)) forms.add("path");
@@ -647,7 +741,7 @@ function findingsFor(verdict: ScopeVerdict, paths: readonly string[], within: bo
 function inScope(path: string): boolean {
   return path.startsWith(SCOPE);
 }
-/** A repository's listed src/ files: tracked plus untracked-not-ignored, present on disk by lstat (an index entry deleted from disk is not listed; a symbolic link is present whether or not its target exists). */
+/** A repository's listed src/ files: tracked plus untracked-not-ignored, present on disk by lstat (an index entry deleted from disk is not listed; a symbolic link is present whether or not its target exists; claimed on today's src/ tree and A2's listing plant only: THE LISTING). */
 function listedSrc(root: string, env?: NodeJS.ProcessEnv): string[] {
   return sorted(
     gitAt(root, ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", SCOPE], undefined, env)
@@ -658,7 +752,7 @@ function listedSrc(root: string, env?: NodeJS.ProcessEnv): string[] {
 }
 /** This repository's listed src/ files, the judged scope. */
 const srcPaths = lazy((): string[] => listedSrc(REPO));
-/** Listed entries as git stores them: a file's bytes, a symbolic link's own link text (a link is never followed). */
+/** Listed entries as git stores them: a file's bytes, a symbolic link's own link text (a link is never followed; claimed on today's src/ tree and A2's listing plant only). */
 function entriesOf(root: string, paths: readonly string[]): Entry[] {
   return paths.map(path => {
     const full = join(root, path);
@@ -666,7 +760,7 @@ function entriesOf(root: string, paths: readonly string[]): Entry[] {
   });
 }
 const srcEntries = lazy((): Entry[] => entriesOf(REPO, srcPaths()));
-/** Every entry under a repository's src/ on disk that lstat does not call a directory: a symbolic link is an entry and is never followed. */
+/** The entries under a repository's src/ on disk that lstat does not call a directory: a symbolic link is an entry and is never followed (claimed on today's src/ tree and A2's listing plant only: THE LISTING). */
 function walkedSrc(root: string): string[] {
   const out: string[] = [];
   const visit = (dir: string): void => {
@@ -679,7 +773,7 @@ function walkedSrc(root: string): string[] {
   visit(SCOPE.replace(/\/$/, ""));
   return sorted(out);
 }
-/** The paths of a list that a repository's git ignores (tracked files are never reported). */
+/** The paths of a list that a repository's git ignores (tracked files are never reported; claimed on today's src/ tree and A2's listing plant only). */
 function ignoredOf(root: string, paths: readonly string[], env?: NodeJS.ProcessEnv): Set<string> {
   if (paths.length === 0) return new Set();
   try {
@@ -956,7 +1050,7 @@ function unreachable(name: string): () => Promise<never> {
 const FORGE_CLIENT: ForgeReadClient = { gate: { status: unreachable("forge gate.status") } };
 const FURNACE_CLIENT: FurnaceReadClient = { runs: { get: () => ({ inspect: unreachable("furnace runs.get().inspect") }) } };
 const HYPERUNIX_READER: HyperUnixReader = { find: unreachable("hyperunix find"), runtime: unreachable("hyperunix runtime"), async close() {} };
-/** Every exported registration function of src/workbench/providers/, each run into its own registry. */
+/** Each exported registration function of src/workbench/providers/ (O2 holds the real registrars equal to these), run into its own registry. */
 const SURFACES: Readonly<Record<string, (registry: CapabilityRegistry) => void>> = {
   registerForgeGateStatus: registry => registerForgeGateStatus(registry, FORGE_CLIENT, "0.1.0"),
   registerFurnaceRunInspect: registry => registerFurnaceRunInspect(registry, FURNACE_CLIENT, REPO),
@@ -1042,7 +1136,7 @@ const PROVIDER_PLANT: DescriptorPlant = { id: "apo.graph.read", effectClass: "re
 /** R-UNNAMED-ROLE: an effectful descriptor presenting a program view class without naming the program. */
 const UNNAMED_DESCRIPTOR: DescriptorPlant = { id: "workbench.policy.gradient", effectClass: "write", description: "Policy gradient and credit view.", permissions: ["census:plant"] };
 const ROLE_FIELDS = ["id", "description", "contractSource", "permissions"] as const;
-/** The descriptor fields that carry a role, read by the judge. */
+/** The descriptor fields that carry a role, read by the judge (THE JUDGE's ROLE: claimed on the planted placements only). */
 function roleFieldsOf(descriptor: CapabilityDescriptor): string[] {
   const texts: Readonly<Record<(typeof ROLE_FIELDS)[number], string>> = {
     id: descriptor.id,
@@ -1056,7 +1150,7 @@ function roleFieldsOf(descriptor: CapabilityDescriptor): string[] {
 function hasRole(descriptor: CapabilityDescriptor): boolean {
   return roleFieldsOf(descriptor).length > 0;
 }
-/** THE FALSIFIER: every APO-role descriptor whose effect class is not read, named. */
+/** THE FALSIFIER: the APO-role descriptors whose effect class is not read, named (claimed on C1's plants, C3's class plants and the real catalog). */
 function effectViolations(descriptors: readonly CapabilityDescriptor[]): string[] {
   return descriptors.filter(descriptor => hasRole(descriptor) && descriptor.effectClass !== READ_CLASS).map(descriptor => `${descriptor.id} declares effectClass ${descriptor.effectClass}`);
 }
@@ -1091,7 +1185,7 @@ async function plantedClasses(): Promise<Map<string, string[]>> {
   return classes;
 }
 
-/** A callee read through its parentheses, non-null assertions, as and satisfies clauses and angle-bracket assertions. */
+/** A callee read through its parentheses, non-null assertions, as and satisfies clauses and angle-bracket assertions (THE JUDGE's CALLEE: claimed on V2's wrapped plant only). */
 function unwrapped(callee: ts.Expression): ts.Expression {
   let at = callee;
   while (ts.isParenthesizedExpression(at) || ts.isNonNullExpression(at) || ts.isAsExpression(at) || ts.isSatisfiesExpression(at) || ts.isTypeAssertionExpression(at)) at = at.expression;
@@ -1104,7 +1198,7 @@ function memberNameOf(expression: ts.Expression): string | undefined {
   return undefined;
 }
 type ReachVerdict = "read" | "non-read" | "unknown" | "computed";
-/** Every invoke or inspect member call of a module, by its literal target or as computed. */
+/** A module's invoke and inspect member calls, by their literal target or as computed (THE JUDGE's REACH: claimed on V2's plants and the real call sites only). */
 function reachesOf(source: ts.SourceFile): (string | null)[] {
   const targets: (string | null)[] = [];
   for (const node of nodes(source)) {
@@ -1126,7 +1220,7 @@ interface HandlerVerdict {
   readonly reaches: { readonly [path: string]: readonly ReachVerdict[] };
   readonly violations: { readonly [path: string]: readonly ReachVerdict[] };
 }
-/** THE REACH FALSIFIER: every reach of an APO module whose verdict is not read, named by module. */
+/** THE REACH FALSIFIER: an APO module's reaches whose verdict is not read, named by module (claimed on V2's plants and the real modules only). */
 function judgeHandlers(entries: readonly Entry[], classes: ReadonlyMap<string, readonly string[]>): HandlerVerdict {
   const apoModules: string[] = [];
   const reaches: { [path: string]: ReachVerdict[] } = {};
@@ -1238,7 +1332,7 @@ const ALIAS_REGISTER_MODULE = {
   path: "src/workbench/zz-residual-register-alias.ts",
   text: `${REGISTER_HEAD}export function registerPlantAlias(registry: Registry): void {\n  const register = registry.register.bind(registry);\n  register({ descriptor: { id: "census.plant.alias" } });\n}\n`,
 } as const;
-/** Every registry.register call of a module set: descriptor sites with their enclosing function, and non-literal calls. */
+/** A module set's register calls: descriptor sites with their enclosing function, and non-literal calls (THE JUDGE's REGISTRATION SITE: claimed on O2's and Q9's plants and the real src/ files only). */
 function registrationsOf(entries: readonly Entry[]): { readonly sites: { readonly path: string; readonly enclosing: string | null }[]; readonly nonLiteral: { [path: string]: number } } {
   const sites: { path: string; enclosing: string | null }[] = [];
   const nonLiteral: { [path: string]: number } = {};
@@ -1264,7 +1358,7 @@ function registrationsOf(entries: readonly Entry[]): { readonly sites: { readonl
   }
   return { sites, nonLiteral };
 }
-/** The exported function declarations of the provider modules whose name begins "register", with their module. */
+/** The exported function declarations of the provider modules whose name begins "register", with their module (THE JUDGE's REGISTRARS: claimed on the real providers and O2's registrar plants only). */
 function exportedRegistrars(entries: readonly Entry[]): { readonly path: string; readonly name: string }[] {
   const found: { path: string; name: string }[] = [];
   for (const item of entries) {
