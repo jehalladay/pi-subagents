@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census roster; exact pinned witnesses. Cut #2 (the respin of refusal #1, seat ws-05, g10-work-s180) re-measured every witness on trunk 19024ab897c355768fa5505f334db5a9644c3f7e (117 src modules, 60 plane knowers; 12 reaching, six sites in four modules): B2, B3 and D1 carry the cut #2 readings and controls, the B and D labels the cut #2 claim words; A1-A3, B1, C1 and C2 read as cut #1 measured them at f63d38962c. Acceptance clauses are independently anchored in the tracked bead export. Regenerate only by re-measuring.",
+  "provenance": "wb-km7q.7 A1-D1 model-binding, plane-closure and opt-in-checklist census roster; exact pinned witnesses. Cut #3 (enumerate-the-resolvable, the respin of refusal #2 under R-B304; seat ws-01, g10-work-s182) re-measured every witness on trunk f5cb912999baeccb2705922ff80fd9066d5e70c4 (src unchanged since 19024ab897c3: 117 src modules, 60 plane knowers; 12 reaching, six sites in four modules): B2 gains the every-module knowing plant and the knowing edge-form, resolution and unread controls, B3 the per-core (head and tail) and per-class (first and last name) plants, the every-name prototype probe and the prefix, name and heritage controls, D1 the bare-stem control, the B label the cut #3 claim words, and the readings' regular expressions and floors are held here; A1-A3, B1, C1, C2 and D1's other readings read as cut #2 measured them. Acceptance clauses are independently anchored in the tracked bead export. Regenerate only by re-measuring.",
   "launchExports": {
     "@anthropic-ai/claude-agent-sdk": [
       "prewarm",
@@ -88,6 +88,27 @@
     "prewarm",
     "startup"
   ],
+  "listenerPrefix": "/^on[A-Z]/",
+  "speculation": "/specul/i",
+  "anchorForms": {
+    "evidence": "/^src\\/workbench\\/[^/]*-evidence\\.ts$/",
+    "evidencePrefix": "/^src\\/workbench\\/evidence-[^/]*\\.ts$/",
+    "observer": "/^src\\/workbench\\/[^/]*-observer\\.ts$/"
+  },
+  "floors": {
+    "src": 100,
+    "knowers": 50,
+    "anchors": {
+      "evidence": 4,
+      "evidencePrefix": 3,
+      "observer": 8,
+      "planeUi": 3
+    },
+    "prototypes": {
+      "EvidenceStore": 5,
+      "ObservationProjection": 20
+    }
+  },
   "rows": [
     {
       "id": "A",
@@ -228,7 +249,7 @@
     },
     {
       "id": "B",
-      "label": "the evidence/query/projection plane is three cores and every src module that knows one through any import edge, type imports included; no identifier, private identifier, string or template text of a core is a listener-vocabulary name, and the cores' callable type nodes and heritage clauses are exactly the loader seam's two members and EvidenceRefusal extends Error",
+      "label": "the evidence/query/projection plane is three cores and every src module that knows one through a relative knowing edge (each import, re-export, import-equals, import-type and literal load form, type-only forms included); no identifier, private identifier, string or template text of any core is a listener-vocabulary name, and the cores' callable type nodes and heritage clauses are exactly the loader seam's two members and EvidenceRefusal extends Error",
       "pins": [
         {
           "id": "B1",
@@ -271,8 +292,46 @@
                 "src/workbench/Gp-14_plant-evidence.ts",
                 "src/workbench/Gp-14_plant-observer.ts",
                 "src/workbench/evidence-Gp-14_plant.ts"
-              ]
-            }
+              ],
+              "edgeForms": {
+                "typeClause": true,
+                "typeSpecifier": true,
+                "valueImport": true,
+                "defaultImport": true,
+                "namespaceImport": true,
+                "sideEffectImport": true,
+                "namedReexport": true,
+                "typeReexport": true,
+                "starReexport": true,
+                "typeStarReexport": true,
+                "namespaceReexport": true,
+                "importEquals": true,
+                "typeImportEquals": true,
+                "importType": true,
+                "typeofImportType": true,
+                "dynamicImport": true,
+                "dynamicTemplate": true,
+                "requireLoad": true,
+                "requireTemplate": true,
+                "createRequireLoad": true,
+                "createRequireTemplate": true
+              },
+              "resolution": {
+                "js": true,
+                "mjs": true,
+                "cjs": true,
+                "ts": true,
+                "extensionless": true,
+                "directoryIndex": true
+              },
+              "unread": {
+                "augmentation": false,
+                "tripleSlash": false,
+                "composedSpecifier": false,
+                "bareSpecifier": false
+              }
+            },
+            "knowingPlants": []
           }
         },
         {
@@ -292,7 +351,16 @@
             },
             "prototypeListeners": [],
             "prototypeControl": [
-              "PrototypeProbe.onChange"
+              "PrototypeProbe.addEventListener",
+              "PrototypeProbe.addListener",
+              "PrototypeProbe.listen",
+              "PrototypeProbe.onChange",
+              "PrototypeProbe.removeEventListener",
+              "PrototypeProbe.removeListener",
+              "PrototypeProbe.subscribe",
+              "PrototypeProbe.unsubscribe",
+              "PrototypeProbe.unwatch",
+              "PrototypeProbe.watch"
             ],
             "vocabulary": [
               "addEventListener",
@@ -521,6 +589,105 @@
                 "listeners": 0,
                 "callables": 0,
                 "heritage": 0
+              },
+              "prefixLetters": {
+                "listeners": 26,
+                "callables": 0,
+                "heritage": 0
+              },
+              "prefixTails": {
+                "listeners": 6,
+                "callables": 0,
+                "heritage": 0
+              },
+              "prefixNearMisses": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "namesNearMisses": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              },
+              "classExpressionHeritage": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 1
+              },
+              "unlistedNames": {
+                "listeners": 0,
+                "callables": 0,
+                "heritage": 0
+              }
+            },
+            "corePlants": {
+              "src/workbench/evidence-loader.ts": {
+                "listeners": [
+                  "src/workbench/evidence-loader.ts: onCoreHead",
+                  "src/workbench/evidence-loader.ts: onCorePlant"
+                ],
+                "callables": [
+                  "src/workbench/evidence-loader.ts: CoreHeadFeed.onCoreHead.listener",
+                  "src/workbench/evidence-loader.ts: CorePlantFeed.onCorePlant.listener",
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.canLoad",
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.load"
+                ],
+                "heritage": [
+                  "src/workbench/evidence-loader.ts: CoreHeadFeed extends EventTarget",
+                  "src/workbench/evidence-loader.ts: CorePlantFeed extends EventTarget",
+                  "src/workbench/evidence-loader.ts: EvidenceRefusal extends Error"
+                ]
+              },
+              "src/workbench/observation.ts": {
+                "listeners": [
+                  "src/workbench/observation.ts: onCoreHead",
+                  "src/workbench/observation.ts: onCorePlant"
+                ],
+                "callables": [
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.canLoad",
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.load",
+                  "src/workbench/observation.ts: CoreHeadFeed.onCoreHead.listener",
+                  "src/workbench/observation.ts: CorePlantFeed.onCorePlant.listener"
+                ],
+                "heritage": [
+                  "src/workbench/evidence-loader.ts: EvidenceRefusal extends Error",
+                  "src/workbench/observation.ts: CoreHeadFeed extends EventTarget",
+                  "src/workbench/observation.ts: CorePlantFeed extends EventTarget"
+                ]
+              },
+              "src/workbench/observe-query.ts": {
+                "listeners": [
+                  "src/workbench/observe-query.ts: onCoreHead",
+                  "src/workbench/observe-query.ts: onCorePlant"
+                ],
+                "callables": [
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.canLoad",
+                  "src/workbench/evidence-loader.ts: EvidenceLoader.load",
+                  "src/workbench/observe-query.ts: CoreHeadFeed.onCoreHead.listener",
+                  "src/workbench/observe-query.ts: CorePlantFeed.onCorePlant.listener"
+                ],
+                "heritage": [
+                  "src/workbench/evidence-loader.ts: EvidenceRefusal extends Error",
+                  "src/workbench/observe-query.ts: CoreHeadFeed extends EventTarget",
+                  "src/workbench/observe-query.ts: CorePlantFeed extends EventTarget"
+                ]
+              }
+            },
+            "prototypePlants": {
+              "EvidenceStore": {
+                "listeners": [
+                  "EvidenceStore.onCorePlant",
+                  "EvidenceStore.subscribe"
+                ],
+                "copied": true
+              },
+              "ObservationProjection": {
+                "listeners": [
+                  "ObservationProjection.onCorePlant",
+                  "ObservationProjection.subscribe"
+                ],
+                "copied": true
               }
             }
           }
@@ -716,7 +883,8 @@
               "outsideVocabulary": 0,
               "privateName": 2,
               "noSubstitutionTemplate": 1,
-              "templateSpans": 3
+              "templateSpans": 3,
+              "stem": 2
             },
             "warmStartControls": {
               "prewarm": 1,
