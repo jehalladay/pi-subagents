@@ -4,10 +4,16 @@
  * (observationMembers, the reader of wb-km7q.4's THE MEMBER CHECK). Statement (the bead's export title): "observationMembers reads
  * merged same-module declarations (NativeSnapshot/ObservationTrace class merges, augmentation blocks) or the B1 claims state the
  * top-level-interface scope, narrowed out of wb-km7q.4's fail-closed core (rule-19 structural exit)". This cut takes the first
- * branch: the reader reads those merges, and states in its header exactly what it reads and what it does not. Cut #3 is the
+ * branch: the reader reads those merges, and states in its header what it reads and what it does not. Cut #3 is the
  * enumerate-the-resolvable cut ruling R-B242 orders after refusal #2 (U1-U6): it changes no reading, pins every member refusal #2
  * names (ITEM RF2-U1 to RF2-U6, through the EDGES and NESTED tables and the FORMS and CONTEXTS rows marked cut #3), and states the
- * reach of THE SYNTAX TREE and of LEAF as exactly what those rows pin.
+ * reach of THE SYNTAX TREE and of LEAF as those rows pin them. Cut #4 is the FAIL-CLOSED CORE ruling R-B272 orders after refusal #3
+ * (gate-prep-7, g10-gate-s177: unmet U1-U6, claims wider than pins, and finding F1; the rule-19 structural exit that files wb-km7q.16
+ * for the coverage): it changes no reading, row, pin, plant or test title; it narrows the claim words of DECLARATION, MEMBER,
+ * EXPANSION and LEAF to the forms the rows lay (the helper's CLAIMED FORMS, its section headings and its roster lines, which CLAIM
+ * holds byte for byte, its READING and its comments, and this header), and U1 (G7-L01, G7-L04, G7-L03), U2 (G7-E01), U3 (G7-I01), U4
+ * (G7-M01), U5 (G7-D01, G7-D02, G7-P01), U6 (G7-Q01) and F1 (G7-D04) are NOT CLAIMED, their pins wb-km7q.16's (DEFERRED TO wb-km7q.16
+ * below).
  *
  * ACCEPTANCE (the description's acceptance line, verbatim in ACCEPTANCE below and held to the tracker export): "each plant reds the
  * unmodified census and greens under the cure; claim text (header, LIMITS, comment, delivery note) and reader coverage agree
@@ -19,10 +25,12 @@
  * what the reader reads of it; every slot and every node kind at or above which TypeScript's own AST types admit an identifier has a
  * CONTEXTS row pinning what the reader reads of a read name, of Readonly and of Record standing there, or an UNREACHABLE entry shown
  * by a parse (UNIVERSE); every slot edge those types admit on a kind that can stand above an identifier lies on the path from the
- * source file to the identifier of a fails-closed CONTEXTS or EDGES row, or is UNREACHABLE by a parse (UNIVERSE); every type kind
- * the TYPES table reads as no leaf, at each nested position of a LEAF form, has a NESTED row reading it as no leaf, or is UNREACHABLE
- * there by a parse; every member refusal #2 names maps to a row this census holds (ITEM; that the row reds under the member is the
- * seat's battery's measurement); and the TypeScript checker reads every row's text no narrower than the reader (AGREEMENT).
+ * source file to the identifier of a fails-closed CONTEXTS or EDGES row, or is UNREACHABLE by a parse (UNIVERSE); every type kind the
+ * TYPES table reads as no leaf, at each nested position of a LEAF form as LEAF_POSITIONS composes it, has a NESTED row reading it as
+ * no leaf, or is UNREACHABLE there by a parse; every member refusal #2 names maps to a row this census holds (ITEM; that the row reds
+ * under the member is the seat's battery's measurement); the TypeScript checker reads every row's text no narrower than the reader
+ * (AGREEMENT); and (cut #4) the reader's DECLARATION, MEMBER, EXPANSION and LEAF claim words are claimed only in the forms these rows
+ * lay (the helper's CLAIMED FORMS), every form refusal #3 names NOT CLAIMED (DEFERRED TO wb-km7q.16 below).
  *
  * MEMBER CHECK MODEL: wb-km7q.4's B1 feeds exactly the entries of the real module's reading (its comparisons are equal on the real
  * module, which that census asserts), so a plant reds THE MEMBER CHECK exactly when its reading differs from BASE as a multiset
@@ -71,11 +79,13 @@
  *   row is named for) and no other EDGES row's edge; read like a CONTEXTS row with Interval, Readonly and Record, each pinned fails
  *   closed. A statement or body slot holds a block (refusal #2's guard members test an identifier inside a block under if); a type
  *   parameter list or a parameter list holds the name as a type parameter's or a parameter's name, so no row passes another's edge.
- *  NESTED (cut #3, refusal #2's U6): for each nested position of a LEAF form (POSITIONS: a union's first, middle and last arm, a
- *   readonly array's element, Readonly's argument, Record's key and Record's value) and each type kind the TYPES table reads as no
- *   leaf (NESTED_ATOMS: one type of each kind ts.isTypeNode accepts but the string and number keywords and TYPES' UNREACHABLE kinds),
+ *  NESTED (cut #3, refusal #2's U6): for each nested position of a LEAF form (POSITIONS, each as LEAF_POSITIONS composes it: a
+ *   union's first arm in X | string, its middle arm in string | X | number and its last arm in string | X, a readonly array's
+ *   element, Readonly's argument, Record's key and Record's value) and each type kind the TYPES table reads as no leaf (NESTED_ATOMS:
+ *   one type of each kind ts.isTypeNode accepts but the string and number keywords and TYPES' UNREACHABLE kinds),
  *   NativeSnapshot.subjectBasis typed by the position's composite of the atom (LEAF_POSITIONS) reads `subjectBasis.?`; a pair whose
- *   composite's parse places no node of the kind at the position is UNREACHABLE (NESTED_UNREACHABLE, shown by that parse).
+ *   composite's parse places no node of the kind at the position is UNREACHABLE (NESTED_UNREACHABLE, shown by that parse). A union
+ *   arm at another position or union length is NOT CLAIMED (cut #4; DEFERRED TO wb-km7q.16).
  *  UNIVERSE: the anchor of CONTEXTS and EDGES, read from TypeScript itself. Every slot ts.forEachChild visits whose type in
  *   TypeScript's own lib/typescript.d.ts admits an Identifier (the checker's isTypeAssignableTo; a slot that file leaves undeclared
  *   takes the type its name has on the node interfaces that declare it) is a CONTEXTS row's slot or an UNREACHABLE entry; every node
@@ -108,7 +118,9 @@
  * of (each reads exactly as the augmentation claim's own path list says); an EDGES row's text beyond its edge, slot and reading; a
  * NESTED atom beyond its kind; a cut #3 FORMS or CONTEXTS row that no cures pin names (elsewhere/nestedAugmentationBlock, inner
  * interface/classModifierInnerName and /augmentedInnerName, the heritage rows but nestedHeritage); which row a cures pin names,
- * beyond its existence.
+ * beyond its existence; and (cut #4) the text of each claim word's narrowing in the helper (its `as the rows lay it` forms, its NOT
+ * CLAIMED clauses and CLAIMED FORMS), which CLAIM holds only between the helper's header and its exported roster, so an edit of both
+ * copies together reads green.
  * FROZEN SHAPE (standing rule 16): one literal pins every row as <table>:<id>:<pin count>.
  *
  * NOT CLAIMED: anything of wb-km7q.4's census beyond the reader (its journeys, its comparisons' fed lists, its other legs); that a
@@ -122,6 +134,16 @@
  * tells two paths apart by more than one slot, edge or kind (the kind of the node standing at an edge, where an EDGES or CONTEXTS
  * row lays one kind; two slots or edges at once; a depth) is NOT CLAIMED by this census. A LEAF edit keyed on a node below a nested
  * position (two or more positions under the top of a type, where NESTED pins one) is NOT CLAIMED by this census.
+ * DEFERRED TO wb-km7q.16 (filed by the rule-19 structural exit R-B272 to pin these forms or name them residuals) and NOT CLAIMED
+ * here: every form of a DECLARATION, MEMBER, EXPANSION or LEAF word that no row of this census lays (the helper's CLAIMED FORMS),
+ * among them refusal #3's U1-U6 and F1: U1, a union arm that reads as no leaf at another position or union length than NESTED's
+ * composites lay (any arm of a union of four or more arms, or the first or last of three: G7-L01, G7-L04) or of the node kind of
+ * another arm (G7-L03); U2, a member other than a property signature in a type literal expansion (G7-E01); U3, a property written
+ * with no type in an expansion (G7-I01); U4, a member kind other than a method signature and a class method in a read interface's
+ * expansion, a call or construct signature among them (G7-M01); U5, an augmentation block of two or more statements (G7-D01, G7-D02)
+ * and a ../ specifier spelled other than ../workbench/ (G7-P01); U6, a bare interface reference standing as a property's whole type
+ * under a read interface's expansion (G7-Q01); and F1, a class declaration of a read name without export (G7-D04, whose witness is
+ * TS2395).
  *
  * Display paths added: none. Test-only: it spawns nothing and writes nothing; it reads the helper, the tracker export,
  * src/workbench/observation.ts and TypeScript's lib/typescript.d.ts, lays every plant over that text in memory, and runs the

@@ -11,13 +11,16 @@
  * (DECLARATION) and reads a member's type as holding no members only when every node of it is a LEAF form, so it keeps no set of
  * declared or imported names at all. Its cut #2 answers this bead's refusal #1 (U1-U5, F1-F5): a module block of observation.ts
  * without the declare modifier is no augmentation (the checker merges none). Its cut #3, the enumerate-the-resolvable cut ruling
- * R-B242 orders after refusal #2 (U1-U6), changes no reading: it states the reach of THE SYNTAX TREE and of LEAF as exactly what the
- * census pins, and every claim word is stated no wider than the census pins it. The falsifier census is
+ * R-B242 orders after refusal #2 (U1-U6), changes no reading: it states the reach of THE SYNTAX TREE and of LEAF as the census pins
+ * them, LEAF's narrowed further by cut #4. Its cut #4, the fail-closed core ruling R-B272 orders after refusal #3 (U1-U6, F1),
+ * changes no reading either: it narrows the claim words of DECLARATION, MEMBER, EXPANSION and LEAF, and the READING sentences that
+ * use them, to the forms the census's rows lay (CLAIMED FORMS below), and names the forms refusal #3 found wider NOT CLAIMED, their
+ * coverage wb-km7q.16's (the census's DEFERRED TO wb-km7q.16). The falsifier census is
  * test/workbench-observation-members-census.test.ts. It holds every "- <word>: <claim>" line of this header equal, in order and byte
- * for byte, to the roster exported for its section, gives every word a calibration plant whose reading without the word differs,
- * pins every identifier slot, slot edge and node kind TypeScript's own AST types admit (CONTEXTS, EDGES, UNIVERSE) and every type
- * kind at each nested position of a LEAF form (NESTED), and holds every reading the reader makes to the TypeScript checker's reading
- * of the same text (ReadOptions lists the words a reading uses; every word by default).
+ * for byte, to the roster exported for its section, gives every word a calibration plant whose reading without the word differs, pins
+ * every identifier slot, slot edge and node kind TypeScript's own AST types admit (CONTEXTS, EDGES, UNIVERSE) and every type kind
+ * TYPES reads as no leaf at each nested position of a LEAF form as NESTED composes it, and holds the reader's reading of every row's
+ * text to the TypeScript checker's reading of it (AGREEMENT; ReadOptions lists the words a reading uses, every word by default).
  *
  * READING (observationMembers). It reads one text, the source of src/workbench/observation.ts, through the TypeScript parser and
  * nothing else. The ROOTS are NativeSnapshot and ObservationEvent; a READ NAME is a root or a name a root member expands through
@@ -27,6 +30,12 @@
  * (`<member>.<name>` each) or as `<member>.?` when its type is no LEAF; a required property as nothing; any other member as `?`. The
  * snapshot list is NativeSnapshot's and the event list is ObservationEvent's; a root that reads `?` has the list ["?"]. The order of a
  * list is not claimed (THE MEMBER CHECK compares sorted lists).
+ * CLAIMED FORMS (cut #4, the fail-closed core): READING's sentences and every DECLARATION, MEMBER, EXPANSION and LEAF form below are
+ * claimed only in the forms the census's rows lay (BASE, GATE, FORMS, TYPES, MEMBERS, RESIDUALS, CONTEXTS, EDGES and NESTED, each row
+ * a whole module text the census reads and pins), and each of those words' lines names its rows' forms after `as the rows lay it`; a
+ * form no row lays is NOT CLAIMED, whatever a sentence's generality reads. NOT CLAIMED among them: a read name with three or more
+ * declarations a DECLARATION form reads (the rows lay the module's one top-level interface of a read name and at most one more
+ * declaration of it), and every form refusal #3 names (the census's DEFERRED TO wb-km7q.16).
  * THE SYNTAX TREE (REFUSAL elsewhere, LEAF Readonly and Record): an identifier stands in it when a ts.forEachChild walk from the
  * source file meets it, at whatever node kind and slot holds it. A comment holds none (JSDoc included: TypeScript attaches it as
  * node.jsDoc, never as a child), and a string's or a template's text is no identifier. Its reach is claimed one slot, edge or kind
@@ -35,31 +44,31 @@
  * unless a parse shows it unreachable; a walk or a guard that tells two paths apart by more than one slot, edge or kind (the kind
  * of the node at an edge, two edges at once, a depth) is not claimed.
  *
- * DECLARATION (DECLARATION_FORMS; the declarations of a read name whose members are read):
- * - interface: a top-level interface declaration of the name, every one of them (interface merging)
- * - class merge: a top-level class declaration of the name, its elements read as members (class-interface merging)
- * - augmentation: an interface declaration of the name standing directly in the body of a top-level module block that carries the declare modifier and whose specifier starts with ./ or ../ and, joined to src/workbench, is src/workbench/observation, src/workbench/observation.js or src/workbench/observation.ts (observation.ts augmenting itself)
+ * DECLARATION (DECLARATION_FORMS; the declarations of a read name whose members are read, as CLAIMED FORMS bounds them):
+ * - interface: a top-level interface declaration of the name, every one of them (interface merging), as the rows lay it: the module's own declaration of the name and at most one more exported one (FORMS interface declaredTwice and redeclaredMember); a third declaration, or one without export, is NOT CLAIMED
+ * - class merge: a top-level class declaration of the name, its elements read as members (class-interface merging), as the rows lay it: one exported class declaration of the name (FORMS class merge, GATE O7 and O15 and their journey twins, the MEMBERS class member and modifier rows); a second class declaration of the name, or one without export (refusal #3 F1, G7-D04, its witness TS2395), is NOT CLAIMED
+ * - augmentation: an interface declaration of the name standing directly in the body of a top-level module block that carries the declare modifier and whose specifier starts with ./ or ../ and, joined to src/workbench, is src/workbench/observation, src/workbench/observation.js or src/workbench/observation.ts (observation.ts augmenting itself), as the rows lay it: one such block whose one statement is that interface, its specifier ./ or ../workbench/ before observation, observation.js or observation.ts (FORMS augmentation, GATE O8, AUGMENTATION PATHS); a block of two or more statements (G7-D01, G7-D02), a second such block, or a ../ specifier spelled otherwise (G7-P01) is NOT CLAIMED
  * REFUSAL (REFUSAL_FORMS; fail closed: a read name reads `?` when one holds):
  * - missing: the module text holds no top-level interface declaration of the name
  * - elsewhere: an identifier of the name stands in THE SYNTAX TREE other than as the name of a declaration a DECLARATION form reads, a type reference's name or an extends or implements clause entry's expression
  * - heritage: a declaration of the name that a DECLARATION form reads holds an extends or implements clause
  * - type parameters: a declaration of the name that a DECLARATION form reads holds type parameters
  * - class modifier: a class declaration of the name that class merge reads carries a modifier or decorator other than export and declare
- * MEMBER (MEMBER_FORMS; the members of a declaration a DECLARATION form reads):
- * - property: a property signature, or a class property declaration, named by an identifier and with no modifier but readonly (or public, on a class property); a root reads the optional ones (written with ?, which a definite assignment ! is not) and no required one, an expansion reads every one
- * - other member: any other member (a method, an accessor, an index, call or construct signature, a constructor, a static block, a semicolon element, or a member with another name or modifier) reads `?` in a root's list and `<member>.?` in an expansion
- * EXPANSION (EXPANSION_FORMS; a root member's whole type read one level down, each inner member read by MEMBER and LEAF):
- * - type literal: an optional root property whose whole type is a type literal reads as that literal's members, `<member>.<name>` each
- * - read interface: an optional root property whose whole type is a bare type reference (an identifier, no type arguments) to a name with a top-level interface declaration reads as that read name's members, `<member>.<name>` each, or as `<member>.?` when that name reads `?`
- * - inner interface: an expanded property whose whole type is a bare type reference to a name with a top-level interface declaration reads `<member>.<name>`, whatever that name's REFUSAL forms hold, that interface's own members unread
- * LEAF (LEAF_FORMS; a property's type holds no members only when every node of it is one of these forms; any other node at its top or at a nested position of the form at its top (a union's first, middle or last arm, a readonly array's element, Readonly's argument, Record's key or value), and a property written with no type, makes it read `<member>.?`; a node deeper than that is not claimed):
- * - string: the string keyword
- * - number: the number keyword
- * - string literal: a string literal type, a quoted string
- * - union: a union type whose every arm reads as a leaf
- * - readonly array: readonly T[], its element type T read as a leaf
- * - Readonly: Readonly<T> with one type argument, T read as a leaf, while every identifier Readonly in THE SYNTAX TREE is a type reference's name
- * - Record: Record<string, V> with two type arguments, the first the string keyword and V read as a leaf, while every identifier Record in THE SYNTAX TREE is a type reference's name
+ * MEMBER (MEMBER_FORMS; the members of a declaration a DECLARATION form reads, as CLAIMED FORMS bounds them):
+ * - property: a property signature, or a class property declaration, named by an identifier and with no modifier but readonly (or public, on a class property); a root reads the optional ones (written with ?, which a definite assignment ! is not) and no required one, an expansion reads every one; as the rows lay it: at a root, the module's members and those the rows add to NativeSnapshot, ObservationEvent and their merges (MEMBERS lays each modifier on a property signature and on a class property, the optional, required and definite forms, and each name kind on a property signature, a class property's name as an identifier or a private name), and in an expansion, typed, identifier-named and unmodified ones (the module's ObservationTrace, Interval and node members, Presentation's at TYPES moduleReference, FORMS parentPath, GATE O15 and RESIDUALS presentationMember's twin); a root class property named by a string, a number or a computed name, and in an expansion a property with a modifier, a name other than an identifier or no type (G7-I01), is NOT CLAIMED
+ * - other member: any other member (a method, an accessor, an index, call or construct signature, a constructor, a static block, a semicolon element, or a member with another name or modifier) reads `?` in a root's list and `<member>.?` in an expansion, as the rows lay it: in a root's list, each kind MEMBERS lays on NativeSnapshot's signatures and its class merge's elements (FORMS other member methodMember among them), and in an expansion, a method signature and a class method under ObservationTrace (MEMBERS innerMethod and innerClassMethod); a root class property named by a string, a number or a computed name, and in an expansion any other member kind (a call or construct signature: G7-M01) and any member of a type literal but a property signature (G7-E01), is NOT CLAIMED
+ * EXPANSION (EXPANSION_FORMS; a root member's whole type read one level down, each inner member read by MEMBER and LEAF, as CLAIMED FORMS bounds them):
+ * - type literal: an optional root property whose whole type is a type literal reads as that literal's members, `<member>.<name>` each, as the rows lay it: a literal of one or two typed property signatures (the module's ObservationEvent.node, TYPES wholeTypeLiteral); a literal of three or more members, or holding any other member (G7-E01) or an untyped property (G7-I01), is NOT CLAIMED
+ * - read interface: an optional root property whose whole type is a bare type reference (an identifier, no type arguments) to a name with a top-level interface declaration reads as that read name's members, `<member>.<name>` each, or as `<member>.?` when that name reads `?`, as the rows lay it: ObservationTrace and Interval at both roots and Presentation at subjectBasis (TYPES moduleReference), with the members and merges the rows add to them, the REFUSAL forms FORMS and CONTEXTS lay on ObservationTrace and Interval, and the TYPES reference rows that expand nothing; another read name, a root among them, or a read name holding more members than the rows give it, is NOT CLAIMED
+ * - inner interface: an expanded property whose whole type is a bare type reference to a name with a top-level interface declaration reads `<member>.<name>`, whatever that name's REFUSAL forms hold, that interface's own members unread, as the rows lay it: a type literal expansion's property, the module's node.presentation, with every REFUSAL form and declaration FORMS inner interface lays on Presentation; such a property under a read interface's expansion (G7-Q01) is NOT CLAIMED
+ * LEAF (LEAF_FORMS; a property's type holds no members only when every node of it is one of these forms, as CLAIMED FORMS bounds them; any other node at its top (TYPES) or at a nested position of the form at its top as NESTED composes it (the first arm of X | string, the middle arm of string | X | number, the last arm of string | X, the element of readonly X[], the argument of Readonly<X>, the key of Record<X, string> or the value of Record<string, X>, X a type of each kind TYPES reads as no leaf that a parse places there) makes it read `<member>.?`, and so does a root property signature written with no type (MEMBERS untypedSignature); a node deeper than that, a root class property written with no type, a union arm at another position or union length (G7-L01, G7-L04) or of another arm's node kind (G7-L03), and an untyped property in an expansion (G7-I01) are NOT CLAIMED):
+ * - string: the string keyword, as the rows lay it: at a type's top (the module's members, TYPES string) and in the unions, readonly arrays, Readonly and Record forms the lines below name; another position of it is NOT CLAIMED
+ * - number: the number keyword, as the rows lay it: at a type's top (TYPES number) and as an arm of the unions LEAF union names (the module's sequence and sourceSequence, TYPES leafUnion, NESTED's middle composite); another position of it is NOT CLAIMED
+ * - string literal: a string literal type, a quoted string, as the rows lay it: at a type's top (TYPES stringLiteral) and as an arm of the module's coverage and of Presentation's type and statusTone (TYPES moduleReference); another position of it is NOT CLAIMED
+ * - union: a union type whose every arm reads as a leaf, as the rows lay it: the all-leaf unions the rows lay (the module's sequence, sourceSequence and coverage, Presentation's type and statusTone at TYPES moduleReference, TYPES leafUnion: two to five arms, each the string or number keyword or a string literal) and the unions whose arms that read as no leaf stand as the first or last arm of two or the middle arm of three, each of a node kind no other arm has (NESTED's composites, the TYPES, GATE and RESIDUALS union rows); another all-leaf union (one of six or more arms among them), and a non-leaf arm at another position or union length (G7-L01, G7-L04) or of another arm's node kind (G7-L03), are NOT CLAIMED
+ * - readonly array: readonly T[], its element type T read as a leaf, as the rows lay it: T the string keyword (the module's evidenceRefs, TYPES readonlyArray) or a type of each kind TYPES reads as no leaf that a parse places there (NESTED, TYPES readonlyObjectArray); another element type is NOT CLAIMED
+ * - Readonly: Readonly<T> with one type argument, T read as a leaf, while every identifier Readonly in THE SYNTAX TREE is a type reference's name, as the rows lay it: T the string keyword (TYPES Readonly), Record<string, string> (the module's correlationIds) or a type of each kind TYPES reads as no leaf that a parse places there (NESTED, TYPES ReadonlyObject), the argument counts and the shadowing TYPES lays, and an identifier Readonly at each slot CONTEXTS and EDGES lay; another argument is NOT CLAIMED
+ * - Record: Record<string, V> with two type arguments, the first the string keyword and V read as a leaf, while every identifier Record in THE SYNTAX TREE is a type reference's name, as the rows lay it: V the string keyword (the module's correlationIds, TYPES Record) or a type of each kind TYPES reads as no leaf that a parse places at either argument (NESTED, TYPES RecordObjectValue), the keys, argument counts and shadowing TYPES lays, and an identifier Record at each slot CONTEXTS and EDGES lay; another argument is NOT CLAIMED
  * NOT READ (NOT_READ; each a named residual with a pinned quiet row and a loud twin in the census):
  * - other file: a declaration in another module's text, such as a declare module augmentation of observation.ts written in another file
  * - inner members: an expanded property's own members, such as Presentation's under node.presentation
@@ -86,11 +95,17 @@ export const OBSERVATION_MODULE = "src/workbench/observation.ts";
 export const ROOTS = ["NativeSnapshot", "ObservationEvent"] as const;
 
 export const DECLARATION_FORMS = claims([
-  ["interface", "a top-level interface declaration of the name, every one of them (interface merging)"],
-  ["class merge", "a top-level class declaration of the name, its elements read as members (class-interface merging)"],
+  [
+    "interface",
+    "a top-level interface declaration of the name, every one of them (interface merging), as the rows lay it: the module's own declaration of the name and at most one more exported one (FORMS interface declaredTwice and redeclaredMember); a third declaration, or one without export, is NOT CLAIMED",
+  ],
+  [
+    "class merge",
+    "a top-level class declaration of the name, its elements read as members (class-interface merging), as the rows lay it: one exported class declaration of the name (FORMS class merge, GATE O7 and O15 and their journey twins, the MEMBERS class member and modifier rows); a second class declaration of the name, or one without export (refusal #3 F1, G7-D04, its witness TS2395), is NOT CLAIMED",
+  ],
   [
     "augmentation",
-    "an interface declaration of the name standing directly in the body of a top-level module block that carries the declare modifier and whose specifier starts with ./ or ../ and, joined to src/workbench, is src/workbench/observation, src/workbench/observation.js or src/workbench/observation.ts (observation.ts augmenting itself)",
+    "an interface declaration of the name standing directly in the body of a top-level module block that carries the declare modifier and whose specifier starts with ./ or ../ and, joined to src/workbench, is src/workbench/observation, src/workbench/observation.js or src/workbench/observation.ts (observation.ts augmenting itself), as the rows lay it: one such block whose one statement is that interface, its specifier ./ or ../workbench/ before observation, observation.js or observation.ts (FORMS augmentation, GATE O8, AUGMENTATION PATHS); a block of two or more statements (G7-D01, G7-D02), a second such block, or a ../ specifier spelled otherwise (G7-P01) is NOT CLAIMED",
   ],
 ]);
 export const REFUSAL_FORMS = claims([
@@ -106,34 +121,55 @@ export const REFUSAL_FORMS = claims([
 export const MEMBER_FORMS = claims([
   [
     "property",
-    "a property signature, or a class property declaration, named by an identifier and with no modifier but readonly (or public, on a class property); a root reads the optional ones (written with ?, which a definite assignment ! is not) and no required one, an expansion reads every one",
+    "a property signature, or a class property declaration, named by an identifier and with no modifier but readonly (or public, on a class property); a root reads the optional ones (written with ?, which a definite assignment ! is not) and no required one, an expansion reads every one; as the rows lay it: at a root, the module's members and those the rows add to NativeSnapshot, ObservationEvent and their merges (MEMBERS lays each modifier on a property signature and on a class property, the optional, required and definite forms, and each name kind on a property signature, a class property's name as an identifier or a private name), and in an expansion, typed, identifier-named and unmodified ones (the module's ObservationTrace, Interval and node members, Presentation's at TYPES moduleReference, FORMS parentPath, GATE O15 and RESIDUALS presentationMember's twin); a root class property named by a string, a number or a computed name, and in an expansion a property with a modifier, a name other than an identifier or no type (G7-I01), is NOT CLAIMED",
   ],
   [
     "other member",
-    "any other member (a method, an accessor, an index, call or construct signature, a constructor, a static block, a semicolon element, or a member with another name or modifier) reads `?` in a root's list and `<member>.?` in an expansion",
+    "any other member (a method, an accessor, an index, call or construct signature, a constructor, a static block, a semicolon element, or a member with another name or modifier) reads `?` in a root's list and `<member>.?` in an expansion, as the rows lay it: in a root's list, each kind MEMBERS lays on NativeSnapshot's signatures and its class merge's elements (FORMS other member methodMember among them), and in an expansion, a method signature and a class method under ObservationTrace (MEMBERS innerMethod and innerClassMethod); a root class property named by a string, a number or a computed name, and in an expansion any other member kind (a call or construct signature: G7-M01) and any member of a type literal but a property signature (G7-E01), is NOT CLAIMED",
   ],
 ]);
 export const EXPANSION_FORMS = claims([
-  ["type literal", "an optional root property whose whole type is a type literal reads as that literal's members, `<member>.<name>` each"],
+  [
+    "type literal",
+    "an optional root property whose whole type is a type literal reads as that literal's members, `<member>.<name>` each, as the rows lay it: a literal of one or two typed property signatures (the module's ObservationEvent.node, TYPES wholeTypeLiteral); a literal of three or more members, or holding any other member (G7-E01) or an untyped property (G7-I01), is NOT CLAIMED",
+  ],
   [
     "read interface",
-    "an optional root property whose whole type is a bare type reference (an identifier, no type arguments) to a name with a top-level interface declaration reads as that read name's members, `<member>.<name>` each, or as `<member>.?` when that name reads `?`",
+    "an optional root property whose whole type is a bare type reference (an identifier, no type arguments) to a name with a top-level interface declaration reads as that read name's members, `<member>.<name>` each, or as `<member>.?` when that name reads `?`, as the rows lay it: ObservationTrace and Interval at both roots and Presentation at subjectBasis (TYPES moduleReference), with the members and merges the rows add to them, the REFUSAL forms FORMS and CONTEXTS lay on ObservationTrace and Interval, and the TYPES reference rows that expand nothing; another read name, a root among them, or a read name holding more members than the rows give it, is NOT CLAIMED",
   ],
   [
     "inner interface",
-    "an expanded property whose whole type is a bare type reference to a name with a top-level interface declaration reads `<member>.<name>`, whatever that name's REFUSAL forms hold, that interface's own members unread",
+    "an expanded property whose whole type is a bare type reference to a name with a top-level interface declaration reads `<member>.<name>`, whatever that name's REFUSAL forms hold, that interface's own members unread, as the rows lay it: a type literal expansion's property, the module's node.presentation, with every REFUSAL form and declaration FORMS inner interface lays on Presentation; such a property under a read interface's expansion (G7-Q01) is NOT CLAIMED",
   ],
 ]);
 export const LEAF_FORMS = claims([
-  ["string", "the string keyword"],
-  ["number", "the number keyword"],
-  ["string literal", "a string literal type, a quoted string"],
-  ["union", "a union type whose every arm reads as a leaf"],
-  ["readonly array", "readonly T[], its element type T read as a leaf"],
-  ["Readonly", "Readonly<T> with one type argument, T read as a leaf, while every identifier Readonly in THE SYNTAX TREE is a type reference's name"],
+  [
+    "string",
+    "the string keyword, as the rows lay it: at a type's top (the module's members, TYPES string) and in the unions, readonly arrays, Readonly and Record forms the lines below name; another position of it is NOT CLAIMED",
+  ],
+  [
+    "number",
+    "the number keyword, as the rows lay it: at a type's top (TYPES number) and as an arm of the unions LEAF union names (the module's sequence and sourceSequence, TYPES leafUnion, NESTED's middle composite); another position of it is NOT CLAIMED",
+  ],
+  [
+    "string literal",
+    "a string literal type, a quoted string, as the rows lay it: at a type's top (TYPES stringLiteral) and as an arm of the module's coverage and of Presentation's type and statusTone (TYPES moduleReference); another position of it is NOT CLAIMED",
+  ],
+  [
+    "union",
+    "a union type whose every arm reads as a leaf, as the rows lay it: the all-leaf unions the rows lay (the module's sequence, sourceSequence and coverage, Presentation's type and statusTone at TYPES moduleReference, TYPES leafUnion: two to five arms, each the string or number keyword or a string literal) and the unions whose arms that read as no leaf stand as the first or last arm of two or the middle arm of three, each of a node kind no other arm has (NESTED's composites, the TYPES, GATE and RESIDUALS union rows); another all-leaf union (one of six or more arms among them), and a non-leaf arm at another position or union length (G7-L01, G7-L04) or of another arm's node kind (G7-L03), are NOT CLAIMED",
+  ],
+  [
+    "readonly array",
+    "readonly T[], its element type T read as a leaf, as the rows lay it: T the string keyword (the module's evidenceRefs, TYPES readonlyArray) or a type of each kind TYPES reads as no leaf that a parse places there (NESTED, TYPES readonlyObjectArray); another element type is NOT CLAIMED",
+  ],
+  [
+    "Readonly",
+    "Readonly<T> with one type argument, T read as a leaf, while every identifier Readonly in THE SYNTAX TREE is a type reference's name, as the rows lay it: T the string keyword (TYPES Readonly), Record<string, string> (the module's correlationIds) or a type of each kind TYPES reads as no leaf that a parse places there (NESTED, TYPES ReadonlyObject), the argument counts and the shadowing TYPES lays, and an identifier Readonly at each slot CONTEXTS and EDGES lay; another argument is NOT CLAIMED",
+  ],
   [
     "Record",
-    "Record<string, V> with two type arguments, the first the string keyword and V read as a leaf, while every identifier Record in THE SYNTAX TREE is a type reference's name",
+    "Record<string, V> with two type arguments, the first the string keyword and V read as a leaf, while every identifier Record in THE SYNTAX TREE is a type reference's name, as the rows lay it: V the string keyword (the module's correlationIds, TYPES Record) or a type of each kind TYPES reads as no leaf that a parse places at either argument (NESTED, TYPES RecordObjectValue), the keys, argument counts and shadowing TYPES lays, and an identifier Record at each slot CONTEXTS and EDGES lay; another argument is NOT CLAIMED",
   ],
 ]);
 export const NOT_READ = claims([
@@ -255,7 +291,7 @@ export function observationMembers(text: string, options: ReadOptions = {}): Obs
     }
     return undefined;
   };
-  /** Whether a type holds no members (LEAF): every node of it is a LEAF form. */
+  /** Whether a type holds no members (LEAF): every node of it is a LEAF form (claimed in the forms the header's LEAF lines name). */
   const leaf = (type: ts.TypeNode): boolean => {
     if (type.kind === ts.SyntaxKind.StringKeyword) return on.has("string");
     if (type.kind === ts.SyntaxKind.NumberKeyword) return on.has("number");
