@@ -3654,6 +3654,612 @@
                   "unplaced": []
                 }
               ],
+              "walk": {
+                "list": [
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire",
+                      "docs/plant.md:8 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  }
+                ],
+                "nestedList": [
+                  {
+                    "findings": [
+                      "docs/plant.md:2 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire",
+                      "docs/plant.md:8 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire",
+                      "docs/plant.md:8 acquire",
+                      "docs/plant.md:9 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  }
+                ],
+                "header": [
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  }
+                ],
+                "rows": [
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire",
+                      "docs/plant.md:8 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire",
+                      "docs/plant.md:8 acquire",
+                      "docs/plant.md:9 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire",
+                      "docs/plant.md:8 acquire",
+                      "docs/plant.md:9 acquire",
+                      "docs/plant.md:10 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  }
+                ],
+                "cells": [
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  }
+                ],
+                "tokens": [
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  }
+                ],
+                "quote": [
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire",
+                      "docs/plant.md:8 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  }
+                ],
+                "nestedQuote": [
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  },
+                  {
+                    "findings": [
+                      "docs/plant.md:1 acquire",
+                      "docs/plant.md:2 acquire",
+                      "docs/plant.md:3 acquire",
+                      "docs/plant.md:4 acquire",
+                      "docs/plant.md:5 acquire",
+                      "docs/plant.md:6 acquire",
+                      "docs/plant.md:7 acquire",
+                      "docs/plant.md:8 acquire"
+                    ],
+                    "quieted": [],
+                    "unplaced": []
+                  }
+                ]
+              },
               "cursor": [
                 {
                   "findings": [
