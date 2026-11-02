@@ -1279,8 +1279,9 @@ function isValueName(node: ts.Identifier): boolean {
  * The forms judge (cut #4; ruling R-B33, enumerate the resolvable): for each given module, every node whose checker type
  * exposes the projection, read in one of RESOLVABLE_FORMS or refused (FormsReading); a module with no such node and no
  * refusal is absent. It reads the same modules projectionReach reads (the class's own module outside classInternal). A
- * flow - an argument (a call's or a new expression's written argument, and a tagged template's substitution, the argument
- * at its index among the substitutions plus one: wb-021.10), an initializer or default under a written type, an
+ * flow - an argument (a call's or a new expression's written argument, and, under the tag forms TAGGED-TEMPLATE-ARGUMENTS
+ * names, a tagged template's substitution, the argument at its index among the substitutions plus one: wb-021.10; any
+ * other tag form is NOT CLAIMED), an initializer or default under a written type, an
  * assignment, an object property under a contextual type, a return under a written return type, a cast - is judged against
  * the type the value flows into: for a src callee the parameter as the callee's body sees it (an overload's
  * implementation; a declared this parameter skipped, since it receives no argument: wb-021.10; a type parameter through its
@@ -1708,7 +1709,8 @@ export function readForms(
      * The type an argument flows into (undefined: no parameter takes it, or the callee is unresolved). A call's or a new
      * expression's argument is read at its effective position (wb-97ah; pinned for R-THIS-BINDING's this argument), and a
      * tagged template's substitution at its index among the template's substitutions plus one, the template strings array
-     * taking the first (wb-021.10). A src declaration's own declared this parameter receives no argument and is skipped, as
+     * taking the first (wb-021.10; pinned for the tag forms TAGGED-TEMPLATE-ARGUMENTS names, any other tag form NOT
+     * CLAIMED). A src declaration's own declared this parameter receives no argument and is skipped, as
      * ownAt skips it (wb-021.10), so an argument that is no spread and has none written before it is read against the
      * declared parameter the checker binds it to; a library declaration's parameters are read as declared.
      */
@@ -1746,7 +1748,7 @@ export function readForms(
       const parent = node.parent;
       const passed: readonly ts.Expression[] = (ts.isCallExpression(parent) || ts.isNewExpression(parent)) && parent.arguments ? parent.arguments : [];
       if ((ts.isCallExpression(parent) || ts.isNewExpression(parent)) && passed.includes(node)) return { form: "argument", target: argumentTarget(parent, node, exposing), site: parent };
-      // A tagged template's substitution is an argument of the call its tag makes (wb-021.10): read at its position, the tagged template the site.
+      // A tagged template's substitution is an argument of the call its tag makes (wb-021.10): read at its position, the tagged template the site (pinned for the tag forms TAGGED-TEMPLATE-ARGUMENTS names).
       const tagged = substitutionOf(node);
       if (tagged) return { form: "argument", target: argumentTarget(tagged, node, exposing), site: tagged };
       if ((ts.isVariableDeclaration(parent) || ts.isPropertyDeclaration(parent)) && parent.initializer === node && parent.type) return { form: "initializer", target: checker.getTypeFromTypeNode(parent.type), site: parent };
@@ -5488,7 +5490,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "TAGGED-TEMPLATE-ARGUMENTS",
       label:
-        "a tagged template's substitution is an argument of the call its tag makes, and the flow reading reads it as a written argument (wb-021.10): its position is its index among the template's substitutions plus one, the template strings array taking the first, and the tagged template is the site the row names, so each paired page reads as its twin, the same tag called with its strings argument (a template strings array; for String.raw, { raw: [] }) and the same values written as arguments, reads - a value that exposes the projection into a parameter that keeps it (argument) and, refused (argument), into one that hides it; a class instance flowing into a type its class does not declare, refused (structural-stand-in) - as the only substitution, as the second, at and past a rest parameter's position, parenthesized, under an object literal's method as the tag and under a tag that declares an explicit this parameter (skipped, as THIS-PARAMETER-ARGUMENTS reads it) - and one whose class declares that type, quiet; a callback whose own parameter hides what the parameter's type hands it, refused (argument); an object literal not written where it flows, refused (context-less-literal); an object literal written at the substitution, read under its contextual type (property); and String.raw's substitutions, which its rest parameter types any: a value that exposes the projection, refused (argument), and a class instance, quiet. The tag is no argument: a tag that exposes the projection still fails closed (unlisted TaggedTemplateExpression), and a template with no tag makes no call, so a class instance in its substitution is read by no flow (a substitution there that exposes the projection is refused, UNLISTED-FORMS)",
+        "a tagged template's substitution is an argument of the call its tag makes, and the flow reading reads it as a written argument (wb-021.10) at its index among the template's substitutions plus one, the template strings array taking the first, the tagged template the site the row names - read and pinned for these tag forms only, every other tag form NOT CLAIMED: a src function, an object literal's method and a function that declares an explicit this parameter (skipped, as THIS-PARAMETER-ARGUMENTS reads it), each with its strings parameter written TemplateStringsArray, and a src function with it written readonly string[] or { readonly raw: readonly string[] }; String.raw; Object.assign given the type arguments TemplateStringsArray and a sink type; and the set of a Map keyed by TemplateStringsArray. Each paired page reads as its twin, the same tag called with its strings argument (a template strings array; for String.raw and the raw object, { raw: [] }) and the same values written as arguments, reads (the map's set apart, named below) - under a strings parameter written TemplateStringsArray: a value that exposes the projection into a parameter that keeps it (argument) and, refused (argument), into one that hides it; a class instance flowing into a type its class does not declare, refused (structural-stand-in) - as the only substitution, as the second, at and past a rest parameter's position, parenthesized, under an object literal's method as the tag and under a tag that declares an explicit this parameter - and one whose class declares that type, quiet; a callback whose own parameter hides what the parameter's type hands it, refused (argument); an object literal not written where it flows, refused (context-less-literal); an object literal written at the substitution, read under its contextual type (property); under a strings parameter written readonly string[]: a class instance, refused (structural-stand-in), also as the second substitution after a parameter typed unknown, which the strings array is assignable to, a hiding callback, refused (argument), and a value its parameter keeps (argument); under one written { readonly raw: readonly string[] }: a class instance, refused (structural-stand-in); String.raw's substitutions, which its rest parameter types any: a value that exposes the projection, refused (argument), and a class instance, quiet; Object.assign's substitution, read against its instantiated second parameter, the sink type: a class instance, refused (structural-stand-in), a hiding callback, refused (argument), and one whose class declares the sink type, quiet; and the set of a Map<TemplateStringsArray, ObservationProjection>: a value that exposes the projection, kept by the map's own element type (argument), where the tag itself, which exposes the projection, fails closed (unlisted TaggedTemplateExpression) and the twin's callee is read (callee). The tag is no argument: a tag that exposes the projection still fails closed (unlisted TaggedTemplateExpression), and a template with no tag makes no call, so a class instance in its substitution is read by no flow (a substitution there that exposes the projection is refused, UNLISTED-FORMS)",
       cases: [
         reachForms(
           "src/ui/census-forms-tagged-instance.ts",
@@ -5657,6 +5659,114 @@ export const REACH: Table<ReachItem> = {
           `${OBS_UI}${HOLDER_UI}export const run = (): string => String.raw({ raw: [] }, new Holder());\n`,
           reached(true, [], [], []),
           null,
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-assign-instance.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}export const run = (): void => void Object.assign<TemplateStringsArray, Sink>\`x\${new Holder()}\`;\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], [`structural-stand-in: Object.assign<TemplateStringsArray, Sink>\`x\${new Holder()}\``]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-assign-instance-call.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${TEXTS_UI}export const run = (): void => void Object.assign<TemplateStringsArray, Sink>(texts, new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: Object.assign<TemplateStringsArray, Sink>(texts, new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-assign-callback.ts",
+          `${OBS_UI}export const run = (): void => void Object.assign<TemplateStringsArray, (projection: ObservationProjection) => void>\`x\${(projection: unknown): void => void projection}\`;\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], [`argument: Object.assign<TemplateStringsArray, (projection: ObservationProjection) => void>\`x\${(projection: unknown): void => void projection}\``]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-assign-callback-call.ts",
+          `${OBS_UI}${TEXTS_UI}export const run = (): void => void Object.assign<TemplateStringsArray, (projection: ObservationProjection) => void>(texts, (projection: unknown): void => void projection);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["argument: Object.assign<TemplateStringsArray, (projection: ObservationProjection) => void>(texts, (projection: unknown): void => void projection)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-assign-declared-instance.ts",
+          `${OBS_UI}${SINK_UI}${DECLARED_KEEPER_UI}export const run = (): void => void Object.assign<TemplateStringsArray, Sink>\`x\${new Keeper()}\`;\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-assign-declared-instance-call.ts",
+          `${OBS_UI}${SINK_UI}${DECLARED_KEEPER_UI}${TEXTS_UI}export const run = (): void => void Object.assign<TemplateStringsArray, Sink>(texts, new Keeper());\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-map-set-value.ts",
+          `${OBS_UI}const kept = new Map<TemplateStringsArray, ObservationProjection>();\nexport const run = (projection: ObservationProjection): void => {\n  kept.set\`x\${projection}\`;\n};\n`,
+          reached(true, [], [], ["kept", "projection", "set"]),
+          formsRead(["annotation", "argument", "initializer", "lib-generic", "member", "statement"], [`unlisted TaggedTemplateExpression: kept.set\`x\${projection}\``]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-map-set-value-call.ts",
+          `${OBS_UI}${TEXTS_UI}const kept = new Map<TemplateStringsArray, ObservationProjection>();\nexport const run = (projection: ObservationProjection): void => {\n  kept.set(texts, projection);\n};\n`,
+          reached(true, [], [], ["kept", "projection", "set"]),
+          formsRead(["annotation", "argument", "callee", "initializer", "lib-generic", "member", "statement"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-readonly-strings-instance.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}function tag(strings: readonly string[], sink: Sink): void {\n  void strings;\n  void sink;\n}\nexport const run = (): void => tag\`x\${new Holder()}\`;\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], [`structural-stand-in: tag\`x\${new Holder()}\``]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-readonly-strings-instance-call.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${TEXTS_UI}function tag(strings: readonly string[], sink: Sink): void {\n  void strings;\n  void sink;\n}\nexport const run = (): void => tag(texts, new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: tag(texts, new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-readonly-strings-callback.ts",
+          `${OBS_UI}function tag(strings: readonly string[], sink: (projection: ObservationProjection) => void): void {\n  void strings;\n  void sink;\n}\nexport const run = (): void => tag\`x\${(projection: unknown): void => void projection}\`;\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], [`argument: tag\`x\${(projection: unknown): void => void projection}\``]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-readonly-strings-callback-call.ts",
+          `${OBS_UI}${TEXTS_UI}function tag(strings: readonly string[], sink: (projection: ObservationProjection) => void): void {\n  void strings;\n  void sink;\n}\nexport const run = (): void => tag(texts, (projection: unknown): void => void projection);\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["argument: tag(texts, (projection: unknown): void => void projection)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-readonly-strings-value-kept.ts",
+          `${OBS_UI}function tag(strings: readonly string[], projection: ObservationProjection): number {\n  void strings;\n  return projection.stats().nodes;\n}\nexport const run = (projection: ObservationProjection): number => tag\`x\${projection}\`;\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "argument", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-readonly-strings-value-kept-call.ts",
+          `${OBS_UI}${TEXTS_UI}function tag(strings: readonly string[], projection: ObservationProjection): number {\n  void strings;\n  return projection.stats().nodes;\n}\nexport const run = (projection: ObservationProjection): number => tag(texts, projection);\n`,
+          reached(true, ["stats"], [], ["projection"]),
+          formsRead(["annotation", "argument", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-raw-object-instance.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}function tag(template: { readonly raw: readonly string[] }, sink: Sink): void {\n  void template;\n  void sink;\n}\nexport const run = (): void => tag\`x\${new Holder()}\`;\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], [`structural-stand-in: tag\`x\${new Holder()}\``]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-raw-object-instance-call.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}function tag(template: { readonly raw: readonly string[] }, sink: Sink): void {\n  void template;\n  void sink;\n}\nexport const run = (): void => tag({ raw: [] }, new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: tag({ raw: [] }, new Holder())"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-readonly-strings-second.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}function tag(strings: readonly string[], held: unknown, sink: Sink): void {\n  void strings;\n  void held;\n  void sink;\n}\nexport const run = (): void => tag\`a\${1}b\${new Holder()}c\`;\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], [`structural-stand-in: tag\`a\${1}b\${new Holder()}c\``]),
+        ),
+        reachForms(
+          "src/ui/census-forms-tagged-readonly-strings-second-call.ts",
+          `${OBS_UI}${SINK_UI}${HOLDER_UI}${TEXTS_UI}function tag(strings: readonly string[], held: unknown, sink: Sink): void {\n  void strings;\n  void held;\n  void sink;\n}\nexport const run = (): void => tag(texts, 1, new Holder());\n`,
+          reached(true, [], [], ["projection"]),
+          formsRead(["annotation"], ["structural-stand-in: tag(texts, 1, new Holder())"]),
         ),
         reachForms(
           "src/ui/census-forms-tagged-exposing-tag.ts",
