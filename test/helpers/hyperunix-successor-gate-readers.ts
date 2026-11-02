@@ -19,6 +19,10 @@
  * setup-file words to three modules below, pins every refusal #3 and refusal #4 crossing of those words over catalogs the
  * census enumerates (names, places, spellings, wrappers, numeric keys, declarations, relative loads), checks the gates' paired
  * real-tree twins in as TWIN rows, and names every mode outside the catalogs under NOT CLAIMED below; no reader code changed.
+ * Refusal #1 on wb-tz2.21 (gate-prep-14, O:1789) found catalog cells those words named and no row pinned: MEMBER_PLACES read on
+ * one rotating base, numeric keys read on unwrapped bases only, two of five relative spellings read deep in the closure. Cut #2
+ * reads every one of those cells, lists under NOT CLAIMED below each crossing of names, catalogs, places, holders and depths the
+ * census reads, and names every other crossing NOT CLAIMED; no reader code changed.
  * Vocabulary (refusal #2 F2): where a claim names a
  * string literal in a place a no-substitution template can also stand, the readers read the template the same way, and the
  * census pins both forms.
@@ -105,22 +109,51 @@
  * - R-HELPER-PATCH: a local module the suite loads that patches a built-in at load while reaching no vitest module and holding no route reads as a module; the in-flight rewrite of a built-in is wb-tz2.3's R-RUNTIME family; the suite's own patch reads as a member write
  *
  * NOT CLAIMED by this census (wb-tz2.21; a boundary of the pinned set, not a residual): the census reads the ROUTES global object
- * and dynamic code words over catalogs it enumerates, the IMPORT and CHANNEL setup-file words over planted loads it lists, and
- * the gates' twins it checks in; every mode below lies outside them and is NOT CLAIMED by this census:
- *   ROUTES global object and dynamic code: a free name read in a place outside the census's FREE_PLACES (48 places); a member
- *   read in a place outside the census's MEMBER_PLACES (18 places); a member read spelled outside the census's MEMBER_SPELLINGS
- *   (10 spellings); a base written outside the census's BASE_WRAPPERS (7 wrappers); a numeric key outside the census's
- *   NUMERIC_KEYS (10 keys), and a bigint literal key; a declaration outside the census's DECLARATIONS (19 kinds), and a
- *   type-only declaration (a type alias, an interface) naming one of those five; a member constructor read on a base outside
- *   the census's CONSTRUCTOR_BASES (6 bases), or spelled outside the census's CONSTRUCTOR_SPELLINGS (7 spellings).
- *   IMPORT and CHANNEL setup file: a load that does not resolve held four or more modules below the suite, or four or more
- *   loads below a setup file; a relative load outside the census's SUITE_MISSING (5 loads) and the census's HELPER_MISSING
- *   (5 loads); a load of another form than an import declaration; a load that does not resolve for a reason other than a
- *   relative path that names no file; a module that holds one read a second time, or reached through a cycle of loads.
+ * and dynamic code words over catalogs it enumerates, crossed only as the list below names; the IMPORT and CHANNEL setup-file
+ * words over the planted loads, holders and depths the list below names; and the gates' paired real-tree twins it checks in as
+ * TWIN rows (DW-L08, DW-L12, DW-L15 and DW-L17; TW-S1 to TW-S13; TW14-S1 to TW14-S7 and TW14-S9). Every mode the list does not
+ * name is NOT CLAIMED by this census. The ROUTES global object and dynamic code crossings the census reads:
+ *   a free name: each of the five names, eval and Function in each of the census's FREE_PLACES (48 places), undeclared;
+ *   a declared name: each of the five names under each of the census's DECLARATIONS (19 kinds) and under a shadowing parameter,
+ *     read as an initializer, in a package module, a local module and the suite;
+ *   a base: each of the five names under each of the census's BASE_WRAPPERS (7 wrappers), plain and optional, as the base of a
+ *     property access by a member name, of an element access by each of the census's STRING_KEYS (4 keys) and by each of the
+ *     census's NUMERIC_KEYS (10 keys), read as an initializer;
+ *   a member spelling: each of the five names as the base of each of the five names and each of the five loader names in each of
+ *     the census's MEMBER_SPELLINGS (10 spellings), and of eval and Function in the five member-name spellings and the five
+ *     string-key spellings, read as an initializer (in the member-name spellings eval also called in an arrow body, Function also
+ *     called and, but in the optional spelling, constructed);
+ *   a place: each of the five names as the base, spelled plainly, in each of the census's MEMBER_PLACES (18 places): lgName as a
+ *     member name and as a string key, the key 0, each of the five names and each loader name as a member name, eval and
+ *     Function as a member name and as a string key;
+ *   a member constructor: each of the census's CONSTRUCTOR_BASES (6 bases) in each of the census's CONSTRUCTOR_SPELLINGS
+ *     (7 spellings), read as an initializer, and each of those bases with .constructor in each MEMBER_PLACES place;
+ *   typeof and the admitted spy: each of the five names in the five typeof forms and in the five spy forms, read as an initializer;
+ *   the scopes: each plant above held by a local module read again in the suite and in a package module (dynamic code reads
+ *     nothing in a package module); the declared names in the scopes their line names; the spy forms in the suite and a local
+ *     module.
+ *   NOT CLAIMED in those words: a BASE_WRAPPERS wrapper, an optional chain, a MEMBER_SPELLINGS spelling, a key other than the
+ *   plain one, a DECLARATIONS kind, a typeof form or a spy form crossed with a place other than an initializer; a BASE_WRAPPERS
+ *   wrapper on the base of a member a ROUTES piece names; any other crossing of two catalogs, or of a catalog with a place, the
+ *   list does not name; a free name read in a place outside FREE_PLACES; a member read in a place outside MEMBER_PLACES or spelled
+ *   outside MEMBER_SPELLINGS; a base written outside BASE_WRAPPERS; a key outside STRING_KEYS and NUMERIC_KEYS, and a bigint
+ *   literal key; a declaration outside DECLARATIONS, and a type-only declaration (a type alias, an interface) naming one of those
+ *   five; a member constructor read on a base outside CONSTRUCTOR_BASES or spelled outside CONSTRUCTOR_SPELLINGS; a parenthesized
+ *   .spyOn callee (routesOf admits it through the parentheses, writesOf reads its .spyOn as a spy member).
+ *   IMPORT and CHANNEL setup file, the loads the census reads: each of the census's SUITE_MISSING (5 loads) held by the suite;
+ *   each of the census's HELPER_MISSING (5 loads) held by the receipt helper, by a local module two and three below the suite, by
+ *   a local setup file and by a local module one, two and three loads below a local setup file; each of the census's
+ *   PACKAGE_MISSING (4 loads) held by a package's main module one, two and three below the suite, by a package setup file, by a
+ *   package's main module one, two and three loads below a local setup file and by a package's own module one, two and three
+ *   loads below a package setup file. NOT CLAIMED: a load that does not resolve held four or more modules below the suite, or
+ *   four or more loads below a setup file; a load of one of those catalogs held by a module the list does not name for it; a
+ *   relative load outside the three catalogs; a load of another form than an import declaration; a load that does not resolve
+ *   for a reason other than a relative path that names no file (the . of a package names a directory package); a module that
+ *   holds one read a second time, or reached through a cycle of loads.
  * Not claimed: what a module does at run time beyond the forms above (a value assembled at run time and handed to a form these
  * readers do not name); a resolution vite performs that the default tier's vouched config cannot express (the census guard
- * refuses every key that may redirect a module); a package installed outside the lock; a crossing of a piece with a form or a
- * scope its line does not name. Display paths added: none. Test-only: spawns nothing, writes nothing; reads files under the root
+ * refuses every key that may redirect a module); a package installed outside the lock; a crossing of a piece with a form, a scope
+ * or a catalog its line and the list above do not name. Display paths added: none. Test-only: spawns nothing, writes nothing; reads files under the root
  * through a host that may lay planted texts over the disk, and a tier config through an injected reader when one is given.
  */
 import { readdirSync, readFileSync, realpathSync, statSync } from "node:fs";
