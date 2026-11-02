@@ -12,6 +12,9 @@
  * wb-km7q.14 (the carrier of wb-km7q.10's remaining acceptance since the rule-19 dependency inversion R-B300) carries these
  * readers with no reader body changed: it pins refusal #3's and refusal #4's layoutBands members in the census, and narrows the
  * LAYOUT claim's read words to the count widths and descriptions its falsifiers plant (LAYOUT_SCOPE now bounds every form).
+ * Its cut #2 (after the carrier's refusal #1, ruling R-B349) changes no reader body either: TIER_SCOPE bounds the tier claim to
+ * the modules and docs/10 pages its falsifiers plant and to every page a LAYOUT falsifier plants, and the widths and rows forms
+ * name the census's own LAYOUT pages of the bands form's five width examples, each drawn as a tier example of its own.
  */
 import ts from "typescript";
 import type { InspectorSize } from "../../src/ui/workflow-inspector.js";
@@ -456,12 +459,12 @@ export const TIER_FORMS: readonly ReaderForm[] = [
   {
     id: "widths",
     lead: "each combination at one width inside every band layoutBands reads, the band's lowest stated column count or one below the column bound it states, in band order",
-    examples: ["the real three bands", "a fourth band", "a band listed first", "two bands sharing a width"],
+    examples: ["the real three bands", "a fourth band", "a band listed first", "two bands sharing a width", "the real three bands and a >=N count of each width from one to five digits", "the real three bands and a <N columns count of each width from one to three digits", "the real three bands and an N of N to M of each width from one to three digits", "the real three bands and an M of N to M of each width from one to four digits"],
   },
   {
     id: "rows",
     lead: "each width at the census's row count and at one below every row bound a band states, ascending",
-    examples: ["the real row bound", "no row bound", "a row bound at the census's row count", "a one-digit row bound"],
+    examples: ["the real row bound", "no row bound", "a row bound at the census's row count", "a one-digit row bound", "the real row bound and a <M rows count of each width from one to three digits"],
   },
   {
     id: "ids",
@@ -480,8 +483,13 @@ export const TIER_UNREAD_FORMS: readonly ReaderForm[] = [
   { id: "unread-input", lead: "anything sizeMembers or layoutBands leave unread", examples: ["a method member", "a band lead it cannot read", "a refused section"] },
   { id: "no-band", lead: "no band at all", examples: ["a section with no band item"] },
 ];
-/** The tier claim (R13, D1-F3), composed from TIER_FORMS and TIER_UNREAD_FORMS. */
-export const TIER_CLAIM = `tierDraws draws every declared tier of the inspector: ${listed(TIER_FORMS)}. It fails closed on ${listed(TIER_UNREAD_FORMS)}.`;
+/** The bounds of the tier claim: each form, drawn or fail-closed, is claimed only on the module and the docs/10 page its falsifier
+ * plants, and on every docs/10 page a LAYOUT falsifier plants, so no word of the claim (every band, every row bound, every
+ * combination) reaches a module or a page no falsifier holds (wb-km7q.14 cut #2, after the carrier's refusal #1). */
+export const TIER_SCOPE =
+  "Each form, drawn or fail-closed, is claimed only in the examples it lists, each on the module and the docs/10 page its falsifier in the readers census plants, and on every docs/10 page a LAYOUT falsifier in the readers census plants, drawn with the real draw options: a module or a page written otherwise is NOT CLAIMED by the readers census to be drawn or to fail closed, whatever a form's lead says every band, every row bound or every combination is.";
+/** The tier claim (R13, D1-F3), composed from TIER_FORMS, TIER_UNREAD_FORMS and TIER_SCOPE. */
+export const TIER_CLAIM = `tierDraws draws every declared tier of the inspector: ${listed(TIER_FORMS)}. It fails closed on ${listed(TIER_UNREAD_FORMS)}. ${TIER_SCOPE}`;
 /** The draws that cover every declared tier; none when anything is unread. A draw's id is `<width>x<rows>`, then per option in
  * name order nothing (absent), `-<option>` (false) or `+<option>` (true); widths in band order, rows ascending, options' states in
  * that order (the first option varying fastest). */

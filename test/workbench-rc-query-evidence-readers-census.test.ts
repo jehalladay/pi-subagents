@@ -25,16 +25,22 @@
  *  refusals #3 and #4 with its measured witness, names refusal #3's equivalent member, widens the bounds form's three
  *  falsifiers to the <N columns or <M rows lead, narrows the bands form's read words to the counts and descriptions its
  *  examples plant (its width examples naming the count widths at each count place), and bounds every LAYOUT form, read or
- *  fail-closed, by LAYOUT_SCOPE (REFUSAL #3 and REFUSAL #4 below).
+ *  fail-closed, by LAYOUT_SCOPE (REFUSAL #3 and REFUSAL #4 below). The carrier's cut #2 (after its own refusal #1, ruling
+ *  R-B349) changes no reader body and no doc either: it bounds the tier claim by TIER_SCOPE, draws every LAYOUT falsifier's
+ *  page with the real draw options against the widths and row counts that falsifier pins read, names the five pages of the
+ *  bands form's width examples as tier examples, and binds each record-table member to the witness its line pairs with its id
+ *  (CARRIER REFUSAL #1 below).
  *
  * PINNED READER SET. 'the rows' (12 cases: one per pin of ROWS, each reading its gate plant both ways, its twin and its
- *  control, and pinning WITNESS), 'the anchors' (4 cases: ROWS against the export, FROZEN SHAPE, the title), 'the rosters' (6
+ *  control, and pinning WITNESS), 'the anchors' (4 cases: ROWS against the export, FROZEN SHAPE, the title), 'the rosters' (7
  *  cases: every example of every roster form of the six claims is one falsifier, named by it, whose whole reading is pinned,
- *  and each claim is restated here byte-for-byte), 'the residuals' (1 case: R-UNLISTED's quiet row), 'the real tree' (3 cases:
- *  src's views and draw options, docs/10's three rendered bands with each band's whole rendered text, today's surfaces) and
- *  'records' (8 cases: every pin, roster, falsifier and refusal-#1 cure ran, every refusal-#2, refusal-#3 and refusal-#4
- *  member is a gate mutant its line in the export names, whose falsifier ran pinning the reading of the witness that line
- *  quotes, and every width example of the bands form plants one band of each count width its name states).
+ *  and each claim is restated here byte-for-byte; and every page a LAYOUT falsifier plants is drawn by tierDraws with the real
+ *  draw options, its draws the widths and row counts that falsifier's pinned bands reading names), 'the residuals' (1 case:
+ *  R-UNLISTED's quiet row), 'the real tree' (3 cases: src's views and draw options, docs/10's three rendered bands with each
+ *  band's whole rendered text, today's surfaces) and 'records' (9 cases: every pin, roster, falsifier and refusal-#1 cure ran,
+ *  every refusal-#2, refusal-#3 and refusal-#4 member is a gate mutant its line in the export names, bound to the witness its
+ *  line pairs with its id, whose falsifier ran pinning the reading of that witness, every width example of the bands form
+ *  plants one band of each count width its name states, and every LAYOUT falsifier's page was drawn by tierDraws).
  *
  * THE ROWS (ROWS: a row's label is the requirement text it answers, verbatim from the export; one test per pin). U1, U2 and
  *  RIDER are the description's three enumerated items, F-U1, F-U2 and F-U3 the three members R-B143 folded into the bead's note,
@@ -158,14 +164,21 @@
  *  width and row count); each draw option sizeMembers reads that is optional with its type spelled boolean, absent, false and
  *  true, in every combination (the real ascii and panes, a third option); each combination at one width inside every band
  *  layoutBands reads, the band's lowest stated column count or one below the column bound it states, in band order (the real
- *  three bands, a fourth band, a band listed first, two bands sharing a width); each width at the census's row count and at one
- *  below every row bound a band states, ascending (the real row bound, no row bound, a row bound at the census's row count, a
- *  one-digit row bound); each draw named <width>x<rows>, then per option in name order -<option> for false or +<option> for
- *  true, the first option varying fastest (the real 54 draws). It fails closed on a draw option that is neither optional with
- *  its type spelled boolean nor required with its type spelled number and named width or rows (a union type, a required number
- *  of another name, a required boolean, a width spelled string, an optional width, an optional rows, a boolean spelled with
- *  undefined); a module that declares no width or no rows draw option (no width, no rows); anything sizeMembers or layoutBands
- *  leave unread (a method member, a band lead it cannot read, a refused section); no band at all (a section with no band item).
+ *  three bands, a fourth band, a band listed first, two bands sharing a width, the real three bands and a >=N count of each
+ *  width from one to five digits, the real three bands and a <N columns count of each width from one to three digits, the real
+ *  three bands and an N of N to M of each width from one to three digits, the real three bands and an M of N to M of each width
+ *  from one to four digits); each width at the census's row count and at one below every row bound a band states, ascending
+ *  (the real row bound, no row bound, a row bound at the census's row count, a one-digit row bound, the real row bound and a <M
+ *  rows count of each width from one to three digits); each draw named <width>x<rows>, then per option in name order -<option>
+ *  for false or +<option> for true, the first option varying fastest (the real 54 draws). It fails closed on a draw option that
+ *  is neither optional with its type spelled boolean nor required with its type spelled number and named width or rows (a union
+ *  type, a required number of another name, a required boolean, a width spelled string, an optional width, an optional rows, a
+ *  boolean spelled with undefined); a module that declares no width or no rows draw option (no width, no rows); anything
+ *  sizeMembers or layoutBands leave unread (a method member, a band lead it cannot read, a refused section); no band at all (a
+ *  section with no band item). Each form, drawn or fail-closed, is claimed only in the examples it lists, each on the module
+ *  and the docs/10 page its falsifier in the readers census plants, and on every docs/10 page a LAYOUT falsifier in the readers
+ *  census plants, drawn with the real draw options: a module or a page written otherwise is NOT CLAIMED by the readers census
+ *  to be drawn or to fail closed, whatever a form's lead says every band, every row bound or every combination is.
  *
  * REFUSAL #1 CURES (refusal #1 on cut #1 571838b3, gate-prep-14, g10-gate-s159, O:1561; CURES below, each falsifier must run):
  *  U1 (an object's own length) R14/object-keys/length. U2 (stringsOf's canonical-numeric-key handling) READINGS/array-key/01
@@ -235,6 +248,28 @@
  *  and every claimed example has its falsifier. Each member's falsifier pins the band its line's witness reads as; the kills
  *  are measured outside this census, by the mutant runs the delivery note records.
  *
+ * CARRIER REFUSAL #1 (wb-km7q.14's refusal #1 on cut #1 b6d53874, gate-prep-1, g10-gate-s190, O:1811; ruling R-B349: the
+ *  refusal stands on U1 and U3, U2 is record-only; the record is not in the export at this cut's base, so this census holds the
+ *  cures and the delivery note records the members' kills). U1 (the tier claim's 'every band layoutBands reads' and 'one below
+ *  every row bound a band states' wider than its pins: three single-site tierDraws edits drew fewer tiers on this census's own
+ *  LAYOUT pages): TIER_SCOPE claims each form only on the module and the docs/10 page its falsifier plants and on every page a
+ *  LAYOUT falsifier plants; the case 'TIERS on the LAYOUT pages' draws each of those pages with the real draw options against
+ *  the widths and row counts its pinned bands reading names (each band's stated lowest column count or one below its column
+ *  bound, in band order and once each; the census's row count and one below each row bound, ascending; the real nine option
+ *  states at each), or fails closed with its pinned unread; and the widths and rows forms name, as tier examples of their own
+ *  drawn to literal grids, the pages of the bands form's five width examples: TIERS/widths/the real three bands and a >=N
+ *  count, a <N columns count, an N of N to M and an M of N to M of each width they name, TIERS/rows/the real row bound and a <M
+ *  rows count of each width from one to three digits (the TIERS case holds each such example to the LAYOUT page its name
+ *  names). TIERS/rows/a one-digit row bound now plants a one-digit bound ('<9 rows', drawn at 8 rows) as its name says, and
+ *  still holds 'ascending' as a numeric order. U2 (a cap on the option combinations past three options): record-only under
+ *  R-B349; no falsifier plants a module with four optional booleans, so TIER_SCOPE leaves it NOT CLAIMED. U3 (the record tables
+ *  held each member's quote only to some quote on its line): each member of REFUSAL2, REFUSAL3 and REFUSAL4 is bound to the
+ *  witness its line pairs with its id - its quote stands whole after its own id and after the quote of the member before it -
+ *  so no member can hold a sibling's witness, a quote its line holds before its id, or a quote a later sibling's witness
+ *  precedes. Refusal #2's F1, whose line quotes the words its member falsifies before the id and no witness after, is bound to
+ *  the first quote after its line's head and to the real docs/10 band its line says the mutant drops the description of;
+ *  refusal #2's F2 to the issue its line says the cure reads and the mutant does not.
+ *
  * NOT CLAIMED. An import, a namespace or a value declared under the name InspectorView or InspectorSize is NOT CLAIMED by this
  *  census: declaredViews and sizeMembers count only top-level interfaces, classes, enums and type aliases. A band whose column
  *  count is spelled in words reads as prose and is NOT CLAIMED by this census. Reading or failing closed on any spelling of a
@@ -251,7 +286,12 @@
  *  dash form lists, a space on both sides of the en dash, a tilde in place of it, a range whose N is one more than its M, an
  *  underscore in a count, a hexadecimal or a fullwidth count, a digit after a colon that no falsifier plants (a 9, for one),
  *  and a thematic break. What an item states whose only digits lie outside ASCII 0 to 9 (fullwidth digits, for one) is NOT
- *  CLAIMED by this census: the LAYOUT claim's digit is ASCII.
+ *  CLAIMED by this census: the LAYOUT claim's digit is ASCII. Drawing or failing closed on a module or a docs/10 page that no
+ *  falsifier of this census plants is NOT CLAIMED by this census (TIER_SCOPE), whatever a form's lead says every band, every
+ *  row bound or every combination is. Among them, each where a single-site tierDraws edit the carrier's seat measured keeps
+ *  this census green and draws otherwise: a page of more than eight bands, a band count or a row bound larger than any
+ *  falsifier plants ('>=12001', '<201 rows'), a column or row bound of 1 (a draw at 0 columns or 0 rows), and a module with
+ *  four or more optional booleans (the carrier's refusal #1, U2).
  *
  * RESIDUAL. R-UNLISTED: a proxy that reports another prototype, or answers or hides a key, is read only through what
  *  reflection reports. Its quiet row is 'the residuals' case 'R-UNLISTED quiet row', which reds if either claim stops naming it
@@ -264,7 +304,8 @@
  *  REFUSAL3 (U1:10, U2:1, U3:2, U4:3, F1:1) and REFUSAL4 (U1:6, U2:1) pin theirs the same way, each held to the mutant ids its
  *  items' lines in the export name and to the member count each unmet item's head there states; their unmet items are every
  *  unmet line of their record that names a gate mutant, and their findings every finding of it whose head names a
- *  verdict-equivalent survivor.
+ *  verdict-equivalent survivor. Every member of REFUSAL2, REFUSAL3 and REFUSAL4 is bound to the witness its line pairs with its
+ *  id (CARRIER REFUSAL #1, U3), and every page a LAYOUT falsifier plants was drawn by tierDraws (PAGES_DRAWN).
  */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -421,6 +462,8 @@ const ROSTER_RAN = new Set<string>();
 /** Every falsifier that ran, as `<roster>/<form id>/<example>`, and the reading it pins. */
 const FALSIFIED = new Set<string>();
 const EXPECTED = new Map<string, unknown>();
+/** Every LAYOUT falsifier whose page the case 'TIERS on the LAYOUT pages' drew, as `LAYOUT/<form id>/<example>`. */
+const PAGES_DRAWN = new Set<string>();
 
 // ------------------------------------------------------------------------------------------------------- outside anchors
 const isRecord = (value: unknown): value is Record<string, unknown> => value !== null && typeof value === "object" && !Array.isArray(value);
@@ -1266,6 +1309,27 @@ function sizeOfId(id: string): Record<string, number | boolean> {
   return size;
 }
 const optionKind = (name: string): string => `${name}: a draw option that is neither an optional boolean nor a required number named width or rows`;
+/** The docs/10 page a LAYOUT falsifier plants: the census's own page, so a tier falsifier draws what that falsifier pins read. */
+function layoutPage(form: string, example: string): string {
+  const page = (LAYOUT_FALSIFIERS[form] ?? []).find(([name]) => name === example)?.[1];
+  if (page === undefined) throw new Error(`no LAYOUT falsifier ${form}/${example}`);
+  return page;
+}
+/** The draws the tier claim names on a page whose bands reading a LAYOUT falsifier pins (TIER_SCOPE), read from the pinned band
+ * strings (`<text>=<from>/<columns below>/<rows below>`), never from tierDraws: one width per band, its stated lowest column
+ * count or one below its column bound, in band order and once each; the census's row count and one below each row bound,
+ * ascending; the real nine option states at each. Nothing is drawn, and the pinned unread (and no band) is left unread, when
+ * the pinned reading leaves anything unread or reads no band. */
+function pinnedDraws(reading: LayoutReading): { readonly ids: readonly string[]; readonly unread: readonly string[] } {
+  if (reading.unread.length > 0 || reading.bands.length === 0) return { ids: [], unread: [...reading.unread, ...(reading.bands.length === 0 ? ["docs/10: no band"] : [])] };
+  const stated = reading.bands.map(band => {
+    const found = /=(\d*)\/(\d*)\/(\d*)$/.exec(band);
+    return { from: found?.[1] ?? "", below: found?.[2] ?? "", rows: found?.[3] ?? "" };
+  });
+  const widths = [...new Set(stated.map(({ from, below }) => (from === "" ? Number(below) - 1 : Number(from))))];
+  const heights = [...new Set([ROWS_DRAWN, ...stated.flatMap(({ rows }) => (rows === "" ? [] : [Number(rows) - 1]))])].sort((a, b) => a - b);
+  return { ids: grid(widths, heights, SUFFIXES), unread: [] };
+}
 const REAL_TIERS = { ids: REAL_IDS, unread: [] };
 /** One falsifier per example of tierDraws' forms: a module (a declaration in place of the head of InspectorSize, or `whole:` and
  * a whole InspectorSize), a docs/10 text, and every draw's id with what is unread. */
@@ -1283,12 +1347,17 @@ const TIER_FALSIFIERS: Falsifiers<readonly [string, string], { readonly ids: rea
     ["a fourth band", [SIZE_DECLARED, after120(`- ${FOURTH}`)], { ids: grid([...WIDTHS, 160], HEIGHTS, SUFFIXES), unread: [] }],
     ["a band listed first", [SIZE_DECLARED, docs(BAND_BELOW, `- ${FOURTH}${BAND_BELOW}`)], { ids: grid([160, ...WIDTHS], HEIGHTS, SUFFIXES), unread: [] }],
     ["two bands sharing a width", [SIZE_DECLARED, after120("- \\>=80: two panes again.\n")], REAL_TIERS],
+    ["the real three bands and a >=N count of each width from one to five digits", [SIZE_DECLARED, layoutPage("bands", "a >=N count of each width from one to five digits")], { ids: grid([...WIDTHS, 2, 23, 234, 2345, 12000], HEIGHTS, SUFFIXES), unread: [] }],
+    ["the real three bands and a <N columns count of each width from one to three digits", [SIZE_DECLARED, layoutPage("bands", "a <N columns count of each width from one to three digits")], { ids: grid([...WIDTHS, 1, 22, 99], HEIGHTS, SUFFIXES), unread: [] }],
+    ["the real three bands and an N of N to M of each width from one to three digits", [SIZE_DECLARED, layoutPage("bands", "an N of N to M of each width from one to three digits")], { ids: grid([...WIDTHS, 2, 23, 100], HEIGHTS, SUFFIXES), unread: [] }],
+    ["the real three bands and an M of N to M of each width from one to four digits", [SIZE_DECLARED, layoutPage("bands", "an M of N to M of each width from one to four digits")], { ids: grid([...WIDTHS, 1], HEIGHTS, SUFFIXES), unread: [] }],
   ],
   rows: [
     ["the real row bound", [SIZE_DECLARED, DOCS10_TEXT], REAL_TIERS],
     ["no row bound", [SIZE_DECLARED, docs("- <80 columns or <20 rows:", "- <80 columns:")], { ids: grid(WIDTHS, [ROWS_DRAWN], SUFFIXES), unread: [] }],
     ["a row bound at the census's row count", [SIZE_DECLARED, docs("- <80 columns or <20 rows:", "- <80 columns or <41 rows:")], { ids: grid(WIDTHS, [ROWS_DRAWN], SUFFIXES), unread: [] }],
-    ["a one-digit row bound", [SIZE_DECLARED, docs("- <80 columns or <20 rows:", "- <80 columns or <10 rows:")], { ids: grid(WIDTHS, [9, ROWS_DRAWN], SUFFIXES), unread: [] }],
+    ["a one-digit row bound", [SIZE_DECLARED, docs("- <80 columns or <20 rows:", "- <80 columns or <9 rows:")], { ids: grid(WIDTHS, [8, ROWS_DRAWN], SUFFIXES), unread: [] }],
+    ["the real row bound and a <M rows count of each width from one to three digits", [SIZE_DECLARED, layoutPage("bands", "a <M rows count of each width from one to three digits")], { ids: grid(WIDTHS, [1, 19, 22, ROWS_DRAWN, 199], SUFFIXES), unread: [] }],
   ],
   ids: [["the real 54 draws", [SIZE_DECLARED, DOCS10_TEXT], REAL_TIERS]],
   "option-kind": [
@@ -1386,8 +1455,29 @@ describe("the rosters: every example of every claim form holds one falsifier, an
     expect(CURED_DRAWS().members.find(draw => draw.id === "120x40")?.size, "the default draw gives no option").toEqual({ width: 120, rows: 40 });
     const listedBackwards: ModuleReading<SizeMember> = { members: [...sizeMembers(INSPECTOR_TEXT, INSPECTOR).members].reverse(), unread: [] };
     expect(tierDraws(listedBackwards, layoutBands(DOCS10_TEXT), ROWS_DRAWN).members.map(draw => draw.id), "options in name order, whatever order the size reading lists them").toEqual(REAL_IDS);
+    const onLayout = Object.values(TIER_FALSIFIERS).flatMap(plants =>
+      plants.flatMap(([example, [, page]]) => {
+        const named = /^the real (?:three bands|row bound) and (.+)$/.exec(example)?.[1];
+        return named === undefined ? [] : [`${example}: ${page === layoutPage("bands", named) ? "its LAYOUT page" : "another page"}`];
+      }),
+    );
+    const widthExamples = (LAYOUT_FORMS.find(form => form.id === "bands")?.examples ?? []).filter(example => / of each width from one to [a-z]+ digits$/.test(example));
+    expect(onLayout.sort(), "each tier example naming a bands-form width example draws that LAYOUT falsifier's page").toEqual(
+      widthExamples.map(example => `the real ${example.startsWith("a <M rows") ? "row bound" : "three bands"} and ${example}: its LAYOUT page`).sort(),
+    );
     expect(headerClaim("TIER CLAIM:"), "the header restates the claim").toBe(TIER_CLAIM);
     ROSTER_RAN.add("TIERS");
+  });
+  it("TIERS on the LAYOUT pages: each page a LAYOUT falsifier plants is drawn with the real draw options at the widths and row counts its pinned bands reading names, or fails closed with its pinned unread", () => {
+    const misdrawn = Object.entries(LAYOUT_FALSIFIERS).flatMap(([id, plants]) =>
+      plants.flatMap(([example, page, pinned]) => {
+        PAGES_DRAWN.add(`LAYOUT/${id}/${example}`);
+        const { ids, unread, misnamed } = tierView([SIZE_DECLARED, page]);
+        const named = pinnedDraws(pinned);
+        return JSON.stringify({ ids, unread }) === JSON.stringify(named) && misnamed.length === 0 ? [] : [`${id}/${example}: ${ids.length} draws (${ids.slice(0, 3).join(" ")}), unread ${JSON.stringify(unread)}`];
+      }),
+    );
+    expect(misdrawn, "every LAYOUT page draws exactly the tiers its pinned bands reading names").toEqual([]);
   });
 });
 
@@ -1638,6 +1728,30 @@ const quotedLead = (quote: string): string =>
     .replace(/^\\>/, ">")
     .split(":")[0] ?? "";
 const isLayoutReading = (value: unknown): value is LayoutReading => isRecord(value) && Array.isArray(value.bands) && Array.isArray(value.unread);
+/** Where `quote` first stands whole on `line` at or after `from`: between two "'", neither touching a letter; -1 when it stands
+ * nowhere there (or `from` is -1). */
+function quoteAt(line: string, quote: string, from: number): number {
+  const text = `'${quote}'`;
+  for (let at = from < 0 ? -1 : line.indexOf(text, from); at >= 0; at = line.indexOf(text, at + 1)) if (!/\p{L}/u.test(line.charAt(at - 1)) && !/\p{L}/u.test(line.charAt(at + text.length))) return at;
+  return -1;
+}
+/** Where a gate mutant's id first stands whole on `line`; -1 when it does not. */
+const idAt = (line: string, mutant: string): number => new RegExp(`(?<![a-z0-9-])${mutant}(?![a-z0-9-])`).exec(line)?.index ?? -1;
+/** The members of `items` that are not bound to the witness their line pairs with their id, as `<item> <mutant>`. A member is
+ * bound when its quote stands whole on its item's line after its own id and after the quote of the member before it, so no
+ * member holds a sibling's witness, a quote its line holds before its id, or a quote a later sibling's witness precedes. */
+function unpaired(items: readonly RecordItem[], lineOf: (lead: string) => string): string[] {
+  return items.flatMap(({ id, lead, members }) => {
+    const line = lineOf(lead);
+    let last = -1;
+    return members.flatMap(({ mutant, quote }) => {
+      const at = quoteAt(line, quote, idAt(line, mutant));
+      if (at <= last) return [`${id} ${mutant}`];
+      last = at;
+      return [];
+    });
+  });
+}
 /** A refusal record judged against the export: its members are the gate mutants its lines name, each witness is quoted on its line
  * and pinned on `side` (a FAIL-OPEN member's witness unread, a FAIL-CLOSED member's read as a band) by a falsifier that ran, and
  * `shape` is its frozen shape, each unmet item's count as its head in the export states it. */
@@ -1660,6 +1774,7 @@ function judgeRecord(span: RecordSpan, items: readonly RecordItem[], named: (lin
   ).toEqual(items.filter(({ id }) => id.startsWith("F")).map(({ lead }) => lead));
   expect(items.flatMap(({ id, members }) => members.filter(({ cure }) => !FALSIFIED.has(cure)).map(({ mutant, cure }) => `${id} ${mutant}: ${cure}`)), "every cure ran").toEqual([]);
   expect(items.flatMap(({ id, lead, members }) => members.filter(({ quote }) => !lineOf(lead).includes(`'${quote}'`)).map(({ mutant }) => `${id} ${mutant}`)), "each witness is quoted on its line").toEqual([]);
+  expect(unpaired(items, lineOf), "each member's quote is the witness its line pairs with its id: after its own id, in member order").toEqual([]);
   const derived = (quote: string, reading: string): boolean => (side === "unread" ? reading === digit(quotedLead(quote)) : reading.startsWith(`${quotedLead(quote)}: `));
   expect(items.flatMap(({ id, members }) => members.filter(({ quote, reading }) => !derived(quote, reading)).map(({ mutant }) => `${id} ${mutant}`)), "each reading is the quoted witness's lead, on its side").toEqual([]);
   expect(
@@ -1713,7 +1828,7 @@ describe("records", () => {
     expect(CURES.flatMap(([item, cures]) => cures.filter(cure => !FALSIFIED.has(cure)).map(cure => `${item}: ${cure}`))).toEqual([]);
     expect(CURES.map(([item]) => item)).toEqual(["U1", "U2", "U3", "U4", "U5", "U6", "U7", "F1", "F2", "F3"]);
   });
-  it("every refusal-#2 member is a gate mutant its line in the export names, whose falsifier ran pinning the witness the line quotes", () => {
+  it("every refusal-#2 member is a gate mutant its line in the export names, bound to the witness its line pairs with its id, whose falsifier ran pinning it", () => {
     const notes = exportRow().notes.split("\n");
     expect(
       REFUSAL2.map(({ id, lead }) => [id, mutantsOf(notes.find(line => line.startsWith(lead)) ?? "")]),
@@ -1723,6 +1838,23 @@ describe("records", () => {
     expect(REFUSAL2.flatMap(({ id, members }) => members.filter(({ cure }) => !FALSIFIED.has(cure)).map(({ mutant, cure }) => `${id} ${mutant}: ${cure}`)), "every cure ran").toEqual([]);
     const lineOf = (lead: string): string => notes.find(line => line.startsWith(lead)) ?? "";
     expect(REFUSAL2.flatMap(({ id, lead, members }) => members.filter(({ quote }) => !lineOf(lead).includes(`'${quote}'`)).map(({ mutant }) => `${id} ${mutant}`)), "each witness is quoted on its line").toEqual([]);
+    expect(unpaired(REFUSAL2, lineOf), "each member's quote is the witness its line pairs with its id, but F1's: its line quotes the words its member falsifies before the id, and no witness after").toEqual(["F1 lb-text-leadonly"]);
+    const f1 = REFUSAL2.find(({ id }) => id === "F1");
+    const f1Line = lineOf(f1?.lead ?? "");
+    const f1Head = f1?.lead ?? "";
+    const f1Member = f1?.members[0];
+    const realBands = bandsView(layoutBands(DOCS10_TEXT)).bands;
+    expect(
+      [f1Line.length > 0, quoteAt(f1Line, f1Member?.quote ?? "", f1Head.length) === f1Line.indexOf("'", f1Head.length), realBands.includes(f1Member?.reading ?? ""), f1Line.includes(`the ${(f1Member?.reading ?? "").split(": ")[0]} band's description is dropped`)],
+      "F1: its quote is the first quote after its line's head, and its reading the real docs/10 band whose description its line says the mutant drops",
+    ).toEqual([true, true, true, true]);
+    const f2 = REFUSAL2.find(({ id }) => id === "F2");
+    const f2Line = lineOf(f2?.lead ?? "");
+    const between = (from: string): string => (f2Line.includes(from) ? f2Line.slice(f2Line.indexOf(from), f2Line.indexOf("]", f2Line.indexOf(from)) + 1) : "");
+    expect(
+      (f2?.members ?? []).map(({ quote, reading }) => [reading === quote, quoteAt(between("the cure reads ["), quote, 0) >= 0, between("the mutant reads [").length > 0 && quoteAt(between("the mutant reads ["), quote, 0) < 0]),
+      "F2: its reading is its quote, the issue its line says the cure reads and the mutant does not",
+    ).toEqual([[true, true, true]]);
     expect(
       REFUSAL2.filter(({ id }) => id.startsWith("U")).flatMap(({ id, members }) => members.filter(({ quote, reading }) => reading !== digit(witnessLead(quote))).map(({ mutant }) => `${id} ${mutant}`)),
       "each U1/U2 reading is the quoted witness's lead, unread",
@@ -1734,11 +1866,14 @@ describe("records", () => {
     const named = from < 0 || to < from ? [] : [...new Set(notes.slice(from, to + 1).flatMap(mutantsOf))].sort();
     expect(named, "every gate mutant refusal #2's record names is a member, and no other").toEqual(REFUSAL2.flatMap(({ members }) => members.map(({ mutant }) => mutant)).sort());
   });
-  it("every refusal-#3 member is a gate mutant its line in the export names, whose falsifier ran pinning the witness the line quotes, unread", () => {
+  it("every refusal-#3 member is a gate mutant its line in the export names, bound to the witness its line pairs with its id, whose falsifier ran pinning it unread", () => {
     judgeRecord(RECORD3, REFUSAL3, mutantsOf, "unread", ["U1:10", "U2:1", "U3:2", "U4:3", "F1:1"]);
   });
-  it("every refusal-#4 member is a gate mutant its line in the export names, whose falsifier ran pinning the witness the line quotes, read as a band", () => {
+  it("every refusal-#4 member is a gate mutant its line in the export names, bound to the witness its line pairs with its id, whose falsifier ran pinning it read as a band", () => {
     judgeRecord(RECORD4, REFUSAL4, readSideMutantsOf, "bands", ["U1:6", "U2:1"]);
+  });
+  it("every page a LAYOUT falsifier plants was drawn by tierDraws with the real draw options", () => {
+    expect([...PAGES_DRAWN].sort()).toEqual([...LAYOUT_FORMS, ...LAYOUT_UNREAD_FORMS].flatMap(form => form.examples.map(example => `LAYOUT/${form.id}/${example}`)).sort());
   });
   it("every width example of the bands form plants one band of each count width its name states, at the count place it names", () => {
     const examples = (LAYOUT_FORMS.find(form => form.id === "bands")?.examples ?? []).filter(example => / of each width from one to [a-z]+ digits$/.test(example));
