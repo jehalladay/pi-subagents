@@ -33,13 +33,16 @@
  *   witness counts; (2) wb-021.9's notes carry refusal #3's UNMET list (the 'UNMET (record.unmet = record.prep.unmet, verbatim;
  *   3 items' block), whose items carry row R3's items in order with the member and witness counts of their ledger slugs and
  *   their G15 member ids in first-mention order; in the text from each member id to the next (the last member's text runs to
- *   its item's end, so an item's closing twins are its last member's held pages), the member's quote follows its id up to ': ',
- *   its witness ids come before the twin marker ('Twins' or 'twin') and its held ids after it, and the GW15 ids an item names
- *   are exactly its pins' probes; (3) wb-021.11's notes carry R-B293's fold, whose ledger slugs carry row R4's items with their
- *   member and witness counts, and (4) wb-021.9's notes carry refusal #4's UNMET list (the 'UNMET (record.unmet verbatim; 4
- *   items' block that the inversion folds), whose slugs are the fold's and whose items carry row R4's G10 members, quotes (the
- *   parenthesis after each id) and W10 witness and held ids the same way. Both records are in the export at trunk d16ddd7, the
- *   base this cut was written on.
+ *   its item's end, so an item's closing twins are its last member's held pages), the member's quote - the whole text after its
+ *   id and one space, up to the ': ' directly before the first GW15 id that text names - equals its pin's quote, its witness
+ *   ids come before the twin marker ('Twins' or 'twin') and its held ids after it, and the GW15 ids an item names are exactly
+ *   its pins' probes; (3) wb-021.11's notes carry R-B293's fold, whose ledger slugs carry row R4's items with their member and
+ *   witness counts, and (4) wb-021.9's notes carry refusal #4's UNMET list (the 'UNMET (record.unmet verbatim; 4 items' block
+ *   that the inversion folds), whose slugs are the fold's and whose items carry row R4's G10 members, quotes (the whole text
+ *   inside the parenthesis that opens one space after each id, up to the parenthesis that balances it, equal to its pin's
+ *   quote) and W10 witness and held ids the same way. Each quote is compared whole, by equality: a quote cut short at a ': ' or
+ *   ') ' inside it, or run on past its close to a later one, is not the record's. Both records are in the export at trunk
+ *   9fe6f325 (landing 840), the base this cut was written on.
  * PIN ROSTER
  *   R3 (wb-021.9's refusal #3 members (gate-prep-15, run g10-gate-s177), which wb-021.11's description carries): 10 pins
  *     G15-SPANS-block-html-only (U1; the member: only counts html BLOCK children ((child as { block?: boolean }).block === true)): witnesses GW15-OPQ-INLINE-LIST, GW15-OPQ-INLINE-QUOTE; held none
@@ -68,8 +71,10 @@
  * a pin of either row removed, swapped or relabelled in one literal, or a row deleted, reds SHAPE or HEADER (standing rule 16's
  * CT1-CT4). (4) Row R3's unmet items, member and witness counts, member ids, quotes, witnesses and held pages are the ones
  * wb-021.11's description and refusal #3's UNMET list record, and row R4's the ones R-B293's fold and refusal #4's UNMET list
- * record (ANCHOR): a member removed or relabelled in every literal together, a witness moved between pins, or a row removed
- * with its frozen-shape elements, reds ANCHOR (CT5, CT6).
+ * record (ANCHOR), each quote whole in the form the ANCHOR bullet above reads: a member removed or relabelled in every literal
+ * together, a witness moved between pins, or a row removed with its frozen-shape elements, reds ANCHOR (CT5, CT6), and so does
+ * a pin's quote cut short or run on in its literal and its roster line together, or a record whose quote of a member, read in
+ * that form, is not its pin's quote.
  *
  * NOT CLAIMED. A reading on any input that is not one of these probes is NOT CLAIMED by this census - among them every form of
  * a reader that no probe plants; refusal #3's riders F1, F2(a) and F2(b) (a pipe-less table's later body row, eight or more
@@ -134,7 +139,8 @@ interface Row {
   /** The prefix of the gate's member ids and of its page ids in the row's records. */
   readonly memberPrefix: string;
   readonly probePrefix: string;
-  /** How the record quotes a member: right after its id up to ': ' (colon), or in the parenthesis after its id (parenthesis). */
+  /** How the record quotes a member: after its id and one space up to the ': ' directly before the first page id its text names
+   * (colon), or inside the parenthesis that opens one space after its id, up to the parenthesis that balances it (parenthesis). */
   readonly quoteForm: "colon" | "parenthesis";
   readonly pins: readonly string[];
 }
@@ -1015,17 +1021,36 @@ function recordPins(item: UnmetItem, row: Row): { readonly id: string; readonly 
     return { id, segment, witnesses: idsOf(before, row.probePrefix, false), held: idsOf(after, row.probePrefix, false) };
   });
 }
-const quoted = (row: Row, pin: Pin): string => (row.quoteForm === "colon" ? `${pin.id} ${pin.quote}: ` : `${pin.id} (${pin.quote}) `);
+/** The index of the first page id of a prefix a text names (-1 when it names none). */
+const firstPageAt = (text: string, prefix: string): number => new RegExp(`\\b${prefix}-[A-Z0-9]+(?:-[A-Z0-9]+)*`).exec(text)?.index ?? -1;
+/** The quote a record gives a member, read whole from the member's text (which opens with its id): in the colon form the text after
+ * the id and one space up to the ': ' directly before the first page id the text names; in the parenthesis form the text inside the
+ * parenthesis that opens one space after the id, up to the parenthesis that balances it. Undefined when the text holds no quote of
+ * the row's form. */
+function recordQuote(row: Row, id: string, segment: string): string | undefined {
+  const lead = row.quoteForm === "colon" ? `${id} ` : `${id} (`;
+  if (!segment.startsWith(lead)) return undefined;
+  const rest = segment.slice(lead.length);
+  if (row.quoteForm === "colon") {
+    const page = firstPageAt(rest, row.probePrefix);
+    return page >= 2 && rest.slice(page - 2, page) === ": " ? rest.slice(0, page - 2) : undefined;
+  }
+  let depth = 1;
+  for (let at = 0; at < rest.length; at += 1) {
+    if (rest[at] === "(") depth += 1;
+    else if (rest[at] === ")") depth -= 1;
+    if (depth === 0) return rest.slice(0, at);
+  }
+  return undefined;
+}
+/** A quote as a reading writes it: JSON-quoted, so no quote text can read as a missing quote. */
+const quoteReading = (quote: string | undefined): string => (quote === undefined ? "missing" : JSON.stringify(quote));
 /** The whole reading of one UNMET list against a row: each item's counts and members, then each member's quote, witnesses and held pages. */
 function listReading(items: readonly UnmetItem[], row: Row): { readonly items: string[]; readonly pins: string[]; readonly pages: string[] } {
   return {
     items: items.map(item => `${item.unmet}:${memberCount(item.slug)}:${witnessCount(item.slug)}:${idsOf(item.text, row.memberPrefix, true).join(",")}`),
     pins: items.flatMap(item =>
-      recordPins(item, row).map(entry => {
-        const pin = PINS.find(candidate => candidate.id === entry.id);
-        const quotes = pin !== undefined && entry.segment.startsWith(quoted(row, pin));
-        return `${entry.id}:${item.unmet}:quote ${quotes ? "held" : "missing"}:${entry.witnesses.join(",")}:${entry.held.join(",")}`;
-      }),
+      recordPins(item, row).map(entry => `${entry.id}:${item.unmet}:quote ${quoteReading(recordQuote(row, entry.id, entry.segment))}:${entry.witnesses.join(",")}:${entry.held.join(",")}`),
     ),
     pages: items.map(item => `${item.unmet}:${idsOf(item.text, row.probePrefix, false).join(",")}`),
   };
@@ -1035,7 +1060,7 @@ function rowReading(row: Row): { readonly items: string[]; readonly pins: string
   const items = rowItems(row);
   return {
     items: items.map(item => `${item.unmet}:${item.pins.length}:${witnessesOf(item.pins).length}:${item.pins.map(pin => pin.id).join(",")}`),
-    pins: items.flatMap(item => item.pins.map(pin => `${pin.id}:${item.unmet}:quote held:${pin.witnesses.join(",")}:${pin.held.join(",")}`)),
+    pins: items.flatMap(item => item.pins.map(pin => `${pin.id}:${item.unmet}:quote ${quoteReading(pin.quote)}:${pin.witnesses.join(",")}:${pin.held.join(",")}`)),
     pages: items.map(item => `${item.unmet}:${[...new Set(item.pins.flatMap(pin => [...pin.witnesses, ...pin.held]))].join(",")}`),
   };
 }
@@ -1081,7 +1106,7 @@ describe("wb-021.11 APO citation-status judge members census (test/helpers/apo-c
     expect(lines.slice(start + 1, end)).toEqual(rosterLines());
   });
 
-  it("ANCHOR: row R3's items, counts, members, quotes, witnesses and held pages are wb-021.11's description's and refusal #3's UNMET list's, and row R4's are R-B293's fold's and refusal #4's UNMET list's", () => {
+  it("ANCHOR: row R3's items, counts, members, quotes (each whole), witnesses and held pages are wb-021.11's description's and refusal #3's UNMET list's, and row R4's are R-B293's fold's and refusal #4's UNMET list's", () => {
     const child = exportRow("wb-021.11");
     const parent = exportRow("wb-021.9");
     const r3 = ROWS.find(row => row.id === "R3");
@@ -1095,7 +1120,7 @@ describe("wb-021.11 APO citation-status judge members census (test/helpers/apo-c
     const record3 = listReading(items3, r3);
     const own3 = rowReading(r3);
     expect(record3.items, "refusal #3's UNMET list carries exactly row R3's items, counts and members, in order").toEqual(own3.items);
-    expect(record3.pins, "refusal #3's UNMET list quotes each row R3 member and names its witnesses and held pages").toEqual(own3.pins);
+    expect(record3.pins, "refusal #3's UNMET list quotes each row R3 member whole, as its pin does, and names its witnesses and held pages").toEqual(own3.pins);
     expect(record3.pages, "the GW15 pages each refusal #3 item names are exactly its pins' probes").toEqual(own3.pages);
 
     const fold = sectionOf(child.notes, FOLD_OPEN, FOLD_CLOSE)
@@ -1113,7 +1138,7 @@ describe("wb-021.11 APO citation-status judge members census (test/helpers/apo-c
     const record4 = listReading(items4, r4);
     const own4 = rowReading(r4);
     expect(record4.items, "refusal #4's UNMET list carries exactly row R4's items, counts and members, in order").toEqual(own4.items);
-    expect(record4.pins, "refusal #4's UNMET list quotes each row R4 member and names its witnesses and held pages").toEqual(own4.pins);
+    expect(record4.pins, "refusal #4's UNMET list quotes each row R4 member whole, as its pin does, and names its witnesses and held pages").toEqual(own4.pins);
     expect(record4.pages, "the W10 pages each refusal #4 item names are exactly its pins' probes").toEqual(own4.pages);
   });
 
