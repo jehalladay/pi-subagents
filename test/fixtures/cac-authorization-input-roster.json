@@ -399,10 +399,15 @@
        "list"
       ],
       "items": 8,
-      "attributes": 0,
       "sha256": "afc98664a6f9bb2d",
       "source": "481acac650cbfb49",
-      "length": 1121,
+      "bytes": 1121,
+      "tokens": [
+       "heading:23",
+       "space:2",
+       "list:1094",
+       "space:2"
+      ],
       "checks": [
        "view",
        "tokens",
@@ -431,6 +436,7 @@
        "L2G-CR-BLANK",
        "L2G-CRLF-BODY",
        "LONE-CR",
+       "CRLF-ANCHOR-LINES",
        "L2G-DUPDEF-NOOUT",
        "L2G-SPACE-BULLET2",
        "L2G-SPACE-BLANK",
@@ -471,7 +477,28 @@
        "HEADING-ENTITY",
        "DUP-HEADING",
        "RE-HOMED",
-       "NESTED-HEADING"
+       "NESTED-HEADING",
+       "HEADING-COMMENT",
+       "HEADING-SPACES",
+       "G-T-NESTED-TABLE-BODY",
+       "G-T-NESTED-TABLE-HEAD",
+       "G-T-NESTED-TABLE-TERM-ONLY",
+       "G-T-ITEM-QUOTE-LIST",
+       "G-T-ITEM-QUOTE-TABLE",
+       "G-T-NESTED-ITEM-TABLE",
+       "G-T-QUOTE-TABLE",
+       "G-T-QUOTE-TABLE-TERM-ONLY",
+       "G-T-QUOTE-QUOTE-LIST",
+       "C-TOP-TABLE",
+       "C-TOP-QUOTE-LIST",
+       "G-T-QUOTE-LIST",
+       "G-T-QUOTE-QUOTE-PARA",
+       "G-T-ITEM-QUOTE-PARA",
+       "G-T-TABLE-HEAD-TOP",
+       "G-T-QUOTE-INDENTED-CODE",
+       "G-S-ITEM-DUPDEF",
+       "G-S-ITEM-DUPDEF-NOTITLE",
+       "C-TOP-DUPDEF"
       ]
      }
     }
@@ -509,7 +536,7 @@
   },
   {
    "id": "R-OTHER-SECTION",
-   "family": "D1 reads the one section clause (d) names, docs/workbench/12-security.md 'Authorization design' (a definition elsewhere only as a link of the section resolves to it, and the tiling page-wide): on a page its tokens tile, the sentence placed outside the section's source, on another section of the page (a level-1 or level-2 heading placed after the section's last block starts one, and the section's heading text set as a level-3 heading starts none; HTML wrapped around the section sits in its neighbours) or on another page, is not read"
+   "family": "D1 reads the one section clause (d) names, docs/workbench/12-security.md 'Authorization design' (its source over the span sectionSource binds, no definition elsewhere, one a link of the section resolves to included, and the tiling page-wide): on a page its tokens tile, the sentence placed outside the section's source, on another section of the page (a level-1 or level-2 heading placed after the section's last block starts one, and the section's heading text set as a level-3 heading starts none; HTML wrapped around the section sits in its neighbours) or on another page, is not read"
   }
  ]
 }
