@@ -188,6 +188,41 @@
  * trailing-dot fraction and a legacy octal [trailing-dot-legacy-octal-named-methods], and the method of an object literal
  * held as a call argument, an array item, a property value or a return value [positioned-object-numeric-methods]. No
  * FAIL CLOSED probe of these calls a method by a member callee, so each reads its notes alone.
+ * MATRICES (wb-07zx cut #2, refusal #1's respin: its U1-U4, the survivors its F2 measured, and the class its guard binds, a
+ * composition of the words above that narrows the reading): a generated probe per placement and side spells every cell of each
+ * cross product below (MATRICES), a method a cell under a name and a parameter of its own, so a reading narrowed at any one
+ * composition of a product drops that cell's row; C3 holds each matrix to its rows - one per cell, two per overload (its
+ * signature's note and its implementation's) -, every row on its side, and the roster pins its rows and its axes. A placement
+ * is an object literal a const declares, a class declaration's method or a class expression's, static or not; a kind is a
+ * plain, a generator, an async or an async generator method. HELD (the FUNCTION TABLE): at every placement and kind, a method
+ * under each pinned name kind - an identifier, bare or holding a unicode or a code-point escape, a #private name (a class's),
+ * a string literal, bare or holding a unicode, a code-point, a zero-padded code-point, a hex or an identity escape, a line
+ * continuation or two escapes, or a computed name keyed by a string or a template literal, a "+" sum, a template expression, a
+ * const a template literal initializes or a const a string initializes (read bare or through parentheses, an as or a satisfies
+ * clause, a non-null mark, an angle assertion or an await), or by 1e999 or 2e999, held under "Infinity" -, each called by a
+ * member callee its name's string spells (a #private one from a method of its class) [held-object-literal-matrix,
+ * held-class-declaration-matrix, held-static-class-declaration-matrix, held-class-expression-matrix,
+ * held-static-class-expression-matrix]; at every class placement and kind, an identifier-named method with an accessibility
+ * (public, protected or private), an override or an optional modifier [held-modified-class-method-matrix]; an identifier-named
+ * plain method of an object literal a let or a var declares, held as a call's first or a later argument, an array's first or a
+ * later item, a property value one or two levels down, the return value of a function, of a function nested in one or of an
+ * arrow's block or concise body, or read in place [held-positioned-object-methods]; and a function declaration of every kind
+ * and a variable a const, a let or a var declares whose initializer, bare or read through each of those wrappers (an await
+ * among them), is an arrow, plain or async, or a function expression of every kind [held-declaration-matrix]. FAIL CLOSED: at
+ * every placement, an object literal read in place among them, and kind, a method a number literal names - decimal, a
+ * fraction, a leading-dot or a trailing-dot fraction, an exponent, signed, negative or uppercase, an uppercase one signed, hex
+ * with a lowercase or an uppercase prefix or uppercase digits, binary and octal each with either prefix, a legacy octal, or
+ * with separators - or a bigint literal names - decimal, hex or uppercase hex, binary, octal or separated -
+ * [unpinned-object-literal-matrix, unpinned-inline-object-matrix, unpinned-class-declaration-matrix,
+ * unpinned-static-class-declaration-matrix, unpinned-class-expression-matrix, unpinned-static-class-expression-matrix], each
+ * noted at its name's line and never called; at every spelling, an abstract class declaration's method signature, and an
+ * overload's at every class placement, its signature and its implementation each noted [unpinned-bodiless-matrix]; and a
+ * decimal-named plain method of an object literal at each of those positions but in place
+ * [unpinned-positioned-object-methods]. Refusal #1's UNMET each reds its cells: U1's H06, H07 and H16 the static matrices'
+ * async, generator and async generator cells; U2's H08 and H09 the computed cells; U3's H10, H12, H13 and H14 the class
+ * matrices' escaped cells; U4's F07, F11, F14 and F17 the class matrices' trailing-dot, static async, async bigint and legacy
+ * octal cells; and F2's F06, F08, F09, F10, F13, F16 and F18 the signed uppercase exponent cells and the positioned FAIL
+ * CLOSED probe.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the
  * constants, the registered test titles and each pin's assertion count are held to the out-of-file roster
  * (test/fixtures/rc-context-block-roster.json).
@@ -219,7 +254,8 @@
  * the filing names it (clause (a)'s three control words, clause (c)'s surfaces and names, the two fixture names), and a read
  * probe by the wb-wgk3 title only as the one answer GQ_PINS gives a GQ mutant it names and by the wb-07zx title only as the
  * one answer G_PINS gives a G mutant its range counts, which probe answers it being this census's reading (so a probe of
- * wb-07zx's F2 shapes, removed from every literal and the roster, is anchored by neither); the rows, the
+ * wb-07zx's F2 shapes, or one of its MATRICES with its axes and rows, removed from every literal and the roster, is
+ * anchored by neither); the rows, the
  * pins and the residual list are anchored as above, but which pin covers which words is this census's reading (COVERS); an
  * edit of the tracked bead export itself is outside every anchor (it is machine-written at each ledger hop). The parse-aware
  * reading reads one module at a time and binds a name to a result by the forms PARSE-AWARE READING lists only; it follows no
@@ -254,6 +290,13 @@
  * method beside it [collision-nested-function, collision-nested-arrow, collision-object-method, collision-class-method,
  * collision-relay, collision-relay-earlier, collision-earlier-declaration]: over-reads that can only refuse (wb-qnls cut #2
  * U2; the table restated by cut #3).
+ * Of the MATRICES' cross product, what no cell spells is NOT CLAIMED by this census, in these words: a modified method
+ * (an accessibility, an override or an optional modifier) named other than by an identifier, or holding two of those
+ * modifiers; an overload whose implementation is a generator, an async or an async generator method, and an abstract method
+ * of a kind other than plain; a method of an object literal at a position the positioned probes spell that is not plain,
+ * held under a name other than an identifier or noted under a spelling other than the decimal one; a computed name an
+ * overflowing number literal spelled otherwise than 1e999 or 2e999 keys; and a variable's initializer read through two
+ * wrappers or more.
  * RESIDUALS (named families, each with a pinned quiet row in row R): R1 R-STATUS-WORD a control word rf states as an observation
  *   status surfaces as a status word (the filing admits status words); R2 R-PRODUCER-IDENTITY a control word stated as a bounded
  *   producer identity (cli_version, an engine version) surfaces as that identity; R3 R-PROSE-NAME the document name as two words
@@ -517,6 +560,337 @@ const SURFACE_PINS: Readonly<Record<string, string>> = { "Pi type": "C2", "UI ha
 const UI_LOAD_PROBES: Readonly<Record<string, boolean>> = { [UI_PACKAGE]: true, [`${UI_PACKAGE}/dist/index.js`]: true, [`${UI_PACKAGE}-extra`]: false };
 /** A UI module's way to the rf result of a preview reading, as the probes below spell it. */
 const PROBE_RESULT = "(reading as { source: { result: Record<string, unknown> } }).source.result";
+/** wb-07zx cut #2 (refusal #1's respin, its U1-U4 and F2): the MATRICES, a generated read probe per placement and side that
+ * spells every composition the header's FUNCTION TABLE, FAIL CLOSED and COMPOSITIONS words name (the header's MATRICES), a
+ * method a cell, each under a name and a parameter of its own (a name binds module-wide), so a reading narrowed at one
+ * composition drops that cell's row. A cell's ordinal is three digits, unique in its module; a held cell's name is
+ * `mO<ordinal>`, its "O" the letter an escape spells. Each matrix states its side and its rows, and C3 holds its reading to
+ * them besides the roster. */
+interface Matrix {
+  readonly text: string;
+  /** The form of every row the reading notes for it: a held cell's member read, or a FAIL CLOSED cell's note. */
+  readonly side: RegExp;
+  /** One per cell, but two per overload (its signature and its implementation are each noted). */
+  readonly rows: number;
+}
+const MATRIX_PARAMETER = "Record<string, unknown>";
+const HELD_ROW = /^\d+ member blocks$/;
+const UNPINNED_ROW = /^\d+ declaration unpinned$/;
+interface MatrixKind {
+  readonly id: string;
+  /** The marker before a method's name. */
+  readonly marker: string;
+  /** The keyword a function declaration of the kind starts with. */
+  readonly declares: string;
+  /** The statement its body reads its parameter's member in. */
+  readonly statement: string;
+}
+const PLAIN_KIND: MatrixKind = { id: "plain", marker: "", declares: "function", statement: "return" };
+/** A method's kinds: plain, a generator, an async and an async generator method. */
+const MATRIX_KINDS: readonly MatrixKind[] = [
+  PLAIN_KIND,
+  { id: "generator", marker: "*", declares: "function*", statement: "yield" },
+  { id: "async", marker: "async ", declares: "async function", statement: "return" },
+  { id: "async generator", marker: "async *", declares: "async function*", statement: "yield" },
+];
+/** A FUNCTION TABLE name kind spelling a cell's name `mO<ordinal>`: its source text, the declarations it needs at the module's
+ * top and the property name a member callee spells to reach it. */
+interface HeldName {
+  readonly id: string;
+  readonly spell: (ordinal: string) => string;
+  readonly needs: (ordinal: string) => readonly string[];
+  readonly callee: (ordinal: string) => string;
+  /** A #private name, a class's only. */
+  readonly classOnly: boolean;
+}
+function heldName(
+  id: string,
+  spell: (ordinal: string) => string,
+  needs: (ordinal: string) => readonly string[] = () => [],
+  callee: (ordinal: string) => string = ordinal => `mO${ordinal}`,
+  classOnly = false,
+): HeldName {
+  return { id, spell, needs, callee, classOnly };
+}
+function constKey(ordinal: string): readonly string[] {
+  return [`const k${ordinal} = "mO${ordinal}";`];
+}
+/** The FUNCTION TABLE's pinned name kinds: an identifier, bare or escaped, a #private name, a string literal, bare, escaped or
+ * continued, and a computed name keyed by each KEY form, its const read bare or through each wrapper, or by an overflowing
+ * number literal (held under "Infinity"). */
+const MATRIX_HELD_NAMES: readonly HeldName[] = [
+  heldName("identifier", ordinal => `mO${ordinal}`),
+  heldName("identifier, a unicode escape", ordinal => `m\\u004f${ordinal}`),
+  heldName("identifier, a code-point escape", ordinal => `m\\u{4f}${ordinal}`),
+  heldName("#private name", ordinal => `#mO${ordinal}`, undefined, ordinal => `#mO${ordinal}`, true),
+  heldName("string literal", ordinal => `"mO${ordinal}"`),
+  heldName("string literal, a unicode escape", ordinal => `"m\\u004f${ordinal}"`),
+  heldName("string literal, a code-point escape", ordinal => `"m\\u{4f}${ordinal}"`),
+  heldName("string literal, a zero-padded code-point escape", ordinal => `"m\\u{004f}${ordinal}"`),
+  heldName("string literal, a hex escape", ordinal => `"m\\x4f${ordinal}"`),
+  heldName("string literal, an identity escape", ordinal => `"m\\O${ordinal}"`),
+  heldName("string literal, a line continuation", ordinal => `"mO\\\n${ordinal}"`),
+  heldName("string literal, two escapes", ordinal => `"\\x6d\\x4f${ordinal}"`),
+  heldName("computed, a string literal", ordinal => `["mO${ordinal}"]`),
+  heldName("computed, a template literal", ordinal => `[\`mO${ordinal}\`]`),
+  heldName("computed, a sum", ordinal => `["mO" + "${ordinal}"]`),
+  heldName("computed, a template expression", ordinal => `[\`\${prefix}${ordinal}\`]`, () => ['const prefix = "mO";']),
+  heldName("computed, a const string", ordinal => `[k${ordinal}]`, constKey),
+  heldName("computed, a const template", ordinal => `[k${ordinal}]`, ordinal => [`const k${ordinal} = \`mO${ordinal}\`;`]),
+  heldName("computed, parentheses", ordinal => `[(k${ordinal})]`, constKey),
+  heldName("computed, an as clause", ordinal => `[k${ordinal} as string]`, constKey),
+  heldName("computed, a satisfies clause", ordinal => `[k${ordinal} satisfies string]`, constKey),
+  heldName("computed, a non-null mark", ordinal => `[k${ordinal}!]`, constKey),
+  heldName("computed, an angle assertion", ordinal => `[<string>k${ordinal}]`, constKey),
+  heldName("computed, an await", ordinal => `[await k${ordinal}]`, constKey),
+  heldName("computed, 1e999", () => "[1e999]", undefined, () => "Infinity"),
+  heldName("computed, 2e999", () => "[2e999]", undefined, () => "Infinity"),
+];
+/** The decimal spelling, the one a positioned FAIL CLOSED probe names its methods by. */
+const DECIMAL_SPELLING = "16";
+/** FAIL CLOSED's spellings: a number literal's and a bigint literal's, none a pinned name kind. */
+const MATRIX_SPELLINGS: Readonly<Record<string, string>> = {
+  decimal: DECIMAL_SPELLING,
+  fraction: "1.5",
+  "leading-dot fraction": ".5",
+  "trailing-dot fraction": "5.",
+  exponent: "1e3",
+  "signed exponent": "1e+3",
+  "negative exponent": "1e-3",
+  "uppercase exponent": "1E3",
+  "signed uppercase exponent": "2E+3",
+  hex: "0x1f",
+  "uppercase hex prefix": "0X1f",
+  "uppercase hex digits": "0x1F",
+  binary: "0b101",
+  "uppercase binary prefix": "0B101",
+  octal: "0o17",
+  "uppercase octal prefix": "0O17",
+  "legacy octal": "017",
+  separators: "1_000",
+  bigint: "1n",
+  "hex bigint": "0x1fn",
+  "uppercase hex bigint": "0X1Fn",
+  "binary bigint": "0b101n",
+  "octal bigint": "0o17n",
+  "separated bigint": "1_000n",
+};
+/** COMPOSITIONS' modifiers of a class's method: before its kind's marker, but the optional mark after its name. */
+const MATRIX_MODIFIERS: Readonly<Record<string, string>> = { public: "public ", protected: "protected ", private: "private ", override: "override ", optional: "?" };
+/** The class placements of a held matrix: a class declaration's method or a class expression's, static or not. */
+const CLASS_PLACEMENTS = ["class declaration", "static class declaration", "class expression", "static class expression"] as const;
+type ClassPlacement = (typeof CLASS_PLACEMENTS)[number];
+type HeldPlacement = "object literal" | ClassPlacement;
+type UnpinnedPlacement = HeldPlacement | "object literal read in place";
+function ordinalOf(cell: number): string {
+  return String(cell).padStart(3, "0");
+}
+function staticOf(placement: UnpinnedPlacement): string {
+  return placement.startsWith("static ") ? "static " : "";
+}
+function containerName(placement: UnpinnedPlacement): string {
+  return placement.endsWith("class declaration") ? "Declared" : placement.endsWith("class expression") ? "Expressed" : "holder";
+}
+/** A container around its members, named by containerName: an object literal a const declares or one read in place (an element
+ * access its operand), a class declaration, or a class expression a const declares. */
+function containerOf(placement: UnpinnedPlacement, members: string, lead: string): string {
+  const name = containerName(placement);
+  if (placement === "object literal") return `${lead}const ${name} = {\n${members}};\n`;
+  if (placement === "object literal read in place") return `${lead}const ${name} = ({\n${members}})[16];\n`;
+  if (placement.endsWith("class declaration")) return `${lead}class ${name} {\n${members}}\n`;
+  return `${lead}const ${name} = class {\n${members}};\n`;
+}
+/** A method member: its modifiers, its kind's marker and its name, a parameter of its own and a body reading that parameter's
+ * blocks; an object literal's member ends with a comma. */
+function memberOf(modifiers: string, kind: MatrixKind, name: string, ordinal: string, inObject: boolean): string {
+  return `  ${modifiers}${kind.marker}${name}(p${ordinal}: ${MATRIX_PARAMETER}) {\n    ${kind.statement} p${ordinal}.blocks;\n  }${inObject ? "," : ""}\n`;
+}
+/** The calls of a held matrix: each callee reached by a member callee off its receiver, handed the rf result. */
+function callsOf(receiver: string, callees: readonly string[]): string {
+  return `export const rows = [\n${callees.map(callee => `  ${receiver}.${callee}(${PROBE_RESULT}),\n`).join("")}];\n`;
+}
+/** The FUNCTION TABLE's cells at one placement: every kind under every pinned name kind, each called by a member callee (a
+ * #private one from a method of its class). */
+function heldMatrix(placement: HeldPlacement): Matrix {
+  const inObject = placement === "object literal";
+  const needs = new Set<string>();
+  const members: string[] = [];
+  const callees: string[] = [];
+  const privates: string[] = [];
+  let cells = 0;
+  for (const kind of MATRIX_KINDS) {
+    for (const name of MATRIX_HELD_NAMES) {
+      if (name.classOnly && inObject) continue;
+      cells += 1;
+      const ordinal = ordinalOf(cells);
+      for (const need of name.needs(ordinal)) needs.add(need);
+      members.push(memberOf(staticOf(placement), kind, name.spell(ordinal), ordinal, inObject));
+      (name.classOnly ? privates : callees).push(name.callee(ordinal));
+    }
+  }
+  if (privates.length > 0) members.push(`  ${staticOf(placement)}reach() {\n    return [${privates.map(callee => `this.${callee}(${PROBE_RESULT})`).join(", ")}];\n  }\n`);
+  const receiver = inObject || staticOf(placement) !== "" ? containerName(placement) : `new ${containerName(placement)}()`;
+  return { text: `${[...needs].join("\n")}\n${containerOf(placement, members.join(""), "")}${callsOf(receiver, callees)}`, side: HELD_ROW, rows: cells };
+}
+/** COMPOSITIONS' modified methods: every modifier at every class placement and kind, under an identifier, each called by a
+ * member callee; an override's class extends a base declaring a same-named method of its own static-ness that reads nothing. */
+function modifiedMatrix(): Matrix {
+  const bases: string[] = [];
+  const bodies: Record<"Declared" | "Expressed", string[]> = { Declared: [], Expressed: [] };
+  const calls: string[] = [];
+  let cells = 0;
+  for (const placement of CLASS_PLACEMENTS) {
+    const container = placement.endsWith("class declaration") ? "Declared" : "Expressed";
+    for (const [modifier, spelled] of Object.entries(MATRIX_MODIFIERS)) {
+      for (const kind of MATRIX_KINDS) {
+        cells += 1;
+        const ordinal = ordinalOf(cells);
+        const optional = modifier === "optional";
+        const lead = modifier === "override" ? `${staticOf(placement)}${spelled}` : optional ? staticOf(placement) : `${spelled}${staticOf(placement)}`;
+        bodies[container].push(memberOf(lead, kind, `mO${ordinal}${optional ? "?" : ""}`, ordinal, false));
+        if (modifier === "override") bases.push(`  ${staticOf(placement)}mO${ordinal}(b${ordinal}: ${MATRIX_PARAMETER}): unknown {\n    return b${ordinal};\n  }\n`);
+        calls.push(`  ${staticOf(placement) === "" ? `new ${container}()` : container}.mO${ordinal}(${PROBE_RESULT}),\n`);
+      }
+    }
+  }
+  const text = `class Base {\n${bases.join("")}}\nclass Declared extends Base {\n${bodies.Declared.join("")}}\nconst Expressed = class extends Base {\n${bodies.Expressed.join("")}};\nexport const rows = [\n${calls.join("")}];\n`;
+  return { text, side: HELD_ROW, rows: cells };
+}
+/** The object-literal positions a positioned probe holds one method at, each wrapping its member: a let's or a var's
+ * initializer, a call's first or a later argument, an array's first or a later item, a property value one or two levels
+ * down, and the return value of a function, of a function nested in one, of an arrow's block and of an arrow's concise body. */
+const MATRIX_POSITIONS: Readonly<Record<string, (member: string, ordinal: string) => string>> = {
+  "let declaration": (member, ordinal) => `export let held${ordinal} = {\n${member}};\n`,
+  "var declaration": (member, ordinal) => `export var held${ordinal} = {\n${member}};\n`,
+  "first call argument": member => `take({\n${member}});\n`,
+  "later call argument": member => `take(0, {\n${member}});\n`,
+  "first array item": (member, ordinal) => `export const held${ordinal} = [\n  {\n${member}  },\n];\n`,
+  "later array item": (member, ordinal) => `export const held${ordinal} = [\n  {},\n  {\n${member}  },\n];\n`,
+  "property value": (member, ordinal) => `export const held${ordinal} = {\n  inner: {\n${member}  },\n};\n`,
+  "property value two levels down": (member, ordinal) => `export const held${ordinal} = {\n  outer: {\n    inner: {\n${member}    },\n  },\n};\n`,
+  "function return": (member, ordinal) => `export function held${ordinal}() {\n  return {\n${member}  };\n}\n`,
+  "nested function return": (member, ordinal) => `export function held${ordinal}() {\n  return function inner() {\n    return {\n${member}    };\n  };\n}\n`,
+  "arrow block return": (member, ordinal) => `export const held${ordinal} = () => {\n  return {\n${member}  };\n};\n`,
+  "arrow concise return": (member, ordinal) => `export const held${ordinal} = () => ({\n${member}});\n`,
+};
+/** A positioned probe: one plain method at each position, an identifier-named one a member callee calls (held, and read in
+ * place besides) or a decimal-named one never called (FAIL CLOSED). */
+function positionedMatrix(held: boolean): Matrix {
+  const parts: string[] = ["declare function take(...values: unknown[]): void;\n"];
+  if (held) parts.push("declare const reach: Record<string, (envelope: unknown) => unknown>;\n");
+  const inPlace: Readonly<Record<string, (member: string, ordinal: string) => string>> = held ? { "read in place": (member, ordinal) => `export const held${ordinal} = ({\n${member}}).mO${ordinal}(${PROBE_RESULT});\n` } : {};
+  const callees: string[] = [];
+  let cells = 0;
+  for (const place of Object.values({ ...MATRIX_POSITIONS, ...inPlace })) {
+    cells += 1;
+    const ordinal = ordinalOf(cells);
+    parts.push(place(memberOf("", PLAIN_KIND, held ? `mO${ordinal}` : DECIMAL_SPELLING, ordinal, true), ordinal));
+    if (held) callees.push(`mO${ordinal}`);
+  }
+  if (held) parts.push(callsOf("reach", callees));
+  return { text: parts.join(""), side: held ? HELD_ROW : UNPINNED_ROW, rows: cells };
+}
+/** The FUNCTION TABLE's other declarations: a function declaration of every kind, and a variable every declaration list
+ * declares whose initializer, bare or read through each wrapper, is an arrow, plain or async, or a function expression of
+ * every kind; each called by its name. */
+const MATRIX_LISTS: readonly string[] = ["const", "let", "var"];
+const MATRIX_INITIALIZERS: Readonly<Record<string, (parameter: string) => string>> = {
+  arrow: parameter => `(${parameter}: ${MATRIX_PARAMETER}) => ${parameter}.blocks`,
+  "async arrow": parameter => `async (${parameter}: ${MATRIX_PARAMETER}) => ${parameter}.blocks`,
+  "function expression": parameter => `function (${parameter}: ${MATRIX_PARAMETER}) {\n  return ${parameter}.blocks;\n}`,
+  "generator function expression": parameter => `function* (${parameter}: ${MATRIX_PARAMETER}) {\n  yield ${parameter}.blocks;\n}`,
+  "async function expression": parameter => `async function (${parameter}: ${MATRIX_PARAMETER}) {\n  return ${parameter}.blocks;\n}`,
+  "async generator function expression": parameter => `async function* (${parameter}: ${MATRIX_PARAMETER}) {\n  yield ${parameter}.blocks;\n}`,
+};
+const MATRIX_WRAPPERS: Readonly<Record<string, (value: string) => string>> = {
+  bare: value => value,
+  parentheses: value => `(${value})`,
+  "as clause": value => `(${value}) as unknown`,
+  "satisfies clause": value => `(${value}) satisfies unknown`,
+  "non-null mark": value => `(${value})!`,
+  "angle assertion": value => `<unknown>(${value})`,
+  await: value => `await (${value})`,
+};
+function declarationMatrix(): Matrix {
+  const parts: string[] = [];
+  const callees: string[] = [];
+  let cells = 0;
+  for (const kind of MATRIX_KINDS) {
+    cells += 1;
+    const ordinal = ordinalOf(cells);
+    parts.push(`${kind.declares} f${ordinal}(p${ordinal}: ${MATRIX_PARAMETER}) {\n  ${kind.statement} p${ordinal}.blocks;\n}\n`);
+    callees.push(`f${ordinal}`);
+  }
+  for (const list of MATRIX_LISTS) {
+    for (const initializer of Object.values(MATRIX_INITIALIZERS)) {
+      for (const wrapper of Object.values(MATRIX_WRAPPERS)) {
+        cells += 1;
+        const ordinal = ordinalOf(cells);
+        parts.push(`${list} v${ordinal} = ${wrapper(initializer(`p${ordinal}`))};\n`);
+        callees.push(`v${ordinal}`);
+      }
+    }
+  }
+  return { text: `${parts.join("")}export const rows = [\n${callees.map(callee => `  ${callee}(${PROBE_RESULT}),\n`).join("")}];\n`, side: HELD_ROW, rows: cells };
+}
+/** FAIL CLOSED's cells at one placement: every kind under every spelling, each noted at its name's line and never called. */
+function unpinnedMatrix(placement: UnpinnedPlacement): Matrix {
+  const inObject = !placement.includes("class ");
+  const members: string[] = [];
+  let cells = 0;
+  for (const kind of MATRIX_KINDS) {
+    for (const spelling of Object.values(MATRIX_SPELLINGS)) {
+      cells += 1;
+      members.push(memberOf(staticOf(placement), kind, spelling, ordinalOf(cells), inObject));
+    }
+  }
+  return { text: containerOf(placement, members.join(""), "export "), side: UNPINNED_ROW, rows: cells };
+}
+/** FAIL CLOSED's signatures with no body, at every spelling: an abstract class declaration's method, and an overload's at every
+ * class placement, its signature and its implementation each noted (their parameters named apart). */
+function bodilessMatrix(): Matrix {
+  const spellings = Object.values(MATRIX_SPELLINGS);
+  let cells = 0;
+  let rows = 0;
+  const abstracts: string[] = [];
+  for (const spelling of spellings) {
+    cells += 1;
+    rows += 1;
+    abstracts.push(`  abstract ${spelling}(p${ordinalOf(cells)}: ${MATRIX_PARAMETER}): unknown;\n`);
+  }
+  const overloads = (placement: ClassPlacement): string => {
+    const members: string[] = [];
+    for (const spelling of spellings) {
+      cells += 1;
+      rows += 2;
+      const ordinal = ordinalOf(cells);
+      members.push(`  ${staticOf(placement)}${spelling}(s${ordinal}: ${MATRIX_PARAMETER}): unknown;\n${memberOf(staticOf(placement), PLAIN_KIND, spelling, ordinal, false)}`);
+    }
+    return members.join("");
+  };
+  const declared = `${overloads("class declaration")}${overloads("static class declaration")}`;
+  const expressed = `${overloads("class expression")}${overloads("static class expression")}`;
+  return { text: `export abstract class Abstracts {\n${abstracts.join("")}}\nexport class Overloads {\n${declared}}\nexport const Expressed = class {\n${expressed}};\n`, side: UNPINNED_ROW, rows };
+}
+/** The MATRICES by probe id (READ_PROBES spreads their texts; C3 holds each reading to its side and rows). */
+const MATRICES: Readonly<Record<string, Matrix>> = {
+  "held-object-literal-matrix": heldMatrix("object literal"),
+  "held-class-declaration-matrix": heldMatrix("class declaration"),
+  "held-static-class-declaration-matrix": heldMatrix("static class declaration"),
+  "held-class-expression-matrix": heldMatrix("class expression"),
+  "held-static-class-expression-matrix": heldMatrix("static class expression"),
+  "held-modified-class-method-matrix": modifiedMatrix(),
+  "held-positioned-object-methods": positionedMatrix(true),
+  "held-declaration-matrix": declarationMatrix(),
+  "unpinned-object-literal-matrix": unpinnedMatrix("object literal"),
+  "unpinned-inline-object-matrix": unpinnedMatrix("object literal read in place"),
+  "unpinned-class-declaration-matrix": unpinnedMatrix("class declaration"),
+  "unpinned-static-class-declaration-matrix": unpinnedMatrix("static class declaration"),
+  "unpinned-class-expression-matrix": unpinnedMatrix("class expression"),
+  "unpinned-static-class-expression-matrix": unpinnedMatrix("static class expression"),
+  "unpinned-bodiless-matrix": bodilessMatrix(),
+  "unpinned-positioned-object-methods": positionedMatrix(false),
+};
 /** C3's read forms (wb-ycir F1; wb-qnl8 F2 and F3 add one per claimed result-expression and read form; wb-qnls F1 and F2 one per
  * binding form the gate's F1 mutants and P31-P33 named, cut #2 one per shape a refusal #1 U1 or F4 mutant or a seat mutant
  * narrowed a form to and per form U2 widens, cut #3 one per FUNCTION TABLE form and per refusal #2 GN survivor's shape,
@@ -777,6 +1151,8 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   "uppercase-spelled-numeric-named-methods": "export const helpers = {\n  0X10(hexed: Record<string, unknown>) {\n    return hexed.blocks;\n  },\n  0B101(binaried: Record<string, unknown>) {\n    return binaried.blocks;\n  },\n  0O7(octaled: Record<string, unknown>) {\n    return octaled.blocks;\n  },\n  1E3(exponented: Record<string, unknown>) {\n    return exponented.blocks;\n  },\n};\n",
   "trailing-dot-legacy-octal-named-methods": "export const helpers = {\n  5.(dotted: Record<string, unknown>) {\n    return dotted.blocks;\n  },\n  017(legacy: Record<string, unknown>) {\n    return legacy.blocks;\n  },\n};\n",
   "positioned-object-numeric-methods": "declare function take(value: object): void;\ntake({\n  1(argument: Record<string, unknown>) {\n    return argument.blocks;\n  },\n});\nexport const items = [\n  {\n    2(item: Record<string, unknown>) {\n      return item.blocks;\n    },\n  },\n];\nexport const holder = {\n  inner: {\n    3(property: Record<string, unknown>) {\n      return property.blocks;\n    },\n  },\n};\nexport function make() {\n  return {\n    4(returned: Record<string, unknown>) {\n      return returned.blocks;\n    },\n  };\n}\n",
+  // wb-07zx cut #2 (refusal #1's respin): the MATRICES, each a module MATRICES above generates.
+  ...Object.fromEntries(Object.entries(MATRICES).map(([id, matrix]) => [id, matrix.text])),
   ...Object.fromEntries(REFLECTIVE_READS.map(call => [`reflective-${call}`, `export const rows = ${call}(${PROBE_RESULT});\n`])),
 };
 /** The follow-up whose title names the gate mutants of cut #4 this census answers by read probe (the R694 carry of landing 749). */
@@ -2568,6 +2944,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
     const gMisfits = [...sideOf(G_PINS.failClosed, /^\d+ declaration unpinned$/), ...sideOf(G_PINS.pinned, /^\d+ member [a-z]+$/)];
     expect({ distinct: new Set(gAnswers).size, misfits: gMisfits }, "each G mutant's probe: its own, a FAIL CLOSED one noting only unpinned declarations, a pinned one only member reads").toStrictEqual({ distinct: gAnswers.length, misfits: [] });
+    // wb-07zx cut #2: each MATRIX reads one row per cell, every row on its side (a held cell's member read, a FAIL CLOSED cell's note).
+    const offMatrix = Object.entries(MATRICES)
+      .filter(([id, matrix]) => {
+        const found = probes.reads[id] ?? [];
+        return found.length !== matrix.rows || !found.every(read => matrix.side.test(read));
+      })
+      .map(([id]) => id);
+    expect(offMatrix, "each matrix reads one row per cell, every row on its side").toStrictEqual([]);
     expect(loaders.length > 0 && !loaders.includes("reactivefiber"), "the evidence loader roster holds no reactivefiber row").toBe(true);
     // wb-qnl8 F1: a UI module read two ways is parsed, loaded from and spelled in both.
     const twoReadings: Walked = {
@@ -2921,6 +3305,17 @@ function constants(): JsonValue {
     quietProbes: Object.keys(QUIET_PROBES),
     gqPins: GQ_PINS,
     gPins: G_PINS,
+    matrices: {
+      kinds: Object.fromEntries(MATRIX_KINDS.map(kind => [kind.id, `${kind.marker}|${kind.declares}|${kind.statement}`])),
+      heldNames: Object.fromEntries(MATRIX_HELD_NAMES.map(name => [name.id, `${name.spell("000")}|${name.needs("000").join(" ")}|${name.callee("000")}`])),
+      spellings: MATRIX_SPELLINGS,
+      modifiers: MATRIX_MODIFIERS,
+      positions: Object.keys(MATRIX_POSITIONS),
+      lists: MATRIX_LISTS,
+      initializers: Object.fromEntries(Object.entries(MATRIX_INITIALIZERS).map(([id, initializer]) => [id, initializer("p")])),
+      wrappers: Object.fromEntries(Object.entries(MATRIX_WRAPPERS).map(([id, wrapper]) => [id, wrapper("v")])),
+      rows: Object.fromEntries(Object.entries(MATRICES).map(([id, matrix]) => [id, matrix.rows])),
+    },
     surfacePins: SURFACE_PINS,
     covers: Object.fromEntries(Object.entries(COVERS).map(([pin, phrases]) => [pin, phrases.map(held)])),
     coverStop: COVER_STOP,
