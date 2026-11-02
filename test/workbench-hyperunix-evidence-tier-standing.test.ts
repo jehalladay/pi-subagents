@@ -8,7 +8,10 @@
  * cut #4 and pins the deferred coverage refusals #3 and #4 name: an unread member of the static, accessor and field kinds and
  * under a computed numeric name, an unread member at each position of the class, a list's declaration moved into each of 17
  * nestings, and each spelling form of a HOLDER's write, of its class in another module, of a list's reference and of a direct
- * eval, every claim word stating exactly its plants): each case claims exactly the cells and pins it
+ * eval, every claim word stating exactly its plants; its cut #2, the respin of its refusal #1, pins each claim word that refusal
+ * reads wider than its plants: each of 13 element forms at each position of each key list the reading reads, each HOLDER spelled
+ * in each form at its module's start and end and written by a FALSIFIER of its own, the class and eval in each form in each
+ * module, and the Set constructor read by its name): each case claims exactly the cells and pins it
  * runs, each pin is a falsifier this file executes, T2 claims what the decoder accepts read where it decides it, declared text, the
  * package's bytes and probes, and each mode outside them that this cut knows of is a named residual whose quiet row case Q pins. The
  * statement (STATEMENT below,
@@ -71,17 +74,23 @@
  *      again under such a member) with its whole text equal to its pinned sha256, so an edit anywhere in one (an early return, a
  *      rewritten input) departs; and written by no name the reading looks for, as this census pins it in exactly these plants:
  *      outside the HOLDERS' text, a spelling of a HOLDER's name in its own module that is not its declaration, the callee of a
- *      call or a named import departs naming its form in the 7 WRITE_FORMS (an identifier as a prototype's member, as an instance
+ *      call or a named import departs naming its form, in the 7 WRITE_FORMS (an identifier as a prototype's member, as an instance
  *      member and as another object's member, each written by assignment, and as a module function's rebound binding; a string
  *      literal and a no-substitution template literal, each Object.defineProperty's key; and the class's identifier in another
- *      consulted module); a spelling of the class holding the StreamChecker HOLDERS in another consulted module departs naming
- *      its forms (an identifier in result.js, that WRITE_FORMS row; a string literal there through a namespace import and a
- *      no-substitution template literal so in protocol/query.js, the 2 CLASS_FORMS); and an identifier spelling eval departs
- *      naming its form (the callee of a call in each of the three modules, and a parenthesized callee, a direct eval as well, in
- *      protocol/decoder.js), through which a direct eval could write a HOLDER or a list by a name built from a string. Any other
- *      form or context of these spellings (another member or key position, an alias of eval, an optional or tagged call) is NOT
- *      CLAIMED, its label included; a write from another consulted module through a checker it reaches without that class's name,
- *      or by a name built at run time, is R-ACCEPTANCE's;
+ *      consulted module), in a write of each of the 5 HOLDERS those rows leave unwritten (the 5 written cells: decodeResultStream,
+ *      parseFrameJson, snapshotJson and checkStream each rebound, checkStream's the gate's GP19-REBIND-CHECKSTREAM, and
+ *      StreamChecker.feed written on its prototype), and in a statement spelling each of the 8 HOLDERS in each of the 6
+ *      SPELLED_STATEMENTS forms (the WRITE_FORMS but elsewhere) at the start and at the end of its module (96 controls); a spelling
+ *      of the class holding the StreamChecker HOLDERS in another consulted module departs naming its forms (an identifier in
+ *      result.js, that WRITE_FORMS row; a string literal there through a namespace import and a no-substitution template literal
+ *      so in protocol/query.js, the 2 CLASS_FORMS; and a statement spelling it in each of those 3 forms at the end of each of the 2
+ *      other consulted modules, 6 controls); and an identifier spelling eval departs naming its form (the callee of a call in each
+ *      of the three modules, and a parenthesized callee, a direct eval as well, in protocol/decoder.js; and a statement holding
+ *      either form at the end of each of the three modules, 6 controls), through which a direct eval could write a HOLDER or a list
+ *      by a name built from a string. Any other form, context or position of these spellings than these plants (another member or
+ *      key position, another statement, an alias of eval, an optional or tagged call) is NOT CLAIMED, its label included; a write
+ *      from another consulted module through a checker it reaches without that class's name, or by a name built at run time, is
+ *      R-ACCEPTANCE's;
  *      anchored by the SDK's own calls: the first is decodeResultStream, every other one
  *      is called by a HOLDER, and the HOLDERS' callees outside them (those the three modules declare or import by name) are
  *      exactly the 14 HELPERS. In them, 4 consulted sites read by their shape: parseFrameLine's filter (for each [key, field] of
@@ -94,9 +103,15 @@
  *      filter's ordinary extra, the frame's carrying of it and the check's own body, and an edit of any other form departs through
  *      its HOLDER's digest); the 3 literal lists those sites
  *      name (the known set, OBSERVATION_PAYLOAD and OBSERVATION_FIELDS), each read in its declared container (a new Set of an array
- *      literal; the table an Object.freeze of an object literal), every member a string literal and every member of the table a
- *      property under an identifier or a string-literal name holding such a list (a member under a computed name, a spread, an
- *      accessor, a method or a shorthand departs; a kind the table lists twice is NOT CLAIMED by this census); and the 2
+ *      literal, a subclass's constructor in Set's place departing, a control; the table an Object.freeze of an object literal),
+ *      every member a string literal, as this census pins it in exactly these plants: an element in each of the 13 ELEMENT_FORMS (a
+ *      call, an identifier, a template expression, a no-substitution template literal, a tagged template, a binary expression, a
+ *      conditional, a parenthesized expression, a member, an element access, a spread, an await and a numeric literal) planted at
+ *      each of the 65 positions of the 9 key lists the reading reads (the known set, OBSERVATION_PAYLOAD and the table's seven)
+ *      departs at its index and only so (845 controls), the call with one FALSIFIER in each consulted list and each other form with
+ *      one (the 12 element cells, the identifier's the gate's GP19-LM-IDENT), any other element form NOT CLAIMED; and every member
+ *      of the table a property under an identifier or a string-literal name holding such a list (a member under a computed name, a
+ *      spread, an accessor, a method or a shorthand departs; a kind the table lists twice is NOT CLAIMED by this census); and the 2
  *      module-level ones each read at the one declaration of its name among the decoder module's top-level statements (a const
  *      declaration in the installed module), as this census pins it in exactly these plants: its const declaration moved into a
  *      block statement at the module's top level, which the site no longer consults, departs (one FALSIFIER each), and
@@ -124,7 +139,8 @@
  *      __proto__, and each of the seven bodies refuses every one at body.<name>), each of the seven
  *      OBSERVATION_FIELDS bodies accepts exactly its table list (every key of it passing the check), those seven are the kinds
  *      feed() dispatches, no accepted key holds a tier, and every unknown-key refusal of the decoder module is read (four at their
- *      named check sites, two at the consulted sites). Each of the 69 FALSIFIERS, one per claim cell (each HOLDER, site and list;
+ *      named check sites, two at the consulted sites). Each of the 86 FALSIFIERS, one per claim cell (each HOLDER, site and list;
+ *      a list element in each of the 12 ELEMENT_FORMS beyond the call;
  *      each module-level list's container and its declaration moved into a top-level block, and the table's into a switch case;
  *      each module-level list's references and the 5 REFERENCE_FORMS, a string-literal and a template-literal reference in its
  *      module and an identifier, a string-literal and a template-literal one from another consulted module; each decided part; an
@@ -135,12 +151,13 @@
  *      each form that is not a key list - a computed name, a spread, an accessor, a method and a shorthand; a HOLDER written by a
  *      spelled name in each form - a prototype member, an instance member, another object's member, Object.defineProperty under a
  *      string key and under a template key, a rebinding and a write from another consulted module (the 7 WRITE_FORMS prototype,
- *      instance, member, string, template, binding and elsewhere); the class spelled in another consulted module as a string
+ *      instance, member, string, template, binding and elsewhere) and a write of each of the 5 HOLDERS those leave unwritten (the 5
+ *      written cells); the class spelled in another consulted module as a string
  *      literal and as a template literal (the 2 CLASS_FORMS); an eval in each module; and a parenthesized eval in the module
  *      declaring the table), plants one exact-string edit that begins inside its cell's span (a
- *      HOLDER's outside every site and list; a container's inside its list and a table member's inside the table; a nested
- *      declaration's, a reference's, a second declaration's, an unread name's, a write's, a class spelling's and an eval's outside
- *      every HOLDER, site and list) and moves the
+ *      HOLDER's outside every site and list; a container's inside its list and a table member's inside the table; an element's
+ *      outside every HOLDER and site; a nested declaration's, a reference's, a second declaration's, an unread name's, a write's, a
+ *      written HOLDER's, a class spelling's and an eval's outside every HOLDER, site and list) and moves the
  *      reading exactly as its row pins, each row departing in its own cell's mark (which names the row's form where the cell has
  *      one); each row's admitted key (the key its plant
  *      admits, which the seat's physical battery measures and this file does not) is one the installed decoder refuses there
@@ -149,8 +166,8 @@
  *      GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER,
  *      GP30-STATIC-BLOCK-PAYLOAD and GP30-BLOCK-TABLE (wb-tz2.18 refusal #2), GP31-SWITCH-TABLE, GP31-STATIC-CALL-FIELD,
  *      GP31-ACCESSOR-CALL-PAYLOAD and GP31-FIELD-CALL-PAYLOAD (wb-tz2.18 refusal #3) and GP20-NUMBER-FIELD,
- *      GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED and GP20-PAREN-EVAL-FIELDS (wb-tz2.18 refusal #4) are among
- *      them, byte-identical. DECLARED TEXT, read
+ *      GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED and GP20-PAREN-EVAL-FIELDS (wb-tz2.18 refusal #4) and
+ *      GP19-LM-IDENT and GP19-REBIND-CHECKSTREAM (wb-tz2.23 refusal #1) are among them, byte-identical. DECLARED TEXT, read
  *      from the installed decoder
  *      module and pinned exactly: the seven key lists of its OBSERVATION_FIELDS table; the key set each of four
  *      other bodies names in its own unknown-field refusal (`if (!<SET>.has(key)) this.fail("SDK_PROTOCOL_MALFORMED", `<kind>:
@@ -272,12 +289,15 @@
  * function a control shows can fire: moved() (a changed runtime digest moves every base reading's outputs and axis, and the twin's),
  * departure() (an open body departs from a refusal, a closed one from a decode), the placement control (every cell carries what it
  * names), promotion() (the licensed complete readings, and an unlicensed reading judged as licensed, flag each of its seven clauses),
- * the instrument's four stand-ins, acceptanceOf() (each of the 69 FALSIFIERS moves it), calleesOf() (a HOLDER planted to call
+ * the instrument's four stand-ins, acceptanceOf() (each of the 86 FALSIFIERS moves it), calleesOf() (a HOLDER planted to call
  * validateWireBody adds exactly it), the site readers' three premises (each planted away, its site is not read), acceptedTierNames()
  * (a copy holding a tier name at the envelope and in a body), the placement judge (in each of its arms, a row relabelled to a cell
  * it does not lie in), the cell-mark judge (in each of its arms, a row departing in another mark) and the witness judge (a row
  * naming a key the decoder accepts at the envelope, and for each of the seven bodies a row naming a key only that body accepts,
- * reported at exactly that body). Pure: no HX binary, scratch directory, clock, network or file write; the files read are the
+ * reported at exactly that body), the element-form reading (none for a row departing at no member) and the sweeps' judges
+ * (ELEMENTS on a string literal planted in a list deciding each part, SPELLINGS on a callee and on another form, and the class and
+ * eval statements on the class in its own module and on eval spelled as a string). Pure: no HX binary, scratch directory, clock,
+ * network or file write; the files read are the
  * installed SDK's package.json, shipped declaration files and modules, and the three READER_MODULES. Display paths added: none
  * (test-only). */
 import {createHash} from 'node:crypto';
@@ -833,7 +853,8 @@ interface Holder {
  * each declared once (the one function of its name in its module, or the one member of its class under it: a second declaration
  * departs as T2's 8 TWICE_CELLS plants pin it, and any other kind, modifier or name form is NOT CLAIMED) with its pinned text, so an
  * edit anywhere in one (an early return, a rewritten input) departs, and written by no name the three modules spell, as T2's
- * WRITE_FORMS, CLASS_FORMS and eval plants pin it (any other spelling NOT CLAIMED). */
+ * WRITE_FORMS and written rows, SPELLED_STATEMENTS, CLASS_FORMS, CLASS_STATEMENTS, eval plants and EVAL_STATEMENTS pin it (any
+ * other spelling NOT CLAIMED). */
 const HOLDERS: readonly Holder[] = [
   {module: 'result.js', name: 'decodeResultStream', sha256: '10e4c6aa57673c77a8f11d5eb3d30e6a05ec500d4dd6f93a50f382f95c8555fa'},
   {module: 'protocol/query.js', name: 'parseFrameLine', sha256: '0727532286f1a215cbec240e517036de85f51d074767353e092438af4f27b153'},
@@ -1020,10 +1041,13 @@ function moduleConstIn(file: ts.SourceFile, name: string): ts.Expression | undef
     ? statement.declarationList.declarations.filter(declaration => declaration.name.getText() === name) : []);
   return declarations.length === 1 ? declarations[0]?.initializer : undefined;
 }
-/** The array literal a `new Set([...])` holds. */
+/** The array literal a `new Set([...])` holds (T2 pins that a subclass's constructor in Set's place is not read, as GS-C-PAYLOAD's
+ * wrapper is not; any other constructor form is NOT CLAIMED). */
 const setLiteral = (node: ts.Node | undefined): ts.Node | undefined => node !== undefined && ts.isNewExpression(node)
   && node.expression.getText() === 'Set' && node.arguments?.length === 1 ? node.arguments[0] : undefined;
-/** The string literals of an array literal: a node that is not one, or an element that is not a string literal, is a departure. */
+/** The string literals of an array literal: a node that is not one, or an element that is not a string literal, is a departure
+ * (T2 pins an element in each of the 13 ELEMENT_FORMS at each position of each key list it reads, departing at its index; any other
+ * element form is NOT CLAIMED). */
 function literalMembers(list: ts.Node | undefined, what: string, departures: string[]): string[] {
   if (list === undefined || !ts.isArrayLiteralExpression(list)) {
     departures.push(`${what}: not read`);
@@ -1122,9 +1146,11 @@ function checkSite(holder: ts.FunctionLikeDeclaration): {readonly table: string;
  * its TWICE_CELLS and UNREAD_FORMS plants and its 23 positions only) with its pinned text and
  * written by no name the modules spell (outside the HOLDERS' text its own module spells its name only at a declaration counted for
  * it or where calledOrImported() holds, its class is spelled in no other consulted module, and no module spells eval, each
- * departure naming its forms, as T2 pins it in its WRITE_FORMS, CLASS_FORMS, eval and parenthesized-eval plants only); each
- * consulted site is read by its shape, its sets' names read from it; the set the filter tests, the dispatched set and the table the
- * check consults are read as string literals in their declared containers; and the two module-level ones are each read at the one
+ * departure naming its forms, as T2 pins it in its WRITE_FORMS and written rows, SPELLED_STATEMENTS, CLASS_FORMS, CLASS_STATEMENTS,
+ * eval, parenthesized-eval and EVAL_STATEMENTS plants only); each consulted site is read by its shape, its sets' names read from it; the
+ * set the filter tests, the dispatched set and the table the check consults are read as string literals in their declared
+ * containers (pinned for an element in each of the 13 ELEMENT_FORMS at each position of each key list, and for a Set subclass's
+ * constructor, only); and the two module-level ones are each read at the one
  * declaration of its name among the decoder module's top-level statements (moduleConstIn(), pinned for a top-level block, a
  * switch case, the 17 NESTINGS and a top-level var redeclaration only) and spelled in the three modules only at that declaration
  * and their site (pinned for its REFERENCE_FORMS plants only). Each failure is a departure, and a part of acceptance whose sites
@@ -1167,7 +1193,9 @@ function acceptanceOf(texts: ModuleTexts): AcceptanceReading {
   }
   // No name the modules spell writes a HOLDER: outside the HOLDERS' text its own module spells its name only at a declaration
   // counted above or as a callee or a named import, its class is spelled in no other consulted module, and no module spells eval;
-  // each departure names its forms (writeForm(), spellingForm(), evalForm()).
+  // each departure names its forms (writeForm(), spellingForm(), evalForm()): pinned for T2's WRITE_FORMS and written rows, its
+  // SPELLED_STATEMENTS at each HOLDER module's start and end, its CLASS_FORMS and CLASS_STATEMENTS, and its eval rows and
+  // EVAL_STATEMENTS only, any other spelling NOT CLAIMED.
   const spellings = (module: ConsultedModule, name: string): readonly ts.Node[] => spellingsIn(parsedModule(module, texts[module]), name);
   const inHolders = (module: ConsultedModule, node: ts.Node): boolean => HOLDERS.some(({name}) => within(spans[name], module, node.getStart()));
   for (const holder of HOLDERS) {
@@ -1302,6 +1330,8 @@ const AUDIT_BUILT = '["audit", "ti" + "er"].join("_")';
  * probes either. */
 const REVIEW_BUILT = '["review", "ti" + "er"].join("_")';
 const PREP_BUILT = '["prep", "ti" + "er"].join("_")';
+/** The key wb-tz2.23 refusal #1's gate plants build at run time (gate_tier), a tier name no case here probes either. */
+const GATE_KEY_BUILT = '["gate", "ti" + "er"].join("_")';
 /** payload()'s first line, and the line of the StreamChecker member refusal #2's gate plants are planted before (answer()). */
 const PAYLOAD_HEAD = '    payload(st, frame) {\n';
 const ANSWER_HEAD = '    answer(st, frame) {\n';
@@ -1373,6 +1403,24 @@ const PREP_DELEGATE = `function (st, frame) {\n        const key = ${PREP_BUILT}
 /** GP20-FIRST-BLOCK's and GP20-LAST-BLOCK's static block (refusal #4's gate), planted at the class's first and last positions: it
  * writes PREP_DELEGATE to the prototype under a name built at run time. */
 const PREP_BLOCK = `    static {\n        const delegate = this.prototype[["pay", "load"].join("")];\n        this.prototype[["pay", "load"].join("")] = ${PREP_DELEGATE};\n    }\n`;
+/** GP19-LM-IDENT as one exact-string edit, exactly as wb-tz2.23 refusal #1's gate planted it in two: a module const GATE_KEY built
+ * at run time before the table, and OBSERVATION_FIELDS.derivation holding it as its fourth element; the old text is the module's
+ * span from the table's first line through derivation's line. */
+function identElement(): {readonly old: string; readonly planted: string} {
+  const text = moduleText('protocol/decoder.js');
+  const line = "    derivation: ['id', 'rule', 'inputs'],";
+  const old = text.slice(text.indexOf('const OBSERVATION_FIELDS = Object.freeze({'), text.indexOf(line) + line.length);
+  return {old, planted: `const GATE_KEY = ${GATE_KEY_BUILT};\n${old.slice(0, -line.length)}    derivation: ['id', 'rule', 'inputs', GATE_KEY],`};
+}
+/** A key-list line of the installed OBSERVATION_FIELDS table (`    <kind>: [...],`), and that line with the element of one of the
+ * ELEMENT_FORMS appended as its last member. */
+function appendedElement(kind: string, form: string): {readonly old: string; readonly planted: string} {
+  const old = tableDeclaration().split('\n').find(line => line.startsWith(`    ${kind}: [`) || line.startsWith(`    '${kind}': [`)) ?? '';
+  return {old, planted: `${old.slice(0, -'],'.length)}, ${ELEMENT_FORMS.find(([label]) => label === form)?.[1] ?? ''}],`};
+}
+/** GP19-REBIND-CHECKSTREAM's planted text, exactly as wb-tz2.23 refusal #1's gate built it: checkStream rebound at the decoder
+ * module's end to a wrapper that strips gate_tier from each frame body before the installed check, then the anchor. */
+const rebindCheckStream = (): string => `checkStream = ((check) => (frames, limits) => check(frames.map((frame) => {\n    const key = ${GATE_KEY_BUILT};\n    return Object.hasOwn(frame.body, key) ? { ...frame, body: Object.fromEntries(Object.entries(frame.body).filter(([name]) => name !== key)) } : frame;\n}), limits))(checkStream);\n//# sourceMappingURL=decoder.js.map`;
 /** The cells of a HOLDER declared twice, the 8 forms T2 pins: on payload, a later member of its name as a plain instance method
  * under an identifier, a string literal and a computed string literal, an instance field holding an arrow function, a get accessor
  * and a static method (each under an identifier where not named otherwise); then on the envelope's path, an instance field of fail
@@ -1413,6 +1461,42 @@ const NESTINGS: readonly (readonly [label: string, before: string, after: string
   ['while', 'while (true) {\n', '\nbreak;\n}'], ['do', 'do {\n', '\n} while (false);'], ['function', 'function scope() {\n', '\n}\nvoid scope;'],
   ['arrow', '(() => {\n', '\n})();'], ['block-in-block', '{\n{\n', '\n}\n}'], ['static-block', 'class Scope {\nstatic {\n', '\n}\n}\nvoid Scope;'],
 ];
+/** The 13 ELEMENT_FORMS T2 plants as a member of each of the 9 key lists the acceptance reading reads, each [label, element
+ * text], every one but the numeric literal building or reading gate_tier at run time with no tier name spelled: a call, an
+ * identifier, a template expression, a no-substitution template literal (an escape spelling its key), a tagged template, a binary
+ * expression, a conditional, a parenthesized expression, a property access (member), an element access, a spread, an await
+ * expression and a numeric literal; each label is elementForm()'s for its element. Any other element form is NOT CLAIMED. */
+const ELEMENT_FORMS: readonly (readonly [form: string, element: string])[] = [
+  ['call', GATE_KEY_BUILT], ['identifier', 'GATE_KEY'], ['template-expression', `\`gate_\${"ti"}er\``], ['template', '`gate_\\u0074ier`'],
+  ['tagged-template', `String.raw\`gate_\${"ti"}er\``], ['binary', '"gate_" + "ti" + "er"'], ['conditional', `true ? ${GATE_KEY_BUILT} : "id"`],
+  ['parenthesized', `(${GATE_KEY_BUILT})`], ['member', `({gate: ${GATE_KEY_BUILT}}).gate`], ['element-access', `[${GATE_KEY_BUILT}][0]`],
+  ['spread', `...[${GATE_KEY_BUILT}]`], ['await', `await Promise.resolve(${GATE_KEY_BUILT})`], ['number', '0'],
+];
+/** The node kinds elementForm() labels, each with its label; an element of any other kind reads other. */
+const ELEMENT_KINDS: readonly (readonly [is: (node: ts.Node) => boolean, form: string])[] = [[ts.isCallExpression, 'call'],
+  [ts.isIdentifier, 'identifier'], [ts.isTemplateExpression, 'template-expression'], [ts.isNoSubstitutionTemplateLiteral, 'template'],
+  [ts.isTaggedTemplateExpression, 'tagged-template'], [ts.isBinaryExpression, 'binary'], [ts.isConditionalExpression, 'conditional'],
+  [ts.isParenthesizedExpression, 'parenthesized'], [ts.isPropertyAccessExpression, 'member'], [ts.isElementAccessExpression, 'element-access'],
+  [ts.isSpreadElement, 'spread'], [ts.isAwaitExpression, 'await'], [ts.isNumericLiteral, 'number']];
+/** The form of a list element as the ELEMENT_FORMS label it (none when there is no element). */
+const elementForm = (element: ts.Node | undefined): string => element === undefined ? 'none'
+  : ELEMENT_KINDS.find(([is]) => is(element))?.[1] ?? 'other';
+/** The statements T2 spells a HOLDER's name in, one per form of a spelling outside a call (the WRITE_FORMS but elsewhere, which
+ * spells the class in another module), each [form, statement] with <name> standing for the name: an identifier as a member of a
+ * prototype, of this and of another object, a string literal and a no-substitution template literal (each Object.defineProperty's
+ * key) and a binding; each planted at the start and at the end of the HOLDER's module (96 controls). Any other statement, context or
+ * position of a spelling is NOT CLAIMED beyond the FALSIFIERS that plant one. */
+const SPELLED_STATEMENTS: readonly (readonly [form: string, statement: string])[] = [['prototype', 'Function.prototype.<name> = undefined;'],
+  ['instance', 'this.<name> = undefined;'], ['member', 'globalThis.<name> = undefined;'],
+  ['string', 'Object.defineProperty(globalThis, "<name>", {value: undefined});'],
+  ['template', 'Object.defineProperty(globalThis, `<name>`, {value: undefined});'], ['binding', '<name> = undefined;']];
+/** The statements T2 spells the HOLDERS' class in at the end of each other consulted module, one per form (an identifier, then the
+ * 2 CLASS_FORMS), each [form, statement] with <name> standing for the class (6 controls). */
+const CLASS_STATEMENTS: readonly (readonly [form: string, statement: string])[] = [['identifier', 'void <name>;'], ['string', 'void "<name>";'],
+  ['template', 'void `<name>`;']];
+/** The statements T2 spells eval in at the end of each consulted module, one per form a direct eval takes (a call's callee and a
+ * parenthesized callee), each [form, statement] (6 controls). */
+const EVAL_STATEMENTS: readonly (readonly [form: string, statement: string])[] = [['callee', 'eval("0");'], ['parenthesized', '(eval)("0");']];
 /** A falsifier of the acceptance reading: the claim cell it falsifies, an exact-string plant on one module text (its old text occurs
  * exactly once there), what the reading departs in under it, and for a plant that admits a key, the key and where it admits it (the
  * seat's physical battery measures the admission; T2 checks only that the installed decoder refuses that key there). */
@@ -1425,15 +1509,18 @@ interface Falsifier {
   readonly departs: readonly string[];
   readonly admits?: {readonly key: string; readonly at: 'envelope' | 'bodies'};
 }
-/** The 69 FALSIFIERS, one per claim cell in T2's cell order: each HOLDER (an edit outside every site: only its text departs), each
- * consulted site (an edit of its shape), each consulted list (a member that is not a string literal), each module-level list's
+/** The 86 FALSIFIERS, one per claim cell in T2's cell order: each HOLDER (an edit outside every site: only its text departs), each
+ * consulted site (an edit of its shape), each consulted list (a member that is not a string literal, a call), a list member in each
+ * of the 12 other ELEMENT_FORMS (the element cells, each appended to a key list but the identifier's), each module-level list's
  * container (a wrapper the reader does not read) and its declaration moved into a top-level block (no top-level declaration of it
  * is left), the table's moved into a switch case,
  * each module-level list's references (a write elsewhere) and each of the REFERENCE_FORMS, each decided part (a literal moves it),
  * a table kind left undispatched, the check admitting a key that holds no tier word, a HOLDER declared twice in each of the
  * TWICE_CELLS (a later StreamChecker member of its name, which overrides it or, static, does not; a module function declared
  * again), a member of the HOLDERS' class in each of the UNREAD_FORMS, a table member in each of the MEMBER_FORMS, a HOLDER written
- * by a spelled name in each of the WRITE_FORMS, its class spelled in another consulted module in each of the CLASS_FORMS, an eval
+ * by a spelled name in each of the WRITE_FORMS, each HOLDER those leave unwritten written so (the 5 written cells: four rebound
+ * module functions and StreamChecker.feed on its prototype), its class spelled in another consulted module in each of the
+ * CLASS_FORMS, an eval
  * in each consulted module and a parenthesized one in the module declaring the table. GP-OBSt, GP-ENVt and GP-OBSy are the gate's
  * plants of wb-tz2.12 refusal #3 (O:1364), GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE and
  * GP29-EVAL-FIELDS those of wb-tz2.18 refusal #1 (O:1544, the PREP archive's runs/plants.json), GP30-BINARY-NAMED-PAYLOAD,
@@ -1441,7 +1528,8 @@ interface Falsifier {
  * GP30-BLOCK-TABLE those of wb-tz2.18 refusal #2 (O:1608, the PREP archive's plants/), GP31-SWITCH-TABLE, GP31-STATIC-CALL-FIELD,
  * GP31-ACCESSOR-CALL-PAYLOAD and GP31-FIELD-CALL-PAYLOAD those of wb-tz2.18 refusal #3 (O:1684, its gate's review plants), and
  * GP20-NUMBER-FIELD, GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED and GP20-PAREN-EVAL-FIELDS those of wb-tz2.18
- * refusal #4 (O:1740, the PREP archive's plants/), each byte-identical. */
+ * refusal #4 (O:1740, the PREP archive's plants/), and GP19-LM-IDENT and GP19-REBIND-CHECKSTREAM those of wb-tz2.23 refusal #1
+ * (O:1798, the PREP archive's gp19-tools/plant-P-LM-IDENT.json and plant-P-REBIND-CHECKSTREAM.json), each byte-identical. */
 const FALSIFIERS: readonly Falsifier[] = [
   {id: 'GS-H-LINES', cell: 'holder decodeResultStream', module: 'result.js', old: 'if (text1 === "")', planted: `if (text1 === "" || text1.includes(${BUILT}))`,
     departs: ['decodeResultStream: text']},
@@ -1479,6 +1567,30 @@ const FALSIFIERS: readonly Falsifier[] = [
     planted: '"attribute-claim", "coverage", ["ans", "wer"].join("")]);\n// Native', departs: ['OBSERVATION_PAYLOAD[7]: not a string literal']},
   {id: 'GS-L-FIELDS', cell: 'list OBSERVATION_FIELDS', module: 'protocol/decoder.js', old: "'depth_bound', 'cause', 'supports'],",
     planted: `'depth_bound', 'cause', 'supports', ${BUILT}],`, departs: ['OBSERVATION_FIELDS.coverage[8]: not a string literal']},
+  {id: 'GP19-LM-IDENT', cell: 'element identifier', module: 'protocol/decoder.js', ...identElement(),
+    departs: ['OBSERVATION_FIELDS.derivation[3]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-TEMPLATE-EXPRESSION', cell: 'element template-expression', module: 'protocol/decoder.js', ...appendedElement('support', 'template-expression'),
+    departs: ['OBSERVATION_FIELDS.support[11]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-TEMPLATE', cell: 'element template', module: 'protocol/decoder.js', ...appendedElement('node-claim', 'template'),
+    departs: ['OBSERVATION_FIELDS.node-claim[6]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-TAGGED-TEMPLATE', cell: 'element tagged-template', module: 'protocol/decoder.js', ...appendedElement('edge-claim', 'tagged-template'),
+    departs: ['OBSERVATION_FIELDS.edge-claim[7]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-BINARY', cell: 'element binary', module: 'protocol/decoder.js', ...appendedElement('kind-claim', 'binary'),
+    departs: ['OBSERVATION_FIELDS.kind-claim[3]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-CONDITIONAL', cell: 'element conditional', module: 'protocol/decoder.js', ...appendedElement('attribute-claim', 'conditional'),
+    departs: ['OBSERVATION_FIELDS.attribute-claim[4]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-PARENTHESIZED', cell: 'element parenthesized', module: 'protocol/decoder.js', ...appendedElement('coverage', 'parenthesized'),
+    departs: ['OBSERVATION_FIELDS.coverage[8]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-MEMBER', cell: 'element member', module: 'protocol/decoder.js', ...appendedElement('support', 'member'),
+    departs: ['OBSERVATION_FIELDS.support[11]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-ELEMENT-ACCESS', cell: 'element element-access', module: 'protocol/decoder.js', ...appendedElement('node-claim', 'element-access'),
+    departs: ['OBSERVATION_FIELDS.node-claim[6]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-SPREAD', cell: 'element spread', module: 'protocol/decoder.js', ...appendedElement('edge-claim', 'spread'),
+    departs: ['OBSERVATION_FIELDS.edge-claim[7]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-AWAIT', cell: 'element await', module: 'protocol/decoder.js', ...appendedElement('kind-claim', 'await'),
+    departs: ['OBSERVATION_FIELDS.kind-claim[3]: not a string literal'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-E-NUMBER', cell: 'element number', module: 'protocol/decoder.js', old: '"attribute-claim", "coverage"]);\n// Native',
+    planted: '"attribute-claim", "coverage", 0]);\n// Native', departs: ['OBSERVATION_PAYLOAD[7]: not a string literal']},
   {id: 'GS-C-PAYLOAD', cell: 'container OBSERVATION_PAYLOAD', module: 'protocol/decoder.js',
     old: 'export const OBSERVATION_PAYLOAD = new Set(["support", "derivation", "node-claim", "edge-claim", "kind-claim", "attribute-claim", "coverage"]);',
     planted: 'export const OBSERVATION_PAYLOAD = ((set) => (set.delete("support"), set))(new Set(["support", "derivation", "node-claim", "edge-claim", "kind-claim", "attribute-claim", "coverage"]));',
@@ -1611,6 +1723,20 @@ const FALSIFIERS: readonly Falsifier[] = [
   {id: 'GS-W-ELSEWHERE', cell: 'write elsewhere', module: 'result.js', old: '//# sourceMappingURL=result.js.map',
     planted: 'import { StreamChecker } from "./protocol/decoder.js";\nStreamChecker.prototype.payload = function (st, frame) {\n    void st;\n    void frame;\n};\n//# sourceMappingURL=result.js.map',
     departs: ['StreamChecker: spelled outside its module (identifier)'], admits: {key: 'trust_tier', at: 'bodies'}},
+  {id: 'GS-S-DECODE', cell: 'written decodeResultStream', module: 'result.js', old: '//# sourceMappingURL=result.js.map',
+    planted: `decodeResultStream = ((decode) => (...input) => {\n    try {\n        return decode(...input);\n    }\n    catch (error) {\n        if (String(error.path).endsWith(${BUILT}))\n            return { frames: Object.freeze([]), checker: undefined };\n        throw error;\n    }\n})(decodeResultStream);\n//# sourceMappingURL=result.js.map`,
+    departs: ['decodeResultStream: spelled outside a call (binding)'], admits: {key: 'trust_tier', at: 'envelope'}},
+  {id: 'GS-S-JSON', cell: 'written parseFrameJson', module: 'protocol/decoder.js', old: '//# sourceMappingURL=decoder.js.map',
+    planted: `parseFrameJson = ((parse) => (source, limits) => {\n    const value = parse(source, limits);\n    if (value !== null && typeof value === "object")\n        delete value[${BUILT}];\n    return value;\n})(parseFrameJson);\n//# sourceMappingURL=decoder.js.map`,
+    departs: ['parseFrameJson: spelled outside a call (binding)'], admits: {key: 'trust_tier', at: 'envelope'}},
+  {id: 'GS-S-COPY', cell: 'written snapshotJson', module: 'protocol/query.js', old: '//# sourceMappingURL=query.js.map',
+    planted: `snapshotJson = ((copy) => (value) => {\n    const key = ${BUILT};\n    return copy(value !== null && typeof value === "object" && !Array.isArray(value) ? Object.fromEntries(Object.entries(value).filter(([name]) => name !== key)) : value);\n})(snapshotJson);\n//# sourceMappingURL=query.js.map`,
+    departs: ['snapshotJson: spelled outside a call (binding)'], admits: {key: 'trust_tier', at: 'envelope'}},
+  {id: 'GP19-REBIND-CHECKSTREAM', cell: 'written checkStream', module: 'protocol/decoder.js', old: '//# sourceMappingURL=decoder.js.map',
+    planted: rebindCheckStream(), departs: ['checkStream: spelled outside a call (binding)'], admits: {key: 'gate_tier', at: 'bodies'}},
+  {id: 'GS-S-FEED', cell: 'written StreamChecker.feed', module: 'protocol/decoder.js', old: '/** Validate a whole finite frame list under the batch bounds;',
+    planted: `const feedDelegate = StreamChecker.prototype.feed;\nStreamChecker.prototype.feed = function (frame) {\n    const key = ${BUILT};\n    return feedDelegate.call(this, Object.hasOwn(frame.body, key) ? { ...frame, body: Object.fromEntries(Object.entries(frame.body).filter(([name]) => name !== key)) } : frame);\n};\n/** Validate a whole finite frame list under the batch bounds;`,
+    departs: ['StreamChecker.feed: spelled outside a call (prototype)'], admits: {key: 'trust_tier', at: 'bodies'}},
   {id: 'GP20-NS-STRING-ELSEWHERE-SPELLED', cell: 'class string', module: 'result.js', old: '//# sourceMappingURL=result.js.map',
     planted: `import * as decoderNamespace from "./protocol/decoder.js";\nconst checkerClass = decoderNamespace["StreamChecker"];\nconst delegate = checkerClass.prototype.payload;\ncheckerClass.prototype.payload = ${PREP_DELEGATE};\n//# sourceMappingURL=result.js.map`,
     departs: ['StreamChecker: spelled outside its module (string)'], admits: {key: 'prep_tier', at: 'bodies'}},
@@ -1638,6 +1764,51 @@ function firstDifference(left: string, right: string): number {
 /** Whether an offset of a module's text lies in a span. */
 const within = (span: Span | undefined, module: ConsultedModule, at: number): boolean =>
   span !== undefined && span[0] === module && span[1] <= at && at < span[2];
+/** The acceptance reading of three module texts with one module's text replaced, that copy's parse released afterwards (T2's sweeps
+ * read about a thousand planted copies). */
+function readingWith(texts: ModuleTexts, module: ConsultedModule, text: string): AcceptanceReading {
+  const reading = acceptanceOf({...texts, [module]: text});
+  if (text !== texts[module]) parsedModules.delete(`${module}\n${text}`);
+  return reading;
+}
+/** A key list an acceptance reading reads: the name its departures give it (the known set, OBSERVATION_PAYLOAD, or one of the
+ * table's kinds as OBSERVATION_FIELDS.<kind>), its module and its array literal. */
+interface KeyList {
+  readonly what: string;
+  readonly module: ConsultedModule;
+  readonly list: ts.ArrayLiteralExpression;
+}
+/** The key lists a reading reads, in its lists' order (each table kind in the table's order), each read from the module text the
+ * reading read: the array literal of a list's new Set, and each key list of the table's object literal. */
+function keyListsOf(texts: ModuleTexts, reading: AcceptanceReading): KeyList[] {
+  return reading.lists.flatMap((name): KeyList[] => {
+    const span = reading.spans[name];
+    if (span === undefined) return [];
+    const [module, start, end] = span;
+    const node = nodesUnder(parsedModule(module, texts[module]), (candidate): candidate is ts.Node => candidate.getStart() === start
+      && candidate.getEnd() === end)[0];
+    const set = setLiteral(node);
+    if (set !== undefined) return ts.isArrayLiteralExpression(set) ? [{what: name, module, list: set}] : [];
+    const frozen = node !== undefined && ts.isCallExpression(node) ? node.arguments[0] : undefined;
+    return frozen !== undefined && ts.isObjectLiteralExpression(frozen) ? frozen.properties.flatMap((property): KeyList[] =>
+      ts.isPropertyAssignment(property) && (ts.isIdentifier(property.name) || ts.isStringLiteral(property.name))
+      && ts.isArrayLiteralExpression(property.initializer) ? [{what: `${name}.${property.name.text}`, module, list: property.initializer}] : []) : [];
+  });
+}
+/** An element text parsed as the one member of an exported array literal (a module, so an await is read as one). */
+function parsedElement(element: string): ts.Node | undefined {
+  const statement = ts.createSourceFile('element.js', `export const list = [${element}];`, ts.ScriptTarget.Latest, true, ts.ScriptKind.JS).statements[0];
+  const list = statement !== undefined && ts.isVariableStatement(statement) ? statement.declarationList.declarations[0]?.initializer : undefined;
+  return list !== undefined && ts.isArrayLiteralExpression(list) ? list.elements[0] : undefined;
+}
+/** A module text with an element inserted into one of its key lists at a position: before the member at that index, or after the
+ * last member. */
+function insertedElement(text: string, list: ts.ArrayLiteralExpression, at: number, element: string): string {
+  const next = list.elements[at];
+  if (next !== undefined) return `${text.slice(0, next.getStart())}${element}, ${text.slice(next.getStart())}`;
+  const end = list.elements[list.elements.length - 1]?.getEnd() ?? list.getStart() + 1;
+  return `${text.slice(0, end)}, ${element}${text.slice(end)}`;
+}
 
 /** One object node of a live input: a node of one frame's body, or (no frame) a node of the transport diagnostic. */
 interface LiveSite {
@@ -2152,7 +2323,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       .toStrictEqual(['supportIds', 'evidenceClasses', 'derivationHandles', 'providers', 'providerVersions']);
   });
 
-  it('T2: read where the decoder decides it, the frame envelope accepts exactly the seven keys of parseFrameLine\'s known set and __proto__, the one key the filter\'s assignment never records (GP-ENV0: request_id and reply_id, which ENVELOPE_KEYS declares, are refused, and of the names Object.prototype holds only __proto__ decodes, every one refused in each body) and each of the seven OBSERVATION_FIELDS bodies exactly the list payload()\'s check consults, every key of which passes that check, no accepted key holding a tier, over the 8 HOLDERS\' pinned text (each the one function or class member of its name, a second one departing in each of the 8 TWICE_CELLS forms and an unread member of its class in each of the 11 UNREAD_FORMS members (five plain instance methods, a private field, a static block, a static field, a get accessor and two public fields) and a static block at each of the class\'s 23 positions departing, every other kind, modifier and name form NOT CLAIMED, spelled outside the HOLDERS in its own module only as a callee or a named import (a spelling in each of the 7 WRITE_FORMS departing), its class spelled in no other consulted module (in each of the 2 CLASS_FORMS as well) and none of the three spelling eval (as a callee, or a parenthesized one), every other spelling form NOT CLAIMED; their other callees exactly the 14 HELPERS), 4 consulted sites, 3 literal lists (each read in its container, every table member a key list) and 2 references (each list the one declaration of its name among the decoder module\'s top-level statements (a const), one moved into a top-level block or the table into a switch case departing and each moved into each of the 17 NESTINGS departing, any other nesting or declaration kind NOT CLAIMED, spelled in the three modules only at that declaration and their site, a spelling in each of the 5 REFERENCE_FORMS departing), every unknown-key refusal read and each of the 69 FALSIFIERS (the gate\'s GP-ENVt, GP-OBSt, GP-OBSy, GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE, GP29-EVAL-FIELDS, GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER, GP30-STATIC-BLOCK-PAYLOAD, GP30-BLOCK-TABLE, GP31-SWITCH-TABLE, GP31-STATIC-CALL-FIELD, GP31-ACCESSOR-CALL-PAYLOAD, GP31-FIELD-CALL-PAYLOAD, GP20-NUMBER-FIELD, GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED and GP20-PAREN-EVAL-FIELDS among them, one in each of the 69 claim cells) departing exactly as pinned from inside its cell; read as declarations, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export), the spellings of OBSERVATION_FIELDS and OBSERVATION_PAYLOAD in the 27 shipped modules (the latter also at its re-export and at execution.js\'s import and one read) and its 3 empty-body kinds are exactly these and hold no tier, and the package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
+  it('T2: read where the decoder decides it, the frame envelope accepts exactly the seven keys of parseFrameLine\'s known set and __proto__, the one key the filter\'s assignment never records (GP-ENV0: request_id and reply_id, which ENVELOPE_KEYS declares, are refused, and of the names Object.prototype holds only __proto__ decodes, every one refused in each body) and each of the seven OBSERVATION_FIELDS bodies exactly the list payload()\'s check consults, every key of which passes that check, no accepted key holding a tier, over the 8 HOLDERS\' pinned text (each the one function or class member of its name, a second one departing in each of the 8 TWICE_CELLS forms and an unread member of its class in each of the 11 UNREAD_FORMS members (five plain instance methods, a private field, a static block, a static field, a get accessor and two public fields) and a static block at each of the class\'s 23 positions departing, every other kind, modifier and name form NOT CLAIMED, spelled outside the HOLDERS in its own module only as a callee or a named import (a spelling in each of the 7 WRITE_FORMS departing, a write of each of the 5 HOLDERS those leave unwritten departing in its written cell, and a statement spelling each of the 8 in each of the 6 SPELLED_STATEMENTS forms at its module\'s start and end departing in exactly that form, 96 controls), its class spelled in no other consulted module (in each of the 2 CLASS_FORMS as well, and a statement in each of its 3 forms at the end of each other consulted module, 6 controls) and none of the three spelling eval (as a callee, or a parenthesized one, a statement in each form at the end of each module departing, 6 controls), every other spelling form, context and position NOT CLAIMED; their other callees exactly the 14 HELPERS), 4 consulted sites, 3 literal lists (each read in its container, a Set subclass\'s constructor departing, every member a string literal, an element in each of the 13 ELEMENT_FORMS at each of the 65 positions of the 9 key lists departing at its index, 845 controls, each form but the call with an element row, any other element form NOT CLAIMED, and every table member a key list) and 2 references (each list the one declaration of its name among the decoder module\'s top-level statements (a const), one moved into a top-level block or the table into a switch case departing and each moved into each of the 17 NESTINGS departing, any other nesting or declaration kind NOT CLAIMED, spelled in the three modules only at that declaration and their site, a spelling in each of the 5 REFERENCE_FORMS departing), every unknown-key refusal read and each of the 86 FALSIFIERS (the gate\'s GP-ENVt, GP-OBSt, GP-OBSy, GP29-NAMED-PAYLOAD, GP29-FIELD-PAYLOAD, GP29-FIELD-FAIL, GP29-COMPUTED-TABLE, GP29-EVAL-FIELDS, GP30-BINARY-NAMED-PAYLOAD, GP30-IDENT-NAMED-PAYLOAD, GP30-TEMPLATE-MEMBER, GP30-NUMBER-MEMBER, GP30-PRIVATE-MEMBER, GP30-STATIC-BLOCK-PAYLOAD, GP30-BLOCK-TABLE, GP31-SWITCH-TABLE, GP31-STATIC-CALL-FIELD, GP31-ACCESSOR-CALL-PAYLOAD, GP31-FIELD-CALL-PAYLOAD, GP20-NUMBER-FIELD, GP20-DEFINE-STRING-PAYLOAD, GP20-NS-STRING-ELSEWHERE-SPELLED, GP20-PAREN-EVAL-FIELDS, GP19-LM-IDENT and GP19-REBIND-CHECKSTREAM among them, one in each of the 86 claim cells) departing exactly as pinned from inside its cell; read as declarations, the installed decoder module\'s OBSERVATION_FIELDS table (seven key lists), the key sets four other bodies name in their own unknown-field refusals, its exported ENVELOPE_KEYS (spelled in the 27 shipped modules only at its declaration and its re-export), the spellings of OBSERVATION_FIELDS and OBSERVATION_PAYLOAD in the 27 shipped modules (the latter also at its re-export and at execution.js\'s import and one read) and its 3 empty-body kinds are exactly these and hold no tier, and the package.json and 27 shipped modules equal SDK_BYTES; through decodeResultStream each of those 11 closed bodies refuses each of the 12 TIER_MEMBERS under each of the 11 probe values at body.<member>, the empty-body kinds refuse them at body and the envelope at the member, an open diagnostic body decodes them, and no tier word but parsed is an evidence status', () => {
     // THE BYTES: the package.json and each of the 27 shipped modules equal SDK_BYTES, so a change to any of them reds here.
     expect(sdkBytes(), BYTES_MOVED).toStrictEqual(SDK_BYTES);
     const tables = decoderTables();
@@ -2219,6 +2390,10 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       premise('protocol/decoder.js', '        batch.bytes = stagedBytes;\n        const body = frame.body;\n', '        batch.bytes = stagedBytes;\n        const body = {...frame.body};\n')])
       .toStrictEqual([['parseFrameLine: text', 'filter: not read', 'envelope'], ['parseFrameLine: text', 'filter: not read', 'envelope'],
         ['StreamChecker.payload: text', 'check: not read', 'bodies']]);
+    // The container reader requires the Set constructor by its name: OBSERVATION_PAYLOAD constructed by a subclass's constructor
+    // (KeySet) is not read, departing exactly as GS-C-PAYLOAD's wrapper does (a control).
+    expect(premise('protocol/decoder.js', 'export const OBSERVATION_PAYLOAD = new Set([', 'export const OBSERVATION_PAYLOAD = new KeySet(['))
+      .toStrictEqual(FALSIFIERS.find(({id}) => id === 'GS-C-PAYLOAD')?.departs);
     // No accepted key holds a tier, and that reading fires on a copy holding one at the envelope and one in a body.
     expect(acceptedTierNames(acceptance), TRIGGER).toStrictEqual([]);
     expect(acceptedTierNames({envelope: [...acceptance.envelope, 'trust_tier'], bodies: {...acceptance.bodies, coverage: ['evidence_tier']}}))
@@ -2326,6 +2501,65 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     expect([misnested('OBSERVATION_PAYLOAD', decoderText), misnested('OBSERVATION_FIELDS', decoderText)]).toStrictEqual([true, true]);
     expect(NESTINGS.map(([label]) => label)).toStrictEqual(['block', 'case', 'default', 'label', 'if', 'else', 'try', 'catch', 'finally', 'for', 'for-of',
       'while', 'do', 'function', 'arrow', 'block-in-block', 'static-block']);
+    // ELEMENTS: each of the 13 ELEMENT_FORMS planted at each of the 65 positions of the 9 key lists the reading reads (before each
+    // member and after the last) departs at its index and only so (845 controls; the known set, inside parseFrameLine, departs
+    // through that HOLDER's text as well), each ELEMENT_FORMS element being of the form its label names.
+    expect(ELEMENT_FORMS.map(([form, element]) => `${form}:${elementForm(parsedElement(element))}`))
+      .toStrictEqual(ELEMENT_FORMS.map(([form]) => `${form}:${form}`));
+    expect(ELEMENT_FORMS.map(([form]) => form)).toStrictEqual(['call', 'identifier', 'template-expression', 'template', 'tagged-template', 'binary',
+      'conditional', 'parenthesized', 'member', 'element-access', 'spread', 'await', 'number']);
+    const keyLists = keyListsOf(texts, acceptance);
+    expect(keyLists.map(({what, list}) => `${what}:${list.elements.length + 1}`)).toStrictEqual(['known:8', 'OBSERVATION_PAYLOAD:8',
+      'OBSERVATION_FIELDS.support:12', 'OBSERVATION_FIELDS.derivation:4', 'OBSERVATION_FIELDS.node-claim:7', 'OBSERVATION_FIELDS.edge-claim:8',
+      'OBSERVATION_FIELDS.kind-claim:4', 'OBSERVATION_FIELDS.attribute-claim:5', 'OBSERVATION_FIELDS.coverage:9']);
+    const elementMisread = ({what, module, list}: KeyList, at: number, element: string): boolean => {
+      const holder = HOLDERS.find(({name}) => within(acceptance.spans[name], module, list.getStart()))?.name;
+      return !isDeepStrictEqual(departing(readingWith(texts, module, insertedElement(texts[module], list, at, element)), acceptance),
+        [...(holder === undefined ? [] : [`${holder}: text`]), `${what}[${at}]: not a string literal`]);
+    };
+    const elementPlants = keyLists.flatMap(keyList => Array.from({length: keyList.list.elements.length + 1}, (_, at) => at)
+      .flatMap(at => ELEMENT_FORMS.map(([form, element]) => [keyList, at, form, element] as const)));
+    expect(elementPlants.length).toBe(845);
+    expect(elementPlants.filter(([keyList, at, , element]) => elementMisread(keyList, at, element)).map(([{what}, at, form]) => `${what}[${at}] ${form}`))
+      .toStrictEqual([]);
+    // The judge fires on a string literal planted so in a list deciding each part (read as a member, it moves that part).
+    expect(['known', 'OBSERVATION_PAYLOAD', 'OBSERVATION_FIELDS.derivation'].map(what => {
+      const keyList = keyLists.find(entry => entry.what === what);
+      return keyList !== undefined && elementMisread(keyList, 0, '"gate_key"');
+    })).toStrictEqual([true, true, true]);
+    // SPELLINGS: a statement spelling each of the 8 HOLDERS' names in each of the 6 SPELLED_STATEMENTS forms (the WRITE_FORMS but
+    // elsewhere), planted at the start and at the end of its module, departs naming exactly that form and only so (96 controls).
+    expect(SPELLED_STATEMENTS.map(([form]) => form)).toStrictEqual(WRITE_FORMS.filter(form => form !== 'elsewhere'));
+    const spelledMisread = (module: ConsultedModule, name: string, statement: string, form: string, start: boolean): boolean => {
+      const spelled = statement.replace('<name>', () => name.slice(name.indexOf('.') + 1));
+      return !isDeepStrictEqual(departing(readingWith(texts, module, start ? `${spelled}\n${texts[module]}` : `${texts[module]}\n${spelled}`),
+        acceptance), [`${name}: spelled outside a call (${form})`]);
+    };
+    const spelledPlants = HOLDERS.flatMap(({module, name}) => SPELLED_STATEMENTS.flatMap(([form, statement]) =>
+      [true, false].map(start => [module, name, statement, form, start] as const)));
+    expect(spelledPlants.length).toBe(96);
+    expect(spelledPlants.filter(plant => spelledMisread(...plant)).map(([, name, , form, start]) => `${name} ${form} ${start ? 'start' : 'end'}`))
+      .toStrictEqual([]);
+    // The judge fires on a statement calling the HOLDER (a callee, which the reading allows) and on one spelling it in another form.
+    expect([spelledMisread('protocol/decoder.js', 'checkStream', '<name>([]);', 'binding', false),
+      spelledMisread('protocol/decoder.js', 'checkStream', 'globalThis.<name> = undefined;', 'binding', false)]).toStrictEqual([true, true]);
+    // The HOLDERS' class spelled in each of its 3 forms (an identifier, then the 2 CLASS_FORMS) at the end of each other consulted
+    // module departs naming exactly that form, and eval in each of the 2 EVAL_STATEMENTS forms at the end of each of the three modules
+    // likewise (6 controls each).
+    const owner = HOLDERS.find(({name}) => name.includes('.'));
+    const className = owner === undefined ? '' : owner.name.slice(0, owner.name.indexOf('.'));
+    expect(CLASS_STATEMENTS.map(([form]) => form)).toStrictEqual(['identifier', ...CLASS_FORMS]);
+    const appendedMisread = (module: ConsultedModule, statement: string, expected: string): boolean =>
+      !isDeepStrictEqual(departing(readingWith(texts, module, `${texts[module]}\n${statement}`), acceptance), [expected]);
+    const classPlants = CONSULTED.filter(module => module !== owner?.module).flatMap(module => CLASS_STATEMENTS.map(([form, statement]) =>
+      [module, statement.replace('<name>', () => className), `${className}: spelled outside its module (${form})`] as const));
+    const evalPlants = CONSULTED.flatMap(module => EVAL_STATEMENTS.map(([form, statement]) => [module, statement, `${module}: eval (${form})`] as const));
+    expect([classPlants.length, evalPlants.length]).toStrictEqual([6, 6]);
+    expect([...classPlants, ...evalPlants].filter(([module, statement, expected]) => appendedMisread(module, statement, expected)).map(([module, statement]) => `${module} ${statement}`))
+      .toStrictEqual([]);
+    // The judge fires on the class spelled in its own module and on eval's name spelled as a string.
+    expect([appendedMisread(owner?.module ?? 'result.js', `void ${className};`, `${className}: spelled outside its module (identifier)`),
+      appendedMisread('result.js', 'void "eval";', 'result.js: eval (callee)')]).toStrictEqual([true, true]);
     // The rows' cells are T2's claim cells, in order, read from the reading and the SDK: each HOLDER, each site and list the
     // installed reading reads, the container of each list it reads outside every HOLDER and then its declaration moved into a
     // top-level block, the table the check consults moved into a switch case,
@@ -2335,19 +2569,27 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     const outsideHolders = (list: string): boolean => !HOLDERS.some(({name}) => within(acceptance.spans[name],
       acceptance.spans[list]?.[0] ?? 'result.js', acceptance.spans[list]?.[1] ?? -1));
     const consultedTable = acceptance.lists.at(-1) ?? '';
+    // The HOLDERS a WRITE_FORMS row writes (each row's spelled-outside-a-call departure names its HOLDER); each other HOLDER is a
+    // written cell.
+    const writtenByForms = new Set(FALSIFIERS.filter(({cell}) => cell.startsWith('write ')).flatMap(({departs}) =>
+      departs.flatMap(mark => /^(\S+): spelled outside a call \(/.exec(mark)?.[1] ?? [])));
+    expect([...writtenByForms]).toStrictEqual(['StreamChecker.payload', 'StreamChecker.fail', 'parseFrameLine']);
     expect(FALSIFIERS.map(({cell}) => cell)).toStrictEqual([...HOLDERS.map(({name}) => `holder ${name}`),
       ...Object.keys(acceptance.sites).map(id => `site ${id}`), ...acceptance.lists.map(name => `list ${name}`),
+      ...ELEMENT_FORMS.filter(([form]) => form !== 'call').map(([form]) => `element ${form}`),
       ...acceptance.lists.filter(outsideHolders).map(name => `container ${name}`), ...acceptance.lists.filter(outsideHolders).map(name => `nested ${name}`),
       `case ${consultedTable}`, ...acceptance.references.map(name => `references ${name}`),
       ...REFERENCE_FORMS.map(form => `reference ${form}`), ...DECIDED.map(part => `part ${part}`), 'undispatched', 'synonym check',
       ...TWICE_CELLS.map(cell => `twice ${cell}`), ...UNREAD_FORMS.map(form => `unread ${form}`),
-      ...MEMBER_FORMS.map(form => `member ${form}`), ...WRITE_FORMS.map(form => `write ${form}`), ...CLASS_FORMS.map(form => `class ${form}`),
+      ...MEMBER_FORMS.map(form => `member ${form}`), ...WRITE_FORMS.map(form => `write ${form}`),
+      ...HOLDERS.filter(({name}) => !writtenByForms.has(name)).map(({name}) => `written ${name}`), ...CLASS_FORMS.map(form => `class ${form}`),
       ...new Set(HOLDERS.map(({module}) => `eval ${module}`)), `paren ${acceptance.spans[consultedTable]?.[0] ?? ''}`]);
     // Each plant begins inside its cell: a HOLDER's outside every site and list, a site's, a list's or a container's (the synonym's
     // at the check) inside it, a table member's inside the table the check consults (the last consulted list), a decided part's or
-    // the undispatched kind's inside a list, and a nested declaration's (in a block or a switch case), a reference's, a second
-    // declaration's, an unread name's, a write's, a class spelling's or an eval's (bare or parenthesized) outside every HOLDER, site
-    // and list; the judge fires in each of its arms on a row relabelled to a cell it does not lie in.
+    // the undispatched kind's inside a list, an element's outside every HOLDER and site (in a key list, or at a declaration its
+    // element reads), and a nested declaration's (in a block or a switch case), a reference's, a second declaration's, an unread
+    // name's, a write's, a written HOLDER's, a class spelling's or an eval's (bare or parenthesized) outside every HOLDER, site and
+    // list; the judge fires in each of its arms on a row relabelled to a cell it does not lie in.
     const misplaced = (falsifier: Falsifier): boolean => {
       const at = firstDifference(texts[falsifier.module], planted(falsifier));
       const [kind, name = ''] = falsifier.cell.split(' ');
@@ -2357,7 +2599,8 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       if (kind === 'site' || kind === 'list' || kind === 'synonym' || kind === 'container') return !within(acceptance.spans[name], falsifier.module, at);
       if (kind === 'member') return !within(acceptance.spans[acceptance.lists.at(-1) ?? ''], falsifier.module, at);
       const inHolder = HOLDERS.some(holder => within(acceptance.spans[holder.name], falsifier.module, at));
-      if (['nested', 'case', 'references', 'reference', 'twice', 'unread', 'write', 'class', 'eval', 'paren'].includes(kind)) return inList || inHolder || inSite;
+      if (kind === 'element') return inHolder || inSite;
+      if (['nested', 'case', 'references', 'reference', 'twice', 'unread', 'write', 'written', 'class', 'eval', 'paren'].includes(kind)) return inList || inHolder || inSite;
       return !inList;
     };
     expect(FALSIFIERS.filter(misplaced).map(({id}) => id)).toStrictEqual([]);
@@ -2370,20 +2613,24 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       relabelled('GS-C-PAYLOAD', 'container OBSERVATION_FIELDS'), relabelled('GS-L-PAYLOAD', 'member computed'),
       relabelled('GS-H-STREAM', 'references OBSERVATION_FIELDS'), relabelled('GS-L-PAYLOAD', 'eval protocol/decoder.js'),
       relabelled('GS-C-FIELDS', 'nested OBSERVATION_FIELDS'), relabelled('GS-H-LINES', 'part envelope'), relabelled('GS-L-PAYLOAD', 'case OBSERVATION_FIELDS'),
-      relabelled('GS-L-PAYLOAD', 'class string'), relabelled('GS-L-PAYLOAD', 'paren protocol/decoder.js')]).toStrictEqual(new Array(15).fill(true));
+      relabelled('GS-L-PAYLOAD', 'class string'), relabelled('GS-L-PAYLOAD', 'paren protocol/decoder.js'), relabelled('GS-H-STREAM', 'element identifier'),
+      relabelled('GS-L-FIELDS', 'written checkStream')]).toStrictEqual(new Array(17).fill(true));
     // Each row departs in its own cell's mark, which names the row's form where a cell has one (a HOLDER's text alone, a site, a
-    // container or a nested declaration's list not read, a list member that is not a string literal, an identifier reference count,
+    // container or a nested declaration's list not read, a list member that is not a string literal (an element row's in any key
+    // list, its member's form read below), an identifier reference count,
     // a reference count holding its form, the decided part, a kind not dispatched, the check not read for the synonym, payload's two
     // declarations in exactly the installed method's form and the cell's, fail's as a field and a method, or a module function's
     // two as functions, a HOLDERS' class's unread member name in exactly the cell's form, the table member in the cell's form that is
     // not a key list, a spelling outside a call in exactly the cell's form or the class spelled outside its module as an identifier,
-    // the class spelled outside its module in exactly the cell's form, the module's eval as a callee or parenthesized); the judge
+    // the written HOLDER spelled outside a call, the class spelled outside its module in exactly the cell's form, the module's eval as
+    // a callee or parenthesized); the judge
     // refuses, in each of its arms, a row that departs in another mark or another form.
     const marked = (cell: string, departs: readonly string[]): boolean => {
       const [kind, name = ''] = cell.split(' ');
       if (kind === 'holder') return departs.length === 1 && departs[0] === `${name}: text`;
       if (kind === 'site' || kind === 'synonym' || kind === 'container' || kind === 'nested' || kind === 'case') return departs.includes(`${name}: not read`);
       if (kind === 'list') return departs.some(mark => (mark.startsWith(`${name}[`) || mark.startsWith(`${name}.`)) && mark.endsWith(': not a string literal'));
+      if (kind === 'element') return departs.some(mark => /\[\d+\]: not a string literal$/.test(mark));
       if (kind === 'references') return departs.some(mark => mark.startsWith(`${name}: `) && mark.endsWith(' references (identifier)'));
       if (kind === 'reference') return departs.some(mark => / references \(([^)]*)\)$/.exec(mark)?.[1]?.split(', ').includes(name) === true);
       if (kind === 'part') return departs.includes(name);
@@ -2404,6 +2651,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       if (kind === 'write') {
         return departs.some(mark => name === 'elsewhere' ? mark.endsWith(': spelled outside its module (identifier)') : mark.endsWith(`: spelled outside a call (${name})`));
       }
+      if (kind === 'written') return departs.some(mark => mark.startsWith(`${name}: spelled outside a call (`));
       if (kind === 'class') return departs.some(mark => mark.endsWith(`: spelled outside its module (${name})`));
       if (kind === 'eval') return departs.includes(`${name}: eval (callee)`);
       if (kind === 'paren') return departs.includes(`${name}: eval (parenthesized)`);
@@ -2438,7 +2686,21 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       marked('class string', ['StreamChecker: spelled outside its module (identifier)']),
       marked('eval protocol/decoder.js', ['protocol/decoder.js: eval (parenthesized)']),
       marked('paren protocol/decoder.js', ['protocol/decoder.js: eval (callee)']),
-      marked('undispatched', ['dispatched'])]).toStrictEqual(new Array(33).fill(false));
+      marked('undispatched', ['dispatched']), marked('element identifier', ['OBSERVATION_FIELDS: not read']),
+      marked('written checkStream', ['parseFrameLine: spelled outside a call (binding)'])]).toStrictEqual(new Array(35).fill(false));
+    // Each consulted list's row and each element row departs at a planted member of its cell's form, read on the planted module (a
+    // call for each list's row, the cell's form for each element row); the reading gives none for a row departing at no member.
+    const departedForm = (falsifier: Falsifier): string => {
+      const copy: ModuleTexts = {...texts, [falsifier.module]: planted(falsifier)};
+      const [, what = '', index = ''] = /^(.+)\[(\d+)\]: not a string literal$/
+        .exec(falsifier.departs.find(mark => mark.endsWith(': not a string literal')) ?? '') ?? [];
+      return elementForm(keyListsOf(copy, acceptanceOf(copy)).find(entry => entry.what === what)?.list.elements[Number(index)]);
+    };
+    const formRows = FALSIFIERS.filter(({cell}) => cell.startsWith('list ') || cell.startsWith('element '));
+    expect(formRows.map(falsifier => `${falsifier.id}:${departedForm(falsifier)}`)).toStrictEqual(formRows.map(({id, cell}) =>
+      `${id}:${cell.startsWith('list ') ? 'call' : cell.slice('element '.length)}`));
+    const linesRow = FALSIFIERS.find(({id}) => id === 'GS-H-LINES');
+    expect(linesRow === undefined ? 'missing' : departedForm(linesRow)).toBe('none');
     // Each row's admitted key (the key its plant admits, which the seat's physical battery measures, not this file) is one the
     // installed decoder refuses there, at the envelope or in each of the seven bodies, so a plant admitting it is never equivalent;
     // the check's own row names a tier name, the synonym cell's a key holding none.
@@ -2459,14 +2721,17 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     expect(unwitnessed(observation.map(kind => ({id: kind, admits: {key: onlyIn[kind] ?? '', at: 'bodies' as const}}))))
       .toStrictEqual(observation.map(kind => `${kind}: decoded, expected SDK_PROTOCOL_MALFORMED body.${onlyIn[kind]} ${FRAME_INVALID}`));
     expect(FALSIFIERS.flatMap(({id, admits}) => admits === undefined ? [] : [`${id}:${admits.at}`])).toStrictEqual(['GS-FILTER:envelope',
-      'GS-REFUSAL:envelope', 'GS-DISPATCH:bodies', 'GP-OBSt:bodies', 'GP-ENVt:envelope', 'GS-C-PAYLOAD:bodies', 'GS-C-FIELDS:bodies', 'GP30-BLOCK-TABLE:bodies',
+      'GS-REFUSAL:envelope', 'GS-DISPATCH:bodies', 'GP-OBSt:bodies', 'GP-ENVt:envelope', 'GP19-LM-IDENT:bodies', 'GS-E-TEMPLATE-EXPRESSION:bodies',
+      'GS-E-TEMPLATE:bodies', 'GS-E-TAGGED-TEMPLATE:bodies', 'GS-E-BINARY:bodies', 'GS-E-CONDITIONAL:bodies', 'GS-E-PARENTHESIZED:bodies',
+      'GS-E-MEMBER:bodies', 'GS-E-ELEMENT-ACCESS:bodies', 'GS-E-SPREAD:bodies', 'GS-E-AWAIT:bodies', 'GS-C-PAYLOAD:bodies', 'GS-C-FIELDS:bodies', 'GP30-BLOCK-TABLE:bodies',
       'GP31-SWITCH-TABLE:bodies', 'GS-R-STRING:bodies', 'GS-R-TEMPLATE:bodies', 'GS-R-ELSEWHERE:bodies', 'GS-R-ELSEWHERE-STRING:bodies',
       'GS-R-ELSEWHERE-TEMPLATE:bodies', 'GS-ENVy:envelope', 'GP-OBSy:bodies', 'GS-TWICE:bodies', 'GP29-NAMED-PAYLOAD:bodies',
       'GS-TWICE-COMPUTED:bodies', 'GP29-FIELD-PAYLOAD:bodies', 'GS-TWICE-GET:bodies', 'GP29-FIELD-FAIL:envelope', 'GS-UNREAD:bodies',
       'GP30-BINARY-NAMED-PAYLOAD:bodies', 'GP30-IDENT-NAMED-PAYLOAD:bodies', 'GP30-STATIC-BLOCK-PAYLOAD:bodies', 'GP31-STATIC-CALL-FIELD:bodies',
       'GP31-ACCESSOR-CALL-PAYLOAD:bodies', 'GP31-FIELD-CALL-PAYLOAD:bodies', 'GP20-NUMBER-FIELD:bodies',
       'GP29-COMPUTED-TABLE:bodies', 'GS-M-SPREAD:bodies', 'GS-M-ACCESSOR:bodies', 'GS-W-PROTO:bodies', 'GS-W-INSTANCE:envelope', 'GS-W-MEMBER:bodies',
-      'GP20-DEFINE-STRING-PAYLOAD:bodies', 'GS-W-DEFINE:bodies', 'GS-W-REBIND:envelope', 'GS-W-ELSEWHERE:bodies', 'GP20-NS-STRING-ELSEWHERE-SPELLED:bodies',
+      'GP20-DEFINE-STRING-PAYLOAD:bodies', 'GS-W-DEFINE:bodies', 'GS-W-REBIND:envelope', 'GS-W-ELSEWHERE:bodies', 'GS-S-DECODE:envelope',
+      'GS-S-JSON:envelope', 'GS-S-COPY:envelope', 'GP19-REBIND-CHECKSTREAM:bodies', 'GS-S-FEED:bodies', 'GP20-NS-STRING-ELSEWHERE-SPELLED:bodies',
       'GS-C-TEMPLATE:bodies', 'GS-EVAL-RESULT:envelope', 'GS-EVAL-QUERY:envelope', 'GP29-EVAL-FIELDS:bodies', 'GP20-PAREN-EVAL-FIELDS:bodies']);
     expect(['site check', 'synonym check'].map(cell => FALSIFIERS.filter(falsifier => falsifier.cell === cell)
       .map(({admits}) => admits === undefined ? 'none' : holdsTier(admits.key) ? 'tier' : 'synonym'))).toStrictEqual([['tier'], ['synonym']]);
@@ -2476,7 +2741,11 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       'GS-H-COPY:holder snapshotJson:1', 'GS-H-STREAM:holder checkStream:1', 'GS-H-FEED:holder StreamChecker.feed:1',
       'GS-H-PAYLOAD:holder StreamChecker.payload:1', 'GS-H-FAIL:holder StreamChecker.fail:1', 'GS-FILTER:site filter:3',
       'GS-REFUSAL:site envelope-refusal:3', 'GS-DISPATCH:site dispatch:4', 'GP-OBSt:site check:3', 'GP-ENVt:list known:2',
-      'GS-L-PAYLOAD:list OBSERVATION_PAYLOAD:1', 'GS-L-FIELDS:list OBSERVATION_FIELDS:1', 'GS-C-PAYLOAD:container OBSERVATION_PAYLOAD:10',
+      'GS-L-PAYLOAD:list OBSERVATION_PAYLOAD:1', 'GS-L-FIELDS:list OBSERVATION_FIELDS:1', 'GP19-LM-IDENT:element identifier:1',
+      'GS-E-TEMPLATE-EXPRESSION:element template-expression:1', 'GS-E-TEMPLATE:element template:1', 'GS-E-TAGGED-TEMPLATE:element tagged-template:1',
+      'GS-E-BINARY:element binary:1', 'GS-E-CONDITIONAL:element conditional:1', 'GS-E-PARENTHESIZED:element parenthesized:1',
+      'GS-E-MEMBER:element member:1', 'GS-E-ELEMENT-ACCESS:element element-access:1', 'GS-E-SPREAD:element spread:1', 'GS-E-AWAIT:element await:1',
+      'GS-E-NUMBER:element number:1', 'GS-C-PAYLOAD:container OBSERVATION_PAYLOAD:10',
       'GS-C-FIELDS:container OBSERVATION_FIELDS:2', 'GS-N-PAYLOAD:nested OBSERVATION_PAYLOAD:10', 'GP30-BLOCK-TABLE:nested OBSERVATION_FIELDS:2',
       'GP31-SWITCH-TABLE:case OBSERVATION_FIELDS:2', 'GS-R-PAYLOAD:references OBSERVATION_PAYLOAD:1', 'GS-R-FIELDS:references OBSERVATION_FIELDS:1',
       'GS-R-STRING:reference string:1', 'GS-R-TEMPLATE:reference template:1', 'GS-R-ELSEWHERE:reference elsewhere:1',
@@ -2491,13 +2760,15 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
       'GP29-COMPUTED-TABLE:member computed:1', 'GS-M-SPREAD:member spread:1',
       'GS-M-ACCESSOR:member accessor:1', 'GS-M-METHOD:member method:1', 'GS-M-SHORTHAND:member shorthand:1', 'GS-W-PROTO:write prototype:1',
       'GS-W-INSTANCE:write instance:1', 'GS-W-MEMBER:write member:1', 'GP20-DEFINE-STRING-PAYLOAD:write string:1', 'GS-W-DEFINE:write template:1',
-      'GS-W-REBIND:write binding:1', 'GS-W-ELSEWHERE:write elsewhere:1', 'GP20-NS-STRING-ELSEWHERE-SPELLED:class string:1', 'GS-C-TEMPLATE:class template:1',
+      'GS-W-REBIND:write binding:1', 'GS-W-ELSEWHERE:write elsewhere:1', 'GS-S-DECODE:written decodeResultStream:1', 'GS-S-JSON:written parseFrameJson:1',
+      'GS-S-COPY:written snapshotJson:1', 'GP19-REBIND-CHECKSTREAM:written checkStream:1', 'GS-S-FEED:written StreamChecker.feed:1',
+      'GP20-NS-STRING-ELSEWHERE-SPELLED:class string:1', 'GS-C-TEMPLATE:class template:1',
       'GS-EVAL-RESULT:eval result.js:1', 'GS-EVAL-QUERY:eval protocol/query.js:1', 'GP29-EVAL-FIELDS:eval protocol/decoder.js:1',
       'GP20-PAREN-EVAL-FIELDS:paren protocol/decoder.js:1']);
     // The claim text agrees with the roster: the title names exactly the gate's plants among the FALSIFIERS (with GP-ENV0, the
     // unplanted probe) and states each count the reading measures.
     const title = expect.getState().currentTestName ?? '';
-    expect(title.match(/GP(?:20|29|30|31)?-[A-Z]+[0-9a-z]*(?:-[A-Z]+)*/g)?.sort()).toStrictEqual(['GP-ENV0', ...FALSIFIERS.map(({id}) => id)
+    expect(title.match(/GP(?:19|20|29|30|31)?-[A-Z]+[0-9a-z]*(?:-[A-Z]+)*/g)?.sort()).toStrictEqual(['GP-ENV0', ...FALSIFIERS.map(({id}) => id)
       .filter(id => id.startsWith('GP'))].sort());
     expect([`${HOLDERS.length} HOLDERS`, `${HELPERS.length} HELPERS`, `${Object.keys(acceptance.sites).length} consulted sites`,
       `${acceptance.lists.length} literal lists`, `${acceptance.references.length} references`, `${FALSIFIERS.length} FALSIFIERS`,
@@ -2557,7 +2828,7 @@ describe('wb-tz2.12 standing leg: a provider evidence tier is held off the runti
     expect(statusMisread, TRIGGER).toStrictEqual([]);
     expect(TIER_WORDS.filter(word => STATUS_SET.has(word)), TRIGGER).toStrictEqual(['parsed']);
     expect(statusRefusals).toBe(9);
-  }, 60_000);
+  }, 120_000);
 
   it('T3: over the 25 object nodes of FULL the round trip the provider applies rebuilds each of the 12 TIER_MEMBERS under each tier word away at the 9 fixed-key nodes and carries it verbatim, nothing else changed, at the 16 CARRIED nodes', () => {
     expect(json(resultToJson(resultFromJson(FULL))), 'FULL is a fixed point of the round trip').toStrictEqual(FULL);
