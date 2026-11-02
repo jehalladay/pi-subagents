@@ -125,11 +125,289 @@
  },
  "known": {
   "C1": [
+   "wb-km7q.11 no-deferral-wording",
    "wb-km7q.6 no-deferral-wording"
   ],
   "C2": [
    "wb-csbt.2 no-related-edge",
+   "wb-km7q.11 no-related-edge",
    "wb-km7q.6 no-related-edge"
+  ]
+ },
+ "knownRecord": {
+  "live": {
+   "paragraphs": 1,
+   "measure": "trunk f63d3896, landing 753",
+   "docComment": "/** KNOWN FINDINGS (header): exact, re-measured on the export of trunk f63d3896, landing 753. */",
+   "sets": [
+    "C1 reads exactly wb-km7q.11 and wb-km7q.6, and C2 reads exactly wb-csbt.2, wb-km7q.11 and wb-km7q.6."
+   ],
+   "counts": [
+    "three"
+   ],
+   "antecedent": true
+  },
+  "wellFormed": {
+   "paragraphs": 1,
+   "measure": "trunk 1234567, landing 7",
+   "docComment": "/** KNOWN FINDINGS (header): exact, re-measured on the export of trunk 1234567, landing 7. */",
+   "sets": [
+    "C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other."
+   ],
+   "counts": [
+    "three"
+   ],
+   "antecedent": true
+  },
+  "controls": {
+   "secondOpening": {
+    "paragraphs": 2
+   },
+   "earlyOpening": {
+    "paragraphs": 2,
+    "measure": "trunk 7654321, landing 3",
+    "sets": [
+     "C1 reads exactly wb-y, and C2 reads exactly wb-x."
+    ],
+    "counts": [],
+    "antecedent": false
+   },
+   "longHeader": {
+    "paragraphs": 2
+   },
+   "lateOpening": {
+    "paragraphs": 2
+   },
+   "secondSentence": {
+    "sets": [
+     "C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other.",
+     "C1 reads exactly wb-y, and C2 reads exactly wb-x."
+    ]
+   },
+   "repeatedSentence": {
+    "sets": [
+     "C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other.",
+     "C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other."
+    ]
+   },
+   "secondCount": {
+    "counts": [
+     "three",
+     "two"
+    ]
+   },
+   "repeatedCount": {
+    "counts": [
+     "three",
+     "three"
+    ]
+   },
+   "longParagraph": {
+    "counts": [
+     "three",
+     "two"
+    ]
+   },
+   "longerParagraph": {
+    "counts": [
+     "three",
+     "two"
+    ]
+   },
+   "indentedBlank": {
+    "counts": [
+     "three",
+     "two"
+    ]
+   },
+   "noAntecedent": {
+    "antecedent": false
+   },
+   "lowerAntecedent": {
+    "antecedent": false
+   },
+   "knownLists": {
+    "antecedent": false
+   },
+   "numeralAntecedent": {
+    "antecedent": false
+   },
+   "indentedLine": {
+    "antecedent": false
+   },
+   "measureLater": {
+    "measure": null
+   },
+   "measureNoSemicolon": {
+    "measure": null
+   },
+   "measureNoSpace": {
+    "measure": null
+   },
+   "casedMeasure": {
+    "measure": null
+   },
+   "measureWithoutRe": {
+    "measure": null
+   },
+   "measureElsewhere": {
+    "measure": null
+   },
+   "noOpening": {
+    "paragraphs": 0,
+    "measure": null,
+    "sets": [],
+    "counts": [],
+    "antecedent": false
+   },
+   "noHeader": {
+    "paragraphs": 0,
+    "measure": null,
+    "sets": [],
+    "counts": [],
+    "antecedent": false
+   },
+   "noBlank": {
+    "sets": [
+     "C1 reads exactly wb-x and wb-y, and C2 reads exactly wb-other.",
+     "C1 reads exactly wb-y, and C2 reads exactly wb-x."
+    ],
+    "counts": [
+     "three",
+     "two"
+    ]
+   },
+   "noDeclaration": {
+    "docComment": null
+   },
+   "twoDeclarations": {
+    "docComment": null
+   },
+   "detachedDocComment": {
+    "docComment": ""
+   },
+   "trailingSpaceBlank": {},
+   "spacing": {},
+   "belowHeader": {},
+   "quietColonOpening": {},
+   "quietSpacedOpening": {},
+   "quietCasedOpening": {},
+   "quietOtherSentence": {},
+   "quietNumeralCount": {},
+   "quietCapitalCount": {},
+   "quietCapitalPhrase": {},
+   "quietSecondMeasure": {}
+  },
+  "compositions": [
+   {
+    "sets": [
+     "C1 reads exactly , and C2 reads exactly ."
+    ],
+    "counts": [
+     "no"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1, and C2 reads exactly wb-r1."
+    ],
+    "counts": [
+     "one"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1, and C2 reads exactly wb-r2."
+    ],
+    "counts": [
+     "two"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1 and wb-r2, and C2 reads exactly wb-r2 and wb-r3."
+    ],
+    "counts": [
+     "three"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1 and wb-r2, and C2 reads exactly wb-r3 and wb-r4."
+    ],
+    "counts": [
+     "four"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1, wb-r2 and wb-r3, and C2 reads exactly wb-r3, wb-r4 and wb-r5."
+    ],
+    "counts": [
+     "five"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1, wb-r2 and wb-r3, and C2 reads exactly wb-r4, wb-r5 and wb-r6."
+    ],
+    "counts": [
+     "six"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1, wb-r2, wb-r3 and wb-r4, and C2 reads exactly wb-r4, wb-r5, wb-r6 and wb-r7."
+    ],
+    "counts": [
+     "seven"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1, wb-r2, wb-r3 and wb-r4, and C2 reads exactly wb-r5, wb-r6, wb-r7 and wb-r8."
+    ],
+    "counts": [
+     "eight"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1, wb-r2, wb-r3, wb-r4 and wb-r5, and C2 reads exactly wb-r5, wb-r6, wb-r7, wb-r8 and wb-r9."
+    ],
+    "counts": [
+     "nine"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1, wb-r2, wb-r3, wb-r4 and wb-r5, and C2 reads exactly wb-r6, wb-r7, wb-r8, wb-r9 and wb-r10."
+    ],
+    "counts": [
+     "ten"
+    ]
+   },
+   {
+    "sets": [
+     "C1 reads exactly wb-r1, wb-r2, wb-r3, wb-r4, wb-r5 and wb-r6, and C2 reads exactly wb-r6, wb-r7, wb-r8, wb-r9, wb-r10 and wb-r11."
+    ],
+    "counts": [
+     "11"
+    ]
+   }
+  ],
+  "numberWords": [
+   "0:no",
+   "1:one",
+   "2:two",
+   "3:three",
+   "4:four",
+   "5:five",
+   "6:six",
+   "7:seven",
+   "8:eight",
+   "9:nine",
+   "10:ten"
   ]
  },
  "residuals": [
@@ -577,6 +855,7 @@
       ],
       "gateWording": true,
       "findings": [
+       "wb-km7q.11 no-deferral-wording",
        "wb-km7q.6 no-deferral-wording"
       ],
       "controls": {
@@ -605,6 +884,7 @@
       "anchor": "a related (never blocks) edge to the gate",
       "findings": [
        "wb-csbt.2 no-related-edge",
+       "wb-km7q.11 no-related-edge",
        "wb-km7q.6 no-related-edge"
       ],
       "blocking": [],
@@ -670,6 +950,8 @@
  ],
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the owner filing agree",
+  "the KNOWN record: knownRecord reads this file's text as the record knownComposed gives for KNOWN - one KNOWN paragraph opening with the re-measure its doc comment names, one C1/C2 sentence and one count phrase listing and counting KNOWN's rows - and the roster's live reading agrees with both",
+  "the KNOWN record's controls: knownRecord reads the well-formed synthetic text and each control as the roster holds them, KNOWN_CONTROLS, the roster and the header's KNOWN CONTROLS list name KNOWN_CONTROL_IDS in order, the long controls reach past this file's header, and knownComposed and NUMBER_WORDS read as the roster's compositions and number words",
   "A1",
   "A2",
   "B1",
