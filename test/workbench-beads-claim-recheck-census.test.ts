@@ -52,11 +52,14 @@
  *    control program; a module B1 flags must be bound in BEAD_EXECUTORS and every binding must name one (empty both ways
  *    today). B2 the
  *    reader holds no readiness: its source keeps no module-scope let or var and writes no module-scope container, and two reads of
- *    one id issue two shows whose readings follow their own envelopes and stamps. B3 no file under IMPORT_ROOTS imports the reader
- *    (an exact set, empty today: a specifier read in the raw text and, as its cooked value, by the TypeScript parser, and named as
- *    Node's loader reads a URL) or spells a bd readiness read (READ_VERBS) outside it (read raw and cooked, as B1 reads a code
- *    file), with matcher controls and positive floors (the import matcher finds the reader's own import of redaction.ts; the read
- *    judge reads the seam's own bd show). B4 the bead
+ *    one id issue two shows whose readings follow their own envelopes and stamps. B3 no file under IMPORT_ROOTS, code or not,
+ *    imports the reader (an exact set, empty today: a specifier read in the raw text - a JSON file's also in the strings its parser
+ *    cooks - and, in a code file, as its cooked value by the TypeScript parser, and named as Node's loader reads a URL) or spells a
+ *    bd readiness read (READ_VERBS) outside it (read as B1 reads a file: raw, and cooked in a code or a JSON file), with matcher
+ *    controls (non-code files among them, extensionless scripts too), a floor and an anchor for the non-code files the walk reads
+ *    (IMPORT_NON_CODE), the walk's extensionless control (it reaches B1's Beads-hooks anchor, a file with no extension) and
+ *    positive floors (the import matcher finds the reader's own import of redaction.ts; the read judge reads the seam's own bd
+ *    show). B4 the bead
  *    machine's generation: in the carried claim step, a bd show read and the status requirement precede the claim-lock and the
  *    claim write, a second bd show follows the claim write, all of them precede the first execution step, and no bd close is
  *    spelled.
@@ -87,12 +90,28 @@
  * require createRequire returns (called on the spot or through a binding not named require), escapes B3, as does a module loaded
  * through any other API (require reached through call, apply or bind, a Worker over the reader's URL, a package imports-map or
  * exports-map alias, a self-reference among them); and
- * a bd word spelled through the quoting or escapes of a file B1 reads raw only, neither code nor JSON (a shell script's adjacent
- * quotes or backslash, a YAML or TOML string escape), escapes B1 (Q4); R-INSTRUCTION AGENTS.md, .agents/skills/beads/SKILL.md and
+ * a word spelled through the quoting or escapes of a file read raw only, neither code nor JSON, escapes the judge reading it: a
+ * bd word escapes B1's claim judge and B3's read judge, which reads such a file raw only as well (wb-38nd F2), pinned at both
+ * for a shell script's adjacent quotes and backslash and a YAML, a TOML and a JSONC string escape (the wb-38nd gate's F4, its X3
+ * and X2 among them); a read verb split by a shell script's adjacent quotes or backslash escapes B3's read judge; and an import
+ * specifier spelled through a JavaScript escape inside a shell script's node eval escapes B3's import judge (Q4); R-INSTRUCTION
+ * AGENTS.md, .agents/skills/beads/SKILL.md and
  * .beads/README.md teach a generic bd claim for this repository's own store in their rendered text (as marked renders them and
- * visibleTextOf reads the HTML): instruction text outside B1's executable roots; the reading models presentation only through
- * CSS (a page carrying any reads as showing nothing), so a presentational colour attribute that may match the page reads as
- * shown (Q5); R-CONTROLLER the
+ * visibleTextOf reads the HTML): instruction text outside B1's executable roots; and the reading shows text a browser hides,
+ * each member pinned by its own Q5 rows: it models presentation only through CSS (a page carrying any reads as showing
+ * nothing), so a presentational colour attribute that may match the page reads as shown (presentationalColour); a meter's or a
+ * progress element's content, which a browser may draw as the element's widget instead, reads as shown (widgetContent); an end
+ * tag the tree builder ignores or applies to another element than the reading does ends a hiding element here, so the text
+ * after it reads as shown where a browser hides it (wb-38nd; endTagRecovery: an end tag whose element is out of scope past a
+ * button, a list or a table cell, one of another name that meets a special element opened inside its element, a formatting
+ * element's end tag past a marker element or across a block - the adoption agency's furthest block - and a form end tag, which
+ * removes the form alone); and one hiding formatting element waiting alone after its paragraph's end tag (the form each of
+ * these rows plants, and claimed there only) is re-opened here before text and before a formatting element's start tag only,
+ * while the tree builder re-opens it before other start tags as well, so a textarea - the one body read without re-opening -
+ * after or inside an element whose start tag re-opens it there reads as shown where a browser hides it (the wb-38nd gate's U1;
+ * startTagReconstruction: inside a span, a label, a button or a custom element, and after a closed or empty span, a br, an img,
+ * an input, a wbr, an area, an embed, a keygen, an image, an end tag br, an empty xmp, or a closed select, option, svg, math,
+ * marquee or object) (Q5); R-CONTROLLER the
  * VC-4 tier's launcher starts a Furnace Run whose Work is claimed and executed by Furnace's authority in a disposable store, and B1
  * reads the launcher as no claim site (Q6); R-ALIAS B2's static scan reads a write spelled on the module-scope name, so a write
  * through an alias escapes it (the two-read case still sees a cache that changes a reading) (Q7); R-REMEASURE the generation is
@@ -104,6 +123,14 @@
  * grammar: prose naming the bd word and a claim word within the window reds it (OVER-READ, disclosed: no executable root spells one
  * today). B3's read judge reads no grammar either: a comment or a message naming the bd word and a read verb within the window reds
  * it (OVER-READ, disclosed by the gate's F7 and pinned by B3's last flagged read control; the reader's own messages are its floor).
+ * Neither B3 judge reads grammar in a file it reads raw only (wb-38nd F2): a script or a document spelling an import form of the
+ * reader, or naming the bd word and a read verb within the window, reds B3 (OVER-READ, disclosed and pinned by B3's non-code
+ * controls; no such file exists today). B3's live walk over the import roots meets no file without an extension today (none of
+ * its six non-code files lacks one), so B3's reading of such a file is pinned by the walk's control over the Beads hooks and by
+ * the judges' extensionless controls, not by the live walk: a filter on the import roots' walk alone that skips files without an
+ * extension changes no reading today and is NOT CLAIMED as pinned (wb-38nd cut #2, disclosed). A walk filter that skips a kind
+ * the import roots hold today (Markdown, JSON or shell) reds B3 through that kind's anchor (wb-38nd cut #3); one that skips a kind
+ * they do not hold (a YAML or a text file, say) changes no reading today and is NOT CLAIMED.
  * B1's seam reader resolves no module either: it reads every SEAM_INTERFACE declaration a code file under IMPORT_ROOTS spells,
  * merged or not, so a same-named interface or type alias TypeScript never merges into the reader's seam (a module-local declaration
  * in another module) reds B1 too (OVER-READ, disclosed by the wb-xogu gate's F5 and pinned by B1's unmergedLocal selection control;
@@ -111,14 +138,30 @@
  * is never attributed to an earlier bd word. The merged seam is pinned with its declarations, so an augmentation merging into the
  * seam reds B1 even when it adds no member beyond show (disclosed; none exists today). B3's specifier reading drops a query or
  * fragment and decodes a percent-encoding as Node's ESM loader does; a require path does neither, so a require specifier carrying
- * one reads as the reader too (OVER-READ, disclosed; no such specifier exists today). visibleTextOf reads tokens and a stack of
- * open elements, not the tree builder's recovery: an element the parser closes early (a hidden p before a block start tag) hides
- * to its matching end tag, a closed details element hides its summary with its body, a select, an object, a media or canvas
- * element, svg and math content and a bdo show nothing, and a page carrying a script (an element or an event-handler attribute),
- * CSS (a style element or attribute, a stylesheet link), a meta refresh, a hidden html or body start tag or a bidi override
- * shows nothing at all - each hides more than a browser may, in Q5's direction (a page that still teaches a claim reads as
- * teaching none; pinned by Q5's impliedEnd and closedSummary rows), and none of them is in the instruction files today; a tag
- * still separates words (wb-dugi's reading).
+ * one reads as the reader too (OVER-READ, disclosed; no such specifier exists today). visibleTextOf reads tokens, a stack of open
+ * elements and the tree builder's list of active formatting elements (wb-38nd F1), not the rest of the tree builder's recovery,
+ * and departs from a browser in both directions. SCOPE names, by direction, the departures this census pins with Q5's rows; a
+ * departure it does not name is NOT CLAIMED by this census, and no agreement with a browser is claimed beyond those rows. Pinned
+ * in Q5's direction, hiding more than a browser may (a page that still teaches a claim reads as teaching none): an element the
+ * parser closes early hides to its matching end tag (a hidden p before a block start tag: impliedEnd; a hidden list item before
+ * the next and a hidden button before another: hidingMembers); a closed details element hides its summary with its body
+ * (closedSummary); a select, an object, a media or canvas element, svg and math content and a bdo show nothing, and a page
+ * carrying a script (an element or an event-handler attribute), CSS (a style element or attribute, a stylesheet link), a meta
+ * refresh, a hidden html or body start tag or a bidi override shows nothing at all (Q5's hiding rows, with canvas, audio and
+ * math content and a hidden html start tag in hidingMembers);
+ * and, each in the form its reconstructionOverHide row plants and claimed there only, the list keeps no marker, so a hiding
+ * formatting element is re-opened inside a table cell or a caption and outlives an applet, a marquee, an object or a template it
+ * was opened in; it never ends an open a or nobr at a second one's start tag, so the first stays open around the second; and its
+ * re-opening, before text and before a formatting element's start tag only (a textarea's body excepted, as in the tree builder),
+ * re-opens a waiting hiding formatting element inside an element opened while it waited, so its end tag leaves that element
+ * open; and it keeps the earliest of four alike entries (one name, the same attributes), which the tree builder drops from its
+ * list, so that entry re-opens where a browser shows the text after it (reconstructionOverHide: markerCell, markerCaption,
+ * markerApplet, markerMarquee, markerObject, markerTemplate, secondAnchor, secondNobr, openedWhileWaiting, fourthAlike). Pinned
+ * against Q5's direction, showing what a browser hides, are the R-INSTRUCTION members RESIDUALS names, each with its quiet rows:
+ * presentationalColour, widgetContent, endTagRecovery, and startTagReconstruction, where the same re-opening, made before no
+ * other start tag, leaves a textarea after or inside an element whose start tag the tree builder re-opens a waiting element at
+ * outside the re-opened element (one hiding formatting element waiting alone, as each of its rows plants). None of them is in
+ * the instruction files today; a tag still separates words (wb-dugi's reading).
  *
  * wb-xogu (the R694 follow-up the wb-kku9.3 gate routed at landing 340: F1 leads, F2-F7 ride, F8 shared). F1 the seam is read by
  * the TypeScript parser, so the gate's G16a optional method, G16b readonly optional property and G16d generic method red B1 beside
@@ -155,6 +198,56 @@
  * page carrying a script (G12, closed or not), CSS, a meta refresh, a hidden root or a bidi override shows nothing (rendering
  * controls, Q5). The forms the readings still leave are named in their families with pinned quiet rows: R-COMPOSED gains the
  * indirect loaders and the quoting and escapes of files read raw only (Q4), R-INSTRUCTION the presentational colour (Q5).
+ *
+ * wb-38nd (the R694 follow-up the wb-dcsb gate routed at landing 611: F1 leads, F2 rides). F1 visibleTextOf keeps the tree
+ * builder's list of active formatting elements (FORMATTING_ELEMENTS): one an enclosing element's end tag closes is re-opened, its
+ * attributes with it, before the next text (a textarea's body excepted, which the tree builder inserts without re-opening) and
+ * before a formatting element's start tag, until the end tag of its own name removes it - claimed in the forms Q5's
+ * reconstruction rows plant only (visibleTextOf's doc, wb-38nd cut #4) - so the gate's L3 plant (a b carrying hidden, left open
+ * alone across a paragraph's end tag) hides the claim after it, as a browser does, for each of the fourteen; its paired L3c
+ * control (a span, not a formatting element) still reads shown (reconstruction controls, Q5). SCOPE names the
+ * departures the reading still leaves by direction: the over-hides with pinned rows, and the end-tag recovery a browser applies
+ * and the reading does not, which joins R-INSTRUCTION with pinned quiet rows (Q5). F2 B3's import and read judges read every file
+ * under IMPORT_ROOTS - a file neither code nor JSON in its raw text, a JSON file also in its cooked strings - so the gate's L1 (a
+ * shell script spelling bd ready) and L2 (a shell script whose node eval imports the reader) red B3 (non-code controls; the
+ * walk's non-code floor and anchor, IMPORT_NON_CODE); such a file's own quoting and escapes join R-COMPOSED (Q4).
+ *
+ * wb-38nd respin (cut #2: refusal #1's U1 and U2, riders F3 to F5). U1 the tree builder also re-opens a waiting formatting element
+ * before other start tags than a formatting element's (an ordinary element's, a button's, a br's, an img's or an input's among
+ * them), where the reading does not: the family joins R-INSTRUCTION with pinned quiet rows (Q5 startTagReconstruction, the
+ * gate's G-RS1 to G-RS9 among them, with controls the tree builder agrees with), its over-hide twin stays openedWhileWaiting,
+ * the marker rows gain the applet, object and template SCOPE names, a meter's and a progress element's content joins as
+ * widgetContent, and SCOPE is restated by direction, any departure it does not name NOT CLAIMED. U2 Q5's reconstruction rows
+ * put two entries of distinct names waiting at one re-opening point (the hiding one first, then last), three (the hiding one
+ * between; cut #3 adds the rest, below) and whitespace-only text before a textarea, so the gate's M1, M2 and M7 red Q5, beside
+ * two rows the seat's own mutants needed (a shown b re-opened closes a hiding span opened inside it at its end tag; a hiding b
+ * and a shown i re-open in list order, so the i's end tag leaves the b open around a textarea). F3 B3's walk reaches a
+ * file with no extension (one walk call reads the import roots and B1's Beads-hooks root, whose anchor has none) and both
+ * judges read an extensionless script (non-code controls), so the gate's M11 reds B3. F4 R-COMPOSED's
+ * raw-only members are each pinned at the judges the family names (Q4 otherSyntaxes, rawOnlyB1 and rawOnlyB3, the gate's X3 shell
+ * backslash and X2 JSONC escape among them). F5 is the delivery note's: biome lints *.ts only, so the roster is never linted.
+ *
+ * wb-38nd respin (cut #3, enumerate-the-resolvable under R-B260: refusal #2's U1, rider F2). U1 Q5's reconstruction rows kill
+ * the gate's four survivors of reconstruct(), each beside a shown control the tree builder agrees with (the parse5 7.3.0 tree
+ * reads every new row as the reading does): G01, which stops the walk back at an open element of a waiting entry's name, through
+ * a hiding entry waiting while an element of its name is open (in a block, inline, and before a textarea) and a hiding entry
+ * waiting before one whose namesake is open; G03 and G05, which re-open at most two or three entries, through three and four
+ * waiting entries of distinct names and the run of every formatting element, the hiding one last (and first, against
+ * re-opening only the last few); G10, which skips a waiting entry when a later one of its name waits, through two waiting
+ * entries of one name, one hiding and one shown, the hiding one first (and last, against the mirror). visibleTextOf's doc
+ * names the subset Q5 pins; a waiting run longer than the fourteen formatting elements is NOT CLAIMED by this census. The
+ * seat's own probes found one more over-hide, now pinned: the tree builder drops the earliest of four alike entries from its
+ * list (its Noah's Ark clause), which the list here keeps (fourthAlike, beside the threeAlikeEnded control). F2 B3's walk holds
+ * an anchor per non-code kind the import roots hold today (IMPORT_NON_CODE.kindAnchors: a Markdown page, a JSON receipt and a
+ * shell script, each read and quiet under both judges), so the gate's G20 and G21 walk filters red B3.
+ *
+ * wb-38nd cut #4 (the fail-closed core the rule-19 structural exit R-B285 binds at refusal #3 of cut #3: its U1 and U2, rider
+ * F2). The reconstruction claims are narrowed to the pages Q5 plants: visibleTextOf's doc (its listing, end-tag and re-opening
+ * sentences and cut #3's pinned-subset sentence), FORMATTING_ELEMENTS' and renderedOf's docs, SCOPE's over-hide and
+ * startTagReconstruction sentences, R-INSTRUCTION's, the wb-38nd paragraphs above, the Q5 comments and the reconstruction
+ * message. The forms the wb-38nd gate found unpinned are NOT CLAIMED and DEFERRED TO wb-pvab (U1's GP29, GP31, GP32 and GP35;
+ * F2's GP01 and GP09), beside the forms this cut's seat found (visibleTextOf's doc names each). No reading, row, control, pin,
+ * witness, roster byte or test title changes: only comments and the reconstruction message do.
  *
  * Display paths added: none. Test-only: src, qa, examples, the root manifests, the instruction files, .beads, tsconfig.json with
  * the files its program reads, and the node_modules/.bin link the walk's control reads are only read; nothing is written (the
@@ -256,6 +349,20 @@ const ROOT_MANIFESTS = {
 const SEAM_INTERFACE = "BeadsReadClient";
 /** The code roots B3 reads for an importer of the reader and for a bd readiness read outside it. */
 const IMPORT_ROOTS: readonly string[] = ["src", "qa", "examples"];
+/** The non-code files B3's walk reads under IMPORT_ROOTS (wb-38nd F2): a floor below the 6 measured at trunk 27c968d (one examples
+ * Markdown page, four qa shell scripts and one qa JSON receipt) and an anchor, read and quiet under both judges; and an anchor per
+ * non-code kind the import roots hold today (wb-38nd cut #3, the gate's F2: its G20 and G21 skip a kind), each a file of its kind
+ * read and quiet under both judges, so a walk that skips one of those kinds reds B3. */
+const IMPORT_NON_CODE = {
+  floor: 4,
+  anchorFile: "qa/workbench/smoke.sh",
+  anchorToken: "node qa/workbench/smoke.mjs",
+  kindAnchors: [
+    { kind: "md", file: "examples/agent-tool-description.md", token: "{{typeList}}" },
+    { kind: "json", file: "qa/workbench/receipts/wb-a2g.3-operator-receipt.json", token: "workbench.operator-journey/v2" },
+    { kind: "sh", file: "qa/workbench/smoke.sh", token: "node qa/workbench/smoke.mjs" },
+  ],
+} as const;
 const READER_MODULE = "src/workbench/beads-observer.ts";
 /** The instruction documents that teach a generic claim for this repository's own store (R-INSTRUCTION). */
 const INSTRUCTION_FILES: readonly string[] = ["AGENTS.md", ".agents/skills/beads/SKILL.md", ".beads/README.md"];
@@ -651,8 +758,11 @@ function parsedImportsOf(text: string, file: string): string[] {
  * F3, parsedImportsOf), so a form only the raw text holds (an import inside a JSDoc comment) is still read - a specifier composed,
  * selected or held at runtime, or loaded by any other API, names no module (R-COMPOSED, Q4). */
 function importsOf(text: string, file = "module.ts"): string[] {
-  const raw = [...text.matchAll(IMPORT_FORMS)].map(match => match[1] ?? match[2] ?? match[3] ?? "");
-  return [...new Set([...raw, ...parsedImportsOf(text, file)])];
+  return [...new Set([...rawImportsOf(text), ...parsedImportsOf(text, file)])];
+}
+/** The specifiers a text's raw import forms name (IMPORT_FORMS), in order. */
+function rawImportsOf(text: string): string[] {
+  return [...text.matchAll(IMPORT_FORMS)].map(match => match[1] ?? match[2] ?? match[3] ?? "");
 }
 /** A code file: a .ts, .mts, .cts, .tsx, .js, .mjs, .cjs or .jsx name, in any case (a declaration file among them). */
 const CODE_FILE = /\.(?:[cm]?[jt]s|[jt]sx)$/i;
@@ -684,13 +794,39 @@ const seamMembers = (): string[] =>
     .filter(file => CODE_FILE.test(file))
     .flatMap(file => seamMembersOf(textOf(file), file))
     .sort();
+/** A file B3's judges read: its repository-relative path and its text. */
+interface JudgedFile {
+  readonly path: string;
+  readonly text: string;
+}
+/** Every file below the roots as the walk reaches it (filesBelow), by repository-relative path, with its text. */
+function judgedFilesBelow(roots: readonly string[]): JudgedFile[] {
+  return roots.flatMap(root => filesBelow(join(REPO, root))).map(file => ({ path: relative(REPO, file), text: textOf(file) }));
+}
+/** The import specifiers a file names, as B3's import judge reads them (wb-38nd F2): a code file's as importsOf reads them (raw and
+ * parsed); a JSON file's through the raw import forms over its text and over the strings its JSON parser cooks; any other file's
+ * through the raw import forms over its text (its own quoting and escapes are R-COMPOSED, Q4). */
+function fileImportsOf(text: string, file: string): string[] {
+  if (CODE_FILE.test(file)) return importsOf(text, file);
+  const readings = /\.json$/i.test(file) ? [text, cookedJsonOf(text, file)] : [text];
+  return [...new Set(readings.flatMap(reading => rawImportsOf(reading)))];
+}
+/** B3's import judge over a set of files, code or not (wb-38nd F2): the paths of those naming the module whose file stem is `stem`
+ * (the reader itself excepted when the stem is its own). */
+function importersIn(files: readonly JudgedFile[], stem: string): string[] {
+  return files
+    .filter(file => file.path !== READER_MODULE || stem !== "beads-observer")
+    .filter(file => fileImportsOf(file.text, file.path).some(specifier => namesModule(specifier, stem)))
+    .map(file => file.path);
+}
+/** B3's import judge over every file below the roots. */
 function importersOf(stem: string, roots: readonly string[]): string[] {
-  return roots
-    .flatMap(root => filesBelow(join(REPO, root)))
-    .filter(file => CODE_FILE.test(file))
-    .map(file => relative(REPO, file))
-    .filter(file => file !== READER_MODULE || stem !== "beads-observer")
-    .filter(file => importsOf(textOf(join(REPO, file)), file).some(specifier => namesModule(specifier, stem)));
+  return importersIn(judgedFilesBelow(roots), stem);
+}
+/** B3's read judge over a set of files, code or not (wb-38nd F2): the paths of those spelling a bd readiness read in any reading
+ * readsIn takes (raw, and cooked for a code or a JSON file), the reader excepted. */
+function bypassIn(files: readonly JudgedFile[]): string[] {
+  return files.filter(file => file.path !== READER_MODULE && readsIn(file.text, file.path).length > 0).map(file => file.path);
 }
 
 /** The TypeScript configuration the typecheck step reads (npm run typecheck): the program TypeScript merges the seam in. */
@@ -799,6 +935,13 @@ const RAW_TEXT_ELEMENTS: Readonly<Record<string, RawTextElement>> = {
  * the popover attribute, a dialog that is not open and a details element that is not open (its summary with it, OVER-READ) hide
  * theirs too (hidesContent). */
 const HIDING_ELEMENTS: readonly string[] = ["template", "datalist", "rp", "video", "audio", "canvas", "object", "select", "svg", "math", "bdo"];
+/** The HTML standard's formatting elements (wb-38nd F1): the tree builder keeps each on its list of active formatting elements from
+ * its start tag until the end tag of its own name removes it (or a marker element's end tag clears it from the list, which the
+ * reading does not model: SCOPE), so one an enclosing element's end tag closes is re-opened, its attributes with it (a hiding
+ * attribute among them), around the content after it - it reconstructs the active formatting elements, before text and before
+ * other start tags; visibleTextOf re-opens it before text and before a formatting element's start tag only (SCOPE), claimed in
+ * the forms Q5's reconstruction rows plant only (visibleTextOf's doc names what is NOT CLAIMED). */
+const FORMATTING_ELEMENTS: readonly string[] = ["a", "b", "big", "code", "em", "font", "i", "nobr", "s", "small", "strike", "strong", "tt", "u"];
 const isHtmlSpace = (char: string | undefined): boolean => char === "\t" || char === "\n" || char === "\f" || char === " ";
 const isAsciiAlpha = (char: string | undefined): boolean => char !== undefined && /^[A-Za-z]$/.test(char);
 /** True when `at` opens the tag `tag` (a "<name" or "</name" prefix, any case) followed by the character the tokenizer ends a tag
@@ -892,18 +1035,69 @@ function unjudgedBy(tag: HtmlTag): boolean {
   if (tag.name === "meta" && (tag.attributes.get("http-equiv") ?? "").toLowerCase().includes("refresh")) return true;
   return (tag.name === "html" || tag.name === "body") && tag.attributes.has("hidden");
 }
+/** An element on visibleTextOf's stack of open elements or on its list of active formatting elements: its name, and whether it hides
+ * its content (hidesContent). */
+interface OpenElement {
+  readonly name: string;
+  readonly hides: boolean;
+}
 /** The text an HTML document shows (wb-dcsb F4), read token by token as the HTML tokenizer reads it: a comment, a markup declaration
  * and a processing instruction show nothing; a tag shows nothing (its attributes with it) and separates words; a raw-text
  * element's body is read to its end tag (RAW_TEXT_ELEMENTS) and shown only when the element renders it; the text inside an
- * element that hides its content (hidesContent; the element's extent is its start tag to the matching end tag by name, nested
- * same-name elements counted, an unclosed one to the end - a self-closing slash on an element that is not void closes nothing)
- * shows nothing; and a page carrying a start tag unjudgedBy names, or a bidi override character in its shown text (the text may
- * be shown reversed), shows nothing at all. Entities are decoded in text and RCDATA. */
+ * element that hides its content (hidesContent) shows nothing; and a page carrying a start tag unjudgedBy names, or a bidi
+ * override character in its shown text (the text may be shown reversed), shows nothing at all. Entities are decoded in text and
+ * RCDATA. An element is open from its start tag (a self-closing slash on an element that is not void closes nothing) until an end
+ * tag closes it, or to the end of the document when none does; an end tag closes the element it names with every element opened
+ * inside it (a formatting element's end tag as below). The end tag of an element that is not a formatting element names the last
+ * open element of its name (nested same-name elements counted). A formatting element (FORMATTING_ELEMENTS; wb-38nd F1) is also
+ * listed, as the tree builder's list of active formatting elements holds it, from its start tag until an end tag of its name
+ * removes it (the tree builder also drops the earliest of four alike entries, which this list keeps: an over-hide, SCOPE): that
+ * end tag names the last listed element of its name, removes it from the list and closes it when it is still open (one closed
+ * already is only removed). A listed element an end tag closed waits; reconstruct re-opens the waiting elements (those listed
+ * after the last one still open, each with its hiding, in list order) before the next text (whitespace-only text among it; a
+ * textarea's body excepted, which the tree builder inserts without re-opening) and before a formatting element's start tag, and
+ * before no other start tag, where the tree builder re-opens them too (SCOPE; R-INSTRUCTION's startTagReconstruction).
+ * CLAIMED ONLY on the pages Q5 reads (wb-38nd cut #4, the fail-closed core the rule-19 structural exit R-B285 binds): the
+ * listing, a formatting element's end tag and the re-opening read as the tree builder does on each reconstruction row Q5's
+ * comment names with its form (every hiding row quiet, every control shown), and as Q5 pins each other row and the instruction
+ * files (the over-hides SCOPE discloses, R-INSTRUCTION's quiet rows and their controls). NOT CLAIMED by this census: the
+ * listing, the end tags and the re-opening on any other page. Among those, DEFERRED TO wb-pvab (filed by R-B285 to pin each
+ * form or name it a residual; the wb-38nd gate's refusal #3 of cut #3): the same-name waiting-entry reconstruction (its U1:
+ * GP29, GP31, GP32 and GP35) - three or more entries of one name on the list (three waiting entries of one name, the hiding one
+ * first; a run of four holding three of one name), two waiting entries of one name that both hide (before a textarea) and
+ * three alike hiding entries - and the walk back's shapes no row plants (its F2: GP01 and GP09, which only hide more): a
+ * waiting run of odd length directly above a still-open listed element that its own end tag closes later, and a listed element
+ * still open at the bottom of the stack of open elements. NOT CLAIMED either, named as scope only (the cut #4 seat's one-edit
+ * probes, each 0 failed | 21 passed (21) on this census; the planted sameNameShown and waitingNameOpenShown controls aside):
+ * two waiting entries of one name that are both shown, and a waiting entry while an element alike to it (its name and its
+ * hiding) is open; a listed element already open as the current node when the text inside it is read, then ended by its own
+ * end tag with text after it in its parent (a hiding b ended inside its paragraph, the claim after it in that paragraph); a
+ * formatting element's end tag for a listed element at the bottom of the stack of open elements; the hiding of a shown entry
+ * re-opened after a hiding one, read after that one's end tag; the re-opening while another open element hides; and a waiting
+ * run longer than the fourteen formatting elements (the gate's GP06 at refusal #3). */
 function visibleTextOf(html: string): string {
   const source = html.replace(/\r\n?/g, "\n");
   const shown: string[] = [];
-  const open: { readonly name: string; readonly hides: boolean }[] = [];
-  const show = (segment: string, decoded: boolean): void => {
+  const open: OpenElement[] = [];
+  const active: OpenElement[] = [];
+  const reconstruct = (): void => {
+    let from = active.length;
+    while (from > 0) {
+      const entry = active[from - 1];
+      if (entry === undefined || open.includes(entry)) break;
+      from -= 1;
+    }
+    for (let index = from; index < active.length; index += 1) {
+      const entry = active[index];
+      if (entry === undefined) continue;
+      const reopened: OpenElement = { name: entry.name, hides: entry.hides };
+      open.push(reopened);
+      active[index] = reopened;
+    }
+  };
+  const show = (segment: string, decoded: boolean, reopens = true): void => {
+    if (segment.length === 0) return;
+    if (reopens) reconstruct();
     if (open.every(element => !element.hides)) shown.push(decoded ? decodeEntities(segment) : segment);
   };
   let at = 0;
@@ -921,8 +1115,18 @@ function visibleTextOf(html: string): string {
     else if (next === "/" && isAsciiAlpha(after)) {
       const tag = htmlTagAt(source, lt + 2);
       if (tag === undefined) break;
-      const index = open.map(element => element.name).lastIndexOf(tag.name);
-      if (index >= 0) open.length = index;
+      if (FORMATTING_ELEMENTS.includes(tag.name)) {
+        const listed = active.map(element => element.name).lastIndexOf(tag.name);
+        const entry = active[listed];
+        if (entry !== undefined) {
+          active.splice(listed, 1);
+          const index = open.indexOf(entry);
+          if (index >= 0) open.length = index;
+        }
+      } else {
+        const index = open.map(element => element.name).lastIndexOf(tag.name);
+        if (index >= 0) open.length = index;
+      }
       at = tag.next;
     } else if (isAsciiAlpha(next)) {
       const tag = htmlTagAt(source, lt + 1);
@@ -931,10 +1135,15 @@ function visibleTextOf(html: string): string {
       at = tag.next;
       const raw = RAW_TEXT_ELEMENTS[tag.name];
       if (raw === undefined) {
-        if (!VOID_ELEMENTS.includes(tag.name)) open.push({ name: tag.name, hides: hidesContent(tag.name, tag.attributes) });
+        if (FORMATTING_ELEMENTS.includes(tag.name)) {
+          reconstruct();
+          const element: OpenElement = { name: tag.name, hides: hidesContent(tag.name, tag.attributes) };
+          open.push(element);
+          active.push(element);
+        } else if (!VOID_ELEMENTS.includes(tag.name)) open.push({ name: tag.name, hides: hidesContent(tag.name, tag.attributes) });
       } else {
         const end = tag.name === "plaintext" ? source.length : rawBodyEnd(source, at, tag.name);
-        if (raw.shown && !hidesContent(tag.name, tag.attributes)) show(source.slice(at, end), raw.decoded);
+        if (raw.shown && !hidesContent(tag.name, tag.attributes)) show(source.slice(at, end), raw.decoded, tag.name !== "textarea");
         const close = end < source.length ? htmlTagAt(source, end + 2) : undefined;
         if (close === undefined) break;
         at = close.next;
@@ -949,10 +1158,13 @@ function visibleTextOf(html: string): string {
   const page = shown.join("");
   return BIDI_OVERRIDES.some(override => page.includes(override)) ? "" : page;
 }
-/** A Markdown text as its reader sees it rendered (wb-dugi F3 and F4; wb-xogu F6; wb-dcsb F4): marked renders it to HTML, where
- * code (a fence, an indented block, an inline span) is escaped text, so an HTML comment inside code renders literally and is kept;
- * then visibleTextOf reads the HTML as a browser's tokenizer does and keeps the text a browser shows. A link reference definition
- * renders nothing; the text inside an element that hides nothing is kept. */
+/** A Markdown text as its reader sees it rendered (wb-dugi F3 and F4; wb-xogu F6; wb-dcsb F4; wb-38nd F1): marked renders it to HTML,
+ * where code (a fence, an indented block, an inline span) is escaped text, so an HTML comment inside code renders literally and is
+ * kept; then visibleTextOf reads the HTML as a browser's tokenizer does, with the tree builder's re-opening of formatting elements
+ * before text and before a formatting element's start tag (claimed in the forms Q5's reconstruction rows plant only:
+ * visibleTextOf's doc), and keeps the text it reads as shown - SCOPE names, in each direction, the departures from what a
+ * browser shows that Q5 pins, and any other is NOT CLAIMED. A link reference definition renders nothing;
+ * the text inside an element that hides nothing is kept. */
 function renderedOf(text: string): string {
   return visibleTextOf(MARKDOWN.parse(text, { async: false }));
 }
@@ -1370,6 +1582,7 @@ function constantsOf(): JsonValue {
     scanRoots: SCAN_ROOTS,
     rootManifests: ROOT_MANIFESTS,
     importRoots: IMPORT_ROOTS,
+    importNonCode: IMPORT_NON_CODE,
     seamInterface: SEAM_INTERFACE,
     readerModule: READER_MODULE,
     instructionFiles: INSTRUCTION_FILES,
@@ -1384,6 +1597,7 @@ function constantsOf(): JsonValue {
     voidElements: VOID_ELEMENTS,
     rawTextElements: RAW_TEXT_ELEMENTS,
     hidingElements: HIDING_ELEMENTS,
+    formattingElements: FORMATTING_ELEMENTS,
     contract: beadsObserver.BEADS_WORK_CONTRACT,
   });
 }
@@ -1704,7 +1918,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return json({ reader, controls, dynamic });
   },
   B3: async () => {
-    const importers = importersOf("beads-observer", IMPORT_ROOTS);
+    // One walk call reads the import roots and, for the walk's extensionless control (wb-38nd F3), B1's Beads-hooks root.
+    const hooks = SCAN_ROOTS.find(scan => scan.root === ".beads/hooks");
+    const [walked = [], hooksWalked = []] = [IMPORT_ROOTS, hooks === undefined ? [] : [hooks.root]].map(roots => judgedFilesBelow(roots));
+    const importers = importersIn(walked, "beads-observer");
     const floor = importersOf("redaction", ["src"]);
     const controls = {
       flagged: [
@@ -1727,7 +1944,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         "const beads = await import /* the reader */ ('./beads-observer.js');",
         'import /* the reader */ * as beads from /* its module */ "./beads-observer.js";',
         "export * from // the reader\n  './beads-observer.js';",
-      ].map(text => importsOf(text).filter(specifier => namesModule(specifier, "beads-observer")).length),
+      ].map(text => fileImportsOf(text, "module.ts").filter(specifier => namesModule(specifier, "beads-observer")).length),
       quiet: [
         'import {sanitizeWorkbenchText} from "./redaction.js";',
         "// beads-observer.js stays a reader",
@@ -1739,7 +1956,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         'const redaction = await import(/* "./beads-observer.js" */ "./redaction.js");',
         "const loaded = await import(/* ./beads-observer.js */ loaderPath);",
         "const loaded = await import(/* a */ loaderPath, /* b */ './beads-observer.js');",
-      ].map(text => importsOf(text).filter(specifier => namesModule(specifier, "beads-observer")).length),
+      ].map(text => fileImportsOf(text, "module.ts").filter(specifier => namesModule(specifier, "beads-observer")).length),
     };
     const bound = BEAD_EXECUTORS.map(binding => binding.module);
     expect(importers, "a file under the import roots importing the Beads reader").toEqual([]);
@@ -1752,7 +1969,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     // as Node reads them, as do an import type, an import-equals require, a require call through parentheses, a comma, an
     // optional call or a member named require, and a triple-slash reference (path or types) or AMD dependency; require.resolve
     // loads nothing and reads quiet.
-    const readerSpecifiers = (file: string, source: string): number => importsOf(source, file).filter(specifier => namesModule(specifier, "beads-observer")).length;
+    const readerSpecifiers = (file: string, source: string): number => fileImportsOf(source, file).filter(specifier => namesModule(specifier, "beads-observer")).length;
     const parserImports = Object.fromEntries(
       Object.entries({
         unicodeEscape: ["zz-reexport.ts", 'export { readBeadsWork } from "./beads\\u002Dobserver.js";'],
@@ -1801,11 +2018,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       amdDependency: 1,
       resolveOnly: 0,
     });
-    // A readiness read outside the seam: no code file but the reader spells a bd read verb.
-    const codeFiles = IMPORT_ROOTS.flatMap(root => filesBelow(join(REPO, root)))
-      .filter(file => CODE_FILE.test(file))
-      .map(file => relative(REPO, file));
-    const bypass = codeFiles.filter(file => file !== READER_MODULE && readsIn(textOf(join(REPO, file)), file).length > 0);
+    // A readiness read outside the seam: no file under the import roots but the reader spells a bd read verb (code or not, wb-38nd F2).
+    const bypass = bypassIn(walked);
     const seamReads = readsIn(textOf(join(REPO, READER_MODULE)), READER_MODULE).length > 0;
     const readControls = {
       // The last flagged control is the disclosed OVER-READ (wb-xogu F7): prose naming a read verb reds the judge, as in B1.
@@ -1818,7 +2032,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ].map(text => bdReadsIn(text).length),
       quiet: ["bd init --non-interactive --prefix fx", "bd codex-hook SessionStart", "showReady(list)"].map(text => bdReadsIn(text).length),
     };
-    expect(bypass, "a code file reading bd readiness outside the seam").toEqual([]);
+    expect(bypass, "a file reading bd readiness outside the seam").toEqual([]);
     expect(seamReads, "the same judge reads the seam's own bd show").toBe(true);
     expect(readControls.flagged.every(count => count > 0) && readControls.quiet.every(count => count === 0), "the read judge's controls").toBe(true);
     // The read judge's cooked controls (wb-dcsb, the F2 class at B3's second judge): an escaped bd word or read verb in a code file
@@ -1831,7 +2045,67 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       quiet: [["composed.mjs", 'spawnSync("b" + "d", ["show", id]);']].map(([file = "", source = ""]) => readsIn(source, file).length),
     };
     expect(cookedReads, "the read judge's cooked controls").toStrictEqual({ flagged: [1, 1], quiet: [0] });
-    return json({ importers, bound, readerImportsRedaction: floor.includes(READER_MODULE), controls, parserImports, bypass, seamReads, readControls, cookedReads });
+    // wb-38nd F2: both judges read every file under the import roots. The gate's L2 (a shell script whose node eval imports the
+    // reader) and L1 (a shell script spelling bd ready) red them, as do the same scripts with no extension (the wb-38nd gate's X1
+    // shape, its F3), a JSON string read cooked and a document spelling an import form or a read (the disclosed OVER-READ); a script
+    // and a document naming neither read quiet.
+    const nonCode = {
+      importers: importersIn(
+        [
+          {
+            path: "qa/workbench/zz-gate-eval.sh",
+            text: "node --input-type=module -e \"const { readBeadsWork } = await import('./dist/workbench/beads-observer.js'); console.log(typeof readBeadsWork);\"\n",
+          },
+          { path: "qa/workbench/zz-gate-eval", text: "#!/bin/sh\nnode --input-type=module -e \"await import('./dist/workbench/beads-observer.js')\"\n" },
+          { path: "qa/workbench/zz-gate-probe.json", text: '{ "probe": "node -e \\"import(\\u0027./src/workbench/beads-observer.js\\u0027)\\"" }\n' },
+          { path: "examples/zz-reader.md", text: "```js\nimport { readBeadsWork } from './beads-observer.js';\n```\n" },
+          { path: "qa/workbench/zz-quiet.sh", text: "node qa/workbench/smoke.mjs\n" },
+          { path: "examples/zz-quiet.md", text: "The beads-observer module stays a reader.\n" },
+        ],
+        "beads-observer",
+      ),
+      reads: bypassIn([
+        { path: "qa/workbench/zz-gate-ready.sh", text: "bd ready --json\n" },
+        { path: "qa/workbench/zz-gate-ready", text: "#!/bin/sh\nbd ready --json\n" },
+        { path: "qa/workbench/zz-gate-show.json", text: '{ "probe": "\\u0062d show fx-run.1 --json" }\n' },
+        { path: "examples/zz-queue.md", text: "Inspect the queue with `bd list --status open` first.\n" },
+        { path: "qa/workbench/zz-quiet.sh", text: "bd init --non-interactive --prefix fx\n" },
+        { path: "examples/zz-quiet.md", text: "The queue stays in Beads.\n" },
+      ]),
+    };
+    expect(nonCode, "the non-code controls: a script, a JSON string and a document naming the reader or a read red B3; the rest read quiet").toStrictEqual({
+      importers: ["qa/workbench/zz-gate-eval.sh", "qa/workbench/zz-gate-eval", "qa/workbench/zz-gate-probe.json", "examples/zz-reader.md"],
+      reads: ["qa/workbench/zz-gate-ready.sh", "qa/workbench/zz-gate-ready", "qa/workbench/zz-gate-show.json", "examples/zz-queue.md"],
+    });
+    // The walk reaches the non-code files both judges now read: a floor below today's count, and an anchor read and quiet. It also
+    // reaches a file with no extension (the wb-38nd gate's M11 class, its F3): none lies under the import roots today, so the same
+    // walk call over B1's Beads-hooks root reaches that root's anchor, a script with no extension, read whole.
+    const anchorQuiet = (file: JudgedFile): boolean =>
+      file.text.includes(IMPORT_NON_CODE.anchorToken) && importersIn([file], "beads-observer").length === 0 && bypassIn([file]).length === 0;
+    // wb-38nd cut #3 (the gate's F2): per non-code kind the import roots hold today, the walk reaches that kind's anchor, a file of
+    // the kind, read and quiet under both judges, so a walk filter that skips the kind (its G20 Markdown, its G21 JSON) reds B3.
+    const kindAnchored = (anchor: (typeof IMPORT_NON_CODE.kindAnchors)[number]): boolean =>
+      anchor.file.endsWith(`.${anchor.kind}`) &&
+      walked.some(
+        file =>
+          file.path === anchor.file && file.text.includes(anchor.token) && importersIn([file], "beads-observer").length === 0 && bypassIn([file]).length === 0,
+      );
+    const nonCodeWalk = {
+      floor: walked.filter(file => !CODE_FILE.test(file.path)).length >= IMPORT_NON_CODE.floor,
+      anchor: walked.some(file => file.path === IMPORT_NON_CODE.anchorFile && anchorQuiet(file)),
+      kinds: Object.fromEntries(IMPORT_NON_CODE.kindAnchors.map(anchor => [anchor.kind, kindAnchored(anchor)])),
+      extensionless:
+        hooks !== undefined &&
+        !(hooks.anchorFile.split("/").pop() ?? ".").includes(".") &&
+        hooksWalked.some(file => file.path === hooks.anchorFile && file.text.includes(hooks.anchorToken)),
+    };
+    expect(nonCodeWalk, "the walk's non-code floor and anchor, an anchor per non-code kind, and its extensionless control").toStrictEqual({
+      floor: true,
+      anchor: true,
+      kinds: { md: true, json: true, sh: true },
+      extensionless: true,
+    });
+    return json({ importers, bound, readerImportsRedaction: floor.includes(READER_MODULE), controls, parserImports, bypass, seamReads, readControls, cookedReads, nonCode, nonCodeWalk });
   },
   B4: async () => {
     const step = judgeStep(ROSTER.generation.claimStep.text);
@@ -1971,6 +2245,45 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       indirectLoads: { requireCall: 0, worker: 0, importsMap: 0 },
       otherSyntaxes: { shellQuotes: 0, shellBackslash: 0, yamlEscape: 0, tomlEscape: 0 },
     });
+    // wb-38nd F2: B3 reads such a file raw only as well, so the same family reaches its judges - a readiness read whose bd word a
+    // shell script's adjacent quotes or backslash split or a YAML, a TOML or a JSONC string escape spells (the wb-38nd gate's F4:
+    // its X3 backslash and X2 JSONC plants among them), one whose read verb the same quotes or backslash split, and a specifier
+    // spelled through a JavaScript escape inside a shell script's node eval read quiet, while the same reads and specifier spelled
+    // plainly, a TOML and a JSONC file's among them, read (the controls). B1's claim judge reads a JSONC file raw only as well
+    // (rawOnlyB1), beside the four syntaxes otherSyntaxes pins.
+    const rawOnlyB3 = {
+      shellQuotesRead: bypassIn([{ path: "qa/workbench/zz-ready.sh", text: "#!/bin/sh\nb''d ready --json\n" }]).length,
+      shellBackslashRead: bypassIn([{ path: "qa/workbench/zz-ready.sh", text: "#!/bin/sh\nb\\d ready --json\n" }]).length,
+      yamlEscapeRead: bypassIn([{ path: "qa/workbench/zz-ready.yml", text: 'run: "\\x62d ready --json"\n' }]).length,
+      tomlEscapeRead: bypassIn([{ path: "qa/workbench/zz-ready.toml", text: '[run]\nready = "\\u0062d ready --json"\n' }]).length,
+      jsoncEscapeRead: bypassIn([{ path: "qa/workbench/zz-ready.jsonc", text: '{ "run": "\\u0062d ready --json" }\n' }]).length,
+      shellQuotesVerb: bypassIn([{ path: "qa/workbench/zz-ready.sh", text: "#!/bin/sh\nbd re''ady --json\n" }]).length,
+      shellBackslashVerb: bypassIn([{ path: "qa/workbench/zz-ready.sh", text: "#!/bin/sh\nbd re\\ady --json\n" }]).length,
+      evalEscapedSpecifier: importersIn([{ path: "qa/workbench/zz-eval.sh", text: "node --input-type=module -e \"await import('./dist/workbench/beads\\-observer.js')\"\n" }], "beads-observer").length,
+      plainRead: bypassIn([{ path: "qa/workbench/zz-ready.sh", text: "#!/bin/sh\nbd ready --json\n" }]).length,
+      plainTomlRead: bypassIn([{ path: "qa/workbench/zz-ready.toml", text: '[run]\nready = "bd ready --json"\n' }]).length,
+      plainJsoncRead: bypassIn([{ path: "qa/workbench/zz-ready.jsonc", text: '{ "run": "bd ready --json" }\n' }]).length,
+      plainSpecifier: importersIn([{ path: "qa/workbench/zz-eval.sh", text: "node --input-type=module -e \"await import('./dist/workbench/beads-observer.js')\"\n" }], "beads-observer").length,
+    };
+    expect(rawOnlyB3, "a raw-only file's own quoting and escapes read quiet at B3's judges; the plain spellings read").toStrictEqual({
+      shellQuotesRead: 0,
+      shellBackslashRead: 0,
+      yamlEscapeRead: 0,
+      tomlEscapeRead: 0,
+      jsoncEscapeRead: 0,
+      shellQuotesVerb: 0,
+      shellBackslashVerb: 0,
+      evalEscapedSpecifier: 0,
+      plainRead: 1,
+      plainTomlRead: 1,
+      plainJsoncRead: 1,
+      plainSpecifier: 1,
+    });
+    const rawOnlyB1 = {
+      jsoncEscape: claimsIn('{ "claim": "\\u0062d update fx-run.1 --claim" }\n', "qa/workbench/zz-claim.jsonc").length,
+      plainJsonc: claimsIn('{ "claim": "bd update fx-run.1 --claim" }\n', "qa/workbench/zz-claim.jsonc").length,
+    };
+    expect(rawOnlyB1, "B1 reads a JSONC file raw only: its string escape reads quiet, the plain claim reads").toStrictEqual({ jsoncEscape: 0, plainJsonc: 1 });
     expect(
       { quiet, edge, composedImport, runtimeImports, loaderControl },
       "composed, held and far claims read quiet; the window's last word still counts; composed, selected, held and loader-passed specifiers read quiet; the loader bound as require reads",
@@ -1981,7 +2294,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       runtimeImports: { concatenated: 0, selected: 0, held: 0, loaderCall: 0, loaderBinding: 0 },
       loaderControl: 1,
     });
-    return json({ quiet, edge, composedImport, runtimeImports, loaderControl, indirectLoads, otherSyntaxes, composedControl: claimLaunchesIn(compose("bd", "update", WORK_ID, "--claim")).length });
+    return json({ quiet, edge, composedImport, runtimeImports, loaderControl, indirectLoads, otherSyntaxes, composedControl: claimLaunchesIn(compose("bd", "update", WORK_ID, "--claim")).length, rawOnlyB3, rawOnlyB1 });
   },
   Q5: async () => {
     const files = INSTRUCTION_FILES.map(file => ({ file, claims: claimLaunchesIn(renderedOf(textOf(join(REPO, file)))).length > 0, scanned: scannedByB1(file) }));
@@ -2136,7 +2449,303 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       impliedEnd: 0,
       closedSummary: 0,
     });
-    return json({ files, controls, rendering: renderedClaims, hiding: renderedF4, unmodeled: unmodeledClaims });
+    // wb-38nd F1: the tree builder's reconstruction, claimed ONLY on these pages, each as planted (wb-38nd cut #4; visibleTextOf's
+    // doc names what is NOT CLAIMED, DEFERRED TO wb-pvab among it). Each shows nothing: a formatting element carrying hidden,
+    // waiting alone after its paragraph's end tag, the claim in the next paragraph (the gate's L3 plant, for each of
+    // FORMATTING_ELEMENTS), a b carrying popover so (popover), and an i carrying hidden after a division's end tag
+    // (acrossDivision); a hiding i inside a shown b whose end tag closes both, the claim after it in the paragraph
+    // (innerFormatting); a hiding b waiting alone before an i's start tag (beforeFormatting), before an xmp's or a plaintext's body
+    // (xmpBody, plaintextBody) and, past whitespace-only text, before a textarea (whitespaceTextarea); a hiding b left open when the
+    // end tag of its name removes a waiting inner b, before text and before a textarea (endedWaiting, endedWaitingRaw); and a
+    // hiding b an inner b's end tag leaves listed, re-opened after its paragraph (nestedSameName). Shown, the controls: the gate's
+    // L3c span (not a formatting element: the paragraph's end tag ends it); a hiding b ended by its own end tag inside its
+    // paragraph, the claim in the next paragraph (endedInside), one ended after its paragraph (endedAfter) and one re-opened once in
+    // the next paragraph and ended there before the claim (endedReopened); a b that hides nothing (shownFormatting); and a hiding b
+    // before a textarea's body, which the tree builder inserts without re-opening (textareaBody). The wb-38nd gate's U2 (cut #2):
+    // two waiting entries of distinct names, the hiding one first or last, and three, the hiding one between, each show nothing
+    // (its M1 and M2 re-open the last or the first alone; its M7, re-opening before other text only, fails whitespaceTextarea).
+    // And the seat's own mutants: a shown b re-opened in the next paragraph closes a hiding span opened inside it at its end tag,
+    // the claim after it shown (reopenedShownClosesHiding; re-opening the hiding entries alone keeps the span open), and a hiding b
+    // and a shown i re-open in list order, so the i's end tag leaves the b open around a textarea (reopenedInOrder; re-opening in
+    // reverse closes both). The wb-38nd gate's U1 at refusal #2 (cut #3; parse5 7.3.0 reads each row as the reading does): a hiding
+    // b waiting while a shown b is open, in a block, inline and before a textarea, and a hiding i waiting before a b while a b is
+    // open, each show nothing (waitingNameOpen, waitingNameOpenInline, waitingNameOpenTextarea, hidingBeforeNameOpen; its G01 stops
+    // the walk back at the name); waiting runs of distinct names - three and four, the hiding one first or last, and the fourteen
+    // formatting elements, the hiding one first or last - show nothing (its G03 and G05 re-open two or three at most; re-opening
+    // the last few alone fails the first-placed rows); and two waiting entries of one name, one hiding and one shown - a hiding b
+    // then a b, a hiding i around a b then an i, a b then a hiding b - show nothing (its G10 skips an entry a later one of its name
+    // follows). Shown, their controls: the same pages hiding nothing (waitingNameOpenShown, everyFormattingShown, sameNameShown),
+    // and three alike hiding b's, each ended by its own end tag (threeAlikeEnded; the fourth alike is an over-hide, below).
+    const leftOpen = (element: string, attribute = "hidden"): string => `<p><${element} ${attribute}>Note.</p>\n\nbd update fx-1 --claim\n`;
+    const waitingRun = (elements: readonly string[], hiding: number): string =>
+      `<p>${elements.map((element, index) => (index === hiding ? `<${element} hidden>` : `<${element}>`)).join("")}Note.</p>\n\nbd update fx-1 --claim\n`;
+    const reconstruction: Readonly<Record<string, string>> = {
+      ...Object.fromEntries(FORMATTING_ELEMENTS.map(element => [`leftOpen:${element}`, leftOpen(element)])),
+      popover: leftOpen("b", "popover"),
+      acrossDivision: "<div><i hidden>Note.</div>\n\nbd update fx-1 --claim\n",
+      innerFormatting: "<p><b><i hidden>Note.</b> bd update fx-1 --claim</p>\n",
+      beforeFormatting: "<p><b hidden>Note.</p><i>bd update fx-1 --claim</i>\n",
+      xmpBody: "<p><b hidden>Note.</p><xmp>bd update fx-1 --claim</xmp>\n",
+      plaintextBody: "<p><b hidden>Note.</p><plaintext>bd update fx-1 --claim\n",
+      endedWaiting: "<div><b hidden><p><b>Note.</p></b> bd update fx-1 --claim</div>\n",
+      endedWaitingRaw: "<div><b hidden><p><b>Note.</p></b><textarea>bd update fx-1 --claim</textarea></div>\n",
+      nestedSameName: "<p><b hidden><b>Note.</b></p>\n\nbd update fx-1 --claim\n",
+      twoWaitingHidingFirst: "<p><b hidden><i>Note.</p>\n\nbd update fx-1 --claim\n",
+      twoWaitingHidingLast: "<p><b><i hidden>Note.</p>\n\nbd update fx-1 --claim\n",
+      threeWaitingHidingBetween: "<p><b><i hidden><u>Note.</p>\n\nbd update fx-1 --claim\n",
+      whitespaceTextarea: "<p><b hidden>Note.</p>\n<textarea>bd update fx-1 --claim</textarea>\n",
+      reopenedInOrder: "<p><b hidden><i>Note.</p>x</i><textarea>bd update fx-1 --claim</textarea>\n",
+      waitingNameOpen: "<div><b><p><b hidden>Note.</p>bd update fx-1 --claim</b></div>\n",
+      waitingNameOpenInline: "<b><p><b hidden>Note.</p>bd update fx-1 --claim</b>\n",
+      waitingNameOpenTextarea: "<div><b><p><b hidden>Note.</p><i>x</i><textarea>bd update fx-1 --claim</textarea></b></div>\n",
+      hidingBeforeNameOpen: "<div><b><p><i hidden><b>Note.</p>bd update fx-1 --claim</b></div>\n",
+      threeWaitingHidingFirst: waitingRun(["b", "i", "u"], 0),
+      threeWaitingHidingLast: waitingRun(["b", "i", "u"], 2),
+      fourWaitingHidingFirst: waitingRun(["b", "i", "s", "u"], 0),
+      fourWaitingHidingLast: waitingRun(["b", "i", "s", "u"], 3),
+      everyFormattingHidingFirst: waitingRun(FORMATTING_ELEMENTS, 0),
+      everyFormattingHidingLast: waitingRun(FORMATTING_ELEMENTS, FORMATTING_ELEMENTS.length - 1),
+      sameNameHidingFirst: "<p><b hidden><b>Note.</p>\n\nbd update fx-1 --claim\n",
+      sameNameHidingFirstAround: "<p><i hidden><b><i>Note.</p>\n\nbd update fx-1 --claim\n",
+      sameNameHidingLast: "<p><b><b hidden>Note.</p>\n\nbd update fx-1 --claim\n",
+      spanControl: leftOpen("span"),
+      endedInside: "<p><b hidden>Note.</b></p>\n\nbd update fx-1 --claim\n",
+      endedAfter: "<p><b hidden>Note.</p>\n\n</b>\n\nbd update fx-1 --claim\n",
+      endedReopened: "<p><b hidden>Note.</p>\n\n<p>context</b> bd update fx-1 --claim</p>\n",
+      shownFormatting: leftOpen("b", 'title="note"'),
+      textareaBody: "<p><b hidden>Note.</p><textarea>bd update fx-1 --claim</textarea>\n",
+      reopenedShownClosesHiding: "<p><b>Note.</p><p>x<span hidden>context</b>bd update fx-1 --claim</span></p>\n",
+      waitingNameOpenShown: "<div><b><p><b>Note.</p>bd update fx-1 --claim</b></div>\n",
+      everyFormattingShown: waitingRun(FORMATTING_ELEMENTS, -1),
+      sameNameShown: "<p><b><b>Note.</p>\n\nbd update fx-1 --claim\n",
+      threeAlikeEnded: "<p><b hidden>1<b hidden>2<b hidden>3</b></b></b></p>\n\nbd update fx-1 --claim\n",
+    };
+    const reconstructionClaims = Object.fromEntries(Object.entries(reconstruction).map(([name, source]) => [name, claimLaunchesIn(renderedOf(source)).length]));
+    expect(reconstructionClaims, "the reconstruction rows, each as planted: every hiding page reads quiet as the tree builder does; every control shows").toStrictEqual({
+      "leftOpen:a": 0,
+      "leftOpen:b": 0,
+      "leftOpen:big": 0,
+      "leftOpen:code": 0,
+      "leftOpen:em": 0,
+      "leftOpen:font": 0,
+      "leftOpen:i": 0,
+      "leftOpen:nobr": 0,
+      "leftOpen:s": 0,
+      "leftOpen:small": 0,
+      "leftOpen:strike": 0,
+      "leftOpen:strong": 0,
+      "leftOpen:tt": 0,
+      "leftOpen:u": 0,
+      popover: 0,
+      acrossDivision: 0,
+      innerFormatting: 0,
+      beforeFormatting: 0,
+      xmpBody: 0,
+      plaintextBody: 0,
+      endedWaiting: 0,
+      endedWaitingRaw: 0,
+      nestedSameName: 0,
+      twoWaitingHidingFirst: 0,
+      twoWaitingHidingLast: 0,
+      threeWaitingHidingBetween: 0,
+      whitespaceTextarea: 0,
+      reopenedInOrder: 0,
+      waitingNameOpen: 0,
+      waitingNameOpenInline: 0,
+      waitingNameOpenTextarea: 0,
+      hidingBeforeNameOpen: 0,
+      threeWaitingHidingFirst: 0,
+      threeWaitingHidingLast: 0,
+      fourWaitingHidingFirst: 0,
+      fourWaitingHidingLast: 0,
+      everyFormattingHidingFirst: 0,
+      everyFormattingHidingLast: 0,
+      sameNameHidingFirst: 0,
+      sameNameHidingFirstAround: 0,
+      sameNameHidingLast: 0,
+      spanControl: 1,
+      endedInside: 1,
+      endedAfter: 1,
+      endedReopened: 1,
+      shownFormatting: 1,
+      textareaBody: 1,
+      reopenedShownClosesHiding: 1,
+      waitingNameOpenShown: 1,
+      everyFormattingShown: 1,
+      sameNameShown: 1,
+      threeAlikeEnded: 1,
+    });
+    // wb-38nd: what the reading leaves of the tree builder's recovery, by direction (SCOPE), each row claimed as planted only. In
+    // Q5's direction, over-hides (a browser shows each claim): the list keeps no marker, so a hiding b is re-opened inside a table
+    // cell and a caption and outlives
+    // an applet, a marquee, an object and a template it was opened in; a second a or nobr leaves the first open; and a b's end tag
+    // inside a span opened while the b waited leaves the span open; and of four alike hiding b's, each ended by its own end tag,
+    // the list keeps the earliest, which the tree builder drops (its Noah's Ark clause), so it re-opens (fourthAlike). Against it, R-INSTRUCTION's quiet rows (a browser hides each claim): an end tag the tree builder ignores
+    // or applies to another element - a p's past a button, an li's past a list, a div's past a table cell, a span's past a div
+    // opened inside it, a form's (it removes the form alone), a b's across a block (the furthest block) and past a marquee (its
+    // marker) - ends the hiding element here, so each claim reads as shown.
+    const overHide: Readonly<Record<string, string>> = {
+      markerCell: "<p><b hidden>Note.</p><table><tr><td>bd update fx-1 --claim</td></tr></table>\n",
+      markerCaption: "<p><b hidden>Note.</p><table><caption>bd update fx-1 --claim</caption></table>\n",
+      markerApplet: "<div><applet><b hidden>Note.</applet></div>\n\nbd update fx-1 --claim\n",
+      markerMarquee: "<div><marquee><b hidden>Note.</marquee></div>\n\nbd update fx-1 --claim\n",
+      markerObject: "<div><object><b hidden>Note.</object></div>\n\nbd update fx-1 --claim\n",
+      markerTemplate: "<div><template><b hidden>Note.</template></div>\n\nbd update fx-1 --claim\n",
+      secondAnchor: "<p><a hidden>Note.<a>bd update fx-1 --claim</a></a></p>\n",
+      secondNobr: "<p><nobr hidden>Note.<nobr>bd update fx-1 --claim</nobr></nobr></p>\n",
+      openedWhileWaiting: "<p><b hidden>Note.</p><p><span hidden>context</b>bd update fx-1 --claim</span></p>\n",
+      fourthAlike: "<p><b hidden>1<b hidden>2<b hidden>3<b hidden>4</b></b></b></p>\n\nbd update fx-1 --claim\n",
+    };
+    const endTagRecovery: Readonly<Record<string, string>> = {
+      scopeButton: "<p hidden><button></p>bd update fx-1 --claim</button>\n",
+      scopeList: "<ul><li hidden><ul></li>bd update fx-1 --claim</ul></li></ul>\n",
+      scopeCell: "<div hidden><table><tr><td></div>bd update fx-1 --claim</td></tr></table></div>\n",
+      specialStop: "<div><span hidden><div></span>bd update fx-1 --claim</div></div>\n",
+      formEnd: "<form><span hidden>Note.</form>bd update fx-1 --claim\n",
+      furthestBlock: "<b><p hidden>Note.</b>bd update fx-1 --claim</p>\n",
+      pastMarker: "<b hidden><marquee>Note.</b>bd update fx-1 --claim</marquee>\n",
+    };
+    const overHideClaims = Object.fromEntries(Object.entries(overHide).map(([name, source]) => [name, claimLaunchesIn(renderedOf(source)).length]));
+    const endTagClaims = Object.fromEntries(Object.entries(endTagRecovery).map(([name, source]) => [name, claimLaunchesIn(renderedOf(source)).length]));
+    expect(
+      { overHide: overHideClaims, endTagRecovery: endTagClaims },
+      "the unmodeled recovery: the reconstruction's over-hides read quiet; R-INSTRUCTION's end-tag rows read as shown",
+    ).toStrictEqual({
+      overHide: {
+        markerCell: 0,
+        markerCaption: 0,
+        markerApplet: 0,
+        markerMarquee: 0,
+        markerObject: 0,
+        markerTemplate: 0,
+        secondAnchor: 0,
+        secondNobr: 0,
+        openedWhileWaiting: 0,
+        fourthAlike: 0,
+      },
+      endTagRecovery: { scopeButton: 1, scopeList: 1, scopeCell: 1, specialStop: 1, formEnd: 1, furthestBlock: 1, pastMarker: 1 },
+    });
+    // The wb-38nd gate's U1, against Q5's direction (R-INSTRUCTION's startTagReconstruction quiet rows, each claimed as planted):
+    // the tree builder re-opens a hiding formatting element waiting alone (each row's waiting page) before other start tags than a
+    // formatting element's as well, where the reading does not, so a
+    // textarea - the one body read without re-opening - inside a span, a label, a button or a custom element, or after a closed or
+    // empty span, a br, an img, an input, a wbr, an area, an embed, a keygen, an image, an end tag br, an empty xmp, or a closed
+    // select, option, svg, math, marquee or object reads as shown where a browser hides it (the gate's G-RS1 to G-RS9 among them,
+    // popoverBr its popover member). The controls agree with the tree builder: a textarea inside or after an element whose start
+    // tag re-opens nothing (a division, a table, a rule, a list item; a textarea alone is textareaBody above), one after a waiting
+    // element that hides nothing, and text inside a span, before which the reading re-opens.
+    const waiting = "<p><b hidden>Note.</p>";
+    const claimArea = "<textarea>bd update fx-1 --claim</textarea>";
+    const startTag: Readonly<Record<string, string>> = {
+      spanInside: `${waiting}<span>${claimArea}</span>\n`,
+      labelInside: `${waiting}<label>${claimArea}</label>\n`,
+      buttonInside: `${waiting}<button>${claimArea}</button>\n`,
+      customInside: `${waiting}<x-note>${claimArea}</x-note>\n`,
+      closedSpan: `${waiting}<span>x</span>${claimArea}\n`,
+      emptySpan: `${waiting}<span></span>${claimArea}\n`,
+      brAfter: `${waiting}<br>${claimArea}\n`,
+      imgAfter: `${waiting}<img alt="">${claimArea}\n`,
+      inputAfter: `${waiting}<input>${claimArea}\n`,
+      wbrAfter: `<p><em hidden>Note.</p><wbr>${claimArea}\n`,
+      areaAfter: `${waiting}<area>${claimArea}\n`,
+      embedAfter: `${waiting}<embed>${claimArea}\n`,
+      keygenAfter: `${waiting}<keygen>${claimArea}\n`,
+      imageAfter: `${waiting}<image>${claimArea}\n`,
+      endBr: `${waiting}</br>${claimArea}\n`,
+      emptyXmp: `${waiting}<xmp></xmp>${claimArea}\n`,
+      selectClosed: `${waiting}<select></select>${claimArea}\n`,
+      optionClosed: `${waiting}<option></option>${claimArea}\n`,
+      svgClosed: `${waiting}<svg></svg>${claimArea}\n`,
+      mathClosed: `${waiting}<math></math>${claimArea}\n`,
+      marqueeClosed: `${waiting}<marquee></marquee>${claimArea}\n`,
+      objectClosed: `${waiting}<object></object>${claimArea}\n`,
+      popoverBr: `<p><b popover>Note.</p><br>${claimArea}\n`,
+    };
+    const startTagControls: Readonly<Record<string, string>> = {
+      divInside: `${waiting}<div>${claimArea}</div>\n`,
+      tableClosed: `${waiting}<table></table>${claimArea}\n`,
+      hrAfter: `${waiting}<hr>${claimArea}\n`,
+      listItemInside: `${waiting}<ul><li>${claimArea}</li></ul>\n`,
+      shownWaiting: `<p><b>Note.</p><span>${claimArea}</span>\n`,
+      spanText: `${waiting}<span>bd update fx-1 --claim</span>\n`,
+    };
+    // The over-hide members SCOPE names beside the landed hiding rows (Q5's direction: each reads as showing nothing): a hidden list
+    // item before the next and a hidden button before another, both closed early by the parser; canvas, audio and math content;
+    // and a hidden html start tag, which leaves the page unjudged.
+    const hidingMore: Readonly<Record<string, string>> = {
+      impliedEndListItem: "<ul><li hidden>Note.<li>bd update fx-1 --claim</ul>\n",
+      impliedEndButton: "<div><button hidden>Note.<button>bd update fx-1 --claim</button></div>\n",
+      canvasFallback: "<canvas>bd update fx-1 --claim</canvas>\n",
+      audioFallback: "<audio>bd update fx-1 --claim</audio>\n",
+      mathContent: "<math><mi>bd update fx-1 --claim</mi></math>\n",
+      hiddenHtml: "bd update fx-1 --claim\n\n<html hidden>\n",
+    };
+    // R-INSTRUCTION's widgetContent quiet rows: a meter's and a progress element's content read as shown, where a browser may draw
+    // the element's widget instead.
+    const widget: Readonly<Record<string, string>> = {
+      meter: "<meter>bd update fx-1 --claim</meter>\n",
+      progress: "<progress>bd update fx-1 --claim</progress>\n",
+    };
+    const claimsOf = (sources: Readonly<Record<string, string>>): Record<string, number> =>
+      Object.fromEntries(Object.entries(sources).map(([name, source]) => [name, claimLaunchesIn(renderedOf(source)).length]));
+    const startTagReconstruction = { members: claimsOf(startTag), controls: claimsOf(startTagControls) };
+    const widgetContent = claimsOf(widget);
+    const hidingMembers = claimsOf(hidingMore);
+    expect(hidingMembers, "the over-hide members SCOPE names beside the landed hiding rows read as showing nothing").toStrictEqual({
+      impliedEndListItem: 0,
+      impliedEndButton: 0,
+      canvasFallback: 0,
+      audioFallback: 0,
+      mathContent: 0,
+      hiddenHtml: 0,
+    });
+    expect(
+      { startTagReconstruction, widgetContent },
+      "R-INSTRUCTION's start-tag and widget rows read as shown; the start-tag controls agree with the tree builder",
+    ).toStrictEqual({
+      startTagReconstruction: {
+        members: {
+          spanInside: 1,
+          labelInside: 1,
+          buttonInside: 1,
+          customInside: 1,
+          closedSpan: 1,
+          emptySpan: 1,
+          brAfter: 1,
+          imgAfter: 1,
+          inputAfter: 1,
+          wbrAfter: 1,
+          areaAfter: 1,
+          embedAfter: 1,
+          keygenAfter: 1,
+          imageAfter: 1,
+          endBr: 1,
+          emptyXmp: 1,
+          selectClosed: 1,
+          optionClosed: 1,
+          svgClosed: 1,
+          mathClosed: 1,
+          marqueeClosed: 1,
+          objectClosed: 1,
+          popoverBr: 1,
+        },
+        controls: { divInside: 1, tableClosed: 1, hrAfter: 1, listItemInside: 1, shownWaiting: 1, spanText: 0 },
+      },
+      widgetContent: { meter: 1, progress: 1 },
+    });
+    return json({
+      files,
+      controls,
+      rendering: renderedClaims,
+      hiding: renderedF4,
+      unmodeled: unmodeledClaims,
+      reconstruction: reconstructionClaims,
+      reconstructionOverHide: overHideClaims,
+      endTagRecovery: endTagClaims,
+      startTagReconstruction,
+      widgetContent,
+      hidingMembers,
+    });
   },
   Q6: async () => {
     const text = textOf(join(REPO, VC4_LAUNCHER));
