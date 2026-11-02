@@ -92,8 +92,11 @@
  * reflective-later-argument, reflective-third-argument, reflective-first-of-three] and a KEYED_READS call keyed as an element
  * access is [reflect-get, descriptor, reflect-get-computed, reflect-get-const-key], one keyed by another member reading
  * nothing [reflect-other-member, descriptor-other-member]. A KEY resolves to a constant string when it is a string, template
- * or number literal [literal-key, template-key, numeric-key], a "+" sum or a template whose parts all resolve [sum-key,
- * template-expression-key], or a name every variable, parameter and binding element of which holds that one string, each a
+ * or number literal [literal-key, template-key, numeric-key], a "+" sum or a template whose parts all resolve, claimed at
+ * the parts its probes spell (wb-07zx cut #3): as an element access's key, a sum of two string literals [sum-key] and a
+ * template of one const before a literal [template-expression-key]; as a method's computed name, each sum and template
+ * the MATRICES' held name kinds spell; or a name every variable, parameter and binding element of which holds that one
+ * string, each a
  * const declaration whose initializer is that string or template literal [computed-key, template-const-key], read through its
  * wrappers [asserted-key]; a let [let-key], two different const strings [conflicting-key], and a parameter or a binding
  * element beside a const of its name [shadowed-parameter-key, shadowed-binding-key] resolve to none.
@@ -195,12 +198,20 @@
  * signature's note and its implementation's) -, every row on its side, and the roster pins its rows and its axes. A placement
  * is an object literal a const declares, a class declaration's method or a class expression's, static or not; a kind is a
  * plain, a generator, an async or an async generator method. HELD (the FUNCTION TABLE): at every placement and kind, a method
- * under each pinned name kind - an identifier, bare or holding a unicode or a code-point escape, a #private name (a class's),
- * a string literal, bare or holding a unicode, a code-point, a zero-padded code-point, a hex or an identity escape, a line
- * continuation or two escapes, or a computed name keyed by a string or a template literal, a "+" sum, a template expression, a
- * const a template literal initializes or a const a string initializes (read bare or through parentheses, an as or a satisfies
- * clause, a non-null mark, an angle assertion or an await), or by 1e999 or 2e999, held under "Infinity" -, each called by a
- * member callee its name's string spells (a #private one from a method of its class) [held-object-literal-matrix,
+ * under each pinned name kind - an identifier, bare or holding a unicode, a code-point or a zero-padded code-point escape, a
+ * unicode escape as its first character, or a unicode and a code-point escape; a #private name (a class's), bare or holding
+ * a unicode escape; a string literal, double-quoted - bare or holding a unicode, a code-point, a zero-padded code-point, a
+ * hex or an identity escape, a unicode escape in uppercase hex, a line continuation, two or three hex escapes, a unicode and
+ * a hex escape, or a hex escape as its last character - or single-quoted and bare; or a computed name keyed by a string
+ * literal, double-quoted, bare or holding a hex escape, single-quoted, or read through an as clause, by a template literal,
+ * by a "+" sum - of two string literals, of a const before a string literal, of a string literal before a number literal,
+ * of a template literal before a string literal, of three string literals, or of a string literal in parentheses before a
+ * string literal -, by a template expression - of one const before a literal, after a head before a literal, or with no
+ * literal after it; of one string literal or one sum of two string literals before a literal; of one number literal after
+ * a head with no literal after it; or of two consts before a literal -, by a const a template literal initializes or a
+ * const a string initializes (read bare or through parentheses, an as or a satisfies clause, a non-null mark, an angle
+ * assertion or an await, or parentheses around an as clause), or by 1e999 or 2e999, held under "Infinity" -, each called
+ * by a member callee its name's string spells (a #private one from a method of its class) [held-object-literal-matrix,
  * held-class-declaration-matrix, held-static-class-declaration-matrix, held-class-expression-matrix,
  * held-static-class-expression-matrix]; at every class placement and kind, an identifier-named method with an accessibility
  * (public, protected or private), an override or an optional modifier [held-modified-class-method-matrix]; an identifier-named
@@ -210,9 +221,10 @@
  * and a variable a const, a let or a var declares whose initializer, bare or read through each of those wrappers (an await
  * among them), is an arrow, plain or async, or a function expression of every kind [held-declaration-matrix]. FAIL CLOSED: at
  * every placement, an object literal read in place among them, and kind, a method a number literal names - decimal, a
- * fraction, a leading-dot or a trailing-dot fraction, an exponent, signed, negative or uppercase, an uppercase one signed, hex
- * with a lowercase or an uppercase prefix or uppercase digits, binary and octal each with either prefix, a legacy octal, or
- * with separators - or a bigint literal names - decimal, hex or uppercase hex, binary, octal or separated -
+ * fraction, a leading-dot or a trailing-dot fraction, a fraction with an exponent, an exponent, signed, negative or
+ * uppercase, an uppercase one signed or negative, hex with a lowercase or an uppercase prefix or uppercase digits, binary
+ * and octal each with either prefix, a legacy octal, or with one separator or two - or a bigint literal names - decimal,
+ * hex or uppercase hex, binary and octal each with either prefix, or separated -
  * [unpinned-object-literal-matrix, unpinned-inline-object-matrix, unpinned-class-declaration-matrix,
  * unpinned-static-class-declaration-matrix, unpinned-class-expression-matrix, unpinned-static-class-expression-matrix], each
  * noted at its name's line and never called; at every spelling, an abstract class declaration's method signature, and an
@@ -222,7 +234,54 @@
  * async, generator and async generator cells; U2's H08 and H09 the computed cells; U3's H10, H12, H13 and H14 the class
  * matrices' escaped cells; U4's F07, F11, F14 and F17 the class matrices' trailing-dot, static async, async bigint and legacy
  * octal cells; and F2's F06, F08, F09, F10, F13, F16 and F18 the signed uppercase exponent cells and the positioned FAIL
- * CLOSED probe.
+ * CLOSED probe. Cut #3 (refusal #2's respin) adds the held name kinds and the spellings past cut #2's: refusal #2's UNMET
+ * U1 reds its cells - GP7-K01 the const-part sums, K02 the number-part sums, K03 the template-part sums, K04 the three-part
+ * sums, K06 the string-literal templates, K07 the number-literal templates and K09 the sum templates -, and so do the
+ * members of the same families its findings list: K05, K08 and K10-K15 their own computed cells, N01-N09 their own
+ * escaped and quoted cells, and F03, F04, F17 and F18 their own spellings' cells at every FAIL CLOSED placement, kind and
+ * bodiless form.
+ * ENUMERATION (wb-07zx cut #3, ruling R-B366: refusal #2's respin in the enumerate-the-resolvable form, the class its guard
+ * binds frozen): every member refusal #2 measured, the gate's 77 one-edit members of resultReadsOf's collect (GP7-K01 to
+ * GP7-F20, their UNMET U1 and their findings F3-F6), is red - N10 and F01 as at cut #2, each other one against cells or a
+ * read probe of its own -, so no member is left a residual and the claim is narrowed to those pins. The K and N members
+ * are held name kinds of MATRICES above, and F03, F04, F17 and F18 its FAIL CLOSED spellings, each a cell at every
+ * placement and kind. The rest are one read probe each, its member's witness - a plain method or function under an
+ * identifier and called by its name, or a FAIL CLOSED one under the decimal 16 and never called, its one parameter typed,
+ * unless the item names otherwise -, claimed at exactly the composition its text spells and at no cross of that shape with
+ * another kind, name kind, placement or shape. The FUNCTION TABLE holds a method of an exported class declaration
+ * [exported-class-declaration-method], a static method of an abstract class declaration [abstract-class-declaration-method],
+ * a method of a class with a heritage clause [extending-class-method], of a named class expression
+ * [named-class-expression-method], of a class declared in a function's body [nested-class-declaration-method], of an object
+ * literal read through an as clause [asserted-object-literal-method], of an object literal an exported const declares
+ * [exported-object-literal-method], of a class expression a let declares and a later assignment replaces
+ * [let-class-expression-method], of a class expression no declaration holds [undeclared-class-expression-method] and of an
+ * object literal a const in a function's body declares [function-body-object-literal-method] (C01-C10); a generic method
+ * [generic-method-helper], a method with a return type [return-typed-method-helper], a decorated method
+ * [decorated-method-helper], a method with a second, optional parameter [two-parameter-method-helper], a method whose
+ * parameter has a default [defaulted-parameter-method-helper] or is optional [optional-parameter-method-helper], an
+ * overload's implementation beside its signature, their parameters named apart, of a class
+ * [overload-implementation-method] and of function declarations [overload-implementation-function], an exported function
+ * declaration [exported-function-helper], a function declared in a function's body [nested-function-helper], a method whose
+ * parameter is an object pattern [pattern-parameter-method-helper] or is untyped, its object literal typed by its const's
+ * annotation [untyped-parameter-method-helper], and a static method of a class holding a constructor
+ * [constructor-class-static-method] (S01-S12 and S14; S07 and S09 read equivalent on the gate's witnesses, whose signature
+ * and implementation share a parameter name, and each reds with the names apart); and a variable's arrow with a block body
+ * [block-arrow-helper], an exported const's arrow [exported-variable-helper], a type-annotated const's
+ * [annotated-variable-helper], a later declarator's [later-declarator-helper], a named function expression
+ * [named-function-expression-helper], a generic arrow [generic-arrow-helper], a const's arrow in a function's body
+ * [nested-variable-helper], an arrow whose parameter is unparenthesized, its const annotated [bare-parameter-arrow-helper],
+ * and an arrow with a return type [return-typed-arrow-helper] (V01-V09). FAIL CLOSED notes a method a decimal number
+ * literal names of a class with a heritage clause [extending-class-numeric-method], a generic one [generic-numeric-method],
+ * one with a return type [return-typed-numeric-method], one with a second, optional parameter
+ * [two-parameter-numeric-method], one of an object literal read through an as clause
+ * [asserted-object-literal-numeric-method], of a class declared in a function's body [nested-class-numeric-method], of a
+ * named class expression [named-class-expression-numeric-method], of a class expression a let declares
+ * [let-class-expression-numeric-method] or no declaration holds [undeclared-class-expression-numeric-method], one whose
+ * parameter is an object pattern [pattern-parameter-numeric-method], one of a default-exported object literal
+ * [default-exported-object-numeric-method], a decorated one [decorated-numeric-method], a concrete one of an abstract class
+ * [abstract-class-concrete-numeric-method] and one of a class holding a constructor [constructor-class-numeric-method]; and a
+ * bigint-named method of an object literal a const declares without an export [local-bigint-named-method] (F02, F05-F16,
+ * F19 and F20).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the
  * constants, the registered test titles and each pin's assertion count are held to the out-of-file roster
  * (test/fixtures/rc-context-block-roster.json).
@@ -254,8 +313,8 @@
  * the filing names it (clause (a)'s three control words, clause (c)'s surfaces and names, the two fixture names), and a read
  * probe by the wb-wgk3 title only as the one answer GQ_PINS gives a GQ mutant it names and by the wb-07zx title only as the
  * one answer G_PINS gives a G mutant its range counts, which probe answers it being this census's reading (so a probe of
- * wb-07zx's F2 shapes, or one of its MATRICES with its axes and rows, removed from every literal and the roster, is
- * anchored by neither); the rows, the
+ * wb-07zx's F2 shapes, one of its MATRICES with its axes and rows, or one of its cut #3 read probes, held name kinds or
+ * spellings, removed from every literal and the roster, is anchored by neither); the rows, the
  * pins and the residual list are anchored as above, but which pin covers which words is this census's reading (COVERS); an
  * edit of the tracked bead export itself is outside every anchor (it is machine-written at each ledger hop). The parse-aware
  * reading reads one module at a time and binds a name to a result by the forms PARSE-AWARE READING lists only; it follows no
@@ -296,7 +355,23 @@
  * of a kind other than plain; a method of an object literal at a position the positioned probes spell that is not plain,
  * held under a name other than an identifier or noted under a spelling other than the decimal one; a computed name an
  * overflowing number literal spelled otherwise than 1e999 or 2e999 keys; and a variable's initializer read through two
- * wrappers or more.
+ * wrappers or more. Of cut #3's compositions, NOT CLAIMED by this census, in these words: a shape one ENUMERATION probe
+ * spells - a container exported, abstract, extending, named, nested, wrapped, let-declared, undeclared or in a function's
+ * body; a generic, return-typed, decorated, two-parameter, defaulted, optional, overloaded, exported, nested,
+ * pattern-parameter, untyped or constructor-class function; a block-bodied, exported, annotated, later, named, generic,
+ * nested, bare-parameter or return-typed variable's function; or a FAIL CLOSED name's container or signature so shaped -
+ * at any other kind, name kind, spelling or placement, or with a second such shape; a function the FUNCTION TABLE holds
+ * with a parameter pattern or with two parameters or more, but those its probes spell (a const arrow's object or array
+ * pattern [parameter-pattern, parameter-array-pattern], an object literal method's object pattern
+ * [pattern-parameter-method-helper], a function declaration handed the result third [direct-later-argument] and an object
+ * literal method with a second parameter [two-parameter-method-helper]); a KEY's sum or template other than the KEY
+ * rule's pinned parts - a template expression as a sum's part or a template's substitution, a sum of four parts or more, a
+ * template of three substitutions or more, a part or a substitution read through a wrapper other than the parentheses of a
+ * sum's string literal, and a sum pairing part kinds no cell pairs (a const after a string literal, two consts, a number
+ * literal between two string literals) -, each naming a method a member callee spells; and an escape, a quote or a
+ * spelling no held name kind or FAIL CLOSED spelling of MATRICES spells, of a held name a member callee spells (one none
+ * spells is the family of [single-escaped-element-callee]) or of a FAIL CLOSED one. The reading holds each such method a
+ * member callee reaches, so it reads its member, and notes each FAIL CLOSED one: none is quiet and no quiet row is owed.
  * RESIDUALS (named families, each with a pinned quiet row in row R): R1 R-STATUS-WORD a control word rf states as an observation
  *   status surfaces as a status word (the filing admits status words); R2 R-PRODUCER-IDENTITY a control word stated as a bounded
  *   producer identity (cli_version, an engine version) surfaces as that identity; R3 R-PROSE-NAME the document name as two words
@@ -617,7 +692,8 @@ function constKey(ordinal: string): readonly string[] {
 }
 /** The FUNCTION TABLE's pinned name kinds: an identifier, bare or escaped, a #private name, a string literal, bare, escaped or
  * continued, and a computed name keyed by each KEY form, its const read bare or through each wrapper, or by an overflowing
- * number literal (held under "Infinity"). */
+ * number literal (held under "Infinity"); cut #3 adds each sum part, template substitution, escape and quote the gate's
+ * GP7-K and GP7-N members narrowed a name at. */
 const MATRIX_HELD_NAMES: readonly HeldName[] = [
   heldName("identifier", ordinal => `mO${ordinal}`),
   heldName("identifier, a unicode escape", ordinal => `m\\u004f${ordinal}`),
@@ -645,6 +721,33 @@ const MATRIX_HELD_NAMES: readonly HeldName[] = [
   heldName("computed, an await", ordinal => `[await k${ordinal}]`, constKey),
   heldName("computed, 1e999", () => "[1e999]", undefined, () => "Infinity"),
   heldName("computed, 2e999", () => "[2e999]", undefined, () => "Infinity"),
+  // wb-07zx cut #3 (refusal #2's respin, R-B366): the KEY rule's sum parts and template substitutions a computed name spells
+  // (U1's GP7-K01-K04, K06, K07 and K09, and K05, K08, K10-K15) and the escapes and quotes a name spells (GP7-N01-N09),
+  // each a held name kind of every placement and kind; a cell a number-literal part names is held as mO1<ordinal>.
+  heldName("computed, a sum with a const part", ordinal => `[prefix + "${ordinal}"]`, () => ['const prefix = "mO";']),
+  heldName("computed, a sum with a number literal part", ordinal => `["mO" + 1${ordinal}]`, undefined, ordinal => `mO1${ordinal}`),
+  heldName("computed, a sum with a template literal part", ordinal => `[\`mO\` + "${ordinal}"]`),
+  heldName("computed, a sum of three parts", ordinal => `["m" + "O" + "${ordinal}"]`),
+  heldName("computed, a sum with a part in parentheses", ordinal => `[("mO") + "${ordinal}"]`),
+  heldName("computed, a template with a string literal", ordinal => `[\`\${"mO"}${ordinal}\`]`),
+  heldName("computed, a template with a number literal", ordinal => `[\`mO\${1${ordinal}}\`]`, undefined, ordinal => `mO1${ordinal}`),
+  heldName("computed, a template with two consts", ordinal => `[\`\${mName}\${oName}${ordinal}\`]`, () => ['const mName = "m";', 'const oName = "O";']),
+  heldName("computed, a template with a sum", ordinal => `[\`\${"m" + "O"}${ordinal}\`]`),
+  heldName("computed, a template with a head", ordinal => `[\`m\${oName}${ordinal}\`]`, () => ['const oName = "O";']),
+  heldName("computed, a template with no literal after", ordinal => `[\`\${k${ordinal}}\`]`, constKey),
+  heldName("computed, a string literal through an as clause", ordinal => `["mO${ordinal}" as string]`),
+  heldName("computed, a hex-escaped string literal", ordinal => `["m\\x4f${ordinal}"]`),
+  heldName("computed, a single-quoted string literal", ordinal => `['mO${ordinal}']`),
+  heldName("computed, parentheses around an as clause", ordinal => `[(k${ordinal} as string)]`, constKey),
+  heldName("identifier, its first character escaped", ordinal => `\\u006dO${ordinal}`),
+  heldName("identifier, a zero-padded code-point escape", ordinal => `m\\u{004f}${ordinal}`),
+  heldName("identifier, a unicode and a code-point escape", ordinal => `m\\u004f\\u{3${ordinal.slice(0, 1)}}${ordinal.slice(1)}`),
+  heldName("#private name, a unicode escape", ordinal => `#m\\u004f${ordinal}`, undefined, ordinal => `#mO${ordinal}`, true),
+  heldName("string literal, single-quoted", ordinal => `'mO${ordinal}'`),
+  heldName("string literal, a unicode and a hex escape", ordinal => `"m\\u004f\\x3${ordinal.slice(0, 1)}${ordinal.slice(1)}"`),
+  heldName("string literal, a hex escape last", ordinal => `"mO${ordinal.slice(0, 2)}\\x3${ordinal.slice(2)}"`),
+  heldName("string literal, three escapes", ordinal => `"\\x6d\\x4f\\x3${ordinal.slice(0, 1)}${ordinal.slice(1)}"`),
+  heldName("string literal, a unicode escape in uppercase hex", ordinal => `"m\\u004F${ordinal}"`),
 ];
 /** The decimal spelling, the one a positioned FAIL CLOSED probe names its methods by. */
 const DECIMAL_SPELLING = "16";
@@ -668,12 +771,19 @@ const MATRIX_SPELLINGS: Readonly<Record<string, string>> = {
   "uppercase octal prefix": "0O17",
   "legacy octal": "017",
   separators: "1_000",
+  // wb-07zx cut #3 (refusal #2's respin, R-B366): an uppercase negative exponent, a fraction with an exponent and two
+  // separators (the gate's GP7-F03, F17 and F18), and below, a binary and an octal bigint with an uppercase prefix (GP7-F04).
+  "uppercase negative exponent": "1E-3",
+  "fraction with an exponent": "1.5e3",
+  "two separators": "1_000_000",
   bigint: "1n",
   "hex bigint": "0x1fn",
   "uppercase hex bigint": "0X1Fn",
   "binary bigint": "0b101n",
   "octal bigint": "0o17n",
   "separated bigint": "1_000n",
+  "uppercase binary bigint prefix": "0B101n",
+  "uppercase octal bigint prefix": "0O17n",
 };
 /** COMPOSITIONS' modifiers of a class's method: before its kind's marker, but the optional mark after its name. */
 const MATRIX_MODIFIERS: Readonly<Record<string, string>> = { public: "public ", protected: "protected ", private: "private ", override: "override ", optional: "?" };
@@ -1153,6 +1263,58 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   "positioned-object-numeric-methods": "declare function take(value: object): void;\ntake({\n  1(argument: Record<string, unknown>) {\n    return argument.blocks;\n  },\n});\nexport const items = [\n  {\n    2(item: Record<string, unknown>) {\n      return item.blocks;\n    },\n  },\n];\nexport const holder = {\n  inner: {\n    3(property: Record<string, unknown>) {\n      return property.blocks;\n    },\n  },\n};\nexport function make() {\n  return {\n    4(returned: Record<string, unknown>) {\n      return returned.blocks;\n    },\n  };\n}\n",
   // wb-07zx cut #2 (refusal #1's respin): the MATRICES, each a module MATRICES above generates.
   ...Object.fromEntries(Object.entries(MATRICES).map(([id, matrix]) => [id, matrix.text])),
+  // wb-07zx cut #3 (refusal #2's respin, R-B366's enumerate-the-resolvable cut): a read probe per member of the gate's F3-F6
+  // families no MATRICES cell spells, each the member's own witness (the text of its src/ui plant), so each reds against its
+  // member: the containers (GP7-C01-C10), the signatures (GP7-S01-S12 and S14; S07's and S09's signature parameter is named
+  // apart from the implementation's, a shared name binding module-wide), the variables' functions (GP7-V01-V09) and the FAIL
+  // CLOSED compositions (GP7-F02, F05-F16, F19 and F20).
+  "exported-class-declaration-method": `export class Helpers {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\n`,
+  "abstract-class-declaration-method": `abstract class Helpers {\n  static blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = Helpers.blocksOf(${PROBE_RESULT});\n`,
+  "extending-class-method": `class Base {}\nclass Helpers extends Base {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\n`,
+  "named-class-expression-method": `const Helpers = class Named {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\n`,
+  "nested-class-declaration-method": `export function make() {\n  class Helpers {\n    blocksOf(envelope: Record<string, unknown>) {\n      return envelope.blocks;\n    }\n  }\n  return new Helpers().blocksOf(${PROBE_RESULT});\n}\n`,
+  "asserted-object-literal-method": `const helpers = {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n} as const;\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "exported-object-literal-method": `export const helpers = {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "let-class-expression-method": `let Helpers = class {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\nexport const reset = () => {\n  Helpers = class {\n    blocksOf(_unused: unknown) {\n      return undefined;\n    }\n  };\n};\n`,
+  "undeclared-class-expression-method": `export const rows = new (class {\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n})().blocksOf(${PROBE_RESULT});\n`,
+  "function-body-object-literal-method": `export function make() {\n  const helpers = {\n    blocksOf(envelope: Record<string, unknown>) {\n      return envelope.blocks;\n    },\n  };\n  return helpers.blocksOf(${PROBE_RESULT});\n}\n`,
+  "generic-method-helper": `const helpers = {\n  blocksOf<T extends Record<string, unknown>>(envelope: T) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "return-typed-method-helper": `const helpers = {\n  blocksOf(envelope: Record<string, unknown>): unknown {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "decorated-method-helper": `function logged<T>(value: T, _context: ClassMethodDecoratorContext): T {\n  return value;\n}\nclass Helpers {\n  @logged\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\n`,
+  "two-parameter-method-helper": `const helpers = {\n  blocksOf(envelope: Record<string, unknown>, _label?: string) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "defaulted-parameter-method-helper": `const helpers = {\n  blocksOf(envelope: Record<string, unknown> = {}) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "optional-parameter-method-helper": `const helpers = {\n  blocksOf(envelope?: Record<string, unknown>) {\n    return envelope?.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "overload-implementation-method": `class Helpers {\n  blocksOf(signature: Record<string, unknown>): unknown;\n  blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = new Helpers().blocksOf(${PROBE_RESULT});\n`,
+  "exported-function-helper": `export function blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "overload-implementation-function": `function blocksOf(signature: Record<string, unknown>): unknown;\nfunction blocksOf(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n}\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "nested-function-helper": `export function make() {\n  function blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n  return blocksOf(${PROBE_RESULT});\n}\n`,
+  "pattern-parameter-method-helper": `const helpers = {\n  blocksOf({ blocks }: Record<string, unknown>) {\n    return blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "untyped-parameter-method-helper": `const helpers: { blocksOf(envelope: Record<string, unknown>): unknown } = {\n  blocksOf(envelope) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers.blocksOf(${PROBE_RESULT});\n`,
+  "constructor-class-static-method": `class Helpers {\n  label: string;\n  constructor() {\n    this.label = "helpers";\n  }\n  static blocksOf(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\nexport const rows = Helpers.blocksOf(${PROBE_RESULT});\n`,
+  "block-arrow-helper": `const blocksOf = (envelope: Record<string, unknown>) => {\n  return envelope.blocks;\n};\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "exported-variable-helper": `export const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "annotated-variable-helper": `const blocksOf: (envelope: Record<string, unknown>) => unknown = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "later-declarator-helper": `export const label = "helpers",\n  blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "named-function-expression-helper": `const blocksOf = function named(envelope: Record<string, unknown>) {\n  return envelope.blocks;\n};\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "generic-arrow-helper": `const blocksOf = <T extends Record<string, unknown>>(envelope: T) => envelope.blocks;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "nested-variable-helper": `export function make() {\n  const blocksOf = (envelope: Record<string, unknown>) => envelope.blocks;\n  return blocksOf(${PROBE_RESULT});\n}\n`,
+  "bare-parameter-arrow-helper": `const blocksOf: (envelope: Record<string, unknown>) => unknown = envelope => envelope.blocks;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "return-typed-arrow-helper": `const blocksOf = (envelope: Record<string, unknown>): unknown => envelope.blocks;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "local-bigint-named-method": "const helpers = {\n  1n(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\nexport const rows = helpers;\n",
+  "extending-class-numeric-method": "class Base {}\nexport class Helpers extends Base {\n  16(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\n",
+  "generic-numeric-method": "export const helpers = {\n  16<T extends Record<string, unknown>>(envelope: T) {\n    return envelope.blocks;\n  },\n};\n",
+  "return-typed-numeric-method": "export const helpers = {\n  16(envelope: Record<string, unknown>): unknown {\n    return envelope.blocks;\n  },\n};\n",
+  "two-parameter-numeric-method": "export const helpers = {\n  16(envelope: Record<string, unknown>, _label?: string) {\n    return envelope.blocks;\n  },\n};\n",
+  "asserted-object-literal-numeric-method": "export const helpers = {\n  16(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n} as const;\n",
+  "nested-class-numeric-method": "export function make() {\n  class Helpers {\n    16(envelope: Record<string, unknown>) {\n      return envelope.blocks;\n    }\n  }\n  return Helpers;\n}\n",
+  "named-class-expression-numeric-method": "export const Helpers = class Named {\n  16(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\n",
+  "let-class-expression-numeric-method": "export let Helpers = class {\n  16(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n};\n",
+  "undeclared-class-expression-numeric-method": "export const made = new (class {\n  16(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n})();\n",
+  "pattern-parameter-numeric-method": "export const helpers = {\n  16({ blocks }: Record<string, unknown>) {\n    return blocks;\n  },\n};\n",
+  "default-exported-object-numeric-method": "export default {\n  16(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  },\n};\n",
+  "decorated-numeric-method": "function logged<T>(value: T, _context: ClassMethodDecoratorContext): T {\n  return value;\n}\nexport class Helpers {\n  @logged\n  16(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\n",
+  "abstract-class-concrete-numeric-method": "export abstract class Helpers {\n  16(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\n",
+  "constructor-class-numeric-method": "export class Helpers {\n  label: string;\n  constructor() {\n    this.label = \"helpers\";\n  }\n  16(envelope: Record<string, unknown>) {\n    return envelope.blocks;\n  }\n}\n",
   ...Object.fromEntries(REFLECTIVE_READS.map(call => [`reflective-${call}`, `export const rows = ${call}(${PROBE_RESULT});\n`])),
 };
 /** The follow-up whose title names the gate mutants of cut #4 this census answers by read probe (the R694 carry of landing 749). */
