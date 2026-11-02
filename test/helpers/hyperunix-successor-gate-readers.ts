@@ -10,10 +10,13 @@
  * Its TILE reads every claim here - each "- <word>: <claim>" line, and the text after the reader's name in a section heading -
  * split at ", ", ", or ", ", and ", ", nor ", "; ", " or ", " and " and " nor ", and holds each piece the quote of exactly one falsifier row (MEMBERS)
  * whose pins read what that piece says. Refusal #2 on this bead (gate-prep-17, O:1576) found pieces crossed with each other
- * unpinned; cut #3 pins the crossings the lines name: each ROUTES line's scope pieces read every plant its other pieces pin in a
- * local module again in each scope the line names, and the ROUTES, IDENTITY, WRITES, CHANNEL and RUN pieces pin each form and
- * each scope their words cross. Vocabulary (refusal #2 F2): where a claim names a string literal in a place a no-substitution
- * template can also stand, the readers read the template the same way, and the census pins both forms.
+ * unpinned; cut #3 made each ROUTES line's scope pieces read every plant its other pieces pin in a local module again in each
+ * scope the line names. Refusal #3 (gate-prep-1, O:1634) found crossings that cut #3's words named and no row pinned; cut #4
+ * (R-B244, the fail-closed core) narrows the ROUTES global object and dynamic code words, the RUN plain-keys words, the IMPORT
+ * closure words and the CHANNEL setup-file closure words to crossings their own rows pin, and names every other crossing of those
+ * words under NOT CLAIMED below (the coverage is deferred to wb-tz2.21). Vocabulary (refusal #2 F2): where a claim names a
+ * string literal in a place a no-substitution template can also stand, the readers read the template the same way, and the
+ * census pins both forms.
  *
  * RESOLUTION (resolveSpecifier; paths are root-relative with / separators; a path through a link reads as written rather than as its target):
  * - builtin: node: then any name, or a bare name node's module.isBuiltin accepts: a builtin module; a builtin is never read from a file
@@ -63,8 +66,8 @@
  * - vite name: in every scope; a name beginning __vite read as an identifier, as a member name, as a string literal, as a no-substitution template, as a template part; vite's injected loaders are such names; vitest's __vitest_index__ handle is one
  * - import meta: in every scope, import.meta read other than as the base of import.meta.url
  * - sensitive builtin: in every scope; a load that resolves to one of the builtins inspector, module, process, repl, vm; each named with node:; each named without node:
- * - global object: in every scope; a free globalThis, global, self, window, process; in a package module free means declared nowhere in the module; not when it is the base of a property access; not when it is the base of an element access keyed by a string literal; not when it is the base of an element access keyed by a numeric literal; read when that member names one of those five; read when that member names createRequire, getBuiltinModule, binding, dlopen, _linkedBinding; not as the operand of typeof; not as the first argument of an admitted spy in the suite
- * - dynamic code: read in the suite; read in local modules; never in a package module; a free eval; a free Function; an eval member of a free global object; a Function member of a free global object; a member constructor read on any base
+ * - global object: in every scope; a free globalThis, global, self, window, process; in a package module a free self is one declared nowhere in the module; not when globalThis is the base of a property access; not when globalThis is the base of an element access keyed by a string literal; not when globalThis is the base of an element access keyed by a numeric literal; read when that member of globalThis names one of those five; read when that member of globalThis names createRequire, getBuiltinModule, binding, dlopen, _linkedBinding; not when window is the operand of typeof; not when globalThis is the first argument of an admitted spy in the suite
+ * - dynamic code: read in the suite; read in local modules; never in a package module; a free eval; a free Function; an eval member of globalThis read as a member name; a Function member of globalThis read as a member name; a member constructor read on any base
  * WRITES (writesOf; the cited suite only; each is a CHANNEL finding):
  * - member write: an assignment of any operator to a property access; to an element access; ++ on such a target; -- on such a target; delete of such a target; such a target of a for-in; such a target of a for-of; such a target inside a destructuring assignment; such a target read through parentheses, as, satisfies, non-null or <T> assertions
  * - mutator member: __defineGetter__, __defineSetter__, __proto__, assign, defineProperties, defineProperty, deleteProperty, set, setPrototypeOf; each read as a member name, as a string element key, as a destructured key, as a whole string literal
@@ -73,15 +76,15 @@
  * - computed member: an element access with a computed key; a string literal key is no computed key; a no-substitution template key is none; a numeric literal key is none; a computed key of an object binding pattern
  * CHANNEL (channelReading):
  * - tier config: the default test tier's one vitest config passes the landed census guard (censusGuard on the test tier) whose closed key lists refuse every key outside them; a resolver alias is refused (its landed row g-u62r5-alias); plugins are refused (its landed row g-u62r5-plugins); a refusal is a finding even when the guard names the config
- * - setup file: every setup file that config's test.setupFiles names is a closure root; it names one file as a string literal; it names one file per string literal of an array; a setup file that is a carrier is a finding; a setup file reaching a carrier is a finding; a setup file that is a vitest module is a finding; a setup file that names no file is a finding; a setup file whose closure holds a load that does not resolve is a finding
+ * - setup file: every setup file that config's test.setupFiles names is a closure root; it names one file as a string literal; it names one file per string literal of an array; a setup file that is a carrier is a finding; a setup file reaching a carrier is a finding; a setup file that is a vitest module is a finding; a setup file that names no file is a finding; a setup file holding an import declaration of a relative path that names no file is a finding
  * - cited suite: the suite's ROUTE_FORMS findings; its WRITE_FORMS findings; a sensitive builtin among its loads; the modules its loads reach are read by IMPORT
- * IMPORT (importReading; exactly one load of the suite resolves to a vitest module or to a carrier; it is an import declaration; every other load resolves to no vitest module and to no carrier; a load anywhere in the closure that does not resolve breaks; the listing names each load of the suite as written in source order; each listed load shows its form, its resolution and its identity):
+ * IMPORT (importReading; exactly one load of the suite resolves to a vitest module or to a carrier; it is an import declaration; every other load resolves to no vitest module and to no carrier; an import declaration of a relative path that names no file breaks when held at most one module below the suite; the listing names each load of the suite as written in source order; each listed load shows its form, its resolution and its identity):
  *
  * RUN (runReading):
  * - argv: the census tier resolves (the shared resolveTier) to exactly vitest run --config <file>
  * - statements: the config module holds only value import declarations of defineConfig from vitest/config, named and unaliased, and one default export
  * - default export: the default export is a call of that defineConfig with one object literal argument
- * - plain keys: every property of the config object is plain; every property of its test object is plain; a plain property has an identifier key with a value; a string key with a value is plain too; a spread is not plain; a computed key is not plain; a shorthand property is not plain; a method is not plain; an accessor is not plain; no key may appear twice
+ * - plain keys: every property of the config object is plain; every property of its test object is plain; a plain property has an identifier key with a value; a string key with a value is plain too; a spread is not plain; a computed key is not plain; a shorthand property is not plain; a method in the test object is not plain; a get accessor in the test object is not plain; no key may appear twice
  * - top-level keys: the object holds test and no other key
  * - test keys: the test object holds allowOnly and include and no other key: dir, root, testNamePattern, passWithNoTests, exclude and every other key read as a break
  * - allowOnly: allowOnly is the literal false
@@ -96,6 +99,22 @@
  * - R-PACKAGE-CODE: a package module's own dynamic code is no route (typebox builds validators through new (globalThis.Function)(...)), so a package that reaches vitest only through dynamic code reads as a module
  * - R-HELPER-PATCH: a local module the suite loads that patches a built-in at load while reaching no vitest module and holding no route reads as a module; the in-flight rewrite of a built-in is wb-tz2.3's R-RUNTIME family; the suite's own patch reads as a member write
  *
+ * NOT CLAIMED by cut #4 (R-B244; each crossing below lies outside the narrowed words; refusal #3's members are deferred to
+ * wb-tz2.21, the seat-found ones are scope sentences only):
+ *   ROUTES global object: a free global, self, window or process as the base of a property access, as the base of an element
+ *   access keyed by a string literal or a numeric literal, as the base of a member naming one of those five, createRequire,
+ *   getBuiltinModule, binding, dlopen or _linkedBinding, and as the first argument of an admitted spy in the suite; globalThis,
+ *   global, self or process as the operand of typeof; the members globalThis, global, window, createRequire, getBuiltinModule,
+ *   binding and _linkedBinding of globalThis read through an element key, and its members self and dlopen read as a member name;
+ *   whether a globalThis, global, window or process that a local module or the suite declares, or that a package module declares
+ *   anywhere, reads as a global object; which declarations bind a name (so that it is not free) in a local module or the suite
+ *   beyond a variable declaration of a plain name and a parameter: a function, class, import or destructuring declaration.
+ *   ROUTES dynamic code: an eval or Function member of global, self, window or process; the eval and Function members of
+ *   globalThis read through an element key.
+ *   RUN plain keys: a method or an accessor in the config object; a set accessor in the test object.
+ *   IMPORT and CHANNEL setup file: a load that does not resolve held two or more modules below the suite, or held in a module a
+ *   setup file loads or deeper; a load of another form than an import declaration; a load that does not resolve for a reason
+ *   other than a relative path that names no file.
  * Not claimed: what a module does at run time beyond the forms above (a value assembled at run time and handed to a form these
  * readers do not name); a resolution vite performs that the default tier's vouched config cannot express (the census guard
  * refuses every key that may redirect a module); a package installed outside the lock; a crossing of a piece with a form or a
@@ -181,8 +200,8 @@ export const ROUTE_FORMS = roster([
   ["vite name", "in every scope; a name beginning __vite read as an identifier, as a member name, as a string literal, as a no-substitution template, as a template part; vite's injected loaders are such names; vitest's __vitest_index__ handle is one"],
   ["import meta", "in every scope, import.meta read other than as the base of import.meta.url"],
   ["sensitive builtin", "in every scope; a load that resolves to one of the builtins inspector, module, process, repl, vm; each named with node:; each named without node:"],
-  ["global object", "in every scope; a free globalThis, global, self, window, process; in a package module free means declared nowhere in the module; not when it is the base of a property access; not when it is the base of an element access keyed by a string literal; not when it is the base of an element access keyed by a numeric literal; read when that member names one of those five; read when that member names createRequire, getBuiltinModule, binding, dlopen, _linkedBinding; not as the operand of typeof; not as the first argument of an admitted spy in the suite"],
-  ["dynamic code", "read in the suite; read in local modules; never in a package module; a free eval; a free Function; an eval member of a free global object; a Function member of a free global object; a member constructor read on any base"],
+  ["global object", "in every scope; a free globalThis, global, self, window, process; in a package module a free self is one declared nowhere in the module; not when globalThis is the base of a property access; not when globalThis is the base of an element access keyed by a string literal; not when globalThis is the base of an element access keyed by a numeric literal; read when that member of globalThis names one of those five; read when that member of globalThis names createRequire, getBuiltinModule, binding, dlopen, _linkedBinding; not when window is the operand of typeof; not when globalThis is the first argument of an admitted spy in the suite"],
+  ["dynamic code", "read in the suite; read in local modules; never in a package module; a free eval; a free Function; an eval member of globalThis read as a member name; a Function member of globalThis read as a member name; a member constructor read on any base"],
 ] as const);
 export type RouteForm = (typeof ROUTE_FORMS)[number]["word"];
 
@@ -197,7 +216,7 @@ export type WriteForm = (typeof WRITE_FORMS)[number]["word"];
 
 export const CHANNEL_ROOTS = roster([
   ["tier config", "the default test tier's one vitest config passes the landed census guard (censusGuard on the test tier) whose closed key lists refuse every key outside them; a resolver alias is refused (its landed row g-u62r5-alias); plugins are refused (its landed row g-u62r5-plugins); a refusal is a finding even when the guard names the config"],
-  ["setup file", "every setup file that config's test.setupFiles names is a closure root; it names one file as a string literal; it names one file per string literal of an array; a setup file that is a carrier is a finding; a setup file reaching a carrier is a finding; a setup file that is a vitest module is a finding; a setup file that names no file is a finding; a setup file whose closure holds a load that does not resolve is a finding"],
+  ["setup file", "every setup file that config's test.setupFiles names is a closure root; it names one file as a string literal; it names one file per string literal of an array; a setup file that is a carrier is a finding; a setup file reaching a carrier is a finding; a setup file that is a vitest module is a finding; a setup file that names no file is a finding; a setup file holding an import declaration of a relative path that names no file is a finding"],
   ["cited suite", "the suite's ROUTE_FORMS findings; its WRITE_FORMS findings; a sensitive builtin among its loads; the modules its loads reach are read by IMPORT"],
 ] as const);
 export type ChannelRoot = (typeof CHANNEL_ROOTS)[number]["word"];
@@ -206,7 +225,7 @@ export const RUN_FORMS = roster([
   ["argv", "the census tier resolves (the shared resolveTier) to exactly vitest run --config <file>"],
   ["statements", "the config module holds only value import declarations of defineConfig from vitest/config, named and unaliased, and one default export"],
   ["default export", "the default export is a call of that defineConfig with one object literal argument"],
-  ["plain keys", "every property of the config object is plain; every property of its test object is plain; a plain property has an identifier key with a value; a string key with a value is plain too; a spread is not plain; a computed key is not plain; a shorthand property is not plain; a method is not plain; an accessor is not plain; no key may appear twice"],
+  ["plain keys", "every property of the config object is plain; every property of its test object is plain; a plain property has an identifier key with a value; a string key with a value is plain too; a spread is not plain; a computed key is not plain; a shorthand property is not plain; a method in the test object is not plain; a get accessor in the test object is not plain; no key may appear twice"],
   ["top-level keys", "the object holds test and no other key"],
   ["test keys", "the test object holds allowOnly and include and no other key: dir, root, testNamePattern, passWithNoTests, exclude and every other key read as a break"],
   ["allowOnly", "allowOnly is the literal false"],

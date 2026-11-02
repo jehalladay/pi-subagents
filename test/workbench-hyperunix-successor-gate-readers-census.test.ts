@@ -30,7 +30,7 @@
  *   place a position piece names, every exclusion a "not", "but" or "only" piece states, a quiet twin beside a loud plant where
  *   the piece draws a line - and pin the literal reading. The CHANNEL tier-config pieces read a guard refusal that names its
  *   config through setupFiles and channelReading (an injected guard: refusal #1 U2). Cut #3 (refusal #2 on this bead, gate-prep-17
- *   O:1576, R-B203 enumerate-the-resolvable) pins the crossings each line names: every ROUTES line's scope rows read each plant
+ *   O:1576, R-B203 enumerate-the-resolvable) pins these crossings: every ROUTES line's scope rows read each plant
  *   its other rows pin in a local module again in each scope the line names (dynamic code: the suite and local modules, nothing
  *   in a package module); the ROUTES heading's carrier and CHANNEL rows and IDENTITY's carrier rows read one plant per route form
  *   in a local module, a package module and the cited suite, and every sensitive builtin name, prefix and load form in each
@@ -40,7 +40,11 @@
  *   setupFiles' injected reader (nothing is written); the RUN include rows read each regex metacharacter as itself. The gate's 27
  *   refusal #2 witnesses are pins of these rows in the gate's own shapes: U1 G01-G16, G18, G19, G21 (the ROUTES heading rows);
  *   U2 G22, G22b (any operator), G23 (parentheses), G24 (for-in), G25, G26 (destructured key); U3 G27 (a string setupFiles), G28
- *   (a literal dot).
+ *   (a literal dot). Cut #4 (refusal #3 on this bead, gate-prep-1 O:1634; R-B244, the fail-closed core) keeps every row's place
+ *   and pin count and every pin, plant and reading: it narrows the helper header's ROUTES global object and dynamic code pieces,
+ *   its RUN plain-keys pieces, its IMPORT closure piece and its CHANNEL setup-file closure piece to crossings their own rows pin
+ *   (the rows quote the narrowed pieces), and the helper header names every other crossing of those words NOT CLAIMED; that
+ *   coverage is deferred to wb-tz2.21.
  *  RESIDUALS: R-PACKAGE-CODE and R-HELPER-PATCH, each a pinned quiet row beside its loud control (FORMS and MEMBERS).
  *  CLAIM: the helper header's "- <word>: <claim>" lines equal the rosters byte for byte, section by section, in order; every
  *   roster word has exactly one FORMS row.
@@ -1195,13 +1199,13 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     member("ROUTES:global object", "self", localRoute("export const lgW = self;\n", ["global object self as a VariableDeclaration :1"])),
     member("ROUTES:global object", "window", localRoute("export const lgW = window;\n", ["global object window as a VariableDeclaration :1"])),
     member("ROUTES:global object", "process", localRoute("export const lgW = process;\n", ["global object process as a VariableDeclaration :1"])),
-    member("ROUTES:global object", "in a package module free means declared nowhere in the module",
+    member("ROUTES:global object", "in a package module a free self is one declared nowhere in the module",
       pin(() => routes("package", "export const lgW = self;\n"), ["global object self as a VariableDeclaration :1"]),
       pin(() => routes("package", "const self = 1;\nexport const lgW = self;\n"), []),
       pin(() => routes("package", "export const lgA = (self: number): number => self;\nexport const lgB = self;\n"), []),
       ...DECLARATION_KINDS.map(declaration => pin(() => routes("package", `${declaration}\nexport const lgW = self;\n`), [])),
       pin(() => routes("local", "export const lgA = (self: number): number => self;\nexport const lgB = self;\n"), ["global object self as a VariableDeclaration :2"])),
-    member("ROUTES:global object", "not when it is the base of a property access",
+    member("ROUTES:global object", "not when globalThis is the base of a property access",
       localRoute("export const lgW = globalThis.lgName;\n", []),
       localRoute("export const lgW = (globalThis).lgName;\n", []),
       localRoute("export const lgW = (globalThis as Record<string, unknown>).lgName;\n", []),
@@ -1209,13 +1213,13 @@ const MEMBER_ROWS: readonly MemberRow[] = [
       localRoute("export const lgW = globalThis!.lgName;\n", []),
       localRoute("export const lgW = (<Record<string, unknown>>globalThis).lgName;\n", []),
       localRoute("export const lgW = ((globalThis as Record<string, unknown>)).lgName;\n", [])),
-    member("ROUTES:global object", "not when it is the base of an element access keyed by a string literal",
+    member("ROUTES:global object", "not when globalThis is the base of an element access keyed by a string literal",
       localRoute('export const lgW = [globalThis["lgName"], globalThis[`lgName`]];\n', []),
       localRoute('export const lgW = globalThis[("lgName")];\n', [])),
-    member("ROUTES:global object", "not when it is the base of an element access keyed by a numeric literal",
+    member("ROUTES:global object", "not when globalThis is the base of an element access keyed by a numeric literal",
       localRoute("export const lgW = globalThis[0];\n", []),
       localRoute("export const lgW = (k: string): unknown => (globalThis as Record<string, unknown>)[k];\n", ["global object globalThis as a ElementAccessExpression :1"])),
-    member("ROUTES:global object", "read when that member names one of those five",
+    member("ROUTES:global object", "read when that member of globalThis names one of those five",
       globalMember("globalThis", false),
       globalMember("global", false),
       globalMember("self", true),
@@ -1223,16 +1227,16 @@ const MEMBER_ROWS: readonly MemberRow[] = [
       globalMember("process", false),
       localRoute('export const lgW = globalThis[("process")];\n', ["global object globalThis.process :1"]),
       localRoute("export const lgW = (globalThis).process;\n", ["global object globalThis.process :1"])),
-    member("ROUTES:global object", "read when that member names createRequire", globalMember("createRequire", false, "loader name createRequire :1")),
+    member("ROUTES:global object", "read when that member of globalThis names createRequire", globalMember("createRequire", false, "loader name createRequire :1")),
     member("ROUTES:global object", "getBuiltinModule", globalMember("getBuiltinModule", false, "loader name getBuiltinModule :1")),
     member("ROUTES:global object", "binding", globalMember("binding", false, "loader name .binding :1")),
     member("ROUTES:global object", "dlopen", globalMember("dlopen", true, "loader name 'dlopen' :1")),
     member("ROUTES:global object", "_linkedBinding", globalMember("_linkedBinding", false, "loader name ._linkedBinding :1")),
-    member("ROUTES:global object", "not as the operand of typeof",
+    member("ROUTES:global object", "not when window is the operand of typeof",
       localRoute("export const lgW = typeof window;\n", []),
       localRoute("export const lgW = typeof (window);\n", []),
       localRoute('export const lgW = typeof process === "undefined";\n', [])),
-    member("ROUTES:global object", "not as the first argument of an admitted spy in the suite",
+    member("ROUTES:global object", "not when globalThis is the first argument of an admitted spy in the suite",
       pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, "fetch");\n'), []),
       pin(() => routes("local", 'import { vi } from "vitest";\nexport const lgW = vi.spyOn(globalThis, "fetch");\n'), ["global object globalThis as a CallExpression :2"]),
       pin(() => routes("suite", 'import { vi } from "vitest";\nexport const lgW = vi["spyOn"](globalThis, "fetch");\n'), ["global object globalThis as a CallExpression :2"]),
@@ -1253,10 +1257,10 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     member("ROUTES:dynamic code", "a free Function",
       localRoute('export const lgW = Function("return 1");\n', ["dynamic code Function :1"]),
       localRoute("const Function = (): number => 1;\nexport const lgW = Function();\n", [])),
-    member("ROUTES:dynamic code", "an eval member of a free global object",
+    member("ROUTES:dynamic code", "an eval member of globalThis read as a member name",
       localRoute("export const lgW = (code: string): unknown => globalThis.eval(code);\n", ["dynamic code globalThis.eval :1"]),
       localRoute('export const lgW = (code: string): unknown => self["eval"](code);\n', ["dynamic code self.eval :1"])),
-    member("ROUTES:dynamic code", "a Function member of a free global object",
+    member("ROUTES:dynamic code", "a Function member of globalThis read as a member name",
       localRoute('export const lgW = new globalThis.Function("return 1");\n', ["dynamic code globalThis.Function :1"]),
       localRoute('export const lgW = new window.Function("return 1");\n', ["dynamic code window.Function :1"])),
     member("ROUTES:dynamic code", "a member constructor read on any base",
@@ -1425,7 +1429,7 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => setupChannel(["node_modules/vitest/dist/index.js"]), ["setup file node_modules/vitest/dist/index.js: vitest (vitest)"])),
   member("CHANNEL:setup file", "a setup file that names no file is a finding",
     pin(() => setupChannel(["test/helpers/lg-no-setup.ts"]), ["setup file test/helpers/lg-no-setup.ts: a load does not resolve: test/helpers/lg-no-setup.ts names no file"])),
-  member("CHANNEL:setup file", "a setup file whose closure holds a load that does not resolve is a finding",
+  member("CHANNEL:setup file", "a setup file holding an import declaration of a relative path that names no file is a finding",
     pin(() => setupChannel(["test/helpers/lg-setup3.ts"], files(["test/helpers/lg-setup3.ts", `${MISSING_LOAD}\n`])),
       ["setup file test/helpers/lg-setup3.ts: a load does not resolve: test/helpers/lg-setup3.ts:1 loads './lg-missing.js': test/helpers/lg-missing.js names no file"])),
   member("CHANNEL:cited suite", "the suite's ROUTE_FORMS findings",
@@ -1459,7 +1463,7 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => importReading(BASE, SUITE).listing.filter(entry => entry.includes(" -> vitest (")).length, 1)),
   member("IMPORT", "to no carrier",
     pin(() => importReading(BASE, SUITE).listing.filter(entry => entry.includes(" -> carrier (")).length, 0)),
-  member("IMPORT", "a load anywhere in the closure that does not resolve breaks",
+  member("IMPORT", "an import declaration of a relative path that names no file breaks when held at most one module below the suite",
     pin(() => suiteImport(files([HX, brokenHx])),
       `IMPORT <a load does not resolve: ${HX}:${brokenHx.split("\n").indexOf(MISSING_LOAD) + 1} loads './lg-missing.js': test/helpers/lg-missing.js names no file>`),
     pin(() => suiteImport(plantSuite('import "./helpers/lg-missing.js";')), `IMPORT <a load does not resolve: './helpers/lg-missing.js' at line ${PLANT_LINE}: test/helpers/lg-missing.js names no file>`)),
@@ -1512,9 +1516,9 @@ const MEMBER_ROWS: readonly MemberRow[] = [
     pin(() => run(config('["include"]: ["test/**/*.census.ts"], allowOnly: false')), brokenRun("'s test object holds a computed key"))),
   member("RUN:plain keys", "a shorthand property is not plain",
     pin(() => run('import { defineConfig } from "vitest/config";\nexport default defineConfig({ test });\n'), brokenRun("'s config holds a shorthand property"))),
-  member("RUN:plain keys", "a method is not plain",
+  member("RUN:plain keys", "a method in the test object is not plain",
     pin(() => run(config('allowOnly: false, include() { return ["test/**/*.census.ts"]; }')), brokenRun("'s test object holds a method or accessor"))),
-  member("RUN:plain keys", "an accessor is not plain",
+  member("RUN:plain keys", "a get accessor in the test object is not plain",
     pin(() => run(config(`${CENSUS_TEST}, get testNamePattern() { return "^$"; }`)), brokenRun("'s test object holds a method or accessor"))),
   member("RUN:plain keys", "no key may appear twice",
     pin(() => run(config('include: ["qa/**/*.census.ts"], allowOnly: false, include: ["test/**/*.census.ts"]')), brokenRun("'s test object holds the key include twice")),
