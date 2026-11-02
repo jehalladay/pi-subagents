@@ -18,7 +18,10 @@
  * form outside these tables is outside every claim, where the fail-closed readers refuse it), and the code reader
  * (codeShapeKeysOf, codeComposedOf: the TypeScript parse of a residual source member) that reads S2's liveness from the
  * member's parse, where a comment is trivia and a string's content is no code, and of whose literal tokens only the
- * double-quoted strings compose (COMPOSE_PLANTS).
+ * double-quoted strings compose (COMPOSE_PLANTS); wb-4z24 (the R694 follow-up from wb-0lf.8's landing 757) pins the code
+ * reader's parse kind on each of its readers (PARSE_PLANTS, JSX_SHAPED) and the shape reader reading no key from SHAPE_QUIET's
+ * plants, which wb-oddy (the R694 follow-up from wb-4z24's landing 791) holds at five places, one plant per place, each
+ * answering the shape-reader survivor the R694 row that filed it names in the tracker export (quietSurvivorsOf).
  */
 import { createHash } from "node:crypto";
 import { isDeepStrictEqual, types } from "node:util";
@@ -2016,7 +2019,7 @@ export async function driveEffects(make: () => Drive, after: () => void = () => 
     thirdDiffers: calls.length === 3 && !isDeepStrictEqual(calls[2]?.outcome, calls[0]?.outcome),
   };
 }
-/** A source member's double-quoted string literals, each decoded as JSON decodes it, joined in order: the word R-COMPOSED's member builds at run time, read over its raw text, comments included (so R-COMMENTED refuses a comment opener). */
+/** A source member's double-quoted string literals, each decoded as JSON decodes it, joined in order: the word R-COMPOSED's member builds at run time, read over its raw text, comments included (so R-COMMENTED refuses the comment openers FAIL_CLOSED's S2 forms' texts hold). */
 export const composedOf = (text: string): string =>
   [...text.matchAll(/"((?:[^"\\\n]|\\.)*)"/g)]
     .map(match => {
@@ -2028,7 +2031,7 @@ export const composedOf = (text: string): string =>
       }
     })
     .join("");
-/** The object keys a source member's text names (an identifier before a colon) that are keys of the given document: R-UNNAMED's static reading of a GraphDataIR-shaped value, over its raw text, comments included (so R-COMMENTED refuses a comment opener). */
+/** The object keys a source member's text names (an identifier before a colon) that are keys of the given document: R-UNNAMED's static reading of a GraphDataIR-shaped value, over its raw text, comments included (so R-COMMENTED refuses the comment openers FAIL_CLOSED's S2 forms' texts hold). */
 export const shapeKeysOf = (text: string, keys: ReadonlySet<string>): string[] => [...new Set([...text.matchAll(/\b([A-Za-z_][A-Za-z0-9_]*)\s*:/g)].map(match => match[1] ?? "").filter(key => keys.has(key)))];
 const withGraph = (outcome: Exported, change: (graph: Record<string, unknown>) => Record<string, unknown>): Exported => ({ ...outcome, graph: change(structuredClone(outcome.graph) as Record<string, unknown>) });
 export const RESIDUALS: Readonly<Record<string, readonly Residual[]>> = {
@@ -2245,17 +2248,153 @@ export function unpinnedExecutorRequestFindings(texts: ReadonlyMap<string, strin
   return findings;
 }
 /**
- * The comment openers (// and /*) a residual source member's raw text holds, inside its string literals too: the static
- * liveness proxies (shapeKeysOf, composedOf) read raw text and cannot tell a comment from code.
+ * The comment openers (// and /*) a residual source member's raw text holds, read over the raw text, a double-quoted string
+ * literal's included: the static liveness proxies (shapeKeysOf, composedOf) read raw text and cannot tell a comment from code.
+ * What the census claims of it is exactly the texts FAIL_CLOSED's eight S2 forms refuse, each with its opener count (wb-0x41
+ * cut #3, R-B181's enumerate-the-resolvable form; each opener written with the characters beside it in its form's text):
+ * // opening each non-empty line, "// e" and "//d"; after a two-space indentation, "  // a" and "  //a"; after code ending in
+ * ";" at a line's end, "; // a", "; //a", ";// a" and ";//a"; inside a double-quoted string literal, "a // b", "a //b",
+ * "a// b" and "a//b"; /* opening the text, "/* a" and "/*a"; between code on a line, "export /* a", "export/* a",
+ * "export /*a" and "export/*a" (each block closed before " const") and "( /* a", "(/* a", "( /*a" and "(/*a" (each closed
+ * before "entities"); opening a later line, "/*" ending its line, "/* a" and "/*a", each block closing on a later line; and two
+ * openers on one line, each counted, as TRAILING_LINES' c1-c5 write them after code ending in ";", each opener after one space:
+ * a block comment then a line comment, a line comment holding // and one holding /*, two block comments, and a block comment
+ * holding //. So each position above but those two-opener lines is held both with one space and with none beside the opener,
+ * before it and after it wherever code or text stands there, and each opener is counted on its own, never per line. An opener
+ * with other characters beside it (a tab, a run of spaces, another letter, digit or mark), at another position, or three or
+ * more on one line, is outside the claim.
  */
 export const commentOpeners = (text: string): number => [...text.matchAll(/\/[/*]/g)].length;
-/** S2's fail-closed refusal (R-B73): a residual source member whose text holds a comment opener is refused, R-COMMENTED. */
+/** S2's fail-closed refusal (R-B73): a residual source member whose text holds a comment opener (commentOpeners) is refused, R-COMMENTED, claimed on the texts FAIL_CLOSED's S2 forms pin. */
 export const commentFindings = (path: string, text: string): string[] => {
   const openers = commentOpeners(text);
   return openers === 0 ? [] : [`R-COMMENTED ${path} holds ${openers} comment opener${openers === 1 ? "" : "s"} (// or /*), so its static liveness proxy could read a comment as code`];
 };
 /** The paths a fail-closed reader's findings name (each finding's second word), each once in order: the reader its read proof drives. */
 export const findingPaths = (findings: readonly string[]): string[] => [...new Set(findings.map(finding => finding.split(" ", 2)[1] ?? ""))];
+/** The scopes whose git listing this census reads: src (G1, D3, G2 and the fail-closed readers) and qa (G2). */
+export const LISTED_SCOPES = ["src", "qa"] as const;
+/** An entry git would commit under a listed scope that is no regular file on disk, with its kind as lstat reads it. */
+export interface ListedEntry {
+  readonly path: string;
+  readonly kind: "symbolic link" | "directory" | "other";
+}
+/**
+ * The listing's fail-closed refusal (wb-0x41, landing 677's carried F1): an entry git would commit under a listed scope that is
+ * no regular file is refused, S-NONREGULAR, since the landed listers (gitList's regular-file filter, walkList's lstat walk)
+ * drop it, so no reader of this census reads a module through it. Claimed on the listing forms pinned (FC-LISTING-SYMLINK's
+ * untracked links, FC-LISTING-TRACKED's links in git's index; wb-0x41 cut #2, refusal #1's U1).
+ */
+export const nonRegularFindings = (entries: readonly ListedEntry[]): string[] => entries.map(entry => `S-NONREGULAR ${entry.path} is a ${entry.kind} git would commit, which the landed listers drop, so no reader of this census reads it`);
+/**
+ * The outside anchor a FAIL_CLOSED form answers (wb-0x41, landing 677's carried F4): the bead whose row in the tracker export
+ * filed the form, and the name that row gives it - a refusal #5 hollowing (RH-...) or residual family (Q<n>) of an item
+ * wb-0lf.8's description enumerates (refusalItemsOf), one of cut #6's own forms in wb-0lf.2's notes (ownFormsOf), a gate
+ * plant wb-0x41's carried finding lines name (carriedPlantsOf), or a gate hollowing wb-0x41's refusal #1 names in its UNMET
+ * lines (unmetHollowingsOf, wb-0x41 cut #2). The fail-closed row holds the forms' anchors to the names those rows give, both
+ * ways, so a form removed from every literal of the census, this helper and the roster together still reds.
+ */
+export interface FailClosedAnchor {
+  readonly bead: string;
+  readonly name: string;
+}
+/** The bead whose description enumerates refusal #5's items, one per "- U<n> " line (R-B73's rule-19 structural-exit child). */
+export const REFUSAL_ITEMS_BEAD = "wb-0lf.8";
+/** The R694 follow-up landing 677 filed for its carried F1, F2 and F4: its filing note's carried lines name the gate plants. */
+export const CARRIED_BEAD = "wb-0x41";
+/** A bead's description in the tracker export text (one JSON row per line), or undefined when no row of that id carries one. */
+export function rowDescription(exportText: string, bead: string): string | undefined {
+  for (const line of exportText.split("\n")) {
+    if (!line.includes(`"id":"${bead}"`)) continue;
+    const row: unknown = JSON.parse(line);
+    if (typeof row !== "object" || row === null) continue;
+    const { id, description } = row as { readonly id?: unknown; readonly description?: unknown };
+    if (id === bead && typeof description === "string") return description;
+  }
+  return undefined;
+}
+/** One refusal #5 item of a description: its id (U<n>), the claim its line names and the names it gives the forms. */
+export interface RefusalItem {
+  readonly item: string;
+  readonly claim: string;
+  readonly names: readonly string[];
+}
+/**
+ * Refusal #5's items as a description enumerates them: each "- U<n> " line in order, with the claim it names (the first of G1,
+ * D3, G3 or S2 on the line) and its names - the hollowings it names (RH-...), or, on a line naming none, its residual families
+ * (Q<n>).
+ */
+export function refusalItemsOf(description: string): RefusalItem[] {
+  const items: RefusalItem[] = [];
+  for (const line of description.split("\n")) {
+    const item = /^- (U\d+) /.exec(line)?.[1];
+    if (item === undefined) continue;
+    const hollowings = [...line.matchAll(/\bRH-[A-Z0-9]+(?:-[A-Z0-9]+)*/g)].map(match => match[0]);
+    const families = [...line.matchAll(/\bQ\d+\b/g)].map(match => match[0]);
+    items.push({ item, claim: /\b(G1|D3|G3|S2)\b/.exec(line)?.[1] ?? "", names: hollowings.length > 0 ? hollowings : families });
+  }
+  return items;
+}
+/** The forms cut #6 named as its own in the landed delivery note a bead's notes hold ("two of this cut's own (A, B: ..."), each once, in order. */
+export function ownFormsOf(notes: string): string[] {
+  const names: string[] = [];
+  for (const match of notes.matchAll(/two of this cut's own \(([A-Z0-9, -]+):/g)) for (const name of (match[1] ?? "").split(", ")) if (/^FC-[A-Z0-9-]+$/.test(name) && !names.includes(name)) names.push(name);
+  return names;
+}
+/**
+ * The gate plants (G<n>-P-...) an R694 filing note's carried finding lines name: its "[leads] - " and "[rides] - " lines, read up
+ * to the note's first "Context: " line (so its not-carried lines and every later note are never read), each once, in order.
+ */
+export function carriedPlantsOf(notes: string): string[] {
+  const names: string[] = [];
+  for (const line of notes.split("\n")) {
+    if (line.startsWith("Context: ")) break;
+    if (!line.startsWith("[leads] - ") && !line.startsWith("[rides] - ")) continue;
+    for (const match of line.matchAll(/\bG\d+-P-[A-Z0-9]+(?:-[A-Z0-9]+)*/g)) if (!names.includes(match[0])) names.push(match[0]);
+  }
+  return names;
+}
+/** A gate hollowing an unmet line names, with the regular expression literal the line writes right after its name, when it writes one. */
+export interface UnmetHollowing {
+  readonly name: string;
+  readonly pattern?: { readonly source: string; readonly flags: string };
+}
+/** One unmet item of a refusal note: its id (U<n>), the typed refusal its line names first and the gate hollowings it names. */
+export interface UnmetItem {
+  readonly item: string;
+  readonly refusal: string;
+  readonly hollowings: readonly UnmetHollowing[];
+}
+/** The typed refusals an unmet line of wb-0x41's refusal #1 names: the listing's and S2's. */
+const UNMET_REFUSAL = /\b(S-NONREGULAR|R-COMMENTED)\b/;
+/** A regular expression literal opening a text: its source (an escape or a character class read whole, so a slash inside either never ends it) and its flags. */
+const REGEX_LITERAL = /^\/((?:\\.|\[(?:\\.|[^\]\\\n])*\]|[^/\\[\n])+)\/([dgimsuvy]*)/;
+/**
+ * The unmet items of a bead's first refusal (wb-0x41 cut #2: refusal #1's UNMET lines name the gate's hollowings, so a form that
+ * answers one is bound to the row that named it): each "- U<n> (" line that follows the notes' first "UNMET (" line, up to the
+ * first line that is no such line, in order, with the typed refusal it names first (S-NONREGULAR or R-COMMENTED) and the gate
+ * hollowings it names (L<n>-... names, never a gate plant, L<n>-P-...), each once, each with the regular expression literal its
+ * line writes after the name's first mention, when one follows. Every other line and every later note is never read.
+ */
+export function unmetHollowingsOf(notes: string): UnmetItem[] {
+  const lines = notes.split("\n");
+  const start = lines.findIndex(line => line.startsWith("UNMET ("));
+  if (start === -1) return [];
+  const items: UnmetItem[] = [];
+  for (const line of lines.slice(start + 1)) {
+    const item = /^- (U\d+) \(/.exec(line)?.[1];
+    if (item === undefined) break;
+    const hollowings: UnmetHollowing[] = [];
+    for (const match of line.matchAll(/\bL\d+-(?!P-)[A-Z0-9]+(?:-[A-Z0-9]+)*/g)) {
+      if (hollowings.some(entry => entry.name === match[0])) continue;
+      const after = line.slice(match.index + match[0].length);
+      const literal = after.startsWith(" /") ? REGEX_LITERAL.exec(after.slice(1)) : null;
+      hollowings.push(literal === null ? { name: match[0] } : { name: match[0], pattern: { source: literal[1] ?? "", flags: literal[2] ?? "" } });
+    }
+    items.push({ item, refusal: UNMET_REFUSAL.exec(line)?.[1] ?? "", hollowings });
+  }
+  return items;
+}
 /** A form outside G1's or D3's pinned spellings: a src module read after the tracked modules. */
 export interface FailClosedSource {
   readonly kind: "source";
@@ -2267,6 +2406,7 @@ export interface FailClosedSource {
   readonly words: readonly string[];
   /** Each match the claim's fail-closed reader refuses, in order: its word and its text. */
   readonly unpinned: readonly { readonly word: string; readonly match: string }[];
+  readonly anchor: FailClosedAnchor;
 }
 /** A form outside G3's pinned plants: an in-memory edit of the live docs/03, read by docs03Reading and judged by docs03Findings. */
 export interface FailClosedDocs {
@@ -2276,6 +2416,7 @@ export interface FailClosedDocs {
   readonly edit: (page: string) => string;
   /** The docs rules it is refused with, in order. */
   readonly expect: readonly string[];
+  readonly anchor: FailClosedAnchor;
 }
 /** A form outside S2's liveness reading: a residual source member's text edited. */
 export interface FailClosedMember {
@@ -2285,14 +2426,108 @@ export interface FailClosedMember {
   /** The residual source member's path (RESIDUALS). */
   readonly member: string;
   readonly edit: (text: string) => string;
+  /** The comment openers the edited member's text holds (commentOpeners; the member itself holds none), held to the roster too, so each opener a multi-opener form pins is read. */
+  readonly openers: number;
+  readonly anchor: FailClosedAnchor;
 }
-export type FailClosedForm = FailClosedSource | FailClosedDocs | FailClosedMember;
-/** Every non-empty line behind a line comment: the member defines nothing (refusal #5's S2-Q1-COMMENTED and S2-Q2-COMMENTED). */
+/**
+ * A form outside every listing this census reads (wb-0x41): a scratch repository whose src and qa hold symbolic links beside
+ * regular modules. git would commit each link it neither ignores nor misses on disk, the landed listers drop it, and the
+ * listing's fail-closed refusal names each one (S-NONREGULAR). FC-LISTING-SYMLINK (landing 677's carried F1, the gate's
+ * G15-P-G1-SYMLINK plant) holds its links untracked, beside a link git ignores; FC-LISTING-TRACKED (refusal #1's U1, the gate's
+ * L2-NR-NO-CACHED) holds its links in git's index, beside an untracked link git lists before them and a tracked module missing
+ * on disk.
+ */
+export interface FailClosedListing {
+  readonly kind: "listing";
+  readonly id: string;
+  readonly claim: "LISTING";
+  /** The scratch tree's regular files, path to text. */
+  readonly files: Readonly<Record<string, string>>;
+  /** The scratch tree's symbolic links, path to target (relative to the link's directory, as written into the link). */
+  readonly links: Readonly<Record<string, string>>;
+  /** The files and links git add puts in the scratch repository's index (tracked), in path order. */
+  readonly tracked: readonly string[];
+  /** The links the scratch repository's own exclude file names (.git/info/exclude: git's ignored set, no .gitignore in the tree). */
+  readonly ignored: readonly string[];
+  /** The tracked files removed from disk after git add (git's index lists them, the disk holds none). */
+  readonly removed: readonly string[];
+  /** The site word the module behind each src link git would commit that reaches one of the files names, as siteFindings reads it through the link. */
+  readonly word: string;
+  readonly anchor: FailClosedAnchor;
+}
+export type FailClosedForm = FailClosedSource | FailClosedDocs | FailClosedMember | FailClosedListing;
+/**
+ * Every non-empty line behind a line comment: the member defines nothing (refusal #5's S2-Q1-COMMENTED and S2-Q2-COMMENTED).
+ * The opener is followed by one space on the text's first, third, ... lines and by the line's code on its second, fourth, ...
+ * (wb-0x41 cut #3, refusal #2's U1: L2-CO-LINE-SPACE, reading // only before a space, misses the second line's opener).
+ */
 const commentedOut = (text: string): string =>
   text
     .split("\n")
-    .map(line => (line === "" ? line : `// ${line}`))
+    .map((line, index) => (line === "" ? line : `//${index % 2 === 0 ? " " : ""}${line}`))
     .join("\n");
+/** A block comment before the member's text (the gate's G15-P-S2-Q1-BLOCKCOMMENT plant): the member still defines its value, and its one comment opener is R-COMMENTED's block half. */
+const blockCommented = (text: string): string => `/* a note */ ${text}`;
+/**
+ * The lines blockMidLine writes after the member's text (wb-0x41 cut #3, refusal #2's U2): a block comment between code on a
+ * line, after "export" and before " const", or after "(" and before "entities", one space or none before its opener and one
+ * space or a letter after it (L2-CO-BLOCK-AFTER-SPACE, reading /* only after a line's start or white space, misses the openers
+ * a letter or "(" precedes; L2-CO-BLOCK-START-OR-SPACE, reading /* only at a line's start or before a space, the ones a letter
+ * follows).
+ */
+const MID_LINE_LINES = [
+  "export/* a note */ const m1 = 1;",
+  "export /*a note*/ const m2 = 2;",
+  "export/*a note*/ const m3 = 3;",
+  "export const m4 = (/* a note */entities: unknown[]): unknown[] => entities;",
+  "export const m5 = ( /* a note */entities: unknown[]): unknown[] => entities;",
+  "export const m6 = (/*a note*/entities: unknown[]): unknown[] => entities;",
+  "export const m7 = ( /*a note*/entities: unknown[]): unknown[] => entities;",
+] as const;
+/** A block comment between code on the member's first line, after its first word, then MID_LINE_LINES (refusal #1's U2: L2-CO-BLOCK-TEXT-START, reading /* at the text's start only, misses every opener). */
+const blockMidLine = (text: string): string => `${text.replace(" ", " /* a note */ ")}${MID_LINE_LINES.map(line => `${line}\n`).join("")}`;
+/**
+ * Two line comments after a two-space indentation, on lines before the member's text, the opener followed by one space and by a
+ * letter (refusal #1's U2: L2-CO-LINE-LINE-START, reading // at a line's start only, misses both; wb-0x41 cut #3, refusal #2's
+ * U1: L2-CO-LINE-SPACE, reading // only before a space, misses the second).
+ */
+const lineIndented = (text: string): string => `  // a note\n  //a note\n${text}`;
+/**
+ * The lines lineTrailing writes after the member's text (wb-0x41 cut #3, refusal #2's U1 and U3), each opener after code ending
+ * in ";" on its line: a line comment, one space or none before its opener and one space or a letter after it (L2-CO-LINE-SPACE
+ * misses the openers a letter follows, L2-CO-LINE-AFTER-SPACE, reading // only after a line's start or white space, the ones
+ * ";" precedes); a double-quoted string literal holding //, one space or none on each side of it (commentOpeners' string-literal
+ * reading; L2-CO-LINE-SPACE misses "a //b" and "a//b", L2-CO-LINE-AFTER-SPACE "a// b" and "a//b"); and two openers on one line,
+ * each counted (L2-CO-PER-LINE, counting the lines that hold an opener, reads one on each).
+ */
+const TRAILING_LINES = [
+  "export const t1 = 1; //a note",
+  "export const t2 = 2;// a note",
+  "export const t3 = 3;//a note",
+  'export const NOTE = "a // b";',
+  'export const NOTE1 = "a //b";',
+  'export const NOTE2 = "a// b";',
+  'export const NOTE3 = "a//b";',
+  "export const c1 = 1; /* a */ // b",
+  "export const c2 = 2; // a // b",
+  "export const c3 = 3; // a /* b",
+  "export const c4 = 4; /* a */ /* b */",
+  "export const c5 = 5; /* a // b */",
+] as const;
+/**
+ * A line comment after code at the end of the member's first line, then TRAILING_LINES (refusal #1's U2: every opener stands
+ * after code on its line, where L2-CO-BOTH-LINE-START, reading an opener at a line's start only, reads none).
+ */
+const lineTrailing = (text: string): string => `${text.replace("\n", " // a note\n")}${TRAILING_LINES.map(line => `${line}\n`).join("")}`;
+/** A block comment opening the text with no space after its opener (refusal #1's U2: the opener L2-CO-BLOCK-SPACE, reading /* only before a space, misses). */
+const blockUnspaced = (text: string): string => `/*a note*/ ${text}`;
+/**
+ * Three block comments opening the lines after the member's first, each closing on a later line, the opener followed by its
+ * line's end, by one space and by a letter (refusal #1's U2: L2-CO-BLOCK-SAME-LINE, reading /* only when its block closes on its
+ * line, misses all three; wb-0x41 cut #3).
+ */
+const blockMultiLine = (text: string): string => text.replace("\n", "\n/*\n * a note\n */\n/* a note\n */\n/*a note\n*/\n");
 /**
  * The fail-closed row (R-B73, R-B67's one pinned row proving that a form outside the pinned set refuses): refusal #5's twelve
  * plants, one per member of its U1-U5, each outside its claim's pinned set and each refused with exactly its typed refusals.
@@ -2301,14 +2536,26 @@ const commentedOut = (text: string): string =>
  * and a thematic break leading the boundary section, and a paragraph holding GraphPolicyCLI between the Ownership boundaries
  * heading and its table; S2's two (U5): q1-shape and q2-joined commented out. And two of this cut's own, FC-G1-EVERY-MATCH and
  * FC-D3-EVERY-MATCH: an unpinned spelling after a pinned one in one module (G1's for each of its two words), so each
- * fail-closed reader is proven on every match and every word, never only the first.
+ * fail-closed reader is proven on every match and every word, never only the first. And wb-0x41's two (landing 677's carried
+ * F1 and F2, each the gate plant its finding names): FC-S2-Q1-BLOCK-COMMENT (G15-P-S2-Q1-BLOCKCOMMENT: q1-shape with a block
+ * comment before its text, R-COMMENTED's block half) and FC-LISTING-SYMLINK (G15-P-G1-SYMLINK: symbolic links git would
+ * commit under src and qa, untracked, beside a link git ignores, the listing's S-NONREGULAR). And wb-0x41 cut #2's six (its
+ * refusal #1, each form answering the gate hollowing its UNMET line names, and each that hollowing's falsifier): five S2
+ * positions of q1-shape's openers (U2: FC-S2-Q1-BLOCK-MID-LINE, FC-S2-Q1-LINE-INDENTED, FC-S2-Q1-LINE-TRAILING,
+ * FC-S2-Q1-BLOCK-UNSPACED, FC-S2-Q1-BLOCK-MULTI-LINE) and FC-LISTING-TRACKED (U1: links in git's index, the listing's tracked
+ * half). wb-0x41 cut #3 (refusal #2, R-B181's enumerate-the-resolvable form) keeps the twenty-two forms and their anchors and
+ * widens five S2 forms' texts (FC-S2-Q1-COMMENTED, FC-S2-Q1-LINE-INDENTED, FC-S2-Q1-LINE-TRAILING, FC-S2-Q1-BLOCK-MID-LINE,
+ * FC-S2-Q1-BLOCK-MULTI-LINE), so each opener position commentOpeners' doc lists, but its two-opener lines, is held both with
+ * one space and with none beside the opener, before it and after it wherever code or text stands there, and
+ * FC-S2-Q1-LINE-TRAILING holds lines with two openers, each counted; that doc lists the texts exactly. Each form names its
+ * outside anchor (FailClosedAnchor).
  */
 export const FAIL_CLOSED: readonly FailClosedForm[] = [
-  { kind: "source", id: "FC-G1-CAMEL", claim: "G1", path: "src/workbench/zz-fc-g1-camel.ts", text: 'export const graphPolicyLabel = "seam";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graphPolicy" }] },
-  { kind: "source", id: "FC-G1-SENTENCE", claim: "G1", path: "src/workbench/zz-fc-g1-sentence.ts", text: "// Graph policy decision seam\nexport const placed = 1;\n", words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "Graph policy" }] },
-  { kind: "source", id: "FC-G1-RUN-LONG", claim: "G1", path: "src/workbench/zz-fc-g1-run-long.ts", text: 'export const LABEL = "graph -- policy";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graph -- policy" }] },
-  { kind: "source", id: "FC-G1-RUN3-SAME", claim: "G1", path: "src/workbench/zz-fc-g1-run3-same.ts", text: 'export const LABEL = "graph___policy";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graph___policy" }] },
-  { kind: "source", id: "FC-G1-UNEVEN", claim: "G1", path: "src/workbench/zz-fc-g1-uneven.ts", text: 'export const GRAPH_DATAIR = "v1";\n', words: ["GraphDataIR"], unpinned: [{ word: "GraphDataIR", match: "GRAPH_DATAIR" }] },
+  { kind: "source", id: "FC-G1-CAMEL", claim: "G1", path: "src/workbench/zz-fc-g1-camel.ts", text: 'export const graphPolicyLabel = "seam";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graphPolicy" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-CAMEL" } },
+  { kind: "source", id: "FC-G1-SENTENCE", claim: "G1", path: "src/workbench/zz-fc-g1-sentence.ts", text: "// Graph policy decision seam\nexport const placed = 1;\n", words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "Graph policy" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-SENTENCE" } },
+  { kind: "source", id: "FC-G1-RUN-LONG", claim: "G1", path: "src/workbench/zz-fc-g1-run-long.ts", text: 'export const LABEL = "graph -- policy";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graph -- policy" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-RUN-LONG" } },
+  { kind: "source", id: "FC-G1-RUN3-SAME", claim: "G1", path: "src/workbench/zz-fc-g1-run3-same.ts", text: 'export const LABEL = "graph___policy";\n', words: ["GraphPolicy"], unpinned: [{ word: "GraphPolicy", match: "graph___policy" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-RUN3-SAME" } },
+  { kind: "source", id: "FC-G1-UNEVEN", claim: "G1", path: "src/workbench/zz-fc-g1-uneven.ts", text: 'export const GRAPH_DATAIR = "v1";\n', words: ["GraphDataIR"], unpinned: [{ word: "GraphDataIR", match: "GRAPH_DATAIR" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-UNEVEN" } },
   {
     kind: "source",
     id: "FC-G1-EVERY-MATCH",
@@ -2320,21 +2567,65 @@ export const FAIL_CLOSED: readonly FailClosedForm[] = [
       { word: "GraphPolicy", match: "graphPolicy" },
       { word: "GraphDataIR", match: "GRAPH_DATAIR" },
     ],
+    anchor: { bead: "wb-0lf.2", name: "FC-G1-EVERY-MATCH" },
   },
-  { kind: "source", id: "FC-D3-CAMEL", claim: "D3", path: "src/workbench/zz-fc-d3-camel.ts", text: 'export const executorRequest = { executor: "furnace" };\n', words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "executorRequest" }] },
-  { kind: "source", id: "FC-D3-SENTENCE", claim: "D3", path: "src/workbench/zz-fc-d3-sentence.ts", text: "// Executor request shape\nexport const placed = 1;\n", words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "Executor request" }] },
-  { kind: "source", id: "FC-D3-EVERY-MATCH", claim: "D3", path: "src/workbench/zz-fc-d3-every-match.ts", text: 'export const KINDS = ["ExecutorRequest", "executorRequest"];\n', words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "executorRequest" }] },
-  { kind: "docs", id: "FC-G3-LEAD-HEADING", claim: "G3", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n### Status\n\n`), expect: ["boundary-first"] },
-  { kind: "docs", id: "FC-G3-LEAD-BREAK", claim: "G3", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n---\n\n`), expect: ["boundary-first"] },
+  { kind: "source", id: "FC-D3-CAMEL", claim: "D3", path: "src/workbench/zz-fc-d3-camel.ts", text: 'export const executorRequest = { executor: "furnace" };\n', words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "executorRequest" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-D3-CAMEL" } },
+  { kind: "source", id: "FC-D3-SENTENCE", claim: "D3", path: "src/workbench/zz-fc-d3-sentence.ts", text: "// Executor request shape\nexport const placed = 1;\n", words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "Executor request" }], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-D3-SENTENCE" } },
+  { kind: "source", id: "FC-D3-EVERY-MATCH", claim: "D3", path: "src/workbench/zz-fc-d3-every-match.ts", text: 'export const KINDS = ["ExecutorRequest", "executorRequest"];\n', words: ["ExecutorRequest"], unpinned: [{ word: "ExecutorRequest", match: "executorRequest" }], anchor: { bead: "wb-0lf.2", name: "FC-D3-EVERY-MATCH" } },
+  { kind: "docs", id: "FC-G3-LEAD-HEADING", claim: "G3", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n### Status\n\n`), expect: ["boundary-first"], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-FIRST-HEADING" } },
+  { kind: "docs", id: "FC-G3-LEAD-BREAK", claim: "G3", edit: page => onceIn(page, `## ${BOUNDARY_HEADING}\n\n`, `## ${BOUNDARY_HEADING}\n\n---\n\n`), expect: ["boundary-first"], anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-FIRST-HR" } },
   {
     kind: "docs",
     id: "FC-G3-OTHER-LEAD",
     claim: "G3",
     edit: page => onceIn(page, `## ${OWNERSHIP_HEADING}\n\n`, `## ${OWNERSHIP_HEADING}\n\n${GP_OWNER} decides policy scores through the gp seam at src/workbench/gp-seam.ts.\n\n`),
     expect: ["ownership-other"],
+    anchor: { bead: REFUSAL_ITEMS_BEAD, name: "RH-OTHER-LEAD" },
   },
-  { kind: "member", id: "FC-S2-Q1-COMMENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: commentedOut },
-  { kind: "member", id: "FC-S2-Q2-COMMENTED", claim: "S2", member: "src/workbench/q2-joined.ts", edit: commentedOut },
+  { kind: "member", id: "FC-S2-Q1-COMMENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: commentedOut, openers: 2, anchor: { bead: REFUSAL_ITEMS_BEAD, name: "Q1" } },
+  { kind: "member", id: "FC-S2-Q2-COMMENTED", claim: "S2", member: "src/workbench/q2-joined.ts", edit: commentedOut, openers: 1, anchor: { bead: REFUSAL_ITEMS_BEAD, name: "Q2" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-COMMENT", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockCommented, openers: 1, anchor: { bead: CARRIED_BEAD, name: "G15-P-S2-Q1-BLOCKCOMMENT" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-MID-LINE", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockMidLine, openers: 8, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-TEXT-START" } },
+  { kind: "member", id: "FC-S2-Q1-LINE-INDENTED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: lineIndented, openers: 2, anchor: { bead: CARRIED_BEAD, name: "L2-CO-LINE-LINE-START" } },
+  { kind: "member", id: "FC-S2-Q1-LINE-TRAILING", claim: "S2", member: "src/workbench/q1-shape.ts", edit: lineTrailing, openers: 18, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BOTH-LINE-START" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-UNSPACED", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockUnspaced, openers: 1, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-SPACE" } },
+  { kind: "member", id: "FC-S2-Q1-BLOCK-MULTI-LINE", claim: "S2", member: "src/workbench/q1-shape.ts", edit: blockMultiLine, openers: 3, anchor: { bead: CARRIED_BEAD, name: "L2-CO-BLOCK-SAME-LINE" } },
+  {
+    kind: "listing",
+    id: "FC-LISTING-SYMLINK",
+    claim: "LISTING",
+    files: { "qa/zz-g15-target.ts": 'export const graphPolicyLabel = "seam";\n', "src/workbench/zz-g15-module.ts": "export const placed = 1;\n" },
+    links: {
+      "src/workbench/zz-g15-link.ts": "../../qa/zz-g15-target.ts",
+      "src/workbench/zz-g15-dir": "../../qa",
+      "src/workbench/zz-g15-dangling.ts": "../../qa/zz-g15-missing.ts",
+      "qa/zz-g15-link.ts": "zz-g15-target.ts",
+      "src/workbench/zz-g15-ignored.ts": "../../qa/zz-g15-target.ts",
+    },
+    tracked: [],
+    ignored: ["src/workbench/zz-g15-ignored.ts"],
+    removed: [],
+    word: "GraphPolicy",
+    anchor: { bead: CARRIED_BEAD, name: "G15-P-G1-SYMLINK" },
+  },
+  {
+    kind: "listing",
+    id: "FC-LISTING-TRACKED",
+    claim: "LISTING",
+    files: { "qa/zz-l2-target.ts": 'export const graphPolicyLabel = "seam";\n', "src/workbench/zz-l2-module.ts": "export const placed = 1;\n", "src/workbench/zz-l2-removed.ts": "export const removed = 1;\n" },
+    links: {
+      "src/workbench/zz-l2-link.ts": "../../qa/zz-l2-target.ts",
+      "src/workbench/zz-l2-dir": "../../qa",
+      "src/workbench/zz-l2-dangling.ts": "../../qa/zz-l2-missing.ts",
+      "src/workbench/zz-l2-untracked.ts": "../../qa/zz-l2-missing.ts",
+      "qa/zz-l2-link.ts": "zz-l2-target.ts",
+    },
+    tracked: ["qa/zz-l2-link.ts", "src/workbench/zz-l2-dangling.ts", "src/workbench/zz-l2-dir", "src/workbench/zz-l2-link.ts", "src/workbench/zz-l2-removed.ts"],
+    ignored: [],
+    removed: ["src/workbench/zz-l2-removed.ts"],
+    word: "GraphPolicy",
+    anchor: { bead: CARRIED_BEAD, name: "L2-NR-NO-CACHED" },
+  },
 ];
 
 // ---- the full surface (wb-0lf.8, the rule-19 structural-exit child R-B73 filed): the forms these tables list, each pinned
@@ -2570,23 +2861,28 @@ export const SURFACE_OTHERS: readonly SurfaceDocs[] = SURFACE_POSITIONS.flatMap(
 export const otherBlocks = (form: SurfaceDocs): string[] =>
   form.position === "before" ? [form.reads, "table"] : form.position === "after" ? ["table", form.reads] : form.position === "between" ? ["table", form.reads, "table"] : ["table", "table", form.reads];
 
-/** A residual source member's code as TypeScript parses it (wb-0lf.8 U5): a comment is trivia and a string's content is no code. The code reader parses TypeScript (ScriptKind.TS); literalTokensOf's TSX control alone parses another kind. */
+/**
+ * A residual source member's code as TypeScript parses it (wb-0lf.8 U5): a comment is trivia and a string's content is no
+ * code. The code reader (codeShapeKeysOf, codeComposedOf) and literalTokensOf, which reads its literal tokens, parse TypeScript
+ * (ScriptKind.TS), this default, unless a TSX control passes another kind; the full-surface row pins that kind on each of the
+ * three (wb-4z24's F1): PARSE_PLANTS through codeShapeKeysOf and codeComposedOf, JSX_SHAPED through literalTokensOf.
+ */
 const memberCode = (text: string, kind: ts.ScriptKind = ts.ScriptKind.TS): ts.SourceFile => ts.createSourceFile(kind === ts.ScriptKind.TSX ? "member.tsx" : "member.ts", text, ts.ScriptTarget.Latest, true, kind);
 const eachNode = (node: ts.Node, visit: (node: ts.Node) => void): void => {
   visit(node);
   ts.forEachChild(node, child => eachNode(child, visit));
 };
-/** R-UNNAMED's liveness read from code (wb-0lf.8 U5): the names of the properties the member's object literals assign that are keys of the given document, each once in order. */
-export const codeShapeKeysOf = (text: string, keys: ReadonlySet<string>): string[] => {
+/** R-UNNAMED's liveness read from code (wb-0lf.8 U5): the identifier names of the properties the member's object literals assign that are keys of the given document, each once in order (no name SHAPE_QUIET's plants hold at their five places: SHAPE_QUIET); kind is a TSX control's (PARSE_PLANTS). */
+export const codeShapeKeysOf = (text: string, keys: ReadonlySet<string>, kind?: ts.ScriptKind): string[] => {
   const named: string[] = [];
-  eachNode(memberCode(text), node => {
+  eachNode(memberCode(text, kind), node => {
     if ((ts.isPropertyAssignment(node) || ts.isShorthandPropertyAssignment(node)) && ts.isIdentifier(node.name)) named.push(node.name.text);
   });
   return [...new Set(named.filter(key => keys.has(key)))];
 };
-/** R-COMPOSED's liveness read from code (wb-0lf.8 U5): the member's double-quoted string literals, each as TypeScript decodes it, joined in order; no other literal token composes (COMPOSE_PLANTS). */
-export const codeComposedOf = (text: string): string => {
-  const source = memberCode(text);
+/** R-COMPOSED's liveness read from code (wb-0lf.8 U5): the member's double-quoted string literals, each as TypeScript decodes it, joined in order; no other literal token composes (COMPOSE_PLANTS), nor a JSX text node under a TSX control (JSX_SHAPED); kind is a TSX control's (PARSE_PLANTS). */
+export const codeComposedOf = (text: string, kind?: ts.ScriptKind): string => {
+  const source = memberCode(text, kind);
   const parts: string[] = [];
   eachNode(source, node => {
     if (ts.isStringLiteral(node) && source.text.charAt(node.getStart(source)) === '"') parts.push(node.text);
@@ -2638,10 +2934,10 @@ export const LITERAL_KINDS: readonly (keyof typeof ts.SyntaxKind)[] = [
  * TSX, so JSX_SHAPED holds no JSX text node there, while its TSX parse holds a JsxText node (the control).
  */
 export const LITERAL_KINDS_OUTSIDE: readonly (keyof typeof ts.SyntaxKind)[] = ["JsxText", "JsxTextAllWhiteSpaces"];
-/** A module shaped as JSX: the code reader's .ts parse holds no JSX text node in it, and a regular expression token where its closing tag stands (the full-surface row holds both parses' tokens to the roster). */
+/** A module shaped as JSX: the code reader's .ts parse holds no JSX text node in it, and a regular expression token where its closing tag stands, and codeComposedOf composes nothing from it under either parse (the full-surface row holds both parses' tokens and compositions to the roster). */
 export const JSX_SHAPED = "export const view = <b>GraphPolicy</b>;\n";
-/** The literal tokens of a member's parse (the code reader's, ScriptKind.TS, unless the TSX control asks for another), in source order, each by its LITERAL_KINDS name, a string literal's followed by its opening quote. */
-export const literalTokensOf = (text: string, kind: ts.ScriptKind = ts.ScriptKind.TS): string[] => {
+/** The literal tokens of a member's parse (the code reader's: memberCode's default kind, unless the TSX control passes another; wb-4z24's F1, so JSX_SHAPED reads the code reader's own kind), in source order, each by its LITERAL_KINDS name, a string literal's followed by its opening quote. */
+export const literalTokensOf = (text: string, kind?: ts.ScriptKind): string[] => {
   const source = memberCode(text, kind);
   const named = new Map(LITERAL_KINDS.map(name => [ts.SyntaxKind[name], name] as const));
   const tokens: string[] = [];
@@ -2666,6 +2962,124 @@ export const COMPOSE_PLANTS: readonly { readonly id: string; readonly text: stri
   { id: "template-parts", text: `export const label = \`Graph\${0}Data\${1n}IR\`;\n` },
 ];
 
+// ---- wb-4z24 (the R694 follow-up from wb-0lf.8's landing 757): the code reader's parse kind pinned on each reader itself (F1)
+// and the shape reader's quiet plants (F2), one per place since wb-oddy (the R694 follow-up from its landing 791: F1, F2, F4) ----
+
+/**
+ * PARSE_PLANTS (wb-4z24's F1): one module per live kind of the residual source members, each read by that kind's code reader
+ * (codeComposedOf, codeShapeKeysOf) as its TypeScript parse reads it and otherwise under a TSX parse: a type assertion, which
+ * TSX parses as a JSX element. Through the code reader the composed plant composes GraphPolicy and the shape plant assigns four
+ * keys of the vendored v1 document; under each reader's TSX control the composed plant composes nothing and the shape plant
+ * assigns no key. So each reader's own parse kind is pinned on that reader.
+ */
+export const PARSE_PLANTS: readonly { readonly id: string; readonly live: SourceResidual["live"]; readonly text: string }[] = [
+  { id: "type-assertion-composed", live: "composed", text: 'export const label = <string>"Graph" + "Policy";\n' },
+  { id: "type-assertion-shape", live: "shape", text: 'export const shape = <unknown>{ schema_ref: { namespace: "x" }, entities: [], relations: [] };\n' },
+];
+/** The node kinds a SHAPE_QUIET plant holds names in: a type's members (PropertySignature names; a type, where no code runs) and an object binding pattern's bindings (BindingElement names). */
+export const QUIET_KINDS = ["PropertySignature", "BindingElement"] as const;
+export type QuietKind = (typeof QUIET_KINDS)[number];
+/** A SHAPE_QUIET plant: its id, the node kind it holds names in, its place (the syntax kind quietPlacesOf reads for its first held name), the survivor it answers (the R694 row that filed it and the name that row gives the survivor) and its module text. */
+export interface QuietPlant {
+  readonly id: string;
+  readonly holds: QuietKind;
+  readonly place: keyof typeof ts.SyntaxKind;
+  readonly answers: FailClosedAnchor;
+  readonly text: string;
+}
+/** The R694 rows that filed SHAPE_QUIET's plants, in filing order: wb-4z24 (landing 757's carried F2) and wb-oddy (landing 791's carried F1). */
+export const QUIET_BEADS: readonly string[] = ["wb-4z24", "wb-oddy"];
+/**
+ * The lines of the tracker export text that hold a bead's "id" key, in order, joined by newlines: a grep by indexOf, so the
+ * full-surface row reads QUIET_BEADS' rows without splitting the whole export again (beadRow picks the bead's own row among
+ * them).
+ */
+export function exportLinesOf(exportText: string, bead: string): string {
+  const needle = `"id":"${bead}"`;
+  const lines: string[] = [];
+  for (let at = exportText.indexOf(needle); at !== -1; ) {
+    const end = exportText.indexOf("\n", at);
+    const stop = end === -1 ? exportText.length : end;
+    lines.push(exportText.slice(exportText.lastIndexOf("\n", at) + 1, stop));
+    at = exportText.indexOf(needle, stop);
+  }
+  return lines.join("\n");
+}
+/**
+ * SHAPE_QUIET (wb-4z24's F2; wb-oddy's F1, F2 and F4): keys of the vendored v1 document written where no object literal assigns
+ * them, one plant per place, five places: PropertySignature names of a type alias's type literal, of a type literal that is a
+ * type reference's argument and of an interface's members, and BindingElement names of a variable declaration's and of a
+ * parameter's object binding pattern. Each plant answers the shape-reader survivor its R694 row names in the tracker export
+ * (quietSurvivorsOf: wb-4z24's two, wb-oddy's G-P1 to G-P3) and holds the node kind that row names for it; each holds names
+ * of its node kind only (heldNamesOf), every one a key of the document, its first one at its own place (quietPlacesOf); and the
+ * code reader reads no key from any of the five.
+ */
+export const SHAPE_QUIET: readonly QuietPlant[] = [
+  { id: "type-literal", holds: "PropertySignature", place: "TypeAliasDeclaration", answers: { bead: "wb-4z24", name: "GP20-U5-CSK-READS-TYPE-MEMBERS" }, text: "export type Snapshot = { schema_ref: { namespace: string }; entities: unknown[]; relations: [] };\n" },
+  { id: "destructuring", holds: "BindingElement", place: "VariableDeclaration", answers: { bead: "wb-4z24", name: "GP20-U5-CSK-READS-BINDINGS" }, text: "export const keysOf = (input: Record<string, unknown>): unknown[] => {\n  const { schema_ref, entities, relations } = input;\n  return [schema_ref, entities, relations];\n};\n" },
+  { id: "parameter-destructuring", holds: "BindingElement", place: "Parameter", answers: { bead: "wb-oddy", name: "G-P1" }, text: "export const keysOf = ({ schema_ref, entities, relations }: Record<string, unknown>): unknown[] => [schema_ref, entities, relations];\n" },
+  { id: "type-argument", holds: "PropertySignature", place: "TypeReference", answers: { bead: "wb-oddy", name: "G-P2" }, text: "export type Snapshot = Readonly<{ schema_ref: { namespace: string }; entities: unknown[]; relations: [] }>;\n" },
+  { id: "interface", holds: "PropertySignature", place: "InterfaceDeclaration", answers: { bead: "wb-oddy", name: "G-P3" }, text: "export interface Snapshot {\n  schema_ref: { namespace: string };\n  entities: unknown[];\n  relations: [];\n}\n" },
+];
+/** The identifier names a SHAPE_QUIET plant holds in its node kind (PropertySignature or BindingElement), in source order, as the code reader's parse holds them. */
+export const heldNamesOf = (plant: QuietPlant): string[] => {
+  const names: string[] = [];
+  eachNode(memberCode(plant.text), node => {
+    if ((ts.isPropertySignature(node) || ts.isBindingElement(node)) && node.kind === ts.SyntaxKind[plant.holds] && ts.isIdentifier(node.name)) names.push(node.name.text);
+  });
+  return names;
+};
+/**
+ * The places a SHAPE_QUIET plant holds its names at, one per held name in heldNamesOf's order, by syntax kind name: the node
+ * holding the type literal or object binding pattern the name is written in, or the interface holding it as a member. A
+ * plant's place is its first name's.
+ */
+export const quietPlacesOf = (plant: QuietPlant): string[] => {
+  const places: string[] = [];
+  eachNode(memberCode(plant.text), node => {
+    if (!(ts.isPropertySignature(node) || ts.isBindingElement(node)) || node.kind !== ts.SyntaxKind[plant.holds] || !ts.isIdentifier(node.name)) return;
+    places.push(ts.SyntaxKind[(ts.isInterfaceDeclaration(node.parent) ? node.parent : node.parent.parent).kind]);
+  });
+  return places;
+};
+/** A gate survivor's name as an R694 filing note's carried lines write it: G or GP<n>, a hyphen, then capitals and digits in hyphen-joined parts (G-P1, GP20-U5-CSK-READS-BINDINGS). */
+const SURVIVOR_NAME = /\bG(?:P\d+)?-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g;
+/**
+ * The shape-reader survivors an R694 filing note's carried finding lines name, each with the node kind it makes the code reader
+ * read: on each "[leads] - " and "[rides] - " line, read up to the note's first "Context: " line (so its not-carried lines and
+ * every later note are never read), each gate survivor name whose first mention on the line is followed, before the line's
+ * next mention of another survivor name, by a QUIET_KINDS kind (the first one written there), each once, in order.
+ */
+export function quietSurvivorsOf(notes: string): { readonly name: string; readonly holds: QuietKind }[] {
+  const survivors: { readonly name: string; readonly holds: QuietKind }[] = [];
+  for (const line of notes.split("\n")) {
+    if (line.startsWith("Context: ")) break;
+    if (!line.startsWith("[leads] - ") && !line.startsWith("[rides] - ")) continue;
+    const mentions = [...line.matchAll(SURVIVOR_NAME)];
+    for (const [index, mention] of mentions.entries()) {
+      const name = mention[0];
+      if (mentions.findIndex(other => other[0] === name) !== index || survivors.some(entry => entry.name === name)) continue;
+      const after = line.slice(mention.index + name.length, mentions.slice(index + 1).find(other => other[0] !== name)?.index ?? line.length);
+      const holds = QUIET_KINDS.filter(kind => after.includes(kind)).sort((left, right) => after.indexOf(left) - after.indexOf(right))[0];
+      if (holds !== undefined) survivors.push({ name, holds });
+    }
+  }
+  return survivors;
+}
+/**
+ * quietSurvivorsOf's control (wb-oddy): an R694-shaped note each of whose lines tries one of the reader's rules - a carried line
+ * whose first survivor has two kinds after its first mention (the first written counts), whose second survivor has none before
+ * the next survivor's mention (no survivor), and whose third has one; a carried line with a fourth survivor and a second mention
+ * of the first (read once); a line of another role; and a carried line after the note's first "Context: " line (neither read).
+ */
+export const QUIET_CONTROL = [
+  "[leads] - G-C1 (BindingElement names, then PropertySignature names) and G-C2, a parse survivor; G-C3 reads PropertySignature names.",
+  "[rides] - GP9-C4 reads PropertySignature names; G-C1 reads BindingElement names again.",
+  "[owner-routed: OWNER WEIGH-IN] - G-C5 reads BindingElement names.",
+  "Context: the control's end.",
+  "[leads] - G-C6 reads PropertySignature names.",
+].join("\n");
+
 // ---- CORE OVERLAP (refusal #2's U1 under R-B164, the enumerate-the-resolvable cut): the full-surface forms that are the core's ----
 
 /** A form the overlap reading compares: its table, its id, and the text compared (a spelling, an edit of the live page or a member text). */
@@ -2677,7 +3091,8 @@ export interface Keyed {
 /**
  * Every full-surface form as the overlap reading compares it, in table order: U1's and U2's spellings and R-NON-ASCII-PART's
  * members by their spelling; U3's leads, U4's ownership blocks and the owner cells by their edit of the live page; U5's
- * silencings of each residual source member, R-UNREACHABLE's placement of each and COMPOSE_PLANTS by their member text.
+ * silencings of each residual source member, R-UNREACHABLE's placement of each, COMPOSE_PLANTS and wb-4z24's PARSE_PLANTS and
+ * SHAPE_QUIET by their member text.
  */
 export const surfaceForms = (page: string, members: readonly SourceResidual[]): Keyed[] => [
   ...SURFACE_SITE_SPELLINGS.map(entry => ({ table: "SURFACE_SITE_SPELLINGS", id: entry.id, key: entry.spelling })),
@@ -2689,6 +3104,8 @@ export const surfaceForms = (page: string, members: readonly SourceResidual[]): 
   ...members.flatMap(member => SILENCINGS.map(form => ({ table: "SILENCINGS", id: `${member.path} ${form.id}`, key: form.silence(member.text) }))),
   ...members.map(member => ({ table: "unreachable", id: `${member.path} unreachable`, key: unreachable(member.text) })),
   ...COMPOSE_PLANTS.map(plant => ({ table: "COMPOSE_PLANTS", id: `compose ${plant.id}`, key: plant.text })),
+  ...PARSE_PLANTS.map(plant => ({ table: "PARSE_PLANTS", id: `parse ${plant.id}`, key: plant.text })),
+  ...SHAPE_QUIET.map(plant => ({ table: "SHAPE_QUIET", id: `quiet ${plant.id}`, key: plant.text })),
 ];
 /** The core's spelling tables (G1's and D3's), by name: the spellings each word reader reads, holds quiet or holds outside its pattern. */
 const CORE_SPELLING_TABLES: readonly (readonly [string, readonly string[]])[] = [
@@ -2704,7 +3121,8 @@ const CORE_SPELLING_TABLES: readonly (readonly [string, readonly string[]])[] = 
  * Every form of the fail-closed core (wb-0lf.2's census as R-B73 narrowed it) the overlap reading compares against, in table
  * order: the spellings G1's and D3's tables write and each match FAIL_CLOSED's source forms refuse; the edits of the live page
  * DOCS_PLANTS, FAIL_CLOSED's docs forms and the residual docs members (Q9's) make; and the residual source members' own texts
- * and FAIL_CLOSED's member edits of them.
+ * and FAIL_CLOSED's member edits of them (its eight S2 forms). FAIL_CLOSED's two listing forms, scratch repositories, are no
+ * core form this reader reads.
  */
 export const coreForms = (page: string, members: readonly SourceResidual[]): Keyed[] => [
   ...CORE_SPELLING_TABLES.flatMap(([table, spellings]) => spellings.map((key, index) => ({ table, id: `${table}#${index}`, key }))),
@@ -2726,8 +3144,9 @@ export const coreOverlapOf = (surface: readonly Keyed[], core: readonly Keyed[])
  * core forms it is, as the full-surface row computes them (coreOverlapOf over surfaceForms and coreForms) and the census header
  * names them: seven spellings FAIL_CLOSED's source forms refuse (five of U1's, two of U2's), two boundary leads and the
  * paragraph before the Ownership table that are FAIL_CLOSED's G3 forms, four ownership blocks after the table that are
- * DOCS_PLANTS' D-OTHER plants, and the line-comment silencings of q1-shape.ts and q2-joined.ts that are FAIL_CLOSED's S2 forms.
- * The full-surface row reads each again; no other full-surface form is a core form.
+ * DOCS_PLANTS' D-OTHER plants, and the line-comment silencings of q1-shape.ts and q2-joined.ts that are FAIL_CLOSED's two
+ * commented-out S2 forms (its six other S2 forms, wb-0x41's, are no full-surface form). The full-surface row reads each again;
+ * no other full-surface form is a core form.
  */
 export const CORE_OVERLAP: readonly { readonly form: string; readonly core: readonly string[] }[] = [
   { form: "GraphPolicy/none/camel", core: ["FC-G1-CAMEL", "FC-G1-EVERY-MATCH"] },
