@@ -247,8 +247,9 @@
  * parameter; and a rest parameter typed by a type parameter constrained to [], which the checker does not type as the empty
  * tuple), where, with no type argument written, the this parameter is never read: a hole, named in R-THIS-BINDING with its
  * quiet pages pinned beside the first-overload twins that refuse. F3: Function.prototype.bind handed the function and the
- * value by call with no type argument written (final cut #4) types the value any (the untyped Function interface's bind) and
- * reads quiet; R-THIS-BINDING and DISPATCH
+ * value by call with no type argument written (final cut #4) reads quiet, the call it is handed by typing the value by its
+ * own type (wb-py8n: the untyped Function interface's members declare their this argument any, and the call the checker
+ * instantiates types the value any only where such a member is itself applied or called); R-THIS-BINDING and DISPATCH
  * name it, and R-THIS-BINDING pins it with Function.prototype.bind's apply, Function.prototype.call's and
  * Function.prototype.apply's call, Function.prototype.call's bind and Reflect.apply over Function.prototype.bind. F4
  * (CT6-v, the coordinated hollow of R-THIS-BINDING from every literal, survives: the 6ze.39 class) stays disclosed in NOT
@@ -279,6 +280,27 @@
  * R-STRUCTURAL-STAND-IN's label nor DISPATCH's fail-closed clause, and refusal #3 proposes its route (bead wb-021.10, the
  * home of argumentTarget's indexing, or wb-021.7's fail-closed home). F4 (CT6-v, the 6ze.39 class) stays disclosed in NOT
  * CLAIMED. No reading of the helper is edited, so src's live reach map, forms and refused uses read as at cut #8.
+ *
+ * WB-PY8N (the R694 follow-up of landing 770, gate cmd_b58e78b66cdd: F6 leads, F7 and F8 ride; record precision, in the
+ * R-B60 posture: no reading of the helper is edited). Final cut #4's shape stands: 0 rows added or removed, 0 pins removed
+ * or changed; one anchor row is added (INTO ANY, below), and the R-THIS-BINDING label's into-any clause, its RESIDUALS
+ * sentence, DISPATCH's exception item and the WB-VGRI RESPIN 2 paragraph's F3 clause are restated to what the checker
+ * instantiates. F6 (the into-any clause said the untyped Function interface's bind, call and apply type the value any at
+ * every page it pins, true of those members' declarations - thisArg: any, argArray: any[] - while the call the checker
+ * instantiates types the value any at 3 of the 13 pages): the clause states the declarations, then the two typings page by
+ * page - any where that member is itself applied or called (Function.prototype.bind by apply, Function.prototype.call bound
+ * by bind and then called, Reflect.apply given Function.prototype.bind), and the value's own type where it is handed the
+ * function and the value by call (Function.prototype.bind, call and apply each so handed: that call's rest parameter is
+ * inferred from the value, as at a function's own call) - and every page still reads quiet as pinned. INTO ANY holds the
+ * into-any pages (R-THIS-BINDING's cases written in that form) to its table, each page's typing to the pinned typescript's
+ * checker (an anchor outside this file and its roster) and the two labels to that split, with the three written-type-argument
+ * pages, which the checker types by the this parameter's type, as its control. F7 (CT6-v, the coordinated hollow of
+ * R-THIS-BINDING from every literal, survives: the 6ze.39 class) stays disclosed in NOT CLAIMED. F8 (the written-index
+ * reading at an ordinary call's argument and at an argument after the this argument with a written rest type argument,
+ * against R-STRUCTURAL-STAND-IN's and DISPATCH's landed fail-closed claims) is not cured here: the claims it names are
+ * trunk-landed, this cut restates neither R-STRUCTURAL-STAND-IN's label nor DISPATCH's fail-closed clause, and bead
+ * wb-021.10 is its home. No reading of the helper is edited, so src's live reach map, forms and refused uses read as at
+ * cut #8.
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
@@ -398,7 +420,8 @@
  * text) spells the program, at a file floor.
  * OUTSIDE ANCHORS (each a source of truth outside this file and its roster): src (COVERAGE, NON-RENDER, RENDER TOUCHES,
  * FORMS, CLASS ELEMENTS, MEMBERS, EFFECT CLASSES, DIALOG ACTIONS), the pinned typescript's declaration file (CLASS ELEMENTS:
- * the class-element kinds and their SyntaxKinds) and the bead's export row (every table quote, the filing's bytes, the
+ * the class-element kinds and their SyntaxKinds), the pinned typescript's checker (INTO ANY: the type the call it
+ * instantiates gives each into-any page's bound value, wb-py8n) and the bead's export row (every table quote, the filing's bytes, the
  * title's bytes, the judged statement the quotes and their pinned junctions compose right after the requirement id, the
  * two tilings, the program's two spellings in the title, the absence of bd's other requirement fields; and, in its notes, the
  * cut #8 delivery record's one enumeration of FAIL_CLOSED, each kind with the row that plants it, in order: wb-vgri), so a
@@ -460,9 +483,13 @@
  * function's own call and apply, bind resolved to its second overload and Reflect.apply resolved to its first type it by a
  * type parameter inferred from the value, so with no type argument written the value flows into a type it is and reads
  * quiet whatever its member does (a type argument written as the instance's own class reads the same), Reflect.apply's
- * second overload and the untyped Function interface's bind, call and apply read off Function.prototype and handed the
- * function and the value with no type argument written type it any, which hands nothing, and each pinned value so handed
- * reads quiet, and a member call's receiver is bound by no flow the reading reads and reads quiet, while bind resolved to
+ * second overload types it any, which hands nothing, the untyped Function interface's bind, call and apply read off
+ * Function.prototype, which declare their this argument and their arguments any, handed the function and the value with no
+ * type argument written type it any where that member is itself applied or called (Function.prototype.bind by apply,
+ * Function.prototype.call bound by bind and then called, Reflect.apply given Function.prototype.bind) and by its own type
+ * where that member is handed them by call, that call's rest parameter inferred from the value (wb-py8n, landing 770 F6),
+ * and each pinned value so handed reads quiet, and a member call's receiver is bound by no flow the reading reads and reads
+ * quiet, while bind resolved to
  * its first overload, whose this argument the checker types as the function's this parameter, and a type argument written
  * as the this parameter's type read the value written with no spread before it there as at any flow into that type (an
  * instance, a keeping instance or a static side refused, structural-stand-in; an object literal not written where it flows,
@@ -502,13 +529,18 @@
  * fail-closed check instead, which then finds no planted case of the kind, wb-vgri respin 1 F7); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
  * stays green, since every real surface reads QUIET on every field, and the anchor's section reading widened back to
  * the whole row stays green on the clean export: the src and export plants recorded with the cut are those readings'
- * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); the
+ * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); this
+ * header's into-any wording (the R-THIS-BINDING RESIDUALS sentence and the WB-VGRI RESPIN 2 paragraph's F3 clause: INTO ANY
+ * reads the two labels, never this file's text, wb-py8n); an into-any page removed with its INTO_ANY entry, its
+ * frozen-literal element, R-THIS-BINDING's rule-16 count and the roster together (INTO ANY anchors each page's typing to
+ * the checker, not the page set, wb-py8n); the
  * legacy (non-inspector) dialog frame, whose spinner and elapsed time read a clock by design and which reads no
  * observation beyond the window total.
  * FROZEN SHAPE (standing rule 16): the rule-16 row pins `${table}/${id}:${pins.length}` for every judged row, the NON_RENDER
  * entries, their refused uses and their typed writers, the residual families, the member sets, CARRIER_DEPTH, the marker, RESOLVABLE_FORMS,
  * REQUIREMENT_FIELDS, LIVE_FORMS, CLASS_ELEMENT_KINDS with each kind's SyntaxKind and STAND_IN reading, and FAIL_CLOSED with the
- * row that plants each shape refused beside a quiet page (cuts #7 and #8) as literals; test/fixtures/apo-rerender-roster.json holds every judged
+ * row that plants each shape refused beside a quiet page (cuts #7 and #8) as literals, and INTO ANY pins the into-any pages
+ * with their typing as a literal (wb-py8n); test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
  *
@@ -622,7 +654,9 @@ const FAIL_CLOSED_ANCHOR =
   "anchor: the fail-closed shapes, each with the REACH row that plants it, are exactly the kind:row pairs the cut #8 delivery record in the bead's export row enumerates, in its order (.beads/issues.jsonl, wb-021.5; wb-vgri)";
 const ANCHOR =
   "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
-const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK]);
+const INTO_ANY_ROW =
+  "anchor: at each into-any page of R-THIS-BINDING (Function.prototype's bind, call or apply, or Reflect.apply given Function.prototype.bind, handed the function and the value with no type argument written), the call the pinned typescript's checker instantiates types the bound value any where that member is itself applied or called and by its own type where it is handed them by call, and R-THIS-BINDING's label and DISPATCH's exception item state that split (wb-py8n, landing 770 F6)";
+const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, CLASS_ELEMENTS, MEMBERS, ACTIONS, ABSENCE_WALK, INTO_ANY_ROW]);
 /** bd's requirement fields beside the title and the notes: the export row holds none (F2 of refusal #3), so the title and the owner filing are the whole requirement. */
 const REQUIREMENT_FIELDS: readonly string[] = ["acceptance_criteria", "description", "design"];
 /** The forms src's nodes that expose the projection stand in, as measured at the cut (an outside anchor of RESOLVABLE_FORMS: a form the judge stops reading in src reds FORMS). */
@@ -762,6 +796,71 @@ function failClosedRecord(notes: string): string[] {
   const entries = (only[2] ?? "").split(", ");
   if (String(entries.length) !== only[1]) throw new Error(`the record counts ${only[1]} entries and lists ${entries.length}`);
   return entries;
+}
+
+/**
+ * The into-any pages (wb-py8n, the R694 follow-up of landing 770, gate cmd_b58e78b66cdd: F6): the R-THIS-BINDING cases that
+ * hand Function.prototype's bind, call or apply, or Reflect.apply Function.prototype.bind, the function and the value with no
+ * type argument written (INTO_ANY_FORM, read on each case's planted text), in row order, each with the value bound as this
+ * (the one node of the page's used initializer that reads as it), the type the pinned typescript's checker gives that value at
+ * the call it instantiates (any, or own: the value's own type) and the words R-THIS-BINDING's label names the page by in the
+ * list of that typing.
+ */
+const INTO_ANY_FORM = /Function\.prototype\.\w+\.\w+\(|Reflect\.apply\(Function\.prototype\./;
+type IntoAnyTyping = "any" | "own";
+const INTO_ANY: readonly { readonly module: string; readonly value: string; readonly typed: IntoAnyTyping; readonly named: string }[] = [
+  { module: "src/ui/census-forms-this-function-bind-call.ts", value: "new Holder()", typed: "own", named: "a hiding instance, called and not" },
+  { module: "src/ui/census-forms-this-function-bind-call-called.ts", value: "new Holder()", typed: "own", named: "a hiding instance, called and not" },
+  { module: "src/ui/census-forms-this-function-bind-call-argument.ts", value: "new Holder()", typed: "own", named: "followed by an argument" },
+  { module: "src/ui/census-forms-this-function-bind-call-method.ts", value: "new Holder()", typed: "own", named: "and bound to a method" },
+  { module: "src/ui/census-forms-this-function-bind-call-keeps.ts", value: "new Keeper()", typed: "own", named: "a keeping instance" },
+  { module: "src/ui/census-forms-this-function-bind-call-static.ts", value: "StaticHolder", typed: "own", named: "a class's static side" },
+  { module: "src/ui/census-forms-this-function-bind-call-literal.ts", value: "impl", typed: "own", named: "an object literal not written where it flows" },
+  { module: "src/ui/census-forms-this-function-bind-call-callback.ts", value: "hide", typed: "own", named: "a hiding callback" },
+  { module: "src/ui/census-forms-this-function-bind-apply.ts", value: "new Holder()", typed: "any", named: "Function.prototype.bind by apply" },
+  { module: "src/ui/census-forms-this-function-call-call.ts", value: "new Holder()", typed: "own", named: "Function.prototype.call and Function.prototype.apply each handed them by call" },
+  { module: "src/ui/census-forms-this-function-apply-call.ts", value: "new Holder()", typed: "own", named: "Function.prototype.call and Function.prototype.apply each handed them by call" },
+  { module: "src/ui/census-forms-this-function-call-bind.ts", value: "new Holder()", typed: "any", named: "Function.prototype.call bound to the function by bind and called with the instance" },
+  { module: "src/ui/census-forms-this-reflect-function-bind.ts", value: "new Holder()", typed: "any", named: "Reflect.apply given Function.prototype.bind" },
+];
+/** R-THIS-BINDING's into-any clause: its opening, the declaration fact it states, the opening of each typed list, and the wording landing 770 F6 withdrew. */
+const INTO_ANY_CLAUSE = "Into any (respin 2, refusal #2 F3; narrowed at final cut #4; restated at wb-py8n, landing 770 F6): ";
+const INTO_ANY_DECLARED = "declare their this argument and their arguments any (thisArg: any, argArray: any[])";
+const INTO_ANY_TYPED: Readonly<Record<IntoAnyTyping, string>> = { any: "pinned typed any (", own: "pinned typed by its own type (" };
+const INTO_ANY_WITHDRAWN = "type their this argument and their arguments any";
+/** DISPATCH's exception item: the by-call members among the flows into a type the value is, the applied or called members among the flows into any, and the wording landing 770 F6 withdrew. */
+const DISPATCH_INTO_OWN =
+  "or by the call that hands the untyped Function interface's bind, call or apply, read off Function.prototype, the function and the value with no type argument written - or into any";
+const DISPATCH_INTO_ANY = "or into any by Reflect.apply's second overload or by those members applied or called themselves with no type argument written";
+const DISPATCH_WITHDRAWN = "or by the untyped Function interface's bind, call and apply read off Function.prototype with no type argument written";
+/** The type the pinned typescript's checker gives the value bound as this at a planted page (its contextual type there, at the call the checker instantiates): any, own (the value's own type) or that type's name. */
+function boundTyping(rel: string, value: string): string {
+  const program = planted();
+  const source = program.getSourceFile(join(ROOT, rel));
+  if (!source) throw new Error(`${rel} is not a planted module`);
+  const declarations = source.statements.flatMap(statement => (ts.isVariableStatement(statement) ? [...statement.declarationList.declarations] : []));
+  const used = declarations.find(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === "used");
+  const found: ts.Expression[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isExpression(node) && node.getText(source) === value) found.push(node);
+    else ts.forEachChild(node, visit);
+  };
+  if (used?.initializer) visit(used.initializer);
+  const [node] = found;
+  if (found.length !== 1 || !node) throw new Error(`${rel}: ${found.length} nodes of its used initializer read ${value}; the reading takes exactly one`);
+  const checker = program.getTypeChecker();
+  const into = checker.getContextualType(node);
+  if (into === undefined) return "<no contextual type>";
+  if ((into.flags & ts.TypeFlags.Any) !== 0) return "any";
+  return into === checker.getTypeAtLocation(node) ? "own" : checker.typeToString(into);
+}
+/** A label's into-any clause split at its two typed lists: the any list runs to the own list's opening, the own list to the clause's closing sentence end. */
+function intoAnyLists(label: string): Record<IntoAnyTyping, string> {
+  const parts = [INTO_ANY_CLAUSE, INTO_ANY_TYPED.any, INTO_ANY_TYPED.own];
+  const [clause = -1, any = -1, own = -1] = parts.map(part => label.indexOf(part));
+  if (parts.some(part => occurrences(label, part) !== 1) || !(clause < any && any < own)) throw new Error("the label holds no into-any clause with an any list and then an own list, each once");
+  const end = label.indexOf(". ", own);
+  return { any: label.slice(any, own), own: label.slice(own, end < 0 ? label.length : end) };
 }
 
 const plantMembers = (): AdmissionMember[] =>
@@ -988,6 +1087,54 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     expect(() => failClosedRecord(`LATER NOTE quoting ${planted}`), "the record quoted inside another line").toThrow();
     expect(() => failClosedRecord(planted.replace("2 entries", "3 entries")), "a count its list does not meet").toThrow();
     expect(() => failClosedRecord(`${planted} (rule-16 pinned, 1 entries: spread:SPREADS)`), "two enumerations in the record line").toThrow();
+  });
+
+  it(INTO_ANY_ROW, { timeout: WALK_BUDGET_MS }, () => {
+    const row = REACH.rows.find(entry => entry.id === "R-THIS-BINDING");
+    expect(
+      (row?.cases ?? []).filter(item => INTO_ANY_FORM.test(item.plants[item.module] ?? "")).map(item => item.module),
+      "the into-any pages: R-THIS-BINDING's cases written in the into-any form, in row order",
+    ).toEqual(INTO_ANY.map(page => page.module));
+    expect(
+      INTO_ANY.map(page => `${page.module}:${boundTyping(page.module, page.value)}`),
+      "the type the pinned typescript's checker gives each page's bound value at the call it instantiates",
+    ).toEqual(INTO_ANY.map(page => `${page.module}:${page.typed}`));
+    expect(INTO_ANY.map(page => `${page.module.replace(/^src\/ui\/census-forms-|\.ts$/g, "")}:${page.typed}`), "the into-any pages and their typing, frozen (rule 16)").toEqual([
+      "this-function-bind-call:own",
+      "this-function-bind-call-called:own",
+      "this-function-bind-call-argument:own",
+      "this-function-bind-call-method:own",
+      "this-function-bind-call-keeps:own",
+      "this-function-bind-call-static:own",
+      "this-function-bind-call-literal:own",
+      "this-function-bind-call-callback:own",
+      "this-function-bind-apply:any",
+      "this-function-call-call:own",
+      "this-function-apply-call:own",
+      "this-function-call-bind:any",
+      "this-reflect-function-bind:any",
+    ]);
+    const label = row?.label ?? "";
+    expect(occurrences(label, INTO_ANY_WITHDRAWN), "R-THIS-BINDING's label: the withdrawn wording (every page typed any)").toBe(0);
+    expect(occurrences(label, INTO_ANY_DECLARED), "R-THIS-BINDING's label: the declaration fact, once").toBe(1);
+    const lists = intoAnyLists(label);
+    for (const page of INTO_ANY) {
+      const other: IntoAnyTyping = page.typed === "any" ? "own" : "any";
+      expect([occurrences(lists[page.typed], page.named) > 0, occurrences(lists[other], page.named)], `${page.module}: named in the ${page.typed} list, never in the ${other} list`).toEqual([true, 0]);
+    }
+    const dispatch = REACH.rows.find(entry => entry.id === "DISPATCH")?.label ?? "";
+    expect(
+      [DISPATCH_INTO_OWN, DISPATCH_INTO_ANY, DISPATCH_WITHDRAWN].map(phrase => occurrences(dispatch, phrase)),
+      "DISPATCH's exception item: the by-call members into a type the value is, the applied or called members into any, the withdrawn wording",
+    ).toEqual([1, 1, 0]);
+    // Non-vacuity: the same reading at the three Function.prototype pages R-THIS-BINDING's hole pins with type arguments written gives the this parameter's type, so it reads more than any and own.
+    expect(
+      ["bind-call", "call-call", "apply-call"].map(form => boundTyping(`src/ui/census-forms-this-function-${form}-explicit.ts`, "new Holder()")),
+      "the written-type-argument pages",
+    ).toEqual(["Sink", "Sink", "Sink"]);
+    // Non-vacuity: the lists reading refuses a label whose own list is missing or comes first.
+    expect(() => intoAnyLists(`${INTO_ANY_CLAUSE}${INTO_ANY_TYPED.any}a plant. `), "an own list missing").toThrow();
+    expect(() => intoAnyLists(`${INTO_ANY_CLAUSE}${INTO_ANY_TYPED.own}a plant; ${INTO_ANY_TYPED.any}a plant. `), "the own list first").toThrow();
   });
 
   it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the class-element kinds with their syntax and stand-in readings, the fail-closed shapes with the rows that plant them, the requirement fields and src's forms are frozen at their measured shape", () => {
