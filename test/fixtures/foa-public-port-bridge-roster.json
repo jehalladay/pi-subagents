@@ -888,6 +888,8 @@
      "M-READ-EFFECT-ALIAS",
      "M-READ-INVOKE-ALIAS",
      "M-SEAM-SUB-ALIAS",
+     "M-SEAM-SUB-DELTA-ALIAS",
+     "M-SEAM-SUB-RESYNC-ALIAS",
      "M-READ-SUB-ALIAS",
      "M-SEAM-OWN-ALIAS",
      "M-READ-OWN-ALIAS",
@@ -3361,6 +3363,100 @@
       "aliased"
      ]
     },
+    "M-SEAM-SUB-DELTA-ALIAS": {
+     "F-SESSION": [
+      "aliased"
+     ],
+     "F-ALIAS-LATER-REJECTED": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-DIGEST": [
+      "aliased"
+     ],
+     "F-EPOCH": [
+      "aliased"
+     ],
+     "F-DUPLICATE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-SCOPE": [
+      "aliased"
+     ],
+     "F-DUPLICATE-REJECTED": [
+      "aliased"
+     ],
+     "F-FEEDBACK": [
+      "aliased"
+     ],
+     "F-GAP": [
+      "aliased"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "aliased"
+     ],
+     "F-GAP-SNAPSHOT": [
+      "aliased"
+     ],
+     "F-GAP-BACKWARD": [
+      "aliased"
+     ],
+     "F-GAP-NO-BASE": [
+      "aliased"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "aliased"
+     ],
+     "F-GAP-PORTS": [
+      "aliased"
+     ],
+     "F-GAP-SIGNAL": [
+      "aliased"
+     ],
+     "F-GAP-ACK": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ]
+    },
+    "M-SEAM-SUB-RESYNC-ALIAS": {
+     "F-ALIAS-REJECTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-RESYNC": [
+      "aliased"
+     ],
+     "F-ALIAS-ADMITTED-DELTA": [
+      "aliased"
+     ],
+     "F-GAP": [
+      "aliased"
+     ],
+     "F-GAP-ANNOUNCED": [
+      "aliased"
+     ],
+     "F-GAP-ENDPOINTS": [
+      "aliased"
+     ],
+     "F-GAP-SIGNAL": [
+      "aliased"
+     ],
+     "F-GAP-IDENTITY": [
+      "aliased"
+     ],
+     "F-GAP-HOLD-RUNTIME": [
+      "aliased"
+     ],
+     "F-GAP-REGAP": [
+      "aliased"
+     ]
+    },
     "M-READ-SUB-ALIAS": {
      "F-SESSION": [
       "aliased"
@@ -4522,6 +4618,8 @@
     "M-READ-EFFECT-ALIAS": [],
     "M-READ-INVOKE-ALIAS": [],
     "M-SEAM-SUB-ALIAS": [],
+    "M-SEAM-SUB-DELTA-ALIAS": [],
+    "M-SEAM-SUB-RESYNC-ALIAS": [],
     "M-READ-SUB-ALIAS": [],
     "M-SEAM-OWN-ALIAS": [],
     "M-READ-OWN-ALIAS": [],
@@ -6933,6 +7031,100 @@
      "aliased"
     ]
    },
+   "M-SEAM-SUB-DELTA-ALIAS": {
+    "F-SESSION": [
+     "aliased"
+    ],
+    "F-ALIAS-LATER-REJECTED": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-DIGEST": [
+     "aliased"
+    ],
+    "F-EPOCH": [
+     "aliased"
+    ],
+    "F-DUPLICATE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-SCOPE": [
+     "aliased"
+    ],
+    "F-DUPLICATE-REJECTED": [
+     "aliased"
+    ],
+    "F-FEEDBACK": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-SNAPSHOT": [
+     "aliased"
+    ],
+    "F-GAP-BACKWARD": [
+     "aliased"
+    ],
+    "F-GAP-NO-BASE": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-PORTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-ACK": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ]
+   },
+   "M-SEAM-SUB-RESYNC-ALIAS": {
+    "F-ALIAS-REJECTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-RESYNC": [
+     "aliased"
+    ],
+    "F-ALIAS-ADMITTED-DELTA": [
+     "aliased"
+    ],
+    "F-GAP": [
+     "aliased"
+    ],
+    "F-GAP-ANNOUNCED": [
+     "aliased"
+    ],
+    "F-GAP-ENDPOINTS": [
+     "aliased"
+    ],
+    "F-GAP-SIGNAL": [
+     "aliased"
+    ],
+    "F-GAP-IDENTITY": [
+     "aliased"
+    ],
+    "F-GAP-HOLD-RUNTIME": [
+     "aliased"
+    ],
+    "F-GAP-REGAP": [
+     "aliased"
+    ]
+   },
    "M-READ-SUB-ALIAS": {
     "F-SESSION": [
      "aliased"
@@ -8547,7 +8739,7 @@
   "Q12: R-LABEL-TEXT",
   "Q13: R-ALIAS-HOLDER",
   "rule 16: the rows, the residual families, the classes, the contract parts, the claim families, the checks, the mutants, the fixtures, the contract's endpoints, the words, the reading forms (script and markup extensions, named entities), the walks (roots, pathspecs, judges, floors, anchors and exclusions) and the hosts are frozen at their measured shape",
-  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe, its first refusal's U1-U3 lines the members they owe, and its second refusal's U1-U3 lines the member-depth mutants and the maxima they owe",
+  "the outside anchors: the bead's title binds the rows, the quotes, the words and the decision bead; the bead's own record binds the residual families; the owner filing binds the derived classes, the contract parts and the class each part's break draws, the claim families, the gate and the producer citation; TypeScript's extension table binds the script extensions; the producer's :41, :17, :19 and :23 lines bind the charter-only classes, the three families, the unshipped heading, the record's own line and the wire's kinds; the follow-up wb-vf3r's own filing binds the members its F5-F8 lines owe, its first refusal's U1-U3 lines the members they owe, and its second refusal's U1-U3 lines the member-depth mutants and the maxima they owe; and the child wb-doja's own filing binds the seam half's own-message member-depth mutant at each call kind its acceptance line names",
   "roster: the judged rows, the quotes, the residual members, the readers and the registered tests equal test/fixtures/foa-public-port-bridge-roster.json, in order and both ways; every pin reached its witness compare"
  ],
  "producer": {

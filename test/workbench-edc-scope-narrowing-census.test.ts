@@ -81,10 +81,21 @@
  *    of a named export-from (import-escape, export-from-escape), in a dynamic import's double-quoted specifier
  *    (dynamic-import-escape), in a double-quoted string key of an object literal (property-key-escape) and in a double-quoted
  *    string literal type (literal-type-escape). R-ESCAPED's seven members (below: three escapes in a regular-expression literal,
- *    two character references in JSX text and two in a JSX attribute's string) are read as written, never decoded, each pinned
- *    by its Q15 probe. How a text is read at any other site, in any other quoting, through any other escape or reference
- *    spelling, beside a second escape in the same text, in a module holding more than the row's one line, or under another
- *    module name or script kind, is NOT CLAIMED by this census. Any mention reads the adoption PRESENT.
+ *    two character references in JSX text and two in a JSX attribute's string) are read as written, never decoded, exactly as
+ *    far as Q15's ten probes write them (ESCAPED_CONTROLS; wb-6jao, the R694 follow-up of landing 776, narrowed this sentence
+ *    to the probes and added the three second spellings its F5 named, SF1-SF3): the hex escape in an unflagged and in an
+ *    i-flagged regular expression (regex-hex, regex-hex-flagged), the unicode escape in an unflagged one (regex-unicode) and
+ *    the code-point escape under the u flag (regex-code-point); the decimal reference as a span element's text and as a
+ *    fragment's text (jsx-decimal, jsx-fragment) and the hex reference as a span's text (jsx-hex); the decimal reference in a
+ *    span's title and aria-label attributes (jsx-attribute, jsx-attribute-aria) and the hex reference in its title attribute
+ *    (jsx-attribute-hex); each probe read on its own as a module of one line under its probe's name, and each of the six plain
+ *    twins (ESCAPED_TWINS: an unflagged and an i-flagged regular expression, a span's and a fragment's text, and a span's title
+ *    and aria-label attributes) reading the stem. Whether an escape or a reference is read as written anywhere but in one of
+ *    those ten probe texts - under another flag set, in another JSX parent or attribute name, in another surrounding text, in a
+ *    module of more than one line or under another module name or script kind - is NOT CLAIMED by this census. How a text is
+ *    read at any other site, in any other quoting, through any other escape or reference spelling, beside a second escape in
+ *    the same text, in a module holding more than the row's one line, or under another module name or script kind, is NOT
+ *    CLAIMED by this census. Any mention reads the adoption PRESENT.
  *  - D, the artifact. THE FORMS (DECLARATION_FORMS; the claim is exactly these seven forms, each pinned by its TRIPLE_CONTROLS
  *    rows): a name-carrying declaration is a node of one of the forms, read by its names -
  *     (1) members: an interface, a type literal or a class (declaration or expression) - its members' written names (properties,
@@ -183,7 +194,11 @@
  *   (Q14); R-ESCAPED (wb-a6m9) a stem spelled through an escape the A reader reads as written - a hex, a unicode or a
  *   code-point escape in a regular-expression literal (/\x45DC/, /\u0045DC/, /\u{45}DC/u) and a decimal or hex character
  *   reference in JSX text or in a JSX attribute's string (&#69;DC, &#x45;DC) - its seven members, each with its own
- *   ESCAPED_CONTROLS probe (the attribute's hex probe since cut #3) - reads no stem, while the plain twin at each site does (Q15).
+ *   ESCAPED_CONTROLS probe (the attribute's hex probe since cut #3), and since wb-6jao three second spellings, one per sub-form
+ *   the landing-776 gate named (/\x45DC/i, a fragment's &#69;DC and an aria-label attribute's &#69;DC) - reads no stem, while
+ *   the plain twin at each of six sites does (Q15: ten probes, six twins - an unflagged and an i-flagged regular expression, a
+ *   span's and a fragment's text, a span's title and aria-label attributes); the claim is exactly those ten probe texts, as THE
+ *   DECODED TEXTS states.
  *
  * Display paths added: none. Test-only: no scratch is allocated; src, package.json, .beads and git's index are only read, and the
  * mirror rows build in-memory registries and curated tool servers only.
@@ -1416,8 +1431,10 @@ const SPLIT_SOURCE = 'export const label = "E-D-C assembly"; export const EdC = 
 const SPLIT_SOURCE_TWIN = 'export const label = "EDC assembly";';
 /** R-ESCAPED's probes (wb-a6m9): a stem spelled through an escape the A reader reads as written - a hex, a unicode and a
  * code-point escape in a regular-expression literal, and a decimal and a hex character reference in JSX text and in a JSX
- * attribute's string (the attribute's hex probe since cut #3, refusal #2's U3) - one probe per member; and the plain twin at
- * each site. */
+ * attribute's string (the attribute's hex probe since cut #3, refusal #2's U3) - one probe per member, and since wb-6jao (the
+ * R694 follow-up of landing 776, F5) one second spelling per sub-form its gate named: the hex escape under a flag (SF1), the
+ * decimal reference as a fragment's text (SF2) and in an attribute other than title (SF3); and a plain twin at each site: an
+ * unflagged and an i-flagged regular expression, a span's and a fragment's text, a span's title and aria-label attributes. */
 const ESCAPED_CONTROLS: Readonly<Record<string, string>> = {
   "regex-hex": "export const pattern = /\\x45DC/;",
   "regex-unicode": "export const pattern = /\\u0045DC/;",
@@ -1426,11 +1443,17 @@ const ESCAPED_CONTROLS: Readonly<Record<string, string>> = {
   "jsx-hex.tsx": "export const view = <span>&#x45;DC scope</span>;",
   "jsx-attribute.tsx": 'export const view = <span title="&#69;DC scope">view</span>;',
   "jsx-attribute-hex.tsx": 'export const view = <span title="&#x45;DC scope">view</span>;',
+  "regex-hex-flagged": "export const pattern = /\\x45DC/i;",
+  "jsx-fragment.tsx": "export const view = <>&#69;DC scope</>;",
+  "jsx-attribute-aria.tsx": 'export const view = <span aria-label="&#69;DC scope">view</span>;',
 };
 const ESCAPED_TWINS: Readonly<Record<string, string>> = {
   regex: "export const pattern = /EDC/;",
   "jsx.tsx": "export const view = <span>EDC scope</span>;",
   "jsx-attribute.tsx": 'export const view = <span title="EDC scope">view</span>;',
+  "regex-flagged": "export const pattern = /EDC/i;",
+  "jsx-fragment.tsx": "export const view = <>EDC scope</>;",
+  "jsx-attribute-aria.tsx": 'export const view = <span aria-label="EDC scope">view</span>;',
 };
 /** Each residual family and the quiet row that pins it. */
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {

@@ -1,6 +1,6 @@
 {
  "bead": "wb-pyel.6",
- "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut and for respin 2 by seat ws-03 (run g10-work-s138) on trunk a4cf24c plus the cut; the census holds its own literals to this file and its rows, quotes, partitions, axes, codes and stems to the bead's row in .beads/issues.jsonl; extended by seat ws-04 (run g10-work-s147) on trunk 2211bdf plus the cut for wb-a6m9 (the R694 follow-up of landing 682): the combining-mark and escape controls and the R-ESCAPED quiet row Q15; respun as cut #3 by seat ws-03 (run g10-work-s160) on trunk 379a945 plus the cut for wb-a6m9 refusal #2 (U1-U3): THE FOLD SWEEP's verdicts in A1 (the stems) and D1 (the axis words) with its constants (foldClasses, precomposedLetter, foldUnion, foldFloors, foldCarriers), the private-name, no-substitution, template-middle and template-tail escape controls read by A1, and Q15's JSX attribute hex probe; respun as cut #4 by seat ws-06 (run g10-work-s171) on trunk f63d389 plus the cut for wb-a6m9 refusal #3 (U1-U2, in the enumerate-the-resolvable form ruling R-B212 binds): nine more SOURCE_CONTROLS escape rows read by A1 (the import, export-from and dynamic-import specifier, string property key, string literal type and single-quoted string hex escapes, and the property-access name and import and export specifier name unicode escapes), one per site refusal #3 names, the sixteen escape rows being exactly the texts THE DECODED TEXTS claims",
+ "comment": "wb-pyel.6 EDC scope-narrowing census roster: the judged set (rows, quotes, constants, every pin's witness) and the registered tests, first measured by seat ws-04 (run g10-work-s125) on trunk 7a0ab7f plus the cut, re-measured for respin 1 by seat ws-05 (run g10-work-s136) on trunk 04123dc plus the cut and for respin 2 by seat ws-03 (run g10-work-s138) on trunk a4cf24c plus the cut; the census holds its own literals to this file and its rows, quotes, partitions, axes, codes and stems to the bead's row in .beads/issues.jsonl; extended by seat ws-04 (run g10-work-s147) on trunk 2211bdf plus the cut for wb-a6m9 (the R694 follow-up of landing 682): the combining-mark and escape controls and the R-ESCAPED quiet row Q15; respun as cut #3 by seat ws-03 (run g10-work-s160) on trunk 379a945 plus the cut for wb-a6m9 refusal #2 (U1-U3): THE FOLD SWEEP's verdicts in A1 (the stems) and D1 (the axis words) with its constants (foldClasses, precomposedLetter, foldUnion, foldFloors, foldCarriers), the private-name, no-substitution, template-middle and template-tail escape controls read by A1, and Q15's JSX attribute hex probe; respun as cut #4 by seat ws-06 (run g10-work-s171) on trunk f63d389 plus the cut for wb-a6m9 refusal #3 (U1-U2, in the enumerate-the-resolvable form ruling R-B212 binds): nine more SOURCE_CONTROLS escape rows read by A1 (the import, export-from and dynamic-import specifier, string property key, string literal type and single-quoted string hex escapes, and the property-access name and import and export specifier name unicode escapes), one per site refusal #3 names, the sixteen escape rows being exactly the texts THE DECODED TEXTS claims; extended by seat ws-01 (run g10-work-s182) on trunk f5cb912 plus the cut for wb-6jao (the R694 follow-up of landing 776, its F5 lead): Q15's three second spellings, one per sub-form the landing-776 gate named (regex-hex-flagged, jsx-fragment.tsx, jsx-attribute-aria.tsx), and their three plain twins (regex-flagged, jsx-fragment.tsx, jsx-attribute-aria.tsx), with THE DECODED TEXTS' R-ESCAPED sentence narrowed to the ten probe texts",
  "constants": {
   "stems": {
    "edc": "word",
@@ -950,12 +950,18 @@
    "jsx-decimal.tsx": "export const view = <span>&#69;DC scope</span>;",
    "jsx-hex.tsx": "export const view = <span>&#x45;DC scope</span>;",
    "jsx-attribute.tsx": "export const view = <span title=\"&#69;DC scope\">view</span>;",
-   "jsx-attribute-hex.tsx": "export const view = <span title=\"&#x45;DC scope\">view</span>;"
+   "jsx-attribute-hex.tsx": "export const view = <span title=\"&#x45;DC scope\">view</span>;",
+   "regex-hex-flagged": "export const pattern = /\\x45DC/i;",
+   "jsx-fragment.tsx": "export const view = <>&#69;DC scope</>;",
+   "jsx-attribute-aria.tsx": "export const view = <span aria-label=\"&#69;DC scope\">view</span>;"
   },
   "escapedTwins": {
    "regex": "export const pattern = /EDC/;",
    "jsx.tsx": "export const view = <span>EDC scope</span>;",
-   "jsx-attribute.tsx": "export const view = <span title=\"EDC scope\">view</span>;"
+   "jsx-attribute.tsx": "export const view = <span title=\"EDC scope\">view</span>;",
+   "regex-flagged": "export const pattern = /EDC/i;",
+   "jsx-fragment.tsx": "export const view = <>EDC scope</>;",
+   "jsx-attribute-aria.tsx": "export const view = <span aria-label=\"EDC scope\">view</span>;"
   },
   "residuals": {
    "R-LOOKALIKE": [
@@ -2254,7 +2260,10 @@
        "jsx-decimal.tsx": [],
        "jsx-hex.tsx": [],
        "jsx-attribute.tsx": [],
-       "jsx-attribute-hex.tsx": []
+       "jsx-attribute-hex.tsx": [],
+       "regex-hex-flagged": [],
+       "jsx-fragment.tsx": [],
+       "jsx-attribute-aria.tsx": []
       },
       "twins": {
        "regex": [
@@ -2265,6 +2274,15 @@
        ],
        "jsx-attribute.tsx": [
         "jsx-attribute.tsx:1|string|edc"
+       ],
+       "regex-flagged": [
+        "regex-flagged:1|regex|edc"
+       ],
+       "jsx-fragment.tsx": [
+        "jsx-fragment.tsx:1|jsx|edc"
+       ],
+       "jsx-attribute-aria.tsx": [
+        "jsx-attribute-aria.tsx:1|string|edc"
        ]
       }
      }
