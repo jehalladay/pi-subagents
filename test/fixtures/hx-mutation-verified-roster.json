@@ -1,6 +1,6 @@
 {
  "bead": "wb-ts6.2",
- "basis": "The out-of-file roster of test/workbench-hx-mutation-verified-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the constants (controls, probes, reading shapes, residual families, the undelivered armed clauses) and the registered test titles, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Cut 1: witnesses measured by the cutting seat ws-04 (run g10-work-s125, 2026-10-28) on trunk 061c2ac. Respin 1 (refusal #1, U1-U6): every witness re-measured by seat ws-05 (run g10-work-s138, 2026-10-29) on trunk 04123dc with the vendored @hyperunix/sdk 0.1.0 (node_modules/@hyperunix/sdk/dist, installed by npm ci from vendor/hyperunix-sdk-0.1.0.tgz); the cut-1 readings each kept witness carries are unchanged, and every new or changed witness was reviewed by hand against the shipped declarations and src (the provider module's 13 SDK identifier references and src's 25 domainStatus places counted line by line). Respin 2 (refusal #2, U1-U4; the enumerate-the-resolvable form, orchestrator ruling R-B91): every witness re-measured by seat ws-03 (run g10-work-s141, 2026-10-29) on trunk aa95f43 with the same vendored SDK; every respin-1 witness key re-measured unchanged, and the new keys (A1/A3 products, A2 subsets, C1 loaders, C3 receipt carriers and subsets, C4 SDK binary names, client control and spellings, Q2 require load, Q4 widened site, Q8 host values and products) and the new rows Q10-Q14 were reviewed by hand against the shipped SDK (client.js resolveBinary, protocol/mutation.js receiptToJson, index.d.ts) and src; the product witnesses pin their readings by sha256 over the reading lines (A1 19136, A2 3328, A3 4416). Cut #4 (refusal #3, U1-U4 and F6; the fail-closed core, orchestrator ruling R-B112): every witness re-measured by seat ws-02 (run g10-work-s146, 2026-10-30) on trunk cdf5484 with the same vendored SDK; every cut-3 reading re-measured unchanged (each kept key and sub-key equal; C3 glyphControl keeps its seven readings in order and adds the three the widened glyph control carries: indexOf, a non-null assertion, a cast), and the new keys (C1 site controls import-equals, literal-position, upper-case, the six as-path readings and the template middle and tail, the bound-new and bound-union loader controls and packageControl; C2 unread, unreadControls, readControls and five destructure member controls; C3's widened glyph control; C4's no-substitution and template head and tail carriers; Q1 union-key, keyof-key, values, descriptor, for-in; Q2 copies) and the new pins C5, Q15 and Q16 were reviewed by hand against src, the installed tree (node_modules/.bin links, the SDK package entries) and the shipped adapter's refusal message.",
+ "basis": "The out-of-file roster of test/workbench-hx-mutation-verified-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the constants (controls, probes, reading shapes, residual families, the undelivered armed clauses) and the registered test titles, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Cut 1: witnesses measured by the cutting seat ws-04 (run g10-work-s125, 2026-10-28) on trunk 061c2ac. Respin 1 (refusal #1, U1-U6): every witness re-measured by seat ws-05 (run g10-work-s138, 2026-10-29) on trunk 04123dc with the vendored @hyperunix/sdk 0.1.0 (node_modules/@hyperunix/sdk/dist, installed by npm ci from vendor/hyperunix-sdk-0.1.0.tgz); the cut-1 readings each kept witness carries are unchanged, and every new or changed witness was reviewed by hand against the shipped declarations and src (the provider module's 13 SDK identifier references and src's 25 domainStatus places counted line by line). Respin 2 (refusal #2, U1-U4; the enumerate-the-resolvable form, orchestrator ruling R-B91): every witness re-measured by seat ws-03 (run g10-work-s141, 2026-10-29) on trunk aa95f43 with the same vendored SDK; every respin-1 witness key re-measured unchanged, and the new keys (A1/A3 products, A2 subsets, C1 loaders, C3 receipt carriers and subsets, C4 SDK binary names, client control and spellings, Q2 require load, Q4 widened site, Q8 host values and products) and the new rows Q10-Q14 were reviewed by hand against the shipped SDK (client.js resolveBinary, protocol/mutation.js receiptToJson, index.d.ts) and src; the product witnesses pin their readings by sha256 over the reading lines (A1 19136, A2 3328, A3 4416). Cut #4 (refusal #3, U1-U4 and F6; the fail-closed core, orchestrator ruling R-B112): every witness re-measured by seat ws-02 (run g10-work-s146, 2026-10-30) on trunk cdf5484 with the same vendored SDK; every cut-3 reading re-measured unchanged (each kept key and sub-key equal; C3 glyphControl keeps its seven readings in order and adds the three the widened glyph control carries: indexOf, a non-null assertion, a cast), and the new keys (C1 site controls import-equals, literal-position, upper-case, the six as-path readings and the template middle and tail, the bound-new and bound-union loader controls and packageControl; C2 unread, unreadControls, readControls and five destructure member controls; C3's widened glyph control; C4's no-substitution and template head and tail carriers; Q1 union-key, keyof-key, values, descriptor, for-in; Q2 copies) and the new pins C5, Q15 and Q16 were reviewed by hand against src, the installed tree (node_modules/.bin links, the SDK package entries) and the shipped adapter's refusal message. Cut #5 (refusal #4, U1-U2; the mechanical restatement over wb-ts6.3's landed readers test/helpers/hx-mutation-verified-readers.ts, orchestrator ruling R-B145): every witness re-measured by seat ws-01 (run g10-work-s185, 2026-11-02) on trunk e23b18e (landing 810) with the same vendored SDK, through the landed readers imported unedited, and compared key by key with cut #4's roster: A1-A3, B1, B3, C1, C3, Q1, Q4-Q14 and Q16 are unchanged whole; within the changed pins every cut-4 key the restatement leaves in place is unchanged (B2 native, injected, armed, controls and providerExports; C2's 23 src references and its 17 cut-4 member controls; C4 floor, hx, sdkBinaryNames, clientControl and nearMiss, with its controls and spellings changed in format only - label|text, the old context field gone - each word otherwise equal; C5 root, rootControl, readKinds, kinds and refused; Q2 cast, requireLoad, requireLoadSite and its two cut-4 copies; every cut-4 Q15 key). The new or changed keys were reviewed by hand against src, the helper's claim lines and its census: the new pin A4 (the adapter's src import closure, four modules, no environment read, and its control), B2 registrationTargets, registrationReferences (three src references) and referenceControl (replacing registrationCalls and callControl), C2's eight new member controls (refusal #4 U1's intersections, refusal #3 U3's computed-key destructures, three destructuring assignments) and its compiled exclusion controls, C5's control and walk-control kinds through the landed entryKind (a .json entry reads json), Q2's assignment-rest copy probe, Q3's injectedReferences and unnamed-registration probe (replacing injectedCalls), Q15's landed-reader probes, and the constants naming the landed helper (path, sha256, imported names) and the new controls and probes.",
  "constants": {
   "self": "test/workbench-hx-mutation-verified-census.test.ts",
   "sdk": "@hyperunix/sdk",
@@ -217,6 +217,7 @@
    ]
   },
   "envFlag": "PI_HX_MUTATIONS",
+  "rootJournal": ".hx/journal",
   "ambientFlag": "PI_HX_ALLOW_MUTATION_OUTCOMES",
   "ambientCalls": 1000000,
   "ambientEpoch": 4102444800000,
@@ -292,30 +293,37 @@
    "module"
   ],
   "unreadDestructureControls": {
-   "computed-literal": "const { [\"mutations\"]: mutations } = workspace;\n",
-   "computed-const": "const KEY = \"mutations\";\nconst { [KEY]: mutations } = workspace;\n",
-   "computed-parameter": "export const read = ({ [\"mutations\"]: mutations }: Workspace) => mutations;\n",
-   "numeric-key": "const { 0: first } = list;\n",
-   "assignment-shorthand": "let mutations: unknown;\n({ mutations } = workspace);\n",
-   "assignment-renamed": "let read: unknown;\n({ mutations: read } = workspace);\n",
-   "assignment-array": "let first: unknown;\n[first] = list;\n",
-   "for-of-head": "let mutations: unknown;\nfor ({ mutations } of workspaces) void mutations;\n",
-   "for-in-head": "let first: unknown;\nfor ([first] in record) void first;\n"
+   "computed-string": "export const read = (workspace: { readonly mutations: unknown }, key: string): unknown => {\n  const { [key]: found } = workspace;\n  return found;\n};\n",
+   "computed-union": "export const read = (workspace: { readonly mutations: unknown; readonly root: unknown }, flag: boolean): unknown => {\n  const { [flag ? \"mutations\" : \"root\"]: found } = workspace;\n  return found;\n};\n",
+   "numeric-key": "const list = [\"first\"];\nconst { 0: first } = list;\nexport { first };\n",
+   "pattern-computed-string": "export const read = (workspace: { readonly mutations: unknown }, key: string): unknown => {\n  let found: unknown;\n  ({ [key]: found } = workspace);\n  return found;\n};\n",
+   "rest-pattern": "const list = [\"first\"];\nlet length = 0;\n[...{ length }] = list;\nexport { length };\n",
+   "for-in-head": "const record = { first: 1 };\nlet first: unknown;\nfor ([first] in record) void first;\nexport { first };\n"
   },
   "readDestructureControls": {
-   "shorthand": "const { mutations } = workspace;\n",
-   "renamed": "const { mutations: read } = workspace;\n",
-   "string-key": "const { \"mutations\": read } = workspace;\n",
-   "nested": "const { client: { limits } } = workspace;\n",
-   "defaulted": "const { mutations = fallback } = workspace;\n",
-   "parameter": "export const read = ({ mutations }: Workspace) => mutations;\n",
-   "rest": "const { client, ...rest } = workspace;\n",
-   "array-binding": "const [first] = list;\n",
-   "plain-assignment": "let read: unknown;\nread = workspace.mutations;\n"
+   "shorthand": "const workspace = { mutations: 1 };\nconst { mutations } = workspace;\nexport { mutations };\n",
+   "renamed": "const workspace = { mutations: 1 };\nconst { mutations: read } = workspace;\nexport { read };\n",
+   "string-key": "const workspace = { mutations: 1 };\nconst { \"mutations\": read } = workspace;\nexport { read };\n",
+   "nested": "const workspace = { client: { limits: 1 } };\nconst { client: { limits } } = workspace;\nexport { limits };\n",
+   "defaulted": "const workspace: { mutations?: number } = {};\nconst { mutations = 0 } = workspace;\nexport { mutations };\n",
+   "parameter": "export const read = ({ mutations }: { readonly mutations: unknown }): unknown => mutations;\n",
+   "rest": "const workspace = { client: 1, mutations: 2 };\nconst { client, ...rest } = workspace;\nexport { client, rest };\n",
+   "array-binding": "const list = [\"first\"];\nconst [first] = list;\nexport { first };\n",
+   "plain-assignment": "const workspace = { mutations: 1 };\nlet read = 0;\nread = workspace.mutations;\nexport { read };\n",
+   "computed-literal": "const workspace = { mutations: 1 };\nconst { [\"mutations\"]: read } = workspace;\nexport { read };\n",
+   "computed-const": "const KEY = \"mutations\";\nconst workspace = { mutations: 1 };\nconst { [KEY]: read } = workspace;\nexport { read };\n",
+   "computed-template": "const workspace = { mutations: 1 };\nconst { [`mutations`]: read } = workspace;\nexport { read };\n",
+   "assignment-shorthand": "const workspace = { mutations: 1 };\nlet mutations = 0;\n({ mutations } = workspace);\nexport { mutations };\n",
+   "assignment-renamed": "const workspace = { mutations: 1 };\nlet read = 0;\n({ mutations: read } = workspace);\nexport { read };\n",
+   "assignment-computed": "const workspace = { mutations: 1 };\nlet read = 0;\n({ [\"mutations\"]: read } = workspace);\nexport { read };\n",
+   "assignment-rest": "const workspace = { client: 1, mutations: 2 };\nlet client = 0;\nlet rest = {};\n({ client, ...rest } = workspace);\nexport { client, rest };\n",
+   "for-of-head": "const workspaces = [{ mutations: 1 }];\nlet mutations = 0;\nfor ({ mutations } of workspaces) void mutations;\nexport { mutations };\n",
+   "assignment-array": "const list = [\"first\"];\nlet first = \"\";\n[first] = list;\nexport { first };\n"
   },
   "copyProbes": {
    "rest": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst { client, ...rest } = HyperUnix.open(\"/r\");\nvoid client;\nexport const read = rest.mutations;\n",
-   "spread": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst copy = { ...HyperUnix.open(\"/r\") };\nexport const read = copy.mutations;\n"
+   "spread": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst copy = { ...HyperUnix.open(\"/r\") };\nexport const read = copy.mutations;\n",
+   "assignment-rest": "import { HyperUnix } from \"@hyperunix/sdk\";\nlet client: unknown;\nlet rest: Record<string, unknown> = {};\n({ client, ...rest } = HyperUnix.open(\"/r\"));\nvoid client;\nexport const read = rest.mutations;\n"
   },
   "handReadProbes": {
    "disk-read": "import { readFileSync } from \"node:fs\";\nimport { join } from \"node:path\";\nexport type HxReceiptState = \"Verified\" | \"Torn\" | \"Rejected\";\nexport function receiptState(root: string, executionId: string): HxReceiptState | undefined {\n  const receipt = JSON.parse(readFileSync(join(root, \".hx\", \"receipts\", `${executionId}.json`), \"utf8\")) as { state?: unknown };\n  return receipt.state === \"Verified\" || receipt.state === \"Torn\" || receipt.state === \"Rejected\" ? receipt.state : undefined;\n}\n",
@@ -940,7 +948,6 @@
    "evidence": "export function nativeEvidence(id: string) { switch (id) { case \"a.read\": break; case \"hyperunix.apply\": break; default: } }\nfunction other(id: string) { switch (id) { case \"z.read\": break; } }",
    "glyph": "const lit = node.domainStatus === \"verified\" || \"complete\" == entry.domainStatus || node.state === \"done\" || node.domainStatus !== \"failed\" || [\"complete-empty\", 7].includes(node.domainStatus ?? \"\") || new Set([\"incomplete\"]).has(entry.domainStatus) || domainStatus === \"cancelled\" || node[\"domainStatus\"] === \"usage-error\" || [\"budget-exhausted\"].indexOf(node.domainStatus) >= 0 || node.domainStatus! === \"view-failed\" || (node.domainStatus as string) === \"partial\";\nswitch (node.domainStatus) { case \"provider-failed\": break; default: }\nconst other = [\"done\"].includes(node.state);",
    "places": "interface N { domainStatus?: string }\nconst a = node.domainStatus;\nconst { domainStatus } = node;\nconst b = node[\"domainStatus\"];\nconst c = { domainStatus: a, \"domainStatus\": b };\nconst d = { domainStatus };\nlabel(domainStatus);\nconst e = node.domainStatusText;",
-   "registration": "registerHyperUnixFind(registry, reader, root);\nhyperunix.registerNativeHyperUnixFind(registry, root);\nregisterOther(registry);",
    "client": "function resolveBinary(state) {\n    const other = state.x ? \"y.exe\" : \"y\";\n    const name = process.platform === \"win32\" ? \"a.exe\" : \"a\";\n    return name;\n}\nfunction elsewhere() {\n    const name = cond ? \"b.exe\" : \"b\";\n}"
   },
   "siteControls": {
@@ -1005,7 +1012,15 @@
    "identifier": "import { receiptFromJson } from \"@hyperunix/sdk\";\nexport const decode = (value: unknown) => receiptFromJson(value as never);\n",
    "relative-identifier": "import { receiptFromJson } from \"../../node_modules/@hyperunix/sdk/dist/protocol/mutation.js\";\nexport const decode = (value: unknown) => receiptFromJson(value as never);\n",
    "type-identifier": "import type { MutationReceipt } from \"@hyperunix/sdk\";\nexport type Receipt = MutationReceipt;\n",
-   "mts-module.mts": "import { receiptFromJson } from \"@hyperunix/sdk\";\nexport const decode = (value: unknown) => receiptFromJson(value as never);\n"
+   "mts-module.mts": "import { receiptFromJson } from \"@hyperunix/sdk\";\nexport const decode = (value: unknown) => receiptFromJson(value as never);\n",
+   "intersection-local-first": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst workspace = HyperUnix.open(\"/r\");\nconst facet: { readonly mutations: unknown } & typeof workspace = workspace;\nexport const read = facet.mutations;\n",
+   "intersection-sdk-first": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst workspace = HyperUnix.open(\"/r\");\nconst facet: typeof workspace & { readonly mutations: unknown } = workspace;\nexport const read = facet.mutations;\n",
+   "intersection-destructure": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst workspace = HyperUnix.open(\"/r\");\nconst { mutations: found }: { readonly mutations: unknown } & typeof workspace = workspace;\nexport { found };\n",
+   "computed-literal-destructure": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst { [\"mutations\"]: found } = HyperUnix.open(\"/r\");\nexport { found };\n",
+   "computed-const-destructure": "import { HyperUnix } from \"@hyperunix/sdk\";\nconst KEY = \"mutations\";\nconst { [KEY]: found } = HyperUnix.open(\"/r\");\nexport { found };\n",
+   "assignment-shorthand": "import { HyperUnix } from \"@hyperunix/sdk\";\nlet mutations: unknown;\n({ mutations } = HyperUnix.open(\"/r\"));\nexport { mutations };\n",
+   "assignment-renamed": "import { HyperUnix } from \"@hyperunix/sdk\";\nlet found: unknown;\n({ mutations: found } = HyperUnix.open(\"/r\"));\nexport { found };\n",
+   "for-of-pattern": "import { HyperUnix } from \"@hyperunix/sdk\";\nlet mutations: unknown;\nfor ({ mutations } of [HyperUnix.open(\"/r\")]) void mutations;\nexport { mutations };\n"
   },
   "computedKeyProbes": {
    "composed": "import { HyperUnix } from \"@hyperunix/sdk\";\nexport const read = HyperUnix.open(\"/r\")[\"mut\" + \"ations\"];\n",
@@ -1102,6 +1117,39 @@
    "R-HAND-READ-RECEIPT": [
     "Q16"
    ]
+  },
+  "helper": "test/helpers/hx-mutation-verified-readers.ts",
+  "helperSha256": "e00f32cbeaf3c90664e919aff5b84c56c61f7a0aecff9a1c5e8472cf271b04fa",
+  "helperImports": [
+   "assignmentPatternMembers",
+   "bindingKey",
+   "EntryLike",
+   "EntryReading",
+   "entriesBelow",
+   "entryKind",
+   "entryStrings",
+   "environmentReads",
+   "importClosure",
+   "MODULE_EXTENSIONS",
+   "packageNameOf",
+   "registrationReferences",
+   "resolvesIntoSdk",
+   "SDK",
+   "sdkDeclarations"
+  ],
+  "adapterModule": "src/workbench/hyperunix-observer.ts",
+  "providerModule": "src/workbench/providers/hyperunix.ts",
+  "registrationControl": "import type { CapabilityRegistry } from \"../workbench/capability-registry.js\";\nimport { type HyperUnixReader, registerHyperUnixFind, registerNativeHyperUnixFind } from \"../workbench/providers/hyperunix.js\";\nconst attachReader = registerHyperUnixFind;\nexport function direct(registry: CapabilityRegistry, reader: HyperUnixReader, root: string): void {\n  registerHyperUnixFind(registry, reader, root);\n}\nexport function method(registry: CapabilityRegistry, reader: HyperUnixReader, root: string): void {\n  registerHyperUnixFind.call(undefined, registry, reader, root);\n}\nexport function aliased(registry: CapabilityRegistry, reader: HyperUnixReader, root: string): void {\n  attachReader(registry, reader, root);\n}\nexport function native(registry: CapabilityRegistry, root: string): void {\n  registerNativeHyperUnixFind(registry, root);\n}\n",
+  "unnamedRegistrationProbe": "import type { CapabilityRegistry } from \"../workbench/capability-registry.js\";\nimport * as provider from \"../workbench/providers/hyperunix.js\";\nimport type { HyperUnixReader } from \"../workbench/providers/hyperunix.js\";\ntype Register = (registry: CapabilityRegistry, reader: HyperUnixReader, root: string) => void;\nexport function unnamed(registry: CapabilityRegistry, reader: HyperUnixReader, root: string, key: string): void {\n  const found = Object.values(provider).find(value => typeof value === \"function\" && value.name === \"registerHyperUnixFind\") as Register;\n  found(registry, reader, root);\n  (provider as unknown as Record<string, Register>)[key]?.(registry, reader, root);\n}\nexport function named(registry: CapabilityRegistry, reader: HyperUnixReader, root: string): void {\n  provider.registerHyperUnixFind(registry, reader, root);\n}\n",
+  "environmentControls": {
+   "a4-entry": "import { refusesMutation } from \"./a4-gated.js\";\nexport const entry = (kind: string): boolean => refusesMutation(kind);\n",
+   "a4-gated": "export const refusesMutation = (kind: string): boolean => kind.startsWith(\"mutation-\") && process.env.PI_HX_ALLOW_MUTATION_OUTCOMES !== \"1\";\n"
+  },
+  "ambientProbes": {
+   "q15-untyped": "export const refusesMutation = (kind: string): boolean => kind.startsWith(\"mutation-\") && (process as unknown as { env: Record<string, string | undefined> }).env.PI_HX_ALLOW_MUTATION_OUTCOMES !== \"1\";\n",
+   "q15-runtime": "export const refusesMutation = async (kind: string): Promise<boolean> => kind.startsWith(\"mutation-\") && !(await import(\"./q15-runtime-flag.js\")).allowed;\n",
+   "q15-runtime-flag": "export const allowed = process.env.PI_HX_ALLOW_MUTATION_OUTCOMES === \"1\";\n",
+   "q15-clock": "let calls = 0;\nexport const refusesMutation = (kind: string): boolean => kind.startsWith(\"mutation-\") && ++calls <= 1_000_000 && Date.now() < 4_102_444_800_000;\n"
   }
  },
  "rows": [
@@ -1526,6 +1574,28 @@
        "sha256": "04d08865f4a781b97c7bb47878bcb382d0a89c3d14d3950fda1a27f09dd29725"
       }
      }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "adapter": "src/workbench/hyperunix-observer.ts",
+      "closure": [
+       "src/workbench/hyperunix-observer.ts",
+       "src/workbench/capability-registry.ts",
+       "src/workbench/observation.ts",
+       "src/workbench/redaction.ts"
+      ],
+      "reads": [],
+      "control": {
+       "closure": [
+        "src/__hx-mutation-verified-census__/a4-entry.ts",
+        "src/__hx-mutation-verified-census__/a4-gated.ts"
+       ],
+       "reads": [
+        "src/__hx-mutation-verified-census__/a4-gated.ts|1|process.env"
+       ]
+      }
+     }
     }
    ]
   },
@@ -1588,13 +1658,23 @@
        "registerHyperUnixFind",
        "registerNativeHyperUnixFind"
       ],
-      "registrationCalls": [
-       "src/workbench/hosts/local-detached.ts|registerNativeHyperUnixFind",
-       "src/workbench/native-modules.ts|hyperunix.registerNativeHyperUnixFind"
+      "registrationTargets": [
+       "registerHyperUnixFind",
+       "registerNativeHyperUnixFind"
       ],
-      "callControl": [
-       "control|registerHyperUnixFind",
-       "control|hyperunix.registerNativeHyperUnixFind"
+      "registrationReferences": [
+       "src/workbench/hosts/local-detached.ts|specifier|registerNativeHyperUnixFind|registerNativeHyperUnixFind",
+       "src/workbench/hosts/local-detached.ts|call|registerNativeHyperUnixFind|registerNativeHyperUnixFind",
+       "src/workbench/native-modules.ts|call|registerNativeHyperUnixFind|hyperunix.registerNativeHyperUnixFind"
+      ],
+      "referenceControl": [
+       "control:b2-registration|specifier|registerHyperUnixFind|registerHyperUnixFind",
+       "control:b2-registration|specifier|registerNativeHyperUnixFind|registerNativeHyperUnixFind",
+       "control:b2-registration|alias|registerHyperUnixFind|registerHyperUnixFind",
+       "control:b2-registration|call|registerHyperUnixFind|registerHyperUnixFind",
+       "control:b2-registration|call-method|registerHyperUnixFind|registerHyperUnixFind",
+       "control:b2-registration|call|registerHyperUnixFind|attachReader",
+       "control:b2-registration|call|registerNativeHyperUnixFind|registerNativeHyperUnixFind"
       ]
      }
     },
@@ -2294,36 +2374,115 @@
          "control:mts-module.mts|identifier|receiptFromJson|protocol/mutation.d.ts|mutation",
          "control:mts-module.mts|identifier|receiptFromJson|protocol/mutation.d.ts|mutation"
         ]
+       },
+       "intersection-local-first": {
+        "references": [
+         "control:intersection-local-first|identifier|HyperUnix|client.d.ts",
+         "control:intersection-local-first|member|open|client.d.ts",
+         "control:intersection-local-first|identifier|HyperUnix|client.d.ts",
+         "control:intersection-local-first|member|mutations|client.d.ts|mutation"
+        ],
+        "violations": [
+         "control:intersection-local-first|member|mutations|client.d.ts|mutation"
+        ]
+       },
+       "intersection-sdk-first": {
+        "references": [
+         "control:intersection-sdk-first|identifier|HyperUnix|client.d.ts",
+         "control:intersection-sdk-first|member|open|client.d.ts",
+         "control:intersection-sdk-first|identifier|HyperUnix|client.d.ts",
+         "control:intersection-sdk-first|member|mutations|client.d.ts|mutation"
+        ],
+        "violations": [
+         "control:intersection-sdk-first|member|mutations|client.d.ts|mutation"
+        ]
+       },
+       "intersection-destructure": {
+        "references": [
+         "control:intersection-destructure|identifier|HyperUnix|client.d.ts",
+         "control:intersection-destructure|member|open|client.d.ts",
+         "control:intersection-destructure|identifier|HyperUnix|client.d.ts",
+         "control:intersection-destructure|destructure|mutations|client.d.ts|mutation"
+        ],
+        "violations": [
+         "control:intersection-destructure|destructure|mutations|client.d.ts|mutation"
+        ]
+       },
+       "computed-literal-destructure": {
+        "references": [
+         "control:computed-literal-destructure|identifier|HyperUnix|client.d.ts",
+         "control:computed-literal-destructure|destructure|mutations|client.d.ts|mutation",
+         "control:computed-literal-destructure|member|open|client.d.ts",
+         "control:computed-literal-destructure|identifier|HyperUnix|client.d.ts"
+        ],
+        "violations": [
+         "control:computed-literal-destructure|destructure|mutations|client.d.ts|mutation"
+        ]
+       },
+       "computed-const-destructure": {
+        "references": [
+         "control:computed-const-destructure|identifier|HyperUnix|client.d.ts",
+         "control:computed-const-destructure|destructure|mutations|client.d.ts|mutation",
+         "control:computed-const-destructure|member|open|client.d.ts",
+         "control:computed-const-destructure|identifier|HyperUnix|client.d.ts"
+        ],
+        "violations": [
+         "control:computed-const-destructure|destructure|mutations|client.d.ts|mutation"
+        ]
+       },
+       "assignment-shorthand": {
+        "references": [
+         "control:assignment-shorthand|identifier|HyperUnix|client.d.ts",
+         "control:assignment-shorthand|member|open|client.d.ts",
+         "control:assignment-shorthand|identifier|HyperUnix|client.d.ts",
+         "control:assignment-shorthand|pattern|mutations|client.d.ts|mutation"
+        ],
+        "violations": [
+         "control:assignment-shorthand|pattern|mutations|client.d.ts|mutation"
+        ]
+       },
+       "assignment-renamed": {
+        "references": [
+         "control:assignment-renamed|identifier|HyperUnix|client.d.ts",
+         "control:assignment-renamed|member|open|client.d.ts",
+         "control:assignment-renamed|identifier|HyperUnix|client.d.ts",
+         "control:assignment-renamed|pattern|mutations|client.d.ts|mutation"
+        ],
+        "violations": [
+         "control:assignment-renamed|pattern|mutations|client.d.ts|mutation"
+        ]
+       },
+       "for-of-pattern": {
+        "references": [
+         "control:for-of-pattern|identifier|HyperUnix|client.d.ts",
+         "control:for-of-pattern|member|open|client.d.ts",
+         "control:for-of-pattern|identifier|HyperUnix|client.d.ts",
+         "control:for-of-pattern|pattern|mutations|client.d.ts|mutation"
+        ],
+        "violations": [
+         "control:for-of-pattern|pattern|mutations|client.d.ts|mutation"
+        ]
        }
       },
       "unread": [],
       "unreadControls": {
-       "computed-literal": [
-        "control:computed-literal|binding-key|ComputedPropertyName"
+       "computed-string": [
+        "control:computed-string|binding-key|ComputedPropertyName"
        ],
-       "computed-const": [
-        "control:computed-const|binding-key|ComputedPropertyName"
-       ],
-       "computed-parameter": [
-        "control:computed-parameter|binding-key|ComputedPropertyName"
+       "computed-union": [
+        "control:computed-union|binding-key|ComputedPropertyName"
        ],
        "numeric-key": [
         "control:numeric-key|binding-key|NumericLiteral"
        ],
-       "assignment-shorthand": [
-        "control:assignment-shorthand|assignment|ObjectLiteralExpression"
+       "pattern-computed-string": [
+        "control:pattern-computed-string|pattern-key|PropertyAssignment"
        ],
-       "assignment-renamed": [
-        "control:assignment-renamed|assignment|ObjectLiteralExpression"
-       ],
-       "assignment-array": [
-        "control:assignment-array|assignment|ArrayLiteralExpression"
-       ],
-       "for-of-head": [
-        "control:for-of-head|for-head|ObjectLiteralExpression"
+       "rest-pattern": [
+        "control:rest-pattern|rest-pattern|ObjectLiteralExpression"
        ],
        "for-in-head": [
-        "control:for-in-head|for-head|ArrayLiteralExpression"
+        "control:for-in-head|for-in-head|ArrayLiteralExpression"
        ]
       },
       "readControls": {
@@ -2335,7 +2494,16 @@
        "parameter": [],
        "rest": [],
        "array-binding": [],
-       "plain-assignment": []
+       "plain-assignment": [],
+       "computed-literal": [],
+       "computed-const": [],
+       "computed-template": [],
+       "assignment-shorthand": [],
+       "assignment-renamed": [],
+       "assignment-computed": [],
+       "assignment-rest": [],
+       "for-of-head": [],
+       "assignment-array": []
       }
      }
     },
@@ -2505,78 +2673,78 @@
       ],
       "controls": {
        "literal": [
-        "control:literal|CallExpression|hx"
+        "control:literal|hx"
        ],
        "shell": [
-        "control:shell|CallExpression|hx apply plan"
+        "control:shell|hx apply plan"
        ],
        "path": [
-        "control:path|CallExpression|/usr/local/bin/hx"
+        "control:path|/usr/local/bin/hx"
        ],
        "member": [
-        "control:member|CallExpression|hx"
+        "control:member|hx"
        ],
        "alias-import": [
-        "control:alias-import|CallExpression|hx"
+        "control:alias-import|hx"
        ],
        "promisified": [
-        "control:promisified|CallExpression|hx"
+        "control:promisified|hx"
        ],
        "shell-c": [
-        "control:shell-c|ArrayLiteralExpression|hx mutation apply \"$0\""
+        "control:shell-c|hx mutation apply \"$0\""
        ],
        "env-prefix": [
-        "control:env-prefix|CallExpression|HX_NO_COLOR=1 hx mutation apply plan"
+        "control:env-prefix|HX_NO_COLOR=1 hx mutation apply plan"
        ],
        "npx": [
-        "control:npx|ArrayLiteralExpression|hx"
+        "control:npx|hx"
        ],
        "bound": [
-        "control:bound|VariableDeclaration|hx"
+        "control:bound|hx"
        ],
        "template": [
-        "control:template|TemplateSpan|/hx mutation apply "
+        "control:template|/hx mutation apply "
        ],
        "no-substitution": [
-        "control:no-substitution|CallExpression|hx"
+        "control:no-substitution|hx"
        ],
        "template-head": [
-        "control:template-head|TemplateExpression|hx mutation apply "
+        "control:template-head|hx mutation apply "
        ],
        "template-tail": [
-        "control:template-tail|TemplateSpan| && hx"
+        "control:template-tail| && hx"
        ]
       },
       "spellings": {
        "win32-path": [
-        "control:win32-path|CallExpression|C:\\Tools\\hx"
+        "control:win32-path|C:\\Tools\\hx"
        ],
        "sdk-win32-name": [
-        "control:sdk-win32-name|CallExpression|hx.exe"
+        "control:sdk-win32-name|hx.exe"
        ],
        "win32-name-case": [
-        "control:win32-name-case|CallExpression|HX.EXE"
+        "control:win32-name-case|HX.EXE"
        ],
        "posix-path-exe": [
-        "control:posix-path-exe|CallExpression|/opt/hyperunix/bin/hx.exe"
+        "control:posix-path-exe|/opt/hyperunix/bin/hx.exe"
        ],
        "win32-path-exe": [
-        "control:win32-path-exe|CallExpression|C:\\Program Files\\HyperUnix\\Hx.Exe"
+        "control:win32-path-exe|C:\\Program Files\\HyperUnix\\Hx.Exe"
        ],
        "com": [
-        "control:com|CallExpression|hx.com"
+        "control:com|hx.com"
        ],
        "cmd-shim": [
-        "control:cmd-shim|CallExpression|hx.cmd"
+        "control:cmd-shim|hx.cmd"
        ],
        "bat-shim": [
-        "control:bat-shim|CallExpression|hx.bat mutation apply plan"
+        "control:bat-shim|hx.bat mutation apply plan"
        ],
        "ps1-shim": [
-        "control:ps1-shim|ArrayLiteralExpression|hx.ps1"
+        "control:ps1-shim|hx.ps1"
        ],
        "template-win32": [
-        "control:template-win32|TemplateSpan|\\hx.exe mutation apply "
+        "control:template-win32|\\hx.exe mutation apply "
        ]
       },
       "nearMiss": []
@@ -2610,7 +2778,7 @@
        "hx-mutation-link.mjs|symlink|link",
        "hx-mutation-link.d.ts|symlink|link",
        "hxsdk|directory-link|link",
-       "hx-launch.json|file|file",
+       "hx-launch.json|file|json",
        "hx|file|file",
        "E.TS|file|file",
        "f.ts|fifo|other",
@@ -2626,7 +2794,7 @@
         "node_modules/@hyperunix/sdk/README.md|file",
         "node_modules/@hyperunix/sdk/dist/index.js|module",
         "node_modules/@hyperunix/sdk/dist|directory",
-        "node_modules/@hyperunix/sdk/package.json|file"
+        "node_modules/@hyperunix/sdk/package.json|json"
        ]
       }
      }
@@ -2740,6 +2908,15 @@
          "control:q2-spread|identifier|HyperUnix|client.d.ts"
         ],
         "violations": []
+       },
+       "assignment-rest": {
+        "references": [
+         "control:q2-assignment-rest|identifier|HyperUnix|client.d.ts",
+         "control:q2-assignment-rest|member|open|client.d.ts",
+         "control:q2-assignment-rest|identifier|HyperUnix|client.d.ts",
+         "control:q2-assignment-rest|pattern|client|client.d.ts"
+        ],
+        "violations": []
        }
       }
      }
@@ -2750,7 +2927,10 @@
       "domainStatus": "verified",
       "topology": "refused:validation:HyperUnix topology refused: source.execution_status.kind is not a vendored SDK ExecutionStatusKind.",
       "invariant": "breaks:execution-kind:absence-not-licensed",
-      "injectedCalls": []
+      "injectedReferences": [],
+      "unnamedProbe": [
+       "probe:q3-unnamed|call|registerHyperUnixFind|provider.registerHyperUnixFind"
+      ]
      }
     },
     {
@@ -3090,6 +3270,12 @@
       "underCensusEnv": [],
       "underFlag": [
        "hyperunix.apply"
+      ],
+      "rootJournal": ".hx/journal",
+      "repoHoldsJournal": false,
+      "atRepoRoot": [],
+      "atJournalRoot": [
+       "hyperunix.apply"
       ]
      }
     },
@@ -3149,7 +3335,35 @@
          "clock": "projected:stand-in"
         }
        }
-      ]
+      ],
+      "readers": {
+       "q15-untyped": {
+        "closure": [
+         "src/__hx-mutation-verified-census__/q15-untyped.ts"
+        ],
+        "reads": []
+       },
+       "q15-runtime": {
+        "closure": [
+         "src/__hx-mutation-verified-census__/q15-runtime.ts"
+        ],
+        "reads": []
+       },
+       "q15-runtime-flag": {
+        "closure": [
+         "src/__hx-mutation-verified-census__/q15-runtime-flag.ts"
+        ],
+        "reads": [
+         "src/__hx-mutation-verified-census__/q15-runtime-flag.ts|1|process.env"
+        ]
+       },
+       "q15-clock": {
+        "closure": [
+         "src/__hx-mutation-verified-census__/q15-clock.ts"
+        ],
+        "reads": []
+       }
+      }
      }
     },
     {
@@ -3201,6 +3415,7 @@
   "A1",
   "A2",
   "A3",
+  "A4",
   "B1",
   "B2",
   "B3",
