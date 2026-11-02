@@ -85,7 +85,8 @@
  * R-PIN-HOLLOW a pin removed from ROWS, the frozen literal, IMPL and the roster together: the anchor case reads row
  * labels, so it cannot see one (its quiet row pins the unseen pins, A1 to C2, beside a liveness reading: removing any
  * row is seen). R-RELAYED-SHAPE (wb-noq8, the landing-646 follow-up) a reason carried inside a shape wb-gwr.2 relays verbatim
- * (a string view, a diagnostic code naming CONFLICT as a whole segment, an incomplete region with a string scope and target)
+ * (a string view, a diagnostic code naming CONFLICT bounded on both sides (a capital A-Z or a digit 0-9 glues; every other
+ * character and a code end bound), an incomplete region with a string scope and target)
  * surfaces as that facet by that bead's design, so B2's carriers read quiet only in the shapes they are planted in and B2's
  * "reaches no output field" holds for them, not for a relayed shape. Its quiet row, B2's relayed-shape control, plants the
  * reason in each relayed shape (RELAYED_SHAPES, one per slot the adapter's own HYPERUNIX_CONSUMED_FIELDS 'relayed' entries name)
