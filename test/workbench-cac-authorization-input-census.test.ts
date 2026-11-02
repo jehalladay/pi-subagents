@@ -25,10 +25,10 @@
  * MEASURED AT 04123dc0d0f2 (trunk tip at the first cut's claim, landing 671), re-measured at 57cb1c0ca9a4 (landing 677) and
  * aa95f436d802 (landing 678) for the second cut, at c2695d76773c (landing 686), a9bfea3f49c4 (landing 688) and cdf5484d8d1b (landing
  * 689) for the third, at 3c9db90d55f3 (landing 717) for the fourth, at 1e985b6f7d7d (landing 805), 04c8bbb06ccc (landing 807) and
- * f5cb912999ba (landing 808) for the fifth and at e23b18e15bd7 (landing 810), 5779ecaf1161 (landing 814) and 28eea0277c20 (landing
- * 816) for this one, each merged into the branch. Among the first seven, no src path and no other path this census reads changed but
- * the bead export, of which it reads the wb-rdlh.1 row's first seven paragraphs, unchanged (the row gained notes after them), and, at
- * landing
+ * f5cb912999ba (landing 808) for the fifth, at e23b18e15bd7 (landing 810), 5779ecaf1161 (landing 814) and 28eea0277c20 (landing
+ * 816) for the sixth and at a9a10bbaa2fa (landing 834) for this one, each merged into the branch. Among the first seven, no src path
+ * and no other path this census reads changed but the bead export, of which it reads the wb-rdlh.1 row's first seven paragraphs,
+ * unchanged (the row gained notes after them), and, at landing
  * 691 (wb-ycue), the absence roster (a followUp block and two residual families; its 50 vendored lines, all this census reads of it,
  * unchanged) and the absence census (which still names that roster, all this census reads of it);
  * docs/workbench/18-decisions-and-risks.md, which it does not read, gained two lines at landing 673. From the fourth to the fifth's
@@ -39,11 +39,16 @@
  * docs/workbench/12-security.md is unchanged (blob ff7a76a7). From the fifth's first to its second, of the paths this census reads only
  * the bead export (this row's status) and test/helpers/census.ts changed: wb-aalz's one blockText hunk renders a block quote's block
  * children, which turns one check of D1 at one plant, G-T-ITEM-QUOTE-LIST's rendered check (NOT CLAIMED below), and no other check of
- * any plant; every count below re-measured equal at both. From the fifth's second to this one, of the paths this census reads only the
+ * any plant; every count below re-measured equal at both. From the fifth's second to the sixth, of the paths this census reads only the
  * bead export changed: this row's notes are byte-equal at f5cb912999ba and at e23b18e15bd7 gain refusal #5's record and its disposition
  * after every line this census reads (the seven paragraphs, refusal #3's GATE PLANTS block and refusal #4's member lines unchanged),
  * and at 5779ecaf1161 and 28eea0277c20 only the bead export again (this row's status at the first; its notes byte-equal at both);
- * every count below re-measured equal at e23b18e15bd7, 5779ecaf1161 and 28eea0277c20. Not pinned:
+ * every count below re-measured equal at e23b18e15bd7, 5779ecaf1161 and 28eea0277c20. From the sixth's last merge (00b18a9c0eae,
+ * landing 817) to this one, of the paths this census reads only the bead export and the absence census changed: this row's notes gain
+ * refusal #6's record and its disposition after every line this census reads (the seven paragraphs, refusal #3's GATE PLANTS block,
+ * refusal #4's member lines and refusal #5's UNMET record unchanged; refusal #6's UNMET record, which this cut reads, is among the
+ * additions), and the absence census still names that roster, all this census reads of it; every count below re-measured equal at
+ * a9a10bbaa2fa. Not pinned:
  * src/workbench/control.ts:255 declares the filing's cited predicate (export function isCoreMintedDecision); src holds 117 files,
  * every one a .ts module, no symlink; the core and the
  * six modules with a value import of it (claude-control, control-reply, control-tool, detached-control, forge-control and
@@ -92,9 +97,10 @@
  * - DOCS (row D): the page's 'Authorization design' section, read through two views of the one page, each claimed at the forms D1's
  *   pins hold and no wider. THE SECTION-SOURCE READER: wb-rdlh.3's, landed at landing 798 (test/helpers/docs-section-source.ts) and
  *   imported unedited (sectionSource, termsStated) by one import declaration, whose two names docsBinding calls; no function, variable
- *   or class declaration, parameter or binding element of this file takes either name, and no import declaration of it names marked
- *   (the provenance case, at the forms PROVENANCE names; a copy of termsStated feeding the terms beside docsBinding's own call, a named
- *   function expression and a dynamic import are not read: R-UNREAD-PROVENANCE), and that reader's own census
+ *   or class declaration, parameter or binding element of this file takes either name at the placements PROVENANCE names, and no
+ *   import declaration of it names marked (the provenance case, at the forms PROVENANCE names; a copy of termsStated feeding the
+ *   terms beside docsBinding's own call, a named function expression and a dynamic import are not read: R-UNREAD-PROVENANCE), and
+ *   that reader's own census
  *   (test/workbench-docs12-section-source-census.test.ts) pins what it reads. SOURCE: sectionSource's source, the page's own text from
  *   the first character marked 18.0.11's top-level lexer step for the heading token consumed up to the first character the step for the
  *   next top-level level-1 or level-2 heading token consumed (or the
@@ -200,27 +206,46 @@
  * (a) measured without terms with the checks it measured each by, and member (c)'s four raws; refusal #5's UNMET record in the same
  * row's notes (its '| U1-' line up to its '| CURE' line, the first such block: a later quotation appended is not read) names the
  * thirteen witnesses and escapes this census holds, each by its id (W- a provenance form, E- an R-UNREAD-PROVENANCE escape,
- * W-MEMBER-SWAP- an R-PLANT-EDIT swap, WX an appended-note witness); the absence roster's vendored lines yield the records, their
+ * W-MEMBER-SWAP- an R-PLANT-EDIT swap, WX an appended-note witness); refusal #6's UNMET record in the same row's notes (its '| U1-'
+ * line through its '| U2-' line, the first such block: a later quotation appended is not read) names the ten witnesses this census
+ * holds as binding placements, each by its id (W- or WD-); the absence roster's vendored lines yield the records, their
  * members and the statuses; the src tree yields the admission/decision set;
  * and the docs page's section yields D1's frozen shape.
  * SELF-READ: the judged set parses this file's IMPL and requires every pin to name one of READERS and not ROSTER (direct
  * identifiers only, R-HOLLOW-IMPL); each pin's witness carries the digest of its own quote; the records case requires every pin and
- * every quiet row to have run to its end; and the residual ids this header's RESIDUALS paragraph names, in order, must equal QUIET's
- * keys and the roster's. PROVENANCE: this file's source, parsed as TypeScript and judged four ways, each at the forms the case's
+ * every quiet row to have run to its end; the residual ids this header's RESIDUALS paragraph names, in order, must equal QUIET's
+ * keys and the roster's; and the binding placements this header's PROVENANCE placement sentence names, in order, must equal
+ * BINDING_PLACEMENTS'. PROVENANCE: this file's source, parsed as TypeScript and judged four ways, each at the forms the case's
  * controls hold: its one import declaration of the section-source reader binds exactly sectionSource and termsStated as values (a
  * type-only specifier or a type-only import declaration of the reader binds none); docsBinding calls both by name (a call outside
- * docsBinding is not read as one); no function, variable or class declaration, parameter or binding element of this file, at any
- * depth, takes either name; and no import declaration of this file names marked (a named value, type-only, type-only specifier,
- * namespace, default or side-effect import of it each reds). The controls are the synthetic module and one edit of this file's own
- * source per form, made in memory (refusal #5's gate witnesses W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2, W-TYPEIMPORT3 and
- * W-VALUES-TYPE among them), each held to the judgements it reds; the forms' shape is a frozen literal and refusal #5's record holds its
- * witnesses (OUTSIDE ANCHORS); the forms the case does not read are R-UNREAD-PROVENANCE.
+ * docsBinding is not read as one); no function, variable or class declaration, parameter or binding element of this file takes
+ * either name at the placements the binding controls make (BINDING_PLACEMENTS, each made once with each name): in docsBinding's body
+ * a function declaration (W-FUNCDECL); in its parameter list a parameter (W-PARAM); in its body a shorthand element of a const's
+ * object pattern (W-BINDING); in plantEdit's body a class declaration (W-CLASS2); in docsBinding's body a const (W-VARDECL), a let
+ * (WD-LET) and a var (W-VAR); a const in a lone block in its body (WD-BLOCK); a const in the block body of an arrow function its
+ * return calls (WD-ARROW); the parameter of an arrow function its return calls (WD-ARROW-PARAM); in its body a shorthand element of an
+ * object pattern nested in a const's object pattern (WD-NESTED-PATTERN), a renamed element of a const's object pattern
+ * (W-RENAMED-ELEMENT), an element of a const's array pattern (W-ARRAY-ELEMENT), a catch clause's variable (W-CATCH) and a for-of
+ * head's const (W-FOR-OF); a const in the body of a function expression its return calls (W-FUNCEXPR-BODY) and in the body of an
+ * object literal's method its return calls (W-METHOD-BODY); and at this file's top level a const (W-TOP; the synthetic module holds one
+ * too); a declaration of either name at any other placement,
+ * in any other form or with any other modifier (for one: a generator, async or overload function, a using declaration, a rest
+ * element or parameter, a function type's parameter, a declaration nested deeper than its placement) is NOT CLAIMED by this census;
+ * and no import declaration of this file names marked (a named value, type-only, type-only specifier, namespace, default or
+ * side-effect import of it each reds). The controls are the synthetic module and one edit of this file's own source per form, made in
+ * memory (the forms of refusal #5's gate witnesses W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2, W-TYPEIMPORT3 and W-VALUES-TYPE and of
+ * refusal #6's WD-LET, WD-BLOCK, WD-ARROW, WD-ARROW-PARAM and WD-NESTED-PATTERN among them, each bound by its id), each held to the
+ * judgements it reds; each binding placement is made with the two names the reader's import binds, and the declaration it makes is
+ * read back (placementShape: its form and the functions and blocks around it) and held to its row's frozen shape, alike with either
+ * name; the forms' shape is a frozen literal, and refusal #5's and refusal #6's records hold their witnesses (OUTSIDE ANCHORS); the
+ * forms the case does not read are R-UNREAD-PROVENANCE.
  * CASES (the pinned reader set, in registration order): 'judged set, frozen shape', 'judged set, roster', 'judged set, outside
  * anchors: the owner filing ...', 'judged set, outside anchors: refusal #4's UNMET members ...', 'judged set, outside anchors: every
- * witness and escape refusal #5's UNMET record names ...', 'judged set, self-read', 'judged set, provenance', the nine pins (A1-A3,
+ * witness and escape refusal #5's UNMET record names ...', 'judged set, outside anchors: every witness refusal #6's UNMET record
+ * names ...', 'judged set, self-read', 'judged set, provenance', the nine pins (A1-A3,
  * B1-B3, C1-C2 and D1, each titled by its id under its row's label), the ten quiet rows under 'residuals: each named family's quiet
  * row', and 'records'.
- * NOT CLAIMED (scope sentences of the DOCS reading; each bounds what D1 reads and names no residual):
+ * NOT CLAIMED (scope sentences of the DOCS reading and one of PROVENANCE's; each bounds what its case reads and names no residual):
  * - The shared view's text at the nine placements refusal #4's member (a) measured without terms (a table nested in a list item or a
  *   block quote, a list inside a block quote nested in a list item or a block quote: the wb-aalz family) is NOT CLAIMED by the rendered
  *   check: D1 holds every other check of those nine plants exactly, and each reds by source and by terms.
@@ -234,6 +259,8 @@
  *   shared view binds by its own rules; HEADING-ENTITY reds by tokens and source).
  * - sectionSource's refusal when its instrumented lexer's tokens are not marked.lexer's own or its steps miss a token, and a page with
  *   a lone surrogate, are NOT CLAIMED by this census (no page here reaches either).
+ * - A declaration of either name at a placement PROVENANCE does not name (each binding control makes one placement, once with each
+ *   name) is NOT CLAIMED by the provenance case's binding judgement.
  * RESIDUALS (named families, each with a pinned quiet row in QUIET): R-OTHER-PRODUCER row B reads rf's refusal only; R-SHARED-NAME
  * a one-word member (principal, status) is not judged by name; R-DYNAMIC-KEY a key the source never spells whole, as a literal or
  * as a word (a variable, a concatenation, a template with a substitution, its head spelling the name whole included, a fragment
@@ -247,14 +274,14 @@
  * of the section resolves to included, and the tiling page-wide), so, on a page its tokens tile, the sentence placed outside the
  * section's source, on another section of the page (a level-1 or level-2 heading placed after the section's last block starts one, and
  * the section's heading text set as a level-3 heading starts none; HTML wrapped around the section sits in its neighbours) or on
- * another page, is not read; R-UNREAD-PROVENANCE the provenance case reads import declarations, the five declaration kinds and
- * docsBinding's calls by name, so marked loaded by a dynamic import() (refusal #5's E-DYNIMPORT2), either name bound by a named function
- * expression (E-FUNCEXPR2) and a copy of termsStated under another name feeding D1's terms beside docsBinding's own call of it (an
- * object's method, E-METHOD) are not read; R-PLANT-EDIT a gate's plant is bound by its id and by every check it fails or the form it is
- * read at (refusal #4's members also by order, from their lines in the export; refusal #3's four also by the slices that gate
- * measured), so a plant's edit or module swapped for another that reds or reads alike is not read (refusal #5's W-MEMBER-SWAP-A and
- * W-MEMBER-SWAP-B, a refusal #1 and a refusal #2 docs plant, a refusal #1 module). The list's anchors are this paragraph, QUIET and
- * the roster, which one coordinated edit changes together:
+ * another page, is not read; R-UNREAD-PROVENANCE the provenance case reads import declarations, the five declaration kinds (claimed at
+ * the binding placements) and docsBinding's calls by name, so marked loaded by a dynamic import() (refusal #5's E-DYNIMPORT2), either
+ * name bound by a named function expression (E-FUNCEXPR2) and a copy of termsStated under another name feeding D1's terms beside
+ * docsBinding's own call of it (an object's method, E-METHOD) are not read; R-PLANT-EDIT a gate's plant is bound by its id and by
+ * every check it fails or the form it is read at (refusal #4's members also by order, from their lines in the export; refusal #3's
+ * four also by the slices that gate measured), so a plant's edit or module swapped for another that reds or reads alike is not
+ * read (refusal #5's W-MEMBER-SWAP-A and W-MEMBER-SWAP-B, a refusal #1 and a refusal #2 docs plant, a refusal #1 module). The
+ * list's anchors are this paragraph, QUIET and the roster, which one coordinated edit changes together:
  * the program states no residual list to anchor it outside the cut.
  * Display paths added: none. Test-only: no scratch (every synthetic module is parsed in memory); src, the docs, both rosters, the
  * two test sources it binds, the section-source reader it imports and the bead export are only read.
@@ -1232,7 +1259,7 @@ function refusal3Slices(notes: string = beadNotes(BEAD)): Record<string, readonl
   }
   return slices;
 }
-/** Refusal #5's appended-note witnesses (gate s184 LEG 2, verbatim), each appended to this row's notes in memory: a later note quoting
+/** Refusal #5's appended-note witnesses (gate s184 LEG 2, by id), each appended to this row's notes in memory: a later note quoting
  * member lines (WX1) and one quoting a GATE PLANTS block (WX2). The export readers read the first line of each member and the first
  * block, so neither moves a reading (the refusal #4 case and D1 hold it). */
 const APPENDED_WITNESSES = {
@@ -1250,6 +1277,18 @@ function refusal5Witnesses(notes: string = beadNotes(BEAD)): string[] {
 }
 /** A later quotation of refusal #5's record, appended in memory (this census's control of refusal5Witnesses' first block). */
 const APPENDED_RECORD = "\n\n| U1-MEDIUM-CONFIRMED-R514-R515-R668-PROVENANCE-BINDING-KINDS-UNPINNED. A later quotation of the record.\n| - W-QUOTED-ONLY: a quoted witness.\n| CURE (quoted).";
+/** Refusal #6's UNMET record in this bead's notes (gate s186; its '| U1-' line through its '| U2-' line, the first such block): the
+ * witness ids it names, in order, each once (W- and WD- ids). */
+function refusal6Witnesses(notes: string = beadNotes(BEAD)): string[] {
+  const lines = notes.split("\n");
+  const at = lines.findIndex(line => line.startsWith("| U1-MEDIUM-CONFIRMED-R514-R515-R668-PROVENANCE-BINDING-DEPTH-FORMS-UNPINNED:"));
+  const end = lines.findIndex((line, index) => at !== -1 && index > at && line.startsWith("| U2-LOW-CONFIRMED-R514-R515-R668-PROVENANCE-VARIABLE-DECLARATION-FORMS-UNPINNED:"));
+  if (at === -1 || end === -1) throw new Error(`${EXPORT_FILE}'s ${BEAD} notes carry no refusal #6 UNMET record`);
+  return [...new Set(lines.slice(at, end + 1).join("\n").match(/\bWD?-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g) ?? [])];
+}
+/** A later quotation of refusal #6's record, appended in memory (this census's control of refusal6Witnesses' first block). */
+const APPENDED_RECORD6 =
+  "\n\n| U1-MEDIUM-CONFIRMED-R514-R515-R668-PROVENANCE-BINDING-DEPTH-FORMS-UNPINNED: a later quotation of the record.\n| - WD-QUOTED-ONLY: a quoted witness.\n| U2-LOW-CONFIRMED-R514-R515-R668-PROVENANCE-VARIABLE-DECLARATION-FORMS-UNPINNED: quoted.";
 /** The nine placements refusal #4's member (a) measured without terms: the shared view's text there is NOT CLAIMED (the wb-aalz
  * family), so D1 pins every check of those plants but rendered. */
 const AT_DEPTH: ReadonlySet<string> = new Set(MEMBERS.measured.map(([id]) => id));
@@ -1261,14 +1300,16 @@ interface Provenance {
   readonly reader: readonly (readonly string[])[];
   /** The import declarations naming marked, of any form (a dynamic import() is not one: R-UNREAD-PROVENANCE). */
   readonly marked: number;
-  /** The names this file's function, variable and class declarations, parameters and binding elements bind, at any depth (its
-   * imports excluded; no other form is read: R-UNREAD-PROVENANCE). */
+  /** The names the walk collects from this file's function, variable and class declarations, parameters and binding elements (its
+   * imports excluded), claimed at the binding placements only (BINDING_PLACEMENTS; elsewhere NOT CLAIMED, and the forms
+   * R-UNREAD-PROVENANCE names are not read). */
   readonly declared: readonly string[];
   /** The functions docsBinding calls by name. */
   readonly calls: readonly string[];
 }
 /** This file's own source, parsed as TypeScript: its import declarations of the section-source reader (their value specifiers) and of
- * marked (counted), the names its five declaration kinds bind and the calls docsBinding makes by name. */
+ * marked (counted), the names the walk collects from its five declaration kinds (claimed at the binding placements only) and the calls
+ * docsBinding makes by name. */
 function provenance(text: string = readFileSync(HERE, "utf8")): Provenance {
   const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const imports = source.statements.filter(ts.isImportDeclaration);
@@ -1296,7 +1337,7 @@ function provenance(text: string = readFileSync(HERE, "utf8")): Provenance {
 
 /** The four judgements the provenance case makes of a reading, each named by what it holds: the reader's one import declaration binds
  * exactly sectionSource and termsStated as values (reader), no import declaration names marked (marked), docsBinding calls both by name
- * (calls), and no declaration of the five kinds takes either name (binding). */
+ * (calls), and no declaration of the five kinds the walk collects takes either name (binding; claimed at the binding placements). */
 const PROVENANCE_JUDGEMENTS: Readonly<Record<string, (read: Provenance) => boolean>> = {
   reader: read => JSON.stringify(read.reader) === JSON.stringify([["sectionSource", "termsStated"]]),
   marked: read => read.marked === 0,
@@ -1308,6 +1349,48 @@ const provenanceDefects = (read: Provenance): string[] =>
   Object.entries(PROVENANCE_JUDGEMENTS)
     .filter(([, holds]) => !holds(read))
     .map(([judgement]) => judgement);
+/** What a binding placement declares, read back from its edited source: for each declaration of the name the walk would collect (the
+ * five kinds), its form (a function, class, parameter, const, let or var, a for-of head's const, a catch clause's variable, or a
+ * shorthand, renamed or array-pattern element, nested when its pattern is an element's) and, outward to this file's top level, each
+ * arrow function, function expression, method, lone block and function declaration (by its name) around it ('top' when none is). */
+function placementShape(text: string, name: string): string[] {
+  const source = ts.createSourceFile(SELF, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const form = (node: ts.Node): string => {
+    if (ts.isFunctionDeclaration(node)) return "function";
+    if (ts.isClassDeclaration(node)) return "class";
+    if (ts.isParameter(node)) return "parameter";
+    if (ts.isBindingElement(node)) {
+      const element = ts.isArrayBindingPattern(node.parent) ? "array element" : node.propertyName === undefined ? "shorthand element" : "renamed element";
+      return ts.isBindingElement(node.parent.parent) ? `nested ${element}` : element;
+    }
+    if (!ts.isVariableDeclaration(node)) return "other";
+    if (ts.isCatchClause(node.parent)) return "catch variable";
+    const keyword = (node.parent.flags & ts.NodeFlags.Const) !== 0 ? "const" : (node.parent.flags & ts.NodeFlags.Let) !== 0 ? "let" : "var";
+    return ts.isForOfStatement(node.parent.parent) ? `for-of ${keyword}` : keyword;
+  };
+  const around = (node: ts.Node): string => {
+    const scopes: string[] = [];
+    for (let at: ts.Node = node.parent; !ts.isSourceFile(at); at = at.parent) {
+      if (ts.isArrowFunction(at)) scopes.push("arrow");
+      else if (ts.isFunctionExpression(at)) scopes.push("function expression");
+      else if (ts.isMethodDeclaration(at)) scopes.push("method");
+      else if (ts.isFunctionDeclaration(at)) scopes.push(at.name?.text ?? "function");
+      else if (ts.isBlock(at) && ts.isBlock(at.parent)) scopes.push("block");
+    }
+    return scopes.length === 0 ? "top" : scopes.join(" in ");
+  };
+  const shapes: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === name) {
+      const declaration = node.parent;
+      const declares = ts.isClassDeclaration(declaration) || ts.isFunctionDeclaration(declaration) || ts.isBindingElement(declaration) || ts.isParameter(declaration) || ts.isVariableDeclaration(declaration);
+      if (declares && declaration.name === node) shapes.push(`${form(declaration)} in ${around(declaration)}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return shapes;
+}
 /** One edit of this file's own source: an anchor the source spells once (lines of this file), and what replaces it. */
 type SourceEdit = readonly [string, string];
 /** This file's own source with each edit made in turn, in memory, never on disk. */
@@ -1326,21 +1409,88 @@ const AT_TILED = "    tiled: read.tiled,\n";
 const AT_TERMS = "    terms: termsStated(read.source, PARKED_TERMS),\n";
 const AT_TOKENS = "  readonly tokens: readonly string[];\n  /** The parked sentence's terms the source spells out, in PARKED_TERMS order (termsStated). */\n";
 const AT_PLANT_EDIT = "function plantEdit(id: string): PageEdit {\n  const found = DOCS_PLANTS.find(([plant]) => plant === id);\n";
-/** The body refusal #5's witnesses give a local copy of termsStated (the gate's text). */
+// docsBinding's return, from the reader's call to its first member and from the terms to the function's end: the spans the block,
+// arrow, function expression and method placements edit; each spelled once in this file.
+const AT_RETURN = `${AT_SOURCE_READ}  return {\n    view: section.ok,\n`;
+const AT_RETURN_END = `${AT_TERMS}  };\n}\n`;
+/** The body of a local copy of termsStated's reading (the placements of refusal #5's witnesses declare one). */
 const LOCAL_TERMS = 'const flat = text.replace(/\\s+/g, " ").toLowerCase(); return terms.filter(term => flat.includes(term.toLowerCase()));';
-/** The forms the four judgements read, each one edit (or two) of this file's own source with the judgements it reds: refusal #5's gate
- * witnesses verbatim where that gate measured the form (W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2, W-TYPEIMPORT3, W-VALUES-TYPE), and
- * one more for each further form the judgements read. */
-const PROVENANCE_FORMS: readonly (readonly [string, readonly SourceEdit[], readonly string[]])[] = [
-  ["W-FUNCDECL", [[AT_SOURCE_READ, `${AT_SOURCE_READ}  function termsStated(text: string, terms: readonly string[]): string[] {\n    ${LOCAL_TERMS}\n  }\n`]], ["binding"]],
+/** A local copy of termsStated's reading, declared as a const, let or var of the name at the indent. */
+const localCopy = (keyword: string, name: string, indent: string): string =>
+  `${indent}${keyword} ${name} = (text: string, terms: readonly string[]): string[] => {\n${indent}  const flat = text.replace(/\\s+/g, " ").toLowerCase();\n${indent}  return terms.filter(term => flat.includes(term.toLowerCase()));\n${indent}};\n`;
+/** The placements the binding judgement is claimed at (PROVENANCE's placement sentence names each, in this order): each one edit (or two)
+ * of this file's own source that declares the name once, at one placement and in one form (placementShape reads both back), made in
+ * memory with each of the reader's two names. The placements of refusal #5's gate witnesses (W-FUNCDECL, W-PARAM, W-BINDING, W-CLASS2)
+ * and of refusal #6's (WD-LET, WD-BLOCK, WD-ARROW, WD-ARROW-PARAM, WD-NESTED-PATTERN) are among them, each bound by its id, the
+ * judgement it reds and the declaration it makes; each further placement is one PROVENANCE names. */
+const BINDING_PLACEMENTS: readonly (readonly [string, (name: string) => readonly SourceEdit[]])[] = [
+  ["W-FUNCDECL", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  function ${name}(text: string, terms: readonly string[]): string[] {\n    ${LOCAL_TERMS}\n  }\n`]]],
   [
     "W-PARAM",
-    [[AT_DOCS_BINDING, `function docsBinding(markdown: string = readRepo(DOCS_FILE), termsStated: (text: string, terms: readonly string[]) => string[] = (text, terms) => { ${LOCAL_TERMS} }): DocsReading {\n`]],
-    ["binding"],
+    name => [[AT_DOCS_BINDING, `function docsBinding(markdown: string = readRepo(DOCS_FILE), ${name}: (text: string, terms: readonly string[]) => string[] = (text, terms) => { ${LOCAL_TERMS} }): DocsReading {\n`]],
   ],
-  ["W-BINDING", [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const { termsStated } = { termsStated: (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} } };\n`]], ["binding"]],
-  ["W-CLASS2", [[AT_PLANT_EDIT, "function plantEdit(id: string): PageEdit {\n  class termsStated {\n    static readonly of = id;\n  }\n  const found = DOCS_PLANTS.find(([plant]) => plant === termsStated.of);\n"]], ["binding"]],
-  ["W-VARDECL", [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const termsStated = (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} };\n`]], ["binding"]],
+  ["W-BINDING", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const { ${name} } = { ${name}: (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} } };\n`]]],
+  ["W-CLASS2", name => [[AT_PLANT_EDIT, `function plantEdit(id: string): PageEdit {\n  class ${name} {\n    static readonly of = id;\n  }\n  const found = DOCS_PLANTS.find(([plant]) => plant === ${name}.of);\n`]]],
+  ["W-VARDECL", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const ${name} = (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} };\n`]]],
+  ["WD-LET", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}${localCopy("let", name, "  ")}`]]],
+  ["W-VAR", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}${localCopy("var", name, "  ")}`]]],
+  [
+    "WD-BLOCK",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  {\n${localCopy("const", name, "    ")}    return {\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  };\n  }\n}\n`],
+    ],
+  ],
+  [
+    "WD-ARROW",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  return ((): DocsReading => {\n${localCopy("const", name, "    ")}    return {\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  };\n  })();\n}\n`],
+    ],
+  ],
+  [
+    "WD-ARROW-PARAM",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  return ((${name}: (text: string, terms: readonly string[]) => string[]): DocsReading => ({\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  }))((text, terms) => {\n    const flat = text.replace(/\\s+/g, " ").toLowerCase();\n    return terms.filter(term => flat.includes(term.toLowerCase()));\n  });\n}\n`],
+    ],
+  ],
+  [
+    "WD-NESTED-PATTERN",
+    name => [
+      [
+        AT_SOURCE_READ,
+        `${AT_SOURCE_READ}  const {\n    probe: { ${name} },\n  } = {\n    probe: {\n      ${name}: (text: string, terms: readonly string[]): string[] => {\n        const flat = text.replace(/\\s+/g, " ").toLowerCase();\n        return terms.filter(term => flat.includes(term.toLowerCase()));\n      },\n    },\n  };\n`,
+      ],
+    ],
+  ],
+  ["W-RENAMED-ELEMENT", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const { probe: ${name} } = { probe: (text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} } };\n`]]],
+  ["W-ARRAY-ELEMENT", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  const [${name}] = [(text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} }] as const;\n`]]],
+  ["W-CATCH", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  try {\n    void read;\n  } catch (${name}) {\n    void ${name};\n  }\n`]]],
+  ["W-FOR-OF", name => [[AT_SOURCE_READ, `${AT_SOURCE_READ}  for (const ${name} of [(text: string, terms: readonly string[]): string[] => { ${LOCAL_TERMS} }]) {\n    void ${name};\n  }\n`]]],
+  [
+    "W-FUNCEXPR-BODY",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  return (function (): DocsReading {\n${localCopy("const", name, "    ")}    return {\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  };\n  })();\n}\n`],
+    ],
+  ],
+  [
+    "W-METHOD-BODY",
+    name => [
+      [AT_RETURN, `${AT_SOURCE_READ}  return {\n    reading(): DocsReading {\n${localCopy("const", name, "      ")}      return {\n    view: section.ok,\n`],
+      [AT_RETURN_END, `${AT_TERMS}  };\n    },\n  }.reading();\n}\n`],
+    ],
+  ],
+  ["W-TOP", name => [[AT_URL_IMPORT, `${AT_URL_IMPORT}const ${name} = 0;\n`]]],
+];
+/** The reader's two names, each a binding placement is made with. */
+const READER_NAMES = ["termsStated", "sectionSource"] as const;
+/** The forms the four judgements are claimed at, each one edit (or two) of this file's own source with the judgements it reds: the binding
+ * placements made with termsStated (BINDING_PLACEMENTS), the forms of refusal #5's gate witnesses W-TYPEIMPORT3 and W-VALUES-TYPE (each
+ * bound by its id and the judgements it reds), and one more for each further form PROVENANCE names. */
+const PROVENANCE_FORMS: readonly (readonly [string, readonly SourceEdit[], readonly string[]])[] = [
+  ...BINDING_PLACEMENTS.map(([placement, place]) => [placement, place("termsStated"), ["binding"]] as const),
   [
     "W-TYPEIMPORT3",
     [
@@ -1379,7 +1529,7 @@ function formEdits(form: string): readonly SourceEdit[] {
   if (found === undefined) throw new Error(`no provenance form ${form}`);
   return found[1];
 }
-/** Refusal #5's direct escapes (gate s184 LEG 2, verbatim), each one edit (two) of this file's own source and the text that spells its
+/** Refusal #5's direct escapes (gate s184 LEG 2, by id), each one edit (two) of this file's own source and the text that spells its
  * form: a dynamic import of marked feeding the tiling, a named function expression binding termsStated, and an object's method copying
  * termsStated beside docsBinding's own call of it. None is read (R-UNREAD-PROVENANCE). */
 const UNREAD_ESCAPES: readonly (readonly [string, readonly SourceEdit[], string])[] = [
@@ -1811,6 +1961,14 @@ function headerResiduals(text: string = readFileSync(HERE, "utf8")): string[] {
   const paragraph = /\n \* RESIDUALS \(([\s\S]*?)\n \* Display paths added:/.exec(header)?.[1] ?? "";
   return [...new Set(paragraph.match(/\bR-[A-Z]+(?:-[A-Z]+)*\b/g) ?? [])];
 }
+/** The binding placements this file's header claims, in order: the W- and WD- ids its PROVENANCE paragraph's placement sentence names
+ * (from 'the binding controls make' to '; a declaration of either name at any other placement'), read with the comment's line breaks
+ * joined. */
+function headerPlacements(text: string = readFileSync(HERE, "utf8")): string[] {
+  const header = (/^\/\*\*([\s\S]*?)\*\//.exec(text)?.[1] ?? "").replace(/\n \* */g, " ");
+  const sentence = /the binding controls make \(BINDING_PLACEMENTS, each made once with each name\): ([\s\S]*?); a declaration of either name at any other placement/.exec(header)?.[1] ?? "";
+  return [...new Set(sentence.match(/\bWD?-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g) ?? [])];
+}
 /** The labels tile the clause when each follows the last with only white space, commas, semicolons and list markers between. */
 const LIST_SEPARATOR = /^(?:[\s,;]|\([a-z]\)(?=\s))*$/;
 /** A row's pin quotes tile its label with the same separators and a spaced hyphen. */
@@ -1901,18 +2059,26 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
     expect(refusal5Witnesses(`${beadNotes(BEAD)}${APPENDED_RECORD}`), "a later quotation of the record appended is not read: the first such block").toEqual(named);
   });
 
+  it("judged set, outside anchors: every witness refusal #6's UNMET record names is a binding placement this census holds", () => {
+    const named = refusal6Witnesses();
+    expect(named.length, "refusal #6's UNMET record names ten witnesses").toBe(10);
+    const placements = BINDING_PLACEMENTS.map(([placement]) => placement);
+    expect(named.filter(id => !placements.includes(id)), "each a binding placement (W- or WD-)").toEqual([]);
+    expect(refusal6Witnesses(`${beadNotes(BEAD)}${APPENDED_RECORD6}`), "a later quotation of the record appended is not read: the first such block").toEqual(named);
+  });
+
   it("judged set, self-read: every IMPL entry names a reader and not the roster", () => {
     const reads = implReads();
     expect(Object.keys(reads).sort()).toEqual(pinIds());
     expect(selfReadDefects(reads)).toEqual([]);
   });
 
-  it("judged set, provenance: one import declaration binds the landed section-source reader's sectionSource and termsStated as values, docsBinding calls both by name, no declaration of the five kinds takes either name and no import declaration names marked", { timeout: 180_000 }, () => {
+  it("judged set, provenance: one import declaration binds the landed section-source reader's sectionSource and termsStated as values, docsBinding calls both by name, no declaration of the five kinds takes either name at a binding placement and no import declaration names marked", { timeout: 180_000 }, () => {
     const read = provenance();
     expect(read.reader, "one import declaration of the reader, binding exactly sectionSource and termsStated as values").toEqual([["sectionSource", "termsStated"]]);
     expect(read.marked, "no import declaration of this file names marked").toBe(0);
     expect(["sectionSource", "termsStated"].filter(name => !read.calls.includes(name)), "docsBinding calls both by name").toEqual([]);
-    expect(read.declared.filter(name => name === "sectionSource" || name === "termsStated"), "no function, variable or class declaration, parameter or binding element of this file takes either name").toEqual([]);
+    expect(read.declared.filter(name => name === "sectionSource" || name === "termsStated"), "no declaration this file's walk collects takes either name").toEqual([]);
     expect(provenanceDefects(read), "so this file fails none of the four judgements the controls replay").toEqual([]);
     const control = provenance(
       [
@@ -1936,6 +2102,19 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
       "W-BINDING:1:binding",
       "W-CLASS2:1:binding",
       "W-VARDECL:1:binding",
+      "WD-LET:1:binding",
+      "W-VAR:1:binding",
+      "WD-BLOCK:2:binding",
+      "WD-ARROW:2:binding",
+      "WD-ARROW-PARAM:2:binding",
+      "WD-NESTED-PATTERN:1:binding",
+      "W-RENAMED-ELEMENT:1:binding",
+      "W-ARRAY-ELEMENT:1:binding",
+      "W-CATCH:1:binding",
+      "W-FOR-OF:1:binding",
+      "W-FUNCEXPR-BODY:2:binding",
+      "W-METHOD-BODY:2:binding",
+      "W-TOP:1:binding",
       "W-TYPEIMPORT3:2:marked",
       "W-MARKED-VALUE:1:marked",
       "W-MARKED-TYPE-SPECIFIER:1:marked",
@@ -1951,6 +2130,41 @@ describe("wb-rdlh.1 Library design-program authorization-input census (LIBRARY-C
       PROVENANCE_FORMS.map(([form, edits]) => [form, provenanceDefects(provenance(edited(edits)))]),
       "each form, one edit of this file's own source made in memory, reds exactly the judgements it names (refusal #5's witnesses among them)",
     ).toEqual(PROVENANCE_FORMS.map(([form, , judgements]) => [form, [...judgements]]));
+    expect(
+      BINDING_PLACEMENTS.map(([placement, place]) => [
+        placement,
+        READER_NAMES.map(name => {
+          const placed = provenance(edited(place(name)));
+          return [placed.declared.filter(declared => declared === name).length, provenanceDefects(placed)];
+        }),
+      ]),
+      "each binding placement, made once with each of the reader's two names, declares that name once and reds the binding judgement alone",
+    ).toEqual(BINDING_PLACEMENTS.map(([placement]) => [placement, READER_NAMES.map(() => [1, ["binding"]])]));
+    expect([...READER_NAMES].sort(), "the placements are made with the two names the reader's one import declaration binds").toEqual([...(read.reader[0] ?? [])].sort());
+    expect(
+      BINDING_PLACEMENTS.map(([placement, place]) => [placement, ...new Set(READER_NAMES.flatMap(name => placementShape(edited(place(name)), name)))].join(": ")),
+      "each binding placement declares, alike with either name, the one declaration its row names (placementShape)",
+    ).toEqual([
+      "W-FUNCDECL: function in docsBinding",
+      "W-PARAM: parameter in docsBinding",
+      "W-BINDING: shorthand element in docsBinding",
+      "W-CLASS2: class in plantEdit",
+      "W-VARDECL: const in docsBinding",
+      "WD-LET: let in docsBinding",
+      "W-VAR: var in docsBinding",
+      "WD-BLOCK: const in block in docsBinding",
+      "WD-ARROW: const in arrow in docsBinding",
+      "WD-ARROW-PARAM: parameter in arrow in docsBinding",
+      "WD-NESTED-PATTERN: nested shorthand element in docsBinding",
+      "W-RENAMED-ELEMENT: renamed element in docsBinding",
+      "W-ARRAY-ELEMENT: array element in docsBinding",
+      "W-CATCH: catch variable in docsBinding",
+      "W-FOR-OF: for-of const in docsBinding",
+      "W-FUNCEXPR-BODY: const in function expression in docsBinding",
+      "W-METHOD-BODY: const in method in docsBinding",
+      "W-TOP: const in top",
+    ]);
+    expect(headerPlacements(), "the header's placement sentence claims exactly the binding placements, in order").toEqual(BINDING_PLACEMENTS.map(([placement]) => placement));
     expect(
       ["W-VALUES-TYPE", "W-READER-TYPE-ONLY"].map(form => provenance(edited(formEdits(form))).reader),
       "a type-only specifier of the reader, and a type-only import declaration of it, bind no value",
