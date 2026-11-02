@@ -143,8 +143,9 @@
  * reading is handed for each class file is now held byte for byte to its built text, and PLANTED records what each write left on disk,
  * so W-H and its pairs with L2-00 and L2-Q red, and so does W-H-TAB with its tab cure (PREP's counter-reading), a write() hollow that
  * drops the tab from every file it writes: it reds at the two plane-0 class files, whose text as the line reading is handed it is no
- * longer their built text (cut #5 narrows this clause to that measured member: a write() hollow keyed to the landed separator plant's
- * own path is NOT CLAIMED, refusal #4 U2). The measured open members are killed at their own sites (THE CONTEXT PLANT below), and the
+ * longer their built text (cut #5 narrowed this clause to that measured member, a write() hollow keyed to the landed separator plant's
+ * own path NOT CLAIMED, refusal #4 U2; since wb-xu2e that hollow reds as well, at the separator plant's own byte-for-byte pin, PLANT
+ * IDENTITY below). The measured open members are killed at their own sites (THE CONTEXT PLANT below), and the
  * class shapes are held to CLASS_FORMS' (cut #3's guard hollow G-U1-HOLLOW, with L2-Q, reds). The anchor owes each class and context
  * file: 370 subjects, 34 class and 16 context among them, unbuilt (measured; dist/ and .forge/ add the two outside sites of F5). Cost:
  * R-SPELLING 8,623 to 9,179 ms against 8,850 to 9,064 ms on cut #3's merged bytes, measured back to back at load1 ~200 to 250; peak
@@ -156,9 +157,22 @@
  * plant's builder (G-CX-3164-DROPPED, G-CX-NONE-DROPPED, G-CX-TEMPLATE-DROPPED, G-CX-1024-DROPPED, G-CX-8192-DROPPED), whose joiners
  * and sites no table apart from that builder holds. U2: a write() hollow keyed to the landed separator plant's own path
  * (G-SEP-PATH-WRITE-HOLLOW), whose file no pin compares with the text handed to its writer. Cut #5 narrows the plant-identity claims
- * to exactly the identity as handed to the writer and states the produced artifact NOT CLAIMED (PLANT IDENTITY below); that coverage
- * is deferred to wb-xu2e. Its code tokens are cut #4's but for three assertion messages narrowed to the same reading (measured), so
+ * to exactly the identity as handed to the writer and states the produced artifact NOT CLAIMED; that coverage is deferred to wb-xu2e
+ * (FOLLOW-UP below). Its code tokens are cut #4's but for three assertion messages narrowed to the same reading (measured), so
  * every pin cut #4 delivered stays: those that kill refusals #2 and #3's named members, and the five of its pin-flip floor.
+ * FOLLOW-UP (wb-xu2e, the child the rule 19 exit R-B226 filed at refusal #4 to carry its U1-U2; cut on trunk f5cb912, landing 808,
+ * whose census bytes are cut #5's): MEASURED at f5cb912, refusal #4's six members of one edit each still read 28 of 28 and each hides
+ * its cure (the five context cures red 2 alone and SRC-DQ-TAB red 3; each hollow with its cure 28 of 28), because what the separator
+ * plant's own file and the context plant's files hold was held only to the text handed to their writer and to their builder. This
+ * cut reads both plants' identity off the artifact each produces, the text the line reading is handed for each file (PLANT IDENTITY
+ * below): the separator plant's first write is read with a walked map, its file held byte for byte to the text its builder hands
+ * write() and the two-word member's separators read off it (codeSpellings); the context plant's files, each file's line form and
+ * its joiners are read off against CONTEXT_TABLE, written apart from its builder. Each of the six members now reds - the five context
+ * hollows red 2 (R-SPELLING, records), the write hollow red 3 (R-SPELLING, the anchor, records) - and so does each hollow with its
+ * cure; the landing-792 verdict's F6 N8, a splice of the U+00A0 two-word spelling out of the separator plant's variants after its
+ * pin, read 28 of 28 at f5cb912 and reds 3 here (measured). The verdict's F5 N6 (the base separator swaps, wb-zulk's lead) still
+ * reads 28 of 28, outside these claims. No judged row, pin, roster entry or frozen literal changes. Cost: R-SPELLING 5,506 and 8,240
+ * ms against 8,224 and 8,927 ms on the base bytes, measured back to back at load1 ~50 to 66 (no cost measured past the noise).
  *
  * READINGS. A tree is walked from the repository root by directory entries: a regular file is read, a directory recursed (hidden
  * entries included), anything else (a symlink, a socket) is UNREAD and recorded. Every file is read as latin1 bytes, so the ASCII
@@ -261,18 +275,27 @@
  * RegExp.prototype's methods and getters, RegExp's species, String.prototype.matchAll and the iterators they return, which every
  * regular expression in the realm shares - is NOT CLAIMED by this census. Such a matcher reads the member only where the line it is
  * handed holds the member's own text, its words (which carry no white space) joined by its one space.
- * PLANT IDENTITY (cut #5, the fail-closed core R-B226 binds): every plant identity this census claims for R-SPELLING is the identity
- * as handed to the writer - what the text a plant's builder hands to write() holds, held apart from that builder: the class plant's
- * joiners by classFaults against CLASS_FORMS, SCALAR_VALUES and the engine; the landed separator plant's separators, in the spellings
- * it hands its writer, by SPACE_SEPARATOR_POINTS against the engine's \s class (WHITE_SPACE), and its other cases by the residual
- * anchor's subjects, derived from the needle set; and of the context plant only the five measured open members (OPEN_MEMBERS).
- * Wherever this header says R-SPELLING or its quiet row plants, writes or holds a spelling, it claims that identity and no other.
- * The produced artifact's identity is NOT CLAIMED by this census: what the landed separator plant's own written file
- * (src/plant.ts) holds, which no pin compares with its handed text on disk or as read - the residual anchor reads every quiet row's
- * written files together, and the class files meet its separator subjects as well (refusal #4 U2) - and what the context plant's
- * joined contexts hold past those five members, whose joiners and sites (CONTEXT_JOINERS, CONTEXT_SITES) no table apart from its
- * builder holds (refusal #4 U1). That coverage is deferred to wb-xu2e. Cut #4's byte-for-byte comparisons stay as pins: the text the
- * line reading is handed for each class and context file against its built text, and PLANTED's read-back in the residual anchor.
+ * PLANT IDENTITY (cut #5, the fail-closed core R-B226 binds; wb-xu2e reads two plants' produced artifacts): every plant identity this
+ * census claims for R-SPELLING is the identity as handed to the writer - what the text a plant's builder hands to write() holds, held
+ * apart from that builder: the class plant's joiners by classFaults against CLASS_FORMS, SCALAR_VALUES and the engine; the landed
+ * separator plant's separators, in the spellings it hands its writer, by SPACE_SEPARATOR_POINTS against the engine's \s class
+ * (WHITE_SPACE), and its other cases by the residual anchor's subjects, derived from the needle set; and of the context plant the five
+ * measured open members (OPEN_MEMBERS). For the separator and context plants (wb-xu2e) the census also claims the identity of the
+ * artifact each produces, read off the text the line reading is handed for each of their files, which the walk reads from disk.
+ * The landed separator plant's own written file (src/plant.ts, at the first of its two writes) is, as the line reading is handed it,
+ * byte for byte the text its builder hands write(), and the two-word member's separators read off it, statement by statement in
+ * code()'s form as written apart from code() (codeSpellings), are SPACE_SEPARATOR_POINTS' in planting order (refusal #4 U2's cure).
+ * The context plant's files are exactly the sites CONTEXT_TABLE names, and each, read off as the line reading is handed it, is lines
+ * in its site's form and nothing else, holding the member with its space, CONTEXT_TABLE's four joiners in its order and the member
+ * with its space again (refusal #4 U1's cure); CONTEXT_TABLE is written apart from the context plant's builder (CONTEXT_JOINERS,
+ * CONTEXT_SITES, padded, contextFiles). Wherever this header says R-SPELLING or its quiet row plants, writes or holds a spelling, it
+ * claims those identities and no other. NOT CLAIMED by this census: the separator plant's written file past the two-word member's
+ * separators as read off it (its whole bytes are held to the text handed to write(); its other cases are owed by the residual anchor
+ * through PLANTED's read-back; the base separator swaps of the other needles are held by its builder alone, wb-zulk's lead), and its
+ * second write, the file beside a judged needle; a coordinated edit of a table and what it is held to - CONTEXT_TABLE with the context
+ * plant's builder (the artifact the builder produces is the table's one anchor), or SPACE_SEPARATOR_POINTS with the separator plant's
+ * builder (swaps) or with the WHITE_SPACE derivation (landing 635's F2). Cut #4's byte-for-byte comparisons stay as pins: the text
+ * the line reading is handed for each class and context file against its built text, and PLANTED's read-back in the residual anchor.
  * THE CLASS PLANT writes every other joiner of at most one code point - the joined spelling and each of the 1,112,063 other Unicode
  * scalar values, derived plane by plane from the engine (U+200B and U+3164 among them, named in JOINER_POINTS) - in two shapes, one
  * file per plane each (CLASS_SHAPES, held to exactly CLASS_FORMS' shapes, cut #4): packed, 256 spellings to an unquoted line a space
@@ -287,25 +310,31 @@
  * (refusal #3's W-H-WRITE-HOLLOW). PLANTED records each write as the text it left on disk, read back from its path (cut #4), so the
  * residual anchor owes each class file at its path as the disk holds it.
  * THE CONTEXT PLANT (cut #4, refusal #3's reading order) writes the joiners its builder names (CONTEXT_JOINERS), one to a line
- * between the member with its space first and last, at the sites its builder names (CONTEXT_SITES), one file each. Which joiners it
- * writes at which sites is that builder's statement and is NOT CLAIMED by this census (cut #5, refusal #4 U1: five one-edit hollows
- * of CONTEXT_JOINERS or CONTEXT_SITES read 28 of 28, measured; deferred to wb-xu2e). What this census claims of the context plant is
- * the five measured open members, each by the joiner its rewrite reads as the space and the context it keys to, written apart from
- * the sites' writers (OPEN_MEMBERS): each is held on a line in its context in the text the line reading is handed, which is each
- * context file byte for byte as built; at each context site the controls are read and every other spelling reads quiet, and the
- * residual anchor owes each context file at its path.
+ * between the member with its space first and last, at the sites its builder names (CONTEXT_SITES), one file each. Cut #5 stated
+ * which joiners it writes at which sites NOT CLAIMED (refusal #4 U1: five one-edit hollows of CONTEXT_JOINERS or CONTEXT_SITES read
+ * 28 of 28, measured); since wb-xu2e the census claims them as read off the context files the line reading is handed, against
+ * CONTEXT_TABLE (PLANT IDENTITY above): the joined spelling, U+200B, U+3164 and the doubled U+200B, in that order, at each of the
+ * census's ten plant sites in C1's and F1's forms (each file renamed plant-context-c1 and plant-context-f1), at a single-quoted, a
+ * template and a bare line in src, and at the code line padded to 128, 1,024 and 8,192 bytes as read; each of refusal #4's five
+ * hollows reds (measured). The five measured open members stay held as cut #4 holds them, each by the joiner its rewrite reads as
+ * the space and the context it keys to, written apart from the sites' writers (OPEN_MEMBERS): each is held on a line in its context
+ * in the text the line reading is handed, which is each context file byte for byte as built; at each context site the controls are
+ * read and every other spelling reads quiet, and the residual anchor owes each context file at its path.
  * THE LINE READING is pinned at the class shapes' sites and in the five measured open members' own contexts, and only there: a
  * rewrite before the matcher that reads a class joiner as the space at a class shape's site, or a measured open member's joiner as
  * the space in that member's context, reds the row (refusal #2's L2-Q, L2-S and L2-P at the class shapes' sites; the measured open
  * members O-EX-EXAMPLES-ONLY, O-SQ-SINGLE-QUOTED, O-MID-LINE-64-511, O-LJ-DOUBLED-ZWSP and PREP's L2-SRC-DQ in their contexts; each
- * measured red on the cut's final bytes). NOT CLAIMED by this census (cut #5 narrows the sites, R-B226): the landed separator plant's
- * code() lines in src (src/plant.ts; refusal #4 U2: SRC-DQ-TAB, a cure the census kills alone, reads 28 of 28 under that file's own
- * write hollow); the context plant's other joiners and sites (refusal #4 U1: U+3164 and the joined spelling inside single quotes,
- * U+200B inside a template and on the 1,024- and 8,192-character lines); a rewrite keyed to a site no plant writes - another quoting,
- * line length, tree, file kind or name, position on the line, or the root read (every plant is written in a synthetic tree, never the
- * live repository); a rewrite keyed to the call the line reading is reached from (the class and context files are read with a walked
- * map, every other reading, the live tree's among them, without: refusal #4's PREP F7, G-NOMAP-ZWSP); and a rewrite of a joiner at a
- * site that does not plant it (a class site plants no joiner of two or more code points).
+ * measured red on the cut's final bytes). NOT CLAIMED by this census (cut #5 narrows the sites, R-B226; wb-xu2e holds the plants at
+ * the sites below as produced, PLANT IDENTITY above, and leaves the sites as cut #5 narrowed them): a rewrite at the landed separator
+ * plant's code() lines in src (src/plant.ts) or at the context plant's other joiners and sites - refusal #4's six cures there
+ * (SRC-DQ-TAB; SQ-3164, SQ-NONE, TPL-ZWSP, MID-1024-ZWSP and LONG-ZWSP: U+3164 and the joined spelling inside single quotes, U+200B
+ * inside a template and on the 1,024- and 8,192-character lines) each red alone and, since wb-xu2e, under its hollow too, which reds
+ * alone (measured), but no other rewrite there is measured; a rewrite keyed to a site no plant writes - another quoting, line length,
+ * tree, file kind or name, position on the line, or the root read (every plant is written in a synthetic tree, never the live
+ * repository); a rewrite keyed to the call the line reading is reached from (the class and context files, and since wb-xu2e the
+ * separator plant's first write, are read with a walked map, every other reading, the live tree's among them, without: refusal #4's
+ * PREP F7, G-NOMAP-ZWSP); and a rewrite of a joiner at a site that does not plant it (a class site plants no joiner of two or more
+ * code points).
  * Gate behaviour: the day a source owner publishes an exported package or an adapter with a recorded adoption gate, the artifact is
  * triaged as its own program-triage epic and the cut that lands its adoption owes this census's update; until then it stays empty by
  * design. Display paths added: none. Test-only: synthetic trees live in makeScratch scratch with the leak guard installed; src, the
@@ -1268,8 +1297,8 @@ const WHITE_SPACE: readonly string[] = Array.from({ length: 0x10000 }, (_, point
  * matcher, pinned whole in the row, reads that member through its one space only, so every other joiner of at most one code point -
  * nothing at all (the joined spelling, named "none") and each other Unicode scalar value - is planted in its place, in each class
  * shape (CLASS_SHAPES); the context plant's builder names JOINER_POINTS' three among its joiners as well (CONTEXT_JOINERS, cut #4),
- * which this census does not claim (cut #5). JOINER_POINTS names by code point the three members the gate measured outside the
- * white-space class;
+ * which this census claims as read off the context files against CONTEXT_TABLE, written apart from both (wb-xu2e; cut #5 did not
+ * claim it). JOINER_POINTS names by code point the three members the gate measured outside the white-space class;
  * SCALAR_VALUES is the standard's count each shape must reach (17 planes of 65,536 code points less the 2,048 surrogates: with the
  * space out and the joined spelling in, the same number). */
 const JOINER_POINTS: readonly string[] = ["none", "200b", "3164"];
@@ -1340,7 +1369,8 @@ function classFiles(): readonly ClassFile[] {
 }
 /** The context plant's joiners as its builder names them (wb-iug2 cut #4, refusal #3's reading order): JOINER_POINTS' three - the
  * joined spelling, U+200B and U+3164 - and the doubled U+200B, the longer joiner cut #3 measured open (O-LJ-DOUBLED-ZWSP), each named
- * by code point. A builder statement: which joiners the context plant writes is NOT CLAIMED by this census (cut #5, refusal #4 U1). */
+ * by code point. A builder statement, held apart from the builder since wb-xu2e: the joiners read off the context files the line
+ * reading is handed are CONTEXT_TABLE's (cut #5 stated them NOT CLAIMED, refusal #4 U1). */
 const CONTEXT_JOINERS: readonly string[] = [...JOINER_POINTS, "200b+200b"];
 /** The census's code() line with a trailing comment that pads it to `length` characters as read (its UTF-8 bytes, the walk's latin1
  * reading), its line break apart. */
@@ -1353,8 +1383,9 @@ const padded =
 /** The context plant's sites (wb-iug2 cut #4: the measured open members' own sites), one file each: the census's ten plant sites in
  * their own forms (C1's PLANT_SITES and F1's COMMENT_SITES, each file renamed plant-context-c1 and plant-context-f1), then six src files
  * that give the joiners forms neither those sites nor the class shapes give them - a single-quoted, a template and a bare line, and
- * the code line padded to 128, 1,024 and 8,192 characters as read. A builder statement: which sites the context plant writes is NOT
- * CLAIMED by this census (cut #5, refusal #4 U1); OPEN_MEMBERS holds the five measured open members' contexts apart from it. */
+ * the code line padded to 128, 1,024 and 8,192 characters as read. A builder statement, held apart from the builder since wb-xu2e:
+ * the files the walk reads are CONTEXT_TABLE's sites, each in its form (cut #5 stated them NOT CLAIMED, refusal #4 U1); OPEN_MEMBERS
+ * holds the five measured open members' contexts apart from it. */
 const CONTEXT_SITES: readonly (readonly [string, (spelling: string) => string])[] = [
   ...PLANT_SITES.map(([site, line]) => [site.replace("/plant.", "/plant-context-c1."), line] as const),
   ...COMMENT_SITES.map(([site, line]) => [site.replace("/plant.", "/plant-context-f1."), line] as const),
@@ -1387,6 +1418,76 @@ const OPEN_MEMBERS: Readonly<Record<string, { readonly joiner: string; readonly 
   "O-LJ-DOUBLED-ZWSP": { joiner: "200b+200b", at: (_file, line, spelling) => line.includes(spelling) },
   "L2-SRC-DQ": { joiner: "200b", at: (file, line, spelling) => file.startsWith("src/") && line.includes(`"${spelling}"`) },
 };
+/** A context site's line form as read (wb-xu2e): the spelling a line holds, or undefined when the line is not in the site's form. */
+type ContextForm = (line: string) => string | undefined;
+/** A line that is exactly `before`, a spelling and `after`. */
+const framed =
+  (before: string, after: string): ContextForm =>
+  line =>
+    line.length >= before.length + after.length && line.startsWith(before) && line.endsWith(after) ? line.slice(before.length, line.length - after.length) : undefined;
+/** The census's code() statement and a comment, a space and x's, that make the line `bytes` long as read (its UTF-8 bytes, the walk's
+ * latin1 reading), its line break apart. */
+const paddedTo =
+  (bytes: number): ContextForm =>
+  line => {
+    const match = /^export const plant = "([^"]*)"; \/\/ x*$/.exec(line);
+    return match !== null && Buffer.byteLength(line, "utf8") === bytes ? match[1] : undefined;
+  };
+/** The context plant as this census states it (wb-xu2e, refusal #4 U1's cure), written apart from its builder (CONTEXT_JOINERS,
+ * CONTEXT_SITES, padded, contextFiles) and read off the artifact it produces (R-SPELLING): the joiners by code point in planting order
+ * - the joined spelling, U+200B, U+3164 and the doubled U+200B - and the sites by path, each with the form its lines take as read:
+ * the census's ten plant sites in C1's and F1's forms, a single-quoted, a template and a bare line in src, and the code line padded
+ * to 128, 1,024 and 8,192 bytes as read. */
+const CONTEXT_TABLE: { readonly joiners: readonly string[]; readonly sites: Readonly<Record<string, ContextForm>> } = {
+  joiners: ["none", "200b", "3164", "200b+200b"],
+  sites: {
+    "src/plant-context-c1.ts": framed('export const plant = "', '";'),
+    "qa/plant-context-c1.mjs": framed('export const plant = "', '";'),
+    "docs/workbench/plant-context-c1.md": framed("The page names ", "."),
+    "examples/plant-context-c1.js": framed('export const plant = "', '";'),
+    "test/plant-context-c1.test.ts": framed('const plant = "', '";'),
+    "src/plant-context-f1.ts": framed("// ", ""),
+    "qa/plant-context-f1.mjs": framed("/* ", " */"),
+    "docs/workbench/plant-context-f1.md": framed("<!-- ", " -->"),
+    "examples/plant-context-f1.js": framed("// ", ""),
+    "test/plant-context-f1.test.ts": framed("// ", ""),
+    "src/plant-context-quoted.ts": framed("export const plant = '", "';"),
+    "src/plant-context-template.ts": framed("export const plant = `", "`;"),
+    "src/plant-context-bare.ts": framed("", ""),
+    "src/plant-context-128.ts": paddedTo(128),
+    "src/plant-context-1024.ts": paddedTo(1024),
+    "src/plant-context-8192.ts": paddedTo(8192),
+  },
+};
+/** A produced file's text as the walk reads it (latin1, a character to a byte) read back as the UTF-8 text it holds (wb-xu2e). */
+const asUtf8 = (read: string | undefined): string => Buffer.from(read ?? "", "latin1").toString("utf8");
+/** The joiners a context file holds, read off its text as produced (wb-xu2e): each line in its site's form (CONTEXT_TABLE) holds the
+ * two-word member with a joiner between its words, named by code point ("none" for the joined spelling); a line out of its site's
+ * form, or holding no such spelling, reads "?", and so does the end of a file that does not close with a line break. */
+function contextJoiners(site: string, text: string): string[] {
+  const form = CONTEXT_TABLE.sites[site];
+  const lines = text.split("\n");
+  const last = lines.pop();
+  const read = lines.map(line => {
+    const spelling = form?.(line);
+    if (spelling === undefined || spelling.length < MEMBER_HEAD.length + MEMBER_TAIL.length || !spelling.startsWith(MEMBER_HEAD) || !spelling.endsWith(MEMBER_TAIL)) return "?";
+    return points(spelling.slice(MEMBER_HEAD.length, spelling.length - MEMBER_TAIL.length)) || "none";
+  });
+  return last === "" ? read : [...read, "?"];
+}
+/** The census's code() form read back off a produced file, written apart from code() (wb-xu2e, refusal #4 U2's cure): a run of
+ * statements `export const plant = "<spelling>";`, each closed by a line break, and nothing else - its spellings in file order, or
+ * undefined when a byte stands outside that form. */
+function codeSpellings(text: string): string[] | undefined {
+  const statement = /export const plant = "([^"]*)";\n/y;
+  const spellings: string[] = [];
+  while (statement.lastIndex < text.length) {
+    const match = statement.exec(text);
+    if (match === null) return undefined;
+    spellings.push(match[1] ?? "");
+  }
+  return spellings;
+}
 /** A class file read off its built text (wb-iug2 cut #3, refusal #2 U3; R-SPELLING holds the text the line reading is handed to it,
  * byte for byte, cut #4): its joiners - what stands between the member's two words
  * in each spelling, in file order, the two controls (the space) first and last - and its gaps: the text before the first spelling,
@@ -1550,8 +1651,20 @@ const QUIET: Readonly<Record<string, () => void>> = {
     ).toEqual([["extension:status"], SPACE_SEPARATOR_POINTS]);
     const needle = NEEDLES[0]?.text ?? "";
     withTree(root => {
-      write(root, "src/plant.ts", variants.map(code).join(""));
-      expect(findings(treeCensus(root)), "another case or separator reads quiet").toEqual([]);
+      const built = variants.map(code).join("");
+      write(root, "src/plant.ts", built);
+      const walked = new Map<string, string>();
+      expect(findings(treeCensus(root, walked)), "another case or separator reads quiet").toEqual([]);
+      // wb-xu2e (refusal #4 U2's cure): the separator plant's own written file read as the artifact it produces, as the class and
+      // context files are - the text the line reading is handed for it held byte for byte to the text its builder handed write(), and
+      // the two-word member's separators read off those bytes, statement by statement in code()'s form (codeSpellings)
+      const handed = walked.get("src/plant.ts");
+      expect(handed !== undefined && Buffer.from(handed, "latin1").equals(Buffer.from(built, "utf8")), "the line reading is handed the separator plant's own file byte for byte as built").toBe(true);
+      const statements = codeSpellings(asUtf8(handed));
+      expect(
+        [statements !== undefined, (statements ?? []).filter(spelling => spelling.startsWith(head) && spelling.endsWith(tail)).map(spelling => points(spelling.slice(head.length, spelling.length - tail.length)))],
+        "the separator plant's own file, read off in code()'s form as the line reading is handed it, holds the two-word member with each other separator SPACE_SEPARATOR_POINTS names, in planting order",
+      ).toEqual([true, SPACE_SEPARATOR_POINTS]);
       write(root, "src/plant.ts", [needle, ...variants].map(code).join(""));
       expect(findings(treeCensus(root)), "beside a judged needle in the same file, the other spellings still read quiet").toEqual([{ file: "src/plant.ts", line: 1, needle }]);
     });
@@ -1630,10 +1743,11 @@ const QUIET: Readonly<Record<string, () => void>> = {
       );
     });
     // refusal #3's reading order (cut #4): the measured open members killed at their own sites (OPEN_MEMBERS), in the context files
-    // the builder writes (CONTEXT_JOINERS at CONTEXT_SITES, a builder statement this census does not claim, cut #5), read through the
-    // walk and held to the text the line reading is handed
+    // the builder writes (CONTEXT_JOINERS at CONTEXT_SITES, held apart from the builder by CONTEXT_TABLE since wb-xu2e), read through
+    // the walk and held to the text the line reading is handed
     const contexts = contextFiles();
     withTree(root => {
+      const base = new Set(treeCensus(root).files);
       for (const entry of contexts) write(root, entry.file, entry.text);
       const walked = new Map<string, string>();
       const read = treeCensus(root, walked);
@@ -1641,6 +1755,15 @@ const QUIET: Readonly<Record<string, () => void>> = {
         contexts.filter(entry => !Buffer.from(walked.get(entry.file) ?? "", "latin1").equals(Buffer.from(entry.text, "utf8"))).map(entry => entry.file),
         "the line reading is handed each context file byte for byte as built, in its site's form",
       ).toEqual([]);
+      // wb-xu2e (refusal #4 U1's cure): the context plant read as the artifact it produces, held apart from its builder - the files the
+      // walk reads past the base tree's are exactly CONTEXT_TABLE's sites, and each, read off as the line reading is handed it, is lines
+      // in its site's form and nothing else, holding the member with its space, CONTEXT_TABLE's joiners in its order and the member again
+      const sites = Object.keys(CONTEXT_TABLE.sites).sort();
+      expect(read.files.filter(file => !base.has(file)).sort(), "the context plant writes exactly the sites CONTEXT_TABLE names, as the walk reads them").toEqual(sites);
+      expect(
+        sites.map(site => [site, contextJoiners(site, asUtf8(walked.get(site)))]),
+        "each context file, read off as the line reading is handed it, is lines in its site's form only, holding the member with its space, CONTEXT_TABLE's joiners in its order and the member with its space again",
+      ).toEqual(sites.map(site => [site, ["0020", ...CONTEXT_TABLE.joiners, "0020"]]));
       expect(
         Object.entries(OPEN_MEMBERS)
           .filter(([, { joiner, at }]) => !contexts.some(entry => (walked.get(entry.file) ?? "").split("\n").some(line => at(entry.file, line, latin1(spellMember(joinerOf(joiner)))))))
