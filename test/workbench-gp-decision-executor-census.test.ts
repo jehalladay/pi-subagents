@@ -51,9 +51,10 @@
  *    check, a record of one to four requests and one to three handed
  *    decisions. In those forms the drive records a copy of each returned request, taken at the return, so an in-place edit
  *    of every member of a returned object afterwards edits no record, and keeps the copies in the order the call asked for
- *    them, in each of the three orders; every request of such a call, the first, second,
- *    third and last of four, carries that call's own serial in its invocationId, and of two calls in a row over one fixture
- *    neither issues an invocationId the other issued; the check reads every handed decision, the first, middle and last of
+ *    them, in each of the three orders; every request of such a call asking for all four, in each of the three orders,
+ *    the first, second, third and last asked, carries that call's own serial in its invocationId, and of two such calls
+ *    in a row over one fixture, in each ordered pair of the three orders, neither issues an invocationId the other
+ *    issued; the check reads every handed decision, the first, middle and last of
  *    three, against every recorded request, at each position of one to four, and holds a receipt to ONE recorded request
  *    in the forms the split and mix controls plant (a receipt whose six echoed fields and grant two recorded requests
  *    split between them, each read field in turn, answers neither; a core-minted permit decided on the chosen request
@@ -98,7 +99,7 @@
  *    decision, whether a recorded request answers its receipt, beside the checks the call fails); the echo (the permit's
  *    receipt answers the request it was minted for, with that request's grants in either order, and answers it no longer
  *    with one echoed field or its grant altered alone as planted: a string or the grant gaining a final ~, an object
- *    gaining a member); and wb-kbh1's four: the forms (on F1, the permit's receipt answers its own request no longer with
+ *    gaining a member); and wb-kbh1's six: the forms (on F1, the permit's receipt answers its own request no longer with
  *    one read field altered alone, on the receipt's side and, in turn, on the request's side, in each planted form: an
  *    echoed string, or the grant, gaining a final or a leading ~, in another case, without its last character or without
  *    its first; an echoed object gaining a member, lacking one of its members or holding another value under one of
@@ -120,7 +121,18 @@
  *    snapshot's reverse order, and in the interleaving second, last, first, third, reads on every fixture the record
  *    equal to its own copies element by element, as in the snapshot's order, its targets read back in the order asked
  *    (every record reading carries its targets, in the record's order); the snapshot's order lists its
- *    invocationIds sorted and neither other order does, so a record kept sorted reads otherwise there). A4 a hand-built
+ *    invocationIds sorted and neither other order does, so a record kept sorted reads otherwise there); and, cut #2's,
+ *    the serial orders (the serial control's planted point driven over each fixture twice in a row, each call asking
+ *    for all four candidates in its own order of a pair, in each ordered pair of the three orders, the snapshot's twice
+ *    among them: every request of each call, first, second, third and last asked, carries that call's serial and not
+ *    the other call's, the two calls issue no invocationId in common, their requests name the fixture driven, and each
+ *    call's targets read back in the order it asked; the serial reading, shown planted calls, reads a request carrying
+ *    the other call's serial as not carried and an invocationId both calls were returned as shared) and the replay
+ *    orders (the replay control's planted point driven
+ *    over F1 twice in a row, each call asking for all four in its own order of a pair, in each ordered pair: the permit
+ *    its first call executes for the request at each position of that call's order answers that request and meets
+ *    every check, and its second call, handed that same permit, answers none of its requests and fails
+ *    effect-unrequested alone; the targets each call recorded read back in the order it asked). A4 a hand-built
  *    look-alike permit and a spread copy of a minted one fail
  *    effect-unminted; isCoreMintedDecision is false for the reply, its typed conversion, a copy, a JSON round trip and a
  *    denial. B1 the mismatch condition: F2's presented bytes hash to a digest the reply does not carry, while F1's bytes hash
@@ -135,7 +147,7 @@
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's
  * member count as literals, beside the vocabulary, the checks, the echoed request fields, the positions, the mutants, the
- * lead plants, the string forms, the mixes, the orders, the fixtures, the bound points, the floor, the pin and the derived
+ * lead plants, the string forms, the mixes, the orders, the order pairs, the fixtures, the bound points, the floor, the pin and the derived
  * path; the judged set (every row's id, label
  * and pins, every pin's quote and witness, the residual members, every registered test title) is held to the out-of-file
  * roster test/fixtures/gp-decision-executor-roster.json. OUTSIDE ANCHORS (their own registered case): the bead's own row in the
@@ -181,8 +193,9 @@
  * another line separator); the leading comment of a path member and anything C1 does not derive (row Q4); a mutant, a
  * fixture, a planted control or a reader control removed from its table or case, the frozen literal and the roster together
  * while every check still fires; row Q or a residual member removed from every literal and the roster together (no source
- * outside this cut names the residual families before its delivery note lands); a pin's case replaced by one that echoes its
- * roster witness. wb-kbh1 (filed by the rule-19 structural exit R-B249 to pin the forms cut #4 left unplanted) pins them in
+ * outside this cut names the residual families before its delivery note lands); a pin's case, or one reading inside it,
+ * replaced by one that echoes its roster witness. wb-kbh1 (filed by the rule-19 structural exit R-B249 to pin the forms cut
+ * #4 left unplanted) pins them in
  * A3's forms, split, mix and order controls; every effect-unrequested form A3 does not plant stays NOT CLAIMED, among
  * them: a receipt whose read fields a record splits across three or more requests, a split beside a second handed
  * decision, a split on a fixture other than F1, and a split whose two requests each differ from the receipt in two read
@@ -194,8 +207,11 @@
  * changed other than by a final ~ on its string value, or a member of another type; a grant split across two of the request's
  * grants; a form planted on any receipt but the permit minted for F1's chosen request); the record's order where a call
  * asks for fewer than all four candidates outside the snapshot's order, or for
- * all four in an order other than the three the record control plants; and a call asking requestOf for one candidate
- * twice, or for a candidate outside the snapshot's can_execute relations (no control asks either).
+ * all four in an order other than the three the record control plants; the serial of a request of a call asking for
+ * fewer than all four candidates, or for all four in an order other than the three, and an invocationId two calls in a
+ * row share where either call asks so (the serial controls ask for all four, in each ordered pair of the three
+ * orders); and a call asking requestOf for one candidate twice, or for a candidate outside the snapshot's can_execute
+ * relations (no control asks either).
  * RESIDUALS (named families, each member a pinned quiet row; a reader that starts reading a member reds its row):
  * R-SPELLING (Q1, a vocabulary spelling the token reader does not read: camel case, a member composed at run time, a name
  * lower-cased), R-SIDE-PATH (Q2, a decision point that reaches an effect outside the injected seam: the checks observe the seam
@@ -244,7 +260,11 @@
  * (Y07, Y07b, Y16); U4 the order control pins the record's order (Y02). The form, split and mix controls also kill the
  * probes cut #4's seat recorded inside NOT CLAIMED forms (N01, N02, N03, N05, N16 the forms; N06, N15 the split and the
  * mix). The CHECKS parenthetical, A3's sentences, the record's and answers()'s docs and the NOT CLAIMED list name each
- * planted form.
+ * planted form. Cut #2 (refusal #1 of cut #1, gate-prep-12 / g10-gate-s186: unmet U1, cut #1's reverse and interleaving
+ * orders widened the CHECKS parenthetical's serial and no-shared-invocationId clauses past their pins): the serial and
+ * replay controls ask in each ordered pair of the three orders (A3's serial orders and replay orders readings, every
+ * fixture and F1), so the gate's GP12-S01 and GP12-S02 red; those clauses now name a call asking for all four, and the
+ * NOT CLAIMED list names the rest.
  * Display paths added: none. Test-only: no src change, no GraphPolicyCLI dependency, adapter, seam or fake binary.
  */
 import { execFileSync } from "node:child_process";
@@ -548,6 +568,12 @@ const MIXES: Readonly<Record<string, (request: NativeControlRequest, other: Nati
 };
 /** The orders A3's record control asks the snapshot's can_execute candidates in, by position: the snapshot's own, its reverse and one interleaving (wb-kbh1). */
 const ORDERS = { snapshot: [0, 1, 2, 3], reversed: [3, 2, 1, 0], interleaved: [1, 3, 0, 2] } as const;
+/** Two orders by position, the first call's and the second's: the serial and replay controls ask one call in each, in a row (wb-kbh1 cut #2). */
+type OrderPair = readonly [readonly number[], readonly number[]];
+/** Each ordered pair of the orders, the first call's then the second's: the serial and replay controls ask in every one (wb-kbh1 cut #2). */
+const ORDER_PAIRS: readonly { readonly label: string; readonly orders: OrderPair }[] = Object.entries(ORDERS).flatMap(([first, firstOrder]) =>
+  Object.entries(ORDERS).map(([second, secondOrder]) => ({ label: `${first} then ${second}`, orders: [firstOrder, secondOrder] as const })),
+);
 /** A type alias, not an interface, so the reading is a Json witness as it stands. */
 type RecordReading = {
   readonly requests: number;
@@ -614,21 +640,8 @@ type SerialReading = {
   /** The fixture ids the two calls' invocationIds name (their second dash-separated segment), once each. */
   readonly named: readonly string[];
 };
-/**
- * The serial control: a planted point asks requestOf once per can_execute candidate of the snapshot (four requests) and
- * executes nothing; it is driven over one fixture twice in a row, and each call's serial is driveSerial as its drive left it.
- */
-function serialReading(entry: Fixture): SerialReading {
-  const returned: NativeControlRequest[][] = [];
-  const probe: DecisionPoint = call => {
-    returned.push(executable(call.presented).map(candidate => call.requestOf(candidate)));
-    return [];
-  };
-  const serials: number[] = [];
-  drive(probe, entry);
-  serials.push(driveSerial);
-  drive(probe, entry);
-  serials.push(driveSerial);
+/** The serial reading of two calls in a row, from the invocationIds each was returned and each call's serial (A3 holds it on planted calls, wb-kbh1 cut #2). */
+function serialOf(returned: readonly (readonly { readonly invocationId: string }[])[], serials: readonly number[]): SerialReading {
   const carried = returned.map((requests, index) =>
     requests.map(request => carriesSerial(request.invocationId, serials[index] ?? 0) && !carriesSerial(request.invocationId, serials[1 - index] ?? 0)),
   );
@@ -637,19 +650,55 @@ function serialReading(entry: Fixture): SerialReading {
   const named = [...new Set(returned.flat().map(request => request.invocationId.split("-")[1] ?? ""))];
   return { carried, shared, named };
 }
+/** The serial reading in a pair of orders, with the target ids each call was returned, in the order it asked (wb-kbh1 cut #2). */
+type OrderedSerialReading = SerialReading & { readonly asked: readonly (readonly string[])[] };
+/**
+ * The serial control: a planted point asks requestOf once per can_execute candidate of the snapshot (four requests), each
+ * call in its own order of the pair (wb-kbh1 cut #2; the serial reading asks in the snapshot's order twice), and executes
+ * nothing; it is driven over one fixture twice in a row, and each call's serial is driveSerial as its drive left it.
+ */
+function orderedSerialReading(entry: Fixture, [firstOrder, secondOrder]: OrderPair): OrderedSerialReading {
+  const returned: NativeControlRequest[][] = [];
+  const probe: DecisionPoint = call => {
+    const listed = executable(call.presented);
+    const order = returned.length === 0 ? firstOrder : secondOrder;
+    returned.push(order.flatMap(index => listed.slice(index, index + 1)).map(candidate => call.requestOf(candidate)));
+    return [];
+  };
+  const serials: number[] = [];
+  drive(probe, entry);
+  serials.push(driveSerial);
+  drive(probe, entry);
+  serials.push(driveSerial);
+  return { ...serialOf(returned, serials), asked: returned.map(requests => requests.map(request => request.target.id)) };
+}
+/** The serial control in the snapshot's order twice: the serial reading A3 has held since wb-5omz's cut #3. */
+function serialReading(entry: Fixture): SerialReading {
+  const { carried, shared, named } = orderedSerialReading(entry, [ORDERS.snapshot, ORDERS.snapshot]);
+  return { carried, shared, named };
+}
+/** A type alias, not an interface, so the reading is a Json witness as it stands: the replay at one position. */
+type ReplayReading = { readonly minting: Check[]; readonly replaying: Check[]; readonly answered: readonly number[] };
+/** The replay at one position in a pair of orders, with the target ids each call recorded, in the order it asked (wb-kbh1 cut #2). */
+type OrderedReplayReading = ReplayReading & { readonly asked: readonly (readonly string[])[] };
 /**
  * The replay control, per position of the four: a planted point driven over F1 twice in a row issues the four requests, one
- * per can_execute candidate in the snapshot's order; its first call asks the core on the request at that position and hands
- * the seam the permit, its second hands the seam that same permit. Each call's failed checks, in CHECKS order, and per call
- * the index of the recorded request the handed permit answers (-1: none).
+ * per can_execute candidate, each call in its own order of the pair (wb-kbh1 cut #2; the replay reading asks in the
+ * snapshot's order twice); its first call asks the core on the request at that position of its order and hands the seam
+ * the permit, its second hands the seam that same permit. Each call's failed checks, in CHECKS order, and per call the
+ * index of the recorded request the handed permit answers (-1: none).
  */
-function replayReading(): Record<string, { readonly minting: Check[]; readonly replaying: Check[]; readonly answered: readonly number[] }> {
+function orderedReplayReading([firstOrder, secondOrder]: OrderPair): Record<string, OrderedReplayReading> {
   const F1 = fixture("F1");
   return Object.fromEntries(
     POSITIONS.map((label, index) => {
       let held: ControlDecision | undefined;
+      let made = 0;
       const point: DecisionPoint = call => {
-        const request = executable(call.presented).map(candidate => call.requestOf(candidate))[index];
+        const listed = executable(call.presented);
+        const order = made === 0 ? firstOrder : secondOrder;
+        made += 1;
+        const request = order.flatMap(at => listed.slice(at, at + 1)).map(candidate => call.requestOf(candidate))[index];
         if (request === undefined) return [];
         held ??= decideControl(request, { projection: call.projection, now: call.now });
         return [{ status: "executed", candidate: request.target.id, answer: call.effect(held) }];
@@ -657,8 +706,14 @@ function replayReading(): Record<string, { readonly minting: Check[]; readonly r
       const runs = [drive(point, F1), drive(point, F1)];
       const [minting = [], replaying = []] = runs.map(run => violations(F1, run));
       const answered = runs.map(run => run.issued.findIndex(request => answers(own(run.calls[0]?.decision, "receipt"), request)));
-      return [label, { minting, replaying, answered }];
+      return [label, { minting, replaying, answered, asked: runs.map(run => run.issued.map(request => request.target.id)) }];
     }),
+  );
+}
+/** The replay control in the snapshot's order twice: the replay reading A3 has held since wb-5omz's cut #3. */
+function replayReading(): Record<string, ReplayReading> {
+  return Object.fromEntries(
+    Object.entries(orderedReplayReading([ORDERS.snapshot, ORDERS.snapshot])).map(([label, { minting, replaying, answered }]) => [label, { minting, replaying, answered }]),
   );
 }
 
@@ -1361,6 +1416,40 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       }),
     );
     expect(orderSorts, "the snapshot's order asks for the candidates with their invocationIds sorted, and neither other order does, so a record kept sorted reads otherwise there").toEqual({ snapshot: true, reversed: false, interleaved: false });
+    const plantedSerial = serialOf(
+      [
+        [{ invocationId: "inv-F1-7-exec-a1-t1" }, { invocationId: "inv-F1-8-exec-a1-t2" }],
+        [{ invocationId: "inv-F1-8-exec-a1-t2" }, { invocationId: "inv-F2-8-exec-a2-t2" }],
+      ],
+      [7, 8],
+    );
+    expect(plantedSerial, "wb-kbh1 cut #2: the serial reading reads planted calls (serials 7 then 8): a request carrying the other call's serial is not carried, an invocationId both calls were returned is shared, and the fixtures the invocationIds name are named once each").toEqual({
+      carried: [
+        [true, false],
+        [true, true],
+      ],
+      shared: ["inv-F1-8-exec-a1-t2"],
+      named: ["F1", "F2"],
+    });
+    const askedIn = (order: readonly number[]): string[] => order.flatMap(index => candidates.slice(index, index + 1)).map(candidate => runRef(candidate).id);
+    const serialOrders = Object.fromEntries(FIXTURES.map(entry => [entry.id, Object.fromEntries(ORDER_PAIRS.map(({ label, orders }) => [label, orderedSerialReading(entry, orders)]))]));
+    expect(serialOrders, "wb-kbh1 cut #2 serial orders: on every fixture, of two calls in a row each asking requestOf for all four candidates in its own order, in each ordered pair of the three orders (the snapshot's, its reverse, the interleaving), each request of each call, first, second, third and last asked, carries that call's serial and not the other call's, the two calls share no invocationId, and each call's targets read back in the order it asked").toEqual(
+      Object.fromEntries(
+        FIXTURES.map(entry => [
+          entry.id,
+          Object.fromEntries(ORDER_PAIRS.map(({ label, orders: [first, second] }) => [label, { carried: [everyPosition, everyPosition], shared: [], named: [entry.id], asked: [askedIn(first), askedIn(second)] }])),
+        ]),
+      ),
+    );
+    const replayOrders = Object.fromEntries(ORDER_PAIRS.map(({ label, orders }) => [label, orderedReplayReading(orders)]));
+    expect(replayOrders, "wb-kbh1 cut #2 replay orders: on F1, of two calls in a row each asking for all four candidates in its own order, in each ordered pair of the three orders, a permit the first call executes for the request at any of the four positions of its order answers that request and meets every check there, and handed to the seam in the second call answers none of its requests and fails effect-unrequested alone; each call's targets read back in the order it asked").toEqual(
+      Object.fromEntries(
+        ORDER_PAIRS.map(({ label, orders: [first, second] }) => [
+          label,
+          Object.fromEntries(POSITIONS.map((position, index) => [position, { minting: [], replaying: ["effect-unrequested"], answered: [index, -1], asked: [askedIn(first), askedIn(second)] }])),
+        ]),
+      ),
+    );
     return {
       providers,
       denial,
@@ -1389,6 +1478,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       mixed,
       ordered,
       orderSorts,
+      serialOrders,
+      replayOrders,
+      plantedSerial,
     };
   },
   A4: () => {
@@ -1612,6 +1704,17 @@ describe(SUITE, () => {
     expect(Object.keys(STRING_FORMS)).toEqual(["gaining a final ~", "gaining a leading ~", "in another case", "without its last character", "without its first character"]);
     expect(Object.keys(MIXES)).toEqual(["the other request's invocationId", "the other request's target", "the principal's role dropped"]);
     expect(ORDERS).toEqual({ snapshot: [0, 1, 2, 3], reversed: [3, 2, 1, 0], interleaved: [1, 3, 0, 2] });
+    expect(ORDER_PAIRS.map(({ label, orders: [first, second] }) => `${label}:${first.join("")}:${second.join("")}`)).toEqual([
+      "snapshot then snapshot:0123:0123",
+      "snapshot then reversed:0123:3210",
+      "snapshot then interleaved:0123:1302",
+      "reversed then snapshot:3210:0123",
+      "reversed then reversed:3210:3210",
+      "reversed then interleaved:3210:1302",
+      "interleaved then snapshot:1302:0123",
+      "interleaved then reversed:1302:3210",
+      "interleaved then interleaved:1302:1302",
+    ]);
     expect(Object.keys(MUTANTS)).toEqual([
       "M-NO-BASIS",
       "M-DIGEST-ONLY",
