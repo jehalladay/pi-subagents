@@ -87,7 +87,8 @@
  * verbatim); in each of the two layouts the glyphs binding of the function's own statements selects the glyph tier by the ascii
  * option (input.ascii ? ASCII_* : UNICODE_*), and,
  * drawn for every declared kind in both tiers at C3's two render input sets, the workflow card's and the dialog's verified glyph light
- * on none - neither layout shows a tick of either tier at any position of any line it draws, and each draws "?" before the node's
+ * on none in their plain lines (plainWorkflowCardLines, plainWorkflowDialogLines; wb-zzxc) - neither layout shows a tick of either
+ * tier at any position of any line it draws, and each draws "?" before the node's
  * label - ("verified", which no declared kind spells, lights both: each layout shows exactly one tick, its tier's own, the glyph
  * before the node's label), and src names domainStatus at 25 places. No word of a string in a src module is an hx
  * spelling; src launches forge, git and rf by literal command.
@@ -255,7 +256,16 @@
  *    glyph other than the two tick glyphs, drawn anywhere but before the node's label, is NOT CLAIMED by this census; a glyph
  *    conditioned on another render input - another
  *    clock, another width, the task, progress (another entry beside the node), a node field other than its domainStatus, the
- *    dialog's state or another dialog option (spinnerFrame, terminalRows, bodyRows, available) - is NOT CLAIMED by this census;
+ *    dialog's state, another dialog option (spinnerFrame, terminalRows, bodyRows, available), another input of the card
+ *    (showToolTitle, meta, agentCount, totalTokens, agentCap, tokenCap) or another field of the dialog's source (observation,
+ *    timelineLanes, attention, graphView, meta, agentCount) - is NOT CLAIMED by this census (wb-zzxc, landing 866's F2: C3's draws
+ *    set none of those inputs, among them the meta, agentCount and totalTokens both of Pi's card calls set - the tool result's
+ *    renderResult in src/index.ts and the session-entry card renderWorkflowEntryCard - and the showToolTitle the session-entry card
+ *    sets true); C3 reads each layout's plain lines (plainWorkflowCardLines, plainWorkflowDialogLines), never a themed line, and the
+ *    theme path Pi displays them through - styleWorkflowCardLines and renderWorkflowCard for the card (renderWorkflowEntryCard and
+ *    the tool result's renderResult draw through renderWorkflowCard) and WorkflowDialog.render for the dialog (which, from its
+ *    source's observation, may add a hint line or draw layoutInspector in place of the dialog) - is NOT CLAIMED by this census
+ *    (wb-zzxc, landing 866's F3);
  *    every src
  *    place naming domainStatus (an identifier, a member, a binding, an element key, a property key) with its consuming context,
  *    pinned exactly (a new place naming domainStatus - a helper call's argument, a membership test, a destructure - reds C3 for
@@ -379,6 +389,11 @@
  * glyphOf takes the one token before the label, so a tick drawn elsewhere on the node's row was never read): C3 reads every tick of
  * either tier at every position of every line both layouts draw (ticksDrawn; lights() reads its readings), its drawn witness pins
  * each layout's tick readings beside its glyph before the label, and the tick reader reads its controls (TICK_CONTROLS).
+ * The R694 follow-up wb-zzxc (landing 866's F2 and F3; comments only) names in C3's clause, NOT CLAIMED, the render inputs C3's
+ * draws leave unset - the card's showToolTitle, meta, agentCount, totalTokens, agentCap and tokenCap and the dialog source's
+ * observation, timelineLanes, attention, graphView, meta and agentCount - and the theme path (styleWorkflowCardLines,
+ * renderWorkflowCard, WorkflowDialog.render), and MEASURED's glyph sentence names the plain lines it reads; no reading, pin,
+ * witness, constant or roster entry changes.
  *
  * Display paths added: none. Test-only: no scratch is allocated and nothing is written (the virtual modules live in memory); src,
  * the SDK's shipped declarations and client, @types/node's module declarations (through the program), one landed test file, the
@@ -1867,7 +1882,10 @@ interface RenderInputs {
 }
 /** C3's render input sets (cut #6: the sets its glyph clause names): wide (the card at width 240, the dialog at 200) and
  * default-width (the width option unset: each layout's own default), both at the clock 1000; the dialog draws from its initial
- * state (initialWorkflowDialogState) and both layouts draw the task RENDER_TASK. */
+ * state (initialWorkflowDialogState) and both layouts draw the task RENDER_TASK. Neither set gives any other input either layout's
+ * input type declares - the card's showToolTitle, meta, agentCount, totalTokens, agentCap and tokenCap, the dialog's observation,
+ * timelineLanes, attention, graphView, meta, agentCount, available, spinnerFrame, bodyRows and terminalRows: NOT CLAIMED, C3's
+ * clause (wb-zzxc). */
 const RENDER_INPUTS: readonly RenderInputs[] = [
   { inputs: "wide", card: { now: 1_000, width: 240 }, dialog: { now: 1_000, width: 200 } },
   { inputs: "default-width", card: { now: 1_000 }, dialog: { now: 1_000 } },
