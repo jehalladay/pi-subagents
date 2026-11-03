@@ -1,23 +1,21 @@
 /**
- * THE APO CITATION-STATUS JUDGE (wb-021.9, the rule-19 structural-exit child of wb-021.6): the judge of the wb-021.6 APO
- * citation-status census, moved here from that bead's FINAL cut #5 (cdea135d4932a0bfdec599c6f2e43b3fd40e85e1,
- * test/workbench-apo-citation-status-census.test.ts) so the child's census (test/workbench-apo-citation-status-judge-census.test.ts)
- * can hold the judge under the one-edit mutants the wb-021.6 gates named, and the parent's re-cut can read the landed judge.
- * The code below is that cut's lines 362-363, 368-369, 371-372, 398-410, 551-566, 568-789, 804-830, 833-834 and 841-882,
- * each top-level declaration gaining `export `. Of the 23 one-edit mutants the wb-021.6 gates authored over that cut's
- * readers (gate-prep-16's 12, gate-prep-18's 11), 22 find their text here exactly once; the 23rd, GP18-RG-beadrow-uncounted,
- * edits the export reader beadRow, which was not moved. Cut #2 of this bead narrowed four comments to what this code reads
- * (LOCKS, the carriers, THE EFFECT CLASS, the run guard's counter) and changed no code line; cut #3 narrowed two more to the forms
- * the census holds (shownText's links, unwrapped's assertions) and changed no code line; cut #4 narrowed seven more to the forms the
- * census holds (FOOTNOTE, spansBlankLine, carrierView, sourceUnits, the template view, THE JUDGE, THE BINDING) and changed no code
- * line.
- * Display paths added: none (test-only; nothing here renders, it reads texts handed to it).
+ * wb-021.11 (the rule-19 dependency-inversion child of wb-021.9, rulings R-B289 and R-B293; wb-021.6's APO citation-status
+ * judge): the judge of wb-021.9's FINAL cut #4 (machine/flywheel/wb-021.9 tip 4334fecdaddbce1494c859d7d312a00d27c66b74,
+ * test/helpers/apo-citation-status-judge.ts), moved here so that a census can hold its readings
+ * (test/workbench-apo-citation-status-judge-members-census.test.ts). Under R-B293 the parent wb-021.9 is parked and waits on
+ * wb-021.11; its later re-cut can import this judge. Every non-blank line below this header is copied byte for byte from that
+ * tip, in its order - lines 16-18, 21, 23-24, 26-27, 30-38, 40-41, 44-58, 60, 62, 64-71, 73-79, 81, 83, 85, 88-100, 102-110,
+ * 112-127, 129-141, 143-156, 158-160, 162-205, 207-225, 227-243, 246-265, 267-281, 283-309, 312, 315-345, 347-349, 351-354 -
+ * and only this header is added. Left out are the tip's own header (lines 1-15) and its 25 doc comments (lines 20, 29, 39, 43,
+ * 61, 63, 72, 80, 82, 84, 87, 101, 111, 128, 142, 157, 161, 206, 226, 245, 266, 311, 314, 346, 350): several state what
+ * wb-021.9's census holds, and that census is not on trunk. What this module is held to is the members census's pinned probes.
+ * Nothing here reads the file system: callers pass each file's path and text. Display paths added: none (test-only; no src,
+ * docs or receipt is read or written here).
  */
 import { Lexer, type Links, marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { roleReading } from "./apo-ui-publish-census.js";
 
-/** The two dependency locks, set aside by exact path: an integrity value can split into the word apo (package-lock.json's do; R-LOCKFILE). */
 export const LOCKS: readonly string[] = ["package-lock.json", "vendor/dependency-lock.json"];
 
 export const EFFECT_PROPERTY = "effectClass";
@@ -26,7 +24,6 @@ export const READ = "read";
 export const cp = (...points: number[]): string => String.fromCodePoint(...points);
 export const NUL = cp(0);
 
-/** The statement's two carriers (the parent census's anchor case derived both words from the wb-021.6 title) and the producer's own status sentence. */
 export const STATUS_WORD = "design-stage";
 export const SCOPE_WORD = "non-effectful";
 export const STATUS_LITERAL = "accepted design direction; documentation only";
@@ -36,11 +33,9 @@ export function escaped(text: string): string {
 export const STATUS_PATTERN = new RegExp(`(?<![\\w-])${escaped(STATUS_WORD)}(?![\\w-])`, "gi");
 export const SCOPE_PATTERN = new RegExp(`(?<![\\w-])${escaped(SCOPE_WORD)}(?![\\w-])`, "gi");
 export const STATUS_LITERAL_PATTERN = new RegExp(`(?<![\\w-])${STATUS_LITERAL.split(/\s+/).map(escaped).join("\\s+")}(?![\\w-])`, "gi");
-/** A carrier is cancelled by one of these in the two words before it, or by these right after it. */
 export const NEGATION_BEFORE = /\b(?:not|never|nor|no|isn't|aren't|wasn't|weren't|formerly|previously)\b/i;
 export const NEGATION_AFTER = /^\W*(?:no\s+longer|no\s+more|any\s*more)\b/i;
 
-/** THE CITATION: the shared ROLE reading of the program family (test/helpers/apo-ui-publish-census.ts, wb-021.4). */
 export const cites = (text: string): boolean => roleReading(text) !== undefined;
 export function carried(text: string, pattern: RegExp): boolean {
   for (const hit of text.matchAll(pattern)) {
@@ -58,9 +53,7 @@ export const carriesStatus = (text: string): boolean => carried(text, STATUS_PAT
 export const carriesScope = (text: string): boolean => carried(text, SCOPE_PATTERN);
 
 export type UnitKind = "block" | "line" | "string" | "comment" | "code" | "text";
-/** The units that owe both carriers: a markdown unit (a Pi doc's) and a script's string (a surfaced string). */
 export const OWES: readonly UnitKind[] = ["block", "line", "string"];
-/** What a reader sees of a unit, as a carrier: an opaque view carries nothing. */
 export interface CarrierView {
   readonly text: string;
   readonly opaque: boolean;
@@ -69,7 +62,6 @@ export interface Unit {
   readonly line: number;
   readonly kind: UnitKind;
   readonly text: string;
-  /** A markdown unit's carrier view (THE CARRIER VIEW), read lazily; a unit without one is shown as its text. */
   readonly view?: () => CarrierView;
 }
 export const BLANK = /^\s*(?:>\s*)*$/;
@@ -77,14 +69,10 @@ export const LIST_ITEM = /^\s*(?:>\s*)*(?:[-*+]|\d{1,9}[.)])\s+/;
 export const HEADING = /^\s{0,3}#{1,6}(?:\s|$)/;
 export const TABLE_ROW = /^\s*\|/;
 export const FENCE = /^\s{0,3}(?:`{3,}|~{3,})/;
-/** The carrier view: marked token types whose text no reader of the rendered page sees as a carrier. */
 export const UNSHOWN: readonly string[] = ["html", "image", "def", "del", "space", "hr"];
-/** An html token opening or closing an element: an attribute or a style can hide the text between its tags, so its view is opaque. */
 export const ELEMENT = /^<\/?[A-Za-z]/;
-/** Footnote syntax shows no carrier: a reference renders as a number (never its label), and the definitions the census holds ([^n]: two spaces in and after one '> ') are dropped from their units. */
 export const FOOTNOTE = { reference: /\[\^[^\]\n]+\]/g, definition: /^\s*(?:>\s*)*\[\^[^\]\n]+\]:/ };
 
-/** A markdown line's place in its document's own rendering: rendered with its unit, shown verbatim as code, hidden, or opaque. */
 export type LineShow = "rendered" | "code" | "hidden" | "opaque";
 export const SHOW_RANK: Readonly<Record<LineShow, number>> = { rendered: 0, code: 1, hidden: 2, opaque: 3 };
 export const isList = (token: Token): token is Tokens.List => token.type === "list";
@@ -98,7 +86,6 @@ export function textField(token: Token): string {
   const value: unknown = (token as { text?: unknown }).text;
   return typeof value === "string" ? value : "";
 }
-/** Opacity: the census holds a three-line html block comment ending a one-item list or quote, or that list or quote nested once, whose crossing line BLANK reads (white space and '>' marks only); the census's units cannot see where that HTML ends. */
 export function spansBlankLine(token: Token): boolean {
   return childrenOf(token).some(child => (child.type === "html" && /\n[\s>]*\n/.test(child.raw)) || spansBlankLine(child));
 }
@@ -108,7 +95,6 @@ export function placeOf(token: Token, line: string): LineShow {
   if ((token.type === "list" || token.type === "blockquote") && spansBlankLine(token)) return "opaque";
   return "rendered";
 }
-/** Each line's place, read from marked's top-level tokens of the whole document (their raws tile its source), and its link definitions. */
 export function documentView(text: string): { readonly places: readonly LineShow[]; readonly links: Links } {
   const source = text.split("\n");
   const places: LineShow[] = source.map(() => "rendered");
@@ -125,7 +111,6 @@ export function documentView(text: string): { readonly places: readonly LineShow
   }
   return { places, links: tokens.links };
 }
-/** What a reader sees of marked tokens as a carrier: unshown types and an inline link's destination and title show nothing (an autolink shows its address, its text). */
 export function shownText(tokens: readonly Token[], separator: string, view: { opaque: boolean }): string {
   return tokens
     .map(token => {
@@ -139,7 +124,6 @@ export function shownText(tokens: readonly Token[], separator: string, view: { o
     })
     .join(separator);
 }
-/** A unit's carrier view: opaque when its line is opaque (the census holds one-line units inside the comment); else its hidden lines dropped, shown verbatim when every line is code or hidden, and otherwise rendered on its own (of indentation the census holds a tab and four spaces removed, footnote references and the held definitions removed, the document's definitions preloaded). */
 export function carrierView(lines: readonly string[], places: readonly LineShow[], links: Links): CarrierView {
   if (places.includes("opaque")) return { text: "", opaque: true };
   const kept = lines.filter((_, index) => places[index] !== "hidden");
@@ -154,11 +138,9 @@ export function carrierView(lines: readonly string[], places: readonly LineShow[
   const text = shownText(lexer.lex(markdown), "\n", view);
   return { text, opaque: view.opaque };
 }
-/** Markdown units by THE UNITS' five patterns: a line FENCE, HEADING or TABLE_ROW reads and every line of an open fence is a unit of its own, BLANK ends a block and LIST_ITEM opens one; any other heading, row or fence line is read inside its block (R-UNCUT). */
 export function markdownUnits(text: string): Unit[] {
   const units: Unit[] = [];
   let document: ReturnType<typeof documentView> | undefined;
-  /** The document's own rendering, read once and only when a citing unit asks for its view. */
   const read = (): ReturnType<typeof documentView> => {
     document ??= documentView(text);
     return document;
@@ -203,7 +185,6 @@ export function scriptKindOf(path: string): ts.ScriptKind {
   if (/\.[cm]?jsx?$/.test(path)) return path.endsWith("x") ? ts.ScriptKind.JSX : ts.ScriptKind.JS;
   return path.endsWith("x") ? ts.ScriptKind.TSX : ts.ScriptKind.TS;
 }
-/** Script units through the TypeScript AST: strings (cooked), templates (the census holds one or two substitutions), comments (leading and same-line trailing ranges; the census holds one comment at a place), and identifiers as code. */
 export function sourceUnits(path: string, text: string): Unit[] {
   const file = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const units: Unit[] = [];
@@ -223,7 +204,6 @@ export function sourceUnits(path: string, text: string): Unit[] {
       units.push({ line: lineOf(node.getStart(file)), kind: "string", text: node.text });
     } else if (ts.isTemplateExpression(node)) {
       const body = node.head.text + node.templateSpans.map(span => `\${${span.expression.getText(file)}}${span.literal.text}`).join("");
-      /** THE CARRIER VIEW of a template: its cooked parts, each substitution shown as nothing (the census holds one or two substitutions). */
       const shown = node.head.text + node.templateSpans.map(span => span.literal.text).join("");
       units.push({ line: lineOf(node.getStart(file)), kind: "string", text: body, view: () => ({ text: shown, opaque: false }) });
     } else if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) {
@@ -242,7 +222,6 @@ export function unitsOf(path: string, text: string): Unit[] {
   return text.split("\n").flatMap((line, index) => (line.trim() === "" ? [] : [{ line: index + 1, kind: "text" as const, text: line }]));
 }
 
-/** An expression with its parentheses, non-null assertions, as and angle-bracket assertions and satisfies clauses removed (of an as, angle-bracket or satisfies wrapper the census holds the string keyword, const and a literal type). */
 export function unwrapped(node: ts.Expression): ts.Expression {
   let at = node;
   while (ts.isParenthesizedExpression(at) || ts.isAsExpression(at) || ts.isSatisfiesExpression(at) || ts.isNonNullExpression(at) || ts.isTypeAssertionExpression(at)) at = at.expression;
@@ -263,7 +242,6 @@ export function accessNameOf(node: ts.Expression): string | undefined {
   if (ts.isElementAccessExpression(at)) return literalOf(at.argumentExpression);
   return undefined;
 }
-/** THE EFFECT CLASS: each effectClass this reader finds a module setting (a property assignment or a shorthand property, a class field with an initializer, or a plain `=` assignment to a property or element access) whose value is not the literal "read"; a compound assignment, and a key or element argument that does not unwrap to a string or plain template literal, are not read. */
 export function effectClasses(path: string, text: string): { line: number; value: string }[] {
   const file = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const found: { line: number; value: string }[] = [];
@@ -308,10 +286,8 @@ export function squeezed(text: string): string {
   return text.replace(/\s+/g, " ").trim();
 }
 
-/** The run guard's counter: each judgeFiles call raises it by one (THE RUN GUARD; the parent's export reader, not moved here, raised it too). */
 export const READS = { calls: 0 };
 
-/** THE JUDGE: every unit of every file, the carriers a citing doc unit or string owes, then each banner module's effect classes (the census holds one non-read setting per module). */
 export function judgeFiles(files: readonly FileText[]): Judgement {
   READS.calls += 1;
   const kinds: Record<FileKind, number> = { lock: 0, binary: 0, markdown: 0, script: 0, text: 0 };
@@ -343,13 +319,10 @@ export function judgeFiles(files: readonly FileText[]): Judgement {
   }
   return { kinds, units, strings, citing, banner, findings };
 }
-/** Causes of one control text read as a whole file at a path. */
 export function causesOf(path: string, text: string): string[] {
   return judgeFiles([{ path, text }]).findings.map(finding => finding.slice(finding.indexOf(" ") + 1));
 }
-/** THE BINDING: the census holds a citing unit with an empty BOUND list (unbound), with a BOUND list of its key alone (bound) and with its key then a retired key (the retired key stale). */
 export function bindingOf(citing: readonly Citing[], bound: readonly string[]): string[] {
   const keys = citing.map(entry => entry.key);
   return [...citing.filter(entry => !bound.includes(entry.key)).map(entry => `${entry.at} unbound`), ...bound.filter(entry => !keys.includes(entry)).map(entry => `${entry} stale`)];
 }
-
