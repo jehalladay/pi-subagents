@@ -112,9 +112,10 @@
  * statement's launch opens with the shape's run, and the words after the run (the tail) stay word for word at the end of
  * the control's launch, which spells the run dropped, changed by one change (oneChangeAway) into the words ahead of the
  * tail, moved behind the tail when the run is one word, or, for the function keyword, rejoined with the name it defines
- * (function f as f()). followedByBd: the word after the shape's run is bd, exactly; a shape whose first word is bd in any
- * letter case, alone or with one dotted suffix (BD.EXE, bd.bat, bd --actor doctor close), carries its binary and is not
- * read, nor is the function keyword, whose name is held by the rejoin. So gate G1-G6 (P05, P32, P06 and P07 each given a
+ * (function f as f()), and never repeats the statement word for word (wb-lrl3 F1). followedByBd: the word after the
+ * shape's run is bd, exactly; a shape whose first word is bd in any letter case, alone or with one dotted suffix of ASCII
+ * letters (BD.EXE, bd.bat, bd --actor doctor close; wb-lrl3 F1), carries its binary and is not read, nor is the function
+ * keyword, whose name is held by the rejoin. So gate G1-G6 (P05, P32, P06 and P07 each given a
  * second word - coproc, time or nohup - behind its shape, the control one dropped run away), each made coherently in every
  * literal of this census and in the roster, red through docs/03, which still names each shape; so do a read verb behind a
  * binary spelling that the control's respelling drops (BD.EXE list close, paired with bd.exe close: shapeRunTied alone
@@ -123,6 +124,80 @@
  * holds shapeRunTied and followedByBd to probes, one or more per branch. Not read: whether a statement is a bd write a
  * shell would run. followedByBd also refuses a word the census reads through (>/dev/null ! bd close), stricter than the
  * census; no member has that form.
+ *
+ * THE wb-lrl3 FOLLOW-UP (R694 of landing 686; gate of record cmd_26db68d04c38, PREP F1 leads, F2 and F3 ride). F1: at
+ * each edge the gate measured, the two readings and their claims now agree. shapeRunTied refuses a control that repeats
+ * the statement word for word ahead of its four forms, so an identical control without a tail (time with time, BD.EXE
+ * with no argv) or with a tail repeating a one-word run (time time) no longer pairs through the moved form.
+ * OWN_BINARY's claim is narrowed to what it reads, one dotted suffix of ASCII letters: bd.x, bd.sh and bd.bash carry
+ * the binary, and bd.ps1, bd.1 and bd. do not, so such a shape is held to be followed by bd (the conservative side).
+ * The F row adds a probe at an edge each surviving reader mutant of the gate crossed: an upper-case BD after a shape
+ * (GR1), a run of two words moved behind the tail (GR2), a suffix of two or four letters (GR3), a shape whose bd is not
+ * its first word (GR5) and a rejoin under another name (GR10). F2: the isolation D row's plants reach every member -
+ * the read verb behind the .bat spelling (P12, gate GM5), an identical control of a binary spelling with no argv (P11)
+ * and every member's control set to its own statement at once - and the launch D row (wb-mpmm) sets every member's
+ * statement to its own control at once, so a reader that skips any one shape in either row reds (gate GR6, GR6peer;
+ * each of the eight shapes skipped alone, measured in each row). F3: FILE_CASES's JSDoc counts the fixed cases by
+ * FIXED_CASES, which the closing tally holds to vitest's own registrations.
+ *
+ * THE wb-11t4 FOLLOW-UP (R694 of landing 725; gate of record cmd_08d9ab916183, PREP F1 leads). F1: the identity claim
+ * above (wb-lrl3 F1) is pinned at each one-word shape the residual family enumerates, where the guard alone refuses an
+ * identical control, and claims no more. Without the guard only the moved form pairs an identical control, and only
+ * one whose launch repeats a one-word run throughout (measured at this cut: the shape once, twice and three times over,
+ * at each one-word shape). At this cut's base a reader that drops the guard for one shape alone kept the census at
+ * 109/109 for function (gate GATE-IDENTICAL-FUNCTION), coproc, 2>/dev/null and bd.bat. The F row now pins two such
+ * identical controls at each of the seven one-word shapes, the shape alone and the shape repeated once as its tail -
+ * beside the landed time, time time, >/dev/null and BD.EXE probes: function, function function, coproc, coproc coproc,
+ * 2>/dev/null, 2>/dev/null 2>/dev/null, bd.bat with no argv and with bd.bat, >/dev/null >/dev/null and BD.EXE with
+ * BD.EXE - so a reader that drops the guard for one of the seven alone, or for one only with a tail or only without
+ * one, reds the F row (measured at this cut). These are reader edges, not coherent members: a coherent member's launch
+ * carries its bd write behind its shape, so its identical control (the isolation D row's every-member plant; function
+ * f { bd close wb-example; }; f for P08) is refused by the four forms with or without the guard (measured at this cut:
+ * under each one-shape drop that plant still names all eight members). The guard at a run of several words (bd --actor
+ * doctor close) is NOT CLAIMED by this census: the moved form takes a run of one word, the rejoin the function keyword,
+ * and one change never leaves a run as it was, so no identical control passes the four forms there and a reader
+ * without the guard there reads the same. A launch repeating its shape three or more times is NOT CLAIMED by this
+ * census, nor is a shape the residual family does not enumerate.
+ *
+ * THE wb-k2lj FOLLOW-UP (R694 of landing 764; gate of record cmd_299c3322dc7d, PREP F5 leads). F5: the identity claim
+ * above (wb-11t4 F1) is pinned at the two binary spellings in both of statementWordsOf's spellings under the launchers
+ * MEMBER_HEAD imports: a binary followed by its argv array (spawnSync) and a shell line (execSync). At this cut's base
+ * the F row pinned bd.bat and BD.EXE in the argv spelling alone, so a reader that drops the guard for execSync
+ * launches of bd.bat alone (gate L2-CROSS[bd.bat]) or of BD.EXE alone (L2-CROSS[BD.EXE]) kept the census at 109/109
+ * while it admitted execSync("bd.bat") and execSync("BD.EXE"), alone and repeated, as their own identical controls,
+ * and so did each such drop made only with a tail or only without one (measured at this cut's base). The F row now
+ * pins four more identical controls - execSync("bd.bat"), execSync("bd.bat bd.bat"), execSync("BD.EXE") and
+ * execSync("BD.EXE BD.EXE") - so each of those six readers reds the F row (measured at this cut), and the F title
+ * names the launcher spellings its identity probes use: an execSync shell line at each one-word shape, and a
+ * spawnSync argv too at the two binary spellings. A reader that drops the guard for a launcher MEMBER_HEAD does not
+ * import (exec, spawn, execFile, execFileSync or fork) is NOT CLAIMED by this census, nor is one that drops it for a
+ * shell shape's spawnSync spelling, whose first argument names a binary rather than the leading redirection or the
+ * time, coproc or function keyword the family enumerates (measured at this cut: such a drop at bd.bat under exec, at
+ * BD.EXE under spawn and at time under spawnSync each keeps the census at 109/109).
+ *
+ * THE wb-unuy FOLLOW-UP (R694 of landing 820; gate of record cmd_c0dbaa2c015a, PREP F1 leads, F2 rides). F1: the
+ * identity claim above (wb-k2lj F5) is pinned at the crossed launcher spellings of the two binary spellings too. At this
+ * cut's base the F row pinned bd.bat and BD.EXE as a spawnSync argv and as an execSync shell line alone, so a reader
+ * that drops the guard for an execSync launch carrying an argv array at bd.bat or at BD.EXE (gate X-ARGV-UNDER-EXEC),
+ * or for a spawnSync launch spelled as a shell line at either (X-LINE-UNDER-SPAWN), kept the census at 109/109 while it
+ * admitted execSync("bd.bat", []), execSync("bd.bat", ["bd.bat"]), spawnSync("bd.bat") and spawnSync("bd.bat bd.bat")
+ * (their BD.EXE twins the same) as their own identical controls, and so did each such drop made only with a tail or
+ * only without one (measured at this cut's base). F2: so did a reader that drops the guard for a single-quoted execSync
+ * shell line at bd.bat or BD.EXE (gate Q-SQ-EXEC), or at any other one-word shape the residual family enumerates (time,
+ * the gate's control at a landed cell; function, coproc, 2>/dev/null and >/dev/null), alone, only with a tail or only
+ * without one (measured at this cut's base). The F row now pins twenty-two more identical controls - the two binary
+ * spellings, alone and repeated once, as an execSync argv (no argv and itself as argv) and as a spawnSync shell line
+ * (eight), and each of the seven one-word shapes, alone and repeated once, as a single-quoted execSync shell line
+ * (fourteen) - so each of those 33 readers reds the F row (measured at this cut). THE IDENTITY CLAIM, AS PINNED: the
+ * identity sentences above (wb-lrl3 F1, wb-11t4 F1, wb-k2lj F5) and the F title's identical-control clause are claimed
+ * exactly at the identical controls the F row lists, each spelled byte for byte as its probe: each one-word shape the
+ * residual family enumerates, alone and repeated once as its tail, as an execSync shell line in double quotes and in
+ * single quotes; the two binary spellings, alone and repeated once, in double quotes as a spawnSync argv, an execSync
+ * argv and a spawnSync shell line; and BD.EXE with no argv as a spawnSync argv beside the same launch in single quotes.
+ * Any other source spelling of an identical control is NOT CLAIMED by this census: a template literal, a single-quoted
+ * argv or spawnSync launch, white space other than one space between the words of a shell line, a padded shell line, a
+ * statement without its closing semicolon (measured at this cut: a drop for each of these keeps the census at
+ * 109/109), and every launcher, shape, spelling and repeat count the NOT CLAIMED sentences above leave out.
  *
  * Display paths added: none. No scratch directory is allocated: the synthetic trees live in memory.
  */
@@ -2136,7 +2211,9 @@ const REGISTERED = {
     "type-only-launcher",
   ],
 } as const satisfies Readonly<Record<"F" | "Q" | "DT", readonly string[]>>;
-/** Every case this file registers: 22 fixed cases, the three it.each tables and the closing tally. */
+/** The fixed cases this file registers: every case but those of the three it.each tables and the closing tally, which counts them (wb-lrl3 F3). */
+const FIXED_CASES = 24;
+/** Every case this file registers: the FIXED_CASES fixed cases, the three it.each tables and the closing tally. */
 const FILE_CASES = 109;
 /** What this run's it.each cases did, recorded by each case at its last line; the closing tally pins every list. */
 const RAN: Record<"F" | "Q" | "DT", string[]> = { F: [], Q: [], DT: [] };
@@ -2280,19 +2357,26 @@ function oneChangeAway(statement: readonly string[], control: readonly string[])
 }
 /**
  * Whether a class-level member's control differs from its statement in the shape's run alone (wb-zj42 F1): both call the
- * same launcher, the statement's launch opens with the shape's run, and its words after the run (the tail, as
- * statementWordsOf reads them) stay word for word in the control, which spells the run in one of four forms - dropped
- * (the tail alone), changed by one change (oneChangeAway) into the words ahead of the tail, moved behind the tail when the
- * run is one word, or, for the function keyword, rejoined with the name it defines (function f as f()). Any other
- * control - a tail changed, a word behind the run dropped or respelled with it, another launcher - is not one.
+ * same launcher, the control's words are not the statement's word for word (wb-lrl3 F1: an identical control, with a
+ * tail or without, is refused ahead of the four forms, of which only the moved form would pair one, a launch
+ * repeating a one-word run throughout; wb-11t4 F1 pins that refusal at each one-word shape the residual family
+ * enumerates, the shape alone and repeated once as its tail; wb-k2lj F5 pins it at the two binary spellings as an
+ * execSync shell line too, beside their spawnSync argv; wb-unuy F1 and F2 pin it at those two spellings as an execSync
+ * argv and a spawnSync shell line too, and at each one-word shape as a single-quoted execSync shell line, and claim it
+ * at exactly the spellings the F row lists), the statement's launch opens with the shape's run, and
+ * its words after the run (the tail, as statementWordsOf reads them) stay word for word in the control, which spells
+ * the run in one of four forms - dropped (the tail alone), changed by one change (oneChangeAway) into the words ahead
+ * of the tail, moved behind the tail when the run is one word, or, for the function keyword, rejoined with the name it
+ * defines (function f as f(), never another name). Any other control - a tail changed, a word behind the run dropped or
+ * respelled with it, another launcher, the statement itself - is not one.
  */
 function shapeRunTied(statement: string, control: string, shape: string): boolean {
   const [callee, ...launch] = statementWordsOf(statement);
   const [controlCallee, ...paired] = statementWordsOf(control);
   const run = shape.split(" ");
-  if (callee === undefined || controlCallee !== callee || !run.every((word, offset) => launch[offset] === word)) return false;
-  const tail = launch.slice(run.length);
   const same = (words: readonly string[], other: readonly string[]): boolean => JSON.stringify(words) === JSON.stringify(other);
+  if (callee === undefined || controlCallee !== callee || same(paired, launch) || !run.every((word, offset) => launch[offset] === word)) return false;
+  const tail = launch.slice(run.length);
   const ahead = paired.slice(0, paired.length - tail.length);
   const keepsTail = paired.length >= tail.length && same(paired.slice(ahead.length), tail);
   const [name, ...body] = tail;
@@ -2302,7 +2386,7 @@ function shapeRunTied(statement: string, control: string, shape: string): boolea
     (shape === "function" && name !== undefined && same(paired, [`${name}()`, ...body]))
   );
 }
-/** A shape whose first word names the bd binary itself: bd in any letter case, alone or with one dotted suffix (BD.EXE, bd.bat, bd --actor doctor close). */
+/** A shape whose first word names the bd binary itself: bd in any letter case, alone or with one dotted suffix of ASCII letters (BD.EXE, bd.bat, bd.sh, bd --actor doctor close); a suffix holding a digit (bd.ps1, bd.1) or no letter (bd.) is not the binary's own (wb-lrl3 F1). */
 const OWN_BINARY = /^bd(?:\.[a-z]+)?$/i;
 /**
  * Whether a shape that carries no bd binary of its own is followed by bd in a member's statement (wb-zj42 F1, the gate's
@@ -2701,6 +2785,20 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     expect(statementMismatches(line, set("P17 a global flag value read as the verb", { statement: 'spawnSync("bd", ["--actor=doctor", "close", "wb-example"]);' })), "the family's last shape, of four words").toEqual([
       `${misread}: the launch P17 a global flag value read as the verb measures does not begin with bd --actor doctor close, the shape docs/03 names it by`,
     ]);
+    const opens = (name: string, shape: string): string => `${misread}: the launch ${name} measures does not begin with ${shape}, the shape docs/03 names it by`;
+    expect(
+      statementMismatches(line, edited(members => members.map(member => ({ ...member, statement: member.control })))),
+      "every member's statement set to its own control: the opening is read at each shape the family enumerates (wb-lrl3 F2, gate GR6peer)",
+    ).toEqual([
+      opens("P06 a leading redirection", ">/dev/null"),
+      opens("P07 a leading descriptor redirection", "2>/dev/null"),
+      opens("P05 the time keyword", "time"),
+      opens("P32 the coproc keyword", "coproc"),
+      opens("P08 the function keyword", "function"),
+      opens("P11 an upper-case .EXE spelling", "BD.EXE"),
+      opens("P12 a .bat spelling", "bd.bat"),
+      opens("P17 a global flag value read as the verb", "bd --actor doctor close"),
+    ]);
     const ambiguous = edited(members =>
       members.map(member =>
         member.name === "P05 the time keyword" ? { ...member, named: "time coproc" } : member.name === "P32 the coproc keyword" ? { ...member, statement: 'execSync("nohup coproc bd close wb-example");' } : member,
@@ -2713,7 +2811,7 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     ]);
   });
 
-  it("D: every class-level member isolates the shape docs/03 names it by - for each shape a family enumerates in the rendered residual line that names exactly one member, that member's control differs from its statement in the shape's run alone (dropped, changed by one change ahead of the statement's tail, moved behind it, or the function keyword rejoined with its name) and a shape carrying no bd binary of its own, the function keyword excepted, is followed by bd, so a second word carried behind a member's shape, its control one dropped run away, reds through docs/03 (wb-zj42 F1, gate G1-G6)", () => {
+  it("D: every class-level member isolates the shape docs/03 names it by - for each shape a family enumerates in the rendered residual line that names exactly one member, that member's control differs from its statement in the shape's run alone (dropped, changed by one change ahead of the statement's tail, moved behind it when the shape is one word, or the function keyword rejoined with its name, never repeated word for word) and a shape carrying no bd binary of its own, the function keyword excepted, is followed by bd, so a second word carried behind a member's shape, its control one dropped run away, reds through docs/03 (wb-zj42 F1, gate G1-G6; wb-lrl3 F1/F2)", () => {
     const section = boundarySection();
     expect(section.why).toBe("");
     const lines = section.blocks.flatMap(block => (block.kind === "paragraph" && block.text.startsWith("Named residuals") ? [block.text] : []));
@@ -2748,6 +2846,10 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
       "a read verb behind a binary spelling, dropped by the control's respelling: the tie alone refuses it",
     ).toEqual([tied("P11 an upper-case .EXE spelling", "BD.EXE")]);
     expect(
+      isolationMismatches(line, set("P12 a .bat spelling", { statement: 'spawnSync("bd.bat", ["list", "close", "wb-example"]);', reads: ["bd.bat list close wb-example"] })),
+      "the same read verb behind the .bat spelling (wb-lrl3 F2, gate GM5): the tie alone refuses it",
+    ).toEqual([tied("P12 a .bat spelling", "bd.bat")]);
+    expect(
       isolationMismatches(line, set(P32, { statement: 'execSync("coproc -a x bd close wb-example");', reads: ["coproc -a x bd close wb-example"], control: 'execSync("exec -a x bd close wb-example");' })),
       "an option and its value behind a keyword, consumed by the control's respelled word: the bd reading alone refuses it",
     ).toEqual([bd(P32, "coproc")]);
@@ -2759,6 +2861,7 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
       ["the tail changed", P05, { control: 'execSync("bd close wb-other");' }, [tied(P05, "time")]],
       ["another launcher", P05, { control: 'exec("bd close wb-example");' }, [tied(P05, "time")]],
       ["a control set to its own statement", P05, { control: 'execSync("time bd close wb-example");' }, [tied(P05, "time")]],
+      ["an identical control of a binary spelling with no argv", "P11 an upper-case .EXE spelling", { statement: 'spawnSync("BD.EXE", []);', control: 'spawnSync("BD.EXE", []);' }, [tied("P11 an upper-case .EXE spelling", "BD.EXE")]],
       ["a shape moved into the tail", P06, { control: 'execSync("bd >/dev/null close wb-example");' }, [tied(P06, ">/dev/null")]],
       ["the function keyword changed beyond its rejoin", "P08 the function keyword", { control: 'execSync("{ bd close wb-example; }; f");' }, [tied("P08 the function keyword", "function")]],
       [
@@ -2776,6 +2879,18 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
       disagreements.map(([kind, name, fields]) => [kind, isolationMismatches(line, set(name, fields))]),
       "each other kind of disagreement, named",
     ).toEqual(disagreements.map(([kind, , , expected]) => [kind, expected]));
+    const every = (fields: (member: ResidualMember) => Partial<ResidualMember>): Residual[] =>
+      RESIDUALS.map(residual => (residual.id === misread ? { ...residual, members: (residual.members ?? []).map(member => ({ ...member, ...fields(member) })) } : residual));
+    expect(isolationMismatches(line, every(member => ({ control: member.statement }))), "every member's control set to its own statement: the tie reads each shape the family enumerates (wb-lrl3 F2)").toEqual([
+      tied(P06, ">/dev/null"),
+      tied("P07 a leading descriptor redirection", "2>/dev/null"),
+      tied(P05, "time"),
+      tied(P32, "coproc"),
+      tied("P08 the function keyword", "function"),
+      tied("P11 an upper-case .EXE spelling", "BD.EXE"),
+      tied("P12 a .bat spelling", "bd.bat"),
+      tied("P17 a global flag value read as the verb", "bd --actor doctor close"),
+    ]);
     const ambiguous = set(P05, { named: "time coproc", statement: 'execSync("time coproc bd close wb-example");', reads: ["time coproc bd close wb-example"] });
     expect(isolationMismatches(line, ambiguous), "a shape naming two members is left to memberMismatches; the shape naming one is read").toEqual([tied(P05, "time"), bd(P05, "time")]);
   });
@@ -2855,7 +2970,7 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     ).toEqual(probes.map(probe => probe[2]));
   });
 
-  it("F: shapeRunTied and followedByBd read a member's pairing by its shape's run - the run dropped, changed by one change ahead of the tail, moved behind the tail or the function keyword rejoined with its name, never a changed tail, a word behind the run changed with it, two changes, another launcher, an identical control or a launch the shape does not open; and a shape followed by the word bd exactly, never by another word, a spelling of bd or nothing, unless it names bd itself or is the function keyword (wb-zj42 F1)", () => {
+  it("F: shapeRunTied and followedByBd read a member's pairing by its shape's run - the run dropped, changed by one change ahead of the tail, moved behind the tail when it is one word or the function keyword rejoined with its name, never a changed tail, a word behind the run changed with it, two changes, another launcher, an identical control, with a tail or without (the guard's own refusal pinned at each one-word shape the residual family enumerates, the shape alone and repeated once as its tail, as an execSync shell line in double and in single quotes and, at the two binary spellings, as a spawnSync argv, an execSync argv and a spawnSync shell line too, each spelled as its probe), or a launch the shape does not open; and a shape followed by the word bd exactly, never by another word, a spelling of bd or nothing, unless its first word is bd in any letter case, alone or with one dotted suffix of ASCII letters, or it is the function keyword (wb-zj42 F1, wb-lrl3 F1, wb-11t4 F1, wb-k2lj F5, wb-unuy F1 F2)", () => {
     const pairings: readonly (readonly [string, string, string, boolean])[] = [
       ['execSync("time bd close wb-x");', 'execSync("bd close wb-x");', "time", true],
       ['execSync("coproc bd close wb-x");', 'execSync("! bd close wb-x");', "coproc", true],
@@ -2876,10 +2991,54 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
       ['execSync("nohup time bd close wb-x");', 'execSync("nohup bd close wb-x");', "time", false],
       ['execSync("nohup bd close wb-x");', 'execSync("bd close wb-x");', "time", false],
       ['execSync("time bd close wb-x"); execSync("f");', 'execSync("bd close wb-x");', "time", false],
+      ['execSync("time");', 'execSync("time");', "time", false],
+      ['execSync(">/dev/null");', 'execSync(">/dev/null");', ">/dev/null", false],
+      ['spawnSync("BD.EXE", []);', 'spawnSync("BD.EXE", []);', "BD.EXE", false],
+      ['spawnSync("BD.EXE", []);', "spawnSync('BD.EXE', []);", "BD.EXE", false],
+      ['execSync("time time");', 'execSync("time time");', "time", false],
+      ['execSync("time");', 'execSync("");', "time", true],
+      ['execSync("nohup time bd close wb-x");', 'execSync("bd close wb-x nohup time");', "nohup time", false],
+      ['execSync("function f { bd close wb-x; }; f");', 'execSync("g() { bd close wb-x; }; f");', "function", false],
+      ['execSync("function");', 'execSync("function");', "function", false],
+      ['execSync("function function");', 'execSync("function function");', "function", false],
+      ['execSync("coproc");', 'execSync("coproc");', "coproc", false],
+      ['execSync("coproc coproc");', 'execSync("coproc coproc");', "coproc", false],
+      ['execSync("2>/dev/null");', 'execSync("2>/dev/null");', "2>/dev/null", false],
+      ['execSync("2>/dev/null 2>/dev/null");', 'execSync("2>/dev/null 2>/dev/null");', "2>/dev/null", false],
+      ['spawnSync("bd.bat", []);', 'spawnSync("bd.bat", []);', "bd.bat", false],
+      ['spawnSync("bd.bat", ["bd.bat"]);', 'spawnSync("bd.bat", ["bd.bat"]);', "bd.bat", false],
+      ['execSync(">/dev/null >/dev/null");', 'execSync(">/dev/null >/dev/null");', ">/dev/null", false],
+      ['spawnSync("BD.EXE", ["BD.EXE"]);', 'spawnSync("BD.EXE", ["BD.EXE"]);', "BD.EXE", false],
+      ['execSync("bd.bat");', 'execSync("bd.bat");', "bd.bat", false],
+      ['execSync("bd.bat bd.bat");', 'execSync("bd.bat bd.bat");', "bd.bat", false],
+      ['execSync("BD.EXE");', 'execSync("BD.EXE");', "BD.EXE", false],
+      ['execSync("BD.EXE BD.EXE");', 'execSync("BD.EXE BD.EXE");', "BD.EXE", false],
+      ['execSync("bd.bat", []);', 'execSync("bd.bat", []);', "bd.bat", false],
+      ['execSync("bd.bat", ["bd.bat"]);', 'execSync("bd.bat", ["bd.bat"]);', "bd.bat", false],
+      ['execSync("BD.EXE", []);', 'execSync("BD.EXE", []);', "BD.EXE", false],
+      ['execSync("BD.EXE", ["BD.EXE"]);', 'execSync("BD.EXE", ["BD.EXE"]);', "BD.EXE", false],
+      ['spawnSync("bd.bat");', 'spawnSync("bd.bat");', "bd.bat", false],
+      ['spawnSync("bd.bat bd.bat");', 'spawnSync("bd.bat bd.bat");', "bd.bat", false],
+      ['spawnSync("BD.EXE");', 'spawnSync("BD.EXE");', "BD.EXE", false],
+      ['spawnSync("BD.EXE BD.EXE");', 'spawnSync("BD.EXE BD.EXE");', "BD.EXE", false],
+      ["execSync('bd.bat');", "execSync('bd.bat');", "bd.bat", false],
+      ["execSync('bd.bat bd.bat');", "execSync('bd.bat bd.bat');", "bd.bat", false],
+      ["execSync('BD.EXE');", "execSync('BD.EXE');", "BD.EXE", false],
+      ["execSync('BD.EXE BD.EXE');", "execSync('BD.EXE BD.EXE');", "BD.EXE", false],
+      ["execSync('time');", "execSync('time');", "time", false],
+      ["execSync('time time');", "execSync('time time');", "time", false],
+      ["execSync('function');", "execSync('function');", "function", false],
+      ["execSync('function function');", "execSync('function function');", "function", false],
+      ["execSync('coproc');", "execSync('coproc');", "coproc", false],
+      ["execSync('coproc coproc');", "execSync('coproc coproc');", "coproc", false],
+      ["execSync('2>/dev/null');", "execSync('2>/dev/null');", "2>/dev/null", false],
+      ["execSync('2>/dev/null 2>/dev/null');", "execSync('2>/dev/null 2>/dev/null');", "2>/dev/null", false],
+      ["execSync('>/dev/null');", "execSync('>/dev/null');", ">/dev/null", false],
+      ["execSync('>/dev/null >/dev/null');", "execSync('>/dev/null >/dev/null');", ">/dev/null", false],
     ];
     expect(
       pairings.map(([statement, control, shape]) => shapeRunTied(statement, control, shape)),
-      "dropped, respelled, a binary respelled, changed inside a run of several words, moved behind the tail, the function rejoin; a word behind the run dropped with it, respelled with it, dropped by a binary's respelling, a changed tail, moved into the tail, two changes inside the run, a rejoin for another shape, the function keyword changed beyond its rejoin, another launcher, an identical control, a launch the shape does not open, a launch another word opens dropped to the tail, a statement read as no words",
+      "dropped, respelled, a binary respelled, changed inside a run of several words, moved behind the tail, the function rejoin; a word behind the run dropped with it, respelled with it, dropped by a binary's respelling, a changed tail, moved into the tail, two changes inside the run, a rejoin for another shape, the function keyword changed beyond its rejoin, another launcher, an identical control, a launch the shape does not open, a launch another word opens dropped to the tail, a statement read as no words; an identical control of the shape alone, of a redirection alone, of a binary spelling with no argv, of the same in other quotes, of a tail repeating its one-word run; the run dropped where there is no tail; a run of two words moved behind the tail, a rejoin under another name; the guard's own refusals at each one-word shape the residual family enumerates (wb-11t4 F1): the function keyword alone and repeated as its tail, the coproc keyword alone and repeated, a descriptor redirection alone and repeated, the .bat spelling with no argv and with itself as argv, a redirection repeated, a binary spelling with itself as argv; the guard's own refusals at each binary spelling as an execSync shell line too (wb-k2lj F5): the .bat spelling alone and repeated once, the upper-case .EXE spelling alone and repeated once; the guard's own refusals at each binary spelling crossed with the launchers (wb-unuy F1): the .bat spelling as an execSync argv with no argv and with itself as argv, the upper-case .EXE spelling the same, the .bat spelling as a spawnSync shell line alone and repeated once, the upper-case .EXE spelling the same; the guard's own refusals at each one-word shape as a single-quoted execSync shell line (wb-unuy F2): the .bat spelling, the upper-case .EXE spelling, the time keyword, the function keyword, the coproc keyword, a descriptor redirection and a redirection, each alone and repeated once",
     ).toEqual(pairings.map(probe => probe[3]));
     const followers: readonly (readonly [string, string, boolean])[] = [
       ['execSync("time bd close wb-x");', "time", true],
@@ -2899,10 +3058,19 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
       ['execSync("nohup time bd close wb-x");', "time", false],
       ['execSync("nohup bd close wb-x");', "time", false],
       ['execSync("time");', "time", false],
+      ['execSync("time BD close wb-x");', "time", false],
+      ['spawnSync("BD", ["close", "wb-x"]);', "BD", true],
+      ['spawnSync("bd.x", ["close", "wb-x"]);', "bd.x", true],
+      ['spawnSync("bd.sh", ["close", "wb-x"]);', "bd.sh", true],
+      ['spawnSync("bd.bash", ["close", "wb-x"]);', "bd.bash", true],
+      ['spawnSync("bd.ps1", ["close", "wb-x"]);', "bd.ps1", false],
+      ['spawnSync("bd.1", ["close", "wb-x"]);', "bd.1", false],
+      ['spawnSync("bd.", ["close", "wb-x"]);', "bd.", false],
+      ['execSync("time bd close wb-x");', "time bd", false],
     ];
     expect(
       followers.map(([statement, shape]) => followedByBd(statement, shape)),
-      "a keyword, a redirection, a binary spelling, another spelling, a run opening with bd, the function keyword, a run of several words; another word, an option, a word the census reads through, a spelling of bd, a word whose head is bd, a word whose tail is bd, two suffixes, a launch the shape does not open, bd after another word that opens the launch, nothing after the shape",
+      "a keyword, a redirection, a binary spelling, another spelling, a run opening with bd, the function keyword, a run of several words; another word, an option, a word the census reads through, a spelling of bd, a word whose head is bd, a word whose tail is bd, two suffixes, a launch the shape does not open, bd after another word that opens the launch, nothing after the shape; an upper-case BD after a shape; bd alone in upper case, a suffix of one, two or four letters; a suffix holding a digit, a digit suffix, a dot with no suffix, a shape whose bd is not its first word",
     ).toEqual(followers.map(probe => probe[2]));
   });
 
@@ -3039,6 +3207,8 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     const names = cases.map(entry => entry.name);
     expect(cases.filter(entry => entry.mode !== "run").map(entry => entry.name), "cases of this file not set to run").toEqual([]);
     expect(cases, "the file's case count").toHaveLength(FILE_CASES);
+    const eachTitles = new Set([...REGISTERED.F.map(key => titleOf(F_TITLE, key)), ...REGISTERED.Q.map(key => titleOf(Q_TITLE, key)), ...REGISTERED.DT.map(key => titleOf(DT_TITLE, key))]);
+    expect(names.filter(name => !eachTitles.has(name) && name !== TALLY_TITLE), "the fixed cases, as FIXED_CASES counts them (wb-lrl3 F3)").toHaveLength(FIXED_CASES);
     expect(names, "every registered case, in registration order, as the out-of-file roster lists it").toEqual(readRoster().registered);
     expect(names[names.length - 1], "the file's last case").toBe(TALLY_TITLE);
     const registered = (template: string, keys: readonly string[]): void => {
