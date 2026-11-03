@@ -50,9 +50,11 @@
  *    that disk text (scopeReadInFull), and that disk text must hold the whole file, its UTF-8 byte length equal to the size
  *    statSync reports for the file (scopeSized; wb-obyu F1: a size read apart from both text readers, as far as rows PC10, PC11
  *    and PC12 pin it - PC10 holds readRfScope's own size check, and PC12 the scan's own call, to a control file whose UTF-8
- *    decode is longer than its size, and PC11 holds sizeOnDisk's body and the whole declaration text of readRfScope and of
- *    scanRfScope to the roster - so a coordinated truncation of the tree's reader and the disk reader, at their bodies, at the
- *    readFileSync they share or at the scan's own call, reds). Not claimed, each a named residual with a pinned quiet row
+ *    decode is longer than its size, and PC11 holds sizeOnDisk's body and the whole declaration text of sizeOnDisk (its
+ *    signature with its body), of readRfScope and of scanRfScope to the roster - so a coordinated truncation of the tree's
+ *    reader and the disk reader, at their bodies, at the readFileSync they share or at the scan's own call, reds, and so does one
+ *    whose size side is stepped in sizeOnDisk's own signature, by a parameter default that re-points the path its body stats
+ *    (wb-4kl7)). Not claimed, each a named residual with a pinned quiet row
  *    (RESIDUALS): the size check's two sides stepped in step with both text readers from outside every text PC11 reads, node:fs
  *    or Buffer patched or shadowed (R-SIZE-STEP, QP1), or a coordinated rewrite of both readers that keeps each file's byte
  *    length (R-SAME-LENGTH, QP2; the size anchor holds a file's length, not its content).
@@ -111,10 +113,12 @@
  *    sizeOnDisk's body is the statSync read alone; readRfScope's body names no text reader and no size reader (diskText,
  *    textOf, readFileSync, statSync, sizeOnDisk, liveTree, TextDecoder) but through its parameters, whose defaults are diskText
  *    and sizeOnDisk; every call spelled readRfScope(...) in scanRfScope's body hands it the matcher and the tree alone; the
- *    whole declaration of readRfScope and of scanRfScope (signature and body, every whitespace run collapsed to one space, the
- *    docstring outside it) is the roster's text, so any other edit of either - an aliased, parenthesized or .call callee at the
- *    scan's own call, a disk reader or size anchor handed there, a size check discarded or filtered there, a comparison stepped
- *    in readRfScope - reds, whatever paths it is keyed to; and readFileSync and statSync are bound in this file only as
+ *    whole declaration of sizeOnDisk, of readRfScope and of scanRfScope (signature and body, every whitespace run collapsed to
+ *    one space, the docstring outside it) is the roster's text, sizeOnDisk's held in this file too, so any other edit of any of
+ *    the three - a parameter added to sizeOnDisk's signature whose default re-points the path its body stats (to a copy of the
+ *    file cut in step with both text readers, say; wb-4kl7, the wb-obyu gate's F1), an aliased, parenthesized or .call callee
+ *    at the scan's own call, a disk reader or size anchor handed there, a size check discarded or filtered there, a comparison
+ *    stepped in readRfScope - reds, whatever paths it is keyed to; and readFileSync and statSync are bound in this file only as
  *    node:fs's own imports, unaliased (an assignment to a member of node:fs or of Buffer binds neither name: R-SIZE-STEP); PC12
  *    the scan itself refuses PC10's control: scanRfScope - rows A5's and C5's own instrument, through its own readRfScope call
  *    and that call's defaults - over the live tree plus the control file (written into its own tracked scratch directory), once
@@ -148,7 +152,8 @@
  * R-CALL-OPERAND a "+" operand that is a call, epoch.toString() (QC6); R-EXPRESSION-SCALE an operand scaled by an expression,
  * not by an operand or a numeral, such as 2 ** 20 (QC7); R-TEMPLATE-PLUS two template literals joined by "+" (QC8); R-WIDE-GAP
  * two interpolations a whitespace-free gap of more than eight characters joins (QC9); R-SIZE-STEP the size check's two sides
- * brought back into step with both text readers' cut from outside every text PC11 reads: node:fs itself patched under the
+ * brought back into step with both text readers' cut from outside every text PC11 reads (sizeOnDisk's signature is inside
+ * them since wb-4kl7: a default there that re-points the path its body stats reds PC11): node:fs itself patched under the
  * census to cut the size statSync reports - by a setup module, by a module this file imports (a side-effect import included)
  * or from this file's own module scope (a default import of node:fs whose statSync is reassigned, the builtin ESM exports
  * synced) - or Buffer shadowed or patched to widen the byte length the check measures by the same count (a module-scope
@@ -170,6 +175,9 @@
  * as a parameter, and the quiet rows QP1 and QP2 of the residuals R-SIZE-STEP and R-SAME-LENGTH; its cut #3 (refusal #2's U1
  * on cut #2, in the enumerate-the-resolvable form standing rule 19(c) binds) added pin PC12 and PC11's two declaration texts,
  * named R-SIZE-STEP's in-file and Buffer members, and restated A5's, PC10's and PC11's clauses to what PC10, PC11 and PC12 pin.
+ * wb-4kl7 (the wb-obyu gate's follow-up, F1) widened PC11 to sizeOnDisk's whole declaration text (its signature with its body),
+ * held in this file and to the roster, so a parameter default in sizeOnDisk's signature that re-points the path its body stats
+ * reds PC11 (the gate's GP7-SIG-RENAME+TRUNC-SRC-200+PROV-LOC and its PROV-REV twin, which read the census before it green).
  *
  * Display paths added: none. Test-only: nothing is spawned; the files written are rows PC10's and PC12's controls, each into its
  * own tracked scratch directory (test/helpers/scratch.ts) its case removes; src, this file (row PC11) and this roster are only
@@ -832,8 +840,9 @@ function diskText(path: string): string | undefined {
 }
 /** A file's size in bytes as the filesystem reports it (statSync), read apart from both text readers: the scans' size anchor
  * (wb-obyu F1), which a coordinated truncation of the tree's reader and diskText does not shorten, and not the UTF-8 byte length
- * of a UTF-8 decode of the file - row PC11 holds this body to the statSync read alone, and row PC10's control (bytes that are
- * not UTF-8) tells the two apart; undefined when no such file exists. */
+ * of a UTF-8 decode of the file - row PC11 holds this body to the statSync read alone and this declaration's text (signature
+ * and body) to the roster (wb-4kl7), and row PC10's control (bytes that are not UTF-8) tells the two apart; undefined when no
+ * such file exists. */
 function sizeOnDisk(path: string): number | undefined {
   try {
     return statSync(path).size;
@@ -1164,13 +1173,15 @@ const SELF = fileURLToPath(import.meta.url);
 const SIZE_READERS: readonly string[] = ["diskText", "textOf", "readFileSync", "statSync", "sizeOnDisk", "liveTree", "TextDecoder"];
 /** The node:fs bindings row PC11 holds to node:fs's own imports. */
 const FS_READS: readonly string[] = ["readFileSync", "statSync"];
-/** Row PC11's reading of the size check's wiring (sizeAnchorWiring); the two declaration texts are held to the roster alone. */
+/** Row PC11's reading of the size check's wiring (sizeAnchorWiring); sizeOnDisk's declaration text is held here and to the
+ * roster, readRfScope's and scanRfScope's to the roster alone. */
 type SizeAnchorWiring = {
   readonly sizeOnDiskBody: string | null;
   readonly readRfScopeDefaults: { [key: string]: Json };
   readonly readRfScopeReaders: string[];
   readonly scanCalls: Json[];
   readonly bindings: string[];
+  readonly sizeOnDiskText: string | null;
   readonly readRfScopeText: string | null;
   readonly scanRfScopeText: string | null;
 };
@@ -1178,10 +1189,11 @@ type SizeAnchorWiring = {
  * (whitespace collapsed), readRfScope's parameter defaults and the SIZE_READERS names its body references, the argument lists of
  * every call spelled readRfScope(...) in scanRfScope's body, every binding of a FS_READS name in the file (an import specifier as
  * "<name>: import <module>", with " as <local>" when aliased; any other declaration by its kind), and the whole declaration text
- * of readRfScope and of scanRfScope (signature and body, every whitespace run collapsed to one space, the docstring outside it),
- * so that any other edit of either declaration - an aliased, parenthesized or .call callee at the scan's own call, a disk
- * reader or size anchor handed there, a size check discarded or filtered there, a comparison stepped in readRfScope - changes
- * what it reads (wb-obyu cut #3, the gate's U1 on cut #2). */
+ * of sizeOnDisk, of readRfScope and of scanRfScope (signature and body, every whitespace run collapsed to one space, the
+ * docstring outside it), so that any other edit of any of the three declarations - a parameter default in sizeOnDisk's
+ * signature that re-points the path its body stats (wb-4kl7), an aliased, parenthesized or .call callee at the scan's own
+ * call, a disk reader or size anchor handed there, a size check discarded or filtered there, a comparison stepped in
+ * readRfScope - changes what it reads (wb-obyu cut #3, the gate's U1 on cut #2). */
 function sizeAnchorWiring(): SizeAnchorWiring {
   const source = ts.createSourceFile(SELF, readFileSync(SELF, "utf8"), ts.ScriptTarget.Latest, true);
   const functions = new Map<string, ts.FunctionDeclaration>();
@@ -1226,6 +1238,7 @@ function sizeAnchorWiring(): SizeAnchorWiring {
     readRfScopeReaders: [...readers].sort(),
     scanCalls,
     bindings: bindings.sort(),
+    sizeOnDiskText: flat(functions.get("sizeOnDisk")),
     readRfScopeText: flat(functions.get("readRfScope")),
     scanRfScopeText: flat(functions.get("scanRfScope")),
   };
@@ -1744,6 +1757,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       readRfScopeReaders: [],
       scanCalls: [["matcher", "tree"]],
       bindings: ["readFileSync: import node:fs", "statSync: import node:fs"],
+      sizeOnDiskText: "function sizeOnDisk(path: string): number | undefined { try { return statSync(path).size; } catch { return undefined; } }",
     });
     const heads = [readRfScopeText?.startsWith("function readRfScope(") ?? false, scanRfScopeText?.startsWith("function scanRfScope(") ?? false];
     expect(heads, "row PC11 did not read the two declarations whose text the roster holds").toEqual([true, true]);
