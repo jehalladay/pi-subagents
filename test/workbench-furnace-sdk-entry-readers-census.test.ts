@@ -104,15 +104,37 @@
  * default-exported class declaration, named or anonymous, for REGISTER METHODS (U2); in WALK FORM (2), a main-entry
  * re-export from a ./ path that resolves to nothing, a braced identifier escape past the entry, a main-entry \x string
  * escape and a types-entry \u string escape (U3); in WALK FORM (3), an import declaration written after the local
- * export it binds (U4); and in RENDERED, a reference link (U5). This re-cut pins each on a plant built from the
+ * export it binds (U4); and in RENDERED, a reference link (U5). That re-cut pinned each on a plant built from the
  * refusal's paired real-tree witness - E1-TEXT-UPPER-BEFORE, E1-TEXT-LOWER-AFTER, E1-TEXT-OCTAL, R-ID-ESC-BRACE,
  * R-STR-ESC-U, R-STRING-SINGLE, R-DEFAULT-CLASS, R-ANON-CLASS, E1-MAIN-UNRESOLVED, W-NAMED-PAST-BRACE, E1-MAIN-STR-HEX,
- * E1-TYPES-STR-U, W-LOCAL-IMPORT-LATE and U2-LINK-REF - and each of the five paragraphs now names its plants' own forms
+ * E1-TYPES-STR-U, W-LOCAL-IMPORT-LATE and U2-LINK-REF - and made each of the five paragraphs name its plants' own forms
  * (the escapes, letters, digit, comment kinds, string quotes, class declarations, specifiers and link kinds they
  * write), the rest NOT CLAIMED by a specific sentence below (U7). The claim parts moved out of this file into
  * test/helpers/furnace-sdk-entry-claims.ts (U6): a sub-form hollowed from this file's literals - its SUBFORMS entry,
  * its plants, their pins and pages and its row's count - leaves the claims module's listed sub-form unanswered, which
  * reds CLAIM ROSTER. No reader line changed: the landed helper is imported as it landed.
+ *
+ * REFUSAL #6 AND THE R-B399 RE-CUT (this bead's refusal #6, on the R-B369 re-cut, its U1-U11; ruling R-B399, a
+ * post-ladder disposition under standing rule 22(d)). Refusal #6 found fifteen one-edit mutants of the landed helper
+ * that left this census and the members census green, each on a form a paragraph's words held and no plant held: in the
+ * ENTRY TEXT READ, a line comment written after code on its line and a block comment spanning lines (U1) and a word
+ * character just before the second DEEP row's name (U2); for REGISTER METHODS, a single-quoted computed string literal
+ * (U3), an object literal an unexported const declaration's initializer holds and class expressions that an unexported
+ * function declaration returns, that are named, or that an arrow function's concise body is (U4), and a single-quoted
+ * name with a string escape (U5); in WALK FORM (3), a braced and an inner identifier escape in an import specifier (U6)
+ * and, with the WALK's every-module words, the plain spelling in protocol.js (U7); and in RENDERED, a list bulleted +
+ * (U8), inline span tags (U9) and a reference image (U10). This re-cut pins each on a plant built byte for byte from
+ * the refusal's paired real-tree witness - E1-TEXT-TRAILING, E1-TEXT-MULTILINE, E1-TEXT-RS-BEFORE, R-COMPUTED-SINGLE,
+ * R-OBJECT-LOCAL, R-CLASS-EXPR-LOCAL, R-CLASS-EXPR-NAMED, R-CLASS-EXPR-ARROW, R-STRING-SINGLE-ESC, W-LOCAL-ESC-BRACE,
+ * W-LOCAL-ESC-INNER, W-LOCAL-PLAIN-JS, U2-LIST-PLUS, U2-HTML-SPAN and U2-IMAGE-REF - and narrows the words refusal #6
+ * named to the plants' own forms (U11): the ENTRY TEXT READ's comments to its plants' comments, by kind, entry,
+ * position and line count, and its word-character, $ and non-ASCII clauses to the names its plants write; REGISTER
+ * METHODS' class expressions and object literals to its plants' containers, its string escapes to its plants' spellings
+ * and its parentheses to its plants' levels; WALK FORM (3)'s cooked reading to its plants' escapes; RENDERED's list,
+ * inline HTML and image to its plants' bullets, tags and image kinds; and the WALK's every-module words to the modules
+ * its plants have it read each form in, each with the class names read there (WALK_READS in the claims module, which
+ * CLAIM ROSTER holds equal to the plants' own lines). The rest is NOT CLAIMED by a specific sentence below. No reader
+ * line changed: the landed helper is imported as it landed.
  *
  * THE ROWS (ROWS; a row's label is the line it answers, verbatim from the bead's row of the tracker export):
  *  E-U1, E-U2, E-U3: the description's enumerated items U1-U3. E-U4 (the note contact count) is DROPPED (below).
@@ -133,20 +155,56 @@
  * THE CLAIMS (each a ClaimPart of CLAIM_PARTS in test/helpers/furnace-sdk-entry-claims.ts, held here byte-for-byte as
  * its own paragraph; each claim lists its sub-forms, and SUBFORMS names, for every listed sub-form in claim order, the
  * plants that prove it and the mark each of them carries). A claim is what its words state, as its plants' cases read
- * it (the real tree's reading plus exactly each plant's lines). Where refusal #4 or refusal #5 found a claim's words
- * covering a form no plant planted, the paragraph now names its plants' own forms - the modules, positions, spellings,
- * letters, codes and kinds they write - and NOT CLAIMED below names the rest by a specific sentence; NOT CLAIMED's
- * closing scope sentence narrows no specific word (R-B233). The paragraphs refusal #4 named do so since the R-B305
- * re-cut, and those refusal #5 named (WALK FORM (2), WALK FORM (3), the ENTRY TEXT READ, RENDERED and REGISTER METHODS)
- * since this re-cut:
+ * it (the real tree's reading plus exactly each plant's lines). Where refusal #4, refusal #5 or refusal #6 found a
+ * claim's words covering a form no plant planted, the paragraph now names its plants' own forms - the modules,
+ * positions, spellings, letters, codes and kinds they write - and NOT CLAIMED below names the rest by a specific
+ * sentence; NOT CLAIMED's closing scope sentence narrows no specific word (R-B233). The paragraphs refusal #4 named do
+ * so since the R-B305 re-cut, those refusal #5 named (WALK FORM (2), WALK FORM (3), the ENTRY TEXT READ, RENDERED and
+ * REGISTER METHODS) since the R-B369 re-cut, and those refusal #6 named (the WALK, WALK FORM (3), the ENTRY TEXT READ,
+ * RENDERED and REGISTER METHODS) since this re-cut:
  *
- * WALK: from each entry its caller names (the types entry and the main entry in both censuses), following an export * from
- * any module but a .d.cts one or an extensionless one, whose specifier is a ./ path holding nothing a step of RESOLUTION's
- * changes, and following an export * as from a .d.ts or a .js module whose specifier is such a ./ path ending .js (neither
- * written export type), each resolved to a module that is not DEEP (an export *'s through RESOLUTION's candidates, an
- * export * as's to its exact path from a .js module and to its .d.ts twin from a .d.ts module), and reading each module's
- * top-level statements through the TypeScript AST (comments never read), the WALK reads these forms, each spelling only
- * where its form's claim places it, in the entry itself and in every module it reaches
+ * WALK: from each entry its caller names (the types entry and the main entry in both censuses), following an export *
+ * from any module but a .d.cts one or an extensionless one, whose specifier is a ./ path holding nothing a step of
+ * RESOLUTION's changes, and following an export * as from a .d.ts or a .js module whose specifier is such a ./ path
+ * ending .js (neither written export type), each resolved to a module that is not DEEP (an export *'s through
+ * RESOLUTION's candidates, an export * as's to its exact path from a .js module and to its .d.ts twin from a .d.ts
+ * module), and reading each module's top-level statements through the TypeScript AST (comments never read), the WALK
+ * reads these forms in the entry itself and in the modules its plants have it reach, each form only in the modules its
+ * plants write it in and there only as they write it - each class name in the spellings, and at the places in the
+ * module, its plants write that name in - and each spelling only where its form's claim places it (its plants' modules:
+ * an export * or an export * as of a DEEP module in embedded (ResidentSession), embedded.js.d.ts (ResidentSession),
+ * hosting.d.ts (EmbeddedHost), hosting/index.d.ts (EmbeddedHost), index.d.ts (EmbeddedHost and ResidentSession),
+ * index.js (EmbeddedHost and ResidentSession), protocol.d.ts (EmbeddedHost and ResidentSession), protocol.js
+ * (EmbeddedHost and ResidentSession), zzas.d.ts (EmbeddedHost), zzasm.js (EmbeddedHost), zzc.cts (EmbeddedHost),
+ * zzd16.d.ts (EmbeddedHost and ResidentSession), zzdc.d.cts (EmbeddedHost), zzdir/index.ts (EmbeddedHost),
+ * zzdir2/index.tsx (EmbeddedHost), zzdm.d.mts (EmbeddedHost), zzexact.ts (EmbeddedHost), zzexact2.tsx (EmbeddedHost),
+ * zzexact3.mts (EmbeddedHost), zzexact4.cts (EmbeddedHost), zzh16.d.ts (EmbeddedHost), zzi/index.tsx (EmbeddedHost),
+ * zzj.ts (EmbeddedHost), zzj16.js (EmbeddedHost and ResidentSession), zzjhop.js (EmbeddedHost), zzjsd.d.ts
+ * (EmbeddedHost), zzjsdir/index.js (EmbeddedHost), zzjsx.d.ts (EmbeddedHost), zzjsxt.ts (EmbeddedHost), zzjsxx.tsx
+ * (EmbeddedHost), zzk.cts (EmbeddedHost), zzk/m1.ts (EmbeddedHost and ResidentSession), zzk/m2.tsx (EmbeddedHost and
+ * ResidentSession), zzk/m3.mts (EmbeddedHost and ResidentSession), zzk/m4.cts (EmbeddedHost and ResidentSession),
+ * zzk/m5.jsx (EmbeddedHost and ResidentSession), zzk/m6.mjs (EmbeddedHost and ResidentSession), zzk/m7.cjs
+ * (EmbeddedHost and ResidentSession), zzk/m8.d.mts (EmbeddedHost and ResidentSession), zzk/m9.d.cts (EmbeddedHost and
+ * ResidentSession), zzm.mts (EmbeddedHost), zzn.mts (EmbeddedHost), zzo.ts (EmbeddedHost), zzoidir/index.js
+ * (EmbeddedHost), zzoo.ts (EmbeddedHost), zzot.ts (EmbeddedHost), zzp.tsx (EmbeddedHost), zzq.ts (EmbeddedHost),
+ * zzr.tsx (EmbeddedHost), zzs.js (EmbeddedHost), zzt/index.ts (EmbeddedHost), zzts.ts (EmbeddedHost), zztsx.tsx
+ * (EmbeddedHost), zzu.d.ts (EmbeddedHost), zzv.tsx (EmbeddedHost), zzw.ts (EmbeddedHost), zzx.ts (EmbeddedHost),
+ * zzy.tsx (EmbeddedHost); a named re-export of a DEEP class in index.d.ts (EmbeddedHost and ResidentSession), index.js
+ * (EmbeddedHost and ResidentSession), protocol.d.ts (EmbeddedHost), protocol.js (EmbeddedHost and ResidentSession),
+ * zzd16.d.ts (EmbeddedHost), zzhop.d.ts (EmbeddedHost), zzj16.js (EmbeddedHost), zzk/m1.ts (EmbeddedHost), zzk/m2.tsx
+ * (EmbeddedHost), zzk/m3.mts (EmbeddedHost), zzk/m4.cts (EmbeddedHost), zzk/m5.jsx (EmbeddedHost), zzk/m6.mjs
+ * (EmbeddedHost), zzk/m7.cjs (EmbeddedHost), zzk/m8.d.mts (EmbeddedHost), zzk/m9.d.cts (EmbeddedHost); a local export
+ * of a class-named import in index.d.ts (EmbeddedHost), index.js (ResidentSession), protocol.d.ts (EmbeddedHost and
+ * ResidentSession), protocol.js (ResidentSession), zzd16.d.ts (ResidentSession), zzhop.d.ts (EmbeddedHost), zzj16.js
+ * (ResidentSession), zzk/m1.ts (ResidentSession), zzk/m2.tsx (ResidentSession), zzk/m3.mts (ResidentSession),
+ * zzk/m4.cts (ResidentSession), zzk/m5.jsx (ResidentSession), zzk/m6.mjs (ResidentSession), zzk/m7.cjs
+ * (ResidentSession), zzk/m8.d.mts (ResidentSession), zzk/m9.d.cts (ResidentSession); a local export of a default or a
+ * namespace import in index.d.ts (EmbeddedHost), index.js (EmbeddedHost), protocol.d.ts (EmbeddedHost), protocol.js
+ * (EmbeddedHost and ResidentSession), zzd16.d.ts (EmbeddedHost and ResidentSession), zzj16.js (EmbeddedHost and
+ * ResidentSession), zzk/m1.ts (EmbeddedHost and ResidentSession), zzk/m2.tsx (EmbeddedHost and ResidentSession),
+ * zzk/m3.mts (EmbeddedHost and ResidentSession), zzk/m4.cts (EmbeddedHost and ResidentSession), zzk/m5.jsx
+ * (EmbeddedHost and ResidentSession), zzk/m6.mjs (EmbeddedHost and ResidentSession), zzk/m7.cjs (EmbeddedHost and
+ * ResidentSession), zzk/m8.d.mts (EmbeddedHost and ResidentSession), zzk/m9.d.cts (EmbeddedHost and ResidentSession))
  *
  * WALK FORM (1) star: an export * of a DEEP module (its target resolved through RESOLUTION) or an export * as of a DEEP
  * module under an identifier whose specifier, a ./ path from a .d.ts or a .js module and a ../ path from a module of
@@ -167,11 +225,13 @@
  *
  * WALK FORM (3) local-import: a local export (export { x }, or aliased on export as an identifier) of a name an import
  * specifier binds by a DEEP class's own name in an import clause with no default binding, its import declaration
- * written before the local export or, in protocol.d.ts, written after it, that name read cooked (the import aliased, a
- * type-only import declaration, a type-only import specifier, a string import name, from a module that is not DEEP),
- * each spelling after export { x }, and an import clause's or a local export clause's member after its first, only in
- * protocol.d.ts and protocol.js, the module each entry star-exports (a string import name, which is aliased, in
- * protocol.js, and every other in protocol.d.ts)
+ * written before the local export or, in protocol.d.ts, written after it, that name read cooked (its plants' identifier
+ * escapes, each in protocol.d.ts: \u0045 as the first character of an import specifier's name and of a binding's,
+ * \u0053 first in a local export clause's name, a braced escape \u{45} first in an import specifier's name and an inner
+ * escape \u0048 in one, Embedded\u0048ost) and spelled (the import aliased, a type-only import declaration, a type-only
+ * import specifier, a string import name, from a module that is not DEEP), each spelling after export { x }, and an
+ * import clause's or a local export clause's member after its first, only in protocol.d.ts and protocol.js, the module
+ * each entry star-exports (a string import name, which is aliased, in protocol.js, and every other in protocol.d.ts)
  *
  * WALK FORM (4) local-module: a local export (export { x }, not aliased on export) of a name a default import of a DEEP
  * module (alone, or beside a namespace import in protocol.d.ts, the module the types entry star-exports) or a namespace
@@ -203,14 +263,20 @@
  * are the row's names
  *
  * ENTRY TEXT READ: each entry's raw text (the types entry's and the main entry's) is read for a DEEP class's name, in
- * its row's letter case, as a whole word (the regex \b<name>\b): a name in its code (the types entry's identifiers and
- * double-quoted string literals, as its plants write them) and a name in a comment (a line comment in either entry and
- * a block comment in the types entry) alike, escape sequences never decoded (those its plants write in either entry:
- * the identifier escapes \u0045, \u{52} and an inner \u0053, the string escapes \x48, \u{45} and \u0045, a legacy octal
- * escape (\105), a single-character escape (\H), a line continuation, and a \u0045 in a comment), a name with a word
- * character (an ASCII letter - its plants' lower-case y and upper-case X just before a name and upper-case X and O and
- * lower-case s just after one - a digit (its plants' 2) or an underscore) just before it or just after it not read, and
- * a name beside a $ or a non-ASCII letter (its plants' U+00E9, on either side) read (each a word boundary)
+ * its row's letter case, as a whole word (the regex \b<name>\b), on the lines its plants append at the entry's end: a
+ * name in its code (the types entry's identifiers and double-quoted string literals, as its plants write them) and a
+ * name in a comment (its plants' comments reading <name> stays a deep import, each opening its line but one: a line
+ * comment opening its line, EmbeddedHost's in the types entry and ResidentSession's in the main entry, and in the types
+ * entry EmbeddedHost's line comment written after code on its line (after export declare const zzTrail: unique
+ * symbol;), block comment on one line and block comment spanning three lines) alike, escape sequences never decoded
+ * (those its plants write in either entry: the identifier escapes \u0045, \u{52} and an inner \u0053, the string
+ * escapes \x48, \u{45} and \u0045, a legacy octal escape (\105), a single-character escape (\H), a line continuation,
+ * and a \u0045 in a comment), a name its plants write with a word character (an ASCII letter, a digit or an underscore)
+ * just before the name or just after the name not read (MyEmbeddedHost, 2EmbeddedHost, _EmbeddedHost, EmbeddedHostX,
+ * EmbeddedHost2 and EmbeddedHost_ in a types-entry line comment, and the types-entry declared names XEmbeddedHost,
+ * EmbeddedHostOptions, EmbeddedHosts and MyResidentSession), and a name its plants write beside a $ or a non-ASCII
+ * letter read, each a word boundary (the types-entry declared names $EmbeddedHost and EmbeddedHost$, and the same two
+ * with U+00E9 in place of the $)
  *
  * PATH READING: a literal's cooked text is read through these steps - every ASCII tab dropped, every LF dropped and
  * every CR dropped, then every %XX escape decoded (each %XX of an ASCII code its plants hold: %40, %2F, %2f, %2E and
@@ -219,23 +285,33 @@
  * begins with @furnace/sdk/ or holds node_modules/@furnace/sdk/ at its start or node_modules/@furnace/sdk/ after a /,
  * and holds one when either holds @furnace/sdk/ anywhere
  *
- * RENDERED: vendor/README.md is read through marked's lexer, each top-level block to its text, whitespace collapsed
- * (every run one space, each run of spaces, tabs and line feeds): a hard line break (a br token, a backslash before a
- * line ending or two or more spaces before a line ending) reads as the line break marked renders, a space; a list reads
- * by its items' tokens, a table by its header cells' tokens and row cells' tokens, and a token holding tokens (a
- * paragraph, a heading (a ## heading), a blockquote, emphasis, strong text or a link (an inline link, or a reference
- * link written [text][label] beside its definition)) by those tokens; raw HTML (an HTML block holding a comment or
- * inline HTML tags), a link-reference definition and an image read as nothing
+ * RENDERED: vendor/README.md is read through marked's lexer, each top-level block to its text (its plants' blocks
+ * appended at its end, after the real text), whitespace collapsed (every run one space, each run of spaces, tabs and
+ * line feeds): a hard line break (a br token, a backslash before a line ending or two or more spaces before a line
+ * ending) reads as the line break marked renders, a space; a list (its plants' lists bulleted -, as they write them, a
+ * one-item list bulleted + and a two-item list ordered 1. and 2.) reads by its items' tokens, a table by its header
+ * cells' tokens and row cells' tokens, and a token holding tokens (a paragraph, a heading (a ## heading), a blockquote,
+ * emphasis, strong text or a link (an inline link, or a reference link written [text][label] beside its definition)) by
+ * those tokens; raw HTML (an HTML block holding a comment, or inline HTML tags - its plants' <b> and </b>, and <span>
+ * and </span>, each pair around (wb-zby)), a link-reference definition and an image (its plants' inline image and a
+ * reference image written ![alt][label] beside its definition, each with a record as its alt text) read as nothing
  *
  * REGISTER METHODS: executor.js's register methods are its method declarations written with no modifier and no
  * asterisk, in a class or in an object literal (each name form below in its plants' unexported class declaration
  * ShimApp at the module's top level; an identifier name in the real tree's exported class declaration ExecutorApp, in a
- * default-exported class declaration at the module's top level, named or anonymous, in a class expression a function
- * returns or in an object literal a const declaration's initializer holds), whose name reads register: an identifier
- * name or a string-literal name (double-quoted, or single-quoted), read cooked (an identifier escape - its plants'
- * \u0072 and braced \u{72}, each the name's first character - or a string escape - its plants' \x65 and \u0065 - reads
- * as the name it spells), or a computed name whose expression, through parentheses, is a computed string literal or a
- * computed no-substitution template literal
+ * default-exported class declaration at the module's top level, named (ShimDefault) or anonymous, in its plants' class
+ * expressions - the anonymous one an exported function declaration returns (makeShim), a named class expression an
+ * exported function declaration returns (NamedShim, in makeNamed), the anonymous one an unexported function declaration
+ * returns (makeLocal) and the anonymous one that is an arrow function's concise body (makeArrow, an exported const
+ * declaration's initializer) - and in its plants' object literals, an exported const declaration's initializer (shim)
+ * and an unexported const declaration's initializer (shimLocal); each of its plants' containers appended at the
+ * module's end), whose name reads register: an identifier name or a string-literal name (double-quoted, or
+ * single-quoted), read cooked (an identifier escape - its plants' \u0072 and braced \u{72}, each the name's first
+ * character - or a string escape - its plants' \x65 and \u0065 for the e before the final r in a double-quoted name,
+ * and \x65 in a single-quoted name for the same e - reads as the name it spells), or a computed name whose expression,
+ * through parentheses (its plants' one and two around a double-quoted string literal and one around a template
+ * literal), is a computed string literal, double-quoted or single-quoted and unparenthesized, or a computed
+ * no-substitution template literal
  *
  * RESIDUALS (named; what the readers leave unread; each family has a quiet plant of row Q - R-WALK-SPECIFIER and R-PATH-UNREAD
  * two - reading as nothing, with a twin in a read form that reads its line):
@@ -282,10 +358,22 @@
  * a single-character escape or a legacy octal escape in the types entry's string export names, a braced or legacy octal
  * one in the main entry's - and a specifier that resolves to a module that is not DEEP or names a bare package but the
  * two the paragraph names; in WALK FORM (3), an import declaration written after its local export in any module but
- * protocol.d.ts; and in RENDERED, a collapsed or shortcut reference link and an autolink. A reading on any input that
- * is not one of this census's plants or their twins is NOT CLAIMED by this census - among them every spelling, module
- * kind, naming module, entry, position, depth, nesting, escape form, letter, character, %XX code or README block that
- * no plant plants, whatever a claim's words would cover there (THE CLAIMS).
+ * protocol.d.ts; and in RENDERED, a collapsed or shortcut reference link and an autolink. Beside the plants' own forms
+ * the paragraphs name since the R-B399 re-cut, NOT CLAIMED by this census, read or not: in the ENTRY TEXT READ, a name
+ * in a comment of a text, kind, entry, position or line count its plants do not write, and a name beside a word
+ * character, a $ or a non-ASCII letter but the names the paragraph lists, each where it lists it; in REGISTER METHODS,
+ * a register method in a container but the declarations, class expressions and object literals the paragraph names
+ * (another export status, nesting, function kind or class-expression name among the rest), a string escape but \x65 and
+ * \u0065 for the e before the final r and \x65 alone in a single-quoted name, parentheses but the paragraph's levels,
+ * and a single-quoted computed string literal in parentheses; in WALK FORM (3), an identifier escape of a code point,
+ * position, form or module the paragraph does not name; in the WALK, a form read in a module, or there with a class
+ * name or in a spelling, that none of its plants writes it in; and in RENDERED, a list but its plants' lists bulleted
+ * -, a one-item list bulleted + and a two-item list ordered 1. and 2. (a * bullet, a ) delimiter and a + bulleted list
+ * of more items among the rest), inline HTML but the <b> and <span> pairs around (wb-zby), and an image but an inline
+ * image and a reference image written ![alt][label] (a collapsed or a shortcut reference image among the rest). A
+ * reading on any input that is not one of this census's plants or their twins is NOT CLAIMED by this census - among
+ * them every spelling, module kind, naming module, entry, position, depth, nesting, escape form, letter, character, %XX
+ * code or README block that no plant plants, whatever a claim's words would cover there (THE CLAIMS).
  *
  * PINNED BY wb-lrz.9 (CUT #4 deferred refusal #3's members to wb-lrz.9 under R-B266, R-B305 folded this bead's refusal
  * #4's members into it, and it landed at landing 826: test/workbench-furnace-sdk-entry-reader-members-census.test.ts
@@ -344,7 +432,10 @@
  * literals leaves an item of the export unanswered (OUTSIDE ANCHOR), and a sub-form deleted from this file's literals -
  * its SUBFORMS entry, its plants, their pins and pages and its row's count - leaves the claims module's listed sub-form
  * unanswered (CLAIM ROSTER); a sub-form de-listed in the claims module too, its words kept there and here, is a hollow
- * of both files that no anchor outside them holds, and is NOT CLAIMED to red by this census. EACH-LIVENESS: every case
+ * of both files that no anchor outside them holds, and is NOT CLAIMED to red by this census. Since the R-B399 re-cut
+ * CLAIM ROSTER also holds the claims module's WALK_READS - the module list the WALK claim states for each form, each
+ * module with its class names - equal to the modules and names the plants' own lines read, so a plant deleted with its
+ * literals leaves a listed module unread, and a module listed with no plant reading it reds. EACH-LIVENESS: every case
  * records its key at its last line, and the closing tally - the file's last case - reads vitest's own task tree: every
  * case is set to run, the case count is the fixed cases, one case per plant and the tally, and the records equal the
  * frozen literals, in order. READS (contacts): package.json, the tarball its @furnace/sdk spec names
@@ -363,7 +454,7 @@ import { fileURLToPath } from "node:url";
 import { gunzipSync } from "node:zlib";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
-import { CLAIM_PARTS, type ClaimPart, WALK_FORMS } from "./helpers/furnace-sdk-entry-claims.js";
+import { CLAIM_PARTS, type ClaimPart, WALK_FORMS, WALK_READS } from "./helpers/furnace-sdk-entry-claims.js";
 import {
   type DeepRow,
   entryExposures,
@@ -1973,6 +2064,93 @@ const PLANTS: Readonly<Record<string, Plant>> = {
     added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D)],
   },
 
+  // Cut #7 (this bead's refusal #6, ruling R-B399): each refusal #6 member pinned on a plant built byte for byte from its
+  // paired real-tree witness. E-U1: the ENTRY TEXT READ's comment positions and line counts, and a word character beside the
+  // second DEEP row's name.
+  "E1-TEXT-TRAILING": {
+    name: "the types entry names EmbeddedHost only in a line comment written after code on its line (refusal #6 G7-T-TRAILING-LINE-COMMENT-UNREAD)",
+    tree: (real) => appended(real, TYPES, "export declare const zzTrail: unique symbol; // EmbeddedHost stays a deep import"),
+    added: [`text types ${EH}`],
+  },
+  "E1-TEXT-MULTILINE": {
+    name: "the types entry names EmbeddedHost only in a block comment spanning three lines (refusal #6 G7-T-MULTILINE-BLOCK-COMMENT-UNREAD)",
+    tree: (real) => appended(real, TYPES, "/*", " EmbeddedHost stays a deep import", "*/"),
+    added: [`text types ${EH}`],
+  },
+  "E1-TEXT-RS-BEFORE": {
+    name: "the types entry holds ResidentSession just after a lower-case ASCII letter (a word character: not read; refusal #6 G7-T-SECOND-ROW-WORDCHAR-BEFORE-READ)",
+    tree: (real) => appended(real, TYPES, "export declare const MyResidentSession: unique symbol;"),
+    added: [],
+    twin: { tree: (real) => appended(real, TYPES, "export declare const ResidentSession: unique symbol;"), added: [`text types ${RS}`] },
+  },
+
+  // E-U2: RENDERED's + bullet, an inline span tag pair and a reference image.
+  "U2-LIST-PLUS": {
+    name: "a second record, with emphasis, in a list whose bullet is + (a list reads by its items' tokens; refusal #6 G7-U-PLUS-LIST-RAW)",
+    tree: (real) => withReadme(real, "+ furnace-sdk-0.2.0.tgz was *re-packaged* on 2026-11-01 (wb-zby) from Furnace revision abcdef0123"),
+    added: [SECOND],
+  },
+  "U2-HTML-SPAN": {
+    name: "a second record whose (wb-zby) sits inside inline span tags (the tags read as nothing, so the record shows; refusal #6 G7-U-INLINE-TAG-SHOWN)",
+    tree: (real) => withReadme(real, "furnace-sdk-0.2.0.tgz was re-packaged on 2026-11-01 <span>(wb-zby)</span> from Furnace revision abcdef0123."),
+    added: [SECOND],
+  },
+  "U2-IMAGE-REF": {
+    name: "a second record as a reference image's alt text, beside its definition (an image reads as nothing; refusal #6 G7-U-REFIMAGE-SHOWN)",
+    tree: (real) => withReadme(real, `![${RECORD_LINE}][img]\n\n[img]: https://example.invalid/i.png`),
+    added: [],
+    twin: { tree: (real) => withReadme(real, RECORD_LINE), added: [SECOND] },
+  },
+
+  // F-U2: REGISTER METHODS' single-quoted computed name and escaped single-quoted name, and four more containers.
+  "R-COMPUTED-SINGLE": {
+    name: "a second register method by a single-quoted computed string literal (refusal #6 G7-G-COMPUTED-SINGLE-QUOTE-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, shim("['register']()")),
+    added: ["register computed-string"],
+  },
+  "R-OBJECT-LOCAL": {
+    name: "a register method in an object literal an unexported const declaration's initializer holds (refusal #6 G7-G-OBJECT-UNEXPORTED-CONST-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, "const shimLocal = {\n  register() {\n    return 1;\n  },\n};"),
+    added: ["register identifier"],
+  },
+  "R-CLASS-EXPR-LOCAL": {
+    name: "a register method in the anonymous class expression an unexported function declaration returns (refusal #6 G7-G-CLASS-EXPR-UNEXPORTED-FUNCTION-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, "function makeLocal() {\n  return class {\n    register() {\n      return this;\n    }\n  };\n}"),
+    added: ["register identifier"],
+  },
+  "R-CLASS-EXPR-NAMED": {
+    name: "a register method in the named class expression an exported function declaration returns (refusal #6 G7-G-NAMED-CLASS-EXPR-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, "export function makeNamed() {\n  return class NamedShim {\n    register() {\n      return this;\n    }\n  };\n}"),
+    added: ["register identifier"],
+  },
+  "R-CLASS-EXPR-ARROW": {
+    name: "a register method in the anonymous class expression an arrow function's concise body is (refusal #6 G7-G-ARROW-CLASS-EXPR-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, "export const makeArrow = () =>\n  class {\n    register() {\n      return this;\n    }\n  };"),
+    added: ["register identifier"],
+  },
+  "R-STRING-SINGLE-ESC": {
+    name: "a second register method by a single-quoted string-literal name with a hex escape (refusal #6 G7-G-SINGLE-QUOTE-ESC-SKIP)",
+    tree: (real) => appended(real, EXECUTOR, shim("'regist\\x65r'()")),
+    added: ["register string"],
+  },
+
+  // W: WALK FORM (3)'s braced and inner identifier escapes in an import specifier, and its plain spelling in protocol.js.
+  "W-LOCAL-ESC-BRACE": {
+    name: "protocol.d.ts's local export of an import of EmbeddedHost spelled with a braced code-point escape first (read cooked; refusal #6 G7-LI-IDESC-BRACE-RAW)",
+    tree: (real) => appended(real, PROTOCOL_D, 'import { \\u{45}mbeddedHost as Embedded } from "./embedded.js";', "export { Embedded };"),
+    added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D)],
+  },
+  "W-LOCAL-ESC-INNER": {
+    name: "protocol.d.ts's local export of an import of EmbeddedHost spelled with an inner identifier escape (read cooked; refusal #6 G7-LI-IDESC-INNER-RAW)",
+    tree: (real) => appended(real, PROTOCOL_D, 'import { Embedded\\u0048ost as Embedded } from "./embedded.js";', "export { Embedded };"),
+    added: [walkLine("types", "local-import", EH, IDX_D, PROTO_D)],
+  },
+  "W-LOCAL-PLAIN-JS": {
+    name: "protocol.js's local export of ResidentSession imported by its own name in an import clause with no default binding (the plain spelling; refusal #6 G7-LI-PLAIN-PROTOCOL-JS-UNREAD)",
+    tree: (real) => appended(real, PROTOCOL_J, 'import { ResidentSession } from "./resident_session.js";', "export { ResidentSession };"),
+    added: [walkLine("main", "local-import", RS, IDX_J, PROTO_J)],
+  },
+
   // Q: the residuals' quiet rows.
   "Q-INDIRECT": {
     name: "R-INDEX-INDIRECT: a value and a type declared from the class, a default export of it, a module augmentation, a named re-export chain, a namespace import of a starring module and an import-equals, each exported",
@@ -2124,6 +2302,9 @@ const ROWS: readonly Row[] = [
       "E1-MAIN-UNRESOLVED",
       "E1-MAIN-STR-HEX",
       "E1-TYPES-STR-U",
+      "E1-TEXT-TRAILING",
+      "E1-TEXT-MULTILINE",
+      "E1-TEXT-RS-BEFORE",
     ],
   },
   {
@@ -2131,7 +2312,7 @@ const ROWS: readonly Row[] = [
     from: "description",
     label: "- U2 backslash hard-break rendered reading (the refusal's U2 member).",
     judge: "u1",
-    pins: ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS", "U2-BR-SPACES", "U2-LIST", "U2-TABLE", "U2-TABLE-HEAD", "U2-HEADING", "U2-QUOTE", "U2-EMPHASIS", "U2-STRONG", "U2-LINK", "U2-HTML", "U2-HTML-INLINE", "U2-DEF", "U2-IMAGE", "U2-LIST-SECOND", "U2-TABLE-HEAD-SECOND", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND", "U2-RUNS", "U2-BR-SPACES3", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-ITEM-NESTED", "U2-ITEM-LOOSE", "U2-ORDERED", "U2-LIST-FIRST", "U2-ITEM-FIRST", "U2-TABLE-HEAD-FIRST", "U2-TABLE-ROW-FIRST", "U2-TABLE-CELL-FIRST", "U2-QUOTE-FIRST", "U2-LINK-REF"],
+    pins: ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS", "U2-BR-SPACES", "U2-LIST", "U2-TABLE", "U2-TABLE-HEAD", "U2-HEADING", "U2-QUOTE", "U2-EMPHASIS", "U2-STRONG", "U2-LINK", "U2-HTML", "U2-HTML-INLINE", "U2-DEF", "U2-IMAGE", "U2-LIST-SECOND", "U2-TABLE-HEAD-SECOND", "U2-TABLE-ROW-SECOND", "U2-TABLE-CELL-SECOND", "U2-RUNS", "U2-BR-SPACES3", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-ITEM-NESTED", "U2-ITEM-LOOSE", "U2-ORDERED", "U2-LIST-FIRST", "U2-ITEM-FIRST", "U2-TABLE-HEAD-FIRST", "U2-TABLE-ROW-FIRST", "U2-TABLE-CELL-FIRST", "U2-QUOTE-FIRST", "U2-LINK-REF", "U2-LIST-PLUS", "U2-HTML-SPAN", "U2-IMAGE-REF"],
   },
   {
     id: "E-U3",
@@ -2153,7 +2334,7 @@ const ROWS: readonly Row[] = [
     from: "notes",
     label: "- U2 (LOW, rides): D4's register-count read has no falsifier - add one or state it.",
     judge: "d4",
-    pins: ["R-PLAIN", "R-STRING", "R-ID-ESC", "R-STR-ESC", "R-COMPUTED", "R-TEMPLATE", "R-PARENS", "R-CLASS-EXPR", "R-OBJECT", "R-PARENS2", "R-PARENS-TEMPLATE", "R-ID-ESC-BRACE", "R-STR-ESC-U", "R-STRING-SINGLE", "R-DEFAULT-CLASS", "R-ANON-CLASS"],
+    pins: ["R-PLAIN", "R-STRING", "R-ID-ESC", "R-STR-ESC", "R-COMPUTED", "R-TEMPLATE", "R-PARENS", "R-CLASS-EXPR", "R-OBJECT", "R-PARENS2", "R-PARENS-TEMPLATE", "R-ID-ESC-BRACE", "R-STR-ESC-U", "R-STRING-SINGLE", "R-DEFAULT-CLASS", "R-ANON-CLASS", "R-COMPUTED-SINGLE", "R-OBJECT-LOCAL", "R-CLASS-EXPR-LOCAL", "R-CLASS-EXPR-NAMED", "R-CLASS-EXPR-ARROW", "R-STRING-SINGLE-ESC"],
   },
   {
     id: "F-U3",
@@ -2265,6 +2446,9 @@ const ROWS: readonly Row[] = [
       "W-NAMED-PAST-ESC",
       "W-NAMED-PAST-BRACE",
       "W-LOCAL-IMPORT-LATE",
+      "W-LOCAL-ESC-BRACE",
+      "W-LOCAL-ESC-INNER",
+      "W-LOCAL-PLAIN-JS",
     ],
   },
   { id: "Q", from: "residuals", label: "the residuals' pinned quiet rows (RESIDUALS)", judge: "d3", pins: ["Q-INDIRECT", "Q-SPECIFIER", "Q-PATH", "Q-RENDER", "Q-REGISTER", "Q-SPECIFIER-CONTROL", "Q-PATH-CONTROL"] },
@@ -2294,7 +2478,7 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["walk", "top-level statements", ["W-NESTED", "W-STATEMENTS", "W-NESTED-IMPORT", "W-LOCAL-THEN-STAR"], /declare module "[^"]+" \{\n {2}(?:export \* from |import )|export \* from "\.\/resident_session\.js";\nexport declare const |export \{ \w+ \};\nexport \* from /],
   ["walk", "comments never read", ["W-COMMENT"], /\/\/ export \* from /],
   ["walk", "the entry itself", ["E1-TYPES-ESC", "D-DTS", "W-LOCAL-NS", "W-LOCAL-ENTRY-TYPES", "W-LOCAL-ENTRY-MAIN", "W-LOCAL-DEFAULT-ENTRY", "W-LOCAL-NS-MAIN", "W-LOCAL-DEFAULT-MAIN"], /^walk \S+ (?:named|local-import|local-module) \S+ via dist\/src\/index\.(?:d\.ts|js)$|^walk \S+ star \S+ via dist\/src\/index\.(?:d\.ts|js) -> \S+$/m],
-  ["walk", "every module it reaches", ["W-NAMED-PAST", "W-LOCAL-IMPORT", "G5", "W-FOLLOW-DEEP", "W-STAR-AS-PAST", "W-NAMED-DEPTH3", "W-LOCAL-DEPTH3", "W-FORMS-MAIN-PAST", "W-FOLLOW-MAIN-PAST", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS", "W-NAMED-PAST-ESC"], /^walk \S+ (?:named|local-import|local-module) \S+ via \S+ -> |^walk \S+ star \S+ via \S+ -> \S+ -> /m],
+  ["walk", "the modules its plants have it reach", ["W-NAMED-PAST", "W-LOCAL-IMPORT", "G5", "W-FOLLOW-DEEP", "W-STAR-AS-PAST", "W-NAMED-DEPTH3", "W-LOCAL-DEPTH3", "W-FORMS-MAIN-PAST", "W-FOLLOW-MAIN-PAST", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS", "W-NAMED-PAST-ESC", "W-LOCAL-PLAIN-JS"], /^walk \S+ (?:named|local-import|local-module) \S+ via \S+ -> |^walk \S+ star \S+ via \S+ -> \S+ -> /m],
   ["star", "export * of a DEEP module", ["D-DTS", "D-JS", "G1", "W-LOCAL-THEN-STAR", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS"], /export \* from "[^"]+";[\s\S]*^walk \S+ star /m],
   ["star", "export * as of a DEEP module", ["W-STAR-AS", "G4", "G1R", "W-STAR-AS-PAST", "W-FORMS-MAIN-PAST", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS", "W-DEEP-STOP-AS"], /export \* as \w+ from "[^"]+";[\s\S]*^walk \S+ star /m],
   ["named", "export { X } from", ["E1-TYPE-DECL", "E1-UNRESOLVED", "E1-TWO", "W-NAMED-PAST", "E1-CLAUSE-AFTER-NONDEEP", "W-NAMED-DEPTH3", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS"], /export (?:type )?\{[^}]+\} from [\s\S]*^walk \S+ named /m],
@@ -2306,10 +2490,12 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["named", "an identifier escape", ["E1-TYPES-ESC", "E1-MAIN-ESC", "E1-BOTH-ESC", "E1-RESIDENT-ESC", "E1-MAIN-RES-ESC", "W-NAMED-PAST-ESC", "W-NAMED-PAST-BRACE"], /export \{ [A-Za-z]*\\u/],
   ["named", "a string escape", ["E1-STR-HEX", "E1-STR-BRACE", "E1-MAIN-STR-U", "E1-MAIN-STR-LC", "E1-MAIN-STR-CHAR", "E1-MAIN-STR-HEX", "E1-TYPES-STR-U"], /export \{ "[^"]*\\/],
   ["named", "whatever its specifier resolves to", ["E1-UNRESOLVED", "S-PCT-NAMED", "S-QUERY-NAMED", "E1-NAMED-OWN-BARE", "E1-MAIN-UNRESOLVED"], /\} from "(?:[^"]*(?:missing|%|\?)[^"]*|@furnace\/sdk|zzgate)";/],
-  ["local-import", "export { x }", ["W-LOCAL-IMPORT", "W-LOCAL-TWO", "W-LOCAL-SECOND", "W-LOCAL-ENTRY-TYPES", "W-LOCAL-ENTRY-MAIN", "W-LOCAL-DEPTH3", "W-LOCAL-IMPORT-AFTER", "W-LOCAL-EXPORT-AFTER", "W-LOCAL-UNRESOLVED", "W-LOCAL-THEN-STAR", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS"], /^export \{ \w+(?:, \w+)* \};$[\s\S]*^walk \S+ local-import /m],
+  ["local-import", "export { x }", ["W-LOCAL-IMPORT", "W-LOCAL-TWO", "W-LOCAL-SECOND", "W-LOCAL-ENTRY-TYPES", "W-LOCAL-ENTRY-MAIN", "W-LOCAL-DEPTH3", "W-LOCAL-IMPORT-AFTER", "W-LOCAL-EXPORT-AFTER", "W-LOCAL-UNRESOLVED", "W-LOCAL-THEN-STAR", "W-DEEP-FORMS-TYPES", "W-DEEP-FORMS-MAIN", "W-FORMS-KINDS", "W-LOCAL-PLAIN-JS"], /^export \{ \w+(?:, \w+)* \};$[\s\S]*^walk \S+ local-import /m],
   ["local-import", "aliased on export", ["W-LOCAL-ALIAS"], /^export \{ \w+ as \w+ \};$/m],
   ["local-import", "written after it", ["W-LOCAL-IMPORT-LATE"], /^export \{ EmbeddedHost \};\nimport \{ EmbeddedHost \} from "\.\/embedded\.js";$/m],
-  ["local-import", "read cooked", ["W-LOCAL-ESC", "W-LOCAL-EXPORT-ESC"], /(?:import|export) \{ [^}]*\\u/],
+  ["local-import", "read cooked", ["W-LOCAL-ESC", "W-LOCAL-EXPORT-ESC", "W-LOCAL-ESC-BRACE", "W-LOCAL-ESC-INNER"], /(?:import|export) \{ [^}]*\\u/],
+  ["local-import", "a braced escape", ["W-LOCAL-ESC-BRACE"], /^import \{ \\u\{[0-9A-Fa-f]+\}\w* as \w+ \} from /m],
+  ["local-import", "an inner escape", ["W-LOCAL-ESC-INNER"], /^import \{ \w+\\u[0-9A-Fa-f]{4}\w* as \w+ \} from /m],
   ["local-import", "the import aliased", ["W-LOCAL-ALIAS", "W-LOCAL-STRING"], /import \{ (?:type )?(?:\w+|"\w+") as \w+ \}/],
   ["local-import", "a type-only import declaration", ["W-LOCAL-TYPE"], /import type \{/],
   ["local-import", "a type-only import specifier", ["W-LOCAL-TYPE-SPEC"], /import \{ type /],
@@ -2392,14 +2578,19 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["text", "the types entry's", ["E1-PLAIN", "E1-TEXT-COMMENT"], /^text types /m],
   ["text", "the main entry's", ["E1-TEXT-MAIN"], /^text main /m],
   ["text", "a name in its code", ["E1-PLAIN", "E1-TYPES-STR"], /^export [^\n]*EmbeddedHost[^\n]*$[\s\S]*^text types EmbeddedHost$/m],
-  ["text", "a name in a comment", ["E1-TEXT-COMMENT", "E1-TEXT-MAIN", "E1-TEXT-BLOCK"], /^(?:\/\/ \w+ stays a deep import|\/\* \w+ stays a deep import \*\/)$[\s\S]*^text \w+ \w+$/m],
+  ["text", "a name in a comment", ["E1-TEXT-COMMENT", "E1-TEXT-MAIN", "E1-TEXT-BLOCK", "E1-TEXT-TRAILING", "E1-TEXT-MULTILINE"], /(?:^|; )(?:\/\/ \w+ stays a deep import|\/\*(?: |\n )\w+ stays a deep import(?: |\n)\*\/)$[\s\S]*^text \w+ \w+$/m],
+  ["text", "a line comment opening its line", ["E1-TEXT-COMMENT", "E1-TEXT-MAIN"], /^\/\/ \w+ stays a deep import$[\s\S]*^text \w+ \w+$/m],
+  ["text", "line comment written after code on its line", ["E1-TEXT-TRAILING"], /^export declare const \w+: unique symbol; \/\/ \w+ stays a deep import$[\s\S]*^text types EmbeddedHost$/m],
+  ["text", "block comment on one line", ["E1-TEXT-BLOCK"], /^\/\* \w+ stays a deep import \*\/$[\s\S]*^text types EmbeddedHost$/m],
+  ["text", "block comment spanning three lines", ["E1-TEXT-MULTILINE"], /^\/\*\n \w+ stays a deep import\n\*\/$[\s\S]*^text types EmbeddedHost$/m],
   ["text", "escape sequences never decoded", ["E1-TEXT-ESCAPE", "E1-TYPES-ESC"], /\\u0045mbeddedHost/],
   ["text", "a legacy octal escape", ["E1-TEXT-OCTAL"], /"\\105mbeddedHost"/],
-  ["text", "an ASCII letter", ["E1-TEXT-LONGER", "E1-TEXT-WORDCHARS", "E1-TEXT-UPPER-BEFORE", "E1-TEXT-LOWER-AFTER"], /[A-Za-z]EmbeddedHost|EmbeddedHost[A-Za-z]/],
+  ["text", "an ASCII letter", ["E1-TEXT-LONGER", "E1-TEXT-WORDCHARS", "E1-TEXT-UPPER-BEFORE", "E1-TEXT-LOWER-AFTER", "E1-TEXT-RS-BEFORE"], /[A-Za-z](?:EmbeddedHost|ResidentSession)|EmbeddedHost[A-Za-z]/],
   ["text", "a digit", ["E1-TEXT-WORDCHARS"], /\dEmbeddedHost|EmbeddedHost\d/],
   ["text", "an underscore", ["E1-TEXT-WORDCHARS"], /_EmbeddedHost|EmbeddedHost_/],
-  ["text", "just before it", ["E1-TEXT-WORDCHARS", "E1-TEXT-UPPER-BEFORE"], /\wEmbeddedHost/],
-  ["text", "just after it", ["E1-TEXT-LONGER", "E1-TEXT-WORDCHARS", "E1-TEXT-LOWER-AFTER"], /EmbeddedHost\w/],
+  ["text", "just before the name", ["E1-TEXT-WORDCHARS", "E1-TEXT-UPPER-BEFORE", "E1-TEXT-RS-BEFORE"], /\w(?:EmbeddedHost|ResidentSession)/],
+  ["text", "just after the name", ["E1-TEXT-LONGER", "E1-TEXT-WORDCHARS", "E1-TEXT-LOWER-AFTER"], /EmbeddedHost\w/],
+  ["text", "MyResidentSession", ["E1-TEXT-RS-BEFORE"], /^export declare const MyResidentSession: unique symbol;$[\s\S]*^text types ResidentSession$/m],
   ["text", "a $", ["E1-TEXT-DOLLAR", "E1-TEXT-DOLLAR-AFTER"], /(?:\$EmbeddedHost|EmbeddedHost\$)[\s\S]*^text types EmbeddedHost$/m],
   ["text", "a non-ASCII letter", ["E1-TEXT-NONASCII", "E1-TEXT-NONASCII-AFTER"], /(?:\u00e9EmbeddedHost|EmbeddedHost\u00e9)[\s\S]*^text types EmbeddedHost$/m],
   ["path", "every ASCII tab dropped", ["P-RESOLVE-TAB", "P-URL-TAB", "P-HOLDS-PATH", "P-TAB2"], /"[^"\n]*\\t[^"\n]*"/],
@@ -2420,7 +2611,8 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["render", "every run one space", ["U2-RUNS"], /re-packaged {2,}on 2026-11-01\n\(wb-zby\) from Furnace \t revision/],
   ["render", "a backslash before a line ending", ["U2-BR-WBZBY", "U2-BR-REVISION", "U2-BR-EMPHASIS"], /\\\n/],
   ["render", "two or more spaces before a line ending", ["U2-BR-SPACES", "U2-BR-SPACES3"], /\S {2,}\n/],
-  ["render", "a list", ["U2-LIST", "U2-LIST-SECOND", "U2-ORDERED", "U2-LIST-FIRST"], /^(?:- |\d+\. )/m],
+  ["render", "a list", ["U2-LIST", "U2-LIST-SECOND", "U2-ORDERED", "U2-LIST-FIRST", "U2-LIST-PLUS"], /^(?:[-+] |\d+\. )/m],
+  ["render", "bulleted +", ["U2-LIST-PLUS"], /^\+ furnace-sdk-0\.2\.0\.tgz was \*re-packaged\* on /m],
   ["render", "its items' tokens", ["U2-LIST-SECOND", "U2-ITEM-NESTED", "U2-ITEM-LOOSE", "U2-ORDERED", "U2-ITEM-FIRST"], /^(?:- other\n(?:- | {2}- |\n {2})|1\. other\n2\. )furnace-sdk-0\.2\.0\.tgz |^- furnace-sdk-0\.2\.0\.tgz [^\n]*\n {2}- other$/m],
   ["render", "a table", ["U2-TABLE", "U2-TABLE-HEAD"], /^\| --- \|$/m],
   ["render", "header cells' tokens", ["U2-TABLE-HEAD", "U2-TABLE-HEAD-SECOND", "U2-TABLE-HEAD-FIRST"], /^\|[^\n]*furnace-sdk-0\.2\.0\.tgz[^\n]*\|\n\| --- /m],
@@ -2433,27 +2625,36 @@ const SUBFORMS: readonly (readonly [string, string, readonly string[], RegExp])[
   ["render", "a link", ["U2-LINK", "U2-LINK-NESTED"], /\[re-[^\]]*\]\(https:\/\/example\.invalid\/r\)/],
   ["render", "a reference link", ["U2-LINK-REF"], /\[re-packaged\]\[gate\] on [^\n]*\n\n\[gate\]: https:\/\/example\.invalid\/r$/m],
   ["render", "by those tokens", ["U2-EMPHASIS", "U2-HEADING", "U2-QUOTE-SECOND", "U2-EMPHASIS-NESTED", "U2-STRONG-NESTED", "U2-LINK-NESTED", "U2-QUOTE-FIRST"], /[*_]re-|\[re-|^> other$/m],
-  ["render", "raw HTML", ["U2-HTML", "U2-HTML-INLINE"], /<!-- |<b>/],
+  ["render", "raw HTML", ["U2-HTML", "U2-HTML-INLINE", "U2-HTML-SPAN"], /<!-- |<b>|<span>/],
   ["render", "an HTML block", ["U2-HTML"], /^<!-- /m],
-  ["render", "inline HTML", ["U2-HTML-INLINE"], /<b>\(wb-zby\)<\/b>/],
+  ["render", "inline HTML", ["U2-HTML-INLINE", "U2-HTML-SPAN"], /<(b|span)>\(wb-zby\)<\/\1>/],
+  ["render", "<span> and </span>", ["U2-HTML-SPAN"], /<span>\(wb-zby\)<\/span>/],
   ["render", "a link-reference definition", ["U2-DEF"], /^\[gate\]: /m],
-  ["render", "an image", ["U2-IMAGE"], /^!\[/m],
-  ["register", "in a class", ["R-PLAIN", "R-CLASS-EXPR"], /\bclass(?: \w+)? \{\n {2,4}register\(\) \{/],
-  ["register", "in an object literal", ["R-OBJECT"], /= \{\n {2}register\(\) \{/],
+  ["render", "an image", ["U2-IMAGE", "U2-IMAGE-REF"], /^!\[/m],
+  ["render", "a reference image", ["U2-IMAGE-REF"], /^!\[[^\]\n]+\]\[img\]\n\n\[img\]: https:\/\/example\.invalid\/i\.png$/m],
+  ["register", "in a class", ["R-PLAIN", "R-CLASS-EXPR", "R-CLASS-EXPR-LOCAL", "R-CLASS-EXPR-NAMED", "R-CLASS-EXPR-ARROW"], /\bclass(?: \w+)? \{\n {2,4}register\(\) \{/],
+  ["register", "in an object literal", ["R-OBJECT", "R-OBJECT-LOCAL"], /= \{\n {2}register\(\) \{/],
   ["register", "a default-exported class declaration", ["R-DEFAULT-CLASS", "R-ANON-CLASS"], /^export default class (?:\w+ )?\{\n {2}register\(\) \{$/m],
+  ["register", "a named class expression", ["R-CLASS-EXPR-NAMED"], /^ {2}return class \w+ \{\n {4}register\(\) \{$/m],
+  ["register", "an unexported function declaration", ["R-CLASS-EXPR-LOCAL"], /^function \w+\(\) \{\n {2}return class \{\n {4}register\(\) \{$/m],
+  ["register", "an arrow function's concise body", ["R-CLASS-EXPR-ARROW"], /^export const \w+ = \(\) =>\n {2}class \{\n {4}register\(\) \{$/m],
+  ["register", "an exported const declaration's initializer", ["R-OBJECT"], /^export const \w+ = \{\n {2}register\(\) \{$/m],
+  ["register", "an unexported const declaration's initializer", ["R-OBJECT-LOCAL"], /^const \w+ = \{\n {2}register\(\) \{$/m],
   ["register", "an identifier name", ["R-PLAIN"], /^ {2}register\(\) \{$[\s\S]*^register identifier$/m],
   ["register", "a string-literal name", ["R-STRING"], /^ {2}"register"\(\) \{$[\s\S]*^register string$/m],
   ["register", "single-quoted", ["R-STRING-SINGLE"], /^ {2}'register'\(\) \{$[\s\S]*^register string$/m],
   ["register", "an identifier escape", ["R-ID-ESC", "R-ID-ESC-BRACE"], /^ {2}\\u(?:0072|\{72\})egister\(\) \{$[\s\S]*^register identifier$/m],
-  ["register", "a string escape", ["R-STR-ESC", "R-STR-ESC-U"], /^ {2}"regist\\(?:x65|u0065)r"\(\) \{$[\s\S]*^register string$/m],
-  ["register", "a computed name", ["R-COMPUTED", "R-TEMPLATE", "R-PARENS"], /^ {2}\[[^\]\n]+\]\(\) \{$[\s\S]*^register computed-(?:string|template)$/m],
+  ["register", "a string escape", ["R-STR-ESC", "R-STR-ESC-U", "R-STRING-SINGLE-ESC"], /^ {2}(["'])regist\\(?:x65|u0065)r\1\(\) \{$[\s\S]*^register string$/m],
+  ["register", "\\x65 in a single-quoted name", ["R-STRING-SINGLE-ESC"], /^ {2}'regist\\x65r'\(\) \{$[\s\S]*^register string$/m],
+  ["register", "a computed name", ["R-COMPUTED", "R-TEMPLATE", "R-PARENS", "R-COMPUTED-SINGLE"], /^ {2}\[[^\]\n]+\]\(\) \{$[\s\S]*^register computed-(?:string|template)$/m],
   ["register", "through parentheses", ["R-PARENS", "R-PARENS2", "R-PARENS-TEMPLATE"], /^ {2}\[\(+["`]register["`]\)+\]\(\) \{$/m],
-  ["register", "a computed string literal", ["R-COMPUTED"], /^ {2}\["register"\]\(\) \{$[\s\S]*^register computed-string$/m],
+  ["register", "a computed string literal", ["R-COMPUTED", "R-COMPUTED-SINGLE"], /^ {2}\[(["'])register\1\]\(\) \{$[\s\S]*^register computed-string$/m],
+  ["register", "single-quoted and unparenthesized", ["R-COMPUTED-SINGLE"], /^ {2}\['register'\]\(\) \{$[\s\S]*^register computed-string$/m],
   ["register", "a computed no-substitution template literal", ["R-TEMPLATE", "R-PARENS-TEMPLATE"], /^ {2}\[\(*`register`\)*\]\(\) \{$[\s\S]*^register computed-template$/m],
 ];
 
 /** Each row's id and pin count, frozen at this cut (PAGES' key order, every plant in ROWS order, freezes the pin ids). */
-const FROZEN_SHAPE = ["E-U1:34", "E-U2:36", "E-U3:31", "F-U1:20", "F-U2:16", "F-U3:21", "W:97", "Q:7"] as const;
+const FROZEN_SHAPE = ["E-U1:37", "E-U2:39", "E-U3:31", "F-U1:20", "F-U2:22", "F-U3:21", "W:100", "Q:7"] as const;
 /** The header labels of the claim parts' paragraphs, in CLAIM_PARTS order. */
 const CLAIM_LABELS: Readonly<Record<string, string>> = {
   walk: "WALK",
@@ -2511,6 +2712,9 @@ const PAGES: Readonly<Record<string, string>> = {
   "E1-MAIN-UNRESOLVED": "5c7bb3ac18d967ef",
   "E1-MAIN-STR-HEX": "1df9bb732e6d60f7",
   "E1-TYPES-STR-U": "abb7910d54440bed",
+  "E1-TEXT-TRAILING": "2e658827cf54bc77",
+  "E1-TEXT-MULTILINE": "b76f97cc53a11dd8",
+  "E1-TEXT-RS-BEFORE": "9815564468f802fd",
   "U2-BR-WBZBY": "43d19beaa985f656",
   "U2-BR-REVISION": "f9c449db53aafc83",
   "U2-BR-EMPHASIS": "abe2a5dc34144781",
@@ -2547,6 +2751,9 @@ const PAGES: Readonly<Record<string, string>> = {
   "U2-TABLE-CELL-FIRST": "8c2656f945627dc3",
   "U2-QUOTE-FIRST": "5db07fa25482b0b0",
   "U2-LINK-REF": "c8385788650b0db5",
+  "U2-LIST-PLUS": "70d8918e019007d6",
+  "U2-HTML-SPAN": "1bbea39d2b4eedf1",
+  "U2-IMAGE-REF": "0162a606f260925e",
   "P-RESOLVE-TAB": "a8ca4f775c04c596",
   "P-RESOLVE-LF": "95699034de8657d8",
   "P-RESOLVE-CR": "7f8f5bc711533181",
@@ -2614,6 +2821,12 @@ const PAGES: Readonly<Record<string, string>> = {
   "R-STRING-SINGLE": "fa73a40007a9d615",
   "R-DEFAULT-CLASS": "7f920c6fa23c48e8",
   "R-ANON-CLASS": "6d4cff30655583fd",
+  "R-COMPUTED-SINGLE": "ae0ceab2e8d63042",
+  "R-OBJECT-LOCAL": "7e278935e2729e9e",
+  "R-CLASS-EXPR-LOCAL": "b16b8665e27353b0",
+  "R-CLASS-EXPR-NAMED": "15d2793fe76f1466",
+  "R-CLASS-EXPR-ARROW": "18cc80dff3d8b2a3",
+  "R-STRING-SINGLE-ESC": "4361d264f12a4674",
   "S-TAB": "9e6153405c43eee8",
   "S-LF": "cfdb664a7af7d292",
   "S-CR": "4abb6c1fe3ec1ecc",
@@ -2732,6 +2945,9 @@ const PAGES: Readonly<Record<string, string>> = {
   "W-NAMED-PAST-ESC": "60423e857291badb",
   "W-NAMED-PAST-BRACE": "d6822cb4deede759",
   "W-LOCAL-IMPORT-LATE": "f95788248f8dc3db",
+  "W-LOCAL-ESC-BRACE": "c8e473aa3bc8b369",
+  "W-LOCAL-ESC-INNER": "c2b0541af975b2b6",
+  "W-LOCAL-PLAIN-JS": "bb58605af58fbe83",
   "Q-INDIRECT": "d9b14d62cbf925b1",
   "Q-SPECIFIER": "f4e476325adeb73f",
   "Q-PATH": "66eb94d9cf0dc889",
@@ -2838,6 +3054,32 @@ const TALLY_TITLE =
 const PLANT_CASES = ROWS.flatMap((row) => row.pins.map((pin) => ({ row: row.id, pin, judge: judgeOf(row, pin) })));
 const partOf = (id: string): ClaimPart | undefined => CLAIM_PARTS.find((part) => part.id === id);
 const WALK_FORM_IDS: ReadonlySet<string> = new Set(WALK_FORMS.map((form) => form.id));
+const byCodeUnit = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
+/** The modules the plants' own lines (each plant's and its twin's) read each WALK form in - an export *'s or an export * as's
+ * module is the one that holds it - each with the class names read there, in code-unit order: what WALK_READS must equal. */
+function plantWalkReads(): Record<string, string[]> {
+  const reads = new Map<string, Map<string, Set<string>>>();
+  for (const plant of Object.values(PLANTS)) {
+    for (const line of [...plant.added, ...(plant.twin?.added ?? [])]) {
+      const match = /^walk \S+ (\S+) (\S+) via (.+)$/.exec(line);
+      if (match === null) continue;
+      const [, form = "", names = "", via = ""] = match;
+      const chain = via.split(" -> ");
+      const module = (form === "star" ? chain[chain.length - 2] : chain[chain.length - 1]) ?? "";
+      const byModule = reads.get(form) ?? new Map<string, Set<string>>();
+      reads.set(form, byModule);
+      const held = byModule.get(module) ?? new Set<string>();
+      byModule.set(module, held);
+      for (const name of names.split(",")) held.add(name);
+    }
+  }
+  return Object.fromEntries(
+    [...reads].map(([form, byModule]) => [
+      form,
+      [...byModule.keys()].sort(byCodeUnit).map((module) => `${module.replace(/^dist\/src\//, "")} (${[...(byModule.get(module) ?? [])].sort(byCodeUnit).join(" and ")})`),
+    ]),
+  );
+}
 
 describe("wb-lrz.8: the full-surface readers of wb-lrz.4's Furnace SDK re-vendor readiness census", () => {
   it("FROZEN SHAPE (standing rule 16): ROWS's shape and pin ids, every plant in exactly one row, PAGES each plant's page digest", () => {
@@ -2877,7 +3119,7 @@ describe("wb-lrz.8: the full-surface readers of wb-lrz.4's Furnace SDK re-vendor
     reached("cases", "claim text");
   });
 
-  it("CLAIM ROSTER: SUBFORMS names exactly the claim parts' listed sub-forms in claim order, each with plants that carry its mark in what they add or read; every plant outside row Q proves one; a WALK form's plants read that form", () => {
+  it("CLAIM ROSTER: SUBFORMS names exactly the claim parts' listed sub-forms in claim order, each with plants that carry its mark in what they add or read; every plant outside row Q proves one; a WALK form's plants read that form; the WALK claim's module list is its plants' own", () => {
     expect(SUBFORMS.map(([part, sub]) => `${part}: ${sub}`)).toEqual(CLAIM_PARTS.flatMap((part) => part.subforms.map((sub) => `${part.id}: ${sub}`)));
     expect(SUBFORMS.filter(([, , pins]) => pins.length === 0 || pins.some((pin) => PLANTS[pin] === undefined)).map(([part, sub]) => `${part}: ${sub}`)).toEqual([]);
     expect(SUBFORMS.filter(([part, sub]) => !(partOf(part)?.text.includes(sub) ?? false)).map(([part, sub]) => `${part}: ${sub}`)).toEqual([]);
@@ -2890,6 +3132,7 @@ describe("wb-lrz.8: the full-surface readers of wb-lrz.4's Furnace SDK re-vendor
     expect(unread, "a WALK form's plant reads that form").toEqual([]);
     const unmarked = SUBFORMS.flatMap(([part, sub, pins, mark]) => pins.filter((pin) => !mark.test(evidenceOf(PLANTS[pin] as Plant))).map((pin) => `${part}: ${sub} <- ${pin}`));
     expect(unmarked, "a sub-form's plant carries its mark in what it adds or reads").toEqual([]);
+    expect(plantWalkReads(), "the WALK claim's module list (the claims module's WALK_READS) is the modules and class names its plants' own lines read").toEqual(WALK_READS);
     reached("cases", "claim roster");
   });
 
